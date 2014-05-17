@@ -738,6 +738,9 @@ class Caldera_Forms {
 							if(isset($form_processors[$processor['type']])){
 								// has processor
 								$process = $form_processors[$processor['type']];
+								if(!isset($process['pre_processor'])){
+									continue;
+								}
 								// set default config
 								$config = $process['default'];
 								if(!empty($processor['config'])){
@@ -778,6 +781,10 @@ class Caldera_Forms {
 							if(isset($form_processors[$processor['type']])){
 								// has processor
 								$process = $form_processors[$processor['type']];
+								if(!isset($process['processor'])){
+									continue;
+								}
+
 								// set default config
 								$config = $process['default'];
 								if(!empty($processor['config'])){
@@ -818,6 +825,9 @@ class Caldera_Forms {
 							if(isset($form_processors[$processor['type']])){
 								// has processor
 								$process = $form_processors[$processor['type']];
+								if(!isset($process['post_processor'])){
+									continue;
+								}								
 								// set default config
 								$config = $process['default'];
 								if(!empty($processor['config'])){
