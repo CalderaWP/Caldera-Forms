@@ -1,0 +1,31 @@
+.caldera-editor-processors-panel {
+  float: left;
+  margin-right: 20px;
+  width: 250px;
+}
+.caldera-editor-processors-panel li{
+  border-bottom: 1px solid #DFDFDF;
+  margin: 0;
+}
+.caldera-editor-processors-panel a{
+  color: #6F6F6F;
+  display: block;
+  padding: 6px;
+  text-decoration: none;
+}
+.caldera-editor-processors-panel li.active a,
+.caldera-editor-processors-panel a:hover{
+  background: none repeat scroll 0 0 #E8E8E8;
+}
+.caldera-editor-processor-config {
+  float: left;
+  width: 500px;
+}
+h3.caldera-editor-processor-title {
+  border-bottom: 1px solid #CFCFCF;
+  color: #3F3F3F;
+  font-size: 18px;
+  font-weight: 400;
+  margin: 0 0 6px;
+  padding: 0 0 12px;
+}

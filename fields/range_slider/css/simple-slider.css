@@ -1,0 +1,52 @@
+.slider {
+  width: 200px;
+  vertical-align: middle;
+  display: inline-block;
+}
+#side-sortables .slider{
+  width: 120px;
+}
+#normal-sortables .slider{
+  width: 300px;
+}
+@media only screen and (max-width: 799px) {
+  #normal-sortables .slider{
+    width: 330px;
+  }
+}
+
+.slider > .dragger {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+
+.slider > .track, .slider > .highlight-track {
+  background: #ccc;
+  background: -webkit-linear-gradient(top, #bbb, #ddd);
+  background: -moz-linear-gradient(top, #bbb, #ddd);
+  background: linear-gradient(top, #bbb, #ddd);
+
+  -webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+  -moz-box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+
+  border: 1px solid #aaa;
+  height: 4px;
+}
+
+.slider > .highlight-track {
+	background-color: #2EA2CC;
+	background: -webkit-linear-gradient(top, #2EA2CC, #1E8CBE);
+	background: -moz-linear-gradient(top, #2EA2CC, #1E8CBE);
+	background: linear-gradient(top, #2EA2CC, #1E8CBE);
+	
+	border-color: #0074A2;
+}
+

@@ -1,0 +1,14 @@
+.toggle_option_row {
+  margin: 4px 0;
+}
+
+.toggle_option_row input{
+	display: inline;
+}
+
+.toggle_option_row .dashicons-sort{ cursor: move;}
+
+.toggle_option_row .toggle_value_field,
+.toggle_option_row .toggle_label_field{
+	width: 120px;
+}

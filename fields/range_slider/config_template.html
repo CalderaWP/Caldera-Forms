@@ -1,0 +1,34 @@
+<div class="caldera-config-group">
+	<label>Default</label>
+	<div class="caldera-config-field">
+		<input type="text" class="block-input field-config" name="{{_name}}[default]" value="{{default}}">
+	</div>
+</div>
+<div class="caldera-config-group">
+	<label>Suffix</label>
+	<div class="caldera-config-field">
+		<input type="text" class="block-input field-config" name="{{_name}}[suffix]" value="{{suffix}}">
+	</div>
+</div>
+<div class="caldera-config-group">
+	<label>Min Value</label>
+	<div class="caldera-config-field">
+		<input type="text" class="block-input field-config" name="{{_name}}[min]" value="{{min}}">
+	</div>
+</div>
+<div class="caldera-config-group">
+	<label>Max Value</label>
+	<div class="caldera-config-field">
+		<input type="text" class="block-input field-config" name="{{_name}}[max]" value="{{max}}">
+	</div>
+</div>
+
+<br><br><br>
+
+<div class="caldera-config-group">
+	<label>&nbsp;</label>
+	<div class="caldera-config-field">
+		<input autocomplete="off" data-init="{{key}}_init_slider" name="<?php echo $field_name; ?>" class="is_simple_slider" type="text" value="" data-slider-highlight="true" data-slider-range="{{min}}|{{max}}"/>
+		<span class="output"></span>
+	</div>
+</div>

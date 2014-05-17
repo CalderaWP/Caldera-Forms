@@ -1,0 +1,202 @@
+
+/* MODALS */
+.caldera-backdrop {
+  background: none repeat scroll 0 0 #000000;
+  bottom: 0;
+  display: block;
+  left: 0;
+  min-height: 360px;
+  opacity: 0.7;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 100100;
+}
+.caldera-modal-wrap {
+  background-color: #FFFFFF;
+  bottom: 15px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+  display: block;
+  left: 50%;
+  margin-left: -250px;
+  position: fixed;
+  top: 15px;
+  transition: height 0.2s ease 0s, margin-top 0.2s ease 0s;
+  width: 500px;
+  z-index: 100105;
+}
+.caldera-modal-title {
+  border-bottom: 1px solid #EFEFEF;
+}
+.caldera-modal-closer {
+  color: #808080;
+  float: right;
+  font-size: 24px;
+  padding: 12px;
+  text-decoration: none;
+}
+.caldera-modal-title > h3 {
+  font-weight: 400;
+  margin: 0;
+  padding: 12px 40px 12px 12px;
+}
+
+.caldera-modal-body {
+  -moz-box-sizing:    border-box;   /* Firefox 1, probably can drop this */
+  -webkit-box-sizing: border-box;   /* Safari 3-4, also probably droppable */
+  box-sizing:        border-box;   /* Everything else */
+  bottom: 53px;
+  left: 0;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 0;
+  padding: 12px 12px 8.9px;
+  position: absolute;
+  right: 0;
+  top: 43px;
+}
+.caldera-modal-footer {
+  background: none repeat scroll 0 0 #EFEFEF;
+  border-top: 1px solid #E0E0E0;
+  padding: 12px;
+  text-align: right;
+}
+.tablenav.caldera-table-nav{
+  margin: 60px 0 0;
+}
+.caldera-table-nav .tablenav-pages{
+  float: left;
+}
+.caldera-table-nav .tablenav-pages .current-page{
+  width: 45px;
+}
+
+
+
+
+
+.profile-features > li,
+.modal-side-tabs > li {
+  display: inline-block;
+  float: left;
+  margin: 0;
+}
+.profile-features > li .profile-feature,
+.modal-side-tabs > li .modal-side-tab {
+  background: none repeat scroll 0 0 #F7F7F7;
+  display: block;
+  margin: 0;
+  padding: 6px 10px;
+  text-decoration: none;
+  color: #8F8F8F;
+}
+.profile-features > li .profile-feature:hover,
+.modal-side-tabs > li .modal-side-tab:hover{
+  background-color: #efefef;
+}
+.caldera-manage-groups-tip {
+  padding: 10px 0;
+  text-align: center;
+}
+
+
+
+
+
+/** DETAIL PROFILE MODAL */
+.modal-inside {
+  height: 100%;
+  margin-left: 170px;
+  padding-right: 10px;
+  overflow: auto;  
+}
+
+.modal-inside .modal-side-bar {
+  background-color: #DFDFDF;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  position: absolute;
+  top: 0;
+  width: 150px;
+}
+.modal-side-bar .user-avatar,
+.modal-side-bar .user-avatar img {
+  float: left;
+}
+.modal-side-bar .modal-side-tabs {
+  background-color: #DFDFDF;
+  bottom: 0;
+  margin: 0;
+  overflow: auto;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  min-height: 100px;
+}
+.modal-side-bar.has-avatar .modal-side-tabs{
+  top: 150px;
+}
+.modal-side-tabs > li .modal-side-tab {
+  background-color: #989898;
+  color: #FFFFFF;
+}
+.modal-side-tabs > li .modal-side-tab:hover{
+  background-color: #efefef;
+  color: #585858;
+}
+.modal-side-tabs > li .modal-side-tab.active {
+  background-color: #FFF;
+  color: #585858;
+}
+.modal-side-bar .modal-side-tabs > li {
+  width: 100%;
+}
+.tab-detail-panel {
+  float: right;
+  width: 100%;
+}
+.user-field-lable {
+  display: inline-block;
+  width: 80px;
+  color: #898989;
+}
+input.disabled-input {
+  background-color: #EFEFEF;
+  box-shadow: none;
+}
+.tab-detail-panel > h4 {
+  font-weight: bold;
+  margin: 0.6em 0;
+}
+.tab-detail-panel > h4 small {
+  color: #A9A9A9;
+  font-style: italic;
+  font-weight: normal;
+}
+.tab-detail-panel .button.caldera-add-group {
+  margin-bottom: 10px !important;
+}
+.tab-detail-panel .caldera-repeater-group {
+  margin-bottom: 12px;
+}
+.caldera-repeater-group-control {
+  background: none repeat scroll 0 0 #F7F7F7;
+  border: 1px solid #F4F4F4;
+  clear: both;
+  padding: 6px;
+  text-align: right;
+}
+.caldera-repeater-group:hover .caldera-repeater-group-control.row-actions{
+  visibility: visible;
+}
+
+.tab-detail-panel .caldera-repeater-group hr{ clear: both;}
+.caldera-modal-body.spinner {
+  background-position: 12px 12px;
+  min-height: 44px;
+  display: block;
+  float: none;
+  text-align: center;
+  width: 100%;
+}
