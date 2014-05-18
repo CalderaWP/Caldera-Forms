@@ -414,7 +414,8 @@ class Caldera_Forms {
 					),
 					"not_supported"	=>	array(
 						'hide_label',
-						'caption'
+						'caption',
+						'required'
 					)
 				)
 			),
@@ -770,11 +771,43 @@ class Caldera_Forms {
 					
 					// SET process ID
 					$processID = uniqid('_cf_process_');
+
+					// get data ready
+					$process_data = $data = stripslashes_deep( $_POST );
+
+					// requireds
+					// set transient for returns submittions
+					$transdata = array(
+						'transient' => $processID,
+						'data' => $data
+					);					
+					foreach($form['fields'] as $field){
+						if(!empty($field['required'])){
+							if(empty($data[$field['slug']])){								
+								$transdata['fields'][$field['slug']] = $field['slug'] .' ' .__('is required', 'caldera-forms');
+							}
+						}
+					}
+					// check requireds
+					if(!empty($transdata['fields'])){
+						$transdata['type'] = 'error';
+						set_transient( $processID, $transdata, 120);
+						// back to form
+						$query_str = array(
+							'cf_er' => $processID
+						);
+						if(!empty($referrer['query'])){
+							$query_str = array_merge($referrer['query'], $query_str);
+						}
+						$referrer = $referrer['path'] . '?' . http_build_query($query_str);
+						wp_redirect( $referrer );
+						exit;
+
+					}
+
+
 					// has processors
 					if(!empty($form['processors'])){
-
-						// get data ready
-						$process_data = $data = stripslashes_deep( $_POST );
 						
 						// get all form processors
 						$form_processors = apply_filters('caldera_forms_get_form_processors', array() );
@@ -964,9 +997,17 @@ class Caldera_Forms {
 
 			/// end form and redirect to submit page or result page.
 		}
-
+		if(empty($post)){
+			if(isset($wp_query->queried_object)){
+				$post = $wp_query->queried_object;
+			}
+		}
+		if(empty($post)){
+			//cant find form;
+			return;
+		}
 		$codes = get_shortcode_regex();
-		preg_match_all('/' . $codes . '/s', $wp_query->queried_object->post_content, $found);
+		preg_match_all('/' . $codes . '/s', $post->post_content, $found);
 		if(!empty($found[0][0])){
 			foreach($found[2] as $index=>$code){
 				if( 'caldera_form' === $code ){
@@ -1116,6 +1157,10 @@ class Caldera_Forms {
 					$field_id = 'fld_' . $field['slug'];
 					$field_label = "<label for=\"" . $field_id . "\" class=\"control-label\">" . $field['label'] . "</label>\r\n";
 					$field_placeholder = "";
+					$field_required = "";
+					if(!empty($field['required'])){
+						$field_required = 'required="required"';
+					}
 					if(!empty($field['hide_label'])){
 						$field_label = "";
 						$field_placeholder = 'placeholder="' . htmlentities( $field['label'] ) .'"';

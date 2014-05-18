@@ -12,7 +12,7 @@
 				<?php if(empty($field['config']['inline'])){ ?>
 				<div class="radio">
 				<?php } ?>
-				<label<?php if(!empty($field['config']['inline'])){ ?> class="radio-inline"<?php } ?>><input type="radio" id="<?php echo $field_id . '_' . $option_key; ?>" class="" name="<?php echo $field_name; ?>" value="<?php echo $option['value']; ?>" <?php if( $field_value == $option['value'] ){ ?>checked="true"<?php } ?>> <?php echo $option['label']; ?></label>
+				<label<?php if(!empty($field['config']['inline'])){ ?> class="radio-inline"<?php } ?>><input type="radio" id="<?php echo $field_id . '_' . $option_key; ?>" class="" name="<?php echo $field_name; ?>" value="<?php echo $option['value']; ?>" <?php if( $field_value == $option['value'] ){ ?>checked="true"<?php } ?> <?php echo $field_required; ?>> <?php echo $option['label']; ?></label>
 				<?php if(empty($field['config']['inline'])){ ?>
 				</div>
 				<?php } ?>

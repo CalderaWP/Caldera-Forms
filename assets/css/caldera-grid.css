@@ -1084,6 +1084,9 @@
 .caldera-grid .visible-lg {
   display: none !important;
 }
+.caldera-grid .form-control {
+  width: 100%;
+}
 @media (max-width: 767px) {
   .caldera-grid .visible-xs {
     display: block !important;

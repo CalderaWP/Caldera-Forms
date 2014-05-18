@@ -61,7 +61,7 @@ foreach($field_types as $field=>$config){
 
 
 
-function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{{slug}}', $caption = '{{caption}}', $hide_label = '{{hide_label}}', $type = null, $config_str = '{"default":"default value"}'){
+function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{{slug}}', $caption = '{{caption}}', $hide_label = '{{hide_label}}', $required = '{{required}}', $type = null, $config_str = '{"default":"default value"}'){
 
 	if(is_array($config_str)){
 		$config 	= $config_str;
@@ -103,6 +103,13 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 			<label for="<?php echo $id; ?>_slug"><?php echo __('Slug', 'caldera-forms'); ?></label>
 			<div class="caldera-config-field">
 				<input type="text" class="block-input field-config field-slug required" id="<?php echo $id; ?>_slug" name="config[fields][<?php echo $id; ?>][slug]" value="<?php echo $slug; ?>">
+			</div>
+		</div>
+		
+		<div class="caldera-config-group required-field">
+			<label for="<?php echo $id; ?>_hide_label"><?php echo __('Required', 'caldera-forms'); ?></label>
+			<div class="caldera-config-field">
+				<input type="checkbox" class="field-config field-checkbox" id="<?php echo $id; ?>_required" name="config[fields][<?php echo $id; ?>][required]" value="1" <?php if($required === 1){ echo 'checked="checked"'; }; ?>>
 			</div>
 		</div>
 
@@ -317,6 +324,7 @@ foreach($panel_extensions as $panel){
 						$field_id = $panel_slug. '_' . $field_slug . '_' . $group_index;
 						$field_label = "<label for=\"" . $field_id . "\">" . $field['label'] . "</label>\r\n";
 						$field_placeholder = "";
+						$field_required = "";
 						if(!empty($field['hide_label'])){
 							$field_label = "";
 							$field_placeholder = 'placeholder="' . htmlentities( $field['label'] ) .'"';

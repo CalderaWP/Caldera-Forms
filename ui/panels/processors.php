@@ -23,6 +23,9 @@ function processor_line_template($id = '{{id}}', $type = null){
 
 	$type_name = __('New Form Processor', 'caldera-forms');
 	if(!empty($type)){
+		if(empty($form_processors[$type])){
+			return;
+		}		
 		if(isset($form_processors[$type]['name'])){
 			$type_name = $form_processors[$type]['name'];
 		}
@@ -43,6 +46,10 @@ function processor_wrapper_template($id = '{{id}}', $type = null, $config_str = 
 
 	$type_name = __('New Form Processor', 'caldera-forms');
 	if(!empty($type)){
+		if(empty($form_processors[$type])){
+			return;
+		}		
+
 		if(isset($form_processors[$type]['name'])){
 			$type_name = $form_processors[$type]['name'];
 		}
