@@ -1,0 +1,16 @@
+<div class="caldera-config-group">
+	<label>type</label>
+	<div class="caldera-config-field">
+		<select class="block-input field-config" name="{{_name}}[type]">
+		<option value="button" {{#is type value="button"}}selected="selected"{{/is}}>Button</option>
+		<option value="reset" {{#is type value="reset"}}selected="selected"{{/is}}>Reset</option>
+		<option value="submit" {{#is type value="submit"}}selected="selected"{{/is}}>Submit</option>
+		</select>
+	</div>
+</div>
+<div class="caldera-config-group">
+	<label>Class</label>
+	<div class="caldera-config-field">
+		<input type="text" class="block-input field-config" name="{{_name}}[class]" value="{{class}}">
+	</div>
+</div>

@@ -17,6 +17,7 @@ jQuery(function($){
 			config			= parent.find('.field_config_string').val(),
 			current_type	= select.data('type');
 
+			parent.find('.caldera-config-group').show();
 
 			// Be sure to load the fields preset when switching back to the initial field type.
 			if(config.length && current_type === select.val() ){
@@ -24,6 +25,17 @@ jQuery(function($){
 			}else{
 				// default config
 				config = fieldtype_defaults[select.val() + '_cfg'];
+			}
+
+			// remove not supported stuff
+			if(fieldtype_defaults[select.val() + '_nosupport']){
+				console.log(fieldtype_defaults[select.val() + '_nosupport']);
+				if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('hide_label') >= 0){
+					parent.find('.hide-label-field').hide();
+				}
+				if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('caption') >= 0){
+					parent.find('.caption-field').hide();
+				}
 			}
 
 			// build template

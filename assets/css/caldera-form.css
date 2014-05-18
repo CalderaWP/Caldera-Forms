@@ -1,3 +1,174 @@
+.caldera-grid article,
+.caldera-grid aside,
+.caldera-grid details,
+.caldera-grid figcaption,
+.caldera-grid figure,
+.caldera-grid footer,
+.caldera-grid header,
+.caldera-grid hgroup,
+.caldera-grid main,
+.caldera-grid nav,
+.caldera-grid section,
+.caldera-grid summary {
+  display: block;
+}
+.caldera-grid audio,
+.caldera-grid canvas,
+.caldera-grid progress,
+.caldera-grid video {
+  display: inline-block;
+  vertical-align: baseline;
+}
+.caldera-grid audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+.caldera-grid [hidden],
+.caldera-grid template {
+  display: none;
+}
+.caldera-grid a {
+  background: transparent;
+}
+.caldera-grid a:active,
+.caldera-grid a:hover {
+  outline: 0;
+}
+.caldera-grid abbr[title] {
+  border-bottom: 1px dotted;
+}
+.caldera-grid b,
+.caldera-grid strong {
+  font-weight: bold;
+}
+.caldera-grid dfn {
+  font-style: italic;
+}
+.caldera-grid h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+.caldera-grid mark {
+  background: #ff0;
+  color: #000;
+}
+.caldera-grid small {
+  font-size: 80%;
+}
+.caldera-grid sub,
+.caldera-grid sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+.caldera-grid sup {
+  top: -0.5em;
+}
+.caldera-grid sub {
+  bottom: -0.25em;
+}
+.caldera-grid img {
+  border: 0;
+}
+.caldera-grid svg:not(:root) {
+  overflow: hidden;
+}
+.caldera-grid figure {
+  margin: 1em 40px;
+}
+.caldera-grid hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+.caldera-grid pre {
+  overflow: auto;
+}
+.caldera-grid code,
+.caldera-grid kbd,
+.caldera-grid pre,
+.caldera-grid samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+.caldera-grid button,
+.caldera-grid input,
+.caldera-grid optgroup,
+.caldera-grid select,
+.caldera-grid textarea {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+.caldera-grid button {
+  overflow: visible;
+}
+.caldera-grid button,
+.caldera-grid select {
+  text-transform: none;
+}
+.caldera-grid button,
+.caldera-grid html input[type="button"],
+.caldera-grid input[type="reset"],
+.caldera-grid input[type="submit"] {
+  -webkit-appearance: button;
+  cursor: pointer;
+}
+.caldera-grid button[disabled],
+.caldera-grid html input[disabled] {
+  cursor: default;
+}
+.caldera-grid button::-moz-focus-inner,
+.caldera-grid input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+.caldera-grid input {
+  line-height: normal;
+}
+.caldera-grid input[type="checkbox"],
+.caldera-grid input[type="radio"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+.caldera-grid input[type="number"]::-webkit-inner-spin-button,
+.caldera-grid input[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+.caldera-grid input[type="search"] {
+  -webkit-appearance: textfield;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+}
+.caldera-grid input[type="search"]::-webkit-search-cancel-button,
+.caldera-grid input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+.caldera-grid fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+.caldera-grid legend {
+  border: 0;
+  padding: 0;
+}
+.caldera-grid textarea {
+  overflow: auto;
+}
+.caldera-grid optgroup {
+  font-weight: bold;
+}
+.caldera-grid table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+.caldera-grid td,
+.caldera-grid th {
+  padding: 0;
+}
 .caldera-grid fieldset {
   padding: 0;
   margin: 0;
@@ -359,6 +530,365 @@
   top: 0;
   right: 15px;
 }
+.caldera-grid .btn {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.caldera-grid .btn:focus,
+.caldera-grid .btn:active:focus,
+.caldera-grid .btn.active:focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+.caldera-grid .btn:hover,
+.caldera-grid .btn:focus {
+  color: #333333;
+  text-decoration: none;
+}
+.caldera-grid .btn:active,
+.caldera-grid .btn.active {
+  outline: 0;
+  background-image: none;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+.caldera-grid .btn.disabled,
+.caldera-grid .btn[disabled],
+.caldera-grid fieldset[disabled] .btn {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.65;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.caldera-grid .btn-default {
+  color: #333333;
+  background-color: #ffffff;
+  border-color: #cccccc;
+}
+.caldera-grid .btn-default:hover,
+.caldera-grid .btn-default:focus,
+.caldera-grid .btn-default:active,
+.caldera-grid .btn-default.active,
+.caldera-grid .open .dropdown-toggle.btn-default {
+  color: #333333;
+  background-color: #ebebeb;
+  border-color: #adadad;
+}
+.caldera-grid .btn-default:active,
+.caldera-grid .btn-default.active,
+.caldera-grid .open .dropdown-toggle.btn-default {
+  background-image: none;
+}
+.caldera-grid .btn-default.disabled,
+.caldera-grid .btn-default[disabled],
+.caldera-grid fieldset[disabled] .btn-default,
+.caldera-grid .btn-default.disabled:hover,
+.caldera-grid .btn-default[disabled]:hover,
+.caldera-grid fieldset[disabled] .btn-default:hover,
+.caldera-grid .btn-default.disabled:focus,
+.caldera-grid .btn-default[disabled]:focus,
+.caldera-grid fieldset[disabled] .btn-default:focus,
+.caldera-grid .btn-default.disabled:active,
+.caldera-grid .btn-default[disabled]:active,
+.caldera-grid fieldset[disabled] .btn-default:active,
+.caldera-grid .btn-default.disabled.active,
+.caldera-grid .btn-default[disabled].active,
+.caldera-grid fieldset[disabled] .btn-default.active {
+  background-color: #ffffff;
+  border-color: #cccccc;
+}
+.caldera-grid .btn-default .badge {
+  color: #ffffff;
+  background-color: #333333;
+}
+.caldera-grid .btn-primary {
+  color: #ffffff;
+  background-color: #428bca;
+  border-color: #357ebd;
+}
+.caldera-grid .btn-primary:hover,
+.caldera-grid .btn-primary:focus,
+.caldera-grid .btn-primary:active,
+.caldera-grid .btn-primary.active,
+.caldera-grid .open .dropdown-toggle.btn-primary {
+  color: #ffffff;
+  background-color: #3276b1;
+  border-color: #285e8e;
+}
+.caldera-grid .btn-primary:active,
+.caldera-grid .btn-primary.active,
+.caldera-grid .open .dropdown-toggle.btn-primary {
+  background-image: none;
+}
+.caldera-grid .btn-primary.disabled,
+.caldera-grid .btn-primary[disabled],
+.caldera-grid fieldset[disabled] .btn-primary,
+.caldera-grid .btn-primary.disabled:hover,
+.caldera-grid .btn-primary[disabled]:hover,
+.caldera-grid fieldset[disabled] .btn-primary:hover,
+.caldera-grid .btn-primary.disabled:focus,
+.caldera-grid .btn-primary[disabled]:focus,
+.caldera-grid fieldset[disabled] .btn-primary:focus,
+.caldera-grid .btn-primary.disabled:active,
+.caldera-grid .btn-primary[disabled]:active,
+.caldera-grid fieldset[disabled] .btn-primary:active,
+.caldera-grid .btn-primary.disabled.active,
+.caldera-grid .btn-primary[disabled].active,
+.caldera-grid fieldset[disabled] .btn-primary.active {
+  background-color: #428bca;
+  border-color: #357ebd;
+}
+.caldera-grid .btn-primary .badge {
+  color: #428bca;
+  background-color: #ffffff;
+}
+.caldera-grid .btn-success {
+  color: #ffffff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+.caldera-grid .btn-success:hover,
+.caldera-grid .btn-success:focus,
+.caldera-grid .btn-success:active,
+.caldera-grid .btn-success.active,
+.caldera-grid .open .dropdown-toggle.btn-success {
+  color: #ffffff;
+  background-color: #47a447;
+  border-color: #398439;
+}
+.caldera-grid .btn-success:active,
+.caldera-grid .btn-success.active,
+.caldera-grid .open .dropdown-toggle.btn-success {
+  background-image: none;
+}
+.caldera-grid .btn-success.disabled,
+.caldera-grid .btn-success[disabled],
+.caldera-grid fieldset[disabled] .btn-success,
+.caldera-grid .btn-success.disabled:hover,
+.caldera-grid .btn-success[disabled]:hover,
+.caldera-grid fieldset[disabled] .btn-success:hover,
+.caldera-grid .btn-success.disabled:focus,
+.caldera-grid .btn-success[disabled]:focus,
+.caldera-grid fieldset[disabled] .btn-success:focus,
+.caldera-grid .btn-success.disabled:active,
+.caldera-grid .btn-success[disabled]:active,
+.caldera-grid fieldset[disabled] .btn-success:active,
+.caldera-grid .btn-success.disabled.active,
+.caldera-grid .btn-success[disabled].active,
+.caldera-grid fieldset[disabled] .btn-success.active {
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+.caldera-grid .btn-success .badge {
+  color: #5cb85c;
+  background-color: #ffffff;
+}
+.caldera-grid .btn-info {
+  color: #ffffff;
+  background-color: #5bc0de;
+  border-color: #46b8da;
+}
+.caldera-grid .btn-info:hover,
+.caldera-grid .btn-info:focus,
+.caldera-grid .btn-info:active,
+.caldera-grid .btn-info.active,
+.caldera-grid .open .dropdown-toggle.btn-info {
+  color: #ffffff;
+  background-color: #39b3d7;
+  border-color: #269abc;
+}
+.caldera-grid .btn-info:active,
+.caldera-grid .btn-info.active,
+.caldera-grid .open .dropdown-toggle.btn-info {
+  background-image: none;
+}
+.caldera-grid .btn-info.disabled,
+.caldera-grid .btn-info[disabled],
+.caldera-grid fieldset[disabled] .btn-info,
+.caldera-grid .btn-info.disabled:hover,
+.caldera-grid .btn-info[disabled]:hover,
+.caldera-grid fieldset[disabled] .btn-info:hover,
+.caldera-grid .btn-info.disabled:focus,
+.caldera-grid .btn-info[disabled]:focus,
+.caldera-grid fieldset[disabled] .btn-info:focus,
+.caldera-grid .btn-info.disabled:active,
+.caldera-grid .btn-info[disabled]:active,
+.caldera-grid fieldset[disabled] .btn-info:active,
+.caldera-grid .btn-info.disabled.active,
+.caldera-grid .btn-info[disabled].active,
+.caldera-grid fieldset[disabled] .btn-info.active {
+  background-color: #5bc0de;
+  border-color: #46b8da;
+}
+.caldera-grid .btn-info .badge {
+  color: #5bc0de;
+  background-color: #ffffff;
+}
+.caldera-grid .btn-warning {
+  color: #ffffff;
+  background-color: #f0ad4e;
+  border-color: #eea236;
+}
+.caldera-grid .btn-warning:hover,
+.caldera-grid .btn-warning:focus,
+.caldera-grid .btn-warning:active,
+.caldera-grid .btn-warning.active,
+.caldera-grid .open .dropdown-toggle.btn-warning {
+  color: #ffffff;
+  background-color: #ed9c28;
+  border-color: #d58512;
+}
+.caldera-grid .btn-warning:active,
+.caldera-grid .btn-warning.active,
+.caldera-grid .open .dropdown-toggle.btn-warning {
+  background-image: none;
+}
+.caldera-grid .btn-warning.disabled,
+.caldera-grid .btn-warning[disabled],
+.caldera-grid fieldset[disabled] .btn-warning,
+.caldera-grid .btn-warning.disabled:hover,
+.caldera-grid .btn-warning[disabled]:hover,
+.caldera-grid fieldset[disabled] .btn-warning:hover,
+.caldera-grid .btn-warning.disabled:focus,
+.caldera-grid .btn-warning[disabled]:focus,
+.caldera-grid fieldset[disabled] .btn-warning:focus,
+.caldera-grid .btn-warning.disabled:active,
+.caldera-grid .btn-warning[disabled]:active,
+.caldera-grid fieldset[disabled] .btn-warning:active,
+.caldera-grid .btn-warning.disabled.active,
+.caldera-grid .btn-warning[disabled].active,
+.caldera-grid fieldset[disabled] .btn-warning.active {
+  background-color: #f0ad4e;
+  border-color: #eea236;
+}
+.caldera-grid .btn-warning .badge {
+  color: #f0ad4e;
+  background-color: #ffffff;
+}
+.caldera-grid .btn-danger {
+  color: #ffffff;
+  background-color: #d9534f;
+  border-color: #d43f3a;
+}
+.caldera-grid .btn-danger:hover,
+.caldera-grid .btn-danger:focus,
+.caldera-grid .btn-danger:active,
+.caldera-grid .btn-danger.active,
+.caldera-grid .open .dropdown-toggle.btn-danger {
+  color: #ffffff;
+  background-color: #d2322d;
+  border-color: #ac2925;
+}
+.caldera-grid .btn-danger:active,
+.caldera-grid .btn-danger.active,
+.caldera-grid .open .dropdown-toggle.btn-danger {
+  background-image: none;
+}
+.caldera-grid .btn-danger.disabled,
+.caldera-grid .btn-danger[disabled],
+.caldera-grid fieldset[disabled] .btn-danger,
+.caldera-grid .btn-danger.disabled:hover,
+.caldera-grid .btn-danger[disabled]:hover,
+.caldera-grid fieldset[disabled] .btn-danger:hover,
+.caldera-grid .btn-danger.disabled:focus,
+.caldera-grid .btn-danger[disabled]:focus,
+.caldera-grid fieldset[disabled] .btn-danger:focus,
+.caldera-grid .btn-danger.disabled:active,
+.caldera-grid .btn-danger[disabled]:active,
+.caldera-grid fieldset[disabled] .btn-danger:active,
+.caldera-grid .btn-danger.disabled.active,
+.caldera-grid .btn-danger[disabled].active,
+.caldera-grid fieldset[disabled] .btn-danger.active {
+  background-color: #d9534f;
+  border-color: #d43f3a;
+}
+.caldera-grid .btn-danger .badge {
+  color: #d9534f;
+  background-color: #ffffff;
+}
+.caldera-grid .btn-link {
+  color: #428bca;
+  font-weight: normal;
+  cursor: pointer;
+  border-radius: 0;
+}
+.caldera-grid .btn-link,
+.caldera-grid .btn-link:active,
+.caldera-grid .btn-link[disabled],
+.caldera-grid fieldset[disabled] .btn-link {
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.caldera-grid .btn-link,
+.caldera-grid .btn-link:hover,
+.caldera-grid .btn-link:focus,
+.caldera-grid .btn-link:active {
+  border-color: transparent;
+}
+.caldera-grid .btn-link:hover,
+.caldera-grid .btn-link:focus {
+  color: #2a6496;
+  text-decoration: underline;
+  background-color: transparent;
+}
+.caldera-grid .btn-link[disabled]:hover,
+.caldera-grid fieldset[disabled] .btn-link:hover,
+.caldera-grid .btn-link[disabled]:focus,
+.caldera-grid fieldset[disabled] .btn-link:focus {
+  color: #999999;
+  text-decoration: none;
+}
+.caldera-grid .btn-lg {
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 6px;
+}
+.caldera-grid .btn-sm {
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+.caldera-grid .btn-xs {
+  padding: 1px 5px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+.caldera-grid .btn-block {
+  display: block;
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}
+.caldera-grid .btn-block + .btn-block {
+  margin-top: 5px;
+}
+.caldera-grid input[type="submit"].btn-block,
+.caldera-grid input[type="reset"].btn-block,
+.caldera-grid input[type="button"].btn-block {
+  width: 100%;
+}
 .caldera-grid .clearfix:before,
 .caldera-grid .clearfix:after,
 .caldera-grid .form-horizontal .form-group:before,
@@ -403,116 +933,4 @@
 }
 .caldera-grid .affix {
   position: fixed;
-}
-@-ms-viewport {
-  width: device-width;
-}
-.caldera-grid .visible-xs,
-.caldera-grid .visible-sm,
-.caldera-grid .visible-md,
-.caldera-grid .visible-lg {
-  display: none !important;
-}
-@media (max-width: 767px) {
-  .caldera-grid .visible-xs {
-    display: block !important;
-  }
-  .caldera-grid table.visible-xs {
-    display: table;
-  }
-  .caldera-grid tr.visible-xs {
-    display: table-row !important;
-  }
-  .caldera-grid th.visible-xs,
-  .caldera-grid td.visible-xs {
-    display: table-cell !important;
-  }
-}
-@media (min-width: 768px) and (max-width: 991px) {
-  .caldera-grid .visible-sm {
-    display: block !important;
-  }
-  .caldera-grid table.visible-sm {
-    display: table;
-  }
-  .caldera-grid tr.visible-sm {
-    display: table-row !important;
-  }
-  .caldera-grid th.visible-sm,
-  .caldera-grid td.visible-sm {
-    display: table-cell !important;
-  }
-}
-@media (min-width: 992px) and (max-width: 1199px) {
-  .caldera-grid .visible-md {
-    display: block !important;
-  }
-  .caldera-grid table.visible-md {
-    display: table;
-  }
-  .caldera-grid tr.visible-md {
-    display: table-row !important;
-  }
-  .caldera-grid th.visible-md,
-  .caldera-grid td.visible-md {
-    display: table-cell !important;
-  }
-}
-@media (min-width: 1200px) {
-  .caldera-grid .visible-lg {
-    display: block !important;
-  }
-  .caldera-grid table.visible-lg {
-    display: table;
-  }
-  .caldera-grid tr.visible-lg {
-    display: table-row !important;
-  }
-  .caldera-grid th.visible-lg,
-  .caldera-grid td.visible-lg {
-    display: table-cell !important;
-  }
-}
-@media (max-width: 767px) {
-  .caldera-grid .hidden-xs {
-    display: none !important;
-  }
-}
-@media (min-width: 768px) and (max-width: 991px) {
-  .caldera-grid .hidden-sm {
-    display: none !important;
-  }
-}
-@media (min-width: 992px) and (max-width: 1199px) {
-  .caldera-grid .hidden-md {
-    display: none !important;
-  }
-}
-@media (min-width: 1200px) {
-  .caldera-grid .hidden-lg {
-    display: none !important;
-  }
-}
-.caldera-grid .visible-print {
-  display: none !important;
-}
-@media print {
-  .caldera-grid .visible-print {
-    display: block !important;
-  }
-  .caldera-grid table.visible-print {
-    display: table;
-  }
-  .caldera-grid tr.visible-print {
-    display: table-row !important;
-  }
-  .caldera-grid th.visible-print,
-  .caldera-grid td.visible-print {
-    display: table-cell !important;
-  }
-}
-@media print {
-  .caldera-grid .hidden-print {
-    display: none !important;
-  }
 }

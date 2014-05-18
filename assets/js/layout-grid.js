@@ -1,4 +1,4 @@
-var rebuild_field_binding, rebind_field_bindings, current_form_fields = {};
+var rebuild_field_binding, rebind_field_bindings, current_form_fields = {}, required_errors = {};
 
 rebuild_field_binding = function(){
 
@@ -35,7 +35,7 @@ rebind_field_bindings = function(){
 
 		for(var fid in current_form_fields){
 			if(field.data('type')){
-				if(field.data('type') !== current_form_fields[fid].type){
+				if(field.data('type').split(',').indexOf(current_form_fields[fid].type) < 0){
 					continue;
 				}
 			}
@@ -44,7 +44,55 @@ rebind_field_bindings = function(){
 
 	});
 
+	check_required_bindings();
 };
+
+function check_required_bindings(){
+	var fields = jQuery('.caldera-config-field .required'),
+		savebutton = jQuery('.caldera-header-save-button'),
+		field_elements = jQuery('.layout-form-field'),
+		nav_elements = jQuery('.caldera-processor-nav');
+	
+	savebutton.prop("disabled", false);
+
+	fields.removeClass('has-error');
+	field_elements.removeClass('has-error');
+	nav_elements.removeClass('has-error');
+
+	jQuery('.error-tag').remove();
+	//reset list 
+	required_errors = {};
+	fields.each(function(k,v){
+		if(!v.value.length){
+			var field = jQuery(v),
+				panel = field.closest('.caldera-config-editor-panel'),
+				is_field = field.closest('.caldera-editor-field-config-wrapper'),
+				is_process = field.closest('.caldera-editor-processor-config-wrapper');
+
+			if(!required_errors[panel.prop('id')]){
+				required_errors[panel.prop('id')] = 0;
+			}
+			if(is_field.length){
+				jQuery('.layout-form-field[data-config="'+is_field.prop('id')+'"]').addClass('has-error');
+			}
+			if(is_process.length){
+				jQuery('.'+is_process.prop('id')).addClass('has-error');
+			}
+			required_errors[panel.prop('id')] += 1;
+			field.addClass('has-error');
+
+			//tab.append('<span class="error-tag">' + required_errors[panel.prop('id')] + '</span>');
+
+		}
+	});
+
+	for(var t in required_errors){
+		savebutton.prop("disabled", true);
+		jQuery('.caldera-forms-options-form').find('a[href="#' + t + '"]').append('<span class="error-tag">' + required_errors[t] + '</span>');
+	}
+
+	//console.log(required_errors);
+}
 
 jQuery(function($) {
 
@@ -129,7 +177,7 @@ jQuery(function($) {
 
 				new_field = {
 					"id"	:	new_name,
-					"label"	:	'untitled field',
+					"label"	:	'',
 					"slug"	:	''
 				};
 
@@ -143,7 +191,7 @@ jQuery(function($) {
 				addClass('layout-form-field').
 				attr('data-config', name);
 
-				newfield.find('.layout_field_name').text('untitled field');
+				newfield.find('.layout_field_name').text('');
 				newfield.find('.field-location').prop('name', 'config[layout_grid][fields][' + name + ']');
 				newfield.find('.settings-panel').show();
 				newfield.appendTo( this );
@@ -227,7 +275,8 @@ jQuery(function($) {
 		var setrow = jQuery(this);
 		jQuery('.column-tools,.column-merge').remove();
 		setrow.children().children().first().append('<div class="column-remove column-tools"><i class="icon-remove"></i></div>');
-		setrow.children().children().last().append('<div class="column-sort column-tools"><i class="icon-sort drag-handle sort-handle"></i></div>');
+		//setrow.children().children().last().append('<div class="column-sort column-tools"><i class="icon-edit"></i> <i class="icon-sort drag-handle sort-handle"></i> </div>');
+		setrow.children().children().last().append('<div class="column-sort column-tools" style="text-align:right;"><i class="icon-sort drag-handle sort-handle"></i></div>');
 		
 		setrow.children().children().not(':first').prepend('<div class="column-merge"><div class="column-join column-tools"><i class="icon-join"></i></div></div>');
 		var single = setrow.parent().parent().parent().width()/12-1;
@@ -396,6 +445,10 @@ jQuery(function($) {
 
 	});
 
+	// edit row
+	$('.caldera-editor-header').on('click', '.column-sort .icon-edit', function(e){
+
+	});
 	// bind tray stuff
 	$('.layout-editor-body').on('tray_loaded', '.layout-template-tray', function(){
 		buildSortables();
@@ -420,8 +473,36 @@ jQuery(function($) {
 
 	});
 
+	$('body').on('change', '.required', check_required_bindings);
+
+	// prevent error forms from submiting
+	$('body').on('submit', '.caldera-forms-options-form', function(e){
+		var errors = $('.required.has-error');
+		if(errors.length){
+			e.preventDefault();
+		}
+	});
+
 
 	// build fild bindings
 	rebuild_field_binding();
 
+});
+
+
+
+Handlebars.registerHelper("is_single", function(value, options) {
+	if(Object.keys(value).length !== 1){
+		return false;
+	}else{
+		return options.fn(this);
+	}
+});
+
+Handlebars.registerHelper("is", function(value, options) {
+	if(options.hash.value === value){
+		return options.fn(this);
+	}else{
+		return false;
+	}
 });

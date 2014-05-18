@@ -58,6 +58,7 @@ jQuery(function($){
 
 		$('.caldera-processor-nav a').first().trigger('click');
 
+		check_required_bindings();
 
 	});
 
@@ -79,6 +80,7 @@ jQuery(function($){
 		// get config
 		build_processor_config(this);
 
+		check_required_bindings();
 
 	});
 
@@ -141,9 +143,13 @@ jQuery(function($){
 
 Handlebars.registerHelper('_field', function(args) {
 
-	var config = this;
+	var config = this,required="";
 	
-	out = '<select ' + ( args.hash.type ? 'data-type="' + args.hash.type + '"' : '' ) + ' name="' + this._name + '[' + args.hash.slug + ']" id="' + this._id + '_' + args.hash.slug + '" class="block-input caldera-processor-field-bind">';
+	if(args.hash.type){
+		required = " required";
+	}
+
+	out = '<select ' + ( args.hash.type ? 'data-type="' + args.hash.type + '"' : '' ) + ' name="' + this._name + '[' + args.hash.slug + ']" id="' + this._id + '_' + args.hash.slug + '" class="block-input caldera-processor-field-bind' + required + '">';
 	
 	for(var fid in current_form_fields){
 		

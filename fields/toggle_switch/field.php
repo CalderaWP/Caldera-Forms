@@ -1,7 +1,7 @@
-<div class="<?php echo $field_wrapper_class; ?>">
+<div class="<?php echo $field_wrapper_class; ?> cf-toggle-switch">
 	<?php echo $field_label; ?>
 	<div class="caldera-config-field init_field_type" data-type="toggle_button">
-		<div class="cu-toggle-group-buttons">
+		<div class="cf-toggle-group-buttons btn-group">
 			<?php
 			if(empty($field['config']['option'])){ ?>
 					
@@ -9,7 +9,7 @@
 
 			<?php }else{
 				foreach($field['config']['option'] as $option_key=>$option){
-					?><button type="button" id="<?php echo $id.'_'.$option_key; ?>" class="button" data-value="<?php echo $option['value']; ?>"><?php echo $option['label']; ?></button><?php
+					?><button type="button" id="<?php echo $field_id.'_'.$option_key; ?>" class="btn btn-default" data-value="<?php echo $option['value']; ?>"><?php echo $option['label']; ?></button><?php
 				}
 			} ?>		
 		</div>
@@ -17,7 +17,7 @@
 		<?php
 			foreach($field['config']['option'] as $option_key=>$option){
 				?>
-				<input type="radio" id="<?php echo $id . '_' . $option_key; ?>" data-ref="<?php echo $id.'_'.$option_key; ?>" class="cu-toggle-group-radio" name="<?php echo $field_name; ?>" value="<?php echo $option['value']; ?>" {{#if <?php echo $field['slug'].'_'.$option['value']; ?>}}checked="true"{{/if}}>
+				<input type="radio" id="<?php echo $field_id . '_' . $option_key; ?>" data-ref="<?php echo $field_id.'_'.$option_key; ?>" class="cf-toggle-group-radio" name="<?php echo $field_name; ?>" value="<?php echo $option['value']; ?>" {{#if <?php echo $field['slug'].'_'.$option['value']; ?>}}checked="true"{{/if}}>
 				<?php
 			}
 		?></div>

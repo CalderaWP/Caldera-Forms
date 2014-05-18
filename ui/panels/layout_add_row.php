@@ -2,6 +2,6 @@
 <div class="button button-small layout-new-form-field">
 	<i class="icon-edit" style="float: right; padding: 7px 0px 0px; display:none;"></i>
 	<div class="drag-handle">
-		<i class="icon-forms"></i>&nbsp;&nbsp;<span class="layout_field_name"><?php echo __('Add Form Field', 'caldera-forms'); ?></span>
+		<i class="icon-forms"></i>&nbsp;&nbsp;<span class="layout_field_name"><?php echo __('Add Element', 'caldera-forms'); ?></span>
 	</div><input value="" type="hidden" class="field-location">
 </div>

@@ -1,0 +1,1 @@
+<input type="hidden" id="<?php echo $field_id; ?>" name="<?php echo $field_name; ?>" value="<?php echo htmlentities( $field_value ,ENT_COMPAT|ENT_HTML401, "UTF-8"); ?>">

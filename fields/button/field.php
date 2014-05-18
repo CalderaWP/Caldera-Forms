@@ -1,0 +1,1 @@
+<button class="<?php echo $field['config']['class']; ?>" type="<?php echo $field['config']['type']; ?>" id="<?php echo $field_id; ?>" name="<?php echo $field_name; ?>"><?php echo $field_label; ?></button>

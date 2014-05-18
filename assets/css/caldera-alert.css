@@ -1,0 +1,126 @@
+.caldera-grid .alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+.caldera-grid .alert h4 {
+  margin-top: 0;
+  color: inherit;
+}
+.caldera-grid .alert .alert-link {
+  font-weight: bold;
+}
+.caldera-grid .alert > p,
+.caldera-grid .alert > ul {
+  margin-bottom: 0;
+}
+.caldera-grid .alert > p + p {
+  margin-top: 5px;
+}
+.caldera-grid .alert-dismissable {
+  padding-right: 35px;
+}
+.caldera-grid .alert-dismissable .close {
+  position: relative;
+  top: -2px;
+  right: -21px;
+  color: inherit;
+}
+.caldera-grid .alert-success {
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+  color: #3c763d;
+}
+.caldera-grid .alert-success hr {
+  border-top-color: #c9e2b3;
+}
+.caldera-grid .alert-success .alert-link {
+  color: #2b542c;
+}
+.caldera-grid .alert-info {
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+  color: #31708f;
+}
+.caldera-grid .alert-info hr {
+  border-top-color: #a6e1ec;
+}
+.caldera-grid .alert-info .alert-link {
+  color: #245269;
+}
+.caldera-grid .alert-warning {
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+  color: #8a6d3b;
+}
+.caldera-grid .alert-warning hr {
+  border-top-color: #f7e1b5;
+}
+.caldera-grid .alert-warning .alert-link {
+  color: #66512c;
+}
+.caldera-grid .alert-error {
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  color: #a94442;
+}
+.caldera-grid .alert-error hr {
+  border-top-color: #e4b9c0;
+}
+.caldera-grid .alert-error .alert-link {
+  color: #843534;
+}
+.caldera-grid .alert-danger {
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  color: #a94442;
+}
+.caldera-grid .alert-danger hr {
+  border-top-color: #e4b9c0;
+}
+.caldera-grid .alert-danger .alert-link {
+  color: #843534;
+}
+.caldera-grid .clearfix:before,
+.caldera-grid .clearfix:after {
+  content: " ";
+  display: table;
+}
+.caldera-grid .clearfix:after {
+  clear: both;
+}
+.caldera-grid .center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.caldera-grid .pull-right {
+  float: right !important;
+}
+.caldera-grid .pull-left {
+  float: left !important;
+}
+.caldera-grid .hide {
+  display: none !important;
+}
+.caldera-grid .show {
+  display: block !important;
+}
+.caldera-grid .invisible {
+  visibility: hidden;
+}
+.caldera-grid .text-hide {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+.caldera-grid .hidden {
+  display: none !important;
+  visibility: hidden !important;
+}
+.caldera-grid .affix {
+  position: fixed;
+}

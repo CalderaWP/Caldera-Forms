@@ -4,12 +4,18 @@
 		<?php
 		if(empty($field['config']['option'])){ ?>
 			
-			<input type="radio" id="<?php echo $field_id; ?>" class="field-config" name="<?php echo $field_name; ?>" value="1" <?php if( !empty($field_value) ){ ?>checked="true"<?php } ?>>
+			<input type="radio" id="<?php echo $field_id; ?>" class="field-config" name="<?php echo $field_name; ?>" value="1" <?php if(!empty($field_value)){ ?>checked="true"<?php } ?>>
 
 		<?php }else{
 			foreach($field['config']['option'] as $option_key=>$option){
 				?>
-				<div><label><input type="radio" id="<?php echo $id . '_' . $option_key; ?>" class="field-config" name="<?php echo $field_name; ?>" value="<?php echo $option['value']; ?>" <?php if( $field_value == $option['value'] ){ ?>checked="true"<?php } ?>> <?php echo $option['label']; ?></label></div>
+				<?php if(empty($field['config']['inline'])){ ?>
+				<div class="radio">
+				<?php } ?>
+				<label<?php if(!empty($field['config']['inline'])){ ?> class="radio-inline"<?php } ?>><input type="radio" id="<?php echo $field_id . '_' . $option_key; ?>" class="" name="<?php echo $field_name; ?>" value="<?php echo $option['value']; ?>" <?php if( $field_value == $option['value'] ){ ?>checked="true"<?php } ?>> <?php echo $option['label']; ?></label>
+				<?php if(empty($field['config']['inline'])){ ?>
+				</div>
+				<?php } ?>
 				<?php
 			}
 		} ?>

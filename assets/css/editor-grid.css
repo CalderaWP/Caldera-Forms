@@ -68,10 +68,22 @@
 	width:10px;
 	text-align: center;
 }
-.column-sort {
+.column-sort.column-tools {
+  width: 45px;
+  right: 0;
+}
+.column-sort .icon-edit {
+  margin-right: 15px;
+}
+.column-sort .icon-sort{
 	right:0;
 	cursor: all-scroll;
 }
+.column-sort .icon-edit{
+	left:0;
+	cursor: pointer;
+}
+
 .layout-grid .row-drop-helper {
 	background: #e7e7e7;
 	min-height: 110px;
@@ -94,6 +106,14 @@
 	padding: 0;
 	position: relative;
 }
+
+.row.active .layout-column.column-container {
+  border-radius: 4px;
+  box-shadow: 0 3px 10px 7px rgba(0, 0, 0, 0.1);
+  padding: 5px;
+}
+
+
 .layout-column > .button{
 	width: 100%;
 }

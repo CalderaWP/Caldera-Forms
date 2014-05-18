@@ -110,6 +110,20 @@
   padding-right: 10px;
   overflow: auto;  
 }
+.modal-body {
+  height: 100%;
+  overflow: auto;  
+}
+.modal-body .modal-list-item {
+  border-bottom: 1px solid #EFEFEF;
+  padding: 5px;
+}
+.modal-list-item:hover {
+  background: none repeat scroll 0 0 #EFEFEF;
+}
+.modal-list-item .description {
+  color: #919191;
+}
 
 .modal-inside .modal-side-bar {
   background-color: #DFDFDF;

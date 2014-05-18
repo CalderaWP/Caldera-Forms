@@ -154,10 +154,14 @@ select.caldera-type-selector {
 .caldera-group-panel.new-element.new-element-form .add-new-h2 {
   margin-top: 80px;
 }
-.caldera-group-panel .has-error {
+.caldera-group-panel .has-error,
+.caldera-processor-nav.has-error,
+.layout-form-field.has-error{
   border-color: #FF0000 !important;
 }
-.caldera-group-panel .has-error:focus{
+.caldera-group-panel .has-error:focus,
+.caldera-processor-nav.has-error a,
+.layout-form-field.has-error{
   box-shadow: 0 0 2px rgba(255, 0, 0, 0.8);
 }
 .caldera-group-panel h3 {
@@ -483,12 +487,23 @@ h3.caldera-editor-field-title {
   cursor: default;
 }
 input.has-error,
-input.has-error:focus {
+input.has-error:focus,
+select.has-error,
+select.has-error:focus,
+textarea.has-error,
+textarea.has-error:focus {
   border-color: #FF0000;
   box-shadow: 0 0 2px rgba(255, 0, 0, 0.8);
 }
 
-
+a span.error-tag {
+  background: none repeat scroll 0 0 #DF1010;
+  border-radius: 3px;
+  color: #FFFFFF;
+  font-weight: bold;
+  margin-left: 8px;
+  padding: 0 5px;
+}
 
 /*--- ADMIN --- */
 
@@ -618,6 +633,18 @@ input.has-error:focus {
 .form-controls > li .form-control:hover,
 .modal-side-tabs > li .modal-side-tab:hover{
   background-color: #efefef;
+}
+.form-controls > li.form-delete {
+  float: right;
+}
+.form-controls > li.form-delete .form-control {
+  background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+  color: #DF1010;
+  visibility: hidden;
+}
+.form-panel:hover .form-controls > li.form-delete .form-control {
+  text-decoration: underline;
+  visibility: visible;
 }
 .caldera-manage-groups-tip {
   padding: 10px 0;

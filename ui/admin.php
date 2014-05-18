@@ -51,7 +51,7 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 
 					<ul class="form-controls">
 						<li><a class="form-control" href="admin.php?page=caldera-forms&edit=<?php echo $form_id; ?>"><?php echo __('Edit Form', 'caldera-forms'); ?></a></li>
-						<li><span  class="form-control">[caldera_form id="<?php echo $form_id; ?>"]</li>
+						<li class="form-delete"><a class="form-control" data-confirm="<?php echo __('This will delete this form permanently. Continue?', 'caldera-forms'); ?>" href="admin.php?page=caldera-forms&delete=<?php echo $form_id; ?>&cal_del=<?php echo wp_create_nonce( 'cf_del_frm' ); ?>"><?php echo __('Delete Form', 'caldera-forms'); ?></a></li>
 					</ul>					
 				</div>
 
@@ -60,7 +60,7 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 			}
 		}else{
 
-			echo '<p>' . __('You don\'t have any forms yet.', 'caldera-forms');
+			echo '<p>' . __('You don\'t have any forms.', 'caldera-forms');
 
 		}
 	?>
@@ -81,39 +81,6 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 			</div>
 		</div>
 	</form>
-</script>
-<script type="text/html" id="pop-over-tmpl">	
-	<div class="pointer"></div>
-	<div class="popover-content" style="display:none;">
-		<button type="button" class="button popover-button">Change Image</button>
-	</div>
-	<div class="popover-content image-thumb">
-		<div class="popover-side-bar">
-			<?php echo get_avatar(1, 62); ?>
-		</div>
-		<div class="popover-main-content">
-			<div>
-				<select>
-					<option>Thumbnail</option>
-					<option>Medium</option>
-					<option>Large</option>
-					<option>Full</option>
-				</select>
-			</div>
-			<button class="button popover-button" type="button">Change Image</button>
-		</div>
-	</div>
-</script>
-<script type="text/html" id="form-card-tmpl">
-{{#each_limit this}}
-	<div class="tag user-panel postbox ajax-trigger" data-index="{{index}}" data-action="get_users" data-modal-buttons='<?php echo $modal_profile_buttons; ?>' data-modal-width="600" data-modal-height="<?php echo $modal_height; ?>" data-load-class="spinner" data-user_id="{{ID}}" data-modal="user_profile" data-modal-title="{{name}}" data-template="#profile-modal-detail-tmpl">
-		<div class="avatar-link {{role}}">
-			<span class="user-avatar-{{ID}}">{{{avatar}}}</span>
-		</div>
-		<h4>{{name}}</h4>
-		<h5>{{email}}</h5>
-	</div>
-{{/each_limit}}
 </script>
 
 <script type="text/html" id="general-settings-tmpl">

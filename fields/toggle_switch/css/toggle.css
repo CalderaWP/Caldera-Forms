@@ -1,13 +1,870 @@
-.cu-toggle-group-buttons .button {
+.cf-toggle-switch html {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+.cf-toggle-switch body {
+  margin: 0;
+}
+.cf-toggle-switch article,
+.cf-toggle-switch aside,
+.cf-toggle-switch details,
+.cf-toggle-switch figcaption,
+.cf-toggle-switch figure,
+.cf-toggle-switch footer,
+.cf-toggle-switch header,
+.cf-toggle-switch hgroup,
+.cf-toggle-switch main,
+.cf-toggle-switch nav,
+.cf-toggle-switch section,
+.cf-toggle-switch summary {
+  display: block;
+}
+.cf-toggle-switch audio,
+.cf-toggle-switch canvas,
+.cf-toggle-switch progress,
+.cf-toggle-switch video {
+  display: inline-block;
+  vertical-align: baseline;
+}
+.cf-toggle-switch audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+.cf-toggle-switch [hidden],
+.cf-toggle-switch template {
+  display: none;
+}
+.cf-toggle-switch a {
+  background: transparent;
+}
+.cf-toggle-switch a:active,
+.cf-toggle-switch a:hover {
+  outline: 0;
+}
+.cf-toggle-switch abbr[title] {
+  border-bottom: 1px dotted;
+}
+.cf-toggle-switch b,
+.cf-toggle-switch strong {
+  font-weight: bold;
+}
+.cf-toggle-switch dfn {
+  font-style: italic;
+}
+.cf-toggle-switch h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+.cf-toggle-switch mark {
+  background: #ff0;
+  color: #000;
+}
+.cf-toggle-switch small {
+  font-size: 80%;
+}
+.cf-toggle-switch sub,
+.cf-toggle-switch sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+.cf-toggle-switch sup {
+  top: -0.5em;
+}
+.cf-toggle-switch sub {
+  bottom: -0.25em;
+}
+.cf-toggle-switch img {
+  border: 0;
+}
+.cf-toggle-switch svg:not(:root) {
+  overflow: hidden;
+}
+.cf-toggle-switch figure {
+  margin: 1em 40px;
+}
+.cf-toggle-switch hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+.cf-toggle-switch pre {
+  overflow: auto;
+}
+.cf-toggle-switch code,
+.cf-toggle-switch kbd,
+.cf-toggle-switch pre,
+.cf-toggle-switch samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+.cf-toggle-switch button,
+.cf-toggle-switch input,
+.cf-toggle-switch optgroup,
+.cf-toggle-switch select,
+.cf-toggle-switch textarea {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+.cf-toggle-switch button {
+  overflow: visible;
+}
+.cf-toggle-switch button,
+.cf-toggle-switch select {
+  text-transform: none;
+}
+.cf-toggle-switch button,
+.cf-toggle-switch html input[type="button"],
+.cf-toggle-switch input[type="reset"],
+.cf-toggle-switch input[type="submit"] {
+  -webkit-appearance: button;
+  cursor: pointer;
+}
+.cf-toggle-switch button[disabled],
+.cf-toggle-switch html input[disabled] {
+  cursor: default;
+}
+.cf-toggle-switch button::-moz-focus-inner,
+.cf-toggle-switch input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+.cf-toggle-switch input {
+  line-height: normal;
+}
+.cf-toggle-switch input[type="checkbox"],
+.cf-toggle-switch input[type="radio"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+.cf-toggle-switch input[type="number"]::-webkit-inner-spin-button,
+.cf-toggle-switch input[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+.cf-toggle-switch input[type="search"] {
+  -webkit-appearance: textfield;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+}
+.cf-toggle-switch input[type="search"]::-webkit-search-cancel-button,
+.cf-toggle-switch input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+.cf-toggle-switch fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+.cf-toggle-switch legend {
+  border: 0;
+  padding: 0;
+}
+.cf-toggle-switch textarea {
+  overflow: auto;
+}
+.cf-toggle-switch optgroup {
+  font-weight: bold;
+}
+.cf-toggle-switch table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+.cf-toggle-switch td,
+.cf-toggle-switch th {
+  padding: 0;
+}
+.cf-toggle-switch .btn {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.cf-toggle-switch .btn:focus,
+.cf-toggle-switch .btn:active:focus,
+.cf-toggle-switch .btn.active:focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+.cf-toggle-switch .btn:hover,
+.cf-toggle-switch .btn:focus {
+  color: #333333;
+  text-decoration: none;
+}
+.cf-toggle-switch .btn:active,
+.cf-toggle-switch .btn.active {
+  outline: 0;
+  background-image: none;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+.cf-toggle-switch .btn.disabled,
+.cf-toggle-switch .btn[disabled],
+.cf-toggle-switch fieldset[disabled] .btn {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.65;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.cf-toggle-switch .btn-default {
+  color: #333333;
+  background-color: #ffffff;
+  border-color: #cccccc;
+}
+.cf-toggle-switch .btn-default:hover,
+.cf-toggle-switch .btn-default:focus,
+.cf-toggle-switch .btn-default:active,
+.cf-toggle-switch .btn-default.active,
+.cf-toggle-switch .open .dropdown-toggle.btn-default {
+  color: #333333;
+  background-color: #ebebeb;
+  border-color: #adadad;
+}
+.cf-toggle-switch .btn-default:active,
+.cf-toggle-switch .btn-default.active,
+.cf-toggle-switch .open .dropdown-toggle.btn-default {
+  background-image: none;
+}
+.cf-toggle-switch .btn-default.disabled,
+.cf-toggle-switch .btn-default[disabled],
+.cf-toggle-switch fieldset[disabled] .btn-default,
+.cf-toggle-switch .btn-default.disabled:hover,
+.cf-toggle-switch .btn-default[disabled]:hover,
+.cf-toggle-switch fieldset[disabled] .btn-default:hover,
+.cf-toggle-switch .btn-default.disabled:focus,
+.cf-toggle-switch .btn-default[disabled]:focus,
+.cf-toggle-switch fieldset[disabled] .btn-default:focus,
+.cf-toggle-switch .btn-default.disabled:active,
+.cf-toggle-switch .btn-default[disabled]:active,
+.cf-toggle-switch fieldset[disabled] .btn-default:active,
+.cf-toggle-switch .btn-default.disabled.active,
+.cf-toggle-switch .btn-default[disabled].active,
+.cf-toggle-switch fieldset[disabled] .btn-default.active {
+  background-color: #ffffff;
+  border-color: #cccccc;
+}
+.cf-toggle-switch .btn-default .badge {
+  color: #ffffff;
+  background-color: #333333;
+}
+.cf-toggle-switch .btn-primary {
+  color: #ffffff;
+  background-color: #428bca;
+  border-color: #357ebd;
+}
+.cf-toggle-switch .btn-primary:hover,
+.cf-toggle-switch .btn-primary:focus,
+.cf-toggle-switch .btn-primary:active,
+.cf-toggle-switch .btn-primary.active,
+.cf-toggle-switch .open .dropdown-toggle.btn-primary {
+  color: #ffffff;
+  background-color: #3276b1;
+  border-color: #285e8e;
+}
+.cf-toggle-switch .btn-primary:active,
+.cf-toggle-switch .btn-primary.active,
+.cf-toggle-switch .open .dropdown-toggle.btn-primary {
+  background-image: none;
+}
+.cf-toggle-switch .btn-primary.disabled,
+.cf-toggle-switch .btn-primary[disabled],
+.cf-toggle-switch fieldset[disabled] .btn-primary,
+.cf-toggle-switch .btn-primary.disabled:hover,
+.cf-toggle-switch .btn-primary[disabled]:hover,
+.cf-toggle-switch fieldset[disabled] .btn-primary:hover,
+.cf-toggle-switch .btn-primary.disabled:focus,
+.cf-toggle-switch .btn-primary[disabled]:focus,
+.cf-toggle-switch fieldset[disabled] .btn-primary:focus,
+.cf-toggle-switch .btn-primary.disabled:active,
+.cf-toggle-switch .btn-primary[disabled]:active,
+.cf-toggle-switch fieldset[disabled] .btn-primary:active,
+.cf-toggle-switch .btn-primary.disabled.active,
+.cf-toggle-switch .btn-primary[disabled].active,
+.cf-toggle-switch fieldset[disabled] .btn-primary.active {
+  background-color: #428bca;
+  border-color: #357ebd;
+}
+.cf-toggle-switch .btn-primary .badge {
+  color: #428bca;
+  background-color: #ffffff;
+}
+.cf-toggle-switch .btn-success {
+  color: #ffffff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+.cf-toggle-switch .btn-success:hover,
+.cf-toggle-switch .btn-success:focus,
+.cf-toggle-switch .btn-success:active,
+.cf-toggle-switch .btn-success.active,
+.cf-toggle-switch .open .dropdown-toggle.btn-success {
+  color: #ffffff;
+  background-color: #47a447;
+  border-color: #398439;
+}
+.cf-toggle-switch .btn-success:active,
+.cf-toggle-switch .btn-success.active,
+.cf-toggle-switch .open .dropdown-toggle.btn-success {
+  background-image: none;
+}
+.cf-toggle-switch .btn-success.disabled,
+.cf-toggle-switch .btn-success[disabled],
+.cf-toggle-switch fieldset[disabled] .btn-success,
+.cf-toggle-switch .btn-success.disabled:hover,
+.cf-toggle-switch .btn-success[disabled]:hover,
+.cf-toggle-switch fieldset[disabled] .btn-success:hover,
+.cf-toggle-switch .btn-success.disabled:focus,
+.cf-toggle-switch .btn-success[disabled]:focus,
+.cf-toggle-switch fieldset[disabled] .btn-success:focus,
+.cf-toggle-switch .btn-success.disabled:active,
+.cf-toggle-switch .btn-success[disabled]:active,
+.cf-toggle-switch fieldset[disabled] .btn-success:active,
+.cf-toggle-switch .btn-success.disabled.active,
+.cf-toggle-switch .btn-success[disabled].active,
+.cf-toggle-switch fieldset[disabled] .btn-success.active {
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+.cf-toggle-switch .btn-success .badge {
+  color: #5cb85c;
+  background-color: #ffffff;
+}
+.cf-toggle-switch .btn-info {
+  color: #ffffff;
+  background-color: #5bc0de;
+  border-color: #46b8da;
+}
+.cf-toggle-switch .btn-info:hover,
+.cf-toggle-switch .btn-info:focus,
+.cf-toggle-switch .btn-info:active,
+.cf-toggle-switch .btn-info.active,
+.cf-toggle-switch .open .dropdown-toggle.btn-info {
+  color: #ffffff;
+  background-color: #39b3d7;
+  border-color: #269abc;
+}
+.cf-toggle-switch .btn-info:active,
+.cf-toggle-switch .btn-info.active,
+.cf-toggle-switch .open .dropdown-toggle.btn-info {
+  background-image: none;
+}
+.cf-toggle-switch .btn-info.disabled,
+.cf-toggle-switch .btn-info[disabled],
+.cf-toggle-switch fieldset[disabled] .btn-info,
+.cf-toggle-switch .btn-info.disabled:hover,
+.cf-toggle-switch .btn-info[disabled]:hover,
+.cf-toggle-switch fieldset[disabled] .btn-info:hover,
+.cf-toggle-switch .btn-info.disabled:focus,
+.cf-toggle-switch .btn-info[disabled]:focus,
+.cf-toggle-switch fieldset[disabled] .btn-info:focus,
+.cf-toggle-switch .btn-info.disabled:active,
+.cf-toggle-switch .btn-info[disabled]:active,
+.cf-toggle-switch fieldset[disabled] .btn-info:active,
+.cf-toggle-switch .btn-info.disabled.active,
+.cf-toggle-switch .btn-info[disabled].active,
+.cf-toggle-switch fieldset[disabled] .btn-info.active {
+  background-color: #5bc0de;
+  border-color: #46b8da;
+}
+.cf-toggle-switch .btn-info .badge {
+  color: #5bc0de;
+  background-color: #ffffff;
+}
+.cf-toggle-switch .btn-warning {
+  color: #ffffff;
+  background-color: #f0ad4e;
+  border-color: #eea236;
+}
+.cf-toggle-switch .btn-warning:hover,
+.cf-toggle-switch .btn-warning:focus,
+.cf-toggle-switch .btn-warning:active,
+.cf-toggle-switch .btn-warning.active,
+.cf-toggle-switch .open .dropdown-toggle.btn-warning {
+  color: #ffffff;
+  background-color: #ed9c28;
+  border-color: #d58512;
+}
+.cf-toggle-switch .btn-warning:active,
+.cf-toggle-switch .btn-warning.active,
+.cf-toggle-switch .open .dropdown-toggle.btn-warning {
+  background-image: none;
+}
+.cf-toggle-switch .btn-warning.disabled,
+.cf-toggle-switch .btn-warning[disabled],
+.cf-toggle-switch fieldset[disabled] .btn-warning,
+.cf-toggle-switch .btn-warning.disabled:hover,
+.cf-toggle-switch .btn-warning[disabled]:hover,
+.cf-toggle-switch fieldset[disabled] .btn-warning:hover,
+.cf-toggle-switch .btn-warning.disabled:focus,
+.cf-toggle-switch .btn-warning[disabled]:focus,
+.cf-toggle-switch fieldset[disabled] .btn-warning:focus,
+.cf-toggle-switch .btn-warning.disabled:active,
+.cf-toggle-switch .btn-warning[disabled]:active,
+.cf-toggle-switch fieldset[disabled] .btn-warning:active,
+.cf-toggle-switch .btn-warning.disabled.active,
+.cf-toggle-switch .btn-warning[disabled].active,
+.cf-toggle-switch fieldset[disabled] .btn-warning.active {
+  background-color: #f0ad4e;
+  border-color: #eea236;
+}
+.cf-toggle-switch .btn-warning .badge {
+  color: #f0ad4e;
+  background-color: #ffffff;
+}
+.cf-toggle-switch .btn-danger {
+  color: #ffffff;
+  background-color: #d9534f;
+  border-color: #d43f3a;
+}
+.cf-toggle-switch .btn-danger:hover,
+.cf-toggle-switch .btn-danger:focus,
+.cf-toggle-switch .btn-danger:active,
+.cf-toggle-switch .btn-danger.active,
+.cf-toggle-switch .open .dropdown-toggle.btn-danger {
+  color: #ffffff;
+  background-color: #d2322d;
+  border-color: #ac2925;
+}
+.cf-toggle-switch .btn-danger:active,
+.cf-toggle-switch .btn-danger.active,
+.cf-toggle-switch .open .dropdown-toggle.btn-danger {
+  background-image: none;
+}
+.cf-toggle-switch .btn-danger.disabled,
+.cf-toggle-switch .btn-danger[disabled],
+.cf-toggle-switch fieldset[disabled] .btn-danger,
+.cf-toggle-switch .btn-danger.disabled:hover,
+.cf-toggle-switch .btn-danger[disabled]:hover,
+.cf-toggle-switch fieldset[disabled] .btn-danger:hover,
+.cf-toggle-switch .btn-danger.disabled:focus,
+.cf-toggle-switch .btn-danger[disabled]:focus,
+.cf-toggle-switch fieldset[disabled] .btn-danger:focus,
+.cf-toggle-switch .btn-danger.disabled:active,
+.cf-toggle-switch .btn-danger[disabled]:active,
+.cf-toggle-switch fieldset[disabled] .btn-danger:active,
+.cf-toggle-switch .btn-danger.disabled.active,
+.cf-toggle-switch .btn-danger[disabled].active,
+.cf-toggle-switch fieldset[disabled] .btn-danger.active {
+  background-color: #d9534f;
+  border-color: #d43f3a;
+}
+.cf-toggle-switch .btn-danger .badge {
+  color: #d9534f;
+  background-color: #ffffff;
+}
+.cf-toggle-switch .btn-link {
+  color: #428bca;
+  font-weight: normal;
+  cursor: pointer;
   border-radius: 0;
-  margin-right: -1px;
 }
-.cu-toggle-group-buttons .button-primary {
-  margin-right: 0;
+.cf-toggle-switch .btn-link,
+.cf-toggle-switch .btn-link:active,
+.cf-toggle-switch .btn-link[disabled],
+.cf-toggle-switch fieldset[disabled] .btn-link {
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
-.cu-toggle-group-buttons .button:first-child {
-  border-radius: 3px 0 0 3px;
+.cf-toggle-switch .btn-link,
+.cf-toggle-switch .btn-link:hover,
+.cf-toggle-switch .btn-link:focus,
+.cf-toggle-switch .btn-link:active {
+  border-color: transparent;
 }
-.cu-toggle-group-buttons .button:last-child {
-  border-radius: 0 3px 3px 0;
+.cf-toggle-switch .btn-link:hover,
+.cf-toggle-switch .btn-link:focus {
+  color: #2a6496;
+  text-decoration: underline;
+  background-color: transparent;
+}
+.cf-toggle-switch .btn-link[disabled]:hover,
+.cf-toggle-switch fieldset[disabled] .btn-link:hover,
+.cf-toggle-switch .btn-link[disabled]:focus,
+.cf-toggle-switch fieldset[disabled] .btn-link:focus {
+  color: #999999;
+  text-decoration: none;
+}
+.cf-toggle-switch .btn-lg,
+.cf-toggle-switch .btn-group-lg > .btn {
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 6px;
+}
+.cf-toggle-switch .btn-sm,
+.cf-toggle-switch .btn-group-sm > .btn {
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+.cf-toggle-switch .btn-xs,
+.cf-toggle-switch .btn-group-xs > .btn {
+  padding: 1px 5px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+.cf-toggle-switch .btn-block {
+  display: block;
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}
+.cf-toggle-switch .btn-block + .btn-block {
+  margin-top: 5px;
+}
+.cf-toggle-switch input[type="submit"].btn-block,
+.cf-toggle-switch input[type="reset"].btn-block,
+.cf-toggle-switch input[type="button"].btn-block {
+  width: 100%;
+}
+.cf-toggle-switch .btn-group,
+.cf-toggle-switch .btn-group-vertical {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+.cf-toggle-switch .btn-group > .btn,
+.cf-toggle-switch .btn-group-vertical > .btn {
+  position: relative;
+  float: left;
+}
+.cf-toggle-switch .btn-group > .btn:hover,
+.cf-toggle-switch .btn-group-vertical > .btn:hover,
+.cf-toggle-switch .btn-group > .btn:focus,
+.cf-toggle-switch .btn-group-vertical > .btn:focus,
+.cf-toggle-switch .btn-group > .btn:active,
+.cf-toggle-switch .btn-group-vertical > .btn:active,
+.cf-toggle-switch .btn-group > .btn.active,
+.cf-toggle-switch .btn-group-vertical > .btn.active {
+  z-index: 2;
+}
+.cf-toggle-switch .btn-group > .btn:focus,
+.cf-toggle-switch .btn-group-vertical > .btn:focus {
+  outline: none;
+}
+.cf-toggle-switch .btn-group .btn + .btn,
+.cf-toggle-switch .btn-group .btn + .btn-group,
+.cf-toggle-switch .btn-group .btn-group + .btn,
+.cf-toggle-switch .btn-group .btn-group + .btn-group {
+  margin-left: -1px;
+}
+.cf-toggle-switch .btn-toolbar {
+  margin-left: -5px;
+}
+.cf-toggle-switch .btn-toolbar .btn-group,
+.cf-toggle-switch .btn-toolbar .input-group {
+  float: left;
+}
+.cf-toggle-switch .btn-toolbar > .btn,
+.cf-toggle-switch .btn-toolbar > .btn-group,
+.cf-toggle-switch .btn-toolbar > .input-group {
+  margin-left: 5px;
+}
+.cf-toggle-switch .btn-group > .btn:not(:first-child):not(:last-child):not(.dropdown-toggle) {
+  border-radius: 0;
+}
+.cf-toggle-switch .btn-group > .btn:first-child {
+  margin-left: 0;
+}
+.cf-toggle-switch .btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+.cf-toggle-switch .btn-group > .btn:last-child:not(:first-child),
+.cf-toggle-switch .btn-group > .dropdown-toggle:not(:first-child) {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+.cf-toggle-switch .btn-group > .btn-group {
+  float: left;
+}
+.cf-toggle-switch .btn-group > .btn-group:not(:first-child):not(:last-child) > .btn {
+  border-radius: 0;
+}
+.cf-toggle-switch .btn-group > .btn-group:first-child > .btn:last-child,
+.cf-toggle-switch .btn-group > .btn-group:first-child > .dropdown-toggle {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+.cf-toggle-switch .btn-group > .btn-group:last-child > .btn:first-child {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+.cf-toggle-switch .btn-group .dropdown-toggle:active,
+.cf-toggle-switch .btn-group.open .dropdown-toggle {
+  outline: 0;
+}
+.cf-toggle-switch .btn-group > .btn + .dropdown-toggle {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.cf-toggle-switch .btn-group > .btn-lg + .dropdown-toggle {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+.cf-toggle-switch .btn-group.open .dropdown-toggle {
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+.cf-toggle-switch .btn-group.open .dropdown-toggle.btn-link {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.cf-toggle-switch .btn .caret {
+  margin-left: 0;
+}
+.cf-toggle-switch .btn-lg .caret {
+  border-width: 5px 5px 0;
+  border-bottom-width: 0;
+}
+.cf-toggle-switch .dropup .btn-lg .caret {
+  border-width: 0 5px 5px;
+}
+.cf-toggle-switch .btn-group-vertical > .btn,
+.cf-toggle-switch .btn-group-vertical > .btn-group,
+.cf-toggle-switch .btn-group-vertical > .btn-group > .btn {
+  display: block;
+  float: none;
+  width: 100%;
+  max-width: 100%;
+}
+.cf-toggle-switch .btn-group-vertical > .btn-group > .btn {
+  float: none;
+}
+.cf-toggle-switch .btn-group-vertical > .btn + .btn,
+.cf-toggle-switch .btn-group-vertical > .btn + .btn-group,
+.cf-toggle-switch .btn-group-vertical > .btn-group + .btn,
+.cf-toggle-switch .btn-group-vertical > .btn-group + .btn-group {
+  margin-top: -1px;
+  margin-left: 0;
+}
+.cf-toggle-switch .btn-group-vertical > .btn:not(:first-child):not(:last-child) {
+  border-radius: 0;
+}
+.cf-toggle-switch .btn-group-vertical > .btn:first-child:not(:last-child) {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.cf-toggle-switch .btn-group-vertical > .btn:last-child:not(:first-child) {
+  border-bottom-left-radius: 4px;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
+.cf-toggle-switch .btn-group-vertical > .btn-group:not(:first-child):not(:last-child) > .btn {
+  border-radius: 0;
+}
+.cf-toggle-switch .btn-group-vertical > .btn-group:first-child:not(:last-child) > .btn:last-child,
+.cf-toggle-switch .btn-group-vertical > .btn-group:first-child:not(:last-child) > .dropdown-toggle {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.cf-toggle-switch .btn-group-vertical > .btn-group:last-child:not(:first-child) > .btn:first-child {
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
+.cf-toggle-switch .btn-group-justified {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+}
+.cf-toggle-switch .btn-group-justified > .btn,
+.cf-toggle-switch .btn-group-justified > .btn-group {
+  float: none;
+  display: table-cell;
+  width: 1%;
+}
+.cf-toggle-switch .btn-group-justified > .btn-group .btn {
+  width: 100%;
+}
+.cf-toggle-switch [data-toggle="buttons"] > .btn > input[type="radio"],
+.cf-toggle-switch [data-toggle="buttons"] > .btn > input[type="checkbox"] {
+  display: none;
+}
+.cf-toggle-switch .clearfix:before,
+.cf-toggle-switch .clearfix:after,
+.cf-toggle-switch .btn-toolbar:before,
+.cf-toggle-switch .btn-toolbar:after,
+.cf-toggle-switch .btn-group-vertical > .btn-group:before,
+.cf-toggle-switch .btn-group-vertical > .btn-group:after {
+  content: " ";
+  display: table;
+}
+.cf-toggle-switch .clearfix:after,
+.cf-toggle-switch .btn-toolbar:after,
+.cf-toggle-switch .btn-group-vertical > .btn-group:after {
+  clear: both;
+}
+.cf-toggle-switch .center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.cf-toggle-switch .pull-right {
+  float: right !important;
+}
+.cf-toggle-switch .pull-left {
+  float: left !important;
+}
+.cf-toggle-switch .hide {
+  display: none !important;
+}
+.cf-toggle-switch .show {
+  display: block !important;
+}
+.cf-toggle-switch .invisible {
+  visibility: hidden;
+}
+.cf-toggle-switch .text-hide {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+.cf-toggle-switch .hidden {
+  display: none !important;
+  visibility: hidden !important;
+}
+.cf-toggle-switch .affix {
+  position: fixed;
+}
+@-ms-viewport {
+  width: device-width;
+}
+.cf-toggle-switch .visible-xs,
+.cf-toggle-switch .visible-sm,
+.cf-toggle-switch .visible-md,
+.cf-toggle-switch .visible-lg {
+  display: none !important;
+}
+@media (max-width: 767px) {
+  .cf-toggle-switch .visible-xs {
+    display: block !important;
+  }
+  .cf-toggle-switch table.visible-xs {
+    display: table;
+  }
+  .cf-toggle-switch tr.visible-xs {
+    display: table-row !important;
+  }
+  .cf-toggle-switch th.visible-xs,
+  .cf-toggle-switch td.visible-xs {
+    display: table-cell !important;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .cf-toggle-switch .visible-sm {
+    display: block !important;
+  }
+  .cf-toggle-switch table.visible-sm {
+    display: table;
+  }
+  .cf-toggle-switch tr.visible-sm {
+    display: table-row !important;
+  }
+  .cf-toggle-switch th.visible-sm,
+  .cf-toggle-switch td.visible-sm {
+    display: table-cell !important;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  .cf-toggle-switch .visible-md {
+    display: block !important;
+  }
+  .cf-toggle-switch table.visible-md {
+    display: table;
+  }
+  .cf-toggle-switch tr.visible-md {
+    display: table-row !important;
+  }
+  .cf-toggle-switch th.visible-md,
+  .cf-toggle-switch td.visible-md {
+    display: table-cell !important;
+  }
+}
+@media (min-width: 1200px) {
+  .cf-toggle-switch .visible-lg {
+    display: block !important;
+  }
+  .cf-toggle-switch table.visible-lg {
+    display: table;
+  }
+  .cf-toggle-switch tr.visible-lg {
+    display: table-row !important;
+  }
+  .cf-toggle-switch th.visible-lg,
+  .cf-toggle-switch td.visible-lg {
+    display: table-cell !important;
+  }
+}
+@media (max-width: 767px) {
+  .cf-toggle-switch .hidden-xs {
+    display: none !important;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .cf-toggle-switch .hidden-sm {
+    display: none !important;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  .cf-toggle-switch .hidden-md {
+    display: none !important;
+  }
+}
+@media (min-width: 1200px) {
+  .cf-toggle-switch .hidden-lg {
+    display: none !important;
+  }
+}
+.cf-toggle-switch .visible-print {
+  display: none !important;
+}
+@media print {
+  .cf-toggle-switch .visible-print {
+    display: block !important;
+  }
+  .cf-toggle-switch table.visible-print {
+    display: table;
+  }
+  .cf-toggle-switch tr.visible-print {
+    display: table-row !important;
+  }
+  .cf-toggle-switch th.visible-print,
+  .cf-toggle-switch td.visible-print {
+    display: table-cell !important;
+  }
+}
+@media print {
+  .cf-toggle-switch .hidden-print {
+    display: none !important;
+  }
+}
+.cf-toggle-group-buttons{
+  width: 100%;
+  clear: both;
 }

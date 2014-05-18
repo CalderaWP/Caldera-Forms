@@ -14,7 +14,7 @@ jQuery(function($){
 					var ftype = $(v);
 					if( typeof window[ftype.data('type') + '_init'] === 'function' ){
 						window[ftype.data('type') + '_init'](ftype.prop('id'), ftype[0]);
-					}					
+					}
 				});
 			}
 		});
@@ -57,6 +57,16 @@ jQuery(function($){
 				parent.remove();
 			});
 
+
+	});
+
+	$('body').on('click', '.form-delete a.form-control', function(e){
+		var clicked = $(this);
+		if(confirm(clicked.data('confirm'))){
+			return;
+		}else{
+			e.preventDefault();
+		}
 
 	});
 
