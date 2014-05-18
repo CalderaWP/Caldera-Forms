@@ -401,6 +401,7 @@ class Caldera_Forms {
 					"not_supported"	=>	array(
 						'hide_label',
 						'caption',
+						'required'
 					)
 				)
 			),
