@@ -110,7 +110,15 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 	}
 
 	?>
-	<div class="caldera-editor-field-config-wrapper" id="<?php echo $id; ?>" style="display:none;">
+	<div class="caldera-editor-field-config-wrapper ajax-trigger" 
+	
+	data-request="setup_field_type" 
+	data-event="field.drop" 
+	data-modal="field_setup"
+	data-modal-title="<?php echo __('Select New Field', 'caldera-forms'); ?>"
+	data-template="#form-fields-selector-tmpl"
+	data-modal-width="600"
+	id="<?php echo $id; ?>" style="display:none;">
 		<button class="button button-small pull-right delete-field" type="button"><i class="icn-delete"></i></button>
 		<h3 class="caldera-editor-field-title"><?php echo $label; ?>&nbsp;</h3>
 		<div class="caldera-config-group">
@@ -464,6 +472,62 @@ foreach($panel_extensions as $panel){
 ?>
 
 
+<script type="text/html" id="form-fields-selector-tmpl">
+	<div class="modal-tab-panel">
+	<?php
+
+		
+		$sorted_field_types = array();
+		ksort($field_types);
+		foreach($field_types as $field_slug=>$config){
+			$cat = 'General';
+			if(!empty($config['category'])){
+				$cat = $config['category'];
+			}
+
+			$icon = CFCORE_URL . "/assets/images/field.png";
+			if(!empty($config['icon'])){
+				$icon = $config['icon'];
+			}
+
+			$template = '<div class="form-modal-add-line">';
+				$template .= '<button type="button" class="button info-button set-current-field" data-field="{{id}}" data-type="' . $field_slug . '">' . __('Set Field', 'caldera-forms') . '</button>';
+				$template .= '<img src="'. $icon .'" class="form-modal-lgo" width="45" height="45">';
+				$template .= '<strong>' . $config['field'] . '</strong>';
+				$template .= '<p class="description">' . (!empty($config['description']) ? $config['description'] : __('No description given', 'caldera-forms') ) . '</p>';
+			$template .= '</div>';
+			if(!isset($sorted_field_types[$cat])){
+				$sorted_field_types[$cat] = null;
+			}
+			$sorted_field_types[$cat] .= $template;
+		}
+		ksort($sorted_field_types);
+		echo '<div class="modal-side-bar">';
+			echo '<ul class="modal-side-tabs">';
+			foreach($sorted_field_types as $cat=>$template){
+				
+				if(!isset($cat_class)){
+					$cat_class = ' active';
+				}
+				echo "<li><a href=\"#modal-category-". sanitize_key( $cat ) ."\" class=\"modal-side-tab". $cat_class ."\">" . $cat . "</a></li>\r\n";
+				$cat_class = '';
+			}
+		echo "</ul>\r\n";
+		echo "</div>\r\n";
+		$cat_show = false;
+		foreach($sorted_field_types as $cat=>$template){
+			if(!empty($cat_show)){
+				$cat_show = 'style="display: none;"';
+			}
+			echo '<div id="modal-category-'. sanitize_key( $cat ) .'" class="tab-detail-panel" '.$cat_show.'>';
+				echo $template;
+			echo '</div>';
+			$cat_show = true;
+		}
+
+	?>
+	</div>
+</script>
 <script type="text/html" id="caldera_field_config_wrapper_templ">
 <?php
 	echo field_wrapper_template();

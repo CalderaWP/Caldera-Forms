@@ -157,9 +157,9 @@ if(!empty($element['processors'])){
 			if(!empty($processor['icon'])){
 				$icon = $processor['icon'];
 			}
-			echo '<div class="form-processor-add-line'. ( !empty($processor['single']) ? ' is_single_processor' : null ) . '" data-type="' . $processor_id . '">';
+			echo '<div class="form-modal-add-line'. ( !empty($processor['single']) ? ' is_single_processor' : null ) . '" data-type="' . $processor_id . '">';
 				echo '<button type="button" class="button info-button add-new-processor" data-type="' . $processor_id . '">' . __('Use Processor', 'caldera-forms') . '</button>';
-				echo '<img src="'. $icon .'" class="form-processor-lgo" width="45" height="45">';
+				echo '<img src="'. $icon .'" class="form-modal-lgo" width="45" height="45">';
 				echo '<strong>' . $processor['name'] .'</strong>';
 				echo '<p class="description">' . $processor['description'] . '</p>';
 			echo '</div>';

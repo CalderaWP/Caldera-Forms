@@ -33,7 +33,7 @@ jQuery(function($){
 	$('body').on('click', '.modal-side-tab', function(e){
 		e.preventDefault();
 		var clicked = $(this),
-			parent = clicked.closest('.modal-inside'),
+			parent = clicked.closest('.caldera-modal-body'),
 			panels = parent.find('.tab-detail-panel'),
 			panel = $(clicked.attr('href'));
 

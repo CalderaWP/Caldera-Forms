@@ -125,7 +125,7 @@
   color: #919191;
 }
 
-.modal-inside .modal-side-bar {
+.modal-side-bar {
   background-color: #DFDFDF;
   bottom: 0;
   left: 0;
@@ -213,4 +213,8 @@ input.disabled-input {
   float: none;
   text-align: center;
   width: 100%;
+}
+
+.modal-tab-panel {
+  margin-left: 150px;
 }

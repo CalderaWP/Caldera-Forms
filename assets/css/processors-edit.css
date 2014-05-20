@@ -29,13 +29,13 @@ h3.caldera-editor-processor-title {
   margin: 0 0 6px;
   padding: 0 0 12px;
 }
-.form-processor-add-line {
+.form-modal-add-line {
   border-bottom: 1px solid #EFEFEF;
   margin: -12px -12px 12px;
   padding: 6px 134px 6px 72px;
 }
 
-.form-processor-add-line:hover {
+.form-modal-add-line:hover {
   background-color: #f7f7f7;
 }
 button.button.info-button {
@@ -43,13 +43,13 @@ button.button.info-button {
   margin-right: -120px;
   margin-top: 8px;
 }
+#field_setup_baldrickModalBody.caldera-modal-body,
 #form_processor_baldrickModalBody.caldera-modal-body{
   bottom: 0;
   overflow: auto;
 }
 
-
-.form-processor-lgo {
+.form-modal-lgo {
   border-radius: 4px;
   float: left;
   height: 45px;

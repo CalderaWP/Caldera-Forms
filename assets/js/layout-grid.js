@@ -50,6 +50,13 @@ rebind_field_bindings = function(){
 	check_required_bindings();
 };
 
+function setup_field_type(obj){
+	
+	return {'id' : obj.trigger.prop('id')};
+}
+
+
+
 function check_required_bindings(){
 	var fields = jQuery('.caldera-config-field .required'),
 		savebutton = jQuery('.caldera-header-save-button'),
@@ -206,7 +213,11 @@ jQuery(function($) {
 
 				$('#' + name + '_lable').focus().select();
 
+				
+
 				rebuild_field_binding();
+				baldrickTriggers();
+				$('#' + name).trigger('field.drop');
 			}
 		});
 

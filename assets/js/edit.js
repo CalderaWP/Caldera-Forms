@@ -34,7 +34,7 @@ jQuery(function($){
 
 			// remove not supported stuff
 			if(fieldtype_defaults[select.val() + '_nosupport']){
-				console.log(fieldtype_defaults[select.val() + '_nosupport']);
+				
 				if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('hide_label') >= 0){
 					parent.find('.hide-label-field').hide().find('.field-config').prop('checked', false);
 				}
@@ -104,7 +104,7 @@ jQuery(function($){
 			$.extend(true, config, lineconf);
 		});
 			
-		console.log(config);
+		
 		preview_target.html( template(config) );
 		preview_parent.removeClass('button');
 
@@ -589,6 +589,21 @@ jQuery(function($){
 		});
 
 	});
+
+	$('body').on('click', '.set-current-field', function(e){
+
+		e.preventDefault();
+
+		var clicked = $(this);
+		$('#' + clicked.data('field') + '_type').val(clicked.data('type')).trigger('change');
+		
+		$('#' + clicked.data('field') + '_lable').focus()
+
+		$('#field_setup_baldrickModalCloser').trigger('click');
+
+
+	});
+
 	$('.caldera-editor-body').on('keyup change', '.field-config', function(e){
 
 		var field 	= $(this),
@@ -608,7 +623,6 @@ jQuery(function($){
 
 
 });//
-
 
 
 

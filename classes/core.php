@@ -397,6 +397,7 @@ class Caldera_Forms {
 		$internal_fields = array(
 			'text' => array(
 				"field"		=>	"Single Line Text",
+				"description" => __('Single Line Text', 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/text/field.php",
 				"category"	=>	__("Text Fields", "cladera-forms"),
 				"setup"		=>	array(
@@ -405,6 +406,7 @@ class Caldera_Forms {
 			),
 			'html' => array(
 				"field"		=>	"HTML",
+				"description" => __('HTML', 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/html/field.php",
 				"category"	=>	__("Content", "cladera-forms"),
 				"setup"		=>	array(
@@ -419,6 +421,7 @@ class Caldera_Forms {
 			),
 			'hidden' => array(
 				"field"		=>	"Hidden",
+				"description" => __('Hidden', 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/hidden/field.php",
 				"category"	=>	__("Text Fields", "cladera-forms"),
 				"setup"		=>	array(
@@ -432,6 +435,7 @@ class Caldera_Forms {
 			),
 			'button' => array(
 				"field"		=>	"Button",
+				"description" => __('Button', 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/button/field.php",
 				"category"	=>	__("Buttons", "cladera-forms"),
 				"setup"		=>	array(
@@ -450,6 +454,7 @@ class Caldera_Forms {
 			),
 			'email' => array(
 				"field"		=>	"Email Address",
+				"description" => __('Email Address', 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/email/field.php",
 				"category"	=>	__("Text Fields", "cladera-forms"),
 				"setup"		=>	array(
@@ -458,6 +463,7 @@ class Caldera_Forms {
 			),
 			'paragraph' => array(
 				"field"		=>	"Paragraph Textarea",
+				"description" => __('Paragraph Textarea', 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/paragraph/field.php",
 				"category"	=>	__("Text Fields", "cladera-forms"),
 				"setup"		=>	array(
@@ -470,6 +476,7 @@ class Caldera_Forms {
 			),
 			'toggle_switch' => array(
 				"field"		=>	"Toggle Switch",
+				"description" => __('Toggle Switch', 'caldera-forms'),
 				"category"	=>	__("Select Options", "cladera-forms"),
 				"file"		=>	CFCORE_PATH . "fields/toggle_switch/field.php",
 				"setup"		=>	array(
@@ -494,6 +501,7 @@ class Caldera_Forms {
 			),
 			'dropdown' => array(
 				"field"		=>	"Dropdown Select",
+				"description" => __('Dropdown Select', 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/dropdown/field.php",
 				"category"	=>	__("Select Options", "cladera-forms"),
 				"setup"		=>	array(
@@ -509,6 +517,7 @@ class Caldera_Forms {
 			),
 			'checkbox' => array(
 				"field"		=>	"Checkbox",
+				"description" => __('Checkbox', 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/checkbox/field.php",
 				"category"	=>	__("Select Options", "cladera-forms"),
 				"setup"		=>	array(
@@ -524,6 +533,7 @@ class Caldera_Forms {
 			),
 			'radio' => array(
 				"field"		=>	"Radio",
+				"description" => __('Radio', 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/radio/field.php",
 				"category"	=>	__("Select Options", "cladera-forms"),
 				"setup"		=>	array(
@@ -538,6 +548,7 @@ class Caldera_Forms {
 			),
 			'date_picker' => array(
 				"field"		=>	"Date Picker",
+				"description" => __('Date Picker', 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/date_picker/datepicker.php",
 				"category"	=>	__("Text Fields", "cladera-forms"),
 				"setup"		=>	array(
@@ -564,6 +575,7 @@ class Caldera_Forms {
 			),
 			'color_picker' => array(
 				"field"		=>	"Color Picker",
+				"description" => __('Color Picker', 'caldera-forms'),
 				"category"	=>	__("Text Fields", "cladera-forms"),
 				"file"		=>	CFCORE_PATH . "fields/color_picker/field.php",
 				"setup"		=>	array(
