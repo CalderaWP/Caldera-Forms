@@ -25,6 +25,6 @@
 <div class="caldera-config-group">
 	<label><?php echo __('Message', 'caldera-forms'); ?> </label>
 	<div class="caldera-config-field">
-		{{{_field slug="message" type="paragraph" required="true"}}}
+		<textarea class="block-input field-config required" name="{{_name}}[message]">{{#if message}}{{message}}{{else}}Name: %name%{{/if}}</textarea>
 	</div>
 </div>

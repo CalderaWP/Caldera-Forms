@@ -1,0 +1,7 @@
+<div class="preview-caldera-config-group cf-color-picker">
+	{{#unless hide_label}}<lable class="control-label">{{label}}</lable>{{/unless}}
+	<div class="preview-caldera-config-field">
+		<input {{#if hide_label}}placeholder="{{label}}"{{/if}} type="text" style="max-width:100px;" class="preview-field-config minicolor-picker init_field_type" data-type="color_picker" value="{{config/default}}"><span class="preview-color-selector" data-for="{{id}}"></span>
+		<span class="help-block">{{caption}}</span>
+	</div>
+</div>

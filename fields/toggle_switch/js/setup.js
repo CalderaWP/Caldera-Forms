@@ -37,8 +37,10 @@ jQuery('document').ready(function($){
 
 	// remove an option row
 	$('.caldera-editor-body').on('click', '.toggle-remove-option', function(e){
-
+		var triggerfield = $(this).closest('.caldera-editor-field-config-wrapper').find('.field-config').first();
 		$(this).parent().remove();
+		triggerfield.trigger('change');
+		
 
 	});
 

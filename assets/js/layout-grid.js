@@ -33,6 +33,9 @@ rebind_field_bindings = function(){
 
 		field.empty();
 
+		if(!field.hasClass('required')){
+			field.append('<option value=""></option>');
+		}
 		for(var fid in current_form_fields){
 			if(field.data('type')){
 				if(field.data('type').split(',').indexOf(current_form_fields[fid].type) < 0){
@@ -148,7 +151,8 @@ jQuery(function($) {
 		
 		// Draggables
 		$( "h3 .layout-new-form-field" ).draggable({
-			helper: "clone"
+			helper: "clone",
+			appendTo: "body"
 		});
 		
 		// Tools Bar Items
@@ -186,12 +190,14 @@ jQuery(function($) {
 
 				newfield.
 				removeClass('button-small').
+				removeClass('button').
+				removeClass('button-primary').
 				removeClass('ui-draggable').
 				removeClass('layout-new-form-field').
 				addClass('layout-form-field').
 				attr('data-config', name);
 
-				newfield.find('.layout_field_name').text('');
+				newfield.find('.layout_field_name').remove();
 				newfield.find('.field-location').prop('name', 'config[layout_grid][fields][' + name + ']');
 				newfield.find('.settings-panel').show();
 				newfield.appendTo( this );
@@ -370,13 +376,20 @@ jQuery(function($) {
 
 	$('.layout-grid').on('click', '.layout-form-field .icon-edit', function(){
 
-		$('.layout-form-field').removeClass('button-primary');
+		
 
 		var clicked = $(this),
 			panel = clicked.parent();
-			panel.addClass('button-primary');
+
 			$('.caldera-editor-field-config-wrapper').hide();
-			$('#' + panel.data('config')).show();
+
+			if(panel.hasClass('field-edit-open')){
+				panel.removeClass('field-edit-open');
+			}else{
+				$('.layout-form-field').removeClass('field-edit-open');
+				panel.addClass('field-edit-open');
+				$('#' + panel.data('config')).show();
+			}
 	});
 	$('body').on('click', '.layout-modal-edit-closer,.layout-modal-save-action', function(e){
 		

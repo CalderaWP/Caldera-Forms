@@ -21,10 +21,11 @@ if(!empty($element['layout_grid']['fields'])){
 
 			$location = explode(':', $location);
 			$fields[$location[0]][$location[1]][] = $field;
+			$config_str = (!empty($field['config']) ? json_encode($field['config']) : null);
 			// build config
 			ob_start();
 
-			field_wrapper_template( $field_id, $field['label'], $field['slug'], $field['caption'], ( isset($field['hide_label']) ? 1 : 0 ), ( isset($field['required']) ? 1 : 0 ), $field['type'], json_encode($field['config']) );
+			field_wrapper_template( $field_id, $field['label'], $field['slug'], $field['caption'], ( isset($field['hide_label']) ? 1 : 0 ), ( isset($field['required']) ? 1 : 0 ), $field['type'], $config_str );
 			$field_config_panels[] = ob_get_clean();
 		}
 
@@ -53,11 +54,12 @@ if(!empty($element['layout_grid']['fields'])){
 				if(isset($fields[$row][$column])){
 					foreach($fields[$row][$column] as $field){
 					?>
-					<div class="button layout-form-field" data-config="<?php echo $field['ID']; ?>">
-						<i style="float: right; padding: 7px 0px 0px; display:none;" class="icon-edit"></i>
+					<div class="layout-form-field" data-config="<?php echo $field['ID']; ?>">
+						<i style="display:none;" class="icon-edit"></i>
 						<div class="drag-handle">
-							<i class="icon-forms"></i>&nbsp;&nbsp;<span class="layout_field_name"><?php echo $field['label']; ?></span>
-						</div><input type="hidden" class="field-location" value="<?php echo $row.':'.$column; ?>" name="config[layout_grid][fields][<?php echo $field['ID']; ?>]">
+							<div class="field_preview"><span class="spinner" style="display: block; float: left;"></span></div>
+						</div>
+						<input type="hidden" class="field-location" value="<?php echo $row.':'.$column; ?>" name="config[layout_grid][fields][<?php echo $field['ID']; ?>]">
 					</div>
 					<?php
 					}

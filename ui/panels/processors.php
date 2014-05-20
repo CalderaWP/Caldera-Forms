@@ -67,7 +67,7 @@ function processor_wrapper_template($id = '{{id}}', $type = null, $config_str = 
 	<div class="caldera-editor-processor-config-wrapper" id="<?php echo $id; ?>" style="display:none;">
 		<button class="button button-small pull-right delete-processor" type="button"><i class="icn-delete"></i></button>
 		<h3 data-title="<?php echo __('New Form Processor', 'caldera-forms'); ?>" class="caldera-editor-processor-title"><?php echo $type_name; ?></h3>
-		<div class="caldera-config-group">
+		<div class="caldera-config-group" style="display:none;">
 			<label for="<?php echo $id; ?>_type"><?php echo __('Processor Type', 'caldera-forms'); ?></label>
 			<div class="caldera-config-field">
 				<select class="block-input caldera-select-processor-type" id="<?php echo $id; ?>_type" name="config[processors][<?php echo $id; ?>][type]" data-type="<?php echo $type; ?>">					
@@ -110,7 +110,13 @@ function build_processor_types($default = null){
 
 
 <div class="caldera-editor-processors-panel">
-	<button type="button" class="button block-button add-new-processor"><?php echo __('Add Processor', 'caldera-forms'); ?></button>
+	<button type="button" class="button block-button ajax-trigger" 
+	data-request="new_form_processor" 
+	data-modal="form_processor" 
+	data-modal-title="<?php echo __('Select Form Processor', 'caldera-forms'); ?>"
+	data-modal-height="500"
+	data-template="#form-processors-tmpl"
+	><?php echo __('Add Processor', 'caldera-forms'); ?></button>
 	<ul class="active-processors-list">
 		<?php
 			// build processors list
@@ -128,16 +134,33 @@ function build_processor_types($default = null){
 /// PROCESSORS CONFIGS
 if(!empty($element['processors'])){
 	foreach($element['processors'] as $processor_id=>$config){
-		//dump($config,0);
-		processor_wrapper_template($processor_id, $config['type'], json_encode($config['config']));
+		
+		$config_str = array();
+		if(!empty($config['config'])){
+			$config_str = json_encode($config['config']);
+		}
+		processor_wrapper_template($processor_id, $config['type'], $config_str);
 	}
 }
-
 
 ?>
 </div>
 <div class="clear"></div>
 
+<script type="text/html" id="form-processors-tmpl">
+	<?php
+		global $form_processors;
+
+		foreach($form_processors as $processor_id=>$processor){
+			echo '<div class="form-processor-add-line">';
+				echo '<button type="button" class="button add-new-processor" data-type="' . $processor_id . '" style="float:right;">' . __('Use Processor', 'caldera-forms') . '</button>';
+				echo '<strong>' . $processor['name'] .'</strong>';
+				echo '<p class="description">' . $processor['description'] . '</p>';
+			echo '</div>';
+		}
+
+	?>
+</script>
 <script type="text/html" id="processor-line-tmpl">
 <?php echo processor_line_template(); ?>
 </script>
@@ -154,9 +177,21 @@ foreach($form_processors as $processor=>$config){
 	}
 
 }
-echo "<script type=\"text/javascript\">\r\n";
-echo implode("\r\n", $form_processors_defaults);
-echo "\r\n</script>\r\n";
+?>
+<script type="text/javascript">
+
+<?php echo implode("\r\n", $form_processors_defaults); ?>
+
+function new_form_processor(obj){
+
+	console.log(obj)
+
+	return {};
+}
+
+
+</script>
+
 
 
 

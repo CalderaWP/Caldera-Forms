@@ -1,3 +1,11 @@
+.preview-color-selector {
+  background: none repeat scroll 0 0 #F0F0F0;
+  border: 1px solid #E2E2E2;
+  display: inline;
+  margin-left: -1px;
+  padding: 3px 12px;
+  box-shadow: 0 0 0 2px #ffffff inset;
+}
 .miniColors-trigger {border: 1px solid #999999;-mz-border-radius: 0 1px 1px 0;-webkit-border-radius: 0 1px 1px 0;display: inline-block;height: 24px;margin: 0 0 -8px -1px;width: 30px;}
 .miniColors-selector {background: none repeat scroll 0 0 #FFFFFF;border: 1px solid #999999;-moz-box-shadow: 0 3px 0 -1px rgba(0, 0, 0, 0.05);-webkit-box-shadow: 0 3px 0 -1px rgba(0, 0, 0, 0.05);box-shadow: 0 3px 0 -1px rgba(0, 0, 0, 0.05);height: 150px;padding: 5px;position: absolute;width: 175px;z-index: 999999;margin-top: -1px;}
 .miniColors-selector.black {background: #000;border-color: #000;}

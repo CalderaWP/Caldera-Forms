@@ -29,13 +29,17 @@ $field_type_defaults = array(
 );
 
 // Build Field Types List
-foreach($field_types as $field=>$config){
+foreach($field_types as $field_slug=>$config){
 
 	if(!file_exists($config['file'])){
 		continue;
 	}
 	// type list
-	$field_type_list[$field] = $config;
+	$category = __('Basic', 'caldera-forms');
+	if(!empty($config['category'])){
+		$category = $config['category'];
+	}
+	$field_type_list[$category][$field_slug] = $config;
 
 	if(!empty($config['setup']['template'])){
 		if(file_exists( $config['setup']['template'] )){
@@ -43,22 +47,56 @@ foreach($field_types as $field=>$config){
 			
 				ob_start();
 					include $config['setup']['template'];
-				$field_type_templates[sanitize_key( $field ) . "_tmpl"] = ob_get_clean();
+				$field_type_templates[sanitize_key( $field_slug ) . "_tmpl"] = ob_get_clean();
 
 				
 		}
-	}
+
+	}	
 	
 	if(!empty($config['setup']['default'])){
-		$field_type_defaults[] = "fieldtype_defaults." . sanitize_key( $field ) . "_cfg = " . json_encode($config['setup']['default']) .";";
+		$field_type_defaults[] = "fieldtype_defaults." . sanitize_key( $field_slug ) . "_cfg = " . json_encode($config['setup']['default']) .";";
 	}
 	if(!empty($config['setup']['not_supported'])){
-		$field_type_defaults[] = "fieldtype_defaults." . sanitize_key( $field ) . "_nosupport = " . json_encode($config['setup']['not_supported']) .";";
+		$field_type_defaults[] = "fieldtype_defaults." . sanitize_key( $field_slug ) . "_nosupport = " . json_encode($config['setup']['not_supported']) .";";
 	}
 
+	if(empty($config['setup']['preview']) || !file_exists( $config['setup']['preview'] )){
+
+		// simulate a preview with actual field file
+		$field = array(
+			'label'	=>	'{{label}}',
+			'slug'	=>	'{{slug}}',
+			'type'	=>	'{{type}}',
+			'caption' => '{{caption}}',
+			'config' => (!empty($config['setup']['default']) ? $config['setup']['default'] : array() )
+		);
+
+		$field_name = $field['slug'];
+		$field_id = 'preview_fld_' . $field['slug'];
+		$field_label = "<label for=\"" . $field_id . "\" class=\"control-label\">" . $field['label'] . "</label>\r\n";
+		$field_required = "";
+		$field_placeholder = 'placeholder="' . $field['label'] .'"';
+		$field_caption = "<span class=\"help-block\">" . $field['caption'] . "</span>\r\n";
+		
+		// blank default
+		$field_value = null;		
+		$field_wrapper_class = "preview-caldera-config-group";
+		$field_input_class = "preview-caldera-config-field";
+		$field_class = "preview-field-config";
+
+		ob_start();
+		include $config['file'];
+		$field_type_templates['preview-' . sanitize_key( $field_slug ) . "_tmpl"] = ob_get_clean();
+	}else{
+		ob_start();
+		include $config['setup']['preview'];
+		$field_type_templates['preview-' . sanitize_key( $field_slug ) . "_tmpl"] = ob_get_clean();
+	}
+	//dump($field_slug,0);
+
+
 }
-
-
 
 
 function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{{slug}}', $caption = '{{caption}}', $hide_label = '{{hide_label}}', $required = '{{required}}', $type = null, $config_str = '{"default":"default value"}'){
@@ -76,7 +114,7 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 		<button class="button button-small pull-right delete-field" type="button"><i class="icn-delete"></i></button>
 		<h3 class="caldera-editor-field-title"><?php echo $label; ?>&nbsp;</h3>
 		<div class="caldera-config-group">
-			<label for="<?php echo $id; ?>_type"><?php echo __('Field Type', 'caldera-forms'); ?></label>
+			<label for="<?php echo $id; ?>_type"><?php echo __('Element Type', 'caldera-forms'); ?></label>
 			<div class="caldera-config-field">
 				<select class="block-input caldera-select-field-type required" id="<?php echo $id; ?>_type" name="config[fields][<?php echo $id; ?>][type]" data-type="<?php echo $type; ?>">					
 					<?php
@@ -86,7 +124,7 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 			</div>
 		</div>		
 		<div class="caldera-config-group">
-			<label for="<?php echo $id; ?>_lable"><?php echo __('Label', 'caldera-forms'); ?></label>
+			<label for="<?php echo $id; ?>_lable"><?php echo __('Name', 'caldera-forms'); ?></label>
 			<div class="caldera-config-field">
 				<input type="text" class="block-input field-config field-label required" id="<?php echo $id; ?>_lable" name="config[fields][<?php echo $id; ?>][label]" value="<?php echo sanitize_text_field( $label ); ?>">
 			</div>
@@ -107,7 +145,7 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 		</div>
 		
 		<div class="caldera-config-group required-field">
-			<label for="<?php echo $id; ?>_hide_label"><?php echo __('Required', 'caldera-forms'); ?></label>
+			<label for="<?php echo $id; ?>_required"><?php echo __('Required', 'caldera-forms'); ?></label>
 			<div class="caldera-config-field">
 				<input type="checkbox" class="field-config field-checkbox" id="<?php echo $id; ?>_required" name="config[fields][<?php echo $id; ?>][required]" value="1" <?php if($required === 1){ echo 'checked="checked"'; }; ?>>
 			</div>
@@ -129,17 +167,24 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 function build_field_types($default = null){
 	global $field_type_list;
 	
+
 	$out = '';
 	if(null === $default){
 		$out .= '<option></option>';
 	}
-	foreach($field_type_list as $field=>$config){
-		$sel = "";
-		if($default == $field){
-			$sel = 'selected="selected"';
-		}
-		$out .= "<option value=\"". $field . "\" ". $sel .">" . $config['field'] . "</option>\r\n";
+	ksort($field_type_list);
+	foreach($field_type_list as $category=>$fields){
+		ksort($fields);
+		$out .= "<optgroup label=\" ". $category . "\">\r\n";
+		foreach ($fields as $field => $config) {
 
+			$sel = "";
+			if($default == $field){
+				$sel = 'selected="selected"';
+			}
+			$out .= "<option value=\"". $field . "\" ". $sel .">" . $config['field'] . "</option>\r\n";
+		}
+		$out .= "</optgroup>";
 	}
 
 	return $out;

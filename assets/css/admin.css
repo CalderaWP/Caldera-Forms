@@ -155,15 +155,15 @@ select.caldera-type-selector {
   margin-top: 80px;
 }
 .caldera-group-panel .has-error,
-.caldera-processor-nav.has-error,
-.layout-form-field.has-error{
+.caldera-processor-nav.has-error{
   border-color: #FF0000 !important;
 }
 .caldera-group-panel .has-error:focus,
 .caldera-processor-nav.has-error a,
-.layout-form-field.has-error{
+.layout-form-field.has-error .preview-caldera-config-group{
   box-shadow: 0 0 2px rgba(255, 0, 0, 0.8);
 }
+
 .caldera-group-panel h3 {
   border-bottom: 1px solid #DFDFDF;
   font-size: 1.2em;
@@ -345,7 +345,40 @@ li.caldera-editor-logo {
   float: left;
   width: 350px;
 }
-select.field-config{ max-width: 270px;}
+
+
+.layout-form-field{background: #fff; padding: 5px;}
+.layout-form-field .control-label{padding: 0 0 5px ; display: block;}
+.layout-form-field .field_preview {
+  min-height: 38px;
+  border: 1px solid transparent;
+}
+.preview-caldera-config-group{padding: 6px;}
+.preview-field-config{width: 100%;}
+.layout-form-field .icon-edit{
+  background: none repeat scroll 0 0 #FFFFFF;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  padding: 5px;
+  position: absolute;
+  right: 12px;
+  top: 12px;  
+}
+.layout-form-field.ui-sortable-helper {
+  border-radius: 3px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+.field_preview .help-block {display:block; margin: 5px 0; font-style: italic; color: #8f8f8f;}
+.field-edit-open .field_preview {
+  background: none repeat scroll 0 0 #F7F7F7;
+  border: 1px solid #EFEFEF;
+}
+.layout-new-form-field .field_preview{
+  display: none;
+}
+.has-error .field_preview {
+  border: 1px solid #FF0000;
+}
 textarea.block-input.field-config {
   height: 100px;
   width: 100%;
@@ -406,6 +439,11 @@ h3.caldera-editor-field-title {
   margin: -2px 0 0 -140px;
   padding: 6px 0;
   width: 110px;
+}
+.caldera-config-group .field-key {
+  float: left;
+  margin: 1px 0 0 -140px;
+  width: 120px;
 }
 .caldera-config-group.caldera-config-group-full > label {
   margin: 0;
@@ -470,6 +508,12 @@ h3.caldera-editor-field-title {
 .caldera-config-editor-main-panel h3 .layout-new-form-field{margin-top: -3px;}
 .ui-draggable-dragging{
   z-index: 100;
+}
+.button.button-small.layout-new-form-field.ui-draggable.ui-draggable-dragging {
+  z-index: 999999;
+}
+.button.button-small.layout-new-form-field.ui-draggable{
+  cursor: move;
 }
 @media screen and (max-width: 782px) {
   .caldera-editor-body > h3{top: 143px;padding: 10px 10px 12px 20px;}

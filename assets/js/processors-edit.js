@@ -26,12 +26,13 @@ jQuery(function($){
 		
 		var clicked = $(this),
 			new_conf_templ = Handlebars.compile( $('#processor-wrapper-tmpl').html() );
-			wrap = clicked.parent().find('.active-processors-list'),
-			process_conf = $('.caldera-editor-processor-config');
+			wrap = $('.active-processors-list'),
+			process_conf = $('.caldera-editor-processor-config'),
+			processid = Math.round(Math.random() * 100000000);
 
 		new_templ = Handlebars.compile( $('#processor-line-tmpl').html() );
 		new_proc = {
-			"id"	:	"fp_" + Math.round(Math.random() * 100000000)
+			"id"	:	"fp_" + processid
 		};
 
 		// place new group line
@@ -42,8 +43,11 @@ jQuery(function($){
 
 		// reset sortable
 		build_sortables()
-
+		$('#form_processor_baldrickModalCloser').trigger('click');
 		$('.caldera-processor-nav a').last().trigger('click');
+		$('#fp_' + processid + '_type').val(clicked.data('type')).trigger('change');		
+		rebuild_field_binding();
+
 
 	});
 
@@ -125,6 +129,8 @@ jQuery(function($){
 				window[select.val() + '_init'](parent.prop('id'), target);
 			}
 
+		rebuild_field_binding();
+
 	}
 
 	// build configs on load:
@@ -140,17 +146,20 @@ jQuery(function($){
 
 
 // field binding helper
-
 Handlebars.registerHelper('_field', function(args) {
 
 	var config = this,required="";
-	
-	if(args.hash.type){
+
+	if(args.hash.required){
 		required = " required";
 	}
 
 	out = '<select ' + ( args.hash.type ? 'data-type="' + args.hash.type + '"' : '' ) + ' name="' + this._name + '[' + args.hash.slug + ']" id="' + this._id + '_' + args.hash.slug + '" class="block-input caldera-processor-field-bind' + required + '">';
 	
+	if(!args.hash.required){
+		out += '<option value=""></option>';
+	}
+
 	for(var fid in current_form_fields){
 		
 		var sel = '';
@@ -175,8 +184,6 @@ Handlebars.registerHelper('_field', function(args) {
 
 	return out;
 });
-
-
 
 
 

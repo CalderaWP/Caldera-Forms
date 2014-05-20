@@ -6,7 +6,6 @@ jQuery(function($){
 	*	configs are stored in the .caldera-config-field-setup field within the parent wrapper
 	*
 	*/
-
 	function build_fieldtype_config(el){
 
 		var select 			= $(el),
@@ -18,6 +17,7 @@ jQuery(function($){
 			current_type	= select.data('type');
 
 			parent.find('.caldera-config-group').show();
+
 
 			// Be sure to load the fields preset when switching back to the initial field type.
 			if(config.length && current_type === select.val() ){
@@ -60,10 +60,50 @@ jQuery(function($){
 				window[select.val() + '_init'](parent.prop('id'), target);
 			}
 
+			build_field_preview(parent.prop('id'));
 
 			// rebind stuff
 			rebuild_field_binding();
 
+	}
+
+	function build_field_preview(id){
+		var panel 			= $('#' + id),
+			select			= panel.find('.caldera-select-field-type'),
+			preview_parent	= $('.layout-form-field[data-config="' + id + '"]'),
+			preview_target	= preview_parent.find('.field_preview'),
+			preview			= $('#preview-' + select.val() + '_tmpl').html(),
+			template 		= Handlebars.compile(preview),
+			config			= {'id': id},
+			data_fields		= panel.find('.field-config'),
+			objects			= [];
+
+		data_fields.each(function(k,v){
+			var field 		= $(v),
+				basename 	= field.prop('name').split('[' + id + ']')[1].substr(1),
+				name		= basename.substr(0, basename.length-1).split(']['),
+				value 		= ( field.is(':checkbox,:radio') ? field.prop('checked') : field.val() ),
+				lineconf 	= {};
+
+
+
+			for(var i = name.length-1; i >= 0; i--){
+				if(i === name.length-1){
+					lineconf[name[i]] = value;
+				}else{
+					var newobj = lineconf;
+					lineconf = {};
+					lineconf[name[i]] = newobj;
+				}		
+			}
+			$.extend(true, config, lineconf);
+		});
+			
+		console.log(config);
+		preview_target.html( template(config) );
+		preview_parent.removeClass('button');
+
+		$('.preview-field-config').prop('disabled', true);
 	}
 
 	// build sortables
@@ -148,9 +188,9 @@ jQuery(function($){
 
 		// is repeatable
 		if(group_repeat.val() === '1'){
-			repeat_button.addClass('button-primary');
+			repeat_button.addClass('field-edit-open');
 		}else{
-			repeat_button.removeClass('button-primary');
+			repeat_button.removeClass('field-edit-open');
 		}
 
 
@@ -225,18 +265,21 @@ jQuery(function($){
 			deleter.show();
 		}
 
-		if(clicked.hasClass('button-primary')){
+		if(clicked.hasClass('field-edit-open')){
 			// show config
 			group_settings.slideUp(100);
-			clicked.removeClass('button-primary');
+			clicked.removeClass('field-edit-open');
 		}else{
 			// hide config
 			group_settings.slideDown(100);
-			clicked.addClass('button-primary');
+			clicked.addClass('field-edit-open');
 		}
 
 	});
 	$('.caldera-editor-body').on('keydown', '.field-config', function(e){
+		if($(this).is('textarea')){
+			return;
+		}
 		if(e.which === 13){
 			e.preventDefault();
 		}
@@ -245,7 +288,7 @@ jQuery(function($){
 	$('.caldera-editor-body').on('keyup change', '.field-label', function(e){
 		var field 		= $(this).closest('.caldera-editor-field-config-wrapper').prop('id');
 			field_line	= $('[data-field="' + field + '"]'),
-			field_title	= $('#' + field + ' .caldera-editor-field-title, .layout-form-field.button-primary .layout_field_name'),
+			field_title	= $('#' + field + ' .caldera-editor-field-title, .layout-form-field.field-edit-open .layout_field_name'),
 			slug		= $('#' + field + ' .field-slug');
 
 		field_line.find('a').html( '<i class="icn-field"></i> ' + this.value );
@@ -338,16 +381,16 @@ jQuery(function($){
 			group_repeat		= active_group.find('.caldera-config-group-repeat'),
 			clicked				= $(this);
 
-		if(clicked.hasClass('button-primary')){
+		if(clicked.hasClass('field-edit-open')){
 			// set static
 			group_repeat.val('0');
 			icon.removeClass('icn-repeat').addClass('icn-folder');
-			clicked.removeClass('button-primary');
+			clicked.removeClass('field-edit-open');
 		}else{
 			// set repeat
 			group_repeat.val('1');
 			icon.addClass('icn-repeat').removeClass('icn-folder');
-			clicked.addClass('button-primary');
+			clicked.addClass('field-edit-open');
 		}
 
 	});
@@ -541,7 +584,16 @@ jQuery(function($){
 		});
 
 	});
+	$('.caldera-editor-body').on('keyup change', '.field-config', function(e){
 
+		var field 	= $(this),
+			parent 	= field.closest('.caldera-editor-field-config-wrapper');
+
+		if(parent.length){
+			build_field_preview(parent.prop('id'));
+		}
+
+	});
 
 	// init sorting
 	
