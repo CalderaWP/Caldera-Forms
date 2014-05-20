@@ -254,7 +254,7 @@ class Caldera_Forms {
 		
 		echo "	<div class=\"wrap\">\r\n";
 		if(!empty($_GET['edit'])){
-			echo "<form method=\"post\" action=\"admin.php?page=" . $this->plugin_slug . "\" class=\"caldera-forms-options-form\">\r\n";
+			echo "<form method=\"POST\" action=\"admin.php?page=" . $this->plugin_slug . "\" data-load-element=\"#save_indicator\" data-sender=\"ajax\" class=\"caldera-forms-options-form edit-update-trigger\">\r\n";
 				include CFCORE_PATH . 'ui/edit.php';
 			echo "</form>\r\n";
 		}elseif(!empty($_GET['project'])){
@@ -296,7 +296,7 @@ class Caldera_Forms {
 			
 		}
 
-		if( isset($_POST['config']) && isset( $_POST['cf_edit_nonce'] ) ){			
+		if( isset($_POST['config']) && isset( $_POST['cf_edit_nonce'] ) ){
 
 			// if this fails, check_admin_referer() will automatically print a "failed" page and die.
 			if ( check_admin_referer( 'cf_edit_element', 'cf_edit_nonce' ) ) {
@@ -318,6 +318,10 @@ class Caldera_Forms {
 				update_option($data['ID'], $data);
 
 				update_option( '_caldera_forms', $forms );
+
+				if(!empty($_POST['sender'])){
+					exit;
+				}
 
 				wp_redirect('admin.php?page=caldera-forms');
 				die;
@@ -372,6 +376,7 @@ class Caldera_Forms {
 			'form_emailer' => array(
 				"name"				=>	__('Form Emailer', 'caldera-forms'),
 				"description"		=>	__("Sends Form results via Email", 'caldera-forms'),
+				"icon"				=>	CFCORE_URL . "/assets/images/processor.png",
 				"post_processor"	=>	array($this, 'process_form_email'),
 				"template"			=>	CFCORE_PATH . "processors/form_emailer/config.php",
 				"default"			=>	array(
@@ -741,7 +746,7 @@ class Caldera_Forms {
 	// FRONT END STUFFF
 
 	static public function check_user_profile_shortcode(){
-		global $post, $front_templates, $wp_query;
+		global $post, $front_templates, $wp_query, $processID, $form;
 
 		//HOOK IN post
 		
@@ -805,7 +810,7 @@ class Caldera_Forms {
 
 				foreach($form['fields'] as $field){
 					if(!empty($field['required'])){
-						if(strlen($data[$field['slug']]) < 1){
+						if(isset($data[$field['slug']]) && strlen($data[$field['slug']]) < 1){
 							$transdata['fields'][$field['slug']] = $field['slug'] .' ' .__('is required', 'caldera-forms');
 						}
 					}
@@ -882,11 +887,6 @@ class Caldera_Forms {
 							}elseif(!empty($process_line_data)){
 								if(isset($process_line_data['_fail'])){
 									
-									// set transient of submittions
-									$transdata = array(
-										'transient' => $processID,
-										'data' => $data
-									);
 									//type
 									if(!empty($process_line_data['_fail']['type'])){
 										$transdata['type'] = $process_line_data['_fail']['type'];
@@ -1031,7 +1031,7 @@ class Caldera_Forms {
 				do_action('caldera_forms_submit_redirect', $data, $form, $referrer, $processID);
 				// filter refer
 				$referrer = apply_filters('caldera_forms_submit_redirect', $referrer, $process_data, $form, $processID);
-				$referrer = apply_filters('caldera_forms_submit_error_redirect_complete', $referrer, $process_data, $form, $processID);
+				$referrer = apply_filters('caldera_forms_submit_redirect_complete', $referrer, $process_data, $form, $processID);
 
 				wp_redirect( $referrer );
 				exit;
@@ -1270,7 +1270,7 @@ class Caldera_Forms {
 					$prev_data = $prev_post['data'];
 				}
 				if(!empty($prev_post['type']) && !empty($prev_post['note'])){
-					$notices[$prev_post['type']]['note'] = '<div class=" '. implode(' ', $note_classes[$prev_post['type']]) . '">'.$prev_post['note'].'</div>';
+					$notices[$prev_post['type']]['note'] = $prev_post['note'];
 				}
 				if(!empty($prev_post['fields'])){
 					$field_errors = $prev_post['fields'];
@@ -1281,7 +1281,9 @@ class Caldera_Forms {
 
 		}
 		if(!empty($_GET['cf_su'])){
-			$notices['success'] = '<div class=" '. implode(' ', $note_classes['success']) . '">'.__('Form has successfuly been submitted.', 'caldera-forms').'</div>';
+			if(empty($notices['success']['note'])){
+				$notices['success']['note'] = __('Form has successfuly been submitted.', 'caldera-forms');
+			}
 		}
 
 		// setup processor bound requieds
@@ -1330,12 +1332,12 @@ class Caldera_Forms {
 					$field_structure = array(
 						"id"				=>	'fld_' . $field['slug'],
 						"name"				=>	$field['slug'],
-						"label_before"		=>	"<label for=\"" . $field_id . "\" class=\"" . $field_classes['field_label'] . "\">",
-						"label"				=>	$field['label'],
-						"label_required"	=>	( !empty($field['required']) ? " <span class=\"" . $field_classes['field_required_tag'] . "\" style=\"color:#ff2222;\">*</span>" : "" ),
-						"label_after"		=>	"</label>",
-						"field_placeholder" =>	( !empty($field['hide_label']) ? 'placeholder="' . htmlentities( $field['label'] ) .'"' : ''),
-						"field_required"	=>	( !empty($field['required']) ? 'required="required"' : ''),
+						"label_before"		=>	( empty($field['hide_label']) ? "<label for=\"" . $field_id . "\" class=\"" . $field_classes['field_label'] . "\">" : null ),
+						"label"				=>	( empty($field['hide_label']) ? $field['label'] : null ),
+						"label_required"	=>	( empty($field['hide_label']) ? ( !empty($field['required']) ? " <span class=\"" . $field_classes['field_required_tag'] . "\" style=\"color:#ff2222;\">*</span>" : "" ) : null ),
+						"label_after"		=>	( empty($field['hide_label']) ? "</label>" : null ),
+						"field_placeholder" =>	( !empty($field['hide_label']) ? 'placeholder="' . htmlentities( $field['label'] ) .'"' : null),
+						"field_required"	=>	( !empty($field['required']) ? 'required="required"' : null),
 						"field_value"		=>	null,
 						"field_caption"		=>	( !empty($field['caption']) ? "<span class=\"" . $field_classes['field_caption'] . "\">" . $field['caption'] . "</span>\r\n" : ""),
 					);
@@ -1392,7 +1394,11 @@ class Caldera_Forms {
 
 		if(!empty($notices)){
 			// do notices
-			$out .= implode("\r\n", $notices);
+			foreach($notices as $note_type => $notice){
+				if(!empty($notice['note'])){					
+					$out .= '<div class=" '. implode(' ', $note_classes[$note_type]) . '">' . $notice['note'] .'</div>';
+				}
+			}
 
 		}
 

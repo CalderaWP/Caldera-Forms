@@ -32,16 +32,28 @@ h3.caldera-editor-processor-title {
 .form-processor-add-line {
   border-bottom: 1px solid #EFEFEF;
   margin: -12px -12px 12px;
-  padding: 6px 12px;
+  padding: 6px 134px 6px 72px;
 }
+
 .form-processor-add-line:hover {
   background-color: #f7f7f7;
 }
-button.button.add-new-processor{
+button.button.info-button {
   float: right;
+  margin-right: -120px;
   margin-top: 8px;
 }
 #form_processor_baldrickModalBody.caldera-modal-body{
   bottom: 0;
   overflow: auto;
+}
+
+
+.form-processor-lgo {
+  border-radius: 4px;
+  float: left;
+  height: 45px;
+  margin-left: -60px;
+  margin-right: 9px;
+  width: 45px;
 }

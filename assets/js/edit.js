@@ -1,6 +1,11 @@
 jQuery(function($){
 
 
+	$('.edit-update-trigger').baldrick({
+		method			:	'POST'
+	});
+
+
 	/*
 	*	Build the fieltypes config
 	*	configs are stored in the .caldera-config-field-setup field within the parent wrapper

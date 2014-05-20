@@ -996,3 +996,5 @@ input.disabled-input {
 .tab-detail-panel .button.caldera-add-group {
   margin-bottom: 10px !important;
 }
+
+.spinner.loading{display: inline;}

@@ -251,8 +251,7 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 			<a href="#settings-panel"><?php echo __("General Settings", "caldera-forms"); ?></a>
 		</li>
 	</ul>
-	<button class="button caldera-header-save-button" type="submit"><?php echo __('Save & Close', 'caldera-forms'); ?></button>
-
+	<button class="button button-primary caldera-header-save-button" type="submit"><?php echo __('Update Form', 'caldera-forms'); ?><span id="save_indicator" class="spinner" style="position: absolute; right: -30px;"></span></button>	
 </div>
 
 <div style="display: none;" class="caldera-editor-body caldera-config-editor-panel " id="settings-panel">

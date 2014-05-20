@@ -32,7 +32,7 @@ function processor_line_template($id = '{{id}}', $type = null){
 	}
 
 	?>
-	<li class="caldera-processor-nav <?php echo $id; ?>">
+	<li class="caldera-processor-nav <?php echo $id; ?> <?php if(!empty($type)){ echo 'processor_type_'.$type; }; ?>">
 		<a href="#<?php echo $id; ?>">
 		<?php echo $type_name; ?>
 		</a>
@@ -116,6 +116,7 @@ function build_processor_types($default = null){
 	data-modal-title="<?php echo __('Select Form Processor', 'caldera-forms'); ?>"
 	data-modal-height="500"
 	data-template="#form-processors-tmpl"
+	data-callback="hide_single_processors"
 	><?php echo __('Add Processor', 'caldera-forms'); ?></button>
 	<ul class="active-processors-list">
 		<?php
@@ -152,8 +153,13 @@ if(!empty($element['processors'])){
 		global $form_processors;
 
 		foreach($form_processors as $processor_id=>$processor){
-			echo '<div class="form-processor-add-line">';
-				echo '<button type="button" class="button add-new-processor" data-type="' . $processor_id . '" style="float:right;">' . __('Use Processor', 'caldera-forms') . '</button>';
+			$icon = CFCORE_URL . "/assets/images/processor.png";
+			if(!empty($processor['icon'])){
+				$icon = $processor['icon'];
+			}
+			echo '<div class="form-processor-add-line'. ( !empty($processor['single']) ? ' is_single_processor' : null ) . '" data-type="' . $processor_id . '">';
+				echo '<button type="button" class="button info-button add-new-processor" data-type="' . $processor_id . '">' . __('Use Processor', 'caldera-forms') . '</button>';
+				echo '<img src="'. $icon .'" class="form-processor-lgo" width="45" height="45">';
 				echo '<strong>' . $processor['name'] .'</strong>';
 				echo '<p class="description">' . $processor['description'] . '</p>';
 			echo '</div>';
@@ -172,6 +178,9 @@ if(!empty($element['processors'])){
 foreach($form_processors as $processor=>$config){
 	if(isset($config['template'])){
 		echo "<script type=\"text/html\" id=\"" . $processor . "-tmpl\">\r\n";
+			if(isset($config['description'])){
+				echo "<p class=\"description\">" . $config['description'] ."</p><br>\r\n";
+			}
 			include $config['template'];
 		echo "\r\n</script>\r\n";		
 	}
@@ -182,9 +191,18 @@ foreach($form_processors as $processor=>$config){
 
 <?php echo implode("\r\n", $form_processors_defaults); ?>
 
-function new_form_processor(obj){
+function hide_single_processors(){
+	jQuery('.is_single_processor').each(function(k,v){
+		var  line = jQuery(v);
 
-	console.log(obj)
+		if(jQuery('.processor_type_' + line.data('type')).length){
+			line.css('opacity', 0.5).find('.add-new-processor').removeClass('.add-new-processor').prop('disabled', true);
+		}
+
+	});
+}
+
+function new_form_processor(obj){
 
 	return {};
 }

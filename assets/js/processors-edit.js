@@ -79,7 +79,7 @@ jQuery(function($){
 		}
 
 		title_line.html( title );
-		activeline.html( title );
+		activeline.html( title ).parent().addClass( 'processor_type_' + selected.val() );
 
 		// get config
 		build_processor_config(this);
