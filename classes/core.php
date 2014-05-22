@@ -305,11 +305,12 @@ class Caldera_Forms {
 			}
 		}
 
+
+		if(empty($form['mailer']['enable_mailer'])){
+			return;
+		}
 		// do mailer!
-		// build CSV
-		//dump($form['mailer']);
-		$attachment = null;
-		
+		$attachment = null;		
 		$sendername = __('Caldera Forms Notification', 'caldera-forms');
 		if(!empty($form['mailer']['sender_name'])){
 			$sendername = $form['mailer']['sender_name'];
@@ -333,6 +334,7 @@ class Caldera_Forms {
 		}
 
 		$message = $form['mailer']['email_message']."\r\n";
+		$subject = $form['mailer']['email_subject'];
 		$submission = array();
 		foreach ($data as $key=>$row) {
 			if(is_array($row)){
@@ -351,6 +353,8 @@ class Caldera_Forms {
 				}
 			}
 			$message = str_replace('%'.$key.'%', $row, $message);
+			$subject = str_replace('%'.$key.'%', $row, $subject);
+			
 			$submission[] = $row;				
 		}
 		// CSV
@@ -366,7 +370,7 @@ class Caldera_Forms {
 		}
 
 		//dump($recipients);		
-		if(wp_mail($recipients, $form['mailer']['email_subject'], $message, $headers, $attachment )){
+		if(wp_mail($recipients, $subject, $message, $headers, $attachment )){
 			// kill attachment.
 			if(!empty($attachment)){
 				if(file_exists($attachment)){

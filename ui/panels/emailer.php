@@ -1,10 +1,10 @@
 <?php
 
 if(!isset($element['mailer']['sender_name'])){
-	$element['mailer']['sender_name'] = '';
+	$element['mailer']['sender_name'] = __('Caldera Forms Notification');
 }
 if(!isset($element['mailer']['sender_email'])){
-	$element['mailer']['sender_email'] = '';
+	$element['mailer']['sender_email'] = get_option( 'admin_email' );
 }
 if(!isset($element['mailer']['email_type'])){
 	$element['mailer']['email_type'] = 'html';
@@ -18,12 +18,25 @@ if(!isset($element['mailer']['email_subject'])){
 if(!isset($element['mailer']['email_message'])){
 	$element['mailer']['email_message'] = '';
 }
+if(!isset($element['mailer']['enable_mailer'])){
+	$element['mailer']['enable_mailer'] = '1';
+}
 
 
 
 
 
 ?>
+	<div class="caldera-config-group">
+		<label><?php echo __('Mailer', 'caldera-forms'); ?> </label>
+		<div class="caldera-config-field">
+			<select class="field-config" id="mailer_status_select" name="config[mailer][enable_mailer]">
+			<option value="0" <?php if($element['mailer']['enable_mailer'] == '0'){ echo 'selected="selected"'; } ?>><?php echo __('Disabled', 'caldera-forms'); ?></option>
+			<option value="1" <?php if($element['mailer']['enable_mailer'] == '1'){ echo 'selected="selected"'; } ?>><?php echo __('Enabled', 'caldera-forms'); ?></option>
+			</select>
+		</div>
+	</div>
+	<div class="mailer_config_panel" <?php if($element['mailer']['enable_mailer'] == '0'){ echo 'style="display:none;"'; } ?>>
 	<div class="caldera-config-group">
 		<label><?php echo __('From Name', 'caldera-forms'); ?> </label>
 		<div class="caldera-config-field">
@@ -72,6 +85,7 @@ if(!isset($element['mailer']['email_message'])){
 		<label><?php echo __('Email Message', 'caldera-forms'); ?> </label>
 		<div class="caldera-config-field" style="max-width: 600px;">
 			<?php wp_editor( $element['mailer']['email_message'], "mailer_email_message", array('textarea_name' => 'config[mailer][email_message]') ); ?>
+			<p class="description"><?php echo __('Magic tags, %field_slug% are replaced with submitted data.', 'caldera-forms'); ?></p>
 		</div>
 	</div>
 
@@ -79,7 +93,19 @@ if(!isset($element['mailer']['email_message'])){
 
 	
 
+<script type="text/javascript">
+	
+jQuery('body').on('change', '#mailer_status_select', function(){
+	var status = jQuery(this);
 
+	if(status.val() === '0'){
+		jQuery('.mailer_config_panel').slideUp(100);
+	}else{
+		jQuery('.mailer_config_panel').slideDown(100);
+	}
+});
+
+</script>
 
 
 
