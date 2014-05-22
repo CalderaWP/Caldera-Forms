@@ -252,7 +252,7 @@
 						data.append(att, tr.data(att));
 					}
 					// use input
-					if(tr.is('input')){
+					if(tr.is('input,select,textarea')){
 						if(tr.is('input:file')){														
 							if(tr[0].files.length > 1){								
 								for( var file = 0; file < tr[0].files.length; file++){

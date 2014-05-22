@@ -28,6 +28,29 @@ $field_type_defaults = array(
 	"var fieldtype_defaults = {};"
 );
 
+// options based template
+$field_options_template = "
+<div class=\"caldera-config-group-toggle-options\">
+	<div class=\"caldera-config-group caldera-config-group-full\">
+		<button class=\"button block-button add-toggle-option\" type=\"button\">" . __('Add Option', 'caldera-forms') . "</button>
+	</div>
+	<div class=\"caldera-config-group caldera-config-group-full\">
+	<label style=\"padding: 10px;\"><input type=\"radio\" class=\"toggle_set_default field-config\" name=\"{{_name}}[default]\" value=\"\" {{#unless default}}checked=\"checked\"{{/unless}}> " . __('No Default', 'caldera-forms') . "</label>
+	</div>
+	<div class=\"caldera-config-group caldera-config-group-full toggle-options\">
+		{{#each option}}
+		<div class=\"toggle_option_row\">
+			<i class=\"dashicons dashicons-sort\" style=\"padding: 4px 9px;\"></i>
+			<input type=\"radio\" class=\"toggle_set_default field-config\" name=\"{{../_name}}[default]\" value=\"{{@key}}\" {{#is ../default value=\"@key\"}}checked=\"checked\"{{/is}}>
+			<input type=\"text\" class=\"toggle_value_field field-config\" name=\"{{../_name}}[option][{{@key}}][value]\" value=\"{{value}}\" placeholder=\"value\">
+			<input type=\"text\" class=\"toggle_label_field field-config\" name=\"{{../_name}}[option][{{@key}}][label]\" value=\"{{label}}\" placeholder=\"label\">
+			<button class=\"button button-small toggle-remove-option\" type=\"button\"><i class=\"icn-delete\"></i></button>		
+		</div>
+		{{/each}}
+	</div>
+</div>
+";
+
 // Build Field Types List
 foreach($field_types as $field_slug=>$config){
 
@@ -44,15 +67,22 @@ foreach($field_types as $field_slug=>$config){
 	if(!empty($config['setup']['template'])){
 		if(file_exists( $config['setup']['template'] )){
 			// create config template block
-			
 				ob_start();
 					include $config['setup']['template'];
-				$field_type_templates[sanitize_key( $field_slug ) . "_tmpl"] = ob_get_clean();
-
-				
+				$field_type_templates[sanitize_key( $field_slug ) . "_tmpl"] = ob_get_clean();				
 		}
 
 	}	
+
+	if(isset($config['options'])){
+		if(!isset($field_type_templates[sanitize_key( $field_slug ) . "_tmpl"])){
+			$field_type_templates[sanitize_key( $field_slug ) . "_tmpl"] = null;
+		}
+
+		// has configurable options - include template
+		$field_type_templates[sanitize_key( $field_slug ) . "_tmpl"] .= $field_options_template;
+	}
+
 	
 	if(!empty($config['setup']['default'])){
 		$field_type_defaults[] = "fieldtype_defaults." . sanitize_key( $field_slug ) . "_cfg = " . json_encode($config['setup']['default']) .";";
@@ -99,7 +129,7 @@ foreach($field_types as $field_slug=>$config){
 }
 
 
-function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{{slug}}', $caption = '{{caption}}', $hide_label = '{{hide_label}}', $required = '{{required}}', $type = null, $config_str = '{"default":"default value"}'){
+function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{{slug}}', $caption = '{{caption}}', $hide_label = '{{hide_label}}', $required = '{{required}}', $entry_list = '{{entry_list}}', $type = null, $config_str = '{"default":"default value"}'){
 
 	if(is_array($config_str)){
 		$config 	= $config_str;
@@ -119,7 +149,7 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 	data-template="#form-fields-selector-tmpl"
 	data-modal-width="600"
 	id="<?php echo $id; ?>" style="display:none;">
-		<button class="button button-small pull-right delete-field" type="button"><i class="icn-delete"></i></button>
+		
 		<h3 class="caldera-editor-field-title"><?php echo $label; ?>&nbsp;</h3>
 		<div class="caldera-config-group">
 			<label for="<?php echo $id; ?>_type"><?php echo __('Element Type', 'caldera-forms'); ?></label>
@@ -165,9 +195,19 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 				<input type="text" class="block-input field-config" id="<?php echo $id; ?>_caption" name="config[fields][<?php echo $id; ?>][caption]" value="<?php echo sanitize_text_field( $caption ); ?>">
 			</div>
 		</div>
+		
+		<div class="caldera-config-group entrylist-field">
+			<label for="<?php echo $id; ?>_entry_list"><?php echo __('Show in Entry List', 'caldera-forms'); ?></label>
+			<div class="caldera-config-field">
+				<input type="checkbox" class="field-config field-checkbox" id="<?php echo $id; ?>_entry_list" name="config[fields][<?php echo $id; ?>][entry_list]" value="1" <?php if($entry_list === 1){ echo 'checked="checked"'; }; ?>>
+			</div>
+		</div>
+
 		<div class="caldera-config-field-setup">
 		</div>
 		<input type="hidden" class="field_config_string block-input" value="<?php echo htmlentities( $config_str ); ?>">
+		<br>
+		<button class="button button-primary delete-field block-button" data-confirm="<?php echo __('Are you sure you want to remove this field?. \'Cancel\' to stop. \'OK\' to delete', 'caldera-forms'); ?>" type="button"><i class="icn-delete"></i> <?php echo __('Delete Field', 'caldera-forms'); ?></button>
 	</div>
 	<?php
 }
@@ -470,7 +510,11 @@ foreach($panel_extensions as $panel){
 // PROCESSORS
 
 ?>
-
+<script type="text/html" id="field-options-cofnig-tmpl">
+<?php
+	echo $field_options_template;
+?>
+</script>
 
 <script type="text/html" id="form-fields-selector-tmpl">
 	<div class="modal-tab-panel">
@@ -532,6 +576,17 @@ foreach($panel_extensions as $panel){
 <?php
 	echo field_wrapper_template();
 ?>
+</script>
+<script type="text/html" id="field-option-row-tmpl">
+	{{#each option}}
+	<div class="toggle_option_row">
+		<i class="dashicons dashicons-sort" style="padding: 4px 9px;"></i>
+		<input type="radio" class="toggle_set_default field-config" name="{{../_name}}[default]" value="{{@key}}" {{#is ../default value="@key"}}checked="checked"{{/is}}>
+		<input type="text" class="toggle_value_field field-config" name="{{../_name}}[option][{{@key}}][value]" value="{{value}}" placeholder="value">
+		<input type="text" class="toggle_label_field field-config" name="{{../_name}}[option][{{@key}}][label]" value="{{label}}" placeholder="label">
+		<button class="button button-small toggle-remove-option" type="button"><i class="icn-delete"></i></button>		
+	</div>
+	{{/each}}
 </script>
 <script type="text/html" id="noconfig_field_templ">
 <div class="caldera-config-group">

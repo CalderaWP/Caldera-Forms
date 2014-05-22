@@ -65,7 +65,7 @@ function processor_wrapper_template($id = '{{id}}', $type = null, $config_str = 
 
 	?>
 	<div class="caldera-editor-processor-config-wrapper" id="<?php echo $id; ?>" style="display:none;">
-		<button class="button button-small pull-right delete-processor" type="button"><i class="icn-delete"></i></button>
+		<button class="button button-small pull-right delete-processor" data-confirm="<?php echo __('Are you sure you want to remove this processor?', 'caldera-forms'); ?>" type="button"><i class="icn-delete"></i></button>
 		<h3 data-title="<?php echo __('New Form Processor', 'caldera-forms'); ?>" class="caldera-editor-processor-title"><?php echo $type_name; ?></h3>
 		<div class="caldera-config-group" style="display:none;">
 			<label for="<?php echo $id; ?>_type"><?php echo __('Processor Type', 'caldera-forms'); ?></label>

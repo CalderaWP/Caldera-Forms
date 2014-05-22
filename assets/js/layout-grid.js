@@ -29,7 +29,14 @@ rebind_field_bindings = function(){
 	bindings.each(function(k,v){
 
 		var field = jQuery(v),
-			current = field.val();
+			current = field.val(),
+			default_sel = field.data('default'),
+			count = 0;
+
+
+		if(default_sel){
+			current = default_sel;
+		}
 
 		field.empty();
 
@@ -41,9 +48,18 @@ rebind_field_bindings = function(){
 				if(field.data('type').split(',').indexOf(current_form_fields[fid].type) < 0){
 					continue;
 				}
+
 			}
 			field.append('<option value="' + fid + '"' + ( current === fid ? 'selected="selected"' : '' ) + '>' + current_form_fields[fid].label + '</option>');
+			count += 1;
 		}
+
+		if(count === 0){
+			field.append('<option value="">No ' + field.data('type').split(',').join(' or ') + ' in form</option>').prop('disabled', true);
+		}else{
+			field.prop('disabled', false);
+		}
+
 
 	});
 
@@ -135,8 +151,13 @@ jQuery(function($) {
 		capt.val(struct.join('|'));
 	}
 	function buildSortables(){
-		
+
 		// Sortables
+		$('.toggle-options').sortable({
+			handle: ".dashicons-sort"
+		});
+
+
 		$( ".layout-grid-panel" ).sortable({
 			placeholder: 	"row-drop-helper",
 			handle: 		".sort-handle",
@@ -508,6 +529,63 @@ jQuery(function($) {
 	});
 
 
+	//toggle_option_row
+
+	$('.caldera-editor-body').on('click', '.add-toggle-option', function(e){
+
+		var clicked		= $(this),
+			wrapper		= clicked.closest('.caldera-editor-field-config-wrapper'),
+			toggle_rows	= wrapper.find('.toggle-options'),
+			row			= $('#field-option-row-tmpl').html(),
+			template	= Handlebars.compile( row ),
+			key			= "opt" + parseInt( ( Math.random() + 1 ) * 0x100000 ),
+			config		= {
+				_name	:	'config[fields][' + wrapper.prop('id') + '][config]',
+				option	: {}
+			};
+
+			console.log(row);
+
+			// add new option
+			config.option[key]	=	{				
+				value	:	'',
+				label	:	'',
+				default :	false				
+			};
+
+
+			// place new row
+			toggle_rows.append( template( config ) );
+
+
+
+			$('.toggle-options').sortable({
+				handle: ".dashicons-sort"
+			});
+
+			toggle_rows.find('.toggle_value_field').last().focus();
+
+
+	});
+
+	// remove an option row
+	$('.caldera-editor-body').on('click', '.toggle-remove-option', function(e){
+		var triggerfield = $(this).closest('.caldera-editor-field-config-wrapper').find('.field-config').first();
+		$(this).parent().remove();
+		triggerfield.trigger('change');
+	});
+
+	$('.caldera-editor-body').on('blur', '.toggle_value_field', function(e){
+		var value = $(this),
+			label = value.next();
+
+		if(label.val().length){
+			return;
+		}
+
+		label.val(value.val());
+	});
+
 	// build fild bindings
 	rebuild_field_binding();
 
@@ -524,9 +602,37 @@ Handlebars.registerHelper("is_single", function(value, options) {
 });
 
 Handlebars.registerHelper("is", function(value, options) {
+	//console.log(value);
+	console.log(options.data.key + ' - ' + options.hash.value);
+	if(options.hash.value === '@key'){
+		options.hash.value = options.data.key;
+	}
 	if(options.hash.value === value){
 		return options.fn(this);
 	}else{
 		return false;
 	}
 });
+Handlebars.registerHelper("_options_config", function() {
+	//console.log(this);
+});
+/*
+<div class="caldera-config-group caldera-config-group-full">
+	<button class="button block-button add-toggle-option" type="button">Add Option</button>
+</div>
+<div class="caldera-config-group caldera-config-group-full toggle-options">
+	{{#each option}}
+	<div class="toggle_option_row">
+		<i class="dashicons dashicons-sort" style="padding: 4px 9px;"></i>
+		{{#if default}}
+			<input type="checkbox" class="toggle_set_default field-config" name="{{../../_name}}[option][{{@key}}][default]" value="1" checked="checked">
+		{{else}}			
+			<input type="checkbox" class="toggle_set_default field-config" name="{{../../_name}}[option][{{@key}}][default]" value="1">
+		{{/if}}
+		<input type="text" class="toggle_value_field field-config" name="{{../_name}}[option][{{@key}}][value]" value="{{value}}" placeholder="value">
+		<input type="text" class="toggle_label_field field-config" name="{{../_name}}[option][{{@key}}][label]" value="{{label}}" placeholder="label">
+		<button class="button button-small toggle-remove-option" type="button"><i class="icn-delete"></i></button>		
+	</div>
+	{{/each}}
+</div>
+*/

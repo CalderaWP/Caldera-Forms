@@ -4,21 +4,3 @@
 		<input type="checkbox" class="field-config" name="{{_name}}[inline]" value="1" {{#if inline}}checked="checked"{{/if}}>
 	</div>
 </div>
-<div class="caldera-config-group caldera-config-group-full">
-	<button class="button block-button add-toggle-option" type="button">Add Option</button>
-</div>
-<div class="caldera-config-group caldera-config-group-full toggle-options">
-	{{#each option}}
-	<div class="toggle_option_row">
-		<i class="dashicons dashicons-sort" style="padding: 4px 9px;"></i>
-		{{#if default}}
-			<input type="checkbox" class="toggle_set_default field-config" name="{{../../_name}}[option][{{@key}}][default]" value="1" checked="checked">
-		{{else}}			
-			<input type="checkbox" class="toggle_set_default field-config" name="{{../../_name}}[option][{{@key}}][default]" value="1">
-		{{/if}}
-		<input type="text" class="toggle_value_field field-config" name="{{../_name}}[option][{{@key}}][value]" value="{{value}}" placeholder="value">
-		<input type="text" class="toggle_label_field field-config" name="{{../_name}}[option][{{@key}}][label]" value="{{label}}" placeholder="label">
-		<button class="button button-small toggle-remove-option" type="button"><i class="icn-delete"></i></button>		
-	</div>
-	{{/each}}
-</div>

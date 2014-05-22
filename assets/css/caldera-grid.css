@@ -256,6 +256,9 @@
   border: 0;
   border-top: 1px solid #eeeeee;
 }
+.caldera-grid .form-group {
+  margin-bottom: 1em;
+}
 .caldera-grid .sr-only {
   position: absolute;
   width: 1px;

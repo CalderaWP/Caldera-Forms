@@ -61,8 +61,10 @@
   padding: 12px;
   text-align: right;
 }
-.tablenav.caldera-table-nav{
-  margin: 60px 0 0;
+.tablenav.caldera-table-nav {
+  clear: none;
+  float: right;
+  margin: -42px 18px 0 0;
 }
 .caldera-table-nav .tablenav-pages{
   float: left;

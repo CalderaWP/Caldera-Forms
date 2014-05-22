@@ -53,6 +53,8 @@ class Caldera_Forms {
 		add_filter('caldera_forms_get_field_types', array( $this, 'get_field_types'));
 		add_filter('caldera_forms_get_form_processors', array( $this, 'get_form_processors'));
 
+		// action
+		add_action('caldera_forms_submit_complete', array( $this, 'save_final_form'),1,2);
 
 		if(is_admin()){
 			add_action( 'wp_loaded', array( $this, 'save_form') );
@@ -67,6 +69,7 @@ class Caldera_Forms {
 
 		//add_action('wp_footer', array( $this, 'footer_scripts' ) );
 		add_action("wp_ajax_create_form", array( $this, 'create_form') );
+		add_action("wp_ajax_browse_entries", array( $this, 'browse_entries') );
 
 
 	}
@@ -83,6 +86,226 @@ class Caldera_Forms {
 			echo "</a>\n";
 		}
 	}
+
+	/// activator
+	public static function activate_caldera_forms(){
+		global $wpdb;
+
+		$tables = $wpdb->get_results("SHOW TABLES", ARRAY_A);
+		foreach($tables as $table){
+			$alltables[] = implode($table);
+		}
+		if(!in_array($wpdb->prefix.'cf_form_entries', $alltables)){
+			// create tables
+			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+
+			$entry_table = "CREATE TABLE `" . $wpdb->prefix . "cf_form_entries` (
+			`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+			`form_id` varchar(18) NOT NULL DEFAULT '',
+			`user_id` int(11) NOT NULL,
+			`datestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY (`id`),
+			KEY `form_id` (`form_id`),
+			KEY `user_id` (`user_id`),
+			KEY `date_time` (`datestamp`)
+			) DEFAULT CHARSET=utf8;";
+
+			
+			dbDelta( $entry_table );
+			
+			$values_table = "CREATE TABLE `" . $wpdb->prefix . "cf_form_entry_values` (
+			`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+			`entry_id` int(11) NOT NULL,
+			`slug` varchar(255) NOT NULL DEFAULT '',
+			`value` longtext NOT NULL,
+			PRIMARY KEY (`id`),
+			KEY `form_id` (`entry_id`),
+			KEY `slug` (`slug`)
+			) DEFAULT CHARSET=utf8;";
+
+			dbDelta( $values_table );
+		
+		}
+
+	}
+
+
+	public static function browse_entries(){
+
+		global $wpdb;
+
+		$page = 1;
+		$perpage = 20;
+
+		$form = get_option( $_POST['form'] );
+			
+		$field_labels = array();
+		$backup_labels = array();
+		$selects = array();
+		if(!empty($form['fields'])){
+			foreach($form['fields'] as $fid=>$field){
+				if(!empty($field['entry_list'])){
+					$selects[] = "'".$field['slug']."'";
+					$field_labels[$field['slug']] = $field['label'];
+				}
+				if(count($backup_labels) < 4 && in_array($field['type'], array('text','email','date','name'))){
+					// backup only first 4 fields
+					$backup_labels[$field['slug']] = $field['label'];
+				}
+			}
+		}
+		if(empty($field_labels)){
+			$field_labels = $backup_labels;
+		}
+		//ksort($field_labels);
+
+		$data = array();
+
+		$data['total'] = (int) $wpdb->get_var($wpdb->prepare("SELECT COUNT(`id`) AS `total` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = %s;", $_POST['form']));
+
+		$data['pages'] = ceil($data['total'] / $perpage );
+
+		if(!empty((int) $_POST['page'])){
+			$page = abs( (int) $_POST['page'] );
+			if($page > $data['pages']){
+				$page = $data['pages'];
+			}
+		}
+
+		$data['current_page'] = $page;
+
+		if($data['total'] > 0){
+			$data['fields'] = $field_labels;
+			$offset = ($page - 1) * $perpage;
+			$limit = $offset . ',' . $perpage;
+
+			$rawdata = $wpdb->get_results($wpdb->prepare("
+			SELECT
+				`id`
+			FROM `" . $wpdb->prefix ."cf_form_entries`
+
+			WHERE `form_id` = %s ORDER BY `datestamp` DESC LIMIT " . $limit . ";", $_POST['form'] ));		
+
+			if(!empty($rawdata)){
+
+				$ids = array();
+				foreach($rawdata as $row){
+					$ids[] = $row->id;
+				}
+
+				$filter = null;
+				if(!empty($selects)){
+					$filter .= " AND `value`.`slug` IN (" . implode(',', $selects) . ") ";
+				}
+				$rawdata = $wpdb->get_results("
+				SELECT
+					`entry`.`id` as `_entryid`,
+					`entry`.`form_id` AS `_form_id`,
+					`entry`.`datestamp` AS `_date_submitted`,
+					`entry`.`user_id` AS `_user_id`,
+					`value`.*
+
+				FROM `" . $wpdb->prefix ."cf_form_entries` AS `entry`
+				LEFT JOIN `" . $wpdb->prefix ."cf_form_entry_values` AS `value` ON (`entry`.`id` = `value`.`entry_id`)
+
+				WHERE `entry`.`id` IN (" . implode(',',$ids) . ")
+				" . $filter ."
+				ORDER BY `entry`.`datestamp` DESC;");
+
+				
+				$data['entries'] = array();
+				$dateformat = get_option('date_format');
+				$timeformat = get_option('time_format');
+				foreach($rawdata as $row){
+
+					if(!empty($row->_user_id)){
+						$user = get_userdata( $row->_user_id );
+						$data['entries']['E' . $row->_entryid]['user']['ID'] = $user->ID;
+						$data['entries']['E' . $row->_entryid]['user']['name'] = $user->data->display_name;
+						$data['entries']['E' . $row->_entryid]['user']['email'] = $user->data->user_email;
+						$data['entries']['E' . $row->_entryid]['user']['avatar'] = get_avatar( $user->ID, 64 );
+					}
+					$data['entries']['E' . $row->_entryid]['_entry_id'] = $row->_entryid;
+					$data['entries']['E' . $row->_entryid]['_date'] = date_i18n( $dateformat.' '.$timeformat, strtotime($row->_date_submitted) );
+					$label = $row->slug;
+					if(!empty($field_labels[$label])){
+						$label = $field_labels[$label];
+						if(!isset($data['entries']['E' . $row->_entryid]['data'])){
+							if(isset($field_labels)){
+								foreach ($field_labels as $slug => $label) {
+									// setup labels ordering
+									$data['entries']['E' . $row->_entryid]['data'][$slug] = null;
+								}
+							}
+						}
+
+						if(isset($data['entries']['E' . $row->_entryid]['data'][$row->slug])){
+							// array based - add another entry
+							if(!is_array($data['entries']['E' . $row->_entryid]['data'][$row->slug])){
+								$tmp = $data['entries']['E' . $row->_entryid]['data'][$row->slug];
+								$data['entries']['E' . $row->_entryid]['data'][$row->slug] = array($tmp);
+							}
+							$data['entries']['E' . $row->_entryid]['data'][$row->slug][] = $row->value;
+						}else{
+							$data['entries']['E' . $row->_entryid]['data'][$row->slug] = $row->value;
+						}
+					}
+					//ksort($data['entries']['E' . $row->_entryid]['data']);
+				}
+			}
+		}
+
+		header('Content-Type: application/json');
+		echo json_encode( $data );
+		exit;
+
+
+	}
+
+	public static function save_final_form($data, $form){
+		
+		global $wpdb;
+
+		$new_entry = array(
+			'form_id'	=>	$form['ID'],
+			'user_id'	=>	get_current_user_id(),			
+		);
+		$wpdb->insert($wpdb->prefix . 'cf_form_entries', $new_entry);
+		$entryid = $wpdb->insert_id;
+		
+		foreach($data as $field=>$values){
+			if(is_array($values)){
+				$keys = array_keys($values);
+				if(is_int($keys[0])){
+					foreach((array) $values as $value){
+						/// repeatable numerik index has same key
+						$field_item = array(
+							'entry_id'	=> $entryid,
+							'slug'		=> $field,
+							'value'		=> $value
+						);
+						$wpdb->insert($wpdb->prefix . 'cf_form_entry_values', $field_item);
+					}
+				}else{
+					// named index is array stored
+					$field_item = array(
+						'entry_id'	=> $entryid,
+						'slug'		=> $field,
+						'value'		=> json_encode( $values )
+					);
+					$wpdb->insert($wpdb->prefix . 'cf_form_entry_values', $field_item);
+				}
+			}else{
+				$field_item = array(
+					'entry_id'	=> $entryid,
+					'slug'		=> $field,
+					'value'		=> $values
+				);
+				$wpdb->insert($wpdb->prefix . 'cf_form_entry_values', $field_item);
+			}
+		}
+	}
+
 	/**
 	 * Return an instance of this class.
 	 *
@@ -285,6 +508,7 @@ class Caldera_Forms {
 				if(isset($forms[$_GET['delete']])){
 					unset($forms[$_GET['delete']]);
 					if(delete_option( $_GET['delete'] )){
+						do_action('caldera_forms_delete_form', $_GET['delete']);
 						update_option( '_caldera_forms', $forms );	
 					}
 				}
@@ -315,8 +539,10 @@ class Caldera_Forms {
 				//dump($data);
 
 				// update form
+				do_action('caldera_forms_save_form', $data);
 				update_option($data['ID'], $data);
 
+				do_action('caldera_forms_save_form_register', $data);
 				update_option( '_caldera_forms', $forms );
 
 				if(!empty($_POST['sender'])){
@@ -429,7 +655,8 @@ class Caldera_Forms {
 					"not_supported"	=>	array(
 						'hide_label',
 						'caption',
-						'required'
+						'required',
+
 					)
 				)
 			),
@@ -448,7 +675,8 @@ class Caldera_Forms {
 					"not_supported"	=>	array(
 						'hide_label',
 						'caption',
-						'required'
+						'required',
+						'entry_list'
 					)
 				)
 			),
@@ -479,6 +707,7 @@ class Caldera_Forms {
 				"description" => __('Toggle Switch', 'caldera-forms'),
 				"category"	=>	__("Select Options", "cladera-forms"),
 				"file"		=>	CFCORE_PATH . "fields/toggle_switch/field.php",
+				"options"	=>	"single",
 				"setup"		=>	array(
 					"template"	=>	CFCORE_PATH . "fields/toggle_switch/config_template.html",
 					"preview"	=>	CFCORE_PATH . "fields/toggle_switch/preview.php",
@@ -504,6 +733,7 @@ class Caldera_Forms {
 				"description" => __('Dropdown Select', 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/dropdown/field.php",
 				"category"	=>	__("Select Options", "cladera-forms"),
+				"options"	=>	"single",
 				"setup"		=>	array(
 					"template"	=>	CFCORE_PATH . "fields/dropdown/config_template.html",
 					"preview"	=>	CFCORE_PATH . "fields/dropdown/preview.php",
@@ -520,6 +750,7 @@ class Caldera_Forms {
 				"description" => __('Checkbox', 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/checkbox/field.php",
 				"category"	=>	__("Select Options", "cladera-forms"),
+				"options"	=>	"multiple",
 				"setup"		=>	array(
 					"preview"	=>	CFCORE_PATH . "fields/checkbox/preview.php",
 					"template"	=>	CFCORE_PATH . "fields/checkbox/config_template.html",
@@ -536,6 +767,7 @@ class Caldera_Forms {
 				"description" => __('Radio', 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/radio/field.php",
 				"category"	=>	__("Select Options", "cladera-forms"),
+				"options"	=>	true,
 				"setup"		=>	array(
 					"preview"	=>	CFCORE_PATH . "fields/radio/preview.php",
 					"template"	=>	CFCORE_PATH . "fields/radio/config_template.html",
@@ -682,7 +914,7 @@ class Caldera_Forms {
 								),
 							)
 						),
-					),
+					),/*
 					"styles" => array(
 						"name" => __("Stylesheets", 'caldera-forms'),
 						"location" => "lower",
@@ -747,7 +979,7 @@ class Caldera_Forms {
 								),
 							),
 						),
-					),
+					),*/
 				),
 			),
 		);
@@ -809,20 +1041,37 @@ class Caldera_Forms {
 
 				// setup processor bound requieds
 				if(!empty($form['processors'])){
+					$bound_fields = array(); 
 					foreach($form['processors'] as $processor_id=>$processor){
 						if(!empty($processor['config'])){
 							foreach($processor['config'] as $slug=>&$value){
-								if(isset($form['fields'][$value])){
-									$form['fields'][$value]['required'] = 1;
-								}
+								$bound_fields = array_merge($bound_fields, self::search_array_fields($value, array_keys( $form['fields'])) );
 							}
 						}
+					}
+					foreach($bound_fields as $bound){
+						$form['fields'][$bound]['required'] = 1;
 					}
 				}
 
 				foreach($form['fields'] as $field){
+					
+					$failed = false;
 					if(!empty($field['required'])){
-						if(isset($data[$field['slug']]) && strlen($data[$field['slug']]) < 1){
+						if(isset($data[$field['slug']])){
+							if(is_array($data[$field['slug']])){
+								if(count($data[$field['slug']]) <= 0){
+									$failed = true;
+								}
+							}else{
+								if(strlen($data[$field['slug']]) < 1){
+									$failed = true;
+								}								
+							}
+						}else{
+							$failed = true;
+						}
+						if($failed === true){
 							$transdata['fields'][$field['slug']] = $field['slug'] .' ' .__('is required', 'caldera-forms');
 						}
 					}
@@ -1033,7 +1282,7 @@ class Caldera_Forms {
 				}
 				
 				// done do action.
-				do_action('caldera_forms_submit_complete', $data, $form, $referrer, $processID);
+				do_action('caldera_forms_submit_complete', $process_data, $form, $referrer, $processID);
 
 				// redirect back or to result page
 				$referrer['query']['cf_su'] = 1;
@@ -1103,7 +1352,7 @@ class Caldera_Forms {
 		//}
 		//if(isset($form['settings']['styles']['use_form'])){
 		//	if($form['settings']['styles']['use_form'] === 'yes'){
-				wp_enqueue_style( 'cf-form-styles', CFCORE_URL . 'assets/css/caldera-form.css', array(), self::VERSION );
+				//wp_enqueue_style( 'cf-form-styles', CFCORE_URL . 'assets/css/caldera-form.css', array(), self::VERSION );
 		//	}
 		//}
 		//if(isset($form['settings']['styles']['use_alerts'])){
@@ -1190,7 +1439,49 @@ class Caldera_Forms {
 		}
 	}
 
-	static public function render_form($atts){
+
+	static function search_array_fields($needle, $haystack, $found = array()){
+
+		//dump($haystack);
+		if(is_array($needle)){
+			foreach($needle as $pin){
+				$found = array_merge($found, self::search_array_fields($pin, $haystack));
+			}
+		}else{
+			if(in_array($needle, $haystack)){
+				$found[] = $needle;
+			}
+		}
+		return $found;
+	}
+	
+	static public function get_entry($entry_id){
+		
+		global $wpdb;
+
+		$rawdata = $wpdb->get_results($wpdb->prepare("
+			SELECT
+				`entry`.`form_id` AS `_form_id`,
+				`entry`.`datestamp` AS `_date_submitted`,
+				`entry`.`user_id` AS `_user_id`,
+				`value`.*
+
+			FROM `" . $wpdb->prefix ."cf_form_entries` AS `entry`
+			LEFT JOIN `" . $wpdb->prefix ."cf_form_entry_values` AS `value` ON (`entry`.`id` = `value`.`entry_id`)
+			WHERE `entry`.`id` = %d;", $entry_id ));
+
+		if(empty($rawdata)){
+			return array();
+		}
+		$data = array();
+		foreach($rawdata as $row){
+			$data[$row->slug] = $row->value;
+		}
+
+		return $data;
+	}
+
+	static public function render_form($atts, $entry_id = null){
 
 		if(empty($atts)){
 			return;
@@ -1272,8 +1563,16 @@ class Caldera_Forms {
 		$note_classes = apply_filters('caldera_forms_render_note_classes', $note_classes, $form);
 
 		$field_errors = array();
+		
 		// check for prev post
 		$prev_data = false;
+		
+		// load requested data
+		if(!empty($entry_id)){
+			$prev_data = Caldera_Forms::get_entry($entry_id);
+		}
+
+
 		if(!empty($_GET['cf_er'])){
 			$prev_post = get_transient( $_GET['cf_er'] );
 			if(!empty($prev_post['transient'])){
@@ -1300,14 +1599,16 @@ class Caldera_Forms {
 
 		// setup processor bound requieds
 		if(!empty($form['processors'])){
+			$bound_fields = array(); 
 			foreach($form['processors'] as $processor_id=>$processor){
 				if(!empty($processor['config'])){
 					foreach($processor['config'] as $slug=>&$value){
-						if(isset($form['fields'][$value])){
-							$form['fields'][$value]['required'] = 1;
-						}
+						$bound_fields = array_merge($bound_fields, self::search_array_fields($value, array_keys( $form['fields'])) );
 					}
 				}
+			}
+			foreach($bound_fields as $bound){
+				$form['fields'][$bound]['required'] = 1;
 			}
 		}
 

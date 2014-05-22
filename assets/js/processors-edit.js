@@ -48,7 +48,7 @@ jQuery(function($){
 		$('#fp_' + processid + '_type').val(clicked.data('type')).trigger('change');		
 		rebuild_field_binding();
 
-
+		baldrickTriggers();
 	});
 
 	// remove processor	
@@ -56,6 +56,10 @@ jQuery(function($){
 		
 		var clicked = $(this),
 			parent = clicked.parent();
+
+		if(!confirm(clicked.data('confirm'))){
+			return;
+		}
 
 		$('.' + parent.prop('id')).remove();
 		parent.remove();
@@ -84,7 +88,8 @@ jQuery(function($){
 		// get config
 		build_processor_config(this);
 
-		check_required_bindings();
+		//check_required_bindings();
+		rebuild_field_binding();
 
 	});
 
@@ -130,7 +135,7 @@ jQuery(function($){
 			}
 
 		rebuild_field_binding();
-
+		baldrickTriggers();
 	}
 
 	// build configs on load:

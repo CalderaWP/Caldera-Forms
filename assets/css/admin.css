@@ -163,7 +163,9 @@ select.caldera-type-selector {
 .layout-form-field.has-error .preview-caldera-config-group{
   box-shadow: 0 0 2px rgba(255, 0, 0, 0.8);
 }
-
+.caldera-config-group-toggle-options{
+  margin-bottom: 20px;
+}
 .caldera-group-panel h3 {
   border-bottom: 1px solid #DFDFDF;
   font-size: 1.2em;
@@ -554,9 +556,21 @@ a span.error-tag {
 
 /* USER PANELS */
 #user_profile_baldrickModalBody,#general_settings_baldrickModalBody{padding: 0;}
-.form-panel-wrap {
-  margin-top: 30px;
+
+.form-admin-page-wrap {
+  margin: 50px 0 0 390px;
 }
+
+.form-panel-wrap {
+  float: left;
+  margin-left: -390px;
+  width: 390px;
+}
+
+.form-entries-wrap {
+  padding: 0 30px;
+}
+
 .form-panel.postbox {
   border-left: 6px solid #E5E5E5;
   float: left;
@@ -566,27 +580,13 @@ a span.error-tag {
   max-width: 350px;
   border-radius: 0;
 }
-.tag.form-panel.postbox {
-  border-radius: 10px 0 0 10px;
+.list.form-panel.postbox {
+  float: none;
+  min-width: 100%;   
+  max-width: 100%;
+  width: auto;
 }
-.lrg.form-panel.postbox {
-  border-left: 8px solid #E5E5E5;
-  float: left;
-  margin-right: 20px;
-  min-height: 80px;
-  min-width: 250px;
-  padding: 12px 10px 5px 80px;
-}
-.alt.form-panel.postbox {
-  border-left: medium none;
-  float: left;
-  margin-right: 20px;
-  min-height: 103px;
-  min-width: 245px;
-  overflow: hidden;
-  padding: 12px 10px 5px 135px;
-  border-radius: 0;
-}
+
 .form-panel.postbox h4 {
     cursor: pointer;
     font-size: 1em;
@@ -607,47 +607,18 @@ a span.error-tag {
 }
 .form-panel.postbox .avatar-link {
   background-color: #FFFFFF;
-  border: 4px solid #E5E5E5;
+  border: 3px solid #E5E5E5;
   border-radius: 100%;
   cursor: pointer;
   display: block;
-  height: 44px;
+  height: 28px;
   left: -20px;
   overflow: hidden;
   position: absolute;
-  top: -3px;
-  width: 44px;
+  top: -18px;
+  width: 28px;
 }
-.lrg.form-panel.postbox .avatar-link {
-  background-color: #FFFFFF;
-  border: 4px solid #E5E5E5;
-  border-radius: 100%;
-  cursor: pointer;
-  display: block;
-  height: 80px;
-  left: -22px;
-  overflow: hidden;
-  position: absolute;
-  top: -16px;
-  width: 80px;
-}
-.alt.form-panel.postbox .avatar-link {
-  background-color: #FFFFFF;
-  border: medium none;
-  border-radius: 0;
-  cursor: pointer;
-  display: block;
-  height: 120px;
-  left: 0;
-  overflow: hidden;
-  position: absolute;
-  top: 0;
-  width: 120px;
-}
-.alt.form-panel.postbox h2 {
-  margin: 0;
-  padding: 0 0 2px;
-}
+
 .avatar-link .avatar {
   max-width: 100%;
   max-height: 100%;
@@ -998,3 +969,455 @@ input.disabled-input {
 }
 
 .spinner.loading{display: inline;}
+
+
+.form-panel html {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+.form-panel body {
+  margin: 0;
+}
+.form-panel article,
+.form-panel aside,
+.form-panel details,
+.form-panel figcaption,
+.form-panel figure,
+.form-panel footer,
+.form-panel header,
+.form-panel hgroup,
+.form-panel main,
+.form-panel nav,
+.form-panel section,
+.form-panel summary {
+  display: block;
+}
+.form-panel audio,
+.form-panel canvas,
+.form-panel progress,
+.form-panel video {
+  display: inline-block;
+  vertical-align: baseline;
+}
+.form-panel audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+.form-panel [hidden],
+.form-panel template {
+  display: none;
+}
+.form-panel a {
+  background: transparent;
+}
+.form-panel a:active,
+.form-panel a:hover {
+  outline: 0;
+}
+.form-panel abbr[title] {
+  border-bottom: 1px dotted;
+}
+.form-panel b,
+.form-panel strong {
+  font-weight: bold;
+}
+.form-panel dfn {
+  font-style: italic;
+}
+.form-panel h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+.form-panel mark {
+  background: #ff0;
+  color: #000;
+}
+.form-panel small {
+  font-size: 80%;
+}
+.form-panel sub,
+.form-panel sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+.form-panel sup {
+  top: -0.5em;
+}
+.form-panel sub {
+  bottom: -0.25em;
+}
+.form-panel img {
+  border: 0;
+}
+.form-panel svg:not(:root) {
+  overflow: hidden;
+}
+.form-panel figure {
+  margin: 1em 40px;
+}
+.form-panel hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+.form-panel pre {
+  overflow: auto;
+}
+.form-panel code,
+.form-panel kbd,
+.form-panel pre,
+.form-panel samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+.form-panel button,
+.form-panel input,
+.form-panel optgroup,
+.form-panel select,
+.form-panel textarea {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+.form-panel button {
+  overflow: visible;
+}
+.form-panel button,
+.form-panel select {
+  text-transform: none;
+}
+.form-panel button,
+.form-panel html input[type="button"],
+.form-panel input[type="reset"],
+.form-panel input[type="submit"] {
+  -webkit-appearance: button;
+  cursor: pointer;
+}
+.form-panel button[disabled],
+.form-panel html input[disabled] {
+  cursor: default;
+}
+.form-panel button::-moz-focus-inner,
+.form-panel input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+.form-panel input {
+  line-height: normal;
+}
+.form-panel input[type="checkbox"],
+.form-panel input[type="radio"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+.form-panel input[type="number"]::-webkit-inner-spin-button,
+.form-panel input[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+.form-panel input[type="search"] {
+  -webkit-appearance: textfield;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+}
+.form-panel input[type="search"]::-webkit-search-cancel-button,
+.form-panel input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+.form-panel fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+.form-panel legend {
+  border: 0;
+  padding: 0;
+}
+.form-panel textarea {
+  overflow: auto;
+}
+.form-panel optgroup {
+  font-weight: bold;
+}
+.form-panel table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+.form-panel td,
+.form-panel th {
+  padding: 0;
+}
+.form-panel table {
+  max-width: 100%;
+  background-color: transparent;
+}
+.form-panel th {
+  text-align: left;
+}
+.form-panel .table {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.form-panel .table > thead > tr > th,
+.form-panel .table > tbody > tr > th,
+.form-panel .table > tfoot > tr > th,
+.form-panel .table > thead > tr > td,
+.form-panel .table > tbody > tr > td,
+.form-panel .table > tfoot > tr > td {
+  padding: 8px;
+  line-height: 1.42857143;
+  vertical-align: top;
+  border-top: 1px solid #dddddd;
+}
+.form-panel .table > thead > tr > th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dddddd;
+}
+.form-panel .table > caption + thead > tr:first-child > th,
+.form-panel .table > colgroup + thead > tr:first-child > th,
+.form-panel .table > thead:first-child > tr:first-child > th,
+.form-panel .table > caption + thead > tr:first-child > td,
+.form-panel .table > colgroup + thead > tr:first-child > td,
+.form-panel .table > thead:first-child > tr:first-child > td {
+  border-top: 0;
+}
+.form-panel .table > tbody + tbody {
+  border-top: 2px solid #dddddd;
+}
+.form-panel .table .table {
+  background-color: #ffffff;
+}
+.form-panel .table-condensed > thead > tr > th,
+.form-panel .table-condensed > tbody > tr > th,
+.form-panel .table-condensed > tfoot > tr > th,
+.form-panel .table-condensed > thead > tr > td,
+.form-panel .table-condensed > tbody > tr > td,
+.form-panel .table-condensed > tfoot > tr > td {
+  padding: 5px;
+}
+.form-panel .table-bordered {
+  border: 1px solid #dddddd;
+}
+.form-panel .table-bordered > thead > tr > th,
+.form-panel .table-bordered > tbody > tr > th,
+.form-panel .table-bordered > tfoot > tr > th,
+.form-panel .table-bordered > thead > tr > td,
+.form-panel .table-bordered > tbody > tr > td,
+.form-panel .table-bordered > tfoot > tr > td {
+  border: 1px solid #dddddd;
+}
+.form-panel .table-bordered > thead > tr > th,
+.form-panel .table-bordered > thead > tr > td {
+  border-bottom-width: 2px;
+}
+.form-panel .table-striped > tbody > tr:nth-child(odd) > td,
+.form-panel .table-striped > tbody > tr:nth-child(odd) > th {
+  background-color: #f9f9f9;
+}
+.form-panel .table-hover > tbody > tr:hover > td,
+.form-panel .table-hover > tbody > tr:hover > th {
+  background-color: #f5f5f5;
+}
+.form-panel table col[class*="col-"] {
+  position: static;
+  float: none;
+  display: table-column;
+}
+.form-panel table td[class*="col-"],
+.form-panel table th[class*="col-"] {
+  position: static;
+  float: none;
+  display: table-cell;
+}
+.form-panel .table > thead > tr > td.active,
+.form-panel .table > tbody > tr > td.active,
+.form-panel .table > tfoot > tr > td.active,
+.form-panel .table > thead > tr > th.active,
+.form-panel .table > tbody > tr > th.active,
+.form-panel .table > tfoot > tr > th.active,
+.form-panel .table > thead > tr.active > td,
+.form-panel .table > tbody > tr.active > td,
+.form-panel .table > tfoot > tr.active > td,
+.form-panel .table > thead > tr.active > th,
+.form-panel .table > tbody > tr.active > th,
+.form-panel .table > tfoot > tr.active > th {
+  background-color: #f5f5f5;
+}
+.form-panel .table-hover > tbody > tr > td.active:hover,
+.form-panel .table-hover > tbody > tr > th.active:hover,
+.form-panel .table-hover > tbody > tr.active:hover > td,
+.form-panel .table-hover > tbody > tr.active:hover > th {
+  background-color: #e8e8e8;
+}
+.form-panel .table > thead > tr > td.success,
+.form-panel .table > tbody > tr > td.success,
+.form-panel .table > tfoot > tr > td.success,
+.form-panel .table > thead > tr > th.success,
+.form-panel .table > tbody > tr > th.success,
+.form-panel .table > tfoot > tr > th.success,
+.form-panel .table > thead > tr.success > td,
+.form-panel .table > tbody > tr.success > td,
+.form-panel .table > tfoot > tr.success > td,
+.form-panel .table > thead > tr.success > th,
+.form-panel .table > tbody > tr.success > th,
+.form-panel .table > tfoot > tr.success > th {
+  background-color: #dff0d8;
+}
+.form-panel .table-hover > tbody > tr > td.success:hover,
+.form-panel .table-hover > tbody > tr > th.success:hover,
+.form-panel .table-hover > tbody > tr.success:hover > td,
+.form-panel .table-hover > tbody > tr.success:hover > th {
+  background-color: #d0e9c6;
+}
+.form-panel .table > thead > tr > td.info,
+.form-panel .table > tbody > tr > td.info,
+.form-panel .table > tfoot > tr > td.info,
+.form-panel .table > thead > tr > th.info,
+.form-panel .table > tbody > tr > th.info,
+.form-panel .table > tfoot > tr > th.info,
+.form-panel .table > thead > tr.info > td,
+.form-panel .table > tbody > tr.info > td,
+.form-panel .table > tfoot > tr.info > td,
+.form-panel .table > thead > tr.info > th,
+.form-panel .table > tbody > tr.info > th,
+.form-panel .table > tfoot > tr.info > th {
+  background-color: #d9edf7;
+}
+.form-panel .table-hover > tbody > tr > td.info:hover,
+.form-panel .table-hover > tbody > tr > th.info:hover,
+.form-panel .table-hover > tbody > tr.info:hover > td,
+.form-panel .table-hover > tbody > tr.info:hover > th {
+  background-color: #c4e3f3;
+}
+.form-panel .table > thead > tr > td.warning,
+.form-panel .table > tbody > tr > td.warning,
+.form-panel .table > tfoot > tr > td.warning,
+.form-panel .table > thead > tr > th.warning,
+.form-panel .table > tbody > tr > th.warning,
+.form-panel .table > tfoot > tr > th.warning,
+.form-panel .table > thead > tr.warning > td,
+.form-panel .table > tbody > tr.warning > td,
+.form-panel .table > tfoot > tr.warning > td,
+.form-panel .table > thead > tr.warning > th,
+.form-panel .table > tbody > tr.warning > th,
+.form-panel .table > tfoot > tr.warning > th {
+  background-color: #fcf8e3;
+}
+.form-panel .table-hover > tbody > tr > td.warning:hover,
+.form-panel .table-hover > tbody > tr > th.warning:hover,
+.form-panel .table-hover > tbody > tr.warning:hover > td,
+.form-panel .table-hover > tbody > tr.warning:hover > th {
+  background-color: #faf2cc;
+}
+.form-panel .table > thead > tr > td.danger,
+.form-panel .table > tbody > tr > td.danger,
+.form-panel .table > tfoot > tr > td.danger,
+.form-panel .table > thead > tr > th.danger,
+.form-panel .table > tbody > tr > th.danger,
+.form-panel .table > tfoot > tr > th.danger,
+.form-panel .table > thead > tr.danger > td,
+.form-panel .table > tbody > tr.danger > td,
+.form-panel .table > tfoot > tr.danger > td,
+.form-panel .table > thead > tr.danger > th,
+.form-panel .table > tbody > tr.danger > th,
+.form-panel .table > tfoot > tr.danger > th {
+  background-color: #f2dede;
+}
+.form-panel .table-hover > tbody > tr > td.danger:hover,
+.form-panel .table-hover > tbody > tr > th.danger:hover,
+.form-panel .table-hover > tbody > tr.danger:hover > td,
+.form-panel .table-hover > tbody > tr.danger:hover > th {
+  background-color: #ebcccc;
+}
+@media (max-width: 767px) {
+  .form-panel .table-responsive {
+    width: 100%;
+    margin-bottom: 15px;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    border: 1px solid #dddddd;
+    -webkit-overflow-scrolling: touch;
+  }
+  .form-panel .table-responsive > .table {
+    margin-bottom: 0;
+  }
+  .form-panel .table-responsive > .table > thead > tr > th,
+  .form-panel .table-responsive > .table > tbody > tr > th,
+  .form-panel .table-responsive > .table > tfoot > tr > th,
+  .form-panel .table-responsive > .table > thead > tr > td,
+  .form-panel .table-responsive > .table > tbody > tr > td,
+  .form-panel .table-responsive > .table > tfoot > tr > td {
+    white-space: nowrap;
+  }
+  .form-panel .table-responsive > .table-bordered {
+    border: 0;
+  }
+  .form-panel .table-responsive > .table-bordered > thead > tr > th:first-child,
+  .form-panel .table-responsive > .table-bordered > tbody > tr > th:first-child,
+  .form-panel .table-responsive > .table-bordered > tfoot > tr > th:first-child,
+  .form-panel .table-responsive > .table-bordered > thead > tr > td:first-child,
+  .form-panel .table-responsive > .table-bordered > tbody > tr > td:first-child,
+  .form-panel .table-responsive > .table-bordered > tfoot > tr > td:first-child {
+    border-left: 0;
+  }
+  .form-panel .table-responsive > .table-bordered > thead > tr > th:last-child,
+  .form-panel .table-responsive > .table-bordered > tbody > tr > th:last-child,
+  .form-panel .table-responsive > .table-bordered > tfoot > tr > th:last-child,
+  .form-panel .table-responsive > .table-bordered > thead > tr > td:last-child,
+  .form-panel .table-responsive > .table-bordered > tbody > tr > td:last-child,
+  .form-panel .table-responsive > .table-bordered > tfoot > tr > td:last-child {
+    border-right: 0;
+  }
+  .form-panel .table-responsive > .table-bordered > tbody > tr:last-child > th,
+  .form-panel .table-responsive > .table-bordered > tfoot > tr:last-child > th,
+  .form-panel .table-responsive > .table-bordered > tbody > tr:last-child > td,
+  .form-panel .table-responsive > .table-bordered > tfoot > tr:last-child > td {
+    border-bottom: 0;
+  }
+}
+.form-panel .clearfix:before,
+.form-panel .clearfix:after {
+  content: " ";
+  display: table;
+}
+.form-panel .clearfix:after {
+  clear: both;
+}
+.form-panel .center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.form-panel .pull-right {
+  float: right !important;
+}
+.form-panel .pull-left {
+  float: left !important;
+}
+.form-panel .hide {
+  display: none !important;
+}
+.form-panel .show {
+  display: block !important;
+}
+.form-panel .invisible {
+  visibility: hidden;
+}
+.form-panel .text-hide {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+.form-panel .hidden {
+  display: none !important;
+  visibility: hidden !important;
+}
+.form-panel .affix {
+  position: fixed;
+}

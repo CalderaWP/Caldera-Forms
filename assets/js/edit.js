@@ -44,6 +44,10 @@ jQuery(function($){
 				if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('required') >= 0){
 					parent.find('.required-field').hide().find('.field-config').prop('checked', false);
 				}
+				if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('entry_list') >= 0){
+					parent.find('.entrylist-field').hide().find('.field-config').prop('checked', false);
+				}
+				
 				
 			}
 
@@ -87,7 +91,7 @@ jQuery(function($){
 			var field 		= $(v),
 				basename 	= field.prop('name').split('[' + id + ']')[1].substr(1),
 				name		= basename.substr(0, basename.length-1).split(']['),
-				value 		= ( field.is(':checkbox,:radio') ? field.prop('checked') : field.val() ),
+				value 		= ( field.is(':checkbox,:radio') ? field.filter(':checked').val() : field.val() ),
 				lineconf 	= {};
 
 
@@ -104,7 +108,7 @@ jQuery(function($){
 			$.extend(true, config, lineconf);
 		});
 			
-		
+		console.log(config);
 		preview_target.html( template(config) );
 		preview_parent.removeClass('button');
 
@@ -405,6 +409,9 @@ jQuery(function($){
 		var clicked = $(this),
 			field	= clicked.parent().prop('id');
 
+		if(!confirm(clicked.data('confirm'))){
+			return;
+		}
 		// remove config
 		$('#' + field).remove();
 
