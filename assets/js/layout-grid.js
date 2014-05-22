@@ -55,7 +55,7 @@ rebind_field_bindings = function(){
 		}
 
 		if(count === 0){
-			field.append('<option value="">No ' + field.data('type').split(',').join(' or ') + ' in form</option>').prop('disabled', true);
+			field.empty().append('<option value="">No ' + field.data('type').split(',').join(' or ') + ' in form</option>').prop('disabled', true);
 		}else{
 			field.prop('disabled', false);
 		}

@@ -160,8 +160,33 @@ if(!empty($element['processors'])){
 			echo '<div class="form-modal-add-line'. ( !empty($processor['single']) ? ' is_single_processor' : null ) . '" data-type="' . $processor_id . '">';
 				echo '<button type="button" class="button info-button add-new-processor" data-type="' . $processor_id . '">' . __('Use Processor', 'caldera-forms') . '</button>';
 				echo '<img src="'. $icon .'" class="form-modal-lgo" width="45" height="45">';
-				echo '<strong>' . $processor['name'] .'</strong>';
+				echo '<strong>' . $processor['name'] .'</strong> ';
+				if(!empty($processor['author'])){
+					echo '<small><span class="description">';
+					echo __('by', 'caldera-forms') . ' ';
+					if(!empty($processor['author_url'])){
+						echo '<a href="' . $processor['author_url'] .'" target="_blank">';
+						echo $processor['author'];
+						echo '</a>';
+					}else{
+						echo $processor['author'];
+					}
+					echo '</span></small>';
+
+				}
 				echo '<p class="description">' . $processor['description'] . '</p>';
+				if(!empty($processor['links'])){
+					echo '<p>';
+					foreach($processor['links'] as $link){
+						if(!empty($link['url']) && !empty($link['label'])){
+							//echo '<div style="float:right; margin-top:5px;">';
+							echo '<a style="" href="'.$link['label'].'" target="_blank" class="' . (!empty($link['class']) ? $link['class'] : null ) . '">' . $link['label'] . '</a>';
+							//echo '<div>';
+						}
+					}
+					echo '</p>';
+				}
+
 			echo '</div>';
 		}
 
