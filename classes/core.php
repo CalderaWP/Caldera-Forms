@@ -52,7 +52,8 @@ class Caldera_Forms {
 		add_filter('caldera_forms_get_panel_extensions', array( $this, 'get_panel_extensions'));
 		add_filter('caldera_forms_get_field_types', array( $this, 'get_field_types'));
 		add_filter('caldera_forms_get_form_processors', array( $this, 'get_form_processors'));
-
+		add_filter('caldera_forms_submit_redirect_complete', array( $this, 'do_redirect'),10, 4);
+		
 		// action
 		add_action('caldera_forms_submit_complete', array( $this, 'save_final_form'),1,2);
 
@@ -354,7 +355,7 @@ class Caldera_Forms {
 			}
 			$message = str_replace('%'.$key.'%', $row, $message);
 			$subject = str_replace('%'.$key.'%', $row, $subject);
-			
+
 			$submission[] = $row;				
 		}
 		// CSV
@@ -661,6 +662,18 @@ class Caldera_Forms {
 
 
 	}
+	public static function do_redirect($referrer, $data, $form, $processid){
+		if(isset($form['processors'])){
+			foreach($form['processors'] as $processor){
+				if($processor['type'] == 'form_redirect'){
+					if(!empty($processor['config']['url'])){
+						return $processor['config']['url'];
+					}
+				}
+			}
+		}
+		return $referrer;
+	}	
 
 	public static function send_auto_response($data, $config, $original_data){
 		
@@ -709,6 +722,11 @@ class Caldera_Forms {
 					'subject'		=>	__('Thank you for contacting us', 'caldera-forms')
 				),
 			),
+			'form_redirect' => array(
+				"name"				=>	__('Redirect', 'caldera-forms'),
+				"description"		=>	__("Redirects user to URL on successful submit", 'caldera-forms'),
+				"template"			=>	CFCORE_PATH . "processors/redirect/config.php",
+			)
 		);
 
 		return array_merge( $processors, $internal_processors );
