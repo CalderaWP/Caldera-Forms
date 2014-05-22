@@ -587,10 +587,36 @@ class Caldera_Forms {
 
 	}
 
-	public static function process_form_email($data, $config, $original_data){
+	public static function send_auto_response($data, $config, $original_data){
+		
 
-		$headers = 'From: ' . $data[$config['sender']] . ' <' . $data[$config['sender_email']] . '>' . "\r\n";
-		wp_mail($config['recipient'], $config['subject'], $data[$config['message']], $headers );
+		$headers = 'From: ' . $config['sender_name'] . ' <' . $config['sender_email'] . '>' . "\r\n";
+		//$headers .= "Content-type: text/html\r\n";
+
+		$message = $config['message'];
+		foreach ($config as $key => $value) {
+			if($key == 'message'){
+				continue;
+			}
+			if(isset($data[$value])){
+				$value = $data[$value];
+			}else{
+				$value = null;
+			}
+			$message = str_replace('%'.$key.'%', $value, $message);
+		}
+
+		foreach ($data as $key => $value) {
+			if($key == 'message'){
+				continue;
+			}
+			if(is_array($value)){
+				$value = implode(', ', $value);
+			}
+			$message = str_replace('%'.$key.'%', $value, $message);
+		}
+
+		wp_mail($data[$config['recipient_name']].' <'.$data[$config['recipient_email']].'>', $config['subject'], $message, $headers );
 
 		return $data;
 	}
@@ -599,15 +625,13 @@ class Caldera_Forms {
 	// get built in form processors
 	public function get_form_processors($processors){
 		$internal_processors = array(
-			'form_emailer' => array(
-				"name"				=>	__('Form Emailer', 'caldera-forms'),
-				"description"		=>	__("Sends Form results via Email", 'caldera-forms'),
-				"icon"				=>	CFCORE_URL . "/assets/images/processor.png",
-				"post_processor"	=>	array($this, 'process_form_email'),
-				"template"			=>	CFCORE_PATH . "processors/form_emailer/config.php",
+			'auto_responder' => array(
+				"name"				=>	__('Auto Responder', 'caldera-forms'),
+				"description"		=>	__("Sends out an auto response e-mail", 'caldera-forms'),
+				"post_processor"	=>	array($this, 'send_auto_response'),
+				"template"			=>	CFCORE_PATH . "processors/auto_responder/config.php",
 				"default"			=>	array(
-					'recipient'		=>	"",
-					'subject'		=>	__('Caldera Form Email', 'caldera-forms')
+					'subject'		=>	__('Thank you for contacting us', 'caldera-forms')
 				),
 			),
 		);
