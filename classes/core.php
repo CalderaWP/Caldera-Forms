@@ -726,6 +726,7 @@ class Caldera_Forms {
 				"name"				=>	__('Redirect', 'caldera-forms'),
 				"description"		=>	__("Redirects user to URL on successful submit", 'caldera-forms'),
 				"template"			=>	CFCORE_PATH . "processors/redirect/config.php",
+				"single"			=>	true
 			)
 		);
 
