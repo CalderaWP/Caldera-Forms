@@ -113,7 +113,7 @@ function build_processor_types($default = null){
 	<button type="button" class="button block-button ajax-trigger" 
 	data-request="new_form_processor" 
 	data-modal="form_processor" 
-	data-modal-title="<?php echo __('Select Form Processor', 'caldera-forms'); ?>"
+	data-modal-title="<?php echo __('Form Processors', 'caldera-forms'); ?>"
 	data-modal-height="500"
 	data-template="#form-processors-tmpl"
 	data-callback="hide_single_processors"

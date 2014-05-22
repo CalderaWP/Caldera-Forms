@@ -1,0 +1,88 @@
+<?php
+
+if(!isset($element['mailer']['sender_name'])){
+	$element['mailer']['sender_name'] = '';
+}
+if(!isset($element['mailer']['sender_email'])){
+	$element['mailer']['sender_email'] = '';
+}
+if(!isset($element['mailer']['email_type'])){
+	$element['mailer']['email_type'] = 'html';
+}
+if(!isset($element['mailer']['recipients'])){
+	$element['mailer']['recipients'] = '';
+}
+if(!isset($element['mailer']['email_subject'])){
+	$element['mailer']['email_subject'] = $element['name'];
+}
+if(!isset($element['mailer']['email_message'])){
+	$element['mailer']['email_message'] = '';
+}
+
+
+
+
+
+?>
+	<div class="caldera-config-group">
+		<label><?php echo __('From Name', 'caldera-forms'); ?> </label>
+		<div class="caldera-config-field">
+			<input type="text" class="field-config" name="config[mailer][sender_name]" value="<?php echo $element['mailer']['sender_name']; ?>" style="width:400px;">
+		</div>
+	</div>
+	<div class="caldera-config-group">
+		<label><?php echo __('From Email', 'caldera-forms'); ?> </label>
+		<div class="caldera-config-field">
+			<input type="text" class="field-config" name="config[mailer][sender_email]" value="<?php echo $element['mailer']['sender_email']; ?>" style="width:400px;">
+		</div>
+	</div>
+	<div class="caldera-config-group">
+		<label><?php echo __('Email Type', 'caldera-forms'); ?> </label>
+		<div class="caldera-config-field">
+			<select class="field-config" name="config[mailer][email_type]">
+			<option value="html" <?php if($element['mailer']['email_type'] == 'html'){ echo 'selected="selected"'; } ?>>HTML</option>
+			<option value="text" <?php if($element['mailer']['email_type'] == 'text'){ echo 'selected="selected"'; } ?>>Text</option>
+			</select>
+		</div>
+	</div>
+	<div class="caldera-config-group">
+		<label><?php echo __('CSV Include', 'caldera-forms'); ?> </label>
+		<div class="caldera-config-field">
+			<label><input type="checkbox" class="field-config" name="config[mailer][csv_data]" value="1" <?php if(isset($element['mailer']['csv_data'])){ echo 'checked="checked";'; } ?>> <?php echo __('Attach a CSV version of the submission', 'caldera-forms'); ?></label>
+		</div>
+	</div>
+
+
+	<div class="caldera-config-group">
+		<label><?php echo __('Recipients', 'caldera-forms'); ?> </label>
+		<div class="caldera-config-field">
+			<input type="text" class="field-config" name="config[mailer][recipients]" value="<?php echo $element['mailer']['recipients']; ?>" style="width:400px;">
+			<p class="description"><?php echo __('Comma separated list of email addresses.', 'caldera-forms'); ?></p>
+		</div>
+
+	</div>
+
+	<div class="caldera-config-group">
+		<label><?php echo __('Email Subject', 'caldera-forms'); ?> </label>
+		<div class="caldera-config-field">
+			<input type="text" class="field-config" name="config[mailer][email_subject]" value="<?php echo $element['mailer']['email_subject']; ?>" style="width:400px;">
+		</div>
+	</div>
+	<div class="caldera-config-group">
+		<label><?php echo __('Email Message', 'caldera-forms'); ?> </label>
+		<div class="caldera-config-field" style="max-width: 600px;">
+			<?php wp_editor( $element['mailer']['email_message'], "mailer_email_message", array('textarea_name' => 'config[mailer][email_message]') ); ?>
+		</div>
+	</div>
+
+
+
+	
+
+
+
+
+
+
+
+

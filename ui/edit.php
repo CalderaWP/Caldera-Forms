@@ -441,7 +441,9 @@ foreach($panel_extensions as $panel){
 						$field_wrapper_class = "caldera-config-group";
 						$field_input_class = "caldera-config-field";
 						$field_class = "field-config";
-
+						if(!empty($field['required'])){
+							$field_class .= " required";							
+						}
 						include $field_types[$field['type']]['file'];
 
 					}

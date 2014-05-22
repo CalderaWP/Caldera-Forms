@@ -304,6 +304,77 @@ class Caldera_Forms {
 				$wpdb->insert($wpdb->prefix . 'cf_form_entry_values', $field_item);
 			}
 		}
+
+		// do mailer!
+		// build CSV
+		//dump($form['mailer']);
+		$attachment = null;
+		
+		$sendername = __('Caldera Forms Notification', 'caldera-forms');
+		if(!empty($form['mailer']['sender_name'])){
+			$sendername = $form['mailer']['sender_name'];
+		}
+		if(empty($form['mailer']['sender_email'])){
+			$sendermail = get_option( 'admin_email' );
+		}else{
+			$sendermail = $form['mailer']['sender_email'];
+		}
+
+
+
+		$headers = 'From: ' . $sendername . ' <' . $sendermail . '>' . "\r\n";
+		if($form['mailer']['email_type'] == 'html'){
+			$headers .= "Content-type: text/html\r\n";
+		}
+		if(!empty($form['mailer']['recipients'])){
+			$recipients = $form['mailer']['recipients'];
+		}else{
+			$recipients = get_option( 'admin_email' );
+		}
+
+		$message = $form['mailer']['email_message']."\r\n";
+		$submission = array();
+		foreach ($data as $key=>$row) {
+			if(is_array($row)){
+				$keys = array_keys($row);
+				if(is_int($keys[0])){
+					$row = implode(', ', $row);
+				}else{
+					$tmp = array();
+					foreach($row as $key=>$item){
+						if(is_array($item)){
+							$item = '( ' . implode(', ', $item).' )';
+						}
+						$tmp[] = $key.': '.$item;
+					}
+					$row = implode(', ', $tmp);
+				}
+			}
+			$message = str_replace('%'.$key.'%', $row, $message);
+			$submission[] = $row;				
+		}
+		// CSV
+		if(!empty($form['mailer']['csv_data'])){
+			ob_start();
+			$df = fopen("php://output", 'w');
+			fputcsv($df, array_keys($data));
+			fputcsv($df, $submission);
+			fclose($df);
+			$csv = ob_get_clean();
+			$csvfile = wp_upload_bits( uniqid().'.csv', null, $csv );
+			$attachment = $csvfile['file'];
+		}
+
+		//dump($recipients);		
+		if(wp_mail($recipients, $form['mailer']['email_subject'], $message, $headers, $attachment )){
+			// kill attachment.
+			if(!empty($attachment)){
+				if(file_exists($attachment)){
+					unlink($attachment);
+				}
+			}
+		}
+
 	}
 
 	/**
@@ -938,7 +1009,14 @@ class Caldera_Forms {
 								),
 							)
 						),
-					),/*
+					),
+					"mailer" => array(
+						"name" => __("Mailer", 'caldera-forms'),
+						"location" => "lower",
+						"label" => __("Email Notification Settings", 'caldera-forms'),
+						"canvas" => $path . "emailer.php",
+					),
+					/*
 					"styles" => array(
 						"name" => __("Stylesheets", 'caldera-forms'),
 						"location" => "lower",
