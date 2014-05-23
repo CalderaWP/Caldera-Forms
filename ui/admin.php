@@ -7,6 +7,16 @@ $template_style = 'form-card-tmpl';
 // get all forms
 $forms = get_option( '_caldera_forms' );
 
+$style_includes = get_option( '_caldera_forms_styleincludes' );
+if(empty($style_includes)){
+	$style_includes = array(
+		'alert'	=>	true,
+		'form'	=>	true,
+		'grid'	=>	true,
+	);
+	update_option( '_caldera_forms_styleincludes', $style_includes);
+}
+
 // Modal Height
 $modal_height = '400';
 
@@ -33,12 +43,25 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 		</li>
 		<li class="caldera-forms-search">
 			<a class="button ajax-trigger" data-request="start_new_form" data-modal-buttons='<?php echo $modal_new_form; ?>' data-modal-width="600" data-modal-height="300" data-load-class="none" data-modal="new_form" data-modal-title="Create New Form" data-template="#new-form-tmpl"><?php echo __('New Form', 'caldera-forms'); ?></a>
-		</li>		
-		
+		</li>
+		<li class="caldera-forms-search">
+		&nbsp;
+		</li>
+		<li class="caldera-forms-headtext">
+			<?php echo __('Front-end Style Includes', 'caldera-forms'); ?>
+		</li>
+		<li class="caldera-forms-search">
+			<div class="toggle_option_preview">
+				<button type="button" title="<?php echo __('Includes Bootstrap 3 styles on the frontend for form alert notices', 'caldera-forms'); ?>" data-action="save_cf_setting" data-active-class="none" data-set="alert" data-callback="update_setting_toggle" class="ajax-trigger setting_toggle_alert button <?php if(!empty($style_includes['alert'])){ ?>button-primary<?php } ?>"><?php echo __('Alert' , 'caldera-forms'); ?></button>
+				<button type="button" title="<?php echo __('Includes Bootstrap 3 styles on the frontend for form fields and buttons', 'caldera-forms'); ?>" data-action="save_cf_setting" data-active-class="none" data-set="form" data-callback="update_setting_toggle" class="ajax-trigger setting_toggle_form button <?php if(!empty($style_includes['form'])){ ?>button-primary<?php } ?>"><?php echo __('Form' , 'caldera-forms'); ?></button>
+				<button type="button" title="<?php echo __('Includes Bootstrap 3 styles on the frontend for form grid layouts', 'caldera-forms'); ?>" data-action="save_cf_setting" data-active-class="none" data-set="grid" data-callback="update_setting_toggle" class="ajax-trigger setting_toggle_grid button <?php if(!empty($style_includes['grid'])){ ?>button-primary<?php } ?>"><?php echo __('Grid' , 'caldera-forms'); ?></button>
+			</div>
+		</li>
 	</ul>
 </div>
 <div class="form-admin-page-wrap">
 	<div class="form-panel-wrap">
+	<?php if(!empty($forms)){ ?>
 		<table class="widefat fixed">
 			<thead>
 				<tr>
@@ -49,82 +72,82 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 			<tbody>
 		<?php
 
-			if(!empty($forms)){
-				global $wpdb;
+			global $wpdb;
 
-				$class = "alternate";
-				foreach($forms as $form_id=>$form){
-					$total = $wpdb->get_var($wpdb->prepare("SELECT COUNT(`id`) AS `total` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = %s;", $form_id));
-					
-					/*
-					?>
+			$class = "alternate";
+			foreach($forms as $form_id=>$form){
+				$total = $wpdb->get_var($wpdb->prepare("SELECT COUNT(`id`) AS `total` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = %s;", $form_id));
+				
+				/*
+				?>
 
-					<div class="form-panel postbox">
-						<h4><?php echo $form['name']; ?></h4>
-						<?php if(!empty($form['description'])){ ?><h5><?php echo $form['description']; ?></h5><?php } ?>
+				<div class="form-panel postbox">
+					<h4><?php echo $form['name']; ?></h4>
+					<?php if(!empty($form['description'])){ ?><h5><?php echo $form['description']; ?></h5><?php } ?>
 
-						<ul class="form-controls">
-							<li><a class="form-control" href="admin.php?page=caldera-forms&edit=<?php echo $form_id; ?>"><?php echo __('Edit Form', 'caldera-forms'); ?></a></li>
-							<li><a class="form-control ajax-trigger" href="#entres"
+					<ul class="form-controls">
+						<li><a class="form-control" href="admin.php?page=caldera-forms&edit=<?php echo $form_id; ?>"><?php echo __('Edit Form', 'caldera-forms'); ?></a></li>
+						<li><a class="form-control ajax-trigger" href="#entres"
 
-							data-action="browse_entries"
-							data-target="#form-entries-viewer"
-							data-form="<?php echo $form_id; ?>"
-
+						data-action="browse_entries"
+						data-target="#form-entries-viewer"
+						data-form="<?php echo $form_id; ?>"
 
 
-							><?php echo __('Entries: ' . $total, 'caldera-forms'); ?></a></li>
-							<li class="form-delete"><a class="form-control" data-confirm="<?php echo __('This will delete this form permanently. Continue?', 'caldera-forms'); ?>" href="admin.php?page=caldera-forms&delete=<?php echo $form_id; ?>&cal_del=<?php echo wp_create_nonce( 'cf_del_frm' ); ?>"><?php echo __('Delete Form', 'caldera-forms'); ?></a></li>
-						</ul>					
-					</div>
 
-					<?php
-					*/
-					?>
+						><?php echo __('Entries: ' . $total, 'caldera-forms'); ?></a></li>
+						<li class="form-delete"><a class="form-control" data-confirm="<?php echo __('This will delete this form permanently. Continue?', 'caldera-forms'); ?>" href="admin.php?page=caldera-forms&delete=<?php echo $form_id; ?>&cal_del=<?php echo wp_create_nonce( 'cf_del_frm' ); ?>"><?php echo __('Delete Form', 'caldera-forms'); ?></a></li>
+					</ul>					
+				</div>
 
-					<tr id="form_row_<?php echo $form_id; ?>" class="<?php echo $class; ?> form_entry_row">						
-						<td>
-							<?php echo $form['name']; ?>
-							<div class="row-actions">
-							<span class="edit"><a class="form-control" href="admin.php?page=caldera-forms&edit=<?php echo $form_id; ?>"><?php echo __('Edit Form', 'caldera-forms'); ?></a> | </span>
-							<span class="edit"><a class="form-control form-entry-trigger ajax-trigger" href="#entres"
+				<?php
+				*/
+				?>
 
-							data-action="browse_entries"
-							data-target="#form-entries-viewer"
-							data-form="<?php echo $form_id; ?>"
-							data-template="#forms-list-alt-tmpl"
-							data-active-element="#form_row_<?php echo $form_id; ?>"
-							data-active-class="highlight"
-							data-group="entry_nav"
-							data-callback="setup_pagination"
-							data-page="1"
+				<tr id="form_row_<?php echo $form_id; ?>" class="<?php echo $class; ?> form_entry_row">						
+					<td>
+						<?php echo $form['name']; ?>
+						<div class="row-actions">
+						<span class="edit"><a class="form-control" href="admin.php?page=caldera-forms&edit=<?php echo $form_id; ?>"><?php echo __('Edit Form', 'caldera-forms'); ?></a> | </span>
+						<span class="edit"><a class="form-control form-entry-trigger ajax-trigger" href="#entres"
 
-							><?php echo __('View Entries', 'caldera-forms'); ?></a> | </span>
-							<span class="trash form-delete"><a class="form-control" data-confirm="<?php echo __('This will delete this form permanently. Continue?', 'caldera-forms'); ?>" href="admin.php?page=caldera-forms&delete=<?php echo $form_id; ?>&cal_del=<?php echo wp_create_nonce( 'cf_del_frm' ); ?>"><?php echo __('Delete Form', 'caldera-forms'); ?></a></span>
+						data-action="browse_entries"
+						data-target="#form-entries-viewer"
+						data-form="<?php echo $form_id; ?>"
+						data-template="#forms-list-alt-tmpl"
+						data-active-element="#form_row_<?php echo $form_id; ?>"
+						data-active-class="highlight"
+						data-group="entry_nav"
+						data-callback="setup_pagination"
+						data-page="1"
 
-							</div>
-						</td>
-						<td style="width:4em; text-align:center;"><?php echo $total; ?></td>
-					</tr>
+						><?php echo __('View Entries', 'caldera-forms'); ?></a> | </span>
+						<span class="trash form-delete"><a class="form-control" data-confirm="<?php echo __('This will delete this form permanently. Continue?', 'caldera-forms'); ?>" href="admin.php?page=caldera-forms&delete=<?php echo $form_id; ?>&cal_del=<?php echo wp_create_nonce( 'cf_del_frm' ); ?>"><?php echo __('Delete Form', 'caldera-forms'); ?></a></span>
+
+						</div>
+					</td>
+					<td style="width:4em; text-align:center;"><?php echo $total; ?></td>
+				</tr>
 
 
-					<?php
-					if($class == 'alternate'){
-						$class = '';
-					}else{
-						$class = "alternate";
-					}
-
+				<?php
+				if($class == 'alternate'){
+					$class = '';
+				}else{
+					$class = "alternate";
 				}
-			}else{
-
-				echo '<p>' . __('You don\'t have any forms.', 'caldera-forms');
 
 			}
 		?></tbody>
 		</table>
+		<?php }else{ ?>
+		<p><?php echo __('You don\'t have any forms.', 'caldera-forms'); ?></p>
+		<?php } ?>
 	</div>
 	<div class="form-entries-wrap">
+		<div class="caldera-entry-exporter" style="display:none;">
+			<a href="" class="button caldera-forms-entry-exporter"><?php echo __('Export Entries', 'caldera-forms'); ?></a>
+		</div>
 		<div class="tablenav caldera-table-nav" style="display:none;">
 			<div class="tablenav-pages">
 				<span class="displaying-num"></span>
@@ -146,7 +169,7 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 		<div class="caldera-config-group">
 			<label for=""><?php echo __('Form Name', 'caldera-forms'); ?></label>
 			<div class="caldera-config-field">
-				<input type="text" class="new-form-name block-input field-config" name="name" value="">
+				<input type="text" class="new-form-name block-input field-config" name="name" value="" required="required">
 			</div>
 		</div>
 		<div class="caldera-config-group">
@@ -250,6 +273,7 @@ function serialize_modal_form(el){
 function setup_pagination(obj){
 
 	var total			= obj.rawData.total,
+		exporter		= jQuery('.caldera-entry-exporter'),
 		tense			= ( total === 1 ? ' <?php echo __('entry', 'caldera-pages'); ?>' : ' <?php echo __('entries', 'caldera-pages'); ?>' ),
 		pages			= obj.rawData.pages,
 		current			= obj.rawData.current_page,
@@ -269,12 +293,15 @@ function setup_pagination(obj){
 
 	if(total < 1){
 		pagenav.hide();
+		exporter.hide();
 		return;	
 	}else if(pages <= 1){
 		page_links.hide();
 	}else{
 		page_links.show();		
 	}
+	exporter.find('.caldera-forms-entry-exporter').attr('href', 'admin.php?page=caldera-forms&export=' + obj.params.trigger.data('form'));
+	exporter.show();
 	pagenav.show();
 	page_links.find('a').removeClass('disabled');
 
@@ -295,13 +322,31 @@ function setup_pagination(obj){
 
 }
 
+function update_setting_toggle(obj){
+
+	for( var k in obj.data){
+		if(obj.data[k] === true){
+			jQuery('.setting_toggle_' + k).addClass('button-primary');
+		}else{
+			jQuery('.setting_toggle_' + k).removeClass('button-primary');
+		}
+	}
+	
+	//for()
+
+}
+
 function start_new_form(){
 
 	
 	return {};
 
 }
+
+
 jQuery(function($){
+
+
 	
 	function do_page_navigate(el){
 	

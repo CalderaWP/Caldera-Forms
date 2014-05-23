@@ -58,11 +58,13 @@ foreach($field_types as $field_slug=>$config){
 		continue;
 	}
 	// type list
-	$category = __('Basic', 'caldera-forms');
+	$categories[] = __('Basic', 'caldera-forms');
 	if(!empty($config['category'])){
-		$category = $config['category'];
+		$categories = explode(',', $config['category']);
 	}
-	$field_type_list[$category][$field_slug] = $config;
+	foreach((array) $categories as $category){
+		$field_type_list[trim($category)][$field_slug] = $config;
+	}
 
 	if(!empty($config['setup']['template'])){
 		if(file_exists( $config['setup']['template'] )){
@@ -145,7 +147,7 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 	data-request="setup_field_type" 
 	data-event="field.drop" 
 	data-modal="field_setup"
-	data-modal-title="<?php echo __('Select New Field', 'caldera-forms'); ?>"
+	data-modal-title="<?php echo __('Elements', 'caldera-forms'); ?>"
 	data-template="#form-fields-selector-tmpl"
 	data-modal-width="600"
 	id="<?php echo $id; ?>" style="display:none;">
@@ -190,7 +192,7 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 		</div>
 
 		<div class="caldera-config-group caption-field">
-			<label for="<?php echo $id; ?>_caption"><?php echo __('Caption', 'caldera-forms'); ?></label>
+			<label for="<?php echo $id; ?>_caption"><?php echo __('Description', 'caldera-forms'); ?></label>
 			<div class="caldera-config-field">
 				<input type="text" class="block-input field-config" id="<?php echo $id; ?>_caption" name="config[fields][<?php echo $id; ?>][caption]" value="<?php echo sanitize_text_field( $caption ); ?>">
 			</div>
@@ -526,26 +528,28 @@ foreach($panel_extensions as $panel){
 		$sorted_field_types = array();
 		ksort($field_types);
 		foreach($field_types as $field_slug=>$config){
-			$cat = 'General';
+			$cats[] = 'General';
 			if(!empty($config['category'])){
-				$cat = $config['category'];
+				$cats = explode(',', $config['category']);
 			}
 
 			$icon = CFCORE_URL . "/assets/images/field.png";
 			if(!empty($config['icon'])){
 				$icon = $config['icon'];
 			}
-
-			$template = '<div class="form-modal-add-line">';
-				$template .= '<button type="button" class="button info-button set-current-field" data-field="{{id}}" data-type="' . $field_slug . '">' . __('Set Field', 'caldera-forms') . '</button>';
-				$template .= '<img src="'. $icon .'" class="form-modal-lgo" width="45" height="45">';
-				$template .= '<strong>' . $config['field'] . '</strong>';
-				$template .= '<p class="description">' . (!empty($config['description']) ? $config['description'] : __('No description given', 'caldera-forms') ) . '</p>';
-			$template .= '</div>';
-			if(!isset($sorted_field_types[$cat])){
-				$sorted_field_types[$cat] = null;
+			foreach($cats as $cat){
+				$cat = trim($cat);
+				$template = '<div class="form-modal-add-line">';
+					$template .= '<button type="button" class="button info-button set-current-field" data-field="{{id}}" data-type="' . $field_slug . '">' . __('Set Element', 'caldera-forms') . '</button>';
+					$template .= '<img src="'. $icon .'" class="form-modal-lgo" width="45" height="45">';
+					$template .= '<strong>' . $config['field'] . '</strong>';
+					$template .= '<p class="description">' . (!empty($config['description']) ? $config['description'] : __('No description given', 'caldera-forms') ) . '</p>';
+				$template .= '</div>';
+				if(!isset($sorted_field_types[$cat])){
+					$sorted_field_types[$cat] = null;
+				}
+				$sorted_field_types[$cat] .= $template;
 			}
-			$sorted_field_types[$cat] .= $template;
 		}
 		ksort($sorted_field_types);
 		echo '<div class="modal-side-bar">';

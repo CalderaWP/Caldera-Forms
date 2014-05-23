@@ -71,9 +71,28 @@ class Caldera_Forms {
 		//add_action('wp_footer', array( $this, 'footer_scripts' ) );
 		add_action("wp_ajax_create_form", array( $this, 'create_form') );
 		add_action("wp_ajax_browse_entries", array( $this, 'browse_entries') );
+		add_action("wp_ajax_save_cf_setting", array( $this, 'save_cf_setting') );
 
 
 	}
+
+	public static function save_cf_setting(){
+		if(empty($_POST['set'])){
+			exit;
+		}
+		$style_includes = get_option( '_caldera_forms_styleincludes' );
+
+		if(empty($style_includes[$_POST['set']])){
+			$style_includes[$_POST['set']] = true;
+		}else{
+			$style_includes[$_POST['set']] = false;
+		}
+		update_option( '_caldera_forms_styleincludes', $style_includes);
+		header('Content-Type: application/json');
+		echo json_encode( $style_includes );
+		exit;
+	}
+
 	/**
 	 * Insert shortcode media button
 	 *
@@ -86,6 +105,21 @@ class Caldera_Forms {
 			echo "	<img src=\"". CFCORE_URL . "assets/images/lgo-icon.png\" alt=\"".__("Insert Form Shortcode","caldera-forms")."\" style=\"padding: 0px 2px 0px 0px; width: 16px; margin: -2px 0px 0px;\" /> ".__('Caldera Form', 'caldera-forms')."\n";
 			echo "</a>\n";
 		}
+	}
+
+	public static function captcha_check($value, $field, $data, $form){
+
+		if(empty($data['recaptcha_response_field'])){
+			return array('_fail' => __("The reCAPTCHA field is required.", 'caldera-forms'));
+		}
+		include_once CFCORE_PATH . 'fields/recaptcha/recaptchalib.php';
+
+		$resp = recaptcha_check_answer ($field['config']['private_key'], $_SERVER["REMOTE_ADDR"], $data['recaptcha_challenge_field'], $data['recaptcha_response_field']);
+
+		if (!$resp->is_valid) {
+			return array('_fail' => __("The reCAPTCHA wasn't entered correctly.", 'caldera-forms'));
+		}
+		return true;
 	}
 
 	/// activator
@@ -174,7 +208,7 @@ class Caldera_Forms {
 		}
 
 		$data['current_page'] = $page;
-
+		$gmt_offset = get_option( 'gmt_offset' );
 		if($data['total'] > 0){
 			$data['fields'] = $field_labels;
 			$offset = ($page - 1) * $perpage;
@@ -227,7 +261,7 @@ class Caldera_Forms {
 						$data['entries']['E' . $row->_entryid]['user']['avatar'] = get_avatar( $user->ID, 64 );
 					}
 					$data['entries']['E' . $row->_entryid]['_entry_id'] = $row->_entryid;
-					$data['entries']['E' . $row->_entryid]['_date'] = date_i18n( $dateformat.' '.$timeformat, strtotime($row->_date_submitted) );
+					$data['entries']['E' . $row->_entryid]['_date'] = date_i18n( $dateformat.' '.$timeformat, strtotime($row->_date_submitted), $gmt_offset);
 					$label = $row->slug;
 					if(!empty($field_labels[$label])){
 						$label = $field_labels[$label];
@@ -269,7 +303,8 @@ class Caldera_Forms {
 
 		$new_entry = array(
 			'form_id'	=>	$form['ID'],
-			'user_id'	=>	get_current_user_id(),			
+			'user_id'	=>	get_current_user_id(),
+			'datestamp' =>	date_i18n( 'Y-m-d H:i:s', time(), 0)
 		);
 		$wpdb->insert($wpdb->prefix . 'cf_form_entries', $new_entry);
 		$entryid = $wpdb->insert_id;
@@ -596,6 +631,92 @@ class Caldera_Forms {
 			
 		}
 
+		if(!empty($_GET['export'])){
+
+			$form = get_option( $_GET['export'] );
+
+			global $wpdb;
+
+			//build labels
+			$labels = array();
+			if(!empty($form['fields'])){
+				foreach($form['fields'] as $field){
+					$labels[$field['slug']] = $field['label'];
+				}
+			}
+
+			$rawdata = $wpdb->get_results($wpdb->prepare("
+			SELECT
+				`entry`.`id` as `_entryid`,
+				`entry`.`form_id` AS `_form_id`,
+				`entry`.`datestamp` AS `_date_submitted`,
+				`entry`.`user_id` AS `_user_id`,
+				`value`.*
+
+			FROM `" . $wpdb->prefix ."cf_form_entries` AS `entry`
+			LEFT JOIN `" . $wpdb->prefix ."cf_form_entry_values` AS `value` ON (`entry`.`id` = `value`.`entry_id`)
+
+			WHERE `entry`.`form_id` = %s
+			
+			ORDER BY `entry`.`datestamp` DESC;", $_GET['export']));
+
+			$data = array();
+			$headers = array();
+			foreach( $rawdata as $entry){
+				// check for json
+				if(substr($entry->value, 0,2) === '{"' && substr($entry->value, strlen($entry->value)-2 ) === '"}'){
+					$row = json_decode($entry->value, true);
+					if(!empty($row)){
+						$keys = array_keys($row);
+						if(is_int($keys[0])){
+							$row = implode(', ', $row);
+						}else{
+							$tmp = array();
+							foreach($row as $key=>$item){
+								if(is_array($item)){
+									$item = '( ' . implode(', ', $item).' )';
+								}
+								$tmp[] = $key.': '.$item;
+							}
+							$row = implode(', ', $tmp);
+						}
+					$entry->value = $row;
+					}
+				}
+				$data[$entry->_entryid][$entry->slug] = $entry->value;
+				$label = $entry->slug;
+				if(isset($labels[$entry->slug])){
+					$label = $labels[$entry->slug];
+				}
+				$headers[$entry->slug] = $label;
+			}
+
+
+			
+			header("Pragma: public");
+			header("Expires: 0");
+			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+			header("Cache-Control: private",false);
+			header("Content-Type: application/octet-stream");
+			header("Content-Disposition: attachment; filename=\"" . sanitize_file_name( $form['name'] ) . ".csv\";" );
+			header("Content-Transfer-Encoding: binary"); 
+			
+			$df = fopen("php://output", 'w');
+			fputcsv($df, $headers);
+			foreach($data as $row){
+				$csvrow = array();
+				foreach($headers as $key=>$label){
+					if(!isset($row[$key])){
+						$row[$key] = null;
+					}
+					$csvrow[] = $row[$key];
+				}
+				fputcsv($df, $row);
+			}
+			fclose($df);			
+			exit;			
+		}
+
 		if( isset($_POST['config']) && isset( $_POST['cf_edit_nonce'] ) ){
 
 			// if this fails, check_admin_referer() will automatically print a "failed" page and die.
@@ -743,16 +864,42 @@ class Caldera_Forms {
 				"field"		=>	"Single Line Text",
 				"description" => __('Single Line Text', 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/text/field.php",
-				"category"	=>	__("Text Fields", "cladera-forms"),
+				"category"	=>	__("Text Fields,Basic", "cladera-forms"),
 				"setup"		=>	array(
 					"preview"	=>	CFCORE_PATH . "fields/text/preview.php"
 				)
 			),
+			'recaptcha' => array(
+				"field"		=>	"reCAPTCHA",
+				"description" => __('reCAPTCHA anti-spam field', 'caldera-forms'),
+				"file"		=>	CFCORE_PATH . "fields/recaptcha/field.php",
+				"category"	=>	__("Special", "cladera-forms"),
+				"handler"	=>	array($this, 'captcha_check'),
+				"setup"		=>	array(
+					"template"	=>	CFCORE_PATH . "fields/recaptcha/config.php",
+					"preview"	=>	CFCORE_PATH . "fields/recaptcha/preview.php",
+					"not_supported"	=>	array(
+						'hide_label',
+						'caption',
+						'required'
+					),
+					"scripts"	=> array(
+						"http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"
+					)
+				),
+				"scripts"	=> array(
+					"http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"
+				),
+				"styles"	=> array(
+					CFCORE_URL . "fields/recaptcha/style.css"
+				),
+			),
 			'html' => array(
 				"field"		=>	"HTML",
-				"description" => __('HTML', 'caldera-forms'),
+				"description" => __('Add text/html content', 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/html/field.php",
 				"category"	=>	__("Content", "cladera-forms"),
+				"icon"		=>	CFCORE_URL . "fields/html/icon.png",
 				"setup"		=>	array(
 					"preview"	=>	CFCORE_PATH . "fields/html/preview.php",
 					"template"	=>	CFCORE_PATH . "fields/html/config_template.php",
@@ -767,7 +914,7 @@ class Caldera_Forms {
 				"field"		=>	"Hidden",
 				"description" => __('Hidden', 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/hidden/field.php",
-				"category"	=>	__("Text Fields", "cladera-forms"),
+				"category"	=>	__("Text Fields,Basic", "cladera-forms"),
 				"setup"		=>	array(
 					"preview"	=>	CFCORE_PATH . "fields/hidden/preview.php",
 					"not_supported"	=>	array(
@@ -811,7 +958,7 @@ class Caldera_Forms {
 				"field"		=>	"Paragraph Textarea",
 				"description" => __('Paragraph Textarea', 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/paragraph/field.php",
-				"category"	=>	__("Text Fields", "cladera-forms"),
+				"category"	=>	__("Text Fields,Basic", "cladera-forms"),
 				"setup"		=>	array(
 					"template"	=>	CFCORE_PATH . "fields/paragraph/config_template.html",
 					"preview"	=>	CFCORE_PATH . "fields/paragraph/preview.php",
@@ -823,7 +970,7 @@ class Caldera_Forms {
 			'toggle_switch' => array(
 				"field"		=>	"Toggle Switch",
 				"description" => __('Toggle Switch', 'caldera-forms'),
-				"category"	=>	__("Select Options", "cladera-forms"),
+				"category"	=>	__("Select Options,Special", "cladera-forms"),
 				"file"		=>	CFCORE_PATH . "fields/toggle_switch/field.php",
 				"options"	=>	"single",
 				"setup"		=>	array(
@@ -850,7 +997,7 @@ class Caldera_Forms {
 				"field"		=>	"Dropdown Select",
 				"description" => __('Dropdown Select', 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/dropdown/field.php",
-				"category"	=>	__("Select Options", "cladera-forms"),
+				"category"	=>	__("Select Options,Basic", "cladera-forms"),
 				"options"	=>	"single",
 				"setup"		=>	array(
 					"template"	=>	CFCORE_PATH . "fields/dropdown/config_template.html",
@@ -867,7 +1014,7 @@ class Caldera_Forms {
 				"field"		=>	"Checkbox",
 				"description" => __('Checkbox', 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/checkbox/field.php",
-				"category"	=>	__("Select Options", "cladera-forms"),
+				"category"	=>	__("Select Options,Basic", "cladera-forms"),
 				"options"	=>	"multiple",
 				"setup"		=>	array(
 					"preview"	=>	CFCORE_PATH . "fields/checkbox/preview.php",
@@ -884,7 +1031,7 @@ class Caldera_Forms {
 				"field"		=>	"Radio",
 				"description" => __('Radio', 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/radio/field.php",
-				"category"	=>	__("Select Options", "cladera-forms"),
+				"category"	=>	__("Select Options,Basic", "cladera-forms"),
 				"options"	=>	true,
 				"setup"		=>	array(
 					"preview"	=>	CFCORE_PATH . "fields/radio/preview.php",
@@ -900,7 +1047,7 @@ class Caldera_Forms {
 				"field"		=>	"Date Picker",
 				"description" => __('Date Picker', 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/date_picker/datepicker.php",
-				"category"	=>	__("Text Fields", "cladera-forms"),
+				"category"	=>	__("Text Fields,Pickers", "cladera-forms"),
 				"setup"		=>	array(
 					"preview"	=>	CFCORE_PATH . "fields/date_picker/preview.php",
 					"template"	=>	CFCORE_PATH . "fields/date_picker/setup.html",
@@ -926,7 +1073,7 @@ class Caldera_Forms {
 			'color_picker' => array(
 				"field"		=>	"Color Picker",
 				"description" => __('Color Picker', 'caldera-forms'),
-				"category"	=>	__("Text Fields", "cladera-forms"),
+				"category"	=>	__("Text Fields,Pickers", "cladera-forms"),
 				"file"		=>	CFCORE_PATH . "fields/color_picker/field.php",
 				"setup"		=>	array(
 					"preview"	=>	CFCORE_PATH . "fields/color_picker/preview.php",
@@ -1151,6 +1298,10 @@ class Caldera_Forms {
 
 				// init filter
 				$form = apply_filters('caldera_forms_submit_get_form', $form, $process_data, $referrer, $processID);
+
+				// get all fieldtype
+				$field_types = apply_filters('caldera_forms_get_field_types', array() );
+
 				// start action
 				do_action('caldera_forms_submit_start', $data, $form, $referrer, $processID);
 
@@ -1179,8 +1330,10 @@ class Caldera_Forms {
 					}
 				}
 
+				// field handlers + required checks
 				foreach($form['fields'] as $field){
-					
+
+					// required check
 					$failed = false;
 					if(!empty($field['required'])){
 						if(isset($data[$field['slug']])){
@@ -1200,6 +1353,23 @@ class Caldera_Forms {
 							$transdata['fields'][$field['slug']] = $field['slug'] .' ' .__('is required', 'caldera-forms');
 						}
 					}
+
+					// handler
+					if(isset($field_types[$field['type']]['handler']) && isset($data[$field['slug']])){
+
+						if(is_array($field_types[$field['type']]['handler'])){
+							$process_data[$field['slug']] = $field_types[$field['type']]['handler'][0]::$field_types[$field['type']]['handler'][1]($process_data[$field['slug']], $field, $process_data, $form);
+						}else{
+							if(function_exists($field_types[$field['type']]['handler'])){
+								$func = $field_types[$field['type']]['handler'];
+								$process_data[$field['slug']] = $func($process_data[$field['slug']], $field, $process_data, $form);	
+							}
+						}
+						if(isset($process_data[$field['slug']]['_fail'])){
+							$transdata['fields'][$field['slug']] = $process_data[$field['slug']]['_fail'];
+						}
+					}
+
 				}
 				// check requireds
 				if(!empty($transdata['fields'])){
@@ -1469,20 +1639,17 @@ class Caldera_Forms {
 		}
 		// if depts been set- scripts are used - 
 		wp_enqueue_script( 'cf-frontend-script-init', CFCORE_URL . 'assets/js/frontend-script-init.js', array('jquery'), self::VERSION, true);
+		$style_includes = get_option( '_caldera_forms_styleincludes' );
 
-		//if(isset($form['settings']['styles']['use_grid'])){
-		//	if($form['settings']['styles']['use_grid'] === 'yes'){
-				wp_enqueue_style( 'cf-grid-styles', CFCORE_URL . 'assets/css/caldera-grid.css', array(), self::VERSION );
-		//	}
-		//}
-		//if(isset($form['settings']['styles']['use_form'])){
-		//	if($form['settings']['styles']['use_form'] === 'yes'){
-				//wp_enqueue_style( 'cf-form-styles', CFCORE_URL . 'assets/css/caldera-form.css', array(), self::VERSION );
-		//	}
-		//}
-		//if(isset($form['settings']['styles']['use_alerts'])){
-		//	if($form['settings']['styles']['use_alerts'] === 'yes'){
-				wp_enqueue_style( 'cf-alert-styles', CFCORE_URL . 'assets/css/caldera-alert.css', array(), self::VERSION );
+		if(!empty($style_includes['grid'])){
+			wp_enqueue_style( 'cf-grid-styles', CFCORE_URL . 'assets/css/caldera-grid.css', array(), self::VERSION );
+		}
+		if(!empty($style_includes['form'])){
+			wp_enqueue_style( 'cf-form-styles', CFCORE_URL . 'assets/css/caldera-form.css', array(), self::VERSION );
+		}
+		if(!empty($style_includes['alert'])){
+			wp_enqueue_style( 'cf-alert-styles', CFCORE_URL . 'assets/css/caldera-alert.css', array(), self::VERSION );
+		}
 		//	}
 		//}
 
@@ -1510,28 +1677,29 @@ class Caldera_Forms {
 									$field_types = apply_filters('caldera_forms_get_field_types', array() );
 								}
 
-
-								foreach($form['fields'] as $field){
-									//enqueue styles
-									if( !empty( $field_types[$field['type']]['styles'])){
-										foreach($field_types[$field['type']]['styles'] as $style){
-											if(filter_var($style, FILTER_VALIDATE_URL)){
-												wp_enqueue_style( 'cf-' . sanitize_key( basename( $style ) ), $style, array(), self::VERSION );
-											}else{
-												wp_enqueue_style( $style );
+								if(!empty($form['fields'])){
+									foreach($form['fields'] as $field){
+										//enqueue styles
+										if( !empty( $field_types[$field['type']]['styles'])){
+											foreach($field_types[$field['type']]['styles'] as $style){
+												if(filter_var($style, FILTER_VALIDATE_URL)){
+													wp_enqueue_style( 'cf-' . sanitize_key( basename( $style ) ), $style, array(), self::VERSION );
+												}else{
+													wp_enqueue_style( $style );
+												}
 											}
 										}
-									}
 
-									//enqueue scripts
-									if( !empty( $field_types[$field['type']]['scripts'])){
-										// check for jquery deps
-										$depts[] = 'jquery';
-										foreach($field_types[$field['type']]['scripts'] as $script){
-											if(filter_var($script, FILTER_VALIDATE_URL)){
-												wp_enqueue_script( 'cf-' . sanitize_key( basename( $script ) ), $script, $depts, self::VERSION );
-											}else{
-												wp_enqueue_script( $script );
+										//enqueue scripts
+										if( !empty( $field_types[$field['type']]['scripts'])){
+											// check for jquery deps
+											$depts[] = 'jquery';
+											foreach($field_types[$field['type']]['scripts'] as $script){
+												if(filter_var($script, FILTER_VALIDATE_URL)){
+													wp_enqueue_script( 'cf-' . sanitize_key( basename( $script ) ), $script, $depts, self::VERSION );
+												}else{
+													wp_enqueue_script( $script );
+												}
 											}
 										}
 									}

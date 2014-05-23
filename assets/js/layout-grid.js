@@ -544,8 +544,6 @@ jQuery(function($) {
 				option	: {}
 			};
 
-			console.log(row);
-
 			// add new option
 			config.option[key]	=	{				
 				value	:	'',
@@ -600,10 +598,15 @@ Handlebars.registerHelper("is_single", function(value, options) {
 		return options.fn(this);
 	}
 });
-
+Handlebars.registerHelper("script", function(options) {
+	if(options.hash.src){
+		return '<script type="text/javascript" src="' + options.fn(this) + '"></script>';
+	}else{
+		return '<script type="text/javascript">' + options.fn(this) + '</script>';
+	}
+});
 Handlebars.registerHelper("is", function(value, options) {
 	//console.log(value);
-	console.log(options.data.key + ' - ' + options.hash.value);
 	if(options.hash.value === '@key'){
 		options.hash.value = options.data.key;
 	}

@@ -78,10 +78,43 @@
 
 
 /* Admin Panels */
+.caldera-editor-header-nav > li.caldera-forms-headtext {
+  display: block;
+  padding: 12px 0 0;
+  color: #737373;
+}
+.toggle_option_row {
+  margin: 4px 0;
+}
+
+.toggle_option_row input{
+  display: inline;
+}
+
+.toggle_option_row .dashicons-sort{ cursor: move;}
+
+.toggle_option_row .toggle_value_field,
+.toggle_option_row .toggle_label_field{
+  width: 120px;
+}
+
+.toggle_option_preview .button {
+  border-radius: 0;
+  margin-right: -5px;
+}
+.toggle_option_preview .button:first-child {
+  border-radius: 3px 0 0 3px;
+}
+.toggle_option_preview .button:last-child {
+  border-radius: 0 3px 3px 0;
+}
 .toplevel_page_caldera-forms .wrap {
   padding-top: 35px;
 }
-
+.caldera-entry-exporter {
+  float: left;
+  margin-top: -38px;
+}
 .caldera-group-panel{
   width: 350px;
   padding: 12px 12px 0;

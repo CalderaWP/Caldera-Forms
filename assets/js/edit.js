@@ -108,7 +108,7 @@ jQuery(function($){
 			$.extend(true, config, lineconf);
 		});
 			
-		console.log(config);
+
 		preview_target.html( template(config) );
 		preview_parent.removeClass('button');
 
