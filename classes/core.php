@@ -73,7 +73,6 @@ class Caldera_Forms {
 		add_action("wp_ajax_browse_entries", array( $this, 'browse_entries') );
 		add_action("wp_ajax_save_cf_setting", array( $this, 'save_cf_setting') );
 
-
 	}
 
 	public static function save_cf_setting(){
@@ -177,8 +176,14 @@ class Caldera_Forms {
 		$field_labels = array();
 		$backup_labels = array();
 		$selects = array();
+
+		// get all fieldtype
+		$field_types = apply_filters('caldera_forms_get_field_types', array() );
+		$fields = array();
 		if(!empty($form['fields'])){
 			foreach($form['fields'] as $fid=>$field){
+				$fields[$field['slug']] = $field;
+
 				if(!empty($field['entry_list'])){
 					$selects[] = "'".$field['slug']."'";
 					$field_labels[$field['slug']] = $field['label'];
@@ -274,6 +279,22 @@ class Caldera_Forms {
 							}
 						}
 
+						// check view handler
+						$field = $fields[$row->slug];
+
+						if(isset($field_types[$field['type']]['viewer'])){
+
+							if(is_array($field_types[$field['type']]['viewer'])){
+								$row->value = $field_types[$field['type']]['viewer'][0]::$field_types[$field['type']]['viewer'][1]($row->value, $field, $form);
+							}else{
+								if(function_exists($field_types[$field['type']]['viewer'])){
+									$func = $field_types[$field['type']]['viewer'];
+									$row->value = $func($row->value, $field, $form);
+								}
+							}
+						}
+
+
 						if(isset($data['entries']['E' . $row->_entryid]['data'][$row->slug])){
 							// array based - add another entry
 							if(!is_array($data['entries']['E' . $row->_entryid]['data'][$row->slug])){
@@ -346,7 +367,15 @@ class Caldera_Forms {
 			return;
 		}
 		// do mailer!
-		$attachment = null;		
+		/*$mail = array(
+			'recipients' => ,
+			'subject'	=> '',
+			'message'	=> '',
+			'headers'	=>	array(),
+			'attachments' => array()
+		);*/
+
+		$attachment = null;
 		$sendername = __('Caldera Forms Notification', 'caldera-forms');
 		if(!empty($form['mailer']['sender_name'])){
 			$sendername = $form['mailer']['sender_name'];
