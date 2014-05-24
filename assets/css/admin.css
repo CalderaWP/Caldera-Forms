@@ -304,7 +304,7 @@ li.caldera-editor-logo {
 .caldera-editor-header-nav > li.active a {  
   background: none repeat scroll 0 0 #efefef;
 }
-.caldera-editor-header-nav > li.caldera-forms-search {
+.caldera-editor-header-nav > li.caldera-forms-toolbar-item {
   padding: 6px 6px 6px 12px;
 }
 .caldera-editor-body .users-settings-input{

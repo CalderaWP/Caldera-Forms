@@ -41,22 +41,29 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 		<li class="caldera-forms-version">
 			v<?php echo CFCORE_VER; ?>
 		</li>
-		<li class="caldera-forms-search">
+		<li class="caldera-forms-toolbar-item">
 			<a class="button ajax-trigger" data-request="start_new_form" data-modal-buttons='<?php echo $modal_new_form; ?>' data-modal-width="600" data-modal-height="300" data-load-class="none" data-modal="new_form" data-modal-title="Create New Form" data-template="#new-form-tmpl"><?php echo __('New Form', 'caldera-forms'); ?></a>
 		</li>
-		<li class="caldera-forms-search">
+		<li class="caldera-forms-toolbar-item">
 		&nbsp;
 		</li>
 		<li class="caldera-forms-headtext">
 			<?php echo __('Front-end Style Includes', 'caldera-forms'); ?>
 		</li>
-		<li class="caldera-forms-search">
+		<li class="caldera-forms-toolbar-item">
 			<div class="toggle_option_preview">
 				<button type="button" title="<?php echo __('Includes Bootstrap 3 styles on the frontend for form alert notices', 'caldera-forms'); ?>" data-action="save_cf_setting" data-active-class="none" data-set="alert" data-callback="update_setting_toggle" class="ajax-trigger setting_toggle_alert button <?php if(!empty($style_includes['alert'])){ ?>button-primary<?php } ?>"><?php echo __('Alert' , 'caldera-forms'); ?></button>
 				<button type="button" title="<?php echo __('Includes Bootstrap 3 styles on the frontend for form fields and buttons', 'caldera-forms'); ?>" data-action="save_cf_setting" data-active-class="none" data-set="form" data-callback="update_setting_toggle" class="ajax-trigger setting_toggle_form button <?php if(!empty($style_includes['form'])){ ?>button-primary<?php } ?>"><?php echo __('Form' , 'caldera-forms'); ?></button>
 				<button type="button" title="<?php echo __('Includes Bootstrap 3 styles on the frontend for form grid layouts', 'caldera-forms'); ?>" data-action="save_cf_setting" data-active-class="none" data-set="grid" data-callback="update_setting_toggle" class="ajax-trigger setting_toggle_grid button <?php if(!empty($style_includes['grid'])){ ?>button-primary<?php } ?>"><?php echo __('Grid' , 'caldera-forms'); ?></button>
 			</div>
 		</li>
+		<li class="caldera-forms-toolbar-item">
+		&nbsp;
+		</li>
+		<li class="caldera-forms-toolbar-item">
+			<button type="button" title="<?php echo __('Includes Bootstrap 3 styles on the frontend for form alert notices', 'caldera-forms'); ?>" data-action="save_cf_setting" data-active-class="none" data-set="alert" data-request="<?php echo CFCORE_EXTEND_URL; ?>" data-modal="extend_cf" data-modal-width="650" data-modal-title="<?php echo __('Caldera Forms Extensions', 'caldera-forms'); ?>" class="ajax-trigger button"><?php echo __('Extensions' , 'caldera-forms'); ?></button>
+		</li>
+
 	</ul>
 </div>
 <div class="form-admin-page-wrap">
@@ -191,6 +198,7 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 						{{#each fields}}
 						<th>{{this}}</th>
 						{{/each}}
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -199,8 +207,9 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 						<td>{{_entry_id}}</td>
 						<td>{{_date}}</td>
 						{{#each data}}
-						<td>{{this}}</td>
+						<td>{{{this}}}</td>
 						{{/each}}
+						<td><button class="button button-small ajax-trigger" data-active-class="none" data-group="viewentry" data-entry="{{_entry_id}}" data-form="{{../form}}" data-action="get_entry" data-modal="view_entry" data-modal-width="550" data-modal-title="<?php echo __('Entry', 'caldera-forms'); ?> # {{_entry_id}}" data-template="#view-entry-tmpl" type="button"><?php echo __('View', 'caldera-forms'); ?></button></td>
 					</tr>
 				{{/each}}
 				</tbody>
@@ -210,35 +219,25 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 	<p class="description"><?php echo __('No entries yet.', 'caldera-forms'); ?></p>
 	{{/if}}
 </script>
-<script type="text/html" id="forms-list-tmpl">
-	{{#if entries}}
-		{{#each entries}}
-		<div class="form-panel postbox">
-			{{#if suser}}
-			<div class="avatar-link">
-				<span class="user-avatar-{{user/ID}}">{{{user/avatar}}}</span>
-			</div>
-			{{/if}}
-			<h4># {{entry_id}}</h4>
-			<h5>{{date_submitted}}</h5>
-			{{#if data}}
-			<table class="table table-condensed">
-				<tbody>
-				{{#each data}}
-					<tr>
-						<th>{{@key}}</th>
-						<td>{{this}}</td>
-					</tr>
-				{{/each}}
-				</tbody>
-			</table>
-
-			{{/if}}
-		</div>
+<script type="text/html" id="view-entry-tmpl">
+<div class="form-panel">
+	<table class="table table-condensed">
+		<thead>
+			<tr>
+				<th><?php echo __('Field', 'caldera-forms'); ?></th>
+				<th><?php echo __('Value', 'caldera-forms'); ?></th>
+			</tr>
+		</thead>
+		<tbody>
+		{{#each data}}
+			<tr>
+				<th>{{label}}</th>
+				<td>{{{value}}}</td>
+			</tr>
 		{{/each}}
-	{{else}}
-	<p class="description"><?php echo __('No entries yet.', 'caldera-forms'); ?></p>
-	{{/if}}
+		</tbody>
+	</table>
+</div>
 </script>
 <script type="text/javascript">
 

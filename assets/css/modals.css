@@ -12,6 +12,7 @@
   top: 0;
   z-index: 100100;
 }
+
 .caldera-modal-wrap {
   background-color: #FFFFFF;
   bottom: 15px;
@@ -55,7 +56,14 @@
   right: 0;
   top: 43px;
 }
-
+.caldera-modal-body .form-panel {
+  bottom: -30px;
+  left: 12px;
+  overflow: auto;
+  position: absolute;
+  right: 12px;
+  top: 0;
+}
 .caldera-modal-footer {
   background: none repeat scroll 0 0 #EFEFEF;
   border-top: 1px solid #E0E0E0;
