@@ -2154,7 +2154,7 @@ class Caldera_Forms {
 		}
 		if(!empty($_GET['cf_su']) && $current_form_count == $_GET['cf_su']){
 			if(empty($notices['success']['note'])){
-				$notices['success']['note'] = __('Form has successfuly been submitted.', 'caldera-forms');
+				$notices['success']['note'] = $form['success'];
 			}
 		}
 
