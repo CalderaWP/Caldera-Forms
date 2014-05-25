@@ -53,12 +53,15 @@ class Caldera_Forms {
 		add_filter('caldera_forms_get_field_types', array( $this, 'get_field_types'));
 		add_filter('caldera_forms_get_form_processors', array( $this, 'get_form_processors'));
 		add_filter('caldera_forms_submit_redirect_complete', array( $this, 'do_redirect'),10, 4);
+		add_filter('caldera_forms_entry_viewer_buttons', array( $this, 'set_viewer_buttons'),10, 4);
 		
 		// mailser
 		add_filter('caldera_forms_mailer', array( $this, 'mail_attachment_check'),10, 3);
 
 		// action
 		add_action('caldera_forms_submit_complete', array( $this, 'save_final_form'),1,2);
+		add_action('caldera_forms_entry_actions', array( $this, 'get_entry_actions'),1);
+		add_action('caldera_forms_admin_templates', array( $this, 'get_admin_templates'),1);
 
 
 		if(is_admin()){
@@ -80,6 +83,10 @@ class Caldera_Forms {
 
 		//add_action('wp_footer', array( $this, 'footer_scripts' ) );
 
+	}
+
+	public static function get_admin_templates(){
+		include CFCORE_PATH . 'ui/admin_templates.php';
 	}
 
 
@@ -114,6 +121,35 @@ class Caldera_Forms {
 		return null;
 	}
 
+	public static function get_entry_actions(){
+
+		$viewer_buttons_array = apply_filters('caldera_forms_entry_viewer_buttons', array());
+		$viewer_buttons = null;
+		if(!empty($viewer_buttons_array)){
+			$viewer_buttons = array();
+			foreach($viewer_buttons_array as $button){
+				if(is_array($button['config'])){
+					$viewer_buttons[] = $button['label'].'|'.json_encode($button['config']);
+				}else{
+					$viewer_buttons[] = $button['label'].'|'.$button['config'];	
+				}
+			}
+
+			$viewer_buttons = 'data-modal-buttons=\'' . implode(';', $viewer_buttons) . '\'';
+		}
+
+		echo '<button class="button button-small ajax-trigger" data-active-class="none" data-load-class="spinner" ' . $viewer_buttons . ' data-group="viewentry" data-entry="{{_entry_id}}" data-form="{{../form}}" data-action="get_entry" data-modal="view_entry" data-modal-width="550" data-modal-title="' . __('Entry', 'caldera-forms') . ' # {{_entry_id}}" data-template="#view-entry-tmpl" type="button">' . __('View', 'caldera-forms') . '</button> ';		
+	}
+	
+	public static function set_viewer_buttons($buttons){
+		
+		$buttons['close_panel'] = array(
+			'label'		=>	'Close',
+			'config'	=>	'dismiss'
+		);
+
+		return $buttons;
+	}
 	public static function handle_file_view($value, $field, $form){
 
 		return '<a href="' . $value .'" target="_blank">' . basename($value) .'</a>';
@@ -551,7 +587,7 @@ class Caldera_Forms {
 	public function register_admin_page(){
 		global $menu, $submenu;
 		
-		$this->screen_prefix = add_menu_page( 'Caldera Forms', 'Caldera Forms', 'manage_options', $this->plugin_slug, array( $this, 'render_admin' ), 'dashicons-list-view', 76 );
+		$this->screen_prefix = add_menu_page( 'Caldera Forms', 'Caldera Forms', 'manage_options', $this->plugin_slug, array( $this, 'render_admin' ), 'dashicons-list-view', 52.999 );
 
 	}
 
@@ -845,13 +881,13 @@ class Caldera_Forms {
 				// add form to registry
 				$forms[$data['ID']] = $data;
 				//dump($data);
-
-				// update form
-				do_action('caldera_forms_save_form', $data);
+				
+				// add from to list
 				update_option($data['ID'], $data);
+				do_action('caldera_forms_save_form', $data);
 
-				do_action('caldera_forms_save_form_register', $data);
 				update_option( '_caldera_forms', $forms );
+				do_action('caldera_forms_save_form_register', $data);
 
 				if(!empty($_POST['sender'])){
 					exit;
@@ -879,16 +915,20 @@ class Caldera_Forms {
 		$newform = array(
 			"ID" 			=> uniqid('CF'),
 			"name" 			=> $newform['name'],
-			"description" 	=> $newform['description']
+			"description" 	=> $newform['description'],
+			"success"		=>	__('Form has been successfuly submitted. Thank you.')
 		);
 
 		// add from to list
+		$newform = apply_filters('caldera_forms_create_form', $newform);
+
 		$forms[$newform['ID']] = $newform;
 		update_option( '_caldera_forms', $forms );
 
 		// add form to db
 		update_option($newform['ID'], $newform);
-		
+		do_action('caldera_forms_create_form', $newform);
+
 		echo $newform['ID'];
 		exit;
 
@@ -1389,7 +1429,7 @@ class Caldera_Forms {
 
 		//HOOK IN post
 		
-		if(isset($_POST['_cf_verify']) && isset( $_POST['_cf_frm'] )){
+		if(isset($_POST['_cf_verify']) && isset( $_POST['_cf_frm_id'] )){
 			if(wp_verify_nonce( $_POST['_cf_verify'], 'caldera_forms_front' )){
 		
 				$referrer = parse_url( $_POST['_wp_http_referer'] );
@@ -1402,16 +1442,22 @@ class Caldera_Forms {
 						unset($referrer['query']['cf_su']);
 					}
 				}
-				$form = get_option( $_POST['_cf_frm'] );
-				if(empty($form['ID']) || $form['ID'] != $_POST['_cf_frm']){
+				$form = get_option( $_POST['_cf_frm_id'] );
+				if(empty($form['ID']) || $form['ID'] != $_POST['_cf_frm_id']){
 					return;
 				}
 
 				unset($_POST['_wp_http_referer']);
 
 				// unset stuff
-				unset($_POST['_cf_frm']);
+				unset($_POST['_cf_frm_id']);
 				unset($_POST['_cf_verify']);
+
+				$form_instance_number = 1;
+				if(isset($_POST['_cf_frm_ct'])){
+					$form_instance_number = $_POST['_cf_frm_ct'];
+				}
+				
 				
 				// SET process ID
 				$processID = uniqid('_cf_process_');
@@ -1431,9 +1477,10 @@ class Caldera_Forms {
 				// requireds
 				// set transient for returns submittions
 				$transdata = array(
-					'transient' => $processID,
-					'expire'	=> 120, 
-					'data' 		=> $data
+					'transient' 	=> $processID,
+					'form_instance' => $form_instance_number,
+					'expire'		=> 120,
+					'data' 			=> $data
 				);
 
 				$transdata = apply_filters('caldera_forms_submit_transient', $transdata, $process_data, $form, $referrer, $processID);
@@ -1705,7 +1752,7 @@ class Caldera_Forms {
 				do_action('caldera_forms_submit_complete', $process_data, $form, $referrer, $processID);
 
 				// redirect back or to result page
-				$referrer['query']['cf_su'] = 1;
+				$referrer['query']['cf_su'] = $form_instance_number;
 				$referrer = $referrer['path'] . '?' . http_build_query($referrer['query']);
 
 				// done do action.
@@ -1911,10 +1958,8 @@ class Caldera_Forms {
 		$data = array();
 		foreach($rawdata as $row){
 
-			$field = $fields[$row->slug];
-			if(isset($fields[$field['slug']])){
-				
-				$field = $fields[$field['slug']];
+			if(isset($fields[$row->slug])){
+				$field = $fields[$row->slug];
 
 				if(isset($field_types[$field['type']]['viewer'])){
 
@@ -1990,9 +2035,13 @@ class Caldera_Forms {
 
 	static public function render_form($atts, $entry_id = null){
 
+		global $current_form_count;
+
 		if(empty($atts)){
 			return;
 		}
+
+
 
 		if(is_string($atts)){
 			$atts = array( 'id' => $atts);
@@ -2008,6 +2057,11 @@ class Caldera_Forms {
 		}
 
 		$form = apply_filters('caldera_forms_render_get_form', $form );
+
+		if(empty($current_form_count)){
+			$current_form_count = 0;
+		}
+		$current_form_count += 1;
 
 		$field_types = apply_filters('caldera_forms_get_field_types', array() );
 
@@ -2098,7 +2152,7 @@ class Caldera_Forms {
 			$prev_post = apply_filters('caldera_forms_render_get_transient', $prev_post, $form);
 
 		}
-		if(!empty($_GET['cf_su'])){
+		if(!empty($_GET['cf_su']) && $current_form_count == $_GET['cf_su']){
 			if(empty($notices['success']['note'])){
 				$notices['success']['note'] = __('Form has successfuly been submitted.', 'caldera-forms');
 			}
@@ -2232,7 +2286,8 @@ class Caldera_Forms {
 			// render only non success
 			$out .= "<form class=\"" . implode(' ', $form_classes) . "\" method=\"POST\" enctype=\"multipart/form-data\" role=\"form\">\r\n";
 			$out .= wp_nonce_field( "caldera_forms_front", "_cf_verify", true, false);
-			$out .= "<input type=\"hidden\" name=\"_cf_frm\" value=\"" . $atts['id'] . "\">\r\n";
+			$out .= "<input type=\"hidden\" name=\"_cf_frm_id\" value=\"" . $atts['id'] . "\">\r\n";
+			$out .= "<input type=\"hidden\" name=\"_cf_frm_ct\" value=\"" . $current_form_count . "\">\r\n";			
 			$out .= $grid->renderLayout();
 			$out .= "</form>\r\n";
 		}

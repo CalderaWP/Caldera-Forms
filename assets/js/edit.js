@@ -56,6 +56,7 @@ jQuery(function($){
 				config = {};
 			}
 
+			config._id = parent.prop('id');
 			config._name = 'config[fields][' + parent.prop('id') + '][config]';
 
 
@@ -73,6 +74,8 @@ jQuery(function($){
 
 			// rebind stuff
 			rebuild_field_binding();
+
+			baldrickTriggers();
 
 	}
 

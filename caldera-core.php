@@ -18,7 +18,7 @@ if ( ! defined( 'WPINC' ) ) {
 define('CFCORE_PATH', plugin_dir_path(__FILE__));
 define('CFCORE_URL', plugin_dir_url(__FILE__));
 define('CFCORE_VER', '1.0.0');
-define('CFCORE_EXTEND_URL', 'http://localhost/orderfyme/1.0/extensions');
+define('CFCORE_EXTEND_URL', 'http://digilab.co.za');
 
 // table builder
 register_activation_hook( __FILE__, array( 'Caldera_Forms', 'activate_caldera_forms' ) );

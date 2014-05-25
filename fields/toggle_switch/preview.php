@@ -1,9 +1,9 @@
 <div class="preview-caldera-config-group">
-	{{#unless hide_label}}<lable class="control-label">{{label}}</lable>{{/unless}}
+	{{#unless hide_label}}<lable class="control-label">{{label}}{{#if required}} <span style="color:#ff0000;">*</span>{{/if}}</lable>{{/unless}}
 	<div class="preview-caldera-config-field">
 		<div class="toggle_option_preview">
 		{{#each config/option}}
-		<button class="button {{#is default value=true}}button-primary{{/is}}" type="button">{{label}}</button>
+		<button class="button {{#is ../config/default value="@key"}}button-primary{{/is}}" type="button">{{label}}</button>
 		{{/each}}
 		</div>
 		<span class="help-block">{{caption}}</span>

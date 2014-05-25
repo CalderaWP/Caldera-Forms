@@ -4,7 +4,10 @@ global $field_type_list, $field_type_templates;
 
 // Load element
 $element = get_option( $_GET['edit'] );
-//dump($element);
+
+if(empty($element['success'])){
+	$element['success'] = __('Form has successfuly been submitted. Thank you.', 'caldera-forms');
+}
 
 // place nonce field
 wp_nonce_field( 'cf_edit_element', 'cf_edit_nonce' );
@@ -12,6 +15,8 @@ wp_nonce_field( 'cf_edit_element', 'cf_edit_nonce' );
 // Init check
 echo "<input name=\"config[_last_updated]\" value=\"" . date('r') . "\" type=\"hidden\">";
 echo "<input name=\"config[ID]\" value=\"" . $_GET['edit'] . "\" type=\"hidden\">";
+
+do_action('caldera_forms_edit_start', $element);
 
 // Get Fieldtpyes
 $field_types = apply_filters('caldera_forms_get_field_types', array() );
@@ -209,7 +214,7 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 		</div>
 		<input type="hidden" class="field_config_string block-input" value="<?php echo htmlentities( $config_str ); ?>">
 		<br>
-		<button class="button button-primary delete-field block-button" data-confirm="<?php echo __('Are you sure you want to remove this field?. \'Cancel\' to stop. \'OK\' to delete', 'caldera-forms'); ?>" type="button"><i class="icn-delete"></i> <?php echo __('Delete Field', 'caldera-forms'); ?></button>
+		<button class="button button-primary delete-field block-button" data-confirm="<?php echo __('Are you sure you want to remove this field?. \'Cancel\' to stop. \'OK\' to delete', 'caldera-forms'); ?>" type="button"><i class="icn-delete"></i> <?php echo __('Delete Element', 'caldera-forms'); ?></button>
 	</div>
 	<?php
 }
@@ -312,12 +317,21 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 			<input type="text" class="field-config required" name="config[name]" value="<?php echo $element['name']; ?>" style="width:300px;" required="required">
 		</div>
 	</div>
+
 	<div class="caldera-config-group">
 		<label><?php echo __('Form Description', 'caldera-forms'); ?> </label>
 		<div class="caldera-config-field">
 			<textarea name="config[description]" class="field-config" style="width:300px;" rows="5"><?php echo htmlentities( $element['description'] ); ?></textarea>
 		</div>
 	</div>
+
+	<div class="caldera-config-group">
+		<label><?php echo __('Success Message', 'caldera-forms'); ?> </label>
+		<div class="caldera-config-field">
+			<input type="text" class="field-config required" name="config[success]" value="<?php echo $element['success']; ?>" style="width:300px;" required="required">
+		</div>
+	</div>
+
 </div>
 
 <?php
@@ -512,7 +526,7 @@ foreach($panel_extensions as $panel){
 }
 
 // PROCESSORS
-
+do_action('caldera_forms_edit_end', $element);
 ?>
 <script type="text/html" id="field-options-cofnig-tmpl">
 <?php

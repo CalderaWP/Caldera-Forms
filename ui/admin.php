@@ -2,10 +2,11 @@
 
 // Just some basics.
 $per_page_limit = 20;
-// form tempalte
-$template_style = 'form-card-tmpl';
+
 // get all forms
 $forms = get_option( '_caldera_forms' );
+
+$forms = apply_filters( 'caldera_forms_admin_forms', $forms );
 
 $style_includes = get_option( '_caldera_forms_styleincludes' );
 if(empty($style_includes)){
@@ -42,7 +43,7 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 			v<?php echo CFCORE_VER; ?>
 		</li>
 		<li class="caldera-forms-toolbar-item">
-			<a class="button ajax-trigger" data-request="start_new_form" data-modal-buttons='<?php echo $modal_new_form; ?>' data-modal-width="600" data-modal-height="300" data-load-class="none" data-modal="new_form" data-modal-title="Create New Form" data-template="#new-form-tmpl"><?php echo __('New Form', 'caldera-forms'); ?></a>
+			<a class="button ajax-trigger" data-request="start_new_form" data-modal-buttons='<?php echo $modal_new_form; ?>' data-modal-width="600" data-modal-height="400" data-load-class="none" data-modal="new_form" data-modal-title="Create New Form" data-template="#new-form-tmpl"><?php echo __('New Form', 'caldera-forms'); ?></a>
 		</li>
 		<li class="caldera-forms-toolbar-item">
 		&nbsp;
@@ -60,9 +61,11 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 		<li class="caldera-forms-toolbar-item">
 		&nbsp;
 		</li>
+		<?php /*
 		<li class="caldera-forms-toolbar-item">
-			<button type="button" title="<?php echo __('Includes Bootstrap 3 styles on the frontend for form alert notices', 'caldera-forms'); ?>" data-action="save_cf_setting" data-active-class="none" data-set="alert" data-request="<?php echo CFCORE_EXTEND_URL; ?>" data-modal="extend_cf" data-modal-width="650" data-modal-title="<?php echo __('Caldera Forms Extensions', 'caldera-forms'); ?>" class="ajax-trigger button"><?php echo __('Extensions' , 'caldera-forms'); ?></button>
+			<button type="button" title="<?php echo __('View available extensions', 'caldera-forms'); ?>" data-modal-buttons="Close|dismiss" data-load-class="spinner" data-action="save_cf_setting" data-active-class="none" data-set="alert" data-request="<?php echo CFCORE_EXTEND_URL; ?>" data-modal="extend_cf" data-modal-width="650" data-modal-title="<?php echo __('Caldera Forms Extensions', 'caldera-forms'); ?>" class="ajax-trigger button"><?php echo __('Extensions' , 'caldera-forms'); ?></button>
 		</li>
+		*/ ?>
 
 	</ul>
 </div>
@@ -83,6 +86,8 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 
 			$class = "alternate";
 			foreach($forms as $form_id=>$form){
+
+
 				$total = $wpdb->get_var($wpdb->prepare("SELECT COUNT(`id`) AS `total` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = %s;", $form_id));
 				
 				/*
@@ -123,7 +128,8 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 						data-form="<?php echo $form_id; ?>"
 						data-template="#forms-list-alt-tmpl"
 						data-active-element="#form_row_<?php echo $form_id; ?>"
-						data-active-class="highlight"
+						data-load-class="spinner"
+						data-active-class="highlight"						
 						data-group="entry_nav"
 						data-callback="setup_pagination"
 						data-page="1"
@@ -155,6 +161,7 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 		<div class="caldera-entry-exporter" style="display:none;">
 			<a href="" class="button caldera-forms-entry-exporter"><?php echo __('Export Entries', 'caldera-forms'); ?></a>
 		</div>
+		<?php do_action('caldera_forms_entries_toolbar'); ?>
 		<div class="tablenav caldera-table-nav" style="display:none;">
 			<div class="tablenav-pages">
 				<span class="displaying-num"></span>
@@ -171,74 +178,9 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 	</div>
 </div>
 
-<script type="text/html" id="new-form-tmpl">
-	<form class="new-form-form">
-		<div class="caldera-config-group">
-			<label for=""><?php echo __('Form Name', 'caldera-forms'); ?></label>
-			<div class="caldera-config-field">
-				<input type="text" class="new-form-name block-input field-config" name="name" value="" required="required">
-			</div>
-		</div>
-		<div class="caldera-config-group">
-			<label for=""><?php echo __('Description', 'caldera-forms'); ?></label>
-			<div class="caldera-config-field">
-				<textarea class="block-input field-config" name="description" value=""></textarea>
-			</div>
-		</div>
-	</form>
-</script>
-<script type="text/html" id="forms-list-alt-tmpl">
-	{{#if entries}}
-		<div class="list form-panel postbox">
-			<table class="table table-condensed">
-				<thead>
-					<tr>
-						<th><?php echo __('ID', 'caldera-forms'); ?></th>
-						<th><?php echo __('Submitted', 'caldera-forms'); ?></th>
-						{{#each fields}}
-						<th>{{this}}</th>
-						{{/each}}
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-				{{#each entries}}
-					<tr>
-						<td>{{_entry_id}}</td>
-						<td>{{_date}}</td>
-						{{#each data}}
-						<td>{{{this}}}</td>
-						{{/each}}
-						<td><button class="button button-small ajax-trigger" data-active-class="none" data-group="viewentry" data-entry="{{_entry_id}}" data-form="{{../form}}" data-action="get_entry" data-modal="view_entry" data-modal-width="550" data-modal-title="<?php echo __('Entry', 'caldera-forms'); ?> # {{_entry_id}}" data-template="#view-entry-tmpl" type="button"><?php echo __('View', 'caldera-forms'); ?></button></td>
-					</tr>
-				{{/each}}
-				</tbody>
-			</table>
-		</div>
-	{{else}}
-	<p class="description"><?php echo __('No entries yet.', 'caldera-forms'); ?></p>
-	{{/if}}
-</script>
-<script type="text/html" id="view-entry-tmpl">
-<div class="form-panel">
-	<table class="table table-condensed">
-		<thead>
-			<tr>
-				<th><?php echo __('Field', 'caldera-forms'); ?></th>
-				<th><?php echo __('Value', 'caldera-forms'); ?></th>
-			</tr>
-		</thead>
-		<tbody>
-		{{#each data}}
-			<tr>
-				<th>{{label}}</th>
-				<td>{{{value}}}</td>
-			</tr>
-		{{/each}}
-		</tbody>
-	</table>
-</div>
-</script>
+<?php
+do_action('caldera_forms_admin_templates');
+?>
 <script type="text/javascript">
 
 function new_form_redirect(obj){
@@ -336,10 +278,7 @@ function update_setting_toggle(obj){
 }
 
 function start_new_form(){
-
-	
 	return {};
-
 }
 
 
@@ -387,4 +326,8 @@ jQuery(function($){
 	});
 
 });
+
 </script>
+<?php
+do_action('caldera_forms_admin_footer');
+?>

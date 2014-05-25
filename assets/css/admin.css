@@ -800,7 +800,17 @@ input.disabled-input {
   text-align: center;
   width: 100%;
 }
-
+#form-entries-viewer.spinner {
+  display: block;
+  float: left;
+  height: 22px;
+  padding: 0;
+  width: 22px;
+}
+#form-entries-viewer.spinner div,
+#form-entries-viewer.spinner p{
+  display: none;
+}
 
 .form-panel.postbox .avatar-link.Administrator{
   border-color: #B5CF75;

@@ -150,7 +150,9 @@
 					label.html(trigger.data('modalTitle')).parent().show();
 				}
 				if(trigger.data('modalButtons')){
-					var buttons = $.trim(trigger.data('modalButtons')).split(';');
+					var buttons = $.trim(trigger.data('modalButtons')).split(';'),
+						button_list = [];
+
 					if(buttons.length){
 						for(b=0; b<buttons.length;b++){
 							var options   = buttons[b].split('|'),
@@ -165,6 +167,9 @@
 								})
 							}
 							footer.append(button.html(buttonLabel));
+							if(b<buttons.length){
+								footer.append('&nbsp;');
+							}
 						}
 						footer.show();
 					}
