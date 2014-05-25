@@ -1,3 +1,3 @@
 <div class="preview-caldera-config-group">
-	<button type="button" class="button">{{label}}</button>
+	<button type="{{config/type}}" class="button" disabled="disabled">{{label}}</button>
 </div>

@@ -116,6 +116,8 @@ jQuery(function($){
 		preview_parent.removeClass('button');
 
 		$('.preview-field-config').prop('disabled', true);
+
+		rebuild_field_binding();
 	}
 
 	// build sortables

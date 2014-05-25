@@ -1090,15 +1090,15 @@ class Caldera_Forms {
 			),
 			'button' => array(
 				"field"		=>	"Button",
-				"description" => __('Button', 'caldera-forms'),
+				"description" => __('Button, Submit and Reset types', 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/button/field.php",
-				"category"	=>	__("Buttons", "cladera-forms"),
+				"category"	=>	__("Buttons,Basic", "cladera-forms"),
 				"setup"		=>	array(
 					"template"	=>	CFCORE_PATH . "fields/button/config_template.html",
 					"preview"	=>	CFCORE_PATH . "fields/button/preview.php",
 					"default"	=> array(
 						'class'	=>	'btn btn-primary',
-						'type'	=>	'button'
+						'type'	=>	'submit'
 					),
 					"not_supported"	=>	array(
 						'hide_label',

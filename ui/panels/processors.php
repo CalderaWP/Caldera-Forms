@@ -108,43 +108,47 @@ function build_processor_types($default = null){
 
 ?>
 
-
-<div class="caldera-editor-processors-panel">
-	<button type="button" class="button block-button ajax-trigger" 
-	data-request="new_form_processor" 
-	data-modal="form_processor" 
-	data-modal-title="<?php echo __('Form Processors', 'caldera-forms'); ?>"
-	data-modal-height="500"
-	data-template="#form-processors-tmpl"
-	data-callback="hide_single_processors"
-	><?php echo __('Add Processor', 'caldera-forms'); ?></button>
-	<ul class="active-processors-list">
-		<?php
-			// build processors list
-			if(!empty($element['processors'])){
-				foreach($element['processors'] as $processor_id=>$config){
-					echo processor_line_template($processor_id, $config['type']);
-				}
-			}
-		?>
-	</ul>
+<div class="mailer-errors" style="display:none;">
+	<p><?php echo __('Please add a "Button" element and set it to "Submit" if you want to have the form submittable.', 'caldera-forms'); ?></p>
 </div>
-<div class="caldera-editor-processor-config">
-<?php
+<div class="caldera-editor-processors-panel-wrap">
+	<div class="caldera-editor-processors-panel">
+		<button type="button" class="new-processor-button button block-button ajax-trigger" 
+		data-request="new_form_processor" 
+		data-modal="form_processor" 
+		data-modal-title="<?php echo __('Form Processors', 'caldera-forms'); ?>"
+		data-modal-height="500"
+		data-template="#form-processors-tmpl"
+		data-callback="hide_single_processors"
+		><?php echo __('Add Processor', 'caldera-forms'); ?></button>
+		<ul class="active-processors-list">
+			<?php
+				// build processors list
+				if(!empty($element['processors'])){
+					foreach($element['processors'] as $processor_id=>$config){
+						echo processor_line_template($processor_id, $config['type']);
+					}
+				}
+			?>
+		</ul>
+	</div>
+	<div class="caldera-editor-processor-config">
+	<?php
 
-/// PROCESSORS CONFIGS
-if(!empty($element['processors'])){
-	foreach($element['processors'] as $processor_id=>$config){
-		
-		$config_str = array();
-		if(!empty($config['config'])){
-			$config_str = json_encode($config['config']);
+	/// PROCESSORS CONFIGS
+	if(!empty($element['processors'])){
+		foreach($element['processors'] as $processor_id=>$config){
+			
+			$config_str = array();
+			if(!empty($config['config'])){
+				$config_str = json_encode($config['config']);
+			}
+			processor_wrapper_template($processor_id, $config['type'], $config_str);
 		}
-		processor_wrapper_template($processor_id, $config['type'], $config_str);
 	}
-}
 
-?>
+	?>
+	</div>
 </div>
 <div class="clear"></div>
 

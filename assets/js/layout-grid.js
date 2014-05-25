@@ -20,6 +20,7 @@ rebuild_field_binding = function(){
 	});
 
 	rebind_field_bindings();
+
 };
 
 rebind_field_bindings = function(){
@@ -117,7 +118,17 @@ function check_required_bindings(){
 		jQuery('.caldera-forms-options-form').find('a[href="#' + t + '"]').append('<span class="error-tag">' + required_errors[t] + '</span>');
 	}
 
-	//console.log(required_errors);
+	// check for button and update the processor page.
+	if(!jQuery('.preview-caldera-config-group button:submit').length){
+		jQuery('.caldera-editor-processors-panel-wrap').hide();
+		jQuery('.mailer-errors').show();
+		jQuery('.mailer-control-panel').hide();
+
+	}else{
+		jQuery('.caldera-editor-processors-panel-wrap').show();
+		jQuery('.mailer-errors').hide();
+		jQuery('.mailer-control-panel').show();
+	}
 }
 
 jQuery(function($) {
