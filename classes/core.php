@@ -304,8 +304,8 @@ class Caldera_Forms {
 
 		$data['pages'] = ceil($data['total'] / $perpage );
 
-		if(!empty((int) $_POST['page'])){
-			$page = abs( (int) $_POST['page'] );
+		if(!empty($_POST['page'])){
+			$page = abs( $_POST['page'] );
 			if($page > $data['pages']){
 				$page = $data['pages'];
 			}
