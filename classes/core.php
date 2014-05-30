@@ -502,7 +502,7 @@ class Caldera_Forms {
 				"field"		=>	"Email Address",
 				"description" => __('Email Address', 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/email/field.php",
-				"category"	=>	__("Text Fields", "cladera-forms"),
+				"category"	=>	__("Text Fields,Basic", "cladera-forms"),
 				"setup"		=>	array(
 					"preview"	=>	CFCORE_PATH . "fields/email/preview.php"
 				)
