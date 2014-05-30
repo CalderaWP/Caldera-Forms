@@ -55,7 +55,7 @@ jQuery(function($){
 	$('body').on('click', '.delete-processor', function(e){
 		
 		var clicked = $(this),
-			parent = clicked.parent();
+			parent = clicked.closest('.caldera-editor-processor-config-wrapper');
 
 		if(!confirm(clicked.data('confirm'))){
 			return;
@@ -92,6 +92,7 @@ jQuery(function($){
 		rebuild_field_binding();
 
 	});
+
 
 	// build processor type config
 	function build_processor_config(el){
@@ -133,6 +134,8 @@ jQuery(function($){
 			if( typeof window[select.val() + '_init'] === 'function' ){
 				window[select.val() + '_init'](parent.prop('id'), target);
 			}
+
+
 
 		rebuild_field_binding();
 		baldrickTriggers();

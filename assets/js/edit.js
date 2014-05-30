@@ -1,3 +1,49 @@
+function new_conditional_group(obj){
+
+	var id 	  	=	obj.trigger.data('id'),
+		lineid 	=	'cl' + Math.round(Math.random() * 18746582734),
+		rowid	=	'rw' + Math.round(Math.random() * 98347598345),
+		group 	=	[
+			{
+				id		:	rowid,
+				type	:	obj.trigger.data('type'),
+				lines	:	[
+					{
+						id	:	lineid
+					}
+				]
+			}
+		];
+
+	
+	return {group : group, id: id};
+}
+function new_conditional_line(obj){
+
+	var id 	  	=	obj.trigger.data('id'),
+		rowid 	=	obj.trigger.data('group'),
+		type 	=	obj.trigger.data('type'),
+		lineid	=	'cl' + Math.round(Math.random() * 18746582734),
+		line 	=	{
+			id		:	id,
+			type	:	type,
+			lineid	:	lineid,
+			rowid	:	rowid,
+			name	:	"config[" + type + "][" + id + "][conditions][group][" + rowid + "][" + lineid + "]"
+		};
+
+	return line;
+}
+
+function build_conditions_config(obj){
+	var config = JSON.parse(obj.trigger.val());
+	config.id = obj.trigger.data('id');
+	console.log(config);
+	return config;
+
+}
+
+
 jQuery(function($){
 
 
@@ -210,6 +256,23 @@ jQuery(function($){
 
 	}
 
+	// tabs button
+	$('body').on('click', '.toggle_option_tab > a', function(e){
+
+		e.preventDefault();
+		var clicked = $(this),
+			panel = $(clicked.attr('href')),
+			tabs = clicked.parent().find('a'),
+			panels = clicked.closest('.caldera-editor-config-wrapper').find('.wrapper-instance-pane');
+
+		tabs.removeClass('button-primary');
+
+		panels.hide();
+		panel.show();
+		clicked.addClass('button-primary');
+		$('.caldera-conditionals-usetype').trigger('change');
+	});
+
 
 	// Change Field Type
 	$('.caldera-editor-body').on('change', '.caldera-select-field-type', function(e){
@@ -412,7 +475,7 @@ jQuery(function($){
 	// bind delete field
 	$('.caldera-editor-body').on('click', '.delete-field', function(){
 		var clicked = $(this),
-			field	= clicked.parent().prop('id');
+			field	= clicked.closest('.caldera-editor-field-config-wrapper').prop('id');
 
 		if(!confirm(clicked.data('confirm'))){
 			return;
@@ -627,7 +690,85 @@ jQuery(function($){
 
 	});
 
-	// init sorting
+	$('.caldera-editor-body').on('change', '.caldera-conditional-field-set', function(e){
+
+		var field = $(this),
+			type = field.data('condition'),
+			field_id = this.value,
+			pid = field.data('id'),
+			field_wrapper = $('#' + field_id),
+			options_wrap = field_wrapper.find('.caldera-config-group-toggle-options'),
+			name = "config[" + type + "][" + pid + "][conditions][group][" + field.data('row') + "][" + field.data('line') + "]",
+			lineid = field.data('line'),
+			target = $('#' + lineid + "_value"),
+			curval = target.find('.caldera-conditional-value-field').first();
+			//console.log(lineid + "_value");
+
+			// check if a value is present
+
+			if(curval.length){
+				if(curval.val().length){
+					target.data('value', curval.val());
+				}
+			}
+			
+		if(options_wrap.length){
+			var options_rows = options_wrap.find('.toggle_option_row'),
+				out = '<select name="' + name + '[value]" class="caldera-processor-value-bind caldera-conditional-value-field" data-field="' + field_id + '" style="max-width: 170px; width: 170px;">';
+
+			options_rows.each(function(k,v){
+				var value = $(v).find('.toggle_value_field').val(),
+					label = $(v).find('.toggle_label_field').val(),
+					sel = '';
+
+				if(target.data('value')){
+					if(target.data('value') === value){
+						sel = ' selected="selected"';
+					}
+				}
+
+				out += '<option value="' + value + '"' + sel + '>' + label + '</option>';
+			})
+
+			out += '</select>';			
+
+		}else{
+
+			out = '<input name="' + name + '[value]" type="text" class="caldera-conditional-value-field" value="' + (target.data('value') ? target.data('value') : '') + '" style="max-width: 165px;">';
+		}
+
+
+		target.html(out);
+
+	});
+
+	
+	$('.caldera-editor-body').on('change', '.caldera-conditionals-usetype', function(e){
+
+		var select = $(this);
+
+		if(this.value !== ''){
+			$('#' + select.data('id') + '_condition_group_add').show();
+			$('#' + select.data('id') + '_conditional_wrap').show();
+		}else{
+			$('#' + select.data('id') + '_condition_group_add').hide();
+			$('#' + select.data('id') + '_conditional_wrap').hide();
+		}
+
+	});
+	// conditionals
+	$('.caldera-editor-body').on('click', '.remove-conditional-line', function(e){
+		e.preventDefault();
+		var clicked = $(this),
+			line = clicked.closest('.caldera-condition-line'),
+			group = clicked.closest('.caldera-condition-group');
+
+		line.remove();
+		if(!group.find('.caldera-condition-line').length){
+			group.remove();
+		}
+
+	});
 	
 
 	// load fist  group

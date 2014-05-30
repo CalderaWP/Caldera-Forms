@@ -129,6 +129,8 @@ function check_required_bindings(){
 		jQuery('.mailer-errors').hide();
 		jQuery('.mailer-control-panel').show();
 	}
+
+	jQuery('.caldera-conditional-field-set').trigger('change');
 }
 
 jQuery(function($) {

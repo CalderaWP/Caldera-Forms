@@ -1,0 +1,654 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Caldera Forms\n"
+"POT-Creation-Date: 2014-05-26 19:10+0200\n"
+"PO-Revision-Date: 2014-05-26 19:10+0200\n"
+"Last-Translator: David Cramer <support@calderaengine.com>\n"
+"Language-Team: Tricodia Systems <david@digilab.co.za>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.5\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../classes/core.php:131
+msgid "File type not allowed. Allowed types are: "
+msgstr "Type de fichier non autorisé. Les types autorisés sont:"
+
+#: ../classes/core.php:133
+msgid "File type needs to be"
+msgstr "File type needs to be"
+
+#: ../classes/core.php:167
+msgid "Entry"
+msgstr "Inscription"
+
+#: ../classes/core.php:167
+msgid "View"
+msgstr "Voir"
+
+#: ../classes/core.php:228
+msgid "Add Form to Page"
+msgstr "Ajouter un formulaire à la page"
+
+#: ../classes/core.php:229
+msgid "Insert Form Shortcode"
+msgstr "Insérez formulaire Shortcode"
+
+#: ../classes/core.php:229
+msgid "Caldera Form"
+msgstr "Formulaire Caldera"
+
+#: ../classes/core.php:237
+msgid "The reCAPTCHA field is required."
+msgstr "Le champ reCAPTCHA est nécessaire."
+
+#: ../classes/core.php:244
+msgid "The reCAPTCHA wasn't entered correctly."
+msgstr "Le reCAPTCHA n'a pas été entré correctement."
+
+#: ../classes/core.php:499 ../ui/panels/emailer.php:4
+msgid "Caldera Forms Notification"
+msgstr "Caldera Formulaires de notification"
+
+#: ../classes/core.php:782
+msgid "Sorry, please try again"
+msgstr "Désolé, s'il vous plaît essayer à nouveau"
+
+#: ../classes/core.php:782
+msgid "Form Delete Error"
+msgstr "Former erreur Supprimer"
+
+#: ../classes/core.php:940
+msgid "Form has been successfuly submitted. Thank you."
+msgstr "Form has been successfully submitted. Thank you."
+
+#: ../classes/core.php:1010
+msgid "Auto Responder"
+msgstr "répondeur automatique"
+
+#: ../classes/core.php:1011
+msgid "Sends out an auto response e-mail"
+msgstr "Envoie une réponse auto e-mail"
+
+#: ../classes/core.php:1015
+msgid "Thank you for contacting us"
+msgstr "Merci de nous contacter"
+
+#: ../classes/core.php:1019
+msgid "Redirect"
+msgstr "réorienter"
+
+#: ../classes/core.php:1020
+msgid "Redirects user to URL on successful submit"
+msgstr "Redirige l'utilisateur à l'URL sur la réussite soumettre"
+
+#: ../classes/core.php:1037
+msgid "Single Line Text"
+msgstr "Ligne texte"
+
+#: ../classes/core.php:1039 ../classes/core.php:1101 ../classes/core.php:1145
+msgid "Text Fields,Basic"
+msgstr ""
+
+#: ../classes/core.php:1046
+msgid "File Uploader"
+msgstr ""
+
+#: ../classes/core.php:1050
+msgid "Basic,File"
+msgstr ""
+
+#: ../classes/core.php:1058
+msgid "reCAPTCHA anti-spam field"
+msgstr ""
+
+#: ../classes/core.php:1060
+msgid "Special"
+msgstr ""
+
+#: ../classes/core.php:1083
+msgid "Add text/html content"
+msgstr ""
+
+#: ../classes/core.php:1085
+msgid "Content"
+msgstr ""
+
+#: ../classes/core.php:1099
+msgid "Hidden"
+msgstr ""
+
+#: ../classes/core.php:1114
+msgid "Button, Submit and Reset types"
+msgstr ""
+
+#: ../classes/core.php:1116
+msgid "Buttons,Basic"
+msgstr ""
+
+#: ../classes/core.php:1134
+msgid "Email Address"
+msgstr ""
+
+#: ../classes/core.php:1136
+msgid "Text Fields"
+msgstr ""
+
+#: ../classes/core.php:1143
+msgid "Paragraph Textarea"
+msgstr ""
+
+#: ../classes/core.php:1156
+msgid "Toggle Switch"
+msgstr ""
+
+#: ../classes/core.php:1157
+msgid "Select Options,Special"
+msgstr ""
+
+#: ../classes/core.php:1182
+msgid "Dropdown Select"
+msgstr ""
+
+#: ../classes/core.php:1184 ../classes/core.php:1201 ../classes/core.php:1218
+msgid "Select Options,Basic"
+msgstr ""
+
+#: ../classes/core.php:1199
+msgid "Checkbox"
+msgstr ""
+
+#: ../classes/core.php:1216
+msgid "Radio"
+msgstr ""
+
+#: ../classes/core.php:1232
+msgid "Date Picker"
+msgstr ""
+
+#: ../classes/core.php:1234 ../classes/core.php:1260
+msgid "Text Fields,Pickers"
+msgstr ""
+
+#: ../classes/core.php:1259
+msgid "Color Picker"
+msgstr ""
+
+#: ../classes/core.php:1299 ../classes/core.php:1315
+msgid "Layout"
+msgstr ""
+
+#: ../classes/core.php:1317
+msgid "Layout Builder"
+msgstr ""
+
+#: ../classes/core.php:1327
+msgid "Processors"
+msgstr ""
+
+#: ../classes/core.php:1329 ../ui/panels/processors.php:147
+msgid "Form Processors"
+msgstr ""
+
+#: ../classes/core.php:1333
+msgid "Responsive"
+msgstr ""
+
+#: ../classes/core.php:1335
+msgid "Resposive Settings"
+msgstr ""
+
+#: ../classes/core.php:1339
+msgid "Grid Collapse"
+msgstr ""
+
+#: ../classes/core.php:1341
+msgid ""
+"Set the smallest screen size at which to collapse the grid. (based on "
+"Bootstrap 3.0)"
+msgstr ""
+
+#: ../classes/core.php:1348
+msgid "Maintain grid always"
+msgstr ""
+
+#: ../classes/core.php:1368 ../ui/panels/emailer.php:32
+msgid "Mailer"
+msgstr ""
+
+#: ../classes/core.php:1370
+msgid "Email Notification Settings"
+msgstr ""
+
+#: ../classes/core.php:1561
+msgid "is required"
+msgstr ""
+
+#: ../fields/file/config_template.php:2
+msgid "Attach to mailer"
+msgstr ""
+
+#: ../fields/file/config_template.php:9
+msgid "Allowed Types"
+msgstr ""
+
+#: ../fields/file/config_template.php:12
+msgid "Comma separated eg. jpg,pdf,txt"
+msgstr ""
+
+#: ../fields/image_picker/field.php:41 ../fields/image_picker/field.php:43
+#: ../fields/image_picker/field.php:46
+msgid "Select Image"
+msgstr ""
+
+#: ../fields/image_picker/field.php:41 ../fields/image_picker/field.php:46
+msgid "Use Image"
+msgstr ""
+
+#: ../fields/image_picker/field.php:43
+msgid "Uploading.."
+msgstr ""
+
+#: ../fields/image_picker/field.php:46 ../ui/edit.php:472 ../ui/edit.php:506
+msgid "Remove"
+msgstr ""
+
+#: ../fields/recaptcha/config.php:2
+msgid "Public Key"
+msgstr ""
+
+#: ../fields/recaptcha/config.php:8
+msgid "Private Key"
+msgstr ""
+
+#: ../fields/recaptcha/config.php:14
+msgid "Theme"
+msgstr ""
+
+#: ../fields/recaptcha/config.php:22
+msgid ""
+"Theme changes not available in preview. Update form and reload to see new "
+"theme."
+msgstr ""
+
+#: ../fields/toggle_switch/field.php:8
+msgid "Enable"
+msgstr ""
+
+#: ../processors/auto_responder/config.php:2 ../ui/panels/emailer.php:42
+msgid "From Name"
+msgstr ""
+
+#: ../processors/auto_responder/config.php:8 ../ui/panels/emailer.php:48
+msgid "From Email"
+msgstr ""
+
+#: ../processors/auto_responder/config.php:14 ../ui/panels/emailer.php:80
+msgid "Email Subject"
+msgstr ""
+
+#: ../processors/auto_responder/config.php:20
+msgid "Recipient Name"
+msgstr ""
+
+#: ../processors/auto_responder/config.php:26
+msgid "Recipient Email"
+msgstr ""
+
+#: ../processors/auto_responder/config.php:32
+msgid "Message"
+msgstr ""
+
+#: ../processors/redirect/config.php:2
+msgid "URL"
+msgstr ""
+
+#: ../ui/admin.php:35
+msgid "Create Form"
+msgstr ""
+
+#: ../ui/admin.php:46
+msgid "New Form"
+msgstr ""
+
+#: ../ui/admin.php:52
+msgid "Front-end Style Includes"
+msgstr ""
+
+#: ../ui/admin.php:56
+msgid "Includes Bootstrap 3 styles on the frontend for form alert notices"
+msgstr ""
+
+#: ../ui/admin.php:56
+msgid "Alert"
+msgstr ""
+
+#: ../ui/admin.php:57
+msgid "Includes Bootstrap 3 styles on the frontend for form fields and buttons"
+msgstr ""
+
+#: ../ui/admin.php:57
+msgid "Form"
+msgstr ""
+
+#: ../ui/admin.php:58
+msgid "Includes Bootstrap 3 styles on the frontend for form grid layouts"
+msgstr ""
+
+#: ../ui/admin.php:58
+msgid "Grid"
+msgstr ""
+
+#: ../ui/admin.php:123
+msgid "Edit Form"
+msgstr ""
+
+#: ../ui/admin.php:137
+msgid "View Entries"
+msgstr ""
+
+#: ../ui/admin.php:138
+msgid "This will delete this form permanently. Continue?"
+msgstr ""
+
+#: ../ui/admin.php:138
+msgid "Delete Form"
+msgstr ""
+
+#: ../ui/admin.php:157
+msgid "You don't have any forms."
+msgstr ""
+
+#: ../ui/admin.php:162
+msgid "Export Entries"
+msgstr ""
+
+#: ../ui/admin.php:203
+msgid "An form name is required"
+msgstr ""
+
+#: ../ui/admin.php:218
+msgid "entry"
+msgstr ""
+
+#: ../ui/admin.php:218
+msgid "entries"
+msgstr ""
+
+#: ../ui/admin_templates.php:7 ../ui/edit.php:320
+msgid "Form Name"
+msgstr ""
+
+#: ../ui/admin_templates.php:13 ../ui/edit.php:205
+msgid "Description"
+msgstr ""
+
+#: ../ui/admin_templates.php:30
+msgid "ID"
+msgstr ""
+
+#: ../ui/admin_templates.php:31
+msgid "Submitted"
+msgstr ""
+
+#: ../ui/admin_templates.php:53
+msgid "No entries yet."
+msgstr ""
+
+#: ../ui/admin_templates.php:61
+msgid "Field"
+msgstr ""
+
+#: ../ui/admin_templates.php:62
+msgid "Value"
+msgstr ""
+
+#: ../ui/edit.php:9
+msgid "Form has successfuly been submitted. Thank you."
+msgstr ""
+
+#: ../ui/edit.php:40
+msgid "Add Option"
+msgstr ""
+
+#: ../ui/edit.php:43
+msgid "No Default"
+msgstr ""
+
+#: ../ui/edit.php:66
+msgid "Basic"
+msgstr ""
+
+#: ../ui/edit.php:155
+msgid "Elements"
+msgstr ""
+
+#: ../ui/edit.php:167
+msgid "Element Type"
+msgstr ""
+
+#: ../ui/edit.php:177
+msgid "Name"
+msgstr ""
+
+#: ../ui/edit.php:184
+msgid "Hide Label"
+msgstr ""
+
+#: ../ui/edit.php:191
+msgid "Slug"
+msgstr ""
+
+#: ../ui/edit.php:198
+msgid "Required"
+msgstr ""
+
+#: ../ui/edit.php:212
+msgid "Show in Entry List"
+msgstr ""
+
+#: ../ui/edit.php:222
+msgid ""
+"Are you sure you want to remove this field?. 'Cancel' to stop. 'OK' to delete"
+msgstr ""
+
+#: ../ui/edit.php:222
+msgid "Delete Element"
+msgstr ""
+
+#: ../ui/edit.php:305
+msgid "Caldera Forms"
+msgstr ""
+
+#: ../ui/edit.php:311 ../ui/edit.php:318
+msgid "General Settings"
+msgstr ""
+
+#: ../ui/edit.php:314
+msgid "Update Form"
+msgstr ""
+
+#: ../ui/edit.php:327
+msgid "Form Description"
+msgstr ""
+
+#: ../ui/edit.php:334
+msgid "Success Message"
+msgstr ""
+
+#: ../ui/edit.php:408
+msgid "Add New"
+msgstr ""
+
+#: ../ui/edit.php:562
+msgid "Set Element"
+msgstr ""
+
+#: ../ui/edit.php:565
+msgid "No description given"
+msgstr ""
+
+#: ../ui/insert_shortcode.php:5
+msgid "Insert Caldera Form"
+msgstr ""
+
+#: ../ui/insert_shortcode.php:24
+msgid "You don't have any forms to insert."
+msgstr ""
+
+#: ../ui/insert_shortcode.php:32
+msgid "Insert Form"
+msgstr ""
+
+#: ../ui/insert_shortcode.php:34
+msgid "Close"
+msgstr ""
+
+#: ../ui/panels/emailer.php:35
+msgid "Disabled"
+msgstr ""
+
+#: ../ui/panels/emailer.php:36
+msgid "Enabled"
+msgstr ""
+
+#: ../ui/panels/emailer.php:54
+msgid "Email Type"
+msgstr ""
+
+#: ../ui/panels/emailer.php:63
+msgid "CSV Include"
+msgstr ""
+
+#: ../ui/panels/emailer.php:65
+msgid "Attach a CSV version of the submission"
+msgstr ""
+
+#: ../ui/panels/emailer.php:71
+msgid "Recipients"
+msgstr ""
+
+#: ../ui/panels/emailer.php:74
+msgid "Comma separated list of email addresses."
+msgstr ""
+
+#: ../ui/panels/emailer.php:86
+msgid "Email Message"
+msgstr ""
+
+#: ../ui/panels/emailer.php:89
+msgid "Magic tags, %field_slug% are replaced with submitted data."
+msgstr ""
+
+#: ../ui/panels/emailer.php:95 ../ui/panels/processors.php:140
+msgid ""
+"Please add a \"Button\" element and set it to \"Submit\" if you want to have "
+"the form submittable."
+msgstr ""
+
+#: ../ui/panels/layout.php:37
+msgid "This will remove all the fields in this row. Are you sure?"
+msgstr ""
+
+#: ../ui/panels/layout_add_row.php:1
+msgid "Add Row"
+msgstr ""
+
+#: ../ui/panels/layout_add_row.php:2
+msgid "Drag onto the form grid below"
+msgstr ""
+
+#: ../ui/panels/layout_add_row.php:4
+msgid "Add Element"
+msgstr ""
+
+#: ../ui/panels/processors.php:24 ../ui/panels/processors.php:47
+#: ../ui/panels/processors.php:80
+msgid "New Form Processor"
+msgstr ""
+
+#: ../ui/panels/processors.php:83
+msgid "Processor Type"
+msgstr ""
+
+#: ../ui/panels/processors.php:97
+msgid "Are you sure you want to remove this processor?"
+msgstr ""
+
+#: ../ui/panels/processors.php:97
+msgid "Remove Processor"
+msgstr ""
+
+#: ../ui/panels/processors.php:103
+msgid "Use"
+msgstr ""
+
+#: ../ui/panels/processors.php:104
+msgid "Don't Use"
+msgstr ""
+
+#: ../ui/panels/processors.php:106
+msgid "Add Conditional Group"
+msgstr ""
+
+#: ../ui/panels/processors.php:151
+msgid "Add Processor"
+msgstr ""
+
+#: ../ui/panels/processors.php:198
+msgid "Use Processor"
+msgstr ""
+
+#: ../ui/panels/processors.php:203
+msgid "by"
+msgstr ""
+
+#: ../ui/panels/processors.php:234
+msgid "or"
+msgstr ""
+
+#: ../ui/panels/processors.php:240 ../ui/panels/processors.php:261
+msgid "is"
+msgstr ""
+
+#: ../ui/panels/processors.php:241 ../ui/panels/processors.php:262
+msgid "is not"
+msgstr ""
+
+#: ../ui/panels/processors.php:242 ../ui/panels/processors.php:263
+msgid "is greater than"
+msgstr ""
+
+#: ../ui/panels/processors.php:243 ../ui/panels/processors.php:264
+msgid "is less than"
+msgstr ""
+
+#: ../ui/panels/processors.php:244 ../ui/panels/processors.php:265
+msgid "starts with"
+msgstr ""
+
+#: ../ui/panels/processors.php:245 ../ui/panels/processors.php:266
+msgid "ends with"
+msgstr ""
+
+#: ../ui/panels/processors.php:246 ../ui/panels/processors.php:267
+msgid "contains"
+msgstr ""
+
+#: ../ui/panels/processors.php:248 ../ui/panels/processors.php:269
+msgid "Select field first"
+msgstr ""
+
+#: ../ui/panels/processors.php:252
+msgid "Add Condition"
+msgstr ""
+
+#: ../ui/panels/processors.php:257
+msgid "and"
+msgstr ""

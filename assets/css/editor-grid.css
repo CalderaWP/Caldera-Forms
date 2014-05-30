@@ -238,6 +238,37 @@
 	padding: 7px 6px;
 
 }
+
+
+.caldera-condition-group {
+  background: none repeat scroll 0 0 #FFFFFF;
+  border: 1px solid #DFDFDF;
+  margin-bottom: 24px;
+  padding: 6px;
+  position: relative;
+}
+
+
+.caldera-condition-lines {
+  clear: both;
+  margin-bottom: 8px;
+}
+.caldera-condition-line{
+  margin-top: 6px;
+}
+.caldera-condition-line-label{
+	display: inline;
+}
+.caldera-condition-group-label {
+  line-height: 0;
+  position: absolute;
+  top: -14px;
+}
+.caldera-condition-group:first-child .caldera-condition-group-label,
+.caldera-condition-line:first-child .caldera-condition-line-label{
+  display: none;
+}
+
 .settings-panel.settings-core{ display: block;}
 
 .layout-new-form-field .drag-handle,

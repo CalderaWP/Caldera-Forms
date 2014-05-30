@@ -136,7 +136,7 @@ foreach($field_types as $field_slug=>$config){
 }
 
 
-function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{{slug}}', $caption = '{{caption}}', $hide_label = '{{hide_label}}', $required = '{{required}}', $entry_list = '{{entry_list}}', $type = null, $config_str = '{"default":"default value"}'){
+function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{{slug}}', $caption = '{{caption}}', $hide_label = '{{hide_label}}', $required = '{{required}}', $entry_list = '{{entry_list}}', $type = null, $config_str = '{"default":"default value"}', $conditions_str = '{"type" : ""}'){
 
 	if(is_array($config_str)){
 		$config 	= $config_str;
@@ -146,75 +146,124 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 		$config = json_decode($config_str, true);
 	}
 
+
+	$condition_type = '';
+	if(!empty($conditions_str)){
+		$conditions = json_decode($conditions_str, true);
+		if(!empty($conditions['type'])){
+			$condition_type = $conditions['type'];
+		}
+		if(!empty($conditions['group'])){
+			$groups = array();
+			foreach ($conditions['group'] as $groupid => $group) {
+				$group_tmp = array(
+					'id' => $groupid,
+					'type'	=> 'fields',
+					'lines' => array()
+				);
+				if(!empty($group)){
+					foreach($group as $line_id => $line){
+						$group_line = $line;
+						$group_line['id'] = $line_id;
+						$group_tmp['lines'][] = $group_line;
+					}
+				}
+				$groups[] = $group_tmp;
+			}
+			$conditions['group'] = $groups;
+			$conditions_str = json_encode($conditions);
+		}
+	}	
+	//dump($conditions,0);
 	?>
-	<div class="caldera-editor-field-config-wrapper ajax-trigger" 
+	<div class="caldera-editor-field-config-wrapper caldera-editor-config-wrapper ajax-trigger" 
 	
 	data-request="setup_field_type" 
-	data-event="field.drop" 
+	data-event="field.drop"
+	data-load-class="none"
 	data-modal="field_setup"
 	data-modal-title="<?php echo __('Elements', 'caldera-forms'); ?>"
 	data-template="#form-fields-selector-tmpl"
 	data-modal-width="600"
 	id="<?php echo $id; ?>" style="display:none;">
 		
+		<div class="toggle_option_tab">
+			<a href="#<?php echo $id; ?>_settings_pane" class="button button-primary">Settings</a>
+			<a href="#<?php echo $id; ?>_conditions_pane" class="button ">Conditions</a>
+		</div>
+
 		<h3 class="caldera-editor-field-title"><?php echo $label; ?>&nbsp;</h3>
-		<div class="caldera-config-group">
-			<label for="<?php echo $id; ?>_type"><?php echo __('Element Type', 'caldera-forms'); ?></label>
-			<div class="caldera-config-field">
-				<select class="block-input caldera-select-field-type required" id="<?php echo $id; ?>_type" name="config[fields][<?php echo $id; ?>][type]" data-type="<?php echo $type; ?>">					
-					<?php
-					echo build_field_types($type);
-					?>
+		<div id="<?php echo $id; ?>_settings_pane" class="wrapper-instance-pane">
+			<div class="caldera-config-group">
+				<label for="<?php echo $id; ?>_type"><?php echo __('Element Type', 'caldera-forms'); ?></label>
+				<div class="caldera-config-field">
+					<select class="block-input caldera-select-field-type required" id="<?php echo $id; ?>_type" name="config[fields][<?php echo $id; ?>][type]" data-type="<?php echo $type; ?>">					
+						<?php
+						echo build_field_types($type);
+						?>
+					</select>
+				</div>
+			</div>		
+			<div class="caldera-config-group">
+				<label for="<?php echo $id; ?>_lable"><?php echo __('Name', 'caldera-forms'); ?></label>
+				<div class="caldera-config-field">
+					<input type="text" class="block-input field-config field-label required" id="<?php echo $id; ?>_lable" name="config[fields][<?php echo $id; ?>][label]" value="<?php echo sanitize_text_field( $label ); ?>">
+				</div>
+			</div>
+
+			<div class="caldera-config-group hide-label-field">
+				<label for="<?php echo $id; ?>_hide_label"><?php echo __('Hide Label', 'caldera-forms'); ?></label>
+				<div class="caldera-config-field">
+					<input type="checkbox" class="field-config field-checkbox" id="<?php echo $id; ?>_hide_label" name="config[fields][<?php echo $id; ?>][hide_label]" value="1" <?php if($hide_label === 1){ echo 'checked="checked"'; }; ?>>
+				</div>
+			</div>
+
+			<div class="caldera-config-group">
+				<label for="<?php echo $id; ?>_slug"><?php echo __('Slug', 'caldera-forms'); ?></label>
+				<div class="caldera-config-field">
+					<input type="text" class="block-input field-config field-slug required" id="<?php echo $id; ?>_slug" name="config[fields][<?php echo $id; ?>][slug]" value="<?php echo $slug; ?>">
+				</div>
+			</div>
+			
+			<div class="caldera-config-group required-field">
+				<label for="<?php echo $id; ?>_required"><?php echo __('Required', 'caldera-forms'); ?></label>
+				<div class="caldera-config-field">
+					<input type="checkbox" class="field-config field-checkbox" id="<?php echo $id; ?>_required" name="config[fields][<?php echo $id; ?>][required]" value="1" <?php if($required === 1){ echo 'checked="checked"'; }; ?>>
+				</div>
+			</div>
+
+			<div class="caldera-config-group caption-field">
+				<label for="<?php echo $id; ?>_caption"><?php echo __('Description', 'caldera-forms'); ?></label>
+				<div class="caldera-config-field">
+					<input type="text" class="block-input field-config" id="<?php echo $id; ?>_caption" name="config[fields][<?php echo $id; ?>][caption]" value="<?php echo sanitize_text_field( $caption ); ?>">
+				</div>
+			</div>
+			
+			<div class="caldera-config-group entrylist-field">
+				<label for="<?php echo $id; ?>_entry_list"><?php echo __('Show in Entry List', 'caldera-forms'); ?></label>
+				<div class="caldera-config-field">
+					<input type="checkbox" class="field-config field-checkbox" id="<?php echo $id; ?>_entry_list" name="config[fields][<?php echo $id; ?>][entry_list]" value="1" <?php if($entry_list === 1){ echo 'checked="checked"'; }; ?>>
+				</div>
+			</div>
+
+			<div class="caldera-config-field-setup">
+			</div>
+			<input type="hidden" class="field_config_string block-input" value="<?php echo htmlentities( $config_str ); ?>">
+			<br>
+			<button class="button button-primary delete-field block-button" data-confirm="<?php echo __('Are you sure you want to remove this field?. \'Cancel\' to stop. \'OK\' to delete', 'caldera-forms'); ?>" type="button"><i class="icn-delete"></i> <?php echo __('Delete Element', 'caldera-forms'); ?></button>
+		</div>
+		<div id="<?php echo $id; ?>_conditions_pane" style="display:none;" class="wrapper-instance-pane">
+			<p>
+				<select name="config[fields][<?php echo $id; ?>][conditions][type]" data-id="<?php echo $id; ?>" class="caldera-conditionals-usetype">
+					<option value=""></option>
+					<option value="show" <?php if($condition_type == 'show'){ echo 'selected="selected"'; } ?>><?php echo __('Show', 'caldera-forms'); ?></option>
+					<option value="hide" <?php if($condition_type == 'hide'){ echo 'selected="selected"'; } ?>><?php echo __('Hide', 'caldera-forms'); ?></option>
 				</select>
-			</div>
+				<button id="<?php echo $id; ?>_condition_group_add" style="display:none;" type="button" data-id="<?php echo $id; ?>" class="pull-right button button-small add-conditional-group ajax-trigger" data-template="#conditional-group-tmpl" data-target-insert="append" data-request="new_conditional_group" data-type="fields" data-callback="rebuild_field_binding" data-target="#<?php echo $id; ?>_conditional_wrap"><?php echo __('Add Conditional Group', 'caldera-forms'); ?></button>
+			</p>
+			<div class="caldera-conditionals-wrapper" id="<?php echo $id; ?>_conditional_wrap"></div>
+			<input type="hidden" class="field_conditions_config_string block-input ajax-trigger" data-event="none" data-autoload="true" data-request="build_conditions_config" data-template="#conditional-group-tmpl" data-id="<?php echo $id; ?>" data-target="#<?php echo $id; ?>_conditional_wrap" data-type="fields" data-callback="rebuild_field_binding" value="<?php echo htmlentities( $conditions_str ); ?>">
 		</div>		
-		<div class="caldera-config-group">
-			<label for="<?php echo $id; ?>_lable"><?php echo __('Name', 'caldera-forms'); ?></label>
-			<div class="caldera-config-field">
-				<input type="text" class="block-input field-config field-label required" id="<?php echo $id; ?>_lable" name="config[fields][<?php echo $id; ?>][label]" value="<?php echo sanitize_text_field( $label ); ?>">
-			</div>
-		</div>
-
-		<div class="caldera-config-group hide-label-field">
-			<label for="<?php echo $id; ?>_hide_label"><?php echo __('Hide Label', 'caldera-forms'); ?></label>
-			<div class="caldera-config-field">
-				<input type="checkbox" class="field-config field-checkbox" id="<?php echo $id; ?>_hide_label" name="config[fields][<?php echo $id; ?>][hide_label]" value="1" <?php if($hide_label === 1){ echo 'checked="checked"'; }; ?>>
-			</div>
-		</div>
-
-		<div class="caldera-config-group">
-			<label for="<?php echo $id; ?>_slug"><?php echo __('Slug', 'caldera-forms'); ?></label>
-			<div class="caldera-config-field">
-				<input type="text" class="block-input field-config field-slug required" id="<?php echo $id; ?>_slug" name="config[fields][<?php echo $id; ?>][slug]" value="<?php echo $slug; ?>">
-			</div>
-		</div>
-		
-		<div class="caldera-config-group required-field">
-			<label for="<?php echo $id; ?>_required"><?php echo __('Required', 'caldera-forms'); ?></label>
-			<div class="caldera-config-field">
-				<input type="checkbox" class="field-config field-checkbox" id="<?php echo $id; ?>_required" name="config[fields][<?php echo $id; ?>][required]" value="1" <?php if($required === 1){ echo 'checked="checked"'; }; ?>>
-			</div>
-		</div>
-
-		<div class="caldera-config-group caption-field">
-			<label for="<?php echo $id; ?>_caption"><?php echo __('Description', 'caldera-forms'); ?></label>
-			<div class="caldera-config-field">
-				<input type="text" class="block-input field-config" id="<?php echo $id; ?>_caption" name="config[fields][<?php echo $id; ?>][caption]" value="<?php echo sanitize_text_field( $caption ); ?>">
-			</div>
-		</div>
-		
-		<div class="caldera-config-group entrylist-field">
-			<label for="<?php echo $id; ?>_entry_list"><?php echo __('Show in Entry List', 'caldera-forms'); ?></label>
-			<div class="caldera-config-field">
-				<input type="checkbox" class="field-config field-checkbox" id="<?php echo $id; ?>_entry_list" name="config[fields][<?php echo $id; ?>][entry_list]" value="1" <?php if($entry_list === 1){ echo 'checked="checked"'; }; ?>>
-			</div>
-		</div>
-
-		<div class="caldera-config-field-setup">
-		</div>
-		<input type="hidden" class="field_config_string block-input" value="<?php echo htmlentities( $config_str ); ?>">
-		<br>
-		<button class="button button-primary delete-field block-button" data-confirm="<?php echo __('Are you sure you want to remove this field?. \'Cancel\' to stop. \'OK\' to delete', 'caldera-forms'); ?>" type="button"><i class="icn-delete"></i> <?php echo __('Delete Element', 'caldera-forms'); ?></button>
 	</div>
 	<?php
 }
@@ -615,7 +664,51 @@ do_action('caldera_forms_edit_end', $element);
 		<input type="text" class="block-input field-config" name="{{_name}}[default]" value="{{default}}">
 	</div>
 </div>
-
+</script>
+<script type="text/html" id="conditional-group-tmpl">	
+	{{#each group}}
+		<div class="caldera-condition-group">
+			<div class="caldera-condition-group-label"><?php echo __('or', 'caldera-forms'); ?></div>			
+			<div class="caldera-condition-lines" id="{{id}}_conditions_lines">
+				{{#each lines}}
+				<div class="caldera-condition-line">
+					if 
+					<select name="config[{{../type}}][{{../../id}}][conditions][group][{{../id}}][{{id}}][field]" data-condition="{{../type}}" class="caldera-processor-field-bind caldera-conditional-field-set" data-id="{{../../id}}" data-default="{{field}}" data-line="{{id}}" data-row="{{../id}}" data-all="true" style="max-width:120px;"></select>
+					<select name="config[{{../type}}][{{../../id}}][conditions][group][{{../id}}][{{id}}][compare]" style="max-width:110px;">
+						<option value="is" {{#is compare value="is"}}selected="selected"{{/is}}><?php echo __('is', 'caldera-forms'); ?></option>
+						<option value="isnot" {{#is compare value="isnot"}}selected="selected"{{/is}}><?php echo __('is not', 'caldera-forms'); ?></option>
+						<option value=">" {{#is compare value=">"}}selected="selected"{{/is}}><?php echo __('is greater than', 'caldera-forms'); ?></option>
+						<option value="<" {{#is compare value="<"}}selected="selected"{{/is}}><?php echo __('is less than', 'caldera-forms'); ?></option>
+						<option value="startswith" {{#is compare value="startswith"}}selected="selected"{{/is}}><?php echo __('starts with', 'caldera-forms'); ?></option>
+						<option value="endswith" {{#is compare value="endswith"}}selected="selected"{{/is}}><?php echo __('ends with', 'caldera-forms'); ?></option>
+						<option value="contains" {{#is compare value="contains"}}selected="selected"{{/is}}><?php echo __('contains', 'caldera-forms'); ?></option>
+					</select>
+					<span class="caldera-conditional-field-value" data-value="{{value}}" id="{{id}}_value"><input disabled type="text" value="" placeholder="<?php echo __('Select field first', 'caldera-forms'); ?>" style="max-width: 165px;"></span>
+					<button type="button" class="button remove-conditional-line pull-right"><i class="icon-join"></i></button>
+				</div>
+				{{/each}}
+			</div>
+			<button type="button" class="button button-small ajax-trigger" data-id="{{../id}}" data-type="{{type}}" data-group="{{id}}" data-request="new_conditional_line" data-target="#{{id}}_conditions_lines" data-callback="rebuild_field_binding" data-template="#conditional-line-tmpl" data-target-insert="append"><?php echo __('Add Condition', 'caldera-forms'); ?></button>
+		</div>
+	{{/each}}
+</script>
+<script type="text/html" id="conditional-line-tmpl">
+	<div class="caldera-condition-line">
+		<div class="caldera-condition-line-label"><?php echo __('and', 'caldera-forms'); ?></div>
+		if 
+		<select name="{{name}}[field]" class="caldera-processor-field-bind caldera-conditional-field-set" data-condition="{{type}}" data-id="{{id}}" data-line="{{lineid}}" data-row="{{rowid}}" data-all="true" style="max-width:120px;"></select>
+		<select name="{{name}}[compare]" style="max-width:110px;">
+			<option value="is"><?php echo __('is', 'caldera-forms'); ?></option>
+			<option value="isnot"><?php echo __('is not', 'caldera-forms'); ?></option>
+			<option value=">"><?php echo __('is greater than', 'caldera-forms'); ?></option>
+			<option value="<"><?php echo __('is less than', 'caldera-forms'); ?></option>
+			<option value="startswith"><?php echo __('starts with', 'caldera-forms'); ?></option>
+			<option value="endswith"><?php echo __('ends with', 'caldera-forms'); ?></option>
+			<option value="contains"><?php echo __('contains', 'caldera-forms'); ?></option>
+		</select>
+		<span class="caldera-conditional-field-value" id="{{lineid}}_value"><input disabled type="text" value="" placeholder="<?php echo __('Select field first', 'caldera-forms'); ?>" style="max-width: 165px;"></span>
+		<button type="button" class="button remove-conditional-line pull-right"><i class="icon-join"></i></button>
+	</div>
 </script>
 <?php
 

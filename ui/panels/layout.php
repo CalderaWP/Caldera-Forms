@@ -22,10 +22,14 @@ if(!empty($element['layout_grid']['fields'])){
 			$location = explode(':', $location);
 			$fields[$location[0]][$location[1]][] = $field;
 			$config_str = (!empty($field['config']) ? json_encode($field['config']) : null);
+			$conditions = '{}';
+			if(!empty($field['conditions'])){
+				$conditions = json_encode($field['conditions']);
+			}			
 			// build config
 			ob_start();
 
-			field_wrapper_template( $field_id, $field['label'], $field['slug'], $field['caption'], ( isset($field['hide_label']) ? 1 : 0 ), ( isset($field['required']) ? 1 : 0 ),( isset($field['entry_list']) ? 1 : 0 ), $field['type'], $config_str );
+			field_wrapper_template( $field_id, $field['label'], $field['slug'], $field['caption'], ( isset($field['hide_label']) ? 1 : 0 ), ( isset($field['required']) ? 1 : 0 ),( isset($field['entry_list']) ? 1 : 0 ), $field['type'], $config_str, $conditions);
 			$field_config_panels[] = ob_get_clean();
 		}
 

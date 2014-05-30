@@ -21,8 +21,16 @@ define('CFCORE_VER', '1.0.0');
 define('CFCORE_EXTEND_URL', 'http://digilab.co.za');
 
 // table builder
-register_activation_hook( __FILE__, array( 'Caldera_Forms', 'activate_caldera_forms' ) );
+register_activation_hook( __FILE__, array( 'Caldera_Forms_Admin', 'activate_caldera_forms' ) );
 
 include_once CFCORE_PATH . 'classes/core.php';
+add_action( 'plugins_loaded', array( 'Caldera_Forms', 'get_instance' ) );
 
-Caldera_Forms::get_instance();
+// Admin & Admin Ajax stuff.
+if ( is_admin() || defined( 'DOING_AJAX' ) ) {
+
+	require_once( CFCORE_PATH . 'classes/admin.php' );
+	add_action( 'plugins_loaded', array( 'Caldera_Forms_Admin', 'get_instance' ) );
+
+}
+

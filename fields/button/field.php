@@ -1,1 +1,1 @@
-<input class="<?php echo $field['config']['class']; ?>" type="<?php echo $field['config']['type']; ?>" value="<?php echo $field['label']; ?>" id="<?php echo $field_id; ?>">
+<input data-field="<?php echo $field_base_id; ?>" class="<?php echo $field['config']['class']; ?>" type="<?php echo $field['config']['type']; ?>" value="<?php echo $field['label']; ?>" id="<?php echo $field_id; ?>">

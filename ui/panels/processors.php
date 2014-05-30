@@ -40,7 +40,7 @@ function processor_line_template($id = '{{id}}', $type = null){
 	<?php
 }
 
-function processor_wrapper_template($id = '{{id}}', $type = null, $config_str = '{"default":"default value"}'){
+function processor_wrapper_template($id = '{{id}}', $type = null, $config_str = '{"default":"default value"}', $conditions_str = '{"type" : ""}'){
 	
 	global $form_processors;
 
@@ -63,23 +63,71 @@ function processor_wrapper_template($id = '{{id}}', $type = null, $config_str = 
 		$config = json_decode($config_str, true);
 	}
 
+	$condition_type = '';
+	if(!empty($conditions_str)){
+		$conditions = json_decode($conditions_str, true);
+		if(!empty($conditions['type'])){
+			$condition_type = $conditions['type'];
+		}
+		if(!empty($conditions['group'])){
+			$groups = array();
+			foreach ($conditions['group'] as $groupid => $group) {
+				$group_tmp = array(
+					'id' => $groupid,
+					'type'	=> 'processors',
+					'lines' => array()
+				);
+				if(!empty($group)){
+					foreach($group as $line_id => $line){
+						$group_line = $line;
+						$group_line['id'] = $line_id;
+						$group_tmp['lines'][] = $group_line;
+					}
+				}
+				$groups[] = $group_tmp;
+			}
+			$conditions['group'] = $groups;
+			$conditions_str = json_encode($conditions);
+		}
+	}
+
 	?>
-	<div class="caldera-editor-processor-config-wrapper" id="<?php echo $id; ?>" style="display:none;">
-		<button class="button button-small pull-right delete-processor" data-confirm="<?php echo __('Are you sure you want to remove this processor?', 'caldera-forms'); ?>" type="button"><i class="icn-delete"></i></button>
+	<div class="caldera-editor-processor-config-wrapper caldera-editor-config-wrapper" id="<?php echo $id; ?>" style="display:none;">
+		<div class="toggle_option_tab">
+			<a href="#<?php echo $id; ?>_settings_pane" class="button button-primary">Settings</a>
+			<a href="#<?php echo $id; ?>_conditions_pane" class="button ">Conditions</a>
+		</div>
 		<h3 data-title="<?php echo __('New Form Processor', 'caldera-forms'); ?>" class="caldera-editor-processor-title"><?php echo $type_name; ?></h3>
-		<div class="caldera-config-group" style="display:none;">
-			<label for="<?php echo $id; ?>_type"><?php echo __('Processor Type', 'caldera-forms'); ?></label>
-			<div class="caldera-config-field">
-				<select class="block-input caldera-select-processor-type" id="<?php echo $id; ?>_type" name="config[processors][<?php echo $id; ?>][type]" data-type="<?php echo $type; ?>">					
-					<?php
-					echo build_processor_types($type);
-					?>
-				</select>
+		<div id="<?php echo $id; ?>_settings_pane" class="wrapper-instance-pane">
+			<div class="caldera-config-group" style="display:none;">
+				<label for="<?php echo $id; ?>_type"><?php echo __('Processor Type', 'caldera-forms'); ?></label>
+				<div class="caldera-config-field">
+					<select class="block-input caldera-select-processor-type" id="<?php echo $id; ?>_type" name="config[processors][<?php echo $id; ?>][type]" data-type="<?php echo $type; ?>">					
+						<?php
+						echo build_processor_types($type);
+						?>
+					</select>
+				</div>
 			</div>
+			<div class="caldera-config-processor-setup">
+			</div>
+			<input type="hidden" class="processor_config_string block-input" value="<?php echo htmlentities( $config_str ); ?>">
+			<br>
+			<br>
+			<button class="button button-primary block-button delete-processor" data-confirm="<?php echo __('Are you sure you want to remove this processor?', 'caldera-forms'); ?>" type="button"><i class="icn-delete"></i> <?php echo __('Remove Processor', 'caldera-forms'); ?></button>
 		</div>
-		<div class="caldera-config-processor-setup">
+		<div id="<?php echo $id; ?>_conditions_pane" style="display:none;" class="wrapper-instance-pane">
+		<p>
+			<select name="config[processors][<?php echo $id; ?>][conditions][type]" data-id="<?php echo $id; ?>" class="caldera-conditionals-usetype">
+				<option value=""></option>
+				<option value="use" <?php if($condition_type == 'use'){ echo 'selected="selected"'; } ?>><?php echo __('Use', 'caldera-forms'); ?></option>
+				<option value="not" <?php if($condition_type == 'not'){ echo 'selected="selected"'; } ?>><?php echo __('Don\'t Use', 'caldera-forms'); ?></option>
+			</select>
+			<button id="<?php echo $id; ?>_condition_group_add" style="display:none;" type="button" data-id="<?php echo $id; ?>" class="pull-right button button-small add-conditional-group ajax-trigger" data-type="processors" data-template="#conditional-group-tmpl" data-target-insert="append" data-request="new_conditional_group" data-callback="rebuild_field_binding" data-target="#<?php echo $id; ?>_conditional_wrap"><?php echo __('Add Conditional Group', 'caldera-forms'); ?></button>
+		</p>
+		<div class="caldera-conditionals-wrapper" id="<?php echo $id; ?>_conditional_wrap"></div>
+		<input type="hidden" class="processor_conditions_config_string block-input ajax-trigger" data-event="none" data-type="processors" data-autoload="true" data-request="build_conditions_config" data-template="#conditional-group-tmpl" data-id="<?php echo $id; ?>" data-target="#<?php echo $id; ?>_conditional_wrap" data-callback="rebuild_field_binding" value="<?php echo htmlentities( $conditions_str ); ?>">
 		</div>
-		<input type="hidden" class="processor_config_string block-input" value="<?php echo htmlentities( $config_str ); ?>">
 	</div>
 	<?php
 }
@@ -115,7 +163,8 @@ function build_processor_types($default = null){
 	<div class="caldera-editor-processors-panel">
 		<button type="button" class="new-processor-button button block-button ajax-trigger" 
 		data-request="new_form_processor" 
-		data-modal="form_processor" 
+		data-modal="form_processor"
+		data-load-class="none"
 		data-modal-title="<?php echo __('Form Processors', 'caldera-forms'); ?>"
 		data-modal-height="500"
 		data-template="#form-processors-tmpl"
@@ -126,7 +175,9 @@ function build_processor_types($default = null){
 				// build processors list
 				if(!empty($element['processors'])){
 					foreach($element['processors'] as $processor_id=>$config){
-						echo processor_line_template($processor_id, $config['type']);
+						if(!empty($config['type'])){
+							echo processor_line_template($processor_id, $config['type']);
+						}
 					}
 				}
 			?>
@@ -138,12 +189,18 @@ function build_processor_types($default = null){
 	/// PROCESSORS CONFIGS
 	if(!empty($element['processors'])){
 		foreach($element['processors'] as $processor_id=>$config){
-			
-			$config_str = array();
-			if(!empty($config['config'])){
-				$config_str = json_encode($config['config']);
+			if(!empty($config['type'])){
+				$config_str = array();
+				if(!empty($config['config'])){
+					$config_str = json_encode($config['config']);
+				}
+				$conditions = '{}';
+				if(!empty($config['conditions'])){
+					$conditions = json_encode($config['conditions']);
+				}
+
+				processor_wrapper_template($processor_id, $config['type'], $config_str, $conditions);
 			}
-			processor_wrapper_template($processor_id, $config['type'], $config_str);
 		}
 	}
 
@@ -196,6 +253,7 @@ function build_processor_types($default = null){
 
 	?>
 </script>
+
 <script type="text/html" id="processor-line-tmpl">
 <?php echo processor_line_template(); ?>
 </script>
