@@ -665,52 +665,60 @@ class Caldera_Forms {
 		}
 		foreach($conditions['group'] as $groupid=>$lines){
 			$truelines = array();
+			
 			foreach($lines as $lineid=>$line){
 				$truelines[$lineid] = false;
+
 				if(!empty($line['field']) && isset($form['fields'][$line['field']])){
-					if(isset($data[$form['fields'][$line['field']]['slug']])){
 
-						foreach( (array) $data[$form['fields'][$line['field']]['slug']] as $value){
+					// if not sent - preset it to a null value.
+					if(!isset($data[$form['fields'][$line['field']]['slug']])){						
+						$prevalue = '';
+					}else{
+						$prevalue = $data[$form['fields'][$line['field']]['slug']];
+					}
 
-							switch ($line['compare']) {
-								case 'is':
-									if($value == $line['value']){
-										$truelines[$lineid] = true;
-									}
-									break;
-								case 'isnot':
-									if($value != $line['value']){
-										$truelines[$lineid] = true;
-									}
-									break;
-								case '>':
-									if($value > $line['value']){
-										$truelines[$lineid] = true;
-									}
-									break;
-								case '<':
-									if($value < $line['value']){
-										$truelines[$lineid] = true;
-									}
-									break;
-								case 'startswith':
-									if( substr( $value, 0, strlen($line['value']) ) == $line['value']){
-										$truelines[$lineid] = true;
-									}
-									break;
-								case 'endswith':
-									if( substr( $value, strlen($value)-strlen($line['value']) ) == $line['value']){
-										$truelines[$lineid] = true;
-									}
-									break;
-								case 'contains':
-									if( false !== strpos( $value, $line['value'] ) ){
-										$truelines[$lineid] = true;
-									}
-									break;
-							}
+					foreach( (array) $prevalue as $value){
 
+						switch ($line['compare']) {
+							case 'is':
+								if($value == $line['value']){
+									$truelines[$lineid] = true;
+								}
+								break;
+							case 'isnot':
+
+								if($value != $line['value']){
+									$truelines[$lineid] = true;
+								}
+								break;
+							case '>':
+								if($value > $line['value']){
+									$truelines[$lineid] = true;
+								}
+								break;
+							case '<':
+								if($value < $line['value']){
+									$truelines[$lineid] = true;
+								}
+								break;
+							case 'startswith':
+								if( substr( $value, 0, strlen($line['value']) ) == $line['value']){
+									$truelines[$lineid] = true;
+								}
+								break;
+							case 'endswith':
+								if( substr( $value, strlen($value)-strlen($line['value']) ) == $line['value']){
+									$truelines[$lineid] = true;
+								}
+								break;
+							case 'contains':
+								if( false !== strpos( $value, $line['value'] ) ){
+									$truelines[$lineid] = true;
+								}
+								break;
 						}
+
 					}
 				}
 			}
