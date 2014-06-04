@@ -9,6 +9,10 @@ if(empty($element['success'])){
 	$element['success'] = __('Form has successfuly been submitted. Thank you.', 'caldera-forms');
 }
 
+if(!isset($element['db_support'])){
+	$element['db_support'] = 1;
+}
+
 // place nonce field
 wp_nonce_field( 'cf_edit_element', 'cf_edit_nonce' );
 
@@ -371,6 +375,14 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 		<label><?php echo __('Form Description', 'caldera-forms'); ?> </label>
 		<div class="caldera-config-field">
 			<textarea name="config[description]" class="field-config" style="width:300px;" rows="5"><?php echo htmlentities( $element['description'] ); ?></textarea>
+		</div>
+	</div>
+
+	<div class="caldera-config-group">
+		<label><?php echo __('Capture Entries', 'caldera-forms'); ?> </label>
+		<div class="caldera-config-field">
+			<label><input type="radio" class="field-config" name="config[db_support]" value="1" <?php if(!empty($element['db_support'])){ ?>checked="checked"<?php } ?>> <?php echo __('Enable', 'caldera-forms'); ?></label>
+			<label><input type="radio" class="field-config" name="config[db_support]" value="0" <?php if(empty($element['db_support'])){ ?>checked="checked"<?php } ?>> <?php echo __('Disabled', 'caldera-forms'); ?></label>
 		</div>
 	</div>
 

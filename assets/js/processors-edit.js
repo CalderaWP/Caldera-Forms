@@ -105,7 +105,6 @@ jQuery(function($){
 			config			= parent.find('.processor_config_string').val(),
 			current_type	= select.data('type');
 
-
 			// Be sure to load the processors preset when switching back to the initial processor type.
 			if(config.length && current_type === select.val() ){
 				config = JSON.parse(config);
@@ -135,6 +134,11 @@ jQuery(function($){
 				window[select.val() + '_init'](parent.prop('id'), target);
 			}
 
+		// check if conditions are allowed			
+		if(parent.find('.no-conditions').length){
+			// conditions are not supported - remove them
+			parent.find('.toggle_option_tab').remove();
+		}
 
 
 		rebuild_field_binding();

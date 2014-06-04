@@ -268,6 +268,11 @@ foreach($form_processors as $processor=>$config){
 			if(isset($config['description'])){
 				echo "<p class=\"description\">" . $config['description'] ."</p><br>\r\n";
 			}
+			if(isset($config['conditionals'])){
+				if(empty($config['conditionals'])){
+					echo '<span class="no-conditions"></span>';
+				}
+			}
 			include $config['template'];
 		echo "\r\n</script>\r\n";		
 	}

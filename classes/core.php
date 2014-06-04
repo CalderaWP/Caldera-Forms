@@ -157,7 +157,10 @@ class Caldera_Forms {
 
 
 	public static function save_final_form($data, $form){
-		
+		if(empty($form['db_support'])){
+			return;
+		}
+
 		global $wpdb;
 
 		$new_entry = array(
@@ -741,6 +744,15 @@ class Caldera_Forms {
 	}
 
 	// FRONT END STUFFF
+	static public function form_redirect($type, $url, $data, $form, $processid){
+
+		do_action('caldera_forms_redirect', $type, $url, $data, $form, $processid);
+		do_action('caldera_forms_redirect_' . $type, $url, $data, $form, $processid);
+		
+		wp_redirect( $url );
+		exit;
+	}
+
 
 	static public function check_forms_shortcode(){
 		global $post, $front_templates, $wp_query, $processID, $form;
@@ -890,9 +902,8 @@ class Caldera_Forms {
 					$referrer = apply_filters('caldera_forms_submit_error_redirect', $referrer, $process_data, $form, $processID);
 					$referrer = apply_filters('caldera_forms_submit_error_redirect_required', $referrer, $process_data, $form, $processID);
 
-					wp_redirect( $referrer );
+					self::form_redirect('error', $referrer, $process_data, $form, $processID );
 					exit;
-
 				}
 
 
@@ -938,16 +949,16 @@ class Caldera_Forms {
 								$config = array_merge($config, $processor['config']);
 							}
 							if(is_array($process['pre_processor'])){
-								$process_line_data = call_user_func_array($process['pre_processor'],array($process_data, $config, $data));
+								$process_line_data = call_user_func_array($process['pre_processor'],array($process_data, $config, $data, $form));
 							}else{
 								if(function_exists($process['pre_processor'])){
 									$func = $process['pre_processor'];
 									$process_line_data = $func($process_data, $config, $data, $form);	
 								}
 							}
-							if(false === $process_line_data){
-								// return an error since a processor killed it!
-								return;
+							if(empty($process_line_data) || false === $process_line_data){
+								// processor killed it- replace with original data.
+								$process_line_data = $data;
 							}elseif(!empty($process_line_data)){
 								if(is_array($process_line_data) && isset($process_line_data['_fail'])){
 									//type
@@ -980,7 +991,7 @@ class Caldera_Forms {
 									$referrer = $referrer['path'] . '?' . http_build_query($query_str);
 									$referrer = apply_filters('caldera_forms_submit_error_redirect', $referrer, $process_data, $form, $processID);
 									$referrer = apply_filters('caldera_forms_submit_error_redirect_pre_process', $referrer, $process_data, $form, $processID);
-									wp_redirect( $referrer );
+									self::form_redirect('fail', $referrer, $process_data, $form, $processID );
 									exit;
 								}
 								// processor returned data, use this instead
@@ -1027,7 +1038,7 @@ class Caldera_Forms {
 								$config = array_merge($config, $processor['config']);
 							}
 							if(is_array($process['processor'])){
-								$process_line_data = call_user_func_array($process['processor'],array($process_data, $config, $data));
+								$process_line_data = call_user_func_array($process['processor'],array($process_data, $config, $data, $form));
 							}else{
 								if(function_exists($process['processor'])){
 									$func = $process['processor'];
@@ -1078,7 +1089,7 @@ class Caldera_Forms {
 								$config = array_merge($config, $processor['config']);
 							}
 							if(is_array($process['post_processor'])){
-								$process_line_data = call_user_func_array($process['post_processor'],array($process_data, $config, $data));
+								$process_line_data = call_user_func_array($process['post_processor'],array($process_data, $config, $data, $form));
 							}else{
 								if(function_exists($process['post_processor'])){
 									$func = $process['post_processor'];
@@ -1104,13 +1115,11 @@ class Caldera_Forms {
 				$referrer['query']['cf_su'] = $form_instance_number;
 				$referrer = $referrer['path'] . '?' . http_build_query($referrer['query']);
 
-				// done do action.
-				do_action('caldera_forms_submit_redirect', $data, $form, $referrer, $processID);
 				// filter refer
 				$referrer = apply_filters('caldera_forms_submit_redirect', $referrer, $process_data, $form, $processID);
 				$referrer = apply_filters('caldera_forms_submit_redirect_complete', $referrer, $process_data, $form, $processID);
 
-				wp_redirect( $referrer );
+				self::form_redirect('complete', $referrer, $process_data, $form, $processID );
 				exit;
 
 
@@ -1645,13 +1654,26 @@ class Caldera_Forms {
 			$form_classes = array(
 				'caldera_forms_form'
 			);
+			
+			$form_attributes = array(
+				'method'	=>	'POST',
+				'enctype'	=>	'multipart/form-data',
+				'role'		=>	'form'
+			);
+
 			$form_classes = apply_filters('caldera_forms_render_form_classes', $form_classes, $form);
+			$form_attributes = apply_filters('caldera_forms_render_form_attributes', $form_attributes, $form);
+
+			$attributes = array();
+			foreach($form_attributes as $attribute=>$value){
+				$attributes[] = $attribute . '="' . htmlentities( $value ) . '"';
+			}
 
 			// render only non success
-			$out .= "<form class=\"" . implode(' ', $form_classes) . "\" method=\"POST\" enctype=\"multipart/form-data\" role=\"form\">\r\n";
+			$out .= "<form class=\"" . implode(' ', $form_classes) . "\" " . implode(" ", $attributes) . ">\r\n";
 			$out .= wp_nonce_field( "caldera_forms_front", "_cf_verify", true, false);
 			$out .= "<input type=\"hidden\" name=\"_cf_frm_id\" value=\"" . $atts['id'] . "\">\r\n";
-			$out .= "<input type=\"hidden\" name=\"_cf_frm_ct\" value=\"" . $current_form_count . "\">\r\n";			
+			$out .= "<input type=\"hidden\" name=\"_cf_frm_ct\" value=\"" . $current_form_count . "\">\r\n";
 			$out .= $grid->renderLayout();
 			$out .= "</form>\r\n";
 		}
@@ -1671,7 +1693,7 @@ class Caldera_Forms {
 
 		do_action('caldera_forms_render_end', $form);
 
-		return $out;
+		return apply_filters('caldera_forms_render_form', $out, $form);
 
 	}
 

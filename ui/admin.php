@@ -87,9 +87,11 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 			$class = "alternate";
 			foreach($forms as $form_id=>$form){
 
-
-				$total = $wpdb->get_var($wpdb->prepare("SELECT COUNT(`id`) AS `total` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = %s;", $form_id));
-				
+				if(!empty($form['db_support'])){
+					$total = $wpdb->get_var($wpdb->prepare("SELECT COUNT(`id`) AS `total` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = %s;", $form_id));
+				}else{
+					$total = __('Disabled', 'caldera-forms');
+				}
 				/*
 				?>
 
@@ -121,7 +123,7 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 						<?php echo $form['name']; ?>
 						<div class="row-actions">
 						<span class="edit"><a class="form-control" href="admin.php?page=caldera-forms&edit=<?php echo $form_id; ?>"><?php echo __('Edit Form', 'caldera-forms'); ?></a> | </span>
-						<span class="edit"><a class="form-control form-entry-trigger ajax-trigger" href="#entres"
+						<?php if(!empty($form['db_support'])){ ?><span class="edit"><a class="form-control form-entry-trigger ajax-trigger" href="#entres"
 
 						data-action="browse_entries"
 						data-target="#form-entries-viewer"
@@ -134,7 +136,7 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 						data-callback="setup_pagination"
 						data-page="1"
 
-						><?php echo __('View Entries', 'caldera-forms'); ?></a> | </span>
+						><?php echo __('View Entries', 'caldera-forms'); ?></a> | </span><?php } ?>
 						<span class="trash form-delete"><a class="form-control" data-confirm="<?php echo __('This will delete this form permanently. Continue?', 'caldera-forms'); ?>" href="admin.php?page=caldera-forms&delete=<?php echo $form_id; ?>&cal_del=<?php echo wp_create_nonce( 'cf_del_frm' ); ?>"><?php echo __('Delete Form', 'caldera-forms'); ?></a></span>
 
 						</div>
