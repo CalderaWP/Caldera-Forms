@@ -1,7 +1,7 @@
 Caldera-Forms
 =============
 
-WordPress form builder done right
+WordPress form builder. MAde to be extendable.
 
 
 

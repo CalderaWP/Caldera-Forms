@@ -247,12 +247,17 @@
 						data = new FormData();
 					}
 
+					if(tr.is('input,select,textarea')){
+						// add value as _value for each access
+						tr.data('_value', tr.val());
+					}
 					// make field vars
 					for(var att in tr.data()){
 						data.append(att, tr.data(att));
 					}
 					// use input
 					if(tr.is('input,select,textarea')){
+
 						if(tr.is('input:file')){														
 							if(tr[0].files.length > 1){								
 								for( var file = 0; file < tr[0].files.length; file++){
