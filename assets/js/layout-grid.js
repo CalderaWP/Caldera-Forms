@@ -288,6 +288,9 @@ jQuery(function($) {
 		$(this).remove();
 		buildSortables();
 		
+		jQuery('.column-tools').remove();
+		jQuery('.column-merge').remove();		
+		
 	});
 	$( ".layout-grid-panel" ).on('click', '.column-remove', function(e){
 		var row = $(this).parent().parent().parent(),
@@ -309,6 +312,8 @@ jQuery(function($) {
 			buildLayoutString();
 			rebuild_field_binding();
 		});
+		jQuery('.column-tools').remove();
+		jQuery('.column-merge').remove();
 		
 	});
 	
@@ -333,6 +338,8 @@ jQuery(function($) {
 		prev.attr('class', left.join('-'));//+' - '+ right);
 		column.remove();
 		buildLayoutString();
+		jQuery('.column-tools').remove();
+		jQuery('.column-merge').remove();		
 	});	
 	
 	$('.layout-grid-panel').on('mouseenter','.row', function(e){
