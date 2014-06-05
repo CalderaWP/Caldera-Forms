@@ -163,11 +163,57 @@ jQuery(function($) {
 		});
 		capt.val(struct.join('|'));
 	}
+
+	function insert_new_field(newfield, target){
+		var name = "fld_" + Math.round( Math.random() * 10000000 ),
+			new_name 	= name,
+			field_conf	= $('#field_config_panels'),
+			new_conf_templ,
+			new_field;
+
+
+		// field conf template
+		new_conf_templ = Handlebars.compile( $('#caldera_field_config_wrapper_templ').html() );
+
+		new_field = {
+			"id"	:	new_name,
+			"label"	:	'',
+			"slug"	:	''
+		};
+
+		// pance new conf template
+		field_conf.append( new_conf_templ( new_field ) );
+
+		newfield.
+		removeClass('button-small').
+		removeClass('button').
+		removeClass('button-primary').
+		removeClass('ui-draggable').
+		removeClass('layout-new-form-field').
+		addClass('layout-form-field').
+		attr('data-config', name);
+
+		newfield.find('.layout_field_name').remove();
+		newfield.find('.field-location').prop('name', 'config[layout_grid][fields][' + name + ']');
+		newfield.find('.settings-panel').show();
+		newfield.appendTo( target );
+		buildSortables();
+		newfield.find('.icon-edit').trigger('click');
+
+		$('#' + name + '_lable').focus().select();
+
+		
+
+		rebuild_field_binding();
+		baldrickTriggers();
+		$('#' + name).trigger('field.drop');		
+	}
+
 	function buildSortables(){
 
 		// Sortables
 		$('.toggle-options').sortable({
-			handle: ".dashicons-sort"
+			handle: ".dashicons-sort",
 		});
 
 
@@ -175,6 +221,7 @@ jQuery(function($) {
 			placeholder: 	"row-drop-helper",
 			handle: 		".sort-handle",
 			items:			".first-row-level",
+			axis: 			"y",
 			stop: function(){
 				buildLayoutString();
 			}
@@ -204,61 +251,27 @@ jQuery(function($) {
 			accept: ".layout-new-form-field",
 			drop: function( event, ui ) {
 				var newfield= ui.draggable.clone(),
-					target = $(this),
-					name = "fld_" + Math.round( Math.random() * 10000000 );
+					target = $(this);
 
-				// append the new field
-				var new_name 	= name,
-					input		= $(this),
-					wrap		= input.parent(),
-					field_conf	= $('#field_config_panels'),
-					new_templ,
-					new_conf_templ,
-					new_field;
-
-
-				// field conf template
-				new_conf_templ = Handlebars.compile( $('#caldera_field_config_wrapper_templ').html() );
-
-				new_field = {
-					"id"	:	new_name,
-					"label"	:	'',
-					"slug"	:	''
-				};
-
-				// pance new conf template
-				field_conf.append( new_conf_templ( new_field ) );
-
-				newfield.
-				removeClass('button-small').
-				removeClass('button').
-				removeClass('button-primary').
-				removeClass('ui-draggable').
-				removeClass('layout-new-form-field').
-				addClass('layout-form-field').
-				attr('data-config', name);
-
-				newfield.find('.layout_field_name').remove();
-				newfield.find('.field-location').prop('name', 'config[layout_grid][fields][' + name + ']');
-				newfield.find('.settings-panel').show();
-				newfield.appendTo( this );
-				buildSortables();
-				newfield.find('.icon-edit').trigger('click');
-
-				$('#' + name + '_lable').focus().select();
-
-				
-
-				rebuild_field_binding();
-				baldrickTriggers();
-				$('#' + name).trigger('field.drop');
+				insert_new_field(newfield, target);
 			}
 		});
 
 		
 		buildLayoutString();		
 	};
-	buildSortables();	
+	buildSortables();
+
+	$('.layout-grid-panel').on('click','.column-fieldinsert', function(e){
+		//newfield-tool
+		var target 		= $(this).closest('.column-container'),
+			newfield 	= $('#newfield-tool').clone();
+		
+		insert_new_field(newfield, target);
+
+	});
+	
+
 	$('.layout-grid-panel').on('click','.column-split', function(e){
 		var column = $(this).parent().parent(),
 			size = column.attr('class').split('-'),
@@ -326,16 +339,17 @@ jQuery(function($) {
 		var setrow = jQuery(this);
 		jQuery('.column-tools,.column-merge').remove();
 		setrow.children().children().first().append('<div class="column-remove column-tools"><i class="icon-remove"></i></div>');
-		//setrow.children().children().last().append('<div class="column-sort column-tools"><i class="icon-edit"></i> <i class="icon-sort drag-handle sort-handle"></i> </div>');
-		setrow.children().children().last().append('<div class="column-sort column-tools" style="text-align:right;"><i class="icon-sort drag-handle sort-handle"></i></div>');
+		//setrow.children().children().last().append('<div class="column-sort column-tools"><i class="icon-edit"></i> <i class="dashicons dashicons-menu drag-handle sort-handle"></i> </div>');
+		setrow.children().children().last().append('<div class="column-sort column-tools" style="text-align:right;"><i class="dashicons dashicons-menu drag-handle sort-handle"></i></div>');
 		
 		setrow.children().children().not(':first').prepend('<div class="column-merge"><div class="column-join column-tools"><i class="icon-join"></i></div></div>');
 		var single = setrow.parent().parent().parent().width()/12-1;
 		setrow.children().children().each(function(k,v){
 			var column = $(v)
 			var width = column.width()/2-5;
+			column.prepend('<div class="column-fieldinsert column-tools"><i class="dashicons dashicons-plus-alt"></i></div>');
 			if(!column.parent().hasClass('col-xs-1')){
-				column.prepend('<div class="column-split column-tools"><i class="icon-split"></i></div>');
+				column.prepend('<div class="column-split column-tools"><i class="dashicons dashicons-leftright"></i></div>');
 				column.find('.column-split').css('left', width);
 			}
 		});

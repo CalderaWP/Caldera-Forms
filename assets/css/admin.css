@@ -81,7 +81,7 @@
   display: inline;
 }
 .toggle_option_row .dashicons-sort {
-  cursor: move;
+  cursor: all-scroll;
 }
 .toggle_option_row .toggle_value_field,
 .toggle_option_row .toggle_label_field {
@@ -560,7 +560,7 @@ h3.caldera-editor-field-title {
   z-index: 999999;
 }
 .button.button-small.layout-new-form-field.ui-draggable {
-  cursor: move;
+  cursor: all-scroll;
 }
 @media screen and (max-width: 782px) {
   .caldera-editor-body > h3 {

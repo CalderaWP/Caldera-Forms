@@ -63,10 +63,19 @@ class Caldera_Forms_Admin {
 		add_action("wp_ajax_create_form", array( $this, 'create_form') );
 		add_action("wp_ajax_browse_entries", array( $this, 'browse_entries') );
 		add_action("wp_ajax_save_cf_setting", array( $this, 'save_cf_setting') );
+		add_action("wp_ajax_cf_dismiss_pointer", array( $this, 'update_pointer') );
+
 		add_action( 'admin_footer', array( $this, 'add_shortcode_inserter'));	
 
 	}
 
+	public static function update_pointer(){
+
+		if(!empty($_POST['pointer'])){
+			add_user_meta( get_current_user_id() , 'cf_pointer_' . $_POST['pointer'] );
+		}
+		exit;
+	}
 
 	/**
 	 * Load the plugin text domain for translation.
@@ -408,6 +417,9 @@ class Caldera_Forms_Admin {
 		}
 
 		wp_enqueue_media();
+		wp_enqueue_script( 'wp-pointer' );
+		wp_enqueue_style( 'wp-pointer' );
+
 
 		wp_enqueue_script( 'password-strength-meter' );
 
