@@ -156,9 +156,6 @@ function build_processor_types($default = null){
 
 ?>
 
-<div class="mailer-errors" style="display:none;">
-	<p><?php echo __('Please add a "Button" element and set it to "Submit" if you want to have the form submittable.', 'caldera-forms'); ?></p>
-</div>
 <div class="caldera-editor-processors-panel-wrap">
 	<div class="caldera-editor-processors-panel">
 		<button type="button" class="new-processor-button button block-button ajax-trigger" 
