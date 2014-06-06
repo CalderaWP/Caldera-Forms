@@ -24,6 +24,8 @@ define('CFCORE_EXTEND_URL', 'http://digilab.co.za');
 register_activation_hook( __FILE__, array( 'Caldera_Forms_Admin', 'activate_caldera_forms' ) );
 
 include_once CFCORE_PATH . 'classes/core.php';
+include_once CFCORE_PATH . 'classes/widget.php';
+
 add_action( 'plugins_loaded', array( 'Caldera_Forms', 'get_instance' ) );
 
 // Admin & Admin Ajax stuff.

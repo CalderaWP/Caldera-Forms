@@ -753,7 +753,7 @@ class Caldera_Forms {
 		
 		$url = apply_filters('caldera_forms_redirect', $url, $data, $form, $processid);
 		$url = apply_filters('caldera_forms_redirect' . $type, $url, $data, $form, $processid);
-
+		
 		if(!empty($url)){
 			wp_redirect( $url );
 			exit;
