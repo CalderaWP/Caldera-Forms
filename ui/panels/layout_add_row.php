@@ -9,8 +9,8 @@
 </div>
 <span id="dismiss-add-element" class="ajax-trigger" data-action="cf_dismiss_pointer" data-pointer="add_element"></span>
 <?php
-
-if(empty(get_user_meta( get_current_user_id() , 'cf_pointer_add_element' ))){ ?>
+$haspointer = get_user_meta( get_current_user_id() , 'cf_pointer_add_element' );
+if(empty($haspointer)){ ?>
 <script>
 	
 	jQuery(document).ready( function($) {
