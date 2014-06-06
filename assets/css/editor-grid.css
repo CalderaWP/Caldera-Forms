@@ -308,7 +308,14 @@
 .caldera-condition-line:first-child .caldera-condition-line-label{
   display: none;
 }
-
+.caldera-editor-field-config-wrapper .caldera-conditional-value-field {
+  margin: 12px;
+  max-width: 263px !important;
+  width: 263px !important;
+}
+.caldera-editor-field-config-wrapper .button.remove-conditional-line.pull-right {
+  margin-top: -12px;
+}
 .settings-panel.settings-core{ display: block;}
 
 .layout-new-form-field .drag-handle,

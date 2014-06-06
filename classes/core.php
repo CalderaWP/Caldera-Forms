@@ -1581,7 +1581,7 @@ class Caldera_Forms {
 					$field = apply_filters('caldera_forms_render_get_field_slug-' . $field['slug'], $field, $form);
 
 					$field_structure = array(
-						"id"				=>	'fld_' . $field['slug'],
+						"id"				=>	$field_base_id,//'fld_' . $field['slug'],
 						"name"				=>	$field_base_id,//$field['slug'],
 						"label_before"		=>	( empty($field['hide_label']) ? "<label for=\"" . $field_base_id . "\" class=\"" . $field_classes['field_label'] . "\">" : null ),
 						"label"				=>	( empty($field['hide_label']) ? $field['label'] : null ),

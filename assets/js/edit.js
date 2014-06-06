@@ -362,7 +362,7 @@ jQuery(function($){
 		}
 	});
 	// field label bind
-	$('.caldera-editor-body').on('keyup change', '.field-label', function(e){
+	$('.caldera-editor-body').on('change', '.field-label', function(e){
 		var field 		= $(this).closest('.caldera-editor-field-config-wrapper').prop('id');
 			field_line	= $('[data-field="' + field + '"]'),
 			field_title	= $('#' + field + ' .caldera-editor-field-title, .layout-form-field.field-edit-open .layout_field_name'),
@@ -378,7 +378,7 @@ jQuery(function($){
 
 
 	// rename group
-	$('.caldera-editor-body').on('keyup blur', '.active-group-name', function(e){
+	$('.caldera-editor-body').on('change', '.active-group-name', function(e){
 		e.preventDefault();
 		var active_group		= $('.caldera-group-nav.active'),
 			group				= active_group.data('group'),
@@ -396,7 +396,7 @@ jQuery(function($){
 
 	});
 	// rename group slug
-	$('.caldera-editor-body').on('keyup blur', '.active-group-slug', function(e){
+	$('.caldera-editor-body').on('change', '.active-group-slug', function(e){
 		e.preventDefault();
 
 		var active_group		= $('.caldera-group-nav.active'),
@@ -416,7 +416,7 @@ jQuery(function($){
 
 	});
 	// rename group description
-	$('.caldera-editor-body').on('keyup blur', '.active-group-desc', function(e){
+	$('.caldera-editor-body').on('change', '.active-group-desc', function(e){
 		e.preventDefault();
 
 		var active_group		= $('.caldera-group-nav.active'),
@@ -518,7 +518,7 @@ jQuery(function($){
 	});
 	
 	// dynamic group creation
-	$('.caldera-editor-body').on('blur keypress', '.new-group-input', function(e){
+	$('.caldera-editor-body').on('change keypress', '.new-group-input', function(e){
 
 		if(e.type === 'keypress'){
 			if(e.which === 13){
@@ -568,7 +568,7 @@ jQuery(function($){
 	});
 
 	// dynamic field creation
-	$('.caldera-editor-body').on('blur keypress', '.new-field-input', function(e){
+	$('.caldera-editor-body').on('change keypress', '.new-field-input', function(e){
 
 		if(e.type === 'keypress'){
 			if(e.which === 13){
@@ -627,7 +627,7 @@ jQuery(function($){
 	});
 
 	// bind slug editing to keep clean
-	$('.caldera-editor-body').on('change keyup', '.field-slug', function(e){
+	$('.caldera-editor-body').on('change', '.field-slug', function(e){
 		if(this.value.length){
 			this.value = this.value.replace(/[^a-z0-9]/gi, '_').toLowerCase();
 		}else{
@@ -679,7 +679,7 @@ jQuery(function($){
 
 	});
 
-	$('.caldera-editor-body').on('keyup change', '.field-config', function(e){
+	$('.caldera-editor-body').on('change', '.field-config', function(e){
 
 		var field 	= $(this),
 			parent 	= field.closest('.caldera-editor-field-config-wrapper');

@@ -8,7 +8,7 @@ jQuery(function($){
 
 		parent.find('.btn').removeClass('btn-primary').addClass('btn-default');
 		clicked.addClass('btn-primary').removeClass('btn-default');
-		input.prop('checked', true);
+		input.prop('checked', true).trigger('change');
 	});
 });
 
