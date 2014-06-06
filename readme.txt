@@ -6,7 +6,7 @@ Tested up to: 3.9.1
 Stable tag: 1.0.0
 License: GPLv2
 
-Caldera Forms allows you to create complex grid based, responsive forms quickly and easily. It features an easy to use drag and drop layout builder and stackable form processors to handle submissions elegantly.
+Create complex grid based, responsive forms easily with an easy to use drag and drop layout builder.
 
 == Description ==
 Caldera Forms is a free, simple form builder with a layout builder that enables you to create the format you want for your form. It is fully responsive and with form processors, it gives you flexibility to handle the form data how you need it.
@@ -18,6 +18,14 @@ Advanced conditional logic take away the basic "Match all or one" and gives you 
 Everything can be extended. For developers, there are enough hooks and filters to build on. From frontend handling, to form processing, to editor panels, to field types. At it's core, it's a framework for building applications so you can make what you want.
 
 This is only the first version and much more is coming.
+
+== Installation ==
+
+Upload the caldera-forms folder to /wp-content/plugins/
+Activate the plugin through the 'Plugins' menu in WordPress
+Navigate to 'Caldera Forms' in wp-admin.
+
+Once you have created a form, insert it in a page or post via the Shortcode inserter button above the content editor.
 
 == Frequently Asked Questions ==
 none yet.
