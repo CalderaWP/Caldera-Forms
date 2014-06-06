@@ -475,6 +475,7 @@ class Caldera_Forms {
 				"category"	=>	__("Text Fields,Basic", "cladera-forms"),
 				"setup"		=>	array(
 					"preview"	=>	CFCORE_PATH . "fields/hidden/preview.php",
+					"template"	=>	CFCORE_PATH . "fields/hidden/setup.php",
 					"not_supported"	=>	array(
 						'hide_label',
 						'caption',
