@@ -686,8 +686,21 @@ class Caldera_Forms_Admin {
 
 				// add form to registry
 				$forms[$data['ID']] = $data;
-				//dump($data);
-				
+
+				// remove undeeded settings for registry
+				if(isset($forms[$data['ID']]['layout_grid'])){
+					unset($forms[$data['ID']]['layout_grid']);
+				}
+				if(isset($forms[$data['ID']]['fields'])){
+					unset($forms[$data['ID']]['fields']);
+				}
+				if(isset($forms[$data['ID']]['processors'])){
+					unset($forms[$data['ID']]['processors']);
+				}
+				if(isset($forms[$data['ID']]['settings'])){
+					unset($forms[$data['ID']]['settings']);
+				}
+
 				// add from to list
 				update_option($data['ID'], $data);
 				do_action('caldera_forms_save_form', $data);

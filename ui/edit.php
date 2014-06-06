@@ -75,15 +75,15 @@ foreach($field_types as $field_slug=>$config){
 		$field_type_list[trim($category)][$field_slug] = $config;
 	}
 
+	ob_start();
+	do_action('caldera_forms_field_settings_template', $config);
 	if(!empty($config['setup']['template'])){
 		if(file_exists( $config['setup']['template'] )){
-			// create config template block
-				ob_start();
-					include $config['setup']['template'];
-				$field_type_templates[sanitize_key( $field_slug ) . "_tmpl"] = ob_get_clean();				
+			// create config template block							
+			include $config['setup']['template'];
 		}
-
-	}	
+	}
+	$field_type_templates[sanitize_key( $field_slug ) . "_tmpl"] = ob_get_clean();
 
 	if(isset($config['options'])){
 		if(!isset($field_type_templates[sanitize_key( $field_slug ) . "_tmpl"])){
@@ -266,7 +266,9 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 				<button id="<?php echo $id; ?>_condition_group_add" style="display:none;" type="button" data-id="<?php echo $id; ?>" class="pull-right button button-small add-conditional-group ajax-trigger" data-template="#conditional-group-tmpl" data-target-insert="append" data-request="new_conditional_group" data-type="fields" data-callback="rebuild_field_binding" data-target="#<?php echo $id; ?>_conditional_wrap"><?php echo __('Add Conditional Group', 'caldera-forms'); ?></button>
 			</p>
 			<div class="caldera-conditionals-wrapper" id="<?php echo $id; ?>_conditional_wrap"></div>
+			<?php do_action('caldera_forms_field_conditionals_template', $id); ?>
 			<input type="hidden" class="field_conditions_config_string block-input ajax-trigger" data-event="none" data-autoload="true" data-request="build_conditions_config" data-template="#conditional-group-tmpl" data-id="<?php echo $id; ?>" data-target="#<?php echo $id; ?>_conditional_wrap" data-type="fields" data-callback="rebuild_field_binding" value="<?php echo htmlentities( $conditions_str ); ?>">
+			
 		</div>		
 	</div>
 	<?php
@@ -299,32 +301,6 @@ function build_field_types($default = null){
 
 }
 
-function group_line_template($id = '{{id}}', $name = '{{name}}', $repeat = '0', $admin = '0', $desc = null){
-	$icon = 'icn-folder';
-	if(!empty($repeat)){
-		$icon = 'icn-repeat';
-	}
-	$adminclass= null;
-	if(!empty($admin)){
-		$adminclass = 'is-admin';
-	}
-	ob_start();
-	?>
-	<li data-group="<?php echo $id; ?>" class="caldera-group-nav <?php echo $adminclass; ?>">
-		<a href="#<?php echo $id; ?>">
-		<i class="icn-right pull-right"></i>
-		<i class="group-type <?php echo $icon; ?>"></i> <span><?php echo $name; ?></span></a>
-		<input type="hidden" class="caldera-config-group-name" value="<?php echo $name; ?>" name="config[groups][<?php echo $id; ?>][name]" autocomplete="off">
-		<input type="hidden" class="caldera-config-group-slug" value="<?php echo $id; ?>" name="config[groups][<?php echo $id; ?>][slug]" autocomplete="off">
-		<input type="hidden" class="caldera-config-group-repeat" value="<?php echo $repeat; ?>" name="config[groups][<?php echo $id; ?>][repeat]" autocomplete="off">
-		<input type="hidden" class="caldera-config-group-admin" value="<?php echo $admin; ?>" name="config[groups][<?php echo $id; ?>][admin]" autocomplete="off">
-		<input type="hidden" class="caldera-config-group-desc" value="<?php echo $desc; ?>" name="config[groups][<?php echo $id; ?>][desc]" autocomplete="off">
-
-	</li>
-	<?php
-
-	return ob_get_clean();
-}
 
 function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{group}}'){
 	
@@ -392,7 +368,7 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 			<input type="text" class="field-config required" name="config[success]" value="<?php echo $element['success']; ?>" style="width:300px;" required="required">
 		</div>
 	</div>
-
+	<?php do_action('caldera_forms_general_settings_panel'); ?>
 </div>
 
 <?php

@@ -841,7 +841,11 @@ class Caldera_Forms {
 		// field handlers + required checks
 		foreach($form['fields'] as $field){
 
-
+			// setfield
+			$field = apply_filters('caldera_forms_render_setup_field', $field, $form);
+			if(empty($field)){
+				continue;
+			}
 			// handler
 			if(isset($field_types[$field['type']]['handler']) && isset($process_data[$field['slug']])){
 
@@ -1556,9 +1560,10 @@ class Caldera_Forms {
 			foreach($form['layout_grid']['fields'] as $field_base_id=>$location){
 
 				if(isset($form['fields'][$field_base_id])){
-					$field = $form['fields'][$field_base_id];
+					
+					$field = apply_filters('caldera_forms_render_setup_field', $form['fields'][$field_base_id], $form);
 
-					if(!isset($field_types[$field['type']]['file']) || !file_exists($field_types[$field['type']]['file'])){
+					if(empty($field) || !isset($field_types[$field['type']]['file']) || !file_exists($field_types[$field['type']]['file'])){
 						continue;
 					}
 					
