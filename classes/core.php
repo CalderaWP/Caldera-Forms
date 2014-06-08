@@ -801,11 +801,13 @@ class Caldera_Forms {
 			if(isset($_POST[$field_slug])){
 				$data[$field['slug']] = $_POST[$field_slug];
 			}
-		}				
-		$process_data = $data;
+		}
 
 		// init filter
-		$form = apply_filters('caldera_forms_submit_get_form', $form, $process_data, $referrer, $processID);
+		$form = apply_filters('caldera_forms_submit_get_form', $form, $data, $referrer, $processID);
+
+		// get submission data- great one this!
+		$process_data = $data = apply_filters('caldera_forms_get_submission', $data, $rawdata, $form, $processID);
 
 		// get all fieldtype
 		$field_types = apply_filters('caldera_forms_get_field_types', array() );
