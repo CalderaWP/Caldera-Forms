@@ -80,12 +80,12 @@
 
 			}
 
-			console.log(trues);
+			
 
 			var template	=	$('#conditional-' + field + '-tmpl').html(),
 				target		=	$('#conditional_' + field),
 				action;
-
+			console.log(target);
 			if(trues.length && trues.indexOf(true) >= 0){					
 				if(type === 'show'){
 					action = 'show';

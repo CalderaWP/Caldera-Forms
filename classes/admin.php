@@ -317,7 +317,7 @@ class Caldera_Forms_Admin {
 					}
 					$data['entries']['E' . $row->_entryid]['_entry_id'] = $row->_entryid;
 					$data['entries']['E' . $row->_entryid]['_date'] = date_i18n( $dateformat.' '.$timeformat, strtotime($row->_date_submitted), $gmt_offset);
-					$label = $row->slug;
+
 					// setup default data array
 					if(!isset($data['entries']['E' . $row->_entryid]['data'])){
 						if(isset($field_labels)){
@@ -328,9 +328,9 @@ class Caldera_Forms_Admin {
 						}
 					}
 
-					//print_r($field_labels);
-					if(!empty($field_labels[$label])){
-						$label = $field_labels[$label];
+					if(!empty($field_labels[$row->slug])){
+
+						$label = $field_labels[$row->slug];
 
 						// check view handler
 						$field = $fields[$row->slug];
@@ -359,7 +359,7 @@ class Caldera_Forms_Admin {
 							$data['entries']['E' . $row->_entryid]['data'][$row->slug] = $row->value;
 						}
 					}
-					//ksort($data['entries']['E' . $row->_entryid]['data']);
+
 				}
 			}
 		}
