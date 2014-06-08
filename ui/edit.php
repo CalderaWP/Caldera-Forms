@@ -197,6 +197,7 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 		</div>
 
 		<h3 class="caldera-editor-field-title"><?php echo $label; ?>&nbsp;</h3>
+		<input type="hidden" class="field-config" name="config[fields][<?php echo $id; ?>][ID]" value="<?php echo $id; ?>">
 		<div id="<?php echo $id; ?>_settings_pane" class="wrapper-instance-pane">
 			<div class="caldera-config-group">
 				<label for="<?php echo $id; ?>_type"><?php echo __('Element Type', 'caldera-forms'); ?></label>
