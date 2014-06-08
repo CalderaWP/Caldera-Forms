@@ -162,11 +162,14 @@ Handlebars.registerHelper('_field', function(args) {
 
 	var config = this,required="";
 
+	var default_val = this[args.hash.slug] ? ' data-default="' + this[args.hash.slug] + '"' : '';
+	//console.log();
+
 	if(args.hash.required){
 		required = " required";
 	}
 
-	out = '<select ' + ( args.hash.type ? 'data-type="' + args.hash.type + '"' : '' ) + ' name="' + this._name + '[' + args.hash.slug + ']" id="' + this._id + '_' + args.hash.slug + '" class="block-input caldera-processor-field-bind' + required + '">';
+	out = '<select ' + ( args.hash.type ? 'data-type="' + args.hash.type + '"' : '' ) + default_val +' name="' + this._name + '[' + args.hash.slug + ']" id="' + this._id + '_' + args.hash.slug + '" class="block-input field-config caldera-processor-field-bind' + required + '">';
 	
 	if(!args.hash.required){
 		out += '<option value=""></option>';
