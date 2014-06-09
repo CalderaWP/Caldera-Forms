@@ -1,5 +1,5 @@
 <script type="text/html" id="new-form-tmpl">
-	<form class="new-form-form">
+	<form class="new-form-form ajax-trigger" data-action="create_form" data-active-class="disabled" data-load-class="disabled" data-callback="new_form_redirect" data-before="serialize_modal_form" data-modal-autoclose="new_form">
 		<?php
 		do_action('caldera_forms_new_form_template_start');
 		?>
