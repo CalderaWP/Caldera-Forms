@@ -140,13 +140,13 @@ class Caldera_Forms {
 
 
 	public static function captcha_check($value, $field, $data, $form){
-
-		if(empty($data['recaptcha_response_field'])){
+		
+		if(empty($_POST['recaptcha_response_field'])){
 			return array('_fail' => __("The reCAPTCHA field is required.", 'caldera-forms'));
 		}
 		include_once CFCORE_PATH . 'fields/recaptcha/recaptchalib.php';
 
-		$resp = recaptcha_check_answer ($field['config']['private_key'], $_SERVER["REMOTE_ADDR"], $data['recaptcha_challenge_field'], $data['recaptcha_response_field']);
+		$resp = recaptcha_check_answer($field['config']['private_key'], $_SERVER["REMOTE_ADDR"], $_POST['recaptcha_challenge_field'], $_POST['recaptcha_response_field']);
 
 		if (!$resp->is_valid) {
 			return array('_fail' => __("The reCAPTCHA wasn't entered correctly.", 'caldera-forms'));
@@ -370,7 +370,7 @@ class Caldera_Forms {
 			}
 			$message = str_replace('%'.$key.'%', $value, $message);
 		}
-
+		do_action( 'caldera_forms_do_autoresponse', $config, $data);
 		wp_mail($data[$config['recipient_name']].' <'.$data[$config['recipient_email']].'>', $config['subject'], $message, $headers );
 
 		return $data;
