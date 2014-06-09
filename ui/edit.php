@@ -364,6 +364,13 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 	</div>
 
 	<div class="caldera-config-group">
+		<label><?php echo __('Hide Form', 'caldera-forms'); ?> </label>
+		<div class="caldera-config-field">
+			<label><input type="checkbox" class="field-config" name="config[hide_form]" value="1" <?php if(!empty($element['hide_form'])){ ?>checked="checked"<?php } ?>> <?php echo __('Enable', 'caldera-forms'); ?> <?php echo __('Hide form after successful submission', 'caldera-forms'); ?></label>
+		</div>
+	</div>
+
+	<div class="caldera-config-group">
 		<label><?php echo __('Success Message', 'caldera-forms'); ?> </label>
 		<div class="caldera-config-field">
 			<input type="text" class="field-config required" name="config[success]" value="<?php echo $element['success']; ?>" style="width:300px;" required="required">

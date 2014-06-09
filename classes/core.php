@@ -52,7 +52,7 @@ class Caldera_Forms {
 		add_filter('caldera_forms_mailer', array( $this, 'mail_attachment_check'),10, 3);
 
 		// action
-		add_action('caldera_forms_submit_complete', array( $this, 'save_final_form'),1,2);
+		add_action('caldera_forms_submit_complete', array( $this, 'save_final_form'),50,2);
 
 
 		add_action("wp_ajax_get_entry", array( $this, 'get_entry') );
@@ -163,9 +163,18 @@ class Caldera_Forms {
 
 			$new_entry = array(
 				'form_id'	=>	$form['ID'],
-				'user_id'	=>	get_current_user_id(),
+				'user_id'	=>	0,
 				'datestamp' =>	date_i18n( 'Y-m-d H:i:s', time(), 0)
 			);
+			// if user logged in
+			if(is_user_logged_in()){
+				$new_entry['user_id'] = get_current_user_id();
+			}else{
+				if(isset($data['_user_id'])){
+					$new_entry['user_id'] = $data['_user_id'];
+				}
+			}
+
 			$wpdb->insert($wpdb->prefix . 'cf_form_entries', $new_entry);
 			$entryid = $wpdb->insert_id;
 			
@@ -346,7 +355,9 @@ class Caldera_Forms {
 	public static function send_auto_response($data, $config, $original_data){
 
 		$headers = 'From: ' . $config['sender_name'] . ' <' . $config['sender_email'] . '>' . "\r\n";
-		//$headers .= "Content-type: text/html\r\n";
+		
+		// remove required bounds.
+		unset($config['_required_bounds']);
 
 		$message = $config['message'];
 		foreach ($config as $key => $value) {
@@ -830,11 +841,18 @@ class Caldera_Forms {
 		if(!empty($form['processors'])){
 			$bound_fields = array(); 
 			foreach($form['processors'] as $processor_id=>$processor){
-				if(!empty($processor['config'])){
+
+				if(!empty($processor['config']['_required_bounds'])){					
 					foreach($processor['config'] as $slug=>&$value){
-						$bound_fields = array_merge($bound_fields, self::search_array_fields($value, array_keys( $form['fields'])) );
+						if($slug == '_required_bounds'){
+							continue;
+						}
+						if(in_array($slug, $processor['config']['_required_bounds'])){							
+							$bound_fields = array_merge($bound_fields, self::search_array_fields($value, array_keys( $form['fields'])) );
+						}
 					}
 				}
+
 			}
 			foreach($bound_fields as $bound){
 				$form['fields'][$bound]['required'] = 1;
@@ -1508,7 +1526,7 @@ class Caldera_Forms {
 		$field_errors = array();
 		
 		// check for prev post
-		$prev_data = false;
+		$prev_data = apply_filters('caldera_forms_render_pre_get_entry', array(), $form, $entry_id);
 		
 		// load requested data
 		if(!empty($entry_id)){
@@ -1545,9 +1563,14 @@ class Caldera_Forms {
 		if(!empty($form['processors'])){
 			$bound_fields = array(); 
 			foreach($form['processors'] as $processor_id=>$processor){
-				if(!empty($processor['config'])){
+				if(!empty($processor['config']['_required_bounds'])){					
 					foreach($processor['config'] as $slug=>&$value){
-						$bound_fields = array_merge($bound_fields, self::search_array_fields($value, array_keys( $form['fields'])) );
+						if($slug == '_required_bounds'){
+							continue;
+						}
+						if(in_array($slug, $processor['config']['_required_bounds'])){							
+							$bound_fields = array_merge($bound_fields, self::search_array_fields($value, array_keys( $form['fields'])) );
+						}
 					}
 				}
 			}
@@ -1673,9 +1696,8 @@ class Caldera_Forms {
 				}
 			}
 
-		}
-
-		if(empty($notices['success'])){
+		}		
+		if(empty($notices['success']) || empty($form['hide_form'])){
 
 			$form_classes = array(
 				'caldera_forms_form'
