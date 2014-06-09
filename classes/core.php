@@ -1452,11 +1452,12 @@ class Caldera_Forms {
 		}
 
 		$form = get_option( $atts['id'] );
+		
+		$form = apply_filters('caldera_forms_render_get_form', $form );
+
 		if(empty($form)){
 			return;
 		}
-
-		$form = apply_filters('caldera_forms_render_get_form', $form );
 
 		if(empty($current_form_count)){
 			$current_form_count = 0;

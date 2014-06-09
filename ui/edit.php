@@ -376,7 +376,7 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 			<input type="text" class="field-config required" name="config[success]" value="<?php echo $element['success']; ?>" style="width:300px;" required="required">
 		</div>
 	</div>
-	<?php do_action('caldera_forms_general_settings_panel'); ?>
+	<?php do_action('caldera_forms_general_settings_panel', $element); ?>
 </div>
 
 <?php
