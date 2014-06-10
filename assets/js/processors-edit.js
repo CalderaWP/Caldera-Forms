@@ -200,7 +200,7 @@ Handlebars.registerHelper('_field', function(args) {
 		}
 		
 
-		out += '<option value="' + fid + '"' + sel + '>' + current_form_fields[fid].label + '</option>';
+		out += '<option value="' + fid + '"' + sel + '>' + current_form_fields[fid].label + ' [' + current_form_fields[fid].slug + ']</option>';
 	};
 
 	out += '</select>';

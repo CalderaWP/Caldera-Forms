@@ -10,10 +10,12 @@ rebuild_field_binding = function(){
 	fields.each(function(fk,fv){
 		var field_id = jQuery(fv).prop('id'),
 			label = jQuery('#' + field_id + '_lable').val(),
+			slug = jQuery('#' + field_id + '_slug').val(),
 			type = jQuery('#' + field_id + '_type').val();
 
 		current_form_fields[field_id] = {
 			label: label,
+			slug: slug,
 			type: type
 		};
 
@@ -51,7 +53,7 @@ rebind_field_bindings = function(){
 				}
 
 			}
-			field.append('<option value="' + fid + '"' + ( current === fid ? 'selected="selected"' : '' ) + '>' + current_form_fields[fid].label + '</option>');
+			field.append('<option value="' + fid + '"' + ( current === fid ? 'selected="selected"' : '' ) + '>' + current_form_fields[fid].label + ' [' + current_form_fields[fid].slug + ']</option>');
 			count += 1;
 		}
 
