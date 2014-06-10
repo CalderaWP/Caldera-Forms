@@ -437,6 +437,27 @@ class Caldera_Forms {
 
 
 		$internal_fields = array(
+			'phone' => array(
+				"field"		=>	__('Phone Number', 'caldera-forms'),
+				"description" => __('Phone number with masking', 'caldera-forms'),
+				"file"		=>	CFCORE_PATH . "fields/phone/field.php",
+				"category"	=>	__("Text Fields,Basic,User", "cladera-forms"),
+				"setup"		=>	array(
+					"template"	=>	CFCORE_PATH . "fields/phone/config.php",
+					"preview"	=>	CFCORE_PATH . "fields/phone/preview.php",
+					"default"	=>	array(
+						'default'	=> 23452345,
+						'type'	=>	'local'
+					),
+					"scripts"	=> array(
+						CFCORE_URL . "fields/phone/masked-input.js"
+					)
+				),
+				"scripts"	=> array(
+					"jquery",
+					CFCORE_URL . "fields/phone/masked-input.js"
+				)
+			),
 			'text' => array(
 				"field"		=>	"Single Line Text",
 				"description" => __('Single Line Text', 'caldera-forms'),
