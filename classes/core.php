@@ -177,8 +177,28 @@ class Caldera_Forms {
 
 			$wpdb->insert($wpdb->prefix . 'cf_form_entries', $new_entry);
 			$entryid = $wpdb->insert_id;
+
+			// get all fieldtype
+			$field_types = apply_filters('caldera_forms_get_field_types', array() );
 			
+			// field save process
+			foreach($form['fields'] as $field){
+				// field save_process
+				if(isset($field_types[$field['type']]['save']) && isset($data[$field['slug']])){
+
+					if(is_array($field_types[$field['type']]['save'])){
+						$data[$field['slug']] = call_user_func_array($field_types[$field['type']]['save'],array($data[$field['slug']], $field, $data, $form));
+					}else{
+						if(function_exists($field_types[$field['type']]['save'])){
+							$func = $field_types[$field['type']]['save'];
+							$data[$field['slug']] = $func($data[$field['slug']], $field, $data, $form);	
+						}
+					}
+				}
+			}
+					
 			foreach($data as $field=>$values){
+
 				if(is_array($values)){
 					$keys = array_keys($values);
 					if(is_int($keys[0])){
