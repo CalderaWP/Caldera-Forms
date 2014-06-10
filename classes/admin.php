@@ -307,17 +307,18 @@ class Caldera_Forms_Admin {
 				$dateformat = get_option('date_format');
 				$timeformat = get_option('time_format');
 				foreach($rawdata as $row){
-
 					if(!empty($row->_user_id)){
 						$user = get_userdata( $row->_user_id );
-						$data['entries']['E' . $row->_entryid]['user']['ID'] = $user->ID;
-						$data['entries']['E' . $row->_entryid]['user']['name'] = $user->data->display_name;
-						$data['entries']['E' . $row->_entryid]['user']['email'] = $user->data->user_email;
-						$data['entries']['E' . $row->_entryid]['user']['avatar'] = get_avatar( $user->ID, 64 );
+						if(!empty($user)){
+							$data['entries']['E' . $row->_entryid]['user']['ID'] = $user->ID;
+							$data['entries']['E' . $row->_entryid]['user']['name'] = $user->data->display_name;
+							$data['entries']['E' . $row->_entryid]['user']['email'] = $user->data->user_email;
+							$data['entries']['E' . $row->_entryid]['user']['avatar'] = get_avatar( $user->ID, 64 );
+						}
 					}
 					$data['entries']['E' . $row->_entryid]['_entry_id'] = $row->_entryid;
 					$data['entries']['E' . $row->_entryid]['_date'] = date_i18n( $dateformat.' '.$timeformat, strtotime($row->_date_submitted), $gmt_offset);
-					$label = $row->slug;
+
 					// setup default data array
 					if(!isset($data['entries']['E' . $row->_entryid]['data'])){
 						if(isset($field_labels)){
@@ -328,9 +329,9 @@ class Caldera_Forms_Admin {
 						}
 					}
 
-					//print_r($field_labels);
-					if(!empty($field_labels[$label])){
-						$label = $field_labels[$label];
+					if(!empty($field_labels[$row->slug])){
+
+						$label = $field_labels[$row->slug];
 
 						// check view handler
 						$field = $fields[$row->slug];
@@ -359,7 +360,7 @@ class Caldera_Forms_Admin {
 							$data['entries']['E' . $row->_entryid]['data'][$row->slug] = $row->value;
 						}
 					}
-					//ksort($data['entries']['E' . $row->_entryid]['data']);
+
 				}
 			}
 		}

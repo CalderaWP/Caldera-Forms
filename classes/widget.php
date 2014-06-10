@@ -9,9 +9,12 @@ class Caldera_Forms_Widget extends WP_Widget {
 	}
 
 	function widget( $args, $instance ) {
+
 		if(!empty($instance['form'])){
 
 			extract($args, EXTR_SKIP);
+
+
 
 			echo $before_widget;
 			$title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
@@ -35,11 +38,13 @@ class Caldera_Forms_Widget extends WP_Widget {
 		$instance = wp_parse_args( (array) $instance, array( 'title' => '' ) );
 		$title = strip_tags($instance['title']);
 		
-		echo "<p><label for=\" " . $this->get_field_id('title') . "\">Title: <input class=\"widefat\" id=\"" . $this->get_field_id('title') . "\" name=\"" . $this->get_field_name('title') . "\" type=\"text\" value=\"" . attribute_escape($title). "\" /></label></p>\r\n";
+		do_action( 'caldera_forms_widget_form_start', $instance );
+
+		echo "<p><label for=\" " . $this->get_field_id('title') . "\">" . __('Title') . ": <input class=\"widefat\" id=\"" . $this->get_field_id('title') . "\" name=\"" . $this->get_field_name('title') . "\" type=\"text\" value=\"" . esc_attr($title). "\" /></label></p>\r\n";
 		// get forms
 		$forms = get_option( '_caldera_forms' );
 
-		echo "<p><select style=\"width:100%;\" name=\"" . $this->get_field_name('form') . "\">\r\n";
+		echo "<p><label for=\" " . $this->get_field_id('title') . "\">" . __('Form') . ": </label><select style=\"width:100%;\" name=\"" . $this->get_field_name('form') . "\">\r\n";
 
 		foreach($forms as $formid=>$form){
 			$sel = "";
@@ -52,6 +57,7 @@ class Caldera_Forms_Widget extends WP_Widget {
 		}
 
 		echo "</select></p>\r\n";
+		do_action( 'caldera_forms_widget_form_end', $instance, $this );
 	}
 }
 

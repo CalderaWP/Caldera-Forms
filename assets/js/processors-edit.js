@@ -154,19 +154,30 @@ jQuery(function($){
 		build_processor_config(v);
 	});
 
+
+	build_sortables();
 });//
 
 
 // field binding helper
 Handlebars.registerHelper('_field', function(args) {
 
-	var config = this,required="";
+	var config = this,required="", is_array = "";
+
+	var default_val = this[args.hash.slug] ? ' data-default="' + this[args.hash.slug] + '"' : '';
+	//console.log();
 
 	if(args.hash.required){
 		required = " required";
 	}
+	if(args.hash.array){
+		is_array = "[]";
+		if(args.hash.array !== 'true'){
+			default_val = 'data-default="' + args.hash.array + '"';
+		}
+	}
 
-	out = '<select ' + ( args.hash.type ? 'data-type="' + args.hash.type + '"' : '' ) + ' name="' + this._name + '[' + args.hash.slug + ']" id="' + this._id + '_' + args.hash.slug + '" class="block-input caldera-processor-field-bind' + required + '">';
+	out = '<select ' + ( args.hash.type ? 'data-type="' + args.hash.type + '"' : '' ) + default_val +' name="' + this._name + '[' + args.hash.slug + ']' + is_array + '" id="' + this._id + '_' + args.hash.slug + '" class="block-input field-config caldera-processor-field-bind' + required + '">';
 	
 	if(!args.hash.required){
 		out += '<option value=""></option>';
@@ -189,11 +200,13 @@ Handlebars.registerHelper('_field', function(args) {
 		}
 		
 
-		out += '<option value="' + fid + '"' + sel + '>' + current_form_fields[fid].label + '</option>';
+		out += '<option value="' + fid + '"' + sel + '>' + current_form_fields[fid].label + ' [' + current_form_fields[fid].slug + ']</option>';
 	};
 
 	out += '</select>';
-
+	if(args.hash.required){
+		out += '<input class="field-config" name="' + this._name + '[_required_bounds][]" type="hidden" value="' + args.hash.slug + '">';
+	}
 	return out;
 });
 

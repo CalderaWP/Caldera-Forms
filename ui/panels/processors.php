@@ -4,8 +4,6 @@ global $form_processors;
 // Get Processors
 $form_processors = apply_filters('caldera_forms_get_form_processors', array() );
 
-//dump($form_processors,0);
-
 $form_processors_defaults = array(
 	"var processor_defaults = {};"
 );
@@ -251,7 +249,6 @@ function build_processor_types($default = null){
 
 	?>
 </script>
-
 <script type="text/html" id="processor-line-tmpl">
 <?php echo processor_line_template(); ?>
 </script>
@@ -259,6 +256,8 @@ function build_processor_types($default = null){
 <?php echo processor_wrapper_template(); ?>
 </script>
 <?php
+
+do_action('caldera_forms_processor_templates', $form_processors);
 
 foreach($form_processors as $processor=>$config){
 	if(isset($config['template'])){

@@ -197,6 +197,7 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 		</div>
 
 		<h3 class="caldera-editor-field-title"><?php echo $label; ?>&nbsp;</h3>
+		<input type="hidden" class="field-config" name="config[fields][<?php echo $id; ?>][ID]" value="<?php echo $id; ?>">
 		<div id="<?php echo $id; ?>_settings_pane" class="wrapper-instance-pane">
 			<div class="caldera-config-group">
 				<label for="<?php echo $id; ?>_type"><?php echo __('Element Type', 'caldera-forms'); ?></label>
@@ -363,12 +364,19 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 	</div>
 
 	<div class="caldera-config-group">
+		<label><?php echo __('Hide Form', 'caldera-forms'); ?> </label>
+		<div class="caldera-config-field">
+			<label><input type="checkbox" class="field-config" name="config[hide_form]" value="1" <?php if(!empty($element['hide_form'])){ ?>checked="checked"<?php } ?>> <?php echo __('Enable', 'caldera-forms'); ?> <?php echo __('Hide form after successful submission', 'caldera-forms'); ?></label>
+		</div>
+	</div>
+
+	<div class="caldera-config-group">
 		<label><?php echo __('Success Message', 'caldera-forms'); ?> </label>
 		<div class="caldera-config-field">
 			<input type="text" class="field-config required" name="config[success]" value="<?php echo $element['success']; ?>" style="width:300px;" required="required">
 		</div>
 	</div>
-	<?php do_action('caldera_forms_general_settings_panel'); ?>
+	<?php do_action('caldera_forms_general_settings_panel', $element); ?>
 </div>
 
 <?php

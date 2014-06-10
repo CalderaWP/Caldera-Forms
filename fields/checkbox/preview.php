@@ -6,7 +6,7 @@
 			{{#unless ../config/inline}}
 			<div>
 			{{/unless}}
-			<label style="margin: 0px 10px 0px 0px;"><input type="checkbox" class="preview-field-config" {{#is default value=true}}checked="checked"{{/is}}> {{label}}</label>
+			<label style="margin: 0px 10px 0px 0px;"><input type="checkbox" class="preview-field-config" {{#is ../config/default value="@key"}}checked="checked"{{/is}}> {{label}}</label>
 			{{#unless ../config/inline}}
 			</div>
 			{{/unless}}

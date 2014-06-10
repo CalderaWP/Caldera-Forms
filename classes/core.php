@@ -52,7 +52,7 @@ class Caldera_Forms {
 		add_filter('caldera_forms_mailer', array( $this, 'mail_attachment_check'),10, 3);
 
 		// action
-		add_action('caldera_forms_submit_complete', array( $this, 'save_final_form'),1,2);
+		add_action('caldera_forms_submit_complete', array( $this, 'save_final_form'),50,2);
 
 
 		add_action("wp_ajax_get_entry", array( $this, 'get_entry') );
@@ -140,13 +140,13 @@ class Caldera_Forms {
 
 
 	public static function captcha_check($value, $field, $data, $form){
-
-		if(empty($data['recaptcha_response_field'])){
+		
+		if(empty($_POST['recaptcha_response_field'])){
 			return array('_fail' => __("The reCAPTCHA field is required.", 'caldera-forms'));
 		}
 		include_once CFCORE_PATH . 'fields/recaptcha/recaptchalib.php';
 
-		$resp = recaptcha_check_answer ($field['config']['private_key'], $_SERVER["REMOTE_ADDR"], $data['recaptcha_challenge_field'], $data['recaptcha_response_field']);
+		$resp = recaptcha_check_answer($field['config']['private_key'], $_SERVER["REMOTE_ADDR"], $_POST['recaptcha_challenge_field'], $_POST['recaptcha_response_field']);
 
 		if (!$resp->is_valid) {
 			return array('_fail' => __("The reCAPTCHA wasn't entered correctly.", 'caldera-forms'));
@@ -163,13 +163,42 @@ class Caldera_Forms {
 
 			$new_entry = array(
 				'form_id'	=>	$form['ID'],
-				'user_id'	=>	get_current_user_id(),
+				'user_id'	=>	0,
 				'datestamp' =>	date_i18n( 'Y-m-d H:i:s', time(), 0)
 			);
+			// if user logged in
+			if(is_user_logged_in()){
+				$new_entry['user_id'] = get_current_user_id();
+			}else{
+				if(isset($data['_user_id'])){
+					$new_entry['user_id'] = $data['_user_id'];
+				}
+			}
+
 			$wpdb->insert($wpdb->prefix . 'cf_form_entries', $new_entry);
 			$entryid = $wpdb->insert_id;
+
+			// get all fieldtype
+			$field_types = apply_filters('caldera_forms_get_field_types', array() );
 			
+			// field save process
+			foreach($form['fields'] as $field){
+				// field save_process
+				if(isset($field_types[$field['type']]['save']) && isset($data[$field['slug']])){
+
+					if(is_array($field_types[$field['type']]['save'])){
+						$data[$field['slug']] = call_user_func_array($field_types[$field['type']]['save'],array($data[$field['slug']], $field, $data, $form));
+					}else{
+						if(function_exists($field_types[$field['type']]['save'])){
+							$func = $field_types[$field['type']]['save'];
+							$data[$field['slug']] = $func($data[$field['slug']], $field, $data, $form);	
+						}
+					}
+				}
+			}
+					
 			foreach($data as $field=>$values){
+
 				if(is_array($values)){
 					$keys = array_keys($values);
 					if(is_int($keys[0])){
@@ -346,7 +375,9 @@ class Caldera_Forms {
 	public static function send_auto_response($data, $config, $original_data){
 
 		$headers = 'From: ' . $config['sender_name'] . ' <' . $config['sender_email'] . '>' . "\r\n";
-		//$headers .= "Content-type: text/html\r\n";
+		
+		// remove required bounds.
+		unset($config['_required_bounds']);
 
 		$message = $config['message'];
 		foreach ($config as $key => $value) {
@@ -370,7 +401,7 @@ class Caldera_Forms {
 			}
 			$message = str_replace('%'.$key.'%', $value, $message);
 		}
-
+		do_action( 'caldera_forms_do_autoresponse', $config, $data);
 		wp_mail($data[$config['recipient_name']].' <'.$data[$config['recipient_email']].'>', $config['subject'], $message, $headers );
 
 		return $data;
@@ -406,6 +437,27 @@ class Caldera_Forms {
 
 
 		$internal_fields = array(
+			'phone' => array(
+				"field"		=>	__('Phone Number', 'caldera-forms'),
+				"description" => __('Phone number with masking', 'caldera-forms'),
+				"file"		=>	CFCORE_PATH . "fields/phone/field.php",
+				"category"	=>	__("Text Fields,Basic,User", "cladera-forms"),
+				"setup"		=>	array(
+					"template"	=>	CFCORE_PATH . "fields/phone/config.php",
+					"preview"	=>	CFCORE_PATH . "fields/phone/preview.php",
+					"default"	=>	array(
+						'default'	=> 23452345,
+						'type'	=>	'local'
+					),
+					"scripts"	=> array(
+						CFCORE_URL . "fields/phone/masked-input.js"
+					)
+				),
+				"scripts"	=> array(
+					"jquery",
+					CFCORE_URL . "fields/phone/masked-input.js"
+				)
+			),
 			'text' => array(
 				"field"		=>	"Single Line Text",
 				"description" => __('Single Line Text', 'caldera-forms'),
@@ -801,11 +853,13 @@ class Caldera_Forms {
 			if(isset($_POST[$field_slug])){
 				$data[$field['slug']] = $_POST[$field_slug];
 			}
-		}				
-		$process_data = $data;
+		}
 
 		// init filter
-		$form = apply_filters('caldera_forms_submit_get_form', $form, $process_data, $referrer, $processID);
+		$form = apply_filters('caldera_forms_submit_get_form', $form, $data, $referrer, $processID);
+
+		// get submission data- great one this!
+		$process_data = $data = apply_filters('caldera_forms_get_submission', $data, $rawdata, $form, $processID);
 
 		// get all fieldtype
 		$field_types = apply_filters('caldera_forms_get_field_types', array() );
@@ -828,11 +882,18 @@ class Caldera_Forms {
 		if(!empty($form['processors'])){
 			$bound_fields = array(); 
 			foreach($form['processors'] as $processor_id=>$processor){
-				if(!empty($processor['config'])){
+
+				if(!empty($processor['config']['_required_bounds'])){					
 					foreach($processor['config'] as $slug=>&$value){
-						$bound_fields = array_merge($bound_fields, self::search_array_fields($value, array_keys( $form['fields'])) );
+						if($slug == '_required_bounds'){
+							continue;
+						}
+						if(in_array($slug, $processor['config']['_required_bounds'])){							
+							$bound_fields = array_merge($bound_fields, self::search_array_fields($value, array_keys( $form['fields'])) );
+						}
 					}
 				}
+
 			}
 			foreach($bound_fields as $bound){
 				$form['fields'][$bound]['required'] = 1;
@@ -1432,11 +1493,12 @@ class Caldera_Forms {
 		}
 
 		$form = get_option( $atts['id'] );
+		
+		$form = apply_filters('caldera_forms_render_get_form', $form );
+
 		if(empty($form)){
 			return;
 		}
-
-		$form = apply_filters('caldera_forms_render_get_form', $form );
 
 		if(empty($current_form_count)){
 			$current_form_count = 0;
@@ -1506,7 +1568,7 @@ class Caldera_Forms {
 		$field_errors = array();
 		
 		// check for prev post
-		$prev_data = false;
+		$prev_data = apply_filters('caldera_forms_render_pre_get_entry', array(), $form, $entry_id);
 		
 		// load requested data
 		if(!empty($entry_id)){
@@ -1543,9 +1605,14 @@ class Caldera_Forms {
 		if(!empty($form['processors'])){
 			$bound_fields = array(); 
 			foreach($form['processors'] as $processor_id=>$processor){
-				if(!empty($processor['config'])){
+				if(!empty($processor['config']['_required_bounds'])){					
 					foreach($processor['config'] as $slug=>&$value){
-						$bound_fields = array_merge($bound_fields, self::search_array_fields($value, array_keys( $form['fields'])) );
+						if($slug == '_required_bounds'){
+							continue;
+						}
+						if(in_array($slug, $processor['config']['_required_bounds'])){							
+							$bound_fields = array_merge($bound_fields, self::search_array_fields($value, array_keys( $form['fields'])) );
+						}
 					}
 				}
 			}
@@ -1671,9 +1738,8 @@ class Caldera_Forms {
 				}
 			}
 
-		}
-
-		if(empty($notices['success'])){
+		}		
+		if(empty($notices['success']) || empty($form['hide_form'])){
 
 			$form_classes = array(
 				'caldera_forms_form'
