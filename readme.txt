@@ -38,7 +38,7 @@ none yet.
 3. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
-= 1.0.1 (11 June, 2014) =
+= 1.0.2 (11 June, 2014) =
 
 * Added Star Rating field
 * Added Calculations
