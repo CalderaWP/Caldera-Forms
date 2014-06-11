@@ -182,7 +182,7 @@ class Caldera_Forms {
 			$field_types = apply_filters('caldera_forms_get_field_types', array() );
 			
 			// field save process
-			foreach($form['fields'] as $field){
+			foreach($form['fields'] as $field_id=>$field){
 				// field save_process
 				if(isset($field_types[$field['type']]['save']) && isset($data[$field['slug']])){
 
@@ -196,7 +196,6 @@ class Caldera_Forms {
 					}
 				}
 			}
-					
 			foreach($data as $field=>$values){
 
 				if(is_array($values)){
@@ -424,7 +423,7 @@ class Caldera_Forms {
 				"name"				=>	__('Redirect', 'caldera-forms'),
 				"description"		=>	__("Redirects user to URL on successful submit", 'caldera-forms'),
 				"template"			=>	CFCORE_PATH . "processors/redirect/config.php",
-				"single"			=>	true
+				"single"			=>	false
 			)
 		);
 
@@ -437,6 +436,36 @@ class Caldera_Forms {
 
 
 		$internal_fields = array(
+			'star_rating' 	=> array(
+				"field"		=>	__("Star Rating", 'caldera-forms'),
+				"file"		=>	CFCORE_PATH . "fields/star-rate/field.php",
+				"category"	=>	__("Feedback,Special", "cladera-forms"),
+				"description" => __('Star rating input for feedback','caldera-forms'),
+				"setup"		=>	array(
+					"template"	=>	CFCORE_PATH . "fields/star-rate/config.php",
+					"preview"	=>	CFCORE_PATH . "fields/star-rate/preview.php",
+					"default"	=> array(
+						'number'	=>	5,
+						'space'		=>	3,
+						'size'		=>	13,
+						'color'		=> '#FFAA00'
+					),
+					"scripts" => array(
+						'jquery',
+						CFCORE_URL . "fields/star-rate/jquery.raty.js",
+					),
+					"styles" => array(
+						CFCORE_URL . "fields/star-rate/jquery.raty.css",
+					)
+				),
+				"scripts" => array(
+					'jquery',
+					CFCORE_URL . "fields/star-rate/jquery.raty.js",
+				),
+				"styles" => array(
+					CFCORE_URL . "fields/star-rate/jquery.raty.css",
+				)
+			),
 			'phone' => array(
 				"field"		=>	__('Phone Number', 'caldera-forms'),
 				"description" => __('Phone number with masking', 'caldera-forms'),
@@ -446,7 +475,7 @@ class Caldera_Forms {
 					"template"	=>	CFCORE_PATH . "fields/phone/config.php",
 					"preview"	=>	CFCORE_PATH . "fields/phone/preview.php",
 					"default"	=>	array(
-						'default'	=> 23452345,
+						'default'	=> '',
 						'type'	=>	'local'
 					),
 					"scripts"	=> array(
