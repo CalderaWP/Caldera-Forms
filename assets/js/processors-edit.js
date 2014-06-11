@@ -210,7 +210,9 @@ Handlebars.registerHelper('_field', function(args) {
 	return out;
 });
 
-
+Handlebars.registerHelper('console', function(context, options) {
+	console.log(this);
+});
 
 
 

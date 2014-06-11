@@ -84,8 +84,9 @@
 
 			var template	=	$('#conditional-' + field + '-tmpl').html(),
 				target		=	$('#conditional_' + field),
+				target_field=	$('[data-field="' + field + '"]'),
 				action;
-			console.log(target);
+			
 			if(trues.length && trues.indexOf(true) >= 0){					
 				if(type === 'show'){
 					action = 'show';
@@ -104,8 +105,9 @@
 				// show - get template and place it in.
 				if(!target.html().length){
 					target.html(template);
-				}						
+				}
 			}else if (action === 'hide'){
+				target_field.val('').empty().prop('checked', false).trigger('cf.remove');
 				target.empty();
 			}
 

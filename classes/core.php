@@ -47,7 +47,7 @@ class Caldera_Forms {
 		add_filter('caldera_forms_get_field_types', array( $this, 'get_field_types'));
 		add_filter('caldera_forms_get_form_processors', array( $this, 'get_form_processors'));
 		add_filter('caldera_forms_submit_redirect_complete', array( $this, 'do_redirect'),10, 4);
-		
+		add_action('caldera_forms_edit_end', array($this, 'calculations_templates') );
 		// mailser
 		add_filter('caldera_forms_mailer', array( $this, 'mail_attachment_check'),10, 3);
 
@@ -431,11 +431,64 @@ class Caldera_Forms {
 
 	}
 
+	static public function handle_calculation($value, $field, $data, $form){
+		
+		$formula = $field['config']['formular'];
+		if( empty($formula)){
+			return 0;
+		}
+		foreach($form['fields'] as $fid=>$cfg){
+			if(false !== strpos($formula, $fid)){
+				if(isset($data[$cfg['slug']])){
+					if(is_array($data[$cfg['slug']])){
+						$number = floatval( array_sum( $data[$cfg['slug']] ) );
+					}else{
+						$number = floatval( $data[$cfg['slug']] );
+					}
+					$formula = str_replace($fid, $number, $formula);
+				}
+			}
+		}			
+
+		$total = create_function(null, 'return '.$formula.';');
+		if(isset($field['config']['fixed'])){
+			return money_format('%i', $total() );
+		}
+		return $total();
+	}
+
+	static public function calculations_templates(){
+		include CFCORE_PATH . "fields/calculation/line-templates.php";
+	}	
+
 	// get built in field types
 	public function get_field_types($fields){
 
 
 		$internal_fields = array(
+			'calculation' => array(
+				"field"		=>	__("Calculation", "cladera-forms"),
+				"file"		=>	CFCORE_PATH . "fields/calculation/field.php",
+				"handler"	=>	array($this, "handle_calculation"),
+				"category"	=>	__("Special,Math", "cladera-forms"),
+				"description" => __('Calculate values', "cladera-forms"),
+				"setup"		=>	array(
+					"template"	=>	CFCORE_PATH . "fields/calculation/config.php",
+					"preview"	=>	CFCORE_PATH . "fields/calculation/preview.php",
+					"default"	=> array(
+						'element'	=>	'h3',
+						'classes'	=> 	'total-line',
+						'before'	=>	__('Total', 'caldera-forms').':',
+						'after'		=> ''
+					),
+					"styles" => array(
+						CFCORE_URL . "fields/calculation/style.css",
+					)
+				),
+				"scripts" => array(
+					'jquery'
+				)
+			),
 			'star_rating' 	=> array(
 				"field"		=>	__("Star Rating", 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/star-rate/field.php",
