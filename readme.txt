@@ -3,7 +3,7 @@ Contributors: Desertsnowman
 Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator
 Requires at least: 3.9
 Tested up to: 3.9.1
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2
 
 Create complex grid based, responsive forms easily with an easy to use drag and drop layout builder.
@@ -38,7 +38,19 @@ none yet.
 3. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
-1.0.0: initial release
+= 1.0.1 (11 June, 2014) =
+
+* Added Star Rating field
+* Added Calculations
+
+= 1.0.1 (10 June, 2014) =
+
+* Added Phone Field Type
+* Additional Hooks & Filters
+* Some Bug fixes
+
+= 1.0.0 =
+Initial Release
 
 == Upgrade Notice ==
 still new, so nothing to upgrade.

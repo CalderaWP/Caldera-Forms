@@ -47,7 +47,7 @@ class Caldera_Forms {
 		add_filter('caldera_forms_get_field_types', array( $this, 'get_field_types'));
 		add_filter('caldera_forms_get_form_processors', array( $this, 'get_form_processors'));
 		add_filter('caldera_forms_submit_redirect_complete', array( $this, 'do_redirect'),10, 4);
-		
+		add_action('caldera_forms_edit_end', array($this, 'calculations_templates') );
 		// mailser
 		add_filter('caldera_forms_mailer', array( $this, 'mail_attachment_check'),10, 3);
 
@@ -182,7 +182,7 @@ class Caldera_Forms {
 			$field_types = apply_filters('caldera_forms_get_field_types', array() );
 			
 			// field save process
-			foreach($form['fields'] as $field){
+			foreach($form['fields'] as $field_id=>$field){
 				// field save_process
 				if(isset($field_types[$field['type']]['save']) && isset($data[$field['slug']])){
 
@@ -196,7 +196,6 @@ class Caldera_Forms {
 					}
 				}
 			}
-					
 			foreach($data as $field=>$values){
 
 				if(is_array($values)){
@@ -424,7 +423,7 @@ class Caldera_Forms {
 				"name"				=>	__('Redirect', 'caldera-forms'),
 				"description"		=>	__("Redirects user to URL on successful submit", 'caldera-forms'),
 				"template"			=>	CFCORE_PATH . "processors/redirect/config.php",
-				"single"			=>	true
+				"single"			=>	false
 			)
 		);
 
@@ -432,11 +431,94 @@ class Caldera_Forms {
 
 	}
 
+	static public function handle_calculation($value, $field, $data, $form){
+		
+		$formula = $field['config']['formular'];
+		if( empty($formula)){
+			return 0;
+		}
+		foreach($form['fields'] as $fid=>$cfg){
+			if(false !== strpos($formula, $fid)){
+				if(isset($data[$cfg['slug']])){
+					if(is_array($data[$cfg['slug']])){
+						$number = floatval( array_sum( $data[$cfg['slug']] ) );
+					}else{
+						$number = floatval( $data[$cfg['slug']] );
+					}
+					$formula = str_replace($fid, $number, $formula);
+				}
+			}
+		}			
+
+		$total = create_function(null, 'return '.$formula.';');
+		if(isset($field['config']['fixed'])){
+			return money_format('%i', $total() );
+		}
+		return $total();
+	}
+
+	static public function calculations_templates(){
+		include CFCORE_PATH . "fields/calculation/line-templates.php";
+	}	
+
 	// get built in field types
 	public function get_field_types($fields){
 
 
 		$internal_fields = array(
+			'calculation' => array(
+				"field"		=>	__("Calculation", "cladera-forms"),
+				"file"		=>	CFCORE_PATH . "fields/calculation/field.php",
+				"handler"	=>	array($this, "handle_calculation"),
+				"category"	=>	__("Special,Math", "cladera-forms"),
+				"description" => __('Calculate values', "cladera-forms"),
+				"setup"		=>	array(
+					"template"	=>	CFCORE_PATH . "fields/calculation/config.php",
+					"preview"	=>	CFCORE_PATH . "fields/calculation/preview.php",
+					"default"	=> array(
+						'element'	=>	'h3',
+						'classes'	=> 	'total-line',
+						'before'	=>	__('Total', 'caldera-forms').':',
+						'after'		=> ''
+					),
+					"styles" => array(
+						CFCORE_URL . "fields/calculation/style.css",
+					)
+				),
+				"scripts" => array(
+					'jquery'
+				)
+			),
+			'star_rating' 	=> array(
+				"field"		=>	__("Star Rating", 'caldera-forms'),
+				"file"		=>	CFCORE_PATH . "fields/star-rate/field.php",
+				"category"	=>	__("Feedback,Special", "cladera-forms"),
+				"description" => __('Star rating input for feedback','caldera-forms'),
+				"setup"		=>	array(
+					"template"	=>	CFCORE_PATH . "fields/star-rate/config.php",
+					"preview"	=>	CFCORE_PATH . "fields/star-rate/preview.php",
+					"default"	=> array(
+						'number'	=>	5,
+						'space'		=>	3,
+						'size'		=>	13,
+						'color'		=> '#FFAA00'
+					),
+					"scripts" => array(
+						'jquery',
+						CFCORE_URL . "fields/star-rate/jquery.raty.js",
+					),
+					"styles" => array(
+						CFCORE_URL . "fields/star-rate/jquery.raty.css",
+					)
+				),
+				"scripts" => array(
+					'jquery',
+					CFCORE_URL . "fields/star-rate/jquery.raty.js",
+				),
+				"styles" => array(
+					CFCORE_URL . "fields/star-rate/jquery.raty.css",
+				)
+			),
 			'phone' => array(
 				"field"		=>	__('Phone Number', 'caldera-forms'),
 				"description" => __('Phone number with masking', 'caldera-forms'),
@@ -446,7 +528,7 @@ class Caldera_Forms {
 					"template"	=>	CFCORE_PATH . "fields/phone/config.php",
 					"preview"	=>	CFCORE_PATH . "fields/phone/preview.php",
 					"default"	=>	array(
-						'default'	=> 23452345,
+						'default'	=> '',
 						'type'	=>	'local'
 					),
 					"scripts"	=> array(
