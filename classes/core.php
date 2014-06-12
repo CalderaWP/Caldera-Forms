@@ -529,7 +529,8 @@ class Caldera_Forms {
 					"preview"	=>	CFCORE_PATH . "fields/phone/preview.php",
 					"default"	=>	array(
 						'default'	=> '',
-						'type'	=>	'local'
+						'type'	=>	'local',
+						'custom'=> '(999)999-9999'
 					),
 					"scripts"	=> array(
 						CFCORE_URL . "fields/phone/masked-input.js"
@@ -627,7 +628,7 @@ class Caldera_Forms {
 					"template"	=>	CFCORE_PATH . "fields/button/config_template.html",
 					"preview"	=>	CFCORE_PATH . "fields/button/preview.php",
 					"default"	=> array(
-						'class'	=>	'btn btn-primary',
+						'class'	=>	'btn btn-default',
 						'type'	=>	'submit'
 					),
 					"not_supported"	=>	array(
