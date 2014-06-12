@@ -6,8 +6,8 @@ jQuery(function($){
 			input = parent.find('[data-ref="'+clicked.attr('id')+'"]');
 
 
-		parent.find('.btn').removeClass('btn-primary').addClass('btn-default');
-		clicked.addClass('btn-primary').removeClass('btn-default');
+		parent.find('.btn').removeClass('btn-success').addClass('btn-default');
+		clicked.addClass('btn-success').removeClass('btn-default');
 		input.prop('checked', true).trigger('change');
 	});
 });
