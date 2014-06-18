@@ -197,15 +197,50 @@ class Caldera_Forms_Admin {
 			$values_table = "CREATE TABLE `" . $wpdb->prefix . "cf_form_entry_values` (
 			`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
 			`entry_id` int(11) NOT NULL,
+			`field_id` varchar(20) NOT NULL,
 			`slug` varchar(255) NOT NULL DEFAULT '',
 			`value` longtext NOT NULL,
 			PRIMARY KEY (`id`),
 			KEY `form_id` (`entry_id`),
+			KEY `field_id` (`field_id`),
 			KEY `slug` (`slug`)
 			) DEFAULT CHARSET=utf8;";
 
 			dbDelta( $values_table );
 		
+		}else{
+			// check for field_id from 1.0.4
+			$columns = $wpdb->get_results("SHOW COLUMNS FROM `" . $wpdb->prefix . "cf_form_entry_values`", ARRAY_A);
+			$fields = array();
+			foreach($columns as $column){
+				$fields[] = $column['Field'];
+			}
+			if(!in_array('field_id', $fields)){
+				$wpdb->query( "ALTER TABLE `" . $wpdb->prefix . "cf_form_entry_values` ADD `field_id` varchar(20) NOT NULL AFTER `entry_id`;" );
+				$wpdb->query( "CREATE INDEX `field_id` ON `" . $wpdb->prefix . "cf_form_entry_values` (`field_id`); ");
+				// update all entries
+				$forms = $wpdb->get_results("SELECT `id`,`form_id` FROM `" . $wpdb->prefix . "cf_form_entries`", ARRAY_A);
+				$known = array();
+				if( !empty($forms)){
+					foreach($forms as $form){
+						if(!isset($known[$form['form_id']])){
+							$config = get_option($form['form_id']);						
+							if(empty($config)){
+								continue;
+							}
+							$known[$form['form_id']] = $config;
+						}else{
+							$config = $known[$form['form_id']];
+						}
+
+						foreach($config['fields'] as $field_id=>$field){
+							$wpdb->update($wpdb->prefix . "cf_form_entry_values", array('field_id'=>$field_id), array('entry_id' => $form['id'], 'slug' => $field['slug']));
+						}
+
+					}
+				}
+			}
+			
 		}
 
 	}
@@ -271,12 +306,17 @@ class Caldera_Forms_Admin {
 
 			$rawdata = $wpdb->get_results($wpdb->prepare("
 			SELECT
-				`id`
+				`id`,
+				`form_id`
 			FROM `" . $wpdb->prefix ."cf_form_entries`
 
 			WHERE `form_id` = %s ORDER BY `datestamp` DESC LIMIT " . $limit . ";", $_POST['form'] ));		
 
 			if(!empty($rawdata)){
+
+				foreach($rawdata as $entry){
+					//$data = Caldera_Forms::get_submission_data($entry->form_id, $entry->id);
+				}
 
 				$ids = array();
 				foreach($rawdata as $row){
@@ -675,7 +715,7 @@ class Caldera_Forms_Admin {
 
 			// if this fails, check_admin_referer() will automatically print a "failed" page and die.
 			if ( check_admin_referer( 'cf_edit_element', 'cf_edit_nonce' ) ) {
-
+				
 				// strip slashes
 				$data = stripslashes_deep($_POST['config']);
 

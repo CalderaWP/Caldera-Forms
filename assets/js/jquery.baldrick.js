@@ -233,9 +233,9 @@
 					params.xhrFields	= {
 						onprogress: function (e) {
 							if (e.lengthComputable) {
-								console.log('Loaded '+ (e.loaded / e.total * 100) + '%');
+								//console.log('Loaded '+ (e.loaded / e.total * 100) + '%');
 							} else {
-								console.log('Length not computable.');
+								//console.log('Length not computable.');
 							}
 						}
 					};
