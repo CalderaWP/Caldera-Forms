@@ -28,6 +28,7 @@ include_once CFCORE_PATH . 'classes/widget.php';
 // includes
 include_once CFCORE_PATH . 'includes/cf-ajax/plugin.php';
 include_once CFCORE_PATH . 'includes/field_processors.php';
+include_once CFCORE_PATH . 'includes/custom_field_class.php';
 
 add_action( 'plugins_loaded', array( 'Caldera_Forms', 'get_instance' ) );
 

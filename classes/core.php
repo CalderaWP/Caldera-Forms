@@ -89,12 +89,11 @@ class Caldera_Forms {
 	public static function mail_attachment_check($mail, $data, $form){
 
 		// check for 
-		foreach($form['fields'] as $field){
+		foreach($form['fields'] as $field_id=>$field){
 			if($field['type'] == 'file' && isset($field['config']['attach'])){
 
-
 				$dir = wp_upload_dir();
-				$file = str_replace($dir['baseurl'], $dir['basedir'], $data[$field['slug']]);
+				$file = str_replace($dir['baseurl'], $dir['basedir'], self::get_field_data($field_id, $form));
 				if(file_exists($file)){
 					$mail['attachments'][] = $file;	
 				}
@@ -279,7 +278,7 @@ class Caldera_Forms {
 			$csvfile = wp_upload_bits( uniqid().'.csv', null, $csv );
 			$mail['attachments'][] = $csvfile['file'];
 		}
-		
+
 		$mail = apply_filters( 'caldera_forms_mailer', $mail, $data, $form);
 
 		if(empty($mail)){
@@ -544,7 +543,12 @@ class Caldera_Forms {
 				"file"		=>	CFCORE_PATH . "fields/text/field.php",
 				"category"	=>	__("Text Fields,Basic", "cladera-forms"),
 				"setup"		=>	array(
+					"template"	=>	CFCORE_PATH . "fields/text/config.php",
 					"preview"	=>	CFCORE_PATH . "fields/text/preview.php"
+				),
+				"scripts"	=> array(
+					"jquery",
+					CFCORE_URL . "fields/phone/masked-input.js"
 				)
 			),
 			'file' => array(
@@ -1891,9 +1895,9 @@ class Caldera_Forms {
 						"field_error"		=> "has-error",
 					);
 
-					$field_classes = apply_filters('caldera_forms_render_field_classes', $field_classes, $form);
-					$field_classes = apply_filters('caldera_forms_render_field_classes_type-' . $field['type'], $field_classes, $form);
-					$field_classes = apply_filters('caldera_forms_render_field_classes_slug-' . $field['slug'], $field_classes, $form);
+					$field_classes = apply_filters('caldera_forms_render_field_classes', $field_classes, $field, $form);
+					$field_classes = apply_filters('caldera_forms_render_field_classes_type-' . $field['type'], $field_classes, $field, $form);
+					$field_classes = apply_filters('caldera_forms_render_field_classes_slug-' . $field['slug'], $field_classes, $field, $form);
 
 					$field = apply_filters('caldera_forms_render_get_field', $field, $form);
 					$field = apply_filters('caldera_forms_render_get_field_type-' . $field['type'], $field, $form);
