@@ -876,8 +876,7 @@ class Caldera_Forms {
 
 			$trues[$groupid] = in_array(false, $truelines) ? false : true;
 		}
-		dump($conditions['group'],0);
-		dump($truelines,0);
+
 		if($conditions['type'] == 'use' || $conditions['type'] == 'show'){
 			if(in_array(true, $trues)){
 				return true;
