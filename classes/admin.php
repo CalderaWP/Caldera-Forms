@@ -624,7 +624,80 @@ class Caldera_Forms_Admin {
 			}
 			
 		}
+		if( isset($_POST['cfimporter']) ){
 
+			if ( check_admin_referer( 'cf-import', 'cfimporter' ) ) {
+				if(!empty($_FILES['import_file']['size'])){
+					$loc = wp_upload_dir();
+					if(move_uploaded_file($_FILES['import_file']['tmp_name'], $loc['path'].'/cf-form-import.json')){
+						$data = json_decode(file_get_contents($loc['path'].'/cf-form-import.json'), true);
+						if(isset($data['ID']) && isset($data['name']) && isset($data['fields'])){
+
+							// get form registry
+							$forms = get_option( '_caldera_forms' );
+							if(empty($forms)){
+								$forms = array();
+							}
+
+							// add form to registry
+							$forms[$data['ID']] = $data;
+
+							// remove undeeded settings for registry
+							if(isset($forms[$data['ID']]['layout_grid'])){
+								unset($forms[$data['ID']]['layout_grid']);
+							}
+							if(isset($forms[$data['ID']]['fields'])){
+								unset($forms[$data['ID']]['fields']);
+							}
+							if(isset($forms[$data['ID']]['processors'])){
+								unset($forms[$data['ID']]['processors']);
+							}
+							if(isset($forms[$data['ID']]['settings'])){
+								unset($forms[$data['ID']]['settings']);
+							}
+
+							// add from to list
+							update_option($data['ID'], $data);
+							do_action('caldera_forms_import_form', $data);
+
+							update_option( '_caldera_forms', $forms );
+							do_action('caldera_forms_save_form_register', $data);
+
+							wp_redirect( 'admin.php?page=caldera-forms&edit=' . $data['ID'] );
+							exit;
+
+						}else{
+							wp_die( __('Sorry, File is not valid.', 'caldera-forms'), __('Form Import Error', 'caldera-forms') );
+						}
+					}
+				}else{
+					wp_die( __('Sorry, File not uploaded.', 'caldera-forms'), __('Form Import Error', 'caldera-forms') );
+				}
+
+			}else{
+
+				wp_die( __('Sorry, please try again', 'caldera-forms'), __('Form Import Error', 'caldera-forms') );
+			}
+
+		}
+		if(!empty($_GET['export-form'])){
+
+			$form = get_option( $_GET['export-form'] );
+
+			if(empty($form)){
+				wp_die( __('Form does not exist.') );
+			}
+
+			header("Pragma: public");
+			header("Expires: 0");
+			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+			header("Cache-Control: private",false);
+			header("Content-Type: application/json");
+			header("Content-Disposition: attachment; filename=\"" . sanitize_file_name( strtolower( $form['name'] ) ) . "-export.json\";" );
+			echo json_encode($form);
+			exit;
+
+		}
 		if(!empty($_GET['export'])){
 
 			$form = get_option( $_GET['export'] );

@@ -828,7 +828,9 @@ class Caldera_Forms {
 					}
 
 					foreach( (array) $prevalue as $value){
-
+						if($truelines[$lineid] == true){
+							break;
+						}
 						switch ($line['compare']) {
 							case 'is':
 								if($value == $line['value']){
@@ -874,7 +876,8 @@ class Caldera_Forms {
 
 			$trues[$groupid] = in_array(false, $truelines) ? false : true;
 		}
-		
+		dump($conditions['group'],0);
+		dump($truelines,0);
 		if($conditions['type'] == 'use' || $conditions['type'] == 'show'){
 			if(in_array(true, $trues)){
 				return true;

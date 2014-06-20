@@ -11,9 +11,9 @@ add_action('caldera_forms_general_settings_panel', 'cf_form_ajaxsetup');
 function cf_form_ajaxsetup($form){
 ?>
 <div class="caldera-config-group">
-	<label><?php echo __('Ajax Submissions', 'caldera-forms-ajax'); ?></label>
+	<label><?php echo __('Ajax Submissions', 'caldera-forms'); ?></label>
 	<div class="caldera-config-field">
-		<label><input type="checkbox" value="1" name="config[form_ajax]" class="field-config"<?php if(isset($form['form_ajax'])){ echo ' checked="checked"'; } ?>> <?php echo __('Enable ajax submissions. (no page reloads)', 'caldera-forms-ajax'); ?></label>
+		<label><input type="checkbox" value="1" name="config[form_ajax]" class="field-config"<?php if(isset($form['form_ajax'])){ echo ' checked="checked"'; } ?>> <?php echo __('Enable Ajax Submissions. (No page reloads)', 'caldera-forms'); ?></label>
 	</div>
 </div>
 <?php	

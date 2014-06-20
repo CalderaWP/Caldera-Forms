@@ -56,6 +56,12 @@
   right: 0;
   top: 43px;
 }
+.caldera-modal-body .import-warning{
+  margin: 0;
+  padding: 4px 0;
+  color: #ff1111;
+}
+
 .caldera-modal-body .form-panel {
   bottom: -30px;
   left: 12px;
