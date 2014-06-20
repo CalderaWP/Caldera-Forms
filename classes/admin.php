@@ -599,7 +599,8 @@ class Caldera_Forms_Admin {
 	 *
 	*/
 	static function save_form(){
-
+		// update check
+		self::activate_caldera_forms();
 		/// check for form delete
 		if(!empty($_GET['delete']) && !empty($_GET['cal_del'])){
 
