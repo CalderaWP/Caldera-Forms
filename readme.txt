@@ -38,6 +38,13 @@ none yet.
 3. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
+= 1.0.4 (20 June, 2014) =
+
+* Added Ajax submissions option - found in General Settings.
+* Added custom field class - field wrapper based
+* Added general input masking for single line text field
+* Added Form Exporting and Importing
+
 = 1.0.3 (12 June, 2014) =
 
 * Added custom input mask format for phone number

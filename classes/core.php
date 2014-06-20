@@ -1592,7 +1592,6 @@ class Caldera_Forms {
 
 	static function search_array_fields($needle, $haystack, $found = array()){
 
-		//dump($haystack);
 		if(is_array($needle)){
 			foreach($needle as $pin){
 				$found = array_merge($found, self::search_array_fields($pin, $haystack));
