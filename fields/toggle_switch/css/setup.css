@@ -3,7 +3,7 @@
 }
 
 .toggle_option_row input{
-	display: inline;
+	display: inline-block;
 }
 
 .toggle_option_row .dashicons-sort{ cursor: move;}

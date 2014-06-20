@@ -197,15 +197,50 @@ class Caldera_Forms_Admin {
 			$values_table = "CREATE TABLE `" . $wpdb->prefix . "cf_form_entry_values` (
 			`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
 			`entry_id` int(11) NOT NULL,
+			`field_id` varchar(20) NOT NULL,
 			`slug` varchar(255) NOT NULL DEFAULT '',
 			`value` longtext NOT NULL,
 			PRIMARY KEY (`id`),
 			KEY `form_id` (`entry_id`),
+			KEY `field_id` (`field_id`),
 			KEY `slug` (`slug`)
 			) DEFAULT CHARSET=utf8;";
 
 			dbDelta( $values_table );
 		
+		}else{
+			// check for field_id from 1.0.4
+			$columns = $wpdb->get_results("SHOW COLUMNS FROM `" . $wpdb->prefix . "cf_form_entry_values`", ARRAY_A);
+			$fields = array();
+			foreach($columns as $column){
+				$fields[] = $column['Field'];
+			}
+			if(!in_array('field_id', $fields)){
+				$wpdb->query( "ALTER TABLE `" . $wpdb->prefix . "cf_form_entry_values` ADD `field_id` varchar(20) NOT NULL AFTER `entry_id`;" );
+				$wpdb->query( "CREATE INDEX `field_id` ON `" . $wpdb->prefix . "cf_form_entry_values` (`field_id`); ");
+				// update all entries
+				$forms = $wpdb->get_results("SELECT `id`,`form_id` FROM `" . $wpdb->prefix . "cf_form_entries`", ARRAY_A);
+				$known = array();
+				if( !empty($forms)){
+					foreach($forms as $form){
+						if(!isset($known[$form['form_id']])){
+							$config = get_option($form['form_id']);						
+							if(empty($config)){
+								continue;
+							}
+							$known[$form['form_id']] = $config;
+						}else{
+							$config = $known[$form['form_id']];
+						}
+
+						foreach($config['fields'] as $field_id=>$field){
+							$wpdb->update($wpdb->prefix . "cf_form_entry_values", array('field_id'=>$field_id), array('entry_id' => $form['id'], 'slug' => $field['slug']));
+						}
+
+					}
+				}
+			}
+			
 		}
 
 	}
@@ -271,12 +306,17 @@ class Caldera_Forms_Admin {
 
 			$rawdata = $wpdb->get_results($wpdb->prepare("
 			SELECT
-				`id`
+				`id`,
+				`form_id`
 			FROM `" . $wpdb->prefix ."cf_form_entries`
 
 			WHERE `form_id` = %s ORDER BY `datestamp` DESC LIMIT " . $limit . ";", $_POST['form'] ));		
 
 			if(!empty($rawdata)){
+
+				foreach($rawdata as $entry){
+					//$data = Caldera_Forms::get_submission_data($entry->form_id, $entry->id);
+				}
 
 				$ids = array();
 				foreach($rawdata as $row){
@@ -584,7 +624,80 @@ class Caldera_Forms_Admin {
 			}
 			
 		}
+		if( isset($_POST['cfimporter']) ){
 
+			if ( check_admin_referer( 'cf-import', 'cfimporter' ) ) {
+				if(!empty($_FILES['import_file']['size'])){
+					$loc = wp_upload_dir();
+					if(move_uploaded_file($_FILES['import_file']['tmp_name'], $loc['path'].'/cf-form-import.json')){
+						$data = json_decode(file_get_contents($loc['path'].'/cf-form-import.json'), true);
+						if(isset($data['ID']) && isset($data['name']) && isset($data['fields'])){
+
+							// get form registry
+							$forms = get_option( '_caldera_forms' );
+							if(empty($forms)){
+								$forms = array();
+							}
+
+							// add form to registry
+							$forms[$data['ID']] = $data;
+
+							// remove undeeded settings for registry
+							if(isset($forms[$data['ID']]['layout_grid'])){
+								unset($forms[$data['ID']]['layout_grid']);
+							}
+							if(isset($forms[$data['ID']]['fields'])){
+								unset($forms[$data['ID']]['fields']);
+							}
+							if(isset($forms[$data['ID']]['processors'])){
+								unset($forms[$data['ID']]['processors']);
+							}
+							if(isset($forms[$data['ID']]['settings'])){
+								unset($forms[$data['ID']]['settings']);
+							}
+
+							// add from to list
+							update_option($data['ID'], $data);
+							do_action('caldera_forms_import_form', $data);
+
+							update_option( '_caldera_forms', $forms );
+							do_action('caldera_forms_save_form_register', $data);
+
+							wp_redirect( 'admin.php?page=caldera-forms&edit=' . $data['ID'] );
+							exit;
+
+						}else{
+							wp_die( __('Sorry, File is not valid.', 'caldera-forms'), __('Form Import Error', 'caldera-forms') );
+						}
+					}
+				}else{
+					wp_die( __('Sorry, File not uploaded.', 'caldera-forms'), __('Form Import Error', 'caldera-forms') );
+				}
+
+			}else{
+
+				wp_die( __('Sorry, please try again', 'caldera-forms'), __('Form Import Error', 'caldera-forms') );
+			}
+
+		}
+		if(!empty($_GET['export-form'])){
+
+			$form = get_option( $_GET['export-form'] );
+
+			if(empty($form)){
+				wp_die( __('Form does not exist.') );
+			}
+
+			header("Pragma: public");
+			header("Expires: 0");
+			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+			header("Cache-Control: private",false);
+			header("Content-Type: application/json");
+			header("Content-Disposition: attachment; filename=\"" . sanitize_file_name( strtolower( $form['name'] ) ) . "-export.json\";" );
+			echo json_encode($form);
+			exit;
+
+		}
 		if(!empty($_GET['export'])){
 
 			$form = get_option( $_GET['export'] );
@@ -675,7 +788,7 @@ class Caldera_Forms_Admin {
 
 			// if this fails, check_admin_referer() will automatically print a "failed" page and die.
 			if ( check_admin_referer( 'cf_edit_element', 'cf_edit_nonce' ) ) {
-
+				
 				// strip slashes
 				$data = stripslashes_deep($_POST['config']);
 

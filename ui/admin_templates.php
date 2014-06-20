@@ -1,3 +1,20 @@
+<script type="text/html" id="import-form-tmpl">
+	<form class="new-form-form" action="admin.php?page=caldera-forms&import=true" enctype="multipart/form-data" method="POST">
+		<?php
+		wp_nonce_field( 'cf-import', 'cfimporter' );
+		do_action('caldera_forms_import_form_template_start');
+		?>
+		<p class="description"><?php echo __('Import a Caldera Form from a .json export file.', 'caldera-forms'); ?></p>
+		<input type="file" class="new-form-name" name="import_file" required="required">		
+		<p class="import-warning" style="color:#ff0000;"><?php echo __('This will overwrite a form if it already exists.', 'caldera-forms'); ?></p>
+
+		<hr>
+		<button type="submit" class="button button-primary" style="float:right;"><?php echo __('Import Form', 'caldera-forms'); ?></button>
+		<?php
+		do_action('caldera_forms_import_form_template_end');
+		?>
+	</form>
+</script>
 <script type="text/html" id="new-form-tmpl">
 	<form class="new-form-form ajax-trigger" data-action="create_form" data-active-class="disabled" data-load-class="disabled" data-callback="new_form_redirect" data-before="serialize_modal_form" data-modal-autoclose="new_form">
 		<?php

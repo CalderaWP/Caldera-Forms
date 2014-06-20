@@ -27,7 +27,7 @@
 					if( comparefield.is(':radio,:checkbox')){
 						comparefield = comparefield.filter(':checked');
 					}
-
+					
 					for( var i = 0; i<comparefield.length; i++){
 						
 						switch(lines[lid].compare) {

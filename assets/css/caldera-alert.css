@@ -42,20 +42,24 @@
 .caldera-grid .alert-warning .alert-link {
   color: #1a1a1a;
 }
+.caldera-grid .alert-error,
 .caldera-grid .alert-danger {
   background-color: #f2dede;
   border-color: #d59595;
   color: #a94442;
 }
+.caldera-grid .alert-error hr,
 .caldera-grid .alert-danger hr {
   border-top-color: #ce8383;
 }
+.caldera-grid .alert-error .alert-link,
 .caldera-grid .alert-danger .alert-link {
   color: #843534;
 }
 .caldera-grid .alert-success,
 .caldera-grid .alert-info,
 .caldera-grid .alert-warning,
+.caldera-grid .alert-error,
 .caldera-grid .alert-danger {
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 }

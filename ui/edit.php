@@ -60,11 +60,22 @@ $field_options_template = "
 </div>
 ";
 
+$default_template = "
+<div class=\"caldera-config-group\">
+	<label>Default</label>
+	<div class=\"caldera-config-field\">
+		<input type=\"text\" class=\"block-input field-config\" name=\"{{_name}}[default]\" value=\"{{default}}\">
+	</div>
+</div>
+";
+
 // Build Field Types List
 foreach($field_types as $field_slug=>$config){
 
 	if(!file_exists($config['file'])){
-		continue;
+		if(!function_exists($config['file'])){
+			continue;
+		}
 	}
 	// type list
 	$categories[] = __('Basic', 'caldera-forms');
@@ -104,31 +115,37 @@ foreach($field_types as $field_slug=>$config){
 
 	if(empty($config['setup']['preview']) || !file_exists( $config['setup']['preview'] )){
 
-		// simulate a preview with actual field file
-		$field = array(
-			'label'	=>	'{{label}}',
-			'slug'	=>	'{{slug}}',
-			'type'	=>	'{{type}}',
-			'caption' => '{{caption}}',
-			'config' => (!empty($config['setup']['default']) ? $config['setup']['default'] : array() )
-		);
+		// if preview is a function
+		if(!empty($config['setup']['preview']) && function_exists($config['setup']['preview'])){
+			$func = $config['setup']['preview'];
+			$field_type_templates['preview-' . sanitize_key( $field_slug ) . "_tmpl"] = $func($config);
+		}else{
+			// simulate a preview with actual field file
+			$field = array(
+				'label'	=>	'{{label}}',
+				'slug'	=>	'{{slug}}',
+				'type'	=>	'{{type}}',
+				'caption' => '{{caption}}',
+				'config' => (!empty($config['setup']['default']) ? $config['setup']['default'] : array() )
+			);
 
-		$field_name = $field['slug'];
-		$field_id = 'preview_fld_' . $field['slug'];
-		$field_label = "<label for=\"" . $field_id . "\" class=\"control-label\">" . $field['label'] . "</label>\r\n";
-		$field_required = "";
-		$field_placeholder = 'placeholder="' . $field['label'] .'"';
-		$field_caption = "<span class=\"help-block\">" . $field['caption'] . "</span>\r\n";
-		
-		// blank default
-		$field_value = null;		
-		$field_wrapper_class = "preview-caldera-config-group";
-		$field_input_class = "preview-caldera-config-field";
-		$field_class = "preview-field-config";
+			$field_name = $field['slug'];
+			$field_id = 'preview_fld_' . $field['slug'];
+			$field_label = "<label for=\"" . $field_id . "\" class=\"control-label\">" . $field['label'] . "</label>\r\n";
+			$field_required = "";
+			$field_placeholder = 'placeholder="' . $field['label'] .'"';
+			$field_caption = "<span class=\"help-block\">" . $field['caption'] . "</span>\r\n";
+			
+			// blank default
+			$field_value = null;		
+			$field_wrapper_class = "preview-caldera-config-group";
+			$field_input_class = "preview-caldera-config-field";
+			$field_class = "preview-field-config";
 
-		ob_start();
-		include $config['file'];
-		$field_type_templates['preview-' . sanitize_key( $field_slug ) . "_tmpl"] = ob_get_clean();
+			ob_start();
+			include $config['file'];
+			$field_type_templates['preview-' . sanitize_key( $field_slug ) . "_tmpl"] = ob_get_clean();
+		}
 	}else{
 		ob_start();
 		include $config['setup']['preview'];
