@@ -119,7 +119,7 @@
 .caldera-grid .checkbox input[type="checkbox"]:focus,
 .caldera-grid .checkbox-inline input[type="checkbox"]:focus {
   outline: 0;
-  border-color: #4d90fe;
+  border-color: #c6c6c6;
 }
 .caldera-grid input[type="radio"]:active,
 .caldera-grid .radio input[type="radio"]:active,
@@ -170,7 +170,7 @@
 .caldera-grid input[type="checkbox"]:checked::after,
 .caldera-grid .checkbox input[type="checkbox"]:checked::after,
 .caldera-grid .checkbox-inline input[type="checkbox"]:checked::after {
-  content: url(../img/checkmark.png);
+  content: url(../images/checkmark.png);
   display: block;
   position: absolute;
   top: -6px;

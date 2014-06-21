@@ -28,7 +28,9 @@ jQuery(function($){
 					if(obj.data.html){
 						obj.params.target.html(obj.data.html);
 					}
-					obj.params.trigger[0].reset();
+					if(!obj.data.entry){
+						obj.params.trigger[0].reset();
+					}
 					if(obj.params.trigger.data('hiderows')){
 						obj.params.trigger.find('div.row').remove();
 					}
@@ -38,17 +40,17 @@ jQuery(function($){
 				}else if(obj.data.status === 'preprocess'){
 					obj.params.target.html(obj.data.html);
 				}else if(obj.data.status === 'error'){
-					if(obj.data.fields){
-						for(var i in obj.data.fields){
-							var field = $('[data-field="' + i + '"]'),
-								wrap = field.closest('.form-group');
-
-								wrap.addClass('has-error').addClass('caldera_ajax_error_wrap');
-								wrap.append('<span class="help-block caldera_ajax_error_block">' + obj.data.fields[i] + '</span>');
-						}
-					}
 					obj.params.target.html(obj.data.html);
 				}
+				if(obj.data.fields){
+					for(var i in obj.data.fields){
+						var field = $('[data-field="' + i + '"]'),
+							wrap = field.closest('.form-group');
+
+							wrap.addClass('has-error').addClass('caldera_ajax_error_wrap');
+							wrap.append('<span class="help-block caldera_ajax_error_block">' + obj.data.fields[i] + '</span>');
+					}
+				}				
 			}
 		});
 	};

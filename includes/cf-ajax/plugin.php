@@ -70,19 +70,25 @@ function cf_ajax_redirect($type, $url, $form){
 		if(!empty($data['note'])){
 			$notices[$data['type']]['note'] = $data['note'];
 		}
+		if(!empty($data['fields'])){
+			foreach($form['fields'] as $fieldid=>$field){				
+				if( isset( $data['fields'][$fieldid] ) ){
+					$out['fields'][$fieldid] = $data['fields'][$fieldid];
+				}
+			}
+		}
+
 	}elseif($type == 'error'){
 		$data = get_transient( $query['cf_er'] );
-		//dump($data);
-		$field_slugs = array_keys($data['fields']);
+		
 		if(!empty($data['fields'])){
+
 			foreach($form['fields'] as $fieldid=>$field){
 				if( in_array( $field['slug'], $field_slugs ) ){
 					$out['fields'][$fieldid] = $data['fields'][$field['slug']];
 				}
 			}
 		}
-		//$out['fields'] = 
-		//$notices[$data['type']]['note'] = $data['note'];
 	}
 
 	$notices = apply_filters('caldera_forms_render_notices', $notices, $form);
@@ -120,6 +126,8 @@ function cf_ajax_redirect($type, $url, $form){
 	}
 	$out['html'] = $html;
 	$out['status'] = $type;
+
+	$out = apply_filters('caldera_forms_ajax_return', $out, $form);
 
 	header('Content-Type: application/json');
 	echo json_encode( $out );

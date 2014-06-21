@@ -894,12 +894,12 @@ class Caldera_Forms {
 	// FRONT END STUFFF
 	static public function form_redirect($type, $url, $form, $processid){
 
-		do_action('caldera_forms_redirect', $type, $url, $form, $processid);
-		do_action('caldera_forms_redirect_' . $type, $url, $form, $processid);
-		
 		$url = apply_filters('caldera_forms_redirect_url', $url, $form, $processid);
 		$url = apply_filters('caldera_forms_redirect_url_' . $type, $url, $form, $processid);
-		
+
+		do_action('caldera_forms_redirect', $type, $url, $form, $processid);
+		do_action('caldera_forms_redirect_' . $type, $url, $form, $processid);
+				
 		if(!empty($url)){
 			wp_redirect( $url );
 			exit;
