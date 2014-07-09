@@ -1318,7 +1318,7 @@ class Caldera_Forms {
 			
 			$entry = self::get_field_data($field_id, $form);
 			if ( is_wp_error( $entry )){
-				$transdata['fields'][$field['slug']] = $entry->get_error_message();
+				$transdata['fields'][$field_id] = $entry->get_error_message();
 			}else{
 				// required check
 				$failed = false;
@@ -1335,9 +1335,9 @@ class Caldera_Forms {
 						$entry = apply_filters( 'caldera_forms_validate_field_' . $field['type'], $entry, $field, $form );
 					}
 					if ( is_wp_error( $entry )){
-						$transdata['fields'][$field['slug']] = $entry->get_error_message();
+						$transdata['fields'][$field_id] = $entry->get_error_message();
 					}elseif($entry === null){
-						$transdata['fields'][$field['slug']] = $field['slug'] .' ' .__('is required', 'caldera-forms');
+						$transdata['fields'][$field_id] = $field['slug'] .' ' .__('is required', 'caldera-forms');
 					}
 				}
 			}
@@ -2001,7 +2001,14 @@ class Caldera_Forms {
 					$notices[$prev_post['type']]['note'] = $prev_post['note'];
 				}
 				if(!empty($prev_post['fields'])){
-					$field_errors = $prev_post['fields'];
+					$field_errors = array();
+					foreach($prev_post['fields'] as $field_id=>$field_error){
+						if(is_wp_error( $field_error )){
+							$field_errors[$form['fields'][$field_id]['slug']] = $field_error->get_error_message();
+						}else{
+							$field_errors[$form['fields'][$field_id]['slug']] = $field_error;
+						}
+					}
 				}
 			}
 			// filter transient
