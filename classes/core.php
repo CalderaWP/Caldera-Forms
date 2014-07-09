@@ -119,6 +119,20 @@ class Caldera_Forms {
 		return true;
 	}
 
+	public static function update_field_data($field, $entry_id, $form){
+		global $wpdb, $form;
+
+		$data = self::get_field_data($field['ID'], $form);
+
+		if(empty($data)){
+			return;
+		}
+
+		$wpdb->update($wpdb->prefix . 'cf_form_entry_values', array('value' => $data), array('entry_id' => $entry_id, 'field_id' => $field['ID']));
+
+	}
+
+
 	public static function save_field_data($field, $entry_id, $form){
 		global $wpdb, $form;
 
@@ -171,32 +185,64 @@ class Caldera_Forms {
 	}
 
 	public static function save_final_form($form){
-		global $wpdb;		
+		global $wpdb;
 
-		if(!empty($form['db_support'])){
-			
-			$new_entry = array(
-				'form_id'	=>	$form['ID'],
-				'user_id'	=>	0,
-				'datestamp' =>	date_i18n( 'Y-m-d H:i:s', time(), 0)
-			);
-			// if user logged in
-			if(is_user_logged_in()){
-				$new_entry['user_id'] = get_current_user_id();
-			}else{
-				if(isset($data['_user_id'])){
-					$new_entry['user_id'] = $data['_user_id'];
+		// check submit type (new or update)
+		if(isset($_POST['_cf_frm_edt'])){
+			// is edit
+			//check user can edit this item.
+			$user_id = get_current_user_id();
+			if(!empty($user_id)){
+				$details = self::get_entry_detail($_POST['_cf_frm_edt'], $form);
+				if(!empty($details)){
+					// check user can edit
+					if( current_user_can( 'edit_posts' ) || $details['user_id'] === $user_id ){
+						$entryid = $_POST['_cf_frm_edt'];
+					}else{
+						return new WP_Error( 'error', __( "Permission denied.", "caldera-forms" ) );
+					}
 				}
+
 			}
 
-			$wpdb->insert($wpdb->prefix . 'cf_form_entries', $new_entry);
-			$entryid = $wpdb->insert_id;
+		}		
 
+		if(!empty($form['db_support'])){
+			// new entry or update
+			if(empty($entryid)){
+				$new_entry = array(
+					'form_id'	=>	$form['ID'],
+					'user_id'	=>	0,
+					'datestamp' =>	date_i18n( 'Y-m-d H:i:s', time(), 0)
+				);
+				// if user logged in
+				if(is_user_logged_in()){
+					$new_entry['user_id'] = get_current_user_id();
+				}else{
+					if(isset($data['_user_id'])){
+						$new_entry['user_id'] = $data['_user_id'];
+					}
+				}
 
-			foreach($form['fields'] as $field_id=>$field){
+				$wpdb->insert($wpdb->prefix . 'cf_form_entries', $new_entry);
+				$entryid = $wpdb->insert_id;
 
-				self::save_field_data($field, $entryid, $form);
+				foreach($form['fields'] as $field_id=>$field){
+					// add new and update
+					self::save_field_data($field, $entryid, $form);
 
+				}
+
+			}else{
+				// do update
+				foreach($form['fields'] as $field_id=>$field){
+					// add new and update
+					self::update_field_data($field, $entryid, $form);
+
+				}
+
+				// return
+				return;		
 			}
 
 		}
@@ -647,7 +693,8 @@ class Caldera_Forms {
 				"file"		=>	CFCORE_PATH . "fields/email/field.php",
 				"category"	=>	__("Text Fields,Basic", "cladera-forms"),
 				"setup"		=>	array(
-					"preview"	=>	CFCORE_PATH . "fields/email/preview.php"
+					"preview"	=>	CFCORE_PATH . "fields/email/preview.php",
+					"template"	=>	CFCORE_PATH . "fields/email/config.php"
 				)
 			),
 			'paragraph' => array(
@@ -939,6 +986,8 @@ class Caldera_Forms {
 		global $processed_data;
 
 
+		//dump($processed_data[$form['ID']],0);
+		//echo $field_id.'<br>';
 		if(is_string($form)){
 			// get processed cached item using the form id
 			if(isset($processed_data[$form][$field_id])){
@@ -953,6 +1002,7 @@ class Caldera_Forms {
 		}
 		// get processed cached item
 		if(isset($processed_data[$form['ID']][$field_id])){
+			
 			return $processed_data[$form['ID']][$field_id];
 		}
 		// entry fetch
@@ -1002,8 +1052,9 @@ class Caldera_Forms {
 			if(has_filter('caldera_forms_process_field_' . $field['type'])){
 				$entry = apply_filters( 'caldera_forms_process_field_' . $field['type'] , $entry, $field, $form );
 				if( is_wp_error( $entry ) ) {
-					return $entry->get_error_message();
-				}				
+					$processed_data[$form['ID']][$field_id] = $entry;
+					return $entry;
+				}
 			}
 
 			if(is_string( $entry ) && strlen( $entry ) <= 0){
@@ -1110,6 +1161,14 @@ class Caldera_Forms {
 		}
 		return $out;
 	}	
+	static public function get_entry_detail($entry_id, $form){
+		global $wpdb;
+
+		$entry = $wpdb->get_row($wpdb->prepare("SELECT * FROM `" . $wpdb->prefix ."cf_form_entries` WHERE `id` = %d", $entry_id), ARRAY_A);
+		$entry = apply_filters( 'caldera_forms_get_entry_detail', $entry, $entry_id, $form );
+		return $entry;
+	}
+
 	static public function get_submission_data($form, $entry_id = false){
 		global $processed_data;
 
@@ -1141,6 +1200,7 @@ class Caldera_Forms {
 		global $form;
 		global $field_types;
 		global $rawdata;
+		global $processed_data;
 
 		$referrer = parse_url( $_POST['_wp_http_referer'] );
 		if(!empty($referrer['query'])){
@@ -1170,15 +1230,27 @@ class Caldera_Forms {
 		$field_types = self::get_field_types();
 		
 		// SET process ID
-		$process_id = uniqid('_cf_process_');
+		if(isset($_GET['cf_er'])){
+			$chk = get_transient( $_GET['cf_er'] );
+			if(isset($chk['transient']) && $chk['transient'] == $_GET['cf_er']){
+				$process_id = $chk['transient'];
+			}
+		}
+		if(empty($process_id)){
+			$process_id = uniqid('_cf_process_');
+		}
 
 
 		// start action
 		do_action('caldera_forms_submit_start', $form);
 
 		// initialize data
-		$data = self::get_submission_data($form);
-
+		$entry_id = false;
+		if(isset($_POST['_cf_frm_edt'])){
+			$entry_id = (int) $_POST['_cf_frm_edt'];
+		}
+		$data = self::get_submission_data($form, $entry_id);
+		//dump($data);
 		// requireds
 		// set transient for returns submittions
 		$transdata = array(
@@ -1210,35 +1282,70 @@ class Caldera_Forms {
 			}
 		}
 
-		// start brining in entries
-		//$data = array();
-		foreach($form['fields'] as $field_id=>$field){
-			
-			$entry = self::get_field_data($field_id, $form);
-
-			// required check
-			$failed = false;
-			if(!empty($field['required'])){
-
-				// check if conditions match first.
-				if(!empty($field['conditions']['type'])){							
-					if(!self::check_condition($field['conditions'], $form)){
-						continue;
+		// check submit type (new or update)
+		if(isset($_POST['_cf_frm_edt'])){
+			// is edit
+			//check user can edit this item.
+			$user_id = get_current_user_id();
+			if(empty($user_id)){
+				$transdata['error'] = true;
+				$transdata['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');
+			}else{
+				
+				$details = self::get_entry_detail($_POST['_cf_frm_edt'], $form);
+				if(empty($details)){
+					$transdata['error'] = true;
+					$transdata['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');
+				}else{
+					// check user can edit
+					if( current_user_can( 'edit_posts' ) || $details['user_id'] === $user_id ){
+						// can edit.
+					}else{
+						$transdata['error'] = true;
+						$transdata['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');
 					}
 				}
 
-				if(has_filter('caldera_forms_validate_field_' . $field['type'])){
-					$entry = apply_filters( 'caldera_forms_validate_field_' . $field['type'], $entry, $field, $form );
-				}
-				if($entry === null){
-					$transdata['fields'][$field['slug']] = $field['slug'] .' ' .__('is required', 'caldera-forms');
+			}
+
+		}
+
+
+		// start brining in entries
+		//$data = array();
+
+		foreach($form['fields'] as $field_id=>$field){
+			
+			$entry = self::get_field_data($field_id, $form);
+			if ( is_wp_error( $entry )){
+				$transdata['fields'][$field['slug']] = $entry->get_error_message();
+			}else{
+				// required check
+				$failed = false;
+				if(!empty($field['required'])){
+
+					// check if conditions match first.
+					if(!empty($field['conditions']['type'])){							
+						if(!self::check_condition($field['conditions'], $form)){
+							continue;
+						}
+					}
+
+					if(has_filter('caldera_forms_validate_field_' . $field['type'])){
+						$entry = apply_filters( 'caldera_forms_validate_field_' . $field['type'], $entry, $field, $form );
+					}
+					if ( is_wp_error( $entry )){
+						$transdata['fields'][$field['slug']] = $entry->get_error_message();
+					}elseif($entry === null){
+						$transdata['fields'][$field['slug']] = $field['slug'] .' ' .__('is required', 'caldera-forms');
+					}
 				}
 			}
 
 		}
 		
 		// check requireds
-		if(!empty($transdata['fields'])){
+		if(!empty($transdata['fields']) || !empty($transdata['error'])){
 			$transdata['type'] = 'error';
 			// set error transient
 			$transdata = apply_filters('caldera_forms_submit_error_transient', $transdata, $form, $referrer, $process_id);
@@ -1786,7 +1893,20 @@ class Caldera_Forms {
 
 		$grid = new Caldera_Form_Grid($grid_settings);
 
-		$grid->setLayout($form['layout_grid']['structure']);
+		// Build Pages Breaks
+		if( false !== strpos($form['layout_grid']['structure'], '#')){
+			// setup pages
+			$pages = explode('#', $form['layout_grid']['structure']);
+			$page_breaks = array();
+			foreach($pages as $page_no=>$page){
+				$point = substr_count($page, '|') + 1;
+				if(isset($page_breaks[$page_no-1])){
+					$point += $page_breaks[$page_no-1];
+				}
+				$page_breaks[$page_no] = $point;
+			}
+			$form['layout_grid']['structure'] = str_replace('#', '|', $form['layout_grid']['structure']);
+		}
 
 		// setup notcies
 		$notices = array();
@@ -1817,6 +1937,44 @@ class Caldera_Forms {
 
 		$field_errors = array();
 		
+		// edit entry from url
+		if(!empty($_GET['cf_ee'])){
+			$entry_id = $_GET['cf_ee'];
+		}
+		// attr entry id
+		if(!empty($atts['entry'])){
+			$entry_id = $atts['entry'];	
+		}
+		
+		if(!empty($entry_id)){
+			//check user can edit this item.
+			$user_id = get_current_user_id();
+			if(!empty($user_id)){
+
+				$details = self::get_entry_detail($entry_id, $form);
+
+				if(!empty($details)){
+					// check user can edit
+					if( current_user_can( 'edit_posts' ) || $details['user_id'] === $user_id ){
+						// can edit.
+						$entry_id = (int) $details['id'];
+					}else{
+						$notices['error']['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');
+					}
+				}else{
+					$notices['error']['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');					
+				}
+
+			}else{
+				$notices['error']['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');
+			}
+
+			if(!empty($notices['error']['note'])){
+				$halt_render = true;
+				$entry_id = false;
+			}
+		}
+
 		// check for prev post
 		$prev_data = apply_filters('caldera_forms_render_pre_get_entry', array(), $form, $entry_id);
 		
@@ -1832,7 +1990,12 @@ class Caldera_Forms {
 			if(!empty($prev_post['transient'])){
 				
 				if($prev_post['transient'] === $_GET['cf_er']){
-					$prev_data = $prev_post['data'];
+					foreach($prev_post['data'] as $field_id=>$field_entry){
+						if(!is_wp_error( $field_entry )){
+							$prev_data[$form['fields'][$field_id]['slug']] = $field_entry;
+						}
+					}
+					
 				}
 				if(!empty($prev_post['type']) && !empty($prev_post['note'])){
 					$notices[$prev_post['type']]['note'] = $prev_post['note'];
@@ -1850,6 +2013,44 @@ class Caldera_Forms {
 				$notices['success']['note'] = $form['success'];
 			}
 		}
+
+		// build grid & pages
+		$grid->setLayout($form['layout_grid']['structure']);
+
+		// insert page breaks
+		if(!empty($page_breaks)){
+			$currentpage = 1;
+			if(isset($_GET['cf_pg']) && !isset($prev_post['page'])){
+				$currentpage = (int) $_GET['cf_pg'];
+			}elseif(isset($prev_post['page'])){
+				$currentpage = (int) $prev_post['page'];
+			}
+			$display = 'none';
+			if( $currentpage === 1){
+				$display = 'block';
+			}
+
+			$total_rows = substr_count($form['layout_grid']['structure'], '|') + 1;
+			$grid->before('<div data-formpage="1" class="caldera-form-page" style="display:'.$display.';">', 1);
+			$grid->after('</div>', $total_rows);
+			//dump($page_breaks);
+			foreach($page_breaks as $page=>$break){
+
+				$grid->after('</div>', $break);
+
+				if($break+1 <= $total_rows ){
+					$display = 'none';
+					if($page+2 == $currentpage){
+						$display = 'block';
+					}
+
+					$grid->before('<div data-formpage="' . ($page+2) . '" class="caldera-form-page" style="display:'.$display.';">', $break+1);
+				}
+			}
+			//dump($page_breaks,0);
+			//dump( $grid );
+		}
+
 
 		// setup processor bound requieds
 		if(!empty($form['processors'])){
@@ -1978,7 +2179,7 @@ class Caldera_Forms {
 		$grid = apply_filters('caldera_forms_render_grid_structure', $grid, $form);
 
 		$out = "<div class=\"caldera-grid\" id=\"caldera_form_" . $current_form_count ."\">\r\n";
-		
+
 		$notices = apply_filters('caldera_forms_render_notices', $notices, $form);
 
 		if(!empty($notices)){
@@ -1990,7 +2191,7 @@ class Caldera_Forms {
 			}
 
 		}		
-		if(empty($notices['success']) || empty($form['hide_form'])){
+		if((empty($notices['success']) || empty($form['hide_form'])) && empty($halt_render)){
 
 			$form_element = 'form';
 
@@ -2018,6 +2219,10 @@ class Caldera_Forms {
 			$out .= wp_nonce_field( "caldera_forms_front", "_cf_verify", true, false);
 			$out .= "<input type=\"hidden\" name=\"_cf_frm_id\" value=\"" . $atts['id'] . "\">\r\n";
 			$out .= "<input type=\"hidden\" name=\"_cf_frm_ct\" value=\"" . $current_form_count . "\">\r\n";
+			// is edit?
+			if(!empty($entry_id)){				
+				$out .= "<input type=\"hidden\" name=\"_cf_frm_edt\" value=\"" . $entry_id . "\">\r\n";
+			}
 			$out .= $grid->renderLayout();
 			$out .= "</" . $form_element . ">\r\n";
 		}

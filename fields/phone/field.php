@@ -1,4 +1,7 @@
 <?php
+if(!empty($field['config']['placeholder'])){
+	$field_placeholder = 'placeholder="'.$field['config']['placeholder'].'"';
+}
 
 $mask = '(999)999-9999';
 if($field['config']['type'] == 'international'){

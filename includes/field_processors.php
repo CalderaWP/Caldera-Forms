@@ -6,10 +6,6 @@
 add_filter('caldera_forms_process_field_file', 'cf_handle_file_upload', 10, 3);
 
 
-
-
-
-
 function cf_handle_file_upload($entry, $field, $form){
 
 	if(!empty($_FILES[$field['ID']]['size'])){
@@ -30,9 +26,9 @@ function cf_handle_file_upload($entry, $field, $form){
 			}
 
 		}
+		if ( ! function_exists( 'wp_handle_upload' ) ) require_once( ABSPATH . 'wp-admin/includes/file.php' );
 
-
-		$upload = wp_upload_bits( $_FILES[$field['ID']]['name'], null, file_get_contents($_FILES[$field['ID']]['tmp_name']) );
+		$upload = wp_handle_upload($_FILES[$field['ID']], array( 'test_form' => false ), date('Y/m') );
 
 		if(empty($upload['error'])){
 			return $upload['url'];

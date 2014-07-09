@@ -1,1 +1,1 @@
-<?php echo $field['config']['default']; ?>
+<?php echo do_shortcode( $field['config']['default'] ); ?>

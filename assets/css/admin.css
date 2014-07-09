@@ -74,6 +74,9 @@
   padding: 12px 0 0;
   color: #737373;
 }
+.caldera-editor-header-nav > li.sub-meta-line {
+  padding: 9px;
+}
 .toggle_option_row {
   margin: 4px 0;
 }
@@ -95,11 +98,13 @@
   border-radius: 0;
   margin-right: -5px;
 }
-.toggle_option_tab .button:first-child {
-  border-radius: 3px 0 0 3px;
-}
 .toggle_option_tab .button:last-child {
-  border-radius: 0 3px 3px 0;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+.toggle_option_tab .button:first-child {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
 }
 .toggle_option_preview .button {
   border-radius: 0;
@@ -472,10 +477,16 @@ h3.caldera-editor-field-title {
   margin-bottom: 30px;
   padding-bottom: 20px;
 }
-.add-new-h2.caldera-add-group,
-.add-new-h2.caldera-add-group:active {
+.add-new-h2.caldera-add-page,
+.add-new-h2.caldera-add-row,
+.add-new-h2.caldera-add-row:active,
+.add-new-h2.caldera-add-page:active {
   font-size: 10px;
-  margin: 4px 30px 4px 10px;
+  margin: 4px 10px 4px 10px;
+}
+.add-new-h2.caldera-add-page,
+.add-new-h2.caldera-add-page:active {
+  margin-left: 0;
 }
 .caldera-config-group label {
   display: block;

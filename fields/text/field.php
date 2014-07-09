@@ -1,4 +1,8 @@
 <?php
+if(!empty($field['config']['placeholder'])){
+	$field_placeholder = 'placeholder="'.$field['config']['placeholder'].'"';
+}
+
 $mask = null;
 if(!empty($field['config']['masked'])){
 	$mask = "data-inputmask=\"'mask': '".$field['config']['mask']."'\" ";

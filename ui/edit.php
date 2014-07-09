@@ -4,7 +4,7 @@ global $field_type_list, $field_type_templates;
 
 // Load element
 $element = get_option( $_GET['edit'] );
-
+//dump($element);
 if(empty($element['success'])){
 	$element['success'] = __('Form has successfuly been submitted. Thank you.', 'caldera-forms');
 }
@@ -420,7 +420,7 @@ foreach($panel_extensions as $panel_slug=>$panel){
 					if(!empty($tab_setup['active'])){
 						$active = " class=\"active\"";
 					}
-					echo "<li".$active."><a href=\"#" . $group_slug . "-config-panel\">" . $tab_setup['name'] . "</a></li>\r\n";
+					echo "<li".$active." id=\"tab_".$group_slug."\"><a href=\"#" . $group_slug . "-config-panel\">" . $tab_setup['name'] . "</a></li>\r\n";
 				}
 
 				// CODE BASED TABS

@@ -27,7 +27,7 @@ function cf_ajax_structures($grid, $form){
 	global $current_form_count; 
 
 	// add in notification area
-	$grid->before('<div id="caldera_notices_'.$current_form_count.'" data-spinner="'. admin_url( 'images/spinner.gif' ).'"></div>', '1');
+	$grid->before('<div id="caldera_notices_'.$current_form_count.'" data-spinner="'. admin_url( 'images/spinner.gif' ).'"></div>', '1', 'prepend');
 
 	return $grid;
 }
@@ -84,7 +84,7 @@ function cf_ajax_redirect($type, $url, $form){
 		if(!empty($data['fields'])){
 
 			foreach($form['fields'] as $fieldid=>$field){
-				if( in_array( $field['slug'], $field_slugs ) ){
+				if( isset( $data['fields'][$fieldid] ) ){
 					$out['fields'][$fieldid] = $data['fields'][$field['slug']];
 				}
 			}

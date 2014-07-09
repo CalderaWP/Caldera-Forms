@@ -482,6 +482,11 @@ class Caldera_Forms_Admin {
 			wp_enqueue_script( 'jquery-ui-droppable' );
 
 		}
+		if(!empty($_GET['edit-entry'])){
+			wp_enqueue_style( 'cf-grid-styles', CFCORE_URL . 'assets/css/caldera-grid.css', array(), self::VERSION );
+		}
+
+		
 			// Load Field Types Styles & Scripts
 			$field_types = apply_filters('caldera_forms_get_field_types', array() );
 
@@ -585,8 +590,8 @@ class Caldera_Forms_Admin {
 			echo "<form method=\"POST\" action=\"admin.php?page=" . $this->plugin_slug . "\" data-load-element=\"#save_indicator\" data-sender=\"ajax\" class=\"caldera-forms-options-form edit-update-trigger\">\r\n";
 				include CFCORE_PATH . 'ui/edit.php';
 			echo "</form>\r\n";
-		}elseif(!empty($_GET['project'])){
-			include CFCORE_PATH . 'ui/project.php';
+		}elseif(!empty($_GET['edit-entry'])){
+			include CFCORE_PATH . 'ui/edit-entry.php';
 		}else{
 			include CFCORE_PATH . 'ui/admin.php';
 		}
@@ -816,6 +821,9 @@ class Caldera_Forms_Admin {
 					unset($forms[$data['ID']]['settings']);
 				}
 
+				// combine structure pages
+				$data['layout_grid']['structure'] = implode('#', $data['layout_grid']['structure']);
+				
 				// add from to list
 				update_option($data['ID'], $data);
 				do_action('caldera_forms_save_form', $data);
@@ -904,6 +912,12 @@ class Caldera_Forms_Admin {
 						"repeat" => 0,
 						"canvas" => $path . "layout.php",
 						"side_panel" => $path . "layout_side.php",
+					),
+					"pages" => array(
+						"name" => __("Pages", 'caldera-forms'),
+						"location" => "lower",
+						"label" => __("Form Pages", 'caldera-forms'),
+						"canvas" => $path . "pages.php",
 					),
 					"processors" => array(
 						"name" => __("Processors", 'caldera-forms'),

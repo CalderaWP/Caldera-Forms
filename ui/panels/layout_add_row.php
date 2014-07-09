@@ -1,4 +1,14 @@
 <a class="add-new-h2 caldera-add-group caldera-add-row" href="#code_panels_tag"><?php echo __('Add Row', 'caldera-forms'); ?></a>
+<a class="add-new-h2 caldera-add-group caldera-add-page ajax-trigger" 
+	
+	data-addtitle="<?php echo __('Page'); ?>"
+	data-template="#grid-page-tmpl"
+	data-target-insert="append"
+	data-request="add_new_grid_page"
+	data-target="#grid-pages-panel"
+	data-callback="add_page_grid"
+
+ href="#code_panels_tag"><?php echo __('Add Page', 'caldera-forms'); ?></a>
 <div id="newfield-tool" class="button button-primary button-small layout-new-form-field" title="<?php echo __('Drag onto the form grid below', 'caldera-forms'); ?>">
 	<i class="icon-edit" style="display:none;"></i>
 	<i class="dashicons dashicons-menu" style="display:none;"></i>

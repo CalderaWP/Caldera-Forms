@@ -15,6 +15,7 @@ if( !class_exists( 'Caldera_Form_Grid' )){
 	    private $config = array();
 	    private $nests = array();
 	    private $output = '';
+	    private $paged = false;
 	    public  $grid = array();
 	    
 
@@ -29,7 +30,11 @@ if( !class_exists( 'Caldera_Form_Grid' )){
 	    public function debug(){
 	        $this->debug = true;
 	    }
-	    public function setLayout($str){        
+	    public function setLayout($str){
+	        // find pages
+	        if( false !== strpos($str, '#') ){
+	        	$this->paged = true;
+	        }
 	        // find nests
 	        preg_match_all("/\[[0-9:\|]+\]/", $str, $matches);
 	        if(!empty($matches[0])){
@@ -42,9 +47,10 @@ if( !class_exists( 'Caldera_Form_Grid' )){
 	        $this->grid = $this->splitString($str);
 	    }
 	    private function splitString($str){
+	        
 	        $rows = explode('|', $str);
 	        $grid = array();
-	        foreach($rows as $row=>$cols){            
+	        foreach($rows as $row=>$cols){
 	            $cols = explode(':',$cols);
 	            foreach($cols as $col=>$span){                
 	                $nest = strpos($span, '__');
@@ -55,6 +61,7 @@ if( !class_exists( 'Caldera_Form_Grid' )){
 	                $grid[$row+1][$col+1]['html'] = '';
 	            }
 	        }
+
 	        return $grid;
 	    }
 	    static function mergeArray($first, $second, $type = 'replace'){       
@@ -102,13 +109,13 @@ if( !class_exists( 'Caldera_Form_Grid' )){
 	        $this->mapValue('html', $html, $map);
 	        $this->grid = self::mergeArray($this->grid, $map, $type);
 	    }
-	    public function before($html, $map) {
+	    public function before($html, $map, $type = 'replace') {
 	        $this->mapValue('before', $html, $map);
-	        $this->grid = self::mergeArray($this->grid, $map);
+	        $this->grid = self::mergeArray($this->grid, $map, $type);
 	    }
-	    public function after($html, $map) {
+	    public function after($html, $map, $type = 'replace') {
 	        $this->mapValue('after', $html, $map);
-	        $this->grid = self::mergeArray($this->grid, $map);
+	        $this->grid = self::mergeArray($this->grid, $map, $type);
 	    }
 	    public function append($html, $map) {
 	        self::html($html, $map, 'append');

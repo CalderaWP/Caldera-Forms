@@ -1,4 +1,4 @@
-var rebuild_field_binding, rebind_field_bindings, current_form_fields = {}, required_errors = {};
+var rebuild_field_binding, rebind_field_bindings, current_form_fields = {}, required_errors = {}, add_new_grid_page, add_page_grid;
 
 rebuild_field_binding = function(){
 
@@ -137,33 +137,72 @@ function check_required_bindings(){
 
 jQuery(function($) {
 
+	add_new_grid_page = function(obj){
+		return { "page_no" : "pg_" + Math.round( Math.random() * 10000000 ) };
+	}
+
+	add_page_grid = function(obj){
+		//obj.rawData.page_no
+		var btn_count = $('.page-toggle').length + 1,
+			button = $('<button type="button" data-name="Page ' + btn_count + '" data-page="' + obj.rawData.page_no + '" class="page-toggle button">' + obj.params.trigger.data('addtitle') + ' ' + btn_count + '</button> '),
+			option_tab = $('#page-toggles');
+		button.appendTo( option_tab );
+		option_tab.show();
+		buildSortables();
+		button.trigger('click');
+		if( btn_count === 1){
+			option_tab.hide();
+		}
+		$(document).trigger('add.page');
+	}
+
+// bind pages tab
+	$(document).on('remove.page add.page load.page', function(e){
+		var btn_count = $('.page-toggle').length,
+			pages_tab = $('#tab_pages');
+
+		if(btn_count <= 1){
+			pages_tab.hide();
+		}else{
+			pages_tab.show();
+		}
+
+
+	});
 
 	function buildLayoutString(){
-		var capt = $('.layout-structure'),
-			grid = $('.layout-grid'),
-			rows = grid.find('.row'),
-			struct = [];
-		rows.each(function(k,v){
-			var row = $(v),
-				cols = row.children().not('.column-merge'),
-				rowcols = [];
-			
-			cols.each(function(p, c){
-				span = $(c).attr('class').split('-');
-				rowcols.push(span[2]);
-				var fields = $(c).find('.field-location');
-				if(fields.length){
-					fields.each(function(x,f){
-						var field = $(f);
-						field.val( (k+1) + ':' + (p+1) ).removeAttr('disabled');						
-					});
-				}
-				// set name
+		var grid_panels = $('.layout-grid-panel'),
+			row_index = 0;
 
+		grid_panels.each(function(pk,pv){
+			
+			var panel= $(pv),
+				capt = panel.find('.layout-structure'),
+				rows = panel.find('.row'),
+				struct = [];
+			
+			rows.each(function(k,v){
+				var row = $(v),
+					cols = row.children().not('.column-merge'),
+					rowcols = [];
+				row_index += 1;
+				cols.each(function(p, c){
+					span = $(c).attr('class').split('-');
+					rowcols.push(span[2]);
+					var fields = $(c).find('.field-location');
+					if(fields.length){
+						fields.each(function(x,f){
+							var field = $(f);
+							field.val( row_index + ':' + (p+1) ).removeAttr('disabled');						
+						});
+					}
+					// set name
+
+				});
+				struct.push(rowcols.join(':'));
 			});
-			struct.push(rowcols.join(':'));
+			capt.val(struct.join('|'));
 		});
-		capt.val(struct.join('|'));
 	}
 
 	function insert_new_field(newfield, target){
@@ -219,7 +258,7 @@ jQuery(function($) {
 		});
 
 
-		$( ".layout-grid-panel" ).sortable({
+		$( "#grid-pages-panel" ).sortable({
 			placeholder: 	"row-drop-helper",
 			handle: 		".sort-handle",
 			items:			".first-row-level",
@@ -264,7 +303,7 @@ jQuery(function($) {
 	};
 	buildSortables();
 
-	$('.layout-grid-panel').on('click','.column-fieldinsert', function(e){
+	$('#grid-pages-panel').on('click','.column-fieldinsert', function(e){
 		//newfield-tool
 		var target 		= $(this).closest('.column-container'),
 			newfield 	= $('#newfield-tool').clone();
@@ -274,7 +313,7 @@ jQuery(function($) {
 	});
 	
 
-	$('.layout-grid-panel').on('click','.column-split', function(e){
+	$('#grid-pages-panel').on('click','.column-split', function(e){
 		var column = $(this).parent().parent(),
 			size = column.attr('class').split('-'),
 			newcol = $('<div>').insertAfter(column);			
@@ -294,9 +333,10 @@ jQuery(function($) {
 		jQuery('.column-merge').remove();		
 		
 	});
-	$( ".layout-grid-panel" ).on('click', '.column-remove', function(e){
-		var row = $(this).parent().parent().parent(),
-			fields = row.find('.layout-form-field');
+	$( "#grid-pages-panel" ).on('click', '.column-remove', function(e){
+		var row = $(this).closest('.row'),
+			fields = row.find('.layout-form-field'),
+			wrap = row.closest('.layout-grid-panel');
 		
 		//find fields
 		if(fields.length){
@@ -313,7 +353,22 @@ jQuery(function($) {
 			$(this).remove();
 			buildLayoutString();
 			rebuild_field_binding();
+			if(!wrap.find('.row').length){
+				wrap.remove();
+				var btn = $('#page-toggles .button-primary'),
+					prev = btn.prev(),
+					next = btn.next();
+
+				btn.remove();
+				if(prev.length){
+					prev.trigger('click');
+				}else{
+					next.trigger('click');
+				}
+			}
+			$(document).trigger('remove.page');
 		});
+
 		jQuery('.column-tools').remove();
 		jQuery('.column-merge').remove();
 		
@@ -321,12 +376,17 @@ jQuery(function($) {
 	
 	$( ".caldera-config-editor-main-panel" ).on('click', '.caldera-add-row', function(e){
 		e.preventDefault();
-		$('.layout-grid').append('<div class="first-row-level row"><div class="col-xs-12"><div class="layout-column column-container"></div></div></div>');
+		var wrap = $('.page-active');
+		if(!wrap.length){
+			$('.caldera-add-page').trigger('click');
+			return;
+		}
+		$('.page-active').append('<div class="first-row-level row"><div class="col-xs-12"><div class="layout-column column-container"></div></div></div>');
 		buildSortables();
 		buildLayoutString();
 	});
 	
-	$( ".layout-grid-panel" ).on('click', '.column-join', function(e){
+	$( "#grid-pages-panel" ).on('click', '.column-join', function(e){
 		
 		var column = $(this).parent().parent().parent();
 		
@@ -344,7 +404,7 @@ jQuery(function($) {
 		jQuery('.column-merge').remove();		
 	});	
 	
-	$('.layout-grid-panel').on('mouseenter','.row', function(e){
+	$('#grid-pages-panel').on('mouseenter','.row', function(e){
 		var setrow = jQuery(this);
 		jQuery('.column-tools,.column-merge').remove();
 		setrow.children().children().first().append('<div class="column-remove column-tools"><i class="icon-remove"></i></div>');
@@ -423,12 +483,12 @@ jQuery(function($) {
 			}
 		});		
 	});
-	$('.layout-grid').on('mouseleave','.row', function(e){
+	$('#grid-pages-panel').on('mouseleave','.row', function(e){
 		jQuery('.column-tools').remove();
 		jQuery('.column-merge').remove();
 	});
 	
-	$('.layout-grid').on('click', '.layout-form-field .icon-remove', function(){
+	$('#grid-pages-panel').on('click', '.layout-form-field .icon-remove', function(){
 		var clicked = $(this),
 			panel = clicked.parent(),
 			config = $('#' + panel.data('config'));
@@ -439,10 +499,14 @@ jQuery(function($) {
 		config.slideUp(100, function(){
 			$(this).remove();
 		});
+		//if(!wrap.children().length){
+			//wrap.remove();
+			
+		//}
 
 	});	
 
-	$('.layout-grid').on('click', '.layout-form-field .icon-edit', function(){
+	$('#grid-pages-panel').on('click', '.layout-form-field .icon-edit', function(){
 
 		
 
@@ -608,6 +672,24 @@ jQuery(function($) {
 		$(this).parent().remove();
 		triggerfield.trigger('change');
 	});
+	$('.caldera-editor-body').on('click', '.page-toggle', function(e){
+		var clicked = $(this),
+			wrap = clicked.parent(),
+			btns = wrap.find('.button');
+
+		btns.removeClass('button-primary');
+		$('.layout-grid-panel').hide().removeClass('page-active');
+		$('#' + clicked.data('page')).show().addClass('page-active');
+		clicked.addClass('button-primary');
+		//reindex
+		btns.each(function(k,v){
+			$(v).html(wrap.data('title') + ' ' + (k+1) );
+		});
+		if(btns.length === 1){
+			wrap.hide();
+		}
+
+	});
 
 	$('.caldera-editor-body').on('blur', '.toggle_value_field', function(e){
 		var value = $(this),
@@ -622,7 +704,7 @@ jQuery(function($) {
 
 	// build fild bindings
 	rebuild_field_binding();
-
+	$(document).trigger('load.page');
 });
 
 
