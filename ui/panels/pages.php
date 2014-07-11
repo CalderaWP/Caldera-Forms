@@ -1,7 +1,7 @@
 <div class="caldera-config-group">
 	<label><?php echo __('Progress Bar', 'caldera-forms'); ?></label>
 	<div class="caldera-config-field">
-		<label><input type="checkbox" name="config[auto_progress]" value="1"> <?php echo __('Show automatic progress indicator', 'caldera-forms'); ?></label>
+		<label><input type="checkbox" name="config[auto_progress]" value="1" <?php if(!empty($element['auto_progress'])){ echo 'checked="checked"'; } ?>> <?php echo __('Show Breadcrumbs', 'caldera-forms'); ?></label>
 		<p class="description"><?php echo __('ProTip: Use an HTML element to build a custom progress per page', 'caldera-forms'); ?></p>
 	</div>
 </div>

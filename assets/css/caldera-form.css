@@ -1172,3 +1172,29 @@
 .caldera-grid .input-group-addon input[type="checkbox"] {
   margin-bottom: -3px;
 }
+
+
+.caldera-grid .breadcrumb {
+  padding: 6px 12px;
+  margin-bottom: 20px;
+  list-style: none;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+.caldera-grid .breadcrumb > li {
+  display: inline-block;
+  margin: 0;
+}
+.caldera-grid .breadcrumb > li + li:before {
+  content: "/\00a0";
+  padding: 0 5px;
+  color: #cccccc;
+}
+.caldera-grid .breadcrumb > .active,
+.caldera-grid .breadcrumb > .active > a {
+  color: #777777;
+}
+.breadcrumb > li.active.error > a,
+.breadcrumb > li.error > a {
+  color: #ff0000;
+}

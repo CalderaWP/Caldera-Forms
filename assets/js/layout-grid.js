@@ -36,6 +36,7 @@ rebind_field_bindings = function(){
 			default_sel = field.data('default'),
 			count = 0;
 
+		console.log(field);
 
 		if(default_sel){
 			current = default_sel;
@@ -58,7 +59,9 @@ rebind_field_bindings = function(){
 		}
 
 		if(count === 0){
-			field.empty().append('<option value="">No ' + field.data('type').split(',').join(' or ') + ' in form</option>').prop('disabled', true);
+			if(field.data('type')){
+				field.empty().append('<option value="">No ' + field.data('type').split(',').join(' or ') + ' in form</option>').prop('disabled', true);
+			}
 		}else{
 			field.prop('disabled', false);
 		}
@@ -205,17 +208,20 @@ jQuery(function($) {
 		});
 	}
 
-	function insert_new_field(newfield, target){
+	function insert_new_field(newfield, target, tel){
 		var name = "fld_" + Math.round( Math.random() * 10000000 ),
 			new_name 	= name,
 			field_conf	= $('#field_config_panels'),
 			new_conf_templ,
 			new_field;
 
-
-		// field conf template
-		new_conf_templ = Handlebars.compile( $('#caldera_field_config_wrapper_templ').html() );
-
+		if(tel){
+			var clone = $('#' + tel).clone().wrap('<div>').parent().html().replace( new RegExp(tel,"g") , '{{id}}');
+			new_conf_templ = Handlebars.compile( clone );
+		}else{
+			// field conf template
+			new_conf_templ = Handlebars.compile( $('#caldera_field_config_wrapper_templ').html() );
+		}
 		new_field = {
 			"id"	:	new_name,
 			"label"	:	'',
@@ -243,7 +249,10 @@ jQuery(function($) {
 
 		$('#' + name + '_lable').focus().select();
 
-		
+		if(tel){
+			field_conf.find('.field_config_string').val('');
+			field_conf.find('.field-label').trigger('change');
+		}
 
 		rebuild_field_binding();
 		baldrickTriggers();
@@ -311,6 +320,15 @@ jQuery(function($) {
 		insert_new_field(newfield, target);
 
 	});
+	/*
+	$('#grid-pages-panel').on('click','.icon-filter', function(e){
+		//newfield-tool
+		var target 		= $(this).closest('.column-container'),
+			newfield 	= $('#newfield-tool').clone();
+		
+		insert_new_field(newfield, target, $(this).data('id'));
+
+	});*/
 	
 
 	$('#grid-pages-panel').on('click','.column-split', function(e){
@@ -522,6 +540,7 @@ jQuery(function($) {
 				panel.addClass('field-edit-open');
 				$('#' + panel.data('config')).show();
 			}
+
 	});
 	$('body').on('click', '.layout-modal-edit-closer,.layout-modal-save-action', function(e){
 		
@@ -630,11 +649,17 @@ jQuery(function($) {
 
 
 	//toggle_option_row
-
 	$('.caldera-editor-body').on('click', '.add-toggle-option', function(e){
 
-		var clicked		= $(this),
-			wrapper		= clicked.closest('.caldera-editor-field-config-wrapper'),
+		var clicked		= $(this);
+
+		if(clicked.data('bulk')){
+			$(clicked.data('bulk')).toggle();
+			$(clicked.data('bulk')).find('textarea').focus();
+			return;
+		}
+
+		var	wrapper		= clicked.closest('.caldera-editor-field-config-wrapper'),
 			toggle_rows	= wrapper.find('.toggle-options'),
 			row			= $('#field-option-row-tmpl').html(),
 			template	= Handlebars.compile( row ),
@@ -644,27 +669,41 @@ jQuery(function($) {
 				option	: {}
 			};
 
+		if(clicked.data('options')){
+			var batchinput 	= $(clicked.data('options')),
+				batch 		= batchinput.val().split("\n");
+			for( var i = 0; i < batch.length; i ++){
+				config.option["opt" + parseInt( ( Math.random() + i ) * 0x100000 )] = {
+					value	:	batch[i],
+					label	:	batch[i],
+					default	:	false
+				}
+			}
+			$(clicked.data('options')).parent().hide();
+			batchinput.val('');
+			toggle_rows.empty();
+		}else{
 			// add new option
-			config.option[key]	=	{				
+			config.option[key]	=	{
 				value	:	'',
 				label	:	'',
 				default :	false				
 			};
+		}
+
+		// place new row
+		toggle_rows.append( template( config ) );
+		wrapper.find('.toggle_show_values').trigger('change');
 
 
-			// place new row
-			toggle_rows.append( template( config ) );
-
-
-
-			$('.toggle-options').sortable({
-				handle: ".dashicons-sort"
-			});
-
-			toggle_rows.find('.toggle_value_field').last().focus();
-
-
+		$('.toggle-options').sortable({
+			handle: ".dashicons-sort"
+		});
+		if(!batch){
+			toggle_rows.find('.toggle_label_field').last().focus();
+		}
 	});
+
 
 	// remove an option row
 	$('.caldera-editor-body').on('click', '.toggle-remove-option', function(e){
@@ -691,15 +730,16 @@ jQuery(function($) {
 
 	});
 
-	$('.caldera-editor-body').on('blur', '.toggle_value_field', function(e){
-		var value = $(this),
-			label = value.next();
+	$('.caldera-editor-body').on('blur toggle.values', '.toggle_label_field', function(e){
+		console.log(this);
+		var label = $(this),
+			value = label.prev();
 
-		if(label.val().length){
+		if(value.val().length){
 			return;
 		}
 
-		label.val(value.val());
+		value.val(label.val());
 	});
 
 	// build fild bindings

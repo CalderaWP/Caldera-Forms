@@ -255,11 +255,23 @@ class Caldera_Forms {
 		$sendername = __('Caldera Forms Notification', 'caldera-forms');
 		if(!empty($form['mailer']['sender_name'])){
 			$sendername = $form['mailer']['sender_name'];
+			if( false !== strpos($sendername, '%')){
+				$isname = self::get_slug_data( trim($sendername, '%'), $form);
+				if(!empty( $isname )){
+					$sendername = $isname;
+				}
+			}
 		}
 		if(empty($form['mailer']['sender_email'])){
 			$sendermail = get_option( 'admin_email' );
 		}else{
 			$sendermail = $form['mailer']['sender_email'];
+			if( false !== strpos($sendermail, '%')){
+				$ismail = self::get_slug_data( trim($sendermail, '%'), $form);
+				if(is_email( $ismail )){
+					$sendermail = $ismail;
+				}
+			}
 		}
 
 		$mail = array(
@@ -274,6 +286,7 @@ class Caldera_Forms {
 
 		if($form['mailer']['email_type'] == 'html'){
 			$mail['headers'][] = "Content-type: text/html";
+			$mail['message'] = nl2br($form['mailer']['email_message'])."\r\n";
 		}
 
 		if(!empty($form['mailer']['recipients'])){
@@ -325,22 +338,25 @@ class Caldera_Forms {
 			$mail['attachments'][] = $csvfile['file'];
 		}
 
-		$mail = apply_filters( 'caldera_forms_mailer', $mail, $data, $form);
-
 		if(empty($mail)){
 			return;
 		}
-		// recipients
+
+		$mail = apply_filters( 'caldera_forms_mailer', $mail, $data, $form);		
+
+		/*// recipients
 		foreach($mail['recipients'] as &$recipient){
 			// trim spaces
 			$recipient = trim($recipient);
 		}
 		$recipients = implode(',', $mail['recipients']);
+		*/
 		$headers = implode("\r\n", $mail['headers']);		
 
 		do_action( 'caldera_forms_do_mailer', $mail, $data, $form);
 		if(!empty($mail)){
-			if(wp_mail($recipients, $mail['subject'], $mail['message'], $headers, $mail['attachments'] )){
+
+			if(wp_mail( (array) $mail['recipients'], $mail['subject'], $mail['message'], $headers, $mail['attachments'] )){
 				// kill attachment.
 				if(!empty($csvfile['file'])){
 					if(file_exists($csvfile['file'])){
@@ -857,68 +873,111 @@ class Caldera_Forms {
 		if(empty($conditions['group'])){
 			return true;
 		}
-		$data = self::get_submission_data($form);
+		//$data = self::get_submission_data($form);
 
 		foreach($conditions['group'] as $groupid=>$lines){
 			$truelines = array();
 			
 			foreach($lines as $lineid=>$line){
-				$truelines[$lineid] = false;
 
-				if(!empty($line['field']) && isset($form['fields'][$line['field']])){
-
-					// if not sent - preset it to a null value.
-					if(!isset($data[$line['field']])){
-						$prevalue = '';
-					}else{
-						$prevalue = $data[$line['field']];
-					}
-
-					foreach( (array) $prevalue as $value){
-						if($truelines[$lineid] == true){
-							break;
-						}
-						switch ($line['compare']) {
-							case 'is':
-								if($value == $line['value']){
-									$truelines[$lineid] = true;
-								}
-								break;
-							case 'isnot':
-
-								if($value != $line['value']){
-									$truelines[$lineid] = true;
-								}
-								break;
-							case '>':
-								if($value > $line['value']){
-									$truelines[$lineid] = true;
-								}
-								break;
-							case '<':
-								if($value < $line['value']){
-									$truelines[$lineid] = true;
-								}
-								break;
-							case 'startswith':
-								if( substr( $value, 0, strlen($line['value']) ) == $line['value']){
-									$truelines[$lineid] = true;
-								}
-								break;
-							case 'endswith':
-								if( substr( $value, strlen($value)-strlen($line['value']) ) == $line['value']){
-									$truelines[$lineid] = true;
-								}
-								break;
-							case 'contains':
-								if( false !== strpos( $value, $line['value'] ) ){
-									$truelines[$lineid] = true;
-								}
-								break;
-						}
-
+				$value = (array) self::get_field_data($line['field'], $form);
+				if(empty($value)){
+					$value = array('');
+				}
+				// do field value replaces
+				if( false !== strpos($line['value'], '%')){
+					$isslug = self::get_slug_data( trim($line['value'], '%'), $form);
+					if( $isslug !== null ){
+						$line['value'] = $isslug;
 					}
 				}
+
+				$truelines[$lineid] = false;
+
+				switch ($line['compare']) {
+					case 'is':
+						if(is_array($value)){
+							if(in_array($line['value'], $value)){
+								$truelines[$lineid] = true;
+							}
+						}else{
+							if($value == $line['value']){
+								$truelines[$lineid] = true;
+							}
+						}
+						break;
+					case 'isnot':
+						if(is_array($value)){
+							if(!in_array($line['value'], $value)){
+								$truelines[$lineid] = true;
+							}
+						}else{
+							if($value != $line['value']){
+								$truelines[$lineid] = true;
+							}
+						}
+						break;
+					case '>':
+						if(is_array($value)){
+							if(array_sum($value) > $line['value']){
+								$truelines[$lineid] = true;
+							}
+						}else{
+							if($value > $line['value']){
+								$truelines[$lineid] = true;
+							}
+						}
+						break;
+					case '<':
+						if(is_array($value)){
+							if(array_sum($value) < $line['value']){
+								$truelines[$lineid] = true;
+							}
+						}else{
+							if($value < $line['value']){
+								$truelines[$lineid] = true;
+							}
+						}
+						break;
+					case 'startswith':
+						if(is_array($value)){
+							foreach($value as $part){
+								if( 0 === strpos($line['value'], $part)){
+									$truelines[$lineid] = true;
+								}
+							}
+						}else{					
+							if( substr( $value, 0, strlen($line['value']) ) == $line['value']){
+								$truelines[$lineid] = true;
+							}
+						}
+						break;
+					case 'endswith':
+						if(is_array($value)){
+							foreach($value as $part){
+								if( substr( $part, strlen($part)-strlen($line['value']) ) == $line['value']){
+									$truelines[$lineid] = true;
+								}
+							}
+						}else{
+							if( substr( $value, strlen($value)-strlen($line['value']) ) == $line['value']){
+								$truelines[$lineid] = true;
+							}
+						}
+						break;
+					case 'contains':
+						if(is_array($value)){
+							if( false !== strpos( implode('', $value), $line['value'] ) ){
+								$truelines[$lineid] = true;
+							}
+						}else{
+							if( false !== strpos( $value, $line['value'] ) ){
+								$truelines[$lineid] = true;
+							}
+						}
+						break;
+				}
+				
 			}
 
 			$trues[$groupid] = in_array(false, $truelines) ? false : true;
@@ -1068,6 +1127,9 @@ class Caldera_Forms {
 						$out = array();
 						foreach($entry as $option_id=>$option){
 							if(isset($field['config']['option'][$option_id])){
+								if(!isset($field['config']['option'][$option_id]['value'])){
+									$field['config']['option'][$option_id]['value'] = $field['config']['option'][$option_id]['label'];
+								}
 								$out[] = $field['config']['option'][$option_id]['value'];
 							}
 						}
@@ -1840,16 +1902,37 @@ class Caldera_Forms {
 		}
 
 
-
 		if(is_string($atts)){
+
+			$form = get_option( $atts );
+
+			if(empty($form['ID']) || ( empty($form['ID']) && empty($form['name']) ) ){
+				$forms = get_option( '_caldera_forms' );
+				dump($forms);
+				return;
+			}
+
 			$atts = array( 'id' => $atts);
+		}else{
+			if(empty($atts['id'])){
+				if(!empty($atts['name'])){
+					$forms = get_option( '_caldera_forms' );
+					foreach($forms as $form_id=>$form_maybe){
+						if( trim(strtolower($atts['name'])) == strtolower($form_maybe['name']) ){
+							$atts['id'] = $form_id;
+							break;
+						}
+					}
+				}
+
+				if(empty($atts['id'])){
+					return;
+				}
+			}
+			$form = get_option( $atts['id'] );
+
 		}
 
-		if(empty($atts['id'])){
-			return;
-		}
-
-		$form = get_option( $atts['id'] );
 		
 		$form = apply_filters('caldera_forms_render_get_form', $form );
 
@@ -2230,6 +2313,32 @@ class Caldera_Forms {
 			if(!empty($entry_id)){				
 				$out .= "<input type=\"hidden\" name=\"_cf_frm_edt\" value=\"" . $entry_id . "\">\r\n";
 			}
+
+			// auto pagination
+			if(!empty($form['auto_progress']) && count($form['page_names']) > 1){
+			
+			// retain query string				
+			$qurystr = array();
+			parse_str( $_SERVER['QUERY_STRING'], $qurystr );
+			echo "<span class=\"caldera-grid\"><ol class=\"breadcrumb\" data-form=\"caldera_form_" . $current_form_count ."\">\r\n";
+			$current_page = 1;
+			if(!empty($_GET['cf_pg'])){
+				$current_page = $_GET['cf_pg'];
+			}
+			foreach($form['page_names'] as $page_key=>$page_name){
+				$tabclass = null;
+					
+				if($current_page == $page_key + 1){
+					$tabclass = ' class="active"';
+				}
+			
+				$qurystr['cf_pg'] = $page_key + 1;
+				$qurystr['_rdm_'] = rand(100000, 999999);
+				echo "<li" . $tabclass . "><a href=\"?". http_build_query($qurystr) . "\" data-page=\"" . ( $page_key + 1 ) ."\" data-pagenav=\"caldera_form_" . $current_form_count ."\">". $page_name . "</a></li>\r\n";
+			}
+			echo "</ol></span>\r\n";
+			}
+
 			$out .= $grid->renderLayout();
 			$out .= "</" . $form_element . ">\r\n";
 		}

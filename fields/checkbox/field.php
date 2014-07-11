@@ -8,6 +8,9 @@
 
 		<?php }else{
 			foreach($field['config']['option'] as $option_key=>$option){
+				if(!isset($option['value'])){
+					$option['value'] = htmlspecialchars( $option['label'] );
+				}
 				?>
 				<?php if(empty($field['config']['inline'])){ ?>
 				<div class="checkbox">

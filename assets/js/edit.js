@@ -48,7 +48,14 @@ jQuery(function($){
 
 
 	$('.edit-update-trigger').baldrick({
-		method			:	'POST'
+		method			:	'POST',
+		before			: function(){
+			if(tinyMCE){
+				tinyMCE.triggerSave();
+			}
+			
+			return true;
+		}
 	});
 
 
@@ -58,7 +65,7 @@ jQuery(function($){
 	*
 	*/
 	function build_fieldtype_config(el){
-
+		
 		var select 			= $(el),
 			templ			= $('#' + select.val() + '_tmpl').length ? $('#' + select.val() + '_tmpl').html() : $('#noconfig_field_templ').html(),
 			parent			= select.closest('.caldera-editor-field-config-wrapper'),
@@ -122,6 +129,10 @@ jQuery(function($){
 			rebuild_field_binding();
 
 			baldrickTriggers();
+
+			// seup options
+			parent.find('.toggle_show_values').trigger('change');
+
 
 	}
 
@@ -774,6 +785,26 @@ jQuery(function($){
 	// load fist  group
 	$('.caldera-group-nav').first().find('a').trigger('click');
 
+	// toggle set values
+	$('.caldera-editor-body').on('change', '.toggle_show_values', function(e){
+		var clicked = $(this),
+			wrap = clicked.closest('.caldera-config-group-toggle-options');
+			values = wrap.find('.toggle_value_field'),
+			lables = wrap.find('.toggle_label_field'),
+			field_lables = wrap.find('.caldera-config-group-option-labels');
 
+		if(!clicked.prop('checked')){
+			values.prop('disabled', true).hide();
+			lables.css('width', 245);
+			field_lables.hide();
+		}else{
+			values.prop('disabled', false).show();
+			lables.css('width', '');
+			field_lables.show();
+		}
+
+		lables.trigger('toggle.values');
+
+	});
 });//
 
