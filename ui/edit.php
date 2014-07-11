@@ -41,18 +41,29 @@ $field_type_defaults = array(
 $field_options_template = "
 <div class=\"caldera-config-group-toggle-options\">
 	<div class=\"caldera-config-group caldera-config-group-full\">
-		<button class=\"button block-button add-toggle-option\" type=\"button\">" . __('Add Option', 'caldera-forms') . "</button>
+		<button type=\"button\" class=\"button add-toggle-option\" style=\"width: 220px;\">" . __('Add Option', 'caldera-forms') . "</button>		
+		<button type=\"button\" data-bulk=\"#{{_id}}_bulkwrap\" class=\"button add-toggle-option\" style=\"width: 120px;\">" . __('Bulk Insert', 'caldera-forms') . "</button>
+		<div id=\"{{_id}}_bulkwrap\" style=\"display:none; margin-top:10px;\">
+		<textarea style=\"resize:vertical; height:200px;\" class=\"block-input\" id=\"{{_id}}_batch\"></textarea>
+		<p class=\"description\">" . __('Single option per line. These replace the current list.', 'caldera-forms') . "</p>
+		<button type=\"button\" data-options=\"#{{_id}}_batch\" class=\"button block-button add-toggle-option\" style=\"margin: 10px 0;\">" . __('Insert Options', 'caldera-forms') . "</button>
+		</div>
 	</div>
 	<div class=\"caldera-config-group caldera-config-group-full\">
-	<label style=\"padding: 10px;\"><input type=\"radio\" class=\"toggle_set_default field-config\" name=\"{{_name}}[default]\" value=\"\" {{#unless default}}checked=\"checked\"{{/unless}}> " . __('No Default', 'caldera-forms') . "</label>
+	<label style=\"padding: 10px;\"><input type=\"radio\" class=\"toggle_set_default field-config\" name=\"{{_name}}[default]\" value=\"1\" {{#unless default}}checked=\"checked\"{{/unless}}> " . __('No Default', 'caldera-forms') . "</label>
+	<label class=\"pull-right\" style=\"padding: 10px;\"><input type=\"checkbox\" class=\"toggle_show_values field-config\" name=\"{{_name}}[show_values]\" value=\"1\" {{#if show_values}}checked=\"checked\"{{/if}}> " . __('Show Values', 'caldera-forms') . "</label>
+	</div>
+	<div class=\"caldera-config-group-option-labels\" {{#unless show_values}}style=\"display:none;\"{{/unless}}>
+		<span style=\"display: block; clear: left; padding-left: 65px; float: left; width: 125px;\">" . __('Value', 'caldera-forms') . "</span>
+		<span style=\"float: left;\">" . __('Label', 'caldera-forms') . "</span>
 	</div>
 	<div class=\"caldera-config-group caldera-config-group-full toggle-options\">
 		{{#each option}}
 		<div class=\"toggle_option_row\">
 			<i class=\"dashicons dashicons-sort\" style=\"padding: 4px 9px;\"></i>
 			<input type=\"radio\" class=\"toggle_set_default field-config\" name=\"{{../_name}}[default]\" value=\"{{@key}}\" {{#is ../default value=\"@key\"}}checked=\"checked\"{{/is}}>
-			<input type=\"text\" class=\"toggle_value_field field-config\" name=\"{{../_name}}[option][{{@key}}][value]\" value=\"{{value}}\" placeholder=\"value\">
-			<input type=\"text\" class=\"toggle_label_field field-config\" name=\"{{../_name}}[option][{{@key}}][label]\" value=\"{{label}}\" placeholder=\"label\">
+			<input{{#unless ../show_values}} disabled=\"disabled\" style=\"display:none;\"{{/unless}} type=\"text\" class=\"toggle_value_field field-config\" name=\"{{../_name}}[option][{{@key}}][value]\" value=\"{{value}}\" placeholder=\"value\">
+			<input{{#unless ../show_values}} style=\"width:245px;\"{{/unless}} type=\"text\" class=\"toggle_label_field field-config\" name=\"{{../_name}}[option][{{@key}}][label]\" value=\"{{label}}\" placeholder=\"label\">
 			<button class=\"button button-small toggle-remove-option\" type=\"button\"><i class=\"icn-delete\"></i></button>		
 		</div>
 		{{/each}}

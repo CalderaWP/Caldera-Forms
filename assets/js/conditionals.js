@@ -17,66 +17,86 @@
 			// has a wrapper - bind conditions
 			for(var id in groups){
 				
-				var truelines	= [],
+				var truelines	= {},
 					lines		= groups[id];						
 				// go over each line in a group to find a false
 				for(var lid in lines){
 					/// get field 
-					var comparefield 	= $('[data-field="' + lines[lid].field + '"]'),
-						linetmp 		= false;
-					if( comparefield.is(':radio,:checkbox')){
-						comparefield = comparefield.filter(':checked');
-					}
+					var compareelement 	= $('[data-field="' + lines[lid].field + '"]'),
+						comparefield 	= [];
 					
-					for( var i = 0; i<comparefield.length; i++){
-						
+					truelines[lid] 	= false;
+					
+					if( compareelement.is(':radio,:checkbox')){
+						compareelement = compareelement.filter(':checked');
+					}
+					if(!compareelement.length){
+						comparefield.push("");
+					}else{
+						for( var i = 0; i<compareelement.length; i++){
+							comparefield.push(compareelement[i].value);
+						}
+					}
+					console.log(comparefield);
+					//for( var i = 0; i<comparefield.length; i++){
+
 						switch(lines[lid].compare) {
 							case 'is':
-								if(comparefield[i].value.toLowerCase() === lines[lid].value.toLowerCase()){
-									linetmp = true;
+								if(comparefield.length){
+									if(comparefield.indexOf(lines[lid].value) >= 0){
+										truelines[lid] = true;
+									}
 								}
 								break;
 							case 'isnot':
-								if(comparefield[i].value.toLowerCase() !== lines[lid].value.toLowerCase()){
-									linetmp = true;
+								if(comparefield.length){
+									if(comparefield.indexOf(lines[lid].value) < 0){
+										truelines[lid] = true;
+									}
 								}
 								break;
 							case '>':
-								if( parseFloat( comparefield[i].value ) > parseFloat( lines[lid].value ) ){
-									linetmp = true;
+								if( parseFloat( comparefield.reduce(function(a, b) {return a + b;}) ) > parseFloat( lines[lid].value ) ){
+									truelines[lid] = true;
 								}
 								break;
 							case '<':
-								if( parseFloat( comparefield[i].value ) < parseFloat( lines[lid].value ) ){
-									linetmp = true;
+								if( parseFloat( comparefield.reduce(function(a, b) {return a + b;}) ) < parseFloat( lines[lid].value ) ){
+									truelines[lid] = true;
 								}
 								break;
 							case 'startswith':
-								if( comparefield[i].value.toLowerCase().substr(0, lines[lid].value.toLowerCase().length ) === lines[lid].value.toLowerCase()){
-									linetmp = true;
+								for( var i = 0; i<comparefield.length; i++){
+									if( comparefield[i].toLowerCase().substr(0, lines[lid].value.toLowerCase().length ) === lines[lid].value.toLowerCase()){
+										truelines[lid] = true;
+									}
 								}
 								break;
 							case 'endswith':
-								if( comparefield[i].value.toLowerCase().substr(comparefield[i].value.toLowerCase().length - lines[lid].value.toLowerCase().length ) === lines[lid].value.toLowerCase()){
-									linetmp = true;
+								for( var i = 0; i<comparefield.length; i++){
+									if( comparefield[i].toLowerCase().substr(comparefield[i].toLowerCase().length - lines[lid].value.toLowerCase().length ) === lines[lid].value.toLowerCase()){
+										truelines[lid] = true;
+									}
 								}
 								break;
 							case 'contains':
-								if( comparefield[i].value.toLowerCase().indexOf( lines[lid].value ) >= 0 ){
-									linetmp = true;
+								for( var i = 0; i<comparefield.length; i++){
+									if( comparefield[i].toLowerCase().indexOf( lines[lid].value ) >= 0 ){
+										truelines[lid] = true;
+									}
 								}
 								break;
 						}
-					}
-
-					truelines.push(linetmp);
-				}
+				}				
 				// add result in
-				if(truelines.length && truelines.indexOf(false) < 0){
-					trues.push(true);
-				}else{
-					trues.push(false);
+				istrue = true;
+				for( var prop in truelines ){
+					if(truelines[prop] === false){
+						istrue = false;
+						break;
+					}
 				}
+				trues.push(istrue);
 
 			}
 
