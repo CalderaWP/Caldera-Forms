@@ -49,6 +49,8 @@ class Caldera_Forms {
 		add_filter('caldera_forms_submit_redirect_complete', array( $this, 'do_redirect'),10, 4);
 		add_action('caldera_forms_edit_end', array($this, 'calculations_templates') );
 
+		// magic tags
+		//add_filter('caldera_forms_render_magic_tag', array( $this, 'do_magic_tags'));
 		// mailser
 		add_filter('caldera_forms_mailer', array( $this, 'mail_attachment_check'),10, 3);
 
@@ -276,7 +278,7 @@ class Caldera_Forms {
 
 		$mail = array(
 			'recipients' => array(),
-			'subject'	=> $form['mailer']['email_subject'],
+			'subject'	=> self::do_magic_tags($form['mailer']['email_subject']),
 			'message'	=> $form['mailer']['email_message']."\r\n",
 			'headers'	=>	array(
 				'From: ' . $sendername . ' <' . $sendermail . '>'
@@ -288,6 +290,60 @@ class Caldera_Forms {
 			$mail['headers'][] = "Content-type: text/html";
 			$mail['message'] = nl2br($form['mailer']['email_message'])."\r\n";
 		}
+
+		// Filter Mailer first as not to have user input be filtered
+		$mail['message'] = self::do_magic_tags($mail['message']);
+
+		// get tags
+		preg_match_all("/%(.+?)%/", $mail['message'], $hastags);
+		if(!empty($hastags[1])){
+			foreach($hastags[1] as $tag_key=>$tag){
+				$tagval = self::get_slug_data($tag, $form);
+				if(is_array($tagval)){
+					$tagval = implode(', ', $tagval);
+				}
+				$mail['message'] = str_replace($hastags[0][$tag_key], $tagval, $mail['message']);
+			}
+		}
+
+		//$mail['message']
+
+		// ifs
+		preg_match_all("/\[if (.+?)?\](?:(.+?)?\[\/if\])?/", $mail['message'], $hasifs);
+		if(!empty($hasifs[1])){
+			// process ifs
+			foreach($hasifs[0] as $if_key=>$if_tag){
+
+				$content = explode('[else]', $hasifs[2][$if_key]);
+				if(empty($content[1])){
+					$content[1] = '';
+				}
+				$vars = shortcode_parse_atts( $hasifs[1][$if_key]);
+				foreach($vars as $varkey=>$varval){
+					if(is_string($varkey)){
+						$var = self::get_slug_data($varkey, $form);
+						if( in_array($varval, (array) $var) ){
+							// yes show code
+							$mail['message'] = str_replace( $hasifs[0][$if_key], $content[0], $mail['message']);
+						}else{
+							// nope- no code
+							$mail['message'] = str_replace( $hasifs[0][$if_key], $content[1], $mail['message']);
+						}
+					}else{
+						$var = self::get_slug_data($varval, $form);
+						if(!empty($var)){
+							// show code
+							$mail['message'] = str_replace( $hasifs[0][$if_key], $content[0], $mail['message']);
+						}else{
+							// no code
+							$mail['message'] = str_replace( $hasifs[0][$if_key], $content[1], $mail['message']);
+						}
+					}
+				}
+			}
+
+		}
+		
 
 		if(!empty($form['mailer']['recipients'])){
 			$mail['recipients'] = explode(',', $form['mailer']['recipients']);
@@ -1011,7 +1067,87 @@ class Caldera_Forms {
 			exit;
 		}
 	}
-	
+	// magic tags
+	static public function do_magic_tags($value){
+
+		// check for magics
+		preg_match_all("/\{(.+?)\}/", $value, $magics);
+		if(!empty($magics[1])){
+			foreach($magics[1] as $magic_key=>$magic_tag){
+
+				$magic = explode(':', $magic_tag, 2);
+
+				if(count($magic) == 2){
+					switch (strtolower( $magic[0]) ) {
+						case 'get':
+							if( isset($_GET[$magic[1]])){
+								$magic_tag = $_GET[$magic[1]];
+							}else{
+								$magic_tag = null;
+							}
+							break;
+						case 'post':
+							if( isset($_POST[$magic[1]])){
+								$magic_tag = $_POST[$magic[1]];
+							}else{
+								$magic_tag = null;
+							}
+							break;
+						case 'request':
+							if( isset($_REQUEST[$magic[1]])){
+								$magic_tag = $_REQUEST[$magic[1]];
+							}else{
+								$magic_tag = null;
+							}
+							break;
+						case 'date':
+							$magic_tag = date($magic[1]);
+							break;
+						case 'user':
+							if(is_user_logged_in()){
+								$user = get_userdata( get_current_user_id() );
+								if(isset( $user->data->{$magic[1]} )){
+									$magic_tag = $user->data->{$magic[1]};
+								}else{
+									if(strtolower($magic[1]) == 'id'){
+										$magic_tag = $user->ID;
+									}
+									$magic_tag = null;
+								}
+							}else{
+								$magic_tag = null;
+							}
+							break;
+						case 'embed_post':
+							global $post;
+
+							if(is_object($post)){
+								if(isset( $post->{$magic[1]} )){
+									$magic_tag = $post->{$magic[1]};
+								}
+							}else{
+								$magic_tag = null;
+							}
+							break;
+
+					}
+				}else{
+					switch ($magic_tag) {
+						case 'ip':
+							$magic_tag = $_SERVER['REMOTE_ADDR'];
+							break;
+					}
+				}
+				
+				$filter_value = apply_filters('caldera_forms_do_magic_tag', $magic_tag, $magics[0][$magic_key]);
+				$value = str_replace($magics[0][$magic_key], $filter_value, $value);
+			}
+		}
+
+		return $value;
+	}
+
+	// get field types.
 	static public function get_field_types(){
 		global $field_types;
 		if(!empty($field_types)){
@@ -1130,24 +1266,24 @@ class Caldera_Forms {
 								if(!isset($field['config']['option'][$option_id]['value'])){
 									$field['config']['option'][$option_id]['value'] = $field['config']['option'][$option_id]['label'];
 								}
-								$out[] = $field['config']['option'][$option_id]['value'];
+								$out[] = self::do_magic_tags($field['config']['option'][$option_id]['value']);
 							}
 						}
 						$processed_data[$form['ID']][$field_id] = $out;
 					}else{
 						foreach($field['config']['option'] as $option){
 							if($option['value'] == $entry){
-								$processed_data[$form['ID']][$field_id] = $entry;
+								$processed_data[$form['ID']][$field_id] = self::do_magic_tags($entry);
 								break;
 							}
 						}
 					}
 				}else{
-					$processed_data[$form['ID']][$field_id] = $field['config']['default'];
+					$processed_data[$form['ID']][$field_id] = self::do_magic_tags($field['config']['default']);
 				}
 			}else{
 				// dynamic
-				$processed_data[$form['ID']][$field_id] = $entry;
+				$processed_data[$form['ID']][$field_id] = self::do_magic_tags($entry);
 			}
 		}
 		
@@ -2219,7 +2355,8 @@ class Caldera_Forms {
 					
 					// value
 					if(isset($field['config']['default'])){
-						$field_structure['field_value'] = $field['config']['default'];
+
+						$field_structure['field_value'] = self::do_magic_tags($field['config']['default']);
 					}
 
 					// transient data

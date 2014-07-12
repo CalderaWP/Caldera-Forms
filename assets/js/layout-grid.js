@@ -36,8 +36,6 @@ rebind_field_bindings = function(){
 			default_sel = field.data('default'),
 			count = 0;
 
-		console.log(field);
-
 		if(default_sel){
 			current = default_sel;
 		}
@@ -278,9 +276,16 @@ jQuery(function($) {
 		});		
 		$( ".layout-column" ).sortable({
 			connectWith: 	".layout-column",
+			appendTo: 		"#grid-pages-panel",
 			helper: 		"clone",
 			items:			".layout-form-field",
 			handle:			".drag-handle",
+			cursor: 		"move",
+			opacity: 		0.7,
+			cursorAt: 		{left: 100, top: 15},
+			start: function(e,ui){
+				ui.helper.css({width: '200px', height: '35px', paddingTop: '20px'});
+			},
 			stop: function(e,ui){
 				ui.item.removeAttr('style');
 				buildLayoutString();
@@ -292,7 +297,14 @@ jQuery(function($) {
 			helper: "clone",
 			appendTo: "body"
 		});
-		
+		$('.page-toggle.button').droppable({
+			accept: ".layout-form-field",
+			over: function(e, ui){
+				$(this).trigger('click');
+				//buildSortables();
+				$( ".layout-column" ).sortable("refresh");
+			}
+		});
 		// Tools Bar Items
 		$( ".layout-column" ).droppable({
 			greedy: true,
@@ -711,6 +723,7 @@ jQuery(function($) {
 		$(this).parent().remove();
 		triggerfield.trigger('change');
 	});
+
 	$('.caldera-editor-body').on('click', '.page-toggle', function(e){
 		var clicked = $(this),
 			wrap = clicked.parent(),
@@ -731,7 +744,7 @@ jQuery(function($) {
 	});
 
 	$('.caldera-editor-body').on('blur toggle.values', '.toggle_label_field', function(e){
-		console.log(this);
+
 		var label = $(this),
 			value = label.prev();
 

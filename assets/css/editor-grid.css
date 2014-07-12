@@ -347,7 +347,7 @@
 .template-element.ui-draggable-dragging{
 	z-index: 1000;
 }
-
+.ui-sortable-helper{overflow: hidden;}
 
 .layout-grid article,.layout-grid aside,.layout-grid details,.layout-grid figcaption,.layout-grid figure,.layout-grid footer,.layout-grid header,.layout-grid hgroup,.layout-grid main,.layout-grid nav,.layout-grid section,.layout-grid summary{display:block;}
 .layout-grid audio,.layout-grid canvas,.layout-grid video{display:inline-block;}
