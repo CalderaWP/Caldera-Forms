@@ -804,6 +804,19 @@ class Caldera_Forms_Admin {
 					$forms = array();
 				}
 
+				// option value labels
+				if(!empty($data['fields'])){
+					foreach($data['fields'] as &$field){
+						if(!empty($field['config']['option']) && is_array($field['config']['option'])){
+							foreach($field['config']['option'] as &$option){
+								if(!isset($option['value'])){
+									$option['value'] = $option['label'];
+								}
+							}
+						}
+					}
+				}
+				
 				// add form to registry
 				$forms[$data['ID']] = $data;
 

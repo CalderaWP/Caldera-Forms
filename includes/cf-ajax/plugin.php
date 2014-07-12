@@ -85,7 +85,7 @@ function cf_ajax_redirect($type, $url, $form){
 
 			foreach($form['fields'] as $fieldid=>$field){
 				if( isset( $data['fields'][$fieldid] ) ){
-					$out['fields'][$fieldid] = $data['fields'][$field['slug']];
+					$out['fields'][$fieldid] = $data['fields'][$fieldid];
 				}
 			}
 		}
