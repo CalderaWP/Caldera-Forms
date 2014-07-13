@@ -106,7 +106,7 @@ class Caldera_Forms {
 	}
 
 
-	public static function captcha_check($value, $field, $data, $form){
+	public static function captcha_check($value, $field, $form){
 		
 		if(empty($_POST['recaptcha_response_field'])){
 			return array('_fail' => __("The reCAPTCHA field is required.", 'caldera-forms'));
@@ -675,7 +675,6 @@ class Caldera_Forms {
 				"field"		=>	"File",
 				"description" => __('File Uploader', 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/file/field.php",
-				"handler"	=>	array($this, 'handle_file_upload'),
 				"viewer"	=>	array($this, 'handle_file_view'),
 				"category"	=>	__("Basic,File", "cladera-forms"),
 				"setup"		=>	array(

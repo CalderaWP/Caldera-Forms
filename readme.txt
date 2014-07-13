@@ -38,12 +38,28 @@ none yet.
 3. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
-= 1.0.5 (21 June, 2014) =
+= 1.0.5 (13 July, 2014) =
 
-* Fixed bug in ajax verification
-* Fixed missing checkmark image
+Additions:
+* Multi Page Forms (still some work to do to make it easier)
+* Bulk option insert for select fields (dropdown, radio, checkboxes, toggle button)
+* Magic Tags on fields and mailer
+* tag conditionals on email message
+* Ajax return filter
+* Placeholder field to add a custom placeholder rather than using the lable.
+
+Bug Fixes:
+* Bug in ajax verification
+* Missing checkmark image in chrome
+* Conditionals on checkboxes now works
+* Conditionals performance on frontend
+* Calculations field responds to conditionals correctly
+* Static field types (select options etc) cannot be minipulated from frontend. Preprocessing on submit restores set values.
+
+Enhancements:
 * Switched redirect filter and action order
-* Added Ajax return filter
+* File upload method to use WordPress' handler to prevent issues on some installs.
+* Field dragging reduces to a set block for easier field placement.
 
 = 1.0.4 (20 June, 2014) =
 
