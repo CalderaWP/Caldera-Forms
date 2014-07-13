@@ -16,15 +16,20 @@ if(empty($elementType)){
 <?php
 $formula = $field['config']['formular'];
 $binds = array();
+$binds_wrap = array();
 $binds_vars = array();
 foreach($form['fields'] as $fid=>$cfg){
 	if(false !== strpos($formula, $fid)){
 		$binds_vars[] = $fid." = parseFloat( $('[data-field=\"".$fid."\"]').is(':checkbox') ? checked_total_" . $field_base_id. "($('[data-field=\"".$fid."\"]:checked')) : $('[data-field=\"".$fid."\"]').is(':radio') ? $('[data-field=\"".$fid."\"]:checked').val() : $('[data-field=\"".$fid."\"]').val() ) || 0 ";
 		$binds[] = "[data-field=\"".$fid."\"]";
+		// include a conditional wrapper
+		$binds_wrap[] = "#conditional_".$fid;
 	}
 }
 
 if(!empty($binds)){
+	$bindtriggers = array_merge($binds, $binds_wrap);
+
 ?>
 <script type="text/javascript">
 	jQuery(function($){
@@ -47,7 +52,7 @@ if(!empty($binds)){
 			$('[data-field="<?php echo $field_base_id; ?>"]').val( total ).trigger('change');
 
 		}
-		$('body').on('change keyup cf.remove', '<?php echo implode(',', $binds); ?>', function(e){
+		$('body').on('change keyup cf.remove cf.add', '<?php echo implode(',', $bindtriggers); ?>', function(e){
 			docalc_<?php echo $field_base_id; ?>();
 		});
 		docalc_<?php echo $field_base_id; ?>();

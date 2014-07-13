@@ -261,6 +261,16 @@ class Caldera_Forms_Admin {
 
 		// get all fieldtype
 		$field_types = apply_filters('caldera_forms_get_field_types', array() );
+		// setup filters
+		if(!empty($field_types)){
+			foreach($field_types as $fieldType=>$fieldConfig){
+				// check for a viewer
+				if(isset($fieldConfig['viewer'])){
+					add_filter('caldera_forms_view_field_' . $fieldType, $fieldConfig['viewer'], 10, 2);
+				}
+			}
+		}
+
 		$fields = array();
 		if(!empty($form['fields'])){
 			foreach($form['fields'] as $fid=>$field){
@@ -376,7 +386,7 @@ class Caldera_Forms_Admin {
 						// check view handler
 						$field = $fields[$row->slug];
 
-						if(isset($field_types[$field['type']]['viewer'])){
+						/*if(isset($field_types[$field['type']]['viewer'])){
 
 							if(is_array($field_types[$field['type']]['viewer'])){
 								$row->value = call_user_func_array($field_types[$field['type']]['viewer'],array($row->value, $field, $form));
@@ -386,7 +396,8 @@ class Caldera_Forms_Admin {
 									$row->value = $func($row->value, $field, $form);
 								}
 							}
-						}
+						}*/
+						$row->value = apply_filters('caldera_forms_view_field_' . $field['type'], $row->value, $field, $form);
 
 
 						if(isset($data['entries']['E' . $row->_entryid]['data'][$row->slug])){

@@ -543,23 +543,25 @@ class Caldera_Forms {
 
 	}
 
-	static public function handle_calculation($value, $field, $data, $form){
+	static public function run_calculation($value, $field, $form){
+
+		//$data = self::get_submission_data($form);
 		
 		$formula = $field['config']['formular'];
 		if( empty($formula)){
 			return 0;
 		}
+
 		foreach($form['fields'] as $fid=>$cfg){
 			if(false !== strpos($formula, $fid)){
-				if(isset($data[$cfg['slug']])){
-					if(is_array($data[$cfg['slug']])){
-						$number = floatval( array_sum( $data[$cfg['slug']] ) );
-					}else{
-						$number = floatval( $data[$cfg['slug']] );
-					}
+				$entry_value = self::get_field_data($fid, $form);
+				
+				if(is_array($entry_value)){
+					$number = floatval( array_sum( $entry_value ) );
 				}else{
-					$number = 0;
+					$number = floatval( $entry_value );
 				}
+			
 				$formula = str_replace($fid, $number, $formula);
 			}
 		}			
@@ -583,7 +585,7 @@ class Caldera_Forms {
 			'calculation' => array(
 				"field"		=>	__("Calculation", "cladera-forms"),
 				"file"		=>	CFCORE_PATH . "fields/calculation/field.php",
-				"handler"	=>	array($this, "handle_calculation"),
+				"handler"	=>	array($this, "run_calculation"),
 				"category"	=>	__("Special,Math", "cladera-forms"),
 				"description" => __('Calculate values', "cladera-forms"),
 				"setup"		=>	array(
@@ -1228,6 +1230,7 @@ class Caldera_Forms {
 		if(isset($form['fields'][$field_id])){
 			// get field
 			$field = apply_filters('caldera_forms_render_setup_field', $form['fields'][$field_id], $form);
+
 			if(empty($field) || !isset($field['ID'])){
 				return null;
 			}
@@ -1235,14 +1238,22 @@ class Caldera_Forms {
 			$field_types = self::get_field_types();
 
 			if(!isset($field_types[$field['type']])){
-
 				return null;
 			}
 			$entry = null;
+			// dont bother if conditions say it shouldnt be here.
+			if(!empty($field['conditions']['type'])){
+				if(!self::check_condition($field['conditions'], $form)){
+					$processed_data[$form['ID']][$field_id] = $entry;
+					return $entry;
+				}
+			}
+
+			// check condition to see if field should be there first.
+			// check if conditions match first. ignore vailators if not part of condition
 			if(isset($_POST[$field_id])){
 				$entry = stripslashes_deep($_POST[$field_id]);
 			}
-
 			// apply field filter
 			if(has_filter('caldera_forms_process_field_' . $field['type'])){
 				$entry = apply_filters( 'caldera_forms_process_field_' . $field['type'] , $entry, $field, $form );
@@ -1384,7 +1395,7 @@ class Caldera_Forms {
 
 
 		// initialize process data
-		foreach($form['fields'] as $field_id=>$field){
+		foreach($form['fields'] as $field_id=>$field){			
 			self::get_field_data( $field_id, $form, $entry_id);
 		}
 
@@ -1427,6 +1438,24 @@ class Caldera_Forms {
 		// get all fieldtype
 		$field_types = self::get_field_types();
 		
+		// setup fieldtypes field submissions
+		if(!empty($field_types)){
+			foreach($field_types as $fieldType=>$fieldConfig){
+				// check for a handler
+				if(isset($fieldConfig['handler'])){
+					add_filter('caldera_forms_process_field_' . $fieldType, $fieldConfig['handler'], 10, 3);
+				}
+				// check for a hash
+				if(isset($fieldConfig['save'])){
+					add_filter('caldera_forms_save_field_' . $fieldType, $fieldConfig['save'], 10, 3);
+				}
+				// check for a hash
+				if(isset($fieldConfig['validate'])){
+					add_filter('caldera_forms_validate_field_' . $fieldType, $fieldConfig['validate'], 10, 3);
+				}
+			}
+		}
+
 		// SET process ID
 		if(isset($_GET['cf_er'])){
 			$chk = get_transient( $_GET['cf_er'] );
@@ -1520,18 +1549,20 @@ class Caldera_Forms {
 			}else{
 				// required check
 				$failed = false;
+				// run validators
+				if(has_filter('caldera_forms_validate_field_' . $field['type'])){
+					$entry = apply_filters( 'caldera_forms_validate_field_' . $field['type'], $entry, $field, $form );
+				}
+				// if required, check the validators returned errors or not.
 				if(!empty($field['required'])){
 
-					// check if conditions match first.
-					if(!empty($field['conditions']['type'])){							
+					// check if conditions match first. ignore vailators if not part of condition
+					if(!empty($field['conditions']['type'])){
 						if(!self::check_condition($field['conditions'], $form)){
 							continue;
 						}
 					}
-
-					if(has_filter('caldera_forms_validate_field_' . $field['type'])){
-						$entry = apply_filters( 'caldera_forms_validate_field_' . $field['type'], $entry, $field, $form );
-					}
+					// if error - return so
 					if ( is_wp_error( $entry )){
 						$transdata['fields'][$field_id] = $entry->get_error_message();
 					}elseif($entry === null){

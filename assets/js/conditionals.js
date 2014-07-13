@@ -1,9 +1,9 @@
 (function($){
 
-	function calders_forms_check_conditions(el){
+	function calders_forms_check_conditions(){
 		
 		for(var field in caldera_conditionals){
-			
+
 			// each conditional
 			var fieldwrapper = $('#conditional_' + field);
 			
@@ -37,56 +37,54 @@
 							comparefield.push(compareelement[i].value);
 						}
 					}
-					console.log(comparefield);
-					//for( var i = 0; i<comparefield.length; i++){
 
-						switch(lines[lid].compare) {
-							case 'is':
-								if(comparefield.length){
-									if(comparefield.indexOf(lines[lid].value) >= 0){
-										truelines[lid] = true;
-									}
-								}
-								break;
-							case 'isnot':
-								if(comparefield.length){
-									if(comparefield.indexOf(lines[lid].value) < 0){
-										truelines[lid] = true;
-									}
-								}
-								break;
-							case '>':
-								if( parseFloat( comparefield.reduce(function(a, b) {return a + b;}) ) > parseFloat( lines[lid].value ) ){
+					switch(lines[lid].compare) {
+						case 'is':
+							if(comparefield.length){
+								if(comparefield.indexOf(lines[lid].value) >= 0){
 									truelines[lid] = true;
 								}
-								break;
-							case '<':
-								if( parseFloat( comparefield.reduce(function(a, b) {return a + b;}) ) < parseFloat( lines[lid].value ) ){
+							}
+							break;
+						case 'isnot':
+							if(comparefield.length){
+								if(comparefield.indexOf(lines[lid].value) < 0){
 									truelines[lid] = true;
 								}
-								break;
-							case 'startswith':
-								for( var i = 0; i<comparefield.length; i++){
-									if( comparefield[i].toLowerCase().substr(0, lines[lid].value.toLowerCase().length ) === lines[lid].value.toLowerCase()){
-										truelines[lid] = true;
-									}
+							}
+							break;
+						case '>':
+							if( parseFloat( comparefield.reduce(function(a, b) {return a + b;}) ) > parseFloat( lines[lid].value ) ){
+								truelines[lid] = true;
+							}
+							break;
+						case '<':
+							if( parseFloat( comparefield.reduce(function(a, b) {return a + b;}) ) < parseFloat( lines[lid].value ) ){
+								truelines[lid] = true;
+							}
+							break;
+						case 'startswith':
+							for( var i = 0; i<comparefield.length; i++){
+								if( comparefield[i].toLowerCase().substr(0, lines[lid].value.toLowerCase().length ) === lines[lid].value.toLowerCase()){
+									truelines[lid] = true;
 								}
-								break;
-							case 'endswith':
-								for( var i = 0; i<comparefield.length; i++){
-									if( comparefield[i].toLowerCase().substr(comparefield[i].toLowerCase().length - lines[lid].value.toLowerCase().length ) === lines[lid].value.toLowerCase()){
-										truelines[lid] = true;
-									}
+							}
+							break;
+						case 'endswith':
+							for( var i = 0; i<comparefield.length; i++){
+								if( comparefield[i].toLowerCase().substr(comparefield[i].toLowerCase().length - lines[lid].value.toLowerCase().length ) === lines[lid].value.toLowerCase()){
+									truelines[lid] = true;
 								}
-								break;
-							case 'contains':
-								for( var i = 0; i<comparefield.length; i++){
-									if( comparefield[i].toLowerCase().indexOf( lines[lid].value ) >= 0 ){
-										truelines[lid] = true;
-									}
+							}
+							break;
+						case 'contains':
+							for( var i = 0; i<comparefield.length; i++){
+								if( comparefield[i].toLowerCase().indexOf( lines[lid].value ) >= 0 ){
+									truelines[lid] = true;
 								}
-								break;
-						}
+							}
+							break;
+					}
 				}				
 				// add result in
 				istrue = true;
@@ -124,25 +122,25 @@
 			if(action === 'show'){
 				// show - get template and place it in.
 				if(!target.html().length){
-					target.html(template);
+					target.html(template).trigger('cf.add');
 				}
 			}else if (action === 'hide'){
-				target_field.val('').empty().prop('checked', false).trigger('cf.remove');
-				target.empty();
+				if(target.html().length){
+					target_field.val('').empty().prop('checked', false);
+					target.empty().trigger('cf.remove');
+				}
 			}
 
 		}	
 	}
 	
 	if(typeof caldera_conditionals !== 'undefined'){
-
+		
 		$('.caldera_forms_form').on('change keyup', 'input,select,textarea', function(e){
-
 			calders_forms_check_conditions();
 
 		});
 		// init
 		calders_forms_check_conditions();
 	}
-
 })(jQuery);

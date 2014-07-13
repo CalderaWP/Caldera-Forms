@@ -50,7 +50,7 @@ $field_options_template = "
 		</div>
 	</div>
 	<div class=\"caldera-config-group caldera-config-group-full\">
-	<label style=\"padding: 10px;\"><input type=\"radio\" class=\"toggle_set_default field-config\" name=\"{{_name}}[default]\" value=\"1\" {{#unless default}}checked=\"checked\"{{/unless}}> " . __('No Default', 'caldera-forms') . "</label>
+	<label style=\"padding: 10px;\"><input type=\"radio\" class=\"toggle_set_default field-config\" name=\"{{_name}}[default]\" value=\"\" {{#unless default}}checked=\"checked\"{{/unless}}> " . __('No Default', 'caldera-forms') . "</label>
 	<label class=\"pull-right\" style=\"padding: 10px;\"><input type=\"checkbox\" class=\"toggle_show_values field-config\" name=\"{{_name}}[show_values]\" value=\"1\" {{#if show_values}}checked=\"checked\"{{/if}}> " . __('Show Values', 'caldera-forms') . "</label>
 	</div>
 	<div class=\"caldera-config-group-option-labels\" {{#unless show_values}}style=\"display:none;\"{{/unless}}>
