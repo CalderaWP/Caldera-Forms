@@ -5,7 +5,13 @@
 	</div>
 </div>
 <div class="caldera-config-group">
-	<label for="{{_id}}_color"><?php echo __('color', 'caldera-forms'); ?></label>
+	<label for="{{_id}}_trackcolor"><?php echo __('Track', 'caldera-forms'); ?></label>
+	<div class="caldera-config-field">
+		<input id="{{_id}}_trackcolor" type="text" class="minicolor-picker field-config" name="{{_name}}[trackcolor]" value="{{trackcolor}}">
+	</div>
+</div>
+<div class="caldera-config-group">
+	<label for="{{_id}}_color"><?php echo __('Highlight', 'caldera-forms'); ?></label>
 	<div class="caldera-config-field">
 		<input id="{{_id}}_color" type="text" class="minicolor-picker field-config" name="{{_name}}[color]" value="{{color}}">
 	</div>
@@ -60,6 +66,7 @@
 </div>
 {{#script}}
 jQuery(function($){
+	jQuery('#{{_id}}_trackcolor').miniColors();
 	jQuery('#{{_id}}_color').miniColors();
 	jQuery('#{{_id}}_handle').miniColors();
 	jQuery('#{{_id}}_handleborder').miniColors();

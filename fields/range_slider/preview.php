@@ -2,7 +2,7 @@
 	{{#unless hide_label}}<lable class="control-label">{{label}}{{#if required}} <span style="color:#ff0000;">*</span>{{/if}}</lable>{{/unless}}
 	<div class="preview-caldera-config-field">
 		{{#if config/showval}}<div class="col-xs-9" style="margin: 6px 0px;">{{else}}<div style="margin: 6px 0px;">{{/if}}
-			<input id="{{id}}_rangeslider" type="range" data-color="{{config/color}}" data-handle="{{config/handle}}" data-handleborder="{{config/handleborder}}" min="{{config/min}}" max="{{config/max}}" step="{{config/step}}" value="{{config/default}}">
+			<input id="{{id}}_rangeslider" type="range" data-trackcolor="{{config/trackcolor}}" data-color="{{config/color}}" data-handle="{{config/handle}}" data-handleborder="{{config/handleborder}}" min="{{config/min}}" max="{{config/max}}" step="{{config/step}}" value="{{config/default}}">
 		</div>{{#if config/showval}}
 		<div class="col-xs-3">
 			{{config/prefix}}<span id="{{id}}_value">{{config/default}}</span>{{config/suffix}}
@@ -17,6 +17,7 @@
 		},
 		polyfill: false		
 	});
+	rangeslide{{id}}.parent().find('.rangeslider').css('backgroundColor', rangeslide{{id}}.data('trackcolor'));
 	rangeslide{{id}}.parent().find('.rangeslider__fill').css('backgroundColor', rangeslide{{id}}.data('color'));
 	rangeslide{{id}}.parent().find('.rangeslider__handle').css('backgroundColor', rangeslide{{id}}.data('handle'));
 	rangeslide{{id}}.parent().find('.rangeslider__handle').css('borderColor', rangeslide{{id}}.data('handleborder'));

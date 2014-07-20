@@ -706,6 +706,7 @@ class Caldera_Forms {
 						'color'		=> '#00ff00',
 						'handle'	=> '#ffffff',
 						'handleborder'	=> '#cccccc',
+						'trackcolor' => '#e6e6e6'
 					),
 					"scripts" => array(
 						'jquery',
