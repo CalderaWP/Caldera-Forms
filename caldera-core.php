@@ -20,15 +20,15 @@ define('CFCORE_URL', plugin_dir_url(__FILE__));
 define('CFCORE_VER', '1.0.7');
 define('CFCORE_EXTEND_URL', 'http://digilab.co.za');
 
-// table builder
-register_activation_hook( __FILE__, array( 'Caldera_Forms_Admin', 'activate_caldera_forms' ) );
-
 include_once CFCORE_PATH . 'classes/core.php';
 include_once CFCORE_PATH . 'classes/widget.php';
 // includes
 include_once CFCORE_PATH . 'includes/cf-ajax/plugin.php';
 include_once CFCORE_PATH . 'includes/field_processors.php';
 include_once CFCORE_PATH . 'includes/custom_field_class.php';
+
+// table builder
+register_activation_hook( __FILE__, array( 'Caldera_Forms', 'activate_caldera_forms' ) );
 
 add_action( 'plugins_loaded', array( 'Caldera_Forms', 'get_instance' ) );
 
