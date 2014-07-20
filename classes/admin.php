@@ -65,10 +65,79 @@ class Caldera_Forms_Admin {
 		add_action("wp_ajax_browse_entries", array( $this, 'browse_entries') );
 		add_action("wp_ajax_save_cf_setting", array( $this, 'save_cf_setting') );
 		add_action("wp_ajax_cf_dismiss_pointer", array( $this, 'update_pointer') );
+		add_action("wp_ajax_cf_bulk_action", array( $this, 'bulk_action') );
 
 		add_action( 'admin_footer', array( $this, 'add_shortcode_inserter'));
 
 	}
+
+
+
+
+	public function bulk_action(){
+
+		if(empty($_POST['do'])){
+			die;
+		}
+
+		switch ($_POST['do']) {
+			case 'active':
+			case 'trash':
+			case 'delete':
+				global $wpdb;
+
+				// clean out
+				$items = array();
+				$selectors = array();
+				foreach((array) $_POST['items'] as $item_id){
+					$items[] = (int) $item_id;
+					$selectors[] = '#entry_row_' . (int) $item_id;
+				}
+				switch ($_POST['do']) {
+					case 'delete':
+						$result = $wpdb->query( "DELETE FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `id` IN (".implode(',', $items).");" );
+						$result = $wpdb->query( "DELETE FROM `" . $wpdb->prefix . "cf_form_entry_values` WHERE `entry_id` IN (".implode(',', $items).");" );
+						$result = $wpdb->query( "DELETE FROM `" . $wpdb->prefix . "cf_form_entry_meta` WHERE `entry_id` IN (".implode(',', $items).");" );
+						header('Content-Type: application/json');
+						$out['status'] = 'reload';
+						echo json_encode($out);
+						break;
+					
+					default:
+						$result = $wpdb->query( $wpdb->prepare( "UPDATE `" . $wpdb->prefix . "cf_form_entries` SET `status` = %s WHERE `id` IN (".implode(',', $items).");", $_POST['do'] ) );
+						break;
+				}
+				
+				if( $result ){
+					header('Content-Type: application/json');
+					$out['status'] = $_POST['do'];
+					$out['undo'] = ( $_POST['do'] === 'trash' ? 'active' : 'trash' );
+					$out['undo_text'] = ( $_POST['do'] === 'trash' ? __('Restore') : __('Trash') );
+
+					$out['entries'] = implode(',',$selectors);
+					$out['total']	= $wpdb->get_var($wpdb->prepare("SELECT COUNT(`id`) AS `total` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = %s && `status` = 'active';", $_POST['form']));
+					$out['trash']	= $wpdb->get_var($wpdb->prepare("SELECT COUNT(`id`) AS `total` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = %s && `status` = 'trash';", $_POST['form']));
+					echo json_encode($out);
+				}
+				exit();
+
+				break;
+			case 'export':
+
+				$transientid = uniqid('cfe');
+				set_transient( $transientid, $_POST['items'], 180 );
+				header('Content-Type: application/json');
+				$out['url'] = "admin.php?page=caldera-forms&export=" . $_POST['form'] . "&tid=" . $transientid;
+				echo json_encode($out);
+				exit();
+				break;
+			default:
+				# code...
+				break;
+		}
+		
+	}
+
 
 	public static function update_pointer(){
 
@@ -125,6 +194,7 @@ class Caldera_Forms_Admin {
 		}
 
 		echo '{{#if ../../is_active}}<button class="button button-small ajax-trigger view-entry-btn" data-active-class="none" data-load-class="spinner" ' . $viewer_buttons . ' data-group="viewentry" data-entry="{{_entry_id}}" data-form="{{../../form}}" data-action="get_entry" data-modal="view_entry" data-modal-width="600" data-modal-title="' . __('Entry', 'caldera-forms') . ' # {{_entry_id}}" data-template="#view-entry-tmpl" type="button">' . __('View', 'caldera-forms') . '</button> {{/if}}';		
+		echo '<button type="button" class="button button-small ajax-trigger" data-load-class="active" data-panel="{{#if ../../is_trash}}trash{{/if}}{{#if ../../is_active}}active{{/if}}" data-do="{{#if ../../is_trash}}active{{/if}}{{#if ../../is_active}}trash{{/if}}" data-callback="cf_refresh_view" data-form="{{../../form}}" data-active-class="disabled" data-group="row{{_entry_id}}" data-load-element="#entry_row_{{_entry_id}}" data-action="cf_bulk_action" data-items="{{_entry_id}}">{{#if ../../is_trash}}' . __('Restore') . '{{/if}}{{#if ../../is_active}}' . __('Trash') . '{{/if}}</button>';
 	}
 	
 	public static function set_viewer_buttons($buttons){
