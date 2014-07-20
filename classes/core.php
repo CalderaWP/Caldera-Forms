@@ -129,10 +129,12 @@ class Caldera_Forms {
 			`form_id` varchar(18) NOT NULL DEFAULT '',
 			`user_id` int(11) NOT NULL,
 			`datestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			`status` varchar(20) NOT NULL DEFAULT 'active',
 			PRIMARY KEY (`id`),
 			KEY `form_id` (`form_id`),
 			KEY `user_id` (`user_id`),
-			KEY `date_time` (`datestamp`)
+			KEY `date_time` (`datestamp`),
+			KEY `status` (`status`)
 			) DEFAULT CHARSET=utf8;";
 
 			
