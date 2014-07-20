@@ -762,8 +762,6 @@ class Caldera_Forms {
 					}
 				}
 			}
-			// fix POW
-			//$formula = str_replace('pow(', 'Math.pow(', $formula);
 
 		}
 		if( empty($formula)){
