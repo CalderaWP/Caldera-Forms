@@ -1,1 +1,49 @@
-<?php echo do_shortcode( $field['config']['default'] ); ?>
+<?php
+
+
+preg_match_all("/%(.+?)%/", $field['config']['default'], $hastags);
+if(!empty($hastags[1])){
+	$binds = array();
+
+	foreach($hastags[1] as $tag_key=>$tag){
+
+		foreach($form['fields'] as $key_id=>$fcfg){
+			if($fcfg['slug'] === $tag){
+				$binds[] = '#'.$key_id;
+				$bindfields[] = '"'.$key_id.'"';
+				$field['config']['default'] = str_replace($hastags[0][$tag_key], '{{'.$key_id.'}}', $field['config']['default']);
+			}
+		}
+	}
+	echo '<div id="html-content-'.$field_id.'"></div>';
+	echo '<script type="text/html" id="html-content-'.$field_id.'-tmpl">';
+		echo do_shortcode( $field['config']['default'] );
+	echo '</script>';
+	?>
+	<script type="text/javascript">
+		jQuery(function($){
+			
+			function htmltemplate<?php echo $field_id; ?>(){
+				var template = $('#html-content-<?php echo $field_id; ?>-tmpl').html(),
+					target = $('#html-content-<?php echo $field_id; ?>'),
+					list = [<?php echo implode(',', $bindfields); ?>];
+
+				for(var i =0; i < list.length; i++){
+					template = template.replace( new RegExp("\{\{" + list[i] + "\}\}","g"), $('#'+list[i]).val() );
+				}
+				target.html(template);
+
+			}
+			$('body').on('change', '<?php echo implode(',', $binds); ?>', htmltemplate<?php echo $field_id; ?>);
+
+			htmltemplate<?php echo $field_id; ?>();
+
+		})
+	</script>
+	<?php
+}else{
+	echo do_shortcode( $field['config']['default'] );
+}
+
+
+?>

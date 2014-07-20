@@ -687,6 +687,42 @@ class Caldera_Forms {
 					'jquery'
 				)
 			),
+			'range_slider' 	=> array(
+				"field"		=>	__("Range Slider", 'caldera-forms'),
+				"file"		=>	CFCORE_PATH . "fields/range_slider/field.php",
+				"category"	=>	__("Special", "cladera-forms"),
+				"description" => __('Range Slider input field','caldera-forms'),
+				"setup"		=>	array(
+					"template"	=>	CFCORE_PATH . "fields/range_slider/config.php",
+					"preview"	=>	CFCORE_PATH . "fields/range_slider/preview.php",
+					"default"	=> array(
+						'default'	=>	1,
+						'step'		=>	1,
+						'min'		=>	0,
+						'max'		=> 100,
+						'showval'	=> 1,
+						'suffix'	=> '',
+						'prefix'	=> '',
+						'color'		=> '#00ff00',
+						'handle'	=> '#ffffff',
+						'handleborder'	=> '#cccccc',
+					),
+					"scripts" => array(
+						'jquery',
+						CFCORE_URL . "fields/range_slider/rangeslider.js",
+					),
+					"styles" => array(
+						CFCORE_URL . "fields/range_slider/rangeslider.css",
+					)
+				),
+				"scripts" => array(
+					'jquery',
+					CFCORE_URL . "fields/range_slider/rangeslider.js",
+				),
+				"styles" => array(
+					CFCORE_URL . "fields/range_slider/rangeslider.css",
+				)
+			),
 			'star_rating' 	=> array(
 				"field"		=>	__("Star Rating", 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/star-rate/field.php",
