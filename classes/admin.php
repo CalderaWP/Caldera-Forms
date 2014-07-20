@@ -39,6 +39,7 @@ class Caldera_Forms_Admin {
 	 */
 	private function __construct() {
 
+
 		// Load plugin text domain
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
@@ -65,7 +66,7 @@ class Caldera_Forms_Admin {
 		add_action("wp_ajax_save_cf_setting", array( $this, 'save_cf_setting') );
 		add_action("wp_ajax_cf_dismiss_pointer", array( $this, 'update_pointer') );
 
-		add_action( 'admin_footer', array( $this, 'add_shortcode_inserter'));	
+		add_action( 'admin_footer', array( $this, 'add_shortcode_inserter'));
 
 	}
 
@@ -165,106 +166,6 @@ class Caldera_Forms_Admin {
 			echo "	<img src=\"". CFCORE_URL . "assets/images/lgo-icon.png\" alt=\"".__("Insert Form Shortcode","caldera-forms")."\" style=\"padding: 0px 2px 0px 0px; width: 16px; margin: -2px 0px 0px;\" /> ".__('Caldera Form', 'caldera-forms')."\n";
 			echo "</a>\n";
 		}
-	}
-
-
-	/// activator
-	public static function activate_caldera_forms(){
-		global $wpdb;
-
-		$tables = $wpdb->get_results("SHOW TABLES", ARRAY_A);
-		foreach($tables as $table){
-			$alltables[] = implode($table);
-		}
-
-		// meta table
-		if(!in_array($wpdb->prefix.'cf_form_entry_meta', $alltables)){
-			// create meta tables
-			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-
-			$meta_table = "CREATE TABLE `" . $wpdb->prefix . "cf_form_entry_meta` (
-			`meta_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-			`entry_id` bigint(20) unsigned NOT NULL DEFAULT '0',
-			`meta_key` varchar(255) DEFAULT NULL,
-			`meta_value` longtext,
-			PRIMARY KEY (`meta_id`),
-			KEY `meta_key` (`meta_key`),
-			KEY `entry_id` (`entry_id`)
-			) DEFAULT CHARSET=utf8;";
-			
-			dbDelta( $meta_table );
-
-		}
-
-		if(!in_array($wpdb->prefix.'cf_form_entries', $alltables)){
-			// create tables
-			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-
-			$entry_table = "CREATE TABLE `" . $wpdb->prefix . "cf_form_entries` (
-			`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-			`form_id` varchar(18) NOT NULL DEFAULT '',
-			`user_id` int(11) NOT NULL,
-			`datestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-			PRIMARY KEY (`id`),
-			KEY `form_id` (`form_id`),
-			KEY `user_id` (`user_id`),
-			KEY `date_time` (`datestamp`)
-			) DEFAULT CHARSET=utf8;";
-
-			
-			dbDelta( $entry_table );
-			
-			$values_table = "CREATE TABLE `" . $wpdb->prefix . "cf_form_entry_values` (
-			`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-			`entry_id` int(11) NOT NULL,
-			`field_id` varchar(20) NOT NULL,
-			`slug` varchar(255) NOT NULL DEFAULT '',
-			`value` longtext NOT NULL,
-			PRIMARY KEY (`id`),
-			KEY `form_id` (`entry_id`),
-			KEY `field_id` (`field_id`),
-			KEY `slug` (`slug`)
-			) DEFAULT CHARSET=utf8;";
-
-			dbDelta( $values_table );
-		
-		}else{
-			// check for field_id from 1.0.4
-			$columns = $wpdb->get_results("SHOW COLUMNS FROM `" . $wpdb->prefix . "cf_form_entry_values`", ARRAY_A);
-			$fields = array();
-			foreach($columns as $column){
-				$fields[] = $column['Field'];
-			}
-			if(!in_array('field_id', $fields)){
-				$wpdb->query( "ALTER TABLE `" . $wpdb->prefix . "cf_form_entry_values` ADD `field_id` varchar(20) NOT NULL AFTER `entry_id`;" );
-				$wpdb->query( "CREATE INDEX `field_id` ON `" . $wpdb->prefix . "cf_form_entry_values` (`field_id`); ");
-				// update all entries
-				$forms = $wpdb->get_results("SELECT `id`,`form_id` FROM `" . $wpdb->prefix . "cf_form_entries`", ARRAY_A);
-				$known = array();
-				if( !empty($forms)){
-					foreach($forms as $form){
-						if(!isset($known[$form['form_id']])){
-							$config = get_option($form['form_id']);						
-							if(empty($config)){
-								continue;
-							}
-							$known[$form['form_id']] = $config;
-						}else{
-							$config = $known[$form['form_id']];
-						}
-
-						foreach($config['fields'] as $field_id=>$field){
-							$wpdb->update($wpdb->prefix . "cf_form_entry_values", array('field_id'=>$field_id), array('entry_id' => $form['id'], 'slug' => $field['slug']));
-						}
-
-					}
-				}
-			}
-			// add meta table
-
-			
-		}
-
 	}
 
 
@@ -643,8 +544,7 @@ class Caldera_Forms_Admin {
 	 *
 	*/
 	static function save_form(){
-		// update check
-		self::activate_caldera_forms();
+
 		/// check for form delete
 		if(!empty($_GET['delete']) && !empty($_GET['cal_del'])){
 

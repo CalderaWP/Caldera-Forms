@@ -66,6 +66,15 @@ class Caldera_Forms {
 		// render shortcode
 		add_shortcode( 'caldera_form', array( $this, 'render_form') );
 
+		// check update version
+		$version = get_option('_calderaforms_lastupdate');
+		if(empty($version) || version_compare($version, CFCORE_VER) < 0){
+			self::activate_caldera_forms();
+			update_option('_calderaforms_lastupdate',CFCORE_VER);
+			wp_redirect( $_SERVER['REQUEST_URI'] );
+			exit;
+		}
+
 	}
 
 
@@ -81,6 +90,112 @@ class Caldera_Forms {
 		load_textdomain( $domain, trailingslashit( WP_LANG_DIR ) . $domain . '/' . $domain . '-' . $locale . '.mo' );
 		load_plugin_textdomain( $domain, FALSE, basename( dirname( __FILE__ ) ) . '/languages' );
 	}
+
+	/// activator
+	public static function activate_caldera_forms(){
+		global $wpdb;
+
+		$tables = $wpdb->get_results("SHOW TABLES", ARRAY_A);
+		foreach($tables as $table){
+			$alltables[] = implode($table);
+		}
+
+		// meta table
+		if(!in_array($wpdb->prefix.'cf_form_entry_meta', $alltables)){
+			// create meta tables
+			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+
+			$meta_table = "CREATE TABLE `" . $wpdb->prefix . "cf_form_entry_meta` (
+			`meta_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			`entry_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+			`process_id` varchar(255) DEFAULT NULL,
+			`meta_key` varchar(255) DEFAULT NULL,
+			`meta_value` longtext,
+			PRIMARY KEY (`meta_id`),
+			KEY `meta_key` (`meta_key`),
+			KEY `entry_id` (`entry_id`)
+			) DEFAULT CHARSET=utf8;";
+			
+			dbDelta( $meta_table );
+
+		}
+
+		if(!in_array($wpdb->prefix.'cf_form_entries', $alltables)){
+			// create tables
+			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+
+			$entry_table = "CREATE TABLE `" . $wpdb->prefix . "cf_form_entries` (
+			`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+			`form_id` varchar(18) NOT NULL DEFAULT '',
+			`user_id` int(11) NOT NULL,
+			`datestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY (`id`),
+			KEY `form_id` (`form_id`),
+			KEY `user_id` (`user_id`),
+			KEY `date_time` (`datestamp`)
+			) DEFAULT CHARSET=utf8;";
+
+			
+			dbDelta( $entry_table );
+			
+			$values_table = "CREATE TABLE `" . $wpdb->prefix . "cf_form_entry_values` (
+			`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+			`entry_id` int(11) NOT NULL,
+			`field_id` varchar(20) NOT NULL,
+			`slug` varchar(255) NOT NULL DEFAULT '',
+			`value` longtext NOT NULL,
+			PRIMARY KEY (`id`),
+			KEY `form_id` (`entry_id`),
+			KEY `field_id` (`field_id`),
+			KEY `slug` (`slug`)
+			) DEFAULT CHARSET=utf8;";
+
+			dbDelta( $values_table );
+		
+		}else{
+			// check for field_id from 1.0.4
+			$columns = $wpdb->get_results("SHOW COLUMNS FROM `" . $wpdb->prefix . "cf_form_entry_values`", ARRAY_A);
+			$fields = array();
+			foreach($columns as $column){
+				$fields[] = $column['Field'];
+			}
+			if(!in_array('field_id', $fields)){
+				$wpdb->query( "ALTER TABLE `" . $wpdb->prefix . "cf_form_entry_values` ADD `field_id` varchar(20) NOT NULL AFTER `entry_id`;" );
+				$wpdb->query( "CREATE INDEX `field_id` ON `" . $wpdb->prefix . "cf_form_entry_values` (`field_id`); ");
+				// update all entries
+				$forms = $wpdb->get_results("SELECT `id`,`form_id` FROM `" . $wpdb->prefix . "cf_form_entries`", ARRAY_A);
+				$known = array();
+				if( !empty($forms)){
+					foreach($forms as $form){
+						if(!isset($known[$form['form_id']])){
+							$config = get_option($form['form_id']);						
+							if(empty($config)){
+								continue;
+							}
+							$known[$form['form_id']] = $config;
+						}else{
+							$config = $known[$form['form_id']];
+						}
+
+						foreach($config['fields'] as $field_id=>$field){
+							$wpdb->update($wpdb->prefix . "cf_form_entry_values", array('field_id'=>$field_id), array('entry_id' => $form['id'], 'slug' => $field['slug']));
+						}
+
+					}
+				}
+			}
+			// add status
+			$columns = $wpdb->get_results("SHOW COLUMNS FROM `" . $wpdb->prefix . "cf_form_entries`", ARRAY_A);
+			$fields = array();
+			if(!in_array('status', $fields)){
+				$wpdb->query( "ALTER TABLE `" . $wpdb->prefix . "cf_form_entries` ADD `status` varchar(20) NOT NULL DEFAULT 'active' AFTER `datestamp`;" );
+				$wpdb->query( "CREATE INDEX `status` ON `" . $wpdb->prefix . "cf_form_entries` (`status`); ");
+			}
+			
+		}
+
+	}
+
 
 	public static function star_rating_viewer($value, $field, $form){
 
