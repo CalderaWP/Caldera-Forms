@@ -38,6 +38,31 @@ none yet.
 3. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
+= 1.0.6 (20 July, 2014) =
+
+Additions:
+* Range Slider field type
+* Star Rating view filter (show starts in entry view)
+* Auto generate mail body from submissions + {summary} magic tag
+* field %field_slug% tags dynamically bound in HTML field type ( updates dynamically with field values )
+* Gravitar field binding to antry capture to show gravitar of form submitter if email is available - else uses userid of logged in user.
+* Trash, restore & delete for submission entry management.
+* Bulk actions for submission management (trash, delete, restore & export)
+* Form Processor return values are now bindable options for other processors
+* Field tags are now bindable values for processors
+
+
+Bug Fixes:
+* max_input_limit for configurations. fixed without the need to update php.ini (w00t!)
+* fixed conditionals support for IE8
+* some minor fixes I can't remember right now.
+
+Enhancements:
+* Added processor meta values so that form processors can add to the form submission
+* optimized js in editor UI
+* more filters and actions for developers
+* other stiff I can't remember
+
 = 1.0.5 (13 July, 2014) =
 
 Additions:
