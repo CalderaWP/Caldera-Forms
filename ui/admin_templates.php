@@ -1,3 +1,76 @@
+<?php
+
+	$meta_template = apply_filters('caldera_forms_entry_meta_template', "
+	{{#if meta}}
+	{{#each meta}}
+	<div id=\"meta-{{@key}}\" class=\"tab-detail-panel\" style=\"display:none;\">
+	<h4>{{name}}</h4>
+	<hr>
+	<table class=\"table table-condensed\">		
+			{{#each data}}
+			<thead>
+			{{#if title}}
+			<tr>
+				<th colspan=\"2\" class=\"active\">{{title}}</th>
+			</tr>
+			{{/if}}
+			<tr>
+				<th>" . __('Field', 'caldera-forms') . "</th>
+				<th>" . __('Value', 'caldera-forms') . "</th>
+			</tr>
+			</thead>
+			<tbody>
+			{{#each entry}}		
+			<tr>
+				<th>{{meta_key}}</th>
+				<td>{{meta_value}}</td>
+			</tr>
+			{{/each}}
+			</tbody>
+			{{/each}}		
+	</table>
+	</div>
+	{{/each}}
+	{{/if}}");
+
+
+	$entry_template = apply_filters('caldera_forms_entry_meta_template', "<div id=\"main-entry-panel\" class=\"tab-detail-panel\">
+		<h4>" . __('Submitted', 'caldera-forms') . " <small class=\"description\">{{date}}</small></h4>
+		<hr>
+		<table class=\"table table-condensed\">
+		<thead>
+
+			<tr>
+				<th>" . __('Field', 'caldera-forms') . "</th>
+				<th>" . __('Value', 'caldera-forms') . "</th>
+			</tr>
+		</thead>
+		<tbody>
+		{{#each data}}
+			<tr>
+				<th>{{label}}</th>
+				<td>{{{value}}}</td>
+			</tr>
+		{{/each}}
+		</tbody>
+	</table></div>
+	" . $meta_template . "
+	");
+
+
+
+?>
+<script type="text/html" id="bulk-actions-active-tmpl">
+	<option selected="selected" value=""><?php echo __('Bulk Actions'); ?></option>
+	<option value="export"><?php echo __('Export Selected', 'caldera-forms'); ?></option>
+	<option value="trash"><?php echo __('Move to Trash'); ?></option>
+</script>
+<script type="text/html" id="bulk-actions-trash-tmpl">
+	<option selected="selected" value=""><?php echo __('Bulk Actions'); ?></option>
+	<option value="export"><?php echo __('Export Selected', 'caldera-forms'); ?></option>
+	<option value="active"><?php echo __('Restore'); ?></option>
+	<option value="delete"><?php echo __('Delete Permanently'); ?></option>
+</script>
 <script type="text/html" id="import-form-tmpl">
 	<form class="new-form-form" action="admin.php?page=caldera-forms&import=true" enctype="multipart/form-data" method="POST">
 		<?php
@@ -40,10 +113,11 @@
 <script type="text/html" id="forms-list-alt-tmpl">
 
 	{{#if entries}}
-		<div class="list form-panel postbox">
-			<table class="table table-condensed">
+		<div class="list form-panel postbox" data-form="{{form}}">
+			<table class="table table-condensed cf-table-viewer">
 				<thead>
 					<tr>
+						<th style="width:16px;"><input type="checkbox" class="cf-bulkcheck"></th>
 						<th><?php echo __('ID', 'caldera-forms'); ?></th>
 						<th><?php echo __('Submitted', 'caldera-forms'); ?></th>
 						{{#each fields}}
@@ -53,8 +127,10 @@
 					</tr>
 				</thead>
 				<tbody>
+				{{#if entries}}
 				{{#each entries}}
-					<tr>
+					<tr id="entry_row_{{_entry_id}}">
+						<td style="width:16px;"><input type="checkbox" class="cf-entrycheck" value="{{_entry_id}}"></td>
 						<td>{{_entry_id}}</td>
 						<td>{{_date}}</td>
 						{{#each data}}
@@ -63,6 +139,9 @@
 						<td style="text-align: right;"><?php do_action('caldera_forms_entry_actions'); ?></td>
 					</tr>
 				{{/each}}
+				{{else}}
+					<tr><td colspan="100"><?php echo __('No entries found', 'caldera-forms'); ?></td></tr>
+				{{/if}}
 				</tbody>
 			</table>
 		</div>
@@ -71,22 +150,122 @@
 	{{/if}}
 </script>
 <script type="text/html" id="view-entry-tmpl">
-<div class="form-panel">
-	<table class="table table-condensed">
-		<thead>
-			<tr>
-				<th><?php echo __('Field', 'caldera-forms'); ?></th>
-				<th><?php echo __('Value', 'caldera-forms'); ?></th>
-			</tr>
-		</thead>
-		<tbody>
-		{{#each data}}
-			<tr>
-				<th>{{label}}</th>
-				<td>{{{value}}}</td>
-			</tr>
+{{#if user}}
+<div class="modal-side-bar has-avatar">
+	<span class="user-avatar user-avatar-{{user/ID}}"{{#if user/name}} title="{{user/name}}"{{/if}}>
+	{{{user/avatar}}}
+	</span>
+	{{#if meta}}
+	<ul class="modal-side-tabs">
+		<li><a href="#main-entry-panel" class="modal-side-tab active"><?php echo __('Entry'); ?></a></li>
+		{{#each meta}}
+			<li><a href="#meta-{{@key}}" class="modal-side-tab">{{name}}</a></li>
 		{{/each}}
-		</tbody>
-	</table>
+	</ul>
+	{{/if}}
+</div>
+{{/if}}
+<div class="form-panel{{#if user}} modal-inside{{/if}}">
+	<?php echo $entry_template; ?>
 </div>
 </script>
+<script type="text/javascript">
+
+jQuery(function($){
+
+	$('body').on('change', '.cf-bulkcheck', function(){
+
+		var checked = $(this),
+			parent = checked.closest('.cf-table-viewer'),
+			checks = parent.find('.cf-entrycheck'),
+			action = $('#cf_bulk_action');
+
+		checks.prop('checked', checked.prop('checked'));
+
+	});
+	
+	$('body').on('change', '.cf-entrycheck', function(){
+
+		var checkall	= $('.cf-bulkcheck'),
+			allchecks	= $('.cf-entrycheck'),
+			checked 	= $('.cf-entrycheck:checked');
+
+		if(allchecks.length != checked.length){
+			checkall.prop('checked', false);
+		}else{
+			checkall.prop('checked', true);
+		}
+
+	});
+	$('body').on('click', '.cf-bulk-action', function(){
+
+		var action 		= $('#cf_bulk_action'),
+			bulkCheck 	= $('.cf-bulkcheck');
+
+		if( !action.val().length){
+			return;
+		}
+
+		action.prop('disabled', true);
+		var checks 	= $('#form-entries-viewer .cf-entrycheck:checked'),
+			form	= $('#form-entries-viewer .list.form-panel').data('form');
+
+		if(checks.length){
+
+			var list = [],
+				rows = [];
+			for( var i = 0; i<checks.length; i++){
+				list.push(checks[i].value);
+				rows.push('#entry_row_' + checks[i].value);
+			}
+			var row_items = $(rows.join(','));
+
+			var data = {
+				'action'	:	'cf_bulk_action',
+				'do'		:	action.val(),
+				'items'		:	list,
+				'form'		:	form
+			}
+
+			row_items.animate({"opacity": .4}, 500);
+			$.post(ajaxurl, data, function(res){
+				if(res.status && res.entries && res.total){
+					row_items.remove();
+					$('.entry_count_' + form).html(res.total);
+					$('input.current-page').trigger('change');
+				}else if(res.url){
+					row_items.animate({"opacity": 1}, 500);
+					window.location = res.url;
+				}else if(res.status === 'reload'){
+					$('input.current-page').trigger('change');
+				}
+				action.val('').prop('disabled', false);
+				bulkCheck.prop('checked', false);				
+			});
+		}else{
+			action.prop('disabled', false);
+		}
+
+	});
+
+});
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

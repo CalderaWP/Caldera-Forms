@@ -279,7 +279,7 @@ do_action('caldera_forms_edit_end', $element);
 				{{#each lines}}
 				<div class="caldera-condition-line">
 					if 
-					<select name="config[{{../type}}][{{../../id}}][conditions][group][{{../id}}][{{id}}][field]" data-condition="{{../type}}" class="caldera-processor-field-bind caldera-conditional-field-set" data-id="{{../../id}}" data-default="{{field}}" data-line="{{id}}" data-row="{{../id}}" data-all="true" style="max-width:120px;"></select>
+					<select name="config[{{../type}}][{{../../id}}][conditions][group][{{../id}}][{{id}}][field]" data-condition="{{../type}}" class="caldera-field-bind caldera-conditional-field-set" data-id="{{../../id}}" data-default="{{field}}" data-line="{{id}}" data-row="{{../id}}" data-all="true" style="max-width:120px;"></select>
 					<select name="config[{{../type}}][{{../../id}}][conditions][group][{{../id}}][{{id}}][compare]" style="max-width:110px;">
 						<option value="is" {{#is compare value="is"}}selected="selected"{{/is}}><?php echo __('is', 'caldera-forms'); ?></option>
 						<option value="isnot" {{#is compare value="isnot"}}selected="selected"{{/is}}><?php echo __('is not', 'caldera-forms'); ?></option>
@@ -302,7 +302,7 @@ do_action('caldera_forms_edit_end', $element);
 	<div class="caldera-condition-line">
 		<div class="caldera-condition-line-label"><?php echo __('and', 'caldera-forms'); ?></div>
 		if 
-		<select name="{{name}}[field]" class="caldera-processor-field-bind caldera-conditional-field-set" data-condition="{{type}}" data-id="{{id}}" data-line="{{lineid}}" data-row="{{rowid}}" data-all="true" style="max-width:120px;"></select>
+		<select name="{{name}}[field]" class="caldera-field-bind caldera-conditional-field-set" data-condition="{{type}}" data-id="{{id}}" data-line="{{lineid}}" data-row="{{rowid}}" data-all="true" style="max-width:120px;"></select>
 		<select name="{{name}}[compare]" style="max-width:110px;">
 			<option value="is"><?php echo __('is', 'caldera-forms'); ?></option>
 			<option value="isnot"><?php echo __('is not', 'caldera-forms'); ?></option>

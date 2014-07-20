@@ -4,6 +4,10 @@ global $field_type_list, $field_type_templates;
 
 // Load element
 $element = get_option( $_GET['edit'] );
+
+// build magic tags
+$magic_tags = apply_filters('caldera_forms_get_magic_tags', array());
+
 //dump($element);
 if(empty($element['success'])){
 	$element['success'] = __('Form has successfuly been submitted. Thank you.', 'caldera-forms');
@@ -17,8 +21,8 @@ if(!isset($element['db_support'])){
 wp_nonce_field( 'cf_edit_element', 'cf_edit_nonce' );
 
 // Init check
-echo "<input name=\"config[_last_updated]\" value=\"" . date('r') . "\" type=\"hidden\">";
-echo "<input name=\"config[ID]\" value=\"" . $_GET['edit'] . "\" type=\"hidden\">";
+echo "<input id=\"last_updated_field\" name=\"config[_last_updated]\" value=\"" . date('r') . "\" type=\"hidden\">";
+echo "<input id=\"form_id_field\" name=\"config[ID]\" value=\"" . $_GET['edit'] . "\" type=\"hidden\">";
 
 do_action('caldera_forms_edit_start', $element);
 
@@ -278,7 +282,6 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 					<input type="checkbox" class="field-config field-checkbox" id="<?php echo $id; ?>_entry_list" name="config[fields][<?php echo $id; ?>][entry_list]" value="1" <?php if($entry_list === 1){ echo 'checked="checked"'; }; ?>>
 				</div>
 			</div>
-
 			<div class="caldera-config-field-setup">
 			</div>
 			<input type="hidden" class="field_config_string block-input" value="<?php echo htmlentities( $config_str ); ?>">
@@ -298,7 +301,7 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 			<?php do_action('caldera_forms_field_conditionals_template', $id); ?>
 			<input type="hidden" class="field_conditions_config_string block-input ajax-trigger" data-event="none" data-autoload="true" data-request="build_conditions_config" data-template="#conditional-group-tmpl" data-id="<?php echo $id; ?>" data-target="#<?php echo $id; ?>_conditional_wrap" data-type="fields" data-callback="rebuild_field_binding" value="<?php echo htmlentities( $conditions_str ); ?>">
 			
-		</div>		
+		</div>
 	</div>
 	<?php
 }
@@ -364,7 +367,7 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 			<a href="#settings-panel"><?php echo __("General Settings", "caldera-forms"); ?></a>
 		</li>
 	</ul>
-	<button class="button button-primary caldera-header-save-button" type="submit"><?php echo __('Update Form', 'caldera-forms'); ?><span id="save_indicator" class="spinner" style="position: absolute; right: -30px;"></span></button>	
+	<button class="button button-primary caldera-header-save-button" data-active-class="none" data-load-element="#save_indicator" type="button"><?php echo __('Update Form', 'caldera-forms'); ?><span id="save_indicator" class="spinner" style="position: absolute; right: -30px;"></span></button>	
 </div>
 
 <div style="display: none;" class="caldera-editor-body caldera-config-editor-panel " id="settings-panel">
@@ -404,55 +407,64 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 			<input type="text" class="field-config required" name="config[success]" value="<?php echo $element['success']; ?>" style="width:300px;" required="required">
 		</div>
 	</div>
+	<div class="caldera-config-group">
+		<label><?php echo __('Gravatar Field', 'caldera-forms'); ?> </label>
+		<div class="caldera-config-field">
+			<select style="width:300px;" class="field-config caldera-field-bind" name="config[avatar_field]" data-exclude="system" data-default="<?php if(!empty($element['avatar_field'])){ echo $element['avatar_field']; } ?>" data-type="email"></select>
+			<p class="description"><?php echo __('Used when viewing an entry from a non-logged in user.','caldera-forms'); ?></p>
+		</div>
+	</div>
+
 	<?php do_action('caldera_forms_general_settings_panel', $element); ?>
 </div>
-
-<?php
-// PANELS LOWER NAV
-
-foreach($panel_extensions as $panel_slug=>$panel){
-	if(empty($panel['tabs'])){
-		continue;
-	}
-
-	?>
 	<div class="caldera-editor-header caldera-editor-subnav">
 		<ul class="caldera-editor-header-nav">
-			<?php
-			// BUILD ELEMENT SETUP TABS
-			if(!empty($panel['tabs'])){
-				// PANEL BASED TABS
-				foreach($panel['tabs'] as $group_slug=>$tab_setup){
-					if($tab_setup['location'] !== 'lower'){
-						continue;
-					}
 
-					$active = null;
-					if(!empty($tab_setup['active'])){
-						$active = " class=\"active\"";
-					}
-					echo "<li".$active." id=\"tab_".$group_slug."\"><a href=\"#" . $group_slug . "-config-panel\">" . $tab_setup['name'] . "</a></li>\r\n";
-				}
+		<?php
+		// PANELS LOWER NAV
 
-				// CODE BASED TABS
-				if(!empty($panel['tabs']['code'])){
-					foreach($panel['tabs']['code'] as $code_slug=>$tab_setup){
-						$active = null;
-						if(!empty($tab_setup['active'])){
-							$active = " class=\"active\"";
-						}
-						echo "<li".$active."><a href=\"#" . $code_slug . "-code-panel\" data-editor=\"" . $code_slug . "-editor\">" . $tab_setup['name'] . "</a></li>\r\n";
-					}
-				}
-
+		foreach($panel_extensions as $panel_slug=>$panel){
+			if(empty($panel['tabs'])){
+				continue;
 			}
 
 			?>
+					<?php
+					// BUILD ELEMENT SETUP TABS
+					if(!empty($panel['tabs'])){
+						// PANEL BASED TABS
+						foreach($panel['tabs'] as $group_slug=>$tab_setup){
+							if($tab_setup['location'] !== 'lower'){
+								continue;
+							}
+
+							$active = null;
+							if(!empty($tab_setup['active'])){
+								$active = " class=\"active\"";
+							}
+							echo "<li".$active." id=\"tab_".$group_slug."\"><a href=\"#" . $group_slug . "-config-panel\">" . $tab_setup['name'] . "</a></li>\r\n";
+						}
+
+						// CODE BASED TABS
+						if(!empty($panel['tabs']['code'])){
+							foreach($panel['tabs']['code'] as $code_slug=>$tab_setup){
+								$active = null;
+								if(!empty($tab_setup['active'])){
+									$active = " class=\"active\"";
+								}
+								echo "<li".$active."><a href=\"#" . $code_slug . "-code-panel\" data-editor=\"" . $code_slug . "-editor\">" . $tab_setup['name'] . "</a></li>\r\n";
+							}
+						}
+
+					}
+
+					?>
+			<?php
+		}
+		?>
 		</ul>
 	</div>
-	<?php
-}
-
+<?php
 
 // PANEL WRAPPERS & RENDER
 $repeatable_templates = array();
@@ -697,7 +709,7 @@ do_action('caldera_forms_edit_end', $element);
 				{{#each lines}}
 				<div class="caldera-condition-line">
 					if 
-					<select name="config[{{../type}}][{{../../id}}][conditions][group][{{../id}}][{{id}}][field]" data-condition="{{../type}}" class="caldera-processor-field-bind caldera-conditional-field-set" data-id="{{../../id}}" data-default="{{field}}" data-line="{{id}}" data-row="{{../id}}" data-all="true" style="max-width:120px;"></select>
+					<select name="config[{{../type}}][{{../../id}}][conditions][group][{{../id}}][{{id}}][field]" data-condition="{{../type}}" class="caldera-field-bind caldera-conditional-field-set" data-id="{{../../id}}" data-default="{{field}}" data-line="{{id}}" data-row="{{../id}}" data-all="true" style="max-width:120px;"></select>
 					<select name="config[{{../type}}][{{../../id}}][conditions][group][{{../id}}][{{id}}][compare]" style="max-width:110px;">
 						<option value="is" {{#is compare value="is"}}selected="selected"{{/is}}><?php echo __('is', 'caldera-forms'); ?></option>
 						<option value="isnot" {{#is compare value="isnot"}}selected="selected"{{/is}}><?php echo __('is not', 'caldera-forms'); ?></option>
@@ -720,7 +732,7 @@ do_action('caldera_forms_edit_end', $element);
 	<div class="caldera-condition-line">
 		<div class="caldera-condition-line-label"><?php echo __('and', 'caldera-forms'); ?></div>
 		if 
-		<select name="{{name}}[field]" class="caldera-processor-field-bind caldera-conditional-field-set" data-condition="{{type}}" data-id="{{id}}" data-line="{{lineid}}" data-row="{{rowid}}" data-all="true" style="max-width:120px;"></select>
+		<select name="{{name}}[field]" class="caldera-field-bind caldera-conditional-field-set" data-condition="{{type}}" data-id="{{id}}" data-line="{{lineid}}" data-row="{{rowid}}" data-all="true" style="max-width:120px;"></select>
 		<select name="{{name}}[compare]" style="max-width:110px;">
 			<option value="is"><?php echo __('is', 'caldera-forms'); ?></option>
 			<option value="isnot"><?php echo __('is not', 'caldera-forms'); ?></option>
@@ -743,6 +755,33 @@ foreach($field_type_templates as $key=>$template){
 	echo "\r\n</script>\r\n";
 }
 ?>
+
+<?php
+
+
+$magic_script = array();
+
+foreach($magic_tags as $magic_set_key=>$magic_tags_set){
+	
+	$magic_script[$magic_set_key] = array(
+		'type'	=>	$magic_tags_set['type'],
+		'tags'	=>	array()
+	);
+
+	foreach($magic_tags_set['tags'] as $tag_key=>$tag_value){
+
+		if(is_array($tag_value)){
+			foreach($tag_value as $compatibility){
+				$magic_script[$magic_set_key]['tags'][$compatibility][] = $tag_key;
+			}
+		}else{
+			$magic_script[$magic_set_key]['tags']['text'][] = $tag_value;
+		}
+	}
+
+}
+
+?>
 <script type="text/javascript">
 
 <?php
@@ -750,6 +789,8 @@ foreach($field_type_templates as $key=>$template){
 echo implode("\r\n", $field_type_defaults);
 
 ?>
+var system_values = <?php echo json_encode( $magic_script ); ?>;
+
 </script>
 
 

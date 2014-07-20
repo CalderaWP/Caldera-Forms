@@ -2,7 +2,6 @@
 if(!empty($field['config']['placeholder'])){
 	$field_placeholder = 'placeholder="'.$field['config']['placeholder'].'"';
 }
-
 ?><div class="<?php echo $field_wrapper_class; ?>">
 	<?php echo $field_label; ?>
 	<div class="<?php echo $field_input_class; ?>">

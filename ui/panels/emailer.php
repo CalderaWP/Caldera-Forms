@@ -16,7 +16,7 @@ if(!isset($element['mailer']['email_subject'])){
 	$element['mailer']['email_subject'] = $element['name'];
 }
 if(!isset($element['mailer']['email_message'])){
-	$element['mailer']['email_message'] = '';
+	$element['mailer']['email_message'] = '{summary}';
 }
 if(!isset($element['mailer']['enable_mailer'])){
 	$element['mailer']['enable_mailer'] = '1';
@@ -89,7 +89,7 @@ if(!isset($element['mailer']['enable_mailer'])){
 			<label><?php echo __('Email Message', 'caldera-forms'); ?> </label>
 			<div class="caldera-config-field" style="max-width: 600px;">
 				<?php wp_editor( $element['mailer']['email_message'], "mailer_email_message", array('textarea_name' => 'config[mailer][email_message]') ); ?>
-				<p class="description"><?php echo __('Magic tags, %field_slug% are replaced with submitted data.', 'caldera-forms'); ?></p>
+				<p class="description"><?php echo __('Magic tags, %field_slug% are replaced with submitted data. use {summary} to build an automatic mail based on form content. Leaving the mailer blank, will create and automatic summary.', 'caldera-forms'); ?></p>
 			</div>
 		</div>
 	</div>

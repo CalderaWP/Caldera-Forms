@@ -33,17 +33,19 @@ function processor_line_template($id = '{{id}}', $type = null){
 	<li class="caldera-processor-nav <?php echo $id; ?> <?php if(!empty($type)){ echo 'processor_type_'.$type; }; ?>">
 		<a href="#<?php echo $id; ?>">
 		<?php echo $type_name; ?>
+		<span class="processor-line-number"></span>
 		</a>
+		<input type="hidden" name="config[processors][<?php echo $id; ?>][ID]" value="<?php echo $id; ?>">
 	</li>
 	<?php
 }
 
-function processor_wrapper_template($id = '{{id}}', $type = null, $config_str = '{"default":"default value"}', $conditions_str = '{"type" : ""}'){
+function processor_wrapper_template($id = '{{id}}', $type = '{{type}}', $config_str = '{"default":"default value"}', $conditions_str = '{"type" : ""}'){
 	
 	global $form_processors;
 
 	$type_name = __('New Form Processor', 'caldera-forms');
-	if(!empty($type)){
+	if(!empty($type) && $type != '{{type}}'){
 		if(empty($form_processors[$type])){
 			return;
 		}		
@@ -90,7 +92,7 @@ function processor_wrapper_template($id = '{{id}}', $type = null, $config_str = 
 	}
 
 	?>
-	<div class="caldera-editor-processor-config-wrapper caldera-editor-config-wrapper" id="<?php echo $id; ?>" style="display:none;">
+	<div class="caldera-editor-processor-config-wrapper caldera-editor-config-wrapper processor-<?php echo $type; ?>" id="<?php echo $id; ?>" data-type="<?php echo $type; ?>" style="display:none;">
 		<div class="toggle_option_tab">
 			<a href="#<?php echo $id; ?>_settings_pane" class="button button-primary">Settings</a>
 			<a href="#<?php echo $id; ?>_conditions_pane" class="button ">Conditions</a>

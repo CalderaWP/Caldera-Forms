@@ -4,7 +4,11 @@ jQuery(function($){
 
 	function build_sortables(){
 		// set sortable groups
-		$( ".caldera-editor-processors-panel ul" ).sortable();
+		$( ".caldera-editor-processors-panel ul" ).sortable({
+			update: function(){
+				rebind_field_bindings();
+			}
+		});
 
 	}
 
@@ -32,7 +36,8 @@ jQuery(function($){
 
 		new_templ = Handlebars.compile( $('#processor-line-tmpl').html() );
 		new_proc = {
-			"id"	:	"fp_" + processid
+			"id"	:	"fp_" + processid,
+			"type"	:	clicked.data('type')
 		};
 
 		// place new group line
@@ -55,7 +60,8 @@ jQuery(function($){
 	$('body').on('click', '.delete-processor', function(e){
 		
 		var clicked = $(this),
-			parent = clicked.closest('.caldera-editor-processor-config-wrapper');
+			parent = clicked.closest('.caldera-editor-processor-config-wrapper'),
+			type = parent.data('type');
 
 		if(!confirm(clicked.data('confirm'))){
 			return;
@@ -66,7 +72,8 @@ jQuery(function($){
 
 		$('.caldera-processor-nav a').first().trigger('click');
 
-		check_required_bindings();
+		//check_required_bindings();
+		rebuild_field_binding();
 
 	});
 
@@ -83,7 +90,7 @@ jQuery(function($){
 		}
 
 		title_line.html( title );
-		activeline.html( title ).parent().addClass( 'processor_type_' + selected.val() );
+		activeline.html( title + ' <span class="processor-line-number"></span>' ).parent().addClass( 'processor_type_' + selected.val() );
 
 		// get config
 		build_processor_config(this);
@@ -162,13 +169,15 @@ jQuery(function($){
 // field binding helper
 Handlebars.registerHelper('_field', function(args) {
 
-	var config = this,required="", is_array = "";
+	var config = this,required="", is_array = "", exclude="";
 
 	var default_val = this[args.hash.slug] ? ' data-default="' + this[args.hash.slug] + '"' : '';
-	//console.log();
 
 	if(args.hash.required){
 		required = " required";
+	}
+	if(args.hash.exclude){
+		exclude = 'data-exclude="'+args.hash.exclude+'"';
 	}
 	if(args.hash.array){
 		is_array = "[]";
@@ -177,7 +186,7 @@ Handlebars.registerHelper('_field', function(args) {
 		}
 	}
 
-	out = '<select ' + ( args.hash.type ? 'data-type="' + args.hash.type + '"' : '' ) + default_val +' name="' + this._name + '[' + args.hash.slug + ']' + is_array + '" id="' + this._id + '_' + args.hash.slug + '" class="block-input field-config caldera-processor-field-bind' + required + '">';
+	out = '<select ' + ( args.hash.type ? 'data-type="' + args.hash.type + '"' : '' ) + default_val +' ' + exclude + ' name="' + this._name + '[' + args.hash.slug + ']' + is_array + '" id="' + this._id + '_' + args.hash.slug + '" class="block-input field-config caldera-field-bind' + required + '">';
 	
 	if(!args.hash.required){
 		out += '<option value=""></option>';

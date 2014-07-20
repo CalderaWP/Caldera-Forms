@@ -347,6 +347,12 @@
 .template-element.ui-draggable-dragging{
 	z-index: 1000;
 }
+.layout-form-field.ui-sortable-placeholder {
+  background-color: #f8f8f8;
+  border-bottom: 1px dashed #dedede;
+  border-top: 1px dashed #dedede;
+  visibility: visible !important;
+}
 .ui-sortable-helper{overflow: hidden;}
 
 .layout-grid article,.layout-grid aside,.layout-grid details,.layout-grid figcaption,.layout-grid figure,.layout-grid footer,.layout-grid header,.layout-grid hgroup,.layout-grid main,.layout-grid nav,.layout-grid section,.layout-grid summary{display:block;}

@@ -27,16 +27,22 @@ rebuild_field_binding = function(){
 
 rebind_field_bindings = function(){
 
-	var bindings = jQuery('.caldera-processor-field-bind');
+	var bindings = jQuery('.caldera-field-bind'),
+		type_instances,
+		processor_li;
 
 	bindings.each(function(k,v){
 
 		var field = jQuery(v),
 			current = field.val(),
 			default_sel = field.data('default'),
-			count = 0;
+			excludes = field.data('exclude'),
+			count = 0,
+			wrapper = field.closest('.caldera-editor-processor-config-wrapper'),
+			wrapper_id = wrapper.prop('id'),
+			valid;	
 
-		if(default_sel){
+		if(default_sel){			
 			current = default_sel;
 		}
 
@@ -45,6 +51,7 @@ rebind_field_bindings = function(){
 		if(!field.hasClass('required')){
 			field.append('<option value=""></option>');
 		}
+		field.append('<optgroup label="Fields">');
 		for(var fid in current_form_fields){
 			if(field.data('type')){
 				if(field.data('type').split(',').indexOf(current_form_fields[fid].type) < 0){
@@ -55,10 +62,128 @@ rebind_field_bindings = function(){
 			field.append('<option value="' + fid + '"' + ( current === fid ? 'selected="selected"' : '' ) + '>' + current_form_fields[fid].label + ' [' + current_form_fields[fid].slug + ']</option>');
 			count += 1;
 		}
-
+		field.append('</optgroup>');
+		// system values
 		if(count === 0){
+			field.empty();
+		}
+		
+		for(var type in system_values){
+			type_instances = [];
+				
+			if(excludes){				
+				if( excludes.split(',').indexOf(type) >= 0 ){
+					continue;
+				}
+			}
+
+			if(type !== 'system' ){
+				type_instance_confs = jQuery(".processor-" + type);
+				
+				for(var c = 0; c<type_instance_confs.length; c++){
+					if(wrapper_id === type_instance_confs[c].id){
+						continue;
+					}
+
+					type_instances.push(type_instance_confs[c].id);
+					if(type_instance_confs.length > 1){
+						if(processor_li = jQuery('li.'+type_instance_confs[c].id + ' .processor-line-number')){
+							processor_li.html('[' + ( c + 1 ) + ']');
+						}
+					}
+
+				}
+			}else{
+				type_instances.push('__system__');
+			}
+			
 			if(field.data('type')){
-				field.empty().append('<option value="">No ' + field.data('type').split(',').join(' or ') + ' in form</option>').prop('disabled', true);
+
+				var types = field.data('type').split(',');
+
+				for(var t = 0; t<types.length; t++){
+					if(system_values[type].tags[types[t]]){
+						
+						for( var instance = 0; instance < type_instances.length; instance++){
+
+							// check index order is valid
+							if(jQuery('li.'+type_instances[instance]).index() > jQuery('li.'+wrapper_id).index() && type_instances[instance] !== '__system__'){
+								//console.log('lower');
+								valid = ' disabled="disabled"';
+							}else{
+								valid = '';
+							}
+
+
+							field.append('<optgroup label="' + system_values[type].type + ( type_instances[instance] !== '__system__' ? ' ' + ( jQuery('li.'+type_instances[instance]).find('.processor-line-number').html() ) : '' ) + '"' + valid + '>');
+
+								//for( var tag in system_values[type].tags){
+
+									for( var i = 0; i < system_values[type].tags[types[t]].length; i++){
+										
+										var bind_value = system_values[type].tags[types[t]][i];	
+										// update labels on multiple
+										if(type_instances[instance] !== '__system__'){
+											bind_value = bind_value.replace(type ,type_instances[instance]);
+											console.log(bind_value);
+										}
+										
+										field.append('<option value="{' + bind_value + '}"' + ( current === '{'+bind_value+'}' ? 'selected="selected"' : '' ) + valid + '>' + system_values[type].tags[types[t]][i] + '</option>');
+										//field.append('<option value="' + bind_value + '"' + ( current === system_values[type].tags[types[t]][i] ? 'selected="selected"' : '' ) + '>' + system_values[type].tags[types[t]][i] + '</option>');
+
+										count += 1;
+									}
+
+								//}
+
+							field.append('</optgroup>');
+
+						}
+
+					}
+				}
+			}else{	
+
+				if(system_values[type].tags.text){
+					
+					for( var instance = 0; instance < type_instances.length; instance++){
+
+						// check index order is valid
+						if(jQuery('li.'+type_instances[instance]).index() > jQuery('li.'+wrapper_id).index() && type_instances[instance] !== '__system__'){
+							//console.log('lower');
+							valid = ' disabled="disabled"';
+						}else{
+							valid = '';
+						}
+
+						
+						field.append('<optgroup label="' + system_values[type].type + ( type_instances[instance] !== '__system__' ? ' ' + ( jQuery('li.'+type_instances[instance]).find('.processor-line-number').html() ) : '' ) + '"' + valid + '>');
+
+							for( var i = 0; i < system_values[type].tags.text.length; i++){
+
+									var bind_value = system_values[type].tags.text[i];	
+									// update labels on multiple
+									if(type_instances[instance] !== '__system__'){
+										bind_value = bind_value.replace(type ,type_instances[instance]);
+									}
+
+									field.append('<option value="{' + bind_value + '}"' + ( current === '{'+bind_value+'}' ? 'selected="selected"' : '' ) + valid + '>' + system_values[type].tags.text[i] + '</option>');
+									count += 1;
+
+							}
+
+						field.append('</optgroup>');
+					}
+
+				}
+
+			}
+
+		}
+		if(count === 0){
+			field.empty();
+			if(field.data('type')){
+				field.append('<option value="">No ' + field.data('type').split(',').join(' or ') + ' in form</option>').prop('disabled', true);
 			}
 		}else{
 			field.prop('disabled', false);
@@ -78,6 +203,7 @@ function setup_field_type(obj){
 
 
 function check_required_bindings(){
+
 	var fields = jQuery('.caldera-config-field .required'),
 		savebutton = jQuery('.caldera-header-save-button'),
 		field_elements = jQuery('.layout-form-field'),
@@ -92,6 +218,7 @@ function check_required_bindings(){
 	jQuery('.error-tag').remove();
 	//reset list 
 	required_errors = {};
+	
 	fields.each(function(k,v){
 		if(!v.value.length){
 			var field = jQuery(v),
@@ -115,12 +242,12 @@ function check_required_bindings(){
 
 		}
 	});
-
+	
 	for(var t in required_errors){
 		savebutton.prop("disabled", true);
 		jQuery('.caldera-forms-options-form').find('a[href="#' + t + '"]').append('<span class="error-tag">' + required_errors[t] + '</span>');
 	}
-
+	
 	// check for button and update the processor page.
 	if(!jQuery('.preview-caldera-config-group button:submit').length){
 		//jQuery('.caldera-editor-processors-panel-wrap').hide();
@@ -255,6 +382,7 @@ jQuery(function($) {
 		rebuild_field_binding();
 		baldrickTriggers();
 		$('#' + name).trigger('field.drop');		
+		$(document).trigger('field.added');
 	}
 
 	function buildSortables(){

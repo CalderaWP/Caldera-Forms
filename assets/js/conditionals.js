@@ -1,5 +1,26 @@
 (function($){
 
+	// IE8 compatibility
+	if (!Array.prototype.indexOf){
+		Array.prototype.indexOf = function(elt /*, from*/){
+			var len = this.length >>> 0;
+
+			var from = Number(arguments[1]) || 0;
+			from = (from < 0)
+			? Math.ceil(from)
+			: Math.floor(from);
+			if (from < 0)
+				from += len;
+
+			for (; from < len; from++){
+				if (from in this &&
+					this[from] === elt)
+					return from;
+			}
+			return -1;
+		};
+	}
+
 	function calders_forms_check_conditions(){
 		
 		for(var field in caldera_conditionals){
@@ -11,19 +32,20 @@
 				continue;
 			}
 			var type	=	caldera_conditionals[field].type,
-				groups	=	caldera_conditionals[field].group,
-				trues	=	[];
+			groups	=	caldera_conditionals[field].group,
+			trues	=	[];
 			
 			// has a wrapper - bind conditions
 			for(var id in groups){
 				
 				var truelines	= {},
-					lines		= groups[id];						
+				lines		= groups[id];						
 				// go over each line in a group to find a false
-				for(var lid in lines){
+				for(var lid in lines){					
 					/// get field 
 					var compareelement 	= $('[data-field="' + lines[lid].field + '"]'),
-						comparefield 	= [];
+					comparefield 	= [],
+					comparevalue	= (typeof lines[lid].value === 'function' ? lines[lid].value() : lines[lid].value);
 					
 					truelines[lid] 	= false;
 					
@@ -33,57 +55,57 @@
 					if(!compareelement.length){
 						comparefield.push("");
 					}else{
-						for( var i = 0; i<compareelement.length; i++){
+						for( var i = 0; i<compareelement.length; i++){							
 							comparefield.push(compareelement[i].value);
 						}
 					}
 
 					switch(lines[lid].compare) {
 						case 'is':
-							if(comparefield.length){
-								if(comparefield.indexOf(lines[lid].value) >= 0){
-									truelines[lid] = true;
-								}
+						if(comparefield.length){
+							if(comparefield.indexOf(comparevalue) >= 0){
+								truelines[lid] = true;
 							}
-							break;
+						}
+						break;
 						case 'isnot':
-							if(comparefield.length){
-								if(comparefield.indexOf(lines[lid].value) < 0){
-									truelines[lid] = true;
-								}
+						if(comparefield.length){
+							if(comparefield.indexOf(comparevalue) < 0){
+								truelines[lid] = true;
 							}
-							break;
+						}
+						break;
 						case '>':
-							if( parseFloat( comparefield.reduce(function(a, b) {return a + b;}) ) > parseFloat( lines[lid].value ) ){
-								truelines[lid] = true;
-							}
-							break;
+						if( parseFloat( comparefield.reduce(function(a, b) {return a + b;}) ) > parseFloat( comparevalue ) ){
+							truelines[lid] = true;
+						}
+						break;
 						case '<':
-							if( parseFloat( comparefield.reduce(function(a, b) {return a + b;}) ) < parseFloat( lines[lid].value ) ){
+						if( parseFloat( comparefield.reduce(function(a, b) {return a + b;}) ) < parseFloat( comparevalue ) ){
+							truelines[lid] = true;
+						}
+						break;
+						case 'startswith':
+						for( var i = 0; i<comparefield.length; i++){
+							if( comparefield[i].toLowerCase().substr(0, comparevalue.toLowerCase().length ) === comparevalue.toLowerCase()){
 								truelines[lid] = true;
 							}
-							break;
-						case 'startswith':
-							for( var i = 0; i<comparefield.length; i++){
-								if( comparefield[i].toLowerCase().substr(0, lines[lid].value.toLowerCase().length ) === lines[lid].value.toLowerCase()){
-									truelines[lid] = true;
-								}
-							}
-							break;
+						}
+						break;
 						case 'endswith':
-							for( var i = 0; i<comparefield.length; i++){
-								if( comparefield[i].toLowerCase().substr(comparefield[i].toLowerCase().length - lines[lid].value.toLowerCase().length ) === lines[lid].value.toLowerCase()){
-									truelines[lid] = true;
-								}
+						for( var i = 0; i<comparefield.length; i++){
+							if( comparefield[i].toLowerCase().substr(comparefield[i].toLowerCase().length - comparevalue.toLowerCase().length ) === comparevalue.toLowerCase()){
+								truelines[lid] = true;
 							}
-							break;
+						}
+						break;
 						case 'contains':
-							for( var i = 0; i<comparefield.length; i++){
-								if( comparefield[i].toLowerCase().indexOf( lines[lid].value ) >= 0 ){
-									truelines[lid] = true;
-								}
+						for( var i = 0; i<comparefield.length; i++){
+							if( comparefield[i].toLowerCase().indexOf( comparevalue ) >= 0 ){
+								truelines[lid] = true;
 							}
-							break;
+						}
+						break;
 					}
 				}				
 				// add result in
@@ -101,9 +123,9 @@
 			
 
 			var template	=	$('#conditional-' + field + '-tmpl').html(),
-				target		=	$('#conditional_' + field),
-				target_field=	$('[data-field="' + field + '"]'),
-				action;
+			target		=	$('#conditional_' + field),
+			target_field=	$('[data-field="' + field + '"]'),
+			action;
 			
 			if(trues.length && trues.indexOf(true) >= 0){					
 				if(type === 'show'){

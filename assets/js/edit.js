@@ -47,17 +47,53 @@ function build_conditions_config(obj){
 jQuery(function($){
 
 
-	$('.edit-update-trigger').baldrick({
+	$('.caldera-header-save-button').baldrick({
 		method			:	'POST',
-		before			: function(){
+		request			:	'admin.php?page=caldera-forms',
+		before			: function(el, e){
+			e.preventDefault();
+			$('#save_indicator').addClass('loading');
 			if(tinyMCE){
 				tinyMCE.triggerSave();
 			}
-			
+
+			var config			= {},
+				data_fields		= $('.caldera-forms-options-form').find('input,radio,checkbox,select,textarea'),
+				objects			= [];
+
+			//data_fields.each(function(k,v){
+			for( var v = 0; v < data_fields.length; v++){
+				var field 		= $(data_fields[v]),
+					basename 	= field.prop('name').replace(/\[/gi,':').replace(/\]/gi,''),//.split('[' + id + ']')[1].substr(1),
+					name		= basename.split(':'),
+					value 		= ( field.is(':checkbox,:radio') ? field.filter(':checked').val() : field.val() ),
+					lineconf 	= {};			
+
+				for(var i = name.length-1; i >= 0; i--){
+					if(i === name.length-1){
+						lineconf[name[i]] = value;
+					}else{
+						var newobj = lineconf;
+						lineconf = {};
+						lineconf[name[i]] = newobj;
+					}		
+				}
+				$.extend(true, config, lineconf);
+			};
+
+
+			$(el).data('cf_edit_nonce', config.cf_edit_nonce);
+			$(el).data('_wp_http_referer', config._wp_http_referer);
+			$(el).data('sender', 'ajax');
+			$(el).data('config', JSON.stringify(config.config));
+						
 			return true;
+		},
+		complete: function(){
+			
+			$('.wrapper-instance-pane .field-config').prop('disabled', false);
 		}
 	});
-
 
 	/*
 	*	Build the fieltypes config
@@ -137,6 +173,7 @@ jQuery(function($){
 	}
 
 	function build_field_preview(id){
+
 		var panel 			= $('#' + id),
 			select			= panel.find('.caldera-select-field-type'),
 			preview_parent	= $('.layout-form-field[data-config="' + id + '"]'),
@@ -152,11 +189,10 @@ jQuery(function($){
 				basename 	= field.prop('name').split('[' + id + ']')[1].substr(1),
 				name		= basename.substr(0, basename.length-1).split(']['),
 				value 		= ( field.is(':checkbox,:radio') ? field.filter(':checked').val() : field.val() ),
-				lineconf 	= {};
-
-
-
+				lineconf 	= {};			
+			
 			for(var i = name.length-1; i >= 0; i--){
+
 				if(i === name.length-1){
 					lineconf[name[i]] = value;
 				}else{
@@ -167,8 +203,7 @@ jQuery(function($){
 			}
 			$.extend(true, config, lineconf);
 		});
-			
-
+		
 		preview_target.html( template(config) );
 		preview_parent.removeClass('button');
 
@@ -501,10 +536,8 @@ jQuery(function($){
 			// remove line 
 			line.remove();
 			rebuild_field_binding();
+			$(document).trigger('field.removed');
 		});
-
-
-
 
 	});
 
@@ -705,7 +738,7 @@ jQuery(function($){
 
 		var field = $(this),
 			type = field.data('condition'),
-			field_id = this.value,
+			field_id = this.value.replace('{','_').replace('}','_'),
 			pid = field.data('id'),
 			field_wrapper = $('#' + field_id),
 			options_wrap = field_wrapper.find('.caldera-config-group-toggle-options'),

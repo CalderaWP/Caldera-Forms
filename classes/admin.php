@@ -49,7 +49,7 @@ class Caldera_Forms_Admin {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_stylescripts' ) );
 
 		// add element & fields filters
-		add_filter('caldera_forms_get_panel_extensions', array( $this, 'get_panel_extensions'));
+		add_filter('caldera_forms_get_panel_extensions', array( $this, 'get_panel_extensions'), 1);
 		add_filter('caldera_forms_entry_viewer_buttons', array( $this, 'set_viewer_buttons'),10, 4);
 		
 		// action
@@ -123,7 +123,7 @@ class Caldera_Forms_Admin {
 			$viewer_buttons = 'data-modal-buttons=\'' . implode(';', $viewer_buttons) . '\'';
 		}
 
-		echo '<button class="button button-small ajax-trigger" data-active-class="none" data-load-class="spinner" ' . $viewer_buttons . ' data-group="viewentry" data-entry="{{_entry_id}}" data-form="{{../form}}" data-action="get_entry" data-modal="view_entry" data-modal-width="550" data-modal-title="' . __('Entry', 'caldera-forms') . ' # {{_entry_id}}" data-template="#view-entry-tmpl" type="button">' . __('View', 'caldera-forms') . '</button> ';		
+		echo '{{#if ../../is_active}}<button class="button button-small ajax-trigger view-entry-btn" data-active-class="none" data-load-class="spinner" ' . $viewer_buttons . ' data-group="viewentry" data-entry="{{_entry_id}}" data-form="{{../../form}}" data-action="get_entry" data-modal="view_entry" data-modal-width="600" data-modal-title="' . __('Entry', 'caldera-forms') . ' # {{_entry_id}}" data-template="#view-entry-tmpl" type="button">' . __('View', 'caldera-forms') . '</button> {{/if}}';		
 	}
 	
 	public static function set_viewer_buttons($buttons){
@@ -176,6 +176,26 @@ class Caldera_Forms_Admin {
 		foreach($tables as $table){
 			$alltables[] = implode($table);
 		}
+
+		// meta table
+		if(!in_array($wpdb->prefix.'cf_form_entry_meta', $alltables)){
+			// create meta tables
+			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+
+			$meta_table = "CREATE TABLE `" . $wpdb->prefix . "cf_form_entry_meta` (
+			`meta_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			`entry_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+			`meta_key` varchar(255) DEFAULT NULL,
+			`meta_value` longtext,
+			PRIMARY KEY (`meta_id`),
+			KEY `meta_key` (`meta_key`),
+			KEY `entry_id` (`entry_id`)
+			) DEFAULT CHARSET=utf8;";
+			
+			dbDelta( $meta_table );
+
+		}
+
 		if(!in_array($wpdb->prefix.'cf_form_entries', $alltables)){
 			// create tables
 			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
@@ -240,6 +260,8 @@ class Caldera_Forms_Admin {
 					}
 				}
 			}
+			// add meta table
+
 			
 		}
 
@@ -260,16 +282,8 @@ class Caldera_Forms_Admin {
 		$selects = array();
 
 		// get all fieldtype
-		$field_types = apply_filters('caldera_forms_get_field_types', array() );
-		// setup filters
-		if(!empty($field_types)){
-			foreach($field_types as $fieldType=>$fieldConfig){
-				// check for a viewer
-				if(isset($fieldConfig['viewer'])){
-					add_filter('caldera_forms_view_field_' . $fieldType, $fieldConfig['viewer'], 10, 2);
-				}
-			}
-		}
+		$field_types = Caldera_Forms::get_field_types();
+
 
 		$fields = array();
 		if(!empty($form['fields'])){
@@ -293,7 +307,28 @@ class Caldera_Forms_Admin {
 
 		$data = array();
 
-		$data['total'] = (int) $wpdb->get_var($wpdb->prepare("SELECT COUNT(`id`) AS `total` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = %s;", $_POST['form']));
+		$filter = null;
+		if(!empty($selects)){
+			//$filter .= " AND `value`.`slug` IN (" . implode(',', $selects) . ") ";
+		}
+		// status
+		$status = "'active'";
+		if(!empty($_POST['status'])){
+			$status = $wpdb->prepare("%s", $_POST['status']);
+		}
+
+
+		$data['trash'] = (int) $wpdb->get_var($wpdb->prepare("SELECT COUNT(`id`) AS `total` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = %s AND `status` = 'trash';", $_POST['form']));
+		$data['active'] = (int) $wpdb->get_var($wpdb->prepare("SELECT COUNT(`id`) AS `total` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = %s AND `status` = 'active';", $_POST['form']));
+	
+
+		// set current total
+		if(!empty($_POST['status']) && isset($data[$_POST['status']])){
+			$data['total'] = $data[$_POST['status']];
+		}else{
+			$data['total'] = $data['active'];
+		}
+
 
 		$data['pages'] = ceil($data['total'] / $perpage );
 
@@ -314,13 +349,18 @@ class Caldera_Forms_Admin {
 			$offset = ($page - 1) * $perpage;
 			$limit = $offset . ',' . $perpage;
 
+			//if(!empty($selects)){
+			//$filter .= " AND `entry`.`status` = ".$status." ";
+			//}
+
+
 			$rawdata = $wpdb->get_results($wpdb->prepare("
 			SELECT
 				`id`,
 				`form_id`
 			FROM `" . $wpdb->prefix ."cf_form_entries`
 
-			WHERE `form_id` = %s ORDER BY `datestamp` DESC LIMIT " . $limit . ";", $_POST['form'] ));		
+			WHERE `form_id` = %s AND `status` = ".$status." ORDER BY `datestamp` DESC LIMIT " . $limit . ";", $_POST['form'] ));		
 
 			if(!empty($rawdata)){
 
@@ -333,10 +373,6 @@ class Caldera_Forms_Admin {
 					$ids[] = $row->id;
 				}
 
-				$filter = null;
-				if(!empty($selects)){
-					//$filter .= " AND `value`.`slug` IN (" . implode(',', $selects) . ") ";
-				}
 				$rawdata = $wpdb->get_results("
 				SELECT
 					`entry`.`id` as `_entryid`,
@@ -386,17 +422,6 @@ class Caldera_Forms_Admin {
 						// check view handler
 						$field = $fields[$row->slug];
 
-						/*if(isset($field_types[$field['type']]['viewer'])){
-
-							if(is_array($field_types[$field['type']]['viewer'])){
-								$row->value = call_user_func_array($field_types[$field['type']]['viewer'],array($row->value, $field, $form));
-							}else{
-								if(function_exists($field_types[$field['type']]['viewer'])){
-									$func = $field_types[$field['type']]['viewer'];
-									$row->value = $func($row->value, $field, $form);
-								}
-							}
-						}*/
 						$row->value = apply_filters('caldera_forms_view_field_' . $field['type'], $row->value, $field, $form);
 
 
@@ -415,6 +440,9 @@ class Caldera_Forms_Admin {
 				}
 			}
 		}
+
+		// set status output
+		$data['is_' . $_POST['status']] = true;
 
 		header('Content-Type: application/json');
 		echo json_encode( $data );
@@ -728,6 +756,16 @@ class Caldera_Forms_Admin {
 					$labels[$field['slug']] = $field['label'];
 				}
 			}
+			$filter = null;
+			// export set - transient
+			if(!empty($_GET['tid'])){
+				$items = get_transient( $_GET['tid'] );
+				if(!empty($items)){
+					$filter = ' AND `entry`.`id` IN (' . implode(',', $items) . ') ';
+				}else{
+					wp_die( __('Export selection has expired', 'caldera-forms') , __('Export Expired', 'caldera-forms') );
+				}
+			}
 
 			$rawdata = $wpdb->get_results($wpdb->prepare("
 			SELECT
@@ -741,7 +779,7 @@ class Caldera_Forms_Admin {
 			LEFT JOIN `" . $wpdb->prefix ."cf_form_entry_values` AS `value` ON (`entry`.`id` = `value`.`entry_id`)
 
 			WHERE `entry`.`form_id` = %s
-			
+			" . $filter . "
 			ORDER BY `entry`.`datestamp` DESC;", $_GET['export']));
 
 			$data = array();
@@ -802,13 +840,12 @@ class Caldera_Forms_Admin {
 		}
 
 		if( isset($_POST['config']) && isset( $_POST['cf_edit_nonce'] ) ){
-
+			
 			// if this fails, check_admin_referer() will automatically print a "failed" page and die.
 			if ( check_admin_referer( 'cf_edit_element', 'cf_edit_nonce' ) ) {
 				
 				// strip slashes
-				$data = stripslashes_deep($_POST['config']);
-
+				$data = json_decode( stripslashes_deep($_POST['config']) , ARRAY_A );
 				// get form registry
 				$forms = get_option( '_caldera_forms' );
 				if(empty($forms)){

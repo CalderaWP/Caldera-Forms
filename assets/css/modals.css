@@ -63,7 +63,7 @@
 }
 
 .caldera-modal-body .form-panel {
-  bottom: -30px;
+  bottom: 0;
   left: 12px;
   overflow: auto;
   position: absolute;
@@ -127,7 +127,7 @@
 /** DETAIL PROFILE MODAL */
 .modal-inside {
   height: 100%;
-  margin-left: 170px;
+  margin-left: 158px;
   padding-right: 10px;
   overflow: auto;  
 }

@@ -628,6 +628,9 @@ a span.error-tag {
 .form-entries-wrap {
   padding: 0 30px;
 }
+.form-entries-wrap .caldera-forms-entry-exporter{
+  margin-top: 1px;
+}
 .form-panel.postbox {
   border-left: 6px solid #E5E5E5;
   float: left;
@@ -673,6 +676,15 @@ a span.error-tag {
   position: absolute;
   top: -18px;
   width: 28px;
+}
+.form-panel .cf-deleted-row td {
+  opacity: 0.2;
+}
+.form-panel .cf-deleted-row .view-entry-btn{
+  display: none;
+}
+.form-panel .cf-deleted-row td:last-child {
+  opacity: 1;
 }
 .avatar-link .avatar {
   max-width: 100%;
