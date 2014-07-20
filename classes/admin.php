@@ -135,7 +135,7 @@ class Caldera_Forms_Admin {
 				# code...
 				break;
 		}
-		
+		exit();	
 	}
 
 
