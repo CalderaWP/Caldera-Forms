@@ -123,7 +123,7 @@
 						{{#each fields}}
 						<th>{{this}}</th>
 						{{/each}}
-						<th></th>
+						<th style="width: 100px;"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -136,7 +136,7 @@
 						{{#each data}}
 						<td>{{{this}}}</td>
 						{{/each}}
-						<td style="text-align: right;"><?php do_action('caldera_forms_entry_actions'); ?></td>
+						<td style="text-align: right; width: 100px;"><?php do_action('caldera_forms_entry_actions'); ?></td>
 					</tr>
 				{{/each}}
 				{{else}}

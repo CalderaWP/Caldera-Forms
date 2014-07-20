@@ -740,11 +740,32 @@ class Caldera_Forms {
 
 	}
 
-	static public function run_calculation($value, $field, $form){
+	static public function run_calculation($value, $field, $form){		
 
-		//$data = self::get_submission_data($form);
-		
 		$formula = $field['config']['formular'];
+
+		// get manual
+		if(!empty($field['config']['manual'])){
+			$formula = $field['config']['manual_formula'];
+			preg_match_all("/%(.+?)%/", $formula, $hastags);
+			if(!empty($hastags[1])){
+				$binds = array();
+
+				foreach($hastags[1] as $tag_key=>$tag){
+
+					foreach($form['fields'] as $key_id=>$fcfg){
+						if($fcfg['slug'] === $tag){
+							$binds[] = '#'.$key_id;
+							$bindfields[] = '"'.$key_id.'"';
+							$formula = str_replace($hastags[0][$tag_key], $key_id, $formula);
+						}
+					}
+				}
+			}
+			// fix POW
+			//$formula = str_replace('pow(', 'Math.pow(', $formula);
+
+		}
 		if( empty($formula)){
 			return 0;
 		}

@@ -15,6 +15,29 @@ if(empty($elementType)){
 </div>
 <?php
 $formula = $field['config']['formular'];
+//dump($formula);
+if(!empty($field['config']['manual'])){
+	$formula = $field['config']['manual_formula'];
+	preg_match_all("/%(.+?)%/", $formula, $hastags);
+	if(!empty($hastags[1])){
+		$binds = array();
+
+		foreach($hastags[1] as $tag_key=>$tag){
+
+			foreach($form['fields'] as $key_id=>$fcfg){
+				if($fcfg['slug'] === $tag){
+					$binds[] = '#'.$key_id;
+					$bindfields[] = '"'.$key_id.'"';
+					$formula = str_replace($hastags[0][$tag_key], $key_id, $formula);
+				}
+			}
+		}
+	}
+	// fix POW
+	$formula = str_replace('pow(', 'Math.pow(', $formula);
+
+}
+
 $binds = array();
 $binds_wrap = array();
 $binds_vars = array();
@@ -26,6 +49,7 @@ foreach($form['fields'] as $fid=>$cfg){
 		$binds_wrap[] = "#conditional_".$fid;
 	}
 }
+
 
 if(!empty($binds)){
 	$bindtriggers = array_merge($binds, $binds_wrap);
@@ -43,6 +67,8 @@ if(!empty($binds)){
 		function docalc_<?php echo $field_base_id; ?>(){
 			var <?php echo implode(', ',$binds_vars); ?>,
 				total = <?php echo $formula; ?>;
+
+				console.log('<?php echo $formula; ?>');
 
 			<?php if(!empty($field['config']['fixed'])){ ?>
 			total = total.toFixed(2);
