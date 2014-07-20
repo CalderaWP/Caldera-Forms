@@ -15,7 +15,7 @@ if(empty($elementType)){
 </div>
 <?php
 $formula = $field['config']['formular'];
-//dump($formula);
+
 if(!empty($field['config']['manual'])){
 	$formula = $field['config']['manual_formula'];
 	preg_match_all("/%(.+?)%/", $formula, $hastags);
@@ -68,7 +68,6 @@ if(!empty($binds)){
 			var <?php echo implode(', ',$binds_vars); ?>,
 				total = <?php echo $formula; ?>;
 
-				console.log('<?php echo $formula; ?>');
 
 			<?php if(!empty($field['config']['fixed'])){ ?>
 			total = total.toFixed(2);
