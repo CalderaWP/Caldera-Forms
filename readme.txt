@@ -38,6 +38,11 @@ none yet.
 3. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
+= 1.0.7 (20 July, 2014) =
+
+Bugfix:
+* Left off an important table update for the status- very sorry. I hate doing two updates in a day.
+
 = 1.0.6 (20 July, 2014) =
 
 Additions:
