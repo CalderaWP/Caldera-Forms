@@ -54,6 +54,8 @@
 			
 		}
 
+		$(document).trigger('cf.pagenav');
+
 	})
 	// init page errors
 	var tab_navclick;

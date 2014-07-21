@@ -821,7 +821,6 @@ class Caldera_Forms_Admin {
 				if(empty($forms)){
 					$forms = array();
 				}
-
 				// option value labels
 				if(!empty($data['fields'])){
 					foreach($data['fields'] as &$field){

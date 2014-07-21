@@ -59,29 +59,42 @@ jQuery(function($){
 
 			var config			= {},
 				data_fields		= $('.caldera-forms-options-form').find('input,radio,checkbox,select,textarea'),
-				objects			= [];
+				objects			= [],
+				arraynames		= {};
 
 			//data_fields.each(function(k,v){
 			for( var v = 0; v < data_fields.length; v++){
+				if( data_fields[v].getAttribute('name') === null){
+					continue;
+				}
 				var field 		= $(data_fields[v]),
 					basename 	= field.prop('name').replace(/\[/gi,':').replace(/\]/gi,''),//.split('[' + id + ']')[1].substr(1),
 					name		= basename.split(':'),
 					value 		= ( field.is(':checkbox,:radio') ? field.filter(':checked').val() : field.val() ),
-					lineconf 	= {};			
+					lineconf 	= {};					
 
 				for(var i = name.length-1; i >= 0; i--){
+					var nestname = name[i];
+					if(nestname.length === 0){
+						if( typeof arraynames[name[i-1]] === 'undefined'){
+							arraynames[name[i-1]] = 0;
+						}else{
+							arraynames[name[i-1]] += 1;
+						}
+						nestname = arraynames[name[i-1]];
+					}
 					if(i === name.length-1){
-						lineconf[name[i]] = value;
+						lineconf[nestname] = value;
 					}else{
 						var newobj = lineconf;
 						lineconf = {};
-						lineconf[name[i]] = newobj;
+						lineconf[nestname] = newobj;
 					}		
 				}
+				
 				$.extend(true, config, lineconf);
 			};
-
-
+			console.log(arraynames);
 			$(el).data('cf_edit_nonce', config.cf_edit_nonce);
 			$(el).data('_wp_http_referer', config._wp_http_referer);
 			$(el).data('sender', 'ajax');
