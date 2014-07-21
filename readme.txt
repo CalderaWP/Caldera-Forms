@@ -11,15 +11,48 @@ Create complex grid based, responsive forms easily with an easy to use drag and 
 == Description ==
 Caldera Forms is a free, simple form builder with a layout builder that enables you to create the format you want for your form. It is fully responsive and with form processors, it gives you flexibility to handle the form data how you need it.
 
-Add form processors to your forms to have the data go where you need it. Yo can stack up processors to have them do multiple tasks. Currently, there is only an Auto-Responder and Redirect processor, but more are coming.
+For issues and updates - Caldera Forms is on [GitHub](https://github.com/Desertsnowman/Caldera-Forms)
+Form Demos and Templates can be found on the demo site [Caldera Forms Demos](http://demo.calderaforms.com/)
 
-Advanced conditional logic take away the basic "Match all or one" and gives you conditional groups. This allows you to create simple conditionals or complex, multi-condition matching.
+= A Few Feature Highlights =
+* Responsive Grid design based on Bootstrap 3
+* Advanced Conditionals allows for multi, complex matching
+* Form Processors allows for stacking up form functionality, conditionaly
+* Export and Import forms across installations
+* Ajax or Page reload
+* Multipage forms
+* CSV of submission attached to notification email
+* Auto Responder
+* File Uploads
+
+= Auto Values & Magic Tags =
+Capture system values, Post/Page data and custom fields, User data, and processor returns.
+
+= Current Available Fields (more can be added on request) =
+* Calculation
+* Range Slider
+* Star Rating
+* Phone
+* Text - Includes Custom Masking
+* File Upload
+* reCaptcha
+* HTML content block - with dynamic data binding ( %field_slug% updates dynamically in html )
+* Hidden
+* Button
+* Email
+* Paragraph
+* Toggle Switch
+* Dropdown Select
+* Checkbox
+* Radio
+* Date Picker
+* Color Picker
 
 Everything can be extended. For developers, there are enough hooks and filters to build on. From frontend handling, to form processing, to editor panels, to field types. At it's core, it's a framework for building applications so you can make what you want.
 
-This is only the first version and much more is coming.
-
 For issues and updates - Caldera Forms is on [GitHub](https://github.com/Desertsnowman/Caldera-Forms)
+
+
 
 == Installation ==
 
@@ -40,19 +73,19 @@ none yet.
 == Changelog ==
 = 1.0.8 (21 July, 2014) =
 
-Bugfix:
+= Bugfix =
 * PHP 5.2+ compatibility fix on grid generation
 * Multi-page bug that stopped the page config from being saved
 * Range Slider bug fixed that broke sliders on multipage forms
 
 = 1.0.7 (20 July, 2014) =
 
-Bugfix:
+= Bugfix =
 * Left off an important table update for the status- very sorry. I hate doing two updates in a day.
 
 = 1.0.6 (20 July, 2014) =
 
-Additions:
+= Additions =
 * Range Slider field type
 * Star Rating view filter (show starts in entry view)
 * Auto generate mail body from submissions + {summary} magic tag
@@ -64,12 +97,12 @@ Additions:
 * Field tags are now bindable values for processors
 
 
-Bug Fixes:
+= Bug Fixes =
 * max_input_limit for configurations. fixed without the need to update php.ini (w00t!)
 * fixed conditionals support for IE8
 * some minor fixes I can't remember right now.
 
-Enhancements:
+= Enhancements =
 * Added processor meta values so that form processors can add to the form submission
 * optimized js in editor UI
 * more filters and actions for developers
@@ -77,7 +110,7 @@ Enhancements:
 
 = 1.0.5 (13 July, 2014) =
 
-Additions:
+= Additions =
 * Multi Page Forms (still some work to do to make it easier)
 * Bulk option insert for select fields (dropdown, radio, checkboxes, toggle button)
 * Magic Tags on fields and mailer
@@ -85,7 +118,7 @@ Additions:
 * Ajax return filter
 * Placeholder field to add a custom placeholder rather than using the lable.
 
-Bug Fixes:
+= Bug Fixes =
 * Bug in ajax verification
 * Missing checkmark image in chrome
 * Conditionals on checkboxes now works
@@ -93,7 +126,7 @@ Bug Fixes:
 * Calculations field responds to conditionals correctly
 * Static field types (select options etc) cannot be minipulated from frontend. Preprocessing on submit restores set values.
 
-Enhancements:
+= Enhancements =
 * Switched redirect filter and action order
 * File upload method to use WordPress' handler to prevent issues on some installs.
 * Field dragging reduces to a set block for easier field placement.

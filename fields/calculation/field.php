@@ -5,6 +5,13 @@ if(empty($elementType)){
 	$elementType = 'div';
 }
 
+if(!empty($field['config']['before'])){
+	$field['config']['before'] = self::do_magic_tags($field['config']['before']);
+}
+if(!empty($field['config']['after'])){
+	$field['config']['after'] = self::do_magic_tags($field['config']['after']);
+}
+
 ?><div class="<?php echo $field_wrapper_class; ?>">
 	<?php echo $field_label; ?>
 	<div class="<?php echo $field_input_class; ?>">
@@ -37,6 +44,7 @@ if(!empty($field['config']['manual'])){
 	$formula = str_replace('pow(', 'Math.pow(', $formula);
 
 }
+$formula = str_replace("\r",'', str_replace("\n",'', str_replace(' ','', trim( self::do_magic_tags( $formula ) ) ) ) );
 
 $binds = array();
 $binds_wrap = array();

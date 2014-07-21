@@ -3,6 +3,13 @@ $polyfill = 'false';
 if(!empty($field['config']['pollyfill'])){
 	$polyfill = 'true';
 }
+if(!empty($field['config']['suffix'])){
+	$field['config']['suffix'] = self::do_magic_tags($field['config']['suffix']);
+}
+if(!empty($field['config']['prefix'])){
+	$field['config']['prefix'] = self::do_magic_tags($field['config']['prefix']);
+}
+
 ?><div class="<?php echo $field_wrapper_class; ?>">
 	<?php echo $field_label; ?>
 	<div class="<?php echo $field_input_class; ?>">

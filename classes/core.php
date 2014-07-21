@@ -1473,6 +1473,35 @@ class Caldera_Forms {
 								$magic_tag = null;
 							}
 							break;
+						case 'post_meta':
+							global $post;
+
+							if(is_object($post)){
+								$post_metavalue = get_post_meta( $post->ID, $magic[1] );
+								if( false !== strpos($magic[1], ':') ){
+									$magic[3] = explode(':', $magic[1]);
+								}
+								if(empty($post_metavalue)){
+									$magic_tag = null;
+								}else{									
+									if(empty($magic[3])){
+										$magic_tag = implode(', ', $post_metavalue);
+									}else{
+										$outmagic = array();
+										foreach ($magic[3] as $subkey => $subvalue) {
+											foreach( (array) $post_metavalue as $subsubkey=>$subsubval){
+												if(isset($subsubval[$subvalue])){
+													$outmagic[] = $post_metavalue;
+												}												
+											}											
+										}
+										$magic_tag = implode(', ', $outmagic);
+									}
+								}
+							}else{
+								$magic_tag = null;
+							}
+							break;
 
 					}
 				}else{
@@ -1499,8 +1528,8 @@ class Caldera_Forms {
 							break;
 					}
 				}
-				
-				$filter_value = apply_filters('caldera_forms_do_magic_tag', $magic_tag, $magics[0][$magic_key]);
+
+				$filter_value = apply_filters('caldera_forms_do_magic_tag', $magic_tag, $magics[0][$magic_key]);				
 				if(!empty($form['ID']) && !empty($processed_meta[$form['ID']][$magic[0]])){
 
 					foreach($processed_meta[$form['ID']][$magic[0]] as $return_array){
@@ -1512,9 +1541,9 @@ class Caldera_Forms {
 					}
 				}
 				$value = str_replace($magics[0][$magic_key], $filter_value, $value);
+
 			}
 		}
-
 		return $value;
 	}
 
