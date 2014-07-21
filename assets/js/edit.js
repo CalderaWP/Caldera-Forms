@@ -94,7 +94,7 @@ jQuery(function($){
 				
 				$.extend(true, config, lineconf);
 			};
-			console.log(arraynames);
+
 			$(el).data('cf_edit_nonce', config.cf_edit_nonce);
 			$(el).data('_wp_http_referer', config._wp_http_referer);
 			$(el).data('sender', 'ajax');

@@ -246,7 +246,6 @@ if( !class_exists( 'Caldera_Form_Grid' )){
 				
 			}
 
-			//dump($grid);
 			return $this->output;
 		}
 
