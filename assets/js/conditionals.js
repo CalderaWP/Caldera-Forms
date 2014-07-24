@@ -53,7 +53,7 @@
 						compareelement = compareelement.filter(':checked');
 					}
 					if(!compareelement.length){
-						comparefield.push("");
+						comparefield.push(lines[lid].field);
 					}else{
 						for( var i = 0; i<compareelement.length; i++){							
 							comparefield.push(compareelement[i].value);

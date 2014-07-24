@@ -681,6 +681,7 @@ jQuery(function($) {
 				$('#' + panel.data('config')).show();
 			}
 
+		$(document).trigger('show.' + panel.data('config'));
 	});
 	$('body').on('click', '.layout-modal-edit-closer,.layout-modal-save-action', function(e){
 		

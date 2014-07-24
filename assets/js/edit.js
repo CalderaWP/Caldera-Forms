@@ -38,7 +38,7 @@ function new_conditional_line(obj){
 function build_conditions_config(obj){
 	var config = JSON.parse(obj.trigger.val());
 	config.id = obj.trigger.data('id');
-
+	console.log(config);
 	return config;
 
 }
@@ -411,6 +411,7 @@ jQuery(function($){
 			clicked.addClass('field-edit-open');
 		}
 
+
 	});
 	$('.caldera-editor-body').on('keydown', '.field-config', function(e){
 		if($(this).is('textarea')){
@@ -764,22 +765,25 @@ jQuery(function($){
 			// check if a value is present
 
 			if(curval.length){
+				console.log(curval);
 				if(curval.val().length){
 					target.data('value', curval.val());
+					console.log(curval.val());
 				}
 			}
 			
 		if(options_wrap.length){
 			var options_rows = options_wrap.find('.toggle_option_row'),
 				out = '<select name="' + name + '[value]" class="caldera-processor-value-bind caldera-conditional-value-field" data-field="' + field_id + '" style="max-width: 170px; width: 170px;">';
-
+				out += '<option value=""></option>';
 			options_rows.each(function(k,v){
 				var value = $(v).find('.toggle_value_field').val(),
 					label = $(v).find('.toggle_label_field').val(),
 					sel = '';
 
 				if(target.data('value')){
-					if(target.data('value') === value){
+					if(target.data('value').toString() === value){
+						console.log('YES');
 						sel = ' selected="selected"';
 					}
 				}

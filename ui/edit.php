@@ -228,7 +228,7 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 			<a href="#<?php echo $id; ?>_conditions_pane" class="button ">Conditions</a>
 		</div>
 
-		<h3 class="caldera-editor-field-title"><?php echo $label; ?>&nbsp;</h3>
+		<h3 class="caldera-editor-field-title"><?php echo $label; ?>&nbsp;</h3>		
 		<input type="hidden" class="field-config" name="config[fields][<?php echo $id; ?>][ID]" value="<?php echo $id; ?>">
 		<div id="<?php echo $id; ?>_settings_pane" class="wrapper-instance-pane">
 			<div class="caldera-config-group">
@@ -240,7 +240,14 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 						?>
 					</select>
 				</div>
-			</div>		
+			</div>
+			<div class="caldera-config-group">
+				<label for="<?php echo $id; ?>_fid"><?php echo __('ID', 'caldera-forms'); ?></label>
+				<div class="caldera-config-field">
+					<input type="text" class="block-input field-id" id="<?php echo $id; ?>_fid" value="<?php echo $id; ?>" readonly="readonly">
+				</div>
+			</div>
+			
 			<div class="caldera-config-group">
 				<label for="<?php echo $id; ?>_lable"><?php echo __('Name', 'caldera-forms'); ?></label>
 				<div class="caldera-config-field">

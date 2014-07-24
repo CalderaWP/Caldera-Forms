@@ -3,7 +3,7 @@
  * Ajax Submissions addon- included
  */
 
-add_filter('caldera_forms_render_grid_structure', 'cf_ajax_structures', 10, 2);
+//add_filter('caldera_forms_render_grid_structure', 'cf_ajax_structures', 10, 2);
 add_action('caldera_forms_redirect', 'cf_ajax_redirect', 10, 5);
 add_filter('caldera_forms_render_form_classes', 'cf_ajax_register_scripts', 10, 2);
 add_action('caldera_forms_general_settings_panel', 'cf_form_ajaxsetup');
@@ -19,7 +19,7 @@ function cf_form_ajaxsetup($form){
 <?php	
 }
 
-function cf_ajax_structures($grid, $form){
+/*function cf_ajax_structures($grid, $form){
 
 	if(empty($form['form_ajax'])){
 		return $grid;
@@ -30,13 +30,17 @@ function cf_ajax_structures($grid, $form){
 	$grid->before('<div id="caldera_notices_'.$current_form_count.'" data-spinner="'. admin_url( 'images/spinner.gif' ).'"></div>', '1', 'prepend');
 
 	return $grid;
-}
+}*/
 
-function cf_ajax_redirect($type, $url, $form){	
+function cf_ajax_redirect($type, $url, $form){
+
 	if(empty($form['form_ajax'])){
 		return;
-	}	
-	
+	}
+
+	if( empty( $_POST['cfajax'] ) ){
+		return;
+	}
 
 	$data = Caldera_Forms::get_submission_data($form);
 	
@@ -66,21 +70,29 @@ function cf_ajax_redirect($type, $url, $form){
 			$notices['success']['note'] = __('Redirecting');
 		}
 	}elseif($type == 'preprocess'){
-		$data = get_transient( $query['cf_er'] );
-		if(!empty($data['note'])){
-			$notices[$data['type']]['note'] = $data['note'];
-		}
-		if(!empty($data['fields'])){
-			foreach($form['fields'] as $fieldid=>$field){				
-				if( isset( $data['fields'][$fieldid] ) ){
-					$out['fields'][$fieldid] = $data['fields'][$fieldid];
+		if(isset($query['cf_er'])){
+			$data = get_transient( $query['cf_er'] );
+			if(!empty($data['note'])){
+				$notices[$data['type']]['note'] = $data['note'];
+			}
+			if(!empty($data['fields'])){
+				foreach($form['fields'] as $fieldid=>$field){				
+					if( isset( $data['fields'][$fieldid] ) ){
+						$out['fields'][$fieldid] = $data['fields'][$fieldid];
+					}
 				}
 			}
+		}else{
+			$out['url'] = $url;
+			$notices['success']['note'] = __('Redirecting');
 		}
 
 	}elseif($type == 'error'){
 		$data = get_transient( $query['cf_er'] );
-		
+		if(!empty($data['note'])){
+			$notices['error']['note'] = $data['note'];
+		}
+
 		if(!empty($data['fields'])){
 
 			foreach($form['fields'] as $fieldid=>$field){
@@ -158,7 +170,7 @@ function cf_ajax_setatts($atts, $form){
 	$resatts = array(
 		'data-target'	=>	'#caldera_notices_'.$current_form_count,
 		'data-template'	=>	'#cfajax_'.$form['ID'].'-tmpl',
-		'data-action'	=>	'cfajax_setdate'
+		'data-cfajax'	=>	$form['ID']
 	);
 	if(!empty($form['hide_form'])){
 		$resatts['data-hiderows'] = "true";

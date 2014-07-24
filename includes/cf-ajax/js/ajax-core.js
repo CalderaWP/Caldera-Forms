@@ -34,14 +34,16 @@ jQuery(function($){
 					if(obj.params.trigger.data('hiderows')){
 						obj.params.trigger.find('div.row').remove();
 					}
-					if(obj.data.url){
-						window.location = obj.data.url;
-					}
 				}else if(obj.data.status === 'preprocess'){
 					obj.params.target.html(obj.data.html);
 				}else if(obj.data.status === 'error'){
 					obj.params.target.html(obj.data.html);
 				}
+				// do a redirect if set
+				if(obj.data.url){
+					window.location = obj.data.url;
+				}
+
 				if(obj.data.fields){
 					for(var i in obj.data.fields){
 						var field = $('[data-field="' + i + '"]'),
