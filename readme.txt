@@ -71,6 +71,18 @@ none yet.
 3. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
+
+= 1.0.9 (x July, 2014) =
+
+= Bugfix =
+* Conditionals error on numerical condition value
+* placeholder field took preference on masked input instead of default field
+
+= Additions =
+* Processors can now return an error to stop process chain
+* Process transient now accessable for storing process data for redirects and such
+* Field ID added to field config panel for reference
+
 = 1.0.8 (21 July, 2014) =
 
 = Bugfix =
