@@ -79,6 +79,7 @@ none yet.
 * placeholder field took preference on masked input instead of default field
 
 = Additions =
+* Form preview button
 * Processors can now return an error to stop process chain
 * Process transient now accessable for storing process data for redirects and such
 * Field ID added to field config panel for reference
