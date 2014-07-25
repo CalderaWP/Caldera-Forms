@@ -58,7 +58,6 @@ class Caldera_Forms {
 		// action
 		add_action('caldera_forms_submit_complete', array( $this, 'save_final_form'),50);
 
-
 		add_action("wp_ajax_get_entry", array( $this, 'get_entry') );
 		// find if profile is loaded
 		add_action('wp', array( $this, 'check_forms_shortcode'));
@@ -1890,45 +1889,58 @@ class Caldera_Forms {
 					$meta = apply_filters('caldera_forms_get_entry_meta', $meta, $form);
 
 					if(isset($form['processors'][$meta['process_id']])){
-						$group = $form['processors'][$meta['process_id']]['type'];
-						$meta = apply_filters('caldera_forms_get_entry_meta_' . $form['processors'][$meta['process_id']]['type'], $meta, $form['processors'][$meta['process_id']]['config'], $form);
-					}
-					
-					// allows plugins to remove it.
-					if(!empty($meta)){
-						if(!isset($entry['meta'][$group])){
-							// is processor
-							if(isset($form['processors'][$meta['process_id']]['type'])){
-								$meta_name = $processors[$form['processors'][$meta['process_id']]['type']]['name'];
-							}else{
-								$meta_name = $meta['process_id'];
-							}
-							$entry['meta'][$group] = array(
-								'name' => $meta_name,
-								'data' => array()
-							);
+
+						$process_config = array();
+						if(isset($form['processors'][$meta['process_id']]['config'])){
+							$process_config = $form['processors'][$meta['process_id']]['config'];
 						}
 
-						//if(!empty($meta['meta_title'])){
-						//	$entry['meta'][$group]['data'][$meta['process_id']]['title'] = $meta['meta_title'];
-						//}
+						$group = $form['processors'][$meta['process_id']]['type'];
+						$meta = apply_filters('caldera_forms_get_entry_meta_' . $form['processors'][$meta['process_id']]['type'], $meta, $process_config , $form);
 
 						
-						if(is_array($meta['meta_value'])){
-							foreach($meta['meta_value'] as $mkey=>$mval){
-								$entry['meta'][$group]['data'][$meta['process_id']]['title'] = $meta['meta_key'];
-								$entry['meta'][$group]['data'][$meta['process_id']]['entry'][] = array(
-									'meta_key'		=> $mkey,
-									'meta_value' 	=> $mval
+						// allows plugins to remove it.
+						if(!empty($meta)){
+							if(!isset($entry['meta'][$group])){
+								// is processor
+								if(isset($form['processors'][$meta['process_id']]['type'])){
+									$meta_name = $processors[$form['processors'][$meta['process_id']]['type']]['name'];
+								}else{
+									$meta_name = $meta['process_id'];
+								}
+								$entry['meta'][$group] = array(
+									'name' => $meta_name,
+									'data' => array()
 								);
+								// custom template
+								if( isset( $processors[$form['processors'][$meta['process_id']]['type']]['meta_template'] ) && file_exists( $processors[$form['processors'][$meta['process_id']]['type']]['meta_template'] ) ){								
+									$entry['meta'][$group][$group.'_template'] = $entry['meta'][$group]['template'] = true;
+								}							
 							}
-						}else{
-							$entry['meta'][$group]['data'][$meta['process_id']]['entry'][] = array(
-								'meta_key'		=> $meta['meta_key'],
-								'meta_value' 	=> $meta['meta_value']
-							);							
-						}
 
+							//if(!empty($meta['meta_title'])){
+							//	$entry['meta'][$group]['data'][$meta['process_id']]['title'] = $meta['meta_title'];
+							//}
+
+							$entry['meta'][$group]['data'][$meta['process_id']]['entry'][] = $meta;
+
+							
+							/*if(is_array($meta['meta_value'])){
+								foreach($meta['meta_value'] as $mkey=>$mval){
+									$entry['meta'][$group]['data'][$meta['process_id']]['title'] = $meta['meta_key'];
+									$entry['meta'][$group]['data'][$meta['process_id']]['entry'][] = array(
+										'meta_key'		=> $mkey,
+										'meta_value' 	=> $mval
+									);
+								}
+							}else{
+								$entry['meta'][$group]['data'][$meta['process_id']]['entry'][] = array(
+									'meta_key'		=> $meta['meta_key'],
+									'meta_value' 	=> $meta['meta_value']
+								);							
+							}*/
+
+						}
 					}
 				}
 			}
@@ -2270,7 +2282,7 @@ class Caldera_Forms {
 							}
 							$referrer = $referrer['path'] . '?' . http_build_query($query_str);
 							$referrer = apply_filters('caldera_forms_submit_return_redirect', $referrer, $form, $process_id);
-							$referrer = apply_filters('caldera_forms_submit_return_redirect_pre_process', $referrer, $form, $process_id);
+							$referrer = apply_filters('caldera_forms_submit_return_redirect-'.$processor['type'], $referrer, $config, $form, $process_id);
 
 							// set transient data
 							set_transient( $process_id, $transdata, $transdata['expire']);

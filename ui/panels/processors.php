@@ -233,7 +233,13 @@ function build_processor_types($default = null){
 					echo '</span></small>';
 
 				}
-				echo '<p class="description">' . $processor['description'] . '</p>';
+				echo '<p class="description">';
+				if(!empty($processor['description'])){
+					 echo $processor['description'];
+				}else{
+					echo '&nbsp;';
+				}
+				echo '</p>';
 				if(!empty($processor['links'])){
 					echo '<p>';
 					foreach($processor['links'] as $link){

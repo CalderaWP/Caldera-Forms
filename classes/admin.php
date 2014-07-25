@@ -56,7 +56,7 @@ class Caldera_Forms_Admin {
 		// action
 		add_action('caldera_forms_entry_actions', array( $this, 'get_entry_actions'),1);
 		add_action('caldera_forms_admin_templates', array( $this, 'get_admin_templates'),1);
-
+		add_action('caldera_forms_entry_meta_templates', array( $this, 'get_admin_meta_templates'),1);
 
 		add_action( 'wp_loaded', array( $this, 'save_form') );
 		add_action( 'media_buttons', array($this, 'shortcode_insert_button' ), 11 );
@@ -174,7 +174,26 @@ class Caldera_Forms_Admin {
 	public static function get_admin_templates(){
 		include CFCORE_PATH . 'ui/admin_templates.php';
 	}
-
+	public static function get_admin_meta_templates(){
+		
+		$processors = apply_filters( 'caldera_forms_get_form_processors', array() );
+		if(!empty($processors)){
+			foreach($processors as $processor_type=>$processor_config){
+				if( isset( $processor_config['meta_template'] ) && file_exists( $processor_config['meta_template'] ) ){
+					echo "{{#if ".$processor_type."_template}}\r\n";
+						echo "{{#each data}}\r\n";
+							echo "{{#if title}}\r\n";
+								echo "<h4>{{title}}</h4>\r\n";
+							echo "{{/if}}\r\n";
+							echo "{{#each entry}}\r\n";
+								include $processor_config['meta_template'];
+							echo "{{/each}}\r\n";
+						echo "{{/each}}\r\n";
+					echo "{{/if}}\r\n";
+				}
+			}
+		}
+	}
 
 	public static function get_entry_actions(){
 

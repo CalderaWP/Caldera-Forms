@@ -18,8 +18,8 @@ Filters:
 - caldera_forms_submit_return_transient_required
 - caldera_forms_submit_return_redirect
 - caldera_forms_submit_return_redirect_required
-- caldera_forms_submit_return_transient_pre_process
-- caldera_forms_submit_return_redirect_pre_process
+- caldera_forms_submit_return_transient
+- caldera_forms_submit_return_redirect-{ processor_type }
 - caldera_forms_submit_redirect
 - caldera_forms_submit_redirect_complete
 - caldera_forms_render_get_form

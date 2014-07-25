@@ -1,65 +1,3 @@
-<?php
-
-	$meta_template = apply_filters('caldera_forms_entry_meta_template', "
-	{{#if meta}}
-	{{#each meta}}
-	<div id=\"meta-{{@key}}\" class=\"tab-detail-panel\" style=\"display:none;\">
-	<h4>{{name}}</h4>
-	<hr>
-	<table class=\"table table-condensed\">		
-			{{#each data}}
-			<thead>
-			{{#if title}}
-			<tr>
-				<th colspan=\"2\" class=\"active\">{{title}}</th>
-			</tr>
-			{{/if}}
-			<tr>
-				<th>" . __('Field', 'caldera-forms') . "</th>
-				<th>" . __('Value', 'caldera-forms') . "</th>
-			</tr>
-			</thead>
-			<tbody>
-			{{#each entry}}		
-			<tr>
-				<th>{{meta_key}}</th>
-				<td>{{meta_value}}</td>
-			</tr>
-			{{/each}}
-			</tbody>
-			{{/each}}		
-	</table>
-	</div>
-	{{/each}}
-	{{/if}}");
-
-
-	$entry_template = apply_filters('caldera_forms_entry_meta_template', "<div id=\"main-entry-panel\" class=\"tab-detail-panel\">
-		<h4>" . __('Submitted', 'caldera-forms') . " <small class=\"description\">{{date}}</small></h4>
-		<hr>
-		<table class=\"table table-condensed\">
-		<thead>
-
-			<tr>
-				<th>" . __('Field', 'caldera-forms') . "</th>
-				<th>" . __('Value', 'caldera-forms') . "</th>
-			</tr>
-		</thead>
-		<tbody>
-		{{#each data}}
-			<tr>
-				<th>{{label}}</th>
-				<td>{{{value}}}</td>
-			</tr>
-		{{/each}}
-		</tbody>
-	</table></div>
-	" . $meta_template . "
-	");
-
-
-
-?>
 <script type="text/html" id="bulk-actions-active-tmpl">
 	<option selected="selected" value=""><?php echo __('Bulk Actions'); ?></option>
 	<option value="export"><?php echo __('Export Selected', 'caldera-forms'); ?></option>
@@ -166,7 +104,61 @@
 </div>
 {{/if}}
 <div class="form-panel{{#if user}} modal-inside{{/if}}">
-	<?php echo $entry_template; ?>
+<div id="main-entry-panel" class="tab-detail-panel">
+		<h4><?php echo __('Submitted', 'caldera-forms'); ?> <small class="description">{{date}}</small></h4>
+		<hr>
+		<table class="table table-condensed">
+		<thead>
+
+			<tr>
+				<th><?php echo __('Field', 'caldera-forms'); ?></th>
+				<th><?php echo __('Value', 'caldera-forms'); ?></th>
+			</tr>
+		</thead>
+		<tbody>
+		{{#each data}}
+			<tr>
+				<th>{{label}}</th>
+				<td>{{{value}}}</td>
+			</tr>
+		{{/each}}
+		</tbody>
+	</table></div>
+
+	{{#if meta}}
+	{{#each meta}}
+	<div id="meta-{{@key}}" class="tab-detail-panel" style="display:none;">
+	<h4>{{name}}</h4>
+	<hr>
+	{{#unless template}}
+		<table class="table table-condensed">		
+				{{#each data}}
+				<thead>
+				{{#if title}}
+				<tr>
+					<th colspan="2" class="active">{{title}}</th>
+				</tr>
+				{{/if}}
+				<tr>
+					<th><?php echo __('Field', 'caldera-forms'); ?></th>
+					<th><?php echo __('Value', 'caldera-forms'); ?></th>
+				</tr>
+				</thead>
+				<tbody>
+				{{#each entry}}		
+				<tr>
+					<th>{{meta_key}}</th>
+					<td>{{{meta_value}}}</td>
+				</tr>
+				{{/each}}
+				</tbody>
+				{{/each}}		
+		</table>
+	{{/unless}}
+	<?php do_action('caldera_forms_entry_meta_templates'); ?>
+	</div>
+	{{/each}}
+	{{/if}}
 </div>
 </script>
 <script type="text/javascript">

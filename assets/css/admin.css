@@ -68,7 +68,16 @@
 .icn-cf:before {
   content: "\e604";
 }
+
+/* cleanup for announcements */
+#wpbody-content > div.updated,
+#wpbody-content > div.error {
+  margin: 50px 27px -50px 2px;
+}
+
+
 /* Admin Panels */
+
 .caldera-editor-header-nav > li.caldera-forms-headtext {
   display: block;
   padding: 12px 0 0;
@@ -268,15 +277,17 @@ select.caldera-type-selector {
   background-color: #F8F8F8;
   top: 85px;
 }
-.caldera-editor-header .button.caldera-header-save-button {
-  margin: 5px;
-  position: absolute;
-  top: 0;
+.caldera-editor-header .button.caldera-header-save-button,
+.caldera-editor-header .button.caldera-header-preview-button {
+  float: left;
+  margin: 7px 12px 0 12px; 
+  position: relative;
 }
 .caldera-editor-header-nav {
   list-style: none outside none;
   margin: 0;
   min-height: 38px;
+  float: left;
 }
 .caldera-editor-header-nav > li {
   float: left;

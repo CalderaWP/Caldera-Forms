@@ -72,7 +72,7 @@ none yet.
 
 == Changelog ==
 
-= 1.0.9 (x July, 2014) =
+= 1.0.9 (25 July, 2014) =
 
 = Bugfix =
 * Conditionals error on numerical condition value
@@ -82,6 +82,9 @@ none yet.
 * Processors can now return an error to stop process chain
 * Process transient now accessable for storing process data for redirects and such
 * Field ID added to field config panel for reference
+* Extra checks for valid data
+* Extra filters
+* Meta Data view templates to processors
 
 = 1.0.8 (21 July, 2014) =
 
