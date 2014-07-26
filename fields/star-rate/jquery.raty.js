@@ -226,7 +226,7 @@
 
           var cancelOff = that.opt.path + that.opt.cancelOff;
 
-          star.removeClass(cancelOff).addClass(cancelOn);
+          star.removeClass(cancelOff).addClass(cancelOn).css('color', that.opt.starColor);
         }
 
         methods._target.call(that, null, evt);
@@ -329,13 +329,18 @@
             hash++;
           }
         } else {
-          icon = this.opt.path + this.opt[turnOn ? 'starOn' : 'starOff'];
-
+          icon = this.opt.path + this.opt[turnOn ? 'starOn' : 'starOff'];          
           // TODO: extract.
           if (this.opt.starType === 'img') {
             star.attr('src', icon);
           } else {
             star.attr('class', icon);
+          }
+          // Set Color
+          if (turnOn) {
+            star.css('color', this.opt.starColor);
+          }else{
+            star.css('color', '');
           }
         }
       }
@@ -625,8 +630,8 @@
   $.fn.raty.defaults = {
     cancel       : false,
     cancelHint   : 'Cancel this rating!',
-    cancelOff    : 'cancel-off.png',
-    cancelOn     : 'cancel-on.png',
+    cancelOff    : 'raty-cancel-off',
+    cancelOn     : 'raty-cancel-on',
     cancelPlace  : 'left',
     click        : undefined,
     half         : false,
@@ -647,9 +652,10 @@
     single       : false,
     space        : true,
     spaceWidth   : 3,
+    starColor    : '#ff00aa',
     starHalf     : 'star-half.png',
-    starOff      : 'star-off.png',
-    starOn       : 'star-on.png',
+    starOff      : 'raty-dot-off',
+    starOn       : 'raty-dot-on',
     starType     : 'img',
     target       : undefined,
     targetFormat : '{score}',

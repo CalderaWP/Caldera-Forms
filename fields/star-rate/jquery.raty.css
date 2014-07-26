@@ -13,7 +13,7 @@
   src: url("fonts/raty.woff") format("woff");
 }
 
-.cancel-on-png, .cancel-off-png, .star-on-png, .star-off-png, .star-half-png {
+.raty-cancel-on, .raty-cancel-off, .raty-star-on, .raty-star-off, .raty-star-half {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   font-family: "raty";
@@ -25,22 +25,22 @@
   text-transform: none;
 }
 
-.cancel-on-png:before {
+.raty-cancel-on:before {
   content: "\e600";
 }
 
-.cancel-off-png:before {
+.raty-cancel-off:before {
   content: "\e601";
 }
 
-.star-on-png:before {
+.raty-star-on:before {
   content: "\f005";
 }
 
-.star-off-png:before {
+.raty-star-off:before {
   content: "\f006";
 }
 
-.star-half-png:before {
+.raty-star-half:before {
   content: "\f123";
 }

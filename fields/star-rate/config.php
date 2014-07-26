@@ -5,6 +5,17 @@
 	</div>
 </div>
 <div class="caldera-config-group">
+	<label for="{{_id}}_type"><?php echo __('Star Type', 'caldera-forms-register'); ?></label>
+	<div class="caldera-config-field">
+		<select id="{{_id}}_type" class="field-config" name="{{_name}}[type]">
+			<option value="star"><?php echo __('Star', 'caldera-forms'); ?></option>
+			<option value="heart"><?php echo __('Heart', 'caldera-forms'); ?></option>
+			<option value="face"><?php echo __('Face', 'caldera-forms'); ?></option>
+			<option value="dot"><?php echo __('Dot', 'caldera-forms'); ?></option>
+		</select>
+	</div>
+</div>
+<div class="caldera-config-group">
 	<label for="{{_id}}_size"><?php echo __('Star Size', 'caldera-forms-register'); ?></label>
 	<div class="caldera-config-field">
 		<input id="{{_id}}_size" type="number" class="field-config" name="{{_name}}[size]" value="{{size}}" style="width:70px;">px
@@ -30,6 +41,12 @@
 	</div>
 </div>
 <div class="caldera-config-group">
+	<label for="{{_id}}_track_color"><?php echo __('Track Color', 'caldera-forms-register'); ?></label>
+	<div class="caldera-config-field">
+		<input type="text" class="minicolor-picker field-config" id="{{_id}}_track_color" name="{{_name}}[track_color]" value="{{track_color}}">
+	</div>
+</div>
+<div class="caldera-config-group">
 	<label for="{{_id}}_cancel"><?php echo __('Include Cancel', 'caldera-forms-register'); ?></label>
 	<div class="caldera-config-field">
 		<input id="{{_id}}_cancel" type="checkbox" class="field-config" name="{{_name}}[cancel]" value="1" {{#if cancel}}checked="checked"{{/if}}>
@@ -39,5 +56,6 @@
 {{#script}}
 jQuery(function($){
 	jQuery('#{{_id}}_color').miniColors();
+	jQuery('#{{_id}}_track_color').miniColors();
 });
 {{/script}}

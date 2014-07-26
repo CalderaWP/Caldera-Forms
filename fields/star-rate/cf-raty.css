@@ -1,0 +1,53 @@
+@font-face {
+  font-family: 'cf-raty';
+  src: url('fonts/cf-raty.eot?40481674');
+  src: url('fonts/cf-raty.eot?40481674#iefix') format('embedded-opentype'),
+       url('fonts/cf-raty.woff?40481674') format('woff'),
+       url('fonts/cf-raty.ttf?40481674') format('truetype'),
+       url('fonts/cf-raty.svg?40481674#cf-raty') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'cf-raty';
+    src: url('../font/cf-raty.svg?40481674#cf-raty') format('svg');
+  }
+}
+*/
+ 
+ [class^="raty-"]:before, [class*=" raty-"]:before {
+  font-family: "cf-raty";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  font-size: 2em;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  text-align: center;
+  /* opacity: .8; */
+ 
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+}
+ 
+.raty-heart-on:before { content: '\e800'; } /* '' */
+.raty-heart-off:before { content: '\e801'; } /* '' */
+.raty-star-on:before { content: '\e802'; } /* '' */
+.raty-star-off:before { content: '\e803'; } /* '' */
+.raty-circle-on:before { content: '\e804'; } /* '' */
+.raty-circle-off:before { content: '\e805'; } /* '' */
+.raty-dot-off:before { content: '\e806'; } /* '' */
+.raty-dot-on:before { content: '\e807'; } /* '' */
+.raty-face-off:before { content: '\e808'; } /* '' */
+.raty-face-on:before { content: '\e809'; } /* '' */
+.raty-cancel-off:before { content: '\e80a'; } /* '' */
+.raty-cancel-on:before { content: '\e80b'; } /* '' */
