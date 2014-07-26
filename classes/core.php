@@ -875,14 +875,17 @@ class Caldera_Forms {
 						'number'	=>	5,
 						'space'		=>	3,
 						'size'		=>	13,
-						'color'		=> '#FFAA00'
+						'color'		=> '#FFAA00',
+						'track_color'=> '#AFAFAF',
+						'type'=> 'star',
 					),
 					"scripts" => array(
 						'jquery',
 						CFCORE_URL . "fields/star-rate/jquery.raty.js",
 					),
 					"styles" => array(
-						CFCORE_URL . "fields/star-rate/jquery.raty.css",
+						//CFCORE_URL . "fields/star-rate/jquery.raty.css",
+						CFCORE_URL . "fields/star-rate/cf-raty.css",
 					)
 				),
 				"scripts" => array(
@@ -890,7 +893,8 @@ class Caldera_Forms {
 					CFCORE_URL . "fields/star-rate/jquery.raty.js",
 				),
 				"styles" => array(
-					CFCORE_URL . "fields/star-rate/jquery.raty.css",
+					//CFCORE_URL . "fields/star-rate/jquery.raty.css",
+					CFCORE_URL . "fields/star-rate/cf-raty.css",
 				)
 			),
 			'phone' => array(
@@ -2434,6 +2438,45 @@ class Caldera_Forms {
 	static public function check_forms_shortcode(){
 		global $post, $front_templates, $wp_query, $process_id, $form;
 
+
+		// do a form preview
+
+		if(!empty($_GET['cf_preview'])){
+			$form = get_option($_GET['cf_preview']);
+			if( !empty( get_current_user_id() ) ){
+
+				if(empty($form['ID']) || $form['ID'] !== $_GET['cf_preview']){
+					return;
+				}
+				if( empty($post) || $post->post_title !== 'Caldera Forms Preview' ){
+					$temp_page = get_page_by_title('Caldera Forms Preview');
+					if(empty($temp_page)){
+						// create page
+						$post = array(
+						'post_content'   => '',
+						'post_name'      => 'caldera_forms_preview',
+						'post_title'     => 'Caldera Forms Preview',
+						'post_status'    => 'draft',
+						'post_type'      => 'page',
+						'ping_status'    => 'closed',
+						'comment_status' => 'closed'
+						);
+						$page_id = wp_insert_post( $post );
+						wp_redirect( trailingslashit( get_site_url( ) ) . '?page_id='.$page_id.'&preview=true&cf_preview='.$_GET['cf_preview'] );
+						exit;
+					}
+					if( $temp_page->post_status !== 'draft'){
+						wp_update_post( array( 'ID' => $temp_page->ID, 'post_status' => 'draft' ) );
+					}
+					wp_redirect( trailingslashit( get_site_url( ) ) . '?page_id='.$temp_page->ID.'&preview=true&cf_preview='.$_GET['cf_preview'] );
+					exit;
+				}
+				$post->post_title = $form['name'];
+				$post->post_content = '[caldera_form id="'.$_GET['cf_preview'].'"]';
+
+			}
+		}
+
 		// catch a transient process
 		if(!empty($_GET['cf_tp'])){
 
@@ -2502,6 +2545,7 @@ class Caldera_Forms {
 		// if depts been set- scripts are used - 
 		wp_enqueue_script( 'cf-frontend-script-init', CFCORE_URL . 'assets/js/frontend-script-init.js', array('jquery'), self::VERSION, true);
 		$style_includes = get_option( '_caldera_forms_styleincludes' );
+		$style_includes = apply_filters( 'caldera_forms_get_style_includes', $style_includes);
 
 		if(!empty($style_includes['grid'])){
 			wp_enqueue_style( 'cf-grid-styles', CFCORE_URL . 'assets/css/caldera-grid.css', array(), self::VERSION );
@@ -3189,7 +3233,8 @@ class Caldera_Forms {
 			$form_element = 'form';
 
 			$form_classes = array(
-				'caldera_forms_form'
+				$form['ID'],
+				'caldera_forms_form',
 			);
 			
 			$form_attributes = array(
