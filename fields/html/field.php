@@ -16,7 +16,7 @@ if(!empty($hastags[1])){
 			}
 		}
 	}
-	echo '<div id="html-content-'.$field_id.'"></div>';
+	echo '<div id="html-content-'.$field_id.'" data-field="'.$field_id.'"></div>';
 	echo '<script type="text/html" id="html-content-'.$field_id.'-tmpl">';
 		echo do_shortcode( $field['config']['default'] );
 	echo '</script>';
@@ -33,7 +33,7 @@ if(!empty($hastags[1])){
 				for(var i =0; i < list.length; i++){
 					template = template.replace( new RegExp("\{\{" + list[i] + "\}\}","g"), $('[data-field="'+list[i]+'"]').val() );
 				}
-				target.html(template);
+				target.html(template).trigger('change');
 
 			}
 			$('body').on('change', '<?php echo implode(',', $binds); ?>', htmltemplate<?php echo $field_id; ?>);

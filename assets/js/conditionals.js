@@ -51,6 +51,8 @@
 					
 					if( compareelement.is(':radio,:checkbox')){
 						compareelement = compareelement.filter(':checked');
+					}else if( compareelement.is('div')){
+						compareelement = $('<input>').val( compareelement.html() );
 					}
 					if(!compareelement.length){
 						comparefield.push(lines[lid].field);
@@ -158,7 +160,7 @@
 	
 	if(typeof caldera_conditionals !== 'undefined'){
 		
-		$('.caldera_forms_form').on('change keyup', 'input,select,textarea', function(e){
+		$('.caldera_forms_form').on('change keyup', '[data-field]', function(e){
 			calders_forms_check_conditions();
 
 		});
