@@ -122,7 +122,6 @@ rebind_field_bindings = function(){
 										// update labels on multiple
 										if(type_instances[instance] !== '__system__'){
 											bind_value = bind_value.replace(type ,type_instances[instance]);
-											console.log(bind_value);
 										}
 										
 										optgroup.append('<option value="{' + bind_value + '}"' + ( current === '{'+bind_value+'}' ? 'selected="selected"' : '' ) + valid + '>' + system_values[type].tags[types[t]][i] + '</option>');

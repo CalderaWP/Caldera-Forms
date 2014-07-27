@@ -219,7 +219,7 @@ jQuery(function($){
 			value.prop('disabled', false);
 			value.val(attachment.id);
 			thumbnail_val.prop('disabled', false);
-			console.log(thumbnail_val);
+
 			if(picksize.hasClass('image-thumb-lrg')){
 				if(attachment.sizes.large){
 					thumbnail.attr('src', attachment.sizes.large.url);
