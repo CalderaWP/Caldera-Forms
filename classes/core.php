@@ -2443,7 +2443,8 @@ class Caldera_Forms {
 
 		if(!empty($_GET['cf_preview'])){
 			$form = get_option($_GET['cf_preview']);
-			if( !empty( get_current_user_id() ) ){
+			$userid = get_current_user_id();
+			if( !empty( $userid ) ){
 
 				if(empty($form['ID']) || $form['ID'] !== $_GET['cf_preview']){
 					return;
