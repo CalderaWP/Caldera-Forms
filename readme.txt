@@ -72,7 +72,7 @@ none yet.
 
 == Changelog ==
 
-= 1.0.91 (25 July, 2014) =
+= 1.0.91 (27 July, 2014) =
 
 = Bugfix =
 * Fixed the preview button
