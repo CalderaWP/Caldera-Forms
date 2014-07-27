@@ -519,11 +519,14 @@ class Caldera_Forms_Admin {
 			// Load Field Types Styles & Scripts
 			$field_types = apply_filters('caldera_forms_get_field_types', array() );
 
-			// load element types 
+			// load panels
 			$panel_extensions = apply_filters('caldera_forms_get_panel_extensions', array() );
 
+			// load processors
+			$form_processors = apply_filters('caldera_forms_get_form_processors', array() );
+
 			// merge a list
-			$merged_types = array_merge($field_types, $panel_extensions);
+			$merged_types = array_merge($field_types, $panel_extensions, $form_processors);
 
 			foreach( $merged_types as $type=>&$config){
 

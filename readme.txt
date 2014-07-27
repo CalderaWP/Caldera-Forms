@@ -72,6 +72,12 @@ none yet.
 
 == Changelog ==
 
+= 1.1.0 (25 July, 2014) =
+
+= Bugfix =
+* Fixed the preview button
+
+
 = 1.0.9 (25 July, 2014) =
 
 = Bugfix =

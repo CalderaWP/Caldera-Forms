@@ -48,10 +48,7 @@ rebind_field_bindings = function(){
 
 		field.empty();
 
-		if(!field.hasClass('required')){
-			field.append('<option value=""></option>');
-		}
-		field.append('<optgroup label="Fields">');
+		var optgroup = jQuery('<optgroup label="Fields">');
 		for(var fid in current_form_fields){
 			if(field.data('type')){
 				if(field.data('type').split(',').indexOf(current_form_fields[fid].type) < 0){
@@ -59,10 +56,10 @@ rebind_field_bindings = function(){
 				}
 
 			}
-			field.append('<option value="' + fid + '"' + ( current === fid ? 'selected="selected"' : '' ) + '>' + current_form_fields[fid].label + ' [' + current_form_fields[fid].slug + ']</option>');
+			optgroup.append('<option value="' + fid + '"' + ( current === fid ? 'selected="selected"' : '' ) + '>' + current_form_fields[fid].label + ' [' + current_form_fields[fid].slug + ']</option>');
 			count += 1;
 		}
-		field.append('</optgroup>');
+		optgroup.appendTo(field);
 		// system values
 		if(count === 0){
 			field.empty();
@@ -115,7 +112,7 @@ rebind_field_bindings = function(){
 							}
 
 
-							field.append('<optgroup label="' + system_values[type].type + ( type_instances[instance] !== '__system__' ? ' ' + ( jQuery('li.'+type_instances[instance]).find('.processor-line-number').html() ) : '' ) + '"' + valid + '>');
+							var optgroup = jQuery('<optgroup label="' + system_values[type].type + ( type_instances[instance] !== '__system__' ? ' ' + ( jQuery('li.'+type_instances[instance]).find('.processor-line-number').html() ) : '' ) + '"' + valid + '>');
 
 								//for( var tag in system_values[type].tags){
 
@@ -128,15 +125,16 @@ rebind_field_bindings = function(){
 											console.log(bind_value);
 										}
 										
-										field.append('<option value="{' + bind_value + '}"' + ( current === '{'+bind_value+'}' ? 'selected="selected"' : '' ) + valid + '>' + system_values[type].tags[types[t]][i] + '</option>');
+										optgroup.append('<option value="{' + bind_value + '}"' + ( current === '{'+bind_value+'}' ? 'selected="selected"' : '' ) + valid + '>' + system_values[type].tags[types[t]][i] + '</option>');
 										//field.append('<option value="' + bind_value + '"' + ( current === system_values[type].tags[types[t]][i] ? 'selected="selected"' : '' ) + '>' + system_values[type].tags[types[t]][i] + '</option>');
 
 										count += 1;
 									}
 
 								//}
-
-							field.append('</optgroup>');
+							if(optgroup.children().length){
+								optgroup.appendTo(field);	
+							}							
 
 						}
 
@@ -156,8 +154,8 @@ rebind_field_bindings = function(){
 							valid = '';
 						}
 
-						
-						field.append('<optgroup label="' + system_values[type].type + ( type_instances[instance] !== '__system__' ? ' ' + ( jQuery('li.'+type_instances[instance]).find('.processor-line-number').html() ) : '' ) + '"' + valid + '>');
+						var optgroup = jQuery('<optgroup label="' + system_values[type].type + ( type_instances[instance] !== '__system__' ? ' ' + ( jQuery('li.'+type_instances[instance]).find('.processor-line-number').html() ) : '' ) + '"' + valid + '>');
+
 
 							for( var i = 0; i < system_values[type].tags.text.length; i++){
 
@@ -167,12 +165,15 @@ rebind_field_bindings = function(){
 										bind_value = bind_value.replace(type ,type_instances[instance]);
 									}
 
-									field.append('<option value="{' + bind_value + '}"' + ( current === '{'+bind_value+'}' ? 'selected="selected"' : '' ) + valid + '>' + system_values[type].tags.text[i] + '</option>');
+									optgroup.append('<option value="{' + bind_value + '}"' + ( current === '{'+bind_value+'}' ? 'selected="selected"' : '' ) + valid + '>' + system_values[type].tags.text[i] + '</option>');
 									count += 1;
 
 							}
 
-						field.append('</optgroup>');
+						if(optgroup.children().length){
+							optgroup.appendTo(field);
+						}							
+
 					}
 
 				}
@@ -184,12 +185,16 @@ rebind_field_bindings = function(){
 			field.empty();
 			if(field.data('type')){
 				field.append('<option value="">No ' + field.data('type').split(',').join(' or ') + ' in form</option>').prop('disabled', true);
+				var no_options = true;
 			}
 		}else{
 			field.prop('disabled', false);
 		}
-
-
+		
+		if(!field.hasClass('required') && typeof no_options === 'undefined'){
+			field.prepend('<option value=""></option>');
+		}		
+		field.val(current);
 	});
 
 	check_required_bindings();

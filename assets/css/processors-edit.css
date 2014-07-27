@@ -19,6 +19,9 @@
 }
 .caldera-editor-processor-config {
   float: left;
+  width: auto;
+}
+.caldera-editor-processor-config-wrapper {
   width: 500px;
 }
 h3.caldera-editor-processor-title {
