@@ -298,7 +298,7 @@ class Caldera_Forms {
 				'entry_id'	=> $entry_id,
 				'field_id'	=> $field['ID'],
 				'slug'		=> $field['slug'],
-				'value'		=> $entry
+				'value'		=> self::do_magic_tags( $entry )
 			);
 			// named key kets .key to slug
 			if(!is_int($key)){
@@ -557,20 +557,23 @@ class Caldera_Forms {
 			}
 
 			$key = $form['fields'][$field_id]['slug'];
-
 			if(is_array($row)){
-				$keys = array_keys($row);
-				if(is_int($keys[0])){
-					$row = implode(', ', $row);
-				}else{
-					$tmp = array();
-					foreach($row as $linekey=>$item){
-						if(is_array($item)){
-							$item = '( ' . implode(', ', $item).' )';
+				if(!empty($row)){
+					$keys = array_keys($row);
+					if(is_int($keys[0])){
+						$row = implode(', ', $row);
+					}else{
+						$tmp = array();
+						foreach($row as $linekey=>$item){
+							if(is_array($item)){
+								$item = '( ' . implode(', ', $item).' )';
+							}
+							$tmp[] = $linekey.': '.$item;
 						}
-						$tmp[] = $linekey.': '.$item;
+						$row = implode(', ', $tmp);
 					}
-					$row = implode(', ', $tmp);
+				}else{
+					$row = null;
 				}
 			}
 			$mail['message'] = str_replace('%'.$key.'%', $row, $mail['message']);
@@ -998,7 +1001,6 @@ class Caldera_Forms {
 						'hide_label',
 						'caption',
 						'required',
-
 					)
 				)
 			),

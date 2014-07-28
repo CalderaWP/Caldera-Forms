@@ -767,7 +767,7 @@ jQuery(function($){
 			if(curval.length){
 				if(curval.val().length){
 					target.data('value', curval.val());
-					console.log(curval.val());
+					
 				}
 			}
 			
@@ -782,7 +782,6 @@ jQuery(function($){
 
 				if(target.data('value')){
 					if(target.data('value').toString() === value){
-						console.log('YES');
 						sel = ' selected="selected"';
 					}
 				}
@@ -855,5 +854,111 @@ jQuery(function($){
 		lables.trigger('toggle.values');
 
 	});
+
+
+	$(document).on('bound.fields', function(){
+
+	});
+
+	// show magic tag autocompletes
+	$('body').on('keyup blur focus', '.magic-tag-enabled', function(e){
+		var input = $(this),
+			wrap = input.parent(),
+			fieldtype = wrap.closest('.wrapper-instance-pane').find('.caldera-select-field-type').val(),
+			tags = wrap.find('.magic-tags-autocomplete'),
+			list = tags.find('ul'),
+			stream = this.value,
+			tag = [];
+			//reset typed tag
+			input.data('tag','');
+
+			// keyup, do tags matching
+			if(e.type === 'keyup' || e.type === 'focusin'){
+
+				for( var s=stream.length; s > 0; s--){
+					
+					var ch = stream.substr(s-1,1);
+
+					if(ch === '}'){
+						// reset and end
+						tag = [];
+						break;
+					}
+					tag.push(ch);
+					if(ch === '{'){
+						break;
+					}
+					
+				}
+				
+				if(!tag.length || tag.indexOf('{') < 0 ){
+					if(tags.length){
+						tags.remove();
+					}
+					return;
+				}
+				if(!tags.length){
+					tags = $('<div class="magic-tags-autocomplete"></div>');
+					list = $('<ul></ul>');
+					list.appendTo(tags);
+					tags.insertAfter(input);
+				}
+
+				current_tag = tag.reverse().join('');
+				
+				//populate
+				list.empty();
+				// compatibility
+				var tagtypes = 'system';
+				if(fieldtype === 'hidden' || fieldtype === 'dropdown' || fieldtype === 'radio' || fieldtype === 'toggle_switch' || fieldtype === 'checkbox'){
+					fieldtype = 'text';
+					tagtypes = 'all';
+				}else if(fieldtype === 'paragraph'){
+					fieldtype = 'text';
+				}
+				// search em!
+				for( var tp in system_values ){
+					if(tagtypes === 'all' || tagtypes === tp){
+						var heading = $('<li class="header">' + system_values[tp].type+'</li>'),
+							matches = 0;
+						heading.appendTo(list);
+						for( var i = 0; i < system_values[tp].tags[fieldtype].length; i++){
+							var this_tag = '{' + system_values[tp].tags[fieldtype][i]+'}';
+								
+							if( this_tag.indexOf(current_tag) >= 0 ){
+								matches += 1;
+								var view_tag = this_tag.replace(current_tag, '<strong>' + current_tag + '</strong>');
+
+								var linetag = $('<li class="tag" data-tag="'+this_tag+'">' + view_tag + '</li>');
+								linetag.on('click', function(){
+									var selected = $(this).data('tag'),
+										insert = selected.replace(current_tag, '');
+
+									input.val( input.val() + insert ).trigger('change');
+								})
+								linetag.appendTo(list);
+							}
+						}
+						if(matches === 0){
+							heading.remove();
+						}
+					}
+				}
+			}
+			// count results found
+			if(!list.children().length){
+				tags.remove();
+			}
+
+			// focus out - remove
+			if(e.type === 'focusout'){
+				setTimeout(function(){
+					tags.remove();
+				}, 200);
+			}
+
+
+	})
+
 });//
 

@@ -40,7 +40,7 @@ rebind_field_bindings = function(){
 			count = 0,
 			wrapper = field.closest('.caldera-editor-processor-config-wrapper'),
 			wrapper_id = wrapper.prop('id'),
-			valid;	
+			valid = '';	
 
 		if(default_sel){			
 			current = default_sel;
@@ -105,8 +105,9 @@ rebind_field_bindings = function(){
 
 							// check index order is valid
 							if(jQuery('li.'+type_instances[instance]).index() > jQuery('li.'+wrapper_id).index() && type_instances[instance] !== '__system__'){
-								//console.log('lower');
-								valid = ' disabled="disabled"';
+								if( field.closest('.caldera-editor-processors-panel-wrap').length ){
+									valid = ' disabled="disabled"';
+								}
 							}else{
 								valid = '';
 							}
@@ -197,6 +198,7 @@ rebind_field_bindings = function(){
 	});
 
 	check_required_bindings();
+	jQuery(document).trigger('bound.fields');
 };
 
 function setup_field_type(obj){
@@ -895,31 +897,7 @@ jQuery(function($) {
 
 
 
-Handlebars.registerHelper("is_single", function(value, options) {
-	if(Object.keys(value).length !== 1){
-		return false;
-	}else{
-		return options.fn(this);
-	}
-});
-Handlebars.registerHelper("script", function(options) {
-	if(options.hash.src){
-		return '<script type="text/javascript" src="' + options.fn(this) + '"></script>';
-	}else{
-		return '<script type="text/javascript">' + options.fn(this) + '</script>';
-	}
-});
-Handlebars.registerHelper("is", function(value, options) {
-	//console.log(value);
-	if(options.hash.value === '@key'){
-		options.hash.value = options.data.key;
-	}
-	if(options.hash.value === value){
-		return options.fn(this);
-	}else{
-		return false;
-	}
-});
+
 Handlebars.registerHelper("_options_config", function() {
 	//console.log(this);
 });

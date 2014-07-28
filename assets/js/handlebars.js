@@ -2744,3 +2744,31 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
 
   return __module0__;
 })();
+
+
+/* custom helpers */
+  Handlebars.registerHelper("is_single", function(value, options) {
+    if(Object.keys(value).length !== 1){
+      return false;
+    }else{
+      return options.fn(this);
+    }
+  });
+  Handlebars.registerHelper("script", function(options) {
+    if(options.hash.src){
+      return '<script type="text/javascript" src="' + options.fn(this) + '"></script>';
+    }else{
+      return '<script type="text/javascript">' + options.fn(this) + '</script>';
+    }
+  });
+  Handlebars.registerHelper("is", function(value, options) {
+    //console.log(value);
+    if(options.hash.value === '@key'){
+      options.hash.value = options.data.key;
+    }
+    if(options.hash.value === value){
+      return options.fn(this);
+    }else{
+      return false;
+    }
+  });

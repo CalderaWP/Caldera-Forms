@@ -1,7 +1,7 @@
 var baldrickTriggers, loop_loader;
 
 jQuery(function($){
-
+	
 	// admin stuff!
 	// Baldrick Bindings
 	baldrickTriggers = function(){
@@ -42,7 +42,6 @@ jQuery(function($){
 
 		panels.hide();
 		panel.show();
-
 	});
 
 	// Profile Repeatable Group Remove
