@@ -43,6 +43,58 @@ $field_type_defaults = array(
 
 // options based template
 $field_options_template = "
+<div class=\"caldera-config-group caldera-config-group-full\">
+	<div class=\"caldera-config-group\">
+		<div class=\"caldera-config-field\">
+			<label><input id=\"{{_id}}_auto\" type=\"checkbox\" class=\"auto-populate-options field-config\" name=\"{{_name}}[auto]\" value=\"1\" {{#if auto}}checked=\"checked\"{{/if}}> ".__('Auto Populate', 'caldera-forms')."</label>
+		</div>
+	</div>
+</div>
+<div class=\"caldera-config-group-auto-options\" style=\"display:none;\">
+	<div class=\"caldera-config-group\">
+		<label>". __('Auto Type', 'caldera-forms') . "</label>
+		<div class=\"caldera-config-field\">
+			<select class=\"block-input field-config auto-populate-type\" name=\"{{_name}}[auto_type]\">
+				<option value=\"\">" . __('Select a source', 'caldera-forms') . "</option>
+				<option value=\"post_type\"{{#is auto_type value=\"post_type\"}} selected=\"selected\"{{/is}}>" . __('Post Type', 'caldera-forms') . "</option>
+				<option value=\"taxonomy\"{{#is auto_type value=\"taxonomy\"}} selected=\"selected\"{{/is}}>" . __('Taxonomy', 'caldera-forms') . "</option>
+			</select>
+		</div>
+	</div>
+	
+	<div class=\"caldera-config-group caldera-config-group-auto-taxonomy auto-populate-type-panel\" style=\"display:none;\">
+		<label>". __('Taxonomy', 'caldera-forms')."</label>
+		<div class=\"caldera-config-field\">
+			<select class=\"block-input field-config\" name=\"{{_name}}[taxonomy]\">";
+
+			$taxonomies = get_taxonomies();
+
+	    	foreach($taxonomies as $tax_type=>$tax_name){
+	    		$field_options_template .= "<option value=\"" . $tax_type . "\" {{#is taxonomy value=\"" . $tax_type . "\"}}selected=\"selected\"{{/is}}>" . $tax_name . "</option>\r\n";
+	    	}
+	    	
+			$field_options_template .= "</select>
+
+		</div>
+	</div>
+
+	<div class=\"caldera-config-group caldera-config-group-auto-post_type auto-populate-type-panel\" style=\"display:none;\">
+		<label>".__('Post Type', 'caldera-forms') ."</label>
+		<div class=\"caldera-config-field\">
+			<select class=\"block-input field-config\" name=\"{{_name}}[post_type]\">";
+
+			$post_types = get_post_types(array(), 'objects');
+
+	    	foreach($post_types as $type){
+	    		$field_options_template .= "<option value=\"" . $type->name . "\" {{#is post_type value=\"" . $type->name . "\"}}selected=\"selected\"{{/is}}>" . $type->labels->name . "</option>\r\n";
+	    	}
+	    	
+			$field_options_template .= "</select>
+
+		</div>
+	</div>
+
+</div>
 <div class=\"caldera-config-group-toggle-options\">
 	<div class=\"caldera-config-group caldera-config-group-full\">
 		<button type=\"button\" class=\"button add-toggle-option\" style=\"width: 220px;\">" . __('Add Option', 'caldera-forms') . "</button>		

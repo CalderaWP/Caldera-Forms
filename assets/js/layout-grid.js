@@ -688,6 +688,8 @@ jQuery(function($) {
 			}
 
 		$(document).trigger('show.' + panel.data('config'));
+
+		$('#' + panel.data('config')).find('.auto-populate-options').trigger('change');
 	});
 	$('body').on('click', '.layout-modal-edit-closer,.layout-modal-save-action', function(e){
 		

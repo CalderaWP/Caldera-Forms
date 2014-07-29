@@ -48,6 +48,9 @@ class Caldera_Forms {
 		add_filter('caldera_forms_get_form_processors', array( $this, 'get_form_processors'));
 		add_filter('caldera_forms_submit_redirect_complete', array( $this, 'do_redirect'),10, 4);
 		add_action('caldera_forms_edit_end', array($this, 'calculations_templates') );
+		add_filter('caldera_forms_render_get_field_type-radio', array( $this, 'auto_populate_options_field' ), 10, 2);
+		add_filter('caldera_forms_render_get_field_type-checkbox', array( $this, 'auto_populate_options_field' ), 10, 2);
+		add_filter('caldera_forms_render_get_field_type-dropdown', array( $this, 'auto_populate_options_field' ), 10, 2);
 
 		// magic tags
 		//add_filter('caldera_forms_render_magic_tag', array( $this, 'do_magic_tags'));
@@ -1187,6 +1190,43 @@ class Caldera_Forms {
 		return array_merge( $fields, $internal_fields );
 		
 	}	
+
+	public function auto_populate_options_field($field, $form){
+		
+		if(!empty($field['config']['auto'])){
+			$field['config']['option'] = array();
+			switch($field['config']['auto_type']){
+				case 'post_type':
+					$posts = get_posts( array('post_type' => $field['config']['post_type'], 'post_status' => 'publish') );
+					if($field['type'] === 'dropdown'){
+						$field['config']['option'] = array(
+							array(
+								'value'	=>	'',
+								'label' =>	''
+							)
+						);						
+					}
+					foreach($posts as $post_item){
+						$field['config']['option'][$post_item->ID] = array(
+							'value'	=>	$post_item->ID,
+							'label' =>	$post_item->post_title
+						);
+					}
+				break;
+				case 'taxonomy':
+					$taxos = get_terms( $field['config']['taxonomy'], 'orderby=count&hide_empty=0' );
+
+					foreach( $taxos as $term){
+						$field['config']['option'][$term->term_id] = array(
+							'value'	=>	$term->term_id,
+							'label' =>	$term->name
+						);
+					}
+				break;
+			}
+		} 
+		return $field;
+	}
 
 	static public function check_condition($conditions, $form){
 

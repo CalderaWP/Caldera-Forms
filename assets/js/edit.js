@@ -182,7 +182,6 @@ jQuery(function($){
 			// seup options
 			parent.find('.toggle_show_values').trigger('change');
 
-
 	}
 
 	function build_field_preview(id){
@@ -855,10 +854,33 @@ jQuery(function($){
 
 	});
 
-
-	$(document).on('bound.fields', function(){
-
+	// autopopulate	
+	$('.caldera-editor-body').on('change', '.auto-populate-type', function(){
+		$(this).closest('.wrapper-instance-pane').find('.auto-populate-options').trigger('change');
 	});
+	$('.caldera-editor-body').on('change', '.auto-populate-options', function(){
+		var clicked 	= $(this),
+			wrap		= clicked.closest('.wrapper-instance-pane'),
+			manual		= wrap.find('.caldera-config-group-toggle-options'),
+			autotype_wrap 	= wrap.find('.caldera-config-group-auto-options'),
+			autotype		= autotype_wrap.find('.auto-populate-type');
+
+		autotype_wrap.find('.auto-populate-type-panel').hide();
+
+		if(clicked.prop('checked')){
+			manual.hide();
+			autotype_wrap.show();
+		}else{
+			manual.show();
+			autotype_wrap.hide();
+		}
+
+		autotype_wrap.find('.caldera-config-group-auto-' + autotype.val()).show();
+	
+	});
+
+
+
 
 	// show magic tag autocompletes
 	$('body').on('keyup blur focus', '.magic-tag-enabled', function(e){

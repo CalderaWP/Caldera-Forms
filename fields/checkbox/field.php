@@ -2,12 +2,12 @@
 	<?php echo $field_label; ?>
 	<div class="<?php echo $field_input_class; ?>">
 		<?php
-		if(empty($field['config']['option'])){ ?>
+		if(!empty($field['config']['option'])){
 			
-			<input type="checkbox" id="<?php echo $field_id; ?>" data-field="<?php echo $field_base_id; ?>" class="field-config" name="<?php echo $field_name; ?>" value="1" <?php if(!empty($field_value)){ ?>checked="true"<?php } ?>>
-
-		<?php }else{
-
+			
+			/*<input type="checkbox" id="<?php echo $field_id; ?>" data-field="<?php echo $field_base_id; ?>" class="field-config" name="<?php echo $field_name; ?>" value="1" <?php if(!empty($field_value)){ ?>checked="true"<?php } ?>>
+			*/
+			
 			foreach($field['config']['option'] as $option_key=>$option){
 				if(!isset($option['value'])){
 					$option['value'] = htmlspecialchars( $option['label'] );
