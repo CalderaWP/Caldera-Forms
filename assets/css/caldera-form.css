@@ -1176,7 +1176,7 @@
 
 .caldera-grid .breadcrumb {
   padding: 6px 12px;
-  margin-bottom: 20px;
+  margin: 0 0 20px;
   list-style: none;
   background-color: #f5f5f5;
   border-radius: 4px;
