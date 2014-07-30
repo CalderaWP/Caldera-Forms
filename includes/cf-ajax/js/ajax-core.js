@@ -52,7 +52,11 @@ jQuery(function($){
 							wrap.addClass('has-error').addClass('caldera_ajax_error_wrap');
 							wrap.append('<span class="help-block caldera_ajax_error_block">' + obj.data.fields[i] + '</span>');
 					}
-				}				
+				}
+				// was modal?
+				//setTimeout(function(){
+				//	obj.params.target.closest('.caldera-front-modal-container').hide();
+				//}, 1000);
 			}
 		});
 	};

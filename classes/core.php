@@ -67,6 +67,8 @@ class Caldera_Forms {
 
 		// render shortcode
 		add_shortcode( 'caldera_form', array( $this, 'render_form') );
+		// modal shortcode
+		add_shortcode( 'caldera_form_modal', array( $this, 'render_modal_form') );
 
 		// check update version
 		$version = get_option('_calderaforms_lastupdate');
@@ -2054,6 +2056,12 @@ class Caldera_Forms {
 		// init filter
 		$form = apply_filters('caldera_forms_submit_get_form', $form);
 
+		// check source is ajax to overide 
+		if( !empty($_POST['cfajax']) && $_POST['cfajax'] == $form['ID'] ){
+			$form['form_ajax'] = 1;
+		}
+
+
 		// instance number
 		$form_instance_number = 1;
 		if(isset($_POST['_cf_frm_ct'])){
@@ -2677,6 +2685,11 @@ class Caldera_Forms {
 						}
 					}
 				}
+				if($code == 'caldera_form_modal'){
+					//dump($code);
+					wp_enqueue_style( 'cf-modal-styles', CFCORE_URL . 'assets/css/modals.css', array(), self::VERSION );
+					//caldera_form_modal
+				}
 			}
 		}
 	}
@@ -2864,6 +2877,60 @@ class Caldera_Forms {
 		return $data;
 	}
 
+	static public function render_modal_form($atts, $content){
+		if(empty($atts['id'])){
+			return $content;
+		}
+		$form = get_option( $atts['id'] );
+		if(empty($form['ID']) || $form['ID'] != $atts['id']){
+			return $content;
+		}
+		
+		$modal_button_classes = array(
+			"cf_modal_button"
+		);
+
+		if(!empty($atts['classes'])){
+			$modal_button_classes = array_merge($modal_button_classes, explode(',', $atts['classes']));
+		}
+
+		$modal_id = uniqid($form['ID']);
+
+		echo "<a class=\" " . implode(' ', $modal_button_classes) . "\" href=\"#" . $modal_id . "\">" . $content . "</a>\r\n";
+
+		$current_state = 'style="display:none;"';
+		if(!empty($_GET['cf_er'])){
+			$transdata = get_transient( $_GET['cf_er'] );
+			if($transdata['transient'] == $_GET['cf_er']){
+				$current_state = 'style="display:block;"';
+			}
+		}
+		if(!empty($_GET['cf_su'])){
+			// disable notices
+			unset($_GET['cf_su']);
+		}
+
+		$width = '';
+		if(!empty($atts['width'])){
+			$width = ' width: ' . floatval( $atts['width'] ).'px; margin-left: -' . ( floatval( $atts['width'] ) / 2 ) . 'px;';
+		}
+
+		?>
+		<div id="<?php echo $modal_id; ?>" class="caldera-front-modal-container" <?php echo $current_state; ?>>
+			<div class="caldera-backdrop"></div>
+			<div id="<?php echo $modal_id; ?>_modal_wrap" tabindex="-1" arialabelled-by="<?php echo $modal_id; ?>_modal_label" class="caldera-modal-wrap caldera-front-modal-wrap" style="display: block; <?php echo $width; ?>">
+				<div class="caldera-modal-title" id="<?php echo $modal_id; ?>_modal_title" style="display: block;">
+					<a href="#close" class="caldera-modal-closer caldera-front-modal-closer" data-dismiss="modal" aria-hidden="true" id="<?php echo $modal_id; ?>_modal_closer">&times;</a>
+					<h3 class="modal-label" id="<?php echo $modal_id; ?>_modal_label"><?php echo $form['name']; ?></h3>
+				</div>
+				<div class="caldera-modal-body caldera-front-modal-body" id="<?php echo $modal_id; ?>_modal_body">
+				<?php echo self::render_form( array('id'=>$form['ID'],'ajax'=>true) ); ?>
+				</div>
+			</div>
+		</div>
+		<?php
+	}
+
 	static public function render_form($atts, $entry_id = null){
 
 		global $current_form_count;
@@ -2902,6 +2969,14 @@ class Caldera_Forms {
 			}
 			$form = get_option( $atts['id'] );
 
+		}
+
+		if(isset($atts['ajax'])){
+			if(!empty($atts['ajax'])){
+				$form['form_ajax'] = 1;
+			}else{
+				$form['form_ajax'] = 0;
+			}
 		}
 
 		// set entry edit

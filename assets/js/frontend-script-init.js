@@ -8,7 +8,17 @@
 			}
 		});
 	});
-
+	// modals activation
+	$(document).on('click', '.cf_modal_button', function(e){
+		e.preventDefault();
+		var clicked = $(this);
+		$(clicked.attr('href')).show();
+	});
+	$(document).on('click', '.caldera-front-modal-closer', function(e){
+		e.preventDefault();
+		var clicked = $(this);
+			clicked.closest('.caldera-front-modal-container').hide();
+	});
 	// Page navigation
 	$(document).on('click', '[data-page]', function(e){
 		var clicked = $(this),
