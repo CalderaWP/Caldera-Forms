@@ -69,6 +69,7 @@ class Caldera_Forms {
 		add_shortcode( 'caldera_form', array( $this, 'render_form') );
 		// modal shortcode
 		add_shortcode( 'caldera_form_modal', array( $this, 'render_modal_form') );
+		add_action( 'wp_footer', array( $this, 'render_footer_modals') );
 
 		// check update version
 		$version = get_option('_calderaforms_lastupdate');
@@ -2878,6 +2879,8 @@ class Caldera_Forms {
 	}
 
 	static public function render_modal_form($atts, $content){
+		global $footer_modals;
+
 		if(empty($atts['id'])){
 			return $content;
 		}
@@ -2914,6 +2917,7 @@ class Caldera_Forms {
 		if(!empty($atts['width'])){
 			$width = ' width: ' . floatval( $atts['width'] ).'px; margin-left: -' . ( floatval( $atts['width'] ) / 2 ) . 'px;';
 		}
+
 		ob_start();
 		?>
 		<div id="<?php echo $modal_id; ?>" class="caldera-front-modal-container" <?php echo $current_state; ?>>
@@ -2929,10 +2933,15 @@ class Caldera_Forms {
 			</div>
 		</div>
 		<?php
-		$out = ob_get_clean();
+		$footer_modals .= ob_get_clean();
 		return $out;
 	}
-
+	static public function render_footer_modals(){
+		global $footer_modals;
+		if(!empty($footer_modals)){
+			echo $footer_modals;
+		}
+	}
 	static public function render_form($atts, $entry_id = null){
 
 		global $current_form_count;
