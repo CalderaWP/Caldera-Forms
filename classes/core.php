@@ -2896,7 +2896,7 @@ class Caldera_Forms {
 
 		$modal_id = uniqid($form['ID']);
 
-		echo "<a class=\" " . implode(' ', $modal_button_classes) . "\" href=\"#" . $modal_id . "\">" . $content . "</a>\r\n";
+		$out = "<a class=\" " . implode(' ', $modal_button_classes) . "\" href=\"#" . $modal_id . "\">" . $content . "</a>\r\n";
 
 		$current_state = 'style="display:none;"';
 		if(!empty($_GET['cf_er'])){
@@ -2914,7 +2914,7 @@ class Caldera_Forms {
 		if(!empty($atts['width'])){
 			$width = ' width: ' . floatval( $atts['width'] ).'px; margin-left: -' . ( floatval( $atts['width'] ) / 2 ) . 'px;';
 		}
-
+		ob_start();
 		?>
 		<div id="<?php echo $modal_id; ?>" class="caldera-front-modal-container" <?php echo $current_state; ?>>
 			<div class="caldera-backdrop"></div>
@@ -2929,6 +2929,8 @@ class Caldera_Forms {
 			</div>
 		</div>
 		<?php
+		$out = ob_get_clean();
+		return $out;
 	}
 
 	static public function render_form($atts, $entry_id = null){
