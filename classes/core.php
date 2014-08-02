@@ -1626,6 +1626,13 @@ class Caldera_Forms {
 				if(!empty($form['ID']) ){
 					//dump($processed_meta[$form['ID']]);
 
+					// split processor
+					
+					if(!empty($magic[1])){
+						if( false !== strpos( $magic[1], ':' )){
+							$magic = array_reverse( explode(':', $magic[1]) );
+						}
+					}					
 					// check if its a process id or processor slug
 					 if( empty($processed_meta[$form['ID']][$magic[0]]) && !empty($form['processors']) ){
 
