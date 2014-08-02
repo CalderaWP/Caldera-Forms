@@ -48,9 +48,9 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 			<a class="button ajax-trigger" data-request="start_new_form" data-modal-width="400" data-modal-height="192" data-load-class="none" data-modal="new_form" data-template="#import-form-tmpl" data-modal-title="<?php echo __('Import Form', 'caldera-forms'); ?>" ><?php echo __('Import', 'caldera-forms'); ?></a>
 		</li>
 		<li class="caldera-forms-toolbar-item">
-			<button type="button" title="<?php echo __('View available extensions', 'caldera-forms'); ?>" data-modal-buttons="Close|dismiss" data-load-class="spinner" data-active-class="none" data-set="alert" data-request="<?php echo CFCORE_EXTEND_URL . '?version=' . CFCORE_VER; ?>" data-modal="extend_cf" data-error="extend_fail_notice" data-template="#extensions-modal-tmpl" data-modal-width="720" data-modal-title="<?php echo __('Caldera Forms Extensions', 'caldera-forms'); ?>" class="ajax-trigger button"><?php echo __('Extensions' , 'caldera-forms'); ?></button>
+			<button type="button" title="<?php echo __('View available extensions', 'caldera-forms'); ?>" data-modal-buttons="Close|dismiss" data-load-class="spinner" data-active-class="none" data-set="alert" data-request="<?php echo CFCORE_EXTEND_URL . '?version=' . CFCORE_VER; ?>" data-modal="extend_cf" data-error="extend_fail_notice" data-template="#extensions-modal-tmpl" data-modal-width="720" data-modal-title="<?php echo __('Caldera Forms Extensions & News', 'caldera-forms'); ?>" class="ajax-trigger button button-primary"><?php echo __('Extensions' , 'caldera-forms'); ?></button>
 		</li>
-		
+
 		<li class="caldera-forms-toolbar-item">
 		&nbsp;
 		</li>
