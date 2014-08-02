@@ -20,7 +20,7 @@ function cf_custom_field_classes(){
 <div class="caldera-config-group">
 	<label><?php echo __('Custom Class', 'caldera-forms'); ?> </label>
 	<div class="caldera-config-field">
-		<input type="text" class="block-input field-config" name="{{_name}}[custom_class]">
+		<input type="text" class="block-input field-config" name="{{_name}}[custom_class]" value="{{custom_class}}">
 	</div>
 </div>
 <?php
