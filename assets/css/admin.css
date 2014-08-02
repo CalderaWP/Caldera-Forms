@@ -448,6 +448,7 @@ textarea.block-input.field-config {
 }
 .block-input.field-config {
   width: 100%;
+  line-height: 20px;
 }
 .field-config.field-checkbox {
   margin-top: 4px;
@@ -469,7 +470,7 @@ h3.caldera-editor-field-title {
   color: #3f3f3f;
 }
 .caldera-editor-body.caldera-config-editor-panel.caldera-config-has-side {
-  margin-right: 370px;
+  margin-right: 420px;
 }
 .caldera-config-editor-main-panel {
   float: left;
@@ -477,22 +478,20 @@ h3.caldera-editor-field-title {
 }
 .caldera-config-editor-side-panel {
   bottom: 30px;
-  overflow: auto;
+  overflow-y: scroll;
   padding-right: 15px;
   position: fixed;
   right: 0;
   top: 172px;
-  width: 350px;
+  width: 400px;
 }
 .caldera-config-editor-panel-group {
   border-bottom: 1px solid #DFDFDF;
   margin-bottom: 30px;
   padding-bottom: 20px;
 }
-.add-new-h2.caldera-add-page,
-.add-new-h2.caldera-add-row,
-.add-new-h2.caldera-add-row:active,
-.add-new-h2.caldera-add-page:active {
+.caldera-config-editor-panel .add-new-h2 ,
+.caldera-config-editor-panel .add-new-h2:active{
   font-size: 10px;
   margin: 4px 10px 4px 10px;
 }
@@ -546,7 +545,6 @@ h3.caldera-editor-field-title {
   z-index: 999999;
 }
 .toggle_option_row .magic-tags-autocomplete {
-  margin-left: 66px;
   width: 279px;
 }
 .magic-tags-autocomplete > ul {
@@ -557,6 +555,7 @@ h3.caldera-editor-field-title {
   border-bottom: 1px solid #dfdfdf;
   margin: 0;
   padding: 5px 6px 6px 12px;
+  white-space: nowrap;
 }
 .magic-tags-autocomplete > ul > li.header {
   border-bottom: 1px solid #dfdfdf;

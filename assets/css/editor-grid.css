@@ -132,13 +132,15 @@
 	padding: 12px 0;
 	position: relative;
 }
-.column-fieldinsert .dashicons.dashicons-plus-alt {
+.column-fieldinsert .dashicons.dashicons-admin-generic,
+.column-fieldinsert .dashicons.dashicons-plus-alt {	
   background: none repeat scroll 0 0 #EFEFEF;
   color: #6C6C6C;
   font-size: 13px;
   margin-top: -3px;
   padding: 2px;
 }
+.column-fieldinsert.column-tools ,
 .column-fieldinsert.column-tools {
   bottom: -10px;
   left: 50%;
@@ -308,13 +310,36 @@
 .caldera-condition-line:first-child .caldera-condition-line-label{
   display: none;
 }
+.caldera-editor-field-config-wrapper .caldera-conditional-field-value {
+  display: inline-block;
+  margin: 12px 12px 0 0;
+  position: relative;
+}
 .caldera-editor-field-config-wrapper .caldera-conditional-value-field {
-  margin: 12px;
   max-width: 263px !important;
   width: 263px !important;
 }
 .caldera-editor-field-config-wrapper .button.remove-conditional-line.pull-right {
   margin-top: -12px;
+}
+.icn-code.magic-tag-init {
+  background: none repeat scroll 0 0 #f9f9f9;
+  border-bottom: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  cursor: pointer;
+  opacity: 0.5;
+  padding: 7px 6px 6px;
+  position: absolute;
+  right: 1px;
+  top: 2px;
+}
+.icn-code.magic-tag-init:hover {
+  color: #404040;
+  opacity: 1;
+}
+.field-config.magic-tag-enabled {
+  padding-right: 26px;
+  resize: vertical;
 }
 .settings-panel.settings-core{ display: block;}
 

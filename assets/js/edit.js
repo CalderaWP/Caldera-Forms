@@ -792,7 +792,7 @@ jQuery(function($){
 
 		}else{
 
-			out = '<input name="' + name + '[value]" type="text" class="caldera-conditional-value-field" value="' + (target.data('value') ? target.data('value') : '') + '" style="max-width: 165px;">';
+			out = '<input name="' + name + '[value]" type="text" class="caldera-conditional-value-field magic-tag-enabled" value="' + (target.data('value') ? target.data('value') : '') + '" style="max-width: 165px;">';
 		}
 
 
@@ -841,11 +841,11 @@ jQuery(function($){
 			field_lables = wrap.find('.caldera-config-group-option-labels');
 
 		if(!clicked.prop('checked')){
-			values.prop('disabled', true).hide();
+			values.prop('disabled', true).hide().parent().hide();
 			lables.css('width', 245);
 			field_lables.hide();
 		}else{
-			values.prop('disabled', false).show();
+			values.prop('disabled', false).show().parent().show();
 			lables.css('width', '');
 			field_lables.show();
 		}
@@ -880,40 +880,62 @@ jQuery(function($){
 	});
 
 
+	$('body').on('click', '.magic-tag-init', function(e){
+		var clicked = $(this),
+			input = clicked.prev();
 
+		input.focus().trigger('init.magic');
 
+	});
 	// show magic tag autocompletes
-	$('body').on('keyup blur focus', '.magic-tag-enabled', function(e){
+	$('body').on('keyup blur focus select click init.magic', '.magic-tag-enabled', function(e){
 		var input = $(this),
 			wrap = input.parent(),
-			fieldtype = wrap.closest('.wrapper-instance-pane').find('.caldera-select-field-type').val(),
+			fieldtype = ( wrap.closest('.wrapper-instance-pane').find('.caldera-select-field-type').val() ? wrap.closest('.wrapper-instance-pane').find('.caldera-select-field-type').val() : 'hidden' ),
 			tags = wrap.find('.magic-tags-autocomplete'),
 			list = tags.find('ul'),
-			stream = this.value,
-			tag = [];
+			//basevalue = this.value.substr( this.selectionEnd ),
+			stream = this.value,//.substr(0, this.selectionStart ),
+			tag = [],
+			type_instances = [],
+			current_tag = '',
+			start = this.selectionStart,
+			end = this.selectionEnd;
+
 			//reset typed tag
 			input.data('tag','');
-
-			// keyup, do tags matching
-			if(e.type === 'keyup' || e.type === 'focusin'){
-
-				for( var s=stream.length; s > 0; s--){
-					
-					var ch = stream.substr(s-1,1);
-
-					if(ch === '}'){
-						// reset and end
-						tag = [];
-						break;
-					}
-					tag.push(ch);
-					if(ch === '{'){
-						break;
-					}
-					
-				}
+			if(this.selectionEnd > this.selectionStart){
+				current_tag = this.value.substr(this.selectionStart, ( this.selectionEnd - this.selectionStart) );
+			}else{
 				
-				if(!tag.length || tag.indexOf('{') < 0 ){
+				if( ( e.type === 'select' || e.type === 'keyup' ) && ( e.which !== 40 && e.which !== 38 && e.which !== 39 && e.which !== 37 ) ){
+
+					for( start=this.selectionStart; start > 0; start--){
+						
+						var ch = stream.substr(start-1,1);
+
+						if(ch === ' ' || ch === "\n" || ( ( ch === '%' || ch === '}' ) && this.selectionStart === start ) ){
+							break;
+						}
+					}
+					for( end=this.selectionStart; end < stream.length; end++){
+						
+						var ch = stream.substr(end,1);
+
+						if(ch === ' ' || ch === "\n" || ( ( ch === '%' || ch === '{' ) && this.selectionStart === end ) ){
+							break;
+						}
+					}
+					//if(end > this.selectionEnd){
+					current_tag = stream.substr(start, ( end - start ) );
+				}
+				//}
+			}
+			
+			// start matching
+			if( e.type !== 'focusout' ){
+				
+				if( e.type !== 'init' && current_tag.length < 3 ){
 					if(tags.length){
 						tags.remove();
 					}
@@ -926,55 +948,114 @@ jQuery(function($){
 					tags.insertAfter(input);
 				}
 
-				current_tag = tag.reverse().join('');
-				
 				//populate
 				list.empty();
 				// compatibility
 				var tagtypes = 'system';
+				var is_static = false;
 				if(fieldtype === 'hidden' || fieldtype === 'dropdown' || fieldtype === 'radio' || fieldtype === 'toggle_switch' || fieldtype === 'checkbox'){
+					is_static = true;
 					fieldtype = 'text';
 					tagtypes = 'all';
-				}else if(fieldtype === 'paragraph'){
+				}else if(fieldtype === 'paragraph' || fieldtype === 'html'){
 					fieldtype = 'text';
 				}
+				// type set
+				if(input.data('type')){
+					fieldtype = input.data('type');
+				}
 				// search em!
-				for( var tp in system_values ){
-					if(tagtypes === 'all' || tagtypes === tp){
-						var heading = $('<li class="header">' + system_values[tp].type+'</li>'),
-							matches = 0;
-						heading.appendTo(list);
-						for( var i = 0; i < system_values[tp].tags[fieldtype].length; i++){
-							var this_tag = '{' + system_values[tp].tags[fieldtype][i]+'}';
-								
-							if( this_tag.indexOf(current_tag) >= 0 ){
-								matches += 1;
-								var view_tag = this_tag.replace(current_tag, '<strong>' + current_tag + '</strong>');
-
-								var linetag = $('<li class="tag" data-tag="'+this_tag+'">' + view_tag + '</li>');
-								linetag.on('click', function(){
-									var selected = $(this).data('tag'),
-										insert = selected.replace(current_tag, '');
-
-									input.val( input.val() + insert ).trigger('change');
-								})
-								linetag.appendTo(list);
-							}
+				fieldtype = fieldtype.split(',');
+				fieldtype.push('vars');
+				for( var ft = 0; ft < fieldtype.length; ft++){
+					for( var tp in system_values ){
+						if(typeof system_values[tp].tags[fieldtype[ft]] === 'undefined'){
+							continue;
 						}
-						if(matches === 0){
-							heading.remove();
+						
+						type_instances = [tp];
+						if(tp !== 'system' && tp !== 'variable' && tp !== 'field'){
+							var type_instance_confs = jQuery(".processor-" + tp),
+								wrapper = input.closest('.caldera-editor-processor-config-wrapper'),
+								wrapper_id = wrapper.prop('id');
+							type_instances = [];
+							// processor based - orderd
+							for(var c = 0; c<type_instance_confs.length; c++){
+								if(!wrapper.length && is_static === true ){
+									// static non processor - can be used
+									type_instances.push(type_instance_confs[c].id);
+								}else{								
+									if(wrapper_id === type_instance_confs[c].id){
+										continue;
+									}
+
+									// check index order is valid
+									if(jQuery('li.'+type_instance_confs[c].id).index() < jQuery('li.'+wrapper_id).index()){
+										type_instances.push(type_instance_confs[c].id);
+									}
+								}
+
+							}
+
+						}						
+						// all instances of tag
+						for( var instance = 0; instance < type_instances.length; instance++){
+							if(tagtypes === 'all' || tagtypes === tp || tp === 'variable'){
+
+								var heading = $('<li class="header">' + system_values[tp].type + ( instance > 0 ? ' ['+(instance+1)+']' : '' ) +'</li>'),
+									matches = 0;
+								heading.appendTo(list);
+
+								for( var i = 0; i < system_values[tp].tags[fieldtype[ft]].length; i++){
+
+									if(input.data('parent')){
+										if('variable:'+input.data('parent') === system_values[tp].tags[fieldtype[ft]][i]){
+											continue;
+										}
+									}
+
+									var this_tag = system_values[tp].wrap[0] + system_values[tp].tags[fieldtype[ft]][i]+system_values[tp].wrap[1];
+									if(type_instances[instance] !== tp && type_instances.length > 1){
+										this_tag = system_values[tp].wrap[0] + system_values[tp].tags[fieldtype[ft]][i]+':'+type_instances[instance]+system_values[tp].wrap[1];
+									}
+									if( this_tag.indexOf(current_tag) >= 0 || e.type === 'init'){
+
+										matches += 1;
+										var view_tag = this_tag.replace(current_tag, '<strong>' + current_tag + '</strong>');
+
+										var linetag = $('<li class="tag" data-tag="'+this_tag+'">' + view_tag + '</li>');
+										//console.log( current_tag );
+										
+										linetag.on('click', function(){
+											var selected = $(this).data('tag');
+
+
+											input.val( stream.substr(0, start ) + selected + stream.substr( end ) ).trigger('change').focus();
+											input[0].selectionStart = start + selected.length - ( selected.indexOf('*') > 0 ? 2 : 0 );
+											input[0].selectionEnd = start + selected.length - ( selected.indexOf('*') > 0 ? 1 : 0 );
+
+										});
+
+										linetag.appendTo(list);
+									}
+								}
+								if(matches === 0){
+									heading.remove();
+								}
+							}
 						}
 					}
 				}
 			}
-			// count results found
+			// count results found			
 			if(!list.children().length){
 				tags.remove();
 			}
 
 			// focus out - remove
-			if(e.type === 'focusout'){
+			if(e.type === 'focusout'){				
 				setTimeout(function(){
+					//console.log(document.activeElement);
 					tags.remove();
 				}, 200);
 			}

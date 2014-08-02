@@ -873,6 +873,11 @@ class Caldera_Forms_Admin {
 					unset($forms[$data['ID']]['settings']);
 				}
 
+				foreach($forms as $form_id=>$form_config){
+					if(empty($form_config)){
+						unset( $forms[$form_id] );
+					}
+				}
 				// combine structure pages
 				$data['layout_grid']['structure'] = implode('#', $data['layout_grid']['structure']);
 				
@@ -976,6 +981,15 @@ class Caldera_Forms_Admin {
 						"location" => "lower",
 						"label" => __("Form Processors", 'caldera-forms'),
 						"canvas" => $path . "processors.php",
+					),
+					"variables" => array(
+						"name" => __("Variables", 'caldera-forms'),
+						"location" => "lower",
+						"label" => __("Variables", 'caldera-forms'),
+						"canvas" => $path . "variables.php",
+						"actions" => array(
+							$path . "variable_add.php"
+						)
 					),
 					"responsive" => array(
 						"name" => __("Responsive", 'caldera-forms'),

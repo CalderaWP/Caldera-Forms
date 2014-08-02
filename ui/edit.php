@@ -118,7 +118,7 @@ $field_options_template = "
 		<div class=\"toggle_option_row\">
 			<i class=\"dashicons dashicons-sort\" style=\"padding: 4px 9px;\"></i>
 			<input type=\"radio\" class=\"toggle_set_default field-config\" name=\"{{../_name}}[default]\" value=\"{{@key}}\" {{#is ../default value=\"@key\"}}checked=\"checked\"{{/is}}>
-			<input{{#unless ../show_values}} disabled=\"disabled\" style=\"display:none;\"{{/unless}} type=\"text\" class=\"toggle_value_field field-config magic-tag-enabled\" name=\"{{../_name}}[option][{{@key}}][value]\" value=\"{{value}}\" placeholder=\"value\">
+			<span style=\"position: relative; display: inline-block;\"><input{{#unless ../show_values}} disabled=\"disabled\" style=\"display:none;\"{{/unless}} type=\"text\" class=\"toggle_value_field field-config magic-tag-enabled\" name=\"{{../_name}}[option][{{@key}}][value]\" value=\"{{value}}\" placeholder=\"value\"></span>
 			<input{{#unless ../show_values}} style=\"width:245px;\"{{/unless}} type=\"text\" class=\"toggle_label_field field-config\" name=\"{{../_name}}[option][{{@key}}][label]\" value=\"{{label}}\" placeholder=\"label\">
 			<button class=\"button button-small toggle-remove-option\" type=\"button\"><i class=\"icn-delete\"></i></button>		
 		</div>
@@ -435,14 +435,14 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 	<div class="caldera-config-group">
 		<label><?php echo __('Form Name', 'caldera-forms'); ?> </label>
 		<div class="caldera-config-field">
-			<input type="text" class="field-config required" name="config[name]" value="<?php echo $element['name']; ?>" style="width:300px;" required="required">
+			<input type="text" class="field-config required" name="config[name]" value="<?php echo $element['name']; ?>" style="width:500px;" required="required">
 		</div>
 	</div>
 
 	<div class="caldera-config-group">
 		<label><?php echo __('Form Description', 'caldera-forms'); ?> </label>
 		<div class="caldera-config-field">
-			<textarea name="config[description]" class="field-config" style="width:300px;" rows="5"><?php echo htmlentities( $element['description'] ); ?></textarea>
+			<textarea name="config[description]" class="field-config" style="width:500px;" rows="5"><?php echo htmlentities( $element['description'] ); ?></textarea>
 		</div>
 	</div>
 
@@ -461,16 +461,16 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 		</div>
 	</div>
 
-	<div class="caldera-config-group">
+	<div class="caldera-config-group" style="width:500px;">
 		<label><?php echo __('Success Message', 'caldera-forms'); ?> </label>
 		<div class="caldera-config-field">
-			<input type="text" class="field-config required" name="config[success]" value="<?php echo $element['success']; ?>" style="width:300px;" required="required">
+			<input type="text" class="field-config block-input magic-tag-enabled required" name="config[success]" value="<?php echo $element['success']; ?>" required="required">
 		</div>
 	</div>
 	<div class="caldera-config-group">
 		<label><?php echo __('Gravatar Field', 'caldera-forms'); ?> </label>
 		<div class="caldera-config-field">
-			<select style="width:300px;" class="field-config caldera-field-bind" name="config[avatar_field]" data-exclude="system" data-default="<?php if(!empty($element['avatar_field'])){ echo $element['avatar_field']; } ?>" data-type="email"></select>
+			<select style="width:500px;" class="field-config caldera-field-bind" name="config[avatar_field]" data-exclude="system" data-default="<?php if(!empty($element['avatar_field'])){ echo $element['avatar_field']; } ?>" data-type="email"></select>
 			<p class="description"><?php echo __('Used when viewing an entry from a non-logged in user.','caldera-forms'); ?></p>
 		</div>
 	</div>
@@ -747,7 +747,7 @@ do_action('caldera_forms_edit_end', $element);
 	<div class="toggle_option_row">
 		<i class="dashicons dashicons-sort" style="padding: 4px 9px;"></i>
 		<input type="radio" class="toggle_set_default field-config" name="{{../_name}}[default]" value="{{@key}}" {{#is ../default value="@key"}}checked="checked"{{/is}}>
-		<input type="text" class="toggle_value_field field-config" name="{{../_name}}[option][{{@key}}][value]" value="{{value}}" placeholder="value">
+		<span style="position: relative; display: inline-block;"><input type="text" class="toggle_value_field field-config magic-tag-enabled" name="{{../_name}}[option][{{@key}}][value]" value="{{value}}" placeholder="value"></span>
 		<input type="text" class="toggle_label_field field-config" name="{{../_name}}[option][{{@key}}][label]" value="{{label}}" placeholder="label">
 		<button class="button button-small toggle-remove-option" type="button"><i class="icn-delete"></i></button>		
 	</div>
@@ -819,13 +819,16 @@ foreach($field_type_templates as $key=>$template){
 <?php
 
 
-$magic_script = array();
+$magic_script = array(
+	'field' => array()
+);
 
 foreach($magic_tags as $magic_set_key=>$magic_tags_set){
-	
+
 	$magic_script[$magic_set_key] = array(
 		'type'	=>	$magic_tags_set['type'],
-		'tags'	=>	array()
+		'tags'	=>	array(),
+		'wrap'	=>  $magic_tags_set['wrap']
 	);
 
 	foreach($magic_tags_set['tags'] as $tag_key=>$tag_value){

@@ -6,7 +6,7 @@ jQuery(function($){
 		// set sortable groups
 		$( ".caldera-editor-processors-panel ul" ).sortable({
 			update: function(){
-				rebind_field_bindings();
+				rebuild_field_binding();
 			}
 		});
 
@@ -46,12 +46,12 @@ jQuery(function($){
 		// place config
 		process_conf.append( new_conf_templ( new_proc ) );
 
-		// reset sortable
-		build_sortables()
+		// reset sortable		
 		$('#form_processor_baldrickModalCloser').trigger('click');
 		$('.caldera-processor-nav a').last().trigger('click');
-		$('#fp_' + processid + '_type').val(clicked.data('type')).trigger('change');		
-		rebuild_field_binding();
+		$('#fp_' + processid + '_type').val(clicked.data('type')).trigger('change');
+		build_sortables();
+		//rebuild_field_binding();
 
 		baldrickTriggers();
 	});
@@ -182,11 +182,12 @@ Handlebars.registerHelper('_field', function(args) {
 	if(args.hash.array){
 		is_array = "[]";
 		if(args.hash.array !== 'true'){
-			default_val = 'data-default="' + args.hash.array + '"';
+			default_val = 'value="' + args.hash.array + '"';
 		}
 	}
 
 	out = '<select ' + ( args.hash.type ? 'data-type="' + args.hash.type + '"' : '' ) + default_val +' ' + exclude + ' name="' + this._name + '[' + args.hash.slug + ']' + is_array + '" id="' + this._id + '_' + args.hash.slug + '" class="block-input field-config caldera-field-bind' + required + '">';
+	//out = '<input type="text" ' + ( args.hash.type ? 'data-type="' + args.hash.type + '"' : '' ) + default_val +' ' + exclude + ' name="' + this._name + '[' + args.hash.slug + ']' + is_array + '" id="' + this._id + '_' + args.hash.slug + '" class="block-input field-config magic-tag-enabled caldera-field-bind' + required + '">';
 	
 	if(!args.hash.required){
 		out += '<option value=""></option>';
