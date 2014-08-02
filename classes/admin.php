@@ -172,6 +172,7 @@ class Caldera_Forms_Admin {
 	} 
 
 	public static function get_admin_templates(){
+		include CFCORE_PATH . 'ui/news_templates.php';
 		include CFCORE_PATH . 'ui/admin_templates.php';
 	}
 	public static function get_admin_meta_templates(){
