@@ -74,6 +74,7 @@
   position: absolute;
   right: 0;
   top: 43px;
+  overflow: auto;
 }
 .caldera-modal-body.caldera-front-modal-body {
   bottom: auto;

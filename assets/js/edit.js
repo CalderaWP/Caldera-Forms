@@ -759,7 +759,7 @@ jQuery(function($){
 			lineid = field.data('line'),
 			target = $('#' + lineid + "_value"),
 			curval = target.find('.caldera-conditional-value-field').first();
-			//console.log(lineid + "_value");
+			
 
 			// check if a value is present
 
@@ -1024,7 +1024,7 @@ jQuery(function($){
 										var view_tag = this_tag.replace(current_tag, '<strong>' + current_tag + '</strong>');
 
 										var linetag = $('<li class="tag" data-tag="'+this_tag+'">' + view_tag + '</li>');
-										//console.log( current_tag );
+										
 										
 										linetag.on('click', function(){
 											var selected = $(this).data('tag');
@@ -1055,7 +1055,7 @@ jQuery(function($){
 			// focus out - remove
 			if(e.type === 'focusout'){				
 				setTimeout(function(){
-					//console.log(document.activeElement);
+					
 					tags.remove();
 				}, 200);
 			}

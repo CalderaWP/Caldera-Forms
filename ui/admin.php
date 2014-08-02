@@ -46,7 +46,11 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 		</li>
 		<li class="caldera-forms-toolbar-item">
 			<a class="button ajax-trigger" data-request="start_new_form" data-modal-width="400" data-modal-height="192" data-load-class="none" data-modal="new_form" data-template="#import-form-tmpl" data-modal-title="<?php echo __('Import Form', 'caldera-forms'); ?>" ><?php echo __('Import', 'caldera-forms'); ?></a>
-		</li>		
+		</li>
+		<li class="caldera-forms-toolbar-item">
+			<button type="button" title="<?php echo __('View available extensions', 'caldera-forms'); ?>" data-modal-buttons="Close|dismiss" data-load-class="spinner" data-active-class="none" data-set="alert" data-request="<?php echo CFCORE_EXTEND_URL . '?version=' . CFCORE_VER; ?>" data-modal="extend_cf" data-error="extend_fail_notice" data-template="#extensions-modal-tmpl" data-modal-width="720" data-modal-title="<?php echo __('Caldera Forms Extensions', 'caldera-forms'); ?>" class="ajax-trigger button"><?php echo __('Extensions' , 'caldera-forms'); ?></button>
+		</li>
+		
 		<li class="caldera-forms-toolbar-item">
 		&nbsp;
 		</li>
@@ -63,11 +67,6 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 		<li class="caldera-forms-toolbar-item">
 		&nbsp;
 		</li>
-		<?php /*
-		<li class="caldera-forms-toolbar-item">
-			<button type="button" title="<?php echo __('View available extensions', 'caldera-forms'); ?>" data-modal-buttons="Close|dismiss" data-load-class="spinner" data-action="save_cf_setting" data-active-class="none" data-set="alert" data-request="<?php echo CFCORE_EXTEND_URL; ?>" data-modal="extend_cf" data-modal-width="650" data-modal-title="<?php echo __('Caldera Forms Extensions', 'caldera-forms'); ?>" class="ajax-trigger button"><?php echo __('Extensions' , 'caldera-forms'); ?></button>
-		</li>
-		*/ ?>
 
 	</ul>
 </div>
@@ -361,6 +360,10 @@ function update_setting_toggle(obj){
 	
 	//for()
 
+}
+
+function extend_fail_notice(el){
+	jQuery("#extend_cf_baldrickModalBody").html('<div class="alert error"><p><?php echo __('Looks like something is not working. Please try again a little later or post to the <a href="http://wordpress.org/support/plugin/caldera-forms" target="_blank">support forum</a>.', 'caldera-forms'); ?></p></div>');
 }
 
 function start_new_form(){

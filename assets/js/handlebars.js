@@ -2762,7 +2762,7 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
     }
   });
   Handlebars.registerHelper("is", function(value, options) {
-    //console.log(value);
+
     if(options.hash.value === '@key'){
       options.hash.value = options.data.key;
     }

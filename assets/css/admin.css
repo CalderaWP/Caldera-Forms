@@ -1537,3 +1537,9 @@ input.disabled-input {
 .form-panel .affix {
   position: fixed;
 }
+#extend_cf_baldrickModalBody h2 {
+  font-size: 1.1em;
+  margin: 0;
+  padding: 4px 6px 6px;
+  color: inherit;
+}

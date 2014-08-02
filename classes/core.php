@@ -51,6 +51,7 @@ class Caldera_Forms {
 		add_filter('caldera_forms_render_get_field_type-radio', array( $this, 'auto_populate_options_field' ), 10, 2);
 		add_filter('caldera_forms_render_get_field_type-checkbox', array( $this, 'auto_populate_options_field' ), 10, 2);
 		add_filter('caldera_forms_render_get_field_type-dropdown', array( $this, 'auto_populate_options_field' ), 10, 2);
+		add_filter('caldera_forms_render_get_field_type-toggle_switch', array( $this, 'auto_populate_options_field' ), 10, 2);
 
 		// magic tags
 		//add_filter('caldera_forms_render_magic_tag', array( $this, 'do_magic_tags'));
@@ -1676,7 +1677,7 @@ class Caldera_Forms {
 		if(!empty($matches[1])){
 			foreach($matches[1] as $key=>$tag){
 				$entry = self::get_slug_data($tag, $form);
-				if(!empty($entry)){
+				if($entry !== null){
 					if(is_array($entry)){
 						if(count($entry) === 1){
 							$entry = array_shift($entry);
@@ -1689,11 +1690,8 @@ class Caldera_Forms {
 							continue;
 						}
 					}
-				}else{
-					$entry = '';
+					$value = str_replace($matches[0][$key], $entry, $value);
 				}
-
-				$value = str_replace($matches[0][$key], $entry, $value);
 			}
 		}
 
@@ -3278,7 +3276,7 @@ class Caldera_Forms {
 		if(!empty($form['layout_grid']['fields'])){
 
 			foreach($form['layout_grid']['fields'] as $field_base_id=>$location){
-				//
+				// instance base
 				if(isset($form['fields'][$field_base_id])){
 						
 					$field = apply_filters('caldera_forms_render_setup_field', $form['fields'][$field_base_id], $form);
@@ -3343,13 +3341,15 @@ class Caldera_Forms {
 					$field_structure = apply_filters('caldera_forms_render_field_structure_slug-' . $field['slug'], $field_structure, $form);
 
 					$field_name = $field_structure['name'];
-					$field_id = $field_structure['id'];
+					$field_id = $field_structure['id'] . '_' . $current_form_count;
 					$field_label = $field_structure['label_before'] . $field_structure['label'] . $field_structure['label_required'] . $field_structure['label_after']."\r\n";
 					$field_placeholder = $field_structure['field_placeholder'];
 					$field_required = $field_structure['field_required'];
 					$field_caption = $field_structure['field_caption'];
 					// blank default
 					$field_value = $field_structure['field_value'];
+					// setup base instance ID
+					$field_base_id = $field_base_id.'_'.$current_form_count;
 
 					ob_start();
 					include $field_types[$field['type']]['file'];
@@ -3443,7 +3443,7 @@ class Caldera_Forms {
 			// retain query string				
 			$qurystr = array();
 			parse_str( $_SERVER['QUERY_STRING'], $qurystr );
-			echo "<span class=\"caldera-grid\"><ol class=\"breadcrumb\" data-form=\"caldera_form_" . $current_form_count ."\">\r\n";
+			$out .= "<span class=\"caldera-grid\"><ol class=\"breadcrumb\" data-form=\"caldera_form_" . $current_form_count ."\">\r\n";
 			$current_page = 1;
 			if(!empty($_GET['cf_pg'])){
 				$current_page = $_GET['cf_pg'];
@@ -3457,9 +3457,9 @@ class Caldera_Forms {
 			
 				$qurystr['cf_pg'] = $page_key + 1;
 				$qurystr['_rdm_'] = rand(100000, 999999);
-				echo "<li" . $tabclass . "><a href=\"?". http_build_query($qurystr) . "\" data-page=\"" . ( $page_key + 1 ) ."\" data-pagenav=\"caldera_form_" . $current_form_count ."\">". $page_name . "</a></li>\r\n";
+				$out .= "<li" . $tabclass . "><a href=\"?". http_build_query($qurystr) . "\" data-page=\"" . ( $page_key + 1 ) ."\" data-pagenav=\"caldera_form_" . $current_form_count ."\">". $page_name . "</a></li>\r\n";
 			}
-			echo "</ol></span>\r\n";
+			$out .= "</ol></span>\r\n";
 			}
 
 			$out .= $grid->renderLayout();

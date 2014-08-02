@@ -116,7 +116,8 @@ rebind_field_bindings = function(){
 					}
 				}
 
-				if(type !== 'system' || type !== 'variable'){
+				if(type !== 'system' && type !== 'variable'){
+
 					var type_instance_confs = jQuery(".processor-" + type);
 					
 					for(var c = 0; c<type_instance_confs.length; c++){
@@ -132,94 +133,59 @@ rebind_field_bindings = function(){
 						}
 
 					}
-				}else{
+				}else{					
 					type_instances.push('__system__');
 				}
 				
+				var types = [];
 				if(field.data('type')){
+					types = field.data('type').split(',');
+					types.push('vars');
+				}else{
+					types = ['text','vars'];
+				}
 
-					var types = field.data('type').split(',');
-
-					for(var t = 0; t<types.length; t++){
-						if(system_values[type].tags[types[t]]){
-							
-							for( var instance = 0; instance < type_instances.length; instance++){
-
-								// check index order is valid
-								if(jQuery('li.'+type_instances[instance]).index() > jQuery('li.'+wrapper_id).index() && type_instances[instance] !== '__system__'){
-									if( field.closest('.caldera-editor-processors-panel-wrap').length ){
-										valid = ' disabled="disabled"';
-									}
-								}else{
-									valid = '';
-								}
-
-
-								var optgroup = jQuery('<optgroup label="' + system_values[type].type + ( type_instances[instance] !== '__system__' ? ' ' + ( jQuery('li.'+type_instances[instance]).find('.processor-line-number').html() ) : '' ) + '"' + valid + '>');
-
-									//for( var tag in system_values[type].tags){
-
-										for( var i = 0; i < system_values[type].tags[types[t]].length; i++){
-											
-											var bind_value = system_values[type].tags[types[t]][i];	
-											// update labels on multiple
-											if(type_instances[instance] !== '__system__'){
-												bind_value = bind_value.replace(type ,type_instances[instance]);
-											}
-											
-											optgroup.append('<option value="{' + bind_value + '}"' + ( current === '{'+bind_value+'}' ? 'selected="selected"' : '' ) + valid + '>' + system_values[type].tags[types[t]][i] + '</option>');
-											//field.append('<option value="' + bind_value + '"' + ( current === system_values[type].tags[types[t]][i] ? 'selected="selected"' : '' ) + '>' + system_values[type].tags[types[t]][i] + '</option>');
-
-											count += 1;
-										}
-
-									//}
-								if(optgroup.children().length){
-									optgroup.appendTo(field);	
-								}							
-
-							}
-
-						}
-					}
-				}else{	
-
-					if(system_values[type].tags.text){
+				for(var t = 0; t<types.length; t++){
+					if(system_values[type].tags[types[t]]){
 						
 						for( var instance = 0; instance < type_instances.length; instance++){
 
 							// check index order is valid
 							if(jQuery('li.'+type_instances[instance]).index() > jQuery('li.'+wrapper_id).index() && type_instances[instance] !== '__system__'){
-								//console.log('lower');
-								valid = ' disabled="disabled"';
+								if( field.closest('.caldera-editor-processors-panel-wrap').length ){
+									valid = ' disabled="disabled"';
+								}
 							}else{
 								valid = '';
 							}
 
+
 							var optgroup = jQuery('<optgroup label="' + system_values[type].type + ( type_instances[instance] !== '__system__' ? ' ' + ( jQuery('li.'+type_instances[instance]).find('.processor-line-number').html() ) : '' ) + '"' + valid + '>');
 
+								//for( var tag in system_values[type].tags){
 
-								for( var i = 0; i < system_values[type].tags.text.length; i++){
-
-										var bind_value = system_values[type].tags.text[i];	
+									for( var i = 0; i < system_values[type].tags[types[t]].length; i++){
+										
+										var bind_value = system_values[type].tags[types[t]][i];	
 										// update labels on multiple
 										if(type_instances[instance] !== '__system__'){
 											bind_value = bind_value.replace(type ,type_instances[instance]);
 										}
+										
+										optgroup.append('<option value="{' + bind_value + '}"' + ( current === '{'+bind_value+'}' ? 'selected="selected"' : '' ) + valid + '>' + system_values[type].tags[types[t]][i] + '</option>');
+										//field.append('<option value="' + bind_value + '"' + ( current === system_values[type].tags[types[t]][i] ? 'selected="selected"' : '' ) + '>' + system_values[type].tags[types[t]][i] + '</option>');
 
-										optgroup.append('<option value="{' + bind_value + '}"' + ( current === '{'+bind_value+'}' ? 'selected="selected"' : '' ) + valid + '>' + system_values[type].tags.text[i] + '</option>');
 										count += 1;
+									}
 
-								}
-
+								//}
 							if(optgroup.children().length){
-								optgroup.appendTo(field);
+								optgroup.appendTo(field);	
 							}							
 
 						}
 
 					}
-
 				}
 
 			}

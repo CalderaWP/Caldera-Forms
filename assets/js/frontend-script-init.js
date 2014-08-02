@@ -33,7 +33,7 @@
 			if(breadcrumb){
 				breadcrumb.find('li.active').removeClass('active');
 			}
-			next = $('.caldera-form-page[data-formpage="'+ ( page + 1 ) +'"]');
+			next = form.find('.caldera-form-page[data-formpage="'+ ( page + 1 ) +'"]');
 			if(next.length){
 				page_box.hide();
 				next.show();
@@ -45,7 +45,7 @@
 			if(breadcrumb){
 				breadcrumb.find('li.active').removeClass('active');
 			}
-			prev = $('.caldera-form-page[data-formpage="'+ ( page - 1 ) +'"]');
+			prev = form.find('.caldera-form-page[data-formpage="'+ ( page - 1 ) +'"]');
 			if(prev.length){
 				page_box.hide();
 				prev.show();
@@ -58,7 +58,7 @@
 				e.preventDefault();
 				clicked.closest('.breadcrumb').find('li.active').removeClass('active');
 				$('#' + clicked.data('pagenav') + ' .caldera-form-page').hide();
-				$('.caldera-form-page[data-formpage="'+ ( clicked.data('page') ) +'"]').show();
+				$('#' + clicked.data('pagenav') + '	.caldera-form-page[data-formpage="'+ ( clicked.data('page') ) +'"]').show();
 				clicked.parent().addClass('active');
 			}
 			
@@ -73,7 +73,7 @@
 		$(v).find('a[data-pagenav]').each(function(i,e){
 			var tab		= $(e),
 				form 	= tab.data('pagenav'),
-				page	= $('.caldera-form-page[data-formpage="' + tab.data('page') + '"]');
+				page	= $('#'+ form +' .caldera-form-page[data-formpage="' + tab.data('page') + '"]');
 
 			if(page.find('.has-error').length){
 				tab.parent().addClass('error');

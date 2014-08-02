@@ -77,10 +77,13 @@ none yet.
 = Added =
 * Variables tab: create custom magic tags and URL return values by combining other tags, processor values and static strings.
 * Magic tag autocomplete to magic tag enabled inputs in editor.
-* Autopopulate options from post type or taxonomy for static select fields (radio, checkboxes, dropdown)
+* Autopopulate options from post type or taxonomy for static select fields (radio, checkboxes, dropdown, toggle switches)
+
 
 = Enhanced =
 * Rebuilt the get_entry and view methods to be easier to use for developers and be more reliable
+* Form Instancing and field ID's - can have multiple instances of the same form.
+* Additional hooks and filters
 
 = 1.0.91 (27 July, 2014) =
 
