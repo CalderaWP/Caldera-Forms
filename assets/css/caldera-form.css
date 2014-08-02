@@ -25,7 +25,6 @@
   box-shadow: none;
   -webkit-transition: none;
   transition: none;
-  -webkit-appearance: none;
 }
 .caldera-grid .form-control:hover {
   border: 1px solid #b9b9b9;

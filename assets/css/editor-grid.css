@@ -339,6 +339,8 @@
 }
 .field-config.magic-tag-enabled {
   padding-right: 26px;
+}
+textarea.field-config.magic-tag-enabled {
   resize: vertical;
 }
 .settings-panel.settings-core{ display: block;}
