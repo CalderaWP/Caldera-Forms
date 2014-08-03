@@ -131,7 +131,7 @@ function cf_ajax_redirect($type, $url, $form){
 		// do notices
 		foreach($notices as $note_type => $notice){
 			if(!empty($notice['note'])){					
-				$html .= '<div class=" '. implode(' ', $note_classes[$note_type]) . '">' . $notice['note'] .'</div>';
+				$html .= '<div class=" '. implode(' ', $note_classes[$note_type]) . '">' . Caldera_Forms::do_magic_tags( $notice['note'] ) .'</div>';
 			}
 		}
 

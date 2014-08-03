@@ -1478,7 +1478,7 @@ class Caldera_Forms {
 		return $tags;
 	}
 
-	static public function do_magic_tags($value, $magic_caller = array()){
+	static public function do_magic_tags($value, $entry_id = null, $magic_caller = array()){
 
 		global $processed_meta, $form;
 		/// get meta entry for magic tags defined.
@@ -1519,7 +1519,7 @@ class Caldera_Forms {
 									if( $var_key == $magic[1] ){
 										if( !in_array($magic_tag, $magic_caller) ){
 											$magic_caller[] = $magic_tag;
-											$magic_tag = self::do_magic_tags( $form['variables']['values'][$var_index], $magic_caller );
+											$magic_tag = self::do_magic_tags( $form['variables']['values'][$var_index], $entry_id, $magic_caller );
 										}else{
 											$magic_tag = $form['variables']['values'][$var_index];
 										}
@@ -1676,7 +1676,8 @@ class Caldera_Forms {
 		preg_match_all($regex, $value, $matches);
 		if(!empty($matches[1])){
 			foreach($matches[1] as $key=>$tag){
-				$entry = self::get_slug_data($tag, $form);
+				$entry = self::get_slug_data($tag, $form, $entry_id);
+				
 				if($entry !== null){
 					if(is_array($entry)){
 						if(count($entry) === 1){
@@ -1813,6 +1814,9 @@ class Caldera_Forms {
 			$entry = $wpdb->get_results($wpdb->prepare("
 				SELECT `value` FROM `" . $wpdb->prefix ."cf_form_entry_values` WHERE `entry_id` = %d AND `field_id` = %s AND `slug` = %s", $entry_id, $field_id, $form['fields'][$field_id]['slug']), ARRAY_A);
 
+			//allow plugins to alter the value
+			$entry = apply_filters('caldera_forms_get_field_entry', $entry, $field_id, $form, $entry_id);
+
 			if(!empty($entry)){
 				if( count( $entry ) > 1){
 					$out = array();
@@ -1935,57 +1939,11 @@ class Caldera_Forms {
 
 			if($field['slug'] == $slug){
 				
-				if(isset($_POST[$field_id])){
-					if(!empty($slug_parts)){						
-						// just the part
-						$line = stripslashes_deep( $_POST[$field_id] );
-						foreach($slug_parts as $part){
-							if(isset($line[$part])){
-								$line = $line[$part];
-							}
-						}
-						$out[] = $line;
-					}else{
-						//the whole thing
-						$entry = stripslashes_deep( $_POST[$field_id] );
+				return self::get_field_data( $field_id, $form, $entry_id);
 
-						//$entry = apply_filters('caldera_forms_view_field_' . $field['type'], $entry, $field, $form);
-
-						/*if(isset($field_types[$field['type']]['viewer'])){
-
-							if(is_array($field_types[$field['type']]['viewer'])){
-								$entry = call_user_func_array($field_types[$field['type']]['viewer'],array($entry, $field, $form));
-							}else{
-								if(function_exists($field_types[$field['type']]['viewer'])){
-									$func = $field_types[$field['type']]['viewer'];
-									$entry = $func($entry, $field, $form);
-								}
-							}
-						}*/
-						if(is_array($entry)){
-							if(isset($entry[0])){
-								// list
-								$entry = $field['label'].': '. implode(',' , $entry);
-							}else{
-								// named								
-								foreach($entry as $item_key=>$item){
-									if(is_array($item)){
-										$item = $item_key.' ('.implode(', ', $item).')';
-									}
-									$out[] = $item;
-								}								
-							}
-						}else{
-							$out[] = $entry;
-						}
-					}					
-				}
 			}
 		}
-		if(count($out) === 1){
-			$out = array_shift($out);
-		}
-		return $out;
+
 	}	
 	static public function get_entry_detail($entry_id, $form){
 		global $wpdb;

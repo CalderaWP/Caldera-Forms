@@ -18,16 +18,7 @@ if(empty($style_includes)){
 	update_option( '_caldera_forms_styleincludes', $style_includes);
 }
 
-// Modal Height
-$modal_height = '400';
 
-// check there are groups
-if(!empty($meta_groups['groups'])){
-	if( count($meta_groups['groups']) > 7){
-		$multiplier = count($meta_groups['groups']) - 7;
-		$modal_height = $modal_height + ( 30 * $multiplier );
-	}
-}
 // load fields
 //$field_types = apply_filters('caldera_forms_get_field_types', array() );
 
@@ -54,7 +45,7 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 		<li class="caldera-forms-toolbar-item">
 			<button type="button" id="updated-news-button" title="<?php echo __('Caldera Forms Updates, News & Tips', 'caldera-forms'); ?>" data-modal-buttons="Close|dismiss" data-load-class="spinner" data-active-class="none" data-set="alert" data-request="<?php echo CFCORE_EXTEND_URL . 'updates/?version=' . CFCORE_VER; ?>" data-modal="extend_cf" data-error="extend_fail_notice" data-template="#extensions-modal-tmpl" data-modal-width="720" data-modal-title="<?php echo __('Caldera Forms Updates, News & Tips', 'caldera-forms'); ?>" class="ajax-trigger button"><?php echo __('Updates & Tips' , 'caldera-forms'); ?></button>
 		</li>
-		<li class="caldera-forms-toolbar-item ajax-trigger" data-request="<?php echo CFCORE_EXTEND_URL . 'freshness'; ?>" data-callback="news_update_check" data-autoload="true" data-event="none">
+		<li class="caldera-forms-toolbar-item ajax-trigger" data-request="<?php echo CFCORE_EXTEND_URL . 'freshness/?version=' . CFCORE_VER; ?>" data-callback="news_update_check" data-autoload="true" data-event="none">
 		&nbsp;
 		</li>
 		<li class="caldera-forms-headtext">
@@ -374,16 +365,16 @@ function start_new_form(){
 }
 
 function news_update_check(obj){
-	if(obj.data.updates.days <= 7){
+	if(obj.data.updates.days <= 5){
 		jQuery('#updated-news-button').addClass('button-primary');
-		if(obj.data.title){
-			jQuery('#updated-news-button').html( obj.data.title );
+		if(obj.data.updates_title){
+			jQuery('#updated-news-button').html( obj.data.updates_title );
 		}
 	}
-	if(obj.data.extensions.days <= 7){
+	if(obj.data.extensions.days <= 5){
 		jQuery('#updated-extensions-button').addClass('button-primary');
-		if(obj.data.title){
-			jQuery('#updated-extensions-button').html( obj.data.title );
+		if(obj.data.extensions_title){
+			jQuery('#updated-extensions-button').html( obj.data.extensions_title );
 		}
 	}
 }
