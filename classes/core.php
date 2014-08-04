@@ -612,6 +612,10 @@ class Caldera_Forms {
 			$submission[] = $row;
 			$labels[] = $form['fields'][$field_id]['label'];
 		}
+
+		// final magic
+		$mail['message'] = self::do_magic_tags( $mail['message'] );
+		$mail['subject'] = self::do_magic_tags( $mail['subject'] );
 		
 		// CSV
 		if(!empty($form['mailer']['csv_data'])){
@@ -1248,7 +1252,14 @@ class Caldera_Forms {
 					}
 				break;
 			}
-		} 
+		}
+
+		if(empty($field['config']['show_values']) && !empty($field['config']['option'])){
+			
+			foreach($field['config']['option'] as &$option){
+				$option['value'] = $option['label'];
+			}
+		}
 		return $field;
 	}
 

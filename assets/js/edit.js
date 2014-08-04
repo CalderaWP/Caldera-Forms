@@ -778,7 +778,9 @@ jQuery(function($){
 				var value = $(v).find('.toggle_value_field').val(),
 					label = $(v).find('.toggle_label_field').val(),
 					sel = '';
-
+				if(!value.length){
+					value = label;
+				}
 				if(target.data('value')){
 					if(target.data('value').toString() === value){
 						sel = ' selected="selected"';
