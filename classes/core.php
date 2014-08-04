@@ -308,6 +308,12 @@ class Caldera_Forms {
 	public static function save_field_data($field, $entry_id, $form){
 		global $wpdb, $form;
 
+		if(!empty($field['conditions']['type'])){
+			if(!self::check_condition($field['conditions'], $form)){
+				return;
+			}
+		}
+
 		$data = self::get_field_data($field['ID'], $form);
 		if(empty($data)){
 			return;
@@ -411,7 +417,23 @@ class Caldera_Forms {
 					foreach($processed_meta[$form['ID']] as $process_id=>$meta_data){
 						
 						foreach($meta_data as $meta_key=>$meta_value){
-						
+							if(is_array($meta_value)){
+								foreach ($meta_value as &$check_value) {
+									if(is_array($check_value)){
+										foreach($check_value as &$sub_check_value){
+											if(!is_array($sub_check_value)){
+												$sub_check_value = self::do_magic_tags( $sub_check_value );
+											}
+										}
+									}else{
+										$check_value = self::do_magic_tags( $check_value );	
+									}
+								}
+							}else{
+								$meta_value = self::do_magic_tags( $meta_value );
+							}
+							
+
 							if(count($meta_value) > 1){
 								$meta_value = json_encode($meta_value);
 							}else{
@@ -1263,7 +1285,7 @@ class Caldera_Forms {
 		return $field;
 	}
 
-	static public function check_condition($conditions, $form){
+	static public function check_condition($conditions, $form, $entry_id=null){
 
 		$trues = array();
 		if(empty($conditions['group'])){
@@ -1276,13 +1298,13 @@ class Caldera_Forms {
 			
 			foreach($lines as $lineid=>$line){
 
-				$value = (array) self::get_field_data($line['field'], $form);
+				$value = (array) self::get_field_data($line['field'], $form, $entry_id);
 				if(empty($value)){
 					$value = array('');
 				}
 				// do field value replaces
 				if( false !== strpos($line['value'], '%')){
-					$isslug = self::get_slug_data( trim($line['value'], '%'), $form);
+					$isslug = self::get_slug_data( trim($line['value'], '%'), $form, $entry_id);
 					if( $isslug !== null ){
 						$line['value'] = $isslug;
 					}
@@ -1495,6 +1517,10 @@ class Caldera_Forms {
 		/// get meta entry for magic tags defined.
 
 		// check for magics
+		//dump($value);
+		if(is_array($value)){
+			dump($value);
+		}
 		preg_match_all("/\{(.+?)\}/", $value, $magics);
 		if(!empty($magics[1])){
 			foreach($magics[1] as $magic_key=>$magic_tag){
@@ -1861,7 +1887,7 @@ class Caldera_Forms {
 			$entry = null;
 			// dont bother if conditions say it shouldnt be here.
 			if(!empty($field['conditions']['type'])){
-				if(!self::check_condition($field['conditions'], $form)){
+				if(!self::check_condition($field['conditions'], $form, $entry_id)){
 					$processed_data[$indexkey][$field_id] = $entry;
 					return $entry;
 				}
@@ -2083,7 +2109,14 @@ class Caldera_Forms {
 		}
 
 		// initialize process data
-		foreach($form['fields'] as $field_id=>$field){			
+		foreach($form['fields'] as $field_id=>$field){
+			// get data
+			if(!empty($field['conditions']['type'])){
+				if(!self::check_condition($field['conditions'], $form, $entry_id)){
+					continue;
+				}
+			}
+
 			self::get_field_data( $field_id, $form, $entry_id);
 		}
 
@@ -2813,7 +2846,6 @@ class Caldera_Forms {
 		}
 		// get fields 
 		$field_types = self::get_field_types();
-		// get data
 		
 		$entry = self::get_submission_data($form, $entry_id);
 		$data = array(
@@ -3402,7 +3434,7 @@ class Caldera_Forms {
 			}
 
 			// render only non success
-			$out .= "<" . $form_element . " class=\"" . implode(' ', $form_classes) . "\" " . implode(" ", $attributes) . ">\r\n";
+			$out .= "<" . $form_element . " data-instance=\"" . $current_form_count . "\" class=\"" . implode(' ', $form_classes) . "\" " . implode(" ", $attributes) . ">\r\n";
 			$out .= wp_nonce_field( "caldera_forms_front", "_cf_verify", true, false);
 			$out .= "<input type=\"hidden\" name=\"_cf_frm_id\" value=\"" . $atts['id'] . "\">\r\n";
 			$out .= "<input type=\"hidden\" name=\"_cf_frm_ct\" value=\"" . $current_form_count . "\">\r\n";

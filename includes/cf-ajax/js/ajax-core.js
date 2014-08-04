@@ -19,6 +19,8 @@ jQuery(function($){
 			callback		: function(obj){
 				
 				obj.params.trigger.find(':submit').prop('disabled',false);
+				
+				var instance = obj.params.trigger.data('instance');
 
 				$('.caldera_forms_ajax_spinner').remove();
 				$('.caldera_ajax_error_wrap').removeClass('caldera_ajax_error_wrap').removeClass('has-error');
@@ -46,7 +48,7 @@ jQuery(function($){
 
 				if(obj.data.fields){
 					for(var i in obj.data.fields){
-						var field = $('[data-field="' + i + '"]'),
+						var field = $('[data-field="' + i + '_' + instance + '"]'),
 							wrap = field.closest('.form-group');
 
 							wrap.addClass('has-error').addClass('caldera_ajax_error_wrap');
