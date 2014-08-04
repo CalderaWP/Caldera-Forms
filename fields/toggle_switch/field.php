@@ -3,6 +3,16 @@
 	<div class="caldera-config-field init_field_type" data-type="toggle_button">
 		<div class="cf-toggle-group-buttons btn-group">
 			<?php
+
+			if(isset( $field['config'] ) && isset($field['config']['default']) && isset($field['config']['option'][$field['config']['default']])){
+				//if( $field['config']['option'][$field['config']['default']]['value'] )
+				if( $field['config']['default'] === $field_value ){
+					$field_value = $field['config']['option'][$field['config']['default']]['value'];
+				}
+
+			}
+
+
 			if(empty($field['config']['option'])){ ?>
 					
 					<button type="button" id="<?php echo $field_id; ?>_1" class="button" data-value="true"><?php echo __('Enable', 'caldera-forms'); ?></button>

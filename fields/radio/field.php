@@ -2,7 +2,18 @@
 	<?php echo $field_label; ?>
 	<div class="<?php echo $field_input_class; ?>">
 		<?php
-		if(empty($field['config']['option'])){ ?>
+		if(empty($field['config']['option'])){
+
+			if(isset( $field['config'] ) && isset($field['config']['default']) && isset($field['config']['option'][$field['config']['default']])){
+
+				if( $field['config']['default'] === $field_value ){
+					$field_value = $field['config']['option'][$field['config']['default']]['value'];
+				}
+
+			}
+
+
+			?>
 			
 			<input type="radio" id="<?php echo $field_id; ?>" data-field="<?php echo $field_base_id; ?>" class="field-config" name="<?php echo $field_name; ?>" value="1" <?php if(!empty($field_value)){ ?>checked="true"<?php } ?>>
 

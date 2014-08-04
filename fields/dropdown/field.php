@@ -4,6 +4,15 @@
 		<select <?php echo $field_placeholder; ?> id="<?php echo $field_id; ?>" data-field="<?php echo $field_base_id; ?>" class="<?php echo $field_class; ?>" name="<?php echo $field_name; ?>" <?php echo $field_required; ?>>
 		<?php
 
+			if(isset( $field['config'] ) && isset($field['config']['default']) && isset($field['config']['option'][$field['config']['default']])){
+				//if( $field['config']['option'][$field['config']['default']]['value'] )
+				if( $field['config']['default'] === $field_value ){
+					$field_value = $field['config']['option'][$field['config']['default']]['value'];
+				}
+
+			}
+
+
 		if(!empty($field['config']['option'])){
 			if(!empty($field['config']['default'])){
 				if(!isset($field['config']['option'][$field['config']['default']])){
