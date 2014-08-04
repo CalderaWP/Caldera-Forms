@@ -772,7 +772,7 @@ jQuery(function($){
 			
 		if(options_wrap.length){
 			var options_rows = options_wrap.find('.toggle_option_row'),
-				out = '<select name="' + name + '[value]" class="caldera-processor-value-bind caldera-conditional-value-field" data-field="' + field_id + '" style="max-width: 170px; width: 170px;">';
+				out = '<select name="' + name + '[value]" class="caldera-processor-value-bind caldera-conditional-value-field" data-field="' + field_id + '" style="max-width: 220px; width: 220px;">';
 				out += '<option value=""></option>';
 			options_rows.each(function(k,v){
 				var value = $(v).find('.toggle_value_field').val(),
@@ -792,11 +792,12 @@ jQuery(function($){
 
 		}else{
 
-			out = '<input name="' + name + '[value]" type="text" class="caldera-conditional-value-field magic-tag-enabled" value="' + (target.data('value') ? target.data('value') : '') + '" style="max-width: 165px;">';
+			out = '<input name="' + name + '[value]" type="text" class="caldera-conditional-value-field magic-tag-enabled" value="' + (target.data('value') ? target.data('value') : '') + '" style="max-width: 205px;">';
 		}
 
 
 		target.html(out);
+		init_magic_tags();
 
 	});
 
@@ -841,16 +842,17 @@ jQuery(function($){
 			field_lables = wrap.find('.caldera-config-group-option-labels');
 
 		if(!clicked.prop('checked')){
-			values.prop('disabled', true).hide().parent().hide();
+			values.hide().parent().hide();
 			lables.css('width', 245);
 			field_lables.hide();
 		}else{
-			values.prop('disabled', false).show().parent().show();
+			values.show().parent().show();
 			lables.css('width', '');
 			field_lables.show();
 		}
 
 		lables.trigger('toggle.values');
+		init_magic_tags();
 
 	});
 
@@ -889,6 +891,7 @@ jQuery(function($){
 	});
 	// show magic tag autocompletes
 	$('body').on('keyup blur focus select click init.magic', '.magic-tag-enabled', function(e){
+		init_magic_tags();
 		var input = $(this),
 			wrap = input.parent(),
 			fieldtype = ( wrap.closest('.wrapper-instance-pane').find('.caldera-select-field-type').val() ? wrap.closest('.wrapper-instance-pane').find('.caldera-select-field-type').val() : 'hidden' ),

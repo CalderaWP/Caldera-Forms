@@ -11,6 +11,7 @@
 .toggle_option_row .toggle_value_field,
 .toggle_option_row .toggle_label_field{
 	width: 136px;
+	line-height: 20px;
 }
 
 .toggle_option_preview .button {

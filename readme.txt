@@ -3,7 +3,7 @@ Contributors: Desertsnowman
 Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator
 Requires at least: 3.9
 Tested up to: 3.9.1
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2
 
 Create complex grid based, responsive forms easily with an easy to use drag and drop layout builder.
@@ -72,7 +72,13 @@ none yet.
 
 == Changelog ==
 
-= 1.1.0 (* August, 2014) =
+= 1.1.1 (4 August, 2014) =
+
+= Fixed =
+* (partly) Success Message magic tags work on ajax mode. not yet on standard submit.
+* Conditionals working correctly again.
+
+= 1.1.0 (1 August, 2014) =
 
 = Added =
 * Variables tab: create custom magic tags and URL return values by combining other tags, processor values and static strings.

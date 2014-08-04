@@ -337,10 +337,11 @@
   color: #404040;
   opacity: 1;
 }
-.field-config.magic-tag-enabled {
+.magic-tag-enabled {
   padding-right: 26px;
+  line-height: 20px;
 }
-textarea.field-config.magic-tag-enabled {
+textarea.magic-tag-enabled {
   resize: vertical;
 }
 .settings-panel.settings-core{ display: block;}

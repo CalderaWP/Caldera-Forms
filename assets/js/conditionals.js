@@ -43,7 +43,8 @@
 				// go over each line in a group to find a false
 				for(var lid in lines){					
 					/// get field 
-					var compareelement 	= $('[data-field="' + lines[lid].field + '"]'),
+
+					var compareelement 	= $('[data-field="' + lines[lid].field + '_' + lines[lid].instance + '"]'),
 					comparefield 	= [],
 					comparevalue	= (typeof lines[lid].value === 'function' ? lines[lid].value() : lines[lid].value);
 					

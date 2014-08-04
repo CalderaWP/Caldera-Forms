@@ -3325,6 +3325,15 @@ class Caldera_Forms {
 
 						// wrap it up
 						$conditions_templates[$field_base_id] = "<script type=\"text/html\" id=\"conditional-" . $field_base_id . "-tmpl\">\r\n" . $field_html . "</script>\r\n";
+						// add in instance number
+						if(!empty($field['conditions']['group'])){
+							foreach($field['conditions']['group'] as &$group_row){
+								foreach( $group_row as &$group_line){
+									// add instance value
+									$group_line['instance'] = $current_form_count;
+								}
+							}
+						}
 						$conditions_configs[$field_base_id] = $field['conditions'];
 						if($field['conditions']['type'] == 'show'){
 							// show if indicates hidden by default until condition is matched.
@@ -3452,16 +3461,16 @@ class Caldera_Forms {
 
 					foreach($form['fields'] as $field_id=>$field){
 						if($field['slug'] === $tag){
-							$conditions_str = str_replace('"'.$hastags[0][$tag_key].'"', "function(){ return jQuery('#".$field['ID']."').val(); }", $conditions_str);
+							$conditions_str = str_replace('"'.$hastags[0][$tag_key].'"', "function(){ return jQuery('#".$field['ID'].'_'.$current_form_count."').val(); }", $conditions_str);
 						}
 					}
 				}
 			}
 
-			echo "<script type=\"text/javascript\">\r\n";
-			echo "var caldera_conditionals = " . $conditions_str . ";\r\n";
-			echo "</script>\r\n";
-			echo implode("\r\n", $conditions_templates);
+			$out .= "<script type=\"text/javascript\">\r\n";
+			$out .= "var caldera_conditionals = " . $conditions_str . ";\r\n";
+			$out .= "</script>\r\n";
+			$out .= implode("\r\n", $conditions_templates);
 
 			// enqueue conditionls app.
 			wp_enqueue_script( 'cf-frontend-conditionals', CFCORE_URL . 'assets/js/conditionals.js', array('jquery'), self::VERSION, true);

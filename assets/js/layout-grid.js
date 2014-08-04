@@ -2,24 +2,41 @@ var rebuild_field_binding, rebind_field_bindings, current_form_fields = {}, requ
 
 init_magic_tags = function(){
 	//init magic tags
-	var magicfields = jQuery('.magic-tag-enabled').not('.magic-tag-init-bound');
+	var magicfields = jQuery('.magic-tag-enabled');
 
 	magicfields.each(function(k,v){
 		var input = jQuery(v);
 		
-		/*if(input.hasClass('magic-tag-init-bound')){
+		if(input.hasClass('magic-tag-init-bound')){
+			var currentwrapper = input.parent().find('.magic-tag-init');
+			if(!input.is(':visible')){
+				currentwrapper.hide();
+			}else{
+				currentwrapper.show();
+			}
 			return;			
-		}*/
+		}
 		var magictag = jQuery('<span class="icn-code magic-tag-init"></span>'),
 			wrapper = jQuery('<span style="position:relative;display:inline-block; width:100%;"></span>');
 
 		if(input.is('input')){
 			magictag.css('borderBottom', 'none');
 		}
+
+		if(input.hasClass('caldera-conditional-value-field')){
+			wrapper.width('auto');
+		}
+
 		input.wrap(wrapper);
 		magictag.insertAfter(input);
 		input.addClass('magic-tag-init-bound');
-	});	
+		if(!input.is(':visible')){
+			magictag.hide();
+		}else{
+			magictag.show();
+		}
+	});
+
 }
 
 rebuild_field_binding = function(){
