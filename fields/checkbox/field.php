@@ -4,6 +4,13 @@
 		<?php
 		if(!empty($field['config']['option'])){
 			
+			if(isset( $field['config'] ) && isset($field['config']['default']) && isset($field['config']['option'][$field['config']['default']])){
+				//if( $field['config']['option'][$field['config']['default']]['value'] )
+				if( $field['config']['default'] === $field_value ){
+					$field_value = (array) $field['config']['option'][$field['config']['default']]['value'];
+				}
+
+			}
 			
 			/*<input type="checkbox" id="<?php echo $field_id; ?>" data-field="<?php echo $field_base_id; ?>" class="field-config" name="<?php echo $field_name; ?>" value="1" <?php if(!empty($field_value)){ ?>checked="true"<?php } ?>>
 			*/
