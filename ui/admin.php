@@ -40,9 +40,6 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 			<a class="button ajax-trigger" data-request="start_new_form" data-modal-width="400" data-modal-height="192" data-load-class="none" data-modal="new_form" data-template="#import-form-tmpl" data-modal-title="<?php echo __('Import Form', 'caldera-forms'); ?>" ><?php echo __('Import', 'caldera-forms'); ?></a>
 		</li>
 		<li class="caldera-forms-toolbar-item">
-			<button type="button" id="updated-extensions-button" title="<?php echo __('Caldera Forms Extensions', 'caldera-forms'); ?>" data-modal-buttons="Close|dismiss" data-load-class="spinner" data-active-class="none" data-set="alert" data-request="<?php echo CFCORE_EXTEND_URL . 'extensions/?version=' . CFCORE_VER; ?>" data-modal="extend_cf" data-error="extend_fail_notice" data-template="#extensions-modal-tmpl" data-modal-width="720" data-modal-title="<?php echo __('Caldera Forms Extensions & Addons', 'caldera-forms'); ?>" class="ajax-trigger button"><?php echo __('Extensions' , 'caldera-forms'); ?></button>
-		</li>
-		<li class="caldera-forms-toolbar-item">
 			<button type="button" id="updated-news-button" title="<?php echo __('Caldera Forms Updates, News & Tips', 'caldera-forms'); ?>" data-modal-buttons="Close|dismiss" data-load-class="spinner" data-active-class="none" data-set="alert" data-request="<?php echo CFCORE_EXTEND_URL . 'updates/?version=' . CFCORE_VER; ?>" data-modal="extend_cf" data-error="extend_fail_notice" data-template="#extensions-modal-tmpl" data-modal-width="720" data-modal-title="<?php echo __('Caldera Forms Updates, News & Tips', 'caldera-forms'); ?>" class="ajax-trigger button"><?php echo __('Updates & Tips' , 'caldera-forms'); ?></button>
 		</li>
 		<li class="caldera-forms-toolbar-item ajax-trigger" data-request="<?php echo CFCORE_EXTEND_URL . 'freshness/?version=' . CFCORE_VER; ?>" data-callback="news_update_check" data-autoload="true" data-event="none">

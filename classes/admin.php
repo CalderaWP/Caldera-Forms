@@ -30,6 +30,10 @@ class Caldera_Forms_Admin {
 	 */
 	protected $screen_prefix = null;
 	/**
+	 * @var      string
+	 */
+	protected $sub_prefix = null;
+	/**
 	 * @var      object
 	 */
 	protected static $instance = null;
@@ -467,6 +471,8 @@ class Caldera_Forms_Admin {
 		global $menu, $submenu;
 		
 		$this->screen_prefix = add_menu_page( 'Caldera Forms', 'Caldera Forms', 'manage_options', $this->plugin_slug, array( $this, 'render_admin' ), 'dashicons-list-view', 52.999 );
+		add_submenu_page( $this->plugin_slug, 'Caldera Forms Admin', __('Forms Admin', 'caldera-forms'), 'manage_options', $this->plugin_slug, array( $this, 'render_admin' ) );
+		$this->sub_prefix 	 = add_submenu_page( $this->plugin_slug, 'Caldera Forms - Extensions & Addons', 'Extend', 'manage_options', $this->plugin_slug . '-exend', array( $this, 'render_admin' ) );
 
 	}
 
@@ -483,7 +489,7 @@ class Caldera_Forms_Admin {
 			wp_enqueue_style( $this->plugin_slug .'-modal-styles', CFCORE_URL . 'assets/css/modals.css', array(), self::VERSION );
 			wp_enqueue_script( $this->plugin_slug .'-shortcode-insert', CFCORE_URL . 'assets/js/shortcode-insert.js', array('jquery'), self::VERSION );
 		}
-		if( $screen->base !== $this->screen_prefix){
+		if( $screen->base !== $this->screen_prefix && $screen->base !== $this->sub_prefix){
 			return;
 		}
 
@@ -623,8 +629,8 @@ class Caldera_Forms_Admin {
 			echo "<form method=\"POST\" action=\"admin.php?page=" . $this->plugin_slug . "\" data-load-element=\"#save_indicator\" data-sender=\"ajax\" class=\"caldera-forms-options-form edit-update-trigger\">\r\n";
 				include CFCORE_PATH . 'ui/edit.php';
 			echo "</form>\r\n";
-		}elseif(!empty($_GET['edit-entry'])){
-			include CFCORE_PATH . 'ui/edit-entry.php';
+		}elseif(!empty($_GET['page']) && $_GET['page'] == 'caldera-forms-exend'){
+			include CFCORE_PATH . 'ui/extend.php';
 		}else{
 			include CFCORE_PATH . 'ui/admin.php';
 		}

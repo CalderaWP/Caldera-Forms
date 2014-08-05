@@ -1,7 +1,7 @@
 <script type="text/html" id="extensions-modal-tmpl">
 {{#if extensions}}
 	{{#each extensions}}
-	<div style="margin: 10px; width: {{#if width}}{{width}}{{else}}200{{/if}}px; float: left; height: {{#if height}}{{height}}{{else}}200{{/if}}px; {{#if box}}overflow: auto; border: 1px solid rgba(0, 0, 0, 0.15); box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);{{/if}}{{#if background}} background:{{background}};{{/if}}{{#if color}} color:{{color}};{{/if}}position: relative;">
+	<div style="margin: 10px; width: {{#if width}}{{width}}{{else}}200px{{/if}}; float: left; height: {{#if height}}{{height}}{{else}}200px{{/if}}; {{#if box}}overflow: auto; border: 1px solid rgba(0, 0, 0, 0.15); box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);{{/if}}{{#if background}} background:{{background}};{{/if}}{{#if color}} color:{{color}};{{/if}}position: relative;">
 		{{#if banner}}<img src="{{banner}}" style="width:100%;vertical-align: top;">{{/if}}
 		{{#if name}}<h2>{{name}}</h2>{{/if}}
 		{{#if html}}<div style="margin: 0px; padding: 6px 7px;">{{{html}}}</div>{{/if}}

@@ -675,6 +675,9 @@ a span.error-tag {
 .form-admin-page-wrap {
   margin: 50px 0 0 390px;
 }
+.form-extend-page-wrap {
+  margin: 100px 0 0 0;
+}
 .form-panel-wrap {
   float: left;
   margin-left: -390px;
@@ -1537,6 +1540,7 @@ input.disabled-input {
 .form-panel .affix {
   position: fixed;
 }
+.form-extend-page-wrap h2,
 #extend_cf_baldrickModalBody h2 {
   font-size: 1.1em;
   margin: 0;
