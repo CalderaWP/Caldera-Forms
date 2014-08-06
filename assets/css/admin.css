@@ -77,7 +77,10 @@
 
 
 /* Admin Panels */
-
+.caldera-editor-header-nav.spinner {
+  display: block;
+  margin: 10px 0 -6px;
+}
 .caldera-editor-header-nav > li.caldera-forms-headtext {
   display: block;
   padding: 12px 0 0;
@@ -509,17 +512,28 @@ h3.caldera-editor-field-title {
   padding: 6px 0;
   width: 110px;
 }
+.form-extend-page-wrap.spinner {
+  float: none;
+}
+.form-extend-page-wrap .caldera-config-group > label {
+  margin-left: -340px;
+  width: 330px;
+}
 .caldera-config-group .field-key {
   float: left;
   margin: 1px 0 0 -140px;
   width: 120px;
 }
+
 .caldera-config-group.caldera-config-group-full > label {
   margin: 0;
 }
 .caldera-config-group {
   clear: both;
   margin: 0 5px 0 140px;
+}
+.form-extend-page-wrap .caldera-config-group {
+  margin-left: 340px;
 }
 .caldera-config-group.caldera-config-group-full {
   margin-left: 0;

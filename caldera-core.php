@@ -22,6 +22,10 @@ define('CFCORE_EXTEND_URL', 'http://api.calderaforms.com/1.0/');
 
 include_once CFCORE_PATH . 'classes/core.php';
 include_once CFCORE_PATH . 'classes/widget.php';
+// licencing
+require_once( CFCORE_PATH . 'classes/foolic_update_checker.php' );
+require_once( CFCORE_PATH . 'classes/foolic_license_key_validation.php' );
+
 // includes
 include_once CFCORE_PATH . 'includes/cf-ajax/plugin.php';
 include_once CFCORE_PATH . 'includes/field_processors.php';

@@ -21,6 +21,12 @@ class Caldera_Forms_Admin {
 	 * @var     string
 	 */
 	const VERSION = CFCORE_VER;
+
+	/**
+	 * @var     string
+	 */
+	const UPDATE_URL   = 'http://fooplugins.com/api/';
+
 	/**
 	 * @var      string
 	 */
@@ -73,9 +79,37 @@ class Caldera_Forms_Admin {
 
 		add_action( 'admin_footer', array( $this, 'add_shortcode_inserter'));
 
+
+		$addons = apply_filters( 'caldera_forms_get_addons', array() );
+
+		foreach($addons as $slug=>$file){
+
+			//initialize plugin update checks with fooplugins.com
+			new foolic_update_checker_v1_5(
+				$file, //the plugin file
+				self::UPDATE_URL . $slug . '/check', //the URL to check for updates
+				$slug, //the plugin slug
+				get_site_option($slug . '_licensekey') //the stored license key
+			);
+
+			//initialize license key validation with fooplugins.com
+			new foolic_validation_v1_4(
+				self::UPDATE_URL . $slug . '/check', //the URL to validate
+				$slug
+			);
+
+			add_filter('foolic_validation_include_css-' . $slug, array(&$this, 'include_foolic_files'));
+			add_filter('foolic_validation_include_js-' . $slug, array(&$this, 'include_foolic_files'));
+
+		}
+
 	}
 
 
+	//make sure the foo license validation CSS & JS are included on the correct page
+	function include_foolic_files($screen) {
+		return $screen->id === 'caldera-forms_page_caldera-forms-exend';
+	}
 
 
 	public function bulk_action(){
@@ -470,9 +504,10 @@ class Caldera_Forms_Admin {
 	public function register_admin_page(){
 		global $menu, $submenu;
 		
-		$this->screen_prefix = add_menu_page( 'Caldera Forms', 'Caldera Forms', 'manage_options', $this->plugin_slug, array( $this, 'render_admin' ), 'dashicons-list-view', 52.999 );
+		$this->screen_prefix[] = add_menu_page( 'Caldera Forms', 'Caldera Forms', 'manage_options', $this->plugin_slug, array( $this, 'render_admin' ), 'dashicons-list-view', 52.999 );
 		add_submenu_page( $this->plugin_slug, 'Caldera Forms Admin', __('Forms Admin', 'caldera-forms'), 'manage_options', $this->plugin_slug, array( $this, 'render_admin' ) );
-		$this->sub_prefix 	 = add_submenu_page( $this->plugin_slug, 'Caldera Forms - Extensions & Addons', 'Extend', 'manage_options', $this->plugin_slug . '-exend', array( $this, 'render_admin' ) );
+		$this->screen_prefix[] 	 = add_submenu_page( $this->plugin_slug, 'Caldera Forms - Community', 'Community', 'manage_options', $this->plugin_slug . '-community', array( $this, 'render_admin' ) );
+		$this->screen_prefix[] 	 = add_submenu_page( $this->plugin_slug, 'Caldera Forms - Extend', 'Extend', 'manage_options', $this->plugin_slug . '-exend', array( $this, 'render_admin' ) );
 
 	}
 
@@ -489,7 +524,7 @@ class Caldera_Forms_Admin {
 			wp_enqueue_style( $this->plugin_slug .'-modal-styles', CFCORE_URL . 'assets/css/modals.css', array(), self::VERSION );
 			wp_enqueue_script( $this->plugin_slug .'-shortcode-insert', CFCORE_URL . 'assets/js/shortcode-insert.js', array('jquery'), self::VERSION );
 		}
-		if( $screen->base !== $this->screen_prefix && $screen->base !== $this->sub_prefix){
+		if( !in_array( $screen->base, $this->screen_prefix ) ){
 			return;
 		}
 
@@ -631,6 +666,8 @@ class Caldera_Forms_Admin {
 			echo "</form>\r\n";
 		}elseif(!empty($_GET['page']) && $_GET['page'] == 'caldera-forms-exend'){
 			include CFCORE_PATH . 'ui/extend.php';
+		}elseif(!empty($_GET['page']) && $_GET['page'] == 'caldera-forms-community'){
+			include CFCORE_PATH . 'ui/community.php';
 		}else{
 			include CFCORE_PATH . 'ui/admin.php';
 		}

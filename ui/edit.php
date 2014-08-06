@@ -425,9 +425,6 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 		<li>
 			<a href="#settings-panel"><?php echo __("General Settings", "caldera-forms"); ?></a>
 		</li>
-		<li class="caldera-forms-toolbar-item" style="padding-top:7px;">
-			<button type="button" id="updated-news-button" title="<?php echo __('Caldera Forms Updates, News & Tips', 'caldera-forms'); ?>" data-modal-buttons="Close|dismiss" data-load-class="spinner" data-active-class="none" data-set="alert" data-request="<?php echo CFCORE_EXTEND_URL . 'updates/?version=' . CFCORE_VER; ?>" data-modal="extend_cf" data-error="extend_fail_notice" data-template="#extensions-modal-tmpl" data-modal-width="720" data-modal-title="<?php echo __('Caldera Forms Updates, News & Tips', 'caldera-forms'); ?>" class="ajax-trigger button"><?php echo __('Updates & Tips' , 'caldera-forms'); ?></button>
-		</li>
 
 	</ul>
 	<button class="button button-primary caldera-header-save-button" data-active-class="none" data-load-element="#save_indicator" type="button"><?php echo __('Update Form', 'caldera-forms'); ?><span id="save_indicator" class="spinner" style="position: absolute; right: -28px;"></span></button>	
@@ -811,9 +808,6 @@ do_action('caldera_forms_edit_end', $element);
 	</div>
 </script>
 <?php
-//news templates
-include CFCORE_PATH . 'ui/news_templates.php';
-
 
 /// Output the field templates
 foreach($field_type_templates as $key=>$template){
