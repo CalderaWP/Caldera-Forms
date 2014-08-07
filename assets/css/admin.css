@@ -718,6 +718,10 @@ a span.error-tag {
   max-width: 100%;
   width: auto;
 }
+.form-extend-page-wrap .list.form-panel.postbox {
+  -moz-box-sizing: border-box;
+       box-sizing: border-box;  
+}
 .form-panel.postbox h4 {
   cursor: pointer;
   font-size: 1em;

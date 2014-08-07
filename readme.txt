@@ -76,7 +76,14 @@ none yet.
 
 = Fixed =
 * datepicker clashing with jquery ui.
-* Conditionals working correctly again.
+* Conditionals working correctly again round 2.
+* minor bugs
+
+= Added =
+* Pin to menu option to make direct access to entries way faster
+* Extend menu item for addons and licenses 
+* Community menu item for sharing stuff
+
 
 = 1.1.1 (4 August, 2014) =
 

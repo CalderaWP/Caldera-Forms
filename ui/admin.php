@@ -152,58 +152,8 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 		<?php } ?>
 	</div>
 	<div class="form-entries-wrap">
-		<div class="caldera-entry-exporter" style="display:none;">
-
-			<span class="toggle_option_preview" style="">
-				<button type="button" class="status_toggles button button-primary ajax-trigger" style="margin-top: 1px;"
-					data-action="browse_entries"
-					data-target="#form-entries-viewer"
-					data-form=""
-					data-template="#forms-list-alt-tmpl"
-					data-load-class="spinner"
-					data-active-class="button-primary"
-					data-group="status_nav"
-					data-callback="setup_pagination"
-					data-page="1"
-					data-status="active"
-				>Active <span class="current-status-count"></span></button>
-				<button type="button" class="status_toggles button ajax-trigger" style="margin-top: 1px; margin-right: 10px;"
-					data-action="browse_entries"
-					data-target="#form-entries-viewer"
-					data-form=""
-					data-template="#forms-list-alt-tmpl"
-					data-load-class="spinner"
-					data-active-class="button-primary"
-					data-group="status_nav"
-					data-callback="setup_pagination"
-					data-page="1"
-					data-status="trash"
-				>Trash <span class="current-status-count"></span></button>
-			</span>
-
-
-			<a href="" class="button caldera-forms-entry-exporter"><?php echo __('Export Entries', 'caldera-forms'); ?></a>
-
-			<select id="cf_bulk_action" name="action">
-			</select>
-			<button type="button" class="button cf-bulk-action"><?php echo __('Apply'); ?></button>
-
-		</div>
-
-		<?php do_action('caldera_forms_entries_toolbar'); ?>
-		<div class="tablenav caldera-table-nav" style="display:none;">
-			<div class="tablenav-pages">
-				<span class="displaying-num"></span>
-				<span class="pagination-links">
-					<a href="#first" title="Go to the first page" data-page="first" class="first-page">«</a>
-					<a href="#prev" title="Go to the previous page" data-page="prev" class="prev-page">‹</a>
-					<span class="paging-input"><input type="text" size="1" name="paged" title="Current page" class="current-page"> of <span class="total-pages"></span></span>
-					<a href="#next" title="Go to the next page" data-page="next" class="next-page">›</a>
-					<a href="#last" title="Go to the last page" data-page="last" class="last-page">»</a>
-				</span>
-			</div>
-		</div>
-		<div id="form-entries-viewer"></div>
+	<?php include CFCORE_PATH . 'ui/entries_toolbar.php'; ?>
+	<div id="form-entries-viewer"></div>
 	</div>
 </div>
 
@@ -211,19 +161,6 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 do_action('caldera_forms_admin_templates');
 ?>
 <script type="text/javascript">
-
-function cf_refresh_view(obj){
-	
-	jQuery('.entry_count_' + obj.params.trigger.data('form')).html(obj.rawData.total);
-	jQuery('.status_toggles[data-status="trash"] .current-status-count').html(obj.rawData.trash);
-	jQuery('.status_toggles[data-status="active"] .current-status-count').html(obj.rawData.total);
-	if(obj.rawData.undo === obj.params.trigger.data('panel')){
-		obj.params.trigger.closest('tr').addClass('cf-deleted-row');
-	}else{
-		obj.params.trigger.closest('tr').removeClass('cf-deleted-row');
-	}
-	obj.params.trigger.data('do', obj.rawData.undo).html(obj.rawData.undo_text).removeClass('disabled');
-}
 
 function new_form_redirect(obj){
 	if(typeof obj.data === 'string'){
@@ -253,88 +190,6 @@ function serialize_modal_form(el){
 	return true;
 }
 
-function setup_pagination(obj){
-
-	var total			= obj.rawData.total,
-		trash			= obj.rawData.trash,
-		active			= obj.rawData.active,		
-		toggles			= jQuery('.status_toggles'),
-		exporter		= jQuery('.caldera-entry-exporter'),
-		tense			= ( total === 1 ? ' <?php echo __('entry', 'caldera-pages'); ?>' : ' <?php echo __('entries', 'caldera-pages'); ?>' ),
-		pages			= obj.rawData.pages,
-		current			= obj.rawData.current_page,
-		form			= obj.params.trigger.data('form'),
-		status			= obj.params.trigger.data('status'),
-		pagenav			= jQuery('.caldera-table-nav'),
-		page_links		= pagenav.find('.pagination-links'),
-		entries_total	= pagenav.find('.displaying-num'),
-		pages_total		= pagenav.find('.total-pages'),
-		current_display	= pagenav.find('.current-page'),
-		first_page		= pagenav.find('.first-page'),
-		prev_page		= pagenav.find('.prev-page'),
-		next_page		= pagenav.find('.next-page'),
-		last_page		= pagenav.find('.last-page'),
-		form_trigger	= jQuery('.form_entry_row.highlight').find('.form-entry-trigger'),
-		bulk_actions	= jQuery('#cf_bulk_action'),
-		bulk_template	= jQuery('#bulk-actions-'+status+'-tmpl').html(),
-		entry_count		= jQuery('.entry_count_' + form);
-
-	obj.params.trigger.data('page', current);
-	form_trigger.data('status', status);
-	bulk_actions.html(bulk_template);
-
-	toggles.removeClass('button-primary').removeClass('disabled');
-	toggles.filter('[data-status="'+status+'"]').addClass('button-primary');
-	toggles.each(function(k,v){
-		var el = jQuery(v);
-		if(typeof obj.rawData[el.data('status')] === 'number'){
-			if(obj.rawData[el.data('status')] > 0){
-				el.find('.current-status-count').html(obj.rawData[el.data('status')]);
-			}else{
-				el.find('.current-status-count').html('');
-			}
-		}
-	});
-	// update count
-	entry_count.html(active); 
-	//bulk-actions-active-tmpl
-
-	// add form id to toggles
-	toggles.data('form', form)
-	pagenav.data('total', pages);
-	/*
-	if(total < 1 && trash < 1){
-		pagenav.hide();
-		exporter.hide();
-		return;	
-	}else if(total < 1 && trash < 1){
-	*/
-	if(pages <= 1){
-		page_links.hide();
-	}else{
-		page_links.show();		
-	}
-	exporter.find('.caldera-forms-entry-exporter').attr('href', 'admin.php?page=caldera-forms&export=' + form);
-	exporter.show();
-	pagenav.show();
-	page_links.find('a').removeClass('disabled');
-
-	// setup values
-	page_links.data('total', total);
-	entries_total.html(total + tense);
-	pages_total.html(pages);
-	current_display.val(current);
-
-	if(current === 1){
-		first_page.addClass('disabled');
-		prev_page.addClass('disabled');
-	}else if(current === pages){
-		last_page.addClass('disabled');
-		next_page.addClass('disabled');		
-	}
-
-
-}
 
 function update_setting_toggle(obj){
 
@@ -357,54 +212,10 @@ function extend_fail_notice(el){
 function start_new_form(){
 	return {};
 }
-
-
-jQuery(function($){
-
-
-	
-	function do_page_navigate(el){
-	
-		var clicked 		= $(el);
-
-		if(clicked.hasClass('disabled')){
-			return;
-		}
-
-		var	form_trigger	= $('.form_entry_row.highlight').find('.form-entry-trigger'),
-			current			= parseInt(form_trigger.data('page')),
-			pagenav			= jQuery('.caldera-table-nav'),
-			page_links		= pagenav.find('.pagination-links'),
-			total			= parseInt(pagenav.data('total'));
-
-		
-
-		if(clicked.data('page') === 'first'){
-			form_trigger.data('page', 1).trigger('click');
-		}else if(clicked.data('page') === 'prev'){
-			var next = current - 1;
-			form_trigger.data('page', next).trigger('click');
-		}else if(clicked.data('page') === 'next'){
-			var next = current + 1;
-			form_trigger.data('page', next).trigger('click');
-		}else if(clicked.data('page') === 'last'){
-			form_trigger.data('page', total).trigger('click');
-		}else{
-			form_trigger.data('page', clicked.val()).trigger('click');
-		}
-	}
-
-	$('body').on('change','.current-page', function(e){
-		do_page_navigate(this);
-	});
-	$('body').on('click','.pagination-links a', function(e){
-		e.preventDefault();
-		do_page_navigate(this);
-	});
-
-});
-
 </script>
 <?php
+
+include CFCORE_PATH . 'ui/entry_navigation.php';
+
 do_action('caldera_forms_admin_footer');
 ?>
