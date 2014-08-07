@@ -44,7 +44,7 @@ function build_conditions_config(obj){
 }
 
 
-jQuery(function($){
+jQuery(document).ready(function($){
 
 
 	$('.caldera-header-save-button').baldrick({
@@ -774,20 +774,19 @@ jQuery(function($){
 			var options_rows = options_wrap.find('.toggle_option_row'),
 				out = '<select name="' + name + '[value]" class="caldera-processor-value-bind caldera-conditional-value-field" data-field="' + field_id + '" style="max-width: 220px; width: 220px;">';
 				out += '<option value=""></option>';
+
 			options_rows.each(function(k,v){
-				var value = $(v).find('.toggle_value_field').val(),
-					label = $(v).find('.toggle_label_field').val(),
+				var label = $(v).find('.toggle_label_field'),
+					value = label.data('option'),
 					sel = '';
-				if(!value.length){
-					value = label;
-				}
+				
 				if(target.data('value')){
-					if(target.data('value').toString() === value){
+					if(target.data('value').toString() === value || target.data('value').toString() === $(v).find('.toggle_value_field').val() ){
 						sel = ' selected="selected"';
 					}
 				}
 
-				out += '<option value="' + value + '"' + sel + '>' + label + '</option>';
+				out += '<option value="' + value + '"' + sel + '>' + label.val() + '</option>';
 			})
 
 			out += '</select>';			

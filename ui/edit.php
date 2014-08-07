@@ -110,7 +110,7 @@ $field_options_template = "
 	<label class=\"pull-right\" style=\"padding: 10px;\"><input type=\"checkbox\" class=\"toggle_show_values field-config\" name=\"{{_name}}[show_values]\" value=\"1\" {{#if show_values}}checked=\"checked\"{{/if}}> " . __('Show Values', 'caldera-forms') . "</label>
 	</div>
 	<div class=\"caldera-config-group-option-labels\" {{#unless show_values}}style=\"display:none;\"{{/unless}}>
-		<span style=\"display: block; clear: left; padding-left: 65px; float: left; width: 125px;\">" . __('Value', 'caldera-forms') . "</span>
+		<span style=\"display: block; clear: left; padding-left: 65px; float: left; width: 142px;\">" . __('Value', 'caldera-forms') . "</span>
 		<span style=\"float: left;\">" . __('Label', 'caldera-forms') . "</span>
 	</div>
 	<div class=\"caldera-config-group caldera-config-group-full toggle-options\">
@@ -119,7 +119,7 @@ $field_options_template = "
 			<i class=\"dashicons dashicons-sort\" style=\"padding: 4px 9px;\"></i>
 			<input type=\"radio\" class=\"toggle_set_default field-config\" name=\"{{../_name}}[default]\" value=\"{{@key}}\" {{#is ../default value=\"@key\"}}checked=\"checked\"{{/is}}>
 			<span style=\"position: relative; display: inline-block;\"><input{{#unless ../show_values}} style=\"display:none;\"{{/unless}} type=\"text\" class=\"toggle_value_field field-config magic-tag-enabled\" name=\"{{../_name}}[option][{{@key}}][value]\" value=\"{{#if ../show_values}}{{value}}{{else}}{{label}}{{/if}}\" placeholder=\"value\"></span>
-			<input{{#unless ../show_values}} style=\"width:245px;\"{{/unless}} type=\"text\" class=\"toggle_label_field field-config\" name=\"{{../_name}}[option][{{@key}}][label]\" value=\"{{label}}\" placeholder=\"label\">
+			<input{{#unless ../show_values}} style=\"width:245px;\"{{/unless}} type=\"text\" data-option=\"{{@key}}\" class=\"toggle_label_field field-config\" name=\"{{../_name}}[option][{{@key}}][label]\" value=\"{{label}}\" placeholder=\"label\">
 			<button class=\"button button-small toggle-remove-option\" type=\"button\"><i class=\"icn-delete\"></i></button>		
 		</div>
 		{{/each}}
@@ -749,7 +749,7 @@ do_action('caldera_forms_edit_end', $element);
 		<i class="dashicons dashicons-sort" style="padding: 4px 9px;"></i>
 		<input type="radio" class="toggle_set_default field-config" name="{{../_name}}[default]" value="{{@key}}" {{#is ../default value="@key"}}checked="checked"{{/is}}>
 		<span style="position: relative; display: inline-block;"><input type="text" class="toggle_value_field field-config magic-tag-enabled" name="{{../_name}}[option][{{@key}}][value]" value="{{value}}" placeholder="value"></span>
-		<input type="text" class="toggle_label_field field-config" name="{{../_name}}[option][{{@key}}][label]" value="{{label}}" placeholder="label">
+		<input type="text" class="toggle_label_field field-config" data-option="{{@key}}"  name="{{../_name}}[option][{{@key}}][label]" value="{{label}}" placeholder="label">
 		<button class="button button-small toggle-remove-option" type="button"><i class="icn-delete"></i></button>		
 	</div>
 	{{/each}}

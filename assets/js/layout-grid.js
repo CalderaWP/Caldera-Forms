@@ -328,7 +328,7 @@ function check_required_bindings(){
 	jQuery('.caldera-conditional-field-set').trigger('change');
 }
 
-jQuery(function($) {
+jQuery(document).ready(function($) {
 
 	add_new_grid_page = function(obj){
 		return { "page_no" : "pg_" + Math.round( Math.random() * 10000000 ) };

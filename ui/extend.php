@@ -18,19 +18,22 @@
 <div class="form-extend-page-wrap" id="form-license-viewer" style="display:none;">
 	<?php
 	$addons = apply_filters( 'caldera_forms_get_addons', array() );
-
-	foreach($addons as $slug=>$file){
-		$data = apply_filters('foolic_get_validation_data-' . $slug, false);
-		if ($data === false) return;
-		$plugin = get_plugin_data( $file );
-		?>
-		<div class="caldera-config-group">
-			<label for="<?php echo $slug; ?>_licensekey"><?php echo $plugin['Name']; ?></label>
-			<div class="caldera-config-field">
-				<?php echo $data['html']; ?>
+	if(empty($addons)){
+		echo '<p class="description">' . __('No licensed addons installed.', 'caldera-forms') . '</p>';
+	}else{
+		foreach($addons as $slug=>$file){
+			$data = apply_filters('foolic_get_validation_data-' . $slug, false);
+			if ($data === false) return;
+			$plugin = get_plugin_data( $file );
+			?>
+			<div class="caldera-config-group">
+				<label for="<?php echo $slug; ?>_licensekey"><?php echo $plugin['Name']; ?></label>
+				<div class="caldera-config-field">
+					<?php echo $data['html']; ?>
+				</div>
 			</div>
-		</div>
-		<?php
+			<?php
+		}
 	}
 
 	?>

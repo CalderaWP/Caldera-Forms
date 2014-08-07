@@ -25,7 +25,30 @@
 <script type="text/html" id="nav-items-tmpl">
 {{#if channels}}
 	{{#each channels}}
-	<li id="tab_extend_{{channel}}" data-load-class="spinner" data-group="main-nav" data-callback="update_existing" data-before="cf_clear_panel" data-target="#form-extend-viewer" data-request="<?php echo CFCORE_EXTEND_URL . '{{location}}/?version=' . CFCORE_VER; ?>" data-error="extend_fail_notice" data-template="#extensions-modal-tmpl" class="ajax-trigger{{#if class}} {{class}}{{/if}}" {{#if attributes}}{{{attributes}}}{{/if}}><a href="#form-extend-viewer">{{name}}</a></li>
+	<li id="tab_extend_{{channel}}" 
+	data-load-class="spinner" 
+	data-group="main-nav" 
+	data-callback="update_existing" 
+	data-before="cf_clear_panel" 
+	data-target="#form-extend-viewer" 
+	data-error="extend_fail_notice" 
+	{{#if content}}
+		data-request="{{content}}"
+	{{else}}
+			{{#if url}}
+				data-request="{{url}}"
+			{{else}}
+				data-request="<?php echo CFCORE_EXTEND_URL . '{{location}}/?version=' . CFCORE_VER; ?>"
+			{{/if}}
+			{{#if template}}
+				data-template-url="{{template}}"
+			{{else}}
+				data-template="#extensions-modal-tmpl"
+			{{/if}}
+	{{/if}}
+	class="ajax-trigger{{#if class}} {{class}}{{/if}}" {{#if attributes}}{{{attributes}}}{{/if}}
+	><a href="#form-extend-viewer">{{name}}</a>
+	</li>
 	{{/each}}
 {{/if}}
 </script>

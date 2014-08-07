@@ -1,6 +1,6 @@
 var baldrickTriggers, loop_loader;
 
-jQuery(function($){
+jQuery(document).ready(function($){
 	
 	// admin stuff!
 	// Baldrick Bindings

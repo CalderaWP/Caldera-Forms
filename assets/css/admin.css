@@ -1561,3 +1561,6 @@ input.disabled-input {
   padding: 4px 6px 6px;
   color: inherit;
 }
+.view_option_value{
+  color: #afafaf;
+}

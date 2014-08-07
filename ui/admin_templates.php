@@ -119,7 +119,7 @@
 		{{#each data}}
 			<tr>
 				<th>{{label}}</th>
-				<td>{{{value}}}</td>
+				<td>{{{view}}}</td>
 			</tr>
 		{{/each}}
 		</tbody>

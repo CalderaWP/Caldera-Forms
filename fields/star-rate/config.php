@@ -8,10 +8,10 @@
 	<label for="{{_id}}_type"><?php echo __('Star Type', 'caldera-forms-register'); ?></label>
 	<div class="caldera-config-field">
 		<select id="{{_id}}_type" class="field-config" name="{{_name}}[type]">
-			<option value="star"><?php echo __('Star', 'caldera-forms'); ?></option>
-			<option value="heart"><?php echo __('Heart', 'caldera-forms'); ?></option>
-			<option value="face"><?php echo __('Face', 'caldera-forms'); ?></option>
-			<option value="dot"><?php echo __('Dot', 'caldera-forms'); ?></option>
+			<option value="star" {{#is type value="star"}}selected="selected"{{/is}}><?php echo __('Star', 'caldera-forms'); ?></option>
+			<option value="heart" {{#is type value="heart"}}selected="selected"{{/is}}><?php echo __('Heart', 'caldera-forms'); ?></option>
+			<option value="face" {{#is type value="face"}}selected="selected"{{/is}}><?php echo __('Face', 'caldera-forms'); ?></option>
+			<option value="dot" {{#is type value="dot"}}selected="selected"{{/is}}><?php echo __('Dot', 'caldera-forms'); ?></option>
 		</select>
 	</div>
 </div>
