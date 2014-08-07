@@ -77,6 +77,7 @@ none yet.
 = Fixed =
 * datepicker clashing with jquery ui.
 * Conditionals working correctly again round 2.
+* validation across pages
 * minor bugs
 
 = Added =
