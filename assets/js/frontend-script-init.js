@@ -21,13 +21,43 @@
 	});
 	// Page navigation
 	$(document).on('click', '[data-page]', function(e){
+
 		var clicked = $(this),
 			page_box = clicked.closest('.caldera-form-page'),
 			form 	 = clicked.closest('.caldera-grid'),
 			page	 = page_box.data('formpage'),
 			breadcrumb = $('.breadcrumb[data-form="' + form.prop('id') + '"]'),
 			next,
-			prev;
+			prev,
+			fields;
+	
+		// pre validate
+		if(clicked.data('pagenav')){
+			fields = $('#' + clicked.data('pagenav') + ' .caldera-form-page').find('[data-field]');
+			form = clicked.closest('.caldera_forms_form');
+		}else{
+			fields = form.find('.caldera-form-page:visible').find('[data-field]');
+		}
+		for(var f = 0; f < fields.length; f++){
+			if($(fields[f]).prop('required')){
+				if(!fields[f].value.length){
+					e.preventDefault();
+					//nope submit form to indicate a fail.
+					form.find('[type="submit"]').trigger('click');
+					return;
+				}
+				if(fields[f].type === 'email'){
+					if(fields[f].value.indexOf('@') < 0 || fields[f].value.length <= fields[f].value.indexOf('@') + 1){
+						e.preventDefault();
+						//nope submit form to indicate a fail.
+						form.find('[type="submit"]').trigger('click');
+						return;
+
+					}
+				}
+			}
+		}
+
 		
 		if(clicked.data('page') === 'next'){
 			if(breadcrumb){
