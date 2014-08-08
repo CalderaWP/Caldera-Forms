@@ -160,7 +160,9 @@
 								callback  = options[1].trim(),
 								atts    = $.extend({}, {"class":'button ' + defaults.triggerClass.substr(1)}, ( callback.substr(0,1) === '{' ? jQuery.parseJSON(callback) : {"data-callback" : callback} ) ),
 								button    = $('<button>', atts);
-
+							if(options[2]){
+								button.addClass(options[2]);
+							}
 							if(callback === 'dismiss'){
 								button.on('click', function(){
 									$('#' + modal_id + '_baldrickModalCloser').trigger('click');

@@ -24,3 +24,13 @@
 .toggle_option_preview .button:last-child {
   border-radius: 0 3px 3px 0;
 }
+
+.toggle_option_preview.toggle_vertical .button{
+	width: 100%;
+}
+.toggle_option_preview.toggle_vertical .button:first-child {
+  border-radius: 3px 3px 0 0;
+}
+.toggle_option_preview.toggle_vertical .button:last-child {
+  border-radius: 0 0 3px 3px;
+}
