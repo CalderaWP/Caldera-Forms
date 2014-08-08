@@ -509,9 +509,11 @@ class Caldera_Forms_Admin {
 		$this->screen_prefix[] = add_menu_page( 'Caldera Forms', 'Caldera Forms', 'manage_options', $this->plugin_slug, array( $this, 'render_admin' ), 'dashicons-list-view', 52.999 );
 		add_submenu_page( $this->plugin_slug, 'Caldera Forms Admin', __('Forms', 'caldera-forms'), 'manage_options', $this->plugin_slug, array( $this, 'render_admin' ) );
 		
-		foreach($forms as $form_id=>$form){
-			if(!empty($form['pinned'])){
-				$this->screen_prefix[] 	 = add_submenu_page( $this->plugin_slug, 'Caldera Forms - ' . $form['name'], '- '.$form['name'], 'manage_options', $this->plugin_slug . '-pin-' . $form_id, array( $this, 'render_admin' ) );
+		if( ! empty( $forms ) ){
+			foreach($forms as $form_id=>$form){
+				if(!empty($form['pinned'])){
+					$this->screen_prefix[] 	 = add_submenu_page( $this->plugin_slug, 'Caldera Forms - ' . $form['name'], '- '.$form['name'], 'manage_options', $this->plugin_slug . '-pin-' . $form_id, array( $this, 'render_admin' ) );
+				}
 			}
 		}		
 
