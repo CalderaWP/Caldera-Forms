@@ -31,7 +31,19 @@ if(!empty($hastags[1])){
 					list = [<?php echo implode(',', $bindfields); ?>];
 
 				for(var i =0; i < list.length; i++){
-					template = template.replace( new RegExp("\{\{" + list[i] + "\}\}","g"), $('[data-field="'+list[i]+'"]').val() );
+					
+					var field = $('[data-field="'+list[i]+'"]'),
+						value = [];
+					for(var f=0; f < field.length; f++){
+						if( $(field[f]).is(':radio,:checkbox') ){
+							if(!$(field[f]).prop('checked')){
+								continue;
+							}
+						}
+						value.push( field[f].value );
+					}
+
+					template = template.replace( new RegExp("\{\{" + list[i] + "\}\}","g"), value.join(', ') );
 				}
 				target.html(template).trigger('change');
 

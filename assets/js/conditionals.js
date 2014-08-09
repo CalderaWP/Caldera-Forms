@@ -61,11 +61,7 @@
 						for( var i = 0; i<compareelement.length; i++){							
 							comparefield.push(compareelement[i].value);
 						}
-					}
-					console.log(compareelement);
-					console.log(comparefield);
-					console.log(comparevalue);
-					
+					}					
 					switch(lines[lid].compare) {
 						case 'is':
 						if(comparefield.length){
