@@ -35,7 +35,7 @@ if(!empty($field['config']['manual'])){
 				if($fcfg['slug'] === $tag){
 					$binds[] = '#'.$key_id.'_'.$current_form_count;
 					$bindfields[] = '"'.$key_id.'_'.$current_form_count.'"';
-					$formula = str_replace($hastags[0][$tag_key], $key_id.'_'.$current_form_count, $formula);
+					$formula = str_replace($hastags[0][$tag_key], $key_id, $formula);
 				}
 			}
 		}
