@@ -32,6 +32,8 @@
 	</ul>
 	<p class="description">Any length character only: [a{*}]</p>
 	<p class="description">Any length number only: [9{*}]</p>
+	<p class="description">email: *{+}@*{2,}.*{2,}[.[a{2,}][.[a{2,}]]]</p>
+
 </div>
 
 {{#script}}
