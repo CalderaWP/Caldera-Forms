@@ -27,7 +27,11 @@
 		<li>9 : numeric</li>
 		<li>a : alphabetical</li>
 		<li>* : alphanumeric</li>
+		<li>[9 | a | *] : optional</li>
+		<li>{int | * | +} : length</li>
 	</ul>
+	<p class="description">Any length character only: [a{*}]</p>
+	<p class="description">Any length number only: [9{*}]</p>
 </div>
 
 {{#script}}
