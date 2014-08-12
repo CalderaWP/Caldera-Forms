@@ -67,7 +67,7 @@ function cf_ajax_redirect($type, $url, $form){
 			$form_id = 'caldera_form_' . $query['cf_su'];
 		}else{
 			$out['url'] = $url;
-			$notices['success']['note'] = __('Redirecting');
+			$notices['success']['note'] = __('Redirecting', 'caldera-forms');
 		}
 	}elseif($type == 'preprocess'){
 		if(isset($query['cf_er'])){
@@ -84,7 +84,7 @@ function cf_ajax_redirect($type, $url, $form){
 			}
 		}else{
 			$out['url'] = $url;
-			$notices['success']['note'] = __('Redirecting');
+			$notices['success']['note'] = __('Redirecting', 'caldera-forms');
 		}
 
 	}elseif($type == 'error'){

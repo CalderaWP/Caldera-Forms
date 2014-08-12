@@ -11,15 +11,15 @@ if(!isset($element['layout_grid']['structure'])){
 $element['layout_grid']['structure'] = explode("#", $element['layout_grid']['structure']);
 
 echo "<span id=\"row-remove-fields-message\" class=\"hidden\">" . __('This will remove all the fields in this row. Are you sure?', 'caldera-forms') . "</span>";
-echo '<div class="toggle_option_tab" data-title="'.__('Page').'" style="float:none;' . ( count($element['layout_grid']['structure']) === 1 ? ' display:none;' : '' ) . '" id="page-toggles">';
+echo '<div class="toggle_option_tab" data-title="'.__('Page', 'caldera-forms').'" style="float:none;' . ( count($element['layout_grid']['structure']) === 1 ? ' display:none;' : '' ) . '" id="page-toggles">';
 $pgid = uniqid('pg');
 if(count($element['layout_grid']['structure']) >= 1){
 	for($i = 1; $i<=count($element['layout_grid']['structure']) ; $i++){
-		$name = __('Page') . ' ' . $i;
+		$name = __('Page', 'caldera-forms') . ' ' . $i;
 		if(isset($element['page_names'][($i-1)])){
 			$name = htmlspecialchars($element['page_names'][($i-1)]);
 		}
-		echo '<button type="button" data-page="' . $pgid . $i .'" data-name="' . $name . '" class="page-toggle button' . ( $i === 1 ? ' button-primary' : '' ) . '">' . __('Page') . ' ' . $i . '</button> ';
+		echo '<button type="button" data-page="' . $pgid . $i .'" data-name="' . $name . '" class="page-toggle button' . ( $i === 1 ? ' button-primary' : '' ) . '">' . __('Page', 'caldera-forms') . ' ' . $i . '</button> ';
 	
 	}	
 }
@@ -105,7 +105,7 @@ foreach( (array) $element['layout_grid']['structure'] as $page_key=>$page_struct
 </div>
 
 <script type="text/html" id="grid-page-tmpl">
-	<div class="layout-grid-panel layout-grid" data-page="{{page_no}}" data-name="<?php echo __('Page'); ?> {{count}}" style="display:none;" id="{{page_no}}">
+	<div class="layout-grid-panel layout-grid" data-page="{{page_no}}" data-name="<?php echo __('Page', 'caldera-forms'); ?> {{count}}" style="display:none;" id="{{page_no}}">
 		<div class="first-row-level row">
 			<div class="col-xs-12">
 				<div class="layout-column column-container">

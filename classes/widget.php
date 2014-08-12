@@ -40,11 +40,11 @@ class Caldera_Forms_Widget extends WP_Widget {
 		
 		do_action( 'caldera_forms_widget_form_start', $instance );
 
-		echo "<p><label for=\" " . $this->get_field_id('title') . "\">" . __('Title') . ": <input class=\"widefat\" id=\"" . $this->get_field_id('title') . "\" name=\"" . $this->get_field_name('title') . "\" type=\"text\" value=\"" . esc_attr($title). "\" /></label></p>\r\n";
+		echo "<p><label for=\" " . $this->get_field_id('title') . "\">" . __('Title', 'caldera-forms') . ": <input class=\"widefat\" id=\"" . $this->get_field_id('title') . "\" name=\"" . $this->get_field_name('title') . "\" type=\"text\" value=\"" . esc_attr($title). "\" /></label></p>\r\n";
 		// get forms
 		$forms = get_option( '_caldera_forms' );
 
-		echo "<p><label for=\" " . $this->get_field_id('title') . "\">" . __('Form') . ": </label><select style=\"width:100%;\" name=\"" . $this->get_field_name('form') . "\">\r\n";
+		echo "<p><label for=\" " . $this->get_field_id('title') . "\">" . __('Form', 'caldera-forms') . ": </label><select style=\"width:100%;\" name=\"" . $this->get_field_name('form') . "\">\r\n";
 
 		foreach($forms as $formid=>$form){
 			$sel = "";

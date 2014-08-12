@@ -7,9 +7,9 @@ if(!isset($element['variables'])){
 
 ?>
 <div class="caldera-config-group">
-	<label><?php echo __('Name'); ?></label>
+	<label><?php echo __('Name'), 'caldera-forms'; ?></label>
 	<div class="caldera-config-field" style="margin: 0px; padding: 4px 0px; width: 401px;">
-		<div><?php echo __('Value'); ?></div>
+		<div><?php echo __('Value', 'caldera-forms'); ?></div>
 	</div>
 	<?php echo __('Behaviour', 'caldera-forms'); ?>
 </div>

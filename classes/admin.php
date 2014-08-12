@@ -149,8 +149,8 @@ class Caldera_Forms_Admin {
 				if( $result ){
 					header('Content-Type: application/json');
 					$out['status'] = $_POST['do'];
-					$out['undo'] = ( $_POST['do'] === 'trash' ? 'active' : 'trash' );
-					$out['undo_text'] = ( $_POST['do'] === 'trash' ? __('Restore') : __('Trash') );
+					$out['undo'] = ( $_POST['do'] === 'trash' ? 'active' : __('Trash','caldera-forms') );
+					$out['undo_text'] = ( $_POST['do'] === 'trash' ? __('Restore', 'caldera-forms') : __('Trash','caldera-forms') );
 
 					$out['entries'] = implode(',',$selectors);
 					$out['total']	= $wpdb->get_var($wpdb->prepare("SELECT COUNT(`id`) AS `total` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = %s && `status` = 'active';", $_POST['form']));
@@ -190,12 +190,7 @@ class Caldera_Forms_Admin {
 	 *
 	 */
 	public function load_plugin_textdomain() {
-		// TODO: Add translations as need in /languages
-		$domain = $this->plugin_slug;
-		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
-
-		load_textdomain( $domain, trailingslashit( WP_LANG_DIR ) . $domain . '/' . $domain . '-' . $locale . '.mo' );
-		load_plugin_textdomain( $domain, FALSE, basename( dirname( __FILE__ ) ) . '/languages' );
+		load_plugin_textdomain( $this->plugin_slug, FALSE, $this->plugin_slug . '/languages');
 	}
 	
 	
@@ -252,7 +247,7 @@ class Caldera_Forms_Admin {
 		}
 
 		echo '{{#if ../../is_active}}<button class="button button-small ajax-trigger view-entry-btn" data-active-class="none" data-load-class="spinner" ' . $viewer_buttons . ' data-group="viewentry" data-entry="{{_entry_id}}" data-form="{{../../form}}" data-action="get_entry" data-modal="view_entry" data-modal-width="600" data-modal-title="' . __('Entry', 'caldera-forms') . ' # {{_entry_id}}" data-template="#view-entry-tmpl" type="button">' . __('View', 'caldera-forms') . '</button> {{/if}}';		
-		echo '<button type="button" class="button button-small ajax-trigger" data-load-class="active" data-panel="{{#if ../../is_trash}}trash{{/if}}{{#if ../../is_active}}active{{/if}}" data-do="{{#if ../../is_trash}}active{{/if}}{{#if ../../is_active}}trash{{/if}}" data-callback="cf_refresh_view" data-form="{{../../form}}" data-active-class="disabled" data-group="row{{_entry_id}}" data-load-element="#entry_row_{{_entry_id}}" data-action="cf_bulk_action" data-items="{{_entry_id}}">{{#if ../../is_trash}}' . __('Restore') . '{{/if}}{{#if ../../is_active}}' . __('Trash') . '{{/if}}</button>';
+		echo '<button type="button" class="button button-small ajax-trigger" data-load-class="active" data-panel="{{#if ../../is_trash}}trash{{/if}}{{#if ../../is_active}}active{{/if}}" data-do="{{#if ../../is_trash}}active{{/if}}{{#if ../../is_active}}trash{{/if}}" data-callback="cf_refresh_view" data-form="{{../../form}}" data-active-class="disabled" data-group="row{{_entry_id}}" data-load-element="#entry_row_{{_entry_id}}" data-action="cf_bulk_action" data-items="{{_entry_id}}">{{#if ../../is_trash}}' . __('Restore', 'caldera-forms') . '{{/if}}{{#if ../../is_active}}' . __('Trash','caldera-forms') . '{{/if}}</button>';
 	}
 	
 	public static function set_viewer_buttons($buttons){
@@ -784,7 +779,7 @@ class Caldera_Forms_Admin {
 			$form = get_option( $_GET['export-form'] );
 
 			if(empty($form)){
-				wp_die( __('Form does not exist.') );
+				wp_die( __('Form does not exist.', 'caldera-forms') );
 			}
 
 			header("Pragma: public");
@@ -977,7 +972,7 @@ class Caldera_Forms_Admin {
 			"ID" 			=> uniqid('CF'),
 			"name" 			=> $newform['name'],
 			"description" 	=> $newform['description'],
-			"success"		=>	__('Form has been successfuly submitted. Thank you.')
+			"success"		=>	__('Form has been successfuly submitted. Thank you.', 'caldera-forms')
 		);
 
 		// add from to list

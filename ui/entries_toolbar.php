@@ -32,7 +32,7 @@
 
 			<select id="cf_bulk_action" name="action">
 			</select>
-			<button type="button" class="button cf-bulk-action"><?php echo __('Apply'); ?></button>
+			<button type="button" class="button cf-bulk-action"><?php echo __('Apply', 'caldera-forms'); ?></button>
 
 		</div>
 

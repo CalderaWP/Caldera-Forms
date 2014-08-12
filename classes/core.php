@@ -89,12 +89,7 @@ class Caldera_Forms {
 	 *
 	 */
 	public function load_plugin_textdomain() {
-		// TODO: Add translations as need in /languages
-		$domain = $this->plugin_slug;
-		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
-
-		load_textdomain( $domain, trailingslashit( WP_LANG_DIR ) . $domain . '/' . $domain . '-' . $locale . '.mo' );
-		load_plugin_textdomain( $domain, FALSE, basename( dirname( __FILE__ ) ) . '/languages' );
+		load_plugin_textdomain( $this->plugin_slug, FALSE, $this->plugin_slug . '/languages');
 	}
 
 	/// activator
@@ -2135,7 +2130,7 @@ class Caldera_Forms {
 			$form_id = $form;
 			$form = get_option( $form );
 			if(!isset($form['ID']) || $form['ID'] !== $form_id){
-				return new WP_Error( 'fail',  __('Invalid form ID') );
+				return new WP_Error( 'fail',  __('Invalid form ID', 'caldera-forms') );
 			}
 		}
 

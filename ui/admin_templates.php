@@ -1,13 +1,13 @@
 <script type="text/html" id="bulk-actions-active-tmpl">
-	<option selected="selected" value=""><?php echo __('Bulk Actions'); ?></option>
+	<option selected="selected" value=""><?php echo __('Bulk Actions', 'caldera-forms'); ?></option>
 	<option value="export"><?php echo __('Export Selected', 'caldera-forms'); ?></option>
-	<option value="trash"><?php echo __('Move to Trash'); ?></option>
+	<option value="trash"><?php echo __('Move to Trash', 'caldera-forms'); ?></option>
 </script>
 <script type="text/html" id="bulk-actions-trash-tmpl">
-	<option selected="selected" value=""><?php echo __('Bulk Actions'); ?></option>
+	<option selected="selected" value=""><?php echo __('Bulk Actions', 'caldera-forms'); ?></option>
 	<option value="export"><?php echo __('Export Selected', 'caldera-forms'); ?></option>
-	<option value="active"><?php echo __('Restore'); ?></option>
-	<option value="delete"><?php echo __('Delete Permanently'); ?></option>
+	<option value="active"><?php echo __('Restore', 'caldera-forms'); ?></option>
+	<option value="delete"><?php echo __('Delete Permanently', 'caldera-forms'); ?></option>
 </script>
 <script type="text/html" id="import-form-tmpl">
 	<form class="new-form-form" action="admin.php?page=caldera-forms&import=true" enctype="multipart/form-data" method="POST">
@@ -95,7 +95,7 @@
 	</span>
 	{{#if meta}}
 	<ul class="modal-side-tabs">
-		<li><a href="#main-entry-panel" class="modal-side-tab active"><?php echo __('Entry'); ?></a></li>
+		<li><a href="#main-entry-panel" class="modal-side-tab active"><?php echo __('Entry', 'caldera-forms'); ?></a></li>
 		{{#each meta}}
 			<li><a href="#meta-{{@key}}" class="modal-side-tab">{{name}}</a></li>
 		{{/each}}

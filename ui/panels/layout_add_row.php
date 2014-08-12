@@ -1,7 +1,7 @@
 <a class="add-new-h2 caldera-add-group caldera-add-row" href="#code_panels_tag"><?php echo __('Add Row', 'caldera-forms'); ?></a>
 <a class="add-new-h2 caldera-add-group caldera-add-page ajax-trigger" 
 	
-	data-addtitle="<?php echo __('Page'); ?>"
+	data-addtitle="<?php echo __('Page', 'caldera-forms'); ?>"
 	data-template="#grid-page-tmpl"
 	data-target-insert="append"
 	data-request="add_new_grid_page"

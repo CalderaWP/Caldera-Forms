@@ -10,7 +10,7 @@
 </div>
 <script type="text/html" id="page-name-tmpl">
 <div class="caldera-config-group">
-	<label><?php echo __('Page'); ?> {{page_no}}</label>
+	<label><?php echo __('Page', 'caldera-forms'); ?> {{page_no}}</label>
 	<div class="caldera-config-field">
 		<input type="text" class="field-config" name="config[page_names][]" value="" style="width:400px;">
 	</div>

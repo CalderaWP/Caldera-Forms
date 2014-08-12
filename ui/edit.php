@@ -554,7 +554,7 @@ foreach($panel_extensions as $panel){
 			echo '<h3>'.$tab_setup['label'];
 				if( !empty( $tab_setup['repeat'] ) ){
 					// add a repeater button
-					echo " <a href=\"#" . $panel_slug . "_tag\" class=\"add-new-h2 caldera-add-group\" data-group=\"" . $panel_slug . "\">" . __('Add New', 'pods-caldera') . "</a>\r\n";
+					echo " <a href=\"#" . $panel_slug . "_tag\" class=\"add-new-h2 caldera-add-group\" data-group=\"" . $panel_slug . "\">" . __('Add New', 'caldera-forms') . "</a>\r\n";
 				}
 				// ADD ACTIONS
 				if(!empty($tab_setup['actions'])){
@@ -618,7 +618,7 @@ foreach($panel_extensions as $panel){
 
 					}
 					if( !empty( $tab_setup['repeat'] ) ){
-						echo "<a href=\"#remove_" . $panel_slug . "\" class=\"caldera-config-group-remove\">" . __('Remove', 'pods-caldera') . "</a>\r\n";
+						echo "<a href=\"#remove_" . $panel_slug . "\" class=\"caldera-config-group-remove\">" . __('Remove', 'caldera-forms') . "</a>\r\n";
 						echo "</div>\r\n";
 					}
 				}
@@ -652,7 +652,7 @@ foreach($panel_extensions as $panel){
 						$field_template .= "	</div>\r\n";
 
 					}
-					$field_template .= "	<a href=\"#remove-group\" class=\"caldera-config-group-remove\">" . __('Remove', 'pods-caldera') . "</a>\r\n";
+					$field_template .= "	<a href=\"#remove-group\" class=\"caldera-config-group-remove\">" . __('Remove', 'caldera-forms') . "</a>\r\n";
 					$field_template .= "	</div>\r\n";
 					$field_template .= "</script>\r\n";
 

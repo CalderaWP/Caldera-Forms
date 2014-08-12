@@ -1,35 +1,35 @@
 <div class="caldera-config-group">
-	<label for="{{_id}}_element"><?php echo __('Element', 'caldera-forms-register'); ?></label>
+	<label for="{{_id}}_element"><?php echo __('Element', 'caldera-forms'); ?></label>
 	<div class="caldera-config-field">
 		<input id="{{_id}}_element" type="text" class="input-block field-config" name="{{_name}}[element]" value="{{element}}">
 	</div>
 </div>
 <div class="caldera-config-group">
-	<label for="{{_id}}_classes"><?php echo __('Classes', 'caldera-forms-register'); ?></label>
+	<label for="{{_id}}_classes"><?php echo __('Classes', 'caldera-forms'); ?></label>
 	<div class="caldera-config-field">
 		<input id="{{_id}}_classes" type="text" class="input-block field-config" name="{{_name}}[classes]" value="{{classes}}">
 	</div>
 </div>
 <div class="caldera-config-group">
-	<label for="{{_id}}_before"><?php echo __('Before', 'caldera-forms-register'); ?></label>
+	<label for="{{_id}}_before"><?php echo __('Before', 'caldera-forms'); ?></label>
 	<div class="caldera-config-field">
 		<input id="{{_id}}_before" type="text" class="input-block field-config" name="{{_name}}[before]" value="{{before}}">
 	</div>
 </div>
 <div class="caldera-config-group">
-	<label for="{{_id}}_after"><?php echo __('After', 'caldera-forms-register'); ?></label>
+	<label for="{{_id}}_after"><?php echo __('After', 'caldera-forms'); ?></label>
 	<div class="caldera-config-field">
 		<input id="{{_id}}_after" type="text" class="input-block field-config" name="{{_name}}[after]" value="{{after}}">
 	</div>
 </div>
 <div class="caldera-config-group">
 	<div class="caldera-config-field">
-		<label><input id="{{_id}}_fixed" type="checkbox" class="field-config" name="{{_name}}[fixed]" value="1" {{#if fixed}}checked="checked"{{/if}}> <?php echo __('Money Format', 'caldera-forms-calculator'); ?></label>
+		<label><input id="{{_id}}_fixed" type="checkbox" class="field-config" name="{{_name}}[fixed]" value="1" {{#if fixed}}checked="checked"{{/if}}> <?php echo __('Money Format', 'caldera-forms'); ?></label>
 	</div>
 </div>
 <div class="caldera-config-group">
 	<div class="caldera-config-field">
-		<label><input id="{{_id}}_manual" type="checkbox" class="field-config" name="{{_name}}[manual]" value="1" {{#if manual}}checked="checked"{{/if}}> <?php echo __('Manual Formula', 'caldera-forms-calculator'); ?></label>
+		<label><input id="{{_id}}_manual" type="checkbox" class="field-config" name="{{_name}}[manual]" value="1" {{#if manual}}checked="checked"{{/if}}> <?php echo __('Manual Formula', 'caldera-forms'); ?></label>
 	</div>
 </div>
 <div id="{{_id}}_autobox">
@@ -42,7 +42,7 @@
 		data-id="{{_id}}"
 		data-request="calc_add_group"
 		data-callback="init_calc_group"
-		><?php echo __('Add Operator Group'); ?></button>
+		><?php echo __('Add Operator Group', 'caldera-forms'); ?></button>
 	</div>
 	<br>
 	<div id="{{_id}}_operator_groups" class="calculation-groups-wrap"></div>
