@@ -72,6 +72,13 @@ none yet.
 
 == Changelog ==
 
+= 1.1.3 (12 August, 2014) =
+
+= Fixed =
+* foreach warning in new installs.
+* language load corrected
+* minor bugs
+
 = 1.1.2 (6 August, 2014) =
 
 = Fixed =
