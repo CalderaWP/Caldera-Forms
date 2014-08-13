@@ -20,7 +20,7 @@ function setup_pagination(obj){
 		active			= obj.rawData.active,		
 		toggles			= jQuery('.status_toggles'),
 		exporter		= jQuery('.caldera-entry-exporter'),
-		tense			= ( total === 1 ? ' <?php echo __('entry', 'caldera-pages'); ?>' : ' <?php echo __('entries', 'caldera-pages'); ?>' ),
+		tense			= ( total === 1 ? ' <?php _e('item'); ?>' : ' <?php _e('items'); ?>' ),
 		pages			= obj.rawData.pages,
 		current			= obj.rawData.current_page,
 		form			= obj.params.trigger.data('form'),

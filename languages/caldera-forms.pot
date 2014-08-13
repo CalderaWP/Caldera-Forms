@@ -1,0 +1,1355 @@
+# Loco Gettext template
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Caldera Forms\n"
+"Report-Msgid-Bugs-To: David Cramer\n"
+"POT-Creation-Date: Wed, 13 Aug 2014 08:36:20 +0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Loco https://localise.biz\n"
+"X-Loco-Source-Locale: en_US\n"
+"X-Loco-Project-Id: 2863\n"
+"X-Loco-Api-Version: 1.0.8"
+
+#: ../ui/entries_toolbar.php:15 loco:53eb1526374a356aa15edf8b
+msgid "Active"
+msgstr ""
+
+#: ../fields/calculation/config.php:20 loco:53eb1520374a356aa15ededf
+msgid "After"
+msgstr ""
+
+#: ../ui/admin.php:50 loco:53eb1523374a356aa15edf3c
+msgid "Alert"
+msgstr ""
+
+#: ../ui/entries_toolbar.php:35 loco:53eb1526374a356aa15edf8d
+msgid "Apply"
+msgstr ""
+
+#: ../classes/core.php:959 ../classes/core.php:981 ../classes/core.php:996
+#: ../classes/core.php:1048 ../classes/core.php:1064 ../classes/core.php:1084
+#: ../classes/core.php:1094 ../classes/core.php:1135 ../classes/core.php:1154
+#: ../classes/core.php:1173 ../ui/edit.php:148 loco:53eb151e374a356aa15edeae
+msgid "Basic"
+msgstr ""
+
+#: ../fields/calculation/config.php:14 loco:53eb1520374a356aa15edede
+msgid "Before"
+msgstr ""
+
+#: ../ui/panels/variables.php:14 loco:53eb1527374a356aa15edfb4
+msgid "Behaviour"
+msgstr ""
+
+#: ../fields/recaptcha/config.php:19 loco:53eb1521374a356aa15edf08
+msgid "Black"
+msgstr ""
+
+#: ../fields/range_slider/config.php:35 loco:53eb1521374a356aa15edefc
+msgid "Border"
+msgstr ""
+
+#: ../classes/core.php:1061 ../fields/button/config_template.php:6 loco:#: 53eb151e374a356aa15edeb9
+msgid "Button"
+msgstr ""
+
+#: ../classes/core.php:1064 loco:53eb151e374a356aa15edebb
+msgid "Buttons"
+msgstr ""
+
+#: ../classes/core.php:861 loco:53eb151d374a356aa15edea1
+msgid "Calculation"
+msgstr ""
+
+#: ../classes/core.php:1151 ../classes/core.php:1152 loco:53eb151f374a356aa15edec1
+msgid "Checkbox"
+msgstr ""
+
+#: ../fields/button/config_template.php:14 loco:53eb151f374a356aa15ededb
+msgid "Class"
+msgstr ""
+
+#: ../fields/calculation/config.php:8 loco:53eb1520374a356aa15ededd
+msgid "Classes"
+msgstr ""
+
+#: ../fields/recaptcha/config.php:20 loco:53eb1521374a356aa15edf09
+msgid "Clean"
+msgstr ""
+
+#: ../ui/insert_shortcode.php:34 loco:53eb1526374a356aa15edf95
+msgid "Close"
+msgstr ""
+
+#: ../fields/color_picker/setup.php:2 loco:53eb1520374a356aa15edee6
+msgid "Color"
+msgstr ""
+
+#: ../classes/admin.php:516 ../ui/community.php:7 loco:53eb151c374a356aa15ede7f
+msgid "Community"
+msgstr ""
+
+#: ../ui/edit.php:280 loco:53eb1524374a356aa15edf66
+msgid "Conditions"
+msgstr ""
+
+#: ../classes/core.php:1031 ../fields/html/config_template.php:2 loco:#: 53eb151e374a356aa15edeb7
+msgid "Content"
+msgstr ""
+
+#: ../fields/phone/config.php:20 loco:53eb1520374a356aa15edef7
+msgid "Custom"
+msgstr ""
+
+#: ../fields/color_picker/setup.php:2 ../fields/date_picker/setup.php:2
+#: ../fields/email/config.php:8 ../fields/paragraph/config_template.php:14
+#: ../fields/phone/config.php:8 ../fields/range_slider/config.php:10
+#: ../fields/text/config.php:8 loco:53eb1520374a356aa15edee5
+msgid "Default"
+msgstr ""
+
+#: ../ui/admin.php:131 loco:53eb1523374a356aa15edf46
+msgid "Delete"
+msgstr ""
+
+#: ../ui/admin_templates.php:41 ../ui/edit.php:332 loco:53eb1524374a356aa15edf51
+msgid "Description"
+msgstr ""
+
+#: ../ui/admin.php:82 ../ui/edit.php:454 ../ui/edit.php:462
+#: ../ui/panels/emailer.php:35 loco:53eb1523374a356aa15edf41
+msgid "Disabled"
+msgstr ""
+
+#: ../fields/star-rate/config.php:14 loco:53eb1521374a356aa15edf10
+msgid "Dot"
+msgstr ""
+
+#: ../ui/admin.php:114 ../ui/entries.php:12 loco:53eb1523374a356aa15edf42
+msgid "Edit"
+msgstr ""
+
+#: ../fields/calculation/config.php:2 loco:53eb1520374a356aa15ededc
+msgid "Element"
+msgstr ""
+
+#: ../ui/edit.php:273 loco:53eb1524374a356aa15edf64
+msgid "Elements"
+msgstr ""
+
+#: ../fields/toggle_switch/field.php:36 ../ui/edit.php:453 ../ui/edit.php:461
+#: ../ui/edit.php:469 loco:53eb1522374a356aa15edf27
+msgid "Enable"
+msgstr ""
+
+#: ../ui/panels/emailer.php:36 loco:53eb1526374a356aa15edf97
+msgid "Enabled"
+msgstr ""
+
+#: ../ui/admin.php:68 loco:53eb1523374a356aa15edf40
+msgid "Entries"
+msgstr ""
+
+#: ../classes/admin.php:249 ../ui/admin_templates.php:98 loco:#: 53eb151c374a356aa15ede77
+msgid "Entry"
+msgstr ""
+
+#: ../classes/admin.php:517 ../ui/extend.php:7 loco:53eb151c374a356aa15ede80
+msgid "Extend"
+msgstr ""
+
+#: ../fields/star-rate/config.php:13 loco:53eb1521374a356aa15edf0f
+msgid "Face"
+msgstr ""
+
+#: ../classes/core.php:923 loco:53eb151e374a356aa15edea9
+msgid "Feedback"
+msgstr ""
+
+#: ../ui/admin_templates.php:114 ../ui/admin_templates.php:143 loco:#: 53eb1524374a356aa15edf56
+msgid "Field"
+msgstr ""
+
+#: ../classes/core.php:992 ../classes/core.php:996 loco:53eb151e374a356aa15edeb1
+msgid "File"
+msgstr ""
+
+#: ../classes/widget.php:47 ../ui/admin.php:51 ../ui/admin.php:67 loco:#: 53eb151f374a356aa15eded5
+msgid "Form"
+msgstr ""
+
+#: ../fields/date_picker/setup.php:8 loco:53eb1520374a356aa15edee7
+msgid "Format"
+msgstr ""
+
+#: ../classes/admin.php:505 loco:53eb151c374a356aa15ede7e
+msgid "Forms"
+msgstr ""
+
+#: ../ui/admin.php:52 loco:53eb1523374a356aa15edf3f
+msgid "Grid"
+msgstr ""
+
+#: ../classes/core.php:1028 loco:53eb151e374a356aa15edeb5
+msgid "HTML"
+msgstr ""
+
+#: ../fields/range_slider/config.php:29 loco:53eb1521374a356aa15edefb
+msgid "Handle"
+msgstr ""
+
+#: ../fields/star-rate/config.php:12 loco:53eb1521374a356aa15edf0e
+msgid "Heart"
+msgstr ""
+
+#: ../classes/core.php:1045 ../classes/core.php:1046 loco:53eb151e374a356aa15edeb8
+msgid "Hidden"
+msgstr ""
+
+#: ../ui/edit.php:355 loco:53eb1525374a356aa15edf70
+msgid "Hide"
+msgstr ""
+
+#: ../fields/range_slider/config.php:23 loco:53eb1521374a356aa15edefa
+msgid "Highlight"
+msgstr ""
+
+#: ../fields/toggle_switch/config_template.php:5 loco:53eb1522374a356aa15edf23
+msgid "Horizontal"
+msgstr ""
+
+#: ../ui/admin_templates.php:59 ../ui/edit.php:297 loco:53eb1524374a356aa15edf52
+msgid "ID"
+msgstr ""
+
+#: ../ui/admin.php:40 loco:53eb1523374a356aa15edf39
+msgid "Import"
+msgstr ""
+
+#: ../fields/checkbox/config_template.php:3
+#: ../fields/radio/config_template.php:4 loco:53eb1520374a356aa15edee4
+msgid "Inline"
+msgstr ""
+
+#: ../fields/phone/config.php:18 loco:53eb1520374a356aa15edef6
+msgid "International"
+msgstr ""
+
+#: ../ui/edit.php:114 loco:53eb1524374a356aa15edf63
+msgid "Label"
+msgstr ""
+
+#: ../classes/admin.php:1003 ../classes/admin.php:1019 loco:#: 53eb151d374a356aa15ede8a
+msgid "Layout"
+msgstr ""
+
+#: ../fields/phone/config.php:16 loco:53eb1520374a356aa15edef5
+msgid "Local"
+msgstr ""
+
+#: ../classes/admin.php:1087 ../ui/panels/emailer.php:32 loco:#: 53eb151d374a356aa15ede96
+msgid "Mailer"
+msgstr ""
+
+#: ../fields/text/config.php:21 loco:53eb1522374a356aa15edf19
+msgid "Mask"
+msgstr ""
+
+#: ../classes/core.php:864 loco:53eb151e374a356aa15edea3
+msgid "Math"
+msgstr ""
+
+#: ../fields/range_slider/config.php:54 loco:53eb1521374a356aa15edeff
+msgid "Maximum"
+msgstr ""
+
+#: ../processors/auto_responder/config.php:32 loco:53eb1523374a356aa15edf33
+msgid "Message"
+msgstr ""
+
+#: ../fields/range_slider/config.php:48 loco:53eb1521374a356aa15edefe
+msgid "Minimum"
+msgstr ""
+
+#: ../ui/edit.php:304 ../ui/panels/variables.php:10 loco:53eb1524374a356aa15edf68
+msgid "Name"
+msgstr ""
+
+#: ../fields/toggle_switch/config_template.php:2 loco:53eb1522374a356aa15edf22
+msgid "Orientation"
+msgstr ""
+
+#: ../ui/panels/layout.php:14 ../ui/panels/layout.php:18
+#: ../ui/panels/layout.php:22 ../ui/panels/layout.php:108
+#: ../ui/panels/layout_add_row.php:4 ../ui/panels/pages.php:13 loco:#: 53eb1526374a356aa15edfa2
+msgid "Page"
+msgstr ""
+
+#: ../classes/admin.php:1031 loco:53eb151d374a356aa15ede8c
+msgid "Pages"
+msgstr ""
+
+#: ../ui/panels/variables.php:30 ../ui/panels/variables.php:48 loco:#: 53eb1527374a356aa15edfb7
+msgid "Passback"
+msgstr ""
+
+#: ../fields/image_picker/setup.php:2 loco:53eb1520374a356aa15edef1
+msgid "Picker"
+msgstr ""
+
+#: ../classes/core.php:1191 ../classes/core.php:1217 loco:53eb151f374a356aa15edec4
+msgid "Pickers"
+msgstr ""
+
+#: ../fields/email/config.php:2 ../fields/paragraph/config_template.php:2
+#: ../fields/phone/config.php:2 ../fields/text/config.php:2 loco:#: 53eb1520374a356aa15edee8
+msgid "Placeholder"
+msgstr ""
+
+#: ../fields/range_slider/config.php:66 loco:53eb1521374a356aa15edf01
+msgid "Prefix"
+msgstr ""
+
+#: ../classes/admin.php:1037 loco:53eb151d374a356aa15ede8e
+msgid "Processors"
+msgstr ""
+
+#: ../classes/core.php:1170 ../classes/core.php:1171 loco:53eb151f374a356aa15edec2
+msgid "Radio"
+msgstr ""
+
+#: ../ui/panels/emailer.php:73 loco:53eb1526374a356aa15edf9c
+msgid "Recipients"
+msgstr ""
+
+#: ../fields/recaptcha/config.php:17 loco:53eb1521374a356aa15edf06
+msgid "Red"
+msgstr ""
+
+#: ../classes/core.php:791 loco:53eb151d374a356aa15ede9f
+msgid "Redirect"
+msgstr ""
+
+#: ../includes/cf-ajax/plugin.php:70 ../includes/cf-ajax/plugin.php:87 loco:#: 53eb1522374a356aa15edf2a
+msgid "Redirecting"
+msgstr ""
+
+#: ../fields/image_picker/field.php:46 ../fields/image_picker/setup.php:37
+#: ../ui/edit.php:621 ../ui/edit.php:655 loco:53eb1520374a356aa15edef0
+msgid "Remove"
+msgstr ""
+
+#: ../ui/edit.php:325 loco:53eb1524374a356aa15edf6b
+msgid "Required"
+msgstr ""
+
+#: ../fields/button/config_template.php:9 loco:53eb151f374a356aa15ededa
+msgid "Reset"
+msgstr ""
+
+#: ../classes/admin.php:1052 loco:53eb151d374a356aa15ede91
+msgid "Responsive"
+msgstr ""
+
+#: ../classes/admin.php:153 ../classes/admin.php:250
+#: ../ui/admin_templates.php:9 loco:53eb151c374a356aa15ede76
+msgid "Restore"
+msgstr ""
+
+#: ../fields/paragraph/config_template.php:8 loco:53eb1520374a356aa15edef3
+msgid "Rows"
+msgstr ""
+
+#: ../ui/edit.php:279 loco:53eb1524374a356aa15edf65
+msgid "Settings"
+msgstr ""
+
+#: ../ui/edit.php:354 loco:53eb1525374a356aa15edf6f
+msgid "Show"
+msgstr ""
+
+#: ../fields/image_picker/setup.php:2 loco:53eb1520374a356aa15edef2
+msgid "Size"
+msgstr ""
+
+#: ../ui/edit.php:318 loco:53eb1524374a356aa15edf6a
+msgid "Slug"
+msgstr ""
+
+#: ../classes/core.php:864 ../classes/core.php:886 ../classes/core.php:923
+#: ../classes/core.php:1006 ../classes/core.php:1106 loco:53eb151d374a356aa15edea2
+msgid "Special"
+msgstr ""
+
+#: ../fields/star-rate/config.php:11 loco:53eb1521374a356aa15edf0d
+msgid "Star"
+msgstr ""
+
+#: ../ui/panels/variables.php:29 ../ui/panels/variables.php:47 loco:#: 53eb1527374a356aa15edfb6
+msgid "Static"
+msgstr ""
+
+#: ../fields/range_slider/config.php:42 loco:53eb1521374a356aa15edefd
+msgid "Steps"
+msgstr ""
+
+#: ../fields/phone/config.php:14 loco:53eb1520374a356aa15edef4
+msgid "Style"
+msgstr ""
+
+#: ../fields/button/config_template.php:5 loco:53eb151f374a356aa15eded7
+msgid "Submit"
+msgstr ""
+
+#: ../ui/admin_templates.php:60 ../ui/admin_templates.php:108 loco:#: 53eb1524374a356aa15edf53
+msgid "Submitted"
+msgstr ""
+
+#: ../fields/range_slider/config.php:72 loco:53eb1521374a356aa15edf02
+msgid "Suffix"
+msgstr ""
+
+#: ../ui/edit.php:60 ../ui/edit.php:66 loco:53eb1524374a356aa15edf5c
+msgid "Taxonomy"
+msgstr ""
+
+#: ../fields/recaptcha/config.php:14 loco:53eb1521374a356aa15edf05
+msgid "Theme"
+msgstr ""
+
+#: ../classes/widget.php:43 loco:53eb151f374a356aa15eded4
+msgid "Title"
+msgstr ""
+
+#: ../classes/core.php:872 loco:53eb151e374a356aa15edea5
+msgid "Total"
+msgstr ""
+
+#: ../fields/range_slider/config.php:17 loco:53eb1521374a356aa15edef9
+msgid "Track"
+msgstr ""
+
+#: ../classes/admin.php:152 ../classes/admin.php:153 ../classes/admin.php:250
+#: ../ui/entries_toolbar.php:27 loco:53eb151c374a356aa15ede75
+msgid "Trash"
+msgstr ""
+
+#: ../fields/button/config_template.php:2 loco:53eb151f374a356aa15eded6
+msgid "Type"
+msgstr ""
+
+#: ../processors/redirect/config.php:2 loco:53eb1523374a356aa15edf34
+msgid "URL"
+msgstr ""
+
+#: ../fields/image_picker/field.php:43 loco:53eb1520374a356aa15edeef
+msgid "Uploading.."
+msgstr ""
+
+#: ../ui/panels/processors.php:123 loco:53eb1527374a356aa15edfae
+msgid "Use"
+msgstr ""
+
+#: ../classes/core.php:959 loco:53eb151e374a356aa15edeaf
+msgid "User"
+msgstr ""
+
+#: ../classes/foolic_license_key_validation.php:85 loco:53eb151f374a356aa15edeca
+msgid "Validate"
+msgstr ""
+
+#: ../fields/hidden/setup.php:2 ../ui/admin_templates.php:115
+#: ../ui/admin_templates.php:144 ../ui/edit.php:113
+#: ../ui/panels/variables.php:12 loco:53eb1520374a356aa15edeec
+msgid "Value"
+msgstr ""
+
+#: ../classes/admin.php:1043 ../classes/admin.php:1045
+#: ../ui/panels/variables.php:80 loco:53eb151d374a356aa15ede90
+msgid "Variables"
+msgstr ""
+
+#: ../fields/toggle_switch/config_template.php:6 loco:53eb1522374a356aa15edf24
+msgid "Vertical"
+msgstr ""
+
+#: ../classes/admin.php:249 loco:53eb151c374a356aa15ede78
+msgid "View"
+msgstr ""
+
+#: ../fields/recaptcha/config.php:18 loco:53eb1521374a356aa15edf07
+msgid "White"
+msgstr ""
+
+#: ../fields/toggle_switch/config_template.php:12 loco:53eb1522374a356aa15edf25
+msgid "Active Class"
+msgstr ""
+
+#: ../ui/edit.php:796 loco:53eb1526374a356aa15edf89
+msgid "Add Condition"
+msgstr ""
+
+#: ../ui/edit.php:357 ../ui/panels/processors.php:126 loco:#: 53eb1525374a356aa15edf71
+msgid "Add Conditional Group"
+msgstr ""
+
+#: ../ui/panels/layout_add_row.php:15 loco:53eb1527374a356aa15edfa6
+msgid "Add Element"
+msgstr ""
+
+#: ../classes/admin.php:288 loco:53eb151c374a356aa15ede79
+msgid "Add Form to Page"
+msgstr ""
+
+#: ../ui/edit.php:557 loco:53eb1525374a356aa15edf7d
+msgid "Add New"
+msgstr ""
+
+#: ../fields/calculation/config.php:45 loco:53eb1520374a356aa15edee2
+msgid "Add Operator Group"
+msgstr ""
+
+#: ../ui/edit.php:100 loco:53eb1524374a356aa15edf5d
+msgid "Add Option"
+msgstr ""
+
+#: ../ui/panels/layout_add_row.php:11 loco:53eb1526374a356aa15edfa4
+msgid "Add Page"
+msgstr ""
+
+#: ../ui/panels/processors.php:170 loco:53eb1527374a356aa15edfb0
+msgid "Add Processor"
+msgstr ""
+
+#: ../ui/panels/layout_add_row.php:1 loco:53eb1526374a356aa15edfa3
+msgid "Add Row"
+msgstr ""
+
+#: ../classes/core.php:1029 loco:53eb151e374a356aa15edeb6
+msgid "Add text/html content"
+msgstr ""
+
+#: ../ui/panels/variable_add.php:1 loco:53eb1527374a356aa15edfb3
+msgid "Add Variable"
+msgstr ""
+
+#: ../includes/cf-ajax/plugin.php:14 loco:53eb1522374a356aa15edf28
+msgid "Ajax Submissions"
+msgstr ""
+
+#: ../fields/file/config_template.php:9 loco:53eb1520374a356aa15edeea
+msgid "Allowed Types"
+msgstr ""
+
+#: ../fields/text/config.php:28 loco:53eb1522374a356aa15edf1b
+msgid "alphabetical"
+msgstr ""
+
+#: ../fields/text/config.php:29 loco:53eb1522374a356aa15edf1c
+msgid "alphanumeric"
+msgstr ""
+
+#: ../ui/extend.php:54 loco:53eb1526374a356aa15edf91
+msgid "Already Installed"
+msgstr ""
+
+#: ../classes/foolic_license_key_validation.php:280
+#: ../classes/foolic_license_key_validation.php:284 loco:53eb151f374a356aa15edecd
+msgid "An error occurred while trying to validate your license key"
+msgstr ""
+
+#: ../ui/admin.php:182 loco:53eb1523374a356aa15edf48
+msgid "An form name is required"
+msgstr ""
+
+#: ../classes/foolic_license_key_validation.php:331 loco:53eb151f374a356aa15eded1
+msgid "An unexpected error occurred"
+msgstr ""
+
+#: ../classes/foolic_update_checker.php:97 loco:53eb151f374a356aa15eded3
+msgid "An unknown error occurred while getting info for the plugin %"
+msgstr ""
+
+#: ../classes/foolic_update_checker.php:89 loco:53eb151f374a356aa15eded2
+msgid "An unknown error occurred while getting info for the plugin %s. Response: %s"
+msgstr ""
+
+#: ../ui/edit.php:802 loco:53eb1526374a356aa15edf8a
+msgid "and"
+msgstr ""
+
+#: ../fields/text/config.php:33 loco:53eb1522374a356aa15edf1f
+msgid "Any length character only"
+msgstr ""
+
+#: ../fields/text/config.php:34 loco:53eb1522374a356aa15edf20
+msgid "Any length number only"
+msgstr ""
+
+#: ../ui/edit.php:348 loco:53eb1525374a356aa15edf6d
+msgid "Are you sure you want to remove this field?. 'Cancel' to stop. 'OK' to delete"
+msgstr ""
+
+#: ../ui/panels/processors.php:117 loco:53eb1527374a356aa15edfac
+msgid "Are you sure you want to remove this processor?"
+msgstr ""
+
+#: ../ui/panels/emailer.php:67 loco:53eb1526374a356aa15edf9b
+msgid "Attach a CSV version of the submission"
+msgstr ""
+
+#: ../fields/file/config_template.php:2 loco:53eb1520374a356aa15edee9
+msgid "Attach to mailer"
+msgstr ""
+
+#: ../ui/edit.php:49 loco:53eb1524374a356aa15edf58
+msgid "Auto Populate"
+msgstr ""
+
+#: ../classes/core.php:782 loco:53eb151d374a356aa15ede9c
+msgid "Auto Responder"
+msgstr ""
+
+#: ../ui/edit.php:55 loco:53eb1524374a356aa15edf59
+msgid "Auto Type"
+msgstr ""
+
+#: ../ui/admin_templates.php:2 ../ui/admin_templates.php:7 loco:#: 53eb1523374a356aa15edf4a
+msgid "Bulk Actions"
+msgstr ""
+
+#: ../ui/edit.php:101 loco:53eb1524374a356aa15edf5e
+msgid "Bulk Insert"
+msgstr ""
+
+#: ../classes/core.php:1062 loco:53eb151e374a356aa15edeba
+msgid "Button, Submit and Reset types"
+msgstr ""
+
+#: ../ui/panels/processors.php:225 loco:53eb1527374a356aa15edfb2
+msgid "by"
+msgstr ""
+
+#: ../classes/core.php:865 loco:53eb151e374a356aa15edea4
+msgid "Calculate values"
+msgstr ""
+
+#: ../classes/admin.php:289 ../classes/widget.php:8 loco:53eb151c374a356aa15ede7b
+msgid "Caldera Form"
+msgstr ""
+
+#: ../classes/admin.php:504 ../classes/admin.php:510 ../classes/admin.php:516
+#: ../classes/admin.php:517 ../ui/admin.php:31 ../ui/community.php:4
+#: ../ui/edit.php:420 ../ui/extend.php:4 loco:53eb151c374a356aa15ede7c
+msgid "Caldera Forms"
+msgstr ""
+
+#: ../classes/admin.php:505 loco:53eb151c374a356aa15ede7d
+msgid "Caldera Forms Admin"
+msgstr ""
+
+#: ../classes/core.php:502 ../ui/panels/emailer.php:4 loco:#: 53eb151d374a356aa15ede9b
+msgid "Caldera Forms Notification"
+msgstr ""
+
+#: ../ui/edit.php:451 loco:53eb1525374a356aa15edf76
+msgid "Capture Entries"
+msgstr ""
+
+#: ../classes/core.php:1215 ../classes/core.php:1216 loco:53eb151f374a356aa15edec5
+msgid "Color Picker"
+msgstr ""
+
+#: ../fields/file/config_template.php:12 loco:53eb1520374a356aa15edeeb
+msgid "Comma separated eg. jpg,pdf,txt"
+msgstr ""
+
+#: ../ui/panels/emailer.php:76 loco:53eb1526374a356aa15edf9d
+msgid "Comma separated list of email addresses."
+msgstr ""
+
+#: ../ui/edit.php:789 ../ui/edit.php:812 loco:53eb1525374a356aa15edf87
+msgid "contains"
+msgstr ""
+
+#: ../ui/admin.php:26 loco:53eb1523374a356aa15edf35
+msgid "Create Form"
+msgstr ""
+
+#: ../ui/admin.php:37 loco:53eb1523374a356aa15edf36
+msgid "Create New Form"
+msgstr ""
+
+#: ../ui/panels/emailer.php:65 loco:53eb1526374a356aa15edf9a
+msgid "CSV Include"
+msgstr ""
+
+#: ../includes/custom_field_class.php:21 loco:53eb1522374a356aa15edf2b
+msgid "Custom Class"
+msgstr ""
+
+#: ../classes/core.php:1188 ../classes/core.php:1189 loco:53eb151f374a356aa15edec3
+msgid "Date Picker"
+msgstr ""
+
+#: ../ui/edit.php:348 loco:53eb1525374a356aa15edf6e
+msgid "Delete Element"
+msgstr ""
+
+#: ../ui/admin_templates.php:10 loco:53eb1523374a356aa15edf4d
+msgid "Delete Permanently"
+msgstr ""
+
+#: ../ui/panels/processors.php:124 loco:53eb1527374a356aa15edfaf
+msgid "Don't Use"
+msgstr ""
+
+#: ../ui/panels/layout_add_row.php:12 loco:53eb1527374a356aa15edfa5
+msgid "Drag onto the form grid below"
+msgstr ""
+
+#: ../classes/core.php:1132 ../classes/core.php:1133 loco:53eb151f374a356aa15edec0
+msgid "Dropdown Select"
+msgstr ""
+
+#: ../ui/edit.php:287 loco:53eb1524374a356aa15edf67
+msgid "Element Type"
+msgstr ""
+
+#: ../fields/text/config.php:35 loco:53eb1522374a356aa15edf21
+msgid "email"
+msgstr ""
+
+#: ../classes/core.php:1081 ../classes/core.php:1082 loco:53eb151e374a356aa15edebc
+msgid "Email Address"
+msgstr ""
+
+#: ../ui/panels/emailer.php:89 loco:53eb1526374a356aa15edf9e
+msgid "Email Message"
+msgstr ""
+
+#: ../classes/admin.php:1089 loco:53eb151d374a356aa15ede97
+msgid "Email Notification Settings"
+msgstr ""
+
+#: ../processors/auto_responder/config.php:14 ../ui/panels/emailer.php:82 loco:#: 53eb1522374a356aa15edf30
+msgid "Email Subject"
+msgstr ""
+
+#: ../ui/panels/emailer.php:56 loco:53eb1526374a356aa15edf99
+msgid "Email Type"
+msgstr ""
+
+#: ../includes/cf-ajax/plugin.php:16 loco:53eb1522374a356aa15edf29
+msgid "Enable Ajax Submissions. (No page reloads)"
+msgstr ""
+
+#: ../fields/text/config.php:17 loco:53eb1522374a356aa15edf18
+msgid "Enable input mask"
+msgstr ""
+
+#: ../ui/edit.php:788 ../ui/edit.php:811 loco:53eb1525374a356aa15edf86
+msgid "ends with"
+msgstr ""
+
+#: ../ui/entries_toolbar.php:31 loco:53eb1526374a356aa15edf8c
+msgid "Export Entries"
+msgstr ""
+
+#: ../classes/admin.php:815 loco:53eb151d374a356aa15ede88
+msgid "Export Expired"
+msgstr ""
+
+#: ../ui/admin.php:130 loco:53eb1523374a356aa15edf44
+msgid "Export Form"
+msgstr ""
+
+#: ../ui/admin_templates.php:3 ../ui/admin_templates.php:8 loco:#: 53eb1523374a356aa15edf4b
+msgid "Export Selected"
+msgstr ""
+
+#: ../classes/admin.php:815 loco:53eb151d374a356aa15ede87
+msgid "Export selection has expired"
+msgstr ""
+
+#: ../includes/field_processors.php:24 loco:53eb1522374a356aa15edf2d
+msgid "File type needs to be"
+msgstr ""
+
+#: ../includes/field_processors.php:22 loco:53eb1522374a356aa15edf2c
+msgid "File type not allowed. Allowed types are: "
+msgstr ""
+
+#: ../classes/core.php:993 loco:53eb151e374a356aa15edeb2
+msgid "File Uploader"
+msgstr ""
+
+#: ../classes/admin.php:702 loco:53eb151c374a356aa15ede82
+msgid "Form Delete Error"
+msgstr ""
+
+#: ../ui/edit.php:444 loco:53eb1525374a356aa15edf75
+msgid "Form Description"
+msgstr ""
+
+#: ../classes/admin.php:782 loco:53eb151d374a356aa15ede86
+msgid "Form does not exist."
+msgstr ""
+
+#: ../classes/admin.php:975 loco:53eb151d374a356aa15ede89
+msgid "Form has been successfuly submitted. Thank you."
+msgstr ""
+
+#: ../ui/edit.php:13 loco:53eb1524374a356aa15edf57
+msgid "Form has successfuly been submitted. Thank you."
+msgstr ""
+
+#: ../classes/admin.php:764 ../classes/admin.php:768 ../classes/admin.php:773 loco:#: 53eb151c374a356aa15ede84
+msgid "Form Import Error"
+msgstr ""
+
+#: ../ui/admin_templates.php:35 ../ui/edit.php:437 loco:53eb1524374a356aa15edf50
+msgid "Form Name"
+msgstr ""
+
+#: ../classes/admin.php:1033 loco:53eb151d374a356aa15ede8d
+msgid "Form Pages"
+msgstr ""
+
+#: ../classes/admin.php:1039 ../ui/panels/processors.php:166 loco:#: 53eb151d374a356aa15ede8f
+msgid "Form Processors"
+msgstr ""
+
+#: ../processors/auto_responder/config.php:8 ../ui/panels/emailer.php:49 loco:#: 53eb1522374a356aa15edf2f
+msgid "From Email"
+msgstr ""
+
+#: ../processors/auto_responder/config.php:2 ../ui/panels/emailer.php:42 loco:#: 53eb1522374a356aa15edf2e
+msgid "From Name"
+msgstr ""
+
+#: ../ui/admin.php:46 loco:53eb1523374a356aa15edf3a
+msgid "Front-end Style Includes"
+msgstr ""
+
+#: ../ui/edit.php:426 ../ui/edit.php:435 loco:53eb1525374a356aa15edf72
+msgid "General Settings"
+msgstr ""
+
+#: ../ui/edit.php:480 loco:53eb1525374a356aa15edf7b
+msgid "Gravatar Field"
+msgstr ""
+
+#: ../classes/admin.php:1058 loco:53eb151d374a356aa15ede93
+msgid "Grid Collapse"
+msgstr ""
+
+#: ../ui/edit.php:467 loco:53eb1525374a356aa15edf78
+msgid "Hide Form"
+msgstr ""
+
+#: ../ui/edit.php:469 loco:53eb1525374a356aa15edf79
+msgid "Hide form after successful submission"
+msgstr ""
+
+#: ../ui/edit.php:311 loco:53eb1524374a356aa15edf69
+msgid "Hide Label"
+msgstr ""
+
+#: ../ui/admin_templates.php:18 loco:53eb1523374a356aa15edf4e
+msgid "Import a Caldera Form from a .json export file."
+msgstr ""
+
+#: ../ui/admin.php:40 ../ui/admin_templates.php:23 loco:53eb1523374a356aa15edf38
+msgid "Import Form"
+msgstr ""
+
+#: ../fields/toggle_switch/config_template.php:19 loco:53eb1522374a356aa15edf26
+msgid "Inactive Class"
+msgstr ""
+
+#: ../fields/star-rate/config.php:50 loco:53eb1522374a356aa15edf16
+msgid "Include Cancel"
+msgstr ""
+
+#: ../ui/admin.php:52 loco:53eb1523374a356aa15edf3e
+msgid "Includes Bootstrap 3 styles on the frontend for form grid layouts"
+msgstr ""
+
+#: ../ui/admin.php:51 loco:53eb1523374a356aa15edf3d
+msgid "Includes Bootstrap 3 styles on the frontend for form fields and buttons"
+msgstr ""
+
+#: ../ui/admin.php:50 loco:53eb1523374a356aa15edf3b
+msgid "Includes Bootstrap 3 styles on the frontend for form alert notices"
+msgstr ""
+
+#: ../ui/insert_shortcode.php:5 loco:53eb1526374a356aa15edf92
+msgid "Insert Caldera Form"
+msgstr ""
+
+#: ../ui/insert_shortcode.php:32 loco:53eb1526374a356aa15edf94
+msgid "Insert Form"
+msgstr ""
+
+#: ../classes/admin.php:289 loco:53eb151c374a356aa15ede7a
+msgid "Insert Form Shortcode"
+msgstr ""
+
+#: ../ui/edit.php:105 loco:53eb1524374a356aa15edf60
+msgid "Insert Options"
+msgstr ""
+
+#: ../classes/core.php:2133 loco:53eb151f374a356aa15edec7
+msgid "Invalid form ID"
+msgstr ""
+
+#: ../ui/edit.php:783 ../ui/edit.php:806 loco:53eb1525374a356aa15edf81
+msgid "is"
+msgstr ""
+
+#: ../ui/edit.php:785 ../ui/edit.php:808 loco:53eb1525374a356aa15edf83
+msgid "is greater than"
+msgstr ""
+
+#: ../ui/edit.php:786 ../ui/edit.php:809 loco:53eb1525374a356aa15edf84
+msgid "is less than"
+msgstr ""
+
+#: ../ui/edit.php:784 ../ui/edit.php:807 loco:53eb1525374a356aa15edf82
+msgid "is not"
+msgstr ""
+
+#: ../classes/core.php:2380 loco:53eb151f374a356aa15edec9
+msgid "is required"
+msgstr ""
+
+#: ../ui/entry_navigation.php:23 loco:53eb1526374a356aa15edf8e
+msgid "item"
+msgstr ""
+
+#: ../ui/entry_navigation.php:23 loco:53eb1526374a356aa15edf8f
+msgid "items"
+msgstr ""
+
+#: ../classes/admin.php:1021 loco:53eb151d374a356aa15ede8b
+msgid "Layout Builder"
+msgstr ""
+
+#: ../fields/text/config.php:31 loco:53eb1522374a356aa15edf1e
+msgid "length"
+msgstr ""
+
+#: ../ui/admin.php:209 loco:53eb1523374a356aa15edf49
+msgid ""
+"Looks like something is not working. Please try again a little later or post "
+"to the <a href=\"http://wordpress.org/support/plugin/caldera-forms\" target=\"_"
+"blank\">support forum</a>."
+msgstr ""
+
+#: ../ui/panels/emailer.php:92 loco:53eb1526374a356aa15edf9f
+msgid ""
+"Magic tags, %field_slug% are replaced with submitted data. use {summary} to "
+"build an automatic mail based on form content. Leaving the mailer blank, will "
+"create and automatic summary."
+msgstr ""
+
+#: ../classes/admin.php:1067 loco:53eb151d374a356aa15ede95
+msgid "Maintain grid always"
+msgstr ""
+
+#: ../fields/calculation/config.php:32 loco:53eb1520374a356aa15edee1
+msgid "Manual Formula"
+msgstr ""
+
+#: ../fields/text/config.php:15 loco:53eb1522374a356aa15edf17
+msgid "Masked Input"
+msgstr ""
+
+#: ../fields/calculation/config.php:27 loco:53eb1520374a356aa15edee0
+msgid "Money Format"
+msgstr ""
+
+#: ../ui/admin_templates.php:4 loco:53eb1523374a356aa15edf4c
+msgid "Move to Trash"
+msgstr ""
+
+#: ../ui/admin.php:37 loco:53eb1523374a356aa15edf37
+msgid "New Form"
+msgstr ""
+
+#: ../ui/panels/processors.php:22 ../ui/panels/processors.php:47
+#: ../ui/panels/processors.php:100 loco:53eb1527374a356aa15edfaa
+msgid "New Form Processor"
+msgstr ""
+
+#: ../fields/button/config_template.php:7 loco:53eb151f374a356aa15eded8
+msgid "Next Page"
+msgstr ""
+
+#: ../ui/edit.php:109 loco:53eb1524374a356aa15edf61
+msgid "No Default"
+msgstr ""
+
+#: ../ui/edit.php:714 loco:53eb1525374a356aa15edf7f
+msgid "No description given"
+msgstr ""
+
+#: ../ui/admin_templates.php:81 loco:53eb1524374a356aa15edf54
+msgid "No entries found"
+msgstr ""
+
+#: ../ui/admin_templates.php:87 loco:53eb1524374a356aa15edf55
+msgid "No entries yet."
+msgstr ""
+
+#: ../ui/extend.php:22 loco:53eb1526374a356aa15edf90
+msgid "No licensed addons installed."
+msgstr ""
+
+#: ../ui/panels/variables.php:16 loco:53eb1527374a356aa15edfb5
+msgid "No variables defined"
+msgstr ""
+
+#: ../fields/star-rate/config.php:2 loco:53eb1521374a356aa15edf0b
+msgid "Number of Stars"
+msgstr ""
+
+#: ../fields/text/config.php:27 loco:53eb1522374a356aa15edf1a
+msgid "numeric"
+msgstr ""
+
+#: ../fields/text/config.php:30 loco:53eb1522374a356aa15edf1d
+msgid "optional"
+msgstr ""
+
+#: ../ui/edit.php:776 loco:53eb1525374a356aa15edf80
+msgid "or"
+msgstr ""
+
+#: ../classes/core.php:1091 ../classes/core.php:1092 loco:53eb151e374a356aa15edebd
+msgid "Paragraph Textarea"
+msgstr ""
+
+#: ../classes/core.php:380 loco:53eb151d374a356aa15ede9a
+msgid "Permission denied."
+msgstr ""
+
+#: ../classes/core.php:2331 ../classes/core.php:2337 ../classes/core.php:2344
+#: ../classes/core.php:3188 ../classes/core.php:3191 ../classes/core.php:3195 loco:#: 53eb151f374a356aa15edec8
+msgid "Permission denied or entry does not exist."
+msgstr ""
+
+#: ../classes/core.php:956 loco:53eb151e374a356aa15edeab
+msgid "Phone Number"
+msgstr ""
+
+#: ../classes/core.php:957 loco:53eb151e374a356aa15edeac
+msgid "Phone number with masking"
+msgstr ""
+
+#: ../ui/edit.php:459 loco:53eb1525374a356aa15edf77
+msgid "Pin to Menu"
+msgstr ""
+
+#: ../ui/panels/emailer.php:98 loco:53eb1526374a356aa15edfa0
+msgid ""
+"Please add a \"Button\" element and set it to \"Submit\" if you want to have the "
+"form submittable."
+msgstr ""
+
+#: ../classes/foolic_license_key_validation.php:174 loco:53eb151f374a356aa15edecc
+msgid "Please enter a license key"
+msgstr ""
+
+#: ../ui/edit.php:59 ../ui/edit.php:82 loco:53eb1524374a356aa15edf5b
+msgid "Post Type"
+msgstr ""
+
+#: ../ui/edit.php:431 loco:53eb1525374a356aa15edf74
+msgid "Preview Form"
+msgstr ""
+
+#: ../fields/button/config_template.php:8 loco:53eb151f374a356aa15eded9
+msgid "Previous Page"
+msgstr ""
+
+#: ../fields/recaptcha/config.php:8 loco:53eb1521374a356aa15edf04
+msgid "Private Key"
+msgstr ""
+
+#: ../ui/panels/processors.php:103 loco:53eb1527374a356aa15edfab
+msgid "Processor Type"
+msgstr ""
+
+#: ../ui/panels/pages.php:2 loco:53eb1527374a356aa15edfa7
+msgid "Progress Bar"
+msgstr ""
+
+#: ../ui/panels/pages.php:5 loco:53eb1527374a356aa15edfa9
+msgid "ProTip: Use an HTML element to build a custom progress per page"
+msgstr ""
+
+#: ../fields/recaptcha/config.php:2 loco:53eb1521374a356aa15edf03
+msgid "Public Key"
+msgstr ""
+
+#: ../classes/core.php:884 loco:53eb151e374a356aa15edea6
+msgid "Range Slider"
+msgstr ""
+
+#: ../classes/core.php:887 loco:53eb151e374a356aa15edea7
+msgid "Range Slider input field"
+msgstr ""
+
+#: ../classes/core.php:1003 loco:53eb151e374a356aa15edeb3
+msgid "reCAPTCHA"
+msgstr ""
+
+#: ../classes/core.php:1004 loco:53eb151e374a356aa15edeb4
+msgid "reCAPTCHA anti-spam field"
+msgstr ""
+
+#: ../processors/auto_responder/config.php:26 loco:53eb1523374a356aa15edf32
+msgid "Recipient Email"
+msgstr ""
+
+#: ../processors/auto_responder/config.php:20 loco:53eb1522374a356aa15edf31
+msgid "Recipient Name"
+msgstr ""
+
+#: ../classes/core.php:792 loco:53eb151d374a356aa15edea0
+msgid "Redirects user to URL on successful submit"
+msgstr ""
+
+#: ../ui/panels/processors.php:117 loco:53eb1527374a356aa15edfad
+msgid "Remove Processor"
+msgstr ""
+
+#: ../classes/admin.php:1054 loco:53eb151d374a356aa15ede92
+msgid "Resposive Settings"
+msgstr ""
+
+#: ../ui/edit.php:58 loco:53eb1524374a356aa15edf5a
+msgid "Select a source"
+msgstr ""
+
+#: ../ui/edit.php:791 ../ui/edit.php:814 loco:53eb1526374a356aa15edf88
+msgid "Select field first"
+msgstr ""
+
+#: ../fields/image_picker/field.php:41 ../fields/image_picker/field.php:43
+#: ../fields/image_picker/field.php:46 ../fields/image_picker/setup.php:36
+#: ../fields/image_picker/setup.php:37 loco:53eb1520374a356aa15edeed
+msgid "Select Image"
+msgstr ""
+
+#: ../classes/core.php:1106 ../classes/core.php:1135 ../classes/core.php:1154
+#: ../classes/core.php:1173 loco:53eb151e374a356aa15edebf
+msgid "Select Options"
+msgstr ""
+
+#: ../classes/core.php:783 loco:53eb151d374a356aa15ede9d
+msgid "Sends out an auto response e-mail"
+msgstr ""
+
+#: ../ui/edit.php:711 loco:53eb1525374a356aa15edf7e
+msgid "Set Element"
+msgstr ""
+
+#: ../classes/admin.php:1060 loco:53eb151d374a356aa15ede94
+msgid ""
+"Set the smallest screen size at which to collapse the grid. (based on "
+"Bootstrap 3.0)"
+msgstr ""
+
+#: ../ui/panels/pages.php:4 loco:53eb1527374a356aa15edfa8
+msgid "Show Breadcrumbs"
+msgstr ""
+
+#: ../ui/edit.php:339 loco:53eb1525374a356aa15edf6c
+msgid "Show in Entry List"
+msgstr ""
+
+#: ../fields/range_slider/config.php:60 loco:53eb1521374a356aa15edf00
+msgid "Show Value"
+msgstr ""
+
+#: ../ui/edit.php:110 loco:53eb1524374a356aa15edf62
+msgid "Show Values"
+msgstr ""
+
+#: ../classes/core.php:978 ../classes/core.php:979 loco:53eb151e374a356aa15edeb0
+msgid "Single Line Text"
+msgstr ""
+
+#: ../ui/edit.php:104 loco:53eb1524374a356aa15edf5f
+msgid "Single option per line. These replace the current list."
+msgstr ""
+
+#: ../fields/star-rate/config.php:31 loco:53eb1521374a356aa15edf13
+msgid "Single Select"
+msgstr ""
+
+#: ../classes/admin.php:764 loco:53eb151c374a356aa15ede83
+msgid "Sorry, File is not valid."
+msgstr ""
+
+#: ../classes/admin.php:768 loco:53eb151c374a356aa15ede85
+msgid "Sorry, File not uploaded."
+msgstr ""
+
+#: ../classes/admin.php:702 ../classes/admin.php:773 loco:53eb151c374a356aa15ede81
+msgid "Sorry, please try again"
+msgstr ""
+
+#: ../fields/star-rate/config.php:38 loco:53eb1521374a356aa15edf14
+msgid "Star Color"
+msgstr ""
+
+#: ../classes/core.php:921 loco:53eb151e374a356aa15edea8
+msgid "Star Rating"
+msgstr ""
+
+#: ../classes/core.php:924 loco:53eb151e374a356aa15edeaa
+msgid "Star rating input for feedback"
+msgstr ""
+
+#: ../fields/star-rate/config.php:19 loco:53eb1521374a356aa15edf11
+msgid "Star Size"
+msgstr ""
+
+#: ../fields/star-rate/config.php:25 loco:53eb1521374a356aa15edf12
+msgid "Star Spacing"
+msgstr ""
+
+#: ../fields/star-rate/config.php:8 loco:53eb1521374a356aa15edf0c
+msgid "Star Type"
+msgstr ""
+
+#: ../ui/edit.php:787 ../ui/edit.php:810 loco:53eb1525374a356aa15edf85
+msgid "starts with"
+msgstr ""
+
+#: ../ui/edit.php:474 loco:53eb1525374a356aa15edf7a
+msgid "Success Message"
+msgstr ""
+
+#: ../classes/core.php:1513 loco:53eb151f374a356aa15edec6
+msgid "System Tags"
+msgstr ""
+
+#: ../classes/core.php:959 ../classes/core.php:981 ../classes/core.php:1048
+#: ../classes/core.php:1084 ../classes/core.php:1094 ../classes/core.php:1191
+#: ../classes/core.php:1217 loco:53eb151e374a356aa15edead
+msgid "Text Fields"
+msgstr ""
+
+#: ../classes/core.php:787 loco:53eb151d374a356aa15ede9e
+msgid "Thank you for contacting us"
+msgstr ""
+
+#: ../classes/foolic_license_key_validation.php:88 loco:53eb151f374a356aa15edecb
+msgid "The license key has expired!"
+msgstr ""
+
+#: ../classes/core.php:251 loco:53eb151d374a356aa15ede98
+msgid "The reCAPTCHA field is required."
+msgstr ""
+
+#: ../classes/core.php:258 loco:53eb151d374a356aa15ede99
+msgid "The reCAPTCHA wasn't entered correctly."
+msgstr ""
+
+#: ../classes/foolic_license_key_validation.php:285 loco:53eb151f374a356aa15edece
+msgid "The response code of [%s] was not expected"
+msgstr ""
+
+#: ../classes/foolic_license_key_validation.php:327 loco:53eb151f374a356aa15eded0
+msgid "The validation NONCE could not be validated!"
+msgstr ""
+
+#: ../classes/foolic_license_key_validation.php:326 loco:53eb151f374a356aa15edecf
+msgid "The validation request was invalid"
+msgstr ""
+
+#: ../fields/recaptcha/config.php:22 loco:53eb1521374a356aa15edf0a
+msgid ""
+"Theme changes not available in preview. Update form and reload to see new "
+"theme."
+msgstr ""
+
+#: ../ui/admin.php:131 loco:53eb1523374a356aa15edf45
+msgid "This will delete this form permanently. Continue?"
+msgstr ""
+
+#: ../ui/admin_templates.php:20 loco:53eb1524374a356aa15edf4f
+msgid "This will overwrite a form if it already exists."
+msgstr ""
+
+#: ../ui/panels/layout.php:13 loco:53eb1526374a356aa15edfa1
+msgid "This will remove all the fields in this row. Are you sure?"
+msgstr ""
+
+#: ../classes/core.php:1104 ../classes/core.php:1105 loco:53eb151e374a356aa15edebe
+msgid "Toggle Switch"
+msgstr ""
+
+#: ../fields/star-rate/config.php:44 loco:53eb1521374a356aa15edf15
+msgid "Track Color"
+msgstr ""
+
+#: ../ui/news_templates.php:21 loco:53eb1526374a356aa15edf96
+msgid "Unable to connect or no extensions available."
+msgstr ""
+
+#: ../ui/edit.php:430 loco:53eb1525374a356aa15edf73
+msgid "Update Form"
+msgstr ""
+
+#: ../fields/calculation/config.php:54 loco:53eb1520374a356aa15edee3
+msgid "Use %field_slug% as field vaule variables"
+msgstr ""
+
+#: ../ui/panels/emailer.php:45 ../ui/panels/emailer.php:52
+#: ../ui/panels/emailer.php:85 loco:53eb1526374a356aa15edf98
+msgid "Use %field_slug% to use a value from the form"
+msgstr ""
+
+#: ../fields/image_picker/field.php:41 ../fields/image_picker/field.php:46
+#: ../fields/image_picker/setup.php:36 ../fields/image_picker/setup.php:37 loco:#: 53eb1520374a356aa15edeee
+msgid "Use Image"
+msgstr ""
+
+#: ../ui/panels/processors.php:220 loco:53eb1527374a356aa15edfb1
+msgid "Use Processor"
+msgstr ""
+
+#: ../fields/phone/config.php:22 loco:53eb1520374a356aa15edef8
+msgid "Use the digit 9 to indicate a number"
+msgstr ""
+
+#: ../ui/edit.php:483 loco:53eb1525374a356aa15edf7c
+msgid "Used when viewing an entry from a non-logged in user."
+msgstr ""
+
+#: ../ui/admin.php:129 loco:53eb1523374a356aa15edf43
+msgid "View Entries"
+msgstr ""
+
+#: ../ui/admin.php:151 loco:53eb1523374a356aa15edf47
+msgid "You don't have any forms."
+msgstr ""
+
+#: ../ui/insert_shortcode.php:24 loco:53eb1526374a356aa15edf93
+msgid "You don't have any forms to insert."
+msgstr ""

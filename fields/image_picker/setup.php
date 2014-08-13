@@ -1,5 +1,5 @@
 <div class="caldera-config-group">
-	<label>Picker Size</label>
+	<label><?php _e('Picker').' ' . _e('Size'); ?></label>
 	<div class="caldera-config-field">
 		<select class="block-input field-config image-picker-size" name="{{_name}}[picker]">
 			<option value="image-thumb"{{#is picker value="image-thumb"}}selected=\"selected\"{{/is}}>Small</option>

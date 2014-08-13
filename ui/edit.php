@@ -276,8 +276,8 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 	id="<?php echo $id; ?>" style="display:none;">
 		
 		<div class="toggle_option_tab">
-			<a href="#<?php echo $id; ?>_settings_pane" class="button button-primary">Settings</a>
-			<a href="#<?php echo $id; ?>_conditions_pane" class="button ">Conditions</a>
+			<a href="#<?php echo $id; ?>_settings_pane" class="button button-primary"><?php _e('Settings'); ?></a>
+			<a href="#<?php echo $id; ?>_conditions_pane" class="button "><?php _e('Conditions', 'caldera-forms'); ?></a>
 		</div>
 
 		<h3 class="caldera-editor-field-title"><?php echo $label; ?>&nbsp;</h3>		

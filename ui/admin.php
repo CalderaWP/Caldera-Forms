@@ -28,7 +28,7 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 ?><div class="caldera-editor-header">
 	<ul class="caldera-editor-header-nav">
 		<li class="caldera-editor-logo">
-			Caldera Forms
+			<?php _e('Caldera Forms', 'caldera-forms'); ?>
 		</li>
 		<li class="caldera-forms-version">
 			v<?php echo CFCORE_VER; ?>
@@ -64,8 +64,8 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 		<table class="widefat fixed">
 			<thead>
 				<tr>
-					<th>Form</th>
-					<th style="width:4em; text-align:center;">Entries</th>
+					<th><?php _e('Form', 'caldera-forms'); ?></th>
+					<th style="width:5em; text-align:center;"><?php _e('Entries', 'caldera-forms'); ?></th>
 				</tr>		
 			</thead>
 			<tbody>
@@ -111,7 +111,7 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 					<td>
 						<?php echo $form['name']; ?>
 						<div class="row-actions">
-						<span class="edit"><a class="form-control" href="admin.php?page=caldera-forms&edit=<?php echo $form_id; ?>"><?php echo __('Edit', 'caldera-forms'); ?></a> | </span>
+						<span class="edit"><a class="form-control" href="admin.php?page=caldera-forms&edit=<?php echo $form_id; ?>"><?php echo __('Edit'); ?></a> | </span>
 						<?php if(!empty($form['db_support'])){ ?><span class="edit"><a class="form-control form-entry-trigger ajax-trigger" href="#entres"
 
 						data-action="browse_entries"
@@ -128,7 +128,7 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 
 						><?php echo __('View Entries', 'caldera-forms'); ?></a> | </span><?php } ?>
 						<span class="export"><a class="form-control" href="admin.php?page=caldera-forms&export-form=<?php echo $form_id; ?>&cal_del=<?php echo wp_create_nonce( 'cf_del_frm' ); ?>"><?php echo __('Export Form', 'caldera-forms'); ?></a> | </span>
-						<span class="trash form-delete"><a class="form-control" data-confirm="<?php echo __('This will delete this form permanently. Continue?', 'caldera-forms'); ?>" href="admin.php?page=caldera-forms&delete=<?php echo $form_id; ?>&cal_del=<?php echo wp_create_nonce( 'cf_del_frm' ); ?>"><?php echo __('Delete', 'caldera-forms'); ?></a></span>
+						<span class="trash form-delete"><a class="form-control" data-confirm="<?php echo __('This will delete this form permanently. Continue?', 'caldera-forms'); ?>" href="admin.php?page=caldera-forms&delete=<?php echo $form_id; ?>&cal_del=<?php echo wp_create_nonce( 'cf_del_frm' ); ?>"><?php echo __('Delete'); ?></a></span>
 
 
 						</div>

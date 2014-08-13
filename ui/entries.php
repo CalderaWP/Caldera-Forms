@@ -9,7 +9,7 @@
 		</li>
 		<?php } ?>
 		<li class="caldera-forms-toolbar-item">
-			<a class="button" href="admin.php?page=caldera-forms&edit=<?php echo $form['ID']; ?>"><?php echo __('Edit', 'caldera-forms'); ?></a>
+			<a class="button" href="admin.php?page=caldera-forms&edit=<?php echo $form['ID']; ?>"><?php echo __('Edit'); ?></a>
 		</li>		
 
 	</ul>
