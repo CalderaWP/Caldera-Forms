@@ -208,7 +208,7 @@ jQuery(document).ready(function($){
 			preview_parent	= $('.layout-form-field[data-config="' + id + '"]'),
 			preview_target	= preview_parent.find('.field_preview'),
 			preview			= $('#preview-' + select.val() + '_tmpl').html(),
-			template 		= Handlebars.compile(preview),
+			template 		= compiled_templates['preview-' + select.val() + '_tmpl'],// Handlebars.compile(preview),
 			config			= {'id': id},
 			data_fields		= panel.find('.field-config'),
 			objects			= [];
@@ -550,7 +550,6 @@ jQuery(document).ready(function($){
 		if(!confirm(clicked.data('confirm'))){
 			return;
 		}
-		console.log(this);
 		// remove config
 		$('#' + field).remove();
 		// remove options 
@@ -759,7 +758,7 @@ jQuery(document).ready(function($){
 			parent 	= field.closest('.caldera-editor-field-config-wrapper');
 
 		if(parent.length){
-			//build_field_preview(select.data('field'));
+			build_field_preview(parent.prop('id'));
 		}
 
 	});
