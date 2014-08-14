@@ -757,13 +757,38 @@ jQuery(document).ready(function($){
 		var field 	= $(this),
 			parent 	= field.closest('.caldera-editor-field-config-wrapper');
 
+		if(!current_form_fields){
+			return;
+		}
+		//
+		if(field.prop('id') === parent.prop('id') + '_lable'){
+			// update field bind label
+			current_form_fields[parent.prop('id')].label = this.value;
+		}
+		if(field.prop('id') === parent.prop('id') + '_slug'){
+			// update field bind slug
+			current_form_fields[parent.prop('id')].slug = this.value;
+		}
+		if(field.prop('id') === parent.prop('id') + '_type'){
+			// update field bind type
+			current_form_fields[parent.prop('id')].type = this.value;
+		}
+		
+		console.log(current_form_fields[parent.prop('id')]);
+
 		if(parent.length){
 			build_field_preview(parent.prop('id'));
 		}
 
 	});
-
-	$('.caldera-editor-body').on('change', '.caldera-conditional-field-set', function(e){
+	
+	$('.caldera-editor-body').on('change mousedown', '.caldera-conditional-field-set', function(e){
+		
+		if(e.type && e.type === 'mousedown'){
+			$(this).removeClass('bound_field');
+			rebind_field_bindings();
+			return;
+		}
 
 		var field = $(this),
 			type = field.data('condition'),

@@ -64,6 +64,7 @@ rebuild_field_binding = function(){
 	fields.addClass('bound_field');
 	// clear list
 	if(!fields.length){
+		console.log('all bound');
 		rebind_field_bindings();
 		return;
 	}
@@ -111,28 +112,22 @@ rebuild_field_binding = function(){
 rebind_field_bindings = function(){
 
 	//check_required_bindings();
-
+	//console.log('- rebuild_field_binding');
 	//return;
 	var bindings = jQuery('.caldera-field-bind').not('.bound_field'),
 		type_instances,
 		processor_li;
 
-	bindings.addClass('bound_field');
-
+	
+	
 	if(!bindings.length){
-		var bound = jQuery('.caldera-field-bind.bound_field').not('.bind_init');
-		if(!bound.length){
-			var bound_triggers = jQuery('.caldera-field-bind.bound_field.bind_init').not('.bound_triggered');
-			if(bound_triggers.length){
-				bound_triggers.trigger('change');
-			}
-			
-			return;
-		}
-		bound.addClass('bind_init');
+		var bound = jQuery('.caldera-field-bind.bound_field');
+		bound.trigger('change');
 		return;	
 	}
 	
+	bindings.addClass('bound_field');
+	bindings.trigger('change');
 	//bindings.each(function(k,v){
 	for(var v = 0; v < bindings.length; v++){
 
