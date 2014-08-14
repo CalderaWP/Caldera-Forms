@@ -286,7 +286,7 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 			<div class="caldera-config-group">
 				<label for="<?php echo $id; ?>_type"><?php echo __('Element Type', 'caldera-forms'); ?></label>
 				<div class="caldera-config-field">
-					<select class="block-input caldera-select-field-type required" id="<?php echo $id; ?>_type" name="config[fields][<?php echo $id; ?>][type]" data-type="<?php echo $type; ?>">					
+					<select class="block-input caldera-select-field-type" data-field="<?php echo $id; ?>" id="<?php echo $id; ?>_type" name="config[fields][<?php echo $id; ?>][type]" data-type="<?php echo $type; ?>">					
 						<?php
 						echo build_field_types($type);
 						?>
@@ -762,7 +762,7 @@ do_action('caldera_forms_edit_end', $element);
 	</div>
 	{{/each}}
 </script>
-<script type="text/html" id="noconfig_field_templ">
+<script type="text/html" id="noconfig_field_templ" class="cf-editor-template">
 <div class="caldera-config-group">
 	<label>Default</label>
 	<div class="caldera-config-field">
@@ -819,7 +819,7 @@ do_action('caldera_forms_edit_end', $element);
 
 /// Output the field templates
 foreach($field_type_templates as $key=>$template){
-	echo "<script type=\"text/html\" id=\"" . $key . "\">\r\n";
+	echo "<script type=\"text/html\" class=\"cf-editor-template\" id=\"" . $key . "\">\r\n";
 		echo $template;
 	echo "\r\n</script>\r\n";
 }
