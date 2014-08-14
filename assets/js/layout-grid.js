@@ -1,4 +1,10 @@
-var rebuild_field_binding, rebind_field_bindings, current_form_fields = {}, required_errors = {}, add_new_grid_page, add_page_grid, init_magic_tags;
+var rebuild_field_binding, 
+	rebind_field_bindings, 
+	current_form_fields = {}, 
+	required_errors = {}, 
+	add_new_grid_page, 
+	add_page_grid, 
+	init_magic_tags;
 
 init_magic_tags = function(){
 	//init magic tags
@@ -41,10 +47,17 @@ init_magic_tags = function(){
 
 rebuild_field_binding = function(){
 
-	var fields = jQuery('.caldera-editor-field-config-wrapper');
+	var fields = jQuery('.caldera-editor-field-config-wrapper').not('.bound_field');
 
+	// add binding
+	fields.addClass('bound_field');
 	// clear list
-	current_form_fields = {};
+	if(!fields.length){
+		console.log('all bound');
+		rebind_field_bindings();
+		return;
+	}
+	
 	// set object
 	system_values.field = {
 		tags	:	{
@@ -54,8 +67,9 @@ rebuild_field_binding = function(){
 		wrap	:	['%','%']
 	};
 
-	fields.each(function(fk,fv){
-		var field_id = jQuery(fv).prop('id'),
+	//fields.each(function(fk,fv){
+	for(var f = 0; f < fields.length; f++){
+		var field_id = fields[f].id,
 			label = jQuery('#' + field_id + '_lable').val(),
 			slug = jQuery('#' + field_id + '_slug').val(),
 			type = jQuery('#' + field_id + '_type').val();
@@ -75,8 +89,12 @@ rebuild_field_binding = function(){
 			type: type
 		};
 
-	});
-	rebind_field_bindings();
+
+	};
+
+	//console.log( jQuery('.caldera-field-bind') );
+	//console.log(current_form_fields);
+	//rebind_field_bindings();
 
 };
 
@@ -85,13 +103,40 @@ rebind_field_bindings = function(){
 	//check_required_bindings();
 	
 	//return;
-	var bindings = jQuery('.caldera-field-bind'),
+	var bindings = jQuery('.caldera-field-bind').not('.bound_field'),
 		type_instances,
 		processor_li;
 
-	bindings.each(function(k,v){
+	bindings.addClass('bound_field');
 
-		var field = jQuery(v),
+	if(!bindings.length){
+		var bound = jQuery('.caldera-field-bind.bound_field').not('.bind_init');
+		if(!bound.length){
+			var bound_triggers = jQuery('.caldera-field-bind.bound_field.bind_init').not('.bound_triggered');
+			if(bound_triggers.length){
+				bound_triggers.trigger('change');
+			}
+			
+			return;
+		}
+		bound.addClass('bind_init');
+
+		//bound.trigger('change');
+		//for(var f = 0; f < bound.length; f++){
+			//console.log( jQuery(bound[f]).trigger('change');
+		//}
+		//console.log(bound);
+		//console.log('all done bindings');
+		// trigger changed
+		//field.trigger('change');
+		//console.log(field);	
+		return;	
+	}
+	
+	//bindings.each(function(k,v){
+	for(var v = 0; v < bindings.length; v++){
+
+		var field = jQuery(bindings[v]),
 			current = field.val(),
 			default_sel = field.data('default'),
 			excludes = field.data('exclude'),
@@ -224,11 +269,13 @@ rebind_field_bindings = function(){
 			// text types
 			//console.log(field.val())
 		}
-	});
 
-	check_required_bindings();
+	};
+
+	//check_required_bindings();
 	init_magic_tags();
 	jQuery(document).trigger('bound.fields');
+	jQuery('.caldera-header-save-button').prop("disabled", false);
 };
 
 function setup_field_type(obj){
@@ -245,7 +292,7 @@ function check_required_bindings(){
 		field_elements = jQuery('.layout-form-field'),
 		nav_elements = jQuery('.caldera-processor-nav');
 	
-	savebutton.prop("disabled", false);
+	
 
 	fields.removeClass('has-error');
 	field_elements.removeClass('has-error');
@@ -737,7 +784,8 @@ jQuery(document).ready(function($) {
 		
 
 		var clicked = $(this),
-			panel = clicked.parent();
+			panel 	= clicked.parent(),
+			type 	= $('#' + panel.data('config') +'_type').val();
 
 			$('.caldera-editor-field-config-wrapper').hide();
 
@@ -751,7 +799,9 @@ jQuery(document).ready(function($) {
 
 		$(document).trigger('show.' + panel.data('config'));
 
-		$('#' + panel.data('config')).find('.auto-populate-options').trigger('change');
+		if( type === 'radio' || type === 'checkbox' || type === 'dropdown' || type === 'toggle_switch' ){
+			$('#' + panel.data('config') + '_auto').trigger('change');
+		}
 	});
 	$('body').on('click', '.layout-modal-edit-closer,.layout-modal-save-action', function(e){
 		

@@ -541,8 +541,13 @@ jQuery(document).ready(function($){
 		}
 		// remove config
 		$('#' + field).remove();
+		// remove options 
+		$('option[value="' + field + '"]').remove();
+		$('[data-bind="' + field + '"]').remove();
+		
+		// remove field
+		delete current_form_fields[field];
 
-		// remove line
 		$('[data-config="' + field + '"]').slideUp(200, function(){
 			var line = $(this);
 
@@ -760,7 +765,9 @@ jQuery(document).ready(function($){
 			target = $('#' + lineid + "_value"),
 			curval = target.find('.caldera-conditional-value-field').first();
 			
-
+			if(field.hasClass('.bind_init')){
+				field.addClass('bound_triggered');
+			}
 			// check if a value is present
 
 			if(curval.length){
