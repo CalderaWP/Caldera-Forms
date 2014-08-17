@@ -146,7 +146,7 @@ function cf_ajax_redirect($type, $url, $form){
 		$out['data'] = $query;
 	}
 	$out['html'] = $html;
-	$out['type'] = $data['type'];
+	$out['type'] = ( isset($data['type']) ? $data['type'] : $type );
 	$out['status'] = $type;
 
 	$out = apply_filters('caldera_forms_ajax_return', $out, $form);
