@@ -241,6 +241,25 @@
 	display: none !important;
 }
 
+.mini-mode .preview-caldera-config-group {
+  padding: 0 5px;
+}
+.mini-mode .preview-caldera-config-field{
+	display: none;
+}
+.mini-mode .layout-form-field {
+  padding: 0 5px;
+}
+.mini-mode .layout-form-field .icon-edit{
+	top: 4px;
+	right: 9px;
+}
+.mini-mode .field_preview {
+  min-height: 31px;
+}
+.mini-mode .layout-column {
+  margin-top: 8px;
+}
 .layout-template-tray .template-element,
 .layout-grid-tools .template-element{
 	cursor: move;

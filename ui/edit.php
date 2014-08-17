@@ -462,7 +462,7 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 			<label><input type="radio" class="field-config" name="config[pinned]" value="0" <?php if(empty($element['pinned'])){ ?>checked="checked"<?php } ?>> <?php echo __('Disabled', 'caldera-forms'); ?></label>
 		</div>
 	</div>
-
+	
 	<div class="caldera-config-group">
 		<label><?php echo __('Hide Form', 'caldera-forms'); ?> </label>
 		<div class="caldera-config-field">
@@ -778,7 +778,9 @@ do_action('caldera_forms_edit_end', $element);
 				{{#each lines}}
 				<div class="caldera-condition-line">
 					if 
-					<select name="config[{{../type}}][{{../../id}}][conditions][group][{{../id}}][{{id}}][field]" data-condition="{{../type}}" class="caldera-field-bind caldera-conditional-field-set" data-id="{{../../id}}" data-default="{{field}}" data-line="{{id}}" data-row="{{../id}}" data-all="true" style="max-width:120px;"></select>
+					<select name="config[{{../type}}][{{../../id}}][conditions][group][{{../id}}][{{id}}][field]" data-condition="{{../type}}" class="caldera-field-bind caldera-conditional-field-set" data-id="{{../../id}}" {{#if field}}data-default="{{field}}"{{/if}} data-line="{{id}}" data-row="{{../id}}" data-all="true" style="max-width:120px;">
+						{{#if field}}<option value="{{field}}" class="bound-field" selected="selected"></option>{{else}}<option value="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>{{/if}}
+					</select>
 					<select name="config[{{../type}}][{{../../id}}][conditions][group][{{../id}}][{{id}}][compare]" style="max-width:110px;">
 						<option value="is" {{#is compare value="is"}}selected="selected"{{/is}}><?php echo __('is', 'caldera-forms'); ?></option>
 						<option value="isnot" {{#is compare value="isnot"}}selected="selected"{{/is}}><?php echo __('is not', 'caldera-forms'); ?></option>

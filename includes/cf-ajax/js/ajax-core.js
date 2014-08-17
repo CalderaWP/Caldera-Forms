@@ -25,8 +25,8 @@ jQuery(function($){
 				$('.caldera_forms_ajax_spinner').remove();
 				$('.caldera_ajax_error_wrap').removeClass('caldera_ajax_error_wrap').removeClass('has-error');
 				$('.caldera_ajax_error_block').remove();
-
-				if(obj.data.status === 'complete'){
+				console.log(obj.data.type);
+				if(obj.data.status === 'complete' || obj.data.type === 'success'){
 					if(obj.data.html){
 						obj.params.target.html(obj.data.html);
 					}

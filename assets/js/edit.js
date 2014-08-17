@@ -774,22 +774,24 @@ jQuery(document).ready(function($){
 			current_form_fields[parent.prop('id')].type = this.value;
 		}
 		
-		console.log(current_form_fields[parent.prop('id')]);
+		//console.log(current_form_fields[parent.prop('id')]);
 
 		if(parent.length){
 			build_field_preview(parent.prop('id'));
 		}
 
 	});
-	
-	$('.caldera-editor-body').on('change mousedown', '.caldera-conditional-field-set', function(e){
-		
-		if(e.type && e.type === 'mousedown'){
-			$(this).removeClass('bound_field');
+
+	$('.caldera-editor-body').on('focus', '.caldera-field-bind', function(e){
+		if(e.type && e.type === 'focusin'){
+			$(this).removeClass('bound_field').addClass('reload-binding');
 			rebind_field_bindings();
 			return;
 		}
+	});
 
+	$('.caldera-editor-body').on('change', '.caldera-conditional-field-set', function(e){
+		
 		var field = $(this),
 			type = field.data('condition'),
 			field_id = this.value.replace('{','_').replace('}','_'),

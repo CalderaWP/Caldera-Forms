@@ -75,13 +75,7 @@ function cf_ajax_redirect($type, $url, $form){
 			if(!empty($data['note'])){
 				$notices[$data['type']]['note'] = $data['note'];
 			}
-			if(!empty($data['fields'])){
-				foreach($form['fields'] as $fieldid=>$field){				
-					if( isset( $data['fields'][$fieldid] ) ){
-						$out['fields'][$fieldid] = $data['fields'][$fieldid];
-					}
-				}
-			}
+
 		}else{
 			$out['url'] = $url;
 			$notices['success']['note'] = __('Redirecting', 'caldera-forms');
@@ -93,16 +87,20 @@ function cf_ajax_redirect($type, $url, $form){
 			$notices['error']['note'] = $data['note'];
 		}
 
-		if(!empty($data['fields'])){
+	}
+	// check for field erors
+	if(!empty($data['fields'])){
+		foreach($form['fields'] as $fieldid=>$field){
+			if( isset( $data['fields'][$fieldid] ) ){
 
-			foreach($form['fields'] as $fieldid=>$field){
-				if( isset( $data['fields'][$fieldid] ) ){
+				if($urlparts['path'] == 'api'){
+					$out['fields'][$field['slug']] = $data['fields'][$fieldid];
+				}else{
 					$out['fields'][$fieldid] = $data['fields'][$fieldid];
 				}
 			}
 		}
 	}
-
 	$notices = apply_filters('caldera_forms_render_notices', $notices, $form);
 
 	$note_classes = array(
@@ -130,13 +128,25 @@ function cf_ajax_redirect($type, $url, $form){
 	if(!empty($notices)){
 		// do notices
 		foreach($notices as $note_type => $notice){
-			if(!empty($notice['note'])){					
-				$html .= '<div class=" '. implode(' ', $note_classes[$note_type]) . '">' . Caldera_Forms::do_magic_tags( $notice['note'] ) .'</div>';
+			if(!empty($notice['note'])){
+				$result = Caldera_Forms::do_magic_tags( $notice['note'] );
+				$html .= '<div class=" '. implode(' ', $note_classes[$note_type]) . '">' . $result .'</div>';	
 			}
 		}
+	}
 
+	if(!empty($result)){
+		$out['result'] = $result;
+	}
+
+	if(!empty($query)){
+		if(!empty($query['cf_su'])){
+			unset($query['cf_su']);
+		}
+		$out['data'] = $query;
 	}
 	$out['html'] = $html;
+	$out['type'] = $data['type'];
 	$out['status'] = $type;
 
 	$out = apply_filters('caldera_forms_ajax_return', $out, $form);

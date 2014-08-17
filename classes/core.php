@@ -89,6 +89,15 @@ class Caldera_Forms {
 	 *
 	 */
 	public function load_plugin_textdomain() {
+		/*add_rewrite_tag('%cf_api%', '([^&]+)');
+		add_rewrite_tag('%cf_entry%', '([^&]+)');
+		// INIT API
+		add_rewrite_rule('^api/cf/([^/]*)/([^/]*)/?','index.php?cf_api=$matches[1]&cf_entry=$matches[2]','top');
+		add_rewrite_rule('^api/cf/([^/]*)/?','index.php?cf_api=$matches[1]','top');
+
+		//flush_rewrite_rules();
+		*/
+
 		load_plugin_textdomain( $this->plugin_slug, FALSE, $this->plugin_slug . '/languages');
 	}
 
@@ -405,7 +414,9 @@ class Caldera_Forms {
 
 				$wpdb->insert($wpdb->prefix . 'cf_form_entries', $new_entry);
 				$entryid = $wpdb->insert_id;
-
+				// save entry_id
+				self::set_field_data('_entry_id', $entryid, $form);
+				
 				foreach($form['fields'] as $field_id=>$field){
 					// add new and update
 					self::save_field_data($field, $entryid, $form);
@@ -450,7 +461,7 @@ class Caldera_Forms {
 								'meta_value' =>	$meta_value
 							);
 
-							$wpdb->insert($wpdb->prefix . 'cf_form_entry_meta', $meta_entry);	
+							$wpdb->insert($wpdb->prefix . 'cf_form_entry_meta', $meta_entry);
 
 						}
 
@@ -664,7 +675,7 @@ class Caldera_Forms {
 		}
 		$recipients = implode(',', $mail['recipients']);
 		*/
-		$headers = implode("\r\n", $mail['headers']);		
+		$headers = implode("\r\n", $mail['headers']);
 
 		do_action( 'caldera_forms_do_mailer', $mail, $data, $form);
 		if(!empty($mail)){
@@ -1014,11 +1025,11 @@ class Caldera_Forms {
 						'required'
 					),
 					"scripts"	=> array(
-						"http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"
+						"//www.google.com/recaptcha/api/js/recaptcha_ajax.js"
 					)
 				),
 				"scripts"	=> array(
-					"http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"
+					"//www.google.com/recaptcha/api/js/recaptcha_ajax.js"
 				),
 				"styles"	=> array(
 					CFCORE_URL . "fields/recaptcha/style.css"
@@ -1403,12 +1414,12 @@ class Caldera_Forms {
 						break;
 					case 'startswith':
 						if(is_array($value)){
-							foreach($value as $part){
-								if( 0 === strpos($line['value'], $part)){
+							foreach($value as $part){								
+								if( 0 === strpos($part,$line['value'])){
 									$truelines[$lineid] = true;
 								}
 							}
-						}else{					
+						}else{
 							if( substr( $value, 0, strlen($line['value']) ) == $line['value']){
 								$truelines[$lineid] = true;
 							}
@@ -1480,6 +1491,7 @@ class Caldera_Forms {
 
 		// get internal tags
 		$system_tags = array(
+			'entry_id',
 			'ip',
 			'user:id',
 			'user:user_login',
@@ -1676,6 +1688,9 @@ class Caldera_Forms {
 					}
 				}else{
 					switch ($magic_tag) {
+						case 'entry_id':
+							$magic_tag = self::get_field_data('_entry_id', $form);
+							break;
 						case 'ip':
 							$magic_tag = $_SERVER['REMOTE_ADDR'];
 							break;
@@ -1800,12 +1815,13 @@ class Caldera_Forms {
 		
 	static public function get_processor_by_type($type, $form){
 		if(is_string($form)){
-			$form = get_option($form);
-			if(!empty($form['ID'])){
-				if($form['ID'] !== $form || empty($form['processors'])){
+			$form_cfg = get_option($form);
+			if(!empty($form_cfg['ID'])){
+				if($form_cfg['ID'] !== $form || empty($form_cfg['processors'])){
 					return false;
 				}
 			}
+			$form = $form_cfg;
 		}
 
 		if(!empty($form['processors'])){
@@ -1856,7 +1872,7 @@ class Caldera_Forms {
 		}
 		// form object
 		if(isset($form['ID'])){
-			if(isset($processed_data[$form['ID']][$field_id])){
+			if(isset($processed_data[$form['ID']][$field_id]) || $field_id === '_entry_id'){
 				$processed_data[$form['ID']][$field_id] = $data;
 				return true;
 			}
@@ -1937,7 +1953,11 @@ class Caldera_Forms {
 			// check if conditions match first. ignore vailators if not part of condition
 			if(isset($_POST[$field_id])){
 				$entry = stripslashes_deep($_POST[$field_id]);
+			}elseif(isset($_POST[$field['slug']])){
+				// is slug maybe?
+				$entry = stripslashes_deep( $_POST[$field['slug']] );			
 			}
+
 			// apply field filter
 			if(has_filter('caldera_forms_process_field_' . $field['type'])){
 				$entry = apply_filters( 'caldera_forms_process_field_' . $field['type'] , $entry, $field, $form );
@@ -1984,6 +2004,7 @@ class Caldera_Forms {
 				$processed_data[$indexkey][$field_id] = $entry;
 			}
 		}else{
+
 			$is_tag = self::do_magic_tags($field_id);
 			if($is_tag !== $field_id){
 				$processed_data[$indexkey][$field_id] = $is_tag;
@@ -2646,8 +2667,33 @@ class Caldera_Forms {
 	static public function check_forms_shortcode(){
 		global $post, $front_templates, $wp_query, $process_id, $form;
 
+		// check for API
+		if(!empty($wp_query->query_vars['cf_api'])){
+			// check if form exists
+			$form = get_option( $wp_query->query_vars['cf_api'] );
+			if(!empty($form['ID'])){
+				if($form['ID'] === $wp_query->query_vars['cf_api']){
+					// got it!
+					// need entry?
+					if(!empty($wp_query->query_vars['cf_entry'])){
+						$entry = Caldera_Forms::get_entry($wp_query->query_vars['cf_entry'], $form);
+						wp_send_json( $entry );
+					}
+					// is a post?
+					if( $_SERVER['REQUEST_METHOD'] === 'POST' ){
+						
+						$_POST['_wp_http_referer_true'] = 'api';
+						$_POST['_cf_frm_id'] 			=  $_POST['cfajax']	= $wp_query->query_vars['cf_api'];
 
-		// do a form preview
+						$submission = Caldera_Forms::process_submission();
+
+					}
+
+					wp_send_json( $wp_query );
+					die;
+				}
+			}
+		}
 
 		if(!empty($_GET['cf_preview'])){
 			$form = get_option($_GET['cf_preview']);

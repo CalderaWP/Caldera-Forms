@@ -972,7 +972,8 @@ class Caldera_Forms_Admin {
 			"ID" 			=> uniqid('CF'),
 			"name" 			=> $newform['name'],
 			"description" 	=> $newform['description'],
-			"success"		=>	__('Form has been successfuly submitted. Thank you.', 'caldera-forms')
+			"success"		=>	__('Form has been successfuly submitted. Thank you.', 'caldera-forms'),
+			"hide_form"		=> 1
 		);
 
 		// add from to list

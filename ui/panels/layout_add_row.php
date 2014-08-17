@@ -18,6 +18,11 @@
 	</div><input value="" type="hidden" class="field-location">	
 </div>
 
+<?php
+/*
+<button class="button button-small compact-mode" style="margin-top:-3px; margin-left:10px;" type="button"><?php _e('Compact', 'caldera-forms'); ?></button>
+*/
+?>
 <span id="dismiss-add-element" class="ajax-trigger" data-action="cf_dismiss_pointer" data-pointer="add_element"></span>
 <?php
 $haspointer = get_user_meta( get_current_user_id() , 'cf_pointer_add_element' );
@@ -39,3 +44,19 @@ if(empty($haspointer)){ ?>
 
 </script>
 <?php } ?>
+<script>
+	jQuery(document).on('click','.compact-mode', function(){
+
+		var form = jQuery('.caldera-forms-options-form'),
+			clicked = jQuery(this);
+			console.log(this);
+		if(form.hasClass('mini-mode')){
+			form.removeClass('mini-mode');
+			clicked.removeClass('button-primary');
+		}else{
+			form.addClass('mini-mode');
+			clicked.addClass('button-primary');
+		}
+
+	});
+</script>

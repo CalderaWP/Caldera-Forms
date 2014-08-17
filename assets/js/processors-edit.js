@@ -188,11 +188,13 @@ Handlebars.registerHelper('_field', function(args) {
 
 	out = '<select ' + ( args.hash.type ? 'data-type="' + args.hash.type + '"' : '' ) + default_val +' ' + exclude + ' name="' + this._name + '[' + args.hash.slug + ']' + is_array + '" id="' + this._id + '_' + args.hash.slug + '" class="block-input field-config caldera-field-bind' + required + '">';
 	//out = '<input type="text" ' + ( args.hash.type ? 'data-type="' + args.hash.type + '"' : '' ) + default_val +' ' + exclude + ' name="' + this._name + '[' + args.hash.slug + ']' + is_array + '" id="' + this._id + '_' + args.hash.slug + '" class="block-input field-config magic-tag-enabled caldera-field-bind' + required + '">';
-	
-	if(!args.hash.required){
-		out += '<option value=""></option>';
+	if(this[args.hash.slug]){
+		out += '<option value="' + this[args.hash.slug] + '" class="bound-field"></option>';
+	}else{
+		if(!args.hash.required){
+			out += '<option value=""></option>';
+		}
 	}
-
 	for(var fid in current_form_fields){
 		
 		var sel = '';
