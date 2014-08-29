@@ -1295,7 +1295,7 @@ class Caldera_Forms {
 			$field['config']['option'] = array();
 			switch($field['config']['auto_type']){
 				case 'post_type':
-					$posts = get_posts( array('post_type' => $field['config']['post_type'], 'post_status' => 'publish') );
+					$posts = get_posts( array('post_type' => $field['config']['post_type'], 'post_status' => 'publish', 'posts_per_page' => -1) );
 					if($field['type'] === 'dropdown'){
 						$field['config']['option'] = array(
 							array(
