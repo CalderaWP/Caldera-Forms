@@ -103,7 +103,11 @@ rebuild_field_binding = function(){
 		// bind names
 		jQuery('option.bound-field').trigger('change').each(function(k,v){
 			var bind = jQuery(v);
-			bind.text( jQuery('#' + bind.prop('value') + '_lable').val() + ' ['+jQuery('#' + bind.prop('value') + '_lable').val() +']');
+			if(bind.prop('value').indexOf('{') !== 0){
+				bind.text( jQuery('#' + bind.prop('value') + '_lable').val() + ' ['+jQuery('#' + bind.prop('value') + '_lable').val() +']');
+			}else{
+				bind.text(bind.prop('value').replace('{','').replace('}',''));
+			}
 		}).removeClass('bound-field');
 	};
 
