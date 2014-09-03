@@ -9,4 +9,4 @@ if($field['config']['type'] == 'next' || $field['config']['type'] == 'prev'){
 }
 
 
-?><input data-field="<?php echo $field_base_id; ?>" <?php echo $btn_action; ?> class="<?php echo $field['config']['class']; ?>" type="<?php echo $btnType; ?>" value="<?php echo $field['label']; ?>" id="<?php echo $field_id; ?>">
+?><div class="<?php echo $field_wrapper_class; ?>"><input data-field="<?php echo $field_base_id; ?>" <?php echo $btn_action; ?> class="<?php echo $field['config']['class']; ?>" type="<?php echo $btnType; ?>" value="<?php echo $field['label']; ?>" id="<?php echo $field_id; ?>"></div>
