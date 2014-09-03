@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Caldera Forms\n"
-"POT-Creation-Date: 2014-08-12 11:18+0200\n"
-"PO-Revision-Date: 2014-08-29 15:28+0100\n"
-"Last-Translator: David RICQ <david@bsilimoges.fr>\n"
+"POT-Creation-Date: 2014-09-03 11:34+0200\n"
+"PO-Revision-Date: 2014-09-03 11:34+0200\n"
+"Last-Translator: David Cramer <david@caldera.co.za>\n"
 "Language-Team: Tricodia Systems <david@digilab.co.za>\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
@@ -17,6 +17,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../classes/admin.php:152 ../classes/admin.php:153 ../classes/admin.php:250
+#: ../ui/entries_toolbar.php:27
 msgid "Trash"
 msgstr "Corbeille"
 
@@ -45,9 +46,27 @@ msgstr "Insérer depuis le Shortcode"
 msgid "Caldera Form"
 msgstr ""
 
+#: ../classes/admin.php:504 ../classes/admin.php:510 ../classes/admin.php:516
+#: ../classes/admin.php:517 ../ui/admin.php:31 ../ui/community.php:4
+#: ../ui/edit.php:420 ../ui/extend.php:4
+msgid "Caldera Forms"
+msgstr ""
+
+#: ../classes/admin.php:505
+msgid "Caldera Forms Admin"
+msgstr "Notification de Caldera Forms"
+
 #: ../classes/admin.php:505
 msgid "Forms"
 msgstr "Formulaire"
+
+#: ../classes/admin.php:516 ../ui/community.php:7
+msgid "Community"
+msgstr "Communauté"
+
+#: ../classes/admin.php:517 ../ui/extend.php:7
+msgid "Extend"
+msgstr "Plus..."
 
 #: ../classes/admin.php:702 ../classes/admin.php:773
 msgid "Sorry, please try again"
@@ -85,252 +104,270 @@ msgstr ""
 msgid "Form has been successfuly submitted. Thank you."
 msgstr "Le formulaire a été envoyé."
 
-#: ../classes/admin.php:1003 ../classes/admin.php:1019
+#: ../classes/admin.php:1004 ../classes/admin.php:1020
 msgid "Layout"
 msgstr "Disposition"
 
-#: ../classes/admin.php:1021
+#: ../classes/admin.php:1022
 msgid "Layout Builder"
 msgstr ""
 
-#: ../classes/admin.php:1031
+#: ../classes/admin.php:1032
 msgid "Pages"
 msgstr "Pages"
 
-#: ../classes/admin.php:1033
+#: ../classes/admin.php:1034
 msgid "Form Pages"
 msgstr "Pages de formulaire"
 
-#: ../classes/admin.php:1037
+#: ../classes/admin.php:1038
 msgid "Processors"
 msgstr ""
 
-#: ../classes/admin.php:1039 ../ui/panels/processors.php:166
+#: ../classes/admin.php:1040 ../ui/panels/processors.php:166
 msgid "Form Processors"
 msgstr ""
 
-#: ../classes/admin.php:1043 ../classes/admin.php:1045
+#: ../classes/admin.php:1044 ../classes/admin.php:1046
 #: ../ui/panels/variables.php:80
 msgid "Variables"
 msgstr "Variables"
 
-#: ../classes/admin.php:1052
+#: ../classes/admin.php:1053
 msgid "Responsive"
 msgstr "Responsive"
 
-#: ../classes/admin.php:1054
+#: ../classes/admin.php:1055
 msgid "Resposive Settings"
 msgstr "Réglage du \"Responsive\""
 
-#: ../classes/admin.php:1058
+#: ../classes/admin.php:1059
 msgid "Grid Collapse"
 msgstr "Redimensionnement des grilles"
 
-#: ../classes/admin.php:1060
+#: ../classes/admin.php:1061
 msgid ""
 "Set the smallest screen size at which to collapse the grid. (based on "
 "Bootstrap 3.0)"
 msgstr ""
 
-#: ../classes/admin.php:1067
+#: ../classes/admin.php:1068
 msgid "Maintain grid always"
 msgstr "Ne pas redimmensionner les grilles"
 
-#: ../classes/admin.php:1087 ../ui/panels/emailer.php:32
+#: ../classes/admin.php:1088 ../ui/panels/emailer.php:32
 msgid "Mailer"
 msgstr ""
 
-#: ../classes/admin.php:1089
+#: ../classes/admin.php:1090
 msgid "Email Notification Settings"
 msgstr "Réglages des notifications par email"
 
-#: ../classes/core.php:251
+#: ../classes/core.php:260
 msgid "The reCAPTCHA field is required."
 msgstr "Le reCAPTCHA est requis."
 
-#: ../classes/core.php:258
+#: ../classes/core.php:267
 msgid "The reCAPTCHA wasn't entered correctly."
 msgstr "Le reCAPTCHA est incorrect."
 
-#: ../classes/core.php:380
+#: ../classes/core.php:389
 msgid "Permission denied."
 msgstr "Autorisation refusé"
 
-#: ../classes/core.php:502 ../ui/panels/emailer.php:4
+#: ../classes/core.php:513 ../ui/panels/emailer.php:4
 msgid "Caldera Forms Notification"
 msgstr "Notification de Caldera Forms"
 
-#: ../classes/core.php:782
+#: ../classes/core.php:793
 msgid "Auto Responder"
 msgstr "Résponse automatique"
 
-#: ../classes/core.php:783
+#: ../classes/core.php:794
 msgid "Sends out an auto response e-mail"
 msgstr "Envoie une réponse automatique"
 
-#: ../classes/core.php:787
+#: ../classes/core.php:798
 msgid "Thank you for contacting us"
 msgstr "Merci de nous avoir contacter"
 
-#: ../classes/core.php:791
+#: ../classes/core.php:802
 msgid "Redirect"
 msgstr "Redirection"
 
-#: ../classes/core.php:792
+#: ../classes/core.php:803
 msgid "Redirects user to URL on successful submit"
 msgstr "Redirige l'utilisateur vers l'URL après l'envoie du formulaire"
 
-#: ../classes/core.php:861
+#: ../classes/core.php:872
 msgid "Calculation"
 msgstr "Calcul"
 
-#: ../classes/core.php:864
-msgid "Special,Math"
-msgstr ""
-
-#: ../classes/core.php:865
-msgid "Calculate values"
-msgstr "Calculer les valeurs"
-
-#: ../classes/core.php:872
-msgid "Total"
-msgstr "Total"
-
-#: ../classes/core.php:884
-msgid "Range Slider"
-msgstr ""
-
-#: ../classes/core.php:886 ../classes/core.php:1006
+#: ../classes/core.php:875 ../classes/core.php:897 ../classes/core.php:934
+#: ../classes/core.php:1017 ../classes/core.php:1117
 msgid "Special"
 msgstr "Spécial"
 
-#: ../classes/core.php:887
+#: ../classes/core.php:875
+msgid "Math"
+msgstr ""
+
+#: ../classes/core.php:876
+msgid "Calculate values"
+msgstr "Calculer les valeurs"
+
+#: ../classes/core.php:883
+msgid "Total"
+msgstr "Total"
+
+#: ../classes/core.php:895
+msgid "Range Slider"
+msgstr ""
+
+#: ../classes/core.php:898
 msgid "Range Slider input field"
 msgstr ""
 
-#: ../classes/core.php:921
+#: ../classes/core.php:932
 msgid "Star Rating"
 msgstr ""
 
-#: ../classes/core.php:923
-msgid "Feedback,Special"
+#: ../classes/core.php:934
+msgid "Feedback"
 msgstr ""
 
-#: ../classes/core.php:924
+#: ../classes/core.php:935
 msgid "Star rating input for feedback"
 msgstr ""
 
-#: ../classes/core.php:956
+#: ../classes/core.php:967
 msgid "Phone Number"
 msgstr "Numéro de téléphone"
 
-#: ../classes/core.php:957
+#: ../classes/core.php:968
 msgid "Phone number with masking"
 msgstr "Numéro de téléphone (avec mask)"
 
-#: ../classes/core.php:959
-msgid "Text Fields,Basic,User"
+#: ../classes/core.php:970 ../classes/core.php:992 ../classes/core.php:1059
+#: ../classes/core.php:1095 ../classes/core.php:1105 ../classes/core.php:1202
+#: ../classes/core.php:1228
+msgid "Text Fields"
+msgstr "Champ"
+
+#: ../classes/core.php:970 ../classes/core.php:992 ../classes/core.php:1007
+#: ../classes/core.php:1059 ../classes/core.php:1075 ../classes/core.php:1095
+#: ../classes/core.php:1105 ../classes/core.php:1146 ../classes/core.php:1165
+#: ../classes/core.php:1184 ../ui/edit.php:148
+msgid "Basic"
 msgstr ""
 
-#: ../classes/core.php:979
+#: ../classes/core.php:970
+msgid "User"
+msgstr ""
+
+#: ../classes/core.php:989 ../classes/core.php:990
 msgid "Single Line Text"
 msgstr "Champ texte"
 
-#: ../classes/core.php:981 ../classes/core.php:1048 ../classes/core.php:1084
-#: ../classes/core.php:1094
-msgid "Text Fields,Basic"
-msgstr ""
-
-#: ../classes/core.php:993
-msgid "File Uploader"
-msgstr ""
-
-#: ../classes/core.php:996
-msgid "Basic,File"
+#: ../classes/core.php:1003 ../classes/core.php:1007
+msgid "File"
 msgstr ""
 
 #: ../classes/core.php:1004
+msgid "File Uploader"
+msgstr ""
+
+#: ../classes/core.php:1014
+msgid "reCAPTCHA"
+msgstr ""
+
+#: ../classes/core.php:1015
 msgid "reCAPTCHA anti-spam field"
 msgstr ""
 
-#: ../classes/core.php:1029
+#: ../classes/core.php:1039
+msgid "HTML"
+msgstr ""
+
+#: ../classes/core.php:1040
 msgid "Add text/html content"
 msgstr "Ajouter un contenu text/html"
 
-#: ../classes/core.php:1031
+#: ../classes/core.php:1042 ../fields/html/config_template.php:2
 msgid "Content"
 msgstr "Contenu"
 
-#: ../classes/core.php:1046
+#: ../classes/core.php:1056 ../classes/core.php:1057
 msgid "Hidden"
 msgstr "Caché"
 
-#: ../classes/core.php:1062
+#: ../classes/core.php:1072 ../fields/button/config_template.php:6
+msgid "Button"
+msgstr ""
+
+#: ../classes/core.php:1073
 msgid "Button, Submit and Reset types"
 msgstr ""
 
-#: ../classes/core.php:1064
-msgid "Buttons,Basic"
+#: ../classes/core.php:1075
+msgid "Buttons"
 msgstr ""
 
-#: ../classes/core.php:1082
+#: ../classes/core.php:1092 ../classes/core.php:1093
 msgid "Email Address"
 msgstr "Adresse email"
 
-#: ../classes/core.php:1092
+#: ../classes/core.php:1102 ../classes/core.php:1103
 msgid "Paragraph Textarea"
 msgstr "Zone de texte"
 
-#: ../classes/core.php:1105
+#: ../classes/core.php:1115 ../classes/core.php:1116
 msgid "Toggle Switch"
 msgstr ""
 
-#: ../classes/core.php:1106
-msgid "Select Options,Special"
+#: ../classes/core.php:1117 ../classes/core.php:1146 ../classes/core.php:1165
+#: ../classes/core.php:1184
+msgid "Select Options"
 msgstr ""
 
-#: ../classes/core.php:1133
+#: ../classes/core.php:1143 ../classes/core.php:1144
 msgid "Dropdown Select"
 msgstr ""
 
-#: ../classes/core.php:1135 ../classes/core.php:1154 ../classes/core.php:1173
-msgid "Select Options,Basic"
-msgstr ""
-
-#: ../classes/core.php:1152
+#: ../classes/core.php:1162 ../classes/core.php:1163
 msgid "Checkbox"
 msgstr ""
 
-#: ../classes/core.php:1171
+#: ../classes/core.php:1181 ../classes/core.php:1182
 msgid "Radio"
 msgstr ""
 
-#: ../classes/core.php:1189
+#: ../classes/core.php:1199 ../classes/core.php:1200
 msgid "Date Picker"
 msgstr ""
 
-#: ../classes/core.php:1191 ../classes/core.php:1217
-msgid "Text Fields,Pickers"
+#: ../classes/core.php:1202 ../classes/core.php:1228
+msgid "Pickers"
 msgstr ""
 
-#: ../classes/core.php:1216
+#: ../classes/core.php:1226 ../classes/core.php:1227
 msgid "Color Picker"
 msgstr ""
 
-#: ../classes/core.php:1513
+#: ../classes/core.php:1525
 msgid "System Tags"
 msgstr ""
 
-#: ../classes/core.php:2133
+#: ../classes/core.php:2154
 msgid "Invalid form ID"
 msgstr ""
 
-#: ../classes/core.php:2331 ../classes/core.php:2337 ../classes/core.php:2344
-#: ../classes/core.php:3188 ../classes/core.php:3191 ../classes/core.php:3195
+#: ../classes/core.php:2352 ../classes/core.php:2358 ../classes/core.php:2365
+#: ../classes/core.php:3235 ../classes/core.php:3238 ../classes/core.php:3242
 msgid "Permission denied or entry does not exist."
 msgstr "Accés refusé ou donnée inexistante."
 
-#: ../classes/core.php:2380
+#: ../classes/core.php:2401
 msgid "is required"
 msgstr "est requis"
 
@@ -386,9 +423,33 @@ msgstr ""
 msgid "Title"
 msgstr "Titre"
 
-#: ../classes/widget.php:47 ../ui/admin.php:51
+#: ../classes/widget.php:47 ../ui/admin.php:51 ../ui/admin.php:67
 msgid "Form"
 msgstr "Formulaire"
+
+#: ../fields/button/config_template.php:2
+msgid "Type"
+msgstr ""
+
+#: ../fields/button/config_template.php:5
+msgid "Submit"
+msgstr "Date d'envoi"
+
+#: ../fields/button/config_template.php:7
+msgid "Next Page"
+msgstr "Page"
+
+#: ../fields/button/config_template.php:8
+msgid "Previous Page"
+msgstr ""
+
+#: ../fields/button/config_template.php:9
+msgid "Reset"
+msgstr ""
+
+#: ../fields/button/config_template.php:14
+msgid "Class"
+msgstr "Classes"
 
 #: ../fields/calculation/config.php:2
 msgid "Element"
@@ -422,6 +483,31 @@ msgstr ""
 msgid "Use %field_slug% as field vaule variables"
 msgstr "Utiliser %field_slug% pour utiliser la valeur de la variable"
 
+#: ../fields/checkbox/config_template.php:3
+#: ../fields/radio/config_template.php:4
+msgid "Inline"
+msgstr ""
+
+#: ../fields/color_picker/setup.php:2 ../fields/date_picker/setup.php:2
+#: ../fields/email/config.php:8 ../fields/paragraph/config_template.php:14
+#: ../fields/phone/config.php:8 ../fields/range_slider/config.php:10
+#: ../fields/text/config.php:8
+msgid "Default"
+msgstr "Défaut"
+
+#: ../fields/color_picker/setup.php:2
+msgid "Color"
+msgstr ""
+
+#: ../fields/date_picker/setup.php:8
+msgid "Format"
+msgstr "Formulaire"
+
+#: ../fields/email/config.php:2 ../fields/paragraph/config_template.php:2
+#: ../fields/phone/config.php:2 ../fields/text/config.php:2
+msgid "Placeholder"
+msgstr ""
+
 #: ../fields/file/config_template.php:2
 msgid "Attach to mailer"
 msgstr ""
@@ -434,12 +520,20 @@ msgstr "Type autorisés"
 msgid "Comma separated eg. jpg,pdf,txt"
 msgstr "Séparés par des virgules, par exemple. jpg, pdf, txt"
 
+#: ../fields/hidden/setup.php:2 ../ui/admin_templates.php:115
+#: ../ui/admin_templates.php:144 ../ui/edit.php:113
+#: ../ui/panels/variables.php:12
+msgid "Value"
+msgstr "Valeur"
+
 #: ../fields/image_picker/field.php:41 ../fields/image_picker/field.php:43
-#: ../fields/image_picker/field.php:46
+#: ../fields/image_picker/field.php:46 ../fields/image_picker/setup.php:36
+#: ../fields/image_picker/setup.php:37
 msgid "Select Image"
 msgstr "Choisir une image"
 
 #: ../fields/image_picker/field.php:41 ../fields/image_picker/field.php:46
+#: ../fields/image_picker/setup.php:36 ../fields/image_picker/setup.php:37
 msgid "Use Image"
 msgstr "Utiliser une image"
 
@@ -447,17 +541,42 @@ msgstr "Utiliser une image"
 msgid "Uploading.."
 msgstr "Envoi en cours..."
 
-#: ../fields/image_picker/field.php:46 ../ui/edit.php:621 ../ui/edit.php:655
+#: ../fields/image_picker/field.php:46 ../fields/image_picker/setup.php:37
+#: ../ui/edit.php:621 ../ui/edit.php:655
 msgid "Remove"
 msgstr "Supprimer"
+
+#: ../fields/image_picker/setup.php:2
+msgid "Picker"
+msgstr ""
+
+#: ../fields/image_picker/setup.php:2
+msgid "Size"
+msgstr ""
+
+#: ../fields/paragraph/config_template.php:8
+msgid "Rows"
+msgstr ""
+
+#: ../fields/phone/config.php:14
+msgid "Style"
+msgstr ""
+
+#: ../fields/phone/config.php:16
+msgid "Local"
+msgstr ""
+
+#: ../fields/phone/config.php:18
+msgid "International"
+msgstr ""
+
+#: ../fields/phone/config.php:20
+msgid "Custom"
+msgstr ""
 
 #: ../fields/phone/config.php:22
 msgid "Use the digit 9 to indicate a number"
 msgstr ""
-
-#: ../fields/range_slider/config.php:10
-msgid "Default"
-msgstr "Défaut"
 
 #: ../fields/range_slider/config.php:17
 msgid "Track"
@@ -510,6 +629,22 @@ msgstr "Clé privée"
 #: ../fields/recaptcha/config.php:14
 msgid "Theme"
 msgstr "Thème"
+
+#: ../fields/recaptcha/config.php:17
+msgid "Red"
+msgstr ""
+
+#: ../fields/recaptcha/config.php:18
+msgid "White"
+msgstr ""
+
+#: ../fields/recaptcha/config.php:19
+msgid "Black"
+msgstr ""
+
+#: ../fields/recaptcha/config.php:20
+msgid "Clean"
+msgstr ""
 
 #: ../fields/recaptcha/config.php:22
 msgid ""
@@ -565,6 +700,70 @@ msgstr ""
 msgid "Include Cancel"
 msgstr ""
 
+#: ../fields/text/config.php:15
+msgid "Masked Input"
+msgstr ""
+
+#: ../fields/text/config.php:17
+msgid "Enable input mask"
+msgstr ""
+
+#: ../fields/text/config.php:21
+msgid "Mask"
+msgstr ""
+
+#: ../fields/text/config.php:27
+msgid "numeric"
+msgstr ""
+
+#: ../fields/text/config.php:28
+msgid "alphabetical"
+msgstr ""
+
+#: ../fields/text/config.php:29
+msgid "alphanumeric"
+msgstr ""
+
+#: ../fields/text/config.php:30
+msgid "optional"
+msgstr ""
+
+#: ../fields/text/config.php:31
+msgid "length"
+msgstr ""
+
+#: ../fields/text/config.php:33
+msgid "Any length character only"
+msgstr ""
+
+#: ../fields/text/config.php:34
+msgid "Any length number only"
+msgstr ""
+
+#: ../fields/text/config.php:35
+msgid "email"
+msgstr ""
+
+#: ../fields/toggle_switch/config_template.php:2
+msgid "Orientation"
+msgstr ""
+
+#: ../fields/toggle_switch/config_template.php:5
+msgid "Horizontal"
+msgstr ""
+
+#: ../fields/toggle_switch/config_template.php:6
+msgid "Vertical"
+msgstr ""
+
+#: ../fields/toggle_switch/config_template.php:12
+msgid "Active Class"
+msgstr ""
+
+#: ../fields/toggle_switch/config_template.php:19
+msgid "Inactive Class"
+msgstr ""
+
 #: ../fields/toggle_switch/field.php:36 ../ui/edit.php:453 ../ui/edit.php:461
 #: ../ui/edit.php:469
 msgid "Enable"
@@ -578,7 +777,7 @@ msgstr ""
 msgid "Enable Ajax Submissions. (No page reloads)"
 msgstr ""
 
-#: ../includes/cf-ajax/plugin.php:70 ../includes/cf-ajax/plugin.php:87
+#: ../includes/cf-ajax/plugin.php:70 ../includes/cf-ajax/plugin.php:81
 msgid "Redirecting"
 msgstr "Redirection"
 
@@ -665,6 +864,10 @@ msgstr ""
 #: ../ui/admin.php:52
 msgid "Grid"
 msgstr "Grille"
+
+#: ../ui/admin.php:68
+msgid "Entries"
+msgstr "données"
 
 #: ../ui/admin.php:82 ../ui/edit.php:454 ../ui/edit.php:462
 #: ../ui/panels/emailer.php:35
@@ -762,19 +965,6 @@ msgstr "Il n'y a pas encore de donnée"
 msgid "Field"
 msgstr "Champ"
 
-#: ../ui/admin_templates.php:115 ../ui/admin_templates.php:144
-#: ../ui/edit.php:113 ../ui/panels/variables.php:12
-msgid "Value"
-msgstr "Valeur"
-
-#: ../ui/community.php:4 ../ui/edit.php:420 ../ui/extend.php:4
-msgid "Caldera Forms"
-msgstr ""
-
-#: ../ui/community.php:7
-msgid "Community"
-msgstr "Communauté"
-
 #: ../ui/edit.php:13
 msgid "Form has successfuly been submitted. Thank you."
 msgstr "Le formulaire a été envoyé."
@@ -827,13 +1017,17 @@ msgstr "Montrer les valeurs"
 msgid "Label"
 msgstr "Label"
 
-#: ../ui/edit.php:148
-msgid "Basic"
-msgstr ""
-
 #: ../ui/edit.php:273
 msgid "Elements"
 msgstr "Éléments"
+
+#: ../ui/edit.php:279
+msgid "Settings"
+msgstr "Paramètres généraux"
+
+#: ../ui/edit.php:280
+msgid "Conditions"
+msgstr ""
 
 #: ../ui/edit.php:287
 msgid "Element Type"
@@ -940,45 +1134,49 @@ msgstr "Pas de description"
 msgid "or"
 msgstr "ou"
 
-#: ../ui/edit.php:783 ../ui/edit.php:806
+#: ../ui/edit.php:785 ../ui/edit.php:808
 msgid "is"
 msgstr "est"
 
-#: ../ui/edit.php:784 ../ui/edit.php:807
+#: ../ui/edit.php:786 ../ui/edit.php:809
 msgid "is not"
 msgstr "n'est pas"
 
-#: ../ui/edit.php:785 ../ui/edit.php:808
+#: ../ui/edit.php:787 ../ui/edit.php:810
 msgid "is greater than"
 msgstr "est plus grand que"
 
-#: ../ui/edit.php:786 ../ui/edit.php:809
+#: ../ui/edit.php:788 ../ui/edit.php:811
 msgid "is less than"
 msgstr "est plus petit que"
 
-#: ../ui/edit.php:787 ../ui/edit.php:810
+#: ../ui/edit.php:789 ../ui/edit.php:812
 msgid "starts with"
 msgstr "commence avec"
 
-#: ../ui/edit.php:788 ../ui/edit.php:811
+#: ../ui/edit.php:790 ../ui/edit.php:813
 msgid "ends with"
 msgstr "se termine avec"
 
-#: ../ui/edit.php:789 ../ui/edit.php:812
+#: ../ui/edit.php:791 ../ui/edit.php:814
 msgid "contains"
 msgstr "contient"
 
-#: ../ui/edit.php:791 ../ui/edit.php:814
+#: ../ui/edit.php:793 ../ui/edit.php:816
 msgid "Select field first"
 msgstr "Sélectionner le champ en premier"
 
-#: ../ui/edit.php:796
+#: ../ui/edit.php:798
 msgid "Add Condition"
 msgstr ""
 
-#: ../ui/edit.php:802
+#: ../ui/edit.php:804
 msgid "and"
 msgstr "et"
+
+#: ../ui/entries_toolbar.php:15
+msgid "Active"
+msgstr ""
 
 #: ../ui/entries_toolbar.php:31
 msgid "Export Entries"
@@ -989,16 +1187,12 @@ msgid "Apply"
 msgstr "Appliquer"
 
 #: ../ui/entry_navigation.php:23
-msgid "entry"
-msgstr "donnée"
+msgid "item"
+msgstr ""
 
 #: ../ui/entry_navigation.php:23
-msgid "entries"
-msgstr "données"
-
-#: ../ui/extend.php:7
-msgid "Extend"
-msgstr "Plus..."
+msgid "items"
+msgstr ""
 
 #: ../ui/extend.php:22
 msgid "No licensed addons installed."
@@ -1173,3 +1367,6 @@ msgstr ""
 #: ../ui/panels/variables.php:30 ../ui/panels/variables.php:48
 msgid "Passback"
 msgstr ""
+
+#~ msgid "entry"
+#~ msgstr "donnée"

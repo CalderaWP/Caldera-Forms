@@ -190,7 +190,7 @@ class Caldera_Forms_Admin {
 	 *
 	 */
 	public function load_plugin_textdomain() {
-		load_plugin_textdomain( $this->plugin_slug, FALSE, $this->plugin_slug . '/languages');
+		load_plugin_textdomain( $this->plugin_slug, FALSE, basename( CFCORE_PATH ) . '/languages');
 	}
 	
 	

@@ -98,7 +98,7 @@ class Caldera_Forms {
 		//flush_rewrite_rules();
 		*/
 
-		load_plugin_textdomain( $this->plugin_slug, FALSE, $this->plugin_slug . '/languages');
+		load_plugin_textdomain( $this->plugin_slug, FALSE, basename( CFCORE_PATH ) . '/languages');
 	}
 
 	/// activator
