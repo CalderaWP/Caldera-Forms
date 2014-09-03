@@ -2754,6 +2754,7 @@ class Caldera_Forms {
 				exit;
 
 			}
+			exit;
 			/// end form and redirect to submit page or result page.
 		}
 
