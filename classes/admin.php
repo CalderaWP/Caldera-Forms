@@ -34,7 +34,7 @@ class Caldera_Forms_Admin {
 	/**
 	 * @var      string
 	 */
-	protected $screen_prefix = null;
+	protected $screen_prefix = array();
 	/**
 	 * @var      string
 	 */
@@ -528,6 +528,7 @@ class Caldera_Forms_Admin {
 	public function enqueue_admin_stylescripts() {
 
 		$screen = get_current_screen();
+
 		if($screen->base === 'post'){
 			wp_enqueue_style( $this->plugin_slug .'-modal-styles', CFCORE_URL . 'assets/css/modals.css', array(), self::VERSION );
 			wp_enqueue_script( $this->plugin_slug .'-shortcode-insert', CFCORE_URL . 'assets/js/shortcode-insert.js', array('jquery'), self::VERSION );
@@ -959,7 +960,6 @@ class Caldera_Forms_Admin {
 
 	public static function create_form(){
 
-
 		parse_str( $_POST['data'], $newform );
 
 		// get form registry
@@ -967,7 +967,9 @@ class Caldera_Forms_Admin {
 		if(empty($forms)){
 			$forms = array();
 		}
-
+		if(!empty($newform['clone'])){
+			$clone = $newform['clone'];
+		}
 		$newform = array(
 			"ID" 			=> uniqid('CF'),
 			"name" 			=> $newform['name'],
@@ -981,7 +983,14 @@ class Caldera_Forms_Admin {
 
 		$forms[$newform['ID']] = $newform;
 		update_option( '_caldera_forms', $forms );
-
+		
+		if(!empty($clone)){
+			$clone_form = get_option( $clone );
+			if(!empty($clone_form['ID']) && $clone == $clone_form['ID']){
+				$newform = array_merge($clone_form, $newform);
+			}
+		}
+		
 		// add form to db
 		update_option($newform['ID'], $newform);
 		do_action('caldera_forms_create_form', $newform);

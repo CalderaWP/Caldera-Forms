@@ -606,7 +606,7 @@ class Caldera_Forms {
 		
 
 		if(!empty($form['mailer']['recipients'])){
-			$mail['recipients'] = explode(',', $form['mailer']['recipients']);
+			$mail['recipients'] = explode(',', self::do_magic_tags( $form['mailer']['recipients']) );
 		}else{
 			$mail['recipients'][] = get_option( 'admin_email' );
 		}
@@ -1460,7 +1460,7 @@ class Caldera_Forms {
 			if(in_array(true, $trues)){
 				return true;
 			}
-		}elseif($conditions['type'] == 'not' || $conditions['type'] == 'hide'){
+		}elseif($conditions['type'] == 'not' || $conditions['type'] == 'hide' || $conditions['type'] == 'disable'){
 			if(!in_array(true, $trues)){
 				return true;
 			}
@@ -1675,7 +1675,7 @@ class Caldera_Forms {
 												if(isset($subsubval[$subvalue])){
 													$outmagic[] = $post_metavalue;
 												}												
-											}											
+											}
 										}
 										$magic_tag = implode(', ', $outmagic);
 									}
@@ -3479,7 +3479,7 @@ class Caldera_Forms {
 							}
 						}
 						$conditions_configs[$field_base_id] = $field['conditions'];
-						if($field['conditions']['type'] == 'show'){
+						if($field['conditions']['type'] == 'show' || $field['conditions']['type'] == 'disable'){
 							// show if indicates hidden by default until condition is matched.
 							$field_html = null;
 						}

@@ -121,7 +121,9 @@
 	padding: 12px;
 	border-bottom: 1px solid #EEEEEE;
 }
-
+.mailer-control-panel .caldera-config-group{
+	max-width: 400px;
+}
 .layout-grid .layout-column {
 	background-color: #FFF;
 	border: 0 solid #DDDDDD;

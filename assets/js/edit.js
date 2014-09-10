@@ -104,7 +104,7 @@ jQuery(document).ready(function($){
 			$(el).data('_wp_http_referer', config._wp_http_referer);
 			$(el).data('sender', 'ajax');
 			$(el).data('config', JSON.stringify(config.config));
-						
+			
 			return true;
 		},
 		complete: function(){

@@ -126,8 +126,9 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 						data-status="active"
 						data-page="1"
 
-						><?php echo __('View Entries', 'caldera-forms'); ?></a> | </span><?php } ?>
-						<span class="export"><a class="form-control" href="admin.php?page=caldera-forms&export-form=<?php echo $form_id; ?>&cal_del=<?php echo wp_create_nonce( 'cf_del_frm' ); ?>"><?php echo __('Export Form', 'caldera-forms'); ?></a> | </span>
+						><?php echo __('Entries', 'caldera-forms'); ?></a> | </span><?php } ?>
+						<span class="export"><a class="form-control" href="admin.php?page=caldera-forms&export-form=<?php echo $form_id; ?>&cal_del=<?php echo wp_create_nonce( 'cf_del_frm' ); ?>"><?php echo __('Export', 'caldera-forms'); ?></a> | </span>
+						<span><a class="ajax-trigger" href="#clone" data-request="start_new_form" data-modal-buttons='<?php echo $modal_new_form; ?>' data-clone="<?php echo $form_id; ?>" data-modal-width="600" data-modal-height="400" data-load-class="none" data-modal="new_form" data-modal-title="<?php echo __('Clone Form', 'caldera-forms'); ?>" data-template="#new-form-tmpl"><?php echo __('Clone', 'caldera-forms'); ?></a> | </span>
 						<span class="trash form-delete"><a class="form-control" data-confirm="<?php echo __('This will delete this form permanently. Continue?', 'caldera-forms'); ?>" href="admin.php?page=caldera-forms&delete=<?php echo $form_id; ?>&cal_del=<?php echo wp_create_nonce( 'cf_del_frm' ); ?>"><?php echo __('Delete'); ?></a></span>
 
 
@@ -175,7 +176,7 @@ function serialize_modal_form(el){
 	
 	var clicked	= jQuery(el),
 		data 	= clicked.closest('.caldera-modal-wrap').find('.new-form-form'),
-		name = data.find('.new-form-name');
+		name 	= data.find('.new-form-name');
 	
 	//verify name is set
 	if(name.val().length < 1){
@@ -209,7 +210,10 @@ function extend_fail_notice(el){
 	jQuery("#extend_cf_baldrickModalBody").html('<div class="alert error"><p><?php echo __('Looks like something is not working. Please try again a little later or post to the <a href="http://wordpress.org/support/plugin/caldera-forms" target="_blank">support forum</a>.', 'caldera-forms'); ?></p></div>');
 }
 
-function start_new_form(){
+function start_new_form(obj){
+	if( obj.trigger.data('clone') ){
+		return {clone: obj.trigger.data('clone') };
+	}
 	return {};
 }
 </script>

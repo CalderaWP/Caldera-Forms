@@ -353,6 +353,7 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 					<option value=""></option>
 					<option value="show" <?php if($condition_type == 'show'){ echo 'selected="selected"'; } ?>><?php echo __('Show', 'caldera-forms'); ?></option>
 					<option value="hide" <?php if($condition_type == 'hide'){ echo 'selected="selected"'; } ?>><?php echo __('Hide', 'caldera-forms'); ?></option>
+					<option value="disable" <?php if($condition_type == 'disable'){ echo 'selected="selected"'; } ?>><?php echo __('Disable', 'caldera-forms'); ?></option>
 				</select>
 				<button id="<?php echo $id; ?>_condition_group_add" style="display:none;" type="button" data-id="<?php echo $id; ?>" class="pull-right button button-small add-conditional-group ajax-trigger" data-template="#conditional-group-tmpl" data-target-insert="append" data-request="new_conditional_group" data-type="fields" data-callback="rebuild_field_binding" data-target="#<?php echo $id; ?>_conditional_wrap"><?php echo __('Add Conditional Group', 'caldera-forms'); ?></button>
 			</p>
@@ -479,7 +480,11 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 	<div class="caldera-config-group">
 		<label><?php echo __('Gravatar Field', 'caldera-forms'); ?> </label>
 		<div class="caldera-config-field">
-			<select style="width:500px;" class="field-config caldera-field-bind" name="config[avatar_field]" data-exclude="system" data-default="<?php if(!empty($element['avatar_field'])){ echo $element['avatar_field']; } ?>" data-type="email"></select>
+			<select style="width:500px;" class="field-config caldera-field-bind" name="config[avatar_field]" data-exclude="system" data-default="<?php if(!empty($element['avatar_field'])){ echo $element['avatar_field']; } ?>" data-type="email">
+			<?php
+			if(!empty($element['avatar_field'])){ echo '<option value="'.$element['avatar_field'].'"></option>'; }
+			?>
+			</select>
 			<p class="description"><?php echo __('Used when viewing an entry from a non-logged in user.','caldera-forms'); ?></p>
 		</div>
 	</div>

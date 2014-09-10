@@ -2,7 +2,7 @@
 Contributors: Desertsnowman
 Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator
 Requires at least: 3.9
-Tested up to: 3.9.1
+Tested up to: 4.0
 Stable tag: 1.1.4
 License: GPLv2
 
@@ -80,9 +80,14 @@ none yet.
 
 = Fixed =
 * "Contains" clause in conditionals works correctly
+* multi-site fix
 
 = Added =
+* option to clone form
+* disable condition option for fields
 * 'entry_id' magic tag
+* Magic tag enabled all mailer fields
+
 
 = 1.1.3 (12 August, 2014) =
 

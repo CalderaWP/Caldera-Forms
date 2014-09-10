@@ -41,14 +41,14 @@ if(!isset($element['mailer']['enable_mailer'])){
 		<div class="caldera-config-group">
 			<label><?php echo __('From Name', 'caldera-forms'); ?> </label>
 			<div class="caldera-config-field">
-				<input type="text" class="field-config" name="config[mailer][sender_name]" value="<?php echo $element['mailer']['sender_name']; ?>" style="width:400px;">
+				<input type="text" class="field-config magic-tag-enabled" name="config[mailer][sender_name]" value="<?php echo $element['mailer']['sender_name']; ?>" style="width:400px;">
 				<p class="description"><?php echo __('Use %field_slug% to use a value from the form', 'caldera-forms'); ?></p>
 			</div>
 		</div>
 		<div class="caldera-config-group">
 			<label><?php echo __('From Email', 'caldera-forms'); ?> </label>
 			<div class="caldera-config-field">
-				<input type="text" class="field-config" name="config[mailer][sender_email]" value="<?php echo $element['mailer']['sender_email']; ?>" style="width:400px;">
+				<input type="text" class="field-config magic-tag-enabled" name="config[mailer][sender_email]" value="<?php echo $element['mailer']['sender_email']; ?>" style="width:400px;">
 				<p class="description"><?php echo __('Use %field_slug% to use a value from the form', 'caldera-forms'); ?></p>
 			</div>
 		</div>
@@ -72,7 +72,7 @@ if(!isset($element['mailer']['enable_mailer'])){
 		<div class="caldera-config-group">
 			<label><?php echo __('Recipients', 'caldera-forms'); ?> </label>
 			<div class="caldera-config-field">
-				<input type="text" class="field-config" name="config[mailer][recipients]" value="<?php echo $element['mailer']['recipients']; ?>" style="width:400px;">
+				<input type="text" class="field-config magic-tag-enabled" name="config[mailer][recipients]" value="<?php echo $element['mailer']['recipients']; ?>" style="width:400px;">
 				<p class="description"><?php echo __('Comma separated list of email addresses.', 'caldera-forms'); ?></p>
 			</div>
 
@@ -81,7 +81,7 @@ if(!isset($element['mailer']['enable_mailer'])){
 		<div class="caldera-config-group">
 			<label><?php echo __('Email Subject', 'caldera-forms'); ?> </label>
 			<div class="caldera-config-field">
-				<input type="text" class="field-config" name="config[mailer][email_subject]" value="<?php echo $element['mailer']['email_subject']; ?>" style="width:400px;">
+				<input type="text" class="field-config magic-tag-enabled" name="config[mailer][email_subject]" value="<?php echo $element['mailer']['email_subject']; ?>" style="width:400px;">
 				<p class="description"><?php echo __('Use %field_slug% to use a value from the form', 'caldera-forms'); ?></p>
 			</div>
 		</div>

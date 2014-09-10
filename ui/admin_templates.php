@@ -43,6 +43,7 @@
 				<textarea class="block-input field-config" name="description" value=""></textarea>
 			</div>
 		</div>
+		{{#if clone}}<input type="hidden" name="clone" value="{{clone}}">{{/if}}
 		<?php
 		do_action('caldera_forms_new_form_template_end');
 		?>

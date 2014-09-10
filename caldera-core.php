@@ -2,7 +2,7 @@
 /*
   Plugin Name: Caldera Forms
   Plugin URI: http://digilab.co.za
-  Description: Create simple to complex grid based, responsive forms quickly and easily.
+  Description: Easy to use, grid based responsive form builder for creating simple to complex forms.
   Author: David Cramer
   Version: 1.1.4
   Author URI: http://digilab.co.za

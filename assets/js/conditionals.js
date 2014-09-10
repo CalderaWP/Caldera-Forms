@@ -134,10 +134,14 @@
 					action = 'show';
 				}else if (type === 'hide'){
 					action = 'hide';
+				}else if (type === 'disable'){
+					action = 'disable';
 				}
 			}else{
 				if(type === 'show'){
 					action = 'hide';
+				}else if (type === 'disable'){
+					action = 'enable';
 				}else{
 					action = 'show';
 				}
@@ -152,6 +156,19 @@
 				if(target.html().length){
 					target_field.val('').empty().prop('checked', false);
 					target.empty().trigger('cf.remove');
+				}
+			}else if (action === 'enable'){
+				if(!target.html().length){
+					target.html(template).trigger('cf.add');
+				}else{
+					target_field.prop('disabled', false);
+				}
+			}else if (action === 'disable'){
+				if(!target.html().length){
+					target.html(template).trigger('cf.add');
+					$('[data-field="' + field + '"]').prop('disabled', 'disabled');
+				}else{
+					target_field.prop('disabled', 'disabled');
 				}
 			}
 
