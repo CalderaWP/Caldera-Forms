@@ -331,7 +331,7 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 			<div class="caldera-config-group caption-field">
 				<label for="<?php echo $id; ?>_caption"><?php echo __('Description', 'caldera-forms'); ?></label>
 				<div class="caldera-config-field">
-					<input type="text" class="block-input field-config" id="<?php echo $id; ?>_caption" name="config[fields][<?php echo $id; ?>][caption]" value="<?php echo sanitize_text_field( $caption ); ?>">
+					<input type="text" class="block-input field-config" id="<?php echo $id; ?>_caption" name="config[fields][<?php echo $id; ?>][caption]" value="<?php echo esc_html( $caption ); ?>">
 				</div>
 			</div>
 			
