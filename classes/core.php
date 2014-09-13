@@ -37,7 +37,7 @@ class Caldera_Forms {
 	 * Initialize the plugin by setting localization, filters, and administration functions.
 	 *
 	 */
-	private function __construct() {
+	function __construct() {
 
 		// Load plugin text domain
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
