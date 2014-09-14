@@ -40,7 +40,12 @@ if(!empty($hastags[1])){
 								continue;
 							}
 						}
-						value.push( field[f].value );
+						if( $(field[f]).is('input:file') ){
+							var file_parts = field[f].value.split('\\');
+							value.push( file_parts[file_parts.length-1] );
+						}else{
+							value.push( field[f].value );
+						}
 					}
 
 					template = template.replace( new RegExp("\{\{" + list[i] + "\}\}","g"), value.join(', ') );
