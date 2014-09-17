@@ -12,7 +12,7 @@
 					data-callback="setup_pagination"
 					data-page="1"
 					data-status="active"
-				><?php _e('Active', 'caldera-engine'); ?> <span class="current-status-count"></span></button>
+				><?php _e('Active', 'caldera-forms'); ?> <span class="current-status-count"></span></button>
 				<button type="button" class="status_toggles button ajax-trigger" style="margin-top: 1px; margin-right: 10px;"
 					data-action="browse_entries"
 					data-target="#form-entries-viewer"
