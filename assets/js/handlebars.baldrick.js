@@ -1,3 +1,26 @@
+/* custom helpers */
+  Handlebars.registerHelper("even", function(options) {
+  	var intval = options.data.index / 2;
+  	if( intval === Math.ceil( intval ) ){
+  		return options.fn(this);
+  	}else{
+  		return false;
+  	}
+  	
+  });
+  Handlebars.registerHelper("odd", function(options) {
+  	var intval = options.data.index / 2;
+  	if( intval === Math.ceil( intval ) ){
+  		return false;
+  	}else{
+  		return options.fn(this);
+  	}
+  });
+  Handlebars.registerHelper("json", function(context) {
+  		return JSON.stringify( context );
+  });
+
+
 /* Baldrick handlebars.js templating plugin */
 (function($){
 	var compiledTemplates	= {};
