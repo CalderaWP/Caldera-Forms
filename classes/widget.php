@@ -45,15 +45,16 @@ class Caldera_Forms_Widget extends WP_Widget {
 		$forms = get_option( '_caldera_forms' );
 
 		echo "<p><label for=\" " . $this->get_field_id('title') . "\">" . __('Form', 'caldera-forms') . ": </label><select style=\"width:100%;\" name=\"" . $this->get_field_name('form') . "\">\r\n";
-
-		foreach($forms as $formid=>$form){
-			$sel = "";
-			if(!empty($instance['form'])){
-				if($instance['form'] == $formid){
-					$sel = ' selected="selected"';
+		if(!empty($forms)){
+			foreach($forms as $formid=>$form){
+				$sel = "";
+				if(!empty($instance['form'])){
+					if($instance['form'] == $formid){
+						$sel = ' selected="selected"';
+					}
 				}
+				echo "<option value=\"" . $formid . "\"".$sel.">" . $form['name'] ."</option>\r\n";
 			}
-			echo "<option value=\"" . $formid . "\"".$sel.">" . $form['name'] ."</option>\r\n";
 		}
 
 		echo "</select></p>\r\n";
