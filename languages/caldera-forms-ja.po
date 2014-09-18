@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Caldera Forms\n"
-"POT-Creation-Date: 2014-09-17 16:49+0200\n"
-"PO-Revision-Date: 2014-09-17 16:49+0200\n"
+"POT-Creation-Date: 2014-09-18 16:10+0200\n"
+"PO-Revision-Date: 2014-09-18 16:10+0200\n"
 "Last-Translator: David Cramer <david@caldera.co.za>\n"
 "Language-Team: Kiho Shin\n"
 "Language: ja\n"
@@ -16,150 +16,150 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../classes/admin.php:152 ../classes/admin.php:153 ../classes/admin.php:250
+#: ../classes/admin.php:129 ../classes/admin.php:130 ../classes/admin.php:227
 #: ../ui/entries_toolbar.php:27
 msgid "Trash"
 msgstr "ゴミ箱"
 
-#: ../classes/admin.php:153 ../classes/admin.php:250
+#: ../classes/admin.php:130 ../classes/admin.php:227
 #: ../ui/admin_templates.php:9
 msgid "Restore"
 msgstr "復元"
 
-#: ../classes/admin.php:249 ../ui/admin_templates.php:99
+#: ../classes/admin.php:226 ../ui/admin_templates.php:99
 msgid "Entry"
 msgstr "エントリー"
 
-#: ../classes/admin.php:249
+#: ../classes/admin.php:226
 msgid "View"
 msgstr "表示"
 
-#: ../classes/admin.php:288
+#: ../classes/admin.php:265
 msgid "Add Form to Page"
 msgstr "ページにフォームを追加"
 
-#: ../classes/admin.php:289
+#: ../classes/admin.php:266
 msgid "Insert Form Shortcode"
 msgstr "フォームのショートコードを挿入"
 
-#: ../classes/admin.php:289 ../classes/widget.php:8
+#: ../classes/admin.php:266 ../classes/widget.php:8
 msgid "Caldera Form"
 msgstr "Caldera フォーム"
 
-#: ../classes/admin.php:504 ../classes/admin.php:510 ../classes/admin.php:516
-#: ../classes/admin.php:517 ../ui/admin.php:31 ../ui/community.php:4
+#: ../classes/admin.php:481 ../classes/admin.php:487 ../classes/admin.php:493
+#: ../classes/admin.php:494 ../ui/admin.php:31 ../ui/community.php:4
 #: ../ui/edit.php:421 ../ui/extend.php:4
 msgid "Caldera Forms"
 msgstr "Caldera フォーム"
 
-#: ../classes/admin.php:505
+#: ../classes/admin.php:482
 msgid "Caldera Forms Admin"
 msgstr ""
 
-#: ../classes/admin.php:505
+#: ../classes/admin.php:482
 msgid "Forms"
 msgstr "フォーム"
 
-#: ../classes/admin.php:516 ../ui/community.php:7
+#: ../classes/admin.php:493 ../ui/community.php:7
 msgid "Community"
 msgstr "コミュニティ"
 
-#: ../classes/admin.php:517 ../ui/extend.php:7
+#: ../classes/admin.php:494 ../ui/extend.php:7
 msgid "Extend"
 msgstr "拡張する"
 
-#: ../classes/admin.php:703 ../classes/admin.php:774
+#: ../classes/admin.php:680 ../classes/admin.php:751
 msgid "Sorry, please try again"
 msgstr "もう一度試してください"
 
-#: ../classes/admin.php:703
+#: ../classes/admin.php:680
 msgid "Form Delete Error"
 msgstr "フォーム削除エラー"
 
-#: ../classes/admin.php:765
+#: ../classes/admin.php:742
 msgid "Sorry, File is not valid."
 msgstr "ファイルに対応していません。"
 
-#: ../classes/admin.php:765 ../classes/admin.php:769 ../classes/admin.php:774
+#: ../classes/admin.php:742 ../classes/admin.php:746 ../classes/admin.php:751
 msgid "Form Import Error"
 msgstr "フォームのインポート エラー"
 
-#: ../classes/admin.php:769
+#: ../classes/admin.php:746
 msgid "Sorry, File not uploaded."
 msgstr "ファイルのアップロードに失敗しました。"
 
-#: ../classes/admin.php:783
+#: ../classes/admin.php:760
 msgid "Form does not exist."
 msgstr "フォームが見つかりません。"
 
-#: ../classes/admin.php:816
+#: ../classes/admin.php:793
 msgid "Export selection has expired"
 msgstr "エクスポートの設定"
 
-#: ../classes/admin.php:816
+#: ../classes/admin.php:793
 msgid "Export Expired"
 msgstr ""
 
-#: ../classes/admin.php:977
+#: ../classes/admin.php:954
 msgid "Form has been successfuly submitted. Thank you."
 msgstr "送信されました。有難うございます。"
 
-#: ../classes/admin.php:1013 ../classes/admin.php:1029
+#: ../classes/admin.php:990 ../classes/admin.php:1006
 msgid "Layout"
 msgstr "レイアウト"
 
-#: ../classes/admin.php:1031
+#: ../classes/admin.php:1008
 msgid "Layout Builder"
 msgstr "レイアウト ビルダー"
 
-#: ../classes/admin.php:1041
+#: ../classes/admin.php:1018
 msgid "Pages"
 msgstr "ページ"
 
-#: ../classes/admin.php:1043
+#: ../classes/admin.php:1020
 msgid "Form Pages"
 msgstr ""
 
-#: ../classes/admin.php:1047
+#: ../classes/admin.php:1024
 msgid "Processors"
 msgstr "処理"
 
-#: ../classes/admin.php:1049 ../ui/panels/processors.php:166
+#: ../classes/admin.php:1026 ../ui/panels/processors.php:166
 msgid "Form Processors"
 msgstr "フォーム処理"
 
-#: ../classes/admin.php:1053 ../classes/admin.php:1055
+#: ../classes/admin.php:1030 ../classes/admin.php:1032
 #: ../ui/panels/variables.php:80
 msgid "Variables"
 msgstr "変数"
 
-#: ../classes/admin.php:1062
+#: ../classes/admin.php:1039
 msgid "Responsive"
 msgstr "レスポンシブ"
 
-#: ../classes/admin.php:1064
+#: ../classes/admin.php:1041
 msgid "Resposive Settings"
 msgstr "レスポンシブ設定"
 
-#: ../classes/admin.php:1068
+#: ../classes/admin.php:1045
 msgid "Grid Collapse"
 msgstr "グリッドを縮小表示"
 
-#: ../classes/admin.php:1070
+#: ../classes/admin.php:1047
 msgid ""
 "Set the smallest screen size at which to collapse the grid. (based on "
 "Bootstrap 3.0)"
 msgstr "縮小表示次の最小表示サイズを設定 (Bootstrap 3.0 に基づく)"
 
-#: ../classes/admin.php:1077
+#: ../classes/admin.php:1054
 msgid "Maintain grid always"
 msgstr "常にグリッド設定を保持する"
 
-#: ../classes/admin.php:1097 ../ui/panels/emailer.php:32
+#: ../classes/admin.php:1074 ../ui/panels/emailer.php:32
 msgid "Mailer"
 msgstr "メーラー"
 
-#: ../classes/admin.php:1099
+#: ../classes/admin.php:1076
 msgid "Email Notification Settings"
 msgstr "メール通知設定"
 
@@ -179,243 +179,212 @@ msgstr "権限がありません。"
 msgid "Caldera Forms Notification"
 msgstr "Caldera フォームの通知"
 
-#: ../classes/core.php:793
+#: ../classes/core.php:807
 msgid "Auto Responder"
 msgstr "自動返信メール"
 
-#: ../classes/core.php:794
+#: ../classes/core.php:808
 msgid "Sends out an auto response e-mail"
 msgstr "自動返信メールを送る"
 
-#: ../classes/core.php:798
+#: ../classes/core.php:812
 msgid "Thank you for contacting us"
 msgstr "お問い合わせ有難うございます。"
 
-#: ../classes/core.php:802
+#: ../classes/core.php:816
 msgid "Redirect"
 msgstr "転送"
 
-#: ../classes/core.php:803
+#: ../classes/core.php:817
 msgid "Redirects user to URL on successful submit"
 msgstr "送信成功後転送するURL"
 
-#: ../classes/core.php:872
+#: ../classes/core.php:886
 msgid "Calculation"
 msgstr "計算"
 
-#: ../classes/core.php:875 ../classes/core.php:897 ../classes/core.php:934
-#: ../classes/core.php:1017 ../classes/core.php:1117
+#: ../classes/core.php:889 ../classes/core.php:911 ../classes/core.php:948
+#: ../classes/core.php:1031 ../classes/core.php:1131
 msgid "Special"
 msgstr "スペシャル"
 
-#: ../classes/core.php:875
+#: ../classes/core.php:889
 msgid "Math"
 msgstr ""
 
-#: ../classes/core.php:876
+#: ../classes/core.php:890
 msgid "Calculate values"
 msgstr "計算値"
 
-#: ../classes/core.php:883
+#: ../classes/core.php:897
 msgid "Total"
 msgstr "合計"
 
-#: ../classes/core.php:895
+#: ../classes/core.php:909
 msgid "Range Slider"
 msgstr "レンジ スライダー"
 
-#: ../classes/core.php:898
+#: ../classes/core.php:912
 msgid "Range Slider input field"
 msgstr "レンジ スライダー入力フィールド"
 
-#: ../classes/core.php:932
+#: ../classes/core.php:946
 msgid "Star Rating"
 msgstr "スター評価"
 
-#: ../classes/core.php:934
+#: ../classes/core.php:948
 msgid "Feedback"
 msgstr ""
 
-#: ../classes/core.php:935
+#: ../classes/core.php:949
 msgid "Star rating input for feedback"
 msgstr "フィードバックのスター評価"
 
-#: ../classes/core.php:967
+#: ../classes/core.php:981
 msgid "Phone Number"
 msgstr "電話番号"
 
-#: ../classes/core.php:968
+#: ../classes/core.php:982
 msgid "Phone number with masking"
 msgstr "フォーマット化された電話番号"
 
-#: ../classes/core.php:970 ../classes/core.php:992 ../classes/core.php:1059
-#: ../classes/core.php:1095 ../classes/core.php:1105 ../classes/core.php:1202
-#: ../classes/core.php:1228
+#: ../classes/core.php:984 ../classes/core.php:1006 ../classes/core.php:1073
+#: ../classes/core.php:1109 ../classes/core.php:1119 ../classes/core.php:1216
+#: ../classes/core.php:1242
 msgid "Text Fields"
 msgstr "テキスト入力"
 
-#: ../classes/core.php:970 ../classes/core.php:992 ../classes/core.php:1007
-#: ../classes/core.php:1059 ../classes/core.php:1075 ../classes/core.php:1095
-#: ../classes/core.php:1105 ../classes/core.php:1146 ../classes/core.php:1165
-#: ../classes/core.php:1184 ../ui/edit.php:148
+#: ../classes/core.php:984 ../classes/core.php:1006 ../classes/core.php:1021
+#: ../classes/core.php:1073 ../classes/core.php:1089 ../classes/core.php:1109
+#: ../classes/core.php:1119 ../classes/core.php:1160 ../classes/core.php:1179
+#: ../classes/core.php:1198 ../ui/edit.php:148
 msgid "Basic"
 msgstr "ベーシック"
 
-#: ../classes/core.php:970
+#: ../classes/core.php:984
 msgid "User"
 msgstr ""
 
-#: ../classes/core.php:989 ../classes/core.php:990
+#: ../classes/core.php:1003 ../classes/core.php:1004
 msgid "Single Line Text"
 msgstr "一行のテキスト入力"
 
-#: ../classes/core.php:1003 ../classes/core.php:1007
+#: ../classes/core.php:1017 ../classes/core.php:1021
 msgid "File"
 msgstr ""
 
-#: ../classes/core.php:1004
+#: ../classes/core.php:1018
 msgid "File Uploader"
 msgstr "ファイル アップローダ"
 
-#: ../classes/core.php:1014
+#: ../classes/core.php:1028
 msgid "reCAPTCHA"
 msgstr ""
 
-#: ../classes/core.php:1015
+#: ../classes/core.php:1029
 msgid "reCAPTCHA anti-spam field"
 msgstr "reCAPTCHA アンチスパム フィールド"
 
-#: ../classes/core.php:1039
+#: ../classes/core.php:1053
 msgid "HTML"
 msgstr ""
 
-#: ../classes/core.php:1040
+#: ../classes/core.php:1054
 msgid "Add text/html content"
 msgstr "text/html コンテンツの追加"
 
-#: ../classes/core.php:1042 ../fields/html/config_template.php:2
+#: ../classes/core.php:1056 ../fields/html/config_template.php:2
 msgid "Content"
 msgstr "コンテンツ"
 
-#: ../classes/core.php:1056 ../classes/core.php:1057
+#: ../classes/core.php:1070 ../classes/core.php:1071
 msgid "Hidden"
 msgstr "非表示"
 
-#: ../classes/core.php:1072 ../fields/button/config_template.php:6
+#: ../classes/core.php:1086 ../fields/button/config_template.php:6
 msgid "Button"
 msgstr ""
 
-#: ../classes/core.php:1073
+#: ../classes/core.php:1087
 msgid "Button, Submit and Reset types"
 msgstr "ボタン、送信、リセット"
 
-#: ../classes/core.php:1075
+#: ../classes/core.php:1089
 msgid "Buttons"
 msgstr ""
 
-#: ../classes/core.php:1092 ../classes/core.php:1093
+#: ../classes/core.php:1106 ../classes/core.php:1107
 msgid "Email Address"
 msgstr "メールアドレス"
 
-#: ../classes/core.php:1102 ../classes/core.php:1103
+#: ../classes/core.php:1116 ../classes/core.php:1117
 msgid "Paragraph Textarea"
 msgstr "テキスト エリア入力"
 
-#: ../classes/core.php:1115 ../classes/core.php:1116
+#: ../classes/core.php:1129 ../classes/core.php:1130
 msgid "Toggle Switch"
 msgstr "トグル スイッチ"
 
-#: ../classes/core.php:1117 ../classes/core.php:1146 ../classes/core.php:1165
-#: ../classes/core.php:1184
+#: ../classes/core.php:1131 ../classes/core.php:1160 ../classes/core.php:1179
+#: ../classes/core.php:1198
 msgid "Select Options"
 msgstr ""
 
-#: ../classes/core.php:1143 ../classes/core.php:1144
+#: ../classes/core.php:1157 ../classes/core.php:1158
 msgid "Dropdown Select"
 msgstr "ドロップダウンリスト"
 
-#: ../classes/core.php:1162 ../classes/core.php:1163
+#: ../classes/core.php:1176 ../classes/core.php:1177
 msgid "Checkbox"
 msgstr "チェックボックス"
 
-#: ../classes/core.php:1181 ../classes/core.php:1182
+#: ../classes/core.php:1195 ../classes/core.php:1196
 msgid "Radio"
 msgstr "ラジオボタン"
 
-#: ../classes/core.php:1199 ../classes/core.php:1200
+#: ../classes/core.php:1213 ../classes/core.php:1214
 msgid "Date Picker"
 msgstr "日付ピッカー"
 
-#: ../classes/core.php:1202 ../classes/core.php:1228
+#: ../classes/core.php:1216 ../classes/core.php:1242
 msgid "Pickers"
 msgstr ""
 
-#: ../classes/core.php:1226 ../classes/core.php:1227
+#: ../classes/core.php:1240 ../classes/core.php:1241
 msgid "Color Picker"
 msgstr "カラーピッカー"
 
-#: ../classes/core.php:1525
+#: ../classes/core.php:1539
 msgid "System Tags"
 msgstr "システムタグ"
 
-#: ../classes/core.php:2154
+#: ../classes/core.php:2168
 msgid "Invalid form ID"
 msgstr "無効なフォームID "
 
-#: ../classes/core.php:2352 ../classes/core.php:2358 ../classes/core.php:2365
-#: ../classes/core.php:3235 ../classes/core.php:3238 ../classes/core.php:3242
+#: ../classes/core.php:2366 ../classes/core.php:2372 ../classes/core.php:2379
+#: ../classes/core.php:3249 ../classes/core.php:3252 ../classes/core.php:3256
 msgid "Permission denied or entry does not exist."
 msgstr "アクセス権限が無いかエントリーが存在しません。"
 
-#: ../classes/core.php:2401
+#: ../classes/core.php:2415
 msgid "is required"
 msgstr "は必須項目"
 
-#: ../classes/foolic_license_key_validation.php:85
-msgid "Validate"
-msgstr "検証する"
+#: ../classes/selldock_updater.php:87
+msgid ""
+"An Unexpected HTTP Error occurred during the API request.</p> <p><a href=\"?"
+"\" onclick=\"document.location.reload(); return false;\">Try again</a>"
+msgstr ""
 
-#: ../classes/foolic_license_key_validation.php:88
-msgid "The license key has expired!"
-msgstr "ライセンスキーが無効です！"
-
-#: ../classes/foolic_license_key_validation.php:174
-msgid "Please enter a license key"
-msgstr "ライセンスキーを入力してください"
-
-#: ../classes/foolic_license_key_validation.php:280
-#: ../classes/foolic_license_key_validation.php:284
-msgid "An error occurred while trying to validate your license key"
-msgstr "ライセンスキーが検証できません"
-
-#: ../classes/foolic_license_key_validation.php:285
-#, php-format
-msgid "The response code of [%s] was not expected"
-msgstr "返信コード [%s] は間違っています"
-
-#: ../classes/foolic_license_key_validation.php:326
-msgid "The validation request was invalid"
-msgstr "検証できませんでした。"
-
-#: ../classes/foolic_license_key_validation.php:327
-msgid "The validation NONCE could not be validated!"
-msgstr "認証 NONCE ができませんでした。"
-
-#: ../classes/foolic_license_key_validation.php:331
-msgid "An unexpected error occurred"
+#: ../classes/selldock_updater.php:91
+#, fuzzy
+msgid "An unknown error occurred"
 msgstr "予期せぬエラーです"
 
-#: ../classes/foolic_update_checker.php:89
-#, php-format
-msgid ""
-"An unknown error occurred while getting info for the plugin %s. Response: %s"
-msgstr ""
-" %s プラグインのための情報を取得する際に予期せぬエラーが生じました。 応答: "
-"%s "
-
-#: ../classes/foolic_update_checker.php:97
-msgid "An unknown error occurred while getting info for the plugin %"
-msgstr " % プラグインのための情報を取得する際に予期せぬエラーが生じました。"
+#: ../classes/selldock_updater.php:114
+msgid "Please enter a license key"
+msgstr "ライセンスキーを入力してください"
 
 #: ../classes/widget.php:43
 msgid "Title"
@@ -776,6 +745,7 @@ msgid "Enable Ajax Submissions. (No page reloads)"
 msgstr "Ajax 送信を有効にする。(ページは再ロードされません)"
 
 #: ../includes/cf-ajax/plugin.php:70 ../includes/cf-ajax/plugin.php:81
+#: ../processors/redirect/config.php:10
 msgid "Redirecting"
 msgstr "リダイレクト中"
 
@@ -818,6 +788,15 @@ msgstr "メッセージ"
 #: ../processors/redirect/config.php:2
 msgid "URL"
 msgstr "URL"
+
+#: ../processors/redirect/config.php:8
+#, fuzzy
+msgid "Redirect Message"
+msgstr "転送"
+
+#: ../processors/redirect/config.php:11
+msgid "Message text shown when redirecting in Ajax mode."
+msgstr ""
 
 #: ../ui/admin.php:26
 msgid "Create Form"
@@ -1209,7 +1188,7 @@ msgstr ""
 msgid "No licensed addons installed."
 msgstr "ライセンスされたアドオンはありません。"
 
-#: ../ui/extend.php:54
+#: ../ui/extend.php:61
 msgid "Already Installed"
 msgstr "既にインストール済み"
 
@@ -1377,6 +1356,34 @@ msgstr "スタティック"
 #: ../ui/panels/variables.php:30 ../ui/panels/variables.php:48
 msgid "Passback"
 msgstr "パスバック"
+
+#~ msgid "Validate"
+#~ msgstr "検証する"
+
+#~ msgid "The license key has expired!"
+#~ msgstr "ライセンスキーが無効です！"
+
+#~ msgid "An error occurred while trying to validate your license key"
+#~ msgstr "ライセンスキーが検証できません"
+
+#~ msgid "The response code of [%s] was not expected"
+#~ msgstr "返信コード [%s] は間違っています"
+
+#~ msgid "The validation request was invalid"
+#~ msgstr "検証できませんでした。"
+
+#~ msgid "The validation NONCE could not be validated!"
+#~ msgstr "認証 NONCE ができませんでした。"
+
+#~ msgid ""
+#~ "An unknown error occurred while getting info for the plugin %s. Response: "
+#~ "%s"
+#~ msgstr ""
+#~ " %s プラグインのための情報を取得する際に予期せぬエラーが生じました。 応"
+#~ "答: %s "
+
+#~ msgid "An unknown error occurred while getting info for the plugin %"
+#~ msgstr " % プラグインのための情報を取得する際に予期せぬエラーが生じました。"
 
 #~ msgid "View Entries"
 #~ msgstr "エントリーを表示"

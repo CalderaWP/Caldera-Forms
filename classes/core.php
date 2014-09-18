@@ -714,7 +714,18 @@ class Caldera_Forms {
 		return self::$instance;
 	}
 
+	public static function override_redirect_notice($notices, $form){
 
+		if(isset($form['processors'])){
+			foreach($form['processors'] as $processor){
+				if($processor['type'] == 'form_redirect'){
+					$notices['success']['note'] = self::do_magic_tags($processor['config']['message']);
+				}
+			}
+		}
+		
+		return $notices;
+	}
 
 	public static function do_redirect($referrer, $form, $processid){
 		if(isset($form['processors'])){
@@ -727,6 +738,9 @@ class Caldera_Forms {
 						}
 					}
 					if(!empty($processor['config']['url'])){
+
+						// set message
+						add_filter('caldera_forms_render_notices', array('Caldera_Forms', 'override_redirect_notice' ), 10, 2 );
 
 						//passback urls
 						$referrer = parse_url( $referrer );

@@ -72,11 +72,15 @@ none yet.
 
 == Changelog ==
 
-= 1.1.4 (*, 2014) =
+= 1.1.5 (18 September, 2014) =
 
-= Corrected =
+= Fixed =
 * corrected typos in the textdomain
+* Validation classes added to Alerts and not Forms.
+* Minor bug fixes that where annoying me
 
+= Updated =
+* Handlebars.js v2
 
 = 1.1.4 (17 August, 2014) =
 

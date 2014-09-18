@@ -63,3 +63,41 @@
 .caldera-grid .alert-danger {
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 }
+.caldera-grid .has-error .help-block,
+.caldera-grid .has-error .control-label,
+.caldera-grid .has-error .radio,
+.caldera-grid .has-error .checkbox,
+.caldera-grid .has-error .radio-inline,
+.caldera-grid .has-error .checkbox-inline {
+  color: #dd4b39;
+}
+.caldera-grid .has-error .form-control {
+  border-color: #dd4b39;
+}
+.caldera-grid .has-error .form-control:focus {
+  border-color: #c23321;
+}
+.caldera-grid .has-error .input-group-addon {
+  color: #dd4b39;
+  border-color: #dd4b39;
+  background-color: #f2dede;
+}
+.caldera-grid .has-error .form-control-feedback {
+  color: #dd4b39;
+}
+.caldera-grid .has-error .form-control {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.caldera-grid .has-error .form-control:hover {
+  border-color: #dd4b39;
+}
+.caldera-grid .has-error .form-control:focus {
+  border-color: #dd4b39;
+}
+
+
+
+
+
+
