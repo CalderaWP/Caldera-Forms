@@ -82,6 +82,9 @@ none yet.
 = Updated =
 * Handlebars.js v2
 
+= Added =
+* Gravatar field for live display of gravatar.
+
 = 1.1.4 (17 August, 2014) =
 
 = Improved =

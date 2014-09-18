@@ -25,3 +25,44 @@ function cf_custom_field_classes(){
 </div>
 <?php
 }
+
+
+add_filter('caldera_forms_get_field_types', 'cf_live_gravatar_field');
+
+function cf_live_gravatar_field($fieldtypes){
+
+	$fieldtypes['live_gravatar'] = array(
+		"field"			=>	"Gravatar",
+		"file"			=>	CFCORE_PATH . "fields/gravatar/field.php",
+		"category"		=>	"User,Special",
+		"description" 	=> 'A live gravatar preview',
+		"setup"			=>	array(
+			"template"	=>	CFCORE_PATH . "fields/gravatar/config.php",
+			"preview"	=>	CFCORE_PATH . "fields/gravatar/preview.php",
+			"not_supported"	=>	array(
+				'entry_list'
+			)
+		)
+	);
+	return $fieldtypes;
+}
+
+
+add_action( 'wp_ajax_cf_live_gravatar_get_gravatar', 		'cf_live_gravatar_get_gravatar' );
+add_action( 'wp_ajax_nopriv_cf_live_gravatar_get_gravatar', 'cf_live_gravatar_get_gravatar' );
+
+
+function cf_live_gravatar_get_gravatar(){
+	if( empty($_POST['preview'] ) ){
+		if( !is_email( $_POST['email'] ) && !empty($_POST['email'])){
+			exit;
+		}
+	}
+
+	if( empty( $_POST['email'] ) && is_user_logged_in() ){
+		$_POST['email'] = get_current_user_id();
+	}
+
+	echo get_avatar( $_POST['email'], (int) $_POST['size'], $_POST['generator']);	
+	exit;
+}

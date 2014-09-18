@@ -75,15 +75,16 @@ class Caldera_Forms_Admin {
 		add_action( 'admin_footer', array( $this, 'add_shortcode_inserter'));
 
 
-		$addons = apply_filters( 'caldera_forms_get_addons', array() );
+		$addons = apply_filters( 'caldera_forms_get_active_addons', array() );
+		if(!empty($addons)){
+			foreach($addons as $slug=>$addon){
 
-		foreach($addons as $slug=>$addon){
+				if($addon['type'] == 'selldock'){
+					// selldock type
+					new SellDock_Updater( $addon['slug'], $addon['file']);
+				}
 
-			if($addon['type'] == 'selldock'){
-				// selldock type
-				new SellDock_Updater( $addon['slug'], $addon['file']);
 			}
-
 		}
 
 	}

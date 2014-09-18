@@ -17,7 +17,7 @@
 <div class="form-extend-page-wrap" id="form-extend-viewer"></div>
 <div class="form-extend-page-wrap" id="form-license-viewer" style="display:none;">
 	<?php
-	$addons = apply_filters( 'caldera_forms_get_addons', array() );
+	$addons = apply_filters( 'caldera_forms_get_active_addons', array() );
 	if(empty($addons)){
 		echo '<p class="description">' . __('No licensed addons installed.', 'caldera-forms') . '</p>';
 	}else{
