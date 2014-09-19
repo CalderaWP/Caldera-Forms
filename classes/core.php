@@ -771,7 +771,7 @@ class Caldera_Forms {
 			}
 		}
 		return $referrer;
-	}	
+	}
 
 	public static function send_auto_response($config, $form){
 		global $form;
@@ -2226,6 +2226,32 @@ class Caldera_Forms {
 		if(empty($form['ID']) || $form['ID'] != $_POST['_cf_frm_id']){
 			return;
 		}
+
+		// instance number
+		$form_instance_number = 1;
+		if(isset($_POST['_cf_frm_ct'])){
+			$form_instance_number = $_POST['_cf_frm_ct'];
+		}
+
+		// check honey
+		if(isset($form['check_honey'])){
+			// use multiple honey words
+			$honey_words = apply_filters('caldera_forms_get_honey_words', array('web_site', 'url', 'email', 'company', 'name'));
+			foreach($_POST as $honey_word=>$honey_value){
+				if(strlen($honey_value) && in_array($honey_word, $honey_words)){
+					// yupo - bye bye
+					$referrer['query']['cf_su'] = $form_instance_number;
+					$query_str = array(
+						'cf_er' => $process_id
+					);
+					if(!empty($referrer['query'])){
+						$query_str = array_merge($referrer['query'], $query_str);
+					}
+					$referrer = $referrer['path'] . '?' . http_build_query($query_str);
+					return self::form_redirect('complete', $referrer, $form, uniqid('_cf_bliss_') );
+				}
+			}
+		}
 		// init filter
 		$form = apply_filters('caldera_forms_submit_get_form', $form);
 
@@ -2241,13 +2267,6 @@ class Caldera_Forms {
 		// check source is ajax to overide 
 		if( !empty($_POST['cfajax']) && $_POST['cfajax'] == $form['ID'] ){
 			$form['form_ajax'] = 1;
-		}
-
-
-		// instance number
-		$form_instance_number = 1;
-		if(isset($_POST['_cf_frm_ct'])){
-			$form_instance_number = $_POST['_cf_frm_ct'];
 		}
 		
 		// get all fieldtype
@@ -3586,8 +3605,18 @@ class Caldera_Forms {
 			}
 			$out .= "</ol></span>\r\n";
 			}
+			
+			// sticky sticky honey
+			if(isset($form['check_honey'])){
+				$out .= "<div class=\"hide\" style=\"display:none; overflow:hidden;height:0;width:0;\">\r\n";
+					$honey_words = apply_filters('caldera_forms_get_honey_words', array('web_site', 'url', 'email', 'company', 'name'));
+					$word = $honey_words[rand(0, count($honey_words) - 1 )];
+					$out .= "<label>". ucwords( str_replace('_', ' ', $word) ) ."</label><input type=\"text\" name=\"".$word."\" value=\"\" autocomplete=\"off\">\r\n";
+				$out .= "</div>";
+			}
 
 			$out .= $grid->renderLayout();
+
 			$out .= "</" . $form_element . ">\r\n";
 		}
 		
