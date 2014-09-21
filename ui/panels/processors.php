@@ -268,19 +268,21 @@ function build_processor_types($default = null){
 do_action('caldera_forms_processor_templates', $form_processors);
 
 foreach($form_processors as $processor=>$config){
-	if(isset($config['template'])){
-		echo "<script type=\"text/html\" id=\"" . $processor . "-tmpl\">\r\n";
-			if(isset($config['description'])){
-				echo "<p class=\"description\">" . $config['description'] ."</p><br>\r\n";
-			}
-			if(isset($config['conditionals'])){
-				if(empty($config['conditionals'])){
-					echo '<span class="no-conditions"></span>';
-				}
-			}
-			include $config['template'];
-		echo "\r\n</script>\r\n";		
+	echo "<script type=\"text/html\" id=\"" . $processor . "-tmpl\">\r\n";
+	if(isset($config['description'])){
+		echo "<p class=\"description\">" . $config['description'] ."</p><br>\r\n";
 	}
+	if(isset($config['conditionals'])){
+		if(empty($config['conditionals'])){
+			echo '<span class="no-conditions"></span>';
+		}
+	}	
+	if(isset($config['template'])){
+		include $config['template'];
+	}else{
+		echo '<p>' . __('This processor has no configurable options.', 'caldera-forms') . '</p>';
+	}
+	echo "\r\n</script>\r\n";
 
 }
 ?>
