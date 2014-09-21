@@ -819,10 +819,94 @@ class Caldera_Forms {
 				"single"			=>	false
 			)
 		);
+		// akismet 
+		$wp_api_key = get_option( 'wordpress_api_key' );
+		if(!empty($wp_api_key)){
+			$internal_processors['akismet'] = array(
+				"name"				=>	__('Akismet', 'caldera-forms'),
+				"description"		=>	__("Anti-spam filtering", 'caldera-forms'),
+				"pre_processor"		=>	array( $this, 'akismet_scanner'),
+				"template"			=>	CFCORE_PATH . "processors/akismet/config.php",
+				"single"			=>	false,
+			);
+		}
 
 		return array_merge( $processors, $internal_processors );
 
 	}
+
+	static public function akismet_scanner($config, $form){
+		global $post;
+
+		$wp_api_key = get_option( 'wordpress_api_key' );
+		if(empty($wp_api_key)){
+			return array('type' => 'error', 'note' => __('Akismet not setup.'));
+		}
+		// set permalink
+		if($post->ID){
+			$permalink = get_permalink( $post->ID );
+		}else{
+			$permalink = get_site_url();
+		}
+		// is contact form or reg form
+		$regform = self::get_processor_by_type('user_register', $form);
+		if(!empty($regform)){
+			$type = 'signup';
+		}else{
+			$type = 'contact-form';
+		}
+		// Call to comment check
+		$data = array(
+			'blog' 					=> get_site_url(),
+			'user_ip' 				=> $_SERVER['REMOTE_ADDR'],
+			'user_agent' 			=> $_SERVER['HTTP_USER_AGENT'],
+			'referrer'				=> $_SERVER['HTTP_REFERER'],
+			'permalink' 			=> $permalink,
+			'comment_type' 			=> $type,
+			'comment_author' 		=> self::do_magic_tags($config['sender_name']),
+			'comment_author_email'	=> self::do_magic_tags($config['sender_email'])
+		);
+
+		if(!empty($config['url'])){
+			$data['comment_author_url']	= self::do_magic_tags($config['url']);
+		};
+		if(!empty($config['content'])){
+			$data['comment_content']	= self::do_magic_tags($config['content']);	
+		};
+
+		$request = http_build_query($data);
+
+		$host = $http_host = $wp_api_key.'.rest.akismet.com';
+		$path = '/1.1/comment-check';
+		$port = 80;
+		$akismet_ua = "WordPress/3.8.1 | Akismet/2.5.9";
+		$content_length = strlen( $request );
+		$http_request = "POST $path HTTP/1.0\r\n";
+		$http_request .= "Host: $host\r\n";
+		$http_request .= "Content-Type: application/x-www-form-urlencoded\r\n";
+		$http_request .= "Content-Length: {$content_length}\r\n";
+		$http_request .= "User-Agent: {$akismet_ua}\r\n";
+		$http_request .= "\r\n";
+		$http_request .= $request;
+		$response = '';
+		if( false != ( $fs = @fsockopen( $http_host, $port, $errno, $errstr, 10 ) ) ) {
+		
+			fwrite( $fs, $http_request );
+			
+			while ( !feof( $fs ) )
+			$response .= fgets( $fs, 1160 ); // One TCP-IP packet
+			fclose( $fs );
+			
+			$response = explode( "\r\n\r\n", $response, 2 );
+
+		}
+
+		if ( 'true' == $response[1] ){
+			return array('type' => 'error', 'note' => self::do_magic_tags($config['error']));
+		}
+
+	}
+
 
 	static public function run_calculation($value, $field, $form){		
 
