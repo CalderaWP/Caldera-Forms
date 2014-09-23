@@ -2932,8 +2932,10 @@ class Caldera_Forms {
 		//	}
 		//}
 
-
-
+		// not a post-
+		if(!isset($post->post_content)){
+			return;
+		}
 
 		$codes = get_shortcode_regex();
 		preg_match_all('/' . $codes . '/s', $post->post_content, $found);
