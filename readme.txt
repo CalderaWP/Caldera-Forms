@@ -12,7 +12,7 @@ Create complex grid based, responsive forms easily with an easy to use drag and 
 Caldera Forms is a free, simple form builder with a layout builder that enables you to create the format you want for your form. It is fully responsive and with form processors, it gives you flexibility to handle the form data how you need it.
 
 For issues and updates - Caldera Forms is on [GitHub](https://github.com/Desertsnowman/Caldera-Forms)
-Form Demos and Templates can be found on the demo site [Caldera Forms Demos](http://demo.calderaforms.com/)
+Form Docs, Demos & Templates can be found on the docs site (work in progress) [Caldera Forms Docs](http://docs.calderaforms.com/)
 
 = A Few Feature Highlights =
 * Responsive Grid design based on Bootstrap 3

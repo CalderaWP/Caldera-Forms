@@ -3,7 +3,7 @@ Caldera-Forms
 
 WordPress form builder... I'll make a better description later.
 
-
+For more detailed docs on these, [see the docs site](http://docs.calderaforms.com/category/developer-api/hooks/)
 
 Filters:
 
@@ -76,7 +76,6 @@ Actions:
 - caldera_forms_import_form
 - caldera_forms_save_form_register
 - caldera_forms_save_form
-- caldera_forms_save_form_register
 - caldera_forms_create_form
 
 
