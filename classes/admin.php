@@ -779,9 +779,11 @@ class Caldera_Forms_Admin {
 
 			//build labels
 			$labels = array();
+			$structure = array();
 			if(!empty($form['fields'])){
 				foreach($form['fields'] as $field){
 					$labels[$field['slug']] = $field['label'];
+					$structure[$field['slug']] = null;
 				}
 			}
 			$filter = null;
@@ -808,11 +810,16 @@ class Caldera_Forms_Admin {
 
 			WHERE `entry`.`form_id` = %s
 			" . $filter . "
+			AND `entry`.`status` = 'active'
 			ORDER BY `entry`.`datestamp` DESC;", $_GET['export']));
 
 			$data = array();
 			$headers = array();
 			foreach( $rawdata as $entry){
+				// build structure
+				if(!isset($data[$entry->_entryid])){
+					$data[$entry->_entryid] = $structure;
+				}
 				// check for json
 				if(substr($entry->value, 0,2) === '{"' && substr($entry->value, strlen($entry->value)-2 ) === '"}'){
 					$row = json_decode($entry->value, true);
@@ -850,7 +857,6 @@ class Caldera_Forms_Admin {
 			header("Content-Type: application/octet-stream");
 			header("Content-Disposition: attachment; filename=\"" . sanitize_file_name( $form['name'] ) . ".csv\";" );
 			header("Content-Transfer-Encoding: binary"); 
-			
 			$df = fopen("php://output", 'w');
 			fputcsv($df, $headers);
 			foreach($data as $row){
