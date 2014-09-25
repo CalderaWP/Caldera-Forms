@@ -93,7 +93,10 @@
 			}
 			
 		}
-
+		$('html, body').animate({
+			scrollTop: form.offset().top - 100
+		}, 500);
+		
 		$(document).trigger('cf.pagenav');
 
 	})
