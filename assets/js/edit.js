@@ -893,6 +893,7 @@ jQuery(document).ready(function($){
 			field_lables.hide();
 		}else{
 			values.show().parent().show();
+			values.show().parent().parent().show();
 			lables.css('width', '');
 			field_lables.show();
 		}
