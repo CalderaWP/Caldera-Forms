@@ -72,11 +72,17 @@ none yet.
 
 == Changelog ==
 
-= 1.1.5 (18 September, 2014) =
+= 1.1.6 (25 September, 2014) =
 
 = Added =
+* Akismet spam filtering processor. Listed once Askismet plugin is active and activated.
 * Honeypot spamtrap option to place an invisible field in the form to trick spam bots.
 
+= Fixed =
+* Checkboxes, Radio & Dropdown select Show Values option corrected to show the values as intended.
+* Better Instancing of multiple forms on page.
+* Minor activation output error.
+* Minor Bugfixes.
 
 = 1.1.5 (18 September, 2014) =
 
