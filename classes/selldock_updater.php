@@ -3,8 +3,8 @@
  *  SellDock autoupdater class
  */
 
-if( !class_exists('SellDock_Updater') ) {
-    class SellDock_Updater {
+if( !class_exists('SellDock_Updater_v2') ) {
+    class SellDock_Updater_v2 {
     
         var $api_url = 'https://selldock.com/products/';
         var $plugin_id = 28;
