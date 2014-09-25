@@ -105,6 +105,14 @@ class Caldera_Forms {
 	public static function activate_caldera_forms(){
 		global $wpdb;
 
+		$version = get_option('_calderaforms_lastupdate');
+		if(!empty($version) ){
+			if( version_compare($version, CFCORE_VER) === 0 ){ // no change
+				//echo version_compare('1.1.1', CFCORE_VER);
+				return;
+			}
+		}
+
 		$tables = $wpdb->get_results("SHOW TABLES", ARRAY_A);
 		foreach($tables as $table){
 			$alltables[] = implode($table);
@@ -165,6 +173,9 @@ class Caldera_Forms {
 			dbDelta( $values_table );
 		
 		}else{
+			if($version >= '1.1.5'){
+				return; // only if 1.1.4 or lower
+			}
 			// check for field_id from 1.0.4
 			$columns = $wpdb->get_results("SHOW COLUMNS FROM `" . $wpdb->prefix . "cf_form_entry_values`", ARRAY_A);
 			$fields = array();
