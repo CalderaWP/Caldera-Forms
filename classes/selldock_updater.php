@@ -3,21 +3,21 @@
  *  SellDock autoupdater class
  */
 
-if( !class_exists('SellDock_Updater_v2') ) {
-    class SellDock_Updater_v2 {
+if( !class_exists('SellDock_Updater_v3') ) {
+    class SellDock_Updater_v3 {
     
-        var $api_url = 'https://selldock.com/products/';
+        var $api_url = 'https://selldock.com/';
         var $plugin_id = 28;
         var $plugin_path;
         var $plugin_slug;
         var $license_key;
     
-        function __construct( $plugin_slug, $plugin_path, $license_key = null ) {
-            $this->api_url .= $plugin_slug.'/';
+        function __construct( $plugin_slug, $plugin_path ) {
+            //$this->api_url .= $plugin_slug.'/';
             $this->plugin_slug = $plugin_slug;
             $this->plugin_path = basename( plugin_dir_path( $plugin_path ) ) . '/' . basename( $plugin_path );
-            $this->license_key = $license_key;
-    	
+            $this->license_key = get_option('_' . $this->plugin_slug . '_license_key' );
+        
 
             add_filter( 'pre_set_site_transient_update_plugins', array(&$this, 'check_for_update') );
             add_filter( 'plugins_api', array(&$this, 'plugin_api_call'), 10, 3 );
@@ -44,17 +44,16 @@ if( !class_exists('SellDock_Updater_v2') ) {
                 'slug'          => $this->plugin_slug,
                 'version'       => $transient->checked[$this->plugin_path]
             );
-            if ($this->license_key) $request_args['license'] = $this->license_key;
-
             
-            $request_string = $this->prepare_request( 'plugin_update_check', $request_args );
+            $request_string = $this->prepare_request( $request_args );
 
-            $raw_response = wp_remote_post( $this->api_url, $request_string );
+            $raw_response = wp_remote_post( $this->api_url . 'updates/check/', $request_string );
             $response = null;
+
             if( !is_wp_error($raw_response) && ($raw_response['response']['code'] == 200) )
-                $response = unserialize($raw_response['body']);
+                $response = json_decode($raw_response['body']);
             
-            if( is_object($response) && !empty($response) ) {
+            if( is_object($response) && !empty($response) && !isset( $response->success ) ) {
                 // Feed the update data into WP updater
                 $transient->response[$this->plugin_path] = $response;
                 return $transient;
@@ -80,23 +79,29 @@ if( !class_exists('SellDock_Updater_v2') ) {
                 'version' => (isset($plugin_info->checked)) ? $plugin_info->checked[$this->plugin_path] : 0 // Current version
             );
             
-            $request_string = $this->prepare_request( $action, $request_args );
-            $raw_response = wp_remote_post( $this->api_url, $request_string );
+            $request_string = $this->prepare_request( $request_args );
+            $raw_response = wp_remote_post( $this->api_url . 'package/detail/', $request_string );            
 
             if( is_wp_error($raw_response) ){
                 $res = new WP_Error('plugins_api_failed', __('An Unexpected HTTP Error occurred during the API request.</p> <p><a href="?" onclick="document.location.reload(); return false;">Try again</a>'), $raw_response->get_error_message());
             } else {
-                $res = unserialize($raw_response['body']);
-                if ($res === false)
+                $res = json_decode( $raw_response['body'] );
+                if ($res === false){
                     $res = new WP_Error('plugins_api_failed', __('An unknown error occurred'), $raw_response['body']);
+                }
+                if(isset($res->sections)){
+                    $res->sections = json_decode($res->sections, true);
+                }
+                if(isset($res->banners)){
+                    $res->banners = json_decode($res->banners, true);
+                }
             }
-            
             return $res;
         }
     
-        function prepare_request( $action, $args ) {
+        function prepare_request( $args ) {
             global $wp_version;
-            $args = array_merge( array('action' => $action, 'license_key' => get_option('_caldera_engine_license_key'), 'url' => home_url() ), $args);
+            $args = array_merge( array( 'license_key' => get_option('_' . $this->plugin_slug . '_license_key'), 'url' => home_url() ), $args);
             return array(
                 'body' => $args,
                 'user-agent' => 'WordPress/'. $wp_version .'; '. home_url()
@@ -108,40 +113,36 @@ if( !class_exists('SellDock_Updater_v2') ) {
             die;
             return $res;
         }
-		
-		function selldock_activate(){
-			if(empty($_POST['license'])){
-				echo '<div id="key-notice" class="error" style="display:inline-block !important; "><p>'.__('Please enter a license key', 'caldera-forms').'</p></div>';
-				die;
-			}
-			global $wp_version;
-			$request_string = array(
-				'body' => array(
-					'action'  => 'product_activation', 
-					'license_key' => $_POST['license'],
-					'version'	=> $_POST['version'],
-					'url'		=>  home_url()
-					),
-				'user-agent' => 'WordPress/'. $wp_version .'; '. home_url()
-				);
+        
+        function selldock_activate(){
+            if(empty($_POST['license'])){
+                echo '<div id="key-notice" class="error" style="display:inline-block !important; "><p>'.__('Please enter a license key', 'caldera-forms').'</p></div>';
+                die;
+            }
+            global $wp_version;
+            $request_string = array(
+                'body' => array(
+                    'slug'  =>  $this->plugin_slug,
+                    'license_key' => $_POST['license'],
+                    'version'   => $_POST['version'],
+                    'url'       =>  home_url()
+                    ),
+                'user-agent' => 'WordPress/'. $wp_version .'; '. home_url()
+                );
 
-			$raw_response = wp_remote_post($this->api_url, $request_string );
-
-			if( !is_wp_error($raw_response) && ($raw_response['response']['code'] == 200) )
-				$response = unserialize($raw_response['body']);
-			
-			$out = array(
-				'result' => $response->result
-				);
-			if( !empty( $response->activation_key ) ){
-				update_option('_' . $this->plugin_slug . '_license_key', $response->activation_key);
-				set_site_transient( 'update_plugins', null );
-				echo '<div id="key-notice" class="updated" style="display:inline-block !important; "><p>'.$response->message.'</p></div>';
-			}else{
-				echo '<div id="key-notice" class="error" style="display:inline-block !important; "><p>'.$response->message.'</p></div>';
-			}
-			die;
-		}
+            $raw_response = wp_remote_post($this->api_url . 'package/activate', $request_string );
+            if( !is_wp_error($raw_response) && ($raw_response['response']['code'] == 200) )
+                $response = json_decode( $raw_response['body'] );
+            
+            if( !empty( $response->success ) ){
+                update_option('_' . $this->plugin_slug . '_license_key', $_POST['license']);
+                set_site_transient( 'update_plugins', null );
+                echo '<div id="key-notice" class="updated" style="display:inline-block !important; "><p>'.$response->data.'</p></div>';
+            }else{
+                echo '<div id="key-notice" class="error" style="display:inline-block !important; "><p>'.$response->data.'</p></div>';
+            }
+            die;
+        }
     
     }
 }

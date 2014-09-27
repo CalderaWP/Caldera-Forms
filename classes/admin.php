@@ -81,7 +81,7 @@ class Caldera_Forms_Admin {
 
 				if($addon['type'] == 'selldock'){
 					// selldock type
-					new SellDock_Updater_v2( $addon['slug'], $addon['file']);
+					new SellDock_Updater_v3( $addon['slug'], $addon['file']);
 				}
 
 			}
