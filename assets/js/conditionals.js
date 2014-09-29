@@ -26,7 +26,7 @@
 		for(var field in caldera_conditionals){
 
 			// each conditional
-			var fieldwrapper = $('#conditional_' + field);
+			var fieldwrapper = jQuery('#conditional_' + field);
 			
 			if(!fieldwrapper.length){
 				continue;
@@ -44,7 +44,7 @@
 				for(var lid in lines){					
 					/// get field 
 
-					var compareelement 	= $('[data-field="' + lines[lid].field + '_' + lines[lid].instance + '"]'),
+					var compareelement 	= jQuery('[data-field="' + lines[lid].field + '_' + lines[lid].instance + '"]'),
 					comparefield 	= [],
 					comparevalue	= (typeof lines[lid].value === 'function' ? lines[lid].value() : lines[lid].value);
 					
@@ -53,7 +53,7 @@
 					if( compareelement.is(':radio,:checkbox')){
 						compareelement = compareelement.filter(':checked');
 					}else if( compareelement.is('div')){
-						compareelement = $('<input>').val( compareelement.html() );
+						compareelement = jQuery('<input>').val( compareelement.html() );
 					}
 					if(!compareelement.length){
 						comparefield.push(lines[lid].field);
@@ -124,9 +124,9 @@
 
 			
 
-			var template	=	$('#conditional-' + field + '-tmpl').html(),
-			target		=	$('#conditional_' + field),
-			target_field=	$('[data-field="' + field + '"]'),
+			var template	=	jQuery('#conditional-' + field + '-tmpl').html(),
+			target		=	jQuery('#conditional_' + field),
+			target_field=	jQuery('[data-field="' + field + '"]'),
 			action;
 			
 			if(trues.length && trues.indexOf(true) >= 0){					
@@ -166,7 +166,7 @@
 			}else if (action === 'disable'){
 				if(!target.html().length){
 					target.html(template).trigger('cf.add');
-					$('[data-field="' + field + '"]').prop('disabled', 'disabled');
+					jQuery('[data-field="' + field + '"]').prop('disabled', 'disabled');
 				}else{
 					target_field.prop('disabled', 'disabled');
 				}
@@ -177,7 +177,7 @@
 	
 	if(typeof caldera_conditionals !== 'undefined'){
 		
-		$('.caldera_forms_form').on('change keyup', '[data-field]', function(e){
+		jQuery('.caldera_forms_form').on('change keyup', '[data-field]', function(e){
 			calders_forms_check_conditions();
 
 		});
