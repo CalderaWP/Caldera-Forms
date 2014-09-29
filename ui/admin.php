@@ -28,6 +28,7 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 ?><div class="caldera-editor-header">
 	<ul class="caldera-editor-header-nav">
 		<li class="caldera-editor-logo">
+			<span class="dashicons-cf-logo"></span>
 			<?php _e('Caldera Forms', 'caldera-forms'); ?>
 		</li>
 		<li class="caldera-forms-version">
