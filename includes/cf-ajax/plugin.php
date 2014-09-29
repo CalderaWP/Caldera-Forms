@@ -166,8 +166,8 @@ function cf_ajax_register_scripts($classes, $form){
 
 	// enqueue scripts
 	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script( 'cfajax-baldrick', CFCORE_URL . 'assets/js/jquery.baldrick.js', array('jquery'), '1.00', true );
-	wp_enqueue_script( 'cfajax-core', plugin_dir_url(__FILE__) . 'js/ajax-core.js', array('cfajax-baldrick'), '1.00', true );
+	wp_enqueue_script( 'cfajax-baldrick', CFCORE_URL . 'assets/js/jquery.baldrick.js', array('jquery'), CFCORE_VER, true );
+	wp_enqueue_script( 'cfajax-core', plugin_dir_url(__FILE__) . 'js/ajax-core.js', array('cfajax-baldrick'), CFCORE_VER, true );
 
 	$classes[] = 'cfajax-trigger';
 
@@ -178,9 +178,11 @@ function cf_ajax_setatts($atts, $form){
 	global $current_form_count;
 	
 	$resatts = array(
-		'data-target'	=>	'#caldera_notices_'.$current_form_count,
-		'data-template'	=>	'#cfajax_'.$form['ID'].'-tmpl',
-		'data-cfajax'	=>	$form['ID']
+		'data-target'		=>	'#caldera_notices_'.$current_form_count,
+		'data-template'		=>	'#cfajax_'.$form['ID'].'-tmpl',
+		'data-cfajax'		=>	$form['ID'],
+		'data-load-element' => '_parent',
+		'data-load-class' 	=> 'cf_processing',
 	);
 	if(!empty($form['hide_form'])){
 		$resatts['data-hiderows'] = "true";

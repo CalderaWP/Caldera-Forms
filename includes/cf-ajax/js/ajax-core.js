@@ -10,10 +10,8 @@ jQuery(function($){
 			method			:	'POST',
 			before			: function(el){
 				
-				var target	= $($(el).data('target')),
-					spinner = target.data('spinner'),
-					buttons = $(el).find(':submit');
-					buttons.prop('disabled',true).after('<img class="caldera_forms_ajax_spinner" src="' + spinner + '" style="margin: 5px;">');
+				var buttons = $(el).find(':submit');
+					buttons.prop('disabled',true);
 
 			},
 			callback		: function(obj){
@@ -22,10 +20,9 @@ jQuery(function($){
 				
 				var instance = obj.params.trigger.data('instance');
 
-				$('.caldera_forms_ajax_spinner').remove();
 				$('.caldera_ajax_error_wrap').removeClass('caldera_ajax_error_wrap').removeClass('has-error');
 				$('.caldera_ajax_error_block').remove();
-				console.log(obj.data.type);
+
 				if(obj.data.status === 'complete' || obj.data.type === 'success'){
 					if(obj.data.html){
 						obj.params.target.html(obj.data.html);
