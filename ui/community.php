@@ -1,6 +1,7 @@
 <div class="caldera-editor-header">
 	<ul class="caldera-editor-header-nav">
 		<li class="caldera-editor-logo">
+			<span class="dashicons-cf-logo"></span>
 			<?php echo __('Caldera Forms', 'caldera-forms'); ?>
 		</li>
 		<li class="caldera-element-type-label">

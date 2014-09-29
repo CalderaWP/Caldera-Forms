@@ -479,7 +479,7 @@ class Caldera_Forms_Admin {
 		
 		$forms = get_option( '_caldera_forms' );
 
-		$this->screen_prefix[] = add_menu_page( __('Caldera Forms', 'caldera-forms'), __('Caldera Forms', 'caldera-forms'), 'manage_options', $this->plugin_slug, array( $this, 'render_admin' ), 'dashicons-list-view', 52.999 );
+		$this->screen_prefix[] = add_menu_page( __('Caldera Forms', 'caldera-forms'), __('Caldera Forms', 'caldera-forms'), 'manage_options', $this->plugin_slug, array( $this, 'render_admin' ), 'dashicons-cf-logo', 52.999 );
 		add_submenu_page( $this->plugin_slug, __('Caldera Forms Admin', 'caldera-forms'), __('Forms', 'caldera-forms'), 'manage_options', $this->plugin_slug, array( $this, 'render_admin' ) );
 		
 		if( ! empty( $forms ) ){
@@ -506,6 +506,8 @@ class Caldera_Forms_Admin {
 	public function enqueue_admin_stylescripts() {
 
 		$screen = get_current_screen();
+
+		wp_enqueue_style( $this->plugin_slug .'-admin-icon-styles', CFCORE_URL . 'assets/css/dashicon.css', array(), self::VERSION );
 
 		if($screen->base === 'post'){
 			wp_enqueue_style( $this->plugin_slug .'-modal-styles', CFCORE_URL . 'assets/css/modals.css', array(), self::VERSION );

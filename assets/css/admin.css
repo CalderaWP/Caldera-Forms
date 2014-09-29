@@ -308,11 +308,10 @@ li.caldera-forms-version {
   font-size: 0.8em;
   padding: 12px 0;
 }
-li.caldera-editor-logo {
-  background: url("../images/lgo-icon.png") no-repeat scroll 0 8px / 26px auto rgba(0, 0, 0, 0);
+li.caldera-editor-logo {  
   font-size: 18px;
   font-weight: 300;
-  padding: 11px 12px 11px 34px;
+  padding: 11px 12px 11px 0;  
 }
 .caldera-editor-header-nav > li a {
   display: inline-block;

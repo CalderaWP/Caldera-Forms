@@ -25,11 +25,17 @@
 
 div.wp-menu-image.dashicons-cf-logo:before{
   font-family: 'caldera-forms' !important;
-  font-size: 18px !important;
-  color: #A3B745 !important;
+  font-size: 19px !important;
 }
 .dashicons-cf-logo:before {
   content: "\e604";
+}
+
+.caldera-editor-logo > span.dashicons-cf-logo{
+  font-size: 20px;
+  line-height: 15px;
+  vertical-align: -2px;
+  color: #a3be5f;
 }
 
 .current div.wp-menu-image.dashicons-cf-logo:before,
