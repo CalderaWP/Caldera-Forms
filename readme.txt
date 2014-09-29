@@ -3,7 +3,7 @@ Contributors: Desertsnowman
 Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator
 Requires at least: 3.9
 Tested up to: 4.0
-Stable tag: 1.1.6
+Stable tag: 1.1.7
 License: GPLv2
 
 Create complex grid based, responsive forms easily with an easy to use drag and drop layout builder.
@@ -71,6 +71,23 @@ none yet.
 3. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
+
+= 1.1.7 (29 September, 2014) =
+
+= Fixed =
+* Javascript error on deleting entries in pin mode
+* Minor bug fixes
+
+= Improved =
+* CSV exporter improvements
+
+= Added =
+* Ajax submissions on by default
+
+= Updated =
+* Balrick.JS updated to 2.3
+* Ajax spinner removed and replaced with overlay blocking.
+* Addon licensing v3
 
 = 1.1.6 (25 September, 2014) =
 
