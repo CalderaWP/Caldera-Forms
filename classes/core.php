@@ -1125,6 +1125,7 @@ class Caldera_Forms {
 				"file"		=>	CFCORE_PATH . "fields/recaptcha/field.php",
 				"category"	=>	__("Special", "caldera-forms"),
 				"handler"	=>	array($this, 'captcha_check'),
+				"capture"	=>	false,
 				"setup"		=>	array(
 					"template"	=>	CFCORE_PATH . "fields/recaptcha/config.php",
 					"preview"	=>	CFCORE_PATH . "fields/recaptcha/preview.php",
@@ -1150,6 +1151,7 @@ class Caldera_Forms {
 				"file"		=>	CFCORE_PATH . "fields/html/field.php",
 				"category"	=>	__("Content", "caldera-forms"),
 				"icon"		=>	CFCORE_URL . "fields/html/icon.png",
+				"capture"	=>	false,
 				"setup"		=>	array(
 					"preview"	=>	CFCORE_PATH . "fields/html/preview.php",
 					"template"	=>	CFCORE_PATH . "fields/html/config_template.php",
@@ -1182,6 +1184,7 @@ class Caldera_Forms {
 				"description" => __('Button, Submit and Reset types', 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/button/field.php",
 				"category"	=>	__("Buttons", "caldera-forms").', '.__("Basic", "caldera-forms"),
+				"capture"	=>	false,
 				"setup"		=>	array(
 					"template"	=>	CFCORE_PATH . "fields/button/config_template.php",
 					"preview"	=>	CFCORE_PATH . "fields/button/preview.php",
