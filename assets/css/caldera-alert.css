@@ -95,7 +95,12 @@
 .caldera-grid .has-error .form-control:focus {
   border-color: #dd4b39;
 }
-
+.caldera-grid.cf_processing {
+    background: url("../images/loading.gif") no-repeat scroll center center / 30px auto rgba(0, 0, 0, 0);
+}
+.caldera-grid.cf_processing > * {
+    opacity: 0.5;
+}
 
 
 
