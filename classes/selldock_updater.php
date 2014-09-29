@@ -131,7 +131,7 @@ if( !class_exists('SellDock_Updater_v3') ) {
                 );
 
             $raw_response = wp_remote_post($this->api_url . 'package/activate', $request_string );
-            if( !is_wp_error($raw_response) && ($raw_response['response']['code'] == 200) )
+            if( !is_wp_error($raw_response) )
                 $response = json_decode( $raw_response['body'] );
             
             if( !empty( $response->success ) ){
