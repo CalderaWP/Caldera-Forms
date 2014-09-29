@@ -114,9 +114,9 @@ class Caldera_Forms_Admin {
 						$result = $wpdb->query( "DELETE FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `id` IN (".implode(',', $items).");" );
 						$result = $wpdb->query( "DELETE FROM `" . $wpdb->prefix . "cf_form_entry_values` WHERE `entry_id` IN (".implode(',', $items).");" );
 						$result = $wpdb->query( "DELETE FROM `" . $wpdb->prefix . "cf_form_entry_meta` WHERE `entry_id` IN (".implode(',', $items).");" );
-						header('Content-Type: application/json');
+
 						$out['status'] = 'reload';
-						echo json_encode($out);
+						wp_send_json( $out );
 						break;
 					
 					default:
@@ -125,7 +125,7 @@ class Caldera_Forms_Admin {
 				}
 				
 				if( $result ){
-					header('Content-Type: application/json');
+
 					$out['status'] = $_POST['do'];
 					$out['undo'] = ( $_POST['do'] === 'trash' ? 'active' : __('Trash') );
 					$out['undo_text'] = ( $_POST['do'] === 'trash' ? __('Restore', 'caldera-forms') : __('Trash') );
@@ -133,7 +133,7 @@ class Caldera_Forms_Admin {
 					$out['entries'] = implode(',',$selectors);
 					$out['total']	= $wpdb->get_var($wpdb->prepare("SELECT COUNT(`id`) AS `total` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = %s && `status` = 'active';", $_POST['form']));
 					$out['trash']	= $wpdb->get_var($wpdb->prepare("SELECT COUNT(`id`) AS `total` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = %s && `status` = 'trash';", $_POST['form']));
-					echo json_encode($out);
+					wp_send_json( $out );
 				}
 				exit();
 
@@ -141,10 +141,9 @@ class Caldera_Forms_Admin {
 			case 'export':
 
 				$transientid = uniqid('cfe');
-				set_transient( $transientid, $_POST['items'], 180 );
-				header('Content-Type: application/json');
+				set_transient( $transientid, $_POST['items'], 180 );				
 				$out['url'] = "admin.php?page=caldera-forms&export=" . $_POST['form'] . "&tid=" . $transientid;
-				echo json_encode($out);
+				wp_send_json( $out );
 				exit();
 				break;
 			default:
@@ -250,8 +249,7 @@ class Caldera_Forms_Admin {
 			$style_includes[$_POST['set']] = false;
 		}
 		update_option( '_caldera_forms_styleincludes', $style_includes);
-		header('Content-Type: application/json');
-		echo json_encode( $style_includes );
+		wp_send_json( $style_includes );
 		exit;
 	}
 
@@ -446,8 +444,7 @@ class Caldera_Forms_Admin {
 		// set status output
 		$data['is_' . $_POST['status']] = true;
 
-		header('Content-Type: application/json');
-		echo json_encode( $data );
+		wp_send_json( $data );
 		exit;
 
 
@@ -782,10 +779,14 @@ class Caldera_Forms_Admin {
 			//build labels
 			$labels = array();
 			$structure = array();
+			$field_types = apply_filters('caldera_forms_get_field_types', array());
 			if(!empty($form['fields'])){
-				foreach($form['fields'] as $field){
-					$labels[$field['slug']] = $field['label'];
-					$structure[$field['slug']] = null;
+				foreach($form['fields'] as $field_id=>$field){
+					if(isset($field_types[$field['type']]['capture']) &&  false === $field_types[$field['type']]['capture']){
+						continue;
+					}
+					$headers[$field['slug']] = $field['label'];
+					$structure[$field['slug']] = $field_id;
 				}
 			}
 			$filter = null;
@@ -804,11 +805,10 @@ class Caldera_Forms_Admin {
 				`entry`.`id` as `_entryid`,
 				`entry`.`form_id` AS `_form_id`,
 				`entry`.`datestamp` AS `_date_submitted`,
-				`entry`.`user_id` AS `_user_id`,
-				`value`.*
+				`entry`.`user_id` AS `_user_id`
 
 			FROM `" . $wpdb->prefix ."cf_form_entries` AS `entry`
-			LEFT JOIN `" . $wpdb->prefix ."cf_form_entry_values` AS `value` ON (`entry`.`id` = `value`.`entry_id`)
+			
 
 			WHERE `entry`.`form_id` = %s
 			" . $filter . "
@@ -816,7 +816,15 @@ class Caldera_Forms_Admin {
 			ORDER BY `entry`.`datestamp` DESC;", $_GET['export']));
 
 			$data = array();
-			$headers = array();
+
+			foreach( $rawdata as $entry){
+				$submission = Caldera_Forms::get_entry( $entry->_entryid, $form);
+				foreach ($structure as $slug => $field_id) {
+					$data[$entry->_entryid][$slug] = ( isset( $submission['data'][$field_id]['value'] ) ? $submission['data'][$field_id]['value'] : null );
+				}
+				//dump($data);
+			}
+			/*dump($data);
 			foreach( $rawdata as $entry){
 				// build structure
 				if(!isset($data[$entry->_entryid])){
@@ -848,7 +856,7 @@ class Caldera_Forms_Admin {
 					$label = $labels[$entry->slug];
 				}
 				$headers[$entry->slug] = $label;
-			}
+			}*/
 
 
 			
@@ -856,7 +864,7 @@ class Caldera_Forms_Admin {
 			header("Expires: 0");
 			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 			header("Cache-Control: private",false);
-			header("Content-Type: application/octet-stream");
+			header("Content-Type: text/csv charset=utf-8;");
 			header("Content-Disposition: attachment; filename=\"" . sanitize_file_name( $form['name'] ) . ".csv\";" );
 			header("Content-Transfer-Encoding: binary"); 
 			$df = fopen("php://output", 'w');
@@ -961,6 +969,7 @@ class Caldera_Forms_Admin {
 			"name" 			=> $newform['name'],
 			"description" 	=> $newform['description'],
 			"success"		=>	__('Form has been successfuly submitted. Thank you.', 'caldera-forms'),
+			"form_ajax"		=> 1,
 			"hide_form"		=> 1
 		);
 
