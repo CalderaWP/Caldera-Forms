@@ -3540,7 +3540,7 @@ class Caldera_Forms {
 					$field_structure = array(
 						"id"				=>	$field_base_id,//'fld_' . $field['slug'],
 						"name"				=>	$field_base_id,//$field['slug'],
-						"label_before"		=>	( empty($field['hide_label']) ? "<label for=\"" . $field_base_id . "\" class=\"" . $field_classes['field_label'] . "\">" : null ),
+						"label_before"		=>	( empty($field['hide_label']) ? "<label for=\"" . $field_base_id.'_'.$current_form_count . "\" class=\"" . $field_classes['field_label'] . "\">" : null ),
 						"label"				=>	( empty($field['hide_label']) ? $field['label'] : null ),
 						"label_required"	=>	( empty($field['hide_label']) ? ( !empty($field['required']) ? " <span class=\"" . $field_classes['field_required_tag'] . "\" style=\"color:#ff2222;\">*</span>" : "" ) : null ),
 						"label_after"		=>	( empty($field['hide_label']) ? "</label>" : null ),
