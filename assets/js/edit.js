@@ -928,6 +928,18 @@ jQuery(document).ready(function($){
 	
 	});
 
+	$('body').on('change', '.pin-toggle-roles', function(){
+		
+		var clicked = $(this),
+			roles = $('#caldera-pin-rules');
+
+		if( clicked.val() === '1' ){
+			roles.show();
+		}else{
+			roles.hide();
+		}
+
+	});
 
 	$('body').on('click', '.magic-tag-init', function(e){
 		var clicked = $(this),

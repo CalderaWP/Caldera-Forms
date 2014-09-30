@@ -9,10 +9,11 @@
 			<?php echo $form['description']; ?>
 		</li>
 		<?php } ?>
+		<?php if( current_user_can( 'delete_others_posts' ) ){ ?>
 		<li class="caldera-forms-toolbar-item">
 			<a class="button" href="admin.php?page=caldera-forms&edit=<?php echo $form['ID']; ?>"><?php echo __('Edit'); ?></a>
 		</li>		
-
+		<?php } ?>
 	</ul>
 </div>
 <span class="form_entry_row highlight">

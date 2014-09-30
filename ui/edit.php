@@ -460,11 +460,36 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 	<div class="caldera-config-group">
 		<label><?php echo __('Pin to Menu', 'caldera-forms'); ?> </label>
 		<div class="caldera-config-field">
-			<label><input type="radio" class="field-config" name="config[pinned]" value="1" <?php if(!empty($element['pinned'])){ ?>checked="checked"<?php } ?>> <?php echo __('Enable', 'caldera-forms'); ?></label>
-			<label><input type="radio" class="field-config" name="config[pinned]" value="0" <?php if(empty($element['pinned'])){ ?>checked="checked"<?php } ?>> <?php echo __('Disabled', 'caldera-forms'); ?></label>
+			<label><input type="radio" class="field-config pin-toggle-roles" name="config[pinned]" value="1" <?php if(!empty($element['pinned'])){ ?>checked="checked"<?php } ?>> <?php echo __('Enable', 'caldera-forms'); ?></label>
+			<label><input type="radio" class="field-config pin-toggle-roles" name="config[pinned]" value="0" <?php if(empty($element['pinned'])){ ?>checked="checked"<?php } ?>> <?php echo __('Disabled', 'caldera-forms'); ?></label>
 		</div>
 	</div>
-	
+
+	<div id="caldera-pin-rules" <?php if(empty($element['pinned'])){ ?>style="display:none;"<?php } ?>>
+		<div class="caldera-config-group">
+			<label><?php echo __('View Entries', 'caldera-forms'); ?> </label>
+			<div class="caldera-config-field" style="max-width: 500px;">
+			<label><input type="checkbox" id="pin_role_all_roles" class="field-config visible-all-roles" data-set="form_role" value="1" name="config[pin_roles][all_roles]" <?php if( !empty($form['pin_roles']['all_roles'])){ echo 'checked="checked"'; } ?>> <?php echo __('All'); ?></label>
+			<hr>
+			<?php
+			global $wp_roles;
+		    $all_roles = $wp_roles->roles;
+		    $editable_roles = apply_filters('editable_roles', $all_roles);
+			
+			foreach($editable_roles as $role=>$role_details){
+				if( 'administrator' === $role){
+					continue;
+				}
+				?>
+				<label><input type="checkbox" class="field-config form_role_role_check gen_role_check" data-set="form_role" name="config[pin_roles][access_role][<?php echo $role; ?>]" value="1" <?php if( !empty($form['pin_roles']['access_role'][$role])){ echo 'checked="checked"'; } ?>> <?php echo $role_details['name']; ?></label>
+				<?php 
+			}
+
+			?>
+			</div>
+		</div>	
+	</div>
+
 	<div class="caldera-config-group">
 		<label><?php echo __('Hide Form', 'caldera-forms'); ?> </label>
 		<div class="caldera-config-field">
