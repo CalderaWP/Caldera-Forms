@@ -35,6 +35,10 @@ class Caldera_Forms_Admin {
 	 */
 	protected $sub_prefix = null;
 	/**
+	 * @var      string
+	 */
+	protected $addons = array();
+	/**
 	 * @var      object
 	 */
 	protected static $instance = null;
@@ -44,12 +48,13 @@ class Caldera_Forms_Admin {
 	 */
 	private function __construct() {
 
+		add_filter( 'all_plugins', array( $this, 'prepare_filter_addons' ) );
 
 		// Load plugin text domain
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
 		// Add Admin menu page
-		add_action( 'admin_menu', array( $this, 'register_admin_page' ) );
+		add_action( 'admin_menu', array( $this, 'register_admin_page' ), 9 );
 		
 		// Add admin scritps and styles
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_stylescripts' ) );
@@ -79,9 +84,9 @@ class Caldera_Forms_Admin {
 		add_action( 'admin_footer', array( $this, 'add_shortcode_inserter'));
 
 
-		$addons = apply_filters( 'caldera_forms_get_active_addons', array() );
-		if(!empty($addons)){
-			foreach($addons as $slug=>$addon){
+		$this->addons = apply_filters( 'caldera_forms_get_active_addons', array() );
+		if(!empty($this->addons)){
+			foreach($this->addons as $slug=>$addon){
 
 				if($addon['type'] == 'selldock'){
 					// selldock type
@@ -93,6 +98,24 @@ class Caldera_Forms_Admin {
 
 	}
 
+	public function prepare_filter_addons($plugins){
+		global $wp_list_table, $status;
+
+		if( !empty( $this->addons ) ){
+			$addons = array();
+			foreach( $this->addons as $addon ){
+				$plugin_slug = basename( dirname( $addon['file'] ) ) .'/'.basename( $addon['file'] );
+				if( isset( $plugins[$plugin_slug] ) ){
+					$plugins[$plugin_slug]['slug'] = $addon['slug'];
+				}				
+			}
+		}
+		if( isset( $_REQUEST['plugin_status'] ) && $_REQUEST['plugin_status'] === 'caldera_forms' ){
+			$status = 'caldera_forms';
+		}
+
+		return $plugins;
+	}
 
 	public function bulk_action(){
 
@@ -219,11 +242,16 @@ class Caldera_Forms_Admin {
 		if(!empty($viewer_buttons_array)){
 			$viewer_buttons = array();
 			foreach($viewer_buttons_array as $button){
+
 				if(is_array($button['config'])){
-					$viewer_buttons[] = $button['label'].'|'.json_encode($button['config']);
+					$config = $button['label'].'|'.json_encode($button['config']);
 				}else{
-					$viewer_buttons[] = $button['label'].'|'.$button['config'];	
+					$config = $button['label'].'|'.$button['config'];	
 				}
+				if( isset( $button['class'] ) ){
+					$config .= '|' . $button['class'];
+				}
+				$viewer_buttons[] = $config;
 			}
 
 			$viewer_buttons = 'data-modal-buttons=\'' . implode(';', $viewer_buttons) . '\'';
@@ -233,13 +261,15 @@ class Caldera_Forms_Admin {
 		if( current_user_can( 'delete_others_posts' ) ){
 			echo '<button type="button" class="button button-small ajax-trigger" data-load-class="active" data-panel="{{#if ../../is_trash}}trash{{/if}}{{#if ../../is_active}}active{{/if}}" data-do="{{#if ../../is_trash}}active{{/if}}{{#if ../../is_active}}trash{{/if}}" data-callback="cf_refresh_view" data-form="{{../../form}}" data-active-class="disabled" data-group="row{{_entry_id}}" data-load-element="#entry_row_{{_entry_id}}" data-action="cf_bulk_action" data-items="{{_entry_id}}">{{#if ../../is_trash}}' . __('Restore', 'caldera-forms') . '{{/if}}{{#if ../../is_active}}' . __('Trash') . '{{/if}}</button>';
 		}
+
 	}
 	
 	public static function set_viewer_buttons($buttons){
 		
 		$buttons['close_panel'] = array(
 			'label'		=>	'Close',
-			'config'	=>	'dismiss'
+			'config'	=>	'dismiss',
+			'class'		=>	'right'
 		);
 
 		return $buttons;
