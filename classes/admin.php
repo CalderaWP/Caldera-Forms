@@ -241,11 +241,6 @@ class Caldera_Forms_Admin {
 			'label'		=>	'Close',
 			'config'	=>	'dismiss'
 		);
-		$buttons['pdf_export'] = array(
-			'label'		=>	'Save as PDF',
-			'config'	=>	'{"data-modal-autoclose": "view_entry"}',
-			'class'		=>	'button-primary'
-		);
 
 		return $buttons;
 	}
