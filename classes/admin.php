@@ -768,9 +768,15 @@ class Caldera_Forms_Admin {
 				$forms = get_option( '_caldera_forms' );
 				if(isset($forms[$_GET['delete']])){
 					unset($forms[$_GET['delete']]);
-					if(delete_option( $_GET['delete'] )){
+					$form = get_option( $_GET['delete'] );
+					if(empty($form)){
 						do_action('caldera_forms_delete_form', $_GET['delete']);
-						update_option( '_caldera_forms', $forms );	
+						update_option( '_caldera_forms', $forms );
+					}else{
+						if( delete_option( $_GET['delete'] ) ){
+							do_action('caldera_forms_delete_form', $_GET['delete']);
+							update_option( '_caldera_forms', $forms );						
+						}
 					}
 				}
 

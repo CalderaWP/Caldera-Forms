@@ -10,7 +10,7 @@
 		global $status;
 
 		$screen = get_current_screen();
-		if($screen->base === 'plugins' && !empty($_REQUEST['plugin_status']) && $_REQUEST['plugin_status'] === 'caldera_forms'){
+		if( is_object($screen) && $screen->base === 'plugins' && !empty($_REQUEST['plugin_status']) && $_REQUEST['plugin_status'] === 'caldera_forms'){
 			$status = 'caldera_forms';
 		}
 
