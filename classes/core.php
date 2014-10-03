@@ -390,17 +390,38 @@ class Caldera_Forms {
 			// is edit
 			//check user can edit this item.
 			$user_id = get_current_user_id();
-			if(!empty($user_id)){
-				$details = self::get_entry_detail($_POST['_cf_frm_edt'], $form);
-				if(!empty($details)){
-					// check user can edit
-					if( current_user_can( 'edit_posts' ) || $details['user_id'] === $user_id ){
-						$entryid = $_POST['_cf_frm_edt'];
-					}else{
-						return new WP_Error( 'error', __( "Permission denied.", "caldera-forms" ) );
-					}
+			$details = self::get_entry_detail($_POST['_cf_frm_edt'], $form);
+
+			// check token
+			if(isset($_POST['_cf_frm_edt_tkn'])){
+
+				// build token
+				$token_array = array(
+					'id'		=>	(int) $details['id'],
+					'datestamp'	=>	$details['datestamp'],
+					'user_id'	=>	(int) $details['user_id'],
+					'form_id'	=>	$form['ID']
+				);
+				if( sha1( json_encode( $token_array ) ) !== trim( $_POST['_cf_frm_edt_tkn'] ) ){
+					return new WP_Error( 'error', __( "Permission denied.", "caldera-forms" ) );
+				}else{
+					$entryid = (int) $details['id'];
+					$edit_token = sha1( json_encode( $token_array ) );
 				}
 
+			}else{
+
+				if(!empty($user_id)){					
+					if(!empty($details)){
+						// check user can edit
+						if( current_user_can( 'edit_posts' ) || $details['user_id'] === $user_id ){
+							$entryid = $_POST['_cf_frm_edt'];
+						}else{
+							return new WP_Error( 'error', __( "Permission denied.", "caldera-forms" ) );
+						}
+					}
+
+				}
 			}
 
 		}
@@ -409,25 +430,9 @@ class Caldera_Forms {
 		if(!empty($form['db_support'])){
 			// new entry or update
 			if(empty($entryid)){
-				$new_entry = array(
-					'form_id'	=>	$form['ID'],
-					'user_id'	=>	0,
-					'datestamp' =>	date_i18n( 'Y-m-d H:i:s', time(), 0)
-				);
-				// if user logged in
-				if(is_user_logged_in()){
-					$new_entry['user_id'] = get_current_user_id();
-				}else{
-					if(isset($data['_user_id'])){
-						$new_entry['user_id'] = $data['_user_id'];
-					}
-				}
 
-				$wpdb->insert($wpdb->prefix . 'cf_form_entries', $new_entry);
-				$entryid = $wpdb->insert_id;
-				// save entry_id
-				self::set_field_data('_entry_id', $entryid, $form);
-				
+				$entryid = self::get_field_data( '_entry_id', $form );
+
 				foreach($form['fields'] as $field_id=>$field){
 					// add new and update
 					self::save_field_data($field, $entryid, $form);
@@ -478,6 +483,9 @@ class Caldera_Forms {
 
 					}
 				}
+
+				// update status
+				$wpdb->update($wpdb->prefix . 'cf_form_entries', array('status' => 'active'), array( 'id' => $entryid ) );
 
 			}else{
 
@@ -1604,6 +1612,7 @@ class Caldera_Forms {
 		// get internal tags
 		$system_tags = array(
 			'entry_id',
+			'entry_token',
 			'ip',
 			'user:id',
 			'user:user_login',
@@ -1802,6 +1811,18 @@ class Caldera_Forms {
 					switch ($magic_tag) {
 						case 'entry_id':
 							$magic_tag = self::get_field_data('_entry_id', $form);
+							if( $magic_tag === null){
+								// check if theres an entry
+								if( !empty( $_GET['cf_ee'] ) ){
+									$entry = self::get_entry_detail( $_GET['cf_ee'], $form );
+									if( !empty( $entry ) ){
+										$magic_tag = $entry['id'];
+									}
+								}
+							}
+							break;
+						case 'entry_token':
+							$magic_tag = $magic_tag = self::get_field_data('_entry_token', $form);
 							break;
 						case 'ip':
 							$magic_tag = $_SERVER['REMOTE_ADDR'];
@@ -1984,10 +2005,10 @@ class Caldera_Forms {
 		}
 		// form object
 		if(isset($form['ID'])){
-			if(isset($processed_data[$form['ID']][$field_id]) || $field_id === '_entry_id'){
-				$processed_data[$form['ID']][$field_id] = $data;
-				return true;
-			}
+			//if(isset($processed_data[$form['ID']][$field_id]) || $field_id === '_entry_id' ||){
+			$processed_data[$form['ID']][$field_id] = $data;
+			return true;
+			//}
 		}
 	}
 
@@ -2154,7 +2175,7 @@ class Caldera_Forms {
 	static public function get_entry_detail($entry_id, $form){
 		global $wpdb;
 
-		$entry = $wpdb->get_row($wpdb->prepare("SELECT * FROM `" . $wpdb->prefix ."cf_form_entries` WHERE `id` = %d", $entry_id), ARRAY_A);
+		$entry = $wpdb->get_row($wpdb->prepare("SELECT * FROM `" . $wpdb->prefix ."cf_form_entries` WHERE `id` = %d && `form_id` = %s", $entry_id, $form['ID']), ARRAY_A);
 		if(!empty($entry)){
 			// get meta if any
 			$meta = self::get_entry_meta($entry_id, $form);
@@ -2301,6 +2322,7 @@ class Caldera_Forms {
 		global $rawdata;
 		global $processed_data;
 		global $transdata;
+		global $wpdb;
 
 
 
@@ -2477,28 +2499,51 @@ class Caldera_Forms {
 			// is edit
 			//check user can edit this item.
 			$transdata['edit'] = (int) $_POST['_cf_frm_edt'];
+			// set entry_id
+			self::set_field_data('_entry_id', $transdata['edit'], $form);
+			$details = self::get_entry_detail($_POST['_cf_frm_edt'], $form);
 			$user_id = get_current_user_id();
-			if(empty($user_id)){
-				$transdata['error'] = true;
-				$transdata['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');
+
+			// check token
+			if(isset($_POST['_cf_frm_edt_tkn'])){
+
+				// build token
+				$token_array = array(
+					'id'		=>	(int) $entry_id,
+					'datestamp'	=>	$details['datestamp'],
+					'user_id'	=>	(int) $details['user_id'],
+					'form_id'	=>	$form['ID']
+				);
+				if( sha1( json_encode( $token_array ) ) !== trim( $_POST['_cf_frm_edt_tkn'] ) ){
+					return new WP_Error( 'error', __( "Permission denied.", "caldera-forms" ) );
+				}else{
+					$entry_id = (int) $details['id'];
+					$edit_token = sha1( json_encode( $token_array ) );
+				}
+
 			}else{
-				
-				$details = self::get_entry_detail($_POST['_cf_frm_edt'], $form);
-				if(empty($details)){
+
+				if(empty($user_id)){
 					$transdata['error'] = true;
 					$transdata['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');
 				}else{
-					// check user can edit
-					if( current_user_can( 'edit_posts' ) || $details['user_id'] === $user_id ){
-						// can edit.
-					}else{
+
+					if(empty($details)){
 						$transdata['error'] = true;
 						$transdata['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');
+					}else{
+						// check user can edit
+						if( current_user_can( 'edit_posts' ) || $details['user_id'] === $user_id ){
+							// can edit.
+						}else{
+							$transdata['error'] = true;
+							$transdata['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');
+						}
 					}
+
 				}
 
 			}
-
 		}
 
 
@@ -2562,145 +2607,72 @@ class Caldera_Forms {
 
 		// has processors
 		do_action('caldera_forms_submit_start_processors', $form, $referrer, $process_id);
-		if(!empty($form['processors'])){
+		if(!isset($form['processors'])){
+			$form['processors'] = array();
+		}
 			
-			// get all form processors
-			$form_processors = apply_filters('caldera_forms_get_form_processors', array() );
-			do_action('caldera_forms_submit_pre_process_start', $form, $referrer, $process_id);
+		// get all form processors
+		$form_processors = apply_filters('caldera_forms_get_form_processors', array() );
+		do_action('caldera_forms_submit_pre_process_start', $form, $referrer, $process_id);
 
-			// PRE PROCESS
-			foreach($form['processors'] as $processor_id=>$processor){
-				
-				if(isset($form_processors[$processor['type']])){
+		// PRE PROCESS
+		foreach($form['processors'] as $processor_id=>$processor){
+			
+			if(isset($form_processors[$processor['type']])){
 
-					// Do Conditional
-					if(isset($processor['conditions']) && !empty($processor['conditions']['type'])){
-						if(!self::check_condition($processor['conditions'], $form)){
-							continue;
-						}
-					}
-
-					// has processor
-					$process = $form_processors[$processor['type']];
-					if(!isset($process['pre_processor'])){
+				// Do Conditional
+				if(isset($processor['conditions']) && !empty($processor['conditions']['type'])){
+					if(!self::check_condition($processor['conditions'], $form)){
 						continue;
-					}
-
-					// set default config
-					$config = array();
-					$config['processor_id'] = $processor_id;
-
-					if(isset($process['default'])){
-						$config = $process['default'];
-					}
-					if(!empty($processor['config'])){
-
-						$config = array_merge($config, $processor['config']);
-					}
-					if(is_array($process['pre_processor'])){
-						$process_line_data = call_user_func_array($process['pre_processor'],array($config, $form, $process_id));
-					}else{
-						if(function_exists($process['pre_processor'])){
-							$func = $process['pre_processor'];
-							$process_line_data = $func($config, $form, $process_id);
-						}
-					}
-					// pre processors should not return unless a break in action for further 
-					// Returned something - check it
-					if(!empty($process_line_data)){						
-						if(is_array($process_line_data)){
-							//type
-							if(!empty($process_line_data['type'])){
-								$transdata['type'] = $process_line_data['type'];
-								// has note?
-								if(!empty($process_line_data['note'])){
-									$transdata['note'] = $process_line_data['note'];
-								}																						
-							}
-
-							// fields involved?
-							if(!empty($process_line_data['fields'])){
-								$transdata['fields'] = $process_line_data['fields'];
-							}
-		
-							// set error transient
-							$transdata = apply_filters('caldera_forms_submit_return_transient', $transdata, $form, $referrer, $process_id);
-							$transdata = apply_filters('caldera_forms_submit_return_transient_pre_process', $transdata, $form, $referrer, $process_id);
-
-							// back to form
-							$query_str = array(
-								'cf_er' => $process_id
-							);
-							if(!empty($referrer['query'])){
-								$query_str = array_merge($referrer['query'], $query_str);
-							}
-							$referrer = $referrer['path'] . '?' . http_build_query($query_str);
-							$referrer = apply_filters('caldera_forms_submit_return_redirect', $referrer, $form, $process_id);
-							$referrer = apply_filters('caldera_forms_submit_return_redirect-'.$processor['type'], $referrer, $config, $form, $process_id);
-
-							// set transient data
-							set_transient( $process_id, $transdata, $transdata['expire']);
-
-							return self::form_redirect('preprocess', $referrer, $form, $process_id );
-						}
 					}
 				}
-			}
-			do_action('caldera_forms_submit_pre_process_end', $form, $referrer, $process_id);
-			/// AFTER PRE-PROCESS - check for errors etc to return else continue to process.
 
-			do_action('caldera_forms_submit_process_start', $form, $referrer, $process_id);
-			/// PROCESS
-			foreach($form['processors'] as $processor_id=>$processor){
-				if(isset($form_processors[$processor['type']])){
-					// has processor
-					// Do Conditional
-					if(isset($processor['conditions']) && !empty($processor['conditions']['type'])){
-						if(!self::check_condition($processor['conditions'], $form)){
-							continue;
-						}
-					}
-					
-					$process = $form_processors[$processor['type']];
-					if(!isset($process['processor'])){
-						continue;
-					}
-					$hasmeta = null;
-					// set default config
-					$config = array();
-					$config['processor_id'] = $processor_id;
-					if(isset($process['default'])){
-						$config = $process['default'];
-					}
-					if(!empty($processor['config'])){
+				// has processor
+				$process = $form_processors[$processor['type']];
+				if(!isset($process['pre_processor'])){
+					continue;
+				}
 
-						$config = array_merge($config, $processor['config']);
-					}					
-					if(is_array($process['processor'])){
-						$hasmeta = call_user_func_array($process['processor'],array($config, $form, $process_id));
-					}else{
-						if(function_exists($process['processor'])){							
-							$func = $process['processor'];
-							$hasmeta = $func($config, $form, $process_id);
-						}
-					}
-					if($hasmeta !== null){
-						foreach( (array) $hasmeta as $metakey=>$metavalue){
-							$meta_process_id = $processor_id;
-							// single processors are generallay used so not processor id is needed
-							if(!empty($form_processors[$processor['type']]['single'])){
-								$meta_process_id = $processor['type'];
-							}
-							self::set_submission_meta($metakey, $metavalue, $form, $processor_id);
-						}
-					} // check for transdata errors
-					
-					
-					if(!empty($transdata['error'])){
+				// set default config
+				$config = array();
+				$config['processor_id'] = $processor_id;
 
+				if(isset($process['default'])){
+					$config = $process['default'];
+				}
+				if(!empty($processor['config'])){
+
+					$config = array_merge($config, $processor['config']);
+				}
+				if(is_array($process['pre_processor'])){
+					$process_line_data = call_user_func_array($process['pre_processor'],array($config, $form, $process_id));
+				}else{
+					if(function_exists($process['pre_processor'])){
+						$func = $process['pre_processor'];
+						$process_line_data = $func($config, $form, $process_id);
+					}
+				}
+				// pre processors should not return unless a break in action for further 
+				// Returned something - check it
+				if(!empty($process_line_data)){						
+					if(is_array($process_line_data)){
+						//type
+						if(!empty($process_line_data['type'])){
+							$transdata['type'] = $process_line_data['type'];
+							// has note?
+							if(!empty($process_line_data['note'])){
+								$transdata['note'] = $process_line_data['note'];
+							}																						
+						}
+
+						// fields involved?
+						if(!empty($process_line_data['fields'])){
+							$transdata['fields'] = $process_line_data['fields'];
+						}
+	
 						// set error transient
-						$transdata = apply_filters('caldera_forms_submit_error_transient', $transdata, $form, $referrer, $process_id);
-						$transdata = apply_filters('caldera_forms_submit_error_transient_pre_process', $transdata, $form, $referrer, $process_id);
+						$transdata = apply_filters('caldera_forms_submit_return_transient', $transdata, $form, $referrer, $process_id);
+						$transdata = apply_filters('caldera_forms_submit_return_transient_pre_process', $transdata, $form, $referrer, $process_id);
 
 						// back to form
 						$query_str = array(
@@ -2710,71 +2682,183 @@ class Caldera_Forms {
 							$query_str = array_merge($referrer['query'], $query_str);
 						}
 						$referrer = $referrer['path'] . '?' . http_build_query($query_str);
-						$referrer = apply_filters('caldera_forms_submit_error_redirect', $referrer, $form, $process_id);
-						$referrer = apply_filters('caldera_forms_submit_error_redirect_pre_process', $referrer, $form, $process_id);
+						$referrer = apply_filters('caldera_forms_submit_return_redirect', $referrer, $form, $process_id);
+						$referrer = apply_filters('caldera_forms_submit_return_redirect-'.$processor['type'], $referrer, $config, $form, $process_id);
 
 						// set transient data
 						set_transient( $process_id, $transdata, $transdata['expire']);
 
-						return self::form_redirect('error', $referrer, $form, $process_id );
+						return self::form_redirect('preprocess', $referrer, $form, $process_id );
 					}
-
 				}
 			}
-			do_action('caldera_forms_submit_process_end', $form, $referrer, $process_id);
-			// AFTER PROCESS - do post process for any additional stuff
-			
-
-			do_action('caldera_forms_submit_post_process', $form, $referrer, $process_id);
-			// POST PROCESS
-			foreach($form['processors'] as $processor_id=>$processor){
-				if(isset($form_processors[$processor['type']])){
-					// has processor
-					// Do Conditional
-					if(isset($processor['conditions']) && !empty($processor['conditions']['type'])){
-						if(!self::check_condition($processor['conditions'], $form)){
-							continue;
-						}
-					}
-
-					$process = $form_processors[$processor['type']];
-					if(!isset($process['post_processor'])){
-						continue;
-					}								
-					// set default config
-					$config = array();
-					$config['processor_id'] = $processor_id;
-					if(isset($process['default'])){
-						$config = $process['default'];
-					}
-					if(!empty($processor['config'])){
-
-						$config = array_merge($config, $processor['config']);
-					}
-					if(is_array($process['post_processor'])){
-						$hasmeta = call_user_func_array($process['post_processor'],array($config, $form, $process_id));
-					}else{
-						if(function_exists($process['post_processor'])){
-							$func = $process['post_processor'];
-							$hasmeta = $func($config, $form, $process_id);	
-						}
-					}
-					if($hasmeta !== null){
-						foreach( (array) $hasmeta as $metakey=>$metavalue){
-							self::set_submission_meta($metakey, $metavalue, $form, $processor_id);
-						}
-					}
-
-				}
-			}
-			do_action('caldera_forms_submit_post_process_end', $form, $referrer, $process_id);
 		}
+		do_action('caldera_forms_submit_pre_process_end', $form, $referrer, $process_id);
+		/// AFTER PRE-PROCESS - check for errors etc to return else continue to process.
+		if( empty( $transdata['edit'] ) && !empty($form['db_support']) ){
+			// CREATE ENTRY
+			$new_entry = array(
+				'form_id'	=>	$form['ID'],
+				'user_id'	=>	0,
+				'datestamp' =>	date_i18n( 'Y-m-d H:i:s', time(), 0),
+				'status'	=>	'pending'
+			);
+			// if user logged in
+			if(is_user_logged_in()){
+				$new_entry['user_id'] = get_current_user_id();
+			}else{
+				if(isset($data['_user_id'])){
+					$new_entry['user_id'] = $data['_user_id'];
+				}
+			}
+
+			$wpdb->insert($wpdb->prefix . 'cf_form_entries', $new_entry);
+			$entryid = $wpdb->insert_id;
+			// save entry_id
+			self::set_field_data('_entry_id', $entryid, $form);
+			// set entry token
+			$token_array = array(
+				'id'		=>	(int) $entryid,
+				'datestamp'	=>	$new_entry['datestamp'],
+				'user_id'	=>	(int) $new_entry['user_id'],
+				'form_id'	=>	$form['ID']
+			);
+			// set edit token
+			self::set_field_data('_entry_token', sha1( json_encode( $token_array ) ), $form);
+
+		}
+
+		do_action('caldera_forms_submit_process_start', $form, $referrer, $process_id);
+		/// PROCESS
+		foreach($form['processors'] as $processor_id=>$processor){
+			if(isset($form_processors[$processor['type']])){
+				// has processor
+				// Do Conditional
+				if(isset($processor['conditions']) && !empty($processor['conditions']['type'])){
+					if(!self::check_condition($processor['conditions'], $form)){
+						continue;
+					}
+				}
+				
+				$process = $form_processors[$processor['type']];
+				if(!isset($process['processor'])){
+					continue;
+				}
+				$hasmeta = null;
+				// set default config
+				$config = array();
+				$config['processor_id'] = $processor_id;
+				if(isset($process['default'])){
+					$config = $process['default'];
+				}
+				if(!empty($processor['config'])){
+
+					$config = array_merge($config, $processor['config']);
+				}					
+				if(is_array($process['processor'])){
+					$hasmeta = call_user_func_array($process['processor'],array($config, $form, $process_id));
+				}else{
+					if(function_exists($process['processor'])){							
+						$func = $process['processor'];
+						$hasmeta = $func($config, $form, $process_id);
+					}
+				}
+				if($hasmeta !== null){
+					foreach( (array) $hasmeta as $metakey=>$metavalue){
+						$meta_process_id = $processor_id;
+						// single processors are generallay used so not processor id is needed
+						if(!empty($form_processors[$processor['type']]['single'])){
+							$meta_process_id = $processor['type'];
+						}
+						self::set_submission_meta($metakey, $metavalue, $form, $processor_id);
+					}
+				} // check for transdata errors
+				
+				
+				if(!empty($transdata['error'])){
+
+					// set error transient
+					$transdata = apply_filters('caldera_forms_submit_error_transient', $transdata, $form, $referrer, $process_id);
+					$transdata = apply_filters('caldera_forms_submit_error_transient_pre_process', $transdata, $form, $referrer, $process_id);
+
+					// back to form
+					$query_str = array(
+						'cf_er' => $process_id
+					);
+					if(!empty($referrer['query'])){
+						$query_str = array_merge($referrer['query'], $query_str);
+					}
+					$referrer = $referrer['path'] . '?' . http_build_query($query_str);
+					$referrer = apply_filters('caldera_forms_submit_error_redirect', $referrer, $form, $process_id);
+					$referrer = apply_filters('caldera_forms_submit_error_redirect_pre_process', $referrer, $form, $process_id);
+
+					// set transient data
+					set_transient( $process_id, $transdata, $transdata['expire']);
+
+					return self::form_redirect('error', $referrer, $form, $process_id );
+				}
+
+			}
+		}
+		do_action('caldera_forms_submit_process_end', $form, $referrer, $process_id);
+		// AFTER PROCESS - do post process for any additional stuff
+		
+
+		do_action('caldera_forms_submit_post_process', $form, $referrer, $process_id);
+		// POST PROCESS
+		foreach($form['processors'] as $processor_id=>$processor){
+			if(isset($form_processors[$processor['type']])){
+				// has processor
+				// Do Conditional
+				if(isset($processor['conditions']) && !empty($processor['conditions']['type'])){
+					if(!self::check_condition($processor['conditions'], $form)){
+						continue;
+					}
+				}
+
+				$process = $form_processors[$processor['type']];
+				if(!isset($process['post_processor'])){
+					continue;
+				}								
+				// set default config
+				$config = array();
+				$config['processor_id'] = $processor_id;
+				if(isset($process['default'])){
+					$config = $process['default'];
+				}
+				if(!empty($processor['config'])){
+
+					$config = array_merge($config, $processor['config']);
+				}
+				if(is_array($process['post_processor'])){
+					$hasmeta = call_user_func_array($process['post_processor'],array($config, $form, $process_id));
+				}else{
+					if(function_exists($process['post_processor'])){
+						$func = $process['post_processor'];
+						$hasmeta = $func($config, $form, $process_id);	
+					}
+				}
+				if($hasmeta !== null){
+					foreach( (array) $hasmeta as $metakey=>$metavalue){
+						self::set_submission_meta($metakey, $metavalue, $form, $processor_id);
+					}
+				}
+
+			}
+		}
+		do_action('caldera_forms_submit_post_process_end', $form, $referrer, $process_id);
 		
 		// done do action.
 		do_action('caldera_forms_submit_complete', $form, $referrer, $process_id);
 
 		// redirect back or to result page
 		$referrer['query']['cf_su'] = $form_instance_number;
+
+		// last entry id - new only
+		if( empty( $transdata['edit'] ) ){
+			$referrer['query']['cf_id'] = self::do_magic_tags( '{entry_id}' );
+		}		
+		
 		// passback values
 		if( !empty( $form['variables']['types'] ) ){
 			foreach($form['variables']['types'] as $variable_index=>$behavior_type){
@@ -3347,6 +3431,7 @@ class Caldera_Forms {
 		if(!empty($_GET['cf_ee'])){
 			$entry_id = $_GET['cf_ee'];
 		}
+
 		// attr entry id
 		if(!empty($atts['entry'])){
 			$entry_id = $atts['entry'];	
@@ -3355,24 +3440,41 @@ class Caldera_Forms {
 		if(!empty($entry_id)){
 			//check user can edit this item.
 			$user_id = get_current_user_id();
-			if(!empty($user_id)){
-
-				$details = self::get_entry_detail($entry_id, $form);
-
-				if(!empty($details)){
-					// check user can edit
-					if( current_user_can( 'edit_posts' ) || $details['user_id'] === $user_id ){
-						// can edit.
-						$entry_id = (int) $details['id'];
-					}else{
-						$notices['error']['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');
-					}
+			$details = self::get_entry_detail($entry_id, $form);
+			if( !empty( $_GET['cf_et'] ) ){
+				// build token
+				$token_array = array(
+					'id'		=>	(int) $entry_id,
+					'datestamp'	=>	$details['datestamp'],
+					'user_id'	=>	(int) $details['user_id'],
+					'form_id'	=>	$form['ID']
+				);
+				if( sha1( json_encode( $token_array ) ) !== trim( $_GET['cf_et'] ) ){
+					$notices['error']['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');
 				}else{
-					$notices['error']['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');					
+					$entry_id = (int) $details['id'];
+					$edit_token = sha1( json_encode( $token_array ) );
 				}
 
 			}else{
-				$notices['error']['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');
+
+				if(!empty($user_id)){
+
+					if(!empty($details)){
+						// check user can edit
+						if( current_user_can( 'edit_posts' ) || $details['user_id'] === $user_id ){
+							// can edit.
+							$entry_id = (int) $details['id'];
+						}else{
+							$notices['error']['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');
+						}
+					}else{
+						$notices['error']['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');					
+					}
+
+				}else{
+					$notices['error']['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');
+				}
 			}
 
 			if(!empty($notices['error']['note'])){
@@ -3635,9 +3737,18 @@ class Caldera_Forms {
 		$out .= '<div id="caldera_notices_'.$current_form_count.'" data-spinner="'. admin_url( 'images/spinner.gif' ).'">';
 		if(!empty($notices)){
 			// do notices
+			// entry id
+			if( isset( $_GET['cf_id'] ) ){
+				$notice_entry_id = (int) $_GET['cf_id'];
+			}elseif( !empty( $entry_id ) ){
+				$notice_entry_id = $entry_id;
+			}else{
+				$notice_entry_id = null;
+			}
+			
 			foreach($notices as $note_type => $notice){
 				if(!empty($notice['note'])){					
-					$out .= '<div class=" '. implode(' ', $note_classes[$note_type]) . '">' . $notice['note'] .'</div>';
+					$out .= '<div class=" '. implode(' ', $note_classes[$note_type]) . '">' . self::do_magic_tags( $notice['note'], $notice_entry_id ) .'</div>';
 				}
 			}
 
@@ -3680,6 +3791,12 @@ class Caldera_Forms {
 			if(!empty($entry_id)){			
 				$out .= "<input type=\"hidden\" name=\"_cf_frm_edt\" value=\"" . $entry_id . "\">\r\n";
 			}
+
+			// is edit via token?
+			if(!empty($edit_token)){
+				$out .= "<input type=\"hidden\" name=\"_cf_frm_edt_tkn\" value=\"" . $edit_token . "\">\r\n";
+			}
+
 
 			// auto pagination
 			if(!empty($form['auto_progress']) && count($form['page_names']) > 1){
@@ -3731,8 +3848,14 @@ class Caldera_Forms {
 					foreach($condition_field_conf['group'] as &$condition_group){
 						if(!empty($condition_group)){
 							foreach($condition_group as &$condition_line){
+
 								if( isset( $form['fields'][$condition_line['field']]['config']['option'][$condition_line['value']] )){
 									$condition_line['value'] = $form['fields'][$condition_line['field']]['config']['option'][$condition_line['value']]['value'];
+								}else{
+
+									if( false !== strpos( $condition_line['field'] , '{') && false !== strpos( $condition_line['field'] , '}') ){
+										$condition_line['field'] = self::do_magic_tags( $condition_line['field'] );
+									}
 								}
 								$condition_line['value'] = self::do_magic_tags( $condition_line['value'] );
 							}
