@@ -8,7 +8,9 @@
 		
 	function cf_filter_addons_prepare_filter_addons_referer($a, $b){
 		global $status;
-
+		if( !function_exists('get_current_screen')){
+			return;
+		}
 		$screen = get_current_screen();
 		if( is_object($screen) && $screen->base === 'plugins' && !empty($_REQUEST['plugin_status']) && $_REQUEST['plugin_status'] === 'caldera_forms'){
 			$status = 'caldera_forms';

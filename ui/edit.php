@@ -621,7 +621,7 @@ foreach($panel_extensions as $panel){
 					foreach($tab_setup['fields'] as $field_slug=>&$field){
 						
 						$field_name = 'config[settings][' . $panel_slug . '][' . $field_slug . ']';
-						$field_id = $panel_slug. '_' . $field_slug . '_' . $group_index;
+						$field_base_id = $field_id = $panel_slug. '_' . $field_slug . '_' . $group_index;						
 						$field_label = "<label for=\"" . $field_id . "\">" . $field['label'] . "</label>\r\n";
 						$field_placeholder = "";
 						$field_required = "";
