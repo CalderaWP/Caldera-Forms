@@ -266,9 +266,9 @@ class Caldera_Forms {
 
 
 	public static function captcha_check($value, $field, $form){
-		
+
 		if(empty($_POST['recaptcha_response_field'])){
-			return array('_fail' => __("The reCAPTCHA field is required.", 'caldera-forms'));
+			return new WP_Error( 'error', __("The reCAPTCHA wasn't entered correctly.", 'caldera-forms'));
 		}
 		include_once CFCORE_PATH . 'fields/recaptcha/recaptchalib.php';
 
@@ -2992,7 +2992,7 @@ class Caldera_Forms {
 			//enqueue styles
 			if( !empty( $field_type['styles'])){
 				foreach($field_type['styles'] as $style){
-					if(filter_var($style, FILTER_VALIDATE_URL)){
+					if( false !== strpos($style, '//')){
 						wp_enqueue_style( 'cf-' . sanitize_key( basename( $style ) ), $style, array(), self::VERSION );
 					}else{
 						wp_enqueue_style( $style );
@@ -3005,7 +3005,7 @@ class Caldera_Forms {
 				// check for jquery deps
 				$depts[] = 'jquery';
 				foreach($field_type['scripts'] as $script){
-					if(filter_var($script, FILTER_VALIDATE_URL)){
+					if( false !== strpos($script, '//')){
 						wp_enqueue_script( 'cf-' . sanitize_key( basename( $script ) ), $script, $depts, self::VERSION );
 					}else{
 						wp_enqueue_script( $script );
