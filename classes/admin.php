@@ -671,7 +671,7 @@ class Caldera_Forms_Admin {
 
 							}else{
 								// is url - 
-								if('//' != substr( $script, 0, 2) && file_exists( $style )){
+								if('//' != substr( $style, 0, 2) && file_exists( $style )){
 									// local file
 									wp_enqueue_style( $key, plugin_dir_url( $style ) . basename( $style ), array(), self::VERSION );
 								}else{
