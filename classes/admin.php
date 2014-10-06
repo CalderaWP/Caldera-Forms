@@ -671,7 +671,7 @@ class Caldera_Forms_Admin {
 
 							}else{
 								// is url - 
-								if(file_exists( $style )){
+								if('//' != substr( $script, 0, 2) && file_exists( $style )){
 									// local file
 									wp_enqueue_style( $key, plugin_dir_url( $style ) . basename( $style ), array(), self::VERSION );
 								}else{
@@ -706,7 +706,7 @@ class Caldera_Forms_Admin {
 
 							}else{
 								// is url - 
-								if(file_exists( $script )){
+								if('//' != substr( $script, 0, 2) && file_exists( $script )){
 									// local file
 									wp_enqueue_script( $key, plugin_dir_url( $script ) . basename( $script ), array('jquery'), self::VERSION );
 								}else{
