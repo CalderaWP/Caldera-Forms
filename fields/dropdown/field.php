@@ -10,6 +10,8 @@
 					$field_value = $field['config']['option'][$field['config']['default']]['value'];
 				}
 
+			}else{
+				echo '<option value="">' . ( !empty($field['hide_label']) ? $field['label'] : null ) . '</option>';
 			}
 
 
