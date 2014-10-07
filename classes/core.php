@@ -3657,8 +3657,7 @@ class Caldera_Forms {
 					$field_class = $field_classes['field'];
 
 					if(!empty($field_errors[$field_base_id])){
-
-						$field_input_class .= " " . $field_classes['field_error'];
+						$field_wrapper_class .= " " . $field_classes['field_error'];
 						$field_structure['field_caption'] = "<span class=\"" . $field_classes['field_caption'] . "\">" . $field_errors[$field_base_id] . "</span>\r\n";
 					}
 					
