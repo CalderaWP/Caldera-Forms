@@ -76,6 +76,7 @@ none yet.
 
 = Fixed =
 * Javascript error in reCapture field
+* No Default on dropdown field type results in correct blank option
 * Minor bug fixes
 
 = Improved =
