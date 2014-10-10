@@ -151,24 +151,29 @@
 				// show - get template and place it in.
 				if(!target.html().length){
 					target.html(template).trigger('cf.add');
+					jQuery(document).trigger('cf.add');
 				}
 			}else if (action === 'hide'){
 				if(target.html().length){
 					target_field.val('').empty().prop('checked', false);
 					target.empty().trigger('cf.remove');
+					jQuery(document).trigger('cf.remove');
 				}
 			}else if (action === 'enable'){
 				if(!target.html().length){
 					target.html(template).trigger('cf.add');
+					jQuery(document).trigger('cf.add');
 				}else{
 					target_field.prop('disabled', false);
 				}
 			}else if (action === 'disable'){
 				if(!target.html().length){
 					target.html(template).trigger('cf.add');
+					jQuery(document).trigger('cf.add');
 					jQuery('[data-field="' + field + '"]').prop('disabled', 'disabled');
 				}else{
 					target_field.prop('disabled', 'disabled');
+					jQuery(document).trigger('cf.disable');
 				}
 			}
 

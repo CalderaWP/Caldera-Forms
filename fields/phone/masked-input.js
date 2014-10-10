@@ -2133,5 +2133,8 @@
 }(jQuery);
 
 jQuery(document).ready(function($){
-    $("[data-inputmask]").inputmask();
+    jQuery(document).on('cf.add', function(){
+        $("[data-inputmask]").inputmask();
+    });
+    jQuery(document).trigger('cf.add');
 });

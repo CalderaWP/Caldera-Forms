@@ -2342,7 +2342,11 @@ class Caldera_Forms {
 			}
 		}
 		// get form and check
-		$form = get_option( $_POST['_cf_frm_id'] );
+		$forms = get_option( '_caldera_forms' );
+		if( !isset( $forms[ $_POST['_cf_frm_id'] ] ) ){
+			return;
+		}
+		$form = get_option( $forms[ $_POST['_cf_frm_id'] ]['ID'] );
 		if(empty($form['ID']) || $form['ID'] != $_POST['_cf_frm_id']){
 			return;
 		}
@@ -2911,7 +2915,12 @@ class Caldera_Forms {
 		}
 
 		if(!empty($_GET['cf_preview'])){
-			$form = get_option($_GET['cf_preview']);
+			$forms = get_option( '_caldera_forms' );
+			if( !isset( $forms[ $_GET['cf_preview'] ] ) ){
+				return;
+			}
+			$form = get_option( $forms[ $_GET['cf_preview'] ]['ID'] );
+
 			$userid = get_current_user_id();
 			if( !empty( $userid ) ){
 
@@ -3136,10 +3145,16 @@ class Caldera_Forms {
 		if(empty($entry_id)){
 			if(!empty($_POST['form'])){
 				$entry_id = $_POST['entry'];
-				$form = get_option( $_POST['form'] );
-				if(empty($form)){
+				// get form and check
+				$forms = get_option( '_caldera_forms' );
+				if( !isset( $forms[ $_POST['form'] ] ) ){
 					return;
 				}
+				$form = get_option( $forms[ $_POST['form'] ]['ID'] );
+				if(empty($form['ID']) || $form['ID'] != $_POST['form']){
+					return;
+				}
+				
 				$fields = array();
 				foreach ($form['fields'] as $field_id => $field) {
 					$fields[$field['slug']] = $field;
