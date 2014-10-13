@@ -2322,9 +2322,7 @@ class Caldera_Forms {
 		global $rawdata;
 		global $processed_data;
 		global $transdata;
-		global $wpdb;
-
-
+		global $wpdb;		
 
 		// clean out referrer
 		if(empty($_POST['_wp_http_referer_true'])){
@@ -2340,6 +2338,9 @@ class Caldera_Forms {
 			if(isset($referrer['query']['cf_su'])){
 				unset($referrer['query']['cf_su']);
 			}
+		}
+		if( isset( $_POST['_cf_cr_pst'] ) && $post->ID !== (int) $_POST['_cf_cr_pst'] ){
+			$post = get_post( (int) $_POST['_cf_cr_pst'] );
 		}
 		// get form and check
 		$forms = get_option( '_caldera_forms' );
@@ -3228,6 +3229,7 @@ class Caldera_Forms {
 				'avatar' 	=> get_avatar( $avatar_field, 150),
 			);
 		}
+		
 		// allow plugins to alter the profile.
 		$data['user'] = apply_filters('caldera_forms_get_entry_user', $data['user'], $entry_id, $form);
 
@@ -3305,7 +3307,7 @@ class Caldera_Forms {
 	}
 	static public function render_form($atts, $entry_id = null){
 
-		global $current_form_count;
+		global $current_form_count, $form, $post;
 
 		if(empty($atts)){
 			return;
@@ -3797,6 +3799,8 @@ class Caldera_Forms {
 			$out .= wp_nonce_field( "caldera_forms_front", "_cf_verify", true, false);
 			$out .= "<input type=\"hidden\" name=\"_cf_frm_id\" value=\"" . $atts['id'] . "\">\r\n";
 			$out .= "<input type=\"hidden\" name=\"_cf_frm_ct\" value=\"" . $current_form_count . "\">\r\n";
+			$out .= "<input type=\"hidden\" name=\"_cf_cr_pst\" value=\"" . $post->ID . "\">\r\n";
+
 			// user transient for continuation
 			if(!empty($prev_post['transient'])){
 				$out .= "<input type=\"hidden\" name=\"_cf_frm_tr\" value=\"" . $prev_post['transient'] . "\">\r\n";
