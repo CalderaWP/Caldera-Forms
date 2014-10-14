@@ -1416,14 +1416,7 @@ class Caldera_Forms {
 			switch($field['config']['auto_type']){
 				case 'post_type':
 					$posts = get_posts( array('post_type' => $field['config']['post_type'], 'post_status' => 'publish', 'posts_per_page' => -1) );
-					if($field['type'] === 'dropdown'){
-						$field['config']['option'] = array(
-							array(
-								'value'	=>	'',
-								'label' =>	''
-							)
-						);						
-					}
+
 					foreach($posts as $post_item){
 						$field['config']['option'][$post_item->ID] = array(
 							'value'	=>	$post_item->ID,
@@ -3642,13 +3635,13 @@ class Caldera_Forms {
 					}
 
 					$field_classes = array(
-						"control_wrapper"	=> "form-group",
-						"field_label"		=> "control-label",
-						"field_required_tag"=> "field_required",
-						"field_wrapper"		=> "",
-						"field"				=> "form-control",
-						"field_caption"		=> "help-block",
-						"field_error"		=> "has-error",
+						"control_wrapper"	=> array("form-group"),
+						"field_label"		=> array("control-label"),
+						"field_required_tag"=> array("field_required"),
+						"field_wrapper"		=> array(),
+						"field"				=> array("form-control"),
+						"field_caption"		=> array("help-block"),
+						"field_error"		=> array("has-error"),
 					);
 
 					$field_classes = apply_filters('caldera_forms_render_field_classes', $field_classes, $field, $form);
@@ -3656,28 +3649,39 @@ class Caldera_Forms {
 					$field_classes = apply_filters('caldera_forms_render_field_classes_slug-' . $field['slug'], $field_classes, $field, $form);
 
 
+
+					$field_wrapper_class = implode(' ',$field_classes['control_wrapper']);
+					$field_input_class = implode(' ',$field_classes['field_wrapper']);
+					$field_class = implode(' ',$field_classes['field']);
+
+					// add error class
+					if(!empty($field_errors[$field_base_id])){
+						$field_wrapper_class .= " " . $field_classes['field_error'];
+					}
+
 					$field_structure = array(
+						"field"			=>	$field,
 						"id"				=>	$field_base_id,//'fld_' . $field['slug'],
 						"name"				=>	$field_base_id,//$field['slug'],
-						"label_before"		=>	( empty($field['hide_label']) ? "<label for=\"" . $field_base_id.'_'.$current_form_count . "\" class=\"" . $field_classes['field_label'] . "\">" : null ),
+						"wrapper_before"	=>	"<div class=\"" . $field_wrapper_class . "\">\r\n",
+						"field_before"		=>	"<div class=\"" . $field_input_class ."\">\r\n",
+						"label_before"		=>	( empty($field['hide_label']) ? "<label for=\"" . $field_base_id.'_'.$current_form_count . "\" class=\"" . implode(' ', $field_classes['field_label'] ) . "\">" : null ),
 						"label"				=>	( empty($field['hide_label']) ? $field['label'] : null ),
-						"label_required"	=>	( empty($field['hide_label']) ? ( !empty($field['required']) ? " <span class=\"" . $field_classes['field_required_tag'] . "\" style=\"color:#ff2222;\">*</span>" : "" ) : null ),
+						"label_required"	=>	( empty($field['hide_label']) ? ( !empty($field['required']) ? " <span class=\"" . implode(' ', $field_classes['field_required_tag'] ) . "\" style=\"color:#ff2222;\">*</span>" : "" ) : null ),
 						"label_after"		=>	( empty($field['hide_label']) ? "</label>" : null ),
 						"field_placeholder" =>	( !empty($field['hide_label']) ? 'placeholder="' . htmlentities( $field['label'] ) .'"' : null),
 						"field_required"	=>	( !empty($field['required']) ? 'required="required"' : null),
 						"field_value"		=>	null,
-						"field_caption"		=>	( !empty($field['caption']) ? "<span class=\"" . $field_classes['field_caption'] . "\">" . $field['caption'] . "</span>\r\n" : ""),
+						"field_caption"		=>	( !empty($field['caption']) ? "<span class=\"" . implode(' ', $field_classes['field_caption'] ) . "\">" . $field['caption'] . "</span>\r\n" : ""),
+						"field_after"		=>  "</div>\r\n",
+						"wrapper_after"		=>  "</div>\r\n",
 					);
 
-					$field_wrapper_class = $field_classes['control_wrapper'];
-					$field_input_class = $field_classes['field_wrapper'];
-					$field_class = $field_classes['field'];
-
+					// add error
 					if(!empty($field_errors[$field_base_id])){
-						$field_wrapper_class .= " " . $field_classes['field_error'];
-						$field_structure['field_caption'] = "<span class=\"" . $field_classes['field_caption'] . "\">" . $field_errors[$field_base_id] . "</span>\r\n";
+						$field_structure['field_caption'] = "<span class=\"" . implode(' ', $field_classes['field_caption'] ) . "\">" . $field_errors[$field_base_id] . "</span>\r\n";
 					}
-					
+
 					// value
 					if(isset($field['config']['default'])){
 
@@ -3695,10 +3699,14 @@ class Caldera_Forms {
 
 					$field_name = $field_structure['name'];
 					$field_id = $field_structure['id'] . '_' . $current_form_count;
+					$wrapper_before = $field_structure['wrapper_before'];
+					$field_before = $field_structure['field_before'];
 					$field_label = $field_structure['label_before'] . $field_structure['label'] . $field_structure['label_required'] . $field_structure['label_after']."\r\n";
 					$field_placeholder = $field_structure['field_placeholder'];
 					$field_required = $field_structure['field_required'];
 					$field_caption = $field_structure['field_caption'];
+					$field_after = $field_structure['field_after'];
+					$wrapper_after = $field_structure['wrapper_after'];
 					// blank default
 					$field_value = $field_structure['field_value'];
 					// setup base instance ID
@@ -3745,8 +3753,13 @@ class Caldera_Forms {
 		}
 		//
 		$grid = apply_filters('caldera_forms_render_grid_structure', $grid, $form);
+		// wrapper classes
+		$form_wrapper_classes = array(
+			"caldera-grid"
+		);
+		$form_wrapper_classes = apply_filters('caldera_forms_render_form_wrapper_classes', $form_wrapper_classes, $form);
 
-		$out = "<div class=\"caldera-grid\" id=\"caldera_form_" . $current_form_count ."\">\r\n";
+		$out = "<div class=\"" . implode(' ', $form_wrapper_classes) . "\" id=\"caldera_form_" . $current_form_count ."\">\r\n";
 
 		$notices = apply_filters('caldera_forms_render_notices', $notices, $form);
 

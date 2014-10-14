@@ -227,8 +227,8 @@ if( !class_exists( 'Caldera_Form_Grid' )){
 							$afterBuffer = $content['after'];
 							unset($content['after']);
 						}
-						//$span = !empty($this->config['column_content['span']]) ? $content['span'] : 'default';                    
-						$this->output .= sprintf($this->config['column_before'], $colID, $content['span'], $colClass);//"    <div class=\"span".$content['span']." ".$colClass."\">\n";
+						$span = (!empty($this->config['column_spans'][$content['span']]) ? $this->config['column_spans'][$content['span']] : $content['span']);
+						$this->output .= sprintf($this->config['column_before'], $colID, $span, $colClass);//"    <div class=\"span".$content['span']." ".$colClass."\">\n";
 						$this->output .= $content['html'];
 						unset($content['html']);
 						unset($content['span']);

@@ -198,15 +198,17 @@ foreach($field_types as $field_slug=>$config){
 
 			$field_name = $field['slug'];
 			$field_id = 'preview_fld_' . $field['slug'];
+			$wrapper_before = "<div class=\"preview-caldera-config-group\">";
+			$field_before = "<div class=\"preview-caldera-config-field\">";
+			$field_after = '</div>';
+			$wrapper_after = '</div>';
 			$field_label = "<label for=\"" . $field_id . "\" class=\"control-label\">" . $field['label'] . "</label>\r\n";
 			$field_required = "";
 			$field_placeholder = 'placeholder="' . $field['label'] .'"';
 			$field_caption = "<span class=\"help-block\">" . $field['caption'] . "</span>\r\n";
 			
 			// blank default
-			$field_value = null;		
-			$field_wrapper_class = "preview-caldera-config-group";
-			$field_input_class = "preview-caldera-config-field";
+			$field_value = null;
 			$field_class = "preview-field-config";
 
 			ob_start();
@@ -619,7 +621,10 @@ foreach($panel_extensions as $panel){
 						echo "<div class=\"caldera-config-editor-panel-group\">\r\n";
 					}
 					foreach($tab_setup['fields'] as $field_slug=>&$field){
-						
+						$wrapper_before = "<div class=\"caldera-config-group\">";
+						$field_before = "<div class=\"caldera-config-field\">";
+						$field_after = '</div>';
+						$wrapper_after = '</div>';
 						$field_name = 'config[settings][' . $panel_slug . '][' . $field_slug . ']';
 						$field_base_id = $field_id = $panel_slug. '_' . $field_slug . '_' . $group_index;						
 						$field_label = "<label for=\"" . $field_id . "\">" . $field['label'] . "</label>\r\n";
@@ -645,9 +650,7 @@ foreach($panel_extensions as $panel){
 						if(isset($element['settings'][$panel_slug][$field_slug])){
 							$field_value = $element['settings'][$panel_slug][$field_slug];
 						}
-						
-						$field_wrapper_class = "caldera-config-group";
-						$field_input_class = "caldera-config-field";
+
 						$field_class = "field-config";
 						if(!empty($field['required'])){
 							$field_class .= " required";							

@@ -72,6 +72,11 @@ none yet.
 
 == Changelog ==
 
+= 1.1.9 (, 2014) =
+
+= Improved =
+* {embed_post:*} available in archive list
+
 = 1.1.8 (7 October, 2014) =
 
 = Fixed =
@@ -82,7 +87,6 @@ none yet.
 = Improved =
 * Moved entry creation to just after pre-processor to allow for {entry_id} to be usable
 * Class wrapper locations improved for better addons
-
 
 = 1.1.7 (29 September, 2014) =
 

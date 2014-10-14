@@ -401,6 +401,7 @@ textarea.magic-tag-enabled {
   border-bottom: 1px dashed #dedede;
   border-top: 1px dashed #dedede;
   visibility: visible !important;
+  min-height: 50px;
 }
 .ui-sortable-helper{overflow: hidden;}
 

@@ -12,14 +12,14 @@ if(!empty($field['config']['after'])){
 	$field['config']['after'] = self::do_magic_tags($field['config']['after']);
 }
 
-?><div class="<?php echo $field_wrapper_class; ?>">
+?><?php echo $wrapper_before; ?>
 	<?php echo $field_label; ?>
-	<div class="<?php echo $field_input_class; ?>">
+	<?php echo $field_before; ?>
 		<<?php echo $elementType; ?> class="<?php echo $field['config']['classes']; ?>"><?php echo $field['config']['before']; ?><span id="<?php echo $field_id; ?>"><?php echo $field_value; ?></span><?php echo $field['config']['after']; ?></<?php echo $elementType; ?>>
 		<input type="hidden" name="<?php echo $field_name; ?>" value="0" data-field="<?php echo $field_base_id; ?>" >
 		<?php echo $field_caption; ?>
-	</div>
-</div>
+	<?php echo $field_after; ?>
+<?php echo $wrapper_after; ?>
 <?php
 $formula = $field['config']['formular'];
 

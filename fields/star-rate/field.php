@@ -5,16 +5,16 @@ if(!isset($field['config']['track_color'])){
 if(!isset($field['config']['type'])){
 	 $field['config']['type'] = 'star';
 }
-?><div class="<?php echo $field_wrapper_class; ?>">
+?><?php echo $wrapper_before; ?>
 	<?php echo $field_label; ?>
-	<div class="<?php echo $field_input_class; ?>">
+	<?php echo $field_before; ?>
 		<div style="position: relative;">
 			<div id="<?php echo $field_id; ?>_stars" style="color:<?php echo $field['config']['track_color']; ?>;font-size:<?php echo floatval( $field['config']['size'] ); ?>px;"></div>
 			<input id="<?php echo $field_id; ?>" type="text" data-field="<?php echo $field_base_id; ?>" name="<?php echo $field_name; ?>" value="<?php echo $field_value; ?>" <?php echo $field_required; ?> style="position: absolute; width: 0px; height: 0px; padding: 0px; bottom: 0px; left: 12px; opacity: 0; z-index: -1000;">
 		</div>
 		<?php echo $field_caption; ?>
-	</div>
-</div>
+	<?php echo $field_after; ?>
+<?php echo $wrapper_after; ?>
 <script type="text/javascript">
 	jQuery(function($){		
 		$('#<?php echo $field_id; ?>_stars').raty({

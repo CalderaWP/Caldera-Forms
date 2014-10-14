@@ -175,6 +175,9 @@
   top: -6px;
   left: -5px;
 }
+.caldera-grid .file-prevent-overflow{
+  overflow: hidden;
+}
 .caldera-grid .input-sm {
   height: 26px;
   padding: 3px 8px;

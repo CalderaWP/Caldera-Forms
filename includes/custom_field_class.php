@@ -66,3 +66,21 @@ function cf_live_gravatar_get_gravatar(){
 	echo get_avatar( $_POST['email'], (int) $_POST['size'], $_POST['generator']);	
 	exit;
 }
+
+// field specific stuff.
+add_filter( 'caldera_forms_render_field_classes_type-file', 'caldera_forms_file_field_class' );
+function caldera_forms_file_field_class($classes){
+	$classes['field_wrapper'][] = "file-prevent-overflow";
+	return $classes;
+}
+add_filter( 'caldera_forms_render_field_classes_type-toggle_switch', 'caldera_forms_toggle_switch_field_class' );
+function caldera_forms_toggle_switch_field_class($classes){
+	$classes['control_wrapper'][] = "cf-toggle-switch";
+	return $classes;
+}
+add_filter( 'caldera_forms_render_field_classes_type-color_picker', 'caldera_forms_color_picker_field_class' );
+function caldera_forms_color_picker_field_class($classes){
+	$classes['field_wrapper'][] = "input-group";
+	$classes['control_wrapper'][] = "cf-color-picker";
+	return $classes;
+}

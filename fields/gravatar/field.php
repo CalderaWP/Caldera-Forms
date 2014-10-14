@@ -8,7 +8,8 @@ if(!empty($field['config']['email'])){
 	$email = '';
 }
 
-?><div class="<?php echo $field_input_class; ?>">
+?><?php echo $wrapper_before; ?>
+	<?php echo $field_before; ?>
 	<div style="text-align:center;" class="live-gravatar">
 		<?php /*<span style="background: url(<?php echo admin_url('images/spinner.gif'); ?>) no-repeat scroll center center transparent;overflow: hidden;border-radius:<?php echo $field['config']['border_radius']; ?>px; border:<?php echo $field['config']['border_size']; ?>px solid <?php echo $field['config']['border_color']; ?>;display: inline-block;"> */ ?>
 		<span style="overflow: hidden;border-radius:<?php echo $field['config']['border_radius']; ?>px; border:<?php echo $field['config']['border_size']; ?>px solid <?php echo $field['config']['border_color']; ?>;display: inline-block;">
@@ -19,7 +20,8 @@ if(!empty($field['config']['email'])){
 			?></span>
 		</span>
 	</div>
-</div>
+	<?php echo $field_after; ?>
+<?php echo $wrapper_after; ?>
 <?php
 if(empty($field['config']['email'])){
 	return;

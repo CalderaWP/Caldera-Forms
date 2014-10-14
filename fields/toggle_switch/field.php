@@ -16,8 +16,9 @@ if(!empty($field['config']['orientation']) && $field['config']['orientation'] ==
 }
 
 
-?><div class="<?php echo $field_wrapper_class; ?> cf-toggle-switch">
+?><?php echo $wrapper_before; ?>
 	<?php echo $field_label; ?>
+	<?php echo $field_before; ?>
 	<div class="caldera-config-field init_field_type" data-type="toggle_button">
 		<div class="cf-toggle-group-buttons <?php echo $groupOrientation; ?>">
 			<?php
@@ -68,4 +69,5 @@ if(!empty($field['config']['orientation']) && $field['config']['orientation'] ==
 		?></div>
 		<?php echo $field_caption; ?>
 	</div>
-</div>
+	<?php echo $field_after; ?>
+<?php echo $wrapper_after; ?>
