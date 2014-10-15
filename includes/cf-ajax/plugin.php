@@ -147,12 +147,13 @@ function cf_ajax_redirect($type, $url, $form){
 	}
 	$out['html'] = $html;
 	$out['type'] = ( isset($data['type']) ? $data['type'] : $type );
+	$out['form_id'] = $form['ID'];
+	$out['form_name'] = $form['name'];	
 	$out['status'] = $type;
 
 	$out = apply_filters('caldera_forms_ajax_return', $out, $form);
 
-	header('Content-Type: application/json');
-	echo json_encode( $out );
+	wp_send_json( $out );
 	exit;
 
 }
