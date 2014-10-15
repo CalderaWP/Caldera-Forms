@@ -872,6 +872,7 @@ class Caldera_Forms_Admin {
 			$structure = array();
 			$field_types = apply_filters('caldera_forms_get_field_types', array());
 			if(!empty($form['fields'])){
+				$headers['date_submitted'] = 'Submitted';
 				foreach($form['fields'] as $field_id=>$field){
 					if(isset($field_types[$field['type']]['capture']) &&  false === $field_types[$field['type']]['capture']){
 						continue;
@@ -910,6 +911,8 @@ class Caldera_Forms_Admin {
 
 			foreach( $rawdata as $entry){
 				$submission = Caldera_Forms::get_entry( $entry->_entryid, $form);
+				$data[$entry->_entryid]['date_submitted'] = $entry->_date_submitted;
+
 				foreach ($structure as $slug => $field_id) {
 					$data[$entry->_entryid][$slug] = ( isset( $submission['data'][$field_id]['value'] ) ? $submission['data'][$field_id]['value'] : null );
 				}
