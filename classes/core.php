@@ -3498,8 +3498,9 @@ class Caldera_Forms {
 		
 		// load requested data
 		if(!empty($entry_id)){
-			$prev_entry = self::get_entry($entry_id, $form);
+			$prev_entry = self::get_entry($entry_id, $form);			
 			$prev_data = array();
+			self::set_field_data('_entry_id', $entry_id, $form);
 			foreach($prev_entry['data'] as $field_id=>$entry_data){
 				$prev_data[$field_id] = $entry_data['value'];
 			}
