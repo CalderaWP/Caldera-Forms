@@ -127,11 +127,6 @@ class Caldera_Forms_Admin {
 	public function get_form_preview(){
 		global $post;
 
-		ob_start();
-		echo do_shortcode( urldecode( $_POST['raw'] ) );
-		$out['html'] = ob_get_clean();
-		wp_send_json_success( $out );
-
 		add_filter('caldera_forms_render_form_element', array( $this, 'set_preview_form_element') );
 		$post = get_post( (int) $_POST['post_id'] );
 		if( isset($_POST['atts']['named']['id']) ){
