@@ -3095,6 +3095,7 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
     }
   });
   Handlebars.registerHelper("is", function(value, options) {
+    
 
     if(options.hash.value === '@key'){
       options.hash.value = options.data.key;
@@ -3102,6 +3103,11 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
     if(options.hash.value === value){
       return options.fn(this);
     }else{
-      return false;
+      if(this[options.hash.value]){
+        if(this[options.hash.value] === value){
+          return options.fn(this);
+        }
+      }
+      return options.inverse(this);
     }
   });

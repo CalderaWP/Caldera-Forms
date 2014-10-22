@@ -17,7 +17,7 @@ function cf_apply_field_classes($classes, $field, $form){
 
 function cf_custom_field_classes(){
 ?>
-<div class="caldera-config-group">
+<div class="caldera-config-group customclass-field">
 	<label><?php echo __('Custom Class', 'caldera-forms'); ?> </label>
 	<div class="caldera-config-field">
 		<input type="text" class="block-input field-config" name="{{_name}}[custom_class]" value="{{custom_class}}">
@@ -40,7 +40,8 @@ function cf_live_gravatar_field($fieldtypes){
 			"template"	=>	CFCORE_PATH . "fields/gravatar/config.php",
 			"preview"	=>	CFCORE_PATH . "fields/gravatar/preview.php",
 			"not_supported"	=>	array(
-				'entry_list'
+				'entry_list',
+				'custom_class'
 			)
 		)
 	);

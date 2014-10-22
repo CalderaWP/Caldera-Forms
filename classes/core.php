@@ -1586,8 +1586,8 @@ class Caldera_Forms {
 	// FRONT END STUFFF
 	static public function form_redirect($type, $url, $form, $processid){
 
-		$url = apply_filters('caldera_forms_redirect_url', $url, $form, $processid);
-		$url = apply_filters('caldera_forms_redirect_url_' . $type, $url, $form, $processid);
+		$url = apply_filters( 'caldera_forms_redirect_url', $url, $form, $processid);
+		$url = apply_filters( 'caldera_forms_redirect_url_' . $type, $url, $form, $processid);
 		
 		do_action('caldera_forms_redirect', $type, $url, $form, $processid);
 		do_action('caldera_forms_redirect_' . $type, $url, $form, $processid);
@@ -1609,8 +1609,8 @@ class Caldera_Forms {
 			'ip',
 			'user:id',
 			'user:user_login',
-			'user:firstname',
-			'user:lastname',
+			'user:first_name',
+			'user:last_name',
 			'user:user_email' => array(
 				'text',
 				'email'
@@ -1641,7 +1641,7 @@ class Caldera_Forms {
 			'wrap'	=>	array('{','}')
 		);
 		// get processor tags
-		$processors = apply_filters('caldera_forms_get_form_processors', array() );
+		$processors = apply_filters( 'caldera_forms_get_form_processors', array() );
 		if(!empty($processors)){
 			foreach($processors as $processor_key=>$processor){
 				if(isset($processor['magic_tags'])){
@@ -1734,13 +1734,13 @@ class Caldera_Forms {
 							break;
 						case 'user':
 							if(is_user_logged_in()){
-								$user = get_userdata( get_current_user_id() );
+								$user = get_userdata( get_current_user_id() );								
 								if(isset( $user->data->{$magic[1]} )){
 									$magic_tag = $user->data->{$magic[1]};
 								}else{
 									if(strtolower($magic[1]) == 'id'){
 										$magic_tag = $user->ID;
-									}else{
+									}else{										
 										$magic_tag = get_user_meta( $user->ID, $magic[1], true );
 									}
 								}
@@ -1825,7 +1825,7 @@ class Caldera_Forms {
 								$out = array();
 								foreach($form['fields'] as $field_id=>$field){
 									$field_value = self::get_field_data($field_id, $form);
-									$field_value = apply_filters('caldera_forms_view_field_' . $field['type'], $field_value, $field, $form);
+									$field_value = apply_filters( 'caldera_forms_view_field_' . $field['type'], $field_value, $field, $form);
 									if(is_array($field_value)){
 										$field_value = implode(', ', $field_value);
 									}
@@ -1841,7 +1841,7 @@ class Caldera_Forms {
 					}
 				}
 
-				$filter_value = apply_filters('caldera_forms_do_magic_tag', $magic_tag, $magics[0][$magic_key]);				
+				$filter_value = apply_filters( 'caldera_forms_do_magic_tag', $magic_tag, $magics[0][$magic_key]);				
 				if(!empty($form['ID']) ){
 					//dump($processed_meta[$form['ID']]);
 
@@ -1896,7 +1896,7 @@ class Caldera_Forms {
 			foreach($matches[1] as $key=>$tag){
 				$entry = self::get_slug_data($tag, $form, $entry_id);
 				
-				if($entry !== null){
+				//if($entry !== null){
 					if(is_array($entry)){
 						if(count($entry) === 1){
 							$entry = array_shift($entry);
@@ -1910,7 +1910,7 @@ class Caldera_Forms {
 						}
 					}
 					$value = str_replace($matches[0][$key], $entry, $value);
-				}
+				//}
 			}
 		}
 
@@ -1925,7 +1925,7 @@ class Caldera_Forms {
 		//}
 
 
-		$field_types = apply_filters('caldera_forms_get_field_types', array() );
+		$field_types = apply_filters( 'caldera_forms_get_field_types', array() );
 
 		if(!empty($field_types)){
 			foreach($field_types as $fieldType=>$fieldConfig){
@@ -2034,7 +2034,7 @@ class Caldera_Forms {
 				SELECT `value` FROM `" . $wpdb->prefix ."cf_form_entry_values` WHERE `entry_id` = %d AND `field_id` = %s AND `slug` = %s", $entry_id, $field_id, $form['fields'][$field_id]['slug']), ARRAY_A);
 
 			//allow plugins to alter the value
-			$entry = apply_filters('caldera_forms_get_field_entry', $entry, $field_id, $form, $entry_id);
+			$entry = apply_filters( 'caldera_forms_get_field_entry', $entry, $field_id, $form, $entry_id);
 
 			if(!empty($entry)){
 				if( count( $entry ) > 1){
@@ -2055,7 +2055,7 @@ class Caldera_Forms {
 
 		if(isset($form['fields'][$field_id])){
 			// get field
-			$field = apply_filters('caldera_forms_render_setup_field', $form['fields'][$field_id], $form);
+			$field = apply_filters( 'caldera_forms_render_setup_field', $form['fields'][$field_id], $form);
 
 			if(empty($field) || !isset($field['ID'])){
 				return null;
@@ -2187,7 +2187,7 @@ class Caldera_Forms {
 
 		$entry_meta_data = $wpdb->get_results($wpdb->prepare("SELECT * FROM `" . $wpdb->prefix ."cf_form_entry_meta` WHERE `entry_id` = %d", $entry_id), ARRAY_A);
 		if(!empty($entry_meta_data)){
-			$processors = apply_filters('caldera_forms_get_form_processors', array() );							
+			$processors = apply_filters( 'caldera_forms_get_form_processors', array() );							
 			foreach($entry_meta_data as $meta_index=>$meta){
 				// is json?
 				if( false !== strpos($meta['meta_value'], '{') || false !== strpos($meta['meta_value'], '[') ){
@@ -2197,7 +2197,7 @@ class Caldera_Forms {
 				}
 
 				$group = 'meta';
-				$meta = apply_filters('caldera_forms_get_entry_meta', $meta, $form);
+				$meta = apply_filters( 'caldera_forms_get_entry_meta', $meta, $form);
 
 				if(isset($form['processors'][$meta['process_id']])){
 
@@ -2212,7 +2212,7 @@ class Caldera_Forms {
 							continue;
 						}
 					}
-					$meta = apply_filters('caldera_forms_get_entry_meta_' . $form['processors'][$meta['process_id']]['type'], $meta, $process_config , $form);
+					$meta = apply_filters( 'caldera_forms_get_entry_meta_' . $form['processors'][$meta['process_id']]['type'], $meta, $process_config , $form);
 
 					
 					// allows plugins to remove it.
@@ -2354,7 +2354,7 @@ class Caldera_Forms {
 		// check honey
 		if(isset($form['check_honey'])){
 			// use multiple honey words
-			$honey_words = apply_filters('caldera_forms_get_honey_words', array('web_site', 'url', 'email', 'company', 'name'));
+			$honey_words = apply_filters( 'caldera_forms_get_honey_words', array('web_site', 'url', 'email', 'company', 'name'));
 			foreach($_POST as $honey_word=>$honey_value){
 				if(strlen($honey_value) && in_array($honey_word, $honey_words)){
 					// yupo - bye bye
@@ -2371,13 +2371,13 @@ class Caldera_Forms {
 			}
 		}
 		// init filter
-		$form = apply_filters('caldera_forms_submit_get_form', $form);
+		$form = apply_filters( 'caldera_forms_submit_get_form', $form);
 
 		if(!empty($form['fields'])){
 			foreach($form['fields'] as $field_id=>$field){
-				$field = apply_filters('caldera_forms_render_get_field', $field, $form);
-				$field = apply_filters('caldera_forms_render_get_field_type-' . $field['type'], $field, $form);
-				$field = apply_filters('caldera_forms_render_get_field_slug-' . $field['slug'], $field, $form);
+				$field = apply_filters( 'caldera_forms_render_get_field', $field, $form);
+				$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field['type'], $field, $form);
+				$field = apply_filters( 'caldera_forms_render_get_field_slug-' . $field['slug'], $field, $form);
 				$form['fields'][$field_id] = $field;
 			}
 		}
@@ -2467,7 +2467,7 @@ class Caldera_Forms {
 			unset($transdata['data']['cfajax']);
 		}
 		// setup transient data
-		$transdata = apply_filters('caldera_forms_submit_transient_setup', $transdata);
+		$transdata = apply_filters( 'caldera_forms_submit_transient_setup', $transdata);
 
 		// setup processor bound requieds
 		if(!empty($form['processors'])){
@@ -2583,8 +2583,8 @@ class Caldera_Forms {
 		if(!empty($transdata['fields']) || !empty($transdata['error'])){
 			$transdata['type'] = 'error';
 			// set error transient
-			$transdata = apply_filters('caldera_forms_submit_return_transient', $transdata, $form, $referrer, $process_id);
-			$transdata = apply_filters('caldera_forms_submit_return_transient_required', $transdata, $form, $referrer, $process_id);
+			$transdata = apply_filters( 'caldera_forms_submit_return_transient', $transdata, $form, $referrer, $process_id);
+			$transdata = apply_filters( 'caldera_forms_submit_return_transient_required', $transdata, $form, $referrer, $process_id);
 						
 			// back to form
 			$query_str = array(
@@ -2594,8 +2594,8 @@ class Caldera_Forms {
 				$query_str = array_merge($referrer['query'], $query_str);
 			}
 			$referrer = $referrer['path'] . '?' . http_build_query($query_str);
-			$referrer = apply_filters('caldera_forms_submit_return_redirect', $referrer, $form, $process_id);
-			$referrer = apply_filters('caldera_forms_submit_return_redirect_required', $referrer, $form, $process_id);
+			$referrer = apply_filters( 'caldera_forms_submit_return_redirect', $referrer, $form, $process_id);
+			$referrer = apply_filters( 'caldera_forms_submit_return_redirect_required', $referrer, $form, $process_id);
 
 			set_transient( $process_id, $transdata, $transdata['expire']);
 
@@ -2610,7 +2610,7 @@ class Caldera_Forms {
 		}
 			
 		// get all form processors
-		$form_processors = apply_filters('caldera_forms_get_form_processors', array() );
+		$form_processors = apply_filters( 'caldera_forms_get_form_processors', array() );
 		do_action('caldera_forms_submit_pre_process_start', $form, $referrer, $process_id);
 
 		// PRE PROCESS
@@ -2669,8 +2669,8 @@ class Caldera_Forms {
 						}
 	
 						// set error transient
-						$transdata = apply_filters('caldera_forms_submit_return_transient', $transdata, $form, $referrer, $process_id);
-						$transdata = apply_filters('caldera_forms_submit_return_transient_pre_process', $transdata, $form, $referrer, $process_id);
+						$transdata = apply_filters( 'caldera_forms_submit_return_transient', $transdata, $form, $referrer, $process_id);
+						$transdata = apply_filters( 'caldera_forms_submit_return_transient_pre_process', $transdata, $form, $referrer, $process_id);
 
 						// back to form
 						$query_str = array(
@@ -2680,8 +2680,8 @@ class Caldera_Forms {
 							$query_str = array_merge($referrer['query'], $query_str);
 						}
 						$referrer = $referrer['path'] . '?' . http_build_query($query_str);
-						$referrer = apply_filters('caldera_forms_submit_return_redirect', $referrer, $form, $process_id);
-						$referrer = apply_filters('caldera_forms_submit_return_redirect-'.$processor['type'], $referrer, $config, $form, $process_id);
+						$referrer = apply_filters( 'caldera_forms_submit_return_redirect', $referrer, $form, $process_id);
+						$referrer = apply_filters( 'caldera_forms_submit_return_redirect-'.$processor['type'], $referrer, $config, $form, $process_id);
 
 						// set transient data
 						set_transient( $process_id, $transdata, $transdata['expire']);
@@ -2752,7 +2752,7 @@ class Caldera_Forms {
 				if(!empty($processor['config'])){
 
 					$config = array_merge($config, $processor['config']);
-				}					
+				}
 				if(is_array($process['processor'])){
 					$hasmeta = call_user_func_array($process['processor'],array($config, $form, $process_id));
 				}else{
@@ -2774,10 +2774,14 @@ class Caldera_Forms {
 				
 				
 				if(!empty($transdata['error'])){
-
+					// remove pending entry
+					if( !empty( $entryid ) && !empty($new_entry) && $new_entry['status'] == 'pending'  ){
+						// kill it with fire
+						$wpdb->delete($wpdb->prefix . 'cf_form_entries', array( 'id'=>$entryid ) );
+					}
 					// set error transient
-					$transdata = apply_filters('caldera_forms_submit_error_transient', $transdata, $form, $referrer, $process_id);
-					$transdata = apply_filters('caldera_forms_submit_error_transient_pre_process', $transdata, $form, $referrer, $process_id);
+					$transdata = apply_filters( 'caldera_forms_submit_error_transient', $transdata, $form, $referrer, $process_id);
+					$transdata = apply_filters( 'caldera_forms_submit_error_transient_pre_process', $transdata, $form, $referrer, $process_id);
 
 					// back to form
 					$query_str = array(
@@ -2787,8 +2791,8 @@ class Caldera_Forms {
 						$query_str = array_merge($referrer['query'], $query_str);
 					}
 					$referrer = $referrer['path'] . '?' . http_build_query($query_str);
-					$referrer = apply_filters('caldera_forms_submit_error_redirect', $referrer, $form, $process_id);
-					$referrer = apply_filters('caldera_forms_submit_error_redirect_pre_process', $referrer, $form, $process_id);
+					$referrer = apply_filters( 'caldera_forms_submit_error_redirect', $referrer, $form, $process_id);
+					$referrer = apply_filters( 'caldera_forms_submit_error_redirect_pre_process', $referrer, $form, $process_id);
 
 					// set transient data
 					set_transient( $process_id, $transdata, $transdata['expire']);
@@ -2854,7 +2858,10 @@ class Caldera_Forms {
 
 		// last entry id - new only
 		if( empty( $transdata['edit'] ) ){
-			$referrer['query']['cf_id'] = self::do_magic_tags( '{entry_id}' );
+			$cf_id = self::do_magic_tags( '{entry_id}' );
+			if( !empty( $cf_id ) ){
+				$referrer['query']['cf_id'] = self::do_magic_tags( '{entry_id}' );
+			}
 		}		
 		
 		// passback values
@@ -2868,8 +2875,8 @@ class Caldera_Forms {
 		$referrer = $referrer['path'] . '?' . http_build_query($referrer['query']);
 
 		// filter refer
-		$referrer = apply_filters('caldera_forms_submit_redirect', $referrer, $form, $process_id);
-		$referrer = apply_filters('caldera_forms_submit_redirect_complete', $referrer, $form, $process_id);
+		$referrer = apply_filters( 'caldera_forms_submit_redirect', $referrer, $form, $process_id);
+		$referrer = apply_filters( 'caldera_forms_submit_redirect_complete', $referrer, $form, $process_id);
 
 		// kill transient data
 		delete_transient( $process_id );
@@ -3186,7 +3193,7 @@ class Caldera_Forms {
 
 			$data['data'][$field_id] = array(
 				'label' => $field['label'],
-				'view'	=> apply_filters('caldera_forms_view_field_' . $field['type'], $field_value, $field, $form),
+				'view'	=> apply_filters( 'caldera_forms_view_field_' . $field['type'], $field_value, $field, $form),
 				'value' => $field_value
 			);
 		}
@@ -3224,7 +3231,7 @@ class Caldera_Forms {
 		}
 		
 		// allow plugins to alter the profile.
-		$data['user'] = apply_filters('caldera_forms_get_entry_user', $data['user'], $entry_id, $form);
+		$data['user'] = apply_filters( 'caldera_forms_get_entry_user', $data['user'], $entry_id, $form);
 
 		if(!empty($_POST['form'])){
 			header('Content-Type: application/json');
@@ -3351,7 +3358,7 @@ class Caldera_Forms {
 			$entry_id = self::do_magic_tags( $atts['entry'] );
 		}
 		
-		$form = apply_filters('caldera_forms_render_get_form', $form );
+		$form = apply_filters( 'caldera_forms_render_get_form', $form );
 
 		if(empty($form)){
 			return;
@@ -3372,7 +3379,7 @@ class Caldera_Forms {
 		if(!empty($form['settings']['responsive']['break_point'])){
 			$gridsize = $form['settings']['responsive']['break_point'];
 		}
-		$gridsize = apply_filters('caldera_forms_render_set_grid_size', $gridsize );
+		$gridsize = apply_filters( 'caldera_forms_render_set_grid_size', $gridsize );
 
 		// set grid render engine
 		$grid_settings = array(
@@ -3389,7 +3396,7 @@ class Caldera_Forms {
 		);
 		
 		// filter settings
-		$grid_settings = apply_filters('caldera_forms_render_grid_settings', $grid_settings, $form);
+		$grid_settings = apply_filters( 'caldera_forms_render_grid_settings', $grid_settings, $form);
 
 		$grid = new Caldera_Form_Grid($grid_settings);
 
@@ -3413,7 +3420,7 @@ class Caldera_Forms {
 		$note_general_classes = array(
 			'alert'
 		);
-		$note_general_classes = apply_filters('caldera_forms_render_note_general_classes', $note_general_classes, $form);
+		$note_general_classes = apply_filters( 'caldera_forms_render_note_general_classes', $note_general_classes, $form);
 
 		$note_classes = array(
 			'success'	=> array_merge($note_general_classes, array(
@@ -3433,7 +3440,7 @@ class Caldera_Forms {
 			)),
 		);
 		
-		$note_classes = apply_filters('caldera_forms_render_note_classes', $note_classes, $form);
+		$note_classes = apply_filters( 'caldera_forms_render_note_classes', $note_classes, $form);
 
 		$field_errors = array();
 		
@@ -3494,7 +3501,7 @@ class Caldera_Forms {
 		}
 
 		// check for prev post
-		$prev_data = apply_filters('caldera_forms_render_pre_get_entry', array(), $form, $entry_id);
+		$prev_data = apply_filters( 'caldera_forms_render_pre_get_entry', array(), $form, $entry_id);
 		
 		// load requested data
 		if(!empty($entry_id)){
@@ -3504,7 +3511,7 @@ class Caldera_Forms {
 			foreach($prev_entry['data'] as $field_id=>$entry_data){
 				$prev_data[$field_id] = $entry_data['value'];
 			}
-			$prev_data = apply_filters('caldera_forms_render_get_entry', $prev_data, $form, $entry_id);
+			$prev_data = apply_filters( 'caldera_forms_render_get_entry', $prev_data, $form, $entry_id);
 		}
 
 
@@ -3543,7 +3550,7 @@ class Caldera_Forms {
 				}
 			}
 			// filter transient
-			$prev_post = apply_filters('caldera_forms_render_get_transient', $prev_post, $form);
+			$prev_post = apply_filters( 'caldera_forms_render_get_transient', $prev_post, $form);
 
 		}
 		if(!empty($_GET['cf_su']) && $current_form_count == $_GET['cf_su']){
@@ -3616,9 +3623,9 @@ class Caldera_Forms {
 		if(!empty($form['fields'])){
 			// prepare fields
 			foreach($form['fields'] as $field_id=>$field){
-				$field = apply_filters('caldera_forms_render_get_field', $field, $form);
-				$field = apply_filters('caldera_forms_render_get_field_type-' . $field['type'], $field, $form);
-				$field = apply_filters('caldera_forms_render_get_field_slug-' . $field['slug'], $field, $form);
+				$field = apply_filters( 'caldera_forms_render_get_field', $field, $form);
+				$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field['type'], $field, $form);
+				$field = apply_filters( 'caldera_forms_render_get_field_slug-' . $field['slug'], $field, $form);
 				$form['fields'][$field_id] = $field;
 			}
 		}
@@ -3629,7 +3636,7 @@ class Caldera_Forms {
 				// instance base
 				if(isset($form['fields'][$field_base_id])){
 						
-					$field = apply_filters('caldera_forms_render_setup_field', $form['fields'][$field_base_id], $form);
+					$field = apply_filters( 'caldera_forms_render_setup_field', $form['fields'][$field_base_id], $form);
 
 					if(empty($field) || !isset($field_types[$field['type']]['file']) || !file_exists($field_types[$field['type']]['file'])){
 						continue;
@@ -3645,9 +3652,9 @@ class Caldera_Forms {
 						"field_error"		=> array("has-error"),
 					);
 
-					$field_classes = apply_filters('caldera_forms_render_field_classes', $field_classes, $field, $form);
-					$field_classes = apply_filters('caldera_forms_render_field_classes_type-' . $field['type'], $field_classes, $field, $form);
-					$field_classes = apply_filters('caldera_forms_render_field_classes_slug-' . $field['slug'], $field_classes, $field, $form);
+					$field_classes = apply_filters( 'caldera_forms_render_field_classes', $field_classes, $field, $form);
+					$field_classes = apply_filters( 'caldera_forms_render_field_classes_type-' . $field['type'], $field_classes, $field, $form);
+					$field_classes = apply_filters( 'caldera_forms_render_field_classes_slug-' . $field['slug'], $field_classes, $field, $form);
 
 
 
@@ -3657,7 +3664,7 @@ class Caldera_Forms {
 
 					// add error class
 					if(!empty($field_errors[$field_base_id])){
-						$field_wrapper_class .= " " . $field_classes['field_error'];
+						$field_wrapper_class .= " " . implode(' ',$field_classes['field_error']);
 					}
 
 					$field_structure = array(
@@ -3694,9 +3701,9 @@ class Caldera_Forms {
 						$field_structure['field_value'] = $prev_data[$field_base_id];
 					}
 
-					$field_structure = apply_filters('caldera_forms_render_field_structure', $field_structure, $form);
-					$field_structure = apply_filters('caldera_forms_render_field_structure_type-' . $field['type'], $field_structure, $form);
-					$field_structure = apply_filters('caldera_forms_render_field_structure_slug-' . $field['slug'], $field_structure, $form);
+					$field_structure = apply_filters( 'caldera_forms_render_field_structure', $field_structure, $form);
+					$field_structure = apply_filters( 'caldera_forms_render_field_structure_type-' . $field['type'], $field_structure, $form);
+					$field_structure = apply_filters( 'caldera_forms_render_field_structure_slug-' . $field['slug'], $field_structure, $form);
 
 					$field_name = $field_structure['name'];
 					$field_id = $field_structure['id'] . '_' . $current_form_count;
@@ -3715,9 +3722,9 @@ class Caldera_Forms {
 
 					ob_start();
 					include $field_types[$field['type']]['file'];
-					$field_html = apply_filters('caldera_forms_render_field', ob_get_clean(), $form);
-					$field_html = apply_filters('caldera_forms_render_field_type-' . $field['type'], $field_html, $form);
-					$field_html = apply_filters('caldera_forms_render_field_slug-' . $field['slug'], $field_html, $form);
+					$field_html = apply_filters( 'caldera_forms_render_field', ob_get_clean(), $form);
+					$field_html = apply_filters( 'caldera_forms_render_field_type-' . $field['type'], $field_html, $form);
+					$field_html = apply_filters( 'caldera_forms_render_field_slug-' . $field['slug'], $field_html, $form);
 
 					// conditional wrapper
 					if(!empty($field['conditions']['group']) && !empty($field['conditions']['type'])){
@@ -3753,16 +3760,16 @@ class Caldera_Forms {
 			}
 		}
 		//
-		$grid = apply_filters('caldera_forms_render_grid_structure', $grid, $form);
+		$grid = apply_filters( 'caldera_forms_render_grid_structure', $grid, $form);
 		// wrapper classes
 		$form_wrapper_classes = array(
 			"caldera-grid"
 		);
-		$form_wrapper_classes = apply_filters('caldera_forms_render_form_wrapper_classes', $form_wrapper_classes, $form);
+		$form_wrapper_classes = apply_filters( 'caldera_forms_render_form_wrapper_classes', $form_wrapper_classes, $form);
 
 		$out = "<div class=\"" . implode(' ', $form_wrapper_classes) . "\" id=\"caldera_form_" . $current_form_count ."\">\r\n";
 
-		$notices = apply_filters('caldera_forms_render_notices', $notices, $form);
+		$notices = apply_filters( 'caldera_forms_render_notices', $notices, $form);
 
 		$out .= '<div id="caldera_notices_'.$current_form_count.'" data-spinner="'. admin_url( 'images/spinner.gif' ).'">';
 		if(!empty($notices)){
@@ -3799,9 +3806,9 @@ class Caldera_Forms {
 				'role'		=>	'form'
 			);
 
-			$form_element = apply_filters('caldera_forms_render_form_element', $form_element, $form);
-			$form_classes = apply_filters('caldera_forms_render_form_classes', $form_classes, $form);
-			$form_attributes = apply_filters('caldera_forms_render_form_attributes', $form_attributes, $form);
+			$form_element = apply_filters( 'caldera_forms_render_form_element', $form_element, $form);
+			$form_classes = apply_filters( 'caldera_forms_render_form_classes', $form_classes, $form);
+			$form_attributes = apply_filters( 'caldera_forms_render_form_attributes', $form_attributes, $form);
 
 			$attributes = array();
 			foreach($form_attributes as $attribute=>$value){
@@ -3858,7 +3865,7 @@ class Caldera_Forms {
 			// sticky sticky honey
 			if(isset($form['check_honey'])){
 				$out .= "<div class=\"hide\" style=\"display:none; overflow:hidden;height:0;width:0;\">\r\n";
-					$honey_words = apply_filters('caldera_forms_get_honey_words', array('web_site', 'url', 'email', 'company', 'name'));
+					$honey_words = apply_filters( 'caldera_forms_get_honey_words', array('web_site', 'url', 'email', 'company', 'name'));
 					$word = $honey_words[rand(0, count($honey_words) - 1 )];
 					$out .= "<label>". ucwords( str_replace('_', ' ', $word) ) ."</label><input type=\"text\" name=\"".$word."\" value=\"\" autocomplete=\"off\">\r\n";
 				$out .= "</div>";
@@ -3922,7 +3929,7 @@ class Caldera_Forms {
 		
 		do_action('caldera_forms_render_end', $form);
 
-		return apply_filters('caldera_forms_render_form', $out, $form);
+		return apply_filters( 'caldera_forms_render_form', $out, $form);
 
 	}
 

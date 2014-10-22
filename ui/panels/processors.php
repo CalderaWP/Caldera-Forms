@@ -2,7 +2,7 @@
 global $form_processors;
 //dump($element,0);
 // Get Processors
-$form_processors = apply_filters('caldera_forms_get_form_processors', array() );
+$form_processors = apply_filters( 'caldera_forms_get_form_processors', array() );
 
 $form_processors_defaults = array(
 	"var processor_defaults = {};"

@@ -6,7 +6,7 @@ global $field_type_list, $field_type_templates;
 $element = get_option( $_GET['edit'] );
 
 // build magic tags
-$magic_tags = apply_filters('caldera_forms_get_magic_tags', array());
+$magic_tags = apply_filters( 'caldera_forms_get_magic_tags', array());
 
 //dump($element);
 if(empty($element['success'])){
@@ -27,12 +27,12 @@ echo "<input id=\"form_id_field\" name=\"config[ID]\" value=\"" . $_GET['edit'] 
 do_action('caldera_forms_edit_start', $element);
 
 // Get Fieldtpyes
-$field_types = apply_filters('caldera_forms_get_field_types', array() );
+$field_types = apply_filters( 'caldera_forms_get_field_types', array() );
 // sort fields
 ksort($field_types);
 
 // Get Elements
-$panel_extensions = apply_filters('caldera_forms_get_panel_extensions', array() );
+$panel_extensions = apply_filters( 'caldera_forms_get_panel_extensions', array() );
 
 
 $field_type_list = array();
@@ -476,7 +476,7 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 			<?php
 			global $wp_roles;
 		    $all_roles = $wp_roles->roles;
-		    $editable_roles = apply_filters('editable_roles', $all_roles);
+		    $editable_roles = apply_filters( 'editable_roles', $all_roles);
 			
 			foreach($editable_roles as $role=>$role_details){
 				if( 'administrator' === $role){

@@ -8,8 +8,7 @@
   font-weight: normal;
   font-style: normal;
 }
-
-[class^="dashicons-cf-"], [class*=" dashicons-cf-"] {
+[class^="dashicons-cf-"], [class*="dashicons-cf-"], .mce-ico.mce-i-caldera-forms {
   font-family: 'caldera-forms';
   speak: none;
   font-style: normal;
@@ -17,16 +16,23 @@
   font-variant: normal;
   text-transform: none;
   line-height: 1;
+  vertical-align: top;
 
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+.loading-placeholder > .dashicons-cf-logo:before{
+  color: #a3be5f;
+}
+.wpview-error > .dashicons-cf-logo:before{
+  color: #bf0000;
+}
 div.wp-menu-image.dashicons-cf-logo:before{
   font-family: 'caldera-forms' !important;
   font-size: 19px !important;
 }
+.mce-ico.mce-i-caldera-forms:before,
 .dashicons-cf-logo:before {
   content: "\e604";
 }

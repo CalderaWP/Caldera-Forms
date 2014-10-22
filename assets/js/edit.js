@@ -139,27 +139,8 @@ jQuery(document).ready(function($){
 			}else{
 				// default config
 				config = fieldtype_defaults[select.val() + '_cfg'];
-			}
-
-			// remove not supported stuff
-			if(fieldtype_defaults[select.val() + '_nosupport']){
-				
-				if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('hide_label') >= 0){
-					parent.find('.hide-label-field').hide().find('.field-config').prop('checked', false);
-				}
-				if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('caption') >= 0){
-					parent.find('.caption-field').hide().find('.field-config').val('');
-				}
-				if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('required') >= 0){
-					parent.find('.required-field').hide().find('.field-config').prop('checked', false);
-				}
-				if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('entry_list') >= 0){
-					parent.find('.entrylist-field').hide().find('.field-config').prop('checked', false);
-				}
-				
-				
-			}
-
+			}			
+			
 			// build template
 			if(!config){
 				config = {};
@@ -180,6 +161,25 @@ jQuery(document).ready(function($){
 			}
 
 			//build_field_preview(select.data('field'));
+			// remove not supported stuff
+			if(fieldtype_defaults[select.val() + '_nosupport']){
+				
+				if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('hide_label') >= 0){
+					parent.find('.hide-label-field').hide().find('.field-config').prop('checked', false);
+				}
+				if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('caption') >= 0){
+					parent.find('.caption-field').hide().find('.field-config').val('');
+				}
+				if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('caption') >= 0){
+					parent.find('.caption-field').hide().find('.field-config').val('');
+				}
+				if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('custom_class') >= 0){
+					parent.find('.customclass-field').hide().find('.field-config').val('');
+				}
+				if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('entry_list') >= 0){
+					parent.find('.entrylist-field').hide().find('.field-config').prop('checked', false);
+				}				
+			}
 
 			// seup options
 			parent.find('.toggle_show_values').trigger('change');
