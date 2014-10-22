@@ -77,6 +77,11 @@ none yet.
 = Improved =
 * {embed_post:*} available in archive list
 
+= Added =
+* Live preview on shortcode in editor. really. It's awesome.
+
+
+
 = 1.1.8 (7 October, 2014) =
 
 = Fixed =
