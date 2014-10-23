@@ -15,6 +15,9 @@ jQuery(function($){
 
 			},
 			callback		: function(obj){
+                if ( 1 == $(obj.params.trigger ).attr( 'data-post-disable')){
+                    obj.params.trigger.find(':submit').prop('disabled',false);
+                }
 				
 				obj.params.trigger.find(':submit').prop('disabled',false);
 				
