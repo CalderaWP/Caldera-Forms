@@ -518,6 +518,10 @@ class Caldera_Forms_Admin {
 
 						// check view handler
 						$field = $fields[$row->slug];
+						// filter the field to get field data
+						$field = apply_filters( 'caldera_forms_render_get_field', $field, $form);
+						$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field['type'], $field, $form);
+						$field = apply_filters( 'caldera_forms_render_get_field_slug-' . $field['slug'], $field, $form);
 
 						$row->value = apply_filters( 'caldera_forms_view_field_' . $field['type'], $row->value, $field, $form);
 

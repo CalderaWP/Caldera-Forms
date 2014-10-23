@@ -1824,6 +1824,12 @@ class Caldera_Forms {
 							if(!empty($form['fields'])){
 								$out = array();
 								foreach($form['fields'] as $field_id=>$field){
+					
+									// filter the field to get field data
+									$field = apply_filters( 'caldera_forms_render_get_field', $field, $form);
+									$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field['type'], $field, $form);
+									$field = apply_filters( 'caldera_forms_render_get_field_slug-' . $field['slug'], $field, $form);
+
 									$field_value = self::get_field_data($field_id, $form);
 									$field_value = apply_filters( 'caldera_forms_view_field_' . $field['type'], $field_value, $field, $form);
 									if(is_array($field_value)){
@@ -3190,6 +3196,11 @@ class Caldera_Forms {
 			//not_supported
 
 			$field = $form['fields'][$field_id];
+			// filter the field to get field data
+			$field = apply_filters( 'caldera_forms_render_get_field', $field, $form);
+			$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field['type'], $field, $form);
+			$field = apply_filters( 'caldera_forms_render_get_field_slug-' . $field['slug'], $field, $form);
+
 
 			$data['data'][$field_id] = array(
 				'label' => $field['label'],
@@ -3820,7 +3831,9 @@ class Caldera_Forms {
 			$out .= wp_nonce_field( "caldera_forms_front", "_cf_verify", true, false);
 			$out .= "<input type=\"hidden\" name=\"_cf_frm_id\" value=\"" . $atts['id'] . "\">\r\n";
 			$out .= "<input type=\"hidden\" name=\"_cf_frm_ct\" value=\"" . $current_form_count . "\">\r\n";
-			$out .= "<input type=\"hidden\" name=\"_cf_cr_pst\" value=\"" . $post->ID . "\">\r\n";
+			if( is_object($post) ){
+				$out .= "<input type=\"hidden\" name=\"_cf_cr_pst\" value=\"" . $post->ID . "\">\r\n";
+			}
 
 			// user transient for continuation
 			if(!empty($prev_post['transient'])){
