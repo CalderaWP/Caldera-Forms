@@ -72,13 +72,18 @@ none yet.
 
 == Changelog ==
 
-= 1.1.9 (, 2014) =
+= 1.1.9 (26 october, 2014) =
+
+= Fixed =
+* multi page validation on radios + checkboxes
+* minor bug fixes
 
 = Improved =
 * {embed_post:*} available in archive list
 
 = Added =
 * Live preview on shortcode in editor. really. It's awesome.
+* Additional filters to aid in auto-populating fields
 
 = 1.1.8 (7 October, 2014) =
 

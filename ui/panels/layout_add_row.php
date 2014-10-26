@@ -49,7 +49,7 @@ if(empty($haspointer)){ ?>
 
 		var form = jQuery('.caldera-forms-options-form'),
 			clicked = jQuery(this);
-			console.log(this);
+			//console.log(this);
 		if(form.hasClass('mini-mode')){
 			form.removeClass('mini-mode');
 			clicked.removeClass('button-primary');

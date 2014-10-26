@@ -135,7 +135,7 @@ rebind_field_bindings = function(){
 	}
 	
 	bindings.addClass('bound_field');
-	console.log(bindings);
+//	console.log(bindings);
 	//bindings.trigger('change');
 	//bindings.each(function(k,v){
 	for(var v = 0; v < bindings.length; v++){
