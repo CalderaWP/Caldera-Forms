@@ -9,10 +9,12 @@ License: GPLv2
 Create complex grid based, responsive forms easily with an easy to use drag and drop layout builder.
 
 == Description ==
-Caldera Forms is a free, simple form builder with a layout builder that enables you to create the format you want for your form. It is fully responsive and with form processors, it gives you flexibility to handle the form data how you need it.
+Caldera Forms is an easy to use free WordPress form builder with a layout builder that enables you to create the format you want for your form. It is fully responsive and with form processors, it gives you flexibility to handle the form data how you need it without needing a single line of code.
+
+Easy enough for everyday users to create forms, and powerful enough for php ninjas to extend.
 
 For issues and updates - Caldera Forms is on [GitHub](https://github.com/Desertsnowman/Caldera-Forms)
-Form Docs, Demos & Templates can be found on the docs site (work in progress) [Caldera Forms Docs](http://docs.calderaforms.com/)
+Form Docs, Demos & Templates can be found on the docs site (work in progress) [Caldera Forms Documentation](http://docs.calderaforms.com/)
 
 = A Few Feature Highlights =
 * Responsive Grid design based on Bootstrap 3

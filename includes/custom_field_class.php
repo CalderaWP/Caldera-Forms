@@ -10,7 +10,7 @@ add_filter('caldera_forms_render_field_classes', 'cf_apply_field_classes', 10, 3
 function cf_apply_field_classes($classes, $field, $form){
 	
 	if(!empty($field['config']['custom_class'])){
-		$classes['control_wrapper'] .= ' '.$field['config']['custom_class'];
+		$classes['control_wrapper'][] = $field['config']['custom_class'];
 	}
 	return $classes;
 }
