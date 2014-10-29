@@ -655,7 +655,7 @@ class Caldera_Forms_Admin {
 
 		if($screen->base === 'post'){
 			wp_enqueue_style( $this->plugin_slug .'-modal-styles', CFCORE_URL . 'assets/css/modals.css', array(), self::VERSION );
-			wp_enqueue_script( $this->plugin_slug .'-shortcode-insert', CFCORE_URL . 'assets/js/shortcode-insert.js', array('jquery'), self::VERSION );
+			wp_enqueue_script( $this->plugin_slug .'-shortcode-insert', CFCORE_URL . 'assets/js/shortcode-insert.min.js', array('jquery'), self::VERSION );
 			//add_editor_style( CFCORE_URL . 'assets/css/caldera-form.css' );
 			add_editor_style( CFCORE_URL . 'assets/css/caldera-grid.css' );
 			add_editor_style( CFCORE_URL . 'assets/css/dashicon.css' );
@@ -687,17 +687,27 @@ class Caldera_Forms_Admin {
 
 		wp_enqueue_style( $this->plugin_slug .'-admin-styles', CFCORE_URL . 'assets/css/admin.css', array(), self::VERSION );
 		wp_enqueue_style( $this->plugin_slug .'-modal-styles', CFCORE_URL . 'assets/css/modals.css', array(), self::VERSION );
+		wp_enqueue_style( $this->plugin_slug .'-field-styles', CFCORE_URL . 'assets/css/fields.min.css', array(), self::VERSION );
+
+		/* standalone scripts
 		wp_enqueue_script( $this->plugin_slug .'-admin-scripts', CFCORE_URL . 'assets/js/admin.js', array(), self::VERSION );
 		wp_enqueue_script( $this->plugin_slug .'-handlebars', CFCORE_URL . 'assets/js/handlebars.js', array(), self::VERSION );
 		wp_enqueue_script( $this->plugin_slug .'-baldrick-handlebars', CFCORE_URL . 'assets/js/handlebars.baldrick.js', array($this->plugin_slug .'-baldrick'), self::VERSION );
 		wp_enqueue_script( $this->plugin_slug .'-baldrick-modals', CFCORE_URL . 'assets/js/modals.baldrick.js', array($this->plugin_slug .'-baldrick'), self::VERSION );
 		wp_enqueue_script( $this->plugin_slug .'-baldrick', CFCORE_URL . 'assets/js/jquery.baldrick.js', array('jquery'), self::VERSION );
-
+		*/
+		wp_enqueue_script( $this->plugin_slug .'-admin-scripts', CFCORE_URL . 'assets/js/admin.min.js', array('jquery'), self::VERSION );
 
 		if(!empty($_GET['edit'])){
 
-			// editor specific styles
+			/*// editor specific styles
 			wp_enqueue_script( $this->plugin_slug .'-edit-fields', CFCORE_URL . 'assets/js/edit.js', array('jquery'), self::VERSION );
+			*/
+			wp_enqueue_script( $this->plugin_slug .'-edit-fields', CFCORE_URL . 'assets/js/fields.min.js', array('jquery'), self::VERSION );
+			
+			wp_enqueue_script( $this->plugin_slug .'-edit-editor', CFCORE_URL . 'assets/js/edit.min.js', array('jquery'), self::VERSION );
+
+
 			wp_enqueue_script( 'jquery-ui-users' );
 			wp_enqueue_script( 'jquery-ui-sortable' );
 			wp_enqueue_script( 'jquery-ui-droppable' );
@@ -1185,8 +1195,8 @@ class Caldera_Forms_Admin {
 						'jquery-ui-sortable',
 						'jquery-ui-draggable',
 						'jquery-ui-droppable',
-						CFCORE_URL . "assets/js/processors-edit.js",
-						CFCORE_URL . "assets/js/layout-grid.js"
+						//CFCORE_URL . "assets/js/processors-edit.js",
+						//CFCORE_URL . "assets/js/layout-grid.js"
 					),
 					"styles"	=>	array(
 						CFCORE_URL . "assets/css/editor-grid.css",

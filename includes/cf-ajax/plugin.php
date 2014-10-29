@@ -170,8 +170,8 @@ function cf_ajax_register_scripts($classes, $form){
 
 	// enqueue scripts
 	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script( 'cfajax-baldrick', CFCORE_URL . 'assets/js/jquery.baldrick.js', array('jquery'), CFCORE_VER, true );
-	wp_enqueue_script( 'cfajax-core', plugin_dir_url(__FILE__) . 'js/ajax-core.js', array('cfajax-baldrick'), CFCORE_VER, true );
+	wp_enqueue_script( 'cfajax-baldrick', CFCORE_URL . 'assets/js/jquery.baldrick.min.js', array('jquery'), CFCORE_VER, true );
+	wp_enqueue_script( 'cfajax-core', plugin_dir_url(__FILE__) . 'js/ajax-core.min.js', array('jquery'), CFCORE_VER, true );
 
 	$classes[] = 'cfajax-trigger';
 
