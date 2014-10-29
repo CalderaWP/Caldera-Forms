@@ -1001,11 +1001,11 @@ class Caldera_Forms {
 						'after'		=> ''
 					),
 					"styles" => array(
-						CFCORE_URL . "fields/calculation/style.css",
+						//CFCORE_URL . "fields/calculation/style.css",
 					)
 				),
 				"scripts" => array(
-					'jquery'
+					//'jquery'
 				)
 			),
 			'range_slider' 	=> array(
@@ -1030,19 +1030,19 @@ class Caldera_Forms {
 						'trackcolor' => '#e6e6e6'
 					),
 					"scripts" => array(
-						'jquery',
-						CFCORE_URL . "fields/range_slider/rangeslider.js",
+						//'jquery',
+						//CFCORE_URL . "fields/range_slider/rangeslider.js",
 					),
 					"styles" => array(
-						CFCORE_URL . "fields/range_slider/rangeslider.css",
+						//CFCORE_URL . "fields/range_slider/rangeslider.css",
 					)
 				),
 				"scripts" => array(
-					'jquery',
-					CFCORE_URL . "fields/range_slider/rangeslider.js",
+					//'jquery',
+					//CFCORE_URL . "fields/range_slider/rangeslider.js",
 				),
 				"styles" => array(
-					CFCORE_URL . "fields/range_slider/rangeslider.css",
+					//CFCORE_URL . "fields/range_slider/rangeslider.css",
 				)
 			),
 			'star_rating' 	=> array(
@@ -1063,21 +1063,21 @@ class Caldera_Forms {
 						'type'=> 'star',
 					),
 					"scripts" => array(
-						'jquery',
-						CFCORE_URL . "fields/star-rate/jquery.raty.js",
+						//'jquery',
+						//CFCORE_URL . "fields/star-rate/jquery.raty.js",
 					),
 					"styles" => array(
 						//CFCORE_URL . "fields/star-rate/jquery.raty.css",
-						CFCORE_URL . "fields/star-rate/cf-raty.css",
+						//CFCORE_URL . "fields/star-rate/cf-raty.css",
 					)
 				),
 				"scripts" => array(
 					'jquery',
-					CFCORE_URL . "fields/star-rate/jquery.raty.js",
+					//CFCORE_URL . "fields/star-rate/jquery.raty.js",
 				),
 				"styles" => array(
 					//CFCORE_URL . "fields/star-rate/jquery.raty.css",
-					CFCORE_URL . "fields/star-rate/cf-raty.css",
+					//CFCORE_URL . "fields/star-rate/cf-raty.css",
 				)
 			),
 			'phone' => array(
@@ -1094,12 +1094,12 @@ class Caldera_Forms {
 						'custom'=> '(999)999-9999'
 					),
 					"scripts"	=> array(
-						CFCORE_URL . "fields/phone/masked-input.js"
+						//CFCORE_URL . "fields/phone/masked-input.js"
 					)
 				),
 				"scripts"	=> array(
-					"jquery",
-					CFCORE_URL . "fields/phone/masked-input.js"
+					//"jquery",
+					//CFCORE_URL . "fields/phone/masked-input.js"
 				)
 			),
 			'text' => array(
@@ -1112,8 +1112,8 @@ class Caldera_Forms {
 					"preview"	=>	CFCORE_PATH . "fields/text/preview.php"
 				),
 				"scripts"	=> array(
-					"jquery",
-					CFCORE_URL . "fields/phone/masked-input.js"
+					//"jquery",
+					//CFCORE_URL . "fields/phone/masked-input.js"
 				)
 			),
 			'file' => array(
@@ -1150,7 +1150,7 @@ class Caldera_Forms {
 					"//www.google.com/recaptcha/api/js/recaptcha_ajax.js"
 				),
 				"styles"	=> array(
-					CFCORE_URL . "fields/recaptcha/style.css"
+					//CFCORE_URL . "fields/recaptcha/style.css"
 				),
 			),
 			'html' => array(
@@ -1245,18 +1245,18 @@ class Caldera_Forms {
 					"default"	=> array(
 					),
 					"scripts"	=>	array(
-						CFCORE_URL . "fields/toggle_switch/js/setup.js"
+						//CFCORE_URL . "fields/toggle_switch/js/setup.js"
 					),
 					"styles"	=>	array(
-						CFCORE_URL . "fields/toggle_switch/css/setup.css"
+						//CFCORE_URL . "fields/toggle_switch/css/setup.css"
 					),
 				),
 				"scripts"	=>	array(
 					"jquery",
-					CFCORE_URL . "fields/toggle_switch/js/toggle.js"
+					//CFCORE_URL . "fields/toggle_switch/js/toggle.js"
 				),
 				"styles"	=>	array(
-					CFCORE_URL . "fields/toggle_switch/css/toggle.css"
+					//CFCORE_URL . "fields/toggle_switch/css/toggle.css"
 				)
 			),
 			'dropdown' => array(
@@ -1274,7 +1274,7 @@ class Caldera_Forms {
 
 					),
 					"scripts"	=>	array(
-						CFCORE_URL . "fields/dropdown/js/setup.js"
+						//CFCORE_URL . "fields/dropdown/js/setup.js"
 					)
 				)
 			),
@@ -1293,7 +1293,7 @@ class Caldera_Forms {
 
 					),
 					"scripts"	=>	array(
-						CFCORE_URL . "fields/checkbox/js/setup.js"
+						//CFCORE_URL . "fields/checkbox/js/setup.js"
 					)
 				),
 			),
@@ -1311,7 +1311,7 @@ class Caldera_Forms {
 					"default"	=> array(
 					),
 					"scripts"	=>	array(
-						CFCORE_URL . "fields/radio/js/setup.js"
+						//CFCORE_URL . "fields/radio/js/setup.js"
 					)
 				)
 			),
@@ -1327,19 +1327,19 @@ class Caldera_Forms {
 						'format'	=>	'yyyy-mm-dd'
 					),
 					"scripts"	=>	array(
-						CFCORE_URL . "fields/date_picker/js/bootstrap-datepicker.js",
-						CFCORE_URL . "fields/date_picker/js/setup.js"
+						//CFCORE_URL . "fields/date_picker/js/bootstrap-datepicker.js",
+						//CFCORE_URL . "fields/date_picker/js/setup.js"
 					),
 					"styles"	=>	array(
-						CFCORE_URL . "fields/date_picker/css/datepicker.css"
+						//CFCORE_URL . "fields/date_picker/css/datepicker.css"
 					),
 				),
 				"scripts"	=>	array(
-					"jquery",
-					CFCORE_URL . "fields/date_picker/js/bootstrap-datepicker.js"
+					//"jquery",
+					//CFCORE_URL . "fields/date_picker/js/bootstrap-datepicker.js"
 				),
 				"styles"	=>	array(
-					CFCORE_URL . "fields/date_picker/css/datepicker.css"
+					//CFCORE_URL . "fields/date_picker/css/datepicker.css"
 				)
 			),
 			'color_picker' => array(
@@ -1354,20 +1354,20 @@ class Caldera_Forms {
 						'default'	=>	'#FFFFFF'
 					),
 					"scripts"	=>	array(
-						CFCORE_URL . "fields/color_picker/minicolors.js",
-						CFCORE_URL . "fields/color_picker/setup.js"
+						//CFCORE_URL . "fields/color_picker/minicolors.js",
+						//CFCORE_URL . "fields/color_picker/setup.js"
 					),
 					"styles"	=>	array(
-						CFCORE_URL . "fields/color_picker/minicolors.css"
+						//CFCORE_URL . "fields/color_picker/minicolors.css"
 					),
 				),
 				"scripts"	=>	array(
-					"jquery",
-					CFCORE_URL . "fields/color_picker/minicolors.js",
-					CFCORE_URL . "fields/color_picker/setup.js"
+					//"jquery",
+					//CFCORE_URL . "fields/color_picker/minicolors.js",
+					//CFCORE_URL . "fields/color_picker/setup.js"
 				),
 				"styles"	=>	array(
-					CFCORE_URL . "fields/color_picker/minicolors.css"
+					//CFCORE_URL . "fields/color_picker/minicolors.css"
 				)
 			)
 		);
@@ -1685,6 +1685,23 @@ class Caldera_Forms {
 		global $processed_meta, $form;
 		/// get meta entry for magic tags defined.
 
+
+		// pull in the metadata for entry ID
+		if( null !== $entry_id ){
+			$entry_details = self::get_entry_detail( $entry_id );
+			if( !empty( $entry_details['meta'] ) ){
+				foreach( $entry_details['meta'] as $meta_block ){
+					if( !empty( $meta_block['data'] ) ){
+						foreach( $meta_block['data'] as $meta_process_id=>$proces_meta_data ){
+							foreach( $proces_meta_data['entry'] as $process_meta_key=>$process_meta_entry ){
+								$processed_meta[$form['ID']][$meta_process_id][$process_meta_key] = $process_meta_entry['meta_value'];
+							}
+						}
+					}
+				}
+			}
+		}
+
 		// check for magics
 		preg_match_all("/\{(.+?)\}/", $value, $magics);
 		if(!empty($magics[1])){
@@ -1847,9 +1864,8 @@ class Caldera_Forms {
 					}
 				}
 
-				$filter_value = apply_filters( 'caldera_forms_do_magic_tag', $magic_tag, $magics[0][$magic_key]);				
+				$filter_value = apply_filters( 'caldera_forms_do_magic_tag', $magic_tag, $magics[0][$magic_key]);
 				if(!empty($form['ID']) ){
-					//dump($processed_meta[$form['ID']]);
 
 					// split processor
 					
@@ -1863,7 +1879,7 @@ class Caldera_Forms {
 
 					 	// if not a direct chec if theres a slug
 					 	foreach( $form['processors'] as $processid => $processor){
-					 		if($processor['type'] === $magic[0]){					 			
+					 		if($processor['type'] === $magic[0]){	 			
 					 			if(!empty($processed_meta[$form['ID']][$processid])){
 					 				$magic[0] = $processid;
 					 				break;
@@ -2171,11 +2187,17 @@ class Caldera_Forms {
 		}
 
 	}	
-	static public function get_entry_detail($entry_id, $form){
-		global $wpdb;
+	static public function get_entry_detail($entry_id, $form = null){
+		global $wpdb, $form;
 
-		$entry = $wpdb->get_row($wpdb->prepare("SELECT * FROM `" . $wpdb->prefix ."cf_form_entries` WHERE `id` = %d && `form_id` = %s", $entry_id, $form['ID']), ARRAY_A);
+		$entry = $wpdb->get_row($wpdb->prepare("SELECT * FROM `" . $wpdb->prefix ."cf_form_entries` WHERE `id` = %d", $entry_id ), ARRAY_A);
 		if(!empty($entry)){
+			if( null === $form ){
+				$form = get_option( $entry['form_id'] );
+				if( empty($form) ){
+					return null;
+				}
+			}
 			// get meta if any
 			$meta = self::get_entry_meta($entry_id, $form);
 			if(!empty($meta)){
@@ -3030,7 +3052,12 @@ class Caldera_Forms {
 			}
 		}
 		// if depts been set- scripts are used - 
-		wp_enqueue_script( 'cf-frontend-script-init', CFCORE_URL . 'assets/js/frontend-script-init.js', array('jquery'), self::VERSION, true);
+		//wp_enqueue_script( 'cf-frontend-script-init', CFCORE_URL . 'assets/js/frontend-script-init.js', array('jquery'), self::VERSION, true);
+		wp_enqueue_script( 'cf-frontend-script-init', CFCORE_URL . 'assets/js/frontend-script-init.min.js', array('jquery'), self::VERSION, true);
+		wp_enqueue_script( 'cf-frontend-fields', CFCORE_URL . 'assets/js/fields.min.js', array('jquery'), self::VERSION );
+		// field styles
+		wp_enqueue_style( 'cf-frontend-field-styles', CFCORE_URL . 'assets/css/fields.min.css', array(), self::VERSION );
+
 		$style_includes = get_option( '_caldera_forms_styleincludes' );
 		$style_includes = apply_filters( 'caldera_forms_get_style_includes', $style_includes);
 
@@ -3937,7 +3964,7 @@ class Caldera_Forms {
 			$out .= implode("\r\n", $conditions_templates);
 
 			// enqueue conditionls app.
-			wp_enqueue_script( 'cf-frontend-conditionals', CFCORE_URL . 'assets/js/conditionals.js', array('jquery'), self::VERSION, true);
+			wp_enqueue_script( 'cf-frontend-conditionals', CFCORE_URL . 'assets/js/conditionals.min.js', array('jquery'), self::VERSION, true);
 		}
 		
 		do_action('caldera_forms_render_end', $form);
