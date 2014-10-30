@@ -1,0 +1,15 @@
+{
+    "name" : "Desertsnowman/caldera-search",
+    "description" : "Create complex grid based, responsive forms easily with an easy to use drag and drop layout builder",
+    "type" : "wordpress-plugin",
+    "keywords" : [ "wordpress", "forms", "caldera" ],
+    "license" : "GPL-2.0+",
+    "authors" : [
+        {
+            "name"    : "David Cramer",
+            "homepage": "http://cramer.co.za",
+            "role" : "Lead Developer"
+        }
+    ],
+    "homepage" : "http://calderaforms.com"
+}
