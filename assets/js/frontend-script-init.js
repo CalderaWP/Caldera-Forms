@@ -29,7 +29,8 @@
 			breadcrumb = jQuery('.breadcrumb[data-form="' + form.prop('id') + '"]'),
 			next,
 			prev,
-			fields;
+			fields,
+			checks = {};
 	
 		// pre validate
 		if(clicked.data('pagenav')){
@@ -39,25 +40,40 @@
 			fields = form.find('.caldera-form-page:visible').find('[data-field]');
 		}
 		for(var f = 0; f < fields.length; f++){
-			if(jQuery(fields[f]).prop('required')){
-				if(!fields[f].value.length){
-					e.preventDefault();
-					//nope submit form to indicate a fail.
-					form.find('[type="submit"]').trigger('click');
-					return;
+			if( jQuery(fields[f]).is(':radio,:checkbox') ){
+				if( !checks[$(fields[f]).data('field')] ){
+					checks[$(fields[f]).data('field')] = [];
 				}
-				if(fields[f].type === 'email'){
-					if(fields[f].value.indexOf('@') < 0 || fields[f].value.length <= fields[f].value.indexOf('@') + 1){
+				checks[$(fields[f]).data('field')].push($(fields[f]).prop('checked'));
+			}else{
+				if(jQuery(fields[f]).prop('required')){
+					if(!fields[f].value.length){
 						e.preventDefault();
 						//nope submit form to indicate a fail.
 						form.find('[type="submit"]').trigger('click');
 						return;
+					}
+					if(fields[f].type === 'email'){
+						if(fields[f].value.indexOf('@') < 0 || fields[f].value.length <= fields[f].value.indexOf('@') + 1){
+							e.preventDefault();
+							//nope submit form to indicate a fail.
+							form.find('[type="submit"]').trigger('click');
+							return;
 
+						}
 					}
 				}
 			}
 		}
-
+		for( var ch in checks ){
+			if( checks[ch].indexOf(true) < 0){
+				$('[for="' + ch + '"]').parent().addClass('has-error');
+				return false;
+			}else{
+				$('[for="' + ch + '"]').parent().removeClass('has-error');
+			}
+		}
+		
 		
 		if(clicked.data('page') === 'next'){
 			if(breadcrumb){

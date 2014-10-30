@@ -27,7 +27,7 @@
   z-index: 100105;
 }
 .caldera-modal-wrap.caldera-front-modal-wrap{
-  position: absolute;
+  position: fixed;
   bottom: auto;
   width: 600px;
   margin-left: -300px;

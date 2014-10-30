@@ -1,5 +1,9 @@
 /* -- BaldrickJS  V2.3 | (C) David Cramer - 2013 | MIT License */
 (function($){
+	// try not load again
+	if( baldrickCache ){
+		return;
+	}
 
 	var baldrickCache 		= {},
 		baldrickRequests 	= {},
