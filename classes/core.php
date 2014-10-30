@@ -3290,6 +3290,10 @@ class Caldera_Forms {
 			return $content;
 		}
 		
+		$form_atts = array('id'=>$form['ID'],'ajax'=>true);
+		if( !empty( $atts['entry'] ) ){
+			$form_atts['entry'] = $atts['entry'];
+		}
 		$modal_button_classes = array(
 			"cf_modal_button"
 		);
@@ -3318,6 +3322,7 @@ class Caldera_Forms {
 		if(!empty($atts['width'])){
 			$width = ' width: ' . floatval( $atts['width'] ).'px; margin-left: -' . ( floatval( $atts['width'] ) / 2 ) . 'px;';
 		}
+		
 
 		ob_start();
 		?>
@@ -3329,7 +3334,7 @@ class Caldera_Forms {
 					<h3 class="modal-label" id="<?php echo $modal_id; ?>_modal_label"><?php echo $form['name']; ?></h3>
 				</div>
 				<div class="caldera-modal-body caldera-front-modal-body" id="<?php echo $modal_id; ?>_modal_body">
-				<?php echo self::render_form( array('id'=>$form['ID'],'ajax'=>true) ); ?>
+				<?php echo self::render_form( $form_atts ); ?>
 				</div>
 			</div>
 		</div>
