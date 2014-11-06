@@ -10,15 +10,16 @@ jQuery(function($){
 			method			:	'POST',
 			before			: function(el){
 				
-				var buttons = $(el).find(':submit');
+				var form	=	$(el),
+					buttons = 	form.find(':submit');
+				
+				if( !form.data( 'postDisable' ) ){
 					buttons.prop('disabled',true);
+				}
 
 			},
 			callback		: function(obj){
-                if ( 1 == $(obj.params.trigger ).attr( 'data-post-disable')){
-                    obj.params.trigger.find(':submit').prop('disabled',false);
-                }
-				
+
 				obj.params.trigger.find(':submit').prop('disabled',false);
 				
 				var instance = obj.params.trigger.data('instance');
