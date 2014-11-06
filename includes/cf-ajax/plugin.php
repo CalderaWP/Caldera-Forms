@@ -15,6 +15,8 @@ function cf_form_ajaxsetup($form){
 	<div class="caldera-config-field">
 		<label><input type="checkbox" value="1" name="config[form_ajax]" class="field-config"<?php if(isset($form['form_ajax'])){ echo ' checked="checked"'; } ?>> <?php echo __('Enable Ajax Submissions. (No page reloads)', 'caldera-forms'); ?></label>
 	</div>
+</div>
+<div class="caldera-config-group">
 	<label><?php echo __('Multiple Ajax Submissions', 'caldera-forms'); ?></label>
 	<div class="caldera-config-field">
 		<label><input type="checkbox" value="1" name="config[form_ajax_post_submission_disable]" class="field-config"<?php if(isset($form['form_ajax_post_submission_disable'])){ echo ' checked="checked"'; } ?>> <?php echo __('If set, form can be submitted multiple times with out a new page load.', 'caldera-forms'); ?></label>
