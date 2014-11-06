@@ -1903,11 +1903,8 @@ class Caldera_Forms {
 						}
 					}
 				}
-
-				$value = str_replace($magics[0][$magic_key], $filter_value, $value);
-				if( $magics[1][$magic_key] === $value){
-					// return to normal
-					$value = $magics[0][$magic_key];
+				if( $filter_value != $magics[1][$magic_key] ){
+					$value = str_replace($magics[0][$magic_key], $filter_value, $value);
 				}
 			}
 		}
