@@ -1920,10 +1920,10 @@ class Caldera_Forms {
 						if(count($entry) === 1){
 							$entry = array_shift($entry);
 						}elseif(count($entry) === 2){
-							$entry = implode(' & ', $entry);
+							$entry = implode(', ', $entry);
 						}elseif(count($entry) > 2){
 							$last = array_pop($entry);
-							$entry = implode(', ', $entry).' & '.$last;
+							$entry = implode(', ', $entry).', '.$last;
 						}else{
 							continue;
 						}
