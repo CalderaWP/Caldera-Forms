@@ -11,7 +11,7 @@ if(!empty($hastags[1])){
 			if($fcfg['slug'] === $tag){
 				$binds[] = '[data-field="'.$key_id.'_'.$current_form_count.'"]';
 				$bindfields[] = '"'.$key_id.'_'.$current_form_count.'"';
-				$field['config']['default'] = str_replace($hastags[0][$tag_key], '{{{'.$key_id.'_'.$current_form_count.'}}}', $field['config']['default']);
+				$field['config']['default'] = str_replace($hastags[0][$tag_key], '{{'.$key_id.'_'.$current_form_count.'}}', $field['config']['default']);
 			}
 		}
 	}
