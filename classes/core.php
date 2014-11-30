@@ -2381,7 +2381,8 @@ class Caldera_Forms {
 			// use multiple honey words
 			$honey_words = apply_filters( 'caldera_forms_get_honey_words', array('web_site', 'url', 'email', 'company', 'name'));
 			foreach($_POST as $honey_word=>$honey_value){
-				if(strlen($honey_value) && in_array($honey_word, $honey_words)){
+
+				if(!is_array( $honey_value ) && strlen($honey_value) && in_array($honey_word, $honey_words)){
 					// yupo - bye bye
 					$referrer['query']['cf_su'] = $form_instance_number;
 					$query_str = array(

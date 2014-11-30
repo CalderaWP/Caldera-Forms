@@ -4,7 +4,7 @@
   Plugin URI: http://digilab.co.za
   Description: Easy to use, grid based responsive form builder for creating simple to complex forms.
   Author: David Cramer
-  Version: 1.1.9.1
+  Version: 1.1.9.2
   Author URI: http://digilab.co.za
  */
 
