@@ -202,7 +202,9 @@ class Caldera_Forms_Admin {
 						break;
 					
 					default:
-						$result = $wpdb->query( $wpdb->prepare( "UPDATE `" . $wpdb->prefix . "cf_form_entries` SET `status` = %s WHERE `id` IN (".implode(',', $items).");", $_POST['do'] ) );
+						if( current_user_can( 'edit_others_posts' ) ){
+							$result = $wpdb->query( $wpdb->prepare( "UPDATE `" . $wpdb->prefix . "cf_form_entries` SET `status` = %s WHERE `id` IN (".implode(',', $items).");", $_POST['do'] ) );
+						}
 						break;
 				}
 				
@@ -951,7 +953,7 @@ class Caldera_Forms_Admin {
 
 		}
 
-		if(!empty($_GET['export'])){
+		if(!empty($_GET['export']) && current_user_can( 'manage_options') ){
 
 			$form = get_option( $_GET['export'] );
 
