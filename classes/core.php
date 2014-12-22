@@ -1682,7 +1682,7 @@ class Caldera_Forms {
 
 	static public function do_magic_tags($value, $entry_id = null, $magic_caller = array()){
 
-		global $processed_meta, $form;
+		global $processed_meta, $form, $referrer;
 		/// get meta entry for magic tags defined.
 
 
@@ -1715,7 +1715,12 @@ class Caldera_Forms {
 							if( isset($_GET[$magic[1]])){
 								$magic_tag = $_GET[$magic[1]];
 							}else{
-								$magic_tag = null;
+								// check on referer.
+								if( isset( $referrer['query'][ $magic[1] ] ) ){
+									$magic_tag = $referrer['query'][ $magic[1] ];
+								}else{
+									$magic_tag = null;
+								}								
 							}
 							break;
 						case 'post':
@@ -2341,6 +2346,7 @@ class Caldera_Forms {
 		global $processed_data;
 		global $transdata;
 		global $wpdb;		
+		global $referrer;		
 
 		// clean out referrer
 		if(empty($_POST['_wp_http_referer_true'])){
