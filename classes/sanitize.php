@@ -28,9 +28,8 @@ class Caldera_Forms_Sanitize {
 	 *
 	 * @return array|mixed|object|string|void
 	 *
-	 * @since 1.2.0
+	 * @since 1.1.10
 	 *
-	 * @see wp_slash
 	 */
 	public static function sanitize( $input, $params = array() ) {
 
@@ -97,7 +96,7 @@ class Caldera_Forms_Sanitize {
 	 *
 	 * @return array|mixed|object|string|void
 	 *
-	 * @since 2.3.9
+	 * @since 1.1.10
 	 *
 	 * @see like_escape
 	 */
@@ -148,7 +147,7 @@ class Caldera_Forms_Sanitize {
 	 *
 	 * @return array|mixed|object|string|void
 	 *
-	 * @since 2.3.9
+	 * @since 1.1.10
 	 *
 	 * @see wp_unslash
 	 */
@@ -185,9 +184,6 @@ class Caldera_Forms_Sanitize {
 		return $output;
 
 	}
-
-
-	
 	
 }
 
