@@ -1712,8 +1712,8 @@ class Caldera_Forms {
 				if(count($magic) == 2){
 					switch (strtolower( $magic[0]) ) {
 						case 'get':
-							if( isset($_GET[$magic[1]])){
-								$magic_tag = $_GET[$magic[1]];
+							if( isset( $_GET[ $magic[1] ] )  ) {
+								$magic_tag = Caldera_Forms_Sanitize::sanitize( $_GET[ $magic[1] ] );
 							}else{
 								// check on referer.
 								if( isset( $referrer['query'][ $magic[1] ] ) ){
@@ -1724,15 +1724,15 @@ class Caldera_Forms {
 							}
 							break;
 						case 'post':
-							if( isset($_POST[$magic[1]])){
-								$magic_tag = $_POST[$magic[1]];
+							if( isset( $_POST[ $magic[1] ] ) ){
+								$magic_tag = Caldera_Forms_Sanitize::sanitize( $_POST[ $magic[1] ] );
 							}else{
 								$magic_tag = null;
 							}
 							break;
 						case 'request':
-							if( isset($_REQUEST[$magic[1]])){
-								$magic_tag = $_REQUEST[$magic[1]];
+							if( isset(  $_REQUEST[ $magic[1] ] ) ){
+								$magic_tag = Caldera_Forms_Sanitize::sanitize( $_REQUEST[ $magic[1] ] );
 							}else{
 								$magic_tag = null;
 							}
@@ -1840,7 +1840,7 @@ class Caldera_Forms {
 							$magic_tag = $magic_tag = self::get_field_data('_entry_token', $form);
 							break;
 						case 'ip':
-							$magic_tag = $_SERVER['REMOTE_ADDR'];
+							$magic_tag = $_POST[ $magic[1] ]( $_SERVER['REMOTE_ADDR'] );
 							break;
 						case 'summary':
 							if(!empty($form['fields'])){
