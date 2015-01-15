@@ -1,5 +1,5 @@
 === Caldera Forms ===
-Contributors: Desertsnowman
+Contributors: Desertsnowman, shelob9
 Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator
 Requires at least: 3.9
 Tested up to: 4.0
@@ -78,7 +78,13 @@ none yet.
 
 = Improvements =
 * Added ID or Name value selector for autopopulation on selects
-* 
+* Importer now creates a new form and wont overide the original.
+* Modals only close on the dismiss or cancel buttons. no longer on clicking the overlay. (better for management)
+* Added Filter: `caldera_forms_autoresponse_config` to allow modifiying the auto responder config
+* Added Filter: `caldera_forms_autoresponse_mail` to allow modifiying the auto responder mail object before sending
+* Changed the form ajax handler to use teh more reliable wp admin-ajax method
+*
+
 
 = 1.1.9.2 (30 November, 2014) =
 
