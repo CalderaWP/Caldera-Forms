@@ -15,12 +15,26 @@
 		wp_nonce_field( 'cf-import', 'cfimporter' );
 		do_action('caldera_forms_import_form_template_start');
 		?>
-		<p class="description"><?php echo __('Import a Caldera Form from a .json export file.', 'caldera-forms'); ?></p>
-		<input type="file" class="new-form-name" name="import_file" required="required">		
-		<p class="import-warning" style="color:#ff0000;"><?php echo __('This will overwrite a form if it already exists.', 'caldera-forms'); ?></p>
+		<div class="caldera-config-group">
+			<label for=""><?php echo __('Form Name', 'caldera-forms'); ?></label>
+			<div class="caldera-config-field">
+				<input type="text" class="new-form-name block-input field-config" name="name" value="" required="required">
+			</div>
+		</div>
+		<div class="caldera-config-group">
+			<label for=""><?php echo __('Form File', 'caldera-forms'); ?></label>
+			<div class="caldera-config-field">
+				<input type="file" class="new-form-name" name="import_file" required="required" style="width: 230px;">
+			</div>
+		</div>
+		
+		<div class="caldera-modal-footer" style="display: block; clear: both; position: relative; height: 27px; width: 100%; margin: 0px -12px;">
 
-		<hr>
-		<button type="submit" class="button button-primary" style="float:right;"><?php echo __('Import Form', 'caldera-forms'); ?></button>
+			<button type="submit" class="button button-primary" style="float:right;"><?php echo __('Import Form', 'caldera-forms'); ?></button>	
+
+		</div>
+
+		
 		<?php
 		do_action('caldera_forms_import_form_template_end');
 		?>

@@ -885,7 +885,79 @@ class Caldera_Forms_Admin {
 					$loc = wp_upload_dir();
 					if(move_uploaded_file($_FILES['import_file']['tmp_name'], $loc['path'].'/cf-form-import.json')){
 						$data = json_decode(file_get_contents($loc['path'].'/cf-form-import.json'), true);
-						if(isset($data['ID']) && isset($data['name']) && isset($data['fields'])){
+						if(isset($data['ID']) && isset($data['name']) ){
+
+							// generate a new ID
+							$data['ID'] = uniqid('CF');
+							$data['name'] = $_POST['name'];
+
+
+							// rebuild field IDS
+							if( !empty( $data['fields'] ) ){
+								$old_fields = array();
+								$fields 	= $data['fields'];								
+								$layout_fields = $data['layout_grid']['fields'];
+								$data['layout_grid']['fields'] = $data['fields'] = array();
+								foreach( $fields as $field ){									
+									$field_id = uniqid('fld_');
+									$old_fields[$field['ID']] = $field_id;
+
+									$data['layout_grid']['fields'][$field_id] = $layout_fields[$field['ID']];
+									$field['ID'] = $field_id;
+									$data['fields'][$field_id] = $field;
+
+								}
+
+							}
+							// rebuild processor IDS
+							if( !empty( $data['processors'] ) ){
+								
+								$processors 	= $data['processors'];								
+								$data['processors'] = array();
+								$old_processors = array();
+								foreach( $processors as $processor ){
+									$processor_id = uniqid('fp_');
+									$old_processors[$processor['ID']] = $processor_id;
+									$processor['ID'] = $processor_id;									
+									// fix binding
+									if( !empty( $processor['config'] ) && !empty( $data['fields'] ) ){
+										foreach( $processor['config'] as $config_key => &$config_value ){
+											if( is_string($config_value) ){
+												foreach( $old_fields as $old_field=>$new_field ){
+													$config_value = str_replace( $old_field, $new_field, $config_value );
+												}
+											}
+										}
+									}
+									$data['processors'][$processor_id] = $processor;
+								}
+								// fix processor bindings
+								foreach( $data['processors'] as &$processor ){
+									if( !empty( $processor['config'] ) ){
+										foreach( $processor['config'] as $config_key => &$config_value ){
+											if( is_string($config_value) ){
+												foreach( $old_processors as $old_proc=>$new_proc ){
+													$config_value = str_replace( $old_proc, $new_proc, $config_value );
+												}
+											}
+										}
+									}
+								}
+								// fix field - processor bindings
+								if( !empty( $data['fields'] ) ){
+									foreach( $data['fields'] as &$field ){
+										if( !empty( $field['config'] ) ){
+											foreach( $field['config'] as $config_key => &$config_value ){
+												if( is_string($config_value) ){
+													foreach( $old_processors as $old_proc=>$new_proc ){
+														$config_value = str_replace( $old_proc, $new_proc, $config_value );
+													}
+												}
+											}
+										}
+									}
+								}
+							}
 
 							// get form registry
 							$forms = get_option( '_caldera_forms' );
@@ -908,7 +980,7 @@ class Caldera_Forms_Admin {
 							}
 							if(isset($forms[$data['ID']]['settings'])){
 								unset($forms[$data['ID']]['settings']);
-							}
+							}	
 
 							// add from to list
 							update_option($data['ID'], $data);
