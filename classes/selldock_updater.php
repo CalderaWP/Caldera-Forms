@@ -22,7 +22,7 @@ if( !class_exists('SellDock_Updater_v3') ) {
             add_filter( 'pre_set_site_transient_update_plugins', array(&$this, 'check_for_update') );
             add_filter( 'plugins_api', array(&$this, 'plugin_api_call'), 10, 3 );
             
-            add_action('in_plugin_update_message-'.$plugin_path, array($this, 'modify_message'), 10, 2);
+            //add_action('in_plugin_update_message-'.$plugin_path, array($this, 'modify_message'), 10, 2);
 
             add_action('wp_ajax_selldock_activate_' . $this->plugin_slug, array($this, 'selldock_activate') );
             // This is for testing only!
@@ -33,9 +33,9 @@ if( !class_exists('SellDock_Updater_v3') ) {
         }
     
 
-        function modify_message($a,$b){
-            //echo '<div class="error"><p>Please register your copy of Caldera Engine to get automatic updates. by entering your license key or purchase to get a license. <a href="https://gum.co/calderaengine">Buy Now</a><script type="text/javascript" src="https://gumroad.com/js/gumroad.js"></script>.</p></div>';
-        }
+        //function modify_message($a,$b){
+            //echo '<div class="error"><p>Please register your copy of Caldera Forms to get automatic updates. by entering your license key or purchase to get a license. <a href="https://gum.co/calderaengine">Buy Now</a><script type="text/javascript" src="https://gumroad.com/js/gumroad.js"></script>.</p></div>';
+        //}
 
         function check_for_update( $transient ) {
             if(empty($transient->checked)) return $transient;

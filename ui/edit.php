@@ -94,6 +94,16 @@ $field_options_template = "
 		</div>
 	</div>
 
+	<div class=\"caldera-config-group caldera-config-group-auto-taxonomy caldera-config-group-auto-post_type auto-populate-type-panel\" style=\"display:none;\">
+		<label>". __('Value', 'caldera-forms')."</label>
+		<div class=\"caldera-config-field\">
+			<select class=\"block-input field-config\" name=\"{{_name}}[value_field]\">
+				<option value=\"name\" {{#is value_field value=\"name\"}}selected=\"selected\"{{/is}}>Name</option>\r\n
+				<option value=\"id\" {{#is value_field value=\"id\"}}selected=\"selected\"{{/is}}>ID</option>\r\n
+	    	</select>
+
+		</div>
+	</div>
 </div>
 <div class=\"caldera-config-group-toggle-options\">
 	<div class=\"caldera-config-group caldera-config-group-full\">

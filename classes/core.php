@@ -685,7 +685,7 @@ class Caldera_Forms {
 			return;
 		}
 
-		$mail = apply_filters( 'caldera_forms_mailer', $mail, $data, $form);		
+		$mail = apply_filters( 'caldera_forms_mailer', $mail, $data, $form);
 
 		/*// recipients
 		foreach($mail['recipients'] as &$recipient){
@@ -1437,8 +1437,7 @@ class Caldera_Forms {
 			}
 		}
 
-		if(empty($field['config']['show_values']) && !empty($field['config']['option'])){
-			
+		if(empty($field['config']['value_field']) || $field['config']['value_field'] == 'name' ){
 			foreach($field['config']['option'] as &$option){
 				$option['value'] = $option['label'];
 			}
@@ -1685,6 +1684,7 @@ class Caldera_Forms {
 		global $processed_meta, $form, $referrer;
 		/// get meta entry for magic tags defined.
 
+		$input_value = $value;
 
 		// pull in the metadata for entry ID
 		if( null !== $entry_id ){
@@ -1920,7 +1920,7 @@ class Caldera_Forms {
 			foreach($matches[1] as $key=>$tag){
 				$entry = self::get_slug_data($tag, $form, $entry_id);
 				
-				//if($entry !== null){
+				if($entry !== null){
 					if(is_array($entry)){
 						if(count($entry) === 1){
 							$entry = array_shift($entry);
@@ -1934,8 +1934,14 @@ class Caldera_Forms {
 						}
 					}
 					$value = str_replace($matches[0][$key], $entry, $value);
-				//}
+				}else{
+					$value = null;
+				}
 			}
+		}
+		
+		if( $input_value != $value && null == $value ){
+			return $input_value;
 		}
 
 		return $value;
@@ -2123,7 +2129,6 @@ class Caldera_Forms {
 			// is static
 			if(!empty($field_types[$field['type']]['static'])){
 				// is options or not
-
 				if(!empty($field_types[$field['type']]['options'])){
 					if(is_array($entry)){
 						$out = array();
@@ -2306,7 +2311,7 @@ class Caldera_Forms {
 		if(is_string($form)){
 			$form_id = $form;
 			$form = get_option( $form );
-			if(!isset($form['ID']) || $form['ID'] !== $form_id){
+			if(!isset($form['ID']) || $form['ID'] !== $form_id){				
 				return new WP_Error( 'fail',  __('Invalid form ID', 'caldera-forms') );
 			}
 		}
@@ -3206,6 +3211,15 @@ class Caldera_Forms {
 		if(empty($form)){
 			return;
 		}
+		
+		if(is_string($form)){
+			$form_id = $form;
+			$form = get_option( $form );
+			if(!isset($form['ID']) || $form['ID'] !== $form_id){				
+				return new WP_Error( 'fail',  __('Invalid form ID', 'caldera-forms') );
+			}
+		}
+
 		// get fields 
 		$field_types = self::get_field_types();
 		
@@ -3213,6 +3227,7 @@ class Caldera_Forms {
 		$data = array(
 			'data' => array()
 		);
+
 		foreach($entry as $field_id=>$field_value){
 			
 			if(!isset($form['fields'][$field_id]) || !isset($field_types[$form['fields'][$field_id]['type']])){
