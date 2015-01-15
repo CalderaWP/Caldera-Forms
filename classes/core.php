@@ -568,9 +568,11 @@ class Caldera_Forms {
 		// Filter Mailer first as not to have user input be filtered
 		$mail['message'] = self::do_magic_tags($mail['message']);
 
+		$nl2br = apply_filters( 'caldera_forms_mailer_nl2br', true );
+
 		if($form['mailer']['email_type'] == 'html'){
 			$mail['headers'][] = "Content-type: text/html";
-			$mail['message'] = nl2br($mail['message']);
+			$mail['message'] = $nl2br ? nl2br($mail['message']) : $mail['message'];
 		}
 
 		// get tags
