@@ -34,7 +34,7 @@
 
 					modalHeader.append(modalCloser).append(modalTitle).appendTo(modal);
 
-					modalBackdrop.on('click', function(e){
+					modalBackdrop.on('dismiss', function(e){
 						e.preventDefault();
 						modalBackdrop.fadeOut(200);
 						modal.fadeOut(200, function(){
