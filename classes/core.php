@@ -795,6 +795,8 @@ class Caldera_Forms {
 	public static function send_auto_response($config, $form){
 		global $form;
 		
+		// new filter to alter the config.
+		$config = apply_filters( 'caldera_forms_autoresponse_config', $config, $form);		
 		// remove required bounds.
 		unset($config['_required_bounds']);
 
@@ -805,16 +807,28 @@ class Caldera_Forms {
 				$value = self::do_magic_tags( $value );
 			}
 		}
-
 		// set header
 		$headers = 'From: ' . $config['sender_name'] . ' <' . $config['sender_email'] . '>' . "\r\n";
 
 		$message = self::do_magic_tags( $message );
 
 		// setup mailer
-		$subject = $config['subject'];
+		$subject = $config['subject'];		
+
+		$email_message = array(
+			'recipients'	=> array(
+				$config['recipient_name'].' <'.$config['recipient_email'].'>'
+			),
+			'subject'		=>	$subject,
+			'message'		=>	$message,
+			'headers'		=>	$headers,
+			'attachments' 	=> array()
+		);
+
+		$email_message = apply_filters( 'caldera_forms_autoresponse_mail', $email_message, $config, $form);	
 		do_action( 'caldera_forms_do_autoresponse', $config, $form);
-		wp_mail($config['recipient_name'].' <'.$config['recipient_email'].'>', $subject, $message, $headers );
+
+		wp_mail($email_message['recipients'], $email_message['subject'], $email_message['message'], $email_message['headers'], $email_message['attachments'] );
 
 	}
 
@@ -2922,6 +2936,7 @@ class Caldera_Forms {
 	}
 
 	static public function cf_init_system(){
+
 		global $post, $front_templates, $wp_query, $process_id, $form;
 
 		// check for API
