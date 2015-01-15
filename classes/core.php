@@ -865,7 +865,7 @@ class Caldera_Forms {
 		if($post->ID){
 			$permalink = get_permalink( $post->ID );
 		}else{
-			$permalink = get_site_url();
+			$permalink = get_home_url();
 		}
 		// is contact form or reg form
 		$regform = self::get_processor_by_type('user_register', $form);
@@ -876,7 +876,7 @@ class Caldera_Forms {
 		}
 		// Call to comment check
 		$data = array(
-			'blog' 					=> get_site_url(),
+			'blog' 					=> get_home_url(),
 			'user_ip' 				=> $_SERVER['REMOTE_ADDR'],
 			'user_agent' 			=> $_SERVER['HTTP_USER_AGENT'],
 			'referrer'				=> $_SERVER['HTTP_REFERER'],
@@ -2979,13 +2979,13 @@ class Caldera_Forms {
 						'comment_status' => 'closed'
 						);
 						$page_id = wp_insert_post( $post );
-						wp_redirect( trailingslashit( get_site_url( ) ) . '?page_id='.$page_id.'&preview=true&cf_preview='.$_GET['cf_preview'] );
+						wp_redirect( trailingslashit( get_home_url() ) . '?page_id='.$page_id.'&preview=true&cf_preview='.$_GET['cf_preview'] );
 						exit;
 					}
 					if( $temp_page->post_status !== 'draft'){
 						wp_update_post( array( 'ID' => $temp_page->ID, 'post_status' => 'draft' ) );
 					}
-					wp_redirect( trailingslashit( get_site_url( ) ) . '?page_id='.$temp_page->ID.'&preview=true&cf_preview='.$_GET['cf_preview'] );
+					wp_redirect( trailingslashit( get_home_url() ) . '?page_id='.$temp_page->ID.'&preview=true&cf_preview='.$_GET['cf_preview'] );
 					exit;
 				}
 				$post->post_title = $form['name'];
