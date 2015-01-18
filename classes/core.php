@@ -697,7 +697,7 @@ class Caldera_Forms {
 		$headers = implode("\r\n", $mail['headers']);
 
 		do_action( 'caldera_forms_do_mailer', $mail, $data, $form);
-		if(!empty($mail)){
+		if( ! empty( $mail ) && is_string( $mail['message'] ) ){
 
 			if(wp_mail( (array) $mail['recipients'], $mail['subject'], $mail['message'], $headers, $mail['attachments'] )){
 				// kill attachment.
@@ -828,8 +828,10 @@ class Caldera_Forms {
 		$email_message = apply_filters( 'caldera_forms_autoresponse_mail', $email_message, $config, $form);	
 		do_action( 'caldera_forms_do_autoresponse', $config, $form);
 
-		wp_mail($email_message['recipients'], $email_message['subject'], $email_message['message'], $email_message['headers'], $email_message['attachments'] );
-
+		if ( is_string( $message ) ) {
+			wp_mail( $config['recipient_name'] . ' <' . $config['recipient_email'] . '>', $subject, $message, $headers );
+		}
+		
 	}
 
 
