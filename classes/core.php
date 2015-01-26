@@ -1451,12 +1451,15 @@ class Caldera_Forms {
 			}
 		}
 
-		if(empty($field['config']['value_field']) || $field['config']['value_field'] == 'name' ){
-			foreach($field['config']['option'] as &$option){
-				$option['value'] = $option['label'];
+		if ( ( empty( $field['config']['value_field']) || $field[ 'config' ][ 'value_field' ] == 'name' ) && isset( $field[ 'config' ] ) && isset( $field[ 'config' ][ 'option' ] ) && is_array( $field[ 'config' ][ 'option' ] ) ){
+			foreach( $field[ 'config' ][ 'option' ] as &$option){
+				$option[ 'value' ] = $option[ 'label' ];
 			}
+
 		}
+
 		return $field;
+
 	}
 
 	static public function check_condition($conditions, $form, $entry_id=null){
