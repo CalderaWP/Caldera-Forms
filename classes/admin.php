@@ -159,7 +159,9 @@ class Caldera_Forms_Admin {
 			foreach( $this->addons as $addon ){
 				$plugin_slug = basename( dirname( $addon['file'] ) ) .'/'.basename( $addon['file'] );
 				if( isset( $plugins[$plugin_slug] ) ){
-					$plugins[$plugin_slug]['slug'] = $addon['slug'];
+					if( isset( $addon['slug'] ) ){
+						$plugins[$plugin_slug]['slug'] = $addon['slug'];
+					}
 				}				
 			}
 		}
