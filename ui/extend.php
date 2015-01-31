@@ -34,12 +34,16 @@
 				<div class="caldera-config-group">
 					<label for="<?php echo $slug; ?>_licensekey"><?php echo $plugin['Name']; ?></label>
 					<div class="caldera-config-field">
-						<input class="ajax-trigger" data-version="<?php echo $plugin['Version']; ?>" data-target="#<?php echo $slug; ?>_licensekey_result" data-event="validate" data-action="selldock_activate_<?php echo $addon['slug']; ?>" data-slug="<?php echo $addon['slug']; ?>" type="password" value="<?php echo $license; ?>" name="license" id="<?php echo $slug; ?>_licensekey">&nbsp;
+						<input class="ajax-trigger regular-text" data-version="<?php echo $plugin['Version']; ?>" data-target="#<?php echo $slug; ?>_licensekey_result" data-event="validate" data-action="selldock_activate_<?php echo $addon['slug']; ?>" data-slug="<?php echo $addon['slug']; ?>" type="text" value="<?php echo $license; ?>" name="license" id="<?php echo $slug; ?>_licensekey">&nbsp;
 						<input type="button" value="Validate" name="selldock-check-keygen" class="button ajax-trigger" data-for="#<?php echo $slug; ?>_licensekey">
 						<div class="selldock-message" id="<?php echo $slug; ?>_licensekey_result"></div>
 					</div>
 				</div>
 				<?php
+			}else{
+				if( !empty( $addon['template'] ) ){
+					include $addon['template'];
+				}
 			}
 		}
 	}
