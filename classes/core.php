@@ -1468,11 +1468,11 @@ class Caldera_Forms {
 		}else{
 
 			if ( empty( $field[ 'config' ]['show_values'] ) ){			
-				
-				foreach( $field[ 'config' ][ 'option' ] as &$option){
-					$option[ 'value' ] = $option[ 'label' ];
+				if( !empty( $field[ 'config' ][ 'option' ] ) ){
+					foreach( $field[ 'config' ][ 'option' ] as &$option){
+						$option[ 'value' ] = $option[ 'label' ];
+					}
 				}
-
 			}
 		
 		}
