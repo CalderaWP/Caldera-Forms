@@ -267,18 +267,23 @@ class Caldera_Forms {
 
 	public static function captcha_check($value, $field, $form){
 
-		if(empty($_POST['recaptcha_response_field'])){
-			return new WP_Error( 'error', __("The reCAPTCHA wasn't entered correctly.", 'caldera-forms'));
+		if( !isset( $_POST['g-recaptcha-response'] ) || empty( $_POST['g-recaptcha-response'] )){
+			return new WP_Error( 'error' );
 		}
-		include_once CFCORE_PATH . 'fields/recaptcha/recaptchalib.php';
 
-		$resp = recaptcha_check_answer($field['config']['private_key'], $_SERVER["REMOTE_ADDR"], $_POST['recaptcha_challenge_field'], $_POST['recaptcha_response_field']);
-		
-		if (empty($resp->is_valid)) {
-			return new WP_Error( 'error', __("The reCAPTCHA wasn't entered correctly.", 'caldera-forms'));
+		$args = array(
+			'secret'	=>	$field['config']['private_key'],
+			'response'	=>	sanitize_text_field( $_POST['g-recaptcha-response'] )
+		);
 
+		$request = wp_remote_get( 'https://www.google.com/recaptcha/api/siteverify?' . build_query($args) );
+		$result = json_decode( wp_remote_retrieve_body( $request ) );
+		if( empty( $result->success ) ){
+			return new WP_Error( 'error', __("The wasn't entered correct.", 'caldera-forms') . ' <a href="#" class="reset_' . sanitize_text_field( $_POST[ $field['ID'] ] ) . '">' . __("Reset", 'caldera-forms') . '<a>.' );
 		}
+
 		return true;
+
 	}
 
 	public static function update_field_data($field, $entry_id, $form){
@@ -1159,11 +1164,11 @@ class Caldera_Forms {
 						'required'
 					),
 					"scripts"	=> array(
-						"//www.google.com/recaptcha/api/js/recaptcha_ajax.js"
+						"https://www.google.com/recaptcha/api.js"
 					)
 				),
 				"scripts"	=> array(
-					"//www.google.com/recaptcha/api/js/recaptcha_ajax.js"
+					"https://www.google.com/recaptcha/api.js"
 				),
 				"styles"	=> array(
 					//CFCORE_URL . "fields/recaptcha/style.css"
@@ -1451,13 +1456,25 @@ class Caldera_Forms {
 					}
 				break;
 			}
-		}
+			// check values are set
+			if ( ( empty( $field['config']['value_field']) || $field[ 'config' ][ 'value_field' ] == 'name' ) && isset( $field[ 'config' ] ) && isset( $field[ 'config' ][ 'option' ] ) && is_array( $field[ 'config' ][ 'option' ] ) ){			
+				
+				foreach( $field[ 'config' ][ 'option' ] as &$option){
+					$option[ 'value' ] = $option[ 'label' ];
+				}
 
-		if ( ( empty( $field['config']['value_field']) || $field[ 'config' ][ 'value_field' ] == 'name' ) && isset( $field[ 'config' ] ) && isset( $field[ 'config' ][ 'option' ] ) && is_array( $field[ 'config' ][ 'option' ] ) ){
-			foreach( $field[ 'config' ][ 'option' ] as &$option){
-				$option[ 'value' ] = $option[ 'label' ];
 			}
 
+		}else{
+
+			if ( empty( $field[ 'config' ]['show_values'] ) ){			
+				
+				foreach( $field[ 'config' ][ 'option' ] as &$option){
+					$option[ 'value' ] = $option[ 'label' ];
+				}
+
+			}
+		
 		}
 
 		return $field;

@@ -85,6 +85,9 @@ none yet.
 * Changed the form ajax handler to use the more reliable wp admin-ajax method
 * Hooks to extend the autopopulate for option based fields ( caldera_forms_autopopulate_types & caldera_forms_autopopulate_type_config )
 
+= Updated =
+* Updated the reCaptcha to use Google's new version
+
 = Bug Fix =
 * a few small minor issues where resolved.
 
