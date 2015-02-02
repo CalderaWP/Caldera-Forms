@@ -89,6 +89,8 @@ $field_options_template = "
 	    		$field_options_template .= "<option value=\"" . $type->name . "\" {{#is post_type value=\"" . $type->name . "\"}}selected=\"selected\"{{/is}}>" . $type->labels->name . "</option>\r\n";
 	    	}
 	    	
+	    	do_action( 'caldera_forms_autopopulate_types' );
+
 			$field_options_template .= "</select>
 
 		</div>
@@ -104,6 +106,9 @@ $field_options_template = "
 
 		</div>
 	</div>
+
+	<?php do_action( 'caldera_forms_autopopulate_type_config' ); ?>
+
 </div>
 <div class=\"caldera-config-group-toggle-options\">
 	<div class=\"caldera-config-group caldera-config-group-full\">

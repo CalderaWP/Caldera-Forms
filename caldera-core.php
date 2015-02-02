@@ -23,8 +23,6 @@ define('CFCORE_EXTEND_URL', 'https://api.calderaforms.com/1.0/');
 include_once CFCORE_PATH . 'classes/core.php';
 include_once CFCORE_PATH . 'classes/widget.php';
 include_once CFCORE_PATH . 'classes/sanitize.php';
-// licencing
-require_once( CFCORE_PATH . 'classes/selldock_updater.php' );
 
 // includes
 include_once CFCORE_PATH . 'includes/cf-ajax/plugin.php';

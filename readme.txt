@@ -74,7 +74,7 @@ none yet.
 
 == Changelog ==
 
-= 1.1.9.3 ( January, 2015) =
+= 1.1.9.3 ( Febuary, 2015) =
 
 = Improvements =
 * Added ID or Name value selector for autopopulation on selects
@@ -82,8 +82,11 @@ none yet.
 * Modals only close on the dismiss or cancel buttons. no longer on clicking the overlay. (better for management)
 * Added Filter: `caldera_forms_autoresponse_config` to allow modifiying the auto responder config
 * Added Filter: `caldera_forms_autoresponse_mail` to allow modifiying the auto responder mail object before sending
-* Changed the form ajax handler to use teh more reliable wp admin-ajax method
-*
+* Changed the form ajax handler to use the more reliable wp admin-ajax method
+* Hooks to extend the autopopulate for option based fields ( caldera_forms_autopopulate_types & caldera_forms_autopopulate_type_config )
+
+= Bug Fix =
+* a few small minor issues where resolved.
 
 
 = 1.1.9.2 (30 November, 2014) =

@@ -89,17 +89,6 @@ class Caldera_Forms_Admin {
 
 
 		$this->addons = apply_filters( 'caldera_forms_get_active_addons', array() );
-		if(!empty($this->addons)){
-			foreach($this->addons as $slug=>$addon){
-
-				if( $addon['type'] == 'selldock' ){
-					// selldock type
-					new SellDock_Updater_v3( $addon['slug'], $addon['file']);
-				}
-
-			}
-		}
-
 
 
 		add_action('admin_footer-edit.php', array( $this, 'render_editor_template')); // Fired on the page with the posts table
