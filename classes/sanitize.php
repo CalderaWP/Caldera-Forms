@@ -33,6 +33,8 @@ class Caldera_Forms_Sanitize {
 	 */
 	public static function sanitize( $input, $params = array() ) {
 
+		$input = stripslashes_deep( $input );
+
 		if ( '' === $input || is_int( $input ) || is_float( $input ) || empty( $input ) ) {
 			return $input;
 		}

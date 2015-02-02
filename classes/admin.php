@@ -516,6 +516,12 @@ class Caldera_Forms_Admin {
 						$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field['type'], $field, $form);
 						$field = apply_filters( 'caldera_forms_render_get_field_slug-' . $field['slug'], $field, $form);
 
+						if( is_string( $row->value ) ){
+							$row->value = esc_html( stripslashes_deep( $row->value ) );
+						}else{
+							$row->value = stripslashes_deep( Caldera_Forms_Sanitize::sanitize( $row->value ) );
+						}
+
 						$row->value = apply_filters( 'caldera_forms_view_field_' . $field['type'], $row->value, $field, $form);
 
 

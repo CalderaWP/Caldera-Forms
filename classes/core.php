@@ -2125,10 +2125,11 @@ class Caldera_Forms {
 			// check condition to see if field should be there first.
 			// check if conditions match first. ignore vailators if not part of condition
 			if(isset($_POST[$field_id])){
-				$entry = stripslashes_deep($_POST[$field_id]);
+				$entry = Caldera_Forms_Sanitize::sanitize( $_POST[$field_id] );
+
 			}elseif(isset($_POST[$field['slug']])){
 				// is slug maybe?
-				$entry = stripslashes_deep( $_POST[$field['slug']] );			
+				$entry = Caldera_Forms_Sanitize::sanitize( $_POST[$field['slug']] );
 			}
 
 			// apply field filter
@@ -3265,11 +3266,14 @@ class Caldera_Forms {
 			$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field['type'], $field, $form);
 			$field = apply_filters( 'caldera_forms_render_get_field_slug-' . $field['slug'], $field, $form);
 
+			if( is_string( $field_value ) ){
+				$field_value = esc_html( stripslashes_deep( $field_value ) );
+			}
 
 			$data['data'][$field_id] = array(
 				'label' => $field['label'],
 				'view'	=> apply_filters( 'caldera_forms_view_field_' . $field['type'], $field_value, $field, $form),
-				'value' => $field_value
+				'value' => sanitize_text_field( $field_value )
 			);
 		}
 
