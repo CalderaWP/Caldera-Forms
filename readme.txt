@@ -2,7 +2,7 @@
 Contributors: Desertsnowman, shelob9
 Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator
 Requires at least: 3.9
-Tested up to: 4.0
+Tested up to: 4.1
 Stable tag: 1.1.9.3
 License: GPLv2
 
