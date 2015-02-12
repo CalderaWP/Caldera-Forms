@@ -7,6 +7,29 @@
 add_action('caldera_forms_redirect', 'cf_ajax_redirect', 10, 5);
 add_filter('caldera_forms_render_form_classes', 'cf_ajax_register_scripts', 10, 2);
 add_action('caldera_forms_general_settings_panel', 'cf_form_ajaxsetup');
+// add ajax actions
+add_action( 'wp_ajax_cf_process_ajax_submit', 'cf_form_process_ajax' );
+add_action( 'wp_ajax_nopriv_cf_process_ajax_submit', 'cf_form_process_ajax' );
+
+
+function cf_form_process_ajax(){
+	// hook into submision
+	//_cf_cr_pst
+	global $post;
+	if( !empty( $_POST['_cf_cr_pst'] ) ){
+		$post = get_post( (int) $_POST['_cf_cr_pst'] );
+	}
+
+	if(isset($_POST['_cf_verify']) && isset( $_POST['_cf_frm_id'] )){
+		if(wp_verify_nonce( $_POST['_cf_verify'], 'caldera_forms_front' )){
+	
+			Caldera_Forms::process_submission();
+			exit;
+		}
+		exit;
+	}
+}
+
 
 function cf_form_ajaxsetup($form){
 ?>
@@ -196,9 +219,11 @@ function cf_ajax_setatts($atts, $form){
 		'data-target'		=>	'#caldera_notices_'.$current_form_count,
 		'data-template'		=>	'#cfajax_'.$form['ID'].'-tmpl',
 		'data-cfajax'		=>	$form['ID'],
-		'data-load-element' => '_parent',
-		'data-load-class' 	=> 'cf_processing',
-		'data-post-disable' => $post_disable,
+		'data-load-element' =>	'_parent',
+		'data-load-class' 	=>	'cf_processing',
+		'data-post-disable' =>	$post_disable,
+		'data-action'		=>	'cf_process_ajax_submit',
+		'data-request'		=>	admin_url( 'admin-ajax.php' )
 	);
 	if(!empty($form['hide_form'])){
 		$resatts['data-hiderows'] = "true";

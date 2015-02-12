@@ -89,10 +89,25 @@ $field_options_template = "
 	    		$field_options_template .= "<option value=\"" . $type->name . "\" {{#is post_type value=\"" . $type->name . "\"}}selected=\"selected\"{{/is}}>" . $type->labels->name . "</option>\r\n";
 	    	}
 	    	
+	    	do_action( 'caldera_forms_autopopulate_types' );
+
 			$field_options_template .= "</select>
 
 		</div>
 	</div>
+
+	<div class=\"caldera-config-group caldera-config-group-auto-taxonomy caldera-config-group-auto-post_type auto-populate-type-panel\" style=\"display:none;\">
+		<label>". __('Value', 'caldera-forms')."</label>
+		<div class=\"caldera-config-field\">
+			<select class=\"block-input field-config\" name=\"{{_name}}[value_field]\">
+				<option value=\"name\" {{#is value_field value=\"name\"}}selected=\"selected\"{{/is}}>Name</option>\r\n
+				<option value=\"id\" {{#is value_field value=\"id\"}}selected=\"selected\"{{/is}}>ID</option>\r\n
+	    	</select>
+
+		</div>
+	</div>
+
+	<?php do_action( 'caldera_forms_autopopulate_type_config' ); ?>
 
 </div>
 <div class=\"caldera-config-group-toggle-options\">
@@ -432,7 +447,7 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 
 	</ul>
 	<button class="button button-primary caldera-header-save-button" data-active-class="none" data-load-element="#save_indicator" type="button"><?php echo __('Update Form', 'caldera-forms'); ?><span id="save_indicator" class="spinner" style="position: absolute; right: -28px;"></span></button>	
-	<a class="button caldera-header-preview-button" target="_blank" href="<?php echo trailingslashit( get_site_url() ) . '?cf_preview=' . $element['ID']; ?>"><?php echo __('Preview Form', 'caldera-forms'); ?></a>
+	<a class="button caldera-header-preview-button" target="_blank" href="<?php echo trailingslashit( get_home_url() ) . '?cf_preview=' . $element['ID']; ?>"><?php echo __('Preview Form', 'caldera-forms'); ?></a>
 </div>
 
 <div style="display: none;" class="caldera-editor-body caldera-config-editor-panel " id="settings-panel">

@@ -1,9 +1,9 @@
 === Caldera Forms ===
-Contributors: Desertsnowman
+Contributors: Desertsnowman, shelob9
 Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator
 Requires at least: 3.9
-Tested up to: 4.0
-Stable tag: 1.1.9.2
+Tested up to: 4.1
+Stable tag: 1.1.9.3
 License: GPLv2
 
 Create complex grid based, responsive forms easily with an easy to use drag and drop layout builder.
@@ -73,6 +73,24 @@ none yet.
 3. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
+
+= 1.1.9.3 ( Febuary, 2015) =
+
+= Improvements =
+* Added ID or Name value selector for autopopulation on selects
+* Importer now creates a new form and wont overide the original.
+* Modals only close on the dismiss or cancel buttons. no longer on clicking the overlay. (better for management)
+* Added Filter: `caldera_forms_autoresponse_config` to allow modifiying the auto responder config
+* Added Filter: `caldera_forms_autoresponse_mail` to allow modifiying the auto responder mail object before sending
+* Changed the form ajax handler to use the more reliable wp admin-ajax method
+* Hooks to extend the autopopulate for option based fields ( caldera_forms_autopopulate_types & caldera_forms_autopopulate_type_config )
+
+= Updated =
+* Updated the reCaptcha to use Google's new version
+
+= Bug Fix =
+* a few small minor issues where resolved.
+
 
 = 1.1.9.2 (30 November, 2014) =
 

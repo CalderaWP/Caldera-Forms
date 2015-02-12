@@ -41,6 +41,7 @@
 		}
 		for(var f = 0; f < fields.length; f++){
 			if( jQuery(fields[f]).is(':radio,:checkbox') ){
+				if( $(fields[f]).hasClass('option-required') ){continue}
 				if( !checks[$(fields[f]).data('field')] ){
 					checks[$(fields[f]).data('field')] = [];
 				}

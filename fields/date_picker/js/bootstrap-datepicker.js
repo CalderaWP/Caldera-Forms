@@ -1665,7 +1665,10 @@
 		}
 	);
 	$(function(){
-		$('[data-provide="cfdatepicker-inline"]').cfdatepicker();
+		//$('[data-provide="cfdatepicker-inline"]').cfdatepicker({
+	//		language: "pt-BR"
+	//	});
+
 	});
 
 }(window.jQuery));

@@ -89,17 +89,6 @@ class Caldera_Forms_Admin {
 
 
 		$this->addons = apply_filters( 'caldera_forms_get_active_addons', array() );
-		if(!empty($this->addons)){
-			foreach($this->addons as $slug=>$addon){
-
-				if($addon['type'] == 'selldock'){
-					// selldock type
-					new SellDock_Updater_v3( $addon['slug'], $addon['file']);
-				}
-
-			}
-		}
-
 
 
 		add_action('admin_footer-edit.php', array( $this, 'render_editor_template')); // Fired on the page with the posts table
@@ -159,7 +148,9 @@ class Caldera_Forms_Admin {
 			foreach( $this->addons as $addon ){
 				$plugin_slug = basename( dirname( $addon['file'] ) ) .'/'.basename( $addon['file'] );
 				if( isset( $plugins[$plugin_slug] ) ){
-					$plugins[$plugin_slug]['slug'] = $addon['slug'];
+					if( isset( $addon['slug'] ) ){
+						$plugins[$plugin_slug]['slug'] = $addon['slug'];
+					}
 				}				
 			}
 		}
@@ -202,7 +193,9 @@ class Caldera_Forms_Admin {
 						break;
 					
 					default:
-						$result = $wpdb->query( $wpdb->prepare( "UPDATE `" . $wpdb->prefix . "cf_form_entries` SET `status` = %s WHERE `id` IN (".implode(',', $items).");", $_POST['do'] ) );
+						if( current_user_can( 'edit_others_posts' ) ){
+							$result = $wpdb->query( $wpdb->prepare( "UPDATE `" . $wpdb->prefix . "cf_form_entries` SET `status` = %s WHERE `id` IN (".implode(',', $items).");", $_POST['do'] ) );
+						}
 						break;
 				}
 				
@@ -522,6 +515,12 @@ class Caldera_Forms_Admin {
 						$field = apply_filters( 'caldera_forms_render_get_field', $field, $form);
 						$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field['type'], $field, $form);
 						$field = apply_filters( 'caldera_forms_render_get_field_slug-' . $field['slug'], $field, $form);
+
+						if( is_string( $row->value ) ){
+							$row->value = esc_html( stripslashes_deep( $row->value ) );
+						}else{
+							$row->value = stripslashes_deep( Caldera_Forms_Sanitize::sanitize( $row->value ) );
+						}
 
 						$row->value = apply_filters( 'caldera_forms_view_field_' . $field['type'], $row->value, $field, $form);
 
@@ -883,7 +882,79 @@ class Caldera_Forms_Admin {
 					$loc = wp_upload_dir();
 					if(move_uploaded_file($_FILES['import_file']['tmp_name'], $loc['path'].'/cf-form-import.json')){
 						$data = json_decode(file_get_contents($loc['path'].'/cf-form-import.json'), true);
-						if(isset($data['ID']) && isset($data['name']) && isset($data['fields'])){
+						if(isset($data['ID']) && isset($data['name']) ){
+
+							// generate a new ID
+							$data['ID'] = uniqid('CF');
+							$data['name'] = $_POST['name'];
+
+
+							// rebuild field IDS
+							if( !empty( $data['fields'] ) ){
+								$old_fields = array();
+								$fields 	= $data['fields'];								
+								$layout_fields = $data['layout_grid']['fields'];
+								$data['layout_grid']['fields'] = $data['fields'] = array();
+								foreach( $fields as $field ){									
+									$field_id = uniqid('fld_');
+									$old_fields[$field['ID']] = $field_id;
+
+									$data['layout_grid']['fields'][$field_id] = $layout_fields[$field['ID']];
+									$field['ID'] = $field_id;
+									$data['fields'][$field_id] = $field;
+
+								}
+
+							}
+							// rebuild processor IDS
+							if( !empty( $data['processors'] ) ){
+								
+								$processors 	= $data['processors'];								
+								$data['processors'] = array();
+								$old_processors = array();
+								foreach( $processors as $processor ){
+									$processor_id = uniqid('fp_');
+									$old_processors[$processor['ID']] = $processor_id;
+									$processor['ID'] = $processor_id;									
+									// fix binding
+									if( !empty( $processor['config'] ) && !empty( $data['fields'] ) ){
+										foreach( $processor['config'] as $config_key => &$config_value ){
+											if( is_string($config_value) ){
+												foreach( $old_fields as $old_field=>$new_field ){
+													$config_value = str_replace( $old_field, $new_field, $config_value );
+												}
+											}
+										}
+									}
+									$data['processors'][$processor_id] = $processor;
+								}
+								// fix processor bindings
+								foreach( $data['processors'] as &$processor ){
+									if( !empty( $processor['config'] ) ){
+										foreach( $processor['config'] as $config_key => &$config_value ){
+											if( is_string($config_value) ){
+												foreach( $old_processors as $old_proc=>$new_proc ){
+													$config_value = str_replace( $old_proc, $new_proc, $config_value );
+												}
+											}
+										}
+									}
+								}
+								// fix field - processor bindings
+								if( !empty( $data['fields'] ) ){
+									foreach( $data['fields'] as &$field ){
+										if( !empty( $field['config'] ) ){
+											foreach( $field['config'] as $config_key => &$config_value ){
+												if( is_string($config_value) ){
+													foreach( $old_processors as $old_proc=>$new_proc ){
+														$config_value = str_replace( $old_proc, $new_proc, $config_value );
+													}
+												}
+											}
+										}
+									}
+								}
+							}
 
 							// get form registry
 							$forms = get_option( '_caldera_forms' );
@@ -906,7 +977,7 @@ class Caldera_Forms_Admin {
 							}
 							if(isset($forms[$data['ID']]['settings'])){
 								unset($forms[$data['ID']]['settings']);
-							}
+							}	
 
 							// add from to list
 							update_option($data['ID'], $data);
@@ -951,7 +1022,7 @@ class Caldera_Forms_Admin {
 
 		}
 
-		if(!empty($_GET['export'])){
+		if(!empty($_GET['export']) && current_user_can( 'manage_options') ){
 
 			$form = get_option( $_GET['export'] );
 
