@@ -1876,7 +1876,16 @@ class Caldera_Forms {
 							$magic_tag = $magic_tag = self::get_field_data('_entry_token', $form);
 							break;
 						case 'ip':
-							$magic_tag = $_POST[ $magic[1] ]( $_SERVER['REMOTE_ADDR'] );
+
+							$ip = $_SERVER['REMOTE_ADDR'];
+							if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+								$ip = $_SERVER['HTTP_CLIENT_IP'];
+							} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+								$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+							}							
+							
+							$magic_tag = $ip;
+							
 							break;
 						case 'summary':
 							if(!empty($form['fields'])){
