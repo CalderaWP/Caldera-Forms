@@ -1873,7 +1873,7 @@ class Caldera_Forms {
 							}
 							break;
 						case 'entry_token':
-							$magic_tag = $magic_tag = self::get_field_data('_entry_token', $form);
+							$magic_tag = self::get_field_data('_entry_token', $form);
 							break;
 						case 'ip':
 
