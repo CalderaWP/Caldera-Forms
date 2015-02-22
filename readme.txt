@@ -1,28 +1,32 @@
 === Caldera Forms ===
-Contributors: Desertsnowman, shelob9
-Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator
+Contributors: Desertsnowman, Shelob9
+Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator, caldera forms
 Requires at least: 3.9
 Tested up to: 4.1
 Stable tag: 1.1.9.3
 License: GPLv2
 
-Create complex grid based, responsive forms easily with an easy to use drag and drop layout builder.
+Drag and drop responsive form builder.
 
 == Description ==
 Caldera Forms is an easy to use free WordPress form builder with a layout builder that enables you to create the format you want for your form. It is fully responsive and with form processors, it gives you flexibility to handle the form data how you need it without needing a single line of code.
 
 Easy enough for everyday users to create forms, and powerful enough for php ninjas to extend.
 
-For issues and updates - Caldera Forms is on [GitHub](https://github.com/Desertsnowman/Caldera-Forms)
-Form Docs, Demos & Templates can be found on the docs site (work in progress) [Caldera Forms Documentation](http://docs.calderaforms.com/)
+A free plugin by <a href="https://CalderaWP.com" title="CalderaWP: Transform Your WordPress Experience">CalderaWP</a>.
+
+* [Premium Add-ons](https://calderawp.com/caldera-forms-add-ons/)
+* [More Information](https://calderawp.com/free-plugin/caldera-forms/)
+* [Documentation](http://docs.calderaforms.com/)
+* [Report Issues](https://github.com/Desertsnowman/Caldera-Forms)
 
 = A Few Feature Highlights =
 * Responsive Grid design based on Bootstrap 3
 * Advanced Conditionals allows for multi, complex matching
-* Form Processors allows for stacking up form functionality, conditionaly
+* Form Processors allows for stacking up form functionality, conditionally
 * Export and Import forms across installations
 * Ajax or Page reload
-* Multipage forms
+* Multi-page forms
 * CSV of submission attached to notification email
 * Auto Responder
 * File Uploads
