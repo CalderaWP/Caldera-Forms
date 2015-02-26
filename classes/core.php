@@ -1873,7 +1873,7 @@ class Caldera_Forms {
 							}
 							break;
 						case 'entry_token':
-							$magic_tag = $magic_tag = self::get_field_data('_entry_token', $form);
+							$magic_tag = self::get_field_data('_entry_token', $form);
 							break;
 						case 'ip':
 
@@ -1887,6 +1887,9 @@ class Caldera_Forms {
 							$magic_tag = $ip;
 							
 							break;
+						case 'ua':
+							$magic_tag = $_SERVER['HTTP_USER_AGENT'];
+							break;	
 						case 'summary':
 							if(!empty($form['fields'])){
 								$out = array();
