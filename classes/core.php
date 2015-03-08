@@ -1787,7 +1787,7 @@ class Caldera_Forms {
 							}
 							break;
 						case 'date':
-							$magic_tag = date($magic[1]);
+							$magic_tag = get_date_from_gmt(date('Y-m-d H:i:s'), $magic[1]);
 							break;
 						case 'user':
 							if(is_user_logged_in()){
@@ -3309,7 +3309,7 @@ class Caldera_Forms {
 		$timeformat = get_option( 'time_format' );
 		$gmt_offset = get_option( 'gmt_offset' );
 		$entry_detail = self::get_entry_detail($entry_id, $form);
-		$data['date'] = date_i18n( $dateformat.' '.$timeformat, strtotime($entry_detail['datestamp']), $gmt_offset);
+		$data['date'] = date_i18n( $dateformat.' '.$timeformat, get_date_from_gmt( $entry_detail['datestamp'], 'U'));
 
 		if(!empty($entry_detail['meta'])){
 			$data['meta'] = $entry_detail['meta'];
