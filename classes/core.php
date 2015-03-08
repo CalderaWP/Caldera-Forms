@@ -813,7 +813,7 @@ class Caldera_Forms {
 			}
 		}
 		// set header
-		$headers[] = 'From: ' . $config['sender_name'] . ' <' . $config['sender_email'] . '>';
+		$headers = 'From: ' . $config['sender_name'] . ' <' . $config['sender_email'] . '>' . "\r\n";
 
 		$message = self::do_magic_tags( $message );
 
@@ -833,8 +833,9 @@ class Caldera_Forms {
 		$email_message = apply_filters( 'caldera_forms_autoresponse_mail', $email_message, $config, $form);	
 		do_action( 'caldera_forms_do_autoresponse', $config, $form);
 
-		// send mail		
-		wp_mail( $email_message['recipients'], $email_message['subject'], implode( "\r\n", (array) $email_message['message'] ), implode("\r\n", (array) $email_message['headers']), $email_message['attachments'] );
+		if ( is_string( $message ) ) {
+			wp_mail( $config['recipient_name'] . ' <' . $config['recipient_email'] . '>', $subject, $message, $headers );
+		}
 		
 	}
 
@@ -1787,7 +1788,7 @@ class Caldera_Forms {
 							}
 							break;
 						case 'date':
-							$magic_tag = date($magic[1]);
+							$magic_tag = get_date_from_gmt(date('Y-m-d H:i:s'), $magic[1]);
 							break;
 						case 'user':
 							if(is_user_logged_in()){
@@ -3109,7 +3110,10 @@ class Caldera_Forms {
 				}
 			}
 		}
-
+		// if depts been set- scripts are used - 
+		//wp_enqueue_script( 'cf-frontend-script-init', CFCORE_URL . 'assets/js/frontend-script-init.js', array('jquery'), self::VERSION, true);
+		wp_enqueue_script( 'cf-frontend-script-init', CFCORE_URL . 'assets/js/frontend-script-init.min.js', array('jquery'), self::VERSION, true);
+		wp_enqueue_script( 'cf-frontend-fields', CFCORE_URL . 'assets/js/fields.min.js', array('jquery'), self::VERSION );
 		// field styles
 		wp_enqueue_style( 'cf-frontend-field-styles', CFCORE_URL . 'assets/css/fields.min.css', array(), self::VERSION );
 
@@ -3309,7 +3313,7 @@ class Caldera_Forms {
 		$timeformat = get_option( 'time_format' );
 		$gmt_offset = get_option( 'gmt_offset' );
 		$entry_detail = self::get_entry_detail($entry_id, $form);
-		$data['date'] = date_i18n( $dateformat.' '.$timeformat, strtotime($entry_detail['datestamp']), $gmt_offset);
+		$data['date'] = date_i18n( $dateformat.' '.$timeformat, get_date_from_gmt( $entry_detail['datestamp'], 'U'));
 
 		if(!empty($entry_detail['meta'])){
 			$data['meta'] = $entry_detail['meta'];
@@ -4041,10 +4045,6 @@ class Caldera_Forms {
 		}
 		
 		do_action('caldera_forms_render_end', $form);
-
-		wp_enqueue_script( 'cf-frontend-script-init', CFCORE_URL . 'assets/js/frontend-script-init.min.js', array('jquery'), self::VERSION, true);
-		wp_enqueue_script( 'cf-frontend-fields', CFCORE_URL . 'assets/js/fields.min.js', array('jquery'), self::VERSION );
-
 
 		return apply_filters( 'caldera_forms_render_form', $out, $form);
 
