@@ -493,7 +493,7 @@ class Caldera_Forms_Admin {
 						}
 					}
 					$data['entries']['E' . $row->_entryid]['_entry_id'] = $row->_entryid;
-					$data['entries']['E' . $row->_entryid]['_date'] = date_i18n( $dateformat.' '.$timeformat, strtotime($row->_date_submitted), $gmt_offset);
+					$data['entries']['E' . $row->_entryid]['_date'] = date_i18n( $dateformat.' '.$timeformat, get_date_from_gmt( $row->_date_submitted, 'U'));
 
 					// setup default data array
 					if(!isset($data['entries']['E' . $row->_entryid]['data'])){
