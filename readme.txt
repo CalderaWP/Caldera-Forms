@@ -3,7 +3,7 @@ Contributors: Desertsnowman, Shelob9
 Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator, caldera forms
 Requires at least: 3.9
 Tested up to: 4.1
-Stable tag: 1.1.9.3
+Stable tag: 1.1.9.4
 License: GPLv2
 
 Drag and drop responsive form builder.
@@ -77,6 +77,17 @@ none yet.
 3. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
+
+= 1.1.9.4 ( March, 2015) =
+
+= Improvements =
+* Added US States to dropdown as option
+
+= Bug fixes =
+* Fixed a clash with FacetWP pagination
+* Fixed a bug that stoped the text editor from running on WordPress 3.9
+* A few minor bug fixes and improvements
+
 
 = 1.1.9.3 ( Febuary, 2015) =
 
