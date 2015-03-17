@@ -3198,7 +3198,7 @@ class Caldera_Forms {
 								}
 
 								// if depts been set- scripts are used - 
-								wp_enqueue_script( 'cf-frontend-script-init', CFCORE_URL . 'assets/js/frontend-script-init.js', array('jquery'), self::VERSION, true);
+								//wp_enqueue_script( 'cf-frontend-script-init', CFCORE_URL . 'assets/js/frontend-script-init.min.js', array('jquery'), self::VERSION, true);
 
 								if(isset($form['settings']['styles']['use_grid'])){
 									if($form['settings']['styles']['use_grid'] === 'yes'){

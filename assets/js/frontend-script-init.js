@@ -31,7 +31,9 @@
 			prev,
 			fields,
 			checks = {};
-	
+		if( !form.length ){
+			return;
+		}
 		// pre validate
 		if(clicked.data('pagenav')){
 			fields = jQuery('#' + clicked.data('pagenav') + ' .caldera-form-page').find('[data-field]');
