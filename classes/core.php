@@ -1389,7 +1389,22 @@ class Caldera_Forms {
 				"styles"	=>	array(
 					//CFCORE_URL . "fields/color_picker/minicolors.css"
 				)
-			)
+			),
+			'states' => array(
+				"field"		=>	__("State/ Province Select", "caldera-forms"),
+				"description" => __('Dropdown select for US states and Canadian provinces.', 'caldera-forms'),
+				"file"		=>	CFCORE_PATH . "fields/states/field.php",
+				"category"	=>	__("Select Options", "caldera-forms").', '.__("Basic", "caldera-forms"),
+				"placeholder" => false,
+				//"viewer"	=>	array($this, 'filter_options_calculator'),
+				"setup"		=>	array(
+					"template"	=>	CFCORE_PATH . "fields/states/config_template.php",
+					"preview"	=>	CFCORE_PATH . "fields/states/preview.php",
+					"default"	=> array(
+
+					),
+				)
+			),
 		);
 		
 		return array_merge( $fields, $internal_fields );
