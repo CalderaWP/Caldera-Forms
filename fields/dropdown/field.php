@@ -1,5 +1,10 @@
 <?php 
-echo $wrapper_before; ?>
+	echo $wrapper_before;
+	if ( isset( $field[ 'slug' ] ) && isset( $_GET[ $field[ 'slug' ] ] ) ) {
+		$field_value = Caldera_Forms_Sanitize::sanitize( $_GET[ $field[ 'slug' ] ] );
+	}
+
+?>
 	<?php echo $field_label; ?>
 	<?php echo $field_before; ?>
 		<select <?php echo $field_placeholder; ?> id="<?php echo $field_id; ?>" data-field="<?php echo $field_base_id; ?>" class="<?php echo $field_class; ?>" name="<?php echo $field_name; ?>" <?php echo $field_required; ?>>
