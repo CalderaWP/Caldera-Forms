@@ -1567,3 +1567,23 @@ input.disabled-input {
 .view_option_value{
   color: #afafaf;
 }
+
+.entry-line {
+  border-bottom: 1px solid #dddddd;
+  margin-bottom: 4px;
+}
+
+.entry-line label {
+  clear: left;
+  float: left;
+  font-weight: bold;
+  margin-right: 8px;
+  min-width: 130px;
+  text-transform: capitalize;
+}
+
+.entry-line > div {
+  display: inline-block;
+  margin-bottom: 4px;
+  min-width: 355px;
+}

@@ -52,6 +52,7 @@ class Caldera_Forms {
 		add_filter('caldera_forms_render_get_field_type-checkbox', array( $this, 'auto_populate_options_field' ), 10, 2);
 		add_filter('caldera_forms_render_get_field_type-dropdown', array( $this, 'auto_populate_options_field' ), 10, 2);
 		add_filter('caldera_forms_render_get_field_type-toggle_switch', array( $this, 'auto_populate_options_field' ), 10, 2);
+		add_filter('caldera_forms_view_field_paragraph', 'wpautop' );
 
 		// magic tags
 		//add_filter('caldera_forms_render_magic_tag', array( $this, 'do_magic_tags'));

@@ -120,25 +120,16 @@
 {{/if}}
 <div class="form-panel{{#if user}} modal-inside{{/if}}">
 <div id="main-entry-panel" class="tab-detail-panel">
-		<h4><?php echo __('Submitted', 'caldera-forms'); ?> <small class="description">{{date}}</small></h4>
-		<hr>
-		<table class="table table-condensed">
-		<thead>
+	<h4><?php echo __('Submitted', 'caldera-forms'); ?> <small class="description">{{date}}</small></h4>
+	<hr>
+	{{#each data}}
+		<div class="entry-line">
+			<label>{{label}}</label>
+			<div>{{{view}}}&nbsp;</div>
+		</div>
+	{{/each}}
+</div>
 
-			<tr>
-				<th><?php echo __('Field', 'caldera-forms'); ?></th>
-				<th><?php echo __('Value', 'caldera-forms'); ?></th>
-			</tr>
-		</thead>
-		<tbody>
-		{{#each data}}
-			<tr>
-				<th>{{label}}</th>
-				<td>{{{view}}}</td>
-			</tr>
-		{{/each}}
-		</tbody>
-	</table></div>
 
 	{{#if meta}}
 	{{#each meta}}
@@ -146,29 +137,17 @@
 	<h4>{{name}}</h4>
 	<hr>
 	{{#unless template}}
-		<table class="table table-condensed">		
-				{{#each data}}
-				<thead>
-				{{#if title}}
-				<tr>
-					<th colspan="2" class="active">{{title}}</th>
-				</tr>
-				{{/if}}
-				<tr>
-					<th><?php echo __('Field', 'caldera-forms'); ?></th>
-					<th><?php echo __('Value', 'caldera-forms'); ?></th>
-				</tr>
-				</thead>
-				<tbody>
-				{{#each entry}}		
-				<tr>
-					<th>{{meta_key}}</th>
-					<td>{{{meta_value}}}</td>
-				</tr>
-				{{/each}}
-				</tbody>
-				{{/each}}		
-		</table>
+		{{#each data}}
+			{{#if title}}
+				<h4>{{title}}</h4>
+			{{/if}}
+			{{#each entry}}
+				<div class="entry-line">
+					<label>{{meta_key}}</label>
+					<div>{{{meta_value}}}&nbsp;</div>
+				</div>
+			{{/each}}
+		{{/each}}
 	{{/unless}}
 	<?php do_action('caldera_forms_entry_meta_templates'); ?>
 	</div>
