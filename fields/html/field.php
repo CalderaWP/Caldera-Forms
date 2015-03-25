@@ -59,7 +59,7 @@ if(!empty($hastags[1])){
 	</script>
 	<?php
 }else{
-	echo '<div id="html-content-'.$field_id.'" data-field="'.$field_id.'" class="' . $field['config']['custom_class'] . '">' . do_shortcode( self::do_magic_tags( $field['config']['default'] ) ) . '</div>';
+	echo '<div class="' . $field['config']['custom_class'] . '">' . do_shortcode( self::do_magic_tags( $field['config']['default'] ) ) . '</div>';
 }
 
 

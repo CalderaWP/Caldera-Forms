@@ -905,6 +905,18 @@ class Caldera_Forms_Admin {
 
 								}
 
+
+								foreach( $data['fields'] as $field ){
+									// rebind conditions
+									if( !empty( $field['conditions']['group'] ) ){
+										foreach( $field['conditions']['group'] as $group_id=>$group ){
+											foreach( $group as $group_line_id=>$group_line ){
+												$data['fields'][$field['ID']]['conditions']['group'][$group_id][$group_line_id]['field'] = $old_fields[$group_line['field']];
+											}
+										}
+									}
+								}
+
 							}
 							// rebuild processor IDS
 							if( !empty( $data['processors'] ) ){
