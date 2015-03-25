@@ -1587,3 +1587,7 @@ input.disabled-input {
   margin-bottom: 4px;
   min-width: 355px;
 }
+
+.cf-table-viewer p {
+  margin: 0 0 4px;
+}
