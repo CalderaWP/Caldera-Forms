@@ -30,20 +30,21 @@
 			next,
 			prev,
 			fields,
-			checks = {};
+			checks = {};			
 		if( !form.length ){
 			return;
 		}
+
 		// pre validate
 		if(clicked.data('pagenav')){
 			fields = jQuery('#' + clicked.data('pagenav') + ' .caldera-form-page').find('[data-field]');
 			form = clicked.closest('.caldera_forms_form');
 		}else{
-			fields = form.find('.caldera-form-page:visible').find('[data-field]');
+			fields = form.find('.caldera-form-page:visible').find('[data-field]');				
 		}
 		for(var f = 0; f < fields.length; f++){
 			if( jQuery(fields[f]).is(':radio,:checkbox') ){
-				if( $(fields[f]).hasClass('option-required') ){continue}
+				if( !$(fields[f]).hasClass('option-required') ){continue}
 				if( !checks[$(fields[f]).data('field')] ){
 					checks[$(fields[f]).data('field')] = [];
 				}
@@ -68,6 +69,7 @@
 				}
 			}
 		}
+
 		for( var ch in checks ){
 			if( checks[ch].indexOf(true) < 0){
 				$('[for="' + ch + '"]').parent().addClass('has-error');
