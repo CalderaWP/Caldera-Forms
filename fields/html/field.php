@@ -1,6 +1,5 @@
 <?php
 // magics!
-
 preg_match_all("/%(.+?)%/", $field['config']['default'], $hastags);
 if(!empty($hastags[1])){
 	$binds = array();
@@ -15,7 +14,7 @@ if(!empty($hastags[1])){
 			}
 		}
 	}
-	echo '<div id="html-content-'.$field_id.'" data-field="'.$field_id.'" class="' . $field_class . '"></div>';
+	echo '<div id="html-content-'.$field_id.'" data-field="'.$field_id.'" class="' . $field['config']['custom_class'] . '"></div>';
 	echo '<script type="text/html" id="html-content-'.$field_id.'-tmpl">';
 		echo do_shortcode( self::do_magic_tags( $field['config']['default'] ) );
 	echo '</script>';
@@ -60,7 +59,7 @@ if(!empty($hastags[1])){
 	</script>
 	<?php
 }else{
-	echo do_shortcode( self::do_magic_tags( $field['config']['default'] ) );
+	echo '<div id="html-content-'.$field_id.'" data-field="'.$field_id.'" class="' . $field['config']['custom_class'] . '">' . do_shortcode( self::do_magic_tags( $field['config']['default'] ) ) . '</div>';
 }
 
 
