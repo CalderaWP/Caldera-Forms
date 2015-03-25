@@ -1577,6 +1577,7 @@ input.disabled-input {
   clear: left;
   float: left;
   font-weight: bold;
+  margin-bottom: 3px;
   margin-right: 8px;
   min-width: 130px;
   text-transform: capitalize;
