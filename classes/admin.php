@@ -890,6 +890,7 @@ class Caldera_Forms_Admin {
 
 
 							// rebuild field IDS
+							/*
 							if( !empty( $data['fields'] ) ){
 								$old_fields = array();
 								$fields 	= $data['fields'];								
@@ -967,7 +968,7 @@ class Caldera_Forms_Admin {
 									}
 								}
 							}
-
+							*/
 							// get form registry
 							$forms = get_option( '_caldera_forms' );
 							if(empty($forms)){

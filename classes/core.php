@@ -243,6 +243,9 @@ class Caldera_Forms {
 	}
 
 	public static function handle_file_view($value, $field, $form){
+		if( is_array( $value ) ){
+			return $value;
+		}
 
 		return '<a href="' . $value .'" target="_blank">' . basename($value) .'</a>';
 
@@ -564,7 +567,7 @@ class Caldera_Forms {
 		$mail = array(
 			'recipients' => array(),
 			'subject'	=> self::do_magic_tags($form['mailer']['email_subject']),
-			'message'	=> $form['mailer']['email_message']."\r\n",
+			'message'	=> stripslashes( $form['mailer']['email_message'] ) ."\r\n",
 			'headers'	=>	array(
 				self::do_magic_tags( 'From: ' . $sendername . ' <' . $sendermail . '>' )
 			),
@@ -576,7 +579,7 @@ class Caldera_Forms {
 
 		if($form['mailer']['email_type'] == 'html'){
 			$mail['headers'][] = "Content-type: text/html";
-			$mail['message'] = nl2br($mail['message']);
+			$mail['message'] = wpautop( $mail['message'] );
 		}
 
 		// get tags
@@ -703,7 +706,13 @@ class Caldera_Forms {
 		$headers = implode("\r\n", $mail['headers']);
 
 		do_action( 'caldera_forms_do_mailer', $mail, $data, $form);
-		if( ! empty( $mail ) && is_string( $mail['message'] ) ){
+
+		// force message to string.
+		if( is_array( $mail['message'] ) ){
+			$mail['message'] = implode( "\n", $mail['message'] );
+		}
+
+		if( ! empty( $mail ) ){
 
 			if(wp_mail( (array) $mail['recipients'], $mail['subject'], $mail['message'], $headers, $mail['attachments'] )){
 				// kill attachment.

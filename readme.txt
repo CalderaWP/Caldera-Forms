@@ -3,7 +3,7 @@ Contributors: Desertsnowman, Shelob9
 Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator, caldera forms
 Requires at least: 3.9
 Tested up to: 4.1
-Stable tag: 1.1.9.4
+Stable tag: 1.1.9.5
 License: GPLv2
 
 Drag and drop responsive form builder.
@@ -77,6 +77,19 @@ none yet.
 3. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
+
+= 1.1.9.5 ( March, 2015) =
+
+= Bug fixes =
+* Fixed datepicker language loader ... again
+* Pagination next validator on checkbox prevented progression
+
+= Improvements =
+* cleaned up the view entry modal a bit
+* cleaned up paragraph entry view
+* moved a few hooks around for better handling
+* added custom class to html element
+
 
 = 1.1.9.4 ( March, 2015) =
 
