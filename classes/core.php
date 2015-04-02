@@ -714,7 +714,7 @@ class Caldera_Forms {
 
 		if( ! empty( $mail ) ){
 
-			if(wp_mail( (array) $mail['recipients'], $mail['subject'], $mail['message'], $headers, $mail['attachments'] )){
+			if(wp_mail( (array) $mail['recipients'], $mail['subject'], stripslashes( $mail['message'] ), $headers, $mail['attachments'] )){
 				// kill attachment.
 				if(!empty($csvfile['file'])){
 					if(file_exists($csvfile['file'])){
