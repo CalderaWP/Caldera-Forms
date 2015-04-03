@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Caldera Forms\n"
-"POT-Creation-Date: 2015-02-12 10:17+0200\n"
-"PO-Revision-Date: 2015-02-12 10:17+0200\n"
+"POT-Creation-Date: 2015-04-03 09:44+0200\n"
+"PO-Revision-Date: 2015-04-03 09:44+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -72,7 +72,7 @@ msgstr ""
 msgid "Extend"
 msgstr ""
 
-#: ../classes/admin.php:853 ../classes/admin.php:1002
+#: ../classes/admin.php:853 ../classes/admin.php:1015
 msgid "Sorry, please try again"
 msgstr ""
 
@@ -80,312 +80,378 @@ msgstr ""
 msgid "Form Delete Error"
 msgstr ""
 
-#: ../classes/admin.php:993
+#: ../classes/admin.php:1006
 msgid "Sorry, File is not valid."
 msgstr ""
 
-#: ../classes/admin.php:993 ../classes/admin.php:997 ../classes/admin.php:1002
+#: ../classes/admin.php:1006 ../classes/admin.php:1010
+#: ../classes/admin.php:1015
 msgid "Form Import Error"
 msgstr ""
 
-#: ../classes/admin.php:997
+#: ../classes/admin.php:1010
 msgid "Sorry, File not uploaded."
 msgstr ""
 
-#: ../classes/admin.php:1011
+#: ../classes/admin.php:1024
 msgid "Form does not exist."
 msgstr ""
 
-#: ../classes/admin.php:1052
+#: ../classes/admin.php:1065
 msgid "Export selection has expired"
 msgstr ""
 
-#: ../classes/admin.php:1052
+#: ../classes/admin.php:1065
 msgid "Export Expired"
 msgstr ""
 
-#: ../classes/admin.php:1226
+#: ../classes/admin.php:1239
 msgid "Form has been successfuly submitted. Thank you."
 msgstr ""
 
-#: ../classes/admin.php:1263 ../classes/admin.php:1279
+#: ../classes/admin.php:1276 ../classes/admin.php:1292
 msgid "Layout"
 msgstr ""
 
-#: ../classes/admin.php:1281
+#: ../classes/admin.php:1294
 msgid "Layout Builder"
 msgstr ""
 
-#: ../classes/admin.php:1291
+#: ../classes/admin.php:1304
 msgid "Pages"
 msgstr ""
 
-#: ../classes/admin.php:1293
+#: ../classes/admin.php:1306
 msgid "Form Pages"
 msgstr ""
 
-#: ../classes/admin.php:1297
+#: ../classes/admin.php:1310
 msgid "Processors"
 msgstr ""
 
-#: ../classes/admin.php:1299 ../ui/panels/processors.php:166
+#: ../classes/admin.php:1312 ../ui/panels/processors.php:166
 msgid "Form Processors"
 msgstr ""
 
-#: ../classes/admin.php:1303 ../classes/admin.php:1305
+#: ../classes/admin.php:1316 ../classes/admin.php:1318
 #: ../ui/panels/variables.php:80
 msgid "Variables"
 msgstr ""
 
-#: ../classes/admin.php:1312
+#: ../classes/admin.php:1325
 msgid "Responsive"
 msgstr ""
 
-#: ../classes/admin.php:1314
+#: ../classes/admin.php:1327
 msgid "Resposive Settings"
 msgstr ""
 
-#: ../classes/admin.php:1318
+#: ../classes/admin.php:1331
 msgid "Grid Collapse"
 msgstr ""
 
-#: ../classes/admin.php:1320
+#: ../classes/admin.php:1333
 msgid ""
 "Set the smallest screen size at which to collapse the grid. (based on "
 "Bootstrap 3.0)"
 msgstr ""
 
-#: ../classes/admin.php:1327
+#: ../classes/admin.php:1340
 msgid "Maintain grid always"
 msgstr ""
 
-#: ../classes/admin.php:1347 ../ui/panels/emailer.php:32
+#: ../classes/admin.php:1360 ../ui/panels/emailer.php:32
 msgid "Mailer"
 msgstr ""
 
-#: ../classes/admin.php:1349
+#: ../classes/admin.php:1362
 msgid "Email Notification Settings"
 msgstr ""
 
-#: ../classes/core.php:282
+#: ../classes/core.php:287
 msgid "The wasn't entered correct."
 msgstr ""
 
-#: ../classes/core.php:282 ../fields/button/config_template.php:9
+#: ../classes/core.php:287 ../fields/button/config_template.php:9
+#: ../vendor/calderawp/fields/src/fields/button/config_template.php:9
 msgid "Reset"
 msgstr ""
 
-#: ../classes/core.php:411 ../classes/core.php:425 ../classes/core.php:2590
+#: ../classes/core.php:416 ../classes/core.php:430 ../classes/core.php:2635
 msgid "Permission denied."
 msgstr ""
 
-#: ../classes/core.php:537 ../ui/panels/emailer.php:4
+#: ../classes/core.php:542 ../ui/panels/emailer.php:4
 msgid "Caldera Forms Notification"
 msgstr ""
 
-#: ../classes/core.php:847
+#: ../classes/core.php:857
 msgid "Auto Responder"
 msgstr ""
 
-#: ../classes/core.php:848
+#: ../classes/core.php:858
 msgid "Sends out an auto response e-mail"
 msgstr ""
 
-#: ../classes/core.php:852
+#: ../classes/core.php:862
 msgid "Thank you for contacting us"
 msgstr ""
 
-#: ../classes/core.php:856
+#: ../classes/core.php:866
 msgid "Redirect"
 msgstr ""
 
-#: ../classes/core.php:857
+#: ../classes/core.php:867
 msgid "Redirects user to URL on successful submit"
 msgstr ""
 
-#: ../classes/core.php:866
+#: ../classes/core.php:876
 msgid "Akismet"
 msgstr ""
 
-#: ../classes/core.php:867
+#: ../classes/core.php:877
 msgid "Anti-spam filtering"
 msgstr ""
 
-#: ../classes/core.php:883
+#: ../classes/core.php:893
 msgid "Akismet not setup."
 msgstr ""
 
-#: ../classes/core.php:1010
+#: ../classes/core.php:1020 ../vendor/calderawp/fields/src/fields.php:112
 msgid "Calculation"
 msgstr ""
 
-#: ../classes/core.php:1013 ../classes/core.php:1035 ../classes/core.php:1072
-#: ../classes/core.php:1155 ../classes/core.php:1258
+#: ../classes/core.php:1023 ../classes/core.php:1045 ../classes/core.php:1082
+#: ../classes/core.php:1165 ../classes/core.php:1268
+#: ../vendor/calderawp/fields/src/fields.php:114
+#: ../vendor/calderawp/fields/src/fields.php:136
+#: ../vendor/calderawp/fields/src/fields.php:217
+#: ../vendor/calderawp/fields/src/fields.php:319
+#: ../vendor/calderawp/range-slider/src/range_slider.php:34
 msgid "Special"
 msgstr ""
 
-#: ../classes/core.php:1013
+#: ../classes/core.php:1023 ../vendor/calderawp/fields/src/fields.php:114
 msgid "Math"
 msgstr ""
 
-#: ../classes/core.php:1014
+#: ../classes/core.php:1024 ../vendor/calderawp/fields/src/fields.php:115
 msgid "Calculate values"
 msgstr ""
 
-#: ../classes/core.php:1021
+#: ../classes/core.php:1031 ../vendor/calderawp/fields/src/fields.php:122
 msgid "Total"
 msgstr ""
 
-#: ../classes/core.php:1033
+#: ../classes/core.php:1043
+#: ../vendor/calderawp/range-slider/src/range_slider.php:32
 msgid "Range Slider"
 msgstr ""
 
-#: ../classes/core.php:1036
+#: ../classes/core.php:1046
+#: ../vendor/calderawp/range-slider/src/range_slider.php:35
 msgid "Range Slider input field"
 msgstr ""
 
-#: ../classes/core.php:1070
+#: ../classes/core.php:1080 ../vendor/calderawp/fields/src/fields.php:134
 msgid "Star Rating"
 msgstr ""
 
-#: ../classes/core.php:1072
+#: ../classes/core.php:1082 ../vendor/calderawp/fields/src/fields.php:136
 msgid "Feedback"
 msgstr ""
 
-#: ../classes/core.php:1073
+#: ../classes/core.php:1083 ../vendor/calderawp/fields/src/fields.php:137
 msgid "Star rating input for feedback"
 msgstr ""
 
-#: ../classes/core.php:1105
+#: ../classes/core.php:1115 ../vendor/calderawp/fields/src/fields.php:168
 msgid "Phone Number"
 msgstr ""
 
-#: ../classes/core.php:1106
+#: ../classes/core.php:1116 ../vendor/calderawp/fields/src/fields.php:169
 msgid "Phone number with masking"
 msgstr ""
 
-#: ../classes/core.php:1108 ../classes/core.php:1130 ../classes/core.php:1199
-#: ../classes/core.php:1236 ../classes/core.php:1246 ../classes/core.php:1343
-#: ../classes/core.php:1369
+#: ../classes/core.php:1118 ../classes/core.php:1140 ../classes/core.php:1209
+#: ../classes/core.php:1246 ../classes/core.php:1256 ../classes/core.php:1353
+#: ../classes/core.php:1379 ../vendor/calderawp/fields/src/fields.php:171
+#: ../vendor/calderawp/fields/src/fields.php:193
+#: ../vendor/calderawp/fields/src/fields.php:260
+#: ../vendor/calderawp/fields/src/fields.php:297
+#: ../vendor/calderawp/fields/src/fields.php:307
+#: ../vendor/calderawp/fields/src/fields.php:400
+#: ../vendor/calderawp/fields/src/fields.php:426
 msgid "Text Fields"
 msgstr ""
 
-#: ../classes/core.php:1108 ../classes/core.php:1130 ../classes/core.php:1145
-#: ../classes/core.php:1199 ../classes/core.php:1215 ../classes/core.php:1236
-#: ../classes/core.php:1246 ../classes/core.php:1287 ../classes/core.php:1306
-#: ../classes/core.php:1325 ../ui/edit.php:163
+#: ../classes/core.php:1118 ../classes/core.php:1140 ../classes/core.php:1155
+#: ../classes/core.php:1209 ../classes/core.php:1225 ../classes/core.php:1246
+#: ../classes/core.php:1256 ../classes/core.php:1297 ../classes/core.php:1316
+#: ../classes/core.php:1335 ../classes/core.php:1408 ../ui/edit.php:163
+#: ../vendor/calderawp/fields/src/fields.php:171
+#: ../vendor/calderawp/fields/src/fields.php:193
+#: ../vendor/calderawp/fields/src/fields.php:207
+#: ../vendor/calderawp/fields/src/fields.php:260
+#: ../vendor/calderawp/fields/src/fields.php:276
+#: ../vendor/calderawp/fields/src/fields.php:297
+#: ../vendor/calderawp/fields/src/fields.php:307
+#: ../vendor/calderawp/fields/src/fields.php:347
+#: ../vendor/calderawp/fields/src/fields.php:365
+#: ../vendor/calderawp/fields/src/fields.php:383
+#: ../vendor/calderawp/fields/src/fields.php:455
 msgid "Basic"
 msgstr ""
 
-#: ../classes/core.php:1108
+#: ../classes/core.php:1118 ../vendor/calderawp/fields/src/fields.php:171
 msgid "User"
 msgstr ""
 
-#: ../classes/core.php:1127 ../classes/core.php:1128
+#: ../classes/core.php:1137 ../classes/core.php:1138
+#: ../vendor/calderawp/fields/src/fields.php:190
+#: ../vendor/calderawp/fields/src/fields.php:191
 msgid "Single Line Text"
 msgstr ""
 
-#: ../classes/core.php:1141 ../classes/core.php:1145
+#: ../classes/core.php:1151 ../classes/core.php:1155
+#: ../vendor/calderawp/fields/src/fields.php:204
+#: ../vendor/calderawp/fields/src/fields.php:207
 msgid "File"
 msgstr ""
 
-#: ../classes/core.php:1142
+#: ../classes/core.php:1152 ../vendor/calderawp/fields/src/fields.php:205
 msgid "File Uploader"
 msgstr ""
 
-#: ../classes/core.php:1152
+#: ../classes/core.php:1162 ../vendor/calderawp/fields/src/fields.php:214
 msgid "reCAPTCHA"
 msgstr ""
 
-#: ../classes/core.php:1153
+#: ../classes/core.php:1163 ../vendor/calderawp/fields/src/fields.php:215
 msgid "reCAPTCHA anti-spam field"
 msgstr ""
 
-#: ../classes/core.php:1178
+#: ../classes/core.php:1188 ../vendor/calderawp/fields/src/fields.php:239
 msgid "HTML"
 msgstr ""
 
-#: ../classes/core.php:1179
+#: ../classes/core.php:1189 ../vendor/calderawp/fields/src/fields.php:240
 msgid "Add text/html content"
 msgstr ""
 
-#: ../classes/core.php:1181 ../fields/html/config_template.php:2
+#: ../classes/core.php:1191 ../fields/html/config_template.php:2
 #: ../processors/akismet/config.php:20
+#: ../vendor/calderawp/fields/src/fields.php:242
 msgid "Content"
 msgstr ""
 
-#: ../classes/core.php:1196 ../classes/core.php:1197
+#: ../classes/core.php:1206 ../classes/core.php:1207
+#: ../vendor/calderawp/fields/src/fields.php:257
+#: ../vendor/calderawp/fields/src/fields.php:258
 msgid "Hidden"
 msgstr ""
 
-#: ../classes/core.php:1212 ../fields/button/config_template.php:6
+#: ../classes/core.php:1222 ../fields/button/config_template.php:6
+#: ../vendor/calderawp/fields/src/fields.php:273
+#: ../vendor/calderawp/fields/src/fields/button/config_template.php:6
 msgid "Button"
 msgstr ""
 
-#: ../classes/core.php:1213
+#: ../classes/core.php:1223 ../vendor/calderawp/fields/src/fields.php:274
 msgid "Button, Submit and Reset types"
 msgstr ""
 
-#: ../classes/core.php:1215
+#: ../classes/core.php:1225 ../vendor/calderawp/fields/src/fields.php:276
 msgid "Buttons"
 msgstr ""
 
-#: ../classes/core.php:1233 ../classes/core.php:1234
+#: ../classes/core.php:1243 ../classes/core.php:1244
+#: ../vendor/calderawp/fields/src/fields.php:294
+#: ../vendor/calderawp/fields/src/fields.php:295
 msgid "Email Address"
 msgstr ""
 
-#: ../classes/core.php:1243 ../classes/core.php:1244
+#: ../classes/core.php:1253 ../classes/core.php:1254
+#: ../vendor/calderawp/fields/src/fields.php:304
+#: ../vendor/calderawp/fields/src/fields.php:305
 msgid "Paragraph Textarea"
 msgstr ""
 
-#: ../classes/core.php:1256 ../classes/core.php:1257
+#: ../classes/core.php:1266 ../classes/core.php:1267
+#: ../vendor/calderawp/fields/src/fields.php:317
+#: ../vendor/calderawp/fields/src/fields.php:318
 msgid "Toggle Switch"
 msgstr ""
 
-#: ../classes/core.php:1258 ../classes/core.php:1287 ../classes/core.php:1306
-#: ../classes/core.php:1325
+#: ../classes/core.php:1268 ../classes/core.php:1297 ../classes/core.php:1316
+#: ../classes/core.php:1335 ../classes/core.php:1408
+#: ../vendor/calderawp/fields/src/fields.php:319
+#: ../vendor/calderawp/fields/src/fields.php:347
+#: ../vendor/calderawp/fields/src/fields.php:365
+#: ../vendor/calderawp/fields/src/fields.php:383
+#: ../vendor/calderawp/fields/src/fields.php:455
 msgid "Select Options"
 msgstr ""
 
-#: ../classes/core.php:1284 ../classes/core.php:1285
+#: ../classes/core.php:1294 ../classes/core.php:1295
+#: ../vendor/calderawp/fields/src/fields.php:344
+#: ../vendor/calderawp/fields/src/fields.php:345
 msgid "Dropdown Select"
 msgstr ""
 
-#: ../classes/core.php:1303 ../classes/core.php:1304
+#: ../classes/core.php:1313 ../classes/core.php:1314
+#: ../vendor/calderawp/fields/src/fields.php:362
+#: ../vendor/calderawp/fields/src/fields.php:363
 msgid "Checkbox"
 msgstr ""
 
-#: ../classes/core.php:1322 ../classes/core.php:1323
+#: ../classes/core.php:1332 ../classes/core.php:1333
+#: ../vendor/calderawp/fields/src/fields.php:380
+#: ../vendor/calderawp/fields/src/fields.php:381
 msgid "Radio"
 msgstr ""
 
-#: ../classes/core.php:1340 ../classes/core.php:1341
+#: ../classes/core.php:1350 ../classes/core.php:1351
+#: ../vendor/calderawp/fields/src/fields.php:397
+#: ../vendor/calderawp/fields/src/fields.php:398
 msgid "Date Picker"
 msgstr ""
 
-#: ../classes/core.php:1343 ../classes/core.php:1369
+#: ../classes/core.php:1353 ../classes/core.php:1379
+#: ../vendor/calderawp/fields/src/fields.php:400
+#: ../vendor/calderawp/fields/src/fields.php:426
 msgid "Pickers"
 msgstr ""
 
-#: ../classes/core.php:1367 ../classes/core.php:1368
+#: ../classes/core.php:1377 ../classes/core.php:1378
+#: ../vendor/calderawp/fields/src/fields.php:424
+#: ../vendor/calderawp/fields/src/fields.php:425
 msgid "Color Picker"
 msgstr ""
 
-#: ../classes/core.php:1674
+#: ../classes/core.php:1405 ../vendor/calderawp/fields/src/fields.php:452
+msgid "State/ Province Select"
+msgstr ""
+
+#: ../classes/core.php:1406 ../vendor/calderawp/fields/src/fields.php:453
+msgid "Dropdown select for US states and Canadian provinces."
+msgstr ""
+
+#: ../classes/core.php:1699
 msgid "System Tags"
 msgstr ""
 
-#: ../classes/core.php:2352 ../classes/core.php:3257
+#: ../classes/core.php:2395 ../classes/core.php:3299
 msgid "Invalid form ID"
 msgstr ""
 
-#: ../classes/core.php:2600 ../classes/core.php:2605 ../classes/core.php:2612
-#: ../classes/core.php:3573 ../classes/core.php:3589 ../classes/core.php:3592
-#: ../classes/core.php:3596
+#: ../classes/core.php:2645 ../classes/core.php:2650 ../classes/core.php:2657
+#: ../classes/core.php:3615 ../classes/core.php:3631 ../classes/core.php:3634
+#: ../classes/core.php:3638
 msgid "Permission denied or entry does not exist."
 msgstr ""
 
-#: ../classes/core.php:2649
+#: ../classes/core.php:2694
 msgid "is required"
 msgstr ""
 
@@ -398,59 +464,74 @@ msgid "Form"
 msgstr ""
 
 #: ../fields/button/config_template.php:2
+#: ../vendor/calderawp/fields/src/fields/button/config_template.php:2
 msgid "Type"
 msgstr ""
 
 #: ../fields/button/config_template.php:5
+#: ../vendor/calderawp/fields/src/fields/button/config_template.php:5
 msgid "Submit"
 msgstr ""
 
 #: ../fields/button/config_template.php:7
+#: ../vendor/calderawp/fields/src/fields/button/config_template.php:7
 msgid "Next Page"
 msgstr ""
 
 #: ../fields/button/config_template.php:8
+#: ../vendor/calderawp/fields/src/fields/button/config_template.php:8
 msgid "Previous Page"
 msgstr ""
 
 #: ../fields/button/config_template.php:14
+#: ../vendor/calderawp/fields/src/fields/button/config_template.php:14
 msgid "Class"
 msgstr ""
 
 #: ../fields/calculation/config.php:2
+#: ../vendor/calderawp/fields/src/fields/calculation/config.php:2
 msgid "Element"
 msgstr ""
 
 #: ../fields/calculation/config.php:8
+#: ../vendor/calderawp/fields/src/fields/calculation/config.php:8
 msgid "Classes"
 msgstr ""
 
 #: ../fields/calculation/config.php:14
+#: ../vendor/calderawp/fields/src/fields/calculation/config.php:14
 msgid "Before"
 msgstr ""
 
 #: ../fields/calculation/config.php:20
+#: ../vendor/calderawp/fields/src/fields/calculation/config.php:20
 msgid "After"
 msgstr ""
 
 #: ../fields/calculation/config.php:27
+#: ../vendor/calderawp/fields/src/fields/calculation/config.php:27
 msgid "Money Format"
 msgstr ""
 
 #: ../fields/calculation/config.php:32
+#: ../vendor/calderawp/fields/src/fields/calculation/config.php:32
 msgid "Manual Formula"
 msgstr ""
 
 #: ../fields/calculation/config.php:45
+#: ../vendor/calderawp/fields/src/fields/calculation/config.php:45
 msgid "Add Operator Group"
 msgstr ""
 
 #: ../fields/calculation/config.php:54
+#: ../vendor/calderawp/fields/src/fields/calculation/config.php:54
 msgid "Use %field_slug% as field vaule variables"
 msgstr ""
 
 #: ../fields/checkbox/config_template.php:3
 #: ../fields/radio/config_template.php:4
+#: ../vendor/calderawp/fields/src/fields/checkbox/config_template.php:3
+#: ../vendor/calderawp/fields/src/fields/radio/config_template.php:4
 msgid "Inline"
 msgstr ""
 
@@ -458,332 +539,486 @@ msgstr ""
 #: ../fields/email/config.php:8 ../fields/paragraph/config_template.php:14
 #: ../fields/phone/config.php:8 ../fields/range_slider/config.php:10
 #: ../fields/text/config.php:8
+#: ../vendor/calderawp/fields/src/fields/color_picker/setup.php:2
+#: ../vendor/calderawp/fields/src/fields/date_picker/setup.php:2
+#: ../vendor/calderawp/fields/src/fields/email/config.php:8
+#: ../vendor/calderawp/fields/src/fields/paragraph/config_template.php:14
+#: ../vendor/calderawp/fields/src/fields/phone/config.php:8
+#: ../vendor/calderawp/fields/src/fields/text/config.php:8
+#: ../vendor/calderawp/range-slider/src/field/config.php:3
 msgid "Default"
 msgstr ""
 
 #: ../fields/color_picker/setup.php:2
+#: ../vendor/calderawp/fields/src/fields/color_picker/setup.php:2
 msgid "Color"
 msgstr ""
 
 #: ../fields/date_picker/setup.php:8
+#: ../vendor/calderawp/fields/src/fields/date_picker/setup.php:8
 msgid "Format"
 msgstr ""
 
 #: ../fields/date_picker/setup.php:14
-msgid "language"
+#: ../vendor/calderawp/fields/src/fields/date_picker/setup.php:14
+msgid "Autoclose"
+msgstr ""
+
+#: ../fields/date_picker/setup.php:16
+#: ../vendor/calderawp/fields/src/fields/date_picker/setup.php:16
+msgid "Enable autoclose"
 msgstr ""
 
 #: ../fields/date_picker/setup.php:17
+#: ../vendor/calderawp/fields/src/fields/date_picker/setup.php:17
+msgid ""
+"If enabled, the date picker will automatically close after selecting the "
+"final input"
+msgstr ""
+
+#: ../fields/date_picker/setup.php:21
+#: ../vendor/calderawp/fields/src/fields/date_picker/setup.php:21
+msgid "Start View"
+msgstr ""
+
+#: ../fields/date_picker/setup.php:24
+#: ../vendor/calderawp/fields/src/fields/date_picker/setup.php:24
+msgid "Month (Default)"
+msgstr ""
+
+#: ../fields/date_picker/setup.php:25
+#: ../vendor/calderawp/fields/src/fields/date_picker/setup.php:25
+msgid "Year"
+msgstr ""
+
+#: ../fields/date_picker/setup.php:26
+#: ../vendor/calderawp/fields/src/fields/date_picker/setup.php:26
+msgid "Decade"
+msgstr ""
+
+#: ../fields/date_picker/setup.php:28
+#: ../vendor/calderawp/fields/src/fields/date_picker/setup.php:28
+msgid "The starting view of the date picker (month, year, decade)"
+msgstr ""
+
+#: ../fields/date_picker/setup.php:32
+#: ../vendor/calderawp/fields/src/fields/date_picker/setup.php:32
+msgid "language"
+msgstr ""
+
+#: ../fields/date_picker/setup.php:100
+#: ../vendor/calderawp/fields/src/fields/date_picker/setup.php:100
 msgid "Language to use. e.g. pt-BR"
 msgstr ""
 
-#: ../fields/email/config.php:2 ../fields/paragraph/config_template.php:2
-#: ../fields/phone/config.php:2 ../fields/text/config.php:2
+#: ../fields/dropdown/config_template.php:2 ../fields/email/config.php:2
+#: ../fields/paragraph/config_template.php:2 ../fields/phone/config.php:2
+#: ../fields/text/config.php:2
+#: ../vendor/calderawp/fields/src/fields/dropdown/config_template.php:2
+#: ../vendor/calderawp/fields/src/fields/email/config.php:2
+#: ../vendor/calderawp/fields/src/fields/paragraph/config_template.php:2
+#: ../vendor/calderawp/fields/src/fields/phone/config.php:2
+#: ../vendor/calderawp/fields/src/fields/text/config.php:2
 msgid "Placeholder"
 msgstr ""
 
 #: ../fields/file/config_template.php:2
+#: ../vendor/calderawp/fields/src/fields/file/config_template.php:2
 msgid "Attach to mailer"
 msgstr ""
 
 #: ../fields/file/config_template.php:9
+#: ../vendor/calderawp/fields/src/fields/file/config_template.php:9
 msgid "Allowed Types"
 msgstr ""
 
 #: ../fields/file/config_template.php:12
+#: ../vendor/calderawp/fields/src/fields/file/config_template.php:12
 msgid "Comma separated eg. jpg,pdf,txt"
 msgstr ""
 
 #: ../fields/gravatar/config.php:2
+#: ../vendor/calderawp/fields/src/fields/gravatar/config.php:2
 msgid "Email Field"
 msgstr ""
 
 #: ../fields/gravatar/config.php:10
+#: ../vendor/calderawp/fields/src/fields/gravatar/config.php:10
 msgid "Mystery Man"
 msgstr ""
 
 #: ../fields/gravatar/config.php:11
+#: ../vendor/calderawp/fields/src/fields/gravatar/config.php:11
 msgid "Blank"
 msgstr ""
 
 #: ../fields/gravatar/config.php:12
+#: ../vendor/calderawp/fields/src/fields/gravatar/config.php:12
 msgid "Gravatar Logo"
 msgstr ""
 
 #: ../fields/gravatar/config.php:13
+#: ../vendor/calderawp/fields/src/fields/gravatar/config.php:13
 msgid "Identicon (Generated)"
 msgstr ""
 
 #: ../fields/gravatar/config.php:14
+#: ../vendor/calderawp/fields/src/fields/gravatar/config.php:14
 msgid "Wavatar (Generated)"
 msgstr ""
 
 #: ../fields/gravatar/config.php:15
+#: ../vendor/calderawp/fields/src/fields/gravatar/config.php:15
 msgid "MonsterID (Generated)"
 msgstr ""
 
 #: ../fields/gravatar/config.php:16
+#: ../vendor/calderawp/fields/src/fields/gravatar/config.php:16
 msgid "Retro (Generated)"
 msgstr ""
 
 #: ../fields/gravatar/config.php:21
+#: ../vendor/calderawp/fields/src/fields/gravatar/config.php:21
 msgid "Fallback"
 msgstr ""
 
 #: ../fields/gravatar/config.php:35
+#: ../vendor/calderawp/fields/src/fields/gravatar/config.php:35
 msgid "Size"
 msgstr ""
 
 #: ../fields/gravatar/config.php:42
+#: ../vendor/calderawp/fields/src/fields/gravatar/config.php:42
 msgid "Border Color"
 msgstr ""
 
 #: ../fields/gravatar/config.php:49
+#: ../vendor/calderawp/fields/src/fields/gravatar/config.php:49
 msgid "Border Size"
 msgstr ""
 
 #: ../fields/gravatar/config.php:56
+#: ../vendor/calderawp/fields/src/fields/gravatar/config.php:56
 msgid "Border Radius"
 msgstr ""
 
-#: ../fields/hidden/setup.php:2 ../ui/admin_templates.php:130
-#: ../ui/admin_templates.php:159 ../ui/edit.php:100 ../ui/edit.php:128
+#: ../fields/hidden/setup.php:2 ../ui/edit.php:100 ../ui/edit.php:128
 #: ../ui/panels/variables.php:12
+#: ../vendor/calderawp/fields/src/fields/hidden/setup.php:2
 msgid "Value"
 msgstr ""
 
 #: ../fields/paragraph/config_template.php:8
+#: ../vendor/calderawp/fields/src/fields/paragraph/config_template.php:8
 msgid "Rows"
 msgstr ""
 
 #: ../fields/phone/config.php:14
+#: ../vendor/calderawp/fields/src/fields/phone/config.php:14
 msgid "Style"
 msgstr ""
 
 #: ../fields/phone/config.php:16
+#: ../vendor/calderawp/fields/src/fields/phone/config.php:16
 msgid "Local"
 msgstr ""
 
 #: ../fields/phone/config.php:18
+#: ../vendor/calderawp/fields/src/fields/phone/config.php:18
 msgid "International"
 msgstr ""
 
 #: ../fields/phone/config.php:20
+#: ../vendor/calderawp/fields/src/fields/phone/config.php:20
 msgid "Custom"
 msgstr ""
 
 #: ../fields/phone/config.php:22
+#: ../vendor/calderawp/fields/src/fields/phone/config.php:22
 msgid "Use the digit 9 to indicate a number"
 msgstr ""
 
 #: ../fields/range_slider/config.php:17
+#: ../vendor/calderawp/range-slider/src/field/config.php:10
 msgid "Track"
 msgstr ""
 
 #: ../fields/range_slider/config.php:23
+#: ../vendor/calderawp/range-slider/src/field/config.php:16
 msgid "Highlight"
 msgstr ""
 
 #: ../fields/range_slider/config.php:29
+#: ../vendor/calderawp/range-slider/src/field/config.php:22
 msgid "Handle"
 msgstr ""
 
 #: ../fields/range_slider/config.php:35
+#: ../vendor/calderawp/range-slider/src/field/config.php:28
 msgid "Border"
 msgstr ""
 
 #: ../fields/range_slider/config.php:42
+#: ../vendor/calderawp/range-slider/src/field/config.php:35
 msgid "Steps"
 msgstr ""
 
 #: ../fields/range_slider/config.php:48
+#: ../vendor/calderawp/range-slider/src/field/config.php:41
 msgid "Minimum"
 msgstr ""
 
 #: ../fields/range_slider/config.php:54
+#: ../vendor/calderawp/range-slider/src/field/config.php:47
 msgid "Maximum"
 msgstr ""
 
 #: ../fields/range_slider/config.php:60
+#: ../vendor/calderawp/range-slider/src/field/config.php:53
 msgid "Show Value"
 msgstr ""
 
 #: ../fields/range_slider/config.php:66
+#: ../vendor/calderawp/range-slider/src/field/config.php:59
 msgid "Prefix"
 msgstr ""
 
 #: ../fields/range_slider/config.php:72
+#: ../vendor/calderawp/range-slider/src/field/config.php:65
 msgid "Suffix"
 msgstr ""
 
 #: ../fields/recaptcha/config.php:2
+#: ../vendor/calderawp/fields/src/fields/recaptcha/config.php:2
 msgid "Site Key"
 msgstr ""
 
 #: ../fields/recaptcha/config.php:8
+#: ../vendor/calderawp/fields/src/fields/recaptcha/config.php:8
 msgid "Secret Key"
 msgstr ""
 
 #: ../fields/recaptcha/config.php:14
+#: ../vendor/calderawp/fields/src/fields/recaptcha/config.php:14
 msgid "Theme"
 msgstr ""
 
 #: ../fields/recaptcha/config.php:17
+#: ../vendor/calderawp/fields/src/fields/recaptcha/config.php:17
 msgid "Light"
 msgstr ""
 
 #: ../fields/recaptcha/config.php:18
+#: ../vendor/calderawp/fields/src/fields/recaptcha/config.php:18
 msgid "Dark"
 msgstr ""
 
 #: ../fields/recaptcha/config.php:20
+#: ../vendor/calderawp/fields/src/fields/recaptcha/config.php:20
 msgid ""
 "Theme changes not available in preview. Update form and reload to see new "
 "theme."
 msgstr ""
 
 #: ../fields/recaptcha/preview.php:20
+#: ../vendor/calderawp/fields/src/fields/recaptcha/preview.php:20
 msgid "No Secret Key Added"
 msgstr ""
 
 #: ../fields/recaptcha/preview.php:23
+#: ../vendor/calderawp/fields/src/fields/recaptcha/preview.php:23
 msgid "No Site Key Added"
 msgstr ""
 
 #: ../fields/star-rate/config.php:2
+#: ../vendor/calderawp/fields/src/fields/star-rate/config.php:2
 msgid "Number of Stars"
 msgstr ""
 
 #: ../fields/star-rate/config.php:8
+#: ../vendor/calderawp/fields/src/fields/star-rate/config.php:8
 msgid "Star Type"
 msgstr ""
 
 #: ../fields/star-rate/config.php:11
+#: ../vendor/calderawp/fields/src/fields/star-rate/config.php:11
 msgid "Star"
 msgstr ""
 
 #: ../fields/star-rate/config.php:12
+#: ../vendor/calderawp/fields/src/fields/star-rate/config.php:12
 msgid "Heart"
 msgstr ""
 
 #: ../fields/star-rate/config.php:13
+#: ../vendor/calderawp/fields/src/fields/star-rate/config.php:13
 msgid "Face"
 msgstr ""
 
 #: ../fields/star-rate/config.php:14
+#: ../vendor/calderawp/fields/src/fields/star-rate/config.php:14
 msgid "Dot"
 msgstr ""
 
 #: ../fields/star-rate/config.php:19
+#: ../vendor/calderawp/fields/src/fields/star-rate/config.php:19
 msgid "Star Size"
 msgstr ""
 
 #: ../fields/star-rate/config.php:25
+#: ../vendor/calderawp/fields/src/fields/star-rate/config.php:25
 msgid "Star Spacing"
 msgstr ""
 
 #: ../fields/star-rate/config.php:31
+#: ../vendor/calderawp/fields/src/fields/star-rate/config.php:31
 msgid "Single Select"
 msgstr ""
 
 #: ../fields/star-rate/config.php:38
+#: ../vendor/calderawp/fields/src/fields/star-rate/config.php:38
 msgid "Star Color"
 msgstr ""
 
 #: ../fields/star-rate/config.php:44
+#: ../vendor/calderawp/fields/src/fields/star-rate/config.php:44
 msgid "Track Color"
 msgstr ""
 
 #: ../fields/star-rate/config.php:50
+#: ../vendor/calderawp/fields/src/fields/star-rate/config.php:50
 msgid "Include Cancel"
 msgstr ""
 
 #: ../fields/text/config.php:15
+#: ../vendor/calderawp/fields/src/fields/text/config.php:15
 msgid "Masked Input"
 msgstr ""
 
 #: ../fields/text/config.php:17
+#: ../vendor/calderawp/fields/src/fields/text/config.php:17
 msgid "Enable input mask"
 msgstr ""
 
 #: ../fields/text/config.php:22
+#: ../vendor/calderawp/fields/src/fields/text/config.php:22
 msgid "Mask"
 msgstr ""
 
 #: ../fields/text/config.php:30
+#: ../vendor/calderawp/fields/src/fields/text/config.php:30
 msgid "numeric"
 msgstr ""
 
 #: ../fields/text/config.php:31
+#: ../vendor/calderawp/fields/src/fields/text/config.php:31
 msgid "alphabetical"
 msgstr ""
 
 #: ../fields/text/config.php:32
+#: ../vendor/calderawp/fields/src/fields/text/config.php:32
 msgid "alphanumeric"
 msgstr ""
 
 #: ../fields/text/config.php:33
+#: ../vendor/calderawp/fields/src/fields/text/config.php:33
 msgid "optional"
 msgstr ""
 
 #: ../fields/text/config.php:34
+#: ../vendor/calderawp/fields/src/fields/text/config.php:34
 msgid "length"
 msgstr ""
 
 #: ../fields/text/config.php:36
+#: ../vendor/calderawp/fields/src/fields/text/config.php:36
 msgid "Any length character only"
 msgstr ""
 
 #: ../fields/text/config.php:37
+#: ../vendor/calderawp/fields/src/fields/text/config.php:37
 msgid "Any length number only"
 msgstr ""
 
 #: ../fields/text/config.php:38
+#: ../vendor/calderawp/fields/src/fields/text/config.php:38
 msgid "email"
 msgstr ""
 
 #: ../fields/toggle_switch/config_template.php:2
+#: ../vendor/calderawp/fields/src/fields/toggle_switch/config_template.php:2
 msgid "Orientation"
 msgstr ""
 
 #: ../fields/toggle_switch/config_template.php:5
+#: ../vendor/calderawp/fields/src/fields/toggle_switch/config_template.php:5
 msgid "Horizontal"
 msgstr ""
 
 #: ../fields/toggle_switch/config_template.php:6
+#: ../vendor/calderawp/fields/src/fields/toggle_switch/config_template.php:6
 msgid "Vertical"
 msgstr ""
 
 #: ../fields/toggle_switch/config_template.php:12
+#: ../vendor/calderawp/fields/src/fields/toggle_switch/config_template.php:12
 msgid "Active Class"
 msgstr ""
 
 #: ../fields/toggle_switch/config_template.php:19
+#: ../vendor/calderawp/fields/src/fields/toggle_switch/config_template.php:19
 msgid "Inactive Class"
 msgstr ""
 
 #: ../fields/toggle_switch/field.php:37 ../ui/edit.php:472 ../ui/edit.php:480
 #: ../ui/edit.php:513 ../ui/edit.php:520
+#: ../vendor/calderawp/fields/src/fields/toggle_switch/field.php:37
 msgid "Enable"
 msgstr ""
 
-#: ../includes/cf-ajax/plugin.php:37
+#: ../includes/cf-ajax/plugin.php:40
 msgid "Ajax Submissions"
 msgstr ""
 
-#: ../includes/cf-ajax/plugin.php:39
+#: ../includes/cf-ajax/plugin.php:42
 msgid "Enable Ajax Submissions. (No page reloads)"
 msgstr ""
 
-#: ../includes/cf-ajax/plugin.php:43
+#: ../includes/cf-ajax/plugin.php:48
+msgid "Custom Callback"
+msgstr ""
+
+#: ../includes/cf-ajax/plugin.php:50
+msgid "Add a custom Javascript callback handlers on submission."
+msgstr ""
+
+#: ../includes/cf-ajax/plugin.php:57
+msgid "Inhibit Notices"
+msgstr ""
+
+#: ../includes/cf-ajax/plugin.php:59
+msgid "Don't show default alerts (success etc.)"
+msgstr ""
+
+#: ../includes/cf-ajax/plugin.php:65
+msgid "Callback Function"
+msgstr ""
+
+#: ../includes/cf-ajax/plugin.php:68
+msgid ""
+"Javascript function to call on submission. Passed an object containing form "
+"submission result."
+msgstr ""
+
+#: ../includes/cf-ajax/plugin.php:93
 msgid "Multiple Ajax Submissions"
 msgstr ""
 
-#: ../includes/cf-ajax/plugin.php:45
+#: ../includes/cf-ajax/plugin.php:95
 msgid "If set, form can be submitted multiple times with out a new page load."
 msgstr ""
 
-#: ../includes/cf-ajax/plugin.php:99 ../includes/cf-ajax/plugin.php:110
+#: ../includes/cf-ajax/plugin.php:149 ../includes/cf-ajax/plugin.php:160
 #: ../processors/redirect/config.php:10
 msgid "Redirecting"
 msgstr ""
@@ -988,10 +1223,6 @@ msgstr ""
 
 #: ../ui/admin_templates.php:102
 msgid "No entries yet."
-msgstr ""
-
-#: ../ui/admin_templates.php:129 ../ui/admin_templates.php:158
-msgid "Field"
 msgstr ""
 
 #: ../ui/edit.php:13
@@ -1414,4 +1645,8 @@ msgstr ""
 
 #: ../ui/panels/variables.php:30 ../ui/panels/variables.php:48
 msgid "Passback"
+msgstr ""
+
+#: ../vendor/calderawp/fields/src/fields.php:489
+msgid "Invalid field type"
 msgstr ""
