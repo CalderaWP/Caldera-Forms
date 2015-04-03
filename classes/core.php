@@ -570,10 +570,20 @@ class Caldera_Forms {
 			'subject'	=> self::do_magic_tags($form['mailer']['email_subject']),
 			'message'	=> stripslashes( $form['mailer']['email_message'] ) ."\r\n",
 			'headers'	=>	array(
-				self::do_magic_tags( 'From: ' . $sendername . ' <' . $sendermail . '>' )
+				self::do_magic_tags( 'From: ' . $sendername . ' <' . $sendermail . '>' ),
 			),
 			'attachments' => array()
 		);
+
+		// if added a bcc
+		if( !empty( $form['mailer']['bcc_to'] ) ){
+			$mail['headers'][] = self::do_magic_tags( 'Bcc: ' . $form['mailer']['bcc_to'] );
+		}
+
+		// if added a replyto
+		if( !empty( $form['mailer']['reply_to'] ) ){
+			$mail['headers'][] = self::do_magic_tags( 'Reply-To: <' . $form['mailer']['reply_to'] . '>' );
+		}		
 
 		// Filter Mailer first as not to have user input be filtered
 		$mail['message'] = self::do_magic_tags($mail['message']);
