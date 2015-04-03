@@ -53,6 +53,14 @@ if(!isset($element['mailer']['enable_mailer'])){
 			</div>
 		</div>
 		<div class="caldera-config-group">
+			<label><?php echo __('Reply To Email', 'caldera-forms'); ?> </label>
+			<div class="caldera-config-field">
+				<input type="text" class="field-config magic-tag-enabled" name="config[mailer][reply_to]" value="<?php if(isset( $element['mailer']['reply_to'] ) ){ echo $element['mailer']['reply_to']; } ?>" style="width:400px;">
+				<p class="description"><?php echo __('Use %field_slug% to use a value from the form', 'caldera-forms'); ?></p>
+			</div>
+		</div>
+
+		<div class="caldera-config-group">
 			<label><?php echo __('Email Type', 'caldera-forms'); ?> </label>
 			<div class="caldera-config-field">
 				<select class="field-config" name="config[mailer][email_type]">
@@ -76,6 +84,13 @@ if(!isset($element['mailer']['enable_mailer'])){
 				<p class="description"><?php echo __('Comma separated list of email addresses.', 'caldera-forms'); ?></p>
 			</div>
 
+		</div>
+		<div class="caldera-config-group">
+			<label><?php echo __('BCC', 'caldera-forms'); ?> </label>
+			<div class="caldera-config-field">
+				<input type="text" class="field-config magic-tag-enabled" name="config[mailer][bcc_to]" value="<?php if(isset( $element['mailer']['bcc_to'] ) ){ echo $element['mailer']['bcc_to']; } ?>" style="width:400px;">
+				<p class="description"><?php echo __('Comma separated list of email addresses. Use %field_slug% to use a value from the form.', 'caldera-forms'); ?></p>
+			</div>
 		</div>
 
 		<div class="caldera-config-group">
