@@ -46,7 +46,7 @@ if(!empty($field['config']['orientation']) && $field['config']['orientation'] ==
 					$selclass = $selectedClassName;
 				}
 
-					?><button type="button" id="<?php echo $field_id.'_'.$option_key; ?>" data-active="<?php echo $selectedClassName; ?>" data-default="<?php echo $defaultClassName; ?>" class="btn <?php echo $selclass; ?>" data-value="<?php echo $option['value']; ?>"><?php echo $option['label']; ?></button><?php
+					?><button type="button" id="<?php echo $field_id.'_'.$option_key; ?>" data-field="<?php echo $field_base_id; ?>" data-active="<?php echo $selectedClassName; ?>" data-default="<?php echo $defaultClassName; ?>" class="btn <?php echo $selclass; ?>" data-value="<?php echo $option['value']; ?>"><?php echo $option['label']; ?></button><?php
 				}
 			} ?>		
 		</div>
@@ -71,3 +71,12 @@ if(!empty($field['config']['orientation']) && $field['config']['orientation'] ==
 	</div>
 	<?php echo $field_after; ?>
 <?php echo $wrapper_after; ?>
+
+<script>
+jQuery( function( $ ){ 
+	$(document).on('reset', '.<?php echo $form['ID']; ?>', function(e){
+		$('button[data-field="<?php echo $field_base_id; ?>"]').removeClass('<?php echo $selectedClassName; ?>').addClass('<?php echo $defaultClassName; ?>');
+		$('input[data-field="<?php echo $field_base_id; ?>"]').prop('checked','');
+	});
+});
+</script>
