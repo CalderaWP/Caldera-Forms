@@ -48,10 +48,11 @@ class Caldera_Forms {
 		add_filter('caldera_forms_get_form_processors', array( $this, 'get_form_processors'));
 		add_filter('caldera_forms_submit_redirect_complete', array( $this, 'do_redirect'),10, 4);
 		add_action('caldera_forms_edit_end', array($this, 'calculations_templates') );
-		add_filter('caldera_forms_render_get_field_type-radio', array( $this, 'auto_populate_options_field' ), 10, 2);
-		add_filter('caldera_forms_render_get_field_type-checkbox', array( $this, 'auto_populate_options_field' ), 10, 2);
-		add_filter('caldera_forms_render_get_field_type-dropdown', array( $this, 'auto_populate_options_field' ), 10, 2);
-		add_filter('caldera_forms_render_get_field_type-toggle_switch', array( $this, 'auto_populate_options_field' ), 10, 2);
+		add_filter('caldera_forms_render_get_field', array( $this, 'auto_populate_options_field' ), 10, 2);
+		//add_filter('caldera_forms_render_get_field_type-radio', array( $this, 'auto_populate_options_field' ), 10, 2);
+		//add_filter('caldera_forms_render_get_field_type-checkbox', array( $this, 'auto_populate_options_field' ), 10, 2);
+		//add_filter('caldera_forms_render_get_field_type-dropdown', array( $this, 'auto_populate_options_field' ), 10, 2);
+		//add_filter('caldera_forms_render_get_field_type-toggle_switch', array( $this, 'auto_populate_options_field' ), 10, 2);
 		add_filter('caldera_forms_view_field_paragraph', 'wpautop' );
 
 		// magic tags
@@ -2211,7 +2212,13 @@ class Caldera_Forms {
 									$field['config']['option'][$option_id]['value'] = $field['config']['option'][$option_id]['label'];
 								}
 								$out[] = self::do_magic_tags($field['config']['option'][$option_id]['value']);
+							}elseif( isset($field['config']['option'][$option] ) ){
+								if(!isset($field['config']['option'][$option]['value'])){
+									$field['config']['option'][$option]['value'] = $field['config']['option'][$option]['label'];
+								}
+								$out[] = self::do_magic_tags($field['config']['option'][$option]['value']);
 							}
+
 						}
 						$processed_data[$indexkey][$field_id] = $out;
 					}else{
@@ -2398,6 +2405,8 @@ class Caldera_Forms {
 		if(isset($processed_data[$indexkey])){
 			return $processed_data[$indexkey];
 		}
+		// prep data array
+		$processed_data[$indexkey] = array();
 
 		// initialize process data
 		foreach($form['fields'] as $field_id=>$field){
