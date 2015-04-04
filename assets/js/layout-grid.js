@@ -135,9 +135,8 @@ rebind_field_bindings = function(){
 	}
 	
 	bindings.addClass('bound_field');
-//	console.log(bindings);
-	//bindings.trigger('change');
-	//bindings.each(function(k,v){
+	
+
 	for(var v = 0; v < bindings.length; v++){
 
 		var field = jQuery(bindings[v]),
@@ -258,7 +257,7 @@ rebind_field_bindings = function(){
 			if(count === 0){
 				field.empty();
 				if(field.data('type')){
-					field.append('<option value="">No ' + field.data('type').split(',').join(' or ') + ' in form</option>').prop('disabled', true);
+					field.append('<option value="">No ' + field.data('type').split(',').join(' or ') + ' in form</option>');//.prop('disabled', true);
 					var no_options = true;
 				}
 			}else{
