@@ -62,7 +62,7 @@ function cf_form_ajaxsetup($form){
 	<div class="caldera-config-group" style="width:500px;">
 		<label><?php echo __('Callback Function', 'caldera-forms'); ?></label>
 		<div class="caldera-config-field">
-			<input type="text" value="<?php echo $form['custom_callback']; ?>" name="config[custom_callback]" class="field-config block-input magic-tag-enabled">
+			<input type="text" value="<?php echo $form['custom_callback']; ?>" name="config[custom_callback]" class="field-config block-input">
 			<p class="description"><?php _e('Javascript function to call on submission. Passed an object containing form submission result.'); ?> <a href="#" onclick="jQuery('#json_callback_example').toggle();return false;">See Example</a></p>
 			<pre id="json_callback_example" style="display:none;"><?php echo htmlentities('
 {    

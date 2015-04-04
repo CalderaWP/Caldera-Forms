@@ -40,9 +40,6 @@ jQuery(function($){
 						if(obj.data.html){
 							obj.params.target.html(obj.data.html);
 						}
-						if(!obj.data.entry){
-							obj.params.trigger[0].reset();
-						}
 						if(obj.params.trigger.data('hiderows')){
 							obj.params.trigger.find('div.row').remove();
 						}
@@ -53,6 +50,11 @@ jQuery(function($){
 					}
 
 				}
+				// hit reset
+				if( ( obj.data.status === 'complete' || obj.data.type === 'success' ) && !obj.data.entry ){
+					obj.params.trigger[0].reset();
+				}
+
 				// do a redirect if set
 				if(obj.data.url){
 					obj.params.trigger.hide();
