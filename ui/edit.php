@@ -10,7 +10,7 @@ $magic_tags = apply_filters( 'caldera_forms_get_magic_tags', array());
 
 //dump($element);
 if(empty($element['success'])){
-	$element['success'] = __('Form has successfuly been submitted. Thank you.', 'caldera-forms');
+	$element['success'] = __('Form has successfully been submitted. Thank you.', 'caldera-forms');
 }
 
 if(!isset($element['db_support'])){
@@ -529,7 +529,7 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 	<div class="caldera-config-group" style="width:500px;">
 		<label><?php echo __('Success Message', 'caldera-forms'); ?> </label>
 		<div class="caldera-config-field">
-			<input type="text" class="field-config block-input magic-tag-enabled required" name="config[success]" value="<?php echo esc_html( $element['success'] ); ?>" required="required">
+			<textarea class="field-config block-input magic-tag-enabled required" name="config[success]" required="required"><?php echo esc_html( $element['success'] ); ?></textarea>
 		</div>
 	</div>
 	<div class="caldera-config-group">
