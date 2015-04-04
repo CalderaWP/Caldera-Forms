@@ -579,13 +579,15 @@ class Caldera_Forms {
 		);
 
 		// if added a bcc
-		if( !empty( trim( $form['mailer']['bcc_to'] ) ) ){
-			$mail['headers'][] = self::do_magic_tags( 'Bcc: ' . trim( $form['mailer']['bcc_to'] ) );
+		$bcc_to = trim( $form['mailer']['bcc_to'] );
+		if( !empty( $bcc_to ) ){
+			$mail['headers'][] = self::do_magic_tags( 'Bcc: ' . $bcc_to );
 		}
 
 		// if added a replyto
-		if( !empty( trim( $form['mailer']['reply_to'] ) ) ){
-			$mail['headers'][] = self::do_magic_tags( 'Reply-To: <' . trim( $form['mailer']['reply_to'] ) . '>' );
+		$reply_to = trim( $form['mailer']['reply_to'] );
+		if( !empty( $reply_to ) ){
+			$mail['headers'][] = self::do_magic_tags( 'Reply-To: <' . $reply_to . '>' );
 		}		
 
 		// Filter Mailer first as not to have user input be filtered
