@@ -2,8 +2,8 @@
 Contributors: Desertsnowman, Shelob9
 Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator, caldera forms
 Requires at least: 3.9
-Tested up to: 4.1
-Stable tag: 1.1.9.5
+Tested up to: 4..1
+Stable tag: 1.1.9.6
 License: GPLv2
 
 Drag and drop responsive form builder.
@@ -59,7 +59,6 @@ Everything can be extended. For developers, there are enough hooks and filters t
 For issues and updates - Caldera Forms is on [GitHub](https://github.com/Desertsnowman/Caldera-Forms)
 
 
-
 == Installation ==
 
 Upload the caldera-forms folder to /wp-content/plugins/
@@ -77,6 +76,23 @@ none yet.
 3. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
+
+= 1.1.9.6 ( March, 2015) =
+
+= Bug fixes =
+* slashes removed on mailer body
+* Reset fixed for toggle buttons working
+* reCaptcha multi instances
+
+= Improvements =
+* changed the delete element and processor buttons to gray
+* changed the Success message box to a textarea for larger notices.
+
+= Added =
+* added custom ajax callbacks and overrides
+* Increment value processor
+* added BCC and Reply To options for mailer
+* Mailer Debug mode to track issues with sending notifications
 
 = 1.1.9.5 ( March, 2015) =
 
