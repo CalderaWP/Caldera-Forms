@@ -77,7 +77,7 @@ none yet.
 
 == Changelog ==
 
-= 1.1.9.6 ( March, 2015) =
+= 1.1.9.6 ( April, 2015) =
 
 = Bug fixes =
 * slashes removed on mailer body
