@@ -783,8 +783,9 @@ jQuery(document).ready(function($){
 	});
 
 	$('.caldera-editor-body').on('focus', '.caldera-field-bind', function(e){
+		var field = $(this);
 		if(e.type && e.type === 'focusin'){
-			$(this).removeClass('bound_field').addClass('reload-binding');
+			field.removeClass('bound_field').addClass('reload-binding');
 			rebind_field_bindings();
 			return;
 		}
