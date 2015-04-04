@@ -107,6 +107,16 @@ if(!isset($element['mailer']['enable_mailer'])){
 				<p class="description"><?php echo __('Magic tags, %field_slug% are replaced with submitted data. use {summary} to build an automatic mail based on form content. Leaving the mailer blank, will create and automatic summary.', 'caldera-forms'); ?></p>
 			</div>
 		</div>
+
+
+		<div class="caldera-config-group">
+			<label><?php echo __('Debug Mailer', 'caldera-forms'); ?></label>
+			<div class="caldera-config-field">
+				<label><input type="checkbox" value="1" name="config[debug_mailer]" class="field-config"<?php if(isset($element['debug_mailer'])){ echo ' checked="checked"'; } ?>> <?php echo __('Enable email send transation log', 'caldera-forms'); ?></label>
+				<p class="description"><?php echo __('If set, entries will have a "Mailer Debug" meta tab to see the transaction long. Do not keep this enabled on production as it sends two emails for tracking.', 'caldera-forms'); ?></p>
+			</div>
+		</div>
+
 	</div>
 </div>
 <div class="mailer-errors" style="display:none;">

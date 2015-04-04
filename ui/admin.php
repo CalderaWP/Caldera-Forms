@@ -109,8 +109,11 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 				?>
 
 				<tr id="form_row_<?php echo $form_id; ?>" class="<?php echo $class; ?> form_entry_row">						
-					<td>
+					<td>						
 						<?php echo $form['name']; ?>
+						<?php if( !empty( $form['debug_mailer'] ) ) { ?>
+						<span style="color: rgb(207, 0, 0);" class="description"><?php _e('Mailer Debug enabled.', 'caldera-forms') ;?></span>
+						<?php } ?>
 						<div class="row-actions">
 						<span class="edit"><a class="form-control" href="admin.php?page=caldera-forms&edit=<?php echo $form_id; ?>"><?php echo __('Edit'); ?></a> | </span>
 						<?php if(!empty($form['db_support'])){ ?><span class="edit"><a class="form-control form-entry-trigger ajax-trigger" href="#entres"
