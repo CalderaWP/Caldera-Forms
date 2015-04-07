@@ -163,7 +163,11 @@ rebind_field_bindings = function(){
 					}
 
 				}
-				optgroup.append('<option value="' + fid + '"' + ( current === fid ? 'selected="selected"' : '' ) + '>' + current_form_fields[fid].label + ' [' + current_form_fields[fid].slug + ']</option>');
+				// check this field is not the same
+				if( field.data('id') !== fid ){
+					optgroup.append('<option value="' + fid + '"' + ( current === fid ? 'selected="selected"' : '' ) + '>' + current_form_fields[fid].label + ' [' + current_form_fields[fid].slug + ']</option>');
+				}
+				
 				count += 1;
 			}
 			optgroup.appendTo(field);
