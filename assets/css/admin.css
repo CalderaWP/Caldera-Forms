@@ -434,9 +434,11 @@ li.caldera-editor-logo {
   font-style: italic;
   color: #8f8f8f;
 }
+
 .field-edit-open .field_preview {
-  background: none repeat scroll 0 0 #F7F7F7;
-  border: 1px solid #EFEFEF;
+  background: none repeat scroll 0 0 #eff5f5;
+  border: 1px solid #40a4cf;
+  border-radius: 3px;
 }
 .layout-new-form-field .field_preview {
   display: none;
