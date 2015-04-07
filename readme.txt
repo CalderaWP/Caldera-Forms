@@ -2,7 +2,7 @@
 Contributors: Desertsnowman, Shelob9
 Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator, caldera forms
 Requires at least: 3.9
-Tested up to: 4..1
+Tested up to: 4.1.1
 Stable tag: 1.1.9.6
 License: GPLv2
 
@@ -76,6 +76,15 @@ none yet.
 3. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
+
+= 1.1.9.7 ( April, 2015) =
+
+= Bug fixes =
+* Corrected a bug that allowed setting a field to its own conditional (infinte loop)
+
+= Additions =
+* Added a "Entry List" behaviour to Variables to allow the variable to show in entry list.
+
 
 = 1.1.9.6 ( April, 2015) =
 

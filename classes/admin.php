@@ -385,7 +385,11 @@ class Caldera_Forms_Admin {
 					$selects[] = "'".$field['slug']."'";
 					$field_labels[$field['slug']] = $field['label'];
 				}
-				if(count($backup_labels) < 4 && in_array($field['type'], array('text','email','date','name'))){
+				$has_vars = array();
+				if( !empty( $form['variables']['types'] ) ){
+					$has_vars = $form['variables']['types'];
+				}
+				if( ( count($backup_labels) < 4 && !in_array( 'entryitem', $has_vars ) ) && in_array($field['type'], array('text','email','date','name'))){
 					// backup only first 4 fields
 					$backup_labels[$field['slug']] = $field['label'];
 				}
@@ -536,6 +540,16 @@ class Caldera_Forms_Admin {
 							$data['entries']['E' . $row->_entryid]['data'][$row->slug] = $row->value;
 						}
 					}
+
+					if( !empty( $form['variables']['types'] ) ){
+						foreach( $form['variables']['types'] as $var_key=>$var_type ){
+							if( $var_type == 'entryitem' ){
+								$data['fields'][$form['variables']['keys'][$var_key]] = ucwords( str_replace( '_', ' ', $form['variables']['keys'][$var_key] ) );
+								$data['entries']['E' . $row->_entryid]['data'][$form['variables']['keys'][$var_key]] = Caldera_Forms::do_magic_tags( $form['variables']['values'][$var_key], $row->_entryid );
+							}
+						}
+					}
+
 
 				}
 			}

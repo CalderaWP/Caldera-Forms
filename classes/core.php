@@ -1922,6 +1922,8 @@ class Caldera_Forms {
 									// extra post data
 									switch ($magic[1]) {
 										case 'permalink':
+										var_dump( $magic );
+										die;
 											$magic_tag = get_permalink( $post->ID );
 											break;
 
@@ -2990,8 +2992,7 @@ class Caldera_Forms {
 						}
 						self::set_submission_meta($metakey, $metavalue, $form, $processor_id);
 					}
-				} // check for transdata errors
-				
+				} // check for transdata errors								
 				
 				if(!empty($transdata['error'])){
 					// remove pending entry
@@ -3024,7 +3025,6 @@ class Caldera_Forms {
 		}
 		do_action('caldera_forms_submit_process_end', $form, $referrer, $process_id);
 		// AFTER PROCESS - do post process for any additional stuff
-		
 
 		do_action('caldera_forms_submit_post_process', $form, $referrer, $process_id);
 		// POST PROCESS
@@ -3470,6 +3470,19 @@ class Caldera_Forms {
 				'avatar' 	=> get_avatar( $avatar_field, 150),
 			);
 		}
+
+		if( !empty( $form['variables']['types'] ) ){
+			foreach( $form['variables']['types'] as $var_key=>$var_type ){
+				if( $var_type == 'entryitem' ){
+					$var_val = Caldera_Forms::do_magic_tags( $form['variables']['values'][$var_key], $entry_id );
+					$data['data'][ '_var_' . $form['variables']['keys'][$var_key] ] = array(
+						'label' => ucwords( str_replace('_', ' ', $form['variables']['keys'][$var_key] ) ),
+						'view'	=> $var_val,
+						'value' => sanitize_text_field( $var_val )
+					);
+				}
+			}
+		}		
 		
 		// allow plugins to alter the profile.
 		$data['user'] = apply_filters( 'caldera_forms_get_entry_user', $data['user'], $entry_id, $form);
