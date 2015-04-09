@@ -20,7 +20,7 @@
 <div id="{{_id}}_maskwrap">
 	<div class="caldera-config-group">
 		<label><?php _e('Mask', 'caldera-forms'); ?></label>
-		<div class="caldera-config-field">		
+		<div class="caldera-config-field">
 			<input type="text" id="{{_id}}_mask" class="block-input field-config" name="{{_name}}[mask]" value="{{mask}}">
 		</div>
 	</div>
@@ -40,6 +40,13 @@
 	</div>
 </div>
 
+<div class="caldera-config-group">
+    <label for="{{_id}}_readonly"><?php _e('Read-only', 'caldera-forms'); ?></label>
+    <div class="caldera-config-field">
+        <input type="checkbox" id="{{_id}}_readonly" class="field-config" name="{{_name}}[read_only]" {{#if read_only}}checked="checked"{{/if}}>
+    </div>
+</div>
+
 {{#script}}
 	jQuery(function($){
 
@@ -51,7 +58,7 @@
 				$('#{{_id}}_maskwrap').hide();
 				$('#{{_id}}_default').inputmask('remove');
 			}
-		});	
+		});
 		$('#{{_id}}_mask, #{{_id}}_numeric').change(function(){
 			$('.{{_id}}_masked').trigger('change');
 		});
