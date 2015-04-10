@@ -1922,8 +1922,6 @@ class Caldera_Forms {
 									// extra post data
 									switch ($magic[1]) {
 										case 'permalink':
-										var_dump( $magic );
-										die;
 											$magic_tag = get_permalink( $post->ID );
 											break;
 
