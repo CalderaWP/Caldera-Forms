@@ -3,7 +3,7 @@ Contributors: Desertsnowman, Shelob9
 Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator, caldera forms
 Requires at least: 3.9
 Tested up to: 4.1.1
-Stable tag: 1.1.9.6
+Stable tag: 1.1.9.7
 License: GPLv2
 
 Drag and drop responsive form builder.
@@ -84,6 +84,12 @@ none yet.
 
 = Additions =
 * Added a "Entry List" behaviour to Variables to allow the variable to show in entry list.
+* Added filter 'caldera_forms_get_form' for filtering form structure before using it.
+* Added the ability to render forms dicrectly from a array structure ( Dev feature : Allows youto render forms from a structure without needing to import one ).
+
+= Improvements =
+* Made selected field in edit easier to see.
+
 
 
 = 1.1.9.6 ( April, 2015) =

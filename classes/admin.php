@@ -366,7 +366,7 @@ class Caldera_Forms_Admin {
 		$page = 1;
 		$perpage = 20;
 
-		$form = get_option( $_POST['form'] );
+		$form = Caldera_Forms::get_form( $_POST['form'] );
 			
 		$field_labels = array();
 		$backup_labels = array();
@@ -843,7 +843,7 @@ class Caldera_Forms_Admin {
 			include CFCORE_PATH . 'ui/community.php';
 		}elseif(!empty($_GET['page']) && false !== strpos($_GET['page'], 'caldera-forms-pin-')){
 			$formID = substr($_GET['page'], 18);
-			$form = get_option($formID);
+			$form = Caldera_Forms::get_form($formID);
 			include CFCORE_PATH . 'ui/entries.php';
 
 		}else{
@@ -871,7 +871,7 @@ class Caldera_Forms_Admin {
 				$forms = get_option( '_caldera_forms' );
 				if(isset($forms[$_GET['delete']])){
 					unset($forms[$_GET['delete']]);
-					$form = get_option( $_GET['delete'] );
+					$form = Caldera_Forms::get_form( $_GET['delete'] );
 					if(empty($form)){
 						do_action('caldera_forms_delete_form', $_GET['delete']);
 						update_option( '_caldera_forms', $forms );
@@ -1032,7 +1032,7 @@ class Caldera_Forms_Admin {
 		}
 		if(!empty($_GET['export-form']) && current_user_can( 'manage_options' )){
 
-			$form = get_option( $_GET['export-form'] );
+			$form = Caldera_Forms::get_form( $_GET['export-form'] );
 
 			if(empty($form)){
 				wp_die( __('Form does not exist.', 'caldera-forms') );
@@ -1051,7 +1051,7 @@ class Caldera_Forms_Admin {
 
 		if(!empty($_GET['export']) && current_user_can( 'manage_options') ){
 
-			$form = get_option( $_GET['export'] );
+			$form = Caldera_Forms::get_form( $_GET['export'] );
 
 			global $wpdb;
 
