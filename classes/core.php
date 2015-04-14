@@ -3592,7 +3592,7 @@ class Caldera_Forms {
 			echo $footer_modals;
 		}
 	}
-	static public function render_form($atts, $entry_id = null){
+	static public function render_form($atts, $entry_id = null, $shortcode = null){
 
 		global $current_form_count, $form, $post;
 
@@ -3600,27 +3600,29 @@ class Caldera_Forms {
 			return;
 		}
 
-
 		if(is_string($atts)){
 
 			$form = self::get_form( $atts );
 
 		}else{
+
 			if(empty($atts['id'])){
 				if(!empty($atts['name'])){
 					$form = self::get_form( $atts['name'] );
 				}
-
-			}else{
+			}elseif( !empty( $atts['id'] ) ){
 				$form = self::get_form( $atts['id'] );
 			}
-
 		}
 
-		if(empty($form)){
-			return;
+		if( empty( $form ) ){
+			if( null === $shortcode && is_array( $atts ) ){
+				$form = self::get_form( $atts );
+			}else{
+				return;
+			}
 		}
-
+		
 		if(isset($atts['ajax'])){
 			if(!empty($atts['ajax'])){
 				$form['form_ajax'] = 1;
