@@ -23,6 +23,15 @@
 		foreach($plugins['all'] as $plugin_slug=>$plugin_data){
 			if( false !== strpos($plugin_data['Name'], 'Caldera Forms') || false !== strpos($plugin_data['Description'], 'Caldera Forms') ){
 				$plugins['caldera_forms'][$plugin_slug] = $plugins['all'][$plugin_slug];
+				$plugins['caldera_forms'][$plugin_slug]['plugin'] = $plugin_slug;
+				// replicate teh next step
+				if ( current_user_can( 'update_plugins' ) ) {
+					$current = get_site_transient( 'update_plugins' );
+					if ( isset( $current->response[ $plugin_slug ] ) ) {
+						$plugins['caldera_forms'][$plugin_slug]['update'] = true;
+					}
+				}
+				
 			}
 		}
 
