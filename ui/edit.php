@@ -472,6 +472,13 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 	</div>
 
 	<div class="caldera-config-group">
+		<label><?php echo __('State', 'caldera-forms'); ?> </label>
+		<div class="caldera-config-field">
+			<label><input type="checkbox" class="field-config" name="config[form_draft]" value="1" <?php if(!empty($element['form_draft'])){ ?>checked="checked"<?php } ?>> <?php echo __('Deactivate / Draft', 'caldera-forms'); ?></label>
+		</div>
+	</div>
+
+	<div class="caldera-config-group">
 		<label><?php echo __('Capture Entries', 'caldera-forms'); ?> </label>
 		<div class="caldera-config-field">
 			<label><input type="radio" class="field-config" name="config[db_support]" value="1" <?php if(!empty($element['db_support'])){ ?>checked="checked"<?php } ?>> <?php echo __('Enable', 'caldera-forms'); ?></label>

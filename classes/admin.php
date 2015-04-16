@@ -78,7 +78,8 @@ class Caldera_Forms_Admin {
 			add_action("wp_ajax_create_form", array( $this, 'create_form') );
 		}
 
-		add_action("wp_ajax_browse_entries", array( $this, 'browse_entries') );
+		add_action("wp_ajax_toggle_form_state", array( $this, 'toggle_form_state') );
+		add_action("wp_ajax_browse_entries", array( $this, 'browse_entries') );		
 		add_action("wp_ajax_save_cf_setting", array( $this, 'save_cf_setting') );
 		add_action("wp_ajax_cf_dismiss_pointer", array( $this, 'update_pointer') );
 		add_action("wp_ajax_cf_bulk_action", array( $this, 'bulk_action') );
@@ -357,6 +358,33 @@ class Caldera_Forms_Admin {
 			"both"		=> true
 		);
 		return $buttons;
+	}
+
+
+	public static function toggle_form_state(){
+		
+		$forms = get_option( '_caldera_forms' );
+		$form = sanitize_text_field( $_POST['form'] );
+		$form = Caldera_Forms::get_form( $form );
+		if( empty( $form ) || empty( $form['ID'] ) || empty( $forms[ $form['ID'] ]) ){
+			wp_send_json_error( );
+		}
+
+		if( isset( $form['form_draft'] ) ){
+			unset( $form['form_draft'] );
+			unset( $forms[ $form['ID'] ]['form_draft'] );		
+			$state = 'active-form';
+			$label = __('Deactivate', 'caldera-forms');
+		}else{
+			$forms[ $form['ID'] ]['form_draft'] = $form['form_draft'] = 1;
+			$state = 'draft-form';
+			$label = __('Activate', 'caldera-forms');
+		}
+
+		update_option( '_caldera_forms', $forms );
+		update_option( $form['ID'], $form );
+		
+		wp_send_json_success( array( 'ID' => $form['ID'], 'state' => $state, 'label' => $label ) );
 	}
 
 	public static function browse_entries(){

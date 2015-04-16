@@ -3622,6 +3622,20 @@ class Caldera_Forms {
 				return;
 			}
 		}
+
+		// is this form allowed to render ( check state )
+		if( isset( $form['form_draft'] ) ){
+			if( !isset( $_GET['cf_preview'] ) || $_GET['cf_preview'] != $form['ID'] ){
+				if( isset( $_POST['action'] ) && $_POST['action'] == 'cf_get_form_preview' ){
+					echo '<p style="color: #cf0000;">' . __('Form is currently not active.', 'caldera-forms') . '</p>';
+				}else{
+					return;
+				}
+				
+			}else{
+				echo '<div class="caldera-grid"><p class="alert alert-error alert-danger">' . __('Form is currently not active.', 'caldera-forms') . '</p></div>';
+			}
+		}
 		
 		if(isset($atts['ajax'])){
 			if(!empty($atts['ajax'])){
