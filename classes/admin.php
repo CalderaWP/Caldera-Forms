@@ -68,7 +68,7 @@ class Caldera_Forms_Admin {
 		add_action('caldera_forms_admin_templates', array( $this, 'get_admin_templates'),1);
 		add_action('caldera_forms_entry_meta_templates', array( $this, 'get_admin_meta_templates'),1);
 
-		add_action( 'wp_loaded', array( $this, 'save_form') );
+		add_action( 'init', array( $this, 'save_form') );
 		add_action( 'media_buttons', array($this, 'shortcode_insert_button' ), 11 );
 		add_filter( 'wp_fullscreen_buttons', array($this, 'shortcode_insert_button_fs' ), 11 );
 
