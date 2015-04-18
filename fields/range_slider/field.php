@@ -32,6 +32,12 @@ if(!empty($field['config']['prefix'])){
 			if (el.is(':visible')) {
 				rangeslider = el.rangeslider({
 					onSlide: function(position, value) {
+						<?php
+							if( false !== strpos( $field['config']['step'], '.' ) ){
+								$part = explode('.', $field['config']['step'] );								
+						?>
+						value = value.toFixed( <?php echo strlen( $part[1] ); ?> );
+						<?php } ?>
 						$('#<?php echo $field_id; ?>_value').html(value);
 					},
 					polyfill: <?php echo $polyfill; ?>

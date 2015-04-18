@@ -3,7 +3,7 @@ Contributors: Desertsnowman, Shelob9
 Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator, caldera forms
 Requires at least: 3.9
 Tested up to: 4.1.1
-Stable tag: 1.1.9.7
+Stable tag: 1.1.9.8
 License: GPLv2
 
 Drag and drop responsive form builder.
@@ -82,6 +82,12 @@ none yet.
 3. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
+
+= 1.1.9.8 ( , 2015) =
+
+= Improvements =
+* Added setting for custom thousand separator on calculator in money format.
+
 
 = 1.1.9.7 ( April, 2015) =
 

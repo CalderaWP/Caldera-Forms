@@ -12,6 +12,13 @@ if(!empty($field['config']['after'])){
 	$field['config']['after'] = self::do_magic_tags($field['config']['after']);
 }
 
+
+if( !isset( $field['config']['thousand_separator'] ) ){
+	$field['config']['thousand_separator'] = ',';
+}
+
+$thousand_separator = $field['config']['thousand_separator'];
+
 ?><?php echo $wrapper_before; ?>
 	<?php echo $field_label; ?>
 	<?php echo $field_before; ?>
@@ -89,7 +96,7 @@ if(!empty($binds)){
 				x2 = x.length > 1 ? '.' + x[1] : '';
 				var rgx = /(\d+)(\d{3})/;
 				while (rgx.test(x1)) {
-					x1 = x1.replace(rgx, '$1' + ',' + '$2');
+					x1 = x1.replace(rgx, '$1' + '<?php echo $thousand_separator; ?>' + '$2');
 				}
 				return x1 + x2;
 			}

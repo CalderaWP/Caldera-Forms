@@ -27,6 +27,15 @@
 		<label><input id="{{_id}}_fixed" type="checkbox" class="field-config" name="{{_name}}[fixed]" value="1" {{#if fixed}}checked="checked"{{/if}}> <?php echo __('Money Format', 'caldera-forms'); ?></label>
 	</div>
 </div>
+
+<div class="caldera-config-group" id="{{_id}}_thousand_separator">
+	<label for="{{_id}}_sep"><?php echo __('Separator', 'caldera-forms'); ?></label>
+	<div class="caldera-config-field">
+		<input id="{{_id}}_sep" type="text" class="field-config" name="{{_name}}[thousand_separator]" value="{{#if thousand_separator}}{{thousand_separator}}{{else}},{{/if}}">
+		<p class="description"><?php echo __('Setup a custom thousand separator. e.g 10,000.00 or 10.000.00', 'caldera-forms'); ?></p>
+	</div>
+</div>
+
 <div class="caldera-config-group">
 	<div class="caldera-config-field">
 		<label><input id="{{_id}}_manual" type="checkbox" class="field-config" name="{{_name}}[manual]" value="1" {{#if manual}}checked="checked"{{/if}}> <?php echo __('Manual Formula', 'caldera-forms'); ?></label>
@@ -67,6 +76,17 @@ function {{_id}}_build_formula(obj){
 jQuery('#{{_id}}_operator_groups').on('change', 'select', function(e){
 	{{_id}}_build_formula();
 });
+jQuery('body').on('change', '#{{_id}}_fixed', function(e){
+
+	var checked = jQuery(this);
+
+	if(checked.prop('checked')){
+		jQuery('#{{_id}}_thousand_separator').show();
+	}else{
+		jQuery('#{{_id}}_thousand_separator').hide();
+	}	
+
+});
 jQuery('body').on('change', '#{{_id}}_manual', function(e){
 	var checked = jQuery(this);
 
@@ -79,7 +99,7 @@ jQuery('body').on('change', '#{{_id}}_manual', function(e){
 	}
 });
 
-jQuery('#{{_id}}_manual').trigger('change');
+jQuery('#{{_id}}_manual,#{{_id}}_fixed').trigger('change');
 
 {{/script}}
 
