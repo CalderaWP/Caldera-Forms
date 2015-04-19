@@ -1,7 +1,7 @@
 <div class="caldera-config-group">
 	<label><?php _e('Type'); ?></label>
 	<div class="caldera-config-field">
-		<select class="block-input field-config" name="{{_name}}[type]">
+		<select class="block-input field-config field-button-type" name="{{_name}}[type]">
 		<option value="submit" {{#is type value="submit"}}selected="selected"{{/is}}><?php _e('Submit'); ?></option>
 		<option value="button" {{#is type value="button"}}selected="selected"{{/is}}><?php _e('Button', 'caldera-forms'); ?></option>
 		<option value="next" {{#is type value="next"}}selected="selected"{{/is}}><?php _e('Next Page', 'caldera-forms'); ?></option>
