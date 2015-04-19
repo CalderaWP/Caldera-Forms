@@ -88,15 +88,6 @@ class Caldera_Forms {
 
 	public static function get_form( $id_name ){
 
-		if( is_array( $id_name ) && !empty( $id_name['ID'] ) ){
-			
-			$id_name['db_support'] = null;
-
-			return apply_filters( 'caldera_forms_get_form', $id_name, '_struct' );
-		}elseif( is_array( $id_name ) ){
-			return false;
-		}
-
 		$id_name = sanitize_text_field( $id_name );
 
 		$forms = get_option( '_caldera_forms' );
@@ -112,7 +103,9 @@ class Caldera_Forms {
 			}
 		}
 
-		return apply_filters( 'caldera_forms_get_form', $form, $id_name );
+		$form = apply_filters( 'caldera_forms_get_form', $form, $id_name );
+
+		return apply_filters( 'caldera_forms_get_form-' . $id_name, $form, $id_name );
 
 	}
 
@@ -569,6 +562,9 @@ class Caldera_Forms {
 		}
 
 		// add entry ID to transient data
+		if( !isset( $entryid ) ){
+			$entryid = null;
+		}
 		$transdata['entry_id'] = $entryid;
 
 		// do mailer!
@@ -2604,11 +2600,7 @@ class Caldera_Forms {
 			$post = get_post( (int) $_POST['_cf_cr_pst'] );
 		}
 		// get form and check
-		$forms = get_option( '_caldera_forms' );
-		if( !isset( $forms[ $_POST['_cf_frm_id'] ] ) ){
-			return;
-		}
-		$form = self::get_form( $forms[ $_POST['_cf_frm_id'] ]['ID'] );
+		$form = self::get_form( $_POST['_cf_frm_id'] );
 		if(empty($form['ID']) || $form['ID'] != $_POST['_cf_frm_id']){
 			return;
 		}
@@ -3184,11 +3176,7 @@ class Caldera_Forms {
 		}
 
 		if(!empty($_GET['cf_preview'])){
-			$forms = get_option( '_caldera_forms' );
-			if( !isset( $forms[ $_GET['cf_preview'] ] ) ){
-				return;
-			}
-			$form = self::get_form( $forms[ $_GET['cf_preview'] ]['ID'] );
+			$form = self::get_form( $_GET['cf_preview'] );
 
 			$userid = get_current_user_id();
 			if( !empty( $userid ) ){
@@ -3417,11 +3405,7 @@ class Caldera_Forms {
 			if(!empty($_POST['form'])){
 				$entry_id = $_POST['entry'];
 				// get form and check
-				$forms = get_option( '_caldera_forms' );
-				if( !isset( $forms[ $_POST['form'] ] ) ){
-					return;
-				}
-				$form = self::get_form( $forms[ $_POST['form'] ]['ID'] );
+				$form = self::get_form( $_POST['form'] );
 				if(empty($form['ID']) || $form['ID'] != $_POST['form']){
 					return;
 				}
@@ -3940,7 +3924,7 @@ class Caldera_Forms {
 				$form['fields'][$field_id] = $field;
 			}
 		}
-		//dump($form['fields']);
+
 		if(!empty($form['layout_grid']['fields'])){
 
 			foreach($form['layout_grid']['fields'] as $field_base_id=>$location){
