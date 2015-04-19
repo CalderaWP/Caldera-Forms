@@ -2203,19 +2203,28 @@ class Caldera_Forms {
 		$current_data = self::get_field_data($field_id, $form, $entry_id);
 		
 		if(is_string($form)){
-			// get processed cached item using the form id
-			if(isset($processed_data[$form][$field_id])){
-				$processed_data[$form][$field_id] = $data;
-				return true;
-			}
+			$form = self::get_form( $form );
 		}
+
 		// form object
 		if(isset($form['ID'])){
-			//if(isset($processed_data[$form['ID']][$field_id]) || $field_id === '_entry_id' ||){
-			$processed_data[$form['ID']][$field_id] = $data;
-			return true;
-			//}
+			if( isset( $form['fields'][$field_id] ) ){
+				$processed_data[$form['ID']][$field_id] = $data;
+				return true;
+			}else{
+				// is field_id a slug perhaps?
+				foreach ($form['fields'] as $field) {
+					if( $field['slug'] == $field_id ){
+						$processed_data[$form['ID']][ $field['ID'] ] = $data;
+						return true;
+					}
+				}
+			}
 		}
+
+		// generic field data
+		$processed_data[$form['ID']][$field_id] = $data;
+		return true;
 	}
 
 	static public function get_field_data($field_id, $form, $entry_id = false){
@@ -2234,7 +2243,17 @@ class Caldera_Forms {
 		if(!empty($entry_id)){
 			$indexkey = $form['ID'] . '_' . $entry_id;
 		}
-		// get processed cached item		
+		// is ID or slug?
+		if( !isset( $form['fields'][$field_id] ) ){
+			foreach ($form['fields'] as $field) {
+				if( $field['slug'] == $field_id ){
+					$field_id = $field['ID'];
+					break;
+				}
+			}
+		}
+
+		// get processed cached item
 		if(isset($processed_data[$indexkey][$field_id])){
 			return $processed_data[$indexkey][$field_id];
 		}
