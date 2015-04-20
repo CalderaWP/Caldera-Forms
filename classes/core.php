@@ -4182,7 +4182,6 @@ class Caldera_Forms {
 		
 		// output javascript conditions.
 		if(!empty($conditions_configs) && !empty($conditions_templates)){
-
 			// sortout magics 
 			foreach($conditions_configs as &$condition_field_conf){
 				if(!empty($condition_field_conf['group'])){
@@ -4191,6 +4190,7 @@ class Caldera_Forms {
 							foreach($condition_group as &$condition_line){
 
 								if( isset( $form['fields'][$condition_line['field']]['config']['option'][$condition_line['value']] )){
+									$condition_line['label'] = $form['fields'][$condition_line['field']]['config']['option'][$condition_line['value']]['label'];
 									$condition_line['value'] = $form['fields'][$condition_line['field']]['config']['option'][$condition_line['value']]['value'];
 								}else{
 

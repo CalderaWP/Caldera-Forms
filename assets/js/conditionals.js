@@ -48,18 +48,33 @@
 					comparefield 	= [],
 					comparevalue	= (typeof lines[lid].value === 'function' ? lines[lid].value() : lines[lid].value);
 					
+					if( lines[lid].label ){
+						comparevalue = lines[lid].label;
+					}
+
 					truelines[lid] 	= false;
 					
-					if( compareelement.is(':radio,:checkbox')){
+					if( compareelement.is('select')){
+
+						compareelement = jQuery('<input>').val( compareelement.find('option:selected').html() );
+
+
+					}else if( compareelement.is(':radio,:checkbox')){
 						compareelement = compareelement.filter(':checked');
+
 					}else if( compareelement.is('div')){
 						compareelement = jQuery('<input>').val( compareelement.html() );
 					}
 					if(!compareelement.length){
 						comparefield.push(lines[lid].field);
 					}else{
-						for( var i = 0; i<compareelement.length; i++){							
-							comparefield.push(compareelement[i].value);
+						for( var i = 0; i<compareelement.length; i++){
+							if( lines[lid].label ){								
+								comparefield.push( $( compareelement[i] ).parent().text().trim() );
+							}else{
+								comparefield.push(compareelement[i].value);	
+							}
+							
 						}
 					}					
 					switch(lines[lid].compare) {
