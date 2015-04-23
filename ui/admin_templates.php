@@ -125,7 +125,7 @@
 	{{#each data}}
 		<div class="entry-line">
 			<label>{{label}}</label>
-			<div>{{{view}}}&nbsp;</div>
+			<div>{{#if view/label}}{{view/value}}{{else}}{{{view}}}{{/if}}&nbsp;</div>
 		</div>
 	{{/each}}
 </div>

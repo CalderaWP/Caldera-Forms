@@ -3493,6 +3493,12 @@ class Caldera_Forms {
 			$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field['type'], $field, $form);
 			$field = apply_filters( 'caldera_forms_render_get_field_slug-' . $field['slug'], $field, $form);
 
+			// maybe json?
+			$is_json = json_decode( $field_value, ARRAY_A );
+			if( !empty( $is_json ) ){
+				$field_value = $is_json;
+			}
+
 			if( is_string( $field_value ) ){
 				$field_value = esc_html( stripslashes_deep( $field_value ) );
 			}
