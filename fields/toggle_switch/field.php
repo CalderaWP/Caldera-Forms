@@ -46,7 +46,7 @@ if(!empty($field['config']['orientation']) && $field['config']['orientation'] ==
 					$selclass = $selectedClassName;
 				}
 
-					?><button type="button" id="<?php echo $field_id.'_'.$option_key; ?>" data-field="<?php echo $field_base_id; ?>" data-active="<?php echo $selectedClassName; ?>" data-default="<?php echo $defaultClassName; ?>" class="btn <?php echo $selclass; ?>" data-value="<?php echo $option['value']; ?>"><?php echo $option['label']; ?></button><?php
+					?><button type="button" id="<?php echo $field_id.'_'.$option_key; ?>" data-label="<?php echo esc_attr( $option['label'] );?>" data-field="<?php echo $field_base_id; ?>" data-active="<?php echo $selectedClassName; ?>" data-default="<?php echo $defaultClassName; ?>" class="btn <?php echo $selclass; ?>" data-value="<?php echo $option['value']; ?>"><?php echo $option['label']; ?></button><?php
 				}
 			} ?>		
 		</div>
@@ -62,7 +62,7 @@ if(!empty($field['config']['orientation']) && $field['config']['orientation'] ==
 					$sel = 'checked="checked"';
 				}
 				?>
-				<input type="radio" id="<?php echo $field_id . '_' . $option_key; ?>" data-field="<?php echo $field_base_id; ?>" data-ref="<?php echo $field_id.'_'.$option_key; ?>" class="cf-toggle-group-radio <?php echo $field_id; ?>" name="<?php echo $field_name; ?>" value="<?php echo $option['value'] ?>" <?php echo $sel; ?>>
+				<input type="radio" id="<?php echo $field_id . '_' . $option_key; ?>" data-label="<?php echo esc_attr( $option['label'] );?>" data-field="<?php echo $field_base_id; ?>" data-ref="<?php echo $field_id.'_'.$option_key; ?>" class="cf-toggle-group-radio <?php echo $field_id; ?>" name="<?php echo $field_name; ?>" value="<?php echo $option['value'] ?>" <?php echo $sel; ?>>
 				<?php
 			}
 		}

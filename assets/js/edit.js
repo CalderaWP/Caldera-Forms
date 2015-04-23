@@ -108,9 +108,22 @@ jQuery(document).ready(function($){
 			
 			return true;
 		},
-		complete: function(){
+		callback: function( obj ){
 			
+			if( false === obj.data ){
+				var notice = $('.updated_notice_box');
+
+				notice.stop().animate({top: 0}, 200, function(){
+					setTimeout( function(){
+						notice.stop().animate({top: -75}, 200);
+					}, 2000);
+				});
+			}
+		},
+		complete: function( obj ){
+
 			$('.wrapper-instance-pane .field-config').prop('disabled', false);
+
 		}
 	});
 
@@ -744,6 +757,7 @@ jQuery(document).ready(function($){
 		e.preventDefault();
 
 		var clicked = $(this);
+
 		$('#' + clicked.data('field') + '_type').val(clicked.data('type')).trigger('change');
 		
 		$('#' + clicked.data('field') + '_lable').focus()
@@ -800,17 +814,22 @@ jQuery(document).ready(function($){
 		var field = $(this),
 			field_compare = field.parent().find('.compare-type'),
 			type = field.data('condition'),
-			field_type = $( '#' + field.val() + '_type' ),
-			field_id = this.value.replace('{','_').replace('}','_'),
+			//field_type = $( '#' + field.val() + '_type' ),			
 			pid = field.data('id'),
-			field_wrapper = $('#' + field_id),
-			is_button = field_wrapper.find( '.field-button-type' ),
-			options_wrap = field_wrapper.find('.caldera-config-group-toggle-options'),
 			name = "config[" + type + "][" + pid + "][conditions][group][" + field.data('row') + "][" + field.data('line') + "]",
 			lineid = field.data('line'),
 			target = $('#' + lineid + "_value"),
-			curval = target.find('.caldera-conditional-value-field').first();
+			curval = target.find('.caldera-conditional-value-field').first(),
+			field_wrapper,
+			is_button,
+			options_wrap = [];
 			
+		var field_id = this.value;
+		if( field_id.substr(0,1) !== '{' ){
+			field_wrapper = $('#' + field_id);
+			is_button = field_wrapper.find( '.field-button-type' );
+			options_wrap = field_wrapper.find('.caldera-config-group-toggle-options');
+		}
 			if(field.hasClass('.bind_init')){
 				field.addClass('bound_triggered');
 			}
@@ -981,6 +1000,11 @@ jQuery(document).ready(function($){
 			start = this.selectionStart,
 			end = this.selectionEnd;
 
+			if( tags.length && tags.data('focus') ){
+				e.preventDefault();
+				return;
+			}
+
 			//reset typed tag
 			input.data('tag','');
 			if(this.selectionEnd > this.selectionStart){
@@ -1025,6 +1049,15 @@ jQuery(document).ready(function($){
 					list = $('<ul></ul>');
 					list.appendTo(tags);
 					tags.insertAfter(input);
+					tags.on('mouseenter', function(){
+						$(this).data('focus', true);
+					});
+					tags.on('mouseleave', function(){
+						$(this).data('focus', false);
+						if( !input.is(':focus') ){
+							input.trigger('focusout');
+						}
+					});
 				}
 
 				//populate
@@ -1132,10 +1165,10 @@ jQuery(document).ready(function($){
 			}
 
 			// focus out - remove
-			if(e.type === 'focusout'){				
+			if(e.type === 'focusout'){
+
 				setTimeout(function(){
-					
-					tags.remove();
+					tags.remove();					
 				}, 200);
 			}
 
@@ -1404,7 +1437,7 @@ rebind_field_bindings = function(){
 											bind_value = bind_value.replace(type ,type_instances[instance]);
 										}
 										
-										optgroup.append('<option value="{' + bind_value + '}"' + ( current === '{'+bind_value+'}' ? 'selected="selected"' : '' ) + valid + '>' + system_values[type].tags[types[t]][i] + '</option>');
+										optgroup.append('<option value="\{' + bind_value + '\}"' + ( current === '{'+bind_value+'}' ? 'selected="selected"' : '' ) + valid + '>' + system_values[type].tags[types[t]][i] + '</option>');
 										//field.append('<option value="' + bind_value + '"' + ( current === system_values[type].tags[types[t]][i] ? 'selected="selected"' : '' ) + '>' + system_values[type].tags[types[t]][i] + '</option>');
 
 										count += 1;

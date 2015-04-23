@@ -1596,10 +1596,21 @@ input.disabled-input {
 }
 td.draft-form {
   box-shadow: 2px 0 0 rgba(175, 0, 0, 0.6) inset;
+  background-color: rgba(175, 0, 0, 0.09);
 }
 td.active-form {
   box-shadow: 2px 0 0 #a3be5f inset;
 }
 tr.form_entry_row.loading {
   opacity: 0.5;
+}
+.caldera-editor-header .updated_notice_box {
+  background: #fff;
+  border-left: 8px solid rgb(175, 175, 0);
+  color: #333;
+  display: inline-block;
+  padding: 10px 24px 10px 12px;
+  position: absolute;
+  top: -75px;
+  box-shadow: 0 3px 5px rgba(0,0,0,0.2);
 }

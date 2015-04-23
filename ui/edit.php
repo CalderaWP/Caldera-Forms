@@ -62,7 +62,10 @@ $field_options_template = "
 			<select class=\"block-input field-config auto-populate-type\" name=\"{{_name}}[auto_type]\">
 				<option value=\"\">" . __('Select a source', 'caldera-forms') . "</option>
 				<option value=\"post_type\"{{#is auto_type value=\"post_type\"}} selected=\"selected\"{{/is}}>" . __('Post Type', 'caldera-forms') . "</option>
-				<option value=\"taxonomy\"{{#is auto_type value=\"taxonomy\"}} selected=\"selected\"{{/is}}>" . __('Taxonomy', 'caldera-forms') . "</option>
+				<option value=\"taxonomy\"{{#is auto_type value=\"taxonomy\"}} selected=\"selected\"{{/is}}>" . __('Taxonomy', 'caldera-forms') . "</option>";
+				ob_start();
+				do_action( 'caldera_forms_autopopulate_types' );
+				$field_options_template .= ob_get_clean() . "
 			</select>
 		</div>
 	</div>
@@ -93,8 +96,6 @@ $field_options_template = "
 	    	foreach($post_types as $type){
 	    		$field_options_template .= "<option value=\"" . $type->name . "\" {{#is post_type value=\"" . $type->name . "\"}}selected=\"selected\"{{/is}}>" . $type->labels->name . "</option>\r\n";
 	    	}
-	    	
-	    	do_action( 'caldera_forms_autopopulate_types' );
 
 			$field_options_template .= "</select>
 
@@ -451,6 +452,9 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 		</li>
 
 	</ul>
+
+	<div class="updated_notice_box"><?php _e( 'Updated Successfully', '{{core-slug}}' ); ?></div>
+
 	<button class="button button-primary caldera-header-save-button" data-active-class="none" data-load-element="#save_indicator" type="button"><?php echo __('Update Form', 'caldera-forms'); ?><span id="save_indicator" class="spinner" style="position: absolute; right: -28px;"></span></button>	
 	<a class="button caldera-header-preview-button" target="_blank" href="<?php echo trailingslashit( get_home_url() ) . '?cf_preview=' . $element['ID']; ?>"><?php echo __('Preview Form', 'caldera-forms'); ?></a>
 </div>

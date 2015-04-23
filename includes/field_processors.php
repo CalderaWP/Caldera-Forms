@@ -19,9 +19,9 @@ function cf_handle_file_upload($entry, $field, $form){
 			$check = pathinfo($_FILES[$field['ID']]['name']);
 			if(!in_array( $check['extension'], $types)){
 				if(count($types) > 1){
-					return array('_fail'=>__('File type not allowed. Allowed types are: ', 'caldera-forms') . ' '. implode(', ', $types) );
+					return new WP_Error( 'fail', __('File type not allowed. Allowed types are: ', 'caldera-forms') . ' '. implode(', ', $types) );
 				}else{
-					return array('_fail'=>__('File type needs to be', 'caldera-forms') . ' .' . $types[0] );	
+					return new WP_Error( 'fail', __('File type needs to be', 'caldera-forms') . ' .' . $types[0] );					
 				}
 			}
 
