@@ -548,6 +548,12 @@ class Caldera_Forms_Admin {
 						$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field['type'], $field, $form);
 						$field = apply_filters( 'caldera_forms_render_get_field_slug-' . $field['slug'], $field, $form);
 
+						// maybe json?
+						$is_json = json_decode( $row->value, ARRAY_A );
+						if( !empty( $is_json ) ){
+							$row->value = $is_json;
+						}
+
 						if( is_string( $row->value ) ){
 							$row->value = esc_html( stripslashes_deep( $row->value ) );
 						}else{

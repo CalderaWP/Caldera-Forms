@@ -87,7 +87,7 @@
 						<td>{{_entry_id}}</td>
 						<td>{{_date}}</td>
 						{{#each data}}
-						<td>{{{this}}}</td>
+						<td>{{#if label}}{{value}}{{else}}{{{this}}}{{/if}}</td>
 						{{/each}}
 						<td style="text-align: right; width: 100px;"><?php do_action('caldera_forms_entry_actions'); ?></td>
 					</tr>
