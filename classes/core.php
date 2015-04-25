@@ -2069,6 +2069,7 @@ class Caldera_Forms {
 				}
 
 				$filter_value = apply_filters( 'caldera_forms_do_magic_tag', $magic_tag, $magics[0][$magic_key]);
+
 				if(!empty($form['ID']) ){
 
 					// split processor
@@ -2107,13 +2108,16 @@ class Caldera_Forms {
 						}
 					}
 				}
+
 				if( $filter_value != $magics[1][$magic_key] ){
 					$value = str_replace($magics[0][$magic_key], $filter_value, $value);
 				}
+
 			}
 		}
+
 		// fields
-		$regex = "/%(.*?)%/";
+		$regex = "/%([a-zA-Z0-9_]*)%/";
 		preg_match_all($regex, $value, $matches);
 		if(!empty($matches[1])){
 			foreach($matches[1] as $key=>$tag){
@@ -2148,12 +2152,12 @@ class Caldera_Forms {
 					}
 					$value = str_replace($matches[0][$key], $entry, $value);
 				}else{
-					$value = null;
+					$value = str_replace($matches[0][$key], null, $value);
 				}
 			}
 		}
 		
-		if( $input_value != $value && null == $value ){
+		if( $input_value != $value && empty( $value ) ){
 			return $input_value;
 		}
 
@@ -3647,7 +3651,7 @@ class Caldera_Forms {
 
 			$form = self::get_form( $atts );
 			$atts = array();
-			
+
 		}else{
 
 			if(empty($atts['id'])){
