@@ -3646,7 +3646,8 @@ class Caldera_Forms {
 		if(is_string($atts)){
 
 			$form = self::get_form( $atts );
-
+			$atts = array();
+			
 		}else{
 
 			if(empty($atts['id'])){
@@ -3659,11 +3660,7 @@ class Caldera_Forms {
 		}
 
 		if( empty( $form ) ){
-			if( null === $shortcode && is_array( $atts ) ){
-				$form = self::get_form( $atts );
-			}else{
-				return;
-			}
+			return;
 		}
 
 		// is this form allowed to render ( check state )
