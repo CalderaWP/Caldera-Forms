@@ -1108,6 +1108,7 @@ input.disabled-input {
 }
 .spinner.loading {
   display: inline;
+  visibility: visible;
 }
 .form-panel html {
   font-family: sans-serif;
