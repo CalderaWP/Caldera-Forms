@@ -2374,12 +2374,14 @@ class Caldera_Forms {
 								if(!isset($field['config']['option'][$option_id]['value'])){
 									$field['config']['option'][$option_id]['value'] = $field['config']['option'][$option_id]['label'];
 								}
-								$out[] = array( 'value' => self::do_magic_tags($field['config']['option'][$option_id]['value']), 'label' => $field['config']['option'][$option_id]['label'] );
+								$out[] = self::do_magic_tags($field['config']['option'][$option_id]['value']);
+								//$out[] = array( 'value' => self::do_magic_tags($field['config']['option'][$option_id]['value']), 'label' => $field['config']['option'][$option_id]['label'] );
 							}elseif( isset($field['config']['option'][$option] ) ){
 								if(!isset($field['config']['option'][$option]['value'])){
 									$field['config']['option'][$option]['value'] = $field['config']['option'][$option]['label'];
 								}
-								$out[] = array( 'value' => self::do_magic_tags($field['config']['option'][$option]['value']), 'label' => $field['config']['option'][$option]['label'] );
+								$out[] = self::do_magic_tags($field['config']['option'][$option]['value']);
+								//$out[] = array( 'value' => self::do_magic_tags($field['config']['option'][$option]['value']), 'label' => $field['config']['option'][$option]['label'] );
 							}
 
 						}
