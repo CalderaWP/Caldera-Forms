@@ -1615,3 +1615,15 @@ tr.form_entry_row.loading {
   top: -75px;
   box-shadow: 0 3px 5px rgba(0,0,0,0.2);
 }
+.tablenav.caldera-table-nav {
+  clear: none;
+  float: right;
+  margin: -42px 18px 0 0;
+}
+.caldera-table-nav .tablenav-pages{
+  float: left;
+}
+.caldera-table-nav .tablenav-pages .current-page{
+  width: 45px;
+}
+

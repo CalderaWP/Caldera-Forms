@@ -295,7 +295,9 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 	data-modal="field_setup"
 	data-modal-title="<?php echo __('Elements', 'caldera-forms'); ?>"
 	data-template="#form-fields-selector-tmpl"
-	data-modal-width="600"
+	data-modal-width="700"
+	data-modal-height="680"
+
 	id="<?php echo $id; ?>" style="display:none;">
 		
 		<div class="toggle_option_tab">
@@ -792,7 +794,7 @@ do_action('caldera_forms_edit_end', $element);
 			}
 		}
 		ksort($sorted_field_types);
-		echo '<div class="modal-side-bar">';
+		/*echo '<div class="modal-side-bar">';
 			echo '<ul class="modal-side-tabs">';
 			foreach($sorted_field_types as $cat=>$template){
 				
@@ -803,13 +805,13 @@ do_action('caldera_forms_edit_end', $element);
 				$cat_class = '';
 			}
 		echo "</ul>\r\n";
-		echo "</div>\r\n";
+		echo "</div>\r\n";*/
 		$cat_show = false;
 		foreach($sorted_field_types as $cat=>$template){
 			if(!empty($cat_show)){
 				$cat_show = 'style="display: none;"';
 			}
-			echo '<div id="modal-category-'. sanitize_key( $cat ) .'" class="tab-detail-panel" '.$cat_show.'>';
+			echo '<div id="modal-category-'. sanitize_key( $cat ) .'" data-tab="' . esc_attr( $cat ) . '" class="tab-detail-panel" '.$cat_show.'>';
 				echo $template;
 			echo '</div>';
 			$cat_show = true;

@@ -28,7 +28,7 @@
 			</div>
 		</div>
 		
-		<div class="caldera-modal-footer" style="display: block; clear: both; position: relative; height: 27px; width: 100%; margin: 0px -12px;">
+		<div class="baldrick-modal-footer" style="display: block; clear: both; position: relative; height: 27px; width: 100%; margin: 0px -12px;">
 
 			<button type="submit" class="button button-primary" style="float:right;"><?php echo __('Import Form', 'caldera-forms'); ?></button>	
 
@@ -41,7 +41,6 @@
 	</form>
 </script>
 <script type="text/html" id="new-form-tmpl">
-	<form class="new-form-form ajax-trigger" data-action="create_form" data-active-class="disabled" data-load-class="disabled" data-callback="new_form_redirect" data-before="serialize_modal_form" data-modal-autoclose="new_form">
 		<?php
 		do_action('caldera_forms_new_form_template_start');
 		?>
@@ -61,7 +60,6 @@
 		<?php
 		do_action('caldera_forms_new_form_template_end');
 		?>
-	</form>
 </script>
 <script type="text/html" id="forms-list-alt-tmpl">
 

@@ -164,7 +164,8 @@ function build_processor_types($default = null){
 		data-modal="form_processor"
 		data-load-class="none"
 		data-modal-title="<?php echo __('Form Processors', 'caldera-forms'); ?>"
-		data-modal-height="500"
+		data-modal-height="700"
+		data-modal-width="600"
 		data-template="#form-processors-tmpl"
 		data-callback="hide_single_processors"
 		><?php echo __('Add Processor', 'caldera-forms'); ?></button>

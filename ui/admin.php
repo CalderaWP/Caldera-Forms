@@ -38,7 +38,7 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 			<a class="button ajax-trigger" data-request="start_new_form" data-modal-buttons='<?php echo $modal_new_form; ?>' data-modal-width="600" data-modal-height="400" data-load-class="none" data-modal="new_form" data-modal-title="<?php echo __('Create New Form', 'caldera-forms'); ?>" data-template="#new-form-tmpl"><?php echo __('New Form', 'caldera-forms'); ?></a>
 		</li>
 		<li class="caldera-forms-toolbar-item">
-			<a class="button ajax-trigger" data-request="start_new_form" data-modal-width="400" data-modal-height="192" data-load-class="none" data-modal="new_form" data-template="#import-form-tmpl" data-modal-title="<?php echo __('Import Form', 'caldera-forms'); ?>" ><?php echo __('Import', 'caldera-forms'); ?></a>
+			<a class="button ajax-trigger" data-request="start_new_form" data-modal-width="400" data-modal-height="192" data-modal-element="div" data-load-class="none" data-modal="new_form" data-template="#import-form-tmpl" data-modal-title="<?php echo __('Import Form', 'caldera-forms'); ?>" ><?php echo __('Import', 'caldera-forms'); ?></a>
 		</li>
 		<li class="caldera-forms-toolbar-item">
 		&nbsp;&nbsp;
@@ -177,7 +177,7 @@ function new_form_redirect(obj){
 function serialize_modal_form(el){
 	
 	var clicked	= jQuery(el),
-		data 	= clicked.closest('.caldera-modal-wrap').find('.new-form-form'),
+		data 	= jQuery('#new_form_baldrickModal'),
 		name 	= data.find('.new-form-name');
 	
 	//verify name is set

@@ -743,7 +743,8 @@ class Caldera_Forms_Admin {
 		wp_enqueue_script( $this->plugin_slug .'-baldrick-modals', CFCORE_URL . 'assets/js/modals.baldrick.js', array($this->plugin_slug .'-baldrick'), self::VERSION );
 		wp_enqueue_script( $this->plugin_slug .'-baldrick', CFCORE_URL . 'assets/js/jquery.baldrick.js', array('jquery'), self::VERSION );
 		*/
-		wp_enqueue_script( $this->plugin_slug .'-admin-scripts', CFCORE_URL . 'assets/js/admin.min.js', array('jquery'), self::VERSION );
+		wp_enqueue_script( $this->plugin_slug .'-baldrick', CFCORE_URL . 'assets/js/wp-baldrick-full.js', array('jquery'), self::VERSION );
+		wp_enqueue_script( $this->plugin_slug .'-admin-scripts', CFCORE_URL . 'assets/js/admin.js', array( $this->plugin_slug .'-baldrick' ), self::VERSION );
 
 		if(!empty($_GET['edit'])){
 
