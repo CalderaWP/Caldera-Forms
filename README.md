@@ -1,5 +1,7 @@
 Caldera-Forms
 =============
+
+[![Join the chat at https://gitter.im/Desertsnowman/Caldera-Forms](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Desertsnowman/Caldera-Forms?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 <img src="https://calderawp.com/wp-content/uploads/2015/02/CalderaWP_Logo_SQ-150x150.png" >
 
 # Drag & Drop Responsive Form Builder
