@@ -111,9 +111,10 @@ $field_options_template = "
 	    	</select>
 
 		</div>
-	</div>
-
-	<?php do_action( 'caldera_forms_autopopulate_type_config' ); ?>
+	</div>";
+	ob_start();
+	do_action( 'caldera_forms_autopopulate_type_config' );
+	$field_options_template .= ob_get_clean() . "
 
 </div>
 <div class=\"caldera-config-group-toggle-options\">
