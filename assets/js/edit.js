@@ -63,50 +63,15 @@ jQuery(document).ready(function($){
 				tinyMCE.triggerSave();
 			}
 
-			var config			= {},
-				data_fields		= $('.caldera-forms-options-form').find('input,radio,checkbox,select,textarea'),
-				objects			= [],
-				arraynames		= {};
-
-			//data_fields.each(function(k,v){
-			for( var v = 0; v < data_fields.length; v++){
-				if( data_fields[v].getAttribute('name') === null){
-					continue;
-				}
-				var field 		= $(data_fields[v]),
-					basename 	= field.prop('name').replace(/\[/gi,':').replace(/\]/gi,''),//.split('[' + id + ']')[1].substr(1),
-					name		= basename.split(':'),
-					value 		= ( field.is(':checkbox,:radio') ? field.filter(':checked').val() : field.val() ),
-					lineconf 	= {};					
-
-				for(var i = name.length-1; i >= 0; i--){
-					var nestname = name[i];
-					if(nestname.length === 0){
-						if( typeof arraynames[name[i-1]] === 'undefined'){
-							arraynames[name[i-1]] = 0;
-						}else{
-							arraynames[name[i-1]] += 1;
-						}
-						nestname = arraynames[name[i-1]];
-					}
-					if(i === name.length-1){
-						lineconf[nestname] = value;
-					}else{
-						var newobj = lineconf;
-						lineconf = {};
-						lineconf[nestname] = newobj;
-					}		
-				}
-				
-				$.extend(true, config, lineconf);
-			};
-
-			$(el).data('cf_edit_nonce', config.cf_edit_nonce);
-			$(el).data('_wp_http_referer', config._wp_http_referer);
-			$(el).data('sender', 'ajax');
-			$(el).data('config', JSON.stringify(config.config));
+			var data_fields		= $('.caldera-forms-options-form').formJSON();
 			
+			$(el).data('cf_edit_nonce', data_fields.cf_edit_nonce);
+			$(el).data('_wp_http_referer', data_fields._wp_http_referer);
+			$(el).data('sender', 'ajax');
+			$(el).data('config', JSON.stringify(data_fields.config));
+
 			return true;
+
 		},
 		callback: function( obj ){
 			
