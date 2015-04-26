@@ -1,6 +1,6 @@
 
 /* MODALS */
-.cf-style-guide-backdrop {
+.caldera-backdrop {
   background: none repeat scroll 0 0 #000000;
   bottom: 0;
   display: block;
@@ -13,7 +13,7 @@
   z-index: 100100;
 }
 
-.cf-style-guide-modal-wrap {
+.caldera-modal-wrap {
   background-color: #FFFFFF;
   bottom: 15px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
@@ -26,51 +26,46 @@
   width: 500px;
   z-index: 100105;
 }
-.cf-style-guide-modal-wrap.cf-style-guide-front-modal-wrap{
+.caldera-modal-wrap.caldera-front-modal-wrap{
   position: fixed;
   bottom: auto;
   width: 600px;
   margin-left: -300px;
   margin-top: 0;
 }
-.cf-style-guide-modal-title {
+.caldera-modal-title {
   border-bottom: 1px solid #EFEFEF;
 }
 
-.cf-style-guide-modal-closer {
-  color: #fff;
+.caldera-modal-closer {
+  color: #808080;
   float: right;
   font-size: 24px;
   padding: 12px;
   text-decoration: none;
 }
-.cf-style-guide-modal-closer.cf-style-guide-front-modal-closer{
+.caldera-modal-closer.caldera-front-modal-closer{
   position: absolute;
   right: 0;
   text-decoration: none;
   color: inherit;
 }
-.cf-style-guide-modal-closer:hover,
-.cf-style-guide-modal-closer:active,
-a.cf-style-guide-modal-closer.cf-style-guide-front-modal-closer:hover,
-a.cf-style-guide-modal-closer.cf-style-guide-front-modal-closer:active{
+.caldera-modal-closer.caldera-front-modal-closer:hover,
+.caldera-modal-closer.caldera-front-modal-closer:active{
   text-decoration: none;
-  color: #fff;
-  background-color: rgba(0,0,0,0.2);
+  color: inherit;
 }
-.cf-style-guide-modal-title > h3 {
+.caldera-modal-title > h3 {
   font-weight: 400;
   margin: 0;
   padding: 12px 40px 12px 12px;
-  color: #fff;
-  background-color: #a3be5f;
 }
 
-.cf-style-guide-modal-body {
+.caldera-modal-body {
   -moz-box-sizing:    border-box;   /* Firefox 1, probably can drop this */
   -webkit-box-sizing: border-box;   /* Safari 3-4, also probably droppable */
   box-sizing:        border-box;   /* Everything else */
-  bottom: 90px;
+  bottom: 53px;
   left: 0;
   margin-left: 0;
   margin-right: 0;
@@ -83,18 +78,18 @@ a.cf-style-guide-modal-closer.cf-style-guide-front-modal-closer:active{
 #extend_cf_baldrickModalBody{
   overflow: auto;
 }
-.cf-style-guide-modal-body.cf-style-guide-front-modal-body {
+.caldera-modal-body.caldera-front-modal-body {
   bottom: auto;
   position: relative;
   top: auto;
 }
-.cf-style-guide-modal-body .import-warning{
+.caldera-modal-body .import-warning{
   margin: 0;
   padding: 4px 0;
   color: #ff1111;
 }
 
-.cf-style-guide-modal-body .form-panel {
+.caldera-modal-body .form-panel {
   bottom: 0;
   left: 12px;
   overflow: auto;
@@ -102,7 +97,7 @@ a.cf-style-guide-modal-closer.cf-style-guide-front-modal-closer:active{
   right: 12px;
   top: 0;
 }
-.cf-style-guide-modal-footer {
+.caldera-modal-footer {
   background: none repeat scroll 0 0 #EFEFEF;
   border-top: 1px solid #E0E0E0;
   bottom: 0;
@@ -112,33 +107,18 @@ a.cf-style-guide-modal-closer.cf-style-guide-front-modal-closer:active{
   right: 0;
   text-align: left;
 }
-.tablenav.cf-style-guide-table-nav {
+.tablenav.caldera-table-nav {
   clear: none;
   float: right;
   margin: -42px 18px 0 0;
 }
-.cf-style-guide-table-nav .tablenav-pages{
+.caldera-table-nav .tablenav-pages{
   float: left;
 }
-.cf-style-guide-table-nav .tablenav-pages .current-page{
+.caldera-table-nav .tablenav-pages .current-page{
   width: 45px;
 }
 
-.cf-style-guide-modal-wrap .modal-body {
-  height: 100%;
-  overflow: auto;  
-}
-.cf-style-guide-modal-wrap .modal-body .modal-list-item-cfsg {
-  border-bottom: 0;
-  padding: 5px;
-  margin-bottom: 5px;
-}
-.cf-style-guide-modal-wrap .modal-list-item-cfsg:hover {
-  background: none repeat scroll 0 0 #EFEFEF;
-}
-.cf-style-guide-modal-wrap .modal-list-item-cfsg .description {
-  color: #919191;
-}
 
 .baldrick-modal-wrap .spinner.loading {
   background-position: center center;
@@ -286,14 +266,28 @@ a.cf-style-guide-modal-closer.cf-style-guide-front-modal-closer:active{
   color: #fff !important;
 }
 
+.caldera-modal-title .modal-label,
+.caldera-modal-title .caldera-modal-closer,
 .baldrick-modal-title .modal-label,
 .baldrick-modal-title .baldrick-modal-closer{
   color: #fff;
   text-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
 }
+.caldera-modal-title .caldera-modal-closer:hover,
 .baldrick-modal-title .baldrick-modal-closer:hover {
   background: none repeat scroll 0 0 rgba(0, 0, 0, 0.2);
 }
+.caldera-modal-title .modal-label,
 .baldrick-modal-title .modal-label{
   background-color: #a3be5f;
+}
+.modal-body .modal-list-item {
+  border-bottom: 1px solid #EFEFEF;
+  padding: 5px;
+}
+.modal-list-item:hover {
+  background: none repeat scroll 0 0 #EFEFEF;
+}
+.modal-list-item .description {
+  color: #919191;
 }
