@@ -3499,14 +3499,14 @@ class Caldera_Forms {
 			$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field['type'], $field, $form);
 			$field = apply_filters( 'caldera_forms_render_get_field_slug-' . $field['slug'], $field, $form);
 
-			// maybe json?
-			$is_json = json_decode( $field_value, ARRAY_A );
-			if( !empty( $is_json ) ){
-				$field_value = $is_json;
-			}
-
 			if( is_string( $field_value ) ){
-				$field_value = esc_html( stripslashes_deep( $field_value ) );
+				// maybe json?
+				$is_json = json_decode( $field_value, ARRAY_A );
+				if( !empty( $is_json ) ){
+					$field_value = $is_json;
+				}else{
+					$field_value = esc_html( stripslashes_deep( $field_value ) );
+				}
 			}
 
 			$data['data'][$field_id] = array(
@@ -3840,7 +3840,7 @@ class Caldera_Forms {
 
 		// check for prev post
 		$prev_data = apply_filters( 'caldera_forms_render_pre_get_entry', array(), $form, $entry_id);
-		
+
 		// load requested data
 		if(!empty($entry_id)){
 			$prev_entry = self::get_entry($entry_id, $form);			
@@ -3851,7 +3851,6 @@ class Caldera_Forms {
 			}
 			$prev_data = apply_filters( 'caldera_forms_render_get_entry', $prev_data, $form, $entry_id);
 		}
-
 
 		if(!empty($_GET['cf_er'])){
 			$prev_post = get_transient( $_GET['cf_er'] );

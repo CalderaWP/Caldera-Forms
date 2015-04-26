@@ -95,7 +95,7 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 												
 						<div class="row-actions">
 						<span class="edit"><a class="form-control" href="admin.php?page=caldera-forms&edit=<?php echo $form_id; ?>"><?php echo __('Edit'); ?></a> | </span>
-						<span class="edit"><a class="form-control form-entry-trigger ajax-trigger" href="#entres"
+						<span class="edit"><a class="form-control ajax-trigger" href="#entres"
 						data-load-element="#form_row_<?php echo $form_id; ?>"
 						data-action="toggle_form_state"
 						data-active-element="#form_row_<?php echo $form_id; ?>"
