@@ -1174,8 +1174,6 @@ class Caldera_Forms_Admin {
 				}
 				$headers[$entry->slug] = $label;
 			}*/
-
-
 			
 			header("Pragma: public");
 			header("Expires: 0");
@@ -1183,7 +1181,7 @@ class Caldera_Forms_Admin {
 			header("Cache-Control: private",false);
 			header("Content-Type: text/csv charset=utf-8;");
 			header("Content-Disposition: attachment; filename=\"" . sanitize_file_name( $form['name'] ) . ".csv\";" );
-			header("Content-Transfer-Encoding: binary"); 
+			header("Content-Transfer-Encoding: binary");
 			$df = fopen("php://output", 'w');
 			fputcsv($df, $headers);
 			foreach($data as $row){
@@ -1191,7 +1189,24 @@ class Caldera_Forms_Admin {
 				foreach($headers as $key=>$label){
 					if(!isset($row[$key])){
 						$row[$key] = null;
+					}else{
+						if( is_array( $row[$key] ) && isset( $row[$key]['label'] ) ){
+							$row[$key] = $row[$key]['value'];
+						}elseif( is_array( $row[$key] ) && count( $row[$key] ) === 1 ){
+							$row[$key] = $row[$key][0];
+						}elseif( is_array( $row[$key] ) ){
+							$subs = array();
+							foreach( $row[$key] as $row_part ){
+								if( is_array( $row_part ) && isset( $row_part['label'] ) ){
+									$subs[] = $row_part['value'];
+								}else{
+									$subs[] = $row_part;
+								}
+							}
+							$row[$key] = implode(', ', $subs );
+						}
 					}
+
 					$csvrow[] = $row[$key];
 				}
 				fputcsv($df, $row);

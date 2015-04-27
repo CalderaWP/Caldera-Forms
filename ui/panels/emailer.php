@@ -117,6 +117,8 @@ if(!isset($element['mailer']['enable_mailer'])){
 			</div>
 		</div>
 
+		<?php do_action( 'caldera_forms_mailer_config', $element ); ?>
+
 	</div>
 </div>
 <div class="mailer-errors" style="display:none;">
