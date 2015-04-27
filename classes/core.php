@@ -1536,8 +1536,9 @@ class Caldera_Forms {
 					continue;
 				}
 				// auto
-				if(!empty($field_conf['config'])){					
-					if( false !== strpos($field_conf['config']['config'], $field['ID']) || false !== strpos($field_conf['config']['manual_formula'], $field['ID']) ){
+				if(!empty($field_conf['config'])){
+
+					if( false !== strpos($field_conf['config']['formular'], $field['ID']) || false !== strpos($field_conf['config']['manual_formula'], $field['ID']) ){
 						foreach($field['config']['option'] as $option_id=>$option){
 							if(is_array($value)){
 								if( in_array( $option['value'], $value) ){
@@ -2397,7 +2398,7 @@ class Caldera_Forms {
 						}
 					}
 				}else{
-					$processed_data[$indexkey][$field_id] = array( 'value' => self::do_magic_tags($field['config']['default']), 'label' => $field['config']['option'][ $field['config']['default'] ]['label'] );
+					$processed_data[$indexkey][$field_id] = self::do_magic_tags($field['config']['default']);
 				}
 			}else{
 				// dynamic
