@@ -2041,15 +2041,17 @@ class Caldera_Forms {
 									if( isset( $field_values['label'] ) ){
 										$field_values = $field_values['value'];
 									}else{
-										foreach( $field_values as &$field_value ){
-											if( isset( $field_value['label'] ) ){
-												$field_value = $field_value['value'];
+										foreach( $field_values as $field_key=>$field_value ){
+											if( isset( $field_value['label'] ) && isset( $field_value['value'] ) ){
+												$field_value[$field_key] = $field_value['value'];
 											}
 											
 										}
 									}
 
 									$field_value = implode(', ', (array) $field_values);
+									
+
 
 									if($field_value !== null && strlen($field_value) > 0){
 										$out[] = $field['label'].': '.$field_value;
