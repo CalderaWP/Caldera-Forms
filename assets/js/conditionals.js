@@ -65,7 +65,7 @@
 					switch(lines[lid].compare) {
 						case 'is':
 						if(comparefield.length){
-							if(comparefield.indexOf(comparevalue) >= 0){
+							if(comparefield.indexOf(comparevalue.toString()) >= 0){
 								truelines[lid] = true;
 							}
 						}

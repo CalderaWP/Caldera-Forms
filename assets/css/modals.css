@@ -119,7 +119,7 @@
   width: 45px;
 }
 
-
+.baldrick-modal-body.spinner,
 .baldrick-modal-wrap .spinner.loading {
   background-position: center center;
   display: inline-block;
@@ -127,6 +127,7 @@
   height: auto;
   position: absolute;
   width: auto;
+  visibility: visible;
 }
 
 /* MODALS */

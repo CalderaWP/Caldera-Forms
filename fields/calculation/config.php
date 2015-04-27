@@ -56,7 +56,7 @@
 	<br>
 	<div id="{{_id}}_operator_groups" class="calculation-groups-wrap"></div>
 	<input type="hidden" class="block-input field-config calculation-formular" name="{{_name}}[formular]" id="{{_id}}_formular" value="{{formular}}">
-	<input type="hidden" class="block-input field-config ajax-trigger" data-request="build_calc_structure" data-callback="{{_id}}_build_formula" data-init="{{_id}}_build_formula" data-event="none" data-autoload="true" data-template="#calculator-group-tmpl" data-target="#{{_id}}_operator_groups" name="{{_name}}[config]" id="{{_id}}_config" value="{{config}}">
+	<input type="hidden" class="block-input field-config ajax-trigger" data-request="build_calc_structure" data-callback="{{_id}}_build_formula" data-init="{{_id}}_build_formula" data-event="none" data-autoload="true" data-type="json" data-template="#calculator-group-tmpl" data-target="#{{_id}}_operator_groups" name="{{_name}}[config]" id="{{_id}}_config" value="{{#if config/group}}{{json config}}{{else}}{{config}}{{/if}}">
 </div>
 <div id="{{_id}}_manualbox" style="display:none;">
 	<textarea name="{{_name}}[manual_formula]" class="field-config block-input">{{manual_formula}}</textarea>
@@ -68,9 +68,8 @@
 
 
 function {{_id}}_build_formula(obj){
-
 	build_calculations_formular('{{_id}}', obj);
-
+	rebind_field_bindings();
 };
 
 jQuery('#{{_id}}_operator_groups').on('change', 'select', function(e){

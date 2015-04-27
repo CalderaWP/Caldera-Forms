@@ -8,6 +8,7 @@
 <div id="page_name_bind">
 
 </div>
+<?php do_action( 'caldera_forms_pages_config', $element ); ?>
 <script type="text/html" id="page-name-tmpl">
 <div class="caldera-config-group">
 	<label><?php echo __('Page', 'caldera-forms'); ?> {{page_no}}</label>

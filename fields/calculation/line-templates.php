@@ -43,6 +43,7 @@ function build_calc_structure(obj){
 	if(obj.trigger.val().length){
 		config = JSON.parse(obj.trigger.val());
 		config.init = obj.trigger.data('init');
+		console.log( config );
 	}
 	return config;
 }
@@ -135,7 +136,7 @@ function build_calculations_formular(id, obj){
 	if(typeof obj === 'undefined'){
 		formular_input.val(formula);
 		config_input.val(JSON.stringify(config));
-	}	
+	}
 }
 jQuery(function($){
 	$('body').on('click', '.calculation-add-line', function(e){

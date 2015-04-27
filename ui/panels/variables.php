@@ -38,6 +38,7 @@ if(!isset($element['variables'])){
 
 ?>
 </div>
+<?php do_action( 'caldera_forms_variables_config', $element ); ?>
 <script type="text/html" id="variable-fields-tmpl">
 	<div class="caldera-config-group">
 		<label style="padding:2px 0;"><input type="text" class="block-input field-config set-system-variable" name="config[variables][keys][]" value=""></label>

@@ -872,7 +872,7 @@ input.disabled-input {
 }
 .tab-detail-panel > h4 {
   font-weight: bold;
-  margin: 0.6em 0;
+  margin: 0 0 12px;
 }
 .tab-detail-panel > h4 small {
   color: #A9A9A9;
@@ -908,6 +908,7 @@ input.disabled-input {
 }
 #form-entries-viewer.spinner {
   display: block;
+  visibility: visible;
   float: left;
   height: 22px;
   padding: 0;

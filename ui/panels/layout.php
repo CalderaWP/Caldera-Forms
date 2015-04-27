@@ -103,7 +103,7 @@ foreach( (array) $element['layout_grid']['structure'] as $page_key=>$page_struct
 	</div>	
 <?php } ?>
 </div>
-
+<?php do_action( 'caldera_forms_layout_config', $element ); ?>
 <script type="text/html" id="grid-page-tmpl">
 	<div class="layout-grid-panel layout-grid" data-page="{{page_no}}" data-name="<?php echo __('Page', 'caldera-forms'); ?> {{count}}" style="display:none;" id="{{page_no}}">
 		<div class="first-row-level row">

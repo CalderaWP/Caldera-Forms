@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Caldera Forms.
  *
@@ -1537,8 +1538,8 @@ class Caldera_Forms {
 				}
 				// auto
 				if(!empty($field_conf['config'])){
-
-					if( false !== strpos($field_conf['config']['formular'], $field['ID']) || false !== strpos($field_conf['config']['manual_formula'], $field['ID']) ){
+					$binddown = json_encode( $field_conf['config']['config'] );
+					if( false !== strpos($binddown, $field['ID']) || false !== strpos($field_conf['config']['manual_formula'], $field['ID']) ){
 						foreach($field['config']['option'] as $option_id=>$option){
 							if(is_array($value)){
 								if( in_array( $option['value'], $value) ){
