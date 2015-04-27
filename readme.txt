@@ -83,6 +83,19 @@ none yet.
 
 == Changelog ==
 
+= 1.2.0 ( April, 2015) =
+
+= Bugs Fixed =
+* Exports on checkboxes caused issues
+* calculation caused problems
+* Fixed the slug:label magic tag...again.
+
+= Improvements =
+* Updated the visual styles
+* Added additional actions and filters
+* imroved saving speed
+
+
 = 1.1.10 ( April, 2015) =
 
 = Bugs Fixed =

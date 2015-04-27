@@ -2028,6 +2028,9 @@ class Caldera_Forms {
 								$out = array();
 								foreach($form['fields'] as $field_id=>$field){
 					
+									if( in_array( $field['type'], array('button', 'recaptcha', 'html' ) ) ){
+										continue;
+									}
 									// filter the field to get field data
 									$field = apply_filters( 'caldera_forms_render_get_field', $field, $form);
 									$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field['type'], $field, $form);
@@ -2036,21 +2039,11 @@ class Caldera_Forms {
 									$field_values = (array) self::get_field_data($field_id, $form);
 
 									if( isset( $field_values['label'] ) ){
-										$pre_field_values = apply_filters( 'caldera_forms_view_field_' . $field['type'], $field_values['value'], $field, $form);
-										if( $pre_field_values != $field_values['label'] ){
-											//$pre_field_values = $field_values['label'] .' (' . $pre_field_values . ')';
-										}
-										$field_values = $pre_field_values;
+										$field_values = $field_values['value'];
 									}else{
 										foreach( $field_values as &$field_value ){
-											if( is_array( $field_value ) && isset( $field_value['label'] ) ){												
-												$pre_field_value = apply_filters( 'caldera_forms_view_field_' . $field['type'], $field_value['value'], $field, $form);
-												if( $pre_field_value != $field_value['label'] ){
-													$pre_field_value = $field_value['label'] .' (' . $field_value . ')';
-												}
-												$field_value = $pre_field_value;
-											}else{
-												//$field_value = apply_filters( 'caldera_forms_view_field_' . $field['type'], $field_value, $field, $form);
+											if( isset( $field_value['label'] ) ){
+												$field_value = $field_value['value'];
 											}
 											
 										}
@@ -2062,6 +2055,15 @@ class Caldera_Forms {
 										$out[] = $field['label'].': '.$field_value;
 									}
 								}
+								// vars
+								if( !empty( $form['variables'] ) ){
+									foreach( $form['variables']['keys'] as $var_key=>$var_label ){
+										if( $form['variables']['types'][ $var_key ] == 'entryitem' ){
+											$label = ucfirst( str_replace('_', ' ', $var_label ) );
+											$out[] = $label . ': ' . $form['variables']['values'][ $var_key ];
+										}
+									}
+								}								
 								if(!empty($out)){
 									$magic_tag = implode("\r\n", $out);
 								}
@@ -2119,7 +2121,8 @@ class Caldera_Forms {
 		}
 
 		// fields
-		$regex = "/%([a-zA-Z0-9_]*)%/";
+		$regex = "/%([a-zA-Z0-9_:]*)%/";
+
 		preg_match_all($regex, $value, $matches);
 		if(!empty($matches[1])){
 			foreach($matches[1] as $key=>$tag){
@@ -2131,31 +2134,40 @@ class Caldera_Forms {
 				$entry = self::get_slug_data($tag, $form, $entry_id);
 
 				if($entry !== null){
-					if(is_array($entry)){
-						if( !empty( $part_tags[1] ) ){
-							if( isset( $entry[$part_tags[1]] ) ){
-								$entry = (array) $entry[$part_tags[1]];
-							}elseif( isset( $entry['value'] ) ){
-								$entry = (array) $entry['value'];
+					$field = self::get_field_by_slug( $tag, $form );				
+				}
+
+				
+				if( !empty( $field ) && !empty( $part_tags[1] ) && $part_tags[1] == 'label' ){
+					if( !is_array( $entry ) ){
+						$entry = (array) $entry;
+					}
+					foreach( (array) $entry as $entry_key=>$entry_line ){
+						if( !empty( $field['config']['option'] ) ){
+							foreach( $field['config']['option'] as $option ){								
+								if( $option['value'] == $entry_line ){
+									$entry[$entry_key] = $option['label'];
+								}
 							}
-
-						}
-
-						if(count($entry) === 1){
-							$entry = array_shift($entry);
-						}elseif(count($entry) === 2){
-							$entry = implode(', ', $entry);
-						}elseif(count($entry) > 2){
-							$last = array_pop($entry);
-							$entry = implode(', ', $entry).', '.$last;
-						}else{
-							continue;
 						}
 					}
-					$value = str_replace($matches[0][$key], $entry, $value);
-				}else{
-					$value = str_replace($matches[0][$key], null, $value);
 				}
+
+				if(is_array($entry)){
+
+					if(count($entry) === 1){
+						$entry = array_shift($entry);
+					}elseif(count($entry) === 2){
+						$entry = implode(', ', $entry);
+					}elseif(count($entry) > 2){
+						$last = array_pop($entry);
+						$entry = implode(', ', $entry).', '.$last;
+					}else{
+						$entry = null;
+					}
+				}
+
+				$value = str_replace($matches[0][$key], $entry, $value);
 			}
 		}
 		
@@ -2392,7 +2404,7 @@ class Caldera_Forms {
 						if(!empty($field['config']['option'])){
 							foreach($field['config']['option'] as $option){
 								if($option['value'] == $entry){
-									$processed_data[$indexkey][$field_id] = array( 'value' => self::do_magic_tags($entry), 'label' => $option['label'] );
+									$processed_data[$indexkey][$field_id] = self::do_magic_tags($entry);
 									break;
 								}
 							}
@@ -2420,6 +2432,20 @@ class Caldera_Forms {
 
 		return null;
 	}
+	static public function get_field_by_slug($slug, $form){
+
+		foreach($form['fields'] as $field_id=>$field){
+
+			if($field['slug'] == $slug){
+				
+				return apply_filters( 'caldera_forms_render_get_field', $field, $form );
+
+			}
+		}
+
+		return false;
+
+	}	
 	static public function get_slug_data($slug, $form, $entry_id = false){
 
 
