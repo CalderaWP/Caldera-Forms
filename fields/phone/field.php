@@ -5,7 +5,7 @@ if(!empty($field['config']['placeholder'])){
 
 $mask = '(999)999-9999';
 if($field['config']['type'] == 'international'){
-	$mask = '+99 (9)99 999-9999';
+	$mask = '+99 99 999 9999';
 }
 
 ?><?php echo $wrapper_before; ?>
