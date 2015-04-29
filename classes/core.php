@@ -91,23 +91,57 @@ class Caldera_Forms {
 
 		$id_name = sanitize_text_field( $id_name );
 
-		$forms = get_option( '_caldera_forms' );
+		$forms = self::get_forms();
 		$form = null;
 
 		if( isset( $forms[ $id_name ] ) ){
 			$form = get_option( $forms[ $id_name ]['ID'] );
-		}
-
-		foreach($forms as $form_id=>$form_maybe){
-			if( trim(strtolower($id_name)) == strtolower($form_maybe['name']) ){
-				$form = get_option( $form_maybe['ID'] );
+		}else{
+			foreach($forms as $form_id=>$form_maybe){
+				if( trim(strtolower($id_name)) == strtolower($form_maybe['name']) && empty( $form_maybe['_external_form'] ) ){
+					$form = get_option( $form_maybe['ID'] );
+				}
 			}
 		}
 
+		if( empty( $form ) ){
+			$external = true;
+		}
+
 		$form = apply_filters( 'caldera_forms_get_form', $form, $id_name );
+		$form = apply_filters( 'caldera_forms_get_form-' . $id_name, $form, $id_name );
 
-		return apply_filters( 'caldera_forms_get_form-' . $id_name, $form, $id_name );
+		if( is_array( $form ) && empty( $form['ID'] ) ){
+			$form['ID'] = $id_name;
+		}
+		if( !empty( $form ) && !empty( $external ) ){
+			$form['_external_form'] = true;
+		}
 
+		return $form;
+
+	}
+
+
+	public static function get_forms( $internal = false ){
+
+		$base_forms = get_option( '_caldera_forms', array() );
+		if( true === $internal ){
+			return $base_forms;
+		}
+
+		$forms = apply_filters( 'caldera_forms_get_forms', $base_forms );
+		foreach( $forms as $form_id => $form ){
+			if( !isset( $base_forms[ $form_id ] ) ){
+				$forms[ $form_id ]['_external_form'] = true;
+				if( empty( $forms[ $form_id ]['ID'] ) ){
+					$forms[ $form_id ]['ID'] = $form_id;
+				}
+
+			}
+		}
+
+		return $forms;
 	}
 
 	/**
@@ -217,7 +251,7 @@ class Caldera_Forms {
 				if( !empty($forms)){
 					foreach($forms as $form){
 						if(!isset($known[$form['form_id']])){
-							$config = get_option($form['form_id']);						
+							$config = self::get_form( $form['form_id'] );
 							if(empty($config)){
 								continue;
 							}
@@ -2172,10 +2206,6 @@ class Caldera_Forms {
 				$value = str_replace($matches[0][$key], $entry, $value);
 			}
 		}
-		
-		if( $input_value != $value ){
-			return $input_value;
-		}
 
 		return $value;
 	}
@@ -2204,7 +2234,7 @@ class Caldera_Forms {
 		
 	static public function get_processor_by_type($type, $form){
 		if(is_string($form)){
-			$form_cfg = get_option($form);
+			$form_cfg = self::get_form( $form );
 			if(!empty($form_cfg['ID'])){
 				if($form_cfg['ID'] !== $form || empty($form_cfg['processors'])){
 					return false;

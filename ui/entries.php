@@ -9,7 +9,7 @@
 			<?php echo $form['description']; ?>
 		</li>
 		<?php } ?>
-		<?php if( current_user_can( 'delete_others_posts' ) ){ ?>
+		<?php if( current_user_can( 'delete_others_posts' ) && empty( $form['_external_form'] ) ){ ?>
 		<li class="caldera-forms-toolbar-item">
 			<a class="button" href="admin.php?page=caldera-forms&edit=<?php echo $form['ID']; ?>"><?php echo __('Edit'); ?></a>
 		</li>		

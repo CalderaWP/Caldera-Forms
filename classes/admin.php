@@ -363,7 +363,7 @@ class Caldera_Forms_Admin {
 
 	public static function toggle_form_state(){
 		
-		$forms = get_option( '_caldera_forms' );
+		$forms = Caldera_Forms::get_forms( true );
 		$form = sanitize_text_field( $_POST['form'] );
 		$form = Caldera_Forms::get_form( $form );
 		if( empty( $form ) || empty( $form['ID'] ) || empty( $forms[ $form['ID'] ]) ){
@@ -622,7 +622,7 @@ class Caldera_Forms_Admin {
 	public function register_admin_page(){
 		global $menu, $submenu;
 		
-		$forms = get_option( '_caldera_forms' );
+		$forms = Caldera_Forms::get_forms();
 
 		// get current user
 		if( current_user_can( 'manage_options' ) ){
@@ -878,7 +878,7 @@ class Caldera_Forms_Admin {
 			include CFCORE_PATH . 'ui/community.php';
 		}elseif(!empty($_GET['page']) && false !== strpos($_GET['page'], 'caldera-forms-pin-')){
 			$formID = substr($_GET['page'], 18);
-			$form = Caldera_Forms::get_form($formID);
+			$form = Caldera_Forms::get_form( $formID );
 			include CFCORE_PATH . 'ui/entries.php';
 
 		}else{
@@ -903,7 +903,7 @@ class Caldera_Forms_Admin {
 			}else{
 				// ok to delete
 				// get form registry
-				$forms = get_option( '_caldera_forms' );
+				$forms = Caldera_Forms::get_forms( true );
 				if(isset($forms[$_GET['delete']])){
 					unset($forms[$_GET['delete']]);
 					$form = Caldera_Forms::get_form( $_GET['delete'] );
@@ -1019,7 +1019,7 @@ class Caldera_Forms_Admin {
 							}
 							*/
 							// get form registry
-							$forms = get_option( '_caldera_forms' );
+							$forms = Caldera_Forms::get_forms( true );
 							if(empty($forms)){
 								$forms = array();
 							}
@@ -1223,7 +1223,7 @@ class Caldera_Forms_Admin {
 				// strip slashes
 				$data = json_decode( stripslashes_deep($_POST['config']) , ARRAY_A );
 				// get form registry
-				$forms = get_option( '_caldera_forms' );
+				$forms = Caldera_Forms::get_forms( true );
 				if(empty($forms)){
 					$forms = array();
 				}
@@ -1289,7 +1289,7 @@ class Caldera_Forms_Admin {
 		parse_str( $_POST['data'], $newform );
 
 		// get form registry
-		$forms = get_option( '_caldera_forms' );
+		$forms = Caldera_Forms::get_forms( true );
 		if(empty($forms)){
 			$forms = array();
 		}

@@ -94,8 +94,9 @@ none yet.
 
 == Screenshots ==
 1. **Layout Builder** - Easy to use Drag & Drop grid based layout.
-2. **Stackable Form Processors** - Add a form processor to handle the forms submission. Stack them up to apply multi processing.
-3. **Great Looking Forms** - Create great looking forms.
+2. **Form Processors** - With many processors available and more coming, each form can handle submissions in very unique and powerful ways.
+3. **Stackable, condition based Form Processors** - Add as many form processors as needed and add conditions for each to create specific processing flow based on user input.
+4. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
 

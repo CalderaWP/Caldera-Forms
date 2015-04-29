@@ -20,7 +20,7 @@ class Caldera_Forms_Widget extends WP_Widget {
 			$title = empty($instance['title']) ? ' ' : apply_filters( 'widget_title', $instance['title']);
 			if ( !empty( $title ) ) { echo $before_title . $title . $after_title; };
 
-				echo Caldera_Forms::render_form($instance['form']);
+				echo Caldera_Forms::render_form('asd');
 			
 			echo $after_widget;
 
@@ -42,10 +42,12 @@ class Caldera_Forms_Widget extends WP_Widget {
 
 		echo "<p><label for=\" " . $this->get_field_id('title') . "\">" . __('Title', 'caldera-forms') . ": <input class=\"widefat\" id=\"" . $this->get_field_id('title') . "\" name=\"" . $this->get_field_name('title') . "\" type=\"text\" value=\"" . esc_attr($title). "\" /></label></p>\r\n";
 		// get forms
-		$forms = get_option( '_caldera_forms' );
+		$forms = Caldera_Forms::get_forms();
 
 		echo "<p><label for=\" " . $this->get_field_id('title') . "\">" . __('Form', 'caldera-forms') . ": </label><select style=\"width:100%;\" name=\"" . $this->get_field_name('form') . "\">\r\n";
+		echo "<option value=\"\"></option>\r\n";
 		if(!empty($forms)){
+
 			foreach($forms as $formid=>$form){
 				$sel = "";
 				if(!empty($instance['form'])){
