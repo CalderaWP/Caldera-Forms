@@ -765,7 +765,7 @@ jQuery(document).ready(function($){
 	$('.caldera-editor-body').on('focus', '.caldera-field-bind', function(e){
 		var field = $(this),
 			value = this.value;
-
+			console.log( e.type );
 		if(e.type && e.type === 'focusin'){
 			field.removeClass('bound_field').addClass('reload-binding');
 			rebind_field_bindings();
@@ -1262,7 +1262,7 @@ rebuild_field_binding = function(){
 		};
 
 		// bind names
-		jQuery('option.bound-field').trigger('change').each(function(k,v){
+		jQuery('option.bound-field').trigger('change').each(function(k,v){			
 			var bind = jQuery(v);
 			if(bind.prop('value').indexOf('{') !== 0){
 				bind.text( jQuery('#' + bind.prop('value') + '_lable').val() + ' ['+jQuery('#' + bind.prop('value') + '_lable').val() +']');
@@ -1280,8 +1280,6 @@ rebuild_field_binding = function(){
 
 rebind_field_bindings = function(){
 
-	//check_required_bindings();
-	//console.log('- rebuild_field_binding');
 	//return;
 	var bindings = jQuery('.caldera-field-bind').not('.bound_field'),
 		type_instances,
@@ -1290,8 +1288,8 @@ rebind_field_bindings = function(){
 	
 	
 	if(!bindings.length){
-		var bound = jQuery('.caldera-field-bind.bound_field');
-		bound.trigger('change');
+		//var bound = jQuery('.caldera-field-bind.bound_field');
+		//bound.trigger('change');
 		return;	
 	}
 	
