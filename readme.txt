@@ -19,7 +19,7 @@ Pippin Williamson of Easy Digital Downloads, Restrict Content Pro and AffiliateW
 
 John Teague of Theme Surgeons includes Caldera Forms in his list of WordPress plugin recommendations I don’t get paid for.
 
-= Docs & More Information:
+= Docs & More Information =
 * [More Information](https://calderawp.com/downloads/caldera-forms/)
 * [Documentation](http://docs.calderaforms.com/)
 
@@ -27,7 +27,7 @@ John Teague of Theme Surgeons includes Caldera Forms in his list of WordPress pl
 = Addons =
 [All Add-ons](https://calderawp.com/caldera-forms-add-ons/)
 
-== Free Add-ons ==
+= Free Add-ons =
 * [Verify Email for Caldera Forms](https://calderawp.com/downloads/verify-email-for-caldera-forms/) - Send an email with a validate link to verify the email address before completing the form submission.
 * [Form as Metabox - Custom Fields](https://calderawp.com/downloads/caldera-form-metabox/) - Use a Caldera Form as a metabox in the post editor to save custom field values.
 * [Slack Integration for Caldera Forms](https://calderawp.com/downloads/caldera-forms-slack-integration/) - Get notifications in Slack whenever a Caldera Form is submitted.
@@ -35,7 +35,7 @@ John Teague of Theme Surgeons includes Caldera Forms in his list of WordPress pl
 * [Sprout Invoices Integration](https://wordpress.org/plugins/caldera-forms-sprout-invoices-integration/) - Use Caldera Forms for [Sprout Invoice](https://sproutapps.co/sprout-invoices/) forms.
 * [Conditional Fail](https://wordpress.org/plugins/conditional-fail-for-caldera-forms/) - Set conditions to cause that if met will allow or prevent form submssion.
 
-== Premium Add-Ons ==
+= Premium Add-Ons =
 * [MailChimp](https://calderawp.com/downloads/caldera-forms-mailchimp-add-on/) - Seamlessly integrate MailChimp optins into your forms
 * [Stripe](https://calderawp.com/downloads/caldera-forms-stripe-add-on/) - Accept credit card payments via Stripe.
 * [PayPal Express](https://calderawp.com/downloads/caldera-forms-paypal-express-add-on/) - Accept payments via Paypal Express.
