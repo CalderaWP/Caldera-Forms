@@ -6,41 +6,58 @@ Tested up to: 4.2
 Stable tag: 1.2.0
 License: GPLv2
 
-Drag and drop responsive form builder.
+Create beautiful, responsive forms with a simple drag and drop editor.
 
 == Description ==
-Caldera Forms is an easy to use free WordPress form builder with a layout builder that enables you to create the format you want for your form. It is fully responsive and with form processors, it gives you flexibility to handle the form data how you need it without needing a single line of code.
+A diffent kind of WordPress form builder. With an intuitive drag and drop interface -– based on a responsive grid -- and a wide range of add-ons, it’s never been easier to create forms for your WordPress site that look great on any device, thanks to Caldera Forms. This free plugin includes all of the form types you want, mail and redirect processors, entry logging and AJAX submissions.
 
-Easy enough for everyday users to create forms, and powerful enough for php ninjas to extend.
+Easy enough for everyday users to create forms, and powerful enough for PHP experts to extend.
 
 A free plugin by <a href="https://CalderaWP.com" title="CalderaWP: Transform Your WordPress Experience">CalderaWP</a>.
 
-* [Premium Add-ons](https://calderawp.com/caldera-forms-add-ons/)
-* [More Information](https://calderawp.com/free-plugin/caldera-forms/)
-* [Documentation](http://docs.calderaforms.com/)
-* [Report Issues](https://github.com/Desertsnowman/Caldera-Forms)
+Pippin Williamson of Easy Digital Downloads, Restrict Content Pro and AffiliateWP gives Caldera Forms a 5 star rating!
 
-= Free Addons =
-* [Verify Email for Caldera Forms](https://wordpress.org/plugins/verify-email-for-caldera-forms/)
-* [Slack Integration for Caldera Forms](https://wordpress.org/plugins/slack-integration-for-caldera-forms/)
-* [Form as Metabox - Custom Fields](https://wordpress.org/plugins/caldera-form-metabox/)
-* [Sprout Invoices Integration](https://wordpress.org/plugins/caldera-forms-sprout-invoices-integration/)
+John Teague of Theme Surgeons includes Caldera Forms in his list of WordPress plugin recommendations I don’t get paid for.
+
+= Docs & More Information:
+* [More Information](https://calderawp.com/downloads/caldera-forms/)
+* [Documentation](http://docs.calderaforms.com/)
+
+
+= Addons =
+[All Add-ons](https://calderawp.com/caldera-forms-add-ons/)
+
+== Free Add-ons ==
+* [Verify Email for Caldera Forms](https://calderawp.com/downloads/verify-email-for-caldera-forms/) - Send an email with a validate link to verify the email address before completing the form submission.
+* [Form as Metabox - Custom Fields](https://calderawp.com/downloads/caldera-form-metabox/) - Use a Caldera Form as a metabox in the post editor to save custom field values.
+* [Slack Integration for Caldera Forms](https://calderawp.com/downloads/caldera-forms-slack-integration/) - Get notifications in Slack whenever a Caldera Form is submitted.
+* [Run Action](https://calderawp.com/downloads/caldera-forms-run-action/) - Trigger a WordPress action with your form submission.
+* [Sprout Invoices Integration](https://wordpress.org/plugins/caldera-forms-sprout-invoices-integration/) - Use Caldera Forms for [Sprout Invoice](https://sproutapps.co/sprout-invoices/) forms.
+* [Conditional Fail](https://wordpress.org/plugins/conditional-fail-for-caldera-forms/) - Set conditions to cause that if met will allow or prevent form submssion.
+
+== Premium Add-Ons ==
+* [MailChimp](https://calderawp.com/downloads/caldera-forms-mailchimp-add-on/) - Seamlessly integrate MailChimp optins into your forms
+* [Stripe](https://calderawp.com/downloads/caldera-forms-stripe-add-on/) - Accept credit card payments via Stripe.
+* [PayPal Express](https://calderawp.com/downloads/caldera-forms-paypal-express-add-on/) - Accept payments via Paypal Express.
+* [Users](https://calderawp.com/downloads/caldera-forms-users-add/) - Register or login users from your form.
+* [Geolocation](https://calderawp.com/downloads/geolocation-field-for-caldera-forms/) - Make a text field a geolocation auto-complete field and recorded geocoded data.
+* [Mark Viewed](https://calderawp.com/downloads/caldera-forms-mark-viewed/) - Let users track what content they have viewed.
 
 = A Few Feature Highlights =
-* Responsive Grid design based on Bootstrap 3
-* Advanced Conditionals allows for multi, complex matching
-* Form Processors allows for stacking up form functionality, conditionally
+* Drag and drop responsive form builder.
+* Responsive grid is based on Bootstrap 3
+* Process forms without a page load using AJAX
+* Advanced conditional logic for hidding and showing fields.
 * Export and Import forms across installations
-* Ajax or Page reload
 * Multi-page forms
-* CSV of submission attached to notification email
-* Auto Responder
+* Emails sent on form submission are easily customized and can include a CSV file of entry data.
+* Configurable auto-responder and redirections.
 * File Uploads
 
 = Auto Values & Magic Tags =
-Capture system values, Post/Page data and custom fields, User data, and processor returns.
+Capture system values, form data, user data and use it populate form fields values, variables, or in response emails.
 
-= Current Available Fields (more can be added on request) =
+= Current Available Fields =
 * Calculation
 * Range Slider
 * Star Rating
@@ -63,7 +80,6 @@ Capture system values, Post/Page data and custom fields, User data, and processo
 Everything can be extended. For developers, there are enough hooks and filters to build on. From frontend handling, to form processing, to editor panels, to field types. At it's core, it's a framework for building applications so you can make what you want.
 
 For issues and updates - Caldera Forms is on [GitHub](https://github.com/Desertsnowman/Caldera-Forms)
-
 
 == Installation ==
 
