@@ -1615,6 +1615,7 @@ tr.form_entry_row.loading {
   position: absolute;
   top: -75px;
   box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+  z-index: 99999;
 }
 .tablenav.caldera-table-nav {
   clear: none;
