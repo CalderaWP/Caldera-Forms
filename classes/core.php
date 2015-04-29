@@ -2102,6 +2102,8 @@ class Caldera_Forms {
 								}								
 								if(!empty($out)){
 									$magic_tag = implode("\r\n", $out);
+								}else{
+									$magic_tag = '';
 								}
 							}
 							break;
