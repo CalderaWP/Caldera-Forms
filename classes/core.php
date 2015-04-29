@@ -2173,7 +2173,7 @@ class Caldera_Forms {
 			}
 		}
 		
-		if( $input_value != $value && empty( $value ) ){
+		if( $input_value != $value ){
 			return $input_value;
 		}
 
