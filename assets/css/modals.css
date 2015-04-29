@@ -73,7 +73,8 @@
   padding: 12px 12px 8.9px;
   position: absolute;
   right: 0;
-  top: 43px;  
+  top: 43px;
+  overflow: auto;  
 }
 #extend_cf_baldrickModalBody{
   overflow: auto;
