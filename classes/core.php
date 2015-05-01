@@ -3081,7 +3081,7 @@ class Caldera_Forms {
 			 *
 			 * @since 1.2.1
 			 *
-			 * @param string $entryid The ID of the entry that was just saved.
+			 * @param int $entryid The ID of the entry that was just saved.
 			 * @param array $new_entry Data that was saved
 			 * @param array $form Form being processed
 			 */
