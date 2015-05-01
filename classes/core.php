@@ -3081,11 +3081,11 @@ class Caldera_Forms {
 			 *
 			 * @since 1.2.1
 			 *
-			 * @param string $entry_id The ID of the entry that was just saved.
+			 * @param string $entryid The ID of the entry that was just saved.
 			 * @param array $new_entry Data that was saved
 			 * @param array $form Form being processed
 			 */
-			do_action( 'caldera_forms_entry_saved', $entry_id, $new_entry, $form );
+			do_action( 'caldera_forms_entry_saved', $entryid, $new_entry, $form );
 			
 			// save entry_id
 			self::set_field_data('_entry_id', $entryid, $form);
