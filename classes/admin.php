@@ -1300,7 +1300,7 @@ class Caldera_Forms_Admin {
 			"ID" 			=> uniqid('CF'),
 			"name" 			=> $newform['name'],
 			"description" 	=> $newform['description'],
-			"success"		=>	__('Form has been successfuly submitted. Thank you.', 'caldera-forms'),
+			"success"		=>	__('Form has been successfully submitted. Thank you.', 'caldera-forms'),
 			"form_ajax"		=> 1,
 			"hide_form"		=> 1
 		);

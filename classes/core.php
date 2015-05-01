@@ -764,7 +764,9 @@ class Caldera_Forms {
 			fclose($df);
 			$csv = ob_get_clean();
 			$csvfile = wp_upload_bits( uniqid().'.csv', null, $csv );
-			$mail['attachments'][] = $csvfile['file'];
+			if( isset( $csvfile['file'] ) && false == $csvfile['error'] && file_exists( $csvfile['file'] ) ){
+				$mail['attachments'][] = $csvfile['file'];
+			}
 		}
 
 		if(empty($mail)){
@@ -3586,7 +3588,7 @@ class Caldera_Forms {
 			$data['data'][$field_id] = array(
 				'label' => $field['label'],
 				'view'	=> apply_filters( 'caldera_forms_view_field_' . $field['type'], $field_value, $field, $form),
-				'value' => array_map('sanitize_text_field', (array) $field_value )
+				'value' => $field_value
 			);
 		}
 

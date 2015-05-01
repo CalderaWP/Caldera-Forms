@@ -104,7 +104,7 @@ if(!isset($element['mailer']['enable_mailer'])){
 			<label><?php echo __('Email Message', 'caldera-forms'); ?> </label>
 			<div class="caldera-config-field" style="max-width: 600px;">
 				<?php wp_editor( $element['mailer']['email_message'], "mailer_email_message", array('textarea_name' => 'config[mailer][email_message]') ); ?>
-				<p class="description"><?php echo __('Magic tags, %field_slug% are replaced with submitted data. use {summary} to build an automatic mail based on form content. Leaving the mailer blank, will create and automatic summary.', 'caldera-forms'); ?></p>
+				<p class="description"><?php echo __('Magic tags, %field_slug% are replaced with submitted data. Use {summary} to build an automatic mail based on form content. Leaving the mailer blank, will create and automatic summary.', 'caldera-forms'); ?></p>
 			</div>
 		</div>
 
@@ -113,7 +113,7 @@ if(!isset($element['mailer']['enable_mailer'])){
 			<label><?php echo __('Debug Mailer', 'caldera-forms'); ?></label>
 			<div class="caldera-config-field">
 				<label><input type="checkbox" value="1" name="config[debug_mailer]" class="field-config"<?php if(isset($element['debug_mailer'])){ echo ' checked="checked"'; } ?>> <?php echo __('Enable email send transation log', 'caldera-forms'); ?></label>
-				<p class="description"><?php echo __('If set, entries will have a "Mailer Debug" meta tab to see the transaction long. Do not keep this enabled on production as it sends two emails for tracking.', 'caldera-forms'); ?></p>
+				<p class="description"><?php echo __('If set, entries will have a "Mailer Debug" meta tab to see the transaction log. Do not keep this enabled on production as it sends two emails for tracking.', 'caldera-forms'); ?></p>
 			</div>
 		</div>
 
