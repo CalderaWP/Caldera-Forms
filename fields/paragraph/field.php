@@ -1,4 +1,13 @@
 <?php
+if ( is_array( $field_value ) )  {
+	if ( isset( $field_value[0] ) ) {
+		$field_value = $field_value[0];
+	}else{
+		$field_value = ' ';
+	}
+
+}
+
 if(!empty($field['config']['placeholder'])){
 	$field_placeholder = 'placeholder="'.$field['config']['placeholder'].'"';
 }
