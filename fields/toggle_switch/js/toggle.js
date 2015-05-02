@@ -1,5 +1,5 @@
 jQuery(function($){
-	$('body').on('click', '.cf-toggle-group-buttons button', function(){
+	$('body').on('click', '.cf-toggle-group-buttons a', function(){
 
 		var clicked = $(this),
 			parent = clicked.closest('.caldera-config-field'),

@@ -3,6 +3,7 @@
 	<div class="caldera-config-field">
 		<select name="{{_name}}[orientation]" class="block-input field-config">
 		<option value="horizontal" {{#is orientation value="horizontal"}}selected="selected"{{/is}}><?php echo __('Horizontal', 'caldera-forms'); ?></option>
+		<option value="justified" {{#is orientation value="justified"}}selected="selected"{{/is}}><?php echo __('Justified', 'caldera-forms'); ?></option>
 		<option value="vertical" {{#is orientation value="vertical"}}selected="selected"{{/is}}><?php echo __('Vertical', 'caldera-forms'); ?></option>
 		</select>
 	</div>
