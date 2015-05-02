@@ -10,6 +10,14 @@ if(!empty($field['config']['prefix'])){
 	$field['config']['prefix'] = self::do_magic_tags($field['config']['prefix']);
 }
 
+if ( is_array( $field_value ) )  {
+	if ( isset( $field_value[0] ) ) {
+		$field_value = $field_value[0];
+	}else{
+		$field_value = 0;
+	}
+}
+
 ?><?php echo $wrapper_before; ?>
 	<?php echo $field_label; ?>
 	<?php echo $field_before; ?>
