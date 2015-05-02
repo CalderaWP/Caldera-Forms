@@ -375,19 +375,20 @@ class Caldera_Forms {
 		if( has_filter( 'caldera_forms_save_field_' . $field['type'] ) ){
 			$new_data = apply_filters( 'caldera_forms_update_field_' . $field['type'], $new_data, $field, $form );
 		}
-		if($original_data === null){
+		
+		if($original_data !== null){
+			$wpdb->delete($wpdb->prefix . 'cf_form_entry_values', array('entry_id' => $entry_id, 'field_id' => $field['ID'] ) );
+		}
+
+		foreach( (array) $new_data as $entry_data ){
 			// no entry - add first
 			$new_entry = array(
 				'entry_id'	=>	$entry_id,
 				'field_id'	=>	$field['ID'],
 				'slug'	 	=>	$field['slug'],
-				'value'		=>	$new_data,
+				'value'		=>	$entry_data,
 			);
 			$wpdb->insert($wpdb->prefix . 'cf_form_entry_values', $new_entry);
-
-		}else{
-
-			$wpdb->update($wpdb->prefix . 'cf_form_entry_values', array('value' => $new_data), array('entry_id' => $entry_id, 'field_id' => $field['ID']));
 		}
 
 	}
