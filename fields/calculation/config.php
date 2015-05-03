@@ -60,7 +60,7 @@
 </div>
 <div id="{{_id}}_manualbox" style="display:none;">
 	<textarea name="{{_name}}[manual_formula]" class="field-config block-input">{{manual_formula}}</textarea>
-	<p class="description"><?php echo __('Use %field_slug% as field vaule variables', 'caldera-forms'); ?></p>
+	<p class="description"><?php echo __('Use %field_slug% as field value variables', 'caldera-forms'); ?></p>
 </div>
 <br><br><br>
 {{#script}}
