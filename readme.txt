@@ -15,9 +15,9 @@ Easy enough for everyday users to create forms, and powerful enough for PHP expe
 
 A free plugin by <a href="https://CalderaWP.com" title="CalderaWP: Transform Your WordPress Experience">CalderaWP</a>.
 
-Pippin Williamson of Easy Digital Downloads, Restrict Content Pro and AffiliateWP gives Caldera Forms a 5 star rating!
+Pippin Williamson of Easy Digital Downloads, Restrict Content Pro and AffiliateWP gives [Caldera Forms a 5 star rating](https://themesurgeons.com/wordpress-plugins-recommendations/)!
 
-John Teague of Theme Surgeons includes Caldera Forms in his list of WordPress plugin recommendations I don’t get paid for.
+John Teague of Theme Surgeons includes Caldera Forms in his list of [WordPress plugin recommendations I don’t get paid for](https://themesurgeons.com/wordpress-plugins-recommendations/).
 
 = Docs & More Information =
 * [More Information](https://calderawp.com/downloads/caldera-forms/)
