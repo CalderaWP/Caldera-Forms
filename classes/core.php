@@ -2701,7 +2701,7 @@ class Caldera_Forms {
 				unset($referrer['query']['cf_su']);
 			}
 		}
-		if( isset( $_POST['_cf_cr_pst'] ) && $post->ID !== (int) $_POST['_cf_cr_pst'] ){
+		if( ( isset( $_POST['_cf_cr_pst'] ) && ! is_object( $post ) ) || ( isset( $_POST['_cf_cr_pst'] ) && $post->ID !== (int) $_POST['_cf_cr_pst'] ) ){
 			$post = get_post( (int) $_POST['_cf_cr_pst'] );
 		}
 		// get form and check
