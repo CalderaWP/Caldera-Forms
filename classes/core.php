@@ -2580,7 +2580,7 @@ class Caldera_Forms {
 					if(!empty($meta)){
 						if(!isset($entry_meta[$group])){
 							// is processor
-							if(isset($form['processors'][$meta['process_id']]['type'])){
+							if(isset($form['processors'][$meta['process_id']]['type']) && isset( $processors[$form['processors'][$meta['process_id']]['type']] ) ){
 								$meta_name = $processors[$form['processors'][$meta['process_id']]['type']]['name'];
 							}else{
 								if( $meta['process_id'] == '_debug_log' ){
