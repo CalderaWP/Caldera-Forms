@@ -338,7 +338,7 @@
 				params.activeElement.addClass(params.activeClass);
 				params.loadElement.addClass(params.loadClass);
 				var data;
-				if(FormData && ( tr.is('input:file') || params.method === 'POST') ){
+				if( typeof FormData !== 'undefined' && ( tr.is('input:file') || params.method === 'POST') ){
 
 					params.method		=	'POST';
 					params.contentType	=	false;
