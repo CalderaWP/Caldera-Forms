@@ -505,7 +505,7 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 		<div class="caldera-config-group">
 			<label><?php echo __('View Entries', 'caldera-forms'); ?> </label>
 			<div class="caldera-config-field" style="max-width: 500px;">
-			<label><input type="checkbox" id="pin_role_all_roles" class="field-config visible-all-roles" data-set="form_role" value="1" name="config[pin_roles][all_roles]" <?php if( !empty($form['pin_roles']['all_roles'])){ echo 'checked="checked"'; } ?>> <?php echo __('All'); ?></label>
+			<label><input type="checkbox" id="pin_role_all_roles" class="field-config visible-all-roles" data-set="form_role" value="1" name="config[pin_roles][all_roles]" <?php if( !empty($element['pin_roles']['all_roles'])){ echo 'checked="checked"'; } ?>> <?php echo __('All'); ?></label>
 			<hr>
 			<?php
 			global $wp_roles;
@@ -517,7 +517,7 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 					continue;
 				}
 				?>
-				<label><input type="checkbox" class="field-config form_role_role_check gen_role_check" data-set="form_role" name="config[pin_roles][access_role][<?php echo $role; ?>]" value="1" <?php if( !empty($form['pin_roles']['access_role'][$role])){ echo 'checked="checked"'; } ?>> <?php echo $role_details['name']; ?></label>
+				<label><input type="checkbox" class="field-config form_role_role_check gen_role_check" data-set="form_role" name="config[pin_roles][access_role][<?php echo $role; ?>]" value="1" <?php if( !empty($element['pin_roles']['access_role'][$role])){ echo 'checked="checked"'; } ?>> <?php echo $role_details['name']; ?></label>
 				<?php 
 			}
 
