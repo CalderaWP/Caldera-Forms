@@ -21,9 +21,9 @@ function cf_form_process_ajax(){
 	}
 
 	if(isset($_POST['_cf_verify']) && isset( $_POST['_cf_frm_id'] )){
-		if(wp_verify_nonce( $_POST['_cf_verify'], 'caldera_forms_front' )){
-			Caldera_Forms::process_submission();
-		}
+		//if(wp_verify_nonce( $_POST['_cf_verify'], 'caldera_forms_front' )){
+		Caldera_Forms::process_submission();
+		//}
 		exit;
 	}
 }
