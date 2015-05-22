@@ -387,15 +387,47 @@ class Caldera_Forms_Admin {
 		wp_send_json_success( array( 'ID' => $form['ID'], 'state' => $state, 'label' => $label ) );
 	}
 
+	/**
+	 * Show entries in admin
+	 *
+	 * @since unknown
+	 */
 	public static function browse_entries(){
-
-		global $wpdb;
-
 		$page = 1;
 		$perpage = 20;
 
 		$form = Caldera_Forms::get_form( $_POST['form'] );
 			
+		$data = self::get_entries( $form, $page, $perpage );
+
+		// set status output
+		$data['is_' . $_POST['status']] = true;
+
+		wp_send_json( $data );
+		exit;
+
+
+	}
+
+	/**
+	 * Get entries from a form
+	 *
+	 * @since 1.3.0
+	 *
+	 * @param string $form Form ID or form config.
+	 * @param int $page Page of entries to get per page.
+	 * @param int $perpage Number of entries per page.
+	 *
+	 * @return array
+	 */
+	public static function get_entries( $form, $page, $perpage ) {
+
+		if ( is_string( $form ) ) {
+			Caldera_Forms::get_form( $form );
+		}
+
+		global $wpdb;
+
 		$field_labels = array();
 		$backup_labels = array();
 		$selects = array();
@@ -431,9 +463,7 @@ class Caldera_Forms_Admin {
 		$data = array();
 
 		$filter = null;
-		if(!empty($selects)){
-			//$filter .= " AND `value`.`slug` IN (" . implode(',', $selects) . ") ";
-		}
+
 		// status
 		$status = "'active'";
 		if(!empty($_POST['status'])){
@@ -442,7 +472,7 @@ class Caldera_Forms_Admin {
 
 		$data['trash'] = (int) $wpdb->get_var($wpdb->prepare("SELECT COUNT(`id`) AS `total` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = %s AND `status` = 'trash';", $_POST['form']));
 		$data['active'] = (int) $wpdb->get_var($wpdb->prepare("SELECT COUNT(`id`) AS `total` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = %s AND `status` = 'active';", $_POST['form']));
-	
+
 
 		// set current total
 		if(!empty($_POST['status']) && isset($data[$_POST['status']])){
@@ -464,16 +494,13 @@ class Caldera_Forms_Admin {
 		$data['current_page'] = $page;
 		$gmt_offset = get_option( 'gmt_offset' );
 		if($data['total'] > 0){
-			
+
 			$data['form'] = $_POST['form'];
 
 			$data['fields'] = $field_labels;
 			$offset = ($page - 1) * $perpage;
 			$limit = $offset . ',' . $perpage;
 
-			//if(!empty($selects)){
-			//$filter .= " AND `entry`.`status` = ".$status." ";
-			//}
 
 
 			$rawdata = $wpdb->get_results($wpdb->prepare("
@@ -482,13 +509,9 @@ class Caldera_Forms_Admin {
 				`form_id`
 			FROM `" . $wpdb->prefix ."cf_form_entries`
 
-			WHERE `form_id` = %s AND `status` = ".$status." ORDER BY `datestamp` DESC LIMIT " . $limit . ";", $_POST['form'] ));		
+			WHERE `form_id` = %s AND `status` = ".$status." ORDER BY `datestamp` DESC LIMIT " . $limit . ";", $_POST['form'] ));
 
 			if(!empty($rawdata)){
-
-				foreach($rawdata as $entry){
-					//$data = Caldera_Forms::get_submission_data($entry->form_id, $entry->id);
-				}
 
 				$ids = array();
 				foreach($rawdata as $row){
@@ -589,12 +612,7 @@ class Caldera_Forms_Admin {
 			}
 		}
 
-		// set status output
-		$data['is_' . $_POST['status']] = true;
-
-		wp_send_json( $data );
-		exit;
-
+		return $data;
 
 	}
 
