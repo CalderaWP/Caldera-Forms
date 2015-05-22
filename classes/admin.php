@@ -393,15 +393,33 @@ class Caldera_Forms_Admin {
 	 * @since unknown
 	 */
 	public static function browse_entries(){
-		$page = 1;
-		$perpage = 20;
+
+		if ( isset( $_POST[ 'page' ] ) && 0 < $_POST[ 'page' ] ) {
+			$page = absint( $_POST[ 'page' ] );
+		}else{
+			$page = 1;
+		}
+
+		if ( isset( $_POST[ 'perpage' ] ) && 0 < $_POST[ 'perpage' ] ) {
+			$perpage = absint( $_POST[ 'perpage' ] );
+		}else{
+			$perpage = 20;
+		}
+
+		if ( isset( $_POST[ 'status' ] ) ) {
+			$status = strip_tags( $_POST[ 'status' ] );
+		}else{
+			$status = 'active';
+		}
+
+
 
 		$form = Caldera_Forms::get_form( $_POST['form'] );
 			
-		$data = self::get_entries( $form, $page, $perpage );
+		$data = self::get_entries( $form, $page, $perpage, $status );
 
 		// set status output
-		$data['is_' . $_POST['status']] = true;
+		$data['is_' . $status ] = true;
 
 		wp_send_json( $data );
 		exit;
@@ -415,15 +433,21 @@ class Caldera_Forms_Admin {
 	 * @since 1.3.0
 	 *
 	 * @param string $form Form ID or form config.
-	 * @param int $page Page of entries to get per page.
-	 * @param int $perpage Number of entries per page.
+	 * @param int $page Optional. Page of entries to get per page. Default is 1.
+	 * @param int $perpage Optional. Number of entries per page. Default is 20
 	 *
 	 * @return array
 	 */
-	public static function get_entries( $form, $page, $perpage ) {
+	public static function get_entries( $form, $page = 1, $perpage = 20, $status ) {
 
 		if ( is_string( $form ) ) {
-			Caldera_Forms::get_form( $form );
+			$form = Caldera_Forms::get_form( $form );
+		}
+
+		if ( isset( $form[ 'ID' ])) {
+			$form_id = $form[ 'ID' ];
+		}else{
+			return;
 		}
 
 		global $wpdb;
@@ -465,18 +489,17 @@ class Caldera_Forms_Admin {
 		$filter = null;
 
 		// status
-		$status = "'active'";
-		if(!empty($_POST['status'])){
-			$status = $wpdb->prepare("%s", $_POST['status']);
+		if(!empty($status)){
+			$status = $wpdb->prepare("%s", $status );
 		}
 
-		$data['trash'] = (int) $wpdb->get_var($wpdb->prepare("SELECT COUNT(`id`) AS `total` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = %s AND `status` = 'trash';", $_POST['form']));
-		$data['active'] = (int) $wpdb->get_var($wpdb->prepare("SELECT COUNT(`id`) AS `total` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = %s AND `status` = 'active';", $_POST['form']));
+		$data['trash'] = (int) $wpdb->get_var($wpdb->prepare("SELECT COUNT(`id`) AS `total` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = %s AND `status` = 'trash';", $form_id ) );
+		$data['active'] = (int) $wpdb->get_var($wpdb->prepare("SELECT COUNT(`id`) AS `total` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = %s AND `status` = 'active';", $form_id ) );
 
 
 		// set current total
-		if(!empty($_POST['status']) && isset($data[$_POST['status']])){
-			$data['total'] = $data[$_POST['status']];
+		if(!empty( $status ) && isset($data[ $status ])){
+			$data['total'] = $data[ $status ];
 		}else{
 			$data['total'] = $data['active'];
 		}
@@ -484,8 +507,8 @@ class Caldera_Forms_Admin {
 
 		$data['pages'] = ceil($data['total'] / $perpage );
 
-		if(!empty($_POST['page'])){
-			$page = abs( $_POST['page'] );
+		if(!empty( $page )){
+			$page = abs( $page );
 			if($page > $data['pages']){
 				$page = $data['pages'];
 			}
@@ -495,7 +518,7 @@ class Caldera_Forms_Admin {
 		$gmt_offset = get_option( 'gmt_offset' );
 		if($data['total'] > 0){
 
-			$data['form'] = $_POST['form'];
+			$data['form'] = $form_id;
 
 			$data['fields'] = $field_labels;
 			$offset = ($page - 1) * $perpage;
@@ -509,7 +532,7 @@ class Caldera_Forms_Admin {
 				`form_id`
 			FROM `" . $wpdb->prefix ."cf_form_entries`
 
-			WHERE `form_id` = %s AND `status` = ".$status." ORDER BY `datestamp` DESC LIMIT " . $limit . ";", $_POST['form'] ));
+			WHERE `form_id` = %s AND `status` = ".$status." ORDER BY `datestamp` DESC LIMIT " . $limit . ";", $form_id));
 
 			if(!empty($rawdata)){
 
@@ -533,7 +556,7 @@ class Caldera_Forms_Admin {
 				" . $filter ."
 				ORDER BY `entry`.`datestamp` DESC;");
 
-				//print_r()
+
 				$data['entries'] = array();
 				$dateformat = get_option('date_format');
 				$timeformat = get_option('time_format');
@@ -611,6 +634,7 @@ class Caldera_Forms_Admin {
 				}
 			}
 		}
+
 
 		return $data;
 
