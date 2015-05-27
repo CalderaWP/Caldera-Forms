@@ -3356,7 +3356,7 @@ class Caldera_Forms {
 			/// end form and redirect to submit page or result page.
 		}
 
-
+		/* just pull them in!
 		if(empty($post)){
 			if(isset($wp_query->queried_object)){
 				$post = $wp_query->queried_object;
@@ -3365,7 +3365,7 @@ class Caldera_Forms {
 		if(empty($post)){
 			//cant find form;
 			return;
-		}
+		}*/
 
 		// get fields
 
