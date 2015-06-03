@@ -149,8 +149,8 @@ jQuery(document).ready(function($){
 				if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('caption') >= 0){
 					parent.find('.caption-field').hide().find('.field-config').val('');
 				}
-				if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('caption') >= 0){
-					parent.find('.caption-field').hide().find('.field-config').val('');
+				if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('required') >= 0){
+					parent.find('.required-field').hide().find('.field-config').prop('checked', false);
 				}
 				if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('custom_class') >= 0){
 					parent.find('.customclass-field').hide().find('.field-config').val('');

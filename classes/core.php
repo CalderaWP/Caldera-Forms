@@ -2926,8 +2926,11 @@ class Caldera_Forms {
 					$entry = apply_filters( 'caldera_forms_validate_field_' . $field['type'], $entry, $field, $form );
 				}
 				// if required, check the validators returned errors or not.
-				if(!empty($field['required'])){
-
+				if( !empty( $field['required'] ) ){
+					// check is supported
+					if( isset( $field_types[ $field['type'] ]['setup']['not_supported'] ) && in_array( 'required', (array) $field_types[ $field['type'] ]['setup']['not_supported'] ) ){
+						continue;
+					}
 					// check if conditions match first. ignore vailators if not part of condition
 					if(!empty($field['conditions']['type'])){
 						if(!self::check_condition($field['conditions'], $form)){

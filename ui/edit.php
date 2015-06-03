@@ -350,7 +350,7 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 			<div class="caldera-config-group required-field">
 				<label for="<?php echo $id; ?>_required"><?php echo __('Required', 'caldera-forms'); ?></label>
 				<div class="caldera-config-field">
-					<input type="checkbox" class="field-config field-checkbox" id="<?php echo $id; ?>_required" name="config[fields][<?php echo $id; ?>][required]" value="1" <?php if($required === 1){ echo 'checked="checked"'; }; ?>>
+					<input type="checkbox" class="field-config field-required field-checkbox" id="<?php echo $id; ?>_required" name="config[fields][<?php echo $id; ?>][required]" value="1" <?php if($required === 1){ echo 'checked="checked"'; }; ?>>
 				</div>
 			</div>
 
