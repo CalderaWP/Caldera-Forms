@@ -2,8 +2,8 @@
 Contributors: Desertsnowman, Shelob9
 Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator, caldera forms
 Requires at least: 3.9
-Tested up to: 4.2
-Stable tag: 1.2.0
+Tested up to: 4.2.2
+Stable tag: 1.2.1
 License: GPLv2
 
 Create beautiful, responsive forms with a simple drag and drop editor.
@@ -99,6 +99,20 @@ none yet.
 4. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
+
+= 1.2.1 ( June, 2015) =
+
+= Bugs Fixed =
+* Fixed checkbox values not saving on transient redirect ( complicated, but now fixed )
+* Fixed required field on HTML element causing a form to not submit without any notice
+* Fixed issue with pin to menu rights resetting in form edit
+* A bunch of smaller bugs that was causing minor issues
+
+= Improvements =
+* Updated the visual styles on forms
+* updated mailer setup descriptions to prevent spam filtering of mails
+* auto slugs are cleaner
+* minor speed improvements in core
 
 = 1.2.0 ( April, 2015) =
 
@@ -461,4 +475,4 @@ none yet.
 Initial Release
 
 == Upgrade Notice ==
-still new, so nothing to upgrade.
+Autoupdated in WordPress admin.
