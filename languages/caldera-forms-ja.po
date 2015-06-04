@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Caldera Forms\n"
-"POT-Creation-Date: 2015-04-04 09:53+0200\n"
-"PO-Revision-Date: 2015-04-04 09:53+0200\n"
+"POT-Creation-Date: 2015-06-04 11:20+0200\n"
+"PO-Revision-Date: 2015-06-04 11:21+0200\n"
 "Last-Translator: David Cramer <david@caldera.co.za>\n"
 "Language-Team: Kiho Shin\n"
 "Language: ja\n"
@@ -16,463 +16,419 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../classes/admin.php:107
+#: ../classes/admin.php:108
 #, fuzzy
 msgid "Invalid Form."
 msgstr "無効なフォームID "
 
-#: ../classes/admin.php:205 ../classes/admin.php:206 ../classes/admin.php:308
+#: ../classes/admin.php:206 ../classes/admin.php:207 ../classes/admin.php:309
 #: ../ui/entries_toolbar.php:27
 msgid "Trash"
 msgstr "ゴミ箱"
 
-#: ../classes/admin.php:206 ../classes/admin.php:308
+#: ../classes/admin.php:207 ../classes/admin.php:309
 #: ../ui/admin_templates.php:9
 msgid "Restore"
 msgstr "復元"
 
-#: ../classes/admin.php:306 ../ui/admin_templates.php:113
+#: ../classes/admin.php:307 ../ui/admin_templates.php:110
 msgid "Entry"
 msgstr "エントリー"
 
-#: ../classes/admin.php:306
+#: ../classes/admin.php:307
 msgid "View"
 msgstr "表示"
 
-#: ../classes/admin.php:348 ../classes/admin.php:356
+#: ../classes/admin.php:349 ../classes/admin.php:357
 msgid "Add Form to Page"
 msgstr "ページにフォームを追加"
 
-#: ../classes/admin.php:349
+#: ../classes/admin.php:350
 msgid "Insert Form Shortcode"
 msgstr "フォームのショートコードを挿入"
 
-#: ../classes/admin.php:349 ../classes/widget.php:8
+#: ../classes/admin.php:350 ../classes/widget.php:8
 msgid "Caldera Form"
 msgstr "Caldera フォーム"
 
-#: ../classes/admin.php:582 ../classes/admin.php:588 ../classes/admin.php:594
-#: ../classes/admin.php:595 ../classes/admin.php:629 ../classes/admin.php:633
-#: ../includes/filter_addon_plugins.php:41 ../ui/admin.php:32
-#: ../ui/community.php:5 ../ui/edit.php:444 ../ui/extend.php:5
+#: ../classes/admin.php:377 ../ui/admin.php:108
+msgid "Deactivate"
+msgstr ""
+
+#: ../classes/admin.php:381 ../ui/admin.php:108
+msgid "Activate"
+msgstr ""
+
+#: ../classes/admin.php:673 ../classes/admin.php:679 ../classes/admin.php:685
+#: ../classes/admin.php:686 ../classes/admin.php:720 ../classes/admin.php:724
+#: ../includes/filter_addon_plugins.php:50 ../ui/admin.php:32
+#: ../ui/community.php:5 ../ui/edit.php:448 ../ui/extend.php:5
 msgid "Caldera Forms"
 msgstr "Caldera フォーム"
 
-#: ../classes/admin.php:583
+#: ../classes/admin.php:674
 msgid "Caldera Forms Admin"
 msgstr ""
 
-#: ../classes/admin.php:583
+#: ../classes/admin.php:674
 msgid "Forms"
 msgstr "フォーム"
 
-#: ../classes/admin.php:594 ../ui/community.php:8
+#: ../classes/admin.php:685 ../ui/community.php:8
 msgid "Community"
 msgstr "コミュニティ"
 
-#: ../classes/admin.php:595 ../ui/extend.php:8
+#: ../classes/admin.php:686 ../ui/extend.php:8
 msgid "Extend"
 msgstr "拡張する"
 
-#: ../classes/admin.php:853 ../classes/admin.php:1015
+#: ../classes/admin.php:945 ../classes/admin.php:1107
 msgid "Sorry, please try again"
 msgstr "もう一度試してください"
 
-#: ../classes/admin.php:853
+#: ../classes/admin.php:945
 msgid "Form Delete Error"
 msgstr "フォーム削除エラー"
 
-#: ../classes/admin.php:1006
+#: ../classes/admin.php:1098
 msgid "Sorry, File is not valid."
 msgstr "ファイルに対応していません。"
 
-#: ../classes/admin.php:1006 ../classes/admin.php:1010
-#: ../classes/admin.php:1015
+#: ../classes/admin.php:1098 ../classes/admin.php:1102
+#: ../classes/admin.php:1107
 msgid "Form Import Error"
 msgstr "フォームのインポート エラー"
 
-#: ../classes/admin.php:1010
+#: ../classes/admin.php:1102
 msgid "Sorry, File not uploaded."
 msgstr "ファイルのアップロードに失敗しました。"
 
-#: ../classes/admin.php:1024
+#: ../classes/admin.php:1116
 msgid "Form does not exist."
 msgstr "フォームが見つかりません。"
 
-#: ../classes/admin.php:1065
+#: ../classes/admin.php:1157
 msgid "Export selection has expired"
 msgstr "エクスポートの設定"
 
-#: ../classes/admin.php:1065
+#: ../classes/admin.php:1157
 msgid "Export Expired"
 msgstr ""
 
-#: ../classes/admin.php:1239
-msgid "Form has been successfuly submitted. Thank you."
+#: ../classes/admin.php:1346
+#, fuzzy
+msgid "Form has been successfully submitted. Thank you."
 msgstr "送信されました。有難うございます。"
 
-#: ../classes/admin.php:1276 ../classes/admin.php:1292
+#: ../classes/admin.php:1383 ../classes/admin.php:1399
 msgid "Layout"
 msgstr "レイアウト"
 
-#: ../classes/admin.php:1294
+#: ../classes/admin.php:1401
 msgid "Layout Builder"
 msgstr "レイアウト ビルダー"
 
-#: ../classes/admin.php:1304
+#: ../classes/admin.php:1411
 msgid "Pages"
 msgstr "ページ"
 
-#: ../classes/admin.php:1306
+#: ../classes/admin.php:1413
 msgid "Form Pages"
 msgstr ""
 
-#: ../classes/admin.php:1310
+#: ../classes/admin.php:1417
 msgid "Processors"
 msgstr "処理"
 
-#: ../classes/admin.php:1312 ../ui/panels/processors.php:166
+#: ../classes/admin.php:1419 ../ui/panels/processors.php:166
 msgid "Form Processors"
 msgstr "フォーム処理"
 
-#: ../classes/admin.php:1316 ../classes/admin.php:1318
-#: ../ui/panels/variables.php:80
+#: ../classes/admin.php:1423 ../classes/admin.php:1425
+#: ../ui/panels/variables.php:83
 msgid "Variables"
 msgstr "変数"
 
-#: ../classes/admin.php:1325
+#: ../classes/admin.php:1432
 msgid "Responsive"
 msgstr "レスポンシブ"
 
-#: ../classes/admin.php:1327
+#: ../classes/admin.php:1434
 msgid "Resposive Settings"
 msgstr "レスポンシブ設定"
 
-#: ../classes/admin.php:1331
+#: ../classes/admin.php:1438
 msgid "Grid Collapse"
 msgstr "グリッドを縮小表示"
 
-#: ../classes/admin.php:1333
+#: ../classes/admin.php:1440
 msgid ""
 "Set the smallest screen size at which to collapse the grid. (based on "
 "Bootstrap 3.0)"
 msgstr "縮小表示次の最小表示サイズを設定 (Bootstrap 3.0 に基づく)"
 
-#: ../classes/admin.php:1340
+#: ../classes/admin.php:1447
 msgid "Maintain grid always"
 msgstr "常にグリッド設定を保持する"
 
-#: ../classes/admin.php:1360 ../ui/panels/emailer.php:32
+#: ../classes/admin.php:1467 ../ui/panels/emailer.php:32
 msgid "Mailer"
 msgstr "メーラー"
 
-#: ../classes/admin.php:1362
+#: ../classes/admin.php:1469
 msgid "Email Notification Settings"
 msgstr "メール通知設定"
 
-#: ../classes/core.php:287
+#: ../classes/core.php:346
 #, fuzzy
 msgid "The wasn't entered correct."
 msgstr "reCAPTCHA が間違っています。"
 
-#: ../classes/core.php:287 ../fields/button/config_template.php:9
-#: ../vendor/calderawp/fields/src/fields/button/config_template.php:9
+#: ../classes/core.php:346 ../fields/button/config_template.php:9
 msgid "Reset"
 msgstr ""
 
-#: ../classes/core.php:416 ../classes/core.php:430 ../classes/core.php:2734
+#: ../classes/core.php:476 ../classes/core.php:490 ../classes/core.php:2885
 msgid "Permission denied."
 msgstr "権限がありません。"
 
-#: ../classes/core.php:545 ../ui/panels/emailer.php:4
+#: ../classes/core.php:607 ../ui/panels/emailer.php:4
 msgid "Caldera Forms Notification"
 msgstr "Caldera フォームの通知"
 
-#: ../classes/core.php:907
+#: ../classes/core.php:973
 msgid "Auto Responder"
 msgstr "自動返信メール"
 
-#: ../classes/core.php:908
+#: ../classes/core.php:974
 msgid "Sends out an auto response e-mail"
 msgstr "自動返信メールを送る"
 
-#: ../classes/core.php:912
+#: ../classes/core.php:978
 msgid "Thank you for contacting us"
 msgstr "お問い合わせ有難うございます。"
 
-#: ../classes/core.php:916
+#: ../classes/core.php:982
 msgid "Redirect"
 msgstr "転送"
 
-#: ../classes/core.php:917
+#: ../classes/core.php:983
 msgid "Redirects user to URL on successful submit"
 msgstr "送信成功後転送するURL"
 
-#: ../classes/core.php:922
+#: ../classes/core.php:988
 msgid "Increment Value"
 msgstr ""
 
-#: ../classes/core.php:923
+#: ../classes/core.php:989
 msgid "Increment a value per entry."
 msgstr ""
 
-#: ../classes/core.php:937
+#: ../classes/core.php:1003
 msgid "Akismet"
 msgstr ""
 
-#: ../classes/core.php:938
+#: ../classes/core.php:1004
 msgid "Anti-spam filtering"
 msgstr ""
 
-#: ../classes/core.php:971
+#: ../classes/core.php:1037
 msgid "Akismet not setup."
 msgstr ""
 
-#: ../classes/core.php:1098 ../vendor/calderawp/fields/src/fields.php:112
+#: ../classes/core.php:1164
 msgid "Calculation"
 msgstr "計算"
 
-#: ../classes/core.php:1101 ../classes/core.php:1123 ../classes/core.php:1160
-#: ../classes/core.php:1243 ../classes/core.php:1346
-#: ../vendor/calderawp/fields/src/fields.php:114
-#: ../vendor/calderawp/fields/src/fields.php:136
-#: ../vendor/calderawp/fields/src/fields.php:217
-#: ../vendor/calderawp/fields/src/fields.php:319
-#: ../vendor/calderawp/range-slider/src/range_slider.php:34
+#: ../classes/core.php:1167 ../classes/core.php:1189 ../classes/core.php:1226
+#: ../classes/core.php:1309 ../classes/core.php:1412
 msgid "Special"
 msgstr "スペシャル"
 
-#: ../classes/core.php:1101 ../vendor/calderawp/fields/src/fields.php:114
+#: ../classes/core.php:1167
 msgid "Math"
 msgstr ""
 
-#: ../classes/core.php:1102 ../vendor/calderawp/fields/src/fields.php:115
+#: ../classes/core.php:1168
 msgid "Calculate values"
 msgstr "計算値"
 
-#: ../classes/core.php:1109 ../vendor/calderawp/fields/src/fields.php:122
+#: ../classes/core.php:1175
 msgid "Total"
 msgstr "合計"
 
-#: ../classes/core.php:1121
-#: ../vendor/calderawp/range-slider/src/range_slider.php:32
+#: ../classes/core.php:1187
 msgid "Range Slider"
 msgstr "レンジ スライダー"
 
-#: ../classes/core.php:1124
-#: ../vendor/calderawp/range-slider/src/range_slider.php:35
+#: ../classes/core.php:1190
 msgid "Range Slider input field"
 msgstr "レンジ スライダー入力フィールド"
 
-#: ../classes/core.php:1158 ../vendor/calderawp/fields/src/fields.php:134
+#: ../classes/core.php:1224
 msgid "Star Rating"
 msgstr "スター評価"
 
-#: ../classes/core.php:1160 ../vendor/calderawp/fields/src/fields.php:136
+#: ../classes/core.php:1226
 msgid "Feedback"
 msgstr ""
 
-#: ../classes/core.php:1161 ../vendor/calderawp/fields/src/fields.php:137
+#: ../classes/core.php:1227
 msgid "Star rating input for feedback"
 msgstr "フィードバックのスター評価"
 
-#: ../classes/core.php:1193 ../vendor/calderawp/fields/src/fields.php:168
+#: ../classes/core.php:1259
 msgid "Phone Number"
 msgstr "電話番号"
 
-#: ../classes/core.php:1194 ../vendor/calderawp/fields/src/fields.php:169
+#: ../classes/core.php:1260
 msgid "Phone number with masking"
 msgstr "フォーマット化された電話番号"
 
-#: ../classes/core.php:1196 ../classes/core.php:1218 ../classes/core.php:1287
-#: ../classes/core.php:1324 ../classes/core.php:1334 ../classes/core.php:1431
-#: ../classes/core.php:1457 ../vendor/calderawp/fields/src/fields.php:171
-#: ../vendor/calderawp/fields/src/fields.php:193
-#: ../vendor/calderawp/fields/src/fields.php:260
-#: ../vendor/calderawp/fields/src/fields.php:297
-#: ../vendor/calderawp/fields/src/fields.php:307
-#: ../vendor/calderawp/fields/src/fields.php:400
-#: ../vendor/calderawp/fields/src/fields.php:426
+#: ../classes/core.php:1262 ../classes/core.php:1284 ../classes/core.php:1353
+#: ../classes/core.php:1390 ../classes/core.php:1400 ../classes/core.php:1497
+#: ../classes/core.php:1523
 msgid "Text Fields"
 msgstr "テキスト入力"
 
-#: ../classes/core.php:1196 ../classes/core.php:1218 ../classes/core.php:1233
-#: ../classes/core.php:1287 ../classes/core.php:1303 ../classes/core.php:1324
-#: ../classes/core.php:1334 ../classes/core.php:1375 ../classes/core.php:1394
-#: ../classes/core.php:1413 ../classes/core.php:1486 ../ui/edit.php:168
-#: ../vendor/calderawp/fields/src/fields.php:171
-#: ../vendor/calderawp/fields/src/fields.php:193
-#: ../vendor/calderawp/fields/src/fields.php:207
-#: ../vendor/calderawp/fields/src/fields.php:260
-#: ../vendor/calderawp/fields/src/fields.php:276
-#: ../vendor/calderawp/fields/src/fields.php:297
-#: ../vendor/calderawp/fields/src/fields.php:307
-#: ../vendor/calderawp/fields/src/fields.php:347
-#: ../vendor/calderawp/fields/src/fields.php:365
-#: ../vendor/calderawp/fields/src/fields.php:383
-#: ../vendor/calderawp/fields/src/fields.php:455
+#: ../classes/core.php:1262 ../classes/core.php:1284 ../classes/core.php:1299
+#: ../classes/core.php:1353 ../classes/core.php:1369 ../classes/core.php:1390
+#: ../classes/core.php:1400 ../classes/core.php:1441 ../classes/core.php:1460
+#: ../classes/core.php:1479 ../classes/core.php:1552 ../ui/edit.php:170
 msgid "Basic"
 msgstr "ベーシック"
 
-#: ../classes/core.php:1196 ../vendor/calderawp/fields/src/fields.php:171
+#: ../classes/core.php:1262
 msgid "User"
 msgstr ""
 
-#: ../classes/core.php:1215 ../classes/core.php:1216
-#: ../vendor/calderawp/fields/src/fields.php:190
-#: ../vendor/calderawp/fields/src/fields.php:191
+#: ../classes/core.php:1281 ../classes/core.php:1282
 msgid "Single Line Text"
 msgstr "一行のテキスト入力"
 
-#: ../classes/core.php:1229 ../classes/core.php:1233
-#: ../vendor/calderawp/fields/src/fields.php:204
-#: ../vendor/calderawp/fields/src/fields.php:207
+#: ../classes/core.php:1295 ../classes/core.php:1299
 msgid "File"
 msgstr ""
 
-#: ../classes/core.php:1230 ../vendor/calderawp/fields/src/fields.php:205
+#: ../classes/core.php:1296
 msgid "File Uploader"
 msgstr "ファイル アップローダ"
 
-#: ../classes/core.php:1240 ../vendor/calderawp/fields/src/fields.php:214
+#: ../classes/core.php:1306
 msgid "reCAPTCHA"
 msgstr ""
 
-#: ../classes/core.php:1241 ../vendor/calderawp/fields/src/fields.php:215
+#: ../classes/core.php:1307
 msgid "reCAPTCHA anti-spam field"
 msgstr "reCAPTCHA アンチスパム フィールド"
 
-#: ../classes/core.php:1266 ../vendor/calderawp/fields/src/fields.php:239
+#: ../classes/core.php:1332
 msgid "HTML"
 msgstr ""
 
-#: ../classes/core.php:1267 ../vendor/calderawp/fields/src/fields.php:240
+#: ../classes/core.php:1333
 msgid "Add text/html content"
 msgstr "text/html コンテンツの追加"
 
-#: ../classes/core.php:1269 ../fields/html/config_template.php:2
+#: ../classes/core.php:1335 ../fields/html/config_template.php:2
 #: ../processors/akismet/config.php:20
-#: ../vendor/calderawp/fields/src/fields.php:242
 msgid "Content"
 msgstr "コンテンツ"
 
-#: ../classes/core.php:1284 ../classes/core.php:1285
-#: ../vendor/calderawp/fields/src/fields.php:257
-#: ../vendor/calderawp/fields/src/fields.php:258
+#: ../classes/core.php:1350 ../classes/core.php:1351
 msgid "Hidden"
 msgstr "非表示"
 
-#: ../classes/core.php:1300 ../fields/button/config_template.php:6
-#: ../vendor/calderawp/fields/src/fields.php:273
-#: ../vendor/calderawp/fields/src/fields/button/config_template.php:6
+#: ../classes/core.php:1366 ../fields/button/config_template.php:6
 msgid "Button"
 msgstr ""
 
-#: ../classes/core.php:1301 ../vendor/calderawp/fields/src/fields.php:274
+#: ../classes/core.php:1367
 msgid "Button, Submit and Reset types"
 msgstr "ボタン、送信、リセット"
 
-#: ../classes/core.php:1303 ../vendor/calderawp/fields/src/fields.php:276
+#: ../classes/core.php:1369
 msgid "Buttons"
 msgstr ""
 
-#: ../classes/core.php:1321 ../classes/core.php:1322
-#: ../vendor/calderawp/fields/src/fields.php:294
-#: ../vendor/calderawp/fields/src/fields.php:295
+#: ../classes/core.php:1387 ../classes/core.php:1388
 msgid "Email Address"
 msgstr "メールアドレス"
 
-#: ../classes/core.php:1331 ../classes/core.php:1332
-#: ../vendor/calderawp/fields/src/fields.php:304
-#: ../vendor/calderawp/fields/src/fields.php:305
+#: ../classes/core.php:1397 ../classes/core.php:1398
 msgid "Paragraph Textarea"
 msgstr "テキスト エリア入力"
 
-#: ../classes/core.php:1344 ../classes/core.php:1345
-#: ../vendor/calderawp/fields/src/fields.php:317
-#: ../vendor/calderawp/fields/src/fields.php:318
+#: ../classes/core.php:1410 ../classes/core.php:1411
 msgid "Toggle Switch"
 msgstr "トグル スイッチ"
 
-#: ../classes/core.php:1346 ../classes/core.php:1375 ../classes/core.php:1394
-#: ../classes/core.php:1413 ../classes/core.php:1486
-#: ../vendor/calderawp/fields/src/fields.php:319
-#: ../vendor/calderawp/fields/src/fields.php:347
-#: ../vendor/calderawp/fields/src/fields.php:365
-#: ../vendor/calderawp/fields/src/fields.php:383
-#: ../vendor/calderawp/fields/src/fields.php:455
+#: ../classes/core.php:1412 ../classes/core.php:1441 ../classes/core.php:1460
+#: ../classes/core.php:1479 ../classes/core.php:1552
 msgid "Select Options"
 msgstr ""
 
-#: ../classes/core.php:1372 ../classes/core.php:1373
-#: ../vendor/calderawp/fields/src/fields.php:344
-#: ../vendor/calderawp/fields/src/fields.php:345
+#: ../classes/core.php:1438 ../classes/core.php:1439
 msgid "Dropdown Select"
 msgstr "ドロップダウンリスト"
 
-#: ../classes/core.php:1391 ../classes/core.php:1392
-#: ../vendor/calderawp/fields/src/fields.php:362
-#: ../vendor/calderawp/fields/src/fields.php:363
+#: ../classes/core.php:1457 ../classes/core.php:1458
 msgid "Checkbox"
 msgstr "チェックボックス"
 
-#: ../classes/core.php:1410 ../classes/core.php:1411
-#: ../vendor/calderawp/fields/src/fields.php:380
-#: ../vendor/calderawp/fields/src/fields.php:381
+#: ../classes/core.php:1476 ../classes/core.php:1477
 msgid "Radio"
 msgstr "ラジオボタン"
 
-#: ../classes/core.php:1428 ../classes/core.php:1429
-#: ../vendor/calderawp/fields/src/fields.php:397
-#: ../vendor/calderawp/fields/src/fields.php:398
+#: ../classes/core.php:1494 ../classes/core.php:1495
 msgid "Date Picker"
 msgstr "日付ピッカー"
 
-#: ../classes/core.php:1431 ../classes/core.php:1457
-#: ../vendor/calderawp/fields/src/fields.php:400
-#: ../vendor/calderawp/fields/src/fields.php:426
+#: ../classes/core.php:1497 ../classes/core.php:1523
 msgid "Pickers"
 msgstr ""
 
-#: ../classes/core.php:1455 ../classes/core.php:1456
-#: ../vendor/calderawp/fields/src/fields.php:424
-#: ../vendor/calderawp/fields/src/fields.php:425
+#: ../classes/core.php:1521 ../classes/core.php:1522
 msgid "Color Picker"
 msgstr "カラーピッカー"
 
-#: ../classes/core.php:1483 ../vendor/calderawp/fields/src/fields.php:452
+#: ../classes/core.php:1549
 #, fuzzy
 msgid "State/ Province Select"
 msgstr "1つ選択"
 
-#: ../classes/core.php:1484 ../vendor/calderawp/fields/src/fields.php:453
+#: ../classes/core.php:1550
 msgid "Dropdown select for US states and Canadian provinces."
 msgstr ""
 
-#: ../classes/core.php:1777
+#: ../classes/core.php:1844
 msgid "System Tags"
 msgstr "システムタグ"
 
-#: ../classes/core.php:2401 ../classes/core.php:2435
+#: ../classes/core.php:2556 ../classes/core.php:2590
 #, fuzzy
 msgid "Mailer Debug"
 msgstr "メーラー"
 
-#: ../classes/core.php:2494 ../classes/core.php:3398
+#: ../classes/core.php:2649 ../classes/core.php:3554
 msgid "Invalid form ID"
 msgstr "無効なフォームID "
 
-#: ../classes/core.php:2744 ../classes/core.php:2749 ../classes/core.php:2756
-#: ../classes/core.php:3714 ../classes/core.php:3730 ../classes/core.php:3733
-#: ../classes/core.php:3737
+#: ../classes/core.php:2895 ../classes/core.php:2900 ../classes/core.php:2907
+#: ../classes/core.php:3891 ../classes/core.php:3907 ../classes/core.php:3910
+#: ../classes/core.php:3914
 msgid "Permission denied or entry does not exist."
 msgstr "アクセス権限が無いかエントリーが存在しません。"
 
-#: ../classes/core.php:2793
+#: ../classes/core.php:2947
 msgid "is required"
 msgstr "は必須項目"
 
-#: ../classes/core.php:4020
+#: ../classes/core.php:3759 ../classes/core.php:3765
+msgid "Form is currently not active."
+msgstr ""
+
+#: ../classes/core.php:4196
 msgid "WARNING: Form is in Mailer Debug mode. Disable before going live."
 msgstr ""
 
@@ -485,74 +441,68 @@ msgid "Form"
 msgstr "フォーム"
 
 #: ../fields/button/config_template.php:2
-#: ../vendor/calderawp/fields/src/fields/button/config_template.php:2
 msgid "Type"
 msgstr ""
 
 #: ../fields/button/config_template.php:5
-#: ../vendor/calderawp/fields/src/fields/button/config_template.php:5
 msgid "Submit"
 msgstr ""
 
 #: ../fields/button/config_template.php:7
-#: ../vendor/calderawp/fields/src/fields/button/config_template.php:7
 msgid "Next Page"
 msgstr ""
 
 #: ../fields/button/config_template.php:8
-#: ../vendor/calderawp/fields/src/fields/button/config_template.php:8
 msgid "Previous Page"
 msgstr ""
 
 #: ../fields/button/config_template.php:14
-#: ../vendor/calderawp/fields/src/fields/button/config_template.php:14
 msgid "Class"
 msgstr ""
 
 #: ../fields/calculation/config.php:2
-#: ../vendor/calderawp/fields/src/fields/calculation/config.php:2
 msgid "Element"
 msgstr ""
 
 #: ../fields/calculation/config.php:8
-#: ../vendor/calderawp/fields/src/fields/calculation/config.php:8
 msgid "Classes"
 msgstr "クラス"
 
 #: ../fields/calculation/config.php:14
-#: ../vendor/calderawp/fields/src/fields/calculation/config.php:14
 msgid "Before"
 msgstr "前"
 
 #: ../fields/calculation/config.php:20
-#: ../vendor/calderawp/fields/src/fields/calculation/config.php:20
 msgid "After"
 msgstr "後"
 
 #: ../fields/calculation/config.php:27
-#: ../vendor/calderawp/fields/src/fields/calculation/config.php:27
 msgid "Money Format"
 msgstr ""
 
 #: ../fields/calculation/config.php:32
-#: ../vendor/calderawp/fields/src/fields/calculation/config.php:32
+msgid "Separator"
+msgstr ""
+
+#: ../fields/calculation/config.php:35
+msgid "Setup a custom thousand separator. e.g 10,000.00 or 10.000.00"
+msgstr ""
+
+#: ../fields/calculation/config.php:41
 msgid "Manual Formula"
 msgstr "マニュアル数式"
 
-#: ../fields/calculation/config.php:45
-#: ../vendor/calderawp/fields/src/fields/calculation/config.php:45
+#: ../fields/calculation/config.php:54
 msgid "Add Operator Group"
 msgstr ""
 
-#: ../fields/calculation/config.php:54
-#: ../vendor/calderawp/fields/src/fields/calculation/config.php:54
-msgid "Use %field_slug% as field vaule variables"
+#: ../fields/calculation/config.php:63
+#, fuzzy
+msgid "Use %field_slug% as field value variables"
 msgstr "%field_slug% を入力変数として使用する"
 
 #: ../fields/checkbox/config_template.php:3
 #: ../fields/radio/config_template.php:4
-#: ../vendor/calderawp/fields/src/fields/checkbox/config_template.php:3
-#: ../vendor/calderawp/fields/src/fields/radio/config_template.php:4
 msgid "Inline"
 msgstr ""
 
@@ -560,260 +510,203 @@ msgstr ""
 #: ../fields/email/config.php:8 ../fields/paragraph/config_template.php:14
 #: ../fields/phone/config.php:8 ../fields/range_slider/config.php:10
 #: ../fields/text/config.php:8
-#: ../vendor/calderawp/fields/src/fields/color_picker/setup.php:2
-#: ../vendor/calderawp/fields/src/fields/date_picker/setup.php:2
-#: ../vendor/calderawp/fields/src/fields/email/config.php:8
-#: ../vendor/calderawp/fields/src/fields/paragraph/config_template.php:14
-#: ../vendor/calderawp/fields/src/fields/phone/config.php:8
-#: ../vendor/calderawp/fields/src/fields/text/config.php:8
-#: ../vendor/calderawp/range-slider/src/field/config.php:3
 msgid "Default"
 msgstr ""
 
 #: ../fields/color_picker/setup.php:2
-#: ../vendor/calderawp/fields/src/fields/color_picker/setup.php:2
 msgid "Color"
 msgstr ""
 
 #: ../fields/date_picker/setup.php:8
-#: ../vendor/calderawp/fields/src/fields/date_picker/setup.php:8
 msgid "Format"
 msgstr ""
 
 #: ../fields/date_picker/setup.php:14
-#: ../vendor/calderawp/fields/src/fields/date_picker/setup.php:14
 msgid "Autoclose"
 msgstr ""
 
 #: ../fields/date_picker/setup.php:16
-#: ../vendor/calderawp/fields/src/fields/date_picker/setup.php:16
 msgid "Enable autoclose"
 msgstr ""
 
 #: ../fields/date_picker/setup.php:17
-#: ../vendor/calderawp/fields/src/fields/date_picker/setup.php:17
 msgid ""
 "If enabled, the date picker will automatically close after selecting the "
 "final input"
 msgstr ""
 
 #: ../fields/date_picker/setup.php:21
-#: ../vendor/calderawp/fields/src/fields/date_picker/setup.php:21
 #, fuzzy
 msgid "Start View"
 msgstr "スターのサイズ"
 
 #: ../fields/date_picker/setup.php:24
-#: ../vendor/calderawp/fields/src/fields/date_picker/setup.php:24
 #, fuzzy
 msgid "Month (Default)"
 msgstr "ディフォルト設定無し"
 
 #: ../fields/date_picker/setup.php:25
-#: ../vendor/calderawp/fields/src/fields/date_picker/setup.php:25
 msgid "Year"
 msgstr ""
 
 #: ../fields/date_picker/setup.php:26
-#: ../vendor/calderawp/fields/src/fields/date_picker/setup.php:26
 msgid "Decade"
 msgstr ""
 
 #: ../fields/date_picker/setup.php:28
-#: ../vendor/calderawp/fields/src/fields/date_picker/setup.php:28
 msgid "The starting view of the date picker (month, year, decade)"
 msgstr ""
 
 #: ../fields/date_picker/setup.php:32
-#: ../vendor/calderawp/fields/src/fields/date_picker/setup.php:32
 msgid "language"
 msgstr ""
 
 #: ../fields/date_picker/setup.php:100
-#: ../vendor/calderawp/fields/src/fields/date_picker/setup.php:100
 msgid "Language to use. e.g. pt-BR"
 msgstr ""
 
 #: ../fields/dropdown/config_template.php:2 ../fields/email/config.php:2
 #: ../fields/paragraph/config_template.php:2 ../fields/phone/config.php:2
 #: ../fields/text/config.php:2
-#: ../vendor/calderawp/fields/src/fields/dropdown/config_template.php:2
-#: ../vendor/calderawp/fields/src/fields/email/config.php:2
-#: ../vendor/calderawp/fields/src/fields/paragraph/config_template.php:2
-#: ../vendor/calderawp/fields/src/fields/phone/config.php:2
-#: ../vendor/calderawp/fields/src/fields/text/config.php:2
 msgid "Placeholder"
 msgstr ""
 
 #: ../fields/file/config_template.php:2
-#: ../vendor/calderawp/fields/src/fields/file/config_template.php:2
 msgid "Attach to mailer"
 msgstr "メーラーに添付"
 
 #: ../fields/file/config_template.php:9
-#: ../vendor/calderawp/fields/src/fields/file/config_template.php:9
 msgid "Allowed Types"
 msgstr "使用可能なタイプ"
 
 #: ../fields/file/config_template.php:12
-#: ../vendor/calderawp/fields/src/fields/file/config_template.php:12
 msgid "Comma separated eg. jpg,pdf,txt"
 msgstr "コンマ区切り、jpg, pdf, txt"
 
 #: ../fields/gravatar/config.php:2
-#: ../vendor/calderawp/fields/src/fields/gravatar/config.php:2
 #, fuzzy
 msgid "Email Field"
 msgstr "メールのタイプ"
 
 #: ../fields/gravatar/config.php:10
-#: ../vendor/calderawp/fields/src/fields/gravatar/config.php:10
 msgid "Mystery Man"
 msgstr ""
 
 #: ../fields/gravatar/config.php:11
-#: ../vendor/calderawp/fields/src/fields/gravatar/config.php:11
 msgid "Blank"
 msgstr ""
 
 #: ../fields/gravatar/config.php:12
-#: ../vendor/calderawp/fields/src/fields/gravatar/config.php:12
 #, fuzzy
 msgid "Gravatar Logo"
 msgstr "Gravatar 用フィールド"
 
 #: ../fields/gravatar/config.php:13
-#: ../vendor/calderawp/fields/src/fields/gravatar/config.php:13
 msgid "Identicon (Generated)"
 msgstr ""
 
 #: ../fields/gravatar/config.php:14
-#: ../vendor/calderawp/fields/src/fields/gravatar/config.php:14
 msgid "Wavatar (Generated)"
 msgstr ""
 
 #: ../fields/gravatar/config.php:15
-#: ../vendor/calderawp/fields/src/fields/gravatar/config.php:15
 msgid "MonsterID (Generated)"
 msgstr ""
 
 #: ../fields/gravatar/config.php:16
-#: ../vendor/calderawp/fields/src/fields/gravatar/config.php:16
 msgid "Retro (Generated)"
 msgstr ""
 
 #: ../fields/gravatar/config.php:21
-#: ../vendor/calderawp/fields/src/fields/gravatar/config.php:21
 #, fuzzy
 msgid "Fallback"
 msgstr "パスバック"
 
 #: ../fields/gravatar/config.php:35
-#: ../vendor/calderawp/fields/src/fields/gravatar/config.php:35
 msgid "Size"
 msgstr ""
 
 #: ../fields/gravatar/config.php:42
-#: ../vendor/calderawp/fields/src/fields/gravatar/config.php:42
 #, fuzzy
 msgid "Border Color"
 msgstr "ボーダー"
 
 #: ../fields/gravatar/config.php:49
-#: ../vendor/calderawp/fields/src/fields/gravatar/config.php:49
 #, fuzzy
 msgid "Border Size"
 msgstr "ボーダー"
 
 #: ../fields/gravatar/config.php:56
-#: ../vendor/calderawp/fields/src/fields/gravatar/config.php:56
 #, fuzzy
 msgid "Border Radius"
 msgstr "ボーダー"
 
-#: ../fields/hidden/setup.php:2 ../ui/edit.php:105 ../ui/edit.php:133
+#: ../fields/hidden/setup.php:2 ../ui/edit.php:106 ../ui/edit.php:135
 #: ../ui/panels/variables.php:12
-#: ../vendor/calderawp/fields/src/fields/hidden/setup.php:2
 msgid "Value"
 msgstr "入力値"
 
 #: ../fields/paragraph/config_template.php:8
-#: ../vendor/calderawp/fields/src/fields/paragraph/config_template.php:8
 msgid "Rows"
 msgstr ""
 
 #: ../fields/phone/config.php:14
-#: ../vendor/calderawp/fields/src/fields/phone/config.php:14
 msgid "Style"
 msgstr ""
 
 #: ../fields/phone/config.php:16
-#: ../vendor/calderawp/fields/src/fields/phone/config.php:16
 msgid "Local"
 msgstr ""
 
 #: ../fields/phone/config.php:18
-#: ../vendor/calderawp/fields/src/fields/phone/config.php:18
 msgid "International"
 msgstr ""
 
 #: ../fields/phone/config.php:20
-#: ../vendor/calderawp/fields/src/fields/phone/config.php:20
 msgid "Custom"
 msgstr ""
 
 #: ../fields/phone/config.php:22
-#: ../vendor/calderawp/fields/src/fields/phone/config.php:22
 msgid "Use the digit 9 to indicate a number"
 msgstr "\"9\" を数値識別子として使用する"
 
 #: ../fields/range_slider/config.php:17
-#: ../vendor/calderawp/range-slider/src/field/config.php:10
 msgid "Track"
 msgstr "追跡"
 
 #: ../fields/range_slider/config.php:23
-#: ../vendor/calderawp/range-slider/src/field/config.php:16
 msgid "Highlight"
 msgstr "ハイライト"
 
 #: ../fields/range_slider/config.php:29
-#: ../vendor/calderawp/range-slider/src/field/config.php:22
 msgid "Handle"
 msgstr "ハンドル"
 
 #: ../fields/range_slider/config.php:35
-#: ../vendor/calderawp/range-slider/src/field/config.php:28
 msgid "Border"
 msgstr "ボーダー"
 
 #: ../fields/range_slider/config.php:42
-#: ../vendor/calderawp/range-slider/src/field/config.php:35
 msgid "Steps"
 msgstr "ステップ"
 
 #: ../fields/range_slider/config.php:48
-#: ../vendor/calderawp/range-slider/src/field/config.php:41
 msgid "Minimum"
 msgstr "最小"
 
 #: ../fields/range_slider/config.php:54
-#: ../vendor/calderawp/range-slider/src/field/config.php:47
 msgid "Maximum"
 msgstr "最大"
 
 #: ../fields/range_slider/config.php:60
-#: ../vendor/calderawp/range-slider/src/field/config.php:53
 msgid "Show Value"
 msgstr ""
 
 #: ../fields/range_slider/config.php:66
-#: ../vendor/calderawp/range-slider/src/field/config.php:59
 msgid "Prefix"
 msgstr "接頭語"
 
 #: ../fields/range_slider/config.php:72
-#: ../vendor/calderawp/range-slider/src/field/config.php:65
 msgid "Suffix"
 msgstr "接尾語"
 
@@ -822,191 +715,158 @@ msgid "reCaptcha required keys from Google."
 msgstr ""
 
 #: ../fields/recaptcha/config.php:3
-#: ../vendor/calderawp/fields/src/fields/recaptcha/config.php:2
 #, fuzzy
 msgid "Site Key"
 msgstr "プライベートキー"
 
 #: ../fields/recaptcha/config.php:9
-#: ../vendor/calderawp/fields/src/fields/recaptcha/config.php:8
 msgid "Secret Key"
 msgstr ""
 
 #: ../fields/recaptcha/config.php:15
-#: ../vendor/calderawp/fields/src/fields/recaptcha/config.php:14
 msgid "Theme"
 msgstr "テーマ"
 
 #: ../fields/recaptcha/config.php:18
-#: ../vendor/calderawp/fields/src/fields/recaptcha/config.php:17
 msgid "Light"
 msgstr ""
 
 #: ../fields/recaptcha/config.php:19
-#: ../vendor/calderawp/fields/src/fields/recaptcha/config.php:18
 msgid "Dark"
 msgstr ""
 
 #: ../fields/recaptcha/config.php:21
-#: ../vendor/calderawp/fields/src/fields/recaptcha/config.php:20
 msgid ""
 "Theme changes not available in preview. Update form and reload to see new "
 "theme."
 msgstr "テーマの変更はプレビューできません。更新後再度ロードしてください。"
 
 #: ../fields/recaptcha/preview.php:20
-#: ../vendor/calderawp/fields/src/fields/recaptcha/preview.php:20
 msgid "No Secret Key Added"
 msgstr ""
 
 #: ../fields/recaptcha/preview.php:23
-#: ../vendor/calderawp/fields/src/fields/recaptcha/preview.php:23
 msgid "No Site Key Added"
 msgstr ""
 
 #: ../fields/star-rate/config.php:2
-#: ../vendor/calderawp/fields/src/fields/star-rate/config.php:2
 msgid "Number of Stars"
 msgstr "スターの数"
 
 #: ../fields/star-rate/config.php:8
-#: ../vendor/calderawp/fields/src/fields/star-rate/config.php:8
 msgid "Star Type"
 msgstr ""
 
 #: ../fields/star-rate/config.php:11
-#: ../vendor/calderawp/fields/src/fields/star-rate/config.php:11
 msgid "Star"
 msgstr "スター"
 
 #: ../fields/star-rate/config.php:12
-#: ../vendor/calderawp/fields/src/fields/star-rate/config.php:12
 msgid "Heart"
 msgstr "ハート"
 
 #: ../fields/star-rate/config.php:13
-#: ../vendor/calderawp/fields/src/fields/star-rate/config.php:13
 msgid "Face"
 msgstr "顔"
 
 #: ../fields/star-rate/config.php:14
-#: ../vendor/calderawp/fields/src/fields/star-rate/config.php:14
 msgid "Dot"
 msgstr "ドット"
 
 #: ../fields/star-rate/config.php:19
-#: ../vendor/calderawp/fields/src/fields/star-rate/config.php:19
 msgid "Star Size"
 msgstr "スターのサイズ"
 
 #: ../fields/star-rate/config.php:25
-#: ../vendor/calderawp/fields/src/fields/star-rate/config.php:25
 msgid "Star Spacing"
 msgstr "スターの間隔"
 
 #: ../fields/star-rate/config.php:31
-#: ../vendor/calderawp/fields/src/fields/star-rate/config.php:31
 msgid "Single Select"
 msgstr "1つ選択"
 
 #: ../fields/star-rate/config.php:38
-#: ../vendor/calderawp/fields/src/fields/star-rate/config.php:38
 msgid "Star Color"
 msgstr "スターの色"
 
 #: ../fields/star-rate/config.php:44
-#: ../vendor/calderawp/fields/src/fields/star-rate/config.php:44
 msgid "Track Color"
 msgstr "追跡の色"
 
 #: ../fields/star-rate/config.php:50
-#: ../vendor/calderawp/fields/src/fields/star-rate/config.php:50
 msgid "Include Cancel"
 msgstr "キャンセルを含める"
 
 #: ../fields/text/config.php:15
-#: ../vendor/calderawp/fields/src/fields/text/config.php:15
 msgid "Masked Input"
 msgstr ""
 
 #: ../fields/text/config.php:17
-#: ../vendor/calderawp/fields/src/fields/text/config.php:17
 msgid "Enable input mask"
 msgstr ""
 
 #: ../fields/text/config.php:22
-#: ../vendor/calderawp/fields/src/fields/text/config.php:22
 msgid "Mask"
 msgstr ""
 
 #: ../fields/text/config.php:30
-#: ../vendor/calderawp/fields/src/fields/text/config.php:30
 msgid "numeric"
 msgstr ""
 
 #: ../fields/text/config.php:31
-#: ../vendor/calderawp/fields/src/fields/text/config.php:31
 msgid "alphabetical"
 msgstr ""
 
 #: ../fields/text/config.php:32
-#: ../vendor/calderawp/fields/src/fields/text/config.php:32
 msgid "alphanumeric"
 msgstr ""
 
 #: ../fields/text/config.php:33
-#: ../vendor/calderawp/fields/src/fields/text/config.php:33
 msgid "optional"
 msgstr ""
 
 #: ../fields/text/config.php:34
-#: ../vendor/calderawp/fields/src/fields/text/config.php:34
 msgid "length"
 msgstr ""
 
 #: ../fields/text/config.php:36
-#: ../vendor/calderawp/fields/src/fields/text/config.php:36
 msgid "Any length character only"
 msgstr ""
 
 #: ../fields/text/config.php:37
-#: ../vendor/calderawp/fields/src/fields/text/config.php:37
 msgid "Any length number only"
 msgstr ""
 
 #: ../fields/text/config.php:38
-#: ../vendor/calderawp/fields/src/fields/text/config.php:38
 msgid "email"
 msgstr ""
 
 #: ../fields/toggle_switch/config_template.php:2
-#: ../vendor/calderawp/fields/src/fields/toggle_switch/config_template.php:2
 msgid "Orientation"
 msgstr ""
 
 #: ../fields/toggle_switch/config_template.php:5
-#: ../vendor/calderawp/fields/src/fields/toggle_switch/config_template.php:5
 msgid "Horizontal"
 msgstr ""
 
 #: ../fields/toggle_switch/config_template.php:6
-#: ../vendor/calderawp/fields/src/fields/toggle_switch/config_template.php:6
+msgid "Justified"
+msgstr ""
+
+#: ../fields/toggle_switch/config_template.php:7
 msgid "Vertical"
 msgstr ""
 
-#: ../fields/toggle_switch/config_template.php:12
-#: ../vendor/calderawp/fields/src/fields/toggle_switch/config_template.php:12
+#: ../fields/toggle_switch/config_template.php:13
 msgid "Active Class"
 msgstr ""
 
-#: ../fields/toggle_switch/config_template.php:19
-#: ../vendor/calderawp/fields/src/fields/toggle_switch/config_template.php:19
+#: ../fields/toggle_switch/config_template.php:20
 msgid "Inactive Class"
 msgstr ""
 
-#: ../fields/toggle_switch/field.php:37 ../ui/edit.php:477 ../ui/edit.php:485
-#: ../ui/edit.php:518 ../ui/edit.php:525
-#: ../vendor/calderawp/fields/src/fields/toggle_switch/field.php:37
+#: ../fields/toggle_switch/field.php:39 ../ui/edit.php:491 ../ui/edit.php:499
+#: ../ui/edit.php:532 ../ui/edit.php:539
 msgid "Enable"
 msgstr "有効化"
 
@@ -1072,7 +932,7 @@ msgstr "ファイルの種類に対応していません、使用可能なファ
 msgid "File type needs to be"
 msgstr "対応しているファイルの種類は"
 
-#: ../processors/akismet/config.php:2 ../ui/edit.php:326
+#: ../processors/akismet/config.php:2 ../ui/edit.php:330
 #: ../ui/panels/variables.php:10
 msgid "Name"
 msgstr "名称"
@@ -1198,54 +1058,54 @@ msgstr "フロントエンドのフォーム グリッドでBootstrap 3スタイ
 msgid "Grid"
 msgstr "グリッド"
 
-#: ../ui/admin.php:69 ../ui/admin.php:133
+#: ../ui/admin.php:69 ../ui/admin.php:124
 msgid "Entries"
 msgstr "エントリー"
 
-#: ../ui/admin.php:83 ../ui/edit.php:478 ../ui/edit.php:486
+#: ../ui/admin.php:86 ../ui/edit.php:492 ../ui/edit.php:500
 #: ../ui/panels/emailer.php:35
 msgid "Disabled"
 msgstr "無効"
 
-#: ../ui/admin.php:115
+#: ../ui/admin.php:96
 msgid "Mailer Debug enabled."
 msgstr ""
 
-#: ../ui/admin.php:118 ../ui/entries.php:14
+#: ../ui/admin.php:100 ../ui/entries.php:14
 msgid "Edit"
 msgstr ""
 
-#: ../ui/admin.php:134
+#: ../ui/admin.php:125
 #, fuzzy
 msgid "Export"
 msgstr "インポート"
 
-#: ../ui/admin.php:135
+#: ../ui/admin.php:126
 #, fuzzy
 msgid "Clone Form"
 msgstr "Caldera フォーム"
 
-#: ../ui/admin.php:135
+#: ../ui/admin.php:126
 msgid "Clone"
 msgstr ""
 
-#: ../ui/admin.php:136
+#: ../ui/admin.php:127
 msgid "This will delete this form permanently. Continue?"
 msgstr "継続してこのフォームを完全に削除しますか？"
 
-#: ../ui/admin.php:136
+#: ../ui/admin.php:127
 msgid "Delete"
 msgstr ""
 
-#: ../ui/admin.php:156
+#: ../ui/admin.php:147
 msgid "You don't have any forms."
 msgstr "フォームはありません,"
 
-#: ../ui/admin.php:187
+#: ../ui/admin.php:188
 msgid "An form name is required"
 msgstr "フォーム名が必要です"
 
-#: ../ui/admin.php:214
+#: ../ui/admin.php:215
 msgid ""
 "Looks like something is not working. Please try again a little later or post "
 "to the <a href=\"http://wordpress.org/support/plugin/caldera-forms\" target="
@@ -1271,8 +1131,8 @@ msgstr "ゴミ箱に移動"
 msgid "Delete Permanently"
 msgstr ""
 
-#: ../ui/admin_templates.php:19 ../ui/admin_templates.php:49
-#: ../ui/edit.php:461
+#: ../ui/admin_templates.php:19 ../ui/admin_templates.php:48
+#: ../ui/edit.php:468
 msgid "Form Name"
 msgstr "フォーム名"
 
@@ -1281,23 +1141,23 @@ msgstr "フォーム名"
 msgid "Form File"
 msgstr "フォーム名"
 
-#: ../ui/admin_templates.php:55 ../ui/edit.php:354
+#: ../ui/admin_templates.php:54 ../ui/edit.php:358
 msgid "Description"
 msgstr "詳細"
 
-#: ../ui/admin_templates.php:74 ../ui/edit.php:319
+#: ../ui/admin_templates.php:72 ../ui/edit.php:323
 msgid "ID"
 msgstr "ID"
 
-#: ../ui/admin_templates.php:75 ../ui/admin_templates.php:123
+#: ../ui/admin_templates.php:73 ../ui/admin_templates.php:111
 msgid "Submitted"
 msgstr "送信済"
 
-#: ../ui/admin_templates.php:96
+#: ../ui/admin_templates.php:94
 msgid "No entries found"
 msgstr ""
 
-#: ../ui/admin_templates.php:102
+#: ../ui/admin_templates.php:100
 msgid "No entries yet."
 msgstr "えんとりーはありません。"
 
@@ -1318,219 +1178,232 @@ msgstr ""
 msgid "Select a source"
 msgstr ""
 
-#: ../ui/edit.php:64 ../ui/edit.php:87
+#: ../ui/edit.php:64 ../ui/edit.php:90
 msgid "Post Type"
 msgstr ""
 
-#: ../ui/edit.php:65 ../ui/edit.php:71
+#: ../ui/edit.php:65 ../ui/edit.php:74
 msgid "Taxonomy"
 msgstr "タクソノミー"
 
-#: ../ui/edit.php:120
+#: ../ui/edit.php:122
 msgid "Add Option"
 msgstr "オプションの追加"
 
-#: ../ui/edit.php:121
+#: ../ui/edit.php:123
 msgid "Bulk Insert"
 msgstr "バルク挿入"
 
-#: ../ui/edit.php:124
+#: ../ui/edit.php:126
 msgid "Single option per line. These replace the current list."
 msgstr "1行につき1つ選択可能です。既存のリストと換地します。"
 
-#: ../ui/edit.php:125
+#: ../ui/edit.php:127
 msgid "Insert Options"
 msgstr ""
 
-#: ../ui/edit.php:129
+#: ../ui/edit.php:131
 msgid "No Default"
 msgstr "ディフォルト設定無し"
 
-#: ../ui/edit.php:130
+#: ../ui/edit.php:132
 msgid "Show Values"
 msgstr ""
 
-#: ../ui/edit.php:134
+#: ../ui/edit.php:136
 msgid "Label"
 msgstr ""
 
-#: ../ui/edit.php:295
+#: ../ui/edit.php:297
 msgid "Elements"
 msgstr "構成要素"
 
-#: ../ui/edit.php:301
+#: ../ui/edit.php:305
 msgid "Settings"
 msgstr ""
 
-#: ../ui/edit.php:302
+#: ../ui/edit.php:306
 msgid "Conditions"
 msgstr ""
 
-#: ../ui/edit.php:309
+#: ../ui/edit.php:313
 msgid "Element Type"
 msgstr "構成要素の種類"
 
-#: ../ui/edit.php:333
+#: ../ui/edit.php:337
 msgid "Hide Label"
 msgstr "ラベルを隠す"
 
-#: ../ui/edit.php:340
+#: ../ui/edit.php:344
 msgid "Slug"
 msgstr "スラグ"
 
-#: ../ui/edit.php:347
+#: ../ui/edit.php:351
 msgid "Required"
 msgstr "必須"
 
-#: ../ui/edit.php:361
+#: ../ui/edit.php:365
 msgid "Show in Entry List"
 msgstr "エントリーに含む"
 
-#: ../ui/edit.php:370
+#: ../ui/edit.php:374
 msgid ""
 "Are you sure you want to remove this field?. 'Cancel' to stop. 'OK' to delete"
 msgstr ""
 "このフィールドを削除しますか？「キャンセル」を選択し中断するか、「OK」を選択"
 "し削除する。"
 
-#: ../ui/edit.php:370
+#: ../ui/edit.php:374
 msgid "Delete Element"
 msgstr "構成要素を削除"
 
-#: ../ui/edit.php:376
+#: ../ui/edit.php:380
 msgid "Show"
 msgstr "表示"
 
-#: ../ui/edit.php:377
+#: ../ui/edit.php:381
 msgid "Hide"
 msgstr "隠す"
 
-#: ../ui/edit.php:378
+#: ../ui/edit.php:382
 #, fuzzy
 msgid "Disable"
 msgstr "無効"
 
-#: ../ui/edit.php:380 ../ui/panels/processors.php:126
+#: ../ui/edit.php:384 ../ui/panels/processors.php:126
 msgid "Add Conditional Group"
 msgstr "条件グループを追加"
 
-#: ../ui/edit.php:450 ../ui/edit.php:459
+#: ../ui/edit.php:454 ../ui/edit.php:466
 msgid "General Settings"
 msgstr "イパン設定"
 
-#: ../ui/edit.php:454
+#: ../ui/edit.php:459
+msgid "Updated Successfully"
+msgstr ""
+
+#: ../ui/edit.php:461
 msgid "Update Form"
 msgstr "フォームを更新"
 
-#: ../ui/edit.php:455
+#: ../ui/edit.php:462
 msgid "Preview Form"
 msgstr ""
 
-#: ../ui/edit.php:468
+#: ../ui/edit.php:475
 msgid "Form Description"
 msgstr "フォームの詳細"
 
-#: ../ui/edit.php:475
+#: ../ui/edit.php:482
+#, fuzzy
+msgid "State"
+msgstr "スタティック"
+
+#: ../ui/edit.php:484
+msgid "Deactivate / Draft"
+msgstr ""
+
+#: ../ui/edit.php:489
 msgid "Capture Entries"
 msgstr ""
 
-#: ../ui/edit.php:483
+#: ../ui/edit.php:497
 msgid "Pin to Menu"
 msgstr "メニューにピン止めする"
 
-#: ../ui/edit.php:492
+#: ../ui/edit.php:506
 msgid "View Entries"
 msgstr "エントリーを表示"
 
-#: ../ui/edit.php:494
+#: ../ui/edit.php:508
 msgid "All"
 msgstr ""
 
-#: ../ui/edit.php:516
+#: ../ui/edit.php:530
 msgid "Hide Form"
 msgstr ""
 
-#: ../ui/edit.php:518
+#: ../ui/edit.php:532
 msgid "Hide form after successful submission"
 msgstr "送信の性交後フォームを非表示にする"
 
-#: ../ui/edit.php:523
+#: ../ui/edit.php:537
 msgid "Honeypot"
 msgstr ""
 
-#: ../ui/edit.php:525
+#: ../ui/edit.php:539
 msgid "Place an invisible field to trick spambots"
 msgstr ""
 
-#: ../ui/edit.php:530
+#: ../ui/edit.php:544
 msgid "Success Message"
 msgstr "成功時のメッセージ"
 
-#: ../ui/edit.php:536
+#: ../ui/edit.php:550
 msgid "Gravatar Field"
 msgstr "Gravatar 用フィールド"
 
-#: ../ui/edit.php:543
+#: ../ui/edit.php:557
 msgid "Used when viewing an entry from a non-logged in user."
 msgstr "ログインしていないユーザーのエントリーの表示に使用"
 
-#: ../ui/edit.php:617
+#: ../ui/edit.php:631
 msgid "Add New"
 msgstr "新規追加"
 
-#: ../ui/edit.php:682 ../ui/edit.php:716
+#: ../ui/edit.php:696 ../ui/edit.php:730
 msgid "Remove"
 msgstr "削除"
 
-#: ../ui/edit.php:772
+#: ../ui/edit.php:786
 msgid "Set Element"
 msgstr "構成要素を確定"
 
-#: ../ui/edit.php:775
+#: ../ui/edit.php:789
 msgid "No description given"
 msgstr "詳細無し"
 
-#: ../ui/edit.php:837
+#: ../ui/edit.php:851
 msgid "or"
 msgstr "あるいは"
 
-#: ../ui/edit.php:846 ../ui/edit.php:869
+#: ../ui/edit.php:860 ../ui/edit.php:883
 msgid "is"
 msgstr "が"
 
-#: ../ui/edit.php:847 ../ui/edit.php:870
+#: ../ui/edit.php:861 ../ui/edit.php:884
 msgid "is not"
 msgstr "一致しない"
 
-#: ../ui/edit.php:848 ../ui/edit.php:871
+#: ../ui/edit.php:862 ../ui/edit.php:885
 msgid "is greater than"
 msgstr "より大きいい"
 
-#: ../ui/edit.php:849 ../ui/edit.php:872
+#: ../ui/edit.php:863 ../ui/edit.php:886
 msgid "is less than"
 msgstr "以下"
 
-#: ../ui/edit.php:850 ../ui/edit.php:873
+#: ../ui/edit.php:864 ../ui/edit.php:887
 msgid "starts with"
 msgstr "接頭文字列"
 
-#: ../ui/edit.php:851 ../ui/edit.php:874
+#: ../ui/edit.php:865 ../ui/edit.php:888
 msgid "ends with"
 msgstr "末尾文字列"
 
-#: ../ui/edit.php:852 ../ui/edit.php:875
+#: ../ui/edit.php:866 ../ui/edit.php:889
 msgid "contains"
 msgstr "を含む"
 
-#: ../ui/edit.php:854 ../ui/edit.php:877
+#: ../ui/edit.php:868 ../ui/edit.php:891
 msgid "Select field first"
 msgstr "フィールドを先に選択してください"
 
-#: ../ui/edit.php:859
+#: ../ui/edit.php:873
 msgid "Add Condition"
 msgstr "条件を追加"
 
-#: ../ui/edit.php:865
+#: ../ui/edit.php:879
 msgid "and"
 msgstr "および"
 
@@ -1586,15 +1459,27 @@ msgstr "接続に問題があるか、エクステンションがありません
 msgid "Enabled"
 msgstr "有効"
 
-#: ../ui/panels/emailer.php:45 ../ui/panels/emailer.php:52
-#: ../ui/panels/emailer.php:59 ../ui/panels/emailer.php:100
-msgid "Use %field_slug% to use a value from the form"
-msgstr "フォームからの値を使用するために %field_slug% を使う"
+#: ../ui/panels/emailer.php:45
+msgid "Name from which the email comes"
+msgstr ""
+
+#: ../ui/panels/emailer.php:52
+msgid ""
+"Email Address from which the mail comes. Try not to use a field from the "
+"form. Rather use your own email and use a form field in the \"Reply To Email"
+"\" below."
+msgstr ""
 
 #: ../ui/panels/emailer.php:56
 #, fuzzy
 msgid "Reply To Email"
 msgstr "受信者メールアドレス"
+
+#: ../ui/panels/emailer.php:59
+msgid ""
+"The email address of the person filling in the form. This will allow the "
+"email to be replied directly to the sender."
+msgstr ""
 
 #: ../ui/panels/emailer.php:64
 msgid "Email Type"
@@ -1612,7 +1497,7 @@ msgstr "CSV バージョンを添付する"
 msgid "Recipients"
 msgstr "受信者"
 
-#: ../ui/panels/emailer.php:84
+#: ../ui/panels/emailer.php:84 ../ui/panels/emailer.php:92
 msgid "Comma separated list of email addresses."
 msgstr "コンマ区切りのメールアドレスのリスト"
 
@@ -1620,11 +1505,8 @@ msgstr "コンマ区切りのメールアドレスのリスト"
 msgid "BCC"
 msgstr ""
 
-#: ../ui/panels/emailer.php:92
-#, fuzzy
-msgid ""
-"Comma separated list of email addresses. Use %field_slug% to use a value "
-"from the form."
+#: ../ui/panels/emailer.php:100
+msgid "Use %field_slug% to use a value from the form"
 msgstr "フォームからの値を使用するために %field_slug% を使う"
 
 #: ../ui/panels/emailer.php:104
@@ -1632,8 +1514,9 @@ msgid "Email Message"
 msgstr "メールのメッセージ"
 
 #: ../ui/panels/emailer.php:107
+#, fuzzy
 msgid ""
-"Magic tags, %field_slug% are replaced with submitted data. use {summary} to "
+"Magic tags, %field_slug% are replaced with submitted data. Use {summary} to "
 "build an automatic mail based on form content. Leaving the mailer blank, "
 "will create and automatic summary."
 msgstr ""
@@ -1653,11 +1536,11 @@ msgstr ""
 #: ../ui/panels/emailer.php:116
 msgid ""
 "If set, entries will have a \"Mailer Debug\" meta tab to see the transaction "
-"long. Do not keep this enabled on production as it sends two emails for "
+"log. Do not keep this enabled on production as it sends two emails for "
 "tracking."
 msgstr ""
 
-#: ../ui/panels/emailer.php:123
+#: ../ui/panels/emailer.php:125
 msgid ""
 "Please add a \"Button\" element and set it to \"Submit\" if you want to have "
 "the form submittable."
@@ -1669,7 +1552,7 @@ msgstr "指定した列にあるすべてのフィールドが削除されます
 
 #: ../ui/panels/layout.php:14 ../ui/panels/layout.php:18
 #: ../ui/panels/layout.php:22 ../ui/panels/layout.php:108
-#: ../ui/panels/layout_add_row.php:4 ../ui/panels/pages.php:13
+#: ../ui/panels/layout_add_row.php:4 ../ui/panels/pages.php:14
 msgid "Page"
 msgstr "ページ"
 
@@ -1727,19 +1610,19 @@ msgstr "使用する"
 msgid "Don't Use"
 msgstr "使用しない"
 
-#: ../ui/panels/processors.php:170
+#: ../ui/panels/processors.php:171
 msgid "Add Processor"
 msgstr "プロセッサーを追加"
 
-#: ../ui/panels/processors.php:220
+#: ../ui/panels/processors.php:221
 msgid "Use Processor"
 msgstr "プロセッサーを使用"
 
-#: ../ui/panels/processors.php:225
+#: ../ui/panels/processors.php:226
 msgid "by"
 msgstr "による"
 
-#: ../ui/panels/processors.php:283
+#: ../ui/panels/processors.php:284
 msgid "This processor has no configurable options."
 msgstr ""
 
@@ -1755,18 +1638,28 @@ msgstr "動作"
 msgid "No variables defined"
 msgstr "変数が定義されていません"
 
-#: ../ui/panels/variables.php:29 ../ui/panels/variables.php:47
+#: ../ui/panels/variables.php:29 ../ui/panels/variables.php:49
 msgid "Static"
 msgstr "スタティック"
 
-#: ../ui/panels/variables.php:30 ../ui/panels/variables.php:48
+#: ../ui/panels/variables.php:30 ../ui/panels/variables.php:50
 msgid "Passback"
 msgstr "パスバック"
 
-#: ../vendor/calderawp/fields/src/fields.php:489
+#: ../ui/panels/variables.php:31 ../ui/panels/variables.php:51
 #, fuzzy
-msgid "Invalid field type"
-msgstr "無効なフォームID "
+msgid "Entry List"
+msgstr "エントリーに含む"
+
+#, fuzzy
+#~ msgid ""
+#~ "Comma separated list of email addresses. Use %field_slug% to use a value "
+#~ "from the form."
+#~ msgstr "フォームからの値を使用するために %field_slug% を使う"
+
+#, fuzzy
+#~ msgid "Invalid field type"
+#~ msgstr "無効なフォームID "
 
 #~ msgid "Field"
 #~ msgstr "フィールド"
