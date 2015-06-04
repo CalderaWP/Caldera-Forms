@@ -507,7 +507,6 @@ class Caldera_Forms {
 					self::save_field_data($field, $entryid, $form);
 
 				}
-
 				// save form meta if any
 				if(isset($processed_meta[$form['ID']])){
 					foreach($processed_meta[$form['ID']] as $process_id=>$meta_data){
@@ -2315,7 +2314,6 @@ class Caldera_Forms {
 	static public function get_field_data($field_id, $form, $entry_id = false){
 		global $processed_data;
 
-		//dump($processed_data[$form['ID']],0);
 		//echo $field_id.'<br>';
 		if(is_string($form)){
 			$form = self::get_form( $form );
@@ -2342,6 +2340,7 @@ class Caldera_Forms {
 		if(isset($processed_data[$indexkey][$field_id])){
 			return $processed_data[$indexkey][$field_id];
 		}
+
 		// entry fetch
 		if(!empty($entry_id) && isset($form['fields'][$field_id])){
 
@@ -2371,6 +2370,7 @@ class Caldera_Forms {
 		}
 
 		if(isset($form['fields'][$field_id])){
+
 			// get field
 			$field = apply_filters( 'caldera_forms_render_setup_field', $form['fields'][$field_id], $form);
 
@@ -2385,12 +2385,14 @@ class Caldera_Forms {
 			}
 			$entry = null;
 			// dont bother if conditions say it shouldnt be here.
+
 			if(!empty($field['conditions']['type'])){
 				if(!self::check_condition($field['conditions'], $form, $entry_id)){
 					$processed_data[$indexkey][$field_id] = $entry;
 					return $entry;
 				}
 			}
+
 
 			// check condition to see if field should be there first.
 			// check if conditions match first. ignore vailators if not part of condition
@@ -2425,14 +2427,14 @@ class Caldera_Forms {
 								if(!isset($field['config']['option'][$option_id]['value'])){
 									$field['config']['option'][$option_id]['value'] = $field['config']['option'][$option_id]['label'];
 								}
-								$out[] = self::do_magic_tags($field['config']['option'][$option_id]['value']);
-								//$out[] = array( 'value' => self::do_magic_tags($field['config']['option'][$option_id]['value']), 'label' => $field['config']['option'][$option_id]['label'] );
+								$out[ $option_id ] = self::do_magic_tags($field['config']['option'][$option_id]['value']);
+								//$out[ $option_id ] = array( 'value' => self::do_magic_tags($field['config']['option'][$option_id]['value']), 'label' => $field['config']['option'][$option_id]['label'] );
 							}elseif( isset($field['config']['option'][$option] ) ){
 								if(!isset($field['config']['option'][$option]['value'])){
 									$field['config']['option'][$option]['value'] = $field['config']['option'][$option]['label'];
 								}
-								$out[] = self::do_magic_tags($field['config']['option'][$option]['value']);
-								//$out[] = array( 'value' => self::do_magic_tags($field['config']['option'][$option]['value']), 'label' => $field['config']['option'][$option]['label'] );
+								$out[ $option_id ] = self::do_magic_tags($field['config']['option'][$option]['value']);
+								//$out[ $option_id ] = array( 'value' => self::do_magic_tags($field['config']['option'][$option]['value']), 'label' => $field['config']['option'][$option]['label'] );
 							}
 
 						}
@@ -2461,7 +2463,7 @@ class Caldera_Forms {
 				$processed_data[$indexkey][$field_id] = $is_tag;
 			}
 		}
-		
+
 		if(isset($processed_data[$indexkey][$field_id])){
 			return $processed_data[$indexkey][$field_id];	
 		}
