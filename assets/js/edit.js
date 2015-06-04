@@ -453,11 +453,11 @@ jQuery(document).ready(function($){
 			group_name			= active_group.find('.caldera-config-group-name').val(),
 			group_slug			= active_group.find('.caldera-config-group-slug'),
 			group_label			= active_group.find('span'),
-			slug_sanitized		= this.value.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+			slug_sanitized		= this.value.split(' ').join('_').split('-').join('_').replace(/[^a-z0-9_]/gi, '').toLowerCase();
 
 		// check its not blank
 		if(e.type === 'focusout' && !this.value.length){
-			slug_sanitized = group_name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+			slug_sanitized = group_name.split(' ').join('_').split('-').join('_').replace(/[^a-z0-9_]/gi, '').toLowerCase();
 		}
 
 		group_slug.val(slug_sanitized);
@@ -485,7 +485,7 @@ jQuery(document).ready(function($){
 			group_name			= active_group.find('.caldera-config-group-name').val(),
 			group_admin			= active_group.find('.caldera-config-group-admin'),
 			group_label			= active_group.find('span'),
-			slug_sanitized		= this.value.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+			slug_sanitized		= this.value.split(' ').join('_').split('-').join('_').replace(/[^a-z0-9_]/gi, '').toLowerCase();
 
 		// check its not blank
 		if($(this).prop('checked')){
@@ -594,7 +594,7 @@ jQuery(document).ready(function($){
 		}else{
 			new_templ = Handlebars.compile( $('#caldera_group_line_templ').html() );
 			new_group = {
-				"id"	:	group_name.replace(/[^a-z0-9]/gi, '_').toLowerCase(),
+				"id"	:	group_name.split(' ').join('_').split('-').join('_').replace(/[^a-z0-9_]/gi, '').toLowerCase(),
 				"name"	:	group_name,
 			};
 
@@ -652,9 +652,9 @@ jQuery(document).ready(function($){
 			new_conf_templ = Handlebars.compile( $('#caldera_field_config_wrapper_templ').html() );
 
 			new_field = {
-				"id"	:	new_name.replace(/[^a-z0-9]/gi, '_').toLowerCase(),
+				"id"	:	new_name.split(' ').join('_').split('-').join('_').replace(/[^a-z0-9_]/gi, '').toLowerCase(),
 				"label"	:	new_name,
-				"slug"	:	new_name.replace(/[^a-z0-9]/gi, '_').toLowerCase(),
+				"slug"	:	new_name.split(' ').join('_').split('-').join('_').replace(/[^a-z0-9_]/gi, '').toLowerCase(),
 				"group"	:	$('.caldera-group-nav.active').data('group')
 			};
 
@@ -681,10 +681,10 @@ jQuery(document).ready(function($){
 	// bind slug editing to keep clean
 	$('.caldera-editor-body').on('change', '.field-slug', function(e){
 		if(this.value.length){
-			this.value = this.value.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+			this.value = this.value.split(' ').join('_').split('-').join('_').replace(/[^a-z0-9_]/gi, '').toLowerCase();
 		}else{
 			if(e.type === 'change'){
-				this.value = $(this).closest('.caldera-editor-field-config-wrapper').find('.field-label').val().replace(/[^a-z0-9]/gi, '_').toLowerCase();
+				this.value = $(this).closest('.caldera-editor-field-config-wrapper').find('.field-label').val().split(' ').join('_').split('-').join('_').replace(/[^a-z0-9_]/gi, '').toLowerCase();
 			}
 		}
 	});
