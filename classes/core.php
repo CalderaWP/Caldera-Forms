@@ -2943,7 +2943,7 @@ class Caldera_Forms {
 					if ( is_wp_error( $entry )){
 						$transdata['fields'][$field_id] = $entry->get_error_message();
 					}elseif($entry === null){
-						$transdata['fields'][$field_id] = $field['slug'] .' ' .__('is required', 'caldera-forms');
+						$transdata['fields'][$field_id] = $field['label'] .' ' .__('is required', 'caldera-forms');
 					}
 				}
 			}
