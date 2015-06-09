@@ -67,7 +67,7 @@ msgstr "Caldera Forms"
 
 #: ../classes/admin.php:674
 msgid "Caldera Forms Admin"
-msgstr "Administrar Caldera Froms"
+msgstr "Administrar Caldera Forms"
 
 #: ../classes/admin.php:674
 msgid "Forms"
