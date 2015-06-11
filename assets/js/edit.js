@@ -59,7 +59,7 @@ jQuery(document).ready(function($){
 			}
 
 			$('#save_indicator').addClass('loading');
-			if(tinyMCE){
+			if( typeof tinyMCE !== 'undefined'){
 				tinyMCE.triggerSave();
 			}
 
