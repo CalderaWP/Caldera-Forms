@@ -21,9 +21,13 @@
 		};
 	}
 
-	function calders_forms_check_conditions(){
+	function calders_forms_check_conditions( inst_id ){
 		
-		for(var field in caldera_conditionals){
+		if( typeof caldera_conditionals[inst_id] === "undefined"){
+			return;
+		}
+
+		for( var field in caldera_conditionals[ inst_id ] ){
 
 			// each conditional
 			var fieldwrapper = jQuery('#conditional_' + field);
@@ -31,8 +35,8 @@
 			if(!fieldwrapper.length){
 				continue;
 			}
-			var type	=	caldera_conditionals[field].type,
-			groups	=	caldera_conditionals[field].group,
+			var type	=	caldera_conditionals[ inst_id ][field].type,
+			groups	=	caldera_conditionals[ inst_id ][field].group,
 			trues	=	[];
 			
 			// has a wrapper - bind conditions
@@ -183,10 +187,15 @@
 	if(typeof caldera_conditionals !== 'undefined'){
 		
 		jQuery('.caldera_forms_form').on('change keyup', '[data-field]', function(e){
-			calders_forms_check_conditions();
+			
+			var form 			= $(this).closest('.caldera_forms_form').prop('id');
+
+			calders_forms_check_conditions( form );
 
 		});
 		// init
-		calders_forms_check_conditions();
+		$('.caldera_forms_form').each( function(){
+			calders_forms_check_conditions( $(this).closest('.caldera_forms_form').prop('id') );
+		} );
 	}
 })(jQuery);

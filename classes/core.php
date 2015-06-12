@@ -4228,7 +4228,8 @@ class Caldera_Forms {
 			$form_attributes = array(
 				'method'	=>	'POST',
 				'enctype'	=>	'multipart/form-data',
-				'role'		=>	'form'
+				'role'		=>	'form',
+				'id'		=>	$form['ID'] . '_' . $current_form_count
 			);
 
 			$form_element = apply_filters( 'caldera_forms_render_form_element', $form_element, $form);
@@ -4346,7 +4347,8 @@ class Caldera_Forms {
 			}
 
 			$out .= "<script type=\"text/javascript\">\r\n";
-			$out .= "var caldera_conditionals = " . $conditions_str . ";\r\n";
+			$out .= 'if( typeof caldera_conditionals === "undefined" ){ var caldera_conditionals = {}; }';
+			$out .= "caldera_conditionals." . $form['ID'].'_'.$current_form_count . " = " . $conditions_str . ";\r\n";
 			$out .= "</script>\r\n";
 			$out .= implode("\r\n", $conditions_templates);
 
