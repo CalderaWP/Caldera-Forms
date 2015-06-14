@@ -20,7 +20,7 @@ class Caldera_Forms_Widget extends WP_Widget {
 			$title = empty($instance['title']) ? ' ' : apply_filters( 'widget_title', $instance['title']);
 			if ( !empty( $title ) ) { echo $before_title . $title . $after_title; };
 
-				echo Caldera_Forms::render_form('asd');
+				echo Caldera_Forms::render_form( $instance[ 'form' ] );
 			
 			echo $after_widget;
 
