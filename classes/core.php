@@ -1608,26 +1608,83 @@ class Caldera_Forms {
 				case 'post_type':
 					$posts = get_posts( array('post_type' => $field['config']['post_type'], 'post_status' => 'publish', 'posts_per_page' => -1) );
 
+					/**
+					 * Filter which field is used for the VALUE when getting autopopulate option values when autopopulating options from post types
+					 *
+					 * Value can be any WP_Post field, or a meta key (be careful will return an empty string if that meta key isn't set for the post.
+					 *
+					 * @since 1.2.2
+					 *
+					 * @param string $field What field to use for the value. Default is "ID".
+					 * @param array $field Config for the field.
+					 * @param array $form Config for the form.
+					 * @param array $posts Current post collection.
+					 */
+					$field_for_value = apply_filters( 'caldera_forms_autopopulate_options_post_value_field', 'ID', $field, $form, $posts  );
+					$field[ 'config' ][ 'value_field' ] = $field_for_value;
+
+					/**
+					 * Filter which field is used for the LABEL when getting autopopulate option values when autopopulating options from post types
+					 *
+					 * Value can be any WP_Post field, or a meta key (be careful will return an empty string if that meta key isn't set for the post.
+					 *
+					 * @since 1.2.2
+					 *
+					 * @param string $field What field to use for the label. Default is "post_title".
+					 * @param array $field Config for the field.
+					 * @param array $form Config for the form.
+					 * @param array $posts Current post collection.
+					 */
+					$field_for_label = apply_filters( 'caldera_forms_autopopulate_options_post_label_field', 'post_title', $field, $form, $posts  );
+
 					foreach($posts as $post_item){
 						$field['config']['option'][$post_item->ID] = array(
-							'value'	=>	$post_item->ID,
-							'label' =>	$post_item->post_title
+							'value'	=>	$post_item->{$field_for_value},
+							'label' =>	$post_item->{$field_for_label}
 						);
 					}
 				break;
 				case 'taxonomy':
-					$taxos = get_terms( $field['config']['taxonomy'], 'orderby=count&hide_empty=0' );
+					$terms = get_terms( $field['config']['taxonomy'], 'orderby=count&hide_empty=0' );
+					/**
+					 * Filter which field is used for the VALUE when getting autopopulate option values when autopopulating options from post types
+					 *
+					 * Value must be a standard taxonomy term field.
+					 *
+					 * @since 1.2.2
+					 *
+					 * @param string $field What field to use for the value. Default is "term_id".
+					 * @param array $field Config for the field.
+					 * @param array $form Config for the form.
+					 * @param array $posts Current term collection.
+					 */
+					$field_for_value = apply_filters( 'caldera_forms_autopopulate_options_taxonomy_value_field', 'term_id', $field, $form, $terms  );
+					$field[ 'config' ][ 'value_field' ] = $field_for_value;
 
-					foreach( $taxos as $term){
+					/**
+					 * Filter which field is used for the LABEL when getting autopopulate option values when autopopulating options from post types
+					 *
+					 * Value must be a standard taxonomy term field.
+					 *
+					 * @since 1.2.2
+					 *
+					 * @param string $field What field to use for the label. Default is "name".
+					 * @param array $field Config for the field.
+					 * @param array $form Config for the form.
+					 * @param array $posts Current term collection.
+					 */
+					$field_for_label = apply_filters( 'caldera_forms_autopopulate_options_taxonomy_label_field', 'name', $field, $form, $terms  );
+
+					foreach( $terms as $term){
 						$field['config']['option'][$term->term_id] = array(
-							'value'	=>	$term->term_id,
-							'label' =>	$term->name
+							'value'	=>	$term->{$field_for_value},
+							'label' =>	$term->{$field_for_label}
 						);
 					}
 				break;
 			}
 			// check values are set
-			if ( ( empty( $field['config']['value_field']) || $field[ 'config' ][ 'value_field' ] == 'name' ) && isset( $field[ 'config' ] ) && isset( $field[ 'config' ][ 'option' ] ) && is_array( $field[ 'config' ][ 'option' ] ) ){			
+			if ( ( empty( $field['config']['value_field']) || $field[ 'config' ][ 'value_field' ] == 'name' ) && isset( $field[ 'config' ] ) && isset( $field[ 'config' ][ 'option' ] ) && is_array( $field[ 'config' ][ 'option' ] ) ){
 				
 				foreach( $field[ 'config' ][ 'option' ] as &$option){
 					$option[ 'value' ] = $option[ 'label' ];
