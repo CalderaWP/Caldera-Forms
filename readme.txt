@@ -3,7 +3,7 @@ Contributors: Desertsnowman, Shelob9
 Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator, caldera forms
 Requires at least: 3.9
 Tested up to: 4.2.2
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPLv2
 
 Create beautiful, responsive forms with a simple drag and drop editor.
@@ -99,6 +99,21 @@ none yet.
 4. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
+
+= 1.2.2 ( June, 2015) =
+
+= Bugs Fixed =
+* Fixed widget bug where forms in widget disapeared
+* Fixed conditional logic where multiple forms on a page broke conditions
+* Fixed a bug that stopped forms from saving if visual editor was disabled in profile
+* A bunch of smaller bugs that was causing minor issues... again
+
+= New Filters =
+* caldera_forms_autopopulate_options_post_value_field
+* caldera_forms_autopopulate_options_post_label_field
+* caldera_forms_autopopulate_options_taxonomy_value_field
+* caldera_forms_autopopulate_options_taxonomy_label_field
+
 
 = 1.2.1 ( June, 2015) =
 
