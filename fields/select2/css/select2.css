@@ -31,8 +31,7 @@ Version: 3.5.2 Timestamp: Sat Nov  1 14:43:36 EDT 2014
     padding: 0 0 0 8px;
     overflow: hidden;
     position: relative;
-
-    border: 1px solid #aaa;
+    border: 1px solid #aaa !important;
     white-space: nowrap;
     line-height: 26px;
     color: #444;
