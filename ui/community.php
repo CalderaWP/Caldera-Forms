@@ -14,7 +14,7 @@
 	<ul class="caldera-editor-header-nav ajax-trigger" data-load-class="spinner" data-request="<?php echo CFCORE_EXTEND_URL . 'channels/community/?version=' . CFCORE_VER; ?>" data-target="#main-cat-nav" data-target-insert="append" data-template="#nav-items-tmpl" data-event="loadchannels" data-autoload="true" id="main-cat-nav" >
 	</ul>
 </div>
-<div class="form-extend-page-wrap" id="form-extend-viewer"></div>
+<div class="form-extend-page-wrap" id="form-extend-viewer" style="visibility:visible;"></div>
 
 <?php
 	do_action('caldera_forms_admin_templates');

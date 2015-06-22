@@ -16,7 +16,7 @@
 	</ul>
 </div>
 
-<div class="form-extend-page-wrap" id="form-extend-viewer"></div>
+<div class="form-extend-page-wrap" id="form-extend-viewer" style="visibility:visible;"></div>
 <div class="form-extend-page-wrap" id="form-license-viewer" style="display:none;">
 	<div>
 		<em>
