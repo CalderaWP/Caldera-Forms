@@ -15,8 +15,14 @@
 	<ul class="caldera-editor-header-nav ajax-trigger" data-load-class="spinner" data-request="<?php echo CFCORE_EXTEND_URL . 'channels/marketing/?version=' . CFCORE_VER; ?>" data-target="#main-cat-nav" data-target-insert="append" data-template="#nav-items-tmpl" data-event="none" data-autoload="true" id="main-cat-nav" >
 	</ul>
 </div>
+
 <div class="form-extend-page-wrap" id="form-extend-viewer"></div>
 <div class="form-extend-page-wrap" id="form-license-viewer" style="display:none;">
+	<div>
+		<em>
+			<?php _e( 'Note: We are currently moving Caldera Forms licenses to the CalderaWP License Manager. This panel will be removed in a future version of Caldera Forms.', 'caldera-forms' ); ?>
+			</em>
+	</div>
 	<?php
 	$addons = apply_filters( 'caldera_forms_get_active_addons', array() );
 	if(empty($addons)){
