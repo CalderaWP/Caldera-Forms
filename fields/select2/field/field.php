@@ -97,8 +97,7 @@ jQuery( function($){
 					<?php if( !empty( $field['config']['easy_pod'] ) ){?>easy_pod : '<?php echo $field['config']['easy_pod']; ?>'<?php } ?>
 				};
 			},
-			results: function (data, page) { // parse the results into the format expected by Select2.
-				// since we are using custom formatting functions we do not need to alter the remote JSON data
+			results: function (data, page) {
 				console.log( data );
 				return { results: data };
 			},
