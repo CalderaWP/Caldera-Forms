@@ -1575,7 +1575,7 @@ class Caldera_Forms {
 					CFCORE_URL . "fields/select2/js/select2.min.js",
 				),
 				"styles"	=> array(
-					CFCORE_PATH . "fields/select2/css/select2.css",
+					CFCORE_URL . "fields/select2/css/select2.css",
 				)
 			)
 		);
