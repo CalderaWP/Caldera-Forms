@@ -303,12 +303,11 @@ class Caldera_Forms {
 	}
 
 	public static function handle_file_view($value, $field, $form){
-		if( is_array( $value ) ){
-			return $value;
+		$out = array();
+		foreach( (array) $value as $file_url ){
+			$out[] = '<a href="' . $file_url .'" target="_blank">' . basename($file_url) .'</a>';
 		}
-
-		return '<a href="' . $value .'" target="_blank">' . basename($value) .'</a>';
-
+		return implode(', ', $out );
 	}
 	
 	public static function mail_attachment_check($mail, $data, $form){
