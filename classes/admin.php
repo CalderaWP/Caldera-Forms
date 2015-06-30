@@ -96,6 +96,8 @@ class Caldera_Forms_Admin {
 		add_action('admin_footer-post.php', array( $this, 'render_editor_template')); // Fired on post edit page
 		add_action('admin_footer-post-new.php', array( $this, 'render_editor_template')); // Fired on add new post page		
 
+		add_action( 'caldera_forms_new_form_template_end', array( $this, 'load_new_form_templates') );
+
 	}
 
 	public function render_editor_template(){
@@ -112,7 +114,56 @@ class Caldera_Forms_Admin {
 	<?php
 
 	}
+
+	/**
+	 * Returns the array of internal form templates
+	 *
+	 * @since 1.2.3
+	 *
+	 * @return    array | form templates
+	 */
+	public static function internal_form_templates(){
+		
+		$internal_templates = array(
+			'starter_contact_form'	=>	array(
+				'name'	=>	__( 'Starter Contact Form', 'caldera-forms' ),
+				'template'	=>	include CFCORE_PATH . 'includes/templates/starter-contact-form.php'
+			)
+		);
+		/**
+		 * Filter form templates
+		 *
+		 * @since 1.2.3
+		 *
+		 * @param array internal form templates array
+		 */
+		return apply_filters( 'caldera_forms_get_form_templates', $internal_templates );
+	}
 	
+	public function load_new_form_templates(){
+
+		$form_templates = self::internal_form_templates();
+		
+		?>
+		<div class="caldera-config-group">
+			<label for=""><?php echo __('Form Template', 'caldera-forms'); ?></label>
+			<div class="caldera-config-field">
+				<select class="new-form-template block-input field-config" name="template" value="">
+				<option value="0"><?php echo __('no template - blank form', 'caldera-forms'); ?></option>
+				<?php
+
+				foreach( $form_templates as $template_slug => $template ){
+					if( !empty( $template['template'] ) && !empty( $template['name'] ) ){
+						echo '<option value="' . $template_slug . '">' . $template['name'] . '</option>';
+					}
+				}
+
+				?>
+				</select>
+			</div>
+		</div>
+		<?php
+	}
 
 	public function get_form_preview(){
 		global $post;
@@ -1184,40 +1235,7 @@ class Caldera_Forms_Admin {
 				}
 				//dump($data);
 			}
-			/*dump($data);
-			foreach( $rawdata as $entry){
-				// build structure
-				if(!isset($data[$entry->_entryid])){
-					$data[$entry->_entryid] = $structure;
-				}
-				// check for json
-				if(substr($entry->value, 0,2) === '{"' && substr($entry->value, strlen($entry->value)-2 ) === '"}'){
-					$row = json_decode($entry->value, true);
-					if(!empty($row)){
-						$keys = array_keys($row);
-						if(is_int($keys[0])){
-							$row = implode(', ', $row);
-						}else{
-							$tmp = array();
-							foreach($row as $key=>$item){
-								if(is_array($item)){
-									$item = '( ' . implode(', ', $item).' )';
-								}
-								$tmp[] = $key.': '.$item;
-							}
-							$row = implode(', ', $tmp);
-						}
-					$entry->value = $row;
-					}
-				}
-				$data[$entry->_entryid][$entry->slug] = $entry->value;
-				$label = $entry->slug;
-				if(isset($labels[$entry->slug])){
-					$label = $labels[$entry->slug];
-				}
-				$headers[$entry->slug] = $label;
-			}*/
-			
+
 			header("Pragma: public");
 			header("Expires: 0");
 			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
@@ -1331,6 +1349,9 @@ class Caldera_Forms_Admin {
 
 		parse_str( $_POST['data'], $newform );
 
+		// get form templates
+		$form_templates = self::internal_form_templates();
+
 		// get form registry
 		$forms = Caldera_Forms::get_forms( true );
 		if(empty($forms)){
@@ -1338,6 +1359,12 @@ class Caldera_Forms_Admin {
 		}
 		if(!empty($newform['clone'])){
 			$clone = $newform['clone'];
+		}
+		// load template if any
+		if( !empty( $newform['template'] ) ){
+			if( isset( $form_templates[ $newform['template'] ] ) && !empty( $form_templates[ $newform['template'] ]['template'] ) ){
+				$form_template = $form_templates[ $newform['template'] ]['template'];
+			}
 		}
 		$newform = array(
 			"ID" 			=> uniqid('CF'),
@@ -1347,7 +1374,10 @@ class Caldera_Forms_Admin {
 			"form_ajax"		=> 1,
 			"hide_form"		=> 1
 		);
-
+		// is template?
+		if( !empty( $form_template ) && is_array( $form_template ) ){
+			$newform = array_merge( $form_template, $newform );
+		}
 		// add from to list
 		$newform = apply_filters( 'caldera_forms_create_form', $newform);
 
