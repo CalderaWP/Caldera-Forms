@@ -106,7 +106,7 @@ none yet.
 * 
 
 = New Features =
-* Added form templates when creting new form.
+* Added form templates when creating new form.
 
 = New Filters =
 * caldera_forms_get_form_templates : filter to add your own templates to new form templates
