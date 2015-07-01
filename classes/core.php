@@ -1720,8 +1720,7 @@ class Caldera_Forms {
 			}
 		
 		}
-		var_dump( $field );
-		die;
+
 		return $field;
 
 	}
