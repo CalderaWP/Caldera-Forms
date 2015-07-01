@@ -1637,7 +1637,7 @@ class Caldera_Forms {
 					 * @param array $form Config for the form.
 					 * @param array $posts Current post collection.
 					 */
-					$field_for_value = apply_filters( 'caldera_forms_autopopulate_options_post_value_field', 'ID', $field, $form, $posts  );
+					$field_for_value = apply_filters( 'caldera_forms_autopopulate_options_post_value_field', $field[ 'config' ][ 'value_field' ], $field, $form, $posts  );
 					$field[ 'config' ][ 'value_field' ] = $field_for_value;
 
 					/**
@@ -1675,7 +1675,7 @@ class Caldera_Forms {
 					 * @param array $form Config for the form.
 					 * @param array $posts Current term collection.
 					 */
-					$field_for_value = apply_filters( 'caldera_forms_autopopulate_options_taxonomy_value_field', 'term_id', $field, $form, $terms  );
+					$field_for_value = apply_filters( 'caldera_forms_autopopulate_options_taxonomy_value_field', $field[ 'config' ][ 'value_field' ], $field, $form, $terms  );
 					$field[ 'config' ][ 'value_field' ] = $field_for_value;
 
 					/**
@@ -1720,7 +1720,8 @@ class Caldera_Forms {
 			}
 		
 		}
-
+		var_dump( $field );
+		die;
 		return $field;
 
 	}
