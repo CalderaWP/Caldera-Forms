@@ -481,7 +481,7 @@ class Caldera_Forms_Admin {
 	/**
 	 * Get entries from a form
 	 *
-	 * @since 1.3.0
+	 * @since 1.2.1
 	 *
 	 * @param string|array $form Form ID or form config.
 	 * @param int $page Optional. Page of entries to get per page. Default is 1.
