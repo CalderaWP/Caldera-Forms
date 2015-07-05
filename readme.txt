@@ -107,6 +107,7 @@ none yet.
 
 = New Features =
 * Added form templates when creating new form.
+* Automcomplete (select2) field types.
 
 = New Filters =
 * caldera_forms_get_form_templates : filter to add your own templates to new form templates
