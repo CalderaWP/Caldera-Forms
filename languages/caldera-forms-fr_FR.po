@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Caldera Forms\n"
 "POT-Creation-Date: 2015-07-12 07:44+0100\n"
-"PO-Revision-Date: 2015-07-12 07:48+0100\n"
+"PO-Revision-Date: 2015-07-12 16:14+0100\n"
 "Last-Translator: David Cramer <david@caldera.co.za>\n"
 "Language-Team: Tricodia Systems <david@digilab.co.za>\n"
 "Language: fr\n"
@@ -148,11 +148,11 @@ msgstr "Pages de formulaire"
 
 #: ../classes/admin.php:1447
 msgid "Processors"
-msgstr "Traitement"
+msgstr "Traitements"
 
 #: ../classes/admin.php:1449 ../ui/panels/processors.php:166
 msgid "Form Processors"
-msgstr "Traitement du formulaire"
+msgstr "Traitements du formulaire"
 
 #: ../classes/admin.php:1453 ../classes/admin.php:1455
 #: ../ui/panels/variables.php:83
@@ -189,7 +189,7 @@ msgstr "Courrielleur"
 
 #: ../classes/admin.php:1499
 msgid "Email Notification Settings"
-msgstr "Réglages des notifications par courriel"
+msgstr "Réglage des notifications par courriel"
 
 #: ../classes/core.php:345
 msgid "The wasn't entered correct."
@@ -443,7 +443,7 @@ msgstr "est requis"
 
 #: ../classes/core.php:3833 ../classes/core.php:3839
 msgid "Form is currently not active."
-msgstr "Le formualire n'est pas activé actuellement."
+msgstr "Le formulaire n'est pas activé actuellement."
 
 #: ../classes/core.php:4270
 msgid "WARNING: Form is in Mailer Debug mode. Disable before going live."
@@ -1142,7 +1142,7 @@ msgid ""
 "to the <a href=\"http://wordpress.org/support/plugin/caldera-forms\" target="
 "\"_blank\">support forum</a>."
 msgstr ""
-"Il semblerait que quelque chose ne fonctionne pas. Réessayer ou contacter le "
+"Il semblerait que quelque chose ne fonctionne pas. Réessayez ou contactez le "
 "<a href=\"http://wordpress.org/support/plugin/caldera-forms\" target=\"_blank"
 "\">support</a>."
 
@@ -1348,7 +1348,7 @@ msgstr "Tout"
 
 #: ../ui/edit.php:530
 msgid "Hide Form"
-msgstr "Cacher le formulaire"
+msgstr "Masquer le formulaire"
 
 #: ../ui/edit.php:532
 msgid "Hide form after successful submission"
@@ -1372,7 +1372,7 @@ msgstr "Champ Gravatar"
 
 #: ../ui/edit.php:557
 msgid "Used when viewing an entry from a non-logged in user."
-msgstr "Utilisé lorsqu'un utilisateur non authentifié voit une donnée."
+msgstr "Utilisé lorsqu'on voit une donnée d'un utilisateur non authentifié."
 
 #: ../ui/edit.php:631
 msgid "Add New"
@@ -1507,8 +1507,9 @@ msgid ""
 "\" below."
 msgstr ""
 "Adresse électronique de l'expéditeur du message. Essayez de ne pas utiliser "
-"un valeur d'un champ du formulaire. Utilisez plutôt votre propre adresse et "
-"un champ dans la ligne \"Courriel de réponse\" ci-dessous."
+"une valeur d'un champ du formulaire. Utilisez plutôt votre propre adresse et "
+"insérez la valeur d'un champ dans la ligne \"Courriel de réponse\" ci-"
+"dessous."
 
 #: ../ui/panels/emailer.php:56
 msgid "Reply To Email"
@@ -1519,7 +1520,7 @@ msgid ""
 "The email address of the person filling in the form. This will allow the "
 "email to be replied directly to the sender."
 msgstr ""
-"L'adresse électronique de la personne remplissant le formualire. Cela "
+"L'adresse électronique de la personne remplissant le formulaire. Cela "
 "permettra de répondre directement à l'expéditeur."
 
 #: ../ui/panels/emailer.php:64
@@ -1670,7 +1671,7 @@ msgstr "par"
 
 #: ../ui/panels/processors.php:284
 msgid "This processor has no configurable options."
-msgstr "Ce traitement n'a pas d'options configurables"
+msgstr "Ce traitement n'a pas d'options configurables."
 
 #: ../ui/panels/variables.php:14
 msgid "Behaviour"
