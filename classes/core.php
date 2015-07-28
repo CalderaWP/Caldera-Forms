@@ -3852,8 +3852,26 @@ class Caldera_Forms {
 		if(!empty($atts['entry'])){
 			$entry_id = self::do_magic_tags( $atts['entry'] );
 		}
-		
+
+		/**
+		 * Filter form settings, before rendering form.
+		 *
+		 * @since unknown
+		 *
+		 * @param int $entry_id The entry ID.
+		 * @param array $form Form config.
+		 */
 		$form = apply_filters( 'caldera_forms_render_get_form', $form );
+
+		/**
+		 * Set entry ID when loading form
+		 *
+		 * @since 1.2.3
+		 *
+		 * @param int $entry_id The entry ID.
+		 * @param array $form Form config.
+		 */
+		$entry_id = apply_filters( 'caldera_forms_render_entry_id', $entry_id, $form );
 
 		if(empty($form)){
 			return;
