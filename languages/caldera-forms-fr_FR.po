@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Caldera Forms\n"
-"POT-Creation-Date: 2015-07-06 10:27+0200\n"
-"PO-Revision-Date: 2015-07-06 10:27+0200\n"
+"POT-Creation-Date: 2015-07-12 07:44+0100\n"
+"PO-Revision-Date: 2015-07-12 16:14+0100\n"
 "Last-Translator: David Cramer <david@caldera.co.za>\n"
 "Language-Team: Tricodia Systems <david@digilab.co.za>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.9\n"
+"X-Generator: Poedit 1.5.7\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: __;_e\n"
@@ -17,22 +17,20 @@ msgstr ""
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../classes/admin.php:110
-#, fuzzy
 msgid "Invalid Form."
-msgstr "Cacher le formulaire"
+msgstr "Formulaire invalide."
 
 #: ../classes/admin.php:129
 msgid "Starter Contact Form"
-msgstr ""
+msgstr "Formulaire de contact basic"
 
 #: ../classes/admin.php:149
-#, fuzzy
 msgid "Form Template"
-msgstr "Nom du formulaire"
+msgstr "Modèle de formulaire"
 
 #: ../classes/admin.php:152
 msgid "no template - blank form"
-msgstr ""
+msgstr "Aucun modèle - formulaire vide"
 
 #: ../classes/admin.php:257 ../classes/admin.php:258 ../classes/admin.php:360
 #: ../ui/entries_toolbar.php:27
@@ -42,7 +40,7 @@ msgstr "Corbeille"
 #: ../classes/admin.php:258 ../classes/admin.php:360
 #: ../ui/admin_templates.php:9
 msgid "Restore"
-msgstr "Restorer"
+msgstr "Rétablir"
 
 #: ../classes/admin.php:358 ../ui/admin_templates.php:110
 msgid "Entry"
@@ -58,26 +56,26 @@ msgstr "Ajouter le formulaire à la page"
 
 #: ../classes/admin.php:401
 msgid "Insert Form Shortcode"
-msgstr "Insérer depuis le Shortcode"
+msgstr "Insérer le shortcode"
 
 #: ../classes/admin.php:401 ../classes/widget.php:8
 msgid "Caldera Form"
-msgstr ""
+msgstr "Caldera Form"
 
 #: ../classes/admin.php:428 ../ui/admin.php:108
 msgid "Deactivate"
-msgstr ""
+msgstr "Désactiver"
 
 #: ../classes/admin.php:432 ../ui/admin.php:108
 msgid "Activate"
-msgstr ""
+msgstr "Activer"
 
 #: ../classes/admin.php:724 ../classes/admin.php:730 ../classes/admin.php:736
 #: ../classes/admin.php:737 ../classes/admin.php:771 ../classes/admin.php:775
 #: ../includes/filter_addon_plugins.php:50 ../ui/admin.php:32
 #: ../ui/community.php:5 ../ui/edit.php:448 ../ui/extend.php:5
 msgid "Caldera Forms"
-msgstr ""
+msgstr "Caldera Forms"
 
 #: ../classes/admin.php:725
 msgid "Caldera Forms Admin"
@@ -85,7 +83,7 @@ msgstr "Notification de Caldera Forms"
 
 #: ../classes/admin.php:725
 msgid "Forms"
-msgstr "Formulaire"
+msgstr "Formulaires"
 
 #: ../classes/admin.php:736 ../ui/community.php:8
 msgid "Community"
@@ -93,11 +91,11 @@ msgstr "Communauté"
 
 #: ../classes/admin.php:737 ../ui/extend.php:8
 msgid "Extend"
-msgstr "Plus..."
+msgstr "Étendre"
 
 #: ../classes/admin.php:996 ../classes/admin.php:1158
 msgid "Sorry, please try again"
-msgstr "Désolé, essayer plus tard"
+msgstr "Désolé, veuillez essayer plus tard"
 
 #: ../classes/admin.php:996
 msgid "Form Delete Error"
@@ -122,16 +120,15 @@ msgstr "Le formulaire n'existe pas."
 
 #: ../classes/admin.php:1208
 msgid "Export selection has expired"
-msgstr ""
+msgstr "L'exportation de la sélection a pris fin"
 
 #: ../classes/admin.php:1208
 msgid "Export Expired"
-msgstr ""
+msgstr "Exportation achevée"
 
 #: ../classes/admin.php:1373
-#, fuzzy
 msgid "Form has been successfully submitted. Thank you."
-msgstr "Le formulaire a été envoyé."
+msgstr "Le formulaire a été envoyé. Merci pour votre contribution."
 
 #: ../classes/admin.php:1413 ../classes/admin.php:1429
 msgid "Layout"
@@ -139,7 +136,7 @@ msgstr "Disposition"
 
 #: ../classes/admin.php:1431
 msgid "Layout Builder"
-msgstr ""
+msgstr "Disposition des éléments"
 
 #: ../classes/admin.php:1441
 msgid "Pages"
@@ -151,11 +148,11 @@ msgstr "Pages de formulaire"
 
 #: ../classes/admin.php:1447
 msgid "Processors"
-msgstr ""
+msgstr "Traitements"
 
 #: ../classes/admin.php:1449 ../ui/panels/processors.php:166
 msgid "Form Processors"
-msgstr ""
+msgstr "Traitements du formulaire"
 
 #: ../classes/admin.php:1453 ../classes/admin.php:1455
 #: ../ui/panels/variables.php:83
@@ -179,6 +176,8 @@ msgid ""
 "Set the smallest screen size at which to collapse the grid. (based on "
 "Bootstrap 3.0)"
 msgstr ""
+"Définir la plus petite taille d'écran pour laquelle la grille sera modifiée "
+"(basé sur Bootstrap 3.0)."
 
 #: ../classes/admin.php:1477
 msgid "Maintain grid always"
@@ -186,24 +185,23 @@ msgstr "Ne pas redimmensionner les grilles"
 
 #: ../classes/admin.php:1497 ../ui/panels/emailer.php:32
 msgid "Mailer"
-msgstr ""
+msgstr "Courrielleur"
 
 #: ../classes/admin.php:1499
 msgid "Email Notification Settings"
-msgstr "Réglages des notifications par email"
+msgstr "Réglage des notifications par courriel"
 
 #: ../classes/core.php:345
-#, fuzzy
 msgid "The wasn't entered correct."
 msgstr "Le reCAPTCHA est incorrect."
 
 #: ../classes/core.php:345 ../fields/button/config_template.php:9
 msgid "Reset"
-msgstr ""
+msgstr "Réinitialiser"
 
 #: ../classes/core.php:475 ../classes/core.php:489 ../classes/core.php:2959
 msgid "Permission denied."
-msgstr "Autorisation refusé"
+msgstr "Autorisation refusée."
 
 #: ../classes/core.php:606 ../ui/panels/emailer.php:4
 msgid "Caldera Forms Notification"
@@ -211,15 +209,15 @@ msgstr "Notification de Caldera Forms"
 
 #: ../classes/core.php:972
 msgid "Auto Responder"
-msgstr "Résponse automatique"
+msgstr "Réponse automatique"
 
 #: ../classes/core.php:973
 msgid "Sends out an auto response e-mail"
-msgstr "Envoie une réponse automatique"
+msgstr "Envoie une réponse automatique par courriel"
 
 #: ../classes/core.php:977
 msgid "Thank you for contacting us"
-msgstr "Merci de nous avoir contacter"
+msgstr "Merci de nous avoir contacté"
 
 #: ../classes/core.php:981
 msgid "Redirect"
@@ -227,27 +225,27 @@ msgstr "Redirection"
 
 #: ../classes/core.php:982
 msgid "Redirects user to URL on successful submit"
-msgstr "Redirige l'utilisateur vers l'URL après l'envoie du formulaire"
+msgstr "Redirige l'utilisateur vers l'URL après envoi du formulaire"
 
 #: ../classes/core.php:987
 msgid "Increment Value"
-msgstr ""
+msgstr "Valeur d'incrémentation"
 
 #: ../classes/core.php:988
 msgid "Increment a value per entry."
-msgstr ""
+msgstr "Incrémenter une valeur par donnée."
 
 #: ../classes/core.php:1002
 msgid "Akismet"
-msgstr ""
+msgstr "Akismet"
 
 #: ../classes/core.php:1003
 msgid "Anti-spam filtering"
-msgstr ""
+msgstr "Filtrage anti-spam"
 
 #: ../classes/core.php:1036
 msgid "Akismet not setup."
-msgstr ""
+msgstr "Akismet non paramétré."
 
 #: ../classes/core.php:1163
 msgid "Calculation"
@@ -260,7 +258,7 @@ msgstr "Spécial"
 
 #: ../classes/core.php:1166
 msgid "Math"
-msgstr ""
+msgstr "Math"
 
 #: ../classes/core.php:1167
 msgid "Calculate values"
@@ -272,23 +270,23 @@ msgstr "Total"
 
 #: ../classes/core.php:1186
 msgid "Range Slider"
-msgstr ""
+msgstr "Curseur de plage"
 
 #: ../classes/core.php:1189
 msgid "Range Slider input field"
-msgstr ""
+msgstr "Champ de curseur de plage"
 
 #: ../classes/core.php:1223
 msgid "Star Rating"
-msgstr ""
+msgstr "Vote par étoiles"
 
 #: ../classes/core.php:1225
 msgid "Feedback"
-msgstr ""
+msgstr "Retour d'expérience"
 
 #: ../classes/core.php:1226
 msgid "Star rating input for feedback"
-msgstr ""
+msgstr "Vote par étoiles pour réagir"
 
 #: ../classes/core.php:1258
 msgid "Phone Number"
@@ -296,48 +294,48 @@ msgstr "Numéro de téléphone"
 
 #: ../classes/core.php:1259
 msgid "Phone number with masking"
-msgstr "Numéro de téléphone (avec mask)"
+msgstr "Numéro de téléphone (avec masque)"
 
 #: ../classes/core.php:1261 ../classes/core.php:1283 ../classes/core.php:1352
 #: ../classes/core.php:1389 ../classes/core.php:1399 ../classes/core.php:1496
 #: ../classes/core.php:1522
 msgid "Text Fields"
-msgstr "Champ"
+msgstr "Champ de texte"
 
 #: ../classes/core.php:1261 ../classes/core.php:1283 ../classes/core.php:1298
 #: ../classes/core.php:1352 ../classes/core.php:1368 ../classes/core.php:1389
 #: ../classes/core.php:1399 ../classes/core.php:1440 ../classes/core.php:1459
 #: ../classes/core.php:1478 ../classes/core.php:1551 ../ui/edit.php:170
 msgid "Basic"
-msgstr ""
+msgstr "Basic"
 
 #: ../classes/core.php:1261
 msgid "User"
-msgstr ""
+msgstr "Utilisateur"
 
 #: ../classes/core.php:1280 ../classes/core.php:1281
 msgid "Single Line Text"
-msgstr "Champ texte"
+msgstr "Texte sur une ligne"
 
 #: ../classes/core.php:1294 ../classes/core.php:1298
 msgid "File"
-msgstr ""
+msgstr "Fichier"
 
 #: ../classes/core.php:1295
 msgid "File Uploader"
-msgstr ""
+msgstr "Envoi de fichier"
 
 #: ../classes/core.php:1305
 msgid "reCAPTCHA"
-msgstr ""
+msgstr "reCAPTCHA"
 
 #: ../classes/core.php:1306
 msgid "reCAPTCHA anti-spam field"
-msgstr ""
+msgstr "Champ anti-spam reCAPTCHA"
 
 #: ../classes/core.php:1331
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
 #: ../classes/core.php:1332
 msgid "Add text/html content"
@@ -354,19 +352,19 @@ msgstr "Caché"
 
 #: ../classes/core.php:1365 ../fields/button/config_template.php:6
 msgid "Button"
-msgstr ""
+msgstr "Bouton"
 
 #: ../classes/core.php:1366
 msgid "Button, Submit and Reset types"
-msgstr ""
+msgstr "Types button, submit et reset"
 
 #: ../classes/core.php:1368
 msgid "Buttons"
-msgstr ""
+msgstr "Boutons"
 
 #: ../classes/core.php:1386 ../classes/core.php:1387
 msgid "Email Address"
-msgstr "Adresse email"
+msgstr "Adresse électronique"
 
 #: ../classes/core.php:1396 ../classes/core.php:1397
 msgid "Paragraph Textarea"
@@ -374,64 +372,64 @@ msgstr "Zone de texte"
 
 #: ../classes/core.php:1409 ../classes/core.php:1410
 msgid "Toggle Switch"
-msgstr ""
+msgstr "Basculement"
 
 #: ../classes/core.php:1411 ../classes/core.php:1440 ../classes/core.php:1459
 #: ../classes/core.php:1478 ../classes/core.php:1551
 msgid "Select Options"
-msgstr ""
+msgstr "Options de sélection"
 
 #: ../classes/core.php:1437 ../classes/core.php:1438
 msgid "Dropdown Select"
-msgstr ""
+msgstr "Menu déroulant"
 
 #: ../classes/core.php:1456 ../classes/core.php:1457
 msgid "Checkbox"
-msgstr ""
+msgstr "Case à cocher"
 
 #: ../classes/core.php:1475 ../classes/core.php:1476
 msgid "Radio"
-msgstr ""
+msgstr "Bouton radio"
 
 #: ../classes/core.php:1493 ../classes/core.php:1494
 msgid "Date Picker"
-msgstr ""
+msgstr "Sélecteur de date"
 
 #: ../classes/core.php:1496 ../classes/core.php:1522
 msgid "Pickers"
-msgstr ""
+msgstr "Sélecteurs"
 
 #: ../classes/core.php:1520 ../classes/core.php:1521
 msgid "Color Picker"
-msgstr ""
+msgstr "Sélecteur de couleur"
 
 #: ../classes/core.php:1548
 msgid "State/ Province Select"
-msgstr ""
+msgstr "Sélection État/Province"
 
 #: ../classes/core.php:1549
 msgid "Dropdown select for US states and Canadian provinces."
-msgstr ""
+msgstr "Menu déroulant pour les USA et les provinces canadiennes."
 
 #: ../classes/core.php:1563
 msgid "Autocomplete"
-msgstr ""
+msgstr "Remplir automatiquement"
 
 #: ../classes/core.php:1565
 msgid "Pickers,Select Options"
-msgstr ""
+msgstr "Sélecteurs, options de sélection"
 
 #: ../classes/core.php:1918
 msgid "System Tags"
-msgstr ""
+msgstr "Balises système"
 
 #: ../classes/core.php:2630 ../classes/core.php:2664
 msgid "Mailer Debug"
-msgstr ""
+msgstr "Débogage du courielleur"
 
 #: ../classes/core.php:2723 ../classes/core.php:3628
 msgid "Invalid form ID"
-msgstr ""
+msgstr "ID de formulaire invalide"
 
 #: ../classes/core.php:2969 ../classes/core.php:2974 ../classes/core.php:2981
 #: ../classes/core.php:3965 ../classes/core.php:3981 ../classes/core.php:3984
@@ -445,11 +443,13 @@ msgstr "est requis"
 
 #: ../classes/core.php:3833 ../classes/core.php:3839
 msgid "Form is currently not active."
-msgstr ""
+msgstr "Le formulaire n'est pas activé actuellement."
 
 #: ../classes/core.php:4270
 msgid "WARNING: Form is in Mailer Debug mode. Disable before going live."
 msgstr ""
+"ATTENTION : le courrielleur est en mode débogage. Veuillez désactiver ce "
+"mode avant d'aller en ligne."
 
 #: ../classes/widget.php:43
 msgid "Title"
@@ -461,7 +461,7 @@ msgstr "Formulaire"
 
 #: ../fields/button/config_template.php:2
 msgid "Type"
-msgstr ""
+msgstr "Type"
 
 #: ../fields/button/config_template.php:5
 msgid "Submit"
@@ -469,15 +469,15 @@ msgstr "Date d'envoi"
 
 #: ../fields/button/config_template.php:7
 msgid "Next Page"
-msgstr "Page"
+msgstr "Page suivante"
 
 #: ../fields/button/config_template.php:8
 msgid "Previous Page"
-msgstr ""
+msgstr "Page précédente"
 
 #: ../fields/button/config_template.php:14
 msgid "Class"
-msgstr "Classes"
+msgstr "Class"
 
 #: ../fields/calculation/config.php:2
 msgid "Element"
@@ -501,29 +501,28 @@ msgstr "Format monétaire"
 
 #: ../fields/calculation/config.php:32
 msgid "Separator"
-msgstr ""
+msgstr "Séparateur"
 
 #: ../fields/calculation/config.php:35
 msgid "Setup a custom thousand separator. e.g 10,000.00 or 10.000.00"
-msgstr ""
+msgstr "Définir un séparateur des milliers. Ex. : 10 000.00 ou 10.000.00"
 
 #: ../fields/calculation/config.php:41
 msgid "Manual Formula"
-msgstr ""
+msgstr "Formule manuelle"
 
 #: ../fields/calculation/config.php:54
 msgid "Add Operator Group"
-msgstr ""
+msgstr "Ajouter un groupe d'opérateur"
 
 #: ../fields/calculation/config.php:63
-#, fuzzy
 msgid "Use %field_slug% as field value variables"
-msgstr "Utiliser %field_slug% pour utiliser la valeur de la variable"
+msgstr "Utiliser %field_slug% comme variable de valeur de champ"
 
 #: ../fields/checkbox/config_template.php:3
 #: ../fields/radio/config_template.php:4
 msgid "Inline"
-msgstr ""
+msgstr "En ligne"
 
 #: ../fields/color_picker/setup.php:2 ../fields/date_picker/setup.php:2
 #: ../fields/email/config.php:8 ../fields/paragraph/config_template.php:14
@@ -534,132 +533,129 @@ msgstr "Défaut"
 
 #: ../fields/color_picker/setup.php:2
 msgid "Color"
-msgstr ""
+msgstr "Couleur"
 
 #: ../fields/date_picker/setup.php:8
 msgid "Format"
-msgstr "Formulaire"
+msgstr "Format"
 
 #: ../fields/date_picker/setup.php:14
 msgid "Autoclose"
-msgstr ""
+msgstr "Fermer automatiquement"
 
 #: ../fields/date_picker/setup.php:16
 msgid "Enable autoclose"
-msgstr ""
+msgstr "Activer la fermeture automatique"
 
 #: ../fields/date_picker/setup.php:17
 msgid ""
 "If enabled, the date picker will automatically close after selecting the "
 "final input"
 msgstr ""
+"Si activé, le sélecteur de date se fermera automatiquement après sélection "
+"du dernier champ"
 
 #: ../fields/date_picker/setup.php:21
 msgid "Start View"
-msgstr ""
+msgstr "Affichage de départ"
 
 #: ../fields/date_picker/setup.php:24
-#, fuzzy
 msgid "Month (Default)"
-msgstr "Défaut"
+msgstr "Mois (défaut)"
 
 #: ../fields/date_picker/setup.php:25
 msgid "Year"
-msgstr ""
+msgstr "Année"
 
 #: ../fields/date_picker/setup.php:26
 msgid "Decade"
-msgstr ""
+msgstr "Décennie"
 
 #: ../fields/date_picker/setup.php:28
 msgid "The starting view of the date picker (month, year, decade)"
-msgstr ""
+msgstr "L'affichage initial du sélecteur de date (mois, année, décennie)"
 
 #: ../fields/date_picker/setup.php:32
 msgid "language"
-msgstr ""
+msgstr "langue"
 
 #: ../fields/date_picker/setup.php:100
 msgid "Language to use. e.g. pt-BR"
-msgstr ""
+msgstr "Langue à utiliser. Ex. : fr-FR"
 
 #: ../fields/dropdown/config_template.php:2 ../fields/email/config.php:2
 #: ../fields/paragraph/config_template.php:2 ../fields/phone/config.php:2
 #: ../fields/select2/field/config.php:3 ../fields/text/config.php:2
 msgid "Placeholder"
-msgstr ""
+msgstr "Remplaçant fictif"
 
 #: ../fields/file/config_template.php:2
 msgid "Attach to mailer"
-msgstr ""
+msgstr "Attacher au courrielleur"
 
 #: ../fields/file/config_template.php:9
 msgid "Allow Multiple"
-msgstr ""
+msgstr "Multiple autorisé"
 
 #: ../fields/file/config_template.php:16
 msgid "Allowed Types"
-msgstr "Type autorisés"
+msgstr "Types autorisés"
 
 #: ../fields/file/config_template.php:19
 msgid "Comma separated eg. jpg,pdf,txt"
-msgstr "Séparés par des virgules, par exemple. jpg, pdf, txt"
+msgstr "Séparés par des virgules, ex; :  jpg, pdf, txt"
 
 #: ../fields/gravatar/config.php:2
-#, fuzzy
 msgid "Email Field"
-msgstr "Type d'email"
+msgstr "Champ courriel"
 
 #: ../fields/gravatar/config.php:10
 msgid "Mystery Man"
-msgstr ""
+msgstr "L'homme mystérieux"
 
 #: ../fields/gravatar/config.php:11
 msgid "Blank"
-msgstr ""
+msgstr "Vide"
 
 #: ../fields/gravatar/config.php:12
 msgid "Gravatar Logo"
-msgstr ""
+msgstr "Logo Gravatar"
 
 #: ../fields/gravatar/config.php:13
 msgid "Identicon (Generated)"
-msgstr ""
+msgstr "Identicon (Généré)"
 
 #: ../fields/gravatar/config.php:14
 msgid "Wavatar (Generated)"
-msgstr ""
+msgstr "Wavatar (Généré)"
 
 #: ../fields/gravatar/config.php:15
 msgid "MonsterID (Generated)"
-msgstr ""
+msgstr "MonsterID (Généré)"
 
 #: ../fields/gravatar/config.php:16
 msgid "Retro (Generated)"
-msgstr ""
+msgstr "Retro (Généré)"
 
 #: ../fields/gravatar/config.php:21
 msgid "Fallback"
-msgstr ""
+msgstr "Fallback"
 
 #: ../fields/gravatar/config.php:35
 msgid "Size"
-msgstr ""
+msgstr "Taille"
 
 #: ../fields/gravatar/config.php:42
-#, fuzzy
 msgid "Border Color"
-msgstr "Bordure"
+msgstr "Couleur de bordure"
 
 #: ../fields/gravatar/config.php:49
-#, fuzzy
 msgid "Border Size"
-msgstr "Bordure"
+msgstr "Taille de bordure"
 
 #: ../fields/gravatar/config.php:56
-#, fuzzy
 msgid "Border Radius"
-msgstr "Bordure"
+msgstr "Arrondis de bordure"
 
 #: ../fields/hidden/setup.php:2 ../ui/edit.php:106 ../ui/edit.php:135
 #: ../ui/panels/variables.php:12
@@ -668,39 +664,39 @@ msgstr "Valeur"
 
 #: ../fields/paragraph/config_template.php:8
 msgid "Rows"
-msgstr ""
+msgstr "Lignes"
 
 #: ../fields/phone/config.php:14
 msgid "Style"
-msgstr ""
+msgstr "Style"
 
 #: ../fields/phone/config.php:16
 msgid "Local"
-msgstr ""
+msgstr "Local"
 
 #: ../fields/phone/config.php:18
 msgid "International"
-msgstr ""
+msgstr "International"
 
 #: ../fields/phone/config.php:20
 msgid "Custom"
-msgstr ""
+msgstr "Personnalisé"
 
 #: ../fields/phone/config.php:22
 msgid "Use the digit 9 to indicate a number"
-msgstr ""
+msgstr "Utiliser le 9 pour indiquer un nombre"
 
 #: ../fields/range_slider/config.php:17
 msgid "Track"
-msgstr ""
+msgstr "Pister"
 
 #: ../fields/range_slider/config.php:23 ../fields/select2/field/config.php:20
 msgid "Highlight"
-msgstr ""
+msgstr "Mettre en évidence"
 
 #: ../fields/range_slider/config.php:29
 msgid "Handle"
-msgstr ""
+msgstr "Traiter"
 
 #: ../fields/range_slider/config.php:35 ../fields/select2/field/config.php:29
 msgid "Border"
@@ -708,7 +704,7 @@ msgstr "Bordure"
 
 #: ../fields/range_slider/config.php:42
 msgid "Steps"
-msgstr ""
+msgstr "Étapes"
 
 #: ../fields/range_slider/config.php:48
 msgid "Minimum"
@@ -732,16 +728,15 @@ msgstr "Suffixe"
 
 #: ../fields/recaptcha/config.php:1
 msgid "reCaptcha required keys from Google."
-msgstr ""
+msgstr "Le reCaptcha nécessite les clés de Google."
 
 #: ../fields/recaptcha/config.php:3
-#, fuzzy
 msgid "Site Key"
-msgstr "Clé privée"
+msgstr "Clé de site"
 
 #: ../fields/recaptcha/config.php:9
 msgid "Secret Key"
-msgstr ""
+msgstr "Clé secrète"
 
 #: ../fields/recaptcha/config.php:15
 msgid "Theme"
@@ -749,206 +744,160 @@ msgstr "Thème"
 
 #: ../fields/recaptcha/config.php:18
 msgid "Light"
-msgstr ""
+msgstr "Clair"
 
 #: ../fields/recaptcha/config.php:19
 msgid "Dark"
-msgstr ""
+msgstr "Sombre"
 
 #: ../fields/recaptcha/config.php:21
 msgid ""
 "Theme changes not available in preview. Update form and reload to see new "
 "theme."
 msgstr ""
+"Modification de thème non disponible dans l'aperçu. Mettez à jour le "
+"formulaire et rechargez-le pour voir le nouveau thème."
 
 #: ../fields/recaptcha/preview.php:20
 msgid "No Secret Key Added"
-msgstr ""
+msgstr "Aucune clé secrète ajoutée"
 
 #: ../fields/recaptcha/preview.php:23
 msgid "No Site Key Added"
-msgstr ""
+msgstr "Aucune clé de site ajoutée"
 
 #: ../fields/select2/field/config.php:11
 msgid "Multiple"
-msgstr ""
+msgstr "Multiple"
 
 #: ../fields/select2/field/config.php:15
 msgid "Enable multiple selections"
-msgstr ""
+msgstr "Autoriser la sélection multiple"
 
 #: ../fields/star-rate/config.php:2
 msgid "Number of Stars"
-msgstr ""
+msgstr "Nombre d'étoiles"
 
 #: ../fields/star-rate/config.php:8
 msgid "Star Type"
-msgstr ""
+msgstr "Type d'étoiles"
 
 #: ../fields/star-rate/config.php:11
 msgid "Star"
-msgstr ""
+msgstr "Étoile"
 
 #: ../fields/star-rate/config.php:12
 msgid "Heart"
-msgstr ""
+msgstr "Coeur"
 
 #: ../fields/star-rate/config.php:13
 msgid "Face"
-msgstr ""
+msgstr "Visage"
 
 #: ../fields/star-rate/config.php:14
 msgid "Dot"
-msgstr ""
+msgstr "Point"
 
 #: ../fields/star-rate/config.php:19
 msgid "Star Size"
-msgstr ""
+msgstr "Taille d'étoile"
 
 #: ../fields/star-rate/config.php:25
 msgid "Star Spacing"
-msgstr ""
+msgstr "Espacement entre étoiles"
 
 #: ../fields/star-rate/config.php:31
 msgid "Single Select"
-msgstr ""
+msgstr "Sélection unique"
 
 #: ../fields/star-rate/config.php:38
 msgid "Star Color"
-msgstr ""
+msgstr "Couleur d'étoile"
 
 #: ../fields/star-rate/config.php:44
 msgid "Track Color"
-msgstr ""
+msgstr "Couleur de piste"
 
 #: ../fields/star-rate/config.php:50
 msgid "Include Cancel"
-msgstr ""
+msgstr "Inclure \"Annuler\""
 
 #: ../fields/text/config.php:15
 msgid "Masked Input"
-msgstr ""
+msgstr "Champ masqué"
 
 #: ../fields/text/config.php:17
 msgid "Enable input mask"
-msgstr ""
+msgstr "Activer le champ masqué"
 
 #: ../fields/text/config.php:22
 msgid "Mask"
-msgstr ""
+msgstr "masque"
 
 #: ../fields/text/config.php:30
 msgid "numeric"
-msgstr ""
+msgstr "numérique"
 
 #: ../fields/text/config.php:31
 msgid "alphabetical"
-msgstr ""
+msgstr "alphabétique"
 
 #: ../fields/text/config.php:32
 msgid "alphanumeric"
-msgstr ""
+msgstr "alphanumérique"
 
 #: ../fields/text/config.php:33
 msgid "optional"
-msgstr ""
+msgstr "facultatif"
 
 #: ../fields/text/config.php:34
 msgid "length"
-msgstr ""
+msgstr "longueur"
 
 #: ../fields/text/config.php:36
 msgid "Any length character only"
-msgstr ""
+msgstr "Toute longueur de caractères uniquement"
 
 #: ../fields/text/config.php:37
 msgid "Any length number only"
-msgstr ""
+msgstr "Toute longueur de chiffres uniquement"
 
 #: ../fields/text/config.php:38
 msgid "email"
-msgstr ""
+msgstr "courriel"
 
 #: ../fields/toggle_switch/config_template.php:2
 msgid "Orientation"
-msgstr ""
+msgstr "Orientation"
 
 #: ../fields/toggle_switch/config_template.php:5
 msgid "Horizontal"
-msgstr ""
+msgstr "Horizontal"
 
 #: ../fields/toggle_switch/config_template.php:6
 msgid "Justified"
-msgstr ""
+msgstr "Justifié"
 
 #: ../fields/toggle_switch/config_template.php:7
 msgid "Vertical"
-msgstr ""
+msgstr "Vertical"
 
 #: ../fields/toggle_switch/config_template.php:13
 msgid "Active Class"
-msgstr ""
+msgstr "Class active"
 
 #: ../fields/toggle_switch/config_template.php:20
 msgid "Inactive Class"
-msgstr ""
+msgstr "Class inactive"
 
 #: ../fields/toggle_switch/field.php:39 ../ui/edit.php:491 ../ui/edit.php:499
 #: ../ui/edit.php:532 ../ui/edit.php:539
 msgid "Enable"
 msgstr "Activé"
 
-#: ../includes/cf-ajax/plugin.php:38
-msgid "Ajax Submissions"
-msgstr ""
-
-#: ../includes/cf-ajax/plugin.php:40
-msgid "Enable Ajax Submissions. (No page reloads)"
-msgstr ""
-
-#: ../includes/cf-ajax/plugin.php:46
-msgid "Custom Callback"
-msgstr ""
-
-#: ../includes/cf-ajax/plugin.php:48
-msgid "Add a custom Javascript callback handlers on submission."
-msgstr ""
-
-#: ../includes/cf-ajax/plugin.php:55
-msgid "Inhibit Notices"
-msgstr ""
-
-#: ../includes/cf-ajax/plugin.php:57
-msgid "Don't show default alerts (success etc.)"
-msgstr ""
-
-#: ../includes/cf-ajax/plugin.php:63
-#, fuzzy
-msgid "Callback Function"
-msgstr "Calcul"
-
-#: ../includes/cf-ajax/plugin.php:66
-msgid ""
-"Javascript function to call on submission. Passed an object containing form "
-"submission result."
-msgstr ""
-
-#: ../includes/cf-ajax/plugin.php:91
-msgid "Multiple Ajax Submissions"
-msgstr ""
-
-#: ../includes/cf-ajax/plugin.php:93
-msgid "If set, form can be submitted multiple times with out a new page load."
-msgstr ""
-
-#: ../includes/cf-ajax/plugin.php:147 ../includes/cf-ajax/plugin.php:158
-#: ../processors/redirect/config.php:10
-msgid "Redirecting"
-msgstr "Redirection"
-
 #: ../includes/custom_field_class.php:21
 msgid "Custom Class"
-msgstr ""
+msgstr "Class personnalisée"
 
 #: ../includes/field_processors.php:26
 msgid "File type not allowed. Allowed types are: "
@@ -958,13 +907,64 @@ msgstr "Type de fichier non autorisé. Les types autorisés sont :"
 msgid "File type needs to be"
 msgstr "Les types de fichier doivent être"
 
+#: ../includes/cf-ajax/plugin.php:38
+msgid "Ajax Submissions"
+msgstr "Envoi Ajax"
+
+#: ../includes/cf-ajax/plugin.php:40
+msgid "Enable Ajax Submissions. (No page reloads)"
+msgstr "Activer l'envoi par Ajax (pas de rechargement de page)."
+
+#: ../includes/cf-ajax/plugin.php:46
+msgid "Custom Callback"
+msgstr "Callback personnalisé"
+
+#: ../includes/cf-ajax/plugin.php:48
+msgid "Add a custom Javascript callback handlers on submission."
+msgstr ""
+"Ajouter un traitement par callback JavaScript personnalisé après soumission."
+
+#: ../includes/cf-ajax/plugin.php:55
+msgid "Inhibit Notices"
+msgstr "Ignorer les notifications"
+
+#: ../includes/cf-ajax/plugin.php:57
+msgid "Don't show default alerts (success etc.)"
+msgstr "Ne pas afficher les avertissements par défaut (success, etc...)"
+
+#: ../includes/cf-ajax/plugin.php:63
+msgid "Callback Function"
+msgstr "Fonction de callback"
+
+#: ../includes/cf-ajax/plugin.php:66
+msgid ""
+"Javascript function to call on submission. Passed an object containing form "
+"submission result."
+msgstr ""
+"Fonction JavaScript à appeler lors de la soumission. Passe un objet "
+"contenant le résultat de l'envoi du formulaire."
+
+#: ../includes/cf-ajax/plugin.php:91
+msgid "Multiple Ajax Submissions"
+msgstr "Soumissions Ajax multiples"
+
+#: ../includes/cf-ajax/plugin.php:93
+msgid "If set, form can be submitted multiple times with out a new page load."
+msgstr ""
+"Si défini, le formulaire peut être envoyé plusieurs fois sans recharger la "
+"page."
+
+#: ../includes/cf-ajax/plugin.php:147 ../includes/cf-ajax/plugin.php:158
+#: ../processors/redirect/config.php:10
+msgid "Redirecting"
+msgstr "Redirection"
+
 #: ../processors/akismet/config.php:2 ../ui/edit.php:330
 #: ../ui/panels/variables.php:10
 msgid "Name"
 msgstr "Nom"
 
 #: ../processors/akismet/config.php:8
-#, fuzzy
 msgid "Email"
 msgstr "De"
 
@@ -973,13 +973,12 @@ msgid "URL"
 msgstr "URL"
 
 #: ../processors/akismet/config.php:27
-#, fuzzy
 msgid "Error Message"
-msgstr "Message"
+msgstr "Message d'erreur"
 
 #: ../processors/akismet/config.php:29
 msgid "Sorry, that looked very spammy, try rephrasing things"
-msgstr ""
+msgstr "Désolé, cela ressemblait à du spam, veuillez reformuelr les choses"
 
 #: ../processors/auto_responder/config.php:2 ../ui/panels/emailer.php:42
 msgid "From Name"
@@ -995,11 +994,11 @@ msgstr "Sujet"
 
 #: ../processors/auto_responder/config.php:20
 msgid "Recipient Name"
-msgstr ""
+msgstr "Nom du destinataire"
 
 #: ../processors/auto_responder/config.php:26
 msgid "Recipient Email"
-msgstr ""
+msgstr "Courriel du destinataire"
 
 #: ../processors/auto_responder/config.php:32
 msgid "Message"
@@ -1007,37 +1006,39 @@ msgstr "Message"
 
 #: ../processors/increment/config.php:2
 msgid "Increment Start"
-msgstr ""
+msgstr "Début d'incrémentation"
 
 #: ../processors/increment/config.php:6
 msgid "Number to start incrementing."
-msgstr ""
+msgstr "Nombre où l'incrémentation commence."
 
 #: ../processors/increment/config.php:8
 msgid ""
 "Incremenets started at {{start}}. to reset, delete this and insert a new "
 "increment processor."
 msgstr ""
+"Incrémentation débutée à {{start}}. Pour réinitialiser, supprimez cela et "
+"insérez un nouveau traitement d'incrémentation."
 
 #: ../processors/increment/config.php:14
-#, fuzzy
 msgid "Increment Field"
-msgstr "Champ"
+msgstr "Champ d'incrémentation"
 
 #: ../processors/increment/config.php:17
 msgid ""
 "If you want to show the value in the entries, Select a Hidden field in form "
 "to capture the value to."
 msgstr ""
+"Si vous souhaitez afficher la valeur dans les données, sélectionnez un champ "
+"masqué du formulaire dans lequel capturer la valeur."
 
 #: ../processors/redirect/config.php:8
-#, fuzzy
 msgid "Redirect Message"
-msgstr "Redirection"
+msgstr "Redirection de message"
 
 #: ../processors/redirect/config.php:11
 msgid "Message text shown when redirecting in Ajax mode."
-msgstr ""
+msgstr "Texte du message affiché lors de la redirection Ajax."
 
 #: ../ui/admin.php:26
 msgid "Create Form"
@@ -1045,7 +1046,7 @@ msgstr "Créer un formulaire"
 
 #: ../ui/admin.php:38
 msgid "Create New Form"
-msgstr "Crééer un nouveau formulaire"
+msgstr "Créer un nouveau formulaire"
 
 #: ../ui/admin.php:38
 msgid "New Form"
@@ -1053,7 +1054,7 @@ msgstr "Nouveau formulaire"
 
 #: ../ui/admin.php:41 ../ui/admin_templates.php:33
 msgid "Import Form"
-msgstr "Importer un nouveau formulaire"
+msgstr "Importer un formulaire"
 
 #: ../ui/admin.php:41
 msgid "Import"
@@ -1061,23 +1062,29 @@ msgstr "Importer"
 
 #: ../ui/admin.php:47
 msgid "Front-end Style Includes"
-msgstr ""
+msgstr "Inclusions de style en frontend"
 
 #: ../ui/admin.php:51
 msgid "Includes Bootstrap 3 styles on the frontend for form alert notices"
 msgstr ""
+"Inclut les styles Bootstrap 3 dans le frontend pour les notifications du "
+"formulaire"
 
 #: ../ui/admin.php:51
 msgid "Alert"
-msgstr "Alerte"
+msgstr "Notification"
 
 #: ../ui/admin.php:52
 msgid "Includes Bootstrap 3 styles on the frontend for form fields and buttons"
 msgstr ""
+"Inclut les styles Bootstrap 3 dans le frontend pour les champs et boutons du "
+"formulaire"
 
 #: ../ui/admin.php:53
 msgid "Includes Bootstrap 3 styles on the frontend for form grid layouts"
 msgstr ""
+"Inclut les styles Bootstrap 3 dans le frontend pour les dispositions de "
+"grille"
 
 #: ../ui/admin.php:53
 msgid "Grid"
@@ -1090,34 +1097,32 @@ msgstr "données"
 #: ../ui/admin.php:86 ../ui/edit.php:492 ../ui/edit.php:500
 #: ../ui/panels/emailer.php:35
 msgid "Disabled"
-msgstr "Désactiver"
+msgstr "Désactivé"
 
 #: ../ui/admin.php:96
 msgid "Mailer Debug enabled."
-msgstr ""
+msgstr "Débogage courielleur activé."
 
 #: ../ui/admin.php:100 ../ui/entries.php:14
 msgid "Edit"
 msgstr "Modifier"
 
 #: ../ui/admin.php:125
-#, fuzzy
 msgid "Export"
-msgstr "Exporter le formulaire"
+msgstr "Exporter"
 
 #: ../ui/admin.php:126
-#, fuzzy
 msgid "Clone Form"
-msgstr "Format monétaire"
+msgstr "Cloner le formulaire"
 
 #: ../ui/admin.php:126
 msgid "Clone"
-msgstr ""
+msgstr "Cloner"
 
 #: ../ui/admin.php:127
 msgid "This will delete this form permanently. Continue?"
 msgstr ""
-"Cela va supprimer le formulaire de façon permanente. Voulez-vous continuer ?"
+"Cela va supprimer le formulaire définitivement. Voulez-vous continuer ?"
 
 #: ../ui/admin.php:127
 msgid "Delete"
@@ -1125,7 +1130,7 @@ msgstr "Supprimer"
 
 #: ../ui/admin.php:147
 msgid "You don't have any forms."
-msgstr "Vous n'avez aucun formulaire"
+msgstr "Vous n'avez aucun formulaire."
 
 #: ../ui/admin.php:188
 msgid "An form name is required"
@@ -1137,17 +1142,17 @@ msgid ""
 "to the <a href=\"http://wordpress.org/support/plugin/caldera-forms\" target="
 "\"_blank\">support forum</a>."
 msgstr ""
-"Il semblerait que quelque chose ne fonctionne pas. Réessayer ou contacter le "
+"Il semblerait que quelque chose ne fonctionne pas. Réessayez ou contactez le "
 "<a href=\"http://wordpress.org/support/plugin/caldera-forms\" target=\"_blank"
 "\">support</a>."
 
 #: ../ui/admin_templates.php:2 ../ui/admin_templates.php:7
 msgid "Bulk Actions"
-msgstr ""
+msgstr "Actions groupées"
 
 #: ../ui/admin_templates.php:3 ../ui/admin_templates.php:8
 msgid "Export Selected"
-msgstr ""
+msgstr "Exporter la sélection"
 
 #: ../ui/admin_templates.php:4
 msgid "Move to Trash"
@@ -1163,9 +1168,8 @@ msgid "Form Name"
 msgstr "Nom du formulaire"
 
 #: ../ui/admin_templates.php:25
-#, fuzzy
 msgid "Form File"
-msgstr "Nom du formulaire"
+msgstr "Fichier du formulaire"
 
 #: ../ui/admin_templates.php:54 ../ui/edit.php:358
 msgid "Description"
@@ -1173,7 +1177,7 @@ msgstr "Description"
 
 #: ../ui/admin_templates.php:72 ../ui/edit.php:323
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: ../ui/admin_templates.php:73 ../ui/admin_templates.php:111
 msgid "Submitted"
@@ -1185,20 +1189,19 @@ msgstr "Aucune donnée trouvée"
 
 #: ../ui/admin_templates.php:100
 msgid "No entries yet."
-msgstr "Il n'y a pas encore de donnée"
+msgstr "Il n'y a pas encore de données."
 
 #: ../ui/edit.php:13
-#, fuzzy
 msgid "Form has successfully been submitted. Thank you."
-msgstr "Le formulaire a été envoyé."
+msgstr "Le formulaire a été envoyé. Merci pour votre contribution."
 
 #: ../ui/edit.php:54
 msgid "Auto Populate"
-msgstr ""
+msgstr "Remplir automatiquement"
 
 #: ../ui/edit.php:60
 msgid "Auto Type"
-msgstr ""
+msgstr "Saisie automatique"
 
 #: ../ui/edit.php:63
 msgid "Select a source"
@@ -1206,11 +1209,11 @@ msgstr "Choisir une source"
 
 #: ../ui/edit.php:64 ../ui/edit.php:90
 msgid "Post Type"
-msgstr ""
+msgstr "Type de ressource"
 
 #: ../ui/edit.php:65 ../ui/edit.php:74
 msgid "Taxonomy"
-msgstr ""
+msgstr "Taxonomie"
 
 #: ../ui/edit.php:122
 msgid "Add Option"
@@ -1218,19 +1221,19 @@ msgstr "Ajouter une option"
 
 #: ../ui/edit.php:123
 msgid "Bulk Insert"
-msgstr ""
+msgstr "Insertion groupée"
 
 #: ../ui/edit.php:126
 msgid "Single option per line. These replace the current list."
-msgstr ""
+msgstr "Une option par ligne. Ceci remplace la liste actuelle."
 
 #: ../ui/edit.php:127
 msgid "Insert Options"
-msgstr ""
+msgstr "Insérer les options"
 
 #: ../ui/edit.php:131
 msgid "No Default"
-msgstr ""
+msgstr "Pas de valeur par défaut"
 
 #: ../ui/edit.php:132
 msgid "Show Values"
@@ -1238,7 +1241,7 @@ msgstr "Montrer les valeurs"
 
 #: ../ui/edit.php:136
 msgid "Label"
-msgstr "Label"
+msgstr "Titre"
 
 #: ../ui/edit.php:297
 msgid "Elements"
@@ -1246,23 +1249,23 @@ msgstr "Éléments"
 
 #: ../ui/edit.php:305
 msgid "Settings"
-msgstr "Paramètres généraux"
+msgstr "Paramètres"
 
 #: ../ui/edit.php:306
 msgid "Conditions"
-msgstr ""
+msgstr "Conditions"
 
 #: ../ui/edit.php:313
 msgid "Element Type"
-msgstr ""
+msgstr "Type d'élément"
 
 #: ../ui/edit.php:337
 msgid "Hide Label"
-msgstr "Masquer le label"
+msgstr "Masquer le titre"
 
 #: ../ui/edit.php:344
 msgid "Slug"
-msgstr ""
+msgstr "Slug"
 
 #: ../ui/edit.php:351
 msgid "Required"
@@ -1270,12 +1273,14 @@ msgstr "Requis"
 
 #: ../ui/edit.php:365
 msgid "Show in Entry List"
-msgstr ""
+msgstr "Afficher dans la liste des données"
 
 #: ../ui/edit.php:374
 msgid ""
 "Are you sure you want to remove this field?. 'Cancel' to stop. 'OK' to delete"
 msgstr ""
+"Souhaitez-vous vraiment supprimer ce champ ? \"Annuler\" pour abandonner. "
+"\"OK\" pour supprimer."
 
 #: ../ui/edit.php:374
 msgid "Delete Element"
@@ -1290,13 +1295,12 @@ msgid "Hide"
 msgstr "Masquer"
 
 #: ../ui/edit.php:382
-#, fuzzy
 msgid "Disable"
 msgstr "Désactiver"
 
 #: ../ui/edit.php:384 ../ui/panels/processors.php:126
 msgid "Add Conditional Group"
-msgstr ""
+msgstr "Ajouter un groupe conditionnel"
 
 #: ../ui/edit.php:454 ../ui/edit.php:466
 msgid "General Settings"
@@ -1304,7 +1308,7 @@ msgstr "Paramètres généraux"
 
 #: ../ui/edit.php:459
 msgid "Updated Successfully"
-msgstr ""
+msgstr "Mis à jour avec succès !"
 
 #: ../ui/edit.php:461
 msgid "Update Form"
@@ -1320,11 +1324,11 @@ msgstr "Description du formulaire"
 
 #: ../ui/edit.php:482
 msgid "State"
-msgstr ""
+msgstr "État"
 
 #: ../ui/edit.php:484
 msgid "Deactivate / Draft"
-msgstr ""
+msgstr "Désactiver / brouillon"
 
 #: ../ui/edit.php:489
 msgid "Capture Entries"
@@ -1340,36 +1344,35 @@ msgstr "Voir les données"
 
 #: ../ui/edit.php:508
 msgid "All"
-msgstr ""
+msgstr "Tout"
 
 #: ../ui/edit.php:530
 msgid "Hide Form"
-msgstr "Cacher le formulaire"
+msgstr "Masquer le formulaire"
 
 #: ../ui/edit.php:532
 msgid "Hide form after successful submission"
-msgstr "Cache le formulaire après son envoi"
+msgstr "Masquer le formulaire après son envoi"
 
 #: ../ui/edit.php:537
-#, fuzzy
 msgid "Honeypot"
-msgstr "Format monétaire"
+msgstr "Piège à pirates"
 
 #: ../ui/edit.php:539
 msgid "Place an invisible field to trick spambots"
-msgstr ""
+msgstr "Placer un champ invisible pour leurrer les robots de spam."
 
 #: ../ui/edit.php:544
 msgid "Success Message"
-msgstr ""
+msgstr "Message en cas de succès"
 
 #: ../ui/edit.php:550
 msgid "Gravatar Field"
-msgstr ""
+msgstr "Champ Gravatar"
 
 #: ../ui/edit.php:557
 msgid "Used when viewing an entry from a non-logged in user."
-msgstr ""
+msgstr "Utilisé lorsqu'on voit une donnée d'un utilisateur non authentifié."
 
 #: ../ui/edit.php:631
 msgid "Add New"
@@ -1381,7 +1384,7 @@ msgstr "Supprimer"
 
 #: ../ui/edit.php:786
 msgid "Set Element"
-msgstr ""
+msgstr "Définir l'élément"
 
 #: ../ui/edit.php:789
 msgid "No description given"
@@ -1409,11 +1412,11 @@ msgstr "est plus petit que"
 
 #: ../ui/edit.php:864 ../ui/edit.php:887
 msgid "starts with"
-msgstr "commence avec"
+msgstr "commence par"
 
 #: ../ui/edit.php:865 ../ui/edit.php:888
 msgid "ends with"
-msgstr "se termine avec"
+msgstr "se termine par"
 
 #: ../ui/edit.php:866 ../ui/edit.php:889
 msgid "contains"
@@ -1425,7 +1428,7 @@ msgstr "Sélectionner le champ en premier"
 
 #: ../ui/edit.php:873
 msgid "Add Condition"
-msgstr ""
+msgstr "Ajouter une condition"
 
 #: ../ui/edit.php:879
 msgid "and"
@@ -1433,7 +1436,7 @@ msgstr "et"
 
 #: ../ui/entries_toolbar.php:15
 msgid "Active"
-msgstr ""
+msgstr "Actif"
 
 #: ../ui/entries_toolbar.php:31
 msgid "Export Entries"
@@ -1445,11 +1448,11 @@ msgstr "Appliquer"
 
 #: ../ui/entry_navigation.php:23
 msgid "item"
-msgstr ""
+msgstr "élément"
 
 #: ../ui/entry_navigation.php:23
 msgid "items"
-msgstr ""
+msgstr "éléments"
 
 #: ../ui/extend.php:23
 msgid ""
@@ -1457,10 +1460,13 @@ msgid ""
 "License Manager. This panel will be removed in a future version of Caldera "
 "Forms."
 msgstr ""
+"REMARQUE : Nous déplaçons actuellement les licences de Caldera Forms vers le "
+"gestionnaire de licence CalderaWP. Ce panneau sera supprimé dans une version "
+"ultérieure de Caldera Forms."
 
 #: ../ui/extend.php:29
 msgid "No licensed addons installed."
-msgstr ""
+msgstr "Aucune extension avec licence installée."
 
 #: ../ui/extend.php:54
 msgid "Already Installed"
@@ -1468,11 +1474,11 @@ msgstr "Déjà installé"
 
 #: ../ui/insert_shortcode.php:5
 msgid "Insert Caldera Form"
-msgstr ""
+msgstr "Insérer un formulaire"
 
 #: ../ui/insert_shortcode.php:24
 msgid "You don't have any forms to insert."
-msgstr "Vous n'avez aucun formulaire a inserer."
+msgstr "Vous n'avez aucun formulaire a insérer."
 
 #: ../ui/insert_shortcode.php:32
 msgid "Insert Form"
@@ -1492,7 +1498,7 @@ msgstr "Activé"
 
 #: ../ui/panels/emailer.php:45
 msgid "Name from which the email comes"
-msgstr ""
+msgstr "Nom de l'expéditeur du courriel"
 
 #: ../ui/panels/emailer.php:52
 msgid ""
@@ -1500,40 +1506,46 @@ msgid ""
 "form. Rather use your own email and use a form field in the \"Reply To Email"
 "\" below."
 msgstr ""
+"Adresse électronique de l'expéditeur du message. Essayez de ne pas utiliser "
+"une valeur d'un champ du formulaire. Utilisez plutôt votre propre adresse et "
+"insérez la valeur d'un champ dans la ligne \"Courriel de réponse\" ci-"
+"dessous."
 
 #: ../ui/panels/emailer.php:56
 msgid "Reply To Email"
-msgstr ""
+msgstr "Courriel de réponse"
 
 #: ../ui/panels/emailer.php:59
 msgid ""
 "The email address of the person filling in the form. This will allow the "
 "email to be replied directly to the sender."
 msgstr ""
+"L'adresse électronique de la personne remplissant le formulaire. Cela "
+"permettra de répondre directement à l'expéditeur."
 
 #: ../ui/panels/emailer.php:64
 msgid "Email Type"
-msgstr "Type d'email"
+msgstr "Type de courriel"
 
 #: ../ui/panels/emailer.php:73
 msgid "CSV Include"
-msgstr "Inclure un CSV"
+msgstr "Inclure le CSV"
 
 #: ../ui/panels/emailer.php:75
 msgid "Attach a CSV version of the submission"
-msgstr "Ajouter une version CSV des données du formulaire"
+msgstr "Joindre une version CSV des données du formulaire"
 
 #: ../ui/panels/emailer.php:81
 msgid "Recipients"
-msgstr ""
+msgstr "Destinataires"
 
 #: ../ui/panels/emailer.php:84 ../ui/panels/emailer.php:92
 msgid "Comma separated list of email addresses."
-msgstr "Adresses emails séparés par des virgules"
+msgstr "Adresses séparées par des virgules"
 
 #: ../ui/panels/emailer.php:89
 msgid "BCC"
-msgstr ""
+msgstr "Copie cachée"
 
 #: ../ui/panels/emailer.php:100
 msgid "Use %field_slug% to use a value from the form"
@@ -1541,26 +1553,25 @@ msgstr "Utiliser %field_slug% pour afficher une valeur du formulaire"
 
 #: ../ui/panels/emailer.php:104
 msgid "Email Message"
-msgstr ""
+msgstr "Message"
 
 #: ../ui/panels/emailer.php:107
-#, fuzzy
 msgid ""
 "Magic tags, %field_slug% are replaced with submitted data. Use {summary} to "
 "build an automatic mail based on form content. Leaving the mailer blank, "
 "will create and automatic summary."
 msgstr ""
-"Magic tags, %field_slug% sera remplacé par la donnée correspondante du "
-"formulaire. Utiliser {summary} pour générer les données automatiquement. "
-"Laisser vide correspond à {summary} "
+"Balises magiques, %field_slug% sera remplacé par la donnée correspondante du "
+"formulaire. Utiliser {summary} pour générer les données automatiquement "
+"basées sur le contenu du formulaire. Laisser vide correspond à {summary}."
 
 #: ../ui/panels/emailer.php:113
 msgid "Debug Mailer"
-msgstr ""
+msgstr "Débogage courrielleur"
 
 #: ../ui/panels/emailer.php:115
 msgid "Enable email send transation log"
-msgstr ""
+msgstr "Activer le journal des transactions d'envoi"
 
 #: ../ui/panels/emailer.php:116
 msgid ""
@@ -1568,18 +1579,22 @@ msgid ""
 "log. Do not keep this enabled on production as it sends two emails for "
 "tracking."
 msgstr ""
+"Si défini, les données seront affublées d'un onglet de débogage pour voir le "
+"journal des tansactions. Ne laissez pas cette option activée en production "
+"puisque deux courriels sont envoyés pour le pistage."
 
 #: ../ui/panels/emailer.php:125
 msgid ""
 "Please add a \"Button\" element and set it to \"Submit\" if you want to have "
 "the form submittable."
-msgstr "Ajouter un boutton \"Submit\" pour que le formulaire soit valide."
+msgstr ""
+"Ajouter un boutton \"Submit\" pour que les valeurs du formulaire puissent "
+"être envoyées."
 
 #: ../ui/panels/layout.php:13
 msgid "This will remove all the fields in this row. Are you sure?"
 msgstr ""
-"Cela supprimera tous les champs de la ligne. Êtes vous sur de vouloir faire "
-"ça ?"
+"Cela supprimera tous les champs de la ligne. Souhaitez-vous vraiment cela ?"
 
 #: ../ui/panels/layout.php:14 ../ui/panels/layout.php:18
 #: ../ui/panels/layout.php:22 ../ui/panels/layout.php:108
@@ -1597,7 +1612,7 @@ msgstr "Ajouter une page"
 
 #: ../ui/panels/layout_add_row.php:12
 msgid "Drag onto the form grid below"
-msgstr ""
+msgstr "Glissez vers la grille de formulaire ci-dessous"
 
 #: ../ui/panels/layout_add_row.php:15
 msgid "Add Element"
@@ -1605,48 +1620,50 @@ msgstr "Ajouter un élément"
 
 #: ../ui/panels/pages.php:2
 msgid "Progress Bar"
-msgstr ""
+msgstr "Barre de progression"
 
 #: ../ui/panels/pages.php:4
 msgid "Show Breadcrumbs"
-msgstr ""
+msgstr "Afficher les pistes"
 
 #: ../ui/panels/pages.php:5
 msgid "ProTip: Use an HTML element to build a custom progress per page"
 msgstr ""
+"Astuce de pro : utilisez un élément HTML pour créer une progression "
+"personnalisée par page"
 
 #: ../ui/panels/processors.php:22 ../ui/panels/processors.php:47
 #: ../ui/panels/processors.php:100
 msgid "New Form Processor"
-msgstr ""
+msgstr "Nouveau traitement de formulaire"
 
 #: ../ui/panels/processors.php:103
 msgid "Processor Type"
-msgstr ""
+msgstr "Type de traitement"
 
 #: ../ui/panels/processors.php:117
 msgid "Are you sure you want to remove this processor?"
-msgstr ""
+msgstr "Souhaitez-vous vraiment supprimer ce traitement ?"
 
 #: ../ui/panels/processors.php:117
 msgid "Remove Processor"
-msgstr ""
+msgstr "Supprimer le traitement"
 
 #: ../ui/panels/processors.php:123
 msgid "Use"
-msgstr ""
+msgstr "Utiliser"
 
 #: ../ui/panels/processors.php:124
 msgid "Don't Use"
-msgstr ""
+msgstr "Ne pas utiliser"
 
 #: ../ui/panels/processors.php:171
 msgid "Add Processor"
-msgstr ""
+msgstr "Ajouter un traitement"
 
 #: ../ui/panels/processors.php:221
 msgid "Use Processor"
-msgstr ""
+msgstr "Utiliser le traitement"
 
 #: ../ui/panels/processors.php:226
 msgid "by"
@@ -1654,15 +1671,11 @@ msgstr "par"
 
 #: ../ui/panels/processors.php:284
 msgid "This processor has no configurable options."
-msgstr ""
-
-#: ../ui/panels/variable_add.php:1
-msgid "Add Variable"
-msgstr "Ajouter une variable"
+msgstr "Ce traitement n'a pas d'options configurables."
 
 #: ../ui/panels/variables.php:14
 msgid "Behaviour"
-msgstr ""
+msgstr "Comportement"
 
 #: ../ui/panels/variables.php:16
 msgid "No variables defined"
@@ -1670,16 +1683,19 @@ msgstr "Aucune variable définie"
 
 #: ../ui/panels/variables.php:29 ../ui/panels/variables.php:49
 msgid "Static"
-msgstr ""
+msgstr "Statique"
 
 #: ../ui/panels/variables.php:30 ../ui/panels/variables.php:50
 msgid "Passback"
-msgstr ""
+msgstr "Retour"
 
 #: ../ui/panels/variables.php:31 ../ui/panels/variables.php:51
-#, fuzzy
 msgid "Entry List"
-msgstr "données"
+msgstr "Liste des données"
+
+#: ../ui/panels/variable_add.php:1
+msgid "Add Variable"
+msgstr "Ajouter une variable"
 
 #, fuzzy
 #~ msgid ""

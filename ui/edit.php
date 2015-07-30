@@ -543,7 +543,7 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 	<div class="caldera-config-group" style="width:500px;">
 		<label><?php echo __('Success Message', 'caldera-forms'); ?> </label>
 		<div class="caldera-config-field">
-			<textarea class="field-config block-input magic-tag-enabled required" name="config[success]" required="required"><?php echo esc_html( $element['success'] ); ?></textarea>
+			<textarea class="field-config block-input magic-tag-enabled required" name="config[success]" required="required"><?php if (!empty($element['success'])) { echo esc_html( $element['success'] ); } else { echo __('Form has been successfully submitted. Thank you.', 'caldera-forms'); } ?></textarea>
 		</div>
 	</div>
 	<div class="caldera-config-group">
