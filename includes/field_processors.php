@@ -1,6 +1,22 @@
 <?php
 
 
+add_filter('caldera_forms_view_field_checkbox', 'cf_handle_multi_view', 10, 3);
+function cf_handle_multi_view( $data, $field ){
+	
+	// can put in the value as well.
+	$viewer = array();
+	foreach( $data as $key=>$value ){
+		if( isset( $field['config']['option'][ $key ]['value'] ) ){
+			$viewer[] = $field['config']['option'][ $key ]['label'] . ' (' . $field['config']['option'][ $key ]['value'] . ')';
+		}else{
+			$viewer[] = $value;
+		}
+	}
+	
+	return implode( ', ', $viewer );
+
+}
 
 
 add_filter('caldera_forms_process_field_file', 'cf_handle_file_upload', 10, 3);
