@@ -170,15 +170,15 @@
 				}else{
 					target_field.prop('disabled', false);
 				}
+				jQuery(document).trigger('cf.enable');
 			}else if (action === 'disable'){
 				if(!target.html().length){
 					target.html(template).trigger('cf.add');
-					jQuery(document).trigger('cf.add');
 					jQuery('[data-field="' + field + '"]').prop('disabled', 'disabled');
 				}else{
 					target_field.prop('disabled', 'disabled');
-					jQuery(document).trigger('cf.disable');
 				}
+				jQuery(document).trigger('cf.disable');
 			}
 
 		}	
