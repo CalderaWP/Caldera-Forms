@@ -1,4 +1,7 @@
 <?php
+
+
+
 // magics!
 preg_match_all("/%(.+?)%/", $field['config']['default'], $hastags);
 if(!empty($hastags[1])){
@@ -15,9 +18,12 @@ if(!empty($hastags[1])){
 		}
 	}
 	echo '<div id="html-content-'.$field_id.'" data-field="'.$field_id.'" class="' . $field['config']['custom_class'] . '"></div>';
-	echo '<script type="text/html" id="html-content-'.$field_id.'-tmpl">';
-		echo do_shortcode( self::do_magic_tags( $field['config']['default'] ) );
-	echo '</script>';
+
+	// create template block
+	$html_template_block = '<script type="text/html" id="html-content-'.$field_id.'-tmpl">';
+		$html_template_block .= do_shortcode( self::do_magic_tags( $field['config']['default'] ) );
+	$html_template_block .= '</script>';
+	$grid->append($html_template_block, $location);
 	?>
 	<script type="text/javascript">
 		jQuery(function($){
@@ -51,7 +57,7 @@ if(!empty($hastags[1])){
 				target.html(template).trigger('change');
 
 			}
-			$('body').on('change', '<?php echo implode(',', $binds); ?>', htmltemplate<?php echo $field_id; ?>);
+			$('body').on('change keyup', '<?php echo implode(',', $binds); ?>', htmltemplate<?php echo $field_id; ?>);
 
 			htmltemplate<?php echo $field_id; ?>();
 
