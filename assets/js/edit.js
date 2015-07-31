@@ -1184,25 +1184,26 @@ init_magic_tags = function(){
 				currentwrapper.show();
 			}
 			return;			
-		}
-		var magictag = jQuery('<span class="icn-code magic-tag-init"></span>'),
-			wrapper = jQuery('<span style="position:relative;display:inline-block; width:100%;"></span>');
-
-		if(input.is('input')){
-			magictag.css('borderBottom', 'none');
-		}
-
-		if(input.hasClass('caldera-conditional-value-field')){
-			wrapper.width('auto');
-		}
-
-		input.wrap(wrapper);
-		magictag.insertAfter(input);
-		input.addClass('magic-tag-init-bound');
-		if(!input.is(':visible')){
-			magictag.hide();
 		}else{
-			magictag.show();
+			var magictag = jQuery('<span class="icn-code magic-tag-init"></span>'),
+				wrapper = jQuery('<span style="position:relative;display:inline-block; width:100%;"></span>');
+
+			if(input.is('input')){
+				magictag.css('borderBottom', 'none');
+			}
+
+			if(input.hasClass('caldera-conditional-value-field')){
+				wrapper.width('auto');
+			}
+
+			input.wrap(wrapper);
+			magictag.insertAfter(input);
+			input.addClass('magic-tag-init-bound');
+			if(!input.is(':visible')){
+				magictag.hide();
+			}else{
+				magictag.show();
+			}
 		}
 	});
 
