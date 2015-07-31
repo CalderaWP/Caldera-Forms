@@ -48,7 +48,9 @@ if(!empty($hastags[1])){
 							var file_parts = field[f].value.split('\\');
 							value.push( file_parts[file_parts.length-1] );
 						}else{
-							value.push( field[f].value );
+							if( field[f].value ){
+								value.push( field[f].value );
+							}
 						}
 					}
 
