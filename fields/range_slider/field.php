@@ -30,6 +30,7 @@ if ( is_array( $field_value ) )  {
 		<?php echo $field_caption; ?>
 	<?php echo $field_after; ?>
 <?php echo $wrapper_after; ?>
+<?php ob_start(); ?>
 <script type="text/javascript">
 	jQuery(function($){
 
@@ -38,21 +39,23 @@ if ( is_array( $field_value ) )  {
 				rangeslider;
 			<?php if(empty($field['config']['pollyfill'])){ ?>
 			if (el.is(':visible')) {
-				rangeslider = el.rangeslider({
-					onSlide: function(position, value) {
-						<?php
-							if( false !== strpos( $field['config']['step'], '.' ) ){
-								$part = explode('.', $field['config']['step'] );								
-						?>
-						value = value.toFixed( <?php echo strlen( $part[1] ); ?> );
-						<?php } ?>
-						$('#<?php echo $field_id; ?>_value').html(value);
-					},
-					polyfill: <?php echo $polyfill; ?>
-				});
-				rangeslider.parent().find('.rangeslider').css('backgroundColor', rangeslider.data('trackcolor'));
-				rangeslider.parent().find('.rangeslider__fill').css('backgroundColor', rangeslider.data('color'));
-				rangeslider.parent().find('.rangeslider__handle').css('backgroundColor', rangeslider.data('handle')).css('borderColor', rangeslider.data('handleborder'));
+				if( !el.data( 'plugin_rangeslider' ) ){
+					rangeslider = el.rangeslider({
+						onSlide: function(position, value) {
+							<?php
+								if( false !== strpos( $field['config']['step'], '.' ) ){
+									$part = explode('.', $field['config']['step'] );								
+							?>
+							value = value.toFixed( <?php echo strlen( $part[1] ); ?> );
+							<?php } ?>
+							$('#<?php echo $field_id; ?>_value').html(value);
+						},
+						polyfill: <?php echo $polyfill; ?>
+					});
+					rangeslider.parent().find('.rangeslider').css('backgroundColor', rangeslider.data('trackcolor'));
+					rangeslider.parent().find('.rangeslider__fill').css('backgroundColor', rangeslider.data('color'));
+					rangeslider.parent().find('.rangeslider__handle').css('backgroundColor', rangeslider.data('handle')).css('borderColor', rangeslider.data('handleborder'));
+				}
 			}else{
 				el.rangeslider('destroy');
 			}
@@ -65,7 +68,7 @@ if ( is_array( $field_value ) )  {
 		}
 		<?php if(empty($field['config']['pollyfill'])){ ?>
 		// setup tabs
-		$(document).on('cf.pagenav', function(){
+		$(document).on('cf.pagenav cf.add cf.disable', function(){
 			init_rangeslider();
 		});
 		<?php } ?>
@@ -74,3 +77,7 @@ if ( is_array( $field_value ) )  {
 
 	});
 </script>
+<?php
+	$script_template = ob_get_clean();
+	$grid->append( $script_template, $location );
+?>
