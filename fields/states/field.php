@@ -4,7 +4,7 @@ echo $wrapper_before; ?>
 	<?php echo $field_before; ?>
 		<?php ob_start(); ?>
 		<select <?php echo $field_placeholder; ?> id="<?php echo $field_id; ?>" data-field="<?php echo $field_base_id; ?>" class="<?php echo $field_class; ?>" name="<?php echo $field_name; ?>" <?php echo $field_required; ?>>
-			<option> - Select Province/State - </option>
+			<option value=""> - Select Province/State - </option>
 			<option value="AB">Alberta</option>
 			<option value="BC">British Columbia</option>
 			<option value="MB">Manitoba</option>
