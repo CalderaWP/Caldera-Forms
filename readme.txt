@@ -116,6 +116,7 @@ none yet.
 * File field can ne be set as mulitple to allow selecing multiple files.
 * Portugues translation thanks to Luis Martins
 * Turkish translation thanks to Yavuz Uyar
+* I need to thank everyone for the translations provided.
 
 = New Filters =
 * caldera_forms_get_form_templates : filter to add your own templates to new form templates
