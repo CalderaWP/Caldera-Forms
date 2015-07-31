@@ -12,6 +12,9 @@ if( empty( $field['config']['public_key'] ) ){
 <?php echo $field_before; ?>
 <input type="hidden" name="<?php echo $field_name; ?>" value="<?php echo $field_id; ?>" data-field="<?php echo $field_base_id; ?>">
 <div id="cap<?php echo $field_id; ?>" class="g-recaptcha" data-theme="<?php echo $field['config']['theme']; ?>" data-sitekey="<?php echo $field['config']['public_key']; ?>"></div>
+<?php
+ob_start();
+?>
 <script>
 jQuery( function($){
 	function init_recaptcha(){
@@ -27,6 +30,11 @@ jQuery( function($){
 		init_recaptcha();
 	}, 1000);
 });
-</script><?php echo $field_caption; ?>
+</script><?php 
+
+$script_template = ob_get_clean();
+$grid->append( $script_template, $location );
+
+echo $field_caption; ?>
 <?php echo $field_after; ?>
 <?php echo $wrapper_after; ?>

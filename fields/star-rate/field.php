@@ -15,6 +15,7 @@ if(!isset($field['config']['type'])){
 		<?php echo $field_caption; ?>
 	<?php echo $field_after; ?>
 <?php echo $wrapper_after; ?>
+<?php ob_start(); ?>
 <script type="text/javascript">
 	jQuery(function($){		
 		$('#<?php echo $field_id; ?>_stars').raty({
@@ -37,3 +38,6 @@ if(!isset($field['config']['type'])){
 		});
 	});
 </script>
+<?php
+	$script_template = ob_get_clean();
+	$grid->append( $script_template, $location );

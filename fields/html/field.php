@@ -20,10 +20,11 @@ if(!empty($hastags[1])){
 	echo '<div id="html-content-'.$field_id.'" data-field="'.$field_id.'" class="' . $field['config']['custom_class'] . '"></div>';
 
 	// create template block
-	$html_template_block = '<script type="text/html" id="html-content-'.$field_id.'-tmpl">';
-		$html_template_block .= do_shortcode( self::do_magic_tags( $field['config']['default'] ) );
-	$html_template_block .= '</script>';
-	$grid->append($html_template_block, $location);
+	ob_start();
+	echo '<script type="text/html" id="html-content-'.$field_id.'-tmpl">';
+		echo do_shortcode( self::do_magic_tags( $field['config']['default'] ) );
+	echo '</script>';
+	
 	?>
 	<script type="text/javascript">
 		jQuery(function($){
@@ -66,6 +67,9 @@ if(!empty($hastags[1])){
 		})
 	</script>
 	<?php
+		$script_template = ob_get_clean();
+		$grid->append( $script_template, $location );
+			
 }else{
 	echo '<div class="' . $field['config']['custom_class'] . '">' . do_shortcode( self::do_magic_tags( $field['config']['default'] ) ) . '</div>';
 }

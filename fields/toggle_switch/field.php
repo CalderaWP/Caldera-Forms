@@ -73,7 +73,9 @@ if(!empty($field['config']['orientation']) && $field['config']['orientation'] ==
 	</div>
 	<?php echo $field_after; ?>
 <?php echo $wrapper_after; ?>
-
+<?php
+ob_start();
+?>
 <script>
 jQuery( function( $ ){ 
 	$(document).on('reset', '.<?php echo $form['ID']; ?>', function(e){
@@ -82,3 +84,6 @@ jQuery( function( $ ){
 	});
 });
 </script>
+<?php
+	$script_template = ob_get_clean();
+	$grid->append( $script_template, $location );

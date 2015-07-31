@@ -75,6 +75,10 @@ if( !empty( $field['config']['advanced_populate']['filter'] ) ){
 		<?php echo $field_caption; ?>
 	<?php echo $field_after; ?>
 <?php echo $wrapper_after; ?>
+
+<?php
+ob_start();
+?>
 <style>
 .ccselect2-drop-active,.ccselect2-drop.ccselect2-drop-above.ccselect2-drop-active,.ccselect2-container-active .ccselect2-choice,.ccselect2-container-active .ccselect2-choices,.ccselect2-dropdown-open.ccselect2-drop-above .ccselect2-choice,.ccselect2-dropdown-open.ccselect2-drop-above .ccselect2-choices,.ccselect2-container-multi.ccselect2-container-active .ccselect2-choices,.ccselect2-container-multi .ccselect2-choices .ccselect2-search-choice-focus{
     border-color: <?php echo $field['config']['border']; ?>;
@@ -113,7 +117,9 @@ jQuery( function($){
 	}).trigger('cf.add');
 });
 </script>
-
+<?php
+	$script_template = ob_get_clean();
+	$grid->append( $script_template, $location );
 
 
 

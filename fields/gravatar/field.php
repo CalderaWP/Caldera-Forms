@@ -26,6 +26,8 @@ if(!empty($field['config']['email'])){
 if(empty($field['config']['email'])){
 	return;
 }
+
+ob_start();
 ?>
 <script type="text/javascript">
 
@@ -83,3 +85,6 @@ jQuery(function($){
 })
 
 </script>
+<?php
+	$script_template = ob_get_clean();
+	$grid->append( $script_template, $location );

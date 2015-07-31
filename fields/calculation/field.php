@@ -70,6 +70,7 @@ foreach($form['fields'] as $fid=>$cfg){
 if(!empty($binds)){
 	$bindtriggers = array_merge($binds, $binds_wrap);
 
+	ob_start();
 ?>
 <script type="text/javascript">
 	jQuery(function($){
@@ -108,11 +109,19 @@ if(!empty($binds)){
 			$('[data-field="<?php echo $field_base_id; ?>"]').val( total ).trigger('change');
 
 		}
-		$('body').on('change keyup cf.remove cf.add', '<?php echo implode(',', $bindtriggers); ?>', function(e){
+		$('body').on('change keyup', '<?php echo implode(',', $bindtriggers); ?>', function(e){
 			docalc_<?php echo $field_base_id; ?>();
 		});
+		$( document ).on('cf.remove cf.add', function( e ){
+			docalc_<?php echo $field_base_id; ?>();
+		})
 		docalc_<?php echo $field_base_id; ?>();
 	});
 	
 </script>
-<?php } ?>
+<?php 
+
+	$script_template = ob_get_clean();
+	$grid->append( $script_template, $location );
+
+} ?>
