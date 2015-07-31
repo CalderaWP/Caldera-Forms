@@ -100,14 +100,22 @@ none yet.
 
 == Changelog ==
 
-= 1.2.3 ( , 2015) =
+= 1.2.3 ( July, 2015) =
 
 = Bugs Fixed =
-* 
+* Fixed Checkbox values showing as [Object object] in entry view
+* HTML field with magic tags now work with conditions
+* Toggle switches magic tag now doesnt show ,,,
+* Range Slider in conditions improved
+* State / Province field correctly uses the required setting
+* some smaller annoying bugs solved 
 
 = New Features =
 * Added form templates when creating new form.
-* Automcomplete (select2) field types.
+* Automcomplete (select2) field type.
+* File field can ne be set as mulitple to allow selecing multiple files.
+* Portugues translation thanks to Luis Martins
+* Turkish translation thanks to Yavuz Uyar
 
 = New Filters =
 * caldera_forms_get_form_templates : filter to add your own templates to new form templates
