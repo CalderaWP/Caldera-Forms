@@ -3,7 +3,10 @@
 
 add_filter('caldera_forms_view_field_checkbox', 'cf_handle_multi_view', 10, 3);
 function cf_handle_multi_view( $data, $field ){
-	
+
+	if( empty( $data ) || !is_array( $data ) ){
+		return $data;
+	}
 	// can put in the value as well.
 	$viewer = array();
 	foreach( $data as $key=>$value ){
