@@ -117,6 +117,9 @@ none yet.
 * Portugues translation thanks to Luis Martins
 * Turkish translation thanks to Yavuz Uyar
 * I need to thank everyone for the translations provided.
+* Abstracted final DB saving and mailer into new class
+* Added "caldera_forms_mailer_failed" action to run when main mailer fails
+* Added "caldera_forms_autoresponder_failed" action to run when autoresponder fails.
 
 = New Filters =
 * caldera_forms_get_form_templates : filter to add your own templates to new form templates
