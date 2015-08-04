@@ -1910,7 +1910,11 @@ class Caldera_Forms {
 				'date_picker'
 			),
 			'date:Y/m/d',
-			'date:Y/d/m'
+			'date:Y/d/m',
+			'login_url',
+			'logout_url',
+			'register_url',
+			'lostpassword_url'
 
 		);
 
@@ -2099,6 +2103,18 @@ class Caldera_Forms {
 							}else{
 								$magic_tag = null;
 							}
+							break;
+						case 'login_url' :
+							$magic_tag = wp_login_url();
+							break;
+						case 'logout_url' :
+							$magic_tag = wp_logout_url();
+							break;
+						case 'register_url' :
+							$magic_tag = wp_registration_url();
+							break;
+						case 'lostpassword_url' :
+							$magic_tag = wp_lostpassword_url();
 							break;
 
 					}
