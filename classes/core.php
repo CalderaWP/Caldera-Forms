@@ -2104,19 +2104,6 @@ class Caldera_Forms {
 								$magic_tag = null;
 							}
 							break;
-						case 'login_url' :
-							$magic_tag = wp_login_url();
-							break;
-						case 'logout_url' :
-							$magic_tag = wp_logout_url();
-							break;
-						case 'register_url' :
-							$magic_tag = wp_registration_url();
-							break;
-						case 'lostpassword_url' :
-							$magic_tag = wp_lostpassword_url();
-							break;
-
 					}
 				}else{
 					switch ($magic_tag) {
@@ -2200,6 +2187,20 @@ class Caldera_Forms {
 								}
 							}
 							break;
+							case 'login_url' :
+								$magic_tag = wp_login_url();
+								break;
+							case 'logout_url' :
+								$magic_tag = wp_logout_url();
+								break;
+							case 'register_url' :
+								$magic_tag = wp_registration_url();
+								break;
+							case 'lostpassword_url' :
+								$magic_tag = wp_lostpassword_url();
+								break;
+
+
 					}
 				}
 
