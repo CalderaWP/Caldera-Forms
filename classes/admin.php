@@ -143,7 +143,7 @@ class Caldera_Forms_Admin {
 	public function load_new_form_templates(){
 
 		$form_templates = self::internal_form_templates();
-		
+
 		?>
 		<div class="caldera-config-group">
 			<label for=""><?php echo __('Form Template', 'caldera-forms'); ?></label>
@@ -218,8 +218,10 @@ class Caldera_Forms_Admin {
 		if(empty($_POST['do'])){
 			die;
 		}
+		
+		$do_action = strtolower( $_POST['do'] );
 
-		switch ($_POST['do']) {
+		switch ( $do_action ) {
 			case 'active':
 			case 'trash':
 			case 'delete':
@@ -233,7 +235,7 @@ class Caldera_Forms_Admin {
 					$selectors[] = '#entry_row_' . (int) $item_id;
 				}
 
-				switch ($_POST['do']) {
+				switch ($do_action) {
 					case 'delete':
 						if( current_user_can( 'delete_others_posts' ) ){
 							$result = $wpdb->query( "DELETE FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `id` IN (".implode(',', $items).");" );
@@ -246,16 +248,16 @@ class Caldera_Forms_Admin {
 					
 					default:
 						if( current_user_can( 'edit_others_posts' ) ){
-							$result = $wpdb->query( $wpdb->prepare( "UPDATE `" . $wpdb->prefix . "cf_form_entries` SET `status` = %s WHERE `id` IN (".implode(',', $items).");", $_POST['do'] ) );
+							$result = $wpdb->query( $wpdb->prepare( "UPDATE `" . $wpdb->prefix . "cf_form_entries` SET `status` = %s WHERE `id` IN (".implode(',', $items).");", $do_action ) );
 						}
 						break;
 				}
 				
 				if( $result ){
 
-					$out['status'] = $_POST['do'];
-					$out['undo'] = ( $_POST['do'] === 'trash' ? 'active' : __('Trash') );
-					$out['undo_text'] = ( $_POST['do'] === 'trash' ? __('Restore', 'caldera-forms') : __('Trash') );
+					$out['status'] = $do_action;
+					$out['undo'] = ( $do_action === 'trash' ? 'active' : __('Trash') );
+					$out['undo_text'] = ( $do_action === 'trash' ? __('Restore', 'caldera-forms') : __('Trash') );
 
 					$out['entries'] = implode(',',$selectors);
 					$out['total']	= $wpdb->get_var($wpdb->prepare("SELECT COUNT(`id`) AS `total` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = %s && `status` = 'active';", $_POST['form']));
@@ -540,17 +542,11 @@ class Caldera_Forms_Admin {
 
 		$filter = null;
 
-		// status
-		if(!empty($status)){
-			$status = $wpdb->prepare("%s", $status );
-		}
-
 		$data['trash'] = (int) $wpdb->get_var($wpdb->prepare("SELECT COUNT(`id`) AS `total` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = %s AND `status` = 'trash';", $form_id ) );
 		$data['active'] = (int) $wpdb->get_var($wpdb->prepare("SELECT COUNT(`id`) AS `total` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = %s AND `status` = 'active';", $form_id ) );
 
-
 		// set current total
-		if(!empty( $status ) && isset($data[ $status ])){
+		if(!empty( $status ) && isset( $data[ $status ] ) ){
 			$data['total'] = $data[ $status ];
 		}else{
 			$data['total'] = $data['active'];
@@ -584,7 +580,7 @@ class Caldera_Forms_Admin {
 				`form_id`
 			FROM `" . $wpdb->prefix ."cf_form_entries`
 
-			WHERE `form_id` = %s AND `status` = ".$status." ORDER BY `datestamp` DESC LIMIT " . $limit . ";", $form_id));
+			WHERE `form_id` = %s AND `status` = %s ORDER BY `datestamp` DESC LIMIT " . $limit . ";", $form_id, $status ) );
 
 			if(!empty($rawdata)){
 
