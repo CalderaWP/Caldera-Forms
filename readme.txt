@@ -108,6 +108,7 @@ none yet.
 * Toggle switches magic tag now doesn't show ,,,
 * Range Slider in conditions improved
 * State / Province field correctly uses the required setting
+* issue where if you had a single entry in trach, would show no entries.
 * some smaller annoying bugs solved
 
 = New Features =
@@ -118,6 +119,10 @@ none yet.
 * Turkish translation thanks to Yavuz Uyar
 * I need to thank everyone for the translations provided.
 * Added login/logout link magic tags: {login_url} {logout_url} {register_url} {lostpassword_url}
+* Abstracted final DB saving and mailer into new class
+* Added "caldera_forms_mailer_failed" action to run when main mailer fails
+* Added "caldera_forms_autoresponder_failed" action to run when autoresponder fails.
+
 
 = New Filters =
 * caldera_forms_get_form_templates : filter to add your own templates to new form templates
