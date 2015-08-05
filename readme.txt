@@ -100,15 +100,15 @@ none yet.
 
 == Changelog ==
 
-= 1.2.3 ( July, 2015) =
+= 1.2.3 ( August, 2015) =
 
 = Bugs Fixed =
 * Fixed Checkbox values showing as [Object object] in entry view
 * HTML field with magic tags now work with conditions
-* Toggle switches magic tag now doesnt show ,,,
+* Toggle switches magic tag now doesn't show ,,,
 * Range Slider in conditions improved
 * State / Province field correctly uses the required setting
-* some smaller annoying bugs solved 
+* some smaller annoying bugs solved
 
 = New Features =
 * Added form templates when creating new form.
@@ -117,6 +117,7 @@ none yet.
 * Portugues translation thanks to Luis Martins
 * Turkish translation thanks to Yavuz Uyar
 * I need to thank everyone for the translations provided.
+* Added login/logout link magic tags: {login_url} {logout_url} {register_url} {lostpassword_url}
 
 = New Filters =
 * caldera_forms_get_form_templates : filter to add your own templates to new form templates

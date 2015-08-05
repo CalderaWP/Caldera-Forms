@@ -1258,7 +1258,7 @@ class Caldera_Forms {
 				"field"		=>	__('Phone Number', 'caldera-forms'),
 				"description" => __('Phone number with masking', 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/phone/field.php",
-				"category"	=>	__("Text Fields", "caldera-forms").', '.__("Basic", "caldera-forms").', '.__("User", "caldera-forms"),
+				"category"	=>	__("Text Fields", "caldera-forms").', '.__("User", "caldera-forms"),
 				"setup"		=>	array(
 					"template"	=>	CFCORE_PATH . "fields/phone/config.php",
 					"preview"	=>	CFCORE_PATH . "fields/phone/preview.php",
@@ -1548,7 +1548,7 @@ class Caldera_Forms {
 				"field"		=>	__("State/ Province Select", "caldera-forms"),
 				"description" => __('Dropdown select for US states and Canadian provinces.', 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/states/field.php",
-				"category"	=>	__("Select Options", "caldera-forms").', '.__("Basic", "caldera-forms"),
+				"category"	=>	__("Select Options", "caldera-forms"),
 				"placeholder" => false,
 				//"viewer"	=>	array($this, 'filter_options_calculator'),
 				"setup"		=>	array(
@@ -1914,7 +1914,11 @@ class Caldera_Forms {
 				'date_picker'
 			),
 			'date:Y/m/d',
-			'date:Y/d/m'
+			'date:Y/d/m',
+			'login_url',
+			'logout_url',
+			'register_url',
+			'lostpassword_url'
 
 		);
 
@@ -2104,7 +2108,6 @@ class Caldera_Forms {
 								$magic_tag = null;
 							}
 							break;
-
 					}
 				}else{
 					switch ($magic_tag) {
@@ -2188,6 +2191,20 @@ class Caldera_Forms {
 								}
 							}
 							break;
+							case 'login_url' :
+								$magic_tag = wp_login_url();
+								break;
+							case 'logout_url' :
+								$magic_tag = wp_logout_url();
+								break;
+							case 'register_url' :
+								$magic_tag = wp_registration_url();
+								break;
+							case 'lostpassword_url' :
+								$magic_tag = wp_lostpassword_url();
+								break;
+
+
 					}
 				}
 
