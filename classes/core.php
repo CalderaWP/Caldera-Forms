@@ -494,7 +494,8 @@ class Caldera_Forms {
 
 		}
 
-
+		// pull in the class
+		include_once CFCORE_PATH . 'classes/Caldera_Forms_Save_Final.php';
 
 		if(! empty( $form[ 'db_support' ] ) ) {
 			Caldera_Forms_Save_Final::save_in_db( $form, $entryid );
