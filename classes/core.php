@@ -1624,7 +1624,11 @@ class Caldera_Forms {
 			switch($field['config']['auto_type']){
 				case 'post_type':
 					$posts = get_posts( array('post_type' => $field['config']['post_type'], 'post_status' => 'publish', 'posts_per_page' => -1) );
-
+					if( $field[ 'config' ][ 'value_field' ] === 'id' ){
+						$field[ 'config' ][ 'value_field' ] = 'ID';
+					}elseif( $field[ 'config' ][ 'value_field' ] === 'name' ){
+						$field[ 'config' ][ 'value_field' ] = 'post_name';
+					}
 					/**
 					 * Filter which field is used for the VALUE when getting autopopulate option values when autopopulating options from post types
 					 *
