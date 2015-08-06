@@ -8,7 +8,7 @@
 		{{#if buttons}}
 		<div style="position: absolute; bottom: 0px; padding: 6px; background: none repeat scroll 0 0 rgba(0, 0, 0, 0.03); left: 0px; right: 0px; border-top: 1px solid rgba(0, 0, 0, 0.06);">
 			{{#each buttons}}
-				<a class="button {{#if class}}{{class}}{{/if}}" href="{{link}}" target="_blank">{{title}}</a>
+				<a class="button {{#if class}}{{class}}{{/if}}" href="{{link}}" target="_blank" rel="nofollow">{{title}}</a>
 			{{/each}}
 		</div>
 		{{/if}}
