@@ -81,7 +81,7 @@ if(!isset($element['mailer']['enable_mailer'])){
 			<label><?php echo __('Recipients', 'caldera-forms'); ?> </label>
 			<div class="caldera-config-field">
 				<input type="text" class="field-config magic-tag-enabled" name="config[mailer][recipients]" value="<?php echo $element['mailer']['recipients']; ?>" style="width:400px;">
-				<p class="description"><?php echo __('Comma separated list of email addresses.', 'caldera-forms'); ?></p>
+				<p class="description"><?php echo __('Comma separated list of email addresses to send the message to.', 'caldera-forms'); ?></p>
 			</div>
 
 		</div>
@@ -89,7 +89,7 @@ if(!isset($element['mailer']['enable_mailer'])){
 			<label><?php echo __('BCC', 'caldera-forms'); ?> </label>
 			<div class="caldera-config-field">
 				<input type="text" class="field-config magic-tag-enabled" name="config[mailer][bcc_to]" value="<?php if(isset( $element['mailer']['bcc_to'] ) ){ echo $element['mailer']['bcc_to']; } ?>" style="width:400px;">
-				<p class="description"><?php echo __('Comma separated list of email addresses.', 'caldera-forms'); ?></p>
+				<p class="description"><?php echo __('Comma separated list of email addresses to send a BCC to.', 'caldera-forms'); ?></p>
 			</div>
 		</div>
 
