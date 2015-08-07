@@ -1,6 +1,6 @@
 === Caldera Forms ===
 Contributors: Desertsnowman, Shelob9
-Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator, caldera forms
+Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome
 Requires at least: 3.9
 Tested up to: 4.3
 Stable tag: 1.2.3
@@ -9,7 +9,7 @@ License: GPLv2
 Create beautiful, responsive forms with a simple drag and drop editor.
 
 == Description ==
-A diffent kind of WordPress form builder. With an intuitive drag and drop interface -– based on a responsive grid -- and a wide range of add-ons, it’s never been easier to create forms for your WordPress site that look great on any device, thanks to Caldera Forms. This free plugin includes all of the form types you want, mail and redirect processors, entry logging and AJAX submissions.
+A diffrent kind of WordPress form builder. With an intuitive drag and drop interface -– based on a responsive grid -- and a wide range of add-ons, it’s never been easier to create forms for your WordPress site that look great on any device, thanks to Caldera Forms. This free plugin includes all of the form types you want, mail and redirect processors, entry logging and AJAX submissions.
 
 Easy enough for everyday users to create forms, and powerful enough for PHP experts to extend.
 
@@ -100,7 +100,7 @@ none yet.
 
 == Changelog ==
 
-= 1.2.3 ( August, 2015) =
+= 1.2.3 ( August 7, 2015) =
 
 = Bugs Fixed =
 * Fixed Checkbox values showing as [Object object] in entry view
@@ -114,18 +114,16 @@ none yet.
 = New Features =
 * Added form templates when creating new form.
 * Automcomplete (select2) field type.
-* File field can ne be set as mulitple to allow selecing multiple files.
-* Portugues translation thanks to Luis Martins
+* File field can now be set to accept mulitple to allow selecting multiple files.
+* Portuguese translation thanks to Luis Martins
 * Turkish translation thanks to Yavuz Uyar
-* I need to thank everyone for the translations provided.
 * Added login/logout link magic tags: {login_url} {logout_url} {register_url} {lostpassword_url}
 * Abstracted final DB saving and mailer into new class
+
+= New Hooks =
+* caldera_forms_get_form_templates : filter to add your own templates to new form templates
 * Added "caldera_forms_mailer_failed" action to run when main mailer fails
 * Added "caldera_forms_autoresponder_failed" action to run when autoresponder fails.
-
-
-= New Filters =
-* caldera_forms_get_form_templates : filter to add your own templates to new form templates
 
 
 = 1.2.2 ( June, 2015) =
