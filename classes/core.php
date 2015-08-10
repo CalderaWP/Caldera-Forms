@@ -86,7 +86,13 @@ class Caldera_Forms {
 
 	}
 
-
+	/**
+	 * Load a form by ID or name
+	 *
+	 * @param string $id_name ID or name of form.
+	 *
+	 * @return array|null Form config array if found. If not null.
+	 */
 	public static function get_form( $id_name ){
 
 		$id_name = sanitize_text_field( $id_name );
@@ -122,7 +128,13 @@ class Caldera_Forms {
 
 	}
 
-
+	/**
+	 * Load all forms
+	 *
+	 * @param bool $internal Optional. If false, the default, all forms are returned. If true, only those saved in DB are returned.
+	 *
+	 * @return mixed|void
+	 */
 	public static function get_forms( $internal = false ){
 
 		$base_forms = get_option( '_caldera_forms', array() );
@@ -161,7 +173,9 @@ class Caldera_Forms {
 		load_plugin_textdomain( $this->plugin_slug, FALSE, basename( CFCORE_PATH ) . '/languages');
 	}
 
-	/// activator
+	/**
+	 * Activate and setip plugin
+	 */
 	public static function activate_caldera_forms(){
 		global $wpdb;
 
@@ -280,7 +294,15 @@ class Caldera_Forms {
 
 	}
 
-
+	/**
+	 * View a star rating form value
+	 *
+	 * @param int $value Value for star ratring
+	 * @param array $field Field config
+	 * @param array $form Form config
+	 *
+	 * @return string HTML markup
+	 */
 	public static function star_rating_viewer($value, $field, $form){
 		if(!is_admin()){
 			// only for the front
@@ -302,6 +324,15 @@ class Caldera_Forms {
 		return $out;
 	}
 
+	/**
+	 * Output markup for file fields
+	 *
+	 * @param array $value Saved file paths
+	 * @param array $field Field config
+	 * @param array $form Form config
+	 *
+	 * @return string
+	 */
 	public static function handle_file_view($value, $field, $form){
 		$out = array();
 		foreach( (array) $value as $file_url ){
@@ -309,7 +340,17 @@ class Caldera_Forms {
 		}
 		return implode(', ', $out );
 	}
-	
+
+
+	/**
+	 * Prepare email attachments
+	 *
+	 * @param array $mail Email data
+	 * @param array $data ?
+	 * @param array $form For config
+	 *
+	 * @return array
+	 */
 	public static function mail_attachment_check($mail, $data, $form){
 
 		// check for 
@@ -327,7 +368,15 @@ class Caldera_Forms {
 		return $mail;
 	}
 
-
+	/**
+	 * Check a captcha
+	 *
+	 * @param string $value Attempted captcha value
+	 * @param array $field Field config
+	 * @param array $form Form config
+	 *
+	 * @return bool|\WP_Error True if valid, WP_Error if not
+	 */
 	public static function captcha_check($value, $field, $form){
 
 		if( !isset( $_POST['g-recaptcha-response'] ) || empty( $_POST['g-recaptcha-response'] )){
@@ -349,6 +398,13 @@ class Caldera_Forms {
 
 	}
 
+	/**
+	 * Update saved entry data for a field.
+	 *
+	 * @param array $field Field config
+	 * @param int $entry_id The entry ID
+	 * @param array $form Form config
+	 */
 	public static function update_field_data($field, $entry_id, $form){
 		global $wpdb, $form;
 		
@@ -393,7 +449,13 @@ class Caldera_Forms {
 
 	}
 
-
+	/**
+	 * Save entry data for a field.
+	 *
+	 * @param array $field Field config
+	 * @param int $entry_id The entry ID
+	 * @param array $form Form config
+	 */
 	public static function save_field_data($field, $entry_id, $form){
 		global $wpdb, $form;
 
@@ -451,6 +513,13 @@ class Caldera_Forms {
 
 	}
 
+	/**
+	 * Save final form data
+	 *
+	 * @param array $form Form config
+	 *
+	 * @return void|\WP_Error
+	 */
 	public static function save_final_form($form){
 		$entryid = null;
 		// check submit type (new or update)
@@ -514,6 +583,7 @@ class Caldera_Forms {
 	/**
 	 * Creates a send log to debug mailer problems
 	 *
+	 * @param object $phpmailer The phpmailer object
 	 */
 	public static function debug_mail_send( $phpmailer ) {
 		global $transdata, $wpdb;
@@ -559,6 +629,14 @@ class Caldera_Forms {
 		return self::$instance;
 	}
 
+	/**
+	 * Change redirect notices using magic tags.
+	 *
+	 * @param array $notices Current notices
+	 * @param array $form Form config
+	 *
+	 * @return array
+	 */
 	public static function override_redirect_notice($notices, $form){
 
 		if(isset($form['processors'])){
@@ -572,6 +650,15 @@ class Caldera_Forms {
 		return $notices;
 	}
 
+	/**
+	 * Do the redirect
+	 *
+	 * @param string $referrer Reffering URL
+	 * @param array $form Form config
+	 * @param $processid
+	 *
+	 * @return string URL to redirect to.
+	 */
 	public static function do_redirect($referrer, $form, $processid){
 		if(isset($form['processors'])){
 			foreach($form['processors'] as $processor){
@@ -618,6 +705,12 @@ class Caldera_Forms {
 		return $referrer;
 	}
 
+	/**
+	 * Send an autoresponse email.
+	 *
+	 * @param array $config Processor config
+	 * @param array $form Form config
+	 */
 	public static function send_auto_response($config, $form){
 		global $form;
 		
@@ -679,7 +772,13 @@ class Caldera_Forms {
 	}
 
 
-	// get built in form processors
+	/**
+	 * Load built-in form processors
+	 *
+	 * @param array $processors
+	 *
+	 * @return array
+	 */
 	public function get_form_processors($processors){
 		$internal_processors = array(
 			'auto_responder' => array(
@@ -725,7 +824,14 @@ class Caldera_Forms {
 
 	}
 
-	// incremenet value process
+	/**
+	 * Increment an internal value
+	 *
+	 * @param array $config Processor config
+	 * @param array $form Form config
+	 *
+	 * @return array Key is new value.
+	 */
 	public function increment_value( $config, $form ){
 
 		// get increment value;
@@ -742,6 +848,14 @@ class Caldera_Forms {
 	}
 
 
+	/**
+	 * Apply Akismets
+	 *
+	 * @param array $config Processor config
+	 * @param array $form Form config
+	 *
+	 * @return array
+	 */
 	static public function akismet_scanner($config, $form){
 		global $post;
 
@@ -814,7 +928,15 @@ class Caldera_Forms {
 
 	}
 
-
+	/**
+	 * Process a calculation field.
+	 *
+	 * @param string $value The calculation to run
+	 * @param array $field Field config
+	 * @param array $form Form config
+	 *
+	 * @return int|string
+	 */
 	static public function run_calculation($value, $field, $form){		
 
 		$formula = $field['config']['formular'];
@@ -868,7 +990,13 @@ class Caldera_Forms {
 		include CFCORE_PATH . "fields/calculation/line-templates.php";
 	}
 
-	// get built in field types
+	/**
+	 * Load built-in fields
+	 *
+	 * @param array $fields
+	 *
+	 * @return array
+	 */
 	public function get_internal_field_types($fields){
 
 
