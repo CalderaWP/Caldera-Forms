@@ -151,11 +151,9 @@ class Caldera_Forms_Data_From_Processor {
 	 *
 	 * @since 1.2.4
 	 *
-	 * @access private
-	 *
 	 * @param string $message Message for error
 	 */
-	private function add_error( $message ) {
+	public function add_error( $message ) {
 		if ( is_null( $this->errors ) ) {
 			$this->errors = array();
 		}
@@ -188,7 +186,7 @@ class Caldera_Forms_Data_From_Processor {
 	 */
 	public function get_values() {
 		return $this->values;
-		
+
 	}
 
 }
