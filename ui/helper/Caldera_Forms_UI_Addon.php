@@ -32,6 +32,7 @@ class Caldera_Forms_UI_Addon {
 		}
 
  		return $out;
+
 	}
 
 	/**
@@ -66,6 +67,7 @@ class Caldera_Forms_UI_Addon {
 			'required' => false,
 			'desc' => false,
 			'allow_types' => false,
+			'exclude' => false
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -80,9 +82,12 @@ class Caldera_Forms_UI_Addon {
 		 */
 		$args = apply_filters( 'caldera_forms_addon_config_field_args', $args );
 
+		$input_type = 'simple';
+
 		if ( 'checkbox' == $args[ 'type'] ) {
 			$args[ 'block' ] = false;
 			$args[ 'magic' ] = false;
+			$input_type = 'checkbox';
 		}
 
 		if ( is_string( $args[ 'extra_classes']) ) {
@@ -113,13 +118,12 @@ class Caldera_Forms_UI_Addon {
 
 		$allow_types = '';
 		if ( $args[ 'allow_types' ] ) {
-			if ( is_string( $args[ 'allow_type' ] ) ) {
-				$allow_types = sprintf( 'allow="%1s"', esc_attr( $args[ 'allow_types' ] ) );
-			}elseif ( is_array( $args[ 'allow_types' ] ) ){
-				$allow_types = sprintf( 'allow="%1s"', implode( ',', $args[ 'allow_types' ] ) );
-			}else{
-				$allow_types = '';
-			}
+			$input_type = 'advanced';
+		}
+
+		$required = $args[ 'required' ];
+		if ( $required ) {
+			$required = 'required';
 		}
 
 		$field = sprintf( '
@@ -128,22 +132,87 @@ class Caldera_Forms_UI_Addon {
 				%2s
 			</label>
 			<div class="caldera-config-field">
-				<input type="%3s" class="%4s" id="%5s" name="{{_name}}[%6s]" value="%7s" %8s >
+				%3s
 			</div>
-			%9s
+			%4s
 		</div>',
 			esc_attr( $id ),
 			$args[ 'label' ],
-			$args[ 'type' ],
-			$classes,
-			esc_attr( $id ),
-			esc_attr( $id ),
-			'{{' . esc_attr( $id ) . '}}',
-			$allow_types,
+			self::input( $input_type, $args, $id, $classes, $required ),
 			$desc
 		);
 
+		return $field;
 
+	}
+
+	/**
+	 * Create the input for proccesor config field.
+	 *
+	 * @since 1.2.4
+	 *
+	 * @param string $type The type of input. This is NOT The input type. Options are simple|checkbox|advanced
+	 * @param array $args Field args
+	 * @param string $id ID attribute
+	 * @param string $classes Class attribute.
+	 * @param bool|string $required If is required or not
+	 *
+	 * @return string HTML markup for input
+	 */
+	public static function input( $type, $args, $id, $classes, $required ) {
+		switch( $type ) {
+			case 'checkbox' == $type :
+				$field = sprintf( '<input type="%1s" class="%2s" id="%3s" name="{{_name}}[%4s]" %5s>',
+					$args[ 'type' ],
+					$classes,
+					esc_attr( $id ),
+					esc_attr( $id ),
+					sprintf( '{{#if %s}}checked{{/if}}', esc_attr( $id ) )
+				);
+				break;
+			case 'advanced' :
+				if ( $required ) {
+					$required = "true";
+				}else{
+					$required = "false";
+				}
+
+				if ( is_string( $args[ 'allow_types' ] ) ) {
+					$allow_types = $args[ 'allow_types' ] ;
+				}elseif ( is_array( $args[ 'allow_types' ] ) ){
+					$allow_types = implode( ',', $args[ 'allow_types' ] );
+				}else{
+					$allow_types = 'all';
+				}
+
+				if ( is_string( $args[ 'exclude' ] ) ) {
+					$excludes = $args[ 'exclude' ] ;
+				}elseif ( is_array( $args[ 'exclude' ] ) ){
+					$excludes = implode( ',', $args[ 'exclude' ] );
+				}else{
+					$excludes = 'all';
+				}
+
+
+
+				$field = sprintf( '{{{_field slug="%1s" type="%2s" exclude="%3s" required="%4s"}}}',
+					esc_attr( $id ),
+					$allow_types,
+					$excludes,
+					$required
+				);
+			break;
+			default :
+				$field = sprintf( '<input type="%1s" class="%2s" id="%3s" name="{{_name}}[%4s]" value="%5s" %6s>',
+					$args[ 'type' ],
+					$classes,
+					esc_attr( $id ),
+					esc_attr( $id ),
+					'{{' . esc_attr( $id ) . '}}',
+					$required
+				);
+			break;
+		}
 
 		return $field;
 
