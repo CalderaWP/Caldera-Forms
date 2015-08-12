@@ -109,7 +109,7 @@ class Caldera_Forms_UI_Addon {
 		$args[ 'extra_classes' ][] = 'field-config';
 
 		$classes = implode( ' ', $args[ 'extra_classes' ] );
-		$id = $args[ 'id' ];
+		$id = trim( $args['id'] );
 
 		$desc = false;
 		if ( $args[ 'desc' ] ) {
