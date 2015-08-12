@@ -135,10 +135,15 @@ class Caldera_Forms_Data_From_Processor {
 				$value = call_user_func( $args['sanatize'], $value );
 			}
 
-			if ( ! empty( $value ) || ! $args[ 'required' ] ) {
+			if ( ! empty( $value )  ) {
 				$this->values[ $field ] = $value;
+
 			}else{
-				$this->add_error( $args[ 'message' ] );
+				if ( $args[ 'required' ] ) {
+					$this->add_error( $args[ 'message' ] );
+				}else{
+					$this->values[ $field ] = null;
+				}
 			}
 
 		}
