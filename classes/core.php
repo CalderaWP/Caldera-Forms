@@ -3676,9 +3676,33 @@ class Caldera_Forms {
 			//not_supported
 
 			$field = $form['fields'][$field_id];
-			// filter the field to get field data
+
+			/**
+			 * Filter field config.
+			 *
+			 * @param array $field The field config.
+			 * @param array $form The form config.
+			 */
 			$field = apply_filters( 'caldera_forms_render_get_field', $field, $form);
+
+			/**
+			 * Filter field config for fields of a given type.
+			 *
+			 * Filter name is dynamic, based on field type. For example "caldera_forms_render_get_field_type-hidden" or "caldera_forms_render_get_field_type-radio"
+			 *
+			 * @param array $field The field config.
+			 * @param array $form The form config.
+			 */
 			$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field['type'], $field, $form);
+
+			/**
+			 * Filter field config for fields with a given slug
+			 *
+			 * Filter name is dynamic, based on field type. For example "caldera_forms_render_get_field_slug-salsa" or "caldera_forms_render_get_field_slug-chips"
+			 *
+			 * @param array $field The field config.
+			 * @param array $form The form config.
+			 */
 			$field = apply_filters( 'caldera_forms_render_get_field_slug-' . $field['slug'], $field, $form);
 
 			if( is_string( $field_value ) ){
