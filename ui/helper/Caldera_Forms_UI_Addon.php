@@ -16,14 +16,27 @@ class Caldera_Forms_UI_Addon {
 	 * @since 1.2.4
 	 *
 	 * @param array $fields Array of args to pass to self::config_field()
+	 * @param null|string|int Optional. If null, all fields (except those with print args set to false will be printed). Can be used to print a group of fields based on the value of the print arg.
 	 *
 	 * @return bool|string The Markup or false if invalid.
 	 */
-	public static function config_fields( $fields ) {
+	public static function config_fields( $fields, $print_group = null ) {
 		$out = '';
 		if ( ! empty( $fields ) && is_array( $fields ) ) {
 			foreach( $fields as $args ) {
 				if ( ! empty( $args ) ) {
+					if ( isset( $args[ 'print' ] ) && false ==  $args[ 'print' ] ){
+						continue;
+					}
+
+					if ( ! is_null( $print_group ) ) {
+						if ( isset( $args[ 'print' ]  ) || $print_group != $args[ 'print' ] ) {
+							continue;
+
+						}
+
+					}
+
 					$out .= self::config_field( $args );
 				}
 
