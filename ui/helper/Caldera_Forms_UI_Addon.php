@@ -48,6 +48,8 @@ class Caldera_Forms_UI_Addon {
 	 *     @type string $type Field type. Default is "text"
 	 *     @type array|string $extra_class Additional classes to apply.
 	 *     @type string $desc Extra description to add to markup.
+	 *     @type bool|string|array $allow_types Type(s) of fields that are allowed to bind to this or false to allow all.
+	 *     @type bool|string|array $exclude Type(s) of fields that are NOT allowed to bind to this or false to not exclude any.
 	 * }
 	 *
 	 * @return string|void HTML markup if input is valid. Void if not.
