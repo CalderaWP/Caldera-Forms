@@ -58,7 +58,7 @@ class Caldera_Forms_UI_Addon {
 	 *     @type string $label Label for field (REQUIRED)
 	 *     @type bool $magic If field is magic tag enabled. Default is true.
 	 *     @type bool $block Use block style, Default is true
-	 *     @type string $type Field type. Default is "text"
+	 *     @type string $type Field type. Default is "text". Options: simple|checkbox|advanced|dropdown
 	 *     @type array|string $extra_class Additional classes to apply.
 	 *     @type string $desc Extra description to add to markup.
 	 *     @type bool|string|array $allow_types Type(s) of fields that are allowed to bind to this or false to allow all.
@@ -82,7 +82,8 @@ class Caldera_Forms_UI_Addon {
 			'required' => false,
 			'desc' => false,
 			'allow_types' => false,
-			'exclude' => false
+			'exclude' => false,
+			'print' => true
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -166,7 +167,7 @@ class Caldera_Forms_UI_Addon {
 	 *
 	 * @since 1.2.4
 	 *
-	 * @param string $type The type of input. This is NOT The input type. Options are simple|checkbox|advanced
+	 * @param string $type The type of input. This is NOT The input type. Options are simple|checkbox|advanced|dropdown
 	 * @param array $args Field args
 	 * @param string $id ID attribute
 	 * @param string $classes Class attribute.
@@ -217,6 +218,25 @@ class Caldera_Forms_UI_Addon {
 					$required
 				);
 			break;
+			case 'dropdown' :
+				if ( isset( $args[ 'options' ] ) ){
+					foreach( $args[ 'options' ] as $value => $label ) {
+						$options[] = sprintf( '<option value="%1s" {{#is %2s value="%3s"}}selected{{/is}}>%4s</option>',
+							esc_attr( $value ),
+							esc_attr( $id ),
+							esc_attr( $value ),
+							esc_html( $label )
+						);
+					}
+
+					$field = sprintf( '<select class="%1s" id="%2s" name="{{_name}}[%3s]" >%4s,</select>',
+						$classes,
+						esc_attr( $id ),
+						esc_attr( $id ),
+						implode( "/n", $options )
+					);
+				}
+				break;
 			default :
 				$field = sprintf( '<input type="%1s" class="%2s" id="%3s" name="{{_name}}[%4s]" value="%5s" %6s>',
 					$args[ 'type' ],
