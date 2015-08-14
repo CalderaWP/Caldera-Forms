@@ -95,7 +95,7 @@ class Caldera_Forms_Processor_Load {
 		 *
 		 * @param array $processors
 		 */
-		$processors = $processors = apply_filters( 'caldera_forms_get_form_processors', array() );
+		$processors = apply_filters( 'caldera_forms_get_form_processors', array() );
 		$this->processors = array();
 		foreach( $processors as $id => $processor ) {
 			$processor = $this->validate_processor( $processor );
