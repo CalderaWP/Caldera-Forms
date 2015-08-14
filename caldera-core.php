@@ -29,6 +29,7 @@ include_once CFCORE_PATH . 'includes/cf-ajax/plugin.php';
 include_once CFCORE_PATH . 'includes/field_processors.php';
 include_once CFCORE_PATH . 'includes/custom_field_class.php';
 include_once CFCORE_PATH . 'includes/filter_addon_plugins.php';
+include_once( CFCORE_PATH . 'processors/classes/load.php' );
 
 // table builder
 register_activation_hook( __FILE__, array( 'Caldera_Forms', 'activate_caldera_forms' ) );

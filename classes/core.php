@@ -1769,8 +1769,9 @@ class Caldera_Forms {
 			'tags'	=> $system_tags,
 			'wrap'	=>	array('{','}')
 		);
+
 		// get processor tags
-		$processors = apply_filters( 'caldera_forms_get_form_processors', array() );
+		$processors = Caldera_Forms_Processor_Load::get_instance()->get_processors();
 		if(!empty($processors)){
 			foreach($processors as $processor_key=>$processor){
 				if(isset($processor['magic_tags'])){
