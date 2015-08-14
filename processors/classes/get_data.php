@@ -9,7 +9,7 @@
  * @copyright 2015 CalderaWP LLC
  */
 
-class Caldera_Forms_Data_From_Processor {
+class Caldera_Forms_Processor_Get_Data {
 
 	/**
 	 * The values from current submission

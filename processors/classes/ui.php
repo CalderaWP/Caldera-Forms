@@ -8,7 +8,7 @@
  * @link
  * @copyright 2015 CalderaWP LLC
  */
-class Caldera_Forms_UI_Addon {
+class Caldera_Forms_Processor_UI {
 
 	/**
 	 * Output field markup form an array fo field args
