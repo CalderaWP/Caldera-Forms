@@ -100,6 +100,9 @@ none yet.
 
 == Changelog ==
 
+= 1.2.4 ( August X, 2015 ) =
+* Fixed issue where forms with a file field, without a file uploaded, would break mailer validation.
+
 = 1.2.3 ( August 7, 2015) =
 
 = Bugs Fixed =

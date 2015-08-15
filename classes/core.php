@@ -359,7 +359,7 @@ class Caldera_Forms {
 
 				$dir = wp_upload_dir();
 				$file = str_replace($dir['baseurl'], $dir['basedir'], self::get_field_data($field_id, $form));
-				if(file_exists($file)){
+				if( is_String( $file ) && file_exists($file)){
 					$mail['attachments'][] = $file;	
 				}
 				
