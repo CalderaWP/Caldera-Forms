@@ -127,7 +127,7 @@ class Caldera_Forms_Processor_Load {
 		);
 
 		//backwards compat, woo!
-		wp_parse_args( $processor, $dependencies );
+		$processor = wp_parse_args( $processor, $dependencies );
 
 		$fail = false;
 		$pattern = '%1 requires %2s version %3s or later. Current version is %4s.';
