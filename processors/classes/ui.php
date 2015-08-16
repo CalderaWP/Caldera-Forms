@@ -78,7 +78,7 @@ class Caldera_Forms_Processor_UI {
 			'magic' => true,
 			'block' => true,
 			'type'  => 'text',
-			'extra_class' => array(),
+			'extra_classes' => array(),
 			'required' => false,
 			'desc' => false,
 			'allow_types' => false,
