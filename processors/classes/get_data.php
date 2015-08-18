@@ -166,13 +166,13 @@ class Caldera_Forms_Processor_Get_Data {
 	 */
 	public function add_error( $message ) {
 		if ( is_null( $this->errors ) ) {
-			$this->errors = array();
+			$this->errors = array(
+				'type' => 'error',
+				'note' => ''
+			);
 		}
 
-		$this->errors[] = array(
-			'type' => 'error',
-			'note' => $message,
-		);
+		$this->errors[ 'note' ] .=  $message . "<br>";
 
 	}
 
