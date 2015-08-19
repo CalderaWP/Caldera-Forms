@@ -1427,7 +1427,7 @@ class Caldera_Forms_Admin {
 						"label" => __("Layout Builder", 'caldera-forms'),
 						"active" => true,
 						"actions" => array(
-							$path . "layout_add_row.php"
+							$path . "layout_toolbar.php"
 						),
 						"repeat" => 0,
 						"canvas" => $path . "layout.php",
@@ -1439,6 +1439,12 @@ class Caldera_Forms_Admin {
 						"label" => __("Form Pages", 'caldera-forms'),
 						"canvas" => $path . "pages.php",
 					),
+					"conditions" => array(
+						"name" => __("Conditions", 'caldera-forms'),
+						"location" => "lower",
+						"label" => __("Conditional Groups", 'caldera-forms'),
+						"canvas" => $path . "conditions.php",
+					),					
 					"processors" => array(
 						"name" => __("Processors", 'caldera-forms'),
 						"location" => "lower",

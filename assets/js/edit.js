@@ -1838,7 +1838,10 @@ jQuery(document).ready(function($) {
 			$('.caldera-add-page').trigger('click');
 			return;
 		}
-		$('.page-active').append('<div class="first-row-level row"><div class="col-xs-12"><div class="layout-column column-container"></div></div></div>');
+		var new_row = $( '<div style="display:none;" class="first-row-level row"><div class="col-xs-12"><div class="layout-column column-container"></div></div></div>' );
+
+		$('.page-active').append( new_row );
+		new_row.slideDown( 200 );
 		buildSortables();
 		buildLayoutString();
 	});
@@ -2374,6 +2377,21 @@ jQuery(document).ready(function($){
 
 		rebuild_field_binding();
 		baldrickTriggers();
+
+		// initialise baldrick triggers
+		$('.wp-baldrick').baldrick({
+			request     : ajaxurl,
+			method      : 'POST',
+			before		: function(el){
+				
+				var tr = $(el);
+
+				if( tr.data('addNode') && !tr.data('request') ){
+					tr.data('request', 'cf_get_default_setting');
+				}
+			}
+		});
+
 	}
 
 	// build configs on load:

@@ -3830,18 +3830,12 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
   }
   
   $.fn.formJSON = function(){
-    
-    var form = $(this);
-    if( !form.is('form') ){
-      form = $('<form>').append( form.clone() );
-    }
-
-    var fields       = form.serializeArray(),
+    var fields       = $(this).serializeArray(),
         json         = {},
         arraynames   = {};
     for( var v = 0; v < fields.length; v++){
       var field     = fields[v],
-        field_el = form.find('[name="' + field.name + '"]'),
+        field_el = this.find('[name="' + field.name + '"]'),
         name    = field.name.replace(/\]/gi,'').split('['),
         value     = field.value,
         lineconf  = {};
@@ -4638,6 +4632,15 @@ var handlebarsVariables = {};
         title = modal.find('.baldrick-modal-title'),
         current_size = '';
 
+        if( modalHeight === 'auto' ){
+          body.css( 'position', 'initial' );
+          modalHeight = body.outerHeight() + footer.outerHeight() + title.outerHeight();
+          body.css( 'position', '' );
+        }
+        if( modalWidth === 'auto' ){
+          modalWidth = 450;
+        }
+
         if( windowWidth <= 700 && windowWidth > 600 ){
           modalHeight = windowHeight - 30;
           modalWidth = windowWidth - 30;
@@ -4664,13 +4667,11 @@ var handlebarsVariables = {};
         $('#' + obj.params.trigger.data('modalAutoclose') + '_baldrickModalCloser').trigger('click');
       }
       // inject tabs      
-      var navtabs = obj.params.target.find('[data-tab]'),
-          avatar = obj.params.target.find('.user-avatar');
-
+      var navtabs = obj.params.target.find('[data-tab]');
       if( navtabs.length ){
         var tabs = $('<ul>', { "class" : "navtabs" } ),
             hasSelection = false;
-
+       
         navtabs.each( function(k,v){
           var tab = $(this),
               element = $('<li>'),
@@ -4703,18 +4704,16 @@ var handlebarsVariables = {};
         }
 
         tabs.css('top', obj.params.target.parent().find('.baldrick-modal-title').outerHeight() );
-        tabs.css('bottom', obj.params.target.parent().find('.baldrick-modal-footer').outerHeight() );
+        if( obj.params.trigger.data('modalButtons' ) ){
+          tabs.css('bottom', obj.params.target.parent().find('.baldrick-modal-footer').outerHeight() );
+        }else{
+          tabs.css('bottom', 0 );
+        }
+        
 
         obj.params.target.before( tabs ).addClass('has-tabs');
 
-        if( avatar.length ){
-          tabs.before( avatar );
-          tabs.css('top', obj.params.target.parent().find('.baldrick-modal-title').outerHeight() + 149 );
-          tabs.css('padding-top', 0 );
-        }
-
-      }
-
+      }            
     },
     event : function(el, obj){
       var trigger = $(el), modal_id = 'wm';     
@@ -4726,8 +4725,7 @@ var handlebarsVariables = {};
           $('.baldrick-modal-wrap').css('zIndex' , '100099');
           //wm_hasModal = true;
           // write out a template wrapper.
-          var modal_element = trigger.data('modalElement') ? trigger.data('modalElement') : 'form',
-              modal = $('<' + modal_element + '>', {
+          var modal = $('<form>', {
               id          : modal_id + '_baldrickModal',
               tabIndex      : -1,
               "ariaLabelled-by" : modal_id + '_baldrickModalLable',
