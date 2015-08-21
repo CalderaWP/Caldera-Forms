@@ -1448,7 +1448,7 @@ class Caldera_Forms_Admin {
 					"conditions" => array(
 						"name" => __("Conditions", 'caldera-forms'),
 						"location" => "lower",
-						"label" => __("Conditionals", 'caldera-forms'),
+						"label" => __("Conditions", 'caldera-forms'),
 						"canvas" => $path . "conditions.php",
 					),					
 					"processors" => array(

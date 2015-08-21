@@ -391,7 +391,7 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 				<div class="caldera-config-field">
 					<select id="field-condition-type-<?php echo $id; ?>" name="config[fields][<?php echo $id; ?>][conditions][type]" data-id="<?php echo $id; ?>" class="caldera-conditionals-usetype block-input">
 						<option></option>
-						<optgroup class="cf-conditional-selector" label="<?php _e('Conditional Group', 'caldera-forms'); ?>">
+						<optgroup class="cf-conditional-selector">
 							<?php if( !in_array( $condition_type, array( 'show', 'hide','disable' ) ) ){ ?><option value="<?php echo $condition_type; ?>" selected="selected"><?php echo __('Disable', 'caldera-forms'); ?></option><?php } ?></optgroup>
 						</optgroup>
 					</select>
