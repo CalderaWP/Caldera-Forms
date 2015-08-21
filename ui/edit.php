@@ -29,35 +29,37 @@ if(!isset($element['check_honey'])){
 if( empty( $element['conditional_groups'] ) ){
 	
 	$element['conditional_groups'] = array();
-	foreach( $element['fields'] as $field_id=>$field ){
+	if( !empty( $element['fields'] ) ){
+		foreach( $element['fields'] as $field_id=>$field ){
 
-		if( !empty( $field['conditions'] ) && !empty( $field['conditions']['type'] ) ){
+			if( !empty( $field['conditions'] ) && !empty( $field['conditions']['type'] ) ){
 
-			if( empty( $field['conditions']['group'] ) ){
-				continue;
-			}
-			$element['conditional_groups']['conditions'][ 'con_' . $field['ID'] ] = array(
-				'id' => 'con_' . $field['ID'],
-				'name'	=> $field['label'],
-				'type'	=> $field['conditions']['type'],
-				'fields'=> array(),
-				'group' => array()
-			);
-
-			foreach( $field['conditions']['group'] as $groups_id=>$groups ){
-				foreach( $groups as $group_id => $group ){
-					$element['conditional_groups']['conditions'][ 'con_' . $field['ID'] ]['fields'][ $group_id ] = $group['field'];
-					$element['conditional_groups']['conditions'][ 'con_' . $field['ID'] ]['group'][ $groups_id ][ $group_id ] = array(
-						'parent'	=>	$groups_id,
-						'field'		=>	$group['field'],
-						'compare'	=>	$group['compare'],
-						'value'		=>	$group['value']
-					);
+				if( empty( $field['conditions']['group'] ) ){
+					continue;
 				}
+				$element['conditional_groups']['conditions'][ 'con_' . $field['ID'] ] = array(
+					'id' => 'con_' . $field['ID'],
+					'name'	=> $field['label'],
+					'type'	=> $field['conditions']['type'],
+					'fields'=> array(),
+					'group' => array()
+				);
+
+				foreach( $field['conditions']['group'] as $groups_id=>$groups ){
+					foreach( $groups as $group_id => $group ){
+						$element['conditional_groups']['conditions'][ 'con_' . $field['ID'] ]['fields'][ $group_id ] = $group['field'];
+						$element['conditional_groups']['conditions'][ 'con_' . $field['ID'] ]['group'][ $groups_id ][ $group_id ] = array(
+							'parent'	=>	$groups_id,
+							'field'		=>	$group['field'],
+							'compare'	=>	$group['compare'],
+							'value'		=>	$group['value']
+						);
+					}
+				}
+				$element['fields'][ $field_id ]['conditions'] = array(
+					'type' => 'con_' . $field['ID']
+				);
 			}
-			$element['fields'][ $field_id ]['conditions'] = array(
-				'type' => 'con_' . $field['ID']
-			);
 		}
 	}
 }
