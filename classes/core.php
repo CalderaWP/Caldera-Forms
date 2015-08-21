@@ -1483,7 +1483,7 @@ class Caldera_Forms {
 	 * @return array Options for field
 	 */
 	public function apply_conditional_groups($field, $form){
-		
+
 		if( !empty( $form['conditional_groups']['conditions'][ $field['conditions']['type'] ] ) ){			
 			$group = $form['conditional_groups']['conditions'][ $field['conditions']['type'] ];
 			$field['conditions']['type'] = $group['type'];

@@ -1313,6 +1313,9 @@ class Caldera_Forms_Admin {
 				if(isset($forms[$data['ID']]['settings'])){
 					unset($forms[$data['ID']]['settings']);
 				}
+				if(isset($forms[$data['ID']]['conditional_groups'])){
+					unset($forms[$data['ID']]['conditional_groups']);
+				}
 
 				foreach($forms as $form_id=>$form_config){
 					if(empty($form_config)){
@@ -1321,7 +1324,10 @@ class Caldera_Forms_Admin {
 				}
 				// combine structure pages
 				$data['layout_grid']['structure'] = implode('#', $data['layout_grid']['structure']);
-				
+				// remove fields from conditions
+				if( !empty( $data['conditional_groups']['fields'] ) ){
+					unset( $data['conditional_groups']['fields'] );
+				}
 				// add from to list
 				update_option($data['ID'], $data);
 				do_action('caldera_forms_save_form', $data);
