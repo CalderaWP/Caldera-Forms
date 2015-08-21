@@ -21,6 +21,47 @@ if(!isset($element['check_honey'])){
 	$element['check_honey'] = 1;
 }
 
+/**
+ * Convert existing field conditions if old method used
+ *
+ * @since 1.2.4
+ */
+if( empty( $element['conditional_groups'] ) ){
+	
+	$element['conditional_groups'] = array();
+	foreach( $element['fields'] as $field_id=>$field ){
+
+		if( !empty( $field['conditions'] ) && !empty( $field['conditions']['type'] ) ){
+
+			if( empty( $field['conditions']['group'] ) ){
+				continue;
+			}
+			$element['conditional_groups']['conditions'][ 'con_' . $field['ID'] ] = array(
+				'id' => 'con_' . $field['ID'],
+				'name'	=> $field['label'],
+				'type'	=> $field['conditions']['type'],
+				'fields'=> array(),
+				'group' => array()
+			);
+
+			foreach( $field['conditions']['group'] as $groups_id=>$groups ){
+				foreach( $groups as $group_id => $group ){
+					$element['conditional_groups']['conditions'][ 'con_' . $field['ID'] ]['fields'][ $group_id ] = $group['field'];
+					$element['conditional_groups']['conditions'][ 'con_' . $field['ID'] ]['group'][ $groups_id ][ $group_id ] = array(
+						'parent'	=>	$groups_id,
+						'field'		=>	$group['field'],
+						'compare'	=>	$group['compare'],
+						'value'		=>	$group['value']
+					);
+				}
+			}
+			$element['fields'][ $field_id ]['conditions'] = array(
+				'type' => 'con_' . $field['ID']
+			);
+		}
+	}
+}
+$element['conditional_groups']['fields'] = $element['fields'];
 
 // place nonce field
 wp_nonce_field( 'cf_edit_element', 'cf_edit_nonce' );
@@ -301,10 +342,6 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 
 	id="<?php echo $id; ?>" style="display:none;">
 		
-		<div class="toggle_option_tab">
-			<a href="#<?php echo $id; ?>_settings_pane" class="button button-primary"><?php _e('Settings'); ?></a>
-			<a href="#<?php echo $id; ?>_conditions_pane" class="button "><?php _e('Conditions', 'caldera-forms'); ?></a>
-		</div>
 
 		<h3 class="caldera-editor-field-title"><?php echo $label; ?>&nbsp;</h3>		
 		<input type="hidden" class="field-config" name="config[fields][<?php echo $id; ?>][ID]" value="<?php echo $id; ?>">
@@ -325,7 +362,8 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 					<input type="text" class="block-input field-id" id="<?php echo $id; ?>_fid" value="<?php echo $id; ?>" readonly="readonly">
 				</div>
 			</div>
-			
+
+
 			<div class="caldera-config-group">
 				<label for="<?php echo $id; ?>_lable"><?php echo __('Name', 'caldera-forms'); ?></label>
 				<div class="caldera-config-field">
@@ -346,7 +384,17 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 					<input type="text" class="block-input field-config field-slug required" id="<?php echo $id; ?>_slug" name="config[fields][<?php echo $id; ?>][slug]" value="<?php echo $slug; ?>">
 				</div>
 			</div>
-			
+			<div class="caldera-config-group">
+				<label for="<?php echo $id; ?>_fcond"><?php echo __('Condition', 'caldera-forms'); ?></label>
+				<div class="caldera-config-field">
+					<select id="field-condition-type-<?php echo $id; ?>" name="config[fields][<?php echo $id; ?>][conditions][type]" data-id="<?php echo $id; ?>" class="caldera-conditionals-usetype block-input">
+						<option></option>
+						<optgroup class="cf-conditional-selector" label="<?php _e('Conditional Group', 'caldera-forms'); ?>">
+							<?php if( !in_array( $condition_type, array( 'show', 'hide','disable' ) ) ){ ?><option value="<?php echo $condition_type; ?>" selected="selected"><?php echo __('Disable', 'caldera-forms'); ?></option><?php } ?></optgroup>
+						</optgroup>
+					</select>
+				</div>
+			</div>			
 			<div class="caldera-config-group required-field">
 				<label for="<?php echo $id; ?>_required"><?php echo __('Required', 'caldera-forms'); ?></label>
 				<div class="caldera-config-field">
@@ -373,21 +421,7 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 			<br>
 			<button class="button delete-field block-button" data-confirm="<?php echo __('Are you sure you want to remove this field?. \'Cancel\' to stop. \'OK\' to delete', 'caldera-forms'); ?>" type="button"><i class="icn-delete"></i> <?php echo __('Delete Element', 'caldera-forms'); ?></button>
 		</div>
-		<div id="<?php echo $id; ?>_conditions_pane" style="display:none;" class="wrapper-instance-pane">
-			<p>
-				<select name="config[fields][<?php echo $id; ?>][conditions][type]" data-id="<?php echo $id; ?>" class="caldera-conditionals-usetype">
-					<option value=""></option>
-					<option value="show" <?php if($condition_type == 'show'){ echo 'selected="selected"'; } ?>><?php echo __('Show', 'caldera-forms'); ?></option>
-					<option value="hide" <?php if($condition_type == 'hide'){ echo 'selected="selected"'; } ?>><?php echo __('Hide', 'caldera-forms'); ?></option>
-					<option value="disable" <?php if($condition_type == 'disable'){ echo 'selected="selected"'; } ?>><?php echo __('Disable', 'caldera-forms'); ?></option>
-				</select>
-				<button id="<?php echo $id; ?>_condition_group_add" style="display:none;" type="button" data-id="<?php echo $id; ?>" class="pull-right button button-small add-conditional-group ajax-trigger" data-template="#conditional-group-tmpl" data-target-insert="append" data-request="new_conditional_group" data-type="fields" data-callback="rebuild_field_binding" data-target="#<?php echo $id; ?>_conditional_wrap"><?php echo __('Add Conditional Group', 'caldera-forms'); ?></button>
-			</p>
-			<div class="caldera-conditionals-wrapper" id="<?php echo $id; ?>_conditional_wrap"></div>
-			<?php do_action('caldera_forms_field_conditionals_template', $id); ?>
-			<input type="hidden" class="field_conditions_config_string block-input ajax-trigger" data-event="none" data-autoload="true" data-request="build_conditions_config" data-template="#conditional-group-tmpl" data-id="<?php echo $id; ?>" data-target="#<?php echo $id; ?>_conditional_wrap" data-type="fields" data-callback="rebuild_field_binding" value="<?php echo htmlentities( $conditions_str ); ?>">
-			
-		</div>
+
 	</div>
 	<?php
 }
