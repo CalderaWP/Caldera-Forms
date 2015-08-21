@@ -316,7 +316,7 @@ class Caldera_Forms_Admin {
 	}
 	public static function get_admin_meta_templates(){
 		
-		$processors = apply_filters( 'caldera_forms_get_form_processors', array() );
+		$processors = $processors = Caldera_Forms_Processor_Load::get_instance()->get_processors();
 		if(!empty($processors)){
 			foreach($processors as $processor_type=>$processor_config){
 				if( isset( $processor_config['meta_template'] ) && file_exists( $processor_config['meta_template'] ) ){
@@ -863,7 +863,7 @@ class Caldera_Forms_Admin {
 			$panel_extensions = apply_filters( 'caldera_forms_get_panel_extensions', array() );
 
 			// load processors
-			$form_processors = apply_filters( 'caldera_forms_get_form_processors', array() );
+			$form_processors = $processors = Caldera_Forms_Processor_Load::get_instance()->get_processors();
 
 			// merge a list
 			$merged_types = array_merge($field_types, $panel_extensions, $form_processors);
