@@ -99,8 +99,19 @@
 	text-align: center;
 }
 .column-sort.column-tools {
-  width: 45px;
+  width: 25px;
   right: 0;
+}
+.column-config.column-tools {
+  left: -20px;
+  position: absolute;
+  top: 29%;
+}
+.column-config.column-tools i {
+  border: 2px solid #CFCFCF;
+  height: 23px;
+  padding: 3px;
+  width: 23px;
 }
 .column-sort .icon-edit {
   margin-right: 15px;

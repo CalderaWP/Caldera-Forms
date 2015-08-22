@@ -4,8 +4,10 @@
   width: 250px;
 }
 .caldera-editor-processors-panel li{
-  border-bottom: 1px solid #DFDFDF;
-  margin: 0;
+  border: 1px solid #dfdfdf;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  margin: 0 0 6px;
 }
 .caldera-editor-processors-panel a{
   color: #6F6F6F;
@@ -15,7 +17,7 @@
 }
 .caldera-editor-processors-panel li.active a,
 .caldera-editor-processors-panel a:hover{
-  background: none repeat scroll 0 0 #E8E8E8;
+  background: none repeat scroll 0 0 #FFF;
 }
 .caldera-editor-processor-config {
   float: left;
@@ -57,3 +59,42 @@ button.button.info-button {
   margin-right: 9px;
   width: 45px;
 }
+
+
+.caldera-editor-conditions-panel {
+  float: left;
+  margin-right: 20px;
+  width: 250px;
+}
+.caldera-editor-conditions-panel li {
+  border: 1px solid #dfdfdf;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  margin: 0 0 6px;
+}
+.caldera-editor-conditions-panel a{
+  color: #6F6F6F;
+  display: block;
+  padding: 6px;
+  text-decoration: none;
+}
+.caldera-editor-conditions-panel li.active a,
+.caldera-editor-conditions-panel a:hover{
+  background: none repeat scroll 0 0 #FFF;
+}
+.caldera-editor-condition-config {
+  float: left;
+  width: auto;
+}
+.caldera-editor-condition-config-wrapper {
+  width: 550px;
+}
+h3.caldera-editor-condition-title {
+  border-bottom: 1px solid #CFCFCF;
+  color: #3F3F3F;
+  font-size: 18px;
+  font-weight: 400;
+  margin: 0 0 6px;
+  padding: 5px 0 12px;
+}
+

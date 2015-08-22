@@ -853,7 +853,7 @@ jQuery(document).ready(function($){
 
 		var select = $(this);
 
-		if(this.value !== ''){
+		if( this.value === 'show' || this.value === 'hide' || this.value === 'disable' || this.value === 'use' || this.value === 'not' ){
 			$('#' + select.data('id') + '_condition_group_add').show();
 			$('#' + select.data('id') + '_conditional_wrap').show();
 		}else{
@@ -1985,7 +1985,8 @@ jQuery(document).ready(function($) {
 			}
 
 		$(document).trigger('show.' + panel.data('config'));
-
+		$(document).trigger('show.fieldedit');
+		
 		if( type === 'radio' || type === 'checkbox' || type === 'dropdown' || type === 'toggle_switch' ){
 			$('#' + panel.data('config') + '_auto').trigger('change');
 		}

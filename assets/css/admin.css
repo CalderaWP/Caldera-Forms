@@ -277,8 +277,8 @@ select.caldera-type-selector {
   z-index: 100;
 }
 .caldera-editor-header.caldera-editor-subnav {
-  background-color: #F8F8F8;
-  top: 85px;
+  background-color: #f0f0f0;
+  top: 84px;
 }
 .caldera-editor-header .button.caldera-header-save-button,
 .caldera-editor-header .button.caldera-header-preview-button {
@@ -317,9 +317,11 @@ li.caldera-editor-logo {
   display: inline-block;
   padding: 12px 12px;
   text-decoration: none;
+  color: #839e3f;
 }
 .caldera-editor-header-nav > li.active a {
-  background: none repeat scroll 0 0 #efefef;
+  background: none repeat scroll 0 0 #a3be5f;
+  color: #fff;
 }
 .caldera-editor-header-nav > li.caldera-forms-toolbar-item {
   padding: 6px 6px 6px 12px;

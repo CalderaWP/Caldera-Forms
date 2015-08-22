@@ -50,6 +50,7 @@ class Caldera_Forms {
 		add_filter('caldera_forms_submit_redirect_complete', array( $this, 'do_redirect'),10, 4);
 		add_action('caldera_forms_edit_end', array($this, 'calculations_templates') );
 		add_filter('caldera_forms_render_get_field', array( $this, 'auto_populate_options_field' ), 10, 2);
+		add_filter('caldera_forms_render_get_field', array( $this, 'apply_conditional_groups' ), 10, 2);
 		//add_filter('caldera_forms_render_get_field_type-radio', array( $this, 'auto_populate_options_field' ), 10, 2);
 		//add_filter('caldera_forms_render_get_field_type-checkbox', array( $this, 'auto_populate_options_field' ), 10, 2);
 		//add_filter('caldera_forms_render_get_field_type-dropdown', array( $this, 'auto_populate_options_field' ), 10, 2);
@@ -1474,6 +1475,24 @@ class Caldera_Forms {
 	}
 
 	/**
+	 * Applies the inline rules for fields conditionals
+	 *
+	 * @param array $field Field config
+	 * @param array $form Form config
+	 *
+	 * @return array Options for field
+	 */
+	public function apply_conditional_groups($field, $form){
+
+		if( !empty( $form['conditional_groups']['conditions'][ $field['conditions']['type'] ] ) ){			
+			$group = $form['conditional_groups']['conditions'][ $field['conditions']['type'] ];
+			$field['conditions']['type'] = $group['type'];
+			$field['conditions']['group'] = $group['group'];
+		}
+
+		return $field;
+	}
+	/**
 	 * Default callback for auto populating select fields
 	 *
 	 * @param array $field Field config
@@ -1814,8 +1833,9 @@ class Caldera_Forms {
 			'tags'	=> $system_tags,
 			'wrap'	=>	array('{','}')
 		);
+
 		// get processor tags
-		$processors = apply_filters( 'caldera_forms_get_form_processors', array() );
+		$processors = Caldera_Forms_Processor_Load::get_instance()->get_processors();
 		if(!empty($processors)){
 			foreach($processors as $processor_key=>$processor){
 				if(isset($processor['magic_tags'])){

@@ -28,7 +28,7 @@
 			</div>
 		</div>
 		
-		<div class="baldrick-modal-footer" style="display: block; clear: both; position: relative; height: 27px; width: 100%; margin: 0px -12px;">
+		<div class="baldrick-modal-footer" style="display: block; clear: both; position: relative; height: 24px; width: 100%; margin: 0px -12px;">
 
 			<button type="submit" class="button button-primary" style="float:right;"><?php echo __('Import Form', 'caldera-forms'); ?></button>	
 
