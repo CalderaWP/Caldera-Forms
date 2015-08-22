@@ -44,11 +44,11 @@
 		}
 		for(var f = 0; f < fields.length; f++){
 			if( jQuery(fields[f]).is(':radio,:checkbox') ){
-				if( !$(fields[f]).hasClass('option-required') ){continue}
-				if( !checks[$(fields[f]).data('field')] ){
-					checks[$(fields[f]).data('field')] = [];
+				if( !jQuery(fields[f]).hasClass('option-required') ){continue}
+				if( !checks[jQuery(fields[f]).prop('id')] ){
+					checks[jQuery(fields[f]).prop('id')] = [];
 				}
-				checks[$(fields[f]).data('field')].push($(fields[f]).prop('checked'));
+				checks[jQuery(fields[f]).prop('id')].push(jQuery(fields[f]).prop('checked'));
 			}else{
 				if(jQuery(fields[f]).prop('required')){
 					if(!fields[f].value.length){
@@ -63,22 +63,19 @@
 							//nope submit form to indicate a fail.
 							form.find('[type="submit"]').trigger('click');
 							return;
-
 						}
 					}
 				}
 			}
 		}
-
 		for( var ch in checks ){
 			if( checks[ch].indexOf(true) < 0){
-				$('[for="' + ch + '"]').parent().addClass('has-error');
+				jQuery('[for="' + ch + '"]').parent().addClass('has-error');
 				return false;
 			}else{
-				$('[for="' + ch + '"]').parent().removeClass('has-error');
+				jQuery('[for="' + ch + '"]').parent().removeClass('has-error');
 			}
 		}
-		
 		
 		if(clicked.data('page') === 'next'){
 			if(breadcrumb){
