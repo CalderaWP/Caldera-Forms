@@ -853,7 +853,7 @@ jQuery(document).ready(function($){
 
 		var select = $(this);
 
-		if(this.value === 'show' || this.value === 'hide' || this.value === 'disable' ){
+		if( this.value === 'show' || this.value === 'hide' || this.value === 'disable' || this.value === 'use' || this.value === 'not' ){
 			$('#' + select.data('id') + '_condition_group_add').show();
 			$('#' + select.data('id') + '_conditional_wrap').show();
 		}else{
