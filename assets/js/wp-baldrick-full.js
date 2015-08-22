@@ -4724,7 +4724,7 @@ var handlebarsVariables = {};
           $('.baldrick-modal-wrap').css('zIndex' , '100099');
           //wm_hasModal = true;
           // write out a template wrapper.
-          var modal = $('<form>', {
+          var modal = $('<' + ( trigger.data('modalElement') ?  trigger.data('modalElement') : 'form' ) + '>', {
               id          : modal_id + '_baldrickModal',
               tabIndex      : -1,
               "ariaLabelled-by" : modal_id + '_baldrickModalLable',
