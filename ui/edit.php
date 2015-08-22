@@ -63,6 +63,11 @@ if( empty( $element['conditional_groups'] ) ){
 		}
 	}
 }
+
+if ( ! isset( $element['fields'] ) ) {
+	$element['fields'] = array();
+}
+
 $element['conditional_groups']['fields'] = $element['fields'];
 
 // place nonce field

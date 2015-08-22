@@ -253,5 +253,23 @@ class Caldera_Forms_Processor_UI {
 
 	}
 
+	/**
+	 * Helper function to place a notice in processor config, if SSL required and not in use.
+	 *
+	 * @since 1.2.4
+	 *
+	 * @param string $name Name of add-on.
+	 *
+	 * @return string
+	 */
+	public static function ssl_notice( $name ) {
+		if ( is_ssl() ) {
+			return;
+		}
+
+		return sprintf( '<div class="error"><p>%1s</p></div>', __( sprintf( '%1s requires a valid SSL certificate. It will only function is test mode unless SSL/HTTPS is used.', $name ), 'caldera-forms' ) );
+
+	}
+
 
 }
