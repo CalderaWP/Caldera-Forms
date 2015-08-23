@@ -13,7 +13,7 @@ class Caldera_Forms_Processor_UI {
 	/**
 	 * Output field markup form an array fo field args
 	 *
-	 * @since 1.2.4
+	 * @since 1.3.0
 	 *
 	 * @param array $fields Array of args to pass to self::config_field()
 	 * @param null|string|int Optional. If null, all fields (except those with print args set to false will be printed). Can be used to print a group of fields based on the value of the print arg.
@@ -92,7 +92,7 @@ class Caldera_Forms_Processor_UI {
 		/**
 		 * Filter arguments for field markup
 		 *
-		 * @since 1.2.4
+		 * @since 1.3.0
 		 *
 		 * @param array $args
 		 */
@@ -165,7 +165,7 @@ class Caldera_Forms_Processor_UI {
 	/**
 	 * Create the input for proccesor config field.
 	 *
-	 * @since 1.2.4
+	 * @since 1.3.0
 	 *
 	 * @param string $type The type of input. This is NOT The input type. Options are simple|checkbox|advanced|dropdown
 	 * @param array $args Field args
@@ -256,7 +256,7 @@ class Caldera_Forms_Processor_UI {
 	/**
 	 * Helper function to place a notice in processor config, if SSL required and not in use.
 	 *
-	 * @since 1.2.4
+	 * @since 1.3.0
 	 *
 	 * @param string $name Name of add-on.
 	 *

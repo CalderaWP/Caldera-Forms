@@ -24,7 +24,7 @@ if(!isset($element['check_honey'])){
 /**
  * Convert existing field conditions if old method used
  *
- * @since 1.2.4
+ * @since 1.3.0
  */
 if( empty( $element['conditional_groups'] ) ){
 	

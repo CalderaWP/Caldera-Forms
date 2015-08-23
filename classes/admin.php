@@ -50,7 +50,7 @@ class Caldera_Forms_Admin {
 	/**
 	 * Holds admin notices
 	 *
-	 * @since 1.3
+	 * @since 1.3.0
 	 *
 	 * @var array
 	 */
@@ -1598,7 +1598,7 @@ class Caldera_Forms_Admin {
 	/**
 	 * Add to the admin notices
 	 *
-	 * @since 1.3
+	 * @since 1.3.0
 	 *
 	 * @param string|array $notice The notice or array of notices to add.
 	 */

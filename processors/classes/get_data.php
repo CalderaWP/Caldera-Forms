@@ -14,7 +14,7 @@ class Caldera_Forms_Processor_Get_Data {
 	/**
 	 * The values from current submission
 	 *
-	 * @since 1.2.4
+	 * @since 1.3.0
 	 *
 	 * @access private
 	 *
@@ -25,7 +25,7 @@ class Caldera_Forms_Processor_Get_Data {
 	/**
 	 * The errors from current submission
 	 *
-	 * @since 1.2.4
+	 * @since 1.3.0
 	 *
 	 * @access private
 	 *
@@ -36,7 +36,7 @@ class Caldera_Forms_Processor_Get_Data {
 	/**
 	 * The fields needed from this processor
 	 *
-	 * @since 1.2.4
+	 * @since 1.3.0
 	 *
 	 * @access private
 	 *
@@ -47,7 +47,7 @@ class Caldera_Forms_Processor_Get_Data {
 	/**
 	 * Contsructor for class
 	 *
-	 * @since 1.2.4
+	 * @since 1.3.0
 	 *
 	 * @param array $config Proccessor config
 	 * @param array $form Form config
@@ -64,7 +64,7 @@ class Caldera_Forms_Processor_Get_Data {
 	/**
 	 * Validate, and set fields property
 	 *
-	 * @since 1.2.4
+	 * @since 1.3.0
 	 *
 	 * @access protected
 	 *
@@ -126,7 +126,7 @@ class Caldera_Forms_Processor_Get_Data {
 	/**
 	 * Get values from POST data and set in the value property
 	 *
-	 * @since 1.2.4
+	 * @since 1.3.0
 	 *
 	 * @access protected
 	 *
@@ -170,7 +170,7 @@ class Caldera_Forms_Processor_Get_Data {
 	/**
 	 * Add an error message to the errors property
 	 *
-	 * @since 1.2.4
+	 * @since 1.3.0
 	 *
 	 * @param string $message Message for error
 	 */
@@ -189,7 +189,7 @@ class Caldera_Forms_Processor_Get_Data {
 	/**
 	 * Get the errors
 	 *
-	 * @since 1.2.4
+	 * @since 1.3.0
 	 *
 	 * @return array|null
 	 */
@@ -201,7 +201,7 @@ class Caldera_Forms_Processor_Get_Data {
 	/**
 	 * Get the values
 	 *
-	 * @since 1.2.4
+	 * @since 1.3.0
 	 *
 	 * @return array|null
 	 */
@@ -213,7 +213,7 @@ class Caldera_Forms_Processor_Get_Data {
 	/**
 	 * Get prepared fields
 	 *
-	 * @since 1.2.4
+	 * @since 1.3.0
 	 *
 	 * @return array|null
 	 */
