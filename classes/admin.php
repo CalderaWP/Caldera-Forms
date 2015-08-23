@@ -26,22 +26,36 @@ class Caldera_Forms_Admin {
 	 * @var      string
 	 */
 	protected $plugin_slug = 'caldera-forms';
+
 	/**
 	 * @var      string
 	 */
 	protected $screen_prefix = array();
+
 	/**
 	 * @var      string
 	 */
 	protected $sub_prefix = null;
+
 	/**
 	 * @var      string
 	 */
 	protected $addons = array();
+
 	/**
 	 * @var      object
 	 */
 	protected static $instance = null;
+
+	/**
+	 * Holds admin notices
+	 *
+	 * @since 1.3
+	 *
+	 * @var array
+	 */
+	private static $admin_notices;
+
 	/**
 	 * Initialize the plugin by setting localization, filters, and administration functions.
 	 *
@@ -1579,6 +1593,51 @@ class Caldera_Forms_Admin {
 		
 		return array_merge( $panels, $internal_panels );
 		
+	}
+
+	/**
+	 * Add to the admin notices
+	 *
+	 * @since 1.3
+	 *
+	 * @param string|array $notice The notice or array of notices to add.
+	 */
+	public static function add_admin_notice( $notice ) {
+		if ( is_string( $notice ) ) {
+			self::$admin_notices[] = $notice;
+		}
+
+		if ( is_array( $notice ) ) {
+			foreach( $notice as $n) {
+				self::add_admin_notice( $n );
+			}
+
+		}
+
+	}
+
+	/**
+	 * Get the admin messages
+	 *
+	 * @since 1.3
+	 *
+	 * @param bool $as_string Optional. To return as string, the default, or as an array
+	 * @param string $seperator Optional. What to break notices with, when returning as string. Default is "\n"
+	 *
+	 * @return string|array|void
+	 */
+	public static  function get_admin_notices( $as_string = true, $seperator = "\n" ) {
+		if ( ! empty( self::$admin_notices ) ) {
+			if ( $as_string ) {
+				return implode( $seperator, self::$admin_notices  );
+
+			}else{
+				return self::$admin_notices;
+
+			}
+
+		}
+
 	}
 
 }
