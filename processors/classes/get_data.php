@@ -55,7 +55,7 @@ class Caldera_Forms_Processor_Get_Data {
 	 */
 	function __construct( $config, $form, $fields ) {
 		if ( ! empty( $fields ) && is_array( $fields )  ) {
-			$this->set_fields( $fields );
+			$this->set_fields( $fields, $config, $form );
 			$this->set_value( $config, $form );
 		}
 
@@ -69,8 +69,10 @@ class Caldera_Forms_Processor_Get_Data {
 	 * @access protected
 	 *
 	 * @param array $fields Fields array
+	 * @param array $config Proccessor config
+	 * @param array $form Form config
 	 */
-	protected function set_fields( $fields ) {
+	protected function set_fields( $fields, $config, $form ) {
 		$message_pattern = __( '%s is required', 'caldera-forms' );
 		$default_args = array(
 			'message' => false,
@@ -79,6 +81,7 @@ class Caldera_Forms_Processor_Get_Data {
 			'magic' => true,
 			'required' => true,
 		);
+
 
 		foreach( $fields as $field  => $args ) {
 			if ( ( 0 == $field || is_int( $field ) ) ) {
@@ -103,6 +106,13 @@ class Caldera_Forms_Processor_Get_Data {
 			}
 
 			$fields[ $key ] = wp_parse_args( $args, $default_args );
+
+			$_field = Caldera_Forms::get_field_by_slug( str_replace( '%', '', $config[ $key ] ), $form );
+			if ( is_array( $_field ) ) {
+				$fields[ $key ][ 'config_field' ] = $_field[ 'ID' ];
+			}else{
+				$fields[ $key ][ 'config_field' ] = false;
+			}
 			if ( false === $fields[ $key][ 'message' ] ) {
 				$fields[ $key ][ 'message' ] = sprintf( $message_pattern, $args[ 'label' ] );
 			}
@@ -198,6 +208,18 @@ class Caldera_Forms_Processor_Get_Data {
 	public function get_values() {
 		return $this->values;
 
+	}
+
+	/**
+	 * Get prepared fields
+	 *
+	 * @since 1.2.4
+	 *
+	 * @return array|null
+	 */
+	public function get_fields() {
+		return $this->fields;
+		
 	}
 
 }
