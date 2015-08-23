@@ -68,7 +68,7 @@ class Caldera_Forms {
 
 		add_action("wp_ajax_get_entry", array( $this, 'get_entry') );
 		// find if profile is loaded
-		add_action('wp', array( $this, 'cf_init_system'));
+		add_action('init', array( $this, 'cf_init_system'));
 
 		// render shortcode
 		add_shortcode( 'caldera_form', array( $this, 'render_form') );
