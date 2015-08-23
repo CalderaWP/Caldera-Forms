@@ -133,7 +133,7 @@ class Caldera_Forms_Processor_Load {
 		$pattern = '%1 requires %2s version %3s or later. Current version is %4s.';
 		if ( false != $processor[ 'cf_ver' ] ) {
 			if ( ! version_compare( CFCORE_VER, $processor[ 'cf_ver' ], '>=' ) ) {
-				$this->add_notice(  = __( sprintf( $pattern, $processor[ 'name'], 'Caldera Forms', $processor[ 'cf_ver' ], CFCORE_VER  ) ) );
+				$this->add_notice(  __( sprintf( $pattern, $processor[ 'name'], 'Caldera Forms', $processor[ 'cf_ver' ], CFCORE_VER  ) ) );
 				$fail = true;
 			}
 
