@@ -219,7 +219,7 @@ class Caldera_Forms_Processor_Get_Data {
 	 */
 	public function get_fields() {
 		return $this->fields;
-		
+
 	}
 
 }
