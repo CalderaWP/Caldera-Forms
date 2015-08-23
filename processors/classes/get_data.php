@@ -136,15 +136,20 @@ class Caldera_Forms_Processor_Get_Data {
 	protected function set_value( $config, $form ) {
 		foreach ( $this->fields as $field => $args  ) {
 
-			if ( $args[ 'magic' ] ) {
-				$value = Caldera_Forms::do_magic_tags( $config[ $field ] );
-			}else{
-				$value = $config[ $field ];
-			}
+			if ( isset( $config[ $field ]) ) {
+				if ( $args[ 'magic' ] ) {
+					$value = Caldera_Forms::do_magic_tags( $config[ $field ] );
+				} else {
+					$value = $config[ $field ];
+				}
 
-			$field_id_passed = strpos( $value, 'fld_' );
-			if ( false !== $field_id_passed ) {
-				$value = Caldera_Forms::get_field_data( $value, $form );
+				$field_id_passed = strpos( $value, 'fld_' );
+				if ( false !== $field_id_passed ) {
+					$value = Caldera_Forms::get_field_data( $value, $form );
+				}
+				
+			}else{
+				$value = null;
 			}
 
 			if ( ! empty( $value ) ) {
