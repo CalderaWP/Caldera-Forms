@@ -133,7 +133,7 @@ class Caldera_Forms_Processor_Load {
 		$pattern = '%1 requires %2s version %3s or later. Current version is %4s.';
 		if ( false != $processor[ 'cf_ver' ] ) {
 			if ( ! version_compare( CFCORE_VER, $processor[ 'cf_ver' ], '>=' ) ) {
-				$this->notices[] = __( sprintf( $pattern, $processor[ 'name'], 'Caldera Forms', $processor[ 'cf_ver' ], CFCORE_VER  ) );
+				$this->add_notice(  = __( sprintf( $pattern, $processor[ 'name'], 'Caldera Forms', $processor[ 'cf_ver' ], CFCORE_VER  ) ) );
 				$fail = true;
 			}
 
@@ -141,7 +141,7 @@ class Caldera_Forms_Processor_Load {
 
 		if ( false != $processor[ 'php_ver' ] ) {
 			if ( ! version_compare( PHP_VERSION, $processor[ 'php_ver' ], '>=' ) ) {
-				$this->notices[] = __( sprintf( $pattern, $processor[ 'name'], 'PHP', $processor[ 'php_ver' ], CFCORE_VER  ) );
+				$this->add_notice(  __( sprintf( $pattern, $processor[ 'name'], 'PHP', $processor[ 'php_ver' ], CFCORE_VER  ) ) );
 				$fail = true;
 			}
 
@@ -150,7 +150,7 @@ class Caldera_Forms_Processor_Load {
 		if ( false != $processor[ 'wp_ver' ] ) {
 			global $wp_version;
 			if ( ! version_compare( $wp_version, $processor[ 'wp_ver' ], '>=' ) ) {
-				$this->notices[] = __( sprintf( $pattern, $processor[ 'name' ], 'WordPress ', $processor[ 'wp_ver' ], CFCORE_VER  ) );
+				$this->add_notice( __( sprintf( $pattern, $processor[ 'name' ], 'WordPress ', $processor[ 'wp_ver' ], CFCORE_VER  ) ) );
 				$fail = true;
 
 			}
@@ -189,6 +189,21 @@ class Caldera_Forms_Processor_Load {
 
 		return self::$init;
 
+	}
+
+	/**
+	 * Add an error notice in admin.
+	 *
+	 * @since 1.3
+	 *
+	 * @param string $notice The message.
+ 	 */
+	protected function add_notice( $notice ) {
+		if ( class_exists( 'Caldera_Forms_Admin' ) ) {
+			Caldera_Forms_Admin::add_admin_notice( $notice );
+		}
+
+		$this->notices[] = $notice;
 	}
 
 }
