@@ -101,13 +101,14 @@ class Caldera_Forms_Processor_Get_Data {
 				$key = $field;
 			}
 
-			if ( ! is_array( $args ) ) {
-
-			}
-
 			$fields[ $key ] = wp_parse_args( $args, $default_args );
 
-			$_field = Caldera_Forms::get_field_by_slug( str_replace( '%', '', $config[ $key ] ), $form );
+			if ( isset( $config[ $key ] ) ) {
+				$_field = Caldera_Forms::get_field_by_slug( str_replace( '%', '', $config[ $key ] ), $form );
+			} else {
+				$_field = null;
+			}
+
 			if ( is_array( $_field ) ) {
 				$fields[ $key ][ 'config_field' ] = $_field[ 'ID' ];
 			}else{
@@ -147,7 +148,7 @@ class Caldera_Forms_Processor_Get_Data {
 				if ( false !== $field_id_passed ) {
 					$value = Caldera_Forms::get_field_data( $value, $form );
 				}
-				
+
 			}else{
 				$value = null;
 			}
