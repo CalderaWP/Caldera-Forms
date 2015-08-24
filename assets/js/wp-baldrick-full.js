@@ -4666,7 +4666,9 @@ var handlebarsVariables = {};
         $('#' + obj.params.trigger.data('modalAutoclose') + '_baldrickModalCloser').trigger('click');
       }
       // inject tabs      
-      var navtabs = obj.params.target.find('[data-tab]');
+      var navtabs = obj.params.target.find('[data-tab]'),
+          avatar = obj.params.target.find('.user-avatar');
+          
       if( navtabs.length ){
         var tabs = $('<ul>', { "class" : "navtabs" } ),
             hasSelection = false;
@@ -4711,6 +4713,12 @@ var handlebarsVariables = {};
         
 
         obj.params.target.before( tabs ).addClass('has-tabs');
+        
+        if( avatar.length ){
+          tabs.before( avatar );
+          tabs.css('top', obj.params.target.parent().find('.baldrick-modal-title').outerHeight() + 149 );
+          tabs.css('padding-top', 0 );
+        }
 
       }            
     },
