@@ -34,6 +34,8 @@ John Teague of Theme Surgeons includes Caldera Forms in his list of [WordPress p
 * [Run Action](https://calderawp.com/downloads/caldera-forms-run-action/) - Trigger a WordPress action with your form submission.
 * [Sprout Invoices Integration](https://wordpress.org/plugins/caldera-forms-sprout-invoices-integration/) - Use Caldera Forms for [Sprout Invoice](https://sproutapps.co/sprout-invoices/) forms.
 * [Conditional Fail](https://wordpress.org/plugins/conditional-fail-for-caldera-forms/) - Set conditions to cause that if met will allow or prevent form submssion.
+* [Postmatic](https://calderawp.com/downloads/postmatic-for-caldera-forms/) - Subscribe users to your posts and comments using Postmatic.
+* [Mail Templates](https://calderawp.com/downloads/mail-templates-for-caldera-forms/) - Add your logo, and your brand's color scheme to your emails sent from Caldera Forms.
 
 = Premium Add-Ons =
 * [MailChimp](https://calderawp.com/downloads/caldera-forms-mailchimp-add-on/) - Seamlessly integrate MailChimp optins into your forms
@@ -42,6 +44,10 @@ John Teague of Theme Surgeons includes Caldera Forms in his list of [WordPress p
 * [Users](https://calderawp.com/downloads/caldera-forms-users-add/) - Register or login users from your form.
 * [Geolocation](https://calderawp.com/downloads/geolocation-field-for-caldera-forms/) - Make a text field a geolocation auto-complete field and recorded geocoded data.
 * [Mark Viewed](https://calderawp.com/downloads/caldera-forms-mark-viewed/) - Let users track what content they have viewed.
+* [Dwolla](https://calderawp.com/downloads/dwolla-for-caldera-forms/) - Accept payments with low fees using Dwolla.
+* [Authorize.net](https://calderawp.com/downloads/authorize-net-for-caldera-forms/) Accept all major credit cards by integrating with Authorize.net.
+* [BrainTree](https://calderawp.com/downloads/braintree-for-caldera-forms/) Accept credit card payments using BrainTree.
+* [Nexmo](https://calderawp.com/downloads/nexmo-caldera-forms/) Get SMS notifications of form submissions.
 
 = A Few Feature Highlights =
 * Drag and drop responsive form builder.
@@ -109,6 +115,9 @@ none yet.
 * Improved: Colors in form editor.
 * Improved: Inline docs in Caldera_Forms class.
 * Added: 2 new form templates.
+* Fixed: Issue with field scripts being double loaded.
+* Fixed: Issue affecting color pickers as conditional fields.
+* Update Translations: German (de_DE), Spanish (es_ES), French (fr_FR), Japanese (ja), Portuguese (pt_PT), Turkish (tr_TR).
 
 = 1.2.3 ( August 7, 2015) =
 
