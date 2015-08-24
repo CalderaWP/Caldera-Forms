@@ -16,10 +16,7 @@ if(empty($element['success'])){
 if(!isset($element['db_support'])){
 	$element['db_support'] = 1;
 }
-// I should really makea defaults array.. sigh. It grew so fast.
-if(!isset($element['check_honey'])){
-	$element['check_honey'] = 1;
-}
+
 
 /**
  * Convert existing field conditions if old method used

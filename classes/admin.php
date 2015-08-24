@@ -1403,7 +1403,8 @@ class Caldera_Forms_Admin {
 			"description" 	=> $newform['description'],
 			"success"		=>	__('Form has been successfully submitted. Thank you.', 'caldera-forms'),
 			"form_ajax"		=> 1,
-			"hide_form"		=> 1
+			"hide_form"		=> 1,
+			"check_honey" 	=> 1,
 		);
 		// is template?
 		if( !empty( $form_template ) && is_array( $form_template ) ){
@@ -1421,6 +1422,8 @@ class Caldera_Forms_Admin {
 				$newform = array_merge($clone_form, $newform);
 			}
 		}
+
+
 		
 		// add form to db
 		update_option($newform['ID'], $newform);
