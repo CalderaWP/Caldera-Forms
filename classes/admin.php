@@ -130,11 +130,11 @@ class Caldera_Forms_Admin {
 	}
 
 	/**
-	 * Returns the array of internal form templates
+	 * Returns the array of form templates.
 	 *
 	 * @since 1.2.3
 	 *
-	 * @return    array | form templates
+	 * @return    array The form templates
 	 */
 	public static function internal_form_templates(){
 		
@@ -142,16 +142,27 @@ class Caldera_Forms_Admin {
 			'starter_contact_form'	=>	array(
 				'name'	=>	__( 'Starter Contact Form', 'caldera-forms' ),
 				'template'	=>	include CFCORE_PATH . 'includes/templates/starter-contact-form.php'
-			)
+			),
+			'variable_price_example'	=>	array(
+				'name'	=>	__( 'Variable Pricing Form, with add-on products.', 'caldera-forms' ),
+				'template'	=>	include CFCORE_PATH . 'includes/templates/variable-price-example.php'
+			),
+			'registration' => 	array(
+				'name'	=>	__( 'Registration Form, with optional additional participants.', 'caldera-forms' ),
+				'template'	=>	include CFCORE_PATH . 'includes/templates/registration-form-example.php'
+			),
+
 		);
+
 		/**
 		 * Filter form templates
 		 *
 		 * @since 1.2.3
 		 *
-		 * @param array internal form templates array
+		 * @param array $internal_templates Form templates
 		 */
 		return apply_filters( 'caldera_forms_get_form_templates', $internal_templates );
+
 	}
 	
 	public function load_new_form_templates(){
