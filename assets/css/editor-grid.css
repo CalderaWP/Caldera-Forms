@@ -57,6 +57,25 @@
 	content: "\e601";
 }
 
+.add-new-item {
+  cursor: pointer;
+  text-align: center;
+  border: 3px dashed #cfcfcf;
+  height: 50px;
+  margin: 20px 4px;
+}
+.add-new-item:hover {
+  background-color: #e7e7e7;
+  border: 3px dashed #a3a3a3;
+}
+.add-new-item .dashicons.dashicons-plus {
+  color: #cfcfcf;
+  font-size: 28px;
+  line-height: 54px;
+}
+.add-new-item:hover .dashicons.dashicons-plus {
+  color: #a3a3a3;
+}
 
 
 .column-tools i {
@@ -80,8 +99,19 @@
 	text-align: center;
 }
 .column-sort.column-tools {
-  width: 45px;
+  width: 25px;
   right: 0;
+}
+.column-config.column-tools {
+  left: -20px;
+  position: absolute;
+  top: 29%;
+}
+.column-config.column-tools i {
+  border: 2px solid #CFCFCF;
+  height: 23px;
+  padding: 3px;
+  width: 23px;
 }
 .column-sort .icon-edit {
   margin-right: 15px;
@@ -389,9 +419,6 @@ textarea.magic-tag-enabled {
 	z-index: 101;
 }
 
-.layout-grid-panel{
-	min-height: 100px;
-}
 
 .template-element.ui-draggable-dragging{
 	z-index: 1000;

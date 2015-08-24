@@ -26,22 +26,36 @@ class Caldera_Forms_Admin {
 	 * @var      string
 	 */
 	protected $plugin_slug = 'caldera-forms';
+
 	/**
 	 * @var      string
 	 */
 	protected $screen_prefix = array();
+
 	/**
 	 * @var      string
 	 */
 	protected $sub_prefix = null;
+
 	/**
 	 * @var      string
 	 */
 	protected $addons = array();
+
 	/**
 	 * @var      object
 	 */
 	protected static $instance = null;
+
+	/**
+	 * Holds admin notices
+	 *
+	 * @since 1.3.0
+	 *
+	 * @var array
+	 */
+	private static $admin_notices;
+
 	/**
 	 * Initialize the plugin by setting localization, filters, and administration functions.
 	 *
@@ -116,11 +130,11 @@ class Caldera_Forms_Admin {
 	}
 
 	/**
-	 * Returns the array of internal form templates
+	 * Returns the array of form templates.
 	 *
 	 * @since 1.2.3
 	 *
-	 * @return    array | form templates
+	 * @return    array The form templates
 	 */
 	public static function internal_form_templates(){
 		
@@ -128,16 +142,27 @@ class Caldera_Forms_Admin {
 			'starter_contact_form'	=>	array(
 				'name'	=>	__( 'Starter Contact Form', 'caldera-forms' ),
 				'template'	=>	include CFCORE_PATH . 'includes/templates/starter-contact-form.php'
-			)
+			),
+			'variable_price_example'	=>	array(
+				'name'	=>	__( 'Variable Pricing Form, with add-on products.', 'caldera-forms' ),
+				'template'	=>	include CFCORE_PATH . 'includes/templates/variable-price-example.php'
+			),
+			'registration' => 	array(
+				'name'	=>	__( 'Registration Form, with optional additional participants.', 'caldera-forms' ),
+				'template'	=>	include CFCORE_PATH . 'includes/templates/registration-form-example.php'
+			),
+
 		);
+
 		/**
 		 * Filter form templates
 		 *
 		 * @since 1.2.3
 		 *
-		 * @param array internal form templates array
+		 * @param array $internal_templates Form templates
 		 */
 		return apply_filters( 'caldera_forms_get_form_templates', $internal_templates );
+
 	}
 	
 	public function load_new_form_templates(){
@@ -316,7 +341,7 @@ class Caldera_Forms_Admin {
 	}
 	public static function get_admin_meta_templates(){
 		
-		$processors = apply_filters( 'caldera_forms_get_form_processors', array() );
+		$processors = $processors = Caldera_Forms_Processor_Load::get_instance()->get_processors();
 		if(!empty($processors)){
 			foreach($processors as $processor_type=>$processor_config){
 				if( isset( $processor_config['meta_template'] ) && file_exists( $processor_config['meta_template'] ) ){
@@ -863,7 +888,7 @@ class Caldera_Forms_Admin {
 			$panel_extensions = apply_filters( 'caldera_forms_get_panel_extensions', array() );
 
 			// load processors
-			$form_processors = apply_filters( 'caldera_forms_get_form_processors', array() );
+			$form_processors = $processors = Caldera_Forms_Processor_Load::get_instance()->get_processors();
 
 			// merge a list
 			$merged_types = array_merge($field_types, $panel_extensions, $form_processors);
@@ -1313,6 +1338,9 @@ class Caldera_Forms_Admin {
 				if(isset($forms[$data['ID']]['settings'])){
 					unset($forms[$data['ID']]['settings']);
 				}
+				if(isset($forms[$data['ID']]['conditional_groups'])){
+					unset($forms[$data['ID']]['conditional_groups']);
+				}
 
 				foreach($forms as $form_id=>$form_config){
 					if(empty($form_config)){
@@ -1321,7 +1349,14 @@ class Caldera_Forms_Admin {
 				}
 				// combine structure pages
 				$data['layout_grid']['structure'] = implode('#', $data['layout_grid']['structure']);
-				
+				// remove fields from conditions
+				if( !empty( $data['conditional_groups']['fields'] ) ){
+					unset( $data['conditional_groups']['fields'] );
+				}
+				// remove magics ( yes, not used yet.)
+				if( !empty( $data['conditional_groups']['magic'] ) ){
+					unset( $data['conditional_groups']['magic'] );
+				}
 				// add from to list
 				update_option($data['ID'], $data);
 				do_action('caldera_forms_save_form', $data);
@@ -1368,7 +1403,8 @@ class Caldera_Forms_Admin {
 			"description" 	=> $newform['description'],
 			"success"		=>	__('Form has been successfully submitted. Thank you.', 'caldera-forms'),
 			"form_ajax"		=> 1,
-			"hide_form"		=> 1
+			"hide_form"		=> 1,
+			"check_honey" 	=> 1,
 		);
 		// is template?
 		if( !empty( $form_template ) && is_array( $form_template ) ){
@@ -1386,6 +1422,8 @@ class Caldera_Forms_Admin {
 				$newform = array_merge($clone_form, $newform);
 			}
 		}
+
+
 		
 		// add form to db
 		update_option($newform['ID'], $newform);
@@ -1427,7 +1465,7 @@ class Caldera_Forms_Admin {
 						"label" => __("Layout Builder", 'caldera-forms'),
 						"active" => true,
 						"actions" => array(
-							$path . "layout_add_row.php"
+							$path . "layout_toolbar.php"
 						),
 						"repeat" => 0,
 						"canvas" => $path . "layout.php",
@@ -1439,6 +1477,12 @@ class Caldera_Forms_Admin {
 						"label" => __("Form Pages", 'caldera-forms'),
 						"canvas" => $path . "pages.php",
 					),
+					"conditions" => array(
+						"name" => __("Conditions", 'caldera-forms'),
+						"location" => "lower",
+						"label" => __("Conditions", 'caldera-forms'),
+						"canvas" => $path . "conditions.php",
+					),					
 					"processors" => array(
 						"name" => __("Processors", 'caldera-forms'),
 						"location" => "lower",
@@ -1567,6 +1611,51 @@ class Caldera_Forms_Admin {
 		
 		return array_merge( $panels, $internal_panels );
 		
+	}
+
+	/**
+	 * Add to the admin notices
+	 *
+	 * @since 1.3.0
+	 *
+	 * @param string|array $notice The notice or array of notices to add.
+	 */
+	public static function add_admin_notice( $notice ) {
+		if ( is_string( $notice ) ) {
+			self::$admin_notices[] = $notice;
+		}
+
+		if ( is_array( $notice ) ) {
+			foreach( $notice as $n) {
+				self::add_admin_notice( $n );
+			}
+
+		}
+
+	}
+
+	/**
+	 * Get the admin messages
+	 *
+	 * @since 1.3
+	 *
+	 * @param bool $as_string Optional. To return as string, the default, or as an array
+	 * @param string $seperator Optional. What to break notices with, when returning as string. Default is "\n"
+	 *
+	 * @return string|array|void
+	 */
+	public static  function get_admin_notices( $as_string = true, $seperator = "\n" ) {
+		if ( ! empty( self::$admin_notices ) ) {
+			if ( $as_string ) {
+				return implode( $seperator, self::$admin_notices  );
+
+			}else{
+				return self::$admin_notices;
+
+			}
+
+		}
+
 	}
 
 }

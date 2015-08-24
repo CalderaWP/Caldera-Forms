@@ -2,7 +2,7 @@
 global $form_processors;
 //dump($element,0);
 // Get Processors
-$form_processors = apply_filters( 'caldera_forms_get_form_processors', array() );
+$form_processors = $processors = Caldera_Forms_Processor_Load::get_instance()->get_processors();
 
 $form_processors_defaults = array(
 	"var processor_defaults = {};"
@@ -114,7 +114,7 @@ function processor_wrapper_template($id = '{{id}}', $type = '{{type}}', $config_
 			<input type="hidden" class="processor_config_string block-input" value="<?php echo htmlentities( $config_str ); ?>">
 			<br>
 			<br>
-			<button class="button block-button delete-processor" data-confirm="<?php echo __('Are you sure you want to remove this processor?', 'caldera-forms'); ?>" type="button"><i class="icn-delete"></i> <?php echo __('Remove Processor', 'caldera-forms'); ?></button>
+			<button class="button block-button delete-processor" data-confirm="<?php echo __('Are you sure you want to remove this processor?', 'caldera-forms'); ?>" type="button"><?php echo __('Remove Processor', 'caldera-forms'); ?></button>
 		</div>
 		<div id="<?php echo $id; ?>_conditions_pane" style="display:none;" class="wrapper-instance-pane">
 		<p>

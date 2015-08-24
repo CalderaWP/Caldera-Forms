@@ -3830,32 +3830,23 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
   }
   
   $.fn.formJSON = function(){
-    
     var form = $(this);
-    if( !form.is('form') ){
-      form = $('<form>').append( form.clone() );
-    }
 
-    var fields       = form.serializeArray(),
+    var fields       = form.find('[name]'),
         json         = {},
         arraynames   = {};
     for( var v = 0; v < fields.length; v++){
-      var field     = fields[v],
-        field_el = form.find('[name="' + field.name + '"]'),
-        name    = field.name.replace(/\]/gi,'').split('['),
-        value     = field.value,
+      var field     = $( fields[v] ),
+        name    = field.prop('name').replace(/\]/gi,'').split('['),
+        value     = field.val(),
         lineconf  = {};
 
-      /*if( field_el.prop('required') && field_el.is(':visible') ){
-        if( field_el[0].checkValidity ){
-          if( field_el[0].checkValidity() ){
-            field_el.removeClass('invalid');            
-          }else{
-            field_el.focus().addClass('invalid');  
-            return false;         
+        if( field.is(':radio') || field.is(':checkbox') ){
+          if( !field.is(':checked') ){
+            continue;
           }
-        }        
-      }*/
+        }
+
       for(var i = name.length-1; i >= 0; i--){
         var nestname = name[i];
         if(nestname.length === 0){
@@ -3868,18 +3859,20 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
           nestname = arraynames[name[i-1]];
         }
         if(i === name.length-1){
-          if( value === 'true' ){
-            value = true;
-          }else if( value === 'false' ){
-            value = false;
-          }else if( !isNaN( parseFloat( value ) ) && parseFloat( value ).toString() === value ){
-            value = parseFloat( value );
-          }else if( value.substr(0,1) === '{' || value.substr(0,1) === '[' ){
-            try {
-              value = JSON.parse( value );
+          if( value ){
+            if( value === 'true' ){
+              value = true;
+            }else if( value === 'false' ){
+              value = false;
+            }else if( !isNaN( parseFloat( value ) ) && parseFloat( value ).toString() === value ){
+              value = parseFloat( value );
+            }else if( value.substr(0,1) === '{' || value.substr(0,1) === '[' ){
+              try {
+                value = JSON.parse( value );
 
-            } catch (e) {
-              //console.log( e );
+              } catch (e) {
+                //console.log( e );
+              }
             }
           }
           lineconf[nestname] = value;
@@ -4638,6 +4631,15 @@ var handlebarsVariables = {};
         title = modal.find('.baldrick-modal-title'),
         current_size = '';
 
+        if( modalHeight === 'auto' ){
+          body.css( 'position', 'initial' );
+          modalHeight = body.outerHeight() + footer.outerHeight() + title.outerHeight();
+          body.css( 'position', '' );
+        }
+        if( modalWidth === 'auto' ){
+          modalWidth = 450;
+        }
+
         if( windowWidth <= 700 && windowWidth > 600 ){
           modalHeight = windowHeight - 30;
           modalWidth = windowWidth - 30;
@@ -4666,11 +4668,11 @@ var handlebarsVariables = {};
       // inject tabs      
       var navtabs = obj.params.target.find('[data-tab]'),
           avatar = obj.params.target.find('.user-avatar');
-
+          
       if( navtabs.length ){
         var tabs = $('<ul>', { "class" : "navtabs" } ),
             hasSelection = false;
-
+       
         navtabs.each( function(k,v){
           var tab = $(this),
               element = $('<li>'),
@@ -4703,18 +4705,22 @@ var handlebarsVariables = {};
         }
 
         tabs.css('top', obj.params.target.parent().find('.baldrick-modal-title').outerHeight() );
-        tabs.css('bottom', obj.params.target.parent().find('.baldrick-modal-footer').outerHeight() );
+        if( obj.params.trigger.data('modalButtons' ) ){
+          tabs.css('bottom', obj.params.target.parent().find('.baldrick-modal-footer').outerHeight() );
+        }else{
+          tabs.css('bottom', 0 );
+        }
+        
 
         obj.params.target.before( tabs ).addClass('has-tabs');
-
+        
         if( avatar.length ){
           tabs.before( avatar );
           tabs.css('top', obj.params.target.parent().find('.baldrick-modal-title').outerHeight() + 149 );
           tabs.css('padding-top', 0 );
         }
 
-      }
-
+      }            
     },
     event : function(el, obj){
       var trigger = $(el), modal_id = 'wm';     
@@ -4726,8 +4732,7 @@ var handlebarsVariables = {};
           $('.baldrick-modal-wrap').css('zIndex' , '100099');
           //wm_hasModal = true;
           // write out a template wrapper.
-          var modal_element = trigger.data('modalElement') ? trigger.data('modalElement') : 'form',
-              modal = $('<' + modal_element + '>', {
+          var modal = $('<' + ( trigger.data('modalElement') ?  trigger.data('modalElement') : 'form' ) + '>', {
               id          : modal_id + '_baldrickModal',
               tabIndex      : -1,
               "ariaLabelled-by" : modal_id + '_baldrickModalLable',

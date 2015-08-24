@@ -1,12 +1,19 @@
+var cf_jsfields_init;
 (function($){
-	jQuery('document').ready(function(){
-		// check for init function
+
+	// make init function
+	cf_jsfields_init = function(){
 		jQuery('.init_field_type[data-type]').each(function(k,v){
 			var ftype = jQuery(v);
 			if( typeof window[ftype.data('type') + '_init'] === 'function' ){
 				window[ftype.data('type') + '_init'](ftype.prop('id'), ftype[0]);
 			}
 		});
+	};	
+
+	jQuery('document').ready(function(){
+		// check for init function
+		cf_jsfields_init();
 	});
 	// modals activation
 	jQuery(document).on('click', '.cf_modal_button', function(e){
@@ -19,6 +26,9 @@
 		var clicked = jQuery(this);
 			clicked.closest('.caldera-front-modal-container').hide();
 	});
+	// stuff trigger
+	jQuery(document).on('cf.add cf.enable cf.disable cf.pagenav', cf_jsfields_init );
+	
 	// Page navigation
 	jQuery(document).on('click', '[data-page]', function(e){
 

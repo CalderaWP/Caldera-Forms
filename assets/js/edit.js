@@ -853,7 +853,7 @@ jQuery(document).ready(function($){
 
 		var select = $(this);
 
-		if(this.value !== ''){
+		if( this.value === 'show' || this.value === 'hide' || this.value === 'disable' || this.value === 'use' || this.value === 'not' ){
 			$('#' + select.data('id') + '_condition_group_add').show();
 			$('#' + select.data('id') + '_conditional_wrap').show();
 		}else{
@@ -1838,7 +1838,10 @@ jQuery(document).ready(function($) {
 			$('.caldera-add-page').trigger('click');
 			return;
 		}
-		$('.page-active').append('<div class="first-row-level row"><div class="col-xs-12"><div class="layout-column column-container"></div></div></div>');
+		var new_row = $( '<div style="display:none;" class="first-row-level row"><div class="col-xs-12"><div class="layout-column column-container"></div></div></div>' );
+
+		$('.page-active').append( new_row );
+		new_row.slideDown( 200 );
 		buildSortables();
 		buildLayoutString();
 	});
@@ -1982,7 +1985,8 @@ jQuery(document).ready(function($) {
 			}
 
 		$(document).trigger('show.' + panel.data('config'));
-
+		$(document).trigger('show.fieldedit');
+		
 		if( type === 'radio' || type === 'checkbox' || type === 'dropdown' || type === 'toggle_switch' ){
 			$('#' + panel.data('config') + '_auto').trigger('change');
 		}
@@ -2374,6 +2378,21 @@ jQuery(document).ready(function($){
 
 		rebuild_field_binding();
 		baldrickTriggers();
+
+		// initialise baldrick triggers
+		$('.wp-baldrick').baldrick({
+			request     : ajaxurl,
+			method      : 'POST',
+			before		: function(el){
+				
+				var tr = $(el);
+
+				if( tr.data('addNode') && !tr.data('request') ){
+					tr.data('request', 'cf_get_default_setting');
+				}
+			}
+		});
+
 	}
 
 	// build configs on load:

@@ -277,8 +277,8 @@ select.caldera-type-selector {
   z-index: 100;
 }
 .caldera-editor-header.caldera-editor-subnav {
-  background-color: #F8F8F8;
-  top: 85px;
+  background-color: #f0f0f0;
+  top: 84px;
 }
 .caldera-editor-header .button.caldera-header-save-button,
 .caldera-editor-header .button.caldera-header-preview-button {
@@ -317,9 +317,11 @@ li.caldera-editor-logo {
   display: inline-block;
   padding: 12px 12px;
   text-decoration: none;
+  color: #839e3f;
 }
 .caldera-editor-header-nav > li.active a {
-  background: none repeat scroll 0 0 #efefef;
+  background: none repeat scroll 0 0 #a3be5f;
+  color: #fff;
 }
 .caldera-editor-header-nav > li.caldera-forms-toolbar-item {
   padding: 6px 6px 6px 12px;
@@ -697,6 +699,7 @@ a span.error-tag {
   float: left;
   margin-left: -430px;
   width: 430px;
+  position: relative;
 }
 .form-entries-wrap {
   padding: 0 30px;
@@ -825,8 +828,8 @@ a span.error-tag {
   top: 0;
   width: 150px;
 }
-.modal-side-bar .user-avatar,
-.modal-side-bar .user-avatar img {
+.user-avatar,
+.user-avatar img {
   float: left;
 }
 .modal-side-bar .modal-side-tabs {
@@ -1628,4 +1631,40 @@ tr.form_entry_row.loading {
 .caldera-table-nav .tablenav-pages .current-page{
   width: 45px;
 }
-
+.cf-notification-external {
+  left: 0;
+  padding: 0 1px 0 0;
+  position: absolute;
+  right: 0;
+  top: -45px;
+}
+.cf-notification {
+  background: #fff none repeat scroll 0 0;
+  border: 1px solid #dfdfdf;
+  border-radius: 1px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  left: 0;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: -45px;
+}
+.cf-notification-notice {
+  height: 20px;
+  overflow: hidden;
+  padding: 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cf-notification div.error {
+  margin: 1px 0 0 !important;
+}
+.cf-notification .dashicons.dashicons-warning{
+  color: #dd3d36;
+}
+.cf-notification .dashicons.dashicons-arrow-up,
+.cf-notification .dashicons.dashicons-arrow-down {
+  cursor: pointer;
+  float: right;
+  padding: 8px;
+}

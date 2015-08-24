@@ -20,12 +20,26 @@
 <div class="caldera-config-group">
     <label><?php _e('Start View', 'caldera-forms'); ?></label>
     <div class="caldera-config-field">
-        <select class="block-input field-config" name="{{_name}}[start-view]">
-            <option value="month" {{#is start-view value="month"}}selected="selected"{{/is}}><?php _e('Month (Default)', 'caldera-forms'); ?></option>
-            <option value="year" {{#is start-view value="year"}}selected="selected"{{/is}}><?php _e('Year', 'caldera-forms'); ?></option>
-            <option value="decade" {{#is start-view value="decade"}}selected="selected"{{/is}}><?php _e('Decade', 'caldera-forms'); ?></option>
+        <select class="block-input field-config" name="{{_name}}[start_view]">
+            <option value="month" {{#is start_view value="month"}}selected="selected"{{/is}}><?php _e('Month (Default)', 'caldera-forms'); ?></option>
+            <option value="year" {{#is start_view value="year"}}selected="selected"{{/is}}><?php _e('Year', 'caldera-forms'); ?></option>
+            <option value="decade" {{#is start_view value="decade"}}selected="selected"{{/is}}><?php _e('Decade', 'caldera-forms'); ?></option>
         </select>
         <p class="description"><?php _e('The starting view of the date picker (month, year, decade)', 'caldera-forms'); ?></p>
+    </div>
+</div>
+<div class="caldera-config-group">
+    <label><?php _e('Start Date', 'caldera-forms'); ?></label>
+    <div class="caldera-config-field">
+        <input type="text" class="cfdatepicker-set-format block-input field-config" name="{{_name}}[start_date]" value="{{start_date}}">
+        <p class="description"><?php _e('The starting date of the date picker like +1d, -2y, +4m. 0d for today ', 'caldera-forms'); ?></p>
+    </div>
+</div>
+<div class="caldera-config-group">
+    <label><?php _e('End Date', 'caldera-forms'); ?></label>
+    <div class="caldera-config-field">
+        <input type="text" class="cfdatepicker-set-format block-input field-config" name="{{_name}}[end_date]" value="{{end_date}}">
+        <p class="description"><?php _e('The ending date of the date picker like +1d, -2y, +4m. 0d for today ', 'caldera-forms'); ?></p>
     </div>
 </div>
 <div class="caldera-config-group">
