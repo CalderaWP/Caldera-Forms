@@ -699,6 +699,7 @@ a span.error-tag {
   float: left;
   margin-left: -430px;
   width: 430px;
+  position: relative;
 }
 .form-entries-wrap {
   padding: 0 30px;
@@ -827,8 +828,8 @@ a span.error-tag {
   top: 0;
   width: 150px;
 }
-.modal-side-bar .user-avatar,
-.modal-side-bar .user-avatar img {
+.user-avatar,
+.user-avatar img {
   float: left;
 }
 .modal-side-bar .modal-side-tabs {
@@ -1630,4 +1631,35 @@ tr.form_entry_row.loading {
 .caldera-table-nav .tablenav-pages .current-page{
   width: 45px;
 }
-
+.cf-notification-external {
+  left: 0;
+  padding: 0 1px 0 0;
+  position: absolute;
+  right: 0;
+  top: -45px;
+}
+.cf-notification {
+  background: #fff none repeat scroll 0 0;
+  border: 1px solid #dfdfdf;
+  border-radius: 1px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  left: 0;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: -45px;
+}
+.cf-notification-notice {
+  padding: 8px;
+}
+.cf-notification div.error {
+  margin: 1px 0 0 !important;
+}
+.cf-notification .dashicons.dashicons-warning{
+  color: #ef0010;
+}
+.cf-notification .dashicons.dashicons-arrow-up,
+.cf-notification .dashicons.dashicons-arrow-down {
+  cursor: pointer;
+  float: right;
+}

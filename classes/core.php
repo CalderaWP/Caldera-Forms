@@ -983,7 +983,12 @@ class Caldera_Forms {
 
 		$total = create_function(null, 'return '.$formula.';');
 		if(isset($field['config']['fixed'])){
-			return money_format('%i', $total() );
+			if( function_exists( 'money_format' ) ){
+				return money_format('%i', $total() );	
+			}else{
+				return sprintf('%01.2f', $total() );
+			}
+			
 		}
 		return $total();
 	}
