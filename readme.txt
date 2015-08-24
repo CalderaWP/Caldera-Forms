@@ -100,8 +100,15 @@ none yet.
 
 == Changelog ==
 
-= 1.2.4 ( August X, 2015 ) =
-* Fixed issue where forms with a file field, without a file uploaded, would break mailer validation.
+= 1.3.0 ( August 23, 2015 ) =
+* Improved: Adding rows in form layout.
+* Added: Conditional groups.
+* Added: New helper classes for form processors.
+* Fixed: Issue where forms with a file field, without a file uploaded, would break mailer validation.
+* Added: Date range settings for date picker fields.
+* Improved: Colors in form editor.
+* Improved: Inline docs in Caldera_Forms class.
+* Added: 2 new form templates.
 
 = 1.2.3 ( August 7, 2015) =
 
@@ -519,4 +526,5 @@ none yet.
 Initial Release
 
 == Upgrade Notice ==
-Autoupdated in WordPress admin.
+= 1.3.0 =
+New conditional groups!
