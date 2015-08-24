@@ -67,12 +67,12 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 
 
 	?>
-	<div class="cf-notification">
+	<div class="cf-notification" style="display:none;">
+		<span class="dashicons dashicons-arrow-down cf-notice-toggle"></span>
+		<span class="dashicons dashicons-arrow-up cf-notice-toggle" style="display:none;"></span>
 		<div class="cf-notification-notice">
-			<span class="dashicons dashicons-arrow-down cf-notice-toggle"></span>
-			<span class="dashicons dashicons-arrow-up cf-notice-toggle" style="display:none;"></span>
 			<span class="dashicons dashicons-warning"></span>
-			Woah! There be some notices to check!
+			<span class="cf-notice-info-line"></span>
 		</div>
 		<div class="cf-notification-count"></div>
 		<div class="cf-notification-panel"></div>
@@ -238,11 +238,12 @@ function start_new_form(obj){
 	return {};
 }
 jQuery( function( $ ){
-	var notices = $('.error,.notice');
+	var notices = $('.error,.notice,.notice-error');
 
 	if( notices.length ){
+		$('.cf-notice-info-line').html( notices.first().text() );
 		$('.cf-notification-panel').hide();
-		$('.cf-notification').fadeIn();		
+		$('.cf-notification').fadeIn();
 		notices.appendTo( $('.cf-notification-panel') );
 		$( '.cf-notice-toggle').click( function(){
 			$( '.cf-notice-toggle').toggle();

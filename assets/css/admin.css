@@ -1650,16 +1650,21 @@ tr.form_entry_row.loading {
   top: -45px;
 }
 .cf-notification-notice {
+  height: 20px;
+  overflow: hidden;
   padding: 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .cf-notification div.error {
   margin: 1px 0 0 !important;
 }
 .cf-notification .dashicons.dashicons-warning{
-  color: #ef0010;
+  color: #dd3d36;
 }
 .cf-notification .dashicons.dashicons-arrow-up,
 .cf-notification .dashicons.dashicons-arrow-down {
   cursor: pointer;
   float: right;
+  padding: 8px;
 }
