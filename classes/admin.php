@@ -1353,6 +1353,10 @@ class Caldera_Forms_Admin {
 				if( !empty( $data['conditional_groups']['fields'] ) ){
 					unset( $data['conditional_groups']['fields'] );
 				}
+				// remove magics ( yes, not used yet.)
+				if( !empty( $data['conditional_groups']['magic'] ) ){
+					unset( $data['conditional_groups']['magic'] );
+				}
 				// add from to list
 				update_option($data['ID'], $data);
 				do_action('caldera_forms_save_form', $data);
