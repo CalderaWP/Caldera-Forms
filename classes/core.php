@@ -69,6 +69,7 @@ class Caldera_Forms {
 		add_action("wp_ajax_get_entry", array( $this, 'get_entry') );
 		// find if profile is loaded
 		add_action('init', array( $this, 'cf_init_system'));
+		add_action('wp', array( $this, 'cf_init_preview'));
 
 		// render shortcode
 		add_shortcode( 'caldera_form', array( $this, 'render_form') );
@@ -3366,40 +3367,14 @@ class Caldera_Forms {
 		return self::form_redirect('complete', $referrer, $form, $process_id );
 	}
 
+
+	
 	/**
-	 * Makes Caldera Forms go in front-end!
+	 * Makes Caldera Forms load the preview
 	 */
-	static public function cf_init_system(){
+	static public function cf_init_preview(){
 
-		global $post, $front_templates, $wp_query, $process_id, $form;
-
-		// check for API
-		if(!empty($wp_query->query_vars['cf_api'])){
-			// check if form exists
-			$form = self::get_form( $wp_query->query_vars['cf_api'] );
-			if(!empty($form['ID'])){
-				if($form['ID'] === $wp_query->query_vars['cf_api']){
-					// got it!
-					// need entry?
-					if(!empty($wp_query->query_vars['cf_entry'])){
-						$entry = Caldera_Forms::get_entry($wp_query->query_vars['cf_entry'], $form);
-						wp_send_json( $entry );
-					}
-					// is a post?
-					if( $_SERVER['REQUEST_METHOD'] === 'POST' ){
-						
-						$_POST['_wp_http_referer_true'] = 'api';
-						$_POST['_cf_frm_id'] 			=  $_POST['cfajax']	= $wp_query->query_vars['cf_api'];
-
-						$submission = Caldera_Forms::process_submission();
-
-					}
-
-					wp_send_json( $wp_query );
-					die;
-				}
-			}
-		}
+		global $post, $form;
 
 		if(!empty($_GET['cf_preview'])){
 			$form = self::get_form( $_GET['cf_preview'] );
@@ -3436,6 +3411,41 @@ class Caldera_Forms {
 				$post->post_title = $form['name'];
 				$post->post_content = '[caldera_form id="'.$_GET['cf_preview'].'"]';
 
+			}
+		}
+	}
+	/**
+	 * Makes Caldera Forms go in front-end!
+	 */
+	static public function cf_init_system(){
+
+		global $post, $front_templates, $wp_query, $process_id, $form;
+
+		// check for API
+		if(!empty($wp_query->query_vars['cf_api'])){
+			// check if form exists
+			$form = self::get_form( $wp_query->query_vars['cf_api'] );
+			if(!empty($form['ID'])){
+				if($form['ID'] === $wp_query->query_vars['cf_api']){
+					// got it!
+					// need entry?
+					if(!empty($wp_query->query_vars['cf_entry'])){
+						$entry = Caldera_Forms::get_entry($wp_query->query_vars['cf_entry'], $form);
+						wp_send_json( $entry );
+					}
+					// is a post?
+					if( $_SERVER['REQUEST_METHOD'] === 'POST' ){
+						
+						$_POST['_wp_http_referer_true'] = 'api';
+						$_POST['_cf_frm_id'] 			=  $_POST['cfajax']	= $wp_query->query_vars['cf_api'];
+
+						$submission = Caldera_Forms::process_submission();
+
+					}
+
+					wp_send_json( $wp_query );
+					die;
+				}
 			}
 		}
 
