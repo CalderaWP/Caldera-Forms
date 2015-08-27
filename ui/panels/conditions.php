@@ -64,6 +64,7 @@ data-autoload="true"
 								<option value=""></option>
 								<option value="show" {{#is type value="show"}}selected="selected"{{/is}}><?php _e('Show', 'caldera-forms'); ?></option>
 								<option value="hide" {{#is type value="hide"}}selected="selected"{{/is}}><?php _e('Hide', 'caldera-forms'); ?></option>
+								<option value="disabled" {{#is type value="disabled"}}selected="selected"{{/is}}><?php _e('Disabled', 'caldera-forms'); ?></option>
 							</select>
 							{{#if type}}
 								<button type="button" data-add-group="{{id}}" class="pull-right button button-small"><?php echo __('Add Conditional Line', 'caldera-forms'); ?></button>
