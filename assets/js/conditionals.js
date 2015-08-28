@@ -168,19 +168,17 @@
 			}else if (action === 'enable'){
 				if(!target.html().length){
 					target.html(template).trigger('cf.add');
-					jQuery(document).trigger('cf.add');
+					jQuery(document).trigger('cf.add').trigger('cf.enable');
 				}else{
 					target_field.prop('disabled', false);
 				}
-				jQuery(document).trigger('cf.enable');
 			}else if (action === 'disable'){
 				if(!target.html().length){
-					target.html(template).trigger('cf.add');
-					jQuery('[data-field="' + field + '"]').prop('disabled', 'disabled');
+					target.html(template).trigger('cf.remove');
+					jQuery(document).trigger('cf.remove').trigger('cf.disable');
 				}else{
 					target_field.prop('disabled', 'disabled');
 				}
-				jQuery(document).trigger('cf.disable');
 			}
 
 		}	
