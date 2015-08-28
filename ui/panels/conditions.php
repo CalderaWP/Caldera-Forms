@@ -64,6 +64,7 @@ data-autoload="true"
 								<option value=""></option>
 								<option value="show" {{#is type value="show"}}selected="selected"{{/is}}><?php _e('Show', 'caldera-forms'); ?></option>
 								<option value="hide" {{#is type value="hide"}}selected="selected"{{/is}}><?php _e('Hide', 'caldera-forms'); ?></option>
+								<option value="disable" {{#is type value="disable"}}selected="selected"{{/is}}><?php _e('Disable', 'caldera-forms'); ?></option>
 							</select>
 							{{#if type}}
 								<button type="button" data-add-group="{{id}}" class="pull-right button button-small"><?php echo __('Add Conditional Line', 'caldera-forms'); ?></button>
@@ -76,7 +77,6 @@ data-autoload="true"
 						{{/unless}}
 						<div class="caldera-condition-group caldera-condition-lines">
 						{{#each this}}
-
 							<div class="caldera-condition-line condition-line-{{@key}}">
 								<input type="hidden" name="conditions[{{../../id}}][group][{{parent}}][{{@key}}][parent]" value="{{parent}}">
 								<span style="display:inline-block;">{{#if @first}}
@@ -101,8 +101,8 @@ data-autoload="true"
 								<select style="max-width:110px;vertical-align: inherit;" name="conditions[{{../../id}}][group][{{parent}}][{{@key}}][compare]">
 									<option value="is" {{#is compare value="is"}}selected="selected"{{/is}}><?php _e( 'is', 'caldera-forms' ); ?></option>
 									<option value="isnot" {{#is compare value="isnot"}}selected="selected"{{/is}}><?php _e( 'is not', 'caldera-forms' ); ?></option>
-									<option value="&gt;" {{#is compare value="&gt;"}}selected="selected"{{/is}}><?php _e( 'is greater than', 'caldera-forms' ); ?></option>
-									<option value="&lt;" {{#is compare value="&lt;"}}selected="selected"{{/is}}><?php _e( 'is less than', 'caldera-forms' ); ?></option>
+									<option value="greater" {{#is compare value="greater"}}selected="selected"{{/is}}><?php _e( 'is greater than', 'caldera-forms' ); ?></option>
+									<option value="smaller" {{#is compare value="&lt;"}}selected="selected"{{/is}}><?php _e( 'is less than', 'caldera-forms' ); ?></option>
 									<option value="startswith" {{#is compare value="startswith"}}selected="selected"{{/is}}><?php _e( 'starts with', 'caldera-forms' ); ?></option>
 									<option value="endswith" {{#is compare value="endswith"}}selected="selected"{{/is}}><?php _e( 'ends with', 'caldera-forms' ); ?></option>
 									<option value="contains" {{#is compare value="contains"}}selected="selected"{{/is}}><?php _e( 'contains', 'caldera-forms' ); ?></option>

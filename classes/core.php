@@ -1688,6 +1688,7 @@ class Caldera_Forms {
 						}
 						break;
 					case '>':
+					case 'greater':
 						if(is_array($value)){
 							if(array_sum($value) > $line['value']){
 								$truelines[$lineid] = true;
@@ -1699,6 +1700,7 @@ class Caldera_Forms {
 						}
 						break;
 					case '<':
+					case 'smaller':
 						if(is_array($value)){
 							if(array_sum($value) < $line['value']){
 								$truelines[$lineid] = true;
