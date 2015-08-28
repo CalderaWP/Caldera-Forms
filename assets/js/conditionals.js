@@ -82,11 +82,13 @@
 						}
 						break;
 						case '>':
+						case 'greater':
 						if( parseFloat( comparefield.reduce(function(a, b) {return a + b;}) ) > parseFloat( comparevalue ) ){
 							truelines[lid] = true;
 						}
 						break;
 						case '<':
+						case 'smaller':
 						if( parseFloat( comparefield.reduce(function(a, b) {return a + b;}) ) < parseFloat( comparevalue ) ){
 							truelines[lid] = true;
 						}
