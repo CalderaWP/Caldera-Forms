@@ -1555,6 +1555,9 @@ class Caldera_Forms {
 					}
 				break;
 				case 'taxonomy':
+					if( $field[ 'config' ][ 'value_field' ] === 'id' ){
+						$field[ 'config' ][ 'value_field' ] = 'term_id';
+					}
 					$terms = get_terms( $field['config']['taxonomy'], 'orderby=count&hide_empty=0' );
 					/**
 					 * Filter which field is used for the VALUE when getting autopopulate option values when autopopulating options from post types
