@@ -68,7 +68,7 @@ class Caldera_Forms {
 
 		add_action("wp_ajax_get_entry", array( $this, 'get_entry') );
 		// find if profile is loaded
-		add_action('init', array( $this, 'cf_init_system'));
+		add_action('init', array( $this, 'cf_init_system'), 25 );
 		add_action('wp', array( $this, 'cf_init_preview'));
 
 		// render shortcode
@@ -1685,6 +1685,7 @@ class Caldera_Forms {
 						}
 						break;
 					case '>':
+					case 'greater':
 						if(is_array($value)){
 							if(array_sum($value) > $line['value']){
 								$truelines[$lineid] = true;
@@ -1696,6 +1697,7 @@ class Caldera_Forms {
 						}
 						break;
 					case '<':
+					case 'smaller':
 						if(is_array($value)){
 							if(array_sum($value) < $line['value']){
 								$truelines[$lineid] = true;
