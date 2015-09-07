@@ -35,7 +35,6 @@ John Teague of Theme Surgeons includes Caldera Forms in his list of [WordPress p
 * [Sprout Invoices Integration](https://wordpress.org/plugins/caldera-forms-sprout-invoices-integration/) - Use Caldera Forms for [Sprout Invoice](https://sproutapps.co/sprout-invoices/) forms.
 * [Conditional Fail](https://wordpress.org/plugins/conditional-fail-for-caldera-forms/) - Set conditions to cause that if met will allow or prevent form submssion.
 * [Postmatic](https://calderawp.com/downloads/postmatic-for-caldera-forms/) - Subscribe users to your posts and comments using Postmatic.
-* [Mail Templates](https://calderawp.com/downloads/mail-templates-for-caldera-forms/) - Add your logo, and your brand's color scheme to your emails sent from Caldera Forms.
 
 = Premium Add-Ons =
 * [MailChimp](https://calderawp.com/downloads/caldera-forms-mailchimp-add-on/) - Seamlessly integrate MailChimp optins into your forms
@@ -48,6 +47,7 @@ John Teague of Theme Surgeons includes Caldera Forms in his list of [WordPress p
 * [Authorize.net](https://calderawp.com/downloads/authorize-net-for-caldera-forms/) Accept all major credit cards by integrating with Authorize.net.
 * [BrainTree](https://calderawp.com/downloads/braintree-for-caldera-forms/) Accept credit card payments using BrainTree.
 * [Nexmo](https://calderawp.com/downloads/nexmo-caldera-forms/) Get SMS notifications of form submissions.
+* [Mail Templates](https://calderawp.com/downloads/mail-templates-for-caldera-forms/) - Add your logo, and your brand's color scheme to your emails sent from Caldera Forms.
 
 = A Few Feature Highlights =
 * Drag and drop responsive form builder.
