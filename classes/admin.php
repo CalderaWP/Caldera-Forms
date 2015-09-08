@@ -813,11 +813,6 @@ class Caldera_Forms_Admin {
 
 		$screen = get_current_screen();
 
-		if ( ! is_object( $screen ) || 'toplevel_page_caldera-forms' != $screen->id   ) {
-			return;
-
-		}
-
 		wp_enqueue_style( $this->plugin_slug .'-admin-icon-styles', CFCORE_URL . 'assets/css/dashicon.css', array(), self::VERSION );
 
 		if($screen->base === 'post'){
