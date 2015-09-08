@@ -3497,50 +3497,20 @@ class Caldera_Forms {
 		}*/
 
 		// get fields
+		if(!isset($post->post_content)){
+			return;
+		}
+
 
 		$field_types = self::get_field_types();
 
 		foreach($field_types as $field_type){
 			//enqueue styles
-			if( !empty( $field_type['styles'])){
-				foreach($field_type['styles'] as $style){
-					if( false !== strpos($style, '//')){
-						wp_enqueue_style( 'cf-' . sanitize_key( basename( $style ) ), $style, array(), self::VERSION );
-					}else{
-						wp_enqueue_style( $style );
-					}
-				}
-			}
 
-			//enqueue scripts
-			if( !empty( $field_type['scripts'])){
-				// check for jquery deps
-				$depts[] = 'jquery';
-				foreach($field_type['scripts'] as $script){
-					if( false !== strpos($script, '//')){
-						wp_enqueue_script( 'cf-' . sanitize_key( basename( $script ) ), $script, $depts, self::VERSION );
-					}else{
-						wp_enqueue_script( $script );
-					}
-				}
-			}
 		}
 
 		// field styles
-		wp_enqueue_style( 'cf-frontend-field-styles', CFCORE_URL . 'assets/css/fields.min.css', array(), self::VERSION );
 
-		$style_includes = get_option( '_caldera_forms_styleincludes' );
-		$style_includes = apply_filters( 'caldera_forms_get_style_includes', $style_includes);
-
-		if(!empty($style_includes['grid'])){
-			wp_enqueue_style( 'cf-grid-styles', CFCORE_URL . 'assets/css/caldera-grid.css', array(), self::VERSION );
-		}
-		if(!empty($style_includes['form'])){
-			wp_enqueue_style( 'cf-form-styles', CFCORE_URL . 'assets/css/caldera-form.css', array(), self::VERSION );
-		}
-		if(!empty($style_includes['alert'])){
-			wp_enqueue_style( 'cf-alert-styles', CFCORE_URL . 'assets/css/caldera-alert.css', array(), self::VERSION );
-		}
 		//	}
 		//}
 
@@ -3996,6 +3966,23 @@ class Caldera_Forms {
 
 		do_action('caldera_forms_render_start', $form);
 
+
+
+		wp_enqueue_style( 'cf-frontend-field-styles', CFCORE_URL . 'assets/css/fields.min.css', array(), self::VERSION );
+
+		$style_includes = get_option( '_caldera_forms_styleincludes' );
+		$style_includes = apply_filters( 'caldera_forms_get_style_includes', $style_includes);
+
+		if(!empty($style_includes['grid'])){
+			wp_enqueue_style( 'cf-grid-styles', CFCORE_URL . 'assets/css/caldera-grid.css', array(), self::VERSION );
+		}
+		if(!empty($style_includes['form'])){
+			wp_enqueue_style( 'cf-form-styles', CFCORE_URL . 'assets/css/caldera-form.css', array(), self::VERSION );
+		}
+		if(!empty($style_includes['alert'])){
+			wp_enqueue_style( 'cf-alert-styles', CFCORE_URL . 'assets/css/caldera-alert.css', array(), self::VERSION );
+		}
+
 		include_once CFCORE_PATH . "classes/caldera-grid.php";
 
 		$gridsize = 'sm';
@@ -4262,6 +4249,30 @@ class Caldera_Forms {
 
 					if(empty($field) || !isset($field_types[$field['type']]['file']) || !file_exists($field_types[$field['type']]['file'])){
 						continue;
+					}
+
+
+					if( !empty( $field_types[$field['type']]['styles'])){
+						foreach($field_types[$field['type']]['styles'] as $style){
+							if( false !== strpos($style, '//')){
+								wp_enqueue_style( 'cf-' . sanitize_key( basename( $style ) ), $style, array(), self::VERSION );
+							}else{
+								wp_enqueue_style( $style );
+							}
+						}
+					}
+
+					//enqueue scripts
+					if( !empty( $field_types[$field['type']]['scripts'])){
+						// check for jquery deps
+						$depts[] = 'jquery';
+						foreach($field_types[$field['type']]['scripts'] as $script){
+							if( false !== strpos($script, '//')){
+								wp_enqueue_script( 'cf-' . sanitize_key( basename( $script ) ), $script, $depts, self::VERSION );
+							}else{
+								wp_enqueue_script( $script );
+							}
+						}
 					}
 
 					$field_classes = array(
