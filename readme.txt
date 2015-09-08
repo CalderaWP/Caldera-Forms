@@ -106,6 +106,17 @@ none yet.
 
 == Changelog ==
 
+= 1.3.0.1 ( September 8, 2015 ) =
+
+= Bugs Fixed =
+* Scripts and Styles now load only on pages with forms
+* Fixed a bug that conflicted with WooCommerce v2.4.6
+* put back the "disable" condition
+* fixes "is greater" and "is smaller" condition bug that reverted to is
+* autopopulate select fields use ID correctly for post_type and ter_id for taxonomy
+
+
+
 = 1.3.0 ( August 23, 2015 ) =
 * Improved: Adding rows in form layout.
 * Added: Conditional groups.
