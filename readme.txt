@@ -3,7 +3,7 @@ Contributors: Desertsnowman, Shelob9
 Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress
 Requires at least: 3.9
 Tested up to: 4.3
-Stable tag: 1.3.0
+Stable tag: 1.3.1-b-1
 License: GPLv2
 
 Create beautiful, responsive forms with a simple drag and drop editor.
@@ -35,7 +35,6 @@ John Teague of Theme Surgeons includes Caldera Forms in his list of [WordPress p
 * [Sprout Invoices Integration](https://wordpress.org/plugins/caldera-forms-sprout-invoices-integration/) - Use Caldera Forms for [Sprout Invoice](https://sproutapps.co/sprout-invoices/) forms.
 * [Conditional Fail](https://wordpress.org/plugins/conditional-fail-for-caldera-forms/) - Set conditions to cause that if met will allow or prevent form submssion.
 * [Postmatic](https://calderawp.com/downloads/postmatic-for-caldera-forms/) - Subscribe users to your posts and comments using Postmatic.
-* [Mail Templates](https://calderawp.com/downloads/mail-templates-for-caldera-forms/) - Add your logo, and your brand's color scheme to your emails sent from Caldera Forms.
 
 = Premium Add-Ons =
 * [MailChimp](https://calderawp.com/downloads/caldera-forms-mailchimp-add-on/) - Seamlessly integrate MailChimp optins into your forms
@@ -48,6 +47,7 @@ John Teague of Theme Surgeons includes Caldera Forms in his list of [WordPress p
 * [Authorize.net](https://calderawp.com/downloads/authorize-net-for-caldera-forms/) Accept all major credit cards by integrating with Authorize.net.
 * [BrainTree](https://calderawp.com/downloads/braintree-for-caldera-forms/) Accept credit card payments using BrainTree.
 * [Nexmo](https://calderawp.com/downloads/nexmo-caldera-forms/) Get SMS notifications of form submissions.
+* [Mail Templates](https://calderawp.com/downloads/mail-templates-for-caldera-forms/) - Add your logo, and your brand's color scheme to your emails sent from Caldera Forms.
 
 = A Few Feature Highlights =
 * Drag and drop responsive form builder.
@@ -105,6 +105,17 @@ none yet.
 4. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
+
+= 1.3.0.1 ( September 8, 2015 ) =
+
+= Bugs Fixed =
+* Scripts and Styles now load only on pages with forms
+* Fixed a bug that conflicted with WooCommerce v2.4.6
+* put back the "disable" condition
+* fixes "is greater" and "is smaller" condition bug that reverted to is
+* autopopulate select fields use ID correctly for post_type and ter_id for taxonomy
+
+
 
 = 1.3.0 ( August 23, 2015 ) =
 * Improved: Adding rows in form layout.

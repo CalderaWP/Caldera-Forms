@@ -818,6 +818,7 @@ class Caldera_Forms_Admin {
 		if($screen->base === 'post'){
 			wp_enqueue_style( $this->plugin_slug .'-modal-styles', CFCORE_URL . 'assets/css/modals.css', array(), self::VERSION );
 			wp_enqueue_script( $this->plugin_slug .'-shortcode-insert', CFCORE_URL . 'assets/js/shortcode-insert.min.js', array('jquery'), self::VERSION );
+			/*
 			//add_editor_style( CFCORE_URL . 'assets/css/caldera-form.css' );
 			add_editor_style( CFCORE_URL . 'assets/css/caldera-grid.css' );
 			add_editor_style( CFCORE_URL . 'assets/css/dashicon.css' );
@@ -834,7 +835,7 @@ class Caldera_Forms_Admin {
 				}
 
 			}
-
+			*/
 		}
 		if( !in_array( $screen->base, $this->screen_prefix ) ){
 			return;
