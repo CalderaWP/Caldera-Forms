@@ -158,7 +158,7 @@ class Caldera_Forms_Processor_Load {
 		}
 
 		if ( isset( $processor[ 'icon' ] ) ) {
-			$works = file_get_contents( $processor[ 'icon' ] );
+			$works = file_exists( $processor[ 'icon' ] );
 			if ( ! $works ) {
 				unset( $processor[ 'icon' ] );
 			}
