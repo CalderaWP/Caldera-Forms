@@ -3468,6 +3468,26 @@ class Caldera_Forms {
 				}
 			}
 		}
+		//none!
+		if( empty( $page_forms ) ){
+			return;
+		}
+
+		//theres forms, bring in the globals
+		wp_enqueue_style( 'cf-frontend-field-styles', CFCORE_URL . 'assets/css/fields.min.css', array(), self::VERSION );
+
+		$style_includes = get_option( '_caldera_forms_styleincludes' );
+		$style_includes = apply_filters( 'caldera_forms_get_style_includes', $style_includes);
+
+		if(!empty($style_includes['grid'])){
+			wp_enqueue_style( 'cf-grid-styles', CFCORE_URL . 'assets/css/caldera-grid.css', array(), self::VERSION );
+		}
+		if(!empty($style_includes['form'])){
+			wp_enqueue_style( 'cf-form-styles', CFCORE_URL . 'assets/css/caldera-form.css', array(), self::VERSION );
+		}
+		if(!empty($style_includes['alert'])){
+			wp_enqueue_style( 'cf-alert-styles', CFCORE_URL . 'assets/css/caldera-alert.css', array(), self::VERSION );
+		}
 
 		foreach( $page_forms as $form_id ){
 			// has form get  stuff for it
@@ -3508,25 +3528,6 @@ class Caldera_Forms {
 								}
 							}
 						}
-					}
-				}
-
-				// if depts been set- scripts are used - 
-				//wp_enqueue_script( 'cf-frontend-script-init', CFCORE_URL . 'assets/js/frontend-script-init.min.js', array('jquery'), self::VERSION, true);
-
-				if(isset($form['settings']['styles']['use_grid'])){
-					if($form['settings']['styles']['use_grid'] === 'yes'){
-						wp_enqueue_style( 'cf-grid-styles', CFCORE_URL . 'assets/css/caldera-grid.css', array(), self::VERSION );
-					}
-				}
-				if(isset($form['settings']['styles']['use_form'])){
-					if($form['settings']['styles']['use_form'] === 'yes'){
-						wp_enqueue_style( 'cf-form-styles', CFCORE_URL . 'assets/css/caldera-form.css', array(), self::VERSION );
-					}
-				}
-				if(isset($form['settings']['styles']['use_alerts'])){
-					if($form['settings']['styles']['use_alerts'] === 'yes'){
-						wp_enqueue_style( 'cf-alert-styles', CFCORE_URL . 'assets/css/caldera-alert.css', array(), self::VERSION );
 					}
 				}
 				
@@ -3976,8 +3977,7 @@ class Caldera_Forms {
 
 		do_action('caldera_forms_render_start', $form);
 
-
-
+		// fallback for function based rendering in case it missed detection
 		wp_enqueue_style( 'cf-frontend-field-styles', CFCORE_URL . 'assets/css/fields.min.css', array(), self::VERSION );
 
 		$style_includes = get_option( '_caldera_forms_styleincludes' );
