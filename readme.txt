@@ -3,7 +3,7 @@ Contributors: Desertsnowman, Shelob9
 Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress
 Requires at least: 3.9
 Tested up to: 4.3
-Stable tag: 1.3.1-b-1
+Stable tag: 1.3.0.2
 License: GPLv2
 
 Create beautiful, responsive forms with a simple drag and drop editor.
@@ -105,6 +105,13 @@ none yet.
 4. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
+
+
+= 1.3.0.2 ( September 10, 2015 ) =
+
+= Bugs Fixed =
+* Scripts and Styles now load only on pages with forms in the header where they belong
+* David should be fired, but acknowledges his lazyness so he got a mild warning.
 
 = 1.3.0.1 ( September 8, 2015 ) =
 
