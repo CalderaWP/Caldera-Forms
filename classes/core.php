@@ -3423,6 +3423,119 @@ class Caldera_Forms {
 
 			}
 		}
+
+		// not a post-
+		if(!isset($post->post_content)){
+			return;
+		}
+
+		$page_forms = array();
+
+		// check active widgets
+		$sidebars = get_option('sidebars_widgets'); 
+		$form_widgets = get_option( 'widget_caldera_forms_widget' );
+		unset($sidebars['wp_inactive_widgets']);
+		foreach ($sidebars as $sidebar => $set) {			
+			if (is_active_sidebar($sidebar)) {
+				foreach( $set as $setup ){
+					if( false !== strpos( $setup, 'caldera_forms_widget-' ) ){
+						$widget_instance = str_replace( 'caldera_forms_widget-', '', $setup );
+						if( !empty( $form_widgets[ $widget_instance ]['form'] ) ){
+							$form_id = $form_widgets[ $widget_instance ]['form'];
+							$page_forms[ $form_id ] = $form_id;
+						}
+					}
+				}
+			}
+		}
+
+		$codes = get_shortcode_regex();
+		preg_match_all('/' . $codes . '/s', $post->post_content, $found);		
+
+		if(!empty($found[0][0])){
+			foreach($found[2] as $index=>$code){
+				if( 'caldera_form' === $code ){
+					if(!empty($found[3][$index])){
+						$atts = shortcode_parse_atts($found[3][$index]);
+						if(isset($atts['id'])){
+							$page_forms[ $atts['id'] ] = $atts['id'];
+						}
+					}
+				}
+				if($code == 'caldera_form_modal'){
+					//caldera_form_modal
+					wp_enqueue_style( 'cf-modal-styles', CFCORE_URL . 'assets/css/modals.css', array(), self::VERSION );					
+				}
+			}
+		}
+		//none!
+		if( empty( $page_forms ) ){
+			return;
+		}
+
+		//theres forms, bring in the globals
+		wp_enqueue_style( 'cf-frontend-field-styles', CFCORE_URL . 'assets/css/fields.min.css', array(), self::VERSION );
+
+		$style_includes = get_option( '_caldera_forms_styleincludes' );
+		$style_includes = apply_filters( 'caldera_forms_get_style_includes', $style_includes);
+
+		if(!empty($style_includes['grid'])){
+			wp_enqueue_style( 'cf-grid-styles', CFCORE_URL . 'assets/css/caldera-grid.css', array(), self::VERSION );
+		}
+		if(!empty($style_includes['form'])){
+			wp_enqueue_style( 'cf-form-styles', CFCORE_URL . 'assets/css/caldera-form.css', array(), self::VERSION );
+		}
+		if(!empty($style_includes['alert'])){
+			wp_enqueue_style( 'cf-alert-styles', CFCORE_URL . 'assets/css/caldera-alert.css', array(), self::VERSION );
+		}
+
+		foreach( $page_forms as $form_id ){
+			// has form get  stuff for it
+			$form = self::get_form( $form_id );
+			if(!empty($form)){
+				// get list of used fields
+				if(empty($form['fields'])){
+					/// no filds - next form
+				}
+
+				// has a form - get field type
+				if(!isset($field_types)){
+					$field_types = self::get_field_types();
+				}
+
+				if(!empty($form['fields'])){
+					foreach($form['fields'] as $field){
+						//enqueue styles
+						if( !empty( $field_types[$field['type']]['styles'])){
+							foreach($field_types[$field['type']]['styles'] as $style){
+								if(filter_var($style, FILTER_VALIDATE_URL)){
+									wp_enqueue_style( 'cf-' . sanitize_key( basename( $style ) ), $style, array(), self::VERSION );
+								}else{
+									wp_enqueue_style( $style );
+								}
+							}
+						}
+
+						//enqueue scripts
+						if( !empty( $field_types[$field['type']]['scripts'])){
+							// check for jquery deps
+							$depts[] = 'jquery';
+							foreach($field_types[$field['type']]['scripts'] as $script){
+								if(filter_var($script, FILTER_VALIDATE_URL)){
+									wp_enqueue_script( 'cf-' . sanitize_key( basename( $script ) ), $script, $depts, self::VERSION );
+								}else{
+									wp_enqueue_script( $script );
+								}
+							}
+						}
+					}
+				}
+				
+			}
+
+		}
+
+
 	}
 	/**
 	 * Makes Caldera Forms go in front-end!
@@ -3484,7 +3597,6 @@ class Caldera_Forms {
 			exit;
 			/// end form and redirect to submit page or result page.
 		}
-
 		/* just pull them in!
 		if(empty($post)){
 			if(isset($wp_query->queried_object)){
@@ -3496,108 +3608,7 @@ class Caldera_Forms {
 			return;
 		}*/
 
-		// get fields
-		if(!isset($post->post_content)){
-			return;
-		}
 
-
-		$field_types = self::get_field_types();
-
-		foreach($field_types as $field_type){
-			//enqueue styles
-
-		}
-
-		// field styles
-
-		//	}
-		//}
-
-		// not a post-
-		if(!isset($post->post_content)){
-			return;
-		}
-
-		$codes = get_shortcode_regex();
-		preg_match_all('/' . $codes . '/s', $post->post_content, $found);
-		if(!empty($found[0][0])){
-			foreach($found[2] as $index=>$code){
-				if( 'caldera_form' === $code ){
-					if(!empty($found[3][$index])){
-						$atts = shortcode_parse_atts($found[3][$index]);
-						if(isset($atts['id'])){
-							// has form get  stuff for it
-							$form = self::get_form( $atts['id'] );
-							if(!empty($form)){
-								// get list of used fields
-								if(empty($form['fields'])){
-									/// no filds - next form
-								}
-
-								// has a form - get field type
-								if(!isset($field_types)){
-									$field_types = self::get_field_types();
-								}
-
-								if(!empty($form['fields'])){
-									foreach($form['fields'] as $field){
-										//enqueue styles
-										if( !empty( $field_types[$field['type']]['styles'])){
-											foreach($field_types[$field['type']]['styles'] as $style){
-												if(filter_var($style, FILTER_VALIDATE_URL)){
-													wp_enqueue_style( 'cf-' . sanitize_key( basename( $style ) ), $style, array(), self::VERSION );
-												}else{
-													wp_enqueue_style( $style );
-												}
-											}
-										}
-
-										//enqueue scripts
-										if( !empty( $field_types[$field['type']]['scripts'])){
-											// check for jquery deps
-											$depts[] = 'jquery';
-											foreach($field_types[$field['type']]['scripts'] as $script){
-												if(filter_var($script, FILTER_VALIDATE_URL)){
-													wp_enqueue_script( 'cf-' . sanitize_key( basename( $script ) ), $script, $depts, self::VERSION );
-												}else{
-													wp_enqueue_script( $script );
-												}
-											}
-										}
-									}
-								}
-
-								// if depts been set- scripts are used - 
-								//wp_enqueue_script( 'cf-frontend-script-init', CFCORE_URL . 'assets/js/frontend-script-init.min.js', array('jquery'), self::VERSION, true);
-
-								if(isset($form['settings']['styles']['use_grid'])){
-									if($form['settings']['styles']['use_grid'] === 'yes'){
-										wp_enqueue_style( 'cf-grid-styles', CFCORE_URL . 'assets/css/caldera-grid.css', array(), self::VERSION );
-									}
-								}
-								if(isset($form['settings']['styles']['use_form'])){
-									if($form['settings']['styles']['use_form'] === 'yes'){
-										wp_enqueue_style( 'cf-form-styles', CFCORE_URL . 'assets/css/caldera-form.css', array(), self::VERSION );
-									}
-								}
-								if(isset($form['settings']['styles']['use_alerts'])){
-									if($form['settings']['styles']['use_alerts'] === 'yes'){
-										wp_enqueue_style( 'cf-alert-styles', CFCORE_URL . 'assets/css/caldera-alert.css', array(), self::VERSION );
-									}
-								}
-								
-							}
-						}
-					}
-				}
-				if($code == 'caldera_form_modal'){
-					//dump($code);
-					wp_enqueue_style( 'cf-modal-styles', CFCORE_URL . 'assets/css/modals.css', array(), self::VERSION );
-					//caldera_form_modal
-				}
-			}
-		}
 	}
 
 	/**
@@ -3966,8 +3977,7 @@ class Caldera_Forms {
 
 		do_action('caldera_forms_render_start', $form);
 
-
-
+		// fallback for function based rendering in case it missed detection
 		wp_enqueue_style( 'cf-frontend-field-styles', CFCORE_URL . 'assets/css/fields.min.css', array(), self::VERSION );
 
 		$style_includes = get_option( '_caldera_forms_styleincludes' );
