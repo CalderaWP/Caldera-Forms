@@ -1,7 +1,7 @@
 <?php
 /*
   Plugin Name: Caldera Forms
-  Plugin URI: http://digilab.co.za
+  Plugin URI: http://CalderaForms.com
   Description: Easy to use, grid based responsive form builder for creating simple to complex forms.
   Author: David Cramer
   Version: 1.3.1-b-1
