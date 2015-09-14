@@ -3,7 +3,7 @@
 
 class Caldera_Forms_Widget extends WP_Widget {
 
-	function Caldera_Forms_Widget() {
+	function __construct() {
 		// Instantiate the parent object
 		parent::__construct( false, __('Caldera Form', 'caldera-forms' ) );
 	}
