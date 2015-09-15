@@ -4609,7 +4609,7 @@ class Caldera_Forms {
 		 * @param string $cap A capability. By default "manage_options"
 		 * @param string $context Context to check in.
 		 */
-		return apply_filters( 'caldera_forms_manage_cap', Caldera_Forms::get_manage_cap(), $context );
+		return apply_filters( 'caldera_forms_manage_cap', 'manage_options', $context );
 	}
 
 }
