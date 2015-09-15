@@ -1,7 +1,7 @@
 <script type="text/html" id="bulk-actions-active-tmpl">
 	<option selected="selected" value=""><?php echo __('Bulk Actions'); ?></option>
 	<option value="export"><?php echo __('Export Selected'); ?></option>
-	<?php if( current_user_can( 'manage_options' ) ){ ?><option value="trash"><?php echo __('Move to Trash'); ?></option><?php } ?>
+	<?php if( current_user_can( Caldera_Forms::get_manage_cap() ) ){ ?><option value="trash"><?php echo __('Move to Trash'); ?></option><?php } ?>
 </script>
 <script type="text/html" id="bulk-actions-trash-tmpl">
 	<option selected="selected" value=""><?php echo __('Bulk Actions'); ?></option>
