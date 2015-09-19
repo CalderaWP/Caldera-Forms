@@ -3544,6 +3544,9 @@ class Caldera_Forms {
 
 		global $post, $front_templates, $wp_query, $process_id, $form;
 
+		// register form object
+		wp_register_script( 'cf-form-object', CFCORE_URL . 'assets/js/formobject.min.js', array('jquery'), CFCORE_VER, true );
+
 		// check for API
 		if(!empty($wp_query->query_vars['cf_api'])){
 			// check if form exists
@@ -4239,8 +4242,9 @@ class Caldera_Forms {
 		$conditions_templates = array();
 		$conditions_configs = array();
 		$used_slugs = array();
+		$form_field_strings = array();
 		if(!empty($form['fields'])){
-			// prepare fields
+			// prepare fields			
 			foreach($form['fields'] as $field_id=>$field){
 				$field = apply_filters( 'caldera_forms_render_get_field', $field, $form);
 				$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field['type'], $field, $form);
@@ -4249,18 +4253,18 @@ class Caldera_Forms {
 			}
 		}
 
+
 		if(!empty($form['layout_grid']['fields'])){
 
 			foreach($form['layout_grid']['fields'] as $field_base_id=>$location){
 				// instance base
 				if(isset($form['fields'][$field_base_id])){
-						
+					
 					$field = apply_filters( 'caldera_forms_render_setup_field', $form['fields'][$field_base_id], $form);
 
 					if(empty($field) || !isset($field_types[$field['type']]['file']) || !file_exists($field_types[$field['type']]['file'])){
 						continue;
 					}
-
 
 					if( !empty( $field_types[$field['type']]['styles'])){
 						foreach($field_types[$field['type']]['styles'] as $style){
@@ -4362,6 +4366,9 @@ class Caldera_Forms {
 					$field_value = $field_structure['field_value'];
 					// setup base instance ID
 					$field_base_id = $field_base_id.'_'.$current_form_count;
+					
+					// register strings
+					$form_field_strings[ $field_structure['id'] ] = array( 'id' => $field_structure['id'], 'instance' => $current_form_count, 'slug' => $field['slug'], 'label' => $field['label'] );
 
 					ob_start();
 					include $field_types[$field['type']]['file'];
@@ -4402,7 +4409,10 @@ class Caldera_Forms {
 				}
 			}
 		}
-		//
+		// form object strings
+		wp_localize_script( 'cf-form-object', $form['ID'] . '_' . $current_form_count, $form_field_strings );
+
+		// do grid
 		$grid = apply_filters( 'caldera_forms_render_grid_structure', $grid, $form);
 		// wrapper classes
 		$form_wrapper_classes = array(
