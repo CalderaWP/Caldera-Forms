@@ -4677,6 +4677,43 @@ class Caldera_Forms {
 		 * @param string $context Context to check in.
 		 */
 		return apply_filters( 'caldera_forms_manage_cap', 'manage_options', $context );
+		
+	}
+
+	/**
+	 * Handler for shortcode
+	 *
+	 * @since 1.3.1
+	 *
+	 * @param array $atts
+	 * @param string $content
+	 *
+	 * @return string|void
+	 */
+	public static function shortcode_handler( $atts, $content ) {
+		if ( ! isset( $atts[ 'id' ] ) ) {
+			return;
+		}
+
+
+		if( isset( $atts[ 'modal' ]) && $atts[ 'modal' ] ) {
+			$form = self::get_form( $atts[ 'id' ] );
+			if( ! is_array( $form ) ) {
+				return;
+			}
+
+			if( empty( $content ) ) {
+				$content = $form[ 'name' ];
+			}
+
+			$title = __( sprintf( 'Click to open the form %1s in a modal',  $form[ 'name' ] ), 'caldera-forms' );
+			$form = sprintf( '<a href="#" class="caldera-forms-modal" data-form="%1s" title="%2s">%3s</a>', $form[ 'id' ], $title, $content );
+		}else{
+			$form = self::render_form( $atts );
+		}
+
+		return $form;
+
 	}
 
 }
