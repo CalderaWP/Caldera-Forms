@@ -3464,7 +3464,7 @@ class Caldera_Forms {
 				}
 				if($code == 'caldera_form_modal'){
 					//caldera_form_modal
-					wp_enqueue_style( 'cf-modal-styles', CFCORE_URL . 'assets/css/modals.css', array(), self::VERSION );					
+					//wp_enqueue_style( 'cf-modal-styles', CFCORE_URL . 'assets/css/modals.css', array(), self::VERSION );					
 				}
 			}
 		}
@@ -3474,19 +3474,19 @@ class Caldera_Forms {
 		}
 
 		//theres forms, bring in the globals
-		wp_enqueue_style( 'cf-frontend-field-styles', CFCORE_URL . 'assets/css/fields.min.css', array(), self::VERSION );
+		wp_enqueue_style( 'cf-field-styles' );
 
 		$style_includes = get_option( '_caldera_forms_styleincludes' );
 		$style_includes = apply_filters( 'caldera_forms_get_style_includes', $style_includes);
 
 		if(!empty($style_includes['grid'])){
-			wp_enqueue_style( 'cf-grid-styles', CFCORE_URL . 'assets/css/caldera-grid.css', array(), self::VERSION );
+			wp_enqueue_style( 'cf-grid-styles' );
 		}
 		if(!empty($style_includes['form'])){
-			wp_enqueue_style( 'cf-form-styles', CFCORE_URL . 'assets/css/caldera-form.css', array(), self::VERSION );
+			wp_enqueue_style( 'cf-form-styles' );
 		}
 		if(!empty($style_includes['alert'])){
-			wp_enqueue_style( 'cf-alert-styles', CFCORE_URL . 'assets/css/caldera-alert.css', array(), self::VERSION );
+			wp_enqueue_style( 'cf-alert-styles' );
 		}
 
 		foreach( $page_forms as $form_id ){
@@ -3580,37 +3580,50 @@ class Caldera_Forms {
 	static public function cf_init_system(){
 
 		global $post, $front_templates, $wp_query, $process_id, $form;
-
-		// register form object
-		wp_register_script( 'cf-form-object', CFCORE_URL . 'assets/js/formobject.min.js', array('jquery'), CFCORE_VER, true );
-
-		// check for API
-		if(!empty($wp_query->query_vars['cf_api'])){
-			// check if form exists
-			$form = self::get_form( $wp_query->query_vars['cf_api'] );
-			if(!empty($form['ID'])){
-				if($form['ID'] === $wp_query->query_vars['cf_api']){
-					// got it!
-					// need entry?
-					if(!empty($wp_query->query_vars['cf_entry'])){
-						$entry = Caldera_Forms::get_entry($wp_query->query_vars['cf_entry'], $form);
-						wp_send_json( $entry );
-					}
-					// is a post?
-					if( $_SERVER['REQUEST_METHOD'] === 'POST' ){
-						
-						$_POST['_wp_http_referer_true'] = 'api';
-						$_POST['_cf_frm_id'] 			=  $_POST['cfajax']	= $wp_query->query_vars['cf_api'];
-
-						$submission = Caldera_Forms::process_submission();
-
-					}
-
-					wp_send_json( $wp_query );
-					die;
-				}
-			}
+		
+		// setup script and style urls		
+		$style_urls = array(
+			'modals' => CFCORE_URL . 'assets/css/caldera-modals.min.css',
+			'grid' => CFCORE_URL . 'assets/css/caldera-grid.css',
+			'form' => CFCORE_URL . 'assets/css/caldera-form.css',
+			'alert' => CFCORE_URL . 'assets/css/caldera-alert.css',
+			'field' => CFCORE_URL . 'assets/css/fields.min.css',
+		);
+		$script_urls = array(
+			'dynamic'	=>	CFCORE_URL . 'assets/js/formobject.min.js',
+			'modals'	=>	CFCORE_URL . 'assets/js/caldera-modals.min.js',
+			'init'		=>	CFCORE_URL . 'assets/js/frontend-script-init.min.js',
+			'field'	=>	CFCORE_URL . 'assets/js/fields.min.js',			
+			'conditionals' => CFCORE_URL . 'assets/js/conditionals.min.js',
+		);
+		
+		$script_style_urls = array();
+		/**
+		 * Filter script URLS for Caldera Forms on the frontend
+		 *
+		 *
+		 * @param array $script_urls array containing all urls to register
+		 */
+		$script_style_urls['script'] = apply_filters( 'caldera_forms_script_urls', $script_urls );	
+		
+		/**
+		 * Filter style URLS for Caldera Forms on the frontend
+		 *
+		 *
+		 * @param array $script_urls array containing all urls to register
+		 */
+		$script_style_urls['style'] = apply_filters( 'caldera_forms_style_urls', $style_urls );
+		// register styles
+		foreach( $script_style_urls['style'] as $style_key => $style_url ){
+			wp_register_style( 'cf-' . $style_key . '-styles', $style_url, array(), CFCORE_VER );
 		}
+		// register scripts
+		foreach( $script_style_urls['script'] as $script_key => $script_url ){
+			wp_register_script( 'cf-' . $script_key, $script_url, array('jquery'), CFCORE_VER, true );
+		}
+
+		// localize for dynamic form generation
+		wp_localize_script( 'cf-dynamic', 'cfModals', $script_style_urls );
 
 		// catch a transient process
 		if(!empty($_GET['cf_tp'])){
@@ -4018,19 +4031,19 @@ class Caldera_Forms {
 		do_action('caldera_forms_render_start', $form);
 
 		// fallback for function based rendering in case it missed detection
-		wp_enqueue_style( 'cf-frontend-field-styles', CFCORE_URL . 'assets/css/fields.min.css', array(), self::VERSION );
+		wp_enqueue_style( 'cf-field-styles' );
 
 		$style_includes = get_option( '_caldera_forms_styleincludes' );
 		$style_includes = apply_filters( 'caldera_forms_get_style_includes', $style_includes);
 
 		if(!empty($style_includes['grid'])){
-			wp_enqueue_style( 'cf-grid-styles', CFCORE_URL . 'assets/css/caldera-grid.css', array(), self::VERSION );
+			wp_enqueue_style( 'cf-grid-styles' );
 		}
 		if(!empty($style_includes['form'])){
-			wp_enqueue_style( 'cf-form-styles', CFCORE_URL . 'assets/css/caldera-form.css', array(), self::VERSION );
+			wp_enqueue_style( 'cf-form-styles' );
 		}
 		if(!empty($style_includes['alert'])){
-			wp_enqueue_style( 'cf-alert-styles', CFCORE_URL . 'assets/css/caldera-alert.css', array(), self::VERSION );
+			wp_enqueue_style( 'cf-alert-styles' );
 		}
 
 		include_once CFCORE_PATH . "classes/caldera-grid.php";
@@ -4447,7 +4460,7 @@ class Caldera_Forms {
 			}
 		}
 		// form object strings
-		wp_localize_script( 'cf-form-object', $form['ID'] . '_' . $current_form_count, $form_field_strings );
+		wp_localize_script( 'cf-dynamic', $form['ID'] . '_' . $current_form_count, $form_field_strings );
 
 		// do grid
 		$grid = apply_filters( 'caldera_forms_render_grid_structure', $grid, $form);
@@ -4516,6 +4529,9 @@ class Caldera_Forms {
 			$out .= wp_nonce_field( "caldera_forms_front", "_cf_verify", true, false);
 			$out .= "<input type=\"hidden\" name=\"_cf_frm_id\" value=\"" . $form['ID'] . "\">\r\n";
 			$out .= "<input type=\"hidden\" name=\"_cf_frm_ct\" value=\"" . $current_form_count . "\">\r\n";
+			if( !empty( $form['form_ajax'] ) ){
+				$out .= "<input type=\"hidden\" name=\"cfajax\" value=\"" . $form['ID'] . "\">\r\n";
+			}
 			if( is_object($post) ){
 				$out .= "<input type=\"hidden\" name=\"_cf_cr_pst\" value=\"" . $post->ID . "\">\r\n";
 			}
@@ -4623,13 +4639,13 @@ class Caldera_Forms {
 			$out .= implode("\r\n", $conditions_templates);
 
 			// enqueue conditionls app.
-			wp_enqueue_script( 'cf-frontend-conditionals', CFCORE_URL . 'assets/js/conditionals.min.js', array('jquery'), self::VERSION, true);
+			wp_enqueue_script( 'cf-conditionals' );
 		}
 		
 		do_action('caldera_forms_render_end', $form);
 
-		wp_enqueue_script( 'cf-frontend-script-init', CFCORE_URL . 'assets/js/frontend-script-init.min.js', array('jquery'), self::VERSION, true);
-		wp_enqueue_script( 'cf-frontend-fields', CFCORE_URL . 'assets/js/fields.min.js', array('jquery'), self::VERSION );
+		wp_enqueue_script( 'cf-field' );
+		wp_enqueue_script( 'cf-init' );
 		
 		return apply_filters( 'caldera_forms_render_form', $out, $form);
 
