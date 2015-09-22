@@ -70,6 +70,7 @@ $.fn.formJSON = function(){
     return json;
   }
 
+  /* new button handler */
   $('.caldera_forms_form').on('click','.cf-form-trigger', function( ev ){
     var clicked = $(this);
         form = clicked.closest('form.caldera_forms_form'),
@@ -109,5 +110,36 @@ $.fn.formJSON = function(){
           }
         }
   });
+  
+  /* setup modals system */
+  if( cfModals ){
+
+    var head = $('head'),
+        body = $('body');
+
+    for( var style in cfModals.style ){
+      if( ! $('#cf-' + style + '-styles-css').length ){
+        head.append('<link id="cf-' + style + '-styles-css" rel="stylesheet" type="text/css" href="' + cfModals.style[ style ] + '">');
+      }
+    }
+    for( var script in cfModals.script ){
+      if( ! $('script[src^="' + cfModals.script[ script ] + '"]').length ){
+        body.append('<script src="' + cfModals.script[ script ] + '" type="text/javascript">');
+      }
+    }
+
+    $( document ).on( 'click', '.caldera-forms-modal', function(){
+      var trigger = $( this );
+      if( !trigger.data('form') ){return;}
+      var modal = trigger.calderaModal({
+        content : function(){
+          return $.get( '/api/cf/' + trigger.data('form') );
+        }
+      });
+
+
+    });
+
+  }
 
 })(jQuery);
