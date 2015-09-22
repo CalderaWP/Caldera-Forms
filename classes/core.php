@@ -72,7 +72,7 @@ class Caldera_Forms {
 		add_action('wp', array( $this, 'cf_init_preview'));
 
 		// render shortcode
-		add_shortcode( 'caldera_form', array( $this, 'render_form') );
+		add_shortcode( 'caldera_form', array( $this, 'shortcode_handler') );
 		// modal shortcode
 		add_shortcode( 'caldera_form_modal', array( $this, 'render_modal_form') );
 		add_action( 'wp_footer', array( $this, 'render_footer_modals') );
@@ -116,7 +116,20 @@ class Caldera_Forms {
 			$external = true;
 		}
 
+		/**
+		 * Filter settings of a form or all forms or use to define a form in file
+		 *
+		 * @param array $form Form config
+		 * @param string $id_name ID or name of form
+		 */
 		$form = apply_filters( 'caldera_forms_get_form', $form, $id_name );
+
+		/**
+		 * Filter settings of a specific form or all forms or use to define a form in file
+		 *
+		 * @param array $form Form config
+		 * @param string $id_name ID or name of form
+		 */
 		$form = apply_filters( 'caldera_forms_get_form-' . $id_name, $form, $id_name );
 
 		if( is_array( $form ) && empty( $form['ID'] ) ){
@@ -3859,12 +3872,17 @@ class Caldera_Forms {
 	/**
 	 * Load a Caldera Form in a modal.
 	 *
+	 * @since unknown
+	 *
+	 * @deprecated 1.3.1
+	 *
 	 * @param string|array $atts Shortcode atts or form ID
 	 * @param string $content Content to use in trigger link.
 	 *
 	 * @return string
 	 */
 	static public function render_modal_form($atts, $content){
+		_deprecated_function( __FUNCTION__, '1.3.1', __( 'Use [caldera_forms id="cf.." modal="true"]Click Me[/caldera_forms]', 'caldera-forms' ) );
 		global $footer_modals;
 
 		if(empty($atts['id'])){
@@ -4038,6 +4056,12 @@ class Caldera_Forms {
 		wp_enqueue_style( 'cf-field-styles' );
 
 		$style_includes = get_option( '_caldera_forms_styleincludes' );
+
+		/**
+		 * Disable/enable including of front-end styles
+		 *
+		 * @param bool $style_includes To include or not. Default is value of option "_caldera_forms_styleincludes"
+		 */
 		$style_includes = apply_filters( 'caldera_forms_get_style_includes', $style_includes);
 
 		if(!empty($style_includes['grid'])){
@@ -4056,6 +4080,12 @@ class Caldera_Forms {
 		if(!empty($form['settings']['responsive']['break_point'])){
 			$gridsize = $form['settings']['responsive']['break_point'];
 		}
+
+		/**
+		 * What size grid to use for the grid
+		 *
+		 * @param string $size Size for grid. Default is "sm"
+		 */
 		$gridsize = apply_filters( 'caldera_forms_render_set_grid_size', $gridsize );
 
 		// set grid render engine
@@ -4472,10 +4502,27 @@ class Caldera_Forms {
 		$form_wrapper_classes = array(
 			"caldera-grid"
 		);
+
+		/**
+		 * Change classes of elements wrapping the grid
+		 *
+		 * @since unknown
+		 *
+		 * @param array $form_wrapper_classes Array of classes
+		 * @param array $config Form config
+		 */
 		$form_wrapper_classes = apply_filters( 'caldera_forms_render_form_wrapper_classes', $form_wrapper_classes, $form);
 
 		$out = "<div class=\"" . implode(' ', $form_wrapper_classes) . "\" id=\"caldera_form_" . $current_form_count ."\">\r\n";
 
+		/**
+		 * Filter final HTML for notices
+		 *
+		 * @since unknown
+		 *
+		 * @param string $notice Notices HTML
+		 * @param array $config Form config
+		 */
 		$notices = apply_filters( 'caldera_forms_render_notices', $notices, $form);
 
 		// set debug notice
@@ -4519,8 +4566,36 @@ class Caldera_Forms {
 				'id'		=>	$form['ID'] . '_' . $current_form_count
 			);
 
+			/**
+			 * Change what type of element form is in.
+			 *
+			 * Note: Using anything besides "form" here will make form cease to function as a form.
+			 *
+			 * @since unknown
+			 *
+			 * @param string $form_element Form element type.
+			 * @param array $config Form config
+			 */
 			$form_element = apply_filters( 'caldera_forms_render_form_element', $form_element, $form);
+
+			/**
+			 * Modify classes applied to form element
+			 *
+			 * @since unknown
+			 *
+			 * @param array $form_classes Array of classes
+			 * @param array $config Form config
+			 */
 			$form_classes = apply_filters( 'caldera_forms_render_form_classes', $form_classes, $form);
+
+			/**
+			 * Modify HTML attributes applied to form element
+			 *
+			 * @since unknown
+			 *
+			 * @param array $form_attributes Array of HTML attributes
+			 * @param array $config Form config
+			 */
 			$form_attributes = apply_filters( 'caldera_forms_render_form_attributes', $form_attributes, $form);
 
 			$attributes = array();
@@ -4583,7 +4658,15 @@ class Caldera_Forms {
 			// sticky sticky honey
 			if(isset($form['check_honey'])){
 				$out .= "<div class=\"hide\" style=\"display:none; overflow:hidden;height:0;width:0;\">\r\n";
-					$honey_words = apply_filters( 'caldera_forms_get_honey_words', array('web_site', 'url', 'email', 'company', 'name'));
+
+				/**
+				 * Change which words are used to form honey pot
+				 *
+				 * @since unknown
+				 *
+				 * @param array $words An array of words.
+				 */
+				$honey_words = apply_filters( 'caldera_forms_get_honey_words', array('web_site', 'url', 'email', 'company', 'name'));
 					$word = $honey_words[rand(0, count($honey_words) - 1 )];
 					$out .= "<label>". ucwords( str_replace('_', ' ', $word) ) ."</label><input type=\"text\" name=\"".$word."\" value=\"\" autocomplete=\"off\">\r\n";
 				$out .= "</div>";
@@ -4645,12 +4728,27 @@ class Caldera_Forms {
 			// enqueue conditionls app.
 			wp_enqueue_script( 'cf-conditionals' );
 		}
-		
+
+		/**
+		 * Runs after form is rendered
+		 *
+		 * @since unknown
+		 *
+		 * @param array $config Form config
+		 */
 		do_action('caldera_forms_render_end', $form);
 
 		wp_enqueue_script( 'cf-field' );
 		wp_enqueue_script( 'cf-init' );
-		
+
+		/**
+		 * Filter final HTML of form
+		 *
+		 * @since unknow
+		 *
+		 * @param string $out The HTML
+		 * @param array $config Form config
+		 */
 		return apply_filters( 'caldera_forms_render_form', $out, $form);
 
 	}
@@ -4695,7 +4793,6 @@ class Caldera_Forms {
 			return;
 		}
 
-
 		if( isset( $atts[ 'modal' ]) && $atts[ 'modal' ] ) {
 			$form = self::get_form( $atts[ 'id' ] );
 			if( ! is_array( $form ) ) {
@@ -4707,7 +4804,7 @@ class Caldera_Forms {
 			}
 
 			$title = __( sprintf( 'Click to open the form %1s in a modal',  $form[ 'name' ] ), 'caldera-forms' );
-			$form = sprintf( '<a href="#" class="caldera-forms-modal" data-form="%1s" title="%2s">%3s</a>', $form[ 'id' ], $title, $content );
+			$form = sprintf( '<a href="#" class="caldera-forms-modal" data-form="%1s" title="%2s">%3s</a>', $form[ 'ID' ], $title, $content );
 		}else{
 			$form = self::render_form( $atts );
 		}
