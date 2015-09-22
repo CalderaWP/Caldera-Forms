@@ -3598,21 +3598,25 @@ class Caldera_Forms {
 		);
 		
 		$script_style_urls = array();
+
 		/**
-		 * Filter script URLS for Caldera Forms on the frontend
+		 * Filter script URLS for Caldera Forms on the frontend, before they are enqueued.
 		 *
+		 * @since 1.3.1
 		 *
 		 * @param array $script_urls array containing all urls to register
 		 */
 		$script_style_urls['script'] = apply_filters( 'caldera_forms_script_urls', $script_urls );	
 		
 		/**
-		 * Filter style URLS for Caldera Forms on the frontend
+		 * Filter style URLS for Caldera Forms on the frontend, before they are enqueued.
 		 *
+		 * @since 1.3.1
 		 *
 		 * @param array $script_urls array containing all urls to register
 		 */
 		$script_style_urls['style'] = apply_filters( 'caldera_forms_style_urls', $style_urls );
+
 		// register styles
 		foreach( $script_style_urls['style'] as $style_key => $style_url ){
 			wp_register_style( 'cf-' . $style_key . '-styles', $style_url, array(), CFCORE_VER );
