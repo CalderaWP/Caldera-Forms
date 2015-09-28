@@ -42,6 +42,9 @@ class Caldera_Forms {
 
 		// Load plugin text domain
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
+		// init internals of CF
+		add_action( 'init', array( $this, 'init_cf_internal' ) );
+
 		add_action( 'template_redirect', array( $this, 'api_handler' ) );
 
 		// add element & fields filters
@@ -77,14 +80,7 @@ class Caldera_Forms {
 		add_shortcode( 'caldera_form_modal', array( $this, 'render_modal_form') );
 		add_action( 'wp_footer', array( $this, 'render_footer_modals') );
 
-		// check update version
-		$version = get_option('_calderaforms_lastupdate');
-		if(empty($version) || version_compare($version, CFCORE_VER) < 0){
-			self::activate_caldera_forms();
-			update_option('_calderaforms_lastupdate',CFCORE_VER);
-			wp_redirect( $_SERVER['REQUEST_URI'] );
-			exit;
-		}
+		register_activation_hook( __FILE__, array( $this, 'activate_caldera_forms' ) );
 
 	}
 
@@ -176,18 +172,33 @@ class Caldera_Forms {
 	 *
 	 */
 	public function load_plugin_textdomain() {
+
+		load_plugin_textdomain( $this->plugin_slug, FALSE, basename( CFCORE_PATH ) . '/languages');
+	}
+
+	/**
+	 * Setup internals / AKA activate stufs
+	 *
+	 */
+	public function init_cf_internal() {
+		
 		add_rewrite_tag('%cf_api%', '([^&]+)');
 		add_rewrite_tag('%cf_entry%', '([^&]+)');
 		// INIT API
 		add_rewrite_rule('^api/cf/([^/]*)/([^/]*)/?','index.php?cf_api=$matches[1]&cf_entry=$matches[2]','top');
 		add_rewrite_rule('^api/cf/([^/]*)/?','index.php?cf_api=$matches[1]','top');
-
-		//flush_rewrite_rules();
 		
-
-		load_plugin_textdomain( $this->plugin_slug, FALSE, basename( CFCORE_PATH ) . '/languages');
+		// check update version
+		/*
+		$version = get_option('_calderaforms_lastupdate');
+		if(empty($version) || version_compare($version, CFCORE_VER) < 0){
+			self::activate_caldera_forms();
+			update_option('_calderaforms_lastupdate',CFCORE_VER);
+			flush_rewrite_rules();
+			wp_redirect( $_SERVER['REQUEST_URI'] );
+			exit;
+		}*/
 	}
-
 	/**
 	 * Activate and setip plugin
 	 */
@@ -195,12 +206,17 @@ class Caldera_Forms {
 		global $wpdb;
 
 		$version = get_option('_calderaforms_lastupdate');
+
 		if(!empty($version) ){
 			if( version_compare($version, CFCORE_VER) === 0 ){ // no change
-				//echo version_compare('1.1.1', CFCORE_VER);
 				return;
 			}
 		}
+		// ensure urls are there
+		self::init_cf_internal();
+
+		flush_rewrite_rules();
+		update_option('_calderaforms_lastupdate',CFCORE_VER);
 
 		$tables = $wpdb->get_results("SHOW TABLES", ARRAY_A);
 		foreach($tables as $table){
