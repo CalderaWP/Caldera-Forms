@@ -221,7 +221,7 @@ foreach($field_types as $field_slug=>$config){
 	}
 
 	ob_start();
-	do_action('caldera_forms_field_settings_template', $config);
+	do_action('caldera_forms_field_settings_template', $config, $field_slug );
 	if(!empty($config['setup']['template'])){
 		if(file_exists( $config['setup']['template'] )){
 			// create config template block							
