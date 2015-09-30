@@ -3,6 +3,24 @@
 	<option value="export"><?php echo __('Export Selected'); ?></option>
 	<?php if( current_user_can( Caldera_Forms::get_manage_cap() ) ){ ?><option value="trash"><?php echo __('Move to Trash'); ?></option><?php } ?>
 </script>
+
+<script type="text/html" id="cf-export-template">
+
+<div data-tab="<?php echo esc_attr( __( 'Standard Export', 'caldera-forms' ) ); ?>">
+	<h3 style="margin: 7px 0px; color: rgb(67, 67, 67);"><?php _e('Standard Export'); ?></h3>
+	<p><?php _e('This gives you a .json file that can be imported into Caldera Forms.'); ?></p>
+	<a class="button" href="<?php echo admin_url( 'admin.php?page=caldera-forms&export-form={{formid}}&cal_del={{nonce}}' ); ?>"><?php _e('Export Form', 'caldera-forms'); ?></a>
+
+</div>
+<div data-tab="<?php echo esc_attr( __( 'PHP Export', 'caldera-forms' ) ); ?>">
+	<h3 style="margin: 7px 0px; color: rgb(67, 67, 67);"><?php _e('PHP Export'); ?></h3>
+	<p><?php _e('This gives you a hardcoded .php file that can be included in projects. It includes the correct filter for the ID specific form allowing you to easily use the form by simply including the file.'); ?></p>
+	<p><?php _e('This is not a backup and cannot be imported.'); ?></p>
+
+	<a class="button" href="<?php echo admin_url( 'admin.php?page=caldera-forms&export-form={{formid}}&cal_del={{nonce}}&format=php' ); ?>"><?php _e('Export as PHP', 'caldera-forms'); ?></a>
+</div>
+
+</script>
 <script type="text/html" id="bulk-actions-trash-tmpl">
 	<option selected="selected" value=""><?php echo __('Bulk Actions'); ?></option>
 	<option value="export"><?php echo __('Export Selected'); ?></option>

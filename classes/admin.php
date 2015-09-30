@@ -1193,9 +1193,20 @@ class Caldera_Forms_Admin {
 			header("Expires: 0");
 			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 			header("Cache-Control: private",false);
-			header("Content-Type: application/json");
-			header("Content-Disposition: attachment; filename=\"" . sanitize_file_name( strtolower( $form['name'] ) ) . "-export.json\";" );
-			echo json_encode($form);
+			if( empty( $_GET['format'] ) || $_GET['format'] != 'php' ){
+				header("Content-Type: application/json");
+				header("Content-Disposition: attachment; filename=\"" . sanitize_file_name( strtolower( $form['name'] ) ) . "-export.json\";" );
+				echo json_encode($form);
+			}else{
+				header("Content-Type: application/php");
+				header("Content-Disposition: attachment; filename=\"" . sanitize_file_name( strtolower( $form['name'] ) ) . "-export.php\";" );
+				echo '<?php' . "\r\n";
+				echo "/**\r\n * Caldera Forms - PHP Export \r\n * {$form['name']} \r\n * @version    " . CFCORE_VER . "\r\n * @license   GPL-2.0+\r\n * \r\n */\r\n";
+				$structure = "add_filter( 'caldera_forms_get_form-{$form['ID']}', function(){\r\n return " . var_export( $form, true ) . ";\r\n" . '} );' . "\r\n";
+				// cleanups because I'm me
+				$structure = str_replace( 'array (', 'array(', $structure );
+				echo $structure;
+			}
 			exit;
 
 		}
