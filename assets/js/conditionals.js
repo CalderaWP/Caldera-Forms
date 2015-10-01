@@ -1,3 +1,4 @@
+var calders_forms_check_conditions, calders_forms_init_conditions;
 (function($){
 
 	// IE8 compatibility
@@ -21,8 +22,8 @@
 		};
 	}
 
-	function calders_forms_check_conditions( inst_id ){
-		
+	calders_forms_check_conditions = function( inst_id ){
+
 		if( typeof caldera_conditionals[inst_id] === "undefined"){
 			return;
 		}
@@ -65,7 +66,7 @@
 						for( var i = 0; i<compareelement.length; i++){							
 							comparefield.push(compareelement[i].value);
 						}
-					}					
+					}
 					switch(lines[lid].compare) {
 						case 'is':
 						if(comparefield.length){
@@ -184,8 +185,7 @@
 		}	
 	}
 	
-	if(typeof caldera_conditionals !== 'undefined'){
-		
+	calders_forms_init_conditions = function(){
 		jQuery('.caldera_forms_form').on('change keyup', '[data-field]', function(e){
 			
 			var form 			= $(this).closest('.caldera_forms_form').prop('id');
@@ -196,6 +196,12 @@
 		// init
 		$('.caldera_forms_form').each( function(){
 			calders_forms_check_conditions( $(this).closest('.caldera_forms_form').prop('id') );
-		} );
+		} );		
+	}
+
+	if(typeof caldera_conditionals !== 'undefined'){
+		
+		calders_forms_init_conditions();
+
 	}
 })(jQuery);
