@@ -246,9 +246,8 @@ function cf_ajax_register_scripts($classes, $form){
 	add_filter('caldera_forms_render_form_attributes', 'cf_ajax_setatts', 10, 2);
 
 	// enqueue scripts
-	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script( 'cfajax-baldrick', CFCORE_URL . 'assets/js/jquery.baldrick.min.js', array('jquery'), CFCORE_VER, true );
-	wp_enqueue_script( 'cfajax-core', plugin_dir_url(__FILE__) . 'js/ajax-core.min.js', array('jquery'), CFCORE_VER, true );
+	wp_enqueue_script( 'cf-baldrick' );
+	wp_enqueue_script( 'cf-ajax' );
 
 	$classes[] = 'cfajax-trigger';
 

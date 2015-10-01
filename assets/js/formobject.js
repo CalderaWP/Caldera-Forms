@@ -132,10 +132,29 @@ $.fn.formJSON = function(){
       var trigger = $( this );
       if( !trigger.data('form') ){return;}
       var modal = trigger.calderaModal({
+        modal : trigger.data('form'),
+        width: 100,
+        height: 100,
         content : function(){
-          return $.get( '/api/cf/' + trigger.data('form') );
+          $.get( '/api/cf/' + trigger.data('form') + '/', function(res){
+            var modalWrapper = $('#' + trigger.data('form') + '_calderaModalContent');
+            modal.config.width = 500;
+            modal.resize();
+            modalWrapper.html( res );
+            resBaldrickTriggers();
+
+            $(document).on('cf.modal cf.remove cf.add cf.submission', function(){              
+              modal.config.height = modalWrapper.outerHeight() + modal.config.padding;
+              modal.config.width = 500;
+              modal.resize();
+              console.log('sd');
+            });
+            $(document).trigger('cf.modal');
+          } );
+          return '<div class="caldera-grid cf_processing" style="width: 75px; height: 75px;"></div>';
         }
       });
+
 
 
     });

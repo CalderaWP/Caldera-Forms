@@ -105,6 +105,7 @@
 		calderaModals[ modalId ].modal.css( {
 			width		: modalWidth	
 		} );
+		
 		if( calderaModals[ modalId ].config.sticky && calderaModals[ modalId ].config.minimized ){
 			var toggle = {},
 				minimizedPosition = calderaModals[ modalId ].title.outerHeight() - calderaModals[ modalId ].modal.outerHeight();
@@ -134,7 +135,7 @@
 
 			calderaBackdrop.fadeIn( calderaModals[ modalId ].config.speed );
 		}
-
+		calderaModals[ modalId ].resize = positionModals;
 		return calderaModals; 
 	}
 
