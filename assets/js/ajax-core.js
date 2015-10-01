@@ -70,7 +70,9 @@ jQuery(function($){
 							wrap.append('<span class="help-block caldera_ajax_error_block">' + obj.data.fields[i] + '</span>');
 					}
 				}
-
+				// trigger global event
+				$( document ).trigger( 'cf.submission' );
+				$( document ).trigger( 'cf.' + obj.data.type );
 
 				//custom_callback
 				// was modal?
