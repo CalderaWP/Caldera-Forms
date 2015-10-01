@@ -270,7 +270,7 @@ function cf_ajax_setatts($atts, $form){
 		'data-load-class' 	=>	'cf_processing',
 		'data-post-disable' =>	$post_disable,
 		'data-action'		=>	'cf_process_ajax_submit',
-		'data-request'		=>	home_url( '/api/cf/' . $form['ID'] ),		
+		'data-request'		=>	home_url( '/cf-api/' . $form['ID'] ),		
 	);
 	
 	if( !empty( $form['custom_callback'] ) ){

@@ -136,7 +136,7 @@ $.fn.formJSON = function(){
         width: 100,
         height: 100,
         content : function(){
-          $.get( '/api/cf/' + trigger.data('form') + '/', function(res){
+          $.get( '/cf-api/' + trigger.data('form') + '/', function(res){
             var modalWrapper = $('#' + trigger.data('form') + '_calderaModalContent');
             modal.config.width = 500;
             modal.resize();
@@ -147,7 +147,6 @@ $.fn.formJSON = function(){
               modal.config.height = modalWrapper.outerHeight() + modal.config.padding;
               modal.config.width = 500;
               modal.resize();
-              console.log('sd');
             });
             $(document).trigger('cf.modal');
           } );

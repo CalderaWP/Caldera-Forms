@@ -181,8 +181,8 @@ class Caldera_Forms {
 		add_rewrite_tag('%cf_api%', '([^&]+)');
 		add_rewrite_tag('%cf_entry%', '([^&]+)');
 		// INIT API
-		add_rewrite_rule('^api/cf/([^/]*)/([^/]*)/?','index.php?cf_api=$matches[1]&cf_entry=$matches[2]','top');
-		add_rewrite_rule('^api/cf/([^/]*)/?','index.php?cf_api=$matches[1]','top');
+		add_rewrite_rule('^cf-api/([^/]*)/([^/]*)/?','index.php?cf_api=$matches[1]&cf_entry=$matches[2]','top');
+		add_rewrite_rule('^cf-api/([^/]*)/?','index.php?cf_api=$matches[1]','top');
 		
 		// check update version
 		/*
