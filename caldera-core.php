@@ -6,6 +6,7 @@
   Author: David Cramer
   Version: 1.3.1
   Author URI: http://digilab.co.za
+  Text Domain: caldera-forms
  */
 
 //initilize plugin
