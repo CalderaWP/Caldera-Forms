@@ -22,12 +22,7 @@ if($field['config']['type'] == 'next' || $field['config']['type'] == 'prev'){
 <?php
 ob_start();
 ?>
-<script>
-
-function filter_stuffs( data ){
-	console.log( data );
-}
-
+<script>	
 	jQuery( function($){
 
 		$(document).on('click dblclick', '#<?php echo $field_id; ?>', function( e ){
@@ -38,4 +33,4 @@ function filter_stuffs( data ){
 </script>
 <?php
 	$script_template = ob_get_clean();
-	$grid->append( $script_template, $location );
+	$grid->append( $script_template, $location );	
