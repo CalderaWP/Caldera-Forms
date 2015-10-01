@@ -33,6 +33,8 @@ include_once CFCORE_PATH . 'includes/filter_addon_plugins.php';
 include_once CFCORE_PATH . 'processors/classes/load.php';
 include_once CFCORE_PATH . 'processors/classes/get_data.php';
 
+// init internals of CF urls
+add_action( 'init', array( 'Caldera_Forms', 'init_cf_internal' ) );
 // table builder
 register_activation_hook( __FILE__, array( 'Caldera_Forms', 'activate_caldera_forms' ) );
 

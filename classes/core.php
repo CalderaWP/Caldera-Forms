@@ -42,8 +42,6 @@ class Caldera_Forms {
 
 		// Load plugin text domain
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
-		// init internals of CF
-		add_action( 'init', array( $this, 'init_cf_internal' ) );
 
 		add_action( 'template_redirect', array( $this, 'api_handler' ) );
 
@@ -79,8 +77,6 @@ class Caldera_Forms {
 		// modal shortcode
 		add_shortcode( 'caldera_form_modal', array( $this, 'render_modal_form') );
 		add_action( 'wp_footer', array( $this, 'render_footer_modals') );
-
-		register_activation_hook( __FILE__, array( $this, 'activate_caldera_forms' ) );
 
 	}
 
@@ -180,7 +176,7 @@ class Caldera_Forms {
 	 * Setup internals / AKA activate stufs
 	 *
 	 */
-	public function init_cf_internal() {
+	public static function init_cf_internal() {
 		
 		add_rewrite_tag('%cf_api%', '([^&]+)');
 		add_rewrite_tag('%cf_entry%', '([^&]+)');
@@ -204,18 +200,21 @@ class Caldera_Forms {
 	 */
 	public static function activate_caldera_forms(){
 		global $wpdb;
+		
+		// ensure urls are there
+		self::init_cf_internal();
 
 		$version = get_option('_calderaforms_lastupdate');
+		
+		// ensure rewrites
+		flush_rewrite_rules();
 
 		if(!empty($version) ){
 			if( version_compare($version, CFCORE_VER) === 0 ){ // no change
 				return;
 			}
 		}
-		// ensure urls are there
-		self::init_cf_internal();
-
-		flush_rewrite_rules();
+		
 		update_option('_calderaforms_lastupdate',CFCORE_VER);
 
 		$tables = $wpdb->get_results("SHOW TABLES", ARRAY_A);
@@ -3622,6 +3621,8 @@ class Caldera_Forms {
 			'dynamic'	=>	CFCORE_URL . 'assets/js/formobject.min.js',
 			'modals'	=>	CFCORE_URL . 'assets/js/caldera-modals.min.js',
 			'init'		=>	CFCORE_URL . 'assets/js/frontend-script-init.min.js',
+			'baldrick'	=>	CFCORE_URL . 'assets/js/jquery.baldrick.min.js',
+			'ajax'		=>	CFCORE_URL . 'assets/js/ajax-core.min.js',
 			'field'	=>	CFCORE_URL . 'assets/js/fields.min.js',			
 			'conditionals' => CFCORE_URL . 'assets/js/conditionals.min.js',
 		);
@@ -4809,7 +4810,7 @@ class Caldera_Forms {
 			return;
 		}
 
-		if( isset( $atts[ 'modal' ]) && $atts[ 'modal' ] ) {
+		if( isset( $atts[ 'modal' ] ) && $atts[ 'modal' ] ) {
 			$form = self::get_form( $atts[ 'id' ] );
 			if( ! is_array( $form ) ) {
 				return;
@@ -4821,6 +4822,7 @@ class Caldera_Forms {
 
 			$title = __( sprintf( 'Click to open the form %1s in a modal',  $form[ 'name' ] ), 'caldera-forms' );
 			$form = sprintf( '<a href="#" class="caldera-forms-modal" data-form="%1s" title="%2s">%3s</a>', $form[ 'ID' ], $title, $content );
+			wp_enqueue_script( 'cf-dynamic' );
 		}else{
 			$form = self::render_form( $atts );
 		}
