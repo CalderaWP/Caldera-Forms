@@ -10,12 +10,6 @@ jQuery(function($){
 			method			:	'POST',
 			before			: function(el, ev){
 
-				//if( ! $(el).isValid({}, {}, false) ){
-					//ev.preventDefault();
-					//return false;
-				//}
-				
-
 				var form	=	$(el),
 					buttons = 	form.find(':submit');
 				
