@@ -167,7 +167,7 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 					jQuery(document).trigger('cf.remove');
 				}
 			}else if (action === 'enable'){
-				if(!target.html().length){
+				if(!target.html().length){					
 					target.html(template).trigger('cf.add');
 					jQuery(document).trigger('cf.add').trigger('cf.enable');
 				}else{
@@ -177,6 +177,7 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 				if(!target.html().length){
 					target.html(template).trigger('cf.remove');
 					jQuery(document).trigger('cf.remove').trigger('cf.disable');
+					jQuery('[data-field="' + field + '"]').prop('disabled', 'disabled');
 				}else{
 					target_field.prop('disabled', 'disabled');
 				}
