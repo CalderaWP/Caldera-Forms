@@ -3625,6 +3625,7 @@ class Caldera_Forms {
 			'ajax'		=>	CFCORE_URL . 'assets/js/ajax-core.min.js',
 			'field'	=>	CFCORE_URL . 'assets/js/fields.min.js',			
 			'conditionals' => CFCORE_URL . 'assets/js/conditionals.min.js',
+			'validator' => CFCORE_URL . 'assets/js/jquery.form-validator.min.js',
 		);
 		
 		$script_style_urls = array();
@@ -4756,6 +4757,7 @@ class Caldera_Forms {
 		do_action('caldera_forms_render_end', $form);
 
 		wp_enqueue_script( 'cf-field' );
+		wp_enqueue_script( 'cf-validator' );		
 		wp_enqueue_script( 'cf-init' );
 
 		/**

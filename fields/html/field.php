@@ -4,6 +4,7 @@
 
 // magics!
 preg_match_all("/%(.+?)%/", $field['config']['default'], $hastags);
+$bindfields = array();
 if(!empty($hastags[1])){
 	$binds = array();
 

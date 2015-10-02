@@ -14,6 +14,10 @@ var cf_jsfields_init;
 	jQuery('document').ready(function(){
 		// check for init function
 		cf_jsfields_init();
+
+		$.validate({
+    		modules : 'html5'
+		});
 	});
 	// modals activation
 	jQuery(document).on('click', '.cf_modal_button', function(e){
