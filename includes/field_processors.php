@@ -33,7 +33,7 @@ function cf_handle_file_upload($entry, $field, $form){
 			$types = explode(',',$field['config']['allowed']);
 
 			foreach($types as &$type){
-				$type=trim($type);
+				$type = trim( trim( $type,'.' ) );
 			}
 			foreach( (array) $_FILES[$field['ID']]['name'] as $file_name ){
 				if( empty( $file_name ) ){
