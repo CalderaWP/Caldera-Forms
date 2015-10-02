@@ -59,9 +59,15 @@
 	</form>
 </script>
 <script type="text/html" id="new-form-tmpl">
+		{{#if clone}}
+		<?php
+		do_action('caldera_forms_clone_form_template_start');
+		?>
+		{{else}}
 		<?php
 		do_action('caldera_forms_new_form_template_start');
 		?>
+		{{/if}}
 		<div class="caldera-config-group">
 			<label for=""><?php echo __('Form Name', 'caldera-forms'); ?></label>
 			<div class="caldera-config-field">
@@ -74,10 +80,15 @@
 				<textarea class="block-input field-config" name="description" value=""></textarea>
 			</div>
 		</div>
-		{{#if clone}}<input type="hidden" name="clone" value="{{clone}}">{{/if}}
+		{{#if clone}}<input type="hidden" name="clone" value="{{clone}}">
+		<?php
+		do_action('caldera_forms_clone_form_template_end');
+		?>
+		{{else}}
 		<?php
 		do_action('caldera_forms_new_form_template_end');
 		?>
+		{{/if}}
 </script>
 <script type="text/html" id="forms-list-alt-tmpl">
 
