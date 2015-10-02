@@ -16,6 +16,11 @@
 		<input type="text" class="block-input field-config" name="{{_name}}[class]" value="{{class}}">
 	</div>
 </div>
+<div class="caldera-config-group">
+	<div class="caldera-config-field">
+		<label for="{{_id}}_label"><input id="{{_id}}_label" type="checkbox" class="field-config" name="{{_name}}[label_space]" value="1" {{#if label_space}}checked="checked"{{/if}}> <?php _e('Add Label Space', 'caldera-forms'); ?> </label>
+	</div>
+</div>
 <div id="event{{_id}}" style="display:{{#is type value="button"}}block{{else}}none{{/is}};">
 	
 	<div class="caldera-config-group">
