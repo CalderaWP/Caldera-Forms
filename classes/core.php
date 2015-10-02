@@ -4822,8 +4822,16 @@ class Caldera_Forms {
 				$content = $form[ 'name' ];
 			}
 
+			$tag_atts = sprintf( 'data-form="%1s"', $form['ID'] );
+			if( !empty( $atts['width'] ) ){
+				$tag_atts .= sprintf( ' data-width="%1s"', $atts['width'] );
+			}
+			if( !empty( $atts['height'] ) ){
+				$tag_atts .= sprintf( ' data-height="%1s"', $atts['height'] );
+			}
+
 			$title = __( sprintf( 'Click to open the form %1s in a modal',  $form[ 'name' ] ), 'caldera-forms' );
-			$form = sprintf( '<a href="#" class="caldera-forms-modal" data-form="%1s" title="%2s">%3s</a>', $form[ 'ID' ], $title, $content );
+			$form = sprintf( '<a href="#" class="caldera-forms-modal" %1s title="%2s">%3s</a>', $tag_atts, $title, $content );
 			wp_enqueue_script( 'cf-dynamic' );
 		}else{
 			$form = self::render_form( $atts );

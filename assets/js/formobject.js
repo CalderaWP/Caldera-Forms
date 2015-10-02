@@ -138,14 +138,17 @@ $.fn.formJSON = function(){
         content : function(){
           $.get( '/cf-api/' + trigger.data('form') + '/', function(res){
             var modalWrapper = $('#' + trigger.data('form') + '_calderaModalContent');
-            modal.config.width = 500;
+            modal.config.width = trigger.data('width') ? trigger.data('width') : 500;
             modal.resize();
             modalWrapper.html( res );
             resBaldrickTriggers();
 
-            $(document).on('cf.modal cf.remove cf.add cf.submission', function(){              
-              modal.config.height = modalWrapper.outerHeight() + modal.config.padding;
-              modal.config.width = 500;
+            $(document).on('cf.modal cf.remove cf.add cf.submission', function(){                            
+              if( trigger.data('height') ){
+                modal.config.hegiht = trigger.data('height')
+              }else{
+                modal.config.height = modalWrapper.outerHeight() + modal.config.padding;
+              }
               modal.resize();
             });
             $(document).trigger('cf.modal');
