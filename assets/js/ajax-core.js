@@ -9,11 +9,11 @@ jQuery(function($){
 			request			:	'./',
 			method			:	'POST',
 			before			: function(el, ev){
-				
-				if( ! $(el).isValid({}, {}, false) ){
-					ev.preventDefault();
-					return false;
-				}
+
+				//if( ! $(el).isValid({}, {}, false) ){
+					//ev.preventDefault();
+					//return false;
+				//}
 				
 
 				var form	=	$(el),

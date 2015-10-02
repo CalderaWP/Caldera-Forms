@@ -12,12 +12,8 @@ var cf_jsfields_init;
 	};	
 
 	$('document').ready(function(){
-		// check for init function
-		cf_jsfields_init();
-
-		$.validate({
-    		modules : 'html5'
-		});
+		// check for init function		
+		cf_jsfields_init();		
 	});
 
 	// if pages, disable enter
