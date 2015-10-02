@@ -1194,7 +1194,6 @@ class Caldera_Forms {
 					"template"	=>	CFCORE_PATH . "fields/recaptcha/config.php",
 					"preview"	=>	CFCORE_PATH . "fields/recaptcha/preview.php",
 					"not_supported"	=>	array(
-						'hide_label',
 						'caption',
 						'required'
 					),

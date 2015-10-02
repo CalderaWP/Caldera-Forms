@@ -1,3 +1,5 @@
+<input type="hidden" value="1" name="config[fields][{{_id}}][required]" class="field-config">
+
 <p class="description" style="text-align:center;"><?php _e('reCaptcha required keys from Google.', 'caldera-forms'); ?><a href="https://www.google.com/recaptcha" target="_blank"> Visit reCAPTCHA</a></p>
 <div class="caldera-config-group">
 	<label><?php _e('Site Key', 'caldera-forms'); ?></label>
