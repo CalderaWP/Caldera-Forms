@@ -138,7 +138,7 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 						data-page="1"
 
 						><?php echo __('Entries', 'caldera-forms'); ?></a> | </span><?php } ?>
-						<input type="hidden" id="form-export-<?php echo $form_id; ?>" value='{ "formid" : "<?php echo $form_id; ?>", "nonce" : "<?php echo wp_create_nonce( 'cf_del_frm' ); ?>" }'>
+						<input type="hidden" id="form-export-<?php echo $form_id; ?>" value='{ "formslug" : "<?php echo sanitize_title( $form['name'] ); ?>", "formid" : "<?php echo $form_id; ?>", "nonce" : "<?php echo wp_create_nonce( 'cf_del_frm' ); ?>" }'>
 						<?php if( empty( $form['_external_form'] ) ){ ?><span class="export"><a class="form-control ajax-trigger" 
 							<?php 
 								// build exporter buttons
@@ -147,7 +147,8 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 									'data-modal-autoclose' => 'export',
 								);
 							?>
-							data-modal="export" 
+							data-modal="export"
+							data-modal-height="400"
 							data-modal-title="<?php echo esc_attr( __('Export Form', 'caldera-forms') ); ?>" 
 							data-request="#form-export-<?php echo $form_id; ?>" 
 							data-type="json"

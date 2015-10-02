@@ -22,7 +22,13 @@
 			<div class="caldera-config-group">
 				<label><?php echo __('Form ID', 'caldera-forms'); ?></label>
 				<div class="caldera-config-field">
-					<input type="text" class="block-input field-config" data-format="key" name="form_id" value="{{formid}}" required="required">
+					<input type="text" class="block-input field-config" data-format="key" name="form_id" value="{{formslug}}" required="required">
+				</div>
+			</div>
+			<div class="caldera-config-group">
+				<label><?php echo __('Pin to Admin', 'caldera-forms'); ?></label>
+				<div class="caldera-config-field">
+					<label><input type="checkbox" name="pin_menu" value="1"> <?php _e("Set form to be pinned to Admin Menu", "caldera-forms"); ?></label>
 				</div>
 			</div>
 			<div class="caldera-config-group">
