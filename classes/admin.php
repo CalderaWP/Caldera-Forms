@@ -1198,13 +1198,33 @@ class Caldera_Forms_Admin {
 				header("Content-Disposition: attachment; filename=\"" . sanitize_file_name( strtolower( $form['name'] ) ) . "-export.json\";" );
 				echo json_encode($form);
 			}else{
+
+				$form_id = sanitize_key( $_GET['form_id'] );
+
 				header("Content-Type: application/php");
-				header("Content-Disposition: attachment; filename=\"" . sanitize_file_name( strtolower( $form['name'] ) ) . "-export.php\";" );
+				header("Content-Disposition: attachment; filename=\"" . sanitize_file_name( strtolower( $form_id ) ) . "-include.php\";" );
 				echo '<?php' . "\r\n";
 				echo "/**\r\n * Caldera Forms - PHP Export \r\n * {$form['name']} \r\n * @version    " . CFCORE_VER . "\r\n * @license   GPL-2.0+\r\n * \r\n */\r\n";
-				$structure = "add_filter( 'caldera_forms_get_form-{$form['ID']}', function(){\r\n return " . var_export( $form, true ) . ";\r\n" . '} );' . "\r\n";
+
+				$structure = 'add_filter( "caldera_forms_get_forms", function( $forms ){' . "\r\n";
+  				$structure .= "\t" . '$forms["' . $form_id . '"] = apply_filters( "caldera_forms_get_form-' . $form_id . '", array() );' . "\r\n";
+ 				$structure .= "\t" . 'return $forms;' . "\r\n";
+				$structure .= "} );\r\n\r\n";
+
+
+				$structure .= "add_filter( 'caldera_forms_get_form-{$form_id}', function(){\r\n return " . var_export( $form, true ) . ";\r\n" . '} );' . "\r\n";
 				// cleanups because I'm me
 				$structure = str_replace( 'array (', 'array(', $structure );
+				$structure = str_replace( $form['ID'], $form_id, $structure );
+				// switch field IDs
+				if( !empty( $_GET['convert_slugs'] ) ){
+					if ( !empty( $form['fields'] ) ){
+						foreach( $form['fields'] as $field_id=>$field ){
+							$structure = str_replace( $field_id, $field['slug'], $structure );
+						}
+					}
+				}
+
 				echo $structure;
 			}
 			exit;

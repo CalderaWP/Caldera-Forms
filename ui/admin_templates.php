@@ -5,19 +5,52 @@
 </script>
 
 <script type="text/html" id="cf-export-template">
+		<input type="hidden" name="export-form" value="{{formid}}">
+		<input type="hidden" name="cal_del" value="{{nonce}}">
 
-<div data-tab="<?php echo esc_attr( __( 'Standard Export', 'caldera-forms' ) ); ?>">
-	<h3 style="margin: 7px 0px; color: rgb(67, 67, 67);"><?php _e('Standard Export'); ?></h3>
-	<p><?php _e('This gives you a .json file that can be imported into Caldera Forms.'); ?></p>
-	<a class="button" href="<?php echo admin_url( 'admin.php?page=caldera-forms&export-form={{formid}}&cal_del={{nonce}}' ); ?>"><?php _e('Export Form', 'caldera-forms'); ?></a>
+		<div class="caldera-config-group">
+			<label><?php echo __('Export Type', 'caldera-forms'); ?></label>
+			<div class="caldera-config-field">
+				<select class="form-export-type" name="format" style="width: 230px;">
+					<option value="json"><?php _e('Backup / Importable (json)' , 'caldera-forms' ); ?></option>
+					<option value="php"><?php _e('PHP include File' , 'caldera-forms' ); ?></option>
+				</select>
+			</div>
+		</div>
+		<p class="description" id="json_export_option"><?php _e('This gives you a .json file that can be imported into Caldera Forms.'); ?></p>
+		<div style="display:none;" id="php_export_options">
+			<div class="caldera-config-group">
+				<label><?php echo __('Form ID', 'caldera-forms'); ?></label>
+				<div class="caldera-config-field">
+					<input type="text" class="block-input field-config" data-format="key" name="form_id" value="{{formid}}" required="required">
+				</div>
+			</div>
+			<div class="caldera-config-group">
+				<label><?php echo __('Field Slugs', 'caldera-forms'); ?></label>
+				<div class="caldera-config-field">
+					<label><input type="checkbox" name="convert_slugs" value="1"> <?php _e("Convert Field ID's to use field slugs", "caldera-forms"); ?></label>
+				</div>
+			</div>
+			<hr>
+			<p class="description"><?php _e('This gives you a hardcoded .php file that can be included in projects. It includes the correct filter for the ID specific form allowing you to easily use the form by simply including the file.'); ?></p>
+			<p class="description"><?php _e('This is not a backup and cannot be imported.'); ?></p>
 
-</div>
-<div data-tab="<?php echo esc_attr( __( 'PHP Export', 'caldera-forms' ) ); ?>">
-	<h3 style="margin: 7px 0px; color: rgb(67, 67, 67);"><?php _e('PHP Export'); ?></h3>
-	<p><?php _e('This gives you a hardcoded .php file that can be included in projects. It includes the correct filter for the ID specific form allowing you to easily use the form by simply including the file.'); ?></p>
-	<p><?php _e('This is not a backup and cannot be imported.'); ?></p>
+		</div>
 
-	<a class="button" href="<?php echo admin_url( 'admin.php?page=caldera-forms&export-form={{formid}}&cal_del={{nonce}}&format=php' ); ?>"><?php _e('Export as PHP', 'caldera-forms'); ?></a>
+		{{#script}}
+		jQuery( function( $ ){
+			$(document).on('change', '.form-export-type', function(){
+				if( this.value === 'php' ){
+					$('#json_export_option').slideUp(100);
+					$('#php_export_options').slideDown(100);
+				}else{
+					$('#php_export_options').slideUp(100);
+					$('#json_export_option').slideDown(100);
+				}
+			})
+		});
+
+		{{/script}}
 </div>
 
 </script>

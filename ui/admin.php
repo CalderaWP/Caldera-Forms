@@ -139,7 +139,21 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 
 						><?php echo __('Entries', 'caldera-forms'); ?></a> | </span><?php } ?>
 						<input type="hidden" id="form-export-<?php echo $form_id; ?>" value='{ "formid" : "<?php echo $form_id; ?>", "nonce" : "<?php echo wp_create_nonce( 'cf_del_frm' ); ?>" }'>
-						<?php if( empty( $form['_external_form'] ) ){ ?><span class="export"><a class="form-control ajax-trigger" data-modal="export" data-modal-title="<?php echo esc_attr( __('Export Form', 'caldera-forms') ); ?>" data-request="#form-export-<?php echo $form_id; ?>" data-type="json" data-template="#cf-export-template" href="#export"><?php echo __('Export', 'caldera-forms'); ?></a> | </span><?php } ?>
+						<?php if( empty( $form['_external_form'] ) ){ ?><span class="export"><a class="form-control ajax-trigger" 
+							<?php 
+								// build exporter buttons
+								$buttons = array(
+									'data-request' => 'cf_build_export',
+									'data-modal-autoclose' => 'export',
+								);
+							?>
+							data-modal="export" 
+							data-modal-title="<?php echo esc_attr( __('Export Form', 'caldera-forms') ); ?>" 
+							data-request="#form-export-<?php echo $form_id; ?>" 
+							data-type="json"
+							data-modal-buttons="<?php echo esc_attr( __( 'Export Form', 'caldera-forms' ) ); ?>|<?php echo esc_attr( json_encode( $buttons ) ); ?>"
+							data-template="#cf-export-template"
+							href="#export"><?php echo __('Export', 'caldera-forms'); ?></a> | </span><?php } ?>
 						<span><a class="ajax-trigger" href="#clone" data-request="start_new_form" data-modal-buttons='<?php echo $modal_new_form; ?>' data-clone="<?php echo $form_id; ?>" data-modal-width="600" data-modal-height="400" data-load-class="none" data-modal="new_form" data-modal-title="<?php echo __('Clone Form', 'caldera-forms'); ?>" data-template="#new-form-tmpl"><?php echo __('Clone', 'caldera-forms'); ?></a><?php if( empty( $form['_external_form'] ) ){ ?> | </span>
 						<span class="trash form-delete"><a class="form-control" data-confirm="<?php echo __('This will delete this form permanently. Continue?', 'caldera-forms'); ?>" href="admin.php?page=caldera-forms&delete=<?php echo $form_id; ?>&cal_del=<?php echo wp_create_nonce( 'cf_del_frm' ); ?>"><?php echo __('Delete'); ?></a></span><?php } ?>
 
@@ -238,7 +252,16 @@ function start_new_form(obj){
 	}
 	return {};
 }
+
+var cf_build_export;
 jQuery( function( $ ){
+
+	cf_build_export = function( el ){
+		var export_object = $('#export_baldrickModal').serialize();
+		console.log( "<?php echo esc_attr( admin_url('admin.php?page=caldera-forms' ) ); ?>&" + export_object );
+		window.location = "<?php echo esc_attr( admin_url('admin.php?page=caldera-forms' ) ); ?>&" + export_object;
+	}
+
 	var notices = $('.error,.notice,.notice-error');
 
 	if( notices.length ){
