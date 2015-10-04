@@ -1539,7 +1539,25 @@ class Caldera_Forms {
 			$field['config']['option'] = array();
 			switch($field['config']['auto_type']){
 				case 'post_type':
-					$posts = get_posts( array('post_type' => $field['config']['post_type'], 'post_status' => 'publish', 'posts_per_page' => -1) );
+
+					if( ! isset( $field[ 'config' ][ 'orderby_tax' ] ) ) {
+						$field[ 'config' ][ 'orderby_post' ] = 'date';
+					}
+
+					if( ! isset( $field[ 'config' ][ 'order' ] ) ) {
+						$field[ 'config' ][ 'order' ] = 'ASC';
+					}
+
+					$args = array(
+						'post_type' => $field['config']['post_type'],
+						'post_status' => 'publish',
+						'posts_per_page' => -1,
+						'order' => $field[ 'config' ][ 'order' ],
+						'orderby' => $field[ 'config' ][ 'orderby_post' ]
+					);
+
+					$posts = get_posts( $args );
+					
 					if( $field[ 'config' ][ 'value_field' ] === 'id' ){
 						$field[ 'config' ][ 'value_field' ] = 'ID';
 					}elseif( $field[ 'config' ][ 'value_field' ] === 'name' ){
@@ -1585,7 +1603,22 @@ class Caldera_Forms {
 					if( $field[ 'config' ][ 'value_field' ] === 'id' ){
 						$field[ 'config' ][ 'value_field' ] = 'term_id';
 					}
-					$terms = get_terms( $field['config']['taxonomy'], 'orderby=count&hide_empty=0' );
+
+					if( ! isset( $field[ 'config' ][ 'orderby_tax' ] ) ) {
+						$field[ 'config' ][ 'orderby_tax' ] = 'count';
+					}
+
+					if( ! isset( $field[ 'config' ][ 'order' ] ) ) {
+						$field[ 'config' ][ 'order' ] = 'ASC';
+					}
+
+					$args = array(
+						'orderby' => $field[ 'config' ][ 'orderby_tax' ],
+						'order' => $field[ 'config' ][ 'order' ],
+						'hide_empty' => 0
+					);
+					$terms = get_terms( $field['config']['taxonomy'], $args );
+
 					/**
 					 * Filter which field is used for the VALUE when getting autopopulate option values when autopopulating options from post types
 					 *
