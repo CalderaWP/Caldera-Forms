@@ -386,11 +386,21 @@ class Caldera_Forms {
 		// check for 
 		foreach($form['fields'] as $field_id=>$field){
 			if($field['type'] == 'file' && isset($field['config']['attach'])){
-
 				$dir = wp_upload_dir();
 				$file = str_replace($dir['baseurl'], $dir['basedir'], self::get_field_data($field_id, $form));
 				if( is_String( $file ) && file_exists($file)){
-					$mail['attachments'][] = $file;	
+					$mail['attachments'][] = $file;
+					return $mail;
+				}else{
+					if( isset( $data[ $field_id ] ) && filter_var( $data[ $field_id ], FILTER_VALIDATE_URL) ) {
+						$mail['attachments'][] = $data[ $field_id ];
+					}elseif( isset( $_POST[ $field_id ] ) && filter_var( $_POST[ $field_id ], FILTER_VALIDATE_URL )  && 0 === strpos( $_POST[ $field_id ], $dir['url'] ) ) {
+						$mail['attachments'][] = $_POST[ $field_id ];
+
+					}else{
+						continue;
+
+					}
 				}
 				
 			}
