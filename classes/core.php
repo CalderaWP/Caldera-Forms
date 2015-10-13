@@ -768,8 +768,15 @@ class Caldera_Forms {
 		}
 		// set header
 		$headers[] = 'From: ' . $config['sender_name'] . ' <' . $config['sender_email'] . '>';
+		
+		if( ! isset( $config[ 'html'] ) || true == $config['html'] ){
+			$headers[] = "Content-type: text/html";
+			$message = wpautop( self::do_magic_tags( $message ) );
 
-		$message = self::do_magic_tags( $message );
+		}else{
+			$message = self::do_magic_tags( $message );
+		}
+
 
 		// setup mailer
 		$subject = $config['subject'];		
