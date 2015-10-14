@@ -1536,6 +1536,14 @@ class Caldera_Forms {
 
 		if( !empty( $form['conditional_groups']['conditions'][ $field['conditions']['type'] ] ) ){			
 			$group = $form['conditional_groups']['conditions'][ $field['conditions']['type'] ];
+			if( ! isset( $field['conditions']['group'] ) ){
+				$field['conditions']['group'] = array();
+			}
+
+			if( ! isset( $group['group'] ) ) {
+				$group['group'] = array();
+			}
+
 			$field['conditions']['type'] = $group['type'];
 			$field['conditions']['group'] = $group['group'];
 		}
