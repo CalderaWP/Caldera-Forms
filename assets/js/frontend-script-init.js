@@ -15,6 +15,10 @@ var cf_jsfields_init;
 		// check for init function		
 		cf_jsfields_init();		
 	});
+	if( typeof cfValidatorLocal !== 'undefined' ){
+		window.Parsley.setLocale( cfValidatorLocal );
+	}
+	$('.caldera_forms_form').parsley();
 
 	// if pages, disable enter
 	if( $('.caldera-form-page').length ){

@@ -3649,7 +3649,8 @@ class Caldera_Forms {
 			'ajax'		=>	CFCORE_URL . 'assets/js/ajax-core.min.js',
 			'field'	=>	CFCORE_URL . 'assets/js/fields.min.js',			
 			'conditionals' => CFCORE_URL . 'assets/js/conditionals.min.js',
-			'polyfiller' => CFCORE_URL . 'assets/js/polyfiller.js',
+			'validator' => CFCORE_URL . 'assets/js/parsley.min.js',
+			'polyfiller' => CFCORE_URL . 'assets/js/polyfiller.min.js',
 		);
 		
 		$script_style_urls = array();
@@ -4094,9 +4095,6 @@ class Caldera_Forms {
 
 		do_action('caldera_forms_render_start', $form);
 
-		// fallback for function based rendering in case it missed detection
-		wp_enqueue_style( 'cf-field-styles' );
-
 		$style_includes = get_option( '_caldera_forms_styleincludes' );
 
 		/**
@@ -4115,6 +4113,11 @@ class Caldera_Forms {
 		if(!empty($style_includes['alert'])){
 			wp_enqueue_style( 'cf-alert-styles' );
 		}
+
+		// fallback for function based rendering in case it missed detection
+		wp_enqueue_style( 'cf-field-styles' );
+
+
 
 		include_once CFCORE_PATH . "classes/caldera-grid.php";
 
@@ -4781,7 +4784,32 @@ class Caldera_Forms {
 		do_action('caldera_forms_render_end', $form);
 
 		wp_enqueue_script( 'cf-field' );
-		wp_enqueue_script( 'cf-polyfiller' );		
+		wp_enqueue_script( 'cf-polyfiller' );
+		// check to see language and include the language add on
+		$locale = get_locale();
+		if( $locale !== 'en_US' ){
+			// not default lets go find if there is a translation available
+			if( file_exists( CFCORE_PATH . 'assets/js/i18n/' . $locale . '.js' ) ){
+				// nice- its there
+				$locale_file = $locale;
+			}elseif ( file_exists( CFCORE_PATH . 'assets/js/i18n/' . strtolower( $locale ) . '.js' ) ){
+				$locale_file = strtolower( $locale );
+			}elseif ( file_exists( CFCORE_PATH . 'assets/js/i18n/' . strtolower( str_replace('_', '-', $locale ) ) . '.js' ) ){
+				$locale_file = strtolower( str_replace('_', '-', $locale ) );
+			}elseif ( file_exists( CFCORE_PATH . 'assets/js/i18n/' . strtolower( substr( $locale,0, 2 ) ) . '.js' ) ){
+				$locale_file = strtolower( substr( $locale,0, 2 ) );
+			}elseif ( file_exists( CFCORE_PATH . 'assets/js/i18n/' . strtolower( substr( $locale,3 ) ) . '.js' ) ){
+				$locale_file = strtolower( substr( $locale,3 ) );
+			}
+			if( !empty( $locale_file ) ){
+				wp_enqueue_script( 'cf-validator-i18n', CFCORE_URL . 'assets/js/i18n/' . $locale_file . '.js', array( 'cf-validator' ) );
+				wp_localize_script( 'cf-validator-i18n', 'cfValidatorLocal', basename( $locale_file ) );
+			}
+
+		}
+
+		wp_enqueue_script( 'cf-validator' );
+
 		wp_enqueue_script( 'cf-init' );
 
 		/**
