@@ -9,16 +9,25 @@ var cf_jsfields_init;
 				window[ftype.data('type') + '_init'](ftype.prop('id'), ftype[0]);
 			}
 		});
+
+		if( typeof cfValidatorLocal !== 'undefined' ){
+			window.Parsley.setLocale( cfValidatorLocal );
+		}
+		if( typeof cfModals !== 'undefined' && typeof cfModals.config !== 'undefined' && typeof cfModals.config.validator_lang !== 'undefined' ){
+			window.Parsley.setLocale( cfModals.config.validator_lang );
+		}
+		window.Parsley.on('field:validated', function() {
+			setTimeout( function(){$(document).trigger('cf.error');}, 15 );
+		});
+		$('.caldera_forms_form').parsley();
+
 	};	
 
 	$('document').ready(function(){
 		// check for init function		
 		cf_jsfields_init();		
 	});
-	if( typeof cfValidatorLocal !== 'undefined' ){
-		window.Parsley.setLocale( cfValidatorLocal );
-	}
-	$('.caldera_forms_form').parsley();
+
 
 	// if pages, disable enter
 	if( $('.caldera-form-page').length ){
@@ -47,51 +56,54 @@ var cf_jsfields_init;
 
 		var clicked = $(this),
 			page_box = clicked.closest('.caldera-form-page'),
-			form 	 = clicked.closest('.caldera-grid'),
-			page	 = page_box.data('formpage'),
+			form 	 = clicked.closest('form.caldera_forms_form'),
+			page	 = page_box.data('formpage') ? page_box.data('formpage') : clicked.data('page') ,
 			breadcrumb = $('.breadcrumb[data-form="' + form.prop('id') + '"]'),
 			next,
 			prev,
 			fields,
+			run = true,
 			checks = {};
 		if( !form.length ){
 			return;
 		}
 
-		// pre validate
-		if(clicked.data('pagenav')){
-			fields = $('#' + clicked.data('pagenav') + ' .caldera-form-page').find('[data-field]');
-			form = clicked.closest('.caldera_forms_form');
-		}else{
-			fields = form.find('.caldera-form-page:visible').find('[data-field]');				
-		}
-		for(var f = 0; f < fields.length; f++){
-			if( $(fields[f]).is(':radio,:checkbox') ){
-				if( !$(fields[f]).hasClass('option-required') ){continue}
-				if( !checks[$(fields[f]).data('field')] ){
-					checks[$(fields[f]).data('field')] = [];
-				}
-				checks[$(fields[f]).data('field')].push($(fields[f]).prop('checked'));
-			}else{
-				if($(fields[f]).prop('required')){
-					if(!fields[f].value.length){
-						e.preventDefault();
-						//nope submit form to indicate a fail.
-						form.find('[type="submit"]').trigger('click');
-						return;
-					}
-					if(fields[f].type === 'email'){
-						if(fields[f].value.indexOf('@') < 0 || fields[f].value.length <= fields[f].value.indexOf('@') + 1){
-							e.preventDefault();
-							//nope submit form to indicate a fail.
-							form.find('[type="submit"]').trigger('click');
-							return;
+		fields = form.find('[data-field]');
+		
+		form.find('.has-error[data-page]').removeClass('has-error');
 
+
+		for(var f = 0; f < fields.length; f++){
+			var this_field = $(fields[f]);
+			if( this_field.is(':radio,:checkbox') ){
+				if( !this_field.hasClass('option-required') ){continue}
+				if( !checks[this_field.data('field')] ){
+					checks[this_field.data('field')] = [];
+				}
+				checks[this_field.data('field')].push(this_field.prop('checked'));
+			}else{
+				if(this_field.prop('required')){
+					//console.log( this_field.is(":visible") );
+					if( true !== this_field.parsley().validate() ){
+						// ye nope!
+						if( this_field.is(":visible") ){
+							// on this page.
+							e.preventDefault();
+							return;
+						}else{
+							// not on this page
+							//get page and highlight if lower than this one (aka backwards not forwards)
+							var that_page = parseFloat( this_field.closest('.caldera-form-page[data-formpage]').data('formpage') );
+							if(  that_page < parseFloat(page) ){
+								form.find('[data-page="' + that_page + '"]').addClass('has-error');
+							}
 						}
+						run = false;
 					}
 				}
 			}
 		}
+
 
 		for( var ch in checks ){
 			if( checks[ch].indexOf(true) < 0){

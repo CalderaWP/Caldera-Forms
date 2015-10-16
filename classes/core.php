@@ -3644,16 +3644,40 @@ class Caldera_Forms {
 		$script_urls = array(
 			'dynamic'	=>	CFCORE_URL . 'assets/js/formobject.min.js',
 			'modals'	=>	CFCORE_URL . 'assets/js/caldera-modals.min.js',
-			'init'		=>	CFCORE_URL . 'assets/js/frontend-script-init.min.js',
 			'baldrick'	=>	CFCORE_URL . 'assets/js/jquery.baldrick.min.js',
 			'ajax'		=>	CFCORE_URL . 'assets/js/ajax-core.min.js',
 			'field'	=>	CFCORE_URL . 'assets/js/fields.min.js',			
 			'conditionals' => CFCORE_URL . 'assets/js/conditionals.min.js',
+			'validator-i18n' => null,
 			'validator' => CFCORE_URL . 'assets/js/parsley.min.js',
 			'polyfiller' => CFCORE_URL . 'assets/js/polyfiller.min.js',
+			'init'		=>	CFCORE_URL . 'assets/js/frontend-script-init.min.js',			
 		);
 		
 		$script_style_urls = array();
+
+		// check to see language and include the language add on
+		$locale = get_locale();
+		if( $locale !== 'en_US' ){
+			// not default lets go find if there is a translation available
+			if( file_exists( CFCORE_PATH . 'assets/js/i18n/' . $locale . '.js' ) ){
+				// nice- its there
+				$locale_file = $locale;
+			}elseif ( file_exists( CFCORE_PATH . 'assets/js/i18n/' . strtolower( $locale ) . '.js' ) ){
+				$locale_file = strtolower( $locale );
+			}elseif ( file_exists( CFCORE_PATH . 'assets/js/i18n/' . strtolower( str_replace('_', '-', $locale ) ) . '.js' ) ){
+				$locale_file = strtolower( str_replace('_', '-', $locale ) );
+			}elseif ( file_exists( CFCORE_PATH . 'assets/js/i18n/' . strtolower( substr( $locale,0, 2 ) ) . '.js' ) ){
+				$locale_file = strtolower( substr( $locale,0, 2 ) );
+			}elseif ( file_exists( CFCORE_PATH . 'assets/js/i18n/' . strtolower( substr( $locale,3 ) ) . '.js' ) ){
+				$locale_file = strtolower( substr( $locale,3 ) );
+			}
+			if( !empty( $locale_file ) ){
+				$script_urls['validator-i18n'] = CFCORE_URL . 'assets/js/i18n/' . $locale_file . '.js';
+				$script_style_urls['config']['validator_lang'] = $locale_file;
+			}
+
+		}
 
 		/**
 		 * Filter script URLS for Caldera Forms on the frontend, before they are enqueued.
@@ -3675,10 +3699,16 @@ class Caldera_Forms {
 
 		// register styles
 		foreach( $script_style_urls['style'] as $style_key => $style_url ){
+			if( empty( $style_url ) ){
+				continue;
+			}
 			wp_register_style( 'cf-' . $style_key . '-styles', $style_url, array(), CFCORE_VER );
 		}
 		// register scripts
 		foreach( $script_style_urls['script'] as $script_key => $script_url ){
+			if( empty( $script_url ) ){
+				continue;
+			}
 			wp_register_script( 'cf-' . $script_key, $script_url, array('jquery'), CFCORE_VER, true );
 		}
 
@@ -4785,30 +4815,8 @@ class Caldera_Forms {
 
 		wp_enqueue_script( 'cf-field' );
 		wp_enqueue_script( 'cf-polyfiller' );
-		// check to see language and include the language add on
-		$locale = get_locale();
-		if( $locale !== 'en_US' ){
-			// not default lets go find if there is a translation available
-			if( file_exists( CFCORE_PATH . 'assets/js/i18n/' . $locale . '.js' ) ){
-				// nice- its there
-				$locale_file = $locale;
-			}elseif ( file_exists( CFCORE_PATH . 'assets/js/i18n/' . strtolower( $locale ) . '.js' ) ){
-				$locale_file = strtolower( $locale );
-			}elseif ( file_exists( CFCORE_PATH . 'assets/js/i18n/' . strtolower( str_replace('_', '-', $locale ) ) . '.js' ) ){
-				$locale_file = strtolower( str_replace('_', '-', $locale ) );
-			}elseif ( file_exists( CFCORE_PATH . 'assets/js/i18n/' . strtolower( substr( $locale,0, 2 ) ) . '.js' ) ){
-				$locale_file = strtolower( substr( $locale,0, 2 ) );
-			}elseif ( file_exists( CFCORE_PATH . 'assets/js/i18n/' . strtolower( substr( $locale,3 ) ) . '.js' ) ){
-				$locale_file = strtolower( substr( $locale,3 ) );
-			}
-			if( !empty( $locale_file ) ){
-				wp_enqueue_script( 'cf-validator-i18n', CFCORE_URL . 'assets/js/i18n/' . $locale_file . '.js', array( 'cf-validator' ) );
-				wp_localize_script( 'cf-validator-i18n', 'cfValidatorLocal', basename( $locale_file ) );
-			}
-
-		}
-
 		wp_enqueue_script( 'cf-validator' );
+		wp_enqueue_script( 'cf-validator-i18n' );
 
 		wp_enqueue_script( 'cf-init' );
 

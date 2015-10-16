@@ -143,13 +143,14 @@ $.fn.formJSON = function(){
             modalWrapper.html( res );
             resBaldrickTriggers();
 
-            $(document).on('cf.modal cf.remove cf.add cf.submission', function(){                            
+            $(document).on('cf.modal cf.remove cf.add cf.submission cf.pagenav cf.error', function(){                            
               if( trigger.data('height') ){
                 modal.config.hegiht = trigger.data('height')
               }else{
                 modal.config.height = modalWrapper.outerHeight() + modal.config.padding;
               }
               modal.resize();
+              console.log( 's' );
             });
             $(document).trigger('cf.modal');
           } );
