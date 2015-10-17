@@ -6,14 +6,31 @@ Tested up to: 4.3
 Stable tag: 1.3.0.2
 License: GPLv2
 
-Create beautiful, responsive forms with a simple drag and drop editor.
+Build forms differently.  So easy, it’s fun!
+
 
 == Description ==
-A diffrent kind of WordPress form builder. With an intuitive drag and drop interface -– based on a responsive grid -- and a wide range of add-ons, it’s never been easier to create forms for your WordPress site that look great on any device, thanks to Caldera Forms. This free plugin includes all of the form types you want, mail and redirect processors, entry logging and AJAX submissions.
+Create beautiful, responsive forms with a simple drag and drop editor.
+
+Caldera Forms is a diffrent kind of WordPress form builder. With its intuitive drag and drop interface, it's never been easier and less stressful to create forms for your WordPress site that look awesome on any device.  The visual editor simplifies form building for WordPress. Set up your form with multiple columns, add additional pages, and funnel user responses with conditional logic to get more robust data and relevant information from your customers and visitors.
+
+Whether you are creating a simple contact form or a complex system, you'll love the drag and drop editor. Your site's visitors will love the totally responsive, live-updating forms.
 
 Easy enough for everyday users to create forms, and powerful enough for PHP experts to extend.
 
 A free plugin by <a href="https://CalderaWP.com" title="CalderaWP: Transform Your WordPress Experience">CalderaWP</a>.
+
+
+= Get Help With Caldera Forms =
+Caldera Forms is free to uses, if you need any help, we provide services to ensure you can get the most out of Caldera Forms.
+
+
+* <strong>Priority Support</strong> Direct support from our team, your questions answered within one business day. <a href="https://calderawp.com/support#priority-support">Learn more here.</a>
+* <strong>Form Creation</strong> Got a really trick form and not a lot of time? <a href="https://calderawp.com/caldera-forms-services#cf-dfy">We can help.</a>
+* <strong>Customization</strong> Need amn integration with a third-party service or to modify the default behaviour? <a href="https://calderawp.com/caldera-forms-services#cf-custom-code">Let us write you some code.</a>
+
+<em>Note:  We do not provide free support via WordPress.org. Premium add-on purchases include priority support for Caldera Forms.</em>
+
 
 Pippin Williamson of Easy Digital Downloads, Restrict Content Pro and AffiliateWP gives [Caldera Forms a 5 star rating](https://themesurgeons.com/wordpress-plugins-recommendations/)!
 
