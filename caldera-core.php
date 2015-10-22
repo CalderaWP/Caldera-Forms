@@ -7,6 +7,8 @@
   Version: 1.3.1
   Author URI: https://calderawp.com
   Text Domain: caldera-forms
+  GitHub Plugin URI: https://github.com/Desertsnowman/Caldera-Forms/
+  GitHub Branch:     current-dev
  */
 
 //initilize plugin

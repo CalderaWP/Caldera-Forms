@@ -123,6 +123,8 @@ none yet.
 
 == Changelog ==
 
+= 1.3.1 =
+* Add support for Github Updater Plugin
 
 = 1.3.0.2 ( September 10, 2015 ) =
 
