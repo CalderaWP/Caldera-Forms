@@ -2905,6 +2905,11 @@ class Caldera_Forms {
 		// init filter
 		$form = apply_filters( 'caldera_forms_submit_get_form', $form);
 
+
+		// start action
+		do_action('caldera_forms_submit_start', $form);
+
+
 		if(!empty($form['fields'])){
 			foreach($form['fields'] as $field_id=>$field){
 				$field = apply_filters( 'caldera_forms_render_get_field', $field, $form);
@@ -2970,10 +2975,6 @@ class Caldera_Forms {
 		if(empty($process_id)){
 			$process_id = uniqid('_cf_process_');
 		}
-
-
-		// start action
-		do_action('caldera_forms_submit_start', $form);
 
 		// initialize data
 		$entry_id = false;
