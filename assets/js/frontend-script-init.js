@@ -19,7 +19,12 @@ var cf_jsfields_init;
 		window.Parsley.on('field:validated', function() {
 			setTimeout( function(){$(document).trigger('cf.error');}, 15 );
 		});
-		$('.caldera_forms_form').parsley();
+		if( typeof resBaldrickTriggers === 'undefined' ){
+			$('.caldera_forms_form').parsley({
+				errorsWrapper : '<span class="help-block caldera_ajax_error_block"></span>',
+				errorTemplate : '<span></span>'
+			});
+		}
 
 	};	
 

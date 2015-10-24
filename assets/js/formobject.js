@@ -150,7 +150,6 @@ $.fn.formJSON = function(){
                 modal.config.height = modalWrapper.outerHeight() + modal.config.padding;
               }
               modal.resize();
-              console.log( 's' );
             });
             $(document).trigger('cf.modal');
           } );

@@ -12,7 +12,15 @@ jQuery(function($){
 
 				var form	=	$(el),
 					buttons = 	form.find(':submit');
-				
+
+				var validate = form.parsley({
+					errorsWrapper : '<span class="help-block caldera_ajax_error_block"></span>',
+					errorTemplate : '<span></span>'
+				});
+				if( !validate.isValid() ){
+					return false;
+				}
+
 				if( !form.data( 'postDisable' ) ){
 					buttons.prop('disabled',true);
 				}
