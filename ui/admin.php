@@ -9,6 +9,7 @@ $forms = Caldera_Forms::get_forms();
 $forms = apply_filters( 'caldera_forms_admin_forms', $forms );
 
 $style_includes = get_option( '_caldera_forms_styleincludes' );
+$entry_perpage = get_option( '_caldera_forms_entry_perpage', 20 );
 if(empty($style_includes)){
 	$style_includes = array(
 		'alert'	=>	true,
@@ -44,13 +45,13 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 		&nbsp;&nbsp;
 		</li>
 		<li class="caldera-forms-headtext">
-			<?php echo __('Front-end Style Includes', 'caldera-forms'); ?>
+			<?php echo __('Render forms with:', 'caldera-forms'); ?>
 		</li>
 		<li class="caldera-forms-toolbar-item">
 			<div class="toggle_option_preview">
-				<button type="button" title="<?php echo __('Includes Bootstrap 3 styles on the frontend for form alert notices', 'caldera-forms'); ?>" data-action="save_cf_setting" data-active-class="none" data-set="alert" data-callback="update_setting_toggle" class="ajax-trigger setting_toggle_alert button <?php if(!empty($style_includes['alert'])){ ?>button-primary<?php } ?>"><?php echo __('Alert' , 'caldera-forms'); ?></button>
-				<button type="button" title="<?php echo __('Includes Bootstrap 3 styles on the frontend for form fields and buttons', 'caldera-forms'); ?>" data-action="save_cf_setting" data-active-class="none" data-set="form" data-callback="update_setting_toggle" class="ajax-trigger setting_toggle_form button <?php if(!empty($style_includes['form'])){ ?>button-primary<?php } ?>"><?php echo __('Form' , 'caldera-forms'); ?></button>
-				<button type="button" title="<?php echo __('Includes Bootstrap 3 styles on the frontend for form grid layouts', 'caldera-forms'); ?>" data-action="save_cf_setting" data-active-class="none" data-set="grid" data-callback="update_setting_toggle" class="ajax-trigger setting_toggle_grid button <?php if(!empty($style_includes['grid'])){ ?>button-primary<?php } ?>"><?php echo __('Grid' , 'caldera-forms'); ?></button>
+				<button type="button" title="<?php echo __('Includes Bootstrap 3 styles on the frontend for form alert notices', 'caldera-forms'); ?>" data-action="save_cf_setting" data-active-class="none" data-set="alert" data-callback="update_setting_toggle" class="ajax-trigger setting_toggle_alert button <?php if(!empty($style_includes['alert'])){ ?>button-primary<?php } ?>"><?php echo __('Alert Styles' , 'caldera-forms'); ?></button>
+				<button type="button" title="<?php echo __('Includes Bootstrap 3 styles on the frontend for form fields and buttons', 'caldera-forms'); ?>" data-action="save_cf_setting" data-active-class="none" data-set="form" data-callback="update_setting_toggle" class="ajax-trigger setting_toggle_form button <?php if(!empty($style_includes['form'])){ ?>button-primary<?php } ?>"><?php echo __('Form Styles' , 'caldera-forms'); ?></button>
+				<button type="button" title="<?php echo __('Includes Bootstrap 3 styles on the frontend for form grid layouts', 'caldera-forms'); ?>" data-action="save_cf_setting" data-active-class="none" data-set="grid" data-callback="update_setting_toggle" class="ajax-trigger setting_toggle_grid button <?php if(!empty($style_includes['grid'])){ ?>button-primary<?php } ?>"><?php echo __('Grid Structures' , 'caldera-forms'); ?></button>
 			</div>
 		</li>
 		<li class="caldera-forms-toolbar-item">
@@ -189,7 +190,9 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 do_action('caldera_forms_admin_templates');
 ?>
 <script type="text/javascript">
-
+function cf_set_limits( el ){
+	jQuery( el ).data('perpage', jQuery('#cf-entries-list-items').val() );
+}
 function set_form_state( obj ){
 	if( true === obj.data.success ){
 
@@ -275,6 +278,16 @@ jQuery( function( $ ){
 			$('.cf-notification-panel').slideToggle();
 		});
 	}
+	var ready_limit_change;
+	$(document).on('change', '#cf-entries-list-items', function(){
+		if( ready_limit_change ){
+			clearTimeout( ready_limit_change );
+		}
+		ready_limit_change = setTimeout( function(){
+			$('.status_toggles.button-primary').trigger('click');	
+		}, 280 );
+		
+	});
 });
 </script>
 <?php
