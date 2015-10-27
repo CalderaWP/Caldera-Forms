@@ -1,6 +1,6 @@
 <?php
 /*
- * Ajax Submissions addon- included 
+ * Ajax Submissions 
  */
 
 //add_filter('caldera_forms_render_grid_structure', 'cf_ajax_structures', 10, 2);
@@ -21,9 +21,7 @@ function cf_form_process_ajax(){
 	}
 
 	if(isset($_POST['_cf_verify']) && isset( $_POST['_cf_frm_id'] )){
-		//if(wp_verify_nonce( $_POST['_cf_verify'], 'caldera_forms_front' )){
 		Caldera_Forms::process_submission();
-		//}
 		exit;
 	}
 }

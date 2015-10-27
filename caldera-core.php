@@ -28,7 +28,7 @@ include_once CFCORE_PATH . 'classes/widget.php';
 include_once CFCORE_PATH . 'classes/sanitize.php';
 
 // includes
-include_once CFCORE_PATH . 'includes/cf-ajax/plugin.php';
+include_once CFCORE_PATH . 'includes/ajax.php';
 include_once CFCORE_PATH . 'includes/field_processors.php';
 include_once CFCORE_PATH . 'includes/custom_field_class.php';
 include_once CFCORE_PATH . 'includes/filter_addon_plugins.php';

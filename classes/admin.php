@@ -477,11 +477,14 @@ class Caldera_Forms_Admin {
 		}else{
 			$page = 1;
 		}
-
+		$entry_perpage = get_option( '_caldera_forms_entry_perpage', 20 );
 		if ( isset( $_POST[ 'perpage' ] ) && 0 < $_POST[ 'perpage' ] ) {
-			$perpage = absint( $_POST[ 'perpage' ] );
+			$perpage = absint( (int) $_POST[ 'perpage' ] );
+			if( $entry_perpage != $perpage ){
+				update_option( '_caldera_forms_entry_perpage', $perpage );
+			}			
 		}else{
-			$perpage = 20;
+			$perpage = $entry_perpage;
 		}
 
 		if ( isset( $_POST[ 'status' ] ) ) {
@@ -489,8 +492,6 @@ class Caldera_Forms_Admin {
 		}else{
 			$status = 'active';
 		}
-
-
 
 		$form = Caldera_Forms::get_form( $_POST['form'] );
 			
