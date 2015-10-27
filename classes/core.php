@@ -604,7 +604,7 @@ class Caldera_Forms {
 		}
 
 		// pull in the class
-		include_once CFCORE_PATH . 'classes/Caldera_Forms_Save_Final.php';
+		include_once CFCORE_PATH . 'classes/save.php';
 
 		if(! empty( $form[ 'db_support' ] ) ) {
 			Caldera_Forms_Save_Final::save_in_db( $form, $entryid );
@@ -2842,7 +2842,6 @@ class Caldera_Forms {
 	 */
 	static public function process_submission(){
 		global $post;
-		global $front_templates;
 		global $process_id;
 		global $form;
 		global $field_types;
@@ -3632,7 +3631,7 @@ class Caldera_Forms {
 	 */
 	static public function cf_init_system(){
 
-		global $post, $front_templates, $wp_query, $process_id, $form;
+		global $post, $wp_query, $process_id, $form;
 		
 		// setup script and style urls		
 		$style_urls = array(
@@ -3741,17 +3740,6 @@ class Caldera_Forms {
 			exit;
 			/// end form and redirect to submit page or result page.
 		}
-		/* just pull them in!
-		if(empty($post)){
-			if(isset($wp_query->queried_object)){
-				$post = $wp_query->queried_object;
-			}
-		}
-		if(empty($post)){
-			//cant find form;
-			return;
-		}*/
-
 
 	}
 

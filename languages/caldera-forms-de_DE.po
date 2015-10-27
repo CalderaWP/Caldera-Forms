@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../classes/Caldera_Forms_Save_Final.php:152 ../ui/panels/emailer.php:4
+#: ../classes/save.php:152 ../ui/panels/emailer.php:4
 msgid "Caldera Forms Notification"
 msgstr "Benachrichtigung von Caldera Forms"
 
