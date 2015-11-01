@@ -35,6 +35,31 @@ include_once CFCORE_PATH . 'includes/filter_addon_plugins.php';
 include_once CFCORE_PATH . 'processors/classes/load.php';
 include_once CFCORE_PATH . 'processors/classes/get_data.php';
 
+// Create a helper function for easy SDK access.
+function caldera_forms_fs() {
+	global $caldera_forms_fs;
+	if ( ! isset( $caldera_forms_fs ) ) {
+		// Include Freemius SDK.
+		require_once dirname(__FILE__) . '/freemius/start.php';
+
+		$caldera_forms_fs = fs_dynamic_init( array(
+			'id'                => '79',
+			'slug'              => 'caldera-forms',
+			'menu_slug'         => 'caldera-forms',
+			'public_key'        => 'pk_b39a9e9e420be1aa98e7154c7fcd1',
+			'is_live'           => true,
+			'is_premium'        => true,
+			'has_addons'        => false,
+			'has_paid_plans'    => false,
+		) );
+	}
+
+	return $caldera_forms_fs;
+}
+
+// Init Freemius.
+caldera_forms_fs();
+
 // init internals of CF urls
 add_action( 'init', array( 'Caldera_Forms', 'init_cf_internal' ) );
 // table builder
