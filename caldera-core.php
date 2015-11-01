@@ -48,7 +48,7 @@ function caldera_forms_fs() {
 			'menu_slug'         => 'caldera-forms',
 			'public_key'        => 'pk_b39a9e9e420be1aa98e7154c7fcd1',
 			'is_live'           => true,
-			'is_premium'        => true,
+			'is_premium'        => false,
 			'has_addons'        => false,
 			'has_paid_plans'    => false,
 		) );
