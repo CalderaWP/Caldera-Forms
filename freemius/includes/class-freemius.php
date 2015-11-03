@@ -952,6 +952,11 @@
 		 * @param mixed $api_result
 		 */
 		function _add_connectivity_issue_message( $api_result ) {
+			if ( $this->_enable_anonymous ) {
+				// Don't add message if can run anonymously.
+				return;
+			}
+
 			if ( ! function_exists( 'wp_nonce_url' ) ) {
 				require_once( ABSPATH . 'wp-includes/functions.php' );
 			}
@@ -967,6 +972,36 @@
 			     isset( $api_result->error )
 			) {
 				switch ( $api_result->error->code ) {
+					case 'curl_missing':
+						$message = sprintf(
+							__fs( 'x-requires-access-to-api', 'freemius' ) . ' ' .
+							__fs( 'curl-missing-message' ) . ' ' .
+							' %s',
+							'<b>' . $this->get_plugin_name() . '</b>',
+							sprintf(
+								'<ol id="fs_firewall_issue_options"><li>%s</li><li>%s</li><li>%s</li></ol>',
+								sprintf(
+									'<a class="fs-resolve" data-type="curl" href="#"><b>%s</b></a>%s',
+									__fs( 'curl-missing-no-clue-title' ),
+									' - ' . sprintf(
+										__fs( 'curl-missing-no-clue-desc' ),
+										'<a href="mailto:' . $admin_email . '">' . $admin_email . '</a>'
+									)
+								),
+								sprintf(
+									'<b>%s</b> - %s',
+									__fs( 'sysadmin-title' ),
+									__fs( 'curl-missing-sysadmin-desc' )
+								),
+								sprintf(
+									'<a href="%s"><b>%s</b></a>%s',
+									wp_nonce_url( 'plugins.php?action=deactivate&amp;plugin=' . $this->_plugin_basename . '&amp;plugin_status=' . 'all' . '&amp;paged=' . '1' . '&amp;s=' . '', 'deactivate-plugin_' . $this->_plugin_basename ),
+									__fs( 'deactivate-plugin-title' ),
+									' - ' . __fs( 'deactivate-plugin-desc', 'freemius' )
+								)
+							)
+						);
+						break;
 					case 'cloudflare_ddos_protection':
 						$message = sprintf(
 							__fs( 'x-requires-access-to-api', 'freemius' ) . ' ' .
@@ -1017,7 +1052,7 @@
 								),
 								sprintf(
 									'<b>%s</b> - %s',
-									__fs( 'squid-sysadmin-title' ),
+									__fs( 'sysadmin-title' ),
 									sprintf(
 										__fs( 'squid-sysadmin-desc' ),
 										// We use a filter since the plugin might require additional API connectivity.
@@ -1499,6 +1534,11 @@
 			}
 
 			if ( is_admin() ) {
+				global $pagenow;
+				if ( 'plugins.php' === $pagenow ) {
+					$this->hook_plugin_action_links();
+				}
+
 				if ( $this->is_addon() ) {
 					if ( ! $this->is_parent_plugin_installed() ) {
 						$this->_admin_notices->add(
@@ -4216,6 +4256,10 @@
 		 * @since  1.0.9
 		 */
 		function _prepare_admin_menu() {
+			if ( ! $this->is_on() ) {
+				return;
+			}
+
 			if ( ! $this->has_api_connectivity() && ! $this->enable_anonymous() ) {
 				$this->remove_menu_item();
 			} else {
@@ -4570,6 +4614,10 @@
 		}
 
 		function _add_default_submenu_items() {
+			if ( ! $this->is_on() ) {
+				return;
+			}
+
 			if ( $this->is_registered() ) {
 				if ($this->is_submenu_item_visible('support')) {
 					$this->add_submenu_link_item(
@@ -7017,10 +7065,6 @@
 				'key'      => $key,
 				'external' => $external
 			);
-
-			if ( ! $this->is_plugin_action_links_hooked() ) {
-				$this->hook_plugin_action_links();
-			}
 		}
 
 		/**
