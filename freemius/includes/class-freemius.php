@@ -14,7 +14,7 @@
 		/**
 		 * @var string
 		 */
-		public $version = '1.1.2';
+		public $version = '1.1.3';
 
 		/**
 		 * @since 1.0.1
@@ -133,6 +133,11 @@
 		 * @since 1.0.5
 		 */
 		private $_licenses = false;
+		/**
+		 * @var string[]bool
+		 * @since 1.1.3
+		 */
+		private $_default_submenu_items;
 
 		/**
 		 * @var FS_Admin_Notice_Manager
@@ -1419,7 +1424,26 @@
 			}
 			$this->_plugin->secret_key = $secret_key;
 
-			$this->_menu_slug        = plugin_basename( isset( $plugin_info['menu_slug'] ) ? $plugin_info['menu_slug'] : $this->_slug );
+			$this->_menu_slug = plugin_basename(
+				isset( $plugin_info['menu_slug'] ) ?
+					$plugin_info['menu_slug'] :
+					( ( isset( $plugin_info['menu'] ) && $plugin_info['menu']['slug'] ) ?
+						$plugin_info['menu']['slug'] :
+						$this->_slug
+					)
+			);
+
+			$this->_default_submenu_items = array();
+			if ( is_null( $parent_id ) && isset( $plugin_info['menu'] ) ) {
+				$this->_default_submenu_items = array(
+					'contact' => $this->_get_bool_option( $plugin_info['menu'], 'contact', true ),
+					'support' => $this->_get_bool_option( $plugin_info['menu'], 'support', true ),
+					'account' => $this->_get_bool_option( $plugin_info['menu'], 'account', true ),
+					'pricing' => $this->_get_bool_option( $plugin_info['menu'], 'pricing', true ),
+					'addons'  => $this->_get_bool_option( $plugin_info['menu'], 'addons', true ),
+				);
+			}
+
 			$this->_has_addons       = $this->_get_bool_option( $plugin_info, 'has_addons', false );
 			$this->_has_paid_plans   = $this->_get_bool_option( $plugin_info, 'has_paid_plans', true );
 			$this->_is_org_compliant = $this->_get_bool_option( $plugin_info, 'is_org_compliant', true );
@@ -3991,12 +4015,13 @@
 				if ( $plugin_id != $this->_plugin->id ) {
 					// Add-on was installed - sync license right after install.
 					if ( $redirect && fs_redirect( fs_nonce_url( $this->_get_admin_page_url(
-						'account',
-						array(
-							'fs_action' => $this->_slug . '_sync_license',
-							'plugin_id' => $plugin_id
-						)
-					), $this->_slug . '_sync_license' ) ) ) {
+							'account',
+							array(
+								'fs_action' => $this->_slug . '_sync_license',
+								'plugin_id' => $plugin_id
+							)
+						), $this->_slug . '_sync_license' ) )
+					) {
 						exit();
 					}
 
@@ -4432,6 +4457,20 @@
 		}
 
 		/**
+		 * @author Vova Feldman (@svovaf)
+		 * @since  1.1.3
+		 *
+		 * @param string $id
+		 * @param bool   $default
+		 *
+		 * @return bool
+		 */
+		private function is_submenu_item_visible($id, $default = true)
+		{
+			return $this->_get_bool_option($this->_default_submenu_items, $id, $default);
+		}
+
+		/**
 		 * Add default Freemius menu items.
 		 *
 		 * @author Vova Feldman (@svovaf)
@@ -4452,7 +4491,9 @@
 							$this->get_plugin_name() . ' &ndash; ' . __fs( 'account' ),
 							'manage_options',
 							'account',
-							array( &$this, '_account_page_load' )
+							array( &$this, '_account_page_load' ),
+							10,
+							$this->is_submenu_item_visible('account')
 						);
 					}
 
@@ -4463,7 +4504,9 @@
 						$this->get_plugin_name() . ' &ndash; ' . __fs( 'contact-us' ),
 						'manage_options',
 						'contact',
-						array( &$this, '_clean_admin_content_section' )
+						array( &$this, '_clean_admin_content_section' ),
+						10,
+						$this->is_submenu_item_visible('contact')
 					);
 
 					if ( $this->_has_addons() ) {
@@ -4474,7 +4517,8 @@
 							'manage_options',
 							'addons',
 							array( &$this, '_addons_page_load' ),
-							WP_FS__LOWEST_PRIORITY - 1
+							WP_FS__LOWEST_PRIORITY - 1,
+							$this->is_submenu_item_visible('addons')
 						);
 					}
 
@@ -4489,7 +4533,7 @@
 						WP_FS__LOWEST_PRIORITY,
 						// If user don't have paid plans, add pricing page
 						// to support add-ons checkout but don't add the submenu item.
-						( $this->has_paid_plan() || ( isset( $_GET['page'] ) && $this->_get_menu_slug( 'pricing' ) == $_GET['page'] ) )
+						$this->is_submenu_item_visible('pricing') && ( $this->has_paid_plan() || ( isset( $_GET['page'] ) && $this->_get_menu_slug( 'pricing' ) == $_GET['page'] ) )
 					);
 				}
 			}
@@ -4527,13 +4571,15 @@
 
 		function _add_default_submenu_items() {
 			if ( $this->is_registered() ) {
-				$this->add_submenu_link_item(
-					__fs( 'support-forum' ),
-					'https://wordpress.org/support/plugin/' . $this->_slug,
-					'wp-support-forum',
-					'read',
-					50
-				);
+				if ($this->is_submenu_item_visible('support')) {
+					$this->add_submenu_link_item(
+						__fs( 'support-forum' ),
+						'https://wordpress.org/support/plugin/' . $this->_slug,
+						'wp-support-forum',
+						'read',
+						50
+					);
+				}
 			}
 		}
 

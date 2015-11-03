@@ -51,6 +51,12 @@ function caldera_forms_fs() {
 			'is_premium'        => false,
 			'has_addons'        => false,
 			'has_paid_plans'    => false,
+			'menu' => array(
+				'slug' => 'caldera-forms',
+				'contact' => false,
+				'support' => false,
+				'account' => false,
+			)
 		) );
 	}
 
