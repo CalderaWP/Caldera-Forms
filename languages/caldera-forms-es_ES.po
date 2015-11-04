@@ -955,37 +955,37 @@ msgstr "Clase Inactiva"
 msgid "Enable"
 msgstr "Activar"
 
-#: ../includes/ajax.php:36 ../includes/cf-ajax/ajax.php:36
+#: ../includes/ajax.php:36 ../includes/ajax.php:36
 msgid "Ajax Submissions"
 msgstr "Envío con Ajax"
 
-#: ../includes/ajax.php:38 ../includes/cf-ajax/ajax.php:38
+#: ../includes/ajax.php:38 ../includes/ajax.php:38
 msgid "Enable Ajax Submissions. (No page reloads)"
 msgstr "Activar envío a través de Ajax. (Sin cargar la página)"
 
-#: ../includes/ajax.php:44 ../includes/cf-ajax/ajax.php:44
+#: ../includes/ajax.php:44 ../includes/ajax.php:44
 msgid "Custom Callback"
 msgstr "Respuesta personalizada"
 
-#: ../includes/ajax.php:46 ../includes/cf-ajax/ajax.php:46
+#: ../includes/ajax.php:46 ../includes/ajax.php:46
 msgid "Add a custom Javascript callback handlers on submission."
 msgstr ""
 "Añade controladores de respuesta de JavaScript personalizados al enviar el "
 "formulario."
 
-#: ../includes/ajax.php:53 ../includes/cf-ajax/ajax.php:53
+#: ../includes/ajax.php:53 ../includes/ajax.php:53
 msgid "Inhibit Notices"
 msgstr "Inhibir Avisos"
 
-#: ../includes/ajax.php:55 ../includes/cf-ajax/ajax.php:55
+#: ../includes/ajax.php:55 ../includes/ajax.php:55
 msgid "Don't show default alerts (success etc.)"
 msgstr "No mostrar avisos predeterminados (envío OK, etc.)"
 
-#: ../includes/ajax.php:61 ../includes/cf-ajax/ajax.php:61
+#: ../includes/ajax.php:61 ../includes/ajax.php:61
 msgid "Callback Function"
 msgstr "Función de respuesta"
 
-#: ../includes/ajax.php:64 ../includes/cf-ajax/ajax.php:64
+#: ../includes/ajax.php:64 ../includes/ajax.php:64
 msgid ""
 "Javascript function to call on submission. Passed an object containing form "
 "submission result."
@@ -993,18 +993,18 @@ msgstr ""
 "Función JavaScript que será llamada al enviar el formulario. Pasa un objeto "
 "que contiene los resultados del envío del formulario."
 
-#: ../includes/ajax.php:89 ../includes/cf-ajax/ajax.php:89
+#: ../includes/ajax.php:89 ../includes/ajax.php:89
 msgid "Multiple Ajax Submissions"
 msgstr "Múltiples envíos con Ajax"
 
-#: ../includes/ajax.php:91 ../includes/cf-ajax/ajax.php:91
+#: ../includes/ajax.php:91 ../includes/ajax.php:91
 msgid "If set, form can be submitted multiple times with out a new page load."
 msgstr ""
 "Si está activo, el formulario puede ser enviado varias veces sin cargar la "
 "página."
 
 #: ../includes/ajax.php:145 ../includes/ajax.php:156
-#: ../includes/cf-ajax/ajax.php:145 ../includes/cf-ajax/ajax.php:156
+#: ../includes/ajax.php:145 ../includes/ajax.php:156
 #: ../processors/redirect/config.php:10
 msgid "Redirecting"
 msgstr "Redirección"

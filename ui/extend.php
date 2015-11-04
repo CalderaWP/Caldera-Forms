@@ -7,7 +7,6 @@
 		<li class="caldera-element-type-label">
 			<?php echo __('Extend', 'caldera-forms'); ?>
 		</li>
-		<li id="tab_license"><a href="#form-license-viewer">Licenses</a></li>
 	</ul>
 </div>
 
@@ -17,27 +16,7 @@
 </div>
 
 <div class="form-extend-page-wrap" id="form-extend-viewer" style="visibility:visible;"></div>
-<div class="form-extend-page-wrap" id="form-license-viewer" style="display:none;">
-	<div>
-		<em>
-			<?php _e( 'Note: We are currently moving Caldera Forms licenses to the CalderaWP License Manager. This panel will be removed in a future version of Caldera Forms.', 'caldera-forms' ); ?>
-			</em>
-	</div>
-	<?php
-	$addons = apply_filters( 'caldera_forms_get_active_addons', array() );
-	if(empty($addons)){
-		echo '<p class="description">' . __('No licensed addons installed.', 'caldera-forms') . '</p>';
-	}else{
-		foreach($addons as $slug=>$addon){
-			$plugin = get_plugin_data( $addon['file'] );		
-			if( !empty( $addon['template'] ) ){
-				include $addon['template'];
-			}
-		}
-	}
 
-	?>
-</div>
 
 <?php
 	do_action('caldera_forms_admin_templates');
