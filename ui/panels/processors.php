@@ -213,7 +213,7 @@ function build_processor_types($default = null){
 		global $form_processors;
 
 		foreach($form_processors as $processor_id=>$processor){
-			$icon = CFCORE_URL . "/assets/images/processor.png";
+			$icon = CFCORE_URL . "assets/images/processor.png";
 			if(!empty($processor['icon'])){
 				$icon = $processor['icon'];
 			}

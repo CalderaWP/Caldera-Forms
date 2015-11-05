@@ -883,7 +883,7 @@ do_action('caldera_forms_edit_end', $element);
 				$cats = explode(',', $config['category']);
 			}
 
-			$icon = CFCORE_URL . "/assets/images/field.png";
+			$icon = CFCORE_URL . "assets/images/field.png";
 			if(!empty($config['icon'])){
 				$icon = $config['icon'];
 			}
