@@ -563,7 +563,7 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 
 	</ul>
 
-	<div class="updated_notice_box"><?php _e( 'Updated Successfully', '{{core-slug}}' ); ?></div>
+	<div class="updated_notice_box"><?php _e( 'Updated Successfully', 'caldera-forms' ); ?></div>
 
 	<button class="button button-primary caldera-header-save-button" data-active-class="none" data-load-element="#save_indicator" type="button" disabled="disabled"><?php echo __('Update Form', 'caldera-forms'); ?><span id="save_indicator" class="spinner" style="position: absolute; right: -33px;"></span></button>	
 	<a class="button caldera-header-preview-button" target="_blank" href="<?php echo trailingslashit( get_home_url() ) . '?cf_preview=' . $element['ID']; ?>"><?php echo __('Preview Form', 'caldera-forms'); ?></a>
