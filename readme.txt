@@ -27,7 +27,7 @@ Caldera Forms is free to uses, if you need any help, we provide services to ensu
 
 * <strong>Priority Support</strong> Direct support from our team, your questions answered within one business day. <a href="https://calderawp.com/support#priority-support">Learn more here.</a>
 * <strong>Form Creation</strong> Got a really trick form and not a lot of time? <a href="https://calderawp.com/caldera-forms-services#cf-dfy">We can help.</a>
-* <strong>Customization</strong> Need amn integration with a third-party service or to modify the default behaviour? <a href="https://calderawp.com/caldera-forms-services#cf-custom-code">Let us write you some code.</a>
+* <strong>Customization</strong> Need an integration with a third-party service or to modify the default behaviour? <a href="https://calderawp.com/caldera-forms-services#cf-custom-code">Let us write you some code.</a>
 
 <em>Note:  We do not provide free support via WordPress.org. Premium add-on purchases include priority support for Caldera Forms.</em>
 
@@ -123,8 +123,24 @@ none yet.
 
 == Changelog ==
 
-= 1.3.1 =
-* Add support for Github Updater Plugin
+= 1.3.1 (November 5, 2015 ) =
+* BIG CHANGE: Implement parsley.js for improved client-side validation.
+* BIG CHANGE: New endpoints for processing forms.
+* FIXED: Validation issues in mobile Safari.
+* FIXED: Bug preventing mailer attachments when returning from Paypal.
+* FIXED: Bug where enter key could trigger submit from any page of a multi-page form in some circumstances/ browser.
+* FIXED: Recaptcha settings link opening in same window.
+* FIXED: Bug where CSS was being loaded in footer in some cases.
+* FIXED: Visual issue where datepick fields in Twenty Fifteen theme showed full width.
+* ADDED: Ability to set orderby field and order direction for auto-populated fields from UI.
+* ADDED: Ability to specifify allowed field types in file fields with or without dots.
+* ADDED: support for Github Updater Plugin
+* ADDED: caldera_forms_processor_value filter for changing value of a field from a processor.
+* ADDED: caldera_forms_manage_cap filter for managing all capabilities by context.
+* ADDED: HTML content type header to emails sent via autoresponder processor.
+* ADDED: caldera_forms_script_urls and caldera_forms_style_urls filters for modifying/ removing scripts and styles before enqueuing.
+* ADDED: Label space option to aid in horizontal alignment.
+
 
 = 1.3.0.2 ( September 10, 2015 ) =
 
@@ -139,7 +155,7 @@ none yet.
 * Fixed a bug that conflicted with WooCommerce v2.4.6
 * put back the "disable" condition
 * fixes "is greater" and "is smaller" condition bug that reverted to is
-* autopopulate select fields use ID correctly for post_type and ter_id for taxonomy
+* autopopulate select fields use ID correctly for post_type and term_id for taxonomy
 
 
 
