@@ -1,9 +1,9 @@
 === Caldera Forms ===
 Contributors: Desertsnowman, Shelob9
 Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress
-Requires at least: 3.9
-Tested up to: 4.3
-Stable tag: 1.3.0.2
+Requires at least: 4.0
+Tested up to: 4.4
+Stable tag: 1.3.1
 License: GPLv2
 
 Build forms differently.  So easy, it’s fun!
