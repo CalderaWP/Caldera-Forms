@@ -20,11 +20,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 define('CFCORE_PATH', plugin_dir_path(__FILE__));
 define('CFCORE_URL', plugin_dir_url(__FILE__));
-<<<<<<< HEAD
-define('CFCORE_VER', '1.3.1-b-1');
-=======
 define('CFCORE_VER', '1.3.1');
->>>>>>> current-dev
 define('CFCORE_EXTEND_URL', 'https://api.calderaforms.com/1.0/');
 
 include_once CFCORE_PATH . 'classes/core.php';
