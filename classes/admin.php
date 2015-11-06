@@ -1537,7 +1537,7 @@ class Caldera_Forms_Admin {
 					"responsive" => array(
 						"name" => __("Responsive", 'caldera-forms'),
 						"location" => "lower",
-						"label" => __("Resposive Settings", 'caldera-forms'),
+						"label" => __("Responsive Settings", 'caldera-forms'),
 						"repeat" => 0,
 						"fields" => array(
 							"break_point" => array(
