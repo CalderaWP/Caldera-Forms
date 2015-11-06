@@ -364,10 +364,11 @@ class Caldera_Forms_Save_Final {
 						unlink($csvfile['file']);
 					}
 				}
+				
 				/**
 				 * Fires main mailer completes
 				 *
-				 * @since 1.2.3
+				 * @since 1.3.1
 				 *
 				 * @param array $mail Email data
 				 * @param array $data Form entry data
