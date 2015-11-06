@@ -108,6 +108,8 @@ if(!isset($element['mailer']['enable_mailer'])){
 			</div>
 		</div>
 
+		<?php do_action( 'caldera_forms_mailer_config', $element ); ?>
+
 
 		<div class="caldera-config-group">
 			<label><?php echo __('Debug Mailer', 'caldera-forms'); ?></label>
@@ -119,10 +121,6 @@ if(!isset($element['mailer']['enable_mailer'])){
 				</p>
 			</div>
 		</div>
-
-
-
-		<?php do_action( 'caldera_forms_mailer_config', $element ); ?>
 
 	</div>
 </div>
