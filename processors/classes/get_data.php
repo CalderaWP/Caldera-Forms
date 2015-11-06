@@ -157,6 +157,19 @@ class Caldera_Forms_Processor_Get_Data {
 				$value = call_user_func( $args['sanatize'], $value );
 			}
 
+			/**
+			 * Filter value for field of processor
+			 *
+			 * @since 1.3.1
+			 *
+			 * @param mixed $value The value of the field.
+			 * @param string $field The name of the field.
+			 * @param array $args Config for this field.
+			 * @param array $config Processor config.
+			 * @param array $form Form config.
+			 */
+			$value = apply_filters( 'caldera_forms_processor_value', $value, $field, $args, $config, $form );
+
 			if ( ! empty( $value )  ) {
 				$this->values[ $field ] = $value;
 

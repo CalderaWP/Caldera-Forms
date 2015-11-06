@@ -1,7 +1,64 @@
 <script type="text/html" id="bulk-actions-active-tmpl">
 	<option selected="selected" value=""><?php echo __('Bulk Actions'); ?></option>
 	<option value="export"><?php echo __('Export Selected'); ?></option>
-	<?php if( current_user_can( 'manage_options' ) ){ ?><option value="trash"><?php echo __('Move to Trash'); ?></option><?php } ?>
+	<?php if( current_user_can( Caldera_Forms::get_manage_cap( 'manage' ) ) ){ ?><option value="trash"><?php echo __('Move to Trash'); ?></option><?php } ?>
+</script>
+
+<script type="text/html" id="cf-export-template">
+		<input type="hidden" name="export-form" value="{{formid}}">
+		<input type="hidden" name="cal_del" value="{{nonce}}">
+
+		<div class="caldera-config-group">
+			<label><?php echo __('Export Type', 'caldera-forms'); ?></label>
+			<div class="caldera-config-field">
+				<select class="form-export-type" name="format" style="width: 230px;">
+					<option value="json"><?php _e('Backup / Importable (json)' , 'caldera-forms' ); ?></option>
+					<option value="php"><?php _e('PHP include File' , 'caldera-forms' ); ?></option>
+				</select>
+			</div>
+		</div>
+		<p class="description" id="json_export_option"><?php _e('This gives you a .json file that can be imported into Caldera Forms.'); ?></p>
+		<div style="display:none;" id="php_export_options">
+			<div class="caldera-config-group">
+				<label><?php echo __('Form ID', 'caldera-forms'); ?></label>
+				<div class="caldera-config-field">
+					<input type="text" class="block-input field-config" data-format="key" name="form_id" value="{{formslug}}" required="required">
+				</div>
+			</div>
+			<div class="caldera-config-group">
+				<label><?php echo __('Pin to Admin', 'caldera-forms'); ?></label>
+				<div class="caldera-config-field">
+					<label><input type="checkbox" name="pin_menu" value="1"> <?php _e("Set form to be pinned to Admin Menu", "caldera-forms"); ?></label>
+				</div>
+			</div>
+			<div class="caldera-config-group">
+				<label><?php echo __('Field Slugs', 'caldera-forms'); ?></label>
+				<div class="caldera-config-field">
+					<label><input type="checkbox" name="convert_slugs" value="1"> <?php _e("Convert Field ID's to use field slugs", "caldera-forms"); ?></label>
+				</div>
+			</div>
+			<hr>
+			<p class="description"><?php _e('This gives you a hardcoded .php file that can be included in projects. It includes the correct filter for the ID specific form allowing you to easily use the form by simply including the file.'); ?></p>
+			<p class="description"><?php _e('This is not a backup and cannot be imported.'); ?></p>
+
+		</div>
+
+		{{#script}}
+		jQuery( function( $ ){
+			$(document).on('change', '.form-export-type', function(){
+				if( this.value === 'php' ){
+					$('#json_export_option').slideUp(100);
+					$('#php_export_options').slideDown(100);
+				}else{
+					$('#php_export_options').slideUp(100);
+					$('#json_export_option').slideDown(100);
+				}
+			})
+		});
+
+		{{/script}}
+</div>
+
 </script>
 <script type="text/html" id="bulk-actions-trash-tmpl">
 	<option selected="selected" value=""><?php echo __('Bulk Actions'); ?></option>
@@ -41,9 +98,15 @@
 	</form>
 </script>
 <script type="text/html" id="new-form-tmpl">
+		{{#if clone}}
+		<?php
+		do_action('caldera_forms_clone_form_template_start');
+		?>
+		{{else}}
 		<?php
 		do_action('caldera_forms_new_form_template_start');
 		?>
+		{{/if}}
 		<div class="caldera-config-group">
 			<label for=""><?php echo __('Form Name', 'caldera-forms'); ?></label>
 			<div class="caldera-config-field">
@@ -56,10 +119,15 @@
 				<textarea class="block-input field-config" name="description" value=""></textarea>
 			</div>
 		</div>
-		{{#if clone}}<input type="hidden" name="clone" value="{{clone}}">{{/if}}
+		{{#if clone}}<input type="hidden" name="clone" value="{{clone}}">
+		<?php
+		do_action('caldera_forms_clone_form_template_end');
+		?>
+		{{else}}
 		<?php
 		do_action('caldera_forms_new_form_template_end');
 		?>
+		{{/if}}
 </script>
 <script type="text/html" id="forms-list-alt-tmpl">
 

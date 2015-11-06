@@ -69,7 +69,10 @@ jQuery(document).ready(function($){
 
 	});
 
-
+	// bind slugs
+	$('body').on('keyup change', '[data-format="key"]', function(e){
+		this.value = this.value.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+	});
 
 
 });

@@ -88,6 +88,8 @@
   display: block;
 }
 .cfdatepicker table {
+  border: 0 none;
+  width: auto;
   margin: 0;
   -webkit-touch-callout: none;
   -webkit-user-select: none;

@@ -87,7 +87,7 @@ class Caldera_Forms_Admin {
 		add_filter( 'wp_fullscreen_buttons', array($this, 'shortcode_insert_button_fs' ), 11 );
 
 
-		if( current_user_can( 'manage_options' ) ){
+		if( current_user_can( Caldera_Forms::get_manage_cap( 'create' ) ) ){
 			// create forms
 			add_action("wp_ajax_create_form", array( $this, 'create_form') );
 		}
@@ -477,11 +477,14 @@ class Caldera_Forms_Admin {
 		}else{
 			$page = 1;
 		}
-
+		$entry_perpage = get_option( '_caldera_forms_entry_perpage', 20 );
 		if ( isset( $_POST[ 'perpage' ] ) && 0 < $_POST[ 'perpage' ] ) {
-			$perpage = absint( $_POST[ 'perpage' ] );
+			$perpage = absint( (int) $_POST[ 'perpage' ] );
+			if( $entry_perpage != $perpage ){
+				update_option( '_caldera_forms_entry_perpage', $perpage );
+			}			
 		}else{
-			$perpage = 20;
+			$perpage = $entry_perpage;
 		}
 
 		if ( isset( $_POST[ 'status' ] ) ) {
@@ -489,8 +492,6 @@ class Caldera_Forms_Admin {
 		}else{
 			$status = 'active';
 		}
-
-
 
 		$form = Caldera_Forms::get_form( $_POST['form'] );
 			
@@ -740,22 +741,22 @@ class Caldera_Forms_Admin {
 		$forms = Caldera_Forms::get_forms();
 
 		// get current user
-		if( current_user_can( 'manage_options' ) ){
+		if( current_user_can( Caldera_Forms::get_manage_cap() ) ){
 		
-			$this->screen_prefix[] = add_menu_page( __('Caldera Forms', 'caldera-forms'), __('Caldera Forms', 'caldera-forms'), 'manage_options', $this->plugin_slug, array( $this, 'render_admin' ), 'dashicons-cf-logo', 52.999 );
-			add_submenu_page( $this->plugin_slug, __('Caldera Forms Admin', 'caldera-forms'), __('Forms', 'caldera-forms'), 'manage_options', $this->plugin_slug, array( $this, 'render_admin' ) );
+			$this->screen_prefix[] = add_menu_page( __('Caldera Forms', 'caldera-forms'), __('Caldera Forms', 'caldera-forms'), Caldera_Forms::get_manage_cap(), $this->plugin_slug, array( $this, 'render_admin' ), 'dashicons-cf-logo', 52.999 );
+			add_submenu_page( $this->plugin_slug, __('Caldera Forms Admin', 'caldera-forms'), __('Forms', 'caldera-forms'), Caldera_Forms::get_manage_cap(), $this->plugin_slug, array( $this, 'render_admin' ) );
 			
 			if( ! empty( $forms ) ){
 				foreach($forms as $form_id=>$form){
 					if(!empty($form['pinned'])){
-						$this->screen_prefix[] 	 = add_submenu_page( $this->plugin_slug, __('Caldera Forms', 'caldera-forms').' - ' . $form['name'], '- '.$form['name'], 'manage_options', $this->plugin_slug . '-pin-' . $form_id, array( $this, 'render_admin' ) );
+						$this->screen_prefix[] 	 = add_submenu_page( $this->plugin_slug, __('Caldera Forms', 'caldera-forms').' - ' . $form['name'], '- '.$form['name'], Caldera_Forms::get_manage_cap(), $this->plugin_slug . '-pin-' . $form_id, array( $this, 'render_admin' ) );
 					}
 				}
 			}	
 
 
-			$this->screen_prefix[] 	 = add_submenu_page( $this->plugin_slug, __('Caldera Forms', 'caldera-forms') .' - '. __('Community', 'caldera-forms'), __('Community', 'caldera-forms'), 'manage_options', $this->plugin_slug . '-community', array( $this, 'render_admin' ) );
-			$this->screen_prefix[] 	 = add_submenu_page( $this->plugin_slug, __('Caldera Forms', 'caldera-forms') . ' - ' . __('Extend', 'caldera-forms'), __('Extend', 'caldera-forms'), 'manage_options', $this->plugin_slug . '-exend', array( $this, 'render_admin' ) );
+			$this->screen_prefix[] 	 = add_submenu_page( $this->plugin_slug, __('Caldera Forms', 'caldera-forms') .' - '. __('Community', 'caldera-forms'), __('Community', 'caldera-forms'), Caldera_Forms::get_manage_cap(), $this->plugin_slug . '-community', array( $this, 'render_admin' ) );
+			$this->screen_prefix[] 	 = add_submenu_page( $this->plugin_slug, __('Caldera Forms', 'caldera-forms') . ' - ' . __('Extend', 'caldera-forms'), __('Extend', 'caldera-forms'), Caldera_Forms::get_manage_cap(), $this->plugin_slug . '-exend', array( $this, 'render_admin' ) );
 		}else{
 			// not an admin - pin for user
 			if( ! empty( $forms ) ){
@@ -1011,7 +1012,7 @@ class Caldera_Forms_Admin {
 	static function save_form(){
 
 		/// check for form delete
-		if(!empty($_GET['delete']) && !empty($_GET['cal_del']) && current_user_can( 'manage_options' ) ){
+		if(!empty($_GET['delete']) && !empty($_GET['cal_del']) && current_user_can( Caldera_Forms::get_manage_cap( 'save' ) ) ){
 
 			if ( ! wp_verify_nonce( $_GET['cal_del'], 'cf_del_frm' ) ) {
 				// This nonce is not valid.
@@ -1040,7 +1041,7 @@ class Caldera_Forms_Admin {
 			}
 			
 		}
-		if( isset($_POST['cfimporter']) && current_user_can( 'manage_options' ) ){
+		if( isset($_POST['cfimporter']) && current_user_can( Caldera_Forms::get_manage_cap( 'import' ) ) ){
 
 			if ( check_admin_referer( 'cf-import', 'cfimporter' ) ) {
 				if(!empty($_FILES['import_file']['size'])){
@@ -1181,7 +1182,7 @@ class Caldera_Forms_Admin {
 			}
 
 		}
-		if(!empty($_GET['export-form']) && current_user_can( 'manage_options' )){
+		if(!empty($_GET['export-form']) && current_user_can( Caldera_Forms::get_manage_cap( 'export' ) )){
 
 			$form = Caldera_Forms::get_form( $_GET['export-form'] );
 
@@ -1193,14 +1194,48 @@ class Caldera_Forms_Admin {
 			header("Expires: 0");
 			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 			header("Cache-Control: private",false);
-			header("Content-Type: application/json");
-			header("Content-Disposition: attachment; filename=\"" . sanitize_file_name( strtolower( $form['name'] ) ) . "-export.json\";" );
-			echo json_encode($form);
+			if( empty( $_GET['format'] ) || $_GET['format'] != 'php' ){
+				header("Content-Type: application/json");
+				header("Content-Disposition: attachment; filename=\"" . sanitize_file_name( strtolower( $form['name'] ) ) . "-export.json\";" );
+				echo json_encode($form);
+			}else{
+
+				$form_id = sanitize_key( $_GET['form_id'] );
+				if( !empty( $_GET['pin_menu'] ) ){
+					$form['pinned'] = 1;
+				}
+				header("Content-Type: application/php");
+				header("Content-Disposition: attachment; filename=\"" . sanitize_file_name( strtolower( $form_id ) ) . "-include.php\";" );
+				echo '<?php' . "\r\n";
+				echo "/**\r\n * Caldera Forms - PHP Export \r\n * {$form['name']} \r\n * @version    " . CFCORE_VER . "\r\n * @license   GPL-2.0+\r\n * \r\n */\r\n\r\n\r\n";
+
+				$structure = "/**\r\n * Filter admin forms to include custom form in admin\r\n *\r\n * @since 1.3.1\r\n *\r\n * @param array all registered forms\r\n */\r\n";
+				$structure .= 'add_filter( "caldera_forms_get_forms", function( $forms ){' . "\r\n";
+  				$structure .= "\t" . '$forms["' . $form_id . '"] = apply_filters( "caldera_forms_get_form-' . $form_id . '", array() );' . "\r\n";
+ 				$structure .= "\t" . 'return $forms;' . "\r\n";
+				$structure .= "} );\r\n\r\n";
+
+				$structure .= "/**\r\n * Filter form request to include form structure to be rendered\r\n *\r\n * @since 1.3.1\r\n *\r\n * @param array form structure\r\n */\r\n";
+				$structure .= "add_filter( 'caldera_forms_get_form-{$form_id}', function(){\r\n return " . var_export( $form, true ) . ";\r\n" . '} );' . "\r\n";
+				// cleanups because I'm me
+				$structure = str_replace( 'array (', 'array(', $structure );
+				$structure = str_replace( $form['ID'], $form_id, $structure );
+				// switch field IDs
+				if( !empty( $_GET['convert_slugs'] ) ){
+					if ( !empty( $form['fields'] ) ){
+						foreach( $form['fields'] as $field_id=>$field ){
+							$structure = str_replace( $field_id, $field['slug'], $structure );
+						}
+					}
+				}
+
+				echo $structure;
+			}
 			exit;
 
 		}
 
-		if(!empty($_GET['export']) && current_user_can( 'manage_options') ){
+		if(!empty($_GET['export']) && current_user_can( Caldera_Forms::get_manage_cap( 'export' )) ){
 
 			$form = Caldera_Forms::get_form( $_GET['export'] );
 
@@ -1298,7 +1333,7 @@ class Caldera_Forms_Admin {
 			exit;			
 		}
 
-		if( isset($_POST['config']) && isset( $_POST['cf_edit_nonce'] ) && current_user_can( 'manage_options' ) ){
+		if( isset($_POST['config']) && isset( $_POST['cf_edit_nonce'] ) && current_user_can( Caldera_Forms::get_manage_cap( 'manage' ) ) ){
 			
 			// if this fails, check_admin_referer() will automatically print a "failed" page and die.
 			if ( check_admin_referer( 'cf_edit_element', 'cf_edit_nonce' ) ) {

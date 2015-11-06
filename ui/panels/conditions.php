@@ -2,7 +2,7 @@
 // conditional groups template
 $element['conditional_groups']['magic'] = $magic_tags['system']['tags'];
 ?>
-<button style="width:250px;" class="button ajax-trigger" data-request="cf_new_condition_group" data-template="#conditions-tmpl" data-target="#caldera-forms-conditions-panel" type="button"><?php _e( 'Add Condition', 'caldera-forms' ); ?></button>
+<button style="width:250px;" class="button ajax-trigger" data-request="cf_new_condition_group" data-template="#conditions-tmpl" data-target="#caldera-forms-conditions-panel" type="button"><?php _e( 'Add Conditional Group', 'caldera-forms' ); ?></button>
 <input type="hidden" name="_magic" value="<?php echo esc_attr( json_encode( $magic_tags['system']['tags'] ) ); ?>">
 <input type="hidden" id="cf-conditions-db" name="config[conditional_groups]" value="<?php echo esc_attr( json_encode( $element['conditional_groups'] ) ); ?>" 
 class="ajax-trigger"
@@ -35,7 +35,7 @@ data-autoload="true"
 						{{/is}}
 						<a data-open-group="{{id}}" style="cursor:pointer;"><span id="condition-group-{{id}}">{{name}}</span> <span class="condition-line-number"></span></a>
 					{{else}}
-						<input type="text" name="conditions[{{id}}][name]" value="{{name}}" data-new-condition="{{id}}" style="width:100%;">
+						<input type="text" name="conditions[{{id}}][name]" value="{{name}}" data-new-condition="{{id}}" placeholder="<?php echo esc_attr( 'New Group Name', 'caldera-forms'); ?>" style="width:100%;">
 						{{#script}}
 							jQuery('[data-new-condition]').focus();
 						{{/script}}
@@ -102,7 +102,7 @@ data-autoload="true"
 									<option value="is" {{#is compare value="is"}}selected="selected"{{/is}}><?php _e( 'is', 'caldera-forms' ); ?></option>
 									<option value="isnot" {{#is compare value="isnot"}}selected="selected"{{/is}}><?php _e( 'is not', 'caldera-forms' ); ?></option>
 									<option value="greater" {{#is compare value="greater"}}selected="selected"{{/is}}><?php _e( 'is greater than', 'caldera-forms' ); ?></option>
-									<option value="smaller" {{#is compare value="&lt;"}}selected="selected"{{/is}}><?php _e( 'is less than', 'caldera-forms' ); ?></option>
+									<option value="smaller" {{#is compare value="smaller"}}selected="selected"{{/is}}><?php _e( 'is less than', 'caldera-forms' ); ?></option>
 									<option value="startswith" {{#is compare value="startswith"}}selected="selected"{{/is}}><?php _e( 'starts with', 'caldera-forms' ); ?></option>
 									<option value="endswith" {{#is compare value="endswith"}}selected="selected"{{/is}}><?php _e( 'ends with', 'caldera-forms' ); ?></option>
 									<option value="contains" {{#is compare value="contains"}}selected="selected"{{/is}}><?php _e( 'contains', 'caldera-forms' ); ?></option>

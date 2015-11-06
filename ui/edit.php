@@ -154,9 +154,77 @@ $field_options_template = "
 				<option value=\"name\" {{#is value_field value=\"name\"}}selected=\"selected\"{{/is}}>Name</option>\r\n
 				<option value=\"id\" {{#is value_field value=\"id\"}}selected=\"selected\"{{/is}}>ID</option>\r\n
 	    	</select>
-
 		</div>
-	</div>";
+	</div>
+	<div class=\"caldera-config-group caldera-config-group-auto-taxonomy auto-populate-type-panel\" style=\"display:none;\">
+		<label>". __('Orderby', 'caldera-forms')."</label>
+		<div class=\"caldera-config-field\">
+			<select class=\"block-input field-config\" name=\"{{_name}}[orderby_tax]\">
+				<option value=\"count\" {{#is value_field value=\"count\"}}selected=\"selected\"{{/is}}>
+					" . __( 'Count', 'caldera-forms' ) ."
+				</option>\r\n
+				<option value=\"id\" {{#is value_field value=\"id\"}}selected=\"selected\"{{/is}}>
+					" . __( 'ID', 'caldera-forms' ) ."
+				</option>\r\n
+				<option value=\"name\" {{#is value_field value=\"name\"}}selected=\"selected\"{{/is}}>
+					" . __( 'Name', 'caldera-forms' ) ."
+				</option>\r\n
+				<option value=\"slug\" {{#is value_field value=\"slug\"}}selected=\"selected\"{{/is}}>
+					" . __( 'Slug', 'caldera-forms' ) ."
+				</option>\r\n
+	    	</select>
+		</div>
+	</div>
+	<div class=\"caldera-config-group caldera-config-group-auto-post_type auto-populate-type-panel\" style=\"display:none;\">
+		<label>". __('Orderby', 'caldera-forms')."</label>
+		<div class=\"caldera-config-field\">
+			<select class=\"block-input field-config\" name=\"{{_name}}[orderby_post]\">
+				<option value=\"ID\" {{#is value_field value=\"ID\"}}selected=\"selected\"{{/is}}>
+					" . __( 'ID', 'caldera-forms' ) ."
+				</option>\r\n
+				<option value=\"name\" {{#is value_field value=\"name\"}}selected=\"selected\"{{/is}}>
+					" . __( 'Name (post slug)', 'caldera-forms' ) ."
+				</option>\r\n
+				<option value=\"author\" {{#is value_field value=\"author\"}}selected=\"selected\"{{/is}}>
+					" . __( 'Author', 'caldera-forms' ) ."
+				</option>\r\n
+				<option value=\"title\" {{#is value_field value=\"title\"}}selected=\"selected\"{{/is}}>
+					" . __( 'Title', 'caldera-forms' ) ."
+				</option>\r\n
+				<option value=\"date\" {{#is value_field value=\"date\"}}selected=\"selected\"{{/is}}>
+					" . __( 'Publish Date', 'caldera-forms' ) ."
+				</option>\r\n
+				<option value=\"modified\" {{#is value_field value=\"modified\"}}selected=\"selected\"{{/is}}>
+					" . __( 'Modified Date', 'caldera-forms' ) ."
+				</option>\r\n
+				<option value=\"parent\" {{#is value_field value=\"parent\"}}selected=\"selected\"{{/is}}>
+					" . __( 'Parent ID', 'caldera-forms' ) ."
+				</option>\r\n
+				<option value=\"comment_count\" {{#is value_field value=\"comment_count\"}}selected=\"selected\"{{/is}}>
+					" . __( 'Comment Count', 'caldera-forms' ) ."
+				</option>\r\n
+				<option value=\"menu_order\" {{#is value_field value=\"menu_order\"}}selected=\"selected\"{{/is}}>
+					" . __( 'Menu Order', 'caldera-forms' ) ."
+				</option>\r\n
+	    	</select>
+		</div>
+	</div>
+	<div class=\"caldera-config-group caldera-config-group-auto-taxonomy caldera-config-group-auto-post_type auto-populate-type-panel\" style=\"display:none;\">
+		<label>". __('Order', 'caldera-forms')."</label>
+		<div class=\"caldera-config-field\">
+			<select class=\"block-input field-config\" name=\"{{_name}}[order]\">
+				<option value=\"ASC\" {{#is value_field value=\"ASC\"}}selected=\"selected\"{{/is}}>
+					" . __( 'Ascending', 'caldera-forms' ) ."
+				</option>\r\n
+				<option value=\"DESC\" {{#is value_field value=\"DESC\"}}selected=\"selected\"{{/is}}>
+					" . __( 'Descending', 'caldera-forms' ) ."
+				</option>\r\n
+	    	</select>
+		</div>
+	</div>
+
+
+	";
 	ob_start();
 	do_action( 'caldera_forms_autopopulate_type_config' );
 	$field_options_template .= ob_get_clean() . "
@@ -221,7 +289,7 @@ foreach($field_types as $field_slug=>$config){
 	}
 
 	ob_start();
-	do_action('caldera_forms_field_settings_template', $config);
+	do_action('caldera_forms_field_settings_template', $config, $field_slug );
 	if(!empty($config['setup']['template'])){
 		if(file_exists( $config['setup']['template'] )){
 			// create config template block							
@@ -495,9 +563,9 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 
 	</ul>
 
-	<div class="updated_notice_box"><?php _e( 'Updated Successfully', '{{core-slug}}' ); ?></div>
+	<div class="updated_notice_box"><?php _e( 'Updated Successfully', 'caldera-forms' ); ?></div>
 
-	<button class="button button-primary caldera-header-save-button" data-active-class="none" data-load-element="#save_indicator" type="button"><?php echo __('Update Form', 'caldera-forms'); ?><span id="save_indicator" class="spinner" style="position: absolute; right: -33px;"></span></button>	
+	<button class="button button-primary caldera-header-save-button" data-active-class="none" data-load-element="#save_indicator" type="button" disabled="disabled"><?php echo __('Update Form', 'caldera-forms'); ?><span id="save_indicator" class="spinner" style="position: absolute; right: -33px;"></span></button>	
 	<a class="button caldera-header-preview-button" target="_blank" href="<?php echo trailingslashit( get_home_url() ) . '?cf_preview=' . $element['ID']; ?>"><?php echo __('Preview Form', 'caldera-forms'); ?></a>
 </div>
 

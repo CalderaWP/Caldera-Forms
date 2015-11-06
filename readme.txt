@@ -1,19 +1,36 @@
 === Caldera Forms ===
 Contributors: Desertsnowman, Shelob9
 Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress
-Requires at least: 3.9
-Tested up to: 4.3
-Stable tag: 1.3.0.2
+Requires at least: 4.0
+Tested up to: 4.4
+Stable tag: 1.3.1
 License: GPLv2
 
-Create beautiful, responsive forms with a simple drag and drop editor.
+Build forms differently.  So easy, it’s fun!
+
 
 == Description ==
-A diffrent kind of WordPress form builder. With an intuitive drag and drop interface -– based on a responsive grid -- and a wide range of add-ons, it’s never been easier to create forms for your WordPress site that look great on any device, thanks to Caldera Forms. This free plugin includes all of the form types you want, mail and redirect processors, entry logging and AJAX submissions.
+Create beautiful, responsive forms with a simple drag and drop editor.
+
+Caldera Forms is a diffrent kind of WordPress form builder. With its intuitive drag and drop interface, it's never been easier and less stressful to create forms for your WordPress site that look awesome on any device.  The visual editor simplifies form building for WordPress. Set up your form with multiple columns, add additional pages, and funnel user responses with conditional logic to get more robust data and relevant information from your customers and visitors.
+
+Whether you are creating a simple contact form or a complex system, you'll love the drag and drop editor. Your site's visitors will love the totally responsive, live-updating forms.
 
 Easy enough for everyday users to create forms, and powerful enough for PHP experts to extend.
 
 A free plugin by <a href="https://CalderaWP.com" title="CalderaWP: Transform Your WordPress Experience">CalderaWP</a>.
+
+
+= Get Help With Caldera Forms =
+Caldera Forms is free to uses, if you need any help, we provide services to ensure you can get the most out of Caldera Forms.
+
+
+* <strong>Priority Support</strong> Direct support from our team, your questions answered within one business day. <a href="https://calderawp.com/support#priority-support">Learn more here.</a>
+* <strong>Form Creation</strong> Got a really trick form and not a lot of time? <a href="https://calderawp.com/caldera-forms-services#cf-dfy">We can help.</a>
+* <strong>Customization</strong> Need an integration with a third-party service or to modify the default behaviour? <a href="https://calderawp.com/caldera-forms-services#cf-custom-code">Let us write you some code.</a>
+
+<em>Note:  We do not provide free support via WordPress.org. Premium add-on purchases include priority support for Caldera Forms.</em>
+
 
 Pippin Williamson of Easy Digital Downloads, Restrict Content Pro and AffiliateWP gives [Caldera Forms a 5 star rating](https://themesurgeons.com/wordpress-plugins-recommendations/)!
 
@@ -106,6 +123,24 @@ none yet.
 
 == Changelog ==
 
+= 1.3.1 (November 5, 2015 ) =
+* BIG CHANGE: Implement parsley.js for improved client-side validation.
+* BIG CHANGE: New endpoints for processing forms.
+* FIXED: Validation issues in mobile Safari.
+* FIXED: Bug preventing mailer attachments when returning from Paypal.
+* FIXED: Bug where enter key could trigger submit from any page of a multi-page form in some circumstances/ browser.
+* FIXED: Recaptcha settings link opening in same window.
+* FIXED: Bug where CSS was being loaded in footer in some cases.
+* FIXED: Visual issue where datepick fields in Twenty Fifteen theme showed full width.
+* ADDED: Ability to set orderby field and order direction for auto-populated fields from UI.
+* ADDED: Ability to specifify allowed field types in file fields with or without dots.
+* ADDED: support for Github Updater Plugin
+* ADDED: caldera_forms_processor_value filter for changing value of a field from a processor.
+* ADDED: caldera_forms_manage_cap filter for managing all capabilities by context.
+* ADDED: HTML content type header to emails sent via autoresponder processor.
+* ADDED: caldera_forms_script_urls and caldera_forms_style_urls filters for modifying/ removing scripts and styles before enqueuing.
+* ADDED: Label space option to aid in horizontal alignment.
+
 
 = 1.3.0.2 ( September 10, 2015 ) =
 
@@ -120,7 +155,7 @@ none yet.
 * Fixed a bug that conflicted with WooCommerce v2.4.6
 * put back the "disable" condition
 * fixes "is greater" and "is smaller" condition bug that reverted to is
-* autopopulate select fields use ID correctly for post_type and ter_id for taxonomy
+* autopopulate select fields use ID correctly for post_type and term_id for taxonomy
 
 
 

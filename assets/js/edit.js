@@ -177,6 +177,7 @@ jQuery(document).ready(function($){
 				}else{
 					build_field_preview( select.data('field') );
 				}
+				$('.caldera-header-save-button').prop('disabled', false);
 				rebuild_field_binding();
 				baldrickTriggers();
 			}

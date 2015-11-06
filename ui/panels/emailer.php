@@ -48,7 +48,7 @@ if(!isset($element['mailer']['enable_mailer'])){
 		<div class="caldera-config-group">
 			<label><?php echo __('From Email', 'caldera-forms'); ?> </label>
 			<div class="caldera-config-field">
-				<input type="text" class="field-config magic-tag-enabled" name="config[mailer][sender_email]" value="<?php echo $element['mailer']['sender_email']; ?>" style="width:400px;">
+				<input type="email" class="field-config" name="config[mailer][sender_email]" value="<?php echo $element['mailer']['sender_email']; ?>" style="width:400px;">
 				<p class="description"><?php echo __('Email Address from which the mail comes. Try not to use a field from the form. Rather use your own email and use a form field in the "Reply To Email" below.', 'caldera-forms'); ?></p>
 			</div>
 		</div>
@@ -108,6 +108,8 @@ if(!isset($element['mailer']['enable_mailer'])){
 			</div>
 		</div>
 
+		<?php do_action( 'caldera_forms_mailer_config', $element ); ?>
+
 
 		<div class="caldera-config-group">
 			<label><?php echo __('Debug Mailer', 'caldera-forms'); ?></label>
@@ -119,10 +121,6 @@ if(!isset($element['mailer']['enable_mailer'])){
 				</p>
 			</div>
 		</div>
-
-
-
-		<?php do_action( 'caldera_forms_mailer_config', $element ); ?>
 
 	</div>
 </div>
