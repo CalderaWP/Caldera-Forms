@@ -1590,6 +1590,7 @@ class Caldera_Forms {
 						'order' => $field[ 'config' ][ 'order' ],
 						'orderby' => $field[ 'config' ][ 'orderby_post' ]
 					);
+					$args  = apply_filters( 'caldera_forms_autopopulate_post_type_args', $args );
 
 					$posts = get_posts( $args );
 					
@@ -1652,6 +1653,8 @@ class Caldera_Forms {
 						'order' => $field[ 'config' ][ 'order' ],
 						'hide_empty' => 0
 					);
+					$args  = apply_filters( 'caldera_forms_autopopulate_taxonomy_args', $args );
+					
 					$terms = get_terms( $field['config']['taxonomy'], $args );
 
 					/**
