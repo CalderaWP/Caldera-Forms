@@ -217,6 +217,16 @@ class Caldera_Forms {
 		
 		update_option('_calderaforms_lastupdate',CFCORE_VER);
 
+		$charset_collate = '';
+
+		if ( ! empty( $wpdb->charset ) ) {
+			$charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
+		}
+
+		if ( ! empty( $wpdb->collate ) ) {
+			$charset_collate .= " COLLATE $wpdb->collate";
+		}
+
 		$tables = $wpdb->get_results("SHOW TABLES", ARRAY_A);
 		foreach($tables as $table){
 			$alltables[] = implode($table);
@@ -236,8 +246,8 @@ class Caldera_Forms {
 			PRIMARY KEY (`meta_id`),
 			KEY `meta_key` (`meta_key`),
 			KEY `entry_id` (`entry_id`)
-			) DEFAULT CHARSET=utf8;";
-			
+			) " . $charset_collate . ";";
+
 			dbDelta( $meta_table );
 
 		}
@@ -257,7 +267,7 @@ class Caldera_Forms {
 			KEY `user_id` (`user_id`),
 			KEY `date_time` (`datestamp`),
 			KEY `status` (`status`)
-			) DEFAULT CHARSET=utf8;";
+			) " . $charset_collate . ";";
 
 			
 			dbDelta( $entry_table );
@@ -272,7 +282,7 @@ class Caldera_Forms {
 			KEY `form_id` (`entry_id`),
 			KEY `field_id` (`field_id`),
 			KEY `slug` (`slug`)
-			) DEFAULT CHARSET=utf8;";
+			) " . $charset_collate . ";";
 
 			dbDelta( $values_table );
 		
@@ -1580,6 +1590,7 @@ class Caldera_Forms {
 						'order' => $field[ 'config' ][ 'order' ],
 						'orderby' => $field[ 'config' ][ 'orderby_post' ]
 					);
+					$args  = apply_filters( 'caldera_forms_autopopulate_post_type_args', $args );
 
 					$posts = get_posts( $args );
 					
@@ -1642,6 +1653,8 @@ class Caldera_Forms {
 						'order' => $field[ 'config' ][ 'order' ],
 						'hide_empty' => 0
 					);
+					$args  = apply_filters( 'caldera_forms_autopopulate_taxonomy_args', $args );
+					
 					$terms = get_terms( $field['config']['taxonomy'], $args );
 
 					/**

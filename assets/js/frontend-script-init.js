@@ -81,7 +81,7 @@ var cf_jsfields_init;
 		for(var f = 0; f < fields.length; f++){
 			var this_field = $(fields[f]);
 			if( this_field.is(':radio,:checkbox') ){
-				if( !this_field.hasClass('option-required') ){continue}
+				if( !this_field.hasClass('option-required') || false === this_field.is(':visible') ){continue}
 				if( !checks[this_field.data('field')] ){
 					checks[this_field.data('field')] = [];
 				}

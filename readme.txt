@@ -1,9 +1,9 @@
 === Caldera Forms ===
 Contributors: Desertsnowman, Shelob9
-Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress
+Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms
 Requires at least: 4.0
 Tested up to: 4.4
-Stable tag: 1.3.1
+Stable tag: 1.3.1.1
 License: GPLv2
 
 Build forms differently.  So easy, it’s fun!
@@ -122,6 +122,10 @@ none yet.
 4. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
+
+= 1.3.1.1 (November 12, 2015 ) =
+* FIXED: Annoying little bug that broke the "Next" button if you have a required Checkbox or Radio on a later page. (I know right?)
+* FIXED: A few minor cleanups here and there.
 
 = 1.3.1 (November 5, 2015 ) =
 * BIG CHANGE: Implement parsley.js for improved client-side validation.
