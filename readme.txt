@@ -124,7 +124,7 @@ none yet.
 == Changelog ==
 
 = 1.3.1.1 (November 12, 2015 ) =
-* FIXED: Annoying little bug that broke the "Next" button if you have a required checkbox on a later page. (I know right?)
+* FIXED: Annoying little bug that broke the "Next" button if you have a required Checkbox or Radio on a later page. (I know right?)
 * FIXED: A few minor cleanups here and there.
 
 = 1.3.1 (November 5, 2015 ) =
