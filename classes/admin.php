@@ -203,6 +203,7 @@ class Caldera_Forms_Admin {
 
 		if( !empty( $form ) ){
 			ob_start();
+			wp_head();
 			echo Caldera_Forms::render_form( $form );
 			wp_print_footer_scripts();
 			$html = ob_get_clean();
