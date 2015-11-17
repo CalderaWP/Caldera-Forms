@@ -186,9 +186,8 @@ class Caldera_Forms_Save_Final {
 		);
 
 		// if added a bcc
-		$bcc_to = trim( $form['mailer']['bcc_to'] );
-		if( !empty( $bcc_to ) ){
-			$mail['headers'][] = Caldera_Forms::do_magic_tags( 'Bcc: ' . $bcc_to );
+		if ( isset( $form['mailer']['bcc_to'] )  ) {
+			$mail['headers'][] = Caldera_Forms::do_magic_tags( 'Bcc: ' . $form['mailer']['bcc_to'] );
 		}
 
 		// if added a replyto
