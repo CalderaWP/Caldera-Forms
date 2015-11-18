@@ -26,9 +26,6 @@ jQuery( function($){
 		e.preventDefault();
 		init_recaptcha();
 	} );
-	setTimeout( function(){
-		init_recaptcha();
-	}, 1000);
 });
 </script><?php 
 
