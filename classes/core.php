@@ -3645,13 +3645,18 @@ class Caldera_Forms {
 		}		
 		// check if form exists
 		$form = self::get_form( $wp_query->query_vars['cf_api'] );
+		$atts = array(
+			'id' => $wp_query->query_vars['cf_api'],
+			'ajax' => true
+		);		
 		if(!empty($form['ID'])){
 			if($form['ID'] === $wp_query->query_vars['cf_api']){
 				// got it!
 				// need entry?
 				if(!empty($wp_query->query_vars['cf_entry'])){
-					$entry = Caldera_Forms::get_entry($wp_query->query_vars['cf_entry'], $form);
-					wp_send_json( $entry );
+					$atts['entry'] = (int) $wp_query->query_vars['cf_entry'];
+					//$entry = Caldera_Forms::get_entry($wp_query->query_vars['cf_entry'], $form);
+					//wp_send_json( $entry );
 				}
 				// is a post?
 				if( $_SERVER['REQUEST_METHOD'] === 'POST' ){
@@ -3664,10 +3669,7 @@ class Caldera_Forms {
 				}
 			}
 		}
-		$atts = array(
-			'id' => $wp_query->query_vars['cf_api'],
-			'ajax' => true
-		);
+
 		echo self::render_form( $atts );
 		exit;
 	}
