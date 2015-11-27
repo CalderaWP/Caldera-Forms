@@ -1693,7 +1693,23 @@ class Caldera_Forms {
 						);
 					}
 				break;
+				case 'form':
+					global $wpdb;
+					$query = "SELECT `id` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = '" . $field['config']['form'] . "'";
+					$results = $wpdb->get_results( $query, ARRAY_A );
+					foreach ($results as $result) {
+						// huge hack! need to optomise
+						$field[ 'config' ][ 'option' ][ $result['id'] ] = array(
+							'value' => $result['id'],
+							'label' => Caldera_Forms::do_magic_tags( $field['config']['label_value'] , $result['id'] )
+						);
+					}
+					 $field[ 'config' ][ 'value_field' ] = 'id';
+
+
+				break;
 			}
+
 			// check values are set
 			if ( ( empty( $field['config']['value_field']) || $field[ 'config' ][ 'value_field' ] == 'name' ) && isset( $field[ 'config' ] ) && isset( $field[ 'config' ][ 'option' ] ) && is_array( $field[ 'config' ][ 'option' ] ) ){
 				
@@ -1998,16 +2014,17 @@ class Caldera_Forms {
 		/// get meta entry for magic tags defined.
 
 		$input_value = $value;
-
+		$this_form = $form;
 		// pull in the metadata for entry ID
 		if( null !== $entry_id ){
 			$entry_details = self::get_entry_detail( $entry_id );
+			$this_form = self::get_form( $entry_details['form_id'] );
 			if( !empty( $entry_details['meta'] ) ){
 				foreach( $entry_details['meta'] as $meta_block ){
 					if( !empty( $meta_block['data'] ) ){
 						foreach( $meta_block['data'] as $meta_process_id=>$proces_meta_data ){
 							foreach( $proces_meta_data['entry'] as $process_meta_key=>$process_meta_entry ){
-								$processed_meta[$form['ID']][$meta_process_id][$process_meta_key] = $process_meta_entry['meta_value'];
+								$processed_meta[$this_form['ID']][$meta_process_id][$process_meta_key] = $process_meta_entry['meta_value'];
 							}
 						}
 					}
@@ -2051,14 +2068,14 @@ class Caldera_Forms {
 							}
 							break;
 						case 'variable':
-							if(!empty($form['variables']['keys'])){
-								foreach($form['variables']['keys'] as $var_index=>$var_key){
+							if(!empty($this_form['variables']['keys'])){
+								foreach($this_form['variables']['keys'] as $var_index=>$var_key){
 									if( $var_key == $magic[1] ){
 										if( !in_array($magic_tag, $magic_caller) ){
 											$magic_caller[] = $magic_tag;
-											$magic_tag = self::do_magic_tags( $form['variables']['values'][$var_index], $entry_id, $magic_caller );
+											$magic_tag = self::do_magic_tags( $this_form['variables']['values'][$var_index], $entry_id, $magic_caller );
 										}else{
-											$magic_tag = $form['variables']['values'][$var_index];
+											$magic_tag = $this_form['variables']['values'][$var_index];
 										}
 									}
 								}
@@ -2137,11 +2154,11 @@ class Caldera_Forms {
 				}else{
 					switch ($magic_tag) {
 						case 'entry_id':
-							$magic_tag = self::get_field_data('_entry_id', $form);
+							$magic_tag = self::get_field_data('_entry_id', $this_form);
 							if( $magic_tag === null){
 								// check if theres an entry
 								if( !empty( $_GET['cf_ee'] ) ){
-									$entry = self::get_entry_detail( $_GET['cf_ee'], $form );
+									$entry = self::get_entry_detail( $_GET['cf_ee'], $this_form );
 									if( !empty( $entry ) ){
 										$magic_tag = $entry['id'];
 									}
@@ -2149,7 +2166,7 @@ class Caldera_Forms {
 							}
 							break;
 						case 'entry_token':
-							$magic_tag = self::get_field_data('_entry_token', $form);
+							$magic_tag = self::get_field_data('_entry_token', $this_form);
 							break;
 						case 'ip':
 
@@ -2167,19 +2184,19 @@ class Caldera_Forms {
 							$magic_tag = $_SERVER['HTTP_USER_AGENT'];
 							break;	
 						case 'summary':
-							if(!empty($form['fields'])){
+							if(!empty($this_form['fields'])){
 								$out = array();
-								foreach($form['fields'] as $field_id=>$field){
+								foreach($this_form['fields'] as $field_id=>$field){
 					
 									if( in_array( $field['type'], array('button', 'recaptcha', 'html' ) ) ){
 										continue;
 									}
 									// filter the field to get field data
-									$field = apply_filters( 'caldera_forms_render_get_field', $field, $form);
-									$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field['type'], $field, $form);
-									$field = apply_filters( 'caldera_forms_render_get_field_slug-' . $field['slug'], $field, $form);
+									$field = apply_filters( 'caldera_forms_render_get_field', $field, $this_form);
+									$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field['type'], $field, $this_form);
+									$field = apply_filters( 'caldera_forms_render_get_field_slug-' . $field['slug'], $field, $this_form);
 
-									$field_values = (array) self::get_field_data($field_id, $form);
+									$field_values = (array) self::get_field_data($field_id, $this_form);
 
 									if( isset( $field_values['label'] ) ){
 										$field_values = $field_values['value'];
@@ -2201,11 +2218,11 @@ class Caldera_Forms {
 									}
 								}
 								// vars
-								if( !empty( $form['variables'] ) ){
-									foreach( $form['variables']['keys'] as $var_key=>$var_label ){
-										if( $form['variables']['types'][ $var_key ] == 'entryitem' ){
+								if( !empty( $this_form['variables'] ) ){
+									foreach( $this_form['variables']['keys'] as $var_key=>$var_label ){
+										if( $this_form['variables']['types'][ $var_key ] == 'entryitem' ){
 											$label = ucfirst( str_replace('_', ' ', $var_label ) );
-											$out[] = $label . ': ' . $form['variables']['values'][ $var_key ];
+											$out[] = $label . ': ' . $this_form['variables']['values'][ $var_key ];
 										}
 									}
 								}								
@@ -2235,7 +2252,7 @@ class Caldera_Forms {
 
 				$filter_value = apply_filters( 'caldera_forms_do_magic_tag', $magic_tag, $magics[0][$magic_key]);
 
-				if(!empty($form['ID']) ){
+				if(!empty($this_form['ID']) ){
 
 					// split processor
 					
@@ -2245,25 +2262,25 @@ class Caldera_Forms {
 						}
 					}					
 					// check if its a process id or processor slug
-					 if( empty($processed_meta[$form['ID']][$magic[0]]) && !empty($form['processors']) ){
+					 if( empty($processed_meta[$this_form['ID']][$magic[0]]) && !empty($this_form['processors']) ){
 
 					 	// if not a direct chec if theres a slug
-					 	foreach( $form['processors'] as $processid => $processor){
+					 	foreach( $this_form['processors'] as $processid => $processor){
 					 		if($processor['type'] === $magic[0]){	 			
-					 			if(!empty($processed_meta[$form['ID']][$processid])){
+					 			if(!empty($processed_meta[$this_form['ID']][$processid])){
 					 				$magic[0] = $processid;
 					 				break;
 					 			}
 					 		}
 					 	}
 					 }
-					if(!empty($processed_meta[$form['ID']][$magic[0]])){
+					if(!empty($processed_meta[$this_form['ID']][$magic[0]])){
 						
-						if(isset( $processed_meta[$form['ID']][$magic[0]][$magic[1]] ) ){
+						if(isset( $processed_meta[$this_form['ID']][$magic[0]][$magic[1]] ) ){
 							// direct fined
-							$filter_value = implode(', ', (array) $processed_meta[$form['ID']][$magic[0]][$magic[1]] );
+							$filter_value = implode(', ', (array) $processed_meta[$this_form['ID']][$magic[0]][$magic[1]] );
 						}else{
-							foreach($processed_meta[$form['ID']][$magic[0]] as $return_array){
+							foreach($processed_meta[$this_form['ID']][$magic[0]] as $return_array){
 								foreach($return_array as $return_line){
 									if(isset($return_line[$magic[1]])){
 										$filter_value = $return_line[$magic[1]];
@@ -2292,10 +2309,10 @@ class Caldera_Forms {
 				if( !empty( $part_tags[1] ) ){
 					$tag = $part_tags[0];
 				}
-				$entry = self::get_slug_data($tag, $form, $entry_id);
+				$entry = self::get_slug_data($tag, $this_form, $entry_id);
 
 				if($entry !== null){
-					$field = self::get_field_by_slug( $tag, $form );				
+					$field = self::get_field_by_slug( $tag, $this_form );				
 				}
 
 				
