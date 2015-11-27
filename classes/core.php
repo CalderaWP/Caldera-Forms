@@ -3971,6 +3971,10 @@ class Caldera_Forms {
 		// allow plugins to alter the profile.
 		$data['user'] = apply_filters( 'caldera_forms_get_entry_user', $data['user'], $entry_id, $form);
 
+		// allow plugins to alter the entry
+		$data = apply_filters( 'caldera_forms_get_entry', $data, $entry_id, $form);
+
+
 		if(!empty($_POST['form'])){
 			header('Content-Type: application/json');
 			echo json_encode( $data );
