@@ -349,7 +349,7 @@ class Caldera_Forms {
 			return $value;
 		}
 
-		$out = "<div style=\"color: " . $field['config']['color'] . "; font-size: 10px;\" >";
+		$out = "<div style=\"color: " . $field['config']['color'] . "; font-size: 10px;display: inline;\" >";
 		if(!empty($field['config']['number'])){
 			for( $i = 1; $i <= $field['config']['number']; $i++){
 				$star = 'raty-'.$field['config']['type'].'-off';
