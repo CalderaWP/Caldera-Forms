@@ -4782,7 +4782,6 @@ class Caldera_Forms {
 				}
 			
 				$qurystr['cf_pg'] = $page_key + 1;
-				$qurystr['_rdm_'] = rand(100000, 999999);
 				$out .= "<li" . $tabclass . "><a href=\"?". http_build_query($qurystr) . "\" data-page=\"" . ( $page_key + 1 ) ."\" data-pagenav=\"caldera_form_" . $current_form_count ."\">". $page_name . "</a></li>\r\n";
 			}
 			$out .= "</ol></span>\r\n";
