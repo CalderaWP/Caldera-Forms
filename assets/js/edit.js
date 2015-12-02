@@ -314,6 +314,28 @@ jQuery(document).ready(function($){
 	}
 
 	// tabs button
+	$('body').on('click', '.toggle_processor_event input', function(e){
+		var clicked = $(this),
+			parent = clicked.closest( '.wrapper-instance-pane' ),
+			settings = parent.find('.caldera-config-processor-setup'),
+			notice = parent.find('.caldera-config-processor-notice');
+
+		if( clicked.is(':checked') ){
+			clicked.parent().addClass('button-primary');
+		}else{
+			clicked.parent().removeClass('button-primary');
+		}
+
+		// check if all are selected
+		if( parent.find('.toggle_processor_event .button-primary').length ){
+			settings.slideDown(100);
+			notice.slideUp(100);
+		}else{
+			settings.slideUp(100);
+			notice.slideDown(100);
+		}
+
+	});
 	$('body').on('click', '.toggle_option_tab > a', function(e){
 
 		e.preventDefault();

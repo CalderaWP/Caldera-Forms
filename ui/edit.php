@@ -600,6 +600,7 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 
 <div style="display: none;" class="caldera-editor-body caldera-config-editor-panel " id="settings-panel">
 	<h3><?php echo __("General Settings", "caldera-forms"); ?></h3>
+	<input type="hidden" name="config[cf_version]" value="<?php echo esc_attr( CFCORE_VER ); ?>">
 	<div class="caldera-config-group">
 		<label><?php echo __('Form Name', 'caldera-forms'); ?> </label>
 		<div class="caldera-config-field">

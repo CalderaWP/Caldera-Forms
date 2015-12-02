@@ -3211,6 +3211,38 @@ class Caldera_Forms {
 		$form_processors = apply_filters( 'caldera_forms_get_form_processors', array() );
 		do_action('caldera_forms_submit_pre_process_start', $form, $referrer, $process_id);
 
+		/**
+		 * Remove processors that are not allowed to run on this pass
+		 *
+		 * @since 1.3.2
+		 *
+		 */
+		foreach($form['processors'] as $processor_id=>$processor){
+			// the cf_version value in the form was introduced in 1.3.2
+			// so if its set, its safe to asume the runtimes are set.
+			if( !isset( $form['cf_version'] ) ){
+				// nope
+				if( !empty( $transdata['edit'] ) ){
+					unset( $form['processors'][ $processor_id ] );
+				}
+				continue;
+			}
+
+			// normal check within version
+			// chec if editing and is allowed
+			if( !empty( $transdata['edit'] ) && empty( $processor['runtimes']['edit'] ) ){
+				// is editing and is set to not allow it so remove processor
+				unset( $form['processors'][ $processor_id ] );
+				continue;
+			}
+			if( empty( $transdata['edit'] ) && empty( $processor['runtimes']['insert'] ) ){
+				// is editing and is set to not allow it
+				unset( $form['processors'][ $processor_id ] );
+				continue;
+			}
+
+		}
+
 		// PRE PROCESS
 		foreach($form['processors'] as $processor_id=>$processor){
 			
@@ -3228,6 +3260,7 @@ class Caldera_Forms {
 				if(!isset($process['pre_processor'])){
 					continue;
 				}
+
 
 				// set default config
 				$config = array();

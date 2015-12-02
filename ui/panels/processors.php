@@ -40,10 +40,15 @@ function processor_line_template($id = '{{id}}', $type = null){
 	<?php
 }
 
-function processor_wrapper_template($id = '{{id}}', $type = '{{type}}', $config_str = '{"default":"default value"}', $conditions_str = '{"type" : ""}'){
+function processor_wrapper_template($id = '{{id}}', $type = '{{type}}', $config_str = '{"default":"default value"}', $run_times = false, $conditions_str = '{"type" : ""}'){
 	
 	global $form_processors;
-
+	if( false === $run_times || !is_array( $run_times ) ){
+		$run_times = array(
+			'insert' => 1
+		);
+	}
+	
 	$type_name = __('New Form Processor', 'caldera-forms');
 	if(!empty($type) && $type != '{{type}}'){
 		if(empty($form_processors[$type])){
@@ -93,12 +98,21 @@ function processor_wrapper_template($id = '{{id}}', $type = '{{type}}', $config_
 
 	?>
 	<div class="caldera-editor-processor-config-wrapper caldera-editor-config-wrapper processor-<?php echo $type; ?>" id="<?php echo $id; ?>" data-type="<?php echo $type; ?>" style="display:none;">
+
 		<div class="toggle_option_tab">
 			<a href="#<?php echo $id; ?>_settings_pane" class="button button-primary">Settings</a>
 			<a href="#<?php echo $id; ?>_conditions_pane" class="button ">Conditions</a>
 		</div>
 		<h3 data-title="<?php echo __('New Form Processor', 'caldera-forms'); ?>" class="caldera-editor-processor-title"><?php echo $type_name; ?></h3>
 		<div id="<?php echo $id; ?>_settings_pane" class="wrapper-instance-pane">
+			<div class="toggle_processor_event">
+				<label title="<?php echo esc_attr( __('Run processor on Insert', 'caldera-forms') ); ?>" class="button button-small <?php if( !empty( $run_times['insert'] )){ echo 'button-primary'; } ?>"><input type="checkbox" style="display:none;" value="1" name="config[processors][<?php echo $id; ?>][runtimes][insert]" <?php if( !empty( $run_times['insert'] )){ echo 'checked="checked"'; } ?>>Insert</label>
+				<label title="<?php echo esc_attr( __('Run processor on Update', 'caldera-forms') ); ?>" class="button button-small <?php if( !empty( $run_times['update'] )){ echo 'button-primary'; } ?> "><input type="checkbox" style="display:none;" value="1" name="config[processors][<?php echo $id; ?>][runtimes][update]" <?php if( !empty( $run_times['update'] )){ echo 'checked="checked"'; } ?>>Update</label>
+				<?php /*<label class="button button-small <?php if( !empty( $run_times['delete'] )){ echo 'button-primary'; } ?> "><input type="checkbox" style="display:none;" value="1" name="config[processors][<?php echo $id; ?>][runtimes][delete]" <?php if( !empty( $run_times['delete'] )){ echo 'checked="checked"'; } ?>>Delete</label> */ ?>
+			</div>
+			<div class="caldera-config-processor-notice" style="<?php if( !empty( $run_times ) ){ ?> display:none;<?php } ?>clear: both; padding: 20px 0px 0px;">
+				<p style="padding:12px; text-align:center;background:#e7e7e7;" class="description"><?php _e('Processor is currently disabled', 'caldera-forms'); ?></p>
+			</div>
 			<div class="caldera-config-group" style="display:none;">
 				<label for="<?php echo $id; ?>_type"><?php echo __('Processor Type', 'caldera-forms'); ?></label>
 				<div class="caldera-config-field">
@@ -109,11 +123,13 @@ function processor_wrapper_template($id = '{{id}}', $type = '{{type}}', $config_
 					</select>
 				</div>
 			</div>
-			<div class="caldera-config-processor-setup">
+			<div class="caldera-config-processor-setup" <?php if( empty( $run_times ) ){ ?> style="display:none;"<?php } ?>>
+
 			</div>
 			<input type="hidden" class="processor_config_string block-input" value="<?php echo htmlentities( $config_str ); ?>">
 			<br>
 			<br>
+
 			<button class="button block-button delete-processor" data-confirm="<?php echo __('Are you sure you want to remove this processor?', 'caldera-forms'); ?>" type="button"><?php echo __('Remove Processor', 'caldera-forms'); ?></button>
 		</div>
 		<div id="<?php echo $id; ?>_conditions_pane" style="display:none;" class="wrapper-instance-pane">
@@ -197,8 +213,17 @@ function build_processor_types($default = null){
 				if(!empty($config['conditions'])){
 					$conditions = json_encode($config['conditions']);
 				}
-
-				processor_wrapper_template($processor_id, $config['type'], $config_str, $conditions);
+				// runtime conditions where introduced in 1.3.2
+				// as was the cf_version in form config. so its safe to say that id this value is set, its the same version or higher
+				if( empty( $element['cf_version'] ) ){
+					$run_times = false;
+				}else{
+					$run_times = array();
+				}				
+				if(!empty($config['runtimes'])){
+					$run_times = $config['runtimes'];
+				}
+				processor_wrapper_template($processor_id, $config['type'], $config_str, $run_times, $conditions);
 			}
 		}
 	}
