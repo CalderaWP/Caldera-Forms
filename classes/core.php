@@ -1693,21 +1693,7 @@ class Caldera_Forms {
 						);
 					}
 				break;
-				case 'form':
-					global $wpdb;
-					$query = "SELECT `id` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = '" . $field['config']['form'] . "'";
-					$results = $wpdb->get_results( $query, ARRAY_A );
-					foreach ($results as $result) {
-						// huge hack! need to optomise
-						$field[ 'config' ][ 'option' ][ $result['id'] ] = array(
-							'value' => $result['id'],
-							'label' => Caldera_Forms::do_magic_tags( $field['config']['label_value'] , $result['id'] )
-						);
-					}
-					 $field[ 'config' ][ 'value_field' ] = 'id';
 
-
-				break;
 			}
 
 			// check values are set
@@ -3225,12 +3211,12 @@ class Caldera_Forms {
 				if( !empty( $transdata['edit'] ) ){
 					unset( $form['processors'][ $processor_id ] );
 				}
+
 				continue;
 			}
-
 			// normal check within version
 			// chec if editing and is allowed
-			if( !empty( $transdata['edit'] ) && empty( $processor['runtimes']['edit'] ) ){
+			if( !empty( $transdata['edit'] ) && empty( $processor['runtimes']['update'] ) ){
 				// is editing and is set to not allow it so remove processor
 				unset( $form['processors'][ $processor_id ] );
 				continue;
@@ -3965,10 +3951,23 @@ class Caldera_Forms {
 					$field_value = esc_html( stripslashes_deep( $field_value ) );
 				}
 			}
+			// set view
+			$field_view = apply_filters( 'caldera_forms_view_field_' . $field['type'], $field_value, $field, $form);
+
+			// has options?
+			if( !empty( $field['config']['option'] ) ){
+				foreach( $field['config']['option'] as $option ){
+					if( $option['value'] == $field_view ){
+						$field_view = $option['label'];
+						break;
+					}
+				}
+				
+			}
 
 			$data['data'][$field_id] = array(
 				'label' => $field['label'],
-				'view'	=> apply_filters( 'caldera_forms_view_field_' . $field['type'], $field_value, $field, $form),
+				'view'	=> $field_view,
 				'value' => $field_value
 			);
 		}
@@ -4021,6 +4020,9 @@ class Caldera_Forms {
 		// allow plugins to alter the profile.
 		$data['user'] = apply_filters( 'caldera_forms_get_entry_user', $data['user'], $entry_id, $form);
 
+		// set the entry status
+		$data['status'] = $entry_detail['status'];
+		
 		// allow plugins to alter the entry
 		$data = apply_filters( 'caldera_forms_get_entry', $data, $entry_id, $form);
 

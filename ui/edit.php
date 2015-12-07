@@ -108,7 +108,6 @@ $field_options_template = "
 				<option value=\"\">" . __('Select a source', 'caldera-forms') . "</option>
 				<option value=\"post_type\"{{#is auto_type value=\"post_type\"}} selected=\"selected\"{{/is}}>" . __('Post Type', 'caldera-forms') . "</option>
 				<option value=\"taxonomy\"{{#is auto_type value=\"taxonomy\"}} selected=\"selected\"{{/is}}>" . __('Taxonomy', 'caldera-forms') . "</option>
-				<option value=\"form\"{{#is auto_type value=\"form\"}} selected=\"selected\"{{/is}}>" . __('Form Entries', 'caldera-forms') . "</option>";
 				ob_start();
 				do_action( 'caldera_forms_autopopulate_types' );
 				$field_options_template .= ob_get_clean() . "
@@ -129,34 +128,6 @@ $field_options_template = "
 	    	
 			$field_options_template .= "</select>
 
-		</div>
-	</div>
-
-	<div class=\"caldera-config-group caldera-config-group-auto-form auto-populate-type-panel\" style=\"display:none;\">
-		<label>".__('Form Entries', 'caldera-forms') ."</label>
-		<div class=\"caldera-config-field\">
-			<select class=\"block-input field-config\" name=\"{{_name}}[form]\">
-			<option></option>
-			";
-
-			$forms = Caldera_Forms::get_forms();
-
-	    	foreach($forms as $inner_form ){
-	    		if( $inner_form['ID'] == $element['ID'] ){
-	    			continue;
-	    		}
-	    		$field_options_template .= "<option value=\"" . $inner_form['ID'] . "\" {{#is form value=\"" . $inner_form['ID'] . "\"}}selected=\"selected\"{{/is}}>" . $inner_form['name'] . "</option>\r\n";
-	    	}
-
-			$field_options_template .= "</select>
-
-		</div>
-	</div>
-	<div class=\"caldera-config-group caldera-config-group-auto-form auto-populate-type-panel\" style=\"display:none;\">
-		<label>". __('Label', 'caldera-forms')."</label>
-		<div class=\"caldera-config-field\">
-			<input type=\"text\" class=\"block-input field-config\" name=\"{{_name}}[label_value]\" value=\"{{label_value}}\">
-			
 		</div>
 	</div>
 
