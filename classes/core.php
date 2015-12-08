@@ -515,12 +515,15 @@ class Caldera_Forms {
 			}
 		}
 
-		$data = self::get_field_data($field['ID'], $form);
+		$data = self::get_field_data($field['ID'], $form );
+
 		if(empty($data)){
 			return;
 		}
 
-		foreach((array) $data as $key=>$entry){
+		foreach((array) $data as $key=>$raw_entry){
+
+			$entry = Caldera_Forms_Sanitize::sanitize( $raw_entry );
 
 			if( has_filter( 'caldera_forms_save_field' ) ){
 				$entry = apply_filters( 'caldera_forms_save_field', $entry, $field );
@@ -2563,13 +2566,12 @@ class Caldera_Forms {
 			// check condition to see if field should be there first.
 			// check if conditions match first. ignore vailators if not part of condition
 			if(isset($_POST[$field_id])){
-				$entry = Caldera_Forms_Sanitize::sanitize( $_POST[$field_id] );
+				$entry = stripslashes_deep( $_POST[$field_id] );
 
 			}elseif(isset($_POST[$field['slug']])){
 				// is slug maybe?
-				$entry = Caldera_Forms_Sanitize::sanitize( $_POST[$field['slug']] );
+				$entry = stripslashes_deep( $_POST[$field['slug']] );
 			}
-
 			// apply field filter
 			if(has_filter('caldera_forms_process_field_' . $field['type'])){
 				$entry = apply_filters( 'caldera_forms_process_field_' . $field['type'] , $entry, $field, $form );
