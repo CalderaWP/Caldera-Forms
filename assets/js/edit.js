@@ -1129,13 +1129,17 @@ jQuery(document).ready(function($){
 										
 										
 										linetag.on('click', function(){
+											
 											var selected = $(this).data('tag');
 
 
 											input.val( stream.substr(0, start ) + selected + stream.substr( end ) ).trigger('change').focus();
 											input[0].selectionStart = start + selected.length - ( selected.indexOf('*') > 0 ? 2 : 0 );
 											input[0].selectionEnd = start + selected.length - ( selected.indexOf('*') > 0 ? 1 : 0 );
-
+											//stream = null;
+											end = start = input[0].selectionEnd;
+											stream += selected;
+											input.trigger('init.magic');
 										});
 
 										linetag.appendTo(list);
