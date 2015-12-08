@@ -6,7 +6,7 @@ global $field_type_list, $field_type_templates;
 $element = get_option( $_GET['edit'] );
 
 // build magic tags
-$magic_tags = apply_filters( 'caldera_forms_get_magic_tags', array());
+$magic_tags = apply_filters( 'caldera_forms_get_magic_tags', array(), $element['ID'] );
 
 //dump($element);
 if(empty($element['success'])){
