@@ -107,7 +107,7 @@ $field_options_template = "
 			<select class=\"block-input field-config auto-populate-type\" name=\"{{_name}}[auto_type]\">
 				<option value=\"\">" . __('Select a source', 'caldera-forms') . "</option>
 				<option value=\"post_type\"{{#is auto_type value=\"post_type\"}} selected=\"selected\"{{/is}}>" . __('Post Type', 'caldera-forms') . "</option>
-				<option value=\"taxonomy\"{{#is auto_type value=\"taxonomy\"}} selected=\"selected\"{{/is}}>" . __('Taxonomy', 'caldera-forms') . "</option>
+				<option value=\"taxonomy\"{{#is auto_type value=\"taxonomy\"}} selected=\"selected\"{{/is}}>" . __('Taxonomy', 'caldera-forms') . "</option>";
 				ob_start();
 				do_action( 'caldera_forms_autopopulate_types' );
 				$field_options_template .= ob_get_clean() . "
