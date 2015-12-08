@@ -5,7 +5,15 @@ global $field_type_list, $field_type_templates;
 // Load element
 $element = get_option( $_GET['edit'] );
 
-// build magic tags
+/**
+ * Filter which Magic Tags are available in the form editor
+ *
+ *
+ * @since 1.3.2
+ *
+ * @param array $tags Array of magic registered tags 
+ * @param array $form_id for which this applies.
+ */
 $magic_tags = apply_filters( 'caldera_forms_get_magic_tags', array(), $element['ID'] );
 
 //dump($element);
