@@ -131,6 +131,15 @@ class Caldera_Forms {
 			$form['_external_form'] = true;
 		}
 
+		// remove submit on editing
+		if( !empty( $_GET['modal'] ) && $_GET['modal'] == 'view_entry' && !empty( $_GET['group'] ) && $_GET['group'] == 'editentry' ){
+			foreach( $form['fields'] as $field_id=>$field ){
+				if( $field['type'] == 'button' && $field['config']['type'] == 'submit' ){
+					unset( $form['fields'][ $field_id ] );
+				}
+			}
+		}
+
 		return $form;
 
 	}
@@ -574,6 +583,8 @@ class Caldera_Forms {
 	 * @return void|\WP_Error
 	 */
 	public static function save_final_form($form){
+		global $transdata;
+
 		$entryid = null;
 		// check submit type (new or update)
 		if(isset($_POST['_cf_frm_edt'])){
@@ -622,13 +633,20 @@ class Caldera_Forms {
 		if(! empty( $form[ 'db_support' ] ) ) {
 			Caldera_Forms_Save_Final::save_in_db( $form, $entryid );
 		}
-
-		if(empty($form['mailer']['enable_mailer'])){
-			return;
+		
+		if( !empty( $transdata['edit'] ) ){
+			// update
+			if( empty($form['mailer']['on_update'] ) ){
+				return;
+			}
 		}else{
-			Caldera_Forms_Save_Final::do_mailer( $form, $entryid );
+			// insert
+			if( empty( $form['mailer']['enable_mailer'] ) && empty($form['mailer']['on_insert'] ) ){
+				return;
+			}
 		}
-
+		
+		Caldera_Forms_Save_Final::do_mailer( $form, $entryid );
 
 
 	}
