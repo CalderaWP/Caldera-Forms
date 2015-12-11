@@ -117,6 +117,14 @@ $field_options_template = "
 				<option value=\"post_type\"{{#is auto_type value=\"post_type\"}} selected=\"selected\"{{/is}}>" . __('Post Type', 'caldera-forms') . "</option>
 				<option value=\"taxonomy\"{{#is auto_type value=\"taxonomy\"}} selected=\"selected\"{{/is}}>" . __('Taxonomy', 'caldera-forms') . "</option>";
 				ob_start();
+
+				/**
+				 * Runs after default field auto-population types options are outputted, inside of the select element.
+				 *
+				 * Use this to add new options in UI for auto-population sources
+				 *
+				 * @since unknown
+				 */
 				do_action( 'caldera_forms_autopopulate_types' );
 				$field_options_template .= ob_get_clean() . "
 			</select>
@@ -234,6 +242,14 @@ $field_options_template = "
 
 	";
 	ob_start();
+
+	/**
+	 * Runs after default options for auto-populate fields
+	 *
+	 * Use this to add new options in UI when making custom aut-population types
+	 *
+	 * @since unknown
+	 */
 	do_action( 'caldera_forms_autopopulate_type_config' );
 	$field_options_template .= ob_get_clean() . "
 
