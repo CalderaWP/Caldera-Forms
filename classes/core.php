@@ -1719,25 +1719,42 @@ class Caldera_Forms {
 
 			}
 
-			// check values are set
-			if ( ( empty( $field['config']['value_field']) || $field[ 'config' ][ 'value_field' ] == 'name' ) && isset( $field[ 'config' ] ) && isset( $field[ 'config' ][ 'option' ] ) && is_array( $field[ 'config' ][ 'option' ] ) ){
-				
-				foreach( $field[ 'config' ][ 'option' ] as &$option){
-					$option[ 'value' ] = $option[ 'label' ];
-				}
+		}
 
+		$field = self::format_select_options( $field );
+
+		return $field;
+
+	}
+
+
+	/**
+	 * Verify and format select options
+	 *
+	 * @since 1.3.2
+	 *
+	 * @param array $field Field config
+	 *
+	 * @return array
+	 */
+	static public function format_select_options( $field ) {
+		if ( ( empty( $field['config']['value_field']) || $field[ 'config' ][ 'value_field' ] == 'name' ) && isset( $field[ 'config' ] ) && isset( $field[ 'config' ][ 'option' ] ) && is_array( $field[ 'config' ][ 'option' ] ) ){
+
+			foreach( $field[ 'config' ][ 'option' ] as &$option){
+				$option[ 'value' ] = $option[ 'label' ];
 			}
 
 		}else{
-
-			if ( empty( $field[ 'config' ]['show_values'] ) ){			
+			if ( empty( $field[ 'config' ]['show_values'] ) ){
 				if( !empty( $field[ 'config' ][ 'option' ] ) ){
 					foreach( $field[ 'config' ][ 'option' ] as &$option){
 						$option[ 'value' ] = $option[ 'label' ];
 					}
 				}
+			}else{
+				$field[ 'config' ][ 'option' ] = array();
 			}
-		
+
 		}
 
 		return $field;
