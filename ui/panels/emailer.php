@@ -36,7 +36,8 @@ if( !empty( $element['mailer']['enable_mailer'] ) ){
 			</div>
 		</div>
 	</div>
-	<div class="mailer_config_panel caldera-config-processor-notice" style="<?php if( empty( $element['mailer']['on_insert'] ) && empty( $element['mailer']['on_insert'] ) ){ ?> display:block;<?php } ?>clear: both; padding: 20px 0px 0px;width:550px;">
+
+	<div class="mailer_config_panel caldera-config-processor-notice" style="display:<?php if( empty( $element['mailer']['on_insert'] ) && empty( $element['mailer']['on_insert'] ) ){ ?> block;<?php }else{ ?>none;<?php }?>clear: both; padding: 20px 0px 0px;width:550px;">
 		<p style="padding:12px; text-align:center;background:#e7e7e7;" class="description"><?php _e('Mailer is currently disabled', 'caldera-forms'); ?></p>
 	</div>
 

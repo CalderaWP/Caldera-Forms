@@ -133,9 +133,11 @@ class Caldera_Forms {
 
 		// remove submit on editing
 		if( !empty( $_GET['modal'] ) && $_GET['modal'] == 'view_entry' && !empty( $_GET['group'] ) && $_GET['group'] == 'editentry' ){
-			foreach( $form['fields'] as $field_id=>$field ){
-				if( $field['type'] == 'button' && $field['config']['type'] == 'submit' ){
-					unset( $form['fields'][ $field_id ] );
+			if( !empty( $form['fields'] ) ){
+				foreach( $form['fields'] as $field_id=>$field ){
+					if( $field['type'] == 'button' && $field['config']['type'] == 'submit' ){
+						unset( $form['fields'][ $field_id ] );
+					}
 				}
 			}
 		}

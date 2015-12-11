@@ -76,6 +76,7 @@ class Caldera_Forms_Admin {
 		// add element & fields filters
 		add_filter('caldera_forms_get_panel_extensions', array( $this, 'get_panel_extensions'), 1);
 		add_filter('caldera_forms_entry_viewer_buttons', array( $this, 'set_viewer_buttons'),10, 4);
+		add_filter('caldera_forms_entry_editor_buttons', array( $this, 'set_editor_buttons'),10, 4);
 		
 		// action
 		add_action('caldera_forms_entry_actions', array( $this, 'get_entry_actions'),1);
@@ -388,8 +389,31 @@ class Caldera_Forms_Admin {
 
 			$viewer_buttons = 'data-modal-buttons=\'' . implode(';', $viewer_buttons) . '\'';
 		}
+		$editor_buttons_array = apply_filters( 'caldera_forms_entry_editor_buttons', array());
+		$editor_buttons = null;
+		if(!empty($editor_buttons_array)){
+			$editor_buttons = array();
+			foreach($editor_buttons_array as $button){
 
-		echo '{{#if ../../is_active}}<button class="button button-small ajax-trigger view-entry-btn" data-active-class="none" data-load-class="spinner" ' . $viewer_buttons . ' data-group="viewentry" data-entry="{{_entry_id}}" data-form="{{../../form}}" data-action="get_entry" data-modal="view_entry" data-modal-width="700" data-modal-height="700" data-modal-title="' . __('Entry', 'caldera-forms') . ' # {{_entry_id}}" data-template="#view-entry-tmpl" type="button">' . __('View') . '</button> {{/if}}';		
+				if(is_array($button['config'])){
+					$config = $button['label'].'|'.json_encode($button['config']);
+				}else{
+					$config = $button['label'].'|'.$button['config'];	
+				}
+				if( isset( $button['class'] ) ){
+					$config .= '|' . $button['class'];
+				}
+				$editor_buttons[] = $config;
+			}
+
+			$editor_buttons = 'data-modal-buttons=\'' . implode(';', $editor_buttons) . '\'';
+		}
+
+
+		if( current_user_can( 'edit_others_posts' ) ){
+			echo '{{#if ../../is_active}}<button class="hidden button button-small cfajax-trigger edit-entry-btn" id="edit-entry-{{_entry_id}}" data-active-class="current-edit" data-static="true" data-load-class="spinner" ' . $editor_buttons . ' data-modal-element="div" data-group="editentry" data-entry="{{_entry_id}}" data-form="{{../../form}}" data-request="' . site_url( "/cf-api/" ) . '{{../../form}}/{{_entry_id}}/" data-method="get" data-modal="view_entry" data-modal-width="700" data-modal-height="auto" data-modal-title="' . __('Editing Entry ', 'caldera-forms') . ' #{{_entry_id}}" type="button">' . __('Edit') . '</button> {{/if}}';
+		}
+		echo '{{#if ../../is_active}}<button class="button button-small ajax-trigger view-entry-btn" id="view-entry-{{_entry_id}}" data-active-class="current-view"  data-static="true" data-load-class="spinner" ' . $viewer_buttons . ' data-group="viewentry" data-entry="{{_entry_id}}" data-form="{{../../form}}" data-action="get_entry" data-modal="view_entry" data-modal-width="700" data-modal-height="700" data-modal-title="' . __('Entry', 'caldera-forms') . ' #{{_entry_id}}" data-template="#view-entry-tmpl" type="button">' . __('View') . '</button> {{/if}}';		
 		if( current_user_can( 'delete_others_posts' ) ){
 			echo '<button type="button" class="button button-small ajax-trigger" data-load-class="active" data-panel="{{#if ../../is_trash}}trash{{/if}}{{#if ../../is_active}}active{{/if}}" data-do="{{#if ../../is_trash}}active{{/if}}{{#if ../../is_active}}trash{{/if}}" data-callback="cf_refresh_view" data-form="{{../../form}}" data-active-class="disabled" data-group="row{{_entry_id}}" data-load-element="#entry_row_{{_entry_id}}" data-action="cf_bulk_action" data-items="{{_entry_id}}">{{#if ../../is_trash}}' . __('Restore', 'caldera-forms') . '{{/if}}{{#if ../../is_active}}' . __('Trash') . '{{/if}}</button>';
 		}
@@ -399,13 +423,45 @@ class Caldera_Forms_Admin {
 	public static function set_viewer_buttons($buttons){
 		
 		$buttons['close_panel'] = array(
-			'label'		=>	'Close',
+			'label'		=>	__('Close', 'caldera-forms' ),
 			'config'	=>	'dismiss',
 			'class'		=>	'right'
 		);
+		if( current_user_can( 'edit_others_posts' ) ){
+			$buttons['edit_entry'] = array(
+				'label'		=>	__('Edit Entry', 'caldera-forms' ),
+				'config'	=>	array(
+					'data-trigger'	=> '#edit-entry-{{_entry_id}}'
+				),
+				'class'		=>	'button-primary'
+			);
+		}
 
 		return $buttons;
 	}
+
+	
+	public static function set_editor_buttons($buttons){
+
+		$buttons['submit_form'] = array(
+			'label'		=>	__('Save Changes', 'caldera-forms' ),
+			'config'	=>	array(
+				"data-for" => "#view_entry_baldrickModalBody .caldera_forms_form"
+			),
+			'class'		=>	'right button-primary'
+		);
+		$buttons['view_entry'] = array(
+			'label'		=>	__('View Entry', 'caldera-forms' ),
+			'config'	=>	array(
+				"data-for" => ".view-entry-btn.current-view"
+			),
+			'class'		=>	''
+		);		
+		
+		//$buttons = set_viewer_buttons($buttons);
+		return $buttons;
+	}
+
 
 	public static function save_cf_setting(){
 		if(empty($_POST['set'])){
@@ -883,6 +939,45 @@ class Caldera_Forms_Admin {
 			wp_enqueue_script( 'jquery-ui-users' );
 			wp_enqueue_script( 'jquery-ui-sortable' );
 			wp_enqueue_script( 'jquery-ui-droppable' );
+
+		}else{
+
+			$field_types = apply_filters( 'caldera_forms_get_field_types', array() );
+			
+			wp_enqueue_style( 'cf-grid-styles' );
+			wp_enqueue_style( 'cf-form-styles' );
+			wp_enqueue_style( 'cf-alert-styles' );
+			wp_enqueue_style( 'cf-field-styles' );
+
+			wp_enqueue_script( 'cf-field' );
+			wp_enqueue_script( 'cf-conditionals' );
+			wp_enqueue_script( 'cf-validator' );
+			wp_enqueue_script( 'cf-init' );
+
+			foreach( $field_types as $field ){
+				if( !empty( $field['styles'])){
+					foreach($field['styles'] as $style){
+						if( false !== strpos($style, '//')){
+							wp_enqueue_style( 'cf-' . sanitize_key( basename( $style ) ), $style, array() );
+						}else{
+							wp_enqueue_style( $style );
+						}
+					}
+				}
+
+				//enqueue scripts
+				if( !empty( $field['scripts'])){
+					// check for jquery deps
+					$depts[] = 'jquery';
+					foreach($field['scripts'] as $script){
+						if( false !== strpos($script, '//')){
+							wp_enqueue_script( 'cf-' . sanitize_key( basename( $script ) ), $script, $depts );
+						}else{
+							wp_enqueue_script( $script );
+						}
+					}
+				}	
+			}
 
 		}
 		if(!empty($_GET['edit-entry'])){
@@ -1448,6 +1543,7 @@ class Caldera_Forms_Admin {
 			"form_ajax"		=> 1,
 			"hide_form"		=> 1,
 			"check_honey" 	=> 1,
+			'mailer'		=>	array( 'on_insert' => 1 )
 		);
 		// is template?
 		if( !empty( $form_template ) && is_array( $form_template ) ){
