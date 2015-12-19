@@ -128,10 +128,6 @@ if( !empty( $element['mailer']['enable_mailer'] ) ){
 
 	</div>
 </div>
-<div class="mailer-errors" style="display:none;">
-	<p><?php echo __('Please add a "Button" element and set it to "Submit" if you want to have the form submittable.', 'caldera-forms'); ?></p>
-</div>
-
 
 
 	
