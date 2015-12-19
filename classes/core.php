@@ -1616,12 +1616,12 @@ class Caldera_Forms {
 					$args  = apply_filters( 'caldera_forms_autopopulate_post_type_args', $args );
 
 					$posts = get_posts( $args );
-					
 					if( $field[ 'config' ][ 'value_field' ] === 'id' ){
 						$field[ 'config' ][ 'value_field' ] = 'ID';
 					}elseif( $field[ 'config' ][ 'value_field' ] === 'name' ){
 						$field[ 'config' ][ 'value_field' ] = 'post_name';
 					}
+
 					/**
 					 * Filter which field is used for the VALUE when getting autopopulate option values when autopopulating options from post types
 					 *
@@ -1650,13 +1650,13 @@ class Caldera_Forms {
 					 * @param array $posts Current post collection.
 					 */
 					$field_for_label = apply_filters( 'caldera_forms_autopopulate_options_post_label_field', 'post_title', $field, $form, $posts  );
-
 					foreach($posts as $post_item){
 						$field['config']['option'][$post_item->ID] = array(
 							'value'	=>	$post_item->{$field_for_value},
 							'label' =>	$post_item->{$field_for_label}
 						);
 					}
+
 				break;
 				case 'taxonomy':
 					if( $field[ 'config' ][ 'value_field' ] === 'id' ){
@@ -1719,10 +1719,10 @@ class Caldera_Forms {
 
 			}
 
+		}else{
+			$field = self::format_select_options( $field );
 		}
-
-		$field = self::format_select_options( $field );
-
+		
 		return $field;
 
 	}
@@ -1738,6 +1738,7 @@ class Caldera_Forms {
 	 * @return array
 	 */
 	static public function format_select_options( $field ) {
+
 		if ( ( empty( $field['config']['value_field']) || $field[ 'config' ][ 'value_field' ] == 'name' ) && isset( $field[ 'config' ] ) && isset( $field[ 'config' ][ 'option' ] ) && is_array( $field[ 'config' ][ 'option' ] ) ){
 
 			foreach( $field[ 'config' ][ 'option' ] as &$option){
