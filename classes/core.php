@@ -4170,6 +4170,108 @@ class Caldera_Forms {
 	 *
 	 * @return void|string HTML for form, if it was able to be laoded
 	 */
+	static public function render_field($field, $form = null, $entry_data = array() ){
+		global $current_form_count, $grid;
+
+		$field_classes = array(
+			"control_wrapper"	=> array("form-group"),
+			"field_label"		=> array("control-label"),
+			"field_required_tag"=> array("field_required"),
+			"field_wrapper"		=> array(),
+			"field"				=> array("form-control"),
+			"field_caption"		=> array("help-block"),
+			"field_error"		=> array("has-error"),
+		);
+
+		$field_classes = apply_filters( 'caldera_forms_render_field_classes', $field_classes, $field, $form);
+		$field_classes = apply_filters( 'caldera_forms_render_field_classes_type-' . $field['type'], $field_classes, $field, $form);
+		$field_classes = apply_filters( 'caldera_forms_render_field_classes_slug-' . $field['slug'], $field_classes, $field, $form);
+
+
+
+		$field_wrapper_class = implode(' ',$field_classes['control_wrapper']);
+		$field_input_class = implode(' ',$field_classes['field_wrapper']);
+		$field_class = implode(' ',$field_classes['field']);
+
+		// add error class
+		if(!empty($field_errors[$field['ID']])){
+			$field_wrapper_class .= " " . implode(' ',$field_classes['field_error']);
+		}
+
+		$field_structure = array(
+			"field"			=>	$field,
+			"id"				=>	$field['ID'],//'fld_' . $field['slug'],
+			"name"				=>	$field['ID'],//$field['slug'],
+			"wrapper_before"	=>	"<div class=\"" . $field_wrapper_class . "\">\r\n",
+			"field_before"		=>	"<div class=\"" . $field_input_class ."\">\r\n",
+			"label_before"		=>	( empty($field['hide_label']) ? "<label for=\"" . $field['ID'].'_'.$current_form_count . "\" class=\"" . implode(' ', $field_classes['field_label'] ) . "\">" : null ),
+			"label"				=>	( empty($field['hide_label']) ? $field['label'] : null ),
+			"label_required"	=>	( empty($field['hide_label']) ? ( !empty($field['required']) ? " <span class=\"" . implode(' ', $field_classes['field_required_tag'] ) . "\" style=\"color:#ff2222;\">*</span>" : "" ) : null ),
+			"label_after"		=>	( empty($field['hide_label']) ? "</label>" : null ),
+			"field_placeholder" =>	( !empty($field['hide_label']) ? 'placeholder="' . htmlentities( $field['label'] ) .'"' : null),
+			"field_required"	=>	( !empty($field['required']) ? 'required="required"' : null),
+			"field_value"		=>	null,
+			"field_caption"		=>	( !empty($field['caption']) ? "<span class=\"" . implode(' ', $field_classes['field_caption'] ) . "\">" . $field['caption'] . "</span>\r\n" : ""),
+			"field_after"		=>  "</div>\r\n",
+			"wrapper_after"		=>  "</div>\r\n",
+		);
+
+		// add error
+		if(!empty($field_errors[$field['ID']])){
+			$field_structure['field_caption'] = "<span class=\"" . implode(' ', $field_classes['field_caption'] ) . "\">" . $field_errors[$field['ID']] . "</span>\r\n";
+		}
+
+		// value
+		if(isset($field['config']['default'])){
+
+			$field_structure['field_value'] = self::do_magic_tags($field['config']['default']);
+		}
+
+		// transient data
+		if(isset($entry_data[$field['ID']])){
+			$field_structure['field_value'] = $entry_data[$field['ID']];
+		}
+
+		$field_structure = apply_filters( 'caldera_forms_render_field_structure', $field_structure, $form);
+		$field_structure = apply_filters( 'caldera_forms_render_field_structure_type-' . $field['type'], $field_structure, $form);
+		$field_structure = apply_filters( 'caldera_forms_render_field_structure_slug-' . $field['slug'], $field_structure, $form);
+
+		$field_name = $field_structure['name'];
+		$field_id = $field_structure['id'] . '_' .$current_form_count;
+		$wrapper_before = $field_structure['wrapper_before'];
+		$field_before = $field_structure['field_before'];
+		$field_label = $field_structure['label_before'] . $field_structure['label'] . $field_structure['label_required'] . $field_structure['label_after']."\r\n";
+		$field_placeholder = $field_structure['field_placeholder'];
+		$field_required = $field_structure['field_required'];
+		$field_caption = $field_structure['field_caption'];
+		$field_after = $field_structure['field_after'];
+		$wrapper_after = $field_structure['wrapper_after'];
+		// blank default
+		$field_value = $field_structure['field_value'];
+		// setup base instance ID
+		$field_base_id = $field['ID'];
+
+		// register strings
+		$form_field_strings[ $field_structure['id'] ] = array( 'id' => $field_structure['id'], 'instance' => $current_form_count, 'slug' => $field['slug'], 'label' => $field['label'] );
+		
+		$field_types = self::get_field_types();
+		
+		ob_start();
+		include $field_types[$field['type']]['file'];
+		$field_html = apply_filters( 'caldera_forms_render_field', ob_get_clean(), $form);
+		$field_html = apply_filters( 'caldera_forms_render_field_type-' . $field['type'], $field_html, $form);
+		$field_html = apply_filters( 'caldera_forms_render_field_slug-' . $field['slug'], $field_html, $form);
+
+		return $field_html;
+	}
+	/**
+	 * Create HTML markup for a form.
+	 * @param array|string $atts Form ID or shortcode atts or form config array
+	 * @param null|int $entry_id Optional. Entry ID to load data from. Null, the default, loads form for creating a new entry.
+	 * @param null $shortcode No longer used.
+	 *
+	 * @return void|string HTML for form, if it was able to be laoded
+	 */
 	static public function render_form($atts, $entry_id = null, $shortcode = null){
 
 		global $current_form_count, $form, $post;
@@ -4313,7 +4415,7 @@ class Caldera_Forms {
 		// filter settings
 		$grid_settings = apply_filters( 'caldera_forms_render_grid_settings', $grid_settings, $form);
 
-		$grid = new Caldera_Form_Grid($grid_settings);
+		$form['grid_object'] = new Caldera_Form_Grid($grid_settings);
 
 		// Build Pages Breaks
 		if( false !== strpos($form['layout_grid']['structure'], '#')){
@@ -4474,7 +4576,7 @@ class Caldera_Forms {
 		}
 
 		// build grid & pages
-		$grid->setLayout($form['layout_grid']['structure']);
+		$form['grid_object']->setLayout($form['layout_grid']['structure']);
 
 		// insert page breaks
 		if(!empty($page_breaks)){
@@ -4490,12 +4592,12 @@ class Caldera_Forms {
 			}
 
 			$total_rows = substr_count($form['layout_grid']['structure'], '|') + 1;
-			$grid->before('<div data-formpage="1" class="caldera-form-page" style="display:'.$display.';">', 1);
-			$grid->after('</div>', $total_rows);
+			$form['grid_object']->before('<div data-formpage="1" class="caldera-form-page" style="display:'.$display.';">', 1);
+			$form['grid_object']->after('</div>', $total_rows);
 			//dump($page_breaks);
 			foreach($page_breaks as $page=>$break){
 
-				$grid->after('</div>', $break);
+				$form['grid_object']->after('</div>', $break);
 
 				if($break+1 <= $total_rows ){
 					$display = 'none';
@@ -4503,7 +4605,7 @@ class Caldera_Forms {
 						$display = 'block';
 					}
 
-					$grid->before('<div data-formpage="' . ($page+2) . '" class="caldera-form-page" style="display:'.$display.';">', $break+1);
+					$form['grid_object']->before('<div data-formpage="' . ($page+2) . '" class="caldera-form-page" style="display:'.$display.';">', $break+1);
 				}
 			}
 			//dump($page_breaks,0);
@@ -4551,8 +4653,17 @@ class Caldera_Forms {
 			foreach($form['layout_grid']['fields'] as $field_base_id=>$location){
 				// instance base
 				if(isset($form['fields'][$field_base_id])){
-					
+					/**
+					 * Filter the field setup before render
+					 *
+					 * @since unknown
+					 *
+					 * @param string $notice Notices HTML
+					 * @param array $config Form config
+					 */
 					$field = apply_filters( 'caldera_forms_render_setup_field', $form['fields'][$field_base_id], $form);
+				
+					$field['grid_location'] = $location;
 
 					if(empty($field) || !isset($field_types[$field['type']]['file']) || !file_exists($field_types[$field['type']]['file'])){
 						continue;
@@ -4581,93 +4692,9 @@ class Caldera_Forms {
 						}
 					}
 
-					$field_classes = array(
-						"control_wrapper"	=> array("form-group"),
-						"field_label"		=> array("control-label"),
-						"field_required_tag"=> array("field_required"),
-						"field_wrapper"		=> array(),
-						"field"				=> array("form-control"),
-						"field_caption"		=> array("help-block"),
-						"field_error"		=> array("has-error"),
-					);
+					$field_base_id = $field['ID'] . '_' . $current_form_count;
 
-					$field_classes = apply_filters( 'caldera_forms_render_field_classes', $field_classes, $field, $form);
-					$field_classes = apply_filters( 'caldera_forms_render_field_classes_type-' . $field['type'], $field_classes, $field, $form);
-					$field_classes = apply_filters( 'caldera_forms_render_field_classes_slug-' . $field['slug'], $field_classes, $field, $form);
-
-
-
-					$field_wrapper_class = implode(' ',$field_classes['control_wrapper']);
-					$field_input_class = implode(' ',$field_classes['field_wrapper']);
-					$field_class = implode(' ',$field_classes['field']);
-
-					// add error class
-					if(!empty($field_errors[$field_base_id])){
-						$field_wrapper_class .= " " . implode(' ',$field_classes['field_error']);
-					}
-
-					$field_structure = array(
-						"field"			=>	$field,
-						"id"				=>	$field_base_id,//'fld_' . $field['slug'],
-						"name"				=>	$field_base_id,//$field['slug'],
-						"wrapper_before"	=>	"<div class=\"" . $field_wrapper_class . "\">\r\n",
-						"field_before"		=>	"<div class=\"" . $field_input_class ."\">\r\n",
-						"label_before"		=>	( empty($field['hide_label']) ? "<label for=\"" . $field_base_id.'_'.$current_form_count . "\" class=\"" . implode(' ', $field_classes['field_label'] ) . "\">" : null ),
-						"label"				=>	( empty($field['hide_label']) ? $field['label'] : null ),
-						"label_required"	=>	( empty($field['hide_label']) ? ( !empty($field['required']) ? " <span class=\"" . implode(' ', $field_classes['field_required_tag'] ) . "\" style=\"color:#ff2222;\">*</span>" : "" ) : null ),
-						"label_after"		=>	( empty($field['hide_label']) ? "</label>" : null ),
-						"field_placeholder" =>	( !empty($field['hide_label']) ? 'placeholder="' . htmlentities( $field['label'] ) .'"' : null),
-						"field_required"	=>	( !empty($field['required']) ? 'required="required"' : null),
-						"field_value"		=>	null,
-						"field_caption"		=>	( !empty($field['caption']) ? "<span class=\"" . implode(' ', $field_classes['field_caption'] ) . "\">" . $field['caption'] . "</span>\r\n" : ""),
-						"field_after"		=>  "</div>\r\n",
-						"wrapper_after"		=>  "</div>\r\n",
-					);
-
-					// add error
-					if(!empty($field_errors[$field_base_id])){
-						$field_structure['field_caption'] = "<span class=\"" . implode(' ', $field_classes['field_caption'] ) . "\">" . $field_errors[$field_base_id] . "</span>\r\n";
-					}
-
-					// value
-					if(isset($field['config']['default'])){
-
-						$field_structure['field_value'] = self::do_magic_tags($field['config']['default']);
-					}
-
-					// transient data
-					if(isset($prev_data[$field_base_id])){
-						$field_structure['field_value'] = $prev_data[$field_base_id];
-					}
-
-					$field_structure = apply_filters( 'caldera_forms_render_field_structure', $field_structure, $form);
-					$field_structure = apply_filters( 'caldera_forms_render_field_structure_type-' . $field['type'], $field_structure, $form);
-					$field_structure = apply_filters( 'caldera_forms_render_field_structure_slug-' . $field['slug'], $field_structure, $form);
-
-					$field_name = $field_structure['name'];
-					$field_id = $field_structure['id'] . '_' . $current_form_count;
-					$wrapper_before = $field_structure['wrapper_before'];
-					$field_before = $field_structure['field_before'];
-					$field_label = $field_structure['label_before'] . $field_structure['label'] . $field_structure['label_required'] . $field_structure['label_after']."\r\n";
-					$field_placeholder = $field_structure['field_placeholder'];
-					$field_required = $field_structure['field_required'];
-					$field_caption = $field_structure['field_caption'];
-					$field_after = $field_structure['field_after'];
-					$wrapper_after = $field_structure['wrapper_after'];
-					// blank default
-					$field_value = $field_structure['field_value'];
-					// setup base instance ID
-					$field_base_id = $field_base_id.'_'.$current_form_count;
-					
-					// register strings
-					$form_field_strings[ $field_structure['id'] ] = array( 'id' => $field_structure['id'], 'instance' => $current_form_count, 'slug' => $field['slug'], 'label' => $field['label'] );
-
-					ob_start();
-					include $field_types[$field['type']]['file'];
-					$field_html = apply_filters( 'caldera_forms_render_field', ob_get_clean(), $form);
-					$field_html = apply_filters( 'caldera_forms_render_field_type-' . $field['type'], $field_html, $form);
-					$field_html = apply_filters( 'caldera_forms_render_field_slug-' . $field['slug'], $field_html, $form);
-
+					$field_html = self::render_field( $field, $form, $prev_data );
 					// conditional wrapper
 					if(!empty($field['conditions']['group']) && !empty($field['conditions']['type'])){
 						
@@ -4696,7 +4723,7 @@ class Caldera_Forms {
 						$field_html = '<span class="caldera-forms-conditional-field" id="conditional_' . $field_base_id . '">' . $field_html . '</span>';
 					}
 
-					$grid->append($field_html, $location);
+					$form['grid_object']->append($field_html, $field['grid_location']);
 					
 				}
 			}
@@ -4705,7 +4732,7 @@ class Caldera_Forms {
 		wp_localize_script( 'cf-dynamic', $form['ID'] . '_' . $current_form_count, $form_field_strings );
 
 		// do grid
-		$grid = apply_filters( 'caldera_forms_render_grid_structure', $grid, $form);
+		$form['grid_object'] = apply_filters( 'caldera_forms_render_grid_structure', $form['grid_object'], $form);
 		// wrapper classes
 		$form_wrapper_classes = array(
 			"caldera-grid"
@@ -4879,7 +4906,7 @@ class Caldera_Forms {
 				$out .= "</div>";
 			}
 
-			$out .= $grid->renderLayout();
+			$out .= $form['grid_object']->renderLayout();
 
 			$out .= "</" . $form_element . ">\r\n";
 		}
