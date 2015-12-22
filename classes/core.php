@@ -355,10 +355,6 @@ class Caldera_Forms {
 	 * @return string HTML markup
 	 */
 	public static function star_rating_viewer($value, $field, $form){
-		if(!is_admin()){
-			// only for the front
-			return $value;
-		}
 
 		$out = "<div style=\"color: " . $field['config']['color'] . "; font-size: 10px;display: inline;\" >";
 		if(!empty($field['config']['number'])){
