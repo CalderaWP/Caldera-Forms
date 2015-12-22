@@ -68,8 +68,12 @@ if(!empty($hastags[1])){
 		})
 	</script>
 	<?php
-		$script_template = ob_get_clean();
-		$grid->append( $script_template, $location );
+	$script_template = ob_get_clean();
+	if( !empty( $form['grid_object'] && is_object( $form['grid_object'] ) ) ){
+		$form['grid_object']->append( $script_template, $field['grid_location'] );
+	}else{
+		echo $script_template;
+	}
 			
 }else{
 	echo '<div class="' . $field['config']['custom_class'] . '">' . do_shortcode( self::do_magic_tags( $field['config']['default'] ) ) . '</div>';

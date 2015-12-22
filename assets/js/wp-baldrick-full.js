@@ -4560,7 +4560,7 @@ var handlebarsVariables = {};
                   }
                 }
 
-                compiledTemplates[trigger.data('templateUrl')] = Handlebars.compile(xhr.responseText);
+                compiledTemplates[trigger.data('templateUrl')] = Handlebars.compile(xhr.responseText, { trackIds : true } );
               });
             }
           }
@@ -4585,7 +4585,7 @@ var handlebarsVariables = {};
           opts.data = compiledTemplates[opts.params.trigger.data('template')](opts.data);
         }else{
           if($(opts.params.trigger.data('template'))){
-            compiledTemplates[opts.params.trigger.data('template')] = Handlebars.compile($(opts.params.trigger.data('template')).html());
+            compiledTemplates[opts.params.trigger.data('template')] = Handlebars.compile( $(opts.params.trigger.data('template')).html(), { trackIds : true } );
             opts.data = compiledTemplates[opts.params.trigger.data('template')](opts.data);
           }
         }
@@ -4617,6 +4617,8 @@ var handlebarsVariables = {};
         trigger.removeClass( ( trigger.data('activeClass') ? trigger.data('activeClass') : 'active' ) );
         $('.baldrick-modal-wrap').css('zIndex' , '');
       });
+
+      // cleanup
     },
     resize_modal: function(modal, trigger){
       
@@ -4724,11 +4726,15 @@ var handlebarsVariables = {};
     },
     event : function(el, obj){
       var trigger = $(el), modal_id = 'wm';     
+      
       if(trigger.data('modal') && wm_hasModal === false){
         if(trigger.data('modal') !== 'true'){
           modal_id = trigger.data('modal');
         }
-        if(!$('#' + modal_id + '_baldrickModal').length){
+        if( $('#' + modal_id + '_baldrickModal').length ){
+          $('#' + modal_id + '_baldrickModal').remove();
+        }
+        if( !$('#' + modal_id + '_baldrickModal').length ){
           $('.baldrick-modal-wrap').css('zIndex' , '100099');
           //wm_hasModal = true;
           // write out a template wrapper.
@@ -4741,7 +4747,7 @@ var handlebarsVariables = {};
             }),         
           //modalDialog = $('<div>', {"class" : "modal-dialog"});
           //modalBackdrop = $('.baldrick-backdrop').length ? $('.baldrick-backdrop') : $('<div>', {"class" : "baldrick-backdrop"});
-          modalBackdrop = $('.baldrick-backdrop').length ? $('<div>', {"class" : "baldrick-backdrop-invisible"}) : $('<div>', {"class" : "baldrick-backdrop"});
+          modalBackdrop = $('.baldrick-backdrop').length ? ( $('.baldrick-modal-wrap' ).length ? $('<div>', {"class" : "baldrick-backdrop-invisible"}) : $('.baldrick-backdrop') ) : $('<div>', {"class" : "baldrick-backdrop"});
           modalContent = $('<div>', {"class" : "baldrick-modal-body",id: modal_id + '_baldrickModalBody'});
           modalFooter = $('<div>', {"class" : "baldrick-modal-footer",id: modal_id + '_baldrickModalFooter'});
           modalHeader = $('<div>', {"class" : "baldrick-modal-title", id : modal_id + '_baldrickModalTitle'});
@@ -4785,8 +4791,9 @@ var handlebarsVariables = {};
             };
           
           $(window).on('resize', resize_action);
-
-          modalBackdrop.on('click', modal_closer );
+          if( ! trigger.data('static') ){
+            modalBackdrop.on('click', modal_closer );
+          }
           modalCloser.on('click', modal_closer );
           $(window).on('keypress', modal_closer )
           

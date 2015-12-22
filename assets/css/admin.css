@@ -102,18 +102,23 @@
 .toggle_option_row .toggle_label_field {
   width: 120px;
 }
+.toggle_processor_event,
 .toggle_option_tab {
   float: right;
   margin: 0 6px 0 0;
 }
+
+.toggle_processor_event .button,
 .toggle_option_tab .button {
   border-radius: 0;
   margin-right: -5px;
 }
+.toggle_processor_event .button:last-child,
 .toggle_option_tab .button:last-child {
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
 }
+.toggle_processor_event .button:first-child,
 .toggle_option_tab .button:first-child {
   border-top-left-radius: 3px;
   border-bottom-left-radius: 3px;

@@ -155,7 +155,7 @@
 						{{#each data}}
 						<td>{{#if label}}{{value}}{{else}}{{{this}}}{{/if}}</td>
 						{{/each}}
-						<td style="text-align: right; width: 100px;"><?php do_action('caldera_forms_entry_actions'); ?></td>
+						<td style="text-align: right; width: 100px;white-space: nowrap;"><?php do_action('caldera_forms_entry_actions'); ?></td>
 					</tr>
 				{{/each}}
 				{{else}}
@@ -295,7 +295,29 @@ jQuery(function($){
 </script>
 
 
+<?php 
+$forms = Caldera_Forms::get_forms();
+foreach( $forms as $form_id=>$form_conf ){ ?>
 
+<script type="text/html" id="cfajax_<?php echo esc_attr( $form_id ); ?>-tmpl">
+	{{#script}}
+		var view = jQuery('.current-view'),
+			toggles = jQuery('.status_toggles.button-primary');
+
+		
+		if( view.length ){
+			view.trigger('click');
+			setTimeout( function(){
+				toggles.trigger('click');
+			}, 500 );
+		}else{
+			jQuery('#view_entry_baldrickModalCloser,#edit_entry_baldrickModalCloser').trigger('click');	
+			toggles.trigger('click');			
+		}
+	{{/script}}
+</script>
+
+<?php } ?>
 
 
 

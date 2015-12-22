@@ -24,7 +24,7 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 
 	calders_forms_check_conditions = function( inst_id ){
 
-		if( typeof caldera_conditionals[inst_id] === "undefined"){
+		if( typeof caldera_conditionals === "undefined" || typeof caldera_conditionals[inst_id] === "undefined"){
 			return;
 		}
 

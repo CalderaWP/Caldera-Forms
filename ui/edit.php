@@ -5,8 +5,16 @@ global $field_type_list, $field_type_templates;
 // Load element
 $element = get_option( $_GET['edit'] );
 
-// build magic tags
-$magic_tags = apply_filters( 'caldera_forms_get_magic_tags', array());
+/**
+ * Filter which Magic Tags are available in the form editor
+ *
+ *
+ * @since 1.3.2
+ *
+ * @param array $tags Array of magic registered tags 
+ * @param array $form_id for which this applies.
+ */
+$magic_tags = apply_filters( 'caldera_forms_get_magic_tags', array(), $element['ID'] );
 
 //dump($element);
 if(empty($element['success'])){
@@ -109,6 +117,14 @@ $field_options_template = "
 				<option value=\"post_type\"{{#is auto_type value=\"post_type\"}} selected=\"selected\"{{/is}}>" . __('Post Type', 'caldera-forms') . "</option>
 				<option value=\"taxonomy\"{{#is auto_type value=\"taxonomy\"}} selected=\"selected\"{{/is}}>" . __('Taxonomy', 'caldera-forms') . "</option>";
 				ob_start();
+
+				/**
+				 * Runs after default field auto-population types options are outputted, inside of the select element.
+				 *
+				 * Use this to add new options in UI for auto-population sources
+				 *
+				 * @since unknown
+				 */
 				do_action( 'caldera_forms_autopopulate_types' );
 				$field_options_template .= ob_get_clean() . "
 			</select>
@@ -226,6 +242,14 @@ $field_options_template = "
 
 	";
 	ob_start();
+
+	/**
+	 * Runs after default options for auto-populate fields
+	 *
+	 * Use this to add new options in UI when making custom aut-population types
+	 *
+	 * @since unknown
+	 */
 	do_action( 'caldera_forms_autopopulate_type_config' );
 	$field_options_template .= ob_get_clean() . "
 
@@ -571,6 +595,7 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 
 <div style="display: none;" class="caldera-editor-body caldera-config-editor-panel " id="settings-panel">
 	<h3><?php echo __("General Settings", "caldera-forms"); ?></h3>
+	<input type="hidden" name="config[cf_version]" value="<?php echo esc_attr( CFCORE_VER ); ?>">
 	<div class="caldera-config-group">
 		<label><?php echo __('Form Name', 'caldera-forms'); ?> </label>
 		<div class="caldera-config-field">

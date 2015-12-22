@@ -140,7 +140,7 @@ html[dir="rtl"] .ccselect2-container .ccselect2-choice > .ccselect2-chosen {
     width: 100%;
     margin-top: -1px;
     position: absolute;
-    z-index: 9999;
+    z-index: 999991;
     top: 100%;
 
     background: #fff;
@@ -168,6 +168,7 @@ html[dir="rtl"] .ccselect2-container .ccselect2-choice > .ccselect2-chosen {
 .ccselect2-drop-active {
     border: 1px solid #5b9dd9;
     border-top: none;
+    z-index: 999991;
 }
 
 .ccselect2-drop.ccselect2-drop-above.ccselect2-drop-active {

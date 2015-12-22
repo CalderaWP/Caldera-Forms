@@ -268,7 +268,7 @@ function cf_ajax_setatts($atts, $form){
 		'data-load-class' 	=>	'cf_processing',
 		'data-post-disable' =>	$post_disable,
 		'data-action'		=>	'cf_process_ajax_submit',
-		'data-request'		=>	home_url( '/cf-api/' . $form['ID'] ),		
+		'data-request'		=>	cf_ajax_api_url( $form[ 'ID' ] ),
 	);
 	
 	if( !empty( $form['custom_callback'] ) ){
@@ -284,4 +284,29 @@ function cf_ajax_setatts($atts, $form){
 
 	return array_merge($atts, $resatts);
 
+}
+
+/**
+ * Get URL for API for processing a form
+ *
+ * @since 1.3.2
+ *
+ * @param string $form_id Form ID
+ *
+ * @return string
+ */
+function cf_ajax_api_url( $form_id ) {
+	$url = home_url( '/cf-api/' . $form_id );
+
+	/**
+	 * Change URL for processing forms
+	 *
+	 * NOTE: Using this will make AJAX processing not work. Josh added this in CF 1.3.2 so he could potentially do something cool with it later. You probably shouldn't use it. You could if you wanted to submit against another URL or something:)
+	 *
+	 * @since 1.3.2
+	 *
+	 * @param string $url URL of API
+	 * @param string $form_id Form ID
+	 */
+	return apply_filters( 'caldera_forms_cf_ajax_api_url', $url, $form_id );
 }
