@@ -4198,7 +4198,7 @@ class Caldera_Forms {
 			"field"			=>	$field,
 			"id"				=>	$field['ID'],//'fld_' . $field['slug'],
 			"name"				=>	$field['ID'],//$field['slug'],
-			"wrapper_before"	=>	"<div class=\"" . $field_wrapper_class . "\">\r\n",
+			"wrapper_before"	=>	"<div data-field-wrapper=\"" . $field['ID'] . "\" class=\"" . $field_wrapper_class . "\">\r\n",
 			"field_before"		=>	"<div class=\"" . $field_input_class ."\">\r\n",
 			"label_before"		=>	( empty($field['hide_label']) ? "<label for=\"" . $field['ID'].'_'.$current_form_count . "\" class=\"" . implode(' ', $field_classes['field_label'] ) . "\">" : null ),
 			"label"				=>	( empty($field['hide_label']) ? $field['label'] : null ),
