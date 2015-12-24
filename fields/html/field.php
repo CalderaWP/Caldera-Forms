@@ -12,9 +12,9 @@ if(!empty($hastags[1])){
 
 		foreach($form['fields'] as $key_id=>$fcfg){
 			if($fcfg['slug'] === $tag){
-				$binds[] = '[data-field="'.$key_id.'_'.$current_form_count.'"]';
-				$bindfields[] = '"'.$key_id.'_'.$current_form_count.'"';
-				$field['config']['default'] = str_replace($hastags[0][$tag_key], '{{'.$key_id.'_'.$current_form_count.'}}', $field['config']['default']);
+				$binds[] = '[data-field="'.$key_id.'"]';
+				$bindfields[] = '"'.$key_id.'"';
+				$field['config']['default'] = str_replace($hastags[0][$tag_key], '{{'.$key_id.'}}', $field['config']['default']);
 			}
 		}
 	}
@@ -29,7 +29,7 @@ if(!empty($hastags[1])){
 	?>
 	<script type="text/javascript">
 		jQuery(function($){
-
+			
 			function htmltemplate<?php echo $field_id; ?>(){
 
 				var template = $('#html-content-<?php echo $field_id; ?>-tmpl').html(),
