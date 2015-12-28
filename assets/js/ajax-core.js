@@ -13,6 +13,11 @@ jQuery(function($){
 				var form	=	$(el),
 					buttons = 	form.find(':submit');
 
+				if( form.data('_cf_manual') ){
+					form.find('[name="cfajax"]').remove();
+					return false;
+				}
+
 				var validate = form.parsley({
 					errorsWrapper : '<span class="help-block caldera_ajax_error_block"></span>',
 					errorTemplate : '<span></span>'
@@ -26,8 +31,13 @@ jQuery(function($){
 				}
 
 			},
+			error : function( obj ){
+				if( obj.jqxhr.status === 404){
+					this.trigger.data('_cf_manual', true ).trigger('submit');
+				}
+			},
 			callback		: function(obj){
-
+				
 				obj.params.trigger.find(':submit').prop('disabled',false);
 				
 				var instance = obj.params.trigger.data('instance');
