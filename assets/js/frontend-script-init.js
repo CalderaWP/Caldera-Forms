@@ -117,10 +117,11 @@ var cf_jsfields_init;
 			}else{
 				if(this_field.prop('required')){
 					//console.log( this_field.is(":visible") );
-					if( true !== this_field.parsley().validate() ){
+					if( true !== this_field.parsley().isValid() ){
 						// ye nope!
 						if( this_field.is(":visible") ){
 							// on this page.
+							this_field.parsley().validate();
 							e.preventDefault();
 							return;
 						}else{
