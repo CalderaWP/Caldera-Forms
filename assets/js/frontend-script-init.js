@@ -1,6 +1,34 @@
 var cf_jsfields_init;
 (function($){
 
+	// init sync
+	$('[data-sync]').each( function(){
+		var field = $( this ),
+			binds = field.data('binds'),
+			instance = field.closest('form');
+
+		for( var i = 0; i < binds.length; i++ ){
+			$( document ).on('keyup change', "[data-field='" + binds[ i ] + "']", function(){
+				var str = field.data('sync')
+					id = $(this).data('field'),
+					reg = new RegExp( "\{\{([^\}]*?)\}\}", "g" ),
+					template = str.match( reg );
+
+					for( var t = 0; t < template.length; t++ ){
+						var select = template[ t ].replace(/\}/g,'').replace(/\{/g,'');
+						var re = new RegExp( template[ t ] ,"g");
+						str = str.replace( re , instance.find( "[data-field='" + select + "']" ).val() );
+					}
+					field.val( str );
+			} );
+			$("[data-field='" + binds[ i ] + "']").trigger('change');
+
+		}
+
+
+
+	});
+
 	// make init function
 	cf_jsfields_init = function(){
 		$('.init_field_type[data-type]').each(function(k,v){
