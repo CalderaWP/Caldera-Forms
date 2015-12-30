@@ -4693,7 +4693,6 @@ class Caldera_Forms {
 					$field_html = self::render_field( $field, $form, $prev_data );
 					// conditional wrapper
 					if(!empty($field['conditions']['group']) && !empty($field['conditions']['type'])){
-						
 						// render conditions check- for magic tags since at this point all field data will be null
 						//if(!self::check_condition($field['conditions'], $form)){
 						//	dump($field['conditions'],0);
@@ -4927,7 +4926,19 @@ class Caldera_Forms {
 										$condition_line['field'] = self::do_magic_tags( $condition_line['field'] );
 									}
 								}
-								$condition_line['value'] = self::do_magic_tags( $condition_line['value'] );
+
+								//strip out fields
+								$regex = "/%([a-zA-Z0-9_:]*)%/";
+								preg_match_all($regex, $condition_line['value'], $matches);
+								if(!empty($matches[1])){
+									foreach( $matches[1] as $field_slug ){
+										$value_field = self::get_field_by_slug( $field_slug, $form );
+										$condition_line['selectors'][ $value_field['ID'] ] = '[data-field="' . $value_field['ID'] .'"]';
+										$condition_line['value'] = str_replace( '%' . $field_slug . '%', $value_field['ID'], $condition_line['value'] );
+									}
+								}else{
+									$condition_line['value'] = self::do_magic_tags( $condition_line['value'] );
+								}
 							}
 						}
 					}
