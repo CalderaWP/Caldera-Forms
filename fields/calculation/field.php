@@ -58,11 +58,11 @@ $binds_vars = array();
 foreach($form['fields'] as $fid=>$cfg){
 	if(false !== strpos($formula, $fid)){
 		//dump($cfg,0);
-		$formula = str_replace($fid, $fid.'_'.$current_form_count, $formula);
-		$binds_vars[] = $fid.'_'.$current_form_count." = parseFloat( $('[data-field=\"".$fid.'_'.$current_form_count."\"]').is(':checkbox') ? checked_total_" . $field_base_id. "($('[data-field=\"".$fid.'_'.$current_form_count."\"]:checked')) : $('[data-field=\"".$fid.'_'.$current_form_count."\"]').is(':radio') ? $('[data-field=\"".$fid.'_'.$current_form_count."\"]:checked').val() : $('[data-field=\"".$fid.'_'.$current_form_count."\"]').val() ) || 0 ";
-		$binds[] = "[data-field=\"".$fid.'_'.$current_form_count."\"]";
+		$formula = str_replace($fid, $fid, $formula);
+		$binds_vars[] = $fid." = parseFloat( $('[data-field=\"".$fid."\"]').is(':checkbox') ? checked_total_" . $field_base_id. "($('[data-field=\"".$fid."\"]:checked')) : $('[data-field=\"".$fid."\"]').is(':radio') ? $('[data-field=\"".$fid."\"]:checked').val() : $('[data-field=\"".$fid."\"]').val() ) || 0 ";
+		$binds[] = "[data-field=\"".$fid."\"]";
 		// include a conditional wrapper
-		$binds_wrap[] = "#conditional_".$fid.'_'.$current_form_count;		
+		$binds_wrap[] = "#conditional_".$fid;		
 	}
 }
 
