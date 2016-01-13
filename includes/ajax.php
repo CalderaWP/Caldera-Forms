@@ -296,7 +296,8 @@ function cf_ajax_setatts($atts, $form){
  * @return string
  */
 function cf_ajax_api_url( $form_id ) {
-	$url = home_url( '/cf-api/' . $form_id );
+	
+	$url = Caldera_Forms::get_submit_url( $form_id );
 
 	/**
 	 * Change URL for processing forms

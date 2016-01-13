@@ -3747,6 +3747,44 @@ class Caldera_Forms {
 	}
 
 	/**
+	 * Retrieves the URL to the endpoint.
+	 *
+	 * Note: The returned URL is NOT escaped.
+	 *
+	 * @since 1.3.2
+	 *
+	 * @param string $form_id  form ID
+	 * @return string Full URL
+	 */
+	static function get_submit_url( $form_id ) {
+
+		if ( is_multisite() && get_blog_option( null, 'permalink_structure' ) || get_option( 'permalink_structure' ) ) {
+			$url = get_home_url( );
+			$url .= '/cf-api/' . ltrim( $form_id, '/' );
+		} else {
+			$url = trailingslashit( get_home_url( ) );
+			$url = add_query_arg( 'cf_api', $form_id, $url );
+		}
+		if ( is_ssl() ) {
+			// If the current host is the same as the REST URL host, force the REST URL scheme to HTTPS.
+			if ( $_SERVER['SERVER_NAME'] === parse_url( get_home_url( ), PHP_URL_HOST ) ) {
+				$url = set_url_scheme( $url, 'https' );
+			}
+		}
+		/**
+		 * Filter the REST URL.
+		 *
+		 * Use this filter to adjust the url returned by the `get_rest_url` function.
+		 *
+		 * @since 4.4.0
+		 *
+		 * @param string $url     URL.
+		 * @param string $path    Path.
+		 */
+		return apply_filters( 'caldera_forms_submission_url', $url, $form_id );
+	}
+
+	/**
 	 * Makes Caldera Forms go in front-end!
 	 */
 	static public function cf_init_system(){
