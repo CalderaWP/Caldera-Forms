@@ -24,10 +24,10 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 
 	calders_forms_check_conditions = function( inst_id ){
 
-		if( typeof caldera_conditionals[inst_id] === "undefined"){
+		if( typeof caldera_conditionals === "undefined" || typeof caldera_conditionals[inst_id] === "undefined"){
 			return;
 		}
-
+		var form = $( '#' + inst_id );
 		for( var field in caldera_conditionals[ inst_id ] ){
 
 			// each conditional
@@ -49,12 +49,18 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 				for(var lid in lines){					
 					/// get field 
 
-					var compareelement 	= jQuery('[data-field="' + lines[lid].field + '_' + lines[lid].instance + '"]'),
+					var compareelement 	= form.find('[data-field="' + lines[lid].field + '"]'),
 					comparefield 	= [],
 					comparevalue	= (typeof lines[lid].value === 'function' ? lines[lid].value() : lines[lid].value);
 					
+					if( typeof lines[lid].selectors !== 'undefined' ){
+						for( var selector in lines[lid].selectors ){
+							var re = new RegExp( selector ,"g");
+							comparevalue = comparevalue.replace( re, $( lines[lid].selectors[ selector ] ).val() );
+						}
+					}
+
 					truelines[lid] 	= false;
-					
 					if( compareelement.is(':radio,:checkbox')){
 						compareelement = compareelement.filter(':checked');
 					}else if( compareelement.is('div')){
@@ -84,15 +90,15 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 						break;
 						case '>':
 						case 'greater':
-						if( parseFloat( comparefield.reduce(function(a, b) {return a + b;}) ) > parseFloat( comparevalue ) ){
-							truelines[lid] = true;
-						}
+
+							truelines[lid] = parseFloat( comparefield.reduce(function(a, b) {return a + b;}) ) > parseFloat( comparevalue );
+
 						break;
 						case '<':
 						case 'smaller':
-						if( parseFloat( comparefield.reduce(function(a, b) {return a + b;}) ) < parseFloat( comparevalue ) ){
-							truelines[lid] = true;
-						}
+
+							truelines[lid] = parseFloat( comparefield.reduce(function(a, b) {return a + b;}) ) < parseFloat( comparevalue );
+
 						break;
 						case 'startswith':
 						for( var i = 0; i<comparefield.length; i++){
@@ -129,7 +135,6 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 
 			}
 
-			
 
 			var template	=	jQuery('#conditional-' + field + '-tmpl').html(),
 			target		=	jQuery('#conditional_' + field),

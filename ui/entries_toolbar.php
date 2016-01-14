@@ -1,3 +1,6 @@
+		<?php
+			$entry_perpage = get_option( '_caldera_forms_entry_perpage', 20 );
+		?>
 		<div class="caldera-entry-exporter" style="display:none;">
 
 			<span class="toggle_option_preview" style="">

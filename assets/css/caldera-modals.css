@@ -16,7 +16,7 @@ body{
   overflow-y: scroll;
 }
 .caldera-backdrop {
-  background: rgba(0,0,0,0.3);
+  background-color: rgba(0,0,0,0.3);
   bottom: 0;
   display: block;
   left: 0;

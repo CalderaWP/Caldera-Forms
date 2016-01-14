@@ -314,6 +314,28 @@ jQuery(document).ready(function($){
 	}
 
 	// tabs button
+	$('body').on('click', '.toggle_processor_event input', function(e){
+		var clicked = $(this),
+			parent = clicked.closest( '.wrapper-instance-pane' ),
+			settings = parent.find('.caldera-config-processor-setup'),
+			notice = parent.find('.caldera-config-processor-notice');
+
+		if( clicked.is(':checked') ){
+			clicked.parent().addClass('button-primary');
+		}else{
+			clicked.parent().removeClass('button-primary');
+		}
+
+		// check if all are selected
+		if( parent.find('.toggle_processor_event .button-primary').length ){
+			settings.slideDown(100);
+			notice.slideUp(100);
+		}else{
+			settings.slideUp(100);
+			notice.slideDown(100);
+		}
+
+	});
 	$('body').on('click', '.toggle_option_tab > a', function(e){
 
 		e.preventDefault();
@@ -1107,13 +1129,17 @@ jQuery(document).ready(function($){
 										
 										
 										linetag.on('click', function(){
+											
 											var selected = $(this).data('tag');
 
 
 											input.val( stream.substr(0, start ) + selected + stream.substr( end ) ).trigger('change').focus();
 											input[0].selectionStart = start + selected.length - ( selected.indexOf('*') > 0 ? 2 : 0 );
 											input[0].selectionEnd = start + selected.length - ( selected.indexOf('*') > 0 ? 1 : 0 );
-
+											//stream = null;
+											end = start = input[0].selectionEnd;
+											stream += selected;
+											input.trigger('init.magic');
 										});
 
 										linetag.appendTo(list);
@@ -1537,18 +1563,6 @@ function check_required_bindings(el){
 		jQuery('.caldera-forms-options-form').find('a[href="#' + t + '"]').append('<span class="error-tag">' + required_errors[t] + '</span>');
 	}
 	
-	// check for button and update the processor page.
-	if(!jQuery('.preview-caldera-config-group button:submit').length){
-		//jQuery('.caldera-editor-processors-panel-wrap').hide();
-		jQuery('.mailer-errors').show();
-		jQuery('.mailer-control-panel').hide();
-
-	}else{
-		//jQuery('.caldera-editor-processors-panel-wrap').show();
-		jQuery('.mailer-errors').hide();
-		jQuery('.mailer-control-panel').show();
-	}
-
 	jQuery('.caldera-conditional-field-set').trigger('change');
 
 	return all_clear;

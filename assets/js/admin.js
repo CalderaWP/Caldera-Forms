@@ -8,6 +8,16 @@ jQuery(document).ready(function($){
 		$('.ajax-trigger').baldrick({
 			request			:	ajaxurl,
 			method			:	'POST',
+			before			:	function( el, e ){
+				var clicked = $( el );
+				if( clicked.data('trigger') ){
+					e.preventDefault();
+					var trigger = $( clicked.data('trigger') );
+
+					trigger.trigger( ( trigger.data('event') ? trigger.data('event') : 'click' ) );
+					return false;
+				}
+			},
 			complete		:	function(){
 				// check for init function
 				$('.init_field_type[data-type]').each(function(k,v){

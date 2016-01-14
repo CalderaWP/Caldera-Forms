@@ -12,9 +12,9 @@ if(!empty($hastags[1])){
 
 		foreach($form['fields'] as $key_id=>$fcfg){
 			if($fcfg['slug'] === $tag){
-				$binds[] = '[data-field="'.$key_id.'_'.$current_form_count.'"]';
-				$bindfields[] = '"'.$key_id.'_'.$current_form_count.'"';
-				$field['config']['default'] = str_replace($hastags[0][$tag_key], '{{'.$key_id.'_'.$current_form_count.'}}', $field['config']['default']);
+				$binds[] = '[data-field="'.$key_id.'"]';
+				$bindfields[] = '"'.$key_id.'"';
+				$field['config']['default'] = str_replace($hastags[0][$tag_key], '{{'.$key_id.'}}', $field['config']['default']);
 			}
 		}
 	}
@@ -29,7 +29,7 @@ if(!empty($hastags[1])){
 	?>
 	<script type="text/javascript">
 		jQuery(function($){
-
+			
 			function htmltemplate<?php echo $field_id; ?>(){
 
 				var template = $('#html-content-<?php echo $field_id; ?>-tmpl').html(),
@@ -68,8 +68,12 @@ if(!empty($hastags[1])){
 		})
 	</script>
 	<?php
-		$script_template = ob_get_clean();
-		$grid->append( $script_template, $location );
+	$script_template = ob_get_clean();
+	if( !empty( $form['grid_object'] && is_object( $form['grid_object'] ) ) ){
+		$form['grid_object']->append( $script_template, $field['grid_location'] );
+	}else{
+		echo $script_template;
+	}
 			
 }else{
 	echo '<div class="' . $field['config']['custom_class'] . '">' . do_shortcode( self::do_magic_tags( $field['config']['default'] ) ) . '</div>';

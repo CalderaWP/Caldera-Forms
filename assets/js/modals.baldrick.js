@@ -34,14 +34,17 @@
 
 					modalHeader.append(modalCloser).append(modalTitle).appendTo(modal);
 
-					modalBackdrop.on('dismiss', function(e){
-						e.preventDefault();
-						modalBackdrop.fadeOut(200);
-						modal.fadeOut(200, function(){
-							$(this).remove();
-							modalBackdrop.remove();
-						});
-					})
+					if( ! trigger.data('static') ){
+						
+						modalBackdrop.on('dismiss', function(e){
+							e.preventDefault();
+							modalBackdrop.fadeOut(200);
+							modal.fadeOut(200, function(){
+								$(this).remove();
+								modalBackdrop.remove();
+							});
+						})
+					}
 					modalCloser.on('click', function(e){
 						e.preventDefault();
 						modalBackdrop.fadeOut(200);

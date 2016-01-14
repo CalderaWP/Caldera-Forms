@@ -2,8 +2,8 @@
 Contributors: Desertsnowman, Shelob9
 Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms
 Requires at least: 4.0
-Tested up to: 4.4
-Stable tag: 1.3.1.2
+Tested up to: 4.4.1
+Stable tag: 1.3.2
 License: GPLv2
 
 Build forms differently.  So easy, it’s fun!
@@ -22,14 +22,13 @@ A free plugin by <a href="https://CalderaWP.com" title="CalderaWP: Transform You
 
 
 = Get Help With Caldera Forms =
-Caldera Forms is free to uses, if you need any help, we provide services to ensure you can get the most out of Caldera Forms.
-
-
-* <strong>Priority Support</strong> Direct support from our team, your questions answered within one business day. <a href="https://calderawp.com/support#priority-support">Learn more here.</a>
-* <strong>Form Creation</strong> Got a really trick form and not a lot of time? <a href="https://calderawp.com/caldera-forms-services#cf-dfy">We can help.</a>
-* <strong>Customization</strong> Need an integration with a third-party service or to modify the default behaviour? <a href="https://calderawp.com/caldera-forms-services#cf-custom-code">Let us write you some code.</a>
-
-<em>Note:  We do not provide free support via WordPress.org. Premium add-on purchases include priority support for Caldera Forms.</em>
+> Caldera Forms is free to use, if you need any help, we provide services to ensure you can get the most out of Caldera Forms.
+>
+> <strong>Priority Support</strong> Direct support from our team, your questions answered within one business day. <a href="https://calderawp.com/support#priority-support">Learn more here.</a>
+> <strong>Form Creation</strong> Got a really trick form and not a lot of time? <a href="https://calderawp.com/caldera-forms-services#cf-dfy">We can help.</a>
+> <strong>Customization</strong> Need an integration with a third-party service or to modify the default behaviour? <a href="https://calderawp.com/caldera-forms-services#cf-custom-code">Let us write you some code.</a>
+>
+> <em>Note:  We do not provide free support via WordPress.org. Premium add-on purchases include priority support for Caldera Forms.</em>
 
 
 Pippin Williamson of Easy Digital Downloads, Restrict Content Pro and AffiliateWP gives [Caldera Forms a 5 star rating](https://themesurgeons.com/wordpress-plugins-recommendations/)!
@@ -113,7 +112,7 @@ Navigate to 'Caldera Forms' in wp-admin.
 Once you have created a form, insert it in a page or post via the Shortcode inserter button above the content editor.
 
 == Frequently Asked Questions ==
-none yet.
+[http://calderawp.com/support](http://calderawp.com/support)
 
 == Screenshots ==
 1. **Layout Builder** - Easy to use Drag & Drop grid based layout.
@@ -123,9 +122,20 @@ none yet.
 
 == Changelog ==
 
+<<<<<<< HEAD
 = 1.3.1.2 (November 18, 2015 ) =
 * FIXED: Annoying little bug that broke reCaptcha due to new script loading.
 
+=======
+= 1.3.2 ( January 14, 2015 ) =
+* FIXED: Bug preventing AJAX submissions on certain Apache configurations with ugly permalinks enabled in WordPress
+* FIXED: Calculation fields with hidden fields not calculating.
+* ADDED: "caldera_forms_cf_ajax_api_url" filter -- Filter the URL for AJAX submissions
+* ADDED: Fallback for failed AJAX submissions -- 404s now cause submission via a synchronous request.
+* FIXED: Menu display conflict with Sensi plugin
+* FIXED: Validation errors triggered prematurely on multi-page forms
+* FIXED: Use WordPress' setting for database collation. Hi Chris.
+>>>>>>> current-dev
 
 = 1.3.1.1 (November 12, 2015 ) =
 * FIXED: Annoying little bug that broke the "Next" button if you have a required Checkbox or Radio on a later page. (I know right?)

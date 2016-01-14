@@ -268,7 +268,7 @@ function cf_ajax_setatts($atts, $form){
 		'data-load-class' 	=>	'cf_processing',
 		'data-post-disable' =>	$post_disable,
 		'data-action'		=>	'cf_process_ajax_submit',
-		'data-request'		=>	home_url( '/cf-api/' . $form['ID'] ),		
+		'data-request'		=>	cf_ajax_api_url( $form[ 'ID' ] ),
 	);
 	
 	if( !empty( $form['custom_callback'] ) ){
@@ -283,5 +283,20 @@ function cf_ajax_setatts($atts, $form){
 	}
 
 	return array_merge($atts, $resatts);
+
+}
+
+/**
+ * Get URL for API for processing a form
+ *
+ * @since 1.3.2
+ *
+ * @param string $form_id Form ID
+ *
+ * @return string
+ */
+function cf_ajax_api_url( $form_id ) {
+	
+	return Caldera_Forms::get_submit_url( $form_id );
 
 }

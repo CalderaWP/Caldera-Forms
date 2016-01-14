@@ -288,6 +288,7 @@ jQuery( function( $ ){
 		}, 280 );
 		
 	});
+
 });
 </script>
 <?php

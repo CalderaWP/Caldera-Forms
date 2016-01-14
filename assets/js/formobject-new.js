@@ -140,16 +140,11 @@ $.fn.formJSON = function(){
       }
       $.get( url, function(res){
         backdrop.remove();
-        var button;
-        var modalAtts = {
+        var modal = trigger.calderaModal({
           modal : trigger.data('form'),
           width: trigger.data('width'),
           content : res
-        };
-        if( trigger.data('button') ){
-          modalAtts.footer = '<span><button type="button" class="button cfajax-trigger" data-for="form.' + trigger.data('form') + '">' + trigger.data('button') + '</button></span>';
-        }
-        var modal = trigger.calderaModal( modalAtts );
+        });
         var modalWrapper = $('#' + trigger.data('form') + '_calderaModalContent');
         var modalTitle = $('#' + trigger.data('form') + '_calderaModalTitle');
         var modalFooter = $('#' + trigger.data('form') + '_calderaModalFooter');
