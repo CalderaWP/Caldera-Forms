@@ -22,14 +22,13 @@ A free plugin by <a href="https://CalderaWP.com" title="CalderaWP: Transform You
 
 
 = Get Help With Caldera Forms =
-Caldera Forms is free to uses, if you need any help, we provide services to ensure you can get the most out of Caldera Forms.
-
-
-* <strong>Priority Support</strong> Direct support from our team, your questions answered within one business day. <a href="https://calderawp.com/support#priority-support">Learn more here.</a>
-* <strong>Form Creation</strong> Got a really trick form and not a lot of time? <a href="https://calderawp.com/caldera-forms-services#cf-dfy">We can help.</a>
-* <strong>Customization</strong> Need an integration with a third-party service or to modify the default behaviour? <a href="https://calderawp.com/caldera-forms-services#cf-custom-code">Let us write you some code.</a>
-
-<em>Note:  We do not provide free support via WordPress.org. Premium add-on purchases include priority support for Caldera Forms.</em>
+> Caldera Forms is free to use, if you need any help, we provide services to ensure you can get the most out of Caldera Forms.
+>
+> <strong>Priority Support</strong> Direct support from our team, your questions answered within one business day. <a href="https://calderawp.com/support#priority-support">Learn more here.</a>
+> <strong>Form Creation</strong> Got a really trick form and not a lot of time? <a href="https://calderawp.com/caldera-forms-services#cf-dfy">We can help.</a>
+> <strong>Customization</strong> Need an integration with a third-party service or to modify the default behaviour? <a href="https://calderawp.com/caldera-forms-services#cf-custom-code">Let us write you some code.</a>
+>
+> <em>Note:  We do not provide free support via WordPress.org. Premium add-on purchases include priority support for Caldera Forms.</em>
 
 
 Pippin Williamson of Easy Digital Downloads, Restrict Content Pro and AffiliateWP gives [Caldera Forms a 5 star rating](https://themesurgeons.com/wordpress-plugins-recommendations/)!
