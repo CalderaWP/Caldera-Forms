@@ -112,7 +112,7 @@ Navigate to 'Caldera Forms' in wp-admin.
 Once you have created a form, insert it in a page or post via the Shortcode inserter button above the content editor.
 
 == Frequently Asked Questions ==
-none yet.
+[http://calderawp.com/support](http://calderawp.com/support)
 
 == Screenshots ==
 1. **Layout Builder** - Easy to use Drag & Drop grid based layout.
@@ -121,6 +121,15 @@ none yet.
 4. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
+
+= 1.3.2 ( January 14, 2015 ) =
+* FIXED: Bug preventing AJAX submissions on certain Apache configurations with ugly permalinks enabled in WordPress
+* FIXED: Calculation fields with hidden fields not calculating.
+* ADDED: "caldera_forms_cf_ajax_api_url" filter -- Filter the URL for AJAX submissions
+* ADDED: Fallback for failed AJAX submissions -- 404s now cause submission via a synchronous request.
+* FIXED: Menu display conflict with Sensi plugin
+* FIXED: Validation errors triggered prematurely on multi-page forms
+* FIXED: Use WordPress' setting for database collation. Hi Chris.
 
 = 1.3.1.1 (November 12, 2015 ) =
 * FIXED: Annoying little bug that broke the "Next" button if you have a required Checkbox or Radio on a later page. (I know right?)
