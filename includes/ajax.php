@@ -297,17 +297,6 @@ function cf_ajax_setatts($atts, $form){
  */
 function cf_ajax_api_url( $form_id ) {
 	
-	$url = Caldera_Forms::get_submit_url( $form_id );
+	return Caldera_Forms::get_submit_url( $form_id );
 
-	/**
-	 * Change URL for processing forms
-	 *
-	 * NOTE: Using this will make AJAX processing not work. Josh added this in CF 1.3.2 so he could potentially do something cool with it later. You probably shouldn't use it. You could if you wanted to submit against another URL or something:)
-	 *
-	 * @since 1.3.2
-	 *
-	 * @param string $url URL of API
-	 * @param string $form_id Form ID
-	 */
-	return apply_filters( 'caldera_forms_cf_ajax_api_url', $url, $form_id );
 }
