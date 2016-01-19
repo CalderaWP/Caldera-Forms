@@ -37,7 +37,7 @@ jQuery(function($){
 		loading_<?php echo $field['config']['email'] .'_'.$current_form_count; ?>,
 		current_<?php echo $field['config']['email'] .'_'.$current_form_count; ?>;
 	
-	$(document).on('keyup change cf.add','[data-field="<?php echo $field['config']['email'] .'_'.$current_form_count; ?>"]', function(){
+	$(document).on('keyup change cf.add','#<?php echo $form['ID'].'_'.$current_form_count; ?> [data-field="<?php echo $field['config']['email']; ?>"]', function(){
 
 		if(timeout_<?php echo $field['config']['email'] .'_'.$current_form_count; ?>){
 			clearTimeout(timeout_<?php echo $field['config']['email'] .'_'.$current_form_count; ?>);
@@ -79,7 +79,7 @@ jQuery(function($){
 		}, 100);
 	});
 	$(document).on('cf.add', '#conditional_<?php echo $field_id; ?>', function(){
-		$('[data-field="<?php echo $field['config']['email'] .'_'.$current_form_count; ?>"]').trigger('change');
+		$('#<?php echo $form['ID'].'_'.$current_form_count; ?> [data-field="<?php echo $field['config']['email']; ?>"]').trigger('change');
 	});
 
 })
