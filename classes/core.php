@@ -546,6 +546,7 @@ class Caldera_Forms {
 				'slug'		=> $field['slug'],
 				'value'		=> self::do_magic_tags( $entry )
 			);
+			
 			// named key kets .key to slug
 			if(!is_int($key)){
 				// Keyed
@@ -1735,24 +1736,17 @@ class Caldera_Forms {
 	 */
 	static public function format_select_options( $field ) {
 
-		if ( ( empty( $field['config']['value_field']) || $field[ 'config' ][ 'value_field' ] == 'name' ) && isset( $field[ 'config' ] ) && isset( $field[ 'config' ][ 'option' ] ) && is_array( $field[ 'config' ][ 'option' ] ) ){
 
+		if( !empty( $field[ 'config' ][ 'option' ] ) ){
 			foreach( $field[ 'config' ][ 'option' ] as &$option){
-				$option[ 'value' ] = $option[ 'label' ];
-			}
-
-		}else{
-			if ( empty( $field[ 'config' ]['show_values'] ) ){
-				if( !empty( $field[ 'config' ][ 'option' ] ) ){
-					foreach( $field[ 'config' ][ 'option' ] as &$option){
-						$option[ 'value' ] = $option[ 'label' ];
-					}
+				if ( empty( $field[ 'config' ]['show_values'] ) || strlen( $option[ 'value' ] ) === 0 ){
+					$option[ 'value' ] = $option[ 'label' ] = self::do_magic_tags( $option[ 'label' ] );
+				}else{
+					$option[ 'value' ] = self::do_magic_tags( $option[ 'value' ] );
 				}
-			}else{
-				$field[ 'config' ][ 'option' ] = array();
 			}
-
 		}
+
 
 		return $field;
 
