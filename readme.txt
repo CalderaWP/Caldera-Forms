@@ -122,6 +122,9 @@ Once you have created a form, insert it in a page or post via the Shortcode inse
 
 == Changelog ==
 
+= 1.3.2.1 ( January 14, 2015 ) =
+* FIXED: Bug that caused calculations using checkboxes or Radio buttons to fail
+
 = 1.3.2 ( January 14, 2015 ) =
 * FIXED: Bug preventing AJAX submissions on certain Apache configurations with ugly permalinks enabled in WordPress
 * FIXED: Calculation fields with hidden fields not calculating.
