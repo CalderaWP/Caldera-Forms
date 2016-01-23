@@ -790,7 +790,7 @@ jQuery(document).ready(function($){
 	$('.caldera-editor-body').on('focus', '.caldera-field-bind', function(e){
 		var field = $(this),
 			value = this.value;
-			console.log( e.type );
+			//console.log( e.type );
 		if(e.type && e.type === 'focusin'){
 			field.removeClass('bound_field').addClass('reload-binding');
 			rebind_field_bindings();

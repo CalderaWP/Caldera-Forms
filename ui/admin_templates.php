@@ -242,7 +242,9 @@ jQuery(function($){
 	$('body').on('click', '.cf-bulk-action', function(){
 
 		var action 		= $('#cf_bulk_action'),
-			bulkCheck 	= $('.cf-bulkcheck');
+			bulkCheck 	= $('.cf-bulkcheck'),
+			nonce 		= $('#cf_toolbar_actions'),
+			referer		= nonce.parent().find('[name="_wp_http_referer"]');
 
 		if( !action.val().length){
 			return;
@@ -266,7 +268,9 @@ jQuery(function($){
 				'action'	:	'cf_bulk_action',
 				'do'		:	action.val(),
 				'items'		:	list,
-				'form'		:	form
+				'form'		:	form,
+				'cf_toolbar_actions' : nonce.val(),
+				'_wp_http_referer' : referer.val()
 			}
 
 			row_items.animate({"opacity": .4}, 500);

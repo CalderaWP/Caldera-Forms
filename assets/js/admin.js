@@ -10,6 +10,16 @@ jQuery(document).ready(function($){
 			method			:	'POST',
 			before			:	function( el, e ){
 				var clicked = $( el );
+				// check for a nonce
+
+				var nonce 		= $('#cf_toolbar_actions'),
+					referer		= nonce.parent().find('[name="_wp_http_referer"]');
+					
+				if( nonce.length && referer.length ){
+					clicked.data('cf_toolbar_actions', nonce.val() );
+					clicked.data('_wp_http_referer', referer.val() );
+				}
+
 				if( clicked.data('trigger') ){
 					e.preventDefault();
 					var trigger = $( clicked.data('trigger') );

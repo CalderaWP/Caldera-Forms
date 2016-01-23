@@ -248,6 +248,10 @@ class Caldera_Forms_Admin {
 
 	public function bulk_action(){
 
+		// first validate
+		self::verify_ajax_action();
+
+
 		if(empty($_POST['do'])){
 			die;
 		}
@@ -504,6 +508,9 @@ class Caldera_Forms_Admin {
 
 	public static function toggle_form_state(){
 		
+		// first validate
+		self::verify_ajax_action();
+
 		$forms = Caldera_Forms::get_forms( true );
 		$form = sanitize_text_field( $_POST['form'] );
 		$form = Caldera_Forms::get_form( $form );
@@ -526,6 +533,17 @@ class Caldera_Forms_Admin {
 		update_option( $form['ID'], $form );
 		
 		wp_send_json_success( array( 'ID' => $form['ID'], 'state' => $state, 'label' => $label ) );
+	}
+
+	/**
+	 * nonce verifier for ajax actions
+	 *
+	 * @since 1.3.2.1
+	 */
+	private static function verify_ajax_action(){
+		if ( ! isset( $_POST['cf_toolbar_actions'] ) || ! wp_verify_nonce( $_POST['cf_toolbar_actions'], 'cf_toolbar' ) || !check_admin_referer( 'cf_toolbar', 'cf_toolbar_actions' ) ) {
+			wp_send_json_error( $_POST );
+		}
 	}
 
 	/**

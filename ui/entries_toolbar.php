@@ -2,7 +2,7 @@
 			$entry_perpage = get_option( '_caldera_forms_entry_perpage', 20 );
 		?>
 		<div class="caldera-entry-exporter" style="display:none;">
-
+			<?php wp_nonce_field( 'cf_toolbar', 'cf_toolbar_actions' ); ?>
 			<span class="toggle_option_preview" style="">
 				<button type="button" class="status_toggles button button-primary ajax-trigger" style="margin-top: 1px;"
 					data-before="cf_set_limits"
