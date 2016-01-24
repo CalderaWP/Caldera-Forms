@@ -4681,6 +4681,9 @@ class Caldera_Forms {
 			foreach($form['layout_grid']['fields'] as $field_base_id=>$location){
 				// instance base
 				if(isset($form['fields'][$field_base_id])){
+
+
+
 					/**
 					 * Filter the field setup before render
 					 *
@@ -4690,12 +4693,12 @@ class Caldera_Forms {
 					 * @param array $config Form config
 					 */
 					$field = apply_filters( 'caldera_forms_render_setup_field', $form['fields'][$field_base_id], $form);
-				
-					$field['grid_location'] = $location;
 
 					if(empty($field) || !isset($field_types[$field['type']]['file']) || !file_exists($field_types[$field['type']]['file'])){
 						continue;
 					}
+
+					$field['grid_location'] = $location;
 
 					if( !empty( $field_types[$field['type']]['styles'])){
 						foreach($field_types[$field['type']]['styles'] as $style){
