@@ -2474,8 +2474,6 @@ class Caldera_Forms {
 	 * @return bool
 	 */
 	static public function set_field_data($field_id, $data, $form, $entry_id = false){
-		$supposed = (isset($_POST[$field_id]) ? $_POST[$field_id] : 'Unknown');
-
 		global $processed_data;
 
 		$current_data = self::get_field_data($field_id, $form, $entry_id);
@@ -2515,8 +2513,6 @@ class Caldera_Forms {
 	 * @return bool
 	 */
 	static public function get_field_data($field_id, $form, $entry_id = false){
-		$supposed = (isset($_POST[$field_id]) ? $_POST[$field_id] : 'Unknown');
-
 		global $processed_data;
 
 		//echo $field_id.'<br>';
