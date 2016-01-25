@@ -1047,11 +1047,7 @@ class Caldera_Forms {
 				$entry_value = self::get_field_data($fid, $form);
 
 				if($cfg['type'] == 'date_picker') {
-					echo '<pre>';
-					print_r($entry_value);
-					echo '</pre>';
-					exit();
-					$number = empty($entry_value) ? 0 : (strtotime($entry_value) / (1000 * 3600 * 24));
+					$number = empty($entry_value) ? 0 : (strtotime($entry_value) / (3600 * 24));
 				} else {
 					if (is_array($entry_value)) {
 						$number = floatval(array_sum($entry_value));
