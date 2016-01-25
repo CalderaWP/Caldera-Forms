@@ -546,7 +546,7 @@ class Caldera_Forms {
 				'slug'		=> $field['slug'],
 				'value'		=> self::do_magic_tags( $entry )
 			);
-			
+
 			// named key kets .key to slug
 			if(!is_int($key)){
 				// Keyed
@@ -1045,11 +1045,19 @@ class Caldera_Forms {
 		foreach($form['fields'] as $fid=>$cfg){
 			if(false !== strpos($formula, $fid)){
 				$entry_value = self::get_field_data($fid, $form);
-				
-				if(is_array($entry_value)){
-					$number = floatval( array_sum( $entry_value ) );
-				}else{
-					$number = floatval( $entry_value );
+
+				if($cfg['type'] == 'date_picker') {
+					echo '<pre>';
+					print_r($entry_value);
+					echo '</pre>';
+					exit();
+					$number = empty($entry_value) ? 0 : (strtotime($entry_value) / (1000 * 3600 * 24));
+				} else {
+					if (is_array($entry_value)) {
+						$number = floatval(array_sum($entry_value));
+					} else {
+						$number = floatval($entry_value);
+					}
 				}
 			
 				$formula = str_replace($fid, $number, $formula);
@@ -2470,6 +2478,8 @@ class Caldera_Forms {
 	 * @return bool
 	 */
 	static public function set_field_data($field_id, $data, $form, $entry_id = false){
+		$supposed = (isset($_POST[$field_id]) ? $_POST[$field_id] : 'Unknown');
+
 		global $processed_data;
 
 		$current_data = self::get_field_data($field_id, $form, $entry_id);
@@ -2509,6 +2519,8 @@ class Caldera_Forms {
 	 * @return bool
 	 */
 	static public function get_field_data($field_id, $form, $entry_id = false){
+		$supposed = (isset($_POST[$field_id]) ? $_POST[$field_id] : 'Unknown');
+
 		global $processed_data;
 
 		//echo $field_id.'<br>';
@@ -2567,7 +2579,6 @@ class Caldera_Forms {
 		}
 
 		if(isset($form['fields'][$field_id])){
-
 			// get field
 			$field = apply_filters( 'caldera_forms_render_setup_field', $form['fields'][$field_id], $form);
 
@@ -2590,7 +2601,6 @@ class Caldera_Forms {
 				}
 			}
 
-
 			// check condition to see if field should be there first.
 			// check if conditions match first. ignore vailators if not part of condition
 			if(isset($_POST[$field_id])){
@@ -2600,6 +2610,7 @@ class Caldera_Forms {
 				// is slug maybe?
 				$entry = stripslashes_deep( $_POST[$field['slug']] );
 			}
+
 			// apply field filter
 			if(has_filter('caldera_forms_process_field_' . $field['type'])){
 				$entry = apply_filters( 'caldera_forms_process_field_' . $field['type'] , $entry, $field, $form );
