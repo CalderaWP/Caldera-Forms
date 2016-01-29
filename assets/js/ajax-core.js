@@ -80,8 +80,9 @@ jQuery(function($){
 				}
 				
 				if(obj.data.fields){
+
 					for(var i in obj.data.fields){
-						var field = $('[data-field="' + i + '_' + instance + '"]'),
+						var field = obj.params.trigger.find('[data-field="' + i + '"]'),
 							wrap = field.closest('.form-group');
 
 							wrap.addClass('has-error').addClass('caldera_ajax_error_wrap');
