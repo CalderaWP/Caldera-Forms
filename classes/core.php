@@ -1652,10 +1652,17 @@ class Caldera_Forms {
 					 */
 					$field_for_label = apply_filters( 'caldera_forms_autopopulate_options_post_label_field', 'post_title', $field, $form, $posts  );
 					foreach($posts as $post_item){
-						$field['config']['option'][$post_item->ID] = array(
-							'value'	=>	$post_item->{$field_for_value},
-							'label' =>	$post_item->{$field_for_label}
+						$option = array(
+								'value'	=>	$post_item->{$field_for_value},
+								'label' =>	$post_item->{$field_for_label}
 						);
+						if(!empty($field[ 'config' ]['meta_value_field'])) {
+							$val = get_post_meta($post_item->ID, $field[ 'config' ]['meta_value_field'], true);
+							if(!empty($val)) {
+								$option['value'] = $val;
+							}
+						}
+						$field['config']['option'][$post_item->ID] = $option;
 					}
 
 				break;
@@ -4016,7 +4023,7 @@ class Caldera_Forms {
 			if( is_string( $field_value ) ){
 				// maybe json?
 				$is_json = json_decode( $field_value, ARRAY_A );
-				if( !empty( $is_json ) ){
+				if( is_array( $is_json ) ){
 					$field_value = $is_json;
 				}else{
 					$field_value = esc_html( stripslashes_deep( $field_value ) );

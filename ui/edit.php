@@ -164,7 +164,7 @@ $field_options_template = "
 	</div>
 
 	<div class=\"caldera-config-group caldera-config-group-auto-taxonomy caldera-config-group-auto-post_type auto-populate-type-panel\" style=\"display:none;\">
-		<label>". __('Value', 'caldera-forms')."</label>
+		<label>". __('Display', 'caldera-forms')."</label>
 		<div class=\"caldera-config-field\">
 			<select class=\"block-input field-config\" name=\"{{_name}}[value_field]\">
 				<option value=\"name\" {{#is value_field value=\"name\"}}selected=\"selected\"{{/is}}>Name</option>\r\n
@@ -172,6 +172,14 @@ $field_options_template = "
 	    	</select>
 		</div>
 	</div>
+
+	<div class=\"caldera-config-group caldera-config-group-auto-taxonomy caldera-config-group-auto-post_type auto-populate-type-panel\" style=\"display:none;\">
+		<label>". __('Meta value field', 'caldera-forms')."</label>
+		<div class=\"caldera-config-field\">\r\n
+			<input type=\"text\" value=\"{{meta_value_field}}\" name=\"{{_name}}[meta_value_field]\" />\r\n
+		</div>
+	</div>
+
 	<div class=\"caldera-config-group caldera-config-group-auto-taxonomy auto-populate-type-panel\" style=\"display:none;\">
 		<label>". __('Orderby', 'caldera-forms')."</label>
 		<div class=\"caldera-config-field\">
