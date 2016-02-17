@@ -37,8 +37,8 @@
             function insertTestDefinition(mtoken, element, position) {
                 var maskdef = opts.definitions[element], newBlockMarker = 0 == mtoken.matches.length;
                 if (position = void 0 != position ? position : mtoken.matches.length, maskdef && !escaped) {
-                    for (var prevalidators = maskdef.prevalidator, prevalidatorsL = prevalidators ? prevalidators.length : 0, i = 1; i < maskdef.cardinality; i++) {
-                        var prevalidator = prevalidatorsL >= i ? prevalidators[i - 1] : [], validator = prevalidator.validator, cardinality = prevalidator.cardinality;
+                    for (var precheck = maskdef.prevalidator, precheckL = precheck ? precheck.length : 0, i = 1; i < maskdef.cardinality; i++) {
+                        var prevalidator = precheckL >= i ? precheck[i - 1] : [], validator = prevalidator.validator, cardinality = prevalidator.cardinality;
                         mtoken.matches.splice(position++, 0, {
                             fn: validator ? "string" == typeof validator ? new RegExp(validator) : new function() {
                                 this.test = validator;
