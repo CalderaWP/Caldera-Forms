@@ -109,13 +109,14 @@ var cf_jsfields_init;
 		for(var f = 0; f < fields.length; f++){
 			var this_field = $(fields[f]);
 			if( this_field.is(':radio,:checkbox') ){
-				if( !this_field.hasClass('option-required') || false === this_field.is(':visible') ){continue}
+				if( !this_field.hasClass('option-required') || false === this_field.is(':visible') || clicked.data('page') === 'prev' ){continue}
 				if( !checks[this_field.data('field')] ){
 					checks[this_field.data('field')] = [];
 				}
 				checks[this_field.data('field')].push(this_field.prop('checked'));
 			}else{
-				if(this_field.prop('required')){
+				if( this_field.prop('required') && ( false === this_field.is(':visible') || clicked.data('page') === 'prev' ) ){continue}
+				if( this_field.prop('required') ){
 					//console.log( this_field.is(":visible") );
 					if( true !== this_field.parsley().isValid() ){
 						// ye nope!
