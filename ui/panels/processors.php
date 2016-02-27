@@ -106,9 +106,13 @@ function processor_wrapper_template($id = '{{id}}', $type = '{{type}}', $config_
 		<h3 data-title="<?php echo __('New Form Processor', 'caldera-forms'); ?>" class="caldera-editor-processor-title"><?php echo $type_name; ?></h3>
 		<div id="<?php echo $id; ?>_settings_pane" class="wrapper-instance-pane">
 			<div class="toggle_processor_event">
-				<label title="<?php echo esc_attr( __('Run processor on Insert', 'caldera-forms') ); ?>" class="button button-small <?php if( !empty( $run_times['insert'] )){ echo 'button-primary'; } ?>"><input type="checkbox" style="display:none;" value="1" name="config[processors][<?php echo $id; ?>][runtimes][insert]" <?php if( !empty( $run_times['insert'] )){ echo 'checked="checked"'; } ?>>Insert</label>
-				<label title="<?php echo esc_attr( __('Run processor on Update', 'caldera-forms') ); ?>" class="button button-small <?php if( !empty( $run_times['update'] )){ echo 'button-primary'; } ?> "><input type="checkbox" style="display:none;" value="1" name="config[processors][<?php echo $id; ?>][runtimes][update]" <?php if( !empty( $run_times['update'] )){ echo 'checked="checked"'; } ?>>Update</label>
-				<?php /*<label class="button button-small <?php if( !empty( $run_times['delete'] )){ echo 'button-primary'; } ?> "><input type="checkbox" style="display:none;" value="1" name="config[processors][<?php echo $id; ?>][runtimes][delete]" <?php if( !empty( $run_times['delete'] )){ echo 'checked="checked"'; } ?>>Delete</label> */ ?>
+
+				<label title="<?php echo esc_attr( __('Enable / Disable Processor', 'caldera-forms') ); ?>" class="button button-small <?php if( !empty( $run_times['insert'] )){ echo 'activated'; } ?>"><input type="checkbox" style="display:none;" value="1" name="config[processors][<?php echo $id; ?>][runtimes][insert]" <?php if( !empty( $run_times['insert'] )){ echo 'checked="checked"'; } ?>>
+				<span class="is_active" style="<?php if( empty( $run_times ) ){ ?> display:none;<?php } ?>"><?php esc_html_e( 'Disable Processor', 'caldera-forms' ); ?></span>
+				<span class="not_active" style="<?php if( !empty( $run_times ) ){ ?> display:none;<?php } ?>"><?php esc_html_e( 'Enable Processor', 'caldera-forms' ); ?></span>
+				</label>
+				<?php /*<label title="<?php echo esc_attr( __('Run processor on Update', 'caldera-forms') ); ?>" class="button button-small <?php if( !empty( $run_times['update'] )){ echo 'button-primary'; } ?> "><input type="checkbox" style="display:none;" value="1" name="config[processors][<?php echo $id; ?>][runtimes][update]" <?php if( !empty( $run_times['update'] )){ echo 'checked="checked"'; } ?>>Update</label>
+				<label class="button button-small <?php if( !empty( $run_times['delete'] )){ echo 'button-primary'; } ?> "><input type="checkbox" style="display:none;" value="1" name="config[processors][<?php echo $id; ?>][runtimes][delete]" <?php if( !empty( $run_times['delete'] )){ echo 'checked="checked"'; } ?>>Delete</label> */ ?>
 			</div>
 			<div class="caldera-config-processor-notice" style="<?php if( !empty( $run_times ) ){ ?> display:none;<?php } ?>clear: both; padding: 20px 0px 0px;">
 				<p style="padding:12px; text-align:center;background:#e7e7e7;" class="description"><?php _e('Processor is currently disabled', 'caldera-forms'); ?></p>

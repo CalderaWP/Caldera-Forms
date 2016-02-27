@@ -320,14 +320,19 @@ jQuery(document).ready(function($){
 			settings = parent.find('.caldera-config-processor-setup'),
 			notice = parent.find('.caldera-config-processor-notice');
 
+
 		if( clicked.is(':checked') ){
-			clicked.parent().addClass('button-primary');
+			clicked.parent().addClass('activated');
+			clicked.parent().find('.is_active').show();
+			clicked.parent().find('.not_active').hide();
 		}else{
-			clicked.parent().removeClass('button-primary');
+			clicked.parent().removeClass('activated');
+			clicked.parent().find('.is_active').hide();
+			clicked.parent().find('.not_active').show();
 		}
 
 		// check if all are selected
-		if( parent.find('.toggle_processor_event .button-primary').length ){
+		if( parent.find('.toggle_processor_event .activated').length ){
 			settings.slideDown(100);
 			notice.slideUp(100);
 		}else{
