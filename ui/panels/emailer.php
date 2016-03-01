@@ -30,9 +30,14 @@ if( !empty( $element['mailer']['enable_mailer'] ) ){
 		<label><?php echo __('Send Mailer', 'caldera-forms'); ?> </label>
 		<div class="caldera-config-field">
 			<div style="float:left;" class="toggle_processor_event">
-				<label title="<?php echo esc_attr( __('Send mailer on Insert', 'caldera-forms') ); ?>" class="button button-small <?php if( !empty( $element['mailer']['on_insert'] )){ echo 'button-primary'; } ?>"><input type="checkbox" style="display:none;" value="1" name="config[mailer][on_insert]" <?php if( !empty( $element['mailer']['on_insert'] ) ){ echo 'checked="checked"'; } ?>>Insert</label>
-				<label title="<?php echo esc_attr( __('Send mailer on Update', 'caldera-forms') ); ?>" class="button button-small <?php if( !empty( $element['mailer']['on_update'] )){ echo 'button-primary'; } ?> "><input type="checkbox" style="display:none;" value="1" name="config[mailer][on_update]" <?php if( !empty( $element['mailer']['on_update'] ) ){ echo 'checked="checked"'; } ?>>Update</label>
-				<?php /*<label class="button button-small <?php if( !empty( $run_times['delete'] )){ echo 'button-primary'; } ?> "><input type="checkbox" style="display:none;" value="1" name="config[processors][<?php echo $id; ?>][runtimes][delete]" <?php if( !empty( $run_times['delete'] )){ echo 'checked="checked"'; } ?>>Delete</label> */ ?>
+
+				<label title="<?php echo esc_attr( __('Enable / Disable Mailer', 'caldera-forms') ); ?>" class="button button-small <?php if( !empty( $element['mailer']['on_insert'] ) ){ echo 'activated'; } ?>"><input type="checkbox" style="display:none;" value="1" name="config[mailer][on_insert]" <?php if( !empty( $element['mailer']['on_insert'] ) ){ echo 'checked="checked"'; } ?>>
+				<span class="is_active" style="<?php if( empty( $element['mailer']['on_insert'] ) ){ ?> display:none;<?php } ?>"><?php esc_html_e( 'Disable Mailer', 'caldera-forms' ); ?></span>
+				<span class="not_active" style="<?php if( !empty( $element['mailer']['on_insert'] ) ){ ?> display:none;<?php } ?>"><?php esc_html_e( 'Enable Mailer', 'caldera-forms' ); ?></span>
+				</label>
+
+				<?php /*<label title="<?php echo esc_attr( __('Send mailer on Update', 'caldera-forms') ); ?>" class="button button-small <?php if( !empty( $element['mailer']['on_update'] )){ echo 'button-primary'; } ?> "><input type="checkbox" style="display:none;" value="1" name="config[mailer][on_update]" <?php if( !empty( $element['mailer']['on_update'] ) ){ echo 'checked="checked"'; } ?>>Update</label>
+				<label class="button button-small <?php if( !empty( $run_times['delete'] )){ echo 'button-primary'; } ?> "><input type="checkbox" style="display:none;" value="1" name="config[processors][<?php echo $id; ?>][runtimes][delete]" <?php if( !empty( $run_times['delete'] )){ echo 'checked="checked"'; } ?>>Delete</label> */ ?>
 			</div>
 		</div>
 	</div>

@@ -4,10 +4,10 @@ if(!empty($field['config']['pollyfill'])){
 	$polyfill = 'true';
 }
 if(!empty($field['config']['suffix'])){
-	$field['config']['suffix'] = self::do_magic_tags($field['config']['suffix']);
+	$field['config']['suffix'] = Caldera_Forms::do_magic_tags($field['config']['suffix']);
 }
 if(!empty($field['config']['prefix'])){
-	$field['config']['prefix'] = self::do_magic_tags($field['config']['prefix']);
+	$field['config']['prefix'] = Caldera_Forms::do_magic_tags($field['config']['prefix']);
 }
 
 if ( is_array( $field_value ) )  {

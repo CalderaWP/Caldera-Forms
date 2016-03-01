@@ -76,5 +76,10 @@ function cf_handle_file_upload($entry, $field, $form){
 			return $uploads;
 		}
 		return $uploads[0];
+	}else{
+		if( filter_var( $entry, FILTER_VALIDATE_URL ) ){
+			return $entry;
+		}
 	}
+
 }

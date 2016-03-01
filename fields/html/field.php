@@ -23,7 +23,7 @@ if(!empty($hastags[1])){
 	// create template block
 	ob_start();
 	echo '<script type="text/html" id="html-content-'.$field_id.'-tmpl">';
-		echo do_shortcode( self::do_magic_tags( $field['config']['default'] ) );
+		echo do_shortcode( Caldera_Forms::do_magic_tags( $field['config']['default'] ) );
 	echo '</script>';
 	
 	?>
@@ -76,7 +76,7 @@ if(!empty($hastags[1])){
 	}
 			
 }else{
-	echo '<div class="' . $field['config']['custom_class'] . '">' . do_shortcode( self::do_magic_tags( $field['config']['default'] ) ) . '</div>';
+	echo '<div class="' . $field['config']['custom_class'] . '">' . do_shortcode( Caldera_Forms::do_magic_tags( $field['config']['default'] ) ) . '</div>';
 }
 
 

@@ -6,10 +6,10 @@ if(empty($elementType)){
 }
 
 if(!empty($field['config']['before'])){
-	$field['config']['before'] = self::do_magic_tags($field['config']['before']);
+	$field['config']['before'] = Caldera_Forms::do_magic_tags($field['config']['before']);
 }
 if(!empty($field['config']['after'])){
-	$field['config']['after'] = self::do_magic_tags($field['config']['after']);
+	$field['config']['after'] = Caldera_Forms::do_magic_tags($field['config']['after']);
 }
 
 
@@ -50,7 +50,7 @@ if(!empty($field['config']['manual'])){
 	// fix POW
 	$formula = str_replace('pow(', 'Math.pow(', $formula);
 }
-$formula = str_replace("\r",'', str_replace("\n",'', str_replace(' ','', trim( self::do_magic_tags( $formula ) ) ) ) );
+$formula = str_replace("\r",'', str_replace("\n",'', str_replace(' ','', trim( Caldera_Forms::do_magic_tags( $formula ) ) ) ) );
 $binds = array();
 $binds_wrap = array();
 $binds_vars = array();

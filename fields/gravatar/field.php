@@ -1,6 +1,6 @@
 <?php
 if(!empty($field['config']['email'])){
-	$email = self::do_magic_tags( $field['config']['email'] );
+	$email = Caldera_Forms::do_magic_tags( $field['config']['email'] );
 	if( !is_email( $email ) ){
 		$email = '';
 	}
