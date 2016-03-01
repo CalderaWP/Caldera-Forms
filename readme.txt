@@ -1,9 +1,9 @@
 === Caldera Forms ===
 Contributors: Desertsnowman, Shelob9
 Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, contact, email, auto-responder,
-Requires at least: 4.0
-Tested up to: 4.4.1
-Stable tag: 1.3.3-b1
+Requires at least: 4.3
+Tested up to: 4.5
+Stable tag: 1.3.3
 License: GPLv2
 
 A diffrent kind of WordPress form builder.
