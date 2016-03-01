@@ -1,12 +1,12 @@
 === Caldera Forms ===
 Contributors: Desertsnowman, Shelob9
-Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms
+Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, contact, email, auto-responder,
 Requires at least: 4.0
 Tested up to: 4.4.1
 Stable tag: 1.3.3-b1
 License: GPLv2
 
-Build forms differently.  So easy, it’s fun!
+A diffrent kind of WordPress form builder.
 
 
 == Description ==
@@ -28,7 +28,7 @@ A free plugin by <a href="https://CalderaWP.com" title="CalderaWP: Transform You
 > <strong>Form Creation</strong> Got a really trick form and not a lot of time? <a href="https://calderawp.com/caldera-forms-services#cf-dfy">We can help.</a>
 > <strong>Customization</strong> Need an integration with a third-party service or to modify the default behaviour? <a href="https://calderawp.com/caldera-forms-services#cf-custom-code">Let us write you some code.</a>
 >
-> <em>Note:  We do not provide free support via WordPress.org. Premium add-on purchases include priority support for Caldera Forms.</em>
+> <em>Note: We do not provide free support via WordPress.org. Premium add-on purchases include priority support for Caldera Forms.</em>
 
 
 Pippin Williamson of Easy Digital Downloads, Restrict Content Pro and AffiliateWP gives [Caldera Forms a 5 star rating](https://pippinsplugins.com/review-caldera-forms)!
@@ -37,13 +37,14 @@ John Teague of Theme Surgeons includes Caldera Forms in his list of [WordPress p
 
 = Docs & More Information =
 * [More Information](https://calderawp.com/downloads/caldera-forms/)
-* [Documentation](http://docs.calderaforms.com/)
+* [Caldera Forms Documentation](https://calderawp.com/documentation/caldera-forms-documentation/
 
 
 = Addons =
-[All Add-ons](https://calderawp.com/caldera-forms-add-ons/)
+[All Caldera Forms Add-ons](https://calderawp.com/caldera-forms-add-ons/)
 
 = Free Add-ons =
+* [Caldera Custom Fields](https://calderawp.com/downloads/caldera-form-metabox/) - Save form submissions as post and post meta.
 * [Verify Email for Caldera Forms](https://calderawp.com/downloads/verify-email-for-caldera-forms/) - Send an email with a validate link to verify the email address before completing the form submission.
 * [Form as Metabox - Custom Fields](https://calderawp.com/downloads/caldera-form-metabox/) - Use a Caldera Form as a metabox in the post editor to save custom field values.
 * [Slack Integration for Caldera Forms](https://calderawp.com/downloads/caldera-forms-slack-integration/) - Get notifications in Slack whenever a Caldera Form is submitted.
@@ -53,33 +54,43 @@ John Teague of Theme Surgeons includes Caldera Forms in his list of [WordPress p
 * [Postmatic](https://calderawp.com/downloads/postmatic-for-caldera-forms/) - Subscribe users to your posts and comments using Postmatic.
 
 = Premium Add-Ons =
-* [MailChimp](https://calderawp.com/downloads/caldera-forms-mailchimp-add-on/) - Seamlessly integrate MailChimp optins into your forms
+* [MailChimp](https://calderawp.com/downloads/caldera-forms-mailchimp-add-on/) - Seamlessly integrate MailChimp optins into your forms.
 * [Stripe](https://calderawp.com/downloads/caldera-forms-stripe-add-on/) - Accept credit card payments via Stripe.
 * [PayPal Express](https://calderawp.com/downloads/caldera-forms-paypal-express-add-on/) - Accept payments via Paypal Express.
+* [Connected Forms](https://calderawp.com/downloads/caldera-forms-connector/) - Create sequences of forms with conditional logic. Split your forms into smaller pieces, with total control over what comes next.
 * [Users](https://calderawp.com/downloads/caldera-forms-users-add/) - Register or login users from your form.
 * [Geolocation](https://calderawp.com/downloads/geolocation-field-for-caldera-forms/) - Make a text field a geolocation auto-complete field and recorded geocoded data.
-* [Mark Viewed](https://calderawp.com/downloads/caldera-forms-mark-viewed/) - Let users track what content they have viewed.
+* [Mark Viewed](https://calderawp.com/downloads/caldera-forms-mark-viewed/) - Let users track what content they have viewed using a Caldera Forms.
 * [Dwolla](https://calderawp.com/downloads/dwolla-for-caldera-forms/) - Accept payments with low fees using Dwolla.
-* [Authorize.net](https://calderawp.com/downloads/authorize-net-for-caldera-forms/) Accept all major credit cards by integrating with Authorize.net.
-* [BrainTree](https://calderawp.com/downloads/braintree-for-caldera-forms/) Accept credit card payments using BrainTree.
+* [Authorize.net](https://calderawp.com/downloads/authorize-net-for-caldera-forms/) Accept all major credit cards by integrating Caldera Forms with Authorize.net.
+* [BrainTree](https://calderawp.com/downloads/braintree-for-caldera-forms/) Accept credit card payments in your form through BrainTree.
 * [Nexmo](https://calderawp.com/downloads/nexmo-caldera-forms/) Get SMS notifications of form submissions.
 * [Mail Templates](https://calderawp.com/downloads/mail-templates-for-caldera-forms/) - Add your logo, and your brand's color scheme to your emails sent from Caldera Forms.
 
+= Power A Custom Search =
+Caldera Forms can be used to create totally custom search forms. Search posts, users, categories, tags, custom post types, custom fields -- including those added with [Advanced Custom Fields](http://advancedcustomfields.com).
+
+* [Easy Pods](https://calderawp.com/downloads/caldera-easy-pods/) - Create custom WordPress search forms using the Caldera Forms drag and drop form editor. Search in any post type, taxonomy, or even users or a custom database table. Requires [Pods](http://pods.io) works with any custom post type.
+* [Easy Queries](https://calderawp.com/downloads/caldera-easy-queries/) Create custom WordPress search forms using the Caldera Forms drag and drop form editor. Search across multiple post types, works great with Advanced Custom Fields](http://advancedcustomfields.com).
+
+
 = A Few Feature Highlights =
-* Drag and drop responsive form builder.
-* Responsive grid is based on Bootstrap 3
-* Process forms without a page load using AJAX
-* Advanced conditional logic for hidding and showing fields.
-* Export and Import forms across installations
-* Multi-page forms
-* Emails sent on form submission are easily customized and can include a CSV file of entry data.
-* Configurable auto-responder and redirections.
-* File Uploads
+* Drag and drop responsive form builder -- so simple, it's fun!
+* Responsive grid based on Bootstrap 3 -- looks great on any device!
+* Save entries in the database -- just works!
+* Simple honey-pot for anti-spam -- sorry bots!
+* Process forms without a page load using AJAX -- much usability!
+* Advanced conditional logic for hiding and showing fields -- much simplicity!
+* Easily import and export forms via JSON or PHP files -- simple migrations!
+* Multi-page forms -- Break your forms into bite-sized pieces!
+* Emails sent on form submission are easily customized -- contact forms, auto-responders and beyond!
+* Simple, conditional redirects -- hello thank you page!
+
 
 = Auto Values & Magic Tags =
 Capture system values, form data, user data and use it populate form fields values, variables, or in response emails.
 
-= Current Available Fields =
+= Field Types =
 * Calculation
 * Range Slider
 * Star Rating
@@ -98,6 +109,7 @@ Capture system values, form data, user data and use it populate form fields valu
 * Radio
 * Date Picker
 * Color Picker
+* Auto-complete
 
 Everything can be extended. For developers, there are enough hooks and filters to build on. From frontend handling, to form processing, to editor panels, to field types. At it's core, it's a framework for building applications so you can make what you want.
 
@@ -109,10 +121,10 @@ Upload the caldera-forms folder to /wp-content/plugins/
 Activate the plugin through the 'Plugins' menu in WordPress
 Navigate to 'Caldera Forms' in wp-admin.
 
-Once you have created a form, insert it in a page or post via the Shortcode inserter button above the content editor.
+Once you have created a form, insert it in a page or post via the Shortcode inserter button in the post editor.
 
 == Frequently Asked Questions ==
-[http://calderawp.com/support](http://calderawp.com/support)
+For Caldera Forms support: [http://calderawp.com/support](http://calderawp.com/support)
 
 == Screenshots ==
 1. **Layout Builder** - Easy to use Drag & Drop grid based layout.
@@ -122,10 +134,16 @@ Once you have created a form, insert it in a page or post via the Shortcode inse
 
 == Changelog ==
 
-= 1.3.2.1 ( January 14, 2015 ) =
+= Caldera Forms 1.3.3 ( February 29, 2015) =
+* FIXED: Bug preventing some field validation methods from showing
+* FIXED: Bug preventing some conditional fields from users add-on from showing
+* FIXED: Issue preventing some calculations from working
+* FIXED: Bug causing muti-page forms to validate when going back a page.
+
+= Caldera Forms 1.3.2.1 ( January 14, 2015 ) =
 * FIXED: Bug that caused calculations using checkboxes or Radio buttons to fail
 
-= 1.3.2 ( January 14, 2015 ) =
+= Caldera Forms 1.3.2 ( January 14, 2015 ) =
 * FIXED: Bug preventing AJAX submissions on certain Apache configurations with ugly permalinks enabled in WordPress
 * FIXED: Calculation fields with hidden fields not calculating.
 * ADDED: "caldera_forms_cf_ajax_api_url" filter -- Filter the URL for AJAX submissions
@@ -135,14 +153,14 @@ Once you have created a form, insert it in a page or post via the Shortcode inse
 * FIXED: Validation errors triggered prematurely on multi-page forms
 * FIXED: Use WordPress' setting for database collation. Hi Chris.
 
-= 1.3.1.2 (November 18, 2015 ) =
+= Caldera Forms 1.3.1.2 (November 18, 2015 ) =
 * FIXED: Annoying little bug that broke reCaptcha due to new script loading.
 
-= 1.3.1.1 (November 12, 2015 ) =
+= Caldera Forms 1.3.1.1 (November 12, 2015 ) =
 * FIXED: Annoying little bug that broke the "Next" button if you have a required Checkbox or Radio on a later page. (I know right?)
 * FIXED: A few minor cleanups here and there.
 
-= 1.3.1 (November 5, 2015 ) =
+= Caldera Forms 1.3.1 (November 5, 2015 ) =
 * BIG CHANGE: Implement parsley.js for improved client-side validation.
 * BIG CHANGE: New endpoints for processing forms.
 * FIXED: Validation issues in mobile Safari.
@@ -161,13 +179,13 @@ Once you have created a form, insert it in a page or post via the Shortcode inse
 * ADDED: Label space option to aid in horizontal alignment.
 
 
-= 1.3.0.2 ( September 10, 2015 ) =
+= Caldera Forms 1.3.0.2 ( September 10, 2015 ) =
 
 = Bugs Fixed =
 * Scripts and Styles now load only on pages with forms in the header where they belong
 * David should be fired, but acknowledges his lazyness so he got a mild warning.
 
-= 1.3.0.1 ( September 8, 2015 ) =
+= Caldera Forms 1.3.0.1 ( September 8, 2015 ) =
 
 = Bugs Fixed =
 * Scripts and Styles now load only on pages with forms
@@ -178,7 +196,7 @@ Once you have created a form, insert it in a page or post via the Shortcode inse
 
 
 
-= 1.3.0 ( August 23, 2015 ) =
+= Caldera Forms 1.3.0 ( August 23, 2015 ) =
 * Improved: Adding rows in form layout.
 * Added: Conditional groups.
 * Added: New helper classes for form processors.
@@ -191,7 +209,7 @@ Once you have created a form, insert it in a page or post via the Shortcode inse
 * Fixed: Issue affecting color pickers as conditional fields.
 * Update Translations: German (de_DE), Spanish (es_ES), French (fr_FR), Japanese (ja), Portuguese (pt_PT), Turkish (tr_TR).
 
-= 1.2.3 ( August 7, 2015) =
+= Caldera Forms 1.2.3 ( August 7, 2015) =
 
 = Bugs Fixed =
 * Fixed Checkbox values showing as [Object object] in entry view
@@ -217,7 +235,7 @@ Once you have created a form, insert it in a page or post via the Shortcode inse
 * Added "caldera_forms_autoresponder_failed" action to run when autoresponder fails.
 
 
-= 1.2.2 ( June, 2015) =
+= Caldera Forms 1.2.2 ( June, 2015) =
 
 = Bugs Fixed =
 * Fixed widget bug where forms in widget disapeared
@@ -232,7 +250,7 @@ Once you have created a form, insert it in a page or post via the Shortcode inse
 * caldera_forms_autopopulate_options_taxonomy_label_field
 
 
-= 1.2.1 ( June, 2015) =
+= Caldera Forms 1.2.1 ( June, 2015) =
 
 = Bugs Fixed =
 * Fixed checkbox values not saving on transient redirect ( complicated, but now fixed )
@@ -246,7 +264,7 @@ Once you have created a form, insert it in a page or post via the Shortcode inse
 * auto slugs are cleaner
 * minor speed improvements in core
 
-= 1.2.0 ( April, 2015) =
+= Caldera Forms 1.2.0 ( April, 2015) =
 
 = Bugs Fixed =
 * Exports on checkboxes caused issues
@@ -259,21 +277,21 @@ Once you have created a form, insert it in a page or post via the Shortcode inse
 * imroved saving speed
 
 
-= 1.1.10 ( April, 2015) =
+= Caldera Forms 1.1.10 ( April, 2015) =
 
 = Bugs Fixed =
 * deleting entries in bulk, disabled form. - fixed.
 * viewing entries occationally gave a blank modal.
 
-= 1.1.9.10 ( April, 2015) =
+= Caldera Forms 1.1.9.10 ( April, 2015) =
 * error on checkboxes and array tag showing
 
-= 1.1.9.9 ( April, 2015) =
+= Caldera Forms 1.1.9.9 ( April, 2015) =
 
 = Critical Bug fix =
 * on php 5.3 widget forms and function render forms gave "permission denied" error. solved.
 
-= 1.1.9.8 ( April, 2015) =
+= Caldera Forms 1.1.9.8 ( April, 2015) =
 
 = Improvements =
 * Added setting for custom thousand separator on calculator in money format.
@@ -288,7 +306,7 @@ Once you have created a form, insert it in a page or post via the Shortcode inse
 
 
 
-= 1.1.9.7 ( April, 2015) =
+= Caldera Forms 1.1.9.7 ( April, 2015) =
 
 = Bug fixes =
 * Corrected a bug that allowed setting a field to its own conditional (infinte loop)
@@ -302,7 +320,7 @@ Once you have created a form, insert it in a page or post via the Shortcode inse
 * Made selected field in edit easier to see.
 * Added a Drfat / Deactivate mode for forms.
 
-= 1.1.9.6 ( April, 2015) =
+= Caldera Forms 1.1.9.6 ( April, 2015) =
 
 = Bug fixes =
 * slashes removed on mailer body
@@ -332,7 +350,7 @@ Once you have created a form, insert it in a page or post via the Shortcode inse
 * added custom class to html element
 
 
-= 1.1.9.4 ( March, 2015) =
+= Caldera Forms 1.1.9.4 ( March, 2015) =
 
 = Improvements =
 * Added US States to dropdown as option
@@ -343,7 +361,7 @@ Once you have created a form, insert it in a page or post via the Shortcode inse
 * A few minor bug fixes and improvements
 
 
-= 1.1.9.3 ( Febuary, 2015) =
+= Caldera Forms 1.1.9.3 ( Febuary, 2015) =
 
 = Improvements =
 * Added ID or Name value selector for autopopulation on selects
@@ -361,13 +379,13 @@ Once you have created a form, insert it in a page or post via the Shortcode inse
 * a few small minor issues where resolved.
 
 
-= 1.1.9.2 (30 November, 2014) =
+= Caldera Forms 1.1.9.2 (30 November, 2014) =
 
 = Bug Fix =
 * Issue with HTML binding not working. Solved but need to explore a little more later.
 * a few smaller bug fixes & optimisations
 
-= 1.1.9.1 (27 october, 2014) =
+= Caldera Forms 1.1.9.1 (27 october, 2014) =
 
 = Bug Fix =
 * Sorted an issue with custom classes not being an array. *facepalm*
@@ -385,7 +403,7 @@ Once you have created a form, insert it in a page or post via the Shortcode inse
 * Live preview on shortcode in editor. really. It's awesome.
 * Additional filters to aid in auto-populating fields
 
-= 1.1.8 (7 October, 2014) =
+= Caldera Forms 1.1.8 (7 October, 2014) =
 
 = Fixed =
 * Javascript error in reCapture field
@@ -396,7 +414,7 @@ Once you have created a form, insert it in a page or post via the Shortcode inse
 * Moved entry creation to just after pre-processor to allow for {entry_id} to be usable
 * Class wrapper locations improved for better addons
 
-= 1.1.7 (29 September, 2014) =
+= Caldera Forms 1.1.7 (29 September, 2014) =
 
 = Fixed =
 * Javascript error on deleting entries in pin mode
@@ -413,7 +431,7 @@ Once you have created a form, insert it in a page or post via the Shortcode inse
 * Ajax spinner removed and replaced with overlay blocking.
 * Addon licensing v3
 
-= 1.1.6 (25 September, 2014) =
+= Caldera Forms 1.1.6 (25 September, 2014) =
 
 = Added =
 * Akismet spam filtering processor. Listed once Askismet plugin is active and activated.
@@ -425,7 +443,7 @@ Once you have created a form, insert it in a page or post via the Shortcode inse
 * Minor activation output error.
 * Minor Bugfixes.
 
-= 1.1.5 (18 September, 2014) =
+= Caldera Forms 1.1.5 (18 September, 2014) =
 
 = Fixed =
 * corrected typos in the textdomain
@@ -438,7 +456,7 @@ Once you have created a form, insert it in a page or post via the Shortcode inse
 = Added =
 * Gravatar field for live display of gravatar.
 
-= 1.1.4 (17 August, 2014) =
+= Caldera Forms 1.1.4 (17 August, 2014) =
 
 = Improved =
 * Loading speed improved on form editor
@@ -455,14 +473,14 @@ Once you have created a form, insert it in a page or post via the Shortcode inse
 * Magic tag enabled all mailer fields
 
 
-= 1.1.3 (12 August, 2014) =
+= Caldera Forms 1.1.3 (12 August, 2014) =
 
 = Fixed =
 * foreach warning in new installs.
 * language load corrected
 * minor bugs
 
-= 1.1.2 (6 August, 2014) =
+= Caldera Forms 1.1.2 (6 August, 2014) =
 
 = Fixed =
 * datepicker clashing with jquery ui.
@@ -476,13 +494,13 @@ Once you have created a form, insert it in a page or post via the Shortcode inse
 * Community menu item for sharing stuff
 
 
-= 1.1.1 (4 August, 2014) =
+= Caldera Forms 1.1.1 (4 August, 2014) =
 
 = Fixed =
 * (partly) Success Message magic tags work on ajax mode. not yet on standard submit.
 * Conditionals working correctly again.
 
-= 1.1.0 (1 August, 2014) =
+= Caldera Forms 1.1.0 (1 August, 2014) =
 
 = Added =
 * Variables tab: create custom magic tags and URL return values by combining other tags, processor values and static strings.
@@ -495,7 +513,7 @@ Once you have created a form, insert it in a page or post via the Shortcode inse
 * Form Instancing and field ID's - can have multiple instances of the same form.
 * Additional hooks and filters
 
-= 1.0.91 (27 July, 2014) =
+= Caldera Forms 1.0.91 (27 July, 2014) =
 
 = Bugfix =
 * Fixed the preview button
@@ -503,7 +521,7 @@ Once you have created a form, insert it in a page or post via the Shortcode inse
 = Added =
 * Form ID added as form class
 
-= 1.0.9 (25 July, 2014) =
+= Caldera Forms 1.0.9 (25 July, 2014) =
 
 = Bugfix =
 * Conditionals error on numerical condition value
@@ -530,7 +548,7 @@ Once you have created a form, insert it in a page or post via the Shortcode inse
 = Bugfix =
 * Left off an important table update for the status- very sorry. I hate doing two updates in a day.
 
-= 1.0.6 (20 July, 2014) =
+= Caldera Forms 1.0.6 (20 July, 2014) =
 
 = Additions =
 * Range Slider field type
@@ -555,7 +573,7 @@ Once you have created a form, insert it in a page or post via the Shortcode inse
 * more filters and actions for developers
 * other stiff I can't remember
 
-= 1.0.5 (13 July, 2014) =
+= Caldera Forms 1.0.5 (13 July, 2014) =
 
 = Additions =
 * Multi Page Forms (still some work to do to make it easier)
@@ -578,32 +596,32 @@ Once you have created a form, insert it in a page or post via the Shortcode inse
 * File upload method to use WordPress' handler to prevent issues on some installs.
 * Field dragging reduces to a set block for easier field placement.
 
-= 1.0.4 (20 June, 2014) =
+= Caldera Forms 1.0.4 (20 June, 2014) =
 
 * Added Ajax submissions option - found in General Settings.
 * Added custom field class - field wrapper based
 * Added general input masking for single line text field
 * Added Form Exporting and Importing
 
-= 1.0.3 (12 June, 2014) =
+= Caldera Forms 1.0.3 (12 June, 2014) =
 
 * Added custom input mask format for phone number
 * Cleaned up form style
 * Fixed bug in datepicker with no arrows showing
 * Fixed text field showing behind star rating
 
-= 1.0.2 (11 June, 2014) =
+= Caldera Forms 1.0.2 (11 June, 2014) =
 
 * Added Star Rating field
 * Added Calculations
 
-= 1.0.1 (10 June, 2014) =
+= Caldera Forms 1.0.1 (10 June, 2014) =
 
 * Added Phone Field Type
 * Additional Hooks & Filters
 * Some Bug fixes
 
-= 1.0.0 =
+= Caldera Forms 1.0.0 =
 Initial Release
 
 == Upgrade Notice ==
