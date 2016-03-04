@@ -105,35 +105,36 @@ var cf_jsfields_init;
 		
 		form.find('.has-error[data-page]').removeClass('has-error');
 
-
-		for(var f = 0; f < fields.length; f++){
-			var this_field = $(fields[f]);
-			if( this_field.is(':radio,:checkbox') ){
-				if( !this_field.hasClass('option-required') || false === this_field.is(':visible') || clicked.data('page') === 'prev' ){continue}
-				if( !checks[this_field.data('field')] ){
-					checks[this_field.data('field')] = [];
-				}
-				checks[this_field.data('field')].push(this_field.prop('checked'));
-			}else{
-				if( this_field.prop('required') && ( false === this_field.is(':visible') || clicked.data('page') === 'prev' ) ){continue}
-				if( this_field.prop('required') ){
-					//console.log( this_field.is(":visible") );
-					if( true !== this_field.parsley().isValid() ){
-						// ye nope!
-						if( this_field.is(":visible") ){
-							// on this page.
-							this_field.parsley().validate();
-							e.preventDefault();
-							return;
-						}else{
-							// not on this page
-							//get page and highlight if lower than this one (aka backwards not forwards)
-							var that_page = parseFloat( this_field.closest('.caldera-form-page[data-formpage]').data('formpage') );
-							if(  that_page < parseFloat(page) ){
-								form.find('[data-page="' + that_page + '"]').addClass('has-error');
+		if( clicked.data('page') !== 'prev' ){
+			for(var f = 0; f < fields.length; f++){
+				var this_field = $(fields[f]);
+				if( this_field.is(':radio,:checkbox') ){
+					if( !this_field.hasClass('option-required') || false === this_field.is(':visible') ){continue}
+					if( !checks[this_field.data('field')] ){
+						checks[this_field.data('field')] = [];
+					}
+					checks[this_field.data('field')].push(this_field.prop('checked'));
+				}else{
+					if( this_field.prop('required') && false === this_field.is(':visible') ){ continue }
+					if( this_field.prop('required') ){
+						//console.log( this_field.is(":visible") );
+						if( true !== this_field.parsley().isValid() ){
+							// ye nope!
+							if( this_field.is(":visible") ){
+								// on this page.
+								this_field.parsley().validate();
+								e.preventDefault();
+								return;
+							}else{
+								// not on this page
+								//get page and highlight if lower than this one (aka backwards not forwards)
+								var that_page = parseFloat( this_field.closest('.caldera-form-page[data-formpage]').data('formpage') );
+								if(  that_page < parseFloat(page) ){
+									form.find('[data-page="' + that_page + '"]').addClass('has-error');
+								}
 							}
+							run = false;
 						}
-						run = false;
 					}
 				}
 			}
