@@ -1431,7 +1431,9 @@ class Caldera_Forms_Admin {
 						if( is_array( $row[$key] ) && isset( $row[$key]['label'] ) ){
 							$row[$key] = $row[$key]['value'];
 						}elseif( is_array( $row[$key] ) && count( $row[$key] ) === 1 ){
-							$row[$key] = $row[$key][0];
+                            reset($row[$key]);
+                            $sub_arr_key = key($row[$key]);
+                            $row[$key] = $row[$key][$sub_arr_key];
 						}elseif( is_array( $row[$key] ) ){
 							$subs = array();
 							foreach( $row[$key] as $row_part ){
