@@ -13,7 +13,9 @@ var cf_jsfields_init;
 					id = $(this).data('field'),
 					reg = new RegExp( "\{\{([^\}]*?)\}\}", "g" ),
 					template = str.match( reg );
-
+					if( field.data( 'unsync' ) ){
+						return;
+					}
 					for( var t = 0; t < template.length; t++ ){
 						var select = template[ t ].replace(/\}/g,'').replace(/\{/g,'');
 						var re = new RegExp( template[ t ] ,"g");
@@ -24,9 +26,9 @@ var cf_jsfields_init;
 			$("[data-field='" + binds[ i ] + "']").trigger('change');
 
 		}
-
-
-
+	});
+	$( document ).on('change', "[data-sync]", function(){
+		$(this).data( 'unsync', true );
 	});
 
 	// make init function

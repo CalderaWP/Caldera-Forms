@@ -10,10 +10,10 @@ if ( is_array( $field_value ) )  {
 
 preg_match_all("/%(.+?)%/", $field['config']['default'], $hastags);
 if(!empty($hastags[1])){
-	
 	$binds = array();
 	foreach($hastags[1] as $tag_key=>$tag){
 		foreach($form['fields'] as $key_id=>$fcfg){
+			if( $key_id == $field_base_id ){ continue; } // ye bad to sync to itself
 			if($fcfg['slug'] === $tag){
 				$binds[] = $key_id;
 				$field['config']['default'] = str_replace($hastags[0][$tag_key], '{{'.$key_id.'}}', $field['config']['default']);
