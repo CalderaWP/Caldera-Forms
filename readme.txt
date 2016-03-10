@@ -134,6 +134,9 @@ For Caldera Forms support: [http://calderawp.com/support](http://calderawp.com/s
 
 == Changelog ==
 
+= Caldera Forms 1.3.4 =
+ADDED: caldera_forms_pre_render_form for returning HTML early.
+
 = Caldera Forms 1.3.3.1 ( March 4, 2015) =
 * FIXED: Bug causing muti-page forms to validate when going back a page.... again. For reals this time.
 

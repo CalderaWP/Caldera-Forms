@@ -4379,6 +4379,23 @@ class Caldera_Forms {
 			return;
 		}
 
+		/**
+		 * Runs after form is loaded and before rendering starts
+		 *
+		 * NOTE: An excellent way to conditionally abort form loading.
+		 *
+		 * @since 1.3.4
+		 *
+		 * @param null|string $html By defualt, null. If string is returned, method will immediately return that string.
+		 * @param int $entry_id The entry ID.
+		 * @param array $form Form config.
+		 */
+		$html = apply_filters( 'caldera_forms_pre_render_form', null, $entry_id, $form );
+		if( is_string( $html ) ){
+			return $html;
+
+		}
+
 		if(empty($current_form_count)){
 			$current_form_count = 0;
 		}
