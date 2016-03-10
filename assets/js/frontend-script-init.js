@@ -8,7 +8,7 @@ var cf_jsfields_init;
 			instance = field.closest('form');
 
 		for( var i = 0; i < binds.length; i++ ){
-			$( document ).on('keyup change', "[data-field='" + binds[ i ] + "']", function(){
+			$( document ).on('keyup change blur mouseover', "[data-field='" + binds[ i ] + "']", function(){
 				var str = field.data('sync')
 					id = $(this).data('field'),
 					reg = new RegExp( "\{\{([^\}]*?)\}\}", "g" ),
