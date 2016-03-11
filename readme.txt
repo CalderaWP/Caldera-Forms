@@ -1,18 +1,18 @@
-=== Caldera Forms ===
+=== Caldera Forms - Drag and drop responsive form builder ===
 Contributors: Desertsnowman, Shelob9
 Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, contact, email, auto-responder,
 Requires at least: 4.3
 Tested up to: 4.5
-Stable tag: 1.3.4-b1
+Stable tag: 1.3.3.1
 License: GPLv2
 
-A diffrent kind of WordPress form builder.
+A different kind of WordPress form builder.
 
 
 == Description ==
 Create beautiful, responsive forms with a simple drag and drop editor.
 
-Caldera Forms is a diffrent kind of WordPress form builder. With its intuitive drag and drop interface, it's never been easier and less stressful to create forms for your WordPress site that look awesome on any device.  The visual editor simplifies form building for WordPress. Set up your form with multiple columns, add additional pages, and funnel user responses with conditional logic to get more robust data and relevant information from your customers and visitors.
+Caldera Forms is a different kind of WordPress form builder. With its intuitive drag and drop interface, it's never been easier and less stressful to create forms for your WordPress site that look awesome on any device.  The visual editor simplifies form building for WordPress. Set up your form with multiple columns, add additional pages, and funnel user responses with conditional logic to get more robust data and relevant information from your customers and visitors.
 
 Whether you are creating a simple contact form or a complex system, you'll love the drag and drop editor. Your site's visitors will love the totally responsive, live-updating forms.
 
@@ -134,23 +134,19 @@ For Caldera Forms support: [http://calderawp.com/support](http://calderawp.com/s
 
 == Changelog ==
 
-= Caldera Forms 1.3.4 =
-ADDED: caldera_forms_pre_render_form for returning HTML early.
-ADDED: Form ID and CF version as data attributes in outermost wrapping container for form.
-
-= Caldera Forms 1.3.3.1 ( March 4, 2015) =
+= Caldera Forms 1.3.3.1 ( March 4, 2016) =
 * FIXED: Bug causing muti-page forms to validate when going back a page.... again. For reals this time.
 
-= Caldera Forms 1.3.3 ( February 29, 2015) =
+= Caldera Forms 1.3.3 ( February 29, 2016) =
 * FIXED: Bug preventing some field validation methods from showing
 * FIXED: Bug preventing some conditional fields from users add-on from showing
 * FIXED: Issue preventing some calculations from working
 * FIXED: Bug causing muti-page forms to validate when going back a page.
 
-= Caldera Forms 1.3.2.1 ( January 14, 2015 ) =
+= Caldera Forms 1.3.2.1 ( January 14, 2016 ) =
 * FIXED: Bug that caused calculations using checkboxes or Radio buttons to fail
 
-= Caldera Forms 1.3.2 ( January 14, 2015 ) =
+= Caldera Forms 1.3.2 ( January 14, 2016 ) =
 * FIXED: Bug preventing AJAX submissions on certain Apache configurations with ugly permalinks enabled in WordPress
 * FIXED: Calculation fields with hidden fields not calculating.
 * ADDED: "caldera_forms_cf_ajax_api_url" filter -- Filter the URL for AJAX submissions
