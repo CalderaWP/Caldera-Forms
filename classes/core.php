@@ -389,40 +389,51 @@ class Caldera_Forms {
 	}
 
 
+
 	/**
 	 * Prepare email attachments
 	 *
 	 * @param array $mail Email data
-	 * @param array $data ?
+	 * @param array $data Form data
 	 * @param array $form For config
 	 *
 	 * @return array
 	 */
 	public static function mail_attachment_check($mail, $data, $form){
+		foreach ( $form[ 'fields' ] as $field_id => $field ) {
+			if ( $field[ 'type' ] == 'file' && isset( $field[ 'config' ][ 'attach' ] ) ) {
+				$dir  = wp_upload_dir();
+				$file = str_replace( $dir[ 'baseurl' ], $dir[ 'basedir' ], self::get_field_data( $field_id, $form ) );
+				if ( is_array( $file ) ) {
+					foreach ( $file as $a_file ) {
+						if ( is_string( $a_file ) && file_exists( $a_file ) ) {
+							$mail[ 'attachments' ][] = $a_file;
 
-		// check for 
-		foreach($form['fields'] as $field_id=>$field){
-			if($field['type'] == 'file' && isset($field['config']['attach'])){
-				$dir = wp_upload_dir();
-				$file = str_replace($dir['baseurl'], $dir['basedir'], self::get_field_data($field_id, $form));
-				if( is_String( $file ) && file_exists($file)){
-					$mail['attachments'][] = $file;
+						}
+					}
+
 					return $mail;
-				}else{
-					if( isset( $data[ $field_id ] ) && filter_var( $data[ $field_id ], FILTER_VALIDATE_URL) ) {
-						$mail['attachments'][] = $data[ $field_id ];
-					}elseif( isset( $_POST[ $field_id ] ) && filter_var( $_POST[ $field_id ], FILTER_VALIDATE_URL )  && 0 === strpos( $_POST[ $field_id ], $dir['url'] ) ) {
-						$mail['attachments'][] = $_POST[ $field_id ];
+				} elseif ( is_string( $file ) && file_exists( $file ) ) {
+					$mail[ 'attachments' ][] = $file;
 
-					}else{
+					return $mail;
+				} else {
+					if ( isset( $data[ $field_id ] ) && filter_var( $data[ $field_id ], FILTER_VALIDATE_URL ) ) {
+						$mail[ 'attachments' ][] = $data[ $field_id ];
+					} elseif ( isset( $_POST[ $field_id ] ) && filter_var( $_POST[ $field_id ], FILTER_VALIDATE_URL ) && 0 === strpos( $_POST[ $field_id ], $dir[ 'url' ] ) ) {
+						$mail[ 'attachments' ][] = $_POST[ $field_id ];
+
+					} else {
 						continue;
 
 					}
 				}
-				
+
 			}
 		}
+
 		return $mail;
+
 	}
 
 	/**
