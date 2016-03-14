@@ -1126,9 +1126,9 @@ class Caldera_Forms_Admin {
 	}
 
 	/***
-	 * Save form
+	 * Handles form updating, deleting, exporting and importing
 	 *
-	*/
+	 */
 	static function save_form(){
 
 		/// check for form delete
@@ -1460,65 +1460,7 @@ class Caldera_Forms_Admin {
 				
 				// strip slashes
 				$data = json_decode( stripslashes_deep($_POST['config']) , ARRAY_A );
-				// get form registry
-				$forms = Caldera_Forms::get_forms( true );
-				if(empty($forms)){
-					$forms = array();
-				}
-				// option value labels
-				if(!empty($data['fields'])){
-					foreach($data['fields'] as &$field){
-						if(!empty($field['config']['option']) && is_array($field['config']['option'])){
-							foreach($field['config']['option'] as &$option){
-								if(!isset($option['value'])){
-									$option['value'] = $option['label'];
-								}
-							}
-						}
-					}
-				}
-				
-				// add form to registry
-				$forms[$data['ID']] = $data;
-
-				// remove undeeded settings for registry
-				if(isset($forms[$data['ID']]['layout_grid'])){
-					unset($forms[$data['ID']]['layout_grid']);
-				}
-				if(isset($forms[$data['ID']]['fields'])){
-					unset($forms[$data['ID']]['fields']);
-				}
-				if(isset($forms[$data['ID']]['processors'])){
-					unset($forms[$data['ID']]['processors']);
-				}
-				if(isset($forms[$data['ID']]['settings'])){
-					unset($forms[$data['ID']]['settings']);
-				}
-				if(isset($forms[$data['ID']]['conditional_groups'])){
-					unset($forms[$data['ID']]['conditional_groups']);
-				}
-
-				foreach($forms as $form_id=>$form_config){
-					if(empty($form_config)){
-						unset( $forms[$form_id] );
-					}
-				}
-				// combine structure pages
-				$data['layout_grid']['structure'] = implode('#', $data['layout_grid']['structure']);
-				// remove fields from conditions
-				if( !empty( $data['conditional_groups']['fields'] ) ){
-					unset( $data['conditional_groups']['fields'] );
-				}
-				// remove magics ( yes, not used yet.)
-				if( !empty( $data['conditional_groups']['magic'] ) ){
-					unset( $data['conditional_groups']['magic'] );
-				}
-				// add from to list
-				update_option($data['ID'], $data);
-				do_action('caldera_forms_save_form', $data);
-
-				update_option( '_caldera_forms', $forms );
-				do_action('caldera_forms_save_form_register', $data);
+				self::save_a_form( $data );
 
 				if(!empty($_POST['sender'])){
 					exit;
@@ -1530,6 +1472,93 @@ class Caldera_Forms_Admin {
 			}
 			return;
 		}
+	}
+
+	/**
+	 * Save a form
+	 *
+	 * @since 1.3.4
+	 *
+	 * @param array $data
+	 */
+	public static function save_a_form( $data ){
+		// get form registry
+		$forms = Caldera_Forms::get_forms( true );
+		if(empty($forms)){
+			$forms = array();
+		}
+		// option value labels
+		if(!empty($data['fields'])){
+			foreach($data['fields'] as &$field){
+				if(!empty($field['config']['option']) && is_array($field['config']['option'])){
+					foreach($field['config']['option'] as &$option){
+						if(!isset($option['value'])){
+							$option['value'] = $option['label'];
+						}
+					}
+				}
+			}
+		}
+
+		// add form to registry
+		$forms[$data['ID']] = $data;
+
+		// remove undeeded settings for registry
+		if(isset($forms[$data['ID']]['layout_grid'])){
+			unset($forms[$data['ID']]['layout_grid']);
+		}
+		if(isset($forms[$data['ID']]['fields'])){
+			unset($forms[$data['ID']]['fields']);
+		}
+		if(isset($forms[$data['ID']]['processors'])){
+			unset($forms[$data['ID']]['processors']);
+		}
+		if(isset($forms[$data['ID']]['settings'])){
+			unset($forms[$data['ID']]['settings']);
+		}
+		if(isset($forms[$data['ID']]['conditional_groups'])){
+			unset($forms[$data['ID']]['conditional_groups']);
+		}
+
+		foreach($forms as $form_id=>$form_config){
+			if(empty($form_config)){
+				unset( $forms[$form_id] );
+			}
+		}
+		// combine structure pages
+		$data['layout_grid']['structure'] = implode('#', $data['layout_grid']['structure']);
+		// remove fields from conditions
+		if( !empty( $data['conditional_groups']['fields'] ) ){
+			unset( $data['conditional_groups']['fields'] );
+		}
+		// remove magics ( yes, not used yet.)
+		if( !empty( $data['conditional_groups']['magic'] ) ){
+			unset( $data['conditional_groups']['magic'] );
+		}
+		// add from to list
+		update_option($data['ID'], $data);
+
+		/**
+		 * Fires after a form is saved
+		 *
+		 * @since unknown
+		 *
+		 * @param array $data The form data
+		 * @param string $from_id The form ID
+		 */
+		do_action('caldera_forms_save_form', $data, $data['ID']);
+
+		update_option( '_caldera_forms', $forms );
+
+		/**
+		 * Fires after form registry is updated by saving a from
+		 *
+		 * @since unknown
+		 *
+		 * @param array $data The form data
+		 * @param array $forms Array of forms in registry
+		 */
+		do_action('caldera_forms_save_form_register', $data, $forms );
 	}
 
 	public static function create_form(){
