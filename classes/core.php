@@ -832,7 +832,8 @@ class Caldera_Forms {
 			'attachments' 	=> array()
 		);
 
-		$email_message = apply_filters( 'caldera_forms_autoresponse_mail', $email_message, $config, $form);	
+		$email_message = apply_filters( 'caldera_forms_autoresponse_mail', $email_message, $config, $form);
+
 		do_action( 'caldera_forms_do_autoresponse', $config, $form);
 
 		// send mail		
@@ -4203,11 +4204,14 @@ class Caldera_Forms {
 
 	/**
 	 * Create HTML markup for a form.
-	 * @param array|string $atts Form ID or shortcode atts or form config array
-	 * @param null|int $entry_id Optional. Entry ID to load data from. Null, the default, loads form for creating a new entry.
-	 * @param null $shortcode No longer used.
 	 *
-	 * @return void|string HTML for form, if it was able to be laoded
+	 * @since unknown
+	 *
+	 * @param array|string $field Form ID or shortcode atts or form config array
+	 * @param array|null $form Optional Form to laod field from. Not neccasary, but helps the filters out.
+	 * @param array $entry_data Optional. Entry data to populate field with. Null, the default, loads form for creating a new entry.
+	 *
+	 * @return void|string HTML for form, if it was able to be loaded,
 	 */
 	static public function render_field($field, $form = null, $entry_data = array() ){
 		global $current_form_count, $grid;
@@ -4294,9 +4298,23 @@ class Caldera_Forms {
 		$form_field_strings[ $field_structure['id'] ] = array( 'id' => $field_structure['id'], 'instance' => $current_form_count, 'slug' => $field['slug'], 'label' => $field['label'] );
 		
 		$field_types = self::get_field_types();
-		
+
+		$field_file = $field_types[$field['type']]['file'];
+		/**
+		 * Filter the file path to be used for a field's HTML in front-end
+		 *
+		 * @since 1.3.4
+		 *
+		 * @param string $field_file The path to the file
+		 * @param string $field_type The field type
+		 * @param string $field The field ID.
+		 * @param string $field_structure Data to be used in field
+		 * @param array $form Current form (NOTE: May be null)
+		 */
+		$field_file = apply_filters( 'caldera_forms_render_field_file', $field[ 'type' ], $field[ 'ID' ], $field_file, $field_structure, $form );
+
 		ob_start();
-		include $field_types[$field['type']]['file'];
+		include $field_file;
 		$field_html = apply_filters( 'caldera_forms_render_field', ob_get_clean(), $form);
 		$field_html = apply_filters( 'caldera_forms_render_field_type-' . $field['type'], $field_html, $form);
 		$field_html = apply_filters( 'caldera_forms_render_field_slug-' . $field['slug'], $field_html, $form);
