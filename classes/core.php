@@ -4311,7 +4311,7 @@ class Caldera_Forms {
 		 * @param string $field_structure Data to be used in field
 		 * @param array $form Current form (NOTE: May be null)
 		 */
-		$field_file = apply_filters( 'caldera_forms_render_field_file', $field[ 'type' ], $field[ 'ID' ], $field_file, $field_structure, $form );
+		$field_file = apply_filters( 'caldera_forms_render_field_file', $field_file, $field[ 'type' ], $field[ 'ID' ], $field_file, $field_structure, $form );
 
 		ob_start();
 		include $field_file;
