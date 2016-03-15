@@ -437,7 +437,7 @@ final class Caldera_Forms_Forms {
 
 		self::$index = $forms;
 
-		delete_transient( self::$registry_cache_key );
+		self::clear_cache();
 		update_option( self::$registry_option_key, $forms, false );
 
 		/**
