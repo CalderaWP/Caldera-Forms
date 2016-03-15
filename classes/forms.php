@@ -75,7 +75,8 @@ final class Caldera_Forms_Forms {
 		'form_ajax',
 		'hide_form',
 		'db_support',
-		'mailer'
+		'mailer',
+		'ID'
 	);
 
 	/**
