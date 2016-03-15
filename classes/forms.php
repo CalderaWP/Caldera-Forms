@@ -74,6 +74,7 @@ final class Caldera_Forms_Forms {
 		'success',
 		'form_ajax',
 		'hide_form',
+		'db_support',
 		'mailer'
 	);
 
@@ -95,7 +96,8 @@ final class Caldera_Forms_Forms {
 		if( isset( $forms[ $id_name ] ) ){
 			$form = get_option( $forms[ $id_name ] );
 		}else{
-			foreach($forms as $form_id=>$form_maybe){
+			$forms = self::get_forms( true );
+			foreach( $forms as $form_id=>$form_maybe){
 				if( trim(strtolower($id_name)) == strtolower($form_maybe['name']) && empty( $form_maybe['_external_form'] ) ){
 					$form = get_option( $form_maybe['ID'] );
 				}
@@ -154,7 +156,7 @@ final class Caldera_Forms_Forms {
 	 * @return array|mixed|void
 	 */
 	public static function get_forms( $with_details = false, $internal_only = false ){
-		if( isset( $_GET[ 'cf-cache-clear' ] ) ){
+		if( 1 == 1 ||isset( $_GET[ 'cf-cache-clear' ] ) ){
 			self::clear_cache();
 		}
 
@@ -260,14 +262,17 @@ final class Caldera_Forms_Forms {
 			foreach( self::$detail_fields as $key ){
 				if ( isset( $_form[ $key ] ) ) {
 					$forms[ $id ][ $key ] = $_form[ $key ];
-				}else{
-					if( 'name' == $key ){
-						$forms[ $id ][ $key ] = $id;
-					}else{
-						$forms[ $id ][ $key ] = '';
-					}
-
+				} elseif ( 'name' == $key ) {
+					$forms[ $id ][ $key ] = $id;
+				} elseif ( 'mailer' == $key ) {
+					$forms[ $id ] = array( 'on_insert' => 1 );
+				} elseif ( in_array( $key, array( 'form_ajax', 'check_honey', 'hide_form', 'db_support' ) ) ) {
+					$forms[ $id ][ $key ] = 1;
+				} else {
+					$forms[ $id ][ $key ] = '';
 				}
+
+
 
 			}
 		}
@@ -362,6 +367,7 @@ final class Caldera_Forms_Forms {
 			"form_ajax"		=> 1,
 			"hide_form"		=> 1,
 			"check_honey" 	=> 1,
+			"db_support"    => 1,
 			'mailer'		=>	array( 'on_insert' => 1 )
 		);
 		// is template?
