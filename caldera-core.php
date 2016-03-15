@@ -66,7 +66,6 @@ if ( is_admin() ) {
 
 add_action( 'admin_init', 'caldera_forms_db_update' );
 function caldera_forms_db_update(){
-	delete_option( 'CF_DB' );
 	if( current_user_can( 'manage_options' )  ){
 		$db_version = get_option( 'CF_DB', 0 );
 		if( CF_DB > $db_version ) {
