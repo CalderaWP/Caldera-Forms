@@ -22,15 +22,22 @@ function caldera_forms_db_v2_update(){
 		global $wpdb;
 		$sql = sprintf( "UPDATE `%s` SET `autoload`='no' WHERE %s", $wpdb->options, $where );
 		$result = $wpdb->get_results( $sql  );
-		//create and delete a form, which should cause registry to flatten
-		$fake_form = Caldera_Forms_Forms::create_form( array(
-			"ID" 			=> uniqid('CF'),
-			"name" 			=> '',
-			"description" 	=> '',
-		) );
-		Caldera_Forms_Forms::delete_form( $fake_form[ 'ID' ] );
+
+		$forms = get_option( '_caldera_forms', array() );
+		$new_registry = array();
+		if( ! empty( $forms ) ){
+			foreach( $forms as $id => $form ){
+				$new_registry[ $id ] = $id;
+			}
+
+
+		}
+
+		add_option( '_caldera_forms_forms', $new_registry, false );
+
 		caldera_forms_write_db_flag( 2 );
 	}
+
 }
 
 

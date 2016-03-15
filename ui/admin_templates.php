@@ -300,7 +300,7 @@ jQuery(function($){
 
 
 <?php 
-$forms = Caldera_Forms::get_forms();
+$forms = Caldera_Forms_Forms::get_forms( true );
 foreach( $forms as $form_id=>$form_conf ){ ?>
 
 <script type="text/html" id="cfajax_<?php echo esc_attr( $form_id ); ?>-tmpl">

@@ -53,6 +53,15 @@ final class Caldera_Forms_Forms {
 	protected static $stored_forms;
 
 	/**
+	 * Option key for storing registry in
+	 *
+	 * @since 1.3.4
+	 *
+	 * @var string
+	 */
+	protected static $registry_option_key = '_caldera_forms_forms';
+
+	/**
 	 * Fields used when converting flat registry to detailed registry
 	 *
 	 * @since 1.3.4
@@ -152,8 +161,11 @@ final class Caldera_Forms_Forms {
 		if( $with_details ){
 			if( ! empty( self::$registry_cache ) ){
 				return self::$registry_cache;
-			}else if( false != ( self::$registry_cache = get_transient( self::$registry_cache ) ) ){
-				return self::$registry_cache;
+			}elseif( false != ( self::$registry_cache = get_transient( self::$registry_cache_key ) ) ){
+				if ( is_array( self::$registry_cache ) ) {
+					return self::$registry_cache;
+				}
+
 			}
 
 		}
@@ -172,8 +184,10 @@ final class Caldera_Forms_Forms {
 			 * @param array $base_forms Forms saved in DB
 			 */
 			$forms = apply_filters( 'caldera_forms_get_forms', $base_forms );
-			foreach ( $forms as $form_id => $form ) {
-				$forms[ $form_id ] = $form_id;
+			if ( ! empty( $forms  ) && is_array( $forms )) {
+				foreach ( $forms as $form_id => $form ) {
+					$forms[ $form_id ] = $form_id;
+				}
 			}
 
 			self::$index = $forms;
@@ -186,8 +200,8 @@ final class Caldera_Forms_Forms {
 			$forms = self::add_details( $forms );
 		}
 
-		if( empty( $forms ) ){
-			return array();
+		if( ! is_array( $forms ) ){
+			$forms =  array();
 		}
 
 		return $forms;
@@ -203,7 +217,7 @@ final class Caldera_Forms_Forms {
 	 */
 	protected static function get_stored_forms() {
 		if ( empty( self::$stored_forms ) ) {
-			self::$stored_forms = get_option( '_caldera_forms', array() );
+			self::$stored_forms = get_option( self::$registry_option_key, array() );
 		}
 
 		return self::$stored_forms;
@@ -270,7 +284,10 @@ final class Caldera_Forms_Forms {
 			}
 		}
 
-		set_transient( self::$registry_cache_key, $forms, HOUR_IN_SECONDS );
+		if ( ! empty( $forms ) ) {
+			set_transient( self::$registry_cache_key, $forms, HOUR_IN_SECONDS );
+		}
+
 		self::$registry_cache = $forms;
 		return self::$registry_cache;
 
@@ -421,7 +438,7 @@ final class Caldera_Forms_Forms {
 		self::$index = $forms;
 
 		delete_transient( self::$registry_cache_key );
-		update_option( '_caldera_forms', $forms, false );
+		update_option( self::$registry_option_key, $forms, false );
 
 		/**
 		 * Fires after form registry is updated by saving a from
@@ -432,6 +449,7 @@ final class Caldera_Forms_Forms {
 		 * @param array $forms Array of forms in registry
 		 */
 		do_action('caldera_forms_save_form_register', array(), $forms );
+
 	}
 
 	/**
