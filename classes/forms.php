@@ -190,8 +190,6 @@ final class Caldera_Forms_Forms {
 			return array();
 		}
 
-
-
 		return $forms;
 
 	}
@@ -374,7 +372,7 @@ final class Caldera_Forms_Forms {
 		}
 
 		// add form to db
-		add_option( $newform['ID'], $newform, 'no' );
+		add_option( $newform['ID'], $newform, false );
 
 		/**
 		 * Runs after form is created
@@ -446,5 +444,5 @@ final class Caldera_Forms_Forms {
 		self::$registry_cache = null;
 		delete_transient( self::$registry_cache_key );
 	}
-	
+
 }
