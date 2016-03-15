@@ -2,8 +2,14 @@
 
 global $field_type_list, $field_type_templates;
 
+if( ! isset( $_GET['edit'] ) || ! is_string( $_GET['edit'] ) ){
+	wp_die( esc_html__( 'Invalid form ID', 'caldera-forms' ) );
+}
 // Load element
-$element = get_option( $_GET['edit'] );
+$element = Caldera_Forms_Forms::get_form( $_GET['edit'] );
+if( empty( $element ) || ! is_array( $element ) ){
+	wp_die( esc_html__( 'Invalid form', 'caldera-forms' ) );
+}
 
 /**
  * Filter which Magic Tags are available in the form editor

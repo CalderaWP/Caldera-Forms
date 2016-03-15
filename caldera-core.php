@@ -22,10 +22,12 @@ define('CFCORE_PATH', plugin_dir_path(__FILE__));
 define('CFCORE_URL', plugin_dir_url(__FILE__));
 define('CFCORE_VER', '1.3.4-b1');
 define('CFCORE_EXTEND_URL', 'https://api.calderaforms.com/1.0/');
+define( 'CF_DB', '1.1.0' );
 
 include_once CFCORE_PATH . 'classes/core.php';
 include_once CFCORE_PATH . 'classes/widget.php';
 include_once CFCORE_PATH . 'classes/sanitize.php';
+include_once CFCORE_PATH . 'classes/forms.php';
 
 // includes
 include_once CFCORE_PATH . 'includes/ajax.php';
