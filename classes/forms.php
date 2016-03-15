@@ -94,13 +94,15 @@ final class Caldera_Forms_Forms {
 		$forms = self::get_forms();
 		$form = null;
 
-		if( isset( $forms[ $id_name ] ) ){
-			$form = get_option( $forms[ $id_name ] );
-		}else{
-			$forms = self::get_forms( true );
-			foreach( $forms as $form_id=>$form_maybe){
-				if( trim(strtolower($id_name)) == strtolower($form_maybe['name']) && empty( $form_maybe['_external_form'] ) ){
-					$form = get_option( $form_maybe['ID'] );
+		if ( self::is_internal_form( $id_name ) ) {
+			if ( isset( $forms[ $id_name ] ) ) {
+				$form = get_option( $forms[ $id_name ] );
+			} else {
+				$forms = self::get_forms( true );
+				foreach ( $forms as $form_id => $form_maybe ) {
+					if ( trim( strtolower( $id_name ) ) == strtolower( $form_maybe[ 'name' ] ) && empty( $form_maybe[ '_external_form' ] ) ) {
+						$form = get_option( $form_maybe[ 'ID' ] );
+					}
 				}
 			}
 		}
@@ -128,7 +130,8 @@ final class Caldera_Forms_Forms {
 		if( is_array( $form ) && empty( $form['ID'] ) ){
 			$form['ID'] = $id_name;
 		}
-		if( !empty( $form ) && !empty( $external ) ){
+
+		if( ! empty( $form ) && ! empty( $external ) ){
 			$form['_external_form'] = true;
 		}
 
@@ -157,7 +160,7 @@ final class Caldera_Forms_Forms {
 	 * @return array|mixed|void
 	 */
 	public static function get_forms( $with_details = false, $internal_only = false ){
-		if( 1 == 1 ||isset( $_GET[ 'cf-cache-clear' ] ) ){
+		if(isset( $_GET[ 'cf-cache-clear' ] ) ){
 			self::clear_cache();
 		}
 
@@ -470,4 +473,7 @@ final class Caldera_Forms_Forms {
 		delete_transient( self::$registry_cache_key );
 	}
 
+	public static function is_internal_form( $id_name ){
+		return in_array( $id_name, self::get_stored_forms() );
+	}
 }
