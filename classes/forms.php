@@ -14,7 +14,7 @@
  *
  * @since 1.3.4
  */
-final class Caldera_Forms_Forms {
+class Caldera_Forms_Forms {
 
 	/**
 	 * Holds registry of forms
@@ -160,7 +160,7 @@ final class Caldera_Forms_Forms {
 	 * @return array|mixed|void
 	 */
 	public static function get_forms( $with_details = false, $internal_only = false ){
-		if(isset( $_GET[ 'cf-cache-clear' ] ) ){
+		if( isset( $_GET[ 'cf-cache-clear' ] ) ){
 			self::clear_cache();
 		}
 
@@ -302,6 +302,15 @@ final class Caldera_Forms_Forms {
 
 	}
 
+	/**
+	 * Save a form
+	 *
+	 * @since 1.3.4
+	 *
+	 * @param array $data
+	 *
+	 * @return string|bool Form ID if updated, false if not
+	 */
 	public static function save_form( $data ){
 
 		// option value labels
@@ -318,7 +327,9 @@ final class Caldera_Forms_Forms {
 		}
 
 		// combine structure pages
-		$data['layout_grid']['structure'] = implode('#', $data['layout_grid']['structure']);
+		if ( isset( $data['layout_grid']['structure'] ) && is_array( $data['layout_grid']['structure'] ) ) {
+			$data[ 'layout_grid' ][ 'structure' ] = implode( '#', $data[ 'layout_grid' ][ 'structure' ] );
+		}
 		// remove fields from conditions
 		if( !empty( $data['conditional_groups']['fields'] ) ){
 			unset( $data['conditional_groups']['fields'] );
@@ -328,11 +339,14 @@ final class Caldera_Forms_Forms {
 			unset( $data['conditional_groups']['magic'] );
 		}
 
+		$data[ '_last_updated' ] = date('r');
+		$data[ 'version' ] = CFCORE_VER;
+
 		// add form to registry
 		self::update_registry( $data[ "ID" ] );
 
 		// add from to list
-		update_option( $data['ID'], $data);
+		$updated = update_option( $data['ID'], $data);
 
 		/**
 		 * Fires after a form is saved
@@ -344,15 +358,28 @@ final class Caldera_Forms_Forms {
 		 */
 		do_action('caldera_forms_save_form', $data, $data['ID']);
 
+		if( $updated && isset( $data[ 'ID' ] ) ){
+			$updated = $data[ 'ID' ];
+		}
 
+		return $updated;
 	}
 
+	/**
+	 * Create a new form
+	 *
+	 * @since 1.3.4
+	 *
+	 * @param array $newform Data for new form
+	 *
+	 * @return array|mixed|void
+	 */
 	public static function create_form( $newform ){
+		require_once( CFCORE_PATH . 'classes/admin.php' );
+
 		// get form templates (PROBABLY NEED TO MOVE METHOD INTO THIS CLASS)
 		$form_templates = Caldera_Forms_Admin::internal_form_templates();
 
-		// get form registry
-		$forms = self::get_forms( true, true );
 
 		if(!empty($newform['clone'])){
 			$clone = $newform['clone'];
@@ -363,8 +390,10 @@ final class Caldera_Forms_Forms {
 				$form_template = $form_templates[ $newform['template'] ]['template'];
 			}
 		}
+
+		$id = uniqid('CF');
 		$newform = array(
-			"ID" 			=> uniqid('CF'),
+			"ID" 			=> $id,
 			"name" 			=> $newform['name'],
 			"description" 	=> $newform['description'],
 			"success"		=>	__('Form has been successfully submitted. Thank you.', 'caldera-forms'),
@@ -382,24 +411,24 @@ final class Caldera_Forms_Forms {
 		/**
 		 * Filter newly created form before saving
 		 *
-		 * @since unkown
+		 * @since unknown
 		 *
 		 * @param array $newform New form config
 		 */
 		$newform = apply_filters( 'caldera_forms_create_form', $newform);
 
-		$forms[$newform['ID']] = $newform;
-		self::update_registry( $newform[ 'ID' ] );
+
+		self::update_registry( $id );
 
 		if(!empty($clone)){
-			$clone_form = get_option( $clone );
+			$clone_form = ( $clone );
 			if(!empty($clone_form['ID']) && $clone == $clone_form['ID']){
 				$newform = array_merge($clone_form, $newform);
 			}
 		}
 
 		// add form to db
-		add_option( $newform['ID'], $newform, false );
+		add_option( $id, $newform, false );
 
 		/**
 		 * Runs after form is created
@@ -437,7 +466,7 @@ final class Caldera_Forms_Forms {
 	 */
 	protected static function update_registry( $new ){
 		if( is_string( $new ) ){
-			$forms = self::get_forms();
+			$forms = self::get_stored_forms();
 			$forms[ $new ] = $new;
 		}elseif( is_array( $new ) ){
 			$forms = $new;
@@ -445,10 +474,9 @@ final class Caldera_Forms_Forms {
 			return false;
 		}
 
-		self::$index = $forms;
-
-		self::clear_cache();
 		update_option( self::$registry_option_key, $forms, false );
+		self::clear_cache();
+		self::$index = $forms;
 
 		/**
 		 * Fires after form registry is updated by saving a from
@@ -468,12 +496,24 @@ final class Caldera_Forms_Forms {
 	 * @since 1.3.4
 	 */
 	protected static function clear_cache(){
-		self::$index = null;
-		self::$registry_cache = null;
+		self::$index = array();
+		self::$registry_cache = array();
+		self::$stored_forms = array();
+		wp_cache_delete( '_caldera_forms_forms', 'options' );
 		delete_transient( self::$registry_cache_key );
 	}
 
+	/**
+	 * Check if a form is stored in DB by name oir ID
+	 *
+	 * @since 1.3.4
+	 *
+	 * @param string $id_name Form name or ID
+	 *
+	 * @return bool
+	 */
 	public static function is_internal_form( $id_name ){
 		return in_array( $id_name, self::get_stored_forms() );
 	}
+
 }
