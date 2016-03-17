@@ -30,7 +30,17 @@ function cf_handle_multi_view( $data, $field ){
 add_filter('caldera_forms_process_field_file', 'cf_handle_file_upload', 10, 3);
 
 
-function cf_handle_file_upload($entry, $field, $form){
+function cf_handle_file_upload( $entry, $field, $form ){
+	if( isset($_POST[ '_cf_frm_edt' ] ) ) {
+		if ( ! isset( $_FILES )
+		     || ( isset( $_FILES[ $field[ 'ID' ] ][ 'size' ][0] ) && 0 == $_FILES[ $field[ 'ID' ] ][ 'size' ][0] )
+			|| ( isset( $_FILES[ $field[ 'ID' ] ][ 'size' ] ) && 0 == $_FILES[ $field[ 'ID' ] ][ 'size' ]  )
+		) {
+			$entry = Caldera_Forms::get_field_data( $field[ 'ID' ], $form, absint( $_POST[ '_cf_frm_edt' ] ) );
+
+			return $entry;
+		}
+	}
 	$required = false;
 	if ( isset( $field[ 'required' ] ) &&  $field[ 'required' ] ){
 		$required = true;
