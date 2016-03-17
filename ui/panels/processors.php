@@ -252,7 +252,7 @@ function build_processor_types($default = null){
 				echo '<strong>' . $processor['name'] .'</strong> ';
 				if(!empty($processor['author'])){
 					echo '<small><span class="description">';
-					esc_html_e( 'by', 'caldera-forms') . ' ';
+					' ' . esc_html_e( 'by', 'caldera-forms') . ' ';
 					if(!empty($processor['author_url'])){
 						echo '<a href="' . $processor['author_url'] .'" target="_blank">';
 						echo $processor['author'];
