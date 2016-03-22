@@ -1430,8 +1430,6 @@ class Caldera_Forms_Admin {
 					}else{
 						if( is_array( $row[$key] ) && isset( $row[$key]['label'] ) ){
 							$row[$key] = $row[$key]['value'];
-						}elseif( is_array( $row[$key] ) && count( $row[$key] ) === 1 ){
-							$row[$key] = $row[$key][0];
 						}elseif( is_array( $row[$key] ) ){
 							$subs = array();
 							foreach( $row[$key] as $row_part ){
