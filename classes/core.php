@@ -1622,6 +1622,15 @@ class Caldera_Forms {
 						'order' => $field[ 'config' ][ 'order' ],
 						'orderby' => $field[ 'config' ][ 'orderby_post' ]
 					);
+
+					/**
+					 * Modify arguments for WP_Query used to auto-populate post type fields
+					 *
+					 * @since unknown
+					 *
+					 * @param array $args  Args for WP_Query
+					 * @param array $form Form config
+					 */
 					$args  = apply_filters( 'caldera_forms_autopopulate_post_type_args', $args );
 
 					$posts = get_posts( $args );
@@ -1685,6 +1694,16 @@ class Caldera_Forms {
 						'order' => $field[ 'config' ][ 'order' ],
 						'hide_empty' => 0
 					);
+
+
+					/**
+					 * Modify arguments for get_terms() used to auto-populate taxononmy type fields
+					 *
+					 * @since unknown
+					 *
+					 * @param array $args  Args for get_terms()
+					 * @param array $form Form config
+					 */
 					$args  = apply_filters( 'caldera_forms_autopopulate_taxonomy_args', $args );
 					
 					$terms = get_terms( $field['config']['taxonomy'], $args );
