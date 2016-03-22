@@ -1944,15 +1944,16 @@ class Caldera_Forms {
 
 		$url = apply_filters( 'caldera_forms_redirect_url', $url, $form, $processid);
 		$url = apply_filters( 'caldera_forms_redirect_url_' . $type, $url, $form, $processid);
+
 		if( headers_sent() ){
 			remove_action('caldera_forms_redirect', 'cf_ajax_redirect', 10 );
 		}
-		
+
 		do_action('caldera_forms_redirect', $type, $url, $form, $processid);
 		do_action('caldera_forms_redirect_' . $type, $url, $form, $processid);
 				
 		if(!empty($url)){
-			wp_redirect( $url );
+			cf_redirect( $url, 200 );
 			exit;
 		}
 
