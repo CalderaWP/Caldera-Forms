@@ -4,7 +4,7 @@
  */
 
 //add_filter('caldera_forms_render_grid_structure', 'cf_ajax_structures', 10, 2);
-add_action('caldera_forms_redirect', 'cf_ajax_redirect', 10, 5);
+add_action('caldera_forms_redirect', 'cf_ajax_redirect', 10, 4 );
 add_filter('caldera_forms_render_form_classes', 'cf_ajax_register_scripts', 10, 2);
 add_action('caldera_forms_general_settings_panel', 'cf_form_ajaxsetup');
 // add ajax actions
