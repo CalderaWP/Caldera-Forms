@@ -34,6 +34,8 @@ class Caldera_Forms {
 	 * @var      object
 	 */
 	protected static $instance = null;
+
+
 	/**
 	 * Initialize the plugin by setting localization, filters, and administration functions.
 	 *
@@ -77,6 +79,13 @@ class Caldera_Forms {
 		// modal shortcode
 		add_shortcode( 'caldera_form_modal', array( $this, 'render_modal_form') );
 		add_action( 'wp_footer', array( $this, 'render_footer_modals') );
+
+		add_action( 'wp', function(){
+			if( isset( $_REQUEST, $_REQUEST[ 'cfajax' ] ) ) {
+				ob_start();
+			}
+
+		}, 0);
 
 	}
 
@@ -2955,6 +2964,7 @@ class Caldera_Forms {
 	 * Process current POST data as form submission.
 	 */
 	static public function process_submission(){
+		//ob_flush();
 		global $post;
 		global $process_id;
 		global $form;
@@ -3765,6 +3775,7 @@ class Caldera_Forms {
 					$_POST['_wp_http_referer_true'] = 'api';
 					$_POST['_cf_frm_id'] 			=  $_POST['cfajax']	= $wp_query->query_vars['cf_api'];
 
+
 					$submission = Caldera_Forms::process_submission();
 					wp_send_json( $submission );
 				}
@@ -4247,7 +4258,7 @@ class Caldera_Forms {
 	 *
 	 * @return void|string HTML for form, if it was able to be loaded,
 	 */
-	static public function render_field($field, $form = null, $entry_data = array() ){
+	static public function render_field($field, $form = null, $entry_data = array(), $field_errors = array() ){
 		global $current_form_count, $grid;
 
 		$field_classes = array(
@@ -4271,8 +4282,8 @@ class Caldera_Forms {
 		$field_class = implode(' ',$field_classes['field']);
 
 		// add error class
-		if(!empty($field_errors[$field['ID']])){
-			$field_wrapper_class .= " " . implode(' ',$field_classes['field_error']);
+		if ( ! empty( $field_errors ) ) {
+			$field_wrapper_class .= " " . implode( ' ', $field_classes[ 'field_error' ] );
 		}
 
 		$field_structure = array(
@@ -4294,8 +4305,15 @@ class Caldera_Forms {
 		);
 
 		// add error
-		if(!empty($field_errors[$field['ID']])){
-			$field_structure['field_caption'] = "<span class=\"" . implode(' ', $field_classes['field_caption'] ) . "\">" . $field_errors[$field['ID']] . "</span>\r\n";
+		if ( ! empty( $field_errors ) ) {
+			if( is_string( $field_errors ) ){
+				$field_errors = array( $field_errors );
+			}
+
+			foreach( $field_errors as $error ){
+				$field_structure[ 'field_caption' ] = "<span class=\"" . implode( ' ', $field_classes[ 'field_caption' ] ) . "\">" . $error . "</span>\r\n";
+			}
+
 		}
 
 		// value
@@ -4805,7 +4823,12 @@ class Caldera_Forms {
 
 					$field_base_id = $field['ID'] . '_' . $current_form_count;
 
-					$field_html = self::render_field( $field, $form, $prev_data );
+					$field_error = array();
+					if( isset( $field_errors[ $field[ 'ID' ] ] ) ){
+						$field_error = $field_errors[ $field[ 'ID' ] ];
+					}
+
+					$field_html = self::render_field( $field, $form, $prev_data, $field_error );
 					// conditional wrapper
 					if(!empty($field['conditions']['group']) && !empty($field['conditions']['type'])){
 						// render conditions check- for magic tags since at this point all field data will be null
