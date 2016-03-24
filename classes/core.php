@@ -4058,11 +4058,19 @@ class Caldera_Forms {
 			$field_view = apply_filters( 'caldera_forms_view_field_' . $field['type'], $field_value, $field, $form);
 
 			// has options?
-			if( !empty( $field['config']['option'] ) ){
-				foreach( $field['config']['option'] as $option ){
+			if( ! empty( $field['config']['option'] ) ){
+				$i = 0;
+				foreach( $field['config']['option'] as $opt => $option ){
 					if( $option['value'] == $field_view ){
 						$field_view = $option['label'];
-						break;
+
+						$data['data'][$field_id . '_' . $i ] = array(
+							'label' => $field['label'],
+							'view'	=> $field_view,
+							'value' => $field_value[ $opt ]
+						);
+						$i ++;
+
 					}
 				}
 				
@@ -4073,6 +4081,9 @@ class Caldera_Forms {
 				'view'	=> $field_view,
 				'value' => $field_value
 			);
+
+
+
 		}
 
 		// get meta
