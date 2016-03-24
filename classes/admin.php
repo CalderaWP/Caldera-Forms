@@ -1365,6 +1365,7 @@ class Caldera_Forms_Admin {
 			$labels = array();
 			$structure = array();
 			$field_types = apply_filters( 'caldera_forms_get_field_types', array());
+			$headers = array();
 			if(!empty($form['fields'])){
 				$headers['date_submitted'] = 'Submitted';
 				foreach($form['fields'] as $field_id=>$field){
@@ -1410,7 +1411,11 @@ class Caldera_Forms_Admin {
 				foreach ($structure as $slug => $field_id) {
 					$data[$entry->_entryid][$slug] = ( isset( $submission['data'][$field_id]['value'] ) ? $submission['data'][$field_id]['value'] : null );
 				}
-				//dump($data);
+
+			}
+
+			if( empty( $headers ) ){
+				wp_die( esc_html_e( 'Could not process export. This is most likely due to a problem with the form configuration.', 'caldera-forms' ) );
 			}
 
 			header("Pragma: public");
