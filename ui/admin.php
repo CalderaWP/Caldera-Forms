@@ -5,7 +5,7 @@ $per_page_limit = 20;
 
 
 // get all forms
-$forms = Caldera_Forms::get_forms();
+$forms = Caldera_Forms_Forms::get_forms( true );
 $forms = apply_filters( 'caldera_forms_admin_forms', $forms );
 
 $style_includes = get_option( '_caldera_forms_styleincludes' );

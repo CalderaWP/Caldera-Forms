@@ -97,61 +97,8 @@ class Caldera_Forms {
 	 * @return array|null Form config array if found. If not null.
 	 */
 	public static function get_form( $id_name ){
+		return Caldera_Forms_Forms::get_form( $id_name );
 
-		$id_name = sanitize_text_field( $id_name );
-
-		$forms = self::get_forms();
-		$form = null;
-
-		if( isset( $forms[ $id_name ] ) ){
-			$form = get_option( $forms[ $id_name ]['ID'] );
-		}else{
-			foreach($forms as $form_id=>$form_maybe){
-				if( trim(strtolower($id_name)) == strtolower($form_maybe['name']) && empty( $form_maybe['_external_form'] ) ){
-					$form = get_option( $form_maybe['ID'] );
-				}
-			}
-		}
-
-		if( empty( $form ) ){
-			$external = true;
-		}
-
-		/**
-		 * Filter settings of a form or all forms or use to define a form in file
-		 *
-		 * @param array $form Form config
-		 * @param string $id_name ID or name of form
-		 */
-		$form = apply_filters( 'caldera_forms_get_form', $form, $id_name );
-
-		/**
-		 * Filter settings of a specific form or all forms or use to define a form in file
-		 *
-		 * @param array $form Form config
-		 * @param string $id_name ID or name of form
-		 */
-		$form = apply_filters( 'caldera_forms_get_form-' . $id_name, $form, $id_name );
-
-		if( is_array( $form ) && empty( $form['ID'] ) ){
-			$form['ID'] = $id_name;
-		}
-		if( !empty( $form ) && !empty( $external ) ){
-			$form['_external_form'] = true;
-		}
-
-		// remove submit on editing
-		if( !empty( $_GET['modal'] ) && $_GET['modal'] == 'view_entry' && !empty( $_GET['group'] ) && $_GET['group'] == 'editentry' ){
-			if( !empty( $form['fields'] ) ){
-				foreach( $form['fields'] as $field_id=>$field ){
-					if( $field['type'] == 'button' && $field['config']['type'] == 'submit' ){
-						unset( $form['fields'][ $field_id ] );
-					}
-				}
-			}
-		}
-
-		return $form;
 
 	}
 
@@ -163,24 +110,8 @@ class Caldera_Forms {
 	 * @return mixed|void
 	 */
 	public static function get_forms( $internal = false ){
+		return Caldera_Forms_Forms::get_forms( true, $internal );
 
-		$base_forms = get_option( '_caldera_forms', array() );
-		if( true === $internal ){
-			return $base_forms;
-		}
-
-		$forms = apply_filters( 'caldera_forms_get_forms', $base_forms );
-		foreach( $forms as $form_id => $form ){
-			if( !isset( $base_forms[ $form_id ] ) ){
-				$forms[ $form_id ]['_external_form'] = true;
-				if( empty( $forms[ $form_id ]['ID'] ) ){
-					$forms[ $form_id ]['ID'] = $form_id;
-				}
-
-			}
-		}
-
-		return $forms;
 	}
 
 	/**

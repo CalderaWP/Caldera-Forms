@@ -1126,9 +1126,9 @@ class Caldera_Forms_Admin {
 	}
 
 	/***
-	 * Save form
+	 * Handles form updating, deleting, exporting and importing
 	 *
-	*/
+	 */
 	static function save_form(){
 
 		/// check for form delete
@@ -1138,23 +1138,7 @@ class Caldera_Forms_Admin {
 				// This nonce is not valid.
 				wp_die( __('Sorry, please try again', 'caldera-forms'), __('Form Delete Error', 'caldera-forms') );
 			}else{
-				// ok to delete
-				// get form registry
-				$forms = Caldera_Forms::get_forms( true );
-				if(isset($forms[$_GET['delete']])){
-					unset($forms[$_GET['delete']]);
-					$form = Caldera_Forms::get_form( $_GET['delete'] );
-					if(empty($form)){
-						do_action('caldera_forms_delete_form', $_GET['delete']);
-						update_option( '_caldera_forms', $forms );
-					}else{
-						if( delete_option( $_GET['delete'] ) ){
-							do_action('caldera_forms_delete_form', $_GET['delete']);
-							update_option( '_caldera_forms', $forms );						
-						}
-					}
-				}
-
+				Caldera_Forms_Forms::delete_form( $_GET['cal_del'] );
 				wp_redirect('admin.php?page=caldera-forms' );
 				exit;
 
@@ -1463,65 +1447,7 @@ class Caldera_Forms_Admin {
 				
 				// strip slashes
 				$data = json_decode( stripslashes_deep($_POST['config']) , ARRAY_A );
-				// get form registry
-				$forms = Caldera_Forms::get_forms( true );
-				if(empty($forms)){
-					$forms = array();
-				}
-				// option value labels
-				if(!empty($data['fields'])){
-					foreach($data['fields'] as &$field){
-						if(!empty($field['config']['option']) && is_array($field['config']['option'])){
-							foreach($field['config']['option'] as &$option){
-								if(!isset($option['value'])){
-									$option['value'] = $option['label'];
-								}
-							}
-						}
-					}
-				}
-				
-				// add form to registry
-				$forms[$data['ID']] = $data;
-
-				// remove undeeded settings for registry
-				if(isset($forms[$data['ID']]['layout_grid'])){
-					unset($forms[$data['ID']]['layout_grid']);
-				}
-				if(isset($forms[$data['ID']]['fields'])){
-					unset($forms[$data['ID']]['fields']);
-				}
-				if(isset($forms[$data['ID']]['processors'])){
-					unset($forms[$data['ID']]['processors']);
-				}
-				if(isset($forms[$data['ID']]['settings'])){
-					unset($forms[$data['ID']]['settings']);
-				}
-				if(isset($forms[$data['ID']]['conditional_groups'])){
-					unset($forms[$data['ID']]['conditional_groups']);
-				}
-
-				foreach($forms as $form_id=>$form_config){
-					if(empty($form_config)){
-						unset( $forms[$form_id] );
-					}
-				}
-				// combine structure pages
-				$data['layout_grid']['structure'] = implode('#', $data['layout_grid']['structure']);
-				// remove fields from conditions
-				if( !empty( $data['conditional_groups']['fields'] ) ){
-					unset( $data['conditional_groups']['fields'] );
-				}
-				// remove magics ( yes, not used yet.)
-				if( !empty( $data['conditional_groups']['magic'] ) ){
-					unset( $data['conditional_groups']['magic'] );
-				}
-				// add from to list
-				update_option($data['ID'], $data);
-				do_action('caldera_forms_save_form', $data);
-
-				update_option( '_caldera_forms', $forms );
-				do_action('caldera_forms_save_form_register', $data);
+				self::save_a_form( $data );
 
 				if(!empty($_POST['sender'])){
 					exit;
@@ -1535,60 +1461,23 @@ class Caldera_Forms_Admin {
 		}
 	}
 
+	/**
+	 * Save a form
+	 *
+	 * @since 1.3.4
+	 *
+	 * @param array $data
+	 */
+	public static function save_a_form( $data ){
+		Caldera_Forms_Forms::save_form( $data );
+	}
+
 	public static function create_form(){
 
 		parse_str( $_POST['data'], $newform );
 
-		// get form templates
-		$form_templates = self::internal_form_templates();
 
-		// get form registry
-		$forms = Caldera_Forms::get_forms( true );
-		if(empty($forms)){
-			$forms = array();
-		}
-		if(!empty($newform['clone'])){
-			$clone = $newform['clone'];
-		}
-		// load template if any
-		if( !empty( $newform['template'] ) ){
-			if( isset( $form_templates[ $newform['template'] ] ) && !empty( $form_templates[ $newform['template'] ]['template'] ) ){
-				$form_template = $form_templates[ $newform['template'] ]['template'];
-			}
-		}
-		$newform = array(
-			"ID" 			=> uniqid('CF'),
-			"name" 			=> $newform['name'],
-			"description" 	=> $newform['description'],
-			"success"		=>	__('Form has been successfully submitted. Thank you.', 'caldera-forms'),
-			"form_ajax"		=> 1,
-			"hide_form"		=> 1,
-			"check_honey" 	=> 1,
-			'mailer'		=>	array( 'on_insert' => 1 )
-		);
-		// is template?
-		if( !empty( $form_template ) && is_array( $form_template ) ){
-			$newform = array_merge( $form_template, $newform );
-		}
-		// add from to list
-		$newform = apply_filters( 'caldera_forms_create_form', $newform);
-
-		$forms[$newform['ID']] = $newform;
-		update_option( '_caldera_forms', $forms );
-		
-		if(!empty($clone)){
-			$clone_form = get_option( $clone );
-			if(!empty($clone_form['ID']) && $clone == $clone_form['ID']){
-				$newform = array_merge($clone_form, $newform);
-			}
-		}
-
-
-		
-		// add form to db
-		update_option($newform['ID'], $newform);
-		do_action('caldera_forms_create_form', $newform);
-
+		$newform = Caldera_Forms_Forms::create_form( $newform );
 		echo $newform['ID'];
 		exit;
 

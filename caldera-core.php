@@ -23,9 +23,19 @@ define('CFCORE_URL', plugin_dir_url(__FILE__));
 define('CFCORE_VER', '1.3.4-b1');
 define('CFCORE_EXTEND_URL', 'https://api.calderaforms.com/1.0/');
 
+/**
+ * Caldera Forms DB version
+ *
+ * @since 1.3.4
+ *
+ * PLEASE keep this an integer
+ */
+define( 'CF_DB', 2 );
+
 include_once CFCORE_PATH . 'classes/core.php';
 include_once CFCORE_PATH . 'classes/widget.php';
 include_once CFCORE_PATH . 'classes/sanitize.php';
+include_once CFCORE_PATH . 'classes/forms.php';
 
 // includes
 include_once CFCORE_PATH . 'includes/ajax.php';
@@ -53,3 +63,21 @@ if ( is_admin() || defined( 'DOING_AJAX' ) ) {
 if ( is_admin() ) {
   require_once( CFCORE_PATH . 'processors/classes/ui.php' );
 }
+
+add_action( 'admin_init', 'caldera_forms_db_update' );
+function caldera_forms_db_update(){
+
+	if( current_user_can( 'manage_options' )  ){
+		$db_version = get_option( 'CF_DB', 0 );
+		if( CF_DB > $db_version ) {
+			include_once CFCORE_PATH . 'includes/updater.php';
+			if (  $db_version < 2   ) {
+				caldera_forms_db_v2_update();
+			}
+		}
+
+
+	}
+}
+
+

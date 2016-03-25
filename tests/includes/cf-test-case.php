@@ -8,7 +8,19 @@
  * @link
  * @copyright 2016 Josh Pollock
  */
-abstract class Caldera_Forms_Test_Case extends WP_UnitTestCase {
+class Caldera_Forms_Test_Case extends WP_UnitTestCase {
+
+	public function tearDown(){
+		$forms = get_option( '_caldera_forms_forms', array() );
+		if( ! empty( $forms  ) ){
+			foreach( $forms  as $id => $form) {
+				delete_option( $id );
+			}
+		}
+		delete_option( '_caldera_forms_forms' );
+		wp_cache_delete( '_caldera_forms_forms', 'options' );
+		parent::tearDown();
+	}
 
 	/**
 	 * Forms setup using filter
@@ -22,6 +34,29 @@ abstract class Caldera_Forms_Test_Case extends WP_UnitTestCase {
 		'contact-form'
 	);
 
+	/**
+	 * Get a form saved in file to use as a mock
+	 *
+	 * @since 1.3.4
+	 *
+	 * @param string $name Name of form
+	 * @param bool|true $add_external_flag Optional. Add _external_form key. Default is true
+	 *
+	 * @return bool
+	 */
+	protected function get_file_mock( $name, $add_external_flag = true ){
+		if( in_array( $name, $this->forms_on_filters ) ){
+			$name = str_replace( '-', '_', $name );
+			$cb = 'caldera_forms_tests_get_' . $name;
+			$form =  call_user_func( $cb, array() );
+			if( $add_external_flag ){
+				$form[ '_external_form' ] = true;
+			}
+
+			return $form;
+		}
+	}
+
 
 	/**
 	 * A form that isn't saved or on filter to use as a mock
@@ -31,9 +66,6 @@ abstract class Caldera_Forms_Test_Case extends WP_UnitTestCase {
 	 * @var array
 	 */
 	protected $mock_form = array(
-		'_last_updated'      => 'Tue, 15 Mar 2016 22:16:51 +0000',
-		'ID'                 => 'another-form',
-		'cf_version'         => '1.3.4-b1',
 		'name'               => 'Another form',
 		'description'        => '',
 		'db_support'         => 1,
