@@ -139,6 +139,8 @@ ADDED: Form ID and CF version as data attributes in outermost wrapping container
 FIXED: Bug preventing multiple files in same field from attaching to the email.
 CHANGED: "Pin to Menu" to a more descriptive label. No change in functionality.
 ADDED: caldera_forms_render_field_file filter to Change the file used to create the HTML for a field in the front-end.
+ADDED: entry ID to caldera_forms_submit_post_process and caldera_forms_submit_process_start hooks & documented them.
+ADDED: Caldera_Forms_Forms class to handle all form config CRUD. Refactored form saving for performance and extensibility:)
 
 = Caldera Forms 1.3.3.1 ( March 4, 2016) =
 * FIXED: Bug causing muti-page forms to validate when going back a page.... again. For reals this time.
