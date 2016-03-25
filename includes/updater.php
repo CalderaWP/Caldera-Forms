@@ -15,15 +15,14 @@
  * @since 1.3.4
  */
 function caldera_forms_db_v2_update(){
-	$forms = Caldera_Forms_Forms::get_forms();
+	$forms = get_option( '_caldera_forms', array() );
 	if( ! empty( $forms ) ){
 		$where = '`option_name` = "' . implode( '" OR `option_name` = "', array_keys( $forms ) ) . '"';
 
 		global $wpdb;
 		$sql = sprintf( "UPDATE `%s` SET `autoload`='no' WHERE %s", $wpdb->options, $where );
-		$result = $wpdb->get_results( $sql  );
+		$wpdb->get_results( $sql  );
 
-		$forms = get_option( '_caldera_forms', array() );
 		$new_registry = array();
 		if( ! empty( $forms ) ){
 			foreach( $forms as $id => $form ){
@@ -36,6 +35,7 @@ function caldera_forms_db_v2_update(){
 		add_option( '_caldera_forms_forms', $new_registry, false );
 
 		caldera_forms_write_db_flag( 2 );
+		
 	}
 
 }
