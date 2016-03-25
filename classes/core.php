@@ -3361,7 +3361,17 @@ class Caldera_Forms {
 
 		}
 
-		do_action('caldera_forms_submit_process_start', $form, $referrer, $process_id);
+		/**
+		 * Runs before the 2nd stage of processors "process"
+		 *
+		 * @since unknown
+		 *
+		 * @param array $form Form config
+		 * @param string $referrer URL form was submitted via
+		 * @param string $process_id Unique ID for this processing
+		 * @param int|false $entryid Current entry ID or false if not set or being saved.
+		 */
+		do_action('caldera_forms_submit_process_start', $form, $referrer, $process_id, $entryid );
 		/// PROCESS
 		foreach($form['processors'] as $processor_id=>$processor){
 			if(isset($form_processors[$processor['type']])){
@@ -3439,7 +3449,17 @@ class Caldera_Forms {
 		do_action('caldera_forms_submit_process_end', $form, $referrer, $process_id);
 		// AFTER PROCESS - do post process for any additional stuff
 
-		do_action('caldera_forms_submit_post_process', $form, $referrer, $process_id);
+		/**
+		 * Runs before the 3rd and fineal stage of processors "post-process"
+		 *
+		 * @since unknown
+		 *
+		 * @param array $form Form config
+		 * @param string $referrer URL form was submitted via
+		 * @param string $process_id Unique ID for this processing
+		 * @param int|false $entryid Current entry ID or false if not set or being saved.
+		 */
+		do_action('caldera_forms_submit_post_process', $form, $referrer, $process_id, $entry_id );
 		// POST PROCESS
 		foreach($form['processors'] as $processor_id=>$processor){
 			if(isset($form_processors[$processor['type']])){
