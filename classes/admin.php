@@ -1824,6 +1824,7 @@ class Caldera_Forms_Admin {
 		$notices = self::get_admin_alerts();
 		if( ! empty( $notices ) ){
 			$notice = array_pop( $notices );
+
 			if( is_array( $notice ) && isset( $notice[ 'title' ], $notice[ 'content' ] ) ){
 				self::create_admin_notice( $notice[ 'title' ], $notice[ 'content' ] );
 			}
@@ -1842,17 +1843,16 @@ class Caldera_Forms_Admin {
 	protected static function create_admin_notice( $title, $content ){
 		?>
 		<div
-			class="cf-admin-alert-modal"
+			class="ajax-trigger"
 			data-modal="cf-admin-notice"
 			data-modal-title="<?php echo esc_html( $title ); ?>"
-			data-modal-buttons="<?php echo esc_attr( __( 'Dismiss', 'caldera-forms' ) ); ?>"
-			data-modal-content="#<?php echo esc_attr( sanitize_key( $title ) ); ?>"
+			data-template="#<?php echo esc_attr( sanitize_key( 'admin-modal' .  $title ) ); ?>"
 			data-modal-height="300"
 			data-modal-width="500"
-			data-modal-autoload="true"
+			data-autoload="true"
 		>
 		</div>
-		<script type="text/html" id="<?php echo esc_attr( sanitize_key( $title ) ); ?>">
+		<script type="text/html" id="<?php echo esc_attr( sanitize_key('admin-modal' . $title ) ); ?>">
 			<?php echo wp_kses( $content, wp_kses_allowed_html( 'post') ); ?>
 		</script>
 <?php
