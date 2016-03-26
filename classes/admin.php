@@ -1145,147 +1145,47 @@ class Caldera_Forms_Admin {
 			}
 			
 		}
+
+		/** IMPORT */
 		if( isset($_POST['cfimporter']) && current_user_can( Caldera_Forms::get_manage_cap( 'import' ) ) ){
 
 			if ( check_admin_referer( 'cf-import', 'cfimporter' ) ) {
-				if(!empty($_FILES['import_file']['size'])){
+				if ( ! empty( $_FILES[ 'import_file' ][ 'size' ] ) ) {
 					$loc = wp_upload_dir();
-					if(move_uploaded_file($_FILES['import_file']['tmp_name'], $loc['path'].'/cf-form-import.json')){
-						$data = json_decode(file_get_contents($loc['path'].'/cf-form-import.json'), true);
-						if(isset($data['ID']) && isset($data['name']) ){
+					if ( move_uploaded_file( $_FILES[ 'import_file' ][ 'tmp_name' ], $loc[ 'path' ] . '/cf-form-import.json' ) ) {
+						$data = json_decode( file_get_contents( $loc[ 'path' ] . '/cf-form-import.json' ), true );
 
-							// generate a new ID
-							$data['ID'] = uniqid('CF');
-							$data['name'] = $_POST['name'];
-
-
-							// rebuild field IDS
-							/*
-							if( !empty( $data['fields'] ) ){
-								$old_fields = array();
-								$fields 	= $data['fields'];								
-								$layout_fields = $data['layout_grid']['fields'];
-								$data['layout_grid']['fields'] = $data['fields'] = array();
-								foreach( $fields as $field ){									
-									$field_id = uniqid('fld_');
-									$old_fields[$field['ID']] = $field_id;
-
-									$data['layout_grid']['fields'][$field_id] = $layout_fields[$field['ID']];
-									$field['ID'] = $field_id;
-									$data['fields'][$field_id] = $field;
-
-								}
-
-
-								foreach( $data['fields'] as $field ){
-									// rebind conditions
-									if( !empty( $field['conditions']['group'] ) ){
-										foreach( $field['conditions']['group'] as $group_id=>$group ){
-											foreach( $group as $group_line_id=>$group_line ){
-												$data['fields'][$field['ID']]['conditions']['group'][$group_id][$group_line_id]['field'] = $old_fields[$group_line['field']];
-											}
-										}
-									}
-								}
-
-							}
-							// rebuild processor IDS
-							if( !empty( $data['processors'] ) ){
-								
-								$processors 	= $data['processors'];								
-								$data['processors'] = array();
-								$old_processors = array();
-								foreach( $processors as $processor ){
-									$processor_id = uniqid('fp_');
-									$old_processors[$processor['ID']] = $processor_id;
-									$processor['ID'] = $processor_id;									
-									// fix binding
-									if( !empty( $processor['config'] ) && !empty( $data['fields'] ) ){
-										foreach( $processor['config'] as $config_key => &$config_value ){
-											if( is_string($config_value) ){
-												foreach( $old_fields as $old_field=>$new_field ){
-													$config_value = str_replace( $old_field, $new_field, $config_value );
-												}
-											}
-										}
-									}
-									$data['processors'][$processor_id] = $processor;
-								}
-								// fix processor bindings
-								foreach( $data['processors'] as &$processor ){
-									if( !empty( $processor['config'] ) ){
-										foreach( $processor['config'] as $config_key => &$config_value ){
-											if( is_string($config_value) ){
-												foreach( $old_processors as $old_proc=>$new_proc ){
-													$config_value = str_replace( $old_proc, $new_proc, $config_value );
-												}
-											}
-										}
-									}
-								}
-								// fix field - processor bindings
-								if( !empty( $data['fields'] ) ){
-									foreach( $data['fields'] as &$field ){
-										if( !empty( $field['config'] ) ){
-											foreach( $field['config'] as $config_key => &$config_value ){
-												if( is_string($config_value) ){
-													foreach( $old_processors as $old_proc=>$new_proc ){
-														$config_value = str_replace( $old_proc, $new_proc, $config_value );
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-							*/
-							// get form registry
-							$forms = Caldera_Forms::get_forms( true );
-							if(empty($forms)){
-								$forms = array();
-							}
-
-							// add form to registry
-							$forms[$data['ID']] = $data;
-
-							// remove undeeded settings for registry
-							if(isset($forms[$data['ID']]['layout_grid'])){
-								unset($forms[$data['ID']]['layout_grid']);
-							}
-							if(isset($forms[$data['ID']]['fields'])){
-								unset($forms[$data['ID']]['fields']);
-							}
-							if(isset($forms[$data['ID']]['processors'])){
-								unset($forms[$data['ID']]['processors']);
-							}
-							if(isset($forms[$data['ID']]['settings'])){
-								unset($forms[$data['ID']]['settings']);
-							}	
-
-							// add from to list
-							update_option($data['ID'], $data);
-							do_action('caldera_forms_import_form', $data);
-
-							update_option( '_caldera_forms', $forms );
-							do_action('caldera_forms_save_form_register', $data);
-
-							wp_redirect( 'admin.php?page=caldera-forms&edit=' . $data['ID'] );
-							exit;
-
-						}else{
-							wp_die( __('Sorry, File is not valid.', 'caldera-forms'), __('Form Import Error', 'caldera-forms') );
+						if( ! isset( $_POST[ 'name' ] ) ){
+							wp_die( esc_html__( 'Form must have a name.', 'caldera-forms' ) );
 						}
+
+
+						$data[ 'name' ] = strip_tags( $_POST[ 'name' ] );
+
+						$new_form_id = Caldera_Forms_Forms::import_form( $data );
+
+						if( is_string( $new_form_id ) ){
+							cf_redirect( 'admin.php?page=caldera-forms&edit=' . $new_form_id );
+							exit;
+						}else{
+							wp_die( esc_html__( 'Form could not be imported.', 'caldera-forms' ) );
+						}
+
+
+
+
 					}
-				}else{
-					wp_die( __('Sorry, File not uploaded.', 'caldera-forms'), __('Form Import Error', 'caldera-forms') );
+				} else {
+					wp_die( esc_html__( 'Sorry, File not uploaded.', 'caldera-forms' ), esc_html__( 'Form Import Error', 'caldera-forms' ) );
 				}
 
-			}else{
+			} else {
 
-				wp_die( __('Sorry, please try again', 'caldera-forms'), __('Form Import Error', 'caldera-forms') );
+				wp_die( esc_html__( 'Sorry, please try again', 'caldera-forms' ), esc_html__( 'Form Import Error', 'caldera-forms' ) );
 			}
 
 		}
+
 		if(!empty($_GET['export-form']) && current_user_can( Caldera_Forms::get_manage_cap( 'export' ) )){
 
 			$form = Caldera_Forms::get_form( $_GET['export-form'] );

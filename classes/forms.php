@@ -230,6 +230,33 @@ class Caldera_Forms_Forms {
 	}
 
 	/**
+	 * Import form
+	 *
+	 * @since 1.3.4
+	 *
+	 * @param array $data Form config
+	 *
+	 * @return string Form ID
+	 */
+	public static function import_form( $data ){
+		$forms = self::get_forms();
+		if ( isset( $data[ 'ID' ] ) && array_key_exists( $data[ 'ID' ], $forms ) ) {
+			// generate a new ID
+			$data[ 'ID' ]   = uniqid( 'CF' );
+
+		}
+
+		if( isset( $data[ 'ID' ] ) ){
+			$id = $data[ 'ID' ];
+		}else{
+			$id = $data[ 'ID' ]   = uniqid( 'CF' );
+		}
+
+		return self::save_form( $data );
+
+	}
+
+	/**
 	 * Use to switch form arrays to ID strings
 	 *
 	 * @since 1.3.4
@@ -428,7 +455,11 @@ class Caldera_Forms_Forms {
 		}
 
 		// add form to db
-		add_option( $id, $newform, false );
+		$added = add_option( $id, $newform, false );
+		if( ! $added ){
+			return false;
+
+		}
 
 		/**
 		 * Runs after form is created
