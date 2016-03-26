@@ -994,6 +994,8 @@ class Caldera_Forms {
 			return 0;
 		}
 
+		$formula = self::do_magic_tags( $formula, null, $form );
+
 		foreach($form['fields'] as $fid=>$cfg){
 			if(false !== strpos($formula, $fid)){
 				$entry_value = self::get_field_data($fid, $form);
