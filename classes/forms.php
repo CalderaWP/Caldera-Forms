@@ -365,6 +365,19 @@ class Caldera_Forms_Forms {
 		if( !empty( $data['conditional_groups']['magic'] ) ){
 			unset( $data['conditional_groups']['magic'] );
 		}
+		// sanitize condition values
+		if( !empty( $data['conditional_groups']['conditions'] ) ){
+			foreach( $data['conditional_groups']['conditions'] as $condition_id => &$condition ){
+				if( !empty( $condition['group'] ) ){
+					$condition['name'] = htmlentities( $condition['name'] );
+					foreach ($condition['group'] as $group_id => &$group) {
+						foreach( $group as $case_id=>&$case ){							
+							$case['value'] = htmlentities( $case['value'] );
+						}
+					}
+				}
+			}
+		}
 
 		$data[ '_last_updated' ] = date('r');
 		$data[ 'version' ] = CFCORE_VER;
