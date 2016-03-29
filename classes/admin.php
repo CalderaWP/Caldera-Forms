@@ -1152,9 +1152,12 @@ class Caldera_Forms_Admin {
 			if ( check_admin_referer( 'cf-import', 'cfimporter' ) ) {
 				if ( isset( $_FILES[ 'import_file' ] ) && ! empty( $_FILES[ 'import_file' ][ 'size' ] ) ) {
 					$loc = wp_upload_dir();
-					if ( 'application/json' ==  $_FILES[ 'import_file' ][ 'type' ] && move_uploaded_file( $_FILES[ 'import_file' ][ 'tmp_name' ], $loc[ 'path' ] . '/cf-form-import.json' ) ) {
-						$data = json_decode( file_get_contents( $loc[ 'path' ] . '/cf-form-import.json' ), true );
 
+					if ( move_uploaded_file( $_FILES[ 'import_file' ][ 'tmp_name' ], $loc[ 'path' ] . '/cf-form-import.json' ) ) {
+						$data = json_decode( file_get_contents( $loc[ 'path' ] . '/cf-form-import.json' ), true );
+						if( ! is_array( $data ) ){
+							wp_die( esc_html__( 'File is not a valid Caldera Form Import', 'caldera-forms' ) );
+						}
 						if( ! isset( $_POST[ 'name' ] ) ){
 							wp_die( esc_html__( 'Form must have a name.', 'caldera-forms' ) );
 						}
