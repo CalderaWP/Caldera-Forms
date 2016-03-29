@@ -37,11 +37,11 @@
 			}
 			foreach($field['config']['option'] as $option_key=>$option){
 				if(!isset($option['value'])){
-					$option['value'] = htmlspecialchars( $option['label'] );
+					$option['value'] = $option['label'];
 				}
 
 				?>
-				<option value="<?php echo $option['value']; ?>" <?php if( $field_value == $option['value'] ){ ?>selected="selected"<?php } ?>><?php echo $option['label']; ?></option>
+				<option value="<?php echo esc_attr( $option['value'] ); ?>" <?php if( $field_value == $option['value'] ){ ?>selected="selected"<?php } ?>><?php echo $option['label']; ?></option>
 				<?php
 			}
 		} ?>
