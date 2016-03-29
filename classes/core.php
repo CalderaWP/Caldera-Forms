@@ -1010,12 +1010,16 @@ class Caldera_Forms {
 			}
 		}
 
+		if( preg_match('%^[0-9()/*+-]*$%', $formula ) ){
+			$total = create_function(null, 'return '.$formula.';');
+		}else{
+			$total = null;
+		}
 
-		$total = create_function(null, 'return '.$formula.';');
 		if( ! is_numeric( $total ) ){
 			return new WP_Error( $field[ 'ID' ] . '-calculation', __( 'Calculation is invalid' ) );
 		}
-		
+
 		if(isset($field['config']['fixed'])){
 			if( function_exists( 'money_format' ) ){
 				return money_format('%i', $total() );	
