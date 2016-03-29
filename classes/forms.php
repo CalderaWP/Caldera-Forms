@@ -491,12 +491,24 @@ class Caldera_Forms_Forms {
 	 * @since 1.3.4
 	 *
 	 * @param string $id Form ID
+	 *
+	 * @return bol
 	 */
 	public static function delete_form( $id ){
 		$forms = self::get_forms();
+		if( ! isset( $forms[ $id ] ) ){
+			return false;
+		}
+
 		unset( $forms[ $id ] );
-		delete_option( $id );
-		self::update_registry( $forms );
+		$deleted = delete_option( $id );
+		if ( $deleted ) {
+			self::update_registry( $forms );
+
+			return $deleted;
+		}
+
+		return false;
 	}
 
 	/**

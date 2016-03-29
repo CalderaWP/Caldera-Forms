@@ -1138,9 +1138,13 @@ class Caldera_Forms_Admin {
 				// This nonce is not valid.
 				wp_die( __('Sorry, please try again', 'caldera-forms'), __('Form Delete Error', 'caldera-forms') );
 			}else{
-				Caldera_Forms_Forms::delete_form( $_GET['cal_del'] );
-				wp_redirect('admin.php?page=caldera-forms' );
-				exit;
+				$deleted = Caldera_Forms_Forms::delete_form( strip_tags( $_GET['delete'] ) );
+				if ( $deleted ) {
+					wp_redirect( 'admin.php?page=caldera-forms' );
+					exit;
+				} else {
+					wp_die( __('Sorry, please try again', 'caldera-forms'), __('Form could not be deleted.', 'caldera-forms') );
+				}
 
 			}
 			
