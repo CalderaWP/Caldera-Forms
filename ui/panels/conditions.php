@@ -1,6 +1,9 @@
 <?php
 // conditional groups template
 $element['conditional_groups']['magic'] = $magic_tags['system']['tags'];
+if( !empty( $element['conditional_groups']['fields'] ) ){
+	unset( $element['conditional_groups']['fields'] );
+}
 ?>
 <button style="width:250px;" class="button ajax-trigger" data-request="cf_new_condition_group" data-template="#conditions-tmpl" data-target="#caldera-forms-conditions-panel" type="button"><?php _e( 'Add Conditional Group', 'caldera-forms' ); ?></button>
 <input type="hidden" name="_magic" value="<?php echo esc_attr( json_encode( $magic_tags['system']['tags'] ) ); ?>">

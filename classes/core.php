@@ -34,6 +34,8 @@ class Caldera_Forms {
 	 * @var      object
 	 */
 	protected static $instance = null;
+
+
 	/**
 	 * Initialize the plugin by setting localization, filters, and administration functions.
 	 *
@@ -78,6 +80,13 @@ class Caldera_Forms {
 		add_shortcode( 'caldera_form_modal', array( $this, 'render_modal_form') );
 		add_action( 'wp_footer', array( $this, 'render_footer_modals') );
 
+		add_action( 'wp', function(){
+			if( isset( $_REQUEST, $_REQUEST[ 'cfajax' ] ) ) {
+				ob_start();
+			}
+
+		}, 0);
+
 	}
 
 	/**
@@ -88,61 +97,8 @@ class Caldera_Forms {
 	 * @return array|null Form config array if found. If not null.
 	 */
 	public static function get_form( $id_name ){
+		return Caldera_Forms_Forms::get_form( $id_name );
 
-		$id_name = sanitize_text_field( $id_name );
-
-		$forms = self::get_forms();
-		$form = null;
-
-		if( isset( $forms[ $id_name ] ) ){
-			$form = get_option( $forms[ $id_name ]['ID'] );
-		}else{
-			foreach($forms as $form_id=>$form_maybe){
-				if( trim(strtolower($id_name)) == strtolower($form_maybe['name']) && empty( $form_maybe['_external_form'] ) ){
-					$form = get_option( $form_maybe['ID'] );
-				}
-			}
-		}
-
-		if( empty( $form ) ){
-			$external = true;
-		}
-
-		/**
-		 * Filter settings of a form or all forms or use to define a form in file
-		 *
-		 * @param array $form Form config
-		 * @param string $id_name ID or name of form
-		 */
-		$form = apply_filters( 'caldera_forms_get_form', $form, $id_name );
-
-		/**
-		 * Filter settings of a specific form or all forms or use to define a form in file
-		 *
-		 * @param array $form Form config
-		 * @param string $id_name ID or name of form
-		 */
-		$form = apply_filters( 'caldera_forms_get_form-' . $id_name, $form, $id_name );
-
-		if( is_array( $form ) && empty( $form['ID'] ) ){
-			$form['ID'] = $id_name;
-		}
-		if( !empty( $form ) && !empty( $external ) ){
-			$form['_external_form'] = true;
-		}
-
-		// remove submit on editing
-		if( !empty( $_GET['modal'] ) && $_GET['modal'] == 'view_entry' && !empty( $_GET['group'] ) && $_GET['group'] == 'editentry' ){
-			if( !empty( $form['fields'] ) ){
-				foreach( $form['fields'] as $field_id=>$field ){
-					if( $field['type'] == 'button' && $field['config']['type'] == 'submit' ){
-						unset( $form['fields'][ $field_id ] );
-					}
-				}
-			}
-		}
-
-		return $form;
 
 	}
 
@@ -154,24 +110,8 @@ class Caldera_Forms {
 	 * @return mixed|void
 	 */
 	public static function get_forms( $internal = false ){
+		return Caldera_Forms_Forms::get_forms( true, $internal );
 
-		$base_forms = get_option( '_caldera_forms', array() );
-		if( true === $internal ){
-			return $base_forms;
-		}
-
-		$forms = apply_filters( 'caldera_forms_get_forms', $base_forms );
-		foreach( $forms as $form_id => $form ){
-			if( !isset( $base_forms[ $form_id ] ) ){
-				$forms[ $form_id ]['_external_form'] = true;
-				if( empty( $forms[ $form_id ]['ID'] ) ){
-					$forms[ $form_id ]['ID'] = $form_id;
-				}
-
-			}
-		}
-
-		return $forms;
 	}
 
 	/**
@@ -389,40 +329,51 @@ class Caldera_Forms {
 	}
 
 
+
 	/**
 	 * Prepare email attachments
 	 *
 	 * @param array $mail Email data
-	 * @param array $data ?
+	 * @param array $data Form data
 	 * @param array $form For config
 	 *
 	 * @return array
 	 */
 	public static function mail_attachment_check($mail, $data, $form){
+		foreach ( $form[ 'fields' ] as $field_id => $field ) {
+			if ( $field[ 'type' ] == 'file' && isset( $field[ 'config' ][ 'attach' ] ) ) {
+				$dir  = wp_upload_dir();
+				$file = str_replace( $dir[ 'baseurl' ], $dir[ 'basedir' ], self::get_field_data( $field_id, $form ) );
+				if ( is_array( $file ) ) {
+					foreach ( $file as $a_file ) {
+						if ( is_string( $a_file ) && file_exists( $a_file ) ) {
+							$mail[ 'attachments' ][] = $a_file;
 
-		// check for 
-		foreach($form['fields'] as $field_id=>$field){
-			if($field['type'] == 'file' && isset($field['config']['attach'])){
-				$dir = wp_upload_dir();
-				$file = str_replace($dir['baseurl'], $dir['basedir'], self::get_field_data($field_id, $form));
-				if( is_String( $file ) && file_exists($file)){
-					$mail['attachments'][] = $file;
+						}
+					}
+
 					return $mail;
-				}else{
-					if( isset( $data[ $field_id ] ) && filter_var( $data[ $field_id ], FILTER_VALIDATE_URL) ) {
-						$mail['attachments'][] = $data[ $field_id ];
-					}elseif( isset( $_POST[ $field_id ] ) && filter_var( $_POST[ $field_id ], FILTER_VALIDATE_URL )  && 0 === strpos( $_POST[ $field_id ], $dir['url'] ) ) {
-						$mail['attachments'][] = $_POST[ $field_id ];
+				} elseif ( is_string( $file ) && file_exists( $file ) ) {
+					$mail[ 'attachments' ][] = $file;
 
-					}else{
+					return $mail;
+				} else {
+					if ( isset( $data[ $field_id ] ) && filter_var( $data[ $field_id ], FILTER_VALIDATE_URL ) ) {
+						$mail[ 'attachments' ][] = $data[ $field_id ];
+					} elseif ( isset( $_POST[ $field_id ] ) && filter_var( $_POST[ $field_id ], FILTER_VALIDATE_URL ) && 0 === strpos( $_POST[ $field_id ], $dir[ 'url' ] ) ) {
+						$mail[ 'attachments' ][] = $_POST[ $field_id ];
+
+					} else {
 						continue;
 
 					}
 				}
-				
+
 			}
 		}
+
 		return $mail;
+
 	}
 
 	/**
@@ -821,7 +772,8 @@ class Caldera_Forms {
 			'attachments' 	=> array()
 		);
 
-		$email_message = apply_filters( 'caldera_forms_autoresponse_mail', $email_message, $config, $form);	
+		$email_message = apply_filters( 'caldera_forms_autoresponse_mail', $email_message, $config, $form);
+
 		do_action( 'caldera_forms_do_autoresponse', $config, $form);
 
 		// send mail		
@@ -1042,6 +994,8 @@ class Caldera_Forms {
 			return 0;
 		}
 
+		$formula = self::do_magic_tags( $formula, null, $form );
+
 		foreach($form['fields'] as $fid=>$cfg){
 			if(false !== strpos($formula, $fid)){
 				$entry_value = self::get_field_data($fid, $form);
@@ -1054,9 +1008,18 @@ class Caldera_Forms {
 			
 				$formula = str_replace($fid, $number, $formula);
 			}
-		}			
+		}
 
-		$total = create_function(null, 'return '.$formula.';');
+		if( preg_match('%^[0-9()/*+-]*$%', $formula ) ){
+			$total = create_function(null, 'return '.$formula.';');
+		}else{
+			$total = null;
+		}
+
+		if( ! is_numeric( $total ) ){
+			return new WP_Error( $field[ 'ID' ] . '-calculation', __( 'Calculation is invalid' ) );
+		}
+
 		if(isset($field['config']['fixed'])){
 			if( function_exists( 'money_format' ) ){
 				return money_format('%i', $total() );	
@@ -1610,6 +1573,15 @@ class Caldera_Forms {
 						'order' => $field[ 'config' ][ 'order' ],
 						'orderby' => $field[ 'config' ][ 'orderby_post' ]
 					);
+
+					/**
+					 * Modify arguments for WP_Query used to auto-populate post type fields
+					 *
+					 * @since unknown
+					 *
+					 * @param array $args  Args for WP_Query
+					 * @param array $form Form config
+					 */
 					$args  = apply_filters( 'caldera_forms_autopopulate_post_type_args', $args );
 
 					$posts = get_posts( $args );
@@ -1673,6 +1645,16 @@ class Caldera_Forms {
 						'order' => $field[ 'config' ][ 'order' ],
 						'hide_empty' => 0
 					);
+
+
+					/**
+					 * Modify arguments for get_terms() used to auto-populate taxononmy type fields
+					 *
+					 * @since unknown
+					 *
+					 * @param array $args  Args for get_terms()
+					 * @param array $form Form config
+					 */
 					$args  = apply_filters( 'caldera_forms_autopopulate_taxonomy_args', $args );
 					
 					$terms = get_terms( $field['config']['taxonomy'], $args );
@@ -1913,12 +1895,16 @@ class Caldera_Forms {
 
 		$url = apply_filters( 'caldera_forms_redirect_url', $url, $form, $processid);
 		$url = apply_filters( 'caldera_forms_redirect_url_' . $type, $url, $form, $processid);
-		
+
+		if( headers_sent() ){
+			remove_action('caldera_forms_redirect', 'cf_ajax_redirect', 10 );
+		}
+
 		do_action('caldera_forms_redirect', $type, $url, $form, $processid);
 		do_action('caldera_forms_redirect_' . $type, $url, $form, $processid);
 				
 		if(!empty($url)){
-			wp_redirect( $url );
+			cf_redirect( $url, 302 );
 			exit;
 		}
 
@@ -2920,6 +2906,7 @@ class Caldera_Forms {
 	 * Process current POST data as form submission.
 	 */
 	static public function process_submission(){
+		//ob_flush();
 		global $post;
 		global $process_id;
 		global $form;
@@ -3383,9 +3370,22 @@ class Caldera_Forms {
 			// set edit token
 			self::set_field_data('_entry_token', sha1( json_encode( $token_array ) ), $form);
 
+		}elseif( !empty( $transdata['edit'] ) ){
+			$entryid = $transdata['edit'];
+		}else{
+			$entryid = false;
 		}
-
-		do_action('caldera_forms_submit_process_start', $form, $referrer, $process_id);
+		/**
+		 * Runs before the 2nd stage of processors "process"
+		 *
+		 * @since unknown
+		 *
+		 * @param array $form Form config
+		 * @param string $referrer URL form was submitted via
+		 * @param string $process_id Unique ID for this processing
+		 * @param int|false $entryid Current entry ID or false if not set or being saved.
+		 */
+		do_action('caldera_forms_submit_process_start', $form, $referrer, $process_id, $entryid );
 		/// PROCESS
 		foreach($form['processors'] as $processor_id=>$processor){
 			if(isset($form_processors[$processor['type']])){
@@ -3463,7 +3463,17 @@ class Caldera_Forms {
 		do_action('caldera_forms_submit_process_end', $form, $referrer, $process_id);
 		// AFTER PROCESS - do post process for any additional stuff
 
-		do_action('caldera_forms_submit_post_process', $form, $referrer, $process_id);
+		/**
+		 * Runs before the 3rd and fineal stage of processors "post-process"
+		 *
+		 * @since unknown
+		 *
+		 * @param array $form Form config
+		 * @param string $referrer URL form was submitted via
+		 * @param string $process_id Unique ID for this processing
+		 * @param int|false $entryid Current entry ID or false if not set or being saved.
+		 */
+		do_action('caldera_forms_submit_post_process', $form, $referrer, $process_id, $entry_id );
 		// POST PROCESS
 		foreach($form['processors'] as $processor_id=>$processor){
 			if(isset($form_processors[$processor['type']])){
@@ -3729,6 +3739,7 @@ class Caldera_Forms {
 					
 					$_POST['_wp_http_referer_true'] = 'api';
 					$_POST['_cf_frm_id'] 			=  $_POST['cfajax']	= $wp_query->query_vars['cf_api'];
+
 
 					$submission = Caldera_Forms::process_submission();
 					wp_send_json( $submission );
@@ -4023,11 +4034,19 @@ class Caldera_Forms {
 			$field_view = apply_filters( 'caldera_forms_view_field_' . $field['type'], $field_value, $field, $form);
 
 			// has options?
-			if( !empty( $field['config']['option'] ) ){
-				foreach( $field['config']['option'] as $option ){
+			if( ! empty( $field['config']['option'] ) ){
+				$i = 0;
+				foreach( $field['config']['option'] as $opt => $option ){
 					if( $option['value'] == $field_view ){
 						$field_view = $option['label'];
-						break;
+
+						$data['data'][$field_id . '_' . $i ] = array(
+							'label' => $field['label'],
+							'view'	=> $field_view,
+							'value' => $field_value[ $opt ]
+						);
+						$i ++;
+
 					}
 				}
 				
@@ -4038,6 +4057,9 @@ class Caldera_Forms {
 				'view'	=> $field_view,
 				'value' => $field_value
 			);
+
+
+
 		}
 
 		// get meta
@@ -4192,13 +4214,16 @@ class Caldera_Forms {
 
 	/**
 	 * Create HTML markup for a form.
-	 * @param array|string $atts Form ID or shortcode atts or form config array
-	 * @param null|int $entry_id Optional. Entry ID to load data from. Null, the default, loads form for creating a new entry.
-	 * @param null $shortcode No longer used.
 	 *
-	 * @return void|string HTML for form, if it was able to be laoded
+	 * @since unknown
+	 *
+	 * @param array|string $field Form ID or shortcode atts or form config array
+	 * @param array|null $form Optional Form to laod field from. Not neccasary, but helps the filters out.
+	 * @param array $entry_data Optional. Entry data to populate field with. Null, the default, loads form for creating a new entry.
+	 *
+	 * @return void|string HTML for form, if it was able to be loaded,
 	 */
-	static public function render_field($field, $form = null, $entry_data = array() ){
+	static public function render_field($field, $form = null, $entry_data = array(), $field_errors = array() ){
 		global $current_form_count, $grid;
 
 		$field_classes = array(
@@ -4222,8 +4247,8 @@ class Caldera_Forms {
 		$field_class = implode(' ',$field_classes['field']);
 
 		// add error class
-		if(!empty($field_errors[$field['ID']])){
-			$field_wrapper_class .= " " . implode(' ',$field_classes['field_error']);
+		if ( ! empty( $field_errors ) ) {
+			$field_wrapper_class .= " " . implode( ' ', $field_classes[ 'field_error' ] );
 		}
 
 		$field_structure = array(
@@ -4245,8 +4270,15 @@ class Caldera_Forms {
 		);
 
 		// add error
-		if(!empty($field_errors[$field['ID']])){
-			$field_structure['field_caption'] = "<span class=\"" . implode(' ', $field_classes['field_caption'] ) . "\">" . $field_errors[$field['ID']] . "</span>\r\n";
+		if ( ! empty( $field_errors ) ) {
+			if( is_string( $field_errors ) ){
+				$field_errors = array( $field_errors );
+			}
+
+			foreach( $field_errors as $error ){
+				$field_structure[ 'field_caption' ] = "<span class=\"" . implode( ' ', $field_classes[ 'field_caption' ] ) . "\">" . $error . "</span>\r\n";
+			}
+
 		}
 
 		// value
@@ -4283,9 +4315,23 @@ class Caldera_Forms {
 		$form_field_strings[ $field_structure['id'] ] = array( 'id' => $field_structure['id'], 'instance' => $current_form_count, 'slug' => $field['slug'], 'label' => $field['label'] );
 		
 		$field_types = self::get_field_types();
-		
+
+		$field_file = $field_types[$field['type']]['file'];
+		/**
+		 * Filter the file path to be used for a field's HTML in front-end
+		 *
+		 * @since 1.3.4
+		 *
+		 * @param string $field_file The path to the file
+		 * @param string $field_type The field type
+		 * @param string $field The field ID.
+		 * @param string $field_structure Data to be used in field
+		 * @param array $form Current form (NOTE: May be null)
+		 */
+		$field_file = apply_filters( 'caldera_forms_render_field_file', $field_file, $field[ 'type' ], $field[ 'ID' ], $field_file, $field_structure, $form );
+
 		ob_start();
-		include $field_types[$field['type']]['file'];
+		include $field_file;
 		$field_html = apply_filters( 'caldera_forms_render_field', ob_get_clean(), $form);
 		$field_html = apply_filters( 'caldera_forms_render_field_type-' . $field['type'], $field_html, $form);
 		$field_html = apply_filters( 'caldera_forms_render_field_slug-' . $field['slug'], $field_html, $form);
@@ -4377,6 +4423,23 @@ class Caldera_Forms {
 
 		if(empty($form)){
 			return;
+		}
+
+		/**
+		 * Runs after form is loaded and before rendering starts
+		 *
+		 * NOTE: An excellent way to conditionally abort form loading.
+		 *
+		 * @since 1.3.4
+		 *
+		 * @param null|string $html By defualt, null. If string is returned, method will immediately return that string.
+		 * @param int $entry_id The entry ID.
+		 * @param array $form Form config.
+		 */
+		$html = apply_filters( 'caldera_forms_pre_render_form', null, $entry_id, $form );
+		if( is_string( $html ) ){
+			return $html;
+
 		}
 
 		if(empty($current_form_count)){
@@ -4725,7 +4788,12 @@ class Caldera_Forms {
 
 					$field_base_id = $field['ID'] . '_' . $current_form_count;
 
-					$field_html = self::render_field( $field, $form, $prev_data );
+					$field_error = array();
+					if( isset( $field_errors[ $field[ 'ID' ] ] ) ){
+						$field_error = $field_errors[ $field[ 'ID' ] ];
+					}
+
+					$field_html = self::render_field( $field, $form, $prev_data, $field_error );
 					// conditional wrapper
 					if(!empty($field['conditions']['group']) && !empty($field['conditions']['type'])){
 						// render conditions check- for magic tags since at this point all field data will be null
@@ -4778,7 +4846,8 @@ class Caldera_Forms {
 		 */
 		$form_wrapper_classes = apply_filters( 'caldera_forms_render_form_wrapper_classes', $form_wrapper_classes, $form);
 
-		$out = "<div class=\"" . implode(' ', $form_wrapper_classes) . "\" id=\"caldera_form_" . $current_form_count ."\">\r\n";
+		$form_wrap_id = "caldera_form_" . $current_form_count;
+		$out = sprintf( '<div class="%s" id="%s" data-cf-ver="%s" data-cf-form-id="%s">', esc_attr( implode(' ', $form_wrapper_classes) ), esc_attr( $form_wrap_id ), esc_attr( CFCORE_VER ), esc_attr( $form['ID'] ) );
 
 		/**
 		 * Filter final HTML for notices

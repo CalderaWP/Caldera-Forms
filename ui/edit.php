@@ -2,8 +2,14 @@
 
 global $field_type_list, $field_type_templates;
 
+if( ! isset( $_GET['edit'] ) || ! is_string( $_GET['edit'] ) ){
+	wp_die( esc_html__( 'Invalid form ID', 'caldera-forms' ) );
+}
 // Load element
-$element = get_option( $_GET['edit'] );
+$element = Caldera_Forms_Forms::get_form( $_GET['edit'] );
+if( empty( $element ) || ! is_array( $element ) ){
+	wp_die( esc_html__( 'Invalid form', 'caldera-forms' ) );
+}
 
 /**
  * Filter which Magic Tags are available in the form editor
@@ -626,11 +632,16 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 	</div>
 
 	<div class="caldera-config-group">
-		<label><?php echo __('Pin to Menu', 'caldera-forms'); ?> </label>
+		<label>
+			<?php esc_html_e('Show Entry View Page?', 'caldera-forms'); ?>
+		</label>
 		<div class="caldera-config-field">
 			<label><input type="radio" class="field-config pin-toggle-roles" name="config[pinned]" value="1" <?php if(!empty($element['pinned'])){ ?>checked="checked"<?php } ?>> <?php echo __('Enable', 'caldera-forms'); ?></label>
 			<label><input type="radio" class="field-config pin-toggle-roles" name="config[pinned]" value="0" <?php if(empty($element['pinned'])){ ?>checked="checked"<?php } ?>> <?php echo __('Disabled', 'caldera-forms'); ?></label>
 		</div>
+		<p class="description">
+			<?php esc_html_e('Create a sub-menu item of the Caldera Forms menu and a page to show entries for this form?','caldera-forms'); ?>
+		</p>
 	</div>
 
 	<div id="caldera-pin-rules" <?php if(empty($element['pinned'])){ ?>style="display:none;"<?php } ?>>

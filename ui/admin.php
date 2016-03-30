@@ -5,7 +5,7 @@ $per_page_limit = 20;
 
 
 // get all forms
-$forms = Caldera_Forms::get_forms();
+$forms = Caldera_Forms_Forms::get_forms( true );
 $forms = apply_filters( 'caldera_forms_admin_forms', $forms );
 
 $style_includes = get_option( '_caldera_forms_styleincludes' );
@@ -39,7 +39,7 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 			<a class="button ajax-trigger" data-request="start_new_form" data-modal-buttons='<?php echo $modal_new_form; ?>' data-modal-width="600" data-modal-height="400" data-load-class="none" data-modal="new_form" data-modal-title="<?php echo __('Create New Form', 'caldera-forms'); ?>" data-template="#new-form-tmpl"><?php echo __('New Form', 'caldera-forms'); ?></a>
 		</li>
 		<li class="caldera-forms-toolbar-item">
-			<a class="button ajax-trigger" data-request="start_new_form" data-modal-width="400" data-modal-height="192" data-modal-element="div" data-load-class="none" data-modal="new_form" data-template="#import-form-tmpl" data-modal-title="<?php echo __('Import Form', 'caldera-forms'); ?>" ><?php echo __('Import', 'caldera-forms'); ?></a>
+			<a class="button ajax-trigger" data-request="start_new_form" data-modal-width="400" data-modal-height="192" data-modal-element="div" data-load-class="none" data-modal="import_form" data-template="#import-form-tmpl" data-modal-title="<?php echo __('Import Form', 'caldera-forms'); ?>" ><?php echo __('Import', 'caldera-forms'); ?></a>
 		</li>
 		<li class="caldera-forms-toolbar-item">
 		&nbsp;&nbsp;
@@ -78,7 +78,7 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 		<div class="cf-notification-count"></div>
 		<div class="cf-notification-panel"></div>
 	</div>
-	<?php if(!empty($forms)){ ?>
+	<?php if(! empty( $forms ) ){ ?>
 		<table class="widefat fixed">
 			<thead>
 				<tr>
@@ -177,7 +177,20 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 		?></tbody>
 		</table>
 		<?php }else{ ?>
-		<p><?php echo __('You don\'t have any forms.', 'caldera-forms'); ?></p>
+		<p>
+			<?php esc_html_e( 'You don\'t have any forms.', 'caldera-forms'); ?>
+		</p>
+		<div id="cf-upgrade-maybe-fail">
+			<p>
+				<?php
+				echo __( sprintf( 'If you recently updated Caldera Forms and can no longer see saved forms, %s',
+					sprintf( '<a href="https://calderawp.com/doc/caldera-forms-form-config-changes/" target="_blank"><strong>%s</strong></a>.', esc_html__( 'no data is lost. Click here for more information', 'caldera-forms' ),  'caldera-forms' ) ) ); ?>
+			</p>
+			<p>
+				<?php printf( '<a href="%s" class="button">%s</a>', esc_url( add_query_arg( array( 'page' => 'caldera-forms', 'cal_db_update' => wp_create_nonce() ) ) ), esc_html__( 'Run The Updater', 'caldera-forms' ) ); ?>
+			</p>
+		</div>
+
 		<?php } ?>
 	</div>
 	<div class="form-entries-wrap">

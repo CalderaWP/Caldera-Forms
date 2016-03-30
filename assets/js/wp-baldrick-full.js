@@ -4791,7 +4791,7 @@ var handlebarsVariables = {};
             };
           
           $(window).on('resize', resize_action);
-          if( ! trigger.data('static') ){
+          if( ! trigger.data('fixed') ){
             modalBackdrop.on('click', modal_closer );
           }
           modalCloser.on('click', modal_closer );

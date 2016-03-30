@@ -4,7 +4,7 @@
   Plugin URI: https://calderawp.com/caldera-forms/
   Description: Easy to use, grid based responsive form builder for creating simple to complex forms.
   Author: David Cramer
-  Version: 1.3.3.1
+  Version: 1.3.4
   Author URI: https://calderawp.com
   Text Domain: caldera-forms
   GitHub Plugin URI: https://github.com/Desertsnowman/Caldera-Forms/
@@ -20,12 +20,23 @@ if ( ! defined( 'WPINC' ) ) {
 
 define('CFCORE_PATH', plugin_dir_path(__FILE__));
 define('CFCORE_URL', plugin_dir_url(__FILE__));
-define('CFCORE_VER', '1.3.3.1');
+define('CFCORE_VER', '1.3.4');
 define('CFCORE_EXTEND_URL', 'https://api.calderaforms.com/1.0/');
+define( 'CFCORE_BASENAME', plugin_basename( __FILE__ ) );
+
+/**
+ * Caldera Forms DB version
+ *
+ * @since 1.3.4
+ *
+ * PLEASE keep this an integer
+ */
+define( 'CF_DB', 2 );
 
 include_once CFCORE_PATH . 'classes/core.php';
 include_once CFCORE_PATH . 'classes/widget.php';
 include_once CFCORE_PATH . 'classes/sanitize.php';
+include_once CFCORE_PATH . 'classes/forms.php';
 
 // includes
 include_once CFCORE_PATH . 'includes/ajax.php';
@@ -53,3 +64,29 @@ if ( is_admin() || defined( 'DOING_AJAX' ) ) {
 if ( is_admin() ) {
   require_once( CFCORE_PATH . 'processors/classes/ui.php' );
 }
+
+add_action( 'activate_' . CFCORE_BASENAME,  'caldera_forms_db_update' );
+add_action( 'admin_init', 'caldera_forms_db_update', 0 );
+function caldera_forms_db_update(){
+
+	if( current_user_can( 'manage_options' )  ){
+		$db_version = get_option( 'CF_DB', 0 );
+		$force_update = false;
+		if( isset( $_GET[ 'cal_db_update' ] ) ) {
+			$force_update = (bool) wp_verify_nonce( $_GET[ 'cal_db_update' ] );
+		}
+
+		if( CF_DB > $db_version || $force_update ) {
+			include_once CFCORE_PATH . 'includes/updater.php';
+			if (  $db_version < 2 || $force_update  ) {
+				caldera_forms_db_v2_update();
+			}
+		}
+
+
+	}
+}
+
+
+
+

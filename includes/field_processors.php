@@ -30,8 +30,21 @@ function cf_handle_multi_view( $data, $field ){
 add_filter('caldera_forms_process_field_file', 'cf_handle_file_upload', 10, 3);
 
 
-function cf_handle_file_upload($entry, $field, $form){
+function cf_handle_file_upload( $entry, $field, $form ){
+	if( isset($_POST[ '_cf_frm_edt' ] ) ) {
+		if ( ! isset( $_FILES )
+		     || ( isset( $_FILES[ $field[ 'ID' ] ][ 'size' ][0] ) && 0 == $_FILES[ $field[ 'ID' ] ][ 'size' ][0] )
+			|| ( isset( $_FILES[ $field[ 'ID' ] ][ 'size' ] ) && 0 == $_FILES[ $field[ 'ID' ] ][ 'size' ]  )
+		) {
+			$entry = Caldera_Forms::get_field_data( $field[ 'ID' ], $form, absint( $_POST[ '_cf_frm_edt' ] ) );
 
+			return $entry;
+		}
+	}
+	$required = false;
+	if ( isset( $field[ 'required' ] ) &&  $field[ 'required' ] ){
+		$required = true;
+	}
 	if(!empty($_FILES[$field['ID']]['size'])){
 		// check is allowed 
 		if(!empty($field['config']['allowed'])){
@@ -63,7 +76,12 @@ function cf_handle_file_upload($entry, $field, $form){
 				$files[ $part_index ][ $file_key ] = $part_value;
 			}
 		}
+
+		$uploads = array();
 		foreach( $files as $file ){
+			if( ! $required && 0 == $file[ 'size' ] ){
+				continue;
+			}
 			$upload = wp_handle_upload($file, array( 'test_form' => false ), date('Y/m') );
 
 			if( !empty( $upload['error'] ) ){
@@ -75,6 +93,11 @@ function cf_handle_file_upload($entry, $field, $form){
 		if( count( $uploads ) > 1 ){
 			return $uploads;
 		}
+
+		if( empty( $uploads ) ){
+			return array();
+		}
+
 		return $uploads[0];
 	}else{
 		if( filter_var( $entry, FILTER_VALIDATE_URL ) ){

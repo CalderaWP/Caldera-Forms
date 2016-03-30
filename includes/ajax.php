@@ -3,8 +3,9 @@
  * Ajax Submissions 
  */
 
+
 //add_filter('caldera_forms_render_grid_structure', 'cf_ajax_structures', 10, 2);
-add_action('caldera_forms_redirect', 'cf_ajax_redirect', 10, 5);
+add_action('caldera_forms_redirect', 'cf_ajax_redirect', 10, 4 );
 add_filter('caldera_forms_render_form_classes', 'cf_ajax_register_scripts', 10, 2);
 add_action('caldera_forms_general_settings_panel', 'cf_form_ajaxsetup');
 // add ajax actions
@@ -38,6 +39,8 @@ function cf_form_ajaxsetup($form){
 		<label><input type="checkbox" value="1" name="config[form_ajax]" class="field-config"<?php if(isset($form['form_ajax'])){ echo ' checked="checked"'; } ?>> <?php echo __('Enable Ajax Submissions. (No page reloads)', 'caldera-forms'); ?></label>
 	</div>
 </div>
+
+
 
 
 <div class="caldera-config-group">
@@ -298,5 +301,30 @@ function cf_ajax_setatts($atts, $form){
 function cf_ajax_api_url( $form_id ) {
 	
 	return Caldera_Forms::get_submit_url( $form_id );
+
+}
+
+
+/**
+ * Perform a redirect using the best means possible
+ *
+ * This is copypasted from Pods. Thanks Pods! Very GPL.
+ *
+ * @param string $location The path to redirect to.
+ * @param int $status Optional. Status code to use. Default is 302
+ *
+ * @return void
+ *
+ * @since 1.3.4
+ */
+function cf_redirect( $location, $status = 302 ) {
+	if ( !headers_sent() ) {
+		wp_redirect( $location, $status );
+		die();
+	}else {
+		die( '<script type="text/javascript">'
+		     . 'document.location = "' . str_replace( '&amp;', '&', esc_js( $location ) ) . '";'
+		     . '</script>' );
+	}
 
 }

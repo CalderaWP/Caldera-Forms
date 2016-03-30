@@ -8,12 +8,14 @@ var cf_jsfields_init;
 			instance = field.closest('form');
 
 		for( var i = 0; i < binds.length; i++ ){
-			$( document ).on('keyup change', "[data-field='" + binds[ i ] + "']", function(){
+			$( document ).on('keyup change blur mouseover', "[data-field='" + binds[ i ] + "']", function(){
 				var str = field.data('sync')
 					id = $(this).data('field'),
 					reg = new RegExp( "\{\{([^\}]*?)\}\}", "g" ),
 					template = str.match( reg );
-
+					if( field.data( 'unsync' ) ){
+						return;
+					}
 					for( var t = 0; t < template.length; t++ ){
 						var select = template[ t ].replace(/\}/g,'').replace(/\{/g,'');
 						var re = new RegExp( template[ t ] ,"g");
@@ -24,9 +26,9 @@ var cf_jsfields_init;
 			$("[data-field='" + binds[ i ] + "']").trigger('change');
 
 		}
-
-
-
+	});
+	$( document ).on('change keypress', "[data-sync]", function(){
+		$(this).data( 'unsync', true );
 	});
 
 	// make init function
@@ -47,7 +49,7 @@ var cf_jsfields_init;
 		window.Parsley.on('field:validated', function() {
 			setTimeout( function(){$(document).trigger('cf.error');}, 15 );
 		});
-		if( typeof resBaldrickTriggers === 'undefined' ){
+		if( typeof resBaldrickTriggers === 'undefined' && $('.caldera_forms_form').length ){
 			$('.caldera_forms_form').parsley({
 				errorsWrapper : '<span class="help-block caldera_ajax_error_block"></span>',
 				errorTemplate : '<span></span>'

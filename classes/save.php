@@ -136,16 +136,21 @@ class Caldera_Forms_Save_Final {
 	 * @param array|null $data Optional. Data to use for sending. If not provided, will be retrieved by form ID.
 	 */
 	public static function do_mailer( $form, $entryid = null, $data = null ) {
-		global $transdata;
+		global $transdata, $processed_data;
+
+		if( ! isset( $entryid ) && is_array( $processed_data ) ){
+			if( isset( $processed_data[ $form['ID'] ], $processed_data[ $form['ID'] ][ '_entry_id' ] ) ){
+				$entryid = $processed_data[ $form['ID'] ][ '_entry_id' ];
+			}
+
+		}
 
 		if ( ! $data ) {
-			$data = Caldera_Forms::get_submission_data($form);
+			$data = Caldera_Forms::get_submission_data($form, $entryid );
 		}
 
 		// add entry ID to transient data
-		if( ! isset( $entryid ) ){
-			$entryid = null;
-		}
+
 		$transdata['entry_id'] = $entryid;
 
 		// do mailer!

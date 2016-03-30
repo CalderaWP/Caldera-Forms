@@ -246,19 +246,20 @@ function build_processor_types($default = null){
 			if(!empty($processor['icon'])){
 				$icon = $processor['icon'];
 			}
+
 			echo '<div class="form-modal-add-line'. ( !empty($processor['single']) ? ' is_single_processor' : null ) . '" data-type="' . $processor_id . '">';
 				echo '<button type="button" class="button info-button add-new-processor" data-type="' . $processor_id . '">' . __('Use Processor', 'caldera-forms') . '</button>';
 				echo '<img src="'. $icon .'" class="form-modal-lgo" width="45" height="45">';
 				echo '<strong>' . $processor['name'] .'</strong> ';
 				if(!empty($processor['author'])){
 					echo '<small><span class="description">';
-					esc_html_e( 'by', 'caldera-forms') . ' ';
+					echo '&nbsp' . esc_html__( 'by', 'caldera-forms' ) . '&nbsp';
 					if(!empty($processor['author_url'])){
-						echo '<a href="' . $processor['author_url'] .'" target="_blank">';
-						echo $processor['author'];
+						echo '<a href="' . esc_url( $processor[ 'author_url' ] ) .'" target="_blank">';
+						echo esc_html( $processor[ 'author' ] );
 						echo '</a>';
 					}else{
-						echo $processor['author'];
+						echo esc_html( $processor[ 'author' ] );
 					}
 					echo '</span></small>';
 
