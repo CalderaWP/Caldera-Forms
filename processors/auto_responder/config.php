@@ -33,7 +33,7 @@
 	<div class="caldera-config-field">
 		<textarea rows="6" class="block-input field-config required magic-tag-enabled" name="{{_name}}[message]">{{#if message}}{{message}}{{else}}Hi %recipient_name%.
 Thanks for your email.
-We'll get get back to you as soon as possible!
+We'll get back to you as soon as possible!
 {{/if}}</textarea>
 	</div>
 </div>
