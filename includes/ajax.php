@@ -311,13 +311,13 @@ function cf_ajax_api_url( $form_id ) {
  * This is copypasted from Pods. Thanks Pods! Very GPL.
  *
  * @param string $location The path to redirect to.
- * @param int $status Optional. Status code to use. Default is 200
+ * @param int $status Optional. Status code to use. Default is 302
  *
  * @return void
  *
  * @since 1.3.4
  */
-function cf_redirect( $location, $status = 200 ) {
+function cf_redirect( $location, $status = 302 ) {
 	if ( !headers_sent() ) {
 		wp_redirect( $location, $status );
 		die();

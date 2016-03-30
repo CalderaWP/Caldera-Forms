@@ -1172,7 +1172,7 @@ class Caldera_Forms_Admin {
 						$new_form_id = Caldera_Forms_Forms::import_form( $data );
 
 						if( is_string( $new_form_id ) ){
-							cf_redirect( 'admin.php?page=caldera-forms&edit=' . $new_form_id );
+							cf_redirect( 'admin.php?page=caldera-forms&edit=' . $new_form_id, 302 );
 							exit;
 						}else{
 							wp_die( esc_html__( 'Form could not be imported.', 'caldera-forms' ) );

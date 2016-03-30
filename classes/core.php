@@ -1904,7 +1904,7 @@ class Caldera_Forms {
 		do_action('caldera_forms_redirect_' . $type, $url, $form, $processid);
 				
 		if(!empty($url)){
-			cf_redirect( $url, 200 );
+			cf_redirect( $url, 302 );
 			exit;
 		}
 
