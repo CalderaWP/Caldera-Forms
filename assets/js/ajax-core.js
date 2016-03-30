@@ -83,8 +83,14 @@ jQuery(function($){
 
 					for(var i in obj.data.fields){
 						var field = obj.params.trigger.find('[data-field="' + i + '"]'),
-							wrap = field.parent(),
-							has_block = wrap.find('.help-block').not('.caldera_ajax_error_block');
+							wrap = field.parent();
+						if( wrap.is('label') ){
+							wrap = wrap.parent();
+							if( wrap.hasClass('checkbox') ){
+								wrap = wrap.parent();
+							}
+						}
+						var has_block = wrap.find('.help-block').not('.caldera_ajax_error_block');
 
 							wrap.addClass('has-error').addClass('caldera_ajax_error_wrap');
 							if( has_block.length ){
