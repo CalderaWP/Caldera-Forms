@@ -27,7 +27,7 @@ var cf_jsfields_init;
 
 		}
 	});
-	$( document ).on('change', "[data-sync]", function(){
+	$( document ).on('change keypress', "[data-sync]", function(){
 		$(this).data( 'unsync', true );
 	});
 
