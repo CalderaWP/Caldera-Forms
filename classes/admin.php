@@ -1624,9 +1624,12 @@ class Caldera_Forms_Admin {
 	public static function admin_alerts(){
 		$notices = self::get_admin_alerts();
 		if( ! empty( $notices ) ){
-			$notice = array_pop( $notices );
+			shuffle( $notices );
+			$notice = $notices[0];
 
 			if( is_array( $notice ) && isset( $notice[ 'title' ], $notice[ 'content' ] ) ){
+				unset( $notices[0]);
+				update_option( '_cf_admin_alerts', $notices );
 				self::create_admin_notice( $notice[ 'title' ], $notice[ 'content' ] );
 			}
 		}
@@ -1641,7 +1644,7 @@ class Caldera_Forms_Admin {
 	 * @param $title
 	 * @param $content
 	 */
-	protected static function create_admin_notice( $title, $content ){
+	public static function create_admin_notice( $title, $content ){
 		?>
 		<div
 			class="ajax-trigger"
@@ -1666,14 +1669,19 @@ class Caldera_Forms_Admin {
 	 *
 	 * @return array|mixed|void
 	 */
-	protected static function get_admin_alerts(){
+	public static function get_admin_alerts(){
 		$notices = get_option( '_cf_admin_alerts', array() );
 		if( ! is_array( $notices) ){
 			$notices = array();
 		}
-		if( time() - DAY_IN_SECONDS < get_option( '_cf_last_alert_check', 2147483647 )  ){
+
+
+		$day_ago = time() - DAY_IN_SECONDS;
+		$last_check = get_option( '_cf_last_alert_check', false );
+
+		if( false === $last_check || $day_ago > $last_check   ){
 			global $wp_version;
-			$r = wp_remote_get( add_query_arg( array( 'wp' => urlencode( $wp_version ), 'php' => urlencode( PHP_VERSION ), 'url' => urlencode( site_url() ) ),  'https://calderawp.com/wp-json/calderawp_api/v2/notices'  ) );
+			$r = wp_remote_get( add_query_arg( array( 'wp' => urlencode( $wp_version ), 'php' => urlencode( PHP_VERSION ), 'url' => urlencode( site_url() ) ),  'http://apicaldera.wpengine.com/wp-json/calderawp_api/v2/notices'  ) );
 			if( ! is_wp_error( $r ) && 200 == wp_remote_retrieve_response_code( $r ) ){
 				$r_notices = json_decode(wp_remote_retrieve_body( $r ) );
 				if(  ! empty( $r_notices ) ){
@@ -1687,6 +1695,7 @@ class Caldera_Forms_Admin {
 		}
 
 		return $notices;
+
 	}
 
 }
