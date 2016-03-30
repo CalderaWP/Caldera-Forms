@@ -22,6 +22,7 @@ define('CFCORE_PATH', plugin_dir_path(__FILE__));
 define('CFCORE_URL', plugin_dir_url(__FILE__));
 define('CFCORE_VER', '1.3.4-b1');
 define('CFCORE_EXTEND_URL', 'https://api.calderaforms.com/1.0/');
+define( 'CFCORE_BASENAME', plugin_basename( __FILE__ ) );
 
 /**
  * Caldera Forms DB version
@@ -64,6 +65,7 @@ if ( is_admin() ) {
   require_once( CFCORE_PATH . 'processors/classes/ui.php' );
 }
 
+add_action( 'activate_' . CFCORE_BASENAME,  'caldera_forms_db_update' );
 add_action( 'admin_init', 'caldera_forms_db_update', 0 );
 function caldera_forms_db_update(){
 
@@ -84,5 +86,7 @@ function caldera_forms_db_update(){
 
 	}
 }
+
+
 
 
