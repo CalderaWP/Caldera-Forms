@@ -86,7 +86,7 @@ jQuery(function($){
 							wrap = field.parent();
 						if( wrap.is('label') ){
 							wrap = wrap.parent();
-							if( wrap.hasClass('checkbox') ){
+							if( wrap.hasClass('checkbox') || wrap.hasClass('radio') ){
 								wrap = wrap.parent();
 							}
 						}

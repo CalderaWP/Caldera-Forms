@@ -80,13 +80,6 @@ class Caldera_Forms {
 		add_shortcode( 'caldera_form_modal', array( $this, 'render_modal_form') );
 		add_action( 'wp_footer', array( $this, 'render_footer_modals') );
 
-		add_action( 'wp', function(){
-			if( isset( $_REQUEST, $_REQUEST[ 'cfajax' ] ) ) {
-				ob_start();
-			}
-
-		}, 0);
-
 	}
 
 	/**
