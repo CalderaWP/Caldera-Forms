@@ -100,7 +100,7 @@ class Caldera_Forms_Admin {
 		add_action("wp_ajax_cf_bulk_action", array( $this, 'bulk_action') );
 		add_action("wp_ajax_cf_get_form_preview", array( $this, 'get_form_preview') );
 		
-
+		add_action( 'caldera_forms_admin_footer', array( $this, 'admin_alerts' ) );
 		add_action( 'admin_footer', array( $this, 'add_shortcode_inserter'));
 
 
@@ -1612,6 +1612,81 @@ class Caldera_Forms_Admin {
 
 		}
 
+	}
+
+	/**
+	 * Handle admin alert/notices
+	 *
+	 * @since 1.3.4
+	 *
+	 * @uses "caldera_forms_admin_footer"
+	 */
+	public static function admin_alerts(){
+		$notices = self::get_admin_alerts();
+		if( ! empty( $notices ) ){
+			$notice = array_pop( $notices );
+
+			if( is_array( $notice ) && isset( $notice[ 'title' ], $notice[ 'content' ] ) ){
+				self::create_admin_notice( $notice[ 'title' ], $notice[ 'content' ] );
+			}
+		}
+
+	}
+
+	/**
+	 * Create an admin notice
+	 *
+	 * @since 1.3.4
+	 *
+	 * @param $title
+	 * @param $content
+	 */
+	protected static function create_admin_notice( $title, $content ){
+		?>
+		<div
+			class="ajax-trigger"
+			data-modal="cf-admin-notice"
+			data-modal-title="<?php echo esc_html( $title ); ?>"
+			data-template="#<?php echo esc_attr( sanitize_key( 'admin-modal' .  $title ) ); ?>"
+			data-modal-height="300"
+			data-modal-width="500"
+			data-autoload="true"
+		>
+		</div>
+		<script type="text/html" id="<?php echo esc_attr( sanitize_key('admin-modal' . $title ) ); ?>">
+			<?php echo wp_kses( $content, wp_kses_allowed_html( 'post') ); ?>
+		</script>
+<?php
+	}
+
+	/**
+	 * Get any admin alert/notices from remote API
+	 *
+	 * @since 1.3.4
+	 *
+	 * @return array|mixed|void
+	 */
+	protected static function get_admin_alerts(){
+		$notices = get_option( '_cf_admin_alerts', array() );
+		if( ! is_array( $notices) ){
+			$notices = array();
+		}
+		if( time() - DAY_IN_SECONDS < get_option( '_cf_last_alert_check', 2147483647 )  ){
+			global $wp_version;
+			$r = wp_remote_get( add_query_arg( array( 'wp' => urlencode( $wp_version ), 'php' => urlencode( PHP_VERSION ), 'url' => urlencode( site_url() ) ),  'https://calderawp.com/wp-json/calderawp_api/v2/notices'  ) );
+			if( ! is_wp_error( $r ) && 200 == wp_remote_retrieve_response_code( $r ) ){
+				$r_notices = json_decode(wp_remote_retrieve_body( $r ) );
+				if(  ! empty( $r_notices ) ){
+					$notices = array_merge( $notices, $r_notices );
+					update_option( '_cf_admin_alerts', $notices );
+				}
+			}
+
+			update_option( '_cf_last_alert_check', time() );
+
+		}
+
+		return $notices;
 	}
 
 }
