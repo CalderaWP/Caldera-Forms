@@ -133,14 +133,25 @@ For Caldera Forms support: [http://calderawp.com/support](http://calderawp.com/s
 4. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
-= Caldera Forms 1.3.4 =
+= Caldera Forms 1.3.4 ( March 29, 2016 ) =
 ADDED: caldera_forms_pre_render_form for returning HTML early.
 ADDED: Form ID and CF version as data attributes in outermost wrapping container for form.
 FIXED: Bug preventing multiple files in same field from attaching to the email.
+FIXED: Bug making multi-file upload fields, effectively always required.
+FIXED: Bug causing conditional logic editor to be real slow.
+FIXED: Bug causing conditional logic editor to not show all conditionals.
+FIXED: Bug causing multi-select checkbox fields to not be editable in entry editor.
+FIXED: Bug causing required checkbox fields, when not checked to not report why form wasn't submitted.
+FIXED: Bug causing CSV export and entry viewer to not properly display multi-select checkbox fields.
 CHANGED: "Pin to Menu" to a more descriptive label. No change in functionality.
 ADDED: caldera_forms_render_field_file filter to Change the file used to create the HTML for a field in the front-end.
 ADDED: entry ID to caldera_forms_submit_post_process and caldera_forms_submit_process_start hooks & documented them.
 ADDED: Caldera_Forms_Forms class to handle all form config CRUD. Refactored form saving for performance and extensibility:)
+FIXED: Typo in default auto-responder message.
+FIXED: Bug preventing variables from rendering in calculation fields.
+IMPROVED: Validation error reporting.
+IMPROVED: Handling AJAX false failures caused by PHP notices/warning/other funny markup form other plugins.
+
 
 = Caldera Forms 1.3.3.1 ( March 4, 2016) =
 * FIXED: Bug causing muti-page forms to validate when going back a page.... again. For reals this time.
@@ -372,7 +383,7 @@ ADDED: Caldera_Forms_Forms class to handle all form config CRUD. Refactored form
 * A few minor bug fixes and improvements
 
 
-= Caldera Forms 1.1.9.3 ( Febuary, 2015) =
+= Caldera Forms 1.1.9.3 ( February, 2015) =
 
 = Improvements =
 * Added ID or Name value selector for autopopulation on selects
