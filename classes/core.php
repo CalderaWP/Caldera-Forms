@@ -3370,8 +3370,11 @@ class Caldera_Forms {
 			// set edit token
 			self::set_field_data('_entry_token', sha1( json_encode( $token_array ) ), $form);
 
+		}elseif( !empty( $transdata['edit'] ) ){
+			$entryid = $transdata['edit'];
+		}else{
+			$entryid = false;
 		}
-
 		/**
 		 * Runs before the 2nd stage of processors "process"
 		 *
