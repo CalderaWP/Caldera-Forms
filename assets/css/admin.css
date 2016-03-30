@@ -1673,3 +1673,7 @@ tr.form_entry_row.loading {
   float: right;
   padding: 8px;
 }
+/* admin cleanups */
+#import_form_baldrickModalBody{
+  overflow: hidden;
+}
