@@ -32,7 +32,7 @@ class Caldera_Forms_Forms {
 	 *
 	 * @var string
 	 */
-	protected static $registry_cache_key;
+	protected static $registry_cache_key = '_cadera_forms';
 
 	/**
 	 * Holds simple index of form IDs
