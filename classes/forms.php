@@ -463,7 +463,7 @@ class Caldera_Forms_Forms {
 		self::update_registry( $id );
 
 		if(!empty($clone)){
-			$clone_form = ( $clone );
+			$clone_form = self::get_form( $clone );
 			if(!empty($clone_form['ID']) && $clone == $clone_form['ID']){
 				$newform = array_merge($clone_form, $newform);
 			}
