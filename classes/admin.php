@@ -850,19 +850,29 @@ class Caldera_Forms_Admin {
 				foreach($forms as $form_id=>$form){
 					$capability = null;
 					if(!empty($form['pinned']) && !empty( $form['pin_roles'] ) ){
-
-						foreach ($form['pin_roles']['access_role'] as $role => $enabled) {
-							if( in_array( $role, $user->roles ) ){
-								$role_details = get_role( $role );
-								if(empty($role_details->capabilities)){
-									continue;
+						if( !empty( $form['pin_roles']['all_roles'] ) ){
+							$user = wp_get_current_user();
+							if( empty( $user ) || empty( $user->roles ) ){
+								continue;
+							}
+							$capabilities = array_keys( $user->allcaps );
+							if( empty( $capabilities ) ){
+								continue;
+							}
+							$capability = $capabilities[0];
+						}elseif( !empty( $form['pin_roles']['access_role'] ) ){
+							foreach ($form['pin_roles']['access_role'] as $role => $enabled) {
+								if( in_array( $role, $user->roles ) ){
+									$role_details = get_role( $role );
+									if(empty($role_details->capabilities)){
+										continue;
+									}
+									$capabilities = array_keys( $role_details->capabilities );
+									$capability = $capabilities[0];
+									break;
 								}
-								$capabilities = array_keys( $role_details->capabilities );
-								$capability = $capabilities[0];
-								break;
 							}
 						}
-
 						if( empty($capability)){
 							// not this one.
 							continue;
@@ -1681,7 +1691,7 @@ class Caldera_Forms_Admin {
 
 		if( false === $last_check || $day_ago > $last_check   ){
 			global $wp_version;
-			$r = wp_remote_get( add_query_arg( array( 'wp' => urlencode( $wp_version ), 'php' => urlencode( PHP_VERSION ), 'url' => urlencode( site_url() ) ),  'http://apicaldera.wpengine.com/wp-json/calderawp_api/v2/notices'  ) );
+			$r = wp_remote_get( add_query_arg( array( 'wp' => urlencode( $wp_version ), 'php' => urlencode( PHP_VERSION ), 'db' => get_option( 'CF_DB', 0 ), 'url' => urlencode( site_url() ) ),  'http://apicaldera.wpengine.com/wp-json/calderawp_api/v2/notices'  ) );
 			if( ! is_wp_error( $r ) && 200 == wp_remote_retrieve_response_code( $r ) ){
 				$r_notices = json_decode(wp_remote_retrieve_body( $r ) );
 				if(  ! empty( $r_notices ) ){

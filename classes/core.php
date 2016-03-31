@@ -129,15 +129,17 @@ class Caldera_Forms {
 		add_rewrite_rule('^cf-api/([^/]*)/?','index.php?cf_api=$matches[1]','top');
 		
 		// check update version
-		/*
-		$version = get_option('_calderaforms_lastupdate');
-		if(empty($version) || version_compare($version, CFCORE_VER) < 0){
-			self::activate_caldera_forms();
-			update_option('_calderaforms_lastupdate',CFCORE_VER);
-			flush_rewrite_rules();
-			wp_redirect( $_SERVER['REQUEST_URI'] );
-			exit;
-		}*/
+		$db_version = get_option( 'CF_DB', 0 );
+		$force_update = false;
+		if( is_admin() && isset( $_GET[ 'cal_db_update' ] ) ) { // ensure that admin can only force update
+			$force_update = (bool) wp_verify_nonce( $_GET[ 'cal_db_update' ] );
+		}
+		if( CF_DB > $db_version || $force_update ) {
+			include_once CFCORE_PATH . 'includes/updater.php';
+			if (  $db_version < 2 || $force_update  ) {
+				caldera_forms_db_v2_update();
+			}
+		}
 	}
 	/**
 	 * Activate and setip plugin
@@ -345,11 +347,8 @@ class Caldera_Forms {
 						}
 					}
 
-					return $mail;
 				} elseif ( is_string( $file ) && file_exists( $file ) ) {
 					$mail[ 'attachments' ][] = $file;
-
-					return $mail;
 				} else {
 					if ( isset( $data[ $field_id ] ) && filter_var( $data[ $field_id ], FILTER_VALIDATE_URL ) ) {
 						$mail[ 'attachments' ][] = $data[ $field_id ];
@@ -988,11 +987,13 @@ class Caldera_Forms {
 		}
 
 		$formula = self::do_magic_tags( $formula, null, $form );
-
+		if( false !== strpos( $formula, 'Math.') ){
+			$formula = str_replace( 'Math.', '', $formula );
+		}
 		foreach($form['fields'] as $fid=>$cfg){
 			if(false !== strpos($formula, $fid)){
 				$entry_value = self::get_field_data($fid, $form);
-				
+
 				if(is_array($entry_value)){
 					$number = floatval( array_sum( $entry_value ) );
 				}else{
@@ -1003,11 +1004,8 @@ class Caldera_Forms {
 			}
 		}
 
-		if( preg_match('%^[0-9()/*+-]*$%', $formula ) ){
-			$total = create_function(null, 'return '.$formula.';');
-		}else{
-			$total = null;
-		}
+		$total_function = create_function(null, 'return '.$formula.';');
+		$total = $total_function();
 
 		if( ! is_numeric( $total ) ){
 			return new WP_Error( $field[ 'ID' ] . '-calculation', __( 'Calculation is invalid' ) );
@@ -1015,13 +1013,13 @@ class Caldera_Forms {
 
 		if(isset($field['config']['fixed'])){
 			if( function_exists( 'money_format' ) ){
-				return money_format('%i', $total() );	
+				return money_format('%i', $total );	
 			}else{
-				return sprintf('%01.2f', $total() );
+				return sprintf('%01.2f', $total );
 			}
 			
 		}
-		return $total();
+		return $total;
 	}
 
 	/**
