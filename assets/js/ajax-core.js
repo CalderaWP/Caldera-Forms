@@ -82,21 +82,77 @@ jQuery(function($){
 				if(obj.data.fields){
 
 					for(var i in obj.data.fields){
-						var field = obj.params.trigger.find('[data-field="' + i + '"]'),
-							wrap = field.parent();
-						if( wrap.is('label') ){
-							wrap = wrap.parent();
-							if( wrap.hasClass('checkbox') || wrap.hasClass('radio') ){
-								wrap = wrap.parent();
-							}
-						}
-						var has_block = wrap.find('.help-block').not('.caldera_ajax_error_block');
 
-							wrap.addClass('has-error').addClass('caldera_ajax_error_wrap');
-							if( has_block.length ){
-								has_block.hide();
-							}
-							wrap.append('<span class="help-block caldera_ajax_error_block">' + obj.data.fields[i] + '</span>');
+						var field = obj.params.trigger.find('[data-field="' + i + '"]');
+
+						//debug type
+						//console.log(jQuery.type(obj.data.fields[i]));
+
+						switch ( jQuery.type(obj.data.fields[i]) ) {
+
+							// single field only (bottom of field)
+							case 'string':
+
+								wrap = field.parent();
+								
+								if( wrap.is('label') ) {
+									wrap = wrap.parent();
+									if( wrap.hasClass('checkbox') || wrap.hasClass('radio') ) {
+										wrap = wrap.parent();
+									}
+								}
+
+								var has_block = wrap.find('.help-block').not('.caldera_ajax_error_block');
+		
+								wrap.addClass('has-error').addClass('caldera_ajax_error_wrap');
+								if( has_block.length ){
+									has_block.hide();
+								}
+								wrap.append('<span class="help-block caldera_ajax_error_block">' + obj.data.fields[i] + '</span>');
+
+								break;
+
+								// field without options, next to each option
+							case 'object':
+
+								// debug option
+								//obj.data.fields[i];
+								//console.log(field);
+
+								// loop through errors
+								for(var j in obj.data.fields[i]) {
+									
+									if (!obj.data.fields[i].hasOwnProperty(j)) continue;
+
+									//check all options for match 
+									field.each( function() {
+										if ( $(this).is('[id*="' + j + '"]') ) {
+
+											wrap = $(this).parent();
+
+											// not sure if this is correct for all occasions
+											if( wrap.is('label') && (wrap.parent().hasClass('checkbox') || wrap.parent().hasClass('radio') ) ) {
+
+												wrap = wrap.parent();
+												var has_block = wrap.find('.help-block').not('.caldera_ajax_error_block');
+		
+												wrap.addClass('has-error').addClass('caldera_ajax_error_wrap');
+												if( has_block.length ){
+													has_block.hide();
+												}
+												wrap.append('<span class="help-block caldera_ajax_error_block">' + obj.data.fields[i][j] + '</span>');
+											}
+
+										}
+									
+									});
+								
+								}
+								
+								break;
+
+						}
+							
 					}
 				}
 				// trigger global event
