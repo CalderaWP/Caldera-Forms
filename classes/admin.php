@@ -850,19 +850,29 @@ class Caldera_Forms_Admin {
 				foreach($forms as $form_id=>$form){
 					$capability = null;
 					if(!empty($form['pinned']) && !empty( $form['pin_roles'] ) ){
-
-						foreach ($form['pin_roles']['access_role'] as $role => $enabled) {
-							if( in_array( $role, $user->roles ) ){
-								$role_details = get_role( $role );
-								if(empty($role_details->capabilities)){
-									continue;
+						if( !empty( $form['pin_roles']['all_roles'] ) ){
+							$user = wp_get_current_user();
+							if( empty( $user ) || empty( $user->roles ) ){
+								continue;
+							}
+							$capabilities = array_keys( $user->allcaps );
+							if( empty( $capabilities ) ){
+								continue;
+							}
+							$capability = $capabilities[0];
+						}elseif( !empty( $form['pin_roles']['access_role'] ) ){
+							foreach ($form['pin_roles']['access_role'] as $role => $enabled) {
+								if( in_array( $role, $user->roles ) ){
+									$role_details = get_role( $role );
+									if(empty($role_details->capabilities)){
+										continue;
+									}
+									$capabilities = array_keys( $role_details->capabilities );
+									$capability = $capabilities[0];
+									break;
 								}
-								$capabilities = array_keys( $role_details->capabilities );
-								$capability = $capabilities[0];
-								break;
 							}
 						}
-
 						if( empty($capability)){
 							// not this one.
 							continue;
