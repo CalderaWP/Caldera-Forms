@@ -69,6 +69,7 @@ class Caldera_Forms_Forms {
 	 * @var array
 	 */
 	protected static $detail_fields = array(
+		'ID',
 		'name',
 		'description',
 		'success',
@@ -78,7 +79,7 @@ class Caldera_Forms_Forms {
 		'mailer',
 		'pinned',
 		'pin_roles',
-		'ID'
+		'hidden'
 	);
 
 	/**
@@ -285,24 +286,28 @@ class Caldera_Forms_Forms {
 	 * @return array
 	 */
 	protected static function add_details( $forms ){
+
+		$valid_forms = array();
+		
 		foreach( $forms as $id => $form  ){
 			$_form = self::get_form( $id );
 			if( empty( $_form ) ){
-				$_form = array( 'ID' => $id );
+				//if its empty, there is no form. we can't just make up stuff.
+				continue;
 			}
 
-			$forms[ $id ] = array();
+			$valid_forms[ $id ] = array();
 			foreach( self::$detail_fields as $key ){
 				if ( isset( $_form[ $key ] ) ) {
-					$forms[ $id ][ $key ] = $_form[ $key ];
+					$valid_forms[ $id ][ $key ] = $_form[ $key ];
 				} elseif ( 'name' == $key ) {
-					$forms[ $id ][ $key ] = $id;
+					$valid_forms[ $id ][ $key ] = $id;
 				} elseif ( 'mailer' == $key ) {
-					$forms[ $id ] = array( 'on_insert' => 1 );
+					$valid_forms[ $id ] = array( 'on_insert' => 1 );
 				} elseif ( in_array( $key, array( 'form_ajax', 'check_honey', 'hide_form', 'db_support' ) ) ) {
-					$forms[ $id ][ $key ] = 1;
+					$valid_forms[ $id ][ $key ] = 1;
 				} else {
-					$forms[ $id ][ $key ] = '';
+					$valid_forms[ $id ][ $key ] = '';
 				}
 
 
@@ -312,21 +317,21 @@ class Caldera_Forms_Forms {
 
 		$base_forms = self::get_stored_forms();
 
-		foreach ( $forms as $form_id => $form  ) {
+		foreach ( $valid_forms as $form_id => $form  ) {
 			if ( ! isset( $base_forms[ $form_id ] ) ) {
 				$forms[ $form_id ][ '_external_form' ] = true;
 				if ( empty( $forms[ $form_id ][ 'ID' ] ) ) {
-					$forms[ $form_id ][ 'ID' ] = $form_id;
+					$valid_forms[ $form_id ][ 'ID' ] = $form_id;
 				}
 
 			}
 		}
 
-		if ( ! empty( $forms ) ) {
-			set_transient( self::$registry_cache_key, $forms, HOUR_IN_SECONDS );
+		if ( ! empty( $valid_forms ) ) {
+			set_transient( self::$registry_cache_key, $valid_forms, HOUR_IN_SECONDS );
 		}
 
-		self::$registry_cache = $forms;
+		self::$registry_cache = $valid_forms;
 		return self::$registry_cache;
 
 	}
