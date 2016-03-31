@@ -49,6 +49,23 @@ if(!empty($field['config']['manual'])){
 	}
 	// fix POW
 	$formula = str_replace('pow(', 'Math.pow(', $formula);
+	$formula = str_replace('abs(', 'Math.abs(', $formula);
+	$formula = str_replace('acos(', 'Math.acos(', $formula);
+	$formula = str_replace('asin(', 'Math.asin(', $formula);
+	$formula = str_replace('atan(', 'Math.atan(', $formula);
+	$formula = str_replace('atan2(', 'Math.atan2(', $formula);
+	$formula = str_replace('ceil(', 'Math.ceil(', $formula);
+	$formula = str_replace('cos(', 'Math.cos(', $formula);
+	$formula = str_replace('exp(', 'Math.exp(', $formula);
+	$formula = str_replace('floor(', 'Math.floor(', $formula);
+	$formula = str_replace('log(', 'Math.log(', $formula);
+	$formula = str_replace('max(', 'Math.max(', $formula);
+	$formula = str_replace('min(', 'Math.min(', $formula);
+	$formula = str_replace('random(', 'Math.random(', $formula);
+	$formula = str_replace('round(', 'Math.round(', $formula);
+	$formula = str_replace('sin(', 'Math.sin(', $formula);
+	$formula = str_replace('sqrt(', 'Math.sqrt(', $formula);
+	$formula = str_replace('tan(', 'Math.tan(', $formula);
 }
 $formula = str_replace("\r",'', str_replace("\n",'', str_replace(' ','', trim( Caldera_Forms::do_magic_tags( $formula ) ) ) ) );
 $binds = array();
