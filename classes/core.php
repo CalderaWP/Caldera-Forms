@@ -129,15 +129,17 @@ class Caldera_Forms {
 		add_rewrite_rule('^cf-api/([^/]*)/?','index.php?cf_api=$matches[1]','top');
 		
 		// check update version
-		/*
-		$version = get_option('_calderaforms_lastupdate');
-		if(empty($version) || version_compare($version, CFCORE_VER) < 0){
-			self::activate_caldera_forms();
-			update_option('_calderaforms_lastupdate',CFCORE_VER);
-			flush_rewrite_rules();
-			wp_redirect( $_SERVER['REQUEST_URI'] );
-			exit;
-		}*/
+		$db_version = get_option( 'CF_DB', 0 );
+		$force_update = false;
+		if( is_admin() && isset( $_GET[ 'cal_db_update' ] ) ) { // ensure that admin can only force update
+			$force_update = (bool) wp_verify_nonce( $_GET[ 'cal_db_update' ] );
+		}
+		if( CF_DB > $db_version || $force_update ) {
+			include_once CFCORE_PATH . 'includes/updater.php';
+			if (  $db_version < 2 || $force_update  ) {
+				caldera_forms_db_v2_update();
+			}
+		}
 	}
 	/**
 	 * Activate and setip plugin
