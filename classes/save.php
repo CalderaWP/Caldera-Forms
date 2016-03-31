@@ -23,6 +23,7 @@ class Caldera_Forms_Save_Final {
 	 * @param int|null $entryid Optional. ID of entry to send. If not provided, will be determined from current POST data '_entry_id' key.
 	 */
 	public static function save_in_db( $form, $entryid = null ) {
+
 		global $wpdb, $processed_meta;
 		if(!empty($form['db_support'])){
 
@@ -32,6 +33,7 @@ class Caldera_Forms_Save_Final {
 				$entryid = Caldera_Forms::get_field_data( '_entry_id', $form );
 
 				foreach($form['fields'] as $field_id=>$field){
+
 					// add new and update
 					Caldera_Forms::save_field_data($field, $entryid, $form);
 

@@ -490,7 +490,7 @@ class Caldera_Forms {
 				'slug'		=> $field['slug'],
 				'value'		=> self::do_magic_tags( $entry )
 			);
-			
+
 			// named key kets .key to slug
 			if(!is_int($key)){
 				// Keyed
@@ -992,11 +992,15 @@ class Caldera_Forms {
 		foreach($form['fields'] as $fid=>$cfg){
 			if(false !== strpos($formula, $fid)){
 				$entry_value = self::get_field_data($fid, $form);
-				
-				if(is_array($entry_value)){
-					$number = floatval( array_sum( $entry_value ) );
-				}else{
-					$number = floatval( $entry_value );
+
+				if($cfg['type'] == 'date_picker') {
+					$number = empty($entry_value) ? 0 : (strtotime($entry_value) / (3600 * 24));
+				} else {
+					if (is_array($entry_value)) {
+						$number = floatval(array_sum($entry_value));
+					} else {
+						$number = floatval($entry_value);
+					}
 				}
 			
 				$formula = str_replace($fid, $number, $formula);
@@ -1613,10 +1617,17 @@ class Caldera_Forms {
 					 */
 					$field_for_label = apply_filters( 'caldera_forms_autopopulate_options_post_label_field', 'post_title', $field, $form, $posts  );
 					foreach($posts as $post_item){
-						$field['config']['option'][$post_item->ID] = array(
-							'value'	=>	$post_item->{$field_for_value},
-							'label' =>	$post_item->{$field_for_label}
+						$option = array(
+								'value'	=>	$post_item->{$field_for_value},
+								'label' =>	$post_item->{$field_for_label}
 						);
+						if(!empty($field[ 'config' ]['meta_value_field'])) {
+							$val = get_post_meta($post_item->ID, $field[ 'config' ]['meta_value_field'], true);
+							if(!empty($val)) {
+								$option['value'] = $val;
+							}
+						}
+						$field['config']['option'][$post_item->ID] = $option;
 					}
 
 				break;
@@ -2546,7 +2557,6 @@ class Caldera_Forms {
 		}
 
 		if(isset($form['fields'][$field_id])){
-
 			// get field
 			$field = apply_filters( 'caldera_forms_render_setup_field', $form['fields'][$field_id], $form);
 
@@ -2569,7 +2579,6 @@ class Caldera_Forms {
 				}
 			}
 
-
 			// check condition to see if field should be there first.
 			// check if conditions match first. ignore vailators if not part of condition
 			if(isset($_POST[$field_id])){
@@ -2579,6 +2588,7 @@ class Caldera_Forms {
 				// is slug maybe?
 				$entry = stripslashes_deep( $_POST[$field['slug']] );
 			}
+
 			// apply field filter
 			if(has_filter('caldera_forms_process_field_' . $field['type'])){
 				$entry = apply_filters( 'caldera_forms_process_field_' . $field['type'] , $entry, $field, $form );
@@ -4017,7 +4027,7 @@ class Caldera_Forms {
 			if( is_string( $field_value ) ){
 				// maybe json?
 				$is_json = json_decode( $field_value, ARRAY_A );
-				if( !empty( $is_json ) ){
+				if( is_array( $is_json ) ){
 					$field_value = $is_json;
 				}else{
 					$field_value = esc_html( stripslashes_deep( $field_value ) );

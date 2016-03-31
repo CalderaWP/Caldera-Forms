@@ -49,6 +49,7 @@ if(!empty($field['config']['manual'])){
 	}
 	// fix POW
 	$formula = str_replace('pow(', 'Math.pow(', $formula);
+	$formula = str_replace('ceil(', 'Math.ceil(', $formula);
 }
 $formula = str_replace("\r",'', str_replace("\n",'', str_replace(' ','', trim( Caldera_Forms::do_magic_tags( $formula ) ) ) ) );
 $binds = array();
@@ -58,14 +59,17 @@ foreach($form['fields'] as $fid=>$cfg){
 	if(false !== strpos($formula, $fid)){
 		//dump($cfg,0);
 		$formula = str_replace($fid, $fid, $formula);
-		$binds_vars[] = $fid." = parseFloat( $('[data-field=\"".$fid."\"]').is(':checkbox') ? checked_total_" . $field_base_id. "($('[data-field=\"".$fid."\"]:checked')) : $('[data-field=\"".$fid."\"]').is(':radio') ? $('[data-field=\"".$fid."\"]:checked').val() : $('[data-field=\"".$fid."\"]').val() ) || 0 ";
+		if($cfg['type'] == 'date_picker') {
+			$binds_vars[] = $fid." = ($('[data-field=\"".$fid."\"]').val() == '' ? 0 : ((new Date( $('[data-field=\"".$fid."\"]').val() )) / (1000 * 3600 * 24)))";
+		} else {
+			$binds_vars[] = $fid . " = parseFloat( $('[data-field=\"" . $fid . "\"]').is(':checkbox') ? checked_total_" . $field_base_id . "($('[data-field=\"" . $fid . "\"]:checked')) : $('[data-field=\"" . $fid . "\"]').is(':radio') ? $('[data-field=\"" . $fid . "\"]:checked').val() : $('[data-field=\"" . $fid . "\"]').val() ) || 0 ";
+		}
 
 		$binds[] = "[data-field=\"".$fid."\"]";
 		// include a conditional wrapper
-		$binds_wrap[] = "#conditional_".$fid;		
+		$binds_wrap[] = "#conditional_".$fid;
 	}
 }
-
 
 if(!empty($binds)){
 	$bindtriggers = array_merge($binds, $binds_wrap);
