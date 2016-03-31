@@ -988,11 +988,13 @@ class Caldera_Forms {
 		}
 
 		$formula = self::do_magic_tags( $formula, null, $form );
-
+		if( false !== strpos( $formula, 'Math.') ){
+			$formula = str_replace( 'Math.', '', $formula );
+		}
 		foreach($form['fields'] as $fid=>$cfg){
 			if(false !== strpos($formula, $fid)){
 				$entry_value = self::get_field_data($fid, $form);
-				
+
 				if(is_array($entry_value)){
 					$number = floatval( array_sum( $entry_value ) );
 				}else{
@@ -1003,11 +1005,8 @@ class Caldera_Forms {
 			}
 		}
 
-		if( preg_match('%^[0-9()/*+-]*$%', $formula ) ){
-			$total = create_function(null, 'return '.$formula.';');
-		}else{
-			$total = null;
-		}
+		$total_function = create_function(null, 'return '.$formula.';');
+		$total = $total_function();
 
 		if( ! is_numeric( $total ) ){
 			return new WP_Error( $field[ 'ID' ] . '-calculation', __( 'Calculation is invalid' ) );
@@ -1015,13 +1014,13 @@ class Caldera_Forms {
 
 		if(isset($field['config']['fixed'])){
 			if( function_exists( 'money_format' ) ){
-				return money_format('%i', $total() );	
+				return money_format('%i', $total );	
 			}else{
-				return sprintf('%01.2f', $total() );
+				return sprintf('%01.2f', $total );
 			}
 			
 		}
-		return $total();
+		return $total;
 	}
 
 	/**
