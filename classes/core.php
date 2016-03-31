@@ -347,11 +347,8 @@ class Caldera_Forms {
 						}
 					}
 
-					return $mail;
 				} elseif ( is_string( $file ) && file_exists( $file ) ) {
 					$mail[ 'attachments' ][] = $file;
-
-					return $mail;
 				} else {
 					if ( isset( $data[ $field_id ] ) && filter_var( $data[ $field_id ], FILTER_VALIDATE_URL ) ) {
 						$mail[ 'attachments' ][] = $data[ $field_id ];
