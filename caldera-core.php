@@ -64,29 +64,3 @@ if ( is_admin() || defined( 'DOING_AJAX' ) ) {
 if ( is_admin() ) {
   require_once( CFCORE_PATH . 'processors/classes/ui.php' );
 }
-
-add_action( 'activate_' . CFCORE_BASENAME,  'caldera_forms_db_update' );
-add_action( 'admin_init', 'caldera_forms_db_update', 0 );
-function caldera_forms_db_update(){
-
-	if( current_user_can( 'manage_options' )  ){
-		$db_version = get_option( 'CF_DB', 0 );
-		$force_update = false;
-		if( isset( $_GET[ 'cal_db_update' ] ) ) {
-			$force_update = (bool) wp_verify_nonce( $_GET[ 'cal_db_update' ] );
-		}
-
-		if( CF_DB > $db_version || $force_update ) {
-			include_once CFCORE_PATH . 'includes/updater.php';
-			if (  $db_version < 2 || $force_update  ) {
-				caldera_forms_db_v2_update();
-			}
-		}
-
-
-	}
-}
-
-
-
-
