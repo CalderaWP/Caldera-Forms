@@ -180,17 +180,22 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 		<p>
 			<?php esc_html_e( 'You don\'t have any forms.', 'caldera-forms'); ?>
 		</p>
-		<div id="cf-upgrade-maybe-fail">
-			<p>
-				<?php
-				echo __( sprintf( 'If you recently updated Caldera Forms and can no longer see saved forms, %s',
-					sprintf( '<a href="https://calderawp.com/doc/caldera-forms-form-config-changes/" target="_blank"><strong>%s</strong></a>.', esc_html__( 'no data is lost. Click here for more information', 'caldera-forms' ),  'caldera-forms' ) ) ); ?>
-			</p>
-			<p>
-				<?php printf( '<a href="%s" class="button">%s</a>', esc_url( add_query_arg( array( 'page' => 'caldera-forms', 'cal_db_update' => wp_create_nonce() ) ) ), esc_html__( 'Run The Updater', 'caldera-forms' ) ); ?>
-			</p>
-		</div>
-
+		<?php
+			// check db and only show the upgrade if db version is not there since its confusing
+			$db_version = get_option( 'CF_DB', 0 );
+			if( CF_DB > $db_version ) {
+			?>
+			<div id="cf-upgrade-maybe-fail">
+				<p>
+					<?php
+					echo __( sprintf( 'If you recently updated Caldera Forms and can no longer see saved forms, %s',
+						sprintf( '<a href="https://calderawp.com/doc/caldera-forms-form-config-changes/" target="_blank"><strong>%s</strong></a>.', esc_html__( 'no data is lost. Click here for more information', 'caldera-forms' ),  'caldera-forms' ) ) ); ?>
+				</p>
+				<p>
+					<?php printf( '<a href="%s" class="button">%s</a>', esc_url( add_query_arg( array( 'page' => 'caldera-forms', 'cal_db_update' => wp_create_nonce() ) ) ), esc_html__( 'Run The Updater', 'caldera-forms' ) ); ?>
+				</p>
+			</div>
+			<?php } ?>
 		<?php } ?>
 	</div>
 	<div class="form-entries-wrap">
