@@ -76,6 +76,8 @@ class Caldera_Forms_Forms {
 		'hide_form',
 		'db_support',
 		'mailer',
+		'pinned',
+		'pin_roles',
 		'ID'
 	);
 
