@@ -233,7 +233,7 @@ function serialize_modal_form(el){
 	
 	//verify name is set
 	if(name.val().length < 1){
-		alert("<?php echo __('An form name is required', 'caldera-forms'); ?>");
+		alert("<?php echo __('A form name is required', 'caldera-forms'); ?>");
 		name.focus().addClass('has-error');
 		return false;
 	}
