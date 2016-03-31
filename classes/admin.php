@@ -1681,7 +1681,7 @@ class Caldera_Forms_Admin {
 
 		if( false === $last_check || $day_ago > $last_check   ){
 			global $wp_version;
-			$r = wp_remote_get( add_query_arg( array( 'wp' => urlencode( $wp_version ), 'php' => urlencode( PHP_VERSION ), 'url' => urlencode( site_url() ) ),  'http://apicaldera.wpengine.com/wp-json/calderawp_api/v2/notices'  ) );
+			$r = wp_remote_get( add_query_arg( array( 'wp' => urlencode( $wp_version ), 'php' => urlencode( PHP_VERSION ), 'db' => get_option( 'CF_DB', 0 ), 'url' => urlencode( site_url() ) ),  'http://apicaldera.wpengine.com/wp-json/calderawp_api/v2/notices'  ) );
 			if( ! is_wp_error( $r ) && 200 == wp_remote_retrieve_response_code( $r ) ){
 				$r_notices = json_decode(wp_remote_retrieve_body( $r ) );
 				if(  ! empty( $r_notices ) ){
