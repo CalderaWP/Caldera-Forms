@@ -332,7 +332,10 @@ class Caldera_Forms_Save_Final {
 		 * @param array $form The form config
 		 */
 		$mail = apply_filters( 'caldera_forms_mailer', $mail, $data, $form);
+		if ( ! is_array( $mail ) ) {
+			return;
 
+		}
 
 		$headers = implode("\r\n", $mail['headers']);
 
