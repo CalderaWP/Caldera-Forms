@@ -4359,6 +4359,8 @@ class Caldera_Forms {
 			$form = self::get_form( $atts );
 			$atts = array();
 
+		}elseif( is_array( $atts ) && isset( $atts[ 'ID' ] ) ){
+			$form = Caldera_Forms_Forms::get_form( $atts[ 'ID' ] );
 		}else{
 
 			if(empty($atts['id'])){
