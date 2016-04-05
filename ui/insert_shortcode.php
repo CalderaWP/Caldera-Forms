@@ -8,7 +8,7 @@
 		<div class="modal-body">
 		<?php
 
-			$forms = Caldera_Forms::get_forms();
+			$forms = Caldera_Forms_Forms::get_forms();
 			if(!empty($forms)){
 				foreach($forms as $form_id=>$form){
 

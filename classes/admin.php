@@ -513,7 +513,7 @@ class Caldera_Forms_Admin {
 
 		$forms = Caldera_Forms_Forms::get_forms( true );
 		$form = sanitize_text_field( $_POST['form'] );
-		$form = Caldera_Forms::get_form( $form );
+		$form = Caldera_Forms_Forms::get_form( $form );
 		if( empty( $form ) || empty( $form['ID'] ) || empty( $forms[ $form['ID'] ]) ){
 			wp_send_json_error( );
 		}
@@ -574,7 +574,7 @@ class Caldera_Forms_Admin {
 			$status = 'active';
 		}
 
-		$form = Caldera_Forms::get_form( $_POST['form'] );
+		$form = Caldera_Forms_Forms::get_form( $_POST['form'] );
 			
 		$data = self::get_entries( $form, $page, $perpage, $status );
 
@@ -602,7 +602,7 @@ class Caldera_Forms_Admin {
 	public static function get_entries( $form, $page = 1, $perpage = 20, $status = 'active' ) {
 
 		if ( is_string( $form ) ) {
-			$form = Caldera_Forms::get_form( $form );
+			$form = Caldera_Forms_Forms::get_form( $form );
 		}
 
 		if ( isset( $form[ 'ID' ])) {
@@ -1125,7 +1125,7 @@ class Caldera_Forms_Admin {
 			include CFCORE_PATH . 'ui/community.php';
 		}elseif(!empty($_GET['page']) && false !== strpos($_GET['page'], 'caldera-forms-pin-')){
 			$formID = substr($_GET['page'], 18);
-			$form = Caldera_Forms::get_form( $formID );
+			$form = Caldera_Forms_Forms::get_form( $formID );
 			include CFCORE_PATH . 'ui/entries.php';
 
 		}else{
@@ -1205,7 +1205,7 @@ class Caldera_Forms_Admin {
 
 		if(!empty($_GET['export-form']) && current_user_can( Caldera_Forms::get_manage_cap( 'export' ) )){
 
-			$form = Caldera_Forms::get_form( $_GET['export-form'] );
+			$form = Caldera_Forms_Forms::get_form( $_GET['export-form'] );
 
 			if(empty($form)){
 				wp_die( __('Form does not exist.', 'caldera-forms') );
@@ -1258,7 +1258,7 @@ class Caldera_Forms_Admin {
 
 		if(!empty($_GET['export']) && current_user_can( Caldera_Forms::get_manage_cap( 'export' )) ){
 
-			$form = Caldera_Forms::get_form( $_GET['export'] );
+			$form = Caldera_Forms_Forms::get_form( $_GET['export'] );
 
 			global $wpdb;
 
