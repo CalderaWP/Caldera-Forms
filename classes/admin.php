@@ -511,7 +511,7 @@ class Caldera_Forms_Admin {
 		// first validate
 		self::verify_ajax_action();
 
-		$forms = Caldera_Forms_Forms::get_form( true );
+		$forms = Caldera_Forms::get_forms( true );
 		$form = sanitize_text_field( $_POST['form'] );
 		$form = Caldera_Forms::get_form( $form );
 		if( empty( $form ) || empty( $form['ID'] ) || empty( $forms[ $form['ID'] ]) ){
@@ -819,7 +819,7 @@ class Caldera_Forms_Admin {
 	public function register_admin_page(){
 		global $menu, $submenu;
 		
-		$forms = Caldera_Forms_Forms::get_form();
+		$forms = Caldera_Forms::get_forms();
 
 		// get current user
 		if( current_user_can( Caldera_Forms::get_manage_cap() ) ){
