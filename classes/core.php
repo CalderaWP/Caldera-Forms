@@ -4031,10 +4031,19 @@ class Caldera_Forms {
 					if( $option['value'] == $field_view ){
 						$field_view = $option['label'];
 
+						if( is_array( $field_value ) ){
+							if ( isset( $field_value[ $opt ]) ) {
+								$field_value = $field_value[ $opt ];
+							}  else {
+								$field_value = '';
+							}
+
+						}
+
 						$data['data'][$field_id . '_' . $i ] = array(
 							'label' => $field['label'],
 							'view'	=> $field_view,
-							'value' => $field_value[ $opt ]
+							'value' => $field_value
 						);
 						$i ++;
 
