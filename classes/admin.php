@@ -505,7 +505,13 @@ class Caldera_Forms_Admin {
 		return $buttons;
 	}
 
-
+	/**
+	 * Change form's state
+	 *
+	 * @uses "wp_ajax_toggle_form_state" action
+	 *
+	 * @since unknown
+	 */
 	public static function toggle_form_state(){
 		
 		// first validate
@@ -519,19 +525,17 @@ class Caldera_Forms_Admin {
 		}
 
 		if( isset( $form['form_draft'] ) ){
-			unset( $form['form_draft'] );
-			unset( $forms[ $form['ID'] ]['form_draft'] );		
+
+			Caldera_Forms_Forms::form_state( $form );
 			$state = 'active-form';
 			$label = __('Deactivate', 'caldera-forms');
 		}else{
-			$forms[ $form['ID'] ]['form_draft'] = $form['form_draft'] = 1;
+			Caldera_Forms_Forms::form_state( $form , false );
 			$state = 'draft-form';
 			$label = __('Activate', 'caldera-forms');
 		}
 
-		update_option( '_caldera_forms', $forms );
-		update_option( $form['ID'], $form );
-		
+
 		wp_send_json_success( array( 'ID' => $form['ID'], 'state' => $state, 'label' => $label ) );
 	}
 

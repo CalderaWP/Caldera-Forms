@@ -79,7 +79,8 @@ class Caldera_Forms_Forms {
 		'mailer',
 		'pinned',
 		'pin_roles',
-		'hidden'
+		'hidden',
+		'form_draft'
 	);
 
 	/**
@@ -303,10 +304,12 @@ class Caldera_Forms_Forms {
 				} elseif ( 'name' == $key ) {
 					$valid_forms[ $id ][ $key ] = $id;
 				} elseif ( 'mailer' == $key ) {
-					$valid_forms[ $id ] = array( 'on_insert' => 1 );
+					$valid_forms[ $id ][ $key ] = array( 'on_insert' => 1 );
 				} elseif ( in_array( $key, array( 'form_ajax', 'check_honey', 'hide_form', 'db_support' ) ) ) {
 					$valid_forms[ $id ][ $key ] = 1;
-				} else {
+				} elseif( 'form_draft' == $key ) {
+					$valid_forms[ $id ][ $key ] = 0;
+				}else {
 					$valid_forms[ $id ][ $key ] = '';
 				}
 
@@ -577,6 +580,32 @@ class Caldera_Forms_Forms {
 	 */
 	public static function is_internal_form( $id_name ){
 		return in_array( $id_name, self::get_stored_forms() );
+	}
+
+	/**
+	 * Change a form's state form enabled to disabled or vise vera
+	 *
+	 * @since 1.3.5
+	 *
+	 * @param array $form Form config.
+	 * @param bool|true $enable Optional. If true, enable form, if false, disable form.
+	 */
+	public static function form_state( $form, $enable = true ){
+		if( $enable  ){
+			$form['form_draft'] = 0;
+
+		}else{
+			$form['form_draft'] = 1;
+
+		}
+
+		if( is_array( self::$registry_cache ) && isset( self::$registry_cache[ $form[ 'ID' ] ] ) ){
+			delete_transient( self::$registry_cache_key );
+			self::$registry_cache[ $form[ 'ID' ] ][ 'form_draft' ] = $form['form_draft'];
+		}
+
+		self::save_form( $form );
+
 	}
 
 }
