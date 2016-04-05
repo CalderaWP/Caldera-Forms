@@ -251,7 +251,7 @@ class Caldera_Forms {
 				if( !empty($forms)){
 					foreach($forms as $form){
 						if(!isset($known[$form['form_id']])){
-							$config = self::get_form( $form['form_id'] );
+							$config = Caldera_Forms_Forms::get_form( $form['form_id'] );
 							if(empty($config)){
 								continue;
 							}
@@ -2012,7 +2012,7 @@ class Caldera_Forms {
 		// pull in the metadata for entry ID
 		if( null !== $entry_id ){
 			$entry_details = self::get_entry_detail( $entry_id );
-			$this_form = self::get_form( $entry_details['form_id'] );
+			$this_form = Caldera_Forms_Forms::get_form( $entry_details['form_id'] );
 			if( !empty( $entry_details['meta'] ) ){
 				foreach( $entry_details['meta'] as $meta_block ){
 					if( !empty( $meta_block['data'] ) ){
@@ -2383,7 +2383,7 @@ class Caldera_Forms {
 	 */
 	static public function get_processor_by_type($type, $form){
 		if(is_string($form)){
-			$form_cfg = self::get_form( $form );
+			$form_cfg = Caldera_Forms_Forms::get_form( $form );
 			if(!empty($form_cfg['ID'])){
 				if($form_cfg['ID'] !== $form || empty($form_cfg['processors'])){
 					return false;
@@ -2452,7 +2452,7 @@ class Caldera_Forms {
 		$current_data = self::get_field_data($field_id, $form, $entry_id);
 		
 		if(is_string($form)){
-			$form = self::get_form( $form );
+			$form = Caldera_Forms_Forms::get_form( $form );
 		}
 
 		// form object
@@ -2490,7 +2490,7 @@ class Caldera_Forms {
 
 		//echo $field_id.'<br>';
 		if(is_string($form)){
-			$form = self::get_form( $form );
+			$form = Caldera_Forms_Forms::get_form( $form );
 			if(!isset($form['ID']) || $form['ID'] !== $form){
 				return null;
 			}
@@ -2713,7 +2713,7 @@ class Caldera_Forms {
 		$entry = $wpdb->get_row($wpdb->prepare("SELECT * FROM `" . $wpdb->prefix ."cf_form_entries` WHERE `id` = %d", $entry_id ), ARRAY_A);
 		if(!empty($entry)){
 			if( null === $form ){
-				$form = self::get_form( $entry['form_id'] );
+				$form = Caldera_Forms_Forms::get_form( $entry['form_id'] );
 				if( empty($form) ){
 					return null;
 				}
@@ -2860,7 +2860,7 @@ class Caldera_Forms {
 
 		if(is_string($form)){
 			$form_id = $form;
-			$form = self::get_form( $form );
+			$form = Caldera_Forms_Forms::get_form( $form );
 			if(!isset($form['ID']) || $form['ID'] !== $form_id){				
 				return new WP_Error( 'fail',  __('Invalid form ID', 'caldera-forms') );
 			}
@@ -2927,7 +2927,7 @@ class Caldera_Forms {
 			$post = get_post( (int) $_POST['_cf_cr_pst'] );
 		}
 		// get form and check
-		$form = self::get_form( $_POST['_cf_frm_id'] );
+		$form = Caldera_Forms_Forms::get_form( $_POST['_cf_frm_id'] );
 		if(empty($form['ID']) || $form['ID'] != $_POST['_cf_frm_id']){
 			return;
 		}
@@ -3552,7 +3552,7 @@ class Caldera_Forms {
 		global $post, $form;
 
 		if(!empty($_GET['cf_preview'])){
-			$form = self::get_form( $_GET['cf_preview'] );
+			$form = Caldera_Forms_Forms::get_form( $_GET['cf_preview'] );
 
 			$userid = get_current_user_id();
 			if( !empty( $userid ) ){
@@ -3656,7 +3656,7 @@ class Caldera_Forms {
 
 		foreach( $page_forms as $form_id ){
 			// has form get  stuff for it
-			$form = self::get_form( $form_id );
+			$form = Caldera_Forms_Forms::get_form( $form_id );
 			if(!empty($form)){
 				// get list of used fields
 				if(empty($form['fields'])){
@@ -3711,7 +3711,7 @@ class Caldera_Forms {
 			return;
 		}		
 		// check if form exists
-		$form = self::get_form( $wp_query->query_vars['cf_api'] );
+		$form = Caldera_Forms_Forms::get_form( $wp_query->query_vars['cf_api'] );
 		$atts = array(
 			'id' => $wp_query->query_vars['cf_api'],
 			'ajax' => true
@@ -3934,7 +3934,7 @@ class Caldera_Forms {
 			if(!empty($_POST['form'])){
 				$entry_id = $_POST['entry'];
 				// get form and check
-				$form = self::get_form( $_POST['form'] );
+				$form = Caldera_Forms_Forms::get_form( $_POST['form'] );
 				if(empty($form['ID']) || $form['ID'] != $_POST['form']){
 					return;
 				}
@@ -3955,7 +3955,7 @@ class Caldera_Forms {
 		
 		if(is_string($form)){
 			$form_id = $form;
-			$form = self::get_form( $form );
+			$form = Caldera_Forms_Forms::get_form( $form );
 			if(!isset($form['ID']) || $form['ID'] !== $form_id){				
 				return new WP_Error( 'fail',  __('Invalid form ID', 'caldera-forms') );
 			}
@@ -4144,7 +4144,7 @@ class Caldera_Forms {
 		if(empty($atts['id'])){
 			return $content;
 		}
-		$form = self::get_form( $atts['id'] );
+		$form = Caldera_Forms_Forms::get_form( $atts['id'] );
 		if(empty($form['ID']) || $form['ID'] != $atts['id']){
 			return $content;
 		}
@@ -4356,7 +4356,7 @@ class Caldera_Forms {
 
 		if(is_string($atts)){
 
-			$form = self::get_form( $atts );
+			$form = Caldera_Forms_Forms::get_form( $atts );
 			$atts = array();
 
 		}elseif( is_array( $atts ) && isset( $atts[ 'ID' ] ) ){
@@ -4365,10 +4365,10 @@ class Caldera_Forms {
 
 			if(empty($atts['id'])){
 				if(!empty($atts['name'])){
-					$form = self::get_form( $atts['name'] );
+					$form = Caldera_Forms_Forms::get_form( $atts['name'] );
 				}
 			}elseif( !empty( $atts['id'] ) ){
-				$form = self::get_form( $atts['id'] );
+				$form = Caldera_Forms_Forms::get_form( $atts['id'] );
 			}
 		}
 
@@ -5145,7 +5145,7 @@ class Caldera_Forms {
 		}
 
 		if( isset( $atts[ 'modal' ] ) && $atts[ 'modal' ] ) {
-			$form = self::get_form( $atts[ 'id' ] );
+			$form = Caldera_Forms_Forms::get_form( $atts[ 'id' ] );
 			if( ! is_array( $form ) ) {
 				return;
 			}
