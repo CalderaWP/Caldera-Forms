@@ -3709,7 +3709,7 @@ class Caldera_Forms {
 		// if this is not a request for json or a singular object then bail
 		if ( ! isset( $wp_query->query_vars['cf_api'] ) ){
 			return;
-		}		
+		}
 		// check if form exists
 		$form = Caldera_Forms_Forms::get_form( $wp_query->query_vars['cf_api'] );
 		$atts = array(
@@ -3728,6 +3728,31 @@ class Caldera_Forms {
 				// is a post?
 				if( $_SERVER['REQUEST_METHOD'] === 'POST' ){
 					
+					if( !empty( $_POST['control'] ) ){
+						$transient_name = sanitize_key( $_POST['control'] );
+						$transdata = get_transient( $transient_name );
+						if( false === $transdata ){
+							$transdata = array();
+						}
+						if( !empty( $_FILES ) && !empty( $_POST['field'] ) ){
+							$form = Caldera_Forms_Forms::get_form( $wp_query->query_vars['cf_api'] );
+							$field = $form[ 'fields'][ $_POST['field'] ];
+							
+							$data = cf_handle_file_upload( true, $field, $form );
+							if( is_wp_error( $data ) ){
+								wp_send_json_error( $data->get_error_message() );
+							}
+
+							$transdata[] = $data;
+							//set
+							set_transient( $transient_name, $transdata, DAY_IN_SECONDS );
+							// maybe put in some checks on file then can say yea or nei
+							wp_send_json_success( array(
+
+							) );
+						}
+					}
+
 					$_POST['_wp_http_referer_true'] = 'api';
 					$_POST['_cf_frm_id'] 			=  $_POST['cfajax']	= $wp_query->query_vars['cf_api'];
 

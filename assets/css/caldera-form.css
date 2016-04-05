@@ -23,3 +23,22 @@
 .breadcrumb > li.error > a {
   color: #ff0000;
 }
+.caldera-grid .cf-multi-uploader-list > ul > li .file-name {
+  font-weight: bold;
+}
+.caldera-grid .cf-multi-uploader-list > ul > li .file-size {
+  float: right;
+}
+.caldera-grid .cf-multi-uploader-list > ul > li .file-type {
+  float: left;
+}
+.caldera-grid .cf-multi-uploader-list > ul > li .cf-file-remove {
+  color: #cf0000;
+  text-decoration: none;
+}
+.caldera-grid .cf-multi-uploader-list > ul > li.has-error .bar {
+	background-color: #cf0000 !important;
+}
+.caldera-grid .cf-multi-uploader-list > ul > li.has-error{
+	color: #cf0000;
+}

@@ -6,3 +6,14 @@ input.form-control.parsley-success,select.form-control.parsley-success,textarea.
   list-style: outside none none;
   list-style-type: none;
 }
+.caldera-grid .cf-multi-uploader-list > ul {
+  list-style: outside none none;
+  margin: 0 0 12px;
+  padding: 0;
+}
+.caldera-grid .cf-multi-uploader-list > ul > li {
+  margin: 0;
+  padding: 0 0 22px;
+  position: relative;
+  clear: both;
+}

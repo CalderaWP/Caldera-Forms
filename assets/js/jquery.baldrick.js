@@ -249,7 +249,10 @@
 					}
 				}
 
-				if((tr.data('before') ? (typeof window[tr.data('before')] === 'function' ? window[tr.data('before')](this, e) : callbacks.before(this, e)) : callbacks.before(this, e)) === false){return;}
+				if((tr.data('before') ? (typeof window[tr.data('before')] === 'function' ? window[tr.data('before')](this, e) : callbacks.before(this, e)) : callbacks.before(this, e)) === false){
+					$(defaults.triggerClass).baldrick(defaults);
+					return;
+				}
 
 				var params = {
 					trigger: tr,
