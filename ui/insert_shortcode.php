@@ -8,13 +8,13 @@
 		<div class="modal-body">
 		<?php
 
-			$forms = Caldera_Forms_Forms::get_forms();
+			$forms = Caldera_Forms_Forms::get_forms( true );
 			if(!empty($forms)){
 				foreach($forms as $form_id=>$form){
 
 					echo '<div class="modal-list-item"><label><input name="insert_form_id" autocomplete="off" class="selected-form-shortcode" value="' . $form_id . '" type="radio">' . $form['name'];
 					if(!empty($form['description'])){
-						echo '<span class="description"> '.$form['description'] .' </span>';
+						echo '<p style="margin-left: 20px;" class="description"> '.$form['description'] .' </p>';
 					}
 					echo ' </label></div>';
 					//dump($form,0);
