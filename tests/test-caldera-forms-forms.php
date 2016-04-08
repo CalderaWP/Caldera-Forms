@@ -163,7 +163,7 @@ class Test_Caldera_Forms_Forms extends Caldera_Forms_Test_Case {
 	 * Test registry stays in sync properly and does not cause cache errors
 	 *
 	 * @since 1.3.4
-	 *
+	 * 
 	 * @group db
 	 * @group db_form_config
 	 *
@@ -185,7 +185,7 @@ class Test_Caldera_Forms_Forms extends Caldera_Forms_Test_Case {
 
 		$id = $new_form[ 'ID' ];
 		$this->assertArrayHasKey( $id, get_option( '_caldera_forms_forms', array() ) );
-		$this->assertSame( 1, count( get_option( '_caldera_forms_forms', array() ) ) );
+		$this->assertSame( Caldera_Forms_Forms::get_forms( false, true ), get_option( '_caldera_forms_forms' ) );
 		$ids[] = $id;
 		$data  = array(
 			"name"        => rand(),
@@ -194,17 +194,7 @@ class Test_Caldera_Forms_Forms extends Caldera_Forms_Test_Case {
 
 		$new_form = Caldera_Forms_Forms::create_form( $data );
 
-		$id = $new_form[ 'ID' ];
-		$this->assertArrayHasKey( $id, get_option( '_caldera_forms_forms', array() ) );
-		$ids[] = $id;
 
-		$this->assertSame( 2, count( get_option( '_caldera_forms_forms', array() ) ) );
-
-		wp_cache_delete( '_caldera_forms_forms', 'options' );
-		$this->assertSame( $ids, array_values( get_option( '_caldera_forms_forms' ) ) );
-
-		$this->assertEquals( $ids, array_values( Caldera_Forms_Forms::get_forms( false, true ) ) );
-		wp_cache_delete( '_caldera_forms_forms', 'options' );
 		$this->assertSame( Caldera_Forms_Forms::get_forms( false, true ), get_option( '_caldera_forms_forms' ) );
 
 
