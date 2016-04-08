@@ -5188,7 +5188,7 @@ class Caldera_Forms {
 			}
 
 			$title = __( sprintf( 'Click to open the form %1s in a modal',  $form[ 'name' ] ), 'caldera-forms' );
-			$form = sprintf( '<a href="#" class="caldera-forms-modal" %1s title="%2s">%3s</a>', $tag_atts, $title, $content );
+			$form = sprintf( '<button href="#" class="caldera-forms-modal" %1s title="%2s">%3s</button>', $tag_atts, $title, $content );
 			wp_enqueue_script( 'cf-dynamic' );
 		}else{
 			$form = self::render_form( $atts );
