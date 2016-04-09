@@ -113,6 +113,8 @@ class Caldera_Forms_Admin {
 
 		add_action( 'caldera_forms_new_form_template_end', array( $this, 'load_new_form_templates') );
 
+		add_action( 'admin_init', array( $this, 'watch_tracking' ) );
+
 	}
 
 	public function render_editor_template(){
@@ -1636,17 +1638,39 @@ class Caldera_Forms_Admin {
 	 * @uses "caldera_forms_admin_footer"
 	 */
 	public static function admin_alerts(){
-		$notices = self::get_admin_alerts();
-		if( ! empty( $notices ) ){
-			shuffle( $notices );
-			$notice = $notices[0];
+		$optin_status = Caldera_Forms::tracking_optin_status();
+		if(  'dismiss' !== $optin_status && 0 == $optin_status ){
+			$base_url = add_query_arg( 'page', 'caldera-forms' );
+			$base_url = add_query_arg( 'cal_tracking_nonce', wp_create_nonce(), $base_url );
+			$allow = add_query_arg( 'cal_tracking', 1, $base_url );
+			$dismiss = add_query_arg( 'cal_tracking', 'dismiss', $base_url );
+			$message[] = __( 'Allow us to track basic usage data and receive a 10% discount at CalderaWP.com.', 'caldera-forms' );
+			$message[] = __( 'No form entries, or sensitive data will be saved.', 'caldera-forms' );
+			$message[] = __( 'This data is used to help improve Caldera Forms and it will never be shared with a third-party.', 'caldera-forms' );
+			$message[] = __( 'If you choose to allow us to track data, a 10% discount code for CalderaWP.com will be sent to the admin email for this site.', 'caldera-forms' );
 
-			if( is_array( $notice ) && isset( $notice[ 'title' ], $notice[ 'content' ] ) ){
-				unset( $notices[0]);
-				update_option( '_cf_admin_alerts', $notices );
-				self::create_admin_notice( $notice[ 'title' ], $notice[ 'content' ] );
+			$message = '<p>' . implode( ' ', $message ) . '</p>';
+
+			$message .= sprintf( '<p style="display:inline;float:left;" ><a type="button" class="button button-secondary" href="%s">%s</a></p>', esc_url_raw( $dismiss ), __( 'No Thanks', 'caldera-forms') );
+
+			$message .= sprintf( '<p style="display:inline; float:right;"><a type="button" class="button button-primary" href="%s">%s</a>', esc_url_raw( $allow ), __( 'Help Us & Save', 'caldera-forms') );
+
+			self::create_admin_notice( __( 'Help us improve Caldera Forms & Get 10% Off At CalderaWP.com', 'caldera-forms' ), $message, false );
+		}else{
+			$notices = self::get_admin_alerts();
+			if( ! empty( $notices ) ){
+				shuffle( $notices );
+				$notice = $notices[0];
+
+				if( is_array( $notice ) && isset( $notice[ 'title' ], $notice[ 'content' ] ) ){
+					unset( $notices[0]);
+					update_option( '_cf_admin_alerts', $notices );
+					self::create_admin_notice( $notice[ 'title' ], $notice[ 'content' ] );
+				}
 			}
 		}
+
+
 
 	}
 
@@ -1658,7 +1682,10 @@ class Caldera_Forms_Admin {
 	 * @param $title
 	 * @param $content
 	 */
-	public static function create_admin_notice( $title, $content ){
+	public static function create_admin_notice( $title, $content, $sanitize = true  ){
+		if( $sanitize ) {
+			$content = wp_kses( $content, wp_kses_allowed_html( 'post' ) );
+		}
 		?>
 		<div
 			class="ajax-trigger"
@@ -1671,7 +1698,7 @@ class Caldera_Forms_Admin {
 		>
 		</div>
 		<script type="text/html" id="<?php echo esc_attr( sanitize_key('admin-modal' . $title ) ); ?>">
-			<?php echo wp_kses( $content, wp_kses_allowed_html( 'post') ); ?>
+			<?php echo $content; ?>
 		</script>
 <?php
 	}
@@ -1695,7 +1722,13 @@ class Caldera_Forms_Admin {
 
 		if( false === $last_check || $day_ago > $last_check   ){
 			global $wp_version;
-			$r = wp_remote_get( add_query_arg( array( 'wp' => urlencode( $wp_version ), 'php' => urlencode( PHP_VERSION ), 'db' => get_option( 'CF_DB', 0 ), 'url' => urlencode( site_url() ) ),  'http://apicaldera.wpengine.com/wp-json/calderawp_api/v2/notices'  ) );
+			$tracking_optin = intval( Caldera_Forms::tracking_optin_status() );
+			$url = add_query_arg( array( 'wp' => urlencode( $wp_version ), 'php' => urlencode( PHP_VERSION ), 'db' => get_option( 'CF_DB', 0 ), 'url' => urlencode( site_url() ), 'tracking_optin' => $tracking_optin  ),  'http://apicaldera.wpengine.com/wp-json/calderawp_api/v2/notices'  );
+			if( 0 < $tracking_optin ){
+				$url = add_query_arg( 'email', urlencode( get_option( 'admin_email' ) ), $url );
+			}
+
+			$r = wp_remote_get( $url  );
 			if( ! is_wp_error( $r ) && 200 == wp_remote_retrieve_response_code( $r ) ){
 				$r_notices = json_decode(wp_remote_retrieve_body( $r ) );
 				if(  ! empty( $r_notices ) ){
@@ -1710,6 +1743,26 @@ class Caldera_Forms_Admin {
 
 		return $notices;
 
+	}
+
+	/**
+	 * Watch for tracking optin change and update if needed
+	 *
+	 * @uses "admin_init"
+	 *
+	 * @since 1.3.5
+	 */
+	public static function watch_tracking(){
+		if( isset( $_GET[ 'cal_tracking' ], $_GET[ 'cal_tracking_nonce' ] ) ){
+			if( wp_verify_nonce( $_GET[ 'cal_tracking_nonce' ] ) ) {
+				$value = $_GET[ 'cal_tracking' ];
+				if( is_numeric(  $value ) ) {
+					update_option( '_caldera_forms_tracking_allowed', absint( $value ) );
+				}elseif( 'dismiss' == trim( $value ) ){
+					update_option( '_caldera_forms_tracking_allowed', trim( $value ) );
+				}
+			}
+		}
 	}
 
 }

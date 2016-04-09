@@ -5198,4 +5198,16 @@ class Caldera_Forms {
 
 	}
 
+	/**
+	 * Get the status of the usage tracking
+	 *
+	 * @since 1.3.5
+	 *
+	 * @return string|int
+	 */
+	public static function tracking_optin_status(){
+		return get_option( '_caldera_forms_tracking_allowed', 0 );
+	}
+
+
 }
