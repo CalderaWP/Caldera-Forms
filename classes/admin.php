@@ -1638,7 +1638,7 @@ class Caldera_Forms_Admin {
 	 * @uses "caldera_forms_admin_footer"
 	 */
 	public static function admin_alerts(){
-		$optin_status = Caldera_Forms::tracking_optin_status();
+		$optin_status = Caldera_Forms_Tracking::tracking_optin_status();
 		if(  'dismiss' !== $optin_status && 0 == $optin_status ){
 			$base_url = add_query_arg( 'page', 'caldera-forms' );
 			$base_url = add_query_arg( 'cal_tracking_nonce', wp_create_nonce(), $base_url );
@@ -1721,25 +1721,18 @@ class Caldera_Forms_Admin {
 		$last_check = get_option( '_cf_last_alert_check', false );
 
 		if( false === $last_check || $day_ago > $last_check   ){
-			global $wp_version;
-			$tracking_optin = intval( Caldera_Forms::tracking_optin_status() );
-			$url = add_query_arg( array( 'wp' => urlencode( $wp_version ), 'php' => urlencode( PHP_VERSION ), 'db' => get_option( 'CF_DB', 0 ), 'url' => urlencode( site_url() ), 'tracking_optin' => $tracking_optin  ),  'http://apicaldera.wpengine.com/wp-json/calderawp_api/v2/notices'  );
-			if( 0 < $tracking_optin ){
-				$url = add_query_arg( 'email', urlencode( get_option( 'admin_email' ) ), $url );
+			$url       = Caldera_Forms_Tracking::api_url( 'notices' );
+			$r_notices = Caldera_Forms_Tracking::send_to_api( $url );
+			if ( ! empty( $r_notices ) ) {
+				$notices = array_merge( $notices, $r_notices );
+				update_option( '_cf_admin_alerts', $notices );
 			}
-
-			$r = wp_remote_get( $url  );
-			if( ! is_wp_error( $r ) && 200 == wp_remote_retrieve_response_code( $r ) ){
-				$r_notices = json_decode(wp_remote_retrieve_body( $r ) );
-				if(  ! empty( $r_notices ) ){
-					$notices = array_merge( $notices, $r_notices );
-					update_option( '_cf_admin_alerts', $notices );
-				}
-			}
-
-			update_option( '_cf_last_alert_check', time() );
 
 		}
+
+		update_option( '_cf_last_alert_check', time() );
+
+
 
 		return $notices;
 
