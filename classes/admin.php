@@ -825,7 +825,7 @@ class Caldera_Forms_Admin {
 	public function register_admin_page(){
 		global $menu, $submenu;
 		
-		$forms = Caldera_Forms_Forms::get_forms();
+		$forms = Caldera_Forms_Forms::get_forms( true );
 
 		// get current user
 		if( current_user_can( Caldera_Forms::get_manage_cap() ) ){
@@ -1151,8 +1151,10 @@ class Caldera_Forms_Admin {
 			return;
 		}
 
+		add_filter( 'caldera_forms_manage_cap', array( __CLASS__ , 'save_form_cap_filter' ), 9, 3 );
+
 		/// check for form delete
-		if(!empty($_GET['delete']) && !empty($_GET['cal_del']) && current_user_can( Caldera_Forms::get_manage_cap( 'save' ) ) ){
+		if(!empty($_GET['delete']) && !empty($_GET['cal_del']) && current_user_can( Caldera_Forms::get_manage_cap( 'save' ), strip_tags( $_GET[ 'delete' ] ) ) ){
 
 			if ( ! wp_verify_nonce( $_GET['cal_del'], 'cf_del_frm' ) ) {
 				// This nonce is not valid.
@@ -1171,7 +1173,7 @@ class Caldera_Forms_Admin {
 		}
 
 		/** IMPORT */
-		if( isset($_POST['cfimporter']) && current_user_can( Caldera_Forms::get_manage_cap( 'import' ) ) ){
+		if( isset($_POST['cfimporter']) && current_user_can( Caldera_Forms::get_manage_cap( 'import' )  ) ){
 
 			if ( check_admin_referer( 'cf-import', 'cfimporter' ) ) {
 				if ( isset( $_FILES[ 'import_file' ] ) && ! empty( $_FILES[ 'import_file' ][ 'size' ] ) ) {
@@ -1213,7 +1215,7 @@ class Caldera_Forms_Admin {
 
 		}
 
-		if(!empty($_GET['export-form']) && current_user_can( Caldera_Forms::get_manage_cap( 'export' ) )){
+		if(!empty($_GET['export-form']) && current_user_can( Caldera_Forms::get_manage_cap( 'export', strip_tags( $_GET[ 'export-form' ] ) ) )){
 
 			$form = Caldera_Forms_Forms::get_form( $_GET['export-form'] );
 
@@ -1266,7 +1268,7 @@ class Caldera_Forms_Admin {
 
 		}
 
-		if(!empty($_GET['export']) && current_user_can( Caldera_Forms::get_manage_cap( 'export' )) ){
+		if(!empty($_GET['export']) && current_user_can( Caldera_Forms::get_manage_cap( 'export', strip_tags( $_GET[ 'export' ] ) ) ) ){
 
 			$form = Caldera_Forms_Forms::get_form( $_GET['export'] );
 
@@ -1767,6 +1769,44 @@ class Caldera_Forms_Admin {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Filter permissions used in self::save_form()
+	 *
+	 * @since 1.3.5
+	 *
+	 * @uses "caldera_forms_manage_cap"
+	 *
+	 * @param string $cap A capability. By default "manage_options".
+	 * @param string $context Context to check in.
+	 * @param array|null $form Form config if it was passed.
+	 *
+	 * @return int|string
+	 */
+	public static function save_form_cap_filter( $cap, $context, $form ){
+		if( ! is_array( $form ) ){
+			return $cap;
+		}
+
+		switch( $context ) {
+			case 'export' :
+				if( ! empty( $form[ 'pin_roles' ] ) ){
+					if( isset( $form[ 'pin_roles' ][ 'access_role' ] ) && is_array($form[ 'pin_roles' ][ 'access_role' ] ) ){
+						foreach( $form[ 'pin_roles' ][ 'access_role' ] as $cap => $i ) {
+							if( current_user_can( $cap ) ){
+								break;
+
+							}
+						}
+					}
+				}
+
+				break;
+		}
+
+		return $cap;
+
 	}
 
 }

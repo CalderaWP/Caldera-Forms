@@ -5140,7 +5140,10 @@ class Caldera_Forms {
 	 *
 	 * @return mixed|void
 	 */
-	public static function get_manage_cap( $context = 'admin' ) {
+	public static function get_manage_cap( $context = 'admin', $form = false ) {
+		if( is_string( $form ) ){
+			$form = Caldera_Forms_Forms::get_form($form );
+		}
 
 		/**
 		 * Change capability for managing Caldera Forms
@@ -5149,8 +5152,9 @@ class Caldera_Forms {
 		 *
 		 * @param string $cap A capability. By default "manage_options"
 		 * @param string $context Context to check in.
+		 * @param array|null $form Form config if it was passed.
 		 */
-		return apply_filters( 'caldera_forms_manage_cap', 'manage_options', $context );
+		return apply_filters( 'caldera_forms_manage_cap', 'manage_options', $context, $form );
 		
 	}
 
