@@ -1144,8 +1144,12 @@ class Caldera_Forms_Admin {
 	/***
 	 * Handles form updating, deleting, exporting and importing
 	 *
+	 * @uses "init" action
 	 */
 	static function save_form(){
+		if( ! isset( $_GET[ 'page' ] ) || 'caldera-forms' != $_GET[ 'page' ] ){
+			return;
+		}
 
 		/// check for form delete
 		if(!empty($_GET['delete']) && !empty($_GET['cal_del']) && current_user_can( Caldera_Forms::get_manage_cap( 'save' ) ) ){
