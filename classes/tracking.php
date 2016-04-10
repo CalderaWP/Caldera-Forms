@@ -92,7 +92,7 @@ class Caldera_Forms_Tracking {
 	 * @since 1.3.5
 	 */
 	public static function send_rows( ){
-		delete_option( self::$row_tracking_key );
+
 		if( false == self::tracking_allowed() ){
 			return;
 		}
@@ -115,7 +115,7 @@ class Caldera_Forms_Tracking {
 			'url' => urlencode( home_url() ),
 			'rows' => $rows
 		);
-		$url = self::api_url( 'tracking' );
+
 		$sent = self::send_to_api( self::$api_url . '/tracking', 'POST', $body );
 		if( ! is_numeric( $sent  ) ){
 			end( $rows );
