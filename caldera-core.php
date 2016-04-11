@@ -55,12 +55,14 @@ add_action( 'plugins_loaded', array( 'Caldera_Forms', 'get_instance' ) );
 
 // Admin & Admin Ajax stuff.
 if ( is_admin() || defined( 'DOING_AJAX' ) ) {
-
+	include_once CFCORE_PATH . 'classes/support.php';
+	add_action( 'plugins_loaded', array( 'Caldera_Forms_Support', 'get_instance' ) );
 	require_once( CFCORE_PATH . 'classes/admin.php' );
 	add_action( 'plugins_loaded', array( 'Caldera_Forms_Admin', 'get_instance' ) );
 
 }
 
 if ( is_admin() ) {
+	require_once( CFCORE_PATH . 'classes/support.php' );
   require_once( CFCORE_PATH . 'processors/classes/ui.php' );
 }

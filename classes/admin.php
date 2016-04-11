@@ -911,31 +911,15 @@ class Caldera_Forms_Admin {
 
 		$screen = get_current_screen();
 
-		wp_enqueue_style( $this->plugin_slug .'-admin-icon-styles', CFCORE_URL . 'assets/css/dashicon.css', array(), self::VERSION );
+		wp_enqueue_style( $this->plugin_slug . '-admin-icon-styles', CFCORE_URL . 'assets/css/dashicon.css', array(), self::VERSION );
 
-		if($screen->base === 'post'){
-			wp_enqueue_style( $this->plugin_slug .'-modal-styles', CFCORE_URL . 'assets/css/modals.css', array(), self::VERSION );
-			wp_enqueue_script( $this->plugin_slug .'-shortcode-insert', CFCORE_URL . 'assets/js/shortcode-insert.min.js', array('jquery'), self::VERSION );
-			/*
-			//add_editor_style( CFCORE_URL . 'assets/css/caldera-form.css' );
-			add_editor_style( CFCORE_URL . 'assets/css/caldera-grid.css' );
-			add_editor_style( CFCORE_URL . 'assets/css/dashicon.css' );
-			// get fields
+		if ( $screen->base === 'post' ) {
+			wp_enqueue_style( $this->plugin_slug . '-modal-styles', CFCORE_URL . 'assets/css/modals.css', array(), self::VERSION );
+			wp_enqueue_script( $this->plugin_slug . '-shortcode-insert', CFCORE_URL . 'assets/js/shortcode-insert.min.js', array( 'jquery' ), self::VERSION );
 
-			$field_types = Caldera_Forms::get_field_types();
-
-			foreach($field_types as $field_type){
-				//enqueue styles
-				if( !empty( $field_type['styles'])){
-					foreach($field_type['styles'] as $style){
-						add_editor_style( $style );
-					}
-				}
-
-			}
-			*/
 		}
-		if( !in_array( $screen->base, $this->screen_prefix ) ){
+
+		if ( ! in_array( $screen->base, $this->screen_prefix ) ) {
 			return;
 		}
 
@@ -946,38 +930,29 @@ class Caldera_Forms_Admin {
 
 		wp_enqueue_script( 'password-strength-meter' );
 
-		wp_enqueue_style( $this->plugin_slug .'-admin-styles', CFCORE_URL . 'assets/css/admin.css', array(), self::VERSION );
-		wp_enqueue_style( $this->plugin_slug .'-modal-styles', CFCORE_URL . 'assets/css/modals.css', array(), self::VERSION );
-		wp_enqueue_style( $this->plugin_slug .'-field-styles', CFCORE_URL . 'assets/css/fields.min.css', array(), self::VERSION );
+		wp_enqueue_style( $this->plugin_slug . '-admin-styles', CFCORE_URL . 'assets/css/admin.css', array(), self::VERSION );
+		wp_enqueue_style( $this->plugin_slug . '-modal-styles', CFCORE_URL . 'assets/css/modals.css', array(), self::VERSION );
+		wp_enqueue_style( $this->plugin_slug . '-field-styles', CFCORE_URL . 'assets/css/fields.min.css', array(), self::VERSION );
 
-		/* standalone scripts
-		wp_enqueue_script( $this->plugin_slug .'-admin-scripts', CFCORE_URL . 'assets/js/admin.js', array(), self::VERSION );
-		wp_enqueue_script( $this->plugin_slug .'-handlebars', CFCORE_URL . 'assets/js/handlebars.js', array(), self::VERSION );
-		wp_enqueue_script( $this->plugin_slug .'-baldrick-handlebars', CFCORE_URL . 'assets/js/handlebars.baldrick.js', array($this->plugin_slug .'-baldrick'), self::VERSION );
-		wp_enqueue_script( $this->plugin_slug .'-baldrick-modals', CFCORE_URL . 'assets/js/modals.baldrick.js', array($this->plugin_slug .'-baldrick'), self::VERSION );
-		wp_enqueue_script( $this->plugin_slug .'-baldrick', CFCORE_URL . 'assets/js/jquery.baldrick.js', array('jquery'), self::VERSION );
-		*/
-		wp_enqueue_script( $this->plugin_slug .'-baldrick', CFCORE_URL . 'assets/js/wp-baldrick-full.js', array('jquery'), self::VERSION );
-		wp_enqueue_script( $this->plugin_slug .'-admin-scripts', CFCORE_URL . 'assets/js/admin.min.js', array( $this->plugin_slug .'-baldrick' ), self::VERSION );
 
-		if(!empty($_GET['edit'])){
+		wp_enqueue_script( $this->plugin_slug . '-baldrick', CFCORE_URL . 'assets/js/wp-baldrick-full.js', array( 'jquery' ), self::VERSION );
+		wp_enqueue_script( $this->plugin_slug . '-admin-scripts', CFCORE_URL . 'assets/js/admin.min.js', array( $this->plugin_slug . '-baldrick' ), self::VERSION );
 
-			/*// editor specific styles
-			wp_enqueue_script( $this->plugin_slug .'-edit-fields', CFCORE_URL . 'assets/js/edit.js', array('jquery'), self::VERSION );
-			*/
-			wp_enqueue_script( $this->plugin_slug .'-edit-fields', CFCORE_URL . 'assets/js/fields.min.js', array('jquery'), self::VERSION );
-			
-			wp_enqueue_script( $this->plugin_slug .'-edit-editor', CFCORE_URL . 'assets/js/edit.min.js', array('jquery'), self::VERSION );
+		if ( ! empty( $_GET[ 'edit' ] ) ) {
+
+			wp_enqueue_script( $this->plugin_slug . '-edit-fields', CFCORE_URL . 'assets/js/fields.min.js', array( 'jquery' ), self::VERSION );
+
+			wp_enqueue_script( $this->plugin_slug . '-edit-editor', CFCORE_URL . 'assets/js/edit.min.js', array( 'jquery' ), self::VERSION );
 
 
 			wp_enqueue_script( 'jquery-ui-users' );
 			wp_enqueue_script( 'jquery-ui-sortable' );
 			wp_enqueue_script( 'jquery-ui-droppable' );
 
-		}else{
+		} else {
 
 			$field_types = apply_filters( 'caldera_forms_get_field_types', array() );
-			
+
 			wp_enqueue_style( 'cf-grid-styles' );
 			wp_enqueue_style( 'cf-form-styles' );
 			wp_enqueue_style( 'cf-alert-styles' );
@@ -988,130 +963,128 @@ class Caldera_Forms_Admin {
 			wp_enqueue_script( 'cf-validator' );
 			wp_enqueue_script( 'cf-init' );
 
-			foreach( $field_types as $field ){
-				if( !empty( $field['styles'])){
-					foreach($field['styles'] as $style){
-						if( false !== strpos($style, '//')){
+			foreach ( $field_types as $field ) {
+				if ( ! empty( $field[ 'styles' ] ) ) {
+					foreach ( $field[ 'styles' ] as $style ) {
+						if ( false !== strpos( $style, '//' ) ) {
 							wp_enqueue_style( 'cf-' . sanitize_key( basename( $style ) ), $style, array() );
-						}else{
+						} else {
 							wp_enqueue_style( $style );
 						}
 					}
 				}
 
 				//enqueue scripts
-				if( !empty( $field['scripts'])){
+				if ( ! empty( $field[ 'scripts' ] ) ) {
 					// check for jquery deps
 					$depts[] = 'jquery';
-					foreach($field['scripts'] as $script){
-						if( false !== strpos($script, '//')){
+					foreach ( $field[ 'scripts' ] as $script ) {
+						if ( false !== strpos( $script, '//' ) ) {
 							wp_enqueue_script( 'cf-' . sanitize_key( basename( $script ) ), $script, $depts );
-						}else{
+						} else {
 							wp_enqueue_script( $script );
 						}
 					}
-				}	
+				}
 			}
 
 		}
-		if(!empty($_GET['edit-entry'])){
+		if ( ! empty( $_GET[ 'edit-entry' ] ) ) {
 			wp_enqueue_style( 'cf-grid-styles', CFCORE_URL . 'assets/css/caldera-grid.css', array(), self::VERSION );
 		}
 
-		
-			// Load Field Types Styles & Scripts
-			$field_types = apply_filters( 'caldera_forms_get_field_types', array() );
 
-			// load panels
-			$panel_extensions = apply_filters( 'caldera_forms_get_panel_extensions', array() );
+		// Load Field Types Styles & Scripts
+		$field_types = apply_filters( 'caldera_forms_get_field_types', array() );
 
-			// load processors
-			$form_processors = $processors = Caldera_Forms_Processor_Load::get_instance()->get_processors();
+		// load panels
+		$panel_extensions = apply_filters( 'caldera_forms_get_panel_extensions', array() );
 
-			// merge a list
-			$merged_types = array_merge($field_types, $panel_extensions, $form_processors);
+		// load processors
+		$form_processors = $processors = Caldera_Forms_Processor_Load::get_instance()->get_processors();
 
-			foreach( $merged_types as $type=>&$config){
+		// merge a list
+		$merged_types = array_merge( $field_types, $panel_extensions, $form_processors );
 
-				// set context
-				if(!empty($_GET['edit'])){
-					$context = &$config['setup'];
-				}else{
-					$context = &$config;
-				}
+		foreach ( $merged_types as $type => &$config ) {
 
-				/// Styles
-				if(!empty($context['styles'])){
-					foreach($context['styles'] as $location=>$styles){
+			// set context
+			if ( ! empty( $_GET[ 'edit' ] ) ) {
+				$context = &$config[ 'setup' ];
+			} else {
+				$context = &$config;
+			}
 
-						// front only scripts
-						if($location === 'front'){
-							continue;
-						}
+			/// Styles
+			if ( ! empty( $context[ 'styles' ] ) ) {
+				foreach ( $context[ 'styles' ] as $location => $styles ) {
 
-						
+					// front only scripts
+					if ( $location === 'front' ) {
+						continue;
+					}
 
-						foreach( (array) $styles as $style){
 
-							$key = $type . '-' . sanitize_key( basename( $style) );
+					foreach ( (array) $styles as $style ) {
 
-							// is url
-							if(false === strpos($style, "/")){
-								// is reference
-								wp_enqueue_style( $style );
+						$key = $type . '-' . sanitize_key( basename( $style ) );
 
-							}else{
-								// is url - 
-								if('//' != substr( $style, 0, 2) && file_exists( $style )){
-									// local file
-									wp_enqueue_style( $key, plugin_dir_url( $style ) . basename( $style ), array(), self::VERSION );
-								}else{
-									// most likely remote
-									wp_enqueue_style( $key, $style, array(), self::VERSION );
-								}
+						// is url
+						if ( false === strpos( $style, "/" ) ) {
+							// is reference
+							wp_enqueue_style( $style );
 
+						} else {
+							// is url -
+							if ( '//' != substr( $style, 0, 2 ) && file_exists( $style ) ) {
+								// local file
+								wp_enqueue_style( $key, plugin_dir_url( $style ) . basename( $style ), array(), self::VERSION );
+							} else {
+								// most likely remote
+								wp_enqueue_style( $key, $style, array(), self::VERSION );
 							}
+
 						}
 					}
 				}
-				/// scripts
-				if(!empty($context['scripts'])){
+			}
+			/// scripts
+			if ( ! empty( $context[ 'scripts' ] ) ) {
 
-					foreach($context['scripts'] as $location=>$scripts){
-						
-						// front only scripts
-						if($location === 'front'){
-							continue;
-						}
+				foreach ( $context[ 'scripts' ] as $location => $scripts ) {
 
-						foreach( (array) $scripts as $script){
-							
+					// front only scripts
+					if ( $location === 'front' ) {
+						continue;
+					}
+
+					foreach ( (array) $scripts as $script ) {
 
 
-							$key = $type . '-' . sanitize_key( basename( $script) );
+						$key = $type . '-' . sanitize_key( basename( $script ) );
 
-							// is url
-							if(false === strpos($script, "/")){
-								// is reference
-								wp_enqueue_script( $script );
+						// is url
+						if ( false === strpos( $script, "/" ) ) {
+							// is reference
+							wp_enqueue_script( $script );
 
-							}else{
-								// is url - 
-								if('//' != substr( $script, 0, 2) && file_exists( $script )){
-									// local file
-									wp_enqueue_script( $key, plugin_dir_url( $script ) . basename( $script ), array('jquery'), self::VERSION );
-								}else{
-									// most likely remote
-									wp_enqueue_script( $key, $script, array('jquery'), self::VERSION );
-								}
-
+						} else {
+							// is url -
+							if ( '//' != substr( $script, 0, 2 ) && file_exists( $script ) ) {
+								// local file
+								wp_enqueue_script( $key, plugin_dir_url( $script ) . basename( $script ), array( 'jquery' ), self::VERSION );
+							} else {
+								// most likely remote
+								wp_enqueue_script( $key, $script, array( 'jquery' ), self::VERSION );
 							}
+
 						}
 					}
 				}
-			}			
+			}
+		}
 
-		//}
+
 	}
 
 	/**
