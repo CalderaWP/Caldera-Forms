@@ -3829,7 +3829,7 @@ class Caldera_Forms {
 			'conditionals' => CFCORE_URL . 'assets/js/conditionals.min.js',
 			'validator-i18n' => null,
 			'validator' => CFCORE_URL . 'assets/js/parsley.min.js',
-			'polyfiller' => CFCORE_URL . 'assets/js/polyfiller.min.js',
+			//'polyfiller' => CFCORE_URL . 'assets/js/polyfiller.min.js',
 			'init'		=>	CFCORE_URL . 'assets/js/frontend-script-init.min.js',			
 		);
 		
@@ -5111,7 +5111,7 @@ class Caldera_Forms {
 		do_action('caldera_forms_render_end', $form);
 
 		wp_enqueue_script( 'cf-field' );
-		wp_enqueue_script( 'cf-polyfiller' );
+		//wp_enqueue_script( 'cf-polyfiller' );
 		wp_enqueue_script( 'cf-validator' );
 		wp_enqueue_script( 'cf-validator-i18n' );
 
