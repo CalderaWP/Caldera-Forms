@@ -1716,6 +1716,7 @@ class Caldera_Forms {
 					$option[ 'value' ] = $option[ 'label' ] = self::do_magic_tags( $option[ 'label' ] );
 				}else{
 					$option[ 'value' ] = self::do_magic_tags( $option[ 'value' ] );
+					$option[ 'label' ] = self::do_magic_tags( $option[ 'label' ] );
 				}
 			}
 		}
