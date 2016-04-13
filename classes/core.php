@@ -336,7 +336,7 @@ class Caldera_Forms {
 	 */
 	public static function mail_attachment_check($mail, $data, $form){
 		foreach ( $form[ 'fields' ] as $field_id => $field ) {
-			if ( $field[ 'type' ] == 'file' && isset( $field[ 'config' ][ 'attach' ] ) ) {
+			if ( ( $field[ 'type' ] == 'file' || $field[ 'type' ] == 'advanced_file' )  && isset( $field[ 'config' ][ 'attach' ] ) ) {
 				$dir  = wp_upload_dir();
 				$file = str_replace( $dir[ 'baseurl' ], $dir[ 'basedir' ], self::get_field_data( $field_id, $form ) );
 				if ( is_array( $file ) ) {
@@ -1182,6 +1182,17 @@ class Caldera_Forms {
 				"setup"		=>	array(
 					"preview"	=>	CFCORE_PATH . "fields/file/preview.php",
 					"template"	=>	CFCORE_PATH . "fields/file/config_template.php"
+				)
+			),
+			'advanced_file' => array(
+				"field"		=>	__("Advanced File Uploader", "caldera-forms"),
+				"description" => __('(beta) Inline, multi file uploader', 'caldera-forms'),
+				"file"		=>	CFCORE_PATH . "fields/advanced_file/field.php",
+				"viewer"	=>	array($this, 'handle_file_view'),
+				"category"	=>	__("Special", "caldera-forms").', '.__("File", "caldera-forms"),
+				"setup"		=>	array(
+					"preview"	=>	CFCORE_PATH . "fields/advanced_file/preview.php",
+					"template"	=>	CFCORE_PATH . "fields/advanced_file/config_template.php"
 				)
 			),
 			'recaptcha' => array(

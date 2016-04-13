@@ -94,12 +94,19 @@ jQuery( function( $ ){
     $('.cf-multi-uploader').hide();
     $( document ).on('click', '.cf-file-remove', function( e ){
         e.preventDefault();
-        var clicked = $( this );
+        var clicked = $( this ),
+            field = clicked.closest('.cf-multi-uploader-list').data('field');
+        $('[data-parent="' + field + '"]').slideDown();
         delete cf_uploader_filelist[ clicked.data('file') ];
         clicked.parent().remove();
     });    
 
     $( document ).on('change', '.cf-multi-uploader', function( e ){
+        var field = $(this);
+        if( !field.prop( 'multiple' ) ){
+            cf_uploader_filelist = {};
+            field.parent().find('.cf-uploader-trigger').slideUp();
+        }
         handleFileSelect( e );
     });
 
