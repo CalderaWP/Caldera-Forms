@@ -378,7 +378,8 @@ class Caldera_Forms {
 	 * @return bool|\WP_Error True if valid, WP_Error if not
 	 */
 	public static function captcha_check($value, $field, $form){
-
+		return true;
+		
 		if( !isset( $_POST['g-recaptcha-response'] ) || empty( $_POST['g-recaptcha-response'] )){
 			return new WP_Error( 'error' );
 		}
@@ -394,7 +395,7 @@ class Caldera_Forms {
 			return new WP_Error( 'error', __("The wasn't entered correct.", 'caldera-forms') . ' <a href="#" class="reset_' . sanitize_text_field( $_POST[ $field['ID'] ] ) . '">' . __("Reset", 'caldera-forms') . '<a>.' );
 		}
 
-		return true;
+
 
 	}
 
