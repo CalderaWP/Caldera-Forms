@@ -19,7 +19,18 @@ var cf_jsfields_init;
 					for( var t = 0; t < template.length; t++ ){
 						var select = template[ t ].replace(/\}/g,'').replace(/\{/g,'');
 						var re = new RegExp( template[ t ] ,"g");
-						str = str.replace( re , instance.find( "[data-field='" + select + "']" ).val() );
+						var sync = instance.find( "[data-field='" + select + "']" );
+						var val = '';
+						for( var i =0; i < sync.length; i++ ){
+							var this_field = $( sync[i] );
+							if( ( this_field.is(':radio') || this_field.is(':checkbox') ) && ! this_field.is(':checked') ){
+								// skip.
+							}else{
+								val += this_field.val();
+							}
+
+						}
+						str = str.replace( re , val );
 					}
 					field.val( str );
 			} );
