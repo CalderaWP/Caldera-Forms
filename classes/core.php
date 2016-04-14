@@ -656,6 +656,13 @@ class Caldera_Forms {
 		if(isset($form['processors'])){
 			foreach($form['processors'] as $processor){
 				if($processor['type'] == 'form_redirect'){
+
+					if(isset($processor['conditions']) && !empty($processor['conditions']['type'])){
+						if(!self::check_condition($processor['conditions'], $form)){
+							continue;
+						}
+					}
+
 					$notices['success']['note'] = self::do_magic_tags($processor['config']['message']);
 				}
 			}
