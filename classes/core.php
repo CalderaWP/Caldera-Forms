@@ -4060,7 +4060,7 @@ class Caldera_Forms {
 			if( is_string( $field_value ) ){
 				// maybe json?
 				$is_json = json_decode( $field_value, ARRAY_A );
-				if( !empty( $is_json ) ){
+				if( !empty( $is_json ) && is_array( $is_json ) ){
 					$field_value = $is_json;
 				}else{
 					$field_value = esc_html( stripslashes_deep( $field_value ) );
