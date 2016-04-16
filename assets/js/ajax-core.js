@@ -73,7 +73,7 @@ jQuery(function($){
 		$('.cfajax-trigger').baldrick({
 			request			:	'./',
 			method			:	'POST',
-			before			: function(el, ev){
+			init			: function(el, ev){
 				
 				ev.preventDefault();
 
