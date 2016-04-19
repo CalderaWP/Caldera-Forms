@@ -39,6 +39,7 @@ include_once CFCORE_PATH . 'classes/sanitize.php';
 include_once CFCORE_PATH . 'classes/forms.php';
 include_once CFCORE_PATH . 'classes/db/db.php';
 include_once CFCORE_PATH . 'classes/tracking.php';
+include_once CFCORE_PATH . 'classes/support.php';
 
 // includes
 include_once CFCORE_PATH . 'includes/ajax.php';
@@ -63,7 +64,7 @@ if ( is_admin() || defined( 'DOING_AJAX' ) ) {
 
 	require_once( CFCORE_PATH . 'classes/admin.php' );
 	add_action( 'plugins_loaded', array( 'Caldera_Forms_Admin', 'get_instance' ) );
-
+	add_action( 'plugins_loaded', array( 'Caldera_Forms_Support', 'get_instance' ) );
 }
 
 if ( is_admin() ) {

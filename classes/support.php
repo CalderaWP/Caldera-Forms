@@ -12,21 +12,41 @@
 class Caldera_Forms_Support {
 
 	/**
+	 * Plugin slug for menu page
+	 *
+	 * @since 1.3.5
+	 *
 	 * @var      string
 	 */
 	protected $plugin_slug = 'caldera-forms';
 
-
+	/**
+	 * Class instance
+	 *
+	 * @since 1.3.5
+	 *
+	 * @var Caldera_Forms_Support
+	 */
 	private static  $instance;
 
+	/**
+	 * Add hooks
+	 *
+	 * @since 1.3.5
+	 */
 	protected function __construct(){
 
 		add_action( 'admin_menu', array( $this, 'add_menu_page' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'scripts' ) );
-		add_filter( 'plugins_api', array( $this, 'beta'  ), 11, 3 );
-
 	}
 
+	/**
+	 * Get class instance
+	 *
+	 * @since 1.3.5
+	 *
+	 * @return \Caldera_Forms_Support
+	 */
 	public static function get_instance(){
 		if( null == self::$instance ){
 			self::$instance = new self();
@@ -35,6 +55,13 @@ class Caldera_Forms_Support {
 		return self::$instance;
 	}
 
+	/**
+	 * Add support sub menu page
+	 *
+	 * @since 1.3.5
+	 *
+	 * @uses "admin_menu" hook
+	 */
 	public static function add_menu_page(){
 		add_submenu_page(
 			'caldera-forms',
@@ -47,6 +74,15 @@ class Caldera_Forms_Support {
 		);
 	}
 
+	/**
+	 * Add scripts for this page
+	 *
+	 * @since 1.3.5
+	 *
+	 * @uses "admin_enqueue_scripts" hook
+	 *
+	 * @param string $hook Current menu hook
+	 */
 	public function scripts( $hook ){
 		if( 'caldera-forms_page_caldera-form-support' == $hook ){
 			wp_enqueue_style( $this->plugin_slug . '-admin-styles', CFCORE_URL . 'assets/css/admin.css', array(), CFCORE_VER );
@@ -54,27 +90,13 @@ class Caldera_Forms_Support {
 		}
 	}
 
-
+	/**
+	 * Callback for support menu page render
+	 *
+	 * @since 1.3.5
+	 */
 	public static function page(){
 		include CFCORE_PATH . 'ui/support/page.php';
-	}
-
-	public function beta( $obj, $action, $args ){
-
-		if( $action !== 'plugin_information' || $args->slug !== 'caldera-form' ){
-			return $obj;
-
-		}
-
-		$plugin = new \stdClass();
-		$plugin->name 			= 'CalderaWP License Manager';
-		$plugin->slug 			= 'calderawp-license-manager';
-		$plugin->version		= '1.0.0';
-		$plugin->download_link	= 'https://github.com/CalderaWP/calderawp-license-manager/archive/master.zip';
-		$plugin->plugin			= 'calderawp-license-manager/core.php';
-
-		return $plugin;
-
 	}
 
 	/**
