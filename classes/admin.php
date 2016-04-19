@@ -1627,7 +1627,10 @@ class Caldera_Forms_Admin {
 			$message[] = __( 'No form entries, or sensitive data will be saved.', 'caldera-forms' );
 			$message[] = __( 'This data is used to help improve Caldera Forms and it will never be shared with a third-party.', 'caldera-forms' );
 			$message[] = __( 'If you choose to allow us to track data, a 10% discount code for CalderaWP.com will be sent to the admin email for this site.', 'caldera-forms' );
-
+			$message[] = sprintf( '<em><a href="https://calderawp.com/?post_type=doc&p=17228&preview=true" target="_blank" title="%s">%s</a>',
+				esc_html__( 'Information on CalderaWP site about usage tracking', 'caldera-forms' ),
+				esc_html__( 'Learn more about what is tracked here.', 'caldera-forms' )
+			);
 			$message = '<p>' . implode( ' ', $message ) . '</p>';
 
 			$message .= sprintf( '<p style="display:inline;float:left;" ><a type="button" class="button button-secondary" href="%s">%s</a></p>', esc_url_raw( $dismiss ), __( 'No Thanks', 'caldera-forms') );
@@ -1729,7 +1732,19 @@ class Caldera_Forms_Admin {
 			if( wp_verify_nonce( $_GET[ 'cal_tracking_nonce' ] ) ) {
 				$value = $_GET[ 'cal_tracking' ];
 				if( is_numeric(  $value ) ) {
+
 					update_option( '_caldera_forms_tracking_allowed', absint( $value ) );
+					if( 1 == $value ){
+						$response = wp_remote_get( add_query_arg( 'cf-optin-email', urlencode( get_option( 'admin_email') ), 'http://CalderaWP.com/' ) );
+						/**
+						 * Runs after tracking optin is sent to CalderaWP.com
+						 *
+						 * @since 1.3.5
+						 *
+						 * @param array|WP_Error Response data or WP_Error
+						 */
+						add_action( 'caldera_form_after_tracking_optin', $response );
+					}
 				}elseif( 'dismiss' == trim( $value ) ){
 					update_option( '_caldera_forms_tracking_allowed', trim( $value ) );
 				}
