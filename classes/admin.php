@@ -1627,7 +1627,7 @@ class Caldera_Forms_Admin {
 			$message[] = __( 'No form entries, or sensitive data will be saved.', 'caldera-forms' );
 			$message[] = __( 'This data is used to help improve Caldera Forms and it will never be shared with a third-party.', 'caldera-forms' );
 			$message[] = __( 'If you choose to allow us to track data, a 10% discount code for CalderaWP.com will be sent to the admin email for this site.', 'caldera-forms' );
-			$message[] = sprintf( '<em><a href="https://calderawp.com/?post_type=doc&p=17228&preview=true" target="_blank" title="%s">%s</a>',
+			$message[] = sprintf( '<em><a href="https://calderawp.com/?post_type=doc&p=17228" target="_blank" title="%s">%s</a></em>',
 				esc_html__( 'Information on CalderaWP site about usage tracking', 'caldera-forms' ),
 				esc_html__( 'Learn more about what is tracked here.', 'caldera-forms' )
 			);
