@@ -31,12 +31,14 @@ define('CFCORE_BASENAME', plugin_basename( __FILE__ ));
  *
  * PLEASE keep this an integer
  */
-define( 'CF_DB', 2 );
+define( 'CF_DB', 3 );
 
 include_once CFCORE_PATH . 'classes/core.php';
 include_once CFCORE_PATH . 'classes/widget.php';
 include_once CFCORE_PATH . 'classes/sanitize.php';
 include_once CFCORE_PATH . 'classes/forms.php';
+include_once CFCORE_PATH . 'classes/db/db.php';
+include_once CFCORE_PATH . 'classes/tracking.php';
 
 // includes
 include_once CFCORE_PATH . 'includes/ajax.php';
@@ -46,23 +48,25 @@ include_once CFCORE_PATH . 'includes/filter_addon_plugins.php';
 include_once CFCORE_PATH . 'processors/classes/load.php';
 include_once CFCORE_PATH . 'processors/classes/get_data.php';
 
+
+
 // init internals of CF
 add_action( 'init', array( 'Caldera_Forms', 'init_cf_internal' ) );
 // table builder
 register_activation_hook( __FILE__, array( 'Caldera_Forms', 'activate_caldera_forms' ) );
 
 add_action( 'plugins_loaded', array( 'Caldera_Forms', 'get_instance' ) );
+add_action( 'plugins_loaded', array( 'Caldera_Forms_Tracking', 'get_instance' ) );
 
 // Admin & Admin Ajax stuff.
 if ( is_admin() || defined( 'DOING_AJAX' ) ) {
-	include_once CFCORE_PATH . 'classes/support.php';
-	add_action( 'plugins_loaded', array( 'Caldera_Forms_Support', 'get_instance' ) );
+
 	require_once( CFCORE_PATH . 'classes/admin.php' );
 	add_action( 'plugins_loaded', array( 'Caldera_Forms_Admin', 'get_instance' ) );
 
 }
 
 if ( is_admin() ) {
-	require_once( CFCORE_PATH . 'classes/support.php' );
-  require_once( CFCORE_PATH . 'processors/classes/ui.php' );
+	require_once( CFCORE_PATH . 'processors/classes/ui.php' );
 }
+

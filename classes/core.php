@@ -35,6 +35,15 @@ class Caldera_Forms {
 	 */
 	protected static $instance = null;
 
+	/**
+	 * Used to track if system has initialized and prevent recursion in init_cf_internal() method.
+	 *
+	 * @since 1.3.5
+	 *
+	 * @var bool
+	 */
+	private  static $internal_init = false;
+
 
 	/**
 	 * Initialize the plugin by setting localization, filters, and administration functions.
@@ -117,34 +126,50 @@ class Caldera_Forms {
 	}
 
 	/**
-	 * Setup internals / AKA activate stufs
+	 * Setup internals / AKA activate stuffs
 	 *
 	 */
 	public static function init_cf_internal() {
-		
-		add_rewrite_tag('%cf_api%', '([^&]+)');
-		add_rewrite_tag('%cf_entry%', '([^&]+)');
-		// INIT API
-		add_rewrite_rule('^cf-api/([^/]*)/([^/]*)/?','index.php?cf_api=$matches[1]&cf_entry=$matches[2]','top');
-		add_rewrite_rule('^cf-api/([^/]*)/?','index.php?cf_api=$matches[1]','top');
-		
-		// check update version
-		$db_version = get_option( 'CF_DB', 0 );
-		$force_update = false;
-		if( is_admin() && isset( $_GET[ 'cal_db_update' ] ) ) { // ensure that admin can only force update
-			$force_update = (bool) wp_verify_nonce( $_GET[ 'cal_db_update' ] );
-		}
-		if( CF_DB > $db_version || $force_update ) {
-			include_once CFCORE_PATH . 'includes/updater.php';
-			if (  $db_version < 2 || $force_update  ) {
-				caldera_forms_db_v2_update();
+
+		if( false == self::$internal_init ) {
+			add_rewrite_tag('%cf_api%', '([^&]+)');
+			add_rewrite_tag('%cf_entry%', '([^&]+)');
+			// INIT API
+			add_rewrite_rule('^cf-api/([^/]*)/([^/]*)/?','index.php?cf_api=$matches[1]&cf_entry=$matches[2]','top');
+			add_rewrite_rule('^cf-api/([^/]*)/?','index.php?cf_api=$matches[1]','top');
+
+			self::$internal_init = true;
+
+			// check update version
+			$db_version = get_option( 'CF_DB', 0 );
+			$force_update = false;
+			if( is_admin() && isset( $_GET[ 'cal_db_update' ] ) ) { // ensure that admin can only force update
+				$force_update = (bool) wp_verify_nonce( $_GET[ 'cal_db_update' ] );
 			}
+
+			if( CF_DB > $db_version || $force_update ) {
+				include_once CFCORE_PATH . 'includes/updater.php';
+				if (  $db_version < 2 || $force_update  ) {
+					caldera_forms_db_v2_update();
+				}
+
+				if( $db_version < 3 || $force_update ){
+					self::activate_caldera_forms( true );
+					caldera_forms_write_db_flag( 3 );
+				}
+			}
+
+
 		}
+
 	}
 	/**
-	 * Activate and setip plugin
+	 * Activate and setup plugin
+	 *
+	 * @param bool $force Optional. If true, tables are checked no matter what. Default is false
 	 */
-	public static function activate_caldera_forms(){
+	public static function activate_caldera_forms( $force = false ){
+		wp_schedule_event( time(), 'daily', 'caldera_forms_tracking_send_rows' );
 		global $wpdb;
 		
 		// ensure urls are there
@@ -155,7 +180,7 @@ class Caldera_Forms {
 		// ensure rewrites
 		flush_rewrite_rules();
 
-		if(!empty($version) ){
+		if ( false == $force && ! empty( $version ) ) {
 			if( version_compare($version, CFCORE_VER) === 0 ){ // no change
 				return;
 			}
@@ -195,6 +220,40 @@ class Caldera_Forms {
 			) " . $charset_collate . ";";
 
 			dbDelta( $meta_table );
+
+		}
+
+		// tracking table
+		if ( ! in_array( $wpdb->prefix . 'cf_tracking', $alltables ) ) {
+			// create meta tables
+			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+			$tacking_table = "CREATE TABLE `" . $wpdb->prefix . "cf_tracking` (
+			`ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			`form_id` varchar(255) DEFAULT NULL,
+			`process_id` varchar(255) DEFAULT NULL,
+			PRIMARY KEY (`ID`)
+			) " . $charset_collate . ";";
+
+			dbDelta( $tacking_table );
+
+		}
+
+		//tracking meta
+		if ( ! in_array( $wpdb->prefix . 'cf_tracking_meta', $alltables ) ) {
+			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+
+			$meta_table = "CREATE TABLE `" . $wpdb->prefix . "cf_tracking_meta` (
+			`meta_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			`event_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+			`meta_key` varchar(255) DEFAULT NULL,
+			`meta_value` longtext,
+			PRIMARY KEY (`meta_id`),
+			KEY `meta_key` (`meta_key`),
+			KEY `event_id` (`event_id`)
+			) " . $charset_collate . ";";
+
+			dbDelta( $meta_table );
+
 
 		}
 
@@ -2982,8 +3041,16 @@ class Caldera_Forms {
 		$form = apply_filters( 'caldera_forms_submit_get_form', $form);
 
 
-		// start action
-		do_action('caldera_forms_submit_start', $form);
+		/**
+		 * Runs at beginning of process of submitting form
+		 *
+		 * @since unknown
+		 *
+		 * @param array $form Form config
+		 * @param string $process_id Process ID, may not be set yet.
+		 *
+		 */
+		do_action('caldera_forms_submit_start', $form, $process_id );
 
 
 		if(!empty($form['fields'])){
@@ -5222,16 +5289,7 @@ class Caldera_Forms {
 
 	}
 
-	/**
-	 * Get the status of the usage tracking
-	 *
-	 * @since 1.3.5
-	 *
-	 * @return string|int
-	 */
-	public static function tracking_optin_status(){
-		return get_option( '_caldera_forms_tracking_allowed', 0 );
-	}
+
 
 
 }
