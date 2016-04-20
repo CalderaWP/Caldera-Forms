@@ -3300,6 +3300,16 @@ class Caldera_Forms {
 			
 		// get all form processors
 		$form_processors = apply_filters( 'caldera_forms_get_form_processors', array() );
+
+		/**
+		 * Runs before the 1st stage of processors "pre-process"
+		 *
+		 * @since unknown
+		 *
+		 * @param array $form Form config
+		 * @param array $referrer URL form was submitted via -- is passed through parse_url() before this point.
+		 * @param string $process_id Unique ID for this processing
+		 */
 		do_action('caldera_forms_submit_pre_process_start', $form, $referrer, $process_id);
 
 		/**
@@ -3413,6 +3423,16 @@ class Caldera_Forms {
 				}
 			}
 		}
+
+		/**
+		 * Runs after the 1st stage of processors "pre-process"
+		 *
+		 * @since unknown
+		 *
+		 * @param array $form Form config
+		 * @param array $referrer URL form was submitted via -- is passed through parse_url() before this point.
+		 * @param string $process_id Unique ID for this processing
+		 */
 		do_action('caldera_forms_submit_pre_process_end', $form, $referrer, $process_id);
 		/// AFTER PRE-PROCESS - check for errors etc to return else continue to process.
 		if( empty( $transdata['edit'] ) && !empty($form['db_support']) ){
@@ -3463,13 +3483,14 @@ class Caldera_Forms {
 		}else{
 			$entryid = false;
 		}
+
 		/**
 		 * Runs before the 2nd stage of processors "process"
 		 *
 		 * @since unknown
 		 *
 		 * @param array $form Form config
-		 * @param string $referrer URL form was submitted via
+		 * @param array $referrer URL form was submitted via -- is passed through parse_url() before this point.
 		 * @param string $process_id Unique ID for this processing
 		 * @param int|false $entryid Current entry ID or false if not set or being saved.
 		 */
@@ -3548,16 +3569,27 @@ class Caldera_Forms {
 
 			}
 		}
-		do_action('caldera_forms_submit_process_end', $form, $referrer, $process_id);
-		// AFTER PROCESS - do post process for any additional stuff
 
 		/**
-		 * Runs before the 3rd and fineal stage of processors "post-process"
+		 * Runs after the 2nd stage of processors "process"
 		 *
 		 * @since unknown
 		 *
 		 * @param array $form Form config
-		 * @param string $referrer URL form was submitted via
+		 * @param array $referrer URL form was submitted via -- is passed through parse_url() before this point.
+		 * @param string $process_id Unique ID for this processing
+		 * @param int|false $entryid Current entry ID or false if not set or being saved.
+		 */
+		do_action('caldera_forms_submit_process_end', $form, $referrer, $process_id);
+		// AFTER PROCESS - do post process for any additional stuff
+
+		/**
+		 * Runs before the 3rd and final stage of processors "post-process"
+		 *
+		 * @since unknown
+		 *
+		 * @param array $form Form config
+		 * @param array $referrer URL form was submitted via -- is passed through parse_url() before this point.
 		 * @param string $process_id Unique ID for this processing
 		 * @param int|false $entryid Current entry ID or false if not set or being saved.
 		 */
@@ -3603,9 +3635,28 @@ class Caldera_Forms {
 
 			}
 		}
+
+		/**
+		 * Runs after the 3rd and final stage of processors "post-process"
+		 *
+		 * @since unknown
+		 *
+		 * @param array $form Form config
+		 * @param array $referrer URL form was submitted via -- is passed through parse_url() before this point.
+		 * @param string $process_id Unique ID for this processing
+		 * @param int|false $entryid Current entry ID or false if not set or being saved.
+		 */
 		do_action('caldera_forms_submit_post_process_end', $form, $referrer, $process_id);
-		
-		// done do action.
+
+		/**
+		 * Runs after all processing for form completes
+		 *
+		 * @since unknown
+		 *
+		 * @param array $form Form config
+		 * @param array $referrer URL form was submitted via -- is passed through parse_url() before this point.
+		 * @param string $process_id Unique ID for this processing
+		 */
 		do_action('caldera_forms_submit_complete', $form, $referrer, $process_id);
 
 		// redirect back or to result page

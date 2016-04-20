@@ -164,7 +164,7 @@ class Caldera_Forms_Track extends Caldera_Forms_DB {
 	 * @uses "caldera_forms_submit_complete"
 	 *
 	 * @param array $form Form config
-	 * @param string $referrer URL referring
+	 * @param array $referrer URL parts for submissions URL
 	 * @param string $process_id Form process ID
 	 */
 	public function submit_complete( $form, $referrer, $process_id ){
@@ -174,7 +174,7 @@ class Caldera_Forms_Track extends Caldera_Forms_DB {
 				'form_id' => $form[ 'ID' ],
 				'process_id' => $process_id,
 				'time' => current_time( 'mysql' ),
-				'referrer' => $referrer
+				'referrer' => cf_http_build_url( '', $referrer )
 			));
 			
 		}
@@ -267,4 +267,28 @@ class Caldera_Forms_Track extends Caldera_Forms_DB {
 
 		return true;
 	}
+	/**
+
+	protected function unparse_url( $url ){
+		$keys = array( 'user', 'pass', 'port', 'path', 'query', 'fragment' );
+		foreach ( $keys as $key ) {
+			if ( $flags & (int) constant( 'HTTP_URL_STRIP_' . strtoupper( $key ) ) ) {
+				unset( $parse_url[ $key ] );
+			}
+
+			if( is_array( $parse_url[ $key ] ) ){
+				$parse_url[ $key ] = http_build_query( $parse_url[ $key ] );
+			}
+
+		}
+		return ( ( isset( $parse_url[ 'scheme' ] ) ) ? $parse_url[ 'scheme' ] . '://' : '' )
+		       . ( ( isset( $parse_url[ 'user' ] ) ) ? $parse_url[ 'user' ] . ( ( isset( $parse_url[ 'pass' ] ) ) ? ':' . $parse_url[ 'pass' ] : '' ) . '@' : '' )
+		       . ( ( isset( $parse_url[ 'host' ] ) ) ? $parse_url[ 'host' ] : '' )
+		       . ( ( isset( $parse_url[ 'port' ] ) ) ? ':' . $parse_url[ 'port' ] : '' )
+		       . ( ( isset( $parse_url[ 'path' ] ) ) ? $parse_url[ 'path' ] : '' )
+		       . ( ( isset( $parse_url[ 'query' ] ) ) ? '?' . $parse_url[ 'query' ] : '' )
+		       . ( ( isset( $parse_url[ 'fragment' ] ) ) ? '#' . $parse_url[ 'fragment' ] : '' );
+	}*/
+
+
 }
