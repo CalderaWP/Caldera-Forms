@@ -154,8 +154,7 @@ $.fn.formJSON = function(){
         resBaldrickTriggers();
         if(typeof caldera_conditionals !== 'undefined'){
           calders_forms_init_conditions();
-        }
-        $(document).trigger('cf.modal', form_modal );
+        }        
 
       } );
     }
@@ -174,6 +173,10 @@ $.fn.formJSON = function(){
           $('body').append('<div class="remodal" data-form="' + form_id + '" ' + entry + ' data-remodal-id="modal-' + form_id + '" id="modal-' + form_id + '"><button data-remodal-action="close" class="remodal-close"></button><div class="modal-content" id="modal-' + form_id + '-content"><span class="caldera-grid cf_processing cf_modal"></span></div></div>');
           cf_modals_load_form( $('#modal-' + form_id) );
 
+    });
+
+    $(document).on('opened', '.remodal', function () {
+      $(document).trigger('cf.modal', $( this ) );
     });
 
     $(document).on('cf.submission', function (e, obj ) {      
