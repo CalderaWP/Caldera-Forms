@@ -3899,7 +3899,8 @@ class Caldera_Forms {
 		
 		// setup script and style urls		
 		$style_urls = array(
-			'modals' => CFCORE_URL . 'assets/css/caldera-modals.min.css',
+			'modals' => CFCORE_URL . 'assets/css/remodal.min.css',
+			'modals-theme' => CFCORE_URL . 'assets/css/remodal-default-theme.min.css',
 			'grid' => CFCORE_URL . 'assets/css/caldera-grid.css',
 			'form' => CFCORE_URL . 'assets/css/caldera-form.css',
 			'alert' => CFCORE_URL . 'assets/css/caldera-alert.css',
@@ -3907,7 +3908,7 @@ class Caldera_Forms {
 		);
 		$script_urls = array(
 			'dynamic'	=>	CFCORE_URL . 'assets/js/formobject.min.js',
-			'modals'	=>	CFCORE_URL . 'assets/js/caldera-modals.min.js',
+			'modals'	=>	CFCORE_URL . 'assets/js/remodal.min.js',
 			'baldrick'	=>	CFCORE_URL . 'assets/js/jquery.baldrick.min.js',
 			'ajax'		=>	CFCORE_URL . 'assets/js/ajax-core.min.js',
 			'field'	=>	CFCORE_URL . 'assets/js/fields.min.js',			
@@ -5269,6 +5270,9 @@ class Caldera_Forms {
 			}
 
 			$tag_atts = sprintf( 'data-form="%1s"', $form['ID'] );
+			if( empty( $atts['preview'] ) ){
+				$tag_atts .= sprintf( 'data-remodal-target="modal-%1s"', $form['ID'] );
+			}
 			if( !empty( $atts['width'] ) ){
 				$tag_atts .= sprintf( ' data-width="%1s"', $atts['width'] );
 			}
@@ -5276,8 +5280,14 @@ class Caldera_Forms {
 				$tag_atts .= sprintf( ' data-height="%1s"', $atts['height'] );
 			}
 
+
 			$title = __( sprintf( 'Click to open the form %1s in a modal',  $form[ 'name' ] ), 'caldera-forms' );
-			$form = sprintf( '<button href="#" class="caldera-forms-modal" %1s title="%2s">%3s</button>', $tag_atts, $title, $content );
+			if( !empty( $atts['type'] ) && $atts['type'] == 'button' ){
+				$form = sprintf( '<button class="caldera-forms-modal" %1s title="%2s">%3s</button>', $tag_atts, $title, $content );
+			}else{
+				$form = sprintf( '<a href="#" class="caldera-forms-modal" %1s title="%2s">%3s</a>', $tag_atts, $title, $content );	
+			}
+
 			wp_enqueue_script( 'cf-dynamic' );
 		}else{
 			$form = self::render_form( $atts );

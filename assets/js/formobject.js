@@ -114,6 +114,12 @@ $.fn.formJSON = function(){
   /* setup modals system */
   if( cfModals ){
 
+    window.REMODAL_GLOBALS = {
+      DEFAULTS: {
+        hashTracking: false
+      }
+    };
+
     var head = $('head'),
         body = $('body');
 
@@ -129,56 +135,52 @@ $.fn.formJSON = function(){
       }
     }
 
-    $( document ).on( 'click', '.caldera-forms-modal', function(){
-      var trigger = $( this );
-      if( !trigger.data('form') ){return;}
-      var backdrop = $('<div class="caldera-grid cf_processing caldera-backdrop" style="background-color:rgba(0, 0, 0, 0.3);"></div>');
-      $(body).append( backdrop );
-      var url = '/cf-api/' + trigger.data('form') + '/';
-      if( trigger.data('entry') ){
-        url += trigger.data('entry') + '/';
-      }
-      $.get( url, function(res){
-        backdrop.remove();
-        var button;
-        var modalAtts = {
-          modal : trigger.data('form'),
-          width: trigger.data('width'),
-          content : res
-        };
-        if( trigger.data('button') ){
-          modalAtts.footer = '<span><button type="button" class="button cfajax-trigger" data-for="form.' + trigger.data('form') + '">' + trigger.data('button') + '</button></span>';
-        }
-        var modal = trigger.calderaModal( modalAtts );
-        var modalWrapper = $('#' + trigger.data('form') + '_calderaModalContent');
-        var modalTitle = $('#' + trigger.data('form') + '_calderaModalTitle');
-        var modalFooter = $('#' + trigger.data('form') + '_calderaModalFooter');
-        modal.config.width = trigger.data('width') ? trigger.data('width') : 500;
-        modal.resize();
-        modalWrapper.html( res );
-        modal.resize();
-        resBaldrickTriggers();
-        
-        $(document).on('cf.remove cf.add cf.submission cf.pagenav cf.error', function(){
-          if( trigger.data('height') ){
-            modal.config.height = trigger.data('height')
-          }else{
-            modal.config.height = modalWrapper.outerHeight() + modal.config.padding + 12;
-            if( modalTitle.length ){
-              modal.config.height += modalTitle.outerHeight();
-            }
-            if( modalFooter.length ){
-              modal.config.height += modalFooter.outerHeight();
-            }
+    // place in modal templates
+    $('.caldera-forms-modal').each( function(){
+      var form_modal = $(this),
+          form_id = form_modal.data('form');
+          var entry = '';
+          if( form_modal.data('entry') ){
+            entry += 'data-entry="' + form_modal.data('entry') + '"';
           }
-          modal.resize();
-        });
-        $(document).trigger('cf.modal');
-      } );      
 
-
-
+          
+          $('body').append('<div class="remodal" data-form="' + form_id + '" ' + entry + ' data-remodal-id="modal-' + form_id + '"><div class="modal-content" id="modal-' + form_id + '-content"><span class="caldera-grid cf_processing cf_modal"></span></div></div>');
     });
+
+    $(document).on('opening', '.remodal', function () {
+
+      var modal = $( this );
+      if( !modal.data('form') ){return;}
+      var url = '/cf-api/' + modal.data('form') + '/';
+      if( modal.data('entry') ){
+        url += modal.data('entry') + '/';
+      }
+      $.get( url, function( data ){
+        
+        $('#modal-' + modal.data('form') + '-content').html( data );
+        resBaldrickTriggers();
+        if(typeof caldera_conditionals !== 'undefined'){
+          calders_forms_init_conditions();
+        }
+        $(document).trigger('cf.modal');
+
+      } );
+    });
+
+    $(document).on('closed', '.remodal', function (e) {
+      var modal = $( this );
+      if( !modal.data('form') ){return;}
+
+      $('#modal-' + modal.data('form') + '-content').html( '<span class="caldera-grid cf_processing cf_modal"></span>' );
+    });
+    $(document).on('cf.submission', function (e) {
+
+      var inst = $('[data-remodal-id]').remodal();
+      setTimeout( function(){
+        inst.close();
+      }, 1500 );
+    });    
 
   }
 

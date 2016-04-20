@@ -76,6 +76,20 @@
   top: 43px;
   overflow: auto;  
 }
+.caldera-modal-body h4 {
+  border-bottom: 1px solid #dfdfdf;
+  color: #737373;
+  margin: 0 0 12px;
+  padding: 5px 0 6px;
+}
+.caldera-modal-body .modal-shortcode-options label {
+  display: block;
+  margin: 6px 0;
+}
+.caldera-modal-body .modal-shortcode-options .wp-picker-container.wp-picker-active {
+  position: fixed;
+  z-index: 999;
+}
 #extend_cf_baldrickModalBody{
   overflow: auto;
 }
