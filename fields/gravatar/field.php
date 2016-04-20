@@ -37,7 +37,7 @@ jQuery(function($){
 		loading_<?php echo $field['config']['email'] .'_'.$current_form_count; ?>,
 		current_<?php echo $field['config']['email'] .'_'.$current_form_count; ?>;
 	
-	$(document).on('keyup change cf.add','#<?php echo $form['ID'].'_'.$current_form_count; ?> [data-field="<?php echo $field['config']['email']; ?>"]', function(){
+	$(document).on('keyup change cf.add cf.modal','#<?php echo $form['ID'].'_'.$current_form_count; ?> [data-field="<?php echo $field['config']['email']; ?>"]', function(){
 
 		if(timeout_<?php echo $field['config']['email'] .'_'.$current_form_count; ?>){
 			clearTimeout(timeout_<?php echo $field['config']['email'] .'_'.$current_form_count; ?>);
