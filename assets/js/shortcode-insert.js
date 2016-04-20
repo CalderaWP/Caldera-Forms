@@ -71,9 +71,10 @@ jQuery(function($){
 	 		tag = 'caldera_form_modal';
 	 	}
 
-	 	code = '[' + tag + ' id="' + form.val() + '" type="' + modal_trigger_type + '"';
+	 	code = '[' + tag + ' id="' + form.val() + '"';
 	 	if( is_modal === true ){
 	 		code += ' modal="true"';
+	 		code += ' type="' + modal_trigger_type + '"';
 	 	}
 		if( width.length ){
 			code += ' width="' + width + '"';	
