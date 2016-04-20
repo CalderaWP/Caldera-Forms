@@ -34,7 +34,7 @@ if ( is_array( $field_value ) )  {
 <script type="text/javascript">
 	jQuery(function($){
 
-		function init_rangeslider(){
+		function init_rangeslider_<?php echo $field_id; ?>(){
 			var el = $('#<?php echo $field_id; ?>'),
 				rangeslider;
 			<?php if(empty($field['config']['pollyfill'])){ ?>
@@ -68,12 +68,12 @@ if ( is_array( $field_value ) )  {
 		}
 		<?php if(empty($field['config']['pollyfill'])){ ?>
 		// setup tabs
-		$(document).on('cf.pagenav cf.add cf.disable', function(){
-			init_rangeslider();
+		$(document).on('cf.pagenav cf.add cf.disable cf.modal', function(){
+			init_rangeslider_<?php echo $field_id; ?>();
 		});
 		<?php } ?>
 		// init slider
-		init_rangeslider();
+		init_rangeslider_<?php echo $field_id; ?>();
 
 	});
 </script>
