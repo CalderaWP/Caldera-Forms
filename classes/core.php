@@ -2685,6 +2685,14 @@ class Caldera_Forms {
 								}
 								$out[ $option_id ] = self::do_magic_tags($field['config']['option'][$option]['value']);
 								//$out[ $option_id ] = array( 'value' => self::do_magic_tags($field['config']['option'][$option]['value']), 'label' => $field['config']['option'][$option]['label'] );
+							}else{
+								// array based / check value agains submitted array.
+								foreach ( $field['config']['option'] as $option_id => $set_option) {
+									if( $set_option['value'] === $option ){
+										$out[] = self::do_magic_tags( $set_option['value'] );
+									}
+								}
+
 							}
 
 						}
