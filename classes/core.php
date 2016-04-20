@@ -86,7 +86,7 @@ class Caldera_Forms {
 		// render shortcode
 		add_shortcode( 'caldera_form', array( $this, 'shortcode_handler') );
 		// modal shortcode
-		add_shortcode( 'caldera_form_modal', array( $this, 'render_modal_form') );
+		add_shortcode( 'caldera_form_modal', array( $this, 'shortcode_handler') );
 		add_action( 'wp_footer', array( $this, 'render_footer_modals') );
 
 	}
@@ -5251,14 +5251,17 @@ class Caldera_Forms {
 	 *
 	 * @param array $atts
 	 * @param string $content
+	 * @param string $shortcode
 	 *
 	 * @return string|void
 	 */
-	public static function shortcode_handler( $atts, $content ) {
+	public static function shortcode_handler( $atts, $content, $shortcode ) {
 		if ( ! isset( $atts[ 'id' ] ) ) {
 			return;
 		}
-
+		if( $shortcode === 'caldera_form_modal' ){
+			$atts[ 'modal' ] = true;
+		}
 		if( isset( $atts[ 'modal' ] ) && $atts[ 'modal' ] ) {
 			$form = Caldera_Forms_Forms::get_form( $atts[ 'id' ] );
 			if( ! is_array( $form ) ) {

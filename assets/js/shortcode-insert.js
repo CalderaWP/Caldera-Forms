@@ -62,9 +62,12 @@ jQuery(function($){
 	 		return;
 	 	}
 
+	 	var tag = 'caldera_form';
+	 	if( is_modal ){
+	 		tag = 'caldera_form_modal';
+	 	}
 
-
-	 	code = '[caldera_form id="' + form.val() + '" type="' + modal_trigger_type + '"';
+	 	code = '[' + tag + ' id="' + form.val() + '" type="' + modal_trigger_type + '"';
 	 	if( is_modal === true ){
 	 		code += ' modal="true"';
 	 	}
@@ -77,7 +80,7 @@ jQuery(function($){
 	 		}else{
 				code += form.parent().text();
 	 		}
-	 		code += '[/caldera_form]';
+	 		code += '[/caldera_form_modal]';
 	 	}
 	 	$('#calderaf_forms_shortcode_modal')[0].reset();
 	 	$('.modal-forms-setup').hide();
