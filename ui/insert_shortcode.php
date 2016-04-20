@@ -38,6 +38,8 @@
 				</select>
 				<label><?php esc_html_e('Open Modal Text', 'caldera-forms'); ?></label>
 				<input type="text" name="modal_button_text" class="modal_trigger" style="width: 100%;">
+				<label><?php esc_html_e('Modal Width', 'caldera-forms'); ?></label>
+				<input type="number" name="modal_width" class="modal_width" style="width: 60px;">px
 
 			</div>
 

@@ -205,7 +205,7 @@ jQuery(function($){
 					}
 				}
 				// trigger global event
-				$( document ).trigger( 'cf.submission' );
+				$( document ).trigger( 'cf.submission', obj );
 				$( document ).trigger( 'cf.' + obj.data.type );
 
 				//custom_callback

@@ -135,6 +135,31 @@ $.fn.formJSON = function(){
       }
     }
 
+    function cf_modals_load_form( form_modal ){
+
+      if( !form_modal.data('form') ){return;}
+
+      var url = '/cf-api/' + form_modal.data('form') + '/';
+      if( form_modal.data('entry') ){
+        url += form_modal.data('entry') + '/';
+      } 
+      if( form_modal.data('width') ){
+        form_modal.css({ width: form_modal.data('width') } );
+      }else{
+        form_modal.css({ width: false } );
+      }    
+      $.get( url, function( data ){
+                    
+        $('#modal-' + form_modal.data('form') + '-content').html( data );
+        resBaldrickTriggers();
+        if(typeof caldera_conditionals !== 'undefined'){
+          calders_forms_init_conditions();
+        }
+        $(document).trigger('cf.modal', form_modal );
+
+      } );
+    }
+
     // place in modal templates
     $('.caldera-forms-modal').each( function(){
       var form_modal = $(this),
@@ -143,42 +168,21 @@ $.fn.formJSON = function(){
           if( form_modal.data('entry') ){
             entry += 'data-entry="' + form_modal.data('entry') + '"';
           }
+          if( form_modal.data('width') ){
+            entry += 'data-width="' + form_modal.data('width') + '"';
+          }          
+          $('body').append('<div class="remodal" data-form="' + form_id + '" ' + entry + ' data-remodal-id="modal-' + form_id + '" id="modal-' + form_id + '"><button data-remodal-action="close" class="remodal-close"></button><div class="modal-content" id="modal-' + form_id + '-content"><span class="caldera-grid cf_processing cf_modal"></span></div></div>');
+          cf_modals_load_form( $('#modal-' + form_id) );
 
-          
-          $('body').append('<div class="remodal" data-form="' + form_id + '" ' + entry + ' data-remodal-id="modal-' + form_id + '"><div class="modal-content" id="modal-' + form_id + '-content"><span class="caldera-grid cf_processing cf_modal"></span></div></div>');
     });
 
-    $(document).on('opening', '.remodal', function () {
-
-      var modal = $( this );
-      if( !modal.data('form') ){return;}
-      var url = '/cf-api/' + modal.data('form') + '/';
-      if( modal.data('entry') ){
-        url += modal.data('entry') + '/';
-      }
-      $.get( url, function( data ){
-        
-        $('#modal-' + modal.data('form') + '-content').html( data );
-        resBaldrickTriggers();
-        if(typeof caldera_conditionals !== 'undefined'){
-          calders_forms_init_conditions();
-        }
-        $(document).trigger('cf.modal');
-
-      } );
-    });
-
-    $(document).on('closed', '.remodal', function (e) {
-      var modal = $( this );
-      if( !modal.data('form') ){return;}
-
-      $('#modal-' + modal.data('form') + '-content').html( '<span class="caldera-grid cf_processing cf_modal"></span>' );
-    });
-    $(document).on('cf.submission', function (e) {
-
-      var inst = $('[data-remodal-id]').remodal();
+    $(document).on('cf.submission', function (e, obj ) {      
       setTimeout( function(){
-        inst.close();
+        var inst = $('[data-remodal-id="modal-' + obj.data.form_id + '"]').remodal();
+        cf_modals_load_form( inst.$modal );
+        if( inst.getState() === 'opened' ){
+          inst.close();
+        }
       }, 1500 );
     });    
 

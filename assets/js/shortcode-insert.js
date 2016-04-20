@@ -24,6 +24,9 @@ jQuery(function($){
 	 		if( data.content ){
 	 			$('.modal_trigger').val(data.content);
 	 		}
+	 		if( data.width ){
+	 			$('.modal_width').val(data.width);
+	 		}
 	 		$(this).data('settings', {} );
 	 	}
 
@@ -56,6 +59,7 @@ jQuery(function($){
 	 		is_modal = $('.set_cf_modal').prop('checked'),
 	 		modal_trigger = $('.modal_trigger').val(),
 	 		modal_trigger_type = $('.modal_trigger_type').val(),
+	 		width = $('.modal_width').val(),
 	 		code;
 
 	 	if(!form.length){
@@ -71,7 +75,9 @@ jQuery(function($){
 	 	if( is_modal === true ){
 	 		code += ' modal="true"';
 	 	}
-
+		if( width.length ){
+			code += ' width="' + width + '"';	
+		}
 	 	code += ']';
 
 	 	if( is_modal ){
