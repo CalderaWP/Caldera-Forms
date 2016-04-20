@@ -113,6 +113,10 @@ abstract class Caldera_Forms_DB {
 		);
 
 		foreach( $data as $field => $datum ){
+			if( is_null( $datum ) || is_array( $datum ) || is_object( $datum )  ){
+				$datum = '';
+			}
+
 			if( $this->valid_field( $field, 'primary' ) ){
 				$_data[ 'fields' ][ $field ] = call_user_func( $this->primary_fields[ $field ][1], $datum );
 				$_data[ 'formats' ][] = $this->primary_fields[ $field ][0];
