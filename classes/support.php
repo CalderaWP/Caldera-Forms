@@ -75,6 +75,26 @@ class Caldera_Forms_Support {
 	}
 
 	/**
+	 * Return an array of plugin names and versions
+	 *
+	 * @since 1.3.5
+	 *
+	 * @return array
+	 */
+	public static function get_plugins() {
+		$plugins     = array();
+		include_once ABSPATH  . '/wp-admin/includes/plugin.php';
+		$all_plugins = get_plugins();
+		foreach ( $all_plugins as $plugin_file => $plugin_data ) {
+			if ( is_plugin_active( $plugin_file ) ) {
+				$plugins[ $plugin_data[ 'Name' ] ] = $plugin_data[ 'Version' ];
+			}
+		}
+
+		return $plugins;
+	}
+
+	/**
 	 * Add scripts for this page
 	 *
 	 * @since 1.3.5
@@ -113,13 +133,7 @@ class Caldera_Forms_Support {
 		$wp          = $wp_version;
 		$php         = phpversion();
 		$mysql       = $wpdb->db_version();
-		$plugins     = array();
-		$all_plugins = get_plugins();
-		foreach ( $all_plugins as $plugin_file => $plugin_data ) {
-			if ( is_plugin_active( $plugin_file ) ) {
-				$plugins[ $plugin_data[ 'Name' ] ] = $plugin_data[ 'Version' ];
-			}
-		}
+		$plugins = self::get_plugins();
 		$stylesheet    = get_stylesheet();
 		$theme         = wp_get_theme( $stylesheet );
 		$theme_name    = $theme->get( 'Name' );

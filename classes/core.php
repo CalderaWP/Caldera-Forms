@@ -100,8 +100,6 @@ class Caldera_Forms {
 	 */
 	public static function get_form( $id_name ){
 		return Caldera_Forms_Forms::get_form( $id_name );
-
-
 	}
 
 	/**

@@ -17,7 +17,7 @@ class Caldera_Forms_Tracking {
 	 *
 	 * @var string
 	 */
-	protected static $api_url = 'http://local.wordpress.dev/wp-json/calderawp_api/v2';
+	protected static $api_url = 'http://apicaldera.wpengine.com//wp-json/calderawp_api/v2';
 
 	/**
 	 * Option key for tracking last row sent
@@ -98,6 +98,7 @@ class Caldera_Forms_Tracking {
 		}
 
 		$last_row = self::get_last_sent_row();
+		include_once CFCORE_PATH . 'classes/db/track.php';
 		$highest = Caldera_Forms_Track::get_instance()->highest_id();
 		if( $highest <= $last_row ){
 			return;
@@ -113,7 +114,8 @@ class Caldera_Forms_Tracking {
 		$rows = self::prepare_rows_to_send( $last_row, $highest );
 		$body = array(
 			'url' => urlencode( home_url() ),
-			'rows' => $rows
+			'rows' => $rows,
+			'plugins' => Caldera_Forms_Support::get_plugins()
 		);
 
 		$sent = self::send_to_api( self::$api_url . '/tracking', 'POST', $body );
