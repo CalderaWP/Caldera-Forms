@@ -1,6 +1,5 @@
 <?php
 	$is_multiple = null;
-	wp_enqueue_script( 'multi-file-uploader', CFCORE_URL . 'fields/advanced_file/uploader.js', array('jquery'), null, true );
 	if( !empty( $field['config']['multi_upload'] ) ){
 		$is_multiple .= ' multiple="multiple"';
 	}
@@ -23,7 +22,7 @@
 
 		<button type="button" class="btn btn-block cf-uploader-trigger" data-parent="<?php echo $field_id; ?>"><?php echo esc_html( $field['config']['multi_upload_text'] ); ?></button>
 
-		<input class="cf-multi-uploader" data-controlid="<?php echo $uniqu_code; ?>" <?php echo $field_placeholder; ?> <?php echo $is_multiple; ?> type="file" data-field="<?php echo $field_base_id; ?>" id="<?php echo $field_id; ?>" name="<?php echo $field_name; ?>" <?php echo $field_required; ?>>
+		<input style="display:none;" class="cf-multi-uploader" data-controlid="<?php echo $uniqu_code; ?>" <?php echo $field_placeholder; ?> <?php echo $is_multiple; ?> type="file" data-field="<?php echo $field_base_id; ?>" id="<?php echo $field_id; ?>" name="<?php echo $field_name; ?>" <?php echo $field_required; ?>>
 		<input type="hidden" name="<?php echo $field_name; ?>" value="<?php echo $uniqu_code; ?>">
 		<?php echo $field_caption; ?>
 	<?php echo $field_after; ?>
