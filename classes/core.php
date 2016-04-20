@@ -1258,7 +1258,11 @@ class Caldera_Forms {
 				"setup"		=>	array(
 					"preview"	=>	CFCORE_PATH . "fields/advanced_file/preview.php",
 					"template"	=>	CFCORE_PATH . "fields/advanced_file/config_template.php"
-				)
+				),
+				"scripts"	=> array(
+					CFCORE_URL . 'fields/advanced_file/uploader.js'
+				),
+
 			),
 			'recaptcha' => array(
 				"field"		=>	__("reCAPTCHA", "caldera-forms"),
@@ -3712,17 +3716,13 @@ class Caldera_Forms {
 
 		if(!empty($found[0][0])){
 			foreach($found[2] as $index=>$code){
-				if( 'caldera_form' === $code ){
+				if( 'caldera_form' === $code || $code == 'caldera_form_modal' ){
 					if(!empty($found[3][$index])){
 						$atts = shortcode_parse_atts($found[3][$index]);
 						if(isset($atts['id'])){
 							$page_forms[ $atts['id'] ] = $atts['id'];
 						}
 					}
-				}
-				if($code == 'caldera_form_modal'){
-					//caldera_form_modal
-					//wp_enqueue_style( 'cf-modal-styles', CFCORE_URL . 'assets/css/modals.css', array(), self::VERSION );					
 				}
 			}
 		}
@@ -3767,6 +3767,7 @@ class Caldera_Forms {
 						if( !empty( $field_types[$field['type']]['styles'])){
 							foreach($field_types[$field['type']]['styles'] as $style){
 								if(filter_var($style, FILTER_VALIDATE_URL)){
+									wp_enqueue_style( 'cf-' . sanitize_key( basename( $style ) ), $style, array(), self::VERSION );
 									wp_enqueue_style( 'cf-' . sanitize_key( basename( $style ) ), $style, array(), self::VERSION );
 								}else{
 									wp_enqueue_style( $style );
