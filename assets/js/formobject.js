@@ -114,11 +114,6 @@ $.fn.formJSON = function(){
   /* setup modals system */
   if( cfModals ){
 
-    window.REMODAL_GLOBALS = {
-      DEFAULTS: {
-        hashTracking: false
-      }
-    };
 
     var head = $('head'),
         body = $('body');
@@ -143,6 +138,8 @@ $.fn.formJSON = function(){
       if( form_modal.data('entry') ){
         url += form_modal.data('entry') + '/';
       } 
+      // set form instance count
+      url += '?cf_instance=' + ( $('.caldera_forms_form.' + form_modal.data('form') ).length + 1 );
       if( form_modal.data('width') ){
         form_modal.css({ width: form_modal.data('width') } );
       }else{

@@ -3860,7 +3860,10 @@ class Caldera_Forms {
 		$atts = array(
 			'id' => $wp_query->query_vars['cf_api'],
 			'ajax' => true
-		);		
+		);
+		if( !empty( $_REQUEST['cf_instance'] ) ){
+			$atts['instance'] = $_REQUEST['cf_instance'];
+		}
 		if(!empty($form['ID'])){
 			if($form['ID'] === $wp_query->query_vars['cf_api']){
 				// got it!
@@ -4568,7 +4571,6 @@ class Caldera_Forms {
 				$form['form_ajax'] = 0;
 			}
 		}
-
 		// set entry edit
 		if(!empty($atts['entry'])){
 			$entry_id = self::do_magic_tags( $atts['entry'] );
@@ -4619,6 +4621,11 @@ class Caldera_Forms {
 			$current_form_count = 0;
 		}
 		$current_form_count += 1;
+		
+		// set instance
+		if( !empty( $atts['instance'] ) ){
+			$current_form_count = absint( $atts['instance'] );
+		}
 
 		$field_types = self::get_field_types();
 
