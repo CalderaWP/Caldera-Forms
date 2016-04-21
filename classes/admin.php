@@ -1684,7 +1684,7 @@ class Caldera_Forms_Admin {
 			data-modal-title="<?php echo esc_html( $title ); ?>"
 			data-template="#<?php echo esc_attr( sanitize_key( 'admin-modal' .  $title ) ); ?>"
 			data-modal-height="300"
-			data-modal-width="500"
+			data-modal-width="650"
 			data-autoload="true"
 		>
 		</div>
