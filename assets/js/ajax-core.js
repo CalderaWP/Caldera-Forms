@@ -2,13 +2,80 @@ var resBaldrickTriggers;
  
 jQuery(function($){
 
+	var cf_upload_queue = [];
 	// admin stuff!
+	var cf_push_file_upload = function( form, file_number, data ){
+		var progress = $('#progress-file-' + file_number ),
+			filesize = $('.' + file_number + ' .file-size');
+		cf_upload_queue.push(1);
+		cf_uploader_filelist[ file_number ].state = 2;
+		$.ajax({
+			xhr: function(){
+				var xhr = new window.XMLHttpRequest();
+				//Upload progress
+				xhr.upload.addEventListener("progress", function(evt){
+					if (evt.lengthComputable) {
+						var percentComplete = ( evt.loaded / evt.total ) * 100;
+						progress.width( percentComplete + '%' );
+						filesize.html( size_format(evt.loaded) + ' / ' + size_format( evt.total ) );
+					}
+				}, false);
+				//Download progress
+				xhr.addEventListener("progress", function(evt){
+					if (evt.lengthComputable) {
+						var percentComplete = evt.loaded / evt.total;
+						//Do something with download progress
+						
+					}
+				}, false);
+			return xhr;
+			},								
+			url : form.data('request') + "/upload/",
+			type: "POST",
+			data : data,
+			processData: false,
+			contentType: false,
+			success:function(data, textStatus, jqXHR){
+
+				if( data.success && data.success === true ){
+
+					cf_upload_queue.pop();
+
+					$('[data-file="' + file_number + '"]').remove();
+					//$('.' + file_number ).slideUp();
+					cf_uploader_filelist[ file_number ].state = 3;
+
+					form.submit();
+					
+
+				}else if( data.data && !data.success ){
+					//show error
+					$('.' + file_number ).addClass('has-error');
+					form.find(':submit').prop('disabled',false);
+					form.find('.cf-uploader-trigger').slideDown();
+					$('.' + file_number +' .file-error' ).html( data.data );
+					console.log( data.success );
+					console.log( data.data );
+					return;
+				}
+
+			},
+			error: function(jqXHR, textStatus, errorThrown){
+				//if fails  - push error
+				if( !form.data( 'postDisable' ) ){
+					buttons.prop('disabled',false);
+				}				
+			}
+		});	
+	}
 	// Baldrick Bindings
 	resBaldrickTriggers = function(){
 		$('.cfajax-trigger').baldrick({
 			request			:	'./',
 			method			:	'POST',
-			before			: function(el, ev){
+			init			: function(el, ev){
+				
+				ev.preventDefault();
 
 				var form	=	$(el),
 					buttons = 	form.find(':submit');
@@ -22,12 +89,48 @@ jQuery(function($){
 					errorsWrapper : '<span class="help-block caldera_ajax_error_block"></span>',
 					errorTemplate : '<span></span>'
 				});
+								
 				if( !validate.isValid() ){
+					validate.destroy();
 					return false;
 				}
-
+				validate.destroy(); //allow to continue;
 				if( !form.data( 'postDisable' ) ){
 					buttons.prop('disabled',true);
+				}
+
+
+				if( typeof cf_uploader_filelist === 'object'  ){
+					// verify required
+					form.find('.cf-uploader-trigger').slideUp();
+					// setup file uploader
+					var has_files = false;
+					var count = cf_upload_queue.length;
+					for( var file in cf_uploader_filelist ){
+						if( cf_uploader_filelist[ file ].state > 1 ){
+							// state 2 and 3 is transferring and complete
+							continue;
+						}
+
+						has_files = true;
+						var data = new FormData(),
+							file_number = file,
+							field = $('#' + file_number.split('_file_')[0] );
+							data.append( field.data('field'), cf_uploader_filelist[ file ].file ); 
+							data.append( 'field', field.data('field') ); 
+							data.append( 'control', field.data('controlid') ); 
+						
+
+						cf_push_file_upload( form, file_number, data );
+						count++;
+						if( count === 1 ){
+							break;
+						}
+						
+					}
+					if( true === has_files || cf_upload_queue.length ){
+						return false;
+					}
 				}
 
 			},
@@ -78,7 +181,8 @@ jQuery(function($){
 					obj.params.trigger.hide();
 					window.location = obj.data.url;
 				}
-				
+				// show trigger
+				obj.params.trigger.find('.cf-uploader-trigger').slideDown();
 				if(obj.data.fields){
 
 					for(var i in obj.data.fields){
@@ -97,10 +201,11 @@ jQuery(function($){
 								has_block.hide();
 							}
 							wrap.append('<span class="help-block caldera_ajax_error_block">' + obj.data.fields[i] + '</span>');
+
 					}
 				}
 				// trigger global event
-				$( document ).trigger( 'cf.submission' );
+				$( document ).trigger( 'cf.submission', obj );
 				$( document ).trigger( 'cf.' + obj.data.type );
 
 				//custom_callback

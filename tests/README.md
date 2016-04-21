@@ -7,6 +7,8 @@
     
 * If needed install tests and then switch back to main repo
 
+    cd bin
+
     ./install-wp-tests.sh cf_tests wp wp localhost
     
     cd ../

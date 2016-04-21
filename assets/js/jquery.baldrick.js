@@ -199,6 +199,7 @@
 		var defaults		= $.extend(true, opts, { helpers : baldrickhelpers}, {triggerClass:triggerClass}),
 			ncb				= function(){return true;},
 			callbacks		= {
+				"init"		: ncb,
 				"before"	: ncb,
 				"callback"	: false,
 				"success"	: false,
@@ -249,7 +250,15 @@
 					}
 				}
 
-				if((tr.data('before') ? (typeof window[tr.data('before')] === 'function' ? window[tr.data('before')](this, e) : callbacks.before(this, e)) : callbacks.before(this, e)) === false){return;}
+				if((tr.data('before') ? (typeof window[tr.data('before')] === 'function' ? window[tr.data('before')](this, e) : callbacks.before(this, e)) : callbacks.before(this, e)) === false){
+					$(defaults.triggerClass).baldrick(defaults);
+					return;
+				}
+
+				if((tr.data('init') ? (typeof window[tr.data('init')] === 'function' ? window[tr.data('init')](this, e) : callbacks.init(this, e)) : callbacks.init(this, e)) === false){
+					$(defaults.triggerClass).baldrick(defaults);
+					return;
+				}
 
 				var params = {
 					trigger: tr,

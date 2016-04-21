@@ -180,6 +180,10 @@ class Caldera_Forms_Save_Final {
 			$form['mailer']['email_message'] = "{summary}";
 		}
 
+		if( ! isset( $form[ 'mailer' ][ 'email_subject' ] ) ){
+			$form[ 'mailer' ][ 'email_subject' ] = $form[ 'name' ];
+		}
+
 		$mail = array(
 			'recipients' => array(),
 			'subject'	=> Caldera_Forms::do_magic_tags($form['mailer']['email_subject']),
@@ -196,15 +200,17 @@ class Caldera_Forms_Save_Final {
 		}
 
 		// if added a replyto
-		$reply_to = trim( $form['mailer']['reply_to'] );
-		if( !empty( $reply_to ) ){
-			$mail['headers'][] = Caldera_Forms::do_magic_tags( 'Reply-To: <' . $reply_to . '>' );
+		if ( isset( $form['mailer']['reply_to'] )  ) {
+			$reply_to = trim( $form[ 'mailer' ][ 'reply_to' ] );
+			if ( ! empty( $reply_to ) ) {
+				$mail[ 'headers' ][] = Caldera_Forms::do_magic_tags( 'Reply-To: <' . $reply_to . '>' );
+			}
 		}
 
 		// Filter Mailer first as not to have user input be filtered
 		$mail['message'] = Caldera_Forms::do_magic_tags($mail['message']);
 
-		if($form['mailer']['email_type'] == 'html'){
+		if( ! isset( $form['mailer']['email_type'] ) || $form['mailer']['email_type'] == 'html'){
 			$mail['headers'][] = "Content-type: text/html";
 			$mail['message'] = wpautop( $mail['message'] );
 		}
@@ -332,7 +338,10 @@ class Caldera_Forms_Save_Final {
 		 * @param array $form The form config
 		 */
 		$mail = apply_filters( 'caldera_forms_mailer', $mail, $data, $form);
+		if ( empty( $mail ) || ! is_array( $mail ) ) {
+			return;
 
+		}
 
 		$headers = implode("\r\n", $mail['headers']);
 

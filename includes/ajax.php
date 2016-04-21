@@ -116,7 +116,7 @@ function cf_ajax_redirect($type, $url, $form){
 		return;
 	}
 
-	if( empty( $_POST['cfajax'] ) ){
+	if( empty( $_POST['cfajax'] ) || empty( $_POST['action'] ) || $_POST['action'] != 'cf_process_ajax_submit' ){
 		return;
 	}
 

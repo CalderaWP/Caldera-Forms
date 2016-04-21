@@ -3,7 +3,7 @@ Contributors: Desertsnowman, Shelob9
 Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, contact, email, auto-responder,
 Requires at least: 4.3
 Tested up to: 4.5
-Stable tag: 1.3.4.2
+Stable tag: 1.3.5
 License: GPLv2
 
 A different kind of WordPress form builder.
@@ -30,14 +30,13 @@ A free plugin by <a href="https://CalderaWP.com" title="CalderaWP: Transform You
 >
 > <em>Note: We do not provide free support via WordPress.org. Premium add-on purchases include priority support for Caldera Forms.</em>
 
-
 Pippin Williamson of Easy Digital Downloads, Restrict Content Pro and AffiliateWP gives [Caldera Forms a 5 star rating](https://pippinsplugins.com/review-caldera-forms)!
 
 John Teague of Theme Surgeons includes Caldera Forms in his list of [WordPress plugin recommendations I don’t get paid for](https://themesurgeons.com/wordpress-plugins-recommendations).
 
 = Docs & More Information =
 * [More Information](https://calderawp.com/downloads/caldera-forms/)
-* [Caldera Forms Documentation](https://calderawp.com/documentation/caldera-forms-documentation/
+* [Caldera Forms Documentation](https://calderawp.com/documentation/caldera-forms-documentation/)
 
 
 = Addons =
@@ -133,8 +132,23 @@ For Caldera Forms support: [http://calderawp.com/support](http://calderawp.com/s
 4. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
+= Caldera Forms 1.3.5 ( April 21, 2016 ) =
+ADDED: Forms in modals! Ok, this was there for awhile in secret, but it works really well now, so have at it.
+ADDED: Advanced File Upload fields
+ADDED: Optional usage tracking mode
+ADDED: Better handling for errors from forms submissions API
+ADDED: Ability to use "caldera_forms_mailer" filter to disable using wp_mail() -- better emails, like winter, are coming.
+FIXED: Bug affecting widget admin
+FIXED: Improper validation for email details
+FIXED: Inability to disable forms from the admin.
+FIXED: Issue preventing toggle buttons from toggling in forms.
+FIXED: Issue with datapicker language in forms.
+FIXED: Menu pinning
+FIXED: Magic tags for checkbox fields in forms not showing proper value/label in form entry email
+FIXED: Bug that caused a submission result to show code on screen.
+
 = Caldera Forms 1.3.4.2 ( March 31, 2016 ) =
-FIXED: Bug that caused the DB update to not run on manually uploaded updates
+FIXED: Bug that caused the DB update to not run on manually uploaded updates to Caldera Forms
 FIXED: Bug that caused calculation to fail if they used Math
 FIXED: Bug that caused multiple file fields from being attached to mailer
 FIXED: Bug that stopped forms from being pinned to menu
@@ -657,3 +671,5 @@ Initial Release
 == Upgrade Notice ==
 = 1.3.0 =
 New conditional groups!
+= 1.3.5 =
+Better file fields, forms in modals, usage tracking for your forms!

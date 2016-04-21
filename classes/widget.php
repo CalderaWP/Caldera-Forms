@@ -72,7 +72,7 @@ class Caldera_Forms_Widget extends WP_Widget {
 
 		echo "<p><label for=\" " . $this->get_field_id('title') . "\">" . __('Title', 'caldera-forms') . ": <input class=\"widefat\" id=\"" . $this->get_field_id('title') . "\" name=\"" . $this->get_field_name('title') . "\" type=\"text\" value=\"" . esc_attr($title). "\" /></label></p>\r\n";
 		// get forms
-		$forms = Caldera_Forms::get_forms();
+		$forms = Caldera_Forms_Forms::get_forms( true );
 
 		echo "<p><label for=\" " . $this->get_field_id('title') . "\">" . __('Form', 'caldera-forms') . ": </label><select style=\"width:100%;\" name=\"" . $this->get_field_name('form') . "\">\r\n";
 		echo "<option value=\"\"></option>\r\n";

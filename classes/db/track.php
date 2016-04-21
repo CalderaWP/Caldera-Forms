@@ -1,0 +1,294 @@
+<?php
+/**
+ * Track events in Caldera Forms
+ *
+ * @package Caldera_Forms
+ * @author    Josh Pollock <Josh@CalderaWP.com>
+ * @license   GPL-2.0+
+ * @link
+ * @copyright 2016 CalderaWP LLC
+ */
+class Caldera_Forms_Track extends Caldera_Forms_DB {
+
+	/**
+	 * Primary fields
+	 *
+	 * @since 1.3.5
+	 *
+	 * @var array
+	 */
+	protected $primary_fields = array(
+		'form_id'    => array(
+			'%s',
+			'strip_tags'
+		),
+		'process_id' => array(
+			'%s',
+			'strip_tags'
+		)
+
+	);
+
+	/**
+	 * Meta fields
+	 *
+	 * @since 1.3.5
+	 *
+	 * @var array
+	 */
+	protected $meta_fields = array(
+		'event_id'   => array(
+			'%d',
+			'absint',
+		),
+		'meta_key'   => array(
+			'%s',
+			'strip_tags',
+		),
+		'meta_value' => array(
+			'%s',
+			'strip_tags',
+		),
+	);
+
+	/**
+	 * Meta keys
+	 *
+	 * @since 1.3.5
+	 *
+	 * @var array
+	 */
+	protected $meta_keys = array(
+		'event' => array(
+			'%s',
+			'strip_tags',
+		),
+		'time'  => array(
+			'%s',
+			'strip_tags',
+		),
+		'recipients_set' => array(
+			'%s',
+			'strip_tags',
+		),
+		'referrer' => array(
+			'%s',
+			'esc_url_raw'
+		)
+	);
+
+	/**
+	 * Name of primary index
+	 *
+	 * @since 1.3.5
+	 *
+	 * @var string
+	 */
+	protected $index = 'event_id';
+
+	/**
+	 * Name of table
+	 *
+	 * @since 1.3.5
+	 *
+	 * @var string
+	 */
+	protected $table_name = 'cf_tracking';
+
+	/**
+	 * Class instance
+	 *
+	 * @since 1.3.5
+	 *
+	 * @var Caldera_Forms_Track
+	 */
+	private static $instance;
+
+	/**
+	 * Setup the actions to track upon
+	 *
+	 * @since 1.3.5
+	 */
+	protected function __construct(){
+		add_action( 'caldera_forms_submit_start',  array( $this, 'submit_start' ), 50, 2 );
+		add_action( 'caldera_forms_submit_complete',  array( $this, 'submit_complete' ), 50, 3 );
+		add_action( 'caldera_forms_submit_complete',  array( $this, 'email_tracking' ), 51, 3 );
+		add_action( 'caldera_forms_mailer_complete', array( $this, 'email_sent'), 50, 3 );
+		add_action( 'caldera_forms_mailer_failed', array( $this, 'email_fail' ), 50, 3 );
+		
+	}
+
+	/**
+	 * Get class instance
+	 *
+	 * @since 1.3.5
+	 *
+	 * @return \Caldera_Forms_Track
+	 */
+	public static function get_instance(){
+		if( null == self::$instance ){
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+
+	}
+
+	/**
+	 * Track that a form started submitting
+	 *
+	 * @since 1.3.5
+	 *
+	 * @uses "caldera_forms_submit_start"
+	 *
+	 * @param array $form Form config
+	 * @param string $process_id Form process ID
+	 */
+	public function submit_start( $form, $process_id ){
+		if( isset( $form[ 'ID' ] ) ){
+			$recorded = $this->create( array(
+				'event' => 'submit_start',
+				'form_id' => $form[ 'ID' ],
+				'process_id' => $process_id,
+				'time' => current_time( 'mysql' )
+			));
+			
+		}
+	}
+
+	/**
+	 * Track that a form completed submitting
+	 *
+	 * @since 1.3.5
+	 *
+	 * @uses "caldera_forms_submit_complete"
+	 *
+	 * @param array $form Form config
+	 * @param array $referrer URL parts for submissions URL
+	 * @param string $process_id Form process ID
+	 */
+	public function submit_complete( $form, $referrer, $process_id ){
+		if( isset( $form[ 'ID' ] ) ){
+			$recorded = $this->create( array(
+				'event' => 'submit_complete',
+				'form_id' => $form[ 'ID' ],
+				'process_id' => $process_id,
+				'time' => current_time( 'mysql' ),
+				'referrer' => cf_http_build_url( '', $referrer )
+			));
+			
+		}
+	}
+
+	/**
+	 * Mark that an email <em>should</em> be sent
+	 *
+	 * @since 1.3.5
+	 *
+	 * @uses "caldera_forms_submit_complete"
+	 *
+	 * @param array $form Form config
+	 * @param string $referrer URL referring
+	 * @param string $process_id Form process ID
+	 */
+	public function email_tracking( $form, $referrer, $process_id ){
+		if( isset( $form[ 'ID' ],  $form[ 'mailer' ] ) ){
+			if( is_array( $form[ 'mailer' ] ) &&  isset( $form[ 'mailer' ][ 'on_insert' ] ) && 1 == $form[ 'mailer' ][ 'on_insert' ] ) {
+				$recorded = $this->create( array(
+					'event' => 'email_should_send',
+					'form_id' => $form[ 'ID' ],
+					'process_id' => $process_id,
+					'time' => current_time( 'mysql' ),
+				));
+				
+
+
+			}
+		}
+	}
+
+	/**
+	 * Track a successful email
+	 *
+	 * @uses "caldera_forms_mailer_complete"
+	 *
+	 * @since 1.3.5
+	 *
+	 * @param array $mail Mailer data
+	 * @param array $data Submission data
+	 * @param array $form Form config
+	 */
+	public function email_sent( $mail, $data, $form  ){
+		global $process_id;
+		if( isset( $form[ 'ID' ] ) ){
+			$recorded = $this->create( array(
+				'event' => 'email_sent',
+				'form_id' => $form[ 'ID' ],
+				'process_id' => $process_id,
+				'time' => current_time( 'mysql' ),
+				'recipients_set' => self::recipients_set( $mail )
+			));
+			
+		}
+
+
+	}
+
+	/**
+	 * Track a failed email
+	 *
+	 * @uses "caldera_forms_mailer_failed"
+	 *
+	 * @since 1.3.5
+	 *
+	 * @param array $mail Mailer data
+	 * @param array $data Submission data
+	 * @param array $form Form config
+	 */
+	public function email_fail( $mail, $data, $form  ){
+		global $process_id;
+		if( isset( $form[ 'ID' ] ) ){
+			$this->create( array(
+				'event' => 'email_failed',
+				'form_id' => $form[ 'ID' ],
+				'process_id' => $process_id,
+				'time' => current_time( 'mysql' ),
+				'recipients_set' => self::recipients_set( $mail )
+			));
+			
+		}
+
+	}
+
+	protected function recipients_set( $mail ){
+		if( ! is_array( $mail ) || ! isset( $mail[ 'recipients' ] ) || empty( $mail[ 'recipients' ] ) ){
+			return false;
+		}
+
+		return true;
+	}
+	/**
+
+	protected function unparse_url( $url ){
+		$keys = array( 'user', 'pass', 'port', 'path', 'query', 'fragment' );
+		foreach ( $keys as $key ) {
+			if ( $flags & (int) constant( 'HTTP_URL_STRIP_' . strtoupper( $key ) ) ) {
+				unset( $parse_url[ $key ] );
+			}
+
+			if( is_array( $parse_url[ $key ] ) ){
+				$parse_url[ $key ] = http_build_query( $parse_url[ $key ] );
+			}
+
+		}
+		return ( ( isset( $parse_url[ 'scheme' ] ) ) ? $parse_url[ 'scheme' ] . '://' : '' )
+		       . ( ( isset( $parse_url[ 'user' ] ) ) ? $parse_url[ 'user' ] . ( ( isset( $parse_url[ 'pass' ] ) ) ? ':' . $parse_url[ 'pass' ] : '' ) . '@' : '' )
+		       . ( ( isset( $parse_url[ 'host' ] ) ) ? $parse_url[ 'host' ] : '' )
+		       . ( ( isset( $parse_url[ 'port' ] ) ) ? ':' . $parse_url[ 'port' ] : '' )
+		       . ( ( isset( $parse_url[ 'path' ] ) ) ? $parse_url[ 'path' ] : '' )
+		       . ( ( isset( $parse_url[ 'query' ] ) ) ? '?' . $parse_url[ 'query' ] : '' )
+		       . ( ( isset( $parse_url[ 'fragment' ] ) ) ? '#' . $parse_url[ 'fragment' ] : '' );
+	}*/
+
+
+}

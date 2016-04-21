@@ -28,9 +28,17 @@ function cf_handle_multi_view( $data, $field ){
 
 
 add_filter('caldera_forms_process_field_file', 'cf_handle_file_upload', 10, 3);
+add_filter('caldera_forms_process_field_advanced_file', 'cf_handle_file_upload', 10, 3);
 
 
 function cf_handle_file_upload( $entry, $field, $form ){
+
+	// check transdata
+	$transdata = get_transient( $entry );
+	if( !empty( $transdata ) ){
+		return $transdata;
+	}
+
 	if( isset($_POST[ '_cf_frm_edt' ] ) ) {
 		if ( ! isset( $_FILES )
 		     || ( isset( $_FILES[ $field[ 'ID' ] ][ 'size' ][0] ) && 0 == $_FILES[ $field[ 'ID' ] ][ 'size' ][0] )
