@@ -3,7 +3,7 @@ Contributors: Desertsnowman, Shelob9
 Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, contact, email, auto-responder,
 Requires at least: 4.3
 Tested up to: 4.5
-Stable tag: 1.3.4.2
+Stable tag: 1.3.5
 License: GPLv2
 
 A different kind of WordPress form builder.
@@ -132,19 +132,20 @@ For Caldera Forms support: [http://calderawp.com/support](http://calderawp.com/s
 4. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
-= Caldera Forms 1.3.5 ( April 20, 2016 ) =
+= Caldera Forms 1.3.5 ( April 21, 2016 ) =
 ADDED: Forms in modals! Ok, this was there for awhile in secret, but it works really well now, so have at it.
 ADDED: Advanced File Upload fields
 ADDED: Optional usage tracking mode
+ADDED: Better handling for errors from forms submissions API
+ADDED: Ability to use "caldera_forms_mailer" filter to disable using wp_mail() -- better emails, like winter, are coming.
 FIXED: Bug affecting widget admin
 FIXED: Improper validation for email details
-ADDED: Better handling for errors from forms submissions API
 FIXED: Inability to disable forms from the admin.
-ADDED: Ability to use "caldera_forms_mailer" filter to disable using wp_mail() -- better emails, like winter, are coming.
 FIXED: Issue preventing toggle buttons from toggling in forms.
 FIXED: Issue with datapicker language in forms.
 FIXED: Menu pinning
 FIXED: Magic tags for checkbox fields in forms not showing proper value/label in form entry email
+FIXED: Bug that caused a submission result to show code on screen.
 
 = Caldera Forms 1.3.4.2 ( March 31, 2016 ) =
 FIXED: Bug that caused the DB update to not run on manually uploaded updates to Caldera Forms
