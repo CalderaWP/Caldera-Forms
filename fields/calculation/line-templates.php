@@ -43,7 +43,7 @@ function build_calc_structure(obj){
 	if(obj.trigger.val().length){
 		config = JSON.parse(obj.trigger.val());
 		config.init = obj.trigger.data('init');
-		console.log( config );
+
 	}
 	return config;
 }
