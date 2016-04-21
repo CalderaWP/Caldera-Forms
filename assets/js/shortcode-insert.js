@@ -73,8 +73,10 @@ jQuery(function($){
 
 	 	code = '[' + tag + ' id="' + form.val() + '"';
 	 	if( is_modal === true ){
-	 		code += ' modal="true"';
-	 		code += ' type="' + modal_trigger_type + '"';
+	 		//code += ' modal="true"';
+	 		if( modal_trigger_type === 'button' ){
+	 			code += ' type="' + modal_trigger_type + '"';
+	 		}
 	 	}
 		if( width.length ){
 			code += ' width="' + width + '"';	

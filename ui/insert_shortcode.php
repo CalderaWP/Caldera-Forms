@@ -33,8 +33,8 @@
 			<div class="modal-forms-setup" style="display:none;">
 				<label><?php esc_html_e('Open Modal Trigger Type', 'caldera-forms'); ?></label>
 				<select name="modal_button_type" class="modal_trigger_type" style="width: 100%;">
-					<option value="button"><?php esc_html_e('Button', 'caldera-forms'); ?></option>
 					<option value="link"><?php esc_html_e('Link', 'caldera-forms'); ?></option>
+					<option value="button"><?php esc_html_e('Button', 'caldera-forms'); ?></option>					
 				</select>
 				<label><?php esc_html_e('Open Modal Text', 'caldera-forms'); ?></label>
 				<input type="text" name="modal_button_text" class="modal_trigger" style="width: 100%;">
