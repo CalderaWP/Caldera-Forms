@@ -2478,6 +2478,7 @@ class Caldera_Forms {
 			foreach($form['processors'] as $processor){
 				if($processor['type'] == $type){
 					$processors[] = $processor;
+					$processors[ $processor['ID'] ] = $processor;
 				}
 			}
 			if(empty($processors)){
