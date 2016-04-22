@@ -3440,7 +3440,7 @@ class Caldera_Forms {
 			$new_entry = array(
 				'form_id'	=>	$form['ID'],
 				'user_id'	=>	0,
-				'datestamp' =>	date_i18n( 'Y-m-d H:i:s', time(), 0),
+				'datestamp' =>	current_time( 'mysql', true ),
 				'status'	=>	'pending'
 			);
 			// if user logged in
@@ -4239,7 +4239,7 @@ class Caldera_Forms {
 		// get meta
 		$dateformat = get_option( 'date_format' );
 		$timeformat = get_option( 'time_format' );
-		$gmt_offset = get_option( 'gmt_offset' );
+		
 		$entry_detail = self::get_entry_detail($entry_id, $form);
 		$data['date'] = date_i18n( $dateformat.' '.$timeformat, get_date_from_gmt( $entry_detail['datestamp'], 'U'));
 
