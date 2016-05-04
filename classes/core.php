@@ -4238,11 +4238,8 @@ class Caldera_Forms {
 		}
 
 		// get meta
-		$dateformat = get_option( 'date_format' );
-		$timeformat = get_option( 'time_format' );
-		$gmt_offset = get_option( 'gmt_offset' );
 		$entry_detail = self::get_entry_detail($entry_id, $form);
-		$data['date'] = date_i18n( $dateformat.' '.$timeformat, get_date_from_gmt( $entry_detail['datestamp'], 'U'));
+		$data['date'] = self::localize_time( $entry_detail['datestamp'] );
 
 		if(!empty($entry_detail['meta'])){
 			$data['meta'] = $entry_detail['meta'];
@@ -5366,6 +5363,25 @@ class Caldera_Forms {
 
 		return $form;
 
+	}
+
+	/**
+	 * Convert time entry was submitted (as MySQL timestamp in UTC) to local display time
+	 *
+	 * @since 1.3.6
+	 *
+	 * @param string $submitted Timestamp
+	 *
+	 * @return string
+	 */
+	public static function localize_time( $submitted ){
+		$dateformat = get_option('date_format');
+		$timeformat = get_option('time_format');
+
+		$format = $dateformat.' '.$timeformat;
+		$time = get_date_from_gmt( $submitted, $format );
+		
+		return $time;
 	}
 
 

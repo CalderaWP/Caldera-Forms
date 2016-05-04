@@ -727,8 +727,7 @@ class Caldera_Forms_Admin {
 
 
 				$data['entries'] = array();
-				$dateformat = get_option('date_format');
-				$timeformat = get_option('time_format');
+
 				foreach($rawdata as $row){
 					if(!empty($row->_user_id)){
 						$user = get_userdata( $row->_user_id );
@@ -740,7 +739,12 @@ class Caldera_Forms_Admin {
 						}
 					}
 					$data['entries']['E' . $row->_entryid]['_entry_id'] = $row->_entryid;
-					$data['entries']['E' . $row->_entryid]['_date'] = date_i18n( $dateformat.' '.$timeformat, get_date_from_gmt( $row->_date_submitted, 'U'));
+
+					$submitted =  $row->_date_submitted;
+
+
+
+					$data['entries']['E' . $row->_entryid]['_date'] = Caldera_Forms::localize_time( $submitted );
 
 					// setup default data array
 					if(!isset($data['entries']['E' . $row->_entryid]['data'])){
