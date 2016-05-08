@@ -42,10 +42,8 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 		}
 		var form = $( '#' + inst_id );
 		for( var field in caldera_conditionals[ inst_id ] ){
-			
 			// each conditional
 			var fieldwrapper = jQuery('#conditional_' + field);
-			
 			if(!fieldwrapper.length){
 				continue;
 			}
@@ -188,17 +186,20 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 			}else if (action === 'enable'){
 				if(!target.html().length){					
 					target.html(template).trigger('cf.add');
-					jQuery(document).trigger('cf.add').trigger('cf.enable');
+					jQuery(document).trigger('cf.add').trigger('cf.enable');					
 				}else{
 					target_field.prop('disabled', false);
+					jQuery('#' + field).prop('disabled', false);
 				}
 			}else if (action === 'disable'){
+
 				if(!target.html().length){
 					target.html(template).trigger('cf.remove');
 					jQuery(document).trigger('cf.remove').trigger('cf.disable');
 					jQuery('[data-field="' + field + '"]').prop('disabled', 'disabled');
 				}else{
 					target_field.prop('disabled', 'disabled');
+					jQuery('#' + field).prop('disabled', 'disabled');
 				}
 			}
 
@@ -214,5 +215,5 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 
 	if(typeof caldera_conditionals !== 'undefined'){
 		calders_forms_init_conditions();
-	}
+	}	
 })(jQuery);

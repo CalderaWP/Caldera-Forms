@@ -4909,6 +4909,7 @@ class Caldera_Forms {
 		$conditions_configs = array();
 		$used_slugs = array();
 		$form_field_strings = array();
+
 		if(!empty($form['fields'])){
 			// prepare fields			
 			foreach($form['fields'] as $field_id=>$field){
@@ -4976,25 +4977,28 @@ class Caldera_Forms {
 
 					$field_html = self::render_field( $field, $form, $prev_data, $field_error );
 					// conditional wrapper
-					if(!empty($field['conditions']['group']) && !empty($field['conditions']['type'])){
+					if(!empty($field['conditions']['group']) && !empty($field['conditions']['type']) ){
 						// render conditions check- for magic tags since at this point all field data will be null
 						//if(!self::check_condition($field['conditions'], $form)){
 						//	dump($field['conditions'],0);
 						//}
-
-						// wrap it up
-						$conditions_templates[$field_base_id] = "<script type=\"text/html\" id=\"conditional-" . $field_base_id . "-tmpl\">\r\n" . $field_html . "</script>\r\n";
-						// add in instance number
-						if(!empty($field['conditions']['group'])){
-							foreach($field['conditions']['group'] as &$group_row){
-								foreach( $group_row as &$group_line){
-									// add instance value
-									$group_line['instance'] = $current_form_count;
+						$conditions_configs[$field_base_id] = $field['conditions'];
+						
+						if( $field['conditions']['type'] !== 'disable' ){
+							// wrap it up
+							$conditions_templates[$field_base_id] = "<script type=\"text/html\" id=\"conditional-" . $field_base_id . "-tmpl\">\r\n" . $field_html . "</script>\r\n";
+							// add in instance number
+							if(!empty($field['conditions']['group'])){
+								foreach($field['conditions']['group'] as &$group_row){
+									foreach( $group_row as &$group_line){
+										// add instance value
+										$group_line['instance'] = $current_form_count;
+									}
 								}
 							}
 						}
-						$conditions_configs[$field_base_id] = $field['conditions'];
-						if($field['conditions']['type'] == 'show' || $field['conditions']['type'] == 'disable'){
+						
+						if($field['conditions']['type'] == 'show' || $field['conditions']['type'] == 'wdisable'){
 							// show if indicates hidden by default until condition is matched.
 							$field_html = null;
 						}
@@ -5194,7 +5198,7 @@ class Caldera_Forms {
 		$out .= "</div>\r\n";
 		
 		// output javascript conditions.
-		if(!empty($conditions_configs) && !empty($conditions_templates)){
+		if(!empty($conditions_configs)){
 			// sortout magics 
 			foreach($conditions_configs as &$condition_field_conf){
 				if(!empty($condition_field_conf['group'])){
@@ -5249,7 +5253,9 @@ class Caldera_Forms {
 			$out .= 'if( typeof caldera_conditionals === "undefined" ){ var caldera_conditionals = {}; }';
 			$out .= "caldera_conditionals." . $form['ID'].'_'.$current_form_count . " = " . $conditions_str . ";\r\n";
 			$out .= "</script>\r\n";
-			$out .= implode("\r\n", $conditions_templates);
+			if( !empty($conditions_templates) ){
+				$out .= implode("\r\n", $conditions_templates);
+			}
 
 			// enqueue conditionls app.
 			wp_enqueue_script( 'cf-conditionals' );
