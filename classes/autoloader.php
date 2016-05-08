@@ -2,6 +2,10 @@
 /**
  * Autoloader for Caldera Forms and Caldera Forms add-ons
  *
+ * IMPORTANT: This autoloader has some stupid quirks that we have to live with until we're ready to break backwards compat. <em>Most importantly</em> sub-directories/ sub-prefixes have to be registered separately and you have to be careful about order of registering a prefix. For example, if "Caldera_Forms" had been registered before "Caldera_Forms_DB" it wouldn't have worked, need to make sure that the longest prefix goes in first.
+ *
+ * PREFIXES MUST START WITH "CF_" or "Caldera_Forms"
+ *
  * @package   Caldera_Forms
  * @author    Josh Pollock <Josh@CalderaWP.com>
  * @license   GPL-2.0+
@@ -65,7 +69,6 @@ class Caldera_Forms_Autoloader {
 				require $file;
 
 			}
-
 		}
 
 	}
