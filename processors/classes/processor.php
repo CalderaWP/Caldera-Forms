@@ -79,6 +79,7 @@ abstract class Caldera_Forms_Processor_Processor implements Caldera_Forms_Proces
 	 */
 	public function register_processor( $processors ){
 		$processors[ $this->slug ] = $this->processor_config;
+		return $processors;
 	}
 
 	/**
