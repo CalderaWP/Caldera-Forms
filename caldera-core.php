@@ -33,22 +33,31 @@ define('CFCORE_BASENAME', plugin_basename( __FILE__ ));
  */
 define( 'CF_DB', 3 );
 
-include_once CFCORE_PATH . 'classes/core.php';
-include_once CFCORE_PATH . 'classes/widget.php';
-include_once CFCORE_PATH . 'classes/sanitize.php';
-include_once CFCORE_PATH . 'classes/forms.php';
-include_once CFCORE_PATH . 'classes/db/db.php';
-include_once CFCORE_PATH . 'classes/tracking.php';
-include_once CFCORE_PATH . 'classes/support.php';
 
-// includes
-include_once CFCORE_PATH . 'includes/ajax.php';
-include_once CFCORE_PATH . 'includes/field_processors.php';
-include_once CFCORE_PATH . 'includes/custom_field_class.php';
-include_once CFCORE_PATH . 'includes/filter_addon_plugins.php';
-include_once CFCORE_PATH . 'includes/compat.php';
-include_once CFCORE_PATH . 'processors/classes/load.php';
-include_once CFCORE_PATH . 'processors/classes/get_data.php';
+add_action( 'plugins_loaded', 'caldera_forms_load' );
+function caldera_forms_load(){
+
+	include_once CFCORE_PATH . 'classes/autoloader.php';
+	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms', CFCORE_PATH . 'classes' );
+	Caldera_Forms_Autoloader::register();
+
+
+	include_once CFCORE_PATH . 'classes/db/db.php';
+
+
+
+	// includes
+	include_once CFCORE_PATH . 'includes/ajax.php';
+	include_once CFCORE_PATH . 'includes/field_processors.php';
+	include_once CFCORE_PATH . 'includes/custom_field_class.php';
+	include_once CFCORE_PATH . 'includes/filter_addon_plugins.php';
+	include_once CFCORE_PATH . 'includes/compat.php';
+	include_once CFCORE_PATH . 'processors/classes/load.php';
+	include_once CFCORE_PATH . 'processors/classes/get_data.php';
+
+
+
+}
 
 
 
