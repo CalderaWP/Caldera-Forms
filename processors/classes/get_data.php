@@ -241,4 +241,19 @@ class Caldera_Forms_Processor_Get_Data {
 
 	}
 
+	/**
+	 * Get one value from the processor
+	 *
+	 * @since 1.3.6
+	 *
+	 * @param $field
+	 *
+	 * @return mixed
+	 */
+	public function get_value( $field ){
+		if( isset( $this->values[ $field ] ) ){
+			return $this->values[ $field ];
+		}
+	}
+
 }

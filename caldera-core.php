@@ -34,15 +34,16 @@ define('CFCORE_BASENAME', plugin_basename( __FILE__ ));
 define( 'CF_DB', 3 );
 
 
-add_action( 'plugins_loaded', 'caldera_forms_load' );
+add_action( 'plugins_loaded', 'caldera_forms_load', 0 );
 function caldera_forms_load(){
 
 	include_once CFCORE_PATH . 'classes/autoloader.php';
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_DB', CFCORE_PATH . 'classes/db' );
+	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Processor_Interface', CFCORE_PATH . 'processors/classes/interfaces' );
+	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Processor', CFCORE_PATH . 'processors/classes' );
+
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms', CFCORE_PATH . 'classes' );
-
 	Caldera_Forms_Autoloader::register();
-
 
 
 
@@ -53,10 +54,14 @@ function caldera_forms_load(){
 	include_once CFCORE_PATH . 'includes/custom_field_class.php';
 	include_once CFCORE_PATH . 'includes/filter_addon_plugins.php';
 	include_once CFCORE_PATH . 'includes/compat.php';
-	include_once CFCORE_PATH . 'processors/classes/load.php';
-	include_once CFCORE_PATH . 'processors/classes/get_data.php';
+	include_once CFCORE_PATH . 'processors/functions.php';
 
-
+	/**
+	 * Runs after all of the includes and autoloade setup is done in Caldera Forms core
+	 *
+	 * @since 1.3.6
+	 */
+	do_action( 'caldera_forms_includes_complete' );
 
 }
 
@@ -72,13 +77,7 @@ add_action( 'plugins_loaded', array( 'Caldera_Forms_Tracking', 'get_instance' ) 
 
 // Admin & Admin Ajax stuff.
 if ( is_admin() || defined( 'DOING_AJAX' ) ) {
-
-	require_once( CFCORE_PATH . 'classes/admin.php' );
 	add_action( 'plugins_loaded', array( 'Caldera_Forms_Admin', 'get_instance' ) );
 	add_action( 'plugins_loaded', array( 'Caldera_Forms_Support', 'get_instance' ) );
-}
-
-if ( is_admin() ) {
-	require_once( CFCORE_PATH . 'processors/classes/ui.php' );
 }
 
