@@ -8,7 +8,7 @@
  * @link
  * @copyright 2016 CalderaWP LLC
  */
-abstract class Caldera_Forms_DB {
+abstract class Caldera_Forms_DB_Base {
 
 	/**
 	 * Primary fields

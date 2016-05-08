@@ -38,11 +38,12 @@ add_action( 'plugins_loaded', 'caldera_forms_load' );
 function caldera_forms_load(){
 
 	include_once CFCORE_PATH . 'classes/autoloader.php';
+	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_DB', CFCORE_PATH . 'classes/db' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms', CFCORE_PATH . 'classes' );
+
 	Caldera_Forms_Autoloader::register();
 
 
-	include_once CFCORE_PATH . 'classes/db/db.php';
 
 
 

@@ -44,8 +44,7 @@ class Caldera_Forms_Tracking {
 	protected function __construct(){
 		$enabled = self::tracking_allowed();
 		if ( $enabled ) {
-			include_once CFCORE_PATH . 'classes/db/track.php';
-			add_action( 'init', array( 'Caldera_Forms_Track', 'get_instance' ), 1 );
+			add_action( 'init', array( 'Caldera_Forms_DB_Track', 'get_instance' ), 1 );
 		}
 
 		add_action( 'caldera_forms_tracking_send_rows', array( __CLASS__, 'send_rows' ) );
@@ -99,7 +98,7 @@ class Caldera_Forms_Tracking {
 
 		$last_row = self::get_last_sent_row();
 		include_once CFCORE_PATH . 'classes/db/track.php';
-		$highest = Caldera_Forms_Track::get_instance()->highest_id();
+		$highest = Caldera_Forms_DB_Track::get_instance()->highest_id();
 		if( $highest <= $last_row ){
 			return;
 		}
@@ -216,9 +215,9 @@ class Caldera_Forms_Tracking {
 			$ids[] = $last_row + $i;
 		}
 
-		$rows = Caldera_Forms_Track::get_instance()->get_record( $ids );
+		$rows = Caldera_Forms_DB_Track::get_instance()->get_record( $ids );
 		if ( ! empty( $rows ) ) {
-			$fields    = Caldera_Forms_Track::get_instance()->get_fields();
+			$fields    = Caldera_Forms_DB_Track::get_instance()->get_fields();
 			$meta_keys = $fields[ 'meta_keys' ];
 			foreach ( $rows as $i => $row ) {
 				$rows[ $i ][ 'event_id' ] = $row[ 'ID' ];
