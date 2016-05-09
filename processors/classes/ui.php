@@ -98,7 +98,7 @@ class Caldera_Forms_Processor_UI {
 		 */
 		$args = apply_filters( 'caldera_forms_addon_config_field_args', $args );
 
-		$input_type = 'simple';
+		$input_type = $args[ 'type' ];
 
 		if ( 'checkbox' == $args[ 'type'] ) {
 			$args[ 'block' ] = false;
@@ -127,9 +127,10 @@ class Caldera_Forms_Processor_UI {
 		$classes = implode( ' ', $args[ 'extra_classes' ] );
 		$id = trim( $args['id'] );
 
-		$desc = false;
+		$desc = $has_desc = false;
 		if ( $args[ 'desc' ] ) {
-			$desc = sprintf( '<p class="description">%1s</p>', esc_html( $args[ 'desc' ] ) );
+			$has_desc = true;
+			$desc = sprintf( '<p class="description" id="%s">%s</p>', esc_attr( $id . '-desc' ), esc_html( $args[ 'desc' ] ) );
 		}
 
 		$allow_types = '';
@@ -143,23 +144,33 @@ class Caldera_Forms_Processor_UI {
 		}
 
 		$field = sprintf( '
-		<div class="caldera-config-group">
-			<label for="%1s">
-				%2s
+		<div class="caldera-config-group" id="%s">
+			<label for="%s" id="%s">
+				%s
 			</label>
 			<div class="caldera-config-field">
-				%3s
+				%s
 			</div>
-			%4s
+			%s
 		</div>',
+			esc_attr( $id . '-wrap' ),
 			esc_attr( $id ),
+			esc_attr( self::label_id( $id ) ),
 			$args[ 'label' ],
-			self::input( $input_type, $args, $id, $classes, $required ),
+			self::input( $input_type, $args, $id, $classes, $required, $has_desc ),
 			$desc
 		);
 
 		return $field;
 
+	}
+
+	protected static function label_id( $id ){
+		return $id . '-label';
+	}
+
+	protected static function description_id( $id ){
+		return $id . '-desc';
 	}
 
 	/**
@@ -172,18 +183,25 @@ class Caldera_Forms_Processor_UI {
 	 * @param string $id ID attribute
 	 * @param string $classes Class attribute.
 	 * @param bool|string $required If is required or not
+	 * @param bool $has_desc Does this input have a description?
 	 *
 	 * @return string HTML markup for input
 	 */
-	public static function input( $type, $args, $id, $classes, $required ) {
+	public static function input( $type, $args, $id, $classes, $required, $has_desc ) {
+		$aria = sprintf( 'aria-labelledby="%s"', self::label_id( $id ) );
+		if( $has_desc ){
+			$aria .= sprintf( ' aria-describedby="%s"', self::description_id( $id ) );
+		}
+
 		switch( $type ) {
 			case 'checkbox' == $type :
-				$field = sprintf( '<input type="%1s" class="%2s" id="%3s" name="{{_name}}[%4s]" %5s>',
+				$field = sprintf( '<input type="%1s" class="%2s" id="%3s" name="{{_name}}[%4s]"  %s >',
 					$args[ 'type' ],
 					$classes,
 					esc_attr( $id ),
 					esc_attr( $id ),
-					sprintf( '{{#if %s}}checked{{/if}}', esc_attr( $id ) )
+					sprintf( '{{#if %s}}checked{{/if}}', esc_attr( $id ) ),
+					$aria
 				);
 				break;
 			case 'advanced' :
@@ -229,10 +247,11 @@ class Caldera_Forms_Processor_UI {
 						);
 					}
 
-					$field = sprintf( '<select class="%1s" id="%2s" name="{{_name}}[%3s]" >%4s,</select>',
+					$field = sprintf( '<select class="%s" id="%s" name="{{_name}}[%s]" %s>%s,</select>',
 						$classes,
 						esc_attr( $id ),
 						esc_attr( $id ),
+						$aria,
 						implode( "/n", $options )
 					);
 				}
