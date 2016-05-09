@@ -215,5 +215,6 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 
 	if(typeof caldera_conditionals !== 'undefined'){
 		calders_forms_init_conditions();
+		jQuery('.caldera_forms_form').find('[data-field]').first().trigger('change');
 	}	
 })(jQuery);
