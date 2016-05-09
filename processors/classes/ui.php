@@ -161,14 +161,41 @@ class Caldera_Forms_Processor_UI {
 			$desc
 		);
 
-		return $field;
+		/**
+		 * Modify HTML for the input field group in processor UI
+		 *
+		 * @since 1.3.6
+		 *
+		 * @param string $input_type ID attribute
+		 * @param string $type The type of input. This is NOT The input type. Options are simple|checkbox|advanced|dropdown
+		 * @param array $args Field args
+		 */
+		return apply_filters( 'caldera_forms_processor_ui_input_group_html', $field, $input_type, $id, $args );
 
 	}
 
+	/**
+	 * Make ID for a label element
+	 *
+	 * @since 1.3.6
+	 *
+	 * @param string $id ID attribute of element being labeled.
+	 *
+	 * @return string
+	 */
 	protected static function label_id( $id ){
 		return $id . '-label';
 	}
 
+	/**
+	 * Make ID for a description element
+	 *
+	 * @since 1.3.6
+	 *
+	 * @param string $id ID attribute of element being described.
+	 *
+	 * @return string
+	 */
 	protected static function description_id( $id ){
 		return $id . '-desc';
 	}
@@ -188,6 +215,8 @@ class Caldera_Forms_Processor_UI {
 	 * @return string HTML markup for input
 	 */
 	public static function input( $type, $args, $id, $classes, $required, $has_desc ) {
+
+		$field = '';
 		$aria = sprintf( 'aria-labelledby="%s"', self::label_id( $id ) );
 		if( $has_desc ){
 			$aria .= sprintf( ' aria-describedby="%s"', self::description_id( $id ) );
@@ -268,7 +297,17 @@ class Caldera_Forms_Processor_UI {
 			break;
 		}
 
-		return $field;
+		/**
+		 * Modify HTML for the input in processor UI
+		 *
+		 * @since 1.3.6
+		 *
+		 *
+		 * @param string $id ID attribute
+		 * @param string $type The type of input. This is NOT The input type. Options are simple|checkbox|advanced|dropdown
+		 * @param array $args Field args
+		 */
+		return apply_filters( 'caldera_forms_processor_ui_input_html', $field, $type, $id, $args );
 
 	}
 
