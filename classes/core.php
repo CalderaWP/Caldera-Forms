@@ -89,6 +89,16 @@ class Caldera_Forms {
 		add_shortcode( 'caldera_form_modal', array( $this, 'shortcode_handler') );
 		add_action( 'wp_footer', array( $this, 'render_footer_modals') );
 
+
+		/**
+		 * Runs after Caldera Forms core is initialized
+		 *
+		 * @since 1.3.6
+		 */
+		do_action( 'caldera_forms_core_init' );
+
+		/** Adding anything to this constructor after caldera_forms_core_init action is a violation of intergalactic law */
+
 	}
 
 	/**

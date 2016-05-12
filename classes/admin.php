@@ -115,6 +115,14 @@ class Caldera_Forms_Admin {
 
 		add_action( 'admin_init', array( $this, 'watch_tracking' ) );
 
+		/**
+		 * Runs after Caldera Forms admin is initialized
+		 *
+		 * @since 1.3.6
+		 */
+		do_action( 'caldera_forms_admin_init' );
+
+		/** Adding anything to this constructor after caldera_forms_admin_init action is a violation of intergalactic law */
 	}
 
 	public function render_editor_template(){
