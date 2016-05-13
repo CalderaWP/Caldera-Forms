@@ -916,6 +916,10 @@ class Caldera_Forms {
 			);
 		}
 
+		if( ! is_array( $processors ) || empty( $processors ) ){
+			return $internal_processors;
+		}
+
 		return array_merge( $processors, $internal_processors );
 
 	}
@@ -2845,7 +2849,7 @@ class Caldera_Forms {
 		$entry_meta_data = $wpdb->get_results($wpdb->prepare("SELECT * FROM `" . $wpdb->prefix ."cf_form_entry_meta` WHERE `entry_id` = %d", $entry_id), ARRAY_A);
 
 		if(!empty($entry_meta_data)){
-			$processors = apply_filters( 'caldera_forms_get_form_processors', array() );							
+			$processors = Caldera_Forms_Processor_Load::get_instance()->get_processors();
 			foreach($entry_meta_data as $meta_index=>$meta){
 
 				// is json?
@@ -3310,7 +3314,7 @@ class Caldera_Forms {
 		}
 			
 		// get all form processors
-		$form_processors = apply_filters( 'caldera_forms_get_form_processors', array() );
+		$form_processors = Caldera_Forms_Processor_Load::get_instance()->get_processors();
 
 		/**
 		 * Runs before the 1st stage of processors "pre-process"
@@ -5330,9 +5334,9 @@ class Caldera_Forms {
 	 *
 	 * @since 1.3.1
 	 *
-	 * @param array $atts
-	 * @param string $content
-	 * @param string $shortcode
+	 * @param array $atts Array of shortcode attributes
+	 * @param string $content Enclosed content
+	 * @param string $shortcode Shortcode type caldera_forms|caldera_forms_modal
 	 *
 	 * @return string|void
 	 */
@@ -5343,6 +5347,7 @@ class Caldera_Forms {
 		if( $shortcode === 'caldera_form_modal' ){
 			$atts[ 'modal' ] = true;
 		}
+		
 		if( isset( $atts[ 'modal' ] ) && $atts[ 'modal' ] ) {
 			$form = Caldera_Forms_Forms::get_form( $atts[ 'id' ] );
 			if( ! is_array( $form ) ) {

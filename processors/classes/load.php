@@ -89,21 +89,43 @@ class Caldera_Forms_Processor_Load {
 	 * @access private
 	 */
 	private function load_processors() {
+		/**
+		 * Runs before processors are loaded
+		 *
+		 * Uses "caldera_forms_get_form_processors" filter to add processors
+		 *
+		 * @since 1.3.6
+		 */
+		do_action( 'caldera_forms_pre_load_processors' );
 
 		/**
 		 * Add processors
 		 *
+		 * @since 1.3.0
+		 *
 		 * @param array $processors
 		 */
 		$processors = apply_filters( 'caldera_forms_get_form_processors', array() );
+		
 		$this->processors = array();
-		foreach( $processors as $id => $processor ) {
-			$processor = $this->validate_processor( $processor );
-			if ( $processor ) {
-				$this->processors[ $id ] = $processor;
-			}
+		if ( is_array( $processors ) && ! empty( $processors ) ){
+			foreach ( $processors as $id => $processor ) {
+				$processor = $this->validate_processor( $processor );
+				if ( $processor ) {
+					$this->processors[ $id ] = $processor;
+				}
 
+			}
 		}
+
+		/**
+		 * Runs after processors are loaded
+		 *
+		 * Use: $processors = Caldera_Forms_Processor_Load::get_instance()->get_processors(); to get processors
+		 *
+		 * @since 1.3.6
+		 */
+		do_action( 'caldera_forms_pre_load_processors' );
 
 
 	}

@@ -21,4 +21,45 @@ abstract class Caldera_Forms_Processor_Newsletter extends Caldera_Forms_Processo
 	protected $client;
 
 
+	/**
+	 * Set the API client
+	 *
+	 * @since 1.3.6
+	 */
+	public function set_client(){
+
+	}
+
+
+	/**
+	 * Validate the process if possible, and if not return errors.
+	 *
+	 * @since 1.3.6
+	 *
+	 * @param array $config Processor config
+	 * @param array $form Form config
+	 * @param string $proccesid Unique ID for this instance of the processor
+	 *
+	 * @return array Return if errors, do not return if not
+	 */
+	public function pre_processor( array $config, array $form, $proccesid ){
+
+	}
+
+	/**
+	 * If validate do processing
+	 *
+	 * @since 1.3.6
+	 *
+	 * @param array $config Processor config
+	 * @param array $form Form config
+	 * @param string $proccesid Process ID
+	 *
+	 * @return array Return meta data to save in entry
+	 */
+	public function processor( array $config, array $form, $proccesid ){
+		
+	}
+
+
 }
