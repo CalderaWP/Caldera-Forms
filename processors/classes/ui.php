@@ -63,6 +63,7 @@ class Caldera_Forms_Processor_UI {
 	 *     @type string $desc Extra description to add to markup.
 	 *     @type bool|string|array $allow_types Type(s) of fields that are allowed to bind to this or false to allow all.
 	 *     @type bool|string|array $exclude Type(s) of fields that are NOT allowed to bind to this or false to not exclude any.
+	 *     @type bool $desc_escaped Whether description is already escaped or not. Default is false. If false, description will be passed through esc_html() which is bad if HTML is in description. If true, it is not, which may be bad if you are passing potentially unsafe strings, like translation strings.
 	 * }
 	 *
 	 * @return string|void HTML markup if input is valid. Void if not.
@@ -83,7 +84,8 @@ class Caldera_Forms_Processor_UI {
 			'desc' => false,
 			'allow_types' => false,
 			'exclude' => false,
-			'print' => true
+			'print' => true,
+			'desc_escaped' => false
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -130,7 +132,12 @@ class Caldera_Forms_Processor_UI {
 		$desc = $has_desc = false;
 		if ( $args[ 'desc' ] ) {
 			$has_desc = true;
-			$desc = sprintf( '<p class="description" id="%s">%s</p>', esc_attr( $id . '-desc' ), esc_html( $args[ 'desc' ] ) );
+			if( ! $args[ 'desc_escaped'] ){
+				$desc = esc_html( $args[ 'desc' ] );
+			}else{
+				$desc = $args[ 'desc' ];
+			}
+			$desc = sprintf( '<p class="description" id="%s">%s</p>', esc_attr( self::description_id( $id ) ), $desc  );
 		}
 
 		$allow_types = '';

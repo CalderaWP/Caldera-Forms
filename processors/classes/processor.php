@@ -39,17 +39,49 @@ abstract class Caldera_Forms_Processor_Processor implements Caldera_Forms_Proces
 	protected $data_object;
 
 	/**
+	 * Processor field config
+	 *
+	 * @since 1.3.6
+	 *
+	 * @var array
+	 */
+	protected $fields;
+
+
+	/**
 	 * Construct object for processing object
 	 *
 	 * @since 1.3.6
 	 *
 	 * @param array $processor_config Processor configuration
+	 * @param  array $fields Field config
 	 * @param string $slug Processor slug
 	 */
-	public function __construct( array $processor_config, $slug ){
+	public function __construct( array $processor_config, array $fields, $slug ){
 		$this->slug = $slug;
+		$this->fields = $fields;
 		$this->set_processor_config( $processor_config );
+		
 		add_filter( 'caldera_forms_get_form_processors', array( $this, 'register_processor' ) );
+	}
+
+	/**
+	 * Get configuration for processor fields.
+	 *
+	 * @since 1.3.6
+	 *
+	 * @return array
+	 */
+	public function fields() {
+		/**
+		 * Filter configuration for processor fields.
+		 *
+		 * @since 1.3.6
+		 *
+		 * @param array $fields The fields
+		 * @param string $slug The slug
+		 */
+		return apply_filters(  'caldera_forms_' . $this->slug . '_fields',  $this->fields, $this->slug );
 	}
 
 	/**
