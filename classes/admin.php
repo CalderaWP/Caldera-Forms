@@ -201,6 +201,11 @@ class Caldera_Forms_Admin {
 		<?php
 	}
 
+	/**
+	 * Make the form preview in post editor
+	 *
+	 * @since unknown
+	 */
 	public function get_form_preview(){
 		global $post;
 		add_filter('caldera_forms_render_form_element', array( $this, 'set_preview_form_element') );
@@ -210,8 +215,9 @@ class Caldera_Forms_Admin {
 		}elseif( isset($_POST['atts']['named']['name']) ){
 			$form = $_POST['atts']['named']['name'];
 		}
+		
 		add_filter('caldera_forms_get_form-' . $form, array( $this, 'set_preview_get_form'),100 );
-		//shortcode_handler( $atts, $content )
+
 		$atts = $_POST['atts']['named'];
 		$atts['preview'] = true;
 
@@ -222,7 +228,7 @@ class Caldera_Forms_Admin {
 			if( !empty( $_POST['content'] ) ){
 				$content = stripslashes_deep( $_POST['content'] );
 			}
-			echo Caldera_Forms::shortcode_handler( $atts, $content );
+			echo Caldera_Forms::shortcode_handler( $atts, $content, 'caldera_form' );
 			echo '<div class="clear"></div>';
 			wp_print_footer_scripts();
 			$html = ob_get_clean();
@@ -234,6 +240,7 @@ class Caldera_Forms_Admin {
 		
 		wp_send_json_success( $out );
 	}
+
 	public function set_preview_get_form( $form ){
 		$form['form_ajax'] = false;
 		$form['settings']['responsive']['break_point'] = 'xs';
