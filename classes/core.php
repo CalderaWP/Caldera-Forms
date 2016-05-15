@@ -3083,7 +3083,12 @@ class Caldera_Forms {
 				$field = apply_filters( 'caldera_forms_render_get_field', $field, $form);
 				$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field['type'], $field, $form);
 				$field = apply_filters( 'caldera_forms_render_get_field_slug-' . $field['slug'], $field, $form);
-				$form['fields'][$field_id] = $field;
+				if( ! is_array( $field ) || empty( $field ) ){
+					unset( $form['fields'][$field_id] );
+				}else{
+					$form['fields'][$field_id] = $field;
+				}
+
 			}
 		}
 
