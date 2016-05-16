@@ -33,7 +33,13 @@ define('CFCORE_BASENAME', plugin_basename( __FILE__ ));
  */
 define( 'CF_DB', 3 );
 
+// init internals of CF
+include_once CFCORE_PATH . 'classes/core.php'; // neeeds the core at the very least before plugins loaded
+add_action( 'init', array( 'Caldera_Forms', 'init_cf_internal' ) );
+// table builder
+register_activation_hook( __FILE__, array( 'Caldera_Forms', 'activate_caldera_forms' ) );
 
+// load system
 add_action( 'plugins_loaded', 'caldera_forms_load', 0 );
 function caldera_forms_load(){
 
@@ -44,9 +50,6 @@ function caldera_forms_load(){
 
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms', CFCORE_PATH . 'classes' );
 	Caldera_Forms_Autoloader::register();
-
-
-
 
 	// includes
 	include_once CFCORE_PATH . 'includes/ajax.php';
@@ -65,15 +68,9 @@ function caldera_forms_load(){
 
 }
 
-
-
-// init internals of CF
-add_action( 'init', array( 'Caldera_Forms', 'init_cf_internal' ) );
-// table builder
-register_activation_hook( __FILE__, array( 'Caldera_Forms', 'activate_caldera_forms' ) );
-
 add_action( 'plugins_loaded', array( 'Caldera_Forms', 'get_instance' ) );
 add_action( 'plugins_loaded', array( 'Caldera_Forms_Tracking', 'get_instance' ) );
+
 
 // Admin & Admin Ajax stuff.
 if ( is_admin() || defined( 'DOING_AJAX' ) ) {
