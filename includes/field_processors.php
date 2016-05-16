@@ -119,7 +119,7 @@ function cf_handle_file_upload( $entry, $field, $form ){
 			}
 			return $entry;
 		}else{
-			if( filter_var( $line, FILTER_VALIDATE_URL ) ){
+			if( filter_var( $entry, FILTER_VALIDATE_URL ) ){
 				return $entry;
 			}
 		}
