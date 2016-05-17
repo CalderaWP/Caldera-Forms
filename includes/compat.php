@@ -133,7 +133,7 @@ if ( ! defined( 'HTTP_URL_STRIP_PATH' ) ) {
 	define( 'HTTP_URL_STRIP_PATH', 128 );
 }
 
-if ( ! defined( 'HTTP_URL_STRIP_QUERY ' ) ) {
+if ( ! defined( 'HTTP_URL_STRIP_QUERY' ) ) {
 	define( 'HTTP_URL_STRIP_QUERY', 256 );
 }
 
