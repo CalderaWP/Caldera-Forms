@@ -114,6 +114,7 @@ $field_options_template = "
 		</div>
 	</div>
 </div>
+{{#if auto}}{{#script}}jQuery('#{{_id}}_auto').trigger('change');{{/script}}{{/if}}
 <div class=\"caldera-config-group-auto-options\" style=\"display:none;\">
 	<div class=\"caldera-config-group\">
 		<label>". __('Auto Type', 'caldera-forms') . "</label>
@@ -260,7 +261,7 @@ $field_options_template = "
 	$field_options_template .= ob_get_clean() . "
 
 </div>
-<div class=\"caldera-config-group-toggle-options\">
+<div class=\"caldera-config-group-toggle-options\" {{#if auto}}style=\"display:none;\"{{/if}}>
 	<div class=\"caldera-config-group caldera-config-group-full\">
 		<button type=\"button\" class=\"button add-toggle-option\" style=\"width: 220px;\">" . __('Add Option', 'caldera-forms') . "</button>		
 		<button type=\"button\" data-bulk=\"#{{_id}}_bulkwrap\" class=\"button add-toggle-option\" style=\"width: 120px;\">" . __('Bulk Insert', 'caldera-forms') . "</button>
