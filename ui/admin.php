@@ -229,7 +229,6 @@ function new_form_redirect(obj){
 	}
 }
 
-// profile form saver
 function serialize_modal_form(el){
 	
 	var clicked	= jQuery(el),
@@ -305,6 +304,12 @@ jQuery( function( $ ){
 			$('.status_toggles.button-primary').trigger('click');	
 		}, 280 );
 		
+	});
+
+	$( document ).on('submit', '#new_form_baldrickModal', function(e){
+		e.preventDefault();
+		var trigger = $(this).find('button.ajax-trigger');
+		trigger.trigger('click');
 	});
 
 });
