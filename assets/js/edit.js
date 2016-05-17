@@ -100,7 +100,8 @@ jQuery(document).ready(function($){
 	*
 	*/
 	function build_fieldtype_config(el){
-		//console.log(el);
+
+		
 		var select 			= $(el),
 			//templ			= $('#' + select.val() + '_tmpl').length ? $('#' + select.val() + '_tmpl').html() : $('#noconfig_field_templ').html(),
 			parent			= select.closest('.caldera-editor-field-config-wrapper'),
@@ -181,6 +182,27 @@ jQuery(document).ready(function($){
 				rebuild_field_binding();
 				baldrickTriggers();
 			}
+		if( $('.color-field').length ){
+			$('.color-field').wpColorPicker({
+				change: function(obj){
+					
+					var trigger = $(this);
+
+					
+					if( trigger.data('ev') ){
+						clearTimeout( trigger.data('ev') );
+					}
+					trigger.data('ev', setTimeout( function(){
+						trigger.trigger('record');
+					},200) );
+					if( trigger.data('target') ){
+						$( trigger.data('target') ).css( trigger.data('style'), trigger.val() );
+						$( trigger.data('target') ).val( trigger.val() );
+					}					
+					
+				}
+			});
+		}			
 	}
 
 	function build_field_preview(id){
@@ -762,7 +784,7 @@ jQuery(document).ready(function($){
 
 	});
 
-	$('.caldera-editor-body').on('change', '.field-config', function(e){
+	$('.caldera-editor-body').on('change record', '.field-config', function(e){
 
 		var field 	= $(this),
 			parent 	= field.closest('.caldera-editor-field-config-wrapper');

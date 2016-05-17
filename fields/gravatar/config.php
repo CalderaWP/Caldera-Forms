@@ -41,7 +41,7 @@ $avatar_defaults = array(
 <div class="caldera-config-group">
 	<label><?php _e('Border Color'); ?></label>
 	<div class="caldera-config-field">
-		<input type="text" class="minicolor-picker field-config" name="{{_name}}[border_color]" value="{{#if config/border_color}}{{config/border_color}}{{else}}#efefef{{/if}}">
+		<input type="text" class="color-field field-config" name="{{_name}}[border_color]" value="{{#if config/border_color}}{{config/border_color}}{{else}}#efefef{{/if}}">
 	</div>
 </div>
 
@@ -58,9 +58,3 @@ $avatar_defaults = array(
 		<input type="number" class="field-config" name="{{_name}}[border_radius]" value="{{#if border_radius}}{{border_radius}}{{else}}3{{/if}}" style="width:70px;"> px
 	</div>
 </div>
-
-{{#script}}
-
-jQuery('.minicolor-picker').miniColors();
-
-{{/script}}
