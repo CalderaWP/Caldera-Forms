@@ -279,7 +279,6 @@ jQuery( function( $ ){
 
 	cf_build_export = function( el ){
 		var export_object = $('#export_baldrickModal').serialize();
-		console.log( "<?php echo esc_attr( admin_url('admin.php?page=caldera-forms' ) ); ?>&" + export_object );
 		window.location = "<?php echo esc_attr( admin_url('admin.php?page=caldera-forms' ) ); ?>&" + export_object;
 	}
 
