@@ -3,7 +3,8 @@
 
 
 // magics!
-preg_match_all("/%(.+?)%/", $field['config']['default'], $hastags);
+$html_template = $field['config']['default'];
+preg_match_all("/%(.+?)%/", $html_template, $hastags);
 $bindfields = array();
 if(!empty($hastags[1])){
 	$binds = array();
@@ -14,7 +15,7 @@ if(!empty($hastags[1])){
 			if($fcfg['slug'] === $tag){
 				$binds[] = '[data-field="'.$key_id.'"]';
 				$bindfields[] = '"'.$key_id.'"';
-				$field['config']['default'] = str_replace($hastags[0][$tag_key], '{{'.$key_id.'}}', $field['config']['default']);
+				$html_template = str_replace($hastags[0][$tag_key], '{{'.$key_id.'}}', $html_template);
 			}
 		}
 	}
@@ -23,7 +24,7 @@ if(!empty($hastags[1])){
 	// create template block
 	ob_start();
 	echo '<script type="text/html" id="html-content-'.$field_id.'-tmpl">';
-		echo do_shortcode( Caldera_Forms::do_magic_tags( $field['config']['default'] ) );
+		echo do_shortcode( Caldera_Forms::do_magic_tags( $html_template ) );
 	echo '</script>';
 	
 	?>
@@ -76,7 +77,7 @@ if(!empty($hastags[1])){
 	}
 			
 }else{
-	echo '<div class="' . $field['config']['custom_class'] . '">' . do_shortcode( Caldera_Forms::do_magic_tags( $field['config']['default'] ) ) . '</div>';
+	echo '<div class="' . $field['config']['custom_class'] . '">' . do_shortcode( Caldera_Forms::do_magic_tags( $html_template ) ) . '</div>';
 }
 
 
