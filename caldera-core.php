@@ -44,6 +44,7 @@ add_action( 'plugins_loaded', 'caldera_forms_load', 0 );
 function caldera_forms_load(){
 
 	include_once CFCORE_PATH . 'classes/autoloader.php';
+	include_once CFCORE_PATH . 'classes/widget.php';
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_DB', CFCORE_PATH . 'classes/db' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Processor_Interface', CFCORE_PATH . 'processors/classes/interfaces' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Processor', CFCORE_PATH . 'processors/classes' );
