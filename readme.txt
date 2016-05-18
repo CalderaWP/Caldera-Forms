@@ -3,7 +3,7 @@ Contributors: Desertsnowman, Shelob9
 Tags: forms, formbuilder, form builder, contact form, form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, contact, email, auto-responder, awber, converkit, builder, contact forms
 Requires at least: 4.3
 Tested up to: 4.6
-Stable tag: 1.3.6-b1
+Stable tag: 1.3.5.1
 License: GPLv2
 
 A different kind of WordPress form builder.
@@ -141,8 +141,8 @@ FIXED: Issue preventing multi-select fields from saving 2nd or greater option in
 FIXED: Pressing "enter" in new form modal did not create new form.
 FIXED: Bug preventing some magic tags from rendering in HTML form fields.
 FIXED: Bug preventing rating star form fields from working with conditional logic.
-FIXED: Issue preventing forms combining user login and user profile editing in same form from validating properly. Requires Caldera Forms Users add-on 1.3.4+
-FIXED: Bug causeing PHP notice when creating shortcode previewer in post editor.
+FIXED: Issue preventing forms combining user login and user profile editing in same form from validating properly. ( Requires Caldera Forms Users add-on 1.3.4+ )
+FIXED: Bug causing PHP notice when creating shortcode previewer in post editor.
 ADDED: "caldera_forms_admin_init" action at end of constructor for admin class
 ADDED: "caldera_forms_core_init" action at end of constructor for core class
 ADDED: Autoloader for all classes
@@ -150,8 +150,8 @@ FIXED: Missing ARIA tags in auto-generated processor config settings.
 ADDED: "caldera_forms_processor_ui_input_group_html" filter for adding markup to auto-generated processor config groups.
 ADDED: "caldera_forms_processor_ui_input_html" filter for adding markup to auto-generated processor config fields.
 ADDED: Base classes for processors to extend.
-FIXED: Missing support for date values from datepicker form fields from working in calcualtion form fields.
-FIXED: Issue preventing some disbable conditions from disabling form fields.
+ADDED: Replaced the mini color picker with the native wordpress color picker in form editor.
+FIXED: Issue preventing some disable conditions from disabling form fields.
 
 = Caldera Forms 1.3.5 ( April 21, 2016 ) =
 ADDED: Forms in modals! Ok, this was there for awhile in secret, but it works really well now, so have at it.
