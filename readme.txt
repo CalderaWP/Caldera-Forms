@@ -3,7 +3,7 @@ Contributors: Desertsnowman, Shelob9
 Tags: forms, formbuilder, form builder, contact form, form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, contact, email, auto-responder, awber, converkit, builder, contact forms
 Requires at least: 4.3
 Tested up to: 4.6
-Stable tag: 1.3.5.1
+Stable tag: 1.3.5.2
 License: GPLv2
 
 A different kind of WordPress form builder.
@@ -135,6 +135,8 @@ For Caldera Forms support: [http://calderawp.com/support](http://calderawp.com/s
 4. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
+= Caldera Forms 1.3.5.2 ( May 18, 2016) The Return of the Widget =
+FIXED: The form widget not showing forms
 
 = Caldera Forms 1.3.5.1 ( May 18, 2016) Bug Fix Release =
 FIXED: Issue preventing multi-select fields from saving 2nd or greater option in database.
