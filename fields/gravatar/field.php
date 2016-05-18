@@ -27,68 +27,70 @@ if(empty($field['config']['email'])){
 	return;
 }
 
-ob_start();
-?>
-<script type="text/javascript">
+if( !empty( $form['fields'][ $field['config']['email'] ] ) ){
+	ob_start();
+	?>
+	<script type="text/javascript">
 
-jQuery(function($){
-	
-	var timeout_<?php echo $field['config']['email'] .'_'.$current_form_count; ?>,
-		loading_<?php echo $field['config']['email'] .'_'.$current_form_count; ?>,
-		current_<?php echo $field['config']['email'] .'_'.$current_form_count; ?>;
-	
-	$(document).on('keyup change cf.add cf.modal','#<?php echo $form['ID'].'_'.$current_form_count; ?> [data-field="<?php echo $field['config']['email']; ?>"]', function(){
+	jQuery(function($){
+		
+		var timeout_<?php echo $field['config']['email'] .'_'.$current_form_count; ?>,
+			loading_<?php echo $field['config']['email'] .'_'.$current_form_count; ?>,
+			current_<?php echo $field['config']['email'] .'_'.$current_form_count; ?>;
+		
+		$(document).on('keyup change cf.add cf.modal','#<?php echo $form['ID'].'_'.$current_form_count; ?> [data-field="<?php echo $field['config']['email']; ?>"]', function(){
 
-		if(timeout_<?php echo $field['config']['email'] .'_'.$current_form_count; ?>){
-			clearTimeout(timeout_<?php echo $field['config']['email'] .'_'.$current_form_count; ?>);
-		}
-		if(loading_<?php echo $field['config']['email'] .'_'.$current_form_count; ?>){
-			loading_<?php echo $field['config']['email'] .'_'.$current_form_count; ?>.abort();
-		}
-
-		var email 		= this.value,
-			container	= $('#<?php echo $field_id; ?>_gravatar');
-		if(email.indexOf('@') < 0 || email.length <= email.indexOf('@') + 1 || current_<?php echo $field['config']['email'] .'_'.$current_form_count; ?> === email){
-			if(email.length > 0){
-				return;
+			if(timeout_<?php echo $field['config']['email'] .'_'.$current_form_count; ?>){
+				clearTimeout(timeout_<?php echo $field['config']['email'] .'_'.$current_form_count; ?>);
 			}
-		}
-		timeout_<?php echo $field['config']['email'] .'_'.$current_form_count; ?> = setTimeout(function(){
-			container.find('img').animate({opacity: .5}, 200);
-			loading_<?php echo $field['config']['email'] .'_'.$current_form_count; ?> = $.post('<?php echo admin_url('admin-ajax.php'); ?>', {
-				action	:	'cf_live_gravatar_get_gravatar',
-				email	:	email,
-				size	:	'<?php echo $field['config']['size']; ?>',
-				generator: '<?php echo $field['config']['generator']; ?>'
-			}, function(res){
-				if(res.length){
-					current_<?php echo $field['config']['email'] .'_'.$current_form_count; ?> = email;
-					var image = $(res).load(function(){
-						var img = $(this).css('opacity', .5);
-						container.find('img').animate({opacity: 0}, 200, function(){
-							container.html(img).find('img').animate({opacity: 1}, 200);
-						})
-					});
+			if(loading_<?php echo $field['config']['email'] .'_'.$current_form_count; ?>){
+				loading_<?php echo $field['config']['email'] .'_'.$current_form_count; ?>.abort();
+			}
 
-					//
-				}else{
-					container.find('img').animate({opacity: 1}, 200);
+			var email 		= this.value,
+				container	= $('#<?php echo $field_id; ?>_gravatar');
+			if(email.indexOf('@') < 0 || email.length <= email.indexOf('@') + 1 || current_<?php echo $field['config']['email'] .'_'.$current_form_count; ?> === email){
+				if(email.length > 0){
+					return;
 				}
-			});
+			}
+			timeout_<?php echo $field['config']['email'] .'_'.$current_form_count; ?> = setTimeout(function(){
+				container.find('img').animate({opacity: .5}, 200);
+				loading_<?php echo $field['config']['email'] .'_'.$current_form_count; ?> = $.post('<?php echo admin_url('admin-ajax.php'); ?>', {
+					action	:	'cf_live_gravatar_get_gravatar',
+					email	:	email,
+					size	:	'<?php echo $field['config']['size']; ?>',
+					generator: '<?php echo $field['config']['generator']; ?>'
+				}, function(res){
+					if(res.length){
+						current_<?php echo $field['config']['email'] .'_'.$current_form_count; ?> = email;
+						var image = $(res).load(function(){
+							var img = $(this).css('opacity', .5);
+							container.find('img').animate({opacity: 0}, 200, function(){
+								container.html(img).find('img').animate({opacity: 1}, 200);
+							})
+						});
 
-		}, 100);
-	});
-	$(document).on('cf.add', '#conditional_<?php echo $field_id; ?>', function(){
-		$('#<?php echo $form['ID'].'_'.$current_form_count; ?> [data-field="<?php echo $field['config']['email']; ?>"]').trigger('change');
-	});
+						//
+					}else{
+						container.find('img').animate({opacity: 1}, 200);
+					}
+				});
 
-})
+			}, 100);
+		});
+		$(document).on('cf.add', '#conditional_<?php echo $field_id; ?>', function(){
+			$('#<?php echo $form['ID'].'_'.$current_form_count; ?> [data-field="<?php echo $field['config']['email']; ?>"]').trigger('change');
+		});
 
-</script>
-<?php
-	$script_template = ob_get_clean();
-	if( ! empty( $form[ 'grid_object' ] ) && is_object( $form[ 'grid_object' ] ) ){
-		$form[ 'grid_object' ]->append( $script_template, $field[ 'grid_location' ] );
-	}else{
-		echo $script_template;
+	})
+
+	</script>
+	<?php
+		$script_template = ob_get_clean();
+		if( ! empty( $form[ 'grid_object' ] ) && is_object( $form[ 'grid_object' ] ) ){
+			$form[ 'grid_object' ]->append( $script_template, $field[ 'grid_location' ] );
+		}else{
+			echo $script_template;
+		}
 	}

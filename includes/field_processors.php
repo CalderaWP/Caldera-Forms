@@ -33,10 +33,12 @@ add_filter('caldera_forms_process_field_advanced_file', 'cf_handle_file_upload',
 
 function cf_handle_file_upload( $entry, $field, $form ){
 
-	// check transdata
-	$transdata = get_transient( $entry );
-	if( !empty( $transdata ) ){
-		return $transdata;
+	// check transdata if string based entry
+	if( is_string( $entry ) ){
+		$transdata = get_transient( $entry );
+		if( !empty( $transdata ) ){
+			return $transdata;
+		}
 	}
 
 	if( isset($_POST[ '_cf_frm_edt' ] ) ) {
@@ -108,9 +110,20 @@ function cf_handle_file_upload( $entry, $field, $form ){
 
 		return $uploads[0];
 	}else{
-		if( filter_var( $entry, FILTER_VALIDATE_URL ) ){
+		// for multiples
+		if( is_array( $entry ) ){
+			foreach( $entry as $index => $line ){
+				if( !filter_var( $line, FILTER_VALIDATE_URL ) ){
+					unset( $entry[ $index ] );
+				}
+			}
 			return $entry;
+		}else{
+			if( filter_var( $entry, FILTER_VALIDATE_URL ) ){
+				return $entry;
+			}
 		}
+
 	}
 
 }

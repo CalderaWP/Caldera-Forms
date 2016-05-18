@@ -89,6 +89,16 @@ class Caldera_Forms {
 		add_shortcode( 'caldera_form_modal', array( $this, 'shortcode_handler') );
 		add_action( 'wp_footer', array( $this, 'render_footer_modals') );
 
+
+		/**
+		 * Runs after Caldera Forms core is initialized
+		 *
+		 * @since 1.3.6
+		 */
+		do_action( 'caldera_forms_core_init' );
+
+		/** Adding anything to this constructor after caldera_forms_core_init action is a violation of intergalactic law */
+
 	}
 
 	/**
@@ -904,6 +914,10 @@ class Caldera_Forms {
 				"template"			=>	CFCORE_PATH . "processors/akismet/config.php",
 				"single"			=>	false,
 			);
+		}
+
+		if( ! is_array( $processors ) || empty( $processors ) ){
+			return $internal_processors;
 		}
 
 		return array_merge( $processors, $internal_processors );
@@ -2478,6 +2492,7 @@ class Caldera_Forms {
 			foreach($form['processors'] as $processor){
 				if($processor['type'] == $type){
 					$processors[] = $processor;
+					$processors[ $processor['ID'] ] = $processor;
 				}
 			}
 			if(empty($processors)){
@@ -2834,7 +2849,7 @@ class Caldera_Forms {
 		$entry_meta_data = $wpdb->get_results($wpdb->prepare("SELECT * FROM `" . $wpdb->prefix ."cf_form_entry_meta` WHERE `entry_id` = %d", $entry_id), ARRAY_A);
 
 		if(!empty($entry_meta_data)){
-			$processors = apply_filters( 'caldera_forms_get_form_processors', array() );							
+			$processors = Caldera_Forms_Processor_Load::get_instance()->get_processors();
 			foreach($entry_meta_data as $meta_index=>$meta){
 
 				// is json?
@@ -3068,7 +3083,12 @@ class Caldera_Forms {
 				$field = apply_filters( 'caldera_forms_render_get_field', $field, $form);
 				$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field['type'], $field, $form);
 				$field = apply_filters( 'caldera_forms_render_get_field_slug-' . $field['slug'], $field, $form);
-				$form['fields'][$field_id] = $field;
+				if( ! is_array( $field ) || empty( $field ) ){
+					unset( $form['fields'][$field_id] );
+				}else{
+					$form['fields'][$field_id] = $field;
+				}
+
 			}
 		}
 
@@ -3299,7 +3319,7 @@ class Caldera_Forms {
 		}
 			
 		// get all form processors
-		$form_processors = apply_filters( 'caldera_forms_get_form_processors', array() );
+		$form_processors = Caldera_Forms_Processor_Load::get_instance()->get_processors();
 
 		/**
 		 * Runs before the 1st stage of processors "pre-process"
@@ -4237,11 +4257,8 @@ class Caldera_Forms {
 		}
 
 		// get meta
-		$dateformat = get_option( 'date_format' );
-		$timeformat = get_option( 'time_format' );
-		$gmt_offset = get_option( 'gmt_offset' );
 		$entry_detail = self::get_entry_detail($entry_id, $form);
-		$data['date'] = date_i18n( $dateformat.' '.$timeformat, get_date_from_gmt( $entry_detail['datestamp'], 'U'));
+		$data['date'] = self::localize_time( $entry_detail['datestamp'] );
 
 		if(!empty($entry_detail['meta'])){
 			$data['meta'] = $entry_detail['meta'];
@@ -4908,6 +4925,7 @@ class Caldera_Forms {
 		$conditions_configs = array();
 		$used_slugs = array();
 		$form_field_strings = array();
+
 		if(!empty($form['fields'])){
 			// prepare fields			
 			foreach($form['fields'] as $field_id=>$field){
@@ -4975,25 +4993,28 @@ class Caldera_Forms {
 
 					$field_html = self::render_field( $field, $form, $prev_data, $field_error );
 					// conditional wrapper
-					if(!empty($field['conditions']['group']) && !empty($field['conditions']['type'])){
+					if(!empty($field['conditions']['group']) && !empty($field['conditions']['type']) ){
 						// render conditions check- for magic tags since at this point all field data will be null
 						//if(!self::check_condition($field['conditions'], $form)){
 						//	dump($field['conditions'],0);
 						//}
-
-						// wrap it up
-						$conditions_templates[$field_base_id] = "<script type=\"text/html\" id=\"conditional-" . $field_base_id . "-tmpl\">\r\n" . $field_html . "</script>\r\n";
-						// add in instance number
-						if(!empty($field['conditions']['group'])){
-							foreach($field['conditions']['group'] as &$group_row){
-								foreach( $group_row as &$group_line){
-									// add instance value
-									$group_line['instance'] = $current_form_count;
+						$conditions_configs[$field_base_id] = $field['conditions'];
+						
+						if( $field['conditions']['type'] !== 'disable' ){
+							// wrap it up
+							$conditions_templates[$field_base_id] = "<script type=\"text/html\" id=\"conditional-" . $field_base_id . "-tmpl\">\r\n" . $field_html . "</script>\r\n";
+							// add in instance number
+							if(!empty($field['conditions']['group'])){
+								foreach($field['conditions']['group'] as &$group_row){
+									foreach( $group_row as &$group_line){
+										// add instance value
+										$group_line['instance'] = $current_form_count;
+									}
 								}
 							}
 						}
-						$conditions_configs[$field_base_id] = $field['conditions'];
-						if($field['conditions']['type'] == 'show' || $field['conditions']['type'] == 'disable'){
+						
+						if($field['conditions']['type'] == 'show' || $field['conditions']['type'] == 'wdisable'){
 							// show if indicates hidden by default until condition is matched.
 							$field_html = null;
 						}
@@ -5193,7 +5214,7 @@ class Caldera_Forms {
 		$out .= "</div>\r\n";
 		
 		// output javascript conditions.
-		if(!empty($conditions_configs) && !empty($conditions_templates)){
+		if(!empty($conditions_configs)){
 			// sortout magics 
 			foreach($conditions_configs as &$condition_field_conf){
 				if(!empty($condition_field_conf['group'])){
@@ -5248,7 +5269,9 @@ class Caldera_Forms {
 			$out .= 'if( typeof caldera_conditionals === "undefined" ){ var caldera_conditionals = {}; }';
 			$out .= "caldera_conditionals." . $form['ID'].'_'.$current_form_count . " = " . $conditions_str . ";\r\n";
 			$out .= "</script>\r\n";
-			$out .= implode("\r\n", $conditions_templates);
+			if( !empty($conditions_templates) ){
+				$out .= implode("\r\n", $conditions_templates);
+			}
 
 			// enqueue conditionls app.
 			wp_enqueue_script( 'cf-conditionals' );
@@ -5316,9 +5339,9 @@ class Caldera_Forms {
 	 *
 	 * @since 1.3.1
 	 *
-	 * @param array $atts
-	 * @param string $content
-	 * @param string $shortcode
+	 * @param array $atts Array of shortcode attributes
+	 * @param string $content Enclosed content
+	 * @param string $shortcode Shortcode type caldera_forms|caldera_forms_modal
 	 *
 	 * @return string|void
 	 */
@@ -5329,6 +5352,7 @@ class Caldera_Forms {
 		if( $shortcode === 'caldera_form_modal' ){
 			$atts[ 'modal' ] = true;
 		}
+		
 		if( isset( $atts[ 'modal' ] ) && $atts[ 'modal' ] ) {
 			$form = Caldera_Forms_Forms::get_form( $atts[ 'id' ] );
 			if( ! is_array( $form ) ) {
@@ -5365,6 +5389,25 @@ class Caldera_Forms {
 
 		return $form;
 
+	}
+
+	/**
+	 * Convert time entry was submitted (as MySQL timestamp in UTC) to local display time
+	 *
+	 * @since 1.3.6
+	 *
+	 * @param string $submitted Timestamp
+	 *
+	 * @return string
+	 */
+	public static function localize_time( $submitted ){
+		$dateformat = get_option('date_format');
+		$timeformat = get_option('time_format');
+
+		$format = $dateformat.' '.$timeformat;
+		$time = get_date_from_gmt( $submitted, $format );
+		
+		return $time;
 	}
 
 

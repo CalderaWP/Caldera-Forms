@@ -229,7 +229,6 @@ function new_form_redirect(obj){
 	}
 }
 
-// profile form saver
 function serialize_modal_form(el){
 	
 	var clicked	= jQuery(el),
@@ -280,7 +279,6 @@ jQuery( function( $ ){
 
 	cf_build_export = function( el ){
 		var export_object = $('#export_baldrickModal').serialize();
-		console.log( "<?php echo esc_attr( admin_url('admin.php?page=caldera-forms' ) ); ?>&" + export_object );
 		window.location = "<?php echo esc_attr( admin_url('admin.php?page=caldera-forms' ) ); ?>&" + export_object;
 	}
 
@@ -305,6 +303,12 @@ jQuery( function( $ ){
 			$('.status_toggles.button-primary').trigger('click');	
 		}, 280 );
 		
+	});
+
+	$( document ).on('submit', '#new_form_baldrickModal', function(e){
+		e.preventDefault();
+		var trigger = $(this).find('button.ajax-trigger');
+		trigger.trigger('click');
 	});
 
 });

@@ -54,17 +54,13 @@ add_action( 'wp_ajax_nopriv_cf_live_gravatar_get_gravatar', 'cf_live_gravatar_ge
 
 
 function cf_live_gravatar_get_gravatar(){
-	if( empty($_POST['preview'] ) ){
-		if( !is_email( $_POST['email'] ) && !empty($_POST['email'])){
-			exit;
-		}
-	}
-
-	if( empty( $_POST['email'] ) && is_user_logged_in() ){
-		$_POST['email'] = get_current_user_id();
-	}
-
-	echo get_avatar( $_POST['email'], (int) $_POST['size'], $_POST['generator']);	
+	$defaults = array(
+		'email'	=> '',
+		'generator' => 'mystery',
+		'size' => 100
+	);
+	$defaults = array_merge( $defaults, $_POST );
+	echo get_avatar( Caldera_Forms::do_magic_tags( $defaults['email'] ), (int) $defaults['size'], $defaults['generator']);
 	exit;
 }
 

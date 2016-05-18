@@ -115,6 +115,14 @@ class Caldera_Forms_Admin {
 
 		add_action( 'admin_init', array( $this, 'watch_tracking' ) );
 
+		/**
+		 * Runs after Caldera Forms admin is initialized
+		 *
+		 * @since 1.3.6
+		 */
+		do_action( 'caldera_forms_admin_init' );
+
+		/** Adding anything to this constructor after caldera_forms_admin_init action is a violation of intergalactic law */
 	}
 
 	public function render_editor_template(){
@@ -193,6 +201,11 @@ class Caldera_Forms_Admin {
 		<?php
 	}
 
+	/**
+	 * Make the form preview in post editor
+	 *
+	 * @since unknown
+	 */
 	public function get_form_preview(){
 		global $post;
 		add_filter('caldera_forms_render_form_element', array( $this, 'set_preview_form_element') );
@@ -202,8 +215,9 @@ class Caldera_Forms_Admin {
 		}elseif( isset($_POST['atts']['named']['name']) ){
 			$form = $_POST['atts']['named']['name'];
 		}
+		
 		add_filter('caldera_forms_get_form-' . $form, array( $this, 'set_preview_get_form'),100 );
-		//shortcode_handler( $atts, $content )
+
 		$atts = $_POST['atts']['named'];
 		$atts['preview'] = true;
 
@@ -214,7 +228,7 @@ class Caldera_Forms_Admin {
 			if( !empty( $_POST['content'] ) ){
 				$content = stripslashes_deep( $_POST['content'] );
 			}
-			echo Caldera_Forms::shortcode_handler( $atts, $content );
+			echo Caldera_Forms::shortcode_handler( $atts, $content, 'caldera_form' );
 			echo '<div class="clear"></div>';
 			wp_print_footer_scripts();
 			$html = ob_get_clean();
@@ -226,6 +240,7 @@ class Caldera_Forms_Admin {
 		
 		wp_send_json_success( $out );
 	}
+
 	public function set_preview_get_form( $form ){
 		$form['form_ajax'] = false;
 		$form['settings']['responsive']['break_point'] = 'xs';
@@ -727,8 +742,7 @@ class Caldera_Forms_Admin {
 
 
 				$data['entries'] = array();
-				$dateformat = get_option('date_format');
-				$timeformat = get_option('time_format');
+
 				foreach($rawdata as $row){
 					if(!empty($row->_user_id)){
 						$user = get_userdata( $row->_user_id );
@@ -740,7 +754,12 @@ class Caldera_Forms_Admin {
 						}
 					}
 					$data['entries']['E' . $row->_entryid]['_entry_id'] = $row->_entryid;
-					$data['entries']['E' . $row->_entryid]['_date'] = date_i18n( $dateformat.' '.$timeformat, get_date_from_gmt( $row->_date_submitted, 'U'));
+
+					$submitted =  $row->_date_submitted;
+
+
+
+					$data['entries']['E' . $row->_entryid]['_date'] = Caldera_Forms::localize_time( $submitted );
 
 					// setup default data array
 					if(!isset($data['entries']['E' . $row->_entryid]['data'])){
@@ -948,6 +967,9 @@ class Caldera_Forms_Admin {
 		wp_enqueue_script( $this->plugin_slug . '-admin-scripts', CFCORE_URL . 'assets/js/admin.min.js', array( $this->plugin_slug . '-baldrick' ), self::VERSION );
 
 		if ( ! empty( $_GET[ 'edit' ] ) ) {
+
+			wp_enqueue_style( 'wp-color-picker' );
+			wp_enqueue_script( 'wp-color-picker' );
 
 			wp_enqueue_script( $this->plugin_slug . '-edit-fields', CFCORE_URL . 'assets/js/fields.min.js', array( 'jquery' ), self::VERSION );
 

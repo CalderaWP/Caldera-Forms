@@ -20,8 +20,7 @@
 		<?php _e('Highlight', 'caldera-forms'); ?>
 	</label>
 	<div class="caldera-config-field">
-		<input id="{{_id}}_color" style="width: 120px;" type="text" class="minicolor-picker field-config" name="{{_name}}[color]" value="{{#if color}}{{color}}{{else}}#5b9dd9{{/if}}">
-		<span id="{{_id}}_color_preview" class="preview-color-selector" style="margin-left: -27px; padding-bottom: 4px; padding-top: 4px; background-color: {{#if color}}{{color}}{{else}}#5b9dd9{{/if}};"></span>
+		<input id="{{_id}}_color" type="text" class="color-field field-config" name="{{_name}}[color]" value="{{#if color}}{{color}}{{else}}#5b9dd9{{/if}}">		
 	</div>
 </div>
 <div class="caldera-config-group">
@@ -29,27 +28,7 @@
 		<?php _e( 'Border', 'caldera-forms' ); ?>
 	</label>
 	<div class="caldera-config-field">
-		<input id="{{_id}}_border" style="width: 120px;" type="text" class="minicolor-picker field-config" name="{{_name}}[border]" value="{{#if border}}{{border}}{{else}}#4b8dc9{{/if}}">
-		<span id="{{_id}}_border_preview" class="preview-color-selector" style="margin-left: -27px; padding-bottom: 4px; padding-top: 4px; background-color: {{#if border}}{{border}}{{else}}#4b8dc9{{/if}};"></span>
+		<input id="{{_id}}_border" type="text" class="color-field field-config" name="{{_name}}[border]" value="{{#if border}}{{border}}{{else}}#4b8dc9{{/if}}">		
 	</div>
 </div>
-
-{{#script}}
-jQuery(function($){
-	jQuery('#{{_id}}_color').miniColors({
-		change: function(hex, opacity) {
-			jQuery('#{{_id}}_color_preview').css('background-color', hex);
-		}
-	});
-	jQuery('#{{_id}}_border').miniColors({
-		change: function(hex, opacity) {
-			jQuery('#{{_id}}_border_preview').css('background-color', hex);
-		}
-	});
-});
-{{/script}}
-
-
-
-
 

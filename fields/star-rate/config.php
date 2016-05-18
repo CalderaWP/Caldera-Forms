@@ -37,13 +37,13 @@
 <div class="caldera-config-group">
 	<label for="{{_id}}_color"><?php echo __('Star Color', 'caldera-forms'); ?></label>
 	<div class="caldera-config-field">
-		<input type="text" class="minicolor-picker field-config" id="{{_id}}_color" name="{{_name}}[color]" value="{{color}}">
+		<input type="text" class="color-field field-config" id="{{_id}}_color" name="{{_name}}[color]" value="{{color}}">
 	</div>
 </div>
 <div class="caldera-config-group">
 	<label for="{{_id}}_track_color"><?php echo __('Track Color', 'caldera-forms'); ?></label>
 	<div class="caldera-config-field">
-		<input type="text" class="minicolor-picker field-config" id="{{_id}}_track_color" name="{{_name}}[track_color]" value="{{track_color}}">
+		<input type="text" class="color-field field-config" id="{{_id}}_track_color" name="{{_name}}[track_color]" value="{{track_color}}">
 	</div>
 </div>
 <div class="caldera-config-group">
@@ -52,10 +52,3 @@
 		<input id="{{_id}}_cancel" type="checkbox" class="field-config" name="{{_name}}[cancel]" value="1" {{#if cancel}}checked="checked"{{/if}}>
 	</div>
 </div>
-
-{{#script}}
-jQuery(function($){
-	jQuery('#{{_id}}_color').miniColors();
-	jQuery('#{{_id}}_track_color').miniColors();
-});
-{{/script}}

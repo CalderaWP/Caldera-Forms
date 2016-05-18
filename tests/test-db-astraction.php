@@ -8,7 +8,7 @@
  * @link
  * @copyright 2016 CalderaWP LLC
  */
-class Test_Caldera_Forms_DB_Abstraction extends Caldera_Forms_Test_Case {
+class Test_Caldera_Forms_DB_Base_Abstraction extends Caldera_Forms_Test_Case {
 
 	/**
 	 * @var Caldera_Forms_Fake_DB
@@ -25,7 +25,7 @@ class Test_Caldera_Forms_DB_Abstraction extends Caldera_Forms_Test_Case {
 	 *
 	 * @since 1.3.5
 	 *
-	 * @covers Caldera_Forms_DB::get_table_name()
+	 * @covers Caldera_Forms_DB_Base::get_table_name()
 	 *
 	 * @group db
 	 * @group db_abstraction
@@ -40,7 +40,7 @@ class Test_Caldera_Forms_DB_Abstraction extends Caldera_Forms_Test_Case {
 	 *
 	 * @since 1.3.5
 	 *
-	 * @covers Caldera_Forms_DB::get_table_name()
+	 * @covers Caldera_Forms_DB_Base::get_table_name()
 	 *
 	 * @group db
 	 * @group db_abstraction
@@ -55,8 +55,8 @@ class Test_Caldera_Forms_DB_Abstraction extends Caldera_Forms_Test_Case {
  *
  * @since 1.3.5
  *
- * @covers Caldera_Forms_DB::create()
- * @covers Caldera_Forms_DB::save()
+ * @covers Caldera_Forms_DB_Base::create()
+ * @covers Caldera_Forms_DB_Base::save()
  *
  * @group db
  * @group db_abstraction
@@ -82,8 +82,8 @@ class Test_Caldera_Forms_DB_Abstraction extends Caldera_Forms_Test_Case {
 	 *
 	 * @since 1.3.5
 	 *
-	 * @covers Caldera_Forms_DB::create()
-	 * @covers Caldera_Forms_DB::save()
+	 * @covers Caldera_Forms_DB_Base::create()
+	 * @covers Caldera_Forms_DB_Base::save()
 	 *
 	 * @group db
 	 * @group db_abstraction
@@ -135,7 +135,7 @@ class Test_Caldera_Forms_DB_Abstraction extends Caldera_Forms_Test_Case {
 	 *
 	 * @since 1.3.5
 	 *
-	 * @covers Caldera_Forms_DB::get_primary()
+	 * @covers Caldera_Forms_DB_Base::get_primary()
 	 *
 	 * @group db
 	 * @group db_abstraction
@@ -163,7 +163,7 @@ class Test_Caldera_Forms_DB_Abstraction extends Caldera_Forms_Test_Case {
 	 *
 	 * @since 1.3.5
 	 *
-	 * @covers Caldera_Forms_DB::get_meta()
+	 * @covers Caldera_Forms_DB_Base::get_meta()
 	 *
 	 * @group db
 	 * @group db_abstraction
@@ -199,7 +199,7 @@ class Test_Caldera_Forms_DB_Abstraction extends Caldera_Forms_Test_Case {
 	 *
 	 * @since 1.3.5
 	 *
-	 * @covers Caldera_Forms_DB::delete()
+	 * @covers Caldera_Forms_DB_Base::delete()
 	 *
 	 * @group db
 	 * @group db_abstraction
@@ -238,8 +238,8 @@ class Test_Caldera_Forms_DB_Abstraction extends Caldera_Forms_Test_Case {
 	 *
 	 * @since 1.3.5
 	 *
-	 * @covers Caldera_Forms_DB::valid_field()
-	 * @covers Caldera_Forms_DB::save()
+	 * @covers Caldera_Forms_DB_Base::valid_field()
+	 * @covers Caldera_Forms_DB_Base::save()
 	 *
 	 * @group db
 	 * @group db_abstraction
@@ -280,7 +280,7 @@ class Test_Caldera_Forms_DB_Abstraction extends Caldera_Forms_Test_Case {
 	 *
 	 * @since 1.3.5
 	 *
-	 * @covers Caldera_Forms_DB::get_primary()
+	 * @covers Caldera_Forms_DB_Base::get_primary()
 	 *
 	 * @group db
 	 * @group db_abstraction
@@ -338,7 +338,7 @@ class Test_Caldera_Forms_DB_Abstraction extends Caldera_Forms_Test_Case {
 	 *
 	 * @since 1.3.5
 	 *
-	 * @covers Caldera_Forms_DB::get_meta()
+	 * @covers Caldera_Forms_DB_Base::get_meta()
 	 *
 	 * @group db
 	 * @group db_abstraction
@@ -386,8 +386,8 @@ class Test_Caldera_Forms_DB_Abstraction extends Caldera_Forms_Test_Case {
 	 *
 	 * @since 1.3.5
 	 *
-	 * @covers Caldera_Forms_DB::get_meta()
-	 * @covers Caldera_Forms_DB::reduce_meta()
+	 * @covers Caldera_Forms_DB_Base::get_meta()
+	 * @covers Caldera_Forms_DB_Base::reduce_meta()
 	 *
 	 * @group db
 	 * @group db_abstraction
@@ -412,10 +412,10 @@ class Test_Caldera_Forms_DB_Abstraction extends Caldera_Forms_Test_Case {
 	 *
 	 * @since 1.3.5
 	 *
-	 * @covers Caldera_Forms_DB::get_row()
-	 * @covers Caldera_Forms_DB::get_primary()
-	 * @covers Caldera_Forms_DB::get_meta()
-	 * @covers Caldera_Forms_DB::reduce_meta()
+	 * @covers Caldera_Forms_DB_Base::get_row()
+	 * @covers Caldera_Forms_DB_Base::get_primary()
+	 * @covers Caldera_Forms_DB_Base::get_meta()
+	 * @covers Caldera_Forms_DB_Base::reduce_meta()
 	 *
 	 * @group db
 	 * @group db_abstraction
@@ -451,10 +451,10 @@ class Test_Caldera_Forms_DB_Abstraction extends Caldera_Forms_Test_Case {
 	 *
 	 * @since 1.3.5
 	 *
-	 * @covers Caldera_Forms_DB::get_row()
-	 * @covers Caldera_Forms_DB::get_primary()
-	 * @covers Caldera_Forms_DB::get_meta()
-	 * @covers Caldera_Forms_DB::reduce_meta()
+	 * @covers Caldera_Forms_DB_Base::get_row()
+	 * @covers Caldera_Forms_DB_Base::get_primary()
+	 * @covers Caldera_Forms_DB_Base::get_meta()
+	 * @covers Caldera_Forms_DB_Base::reduce_meta()
 	 *
 	 * @group db
 	 * @group db_abstraction
@@ -500,7 +500,7 @@ class Test_Caldera_Forms_DB_Abstraction extends Caldera_Forms_Test_Case {
 	 *
 	 * @since 1.3.5
 	 *
-	 * @covers Caldera_Forms_DB::highest_id()
+	 * @covers Caldera_Forms_DB_Base::highest_id()
 	 *
 	 * @group db
 	 * @group db_abstraction
@@ -525,7 +525,7 @@ class Test_Caldera_Forms_DB_Abstraction extends Caldera_Forms_Test_Case {
 }
 
 
-class Caldera_Forms_Fake_DB extends Caldera_Forms_DB {
+class Caldera_Forms_Fake_DB extends Caldera_Forms_DB_Base {
 
 
 	/**

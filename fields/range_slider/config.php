@@ -16,25 +16,25 @@
 	<div class="caldera-config-group">
 		<label for="{{_id}}_trackcolor"><?php _e('Track', 'caldera-forms'); ?></label>
 		<div class="caldera-config-field">
-			<input id="{{_id}}_trackcolor" type="text" class="minicolor-picker field-config" name="{{_name}}[trackcolor]" value="{{trackcolor}}">
+			<input id="{{_id}}_trackcolor" type="text" class="color-field field-config" name="{{_name}}[trackcolor]" value="{{trackcolor}}">
 		</div>
 	</div>
 	<div class="caldera-config-group">
 		<label for="{{_id}}_color"><?php _e('Highlight', 'caldera-forms'); ?></label>
 		<div class="caldera-config-field">
-			<input id="{{_id}}_color" type="text" class="minicolor-picker field-config" name="{{_name}}[color]" value="{{color}}">
+			<input id="{{_id}}_color" type="text" class="color-field field-config" name="{{_name}}[color]" value="{{color}}">
 		</div>
 	</div>
 	<div class="caldera-config-group">
 		<label for="{{_id}}_handle"><?php _e('Handle', 'caldera-forms'); ?></label>
 		<div class="caldera-config-field">
-			<input id="{{_id}}_handle" type="text" class="minicolor-picker field-config" name="{{_name}}[handle]" value="{{handle}}">
+			<input id="{{_id}}_handle" type="text" class="color-field field-config" name="{{_name}}[handle]" value="{{handle}}">
 		</div>
 	</div>
 	<div class="caldera-config-group">
 		<label for="{{_id}}_handleborder"><?php _e('Border', 'caldera-forms'); ?></label>
 		<div class="caldera-config-field">
-			<input id="{{_id}}_handleborder" type="text" class="minicolor-picker field-config" name="{{_name}}[handleborder]" value="{{handleborder}}">
+			<input id="{{_id}}_handleborder" type="text" class="color-field field-config" name="{{_name}}[handleborder]" value="{{handleborder}}">
 		</div>
 	</div>
 </div>
@@ -76,10 +76,10 @@
 </div>
 {{#script}}
 jQuery(function($){
-	jQuery('#{{_id}}_trackcolor').miniColors();
-	jQuery('#{{_id}}_color').miniColors();
-	jQuery('#{{_id}}_handle').miniColors();
-	jQuery('#{{_id}}_handleborder').miniColors();
+	//jQuery('#{{_id}}_trackcolor').miniColors();
+	//jQuery('#{{_id}}_color').miniColors();
+	//jQuery('#{{_id}}_handle').miniColors();
+	//jQuery('#{{_id}}_handleborder').miniColors();
 
 	/*jQuery('#{{_id}}_pollyfill_check').on('change', function(){
 

@@ -1,9 +1,9 @@
 === Caldera Forms - Drag and drop responsive form builder ===
 Contributors: Desertsnowman, Shelob9
-Tags: forms, formbuilder, form builder, contact form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, contact, email, auto-responder,
+Tags: forms, formbuilder, form builder, contact form, form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, contact, email, auto-responder, awber, converkit, builder, contact forms
 Requires at least: 4.3
-Tested up to: 4.5
-Stable tag: 1.3.5
+Tested up to: 4.6
+Stable tag: 1.3.5.1
 License: GPLv2
 
 A different kind of WordPress form builder.
@@ -18,6 +18,10 @@ Whether you are creating a simple contact form or a complex system, you'll love 
 
 Easy enough for everyday users to create forms, and powerful enough for PHP experts to extend.
 
+Pippin Williamson of Easy Digital Downloads, Restrict Content Pro and AffiliateWP gives [Caldera Forms a 5 star rating](https://pippinsplugins.com/review-caldera-forms)!
+
+John Teague of Theme Surgeons includes Caldera Forms in his list of [WordPress plugin recommendations I don’t get paid for](https://themesurgeons.com/wordpress-plugins-recommendations).
+
 A free plugin by <a href="https://CalderaWP.com" title="CalderaWP: Transform Your WordPress Experience">CalderaWP</a>.
 
 
@@ -30,11 +34,8 @@ A free plugin by <a href="https://CalderaWP.com" title="CalderaWP: Transform You
 >
 > <em>Note: We do not provide free support via WordPress.org. Premium add-on purchases include priority support for Caldera Forms.</em>
 
-Pippin Williamson of Easy Digital Downloads, Restrict Content Pro and AffiliateWP gives [Caldera Forms a 5 star rating](https://pippinsplugins.com/review-caldera-forms)!
 
-John Teague of Theme Surgeons includes Caldera Forms in his list of [WordPress plugin recommendations I don’t get paid for](https://themesurgeons.com/wordpress-plugins-recommendations).
-
-= Docs & More Information =
+= Documentation & More Information =
 * [More Information](https://calderawp.com/downloads/caldera-forms/)
 * [Caldera Forms Documentation](https://calderawp.com/documentation/caldera-forms-documentation/)
 
@@ -42,17 +43,6 @@ John Teague of Theme Surgeons includes Caldera Forms in his list of [WordPress p
 = Addons =
 [All Caldera Forms Add-ons](https://calderawp.com/caldera-forms-add-ons/)
 
-= Free Add-ons =
-* [Caldera Custom Fields](https://calderawp.com/downloads/caldera-form-metabox/) - Save form submissions as post and post meta.
-* [Verify Email for Caldera Forms](https://calderawp.com/downloads/verify-email-for-caldera-forms/) - Send an email with a validate link to verify the email address before completing the form submission.
-* [Form as Metabox - Custom Fields](https://calderawp.com/downloads/caldera-form-metabox/) - Use a Caldera Form as a metabox in the post editor to save custom field values.
-* [Slack Integration for Caldera Forms](https://calderawp.com/downloads/caldera-forms-slack-integration/) - Get notifications in Slack whenever a Caldera Form is submitted.
-* [Run Action](https://calderawp.com/downloads/caldera-forms-run-action/) - Trigger a WordPress action with your form submission.
-* [Sprout Invoices Integration](https://wordpress.org/plugins/caldera-forms-sprout-invoices-integration/) - Use Caldera Forms for [Sprout Invoice](https://sproutapps.co/sprout-invoices/) forms.
-* [Conditional Fail](https://wordpress.org/plugins/conditional-fail-for-caldera-forms/) - Set conditions to cause that if met will allow or prevent form submssion.
-* [Postmatic](https://calderawp.com/downloads/postmatic-for-caldera-forms/) - Subscribe users to your posts and comments using Postmatic.
-
-= Premium Add-Ons =
 * [MailChimp](https://calderawp.com/downloads/caldera-forms-mailchimp-add-on/) - Seamlessly integrate MailChimp optins into your forms.
 * [Stripe](https://calderawp.com/downloads/caldera-forms-stripe-add-on/) - Accept credit card payments via Stripe.
 * [PayPal Express](https://calderawp.com/downloads/caldera-forms-paypal-express-add-on/) - Accept payments via Paypal Express.
@@ -65,6 +55,19 @@ John Teague of Theme Surgeons includes Caldera Forms in his list of [WordPress p
 * [BrainTree](https://calderawp.com/downloads/braintree-for-caldera-forms/) Accept credit card payments in your form through BrainTree.
 * [Nexmo](https://calderawp.com/downloads/nexmo-caldera-forms/) Get SMS notifications of form submissions.
 * [Mail Templates](https://calderawp.com/downloads/mail-templates-for-caldera-forms/) - Add your logo, and your brand's color scheme to your emails sent from Caldera Forms.
+* [Caldera Custom Fields](https://calderawp.com/downloads/caldera-form-metabox/) - Save form submissions as post and post meta.
+* [Verify Email for Caldera Forms](https://calderawp.com/downloads/verify-email-for-caldera-forms/) - Send an email with a validate link to verify the email address before completing the form submission.
+* [Form as Metabox - Custom Fields](https://calderawp.com/downloads/caldera-form-metabox/) - Use a Caldera Form as a metabox in the post editor to save custom field values.
+* [Slack Integration for Caldera Forms](https://calderawp.com/downloads/caldera-forms-slack-integration/) - Get notifications in Slack whenever a Caldera Form is submitted.
+* [Run Action](https://calderawp.com/downloads/caldera-forms-run-action/) - Trigger a WordPress action with your form submission.
+* [Sprout Invoices Integration](https://wordpress.org/plugins/caldera-forms-sprout-invoices-integration/) - Use Caldera Forms for [Sprout Invoice](https://sproutapps.co/sprout-invoices/) forms.
+* [Conditional Fail](https://wordpress.org/plugins/conditional-fail-for-caldera-forms/) - Set conditions to cause that if met will allow or prevent form submssion.
+* [Postmatic](https://calderawp.com/downloads/postmatic-for-caldera-forms/) - Subscribe users to your posts and comments using Postmatic.
+
+Coming soon:
+* Awber
+* ConverKit
+* Caldera Members
 
 = Power A Custom Search =
 Caldera Forms can be used to create totally custom search forms. Search posts, users, categories, tags, custom post types, custom fields -- including those added with [Advanced Custom Fields](http://advancedcustomfields.com).
@@ -132,6 +135,24 @@ For Caldera Forms support: [http://calderawp.com/support](http://calderawp.com/s
 4. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
+
+= Caldera Forms 1.3.5.1 ( May 18, 2016) Bug Fix Release =
+FIXED: Issue preventing multi-select fields from saving 2nd or greater option in database.
+FIXED: Pressing "enter" in new form modal did not create new form.
+FIXED: Bug preventing some magic tags from rendering in HTML form fields.
+FIXED: Bug preventing rating star form fields from working with conditional logic.
+FIXED: Issue preventing forms combining user login and user profile editing in same form from validating properly. ( Requires Caldera Forms Users add-on 1.3.4+ )
+FIXED: Bug causing PHP notice when creating shortcode previewer in post editor.
+ADDED: "caldera_forms_admin_init" action at end of constructor for admin class
+ADDED: "caldera_forms_core_init" action at end of constructor for core class
+ADDED: Autoloader for all classes
+FIXED: Missing ARIA tags in auto-generated processor config settings.
+ADDED: "caldera_forms_processor_ui_input_group_html" filter for adding markup to auto-generated processor config groups.
+ADDED: "caldera_forms_processor_ui_input_html" filter for adding markup to auto-generated processor config fields.
+ADDED: Base classes for processors to extend.
+ADDED: Replaced the mini color picker with the native wordpress color picker in form editor.
+FIXED: Issue preventing some disable conditions from disabling form fields.
+
 = Caldera Forms 1.3.5 ( April 21, 2016 ) =
 ADDED: Forms in modals! Ok, this was there for awhile in secret, but it works really well now, so have at it.
 ADDED: Advanced File Upload fields

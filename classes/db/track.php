@@ -8,7 +8,7 @@
  * @link
  * @copyright 2016 CalderaWP LLC
  */
-class Caldera_Forms_Track extends Caldera_Forms_DB {
+class Caldera_Forms_DB_Track extends Caldera_Forms_DB_Base {
 
 	/**
 	 * Primary fields
@@ -100,7 +100,7 @@ class Caldera_Forms_Track extends Caldera_Forms_DB {
 	 *
 	 * @since 1.3.5
 	 *
-	 * @var Caldera_Forms_Track
+	 * @var Caldera_Forms_DB_Track
 	 */
 	private static $instance;
 
@@ -123,7 +123,7 @@ class Caldera_Forms_Track extends Caldera_Forms_DB {
 	 *
 	 * @since 1.3.5
 	 *
-	 * @return \Caldera_Forms_Track
+	 * @return \Caldera_Forms_DB_Track
 	 */
 	public static function get_instance(){
 		if( null == self::$instance ){
