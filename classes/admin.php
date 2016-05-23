@@ -93,11 +93,15 @@ class Caldera_Forms_Admin {
 			add_action("wp_ajax_create_form", array( $this, 'create_form') );
 		}
 
-		add_action("wp_ajax_toggle_form_state", array( $this, 'toggle_form_state') );
-		add_action("wp_ajax_browse_entries", array( $this, 'browse_entries') );		
-		add_action("wp_ajax_save_cf_setting", array( $this, 'save_cf_setting') );
-		add_action("wp_ajax_cf_dismiss_pointer", array( $this, 'update_pointer') );
-		add_action("wp_ajax_cf_bulk_action", array( $this, 'bulk_action') );
+		if( current_user_can( Caldera_Forms::get_manage_cap( 'admin' ) ) ){
+			add_action("wp_ajax_toggle_form_state", array( $this, 'toggle_form_state') );
+			add_action("wp_ajax_browse_entries", array( $this, 'browse_entries') );
+			add_action("wp_ajax_cf_bulk_action", array( $this, 'bulk_action') );
+			add_action("wp_ajax_save_cf_setting", array( $this, 'save_cf_setting') );
+			add_action("wp_ajax_cf_dismiss_pointer", array( $this, 'update_pointer') );
+		}
+
+
 		add_action("wp_ajax_cf_get_form_preview", array( $this, 'get_form_preview') );
 		
 		add_action( 'caldera_forms_admin_footer', array( $this, 'admin_alerts' ) );
@@ -346,7 +350,7 @@ class Caldera_Forms_Admin {
 
 
 	public static function update_pointer(){
-
+		self::verify_ajax_action();
 		if(!empty($_POST['pointer'])){
 			add_user_meta( get_current_user_id() , 'cf_pointer_' . $_POST['pointer'] );
 		}
@@ -493,6 +497,7 @@ class Caldera_Forms_Admin {
 
 
 	public static function save_cf_setting(){
+		self::verify_ajax_action();
 		if(empty($_POST['set'])){
 			exit;
 		}
@@ -581,7 +586,7 @@ class Caldera_Forms_Admin {
 	 * @since unknown
 	 */
 	public static function browse_entries(){
-
+		self::verify_ajax_action();
 		if ( isset( $_POST[ 'page' ] ) && 0 < $_POST[ 'page' ] ) {
 			$page = absint( $_POST[ 'page' ] );
 		}else{
