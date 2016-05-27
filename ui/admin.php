@@ -118,6 +118,7 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 						<span class="edit"><a class="form-control ajax-trigger" href="#entres"
 						data-load-element="#form_row_<?php echo $form_id; ?>"
 						data-action="toggle_form_state"
+                        data-nonce="<?php echo esc_attr( wp_create_nonce( 'toggle_form_state') ); ?>"
 						data-active-element="#form_row_<?php echo $form_id; ?>"
 						data-callback="set_form_state"
 						data-form="<?php echo $form_id; ?>"

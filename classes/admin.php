@@ -541,9 +541,9 @@ class Caldera_Forms_Admin {
 	 * @since unknown
 	 */
 	public static function toggle_form_state(){
-
-		// first validate
-		self::verify_ajax_action();
+		if( ! isset( $_POST[ 'nonce' ] ) || !wp_verify_nonce( $_POST[ 'nonce' ], 'toggle_form_state' ) ){
+			wp_send_json_error( $_POST );
+		}
 
 		$forms = Caldera_Forms_Forms::get_forms( true );
 		$form = sanitize_text_field( $_POST['form'] );
