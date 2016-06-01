@@ -302,6 +302,13 @@ $default_template = "
 </div>
 ";
 
+
+// type list
+$field_type_list = array(
+	__('Basic', 'caldera-forms')	=> array(),
+	__('Advanced', 'caldera-forms')	=> array(),
+	__('Special', 'caldera-forms')	=> array(),
+);
 // Build Field Types List
 foreach($field_types as $field_slug=>$config){
 
@@ -310,8 +317,7 @@ foreach($field_types as $field_slug=>$config){
 			continue;
 		}
 	}
-	// type list
-	$categories[] = __('Basic', 'caldera-forms');
+
 	if(!empty($config['category'])){
 		$categories = explode(',', $config['category']);
 	}
@@ -538,7 +544,7 @@ function build_field_types($default = null){
 	if(null === $default){
 		$out .= '<option></option>';
 	}
-	ksort($field_type_list);
+	//ksort($field_type_list);
 	foreach($field_type_list as $category=>$fields){
 		ksort($fields);
 		$out .= "<optgroup label=\" ". $category . "\">\r\n";
@@ -912,8 +918,12 @@ do_action('caldera_forms_edit_end', $element);
 	<?php
 
 		
-		$sorted_field_types = array();
-		ksort($field_types);
+		$sorted_field_types = array(
+			__('Basic', 'caldera-forms') => '',
+			__('Advanced', 'caldera-forms') => '',
+			__('Special', 'caldera-forms') => '',
+		);
+
 		foreach($field_types as $field_slug=>$config){
 			$cats[] = 'General';
 			if(!empty($config['category'])){
@@ -938,20 +948,9 @@ do_action('caldera_forms_edit_end', $element);
 				$sorted_field_types[$cat] .= $template;
 			}
 		}
-		ksort($sorted_field_types);
-		/*echo '<div class="modal-side-bar">';
-			echo '<ul class="modal-side-tabs">';
-			foreach($sorted_field_types as $cat=>$template){
-				
-				if(!isset($cat_class)){
-					$cat_class = ' active';
-				}
-				echo "<li><a href=\"#modal-category-". sanitize_key( $cat ) ."\" class=\"modal-side-tab". $cat_class ."\">" . $cat . "</a></li>\r\n";
-				$cat_class = '';
-			}
-		echo "</ul>\r\n";
-		echo "</div>\r\n";*/
+
 		$cat_show = false;
+
 		foreach($sorted_field_types as $cat=>$template){
 			if(!empty($cat_show)){
 				$cat_show = 'style="display: none;"';
