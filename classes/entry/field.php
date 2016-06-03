@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Object representation of an entry field
+ * Object representation of an entry field - cf_form_entry_values
  *
  * @package Caldera_Forms
  * @author    Josh Pollock <Josh@CalderaWP.com>
@@ -25,6 +25,18 @@ class Caldera_Forms_Entry_Field  extends Caldera_Forms_Entry_Object {
 	
 	/** @var  string */
 	protected $value;
+
+
+	/**
+	 * Apply deserialization if needed to value column
+	 *
+	 * @since 1.3.6
+	 *
+	 * @param string $value Meta value
+	 */
+	protected function set_value( $value ){
+		$this->value = maybe_unserialize( $value );
+	}
 
 }
 

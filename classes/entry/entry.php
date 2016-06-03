@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Object representation of an entry (basic info, no values)
+ * Object representation of an entry (basic info, no values) - cf_form_entries
  *
  * @package Caldera_Forms
  * @author    Josh Pollock <Josh@CalderaWP.com>
