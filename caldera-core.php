@@ -46,6 +46,7 @@ function caldera_forms_load(){
 	include_once CFCORE_PATH . 'classes/autoloader.php';
 	include_once CFCORE_PATH . 'classes/widget.php';
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_DB', CFCORE_PATH . 'classes/db' );
+	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Entry', CFCORE_PATH . 'classes/entry' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Processor_Interface', CFCORE_PATH . 'processors/classes/interfaces' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Processor', CFCORE_PATH . 'processors/classes' );
 
@@ -79,3 +80,9 @@ if ( is_admin() || defined( 'DOING_AJAX' ) ) {
 	add_action( 'plugins_loaded', array( 'Caldera_Forms_Support', 'get_instance' ) );
 }
 
+
+add_action( 'init', function(){
+	$form = Caldera_Forms_Forms::get_form( 'CF57070f0aa5258' );
+
+$x = new Caldera_Forms_Entry( $form, 689  );
+});

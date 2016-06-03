@@ -60,13 +60,17 @@ class Caldera_Forms_Autoloader {
 				$file = $dir . 'core.php';
 			} elseif ( 'Caldera_Form_Grid' == $class ) {
 				$file = $dir . 'caldera-grid.php';
-			} else {
+			} elseif( 'Caldera_Forms_Entry' == $class ) {
+				$file = CFCORE_PATH . 'classes/entry.php';
+			}else {
 				$file = $dir . self::get_base( $class, $root );
 			}
 
 
 			if ( is_file( $file ) ) {
 				require_once $file;
+			}else{
+$x=1;
 			}
 		}
 
