@@ -12,64 +12,124 @@ use ingot\api\internal\test_group\get;
  */
 class Caldera_Forms_Entry_Entries {
 
+	protected $form;
 
-	protected static $instance;
+	protected $entries = array();
 
-	protected $entries;
+	protected $totals = array();
 
+	protected $statuses = array(
+		'active',
+		'pending',
+		'trash'
+	);
 
-	public static function get_instance(){
-		if( null == self::$instance ){
-			self::$instance = new self();
-		}
+	protected $perpage;
 
-		return self::$instance;
+	public function __construct( array $form,  $perpage  ){
+		$this->form = $form;
+		$this->perpage = $perpage;
+		$this->prepare_entries_prop();
+
 	}
 
-	/**
-	 * @param $id
-	 *
-	 * @return Caldera_Forms_Entry|void
-	 */
-	public function get_entry( $id ){
-		if( isset( $this->entries[ $id ] ) ){
-			return $this->entries[ $id ];
-		}
-	}
-
-	public function is_set( $id ){
-		return isset( $this->entries[ $id ] );
-	}
-
-	public function set_entry( Caldera_Forms_Entry $entry ){
-		$this->entries[ $entry->get_entry_id() ] = $entry;
- 	}
-
-	public function get_or_make( $id, $form ){
-		if( $this->is_set( $id ) ){
-			return $this->get_entry( $id );
-		}else{
-			$_entry = new Caldera_Forms_Entry( $form, $id );
-			$found = $_entry->found();
-			if( ! $found ){
-				$this->create_entry_object( $form );
+	protected function prepare_entries_prop(){
+		foreach( $this->statuses as $status ){
+			$total = $this->query_total( $status );
+			$this->totals[ $status ] = $total;
+			$pages = ceil( $total / $this->perpage );
+			$this->entries[ $status ] = array();
+			if( 1 == $pages ){
+				$this->entries[ $status ] = array( 1 => array( ) );
+			}else{
+				$this->entries[ $status ] = array_fill( 1, $pages, array() );
 			}
 
 		}
-		
+
 	}
 
-	/**
-	 * @param array $form
-	 *
-	 * @return Caldera_Forms_Entry_Entry
-	 */
-	protected function create_entry_object( array $form ) {
-		$_entry            = new Caldera_Forms_Entry_Entry();
-		$_entry->form_id   = $form[ 'ID' ];
-		$_entry->datestamp = current_time( 'mysql' );
-		$_entry->status    = 'pending';
-		$_entry->user_id   = get_current_user_id();
-		return $_entry;
+	public function get_page( $page = 1, $status = 'active' ){
+		$page = (int) $page;
+		if( ! in_array( $status, $this->statuses   )
+		   // || ! array_key_exists( $page, $this->entries[ $status ][ $page ])
+		){
+			return array();
+		}
+
+		if( empty(  $this->entries[ $status][ $page ] ) ){
+			$this->query_page( $page, $status );
+		}
+
+		return $this->entries[ $status ][ $page ];
+	}
+
+	public function get_rows( $page, $entry_id, $status = 'active' ){
+		$page = (int) $page;
+		if( ! in_array( $status, $this->statuses ) ){
+			return array();
+		}
+
+		if( ! isset( $this->entries[ $status ][ $page ] ) ){
+			$this->query_page( $page, $status );
+		}
+
+		if( ! isset( $this->entries[ $status ][ $page ] ) || ! isset( $this->entries[ $status ][ $page ][ $entry_id ] ) ){
+			return array();
+		}
+
+		$data =  $_entry = array();
+		/** @var Caldera_Forms_Entry $entry */
+		$entry = $this->entries[ $status ][ $page ][ $entry_id ];
+
+		foreach( $entry->get_entry()->to_array() as $key => $value ){
+			$_entry[  '_' . $key ] = $value;
+		}
+
+		/** @var Caldera_Forms_Entry_Field $_field */
+		foreach( $entry->get_fields() as $_field ){
+			$field = array_merge( $_field->to_array(), $_entry  );
+			$data[] = (object) $field;
+		}
+
+		return $data;
+
+
+
+
+	}
+
+	public function get_total( $status ){
+		if( ! in_array( $status, $this->statuses   ) ){
+			return 0;
+		}
+
+		return $this->totals[ $status ];
+	}
+
+	protected function query_page( $page, $status  ){
+		global $wpdb;
+		$table = $wpdb->prefix ."cf_form_entries";
+		$offset = ($page - 1) * $this->perpage;
+		$limit = $offset . ',' . $this->perpage;
+		$sql = $wpdb->prepare("SELECT * FROM $table WHERE `form_id` = %s AND `status` = %s ORDER BY `datestamp` DESC LIMIT " . $limit . ";", $this->form[ 'ID' ], $status );
+		$_entries = $wpdb->get_results( $sql );
+		if( ! empty( $_entries ) ){
+			$this->entries[ $status ][ $page ] = array();
+			foreach( $_entries as $_entry ){
+				$entry = new Caldera_Forms_Entry_Entry( $_entry );
+				$this->entries[ $status ][ $page ][ (int) $_entry->id ] = new Caldera_Forms_Entry( $this->form, $entry->id, $entry );
+			}
+
+		}
+	}
+
+
+
+	protected function query_total( $status ){
+		global $wpdb;
+		$sql = $wpdb->prepare("SELECT COUNT(`id`) AS `total` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = %s AND `status` = %s;", $this->form[ 'ID' ], $status );
+		$total = $wpdb->get_var( $sql );
+		return (int) $total;
 	}
 }

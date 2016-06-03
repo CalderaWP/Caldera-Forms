@@ -622,44 +622,48 @@ class Caldera_Forms_Admin {
 		$backup_labels = array();
 		$selects = array();
 
-		// get all fieldtype
-		$field_types = Caldera_Forms::get_field_types();
-
-
 		$fields = array();
-		if(!empty($form['fields'])){
-			foreach($form['fields'] as $fid=>$field){
-				$fields[$field['slug']] = $field;
+		if ( ! empty( $form[ 'fields' ] ) ) {
+			foreach ( $form[ 'fields' ] as $fid => $field ) {
+				$fields[ $field[ 'slug' ] ] = $field;
 
-				if(!empty($field['entry_list'])){
-					$selects[] = "'".$field['slug']."'";
-					$field_labels[$field['slug']] = $field['label'];
+				if ( ! empty( $field[ 'entry_list' ] ) ) {
+					$selects[] = "'" . $field[ 'slug' ] . "'";
+					$field_labels[ $field[ 'slug' ] ] = $field[ 'label' ];
 				}
 				$has_vars = array();
-				if( !empty( $form['variables']['types'] ) ){
-					$has_vars = $form['variables']['types'];
+				if ( ! empty( $form[ 'variables' ][ 'types' ] ) ) {
+					$has_vars = $form[ 'variables' ][ 'types' ];
 				}
-				if( ( count($backup_labels) < 4 && !in_array( 'entryitem', $has_vars ) ) && in_array($field['type'], array('text','email','date','name'))){
+				if ( ( count( $backup_labels ) < 4 && ! in_array( 'entryitem', $has_vars ) ) && in_array( $field[ 'type' ], array(
+						'text',
+						'email',
+						'date',
+						'name'
+					) )
+				) {
 					// backup only first 4 fields
-					$backup_labels[$field['slug']] = $field['label'];
+					$backup_labels[ $field[ 'slug' ] ] = $field[ 'label' ];
 				}
 			}
 		}
-		if(empty($field_labels)){
+
+		if ( empty( $field_labels ) ) {
 			$field_labels = $backup_labels;
 		}
-		//ksort($field_labels);
+
+		$entries = new Caldera_Forms_Entry_Entries( $form, $perpage );
 
 		$data = array();
 
 		$filter = null;
 
-		$data['trash'] = (int) $wpdb->get_var($wpdb->prepare("SELECT COUNT(`id`) AS `total` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = %s AND `status` = 'trash';", $form_id ) );
-		$data['active'] = (int) $wpdb->get_var($wpdb->prepare("SELECT COUNT(`id`) AS `total` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = %s AND `status` = 'active';", $form_id ) );
+		$data['trash'] = $entries->get_total( 'trash' );
+		$data['active'] = $entries->get_total( 'active' );
 
 		// set current total
 		if(!empty( $status ) && isset( $data[ $status ] ) ){
-			$data['total'] = $data[ $status ];
+			$data['total'] = $entries->get_total( $status );
 		}else{
 			$data['total'] = $data['active'];
 		}
@@ -684,113 +688,102 @@ class Caldera_Forms_Admin {
 			$offset = ($page - 1) * $perpage;
 			$limit = $offset . ',' . $perpage;
 
+			$the_entries = $entries->get_page( $page );
+
+			if ( ! empty( $the_entries ) ) {
+
+				$ids               = array();
+				$data[ 'entries' ] = array();
+				$dateformat        = get_option( 'date_format' );
+				$timeformat        = get_option( 'time_format' );
 
 
-			$rawdata = $wpdb->get_results($wpdb->prepare("
-			SELECT
-				`id`,
-				`form_id`
-			FROM `" . $wpdb->prefix ."cf_form_entries`
-
-			WHERE `form_id` = %s AND `status` = %s ORDER BY `datestamp` DESC LIMIT " . $limit . ";", $form_id, $status ) );
-
-			if(!empty($rawdata)){
-
-				$ids = array();
-				foreach($rawdata as $row){
-					$ids[] = $row->id;
+				/** @var Caldera_Forms_Entry $an_entry */
+				foreach ( $the_entries as $an_entry ) {
+					$ids[] = $an_entry->get_entry_id();
 				}
 
-				$rawdata = $wpdb->get_results("
-				SELECT
-					`entry`.`id` as `_entryid`,
-					`entry`.`form_id` AS `_form_id`,
-					`entry`.`datestamp` AS `_date_submitted`,
-					`entry`.`user_id` AS `_user_id`,
-					`value`.*
 
-				FROM `" . $wpdb->prefix ."cf_form_entries` AS `entry`
-				LEFT JOIN `" . $wpdb->prefix ."cf_form_entry_values` AS `value` ON (`entry`.`id` = `value`.`entry_id`)
-
-				WHERE `entry`.`id` IN (" . implode(',',$ids) . ")
-				" . $filter ."
-				ORDER BY `entry`.`datestamp` DESC;");
-
-
-				$data['entries'] = array();
-				$dateformat = get_option('date_format');
-				$timeformat = get_option('time_format');
-				foreach($rawdata as $row){
-					if(!empty($row->_user_id)){
-						$user = get_userdata( $row->_user_id );
-						if(!empty($user)){
-							$data['entries']['E' . $row->_entryid]['user']['ID'] = $user->ID;
-							$data['entries']['E' . $row->_entryid]['user']['name'] = $user->data->display_name;
-							$data['entries']['E' . $row->_entryid]['user']['email'] = $user->data->user_email;
-							$data['entries']['E' . $row->_entryid]['user']['avatar'] = get_avatar( $user->ID, 64 );
-						}
-					}
-					$data['entries']['E' . $row->_entryid]['_entry_id'] = $row->_entryid;
-					$data['entries']['E' . $row->_entryid]['_date'] = date_i18n( $dateformat.' '.$timeformat, get_date_from_gmt( $row->_date_submitted, 'U'));
-
-					// setup default data array
-					if(!isset($data['entries']['E' . $row->_entryid]['data'])){
-						if(isset($field_labels)){
-							foreach ($field_labels as $slug => $label) {
-								// setup labels ordering
-								$data['entries']['E' . $row->_entryid]['data'][$slug] = null;
+				foreach ( $ids as $entry_id ) {
+					$rows = $entries->get_rows( $page, $entry_id, $status );
+					foreach ( $rows as $row ) {
+						$e = 'E' . $row->entry_id;
+						if ( ! empty( $row->_user_id ) ) {
+							$user = get_userdata( $row->_user_id );
+							if ( ! empty( $user ) ) {
+								$data[ 'entries' ][ $e ][ 'user' ][ 'ID' ]     = $user->ID;
+								$data[ 'entries' ][ $e ][ 'user' ][ 'name' ]   = $user->data->display_name;
+								$data[ 'entries' ][ $e ][ 'user' ][ 'email' ]  = $user->data->user_email;
+								$data[ 'entries' ][ $e ][ 'user' ][ 'avatar' ] = get_avatar( $user->ID, 64 );
 							}
 						}
-					}
 
-					if(!empty($field_labels[$row->slug])){
+						$data[ 'entries' ][ $e ][ '_entry_id' ] = $row->_entryid;
 
-						$label = $field_labels[$row->slug];
-
-						// check view handler
-						$field = $fields[$row->slug];
-						// filter the field to get field data
-						$field = apply_filters( 'caldera_forms_render_get_field', $field, $form);
-						$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field['type'], $field, $form);
-						$field = apply_filters( 'caldera_forms_render_get_field_slug-' . $field['slug'], $field, $form);
-
-						// maybe json?
-						$is_json = json_decode( $row->value, ARRAY_A );
-						if( !empty( $is_json ) ){
-							$row->value = $is_json;
-						}
-
-						if( is_string( $row->value ) ){
-							$row->value = esc_html( stripslashes_deep( $row->value ) );
-						}else{
-							$row->value = stripslashes_deep( Caldera_Forms_Sanitize::sanitize( $row->value ) );
-						}
-
-						$row->value = apply_filters( 'caldera_forms_view_field_' . $field['type'], $row->value, $field, $form);
+						$submitted = $row->_date_submitted;
 
 
-						if(isset($data['entries']['E' . $row->_entryid]['data'][$row->slug])){
-							// array based - add another entry
-							if(!is_array($data['entries']['E' . $row->_entryid]['data'][$row->slug])){
-								$tmp = $data['entries']['E' . $row->_entryid]['data'][$row->slug];
-								$data['entries']['E' . $row->_entryid]['data'][$row->slug] = array($tmp);
-							}
-							$data['entries']['E' . $row->_entryid]['data'][$row->slug][] = $row->value;
-						}else{
-							$data['entries']['E' . $row->_entryid]['data'][$row->slug] = $row->value;
-						}
-					}
+						$data[ 'entries' ][ $e ][ '_date' ] = Caldera_Forms::localize_time( $submitted );
 
-					if( !empty( $form['variables']['types'] ) ){
-						foreach( $form['variables']['types'] as $var_key=>$var_type ){
-							if( $var_type == 'entryitem' ){
-								$data['fields'][$form['variables']['keys'][$var_key]] = ucwords( str_replace( '_', ' ', $form['variables']['keys'][$var_key] ) );
-								$data['entries']['E' . $row->_entryid]['data'][$form['variables']['keys'][$var_key]] = Caldera_Forms::do_magic_tags( $form['variables']['values'][$var_key], $row->_entryid );
+						// setup default data array
+						if ( ! isset( $data[ 'entries' ][ $e ][ 'data' ] ) ) {
+							if ( isset( $field_labels ) ) {
+								foreach ( $field_labels as $slug => $label ) {
+									// setup labels ordering
+									$data[ 'entries' ][ $e ][ 'data' ][ $slug ] = null;
+								}
 							}
 						}
+
+						if ( ! empty( $field_labels[ $row->slug ] ) ) {
+
+							$label = $field_labels[ $row->slug ];
+
+							// check view handler
+							$field = $fields[ $row->slug ];
+							// filter the field to get field data
+							$field = apply_filters( 'caldera_forms_render_get_field', $field, $form );
+							$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field[ 'type' ], $field, $form );
+							$field = apply_filters( 'caldera_forms_render_get_field_slug-' . $field[ 'slug' ], $field, $form );
+
+							// maybe json?
+							$is_json = json_decode( $row->value, ARRAY_A );
+							if ( ! empty( $is_json ) ) {
+								$row->value = $is_json;
+							}
+
+							if ( is_string( $row->value ) ) {
+								$row->value = esc_html( stripslashes_deep( $row->value ) );
+							} else {
+								$row->value = stripslashes_deep( Caldera_Forms_Sanitize::sanitize( $row->value ) );
+							}
+
+							$row->value = apply_filters( 'caldera_forms_view_field_' . $field[ 'type' ], $row->value, $field, $form );
+
+
+							if ( isset( $data[ 'entries' ][ $e ][ 'data' ][ $row->slug ] ) ) {
+								// array based - add another entry
+								if ( ! is_array( $data[ 'entries' ][ $e ][ 'data' ][ $row->slug ] ) ) {
+									$tmp                                             = $data[ 'entries' ][ $e ][ 'data' ][ $row->slug ];
+									$data[ 'entries' ][ $e ][ 'data' ][ $row->slug ] = array( $tmp );
+								}
+								$data[ 'entries' ][ $e ][ 'data' ][ $row->slug ][] = $row->value;
+							} else {
+								$data[ 'entries' ][ $e ][ 'data' ][ $row->slug ] = $row->value;
+							}
+						}
+
+						if ( ! empty( $form[ 'variables' ][ 'types' ] ) ) {
+							foreach ( $form[ 'variables' ][ 'types' ] as $var_key => $var_type ) {
+								if ( $var_type == 'entryitem' ) {
+									$data[ 'fields' ][ $form[ 'variables' ][ 'keys' ][ $var_key ] ]                  = ucwords( str_replace( '_', ' ', $form[ 'variables' ][ 'keys' ][ $var_key ] ) );
+									$data[ 'entries' ][ $e ][ 'data' ][ $form[ 'variables' ][ 'keys' ][ $var_key ] ] = Caldera_Forms::do_magic_tags( $form[ 'variables' ][ 'values' ][ $var_key ], $row->_entryid );
+								}
+							}
+						}
+
+
 					}
-
-
 				}
 			}
 		}
