@@ -2562,7 +2562,7 @@ class Caldera_Forms {
 				$entry->add_field( $field );
 			}
 		}else{
-			$field = new Caldera_Forms_Field();
+			$field = new Caldera_Forms_Entry_Field();
 			if( isset( $form[ 'fields' ][ $field_id ] ) ){
 				$field->slug = $form[ 'fields' ][ $field_id ][ 'slug' ];
 			}else{
@@ -2632,7 +2632,7 @@ class Caldera_Forms {
 		$entry = Caldera_Forms_Entry_Entries::get_instance()->get_or_make( $entry_id, $form );
 		$field = $entry->get_field( $field_id );
 		if( is_object( $field ) ){
-			return $field;
+			return $field->to_array();
 		}
 		
 		
