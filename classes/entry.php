@@ -69,12 +69,19 @@ class Caldera_Forms_Entry {
 	 * @param array $form For config
 	 * @param int|bool $entry_id Optional. Passing ID will load saved entry, leave false, the default when creating new entry.
 	 */
-	public function __construct( array $form, $entry_id = false ) {
+	public function __construct( array $form, $entry_id = false, Caldera_Forms_Entry_Entry $entry = null ) {
 		$this->form = $form;
-		if( is_numeric( $entry_id  ) ){
+		if( null !== $entry ){
+			$this->entry = $entry;
+			$this->entry_id = $entry->id;
+		}elseif( is_numeric( $entry_id  ) ){
 			$this->entry_id = $entry_id;
+		}
+		
+		if( is_numeric( $this->entry_id ) ){
 			$this->query();
 		}
+		
 	}
 
 	/**
@@ -165,7 +172,10 @@ class Caldera_Forms_Entry {
 	 * Query DB for saved entry data
 	 */
 	public function query(){
-		$this->find_entry();
+		if ( ! is_object( $this->entry ) ) {
+			$this->find_entry();
+		}
+
 		if( is_numeric(  $this->entry_id ) ){
 			$this->find_fields();
 			$this->find_metas();

@@ -10,6 +10,13 @@
  */
 abstract class Caldera_Forms_Entry_Object {
 
+	public function __construct( stdClass $obj = null ) {
+		if( null !== $obj ){
+			$this->set_form_object( $obj );
+		}
+		
+	}
+
 	/**
 	 * Translate from a stdClass object to this object type
 	 *
