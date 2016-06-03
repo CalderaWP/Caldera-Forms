@@ -2545,10 +2545,33 @@ class Caldera_Forms {
 	static public function set_field_data($field_id, $data, $form, $entry_id = false){
 		global $processed_data;
 
-		$current_data = self::get_field_data($field_id, $form, $entry_id);
-		
+
 		if(is_string($form)){
 			$form = Caldera_Forms_Forms::get_form( $form );
+		}
+		
+		if( ! is_array( $form ) ){
+			return false;
+		}
+
+		$entry = Caldera_Forms_Entry_Entries::get_instance()->get_or_make( $entry_id, $form );
+		$field = $entry->get_field( $field_id );
+		if( is_object( $field ) ){
+			if( $data != $field->value ){
+				$field->value = $data;
+				$entry->add_field( $field );
+			}
+		}else{
+			$field = new Caldera_Forms_Field();
+			if( isset( $form[ 'fields' ][ $field_id ] ) ){
+				$field->slug = $form[ 'fields' ][ $field_id ][ 'slug' ];
+			}else{
+				$field->slug = $field_id;
+			}
+			
+			$field->value = $data;
+			$entry->add_field( $field );
+
 		}
 
 		// form object
@@ -2579,15 +2602,15 @@ class Caldera_Forms {
 	 * @param string|array $form Form config array or ID of form.
 	 * @param bool|false $entry_id Optional. Entry ID to save in.
 	 *
-	 * @return bool
+	 * @return bool|array|Caldera_Forms_Entry_Field
 	 */
 	static public function get_field_data($field_id, $form, $entry_id = false){
 		global $processed_data;
 
-		//echo $field_id.'<br>';
-		if(is_string($form)){
+
+		if ( is_string( $form ) ) {
 			$form = Caldera_Forms_Forms::get_form( $form );
-			if(!isset($form['ID']) || $form['ID'] !== $form){
+			if ( ! isset( $form[ 'ID' ] ) || $form[ 'ID' ] !== $form ) {
 				return null;
 			}
 		}
@@ -2605,7 +2628,14 @@ class Caldera_Forms {
 				}
 			}
 		}
-
+		
+		$entry = Caldera_Forms_Entry_Entries::get_instance()->get_or_make( $entry_id, $form );
+		$field = $entry->get_field( $field_id );
+		if( is_object( $field ) ){
+			return $field;
+		}
+		
+		
 		// get processed cached item
 		if(isset($processed_data[$indexkey][$field_id])){
 			return $processed_data[$indexkey][$field_id];
@@ -2614,11 +2644,8 @@ class Caldera_Forms {
 		// entry fetch
 		if(!empty($entry_id) && isset($form['fields'][$field_id])){
 
-			global $wpdb;
-
-			$entry = $wpdb->get_results($wpdb->prepare("
-				SELECT `value` FROM `" . $wpdb->prefix ."cf_form_entry_values` WHERE `entry_id` = %d AND `field_id` = %s AND `slug` = %s", $entry_id, $field_id, $form['fields'][$field_id]['slug']), ARRAY_A);
-
+			
+			
 			//allow plugins to alter the value
 			$entry = apply_filters( 'caldera_forms_get_field_entry', $entry, $field_id, $form, $entry_id);
 
@@ -2636,7 +2663,7 @@ class Caldera_Forms {
 				$processed_data[$indexkey][$field_id] = null;
 			}
 			return $processed_data[$indexkey][$field_id];
-			//return $processed_data[$indexkey][$field_id] = ;
+			
 		}
 
 		if(isset($form['fields'][$field_id])){
@@ -2954,10 +2981,11 @@ class Caldera_Forms {
 
 	/**
 	 * Get submission data from a form being submitted or a saved entry
+	 *
 	 * @param array $form Form Config.
 	 * @param bool|false $entry_id Optional. Entry ID to get data for, or if false, the default, get form current submission.
 	 *
-	 * @return array|\WP_Error
+	 * @return array|\WP_Error|Caldera_Forms_Entry
 	 */
 	static public function get_submission_data($form, $entry_id = false){
 		global $processed_data;
@@ -2973,6 +3001,17 @@ class Caldera_Forms {
 		$indexkey = $form['ID'];
 		if(!empty($entry_id)){
 			$indexkey = $form['ID'] . '_' . $entry_id;
+		}
+
+		$entry = Caldera_Forms_Entry_Entries::get_instance()->get_entry( $entry_id );
+		if( is_object( $entry ) ){
+			return $entry;
+		}elseif( is_numeric( $entry_id ) ){
+			$entry = new Caldera_Forms_Entry( $form, $entry_id );
+			if( $entry->found() ){
+				return $entry;
+			}
+
 		}
 
 		// get processed cached item using the form id
@@ -2999,6 +3038,8 @@ class Caldera_Forms {
 
 	/**
 	 * Process current POST data as form submission.
+	 * 
+	 * @since unknown
 	 */
 	static public function process_submission(){
 		//ob_flush();
@@ -3154,11 +3195,9 @@ class Caldera_Forms {
 		if(isset($_POST['_cf_frm_edt'])){
 			$entry_id = (int) $_POST['_cf_frm_edt'];
 		}
-		// dont get data with ID else update wont work. since it will update the same thing
-		//$data = self::get_submission_data($form, $entry_id);
+
+
 		$data = self::get_submission_data($form);
-		//dump($data);
-		// requireds
 		// set transient for returns submittions
 		if(empty($transdata)){
 			$transdata = array(
@@ -3168,14 +3207,16 @@ class Caldera_Forms {
 				'data' 			=> array_merge($_POST, $data),
 			);
 		}
+
 		// remove AJAX value for tp_
 		if(isset($transdata['data']['cfajax'])){
 			unset($transdata['data']['cfajax']);
 		}
+
 		// setup transient data
 		$transdata = apply_filters( 'caldera_forms_submit_transient_setup', $transdata);
 
-		// setup processor bound requieds
+		// setup processor bound requireds
 		if(!empty($form['processors'])){
 			$bound_fields = array(); 
 			foreach($form['processors'] as $processor_id=>$processor){
@@ -3222,6 +3263,8 @@ class Caldera_Forms {
 					return new WP_Error( 'error', __( "Permission denied.", "caldera-forms" ) );
 				}else{
 					$entry_id = (int) $details['id'];
+					$entry = new Caldera_Forms_Entry( $form, $entry_id );
+					Caldera_Forms_Entry_Entries::get_instance()->set_entry( $entry  );
 					$edit_token = sha1( json_encode( $token_array ) );
 				}
 
@@ -3251,7 +3294,7 @@ class Caldera_Forms {
 		}
 
 
-		// start brining in entries
+		//Get field values
 		foreach($form['fields'] as $field_id=>$field){
 			
 			$entry = self::get_field_data($field_id, $form);

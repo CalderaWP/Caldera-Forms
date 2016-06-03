@@ -70,14 +70,22 @@ abstract class Caldera_Forms_Entry_Object {
 	 *
 	 * @return array
 	 */
-	public function to_array(){
+	public function to_array( $serialize = true ){
 		$vars = get_object_vars(  $this );
-		$vars = array_filter( $vars, function ( $var ) {
-			return ! is_null( $var );
-		} );
+
+		foreach( $vars as $property => $value ){
+			if( is_array( $value )   ){
+				$value = serialize( $value );
+			}
+
+			$vars[ $property ] = $value;
+		}
 
 		return $vars;
+		
 	}
+
+
 
 	/**
 	 * Filter value

@@ -20,7 +20,7 @@ class Caldera_Forms_Entry_Meta extends Caldera_Forms_Entry_Object {
 	/** @var  string */
 	protected $meta_key;
 
-	/** @var  string */
+	/** @var  string|array */
 	protected $meta_value;
 
 	/**

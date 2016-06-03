@@ -30,10 +30,11 @@ class Caldera_Forms_Save_Final {
 			if(empty($entryid)){
 
 				$entryid = Caldera_Forms::get_field_data( '_entry_id', $form );
+				$entry = Caldera_Forms_Entry_Entries::get_instance()->get_or_make( $entryid, $form );
 
-				foreach($form['fields'] as $field_id=>$field){
+				foreach ( $form[ 'fields' ] as $field_id => $field ) {
 					// add new and update
-					Caldera_Forms::save_field_data($field, $entryid, $form);
+					Caldera_Forms::save_field_data( $field, $entryid, $form );
 
 				}
 
