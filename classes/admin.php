@@ -726,7 +726,7 @@ class Caldera_Forms_Admin {
 			$data[ 'fields' ] = $field_labels;
 
 
-			$the_entries = $entries->get_page( $page );
+			$the_entries = $entries->get_page( $page, $status );
 
 			if ( ! empty( $the_entries ) ) {
 
