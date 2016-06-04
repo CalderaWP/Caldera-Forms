@@ -120,7 +120,7 @@ class Caldera_Forms_Entry_Entries {
 			return array();
 		}
 
-		if ( ! isset( $this->entries[ $status ][ $page ] ) ) {
+		if ( ! isset( $this->entries[ $status ][ $page ] ) || empty(  $this->entries[ $status ][ $page ] ) ) {
 			$this->query_page( $page, $status );
 		}
 
@@ -198,11 +198,7 @@ class Caldera_Forms_Entry_Entries {
 	 * @return int
 	 */
 	protected function query_total( $status ) {
-		global $wpdb;
-		$sql   = $wpdb->prepare( "SELECT COUNT(`id`) AS `total` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = %s AND `status` = %s;", $this->form[ 'ID' ], $status );
-		$total = $wpdb->get_var( $sql );
-
-		return (int) $total;
+		return Caldera_Forms_Entry_Bulk::count( $this->form[ 'ID' ], $status );
 	}
 
 	/**

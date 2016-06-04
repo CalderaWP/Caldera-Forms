@@ -283,20 +283,18 @@ class Caldera_Forms_Admin {
 			case 'delete':
 				global $wpdb;
 
-				// clean out
+				$result = false;
 				$items = array();
 				$selectors = array();
-				foreach((array) $_POST['items'] as $item_id){
-					$items[] = (int) $item_id;
+				foreach ( (array) $_POST[ 'items' ] as $item_id ) {
+					$items[]     = (int) $item_id;
 					$selectors[] = '#entry_row_' . (int) $item_id;
 				}
 
-				switch ($do_action) {
+				switch ( $do_action ) {
 					case 'delete':
 						if( current_user_can( 'delete_others_posts' ) ){
-							$result = $wpdb->query( "DELETE FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `id` IN (".implode(',', $items).");" );
-							$result = $wpdb->query( "DELETE FROM `" . $wpdb->prefix . "cf_form_entry_values` WHERE `entry_id` IN (".implode(',', $items).");" );
-							$result = $wpdb->query( "DELETE FROM `" . $wpdb->prefix . "cf_form_entry_meta` WHERE `entry_id` IN (".implode(',', $items).");" );
+							$result = Caldera_Forms_Entry_Bulk::delete_entries( $items );
 						}
 						$out['status'] = 'reload';
 						wp_send_json( $out );
@@ -304,20 +302,20 @@ class Caldera_Forms_Admin {
 
 					default:
 						if( current_user_can( 'edit_others_posts' ) ){
-							$result = $wpdb->query( $wpdb->prepare( "UPDATE `" . $wpdb->prefix . "cf_form_entries` SET `status` = %s WHERE `id` IN (".implode(',', $items).");", $do_action ) );
+							$result = Caldera_Forms_Entry_Bulk::change_status( $items, $do_action  );
 						}
 						break;
 				}
 
 				if( $result ){
+					$out[ 'status' ]    = $do_action;
+					$out[ 'undo' ]      = ( $do_action === 'trash' ? 'active' : esc_html__( 'Trash', 'caldera-forms' ) );
+					$out[ 'undo_text' ] = ( $do_action === 'trash' ? esc_html__( 'Restore', 'caldera-forms' ) : esc_html__( 'Trash', 'caldera-forms' ) );
 
-					$out['status'] = $do_action;
-					$out['undo'] = ( $do_action === 'trash' ? 'active' : __('Trash') );
-					$out['undo_text'] = ( $do_action === 'trash' ? __('Restore', 'caldera-forms') : __('Trash') );
-
-					$out['entries'] = implode(',',$selectors);
-					$out['total']	= $wpdb->get_var($wpdb->prepare("SELECT COUNT(`id`) AS `total` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = %s && `status` = 'active';", $_POST['form']));
-					$out['trash']	= $wpdb->get_var($wpdb->prepare("SELECT COUNT(`id`) AS `total` FROM `" . $wpdb->prefix . "cf_form_entries` WHERE `form_id` = %s && `status` = 'trash';", $_POST['form']));
+					$form             = strip_tags( $_POST[ 'form' ] );
+					$out[ 'entries' ] = implode( ',', $selectors );
+					$out[ 'total' ]   = Caldera_Forms_Entry_Bulk::count( $form, false );
+					$out[ 'trash' ]   = Caldera_Forms_Entry_Bulk::count( $form, 'trash' );
 					wp_send_json( $out );
 				}
 				exit();
@@ -661,10 +659,7 @@ class Caldera_Forms_Admin {
 		$field_labels = array();
 		$backup_labels = array();
 		$selects = array();
-
-		// get all fieldtype
-		$field_types = Caldera_Forms::get_field_types();
-
+		
 
 		$fields = array();
 		if ( ! empty( $form[ 'fields' ] ) ) {
@@ -702,35 +697,34 @@ class Caldera_Forms_Admin {
 
 		$filter = null;
 
-		$data['trash'] = $entries->get_total( 'trash' );
-		$data['active'] = $entries->get_total( 'active' );
+		$data[ 'trash' ]  = $entries->get_total( 'trash' );
+		$data[ 'active' ] = $entries->get_total( 'active' );
 
 		// set current total
-		if(!empty( $status ) && isset( $data[ $status ] ) ){
-			$data['total'] = $entries->get_total( $status );
-		}else{
-			$data['total'] = $data['active'];
+		if ( ! empty( $status ) && isset( $data[ $status ] ) ) {
+			$data[ 'total' ] = $entries->get_total( $status );
+		} else {
+			$data[ 'total' ] = $data[ 'active' ];
 		}
 
 
-		$data['pages'] = ceil($data['total'] / $perpage );
+		$data[ 'pages' ] = ceil( $data[ 'total' ] / $perpage );
 
-		if(!empty( $page )){
+		if ( ! empty( $page ) ) {
 			$page = abs( $page );
-			if($page > $data['pages']){
-				$page = $data['pages'];
+			if ( $page > $data[ 'pages' ] ) {
+				$page = $data[ 'pages' ];
 			}
 		}
 
 		$data['current_page'] = $page;
-		$gmt_offset = get_option( 'gmt_offset' );
+
 		if($data['total'] > 0){
 
-			$data['form'] = $form_id;
+			$data[ 'form' ] = $form_id;
 
-			$data['fields'] = $field_labels;
-			$offset = ($page - 1) * $perpage;
-			$limit = $offset . ',' . $perpage;
+			$data[ 'fields' ] = $field_labels;
+
 
 			$the_entries = $entries->get_page( $page );
 
@@ -738,8 +732,6 @@ class Caldera_Forms_Admin {
 
 				$ids               = array();
 				$data[ 'entries' ] = array();
-				$dateformat        = get_option( 'date_format' );
-				$timeformat        = get_option( 'time_format' );
 
 
 				/** @var Caldera_Forms_Entry $an_entry */
