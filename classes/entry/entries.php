@@ -225,5 +225,5 @@ class Caldera_Forms_Entry_Entries {
 		}
 
 	}
-	
+
 }
