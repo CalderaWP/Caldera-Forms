@@ -68,12 +68,16 @@ class Caldera_Forms_Entry {
 	 *
 	 * @param array $form For config
 	 * @param int|bool $entry_id Optional. Passing ID will load saved entry, leave false, the default when creating new entry.
+	 * @param Caldera_Forms_Entry_Entry $entry Optional. Entry object.
 	 */
 	public function __construct( array $form, $entry_id = false, Caldera_Forms_Entry_Entry $entry = null ) {
 		$this->form = $form;
 		if( null !== $entry ){
 			$this->entry = $entry;
-			$this->entry_id = $entry->id;
+			if ( isset( $entry->id ) ) {
+				$this->entry_id = $entry->id;
+			}
+			
 		}elseif( is_numeric( $entry_id  ) ){
 			$this->entry_id = $entry_id;
 		}
@@ -247,15 +251,22 @@ class Caldera_Forms_Entry {
 	 *
 	 * @return array|int|string
 	 */
-	public function save(){
-		$this->create_entry();
+	public function save(  ){
+		$this->save_entry();
 		if( is_numeric( $this->entry_id   ) ){
-			foreach ( $this->fields as $field ){
-				$this->save_field( $field );
+			if ( ! empty( $this->fields ) ) {
+				foreach ( $this->fields as $field ) {
+					$this->save_field( $field );
 
+				}
+				
 			}
-			foreach ( $this->meta as $meta ){
-				$this->save_meta( $meta );
+
+			if ( ! empty( $this->meta ) ) {
+				foreach ( $this->meta as $meta ) {
+					$this->save_meta( $meta );
+				}
+
 			}
 		}
 
@@ -267,20 +278,17 @@ class Caldera_Forms_Entry {
 	 *
 	 * @since 1.3.6
 	 *
-	 * @param $status
+	 * @param string $status
 	 *
 	 * @return bool
 	 */
 	public function update_status( $status ){
-		if( ! in_array( $status, array(
-			'active',
-			'pending',
-			'trash'
-		)  ) ){
+		if( ! $this->allowed_status( $status ) ){
 			return false;
 		}
+
 		global $wpdb;
-		$wpdb->update($wpdb->prefix . 'cf_form_entries', array('status' => $status ), array( 'id' => $this->entry_id ) );
+		$wpdb->update( $wpdb->prefix . 'cf_form_entries', array('status' => $status ), array( 'id' => $this->entry_id ) );
 	}
 
 	/**
@@ -291,11 +299,10 @@ class Caldera_Forms_Entry {
 	 * @param \Caldera_Forms_Entry_Field $field
 	 */
 	public function add_field( Caldera_Forms_Entry_Field $field ){
-		if( ! isset( $field->entry_id ) ){
-			$field->entry_id = $this->entry_id;
-		}
 
+		$field->entry_id = $this->entry_id;
 		$this->fields[] = $field;
+
 	}
 
 	/**
@@ -310,18 +317,18 @@ class Caldera_Forms_Entry {
 	}
 
 	/**
-	 * Create entry
+	 * Save entry in DB
 	 *
 	 * @since 1.3.6
 	 */
-	protected function create_entry() {
+	protected function save_entry() {
 		global $wpdb;
 		if( null == $this->entry ) {
 			//@todo some error or exception or something
 			return;
 		}
 		$wpdb->insert( $wpdb->prefix . 'cf_form_entries', $this->entry->to_array() );
-		$this->entry_id = $wpdb->insert_id;
+		$this->entry_id = $this->entry->id = $wpdb->insert_id;
 	}
 
 	/**
@@ -334,7 +341,9 @@ class Caldera_Forms_Entry {
 	protected function save_field( Caldera_Forms_Entry_Field $field ){
 		$field->entry_id = $this->entry_id;
 		global $wpdb;
-		$wpdb->insert($wpdb->prefix . 'cf_form_entry_values', $field->to_array() );
+		$data = $field->to_array();
+		unset( $data[ 'id' ] );
+		$wpdb->insert($wpdb->prefix . 'cf_form_entry_values', $data  );
 	}
 
 	/**
@@ -347,7 +356,30 @@ class Caldera_Forms_Entry {
 	protected function save_meta( Caldera_Forms_Entry_Meta $meta ){
 		$meta->entry_id = $this->entry_id;
 		global $wpdb;
-		$wpdb->insert($wpdb->prefix . 'cf_form_entry_meta',  $meta->to_array() );
+		$data = $meta->to_array();
+		unset( $data[ 'id' ] );
+		$wpdb->insert($wpdb->prefix . 'cf_form_entry_meta',  $data );
+	}
+
+	/**
+	 * Check if is an allowed status
+	 *
+	 * @since 1.3.6
+	 *
+	 * @param string $status Status
+	 *
+	 * @return bool
+	 */
+	protected function allowed_status( $status ){
+		if( ! in_array( $status, array(
+			'active',
+			'pending',
+			'trash'
+		)  ) ){
+			return false;
+		}
+
+		return true;
 	}
 
 }

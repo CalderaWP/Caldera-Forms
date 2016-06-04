@@ -412,4 +412,41 @@ class Caldera_Forms_Save_Final {
 
 	}
 
+	public static function create_entry( array $form, array $fields, array $args = array() ){
+		$args = wp_parse_args( $args, array(
+			'user_id' => get_current_user_id(),
+			'datestamp' => current_time( 'mysql' ),
+			'status' => 'active',
+
+		) );
+		if( isset( $form[ 'fields' ] ) ){
+			$_fields = array();
+
+			foreach( $fields as $field_id => $value ){
+				if( array_key_exists($field_id, $form[ 'fields' ] ) ){
+					$field = new Caldera_Forms_Entry_Field();
+					$field->value = $value;
+					$field->slug = $form[ 'fields' ][ $field_id ][ 'slug' ];
+					$field->field_id = $field_id;
+					$_fields[] = $field;
+				}
+			}
+
+			if( ! empty( $_fields ) ){
+				$_entry = new Caldera_Forms_Entry_Entry;
+				$_entry->status = $args[ 'status' ];
+				$_entry->form_id = $form[ 'ID' ];
+				$_entry->datestamp = $args[ 'datestamp' ];
+				$_entry->user_id = $args[ 'user_id' ];
+				$entry = new Caldera_Forms_Entry( $form, false, $_entry );
+				foreach( $_fields as $field ){
+					$entry->add_field( $field );
+				}
+
+				return $entry->save();
+			}
+
+		}
+	}
+
 }
