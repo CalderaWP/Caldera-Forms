@@ -28,15 +28,44 @@ class Caldera_Forms_Entry_Field  extends Caldera_Forms_Entry_Object {
 
 
 	/**
-	 * Apply deserialization if needed to value column
+	 * Apply deserialization/json_decoding if needed to value column
 	 *
 	 * @since 1.3.6
 	 *
-	 * @param string $value Meta value
+	 * @param string $value Value
 	 */
-	protected function set_value( $value ){
-		$this->value = maybe_unserialize( $value );
+	protected function value_set( $value ){
+		if( is_array( $value ) ){
+			$this->value = $value;
+		}elseif( is_serialized( $value  ) ){
+			$this->value = unserialize( $value );
+		}elseif( 0 === strpos( $value, '{' ) && is_object( $_value = json_decode( $value ) ) ){
+			$this->value = (array) $_value;
+		}else{
+			$this->value = $value;
+		}
 	}
+
+	/**
+	 * Get value and ensure is not still serialized
+	 *
+	 * @since 1.3.6
+	 *
+	 * @return array|string|int
+	 */
+	protected function value_get(){
+		
+		if ( is_serialized( $this->value ) ) {
+			$this->value = unserialize( $this->value );
+		} elseif ( is_string( $this->value ) && 0 === strpos( $this->value, '{' ) && is_object( $_value = json_decode( $this->value ) ) ) {
+			$this->value = (array) $_value;
+		}
+
+		return $this->value;
+		
+	}
+
+
 
 }
 

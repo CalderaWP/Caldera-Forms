@@ -54,7 +54,7 @@ class Test_Caldera_Forms_Save extends Caldera_Forms_Test_Case {
 	 *
 	 * @covers Caldera_Forms_Save_Final::create_entry
 	 */
-	public function testCreateEntryFileds(){
+	public function testCreateEntryFields(){
 		$form = $this->mock_form;
 		$data = array();
 		$i = 0;
@@ -84,10 +84,10 @@ class Test_Caldera_Forms_Save extends Caldera_Forms_Test_Case {
 		$this->assertNotEmpty( $results );
 		foreach( $results as $result ){
 			$field_id = $result->field_id;
-			$field_value = $result->value;
+			$field_value = maybe_unserialize( $result->value );
 			$this->assertEquals( $data[ $field_id ], $field_value );
 		}
 
 	}
-	
+
 }

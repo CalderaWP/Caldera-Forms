@@ -57,7 +57,13 @@ class Caldera_Forms_Entry {
 	 */
 	protected $entry;
 
-
+	/**
+	 * Was an entry queried for and found?
+	 *
+	 * @since 1.3.6
+	 *
+	 * @var bool
+	 */
 	protected $found;
 
 
@@ -76,6 +82,7 @@ class Caldera_Forms_Entry {
 			if( null != $entry->id ){
 				$this->entry_id = $entry->id;
 			}
+
 			$this->entry = $entry;
 		}elseif( is_numeric( $entry_id  ) ){
 			$this->entry_id = $entry_id;
@@ -183,6 +190,8 @@ class Caldera_Forms_Entry {
 
 	/**
 	 * Query DB for saved entry data
+	 *
+	 * @since 1.3.6
 	 */
 	public function query(){
 		if ( ! is_object( $this->entry ) ) {
@@ -227,8 +236,7 @@ class Caldera_Forms_Entry {
 		$results = $wpdb->get_results( $sql );
 		if( ! empty( $results ) ){
 			foreach( $results as $result ){
-				$_field = new Caldera_Forms_Entry_Field();
-				$_field->set_form_object( $result );
+				$_field = new Caldera_Forms_Entry_Field(  $result );
 				$this->fields[] = $_field;
 			}
 		}
@@ -264,16 +272,16 @@ class Caldera_Forms_Entry {
 		$this->save_entry();
 		if( is_numeric( $this->entry_id   ) ){
 			if ( ! empty( $this->fields ) ) {
-				foreach ( $this->fields as $field ) {
-					$this->save_field( $field );
+				foreach ( $this->fields as $i =>  $field ) {
+					$this->fields[ $i ] = $this->save_field( $field );
 
 				}
 				
 			}
 
 			if ( ! empty( $this->meta ) ) {
-				foreach ( $this->meta as $meta ) {
-					$this->save_meta( $meta );
+				foreach ( $this->meta as $i => $meta ) {
+					$this->meta[ $i ] = $this->save_meta( $meta );
 				}
 
 			}
@@ -352,7 +360,9 @@ class Caldera_Forms_Entry {
 		global $wpdb;
 		$data = $field->to_array();
 		unset( $data[ 'id' ] );
-		$wpdb->insert($wpdb->prefix . 'cf_form_entry_values', $data  );
+		$wpdb->insert( $wpdb->prefix . 'cf_form_entry_values', $data  );
+		$field->id = $wpdb->insert_id;
+		return $field;
 	}
 
 	/**
@@ -367,7 +377,9 @@ class Caldera_Forms_Entry {
 		global $wpdb;
 		$data = $meta->to_array();
 		unset( $data[ 'id' ] );
-		$wpdb->insert($wpdb->prefix . 'cf_form_entry_meta',  $data );
+		$wpdb->insert( $wpdb->prefix . 'cf_form_entry_meta',  $data );
+		$meta->meta_id = $wpdb->insert_id;
+		return $meta;
 	}
 
 	/**

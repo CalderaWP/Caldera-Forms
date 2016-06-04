@@ -63,6 +63,10 @@ abstract class Caldera_Forms_Entry_Object {
 	 * @return mixed|null|void
 	 */
 	public function __get( $property ) {
+		$getter = $property . '_get';
+		if( method_exists( $this, $getter  ) ){
+			return call_user_func( array( $this, $getter ) );
+		}
 		if ( property_exists( $this, $property ) ) {
 			return $this->apply_filter( $property, $this->$property );
 		} else {
@@ -78,12 +82,18 @@ abstract class Caldera_Forms_Entry_Object {
 	 *
 	 * @return array
 	 */
-	public function to_array( $serialize = true ){
+	public function to_array(  $serialize_arrays = true ){
 		$vars = get_object_vars(  $this );
 
 		foreach( $vars as $property => $value ){
 			if( is_array( $value )   ){
-				$value = serialize( $value );
+				if ( $serialize_arrays ) {
+					$value = serialize( $value );
+				}
+			}
+
+			if( ! $serialize_arrays && is_serialized( $value ) ){
+				$value = unserialize( $value );
 			}
 
 			$vars[ $property ] = $value;

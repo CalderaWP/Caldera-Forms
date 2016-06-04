@@ -27,14 +27,16 @@ class Caldera_Forms_Entry_Meta extends Caldera_Forms_Entry_Object {
 	protected $meta_value;
 
 	/**
-	 * Apply deserialization if needed to meta_value column
+	 * Apply deserialization/json_decoding if needed to meta_value column
 	 *
 	 * @since 1.3.6
 	 *
 	 * @param string $value Meta value
 	 */
 	protected function meta_value_set( $value ){
-		if( is_serialized( $value  ) ){
+		if( is_array( $value ) ){
+			$this->meta_value = $value;
+		} elseif( is_serialized( $value  ) ){
 			$this->meta_value = unserialize( $value );
 		}elseif( 0 === strpos( $value, '{' ) && is_object( $_value = json_decode( $value ) ) ){
 			$this->meta_value = (array) $_value;

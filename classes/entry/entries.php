@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  * A collection of entries for one form
  *
