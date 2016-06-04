@@ -15,8 +15,9 @@
 					data-group="status_nav"
 					data-callback="setup_pagination"
 					data-page="1"
+				    data-nonce="<?php echo wp_create_nonce( 'view_entries' ); ?>"
 					data-status="active"
-				><?php _e('Active', 'caldera-forms'); ?> <span class="current-status-count"></span></button>
+				><?php esc_html_e('Active', 'caldera-forms'); ?> <span class="current-status-count"></span></button>
 				<button type="button" class="status_toggles button ajax-trigger" style="margin-top: 1px; margin-right: 10px;"
 					data-before="cf_set_limits"
 					data-action="browse_entries"
@@ -28,17 +29,22 @@
 					data-group="status_nav"
 					data-callback="setup_pagination"
 					data-page="1"
-					data-status="trash"
-				><?php _e('Trash'); ?> <span class="current-status-count"></span></button>
+				    data-nonce="<?php echo wp_create_nonce( 'view_entries' ); ?>"
+			        data-status="trash"
+				><?php esc_html_e('Trash'); ?> <span class="current-status-count"></span></button>
 			</span>
 
-			<span><?php _e('Show', 'caldera-forms'); ?> <input id="cf-entries-list-items" type="number" value="<?php echo $entry_perpage; ?>" class="screen-per-page"> &nbsp;
+			<span><?php esc_html_e('Show', 'caldera-forms'); ?> <input id="cf-entries-list-items" type="number" value="<?php echo $entry_perpage; ?>" class="screen-per-page"> &nbsp;
 
-			<a href="" class="button caldera-forms-entry-exporter"><?php echo __('Export Entries', 'caldera-forms'); ?></a>
+			<a href="" class="button caldera-forms-entry-exporter">
+				<?php esc_html_e('Export Entries', 'caldera-forms'); ?>
+			</a>
 
 			<select id="cf_bulk_action" name="action" style="vertical-align: initial;">
 			</select>
-			<button type="button" class="button cf-bulk-action"><?php echo __('Apply', 'caldera-forms'); ?></button>
+			<button type="button" class="button cf-bulk-action">
+				<?php esc_html_e('Apply', 'caldera-forms'); ?>
+			</button>
 
 		</div>
 
@@ -55,4 +61,3 @@
 				</span>
 			</div>
 		</div>
-		

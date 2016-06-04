@@ -78,11 +78,11 @@ class Caldera_Forms_Entry_UI {
 	 * @uses "wp_ajax_browse_entries" action
 	 */
 	public function view_entries(){
-		if( ! isset( $_POST[ 'page' ], $_POST[ 'form' ], $_POST[ 'cf_toolbar_actions' ] ) ){
+		if( ! isset( $_POST[ 'page' ], $_POST[ 'form' ], $_POST[ 'nonce' ] ) ){
 			wp_send_json_error( $_POST );
 		}
 
-		if( ! current_user_can( Caldera_Forms::get_manage_cap( 'admin' )  ) || ! wp_verify_nonce( $_POST['cf_toolbar_actions' ], 'cf_toolbar' ) ){
+		if( ! current_user_can( Caldera_Forms::get_manage_cap( 'admin' )  ) || ! wp_verify_nonce( $_POST['nonce' ], 'view_entries' ) ){
 			wp_send_json_error( $_POST );
 		}
 

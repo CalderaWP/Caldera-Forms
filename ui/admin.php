@@ -124,21 +124,21 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 
 						><?php if( !empty( $form['form_draft'] ) ) { echo __('Activate', 'caldera-forms'); }else{ echo __('Deactivate', 'caldera-forms'); } ?></a> | </span><?php } ?>
 
-						<?php if(!empty($form['db_support'])){ ?><span class="edit"><a class="form-control form-entry-trigger ajax-trigger" href="#entres"
-
-						data-action="browse_entries"
-						data-target="#form-entries-viewer"
-						data-form="<?php echo $form_id; ?>"
-						data-template="#forms-list-alt-tmpl"
-						data-active-element="#form_row_<?php echo $form_id; ?>"
-						data-load-class="spinner"
-						data-active-class="highlight"
-						data-group="entry_nav"
-						data-callback="setup_pagination"
-						data-status="active"
-						data-page="1"
-
-						><?php echo __('Entries', 'caldera-forms'); ?></a> | </span><?php } ?>
+						<?php if(!empty($form['db_support'])){ ?><span class="edit">
+							<a class="form-control form-entry-trigger ajax-trigger" href="#entres"
+						            data-nonce="<?php echo wp_create_nonce( 'view_entries' ); ?>"
+									data-action="browse_entries"
+									data-target="#form-entries-viewer"
+									data-form="<?php echo $form_id; ?>"
+									data-template="#forms-list-alt-tmpl"
+									data-active-element="#form_row_<?php echo $form_id; ?>"
+									data-load-class="spinner"
+									data-active-class="highlight"
+									data-group="entry_nav"
+									data-callback="setup_pagination"
+									data-status="active"
+									data-page="1"
+						><?php esc_html_e( 'Entries', 'caldera-forms'); ?></a> | </span><?php } ?>
 						<input type="hidden" id="form-export-<?php echo $form_id; ?>" value='{ "formslug" : "<?php echo sanitize_title( $form['name'] ); ?>", "formid" : "<?php echo $form_id; ?>", "nonce" : "<?php echo wp_create_nonce( 'cf_del_frm' ); ?>" }'>
 						<?php if( empty( $form['_external_form'] ) ){ ?><span class="export"><a class="form-control ajax-trigger" 
 							<?php 
