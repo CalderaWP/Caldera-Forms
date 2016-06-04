@@ -30,11 +30,10 @@ class Caldera_Forms_Save_Final {
 			if(empty($entryid)){
 
 				$entryid = Caldera_Forms::get_field_data( '_entry_id', $form );
-				$entry = Caldera_Forms_Entry_Entries::get_instance()->get_or_make( $entryid, $form );
 
-				foreach ( $form[ 'fields' ] as $field_id => $field ) {
+				foreach($form['fields'] as $field_id=>$field){
 					// add new and update
-					Caldera_Forms::save_field_data( $field, $entryid, $form );
+					Caldera_Forms::save_field_data($field, $entryid, $form);
 
 				}
 
@@ -351,7 +350,7 @@ class Caldera_Forms_Save_Final {
 		 *
 		 * @since 1.2.3 in this location.
 		 * @since unknown in original location (Caldera_Forms::save_final_form)
-		 * 
+		 *
 		 * @param array $mail Email data
 		 * @param array $data Form entry data
 		 * @param array $form The form config
@@ -378,7 +377,7 @@ class Caldera_Forms_Save_Final {
 						unlink($csvfile['file']);
 					}
 				}
-				
+
 				/**
 				 * Fires main mailer completes
 				 *
@@ -388,7 +387,7 @@ class Caldera_Forms_Save_Final {
 				 * @param array $data Form entry data
 				 * @param array $form The form config
 				 */
-				do_action( 'caldera_forms_mailer_complete', $mail, $data, $form );				
+				do_action( 'caldera_forms_mailer_complete', $mail, $data, $form );
 			}else{
 				/**
 				 * Fires main mailer fails
