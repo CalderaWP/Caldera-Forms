@@ -79,10 +79,3 @@ if ( is_admin() || defined( 'DOING_AJAX' ) ) {
 	add_action( 'plugins_loaded', array( 'Caldera_Forms_Admin', 'get_instance' ) );
 	add_action( 'plugins_loaded', array( 'Caldera_Forms_Support', 'get_instance' ) );
 }
-
-
-add_action( 'init', function(){
-	$form = Caldera_Forms_Forms::get_form( 'CF57070f0aa5258' );
-
-$x = new Caldera_Forms_Entry( $form, 689  );
-});
