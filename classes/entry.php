@@ -73,11 +73,10 @@ class Caldera_Forms_Entry {
 	public function __construct( array $form, $entry_id = false, Caldera_Forms_Entry_Entry $entry = null ) {
 		$this->form = $form;
 		if( null !== $entry ){
-			$this->entry = $entry;
-			if ( isset( $entry->id ) ) {
+			if( null != $entry->id ){
 				$this->entry_id = $entry->id;
 			}
-			
+			$this->entry = $entry;
 		}elseif( is_numeric( $entry_id  ) ){
 			$this->entry_id = $entry_id;
 		}
@@ -123,6 +122,13 @@ class Caldera_Forms_Entry {
 		return $this->entry;
 	}
 
+	/**
+	 * Was a query performed and an entry found?
+	 *
+	 * @since 1.3.6
+	 *
+	 * @return bool
+	 */
 	public function found(){
 		return $this->found;
 	}
@@ -135,6 +141,9 @@ class Caldera_Forms_Entry {
 	 * @return int
 	 */
 	public function get_entry_id(){
+		if( null == $this->entry_id && is_object( $this->entry ) ){
+			$this->entry_id = $this->entry->id;
+		}
 		return $this->entry_id;
 	}
 

@@ -749,7 +749,7 @@ class Caldera_Forms_Admin {
 
 
 				foreach ( $ids as $entry_id ) {
-					$rows = $entries->get_rows( $page, $entry_id, $status );
+					$rows = $entries->get_rows( $page, (int) $entry_id, $status );
 					foreach ( $rows as $row ) {
 						$e = 'E' . $row->entry_id;
 						if ( ! empty( $row->_user_id ) ) {

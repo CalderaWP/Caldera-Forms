@@ -135,7 +135,7 @@ class Caldera_Forms_Entry_Entries {
 		foreach ( $entry->get_entry()->to_array() as $key => $value ) {
 			$_entry[ '_' . $key ] = $value;
 		}
-
+		
 		/** @var Caldera_Forms_Entry_Field $_field */
 		foreach ( $entry->get_fields() as $_field ) {
 			$field  = array_merge( $_field->to_array(), $_entry );
