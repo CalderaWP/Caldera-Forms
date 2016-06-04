@@ -62,13 +62,7 @@ function setup_pagination(obj){
 	// add form id to toggles
 	toggles.data('form', form)
 	pagenav.data('total', pages);
-	/*
-	if(total < 1 && trash < 1){
-		pagenav.hide();
-		exporter.hide();
-		return;	
-	}else if(total < 1 && trash < 1){
-	*/
+
 	if(pages <= 1){
 		page_links.hide();
 	}else{
@@ -92,6 +86,11 @@ function setup_pagination(obj){
 		last_page.addClass('disabled');
 		next_page.addClass('disabled');		
 	}
+
+	jQuery( 'html, body').animate({
+		scrollTop: 0
+	}, 250 );
+
 
 	init_cf_baldrick();
 

@@ -350,7 +350,7 @@ class Caldera_Forms_Save_Final {
 		 *
 		 * @since 1.2.3 in this location.
 		 * @since unknown in original location (Caldera_Forms::save_final_form)
-		 * 
+		 *
 		 * @param array $mail Email data
 		 * @param array $data Form entry data
 		 * @param array $form The form config
@@ -377,7 +377,7 @@ class Caldera_Forms_Save_Final {
 						unlink($csvfile['file']);
 					}
 				}
-				
+
 				/**
 				 * Fires main mailer completes
 				 *
@@ -387,7 +387,7 @@ class Caldera_Forms_Save_Final {
 				 * @param array $data Form entry data
 				 * @param array $form The form config
 				 */
-				do_action( 'caldera_forms_mailer_complete', $mail, $data, $form );				
+				do_action( 'caldera_forms_mailer_complete', $mail, $data, $form );
 			}else{
 				/**
 				 * Fires main mailer fails
@@ -410,6 +410,63 @@ class Caldera_Forms_Save_Final {
 
 		}
 
+	}
+
+	/**
+	 * Save an entry in the database
+	 *
+	 * IMPORTANT: Data is assumed to be sanatized, saving is assumed to be authorized. Do not hook directly to an HTTP request.
+	 *
+	 * @since 1.3.6
+	 *
+	 * @param array $form Form config
+	 * @param array $fields Fields to save, must be in form of field_id => value and field IDs must exist
+	 * @param array $args {
+	 *     An array of arguments. As of 1.3.6 used for ovveriding entry status/user/time
+	 *
+	 *     @type string|int $user_id Optional. User ID. Default is current user ID.
+	 *     @type string $datestamp Optional. Datestamp to use for entry. Must be mysql time. Default is current time.
+	 *     @type string $status Optional. Status to use for entry. Must be a valid status. Default is 'active'.
+	 * }
+	 *
+	 * @return array|int|string
+	 */
+	public static function create_entry( array $form, array $fields, array $args = array() ){
+		$args = wp_parse_args( $args, array(
+			'user_id' => get_current_user_id(),
+			'datestamp' => current_time( 'mysql' ),
+			'status' => 'active',
+
+		) );
+		if( isset( $form[ 'fields' ] ) ){
+			$_fields = array();
+
+			foreach( $fields as $field_id => $value ){
+				if( array_key_exists($field_id, $form[ 'fields' ] ) ){
+					$field = new Caldera_Forms_Entry_Field();
+					$field->value = $value;
+					$field->slug = $form[ 'fields' ][ $field_id ][ 'slug' ];
+					$field->field_id = $field_id;
+					$_fields[] = $field;
+				}
+			}
+
+			if( ! empty( $_fields ) ){
+				$_entry = new Caldera_Forms_Entry_Entry;
+				$_entry->status = $args[ 'status' ];
+				$_entry->form_id = $form[ 'ID' ];
+				$_entry->datestamp = $args[ 'datestamp' ];
+				$_entry->user_id = $args[ 'user_id' ];
+				$entry = new Caldera_Forms_Entry( $form, false, $_entry );
+				foreach( $_fields as $field ){
+					$entry->add_field( $field );
+				}
+
+				return $entry->save();
+			}
+
+		}
+		
 	}
 
 }
