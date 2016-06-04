@@ -77,8 +77,7 @@ class Caldera_Forms {
 
 		// action
 		add_action('caldera_forms_submit_complete', array( $this, 'save_final_form'),50);
-
-		add_action("wp_ajax_get_entry", array( $this, 'get_entry') );
+		
 		// find if profile is loaded
 		add_action('wp_loaded', array( $this, 'cf_init_system'), 25 );
 		add_action('wp', array( $this, 'cf_init_preview'));
@@ -3945,7 +3944,7 @@ class Caldera_Forms {
 	 * @param string $form_id  form ID
 	 * @return string Full URL
 	 */
-	static function get_submit_url( $form_id ) {
+	static function get_submit_url( $form_id  = '' ) {
 
 		if ( is_multisite() && get_blog_option( null, 'permalink_structure' ) || get_option( 'permalink_structure' ) ) {
 			$url = get_home_url( );
@@ -4117,43 +4116,24 @@ class Caldera_Forms {
 	/**
 	 * Load a saved entry.
 	 *
-	 * @param null|int $entry_id Entry ID
-	 * @param null|string|array $form Optional. Config array, or ID of form.
+	 * @param int $entry_id Entry ID
+	 * @param string|array $form Optional. Config array, or ID of form.
 	 *
 	 * @return array
 	 */
-	static public function get_entry($entry_id = null, $form = null){
-
-		if(empty($entry_id)){
-			if(!empty($_POST['form'])){
-				$entry_id = $_POST['entry'];
-				// get form and check
-				$form = Caldera_Forms_Forms::get_form( $_POST['form'] );
-				if(empty($form['ID']) || $form['ID'] != $_POST['form']){
-					return;
-				}
-
-				$fields = array();
-				foreach ($form['fields'] as $field_id => $field) {
-					$fields[$field['slug']] = $field;
-				}
+	static public function get_entry($entry_id, $form){
+		if ( is_string( $form ) ) {
+			$form_id = $form;
+			$form    = Caldera_Forms_Forms::get_form( $form );
+			if ( ! is_array( $form ) || ! isset( $form[ 'ID' ] ) || $form[ 'ID' ] !== $form_id ) {
+				return new WP_Error( 'fail', esc_html__( 'Invalid form ID', 'caldera-forms' ) );
 			}
-			if(empty($form)){
-				return array();
-			}
-
 		}
-		if(empty($form)){
+
+		if ( empty( $form ) ) {
 			return;
 		}
 
-		if(is_string($form)){
-			$form_id = $form;
-			$form = Caldera_Forms_Forms::get_form( $form );
-			if(!isset($form['ID']) || $form['ID'] !== $form_id){
-				return new WP_Error( 'fail',  __('Invalid form ID', 'caldera-forms') );
-			}
-		}
 
 		// get fields
 		$field_types = self::get_field_types();
@@ -4307,12 +4287,7 @@ class Caldera_Forms {
 		// allow plugins to alter the entry
 		$data = apply_filters( 'caldera_forms_get_entry', $data, $entry_id, $form);
 
-
-		if(!empty($_POST['form'])){
-			header('Content-Type: application/json');
-			echo json_encode( $data );
-			exit;
-		}
+		
 		return $data;
 	}
 

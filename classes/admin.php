@@ -96,7 +96,6 @@ class Caldera_Forms_Admin {
 
 		if( current_user_can( Caldera_Forms::get_manage_cap( 'create' ) ) ){
 			add_action("wp_ajax_toggle_form_state", array( $this, 'toggle_form_state') );
-			add_action("wp_ajax_browse_entries", array( $this, 'browse_entries') );
 			add_action("wp_ajax_save_cf_setting", array( $this, 'save_cf_setting') );
 			add_action("wp_ajax_cf_dismiss_pointer", array( $this, 'update_pointer') );
 			add_action("wp_ajax_cf_bulk_action", array( $this, 'bulk_action') );
@@ -116,6 +115,12 @@ class Caldera_Forms_Admin {
 		add_action('admin_footer-post-new.php', array( $this, 'render_editor_template')); // Fired on add new post page
 
 		add_action( 'caldera_forms_new_form_template_end', array( $this, 'load_new_form_templates') );
+
+		//view entry
+		add_action( 'wp_ajax_get_entry', array( Caldera_Forms_Entry_UI::get_instance(), 'view_entry' ) );
+		
+		//veiw all entries
+		add_action( 'wp_ajax_browse_entries', array( Caldera_Forms_Entry_UI::get_instance(), 'view_entries') );
 
 	}
 
@@ -376,6 +381,11 @@ class Caldera_Forms_Admin {
 		}
 	}
 
+	/**
+	 * Get the entry editor's buttons
+	 *
+	 * @since unknow
+	 */
 	public static function get_entry_actions(){
 
 		$viewer_buttons_array = apply_filters( 'caldera_forms_entry_viewer_buttons', array());
@@ -419,29 +429,42 @@ class Caldera_Forms_Admin {
 
 
 		if( current_user_can( 'edit_others_posts' ) ){
-			echo '{{#if ../../is_active}}<button class="hidden button button-small cfajax-trigger edit-entry-btn" id="edit-entry-{{_entry_id}}" data-active-class="current-edit" data-static="true" data-load-class="spinner" ' . $editor_buttons . ' data-modal-element="div" data-group="editentry" data-entry="{{_entry_id}}" data-form="{{../../form}}" data-request="' . site_url( "/cf-api/" ) . '{{../../form}}/{{_entry_id}}/" data-method="get" data-modal="view_entry" data-modal-width="700" data-modal-height="auto" data-modal-title="' . __('Editing Entry ', 'caldera-forms') . ' #{{_entry_id}}" type="button">' . __('Edit') . '</button> {{/if}}';
+			echo '{{#if ../../is_active}}<button class="hidden button button-small cfajax-trigger edit-entry-btn" id="edit-entry-{{_entry_id}}" data-active-class="current-edit" data-static="true" data-load-class="spinner" ' . $editor_buttons . ' data-modal-element="div" data-group="editentry" data-entry="{{_entry_id}}" data-form="{{../../form}}" data-request="' . esc_url( Caldera_Forms::get_submit_url() ) . '{{../../form}}/{{_entry_id}}/" data-method="get" data-modal="view_entry" data-modal-width="700" data-modal-height="auto" data-modal-title="' . esc_attr__( 'Editing Entry ', 'caldera-forms') . ' #{{_entry_id}}" type="button">' . esc_html__( 'Edit', 'caldera-forms' ) . '</button> {{/if}}';
+
 		}
-		echo '{{#if ../../is_active}}<button class="button button-small ajax-trigger view-entry-btn" id="view-entry-{{_entry_id}}" data-active-class="current-view"  data-static="true" data-load-class="spinner" ' . $viewer_buttons . ' data-group="viewentry" data-entry="{{_entry_id}}" data-form="{{../../form}}" data-action="get_entry" data-modal="view_entry" data-modal-width="700" data-modal-height="700" data-modal-title="' . __('Entry', 'caldera-forms') . ' #{{_entry_id}}" data-template="#view-entry-tmpl" type="button">' . __('View') . '</button> {{/if}}';
+		echo '{{#if ../../is_active}}<button class="button button-small ajax-trigger view-entry-btn" id="view-entry-{{_entry_id}}" data-active-class="current-view"  data-static="true" data-load-class="spinner" ' . $viewer_buttons . ' data-group="viewentry" data-entry="{{_entry_id}}" data-form="{{../../form}}" data-action="get_entry" data-modal="view_entry" data-modal-width="700" data-modal-height="700" data-modal-title="' . esc_attr__('Entry', 'caldera-forms') . ' #{{_entry_id}}" data-template="#view-entry-tmpl" type="button" data-nonce="' .  wp_create_nonce( 'cf_view_entry'  ) . '">' . esc_html__( 'View', 'caldera-forms' ) . '</button> {{/if}}';
 		if( current_user_can( 'delete_others_posts' ) ){
-			echo '<button type="button" class="button button-small ajax-trigger" data-load-class="active" data-panel="{{#if ../../is_trash}}trash{{/if}}{{#if ../../is_active}}active{{/if}}" data-do="{{#if ../../is_trash}}active{{/if}}{{#if ../../is_active}}trash{{/if}}" data-callback="cf_refresh_view" data-form="{{../../form}}" data-active-class="disabled" data-group="row{{_entry_id}}" data-load-element="#entry_row_{{_entry_id}}" data-action="cf_bulk_action" data-items="{{_entry_id}}">{{#if ../../is_trash}}' . __('Restore', 'caldera-forms') . '{{/if}}{{#if ../../is_active}}' . __('Trash') . '{{/if}}</button>';
+			echo '<button type="button" class="button button-small ajax-trigger" data-load-class="active" data-panel="{{#if ../../is_trash}}trash{{/if}}{{#if ../../is_active}}active{{/if}}" data-do="{{#if ../../is_trash}}active{{/if}}{{#if ../../is_active}}trash{{/if}}" data-callback="cf_refresh_view" data-form="{{../../form}}" data-active-class="disabled" data-group="row{{_entry_id}}" data-load-element="#entry_row_{{_entry_id}}" data-action="cf_bulk_action" data-items="{{_entry_id}}">{{#if ../../is_trash}}' . __('Restore', 'caldera-forms') . '{{/if}}{{#if ../../is_active}}' . esc_html__('Trash', 'caldera-forms' ) . '{{/if}}</button>';
 		}
 
 	}
 
+	/**
+	 * Set buttons for entry viewer
+	 *
+	 * @since 1.3.6
+	 *
+	 * @uses "caldera_forms_entry_viewer_buttons" filter
+	 *
+	 * @param array $buttons
+	 *
+	 * @return array
+	 */
 	public static function set_viewer_buttons($buttons){
 
-		$buttons['close_panel'] = array(
-			'label'		=>	__('Close', 'caldera-forms' ),
-			'config'	=>	'dismiss',
-			'class'		=>	'right'
+		$buttons[ 'close_panel' ] = array(
+			'label'  => esc_html__( 'Close', 'caldera-forms' ),
+			'config' => 'dismiss',
+			'class'  => 'right'
 		);
-		if( current_user_can( 'edit_others_posts' ) ){
-			$buttons['edit_entry'] = array(
-				'label'		=>	__('Edit Entry', 'caldera-forms' ),
-				'config'	=>	array(
-					'data-trigger'	=> '#edit-entry-{{_entry_id}}'
+
+		if ( current_user_can( 'edit_others_posts' ) ) {
+			$buttons[ 'edit_entry' ] = array(
+				'label'  => esc_html__( 'Edit Entry', 'caldera-forms' ),
+				'config' => array(
+					'data-trigger' => '#edit-entry-{{_entry_id}}'
 				),
-				'class'		=>	'button-primary'
+				'class'  => 'button-primary'
 			);
 		}
 
@@ -452,21 +475,21 @@ class Caldera_Forms_Admin {
 	public static function set_editor_buttons($buttons){
 
 		$buttons['submit_form'] = array(
-			'label'		=>	__('Save Changes', 'caldera-forms' ),
+			'label'		=>	esc_html__('Save Changes', 'caldera-forms' ),
 			'config'	=>	array(
 				"data-for" => "#view_entry_baldrickModalBody .caldera_forms_form"
 			),
 			'class'		=>	'right button-primary'
 		);
 		$buttons['view_entry'] = array(
-			'label'		=>	__('View Entry', 'caldera-forms' ),
+			'label'		=>	esc_html__( 'View Entry', 'caldera-forms' ),
 			'config'	=>	array(
 				"data-for" => ".view-entry-btn.current-view"
 			),
 			'class'		=>	''
 		);
 
-		//$buttons = set_viewer_buttons($buttons);
+
 		return $buttons;
 	}
 
@@ -554,9 +577,12 @@ class Caldera_Forms_Admin {
 	/**
 	 * Show entries in admin
 	 *
+	 * @deprecated 1.3.6 Use Caldera_Forms_Entry_UI::view_entries()
+	 *
 	 * @since unknown
 	 */
 	public static function browse_entries(){
+		_deprecated_function( __FUNCTION__, '1.3.6', 'Caldera_Forms_Entry_UI::view_entries' );
 		self::verify_ajax_action();
 		if ( isset( $_POST[ 'page' ] ) && 0 < $_POST[ 'page' ] ) {
 			$page = absint( $_POST[ 'page' ] );
@@ -718,9 +744,9 @@ class Caldera_Forms_Admin {
 							}
 						}
 
-						$data[ 'entries' ][ $e ][ '_entry_id' ] = $row->_entryid;
+						$data[ 'entries' ][ $e ][ '_entry_id' ] = $row->entry_id;
 
-						$submitted = $row->_date_submitted;
+						$submitted = $row->_datestamp;
 
 
 						$data[ 'entries' ][ $e ][ '_date' ] = Caldera_Forms::localize_time( $submitted );
@@ -1813,6 +1839,7 @@ class Caldera_Forms_Admin {
 
 	}
 
+	
 }
 
 

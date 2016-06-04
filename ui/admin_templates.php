@@ -137,8 +137,8 @@
 				<thead>
 					<tr>
 						<th style="width:16px;"><input type="checkbox" class="cf-bulkcheck"></th>
-						<th><?php echo __('ID', 'caldera-forms'); ?></th>
-						<th><?php echo __('Submitted', 'caldera-forms'); ?></th>
+						<th><?php esc_html_e('ID', 'caldera-forms'); ?></th>
+						<th><?php esc_html_e('Submitted', 'caldera-forms'); ?></th>
 						{{#each fields}}
 						<th>{{this}}</th>
 						{{/each}}
@@ -155,17 +155,19 @@
 						{{#each data}}
 						<td>{{#if label}}{{value}}{{else}}{{{this}}}{{/if}}</td>
 						{{/each}}
-						<td style="text-align: right; width: 100px;white-space: nowrap;"><?php do_action('caldera_forms_entry_actions'); ?></td>
+						<td style="text-align: right; width: 100px;white-space: nowrap;">
+							<?php do_action('caldera_forms_entry_actions'); ?>
+						</td>
 					</tr>
 				{{/each}}
 				{{else}}
-					<tr><td colspan="100"><?php echo __('No entries found', 'caldera-forms'); ?></td></tr>
+					<tr><td colspan="100"><?php esc_html_e('No entries found', 'caldera-forms'); ?></td></tr>
 				{{/if}}
 				</tbody>
 			</table>
 		</div>
 	{{else}}
-	<p class="description"><?php echo __('No entries yet.', 'caldera-forms'); ?></p>
+	<p class="description"><?php esc_html_e('No entries yet.', 'caldera-forms'); ?></p>
 	{{/if}}
 </script>
 <script type="text/html" id="view-entry-tmpl">
@@ -175,8 +177,8 @@
 	</div>
 {{/if}}
 
-	<div id="main-entry-panel" class="tab-detail-panel" data-tab="<?php _e('Entry', 'caldera-forms'); ?>">
-		<h4><?php echo __('Submitted', 'caldera-forms'); ?> <small class="description">{{date}}</small></h4>
+	<div id="main-entry-panel" class="tab-detail-panel" data-tab="<?php esc_html_e('Entry', 'caldera-forms'); ?>">
+		<h4><?php echo esc_html_e('Submitted', 'caldera-forms'); ?> <small class="description">{{date}}</small></h4>
 		<hr>
 		{{#each data}}
 			<div class="entry-line">
