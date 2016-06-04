@@ -41,8 +41,9 @@ abstract class Caldera_Forms_Entry_Object {
 	 * @return bool|mixed
 	 */
 	public function __set( $property, $value ){
-		if( method_exists( $this, $property . '_set'  ) ){
-			return call_user_func( $property . '_set', $value );
+		$setter = $property . '_set';
+		if( method_exists( $this, $setter  ) ){
+			return call_user_func( array( $this, $setter ), $value );
 		}elseif (  ( is_string( $value ) ||  is_numeric( $value ) ) && property_exists( $this, $property ) ){
 			$this->$property = $value;
 			return true;

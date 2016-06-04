@@ -12,10 +12,13 @@
 class Caldera_Forms_Entry_Meta extends Caldera_Forms_Entry_Object {
 
 	/** @var  string */
+	protected $meta_id;
+
+	/** @var  string */
 	protected $entry_id;
 
 	/** @var  string */
-	protected $proccess_id;
+	protected $process_id;
 
 	/** @var  string */
 	protected $meta_key;
@@ -30,7 +33,14 @@ class Caldera_Forms_Entry_Meta extends Caldera_Forms_Entry_Object {
 	 *
 	 * @param string $value Meta value
 	 */
-	protected function set_meta_value( $value ){
-		$this->meta_value = maybe_unserialize( $value );
+	protected function meta_value_set( $value ){
+		if( is_serialized( $value  ) ){
+			$this->meta_value = unserialize( $value );
+		}elseif( 0 === strpos( $value, '{' ) && is_object( $_value = json_decode( $value ) ) ){
+			$this->meta_value = (array) $_value;
+		}else{
+			$this->meta_value = $value;
+		}
+
 	}
 }
