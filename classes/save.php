@@ -412,6 +412,25 @@ class Caldera_Forms_Save_Final {
 
 	}
 
+	/**
+	 * Save an entry in the database
+	 *
+	 * IMPORTANT: Data is assumed to be sanatized, saving is assumed to be authorized. Do not hook directly to an HTTP request.
+	 *
+	 * @since 1.3.6
+	 *
+	 * @param array $form Form config
+	 * @param array $fields Fields to save, must be in form of field_id => value and field IDs must exist
+	 * @param array $args {
+	 *     An array of arguments. As of 1.3.6 used for ovveriding entry status/user/time
+	 *
+	 *     @type string|int $user_id Optional. User ID. Default is current user ID.
+	 *     @type string $datestamp Optional. Datestamp to use for entry. Must be mysql time. Default is current time.
+	 *     @type string $status Optional. Status to use for entry. Must be a valid status. Default is 'active'.
+	 * }
+	 *
+	 * @return array|int|string
+	 */
 	public static function create_entry( array $form, array $fields, array $args = array() ){
 		$args = wp_parse_args( $args, array(
 			'user_id' => get_current_user_id(),
@@ -447,6 +466,7 @@ class Caldera_Forms_Save_Final {
 			}
 
 		}
+		
 	}
 
 }
