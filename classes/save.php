@@ -195,14 +195,18 @@ class Caldera_Forms_Save_Final {
 		);
 
 		// if added a bcc
+		$mail[ 'bcc' ] = false;
 		if ( isset( $form['mailer']['bcc_to'] )  ) {
-			$mail['headers'][] = Caldera_Forms::do_magic_tags( 'Bcc: ' . $form['mailer']['bcc_to'] );
+			$mail[ 'bcc' ] = $form[ 'mailer' ][ 'bcc_to' ];
+			$mail[ 'headers' ][] = Caldera_Forms::do_magic_tags( 'Bcc: ' . $form[ 'mailer' ][ 'bcc_to' ] );
 		}
 
 		// if added a replyto
+		$mail[ 'replyto' ] = false;
 		if ( isset( $form['mailer']['reply_to'] )  ) {
 			$reply_to = trim( $form[ 'mailer' ][ 'reply_to' ] );
 			if ( ! empty( $reply_to ) ) {
+				$mail[ 'replyto' ] = $reply_to;
 				$mail[ 'headers' ][] = Caldera_Forms::do_magic_tags( 'Reply-To: <' . $reply_to . '>' );
 			}
 		}
@@ -212,7 +216,10 @@ class Caldera_Forms_Save_Final {
 
 		if( ! isset( $form['mailer']['email_type'] ) || $form['mailer']['email_type'] == 'html'){
 			$mail['headers'][] = "Content-type: text/html";
+			$mail[ 'html' ] = true;
 			$mail['message'] = wpautop( $mail['message'] );
+		}else{
+			$mail[ 'html' ] = false;
 		}
 
 		// get tags
