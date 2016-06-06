@@ -114,7 +114,7 @@ class Caldera_Forms_DB_Track extends Caldera_Forms_DB_Base {
 		add_action( 'caldera_forms_submit_complete',  array( $this, 'submit_complete' ), 50, 3 );
 		add_action( 'caldera_forms_submit_complete',  array( $this, 'email_tracking' ), 51, 3 );
 		add_action( 'caldera_forms_mailer_complete', array( $this, 'email_sent'), 50, 3 );
-		add_action( 'caldera_forms_mailer_failed', array( $this, 'email_fail' ), 50, 3 );
+		add_action( 'caldera_forms_mailer_failed', array( $this, 'email_fail' ), 50, 4 );
 		
 	}
 
@@ -244,8 +244,9 @@ class Caldera_Forms_DB_Track extends Caldera_Forms_DB_Base {
 	 * @param array $mail Mailer data
 	 * @param array $data Submission data
 	 * @param array $form Form config
+	 * @param string $method Send method
 	 */
-	public function email_fail( $mail, $data, $form  ){
+	public function email_fail( $mail, $data, $form, $method  ){
 		global $process_id;
 		if( isset( $form[ 'ID' ] ) ){
 			$this->create( array(
@@ -253,6 +254,7 @@ class Caldera_Forms_DB_Track extends Caldera_Forms_DB_Base {
 				'form_id' => $form[ 'ID' ],
 				'process_id' => $process_id,
 				'time' => current_time( 'mysql' ),
+				'method' => strip_tags( $method ),
 				'recipients_set' => self::recipients_set( $mail )
 			));
 			

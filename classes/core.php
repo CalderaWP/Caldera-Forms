@@ -88,6 +88,8 @@ class Caldera_Forms {
 		add_shortcode( 'caldera_form_modal', array( $this, 'shortcode_handler') );
 		add_action( 'wp_footer', array( $this, 'render_footer_modals') );
 
+		//add email api hooks
+		add_action( 'init', array( 'Caldera_Forms_Email_Settings', 'maybe_add_hooks' ) );
 
 		/**
 		 * Runs after Caldera Forms core is initialized

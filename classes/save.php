@@ -324,9 +324,12 @@ class Caldera_Forms_Save_Final {
 			fputcsv($df, $submission);
 			fclose($df);
 			$csv = ob_get_clean();
-			$csvfile = wp_upload_bits( uniqid().'.csv', null, $csv );
-			if( isset( $csvfile['file'] ) && false == $csvfile['error'] && file_exists( $csvfile['file'] ) ){
-				$mail['attachments'][] = $csvfile['file'];
+			$csvfile = wp_upload_bits( uniqid() . '.csv', null, $csv );
+			if ( isset( $csvfile[ 'file' ] ) && false == $csvfile[ 'error' ] && file_exists( $csvfile[ 'file' ] ) ) {
+				$mail[ 'attachments' ][] = $csvfile[ 'file' ];
+				$mail[ 'csv' ]           = $csvfile[ 'file' ];
+			}else{
+				$mail[ 'csv' ] = false;
 			}
 		}
 
@@ -376,47 +379,59 @@ class Caldera_Forms_Save_Final {
 				add_action( 'phpmailer_init', array( 'Caldera_Forms', 'debug_mail_send' ), 1000 );
 			}
 
-			if( wp_mail( (array) $mail['recipients'], $mail['subject'], stripslashes( $mail['message'] ), $headers, $mail['attachments'] )){
-
-				// kill attachment.
-				if(!empty($csvfile['file'])){
-					if(file_exists($csvfile['file'])){
-						unlink($csvfile['file']);
-					}
-				}
-
-				/**
-				 * Fires main mailer completes
-				 *
-				 * @since 1.3.1
-				 *
-				 * @param array $mail Email data
-				 * @param array $data Form entry data
-				 * @param array $form The form config
-				 */
-				do_action( 'caldera_forms_mailer_complete', $mail, $data, $form );
-			}else{
-				/**
-				 * Fires main mailer fails
-				 *
-				 * @since 1.2.3
-				 *
-				 * @param array $mail Email data
-				 * @param array $data Form entry data
-				 * @param array $form The form config
-				 */
-				do_action( 'caldera_forms_mailer_failed', $mail, $data, $form );
-
-			}
+			$sent = wp_mail( (array) $mail['recipients'], $mail['subject'], stripslashes( $mail['message'] ), $headers, $mail['attachments'] );
+			self::after_send_email( $form, $data, $sent, $csvfile, $mail, 'wpmail' );
 		}else{
-			if(!empty($csvfile['file'])){
-				if(file_exists($csvfile['file'])){
-					unlink($csvfile['file']);
-				}
-			}
+			self::unlink_csv( $csvfile );
 
 		}
 
+	}
+
+	/**
+	 * Runs post email sent/not sent tasks/hooks etc
+	 *
+	 *
+	 * @since 1.3.6
+	 *
+	 * @param array $form Form config
+	 * @param array $data Submission data
+	 * @param bool $sent Was email sent
+	 * @param array|bool $csvfile Csv file array or false if not created
+	 * @param array $mail The email
+	 * @param string $method Method for sending email
+	 */
+	public static function after_send_email( $form, $data, $sent, $csvfile, $mail, $method ) {
+		if ( $sent ) {
+
+			// kill attachment.
+			self::unlink_csv( $csvfile );
+
+			/**
+			 * Fires main mailer completes
+			 *
+			 * @since 1.3.1
+			 *
+			 * @param array $mail Email data
+			 * @param array $data Form entry data
+			 * @param array $form The form config
+			 * @param string $method Method for sending email
+			 */
+			do_action( 'caldera_forms_mailer_complete', $mail, $data, $form, $method );
+		} else {
+			/**
+			 * Fires main mailer fails
+			 *
+			 * @since 1.2.3
+			 *
+			 * @param array $mail Email data
+			 * @param array $data Form entry data
+			 * @param array $form The form config
+			 * @param string $method Method for sending email
+			 */
+			do_action( 'caldera_forms_mailer_failed', $mail, $data, $form, $method );
+
+		}
 	}
 
 	/**
@@ -475,5 +490,23 @@ class Caldera_Forms_Save_Final {
 		}
 		
 	}
+
+	/**
+	 * After sending email, unlink CSV
+	 *
+	 * @since 1.3.6
+	 *
+	 * @param $csvfile
+	 */
+	protected static function unlink_csv( $csvfile ) {
+		if ( is_array( $csvfile ) && ! empty( $csvfile[ 'file' ] ) ) {
+			if ( file_exists( $csvfile[ 'file' ] ) ) {
+				unlink( $csvfile[ 'file' ] );
+			}
+
+		}
+
+	}
+
 
 }

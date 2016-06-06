@@ -1,22 +1,27 @@
 <?php
 
 /**
- * @TODO What this does.
+ * API Client for sending Caldera Forms emails via SendGrid
  *
- * @package   @TODO
- * @author    Josh Pollock <Josh@JoshPress.net>
+ * @package Caldera_Forms
+ * @author    Josh Pollock <Josh@CalderaWP.com>
  * @license   GPL-2.0+
  * @link
- * @copyright 2016 Josh Pollock
+ * @copyright 2016 CalderaWP LLC
  */
 class Caldera_Forms_Email_SendGrid extends Caldera_Forms_Email_Client{
 
-
+	/**
+	 * @inheritdoc
+	 */
 	public function include_sdk() {
 		include_once __DIR__ . '/sendgrid/sendgrid-php.php';
 	}
 
-	public function set_api(){
+	/**
+	 * @inheritdoc
+	 */
+	public function set_api( array $keys ){
 		$options = array(
 			'raise_exceptions' => true
 		);
@@ -27,9 +32,12 @@ class Caldera_Forms_Email_SendGrid extends Caldera_Forms_Email_Client{
 
 		$options = apply_filters( 'caldera_forms_sendgrid_options', $options  );
 
-		$this->api =  new \SendGrid( get_option( '_caldera_forms_send_grid_api_key', 0 ));
+		$this->api =  new \SendGrid( $keys[0], $options );
 	}
 
+	/**
+	 * @inheritdoc
+	 */
 	public function send(){
 		$email = new \SendGrid\Email();
 		$email
@@ -62,12 +70,16 @@ class Caldera_Forms_Email_SendGrid extends Caldera_Forms_Email_Client{
 
 		//@TODO Caldera Exception
 		try {
-			$this->api->send($email);
+			/** @var \SendGrid\Response $response */
+			$response = $this->api->send($email);
+			return $response->getCode();
 		} catch(\SendGrid\Exception $e) {
-			//echo $e->getCode() . "\n";
+			$errors[] = $e->getCode();
 			foreach($e->getErrors() as $er) {
-				//echo $er;
+				$errors[] =  $er;
 			}
+			return $errors;
 		}
 	}
+	
 }
