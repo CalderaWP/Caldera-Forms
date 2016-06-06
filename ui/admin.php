@@ -44,7 +44,7 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 		<li class="caldera-forms-toolbar-item">
 		&nbsp;&nbsp;
 		</li>
-		<li class="caldera-forms-headtext">
+		<li class="caldera-forms-headtext" id="render-with-label">
 			<?php echo __('Render forms with:', 'caldera-forms'); ?>
 		</li>
 		<li class="caldera-forms-toolbar-item">
@@ -56,6 +56,14 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 		</li>
 		<li class="caldera-forms-toolbar-item">
 		&nbsp;
+		</li>
+		<li class="caldera-forms-toolbar-item" id="cf-email-settings-item">
+			<?php
+				printf( '<button class="button" id="cf-email-settings" title="%s">%s</button>',
+					esc_attr__( 'Click to modify Caldera Forms email settings', 'caldera-forms'  ),
+					esc_html__( 'Email Settings' )
+				);
+			?>
 		</li>
 
 	</ul>
@@ -312,11 +320,39 @@ jQuery( function( $ ){
 		trigger.trigger('click');
 	});
 
+	//switch in and out of email settings
+	var inEmailSettings = false;
+	$( '#cf-email-settings' ).on( 'click', function(e){
+		e.preventDefault();
+		var $mainUI = $( '.form-panel-wrap, .form-entries-wrap' );
+		var $emailSettingsUI = $( '#cf-email-settings-ui' );
+		var $otherButtons = $( '.caldera-forms-toolbar-item a' );
+		var $toggles = $( '.toggle_option_preview, #render-with-label' );
+		if( inEmailSettings ){
+			$( this ).html( '<?php esc_html_e( 'Email Settings', 'caldera-forms' ); ?>' ).removeClass( 'button-primary' );
+			inEmailSettings = false;
+			$otherButtons.removeClass( 'disabled' );
+			$emailSettingsUI.hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
+			$mainUI.show().attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' );
+			$toggles.show().attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' );
+		}else{
+			inEmailSettings = true;
+			$( this ).html( '<?php esc_html_e( 'Save Email Settings', 'caldera-forms' ); ?>' ).addClass( 'button-primary' );
+			$otherButtons.addClass( 'disabled' );
+			$mainUI.hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
+			$emailSettingsUI.show().attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' );
+			$( this ).html = "<?php esc_html__( 'Email Settings', 'caldera-forms' ); ?>";
+
+			$toggles.hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
+		}
+	})
+
 });
 </script>
 <?php
 
 include CFCORE_PATH . 'ui/entry_navigation.php';
+
 
 do_action('caldera_forms_admin_footer');
 ?>

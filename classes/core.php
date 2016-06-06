@@ -90,6 +90,8 @@ class Caldera_Forms {
 
 		//add email api hooks
 		add_action( 'init', array( 'Caldera_Forms_Email_Settings', 'maybe_add_hooks' ) );
+		add_action( 'caldera_forms_admin_footer', array( 'Caldera_Forms_Email_Settings', 'ui' ) );
+
 
 		/**
 		 * Runs after Caldera Forms core is initialized

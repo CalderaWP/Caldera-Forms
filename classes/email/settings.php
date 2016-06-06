@@ -166,4 +166,15 @@ class Caldera_Forms_Email_Settings {
 		)  );
 	}
 
+	/**
+	 * Create email settings UI
+	 *
+	 * @uses "caldera_forms_admin_footer" action
+	 *
+	 * @since 1.3.6
+	 */
+	public static function ui(){
+		printf( '<div id="cf-email-settings-ui" aria-hidden="true" style="visibility: hidden;display: none;">%s</div>', 'EMAIL SETTINGS');
+	}
+
 }
