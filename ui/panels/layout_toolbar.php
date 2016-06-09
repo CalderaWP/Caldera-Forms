@@ -12,7 +12,7 @@
 <div id="newfield-tool" class="button button-primary button-small layout-new-form-field" title="<?php echo __('Drag onto the form grid below', 'caldera-forms'); ?>">
 	<i class="icon-edit" style="display:none;"></i>
 	<i class="dashicons dashicons-menu" style="display:none;"></i>
-	<span id="new-form-element" class="layout_field_name"><span class="dashicons dashicons-menu" style="margin: 1px 0px 0px -5px;"></span> <?php echo __('Add Element', 'caldera-forms'); ?></span>
+	<span id="new-form-element" class="layout_field_name"><span class="dashicons dashicons-menu" style="margin: 1px 0px 0px -5px;"></span> <?php echo __('Add Field', 'caldera-forms'); ?></span>
 	<div class="drag-handle">
 		<div class="field_preview"></div>
 	</div><input value="" type="hidden" class="field-location">	

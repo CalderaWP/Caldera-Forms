@@ -1500,17 +1500,23 @@ class Caldera_Forms_Admin {
 						"label" => __("Form Pages", 'caldera-forms'),
 						"canvas" => $path . "pages.php",
 					),
-					"conditions" => array(
-						"name" => __("Conditions", 'caldera-forms'),
+					"mailer" => array(
+						"name" => __("Email", 'caldera-forms'),
 						"location" => "lower",
-						"label" => __("Conditions", 'caldera-forms'),
-						"canvas" => $path . "conditions.php",
+						"label" => __("Email Notification Settings", 'caldera-forms'),
+						"canvas" => $path . "emailer.php",
 					),
 					"processors" => array(
 						"name" => __("Processors", 'caldera-forms'),
 						"location" => "lower",
 						"label" => __("Form Processors", 'caldera-forms'),
 						"canvas" => $path . "processors.php",
+					),
+					"conditions" => array(
+						"name" => __("Conditions", 'caldera-forms'),
+						"location" => "lower",
+						"label" => __("Conditions", 'caldera-forms'),
+						"canvas" => $path . "conditions.php",
 					),
 					"variables" => array(
 						"name" => __("Variables", 'caldera-forms'),
@@ -1519,7 +1525,7 @@ class Caldera_Forms_Admin {
 						"canvas" => $path . "variables.php",
 						"actions" => array(
 							$path . "variable_add.php"
-						)
+						),
 					),
 					"responsive" => array(
 						"name" => __("Responsive", 'caldera-forms'),
@@ -1556,12 +1562,7 @@ class Caldera_Forms_Admin {
 							)
 						),
 					),
-					"mailer" => array(
-						"name" => __("Mailer", 'caldera-forms'),
-						"location" => "lower",
-						"label" => __("Email Notification Settings", 'caldera-forms'),
-						"canvas" => $path . "emailer.php",
-					),
+
 					/*
 					"styles" => array(
 						"name" => __("Stylesheets", 'caldera-forms'),

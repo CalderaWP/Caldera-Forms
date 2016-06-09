@@ -444,7 +444,7 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 	data-event="field.drop"
 	data-load-class="none"
 	data-modal="field_setup"
-	data-modal-title="<?php echo __('Elements', 'caldera-forms'); ?>"
+	data-modal-title="<?php echo __('Fields', 'caldera-forms'); ?>"
 	data-template="#form-fields-selector-tmpl"
 	data-modal-width="700"
 	data-modal-height="680"
@@ -456,7 +456,7 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 		<input type="hidden" class="field-config" name="config[fields][<?php echo $id; ?>][ID]" value="<?php echo $id; ?>">
 		<div id="<?php echo $id; ?>_settings_pane" class="wrapper-instance-pane">
 			<div class="caldera-config-group">
-				<label for="<?php echo $id; ?>_type"><?php echo __('Element Type', 'caldera-forms'); ?></label>
+				<label for="<?php echo $id; ?>_type"><?php echo __('Field Type', 'caldera-forms'); ?></label>
 				<div class="caldera-config-field">
 					<select class="block-input caldera-select-field-type" data-field="<?php echo $id; ?>" id="<?php echo $id; ?>_type" name="config[fields][<?php echo $id; ?>][type]" data-type="<?php echo $type; ?>">					
 						<?php
@@ -529,7 +529,7 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 			<input type="hidden" class="field_config_string block-input" value="<?php echo htmlentities( $config_str ); ?>">
 			<input type="hidden" class="field_conditions_config_string block-input ajax-trigger" data-event="none" data-autoload="true" data-request="build_conditions_config" data-template="#conditional-group-tmpl" data-id="<?php echo $id; ?>" data-target="#<?php echo $id; ?>_conditional_wrap" data-type="fields" data-callback="rebuild_field_binding" value="<?php echo htmlentities( $conditions_str ); ?>">
 			<br>
-			<button class="button delete-field block-button" data-confirm="<?php echo __('Are you sure you want to remove this field?. \'Cancel\' to stop. \'OK\' to delete', 'caldera-forms'); ?>" type="button"><?php echo __('Delete Element', 'caldera-forms'); ?></button>
+			<button class="button delete-field block-button" data-confirm="<?php echo __('Are you sure you want to remove this field?. \'Cancel\' to stop. \'OK\' to delete', 'caldera-forms'); ?>" type="button"><?php echo __('Delete Field', 'caldera-forms'); ?></button>
 		</div>
 
 	</div>
@@ -595,19 +595,19 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 			<?php echo $element['name']; ?>
 		</li>
 		<li>
-			<a href="#settings-panel"><?php echo __("General Settings", "caldera-forms"); ?></a>
+			<a href="#settings-panel"><?php echo __("Form Settings", "caldera-forms"); ?></a>
 		</li>
 
 	</ul>
 
 	<div class="updated_notice_box"><?php _e( 'Updated Successfully', 'caldera-forms' ); ?></div>
 
-	<button class="button button-primary caldera-header-save-button" data-active-class="none" data-load-element="#save_indicator" type="button" disabled="disabled"><?php echo __('Update Form', 'caldera-forms'); ?><span id="save_indicator" class="spinner" style="position: absolute; right: -33px;"></span></button>	
+	<button class="button button-primary caldera-header-save-button" data-active-class="none" data-load-element="#save_indicator" type="button" disabled="disabled"><?php echo __('Save Form', 'caldera-forms'); ?><span id="save_indicator" class="spinner" style="position: absolute; right: -33px;"></span></button>	
 	<a class="button caldera-header-preview-button" target="_blank" href="<?php echo trailingslashit( get_home_url() ) . '?cf_preview=' . $element['ID']; ?>"><?php echo __('Preview Form', 'caldera-forms'); ?></a>
 </div>
 
 <div style="display: none;" class="caldera-editor-body caldera-config-editor-panel " id="settings-panel">
-	<h3><?php echo __("General Settings", "caldera-forms"); ?></h3>
+	<h3><?php echo __("Form Settings", "caldera-forms"); ?></h3>
 	<input type="hidden" name="config[cf_version]" value="<?php echo esc_attr( CFCORE_VER ); ?>">
 	<div class="caldera-config-group">
 		<label><?php echo __('Form Name', 'caldera-forms'); ?> </label>
