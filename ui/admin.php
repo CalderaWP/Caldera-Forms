@@ -311,6 +311,32 @@ jQuery( function( $ ){
 		var trigger = $(this).find('button.ajax-trigger');
 		trigger.trigger('click');
 	});
+	var form_toggle_state = false;
+	$( document ).on( 'click', '.hide-forms', function(){
+		var clicked = $(this),
+			panel = $('.form-admin-page-wrap'),
+			forms = $('.form-panel-wrap'),
+			size = -35;
+
+		if( true === form_toggle_state ){
+			size = 430;
+			clicked.find('span').css({transform: ''});
+			form_toggle_state = false;
+			forms.show();
+		}else{
+			form_toggle_state = true;
+			clicked.find('span').css({transform: 'rotate(180deg)'});
+			forms.hide();
+		}
+		panel.animate( {marginLeft: size }, 220);
+		
+
+	});
+
+	$( document ).on('change', '.cf-template-select', function(){
+		$('.cf-form-template.selected').removeClass('selected');
+		$(this).parent().addClass('selected');
+	});
 
 });
 </script>
