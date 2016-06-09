@@ -308,6 +308,7 @@ $field_type_list = array(
 	__('Basic', 'caldera-forms')	=> array(),
 	__('Advanced', 'caldera-forms')	=> array(),
 	__('Special', 'caldera-forms')	=> array(),
+	__('Discontinued', 'caldera-forms')	=> array(),
 );
 // Build Field Types List
 foreach($field_types as $field_slug=>$config){
@@ -322,6 +323,9 @@ foreach($field_types as $field_slug=>$config){
 		$categories = explode(',', $config['category']);
 	}
 	foreach((array) $categories as $category){
+		if( !isset( $field_type_list[trim($category)] ) ){
+			$category = __('Special', 'caldera-forms');
+		}
 		$field_type_list[trim($category)][$field_slug] = $config;
 	}
 
@@ -922,6 +926,7 @@ do_action('caldera_forms_edit_end', $element);
 			__('Basic', 'caldera-forms') => '',
 			__('Advanced', 'caldera-forms') => '',
 			__('Special', 'caldera-forms') => '',
+			__('Discontinued', 'caldera-forms') => '',
 		);
 
 		foreach($field_types as $field_slug=>$config){
@@ -937,13 +942,13 @@ do_action('caldera_forms_edit_end', $element);
 			foreach($cats as $cat){
 				$cat = trim($cat);
 				$template = '<div class="form-modal-add-line">';
-					$template .= '<button type="button" class="button info-button set-current-field" data-field="{{id}}" data-type="' . $field_slug . '">' . __('Set Element', 'caldera-forms') . '</button>';
+					$template .= '<button type="button" class="button info-button set-current-field" data-field="{{id}}" data-type="' . $field_slug . '">' . __('Set Field', 'caldera-forms') . '</button>';
 					$template .= '<img src="'. $icon .'" class="form-modal-lgo" width="45" height="45">';
 					$template .= '<strong>' . $config['field'] . '</strong>';
 					$template .= '<p class="description">' . (!empty($config['description']) ? $config['description'] : __('No description given', 'caldera-forms') ) . '</p>';
 				$template .= '</div>';
 				if(!isset($sorted_field_types[$cat])){
-					$sorted_field_types[$cat] = null;
+					$cat = __('Special', 'caldera-forms');
 				}
 				$sorted_field_types[$cat] .= $template;
 			}

@@ -1278,7 +1278,7 @@ class Caldera_Forms {
 				"field"		=>	__("reCAPTCHA", "caldera-forms"),
 				"description" => __('reCAPTCHA anti-spam field', 'caldera-forms'),
 				"file"		=>	CFCORE_PATH . "fields/recaptcha/field.php",
-				"category"	=>	__("Deprecated", "caldera-forms"),
+				"category"	=>	__("Discontinued", "caldera-forms"),
 				"handler"	=>	array($this, 'captcha_check'),
 				"capture"	=>	false,
 				"setup"		=>	array(
