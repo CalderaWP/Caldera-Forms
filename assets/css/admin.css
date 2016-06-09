@@ -726,6 +726,7 @@ a span.error-tag {
   min-width: 100%;
   max-width: 100%;
   width: auto;
+  overflow: auto;
 }
 .form-extend-page-wrap .list.form-panel.postbox {
   -moz-box-sizing: border-box;
