@@ -1678,3 +1678,45 @@ tr.form_entry_row.loading {
 #import_form_baldrickModalBody{
   overflow: hidden;
 }
+/* new templates */
+.cf-form-template{
+  border: 2px dashed #cfcfcf;
+  float: left;
+  height: 180px;
+  margin: 0 5px 10px;
+  overflow: hidden;
+  padding: 5px;
+  width: 162px;
+  border-radius: 4px;
+}
+.cf-form-template > input{
+  display: none;
+}
+
+.cf-form-template:hover{
+  border: 2px dashed #a3be5f;
+  background-color: #efefef;
+}
+.cf-form-template.selected{
+  background-color: #a3be5f;
+  border: 2px dashed #a3be5f;
+  color: #fff;
+}
+
+.cf-template-column{
+  background: rgb(223, 223, 223) none repeat scroll 0% 0%;
+  height:20px;
+}
+.cf-form-template.selected .cf-template-column{
+  background-color: #fff;
+}
+.cf-templates-wrapper {
+  border-top: 1px solid #dfdfdf;
+  height: 409px;
+  overflow: auto;
+  padding-top: 20px;
+}
+.cf-form-template small {
+  display: block;
+  padding: 0 3px;
+}

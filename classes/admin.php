@@ -186,22 +186,40 @@ class Caldera_Forms_Admin {
 		$form_templates = self::internal_form_templates();
 
 		?>
-		<div class="caldera-config-group">
-			<label for=""><?php echo __('Form Template', 'caldera-forms'); ?></label>
-			<div class="caldera-config-field">
-				<select class="new-form-template block-input field-config" name="template" value="">
-					<option value="0"><?php echo __('no template - blank form', 'caldera-forms'); ?></option>
+		<div class="cf-templates-wrapper">
+			<label class="caldera-grid cf-form-template selected">
+				<small>Blank</small>
+				<input type="radio" name="template" value="" checked="checked" class="cf-template-select">
+			</label>
 					<?php
 
 					foreach( $form_templates as $template_slug => $template ){
 						if( !empty( $template['template'] ) && !empty( $template['name'] ) ){
-							echo '<option value="' . $template_slug . '">' . $template['name'] . '</option>';
+							$struct = explode('|', $template['template']['layout_grid']['structure'] );
+							echo '<label class="caldera-grid cf-form-template">';
+								echo '<small>' . $template['name'] . '</small>';
+								
+								echo '<input type="radio" name="template" value="' . $template_slug . '" class="cf-template-select">';
+								
+								foreach ($struct as $row) {
+									$columns = explode( ':', $row );
+									echo '<div class="row" style="margin: 6px 0px;">';
+										foreach ($columns as $column) {
+											echo '<div class="col-sm-' . $column . '" style="padding: 0px 3px;">';
+											echo '<div class="cf-template-column"></div>';
+											echo '</div>';
+										}
+										
+									echo '</div>';
+								}
+							
+							echo '</label>';
+							
 						}
 					}
 
 					?>
-				</select>
-			</div>
+
 		</div>
 		<?php
 	}
