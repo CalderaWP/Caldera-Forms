@@ -113,12 +113,7 @@
 				<input type="text" class="new-form-name block-input field-config" name="name" value="" required="required">
 			</div>
 		</div>
-		<div class="caldera-config-group">
-			<label for=""><?php echo __('Description', 'caldera-forms'); ?></label>
-			<div class="caldera-config-field">
-				<textarea class="block-input field-config" name="description" value=""></textarea>
-			</div>
-		</div>
+
 		{{#if clone}}<input type="hidden" name="clone" value="{{clone}}">
 		<?php
 		do_action('caldera_forms_clone_form_template_end');
