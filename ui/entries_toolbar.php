@@ -3,7 +3,7 @@
 		?>
 		<div class="caldera-entry-exporter" style="display:none;">
 			<?php wp_nonce_field( 'cf_toolbar', 'cf_toolbar_actions' ); ?>
-			<button type="button" class="button hide-forms" style="padding: 3px; margin-top: 1px; margin-right: 18px; color: rgb(143, 143, 143);"><span class="dashicons dashicons-admin-collapse"></span></button>
+			<button type="button" class="button hide-forms" title="<?php esc_html_e('Toggle Forms List', 'caldera-forms'); ?>" style="padding: 3px; margin-top: 1px; margin-right: 18px; color: rgb(143, 143, 143);"><span class="dashicons dashicons-admin-collapse"></span></button>
 			<span class="toggle_option_preview" style="">			
 
 				<button type="button" class="status_toggles button button-primary ajax-trigger" style="margin-top: 1px;"

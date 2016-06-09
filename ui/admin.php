@@ -36,7 +36,7 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 			v<?php echo CFCORE_VER; ?>
 		</li>
 		<li class="caldera-forms-toolbar-item">
-			<a class="button ajax-trigger" data-request="start_new_form" data-modal-buttons='<?php echo $modal_new_form; ?>' data-modal-width="600" data-modal-height="580" data-load-class="none" data-modal="new_form" data-modal-title="<?php echo __('Create New Form', 'caldera-forms'); ?>" data-template="#new-form-tmpl"><?php echo __('New Form', 'caldera-forms'); ?></a>
+			<a class="button button-primary ajax-trigger" data-request="start_new_form" data-modal-buttons='<?php echo $modal_new_form; ?>' data-modal-width="600" data-modal-height="580" data-load-class="none" data-modal="new_form" data-modal-title="<?php echo __('Create New Form', 'caldera-forms'); ?>" data-template="#new-form-tmpl"><?php echo __('New Form', 'caldera-forms'); ?></a>
 		</li>
 		<li class="caldera-forms-toolbar-item">
 			<a class="button ajax-trigger" data-request="start_new_form" data-modal-width="400" data-modal-height="192" data-modal-element="div" data-load-class="none" data-modal="import_form" data-template="#import-form-tmpl" data-modal-title="<?php echo __('Import Form', 'caldera-forms'); ?>" ><?php echo __('Import', 'caldera-forms'); ?></a>
@@ -49,9 +49,9 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 		</li>
 		<li class="caldera-forms-toolbar-item">
 			<div class="toggle_option_preview">
-				<button type="button" title="<?php echo __('Includes Bootstrap 3 styles on the frontend for form alert notices', 'caldera-forms'); ?>" data-action="save_cf_setting" data-active-class="none" data-set="alert" data-callback="update_setting_toggle" class="ajax-trigger setting_toggle_alert button <?php if(!empty($style_includes['alert'])){ ?>button-primary<?php } ?>"><?php echo __('Alert Styles' , 'caldera-forms'); ?></button>
-				<button type="button" title="<?php echo __('Includes Bootstrap 3 styles on the frontend for form fields and buttons', 'caldera-forms'); ?>" data-action="save_cf_setting" data-active-class="none" data-set="form" data-callback="update_setting_toggle" class="ajax-trigger setting_toggle_form button <?php if(!empty($style_includes['form'])){ ?>button-primary<?php } ?>"><?php echo __('Form Styles' , 'caldera-forms'); ?></button>
-				<button type="button" title="<?php echo __('Includes Bootstrap 3 styles on the frontend for form grid layouts', 'caldera-forms'); ?>" data-action="save_cf_setting" data-active-class="none" data-set="grid" data-callback="update_setting_toggle" class="ajax-trigger setting_toggle_grid button <?php if(!empty($style_includes['grid'])){ ?>button-primary<?php } ?>"><?php echo __('Grid Structures' , 'caldera-forms'); ?></button>
+				<button type="button" title="<?php echo __('Includes Bootstrap 3 styles on the frontend for form alert notices', 'caldera-forms'); ?>" data-action="save_cf_setting" data-active-class="none" data-set="alert" data-callback="update_setting_toggle" class="ajax-trigger setting_toggle_alert button <?php if(!empty($style_includes['alert'])){ ?>active<?php } ?>"><?php echo __('Alert Styles' , 'caldera-forms'); ?></button>
+				<button type="button" title="<?php echo __('Includes Bootstrap 3 styles on the frontend for form fields and buttons', 'caldera-forms'); ?>" data-action="save_cf_setting" data-active-class="none" data-set="form" data-callback="update_setting_toggle" class="ajax-trigger setting_toggle_form button <?php if(!empty($style_includes['form'])){ ?>active<?php } ?>"><?php echo __('Form Styles' , 'caldera-forms'); ?></button>
+				<button type="button" title="<?php echo __('Includes Bootstrap 3 styles on the frontend for form grid layouts', 'caldera-forms'); ?>" data-action="save_cf_setting" data-active-class="none" data-set="grid" data-callback="update_setting_toggle" class="ajax-trigger setting_toggle_grid button <?php if(!empty($style_includes['grid'])){ ?>active<?php } ?>"><?php echo __('Grid Structures' , 'caldera-forms'); ?></button>
 			</div>
 		</li>
 		<li class="caldera-forms-toolbar-item">
@@ -254,9 +254,9 @@ function update_setting_toggle(obj){
 
 	for( var k in obj.data){
 		if(obj.data[k] === true){
-			jQuery('.setting_toggle_' + k).addClass('button-primary');
+			jQuery('.setting_toggle_' + k).addClass('active');
 		}else{
-			jQuery('.setting_toggle_' + k).removeClass('button-primary');
+			jQuery('.setting_toggle_' + k).removeClass('active');
 		}
 	}
 	
