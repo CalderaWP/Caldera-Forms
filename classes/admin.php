@@ -239,7 +239,7 @@ class Caldera_Forms_Admin {
 
 			?>
 			<label class="caldera-grid cf-form-template">
-				<small>Blank</small>
+				<small><?php echo esc_html__( 'Blank Form', 'caldera-forms' ); ?></small>
 				<input type="radio" name="template" value="" class="cf-template-select">
 			</label>
 		</div>

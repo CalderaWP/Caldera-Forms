@@ -1735,6 +1735,9 @@ tr.form_entry_row.loading {
   padding: 0 9px;
   color: #333;
 }
+.cf-form-template.selected .cf-preview-field.cf-preview-button {
+  background-color: #fff;
+}
 .cf-form-template small.cf-preview-field.cf-preview-field-html {
   background: rgba(0, 0, 0, 0.1) none repeat scroll 0 0;
   border: 0 none;

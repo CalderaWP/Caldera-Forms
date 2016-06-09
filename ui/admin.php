@@ -24,7 +24,7 @@ if(empty($style_includes)){
 //$field_types = apply_filters( 'caldera_forms_get_field_types', array() );
 
 // create user modal buttons
-$modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_form", "data-active-class": "disabled", "data-load-class": "disabled", "data-callback": "new_form_redirect", "data-before" : "serialize_modal_form", "data-modal-autoclose" : "new_form" }';
+$modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_form", "data-active-class": "disabled", "data-load-class": "disabled", "data-callback": "new_form_redirect", "data-before" : "serialize_modal_form", "data-modal-autoclose" : "new_form" }|right';
 
 ?><div class="caldera-editor-header">
 	<ul class="caldera-editor-header-nav">

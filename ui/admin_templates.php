@@ -110,7 +110,7 @@
 		<div class="caldera-config-group">
 			<label for=""><?php echo __('Form Name', 'caldera-forms'); ?></label>
 			<div class="caldera-config-field">
-				<input type="text" class="new-form-name block-input field-config" name="name" value="" required="required">
+				<input type="text" class="new-form-name block-input field-config" name="name" value="" required="required" autofocus="true">
 			</div>
 		</div>
 
@@ -123,6 +123,9 @@
 		do_action('caldera_forms_new_form_template_end');
 		?>
 		{{/if}}
+		{{#script}}
+		jQuery('.new-form-name').focus();
+		{{/script}}
 </script>
 <script type="text/html" id="forms-list-alt-tmpl">
 
