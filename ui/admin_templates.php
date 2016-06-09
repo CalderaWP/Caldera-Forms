@@ -97,6 +97,66 @@
 		?>
 	</form>
 </script>
+<script type="text/html" id="front-settings-tmpl">
+	<?php
+
+	$style_includes = get_option( '_caldera_forms_styleincludes' );
+	if(empty($style_includes)){
+		$style_includes = array(
+			'alert'	=>	true,
+			'form'	=>	true,
+			'grid'	=>	true,
+		);
+		update_option( '_caldera_forms_styleincludes', $style_includes);
+	}
+
+
+	?>
+	<div class="caldera-settings-group">
+		<div class="caldera-settings">
+			<strong><?php echo __('Alert Styles' , 'caldera-forms'); ?></strong>
+			<p class="description"><?php echo __('Includes Bootstrap 3 styles on the frontend for form alert notices', 'caldera-forms'); ?></p>
+			<div class="clear"></div>
+		</div>
+		<div class="caldera-setting">
+			<div class="switch setting_toggle_alert <?php if(!empty($style_includes['alert'])){ ?>active<?php } ?>">
+				<div data-action="save_cf_setting" data-load-element="_parent" data-load-class="load" data-set="alert" data-callback="update_setting_toggle" class="ajax-trigger box"><span class="spinner"></span></div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>	
+
+	<div class="caldera-settings-group">
+		<div class="caldera-settings">
+			<strong><?php echo __('Form Styles' , 'caldera-forms'); ?></strong>
+			<p class="description"><?php echo __('Includes Bootstrap 3 styles on the frontend for form fields and buttons', 'caldera-forms'); ?></p>
+			<div class="clear"></div>
+		</div>
+		<div class="caldera-setting">
+			<div class="switch setting_toggle_form <?php if(!empty($style_includes['form'])){ ?>active<?php } ?>">
+				<div data-action="save_cf_setting" data-load-element="_parent" data-load-class="load" data-set="form" data-callback="update_setting_toggle" class="ajax-trigger box"><span class="spinner"></span></div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>	
+
+	<div class="caldera-settings-group">
+		<div class="caldera-settings">
+			<strong><?php echo __('Grid Structures' , 'caldera-forms'); ?></strong>
+			<p class="description"><?php echo __('Includes Bootstrap 3 styles on the frontend for form grid layouts', 'caldera-forms'); ?></p>
+			<div class="clear"></div>
+		</div>
+		<div class="caldera-setting">
+			<div class="switch setting_toggle_grid <?php if(!empty($style_includes['grid'])){ ?>active<?php } ?>">
+				<div data-action="save_cf_setting" data-load-element="_parent" data-load-class="load" data-set="grid" data-callback="update_setting_toggle" class="ajax-trigger box"><span class="spinner"></span></div>
+			</div>
+
+		</div>
+		<div class="clear"></div>
+	</div>	
+
+
+</script>
 <script type="text/html" id="new-form-tmpl">
 		{{#if clone}}
 		<?php

@@ -8,8 +8,8 @@ $per_page_limit = 20;
 $forms = Caldera_Forms_Forms::get_forms( true );
 $forms = apply_filters( 'caldera_forms_admin_forms', $forms );
 
-$style_includes = get_option( '_caldera_forms_styleincludes' );
 $entry_perpage = get_option( '_caldera_forms_entry_perpage', 20 );
+$style_includes = get_option( '_caldera_forms_styleincludes' );
 if(empty($style_includes)){
 	$style_includes = array(
 		'alert'	=>	true,
@@ -41,18 +41,9 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 		<li class="caldera-forms-toolbar-item">
 			<a class="button ajax-trigger" data-request="start_new_form" data-modal-width="400" data-modal-height="192" data-modal-element="div" data-load-class="none" data-modal="import_form" data-template="#import-form-tmpl" data-modal-title="<?php echo __('Import Form', 'caldera-forms'); ?>" ><?php echo __('Import', 'caldera-forms'); ?></a>
 		</li>
+		<li class="caldera-forms-toolbar-item separator">&nbsp;&nbsp;</li>
 		<li class="caldera-forms-toolbar-item">
-		&nbsp;&nbsp;
-		</li>
-		<li class="caldera-forms-headtext">
-			<?php echo __('Render forms with:', 'caldera-forms'); ?>
-		</li>
-		<li class="caldera-forms-toolbar-item">
-			<div class="toggle_option_preview">
-				<button type="button" title="<?php echo __('Includes Bootstrap 3 styles on the frontend for form alert notices', 'caldera-forms'); ?>" data-action="save_cf_setting" data-active-class="none" data-set="alert" data-callback="update_setting_toggle" class="ajax-trigger setting_toggle_alert button <?php if(!empty($style_includes['alert'])){ ?>active<?php } ?>"><?php echo __('Alert Styles' , 'caldera-forms'); ?></button>
-				<button type="button" title="<?php echo __('Includes Bootstrap 3 styles on the frontend for form fields and buttons', 'caldera-forms'); ?>" data-action="save_cf_setting" data-active-class="none" data-set="form" data-callback="update_setting_toggle" class="ajax-trigger setting_toggle_form button <?php if(!empty($style_includes['form'])){ ?>active<?php } ?>"><?php echo __('Form Styles' , 'caldera-forms'); ?></button>
-				<button type="button" title="<?php echo __('Includes Bootstrap 3 styles on the frontend for form grid layouts', 'caldera-forms'); ?>" data-action="save_cf_setting" data-active-class="none" data-set="grid" data-callback="update_setting_toggle" class="ajax-trigger setting_toggle_grid button <?php if(!empty($style_includes['grid'])){ ?>active<?php } ?>"><?php echo __('Grid Structures' , 'caldera-forms'); ?></button>
-			</div>
+			<a class="button ajax-trigger cf-general-settings" data-request="toggle_front_end_settings" data-modal-width="400" data-modal-height="400" data-modal-element="div" data-load-class="none" data-modal="front_settings" data-template="#front-settings-tmpl" data-callback="toggle_front_end_settings" data-modal-title="<?php echo __('General Display Settings', 'caldera-forms'); ?>" title="<?php echo __('General Display Settings', 'caldera-forms'); ?>" ><span class="dashicons dashicons-admin-generic"></span></a>
 		</li>
 		<li class="caldera-forms-toolbar-item">
 		&nbsp;
@@ -249,19 +240,25 @@ function serialize_modal_form(el){
 	return true;
 }
 
-
+var cf_front_end_settings = {};
 function update_setting_toggle(obj){
+	cf_front_end_settings = obj.data;
+	toggle_front_end_settings();
+}
+function toggle_front_end_settings(){
 
-	for( var k in obj.data){
-		if(obj.data[k] === true){
+	for( var k in cf_front_end_settings){
+		if(cf_front_end_settings[k] === true){
 			jQuery('.setting_toggle_' + k).addClass('active');
 		}else{
 			jQuery('.setting_toggle_' + k).removeClass('active');
 		}
 	}
-	
-	//for()
+}
 
+function get_front_end_settings( obj ){
+	//cf_front_end_settings
+	return cf_front_end_settings;
 }
 
 function extend_fail_notice(el){
