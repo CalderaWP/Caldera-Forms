@@ -1704,12 +1704,11 @@ tr.form_entry_row.loading {
 }
 
 .cf-template-column{
-  background: rgb(223, 223, 223) none repeat scroll 0% 0%;
-  height:20px;
+  
+  
+  overflow: hidden;
 }
-.cf-form-template.selected .cf-template-column{
-  background-color: #fff;
-}
+
 .cf-templates-wrapper {
   border-top: 1px solid #dfdfdf;
   height: 409px;
@@ -1719,4 +1718,25 @@ tr.form_entry_row.loading {
 .cf-form-template small {
   display: block;
   padding: 0 3px;
+}
+.cf-form-template small.cf-preview-field {
+  border-bottom: 1px solid #dfdfdf;
+  font-size: 55%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cf-preview-field.cf-preview-button {
+  background: #d1d1d1 none repeat scroll 0 0;
+  border-radius: 2px;
+  display: inline-block;
+  margin: 5px 3px 0;
+  padding: 0 9px;
+  color: #333;
+}
+.cf-form-template small.cf-preview-field.cf-preview-field-html {
+  background: rgba(0, 0, 0, 0.1) none repeat scroll 0 0;
+  border: 0 none;
+  height: 15px;
 }

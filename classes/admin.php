@@ -187,39 +187,61 @@ class Caldera_Forms_Admin {
 
 		?>
 		<div class="cf-templates-wrapper">
-			<label class="caldera-grid cf-form-template selected">
-				<small>Blank</small>
-				<input type="radio" name="template" value="" checked="checked" class="cf-template-select">
-			</label>
-					<?php
+			<?php
+			$selected_field = ' checked="checked"';
+			$selected_template = ' selected';
 
-					foreach( $form_templates as $template_slug => $template ){
-						if( !empty( $template['template'] ) && !empty( $template['name'] ) ){
-							$struct = explode('|', $template['template']['layout_grid']['structure'] );
-							echo '<label class="caldera-grid cf-form-template">';
-								echo '<small>' . $template['name'] . '</small>';
-								
-								echo '<input type="radio" name="template" value="' . $template_slug . '" class="cf-template-select">';
-								
-								foreach ($struct as $row) {
-									$columns = explode( ':', $row );
-									echo '<div class="row" style="margin: 6px 0px;">';
-										foreach ($columns as $column) {
-											echo '<div class="col-sm-' . $column . '" style="padding: 0px 3px;">';
-											echo '<div class="cf-template-column"></div>';
-											echo '</div>';
+			foreach( $form_templates as $template_slug => $template ){
+				if( !empty( $template['template'] ) && !empty( $template['name'] ) ){
+
+					$struct = explode('|', $template['template']['layout_grid']['structure'] );
+
+					echo '<label class="caldera-grid cf-form-template' . $selected_template . '">';
+						echo '<small>' . $template['name'] . '</small>';
+						
+						echo '<input type="radio" name="template" value="' . $template_slug . '" class="cf-template-select"' . $selected_field . '>';
+						
+						foreach ($struct as $row_num=>$row) {
+
+							$columns = explode( ':', $row );
+							echo '<div class="row" style="margin: 6px 0px;">';
+								foreach ($columns as $column_num=>$column) {
+									//var_dump( $template['template']['layout_grid']['fields'][ ( $row_num+1) . ':' . ( $column_num+1) ] );
+									$fields = array_keys( $template['template']['layout_grid']['fields'], ( $row_num+1) . ':' . ( $column_num+1) );
+									echo '<div class="col-sm-' . $column . '" style="padding: 0px 3px;">';
+									echo '<div class="cf-template-column">';
+									foreach( $fields as $field ){
+										if( isset( $template['template']['fields'][ $field ] ) ){
+											if( $template['template']['fields'][ $field ]['type'] == 'button'){
+												echo '<small class="cf-preview-field cf-preview-button">' . $template['template']['fields'][ $field ]['label'] .'</small>';
+											}elseif( $template['template']['fields'][ $field ]['type'] == 'html'){
+												echo '<small class="cf-preview-field cf-preview-field-html"></small>';
+											}elseif( $template['template']['fields'][ $field ]['type'] == 'paragraph'){
+												echo '<small class="cf-preview-field" style="height:50px;">' . $template['template']['fields'][ $field ]['label'] .'</small>';
+											}else{
+												echo '<small class="cf-preview-field">' . $template['template']['fields'][ $field ]['label'] .'</small>';
+											}
 										}
-										
+									}
+									echo '</div>';
 									echo '</div>';
 								}
-							
-							echo '</label>';
-							
+								
+							echo '</div>';
 						}
-					}
+					
+					echo '</label>';
+					// unset selection
+					$selected_field = null;
+					$selected_template = null;
+				}
+			}
 
-					?>
-
+			?>
+			<label class="caldera-grid cf-form-template">
+				<small>Blank</small>
+				<input type="radio" name="template" value="" class="cf-template-select">
+			</label>
 		</div>
 		<?php
 	}
