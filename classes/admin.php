@@ -218,6 +218,8 @@ class Caldera_Forms_Admin {
 												echo '<small class="cf-preview-field cf-preview-field-html"></small>';
 											}elseif( $template['template']['fields'][ $field ]['type'] == 'paragraph'){
 												echo '<small class="cf-preview-field" style="height:50px;">' . $template['template']['fields'][ $field ]['label'] .'</small>';
+											}elseif( $template['template']['fields'][ $field ]['type'] == 'hidden'){
+												// nope- nothing
 											}else{
 												echo '<small class="cf-preview-field">' . $template['template']['fields'][ $field ]['label'] .'</small>';
 											}
