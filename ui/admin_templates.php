@@ -107,12 +107,11 @@
 		do_action('caldera_forms_new_form_template_start');
 		?>
 		{{/if}}
-		<div class="caldera-config-group">
-			<label for=""><?php echo __('Form Name', 'caldera-forms'); ?></label>
-			<div class="caldera-config-field">
-				<input type="text" class="new-form-name block-input field-config" name="name" value="" required="required" autofocus="true">
-			</div>
+
+		<div class="caldera-config-field">
+			<input type="text" class="new-form-name block-input field-config" name="name" value="" required="required" autofocus="true" placeholder="<?php echo esc_html__('Form Name', 'caldera-forms'); ?>">
 		</div>
+
 
 		{{#if clone}}<input type="hidden" name="clone" value="{{clone}}">
 		<?php
