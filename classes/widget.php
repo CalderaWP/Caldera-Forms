@@ -17,7 +17,7 @@ class Caldera_Forms_Widget extends WP_Widget {
 		 *
 		 * @since 1.3.6
 		 */
-		add_action( 'caldera_forms_widget_init' );
+		do_action( 'caldera_forms_widget_init' );
 	}
 
 	/**
