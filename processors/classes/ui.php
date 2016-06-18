@@ -112,21 +112,37 @@ class Caldera_Forms_Processor_UI {
 			$args[ 'extra_classes' ] = array( $args[ 'extra_classes' ] );
 		}
 
+		$classes = $args[ 'extra_classes' ];
+
 		if( $args[ 'block' ] ) {
-			$args[ 'extra_classes'][] = 'block-input';
+			$classes[] = 'block-input';
 		}
 
 		if ( $args[ 'magic'] ) {
-			$args[ 'extra_classes' ][] = 'magic-tag-enabled';
+			$classes[] = 'magic-tag-enabled';
 		}
 
 		if ( $args[ 'required' ] ) {
-			$args[ 'extra_classes' ][] = 'required';
+			$classes[] = 'required';
 		}
 
 		$args[ 'extra_classes' ][] = 'field-config';
 
-		$classes = implode( ' ', $args[ 'extra_classes' ] );
+		
+
+		/**
+		 * Filter classes added to UI field
+		 *
+		 * @since 1.3.6
+		 *
+		 * @param array $classes Array of classes. Will be imploded
+		 * @param string $id Field ID
+		 * @param array $args field args
+		 * 
+		 */
+		$classes = implode( ' ', apply_filters( 'caldera_forms_ui_field_classes', $classes, $args[ 'id' ], $args ) );
+
+
 		$id = trim( $args['id'] );
 
 		$desc = $has_desc = false;
