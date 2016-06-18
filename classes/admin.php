@@ -378,11 +378,21 @@ class Caldera_Forms_Admin {
 		exit();
 	}
 
-
+	/**
+	 * Dismiss admin pointer
+	 *
+	 * @since unknown
+	 *
+	 * @uses "wp_ajax_cf_dismiss_pointer" action
+	 */
 	public static function update_pointer(){
-		self::verify_ajax_action();
-		if(!empty($_POST['pointer'])){
-			add_user_meta( get_current_user_id() , 'cf_pointer_' . $_POST['pointer'] );
+		if( ! isset( $_POST[ 'nonce' ] ) || ! wp_verify_nonce( $_POST[ 'nonce' ], 'cf_dismiss_pointer' ) ){
+			status_header( 500 );
+			exit;
+		}
+
+		if ( ! empty( $_POST[ 'pointer' ] ) ) {
+			add_user_meta( get_current_user_id(), 'cf_pointer_' . $_POST[ 'pointer' ] );
 		}
 		exit;
 	}

@@ -23,7 +23,7 @@
 <button class="button button-small compact-mode" style="margin-top:-3px; margin-left:10px;" type="button"><?php _e('Compact', 'caldera-forms'); ?></button>
 */
 ?>
-<span id="dismiss-add-element" class="ajax-trigger" data-action="cf_dismiss_pointer" data-pointer="add_element"></span>
+<span id="dismiss-add-element" class="ajax-trigger" data-action="cf_dismiss_pointer" data-pointer="add_element" data-nonce="<?php echo esc_attr( wp_create_nonce( 'cf_dismiss_pointer' ) ); ?>"></span>
 <?php
 $haspointer = get_user_meta( get_current_user_id() , 'cf_pointer_add_element' );
 if(empty($haspointer)){ ?>
