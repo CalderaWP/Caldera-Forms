@@ -35,7 +35,7 @@ abstract class Caldera_Forms_Email_Client implements Caldera_Forms_Email_Interfa
 	 * @param array $message Message details
 	 */
 	public function __construct( array $message ) {
-
+		$this->include_sdk();
 		$this->message = $message;
 
 	}

@@ -184,15 +184,19 @@ class Caldera_Forms_Save_Final {
 			$form[ 'mailer' ][ 'email_subject' ] = $form[ 'name' ];
 		}
 
+
+
 		$mail = array(
 			'recipients' => array(),
 			'subject'	=> Caldera_Forms::do_magic_tags($form['mailer']['email_subject']),
 			'message'	=> stripslashes( $form['mailer']['email_message'] ) ."\r\n",
 			'headers'	=>	array(
-				Caldera_Forms::do_magic_tags( 'From: ' . $sendername . ' <' . $sendermail . '>' ),
+				Caldera_Forms::do_magic_tags( 'From: ' . $sendername . ' <' . $sendermail . '>' )
 			),
 			'attachments' => array()
 		);
+		$mail[ 'from' ] =  $sendermail;
+
 
 		// if added a bcc
 		$mail[ 'bcc' ] = false;
@@ -209,6 +213,9 @@ class Caldera_Forms_Save_Final {
 				$mail[ 'replyto' ] = $reply_to;
 				$mail[ 'headers' ][] = Caldera_Forms::do_magic_tags( 'Reply-To: <' . $reply_to . '>' );
 			}
+		}
+		if( ! $mail[ 'replyto' ] ){
+			$mail[ 'replyto' ] = $mail[ 'from' ];
 		}
 
 		// Filter Mailer first as not to have user input be filtered
@@ -315,8 +322,9 @@ class Caldera_Forms_Save_Final {
 		// final magic
 		$mail['message'] = Caldera_Forms::do_magic_tags( $mail['message'] );
 		$mail['subject'] = Caldera_Forms::do_magic_tags( $mail['subject'] );
-
+		
 		// CSV
+		$mail[ 'csv' ] = $csvfile =false;
 		if(!empty($form['mailer']['csv_data'])){
 			ob_start();
 			$df = fopen("php://output", 'w');
@@ -382,7 +390,10 @@ class Caldera_Forms_Save_Final {
 			$sent = wp_mail( (array) $mail['recipients'], $mail['subject'], stripslashes( $mail['message'] ), $headers, $mail['attachments'] );
 			self::after_send_email( $form, $data, $sent, $csvfile, $mail, 'wpmail' );
 		}else{
-			self::unlink_csv( $csvfile );
+			if( $csvfile ){
+				self::unlink_csv( $csvfile );
+			}
+
 
 		}
 
@@ -404,8 +415,9 @@ class Caldera_Forms_Save_Final {
 	public static function after_send_email( $form, $data, $sent, $csvfile, $mail, $method ) {
 		if ( $sent ) {
 
-			// kill attachment.
-			self::unlink_csv( $csvfile );
+			if( $csvfile ){
+				self::unlink_csv( $csvfile );
+			}
 
 			/**
 			 * Fires main mailer completes

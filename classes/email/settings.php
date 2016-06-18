@@ -30,6 +30,15 @@ class Caldera_Forms_Email_Settings {
 	protected static $settings;
 
 	/**
+	 * Nonce action for settings UI
+	 * 
+	 * @since 1.3.6
+	 * 
+	 * @var string
+	 */
+	protected static $nonce_action = 'cf-emails';
+
+	/**
 	 * Default settings
 	 *
 	 * @since 1.3.6
@@ -38,9 +47,12 @@ class Caldera_Forms_Email_Settings {
 	 */
 	protected static $defaults = array(
 		'sendgrid' => array(
-			'use' => false,
 			'key' => false
-		)
+		),
+		'wp' => array(
+		
+		),
+		'method' => 'wp'
 	);
 
 	/**
@@ -50,8 +62,8 @@ class Caldera_Forms_Email_Settings {
 	 *
 	 * @return array
 	 */
-	public static function get_settings(){
-		if( null == self::$settings ){
+	public static function get_settings() {
+		if ( null == self::$settings ) {
 			self::$settings = get_option( self::$option_key, array() );
 			self::$settings = wp_parse_args( self::$settings, self::$defaults );
 		}
@@ -68,9 +80,9 @@ class Caldera_Forms_Email_Settings {
 	 *
 	 * @return mixed
 	 */
-	public static function get_key( $api ){
-		if( self::valid( $api, false ) ){
-			return self::$settings[ $api ][ 'key' ];
+	public static function get_key( $api ) {
+		if( self::is_allowed_method( $api ) ){
+			return self::$settings[ $api ]['key'];
 		}
 
 	}
@@ -82,19 +94,74 @@ class Caldera_Forms_Email_Settings {
 	 *
 	 * @param string $api API to save key for
 	 * @param string $key API Key
-	 * @param bool $use Optional. If true, the default, API will be enabled.
+	 * @param bool $save Optional. If true, the default, settings will be saved.
 	 */
-	public static function save_key( $api, $key, $use = true ){
-		if( in_array( $api, self::allowed_apis()  ) ){
-			self::$settings[ $api ][ $key ] = $key;
-			if( $use ){
-				self::$settings[ $api ][ 'use' ] = true;
+	public static function save_key( $api, $key, $save = true ) {
+		if ( self::is_allowed_method( $api ) ) {
+			if( ! is_array( self::$settings[ $api ] ) ){
+				self::$settings[ $api ] = array( 'key' => false );
 			}
 
-			update_option( self::$option_key, self::$settings );
+			self::$settings[ $api ][ 'key' ] = $key;
+			if ( $save ) {
+				self::update_settings();
+			}
+
+
 		}
 
 	}
+
+	/**
+	 * Check if is an allowed API
+	 * 
+	 * @since 1.3.6
+	 * 
+	 * @param string $api Name of API
+	 *
+	 * @return bool
+	 */
+	public static function is_allowed_method( $api ){
+		return  in_array( $api, self::allowed_apis() );
+
+	}
+
+	/**
+	 * Save email settings
+	 * 
+	 * @uses "wp_ajax_cf_email_save" action
+	 * 
+	 * @since 1.3.5
+	 */
+	public static function save(){
+		if( ! current_user_can( Caldera_Forms::get_manage_cap( 'admin' ) ) ) {
+			wp_die();
+		}
+		
+		if( isset( $_POST[ 'nonce' ] ) && wp_verify_nonce( $_POST[ 'nonce' ], self::$nonce_action ) ){
+			if( isset( $_POST[ 'method' ] ) ){
+				if ( self::is_allowed_method( $_POST[ 'method' ] ) ) {
+					self::$settings[ 'method' ] = $_POST[ 'method' ];
+				}
+			}
+
+			foreach( self::allowed_apis() as $api ){
+				if( isset( $_POST[ $api ] ) && is_string( $_POST[ $api ] ) ){
+					self::save_key( $api, trim( strip_tags( $_POST[ $api ] )  ), false );
+				}
+			}
+
+			self::update_settings();
+			status_header( 200);
+			wp_send_json_success();
+
+
+		}
+
+		wp_send_json_error();
+		
+	}
+
 
 	/**
 	 * If possible add hook to use set API
@@ -103,21 +170,39 @@ class Caldera_Forms_Email_Settings {
 	 *
 	 * @since 1.3.6
 	 */
-	public static function maybe_add_hooks(){
+	public static function maybe_add_hooks() {
 		//don't load in PHP 5.2
 		if ( ! version_compare( PHP_VERSION, '5.3.0', '>=' ) ) {
 			return;
 		}
-		self::get_settings();
-		foreach ( self::$settings as $api => $args ) {
-			if ( self::valid( $api, true ) ) {
-				add_filter( 'caldera_forms_mailer', array( 'Caldera_Forms_Email_Callbacks', $api ), 26, 3 );
-				break;
-			}
 
+		self::get_settings();
+
+		if( 'wp' !== self::get_method() ){
+			foreach ( self::allowed_apis() as $api ) {
+				if ( self::valid( $api ) ) {
+					add_filter( 'caldera_forms_mailer', array( 'Caldera_Forms_Email_Callbacks', $api ), 26, 3 );
+					break;
+				}
+
+			}
+			
 		}
 
+
 	}
+
+	/**
+	 * Create nonce field for settings
+	 *
+	 * @since 1.3.6
+	 *
+	 * @return string
+	 */
+	public static function nonce_field(){
+		return wp_nonce_field( self::$nonce_action, 'cfemail', false, false );
+	}
+
 
 	/**
 	 * Is API valid?
@@ -125,24 +210,19 @@ class Caldera_Forms_Email_Settings {
 	 * @since 1.3.6
 	 *
 	 * @param string $api API name
-	 * @param bool $check_active Optional. If true, the default, check if is active and valid choice. If false, just check if is a valid choice.
-	 *
+	 
 	 * @return bool
 	 */
-	protected static function valid( $api, $check_active = true ){
+	protected static function valid( $api ) {
 		self::get_settings();
-		if( in_array( $api, self::allowed_apis()  ) ) {
-			if ( $check_active ) {
-				if ( isset( self::$settings[ $api ][ 'use' ], self::$settings[ $api ][ 'key' ] ) && true == self::$settings[ $api ][ 'use' ] && ! empty( self::$settings[ $api ][ 'key' ] ) ) {
-					return true;
-				}
+		if ( self::is_allowed_method( $api ) ) {
+			if ( isset( self::$settings[ $api ]['key'] ) && ! empty( self::$settings[ $api ]['key'] ) ) {
+				return true;
 
-			}else{
-				if ( isset( self::$settings[ $api ][ 'key' ] ) && ! empty( self::$settings[ $api ][ 'key' ] ) ) {
-					return true;
-				}
 			}
+
 		}
+
 	}
 
 	/**
@@ -152,7 +232,7 @@ class Caldera_Forms_Email_Settings {
 	 *
 	 * @return array
 	 */
-	protected static function allowed_apis(){
+	protected static function allowed_apis() {
 		/**
 		 * Filter allowed email APIs
 		 *
@@ -163,7 +243,7 @@ class Caldera_Forms_Email_Settings {
 		return apply_filters( 'caldera_forms_allowed_email_apis', array(
 			'sendgrid',
 			'caldera'
-		)  );
+		) );
 	}
 
 	/**
@@ -173,8 +253,84 @@ class Caldera_Forms_Email_Settings {
 	 *
 	 * @since 1.3.6
 	 */
-	public static function ui(){
-		printf( '<div id="cf-email-settings-ui" aria-hidden="true" style="visibility: hidden;display: none;">%s</div>', 'EMAIL SETTINGS');
+	public static function ui() {
+		if ( ! version_compare( PHP_VERSION, '5.3.0', '>=' ) ) {
+			printf( '<div class="notice notice-error error"><p>%s</p>', esc_html__( 'Switching email services requires PHP 5.3 or later.', 'caldera-forms' ) );
+		}else{
+			include CFCORE_PATH . '/ui/emails/settings.php';
+
+		}
+		
+
+
+	}
+
+	/**
+	 * Get current method being used
+	 *
+	 * @since 1.3.6
+	 *
+	 * @return string
+	 */
+	public static function get_method(){
+		if( ! isset( self::$settings[ 'method' ] ) ){
+			return 'wp';
+
+		}
+
+		return self::$settings[ 'method' ];
+	}
+
+	/**
+	 * Update email settings
+	 *
+	 * @since 1.3.6
+	 */
+	protected static function update_settings() {
+		update_option( self::$option_key, self::$settings );
+	}
+
+	/**
+	 * Sanitize/validate save of this setting
+	 *
+	 * @since 1.3.6
+	 *
+	 * @uses "pre_update_option__caldera_forms_email_api_settings"
+	 *
+	 * @param mixed $values Values to be saved
+	 *
+	 * @return array
+	 */
+	public static function sanitize_save( $values ){
+		if( ! is_array( $values ) ){
+			return self::$defaults;
+		}
+		
+		foreach ( $values as $key => $value ){
+			if( ! array_key_exists( $key, self::$defaults ) ){
+				unset( $values[ $key ] );
+			}elseif( 'method' == $key ){
+				if( ! self::is_allowed_method( $value ) ){
+					$values[ 'method' ] = 'wp';
+				}
+			}else{
+				foreach( $value as $k => $v ){
+					if( ! in_array( $k, array( 'key', 'use' ) ) ){
+						unset( $values[ $key ][ $k ] );
+					}
+				}
+			}
+		}
+
+		foreach ( self::allowed_apis() as $api ){
+			if( ! isset( $values[ $api ] ) ){
+				$values[ $api ] = self::$defaults[ $api ];
+			}
+		}
+		
+		
+		return $values;
+		
 	}
 
 }

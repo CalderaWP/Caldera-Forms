@@ -328,8 +328,9 @@ jQuery( function( $ ){
 		var $emailSettingsUI = $( '#cf-email-settings-ui' );
 		var $otherButtons = $( '.caldera-forms-toolbar-item a' );
 		var $toggles = $( '.toggle_option_preview, #render-with-label' );
+
 		if( inEmailSettings ){
-			$( this ).html( '<?php esc_html_e( 'Email Settings', 'caldera-forms' ); ?>' ).removeClass( 'button-primary' );
+			$( this ).html( '<?php esc_html_e( 'Email Settings', 'caldera-forms' ); ?>' );
 			inEmailSettings = false;
 			$otherButtons.removeClass( 'disabled' );
 			$emailSettingsUI.hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
@@ -337,15 +338,38 @@ jQuery( function( $ ){
 			$toggles.show().attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' );
 		}else{
 			inEmailSettings = true;
-			$( this ).html( '<?php esc_html_e( 'Save Email Settings', 'caldera-forms' ); ?>' ).addClass( 'button-primary' );
+			$( this ).html( '<?php esc_html_e( 'Close Email Settings', 'caldera-forms' ); ?>' );
 			$otherButtons.addClass( 'disabled' );
 			$mainUI.hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
 			$emailSettingsUI.show().attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' );
 			$( this ).html = "<?php esc_html__( 'Email Settings', 'caldera-forms' ); ?>";
 
 			$toggles.hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
+			$( this ).on( 'click' )
 		}
-	})
+		
+
+
+	});
+
+	//handle save of email settings
+	$( '#cf-email-settings-save' ).on( 'click', function( e ) {
+		e.preventDefault( e );
+		var data = {
+			nonce: $('#cfemail').val(),
+			action: 'cf_email_save',
+			method: $('#cf-emails-api').val(),
+			sendgrid: $('#cf-emails-sendgrid-key').val()
+		};
+		//@todo spinner
+		
+		$.post( ajaxurl, data ).done( function( r ) {
+			console.log( r );
+		});
+
+	});
+
+
 
 });
 </script>
