@@ -69,7 +69,7 @@ class Caldera_Forms_Processor_UI {
 	 * @return string|void HTML markup if input is valid. Void if not.
   	 */
 	public static function config_field( $args ) {
-		if ( ! is_array( $args ) || ! isset( $args[ 'label' ] ) || ! isset( $args[ 'id' ] ) ) {
+		if ( ! is_array( $args ) || ! isset( $args[ 'id' ] ) ) {
 			return;
 
 		}
@@ -90,6 +90,10 @@ class Caldera_Forms_Processor_UI {
 
 		$args = wp_parse_args( $args, $defaults );
 
+		if( 'hidden' != 'type' &&  ! isset( $args[ 'label' ] ) )  {
+			return;
+
+		}
 
 		/**
 		 * Filter arguments for field markup
@@ -128,8 +132,6 @@ class Caldera_Forms_Processor_UI {
 
 		$args[ 'extra_classes' ][] = 'field-config';
 
-		
-
 		/**
 		 * Filter classes added to UI field
 		 *
@@ -141,7 +143,6 @@ class Caldera_Forms_Processor_UI {
 		 * 
 		 */
 		$classes = implode( ' ', apply_filters( 'caldera_forms_ui_field_classes', $classes, $args[ 'id' ], $args ) );
-
 
 		$id = trim( $args['id'] );
 
@@ -166,7 +167,8 @@ class Caldera_Forms_Processor_UI {
 			$required = 'required';
 		}
 
-		$field = sprintf( '
+		if ( 'hidden' != $args[ 'type' ] ) {
+			$field = sprintf('
 		<div class="caldera-config-group" id="%s">
 			<label for="%s" id="%s">
 				%s
@@ -176,13 +178,16 @@ class Caldera_Forms_Processor_UI {
 			</div>
 			%s
 		</div>',
-			esc_attr( $id . '-wrap' ),
-			esc_attr( $id ),
-			esc_attr( self::label_id( $id ) ),
-			$args[ 'label' ],
-			self::input( $input_type, $args, $id, $classes, $required, $has_desc ),
-			$desc
-		);
+				esc_attr( $id . '-wrap'),
+				esc_attr( $id ),
+				esc_attr( self::label_id( $id ) ),
+				$args[ 'label' ],
+				self::input( $input_type, $args, $id, $classes, $required, $has_desc ),
+				$desc
+			);
+		} else {
+			$field = self::input( 'hidden', $args, $id, $classes, $required, false );
+		}
 
 		/**
 		 * Modify HTML for the input field group in processor UI
@@ -279,8 +284,6 @@ class Caldera_Forms_Processor_UI {
 					$excludes = 'all';
 				}
 
-
-
 				$field = sprintf( '{{{_field slug="%1s" type="%2s" exclude="%3s" required="%4s"}}}',
 					esc_attr( $id ),
 					$allow_types,
@@ -307,6 +310,14 @@ class Caldera_Forms_Processor_UI {
 						implode( "/n", $options )
 					);
 				}
+				break;
+			case 'hidden' :
+				$field = sprintf( '<input type="hidden" class="%s" id="%s" name="{{_name}}[%s]" value="%s">',
+					$classes,
+					esc_attr( $id ),
+					esc_attr( $id ),
+					'{{' . esc_attr( $id ) . '}}'
+				);
 				break;
 			default :
 				$field = sprintf( '<input type="%1s" class="%2s" id="%3s" name="{{_name}}[%4s]" value="%5s" %6s>',
