@@ -458,7 +458,7 @@ class Caldera_Forms {
 		$request = wp_remote_get( 'https://www.google.com/recaptcha/api/siteverify?' . build_query($args) );
 		$result = json_decode( wp_remote_retrieve_body( $request ) );
 		if( empty( $result->success ) ){
-			return new WP_Error( 'error', __("The wasn't entered correct.", 'caldera-forms') . ' <a href="#" class="reset_' . sanitize_text_field( $_POST[ $field['ID'] ] ) . '">' . __("Reset", 'caldera-forms') . '<a>.' );
+			return new WP_Error( 'error', __( "The wasn't entered correct.", 'caldera-forms' ) . ' <a href="#" class="reset_' . sanitize_text_field( $_POST[ $field['ID'] ] ) . '">' . __( 'Reset', 'caldera-forms' ) . '<a>.' );
 		}
 
 
@@ -613,7 +613,7 @@ class Caldera_Forms {
 					'form_id'	=>	$form['ID']
 				);
 				if( sha1( json_encode( $token_array ) ) !== trim( $_POST['_cf_frm_edt_tkn'] ) ){
-					return new WP_Error( 'error', __( "Permission denied.", "caldera-forms" ) );
+					return new WP_Error( 'error', __( "Permission denied.", 'caldera-forms' ) );
 				}else{
 					$entryid = (int) $details['id'];
 					$edit_token = sha1( json_encode( $token_array ) );
@@ -627,7 +627,7 @@ class Caldera_Forms {
 						if( current_user_can( 'edit_posts' ) || $details['user_id'] === $user_id ){
 							$entryid = $_POST['_cf_frm_edt'];
 						}else{
-							return new WP_Error( 'error', __( "Permission denied.", "caldera-forms" ) );
+							return new WP_Error( 'error', __( "Permission denied.", 'caldera-forms' ) );
 						}
 					}
 
@@ -874,23 +874,23 @@ class Caldera_Forms {
 	public function get_form_processors($processors){
 		$internal_processors = array(
 			'auto_responder' => array(
-				"name"				=>	__('Auto Responder', 'caldera-forms'),
-				"description"		=>	__("Sends out an auto response e-mail", 'caldera-forms'),
+				"name"				=>	__( 'Auto Responder', 'caldera-forms' ),
+				"description"		=>	__( 'Sends out an auto response e-mail', 'caldera-forms' ),
 				"post_processor"	=>	array($this, 'send_auto_response'),
 				"template"			=>	CFCORE_PATH . "processors/auto_responder/config.php",
 				"default"			=>	array(
-					'subject'		=>	__('Thank you for contacting us', 'caldera-forms')
+					'subject'		=>	__( 'Thank you for contacting us', 'caldera-forms' )
 				),
 			),
 			'form_redirect' => array(
-				"name"				=>	__('Redirect', 'caldera-forms'),
-				"description"		=>	__("Redirects user to URL on successful submit", 'caldera-forms'),
+				"name"				=>	__( 'Redirect', 'caldera-forms' ),
+				"description"		=>	__( 'Redirects user to URL on successful submit', 'caldera-forms' ),
 				"template"			=>	CFCORE_PATH . "processors/redirect/config.php",
 				"single"			=>	false
 			),
 			'increment_capture' => array(
-				"name"              =>  __('Increment Value', 'caldera-forms'),
-				"description"       =>  __("Increment a value per entry.", 'caldera-forms'),
+				"name"              =>  __( 'Increment Value', 'caldera-forms' ),
+				"description"       =>  __( 'Increment a value per entry.', 'caldera-forms' ),
 				"processor"     	=>  array( $this, 'increment_value' ),
 				"template"          =>  CFCORE_PATH . "processors/increment/config.php",
 				"single"			=>	true,
@@ -904,8 +904,8 @@ class Caldera_Forms {
 		$wp_api_key = get_option( 'wordpress_api_key' );
 		if(!empty($wp_api_key)){
 			$internal_processors['akismet'] = array(
-				"name"				=>	__('Akismet', 'caldera-forms'),
-				"description"		=>	__("Anti-spam filtering", 'caldera-forms'),
+				"name"				=>	__( 'Akismet', 'caldera-forms' ),
+				"description"		=>	__( 'Anti-spam filtering', 'caldera-forms' ),
 				"pre_processor"		=>	array( $this, 'akismet_scanner'),
 				"template"			=>	CFCORE_PATH . "processors/akismet/config.php",
 				"single"			=>	false,
@@ -957,7 +957,7 @@ class Caldera_Forms {
 
 		$wp_api_key = get_option( 'wordpress_api_key' );
 		if(empty($wp_api_key)){
-			return array('type' => 'error', 'note' => __('Akismet not setup.'));
+			return array('type' => 'error', 'note' => __( 'Akismet not setup.'));
 		}
 		// set permalink
 		if($post->ID){
@@ -1118,18 +1118,18 @@ class Caldera_Forms {
 
 		$internal_fields = array(
 			'calculation' => array(
-				"field"		=>	__("Calculation", "caldera-forms"),
+				"field"		=>	__( 'Calculation', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/calculation/field.php",
 				"handler"	=>	array($this, "run_calculation"),
-				"category"	=>	__("Special", "caldera-forms"),
-				"description" => __('Calculate values', "caldera-forms"),
+				"category"	=>	__( 'Special', 'caldera-forms' ),
+				"description" => __( 'Calculate values', 'caldera-forms' ),
 				"setup"		=>	array(
 					"template"	=>	CFCORE_PATH . "fields/calculation/config.php",
 					"preview"	=>	CFCORE_PATH . "fields/calculation/preview.php",
 					"default"	=> array(
 						'element'	=>	'h3',
 						'classes'	=> 	'total-line',
-						'before'	=>	__('Total', 'caldera-forms').':',
+						'before'	=>	__( 'Total', 'caldera-forms' ).':',
 						'after'		=> ''
 					),
 					"styles" => array(
@@ -1141,10 +1141,10 @@ class Caldera_Forms {
 				)
 			),
 			'range_slider' 	=> array(
-				"field"		=>	__("Range Slider", 'caldera-forms'),
+				"field"		=>	__( 'Range Slider', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/range_slider/field.php",
-				"category"	=>	__("Special", "caldera-forms"),
-				"description" => __('Range Slider input field','caldera-forms'),
+				"category"	=>	__( 'Special', 'caldera-forms' ),
+				"description" => __( 'Range Slider input field','caldera-forms' ),
 				"setup"		=>	array(
 					"template"	=>	CFCORE_PATH . "fields/range_slider/config.php",
 					"preview"	=>	CFCORE_PATH . "fields/range_slider/preview.php",
@@ -1178,10 +1178,10 @@ class Caldera_Forms {
 				)
 			),
 			'star_rating' 	=> array(
-				"field"		=>	__("Star Rating", 'caldera-forms'),
+				"field"		=>	__( 'Star Rating', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/star-rate/field.php",
-				"category"	=>	__("Special", "caldera-forms"),
-				"description" => __('Star rating input for feedback','caldera-forms'),
+				"category"	=>	__( 'Special', 'caldera-forms' ),
+				"description" => __( 'Star rating input for feedback','caldera-forms' ),
 				"viewer"	=>	array($this, 'star_rating_viewer'),
 				"setup"		=>	array(
 					"template"	=>	CFCORE_PATH . "fields/star-rate/config.php",
@@ -1213,10 +1213,10 @@ class Caldera_Forms {
 				)
 			),
 			'phone' => array(
-				"field"		=>	__('Phone Number', 'caldera-forms'),
-				"description" => __('Phone number with masking', 'caldera-forms'),
+				"field"		=>	__( 'Phone Number', 'caldera-forms' ),
+				"description" => __( 'Phone number with masking', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/phone/field.php",
-				"category"	=>	__("Advanced", "caldera-forms"),
+				"category"	=>	__( 'Advanced', 'caldera-forms' ),
 				"setup"		=>	array(
 					"template"	=>	CFCORE_PATH . "fields/phone/config.php",
 					"preview"	=>	CFCORE_PATH . "fields/phone/preview.php",
@@ -1235,10 +1235,10 @@ class Caldera_Forms {
 				)
 			),
 			'text' => array(
-				"field"		=>	__("Single Line Text", "caldera-forms"),
-				"description" => __('Single Line Text', 'caldera-forms'),
+				"field"		=>	__( 'Single Line Text', 'caldera-forms' ),
+				"description" => __( 'Single Line Text', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/text/field.php",
-				"category"	=>	__("Basic", "caldera-forms"),
+				"category"	=>	__( 'Basic', 'caldera-forms' ),
 				"setup"		=>	array(
 					"template"	=>	CFCORE_PATH . "fields/text/config.php",
 					"preview"	=>	CFCORE_PATH . "fields/text/preview.php"
@@ -1249,22 +1249,22 @@ class Caldera_Forms {
 				)
 			),
 			'file' => array(
-				"field"		=>	__("File", "caldera-forms"),
-				"description" => __('File Uploader', 'caldera-forms'),
+				"field"		=>	__( 'File', 'caldera-forms' ),
+				"description" => __( 'File Uploader', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/file/field.php",
 				"viewer"	=>	array($this, 'handle_file_view'),
-				"category"	=>	__("Advanced", "caldera-forms"),
+				"category"	=>	__( 'Advanced', 'caldera-forms' ),
 				"setup"		=>	array(
 					"preview"	=>	CFCORE_PATH . "fields/file/preview.php",
 					"template"	=>	CFCORE_PATH . "fields/file/config_template.php"
 				)
 			),
 			'advanced_file' => array(
-				"field"		=>	__("Advanced File Uploader", "caldera-forms"),
-				"description" => __('(beta) Inline, multi file uploader', 'caldera-forms'),
+				"field"		=>	__( 'Advanced File Uploader', 'caldera-forms' ),
+				"description" => __( '(beta) Inline, multi file uploader', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/advanced_file/field.php",
 				"viewer"	=>	array($this, 'handle_file_view'),
-				"category"	=>	__("Advanced", "caldera-forms"),
+				"category"	=>	__( 'Advanced', 'caldera-forms' ),
 				"setup"		=>	array(
 					"preview"	=>	CFCORE_PATH . "fields/advanced_file/preview.php",
 					"template"	=>	CFCORE_PATH . "fields/advanced_file/config_template.php"
@@ -1275,10 +1275,10 @@ class Caldera_Forms {
 
 			),
 			'recaptcha' => array(
-				"field"		=>	__("reCAPTCHA", "caldera-forms"),
-				"description" => __('reCAPTCHA anti-spam field', 'caldera-forms'),
+				"field"		=>	__( 'reCAPTCHA', 'caldera-forms' ),
+				"description" => __( 'reCAPTCHA anti-spam field', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/recaptcha/field.php",
-				"category"	=>	__("Discontinued", "caldera-forms"),
+				"category"	=>	__( 'Discontinued', 'caldera-forms' ),
 				"handler"	=>	array($this, 'captcha_check'),
 				"capture"	=>	false,
 				"setup"		=>	array(
@@ -1300,10 +1300,10 @@ class Caldera_Forms {
 				),
 			),
 			'html' => array(
-				"field"		=>	__("HTML", "caldera-forms"),
-				"description" => __('Add text/html content', 'caldera-forms'),
+				"field"		=>	__( 'HTML', 'caldera-forms' ),
+				"description" => __( 'Add text/html content', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/html/field.php",
-				"category"	=>	__("Special", "caldera-forms"),
+				"category"	=>	__( 'Special', 'caldera-forms' ),
 				"icon"		=>	CFCORE_URL . "fields/html/icon.png",
 				"capture"	=>	false,
 				"setup"		=>	array(
@@ -1318,10 +1318,10 @@ class Caldera_Forms {
 				)
 			),
 			'hidden' => array(
-				"field"		=>	__("Hidden", "caldera-forms"),
-				"description" => __('Hidden', 'caldera-forms'),
+				"field"		=>	__( 'Hidden', 'caldera-forms' ),
+				"description" => __( 'Hidden', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/hidden/field.php",
-				"category"	=>	__("Basic", "caldera-forms"),
+				"category"	=>	__( 'Basic', 'caldera-forms' ),
 				"static"	=> true,
 				"setup"		=>	array(
 					"preview"	=>	CFCORE_PATH . "fields/hidden/preview.php",
@@ -1334,10 +1334,10 @@ class Caldera_Forms {
 				)
 			),
 			'button' => array(
-				"field"		=>	__("Button", "caldera-forms"),
-				"description" => __('Button, Submit and Reset types', 'caldera-forms'),
+				"field"		=>	__( 'Button', 'caldera-forms' ),
+				"description" => __( 'Button, Submit and Reset types', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/button/field.php",
-				"category"	=>	__("Basic", "caldera-forms"),
+				"category"	=>	__( 'Basic', 'caldera-forms' ),
 				"capture"	=>	false,
 				"setup"		=>	array(
 					"template"	=>	CFCORE_PATH . "fields/button/config_template.php",
@@ -1355,20 +1355,20 @@ class Caldera_Forms {
 				)
 			),
 			'email' => array(
-				"field"		=>	__("Email Address", "caldera-forms"),
-				"description" => __('Email Address', 'caldera-forms'),
+				"field"		=>	__( 'Email Address', 'caldera-forms' ),
+				"description" => __( 'Email Address', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/email/field.php",
-				"category"	=>	__("Basic", "caldera-forms"),
+				"category"	=>	__( 'Basic', 'caldera-forms' ),
 				"setup"		=>	array(
 					"preview"	=>	CFCORE_PATH . "fields/email/preview.php",
 					"template"	=>	CFCORE_PATH . "fields/email/config.php"
 				)
 			),
 			'paragraph' => array(
-				"field"		=>	__("Paragraph Textarea", "caldera-forms"),
-				"description" => __('Paragraph Textarea', 'caldera-forms'),
+				"field"		=>	__( 'Paragraph Textarea', 'caldera-forms' ),
+				"description" => __( 'Paragraph Textarea', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/paragraph/field.php",
-				"category"	=>	__("Basic", "caldera-forms"),
+				"category"	=>	__( 'Basic', 'caldera-forms' ),
 				"setup"		=>	array(
 					"template"	=>	CFCORE_PATH . "fields/paragraph/config_template.php",
 					"preview"	=>	CFCORE_PATH . "fields/paragraph/preview.php",
@@ -1378,9 +1378,9 @@ class Caldera_Forms {
 				)
 			),
 			'toggle_switch' => array(
-				"field"		=>	__("Toggle Switch", "caldera-forms"),
-				"description" => __('Toggle Switch', 'caldera-forms'),
-				"category"	=>	__("Special", "caldera-forms"),
+				"field"		=>	__( 'Toggle Switch', 'caldera-forms' ),
+				"description" => __( 'Toggle Switch', 'caldera-forms' ),
+				"category"	=>	__( 'Special', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/toggle_switch/field.php",
 				"viewer"	=>	array($this, 'filter_options_calculator'),
 				"options"	=>	"single",
@@ -1406,10 +1406,10 @@ class Caldera_Forms {
 				)
 			),
 			'dropdown' => array(
-				"field"		=>	__("Dropdown Select", "caldera-forms"),
-				"description" => __('Dropdown Select', 'caldera-forms'),
+				"field"		=>	__( 'Dropdown Select', 'caldera-forms' ),
+				"description" => __( 'Dropdown Select', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/dropdown/field.php",
-				"category"	=>	__("Basic", "caldera-forms"),
+				"category"	=>	__( 'Basic', 'caldera-forms' ),
 				"options"	=>	"single",
 				"static"	=> true,
 				"viewer"	=>	array($this, 'filter_options_calculator'),
@@ -1425,10 +1425,10 @@ class Caldera_Forms {
 				)
 			),
 			'checkbox' => array(
-				"field"		=>	__("Checkbox", "caldera-forms"),
-				"description" => __('Checkbox', 'caldera-forms'),
+				"field"		=>	__( 'Checkbox', 'caldera-forms' ),
+				"description" => __( 'Checkbox', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/checkbox/field.php",
-				"category"	=>	__("Basic", "caldera-forms"),
+				"category"	=>	__( 'Basic', 'caldera-forms' ),
 				"options"	=>	"multiple",
 				"static"	=> true,
 				"viewer"	=>	array($this, 'filter_options_calculator'),
@@ -1444,10 +1444,10 @@ class Caldera_Forms {
 				),
 			),
 			'radio' => array(
-				"field"		=>	__("Radio", "caldera-forms"),
-				"description" => __('Radio', 'caldera-forms'),
+				"field"		=>	__( 'Radio', 'caldera-forms' ),
+				"description" => __( 'Radio', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/radio/field.php",
-				"category"	=>	__("Basic", "caldera-forms"),
+				"category"	=>	__( 'Basic', 'caldera-forms' ),
 				"options"	=>	true,
 				"static"	=> true,
 				"viewer"	=>	array($this, 'filter_options_calculator'),
@@ -1462,10 +1462,10 @@ class Caldera_Forms {
 				)
 			),
 			'date_picker' => array(
-				"field"		=>	__("Date Picker", "caldera-forms"),
-				"description" => __('Date Picker', 'caldera-forms'),
+				"field"		=>	__( 'Date Picker', 'caldera-forms' ),
+				"description" => __( 'Date Picker', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/date_picker/datepicker.php",
-				"category"	=>	__("Special", "caldera-forms"),
+				"category"	=>	__( 'Special', 'caldera-forms' ),
 				"setup"		=>	array(
 					"preview"	=>	CFCORE_PATH . "fields/date_picker/preview.php",
 					"template"	=>	CFCORE_PATH . "fields/date_picker/setup.php",
@@ -1489,9 +1489,9 @@ class Caldera_Forms {
 				)
 			),
 			'color_picker' => array(
-				"field"		=>	__("Color Picker", "caldera-forms"),
-				"description" => __('Color Picker', 'caldera-forms'),
-				"category"	=>	__("Special", "caldera-forms"),
+				"field"		=>	__( 'Color Picker', 'caldera-forms' ),
+				"description" => __( 'Color Picker', 'caldera-forms' ),
+				"category"	=>	__( 'Special', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/color_picker/field.php",
 				"setup"		=>	array(
 					"preview"	=>	CFCORE_PATH . "fields/color_picker/preview.php",
@@ -1517,10 +1517,10 @@ class Caldera_Forms {
 				)
 			),
 			'states' => array(
-				"field"		=>	__("State/ Province Select", "caldera-forms"),
-				"description" => __('Dropdown select for US states and Canadian provinces.', 'caldera-forms'),
+				"field"		=>	__( 'State/ Province Select', 'caldera-forms' ),
+				"description" => __( 'Dropdown select for US states and Canadian provinces.', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/states/field.php",
-				"category"	=>	__("Special", "caldera-forms"),
+				"category"	=>	__( 'Special', 'caldera-forms' ),
 				"placeholder" => false,
 				//"viewer"	=>	array($this, 'filter_options_calculator'),
 				"setup"		=>	array(
@@ -1534,7 +1534,7 @@ class Caldera_Forms {
 			'filtered_select2' => array(
 				"field"		=>	__( 'Autocomplete', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/select2/field/field.php",
-				"category"	=>	__("Special", "caldera-forms"),
+				"category"	=>	__( 'Special', 'caldera-forms' ),
 				"description" => 'Select2 dropdown',
 				"options"	=>	"multiple",
 				"static"	=> true,
@@ -2039,7 +2039,7 @@ class Caldera_Forms {
 		);
 
 		$tags['system'] = array(
-			'type'	=> __('System Tags', 'caldera-forms'),
+			'type'	=> __( 'System Tags', 'caldera-forms' ),
 			'tags'	=> $system_tags,
 			'wrap'	=>	array('{','}')
 		);
@@ -2862,7 +2862,7 @@ class Caldera_Forms {
 					if( $meta['process_id'] == '_debug_log' ){
 						$meta['meta_value'] = '<pre>' . $meta['meta_value'] . '</pre>';
 						$entry_meta['debug'] = array(
-							'name' => __('Mailer Debug', 'caldera-forms'),
+							'name' => __( 'Mailer Debug', 'caldera-forms' ),
 							'data' => array(
 								'_debug_log' => array(
 									'entry' => array(
@@ -2896,7 +2896,7 @@ class Caldera_Forms {
 								$meta_name = $processors[$form['processors'][$meta['process_id']]['type']]['name'];
 							}else{
 								if( $meta['process_id'] == '_debug_log' ){
-									$meta_name = __('Mailer Debug', 'caldera-forms');
+									$meta_name = __( 'Mailer Debug', 'caldera-forms' );
 								}else{
 									$meta_name = $meta['process_id'];
 								}
@@ -2962,7 +2962,7 @@ class Caldera_Forms {
 			$form_id = $form;
 			$form = Caldera_Forms_Forms::get_form( $form );
 			if(!isset($form['ID']) || $form['ID'] !== $form_id){
-				return new WP_Error( 'fail',  __('Invalid form ID', 'caldera-forms') );
+				return new WP_Error( 'fail',  __( 'Invalid form ID', 'caldera-forms' ) );
 			}
 		}
 
@@ -3215,7 +3215,7 @@ class Caldera_Forms {
 					'form_id'	=>	$form['ID']
 				);
 				if( sha1( json_encode( $token_array ) ) !== trim( $_POST['_cf_frm_edt_tkn'] ) ){
-					return new WP_Error( 'error', __( "Permission denied.", "caldera-forms" ) );
+					return new WP_Error( 'error', __( "Permission denied.", 'caldera-forms' ) );
 				}else{
 					$entry_id = (int) $details['id'];
 					$edit_token = sha1( json_encode( $token_array ) );
@@ -3225,19 +3225,19 @@ class Caldera_Forms {
 
 				if(empty($user_id)){
 					$transdata['error'] = true;
-					$transdata['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');
+					$transdata['note'] = __( 'Permission denied or entry does not exist.', 'caldera-forms' );
 				}else{
 
 					if(empty($details)){
 						$transdata['error'] = true;
-						$transdata['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');
+						$transdata['note'] = __( 'Permission denied or entry does not exist.', 'caldera-forms' );
 					}else{
 						// check user can edit
 						if( current_user_can( 'edit_posts' ) || $details['user_id'] === $user_id ){
 							// can edit.
 						}else{
 							$transdata['error'] = true;
-							$transdata['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');
+							$transdata['note'] = __( 'Permission denied or entry does not exist.', 'caldera-forms' );
 						}
 					}
 
@@ -3277,7 +3277,7 @@ class Caldera_Forms {
 					if ( is_wp_error( $entry )){
 						$transdata['fields'][$field_id] = $entry->get_error_message();
 					}elseif($entry === null){
-						$transdata['fields'][$field_id] = $field['label'] .' ' .__('is required', 'caldera-forms');
+						$transdata['fields'][$field_id] = $field['label'] .' ' .__( 'is required', 'caldera-forms' );
 					}
 				}
 			}
@@ -4543,13 +4543,13 @@ class Caldera_Forms {
 		if( isset( $form['form_draft'] ) ){
 			if( !isset( $_GET['cf_preview'] ) || $_GET['cf_preview'] != $form['ID'] ){
 				if( isset( $_POST['action'] ) && $_POST['action'] == 'cf_get_form_preview' ){
-					echo '<p style="color: #cf0000;">' . __('Form is currently not active.', 'caldera-forms') . '</p>';
+					echo '<p style="color: #cf0000;">' . __( 'Form is currently not active.', 'caldera-forms' ) . '</p>';
 				}else{
 					return;
 				}
 
 			}else{
-				echo '<div class="caldera-grid"><p class="alert alert-error alert-danger">' . __('Form is currently not active.', 'caldera-forms') . '</p></div>';
+				echo '<div class="caldera-grid"><p class="alert alert-error alert-danger">' . __( 'Form is currently not active.', 'caldera-forms' ) . '</p></div>';
 			}
 		}
 
@@ -4744,7 +4744,7 @@ class Caldera_Forms {
 					'form_id'	=>	$form['ID']
 				);
 				if( sha1( json_encode( $token_array ) ) !== trim( $_GET['cf_et'] ) ){
-					$notices['error']['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');
+					$notices['error']['note'] = __( 'Permission denied or entry does not exist.', 'caldera-forms' );
 				}else{
 					$entry_id = (int) $details['id'];
 					$edit_token = sha1( json_encode( $token_array ) );
@@ -4760,14 +4760,14 @@ class Caldera_Forms {
 							// can edit.
 							$entry_id = (int) $details['id'];
 						}else{
-							$notices['error']['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');
+							$notices['error']['note'] = __( 'Permission denied or entry does not exist.', 'caldera-forms' );
 						}
 					}else{
-						$notices['error']['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');
+						$notices['error']['note'] = __( 'Permission denied or entry does not exist.', 'caldera-forms' );
 					}
 
 				}else{
-					$notices['error']['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');
+					$notices['error']['note'] = __( 'Permission denied or entry does not exist.', 'caldera-forms' );
 				}
 			}
 
@@ -5034,7 +5034,7 @@ class Caldera_Forms {
 
 		// set debug notice
 		if( !empty( $form['mailer']['enable_mailer'] ) && !empty( $form['debug_mailer'] ) ){
-			$notices['error'] = array( 'note' => __('WARNING: Form is in Mailer Debug mode. Disable before going live.', 'caldera-forms') );
+			$notices['error'] = array( 'note' => __( 'WARNING: Form is in Mailer Debug mode. Disable before going live.', 'caldera-forms' ) );
 		}
 
 		$out .= '<div id="caldera_notices_'.$current_form_count.'" data-spinner="'. admin_url( 'images/spinner.gif' ).'">';

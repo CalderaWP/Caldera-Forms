@@ -17,7 +17,7 @@
 				</select>
 			</div>
 		</div>
-		<p class="description" id="json_export_option"><?php _e('This gives you a .json file that can be imported into Caldera Forms.'); ?></p>
+		<p class="description" id="json_export_option"><?php _e( 'This gives you a .json file that can be imported into Caldera Forms.'); ?></p>
 		<div style="display:none;" id="php_export_options">
 			<div class="caldera-config-group">
 				<label><?php echo __('Form ID', 'caldera-forms'); ?></label>
@@ -28,13 +28,13 @@
 			<div class="caldera-config-group">
 				<label><?php echo __('Pin to Admin', 'caldera-forms'); ?></label>
 				<div class="caldera-config-field">
-					<label><input type="checkbox" name="pin_menu" value="1"> <?php _e("Set form to be pinned to Admin Menu", "caldera-forms"); ?></label>
+					<label><input type="checkbox" name="pin_menu" value="1"> <?php _e( 'Set form to be pinned to Admin Menu', 'caldera-forms' ); ?></label>
 				</div>
 			</div>
 			<div class="caldera-config-group">
 				<label><?php echo __('Field Slugs', 'caldera-forms'); ?></label>
 				<div class="caldera-config-field">
-					<label><input type="checkbox" name="convert_slugs" value="1"> <?php _e("Convert Field ID's to use field slugs", "caldera-forms"); ?></label>
+					<label><input type="checkbox" name="convert_slugs" value="1"> <?php _e( "Convert Field ID's to use field slugs", 'caldera-forms' ); ?></label>
 				</div>
 			</div>
 			<hr>
