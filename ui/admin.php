@@ -30,7 +30,7 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 	<ul class="caldera-editor-header-nav">
 		<li class="caldera-editor-logo">
 			<span class="dashicons-cf-logo"></span>
-			<?php _e('Caldera Forms', 'caldera-forms'); ?>
+			<span class="caldera-forms-name"><?php _e('Caldera Forms', 'caldera-forms'); ?></span>
 		</li>
 		<li class="caldera-forms-version">
 			v<?php echo CFCORE_VER; ?>
@@ -45,12 +45,9 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 		<li class="caldera-forms-toolbar-item">
 			<a class="button ajax-trigger cf-general-settings" data-request="toggle_front_end_settings" data-modal-width="400" data-modal-height="400" data-modal-element="div" data-load-class="none" data-modal="front_settings" data-template="#front-settings-tmpl" data-callback="toggle_front_end_settings" data-modal-title="<?php echo __('General Display Settings', 'caldera-forms'); ?>" title="<?php echo __('General Display Settings', 'caldera-forms'); ?>" ><span class="dashicons dashicons-admin-generic"></span></a>
 		</li>
-		<li class="caldera-forms-toolbar-item">
-		&nbsp;
-		</li>
-
 	</ul>
 </div>
+
 <div class="form-admin-page-wrap">
 	<div class="form-panel-wrap">
 	<?php
