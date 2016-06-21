@@ -139,6 +139,7 @@
 .caldera-entry-exporter {
   float: left;
   margin-top: -38px;
+  margin-right: 130px;
 }
 .caldera-group-panel {
   width: 350px;
@@ -1806,4 +1807,40 @@ tr.form_entry_row.loading {
   margin: 0;
   opacity: 0.51;
   visibility: visible;
+}
+
+@media screen and ( max-width: 782px ) {
+  /* smaller */
+  .caldera-editor-header {
+    height: 47px;
+    margin: -10px;
+    overflow: hidden;
+    padding-top: 0;
+    top: 57px;
+  }
+  li.caldera-forms-version{
+    display: none;
+  }
+  .caldera-entry-exporter{
+    margin-top: -30px;
+  }
+  .caldera-forms-toolbar-item .button.cf-general-settings {
+    padding: 6px 8px;
+  }  
+  .caldera-editor-header-nav > li.caldera-forms-toolbar-item.separator {
+    display: none;
+  }  
+}
+
+@media screen and ( max-width: 600px ) {
+  .caldera-editor-logo > span.dashicons-cf-logo {
+    font-size: 31px;
+    line-height: 22px;
+  }
+  .caldera-forms-name{
+    display: none;
+  }
+  .caldera-editor-header {
+    position: absolute;
+  }
 }
