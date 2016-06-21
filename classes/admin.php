@@ -194,13 +194,24 @@ class Caldera_Forms_Admin {
 			foreach( $form_templates as $template_slug => $template ){
 				if( !empty( $template['template'] ) && !empty( $template['name'] ) ){
 
-					$struct = explode('|', $template['template']['layout_grid']['structure'] );
-
 					echo '<label class="caldera-grid cf-form-template' . $selected_template . '">';
 						echo '<small>' . $template['name'] . '</small>';
 						
 						echo '<input type="radio" name="template" value="' . $template_slug . '" class="cf-template-select"' . $selected_field . '>';
 						
+
+						// check a layout exists
+						if( !empty( $template['preview'] ) ){
+							echo '<img src="' . $template['preview'] . '"></label>';
+							continue;
+						}
+						if( empty( $template['template']['layout_grid'] ) || empty( $template['template']['layout_grid']['structure'] ) || empty( $template['template']['layout_grid']['fields'] ) ){
+							echo '<p class="description" style="padding: 50px 0px; text-align: center;">' . esc_html__( 'Preview not available', 'caldera-forms' ) . '</p></label>';
+							continue;							
+						}
+
+						$struct = explode('|', $template['template']['layout_grid']['structure'] );
+
 						foreach ($struct as $row_num=>$row) {
 
 							$columns = explode( ':', $row );
