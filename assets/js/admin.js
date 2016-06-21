@@ -94,5 +94,16 @@ jQuery(document).ready(function($){
 		this.value = this.value.replace(/[^a-z0-9]/gi, '-').toLowerCase();
 	});
 
+	$( window ).on('resize', function(){
+
+		var list_toggle = $('#cf_forms_toggle'),
+			forms_panel = $('.form-panel-wrap');
+
+		if( window.innerWidth <= 1420 ){
+			if( list_toggle.is(':visible') && forms_panel.is(':visible') ){
+				list_toggle.trigger('click');
+			}
+		}
+	});
 
 });
