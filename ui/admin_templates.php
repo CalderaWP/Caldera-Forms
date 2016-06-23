@@ -120,7 +120,8 @@
 		</div>
 		<div class="caldera-setting">
 			<div class="switch setting_toggle_alert <?php if(!empty($style_includes['alert'])){ ?>active<?php } ?>">
-				<div data-action="save_cf_setting" data-load-element="_parent" data-load-class="load" data-set="alert" data-callback="update_setting_toggle" class="ajax-trigger box"><span class="spinner"></span></div>
+				<div data-action="save_cf_setting" data-load-element="_parent" data-load-class="load" data-set="alert" data-callback="update_setting_toggle" class="ajax-trigger box-wrapper"></div>
+				<div class="box"><span class="spinner"></span></div>
 			</div>
 		</div>
 		<div class="clear"></div>
@@ -134,7 +135,8 @@
 		</div>
 		<div class="caldera-setting">
 			<div class="switch setting_toggle_form <?php if(!empty($style_includes['form'])){ ?>active<?php } ?>">
-				<div data-action="save_cf_setting" data-load-element="_parent" data-load-class="load" data-set="form" data-callback="update_setting_toggle" class="ajax-trigger box"><span class="spinner"></span></div>
+				<div data-action="save_cf_setting" data-load-element="_parent" data-load-class="load" data-set="form" data-callback="update_setting_toggle" class="ajax-trigger box-wrapper"></div>
+				<div class="box"><span class="spinner"></span></div>
 			</div>
 		</div>
 		<div class="clear"></div>
@@ -148,7 +150,8 @@
 		</div>
 		<div class="caldera-setting">
 			<div class="switch setting_toggle_grid <?php if(!empty($style_includes['grid'])){ ?>active<?php } ?>">
-				<div data-action="save_cf_setting" data-load-element="_parent" data-load-class="load" data-set="grid" data-callback="update_setting_toggle" class="ajax-trigger box"><span class="spinner"></span></div>
+				<div data-action="save_cf_setting" data-load-element="_parent" data-load-class="load" data-set="grid" data-callback="update_setting_toggle" class="ajax-trigger box-wrapper"></div>
+				<div class="box"><span class="spinner"></span></div>
 			</div>
 
 		</div>

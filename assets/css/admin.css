@@ -1783,6 +1783,13 @@ tr.form_entry_row.loading {
   overflow: hidden;
   width: 42px;
   transition: background-color 1s ease 0s;
+  cursor: pointer;
+  position: relative;
+}
+.box-wrapper {
+  height: 21px;
+  position: absolute;
+  width: 100%;
 }
 .switch.active {
   background: #a3be5f none repeat scroll 0 0;
