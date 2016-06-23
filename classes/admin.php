@@ -202,7 +202,7 @@ class Caldera_Forms_Admin {
 
 						// check a layout exists
 						if( !empty( $template['preview'] ) ){
-							echo '<img src="' . $template['preview'] . '"></label>';
+							echo '<img src="' . esc_url( $template['preview'] ) . '"></label>';
 							continue;
 						}
 						if( empty( $template['template']['layout_grid'] ) || empty( $template['template']['layout_grid']['structure'] ) || empty( $template['template']['layout_grid']['fields'] ) ){
