@@ -4,7 +4,7 @@
 		<div class="caldera-entry-exporter" style="display:none;">
 			<?php wp_nonce_field( 'cf_toolbar', 'cf_toolbar_actions' ); ?>
 			<span class="cf-tools-row">
-				<button id="cf_forms_toggle" type="button" class="button hide-forms" title="<?php esc_html_e('Toggle Forms List', 'caldera-forms'); ?>" style="padding: 3px; margin-top: 1px; margin-right: 18px; color: rgb(143, 143, 143);"><span class="dashicons dashicons-admin-collapse"></span></button>
+				<button id="cf_forms_toggle" type="button" class="button hide-forms" title="<?php esc_attr( esc_html_e('Toggle Forms List', 'caldera-forms') ); ?>" style="padding: 3px; margin-top: 1px; margin-right: 18px; color: rgb(143, 143, 143);"><span class="dashicons dashicons-admin-collapse"></span></button>
 				
 				<span class="toggle_option_preview">
 
@@ -19,7 +19,7 @@
 						data-group="status_nav"
 						data-callback="setup_pagination"
 						data-page="1"
-					    data-nonce="<?php echo wp_create_nonce( 'view_entries' ); ?>"
+					    data-nonce="<?php echo esc_attr( wp_create_nonce( 'view_entries' ) ); ?>"
 						data-status="active"
 					><?php esc_html_e('Active', 'caldera-forms'); ?> <span class="current-status-count"></span></button>
 					<button type="button" class="status_toggles button ajax-trigger" style="margin-top: 1px; margin-right: 10px;"
@@ -33,12 +33,12 @@
 						data-group="status_nav"
 						data-callback="setup_pagination"
 						data-page="1"
-					    data-nonce="<?php echo wp_create_nonce( 'view_entries' ); ?>"
+					    data-nonce="<?php echo esc_attr( wp_create_nonce( 'view_entries' ) ); ?>"
 				        data-status="trash"
-					><?php esc_html_e('Trash'); ?> <span class="current-status-count"></span></button>
+					><?php esc_html_e( 'Trash', 'caldera-forms' ); ?> <span class="current-status-count"></span></button>
 				</span>
 				<a href="" class="button caldera-forms-entry-exporter">
-					<?php esc_html_e('Export All', 'caldera-forms'); ?>
+					<?php esc_html_e( 'Export All', 'caldera-forms' ); ?>
 				</a>
 				
 			</span>
@@ -48,7 +48,7 @@
 				<select id="cf_bulk_action" name="action" style="vertical-align: top;">
 				</select>
 				<button type="button" class="button cf-bulk-action">
-					<?php esc_html_e('Apply', 'caldera-forms'); ?>
+					<?php esc_html_e( 'Apply', 'caldera-forms' ); ?>
 				</button>
 			</span>
 
