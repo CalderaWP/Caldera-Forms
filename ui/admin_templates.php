@@ -1,7 +1,7 @@
 <script type="text/html" id="bulk-actions-active-tmpl">
-	<option selected="selected" value=""><?php echo __('Bulk Actions'); ?></option>
-	<option value="export"><?php echo __('Export Selected'); ?></option>
-	<?php if( current_user_can( Caldera_Forms::get_manage_cap( 'manage' ) ) ){ ?><option value="trash"><?php echo __('Move to Trash'); ?></option><?php } ?>
+	<option selected="selected" value=""><?php esc_html_e( 'Bulk Actions', 'caldera-forms' ); ?></option>
+	<option value="export"><?php esc_html_e( 'Export Selected', 'caldera-forms' ); ?></option>
+	<?php if( current_user_can( Caldera_Forms::get_manage_cap( 'manage' ) ) ){ ?><option value="trash"><?php esc_html_e( 'Move to Trash', 'caldera-forms' ); ?></option><?php } ?>
 </script>
 
 <script type="text/html" id="cf-export-template">
@@ -9,37 +9,37 @@
 		<input type="hidden" name="cal_del" value="{{nonce}}">
 
 		<div class="caldera-config-group">
-			<label><?php echo __('Export Type', 'caldera-forms'); ?></label>
+			<label><?php echo esc_html__( 'Export Type', 'caldera-forms' ); ?></label>
 			<div class="caldera-config-field">
 				<select class="form-export-type" name="format" style="width: 230px;">
-					<option value="json"><?php _e('Backup / Importable (json)' , 'caldera-forms' ); ?></option>
-					<option value="php"><?php _e('PHP include File' , 'caldera-forms' ); ?></option>
+					<option value="json"><?php esc_html_e('Backup / Importable (json)' , 'caldera-forms' ); ?></option>
+					<option value="php"><?php esc_html_e('PHP include File' , 'caldera-forms' ); ?></option>
 				</select>
 			</div>
 		</div>
-		<p class="description" id="json_export_option"><?php _e( 'This gives you a .json file that can be imported into Caldera Forms.'); ?></p>
+		<p class="description" id="json_export_option"><?php esc_html_e( 'This gives you a .json file that can be imported into Caldera Forms.', 'caldera-forms' ); ?></p>
 		<div style="display:none;" id="php_export_options">
 			<div class="caldera-config-group">
-				<label><?php echo __('Form ID', 'caldera-forms'); ?></label>
+				<label><?php echo esc_html__( 'Form ID', 'caldera-forms' ); ?></label>
 				<div class="caldera-config-field">
 					<input type="text" class="block-input field-config" data-format="key" name="form_id" value="{{formslug}}" required="required">
 				</div>
 			</div>
 			<div class="caldera-config-group">
-				<label><?php echo __('Pin to Admin', 'caldera-forms'); ?></label>
+				<label><?php echo esc_html__( 'Pin to Admin', 'caldera-forms' ); ?></label>
 				<div class="caldera-config-field">
-					<label><input type="checkbox" name="pin_menu" value="1"> <?php _e( 'Set form to be pinned to Admin Menu', 'caldera-forms' ); ?></label>
+					<label><input type="checkbox" name="pin_menu" value="1"> <?php esc_html_e( 'Set form to be pinned to Admin Menu', 'caldera-forms' ); ?></label>
 				</div>
 			</div>
 			<div class="caldera-config-group">
-				<label><?php echo __('Field Slugs', 'caldera-forms'); ?></label>
+				<label><?php echo esc_html__( 'Field Slugs', 'caldera-forms' ); ?></label>
 				<div class="caldera-config-field">
-					<label><input type="checkbox" name="convert_slugs" value="1"> <?php _e( "Convert Field ID's to use field slugs", 'caldera-forms' ); ?></label>
+					<label><input type="checkbox" name="convert_slugs" value="1"> <?php esc_html_e( "Convert Field ID's to use field slugs", 'caldera-forms' ); ?></label>
 				</div>
 			</div>
 			<hr>
-			<p class="description"><?php _e('This gives you a hardcoded .php file that can be included in projects. It includes the correct filter for the ID specific form allowing you to easily use the form by simply including the file.'); ?></p>
-			<p class="description"><?php _e('This is not a backup and cannot be imported.'); ?></p>
+			<p class="description"><?php esc_html_e('This gives you a hardcoded .php file that can be included in projects. It includes the correct filter for the ID specific form allowing you to easily use the form by simply including the file.', 'caldera-forms'); ?></p>
+			<p class="description"><?php esc_html_e('This is not a backup and cannot be imported.', 'caldera-forms'); ?></p>
 
 		</div>
 
@@ -61,10 +61,10 @@
 
 </script>
 <script type="text/html" id="bulk-actions-trash-tmpl">
-	<option selected="selected" value=""><?php echo __('Bulk Actions'); ?></option>
-	<option value="export"><?php echo __('Export Selected'); ?></option>
-	<?php if( current_user_can( 'delete_others_posts' ) ){ ?><option value="active"><?php echo __('Restore'); ?></option>
-	<option value="delete"><?php echo __('Delete Permanently'); ?></option><?php } ?>
+	<option selected="selected" value=""><?php esc_html_e( 'Bulk Actions', 'caldera-forms' ); ?></option>
+	<option value="export"><?php esc_html_e( 'Export Selected', 'caldera-forms' ); ?></option>
+	<?php if( current_user_can( 'delete_others_posts' ) ){ ?><option value="active"><?php esc_html_e( 'Restore', 'caldera-forms' ); ?></option>
+	<option value="delete"><?php esc_html_e( 'Delete Permanently', 'caldera-forms' ); ?></option><?php } ?>
 </script>
 <script type="text/html" id="import-form-tmpl">
 	<form class="new-form-form" action="admin.php?page=caldera-forms&import=true" enctype="multipart/form-data" method="POST">
@@ -73,13 +73,13 @@
 		do_action('caldera_forms_import_form_template_start');
 		?>
 		<div class="caldera-config-group">
-			<label for=""><?php echo __('Form Name', 'caldera-forms'); ?></label>
+			<label for=""><?php esc_html_e( 'Form Name', 'caldera-forms' ); ?></label>
 			<div class="caldera-config-field">
 				<input type="text" class="new-form-name block-input field-config" name="name" value="" required="required">
 			</div>
 		</div>
 		<div class="caldera-config-group">
-			<label for=""><?php echo __('Form File', 'caldera-forms'); ?></label>
+			<label for=""><?php esc_html_e( 'Form File', 'caldera-forms' ); ?></label>
 			<div class="caldera-config-field">
 				<input type="file" class="new-form-name" name="import_file" required="required" style="width: 230px;">
 			</div>
@@ -87,7 +87,7 @@
 		
 		<div class="baldrick-modal-footer" style="display: block; clear: both; position: relative; height: 24px; width: 100%; margin: 0px -12px;">
 
-			<button type="submit" class="button" style="float:right;"><?php echo __('Import Form', 'caldera-forms'); ?></button>	
+			<button type="submit" class="button" style="float:right;"><?php esc_html_e( 'Import Form', 'caldera-forms' ); ?></button>	
 
 		</div>
 
@@ -114,8 +114,8 @@
 	?>
 	<div class="caldera-settings-group">
 		<div class="caldera-settings">
-			<strong><?php echo __('Alert Styles' , 'caldera-forms'); ?></strong>
-			<p class="description"><?php echo __('Includes Bootstrap 3 styles on the frontend for form alert notices', 'caldera-forms'); ?></p>
+			<strong><?php esc_html_e( 'Alert Styles' , 'caldera-forms' ); ?></strong>
+			<p class="description"><?php esc_html_e( 'Includes Bootstrap 3 styles on the frontend for form alert notices', 'caldera-forms' ); ?></p>
 			<div class="clear"></div>
 		</div>
 		<div class="caldera-setting">
@@ -128,8 +128,8 @@
 
 	<div class="caldera-settings-group">
 		<div class="caldera-settings">
-			<strong><?php echo __('Form Styles' , 'caldera-forms'); ?></strong>
-			<p class="description"><?php echo __('Includes Bootstrap 3 styles on the frontend for form fields and buttons', 'caldera-forms'); ?></p>
+			<strong><?php esc_html_e( 'Form Styles' , 'caldera-forms' ); ?></strong>
+			<p class="description"><?php esc_html_e( 'Includes Bootstrap 3 styles on the frontend for form fields and buttons', 'caldera-forms' ); ?></p>
 			<div class="clear"></div>
 		</div>
 		<div class="caldera-setting">
@@ -142,8 +142,8 @@
 
 	<div class="caldera-settings-group">
 		<div class="caldera-settings">
-			<strong><?php echo __('Grid Structures' , 'caldera-forms'); ?></strong>
-			<p class="description"><?php echo __('Includes Bootstrap 3 styles on the frontend for form grid layouts', 'caldera-forms'); ?></p>
+			<strong><?php esc_html_e( 'Grid Structures' , 'caldera-forms' ); ?></strong>
+			<p class="description"><?php esc_html_e( 'Includes Bootstrap 3 styles on the frontend for form grid layouts', 'caldera-forms' ); ?></p>
 			<div class="clear"></div>
 		</div>
 		<div class="caldera-setting">
@@ -169,7 +169,7 @@
 		{{/if}}
 
 		<div class="caldera-config-field">
-			<input type="text" class="new-form-name block-input field-config" name="name" value="" required="required" autofocus="true" placeholder="<?php echo esc_html__('Form Name', 'caldera-forms'); ?>">
+			<input type="text" class="new-form-name block-input field-config" name="name" value="" required="required" autofocus="true" placeholder="<?php echo esc_html__('Form Name', 'caldera-forms' ); ?>">
 		</div>
 
 
@@ -194,8 +194,8 @@
 				<thead>
 					<tr>
 						<th style="width:16px;"><input type="checkbox" class="cf-bulkcheck"></th>
-						<th><?php esc_html_e('ID', 'caldera-forms'); ?></th>
-						<th><?php esc_html_e('Submitted', 'caldera-forms'); ?></th>
+						<th><?php esc_html_e('ID', 'caldera-forms' ); ?></th>
+						<th><?php esc_html_e('Submitted', 'caldera-forms' ); ?></th>
 						{{#each fields}}
 						<th>{{this}}</th>
 						{{/each}}
@@ -218,13 +218,13 @@
 					</tr>
 				{{/each}}
 				{{else}}
-					<tr><td colspan="100"><?php esc_html_e('No entries found', 'caldera-forms'); ?></td></tr>
+					<tr><td colspan="100"><?php esc_html_e('No entries found', 'caldera-forms' ); ?></td></tr>
 				{{/if}}
 				</tbody>
 			</table>
 		</div>
 	{{else}}
-	<p class="description"><?php esc_html_e('No entries yet.', 'caldera-forms'); ?></p>
+	<p class="description"><?php esc_html_e('No entries yet.', 'caldera-forms' ); ?></p>
 	{{/if}}
 </script>
 <script type="text/html" id="view-entry-tmpl">
@@ -234,8 +234,8 @@
 	</div>
 {{/if}}
 
-	<div id="main-entry-panel" class="tab-detail-panel" data-tab="<?php esc_html_e('Entry', 'caldera-forms'); ?>">
-		<h4><?php echo esc_html_e('Submitted', 'caldera-forms'); ?> <small class="description">{{date}}</small></h4>
+	<div id="main-entry-panel" class="tab-detail-panel" data-tab="<?php esc_html_e('Entry', 'caldera-forms' ); ?>">
+		<h4><?php echo esc_html_e('Submitted', 'caldera-forms' ); ?> <small class="description">{{date}}</small></h4>
 		<hr>
 		{{#each data}}
 			<div class="entry-line">
