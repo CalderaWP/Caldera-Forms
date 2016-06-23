@@ -37,15 +37,15 @@
 				        data-status="trash"
 					><?php esc_html_e('Trash'); ?> <span class="current-status-count"></span></button>
 				</span>
-
-				<?php esc_html_e('Show', 'caldera-forms'); ?> <input id="cf-entries-list-items" type="number" value="<?php echo $entry_perpage; ?>" class="screen-per-page"> &nbsp;
-			</span>
-			<span class="cf-tools-row">
 				<a href="" class="button caldera-forms-entry-exporter">
-					<?php esc_html_e('Export Entries', 'caldera-forms'); ?>
+					<?php esc_html_e('Export All', 'caldera-forms'); ?>
 				</a>
+				
+			</span>
+			<span class="cf-tools-row cf-tools-row-second">
 
-				<select id="cf_bulk_action" name="action" style="vertical-align: initial;">
+
+				<select id="cf_bulk_action" name="action" style="vertical-align: top;">
 				</select>
 				<button type="button" class="button cf-bulk-action">
 					<?php esc_html_e('Apply', 'caldera-forms'); ?>
@@ -55,15 +55,4 @@
 		</div>
 
 		<?php do_action('caldera_forms_entries_toolbar'); ?>
-		<div class="tablenav caldera-table-nav" style="display:none;">
-			<div class="tablenav-pages">
-				<span class="displaying-num"></span>
-				<span class="pagination-links">
-					<a href="#first" title="Go to the first page" data-page="first" class="first-page">«</a>
-					<a href="#prev" title="Go to the previous page" data-page="prev" class="prev-page">‹</a>
-					<span class="paging-input"><input type="text" size="1" name="paged" title="Current page" class="current-page"> of <span class="total-pages"></span></span>
-					<a href="#next" title="Go to the next page" data-page="next" class="next-page">›</a>
-					<a href="#last" title="Go to the last page" data-page="last" class="last-page">»</a>
-				</span>
-			</div>
-		</div>
+

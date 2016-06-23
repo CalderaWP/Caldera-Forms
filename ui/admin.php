@@ -190,6 +190,20 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 	<div class="form-entries-wrap">
 	<?php include CFCORE_PATH . 'ui/entries_toolbar.php'; ?>
 	<div id="form-entries-viewer"></div>
+
+		<div class="tablenav caldera-table-nav" style="display:none;">
+			
+			<div class="tablenav-pages">
+				<input title="<?php echo esc_attr( esc_html__( 'Entries per page', 'caldera-forms' ) ); ?>" id="cf-entries-list-items" type="number" value="<?php echo $entry_perpage; ?>" class="screen-per-page">
+				<span class="pagination-links">
+					<a href="#first" title="Go to the first page" data-page="first" class="first-page">«</a>
+					<a href="#prev" title="Go to the previous page" data-page="prev" class="prev-page">‹</a>
+					<span class="paging-input"><input type="text" size="1" name="paged" title="Current page" class="current-page"> of <span class="total-pages"></span></span>
+					<a href="#next" title="Go to the next page" data-page="next" class="next-page">›</a>
+					<a href="#last" title="Go to the last page" data-page="last" class="last-page">»</a>
+				</span>
+			</div>
+		</div>	
 	</div>
 </div>
 
