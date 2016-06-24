@@ -1,6 +1,6 @@
 === Caldera Forms - Drag and drop responsive form builder ===
 Contributors: Desertsnowman, Shelob9
-Tags: forms, formbuilder, form builder, contact form, form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, contact, email, auto-responder, awber, converkit, builder, contact forms
+Tags: forms, formbuilder, form builder, contact form, form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, contact, email, auto-responder, awber, converkit, builder, contact forms, search, ab testing, a/b testing, split testing
 Requires at least: 4.3
 Tested up to: 4.6
 Stable tag: 1.3.5.3
@@ -29,11 +29,13 @@ A free plugin by <a href="https://CalderaWP.com" title="CalderaWP: Transform You
 > Caldera Forms is free to use, if you need any help, we provide services to ensure you can get the most out of Caldera Forms.
 >
 > <strong>Priority Support</strong> Direct support from our team, your questions answered within one business day. <a href="https://calderawp.com/support#priority-support">Learn more here.</a>
+>
 > <strong>Form Creation</strong> Got a really trick form and not a lot of time? <a href="https://calderawp.com/caldera-forms-services#cf-dfy">We can help.</a>
-> <strong>Customization</strong> Need an integration with a third-party service or to modify the default behaviour? <a href="https://calderawp.com/caldera-forms-services#cf-custom-code">Let us write you some code.</a>
+>
+><strong>Customization</strong> Need an integration with a third-party service or to modify the default behaviour? <a href="https://calderawp.com/caldera-forms-services#cf-custom-code">Let us write you some code.</a>
 >
 > <em>Note: We do not provide free support via WordPress.org. Premium add-on purchases include priority support for Caldera Forms.</em>
-
+>
 
 = Documentation & More Information =
 * [More Information](https://calderawp.com/downloads/caldera-forms/)
@@ -48,6 +50,7 @@ A free plugin by <a href="https://CalderaWP.com" title="CalderaWP: Transform You
 * [PayPal Express](https://calderawp.com/downloads/caldera-forms-paypal-express-add-on/) - Accept payments via Paypal Express.
 * [Connected Forms](https://calderawp.com/downloads/caldera-forms-connector/) - Create sequences of forms with conditional logic. Split your forms into smaller pieces, with total control over what comes next.
 * [Users](https://calderawp.com/downloads/caldera-forms-users-add/) - Register or login users from your form.
+* [A/B Testing](https://calderawp.com/downloads/ingot-for-caldera-forms/) - A/B testing for your forms. Powered by [Ingot](https://IngotHQ.com)
 * [Geolocation](https://calderawp.com/downloads/geolocation-field-for-caldera-forms/) - Make a text field a geolocation auto-complete field and recorded geocoded data.
 * [Mark Viewed](https://calderawp.com/downloads/caldera-forms-mark-viewed/) - Let users track what content they have viewed using a Caldera Forms.
 * [Dwolla](https://calderawp.com/downloads/dwolla-for-caldera-forms/) - Accept payments with low fees using Dwolla.
