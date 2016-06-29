@@ -33,7 +33,7 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 			<?php _e('Caldera Forms', 'caldera-forms'); ?>
 		</li>
 		<li class="caldera-forms-version">
-			v<?php echo CFCORE_VER; ?>
+			<?php echo CFCORE_VER; ?>
 		</li>
 		<li class="caldera-forms-toolbar-item">
 			<a class="button button-primary ajax-trigger" data-request="start_new_form" data-modal-buttons='<?php echo $modal_new_form; ?>' data-modal-width="600" data-modal-height="580" data-load-class="none" data-modal="new_form" data-modal-title="<?php echo __('Create New Form', 'caldera-forms'); ?>" data-template="#new-form-tmpl"><?php echo __('New Form', 'caldera-forms'); ?></a>
@@ -47,9 +47,7 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 			<a class="button ajax-trigger cf-general-settings" data-request="toggle_front_end_settings" data-modal-width="400" data-modal-height="400" data-modal-element="div" data-load-class="none" data-modal="front_settings" data-template="#front-settings-tmpl" data-callback="toggle_front_end_settings" data-modal-title="<?php echo __('General Display Settings', 'caldera-forms'); ?>" title="<?php echo __('General Display Settings', 'caldera-forms'); ?>" ><span class="dashicons dashicons-admin-generic"></span></a>
 
 		</li>
-		<li class="caldera-forms-toolbar-item">
-		&nbsp;
-		</li>
+		<li class="caldera-forms-toolbar-item separator">&nbsp;&nbsp;</li>
 		<li class="caldera-forms-toolbar-item" id="cf-email-settings-item">
 			<?php
 				printf( '<button class="button" id="cf-email-settings" title="%s">%s</button>',
@@ -200,7 +198,7 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 			<?php } ?>
 		<?php } ?>
 	</div>
-	<div class="form-entries-wrap">
+	<div class="form-entries-wrap" aria-live="polite" aria-relevant="additions removals">
 	<?php include CFCORE_PATH . 'ui/entries_toolbar.php'; ?>
 	<div id="form-entries-viewer"></div>
 	</div>
