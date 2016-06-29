@@ -361,12 +361,17 @@ jQuery( function( $ ){
 			method: $('#cf-emails-api').val(),
 			sendgrid: $('#cf-emails-sendgrid-key').val()
 		};
-		//@todo spinner
-		
-		$.post( ajaxurl, data ).done( function( r ) {
-			console.log( r );
-		});
+		var $spinner = $( '#cf-email-spinner' );
+		$spinner.attr( 'aria-hidden', false ).css( 'visibility', 'visible' ).show();
 
+		$.post( ajaxurl, data ).done( function( r ) {
+			$spinner.attr( 'aria-hidden', true ).css( 'visibility', 'hidden' ).hide(
+				500, function(){
+					document.getElementById( 'cf-email-settings' ).click();
+				}
+			);
+		});
+		
 	});
 
 

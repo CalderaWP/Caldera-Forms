@@ -39,7 +39,7 @@
 			<input type="text" class="cf-email-settings" id="cf-emails-sendgrid-key" name="cf-emails-sendgrid-key" value="<?php echo esc_attr( Caldera_Forms_Email_Settings::get_key( 'sendgrid' ) ); ?>">
 		</div>
 		<p class="description" id="cf-emails-sendgrid-key-desc"></p>
-		<?php printf( '<span>%s</span><span><a href="%s" target="_blank" rel="nofollow" title="%s">%s</a></span>',
+		<?php printf( '<span>%s</span> <span><a href="%s" target="_blank" rel="nofollow" title="%s">%s</a></span>',
 					esc_html__( 'SendGrid API Key', 'caldera-forms' ),
 					'https://CalderaWP.com/docs/configure-sendgrid',
 					esc_attr__( 'Documentation for configuring SendGrid API', 'caldera-forms' ),
@@ -50,8 +50,9 @@
 	<?php echo Caldera_Forms_Email_Settings::nonce_field(); ?>
 
 	<div class="field-group">
-		<button type="button" id="cf-email-settings-save" classs="button button-primary">
+		<button type="button" id="cf-email-settings-save" class="button button-primary">
 			<?php esc_html_e( 'Save Email Settings', 'caldera-forms' ); ?>
 		</button>
+		<span class="spinner" style="float:none;" id="cf-email-spinner" aria-hidden="true"></span>
 	</div>
 </div>
