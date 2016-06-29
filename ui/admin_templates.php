@@ -17,7 +17,7 @@
 				</select>
 			</div>
 		</div>
-		<p class="description" id="json_export_option"><?php _e('This gives you a .json file that can be imported into Caldera Forms.'); ?></p>
+		<p class="description" id="json_export_option"><?php _e( 'This gives you a .json file that can be imported into Caldera Forms.'); ?></p>
 		<div style="display:none;" id="php_export_options">
 			<div class="caldera-config-group">
 				<label><?php echo __('Form ID', 'caldera-forms'); ?></label>
@@ -28,13 +28,13 @@
 			<div class="caldera-config-group">
 				<label><?php echo __('Pin to Admin', 'caldera-forms'); ?></label>
 				<div class="caldera-config-field">
-					<label><input type="checkbox" name="pin_menu" value="1"> <?php _e("Set form to be pinned to Admin Menu", "caldera-forms"); ?></label>
+					<label><input type="checkbox" name="pin_menu" value="1"> <?php _e( 'Set form to be pinned to Admin Menu', 'caldera-forms' ); ?></label>
 				</div>
 			</div>
 			<div class="caldera-config-group">
 				<label><?php echo __('Field Slugs', 'caldera-forms'); ?></label>
 				<div class="caldera-config-field">
-					<label><input type="checkbox" name="convert_slugs" value="1"> <?php _e("Convert Field ID's to use field slugs", "caldera-forms"); ?></label>
+					<label><input type="checkbox" name="convert_slugs" value="1"> <?php _e( "Convert Field ID's to use field slugs", 'caldera-forms' ); ?></label>
 				</div>
 			</div>
 			<hr>
@@ -87,7 +87,7 @@
 		
 		<div class="baldrick-modal-footer" style="display: block; clear: both; position: relative; height: 24px; width: 100%; margin: 0px -12px;">
 
-			<button type="submit" class="button button-primary" style="float:right;"><?php echo __('Import Form', 'caldera-forms'); ?></button>	
+			<button type="submit" class="button" style="float:right;"><?php echo __('Import Form', 'caldera-forms'); ?></button>	
 
 		</div>
 
@@ -96,6 +96,66 @@
 		do_action('caldera_forms_import_form_template_end');
 		?>
 	</form>
+</script>
+<script type="text/html" id="front-settings-tmpl">
+	<?php
+
+	$style_includes = get_option( '_caldera_forms_styleincludes' );
+	if(empty($style_includes)){
+		$style_includes = array(
+			'alert'	=>	true,
+			'form'	=>	true,
+			'grid'	=>	true,
+		);
+		update_option( '_caldera_forms_styleincludes', $style_includes);
+	}
+
+
+	?>
+	<div class="caldera-settings-group">
+		<div class="caldera-settings">
+			<strong><?php echo __('Alert Styles' , 'caldera-forms'); ?></strong>
+			<p class="description"><?php echo __('Includes Bootstrap 3 styles on the frontend for form alert notices', 'caldera-forms'); ?></p>
+			<div class="clear"></div>
+		</div>
+		<div class="caldera-setting">
+			<div class="switch setting_toggle_alert <?php if(!empty($style_includes['alert'])){ ?>active<?php } ?>">
+				<div data-action="save_cf_setting" data-load-element="_parent" data-load-class="load" data-set="alert" data-callback="update_setting_toggle" class="ajax-trigger box"><span class="spinner"></span></div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>	
+
+	<div class="caldera-settings-group">
+		<div class="caldera-settings">
+			<strong><?php echo __('Form Styles' , 'caldera-forms'); ?></strong>
+			<p class="description"><?php echo __('Includes Bootstrap 3 styles on the frontend for form fields and buttons', 'caldera-forms'); ?></p>
+			<div class="clear"></div>
+		</div>
+		<div class="caldera-setting">
+			<div class="switch setting_toggle_form <?php if(!empty($style_includes['form'])){ ?>active<?php } ?>">
+				<div data-action="save_cf_setting" data-load-element="_parent" data-load-class="load" data-set="form" data-callback="update_setting_toggle" class="ajax-trigger box"><span class="spinner"></span></div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>	
+
+	<div class="caldera-settings-group">
+		<div class="caldera-settings">
+			<strong><?php echo __('Grid Structures' , 'caldera-forms'); ?></strong>
+			<p class="description"><?php echo __('Includes Bootstrap 3 styles on the frontend for form grid layouts', 'caldera-forms'); ?></p>
+			<div class="clear"></div>
+		</div>
+		<div class="caldera-setting">
+			<div class="switch setting_toggle_grid <?php if(!empty($style_includes['grid'])){ ?>active<?php } ?>">
+				<div data-action="save_cf_setting" data-load-element="_parent" data-load-class="load" data-set="grid" data-callback="update_setting_toggle" class="ajax-trigger box"><span class="spinner"></span></div>
+			</div>
+
+		</div>
+		<div class="clear"></div>
+	</div>	
+
+
 </script>
 <script type="text/html" id="new-form-tmpl">
 		{{#if clone}}
@@ -107,18 +167,12 @@
 		do_action('caldera_forms_new_form_template_start');
 		?>
 		{{/if}}
-		<div class="caldera-config-group">
-			<label for=""><?php echo __('Form Name', 'caldera-forms'); ?></label>
-			<div class="caldera-config-field">
-				<input type="text" class="new-form-name block-input field-config" name="name" value="" required="required">
-			</div>
+
+		<div class="caldera-config-field">
+			<input type="text" class="new-form-name block-input field-config" name="name" value="" required="required" autofocus="true" placeholder="<?php echo esc_html__('Form Name', 'caldera-forms'); ?>">
 		</div>
-		<div class="caldera-config-group">
-			<label for=""><?php echo __('Description', 'caldera-forms'); ?></label>
-			<div class="caldera-config-field">
-				<textarea class="block-input field-config" name="description" value=""></textarea>
-			</div>
-		</div>
+
+
 		{{#if clone}}<input type="hidden" name="clone" value="{{clone}}">
 		<?php
 		do_action('caldera_forms_clone_form_template_end');
@@ -128,6 +182,9 @@
 		do_action('caldera_forms_new_form_template_end');
 		?>
 		{{/if}}
+		{{#script}}
+		jQuery('.new-form-name').focus();
+		{{/script}}
 </script>
 <script type="text/html" id="forms-list-alt-tmpl">
 

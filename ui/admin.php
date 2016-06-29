@@ -8,8 +8,8 @@ $per_page_limit = 20;
 $forms = Caldera_Forms_Forms::get_forms( true );
 $forms = apply_filters( 'caldera_forms_admin_forms', $forms );
 
-$style_includes = get_option( '_caldera_forms_styleincludes' );
 $entry_perpage = get_option( '_caldera_forms_entry_perpage', 20 );
+$style_includes = get_option( '_caldera_forms_styleincludes' );
 if(empty($style_includes)){
 	$style_includes = array(
 		'alert'	=>	true,
@@ -24,7 +24,7 @@ if(empty($style_includes)){
 //$field_types = apply_filters( 'caldera_forms_get_field_types', array() );
 
 // create user modal buttons
-$modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_form", "data-active-class": "disabled", "data-load-class": "disabled", "data-callback": "new_form_redirect", "data-before" : "serialize_modal_form", "data-modal-autoclose" : "new_form" }';
+$modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_form", "data-active-class": "disabled", "data-load-class": "disabled", "data-callback": "new_form_redirect", "data-before" : "serialize_modal_form", "data-modal-autoclose" : "new_form" }|right';
 
 ?><div class="caldera-editor-header">
 	<ul class="caldera-editor-header-nav">
@@ -36,23 +36,16 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 			v<?php echo CFCORE_VER; ?>
 		</li>
 		<li class="caldera-forms-toolbar-item">
-			<a class="button ajax-trigger" data-request="start_new_form" data-modal-buttons='<?php echo $modal_new_form; ?>' data-modal-width="600" data-modal-height="400" data-load-class="none" data-modal="new_form" data-modal-title="<?php echo __('Create New Form', 'caldera-forms'); ?>" data-template="#new-form-tmpl"><?php echo __('New Form', 'caldera-forms'); ?></a>
+			<a class="button button-primary ajax-trigger" data-request="start_new_form" data-modal-buttons='<?php echo $modal_new_form; ?>' data-modal-width="600" data-modal-height="580" data-load-class="none" data-modal="new_form" data-modal-title="<?php echo __('Create New Form', 'caldera-forms'); ?>" data-template="#new-form-tmpl"><?php echo __('New Form', 'caldera-forms'); ?></a>
 		</li>
 		<li class="caldera-forms-toolbar-item">
 			<a class="button ajax-trigger" data-request="start_new_form" data-modal-width="400" data-modal-height="192" data-modal-element="div" data-load-class="none" data-modal="import_form" data-template="#import-form-tmpl" data-modal-title="<?php echo __('Import Form', 'caldera-forms'); ?>" ><?php echo __('Import', 'caldera-forms'); ?></a>
 		</li>
+		<li class="caldera-forms-toolbar-item separator">&nbsp;&nbsp;</li>
 		<li class="caldera-forms-toolbar-item">
-		&nbsp;&nbsp;
-		</li>
-		<li class="caldera-forms-headtext" id="render-with-label">
-			<?php echo __('Render forms with:', 'caldera-forms'); ?>
-		</li>
-		<li class="caldera-forms-toolbar-item">
-			<div class="toggle_option_preview">
-				<button type="button" title="<?php echo __('Includes Bootstrap 3 styles on the frontend for form alert notices', 'caldera-forms'); ?>" data-action="save_cf_setting" data-active-class="none" data-set="alert" data-callback="update_setting_toggle" class="ajax-trigger setting_toggle_alert button <?php if(!empty($style_includes['alert'])){ ?>button-primary<?php } ?>"><?php echo __('Alert Styles' , 'caldera-forms'); ?></button>
-				<button type="button" title="<?php echo __('Includes Bootstrap 3 styles on the frontend for form fields and buttons', 'caldera-forms'); ?>" data-action="save_cf_setting" data-active-class="none" data-set="form" data-callback="update_setting_toggle" class="ajax-trigger setting_toggle_form button <?php if(!empty($style_includes['form'])){ ?>button-primary<?php } ?>"><?php echo __('Form Styles' , 'caldera-forms'); ?></button>
-				<button type="button" title="<?php echo __('Includes Bootstrap 3 styles on the frontend for form grid layouts', 'caldera-forms'); ?>" data-action="save_cf_setting" data-active-class="none" data-set="grid" data-callback="update_setting_toggle" class="ajax-trigger setting_toggle_grid button <?php if(!empty($style_includes['grid'])){ ?>button-primary<?php } ?>"><?php echo __('Grid Structures' , 'caldera-forms'); ?></button>
-			</div>
+
+			<a class="button ajax-trigger cf-general-settings" data-request="toggle_front_end_settings" data-modal-width="400" data-modal-height="400" data-modal-element="div" data-load-class="none" data-modal="front_settings" data-template="#front-settings-tmpl" data-callback="toggle_front_end_settings" data-modal-title="<?php echo __('General Display Settings', 'caldera-forms'); ?>" title="<?php echo __('General Display Settings', 'caldera-forms'); ?>" ><span class="dashicons dashicons-admin-generic"></span></a>
+
 		</li>
 		<li class="caldera-forms-toolbar-item">
 		&nbsp;
@@ -257,19 +250,25 @@ function serialize_modal_form(el){
 	return true;
 }
 
-
+var cf_front_end_settings = {};
 function update_setting_toggle(obj){
+	cf_front_end_settings = obj.data;
+	toggle_front_end_settings();
+}
+function toggle_front_end_settings(){
 
-	for( var k in obj.data){
-		if(obj.data[k] === true){
-			jQuery('.setting_toggle_' + k).addClass('button-primary');
+	for( var k in cf_front_end_settings){
+		if(cf_front_end_settings[k] === true){
+			jQuery('.setting_toggle_' + k).addClass('active');
 		}else{
-			jQuery('.setting_toggle_' + k).removeClass('button-primary');
+			jQuery('.setting_toggle_' + k).removeClass('active');
 		}
 	}
-	
-	//for()
+}
 
+function get_front_end_settings( obj ){
+	//cf_front_end_settings
+	return cf_front_end_settings;
 }
 
 function extend_fail_notice(el){
@@ -318,6 +317,32 @@ jQuery( function( $ ){
 		e.preventDefault();
 		var trigger = $(this).find('button.ajax-trigger');
 		trigger.trigger('click');
+	});
+	var form_toggle_state = false;
+	$( document ).on( 'click', '.hide-forms', function(){
+		var clicked = $(this),
+			panel = $('.form-admin-page-wrap'),
+			forms = $('.form-panel-wrap'),
+			size = -35;
+
+		if( true === form_toggle_state ){
+			size = 430;
+			clicked.find('span').css({transform: ''});
+			form_toggle_state = false;
+			forms.show();
+		}else{
+			form_toggle_state = true;
+			clicked.find('span').css({transform: 'rotate(180deg)'});
+			forms.hide();
+		}
+		panel.animate( {marginLeft: size }, 220);
+		
+
+	});
+
+	$( document ).on('change', '.cf-template-select', function(){
+		$('.cf-form-template.selected').removeClass('selected');
+		$(this).parent().addClass('selected');
 	});
 
 	//switch in and out of email settings

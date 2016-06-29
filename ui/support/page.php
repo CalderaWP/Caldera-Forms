@@ -16,17 +16,17 @@
 			<span class="dashicons-cf-logo"></span>
 			<?php esc_html_e( 'Caldera Forms: Support', 'caldera-forms' ); ?>
 		</li>
-		<li class="caldera-forms-toolbar-item" id="support-nav-info">
+		<li class="caldera-forms-toolbar-link" id="support-nav-info">
 			<a href="#info">
 				<?php esc_html_e( 'How To Get Support', 'caldera-forms' ); ?>
 			</a>
 		</li>
-		<li class="caldera-forms-toolbar-item" id="support-nav-debug">
+		<li class="caldera-forms-toolbar-link" id="support-nav-debug">
 			<a href="#debug">
 				<?php esc_html_e( 'Debug Information', 'caldera-forms' ); ?>
 			</a>
 		</li>
-		<li class="caldera-forms-toolbar-item" id="support-nav-beta">
+		<li class="caldera-forms-toolbar-link" id="support-nav-beta">
 			<a href="#beta">
 				<?php esc_html_e( 'Get Latest Beta', 'caldera-forms' ); ?>
 			</a>

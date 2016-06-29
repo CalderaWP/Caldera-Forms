@@ -34,9 +34,9 @@ function cf_form_ajaxsetup($form){
 	}
 ?>
 <div class="caldera-config-group">
-	<label><?php echo __('Ajax Submissions', 'caldera-forms'); ?></label>
+	<label><?php echo esc_html__( 'Ajax Submissions', 'caldera-forms'); ?></label>
 	<div class="caldera-config-field">
-		<label><input type="checkbox" value="1" name="config[form_ajax]" class="field-config"<?php if(isset($form['form_ajax'])){ echo ' checked="checked"'; } ?>> <?php echo __('Enable Ajax Submissions. (No page reloads)', 'caldera-forms'); ?></label>
+		<label><input type="checkbox" value="1" name="config[form_ajax]" class="field-config"<?php if(isset($form['form_ajax'])){ echo ' checked="checked"'; } ?>> <?php echo esc_html__( 'Enable Ajax Submissions. (No page reloads)', 'caldera-forms'); ?></label>
 	</div>
 </div>
 
@@ -44,16 +44,16 @@ function cf_form_ajaxsetup($form){
 
 
 <div class="caldera-config-group">
-	<label><?php echo __('Custom Callback', 'caldera-forms'); ?></label>
+	<label><?php echo esc_html__( 'Custom Callback', 'caldera-forms'); ?></label>
 	<div class="caldera-config-field">
-		<label><input type="checkbox" onclick="jQuery('#custom_callback_panel').toggle();" value="1" name="config[has_ajax_callback]" class="field-config"<?php if(isset($form['has_ajax_callback'])){ echo ' checked="checked"'; } ?>> <?php echo __('Add a custom Javascript callback handlers on submission.', 'caldera-forms'); ?></label>
+		<label><input type="checkbox" onclick="jQuery('#custom_callback_panel').toggle();" value="1" name="config[has_ajax_callback]" class="field-config"<?php if(isset($form['has_ajax_callback'])){ echo ' checked="checked"'; } ?>> <?php echo esc_html__( 'Add a custom Javascript callback handlers on submission.', 'caldera-forms'); ?></label>
 	</div>
 </div>
 
 <div id="custom_callback_panel" <?php if(empty($form['has_ajax_callback'])){ echo 'style="display:none;"'; } ?>>
 	
 	<div class="caldera-config-group">
-		<label><?php echo __('Inhibit Notices', 'caldera-forms'); ?></label>
+		<label><?php echo esc_html__( 'Inhibit Notices', 'caldera-forms'); ?></label>
 		<div class="caldera-config-field">
 			<label><input type="checkbox" value="1" name="config[inhibit_notice]" class="field-config"<?php if(isset($form['inhibit_notice'])){ echo ' checked="checked"'; } ?>> <?php echo __("Don't show default alerts (success etc.)", 'caldera-forms'); ?></label>
 		</div>
@@ -61,7 +61,7 @@ function cf_form_ajaxsetup($form){
 
 
 	<div class="caldera-config-group" style="width:500px;">
-		<label><?php echo __('Callback Function', 'caldera-forms'); ?></label>
+		<label><?php echo esc_html__( 'Callback Function', 'caldera-forms'); ?></label>
 		<div class="caldera-config-field">
 			<input type="text" value="<?php echo $form['custom_callback']; ?>" name="config[custom_callback]" class="field-config block-input">
 			<p class="description"><?php _e('Javascript function to call on submission. Passed an object containing form submission result.'); ?> <a href="#" onclick="jQuery('#json_callback_example').toggle();return false;">See Example</a></p>
@@ -89,9 +89,9 @@ function cf_form_ajaxsetup($form){
 </div>
 
 <div class="caldera-config-group">
-	<label><?php echo __('Multiple Ajax Submissions', 'caldera-forms'); ?></label>
+	<label><?php echo esc_html__( 'Multiple Ajax Submissions', 'caldera-forms'); ?></label>
 	<div class="caldera-config-field">
-		<label><input type="checkbox" value="1" name="config[form_ajax_post_submission_disable]" class="field-config"<?php if(isset($form['form_ajax_post_submission_disable'])){ echo ' checked="checked"'; } ?>> <?php echo __('If set, form can be submitted multiple times with out a new page load.', 'caldera-forms'); ?></label>
+		<label><input type="checkbox" value="1" name="config[form_ajax_post_submission_disable]" class="field-config"<?php if(isset($form['form_ajax_post_submission_disable'])){ echo ' checked="checked"'; } ?>> <?php echo esc_html__( 'If set, form can be submitted multiple times with out a new page load.', 'caldera-forms'); ?></label>
 	</div>
 </div>
 <?php	
@@ -145,7 +145,7 @@ function cf_ajax_redirect($type, $url, $form){
 			$form_id = 'caldera_form_' . $query['cf_su'];
 		}else{
 			$out['url'] = $url;
-			$notices['success']['note'] = __('Redirecting', 'caldera-forms');
+			$notices['success']['note'] = esc_html__( 'Redirecting', 'caldera-forms');
 		}
 	}elseif($type == 'preprocess'){
 		if(isset($query['cf_er'])){
@@ -156,7 +156,7 @@ function cf_ajax_redirect($type, $url, $form){
 
 		}else{
 			$out['url'] = $url;
-			$notices['success']['note'] = __('Redirecting', 'caldera-forms');
+			$notices['success']['note'] = esc_html__( 'Redirecting', 'caldera-forms');
 		}
 
 	}elseif($type == 'error'){

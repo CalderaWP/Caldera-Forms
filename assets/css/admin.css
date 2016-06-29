@@ -311,7 +311,7 @@ select.caldera-type-selector {
 li.caldera-forms-version {
   color: #AFAFAF;
   font-size: 0.8em;
-  padding: 12px 0;
+  padding: 12px 0 10px;
 }
 li.caldera-editor-logo {  
   font-size: 18px;
@@ -330,6 +330,12 @@ li.caldera-editor-logo {
 }
 .caldera-editor-header-nav > li.caldera-forms-toolbar-item {
   padding: 6px 6px 6px 12px;
+}
+.caldera-editor-header-nav > li.caldera-forms-toolbar-item.separator {
+  border-right: 1px solid #efefef;
+  height: 29px;
+  margin-right: 10px;
+  padding: 6px 0 6px 12px;
 }
 .caldera-editor-body .users-settings-input {
   width: 350px;
@@ -726,6 +732,7 @@ a span.error-tag {
   min-width: 100%;
   max-width: 100%;
   width: auto;
+  overflow: auto;
 }
 .form-extend-page-wrap .list.form-panel.postbox {
   -moz-box-sizing: border-box;
@@ -1676,4 +1683,127 @@ tr.form_entry_row.loading {
 /* admin cleanups */
 #import_form_baldrickModalBody{
   overflow: hidden;
+}
+/* new templates */
+.cf-form-template{
+  border: 2px dashed #cfcfcf;
+  float: left;
+  height: 180px;
+  margin: 0 5px 10px;
+  overflow: hidden;
+  padding: 5px;
+  width: 162px;
+  border-radius: 4px;
+}
+.cf-form-template > input{
+  display: none;
+}
+
+.cf-form-template:hover{
+  border: 2px dashed #a3be5f;
+  background-color: #efefef;
+}
+.cf-form-template.selected{
+  background-color: #a3be5f;
+  border: 2px dashed #a3be5f;
+  color: #fff;
+}
+
+.cf-template-column{
+  
+  
+  overflow: hidden;
+}
+
+.cf-templates-wrapper {
+  border-top: 1px solid #dfdfdf;
+  height: 409px;
+  overflow: auto;
+  padding-top: 20px;
+}
+.cf-form-template small {
+  display: block;
+  padding: 0 3px;
+}
+.cf-form-template small.cf-preview-field {
+  border-bottom: 1px solid #dfdfdf;
+  font-size: 55%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cf-preview-field.cf-preview-button {
+  background: #d1d1d1 none repeat scroll 0 0;
+  border-radius: 2px;
+  display: inline-block;
+  margin: 5px 3px 0;
+  padding: 0 9px;
+  color: #333;
+}
+.cf-form-template.selected .cf-preview-field.cf-preview-button {
+  background-color: #fff;
+}
+.cf-form-template small.cf-preview-field.cf-preview-field-html {
+  background: rgba(0, 0, 0, 0.1) none repeat scroll 0 0;
+  border: 0 none;
+  height: 15px;
+}
+
+.caldera-settings {
+  float: left;
+  width: 270px;
+}
+.caldera-settings strong{
+  display: block;
+}
+.caldera-setting {
+  display: block;
+  float: right;
+  height: 35px;
+  padding: 14px;
+  width: 50px;
+}
+.caldera-settings-group {
+  border-bottom: 1px solid #efefef;
+  display: block;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  clear: both;
+}
+.caldera-forms-toolbar-item .button.cf-general-settings{
+  color: #888888;
+  padding: 3px 5px;
+}
+.switch {
+  background: #efefef none repeat scroll 0 0;
+  border-radius: 50px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.14) inset;
+  height: 20px;
+  overflow: hidden;
+  width: 42px;
+  transition: background-color 1s ease 0s;
+}
+.switch.active {
+  background: #a3be5f none repeat scroll 0 0;
+}
+.switch .box {
+  background: #fff none repeat scroll 0 0;
+  border-radius: 50px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.26), 0 0 1px #333 inset;
+  height: 20px;
+  width: 50%; 
+  transition: margin 0.5s ease 0s;
+  cursor: pointer;
+}
+.switch.active .box {
+  margin-left: 50%;
+}
+.switch.load .box {
+  background-color: #a6a6a6;
+}
+.switch.load .box .spinner {
+  margin: 0;
+  opacity: 0.51;
+  visibility: visible;
 }
