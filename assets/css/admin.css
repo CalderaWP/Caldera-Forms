@@ -1771,10 +1771,7 @@ tr.form_entry_row.loading {
   padding-bottom: 10px;
   clear: both;
 }
-.caldera-forms-toolbar-item .button.cf-general-settings{
-  color: #888888;
-  padding: 3px 5px;
-}
+
 .switch {
   background: #efefef none repeat scroll 0 0;
   border-radius: 50px;
