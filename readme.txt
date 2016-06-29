@@ -66,10 +66,12 @@ A free plugin by <a href="https://CalderaWP.com" title="CalderaWP: Transform You
 * [Sprout Invoices Integration](https://wordpress.org/plugins/caldera-forms-sprout-invoices-integration/) - Use Caldera Forms for [Sprout Invoice](https://sproutapps.co/sprout-invoices/) forms.
 * [Conditional Fail](https://wordpress.org/plugins/conditional-fail-for-caldera-forms/) - Set conditions to cause that if met will allow or prevent form submssion.
 * [Postmatic](https://calderawp.com/downloads/postmatic-for-caldera-forms/) - Subscribe users to your posts and comments using Postmatic.
+* [Aweber](https://calderawp.com/downloads/aweber-caldera-forms/) - Aweber marketting automation meets Caldera Forms.
+* [ConvertKit](https://calderawp.com/downloads/convertkit-caldera-forms/) - Convert leads to customers the ConvertKit way.
 
 Coming soon:
-* Awber
-* ConverKit
+* Front-end viewer
+* Basic Analytics
 * Caldera Members
 
 = Power A Custom Search =
