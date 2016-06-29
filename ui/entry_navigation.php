@@ -93,7 +93,7 @@ function setup_pagination(obj){
 
 
 	init_cf_baldrick();
-
+	jQuery( window ).trigger('resize');
 }
 
 jQuery(function($){

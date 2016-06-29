@@ -24,13 +24,13 @@ if(empty($style_includes)){
 //$field_types = apply_filters( 'caldera_forms_get_field_types', array() );
 
 // create user modal buttons
-$modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_form", "data-active-class": "disabled", "data-load-class": "disabled", "data-callback": "new_form_redirect", "data-before" : "serialize_modal_form", "data-modal-autoclose" : "new_form" }|right';
+$modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : "create_form", "data-active-class": "disabled", "data-load-class": "disabled", "data-callback": "new_form_redirect", "data-before" : "serialize_modal_form", "data-modal-autoclose" : "new_form" }|right';
 
 ?><div class="caldera-editor-header">
 	<ul class="caldera-editor-header-nav">
 		<li class="caldera-editor-logo">
 			<span class="dashicons-cf-logo"></span>
-			<?php _e('Caldera Forms', 'caldera-forms'); ?>
+			<span class="caldera-forms-name">Caldera Forms</span>
 		</li>
 		<li class="caldera-forms-version">
 			<?php echo CFCORE_VER; ?>
@@ -47,6 +47,7 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 			<a class="button ajax-trigger cf-general-settings" data-request="toggle_front_end_settings" data-modal-width="400" data-modal-height="400" data-modal-element="div" data-load-class="none" data-modal="front_settings" data-template="#front-settings-tmpl" data-callback="toggle_front_end_settings" data-modal-title="<?php echo __('General Display Settings', 'caldera-forms'); ?>" title="<?php echo __('General Display Settings', 'caldera-forms'); ?>" ><span class="dashicons dashicons-admin-generic"></span></a>
 
 		</li>
+
 		<li class="caldera-forms-toolbar-item separator">&nbsp;&nbsp;</li>
 		<li class="caldera-forms-toolbar-item" id="cf-email-settings-item">
 			<?php
@@ -59,6 +60,7 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 
 	</ul>
 </div>
+
 <div class="form-admin-page-wrap">
 	<div class="form-panel-wrap">
 	<?php
@@ -106,7 +108,7 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 
 				<tr id="form_row_<?php echo $form_id; ?>" class="<?php echo $class; ?> form_entry_row">						
 					<td class="<?php if( !empty( $form['form_draft'] ) ) { echo 'draft-form'; }else{ echo 'active-form'; } ?>">
-						<?php echo $form['name']; ?>
+						<span class="cf-form-shortcode-preview dashicons-cf-logo" title="<?php echo esc_attr( esc_html__( 'Get Shortcode', 'caldera-forms' ) ); ?>"></span><span class="cf-form-name-preview"><?php echo $form['name']; ?></span><input readonly type="text" class="cf-shortcode-preview" value="<?php echo esc_attr( '[caldera_form id="' . $form['ID'] . '"]'); ?>">
 						
 						<?php if( !empty( $form['debug_mailer'] ) ) { ?>
 						<span style="color: rgb(207, 0, 0);" class="description"><?php _e('Mailer Debug enabled.', 'caldera-forms') ;?></span>
@@ -201,6 +203,20 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 	<div class="form-entries-wrap" aria-live="polite" aria-relevant="additions removals">
 	<?php include CFCORE_PATH . 'ui/entries_toolbar.php'; ?>
 	<div id="form-entries-viewer"></div>
+
+		<div class="tablenav caldera-table-nav" style="display:none;">
+			
+			<div class="tablenav-pages">
+				<input title="<?php echo esc_attr( esc_html__( 'Entries per page', 'caldera-forms' ) ); ?>" id="cf-entries-list-items" type="number" value="<?php echo $entry_perpage; ?>" class="screen-per-page">
+				<span class="pagination-links">
+					<a href="#first" title="Go to the first page" data-page="first" class="first-page">«</a>
+					<a href="#prev" title="Go to the previous page" data-page="prev" class="prev-page">‹</a>
+					<span class="paging-input"><input type="text" size="1" name="paged" title="Current page" class="current-page"> of <span class="total-pages"></span></span>
+					<a href="#next" title="Go to the next page" data-page="next" class="next-page">›</a>
+					<a href="#last" title="Go to the last page" data-page="last" class="last-page">»</a>
+				</span>
+			</div>
+		</div>	
 	</div>
 </div>
 
@@ -343,6 +359,7 @@ jQuery( function( $ ){
 		$(this).parent().addClass('selected');
 	});
 
+
 	//switch in and out of email settings
 	var inEmailSettings = false;
 	$( '#cf-email-settings' ).on( 'click', function(e){
@@ -398,6 +415,21 @@ jQuery( function( $ ){
 	});
 
 
+
+
+	$(document).on('click', '.cf-form-shortcode-preview', function(){
+		var clicked = $( this ),
+			name = clicked.next(),
+			shortcode = name.next();
+		name.hide();
+		shortcode.show().focus().select();
+	});
+	$(document).on('blur', '.cf-shortcode-preview', function(){
+		var clicked = $( this ),
+			form = clicked.prev();
+		clicked.hide();
+		form.show();
+	})
 
 });
 </script>

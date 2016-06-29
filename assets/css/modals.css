@@ -124,12 +124,9 @@
 }
 .tablenav.caldera-table-nav {
   clear: none;
-  float: right;
-  margin: -42px 18px 0 0;
+  margin: 0;
 }
-.caldera-table-nav .tablenav-pages{
-  float: left;
-}
+
 .caldera-table-nav .tablenav-pages .current-page{
   width: 45px;
 }

@@ -269,42 +269,48 @@ class Caldera_Forms {
 
 			dbDelta( $meta_table );
 
-
 		}
 
-		if(!in_array($wpdb->prefix.'cf_form_entries', $alltables)){
+
+		if( !in_array($wpdb->prefix.'cf_form_entries', $alltables) || !in_array($wpdb->prefix.'cf_form_entry_values', $alltables) ){
 			// create tables
 			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
-			$entry_table = "CREATE TABLE `" . $wpdb->prefix . "cf_form_entries` (
-			`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-			`form_id` varchar(18) NOT NULL DEFAULT '',
-			`user_id` int(11) NOT NULL,
-			`datestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-			`status` varchar(20) NOT NULL DEFAULT 'active',
-			PRIMARY KEY (`id`),
-			KEY `form_id` (`form_id`),
-			KEY `user_id` (`user_id`),
-			KEY `date_time` (`datestamp`),
-			KEY `status` (`status`)
-			) " . $charset_collate . ";";
+			if( !in_array($wpdb->prefix.'cf_form_entries', $alltables) ){
+			
+				$entry_table = "CREATE TABLE `" . $wpdb->prefix . "cf_form_entries` (
+				`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+				`form_id` varchar(18) NOT NULL DEFAULT '',
+				`user_id` int(11) NOT NULL,
+				`datestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+				`status` varchar(20) NOT NULL DEFAULT 'active',
+				PRIMARY KEY (`id`),
+				KEY `form_id` (`form_id`),
+				KEY `user_id` (`user_id`),
+				KEY `date_time` (`datestamp`),
+				KEY `status` (`status`)
+				) " . $charset_collate . ";";
 
 
-			dbDelta( $entry_table );
+				dbDelta( $entry_table );
+			}
 
-			$values_table = "CREATE TABLE `" . $wpdb->prefix . "cf_form_entry_values` (
-			`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-			`entry_id` int(11) NOT NULL,
-			`field_id` varchar(20) NOT NULL,
-			`slug` varchar(255) NOT NULL DEFAULT '',
-			`value` longtext NOT NULL,
-			PRIMARY KEY (`id`),
-			KEY `form_id` (`entry_id`),
-			KEY `field_id` (`field_id`),
-			KEY `slug` (`slug`)
-			) " . $charset_collate . ";";
+			if( !in_array($wpdb->prefix.'cf_form_entry_values', $alltables) ){
+				
+				$values_table = "CREATE TABLE `" . $wpdb->prefix . "cf_form_entry_values` (
+				`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+				`entry_id` int(11) NOT NULL,
+				`field_id` varchar(20) NOT NULL,
+				`slug` varchar(255) NOT NULL DEFAULT '',
+				`value` longtext NOT NULL,
+				PRIMARY KEY (`id`),
+				KEY `form_id` (`entry_id`),
+				KEY `field_id` (`field_id`),
+				KEY `slug` (`slug`)
+				) " . $charset_collate . ";";
 
-			dbDelta( $values_table );
+				dbDelta( $values_table );
+			}
 
 		}else{
 			if($version >= '1.1.5'){

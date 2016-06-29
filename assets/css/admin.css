@@ -713,7 +713,7 @@ a span.error-tag {
   position: relative;
 }
 .form-entries-wrap {
-  padding: 0 30px;
+  padding: 0 0 0 30px;
 }
 .form-entries-wrap .caldera-forms-entry-exporter{
   margin-top: 1px;
@@ -733,6 +733,7 @@ a span.error-tag {
   max-width: 100%;
   width: auto;
   overflow: auto;
+  box-sizing: border-box;
 }
 .form-extend-page-wrap .list.form-panel.postbox {
   -moz-box-sizing: border-box;
@@ -1634,11 +1635,10 @@ tr.form_entry_row.loading {
 }
 .tablenav.caldera-table-nav {
   clear: none;
-  float: right;
   margin: -42px 18px 0 0;
 }
 .caldera-table-nav .tablenav-pages{
-  float: left;
+  text-align: right;
 }
 .caldera-table-nav .tablenav-pages .current-page{
   width: 45px;
@@ -1783,6 +1783,13 @@ tr.form_entry_row.loading {
   overflow: hidden;
   width: 42px;
   transition: background-color 1s ease 0s;
+  cursor: pointer;
+  position: relative;
+}
+.box-wrapper {
+  height: 21px;
+  position: absolute;
+  width: 100%;
 }
 .switch.active {
   background: #a3be5f none repeat scroll 0 0;
@@ -1806,4 +1813,97 @@ tr.form_entry_row.loading {
   margin: 0;
   opacity: 0.51;
   visibility: visible;
+}
+input.cf-shortcode-preview {
+  background: #efefef none repeat scroll 0 0;
+  border: medium none;
+  box-shadow: none;
+  display: none;
+  font-size: 12px;
+  padding: 0;
+  vertical-align: top;
+  width: 260px;
+}
+span.cf-form-shortcode-preview {
+  color: #a3be5f;
+  display: inline-block;
+  font-size: 12px;
+  padding: 4px 5px 0 0;
+  cursor: pointer;
+}
+@media screen and ( max-width: 782px ) {
+  /* smaller */
+  .caldera-editor-header {
+    height: 47px;
+    margin: -10px;
+    overflow: hidden;
+    padding-top: 0;
+    top: 57px;
+  }
+  li.caldera-forms-version{
+    display: none;
+  }
+  .caldera-entry-exporter{
+    margin-top: -30px;
+  }
+  .caldera-forms-toolbar-item .button.cf-general-settings {
+    padding: 6px 8px;
+  }  
+  .caldera-editor-header-nav > li.caldera-forms-toolbar-item.separator {
+    display: none;
+  } 
+  #form-entries-viewer {
+    padding-top: 12px;
+  } 
+ .cf-tools-row {
+    white-space: nowrap;
+  }
+}
+.caldera-table-nav .tablenav-pages {
+  float: right;
+  width: auto;
+}
+@media screen and ( max-width: 600px ) {
+  .caldera-editor-logo > span.dashicons-cf-logo {
+    font-size: 31px;
+    line-height: 22px;
+  }
+  .caldera-forms-name{
+    display: none;
+  }
+  .caldera-editor-header {
+    position: absolute;
+  }
+  .tablenav.caldera-table-nav {
+    clear: none;
+    margin: 0;
+    text-align: center;
+  }  
+  .caldera-table-nav .tablenav-pages {
+    text-align: center;
+    width: 100%;
+  }
+ 
+}
+@media screen and ( max-width: 570px ) {
+  .cf-tools-row {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .cf-tools-row-second{
+    margin-left: 50px;
+  }
+
+}
+@media screen and ( max-width: 450px ) {
+  .form-panel-wrap {
+    width: 290px;
+  }  
+.screen-per-page {
+  display: block;
+  margin: 0 auto 10px;
+  width: 68px;
+}
+
 }
