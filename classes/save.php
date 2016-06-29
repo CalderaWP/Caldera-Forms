@@ -196,6 +196,7 @@ class Caldera_Forms_Save_Final {
 			'attachments' => array()
 		);
 		$mail[ 'from' ] =  $sendermail;
+		$mail[ 'from_name' ] = $sendername;
 
 
 		// if added a bcc

@@ -29,6 +29,8 @@ abstract class Caldera_Forms_Email_Client implements Caldera_Forms_Email_Interfa
 	 */
 	protected $message;
 
+	protected $attachments;
+
 	/**
 	 * Caldera_Forms_Email_Client constructor.
 	 *
@@ -36,8 +38,21 @@ abstract class Caldera_Forms_Email_Client implements Caldera_Forms_Email_Interfa
 	 */
 	public function __construct( array $message ) {
 		$this->include_sdk();
+
 		$this->message = $message;
 
+		$this->prepare_attachments();
+
+	}
+
+	public function prepare_attachments(){
+		if( ! empty( $this->message[ 'attachments' ] ) ) {
+			foreach ( $this->message['attachments'] as $attachment ) {
+				$obj = new Caldera_Forms_Email_Attachment( );
+				$obj->content = $attachment;
+				$this->attachments[] = $obj;
+			}
+		}
 	}
 	
 }
