@@ -95,7 +95,7 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 
 				<tr id="form_row_<?php echo $form_id; ?>" class="<?php echo $class; ?> form_entry_row">						
 					<td class="<?php if( !empty( $form['form_draft'] ) ) { echo 'draft-form'; }else{ echo 'active-form'; } ?>">
-						<?php echo $form['name']; ?>
+						<span class="cf-form-shortcode-preview dashicons-cf-logo" title="<?php echo esc_attr( esc_html__( 'Get Shortcode', 'caldera-forms' ) ); ?>"></span><span class="cf-form-name-preview"><?php echo $form['name']; ?></span><input readonly type="text" class="cf-shortcode-preview" value="<?php echo esc_attr( '[caldera_form id="' . $form['ID'] . '"]'); ?>">
 						
 						<?php if( !empty( $form['debug_mailer'] ) ) { ?>
 						<span style="color: rgb(207, 0, 0);" class="description"><?php _e('Mailer Debug enabled.', 'caldera-forms') ;?></span>
@@ -345,7 +345,19 @@ jQuery( function( $ ){
 		$('.cf-form-template.selected').removeClass('selected');
 		$(this).parent().addClass('selected');
 	});
-
+	$(document).on('click', '.cf-form-shortcode-preview', function(){
+		var clicked = $( this ),
+			name = clicked.next(),
+			shortcode = name.next();
+		name.hide();
+		shortcode.show().focus().select();
+	});
+	$(document).on('blur', '.cf-shortcode-preview', function(){
+		var clicked = $( this ),
+			form = clicked.prev();
+		clicked.hide();
+		form.show();
+	})
 });
 </script>
 <?php

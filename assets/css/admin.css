@@ -1814,7 +1814,23 @@ tr.form_entry_row.loading {
   opacity: 0.51;
   visibility: visible;
 }
-
+input.cf-shortcode-preview {
+  background: #efefef none repeat scroll 0 0;
+  border: medium none;
+  box-shadow: none;
+  display: none;
+  font-size: 12px;
+  padding: 0;
+  vertical-align: top;
+  width: 260px;
+}
+span.cf-form-shortcode-preview {
+  color: #a3be5f;
+  display: inline-block;
+  font-size: 12px;
+  padding: 4px 5px 0 0;
+  cursor: pointer;
+}
 @media screen and ( max-width: 782px ) {
   /* smaller */
   .caldera-editor-header {
