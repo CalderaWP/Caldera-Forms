@@ -1816,17 +1816,17 @@ input.cf-shortcode-preview {
   border: medium none;
   box-shadow: none;
   display: none;
-  font-size: 12px;
-  padding: 0;
+  font-size: 13px;
+  padding: 2px;
   vertical-align: top;
   width: 260px;
 }
 span.cf-form-shortcode-preview {
-  color: #a3be5f;
-  display: inline-block;
-  font-size: 12px;
-  padding: 4px 5px 0 0;
+  color: #afafaf;
   cursor: pointer;
+  display: inline-block;
+  font-size: 9px;
+  padding: 4px 5px 0 0;
 }
 @media screen and ( max-width: 782px ) {
   /* smaller */

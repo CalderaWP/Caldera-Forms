@@ -619,6 +619,12 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 			<input type="text" class="field-config required" name="config[name]" value="<?php echo $element['name']; ?>" style="width:500px;" required="required">
 		</div>
 	</div>
+	<div class="caldera-config-group">
+		<label><?php echo esc_html__( 'Shortcode', 'caldera-forms' ); ?> </label>
+		<div class="caldera-config-field">
+			<input type="text" id="cf-shortcode-preview" value="<?php echo esc_attr( '[caldera_form id="' . $element['ID'] . '"]' ); ?>" style="width: 500px; background: #efefef; box-shadow: none; color: #8e8e8e;" readonly="readonly">
+		</div>
+	</div>
 
 	<div class="caldera-config-group">
 		<label><?php echo esc_html__( 'Form Description', 'caldera-forms' ); ?> </label>

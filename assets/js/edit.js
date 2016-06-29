@@ -2371,7 +2371,9 @@ jQuery(document).ready(function($){
 		rebuild_field_binding();
 
 	});
-
+ 	$( document ).on('click', '#cf-shortcode-preview', function(){
+ 		$(this).focus().select();
+ 	} );
 
 	// build processor type config
 	function build_processor_config(el){
