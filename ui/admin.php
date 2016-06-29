@@ -343,11 +343,11 @@ jQuery( function( $ ){
 			size = 430;
 			clicked.find('span').css({transform: ''});
 			form_toggle_state = false;
-			forms.show();
+			forms.attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' ).show();
 		}else{
 			form_toggle_state = true;
 			clicked.find('span').css({transform: 'rotate(180deg)'});
-			forms.hide();
+			forms.attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' ).hide();
 		}
 		panel.animate( {marginLeft: size }, 220);
 		
