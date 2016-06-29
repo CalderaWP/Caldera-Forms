@@ -184,27 +184,39 @@ class Caldera_Forms_Save_Final {
 			$form[ 'mailer' ][ 'email_subject' ] = $form[ 'name' ];
 		}
 
+
+
 		$mail = array(
 			'recipients' => array(),
 			'subject'	=> Caldera_Forms::do_magic_tags($form['mailer']['email_subject']),
 			'message'	=> stripslashes( $form['mailer']['email_message'] ) ."\r\n",
 			'headers'	=>	array(
-				Caldera_Forms::do_magic_tags( 'From: ' . $sendername . ' <' . $sendermail . '>' ),
+				Caldera_Forms::do_magic_tags( 'From: ' . $sendername . ' <' . $sendermail . '>' )
 			),
 			'attachments' => array()
 		);
+		$mail[ 'from' ] =  $sendermail;
+		$mail[ 'from_name' ] = $sendername;
+
 
 		// if added a bcc
+		$mail[ 'bcc' ] = false;
 		if ( isset( $form['mailer']['bcc_to'] )  ) {
-			$mail['headers'][] = Caldera_Forms::do_magic_tags( 'Bcc: ' . $form['mailer']['bcc_to'] );
+			$mail[ 'bcc' ] = $form[ 'mailer' ][ 'bcc_to' ];
+			$mail[ 'headers' ][] = Caldera_Forms::do_magic_tags( 'Bcc: ' . $form[ 'mailer' ][ 'bcc_to' ] );
 		}
 
 		// if added a replyto
+		$mail[ 'replyto' ] = false;
 		if ( isset( $form['mailer']['reply_to'] )  ) {
 			$reply_to = trim( $form[ 'mailer' ][ 'reply_to' ] );
 			if ( ! empty( $reply_to ) ) {
+				$mail[ 'replyto' ] = $reply_to;
 				$mail[ 'headers' ][] = Caldera_Forms::do_magic_tags( 'Reply-To: <' . $reply_to . '>' );
 			}
+		}
+		if( ! $mail[ 'replyto' ] ){
+			$mail[ 'replyto' ] = $mail[ 'from' ];
 		}
 
 		// Filter Mailer first as not to have user input be filtered
@@ -212,7 +224,10 @@ class Caldera_Forms_Save_Final {
 
 		if( ! isset( $form['mailer']['email_type'] ) || $form['mailer']['email_type'] == 'html'){
 			$mail['headers'][] = "Content-type: text/html";
+			$mail[ 'html' ] = true;
 			$mail['message'] = wpautop( $mail['message'] );
+		}else{
+			$mail[ 'html' ] = false;
 		}
 
 		// get tags
@@ -308,8 +323,9 @@ class Caldera_Forms_Save_Final {
 		// final magic
 		$mail['message'] = Caldera_Forms::do_magic_tags( $mail['message'] );
 		$mail['subject'] = Caldera_Forms::do_magic_tags( $mail['subject'] );
-
+		
 		// CSV
+		$mail[ 'csv' ] = $csvfile =false;
 		if(!empty($form['mailer']['csv_data'])){
 			ob_start();
 			$df = fopen("php://output", 'w');
@@ -317,9 +333,12 @@ class Caldera_Forms_Save_Final {
 			fputcsv($df, $submission);
 			fclose($df);
 			$csv = ob_get_clean();
-			$csvfile = wp_upload_bits( uniqid().'.csv', null, $csv );
-			if( isset( $csvfile['file'] ) && false == $csvfile['error'] && file_exists( $csvfile['file'] ) ){
-				$mail['attachments'][] = $csvfile['file'];
+			$csvfile = wp_upload_bits( uniqid() . '.csv', null, $csv );
+			if ( isset( $csvfile[ 'file' ] ) && false == $csvfile[ 'error' ] && file_exists( $csvfile[ 'file' ] ) ) {
+				$mail[ 'attachments' ][] = $csvfile[ 'file' ];
+				$mail[ 'csv' ]           = $csvfile[ 'file' ];
+			}else{
+				$mail[ 'csv' ] = false;
 			}
 		}
 
@@ -369,47 +388,63 @@ class Caldera_Forms_Save_Final {
 				add_action( 'phpmailer_init', array( 'Caldera_Forms', 'debug_mail_send' ), 1000 );
 			}
 
-			if( wp_mail( (array) $mail['recipients'], $mail['subject'], stripslashes( $mail['message'] ), $headers, $mail['attachments'] )){
-
-				// kill attachment.
-				if(!empty($csvfile['file'])){
-					if(file_exists($csvfile['file'])){
-						unlink($csvfile['file']);
-					}
-				}
-
-				/**
-				 * Fires main mailer completes
-				 *
-				 * @since 1.3.1
-				 *
-				 * @param array $mail Email data
-				 * @param array $data Form entry data
-				 * @param array $form The form config
-				 */
-				do_action( 'caldera_forms_mailer_complete', $mail, $data, $form );
-			}else{
-				/**
-				 * Fires main mailer fails
-				 *
-				 * @since 1.2.3
-				 *
-				 * @param array $mail Email data
-				 * @param array $data Form entry data
-				 * @param array $form The form config
-				 */
-				do_action( 'caldera_forms_mailer_failed', $mail, $data, $form );
-
-			}
+			$sent = wp_mail( (array) $mail['recipients'], $mail['subject'], stripslashes( $mail['message'] ), $headers, $mail['attachments'] );
+			self::after_send_email( $form, $data, $sent, $csvfile, $mail, 'wpmail' );
 		}else{
-			if(!empty($csvfile['file'])){
-				if(file_exists($csvfile['file'])){
-					unlink($csvfile['file']);
-				}
+			if( $csvfile ){
+				self::unlink_csv( $csvfile );
 			}
+
 
 		}
 
+	}
+
+	/**
+	 * Runs post email sent/not sent tasks/hooks etc
+	 *
+	 *
+	 * @since 1.3.6
+	 *
+	 * @param array $form Form config
+	 * @param array $data Submission data
+	 * @param bool $sent Was email sent
+	 * @param array|bool $csvfile Csv file array or false if not created
+	 * @param array $mail The email
+	 * @param string $method Method for sending email
+	 */
+	public static function after_send_email( $form, $data, $sent, $csvfile, $mail, $method ) {
+		if ( $sent ) {
+
+			if( $csvfile ){
+				self::unlink_csv( $csvfile );
+			}
+
+			/**
+			 * Fires main mailer completes
+			 *
+			 * @since 1.3.1
+			 *
+			 * @param array $mail Email data
+			 * @param array $data Form entry data
+			 * @param array $form The form config
+			 * @param string $method Method for sending email
+			 */
+			do_action( 'caldera_forms_mailer_complete', $mail, $data, $form, $method );
+		} else {
+			/**
+			 * Fires main mailer fails
+			 *
+			 * @since 1.2.3
+			 *
+			 * @param array $mail Email data
+			 * @param array $data Form entry data
+			 * @param array $form The form config
+			 * @param string $method Method for sending email
+			 */
+			do_action( 'caldera_forms_mailer_failed', $mail, $data, $form, $method );
+
+		}
 	}
 
 	/**
@@ -468,5 +503,23 @@ class Caldera_Forms_Save_Final {
 		}
 		
 	}
+
+	/**
+	 * After sending email, unlink CSV
+	 *
+	 * @since 1.3.6
+	 *
+	 * @param $csvfile
+	 */
+	protected static function unlink_csv( $csvfile ) {
+		if ( is_array( $csvfile ) && ! empty( $csvfile[ 'file' ] ) ) {
+			if ( file_exists( $csvfile[ 'file' ] ) ) {
+				unlink( $csvfile[ 'file' ] );
+			}
+
+		}
+
+	}
+
 
 }

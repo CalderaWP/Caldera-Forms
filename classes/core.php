@@ -88,6 +88,14 @@ class Caldera_Forms {
 		add_shortcode( 'caldera_form_modal', array( $this, 'shortcode_handler') );
 		add_action( 'wp_footer', array( $this, 'render_footer_modals') );
 
+		//emails
+		add_action( 'caldera_forms_core_init', array( 'Caldera_Forms_Email_Settings', 'maybe_add_hooks' ) );
+		add_action( 'caldera_forms_admin_footer', array( 'Caldera_Forms_Email_Settings', 'ui' ) );
+		add_filter( 'pre_update_option__caldera_forms_email_api_settings', array( 'Caldera_Forms_Email_Settings', 'sanitize_save' ) );
+		if( current_user_can( Caldera_Forms::get_manage_cap( 'admin' ) ) ) {
+			add_action( 'wp_ajax_cf_email_save', array( 'Caldera_Forms_Email_Settings', 'save' ) );
+		}
+		
 
 		/**
 		 * Runs after Caldera Forms core is initialized

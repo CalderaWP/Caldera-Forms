@@ -43,10 +43,20 @@ $modal_new_form = __('Create Form', 'caldera-forms').'|{"data-action" : "create_
 		</li>
 		<li class="caldera-forms-toolbar-item separator">&nbsp;&nbsp;</li>
 		<li class="caldera-forms-toolbar-item">
+
 			<a class="button ajax-trigger cf-general-settings" data-request="toggle_front_end_settings" data-modal-width="400" data-modal-height="400" data-modal-element="div" data-load-class="none" data-modal="front_settings" data-template="#front-settings-tmpl" data-callback="toggle_front_end_settings" data-modal-title="<?php echo __('General Display Settings', 'caldera-forms'); ?>" title="<?php echo __('General Display Settings', 'caldera-forms'); ?>" ><span class="dashicons dashicons-admin-generic"></span></a>
+
 		</li>
 		<li class="caldera-forms-toolbar-item">
 		&nbsp;
+		</li>
+		<li class="caldera-forms-toolbar-item" id="cf-email-settings-item">
+			<?php
+				printf( '<button class="button" id="cf-email-settings" title="%s">%s</button>',
+					esc_attr__( 'Click to modify Caldera Forms email settings', 'caldera-forms'  ),
+					esc_html__( 'Email Settings' )
+				);
+			?>
 		</li>
 
 	</ul>
@@ -335,11 +345,68 @@ jQuery( function( $ ){
 		$(this).parent().addClass('selected');
 	});
 
+	//switch in and out of email settings
+	var inEmailSettings = false;
+	$( '#cf-email-settings' ).on( 'click', function(e){
+		e.preventDefault();
+		var $mainUI = $( '.form-panel-wrap, .form-entries-wrap' );
+		var $emailSettingsUI = $( '#cf-email-settings-ui' );
+		var $otherButtons = $( '.caldera-forms-toolbar-item a' );
+		var $toggles = $( '.toggle_option_preview, #render-with-label' );
+
+		if( inEmailSettings ){
+			$( this ).html( '<?php esc_html_e( 'Email Settings', 'caldera-forms' ); ?>' );
+			inEmailSettings = false;
+			$otherButtons.removeClass( 'disabled' );
+			$emailSettingsUI.hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
+			$mainUI.show().attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' );
+			$toggles.show().attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' );
+		}else{
+			inEmailSettings = true;
+			$( this ).html( '<?php esc_html_e( 'Close Email Settings', 'caldera-forms' ); ?>' );
+			$otherButtons.addClass( 'disabled' );
+			$mainUI.hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
+			$emailSettingsUI.show().attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' );
+			$( this ).html = "<?php esc_html__( 'Email Settings', 'caldera-forms' ); ?>";
+
+			$toggles.hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
+			$( this ).on( 'click' )
+		}
+		
+
+
+	});
+
+	//handle save of email settings
+	$( '#cf-email-settings-save' ).on( 'click', function( e ) {
+		e.preventDefault( e );
+		var data = {
+			nonce: $('#cfemail').val(),
+			action: 'cf_email_save',
+			method: $('#cf-emails-api').val(),
+			sendgrid: $('#cf-emails-sendgrid-key').val()
+		};
+		var $spinner = $( '#cf-email-spinner' );
+		$spinner.attr( 'aria-hidden', false ).css( 'visibility', 'visible' ).show();
+
+		$.post( ajaxurl, data ).done( function( r ) {
+			$spinner.attr( 'aria-hidden', true ).css( 'visibility', 'hidden' ).hide(
+				500, function(){
+					document.getElementById( 'cf-email-settings' ).click();
+				}
+			);
+		});
+		
+	});
+
+
+
 });
 </script>
 <?php
 
 include CFCORE_PATH . 'ui/entry_navigation.php';
+
 
 do_action('caldera_forms_admin_footer');
 ?>
