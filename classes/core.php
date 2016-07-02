@@ -3775,17 +3775,19 @@ class Caldera_Forms {
 		$page_forms = array();
 
 		// check active widgets
-		$sidebars = get_option('sidebars_widgets');
-		$form_widgets = get_option( 'widget_caldera_forms_widget' );
-		unset($sidebars['wp_inactive_widgets']);
-		foreach ($sidebars as $sidebar => $set) {
-			if (is_active_sidebar($sidebar)) {
-				foreach( $set as $setup ){
-					if( false !== strpos( $setup, 'caldera_forms_widget-' ) ){
-						$widget_instance = str_replace( 'caldera_forms_widget-', '', $setup );
-						if( !empty( $form_widgets[ $widget_instance ]['form'] ) ){
-							$form_id = $form_widgets[ $widget_instance ]['form'];
-							$page_forms[ $form_id ] = $form_id;
+		$sidebars     = get_option( 'sidebars_widgets' );
+		if ( is_array( $sidebars ) && ! empty( $sidebars )  ) {
+			$form_widgets = get_option( 'widget_caldera_forms_widget' );
+			unset( $sidebars[ 'wp_inactive_widgets' ] );
+			foreach ( $sidebars as $sidebar => $set ) {
+				if ( is_active_sidebar( $sidebar ) ) {
+					foreach ( $set as $setup ) {
+						if ( false !== strpos( $setup, 'caldera_forms_widget-' ) ) {
+							$widget_instance = str_replace( 'caldera_forms_widget-', '', $setup );
+							if ( ! empty( $form_widgets[ $widget_instance ][ 'form' ] ) ) {
+								$form_id                = $form_widgets[ $widget_instance ][ 'form' ];
+								$page_forms[ $form_id ] = $form_id;
+							}
 						}
 					}
 				}
