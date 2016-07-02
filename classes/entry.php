@@ -162,7 +162,14 @@ class Caldera_Forms_Entry {
 	 * @return array
 	 */
 	public function get_fields(){
+		/** @var Caldera_Forms_Entry_Field $field */
+		foreach( $this->fields as $index => $field ){
+			$field->value = $field->apply_filter( 'value', $field->value );
+			$this->fields[ $index ] = $field;
+		}
+
 		return $this->fields;
+		
 	}
 
 	/**

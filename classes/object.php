@@ -117,7 +117,7 @@ abstract class Caldera_Forms_Object {
 	 *
 	 * @return mixed|void
 	 */
-	protected function apply_filter( $property, $value ){
+	public function apply_filter( $property, $value ){
 		$prefix = $this->get_prefix();
 		$filter_name = 'caldera_forms_' . $prefix . '_' . $property;
 
