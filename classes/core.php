@@ -1134,6 +1134,96 @@ class Caldera_Forms {
 	public function get_internal_field_types($fields){
 
 		$internal_fields = array(
+			//basic
+			'text' => array(
+				"field"		=>	__( 'Single Line Text', 'caldera-forms' ),
+				"description" => __( 'Single Line Text', 'caldera-forms' ),
+				"file"		=>	CFCORE_PATH . "fields/text/field.php",
+				"category"	=>	__( 'Basic', 'caldera-forms' ),
+				"setup"		=>	array(
+					"template"	=>	CFCORE_PATH . "fields/text/config.php",
+					"preview"	=>	CFCORE_PATH . "fields/text/preview.php"
+				),
+
+			),
+			'hidden' => array(
+				"field"		=>	__( 'Hidden', 'caldera-forms' ),
+				"description" => __( 'Hidden', 'caldera-forms' ),
+				"file"		=>	CFCORE_PATH . "fields/hidden/field.php",
+				"category"	=>	__( 'Basic', 'caldera-forms' ),
+				"static"	=> true,
+				"setup"		=>	array(
+					"preview"	=>	CFCORE_PATH . "fields/hidden/preview.php",
+					"template"	=>	CFCORE_PATH . "fields/hidden/setup.php",
+					"not_supported"	=>	array(
+						'hide_label',
+						'caption',
+						'required',
+					)
+				)
+			),
+			'email' => array(
+				"field"		=>	__( 'Email Address', 'caldera-forms' ),
+				"description" => __( 'Email Address', 'caldera-forms' ),
+				"file"		=>	CFCORE_PATH . "fields/email/field.php",
+				"category"	=>	__( 'Basic', 'caldera-forms' ),
+				"setup"		=>	array(
+					"preview"	=>	CFCORE_PATH . "fields/email/preview.php",
+					"template"	=>	CFCORE_PATH . "fields/email/config.php"
+				)
+			),
+			'button' => array(
+				"field"		=>	__( 'Button', 'caldera-forms' ),
+				"description" => __( 'Button, Submit and Reset types', 'caldera-forms' ),
+				"file"		=>	CFCORE_PATH . "fields/button/field.php",
+				"category"	=>	__( 'Basic', 'caldera-forms' ),
+				"capture"	=>	false,
+				"setup"		=>	array(
+					"template"	=>	CFCORE_PATH . "fields/button/config_template.php",
+					"preview"	=>	CFCORE_PATH . "fields/button/preview.php",
+					"default"	=> array(
+						'class'	=>	'btn btn-default',
+						'type'	=>	'submit'
+					),
+					"not_supported"	=>	array(
+						'hide_label',
+						'caption',
+						'required',
+						'entry_list'
+					)
+				)
+			),
+			'phone' => array(
+				"field"		=>	__( 'Phone Number', 'caldera-forms' ),
+				"description" => __( 'Phone number with masking', 'caldera-forms' ),
+				"file"		=>	CFCORE_PATH . "fields/phone/field.php",
+				"category"	=>	__( 'Basic', 'caldera-forms' ),
+				"setup"		=>	array(
+					"template"	=>	CFCORE_PATH . "fields/phone/config.php",
+					"preview"	=>	CFCORE_PATH . "fields/phone/preview.php",
+					"default"	=>	array(
+						'default'	=> '',
+						'type'	=>	'local',
+						'custom'=> '(999)999-9999'
+					)
+				)
+			),
+			'paragraph' => array(
+				"field"		=>	__( 'Paragraph Textarea', 'caldera-forms' ),
+				"description" => __( 'Paragraph Textarea', 'caldera-forms' ),
+				"file"		=>	CFCORE_PATH . "fields/paragraph/field.php",
+				"category"	=>	__( 'Basic', 'caldera-forms' ),
+				"setup"		=>	array(
+					"template"	=>	CFCORE_PATH . "fields/paragraph/config_template.php",
+					"preview"	=>	CFCORE_PATH . "fields/paragraph/preview.php",
+					"default"	=> array(
+						'rows'	=>	'4'
+					),
+				)
+			),
+
+
+			//special
 			'calculation' => array(
 				"field"		=>	__( 'Calculation', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/calculation/field.php",
@@ -1194,32 +1284,8 @@ class Caldera_Forms {
 					),
 				)
 			),
-			'phone' => array(
-				"field"		=>	__( 'Phone Number', 'caldera-forms' ),
-				"description" => __( 'Phone number with masking', 'caldera-forms' ),
-				"file"		=>	CFCORE_PATH . "fields/phone/field.php",
-				"category"	=>	__( 'Special', 'caldera-forms' ),
-				"setup"		=>	array(
-					"template"	=>	CFCORE_PATH . "fields/phone/config.php",
-					"preview"	=>	CFCORE_PATH . "fields/phone/preview.php",
-					"default"	=>	array(
-						'default'	=> '',
-						'type'	=>	'local',
-						'custom'=> '(999)999-9999'
-					)
-				)
-			),
-			'text' => array(
-				"field"		=>	__( 'Single Line Text', 'caldera-forms' ),
-				"description" => __( 'Single Line Text', 'caldera-forms' ),
-				"file"		=>	CFCORE_PATH . "fields/text/field.php",
-				"category"	=>	__( 'Basic', 'caldera-forms' ),
-				"setup"		=>	array(
-					"template"	=>	CFCORE_PATH . "fields/text/config.php",
-					"preview"	=>	CFCORE_PATH . "fields/text/preview.php"
-				),
 
-			),
+			//file
 			'file' => array(
 				"field"		=>	__( 'File', 'caldera-forms' ),
 				"description" => __( 'File Uploader', 'caldera-forms' ),
@@ -1246,22 +1312,8 @@ class Caldera_Forms {
 				),
 
 			),
-			'recaptcha' => array(
-				"field"		=>	__( 'reCAPTCHA', 'caldera-forms' ),
-				"description" => __( 'reCAPTCHA anti-spam field', 'caldera-forms' ),
-				"file"		=>	CFCORE_PATH . "fields/recaptcha/field.php",
-				"category"	=>	__( 'Discontinued', 'caldera-forms' ),
-				"handler"	=>	array($this, 'captcha_check'),
-				"capture"	=>	false,
-				"setup"		=>	array(
-					"template"	=>	CFCORE_PATH . "fields/recaptcha/config.php",
-					"preview"	=>	CFCORE_PATH . "fields/recaptcha/preview.php",
-					"not_supported"	=>	array(
-						'caption',
-						'required'
-					),
-				)
-			),
+
+			//content
 			'html' => array(
 				"field"		=>	__( 'HTML', 'caldera-forms' ),
 				"description" => __( 'Add text/html content', 'caldera-forms' ),
@@ -1280,79 +1332,8 @@ class Caldera_Forms {
 					)
 				)
 			),
-			'hidden' => array(
-				"field"		=>	__( 'Hidden', 'caldera-forms' ),
-				"description" => __( 'Hidden', 'caldera-forms' ),
-				"file"		=>	CFCORE_PATH . "fields/hidden/field.php",
-				"category"	=>	__( 'Basic', 'caldera-forms' ),
-				"static"	=> true,
-				"setup"		=>	array(
-					"preview"	=>	CFCORE_PATH . "fields/hidden/preview.php",
-					"template"	=>	CFCORE_PATH . "fields/hidden/setup.php",
-					"not_supported"	=>	array(
-						'hide_label',
-						'caption',
-						'required',
-					)
-				)
-			),
-			'button' => array(
-				"field"		=>	__( 'Button', 'caldera-forms' ),
-				"description" => __( 'Button, Submit and Reset types', 'caldera-forms' ),
-				"file"		=>	CFCORE_PATH . "fields/button/field.php",
-				"category"	=>	__( 'Basic', 'caldera-forms' ),
-				"capture"	=>	false,
-				"setup"		=>	array(
-					"template"	=>	CFCORE_PATH . "fields/button/config_template.php",
-					"preview"	=>	CFCORE_PATH . "fields/button/preview.php",
-					"default"	=> array(
-						'class'	=>	'btn btn-default',
-						'type'	=>	'submit'
-					),
-					"not_supported"	=>	array(
-						'hide_label',
-						'caption',
-						'required',
-						'entry_list'
-					)
-				)
-			),
-			'email' => array(
-				"field"		=>	__( 'Email Address', 'caldera-forms' ),
-				"description" => __( 'Email Address', 'caldera-forms' ),
-				"file"		=>	CFCORE_PATH . "fields/email/field.php",
-				"category"	=>	__( 'Basic', 'caldera-forms' ),
-				"setup"		=>	array(
-					"preview"	=>	CFCORE_PATH . "fields/email/preview.php",
-					"template"	=>	CFCORE_PATH . "fields/email/config.php"
-				)
-			),
-			'paragraph' => array(
-				"field"		=>	__( 'Paragraph Textarea', 'caldera-forms' ),
-				"description" => __( 'Paragraph Textarea', 'caldera-forms' ),
-				"file"		=>	CFCORE_PATH . "fields/paragraph/field.php",
-				"category"	=>	__( 'Basic', 'caldera-forms' ),
-				"setup"		=>	array(
-					"template"	=>	CFCORE_PATH . "fields/paragraph/config_template.php",
-					"preview"	=>	CFCORE_PATH . "fields/paragraph/preview.php",
-					"default"	=> array(
-						'rows'	=>	'4'
-					),
-				)
-			),
-			'toggle_switch' => array(
-				"field"		=>	__( 'Toggle Switch', 'caldera-forms' ),
-				"description" => __( 'Toggle Switch', 'caldera-forms' ),
-				"category"	=>	__( 'Select', 'caldera-forms' ),
-				"file"		=>	CFCORE_PATH . "fields/toggle_switch/field.php",
-				"viewer"	=>	array($this, 'filter_options_calculator'),
-				"options"	=>	"single",
-				"static"	=> true,
-				"setup"		=>	array(
-					"template"	=>	CFCORE_PATH . "fields/toggle_switch/config_template.php",
-					"preview"	=>	CFCORE_PATH . "fields/toggle_switch/preview.php",
-				),
-			),
+
+			//select
 			'dropdown' => array(
 				"field"		=>	__( 'Dropdown Select', 'caldera-forms' ),
 				"description" => __( 'Dropdown Select', 'caldera-forms' ),
@@ -1396,6 +1377,24 @@ class Caldera_Forms {
 					"template"	=>	CFCORE_PATH . "fields/radio/config_template.php",
 				)
 			),
+			'filtered_select2' => array(
+				"field"		=>	__( 'Autocomplete', 'caldera-forms' ),
+				"file"		=>	CFCORE_PATH . "fields/select2/field/field.php",
+				"category"	=>	__( 'Select', 'caldera-forms' ),
+				"description" => 'Select2 dropdown',
+				"options"	=>	"multiple",
+				"static"	=> true,
+				"setup"		=>	array(
+					"template"	=>	CFCORE_PATH . "fields/select2/field/config.php",
+					"preview"	=>	CFCORE_PATH . "fields/select2/field/preview.php",
+				),
+				"scripts"	=> array(
+					CFCORE_URL . "fields/select2/js/select2.min.js",
+				),
+				"styles"	=> array(
+					CFCORE_URL . "fields/select2/css/select2.css",
+				)
+			),
 			'date_picker' => array(
 				"field"		=>	__( 'Date Picker', 'caldera-forms' ),
 				"description" => __( 'Date Picker', 'caldera-forms' ),
@@ -1408,6 +1407,19 @@ class Caldera_Forms {
 						'format'	=>	'yyyy-mm-dd'
 					),
 				)
+			),
+			'toggle_switch' => array(
+				"field"		=>	__( 'Toggle Switch', 'caldera-forms' ),
+				"description" => __( 'Toggle Switch', 'caldera-forms' ),
+				"category"	=>	__( 'Select', 'caldera-forms' ),
+				"file"		=>	CFCORE_PATH . "fields/toggle_switch/field.php",
+				"viewer"	=>	array($this, 'filter_options_calculator'),
+				"options"	=>	"single",
+				"static"	=> true,
+				"setup"		=>	array(
+					"template"	=>	CFCORE_PATH . "fields/toggle_switch/config_template.php",
+					"preview"	=>	CFCORE_PATH . "fields/toggle_switch/preview.php",
+				),
 			),
 			'color_picker' => array(
 				"field"		=>	__( 'Color Picker', 'caldera-forms' ),
@@ -1437,24 +1449,26 @@ class Caldera_Forms {
 					),
 				)
 			),
-			'filtered_select2' => array(
-				"field"		=>	__( 'Autocomplete', 'caldera-forms' ),
-				"file"		=>	CFCORE_PATH . "fields/select2/field/field.php",
-				"category"	=>	__( 'Select', 'caldera-forms' ),
-				"description" => 'Select2 dropdown',
-				"options"	=>	"multiple",
-				"static"	=> true,
+
+
+			//discontinued
+			'recaptcha' => array(
+				"field"		=>	__( 'reCAPTCHA', 'caldera-forms' ),
+				"description" => __( 'reCAPTCHA anti-spam field', 'caldera-forms' ),
+				"file"		=>	CFCORE_PATH . "fields/recaptcha/field.php",
+				"category"	=>	__( 'Discontinued', 'caldera-forms' ),
+				"handler"	=>	array($this, 'captcha_check'),
+				"capture"	=>	false,
 				"setup"		=>	array(
-					"template"	=>	CFCORE_PATH . "fields/select2/field/config.php",
-					"preview"	=>	CFCORE_PATH . "fields/select2/field/preview.php",
-				),
-				"scripts"	=> array(
-					CFCORE_URL . "fields/select2/js/select2.min.js",
-				),
-				"styles"	=> array(
-					CFCORE_URL . "fields/select2/css/select2.css",
+					"template"	=>	CFCORE_PATH . "fields/recaptcha/config.php",
+					"preview"	=>	CFCORE_PATH . "fields/recaptcha/preview.php",
+					"not_supported"	=>	array(
+						'caption',
+						'required'
+					),
 				)
-			)
+			),
+
 		);
 
 		return array_merge( $fields, $internal_fields );

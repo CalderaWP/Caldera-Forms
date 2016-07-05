@@ -93,7 +93,6 @@ do_action('caldera_forms_edit_start', $element);
 // Get Fieldtpyes
 $field_types = apply_filters( 'caldera_forms_get_field_types', array() );
 // sort fields
-ksort($field_types);
 
 // Get Elements
 $panel_extensions = apply_filters( 'caldera_forms_get_panel_extensions', array() );
@@ -305,10 +304,11 @@ $default_template = "
 
 // type list
 $field_type_list = array(
-	esc_html__( 'Basic', 'caldera-forms' )	=> array(),
-	esc_html__( 'Advanced', 'caldera-forms' )	=> array(),
-	esc_html__( 'Special', 'caldera-forms' )	=> array(),
-	esc_html__( 'Discontinued', 'caldera-forms' )	=> array(),
+	esc_html__( 'Select', 'caldera-forms' )       => array(),
+	esc_html__( 'File', 'caldera-forms' )         => array(),
+	esc_html__( 'Content', 'caldera-forms' )      => array(),
+	esc_html__( 'Special', 'caldera-forms' )      => array(),
+	esc_html__( 'Discontinued', 'caldera-forms' ) => array(),
 );
 // Build Field Types List
 foreach($field_types as $field_slug=>$config){
@@ -319,6 +319,7 @@ foreach($field_types as $field_slug=>$config){
 		}
 	}
 
+	$categories = array();
 	if(!empty($config['category'])){
 		$categories = explode(',', $config['category']);
 	}
@@ -396,7 +397,6 @@ foreach($field_types as $field_slug=>$config){
 		include $config['setup']['preview'];
 		$field_type_templates['preview-' . sanitize_key( $field_slug ) . "_tmpl"] = ob_get_clean();
 	}
-	//dump($field_slug,0);
 
 
 }
@@ -548,9 +548,9 @@ function build_field_types($default = null){
 	if(null === $default){
 		$out .= '<option></option>';
 	}
-	//ksort($field_type_list);
+
 	foreach($field_type_list as $category=>$fields){
-		ksort($fields);
+
 		$out .= "<optgroup label=\" ". $category . "\">\r\n";
 		foreach ($fields as $field => $config) {
 
