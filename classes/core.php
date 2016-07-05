@@ -1123,12 +1123,15 @@ class Caldera_Forms {
 	/**
 	 * Load built-in fields
 	 *
+	 * @since unknown
+	 *
+	 * @uses "caldera_forms_get_field_types" filter
+	 *
 	 * @param array $fields
 	 *
 	 * @return array
 	 */
 	public function get_internal_field_types($fields){
-
 
 		$internal_fields = array(
 			'calculation' => array(
@@ -1146,13 +1149,8 @@ class Caldera_Forms {
 						'before'	=>	__( 'Total', 'caldera-forms' ).':',
 						'after'		=> ''
 					),
-					"styles" => array(
-						//CFCORE_URL . "fields/calculation/style.css",
-					)
+
 				),
-				"scripts" => array(
-					//'jquery'
-				)
 			),
 			'range_slider' 	=> array(
 				"field"		=>	__( 'Range Slider', 'caldera-forms' ),
@@ -1175,20 +1173,6 @@ class Caldera_Forms {
 						'handleborder'	=> '#cccccc',
 						'trackcolor' => '#e6e6e6'
 					),
-					"scripts" => array(
-						//'jquery',
-						//CFCORE_URL . "fields/range_slider/rangeslider.js",
-					),
-					"styles" => array(
-						//CFCORE_URL . "fields/range_slider/rangeslider.css",
-					)
-				),
-				"scripts" => array(
-					//'jquery',
-					//CFCORE_URL . "fields/range_slider/rangeslider.js",
-				),
-				"styles" => array(
-					//CFCORE_URL . "fields/range_slider/rangeslider.css",
 				)
 			),
 			'star_rating' 	=> array(
@@ -1208,22 +1192,6 @@ class Caldera_Forms {
 						'track_color'=> '#AFAFAF',
 						'type'=> 'star',
 					),
-					"scripts" => array(
-						//'jquery',
-						//CFCORE_URL . "fields/star-rate/jquery.raty.js",
-					),
-					"styles" => array(
-						//CFCORE_URL . "fields/star-rate/jquery.raty.css",
-						//CFCORE_URL . "fields/star-rate/cf-raty.css",
-					)
-				),
-				"scripts" => array(
-					'jquery',
-					//CFCORE_URL . "fields/star-rate/jquery.raty.js",
-				),
-				"styles" => array(
-					//CFCORE_URL . "fields/star-rate/jquery.raty.css",
-					//CFCORE_URL . "fields/star-rate/cf-raty.css",
 				)
 			),
 			'phone' => array(
@@ -1238,14 +1206,7 @@ class Caldera_Forms {
 						'default'	=> '',
 						'type'	=>	'local',
 						'custom'=> '(999)999-9999'
-					),
-					"scripts"	=> array(
-						//CFCORE_URL . "fields/phone/masked-input.js"
 					)
-				),
-				"scripts"	=> array(
-					//"jquery",
-					//CFCORE_URL . "fields/phone/masked-input.js"
 				)
 			),
 			'text' => array(
@@ -1257,10 +1218,7 @@ class Caldera_Forms {
 					"template"	=>	CFCORE_PATH . "fields/text/config.php",
 					"preview"	=>	CFCORE_PATH . "fields/text/preview.php"
 				),
-				"scripts"	=> array(
-					//"jquery",
-					//CFCORE_URL . "fields/phone/masked-input.js"
-				)
+
 			),
 			'file' => array(
 				"field"		=>	__( 'File', 'caldera-forms' ),
@@ -1302,16 +1260,7 @@ class Caldera_Forms {
 						'caption',
 						'required'
 					),
-					"scripts"	=> array(
-						"https://www.google.com/recaptcha/api.js"
-					)
-				),
-				"scripts"	=> array(
-					"https://www.google.com/recaptcha/api.js"
-				),
-				"styles"	=> array(
-					//CFCORE_URL . "fields/recaptcha/style.css"
-				),
+				)
 			),
 			'html' => array(
 				"field"		=>	__( 'HTML', 'caldera-forms' ),
@@ -1402,22 +1351,7 @@ class Caldera_Forms {
 				"setup"		=>	array(
 					"template"	=>	CFCORE_PATH . "fields/toggle_switch/config_template.php",
 					"preview"	=>	CFCORE_PATH . "fields/toggle_switch/preview.php",
-					"default"	=> array(
-					),
-					"scripts"	=>	array(
-						//CFCORE_URL . "fields/toggle_switch/js/setup.js"
-					),
-					"styles"	=>	array(
-						//CFCORE_URL . "fields/toggle_switch/css/setup.css"
-					),
 				),
-				"scripts"	=>	array(
-					"jquery",
-					//CFCORE_URL . "fields/toggle_switch/js/toggle.js"
-				),
-				"styles"	=>	array(
-					//CFCORE_URL . "fields/toggle_switch/css/toggle.css"
-				)
 			),
 			'dropdown' => array(
 				"field"		=>	__( 'Dropdown Select', 'caldera-forms' ),
@@ -1433,9 +1367,6 @@ class Caldera_Forms {
 					"default"	=> array(
 
 					),
-					"scripts"	=>	array(
-						//CFCORE_URL . "fields/dropdown/js/setup.js"
-					)
 				)
 			),
 			'checkbox' => array(
@@ -1449,12 +1380,7 @@ class Caldera_Forms {
 				"setup"		=>	array(
 					"preview"	=>	CFCORE_PATH . "fields/checkbox/preview.php",
 					"template"	=>	CFCORE_PATH . "fields/checkbox/config_template.php",
-					"default"	=> array(
 
-					),
-					"scripts"	=>	array(
-						//CFCORE_URL . "fields/checkbox/js/setup.js"
-					)
 				),
 			),
 			'radio' => array(
@@ -1468,11 +1394,6 @@ class Caldera_Forms {
 				"setup"		=>	array(
 					"preview"	=>	CFCORE_PATH . "fields/radio/preview.php",
 					"template"	=>	CFCORE_PATH . "fields/radio/config_template.php",
-					"default"	=> array(
-					),
-					"scripts"	=>	array(
-						//CFCORE_URL . "fields/radio/js/setup.js"
-					)
 				)
 			),
 			'date_picker' => array(
@@ -1486,20 +1407,6 @@ class Caldera_Forms {
 					"default"	=> array(
 						'format'	=>	'yyyy-mm-dd'
 					),
-					"scripts"	=>	array(
-						//CFCORE_URL . "fields/date_picker/js/bootstrap-datepicker.js",
-						//CFCORE_URL . "fields/date_picker/js/setup.js"
-					),
-					"styles"	=>	array(
-						//CFCORE_URL . "fields/date_picker/css/datepicker.css"
-					),
-				),
-				"scripts"	=>	array(
-					//"jquery",
-					//CFCORE_URL . "fields/date_picker/js/bootstrap-datepicker.js"
-				),
-				"styles"	=>	array(
-					//CFCORE_URL . "fields/date_picker/css/datepicker.css"
 				)
 			),
 			'color_picker' => array(
@@ -1513,22 +1420,8 @@ class Caldera_Forms {
 					"default"	=> array(
 						'default'	=>	'#FFFFFF'
 					),
-					"scripts"	=>	array(
-						//CFCORE_URL . "fields/color_picker/minicolors.js",
-						//CFCORE_URL . "fields/color_picker/setup.js"
-					),
-					"styles"	=>	array(
-						//CFCORE_URL . "fields/color_picker/minicolors.css"
-					),
+
 				),
-				"scripts"	=>	array(
-					//"jquery",
-					//CFCORE_URL . "fields/color_picker/minicolors.js",
-					//CFCORE_URL . "fields/color_picker/setup.js"
-				),
-				"styles"	=>	array(
-					//CFCORE_URL . "fields/color_picker/minicolors.css"
-				)
 			),
 			'states' => array(
 				"field"		=>	__( 'State/ Province Select', 'caldera-forms' ),
@@ -1536,7 +1429,6 @@ class Caldera_Forms {
 				"file"		=>	CFCORE_PATH . "fields/states/field.php",
 				"category"	=>	__( 'Special', 'caldera-forms' ),
 				"placeholder" => false,
-				//"viewer"	=>	array($this, 'filter_options_calculator'),
 				"setup"		=>	array(
 					"template"	=>	CFCORE_PATH . "fields/states/config_template.php",
 					"preview"	=>	CFCORE_PATH . "fields/states/preview.php",
