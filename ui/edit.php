@@ -930,10 +930,16 @@ do_action('caldera_forms_edit_end', $element);
 		
 		$sorted_field_types = array(
 			__( 'Basic', 'caldera-forms' ) => '',
-			__( 'Advanced', 'caldera-forms' ) => '',
+			__( 'Select', 'caldera-forms' ) => '',
+			__( 'File', 'caldera-forms' ) => '',
+			__( 'Content', 'caldera-forms' ) => '',
 			__( 'Special', 'caldera-forms' ) => '',
-			__( 'Discontinued', 'caldera-forms' ) => '',
+			
 		);
+
+		if( defined( 'CFCORE_SHOW_DISCONTINUED_FIELDS' ) && CFCORE_SHOW_DISCONTINUED_FIELDS  ){
+			$sorted_field_types[ __( 'Discontinued', 'caldera-forms' ) ] = '';
+		}
 
 		foreach($field_types as $field_slug=>$config){
 			$cats[] = 'General';
@@ -947,6 +953,9 @@ do_action('caldera_forms_edit_end', $element);
 			}
 			foreach($cats as $cat){
 				$cat = trim($cat);
+				if(  __( 'Discontinued', 'caldera-forms' ) == $cat ){
+					continue;
+				}
 				$template = '<div class="form-modal-add-line">';
 					$template .= '<button type="button" class="button info-button set-current-field" data-field="{{id}}" data-type="' . $field_slug . '">' . esc_html__( 'Set Field', 'caldera-forms' ) . '</button>';
 					$template .= '<img src="'. $icon .'" class="form-modal-lgo" width="45" height="45">';

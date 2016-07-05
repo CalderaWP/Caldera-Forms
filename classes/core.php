@@ -1198,7 +1198,7 @@ class Caldera_Forms {
 				"field"		=>	__( 'Phone Number', 'caldera-forms' ),
 				"description" => __( 'Phone number with masking', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/phone/field.php",
-				"category"	=>	__( 'Advanced', 'caldera-forms' ),
+				"category"	=>	__( 'Special', 'caldera-forms' ),
 				"setup"		=>	array(
 					"template"	=>	CFCORE_PATH . "fields/phone/config.php",
 					"preview"	=>	CFCORE_PATH . "fields/phone/preview.php",
@@ -1225,7 +1225,7 @@ class Caldera_Forms {
 				"description" => __( 'File Uploader', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/file/field.php",
 				"viewer"	=>	array($this, 'handle_file_view'),
-				"category"	=>	__( 'Advanced', 'caldera-forms' ),
+				"category"	=>	__( 'File', 'caldera-forms' ),
 				"setup"		=>	array(
 					"preview"	=>	CFCORE_PATH . "fields/file/preview.php",
 					"template"	=>	CFCORE_PATH . "fields/file/config_template.php"
@@ -1236,7 +1236,7 @@ class Caldera_Forms {
 				"description" => __( '(beta) Inline, multi file uploader', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/advanced_file/field.php",
 				"viewer"	=>	array($this, 'handle_file_view'),
-				"category"	=>	__( 'Advanced', 'caldera-forms' ),
+				"category"	=>	__( 'File', 'caldera-forms' ),
 				"setup"		=>	array(
 					"preview"	=>	CFCORE_PATH . "fields/advanced_file/preview.php",
 					"template"	=>	CFCORE_PATH . "fields/advanced_file/config_template.php"
@@ -1266,7 +1266,7 @@ class Caldera_Forms {
 				"field"		=>	__( 'HTML', 'caldera-forms' ),
 				"description" => __( 'Add text/html content', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/html/field.php",
-				"category"	=>	__( 'Special', 'caldera-forms' ),
+				"category"	=>	__( 'Content', 'caldera-forms' ),
 				"icon"		=>	CFCORE_URL . "fields/html/icon.png",
 				"capture"	=>	false,
 				"setup"		=>	array(
@@ -1343,7 +1343,7 @@ class Caldera_Forms {
 			'toggle_switch' => array(
 				"field"		=>	__( 'Toggle Switch', 'caldera-forms' ),
 				"description" => __( 'Toggle Switch', 'caldera-forms' ),
-				"category"	=>	__( 'Special', 'caldera-forms' ),
+				"category"	=>	__( 'Select', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/toggle_switch/field.php",
 				"viewer"	=>	array($this, 'filter_options_calculator'),
 				"options"	=>	"single",
@@ -1357,7 +1357,7 @@ class Caldera_Forms {
 				"field"		=>	__( 'Dropdown Select', 'caldera-forms' ),
 				"description" => __( 'Dropdown Select', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/dropdown/field.php",
-				"category"	=>	__( 'Basic', 'caldera-forms' ),
+				"category"	=>	__( 'Select', 'caldera-forms' ),
 				"options"	=>	"single",
 				"static"	=> true,
 				"viewer"	=>	array($this, 'filter_options_calculator'),
@@ -1373,7 +1373,7 @@ class Caldera_Forms {
 				"field"		=>	__( 'Checkbox', 'caldera-forms' ),
 				"description" => __( 'Checkbox', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/checkbox/field.php",
-				"category"	=>	__( 'Basic', 'caldera-forms' ),
+				"category"	=>	__( 'Select', 'caldera-forms' ),
 				"options"	=>	"multiple",
 				"static"	=> true,
 				"viewer"	=>	array($this, 'filter_options_calculator'),
@@ -1387,7 +1387,7 @@ class Caldera_Forms {
 				"field"		=>	__( 'Radio', 'caldera-forms' ),
 				"description" => __( 'Radio', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/radio/field.php",
-				"category"	=>	__( 'Basic', 'caldera-forms' ),
+				"category"	=>	__( 'Select', 'caldera-forms' ),
 				"options"	=>	true,
 				"static"	=> true,
 				"viewer"	=>	array($this, 'filter_options_calculator'),
@@ -1400,7 +1400,7 @@ class Caldera_Forms {
 				"field"		=>	__( 'Date Picker', 'caldera-forms' ),
 				"description" => __( 'Date Picker', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/date_picker/datepicker.php",
-				"category"	=>	__( 'Special', 'caldera-forms' ),
+				"category"	=>	__( 'Select', 'caldera-forms' ),
 				"setup"		=>	array(
 					"preview"	=>	CFCORE_PATH . "fields/date_picker/preview.php",
 					"template"	=>	CFCORE_PATH . "fields/date_picker/setup.php",
@@ -1412,7 +1412,7 @@ class Caldera_Forms {
 			'color_picker' => array(
 				"field"		=>	__( 'Color Picker', 'caldera-forms' ),
 				"description" => __( 'Color Picker', 'caldera-forms' ),
-				"category"	=>	__( 'Special', 'caldera-forms' ),
+				"category"	=>	__( 'Select', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/color_picker/field.php",
 				"setup"		=>	array(
 					"preview"	=>	CFCORE_PATH . "fields/color_picker/preview.php",
@@ -1427,7 +1427,7 @@ class Caldera_Forms {
 				"field"		=>	__( 'State/ Province Select', 'caldera-forms' ),
 				"description" => __( 'Dropdown select for US states and Canadian provinces.', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/states/field.php",
-				"category"	=>	__( 'Special', 'caldera-forms' ),
+				"category"	=>	__( 'Select', 'caldera-forms' ),
 				"placeholder" => false,
 				"setup"		=>	array(
 					"template"	=>	CFCORE_PATH . "fields/states/config_template.php",
@@ -1440,7 +1440,7 @@ class Caldera_Forms {
 			'filtered_select2' => array(
 				"field"		=>	__( 'Autocomplete', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/select2/field/field.php",
-				"category"	=>	__( 'Special', 'caldera-forms' ),
+				"category"	=>	__( 'Select', 'caldera-forms' ),
 				"description" => 'Select2 dropdown',
 				"options"	=>	"multiple",
 				"static"	=> true,
@@ -2349,10 +2349,6 @@ class Caldera_Forms {
 	 * @return array Array of field types.
 	 */
 	static public function get_field_types(){
-		//global $field_types;
-		//if(!empty($field_types)){
-		//	return $field_types;
-		//}
 
 
 		$field_types = apply_filters( 'caldera_forms_get_field_types', array() );
