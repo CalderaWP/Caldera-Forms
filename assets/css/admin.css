@@ -1770,7 +1770,6 @@ tr.form_entry_row.loading {
 
 .cf-templates-wrapper {
   border-top: 1px solid #dfdfdf;
-  height: 409px;
   overflow: auto;
   padding-top: 20px;
 }
