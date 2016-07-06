@@ -85,16 +85,6 @@ jQuery(function($){
 					return false;
 				}
 
-				var validate = form.parsley({
-					errorsWrapper : '<span class="help-block caldera_ajax_error_block"></span>',
-					errorTemplate : '<span></span>'
-				});
-								
-				if( !validate.isValid() ){
-					validate.destroy();
-					return false;
-				}
-				validate.destroy(); //allow to continue;
 				if( !form.data( 'postDisable' ) ){
 					buttons.prop('disabled',true);
 				}
