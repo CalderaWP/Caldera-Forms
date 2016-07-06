@@ -17,7 +17,6 @@ if(!empty($field['config']['orientation']) && $field['config']['orientation'] ==
 	$groupOrientation = 'btn-group-vertical';
 }
 
-
 ?><?php echo $wrapper_before; ?>
 	<?php echo $field_label; ?>
 	<?php echo $field_before; ?>
@@ -64,7 +63,7 @@ if(!empty($field['config']['orientation']) && $field['config']['orientation'] ==
 					$sel = 'checked="checked"';
 				}
 				?>
-				<input type="radio" id="<?php echo $field_id . '_' . $option_key; ?>" data-label="<?php echo esc_attr( $option['label'] );?>" data-field="<?php echo $field_base_id; ?>" data-ref="<?php echo $field_id.'_'.$option_key; ?>" class="cf-toggle-group-radio <?php echo $field_id; ?>" name="<?php echo $field_name; ?>" value="<?php echo esc_attr( $option['value'] ); ?>" <?php echo $sel; ?>>
+				<input <?php if( !empty( $field['required'] ) ){ ?>required="required"<?php } ?> type="radio" id="<?php echo $field_id . '_' . $option_key; ?>" data-label="<?php echo esc_attr( $option['label'] );?>" data-field="<?php echo $field_base_id; ?>" data-ref="<?php echo $field_id.'_'.$option_key; ?>" class="cf-toggle-group-radio <?php echo $field_id; ?>" name="<?php echo $field_name; ?>" value="<?php echo esc_attr( $option['value'] ); ?>" <?php echo $sel; ?>>
 				<?php
 			}
 		}

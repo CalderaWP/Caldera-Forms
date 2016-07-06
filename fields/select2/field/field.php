@@ -84,6 +84,10 @@ ob_start();
     border-color: <?php echo $field['config']['border']; ?>;
 }.ccselect2-results .ccselect2-highlighted,.ccselect2-container-multi .ccselect2-choices .ccselect2-search-choice-focus{
 	background: <?php echo $field['config']['color']; ?>;
+}.has-error .ccselect2-container .ccselect2-choice {
+	border-color: #dd4b39 !important;
+	background-color: #f2dede !important;
+	background-image: none;
 }
 </style>
 <script>
