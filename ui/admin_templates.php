@@ -75,7 +75,7 @@
 		<div class="caldera-config-group">
 			<label for=""><?php esc_html_e( 'Form Name', 'caldera-forms' ); ?></label>
 			<div class="caldera-config-field">
-				<input type="text" class="new-form-name block-input field-config" name="name" value="" required="required">
+				<input type="text" class="new-form-name block-input field-config" autocomplete="off" name="name" value="" required="required">
 			</div>
 		</div>
 		<div class="caldera-config-group">
@@ -172,7 +172,7 @@
 		{{/if}}
 
 		<div class="caldera-config-field">
-			<input type="text" class="new-form-name block-input field-config" name="name" value="" required="required" autofocus="true" placeholder="<?php echo esc_html__('Form Name', 'caldera-forms' ); ?>">
+			<input type="text" class="new-form-name block-input field-config" name="name" value="" required="required" autofocus="true" autocomplete="off" placeholder="<?php echo esc_html__('Form Name', 'caldera-forms' ); ?>">
 		</div>
 
 

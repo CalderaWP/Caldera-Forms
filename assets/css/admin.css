@@ -1699,6 +1699,55 @@ tr.form_entry_row.loading {
   width: 162px;
   border-radius: 4px;
 }
+.cf-form-create{
+  border: none;
+  float: left;
+  height: 180px;
+  margin: 0 5px 10px;
+  overflow: hidden;
+  padding: 5px;
+  width: 162px;
+  border-radius: 4px;
+}
+.caldera-grid.cf-form-create button.cf-change-template-button,
+.caldera-grid.cf-form-create button.cf-create-form-button {
+  background-color: #fff;
+  color: #93ae4f;
+  border: 1px solid #93ae4f;
+  border-radius: 3px;
+  display: block;
+  margin: 24px 0;
+  padding: 9px;
+  width: 100%;
+}
+.caldera-grid.cf-form-create button.cf-change-template-button:hover,
+.caldera-grid.cf-form-create button.cf-create-form-button:hover{
+  background-color: #93ae4f;
+  color: #fff;
+}
+.caldera-grid.cf-form-create button.cf-change-template-button.cf-loading-form {
+  background: #a3be5f;
+  color: #fff;
+}
+.caldera-grid.cf-form-create button.cf-loading-form .dashicons{
+  display: none;
+}
+.caldera-grid.cf-form-create button.cf-create-form-button .spinner{
+  display: none;
+  margin: -1px 0 -1px 0;
+  float: none;  
+}
+.caldera-grid.cf-form-create button.cf-loading-form,
+.caldera-grid.cf-form-create button.cf-loading-form:hover {
+  background: #efefef none repeat scroll 0 0;
+  border-color: #bfbfbf;
+  color: #7f7f7f;
+  cursor: default;
+}
+.caldera-grid.cf-form-create button.cf-loading-form .spinner{
+  display: inline-block;
+  visibility: visible;
+}
 .cf-form-template > input{
   display: none;
 }

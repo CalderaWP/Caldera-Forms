@@ -188,8 +188,8 @@ class Caldera_Forms_Admin {
 		?>
 		<div class="cf-templates-wrapper">
 			<?php
-			$selected_field = ' checked="checked"';
-			$selected_template = ' selected';
+			$selected_field = '';//' checked="checked"';
+			$selected_template = '';//' selected';
 
 			foreach( $form_templates as $template_slug => $template ){
 				if( !empty( $template['template'] ) && !empty( $template['name'] ) ){
@@ -255,6 +255,18 @@ class Caldera_Forms_Admin {
 				<small><?php echo esc_html__( 'Blank Form', 'caldera-forms' ); ?></small>
 				<input type="radio" name="template" value="" class="cf-template-select">
 			</label>
+			<div class="caldera-grid cf-form-create" style="display:none; visibility: hidden;" aria-hidden="true">
+				<button type="button" class="cf-change-template-button"><span class="dashicons dashicons-arrow-left-alt"></span> <?php echo esc_html__( 'Change Template', 'caldera-forms' ); ?></button>
+				<hr>
+				<button type="button" class="cf-create-form-button ajax-trigger" 
+				 data-action="create_form"
+				 data-active-class="disabled"
+				 data-load-class="disabled"
+				 data-callback="new_form_redirect"
+				 data-before="serialize_modal_form"
+				 data-modal-autoclose="new_form"
+				><?php echo esc_html__( 'Create Form', 'caldera-forms' ); ?> <span class="dashicons dashicons-yes"></span><span class="spinner"></span></button>
+			</div>
 		</div>
 		<?php
 	}

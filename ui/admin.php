@@ -36,7 +36,7 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 			<?php echo CFCORE_VER; ?>
 		</li>
 		<li class="caldera-forms-toolbar-item">
-			<a class="button button-primary ajax-trigger" data-request="start_new_form" data-modal-buttons='<?php echo $modal_new_form; ?>' data-modal-width="70%" data-modal-height="80%" data-load-class="none" data-modal="new_form" data-modal-title="<?php echo __('Create New Form', 'caldera-forms'); ?>" data-template="#new-form-tmpl"><?php echo __('New Form', 'caldera-forms'); ?></a>
+			<a class="button button-primary ajax-trigger" data-request="start_new_form" data-modal-no-buttons='<?php echo $modal_new_form; ?>' data-modal-width="70%" data-modal-height="80%" data-load-class="none" data-modal="new_form" data-modal-title="<?php echo __('Create New Form', 'caldera-forms'); ?>" data-template="#new-form-tmpl"><?php echo __('New Form', 'caldera-forms'); ?></a>
 		</li>
 		<li class="caldera-forms-toolbar-item">
 			<a class="button ajax-trigger" data-request="start_new_form" data-modal-width="400" data-modal-height="192" data-modal-element="div" data-load-class="none" data-modal="import_form" data-template="#import-form-tmpl" data-modal-title="<?php echo __('Import Form', 'caldera-forms'); ?>" ><?php echo __('Import', 'caldera-forms'); ?></a>
@@ -263,7 +263,9 @@ function serialize_modal_form(el){
 	}
 
 
-	clicked.data('data', data.serialize());
+	clicked.data('data', data.serialize()).addClass('cf-loading-form').animate({marginTop: 65}, 200);
+
+	jQuery('.cf-form-create hr, .cf-change-template-button').slideUp(200);
 
 	return true;
 }
@@ -361,7 +363,24 @@ jQuery( function( $ ){
 	$( document ).on('change', '.cf-template-select', function(){
 		$('.cf-form-template.selected').removeClass('selected');
 		$(this).parent().addClass('selected');
+		$('.cf-form-template:not(.selected) > small').hide();
+		$('.cf-form-template:not(.selected) > div').hide();
+		$('.cf-form-template:not(.selected)').animate({width:0, opacity: 0, padding: 0, margin: 0}, 200, function(){
+			$(this).css({opacity: '', padding: '', margin: ''}).hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
+		});
+		$('.cf-form-create').fadeIn().attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' );
 	});
+	$( document ).on('click', '.cf-change-template-button', function(){
+		$('.cf-template-select:checked').prop('checked', false);
+		$('.cf-form-template').removeClass('selected');		
+		$('.cf-form-template').show().attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' ).animate({width:162}, 200, function(){
+			$('.cf-form-template > small').fadeIn(100);
+			$('.cf-form-template > div').fadeIn(100);
+		});
+		
+		$('.cf-form-create').fadeOut(200).attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
+	});
+
 
 
 	//switch in and out of email settings
