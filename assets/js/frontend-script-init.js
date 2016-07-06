@@ -103,6 +103,7 @@ var cf_jsfields_init;
 		var clicked = $(this),
 			page_box = clicked.closest('.caldera-form-page'),
 			form 	 = clicked.closest('form.caldera_forms_form'),
+			instance = form.data('instance'),
 			page	 = page_box.data('formpage') ? page_box.data('formpage') : clicked.data('page') ,
 			breadcrumb = $('.breadcrumb[data-form="' + form.prop('id') + '"]'),
 			next,
@@ -156,10 +157,10 @@ var cf_jsfields_init;
 
 		for( var ch in checks ){
 			if( checks[ch].indexOf(true) < 0){
-				$('[for="' + ch + '"]').parent().addClass('has-error');
+				$('[for="' + ch + '_' + instance + '"]').parent().addClass('has-error');
 				return false;
 			}else{
-				$('[for="' + ch + '"]').parent().removeClass('has-error');
+				$('[for="' + ch + '_' + instance + '"]').parent().removeClass('has-error');
 			}
 		}
 		
