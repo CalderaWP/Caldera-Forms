@@ -255,6 +255,9 @@ function serialize_modal_form(el){
 		data 	= jQuery('#new_form_baldrickModal'),
 		name 	= data.find('.new-form-name');
 	
+	if( clicked.hasClass( 'cf-loading-form' ) ){
+		return false;
+	}
 	//verify name is set
 	if(name.val().length < 1){
 		name.focus().addClass('has-error');
@@ -382,7 +385,7 @@ jQuery( function( $ ){
 		}
 
 		create.appendTo(template).attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' ).fadeIn( 100 );
-		
+
 		name.focus();
 	});
 	$( document ).on('click', '.cf-change-template-button', function(){
