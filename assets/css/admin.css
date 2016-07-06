@@ -470,6 +470,10 @@ textarea.block-input.field-config {
 .field-config.field-checkbox {
   margin-top: 4px;
 }
+#new_form_baldrickModalBody .new-form-name.block-input.field-config {
+  font-size: 24px;
+  padding: 7px;
+}
 h3.caldera-editor-field-title {
   border-bottom: 1px solid #CFCFCF;
   font-size: 18px;
