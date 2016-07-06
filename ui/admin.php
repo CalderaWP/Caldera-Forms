@@ -257,15 +257,14 @@ function serialize_modal_form(el){
 	
 	//verify name is set
 	if(name.val().length < 1){
-		alert("<?php echo __('A form name is required', 'caldera-forms'); ?>");
 		name.focus().addClass('has-error');
 		return false;
 	}
 
 
-	clicked.data('data', data.serialize()).addClass('cf-loading-form').animate({marginTop: 65}, 200);
+	clicked.data('data', data.serialize()).addClass('cf-loading-form').animate({width: 348}, 200);
 
-	jQuery('.cf-form-create hr, .cf-change-template-button').slideUp(200);
+	jQuery('.cf-change-template-button').animate({ marginLeft: -175, opacity: 0 }, 200);
 
 	return true;
 }
@@ -361,24 +360,38 @@ jQuery( function( $ ){
 	});
 
 	$( document ).on('change', '.cf-template-select', function(){
+		var template = $(this).parent(),
+			create = $('.cf-form-create'),
+			name = $('.new-form-name');
+
+		$('.cf-template-title').html( template.find('small').html() );
 		$('.cf-form-template.selected').removeClass('selected');
-		$(this).parent().addClass('selected');
-		$('.cf-form-template:not(.selected) > small').hide();
-		$('.cf-form-template:not(.selected) > div').hide();
-		$('.cf-form-template:not(.selected)').animate({width:0, opacity: 0, padding: 0, margin: 0}, 200, function(){
-			$(this).css({opacity: '', padding: '', margin: ''}).hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
-		});
-		$('.cf-form-create').fadeIn().attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' );
+		template.addClass('selected');
+		$('.cf-form-template.selected').animate( {opacity: 1}, 100 );
+		//$('.cf-form-template:not(.selected)').animate( {opacity: 0.6}, 200 );
+		// shift siding
+		var box = $('.cf-templates-wrapper');
+		var relativeX = box.offset().left - template.offset().left;
+		var boxwid = box.offset().left + box.innerWidth();
+		var diffwid = template.offset().left + template.innerWidth();
+
+		if( boxwid - diffwid > template.outerWidth() ){
+			create.css( { left : -2, right: '' } );
+		}else{
+			create.css( { right : -2, left: '' } );
+		}
+
+		create.appendTo(template).attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' ).fadeIn( 100 );
+		
+		name.focus();
 	});
 	$( document ).on('click', '.cf-change-template-button', function(){
 		$('.cf-template-select:checked').prop('checked', false);
-		$('.cf-form-template').removeClass('selected');		
-		$('.cf-form-template').show().attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' ).animate({width:162}, 200, function(){
-			$('.cf-form-template > small').fadeIn(100);
-			$('.cf-form-template > div').fadeIn(100);
-		});
-		
-		$('.cf-form-create').fadeOut(200).attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
+		$('.cf-form-template').removeClass('selected');
+		//$('.cf-form-template').animate( {opacity: 1}, 200 );
+		$('.cf-form-create').fadeOut(100, function(){
+			$(this).attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );	
+		})
 	});
 
 

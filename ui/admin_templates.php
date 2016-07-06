@@ -171,10 +171,6 @@
 		?>
 		{{/if}}
 
-		<div class="caldera-config-field">
-			<input type="text" class="new-form-name block-input field-config" name="name" value="" required="required" autofocus="true" autocomplete="off" placeholder="<?php echo esc_html__('Form Name', 'caldera-forms' ); ?>">
-		</div>
-
 
 		{{#if clone}}<input type="hidden" name="clone" value="{{clone}}">
 		<?php

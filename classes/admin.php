@@ -256,8 +256,13 @@ class Caldera_Forms_Admin {
 				<input type="radio" name="template" value="" class="cf-template-select">
 			</label>
 			<div class="caldera-grid cf-form-create" style="display:none; visibility: hidden;" aria-hidden="true">
+				<div class="cf-template-title"></div>
+
+				<div class="caldera-config-field">
+					<input type="text" class="new-form-name block-input field-config" name="name" value="" required="required" autofocus="true" autocomplete="off" placeholder="<?php echo esc_html__('Form Name', 'caldera-forms' ); ?>">
+				</div>
+
 				<button type="button" class="cf-change-template-button"><span class="dashicons dashicons-arrow-left-alt"></span> <?php echo esc_html__( 'Change Template', 'caldera-forms' ); ?></button>
-				<hr>
 				<button type="button" class="cf-create-form-button ajax-trigger" 
 				 data-action="create_form"
 				 data-active-class="disabled"
