@@ -367,6 +367,9 @@ jQuery( function( $ ){
 			create = $('.cf-form-create'),
 			name = $('.new-form-name');
 
+		if( create.find('.cf-loading-form').length ){
+			return;
+		}
 		$('.cf-template-title').html( template.find('small').html() );
 		$('.cf-form-template.selected').removeClass('selected');
 		template.addClass('selected');
