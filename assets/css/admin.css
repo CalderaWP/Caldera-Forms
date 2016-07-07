@@ -1705,6 +1705,7 @@ tr.form_entry_row.loading {
   width: 162px;
   border-radius: 4px;
   position: relative;
+  overflow: hidden;
 }
 .cf-template-title {
   padding: 2px 2px 0 0;
