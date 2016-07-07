@@ -593,21 +593,42 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 	<ul class="caldera-editor-header-nav">
 		<li class="caldera-editor-logo">
 			<span class="dashicons-cf-logo"></span>
-			<?php echo esc_html__( 'Caldera Forms', 'caldera-forms' ); ?>
+			<?php esc_html_e( 'Caldera Forms', 'caldera-forms' ); ?>
 		</li>
 		<li class="caldera-element-type-label">
 			<?php echo $element['name']; ?>
 		</li>
 		<li>
-			<a href="#settings-panel"><?php echo __( 'Form Settings', 'caldera-forms'  ); ?></a>
+			<a href="#settings-panel">
+				<?php esc_html_e( 'Form Settings', 'caldera-forms'  ); ?>
+			</a>
 		</li>
 
 	</ul>
 
-	<div class="updated_notice_box"><?php _e( 'Updated Successfully', 'caldera-forms'  ); ?></div>
+	<div class="updated_notice_box">
+		<?php esc_html_e( 'Updated Successfully', 'caldera-forms'  ); ?>
+	</div>
 
-	<button class="button button-primary caldera-header-save-button" data-active-class="none" data-load-element="#save_indicator" type="button" disabled="disabled"><?php echo esc_html__( 'Save Form', 'caldera-forms' ); ?><span id="save_indicator" class="spinner" style="position: absolute; right: -33px;"></span></button>	
-	<a class="button caldera-header-preview-button" target="_blank" href="<?php echo trailingslashit( get_home_url() ) . '?cf_preview=' . $element['ID']; ?>"><?php echo esc_html__( 'Preview Form', 'caldera-forms' ); ?></a>
+	<button class="button button-primary caldera-header-save-button" data-active-class="none" data-load-element="#save_indicator" type="button" disabled="disabled">
+		<?php esc_html_e( 'Save Form', 'caldera-forms' ); ?>
+		<span id="save_indicator" class="spinner" style="position: absolute; right: -33px;"></span>
+	</button>
+	<a class="button caldera-header-preview-button" target="_blank" href="<?php echo esc_url( add_query_arg( 'cf_preview', $element[ 'ID' ], get_home_url() ) ); ?>">
+		<?php esc_html_e( 'Preview Form', 'caldera-forms' ); ?>
+	</a>
+
+	<?php if ( ! isset( $element['mailer']['preview_email'] ) || $element['mailer']['preview_email']  ){
+		$hide_email_preview = true;
+	}else{
+		$hide_email_preview = false;
+	}?>
+	<a class="button caldera-header-email-preview-button" target="_blank" href="<?php echo esc_url( add_query_arg( array(
+			'cf-email-preview' => wp_create_nonce( $element[ 'ID' ] ),
+			'cf-email-preview-form' => $element[ 'ID' ]
+	),  get_home_url() ) ); ?>" <?php if ( $hide_email_preview ) :  echo 'aria-hidden="true" style="display:none;visibility:hidden;"'; endif; ?>>
+		<?php esc_html_e( 'Preview Last Email', 'caldera-forms' ); ?>
+	</a>
 </div>
 
 <div style="display: none;" class="caldera-editor-body caldera-config-editor-panel " id="settings-panel">
