@@ -132,7 +132,7 @@ class Caldera_Forms_Save_Final {
 	 * @since 1.2.3
 	 *
 	 * @param array $form Form config
-	 * @param int|null $entryid Optional. ID of entry to send. If not provided, will be deteremined based on global $transdata
+	 * @param int|null $entryid Optional. ID of entry to send. If not provided, will be determined based on global $transdata
 	 * @param array|null $data Optional. Data to use for sending. If not provided, will be retrieved by form ID.
 	 */
 	public static function do_mailer( $form, $entryid = null, $data = null ) {
@@ -241,8 +241,7 @@ class Caldera_Forms_Save_Final {
 				$mail['message'] = str_replace($hastags[0][$tag_key], $tagval, $mail['message']);
 			}
 		}
-
-		//$mail['message']
+		
 
 		// ifs
 		preg_match_all("/\[if (.+?)?\](?:(.+?)?\[\/if\])?/", $mail['message'], $hasifs);
@@ -342,8 +341,21 @@ class Caldera_Forms_Save_Final {
 			}
 		}
 
-		if(empty($mail)){
+		if( empty( $mail ) ){
+			/**
+			 * Runs if mail was not sent because mail variable is empty.
+			 * 
+			 * If this fires, that is bad.
+			 * 
+			 * @since 1.3.6
+			 * 
+			 * @param array $form Form config
+			 * @param int|null $entryid Optional. ID of entry to send. If not provided, will be determined based on global $transdata
+			 * @param array|null $data Optional. Data to use for sending. If not provided, will be retrieved by form ID.
+			 */
+			do_action( 'caldera_forms_mailer_invalid', $form, $entryid, $data );
 			return;
+			
 		}
 
 		/**

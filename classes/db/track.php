@@ -115,7 +115,8 @@ class Caldera_Forms_DB_Track extends Caldera_Forms_DB_Base {
 		add_action( 'caldera_forms_submit_complete',  array( $this, 'email_tracking' ), 51, 3 );
 		add_action( 'caldera_forms_mailer_complete', array( $this, 'email_sent'), 50, 3 );
 		add_action( 'caldera_forms_mailer_failed', array( $this, 'email_fail' ), 50, 4 );
-		
+		add_action( 'caldera_forms_mailer_invalid', array( $this, 'email_invalid' ), 50 );
+
 	}
 
 	/**
@@ -262,6 +263,26 @@ class Caldera_Forms_DB_Track extends Caldera_Forms_DB_Base {
 
 	}
 
+	/**
+	 * Track invalid mailer settings events
+	 *
+	 * @since 1.3.6
+	 *
+	 * @param array $form Form config
+	 */
+	public function email_invalid( $form){
+		global $process_id;
+		if( isset( $form[ 'ID' ] ) ){
+			$this->create( array(
+				'event' => 'email_failed',
+				'form_id' => $form[ 'ID' ],
+				'process_id' => $process_id,
+				'time' => current_time( 'mysql' ),
+			));
+
+		}
+	}
+
 	protected function recipients_set( $mail ){
 		if( ! is_array( $mail ) || ! isset( $mail[ 'recipients' ] ) || empty( $mail[ 'recipients' ] ) ){
 			return false;
@@ -269,28 +290,7 @@ class Caldera_Forms_DB_Track extends Caldera_Forms_DB_Base {
 
 		return true;
 	}
-	/**
 
-	protected function unparse_url( $url ){
-		$keys = array( 'user', 'pass', 'port', 'path', 'query', 'fragment' );
-		foreach ( $keys as $key ) {
-			if ( $flags & (int) constant( 'HTTP_URL_STRIP_' . strtoupper( $key ) ) ) {
-				unset( $parse_url[ $key ] );
-			}
-
-			if( is_array( $parse_url[ $key ] ) ){
-				$parse_url[ $key ] = http_build_query( $parse_url[ $key ] );
-			}
-
-		}
-		return ( ( isset( $parse_url[ 'scheme' ] ) ) ? $parse_url[ 'scheme' ] . '://' : '' )
-		       . ( ( isset( $parse_url[ 'user' ] ) ) ? $parse_url[ 'user' ] . ( ( isset( $parse_url[ 'pass' ] ) ) ? ':' . $parse_url[ 'pass' ] : '' ) . '@' : '' )
-		       . ( ( isset( $parse_url[ 'host' ] ) ) ? $parse_url[ 'host' ] : '' )
-		       . ( ( isset( $parse_url[ 'port' ] ) ) ? ':' . $parse_url[ 'port' ] : '' )
-		       . ( ( isset( $parse_url[ 'path' ] ) ) ? $parse_url[ 'path' ] : '' )
-		       . ( ( isset( $parse_url[ 'query' ] ) ) ? '?' . $parse_url[ 'query' ] : '' )
-		       . ( ( isset( $parse_url[ 'fragment' ] ) ) ? '#' . $parse_url[ 'fragment' ] : '' );
-	}*/
 
 
 }
