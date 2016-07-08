@@ -51,6 +51,8 @@ class Caldera_Forms_Email_Previews {
 				$message = $preview->message;
 				include CFCORE_PATH . 'ui/emails/email-preview.php';
 				exit;
+			}else{
+				wp_die( esc_html__( 'There is no saved email preview. Please submit this form with email previewing on and then try again.', 'caldera-forms' ) );
 			}
 
 		}
