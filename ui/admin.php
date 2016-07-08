@@ -380,8 +380,8 @@ jQuery( function( $ ){
 		var relativeX = box.offset().left - template.offset().left;
 		var boxwid = box.offset().left + box.innerWidth();
 		var diffwid = template.offset().left + template.innerWidth();
-		$('.cf-form-template').css('overflow', 'hidden').find('div,small').show();
-		template.css('overflow', 'visible').find('div,small').hide();
+		$('.cf-form-template').css('overflow', 'hidden').find('.row,small').show();
+		template.css('overflow', 'visible').find('.row,small').hide();
 		if( boxwid - diffwid > template.outerWidth() ){
 			create.css( { left : -2, right: '' } );
 		}else{
