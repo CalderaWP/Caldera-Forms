@@ -24,9 +24,6 @@ if ( ! empty( $element['mailer']['enable_mailer'] ) ) {
 	$element['mailer']['on_insert'] = 1;
 }
 
-if ( empty( $element['mailer']['preview_email'] ) ) {
-	$element['mailer']['preview_email'] = 0;
-}
 
 ?>
 <div class="mailer-control-panel wrapper-instance-pane">
@@ -130,7 +127,7 @@ if ( empty( $element['mailer']['preview_email'] ) ) {
 			</label>
 			<div class="caldera-config-field">
 				<label>
-					<input type="checkbox" id="preview_email" class="field-config" name="config[mailer][preview_email]"  aria-describedby="preview_email-description" aria-labelledby="preview_email-label" <?php if(isset($element['mailer']['preview_email'])){ echo 'checked="checked";'; } ?>>
+					<input type="checkbox" id="preview_email" class="field-config" value="1" name="config[mailer][preview_email]"  aria-describedby="preview_email-description" aria-labelledby="preview_email-label" <?php if(!empty($element['mailer']['preview_email'])){ echo 'checked="checked";'; } ?>>
 					<span id="preview_email-description">
 						<?php esc_html_e( 'Allows you to preview the message and who the message is sent to, as well as the subject. You should turn this off when not testing.', 'caldera-forms'); ?>
 					</span>
