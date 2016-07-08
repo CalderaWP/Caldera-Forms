@@ -46,7 +46,7 @@ class Caldera_Forms_Email_Previews {
 	public function view(){
 		if ( isset( $this->id ) ) {
 			$preview = $this->get_saved( $this->id );
-			if ( is_object( $preview ) && ! empty( $object ) ) {
+			if ( is_object( $preview ) && ! empty( $preview ) ) {
 				$headers = $this->format_headers( $preview->headers );
 				$message = $preview->message;
 				include CFCORE_PATH . 'ui/emails/email-preview.php';
@@ -97,7 +97,7 @@ class Caldera_Forms_Email_Previews {
 	 * @return array
 	 */
 	public function maybe_create_preview( $mail, $data, $form ){
-		if( isset( $form[ 'preview_email'] ) && $form[ 'preview_email'] ){
+		if( ! empty( $form[ 'mailer' ][ 'preview_email' ] ) ){
 			$this->id = $form[ 'ID' ];
 			$preview = new Caldera_Forms_Email_Preview( $mail  );
 			$this->record( $preview );
