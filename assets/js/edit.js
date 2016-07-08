@@ -2374,6 +2374,17 @@ jQuery(document).ready(function($){
  	$( document ).on('click', '#cf-shortcode-preview', function(){
  		$(this).focus().select();
  	} );
+ 	$( document ).on('change', '.cf-email-preview-toggle', function(){
+ 		var clicked = $(this),
+ 			preview_button = $('.caldera-header-email-preview-button');
+ 		if( clicked.is(':checked') ){
+ 			preview_button.show().attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' );
+ 		}else{
+ 			preview_button.hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
+ 		}
+ 		
+ 	} );
+
 
 	// build processor type config
 	function build_processor_config(el){

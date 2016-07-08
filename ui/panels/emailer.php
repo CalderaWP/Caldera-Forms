@@ -19,10 +19,11 @@ if(!isset($element['mailer']['email_message'])){
 	$element['mailer']['email_message'] = '{summary}';
 }
 
-// comatability
-if( !empty( $element['mailer']['enable_mailer'] ) ){
+// backwords-compat
+if ( ! empty( $element['mailer']['enable_mailer'] ) ) {
 	$element['mailer']['on_insert'] = 1;
 }
+
 
 ?>
 <div class="mailer-control-panel wrapper-instance-pane">
@@ -118,7 +119,21 @@ if( !empty( $element['mailer']['enable_mailer'] ) ){
 		</div>
 
 		<?php do_action( 'caldera_forms_mailer_config', $element ); ?>
+		
 
+		<div class="caldera-config-group">
+			<label for="preview_email" id="preview_email-label">
+				<?php esc_html_e( 'Save Preview', 'caldera-forms'); ?>
+			</label>
+			<div class="caldera-config-field">
+				<label>
+					<input type="checkbox" id="preview_email" class="field-config cf-email-preview-toggle" value="1" name="config[mailer][preview_email]"  aria-describedby="preview_email-description" aria-labelledby="preview_email-label" <?php if(!empty($element['mailer']['preview_email'])){ echo 'checked="checked";'; } ?>>
+					<span id="preview_email-description">
+						<?php esc_html_e( 'Allows you to preview the message and who the message is sent to, as well as the subject. You should turn this off when not testing.', 'caldera-forms'); ?>
+					</span>
+				</label>
+			</div>
+		</div>
 
 		<div class="caldera-config-group">
 			<label><?php echo __('Debug Mailer', 'caldera-forms'); ?></label>

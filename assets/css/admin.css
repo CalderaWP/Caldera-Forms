@@ -286,6 +286,7 @@ select.caldera-type-selector {
   top: 84px;
 }
 .caldera-editor-header .button.caldera-header-save-button,
+.caldera-editor-header .caldera-header-email-preview-button,
 .caldera-editor-header .button.caldera-header-preview-button {
   float: left;
   margin: 7px 12px 0 12px; 
