@@ -618,15 +618,17 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 		<?php esc_html_e( 'Preview Form', 'caldera-forms' ); ?>
 	</a>
 
-	<?php if ( ! isset( $element['mailer']['preview_email'] ) || $element['mailer']['preview_email']  ){
-		$hide_email_preview = true;
+	<?php
+	if ( !empty( $element['mailer']['preview_email'] ) ){
+		$has_email_preview = 'aria-hidden="false" ';
 	}else{
-		$hide_email_preview = false;
-	}?>
+		$has_email_preview = 'aria-hidden="true" style="display:none;visibility:hidden;"';
+	}
+	?>
 	<a class="button caldera-header-email-preview-button" target="_blank" href="<?php echo esc_url( add_query_arg( array(
 			'cf-email-preview' => wp_create_nonce( $element[ 'ID' ] ),
 			'cf-email-preview-form' => $element[ 'ID' ]
-	),  get_home_url() ) ); ?>" <?php if ( $hide_email_preview ) :  echo 'aria-hidden="true" style="display:none;visibility:hidden;"'; endif; ?>>
+	),  get_home_url() ) ); ?>" <?php echo $has_email_preview; ?>>
 		<?php esc_html_e( 'Preview Last Email', 'caldera-forms' ); ?>
 	</a>
 </div>
