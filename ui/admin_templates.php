@@ -22,7 +22,7 @@
 			<div class="caldera-config-group">
 				<label><?php echo esc_html__( 'Form ID', 'caldera-forms' ); ?></label>
 				<div class="caldera-config-field">
-					<input type="text" class="block-input field-config" data-format="key" name="form_id" value="{{formslug}}" required="required">
+					<input type="text" class="block-input field-config" data-format="slug" name="form_id" value="{{formslug}}" required="required">
 				</div>
 			</div>
 			<div class="caldera-config-group">
