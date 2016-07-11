@@ -3869,22 +3869,20 @@ class Caldera_Forms {
 			$url = add_query_arg( 'cf_api', $form_id, $url );
 		}
 		if ( is_ssl() ) {
-			// If the current host is the same as the REST URL host, force the REST URL scheme to HTTPS.
 			if ( $_SERVER['SERVER_NAME'] === parse_url( get_home_url( ), PHP_URL_HOST ) ) {
 				$url = set_url_scheme( $url, 'https' );
 			}
 		}
 		/**
-		 * Filter the REST URL.
+		 * Filter the Caldera Forms APU url
 		 *
-		 * Use this filter to adjust the url returned by the `get_rest_url` function.
-		 *
-		 * @since 4.4.0
+		 * @since 1.3.2
 		 *
 		 * @param string $url     URL.
-		 * @param string $path    Path.
+		 * @param string $form_id  ID of form.
 		 */
 		return apply_filters( 'caldera_forms_submission_url', $url, $form_id );
+		
 	}
 
 	/**
