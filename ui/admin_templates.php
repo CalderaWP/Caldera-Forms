@@ -22,7 +22,7 @@
 			<div class="caldera-config-group">
 				<label><?php echo esc_html__( 'Form ID', 'caldera-forms' ); ?></label>
 				<div class="caldera-config-field">
-					<input type="text" class="block-input field-config" data-format="key" name="form_id" value="{{formslug}}" required="required">
+					<input type="text" class="block-input field-config" data-format="slug" name="form_id" value="{{formslug}}" required="required">
 				</div>
 			</div>
 			<div class="caldera-config-group">
@@ -170,9 +170,14 @@
 		do_action('caldera_forms_new_form_template_start');
 		?>
 		{{/if}}
-
-
-		{{#if clone}}<input type="hidden" name="clone" value="{{clone}}">
+		{{#if clone}}
+		<div class="caldera-config-group">
+			<label for=""><?php esc_html_e( 'Form Name', 'caldera-forms' ); ?></label>
+			<div class="caldera-config-field">
+				<input type="text" class="new-form-name block-input field-config" name="name" value="" required="required">
+			</div>
+		</div>
+		<input type="hidden" name="clone" value="{{clone}}">
 		<?php
 		do_action('caldera_forms_clone_form_template_end');
 		?>

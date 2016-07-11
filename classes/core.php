@@ -95,6 +95,21 @@ class Caldera_Forms {
 		if( current_user_can( Caldera_Forms::get_manage_cap( 'admin' ) ) ) {
 			add_action( 'wp_ajax_cf_email_save', array( 'Caldera_Forms_Email_Settings', 'save' ) );
 		}
+
+
+		if( current_user_can( Caldera_Forms::get_manage_cap( 'admin' ) ) ) {
+			$id = null;
+			$view = false;
+			if( isset( $_GET[ 'cf-email-preview' ], $_GET[ 'cf-email-preview-form' ] ) ){
+				if( wp_verify_nonce( $_GET[ 'cf-email-preview' ], $_GET[ 'cf-email-preview-form' ] ) ) {
+					$id = $_GET[ 'cf-email-preview-form' ];
+					$view = true;
+				}
+			}
+
+			new Caldera_Forms_Email_Previews( $id, $view );
+
+		}
 		
 
 		/**
@@ -5297,8 +5312,6 @@ class Caldera_Forms {
 
 		return $time;
 	}
-
-
-
+	
 
 }

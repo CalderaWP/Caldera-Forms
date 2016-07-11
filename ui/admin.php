@@ -162,7 +162,7 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 							data-modal-buttons="<?php echo esc_attr( __( 'Export Form', 'caldera-forms' ) ); ?>|<?php echo esc_attr( json_encode( $buttons ) ); ?>"
 							data-template="#cf-export-template"
 							href="#export"><?php echo __('Export', 'caldera-forms'); ?></a> | </span><?php } ?>
-						<span><a class="ajax-trigger" href="#clone" data-request="start_new_form" data-modal-buttons='<?php echo $modal_new_form; ?>' data-clone="<?php echo $form_id; ?>" data-modal-width="600" data-modal-height="400" data-load-class="none" data-modal="new_form" data-modal-title="<?php echo __('Clone Form', 'caldera-forms'); ?>" data-template="#new-form-tmpl"><?php echo __('Clone', 'caldera-forms'); ?></a><?php if( empty( $form['_external_form'] ) ){ ?> | </span>
+						<span><a class="ajax-trigger" href="#clone" data-request="start_new_form" data-modal-buttons='<?php echo $modal_new_form; ?>' data-clone="<?php echo $form_id; ?>" data-modal-width="600" data-modal-height="160" data-load-class="none" data-modal="new_clone" data-modal-title="<?php echo __('Clone Form', 'caldera-forms'); ?>" data-template="#new-form-tmpl"><?php echo __('Clone', 'caldera-forms'); ?></a><?php if( empty( $form['_external_form'] ) ){ ?> | </span>
 						<span class="trash form-delete"><a class="form-control" data-confirm="<?php echo __('This will delete this form permanently. Continue?', 'caldera-forms'); ?>" href="admin.php?page=caldera-forms&delete=<?php echo $form_id; ?>&cal_del=<?php echo wp_create_nonce( 'cf_del_frm' ); ?>"><?php echo __('Delete'); ?></a></span><?php } ?>
 
 
@@ -380,8 +380,8 @@ jQuery( function( $ ){
 		var relativeX = box.offset().left - template.offset().left;
 		var boxwid = box.offset().left + box.innerWidth();
 		var diffwid = template.offset().left + template.innerWidth();
-		$('.cf-form-template').css('overflow', 'hidden').find('div,small').show();
-		template.css('overflow', 'visible').find('div,small').hide();
+		$('.cf-form-template').css('overflow', 'hidden').find('.row,small').show();
+		template.css('overflow', 'visible').find('.row,small').hide();
 		if( boxwid - diffwid > template.outerWidth() ){
 			create.css( { left : -2, right: '' } );
 		}else{
