@@ -4,10 +4,12 @@ if(!empty($field['config']['placeholder'])){
 }
 
 $mask = '(999)999-9999';
-if($field['config']['type'] == 'international'){
+if( $field['config']['type'] == 'international' ){
 	$mask = '+99 99 999 9999';
+}elseif ( $field['config']['type'] == 'custom' ) {
+	$mask = $field['config']['custom'];
 }
-
+var_dump( $field['config'] );
 ?><?php echo $wrapper_before; ?>
 	<?php echo $field_label; ?>
 	<?php echo $field_before; ?>
