@@ -42,6 +42,9 @@ class Caldera_Forms_Email_Callbacks {
 				//fallback to default
 				return $mail;
 			}
+			
 		}
+		
 	}
+	
 }
