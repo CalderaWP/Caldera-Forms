@@ -9,7 +9,7 @@ if( $field['config']['type'] == 'international' ){
 }elseif ( $field['config']['type'] == 'custom' ) {
 	$mask = $field['config']['custom'];
 }
-var_dump( $field['config'] );
+
 ?><?php echo $wrapper_before; ?>
 	<?php echo $field_label; ?>
 	<?php echo $field_before; ?>
