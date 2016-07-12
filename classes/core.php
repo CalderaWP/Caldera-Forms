@@ -4922,7 +4922,7 @@ class Caldera_Forms {
 							$field_html = null;
 						}
 						// wrapp it up
-						$field_html = '<span class="caldera-forms-conditional-field" id="conditional_' . $field_base_id . '">' . $field_html . '</span>';
+						$field_html = '<span class="caldera-forms-conditional-field" role="region" aria-live="polite" id="conditional_' . $field_base_id . '">' . $field_html . '</span>';
 					}
 
 					$form['grid_object']->append($field_html, $field['grid_location']);
