@@ -4155,13 +4155,14 @@ class Caldera_Forms {
 
 						}
 
-						$data['data'][$field_id . '_' . $i ] = array(
-							'label' => $field['label'],
-							'view'	=> $field_view,
-							'value' => $field_value
-						);
-						$i ++;
-
+						if( empty( $field_types[ $field['type'] ]['options'] ) ){
+							$data['data'][$field_id . '_' . $i ] = array(
+								'label' => $field['label'],
+								'view'	=> $field_view,
+								'value' => $field_value
+							);
+							$i ++;
+						}
 					}
 				}
 
