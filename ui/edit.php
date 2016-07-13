@@ -288,7 +288,9 @@ $field_options_template = "
 			<button class=\"button button-small toggle-remove-option\" type=\"button\"><i class=\"icn-delete\"></i></button>		
 		</div>
 		{{/each}}
+		
 	</div>
+	<div style=\"display:none;\" class=\"notice error\"><p>" . esc_html__( 'Values should be unique to determine which option is selected.', 'caldera-forms' ) . "</p></div>
 </div>
 ";
 
@@ -1127,22 +1129,6 @@ echo implode("\r\n", $field_type_defaults);
 var system_values = <?php echo json_encode( $magic_script ); ?>;
 
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

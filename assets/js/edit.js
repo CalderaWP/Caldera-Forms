@@ -2030,7 +2030,7 @@ jQuery(document).ready(function($) {
 
 		$(document).trigger('show.' + panel.data('config'));
 		$(document).trigger('show.fieldedit');
-		
+
 		if( type === 'radio' || type === 'checkbox' || type === 'dropdown' || type === 'toggle_switch' ){
 			$('#' + panel.data('config') + '_auto').trigger('change');
 		}
@@ -2138,6 +2138,7 @@ jQuery(document).ready(function($) {
 	$('body').on('submit', '.caldera-forms-options-form', function(e){
 		var errors = $('.required.has-error');
 		if(errors.length){
+			console.log('no');
 			e.preventDefault();
 		}
 	});
@@ -2205,6 +2206,7 @@ jQuery(document).ready(function($) {
 		var triggerfield = $(this).closest('.caldera-editor-field-config-wrapper').find('.field-config').first();
 		$(this).parent().remove();
 		triggerfield.trigger('change');
+		$(document).trigger('option.remove');
 	});
 
 	$('.caldera-editor-body').on('click', '.page-toggle', function(e){
@@ -2238,6 +2240,44 @@ jQuery(document).ready(function($) {
 		value.val(label.val());
 	});
 
+
+	$( document ).on('change focusout', '.toggle_value_field', function(){		
+		$( document ).trigger('show.fieldedit');
+	});
+	
+	$( document ).on('show.fieldedit option.remove', function(e){
+		$('.toggle_value_field.has-error').removeClass('has-error');
+		var field = $( '#' + $('.layout-form-field.field-edit-open').data('config') ),
+			options = field.find('.toggle_value_field'),
+			notice = field.find('.notice'),
+			count = 0;
+			
+		for( var i = 0; i < options.length; i++ ){
+			var option = options[ i ].value,
+				repeats = 0;
+			for( var f = 0; f < options.length; f++ ){
+				if( options[ i ] === options[ f ] ){ continue; }
+
+				if( options[ i ].value === options[ f ].value ){
+					$( options[ f ] ).addClass('has-error');
+					repeats++;
+				}
+			}
+			if( repeats > 0 ){
+				$( options[ i ] ).addClass('has-error');
+				count++;
+			}
+		}
+
+		if( count > 0 ){
+			notice.slideDown();
+			e.preventDefault();
+			//setTimeout( function(){ field.focus().select(); }, 10 );
+		}else{
+			notice.slideUp();
+		}
+
+	})
 	// build fild bindings
 	rebuild_field_binding();
 	$(document).trigger('load.page');
