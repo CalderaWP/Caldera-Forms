@@ -3824,6 +3824,8 @@ class Caldera_Forms {
 		if( !empty( $_REQUEST['cf_instance'] ) ){
 			$atts['instance'] = $_REQUEST['cf_instance'];
 		}
+		// push 200 status. in some cases plugins or permalink config may cause a 404 before going out
+		header("HTTP/1.1 200 OK", true );
 		if(!empty($form['ID'])){
 			if($form['ID'] === $wp_query->query_vars['cf_api']){
 				// got it!
