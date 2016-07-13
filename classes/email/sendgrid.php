@@ -69,6 +69,18 @@ class Caldera_Forms_Email_SendGrid extends Caldera_Forms_Email_Client{
 		$personalization = new \SendGrid\Personalization();
 
 		foreach ( $this->message[ 'recipients' ] as $recipient ){
+
+			if( ! is_email( $recipient ) ){
+				$open = strpos( $recipient, '<' );
+				$close = strpos( $recipient, '>' );
+				$length = strlen( $recipient );
+				if( is_numeric( $open ) && $length - 1 == $close ){
+					$recipient = substr( $recipient, $open + 1, $close);
+					$recipient = str_replace( array( '<', '>' ), '', $recipient  );
+				}
+
+			}
+
 			if ( is_email( $recipient ) ) {
 				$email = $this->create_email( $recipient );
 				if ( is_object( $email ) ) {

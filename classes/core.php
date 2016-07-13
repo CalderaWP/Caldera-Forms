@@ -819,7 +819,9 @@ class Caldera_Forms {
 	}
 
 	/**
-	 * Send an autoresponse email.
+	 * Process the auto-responder
+	 *
+	 * @since unknown
 	 *
 	 * @param array $config Processor config
 	 * @param array $form Form config
@@ -833,7 +835,7 @@ class Caldera_Forms {
 		unset($config['_required_bounds']);
 
 		$message = $config['message'];
-		foreach($config as $tag=>&$value){
+		foreach( $config as $tag => &$value ){
 			if($tag !== 'message'){
 				$message = str_replace('%'.$tag.'%', $value, $message);
 				$value = self::do_magic_tags( $value );
@@ -865,6 +867,15 @@ class Caldera_Forms {
 		);
 
 		$email_message = apply_filters( 'caldera_forms_autoresponse_mail', $email_message, $config, $form);
+
+		if( 'wp' !== Caldera_Forms_Email_Settings::get_method() ){
+			$email_message[ 'from'] = $email_message[ 'replyto' ] = $config[ 'sender_email' ];
+			$email_message[ 'from_name' ] = $config['sender_name'];
+			$email_message[ 'bcc' ] = $email_message[ 'csv' ] = false;
+
+			Caldera_Forms_Save_Final::do_mailer( $form, null, null, $email_message );
+			return;
+		}
 
 		do_action( 'caldera_forms_do_autoresponse', $config, $form);
 
@@ -5312,6 +5323,5 @@ class Caldera_Forms {
 
 		return $time;
 	}
-	
 
 }

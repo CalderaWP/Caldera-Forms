@@ -30,7 +30,7 @@ class Caldera_Forms_Email_Callbacks {
 		if ( ! empty( $key ) ) {
 			$client->set_api( array( $key ) );
 			$response = $client->send();
-			if( 200 == $response ){
+			if( in_array( $response, array( 202, 201, 200 ) ) ){
 				Caldera_Forms_Save_Final::after_send_email( $form, $data, true, $mail[ 'csv' ], $mail, 'sendgrid' );
 				//prevent send
 				return null;
@@ -42,6 +42,9 @@ class Caldera_Forms_Email_Callbacks {
 				//fallback to default
 				return $mail;
 			}
+			
 		}
+		
 	}
+	
 }
