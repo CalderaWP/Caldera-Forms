@@ -2295,8 +2295,8 @@ jQuery(document).ready(function($) {
 		if( is_pulsating ){
 			var adders = $('.column-fieldinsert');
 			if( adders.length ){
-				adders.fadeToggle(500);
-				$('.layout-new-form-field').fadeToggle(500);
+				adders.stop().fadeToggle(700);
+				$('.layout-new-form-field').stop().fadeToggle(700);
 			}else{
 				cf_clear_puler();
 			}
