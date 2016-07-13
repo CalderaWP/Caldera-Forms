@@ -121,7 +121,9 @@ if(!empty($binds)){
 			total = total.toFixed(2);
 			view_total = addCommas( total );
 			<?php } ?>
-
+			if( view_total.toString().length > 18 ){
+				view_total = Math.round( view_total );
+			}
 			$('#<?php echo $field_id; ?>').html( view_total );
 			$('[data-field="<?php echo $field_base_id; ?>"]').val( total ).trigger('change');
 

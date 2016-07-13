@@ -306,11 +306,12 @@ $default_template = "
 
 // type list
 $field_type_list = array(
-	esc_html__( 'Select', 'caldera-forms' )       => array(),
-	esc_html__( 'File', 'caldera-forms' )         => array(),
+	esc_html__( 'Basic', 'caldera-forms' )       => array(),
+	esc_html__( 'Select', 'caldera-forms' )         => array(),
+	esc_html__( 'File', 'caldera-forms' )      => array(),
 	esc_html__( 'Content', 'caldera-forms' )      => array(),
-	esc_html__( 'Special', 'caldera-forms' )      => array(),
-	esc_html__( 'Discontinued', 'caldera-forms' ) => array(),
+	esc_html__( 'Special', 'caldera-forms' ) => array(),
+	
 );
 // Build Field Types List
 foreach($field_types as $field_slug=>$config){

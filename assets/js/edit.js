@@ -1787,7 +1787,7 @@ jQuery(document).ready(function($) {
 	$('#grid-pages-panel').on('click','.column-fieldinsert .dashicons-plus-alt', function(e){
 		//newfield-tool
 		var target 		= $(this).closest('.column-container'),
-			newfield 	= $('#newfield-tool').clone();
+			newfield 	= $('#newfield-tool').clone().css('display', '');
 		
 		insert_new_field(newfield, target);
 
@@ -2138,7 +2138,6 @@ jQuery(document).ready(function($) {
 	$('body').on('submit', '.caldera-forms-options-form', function(e){
 		var errors = $('.required.has-error');
 		if(errors.length){
-			console.log('no');
 			e.preventDefault();
 		}
 	});
@@ -2278,6 +2277,40 @@ jQuery(document).ready(function($) {
 		}
 
 	})
+	var is_pulsating = false, pulsing_adders;
+
+	focus_initial_field = function(e){
+		var field = $('.layout-grid-panel .icon-edit').first();
+		if( field.length ){
+			field.trigger('click');
+		}else{
+			$('.layout-column.column-container').first().trigger('mouseover');
+			is_pulsating = setInterval( pulsate_adders, 500 );
+		}
+		$( document ).off('load.page', focus_initial_field );
+	};
+	$( document ).on('load.page', focus_initial_field );
+	function pulsate_adders(){
+
+		if( is_pulsating ){
+			var adders = $('.column-fieldinsert');
+			if( adders.length ){
+				adders.fadeToggle(500);
+				$('.layout-new-form-field').fadeToggle(500);
+			}else{
+				cf_clear_puler();
+			}
+		}
+	}
+	
+	cf_clear_puler = function(){
+		if( is_pulsating ){
+			clearTimeout( is_pulsating );
+			$(document).off('mouseover', '.layout-new-form-field, .column-fieldinsert', cf_clear_puler);
+			$('.layout-new-form-field, .column-fieldinsert').fadeIn();
+		}
+	};
+	$(document).on('mouseover', '.layout-new-form-field, .column-fieldinsert', cf_clear_puler );
 	// build fild bindings
 	rebuild_field_binding();
 	$(document).trigger('load.page');
