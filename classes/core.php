@@ -4814,12 +4814,14 @@ class Caldera_Forms {
 				$currentpage = (int) $prev_post['page'];
 			}
 			$display = 'none';
+			$hidden = 'true';
 			if( $currentpage === 1){
 				$display = 'block';
+				$hidden = 'false';
 			}
 
 			$total_rows = substr_count($form['layout_grid']['structure'], '|') + 1;
-			$form['grid_object']->before('<div data-formpage="1" class="caldera-form-page" style="display:'.$display.';">', 1);
+			$form['grid_object']->before('<div id="form_page_' . $current_form_count . '_pg_1" data-formpage="1" class="caldera-form-page" style="display:'.$display.';" role="region" aria-labelledby="breadcrumb_' . $current_form_count . '_pg_1" aria-hidden="' . $hidden . '">', 1);
 			$form['grid_object']->after('</div>', $total_rows);
 			//dump($page_breaks);
 			foreach($page_breaks as $page=>$break){
@@ -4828,11 +4830,13 @@ class Caldera_Forms {
 
 				if($break+1 <= $total_rows ){
 					$display = 'none';
+					$hidden = 'true';
 					if($page+2 == $currentpage){
 						$display = 'block';
+						$hidden = 'false';
 					}
 
-					$form['grid_object']->before('<div data-formpage="' . ($page+2) . '" class="caldera-form-page" style="display:'.$display.';">', $break+1);
+					$form['grid_object']->before('<div id="form_page_' . $current_form_count . '_pg_' . ($page+2) . '" data-formpage="' . ($page+2) . '" role="region" aria-labelledby="breadcrumb_' . $current_form_count . '_pg_' . ( $page + 2 ) . '" aria-hidden="' . $hidden . '" class="caldera-form-page" style="display:'.$display.';">', $break+1);
 				}
 			}
 			//dump($page_breaks,0);
@@ -5117,13 +5121,14 @@ class Caldera_Forms {
 				}
 				foreach($form['page_names'] as $page_key=>$page_name){
 					$tabclass = null;
-
+					$expanded = 'false';
 					if($current_page == $page_key + 1){
 						$tabclass = ' class="active"';
+						$expanded = 'true';
 					}
 
 					$qurystr['cf_pg'] = $page_key + 1;
-					$out .= "<li" . $tabclass . "><a href=\"?". http_build_query($qurystr) . "\" data-page=\"" . ( $page_key + 1 ) ."\" data-pagenav=\"caldera_form_" . $current_form_count ."\">". $page_name . "</a></li>\r\n";
+					$out .= "<li" . $tabclass . "><a aria-controls=\"form_page_" . $current_form_count ."_pg_" . ( $page_key + 1 ) . "\" aria-expanded=\"" . $expanded . "\" id=\"breadcrumb_" . $current_form_count ."_pg_" . ( $page_key + 1 ) . "\" href=\"?". http_build_query($qurystr) . "\" data-page=\"" . ( $page_key + 1 ) ."\" data-pagenav=\"caldera_form_" . $current_form_count ."\">". $page_name . "</a></li>\r\n";
 				}
 				$out .= "</ol></span>\r\n";
 			}

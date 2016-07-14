@@ -118,7 +118,7 @@ var cf_jsfields_init, cf_validate_form;
 			instance = form.data('instance'),
 			current_page = form.find('.caldera-form-page:visible').data('formpage'),
 			page	 = page_box.data('formpage') ? page_box.data('formpage') : clicked.data('page') ,
-			breadcrumb = $('.breadcrumb[data-form="' + form.prop('id') + '"]'),
+			breadcrumb = $('.breadcrumb[data-form="caldera_form_' + instance + '"]'),
 			next,
 			prev,
 			fields,
@@ -188,35 +188,35 @@ var cf_jsfields_init, cf_validate_form;
 		if(clicked.data('page') === 'next'){
 			
 			if(breadcrumb){
-				breadcrumb.find('li.active').removeClass('active');
+				breadcrumb.find('li.active').removeClass('active').children().attr('aria-expanded', 'false');
 			}
 			next = form.find('.caldera-form-page[data-formpage="'+ ( page + 1 ) +'"]');
 			if(next.length){
-				page_box.hide();
-				next.show();
+				page_box.hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
+				next.show().attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' );
 				if(breadcrumb){
-					breadcrumb.find('a[data-page="'+ ( page + 1 ) +'"]').parent().addClass('active');
+					breadcrumb.find('a[data-page="'+ ( page + 1 ) +'"]').attr('aria-expanded', 'true').parent().addClass('active');
 				}
 			}
 		}else if(clicked.data('page') === 'prev'){
 			if(breadcrumb){
-				breadcrumb.find('li.active').removeClass('active');
+				breadcrumb.find('li.active').removeClass('active').children().attr('aria-expanded', 'false');
 			}
 			prev = form.find('.caldera-form-page[data-formpage="'+ ( page - 1 ) +'"]');
 			if(prev.length){
-				page_box.hide();
-				prev.show();
+				page_box.hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
+				prev.show().attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' );
 				if(breadcrumb){
-					breadcrumb.find('a[data-page="'+ ( page - 1 ) +'"]').parent().addClass('active');
+					breadcrumb.find('a[data-page="'+ ( page - 1 ) +'"]').attr('aria-expanded', 'true').parent().addClass('active');
 				}
 			}
 		}else{
 			if(clicked.data('pagenav')){
 				e.preventDefault();
-				clicked.closest('.breadcrumb').find('li.active').removeClass('active');
-				$('#' + clicked.data('pagenav') + ' .caldera-form-page').hide();
-				$('#' + clicked.data('pagenav') + '	.caldera-form-page[data-formpage="'+ ( clicked.data('page') ) +'"]').show();
-				clicked.parent().addClass('active');
+				clicked.closest('.breadcrumb').find('li.active').removeClass('active').children().attr('aria-expanded', 'false');
+				$('#' + clicked.data('pagenav') + ' .caldera-form-page').hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
+				$('#' + clicked.data('pagenav') + '	.caldera-form-page[data-formpage="'+ ( clicked.data('page') ) +'"]').show().attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' );
+				clicked.parent().addClass('active').children().attr('aria-expanded', 'true');
 			}
 			
 		}
