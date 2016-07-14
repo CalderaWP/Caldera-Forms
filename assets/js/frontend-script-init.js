@@ -154,7 +154,7 @@ var cf_jsfields_init, cf_validate_form;
 								// on this page.
 								this_field.parsley().validate();
 								e.preventDefault();
-								return;
+								//return;
 							}else{
 								// not on this page
 								//get page and highlight if lower than this one (aka backwards not forwards)
@@ -174,13 +174,13 @@ var cf_jsfields_init, cf_validate_form;
 		for( var ch in checks ){
 			if( checks[ch].indexOf(true) < 0){
 				$('[for="' + ch + '_' + instance + '"]').parent().addClass('has-error');
-				run = true;				
+				run = false;				
 			}else{
 				$('[for="' + ch + '_' + instance + '"]').parent().removeClass('has-error');
 			}
 		}
 		
-		if( true === run ){
+		if( false === run ){
 			cf_validate_form( form ).validate();
 			return false;
 		}
