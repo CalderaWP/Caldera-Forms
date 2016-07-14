@@ -7,7 +7,7 @@
 ?>
 	<?php echo $field_label; ?>
 	<?php echo $field_before; ?>
-		<select id="<?php echo $field_id; ?>" data-field="<?php echo $field_base_id; ?>" class="<?php echo $field_class; ?>" name="<?php echo $field_name; ?>" <?php echo $field_required; ?>>
+		<select id="<?php echo $field_id; ?>" data-field="<?php echo $field_base_id; ?>" class="<?php echo $field_class; ?>" name="<?php echo $field_name; ?>" <?php echo $field_required; ?> <?php echo $field_structure['aria']; ?>>
 		<?php
 
 			if(isset( $field['config'] ) && isset($field['config']['default']) && isset($field['config']['option'][$field['config']['default']])){
