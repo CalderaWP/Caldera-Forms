@@ -4363,11 +4363,11 @@ class Caldera_Forms {
 			"field"			=>	$field,
 			"id"				=>	$field['ID'],//'fld_' . $field['slug'],
 			"name"				=>	$field['ID'],//$field['slug'],
-			"wrapper_before"	=>	"<div role=\"field\" aria-labelledby=\"" . $field['ID'] ."Label\" aria-describedby=\"" . $field['ID'] ."Caption\" data-field-wrapper=\"" . $field['ID'] . "\" class=\"" . $field_wrapper_class . "\">\r\n",
+			"wrapper_before"	=>	"<div role=\"field\" data-field-wrapper=\"" . $field['ID'] . "\" class=\"" . $field_wrapper_class . "\">\r\n",
 			"field_before"		=>	"<div class=\"" . $field_input_class ."\">\r\n",
 			"label_before"		=>	( empty($field['hide_label']) ? "<label id=\"" . $field['ID'] ."Label\" for=\"" . $field['ID'].'_'.$current_form_count . "\" class=\"" . implode(' ', $field_classes['field_label'] ) . "\">" : null ),
 			"label"				=>	( empty($field['hide_label']) ? $field['label'] : null ),
-			"label_required"	=>	( empty($field['hide_label']) ? ( !empty($field['required']) ? " <span class=\"" . implode(' ', $field_classes['field_required_tag'] ) . "\" style=\"color:#ff2222;\">*</span>" : "" ) : null ),
+			"label_required"	=>	( empty($field['hide_label']) ? ( !empty($field['required']) ? " <span aria-hidden=\"true\" role=\"presentation\" class=\"" . implode(' ', $field_classes['field_required_tag'] ) . "\" style=\"color:#ff2222;\">*</span>" : "" ) : null ),
 			"label_after"		=>	( empty($field['hide_label']) ? "</label>" : null ),
 			"field_placeholder" =>	( !empty($field['hide_label']) ? 'placeholder="' . htmlentities( $field['label'] ) .'"' : null),
 			"field_required"	=>	( !empty($field['required']) ? 'required="required"' : null),
@@ -4375,8 +4375,21 @@ class Caldera_Forms {
 			"field_caption"		=>	( !empty($field['caption']) ? "<span id=\"" . $field['ID'] ."Caption\" class=\"" . implode(' ', $field_classes['field_caption'] ) . "\">" . $field['caption'] . "</span>\r\n" : ""),
 			"field_after"		=>  "</div>\r\n",
 			"wrapper_after"		=>  "</div>\r\n",
+			"aria"				=> 	array()
 		);
-
+		// if has label
+		if( empty( $field['hide_label'] ) ){
+			// visible label, set labelled by
+			$field_structure['aria']['labelledby'] = $field['ID'] . 'Label';
+		}else{
+			// hidden label, aria label instead
+			$field_structure['aria']['label'] = $field['label'];
+		}
+		// if has caption
+		if( !empty( $field['caption'] ) ){
+			$field_structure['aria']['describedby'] = $field['ID'] . 'Caption';
+		}
+ 
 		// add error
 		if ( ! empty( $field_errors ) ) {
 			if( is_string( $field_errors ) ){
@@ -4403,6 +4416,15 @@ class Caldera_Forms {
 		$field_structure = apply_filters( 'caldera_forms_render_field_structure', $field_structure, $form);
 		$field_structure = apply_filters( 'caldera_forms_render_field_structure_type-' . $field['type'], $field_structure, $form);
 		$field_structure = apply_filters( 'caldera_forms_render_field_structure_slug-' . $field['slug'], $field_structure, $form);
+
+		// compile aria tags
+		if( !empty( $field_structure['aria'] ) ){
+			$aria_atts = null;
+			foreach ($field_structure['aria'] as $att => $att_val) {
+				$aria_atts .= ' aria-' . $att . '="' . esc_attr( $att_val ) . '"';
+			}
+			$field_structure['aria'] = $aria_atts;
+		}
 
 		$field_name = $field_structure['name'];
 		$field_id = $field_structure['id'] . '_' .$current_form_count;
