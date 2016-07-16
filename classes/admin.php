@@ -120,6 +120,8 @@ class Caldera_Forms_Admin {
 		add_action( 'wp_ajax_browse_entries', array( Caldera_Forms_Entry_UI::get_instance(), 'view_entries' ) );
 		add_action( 'wp_ajax_get_entry', array( Caldera_Forms_Entry_UI::get_instance(), 'view_entry' ) );
 
+		add_filter( 'caldera_forms_manage_cap', array( __CLASS__ , 'save_form_cap_filter' ), 9, 3 );
+
 		/**
 		 * Runs after Caldera Forms admin is initialized
 		 *
@@ -1236,8 +1238,6 @@ class Caldera_Forms_Admin {
 			return;
 		}
 
-		add_filter( 'caldera_forms_manage_cap', array( __CLASS__ , 'save_form_cap_filter' ), 9, 3 );
-
 		/// check for form delete
 		if(!empty($_GET['delete']) && !empty($_GET['cal_del']) && current_user_can( Caldera_Forms::get_manage_cap( 'save' ), strip_tags( $_GET[ 'delete' ] ) ) ){
 
@@ -1816,23 +1816,24 @@ class Caldera_Forms_Admin {
 
 		switch( $context ) {
 			case 'export' :
+			case 'entry-view' :
 				if( ! empty( $form[ 'pin_roles' ] ) ){
 					if( isset( $form[ 'pin_roles' ][ 'access_role' ] ) && is_array($form[ 'pin_roles' ][ 'access_role' ] ) ){
 						foreach( $form[ 'pin_roles' ][ 'access_role' ] as $cap => $i ) {
-							if( current_user_can( $cap ) ){
-								break;
-
-							}
+							return $cap;
 						}
 					}
 				}
 
 				break;
+
 		}
 
 		return $cap;
 
 	}
+	
+	
 
 }
 
