@@ -102,6 +102,7 @@ function cf_handle_file_upload( $entry, $field, $form ){
 			if( !empty( $field['config']['media_lib'] ) ){
 				// send to media library
 				// Make sure that this file is included, as wp_generate_attachment_metadata() depends on it.
+				require_once( ABSPATH . 'wp-admin/includes/media.php' );
 				require_once( ABSPATH . 'wp-admin/includes/image.php' );
 
 				// create
