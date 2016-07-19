@@ -1817,10 +1817,13 @@ class Caldera_Forms_Admin {
 		switch( $context ) {
 			case 'export' :
 			case 'entry-view' :
-				if( ! empty( $form[ 'pin_roles' ] ) ){
+				if( ! empty( $form[ 'pinned' ] ) ){
 					if( isset( $form[ 'pin_roles' ][ 'access_role' ] ) && is_array($form[ 'pin_roles' ][ 'access_role' ] ) ){
-						foreach( $form[ 'pin_roles' ][ 'access_role' ] as $cap => $i ) {
-							return $cap;
+						$user = wp_get_current_user();
+						foreach( $form[ 'pin_roles' ][ 'access_role' ] as $role => $i ) {
+							if( in_array( $role, $user->roles ) ){
+								return $role;
+							}
 						}
 					}
 				}
