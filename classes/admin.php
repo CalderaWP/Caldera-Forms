@@ -820,7 +820,8 @@ class Caldera_Forms_Admin {
 				foreach ( $the_entries as $an_entry ) {
 					$ids[] = $an_entry->get_entry_id();
 				}
-
+				// init field types to initialize view rendering in entry lists
+				Caldera_Forms::get_field_types();
 
 				foreach ( $ids as $entry_id ) {
 					$rows = $entries->get_rows( $page, (int) $entry_id, $status );
