@@ -53,25 +53,45 @@ function size_format(bytes) {
     var output = [];
     // get length
     for (var i = 0; i < files.length ; i++) {
-     var id = 'fl' + Math.round(Math.random() * 187465827348977);
+     var id = 'fl' + Math.round(Math.random() * 187465827348977),
+        state = 1,
+        error = '';
         if( config.allowed.length ){
             if( config.allowed.indexOf( files[ i ].type ) < 0 ){
-                continue;
+                state = 0;
+                error = config.notices.invalid_filetype;
             }
         }
+        if( config.max_size ){
+            if( files[ i ].size > config.max_size ){
+                state = 0;
+                error = config.notices.file_exceeds_size_limit;
+            }
+        }
+        if( ! files[ i ].size ){
+            state = 0;
+            error = config.notices.zero_byte_file;
+        }
+
       cf_uploader_filelist[ evt.target.id + '_file_' + id ] = {
             file : files[ i ],
-            state : 1
+            state : state,
+            message : error
         };
     }
     // do preview
     for( var i in cf_uploader_filelist ){
-      output.push('<li class="cf-uploader-queue-item ' + i + '">',
-                  '<a href="#remove-file" data-file="' + i + '" class="cf-file-remove">&times;</a> <span class="file-name">', cf_uploader_filelist[ i ].file.name, '</span>',
+      var state_class = '',
+          error_message = '';
+      if( cf_uploader_filelist[ i ].state === 0 ){
+        state_class = 'has-error';
+      }
+      output.push('<li class="cf-uploader-queue-item ' + i + ' ' + state_class + '">',
+                  '<a href="#remove-file" data-file="' + i + '" class="cf-file-remove">&times;</a> <span class="file-name">', cf_uploader_filelist[ i ].file.name, '</span>&nbsp;',
                   '<div class="progress-bar" style="background:#ececec;"><div class="bar" id="progress-file-' + i + '" style="height:2px;width:0%;background:#a3be5f;"></div></div>',                  
                   '<small class="file-type">', cf_uploader_filelist[ i ].file.type || 'n/a', '</small> ',
-                  '<small class="file-error"></small>',
                   '<small class="file-size">' + size_format( cf_uploader_filelist[ i ].file.size ) + '</small>',
+                  '<small class="file-error">' + cf_uploader_filelist[ i ].message + '</small>',
                   '</li>');
     }
     evt.target.value = null;

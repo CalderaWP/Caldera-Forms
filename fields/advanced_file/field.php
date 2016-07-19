@@ -14,9 +14,8 @@
 			$field['config']['multi_upload_text'] = __( 'Add Files', 'caldera-forms' );
 		}
 	}
-	$accept_tag = null;
+	$accept_tag = array();
 	if( !empty( $field['config']['allowed'] ) ){
-		$accept_tag = array();
 		$allowed = array_map('trim', explode(',', trim( $field['config']['allowed'] ) ) );
 		$field['config']['allowed'] = array();
 		foreach( $allowed as $ext ){
@@ -25,9 +24,24 @@
 			$field['config']['allowed'][] = $file_type['type'];
 			$accept_tag[] = '.' . $ext;
 		}
-		$accept_tag = 'accept="' . esc_attr( implode(',', $accept_tag) ) . '"';
+	}else{
+		$allowed = get_allowed_mime_types();
+		$field['config']['allowed'] = array();
+		foreach( $allowed as $ext=>$mime ){
+			$field['config']['allowed'][] = $mime;
+			$accept_tag[] = '.' . str_replace('|', ',.', $ext );
+		}
+		
 	}
-	
+	$accept_tag = 'accept="' . esc_attr( implode(',', $accept_tag) ) . '"';
+
+	$field['config']['max_size'] = wp_max_upload_size();
+
+	$field['config']['notices'] = array(
+		'file_exceeds_size_limit' => esc_html__( 'File exceeds the maximum upload size for this site.', 'caldera-forms' ),
+		'zero_byte_file' => esc_html__( 'This file is empty. Please try another.', 'caldera-forms' ),
+		'invalid_filetype' => esc_html__( 'This file type is not allowed. Please try another.', 'caldera-forms' ),
+	);
 
 ?><?php echo $wrapper_before; ?>
 	<?php echo $field_label; ?>

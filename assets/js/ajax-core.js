@@ -40,8 +40,9 @@ jQuery(function($){
 				if( data.success && data.success === true ){
 
 					cf_upload_queue.pop();
-
-					$('[data-file="' + file_number + '"]').remove();
+					var file_remover = $('[data-file="' + file_number + '"]');
+					file_remover.next().addClass('file-uploaded');
+					file_remover.remove();
 					//$('.' + file_number ).slideUp();
 					cf_uploader_filelist[ file_number ].state = 3;
 
@@ -97,8 +98,8 @@ jQuery(function($){
 					var has_files = false;
 					var count = cf_upload_queue.length;
 					for( var file in cf_uploader_filelist ){
-						if( cf_uploader_filelist[ file ].state > 1 ){
-							// state 2 and 3 is transferring and complete
+						if( cf_uploader_filelist[ file ].state > 1 || cf_uploader_filelist[ file ].state === 0 ){
+							// state 2 and 3 is transferring and complete, state 0 is error and dont upload
 							continue;
 						}
 
