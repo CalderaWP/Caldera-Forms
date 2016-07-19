@@ -1,5 +1,8 @@
 <script type="text/javascript">
 var init_cf_baldrick;
+function cf_set_limits( el ){
+	jQuery( el ).data('perpage', jQuery('#cf-entries-list-items').val() );
+}
 function cf_refresh_view(obj){
 	
 	jQuery('.entry_count_' + obj.params.trigger.data('form')).html(obj.rawData.total);

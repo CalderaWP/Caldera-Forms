@@ -228,9 +228,7 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 do_action('caldera_forms_admin_templates');
 ?>
 <script type="text/javascript">
-function cf_set_limits( el ){
-	jQuery( el ).data('perpage', jQuery('#cf-entries-list-items').val() );
-}
+
 function set_form_state( obj ){
 	if( true === obj.data.success ){
 
