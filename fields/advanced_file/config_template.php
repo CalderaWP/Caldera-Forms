@@ -1,16 +1,24 @@
 <div class="caldera-config-group">
-	<label for="{{_id}}_attach"><?php echo __('Attach to mailer', 'caldera-forms'); ?></label>
+	<label for="{{_id}}_attach"></label>
 	<div class="caldera-config-field">
-		<input id="{{_id}}_attach" type="checkbox" class="field-config" name="{{_name}}[attach]" value="1" {{#if attach}}checked="checked"{{/if}}>
+		<label><input id="{{_id}}_attach" type="checkbox" class="field-config" name="{{_name}}[attach]" value="1" {{#if attach}}checked="checked"{{/if}}> <?php echo __('Attach to mailer', 'caldera-forms'); ?></label>
 	</div>
 </div>
 
 <div class="caldera-config-group">
-	<label for="{{_id}}_allow_multiple"><?php echo __('Allow Multiple', 'caldera-forms'); ?></label>
+	<label for="{{_id}}_allow_multiple"></label>
 	<div class="caldera-config-field">
-		<input id="{{_id}}_allow_multiple" type="checkbox" class="field-config" name="{{_name}}[multi_upload]" value="1" {{#if multi_upload}}checked="checked"{{/if}}>
+		<label><input id="{{_id}}_allow_multiple" type="checkbox" class="field-config" name="{{_name}}[multi_upload]" value="1" {{#if multi_upload}}checked="checked"{{/if}}> <?php echo __('Allow Multiple', 'caldera-forms'); ?></label>
 	</div>
 </div>
+
+<div class="caldera-config-group">
+	<label for="{{_id}}_media_library"></label>
+	<div class="caldera-config-field">
+		<label><input id="{{_id}}_media_library" type="checkbox" class="field-config" name="{{_name}}[media_lib]" value="1" {{#if media_lib}}checked="checked"{{/if}}> <?php echo __('Add to Media Library', 'caldera-forms'); ?></label>
+	</div>
+</div>
+
 
 <div class="caldera-config-group" id="{{_id}}_allow_multiple_text_wrap">
 	<label for="{{_id}}_allow_multiple_text"><?php echo __('Button Text', 'caldera-forms'); ?></label>
