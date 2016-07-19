@@ -41,7 +41,7 @@ function size_format(bytes) {
     return converted;
 }
 
-  function handleFileSelect(evt) {
+  function handleFileSelect( evt, config ) {
     evt.stopPropagation();
     evt.preventDefault();
     if(evt.dataTransfer){
@@ -54,6 +54,11 @@ function size_format(bytes) {
     // get length
     for (var i = 0; i < files.length ; i++) {
      var id = 'fl' + Math.round(Math.random() * 187465827348977);
+        if( config.allowed.length ){
+            if( config.allowed.indexOf( files[ i ].type ) < 0 ){
+                continue;
+            }
+        }
       cf_uploader_filelist[ evt.target.id + '_file_' + id ] = {
             file : files[ i ],
             state : 1
@@ -107,7 +112,7 @@ jQuery( function( $ ){
             cf_uploader_filelist = {};
             field.parent().find('.cf-uploader-trigger').slideUp();
         }
-        handleFileSelect( e );
+        handleFileSelect( e, field.data('config') );
     });
 
     //var dropTarget = document.getElementById( element );
