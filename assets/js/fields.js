@@ -1683,9 +1683,10 @@ function color_picker_init(){
 			var $this = $(this);
 			if ($this.data('cfdatepicker'))
 				return;
-			e.preventDefault();
+			
 			// component click requires us to explicitly show it
 			if( ! checkDateInput() || ! $this.data('mobile') ){
+				e.preventDefault();
 				$this.cfdatepicker('show');
 			}
 		}
