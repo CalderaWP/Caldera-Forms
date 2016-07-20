@@ -1709,7 +1709,8 @@ jQuery(document).ready(function($) {
 		newfield.find('.settings-panel').show();
 		newfield.appendTo( target );
 		buildSortables();
-		
+		newfield.find('.icon-edit').trigger('click');
+
 
 		$('#' + name + '_lable').focus().select();
 
@@ -1726,7 +1727,6 @@ jQuery(document).ready(function($) {
 			$('#' + new_name + '_type' ).data('type', field_set.type ).trigger('change');
 		}
 		$(document).trigger('field.added');
-		newfield.find('.icon-edit').trigger('click');
 	}
 
 	function buildSortables(){
