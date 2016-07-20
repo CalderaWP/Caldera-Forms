@@ -1672,6 +1672,8 @@ jQuery(document).ready(function($) {
 			new_conf_templ,
 			field_set;
 
+		newfield.prop('id', '').prop('title', '');
+		
 		if(tel){
 			var clone = $('#' + tel).clone().wrap('<div>').parent().html().replace( new RegExp(tel,"g") , '{{id}}');
 			new_conf_templ = Handlebars.compile( clone );
@@ -1685,7 +1687,7 @@ jQuery(document).ready(function($) {
 			"slug"	:	''
 		}, field_set );
 		if( field_set.label.length ){
-			field_set.label = field_set.label + ' ' + ( $('[value="' + field_set.label + '"]').length + 1 );
+			//field_set.label = field_set.label + ' ' + ( $('[value="' + field_set.label + '"]').length + 1 );
 		}
 		//field_set.label = '';
 		field_set.slug = '';
@@ -1707,7 +1709,7 @@ jQuery(document).ready(function($) {
 		newfield.find('.settings-panel').show();
 		newfield.appendTo( target );
 		buildSortables();
-		newfield.find('.icon-edit').trigger('click');
+		
 
 		$('#' + name + '_lable').focus().select();
 
@@ -1724,6 +1726,7 @@ jQuery(document).ready(function($) {
 			$('#' + new_name + '_type' ).data('type', field_set.type ).trigger('change');
 		}
 		$(document).trigger('field.added');
+		newfield.find('.icon-edit').trigger('click');
 	}
 
 	function buildSortables(){
@@ -2018,23 +2021,29 @@ jQuery(document).ready(function($) {
 		//}
 
 	});	
-	$('#grid-pages-panel').on('click', '.layout-form-field .dashicons-admin-page', function(){
+	$( document ).on('click', '.layout-form-field .dashicons-admin-page', function(){
 		var clicked = $( this ),
-			clone_id = clicked.parent().data('config'),
+			wrap = clicked.parent(),
+			clone_id = wrap.data('config'),
 			clone = $('#' + clone_id ).formJSON(),
 			target 		= clicked.closest('.column-container'),
-			newfield 	= clicked.parent().clone().css('display', ''),
+			newfield 	= wrap.clone().css('display', ''),
 			new_params = {};
+
+		if( wrap.hasClass('field-edit-open') ){
+			wrap.removeClass('field-edit-open');
+			newfield.removeClass('field-edit-open');
+			$('.caldera-editor-field-config-wrapper').hide();
+		}
+
 		if( clone.config.fields[ clone_id ] ){
 			new_params = clone.config.fields[ clone_id ];
 			delete new_params.ID;
 		}
+
 		insert_new_field(newfield, target, null, new_params);
 	})
-	$('#grid-pages-panel').on('click', '.layout-form-field .icon-edit', function(){
-
-		
-
+	$( document ).on('click', '.layout-form-field .icon-edit', function(){
 		var clicked = $(this),
 			panel 	= clicked.parent(),
 			type 	= $('#' + panel.data('config') +'_type').val();

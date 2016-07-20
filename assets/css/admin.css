@@ -429,28 +429,35 @@ li.caldera-editor-logo {
   width: 100%;
 }
 .layout-form-field .icon-edit {
-  background: none repeat scroll 0 0 #FFFFFF;
+  background: #efefef none repeat scroll 0 0;
   border-radius: 4px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  border: 1px solid #bfbfbf;
   padding: 5px;
   position: absolute;
   right: 12px;
   top: 12px;
   z-index: 999;
+  color: #707070;
 }
 .layout-form-field .dashicons-admin-page {
-  background: #ffffff none repeat scroll 0 0;
+  background: #efefef none repeat scroll 0 0;
+  border: 1px solid #bfbfbf;
   border-radius: 4px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  color: #707070;
   font-size: 16px;
-  height: 24px;
-  line-height: 26px;
+  height: 25px;
+  line-height: 25px;
   padding: 0;
   position: absolute;
-  right: 38px;
+  right: 40px;
   top: 12px;
-  width: 24px;
+  width: 25px;
   z-index: 999;
+}
+.layout-form-field .icon-edit:hover,
+.layout-form-field .dashicons-admin-page:hover{
+  background: #fcfcfc none repeat scroll 0 0;
+  color: #505050;
 }
 .layout-form-field.ui-sortable-helper {
   border-radius: 3px;
