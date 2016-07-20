@@ -200,8 +200,6 @@ class Caldera_Forms_Admin {
 			),			
 	 	));
 
-	 	ksort( $internal );
-
 	 	return $internal;
 	 }
 
