@@ -80,11 +80,21 @@ if( !empty( $field['config']['advanced_populate']['filter'] ) ){
 ob_start();
 ?>
 <style>
-.ccselect2-drop-active,.ccselect2-drop.ccselect2-drop-above.ccselect2-drop-active,.ccselect2-container-active .ccselect2-choice,.ccselect2-container-active .ccselect2-choices,.ccselect2-dropdown-open.ccselect2-drop-above .ccselect2-choice,.ccselect2-dropdown-open.ccselect2-drop-above .ccselect2-choices,.ccselect2-container-multi.ccselect2-container-active .ccselect2-choices,.ccselect2-container-multi .ccselect2-choices .ccselect2-search-choice-focus{
+.s2id_<?php echo $field_id; ?>.ccselect2-drop-active,
+.s2id_<?php echo $field_id; ?>.ccselect2-drop.ccselect2-drop-above.ccselect2-drop-active,
+.s2id_<?php echo $field_id; ?>.ccselect2-container-active .ccselect2-choice,
+.s2id_<?php echo $field_id; ?>.ccselect2-container-active .ccselect2-choices,
+.s2id_<?php echo $field_id; ?>.ccselect2-dropdown-open.ccselect2-drop-above .ccselect2-choice,
+.s2id_<?php echo $field_id; ?>.ccselect2-dropdown-open.ccselect2-drop-above .ccselect2-choices,
+.s2id_<?php echo $field_id; ?>.ccselect2-container-multi.ccselect2-container-active .ccselect2-choices,
+.s2id_<?php echo $field_id; ?>.ccselect2-container-multi .ccselect2-choices .ccselect2-search-choice-focus{
     border-color: <?php echo $field['config']['border']; ?>;
-}.ccselect2-results .ccselect2-highlighted,.ccselect2-container-multi .ccselect2-choices .ccselect2-search-choice-focus{
+}
+.s2id_<?php echo $field_id; ?> .ccselect2-results .ccselect2-highlighted,
+.s2id_<?php echo $field_id; ?> .ccselect2-container-multi .ccselect2-choices .ccselect2-search-choice-focus{
 	background: <?php echo $field['config']['color']; ?>;
-}.has-error .ccselect2-container .ccselect2-choice {
+}
+.has-error .s2id_<?php echo $field_id; ?> .ccselect2-container .ccselect2-choice {
 	border-color: #dd4b39 !important;
 	background-color: #f2dede !important;
 	background-image: none;
