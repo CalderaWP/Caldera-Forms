@@ -1651,18 +1651,6 @@
 
 	/* DATEPICKER DATA-API
 	* ================== */
-
-	function checkDateInput() {
-		var input = document.createElement('input');
-		input.setAttribute('type','date');
-
-		var notADateValue = 'not-a-date';
-		input.setAttribute('value', notADateValue); 
-
-		return (input.value !== notADateValue);
-	}
-
-	
 	$(document).on(
 		'focus.cfdatepicker.data-api click.cfdatepicker.data-api',
 		'[data-provide="cfdatepicker"]',
@@ -1670,19 +1658,13 @@
 			var $this = $(this);
 			if ($this.data('cfdatepicker'))
 				return;
-			e.preventDefault();
+			
 			// component click requires us to explicitly show it
-			if( ! checkDateInput() || ! $this.data('mobile') ){
-				$this.cfdatepicker('show');
-			}
+			e.preventDefault();
+			$this.cfdatepicker('show')
+			.on('show', function(){ $(this).trigger('blur'); })
+			.on('hide', function(){ $(this).attr("disabled", false); })
 		}
 	);
-
-	$(function(){
-		//$('[data-provide="cfdatepicker-inline"]').cfdatepicker({
-	//		language: "pt-BR"
-	//	});
-
-	});
 
 }(window.jQuery));
