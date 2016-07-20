@@ -31,7 +31,10 @@
       data-nonce="<?php echo wp_create_nonce( 'view_entries' ); ?>"
 ></span>
 </span>
-<?php include CFCORE_PATH . 'ui/entries_toolbar.php'; ?>
+<?php 
+$is_pinned = true;
+include CFCORE_PATH . 'ui/entries_toolbar.php';
+?>
 <div class="form-extend-page-wrap">	
 	<div id="form-entries-viewer"></div>
 	<div class="tablenav caldera-table-nav" style="display:none;">
