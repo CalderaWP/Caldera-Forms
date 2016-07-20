@@ -14,7 +14,7 @@ interface Caldera_Forms_Email_Interface {
 	/**
 	 * Set API keys
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param array $keys
 	 */
@@ -23,7 +23,7 @@ interface Caldera_Forms_Email_Interface {
 	/**
 	 * Send email
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @return array|int Array of errors or status code
 	 */
@@ -32,7 +32,8 @@ interface Caldera_Forms_Email_Interface {
 	/**
 	 * Include SDK for API
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 */
 	public function include_sdk();
+
 }

@@ -266,7 +266,7 @@ class Caldera_Forms_DB_Track extends Caldera_Forms_DB_Base {
 	/**
 	 * Track invalid mailer settings events
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param array $form Form config
 	 */

@@ -395,7 +395,7 @@ class Caldera_Forms_Forms {
 		/**
 		 * Filter form config directly before saving
 		 *
-		 * @since 1.3.6
+		 * @since 1.4.0
 		 *
 		 * @param array $data Form config
 		 */

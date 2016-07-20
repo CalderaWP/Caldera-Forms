@@ -115,7 +115,7 @@ class Caldera_Forms {
 		/**
 		 * Runs after Caldera Forms core is initialized
 		 *
-		 * @since 1.3.6
+		 * @since 1.3.5.3
 		 */
 		do_action( 'caldera_forms_core_init' );
 
@@ -5338,7 +5338,7 @@ class Caldera_Forms {
 	/**
 	 * Convert time entry was submitted (as MySQL timestamp in UTC) to local display time
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param string $submitted Timestamp
 	 *

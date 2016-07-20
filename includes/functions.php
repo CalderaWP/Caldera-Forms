@@ -10,7 +10,7 @@
  *
  * @return array|mixed|object|string|void
  *
- * @since 1.3.6
+ * @since 1.4.0
  *
  */
 function caldera_forms_sanitize( $input, $params = array() ){
@@ -20,9 +20,9 @@ function caldera_forms_sanitize( $input, $params = array() ){
 /**
  * Clean the crap out of a string.
  *
- * Applies  stripslashes_deep, strip_tags and trim
+ * Applies  stripslashes_deep, strip_tags and trim. This is a function of industry, often too much industry.
  *
- * @since 1.3.6
+ * @since 1.4.0
  *
  * @param $string
  *

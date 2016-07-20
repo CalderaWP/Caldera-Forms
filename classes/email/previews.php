@@ -14,7 +14,7 @@ class Caldera_Forms_Email_Previews {
 	/**
 	 * Form ID
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @var null|string
 	 */
@@ -41,7 +41,7 @@ class Caldera_Forms_Email_Previews {
 	/**
 	 * Display email preview
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 */
 	public function view(){
 		if ( isset( $this->id ) ) {
@@ -64,7 +64,7 @@ class Caldera_Forms_Email_Previews {
 	 *
 	 * Create UL markup from array
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param $headers
 	 *
@@ -88,7 +88,7 @@ class Caldera_Forms_Email_Previews {
 	/**
 	 * If preview should be recorded, record
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @uses "caldera_forms_mailer" filter
 	 *
@@ -132,7 +132,7 @@ class Caldera_Forms_Email_Previews {
 	/**
 	 * Save preview
 	 * 
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 * 
 	 * @param Caldera_Forms_Email_Preview $preview Preview object
 	 */
@@ -148,7 +148,7 @@ class Caldera_Forms_Email_Previews {
 	/**
 	 * Option key
 	 * 
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 * 
 	 * @return string
 	 */

@@ -14,7 +14,7 @@ class Caldera_Forms_Email_Attachment extends Caldera_Forms_Object {
 	/**
 	 * Content type
 	 * 
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 * 
 	 * @var string
 	 */
@@ -23,7 +23,7 @@ class Caldera_Forms_Email_Attachment extends Caldera_Forms_Object {
 	/**
 	 * Actual file contents
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @var string
 	 */
@@ -32,7 +32,7 @@ class Caldera_Forms_Email_Attachment extends Caldera_Forms_Object {
 	/**
 	 * The filename
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 * 
 	 * @var string
 	 */
@@ -48,7 +48,7 @@ class Caldera_Forms_Email_Attachment extends Caldera_Forms_Object {
 	/**
 	 *  Get file contents as a base64 encoded string
 	 * 
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 * 
 	 * @return string
 	 */
@@ -63,7 +63,7 @@ class Caldera_Forms_Email_Attachment extends Caldera_Forms_Object {
 	/**
 	 * Make calls to $this->filename only return basename
 	 * 
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 * 
 	 * @return string
 	 */
@@ -74,7 +74,7 @@ class Caldera_Forms_Email_Attachment extends Caldera_Forms_Object {
 	/**
 	 * Called when setting content property, and sets everything if value is a filepath
 	 * 
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 * 
 	 * @param $content
 	 */

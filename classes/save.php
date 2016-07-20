@@ -352,7 +352,7 @@ class Caldera_Forms_Save_Final {
 			 * 
 			 * If this fires, that is bad.
 			 * 
-			 * @since 1.3.6
+			 * @since 1.4.0
 			 * 
 			 * @param array $form Form config
 			 * @param int|null $entryid Optional. ID of entry to send. If not provided, will be determined based on global $transdata
@@ -421,7 +421,7 @@ class Caldera_Forms_Save_Final {
 	 * Runs post email sent/not sent tasks/hooks etc
 	 *
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param array $form Form config
 	 * @param array $data Submission data
@@ -469,12 +469,12 @@ class Caldera_Forms_Save_Final {
 	 *
 	 * IMPORTANT: Data is assumed to be sanatized, saving is assumed to be authorized. Do not hook directly to an HTTP request.
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param array $form Form config
 	 * @param array $fields Fields to save, must be in form of field_id => value and field IDs must exist
 	 * @param array $args {
-	 *     An array of arguments. As of 1.3.6 used for ovveriding entry status/user/time
+	 *     An array of arguments. As of 1.4.0 used for ovveriding entry status/user/time
 	 *
 	 *     @type string|int $user_id Optional. User ID. Default is current user ID.
 	 *     @type string $datestamp Optional. Datestamp to use for entry. Must be mysql time. Default is current time.
@@ -524,7 +524,7 @@ class Caldera_Forms_Save_Final {
 	/**
 	 * After sending email, unlink CSV
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param $csvfile
 	 */

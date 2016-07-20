@@ -14,7 +14,7 @@ class Caldera_Forms_Entry_Bulk {
 	/**
 	 * Delete all entry data for an array of entries
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param array $entry_ids Array of entries to delete
 	 *
@@ -34,7 +34,7 @@ class Caldera_Forms_Entry_Bulk {
 	/**
 	 * Update statuses for an array of entries
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param array $entry_ids Array of entries to delete
 	 * @param string $status New status
@@ -50,7 +50,7 @@ class Caldera_Forms_Entry_Bulk {
 	/**
 	 * Get entry count by status
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param string $form_id Form ID
 	 * @param string $status Status

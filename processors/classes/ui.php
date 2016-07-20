@@ -135,7 +135,7 @@ class Caldera_Forms_Processor_UI {
 		/**
 		 * Filter classes added to UI field
 		 *
-		 * @since 1.3.6
+		 * @since 1.3.5.3
 		 *
 		 * @param array $classes Array of classes. Will be imploded
 		 * @param string $id Field ID
@@ -192,7 +192,7 @@ class Caldera_Forms_Processor_UI {
 		/**
 		 * Modify HTML for the input field group in processor UI
 		 *
-		 * @since 1.3.6
+		 * @since 1.3.5.3
 		 *
 		 * @param string $input_type ID attribute
 		 * @param string $type The type of input. This is NOT The input type. Options are simple|checkbox|advanced|dropdown
@@ -205,7 +205,7 @@ class Caldera_Forms_Processor_UI {
 	/**
 	 * Make ID for a label element
 	 *
-	 * @since 1.3.6
+	 * @since 1.3.5.3
 	 *
 	 * @param string $id ID attribute of element being labeled.
 	 *
@@ -218,7 +218,7 @@ class Caldera_Forms_Processor_UI {
 	/**
 	 * Make ID for a description element
 	 *
-	 * @since 1.3.6
+	 * @since 1.3.5.3
 	 *
 	 * @param string $id ID attribute of element being described.
 	 *
@@ -334,7 +334,7 @@ class Caldera_Forms_Processor_UI {
 		/**
 		 * Modify HTML for the input in processor UI
 		 *
-		 * @since 1.3.6
+		 * @since 1.3.5.3
 		 *
 		 *
 		 * @param string $id ID attribute

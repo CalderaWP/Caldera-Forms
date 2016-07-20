@@ -14,7 +14,7 @@ class Caldera_Forms_Email_Preview implements JsonSerializable {
 	/**
 	 * The mail data
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @var array
 	 */
@@ -24,7 +24,7 @@ class Caldera_Forms_Email_Preview implements JsonSerializable {
 	/**
 	 * Caldera_Forms_Email_Preview constructor.
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param array $mail Mail data
 	 */
@@ -36,7 +36,7 @@ class Caldera_Forms_Email_Preview implements JsonSerializable {
 	/**
 	 * Get content type
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @return string
 	 */
@@ -51,7 +51,7 @@ class Caldera_Forms_Email_Preview implements JsonSerializable {
 	/**
 	 * Get email headers
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @return array
 	 */
@@ -67,7 +67,7 @@ class Caldera_Forms_Email_Preview implements JsonSerializable {
 	/**
 	 * Get the email message
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @return string
 	 */

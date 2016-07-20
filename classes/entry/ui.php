@@ -14,7 +14,7 @@ class Caldera_Forms_Entry_UI {
 	/**
 	 * Class instance
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @var \Caldera_Forms_Entry_UI
 	 */
@@ -23,7 +23,7 @@ class Caldera_Forms_Entry_UI {
 	/**
 	 * Get class instance
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @return \Caldera_Forms_Entry_UI
 	 */
@@ -39,7 +39,7 @@ class Caldera_Forms_Entry_UI {
 	/**
 	 * Get a single entry viewer via AJAX
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @uses "wp_ajax_get_entry" action
 	 */
@@ -75,7 +75,7 @@ class Caldera_Forms_Entry_UI {
 	/**
 	 * Get entry viewer list via AJAX
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @uses "wp_ajax_browse_entries" action
 	 */

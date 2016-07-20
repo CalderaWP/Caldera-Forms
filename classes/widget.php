@@ -15,7 +15,7 @@ class Caldera_Forms_Widget extends WP_Widget {
 		/**
 		 * Runs after Caldera Forms widget is initialized
 		 *
-		 * @since 1.3.6
+		 * @since 1.4.0
 		 */
 		do_action( 'caldera_forms_widget_init' );
 	}

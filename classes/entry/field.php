@@ -30,7 +30,7 @@ class Caldera_Forms_Entry_Field  extends Caldera_Forms_Entry_Object {
 	/**
 	 * Apply deserialization/json_decoding if needed to value column
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param string $value Value
 	 */
@@ -49,7 +49,7 @@ class Caldera_Forms_Entry_Field  extends Caldera_Forms_Entry_Object {
 	/**
 	 * Get value and ensure is not still serialized
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @return array|string|int
 	 */

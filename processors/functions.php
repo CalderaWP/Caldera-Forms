@@ -5,7 +5,7 @@
  *
  * Returns the IP address of the current visitor
  *
- * @since 1.3.6
+ * @since 1.3.5.3
  *
  * @return string $ip User's IP address
  */
@@ -30,7 +30,7 @@ function caldera_forms_get_ip() {
 /**
  * Get current  URL
 
- * @since 1.3.6
+ * @since 1.3.5.3
  *
  * @return string Current URL
  */

@@ -26,7 +26,7 @@ class Caldera_Forms_Email_SendGrid extends Caldera_Forms_Email_Client{
 	 * 
 	 * SendGrid will not let you send to same address twice
 	 * 
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 * 
 	 * @var array
 	 */
@@ -153,7 +153,7 @@ class Caldera_Forms_Email_SendGrid extends Caldera_Forms_Email_Client{
 	 * 
 	 * Main reason for this is to prevent adding duplicated send tos, which will cause API error.
 	 * 
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 * 
 	 * @param string $address Email address to send to.
 	 * @param string|null $name Optional. Name of who sending to. Default is null.

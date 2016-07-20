@@ -20,7 +20,7 @@ abstract class Caldera_Forms_Object {
 	/**
 	 * Translate from a stdClass object to this object type
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param \stdClass $obj
 	 */
@@ -33,7 +33,7 @@ abstract class Caldera_Forms_Object {
 	/**
 	 * Set allowed properties
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param string $property Name of property
 	 * @param mixed $value Property value
@@ -56,7 +56,7 @@ abstract class Caldera_Forms_Object {
 	/**
 	 * Get allowed property value
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param string $property Name of property
 	 *
@@ -78,7 +78,7 @@ abstract class Caldera_Forms_Object {
 	/**
 	 * Convert object to array
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param bool $serialize_arrays Optional. To return arrays serialized. If true, arrays are serialized, if false, serialized data is unserialized. Default is true.
 	 *
@@ -110,7 +110,7 @@ abstract class Caldera_Forms_Object {
 	 *
 	 * Called whenever property is accessed via __get()
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param string $property Property name
 	 * @param mixed $value Property value
@@ -124,7 +124,7 @@ abstract class Caldera_Forms_Object {
 		/**
 		 * Filter value before returning
 		 *
-		 * @since 1.3.6
+		 * @since 1.4.0
 		 *
 		 * @param mixed $value Property value
 		 * @param Caldera_Forms_Object $obj Current class object
@@ -139,7 +139,7 @@ abstract class Caldera_Forms_Object {
 	 *
 	 * Used to form filter for getters. Better to ovveride and hardcode.
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @return string
 	 */

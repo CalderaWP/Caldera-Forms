@@ -14,7 +14,7 @@ class Caldera_Forms_Email_Settings {
 	/**
 	 * Name of options key to store settings
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @var string
 	 */
@@ -23,7 +23,7 @@ class Caldera_Forms_Email_Settings {
 	/**
 	 * Current settings
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @var array
 	 */
@@ -32,7 +32,7 @@ class Caldera_Forms_Email_Settings {
 	/**
 	 * Nonce action for settings UI
 	 * 
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 * 
 	 * @var string
 	 */
@@ -41,7 +41,7 @@ class Caldera_Forms_Email_Settings {
 	/**
 	 * Default settings
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @var array
 	 */
@@ -58,7 +58,7 @@ class Caldera_Forms_Email_Settings {
 	/**
 	 * Get settings
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @return array
 	 */
@@ -74,7 +74,7 @@ class Caldera_Forms_Email_Settings {
 	/**
 	 * Get API keys
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param string $api Which API to get key for
 	 *
@@ -90,7 +90,7 @@ class Caldera_Forms_Email_Settings {
 	/**
 	 * Save an API key
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param string $api API to save key for
 	 * @param string $key API Key
@@ -115,7 +115,7 @@ class Caldera_Forms_Email_Settings {
 	/**
 	 * Check if is an allowed API
 	 * 
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 * 
 	 * @param string $api Name of API
 	 *
@@ -168,7 +168,7 @@ class Caldera_Forms_Email_Settings {
 	 *
 	 * @uses "init" action
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 */
 	public static function maybe_add_hooks() {
 		//don't load in PHP 5.2
@@ -195,7 +195,7 @@ class Caldera_Forms_Email_Settings {
 	/**
 	 * Create nonce field for settings
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @return string
 	 */
@@ -207,7 +207,7 @@ class Caldera_Forms_Email_Settings {
 	/**
 	 * Is API valid?
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param string $api API name
 	 
@@ -228,7 +228,7 @@ class Caldera_Forms_Email_Settings {
 	/**
 	 * Get an array of valid APIs
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @return array
 	 */
@@ -236,7 +236,7 @@ class Caldera_Forms_Email_Settings {
 		/**
 		 * Filter allowed email APIs
 		 *
-		 * @since 1.3.6
+		 * @since 1.4.0
 		 *
 		 * @param array $apis Array of API names that are valid.
 		 */
@@ -251,7 +251,7 @@ class Caldera_Forms_Email_Settings {
 	 *
 	 * @uses "caldera_forms_admin_footer" action
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 */
 	public static function ui() {
 		if ( ! version_compare( PHP_VERSION, '5.3.0', '>=' ) ) {
@@ -268,7 +268,7 @@ class Caldera_Forms_Email_Settings {
 	/**
 	 * Get current method being used
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @return string
 	 */
@@ -284,7 +284,7 @@ class Caldera_Forms_Email_Settings {
 	/**
 	 * Update email settings
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 */
 	protected static function update_settings() {
 		update_option( self::$option_key, self::$settings );
@@ -293,7 +293,7 @@ class Caldera_Forms_Email_Settings {
 	/**
 	 * Sanitize/validate save of this setting
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @uses "pre_update_option__caldera_forms_email_api_settings"
 	 *

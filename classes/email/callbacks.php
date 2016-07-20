@@ -14,7 +14,7 @@ class Caldera_Forms_Email_Callbacks {
 	/**
 	 * Send email via SendGrid API
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @uses "caldera_forms_mailer"
 	 *

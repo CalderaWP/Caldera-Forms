@@ -127,7 +127,7 @@ class Caldera_Forms_Admin {
 		/**
 		 * Runs after Caldera Forms admin is initialized
 		 *
-		 * @since 1.3.6
+		 * @since 1.3.5.3
 		 */
 		do_action( 'caldera_forms_admin_init' );
 
@@ -588,7 +588,7 @@ class Caldera_Forms_Admin {
 	/**
 	 * Set buttons for entry viewer
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @uses "caldera_forms_entry_viewer_buttons" filter
 	 *
@@ -727,12 +727,12 @@ class Caldera_Forms_Admin {
 	/**
 	 * Show entries in admin
 	 *
-	 * @deprecated 1.3.6 Use Caldera_Forms_Entry_UI::view_entries()
+	 * @deprecated 1.4.0 Use Caldera_Forms_Entry_UI::view_entries()
 	 *
 	 * @since unknown
 	 */
 	public static function browse_entries(){
-		_deprecated_function( __FUNCTION__, '1.3.6', 'Caldera_Forms_Entry_UI::view_entries' );
+		_deprecated_function( __FUNCTION__, '1.4.0', 'Caldera_Forms_Entry_UI::view_entries' );
 		self::verify_ajax_action();
 		if ( isset( $_POST[ 'page' ] ) && 0 < $_POST[ 'page' ] ) {
 			$page = absint( $_POST[ 'page' ] );

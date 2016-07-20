@@ -14,7 +14,7 @@ abstract class Caldera_Forms_Email_Client implements Caldera_Forms_Email_Interfa
 	/**
 	 * API object
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @var object
 	 */
@@ -23,16 +23,25 @@ abstract class Caldera_Forms_Email_Client implements Caldera_Forms_Email_Interfa
 	/**
 	 * Message details
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @var array
 	 */
 	protected $message;
 
+	/**
+	 * Message attachments
+	 *
+	 * @since 1.4.0
+	 *
+	 * @var array
+	 */
 	protected $attachments;
 
 	/**
 	 * Caldera_Forms_Email_Client constructor.
+	 *
+	 * @since 1.4.0
 	 *
 	 * @param array $message Message details
 	 */
@@ -45,6 +54,11 @@ abstract class Caldera_Forms_Email_Client implements Caldera_Forms_Email_Interfa
 
 	}
 
+	/**
+	 * Create  Caldera_Forms_Email_Attachment objects
+	 *
+	 * @since 1.4.0
+	 */
 	public function prepare_attachments(){
 		if( ! empty( $this->message[ 'attachments' ] ) ) {
 			foreach ( $this->message['attachments'] as $attachment ) {
@@ -52,7 +66,9 @@ abstract class Caldera_Forms_Email_Client implements Caldera_Forms_Email_Interfa
 				$obj->content = $attachment;
 				$this->attachments[] = $obj;
 			}
+
 		}
+
 	}
 	
 }

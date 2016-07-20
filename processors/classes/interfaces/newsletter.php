@@ -14,7 +14,7 @@ interface Caldera_Forms_Processor_Interface_Newsletter extends Caldera_Forms_Pro
 	/**
 	 * Add a subscriber to a list
 	 *
-	 * @since 1.3.6
+	 * @since 1.3.5.3
 	 *
 	 * @param array $subscriber_data Data for new subscriber
 	 * @param string $list_name Name of list

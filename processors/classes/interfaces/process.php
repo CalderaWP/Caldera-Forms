@@ -14,7 +14,7 @@ interface Caldera_Forms_Processor_Interface_Process {
 	/**
 	 * Validate the process if possible, and if not return errors.
 	 *
-	 * @since 1.3.6
+	 * @since 1.3.5.3
 	 *
 	 * @param array $config Processor config
 	 * @param array $form Form config
@@ -27,7 +27,7 @@ interface Caldera_Forms_Processor_Interface_Process {
 	/**
 	 * If validate do processing
 	 *
-	 * @since 1.3.6
+	 * @since 1.3.5.3
 	 *
 	 * @param array $config Processor config
 	 * @param array $form Form config
@@ -40,7 +40,7 @@ interface Caldera_Forms_Processor_Interface_Process {
 	/**
 	 * Get fields for processor
 	 *
-	 * @since 1.3.6
+	 * @since 1.3.5.3
 	 *
 	 * @return array
 	 */

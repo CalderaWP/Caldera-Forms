@@ -13,7 +13,7 @@ class Test_Caldera_Forms_Entry extends Caldera_Forms_Test_Case  {
 	/**
 	 * Test that fields of an entry are saved properly
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @group db
 	 * @group entry
@@ -33,7 +33,7 @@ class Test_Caldera_Forms_Entry extends Caldera_Forms_Test_Case  {
 	/**
 	 * Test that fields of an entry are saved properly and can be accessed
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @group db
 	 * @group entry
@@ -62,7 +62,7 @@ class Test_Caldera_Forms_Entry extends Caldera_Forms_Test_Case  {
 	/**
 	 * Test that we can create an entry through this object
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @group db
 	 * @group entry
@@ -128,7 +128,7 @@ class Test_Caldera_Forms_Entry extends Caldera_Forms_Test_Case  {
 	/**
 	 * Create a mock entry to test
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 */
 	protected function create_entry(){
 		$form = $this->mock_form;

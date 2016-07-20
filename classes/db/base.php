@@ -98,7 +98,7 @@ abstract class Caldera_Forms_DB_Base {
 		/**
 		 * Filter the allowed meta keys that can be saved
 		 *
-		 * @since 1.3.6
+		 * @since 1.4.0
 		 *
 		 * @param array $fields Allowed fields
 		 * @param string $table_name Name of table

@@ -14,7 +14,7 @@ class Test_Caldera_Forms_Entry_Objects extends Caldera_Forms_Test_Case{
 	/**
 	 * Test that entry object gets and sets properly
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @group db
 	 * @group entry
@@ -55,7 +55,7 @@ class Test_Caldera_Forms_Entry_Objects extends Caldera_Forms_Test_Case{
 	/**
 	 * Test that field object gets and sets properly
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @group db
 	 * @group entry
@@ -149,7 +149,7 @@ class Test_Caldera_Forms_Entry_Objects extends Caldera_Forms_Test_Case{
 	/**
 	 * Test that meta object gets and sets properly
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @group db
 	 * @group entry
@@ -244,7 +244,7 @@ class Test_Caldera_Forms_Entry_Objects extends Caldera_Forms_Test_Case{
 	/**
 	 * Test that we CAN NOT set invalid data
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @group db
 	 * @group entry

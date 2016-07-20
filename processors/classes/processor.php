@@ -14,7 +14,7 @@ abstract class Caldera_Forms_Processor_Processor implements Caldera_Forms_Proces
 	/**
 	 * Processor slug
 	 *
-	 * @since 1.3.6
+	 * @since 1.3.5.3
 	 *
 	 * @var string
 	 */
@@ -23,7 +23,7 @@ abstract class Caldera_Forms_Processor_Processor implements Caldera_Forms_Proces
 	/**
 	 * Processor configuration
 	 *
-	 * @since 1.3.6
+	 * @since 1.3.5.3
 	 *
 	 * @var string
 	 */
@@ -32,7 +32,7 @@ abstract class Caldera_Forms_Processor_Processor implements Caldera_Forms_Proces
 	/**
 	 * Process data object
 	 *
-	 * @since 1.3.6
+	 * @since 1.3.5.3
 	 *
 	 * @var Caldera_Forms_Processor_Get_Data
 	 */
@@ -41,7 +41,7 @@ abstract class Caldera_Forms_Processor_Processor implements Caldera_Forms_Proces
 	/**
 	 * Processor field config
 	 *
-	 * @since 1.3.6
+	 * @since 1.3.5.3
 	 *
 	 * @var array
 	 */
@@ -51,7 +51,7 @@ abstract class Caldera_Forms_Processor_Processor implements Caldera_Forms_Proces
 	/**
 	 * Construct object for processing object
 	 *
-	 * @since 1.3.6
+	 * @since 1.3.5.3
 	 *
 	 * @param array $processor_config Processor configuration
 	 * @param  array $fields Field config
@@ -68,7 +68,7 @@ abstract class Caldera_Forms_Processor_Processor implements Caldera_Forms_Proces
 	/**
 	 * Get configuration for processor fields.
 	 *
-	 * @since 1.3.6
+	 * @since 1.3.5.3
 	 *
 	 * @return array
 	 */
@@ -76,7 +76,7 @@ abstract class Caldera_Forms_Processor_Processor implements Caldera_Forms_Proces
 		/**
 		 * Filter configuration for processor fields.
 		 *
-		 * @since 1.3.6
+		 * @since 1.3.5.3
 		 *
 		 * @param array $fields The fields
 		 * @param string $slug The slug
@@ -87,7 +87,7 @@ abstract class Caldera_Forms_Processor_Processor implements Caldera_Forms_Proces
 	/**
 	 * Set processor_config property
 	 *
-	 * @since 1.3.6
+	 * @since 1.3.5.3
 	 *
 	 * @param array $processor_config Processor configuration
 	 */
@@ -103,7 +103,7 @@ abstract class Caldera_Forms_Processor_Processor implements Caldera_Forms_Proces
 	 *
 	 * @uses "caldera_forms_get_form_processors" filter
 	 *
-	 * @since 1.3.6
+	 * @since 1.3.5.3
 	 *
 	 * @param array		$processors		Array of current registered processors
 	 *
@@ -119,7 +119,7 @@ abstract class Caldera_Forms_Processor_Processor implements Caldera_Forms_Proces
 	 *
 	 * Use during pre_process
 	 *
-	 * @since 1.3.6
+	 * @since 1.3.5.3
 	 *
 	 * @param array $config Processor config
 	 * @param array $form Form config
@@ -135,7 +135,7 @@ abstract class Caldera_Forms_Processor_Processor implements Caldera_Forms_Proces
 	 *
 	 * Use at process or later
 	 *
-	 * @since 1.3.6
+	 * @since 1.3.5.3
 	 *
 	 * @param  string $process_id Process ID
 	 */
@@ -149,7 +149,7 @@ abstract class Caldera_Forms_Processor_Processor implements Caldera_Forms_Proces
 	/**
 	 * Put processor values and object into transdata global for later use
 	 *
-	 * @since 1.3.6
+	 * @since 1.3.5.3
 	 *
 	 * @param  string $process_id Process ID
 	 */

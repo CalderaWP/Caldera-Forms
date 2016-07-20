@@ -14,7 +14,7 @@ class Caldera_Forms_Entry {
 	/**
 	 * Form config
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @var array
 	 */
@@ -23,7 +23,7 @@ class Caldera_Forms_Entry {
 	/**
 	 * Entry ID
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @var array
 	 */
@@ -33,7 +33,7 @@ class Caldera_Forms_Entry {
 	/**
 	 * Field values for entry
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @var array
 	 */
@@ -42,7 +42,7 @@ class Caldera_Forms_Entry {
 	/**
 	 * Meta values for entry
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @var array
 	 */
@@ -51,7 +51,7 @@ class Caldera_Forms_Entry {
 	/**
 	 * Entry object
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @var Caldera_Forms_Entry_Entry
 	 */
@@ -60,7 +60,7 @@ class Caldera_Forms_Entry {
 	/**
 	 * Was an entry queried for and found?
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @var bool
 	 */
@@ -70,7 +70,7 @@ class Caldera_Forms_Entry {
 	/**
 	 * Caldera_Forms_Entry constructor.
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param array $form For config
 	 * @param int|bool $entry_id Optional. Passing ID will load saved entry, leave false, the default when creating new entry.
@@ -97,7 +97,7 @@ class Caldera_Forms_Entry {
 	/**
 	 * Get entry object
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param \Caldera_Forms_Entry_Entry $entry
 	 */
@@ -108,7 +108,7 @@ class Caldera_Forms_Entry {
 	/**
 	 * Get form ID
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @return mixed
 	 */
@@ -121,7 +121,7 @@ class Caldera_Forms_Entry {
 	 *
 	 * Has basic info, no fields or values
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @return \Caldera_Forms_Entry_Entry
 	 */
@@ -132,7 +132,7 @@ class Caldera_Forms_Entry {
 	/**
 	 * Was a query performed and an entry found?
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @return bool
 	 */
@@ -143,7 +143,7 @@ class Caldera_Forms_Entry {
 	/**
 	 * Get entry ID
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @return int
 	 */
@@ -157,7 +157,7 @@ class Caldera_Forms_Entry {
 	/**
 	 * Get all field values
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @return array
 	 */
@@ -189,7 +189,7 @@ class Caldera_Forms_Entry {
 	/**
 	 * Get all meta values
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @return array
 	 */
@@ -201,7 +201,7 @@ class Caldera_Forms_Entry {
 	/**
 	 * Query DB for saved entry data
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 */
 	public function query(){
 		if ( ! is_object( $this->entry ) ) {
@@ -217,7 +217,7 @@ class Caldera_Forms_Entry {
 	/**
 	 * Find the entry in DB and set the entry property of this class
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 */
 	protected function find_entry(){
 		global $wpdb;
@@ -237,7 +237,7 @@ class Caldera_Forms_Entry {
 	/**
 	 * Find field values and set in fields property of this class
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 */
 	protected function find_fields(){
 		global $wpdb;
@@ -255,7 +255,7 @@ class Caldera_Forms_Entry {
 	/**
 	 * Find metas and set in meta property of this class
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 */
 	protected function find_metas(){
 		global $wpdb;
@@ -274,7 +274,7 @@ class Caldera_Forms_Entry {
 	/**
 	 * Save entry
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @return array|int|string
 	 */
@@ -303,7 +303,7 @@ class Caldera_Forms_Entry {
 	/**
 	 * Update entry status
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param string $status
 	 *
@@ -321,7 +321,7 @@ class Caldera_Forms_Entry {
 	/**
 	 * Add a field value to this entry
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param \Caldera_Forms_Entry_Field $field
 	 */
@@ -335,7 +335,7 @@ class Caldera_Forms_Entry {
 	/**
 	 * Add a meta to this entry
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param \Caldera_Forms_Entry_Meta $item
 	 */
@@ -346,7 +346,7 @@ class Caldera_Forms_Entry {
 	/**
 	 * Save entry in DB
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 */
 	protected function save_entry() {
 		global $wpdb;
@@ -361,7 +361,7 @@ class Caldera_Forms_Entry {
 	/**
 	 * Save a field in db
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param \Caldera_Forms_Entry_Field $field
 	 */
@@ -378,7 +378,7 @@ class Caldera_Forms_Entry {
 	/**
 	 * Save a meta in DB
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param \Caldera_Forms_Entry_Meta $meta
 	 */
@@ -395,7 +395,7 @@ class Caldera_Forms_Entry {
 	/**
 	 * Check if is an allowed status
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param string $status Status
 	 *

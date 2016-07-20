@@ -13,7 +13,7 @@ class Caldera_Forms_Entry_Entries {
 	/**
 	 * Form config
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @var array
 	 */
@@ -22,7 +22,7 @@ class Caldera_Forms_Entry_Entries {
 	/**
 	 * Holds all entries, index by status and then page
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @var array
 	 */
@@ -31,7 +31,7 @@ class Caldera_Forms_Entry_Entries {
 	/**
 	 * Holds totals by page
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @var array
 	 */
@@ -42,7 +42,7 @@ class Caldera_Forms_Entry_Entries {
 	 *
 	 * @todo need to make sure this matches in other places, use filter or something
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @var array
 	 */
@@ -55,7 +55,7 @@ class Caldera_Forms_Entry_Entries {
 	/**
 	 * Total per page
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @var int
 	 */
@@ -64,7 +64,7 @@ class Caldera_Forms_Entry_Entries {
 	/**
 	 * Caldera_Forms_Entry_Entries constructor.
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param array $form Form config
 	 * @param int $perpage Number of entries per pags
@@ -79,7 +79,7 @@ class Caldera_Forms_Entry_Entries {
 	/**
 	 * Get one page of results
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param int $page
 	 * @param string $status
@@ -104,7 +104,7 @@ class Caldera_Forms_Entry_Entries {
 	 *
 	 * This is for use inside of Caldera_Forms_Admin::get_entries() for backwards compat reasons
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param int $page What page of results to get
 	 * @param int $entry_id ID of entry
@@ -147,7 +147,7 @@ class Caldera_Forms_Entry_Entries {
 	/**
 	 * Get total number of entries with a given status
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param string $status Which status
 	 *
@@ -164,7 +164,7 @@ class Caldera_Forms_Entry_Entries {
 	/**
 	 * Query for a page of results
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param int $page What page
 	 * @param string $status Which status
@@ -189,7 +189,7 @@ class Caldera_Forms_Entry_Entries {
 	/**
 	 * Query for total rows
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param string $status Which status
 	 *
@@ -202,7 +202,7 @@ class Caldera_Forms_Entry_Entries {
 	/**
 	 * Populates the entries property of this class with arrays per status and per page as needed.
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 */
 	protected function prepare_entries_prop() {
 		foreach ( $this->statuses as $status ) {

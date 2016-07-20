@@ -29,7 +29,7 @@ class Caldera_Forms_Entry_Meta extends Caldera_Forms_Entry_Object {
 	/**
 	 * Apply deserialization/json_decoding if needed to meta_value column
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @param string $value Meta value
 	 */

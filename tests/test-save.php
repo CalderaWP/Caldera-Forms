@@ -14,7 +14,7 @@ class Test_Caldera_Forms_Save extends Caldera_Forms_Test_Case {
 	/**
 	 * Test saving an entry
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @group db
 	 * @group save
@@ -46,7 +46,7 @@ class Test_Caldera_Forms_Save extends Caldera_Forms_Test_Case {
 	/**
 	 * Test that fields of an entry are saved properly
 	 *
-	 * @since 1.3.6
+	 * @since 1.4.0
 	 *
 	 * @group db
 	 * @group save

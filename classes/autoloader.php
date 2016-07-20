@@ -19,7 +19,7 @@ class Caldera_Forms_Autoloader {
 	 *
 	 * 'prefix' => 'path'
 	 *
-	 * @since 1.3.6
+	 * @since 1.3.5.3
 	 *
 	 * @var array
 	 */
@@ -28,7 +28,7 @@ class Caldera_Forms_Autoloader {
 	/**
 	 * Add a route path and prefix
 	 *
-	 * @since 1.3.6
+	 * @since 1.3.5.3
 	 *
 	 * @param string $prefix Class prefix -- Must start with "Caldera_Forms" or "CF_" use "CF_" for add-ons
 	 * @param string $dir Full path to directory
@@ -41,7 +41,7 @@ class Caldera_Forms_Autoloader {
 	/**
 	 * Handles autoloading of Caldera Forms and Caldera Forms add-on classes.
 	 *
-	 * @since 1.3.6
+	 * @since 1.3.5.3
 	 *
 	 * @param string $class
 	 */
@@ -80,7 +80,7 @@ class Caldera_Forms_Autoloader {
 	/**
 	 * Get the root prefix for a class
 	 *
-	 * @since 1.3.6
+	 * @since 1.3.5.3
 	 *
 	 * @param string $class Class name
 	 *
@@ -99,7 +99,7 @@ class Caldera_Forms_Autoloader {
 	/**
 	 * Get the directory for a prefix
 	 *
-	 * @since 1.3.6
+	 * @since 1.3.5.3
 	 *
 	 * @param string $root Prefix root
 	 *
@@ -126,7 +126,7 @@ class Caldera_Forms_Autoloader {
 	/**
 	 * Registers Caldera_Forms_Autoloader as an SPL autoloader.
 	 *
-	 * @since 1.3.6
+	 * @since 1.3.5.3
 
 	 */
 	public static function register( ) {
