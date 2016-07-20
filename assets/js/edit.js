@@ -2196,16 +2196,30 @@ jQuery(document).ready(function($) {
 
 		if(clicked.data('options')){
 			var batchinput 	= $(clicked.data('options')),
-				batch 		= batchinput.val().split("\n");
+				batch 		= batchinput.val().split("\n"),
+				has_vals 	= false;
 			for( var i = 0; i < batch.length; i ++){
+				var label = batch[i],
+					val = label,
+					parts = val.split('|');
+				if( parts.length > 1 ){
+					val = parts[0];
+					label = parts[1];
+					has_vals = true;				
+				}
 				config.option["opt" + parseInt( ( Math.random() + i ) * 0x100000 )] = {
-					value	:	batch[i],
-					label	:	batch[i],
+					value	:	val,
+					label	:	label,
 					default	:	false
 				}
 			}
 			$(clicked.data('options')).parent().hide();
 			batchinput.val('');
+			if( true === has_vals ){
+				wrapper.find('.toggle_show_values').prop( 'checked', true );
+			}else{
+				wrapper.find('.toggle_show_values').prop( 'checked', false );
+			}
 			toggle_rows.empty();
 		}else{
 			// add new option
@@ -2215,7 +2229,7 @@ jQuery(document).ready(function($) {
 				default :	false				
 			};
 		}
-
+		$('.preset_options').val('');
 		// place new row
 		toggle_rows.append( template( config ) );
 		wrapper.find('.toggle_show_values').trigger('change');
@@ -2228,8 +2242,23 @@ jQuery(document).ready(function($) {
 			toggle_rows.find('.toggle_label_field').last().focus();
 		}
 	});
+	// presets
+	$('.caldera-editor-body').on('change', '.preset_options', function(e){
+		var select = $( this ),
+			preset = select.val(),
+			batch = $( select.data('bulk') );
 
+		if( preset_options && preset_options[ preset ] && preset_options[ preset ].data ){
+			if( typeof preset_options[ preset ].data === 'object' ){
+				if( preset_options[ preset ].data.length ){
+					preset_options[ preset ].data = preset_options[ preset ].data.join("\n");
+				}else{
 
+				}
+			}
+			batch.val( preset_options[ preset ].data );
+		}	
+	});
 	// remove an option row
 	$('.caldera-editor-body').on('click', '.toggle-remove-option', function(e){
 		var triggerfield = $(this).closest('.caldera-editor-field-config-wrapper').find('.field-config').first();

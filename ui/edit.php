@@ -257,14 +257,36 @@ $field_options_template = "
 	 * @since unknown
 	 */
 	do_action( 'caldera_forms_autopopulate_type_config' );
+
+	/**
+	 * Filter to setup presets for option fields
+	 *
+	 * Use this to add new option presets for option based fields like Checkboxes, radios and selects
+	 *
+	 * @since 1.4.0
+	 */
+	$option_presets = apply_filters( 'caldera_forms_field_option_presets', array(), $element );
+	$preset_options = array();
+	if( !empty( $option_presets ) && is_array( $option_presets ) ){
+		foreach ($option_presets as $preset_name => $preset ) {
+			if( empty( $preset['name'] ) ){ continue; }
+			$preset_options[] = '<option value="' . esc_attr( $preset_name ) . '">' . esc_html( $preset['name'] ) . '</option>';
+		}
+	}
+	$preset_options = implode(' ', $preset_options );
+
 	$field_options_template .= ob_get_clean() . "
 
 </div>
 <div class=\"caldera-config-group-toggle-options\" {{#if auto}}style=\"display:none;\"{{/if}}>
 	<div class=\"caldera-config-group caldera-config-group-full\">
-		<button type=\"button\" class=\"button add-toggle-option\" style=\"width: 220px;\">" . esc_html__( 'Add Option', 'caldera-forms' ) . "</button>		
-		<button type=\"button\" data-bulk=\"#{{_id}}_bulkwrap\" class=\"button add-toggle-option\" style=\"width: 120px;\">" . esc_html__( 'Bulk Insert', 'caldera-forms' ) . "</button>
-		<div id=\"{{_id}}_bulkwrap\" style=\"display:none; margin-top:10px;\">
+		<button type=\"button\" class=\"button add-toggle-option\" style=\"width: 180px;\">" . esc_html__( 'Add Option', 'caldera-forms' ) . "</button>
+		<button type=\"button\" data-bulk=\"#{{_id}}_bulkwrap\" class=\"button add-toggle-option\" style=\"width: 190px;\">" . esc_html__( 'Bulk Insert / Preset', 'caldera-forms' ) . "</button>
+		<div id=\"{{_id}}_bulkwrap\" style=\"display:none; margin-top:10px;\" class=\"bulk-preset-panel\">
+		<select data-bulk=\"#{{_id}}_batch\" class=\"preset_options block-input\" style=\"margin-bottom:6px;\">
+		<option value=\"\">" . esc_html__( 'Select a preset', 'caldera-forms' ) . "</option>
+		" . $preset_options . "
+		</select>		
 		<textarea style=\"resize:vertical; height:200px;\" class=\"block-input\" id=\"{{_id}}_batch\"></textarea>
 		<p class=\"description\">" . esc_html__( 'Single option per line. These replace the current list.', 'caldera-forms' ) . "</p>
 		<button type=\"button\" data-options=\"#{{_id}}_batch\" class=\"button block-button add-toggle-option\" style=\"margin: 10px 0;\">" . esc_html__( 'Insert Options', 'caldera-forms' ) . "</button>
@@ -1132,7 +1154,7 @@ echo implode("\r\n", $field_type_defaults);
 
 ?>
 var system_values = <?php echo json_encode( $magic_script ); ?>;
-
+var preset_options = <?php echo json_encode( $option_presets ); ?>
 </script>
 
 

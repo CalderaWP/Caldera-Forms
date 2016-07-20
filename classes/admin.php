@@ -72,7 +72,7 @@ class Caldera_Forms_Admin {
 
 		// Add admin scritps and styles
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_stylescripts' ) );
-
+		
 		// add element & fields filters
 		add_filter('caldera_forms_get_panel_extensions', array( $this, 'get_panel_extensions'), 1);
 		add_filter('caldera_forms_entry_viewer_buttons', array( $this, 'set_viewer_buttons'),10, 4);
@@ -87,6 +87,8 @@ class Caldera_Forms_Admin {
 		add_action( 'media_buttons', array($this, 'shortcode_insert_button' ), 11 );
 		add_filter( 'wp_fullscreen_buttons', array($this, 'shortcode_insert_button_fs' ), 11 );
 
+		// filter for adding presets
+		add_filter( 'caldera_forms_field_option_presets', array($this, 'load_option_presets' ) );
 
 		if( current_user_can( Caldera_Forms::get_manage_cap( 'create' ) ) ){
 			// create forms
@@ -146,6 +148,44 @@ class Caldera_Forms_Admin {
 		<?php
 
 	}
+
+	/**
+	 * Returns the array of option presets for option based fields.
+	 *
+	 * @since 1.4.0
+	 * @param array $presets current array of presets
+	 *
+	 * @return    array array of presets
+	 */
+	 public function load_option_presets( $presets ){
+
+	 	$internal = array_merge( $presets, array(
+	 		'countries_iso_alpha_2' => array(
+	 			'name' => __( 'Countries (ISO Alpha-2)', 'caldera-forms'),
+	 			'data' => file_get_contents( CFCORE_PATH . 'includes/presets/countries_iso_alpha_2.txt' ),
+	 		),
+			'countries_names' => array(
+				'name' => __( 'Countries (Names Only)', 'caldera-forms'),
+				'data' => file_get_contents( CFCORE_PATH . 'includes/presets/countries_names.txt' ),
+			),
+			'continents' => array(
+				'name' => __( 'Continents', 'caldera-forms'),
+				'data' => array(
+					"Africa",
+					"Antarctica",
+					"Asia",
+					"Australia",
+					"Europe",
+					"North America",
+					"South America",
+				),
+			), 		
+	 	));
+
+	 	ksort( $internal );
+
+	 	return $internal;
+	 }
 
 	/**
 	 * Returns the array of form templates.
