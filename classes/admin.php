@@ -179,7 +179,25 @@ class Caldera_Forms_Admin {
 					"North America",
 					"South America",
 				),
-			), 		
+			),
+			'canadian_provinces_territories' => array(
+				'name' => __( 'Canadian Provinces & Territories', 'caldera-forms'),
+				'data' => array(
+					"Alberta",
+					"British Columbia",
+					"Manitoba",
+					"New Brunswick",
+					"Newfoundland and Labrador",
+					"Northwest Territories",
+					"Nova Scotia",
+					"Nunavut",
+					"Ontario",
+					"Prince Edward Island",
+					"Quebec",
+					"Saskatchewan",
+					"Yukon",
+				),
+			),			
 	 	));
 
 	 	ksort( $internal );
