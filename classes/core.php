@@ -1325,7 +1325,7 @@ class Caldera_Forms {
 			),
 			'advanced_file' => array(
 				"field"		=>	__( 'Advanced File Uploader', 'caldera-forms' ),
-				"description" => __( '(beta) Inline, multi file uploader', 'caldera-forms' ),
+				"description" => __( 'Inline, multi file uploader', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/advanced_file/field.php",
 				"viewer"	=>	array($this, 'handle_file_view'),
 				"category"	=>	__( 'File', 'caldera-forms' ),
