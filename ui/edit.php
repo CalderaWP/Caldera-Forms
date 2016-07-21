@@ -264,6 +264,8 @@ $field_options_template = "
 	 * Use this to add new option presets for option based fields like Checkboxes, radios and selects
 	 *
 	 * @since 1.4.0
+	 * @param array $presets Array of current presets 
+	 * @param array $element current structure of form
 	 */
 	$option_presets = apply_filters( 'caldera_forms_field_option_presets', array(), $element );
 	$preset_options = array();
