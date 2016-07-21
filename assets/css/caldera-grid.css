@@ -99,8 +99,7 @@
 .caldera-grid input,
 .caldera-grid optgroup,
 .caldera-grid select,
-.caldera-grid textarea {
-  color: inherit;
+.caldera-grid textarea { 
   font: inherit;
   margin: 0;
 }
@@ -395,8 +394,7 @@
 .caldera-grid input,
 .caldera-grid optgroup,
 .caldera-grid select,
-.caldera-grid textarea {
-  color: inherit;
+.caldera-grid textarea { 
   font: inherit;
   margin: 0;
 }

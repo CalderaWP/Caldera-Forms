@@ -6,6 +6,7 @@ input.form-control.parsley-success,select.form-control.parsley-success,textarea.
   list-style: outside none none;
   list-style-type: none;
 }
+
 .caldera-grid .cf-multi-uploader-list > ul {
   list-style: outside none none;
   margin: 0 0 12px;
@@ -17,6 +18,41 @@ input.form-control.parsley-success,select.form-control.parsley-success,textarea.
   position: relative;
   clear: both;
 }
+.caldera-grid .cf-multi-uploader-list > ul > li .file-name {
+  display: inline-block;
+  font-weight: bold;
+  left: 16px;
+  right: 0;
+  overflow: hidden;
+  position: absolute;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.caldera-grid .cf-multi-uploader-list > ul > li .file-name.file-uploaded {
+  left: 0;
+}
+.caldera-grid .cf-multi-uploader-list > ul > li .file-size {
+  float: right;
+}
+.caldera-grid .cf-multi-uploader-list > ul > li .file-type {
+  float: left;
+}
+.caldera-grid .cf-multi-uploader-list > ul > li .file-error{
+	clear: both;
+  display: block;
+}
+.caldera-grid .cf-multi-uploader-list > ul > li .cf-file-remove {
+  color: #cf0000;
+  text-decoration: none;
+  border: 0;
+}
+.caldera-grid .cf-multi-uploader-list > ul > li.has-error .bar {
+	background-color: #cf0000 !important;
+}
+.caldera-grid .cf-multi-uploader-list > ul > li.has-error{
+	color: #cf0000;
+}
+
 .has-error.cf-toggle-switch .cf-toggle-group-buttons > a {
   background-color: #f2dede;
   border-color: #dd4b39;
