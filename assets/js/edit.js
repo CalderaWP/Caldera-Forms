@@ -1650,7 +1650,7 @@ jQuery(document).ready(function($) {
 		removeClass('ui-draggable').
 		removeClass('layout-new-form-field').
 		addClass('layout-form-field').
-		attr('data-config', name);
+		attr('data-config', name).css({ 'display' : '', 'opacity' : '' });
 
 		newfield.find('.layout_field_name').remove();
 		newfield.find('.field-location').prop('name', 'config[layout_grid][fields][' + name + ']');
@@ -2285,9 +2285,9 @@ jQuery(document).ready(function($) {
 	cf_clear_puler = function(){
 		if( is_pulsating ){
 			clearTimeout( is_pulsating );
-			$(document).off('mouseover', '.layout-new-form-field, .column-fieldinsert', cf_clear_puler);
-			$('.layout-new-form-field, .column-fieldinsert').fadeIn();
+			$(document).off('mouseover', '.layout-new-form-field, .column-fieldinsert', cf_clear_puler);			
 		}
+		$('.layout-new-form-field, .column-fieldinsert').fadeIn();
 	};
 	$(document).on('mouseover', '.layout-new-form-field, .column-fieldinsert', cf_clear_puler );
 	// build fild bindings
