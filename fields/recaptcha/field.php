@@ -10,7 +10,7 @@ if( empty( $field['config']['public_key'] ) ){
 }
 ?>
 <?php echo $field_before; ?>
-<input type="hidden" name="<?php echo $field_name; ?>" value="<?php echo $field_id; ?>" data-field="<?php echo $field_base_id; ?>">
+<input type="hidden" name="<?php echo esc_attr( $field_name ); ?>" value="<?php echo esc_attr( $field_id ); ?>" data-field="<?php echo esc_attr( $field_base_id ); ?>">
 <div id="cap<?php echo $field_id; ?>" class="g-recaptcha" data-theme="<?php echo $field['config']['theme']; ?>" data-sitekey="<?php echo $field['config']['public_key']; ?>"></div>
 <?php
 ob_start();

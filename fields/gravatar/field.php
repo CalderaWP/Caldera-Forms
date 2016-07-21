@@ -11,9 +11,8 @@ if(!empty($field['config']['email'])){
 ?><?php echo $wrapper_before; ?>
 	<?php echo $field_before; ?>
 	<div style="text-align:center;" class="live-gravatar">
-		<?php /*<span style="background: url(<?php echo admin_url('images/spinner.gif'); ?>) no-repeat scroll center center transparent;overflow: hidden;border-radius:<?php echo $field['config']['border_radius']; ?>px; border:<?php echo $field['config']['border_size']; ?>px solid <?php echo $field['config']['border_color']; ?>;display: inline-block;"> */ ?>
-		<span style="overflow: hidden;border-radius:<?php echo $field['config']['border_radius']; ?>px; border:<?php echo $field['config']['border_size']; ?>px solid <?php echo $field['config']['border_color']; ?>;display: inline-block;">
-			<span style="border-radius:<?php echo $field['config']['border_radius']; ?>px;width:<?php echo $field['config']['size']; ?>px;height:<?php echo $field['config']['size']; ?>px;display:inline-block;" id="<?php echo $field_id; ?>_gravatar"><?php
+		<span style="overflow: hidden;border-radius:<?php echo esc_attr( $field['config']['border_radius'] ); ?>px; border:<?php echo esc_attr( $field['config']['border_size'] ); ?>px solid <?php echo esc_attr( $field['config']['border_color'] ); ?>;display: inline-block;">
+			<span style="border-radius:<?php echo esc_attr( $field['config']['border_radius'] ); ?>px;width:<?php echo esc_attr( $field['config']['size'] ); ?>px;height:<?php echo esc_attr( $field['config']['size'] ); ?>px;display:inline-block;" id="<?php echo esc_attr( $field_id ); ?>_gravatar"><?php
 
 				echo get_avatar( $email, (int) $field['config']['size'], $field['config']['generator']);
 

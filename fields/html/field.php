@@ -19,11 +19,11 @@ if(!empty($hastags[1])){
 			}
 		}
 	}
-	echo '<div id="html-content-'.$field_id.'" data-field="'.$field_id.'" class="' . $field['config']['custom_class'] . '"></div>';
+	echo '<div id="html-content-' . esc_attr( $field_id ) . '" data-field="' . esc_attr( $field_id ) . '" class="' . esc_attr( $field['config']['custom_class'] ) . '"></div>';
 
 	// create template block
 	ob_start();
-	echo '<script type="text/html" id="html-content-'.$field_id.'-tmpl">';
+	echo '<script type="text/html" id="html-content-' . esc_attr( $field_id ) . '-tmpl">';
 		echo do_shortcode( Caldera_Forms::do_magic_tags( $html_template ) );
 	echo '</script>';
 	
@@ -77,7 +77,7 @@ if(!empty($hastags[1])){
 	}
 			
 }else{
-	echo '<div class="' . $field['config']['custom_class'] . '">' . do_shortcode( Caldera_Forms::do_magic_tags( $html_template ) ) . '</div>';
+	echo '<div class="' . esc_attr( $field['config']['custom_class'] ) . '">' . do_shortcode( Caldera_Forms::do_magic_tags( $html_template ) ) . '</div>';
 }
 
 

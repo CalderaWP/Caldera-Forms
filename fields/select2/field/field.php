@@ -37,7 +37,7 @@ if( !empty( $field['config']['advanced_populate']['filter'] ) ){
 	<?php echo $field_label; ?>
 	<?php echo $field_before; ?>
 		<?php if( empty( $bound ) ){ ?>
-		<select <?php echo $field_placeholder; ?> id="<?php echo $field_id; ?>" <?php echo $multi; ?> data-select-two="true" data-field="<?php echo $field_base_id; ?>" class="<?php echo $field_class; ?>" name="<?php echo $field_name; ?>" <?php echo $field_required; ?> <?php echo $placeholder; ?>>
+		<select <?php echo $field_placeholder; ?> id="<?php echo esc_attr( $field_id ); ?>" <?php echo $multi; ?> data-select-two="true" data-field="<?php echo esc_attr( $field_base_id ); ?>" class="<?php echo esc_attr( $field_class ); ?>" name="<?php echo esc_attr( $field_name ); ?>" <?php echo $field_required; ?> <?php echo $placeholder; ?>>
 		<?php
 			if(isset( $field['config'] ) && isset($field['config']['default']) && isset($field['config']['option'][$field['config']['default']])){
 				//if( $field['config']['option'][$field['config']['default']]['value'] )
@@ -70,7 +70,7 @@ if( !empty( $field['config']['advanced_populate']['filter'] ) ){
 		} ?>
 		</select>
 		<?php }else{ ?>
-		<input type="text" data-select-two="true" id="<?php echo $field_id; ?>" data-field="<?php echo $field_base_id; ?>" name="<?php echo $field_name; ?>[]" multiple="multiple" value="<?php echo htmlentities( $field_value ); ?>">
+		<input type="text" data-select-two="true" id="<?php echo esc_attr( $field_id ); ?>" data-field="<?php echo esc_attr( $field_base_id ); ?>" name="<?php echo esc_attr( $field_name ); ?>[]" multiple="multiple" value="<?php echo htmlentities( $field_value ); ?>">
 		<?php } ?>
 		<?php echo $field_caption; ?>
 	<?php echo $field_after; ?>
