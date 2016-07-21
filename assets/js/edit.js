@@ -1721,12 +1721,13 @@ jQuery(document).ready(function($) {
 
 		rebuild_field_binding();
 		baldrickTriggers();
+		$(document).trigger('field.added');
 		if( ! field_set.type ){
 			$('#' + name).trigger('field.drop');
 		}else{
 			$('#' + new_name + '_type' ).data('type', field_set.type ).trigger('change');
 		}
-		$(document).trigger('field.added');
+		
 	}
 
 	function buildSortables(){
