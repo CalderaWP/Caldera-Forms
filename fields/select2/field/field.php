@@ -17,6 +17,14 @@ if( !empty( $field['config']['advanced_populate']['filter'] ) ){
 	
 }
 
+// default
+if( empty( $field['config']['border'] ) ){
+	$field['config']['border'] = '#b6b6b6';
+}
+if( empty( $field['config']['color'] ) ){
+	$field['config']['color'] = '#8f8f8f';
+}
+
 	echo $wrapper_before;
 	if ( isset( $field[ 'slug' ] ) && isset( $_GET[ $field[ 'slug' ] ] ) ) {
 		$field_value = Caldera_Forms_Sanitize::sanitize( $_GET[ $field[ 'slug' ] ] );
@@ -80,6 +88,8 @@ if( !empty( $field['config']['advanced_populate']['filter'] ) ){
 ob_start();
 ?>
 <style>
+#s2id_<?php echo $field_id; ?>.ccselect2-container.ccselect2-dropdown-open .ccselect2-choice,
+#s2id_<?php echo $field_id; ?>.ccselect2-container.ccselect2-dropdown-open .ccselect2-choices,
 .s2id_<?php echo $field_id; ?>.ccselect2-drop-active,
 .s2id_<?php echo $field_id; ?>.ccselect2-drop.ccselect2-drop-above.ccselect2-drop-active,
 .s2id_<?php echo $field_id; ?>.ccselect2-container-active .ccselect2-choice,
@@ -88,11 +98,11 @@ ob_start();
 .s2id_<?php echo $field_id; ?>.ccselect2-dropdown-open.ccselect2-drop-above .ccselect2-choices,
 .s2id_<?php echo $field_id; ?>.ccselect2-container-multi.ccselect2-container-active .ccselect2-choices,
 .s2id_<?php echo $field_id; ?>.ccselect2-container-multi .ccselect2-choices .ccselect2-search-choice-focus{
-    border-color: <?php echo $field['config']['border']; ?>;
+    border-color: <?php echo $field['config']['border']; ?> !important;
 }
 .s2id_<?php echo $field_id; ?> .ccselect2-results .ccselect2-highlighted,
 .s2id_<?php echo $field_id; ?> .ccselect2-container-multi .ccselect2-choices .ccselect2-search-choice-focus{
-	background: <?php echo $field['config']['color']; ?>;
+	background: <?php echo $field['config']['color']; ?> !important;
 }
 .has-error .s2id_<?php echo $field_id; ?> .ccselect2-container .ccselect2-choice {
 	border-color: #dd4b39 !important;
