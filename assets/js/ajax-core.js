@@ -43,7 +43,7 @@ jQuery(function($){
 					var file_remover = $('[data-file="' + file_number + '"]');
 					file_remover.next().addClass('file-uploaded');
 					file_remover.remove();
-					//$('.' + file_number ).slideUp();
+
 					cf_uploader_filelist[ file_number ].state = 3;
 
 					form.submit();
@@ -199,11 +199,6 @@ jQuery(function($){
 				$( document ).trigger( 'cf.submission', obj );
 				$( document ).trigger( 'cf.' + obj.data.type );
 
-				//custom_callback
-				// was modal?
-				//setTimeout(function(){
-				//	obj.params.target.closest('.caldera-front-modal-container').hide();
-				//}, 1000);
 			}
 		});
 	};
