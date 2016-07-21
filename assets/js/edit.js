@@ -1665,7 +1665,7 @@ jQuery(document).ready(function($) {
 		});
 	}
 
-	function insert_new_field(newfield, target, tel, field_set){
+	function insert_new_field(newfield, target, tel, field_default){
 		var name = "fld_" + Math.round( Math.random() * 10000000 ),
 			new_name 	= name,
 			field_conf	= $('#field_config_panels'),
@@ -1685,7 +1685,7 @@ jQuery(document).ready(function($) {
 			"id"	:	new_name,
 			"label"	:	'',
 			"slug"	:	''
-		}, field_set );
+		}, field_default );
 		if( field_set.label.length ){
 			//field_set.label = field_set.label + ' ' + ( $('[value="' + field_set.label + '"]').length + 1 );
 		}
@@ -1722,10 +1722,10 @@ jQuery(document).ready(function($) {
 		rebuild_field_binding();
 		baldrickTriggers();
 		$(document).trigger('field.added');
-		if( ! field_set.type ){
-			$('#' + name).trigger('field.drop');
-		}else{
+		if( field_default ){
 			$('#' + new_name + '_type' ).data('type', field_set.type ).trigger('change');
+		}else{
+			$('#' + name).trigger('field.drop');
 		}
 		
 	}
