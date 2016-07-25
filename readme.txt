@@ -8,38 +8,73 @@ License: GPLv2
 
 A different kind of WordPress form builder.
 
-
 == Description ==
 Create beautiful, responsive forms with a simple drag and drop editor.
 
-Caldera Forms is a different kind of WordPress form builder. With its intuitive drag and drop interface, it's never been easier and less stressful to create forms for your WordPress site that look awesome on any device.  The visual editor simplifies form building for WordPress. Set up your form with multiple columns, add additional pages, and funnel user responses with conditional logic to get more robust data and relevant information from your customers and visitors.
+Caldera Forms' visual editor simplifies form building for WordPress. Set up your form with multiple columns, add additional pages, and funnel user responses with conditional logic to get more robust data and relevant information from your customers and site visitors. Anti-spam, AJAX, notification emails, and database entry tracking are enabled by default.
+
+Caldera Forms is a free plugin by <a href="https://CalderaWP.com?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms" title="CalderaWP: Transform Your WordPress Experience">CalderaWP</a> developed by [Josh Pollock](http://JoshPress.net) and [David Cramer](http://digilab.co.za/).
+
+> 5 Stars! "Exceptionally well thought out and executed."
+> -Pippin Williamson: Developer of Easy Digital Downloads, Restrict Content Pro and AffiliateWP.
+
+= Responsive By Design =
+
+Caldera Forms is a different kind of WordPress form builder. With its intuitive drag and drop interface, it's never been easier and less stressful to create forms for your WordPress site that look awesome on any device. The visual editor simplifies form building for WordPress. Set up your form with multiple columns, add additional pages, and funnel user responses with conditional logic to get more robust data and relevant information from your customers and visitors.
 
 Whether you are creating a simple contact form or a complex system, you'll love the drag and drop editor. Your site's visitors will love the totally responsive, live-updating forms.
 
-Easy enough for everyday users to create forms, and powerful enough for PHP experts to extend.
+> "Caldera Forms does a thing well, let’s you build forms on your website quickly... I ship it with just about every site these days."
+> - Alex Vasquez: Owner of the DigiSavvy agency.
 
-Pippin Williamson of Easy Digital Downloads, Restrict Content Pro and AffiliateWP gives [Caldera Forms a 5 star rating](https://pippinsplugins.com/review-caldera-forms)!
+= Get Started Quickly With Form Templates =
+Caldera Forms ships with form templates that help you create beutiful, responsive forms quickly. With our powerful layout builder, you can add new fields or modify the layout quickly.
 
-John Teague of Theme Surgeons includes Caldera Forms in his list of [WordPress plugin recommendations I don’t get paid for](https://themesurgeons.com/wordpress-plugins-recommendations).
+Quickly configure the [email notification](https://calderawp.com/doc/setting-caldera-forms-email-notification?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms), to let you know when a form has been submitted. Add one or more [auto-responder processors](https://calderawp.com/doc/using-caldera-forms-auto-responder-processor?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) to your forms to send emails to your lead.
 
-A free plugin by <a href="https://CalderaWP.com?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms" title="CalderaWP: Transform Your WordPress Experience">CalderaWP</a>.
+> "I've converted many sites from Gravity Forms because Caldera Forms is easier, more powerful, and the forms looks great on any device by default"
+> - Matt Cromwell: Head of support for WordImpress
+
+= Anti-Spam By Default =
+Spam is annoying. Anti-spam isn't an add-on with Caldera Forms, your forms will repel spam using a highly-effective honey pot. Anti-spam does not require configuration or adding a Captcha that will hurt your conversions.
 
 
-= Get Help With Caldera Forms =
-> Caldera Forms is free to use, if you need any help, we provide services to ensure you can get the most out of Caldera Forms.
->
-> <strong>Priority Support</strong> Direct support from our team, your questions answered within one business day. <a href="https://calderawp.com/support#priority-support">Learn more here.</a>
->
-> <strong>Form Creation</strong> Got a really trick form and not a lot of time? <a href="https://calderawp.com/caldera-forms-services#cf-dfy">We can help.</a>
->
-><strong>Customization</strong> Need an integration with a third-party service or to modify the default behaviour? <a href="https://calderawp.com/caldera-forms-services#cf-custom-code">Let us write you some code.</a>
->
-> <em>Note: We do not provide free support via WordPress.org. Premium add-on purchases include priority support for Caldera Forms.</em>
->
+= All The Fields You Need =
+Caldera Forms tons of field types to make a great form that will help your website succeed for you. You can set field defaults using the power of [Caldera Forms magic tags](https://calderawp.com/doc/using-magic-tags-caldera-forms/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms. Impress your site's visitors when you take advantage of [field sync](https://calderawp.com/doc/field-sync/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms)!
 
-= Documentation & More Information =
-* [More Information](https://calderawp.com/downloads/caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms)
-* [Caldera Forms Documentation](https://calderawp.com/documentation/caldera-forms-documentation?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms)
+Caldera Forms types include:
+* Auto-complete
+* Calculation
+* Range Slider
+* Star Rating
+* Phone
+* Text
+* File Upload
+* HTML content block
+* Hidden
+* Button
+* Email
+* Paragraph
+* Toggle Switch
+* Dropdown Select
+* Checkbox
+* Radio
+* Date Picker
+* Color Picker
+* Auto-complete
+
+> "Great plugin that I will be using for years to come"
+> - Devin Walker: Developer of Give, WooCommerce QuickCheckout and Maps Builder Pro.
+
+= Use Caldera Forms As Super-Powered Search Tool =
+Caldera Forms can be used to create totally custom search forms. Search posts, users, categories, tags, custom post types, custom fields -- including those added with [Advanced Custom Fields](http://advancedcustomfields.com).
+
+* [Easy Pods](https://calderawp.com/downloads/caldera-easy-pods/) - Create custom WordPress search forms using the Caldera Forms drag and drop form editor. Search in any post type, taxonomy, or even users or a custom database table. Requires [Pods](http://pods.io) works with any custom post type.
+* [Easy Queries](https://calderawp.com/downloads/caldera-easy-queries/) Create custom WordPress search forms using the Caldera Forms drag and drop form editor. Search across multiple post types, works great with [Advanced Custom Fields](http://advancedcustomfields.com).
+
+> "While Gravity Forms may be the more established form solution plugin for WordPress, there is another contender out there that is a real gem. And that gem is Caldera Forms."
+> - John Teague: Owner of Theme Surgeons
+
 
 
 = Addons =
@@ -69,59 +104,6 @@ A free plugin by <a href="https://CalderaWP.com?utm_source=dotOrg&utm_medium=plu
 * [Conditional Fail](https://wordpress.org/plugins/conditional-fail-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Set conditions to cause that if met will allow or prevent form submssion.
 * [Postmatic](https://calderawp.com/downloads/postmatic-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Subscribe users to your posts and comments using Postmatic.
 
-
-Coming soon:
-* Front-end viewer
-* Basic Analytics
-* Caldera Members
-
-= Power A Custom Search =
-Caldera Forms can be used to create totally custom search forms. Search posts, users, categories, tags, custom post types, custom fields -- including those added with [Advanced Custom Fields](http://advancedcustomfields.com).
-
-* [Easy Pods](https://calderawp.com/downloads/caldera-easy-pods/) - Create custom WordPress search forms using the Caldera Forms drag and drop form editor. Search in any post type, taxonomy, or even users or a custom database table. Requires [Pods](http://pods.io) works with any custom post type.
-* [Easy Queries](https://calderawp.com/downloads/caldera-easy-queries/) Create custom WordPress search forms using the Caldera Forms drag and drop form editor. Search across multiple post types, works great with Advanced Custom Fields](http://advancedcustomfields.com).
-
-
-= A Few Feature Highlights =
-* Drag and drop responsive form builder -- so simple, it's fun!
-* Responsive grid based on Bootstrap 3 -- looks great on any device!
-* Save entries in the database -- just works!
-* Simple honey-pot for anti-spam -- sorry bots!
-* Process forms without a page load using AJAX -- much usability!
-* Advanced conditional logic for hiding and showing fields -- much simplicity!
-* Easily import and export forms via JSON or PHP files -- simple migrations!
-* Multi-page forms -- Break your forms into bite-sized pieces!
-* Emails sent on form submission are easily customized -- contact forms, auto-responders and beyond!
-* Simple, conditional redirects -- hello thank you page!
-
-
-= Auto Values & Magic Tags =
-Capture system values, form data, user data and use it populate form fields values, variables, or in response emails.
-
-= Field Types =
-* Calculation
-* Range Slider
-* Star Rating
-* Phone
-* Text - Includes Custom Masking
-* File Upload
-* reCaptcha
-* HTML content block - with dynamic data binding ( %field_slug% updates dynamically in html )
-* Hidden
-* Button
-* Email
-* Paragraph
-* Toggle Switch
-* Dropdown Select
-* Checkbox
-* Radio
-* Date Picker
-* Color Picker
-* Auto-complete
-
-Everything can be extended. For developers, there are enough hooks and filters to build on. From frontend handling, to form processing, to editor panels, to field types. At it's core, it's a framework for building applications so you can make what you want.
-
-
 == Installation ==
 
 Upload the caldera-forms folder to /wp-content/plugins/
@@ -131,7 +113,57 @@ Navigate to 'Caldera Forms' in wp-admin.
 Once you have created a form, insert it in a page or post via the Shortcode inserter button in the post editor.
 
 == Frequently Asked Questions ==
-For Caldera Forms support: [http://calderawp.com/support](http://calderawp.com/support?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms)
+= Are My Caldera Forms Going to Display Properly on All Types of Devices? =
+
+Yes. Caldera forms is responsive by design. With Caldera Forms' drag and drop layout editor, you can easily create multi-column layouts for desktop that will display properly on mobile devices thanks to our responsive bootstrap-driven design.
+
+= Is Caldera Forms Protected Against Spam? =
+
+Yes your forms are protected against spam submissions by default. We use a honeypot instead of a captcha because captchas are less effective than honeypots and captchas are bad for conversions.   You can also use our [Akismet](https://akismet.com/) processor for anti-spam, which is available when Akismet is active on your site. You can also use [Spam Shield](https://wordpress.org/plugins/wp-spamshield/).   On our own sites, we just use the default anti-spam and we find this to be over 99% effective.
+
+= Can I Send One or More Emails With Each Form Submission? =
+
+  Yes, we have many options for sending emails on each submission of your form. Caldera Forms provides an [email notification](https://calderawp.com/doc/setting-caldera-forms-email-notification?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms), which is turned on by default. In addition you can add one or more [auto-responder processors](https://calderawp.com/doc/using-caldera-forms-auto-responder-processor?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) to your forms.
+
+= How Can I Get Support for Caldera Forms? =
+
+  [Support for Caldera Forms is available on our site](https://CalderaWP.com/support?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms).   Support is available to paying users a [Caldera Forms add-ons](https://calderawp.com/caldera-forms-add-ons?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) or one of our [cost-saving Caldera Forms bundles](https://calderawp.com/caldera-forms-bundles/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms). Buy purchasing an add-on or bundle you get cool features, support and supports our work, which allows us to offer this awesome plugin for free.   Support for Caldera forms is not offered through WordPress.org.
+
+= Does Caldera Forms Have Documentation? =
+
+Yes it does. Our [documentation can be searched here](https://calderawp.com/documentation/caldera-forms-documentation/).  
+
+= Who Makes Caldera Forms? =
+
+Caldera Forms is a product of [CalderaWP](https://calderawp.com?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms), a part of [Caldera Labs](http://calderalabs.org?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms). Caldera Forms' founding developer is [David Cramer](https://twitter.com/dcramer). Caldera Forms is now developed by David and [Josh Pollock](http://JoshPress.net?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms).  
+
+= Why Is Caldera Form So Awesome? Seriously, Even Its Free Version Has So Many Great Features! =
+
+Because we are awesome:)   We set out to make a different kind of WordPress form builder. It's no secret that there are a lot of established leaders in this field. But we think that by starting with no conceptions of what a WordPress form builder should be or how it works, we were able to make something special.   We strive to provide a solid core product that can be used for free in hopes that you will use it, and think it is awesome. If you would like to support our work please consider purchasing one of our [Caldera Forms add-ons](https://calderawp.com/caldera-forms-add-ons?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms), a [cost-saving Caldera Forms bundles](https://calderawp.com/caldera-forms-bundles/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) or one of our other fine WordPress plugins including [Easy Pods](https://calderawp.com/downloads/caldera-easy-pods/), [Easy Queries](https://calderawp.com/downloads/caldera-easy-queries/) and [Ingot](https://IngotHQ.com).  
+
+= How Can I Send an Email to More Than One Person?  =
+
+There are a lot of ways to send more than one email with Caldera forms.   If you'd like to send two different emails, for example one email with all of the submission details to the site owner and an auto-response message to the person who filled out the form. In this situation, you can use the main email notification to send to you and then use the [auto-responder processor](https://calderawp.com/doc/using-caldera-forms-auto-responder-processor?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) to send a simple "thank you, we will be in touch" message to the person who filled out the form. If you use the starter contact for form template to create a form this is already set up for you. Simply add your email address as the recipient in the email tab and you're ready to go.   You can add more than one auto-responder processor to your form. Since these processors can make use of Caldera Forms conditional logic, you can add multiple auto-responder processors and set them to run or not run based on form input.
+
+= How Can I Save And View Forms Submissions? =
+
+  Form submission tracking in your WordPress database, is a core feature of Caldera Forms. It is turned on for forms by default. You can turn it off from the settings tab of the form editor. When enabled all form entry data, with certain exceptions -- such as credit card numbers -- for security reasons, is saved.   You can view this information from the Caldera Forms admin page. You may optionally enable, form the form settings tab, a sub-menu page of the Caldera Forms menu page that will show entry data. You can choose to make these sub-menu pages available to users of other roles besides admins.  
+
+= Can You Use Caldera Forms to Create a Event Registration Form? =
+
+  Oh yes you can Caldera forms is excellent for this if you need to accept payments for the event, you can use one of our [many payment processors](https://calderawp.com/caldera-forms-add-ons?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms). If you need to register users, you can use our [users add-on](https://calderawp.com/downloads/caldera-forms-users-add?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms).  
+
+= Can I Use Caldera Forms For Front-end Editing Of Users? =
+
+Yes, you can. Our [users add-on](https://calderawp.com/downloads/caldera-forms-users-add?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) can register users, login users and even be used to edit user profiles. [Matt Cromwell](https://www.mattcromwell.com/) has [an excellent tutorial](https://www.mattcromwell.com/building-front-end-profile-editor-caldera-forms/) on using Caldera Forms for front-end editing of user profiles.  
+
+= Can I Use Caldera Forms For Front-end Editing Of Posts? =
+
+Yes, you can. Our plugin [Caldera Custom Fields ](https://calderawp.com/downloads/caldera-form-metabox?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms)allows you to use Caldera Forms to edit or create posts of any post type, and their custom fields. [Mike Hemberger](http://thestizmedia.com) has an [excellent post on creating a WordPress front-end editor with Caldera Forms](http://thestizmedia.com/front-end-post-editing-with-caldera-forms/).  
+
+= Does Caldera Form Support Multi Page Forms? =
+
+Oh, yes it does. By default Caldera Forms supports multi-page forms.  This is a core feature. multi-page forms are loaded on one page. This way of creating multi-page forms is simple to use and excellent for shorter, less complicated forms. We also offer a[ Connected Forms add-on](https://calderawp.com/downloads/caldera-forms-connector?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms), which allow you to combine multiple Caldera Forms into a sequence of forms. The advantage of this method is that a connected form sequence can have conditional logic.  So for example, if one form asks your user select that they want to pay now or pay later, you can take them to a credit card payment form or a form to arrange payment details. In addition, Connected Forms tracks partial submissions between each step in the form sequence allow users to come back to where they left off in the sequence.
 
 == Screenshots ==
 1. **Layout Builder** - Easy to use Drag & Drop grid based layout.
