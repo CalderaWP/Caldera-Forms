@@ -244,6 +244,26 @@ class Caldera_Forms_Processor_UI {
 	 */
 	public static function input( $type, $args, $id, $classes, $required, $has_desc ) {
 
+		/**
+		 * Use to make custom HTML for admin input fields
+		 *
+		 * By returning a string, rest of this method -- Caldera_Forms_Processor_UI::input() -- is skipped
+		 *
+		 * @since 1.4.0
+		 *
+		 * @param string|null $field_html HTML to use instead of default, else null to let method to its thing.
+		 * @param array $args Field args
+		 * @param string $id ID attribute
+		 * @param string $classes Class attribute.
+		 * @param bool|string $required If is required or not
+		 * @param bool $has_desc Does this input have a description?
+		 */
+		$field_html = apply_filters( 'caldera_forms_processor_ui_input_pre_html', null, $type, $args, $id, $classes, $required, $has_desc );
+		if( is_string( $field_html ) ){
+			return $field_html;
+
+		}
+
 		$field = '';
 		$aria = sprintf( 'aria-labelledby="%s"', self::label_id( $id ) );
 		if( $has_desc ){
