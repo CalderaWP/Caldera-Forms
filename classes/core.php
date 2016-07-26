@@ -183,10 +183,11 @@ class Caldera_Forms {
 					caldera_forms_db_v2_update();
 				}
 
-				if( $db_version < 3 || $force_update ){
+				if( $db_version < 4 || $force_update ){
 					self::activate_caldera_forms( true );
-					caldera_forms_write_db_flag( 3 );
+					caldera_forms_write_db_flag( 4 );
 				}
+
 			}
 
 
@@ -227,6 +228,13 @@ class Caldera_Forms {
 		if ( ! empty( $wpdb->collate ) ) {
 			$charset_collate .= " COLLATE $wpdb->collate";
 		}
+		
+		/*
+		 * Indexes have a maximum size of 767 bytes. Historically, we haven't need to be concerned about that.
+		 * As of WordPress 4.2, however, we moved to utf8mb4, which uses 4 bytes per character. This means that an index which
+		 * used to have room for floor(767/3) = 255 characters, now only has room for floor(767/4) = 191 characters.
+		 */
+		$max_index_length = 191;
 
 		$tables = $wpdb->get_results("SHOW TABLES", ARRAY_A);
 		foreach($tables as $table){
@@ -245,7 +253,7 @@ class Caldera_Forms {
 			`meta_key` varchar(255) DEFAULT NULL,
 			`meta_value` longtext,
 			PRIMARY KEY (`meta_id`),
-			KEY `meta_key` (`meta_key`),
+			KEY `meta_key` (meta_key(" . $max_index_length . ")),
 			KEY `entry_id` (`entry_id`)
 			) " . $charset_collate . ";";
 
@@ -278,7 +286,7 @@ class Caldera_Forms {
 			`meta_key` varchar(255) DEFAULT NULL,
 			`meta_value` longtext,
 			PRIMARY KEY (`meta_id`),
-			KEY `meta_key` (`meta_key`),
+			KEY `meta_key` (`meta_key`(" . $max_index_length . ")),
 			KEY `event_id` (`event_id`)
 			) " . $charset_collate . ";";
 
@@ -321,7 +329,7 @@ class Caldera_Forms {
 				PRIMARY KEY (`id`),
 				KEY `form_id` (`entry_id`),
 				KEY `field_id` (`field_id`),
-				KEY `slug` (`slug`)
+				KEY `slug` (`slug`(" . $max_index_length . "))
 				) " . $charset_collate . ";";
 
 				dbDelta( $values_table );
