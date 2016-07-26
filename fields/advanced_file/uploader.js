@@ -50,7 +50,7 @@ function size_format(bytes) {
 		var files = evt.target.files;
 	}
 	// files is a FileList of File objects. List some properties.
-	var output = [];
+	var output = [], validator = 'valid';
 	// get length
 	for (var i = 0; i < files.length ; i++) {
 	 var id = 'fl' + Math.round(Math.random() * 187465827348977),
@@ -96,11 +96,15 @@ function size_format(bytes) {
 				  '<small class="file-size">' + size_format( cf_uploader_filelist[ i ].file.size ) + '</small>',
 				  '<small class="file-error">' + cf_uploader_filelist[ i ].message + '</small>',
 				  '</li>');
+		if( cf_uploader_filelist[ i ].message.length ){
+			validator = cf_uploader_filelist[ i ].message;
+		}
 	}
 	evt.target.value = null;
 
 	document.getElementById( evt.target.id + '_file_list' ).innerHTML = '<ul class="cf-adv-preview-list">' + output.join('') + '</ul>';
 
+	jQuery( '#' + evt.target.id + '_validator' ).val( validator );
   }
 
   function handleDragOver(evt) {
@@ -125,7 +129,12 @@ jQuery( function( $ ){
 		e.preventDefault();
 		var clicked = $( this ),
 			list = clicked.closest('.cf-adv-preview-list'),
-			field = clicked.closest('.cf-multi-uploader-list').data('field');
+			field = clicked.closest('.cf-multi-uploader-list').data('field'),
+			field_id = clicked.closest('.cf-multi-uploader-list').data('id'),
+			validator = $('#' + field_id + '_validator');
+
+		validator.val('');
+
 		$('[data-parent="' + field + '"]').show();
 		delete cf_uploader_filelist[ clicked.data('file') ];
 		clicked.closest('.cf-multi-uploader-list').parent().find('.cf-uploader-trigger').show();
@@ -133,6 +142,13 @@ jQuery( function( $ ){
 		if( ! list.children().length ){
 			list.remove();
 		}
+
+		for( var fid in cf_uploader_filelist ){
+			if( cf_uploader_filelist[ fid ].field === field_id && cf_uploader_filelist[ fid ].message.length ){
+				validator.val( cf_uploader_filelist[ fid ].message );
+			}
+		}
+
 	});    
 
 	$( document ).on('change', '.cf-multi-uploader', function( e ){
@@ -143,7 +159,19 @@ jQuery( function( $ ){
 			cf_uploader_filelist = {};
 			field.parent().find('.cf-uploader-trigger').hide();
 		}
+		console.log( field );
 		handleFileSelect( e, config );
+	});
+
+	window.Parsley
+	.addValidator('fileType', {
+	requirementType: 'string',
+	validateString: function( value, requirement ) {
+	  if( value === 'valid' ){
+	  	return true;
+	  }
+	  return false;
+	}
 	});
 
 })
