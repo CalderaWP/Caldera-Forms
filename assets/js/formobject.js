@@ -45,9 +45,7 @@ $.fn.formJSON = function(){
               try {
                 value = JSON.parse( value );
 
-              } catch (e) {
-                //console.log( e );
-              }
+              } catch (e) {}
             }else if( typeof value === 'object' && value.length && field.is('select') ){
               var new_val = {};
               for( var i = 0; i < value.length; i++ ){

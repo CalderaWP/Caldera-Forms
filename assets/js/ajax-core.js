@@ -55,8 +55,7 @@ jQuery(function($){
 					form.find(':submit').prop('disabled',false);
 					form.find('.cf-uploader-trigger').slideDown();
 					$('.' + file_number +' .file-error' ).html( data.data );
-					console.log( data.success );
-					console.log( data.data );
+
 					return;
 				}
 

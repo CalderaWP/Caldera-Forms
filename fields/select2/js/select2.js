@@ -1307,8 +1307,6 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.container.removeClass('ccselect2-drop-auto-width');
             }
 
-            //console.log("below/ droptop:", dropTop, "dropHeight", dropHeight, "sum", (dropTop+dropHeight)+" viewport bottom", viewportBottom, "enough?", enoughRoomBelow);
-            //console.log("above/ offset.top", offset.top, "dropHeight", dropHeight, "top", (offset.top-dropHeight), "scrollTop", this.body.scrollTop(), "enough?", enoughRoomAbove);
 
             // fix positioning when body has an offset and is not position: static
             if (this.body.css('position') !== 'static') {

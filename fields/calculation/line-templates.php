@@ -83,7 +83,7 @@ function build_calculations_formular(id, obj){
 		};
 
 	groups.each(function(k,v){
-		//console.log(v);
+
 		var lines = jQuery(v).find('.calculation-group-line'),
 			connector = jQuery(v).find('.calculation-operator'),
 			group	= {};

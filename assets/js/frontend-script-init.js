@@ -147,7 +147,7 @@ var cf_jsfields_init, cf_validate_form;
 				}else{
 					if( this_field.prop('required') && false === this_field.is(':visible') ){ continue }
 					if( this_field.prop('required') ){
-						//console.log( this_field.is(":visible") );
+
 						if( true !== this_field.parsley().isValid() ){
 							// ye nope!
 							if( this_field.is(":visible") ){

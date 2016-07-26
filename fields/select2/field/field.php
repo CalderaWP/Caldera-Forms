@@ -126,7 +126,7 @@ jQuery( function($){
 				};
 			},
 			results: function (data, page) {
-				console.log( data );
+
 				return { results: data };
 			},
 			cache: true
