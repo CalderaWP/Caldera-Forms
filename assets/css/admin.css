@@ -1745,8 +1745,8 @@ tr.form_entry_row.loading {
 }
 .caldera-grid.cf-form-create button.cf-change-template-button,
 .caldera-grid.cf-form-create button.cf-create-form-button {
-  background-color: #93ae4f;
-  color: #fff;
+  background-color: #fff;
+  color: #93ae4f;
   border: 1px solid #93ae4f;
   border-radius: 3px;
   display: inline-block;
@@ -1756,8 +1756,8 @@ tr.form_entry_row.loading {
 }
 .caldera-grid.cf-form-create button.cf-change-template-button:hover,
 .caldera-grid.cf-form-create button.cf-create-form-button:hover{
-  background-color: #fff;
-  color: #93ae4f;
+  background-color: #efefef;
+  color: #7e943d;
 }
 .caldera-grid.cf-form-create button.cf-change-template-button.cf-loading-form {
   background: #a3be5f;
