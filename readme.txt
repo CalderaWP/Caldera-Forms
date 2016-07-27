@@ -85,8 +85,6 @@ Entry editing is a core feature of Caldera Forms. When editing entries, click th
 > - John Teague: Owner of Theme Surgeons
 
 
-
-
 = Addons =
 [All Caldera Forms Add-ons](https://calderawp.com/caldera-forms-add-ons?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms)
 
@@ -182,6 +180,7 @@ Oh, yes it does. By default Caldera Forms supports multi-page forms.  This is a
 4. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
+
 = Caldera Forms 1.3.5.3 ( May 23, 2016)  =
 Security Release
 
