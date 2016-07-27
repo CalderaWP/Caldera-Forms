@@ -241,6 +241,7 @@ class Caldera_Forms_Email_Settings {
 		 * @param array $apis Array of API names that are valid.
 		 */
 		return apply_filters( 'caldera_forms_allowed_email_apis', array(
+			'wp',
 			'sendgrid',
 			'caldera'
 		) );

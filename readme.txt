@@ -72,8 +72,18 @@ Caldera Forms can be used to create totally custom search forms. Search posts, u
 * [Easy Pods](https://calderawp.com/downloads/caldera-easy-pods/) - Create custom WordPress search forms using the Caldera Forms drag and drop form editor. Search in any post type, taxonomy, or even users or a custom database table. Requires [Pods](http://pods.io) works with any custom post type.
 * [Easy Queries](https://calderawp.com/downloads/caldera-easy-queries/) Create custom WordPress search forms using the Caldera Forms drag and drop form editor. Search across multiple post types, works great with [Advanced Custom Fields](http://advancedcustomfields.com).
 
+> "WordPress should have more plugins like this. Adding new forms, editing their settings and stuff is fun."
+> - Ahmad Awais: Full Stack WordPress Developer
+
+
+= Track, Edit and View Your Form Submissions =
+Caldera Forms tracks all of your form submission data in the WordPress database. The entry viewer is fast, dynamic and responsive. You can choose to create sub-menu pages for viewing form submissions and chose which users roles are allowed to view those pages.
+
+Entry editing is a core feature of Caldera Forms. When editing entries, click the "Edit Entry" button to edit your saved data.
+
 > "While Gravity Forms may be the more established form solution plugin for WordPress, there is another contender out there that is a real gem. And that gem is Caldera Forms."
 > - John Teague: Owner of Theme Surgeons
+
 
 
 
