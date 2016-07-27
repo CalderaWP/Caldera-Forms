@@ -2224,6 +2224,14 @@ class Caldera_Forms {
 							break;
 						case 'summary':
 							if(!empty($this_form['fields'])){
+								if ( ! isset( $this_form[ 'mailer' ]['email_type' ] ) || $this_form[ 'mailer' ][ 'email_type' ] == 'html' ) {
+									$html = true;
+									$pattern = '<strong>%s</strong><div style="margin-bottom:20px;">%s</div>';
+
+								}else{
+									$html = false;
+								}
+
 								$out = array();
 								foreach($this_form['fields'] as $field_id=>$field){
 
@@ -2250,18 +2258,25 @@ class Caldera_Forms {
 
 									$field_value = implode(', ', (array) $field_values);
 
-
-
-									if($field_value !== null && strlen($field_value) > 0){
-										$out[] = $field['label'].': '.$field_value;
+									if( $field_value !== null && strlen( $field_value ) > 0){
+										if ( $html ) {
+											$out[] = sprintf( $pattern, $field[ 'label' ], $field_value );
+										} else {
+											$out[] = $field[ 'label' ] . ': ' . $field_value;
+										}
 									}
 								}
+
 								// vars
 								if( !empty( $this_form['variables'] ) ){
 									foreach( $this_form['variables']['keys'] as $var_key=>$var_label ){
 										if( $this_form['variables']['types'][ $var_key ] == 'entryitem' ){
 											$label = ucfirst( str_replace('_', ' ', $var_label ) );
-											$out[] = $label . ': ' . $this_form['variables']['values'][ $var_key ];
+											if ( $html ) {
+												$out[] = sprintf( $pattern, $label, $this_form[ 'variables' ][ 'values' ][ $var_key ] );
+											} else {
+												$out[] = $label . ': ' . $this_form['variables']['values'][ $var_key ];
+											}
 										}
 									}
 								}
