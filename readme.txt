@@ -184,7 +184,7 @@ Oh, yes it does. By default Caldera Forms supports multi-page forms.  This is a
 ADDED: Duplicate field button.
 FIXED: Datepicker behaviour on mobile. Fallback to default date field behaviour on mobile.
 ADDED: ARIA tags for form fields.
-ADDED: Support for sending
+ADDED: Support for sending emails via SendGrid.
 IMPROVED: Entry viewer is now responsive.
 IMPROVED: Improved labels in form editor to make things easier to find.
 ADDED: Shortcode link to form list.
@@ -209,7 +209,7 @@ FIXED: Issue preventing validation errors from showing properly on some field ty
 ADDED: General settings section of main admin
 ADDED: caldera_forms_ui_field_classes filter for filtering processor UI field classes
 ADDED: Hidden fields to processor UI.
-FIXED: Alloweds hidden fields to use custom classes.
+FIXED: Allowed hidden fields to use custom classes.
 ADDED: New database abstraction, this will become very important soon, aslo it's pretty cool.
 DEPRECATED: Caldera_Forms_Admin::browse_entries() use Caldera_Forms_Entry_UI::view_entries()
 ADDED: caldera_forms_presave_form filter to change form config before saving

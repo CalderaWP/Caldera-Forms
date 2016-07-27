@@ -75,7 +75,7 @@ class Caldera_Forms_Email_Previews {
 		$pattern = '<li><pre>%s</pre>: <span>%s</span></li>';
 		foreach ( $headers as $header => $value ){
 			if ( is_string( $value ) ){
-				$view[ $header ] = sprintf( $pattern, ucwords( $header ), $value );
+				$view[ $header ] = sprintf( $pattern, ucwords( $header ), htmlentities( $value ) );
 			}else{
 				$view[ $header ] = sprintf( $pattern, ucwords( $header ), $this->format_headers( $value ) );
 			}
