@@ -180,6 +180,44 @@ Oh, yes it does. By default Caldera Forms supports multi-page forms.  This is a
 4. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
+= Caldera Forms 1.4.0 ( July 26, 2016 ) =
+ADDED: Duplicate field button.
+FIXED: Datepicker behaviour on mobile. Fallback to default date field behaviour on mobile.
+ADDED: ARIA tags for form fields.
+ADDED: Support for sending
+IMPROVED: Entry viewer is now responsive.
+IMPROVED: Improved labels in form editor to make things easier to find.
+ADDED: Shortcode link to form list.
+ADDED: Shortcode link to form settings.
+ADDED: Email preview mode for ensuring that email settings are correct.
+ADDED: Ability to send emails through SendGrid.
+ADDED: Preset options for select fields.
+IMPROVED: Advanced file fields. These fields are no longer in beta, this is a fully operational battle station.
+FIXED: Bug preventing entries from being saved properly when MariaDB is used.
+FIXED: CSS for advanced field field buttons clashed with TwentySixteen
+IMPROVED: New form modal is now more attractive, encourages using templates and provides template previews.
+FIXED: Permissions for sub-menu entry viewer
+FIXED:  Bug preventing dismissing admin pointer.
+ADDED: caldera_forms_processor_ui_input_pre_html filter for custom admin UI fields
+FIXED: Wrong colors being used for autocomplete (select2) fields.
+FIXED: Active class was not being updated properly on multi-page forms.
+ADDED: Proper ARIA tags for state of pages of multi-page forms.
+FIXED: Bug causing validation on the next page from running on multi-page forms to soon.
+IMPROVED: Input masking for phone fields.
+ADDED: caldera_forms_mailer_invalid action that fires when mailer configuration is invalid.
+FIXED: Issue preventing validation errors from showing properly on some field types.
+ADDED: General settings section of main admin
+ADDED: caldera_forms_ui_field_classes filter for filtering processor UI field classes
+ADDED: Hidden fields to processor UI.
+FIXED: Alloweds hidden fields to use custom classes.
+ADDED: New database abstraction, this will become very important soon, aslo it's pretty cool.
+DEPRECATED: Caldera_Forms_Admin::browse_entries() use Caldera_Forms_Entry_UI::view_entries()
+ADDED: caldera_forms_presave_form filter to change form config before saving
+ADDED: Caldera_Forms_Save::create_entry() for creating entries programatically
+ADDED: caldera_forms_widget_init action after widget is initialized.
+ADDED: caldera_forms_sanitize() utility function.
+ADDED: caldera_forms_very_safe_string() for sanatizing a string really hard.
+ADDED: caldera_forms_field_option_presets filter for adding additional option field presets
 
 = Caldera Forms 1.3.5.3 ( May 23, 2016)  =
 Security Release
