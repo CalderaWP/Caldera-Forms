@@ -5,17 +5,6 @@ Requires at least: 4.3
 Tested up to: 4.6
 Stable tag: 1.3.5.3
 License: GPLv2
-=== JPD2 ===
-
-Contributors:Shelob9
-Donate link: http://JoshPress.net
-Tags: transients, caching
-Requires at least: 3.8
-Tested up to: 3.8.1
-Stable tag: 0.1.0
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
-
 
 A different kind of WordPress form builder.
 
@@ -59,42 +48,25 @@ Spam is annoying. Anti-spam isn't an add-on with Caldera Forms, your forms will 
 Caldera Forms tons of field types to make a great form that will help your website succeed for you. You can set field defaults using the power of [Caldera Forms magic tags](https://calderawp.com/doc/using-magic-tags-caldera-forms/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms). Impress your site's visitors when you take advantage of [field sync](https://calderawp.com/doc/field-sync/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms)!
 
 Caldera Forms types include:
+
 * Auto-complete
-
 * Calculation
-
 * Range Slider
-
 * Star Rating
-
 * Phone
-
 * Text
-
 * File Upload
-
 * HTML content block
-
 * Hidden
-
 * Button
-
 * Email
-
 * Paragraph
-
 * Toggle Switch
-
 * Dropdown Select
-
 * Checkbox
-
 * Radio
-
 * Date Picker
-
 * Color Picker
-
 * Auto-complete
 
 > "WordPress should have more plugins like this. Adding new forms, editing their settings and stuff is fun."
