@@ -5,6 +5,17 @@ Requires at least: 4.3
 Tested up to: 4.6
 Stable tag: 1.3.5.3
 License: GPLv2
+=== JPD2 ===
+
+Contributors:Shelob9
+Donate link: http://JoshPress.net
+Tags: transients, caching
+Requires at least: 3.8
+Tested up to: 3.8.1
+Stable tag: 0.1.0
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
 
 A different kind of WordPress form builder.
 
@@ -16,7 +27,10 @@ Caldera Forms' visual editor simplifies form building for WordPress. Set up your
 Caldera Forms is a free plugin by <a href="https://CalderaWP.com?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms" title="CalderaWP: Transform Your WordPress Experience">CalderaWP</a> developed by [Josh Pollock](http://JoshPress.net) and [David Cramer](http://digilab.co.za/).
 
 > 5 Stars! "Exceptionally well thought out and executed."
+>
 > -Pippin Williamson: Developer of Easy Digital Downloads, Restrict Content Pro and AffiliateWP.
+
+[youtube https://www.youtube.com/watch?v=KmKj02aE0nc&index=1&list=PLgeaHmX3MoiuXOhRlDdYn7k0RcL4afLzQ]
 
 = Responsive By Design =
 
@@ -25,6 +39,7 @@ Caldera Forms is a different kind of WordPress form builder. With its intuitive 
 Whether you are creating a simple contact form or a complex system, you'll love the drag and drop editor. Your site's visitors will love the totally responsive, live-updating forms.
 
 > "Caldera Forms does a thing well, let’s you build forms on your website quickly... I ship it with just about every site these days."
+>
 > - Alex Vasquez: Owner of the DigiSavvy agency.
 
 = Get Started Quickly With Form Templates =
@@ -33,6 +48,7 @@ Caldera Forms ships with form templates that help you create beutiful, responsiv
 Quickly configure the [email notification](https://calderawp.com/doc/setting-caldera-forms-email-notification?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms), to let you know when a form has been submitted. Add one or more [auto-responder processors](https://calderawp.com/doc/using-caldera-forms-auto-responder-processor?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) to your forms to send emails to your lead.
 
 > "I've converted many sites from Gravity Forms because Caldera Forms is easier, more powerful, and the forms looks great on any device by default"
+>
 > - Matt Cromwell: Head of support for WordImpress
 
 = Anti-Spam By Default =
@@ -40,31 +56,58 @@ Spam is annoying. Anti-spam isn't an add-on with Caldera Forms, your forms will 
 
 
 = All The Fields You Need =
-Caldera Forms tons of field types to make a great form that will help your website succeed for you. You can set field defaults using the power of [Caldera Forms magic tags](https://calderawp.com/doc/using-magic-tags-caldera-forms/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms. Impress your site's visitors when you take advantage of [field sync](https://calderawp.com/doc/field-sync/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms)!
+Caldera Forms tons of field types to make a great form that will help your website succeed for you. You can set field defaults using the power of [Caldera Forms magic tags](https://calderawp.com/doc/using-magic-tags-caldera-forms/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms). Impress your site's visitors when you take advantage of [field sync](https://calderawp.com/doc/field-sync/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms)!
 
 Caldera Forms types include:
 * Auto-complete
+
 * Calculation
+
 * Range Slider
+
 * Star Rating
+
 * Phone
+
 * Text
+
 * File Upload
+
 * HTML content block
+
 * Hidden
+
 * Button
+
 * Email
+
 * Paragraph
+
 * Toggle Switch
+
 * Dropdown Select
+
 * Checkbox
+
 * Radio
+
 * Date Picker
+
 * Color Picker
+
 * Auto-complete
 
-> "Great plugin that I will be using for years to come"
-> - Devin Walker: Developer of Give, WooCommerce QuickCheckout and Maps Builder Pro.
+> "WordPress should have more plugins like this. Adding new forms, editing their settings and stuff is fun."
+>
+> - Ahmad Awais: Full Stack WordPress Developer
+
+= Awesome Conditional Logic =
+Caldera Forms provides a visual editor for conditional logic. Show only the fields you need to make your forms easy, and maximize conversions.
+
+When creating a form, you want to make sure to only show and only require the necessary information. Forms with fields that are not always needed can be confusing. Conditional groups, applied to fields allow your forms to adapt to user input, as it is entered.
+
+[youtube https://www.youtube.com/watch?v=8M5RcfzAf0g]
+
 
 = Use Caldera Forms As Super-Powered Search Tool =
 Caldera Forms can be used to create totally custom search forms. Search posts, users, categories, tags, custom post types, custom fields -- including those added with [Advanced Custom Fields](http://advancedcustomfields.com).
@@ -72,9 +115,10 @@ Caldera Forms can be used to create totally custom search forms. Search posts, u
 * [Easy Pods](https://calderawp.com/downloads/caldera-easy-pods/) - Create custom WordPress search forms using the Caldera Forms drag and drop form editor. Search in any post type, taxonomy, or even users or a custom database table. Requires [Pods](http://pods.io) works with any custom post type.
 * [Easy Queries](https://calderawp.com/downloads/caldera-easy-queries/) Create custom WordPress search forms using the Caldera Forms drag and drop form editor. Search across multiple post types, works great with [Advanced Custom Fields](http://advancedcustomfields.com).
 
-> "WordPress should have more plugins like this. Adding new forms, editing their settings and stuff is fun."
-> - Ahmad Awais: Full Stack WordPress Developer
 
+> "Great plugin that I will be using for years to come"
+>
+> - Devin Walker: Developer of Give, WooCommerce QuickCheckout and Maps Builder Pro.
 
 = Track, Edit and View Your Form Submissions =
 Caldera Forms tracks all of your form submission data in the WordPress database. The entry viewer is fast, dynamic and responsive. You can choose to create sub-menu pages for viewing form submissions and chose which users roles are allowed to view those pages.
@@ -82,6 +126,7 @@ Caldera Forms tracks all of your form submission data in the WordPress database.
 Entry editing is a core feature of Caldera Forms. When editing entries, click the "Edit Entry" button to edit your saved data.
 
 > "While Gravity Forms may be the more established form solution plugin for WordPress, there is another contender out there that is a real gem. And that gem is Caldera Forms."
+>
 > - John Teague: Owner of Theme Surgeons
 
 
@@ -112,6 +157,8 @@ Entry editing is a core feature of Caldera Forms. When editing entries, click th
 * [Conditional Fail](https://wordpress.org/plugins/conditional-fail-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Set conditions to cause that if met will allow or prevent form submssion.
 * [Postmatic](https://calderawp.com/downloads/postmatic-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Subscribe users to your posts and comments using Postmatic.
 
+[youtube https://www.youtube.com/watch?v=vHprwapE33Q]
+
 == Installation ==
 
 Upload the caldera-forms folder to /wp-content/plugins/
@@ -131,11 +178,11 @@ Yes your forms are protected against spam submissions by default. We use a honey
 
 = Can I Send One or More Emails With Each Form Submission? =
 
-  Yes, we have many options for sending emails on each submission of your form. Caldera Forms provides an [email notification](https://calderawp.com/doc/setting-caldera-forms-email-notification?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms), which is turned on by default. In addition you can add one or more [auto-responder processors](https://calderawp.com/doc/using-caldera-forms-auto-responder-processor?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) to your forms.
+Yes, we have many options for sending emails on each submission of your form. Caldera Forms provides an [email notification](https://calderawp.com/doc/setting-caldera-forms-email-notification?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms), which is turned on by default. In addition you can add one or more [auto-responder processors](https://calderawp.com/doc/using-caldera-forms-auto-responder-processor?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) to your forms.
 
 = How Can I Get Support for Caldera Forms? =
 
-  [Support for Caldera Forms is available on our site](https://CalderaWP.com/support?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms).   Support is available to paying users a [Caldera Forms add-ons](https://calderawp.com/caldera-forms-add-ons?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) or one of our [cost-saving Caldera Forms bundles](https://calderawp.com/caldera-forms-bundles/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms). Buy purchasing an add-on or bundle you get cool features, support and supports our work, which allows us to offer this awesome plugin for free.   Support for Caldera forms is not offered through WordPress.org.
+ [Support for Caldera Forms is available on our site](https://CalderaWP.com/support?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms).   Support is available to paying users a [Caldera Forms add-ons](https://calderawp.com/caldera-forms-add-ons?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) or one of our [cost-saving Caldera Forms bundles](https://calderawp.com/caldera-forms-bundles/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms). Buy purchasing an add-on or bundle you get cool features, support and supports our work, which allows us to offer this awesome plugin for free.   Support for Caldera forms is not offered through WordPress.org.
 
 = Does Caldera Forms Have Documentation? =
 
@@ -147,19 +194,25 @@ Caldera Forms is a product of [CalderaWP](https://calderawp.com?utm_source=dotOr
 
 = Why Is Caldera Form So Awesome? Seriously, Even Its Free Version Has So Many Great Features! =
 
-Because we are awesome:)   We set out to make a different kind of WordPress form builder. It's no secret that there are a lot of established leaders in this field. But we think that by starting with no conceptions of what a WordPress form builder should be or how it works, we were able to make something special.   We strive to provide a solid core product that can be used for free in hopes that you will use it, and think it is awesome. If you would like to support our work please consider purchasing one of our [Caldera Forms add-ons](https://calderawp.com/caldera-forms-add-ons?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms), a [cost-saving Caldera Forms bundles](https://calderawp.com/caldera-forms-bundles/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) or one of our other fine WordPress plugins including [Easy Pods](https://calderawp.com/downloads/caldera-easy-pods/), [Easy Queries](https://calderawp.com/downloads/caldera-easy-queries/) and [Ingot](https://IngotHQ.com).  
+Because we are awesome:)   We set out to make a different kind of WordPress form builder.
+
+It's no secret that there are a lot of established leaders in this field. But we think that by starting with no conceptions of what a WordPress form builder should be or how it works, we were able to make something special.   We strive to provide a solid core product that can be used for free in hopes that you will use it, and think it is awesome. If you would like to support our work please consider purchasing one of our [Caldera Forms add-ons](https://calderawp.com/caldera-forms-add-ons?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms), a [cost-saving Caldera Forms bundles](https://calderawp.com/caldera-forms-bundles/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) or one of our other fine WordPress plugins including [Easy Pods](https://calderawp.com/downloads/caldera-easy-pods/), [Easy Queries](https://calderawp.com/downloads/caldera-easy-queries/) and [Ingot](https://IngotHQ.com).  
 
 = How Can I Send an Email to More Than One Person?  =
 
-There are a lot of ways to send more than one email with Caldera forms.   If you'd like to send two different emails, for example one email with all of the submission details to the site owner and an auto-response message to the person who filled out the form. In this situation, you can use the main email notification to send to you and then use the [auto-responder processor](https://calderawp.com/doc/using-caldera-forms-auto-responder-processor?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) to send a simple "thank you, we will be in touch" message to the person who filled out the form. If you use the starter contact for form template to create a form this is already set up for you. Simply add your email address as the recipient in the email tab and you're ready to go.   You can add more than one auto-responder processor to your form. Since these processors can make use of Caldera Forms conditional logic, you can add multiple auto-responder processors and set them to run or not run based on form input.
+There are a lot of ways to send more than one email with Caldera forms.
+
+ If you'd like to send two different emails, for example, one email with all of the submission details to the site owner and an auto-response message to the person who filled out the form. In this situation, you can use the main email notification to send to you and then use the [auto-responder processor](https://calderawp.com/doc/using-caldera-forms-auto-responder-processor?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) to send a simple "thank you, we will be in touch" message to the person who filled out the form.
+
+ If you use the starter contact for form template to create a form this is already set up for you. Simply add your email address as the recipient in the email tab and you're ready to go.   You can add more than one auto-responder processor to your form. Since these processors can make use of Caldera Forms conditional logic, you can add multiple auto-responder processors and set them to run or not run based on form input.
 
 = How Can I Save And View Forms Submissions? =
 
-  Form submission tracking in your WordPress database, is a core feature of Caldera Forms. It is turned on for forms by default. You can turn it off from the settings tab of the form editor. When enabled all form entry data, with certain exceptions -- such as credit card numbers -- for security reasons, is saved.   You can view this information from the Caldera Forms admin page. You may optionally enable, form the form settings tab, a sub-menu page of the Caldera Forms menu page that will show entry data. You can choose to make these sub-menu pages available to users of other roles besides admins.  
+ Form submission tracking in your WordPress database, is a core feature of Caldera Forms. It is turned on for forms by default. You can turn it off from the settings tab of the form editor. When enabled all form entry data, with certain exceptions -- such as credit card numbers -- for security reasons, is saved.   You can view this information from the Caldera Forms admin page. You may optionally enable, form the form settings tab, a sub-menu page of the Caldera Forms menu page that will show entry data. You can choose to make these sub-menu pages available to users of other roles besides admins.  
 
 = Can You Use Caldera Forms to Create a Event Registration Form? =
 
-  Oh yes you can Caldera forms is excellent for this if you need to accept payments for the event, you can use one of our [many payment processors](https://calderawp.com/caldera-forms-add-ons?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms). If you need to register users, you can use our [users add-on](https://calderawp.com/downloads/caldera-forms-users-add?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms).  
+ Oh yes you can. Caldera forms is excellent for this if you need to accept payments for the event, you can use one of our [many payment processors](https://calderawp.com/caldera-forms-add-ons?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms). If you need to register users, you can use our [users add-on](https://calderawp.com/downloads/caldera-forms-users-add?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms).  
 
 = Can I Use Caldera Forms For Front-end Editing Of Users? =
 
@@ -171,7 +224,11 @@ Yes, you can. Our plugin [Caldera Custom Fields ](https://calderawp.com/download
 
 = Does Caldera Form Support Multi Page Forms? =
 
-Oh, yes it does. By default Caldera Forms supports multi-page forms.  This is a core feature. multi-page forms are loaded on one page. This way of creating multi-page forms is simple to use and excellent for shorter, less complicated forms. We also offer a[ Connected Forms add-on](https://calderawp.com/downloads/caldera-forms-connector?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms), which allow you to combine multiple Caldera Forms into a sequence of forms. The advantage of this method is that a connected form sequence can have conditional logic.  So for example, if one form asks your user select that they want to pay now or pay later, you can take them to a credit card payment form or a form to arrange payment details. In addition, Connected Forms tracks partial submissions between each step in the form sequence allow users to come back to where they left off in the sequence.
+Oh, yes it does. By default Caldera Forms supports multi-page forms.  This is a core feature.
+
+Multi-page forms are loaded on one page. This way of creating multi-page forms is simple to use and excellent for shorter, less complicated forms. We also offer a[ Connected Forms add-on](https://calderawp.com/downloads/caldera-forms-connector?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms), which allow you to combine multiple Caldera Forms into a sequence of forms. The advantage of this method is that a connected form sequence can have conditional logic.  So for example, if one form asks your user select that they want to pay now or pay later, you can take them to a credit card payment form or a form to arrange payment details.
+
+In addition, Connected Forms tracks partial submissions between each step in the form sequence allow users to come back to where they left off in the sequence.
 
 == Screenshots ==
 1. **Layout Builder** - Easy to use Drag & Drop grid based layout.
@@ -181,109 +238,111 @@ Oh, yes it does. By default Caldera Forms supports multi-page forms.  This is a
 
 == Changelog ==
 = Caldera Forms 1.4.0 ( July 26, 2016 ) =
-ADDED: Duplicate field button.
-FIXED: Datepicker behaviour on mobile. Fallback to default date field behaviour on mobile.
-ADDED: ARIA tags for form fields.
-ADDED: Support for sending emails via SendGrid.
-IMPROVED: Entry viewer is now responsive.
-IMPROVED: Improved labels in form editor to make things easier to find.
-ADDED: Shortcode link to form list.
-ADDED: Shortcode link to form settings.
-ADDED: Email preview mode for ensuring that email settings are correct.
-ADDED: Ability to send emails through SendGrid.
-ADDED: Preset options for select fields.
-IMPROVED: Advanced file fields. These fields are no longer in beta, this is a fully operational battle station.
-FIXED: Bug preventing entries from being saved properly when MariaDB is used.
-FIXED: CSS for advanced field field buttons clashed with TwentySixteen
-IMPROVED: New form modal is now more attractive, encourages using templates and provides template previews.
-FIXED: Permissions for sub-menu entry viewer
-FIXED:  Bug preventing dismissing admin pointer.
-ADDED: caldera_forms_processor_ui_input_pre_html filter for custom admin UI fields
-FIXED: Wrong colors being used for autocomplete (select2) fields.
-FIXED: Active class was not being updated properly on multi-page forms.
-ADDED: Proper ARIA tags for state of pages of multi-page forms.
-FIXED: Bug causing validation on the next page from running on multi-page forms to soon.
-IMPROVED: Input masking for phone fields.
-ADDED: caldera_forms_mailer_invalid action that fires when mailer configuration is invalid.
-FIXED: Issue preventing validation errors from showing properly on some field types.
-ADDED: General settings section of main admin
-ADDED: caldera_forms_ui_field_classes filter for filtering processor UI field classes
-ADDED: Hidden fields to processor UI.
-FIXED: Allowed hidden fields to use custom classes.
-ADDED: New database abstraction, this will become very important soon, aslo it's pretty cool.
-DEPRECATED: Caldera_Forms_Admin::browse_entries() use Caldera_Forms_Entry_UI::view_entries()
-ADDED: caldera_forms_presave_form filter to change form config before saving
-ADDED: Caldera_Forms_Save::create_entry() for creating entries programatically
-ADDED: caldera_forms_widget_init action after widget is initialized.
-ADDED: caldera_forms_sanitize() utility function.
-ADDED: caldera_forms_very_safe_string() for sanatizing a string really hard.
-ADDED: caldera_forms_field_option_presets filter for adding additional option field presets
+* FIXED: Datepicker behaviour on mobile. Fallback to default date field behaviour on mobile.
+* ADDED: Duplicate field button.
+* ADDED: Duplicate field button.
+* ADDED: ARIA tags for form fields.
+* ADDED: Duplicate field button.
+* ADDED: Support for sending emails via SendGrid.
+* IMPROVED: Entry viewer is now responsive.
+* IMPROVED: Improved labels in form editor to make things easier to find.
+* ADDED: Shortcode link to form list.
+* ADDED: Shortcode link to form settings.
+* ADDED: Email preview mode for ensuring that email settings are correct.
+* ADDED: Ability to send emails through SendGrid.
+* ADDED: Preset options for select fields.
+* IMPROVED: Advanced file fields. These fields are no longer in beta, this is a fully operational battle station.
+* FIXED: Bug preventing entries from being saved properly when MariaDB is used.
+* FIXED: CSS for advanced field field buttons clashed with TwentySixteen
+* IMPROVED: New form modal is now more attractive, encourages using templates and provides template previews.
+* FIXED: Permissions for sub-menu entry viewer
+* FIXED:  Bug preventing dismissing admin pointer.
+* ADDED: caldera_forms_processor_ui_input_pre_html filter for custom admin UI fields
+* FIXED: Wrong colors being used for autocomplete (select2) fields.
+* FIXED: Active class was not being updated properly on multi-page forms.
+* ADDED: Proper ARIA tags for state of pages of multi-page forms.
+* FIXED: Bug causing validation on the next page from running on multi-page forms to soon.
+* IMPROVED: Input masking for phone fields.
+* ADDED: caldera_forms_mailer_invalid action that fires when mailer configuration is invalid.
+* FIXED: Issue preventing validation errors from showing properly on some field types.
+* ADDED: General settings section of main admin
+* ADDED: caldera_forms_ui_field_classes filter for filtering processor UI field classes
+* ADDED: Hidden fields to processor UI.
+* FIXED: Allowed hidden fields to use custom classes.
+* ADDED: New database abstraction, this will become very important soon, aslo it's pretty cool.
+* DEPRECATED: Caldera_Forms_Admin::browse_entries() use Caldera_Forms_Entry_UI::view_entries()
+* ADDED: caldera_forms_presave_form filter to change form config before saving
+* ADDED: Caldera_Forms_Save::create_entry() for creating entries programatically
+* ADDED: caldera_forms_widget_init action after widget is initialized.
+* ADDED: caldera_forms_sanitize() utility function.
+* ADDED: caldera_forms_very_safe_string() for sanatizing a string really hard.
+* ADDED: caldera_forms_field_option_presets filter for adding additional option field presets
 
 = Caldera Forms 1.3.5.3 ( May 23, 2016)  =
-Security Release
+* Security Release
 
 = Caldera Forms 1.3.5.2 ( May 18, 2016) The Return of the Widget =
-FIXED: The form widget not showing forms
+* FIXED: The form widget not showing forms
 
 = Caldera Forms 1.3.5.1 ( May 18, 2016) Bug Fix Release =
-FIXED: Issue preventing multi-select fields from saving 2nd or greater option in database.
-FIXED: Pressing "enter" in new form modal did not create new form.
-FIXED: Bug preventing some magic tags from rendering in HTML form fields.
-FIXED: Bug preventing rating star form fields from working with conditional logic.
-FIXED: Issue preventing forms combining user login and user profile editing in same form from validating properly. ( Requires Caldera Forms Users add-on 1.3.4+ )
-FIXED: Bug causing PHP notice when creating shortcode previewer in post editor.
-ADDED: "caldera_forms_admin_init" action at end of constructor for admin class
-ADDED: "caldera_forms_core_init" action at end of constructor for core class
-ADDED: Autoloader for all classes
-FIXED: Missing ARIA tags in auto-generated processor config settings.
-ADDED: "caldera_forms_processor_ui_input_group_html" filter for adding markup to auto-generated processor config groups.
-ADDED: "caldera_forms_processor_ui_input_html" filter for adding markup to auto-generated processor config fields.
-ADDED: Base classes for processors to extend.
-ADDED: Replaced the mini color picker with the native wordpress color picker in form editor.
-FIXED: Issue preventing some disable conditions from disabling form fields.
+* FIXED: Issue preventing multi-select fields from saving 2nd or greater option in database.
+* FIXED: Pressing "enter" in new form modal did not create new form.
+* FIXED: Bug preventing some magic tags from rendering in HTML form fields.
+* FIXED: Bug preventing rating star form fields from working with conditional logic.
+* FIXED: Issue preventing forms combining user login and user profile editing in same form from validating properly. ( Requires Caldera Forms Users add-on 1.3.4+ )
+* FIXED: Bug causing PHP notice when creating shortcode previewer in post editor.
+* ADDED: "caldera_forms_admin_init" action at end of constructor for admin class
+* ADDED: "caldera_forms_core_init" action at end of constructor for core class
+* ADDED: Autoloader for all classes
+* FIXED: Missing ARIA tags in auto-generated processor config settings.
+* ADDED: "caldera_forms_processor_ui_input_group_html" filter for adding markup to auto-generated processor config groups.
+* ADDED: "caldera_forms_processor_ui_input_html" filter for adding markup to auto-generated processor config fields.
+* ADDED: Base classes for processors to extend.
+* ADDED: Replaced the mini color picker with the native wordpress color picker in form editor.
+* FIXED: Issue preventing some disable conditions from disabling form fields.
 
 = Caldera Forms 1.3.5 ( April 21, 2016 ) =
-ADDED: Forms in modals! Ok, this was there for awhile in secret, but it works really well now, so have at it.
-ADDED: Advanced File Upload fields
-ADDED: Optional usage tracking mode
-ADDED: Better handling for errors from forms submissions API
-ADDED: Ability to use "caldera_forms_mailer" filter to disable using wp_mail() -- better emails, like winter, are coming.
-FIXED: Bug affecting widget admin
-FIXED: Improper validation for email details
-FIXED: Inability to disable forms from the admin.
-FIXED: Issue preventing toggle buttons from toggling in forms.
-FIXED: Issue with datapicker language in forms.
-FIXED: Menu pinning
-FIXED: Magic tags for checkbox fields in forms not showing proper value/label in form entry email
-FIXED: Bug that caused a submission result to show code on screen.
+* ADDED: Forms in modals! Ok, this was there for awhile in secret, but it works really well now, so have at it.
+* ADDED: Advanced File Upload fields
+* ADDED: Optional usage tracking mode
+* ADDED: Better handling for errors from forms submissions API
+* ADDED: Ability to use "caldera_forms_mailer" filter to disable using wp_mail() -- better emails, like winter, are coming.
+* FIXED: Bug affecting widget admin
+* FIXED: Improper validation for email details
+* FIXED: Inability to disable forms from the admin.
+* FIXED: Issue preventing toggle buttons from toggling in forms.
+* FIXED: Issue with datapicker language in forms.
+* FIXED: Menu pinning
+* FIXED: Magic tags for checkbox fields in forms not showing proper value/label in form entry email
+* FIXED: Bug that caused a submission result to show code on screen.
 
 = Caldera Forms 1.3.4.2 ( March 31, 2016 ) =
-FIXED: Bug that caused the DB update to not run on manually uploaded updates to Caldera Forms
-FIXED: Bug that caused calculation to fail if they used Math
-FIXED: Bug that caused multiple file fields from being attached to mailer
-FIXED: Bug that stopped forms from being pinned to menu
-FIXED: Bug that threw errors on pinning forms to menu
-REMOVED : experimental code that caused stuff to die
-ADDED : Additional Math support in calculations
+* FIXED: Bug that caused the DB update to not run on manually uploaded updates to Caldera Forms
+* FIXED: Bug that caused calculation to fail if they used Math
+* FIXED: Bug that caused multiple file fields from being attached to mailer
+* FIXED: Bug that stopped forms from being pinned to menu
+* FIXED: Bug that threw errors on pinning forms to menu
+* REMOVED : experimental code that caused stuff to die
+* ADDED : Additional Math support in calculations
 
 = Caldera Forms 1.3.4.1 ( March 30, 2016 ) =
-ADDED: caldera_forms_pre_render_form for returning HTML early.
-ADDED: Form ID and CF version as data attributes in outermost wrapping container for form.
-FIXED: Bug preventing multiple files in same field from attaching to the email.
-FIXED: Bug making multi-file upload fields, effectively always required.
-FIXED: Bug causing conditional logic editor to be real slow.
-FIXED: Bug causing conditional logic editor to not show all conditionals.
-FIXED: Bug causing multi-select checkbox fields to not be editable in entry editor.
-FIXED: Bug causing required checkbox fields, when not checked to not report why form wasn't submitted.
-FIXED: Bug causing CSV export and entry viewer to not properly display multi-select checkbox fields.
-CHANGED: "Pin to Menu" to a more descriptive label. No change in functionality.
-ADDED: caldera_forms_render_field_file filter to Change the file used to create the HTML for a field in the front-end.
-ADDED: entry ID to caldera_forms_submit_post_process and caldera_forms_submit_process_start hooks & documented them.
-ADDED: Caldera_Forms_Forms class to handle all form config CRUD. Refactored form saving for performance and extensibility:)
-FIXED: Typo in default auto-responder message.
-FIXED: Bug preventing variables from rendering in calculation fields.
-IMPROVED: Validation error reporting.
-IMPROVED: Handling AJAX false failures caused by PHP notices/warning/other funny markup form other plugins.
+* ADDED: caldera_forms_pre_render_form for returning HTML early.
+* ADDED: Form ID and CF version as data attributes in outermost wrapping container for form.
+* FIXED: Bug preventing multiple files in same field from attaching to the email.
+* FIXED: Bug making multi-file upload fields, effectively always required.
+* FIXED: Bug causing conditional logic editor to be real slow.
+* FIXED: Bug causing conditional logic editor to not show all conditionals.
+* FIXED: Bug causing multi-select checkbox fields to not be editable in entry editor.
+* FIXED: Bug causing required checkbox fields, when not checked to not report why form wasn't submitted.
+* FIXED: Bug causing CSV export and entry viewer to not properly display multi-select checkbox fields.
+* CHANGED: "Pin to Menu" to a more descriptive label. No change in functionality.
+* ADDED: caldera_forms_render_field_file filter to Change the file used to create the HTML for a field in the front-end.
+* ADDED: entry ID to caldera_forms_submit_post_process and caldera_forms_submit_process_start hooks & documented them.
+* ADDED: Caldera_Forms_Forms class to handle all form config CRUD. Refactored form saving for performance and extensibility:)
+* FIXED: Typo in default auto-responder message.
+* FIXED: Bug preventing variables from rendering in calculation fields.
+* IMPROVED: Validation error reporting.
+* IMPROVED: Handling AJAX false failures caused by PHP notices/warning/other funny markup form other plugins.
 
 = Caldera Forms 1.3.3.1 ( March 4, 2016) =
 * FIXED: Bug causing muti-page forms to validate when going back a page.... again. For reals this time.
@@ -644,7 +703,7 @@ IMPROVED: Handling AJAX false failures caused by PHP notices/warning/other funny
 
 = Added =
 * Pin to menu option to make direct access to entries way faster
-* Extend menu item for addons and licenses 
+* Extend menu item for addons and licenses
 * Community menu item for sharing stuff
 
 
@@ -781,5 +840,8 @@ Initial Release
 == Upgrade Notice ==
 = 1.3.0 =
 New conditional groups!
+
 = 1.3.5 =
 Better file fields, forms in modals, usage tracking for your forms!
+= 1.3.4 =
+Major update! Better emails form your form, better form editor. Caldera Forms !!
