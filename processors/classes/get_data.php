@@ -244,7 +244,7 @@ class Caldera_Forms_Processor_Get_Data {
 	/**
 	 * Get one value from the processor
 	 *
-	 * @since 1.3.6
+	 * @since 1.3.5.3
 	 *
 	 * @param $field
 	 *

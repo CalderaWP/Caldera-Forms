@@ -17,6 +17,14 @@ if( !empty( $field['config']['advanced_populate']['filter'] ) ){
 	
 }
 
+// default
+if( empty( $field['config']['border'] ) ){
+	$field['config']['border'] = '#b6b6b6';
+}
+if( empty( $field['config']['color'] ) ){
+	$field['config']['color'] = '#8f8f8f';
+}
+
 	echo $wrapper_before;
 	if ( isset( $field[ 'slug' ] ) && isset( $_GET[ $field[ 'slug' ] ] ) ) {
 		$field_value = Caldera_Forms_Sanitize::sanitize( $_GET[ $field[ 'slug' ] ] );
@@ -37,7 +45,7 @@ if( !empty( $field['config']['advanced_populate']['filter'] ) ){
 	<?php echo $field_label; ?>
 	<?php echo $field_before; ?>
 		<?php if( empty( $bound ) ){ ?>
-		<select <?php echo $field_placeholder; ?> id="<?php echo $field_id; ?>" <?php echo $multi; ?> data-select-two="true" data-field="<?php echo $field_base_id; ?>" class="<?php echo $field_class; ?>" name="<?php echo $field_name; ?>" <?php echo $field_required; ?> <?php echo $placeholder; ?>>
+		<select <?php echo $field_placeholder; ?> id="<?php echo esc_attr( $field_id ); ?>" <?php echo $multi; ?> data-select-two="true" data-field="<?php echo esc_attr( $field_base_id ); ?>" class="<?php echo esc_attr( $field_class ); ?>" name="<?php echo esc_attr( $field_name ); ?>" <?php echo $field_required; ?> <?php echo $placeholder; ?>>
 		<?php
 			if(isset( $field['config'] ) && isset($field['config']['default']) && isset($field['config']['option'][$field['config']['default']])){
 				//if( $field['config']['option'][$field['config']['default']]['value'] )
@@ -70,7 +78,7 @@ if( !empty( $field['config']['advanced_populate']['filter'] ) ){
 		} ?>
 		</select>
 		<?php }else{ ?>
-		<input type="text" data-select-two="true" id="<?php echo $field_id; ?>" data-field="<?php echo $field_base_id; ?>" name="<?php echo $field_name; ?>[]" multiple="multiple" value="<?php echo htmlentities( $field_value ); ?>">
+		<input type="text" data-select-two="true" id="<?php echo esc_attr( $field_id ); ?>" data-field="<?php echo esc_attr( $field_base_id ); ?>" name="<?php echo esc_attr( $field_name ); ?>[]" multiple="multiple" value="<?php echo htmlentities( $field_value ); ?>">
 		<?php } ?>
 		<?php echo $field_caption; ?>
 	<?php echo $field_after; ?>
@@ -80,10 +88,26 @@ if( !empty( $field['config']['advanced_populate']['filter'] ) ){
 ob_start();
 ?>
 <style>
-.ccselect2-drop-active,.ccselect2-drop.ccselect2-drop-above.ccselect2-drop-active,.ccselect2-container-active .ccselect2-choice,.ccselect2-container-active .ccselect2-choices,.ccselect2-dropdown-open.ccselect2-drop-above .ccselect2-choice,.ccselect2-dropdown-open.ccselect2-drop-above .ccselect2-choices,.ccselect2-container-multi.ccselect2-container-active .ccselect2-choices,.ccselect2-container-multi .ccselect2-choices .ccselect2-search-choice-focus{
-    border-color: <?php echo $field['config']['border']; ?>;
-}.ccselect2-results .ccselect2-highlighted,.ccselect2-container-multi .ccselect2-choices .ccselect2-search-choice-focus{
-	background: <?php echo $field['config']['color']; ?>;
+#s2id_<?php echo $field_id; ?>.ccselect2-container.ccselect2-dropdown-open .ccselect2-choice,
+#s2id_<?php echo $field_id; ?>.ccselect2-container.ccselect2-dropdown-open .ccselect2-choices,
+.s2id_<?php echo $field_id; ?>.ccselect2-drop-active,
+.s2id_<?php echo $field_id; ?>.ccselect2-drop.ccselect2-drop-above.ccselect2-drop-active,
+.s2id_<?php echo $field_id; ?>.ccselect2-container-active .ccselect2-choice,
+.s2id_<?php echo $field_id; ?>.ccselect2-container-active .ccselect2-choices,
+.s2id_<?php echo $field_id; ?>.ccselect2-dropdown-open.ccselect2-drop-above .ccselect2-choice,
+.s2id_<?php echo $field_id; ?>.ccselect2-dropdown-open.ccselect2-drop-above .ccselect2-choices,
+.s2id_<?php echo $field_id; ?>.ccselect2-container-multi.ccselect2-container-active .ccselect2-choices,
+.s2id_<?php echo $field_id; ?>.ccselect2-container-multi .ccselect2-choices .ccselect2-search-choice-focus{
+    border-color: <?php echo $field['config']['border']; ?> !important;
+}
+.s2id_<?php echo $field_id; ?> .ccselect2-results .ccselect2-highlighted,
+.s2id_<?php echo $field_id; ?> .ccselect2-container-multi .ccselect2-choices .ccselect2-search-choice-focus{
+	background: <?php echo $field['config']['color']; ?> !important;
+}
+.has-error .s2id_<?php echo $field_id; ?> .ccselect2-container .ccselect2-choice {
+	border-color: #dd4b39 !important;
+	background-color: #f2dede !important;
+	background-image: none;
 }
 </style>
 <script>
@@ -102,7 +126,7 @@ jQuery( function($){
 				};
 			},
 			results: function (data, page) {
-				console.log( data );
+
 				return { results: data };
 			},
 			cache: true

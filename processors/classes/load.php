@@ -94,7 +94,7 @@ class Caldera_Forms_Processor_Load {
 		 *
 		 * Uses "caldera_forms_get_form_processors" filter to add processors
 		 *
-		 * @since 1.3.6
+		 * @since 1.3.5.3
 		 */
 		do_action( 'caldera_forms_pre_load_processors' );
 
@@ -123,7 +123,7 @@ class Caldera_Forms_Processor_Load {
 		 *
 		 * Use: $processors = Caldera_Forms_Processor_Load::get_instance()->get_processors(); to get processors
 		 *
-		 * @since 1.3.6
+		 * @since 1.3.5.3
 		 */
 		do_action( 'caldera_forms_pre_load_processors' );
 

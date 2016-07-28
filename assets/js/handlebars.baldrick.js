@@ -30,7 +30,7 @@
 			if(templates.length){
 				templates.each(function(){
 					var trigger = $(this);
-					//console.log(trigger.data());
+
 					if(typeof compiledTemplates[trigger.data('templateUrl')] === 'undefined'){
 						compiledTemplates[trigger.data('templateUrl')] = true;
 

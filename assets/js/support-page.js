@@ -10,7 +10,7 @@ jQuery( document ).ready( function ( $ ) {
     };
 
     function updateActive( tab ){
-        $(".caldera-forms-toolbar-item:not(#support-nav-" + tab + ")" ).removeClass( 'active' );
+        $(".caldera-forms-toolbar-link:not(#support-nav-" + tab + ")" ).removeClass( 'active' );
         $( '#support-nav-' + tab ).addClass( 'active' );
     };
 

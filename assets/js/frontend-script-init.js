@@ -1,5 +1,20 @@
-var cf_jsfields_init;
+var cf_jsfields_init, cf_validate_form;
 (function($){
+
+	// validation
+	cf_validate_form = function( form ){
+		return form.parsley({
+			errorsWrapper : '<span class="help-block caldera_ajax_error_block"></span>',
+			errorTemplate : '<span></span>',
+			errorsContainer : function( field ){
+				return field.$element.closest('.form-group');
+			}					
+		}).on('field:error', function() {
+			this.$element.closest('.form-group').addClass('has-error');
+		}).on('field:success', function() {
+			this.$element.closest('.form-group').removeClass('has-error');
+		});
+	}
 
 	// init sync
 	$('[data-sync]').each( function(){
@@ -61,10 +76,7 @@ var cf_jsfields_init;
 			setTimeout( function(){$(document).trigger('cf.error');}, 15 );
 		});
 		if( typeof resBaldrickTriggers === 'undefined' && $('.caldera_forms_form').length ){
-			$('.caldera_forms_form').parsley({
-				errorsWrapper : '<span class="help-block caldera_ajax_error_block"></span>',
-				errorTemplate : '<span></span>'
-			});
+
 		}
 
 	};	
@@ -103,8 +115,10 @@ var cf_jsfields_init;
 		var clicked = $(this),
 			page_box = clicked.closest('.caldera-form-page'),
 			form 	 = clicked.closest('form.caldera_forms_form'),
+			instance = form.data('instance'),
+			current_page = form.find('.caldera-form-page:visible').data('formpage'),
 			page	 = page_box.data('formpage') ? page_box.data('formpage') : clicked.data('page') ,
-			breadcrumb = $('.breadcrumb[data-form="' + form.prop('id') + '"]'),
+			breadcrumb = $('.breadcrumb[data-form="caldera_form_' + instance + '"]'),
 			next,
 			prev,
 			fields,
@@ -113,12 +127,15 @@ var cf_jsfields_init;
 		if( !form.length ){
 			return;
 		}
-
-		fields = form.find('[data-field]');
 		
-		form.find('.has-error[data-page]').removeClass('has-error');
+		cf_validate_form( form ).destroy();
 
-		if( clicked.data('page') !== 'prev' ){
+		fields = form.find('[data-field]');		
+		form.find('.has-error').removeClass('has-error');
+
+		
+		if( clicked.data('page') !== 'prev' && page >= current_page ){
+
 			for(var f = 0; f < fields.length; f++){
 				var this_field = $(fields[f]);
 				if( this_field.is(':radio,:checkbox') ){
@@ -130,14 +147,14 @@ var cf_jsfields_init;
 				}else{
 					if( this_field.prop('required') && false === this_field.is(':visible') ){ continue }
 					if( this_field.prop('required') ){
-						//console.log( this_field.is(":visible") );
+
 						if( true !== this_field.parsley().isValid() ){
 							// ye nope!
 							if( this_field.is(":visible") ){
 								// on this page.
 								this_field.parsley().validate();
 								e.preventDefault();
-								return;
+								//return;
 							}else{
 								// not on this page
 								//get page and highlight if lower than this one (aka backwards not forwards)
@@ -153,48 +170,53 @@ var cf_jsfields_init;
 			}
 		}
 
-
+		
 		for( var ch in checks ){
 			if( checks[ch].indexOf(true) < 0){
-				$('[for="' + ch + '"]').parent().addClass('has-error');
-				return false;
+				$('[for="' + ch + '_' + instance + '"]').parent().addClass('has-error');
+				run = false;				
 			}else{
-				$('[for="' + ch + '"]').parent().removeClass('has-error');
+				$('[for="' + ch + '_' + instance + '"]').parent().removeClass('has-error');
 			}
 		}
 		
+		if( false === run ){
+			cf_validate_form( form ).validate();
+			return false;
+		}
 		
 		if(clicked.data('page') === 'next'){
+			
 			if(breadcrumb){
-				breadcrumb.find('li.active').removeClass('active');
+				breadcrumb.find('li.active').removeClass('active').children().attr('aria-expanded', 'false');
 			}
 			next = form.find('.caldera-form-page[data-formpage="'+ ( page + 1 ) +'"]');
 			if(next.length){
-				page_box.hide();
-				next.show();
+				page_box.hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
+				next.show().attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' );
 				if(breadcrumb){
-					breadcrumb.find('a[data-page="'+ ( page + 1 ) +'"]').parent().addClass('active');
+					breadcrumb.find('a[data-page="'+ ( page + 1 ) +'"]').attr('aria-expanded', 'true').parent().addClass('active');
 				}
 			}
 		}else if(clicked.data('page') === 'prev'){
 			if(breadcrumb){
-				breadcrumb.find('li.active').removeClass('active');
+				breadcrumb.find('li.active').removeClass('active').children().attr('aria-expanded', 'false');
 			}
 			prev = form.find('.caldera-form-page[data-formpage="'+ ( page - 1 ) +'"]');
 			if(prev.length){
-				page_box.hide();
-				prev.show();
+				page_box.hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
+				prev.show().attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' );
 				if(breadcrumb){
-					breadcrumb.find('a[data-page="'+ ( page - 1 ) +'"]').parent().addClass('active');
+					breadcrumb.find('a[data-page="'+ ( page - 1 ) +'"]').attr('aria-expanded', 'true').parent().addClass('active');
 				}
 			}
 		}else{
 			if(clicked.data('pagenav')){
 				e.preventDefault();
-				clicked.closest('.breadcrumb').find('li.active').removeClass('active');
-				$('#' + clicked.data('pagenav') + ' .caldera-form-page').hide();
-				$('#' + clicked.data('pagenav') + '	.caldera-form-page[data-formpage="'+ ( clicked.data('page') ) +'"]').show();
-				clicked.parent().addClass('active');
+				clicked.closest('.breadcrumb').find('li.active').removeClass('active').children().attr('aria-expanded', 'false');
+				$('#' + clicked.data('pagenav') + ' .caldera-form-page').hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
+				$('#' + clicked.data('pagenav') + '	.caldera-form-page[data-formpage="'+ ( clicked.data('page') ) +'"]').show().attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' );
+				clicked.parent().addClass('active').children().attr('aria-expanded', 'true');
 			}
 			
 		}
@@ -225,6 +247,19 @@ var cf_jsfields_init;
 		});
 	});
 	// trigger last page
+
+	// validator
+	$( document ).on('click', 'form.caldera_forms_form [type="submit"]', function( e ){
+		var clicked = $( this ),
+			form = clicked.closest('.caldera_forms_form'),
+			validator = cf_validate_form( form );
+
+		if( !validator.validate() ){
+			e.preventDefault();
+		}else{
+			validator.destroy();
+		}
+	});
 
 	
 

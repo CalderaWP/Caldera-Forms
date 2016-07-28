@@ -265,10 +265,13 @@
 .layout-grid .row.sizing .layout-form-field:hover {
 	min-width: 0;
 }
+
+.layout-grid .layout-form-field:hover .dashicons-admin-page,
 .layout-grid .layout-form-field:hover .icon-edit {
 	cursor: pointer;
 	display: block !important;
 }
+
 .layout-grid .layout-form-field.button-primary .icon-edit {
 	display: none !important;
 }

@@ -22,8 +22,8 @@ $thousand_separator = $field['config']['thousand_separator'];
 ?><?php echo $wrapper_before; ?>
 	<?php echo $field_label; ?>
 	<?php echo $field_before; ?>
-		<<?php echo $elementType; ?> class="<?php echo $field['config']['classes']; ?>"><?php echo $field['config']['before']; ?><span id="<?php echo $field_id; ?>"><?php echo $field_value; ?></span><?php echo $field['config']['after']; ?></<?php echo $elementType; ?>>
-		<input type="hidden" name="<?php echo $field_name; ?>" value="0" data-field="<?php echo $field_base_id; ?>" >
+		<<?php echo $elementType . $field_structure['aria']; ?> class="<?php echo $field['config']['classes']; ?>"><?php echo $field['config']['before']; ?><span id="<?php echo esc_attr( $field_id ); ?>"><?php echo $field_value; ?></span><?php echo $field['config']['after']; ?></<?php echo $elementType; ?>>
+		<input type="hidden" name="<?php echo esc_attr( $field_name ); ?>" value="0" data-field="<?php echo esc_attr( $field_base_id ); ?>" >
 		<?php echo $field_caption; ?>
 	<?php echo $field_after; ?>
 <?php echo $wrapper_after; ?>
@@ -121,9 +121,11 @@ if(!empty($binds)){
 			total = total.toFixed(2);
 			view_total = addCommas( total );
 			<?php } ?>
-
+			if( view_total.toString().length > 18 ){
+				view_total = Math.round( view_total );
+			}
 			$('#<?php echo $field_id; ?>').html( view_total );
-			$('[data-field="<?php echo $field_base_id; ?>"]').val( total ).trigger('change');
+			$('[data-field="<?php echo esc_attr( $field_base_id ); ?>"]').val( total ).trigger('change');
 
 		}
 		$('body').on('change keyup', '<?php echo implode(',', $bindtriggers); ?>', function(e){

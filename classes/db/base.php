@@ -90,9 +90,20 @@ abstract class Caldera_Forms_DB_Base {
 	 * @return array
 	 */
 	public function get_fields(){
+
 		$fields[ 'primary' ] = array_keys( $this->primary_fields );
+
 		$fields[ 'meta_keys' ] = array_keys( $this->meta_keys );
-		$fields[ 'meta_fields' ] = array_keys( $this->meta_fields );
+
+		/**
+		 * Filter the allowed meta keys that can be saved
+		 *
+		 * @since 1.4.0
+		 *
+		 * @param array $fields Allowed fields
+		 * @param string $table_name Name of table
+		 */
+		$fields[ 'meta_fields' ] = apply_filters( 'caldera_forms_db_meta_fields',  array_keys( $this->meta_fields ), $this->get_table_name( true ) );
 		return $fields;
 	}
 
@@ -111,7 +122,7 @@ abstract class Caldera_Forms_DB_Base {
 			'fields' => array(),
 			'formats' => array()
 		);
-
+		
 		foreach( $data as $field => $datum ){
 			if( is_null( $datum ) || is_array( $datum ) || is_object( $datum )  ){
 				$datum = '';
@@ -130,8 +141,8 @@ abstract class Caldera_Forms_DB_Base {
 		}
 
 		$id = $this->save( $_data );
-		if( is_numeric( $id ) ){
-
+		if( is_numeric( $id ) && ! empty( $_meta[ 'fields' ] ) ){
+			
 			foreach( $_meta as $meta ){
 
 				foreach( $this->meta_keys as $meta_key => $field ) {
@@ -285,7 +296,7 @@ abstract class Caldera_Forms_DB_Base {
 	 * @since 1.3.5
 	 *
 	 * @param int|array $id ID of entry, or an array of IDs.
-	 *
+	 * @param string|bool $key Optional. If false, the default all the metas are returned.  Use name of key to get one specific key.
 	 * @return array|null|object
 	 */
 	public function get_meta( $id, $key = false ){

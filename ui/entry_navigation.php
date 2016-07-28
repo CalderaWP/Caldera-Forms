@@ -1,5 +1,8 @@
 <script type="text/javascript">
 var init_cf_baldrick;
+function cf_set_limits( el ){
+	jQuery( el ).data('perpage', jQuery('#cf-entries-list-items').val() );
+}
 function cf_refresh_view(obj){
 	
 	jQuery('.entry_count_' + obj.params.trigger.data('form')).html(obj.rawData.total);
@@ -62,13 +65,7 @@ function setup_pagination(obj){
 	// add form id to toggles
 	toggles.data('form', form)
 	pagenav.data('total', pages);
-	/*
-	if(total < 1 && trash < 1){
-		pagenav.hide();
-		exporter.hide();
-		return;	
-	}else if(total < 1 && trash < 1){
-	*/
+
 	if(pages <= 1){
 		page_links.hide();
 	}else{
@@ -93,8 +90,13 @@ function setup_pagination(obj){
 		next_page.addClass('disabled');		
 	}
 
-	init_cf_baldrick();
+	jQuery( 'html, body').animate({
+		scrollTop: 0
+	}, 250 );
 
+
+	init_cf_baldrick();
+	jQuery( window ).trigger('resize');
 }
 
 jQuery(function($){

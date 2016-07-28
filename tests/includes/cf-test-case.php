@@ -66,6 +66,7 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
 	 * @var array
 	 */
 	protected $mock_form = array(
+		'ID'                 => 'cf1234567890',
 		'name'               => 'Another form',
 		'description'        => '',
 		'db_support'         => 1,

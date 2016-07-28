@@ -1651,7 +1651,6 @@
 
 	/* DATEPICKER DATA-API
 	* ================== */
-
 	$(document).on(
 		'focus.cfdatepicker.data-api click.cfdatepicker.data-api',
 		'[data-provide="cfdatepicker"]',
@@ -1659,16 +1658,13 @@
 			var $this = $(this);
 			if ($this.data('cfdatepicker'))
 				return;
-			e.preventDefault();
+			
 			// component click requires us to explicitly show it
-			$this.cfdatepicker('show');
+			e.preventDefault();
+			$this.cfdatepicker('show')
+			.on('show', function(){ $(this).trigger('blur'); })
+			.on('hide', function(){ $(this).attr("disabled", false); })
 		}
 	);
-	$(function(){
-		//$('[data-provide="cfdatepicker-inline"]').cfdatepicker({
-	//		language: "pt-BR"
-	//	});
-
-	});
 
 }(window.jQuery));

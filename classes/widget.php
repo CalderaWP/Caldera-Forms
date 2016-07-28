@@ -11,6 +11,13 @@ class Caldera_Forms_Widget extends WP_Widget {
 	function __construct() {
 		// Instantiate the parent object
 		parent::__construct( false, __('Caldera Form', 'caldera-forms' ) );
+
+		/**
+		 * Runs after Caldera Forms widget is initialized
+		 *
+		 * @since 1.4.0
+		 */
+		do_action( 'caldera_forms_widget_init' );
 	}
 
 	/**
@@ -95,7 +102,10 @@ class Caldera_Forms_Widget extends WP_Widget {
 }
 
 function caldera_forms_register_widget() {
-	register_widget( 'Caldera_Forms_Widget' );
+	if( ! did_action( 'caldera_forms_widget_init' ) ){
+		register_widget( 'Caldera_Forms_Widget' );
+	}
+
 }
 
 add_action( 'widgets_init', 'caldera_forms_register_widget' );

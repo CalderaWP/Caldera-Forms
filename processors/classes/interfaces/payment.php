@@ -13,7 +13,7 @@ interface Caldera_Forms_Processor_Interface_Payment {
 	/**
 	 * Do Payment
 	 *
-	 * @since 1.3.6
+	 * @since 1.3.5.3
 	 *
 	 * @param array $config Processor config
 	 * @param array $form Form config

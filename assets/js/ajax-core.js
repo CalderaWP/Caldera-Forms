@@ -40,9 +40,10 @@ jQuery(function($){
 				if( data.success && data.success === true ){
 
 					cf_upload_queue.pop();
+					var file_remover = $('[data-file="' + file_number + '"]');
+					file_remover.next().addClass('file-uploaded');
+					file_remover.remove();
 
-					$('[data-file="' + file_number + '"]').remove();
-					//$('.' + file_number ).slideUp();
 					cf_uploader_filelist[ file_number ].state = 3;
 
 					form.submit();
@@ -54,8 +55,7 @@ jQuery(function($){
 					form.find(':submit').prop('disabled',false);
 					form.find('.cf-uploader-trigger').slideDown();
 					$('.' + file_number +' .file-error' ).html( data.data );
-					console.log( data.success );
-					console.log( data.data );
+
 					return;
 				}
 
@@ -85,16 +85,6 @@ jQuery(function($){
 					return false;
 				}
 
-				var validate = form.parsley({
-					errorsWrapper : '<span class="help-block caldera_ajax_error_block"></span>',
-					errorTemplate : '<span></span>'
-				});
-								
-				if( !validate.isValid() ){
-					validate.destroy();
-					return false;
-				}
-				validate.destroy(); //allow to continue;
 				if( !form.data( 'postDisable' ) ){
 					buttons.prop('disabled',true);
 				}
@@ -107,8 +97,8 @@ jQuery(function($){
 					var has_files = false;
 					var count = cf_upload_queue.length;
 					for( var file in cf_uploader_filelist ){
-						if( cf_uploader_filelist[ file ].state > 1 ){
-							// state 2 and 3 is transferring and complete
+						if( cf_uploader_filelist[ file ].state > 1 || cf_uploader_filelist[ file ].state === 0 ){
+							// state 2 and 3 is transferring and complete, state 0 is error and dont upload
 							continue;
 						}
 
@@ -208,11 +198,6 @@ jQuery(function($){
 				$( document ).trigger( 'cf.submission', obj );
 				$( document ).trigger( 'cf.' + obj.data.type );
 
-				//custom_callback
-				// was modal?
-				//setTimeout(function(){
-				//	obj.params.target.closest('.caldera-front-modal-container').hide();
-				//}, 1000);
 			}
 		});
 	};

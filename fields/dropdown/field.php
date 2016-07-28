@@ -7,11 +7,11 @@
 ?>
 	<?php echo $field_label; ?>
 	<?php echo $field_before; ?>
-		<select id="<?php echo $field_id; ?>" data-field="<?php echo $field_base_id; ?>" class="<?php echo $field_class; ?>" name="<?php echo $field_name; ?>" <?php echo $field_required; ?>>
+		<select id="<?php echo esc_attr( $field_id ); ?>" data-field="<?php echo esc_attr( $field_base_id ); ?>" class="<?php echo esc_attr( $field_class ); ?>" name="<?php echo esc_attr( $field_name ); ?>" <?php echo $field_required; ?> <?php echo $field_structure['aria']; ?>>
 		<?php
 
 			if(isset( $field['config'] ) && isset($field['config']['default']) && isset($field['config']['option'][$field['config']['default']])){
-				//if( $field['config']['option'][$field['config']['default']]['value'] )
+
 				if( $field['config']['default'] === $field_value ){
 					$field_value = $field['config']['option'][$field['config']['default']]['value'];
 				}
@@ -41,7 +41,7 @@
 				}
 
 				?>
-				<option value="<?php echo esc_attr( $option['value'] ); ?>" <?php if( $field_value == $option['value'] ){ ?>selected="selected"<?php } ?>><?php echo $option['label']; ?></option>
+				<option value="<?php echo esc_attr( $option['value'] ); ?>" <?php if( $field_value == $option['value'] ){ ?>selected="selected"<?php } ?>><?php echo esc_html( $option['label'] ); ?></option>
 				<?php
 			}
 		} ?>

@@ -93,6 +93,20 @@ jQuery(document).ready(function($){
 	$('body').on('keyup change', '[data-format="key"]', function(e){
 		this.value = this.value.replace(/[^a-z0-9]/gi, '-').toLowerCase();
 	});
+	$('body').on('keyup change', '[data-format="slug"]', function(e){
+		this.value = this.value.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+	});
 
+	$( window ).on('resize', function(){
+
+		var list_toggle = $('#cf_forms_toggle'),
+			forms_panel = $('.form-panel-wrap');
+
+		if( window.innerWidth <= 1420 ){
+			if( list_toggle.is(':visible') && forms_panel.is(':visible') ){
+				list_toggle.trigger('click');
+			}
+		}
+	});
 
 });

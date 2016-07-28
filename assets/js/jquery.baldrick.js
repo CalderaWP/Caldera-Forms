@@ -283,7 +283,7 @@
 
 				params = do_helper('params', params);
 				if(params === false){return false;}
-				//console.log( params );
+
 				// check if request is a function
 				e.preventDefault();
 				if(typeof window[params.url] === 'function'){

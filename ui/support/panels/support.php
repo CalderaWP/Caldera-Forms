@@ -9,7 +9,7 @@
  * @copyright 2016 CalderaWP LLC
  */
 ?>
-<div class="caldera-config-group">
+
 	<h2>
 		<?php esc_html_e( 'Caldera Forms Support', 'caldera-forms' ); ?>
 	</h2>
@@ -24,4 +24,3 @@
 		<li><strong><?php esc_html_e( 'Customization', 'caldera-forms' ); ?></strong> <?php esc_html_e( 'Need an integration with a third-party service or to modify the default of Caldera Forms or to do something else special?', 'caldera-forms' ); ?><a href="https://calderawp.com/caldera-forms-services#cf-custom-code" rel="nofollow"><?php esc_html_e( 'Let us write you some code for you.', 'caldera-forms' ); ?></a></li>
 
 	</ul>
-</div>

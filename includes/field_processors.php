@@ -56,28 +56,43 @@ function cf_handle_file_upload( $entry, $field, $form ){
 		$required = true;
 	}
 	if(!empty($_FILES[$field['ID']]['size'])){
-		// check is allowed 
-		if(!empty($field['config']['allowed'])){
-			$types = explode(',',$field['config']['allowed']);
 
-			foreach($types as &$type){
-				$type = trim( trim( $type,'.' ) );
+		// build wp allowed types
+		$allowed = get_allowed_mime_types();
+		$wp_allowed = array();
+		foreach( $allowed as $ext=>$mime ){
+			$exts = explode('|', $ext );
+			foreach( $exts as $ext ){
+				$wp_allowed[ strtolower( $ext ) ] = true;
 			}
-			foreach( (array) $_FILES[$field['ID']]['name'] as $file_name ){
-				if( empty( $file_name ) ){
-					return $entry;
-				}
-				$check = pathinfo( $file_name );
-				if(!in_array( $check['extension'], $types)){
-					if(count($types) > 1){
-						return new WP_Error( 'fail', __('File type not allowed. Allowed types are: ', 'caldera-forms') . ' '. implode(', ', $types) );
-					}else{
-						return new WP_Error( 'fail', __('File type needs to be', 'caldera-forms') . ' .' . $types[0] );					
-					}
-				}
-			}
-
 		}
+
+		// check if user set allowed types
+		if(!empty($field['config']['allowed'])){
+			$allowed = array_map('trim', explode(',', trim( $field['config']['allowed'] ) ) );
+			$field['config']['allowed'] = array();
+			foreach( $allowed as $ext ){
+				$ext = strtolower( trim( $ext, '.' ) );
+				if( in_array($ext, $wp_allowed ) ){
+					$field['config']['allowed'][ $ext ] = true;
+				}
+			}
+		}else{
+			//set allowed to only what wp allows
+			$field['config']['allowed'] = $wp_allowed;
+		}
+
+		// check each file now
+		foreach( (array) $_FILES[$field['ID']]['name'] as $file_name ){
+			if( empty( $file_name ) ){
+				return $entry;
+			}
+			$filetype = wp_check_filetype( basename( $file_name ), null );
+			if( empty( $field['config']['allowed'][ strtolower( $filetype['ext'] ) ] ) ){
+				return new WP_Error( 'fail', __('This file type is not allowed. Please try another.', 'caldera-forms') );
+			}
+		}
+
 		if ( ! function_exists( 'wp_handle_upload' ) ) require_once( ABSPATH . 'wp-admin/includes/file.php' );
 		
 		$files = array();
@@ -98,6 +113,30 @@ function cf_handle_file_upload( $entry, $field, $form ){
 				return new WP_Error( 'fail', $upload['error'] );
 			}
 			$uploads[] = $upload['url'];
+			// check media handler
+			if( !empty( $field['config']['media_lib'] ) ){
+				// send to media library
+				// Make sure that this file is included, as wp_generate_attachment_metadata() depends on it.
+				require_once( ABSPATH . 'wp-admin/includes/media.php' );
+				require_once( ABSPATH . 'wp-admin/includes/image.php' );
+
+				// create
+				$media_item = array(
+					'guid'           => $upload['file'],
+					'post_mime_type' => $upload['type'],
+					'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $upload['file'] ) ),
+					'post_content'   => '',
+					'post_status'    => 'inherit'
+				);
+
+				// Insert the media_item.
+				$media_id = wp_insert_attachment( $media_item, $upload['file'] );
+
+				// Generate the metadata for the media_item, and update the database record.
+				$media_data = wp_generate_attachment_metadata( $media_id, $upload['file'] );
+				wp_update_attachment_metadata( $media_id, $media_data );
+
+			}
 		}
 
 		if( count( $uploads ) > 1 ){

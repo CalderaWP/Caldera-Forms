@@ -392,6 +392,15 @@ class Caldera_Forms_Forms {
 		$data[ '_last_updated' ] = date('r');
 		$data[ 'version' ] = CFCORE_VER;
 
+		/**
+		 * Filter form config directly before saving
+		 *
+		 * @since 1.4.0
+		 *
+		 * @param array $data Form config
+		 */
+		$data = apply_filters( 'caldera_forms_presave_form', $data  );
+
 		// add form to registry
 		self::update_registry( $data[ "ID" ] );
 

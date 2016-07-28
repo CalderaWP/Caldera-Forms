@@ -4632,7 +4632,12 @@ var handlebarsVariables = {};
         footer = modal.find('.baldrick-modal-footer'),
         title = modal.find('.baldrick-modal-title'),
         current_size = '';
-
+        if( typeof modalWidth === 'string' && modalWidth.indexOf('%') > -1 ){
+          modalWidth = parseFloat( modalWidth ) / 100 * windowWidth;
+        }
+        if( typeof modalHeight === 'string' && modalHeight.indexOf('%') > -1 ){
+          modalHeight = parseFloat( modalHeight ) / 100 * windowHeight;
+        }
         if( modalHeight === 'auto' ){
           body.css( 'position', 'initial' );
           modalHeight = body.outerHeight() + footer.outerHeight() + title.outerHeight();
