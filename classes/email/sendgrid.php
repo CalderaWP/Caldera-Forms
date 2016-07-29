@@ -60,6 +60,7 @@ class Caldera_Forms_Email_SendGrid extends Caldera_Forms_Email_Client{
 	 * @inheritdoc
 	 */
 	public function send(){
+
 		$mail = new Mail();
 
 		$email = $this->create_email( $this->message[ 'from' ], $this->message[ 'from_name' ], false );
@@ -132,7 +133,16 @@ class Caldera_Forms_Email_SendGrid extends Caldera_Forms_Email_Client{
 			$mail->setReplyTo ($reply_to );
 		}
 
-		$mail = apply_filters( 'caldera_forms_sendgrid_before', $mail, $this->message  );
+
+		/**
+		 * Modify SendGrid mail object before sending to remote API
+		 *
+		 * @since 1.4.0
+		 *
+		 * @param \SendGrid\Mail $mail SendGrid SDK email object
+		 * @param array $message Raw message details
+		 */
+		$mail = apply_filters( 'caldera_forms_sendgrid_before', $mail, $this->message );
 
 		//@TODO Caldera Exception
 		try {
