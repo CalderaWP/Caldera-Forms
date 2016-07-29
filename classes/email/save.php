@@ -68,10 +68,9 @@ abstract class Caldera_Forms_Email_Save implements JsonSerializable {
 	 */
 	public function headers(){
 		$headers = array();
-		$headers[ 'recipients' ]  = $this->mail[ 'recipients' ];
-		$headers[ 'subject' ] = $this->mail[ 'subject' ];
-		$headers[ 'all' ] = $this->mail[ 'headers' ];
-
+		$headers[ 'recipients' ]  = $this->recipients();
+		$headers[ 'subject' ] = $this->subject();
+		$headers[ 'all' ] = $this->headers_all();
 		return $headers;
 	}
 
@@ -90,5 +89,67 @@ abstract class Caldera_Forms_Email_Save implements JsonSerializable {
 		return '';
 	}
 
+	/**
+	 * Get the email's attachments
+	 *
+	 * @since 1.4.1
+	 *
+	 * @return array
+	 */
+	public function attachments(){
 
+		if( is_array( $this->mail->attachments) ? $attachments = $this->mail->attachments : $attachments = array() );
+		return $attachments;
+
+	}
+
+	/**
+	 * Get the email's reply to address
+	 *
+	 * @since 1.4.1
+	 *
+	 * @return string
+	 */
+	public function reply_to(){
+
+		if( is_array( $this->mail->replyto ) ? $replyto = $this->mail->replyto : $replyto = '' );
+		return $replyto;
+
+	}
+
+	/**
+	 * Get the email's subject
+	 *
+	 * @since 1.4.1
+	 *
+	 * @return string
+	 */
+	public function subject(){
+		return $this->mail[ 'subject' ];
+	}
+
+	/**
+	 * Get the email's recipients
+	 *
+	 * @since 1.4.1
+	 *
+	 * @return array
+	 */
+	public function recipients(){
+		if ( ! empty(  $this->mail[ 'recipients' ] ) ? $recipients = $this->mail[ 'recipients' ] : $recipients = array() );
+		return $recipients;
+	}
+
+	/**
+	 * Get all of the email's headers
+	 *
+	 * @since 1.4.1
+	 *
+	 * @return array
+	 */
+	public function headers_all(){
+		if ( ! empty( $this->mail[ 'headers' ] ) ? $headers = $this->mail[ 'headers' ] : $headers = array() );
+		return $headers;
+
+	}
 }
