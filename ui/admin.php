@@ -250,7 +250,7 @@ function new_form_redirect(obj){
 function serialize_modal_form(el){
 	
 	var clicked	= jQuery(el),
-		data 	= clicked.closest('.baldrick-modal-wrap'),
+		data 	= jQuery('#new_form_baldrickModal'),
 		name 	= data.find('.new-form-name');
 	
 	if( clicked.hasClass( 'cf-loading-form' ) ){
