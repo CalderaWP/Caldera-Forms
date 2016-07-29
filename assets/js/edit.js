@@ -1541,7 +1541,7 @@ function check_required_bindings(el){
 				};
 			}
 			if( field.hasClass('toggle_value_field') ){
-				var vals = jQuery('.toggle_value_field').not(field);
+				var vals = field.closest('.caldera-config-group').find('.toggle_value_field').not(field);
 
 				for(var s = 0; s < vals.length; s++){
 					if( vals[s].value === v.value ){
@@ -2567,7 +2567,6 @@ Handlebars.registerHelper('_field', function(args) {
 Handlebars.registerHelper('console', function(context, options) {
 	console.log(this);
 });
-
 
 
 
