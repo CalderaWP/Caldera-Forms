@@ -209,6 +209,13 @@ In addition, Connected Forms tracks partial submissions between each step in the
 4. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
+= Caldera Forms 1.4.1 ( July 27, 2016 ) =
+* FIXED: Bug preventing saving of forms with checkbox fields. This is the big bad issue that caused this release.
+* FIXED: caldera_forms_sendgrid_before filter was added without documentation and this really upset Josh, who would have been so mad at David if he had made this mistake.
+* ADDED: Caldera_Forms_Email_Save class, abstracting most functionality from Caldera_Forms_Email_Preview class added in 1.4.0. This resolves issue where Josh was annoyed he could not re-use the preview system to make the PDF add-on for printing and saving form data.
+* FIXED: Changed PHP version check for loading advanced email mode from 5.3 to 5.4. Was problem for those on dinoPHP using SendGrid. Really they should update.
+
+
 = Caldera Forms 1.4.0 ( July 26, 2016 ) =
 * FIXED: Datepicker behaviour on mobile. Fallback to default date field behaviour on mobile.
 * ADDED: Duplicate field button.
