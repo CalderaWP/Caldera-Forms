@@ -111,7 +111,7 @@ ob_start();
 }
 </style>
 <script>
-jQuery( function($){
+window.addEventListener("load", function(){
 	<?php if( !empty( $bound ) ){ ?>
 	var opts = {
 		ajax: {
@@ -136,8 +136,8 @@ jQuery( function($){
 	var opts = {};
 	<?php } ?>
 
-	$(document).on('cf.add', function(){
-		$('#<?php echo $field_id; ?>').select2( opts );
+	jQuery(document).on('cf.add', function(){
+		jQuery('#<?php echo $field_id; ?>').select2( opts );
 	}).trigger('cf.add');
 });
 </script>

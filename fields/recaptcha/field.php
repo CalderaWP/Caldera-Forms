@@ -16,7 +16,7 @@ if( empty( $field['config']['public_key'] ) ){
 ob_start();
 ?>
 <script>
-jQuery( function($){
+window.addEventListener("load", function(){
 	function init_recaptcha(){
 		var captch = $('#cap<?php echo $field_id; ?>');
 		captch.empty();
