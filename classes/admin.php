@@ -478,7 +478,7 @@ class Caldera_Forms_Admin {
 		}
 
 		if ( ! empty( $_POST[ 'pointer' ] ) ) {
-			add_user_meta( get_current_user_id(), 'cf_pointer_' . $_POST[ 'pointer' ] );
+			add_user_meta( get_current_user_id(), 'cf_pointer_' . $_POST[ 'pointer' ], array( 0 => NULL ) );
 		}
 		exit;
 	}
