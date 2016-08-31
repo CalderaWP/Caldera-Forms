@@ -213,7 +213,7 @@ class Caldera_Forms_Entry_Entries {
 			$this->totals[ $status ]  = $total;
 			$pages                    = ceil( $total / $this->perpage );
 			$this->entries[ $status ] = array();
-			if ( 1 == $pages ) {
+			if ( 1 >= $pages ) {
 				$this->entries[ $status ] = array( 1 => array() );
 			} else {
 				$this->entries[ $status ] = array_fill( 1, $pages, array() );
