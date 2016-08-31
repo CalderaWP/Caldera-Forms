@@ -621,7 +621,7 @@ jQuery(document).ready(function($){
 				e.preventDefault();
 			}else{
 				return;
-			}			
+			}
 		}
 		
 
@@ -987,7 +987,8 @@ jQuery(document).ready(function($){
 
 	});
 	// show magic tag autocompletes
-	$('body').on('keyup blur focus select click init.magic', '.magic-tag-enabled', function(e){
+	$('body').on('keyup  focus select click init.magic', '.magic-tag-enabled', function(e){
+
 		init_magic_tags();
 		var input = $(this),
 			wrap = input.parent(),
@@ -1055,6 +1056,10 @@ jQuery(document).ready(function($){
 					});
 					tags.on('mouseleave', function(){
 						$(this).data('focus', false);
+
+						setTimeout(function(){
+							tags.remove();
+						}, 200);
 						if( !input.is(':focus') ){
 							input.trigger('focusout');
 						}
@@ -1172,13 +1177,16 @@ jQuery(document).ready(function($){
 			if(e.type === 'focusout'){
 
 				setTimeout(function(){
-					tags.remove();					
+					tags.remove();
 				}, 200);
 			}
 
 
 
-	})
+	});
+
+
+
 
 
 	// precompile tempaltes
