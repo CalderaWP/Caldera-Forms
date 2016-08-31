@@ -577,7 +577,7 @@ class Caldera_Forms {
 
 		$data = self::get_field_data($field['ID'], $form );
 
-		if(empty($data)){
+		if( empty($data) && 0 != $data ){
 			return;
 		}
 
