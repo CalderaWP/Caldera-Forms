@@ -1010,7 +1010,6 @@ class Caldera_Forms_Admin {
 			}
 
 
-			$this->screen_prefix[] 	 = add_submenu_page( $this->plugin_slug, __('Caldera Forms', 'caldera-forms' ) .' - '. __('Community', 'caldera-forms' ), __('Community', 'caldera-forms' ), Caldera_Forms::get_manage_cap(), $this->plugin_slug . '-community', array( $this, 'render_admin' ) );
 			$this->screen_prefix[] 	 = add_submenu_page( $this->plugin_slug, __('Caldera Forms', 'caldera-forms' ) . ' - ' . __('Extend', 'caldera-forms' ), __('Extend', 'caldera-forms' ), Caldera_Forms::get_manage_cap(), $this->plugin_slug . '-extend', array( $this, 'render_admin' ) );
 		}else{
 			// not an admin - pin for user
@@ -1277,8 +1276,6 @@ class Caldera_Forms_Admin {
 			echo "</form>\r\n";
 		}elseif(!empty($_GET['page']) && $_GET['page'] == 'caldera-forms-extend'){
 			include CFCORE_PATH . 'ui/extend.php';
-		}elseif(!empty($_GET['page']) && $_GET['page'] == 'caldera-forms-community'){
-			include CFCORE_PATH . 'ui/community.php';
 		}elseif(!empty($_GET['page']) && false !== strpos($_GET['page'], 'caldera-forms-pin-')){
 			$formID = substr($_GET['page'], 18);
 			$form = Caldera_Forms_Forms::get_form( $formID );
