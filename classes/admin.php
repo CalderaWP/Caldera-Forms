@@ -27,6 +27,7 @@ class Caldera_Forms_Admin {
 	 */
 	protected $plugin_slug = 'caldera-forms';
 
+
 	/**
 	 * @var      string
 	 */
@@ -1010,7 +1011,7 @@ class Caldera_Forms_Admin {
 
 
 			$this->screen_prefix[] 	 = add_submenu_page( $this->plugin_slug, __('Caldera Forms', 'caldera-forms' ) .' - '. __('Community', 'caldera-forms' ), __('Community', 'caldera-forms' ), Caldera_Forms::get_manage_cap(), $this->plugin_slug . '-community', array( $this, 'render_admin' ) );
-			$this->screen_prefix[] 	 = add_submenu_page( $this->plugin_slug, __('Caldera Forms', 'caldera-forms' ) . ' - ' . __('Extend', 'caldera-forms' ), __('Extend', 'caldera-forms' ), Caldera_Forms::get_manage_cap(), $this->plugin_slug . '-exend', array( $this, 'render_admin' ) );
+			$this->screen_prefix[] 	 = add_submenu_page( $this->plugin_slug, __('Caldera Forms', 'caldera-forms' ) . ' - ' . __('Extend', 'caldera-forms' ), __('Extend', 'caldera-forms' ), Caldera_Forms::get_manage_cap(), $this->plugin_slug . '-extend', array( $this, 'render_admin' ) );
 		}else{
 			// not an admin - pin for user
 			if( ! empty( $forms ) ){
@@ -1088,6 +1089,11 @@ class Caldera_Forms_Admin {
 		}
 
 		if ( ! in_array( $screen->base, $this->screen_prefix ) ) {
+			return;
+		}
+
+		if( 'caldera-forms_page_caldera-forms-extend' == $screen->base ){
+			add_action( 'admin_enqueue_scripts', array( 'Caldera_Forms_Admin_Extend', 'scripts' ), 55 );
 			return;
 		}
 
@@ -1269,7 +1275,7 @@ class Caldera_Forms_Admin {
 			echo "<form method=\"POST\" action=\"admin.php?page=" . $this->plugin_slug . "\" data-load-element=\"#save_indicator\" data-sender=\"ajax\" class=\"caldera-forms-options-form edit-update-trigger\">\r\n";
 			include CFCORE_PATH . 'ui/edit.php';
 			echo "</form>\r\n";
-		}elseif(!empty($_GET['page']) && $_GET['page'] == 'caldera-forms-exend'){
+		}elseif(!empty($_GET['page']) && $_GET['page'] == 'caldera-forms-extend'){
 			include CFCORE_PATH . 'ui/extend.php';
 		}elseif(!empty($_GET['page']) && $_GET['page'] == 'caldera-forms-community'){
 			include CFCORE_PATH . 'ui/community.php';

@@ -48,6 +48,7 @@ function caldera_forms_load(){
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_DB', CFCORE_PATH . 'classes/db' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Entry', CFCORE_PATH . 'classes/entry' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Email', CFCORE_PATH . 'classes/email' );
+	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Admin', CFCORE_PATH . 'classes/admin' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Processor_Interface', CFCORE_PATH . 'processors/classes/interfaces' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Processor', CFCORE_PATH . 'processors/classes' );
 
