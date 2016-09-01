@@ -880,6 +880,10 @@ class Caldera_Forms {
 			'attachments' 	=> array()
 		);
 
+		if( ! is_email( $config[ 'sender_email' ] ) ){
+			$config[ 'sender_email' ] = get_option( 'admin_email' );
+		}
+
 		$email_message = apply_filters( 'caldera_forms_autoresponse_mail', $email_message, $config, $form);
 
 		if( 'wp' !== Caldera_Forms_Email_Settings::get_method() ){
