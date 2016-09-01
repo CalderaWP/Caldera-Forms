@@ -216,7 +216,9 @@ In addition, Connected Forms tracks partial submissions between each step in the
 * FIXED: Bug causing jQuery error and alignment issue when bringing up magic tag list in form admins
 * FIXED: Bug preventing a field value of 0 from being saved.
 * FIXED: PHP notices caused by viewing entries for forms with no entries
-* FIXED: Possibly type error in calcualtion field in front-end form view.
+* FIXED: Possibly type error in calculation field in front-end form view.
+* FIXED: Contact form template used an invalid email in auto-responder
+* FIXED: Auto-responder was not checking for invalid from email settings which was causing emails sent from some forms to fail.
 
 = Caldera Forms 1.4.1 ( July 27, 2016 ) =
 * FIXED: Bug preventing saving of forms with checkbox fields. This is the big bad issue that caused this release.
