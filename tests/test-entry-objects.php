@@ -28,13 +28,13 @@ class Test_Caldera_Forms_Entry_Objects extends Caldera_Forms_Test_Case{
 	 */
 	public function testEntry(){
 		$now = current_time( 'mysql' );
-		$data = [
+		$data = array(
 			'id' => 4,
 			'form_id' => 'cf12345',
 			'user_id' => 1,
 			'datestamp' => $now,
 			'status' => 'active',
-		];
+		);
 
 		$object = new Caldera_Forms_Entry_Entry;
 		foreach( $data as $key => $value ){
@@ -69,13 +69,13 @@ class Test_Caldera_Forms_Entry_Objects extends Caldera_Forms_Test_Case{
 	 */
 	public function testField(){
 
-		$data = [
+		$data = array(
 			'id' => rand(),
 			'field_id' => 'fld000',
 			'entry_id' => 5,
 			'slug' => 'batman',
 			'value' => 'robin'
-		];
+		);
 		$object = new Caldera_Forms_Entry_Field;
 		foreach( $data as $key => $value ){
 			$object->$key = $value;
@@ -163,13 +163,13 @@ class Test_Caldera_Forms_Entry_Objects extends Caldera_Forms_Test_Case{
 	 */
 	public function testMeta(){
 
-		$data = [
+		$data = array(
 			'meta_id' => 5,
 			'entry_id' => rand(),
 			'process_id' => 'fp_' . rand(),
 			'meta_key' => 'spidermen' ,
 			'meta_value' => 'three to six spidermen'
-		];
+		);
 
 		$object = new Caldera_Forms_Entry_Meta();
 		foreach( $data as $key => $value ){

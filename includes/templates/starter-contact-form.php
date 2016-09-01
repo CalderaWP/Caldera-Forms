@@ -182,7 +182,7 @@ return array (
 			'config' => 
 			array (
 				'sender_name' => 'Site Admin',
-				'sender_email' => 'admin@localhost',
+				'sender_email' => get_option( 'admin_email' ),
 				'subject' => 'Contact auto-response',
 				'recipient_name' => '%first_name% %last_name%',
 				'recipient_email' => '%email_address%',

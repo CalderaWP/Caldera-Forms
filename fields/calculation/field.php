@@ -118,6 +118,11 @@ if(!empty($binds)){
 				}
 				return x1 + x2;
 			}
+
+			if( 'number' != typeof  total ){
+				total = parseInt( total, 10 );
+			}
+
 			total = total.toFixed(2);
 			view_total = addCommas( total );
 			<?php } ?>

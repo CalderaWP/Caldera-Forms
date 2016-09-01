@@ -3,15 +3,14 @@
   Plugin Name: Caldera Forms
   Plugin URI: https://calderawp.com/caldera-forms/
   Description: Easy to use, grid based responsive form builder for creating simple to complex forms.
-  Author: David Cramer for CalderaWP LLC
-  Version: 1.4.1
+  Author: CalderaWP
+  Version: 1.4.2
   Author URI: https://calderawp.com
   Text Domain: caldera-forms
   GitHub Plugin URI: https://github.com/CalderaWP/Caldera-Forms/
-  GitHub Branch:     current-stable
+  GitHub Branch:     master
  */
 
-//initilize plugin
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -20,7 +19,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 define('CFCORE_PATH', plugin_dir_path(__FILE__));
 define('CFCORE_URL', plugin_dir_url(__FILE__));
-define('CFCORE_VER', '1.4.1');
+define('CFCORE_VER', '1.4.2');
 define('CFCORE_EXTEND_URL', 'https://api.calderaforms.com/1.0/');
 define('CFCORE_BASENAME', plugin_basename( __FILE__ ));
 
@@ -34,7 +33,7 @@ define('CFCORE_BASENAME', plugin_basename( __FILE__ ));
 define( 'CF_DB', 4 );
 
 // init internals of CF
-include_once CFCORE_PATH . 'classes/core.php'; // neeeds the core at the very least before plugins loaded
+include_once CFCORE_PATH . 'classes/core.php'; // needs the core at the very least before plugins loaded
 add_action( 'init', array( 'Caldera_Forms', 'init_cf_internal' ) );
 // table builder
 register_activation_hook( __FILE__, array( 'Caldera_Forms', 'activate_caldera_forms' ) );
@@ -48,6 +47,7 @@ function caldera_forms_load(){
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_DB', CFCORE_PATH . 'classes/db' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Entry', CFCORE_PATH . 'classes/entry' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Email', CFCORE_PATH . 'classes/email' );
+	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Admin', CFCORE_PATH . 'classes/admin' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Processor_Interface', CFCORE_PATH . 'processors/classes/interfaces' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Processor', CFCORE_PATH . 'processors/classes' );
 
