@@ -1565,14 +1565,27 @@ class Caldera_Forms_Admin {
 	 * @uses "wp_ajax_create_form" action
 	 */
 	public static function create_form(){
-		if(! isset( $_POST[ 'nonce' ] ) || ! wp_verify_nonce( $_POST[ 'nonce'], 'cf_create_form' ) ){
-			status_header(500);
-			wp_send_json_error();
+		$nonce_validated = false;
+		if(  isset( $_POST[ 'nonce' ] ) &&  wp_verify_nonce( $_POST[ 'nonce'], 'cf_create_form' ) ){
+			$nonce_validated = true;
 		}
 
 		parse_str( $_POST['data'], $newform );
 
 
+		if( ! $nonce_validated ){
+			if( isset( $newform, $newform[ 'nonce' ] ) ) {
+				if( wp_verify_nonce( $newform[ 'nonce' ], 'cf_create_form' ) ){
+					$nonce_validated = true;
+				}
+			}
+
+		}
+
+		if( ! $nonce_validated ){
+			status_header(500);
+			wp_send_json_error( );
+		}
 		$newform = Caldera_Forms_Forms::create_form( $newform );
 		echo $newform['ID'];
 		exit;
