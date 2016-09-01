@@ -211,6 +211,7 @@ In addition, Connected Forms tracks partial submissions between each step in the
 == Changelog ==
 = Caldera Forms 1.4.2 ( August 31, 2016 ) =
 * ADDED: caldera_forms_new_form_modal_bottom Runs at the bottom of the new forms modal.
+* FIXED: Bug causing errors when magic tag value was not a string and preg_matching was attempted
 
 = Caldera Forms 1.4.1 ( July 27, 2016 ) =
 * FIXED: Bug preventing saving of forms with checkbox fields. This is the big bad issue that caused this release.
