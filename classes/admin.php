@@ -329,10 +329,21 @@ class Caldera_Forms_Admin {
 				 data-callback="new_form_redirect"
 				 data-before="serialize_modal_form"
 				 data-modal-autoclose="new_form"
+				 data-nonce=<?php echo wp_create_nonce( 'cf_create_form' ); ?>
 				><?php echo esc_html__( 'Create Form', 'caldera-forms' ); ?> <span class="dashicons dashicons-yes"></span><span class="spinner"></span></button>
+
 			</div>
+
 		</div>
 		<?php
+		/**
+		 * Runs at the bottom of the new form modal
+		 *
+		 * Use to add extra buttons, etc.
+		 *
+		 * @since 1.4.2
+		 */
+		do_action( 'caldera_forms_new_form_modal_bottom' );
 	}
 
 	public function get_form_preview(){
@@ -1546,7 +1557,18 @@ class Caldera_Forms_Admin {
 		Caldera_Forms_Forms::save_form( $data );
 	}
 
+	/**
+	 * AJAX callback for new form creation
+	 *
+	 * @since unknown
+	 *
+	 * @uses "wp_ajax_create_form" action
+	 */
 	public static function create_form(){
+		if(! isset( $_POST[ 'nonce' ] ) || ! wp_verify_nonce( $_POST[ 'nonce'], 'cf_create_form' ) ){
+			status_header(500);
+			wp_send_json_error();
+		}
 
 		parse_str( $_POST['data'], $newform );
 
