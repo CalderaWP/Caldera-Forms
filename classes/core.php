@@ -5159,7 +5159,7 @@ class Caldera_Forms {
 					}
 
 					$qurystr['cf_pg'] = $page_key + 1;
-					$out .= "<li" . $tabclass . "><a aria-controls=\"form_page_" . $current_form_count ."_pg_" . ( $page_key + 1 ) . "\" aria-expanded=\"" . $expanded . "\" id=\"breadcrumb_" . $current_form_count ."_pg_" . ( $page_key + 1 ) . "\" href=\"?". http_build_query($qurystr) . "\" data-page=\"" . ( $page_key + 1 ) ."\" data-pagenav=\"caldera_form_" . $current_form_count ."\">". $page_name . "</a></li>\r\n";
+					$out .= "<li" . $tabclass . "><a aria-controls=\"form_page_" . $current_form_count ."_pg_" . ( $page_key + 1 ) . "\" aria-expanded=\"" . $expanded . "\" id=\"breadcrumb_" . $current_form_count ."_pg_" . ( $page_key + 1 ) . "\" href=\"?". http_build_query($qurystr) . "\" data-page=\"" . ( $page_key + 1 ) ."\" data-pagenav=\"caldera_form_" . $current_form_count ."\" title=\"" . sprintf( __( 'Navigate to %s', 'caldera-forms' ), $page_name ) ."\">". $page_name . "</a></li>\r\n";
 				}
 				$out .= "</ol></span>\r\n";
 			}
