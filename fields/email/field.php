@@ -1,7 +1,9 @@
 <?php
 if(!empty($field['config']['placeholder'])){
-	$field_placeholder = 'placeholder="'.$field['config']['placeholder'].'"';
+	$placeholder = Caldera_Forms::do_magic_tags( $field['config']['placeholder'] );
+	$field_placeholder = 'placeholder="'. esc_attr( $placeholder ).'"';
 }
+
 ?><?php echo $wrapper_before; ?>
 	<?php echo $field_label; ?>
 	<?php echo $field_before; ?>

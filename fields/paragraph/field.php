@@ -9,7 +9,9 @@ if ( is_array( $field_value ) )  {
 }
 
 if(!empty($field['config']['placeholder'])){
-	$field_placeholder = 'placeholder="'.$field['config']['placeholder'].'"';
+	$placeholder = Caldera_Forms::do_magic_tags( $field['config']['placeholder'] );
+
+	$field_placeholder = 'placeholder="'. esc_attr( $placeholder ) .'"';
 }
 preg_match_all("/%(.+?)%/", $field['config']['default'], $hastags);
 if(!empty($hastags[1])){

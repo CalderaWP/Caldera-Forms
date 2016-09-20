@@ -1,6 +1,6 @@
 <?php
 if(!empty($field['config']['placeholder'])){
-	$field_placeholder = 'placeholder="'.$field['config']['placeholder'].'"';
+	$field_placeholder = 'placeholder="'. esc_attr(Caldera_Forms::do_magic_tags($field['config']['placeholder'])) .'"';
 }
 
 $mask = '(999)999-9999';
