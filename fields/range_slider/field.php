@@ -32,7 +32,7 @@ if ( is_array( $field_value ) )  {
 <?php echo $wrapper_after; ?>
 <?php ob_start(); ?>
 <script type="text/javascript">
-	jQuery(function($){
+	window.addEventListener("load", function(){
 
 		function init_rangeslider_<?php echo $field_id; ?>(){
 			var el = $('#<?php echo $field_id; ?>'),

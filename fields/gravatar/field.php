@@ -31,7 +31,7 @@ if( !empty( $form['fields'][ $field['config']['email'] ] ) ){
 	?>
 	<script type="text/javascript">
 
-	jQuery(function($){
+	window.addEventListener("load", function(){
 		
 		var timeout_<?php echo $field['config']['email'] .'_'.$current_form_count; ?>,
 			loading_<?php echo $field['config']['email'] .'_'.$current_form_count; ?>,

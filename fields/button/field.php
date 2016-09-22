@@ -31,10 +31,10 @@ if($field['config']['type'] == 'next' || $field['config']['type'] == 'prev'){
 ob_start();
 ?>
 <script>	
-	jQuery( function($){
+	window.addEventListener("load", function(){
 
-		$(document).on('click dblclick', '#<?php echo $field_id; ?>', function( e ){
-			$('#<?php echo $field_id; ?>_btn').val( e.type ).trigger('change');
+		jQuery(document).on('click dblclick', '#<?php echo $field_id; ?>', function( e ){
+			jQuery('#<?php echo $field_id; ?>_btn').val( e.type ).trigger('change');
 		});
 
 	});

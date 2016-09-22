@@ -29,7 +29,7 @@ if(!empty($hastags[1])){
 	
 	?>
 	<script type="text/javascript">
-		jQuery(function($){
+		window.addEventListener("load", function(){
 			
 			function htmltemplate<?php echo $field_id; ?>(){
 

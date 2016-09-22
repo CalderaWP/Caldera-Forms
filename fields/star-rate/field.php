@@ -17,7 +17,7 @@ if(!isset($field['config']['type'])){
 <?php echo $wrapper_after; ?>
 <?php ob_start(); ?>
 <script type="text/javascript">
-	jQuery(function($){
+	window.addEventListener("load", function(){
 		function <?php echo $field_id; ?>_stars(){
 			$('#<?php echo $field_id; ?>_stars').raty({
 				starOff	: 'raty-<?php echo $field['config']['type']; ?>-off',
