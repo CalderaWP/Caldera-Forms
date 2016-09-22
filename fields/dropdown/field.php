@@ -24,7 +24,9 @@
 					if( empty( $field_value ) ){
 						$sel = 'selected';
 					}
-					echo '<option value="" disabled ' . $sel . '>' . $field['config']['placeholder'] . '</option>';
+					$placeholder = Caldera_Forms::do_magic_tags( $field['config']['placeholder'] );
+
+					echo '<option value="" disabled ' . $sel . '>' . $placeholder . '</option>';
 				}
 			}
 

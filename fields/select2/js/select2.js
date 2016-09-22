@@ -3051,7 +3051,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 enabledItem = $(
                     "<li class='ccselect2-search-choice'>" +
                     "    <div></div>" +
-                    "    <a href='#' class='ccselect2-search-choice-close' tabindex='-1'></a>" +
+                    "    <a href='#' class='ccselect2-search-choice-close' tabindex='-1'><i class='raty-cancel-on'></i></a>" +
                     "</li>"),
                 disabledItem = $(
                     "<li class='ccselect2-search-choice ccselect2-locked'>" +

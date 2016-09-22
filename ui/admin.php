@@ -48,7 +48,7 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 			<?php
 				printf( '<button class="button" id="cf-email-settings" title="%s">%s</button>',
 					esc_attr__( 'Click to modify Caldera Forms email settings', 'caldera-forms'  ),
-					esc_html__( 'Email Settings' )
+					esc_html__( 'Email Settings', 'caldera-forms' )
 				);
 			?>
 		</li>
@@ -58,7 +58,7 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 			<?php
 				printf( '<span title="%s">%s</span>',
 					esc_attr__( 'Click to modify Caldera Forms general settings', 'caldera-forms'  ),
-					esc_html__( 'General Settings' )
+					esc_html__( 'General Settings', 'caldera-forms' )
 				);
 			?>
 			</a>
@@ -91,7 +91,7 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 				<tr>
 					<th><?php _e('Form', 'caldera-forms'); ?></th>
 					<th style="width:5em; text-align:center;"><?php _e('Entries', 'caldera-forms'); ?></th>
-				</tr>		
+				</tr>
 			</thead>
 			<tbody>
 		<?php
@@ -109,17 +109,17 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 				}else{
 					$total = __('Disabled', 'caldera-forms');
 				}
-			
+
 				?>
 
-				<tr id="form_row_<?php echo $form_id; ?>" class="<?php echo $class; ?> form_entry_row">						
+				<tr id="form_row_<?php echo $form_id; ?>" class="<?php echo $class; ?> form_entry_row">
 					<td class="<?php if( !empty( $form['form_draft'] ) ) { echo 'draft-form'; }else{ echo 'active-form'; } ?>">
 						<span class="cf-form-name-preview"><?php echo $form['name']; ?></span> <input readonly type="text" class="cf-shortcode-preview" value="<?php echo esc_attr( '[caldera_form id="' . $form['ID'] . '"]'); ?>"> <span class="cf-form-shortcode-preview"><?php echo esc_html__( 'Get Shortcode', 'caldera-forms' ); ?></span>
-						
+
 						<?php if( !empty( $form['debug_mailer'] ) ) { ?>
 						<span style="color: rgb(207, 0, 0);" class="description"><?php _e('Mailer Debug enabled.', 'caldera-forms') ;?></span>
 						<?php } ?>
-												
+
 						<div class="row-actions">
 						<?php if( empty( $form['_external_form'] ) ){ ?><span class="edit"><a class="form-control" href="admin.php?page=caldera-forms&edit=<?php echo $form_id; ?>"><?php echo __('Edit'); ?></a> | </span>
 						<span class="edit"><a class="form-control ajax-trigger" href="#entres"
@@ -148,8 +148,8 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 									data-page="1"
 						><?php esc_html_e( 'Entries', 'caldera-forms'); ?></a> | </span><?php } ?>
 						<input type="hidden" id="form-export-<?php echo $form_id; ?>" value='{ "formslug" : "<?php echo sanitize_title( $form['name'] ); ?>", "formid" : "<?php echo $form_id; ?>", "nonce" : "<?php echo wp_create_nonce( 'cf_del_frm' ); ?>" }'>
-						<?php if( empty( $form['_external_form'] ) ){ ?><span class="export"><a class="form-control ajax-trigger" 
-							<?php 
+						<?php if( empty( $form['_external_form'] ) ){ ?><span class="export"><a class="form-control ajax-trigger"
+							<?php
 								// build exporter buttons
 								$buttons = array(
 									'data-request' => 'cf_build_export',
@@ -158,8 +158,8 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 							?>
 							data-modal="export"
 							data-modal-height="400"
-							data-modal-title="<?php echo esc_attr( __('Export Form', 'caldera-forms') ); ?>" 
-							data-request="#form-export-<?php echo $form_id; ?>" 
+							data-modal-title="<?php echo esc_attr( __('Export Form', 'caldera-forms') ); ?>"
+							data-request="#form-export-<?php echo $form_id; ?>"
 							data-type="json"
 							data-modal-buttons="<?php echo esc_attr( __( 'Export Form', 'caldera-forms' ) ); ?>|<?php echo esc_attr( json_encode( $buttons ) ); ?>"
 							data-template="#cf-export-template"
@@ -211,7 +211,7 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 	<div id="form-entries-viewer"></div>
 
 		<div class="tablenav caldera-table-nav" style="display:none;">
-			
+
 			<div class="tablenav-pages">
 				<input title="<?php echo esc_attr( esc_html__( 'Entries per page', 'caldera-forms' ) ); ?>" id="cf-entries-list-items" type="number" value="<?php echo $entry_perpage; ?>" class="screen-per-page">
 				<span class="pagination-links">
@@ -222,7 +222,7 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 					<a href="#last" title="Go to the last page" data-page="last" class="last-page">»</a>
 				</span>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
@@ -237,7 +237,7 @@ function set_form_state( obj ){
 		var row = jQuery('#form_row_' + obj.data.data.ID + '>td');
 		row.first().attr('class', obj.data.data.state );
 		obj.params.trigger.text( obj.data.data.label );
-		
+
 	}
 }
 
@@ -250,11 +250,11 @@ function new_form_redirect(obj){
 }
 
 function serialize_modal_form(el){
-	
+
 	var clicked	= jQuery(el),
 		data 	= clicked.closest('.baldrick-modal-wrap'),
 		name 	= data.find('.new-form-name');
-	
+
 	if( clicked.hasClass( 'cf-loading-form' ) ){
 		return false;
 	}
@@ -330,9 +330,9 @@ jQuery( function( $ ){
 			clearTimeout( ready_limit_change );
 		}
 		ready_limit_change = setTimeout( function(){
-			$('.status_toggles.button-primary').trigger('click');	
+			$('.status_toggles.button-primary').trigger('click');
 		}, 280 );
-		
+
 	});
 
 	$( document ).on('submit', '#new_form_baldrickModal', function(e){
@@ -358,7 +358,7 @@ jQuery( function( $ ){
 			forms.attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' ).hide();
 		}
 		panel.animate( {marginLeft: size }, 220);
-		
+
 
 	});
 
@@ -398,7 +398,7 @@ jQuery( function( $ ){
 		//$('.cf-form-template').animate( {opacity: 1}, 200 );
 		$('.cf-form-create').fadeOut(100, function(){
 			$('.cf-form-template').css('overflow', 'hidden').find('div,small').fadeIn(100);
-			$(this).attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );	
+			$(this).attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
 		})
 	});
 
@@ -431,7 +431,7 @@ jQuery( function( $ ){
 			$toggles.hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
 			$( this ).on( 'click' )
 		}
-		
+
 
 
 	});
@@ -455,7 +455,7 @@ jQuery( function( $ ){
 				}
 			);
 		});
-		
+
 	});
 
 
