@@ -55,7 +55,7 @@ if( !empty( $form['fields'][ $field['config']['email'] ] ) ){
 			}
 			timeout_<?php echo $field['config']['email'] .'_'.$current_form_count; ?> = setTimeout(function(){
 				container.find('img').animate({opacity: .5}, 200);
-				loading_<?php echo $field['config']['email'] .'_'.$current_form_count; ?> = $.post('<?php echo admin_url('admin-ajax.php'); ?>', {
+				loading_<?php echo $field['config']['email'] .'_'.$current_form_count; ?> = jQuery.post('<?php echo admin_url('admin-ajax.php'); ?>', {
 					action	:	'cf_live_gravatar_get_gravatar',
 					email	:	email,
 					size	:	'<?php echo $field['config']['size']; ?>',
