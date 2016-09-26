@@ -209,6 +209,9 @@ In addition, Connected Forms tracks partial submissions between each step in the
 4. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
+= Caldera Forms 1.4.3 ( The Future ) =
+* IMPROVED: Email notification tab. Better descriptions, more accesible HTML markup.
+
 = Caldera Forms 1.4.2 ( August 31, 2016 ) =
 * ADDED: caldera_forms_new_form_modal_bottom Runs at the bottom of the new forms modal.
 * FIXED: Bug causing errors when magic tag value was not a string and preg_matching was attempted
