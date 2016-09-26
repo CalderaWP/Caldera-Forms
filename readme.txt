@@ -210,8 +210,9 @@ In addition, Connected Forms tracks partial submissions between each step in the
 
 == Changelog ==
 = Caldera Forms 1.4.3 ( The Future ) =
-* IMPROVED: Email notification tab. Better descriptions, more accesible HTML markup.
-* FIXED: Inline JavaScript for some fields didn't work when jQuery was loaded in footer.
+* IMPROVED: Email notification tab. Better descriptions, more accessible HTML form markup.
+* FIXED: Inline JavaScript for some form fields types that didn't work when jQuery was loaded in footer.
+* IMPROVED: Loading of color picker in shortcode form preview. Hi Matt.
 
 = Caldera Forms 1.4.2 ( August 31, 2016 ) =
 * ADDED: caldera_forms_new_form_modal_bottom Runs at the bottom of the new forms modal.
