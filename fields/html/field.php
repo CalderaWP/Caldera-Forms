@@ -33,21 +33,21 @@ if(!empty($hastags[1])){
 			
 			function htmltemplate<?php echo $field_id; ?>(){
 
-				var template = $('#html-content-<?php echo $field_id; ?>-tmpl').html(),
-					target = $('#html-content-<?php echo $field_id; ?>'),
+				var template = jQuery(*'#html-content-<?php echo $field_id; ?>-tmpl').html(),
+					target = jQuery(*'#html-content-<?php echo $field_id; ?>'),
 					list = [<?php echo implode(',', $bindfields); ?>];
 
 				for(var i =0; i < list.length; i++){
 					
-					var field = $('[data-field="'+list[i]+'"]'),
+					var field = jQuery(*'[data-field="'+list[i]+'"]'),
 						value = [];
 					for(var f=0; f < field.length; f++){
-						if( $(field[f]).is(':radio,:checkbox') ){
-							if(!$(field[f]).prop('checked')){
+						if( jQuery(*field[f]).is(':radio,:checkbox') ){
+							if(!jQuery(*field[f]).prop('checked')){
 								continue;
 							}
 						}
-						if( $(field[f]).is('input:file') ){
+						if( jQuery(*field[f]).is('input:file') ){
 							var file_parts = field[f].value.split('\\');
 							value.push( file_parts[file_parts.length-1] );
 						}else{
@@ -62,7 +62,7 @@ if(!empty($hastags[1])){
 				target.html(template).trigger('change');
 
 			}
-			$('body').on('change keyup', '<?php echo implode(',', $binds); ?>', htmltemplate<?php echo $field_id; ?>);
+			jQuery(*'body').on('change keyup', '<?php echo implode(',', $binds); ?>', htmltemplate<?php echo $field_id; ?>);
 
 			htmltemplate<?php echo $field_id; ?>();
 

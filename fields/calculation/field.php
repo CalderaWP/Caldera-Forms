@@ -129,14 +129,14 @@ if(!empty($binds)){
 			if( view_total.toString().length > 18 ){
 				view_total = Math.round( view_total );
 			}
-			$('#<?php echo $field_id; ?>').html( view_total );
-			$('[data-field="<?php echo esc_attr( $field_base_id ); ?>"]').val( total ).trigger('change');
+			jQuery('#<?php echo $field_id; ?>').html( view_total );
+			jQuery('[data-field="<?php echo esc_attr( $field_base_id ); ?>"]').val( total ).trigger('change');
 
 		}
-		$('body').on('change keyup', '<?php echo implode(',', $bindtriggers); ?>', function(e){
+		jQuery('body').on('change keyup', '<?php echo implode(',', $bindtriggers); ?>', function(e){
 			docalc_<?php echo $field_base_id; ?>();
 		});
-		$( document ).on('cf.remove cf.add', function( e ){
+		jQuery( document ).on('cf.remove cf.add', function( e ){
 			docalc_<?php echo $field_base_id; ?>();
 		})
 		docalc_<?php echo $field_base_id; ?>();
