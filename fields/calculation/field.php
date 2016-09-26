@@ -90,7 +90,7 @@ if(!empty($binds)){
 	ob_start();
 ?>
 <script type="text/javascript">
-	jQuery(function($){
+	window.addEventListener("load", function(){
 
 		function checked_total_<?php echo $field_base_id; ?>(items){
 			var sum = 0;
