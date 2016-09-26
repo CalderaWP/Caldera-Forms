@@ -4328,7 +4328,7 @@ class Caldera_Forms {
 
 		ob_start();
 		?>
-		<div id="<?php echo $modal_id; ?>" class="caldera-front-modal-container" <?php echo $current_state; ?>>
+		<div id="<?php echo esc_attr( $modal_id ); ?>" class="caldera-front-modal-container" <?php echo $current_state; ?> data-form-id="<?php echo esc_attr( $modal_id ); ?>">
 			<div class="caldera-backdrop"></div>
 			<div id="<?php echo $modal_id; ?>_modal_wrap" tabindex="-1" arialabelled-by="<?php echo $modal_id; ?>_modal_label" class="caldera-modal-wrap caldera-front-modal-wrap" style="display: block; <?php echo $width; ?>">
 				<div class="caldera-modal-title" id="<?php echo $modal_id; ?>_modal_title" style="display: block;">
