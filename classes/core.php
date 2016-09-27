@@ -110,6 +110,8 @@ class Caldera_Forms {
 			add_action( 'wp_ajax_cf_email_save', array( 'Caldera_Forms_Email_Settings', 'save' ) );
 		}
 
+		add_action( 'caldera_forms_render_start', array( __CLASS__, 'easy_pods_queries_setup' ) );
+
 
 		if( current_user_can( Caldera_Forms::get_manage_cap( 'admin' ) ) ) {
 			$id = null;
@@ -5362,6 +5364,21 @@ class Caldera_Forms {
 		$time = get_date_from_gmt( $submitted, $format );
 
 		return $time;
+	}
+
+	/**
+	 * Setup auto-population options for Easy Pods and Easy Queries
+	 *
+	 * @since 1.4.3
+	 *
+	 * @uses "caldera_forms_render_start" action
+	 */
+	public static function easy_pods_queries_setup(){
+		if( function_exists( 'cep_get_easy_pod' ) ){
+			$setup = new Caldera_Forms_Render_AutoPopulation();
+			$setup->add_hooks();
+		}
+
 	}
 
 }
