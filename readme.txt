@@ -214,6 +214,11 @@ In addition, Connected Forms tracks partial submissions between each step in the
 * FIXED: Inline JavaScript for some form fields types that didn't work when jQuery was loaded in footer.
 * IMPROVED: Loading of color picker in shortcode form preview. Hi Matt.
 * FIXED: Date picker from field was hidden by modal when form was loaded in a modal. It is now moved in from of the modal form so it is visible when loading forms in modals.
+* FIXED: Color picker was not working when form was loaded in a modal. Color pickers now work when form is loaded in a popup.
+* IMPROVED: HTML for modal forms was using a global, not a class property. That's bad, we feel bad, we fixed it. Forms in a popup FTW!
+* FIXED: Bug affecting auto-populating form field options auto-populated using posts.
+* IMPROVED: You used to not be able to use magic tags for placeholder of select form fields. You can now preset select fields in your form using magic tags in the placeholder setting.
+
 
 = Caldera Forms 1.4.2 ( August 31, 2016 ) =
 * ADDED: caldera_forms_new_form_modal_bottom Runs at the bottom of the new forms modal.
