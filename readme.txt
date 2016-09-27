@@ -218,6 +218,7 @@ In addition, Connected Forms tracks partial submissions between each step in the
 * IMPROVED: HTML for modal forms was using a global, not a class property. That's bad, we feel bad, we fixed it. Forms in a popup FTW!
 * FIXED: Bug affecting auto-populating form field options auto-populated using posts.
 * IMPROVED: You used to not be able to use magic tags for placeholder of select form fields. You can now preset select fields in your form using magic tags in the placeholder setting.
+* ADDED: caldera_forms_prerender_edit action that runs before form editor is rendered.
 
 
 = Caldera Forms 1.4.2 ( August 31, 2016 ) =
