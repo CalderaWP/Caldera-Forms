@@ -1635,7 +1635,7 @@ class Caldera_Forms {
 			switch($field['config']['auto_type']){
 				case 'post_type':
 
-					if( ! isset( $field[ 'config' ][ 'orderby_tax' ] ) ) {
+					if( ! isset( $field[ 'config' ][ 'orderby_post' ] ) ) {
 						$field[ 'config' ][ 'orderby_post' ] = 'date';
 					}
 
