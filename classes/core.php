@@ -50,6 +50,14 @@ class Caldera_Forms {
 	 */
 	private  static $internal_init = false;
 
+	/**
+	 * Holds modal HTML to be loaded in footer
+	 *
+	 * @since 1.4.2
+	 *
+	 * @var string
+	 */
+	protected static $footer_modals;
 
 	/**
 	 * Initialize the plugin by setting localization, filters, and administration functions.
@@ -4294,7 +4302,6 @@ class Caldera_Forms {
 	 * @return string
 	 */
 	static public function render_modal_form($atts, $content){
-		global $footer_modals;
 
 		if(empty($atts['id'])){
 			return $content;
@@ -4352,18 +4359,23 @@ class Caldera_Forms {
 			</div>
 		</div>
 		<?php
-		$footer_modals .= ob_get_clean();
+		self::$footer_modals .= ob_get_clean();
 		return $out;
 	}
 
 	/**
 	 * Print modal content in footer.
+	 *
+	 * @since unknown
+	 *
+	 * @uses "wp_footer"
 	 */
 	static public function render_footer_modals(){
-		global $footer_modals;
-		if(!empty($footer_modals)){
+		$footer_modals = self::$footer_modals;
+		if ( ! empty( $footer_modals ) && is_string( $footer_modals ) ) {
 			echo $footer_modals;
 		}
+
 	}
 
 	/**
