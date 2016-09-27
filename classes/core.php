@@ -1636,6 +1636,7 @@ class Caldera_Forms {
 			$field['config']['option'] = array();
 			switch($field['config']['auto_type']){
 				case 'post_type':
+				case 'easy-query' :
 
 					if( ! isset( $field[ 'config' ][ 'orderby_post' ] ) ) {
 						$field[ 'config' ][ 'orderby_post' ] = 'date';
@@ -1661,9 +1662,10 @@ class Caldera_Forms {
 					 * @param array $args  Args for WP_Query
 					 * @param array $form Form config
 					 */
-					$args  = apply_filters( 'caldera_forms_autopopulate_post_type_args', $args );
+					$args  = apply_filters( 'caldera_forms_autopopulate_post_type_args', $args, $field );
 
 					$posts = get_posts( $args );
+
 					if( $field[ 'config' ][ 'value_field' ] === 'id' ){
 						$field[ 'config' ][ 'value_field' ] = 'ID';
 					}elseif( $field[ 'config' ][ 'value_field' ] === 'name' ){
@@ -5374,10 +5376,13 @@ class Caldera_Forms {
 	 * @uses "caldera_forms_render_start" action
 	 */
 	public static function easy_pods_queries_setup(){
-		if( function_exists( 'cep_get_easy_pod' ) ){
-			$setup = new Caldera_Forms_Render_AutoPopulation();
-			$setup->add_hooks();
+		if ( version_compare( phpversion(), '5.3.0', '>=' )  ) {
+			if ( function_exists( 'cep_get_easy_pod' ) || defined( 'CAEQ_PATH' ) ) {
+				$setup = new Caldera_Forms_Render_AutoPopulation();
+				$setup->add_hooks();
+			}
 		}
+
 
 	}
 

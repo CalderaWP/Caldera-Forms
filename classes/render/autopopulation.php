@@ -17,8 +17,8 @@ class Caldera_Forms_Render_AutoPopulation {
 	 * @since 1.4.3
 	 */
 	public function add_hooks(){
-		add_filter('caldera_forms_render_get_field', array( $this, 'easy_pods' ), 11, 2 );
-		add_filter('caldera_forms_render_get_field', array( $this, 'easy_queries' ), 11, 2 );
+		add_filter( 'caldera_forms_render_get_field', array( $this, 'easy_pods' ), 11, 2 );
+		add_filter( 'caldera_forms_autopopulate_post_type_args', array( $this, 'easy_queries' ), 11, 2 );
 	}
 
 	/**
@@ -27,8 +27,8 @@ class Caldera_Forms_Render_AutoPopulation {
 	 * @since 1.4.3
 	 */
 	public function remove_hooks(){
-		remove_filter('caldera_forms_render_get_field', array( $this, 'easy_pods' ), 11 );
-		remove_filter('caldera_forms_render_get_field', array( $this, 'easy_queries' ), 11 );
+		remove_filter( 'caldera_forms_render_get_field', array( $this, 'easy_pods' ), 11 );
+		remove_filter( 'caldera_forms_autopopulate_post_type_args', array( $this, 'easy_queries' ), 11 );
 	}
 
 	/**
@@ -42,8 +42,8 @@ class Caldera_Forms_Render_AutoPopulation {
 	 * @return array
 	 */
 	public function easy_pods( $field, $form ){
-		if(!empty($field['config']['auto'])){
-			if( 'easy-pod' == $field['config']['auto_type'] && isset( $field[ 'config'][ 'easy-pod'] ) && function_exists( 'cep_get_easy_pod' ) && function_exists( 'pods' ) ){
+		if ( ! empty( $field[ 'config' ][ 'auto' ] ) ) {
+			if ( 'easy-pod' == $field[ 'config' ][ 'auto_type' ] && isset( $field[ 'config' ][ 'easy-pod' ] ) && function_exists( 'cep_get_easy_pod' ) && function_exists( 'pods' ) ) {
 				$easy_pod = cep_get_easy_pod( $field[ 'config'][ 'easy-pod'] );
 				if( ! empty( $easy_pod ) ){
 					$pod = pods( $easy_pod['pod'] );
@@ -100,15 +100,27 @@ class Caldera_Forms_Render_AutoPopulation {
 	/**
 	 * Auto-populate Easy Queries-based select fields
 	 *
-	 * @since "caldera_forms_render_get_field"
+	 * @since "caldera_forms_autopopulate_post_type_args"
 	 *
+	 * @param array $args WP_Query args
 	 * @param array $field Field config
-	 * @param array $form Form config
 	 *
 	 * @return array
 	 */
-	public function easy_queries( $field, $form ){
-		return $field;
+	public function easy_queries( $args, $field ){
+		if ( ! empty( $field[ 'config' ][ 'auto' ] ) ) {
+			if ( 'easy-query' == $field[ 'config' ][ 'auto_type' ] && isset( $field[ 'config' ][ 'easy-query' ] ) && defined( 'CAEQ_PATH' ) ) {
+				$easy_query = \calderawp\caeq\options::get_single( $field[ 'config' ][ 'easy-query' ] );
+				if ( ! empty( $easy_query ) ) {
+					$args = \calderawp\caeq\core::get_instance()->build_query_args( $easy_query );
+
+				}
+
+			}
+
+		}
+
+		return $args;
 
 	}
 

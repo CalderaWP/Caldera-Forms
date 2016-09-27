@@ -1942,9 +1942,16 @@ class Caldera_Forms_Admin {
 	 * @uses "caldera_forms_prerender_edit" action
 	 */
 	public static function  easy_pods_auto_populate(){
-		if( class_exists( 'Caldera_Easy_Pods' ) ){
-			new Caldera_Forms_Admin_APEasyPods;
+		if( version_compare( phpversion(), '5.3.0', '>=' ) ){
+			if( class_exists( 'Caldera_Easy_Pods' ) ){
+				new Caldera_Forms_Admin_APEasyPods;
+			}
+
+			if( defined( 'CAEQ_PATH' ) ){
+				new Caldera_Forms_Admin_APEasyQueries;
+			}
 		}
+
 	}
 	
 	
