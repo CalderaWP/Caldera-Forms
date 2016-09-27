@@ -78,6 +78,6 @@ function caldera_forms_toggle_switch_field_class($classes){
 add_filter( 'caldera_forms_render_field_classes_type-color_picker', 'caldera_forms_color_picker_field_class' );
 function caldera_forms_color_picker_field_class($classes){
 	$classes['field_wrapper'][] = "input-group";
-	$classes['control_wrapper'][] = "cf-color-picker";
+	$classes['control_wrapper'][] = "minicolor-picker";
 	return $classes;
 }
