@@ -16,7 +16,7 @@ function new_conditional_group(obj){
 			}
 		];
 
-	
+
 	return {group : group, id: id};
 }
 function new_conditional_line(obj){
@@ -53,7 +53,7 @@ jQuery(document).ready(function($){
 		request			:	'admin.php?page=caldera-forms',
 		before			: function(el, e){
 			e.preventDefault();
-			
+
 			if(!check_required_bindings()){
 				return false;
 			}
@@ -76,7 +76,7 @@ jQuery(document).ready(function($){
 
 		},
 		callback: function( obj ){
-			
+
 			if( false === obj.data ){
 				var notice = $('.updated_notice_box');
 
@@ -95,13 +95,13 @@ jQuery(document).ready(function($){
 	});
 
 	/*
-	*	Build the fieltypes config
-	*	configs are stored in the .caldera-config-field-setup field within the parent wrapper
-	*
-	*/
+	 *	Build the fieltypes config
+	 *	configs are stored in the .caldera-config-field-setup field within the parent wrapper
+	 *
+	 */
 	function build_fieldtype_config(el){
 
-		
+
 		var select 			= $(el),
 			parent			= select.closest('.caldera-editor-field-config-wrapper'),
 			target			= parent.find('.caldera-config-field-setup'),
@@ -110,83 +110,83 @@ jQuery(document).ready(function($){
 			current_type	= select.data('type');
 
 
-			parent.find('.caldera-config-group').show();
+		parent.find('.caldera-config-group').show();
 
-			select.addClass('field-initialized');
+		select.addClass('field-initialized');
 
-			// Be sure to load the fields preset when switching back to the initial field type.
-			if(config.length && current_type === select.val() ){
-				config = JSON.parse(config);
+		// Be sure to load the fields preset when switching back to the initial field type.
+		if(config.length && current_type === select.val() ){
+			config = JSON.parse(config);
+		}else{
+			// default config
+			config = fieldtype_defaults[select.val() + '_cfg'];
+		}
+
+		// build template
+		if(!config){
+			config = {};
+		}
+
+		config._id = select.data('field');
+		config._name = 'config[fields][' + select.data('field') + '][config]';
+
+
+		template = $('<div>').html( template( config ) );
+
+		// send to target
+		target.html( template.html() );
+
+		// check for init function
+		if( typeof window[select.val() + '_init'] === 'function' ){
+			window[select.val() + '_init'](select.data('field'), target);
+		}
+
+		// remove not supported stuff
+		if(fieldtype_defaults[select.val() + '_nosupport']){
+
+			if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('hide_label') >= 0){
+				parent.find('.hide-label-field').hide().find('.field-config').prop('checked', false);
+			}
+			if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('caption') >= 0){
+				parent.find('.caption-field').hide().find('.field-config').val('');
+			}
+			if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('required') >= 0){
+				parent.find('.required-field').hide().find('.field-config').prop('checked', false);
+			}
+			if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('custom_class') >= 0){
+				parent.find('.customclass-field').hide().find('.field-config').val('');
+			}
+			if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('entry_list') >= 0){
+				parent.find('.entrylist-field').hide().find('.field-config').prop('checked', false);
+			}
+		}
+
+		// seup options
+		parent.find('.toggle_show_values').trigger('change');
+
+		if( !$('.caldera-select-field-type').not('.field-initialized').length){
+			// build previews
+			if(!core_form.hasClass('builder-loaded')){
+
+				var fields = $('.caldera-select-field-type.field-initialized');
+				for( var f = 0; f < fields.length; f++){
+					build_field_preview( $(fields[f]).data('field') );
+				}
+				core_form.addClass('builder-loaded');
 			}else{
-				// default config
-				config = fieldtype_defaults[select.val() + '_cfg'];
-			}			
-			
-			// build template
-			if(!config){
-				config = {};
+				build_field_preview( select.data('field') );
 			}
-
-			config._id = select.data('field');
-			config._name = 'config[fields][' + select.data('field') + '][config]';
-
-
-			template = $('<div>').html( template( config ) );
-
-			// send to target
-			target.html( template.html() );	
-
-			// check for init function
-			if( typeof window[select.val() + '_init'] === 'function' ){
-				window[select.val() + '_init'](select.data('field'), target);
-			}
-
-			// remove not supported stuff
-			if(fieldtype_defaults[select.val() + '_nosupport']){
-				
-				if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('hide_label') >= 0){
-					parent.find('.hide-label-field').hide().find('.field-config').prop('checked', false);
-				}
-				if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('caption') >= 0){
-					parent.find('.caption-field').hide().find('.field-config').val('');
-				}
-				if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('required') >= 0){
-					parent.find('.required-field').hide().find('.field-config').prop('checked', false);
-				}
-				if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('custom_class') >= 0){
-					parent.find('.customclass-field').hide().find('.field-config').val('');
-				}
-				if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('entry_list') >= 0){
-					parent.find('.entrylist-field').hide().find('.field-config').prop('checked', false);
-				}				
-			}
-
-			// seup options
-			parent.find('.toggle_show_values').trigger('change');
-			
-			if( !$('.caldera-select-field-type').not('.field-initialized').length){
-				// build previews
-				if(!core_form.hasClass('builder-loaded')){
-
-					var fields = $('.caldera-select-field-type.field-initialized');
-					for( var f = 0; f < fields.length; f++){
-						build_field_preview( $(fields[f]).data('field') );
-					}
-					core_form.addClass('builder-loaded');
-				}else{
-					build_field_preview( select.data('field') );
-				}
-				$('.caldera-header-save-button').prop('disabled', false);
-				rebuild_field_binding();
-				baldrickTriggers();
-			}
+			$('.caldera-header-save-button').prop('disabled', false);
+			rebuild_field_binding();
+			baldrickTriggers();
+		}
 		if( $('.color-field').length ){
 			$('.color-field').wpColorPicker({
 				change: function(obj){
-					
+
 					var trigger = $(this);
 
-					
+
 					if( trigger.data('ev') ){
 						clearTimeout( trigger.data('ev') );
 					}
@@ -196,11 +196,11 @@ jQuery(document).ready(function($){
 					if( trigger.data('target') ){
 						$( trigger.data('target') ).css( trigger.data('style'), trigger.val() );
 						$( trigger.data('target') ).val( trigger.val() );
-					}					
-					
+					}
+
 				}
 			});
-		}			
+		}
 	}
 
 	function build_field_preview(id){
@@ -220,8 +220,8 @@ jQuery(document).ready(function($){
 				basename 	= field.prop('name').split('[' + id + ']')[1].substr(1),
 				name		= basename.substr(0, basename.length-1).split(']['),
 				value 		= ( field.is(':checkbox,:radio') ? field.filter(':checked').val() : field.val() ),
-				lineconf 	= {};			
-			
+				lineconf 	= {};
+
 			for(var i = name.length-1; i >= 0; i--){
 
 				if(i === name.length-1){
@@ -230,11 +230,11 @@ jQuery(document).ready(function($){
 					var newobj = lineconf;
 					lineconf = {};
 					lineconf[name[i]] = newobj;
-				}		
+				}
 			}
 			$.extend(true, config, lineconf);
 		});
-		
+
 		preview_target.html( template(config) );
 		preview_parent.removeClass('button');
 
@@ -255,7 +255,7 @@ jQuery(document).ready(function($){
 			group_slug_edit	= $('.active-group-slug'),
 			group_desc_edit	= $('.active-group-desc'),
 			group_admin_edit= $('.active-group-admin'),
-			field_lists		= $('.caldera-editor-fields-list ul'),			
+			field_lists		= $('.caldera-editor-fields-list ul'),
 			group_repeat	= group_line.find('.caldera-config-group-repeat'),
 			repeat_button	= $('.repeat-config-button'),
 			group_settings	= $('.caldera-editor-group-settings'),
@@ -299,7 +299,7 @@ jQuery(document).ready(function($){
 
 		// show groups fields
 		group_line.show();
-		
+
 		// set group name edit field
 		group_name_edit.val(group_name.val());
 
@@ -316,7 +316,7 @@ jQuery(document).ready(function($){
 			group_admin_edit.prop('checked', false);
 		}
 
-		
+
 
 
 		// is repeatable
@@ -457,7 +457,7 @@ jQuery(document).ready(function($){
 	// field label bind
 	$('.caldera-editor-body').on('change', '.field-label', function(e){
 		var field 		= $(this).closest('.caldera-editor-field-config-wrapper').prop('id');
-			field_line	= $('[data-field="' + field + '"]'),
+		field_line	= $('[data-field="' + field + '"]'),
 			field_title	= $('#' + field + ' .caldera-editor-field-title, .layout-form-field.field-edit-open .layout_field_name'),
 			slug		= $('#' + field + ' .field-slug');
 
@@ -484,7 +484,7 @@ jQuery(document).ready(function($){
 		}
 
 
-		group_name.val(this.value);		
+		group_name.val(this.value);
 		group_label.text(this.value);
 
 	});
@@ -578,7 +578,7 @@ jQuery(document).ready(function($){
 		// remove options 
 		$('option[value="' + field + '"]').remove();
 		$('[data-bind="' + field + '"]').remove();
-		
+
 		// remove field
 		delete current_form_fields[field];
 
@@ -610,9 +610,9 @@ jQuery(document).ready(function($){
 			var group_input = $('<input type="text" class="new-group-input block-input">');
 			group_input.appendTo( $('.caldera-editor-groups-panel') ).focus();
 		}
-		
+
 	});
-	
+
 	// dynamic group creation
 	$('.caldera-editor-body').on('change keypress', '.new-group-input', function(e){
 
@@ -623,7 +623,7 @@ jQuery(document).ready(function($){
 				return;
 			}
 		}
-		
+
 
 		var group_name 	= this.value,
 			input		= $(this),
@@ -652,7 +652,7 @@ jQuery(document).ready(function($){
 			new_list.appendTo( field_list );
 
 			// init sorting
-			
+
 
 			// remove input
 			input.remove();
@@ -671,9 +671,9 @@ jQuery(document).ready(function($){
 				e.preventDefault();
 			}else{
 				return;
-			}			
+			}
 		}
-		
+
 
 		var new_name 	= this.value,
 			input		= $(this),
@@ -707,7 +707,7 @@ jQuery(document).ready(function($){
 			// place new field line
 			field.appendTo( wrap );
 			// pance new conf template
-			field_conf.append( new_conf_templ( new_field ) );		
+			field_conf.append( new_conf_templ( new_field ) );
 
 			// load field
 			field.find('a').trigger('click');
@@ -765,7 +765,7 @@ jQuery(document).ready(function($){
 		var clicked = $(this);
 
 		$('#' + clicked.data('field') + '_type').val(clicked.data('type')).trigger('change');
-		
+
 		$('#' + clicked.data('field') + '_lable').focus()
 
 		$('#field_setup_baldrickModalCloser').trigger('click');
@@ -814,7 +814,7 @@ jQuery(document).ready(function($){
 	});
 
 	$('.caldera-editor-body').on('change', '.caldera-conditional-field-set', function(e){
-		
+
 		var field = $(this),
 			field_compare = field.parent().find('.compare-type'),
 			type = field.data('condition'),
@@ -826,34 +826,34 @@ jQuery(document).ready(function($){
 			field_wrapper,
 			is_button,
 			options_wrap = [];
-			
+
 		var field_id = this.value;
 		if( field_id.substr(0,1) !== '{' ){
 			field_wrapper = $('#' + field_id);
 			is_button = field_wrapper.find( '.field-button-type' );
 			options_wrap = field_wrapper.find('.caldera-config-group-toggle-options');
 		}
-			if(field.hasClass('.bind_init')){
-				field.addClass('bound_triggered');
+		if(field.hasClass('.bind_init')){
+			field.addClass('bound_triggered');
+		}
+		// check if a value is present
+		if(curval.length){
+			if(curval.val().length){
+				target.data('value', curval.val());
+
 			}
-			// check if a value is present
-			if(curval.length){
-				if(curval.val().length){
-					target.data('value', curval.val());
-					
-				}
-			}
+		}
 		field_compare.show();
 		if(options_wrap.length){
 			var options_rows = options_wrap.find('.toggle_option_row'),
 				out = '<select name="' + name + '[value]" class="caldera-processor-value-bind caldera-conditional-value-field" data-field="' + field_id + '" style="max-width: 220px; width: 220px;">';
-				out += '<option value=""></option>';
+			out += '<option value=""></option>';
 
 			options_rows.each(function(k,v){
 				var label = $(v).find('.toggle_label_field'),
 					value = label.data('option'),
 					sel = '';
-				
+
 				if(target.data('value')){
 					if(target.data('value').toString() === value || target.data('value').toString() === $(v).find('.toggle_value_field').val() ){
 						sel = ' selected="selected"';
@@ -866,7 +866,7 @@ jQuery(document).ready(function($){
 			out += '</select>';
 
 		}else if( is_button && is_button.val() == 'button' ) {
-			
+
 			field_compare.val('is').hide();
 
 
@@ -885,7 +885,7 @@ jQuery(document).ready(function($){
 
 	});
 
-	
+
 	$('.caldera-editor-body').on('change', '.caldera-conditionals-usetype', function(e){
 
 		var select = $(this);
@@ -912,7 +912,7 @@ jQuery(document).ready(function($){
 		}
 
 	});
-	
+
 
 	// load fist  group
 	$('.caldera-group-nav').first().find('a').trigger('click');
@@ -921,7 +921,7 @@ jQuery(document).ready(function($){
 	$('.caldera-editor-body').on('change', '.toggle_show_values', function(e){
 		var clicked = $(this),
 			wrap = clicked.closest('.caldera-config-group-toggle-options');
-			values = wrap.find('.toggle_value_field'),
+		values = wrap.find('.toggle_value_field'),
 			lables = wrap.find('.toggle_label_field'),
 			field_lables = wrap.find('.caldera-config-group-option-labels');
 
@@ -963,11 +963,11 @@ jQuery(document).ready(function($){
 		}
 
 		autotype_wrap.find('.caldera-config-group-auto-' + autotype.val()).show();
-	
+
 	});
 
 	$('body').on('change', '.pin-toggle-roles', function(){
-		
+
 		var clicked = $(this),
 			roles = $('#caldera-pin-rules');
 
@@ -1002,192 +1002,186 @@ jQuery(document).ready(function($){
 			start = this.selectionStart,
 			end = this.selectionEnd;
 
-			if( tags.length && tags.data('focus') ){
-				e.preventDefault();
+		if( tags.length && tags.data('focus') ){
+			e.preventDefault();
+			return;
+		}
+
+		//reset typed tag
+		input.data('tag','');
+		if(this.selectionEnd > this.selectionStart){
+			current_tag = this.value.substr(this.selectionStart, ( this.selectionEnd - this.selectionStart) );
+		}else{
+
+			if( ( e.type === 'select' || e.type === 'keyup' ) && ( e.which !== 40 && e.which !== 38 && e.which !== 39 && e.which !== 37 ) ){
+
+				for( start=this.selectionStart; start > 0; start--){
+
+					var ch = stream.substr(start-1,1);
+
+					if(ch === ' ' || ch === "\n" || ( ( ch === '%' || ch === '}' ) && this.selectionStart === start ) ){
+						break;
+					}
+				}
+				for( end=this.selectionStart; end < stream.length; end++){
+
+					var ch = stream.substr(end,1);
+
+					if(ch === ' ' || ch === "\n" || ( ( ch === '%' || ch === '{' ) && this.selectionStart === end ) ){
+						break;
+					}
+				}
+
+				current_tag = stream.substr(start, ( end - start ) );
+			}
+
+		}
+
+		// start matching
+		if( e.type !== 'focusout' ){
+
+			if( e.type !== 'init' && current_tag.length < 3 ){
+				if(tags.length){
+					tags.remove();
+				}
 				return;
 			}
+			if(!tags.length){
+				tags = $('<div class="magic-tags-autocomplete"></div>');
+				list = $('<ul></ul>');
+				list.appendTo(tags);
+				tags.insertAfter(input);
+				tags.on('mouseenter', function(){
+					$(this).data('focus', true);
+				});
+				tags.on('mouseleave', function(){
+					$(this).data('focus', false);
 
-			//reset typed tag
-			input.data('tag','');
-			if(this.selectionEnd > this.selectionStart){
-				current_tag = this.value.substr(this.selectionStart, ( this.selectionEnd - this.selectionStart) );
-			}else{
-				
-				if( ( e.type === 'select' || e.type === 'keyup' ) && ( e.which !== 40 && e.which !== 38 && e.which !== 39 && e.which !== 37 ) ){
-
-					for( start=this.selectionStart; start > 0; start--){
-						
-						var ch = stream.substr(start-1,1);
-
-						if(ch === ' ' || ch === "\n" || ( ( ch === '%' || ch === '}' ) && this.selectionStart === start ) ){
-							break;
-						}
-					}
-					for( end=this.selectionStart; end < stream.length; end++){
-						
-						var ch = stream.substr(end,1);
-
-						if(ch === ' ' || ch === "\n" || ( ( ch === '%' || ch === '{' ) && this.selectionStart === end ) ){
-							break;
-						}
-					}
-					
-					current_tag = stream.substr(start, ( end - start ) );
-				}
-				//}
-			}
-			
-			// start matching
-			if( e.type !== 'focusout' ){
-				
-				if( e.type !== 'init' && current_tag.length < 3 ){
-					if(tags.length){
+					setTimeout(function(){
 						tags.remove();
+					}, 200);
+					if( !input.is(':focus') ){
+						input.trigger('focusout');
 					}
-					return;
-				}
-				if(!tags.length){
-					tags = $('<div class="magic-tags-autocomplete"></div>');
-					list = $('<ul></ul>');
-					list.appendTo(tags);
-					tags.insertAfter(input);
-					tags.on('mouseenter', function(){
-						$(this).data('focus', true);
-					});
-					tags.on('mouseleave', function(){
-						$(this).data('focus', false);
+				});
+			}
 
-						setTimeout(function(){
-							tags.remove();
-						}, 200);
-						if( !input.is(':focus') ){
-							input.trigger('focusout');
-						}
-					});
-				}
+			//populate
+			list.empty();
+			// compatibility
+			var tagtypes = 'system';
+			var is_static = false;
+			if(fieldtype === 'hidden' || fieldtype === 'dropdown' || fieldtype === 'radio' || fieldtype === 'toggle_switch' || fieldtype === 'checkbox'){
+				is_static = true;
+				fieldtype = 'text';
+				tagtypes = 'all';
+			}else if(fieldtype === 'paragraph' || fieldtype === 'html'){
+				fieldtype = 'text';
+			}
+			// type set
+			if(input.data('type')){
+				fieldtype = input.data('type');
+			}
+			// search em!
+			fieldtype = fieldtype.split(',');
+			fieldtype.push('vars');
+			for( var ft = 0; ft < fieldtype.length; ft++){
+				for( var tp in system_values ){
+					if(typeof system_values[tp].tags === 'undefined' || typeof system_values[tp].tags[fieldtype[ft]] === 'undefined'){
+						continue;
+					}
 
-				//populate
-				list.empty();
-				// compatibility
-				var tagtypes = 'system';
-				var is_static = false;
-				if(fieldtype === 'hidden' || fieldtype === 'dropdown' || fieldtype === 'radio' || fieldtype === 'toggle_switch' || fieldtype === 'checkbox'){
-					is_static = true;
-					fieldtype = 'text';
-					tagtypes = 'all';
-				}else if(fieldtype === 'paragraph' || fieldtype === 'html'){
-					fieldtype = 'text';
-				}
-				// type set
-				if(input.data('type')){
-					fieldtype = input.data('type');
-				}
-				// search em!
-				fieldtype = fieldtype.split(',');
-				fieldtype.push('vars');
-				for( var ft = 0; ft < fieldtype.length; ft++){
-					for( var tp in system_values ){
-						if(typeof system_values[tp].tags === 'undefined' || typeof system_values[tp].tags[fieldtype[ft]] === 'undefined'){
-							continue;
-						}
-						
-						type_instances = [tp];
-						if(tp !== 'system' && tp !== 'variable' && tp !== 'field'){
-							var type_instance_confs = jQuery(".processor-" + tp),
-								wrapper = input.closest('.caldera-editor-processor-config-wrapper'),
-								wrapper_id = wrapper.prop('id');
-							type_instances = [];
-							// processor based - orderd
-							for(var c = 0; c<type_instance_confs.length; c++){
-								if(!wrapper.length && is_static === true ){
-									// static non processor - can be used
+					type_instances = [tp];
+					if(tp !== 'system' && tp !== 'variable' && tp !== 'field'){
+						var type_instance_confs = jQuery(".processor-" + tp),
+							wrapper = input.closest('.caldera-editor-processor-config-wrapper'),
+							wrapper_id = wrapper.prop('id');
+						type_instances = [];
+						// processor based - orderd
+						for(var c = 0; c<type_instance_confs.length; c++){
+							if(!wrapper.length && is_static === true ){
+								// static non processor - can be used
+								type_instances.push(type_instance_confs[c].id);
+							}else{
+								if(wrapper_id === type_instance_confs[c].id){
+									continue;
+								}
+
+								// check index order is valid
+								if(jQuery('li.'+type_instance_confs[c].id).index() < jQuery('li.'+wrapper_id).index()){
 									type_instances.push(type_instance_confs[c].id);
-								}else{								
-									if(wrapper_id === type_instance_confs[c].id){
+								}
+							}
+
+						}
+
+					}
+					// all instances of tag
+					for( var instance = 0; instance < type_instances.length; instance++){
+						if(tagtypes === 'all' || tagtypes === tp || tp === 'variable'){
+
+							var heading = $('<li class="header">' + system_values[tp].type + ( instance > 0 ? ' ['+(instance+1)+']' : '' ) +'</li>'),
+								matches = 0;
+							heading.appendTo(list);
+
+							for( var i = 0; i < system_values[tp].tags[fieldtype[ft]].length; i++){
+
+								if(input.data('parent')){
+									if('variable:'+input.data('parent') === system_values[tp].tags[fieldtype[ft]][i]){
 										continue;
 									}
-
-									// check index order is valid
-									if(jQuery('li.'+type_instance_confs[c].id).index() < jQuery('li.'+wrapper_id).index()){
-										type_instances.push(type_instance_confs[c].id);
-									}
 								}
 
+								var this_tag = system_values[tp].wrap[0] + system_values[tp].tags[fieldtype[ft]][i]+system_values[tp].wrap[1];
+								if(type_instances[instance] !== tp && type_instances.length > 1){
+									this_tag = system_values[tp].wrap[0] + system_values[tp].tags[fieldtype[ft]][i]+':'+type_instances[instance]+system_values[tp].wrap[1];
+								}
+								if( this_tag.indexOf(current_tag) >= 0 || e.type === 'init'){
+
+									matches += 1;
+									var view_tag = this_tag.replace(current_tag, '<strong>' + current_tag + '</strong>');
+
+									var linetag = $('<li class="tag" data-tag="'+this_tag+'">' + view_tag + '</li>');
+
+
+									linetag.on('click', function(){
+
+										var selected = $(this).data('tag');
+
+
+										input.val( stream.substr(0, start ) + selected + stream.substr( end ) ).trigger('change').focus();
+										input[0].selectionStart = start + selected.length - ( selected.indexOf('*') > 0 ? 2 : 0 );
+										input[0].selectionEnd = start + selected.length - ( selected.indexOf('*') > 0 ? 1 : 0 );
+										end = start = input[0].selectionEnd;
+										stream += selected;
+										input.trigger('init.magic');
+									});
+
+									linetag.appendTo(list);
+								}
 							}
-
-						}						
-						// all instances of tag
-						for( var instance = 0; instance < type_instances.length; instance++){
-							if(tagtypes === 'all' || tagtypes === tp || tp === 'variable'){
-
-								var heading = $('<li class="header">' + system_values[tp].type + ( instance > 0 ? ' ['+(instance+1)+']' : '' ) +'</li>'),
-									matches = 0;
-								heading.appendTo(list);
-
-								for( var i = 0; i < system_values[tp].tags[fieldtype[ft]].length; i++){
-
-									if(input.data('parent')){
-										if('variable:'+input.data('parent') === system_values[tp].tags[fieldtype[ft]][i]){
-											continue;
-										}
-									}
-
-									var this_tag = system_values[tp].wrap[0] + system_values[tp].tags[fieldtype[ft]][i]+system_values[tp].wrap[1];
-									if(type_instances[instance] !== tp && type_instances.length > 1){
-										this_tag = system_values[tp].wrap[0] + system_values[tp].tags[fieldtype[ft]][i]+':'+type_instances[instance]+system_values[tp].wrap[1];
-									}
-									if( this_tag.indexOf(current_tag) >= 0 || e.type === 'init'){
-
-										matches += 1;
-										var view_tag = this_tag.replace(current_tag, '<strong>' + current_tag + '</strong>');
-
-										var linetag = $('<li class="tag" data-tag="'+this_tag+'">' + view_tag + '</li>');
-										
-										
-										linetag.on('click', function(){
-											
-											var selected = $(this).data('tag');
-
-
-											input.val( stream.substr(0, start ) + selected + stream.substr( end ) ).trigger('change').focus();
-											input[0].selectionStart = start + selected.length - ( selected.indexOf('*') > 0 ? 2 : 0 );
-											input[0].selectionEnd = start + selected.length - ( selected.indexOf('*') > 0 ? 1 : 0 );
-											end = start = input[0].selectionEnd;
-											stream += selected;
-											input.trigger('init.magic');
-										});
-
-										linetag.appendTo(list);
-									}
-								}
-								if(matches === 0){
-									heading.remove();
-								}
+							if(matches === 0){
+								heading.remove();
 							}
 						}
 					}
 				}
 			}
-			// count results found			
-			if(!list.children().length){
+		}
+		// count results found
+		if(!list.children().length){
+			tags.remove();
+		}
+
+		// focus out - remove
+		if(e.type === 'focusout'){
+
+			setTimeout(function(){
 				tags.remove();
-			}
-
-			// focus out - remove
-			if(e.type === 'focusout'){
-
-				setTimeout(function(){
-					tags.remove();
-				}, 200);
-			}
-
-
+			}, 200);
+		}
 
 	});
-
-
-
-
 
 	// precompile tempaltes
 	var pretemplates = $('.cf-editor-template');
@@ -1205,12 +1199,12 @@ jQuery(document).ready(function($){
 
 });//
 
-var rebuild_field_binding, 
-	rebind_field_bindings, 
-	current_form_fields = {}, 
-	required_errors = {}, 
-	add_new_grid_page, 
-	add_page_grid, 
+var rebuild_field_binding,
+	rebind_field_bindings,
+	current_form_fields = {},
+	required_errors = {},
+	add_new_grid_page,
+	add_page_grid,
 	init_magic_tags,
 	core_form,
 	compiled_templates = {};
@@ -1221,7 +1215,7 @@ init_magic_tags = function(){
 
 	magicfields.each(function(k,v){
 		var input = jQuery(v);
-		
+
 		if(input.hasClass('magic-tag-init-bound')){
 			var currentwrapper = input.parent().find('.magic-tag-init');
 			if(!input.is(':visible')){
@@ -1229,7 +1223,7 @@ init_magic_tags = function(){
 			}else{
 				currentwrapper.show();
 			}
-			return;			
+			return;
 		}else{
 			var magictag = jQuery('<span class="icn-code magic-tag-init"></span>'),
 				wrapper = jQuery('<span style="position:relative;display:inline-block; width:100%;"></span>');
@@ -1300,7 +1294,7 @@ rebuild_field_binding = function(){
 		};
 
 		// bind names
-		jQuery('option.bound-field').trigger('change').each(function(k,v){			
+		jQuery('option.bound-field').trigger('change').each(function(k,v){
 			var bind = jQuery(v);
 			if(bind.prop('value').indexOf('{') !== 0){
 				bind.text( jQuery('#' + bind.prop('value') + '_lable').val() + ' ['+jQuery('#' + bind.prop('value') + '_lable').val() +']');
@@ -1319,14 +1313,14 @@ rebind_field_bindings = function(){
 		type_instances,
 		processor_li;
 
-	
-	
+
+
 	if(!bindings.length){
-		return;	
+		return;
 	}
-	
+
 	bindings.addClass('bound_field');
-	
+
 
 	for(var v = 0; v < bindings.length; v++){
 
@@ -1337,7 +1331,7 @@ rebind_field_bindings = function(){
 			count = 0,
 			wrapper = field.closest('.caldera-editor-processor-config-wrapper'),
 			wrapper_id = wrapper.prop('id'),
-			valid = '';	
+			valid = '';
 
 		if(default_sel && !field.hasClass('reload-binding')){
 			current = default_sel;
@@ -1358,7 +1352,7 @@ rebind_field_bindings = function(){
 				if( field.data('id') !== fid ){
 					optgroup.append('<option value="' + fid + '"' + ( current === fid ? 'selected="selected"' : '' ) + '>' + current_form_fields[fid].label + ' [' + current_form_fields[fid].slug + ']</option>');
 				}
-				
+
 				count += 1;
 			}
 			optgroup.appendTo(field);
@@ -1366,11 +1360,11 @@ rebind_field_bindings = function(){
 			if(count === 0){
 				field.empty();
 			}
-			
+
 			for(var type in system_values){
 				type_instances = [];
-					
-				if(excludes){				
+
+				if(excludes){
 					if( excludes.split(',').indexOf(type) >= 0 ){
 						continue;
 					}
@@ -1379,7 +1373,7 @@ rebind_field_bindings = function(){
 				if(type !== 'system' && type !== 'variable'){
 
 					var type_instance_confs = jQuery(".processor-" + type);
-					
+
 					for(var c = 0; c<type_instance_confs.length; c++){
 						if(wrapper_id === type_instance_confs[c].id){
 							continue;
@@ -1393,10 +1387,10 @@ rebind_field_bindings = function(){
 						}
 
 					}
-				}else{					
+				}else{
 					type_instances.push('__system__');
 				}
-				
+
 				var types = [];
 				if(field.data('type')){
 					types = field.data('type').split(',');
@@ -1407,7 +1401,7 @@ rebind_field_bindings = function(){
 
 				for(var t = 0; t<types.length; t++){
 					if( system_values[type].tags && system_values[type].tags[types[t]]){
-						
+
 						for( var instance = 0; instance < type_instances.length; instance++){
 
 							// check index order is valid
@@ -1423,21 +1417,21 @@ rebind_field_bindings = function(){
 							var optgroup = jQuery('<optgroup label="' + system_values[type].type + ( type_instances[instance] !== '__system__' ? ' ' + ( jQuery('li.'+type_instances[instance]).find('.processor-line-number').html() ) : '' ) + '"' + valid + '>');
 
 							for( var i = 0; i < system_values[type].tags[types[t]].length; i++){
-								
-								var bind_value = system_values[type].tags[types[t]][i];	
+
+								var bind_value = system_values[type].tags[types[t]][i];
 								// update labels on multiple
 								if(type_instances[instance] !== '__system__'){
 									bind_value = bind_value.replace(type ,type_instances[instance]);
 								}
-								
+
 								optgroup.append('<option value="\{' + bind_value + '\}"' + ( current === '{'+bind_value+'}' ? 'selected="selected"' : '' ) + valid + '>' + system_values[type].tags[types[t]][i] + '</option>');
 
 								count += 1;
 							}
 
 							if(optgroup.children().length){
-								optgroup.appendTo(field);	
-							}							
+								optgroup.appendTo(field);
+							}
 
 						}
 
@@ -1454,10 +1448,10 @@ rebind_field_bindings = function(){
 			}else{
 				field.prop('disabled', false);
 			}
-			
+
 			if(!field.hasClass('required') && typeof no_options === 'undefined'){
 				field.prepend('<option value=""></option>');
-			}		
+			}
 			field.val(current);
 		}
 
@@ -1469,7 +1463,7 @@ rebind_field_bindings = function(){
 };
 
 function setup_field_type(obj){
-	
+
 	return {'id' : obj.trigger.prop('id')};
 }
 
@@ -1482,13 +1476,13 @@ function check_required_bindings(el){
 		field_elements = jQuery('.layout-form-field'),
 		nav_elements = jQuery('.caldera-processor-nav'),
 		all_clear = true;
-	
+
 	if(el){
 		fields = jQuery(el);
 	}else{
 		fields = jQuery('.caldera-config-field .required');
 	}
-	
+
 	fields.removeClass('has-error');
 	field_elements.removeClass('has-error');
 	nav_elements.removeClass('has-error');
@@ -1496,7 +1490,7 @@ function check_required_bindings(el){
 	jQuery('.error-tag').remove();
 	//reset list 
 	required_errors = {};
-	
+
 	fields.each(function(k,v){
 		var field = jQuery(v),
 			panel = field.closest('.caldera-config-editor-panel');
@@ -1572,15 +1566,15 @@ function check_required_bindings(el){
 						all_clear = false;
 						break;
 					}
-				};				
+				};
 			}
 		}
 	});
-	
+
 	for(var t in required_errors){
 		jQuery('.caldera-forms-options-form').find('a[href="#' + t + '"]').append('<span class="error-tag">' + required_errors[t] + '</span>');
 	}
-	
+
 	jQuery('.caldera-conditional-field-set').trigger('change');
 
 	return all_clear;
@@ -1625,12 +1619,12 @@ jQuery(document).ready(function($) {
 			row_index = 0;
 
 		grid_panels.each(function(pk,pv){
-			
+
 			var panel= $(pv),
 				capt = panel.find('.layout-structure'),
 				rows = panel.find('.row'),
 				struct = [];
-			
+
 			rows.each(function(k,v){
 				var row = $(v),
 					cols = row.children().not('.column-merge'),
@@ -1643,7 +1637,7 @@ jQuery(document).ready(function($) {
 					if(fields.length){
 						fields.each(function(x,f){
 							var field = $(f);
-							field.val( row_index + ':' + (p+1) ).removeAttr('disabled');						
+							field.val( row_index + ':' + (p+1) ).removeAttr('disabled');
 						});
 					}
 					// set name
@@ -1663,7 +1657,7 @@ jQuery(document).ready(function($) {
 			field_set;
 
 		newfield.prop('id', '').prop('title', '');
-		
+
 		// field conf template
 		new_conf_templ = Handlebars.compile( $('#caldera_field_config_wrapper_templ').html() );
 
@@ -1694,7 +1688,7 @@ jQuery(document).ready(function($) {
 		newfield.find('.icon-edit').trigger('click');
 
 
-		$('#' + name + '_lable').focus().select();		
+		$('#' + name + '_lable').focus().select();
 		baldrickTriggers();
 		$(document).trigger('field.added');
 		if( field_default ){
@@ -1703,7 +1697,7 @@ jQuery(document).ready(function($) {
 			$('#' + name).trigger('field.drop');
 		}
 		rebuild_field_binding();
-		
+
 	}
 
 	function buildSortables(){
@@ -1722,7 +1716,7 @@ jQuery(document).ready(function($) {
 			stop: function(){
 				buildLayoutString();
 			}
-		});		
+		});
 		$( ".layout-column" ).sortable({
 			connectWith: 	".layout-column",
 			appendTo: 		"#grid-pages-panel",
@@ -1740,7 +1734,7 @@ jQuery(document).ready(function($) {
 				buildLayoutString();
 			}
 		});
-		
+
 		// Draggables
 		$( "h3 .layout-new-form-field" ).draggable({
 			helper: "clone",
@@ -1749,7 +1743,7 @@ jQuery(document).ready(function($) {
 		$('.page-toggle.button').droppable({
 			accept: ".layout-form-field",
 			over: function(e, ui){
-				$(this).trigger('click');				
+				$(this).trigger('click');
 				$( ".layout-column" ).sortable("refresh");
 			}
 		});
@@ -1767,8 +1761,8 @@ jQuery(document).ready(function($) {
 			}
 		});
 
-		
-		buildLayoutString();		
+
+		buildLayoutString();
 	};
 	buildSortables();
 
@@ -1776,7 +1770,7 @@ jQuery(document).ready(function($) {
 		//newfield-tool
 		var target 		= $(this).closest('.column-container'),
 			newfield 	= $('#newfield-tool').clone().css('display', '');
-		
+
 		insert_new_field(newfield, target);
 
 	});
@@ -1784,11 +1778,11 @@ jQuery(document).ready(function($) {
 	$('#grid-pages-panel').on('click','.column-split', function(e){
 		var column = $(this).parent().parent(),
 			size = column.attr('class').split('-'),
-			newcol = $('<div>').insertAfter(column);			
+			newcol = $('<div>').insertAfter(column);
 
 		var left = Math.ceil(size[2]/2),
 			right = Math.floor(size[2]/2);
-		
+
 
 		size[2] = left;
 		column.attr('class', size.join('-'));
@@ -1796,16 +1790,16 @@ jQuery(document).ready(function($) {
 		newcol.addClass(size.join('-')).append('<div class="layout-column column-container">');
 		$(this).remove();
 		buildSortables();
-		
+
 		jQuery('.column-tools').remove();
-		jQuery('.column-merge').remove();		
-		
+		jQuery('.column-merge').remove();
+
 	});
 	$( "#grid-pages-panel" ).on('click', '.column-remove', function(e){
 		var row = $(this).closest('.row'),
 			fields = row.find('.layout-form-field'),
 			wrap = row.closest('.layout-grid-panel');
-		
+
 		//find fields
 		if(fields.length){
 			if(!confirm($('#row-remove-fields-message').text())){
@@ -1817,7 +1811,7 @@ jQuery(document).ready(function($) {
 				// remove options 
 				$('option[value="' + field_id + '"]').remove();
 				$('[data-bind="' + field_id + '"]').remove();
-				
+
 				// remove field
 				delete current_form_fields[field_id];
 
@@ -1847,9 +1841,9 @@ jQuery(document).ready(function($) {
 
 		jQuery('.column-tools').remove();
 		jQuery('.column-merge').remove();
-		
+
 	});
-	
+
 	$( ".caldera-config-editor-main-panel" ).on('click', '.caldera-add-row', function(e){
 		e.preventDefault();
 		var wrap = $('.page-active');
@@ -1864,31 +1858,31 @@ jQuery(document).ready(function($) {
 		buildSortables();
 		buildLayoutString();
 	});
-	
+
 	$( "#grid-pages-panel" ).on('click', '.column-join', function(e){
-		
+
 		var column = $(this).parent().parent().parent();
-		
+
 		var	prev 		= column.prev(),
 			left 		= prev.attr('class').split('-'),
 			right 		= column.attr('class').split('-');
 		left[2]		= parseFloat(left[2])+parseFloat(right[2]);
-		
-		
+
+
 		column.find('.layout-column').contents().appendTo(prev.find('.layout-column'));
 		prev.attr('class', left.join('-'));
 		column.remove();
 		buildLayoutString();
 		jQuery('.column-tools').remove();
-		jQuery('.column-merge').remove();		
-	});	
-	
+		jQuery('.column-merge').remove();
+	});
+
 	$('#grid-pages-panel').on('mouseenter','.row', function(e){
 		var setrow = jQuery(this);
 		jQuery('.column-tools,.column-merge').remove();
 		setrow.children().children().first().append('<div class="column-remove column-tools"><i class="icon-remove"></i></div>');
 		setrow.children().children().last().append('<div class="column-sort column-tools" style="text-align:right;"><i class="dashicons dashicons-menu drag-handle sort-handle"></i></div>');
-		
+
 		setrow.children().children().not(':first').prepend('<div class="column-merge"><div class="column-join column-tools"><i class="icon-join"></i></div></div>');
 		var single = setrow.parent().parent().parent().width()/12-1;
 		setrow.children().children().each(function(k,v){
@@ -1909,7 +1903,7 @@ jQuery(document).ready(function($) {
 			drag: function(e, ui){
 				$(this).addClass('dragging');
 				$('.column-tools').remove();
-				$('.column-split').remove();				
+				$('.column-split').remove();
 				var column = $(this).parent().parent(),
 					dragged = ui.helper,
 					direction = (ui.originalPosition.left > dragged.position().left) ? 'left' : 'right',
@@ -1917,53 +1911,53 @@ jQuery(document).ready(function($) {
 					prev = column.prev(),
 					single = Math.round(column.parent().width()/12-10),
 					distance = Math.abs(ui.originalPosition.left - dragged.position().left);
-					
-					column.parent().addClass('sizing');
-				
-					if(distance >= single){
-						var left 		= prev.attr('class').split('-'),
-							right 		= column.attr('class').split('-');
 
-						left[2]		= parseFloat(left[2]);
-						right[2]	= parseFloat(right[2]);
+				column.parent().addClass('sizing');
 
-						if(direction === 'left'){
-							left[2]--;
-							right[2]++;
-							if(left[2] > 0 && left[2] < (left[2]+right[2]) ){
-								prev.attr('class', left.join('-'));
-								column.attr('class', right.join('-'));
-								ui.originalPosition.left = dragged.position().left;
-							}else{
-								$(this).draggable( "option", "disabled", true );
-							}
+				if(distance >= single){
+					var left 		= prev.attr('class').split('-'),
+						right 		= column.attr('class').split('-');
+
+					left[2]		= parseFloat(left[2]);
+					right[2]	= parseFloat(right[2]);
+
+					if(direction === 'left'){
+						left[2]--;
+						right[2]++;
+						if(left[2] > 0 && left[2] < (left[2]+right[2]) ){
+							prev.attr('class', left.join('-'));
+							column.attr('class', right.join('-'));
+							ui.originalPosition.left = dragged.position().left;
 						}else{
-							left[2]++;
-							right[2]--;
-							if(right[2] > 0 && right[2] < (right[2]+right[2]) ){
-								prev.attr('class', left.join('-'));
-								column.attr('class', right.join('-'));
-								ui.originalPosition.left = dragged.position().left;
-							}else{
-								$(this).draggable( "option", "disabled", true );
-							}
-
+							$(this).draggable( "option", "disabled", true );
 						}
-						buildLayoutString();
-					}
+					}else{
+						left[2]++;
+						right[2]--;
+						if(right[2] > 0 && right[2] < (right[2]+right[2]) ){
+							prev.attr('class', left.join('-'));
+							column.attr('class', right.join('-'));
+							ui.originalPosition.left = dragged.position().left;
+						}else{
+							$(this).draggable( "option", "disabled", true );
+						}
 
-				
+					}
+					buildLayoutString();
+				}
+
+
 			},
 			stop: function(){
 				$(this).removeClass('dragging').parent().parent().parent().removeClass('sizing');
 			}
-		});		
+		});
 	});
 	$('#grid-pages-panel').on('mouseleave','.row', function(e){
 		jQuery('.column-tools').remove();
 		jQuery('.column-merge').remove();
 	});
-	
+
 	$('#grid-pages-panel').on('click', '.layout-form-field .icon-remove', function(){
 		var clicked = $(this),
 			panel = clicked.parent(),
@@ -1975,7 +1969,7 @@ jQuery(document).ready(function($) {
 		config.slideUp(100, function(){
 			$(this).remove();
 		});
-	});	
+	});
 	$( document ).on('click', '.layout-form-field .dashicons-admin-page', function(){
 		var clicked = $( this ),
 			wrap = clicked.parent(),
@@ -2003,15 +1997,15 @@ jQuery(document).ready(function($) {
 			panel 	= clicked.parent(),
 			type 	= $('#' + panel.data('config') +'_type').val();
 
-			$('.caldera-editor-field-config-wrapper').hide();
+		$('.caldera-editor-field-config-wrapper').hide();
 
-			if(panel.hasClass('field-edit-open')){
-				panel.removeClass('field-edit-open');
-			}else{
-				$('.layout-form-field').removeClass('field-edit-open');
-				panel.addClass('field-edit-open');
-				$('#' + panel.data('config')).show();
-			}
+		if(panel.hasClass('field-edit-open')){
+			panel.removeClass('field-edit-open');
+		}else{
+			$('.layout-form-field').removeClass('field-edit-open');
+			panel.addClass('field-edit-open');
+			$('#' + panel.data('config')).show();
+		}
 
 		$(document).trigger('show.' + panel.data('config'));
 		$(document).trigger('show.fieldedit');
@@ -2021,18 +2015,18 @@ jQuery(document).ready(function($) {
 		}
 	});
 	$('body').on('click', '.layout-modal-edit-closer,.layout-modal-save-action', function(e){
-		
+
 		e.preventDefault();
-		
+
 		var clicked = $(this),
 			panel = $('.layout-form-field.edit-open'),
 			modal = clicked.closest('.layout-modal-container');
-			settings = modal.find('.settings-panel').first();
+		settings = modal.find('.settings-panel').first();
 
-			$('.edit-open').removeClass('edit-open');
-			settings.appendTo(panel.find('.settings-wrapper')).hide();
+		$('.edit-open').removeClass('edit-open');
+		settings.appendTo(panel.find('.settings-wrapper')).hide();
 
-			modal.hide();
+		modal.hide();
 
 	});
 
@@ -2048,7 +2042,7 @@ jQuery(document).ready(function($) {
 	$('.layout-editor-body').on('click', '.use-pod-container', function(){
 		var clicked = $(this),
 			podselect = clicked.prev(),
-			pod	= podselect.val(),		
+			pod	= podselect.val(),
 			container = '';
 
 		if(!pod.length){
@@ -2074,13 +2068,13 @@ jQuery(document).ready(function($) {
 				fields = '',
 				container = clicked.closest('.settings-panel').data('container');
 
-				
+
 
 			for(var i in res){
 				fields += '<option value="' + res[i] + '">' + res[i] + '</option>';
 			}
 			template = template.replace(/{{fields}}/g, fields).replace(/{{container_id}}/g, container);
-			
+
 			clicked.parent().append( template );
 
 		});
@@ -2160,7 +2154,7 @@ jQuery(document).ready(function($) {
 				if( parts.length > 1 ){
 					val = parts[0];
 					label = parts[1];
-					has_vals = true;				
+					has_vals = true;
 				}
 				config.option["opt" + parseInt( ( Math.random() + i ) * 0x100000 )] = {
 					value	:	val,
@@ -2181,7 +2175,7 @@ jQuery(document).ready(function($) {
 			config.option[key]	=	{
 				value	:	'',
 				label	:	'',
-				default :	false				
+				default :	false
 			};
 		}
 		$('.preset_options').val('');
@@ -2212,7 +2206,7 @@ jQuery(document).ready(function($) {
 				}
 			}
 			batch.val( preset_options[ preset ].data );
-		}	
+		}
 	});
 	// remove an option row
 	$('.caldera-editor-body').on('click', '.toggle-remove-option', function(e){
@@ -2254,17 +2248,17 @@ jQuery(document).ready(function($) {
 	});
 
 
-	$( document ).on('change focusout', '.toggle_value_field', function(){		
+	$( document ).on('change focusout', '.toggle_value_field', function(){
 		$( document ).trigger('show.fieldedit');
 	});
-	
+
 	$( document ).on('show.fieldedit option.remove', function(e){
 		$('.toggle_value_field.has-error').removeClass('has-error');
 		var field = $( '#' + $('.layout-form-field.field-edit-open').data('config') ),
 			options = field.find('.toggle_value_field'),
 			notice = field.find('.notice'),
 			count = 0;
-			
+
 		for( var i = 0; i < options.length; i++ ){
 			var option = options[ i ].value,
 				repeats = 0;
@@ -2315,11 +2309,11 @@ jQuery(document).ready(function($) {
 			}
 		}
 	}
-	
+
 	cf_clear_puler = function(){
 		if( is_pulsating ){
 			clearTimeout( is_pulsating );
-			$(document).off('mouseover', '.layout-new-form-field, .column-fieldinsert', cf_clear_puler);			
+			$(document).off('mouseover', '.layout-new-form-field, .column-fieldinsert', cf_clear_puler);
 		}
 		$('.layout-new-form-field, .column-fieldinsert').fadeIn();
 	};
@@ -2354,10 +2348,10 @@ jQuery(document).ready(function($) {
 	});
 
 	$('body').on('click', '.add-new-processor', function(e){
-		
+
 		var clicked = $(this),
 			new_conf_templ = Handlebars.compile( $('#processor-wrapper-tmpl').html() );
-			wrap = $('.active-processors-list'),
+		wrap = $('.active-processors-list'),
 			process_conf = $('.caldera-editor-processor-config'),
 			processid = Math.round(Math.random() * 100000000);
 
@@ -2384,7 +2378,7 @@ jQuery(document).ready(function($) {
 
 	// remove processor	
 	$('body').on('click', '.delete-processor', function(e){
-		
+
 		var clicked = $(this),
 			parent = clicked.closest('.caldera-editor-processor-config-wrapper'),
 			type = parent.data('type');
@@ -2423,19 +2417,19 @@ jQuery(document).ready(function($) {
 		rebuild_field_binding();
 
 	});
- 	$( document ).on('click', '#cf-shortcode-preview', function(){
- 		$(this).focus().select();
- 	} );
- 	$( document ).on('change', '.cf-email-preview-toggle', function(){
- 		var clicked = $(this),
- 			preview_button = $('.caldera-header-email-preview-button');
- 		if( clicked.is(':checked') ){
- 			preview_button.show().attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' );
- 		}else{
- 			preview_button.hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
- 		}
- 		
- 	} );
+	$( document ).on('click', '#cf-shortcode-preview', function(){
+		$(this).focus().select();
+	} );
+	$( document ).on('change', '.cf-email-preview-toggle', function(){
+		var clicked = $(this),
+			preview_button = $('.caldera-header-email-preview-button');
+		if( clicked.is(':checked') ){
+			preview_button.show().attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' );
+		}else{
+			preview_button.hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
+		}
+
+	} );
 
 
 	// build processor type config
@@ -2449,34 +2443,34 @@ jQuery(document).ready(function($) {
 			config			= parent.find('.processor_config_string').val(),
 			current_type	= select.data('type');
 
-			// Be sure to load the processors preset when switching back to the initial processor type.
-			if(config.length && current_type === select.val() ){
-				config = JSON.parse(config);
-			}else{
-				// default config
-				config = processor_defaults[select.val() + '_cfg'];
-			}
+		// Be sure to load the processors preset when switching back to the initial processor type.
+		if(config.length && current_type === select.val() ){
+			config = JSON.parse(config);
+		}else{
+			// default config
+			config = processor_defaults[select.val() + '_cfg'];
+		}
 
-			// build template
-			if(!config){
-				config = {};
-			}
+		// build template
+		if(!config){
+			config = {};
+		}
 
-			config._id = parent.prop('id');
-			config._name = 'config[processors][' + parent.prop('id') + '][config]';
+		config._id = parent.prop('id');
+		config._name = 'config[processors][' + parent.prop('id') + '][config]';
 
 
-			
 
-			template = $('<div>').html( template( config ) );
 
-			// send to target
-			target.html( template.html() );	
+		template = $('<div>').html( template( config ) );
 
-			// check for init function
-			if( typeof window[select.val() + '_init'] === 'function' ){
-				window[select.val() + '_init'](parent.prop('id'), target);
-			}
+		// send to target
+		target.html( template.html() );
+
+		// check for init function
+		if( typeof window[select.val() + '_init'] === 'function' ){
+			window[select.val() + '_init'](parent.prop('id'), target);
+		}
 
 		// check if conditions are allowed			
 		if(parent.find('.no-conditions').length){
@@ -2493,7 +2487,7 @@ jQuery(document).ready(function($) {
 			request     : ajaxurl,
 			method      : 'POST',
 			before		: function(el){
-				
+
 				var tr = $(el);
 
 				if( tr.data('addNode') && !tr.data('request') ){
@@ -2546,9 +2540,9 @@ Handlebars.registerHelper('_field', function(args) {
 		}
 	}
 	for(var fid in current_form_fields){
-		
+
 		var sel = '';
-		
+
 		if(args.hash.type){
 			if(current_form_fields[fid].type !== args.hash.type){
 				continue;
@@ -2560,7 +2554,7 @@ Handlebars.registerHelper('_field', function(args) {
 				sel = ' selected="selected"';
 			}
 		}
-		
+
 
 		out += '<option value="' + fid + '"' + sel + '>' + current_form_fields[fid].label + ' [' + current_form_fields[fid].slug + ']</option>';
 	};
