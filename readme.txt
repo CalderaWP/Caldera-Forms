@@ -209,7 +209,7 @@ In addition, Connected Forms tracks partial submissions between each step in the
 4. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
-= Caldera Forms 1.4.3 ( Beta 1 September 27, 2016, Beta 2, September 29th, 2016  ) =
+= Caldera Forms 1.4.3 ( Beta: September27, 2016, RC-1: September 30th, 2016  ) =
 * FIXED: Bug where magic tag button was not working in Chrome. There is now no magic tag button, nor is it needed.
 * IMPROVED: Email notification tab. Better descriptions, more accessible HTML form markup.
 * FIXED: Inline JavaScript for some form fields types that didn't work when jQuery was loaded in footer.
