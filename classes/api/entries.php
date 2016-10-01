@@ -1,10 +1,13 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: josh
- * Date: 10/1/16
- * Time: 4:41 PM
+ * CRUD via REST API for entries
+ *
+ * @package Caldera_Forms
+ * @author    Josh Pollock <Josh@CalderaWP.com>
+ * @license   GPL-2.0+
+ * @link
+ * @copyright 2016 CalderaWP LLC
  */
 class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
 
@@ -145,7 +148,7 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
 			$response_data[ $id ][ 'user' ][ 'name' ] = $user->display_name;
 			if( current_user_can( 'edit_users' ) ){
 				$response_data[ $id ][ 'user' ][ 'email' ] = $user->user_email;
-				$response_data[ $id ][ 'user' ][ 'id' ] = $entry[ 'entry' ][ 'user_id' ];
+				$response_data[ $id ][ 'user' ][ 'id' ] = $entry->get_entry()->user_id;
 			}
 		}
 
@@ -176,13 +179,54 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
 		return $response_data;
 	}
 
-
+	/**
+	 * Permissions for entry read
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param WP_REST_Request $request
+	 *
+	 * @return bool
+	 */
 	public function get_items_permissions_check( WP_REST_Request $request ){
-		return true;
+		$allowed = current_user_can( Caldera_Forms::get_manage_cap( 'entry-view' ), $request[ 'form_id' ] );
+
+		/**
+		 * Filter permissions for viewing entries via Caldera Forms REST API
+		 *
+		 * @since 1.5.0
+		 *
+		 * @param bool $allowed Is request authorized?
+		 * @param string $form_id The form ID
+		 * @param WP_REST_Request $request The current request
+		 */
+		return apply_filters( 'caldera_forms_api_allow_entry_view', $allowed, $request[ 'form_id' ], $request );
+
 	}
 
+	/**
+	 * Permissions for entry create/update/delete
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param WP_REST_Request $request
+	 *
+	 * @return bool
+	 */
 	public function create_item_permissions_check( WP_REST_Request $request ){
-		return true;
+		$allowed = current_user_can( Caldera_Forms::get_manage_cap( 'entry-edit' ), $request[ 'form_id' ] );
+
+		/**
+		 * Filter permissions for creating, updating or deleting entries via Caldera Forms REST API
+		 *
+		 * @since 1.5.0
+		 *
+		 * @param bool $allowed Is request authorized?
+		 * @param string $form_id The form ID
+		 * @param WP_REST_Request $request The current request
+		 */
+		return apply_filters( 'caldera_forms_api_allow_entry_edit', $allowed, $request[ 'form_id' ], $request );
+
 	}
 
 	/**
@@ -242,6 +286,15 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
 		return 'entries';
 	}
 
+	/**
+	 * Validate status argument
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param $value
+	 *
+	 * @return bool
+	 */
 	public function validate_status( $value ){
 		return in_array( $value, array(
 			'active',
