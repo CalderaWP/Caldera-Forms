@@ -128,7 +128,7 @@ class Caldera_Forms {
 
 		}
 
-		add_action( 'rest_apit_init', array( __CLASS__, 'init_rest_api' ) );
+		add_action( 'rest_api_init', array( __CLASS__, 'init_rest_api' ) );
 		
 
 		/**
@@ -5402,9 +5402,17 @@ class Caldera_Forms {
 	 *
 	 * @uses "rest_api_init" action
 	 */
-	public function init_rest_api(){
+	public static function init_rest_api(){
 		self::$api = new Caldera_Forms_API_Load( Caldera_Forms_API_Util::api_namespace() );
+		self::$api->add_route( new Caldera_Forms_API_Entries() );
+		self::$api->init_routes();
 
+		/**
+		 * Runs after Caldera Forms REST API is loaded
+		 *
+		 * @since 1.5.0
+		 */
+		do_action( 'caldera_forms_rest_api_init' );
 
 	}
 

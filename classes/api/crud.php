@@ -17,22 +17,13 @@ abstract class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 	 * @since 1.5.0
 	 */
 	public function add_routes( $namespace ) {
-		$base = $this->route_base();
-		register_rest_route( $namespace, '/' . $base, array(
+
+		register_rest_route( $namespace, $this->non_id_endpoint_url(), array(
 				array(
 					'methods'         => \WP_REST_Server::READABLE,
 					'callback'        => array( $this, 'get_items' ),
 					'permission_callback' => array( $this, 'get_items_permissions_check' ),
-					'args'            => array(
-						'page' => array(
-							'default' => 1,
-							'sanitize_callback'  => 'absint',
-						),
-						'limit' => array(
-							'default' => 10,
-							'sanitize_callback'  => 'absint',
-						)
-					),
+					'args'            => $this->get_items_args(),
 				),
 				array(
 					'methods'         => \WP_REST_Server::CREATABLE,
@@ -42,7 +33,7 @@ abstract class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 				),
 			)
 		);
-		register_rest_route( $namespace, '/' . $base . '/(?P<id>[\w-]+)', array(
+		register_rest_route( $namespace, $this->id_endpoint_url(), array(
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_item' ),
@@ -233,10 +224,58 @@ abstract class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 	 *
 	 * @since 1.5.0
 	 *
-	 * Probably better to ovveride in subclass with a hardcoded string.
+	 * MUST  ovveride in subclass with a hardcoded string.
 	 */
 	protected function route_base() {
-		return substr( strrchr( get_class( $this ), '\\' ), 1 );
+		//must ovveride, should be abstract but PHP5.2
+		_doing_it_wrong( __FUNCTION__, '', '1.5.0' );
+	}
+
+	/**
+	 * Form the endpoint URL that deos not include item ID
+	 *
+	 * Used by for get_items() and create_items()
+	 *
+	 * @since 1.5.0
+	 *
+	 * @return string
+	 */
+	protected function non_id_endpoint_url() {
+		return '/' . $this->route_base();
+
+	}
+
+	/**
+	 * Form the endpoint URL that includes item ID
+	 *
+	 * Used by for get_item() and update_time() and delete_item()
+	 *
+	 * @since 1.5.0
+	 *
+	 * @return string
+	 */
+	public function id_endpoint_url() {
+		return '/' . $this->route_base() . '/(?P<id>[\w-]+)';
+	}
+
+	/**
+	 * @return array
+	 */
+	public function get_items_args() {
+		return array(
+			'page'     => array(
+				'default'           => 1,
+				'sanitize_callback' => 'absint',
+			),
+			'per_page' => array(
+				'default'           => 20,
+				'sanitize_callback' => 'absint',
+			),
+			'limit'    => array(
+				'default'           => 10,
+				'sanitize_callback' => 'absint',
+			)
+		);
 	}
 
 }

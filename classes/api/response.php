@@ -24,5 +24,13 @@ class Caldera_Forms_API_Response extends \WP_REST_Response {
 
 	}
 
+	public function set_total_header( $total ){
+		$this->header( 'X-CF-API-TOTAL', (int) $total );
+	}
+
+	public function set_total_pages_header( $total_pages ){
+		$this->header( 'X-CF-API-TOTAL-PAGES', (int) $total_pages );
+	}
+
 
 }
