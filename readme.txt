@@ -1,9 +1,9 @@
 === Caldera Forms - Drag and drop responsive form builder ===
 Contributors: Desertsnowman, Shelob9
-Tags: forms, formbuilder, form builder, contact form, form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, contact, email, auto-responder, awber, converkit, builder, contact forms, search, ab testing, a/b testing, split testing
+Tags: forms, formbuilder, form builder, contact form, form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, contact, email, auto-responder, aweber, converkit, builder, contact forms, search, ab testing, a/b testing, split testing
 Requires at least: 4.3
-Tested up to: 4.6
-Stable tag: 1.4.1
+Tested up to: 4.6.1
+Stable tag: 1.4.2
 License: GPLv2
 
 A different kind of WordPress form builder.
@@ -209,6 +209,30 @@ In addition, Connected Forms tracks partial submissions between each step in the
 4. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
+= Caldera Forms 1.4.3 ( Beta: September27, 2016, RC-1: September 30th, 2016  ) =
+* FIXED: Bug where magic tag button was not working in Chrome. There is now no magic tag button, nor is it needed.
+* IMPROVED: Email notification tab. Better descriptions, more accessible HTML form markup.
+* FIXED: Inline JavaScript for some form fields types that didn't work when jQuery was loaded in footer.
+* IMPROVED: Loading of color picker in shortcode form preview. Hi Matt.
+* FIXED: Date picker from field was hidden by modal when form was loaded in a modal. It is now moved in from of the modal form so it is visible when loading forms in modals.
+* FIXED: Color picker was not working when form was loaded in a modal. Color pickers now work when form is loaded in a popup.
+* IMPROVED: HTML for modal forms was using a global, not a class property. That's bad, we feel bad, we fixed it. Forms in a popup FTW!
+* FIXED: Bug affecting auto-populating form field options auto-populated using posts.
+* IMPROVED: You used to not be able to use magic tags for placeholder of select form fields. You can now preset select fields in your form using magic tags in the placeholder setting.
+* ADDED: caldera_forms_prerender_edit action that runs before form editor is rendered.
+
+
+= Caldera Forms 1.4.2 ( August 31, 2016 ) =
+* ADDED: caldera_forms_new_form_modal_bottom Runs at the bottom of the new forms modal.
+* FIXED: Bug causing errors when magic tag value was not a string and preg_matching was attempted
+* FIXED: Breadcrumbs title attribute for multi-page forms that was missing.
+* FIXED: Bug causing jQuery error and alignment issue when bringing up magic tag list in form admins
+* FIXED: Bug preventing a field value of 0 from being saved.
+* FIXED: PHP notices caused by viewing entries for forms with no entries
+* FIXED: Possibly type error in calculation field in front-end form view.
+* FIXED: Contact form template used an invalid email in auto-responder
+* FIXED: Auto-responder was not checking for invalid from email settings which was causing emails sent from some forms to fail.
+
 = Caldera Forms 1.4.1 ( July 27, 2016 ) =
 * FIXED: Bug preventing saving of forms with checkbox fields. This is the big bad issue that caused this release.
 * FIXED: caldera_forms_sendgrid_before filter was added without documentation and this really upset Josh, who would have been so mad at David if he had made this mistake.

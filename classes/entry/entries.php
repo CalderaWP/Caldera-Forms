@@ -133,11 +133,14 @@ class Caldera_Forms_Entry_Entries {
 		foreach ( $entry->get_entry()->to_array() as $key => $value ) {
 			$_entry[ '_' . $key ] = $value;
 		}
-		
-		/** @var Caldera_Forms_Entry_Field $_field */
-		foreach ( $entry->get_fields() as $_field ) {
-			$field  = array_merge( $_field->to_array(), $_entry );
-			$data[] = (object) $field;
+
+		$field_values = $entry->get_fields();
+		if ( ! empty( $field_values ) ) {
+			/** @var Caldera_Forms_Entry_Field $_field */
+			foreach ( $field_values as $_field ) {
+				$field  = array_merge( $_field->to_array(), $_entry );
+				$data[] = (object) $field;
+			}
 		}
 
 		return $data;
@@ -210,7 +213,7 @@ class Caldera_Forms_Entry_Entries {
 			$this->totals[ $status ]  = $total;
 			$pages                    = ceil( $total / $this->perpage );
 			$this->entries[ $status ] = array();
-			if ( 1 == $pages ) {
+			if ( 1 >= $pages ) {
 				$this->entries[ $status ] = array( 1 => array() );
 			} else {
 				$this->entries[ $status ] = array_fill( 1, $pages, array() );

@@ -17,9 +17,9 @@ if(!isset($field['config']['type'])){
 <?php echo $wrapper_after; ?>
 <?php ob_start(); ?>
 <script type="text/javascript">
-	jQuery(function($){
+	window.addEventListener("load", function(){
 		function <?php echo $field_id; ?>_stars(){
-			$('#<?php echo $field_id; ?>_stars').raty({
+			jQuery( '#<?php echo $field_id; ?>_stars').raty({
 				starOff	: 'raty-<?php echo $field['config']['type']; ?>-off',
 				starOn : 'raty-<?php echo $field['config']['type']; ?>-on',	
 				target: '#<?php echo $field_id; ?>',
@@ -32,7 +32,7 @@ if(!isset($field['config']['type'])){
 				starColor: '<?php echo $field['config']['color']; ?>',
 				numberMax: 100,
 				click :function(e){
-					$('#<?php echo $field_id; ?>').trigger('change');
+					jQuery( '#<?php echo $field_id; ?>').trigger('change');
 				}
 				<?php if(!empty($field['config']['cancel'])){ echo ",cancel: true"; }; ?>
 				<?php if(!empty($field['config']['single'])){ echo ",single: true"; }; ?>
@@ -40,7 +40,7 @@ if(!isset($field['config']['type'])){
 		}
 
 		<?php echo $field_id; ?>_stars();
-		$( document ).on('cf.add', <?php echo $field_id; ?>_stars );
+		jQuery( document ).on('cf.add', <?php echo $field_id; ?>_stars );
 	});
 </script>
 <?php

@@ -32,10 +32,10 @@ if ( is_array( $field_value ) )  {
 <?php echo $wrapper_after; ?>
 <?php ob_start(); ?>
 <script type="text/javascript">
-	jQuery(function($){
+	window.addEventListener("load", function(){
 
 		function init_rangeslider_<?php echo $field_id; ?>(){
-			var el = $('#<?php echo $field_id; ?>'),
+			var el = jQuery('#<?php echo $field_id; ?>'),
 				rangeslider;
 			<?php if(empty($field['config']['pollyfill'])){ ?>
 			if (el.is(':visible')) {
@@ -48,7 +48,7 @@ if ( is_array( $field_value ) )  {
 							?>
 							value = value.toFixed( <?php echo strlen( $part[1] ); ?> );
 							<?php } ?>
-							$('#<?php echo $field_id; ?>_value').html(value);
+							jQuery('#<?php echo $field_id; ?>_value').html(value);
 						},
 						polyfill: <?php echo $polyfill; ?>
 					});
@@ -62,13 +62,13 @@ if ( is_array( $field_value ) )  {
 			<?php }else{ ?>
 			// pollyfill support
 			el.on('change', function(){
-				$('#<?php echo $field_id; ?>_value').html(this.value);
+				jQuery('#<?php echo $field_id; ?>_value').html(this.value);
 			}).css("width", "100%");
 			<?php } ?>
 		}
 		<?php if(empty($field['config']['pollyfill'])){ ?>
 		// setup tabs
-		$(document).on('cf.pagenav cf.add cf.disable cf.modal', function(){
+		jQuery(document).on('cf.pagenav cf.add cf.disable cf.modal', function(){
 			init_rangeslider_<?php echo $field_id; ?>();
 		});
 		<?php } ?>
