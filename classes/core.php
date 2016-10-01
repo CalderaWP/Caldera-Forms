@@ -60,6 +60,15 @@ class Caldera_Forms {
 	protected static $footer_modals;
 
 	/**
+	 * CF-API v2
+	 *
+	 * @since 1.5.0
+	 *
+	 * @var Caldera_Forms_API_Load
+	 */
+	protected static $api;
+
+	/**
 	 * Initialize the plugin by setting localization, filters, and administration functions.
 	 *
 	 */
@@ -77,15 +86,7 @@ class Caldera_Forms {
 		add_action('caldera_forms_edit_end', array($this, 'calculations_templates') );
 		add_filter('caldera_forms_render_get_field', array( $this, 'auto_populate_options_field' ), 10, 2);
 		add_filter('caldera_forms_render_get_field', array( $this, 'apply_conditional_groups' ), 10, 2);
-		//add_filter('caldera_forms_render_get_field_type-radio', array( $this, 'auto_populate_options_field' ), 10, 2);
-		//add_filter('caldera_forms_render_get_field_type-checkbox', array( $this, 'auto_populate_options_field' ), 10, 2);
-		//add_filter('caldera_forms_render_get_field_type-dropdown', array( $this, 'auto_populate_options_field' ), 10, 2);
-		//add_filter('caldera_forms_render_get_field_type-toggle_switch', array( $this, 'auto_populate_options_field' ), 10, 2);
 		add_filter('caldera_forms_view_field_paragraph', 'wpautop' );
-
-		// magic tags
-		//add_filter('caldera_forms_render_magic_tag', array( $this, 'do_magic_tags'));
-		// mailser
 		add_filter('caldera_forms_get_magic_tags', array( $this, 'set_magic_tags'),1);
 		add_filter('caldera_forms_mailer', array( $this, 'mail_attachment_check'),10, 3);
 
@@ -126,6 +127,8 @@ class Caldera_Forms {
 			new Caldera_Forms_Email_Previews( $id, $view );
 
 		}
+
+		add_action( 'rest_apit_init', array( __CLASS__, 'init_rest_api' ) );
 		
 
 		/**
@@ -5388,6 +5391,19 @@ class Caldera_Forms {
 				$setup->add_hooks();
 			}
 		}
+
+
+	}
+
+	/**
+	 * Load the Caldera Forms REST API
+	 *
+	 * @since 1.5.0
+	 *
+	 * @uses "rest_api_init" action
+	 */
+	public function init_rest_api(){
+		self::$api = new Caldera_Forms_API_Load( Caldera_Forms_API_Util::api_namespace() );
 
 
 	}
