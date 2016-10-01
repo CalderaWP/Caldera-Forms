@@ -9,7 +9,7 @@
  * @link
  * @copyright 2016 CalderaWP LLC
  */
-abstract  class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
+abstract class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 
 	/**
 	 * @inheritdoc
@@ -42,7 +42,7 @@ abstract  class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 				),
 			)
 		);
-		register_rest_route( $namespace, '/' . $base . '/(?P<id>array(\d)+)', array(
+		register_rest_route( $namespace, '/' . $base . '/(?P<id>[\w-]+)', array(
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_item' ),
@@ -99,10 +99,10 @@ abstract  class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param \WP_REST_Request $request Full data about the request.
+	 * @param WP_REST_Request $request Full data about the request.
 	 * @return \WP_Error|bool
 	 */
-	public function get_items_permissions_check( \WP_REST_Request $request ){
+	public function get_items_permissions_check( WP_REST_Request $request ){
 		//must ovveride, should be abstract but PHP5.2
 		_doing_it_wrong( __FUNCTION__, '', '1.5.0' );
 	}
@@ -112,10 +112,10 @@ abstract  class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param \WP_REST_Request $request Full data about the request.
+	 * @param WP_REST_Request $request Full data about the request.
 	 * @return \WP_Error|bool
 	 */
-	public function get_item_permissions_check( \WP_REST_Request $request ) {
+	public function get_item_permissions_check( WP_REST_Request $request ) {
 		return $this->get_items_permissions_check(  $request );
 	}
 
@@ -124,10 +124,10 @@ abstract  class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param \WP_REST_Request $request Full data about the request.
+	 * @param WP_REST_Request $request Full data about the request.
 	 * @return \WP_Error|bool
 	 */
-	public function create_item_permissions_check( \WP_REST_Request $request ){
+	public function create_item_permissions_check( WP_REST_Request $request ){
 		//must ovveride, should be abstract but PHP5.2
 		_doing_it_wrong( __FUNCTION__, '', '1.5.0' );
 	}
@@ -137,10 +137,10 @@ abstract  class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param \WP_REST_Request $request Full data about the request.
+	 * @param WP_REST_Request $request Full data about the request.
 	 * @return \WP_Error|bool
 	 */
-	public function update_item_permissions_check( \WP_REST_Request $request ) {
+	public function update_item_permissions_check( WP_REST_Request $request ) {
 		return $this->create_item_permissions_check( $request );
 	}
 
@@ -149,10 +149,10 @@ abstract  class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param \WP_REST_Request $request Full data about the request.
+	 * @param WP_REST_Request $request Full data about the request.
 	 * @return \WP_Error|bool
 	 */
-	public function delete_item_permissions_check( \WP_REST_Request $request ) {
+	public function delete_item_permissions_check( WP_REST_Request $request ) {
 		return $this->create_item_permissions_check( $request );
 	}
 
@@ -161,10 +161,10 @@ abstract  class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param \WP_REST_Request $request Full data about the request.
+	 * @param WP_REST_Request $request Full data about the request.
 	 * @return \WP_Error|\WP_REST_Response
 	 */
-	public function get_items( \WP_REST_Request $request ) {
+	public function get_items( WP_REST_Request $request ) {
 		return $this->not_yet_response();
 	}
 
@@ -173,10 +173,10 @@ abstract  class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param \WP_REST_Request $request Full data about the request.
+	 * @param WP_REST_Request $request Full data about the request.
 	 * @return \WP_Error|\WP_REST_Response
 	 */
-	public function get_item( \WP_REST_Request $request ) {
+	public function get_item( WP_REST_Request $request ) {
 		return $this->not_yet_response();
 	}
 
@@ -185,10 +185,10 @@ abstract  class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param \WP_REST_Request $request Full data about the request.
+	 * @param WP_REST_Request $request Full data about the request.
 	 * @return Caldera_Forms_API_Response|Caldera_Forms_API_Error
 	 */
-	public function create_item( \WP_REST_Request $request ) {
+	public function create_item( WP_REST_Request $request ) {
 		return $this->not_yet_response();
 	}
 
@@ -197,10 +197,10 @@ abstract  class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param \WP_REST_Request $request Full data about the request.
+	 * @param WP_REST_Request $request Full data about the request.
 	 * @return Caldera_Forms_API_Response|Caldera_Forms_API_Error
 	 */
-	public function update_item( \WP_REST_Request $request ) {
+	public function update_item( WP_REST_Request $request ) {
 		return $this->not_yet_response();
 	}
 
@@ -209,10 +209,10 @@ abstract  class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param \WP_REST_Request $request Full data about the request.
+	 * @param WP_REST_Request $request Full data about the request.
 	 * @return Caldera_Forms_API_Response|Caldera_Forms_API_Error
 	 */
-	public function delete_item( \WP_REST_Request $request ) {
+	public function delete_item( WP_REST_Request $request ) {
 		return $this->not_yet_response();
 	}
 
