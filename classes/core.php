@@ -946,6 +946,12 @@ class Caldera_Forms {
 				"magic_tags"    =>  array(
 					'increment_value'
 				)
+			),
+			'conditional_recipient' => array(
+				'name'				=>	__('Conditional Mailer Recipient', 'caldera-forms'),
+				'description'		=>	__( 'Change email notification recipient with conditional logic', 'caldera-forms' ),
+				'post_processor'	=>	array( 'Caldera_Forms_Processor_Conditional_Recipient', 'post_processor' ),
+				'template'			=>	CFCORE_PATH . 'processors/conditional_recipient/config.php',
 			)
 		);
 		// akismet 
