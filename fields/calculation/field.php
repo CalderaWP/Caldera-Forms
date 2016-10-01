@@ -75,7 +75,7 @@ foreach($form['fields'] as $fid=>$cfg){
 	if(false !== strpos($formula, $fid)){
 		//dump($cfg,0);
 		$formula = str_replace($fid, $fid, $formula);
-		$binds_vars[] = $fid." = parseFloat( $('[data-field=\"".$fid."\"]').is(':checkbox') ? checked_total_" . $field_base_id. "($('[data-field=\"".$fid."\"]:checked')) : $('[data-field=\"".$fid."\"]').is(':radio') ? $('[data-field=\"".$fid."\"]:checked').val() : $('[data-field=\"".$fid."\"]').val() ) || 0 ";
+		$binds_vars[] = $fid." = parseFloat( jQuery('[data-field=\"".$fid."\"]').is(':checkbox') ? checked_total_" . $field_base_id. "(jQuery('[data-field=\"".$fid."\"]:checked')) : jQuery('[data-field=\"".$fid."\"]').is(':radio') ? jQuery('[data-field=\"".$fid."\"]:checked').val() : jQuery('[data-field=\"".$fid."\"]').val() ) || 0 ";
 
 		$binds[] = "[data-field=\"".$fid."\"]";
 		// include a conditional wrapper
@@ -96,7 +96,7 @@ if(!empty($binds)){
 			var sum = 0;
 			
 			items.each(function(k,v){
-				var val = $(v).val();
+				var val = jQuery(v).val();
 				sum += parseFloat( val );
 			});
 			return sum;
