@@ -15,6 +15,6 @@ Caldera-Forms
 
 ### Contributing/ Using This Repo, Etc.
 * The default branch is "master" that should be the same as WordPress.org
-* The current version of Caldera Forms is 1.4.0. We are currently developing 1.4.1 and 1.5.0.
+* The current version of Caldera Forms is 1.4.1. We are currently developing 1.4.2 and 1.5.0.
 * Development for version 1.4 point releases uses "1.4.x" branch. Please submit bug fixes pull requests again 1.4.x branch.
 * Development for version 1.5 uses "1.5.x" branch. Please submit new feature pull requests against 1.5.x branch.

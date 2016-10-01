@@ -64,7 +64,9 @@ class Caldera_Forms_Autoloader {
 				$file = CFCORE_PATH . 'classes/entry.php';
 			} elseif ( 'Caldera_Forms_Save_Final' == $class ){
 				$file = CFCORE_PATH . 'classes/save.php';
-			} else {
+			} elseif( 'Caldera_Forms_Admin' == $class ){
+				$file = CFCORE_PATH . 'classes/admin.php';
+			}else {
 				$file = $dir . self::get_base( $class, $root );
 			}
 

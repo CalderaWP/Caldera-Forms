@@ -75,7 +75,7 @@ foreach($form['fields'] as $fid=>$cfg){
 	if(false !== strpos($formula, $fid)){
 		//dump($cfg,0);
 		$formula = str_replace($fid, $fid, $formula);
-		$binds_vars[] = $fid." = parseFloat( $('[data-field=\"".$fid."\"]').is(':checkbox') ? checked_total_" . $field_base_id. "($('[data-field=\"".$fid."\"]:checked')) : $('[data-field=\"".$fid."\"]').is(':radio') ? $('[data-field=\"".$fid."\"]:checked').val() : $('[data-field=\"".$fid."\"]').val() ) || 0 ";
+		$binds_vars[] = $fid." = parseFloat( jQuery('[data-field=\"".$fid."\"]').is(':checkbox') ? checked_total_" . $field_base_id. "(jQuery('[data-field=\"".$fid."\"]:checked')) : jQuery('[data-field=\"".$fid."\"]').is(':radio') ? jQuery('[data-field=\"".$fid."\"]:checked').val() : jQuery('[data-field=\"".$fid."\"]').val() ) || 0 ";
 
 		$binds[] = "[data-field=\"".$fid."\"]";
 		// include a conditional wrapper
@@ -90,13 +90,13 @@ if(!empty($binds)){
 	ob_start();
 ?>
 <script type="text/javascript">
-	jQuery(function($){
+	window.addEventListener("load", function(){
 
 		function checked_total_<?php echo $field_base_id; ?>(items){
 			var sum = 0;
 			
 			items.each(function(k,v){
-				var val = $(v).val();
+				var val = jQuery(v).val();
 				sum += parseFloat( val );
 			});
 			return sum;
@@ -118,20 +118,25 @@ if(!empty($binds)){
 				}
 				return x1 + x2;
 			}
+
+			if( 'number' != typeof  total ){
+				total = parseInt( total, 10 );
+			}
+
 			total = total.toFixed(2);
 			view_total = addCommas( total );
 			<?php } ?>
 			if( view_total.toString().length > 18 ){
 				view_total = Math.round( view_total );
 			}
-			$('#<?php echo $field_id; ?>').html( view_total );
-			$('[data-field="<?php echo esc_attr( $field_base_id ); ?>"]').val( total ).trigger('change');
+			jQuery('#<?php echo $field_id; ?>').html( view_total );
+			jQuery('[data-field="<?php echo esc_attr( $field_base_id ); ?>"]').val( total ).trigger('change');
 
 		}
-		$('body').on('change keyup', '<?php echo implode(',', $bindtriggers); ?>', function(e){
+		jQuery('body').on('change keyup', '<?php echo implode(',', $bindtriggers); ?>', function(e){
 			docalc_<?php echo $field_base_id; ?>();
 		});
-		$( document ).on('cf.remove cf.add', function( e ){
+		jQuery( document ).on('cf.remove cf.add', function( e ){
 			docalc_<?php echo $field_base_id; ?>();
 		})
 		docalc_<?php echo $field_base_id; ?>();

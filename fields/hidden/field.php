@@ -24,5 +24,5 @@ if(!empty($hastags[1])){
 	$sync = true;
 }
 ?>
-<input type="hidden" id="<?php echo esc_attr( $field_id ); ?>" class="<?php echo esc_attr( $field['config']['custom_class'] ); ?>" <?php if(!empty( $sync ) ){ ?>data-binds="<?php echo esc_attr( json_encode( $binds ) ); ?>" data-sync="<?php echo esc_attr( $field['config']['default'] ); ?>"<?php } ?> data-field="<?php echo esc_attr( $field_base_id ); ?>" name="<?php echo esc_attr( $field_name ); ?>" value="<?php echo htmlentities( $field_value ); ?>">
+<input type="hidden" id="<?php echo esc_attr( $field_id ); ?>" class="<?php echo esc_attr( $field['config']['custom_class'] ); ?>" <?php if(!empty( $sync ) ){ ?>data-binds="<?php echo esc_attr( wp_json_encode( $binds ) ); ?>"" data-sync="<?php echo esc_attr( $field['config']['default'] ); ?>"<?php } ?> data-field="<?php echo esc_attr( $field_base_id ); ?>" name="<?php echo esc_attr( $field_name ); ?>" value="<?php echo htmlentities( $field_value ); ?>">
 

@@ -6,7 +6,7 @@
 </div>
 <div class="caldera-config-group">
 	<label><?php _e('Default'); ?></label>
-	<div class="caldera-config-field">		
+	<div class="caldera-config-field">
 		<input type="text" id="{{_id}}_default" class="block-input field-config" name="{{_name}}[default]" value="{{default}}">
 	</div>
 </div>
@@ -17,7 +17,7 @@
 		<p class="description">(999) 999 9999</p>
 		<label><input type="radio" class="field-config {{_id}}_type international" name="{{_name}}[type]" value="international" {{#is type value="international"}}checked="checked"{{/is}}> <?php _e('International', 'caldera-forms'); ?></label>
 		<p class="description">+99 99 999 9999</p>
-		<label><input type="radio" class="field-config {{_id}}_type custom" name="{{_name}}[type]" value="custom" {{#is type value="custom"}}checked="checked"{{/is}}> <?php _e('Custom'); ?></label>
+		<label><input type="radio" class="field-config {{_id}}_type custom" name="{{_name}}[type]" value="custom" {{#is type value="custom"}}checked="checked"{{/is}}> <?php _e('Custom', 'caldera-forms'); ?></label>
 		<p class="description"><input type="text" id="{{_id}}_custom" class="field-config" name="{{_name}}[custom]" value="{{custom}}"></p>
 		<p class="description"><?php echo __('Use the digit 9 to indicate a number', 'caldera-forms'); ?></p>
 	</div>
@@ -35,7 +35,7 @@
 			}else if(this.value === 'custom'){
 				$('#{{_id}}_default').inputmask( $('#{{_id}}_custom').val() );
 			}
-		});	
+		});
 		$('#{{_id}}_custom').change(function(){
 			$('.{{_id}}_type.{{type}}').trigger('change');
 		});

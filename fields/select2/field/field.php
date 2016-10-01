@@ -38,7 +38,7 @@ if( empty( $field['config']['color'] ) ){
 
 	$placeholder = '';
 	if( !empty( $field['config']['placeholder'] ) ){
-		$placeholder = 'data-placeholder="' . esc_attr( $field['config']['placeholder'] ) . '"';
+		$placeholder = 'data-placeholder="' . esc_attr( Caldera_Forms::do_magic_tags( $field['config']['placeholder'] ) ). '"';
 	}
 
 ?>
