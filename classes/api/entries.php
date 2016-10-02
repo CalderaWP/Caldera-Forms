@@ -28,7 +28,10 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
 		if( ! is_array( $form ) ){
 			return Caldera_Forms_API_Response_Factory::error_form_not_found();
 		}
+
+
 		$entry = new Caldera_Forms_Entry( $form, $request[ 'entry_id' ] );
+
 		if( null == $entry->get_entry() ){
 			return Caldera_Forms_API_Response_Factory::error_entry_not_found();
 		}

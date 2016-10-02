@@ -1,6 +1,6 @@
 <?php
 
-abstract class CF_Rest_Test_Case extends WP_UnitTestCase {
+abstract class CF_Rest_Test_Case extends Caldera_Forms_Test_Case {
 	/**
 	 * In subclass, add route here
 	 *

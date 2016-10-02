@@ -92,9 +92,7 @@ abstract class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 	public function index( WP_REST_Request $request ){
 		/** @var WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
-		$namespaces = $wp_rest_server->get_namespaces();
 		$routes = $wp_rest_server->get_routes();
-
 		$endpoints = array();
 		foreach ( $routes as $route => $route_endpoints ){
 			if( false !== strpos( $route, $this->namespace . '/' . $this->route_base() ) ){
