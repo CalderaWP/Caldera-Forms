@@ -1419,6 +1419,21 @@ class Caldera_Forms {
 					)
 				)
 			),
+            'section_break' => array(
+                "field"		=>	__( 'Section Break', 'caldera-forms' ),
+                "description" => __( 'An HR tag to separate sections of your form.', 'caldera-forms' ),
+                "file"		=>	CFCORE_PATH . "fields/section-break/field.php",
+                "category"	=>	__( 'Content', 'caldera-forms' ),
+                "static"	=> true,
+                "setup"		=>	array(
+                    "template"	=>	CFCORE_PATH . "fields/section-break/setup.php",
+                    "not_supported"	=>	array(
+                        'hide_label',
+                        'caption',
+                        'required',
+                    )
+                )
+            ),
 
 			//select
 			'dropdown' => array(
