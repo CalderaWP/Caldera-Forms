@@ -3,7 +3,7 @@
   Plugin Name: Caldera Forms
   Plugin URI: https://calderawp.com/caldera-forms/
   Description: Easy to use, grid based responsive form builder for creating simple to complex forms.
-  Author: David Cramer for CalderaWP LLC
+  Author: CalderaWP
   Version: 1.5.0-b1
   Author URI: https://calderawp.com
   Text Domain: caldera-forms

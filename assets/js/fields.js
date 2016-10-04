@@ -13,7 +13,8 @@ function color_picker_init(){
 	jQuery('.minicolor-picker').miniColors();
 }
 
-window.addEventListener("load", 'color_picker_init' );
+document.addEventListener('load', color_picker_init , false);
+
 jQuery( document ).ajaxComplete(function() {
 	color_picker_init();
 });

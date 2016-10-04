@@ -3,7 +3,7 @@ Contributors: Desertsnowman, Shelob9
 Tags: forms, formbuilder, form builder, contact form, form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, contact, email, auto-responder, aweber, converkit, builder, contact forms, search, ab testing, a/b testing, split testing
 Requires at least: 4.3
 Tested up to: 4.6.1
-Stable tag: 1.4.2
+Stable tag: 1.4.3
 License: GPLv2
 
 A different kind of WordPress form builder.
@@ -140,6 +140,9 @@ Navigate to 'Caldera Forms' in wp-admin.
 Once you have created a form, insert it in a page or post via the Shortcode inserter button in the post editor.
 
 == Frequently Asked Questions ==
+= Does Caldera Forms Have A Getting Started Guide? =
+Why yes it does. Check it out at [https://CalderaWP.com/getting-started](https://CalderaWP.com/getting-started?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) and start making awesome WordPress forms.
+
 = Are My Caldera Forms Going to Display Properly on All Types of Devices? =
 
 Yes. Caldera forms is responsive by design. With Caldera Forms' drag and drop layout editor, you can easily create multi-column layouts for desktop that will display properly on mobile devices thanks to our responsive bootstrap-driven design.
@@ -209,7 +212,7 @@ In addition, Connected Forms tracks partial submissions between each step in the
 4. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
-= Caldera Forms 1.4.3 ( Beta: September27, 2016, RC-1: September 30th, 2016  ) =
+= Caldera Forms 1.4.4 ( October 4th, 2016  ) =
 * FIXED: Bug where magic tag button was not working in Chrome. There is now no magic tag button, nor is it needed.
 * IMPROVED: Email notification tab. Better descriptions, more accessible HTML form markup.
 * FIXED: Inline JavaScript for some form fields types that didn't work when jQuery was loaded in footer.
@@ -220,6 +223,7 @@ In addition, Connected Forms tracks partial submissions between each step in the
 * FIXED: Bug affecting auto-populating form field options auto-populated using posts.
 * IMPROVED: You used to not be able to use magic tags for placeholder of select form fields. You can now preset select fields in your form using magic tags in the placeholder setting.
 * ADDED: caldera_forms_prerender_edit action that runs before form editor is rendered.
+* FIXED: Issue where readme did not say "Hi Roy." Also, Hi Roy.
 
 
 = Caldera Forms 1.4.2 ( August 31, 2016 ) =
