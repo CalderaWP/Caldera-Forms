@@ -3,7 +3,7 @@ Contributors: Desertsnowman, Shelob9
 Tags: forms, formbuilder, form builder, contact form, form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, contact, email, auto-responder, aweber, converkit, builder, contact forms, search, ab testing, a/b testing, split testing
 Requires at least: 4.3
 Tested up to: 4.6.1
-Stable tag: 1.4.3
+Stable tag: 1.4.3.1
 License: GPLv2
 
 A different kind of WordPress form builder.
@@ -212,7 +212,10 @@ In addition, Connected Forms tracks partial submissions between each step in the
 4. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
-= Caldera Forms 1.4.4 ( October 4th, 2016  ) =
+= Caldera Forms 1.4.3.1 ( October 4th, 2016  ) =
+* FIXED: jQuery syntax error in HTML form field JavaScript
+
+= Caldera Forms 1.4.3 ( October 4th, 2016  ) =
 * FIXED: Bug where magic tag button was not working in Chrome. There is now no magic tag button, nor is it needed.
 * IMPROVED: Email notification tab. Better descriptions, more accessible HTML form markup.
 * FIXED: Inline JavaScript for some form fields types that didn't work when jQuery was loaded in footer.
