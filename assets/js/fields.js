@@ -4856,9 +4856,16 @@ function Caldera_Forms_Field_Config( configs, $ ){
 
 	this.init = function(){
 		$.each( configs, function( i, config ){
-			console.log( config );
 			self[config.type]( config );
 		} );
+	};
+
+	this.advanced_file = function( field ){
+
+	};
+
+	this.calculation = function( field ){
+
 	};
 
 	this.button = function( feild ){
@@ -4866,6 +4873,30 @@ function Caldera_Forms_Field_Config( configs, $ ){
 		$(document).on('click dblclick', '#' + field_id, function( e ){
 			$('#' + field_id + '_btn').val( e.type ).trigger('change');
 		});
+	};
+
+	this.gravatar = function( field ){
+
+	};
+
+	this.html = function ( field ) {
+
+	};
+
+	this.range_slider = function( field ){
+
+	};
+
+	this.select2 = function( field ){
+
+	};
+
+	this.star_rate = function( field ){
+
+	};
+	
+	this.toggle_switch = function( field ) {
+		
 	};
 }
 
