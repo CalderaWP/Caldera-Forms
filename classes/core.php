@@ -4018,7 +4018,7 @@ class Caldera_Forms {
 			'modals'	=>	CFCORE_URL . 'assets/js/remodal.min.js',
 			'baldrick'	=>	CFCORE_URL . 'assets/js/jquery.baldrick.min.js',
 			'ajax'		=>	CFCORE_URL . 'assets/js/ajax-core.min.js',
-			'field'	=>	CFCORE_URL . 'assets/js/fields.min.js',
+			'field'	=>	CFCORE_URL . 'assets/js/fields.js',
 			'conditionals' => CFCORE_URL . 'assets/js/conditionals.min.js',
 			'validator-i18n' => null,
 			'validator' => CFCORE_URL . 'assets/js/parsley.min.js',
@@ -5009,6 +5009,8 @@ class Caldera_Forms {
 
 		}
 
+
+
 		// form object strings
 		wp_localize_script( 'cf-dynamic', $form['ID'] . '_' . $current_form_count, $form_field_strings );
 
@@ -5125,6 +5127,8 @@ class Caldera_Forms {
 			$out .= wp_nonce_field( "caldera_forms_front", "_cf_verify", true, false);
 			$out .= "<input type=\"hidden\" name=\"_cf_frm_id\" value=\"" . $form['ID'] . "\">\r\n";
 			$out .= "<input type=\"hidden\" name=\"_cf_frm_ct\" value=\"" . $current_form_count . "\">\r\n";
+			$fieldjs_config = Caldera_Forms_Render_Assets::prepare_field_js_config( $form, $current_form_count );
+			$out .= sprintf( '<input type="hidden" class="cf-fieldjs-config" value="%s" />', esc_attr( wp_json_encode( $fieldjs_config ) ) );
 			if( !empty( $form['form_ajax'] ) ){
 				$out .= "<input type=\"hidden\" name=\"cfajax\" value=\"" . $form['ID'] . "\">\r\n";
 			}

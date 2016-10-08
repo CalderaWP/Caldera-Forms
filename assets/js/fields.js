@@ -4849,3 +4849,35 @@ function toggle_button_init(id, el){
 	}
 
 }
+
+/** Dynamic Field Configuration **/
+function Caldera_Forms_Field_Config( configs, $ ){
+	var self = this;
+
+	this.init = function(){
+		$.each( configs, function( i, config ){
+			console.log( config );
+			self[config.type]( config );
+		} );
+	};
+
+	this.button = function( feild ){
+		var field_id  = feild.id;
+		$(document).on('click dblclick', '#' + field_id, function( e ){
+			$('#' + field_id + '_btn').val( e.type ).trigger('change');
+		});
+	};
+}
+
+jQuery(document).ready(function($){
+	var form_id, config_object, config;
+	$( '.caldera_forms_form' ).each( function( i, el ){
+		form_id =  $( el ).attr( 'id' );
+		config = $( '#' + form_id + ' .cf-fieldjs-config' );
+		if( 1 == config.length ){
+			config_object = new Caldera_Forms_Field_Config( JSON.parse( config.val() ), $ );
+			config_object.init();
+		}
+	});
+
+});
