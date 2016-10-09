@@ -30,6 +30,8 @@ class Caldera_Forms_Render_FieldsJS {
 	 */
 	protected $data;
 
+	protected $form_count;
+
 	/**
 	 * Caldera_Forms_Render_FieldsJS constructor.
 	 *
@@ -37,8 +39,9 @@ class Caldera_Forms_Render_FieldsJS {
 	 *
 	 * @param array $form Form config
 	 */
-	public function __construct( array $form ) {
+	public function __construct( array $form, $form_count ) {
 		$this->form = $form;
+		$this->form_count = $form_count;
 		$this->data = array();
 	}
 
@@ -79,7 +82,54 @@ class Caldera_Forms_Render_FieldsJS {
 	protected function button( $field_id ){
 		$this->data[ $field_id ] = array(
 			'type' => 'button',
-			'id' => $field_id
+			'id' => $this->field_id( $field_id )
 		);
+	}
+
+	protected function wysiwyg( $field_id ){
+		$options = $this->wysiqyg_options( $field_id );
+
+		$this->data[ $field_id ] = array(
+			'type' => 'wysiwyg',
+			'id' => $this->field_id( $field_id ),
+			'options' => $options
+		);
+	}
+
+	/**
+	 * @param $field_id
+	 *
+	 * @return string
+	 */
+	protected function field_id( $field_id ) {
+		return $field_id . '_' . $this->form_count;
+	}
+
+	/**
+	 * @param $field_id
+	 *
+	 * @return mixed|void
+	 */
+	protected function wysiqyg_options( $field_id ) {
+		$field = $this->form[ 'fields' ][ $field_id ];
+		$options = array();
+		if( ! empty( $field[ 'config' ]['language' ] ) ){
+			$options[ 'lang' ] = strip_tags( $field[ 'config' ]['language' ] );
+		}
+
+		/**
+		 * Filter options passed to Trumbowyg when initializing the WYSIWYG editor
+		 *
+		 * @since 1.5.0
+		 *
+		 * @see https://alex-d.github.io/Trumbowyg/documentation.html#general
+		 *
+		 * @param array $options Options will be empty unless language was set in UI
+		 * @param array $field Field config
+		 * @param array $form Form Config
+		 */
+		$options = apply_filters( 'caldera_forms_wysiwyg_options', $options, $field, $this->form );
+
+		return $options;
 	}
 }

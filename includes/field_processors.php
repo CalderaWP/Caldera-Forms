@@ -166,3 +166,27 @@ function cf_handle_file_upload( $entry, $field, $form ){
 	}
 
 }
+
+
+add_filter( 'caldera_forms_save_field_wysiwyg', 'caldera_forms_save_field_wysiwyg', 1, 2  );
+/**
+ * Apply sanitization to WYSIWYG fields
+ *
+ * @since 1.5.0
+ *
+ * @uses "caldera_forms_save_field_wysiwyg" filter
+ *
+ * @param $entry
+ * @param $field
+ *
+ * @return string
+ */
+function caldera_forms_save_field_wysiwyg( $entry, $field ){
+	if( ! empty( $field[ 'config'][ 'allowed' ] ) ){
+		$context = $field[ 'config'][ 'allowed' ];
+	}else{
+		$context = 'post';
+	}
+	$entry = wp_kses( $entry, wp_kses_allowed_html( $context ) );
+	return $entry;
+}

@@ -1308,7 +1308,22 @@ class Caldera_Forms {
 					),
 				)
 			),
-
+			'wysiwyg' => array(
+				"field"		=>	__( 'Rich Editor', 'caldera-forms' ),
+				"description" => __( 'TinyMCE WYSIWYG editor', 'caldera-forms' ),
+				"file"		=>	CFCORE_PATH . "fields/wysiwyg/field.php",
+				"category"	=>	__( 'Basic', 'caldera-forms' ),
+				"setup"		=>	array(
+					"template"	=>	CFCORE_PATH . "fields/wysiwyg/config_template.php",
+					"preview"	=>	CFCORE_PATH . "fields/wysiwyg/preview.php",
+				),
+				"scripts" => array(
+					CFCORE_URL . 'fields/wysiwyg/wysiwyg.js'
+				),
+				"styles"	=> array(
+					CFCORE_URL . "fields/wysiwyg/wysiwyg.min.css",
+				),
+			),
 
 			//special
 			'calculation' => array(

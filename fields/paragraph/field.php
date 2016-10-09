@@ -8,6 +8,7 @@ if ( is_array( $field_value ) )  {
 
 }
 
+$placeholder = '';
 if(!empty($field['config']['placeholder'])){
 	$placeholder = Caldera_Forms::do_magic_tags( $field['config']['placeholder'] );
 

@@ -4894,9 +4894,29 @@ function Caldera_Forms_Field_Config( configs, $ ){
 	this.star_rate = function( field ){
 
 	};
-	
+
 	this.toggle_switch = function( field ) {
-		
+
+	};
+
+	this.paragraph = function( field ){
+
+	};
+
+	this.wysiwyg = function( field ){
+
+		var actual_field = document.getElementById( field.id );
+		if( null != actual_field ){
+			var $field = $( actual_field );
+			$field.trumbowyg(field.options);
+			var $editor = $field.parent().find( '.trumbowyg-editor');
+
+			$editor.html( $field.html() );
+			$editor.bind('input propertychange', function(){
+				$field.html( $editor.html() );
+			});
+		}
+
 	};
 }
 
