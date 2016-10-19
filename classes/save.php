@@ -210,11 +210,8 @@ class Caldera_Forms_Save_Final {
 			// if added a replyto
 			$mail['replyto'] = false;
 			if ( isset( $form['mailer']['reply_to'] ) ) {
-				$reply_to = trim( $form['mailer']['reply_to'] );
-				if ( ! empty( $reply_to ) ) {
-					$mail['replyto']   = $reply_to;
-					$mail['headers'][] = Caldera_Forms::do_magic_tags( 'Reply-To: <' . $reply_to . '>' );
-				}
+                                $mail['replyto']   = $form['mailer']['reply_to'];
+                                $mail['headers'][] = Caldera_Forms::do_magic_tags( 'Reply-To: ' . $form['mailer']['reply_to'] );
 			}
 			if ( ! $mail['replyto'] ) {
 				$mail['replyto'] = $mail['from'];
