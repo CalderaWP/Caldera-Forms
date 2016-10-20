@@ -5420,6 +5420,7 @@ class Caldera_Forms {
 	public static function init_rest_api(){
 		self::$api = new Caldera_Forms_API_Load( Caldera_Forms_API_Util::api_namespace() );
 		self::$api->add_route( new Caldera_Forms_API_Entries() );
+        self::$api->add_route( new Caldera_Forms_API_Forms() );
 		self::$api->init_routes();
 
 		/**

@@ -158,25 +158,28 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
 		unset( $response_data[ $id ][ 'user_id' ] );
 
 		$fields = $entry->get_fields();
+        $response_data[ $id ][ 'fields' ] = array();
 		if( ! empty( $fields ) ){
 			/** @var Caldera_Forms_Entry_Field $field */
 			foreach(  $fields as $field ){
-				$response_data[ $id ][ 'fields' ][ $field->id ] = $field->to_array( false );
+                if ( is_object( $field )) {
+                    $response_data[$id]['fields'][$field->id ] = $field->to_array(false);
+                }
 			}
 
-		}else{
-			$response_data[ $id ][ 'fields' ] = array();
 		}
 
 		$metas = $entry->get_meta();
+        $response_data[ $id ][ 'meta' ] = array();
 		if( ! empty( $metas ) ){
 			/** @var Caldera_Forms_Entry_Meta $meta */
 			foreach ( $metas as $meta ){
-				$response_data[ $id ][ $meta->id ] = $meta->to_array( false );
+			    if( is_object( $meta ) ){
+                    $response_data[ $id ][ 'meta' ][ $meta->id ] = $meta->to_array( false );
+                }
+
 			}
 
-		}else{
-			$response_data[ $id ][ 'meta' ] = array();
 		}
 
 		return $response_data;
