@@ -125,4 +125,12 @@ class Caldera_Forms_Render_Assets {
 
 	}
 
+	public static function prepare_field_js_config( $form, $instance ){
+		$slug = self::make_slug( 'field' );
+		$fields = new Caldera_Forms_Render_FieldsJS( $form, $instance  );
+		$fields->prepare_data();
+		return $fields->get_data();
+	}
+
+
 }

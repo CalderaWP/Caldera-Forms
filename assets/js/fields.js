@@ -4849,3 +4849,86 @@ function toggle_button_init(id, el){
 	}
 
 }
+
+/** Dynamic Field Configuration **/
+function Caldera_Forms_Field_Config( configs, $ ){
+	var self = this;
+
+	this.init = function(){
+		$.each( configs, function( i, config ){
+			self[config.type]( config );
+		} );
+	};
+
+	this.advanced_file = function( field ){
+
+	};
+
+	this.calculation = function( field ){
+
+	};
+
+	this.button = function( feild ){
+		var field_id  = feild.id;
+		$(document).on('click dblclick', '#' + field_id, function( e ){
+			$('#' + field_id + '_btn').val( e.type ).trigger('change');
+		});
+	};
+
+	this.gravatar = function( field ){
+
+	};
+
+	this.html = function ( field ) {
+
+	};
+
+	this.range_slider = function( field ){
+
+	};
+
+	this.select2 = function( field ){
+
+	};
+
+	this.star_rate = function( field ){
+
+	};
+
+	this.toggle_switch = function( field ) {
+
+	};
+
+	this.paragraph = function( field ){
+
+	};
+
+	this.wysiwyg = function( field ){
+
+		var actual_field = document.getElementById( field.id );
+		if( null != actual_field ){
+			var $field = $( actual_field );
+			$field.trumbowyg(field.options);
+			var $editor = $field.parent().find( '.trumbowyg-editor');
+
+			$editor.html( $field.html() );
+			$editor.bind('input propertychange', function(){
+				$field.html( $editor.html() );
+			});
+		}
+
+	};
+}
+
+jQuery(document).ready(function($){
+	var form_id, config_object, config;
+	$( '.caldera_forms_form' ).each( function( i, el ){
+		form_id =  $( el ).attr( 'id' );
+		config = $( '#' + form_id + ' .cf-fieldjs-config' );
+		if( 1 == config.length ){
+			config_object = new Caldera_Forms_Field_Config( JSON.parse( config.val() ), $ );
+			config_object.init();
+		}
+	});
+
+});
