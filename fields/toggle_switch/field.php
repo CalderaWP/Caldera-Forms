@@ -25,7 +25,6 @@ if(!empty($field['config']['orientation']) && $field['config']['orientation'] ==
 			<?php
 
 			if(isset( $field['config'] ) && isset($field['config']['default']) && isset($field['config']['option'][$field['config']['default']])){
-				//if( $field['config']['option'][$field['config']['default']]['value'] )
 				if( $field['config']['default'] === $field_value ){
 					$field_value = $field['config']['option'][$field['config']['default']]['value'];
 				}
@@ -35,7 +34,7 @@ if(!empty($field['config']['orientation']) && $field['config']['orientation'] ==
 
 			if(empty($field['config']['option'])){ ?>
 					
-					<a id="<?php echo esc_attr( $field_id ); ?>_1" class="button" data-value="true" <?php echo $field_structure['aria']; ?>><?php echo __('Enable', 'caldera-forms'); ?></a>
+					<a id="<?php echo esc_attr( $field_id ); ?>_1" class="button" data-value="true" <?php echo $field_structure['aria']; ?>><?php  esc_html_e('Enable', 'caldera-forms'); ?></a>
 
 			<?php }else{
 				foreach($field['config']['option'] as $option_key=>$option){
@@ -47,7 +46,7 @@ if(!empty($field['config']['orientation']) && $field['config']['orientation'] ==
 					$selclass = $selectedClassName;
 				}
 
-					?><a id="<?php echo $field_id.'_'.$option_key; ?>" data-label="<?php echo esc_attr( $option['label'] );?>" data-field="<?php echo esc_attr( $field_base_id ); ?>" data-active="<?php echo $selectedClassName; ?>" data-default="<?php echo $defaultClassName; ?>" class="btn <?php echo $selclass; ?>" data-value="<?php echo esc_attr( $option['value'] ); ?>" <?php echo $field_structure['aria']; ?>><?php echo $option['label']; ?></a><?php
+					?><a id="<?php echo $field_id.'_'.$option_key; ?>" data-label="<?php echo esc_attr( $option['label'] );?>" data-field="<?php echo esc_attr( $field_base_id ); ?>" data-active="<?php echo $selectedClassName; ?>" data-default="<?php echo $defaultClassName; ?>" class="btn <?php echo $selclass; ?>" data-value="<?php echo esc_attr( $option['value'] ); ?>" <?php echo $field_structure['aria']; ?> title="<?php echo esc_attr( __( 'Choose Option', 'caldera-forms' ) .  $option['label']  ); ?>"><?php echo $option['label']; ?></a><?php
 				}
 			} ?>		
 		</div>
