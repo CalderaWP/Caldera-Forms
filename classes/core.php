@@ -2277,39 +2277,47 @@ class Caldera_Forms {
 
 									} else {
 										$html = false;
+										$pattern = '';
 									}
 
 									$out = array();
-									foreach ( $this_form[ 'fields' ] as $field_id => $field ) {
+									$ordered_fields = Caldera_Forms_Forms::get_fields( $form );
+									if ( ! empty( $ordered_fields ) ) {
+										foreach ( $ordered_fields as $field_id => $field ) {
 
-										if ( in_array( $field[ 'type' ], array( 'button', 'recaptcha', 'html' ) ) ) {
-											continue;
-										}
-										// filter the field to get field data
-										$field = apply_filters( 'caldera_forms_render_get_field', $field, $this_form );
-										$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field[ 'type' ], $field, $this_form );
-										$field = apply_filters( 'caldera_forms_render_get_field_slug-' . $field[ 'slug' ], $field, $this_form );
-
-										$field_values = (array) self::get_field_data( $field_id, $this_form );
-
-										if ( isset( $field_values[ 'label' ] ) ) {
-											$field_values = $field_values[ 'value' ];
-										} else {
-											foreach ( $field_values as $field_key => $field_value ) {
-												if ( isset( $field_value[ 'label' ] ) && isset( $field_value[ 'value' ] ) ) {
-													$field_value[ $field_key ] = $field_value[ 'value' ];
-												}
-
+											if ( in_array( $field[ 'type' ], array(
+												'button',
+												'recaptcha',
+												'html'
+											) ) ) {
+												continue;
 											}
-										}
+											// filter the field to get field data
+											$field = apply_filters( 'caldera_forms_render_get_field', $field, $this_form );
+											$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field[ 'type' ], $field, $this_form );
+											$field = apply_filters( 'caldera_forms_render_get_field_slug-' . $field[ 'slug' ], $field, $this_form );
 
-										$field_value = implode( ', ', (array) $field_values );
+											$field_values = (array) self::get_field_data( $field_id, $this_form );
 
-										if ( $field_value !== null && strlen( $field_value ) > 0 ) {
-											if ( $html ) {
-												$out[] = sprintf( $pattern, $field[ 'label' ], $field_value );
+											if ( isset( $field_values[ 'label' ] ) ) {
+												$field_values = $field_values[ 'value' ];
 											} else {
-												$out[] = $field[ 'label' ] . ': ' . $field_value;
+												foreach ( $field_values as $field_key => $field_value ) {
+													if ( isset( $field_value[ 'label' ] ) && isset( $field_value[ 'value' ] ) ) {
+														$field_value[ $field_key ] = $field_value[ 'value' ];
+													}
+
+												}
+											}
+
+											$field_value = implode( ', ', (array) $field_values );
+
+											if ( $field_value !== null && strlen( $field_value ) > 0 ) {
+												if ( $html ) {
+													$out[] = sprintf( $pattern, $field[ 'label' ], $field_value );
+												} else {
+													$out[] = $field[ 'label' ] . ': ' . $field_value;
+												}
 											}
 										}
 									}

@@ -212,6 +212,10 @@ In addition, Connected Forms tracks partial submissions between each step in the
 4. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
+= Caldera Forms 1.4.4 ( Soon ) =
+* FIXED: Summary magic tag was ordering emails by the order fields were added to form, not order they appeared in the form
+* ADDED: Caldera_Forms_Forms::get_fields() to get fields of form in order.
+
 = Caldera Forms 1.4.3.1 ( October 4th, 2016  ) =
 * FIXED: jQuery syntax error in HTML form field JavaScript
 
