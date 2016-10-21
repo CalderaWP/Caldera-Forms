@@ -4696,6 +4696,9 @@ class Caldera_Forms {
 		$grid_settings = apply_filters( 'caldera_forms_render_grid_settings', $grid_settings, $form);
 
 		$form['grid_object'] = new Caldera_Form_Grid($grid_settings);
+		if( empty( $form['layout_grid'] ) ) {
+			$form['layout_grid'] = array( 'structure' => '' );
+		}
 
 		// Build Pages Breaks
 		if( false !== strpos($form['layout_grid']['structure'], '#')){
@@ -4854,6 +4857,7 @@ class Caldera_Forms {
 				$notices['success']['note'] = $form['success'];
 			}
 		}
+
 
 		// build grid & pages
 		$form['grid_object']->setLayout($form['layout_grid']['structure']);
