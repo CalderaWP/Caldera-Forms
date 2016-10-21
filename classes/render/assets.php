@@ -80,14 +80,36 @@ class Caldera_Forms_Render_Assets {
 		 */
 		$style_includes = apply_filters( 'caldera_forms_get_style_includes', $style_includes );
 
+		$all = true;
+		$styles = array();
 		if ( ! empty( $style_includes[ 'grid' ] ) ) {
-			wp_enqueue_style( 'cf-grid-styles' );
+			$styles[] =  'cf-grid-styles';
+		}else{
+			$all = false;
 		}
+
 		if ( ! empty( $style_includes[ 'form' ] ) ) {
-			wp_enqueue_style( 'cf-form-styles' );
+			$styles[] = 'cf-form-styles';
+		} else{
+			$all = false;
 		}
+
 		if ( ! empty( $style_includes[ 'alert' ] ) ) {
-			wp_enqueue_style( 'cf-alert-styles' );
+			$styles[] = 'cf-alert-styles';
+		}else{
+			$all = false;
+		}
+
+		if( $all ){
+			wp_enqueue_style( 'cf-front-styles' );
+		}else{
+			if (  ! empty( $styles ) ) {
+				foreach ( $styles as $style ) {
+					wp_enqueue_style( $style );
+				}
+
+			}
+
 		}
 
 	}

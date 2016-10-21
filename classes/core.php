@@ -4060,6 +4060,8 @@ class Caldera_Forms {
 			}
 			wp_register_style( 'cf-' . $style_key . '-styles', $style_url, array(), CFCORE_VER );
 		}
+
+		wp_register_style( 'cf-front-styles', CFCORE_URL . 'assets/css/caldera-forms-front.min.css', array(), CFCORE_VER );
 		// register scripts
 		foreach( $script_style_urls['script'] as $script_key => $script_url ){
 			if( empty( $script_url ) ){
