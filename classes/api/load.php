@@ -14,7 +14,7 @@ class Caldera_Forms_API_Load {
 	/**
 	 * Array of route objects for this collection
 	 *
-	 * @since 1.5.0
+	 * @since 1.4.4
 	 *
 	 * @var array
 	 */
@@ -23,7 +23,7 @@ class Caldera_Forms_API_Load {
 	/**
 	 * Namespace for this route collection
 	 *
-	 * @since 1.5.0
+	 * @since 1.4.4
 	 *
 	 * @var string
 	 */
@@ -32,7 +32,7 @@ class Caldera_Forms_API_Load {
 	/**
 	 * Caldera_Forms_API_Load constructor.
 	 *
-	 * @since 1.5.0
+	 * @since 1.4.4
 	 *
 	 * @param string $namespace Namespace for this route collection
 	 */
@@ -45,7 +45,7 @@ class Caldera_Forms_API_Load {
 	/**
 	 * Add a route to this collection
 	 *
-	 * @since 1.5.0
+	 * @since 1.4.4
 	 *
 	 * @param Caldera_Forms_API_Route $route
 	 */
@@ -56,7 +56,7 @@ class Caldera_Forms_API_Load {
 	/**
 	 * Initialize routes for this namespace
 	 *
-	 * @since 1.5.0
+	 * @since 1.4.4
 	 *
 	 * @return bool True if loading happened, false if not
 	 */
@@ -72,7 +72,7 @@ class Caldera_Forms_API_Load {
 			 *
 			 * Dynamic part of hook is the namespace, so may run for each version
 			 *
-			 * @since 1.5.0
+			 * @since 1.4.4
 			 *
 			 * @param array $routes Route objects that were added.
 			 */
