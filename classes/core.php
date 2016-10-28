@@ -60,6 +60,15 @@ class Caldera_Forms {
 	protected static $footer_modals;
 
 	/**
+	 * CF-API v2
+	 *
+	 * @since 1.4.4
+	 *
+	 * @var Caldera_Forms_API_Load
+	 */
+	protected static $api;
+
+	/**
 	 * Initialize the plugin by setting localization, filters, and administration functions.
 	 *
 	 */
@@ -5397,6 +5406,40 @@ class Caldera_Forms {
 			}
 		}
 
+
+	}
+
+	/**
+	 * Load the Caldera Forms REST API
+	 *
+	 * @since 1.4.4
+	 *
+	 * @uses "rest_api_init" action
+	 */
+	public static function init_rest_api(){
+		self::$api = new Caldera_Forms_API_Load( Caldera_Forms_API_Util::api_namespace() );
+
+		/**
+		 * Runs after REST API loader is initialized, but before routes are initialized.
+		 *
+		 * Use this hook to register routes in add-ons
+		 *
+		 * do_action( 'caldera_forms_rest_api_pre_init', function( $api ){ $api->add_route(...
+		 *
+		 * @since 1.4.4
+		 *
+		 * @param Caldera_Forms_API_Load $api API Load class
+		 */
+		do_action( 'caldera_forms_rest_api_pre_init', self::$api );
+
+		self::$api->init_routes();
+
+		/**
+		 * Runs after Caldera Forms REST API is loaded
+		 *
+		 * @since 1.4.4
+		 */
+		do_action( 'caldera_forms_rest_api_init' );
 
 	}
 
