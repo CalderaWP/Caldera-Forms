@@ -150,6 +150,21 @@ class Caldera_Forms_Save_Final {
 			$data = Caldera_Forms::get_submission_data($form, $entryid );
 		}
 
+		//fix for https://github.com/CalderaWP/Caldera-Forms/issues/888
+		//Josh - Please find time to redo all CSV rendering please. Your buddy, Josh
+		if( ! empty( $data ) ){
+			foreach ( $data as $id => $datum ){
+
+				if( is_string( $datum ) && '{"opt' == substr( $datum, 0, 5 ) ){
+					$_value = json_decode( $datum );
+					if( is_object( $_value ) ){
+						$data[ $id ] = implode( ', ', (array) $_value );
+					}
+
+				}
+			}
+		}
+
 		// add entry ID to transient data
 
 		$transdata['entry_id'] = $entryid;
