@@ -166,3 +166,24 @@ function cf_handle_file_upload( $entry, $field, $form ){
 	}
 
 }
+
+
+add_filter( 'caldera_forms_render_get_field_type-hidden', 'caldera_forms_allow_edit_hidden_fields' );
+
+/**
+ * When editing a form from entry viewer, convert hidden fields to text fields to so they too can be edited.
+ *
+ * @since 1.4.3
+ *
+ * @uses "caldera_forms_render_get_field_type-hidden" filter
+ *
+ * @param array $field Field config
+ *
+ * @return mixed
+ */
+function caldera_forms_allow_edit_hidden_fields( $field ){
+	if( ( ! empty( $_GET[ 'modal' ] ) && 'view_entry' == $_GET[ 'modal' ]  ) || ( ! empty( $_POST[ '_cf_frm_edt' ] ) )  ){
+		$field[ 'type' ] = 'text';
+	}
+	return $field;
+};
