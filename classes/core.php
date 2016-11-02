@@ -721,7 +721,7 @@ class Caldera_Forms {
 			}
 
 		}
-		
+
 		if(! empty( $form[ 'db_support' ] ) ) {
 			Caldera_Forms_Save_Final::save_in_db( $form, $entryid );
 		}
@@ -4448,7 +4448,7 @@ class Caldera_Forms {
 			"field_before"		=>	"<div class=\"" . $field_input_class ."\">\r\n",
 			"label_before"		=>	( empty($field['hide_label']) ? "<label id=\"" . $field['ID'] ."Label\" for=\"" . $field['ID'].'_'.$current_form_count . "\" class=\"" . implode(' ', $field_classes['field_label'] ) . "\">" : null ),
 			"label"				=>	( empty($field['hide_label']) ? $field['label'] : null ),
-			"label_required"	=>	( empty($field['hide_label']) ? ( !empty($field['required']) ? " <span aria-hidden=\"true\" role=\"presentation\" class=\"" . implode(' ', $field_classes['field_required_tag'] ) . "\" style=\"color:#ff2222;\">*</span>" : "" ) : null ),
+			"label_required"	=>	( empty($field['hide_label']) ? ( !empty($field['required']) ? " <span aria-hidden=\"true\" role=\"presentation\" class=\"" . implode(' ', $field_classes['field_required_tag'] ) . "\" style=\"color:#ee0000;\">*</span>" : "" ) : null ),
 			"label_after"		=>	( empty($field['hide_label']) ? "</label>" : null ),
 			"field_placeholder" =>	( !empty($field['hide_label']) ? 'placeholder="' . htmlentities( $field['label'] ) .'"' : null),
 			"field_required"	=>	( !empty($field['required']) ? 'required="required"' : null),
