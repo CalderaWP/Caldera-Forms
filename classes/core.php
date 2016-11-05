@@ -86,15 +86,9 @@ class Caldera_Forms {
 		add_action('caldera_forms_edit_end', array($this, 'calculations_templates') );
 		add_filter('caldera_forms_render_get_field', array( $this, 'auto_populate_options_field' ), 10, 2);
 		add_filter('caldera_forms_render_get_field', array( $this, 'apply_conditional_groups' ), 10, 2);
-		//add_filter('caldera_forms_render_get_field_type-radio', array( $this, 'auto_populate_options_field' ), 10, 2);
-		//add_filter('caldera_forms_render_get_field_type-checkbox', array( $this, 'auto_populate_options_field' ), 10, 2);
-		//add_filter('caldera_forms_render_get_field_type-dropdown', array( $this, 'auto_populate_options_field' ), 10, 2);
-		//add_filter('caldera_forms_render_get_field_type-toggle_switch', array( $this, 'auto_populate_options_field' ), 10, 2);
-		add_filter('caldera_forms_view_field_paragraph', 'wpautop' );
+        add_filter('caldera_forms_view_field_paragraph', 'wpautop' );
 
-		// magic tags
-		//add_filter('caldera_forms_render_magic_tag', array( $this, 'do_magic_tags'));
-		// mailser
+		//mailer magic
 		add_filter('caldera_forms_get_magic_tags', array( $this, 'set_magic_tags'),1);
 		add_filter('caldera_forms_mailer', array( $this, 'mail_attachment_check'),10, 3);
 
@@ -119,8 +113,12 @@ class Caldera_Forms {
 			add_action( 'wp_ajax_cf_email_save', array( 'Caldera_Forms_Email_Settings', 'save' ) );
 		}
 
+		//auto-population via Easy Pods/ Easy Queries
 		add_action( 'caldera_forms_render_start', array( __CLASS__, 'easy_pods_queries_setup' ) );
 
+        //delete file uploads that are not going in media library
+        add_action( 'caldera_forms_submit_complete', array( 'Caldera_Forms_Files', 'cleanup' ) );
+        add_action( Caldera_Forms_Files::CRON_ACTION, array( 'Caldera_Forms_Files', 'cleanup_via_cron' ) );
 
 		if( current_user_can( Caldera_Forms::get_manage_cap( 'admin' ) ) ) {
 			$id = null;
@@ -726,19 +724,10 @@ class Caldera_Forms {
 			Caldera_Forms_Save_Final::save_in_db( $form, $entryid );
 		}
 
-		if( !empty( $transdata['edit'] ) ){
-			// update
-			if( empty($form['mailer']['on_update'] ) ){
-				return;
-			}
-		}else{
-			// insert
-			if( empty( $form['mailer']['enable_mailer'] ) && empty($form['mailer']['on_insert'] ) ){
-				return;
-			}
-		}
 
-		Caldera_Forms_Save_Final::do_mailer( $form, $entryid );
+        if ( self::should_send_mail( $form, $transdata ) ) {
+            Caldera_Forms_Save_Final::do_mailer($form, $entryid);
+        }
 
 
 	}
@@ -3892,7 +3881,8 @@ class Caldera_Forms {
 		if ( ! isset( $wp_query->query_vars['cf_api'] ) ){
 			return;
 		}
-		// check if form exists
+
+        // check if form exists
 		$form = Caldera_Forms_Forms::get_form( $wp_query->query_vars['cf_api'] );
 		$atts = array(
 			'id' => $wp_query->query_vars['cf_api'],
@@ -5442,5 +5432,37 @@ class Caldera_Forms {
 		do_action( 'caldera_forms_rest_api_init' );
 
 	}
+
+	public static function should_send_mail( $form, $transadata = array() ){
+	    $send = true;
+	    if( empty( $transadata ) ){
+	        global $transadata;
+        }
+
+        if( !empty( $transdata['edit'] ) ){
+            // update
+            if( empty($form['mailer']['on_update'] ) ){
+                $send = false;
+            }
+        }else{
+            // insert
+            if( empty( $form['mailer']['enable_mailer'] ) && empty($form['mailer']['on_insert'] ) ){
+                $send = false;
+            }
+        }
+
+        /**
+         * Change programmed decision to send mailer or not
+         *
+         * Useful for causing emails to send on entry edit, when they normally would not
+         *
+         * @since 1.4.4
+         *
+         * @param bool $send Whether to send or not
+         * @param array $form Form config
+         */
+        return apply_filters( 'caldera_forms_send_email', $send, $form );
+
+    }
 
 }
