@@ -1,0 +1,11 @@
+bin
+tests
+.distignore
+.idea
+.git
+.gitignore
+.travis.yml
+phpunit.xml.dist
+screenshot-1.png
+screenshot-2.png
+screenshot-3.png
