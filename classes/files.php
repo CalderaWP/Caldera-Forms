@@ -122,7 +122,7 @@ class Caldera_Forms_Files{
      */
     public static function uploads_filter( $args ){
 
-        $newdir = self::$dir;
+        $newdir = '/' . self::$dir;
 
         $args['path']    = str_replace( $args['subdir'], '', $args['path'] );
         $args['url']     = str_replace( $args['subdir'], '', $args['url'] );
@@ -156,9 +156,9 @@ class Caldera_Forms_Files{
      * @param string $field_id The field ID for file field
      * @param string $form_id The form ID
      */
-    protected  function delete_uploaded_files( $field_id, $form_id ){
-
-        $dir = self::secret_dir($field_id, $form_id);
+    protected static function delete_uploaded_files( $field_id, $form_id ){
+		$uploads = wp_get_upload_dir();
+        $dir = $uploads[ 'basedir' ] . '/' . self::secret_dir($field_id, $form_id);
         if (is_dir($dir)) {
             array_map('unlink', glob($dir . '/*'));
             rmdir($dir);
@@ -174,7 +174,7 @@ class Caldera_Forms_Files{
      * @param array $form Form config
      * @param bool $second_run Optional. If using at mail hooks, set true to prevent recurrsion
      */
-    public function cleanup( $form, $second_run = false ){
+    public static function cleanup( $form, $second_run = false ){
         if( false === $second_run && Caldera_Forms::should_send_mail( $form ) ) {
             add_action( 'caldera_forms_mailer_complete', array( __CLASS__, 'delete_after_mail' ), 10, 3 );
             add_action( 'caldera_forms_mailer_failed', array( __CLASS__, 'delete_after_mail' ), 10, 3 );
