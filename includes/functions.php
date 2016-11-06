@@ -31,3 +31,22 @@ function caldera_forms_sanitize( $input, $params = array() ){
 function caldera_forms_very_safe_string( $string ){
 	return trim( strip_tags( stripslashes_deep( $string ) ) );
 }
+
+
+add_action( 'init', 'caldera_forms_fix_license_manger_link' );
+
+/**
+ * Redirect old license page link to new license page link
+ *
+ * @since 1.4.4
+ */
+function caldera_forms_fix_license_manger_link(){
+	if( ! is_admin() ){
+		return;
+	}
+	global $pagenow;
+	if( 'options-general.php' == $pagenow && isset( $_GET[ 'page' ] ) && 'calderawp_license_manager' == $_GET[ 'page' ]  ){
+		cf_redirect( add_query_arg( 'page', 'calderawp_license_manager', self_admin_url( 'wp-admin/admin.php') ) );
+	}
+}
+
