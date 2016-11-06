@@ -184,7 +184,7 @@ class Caldera_Forms_Files{
         $form_id = $form[ 'ID' ];
         $fields = Caldera_Forms_Forms::get_fields( $form, false );
         foreach( $fields as $id => $field ){
-            if( 'advanced_file' == $field[ 'type' ] ){
+            if( Caldera_Forms_Field_Util::is_file_field( $field, $form ) ){
                 self::delete_uploaded_files( $field[ 'ID' ], $form_id );
             }
 
@@ -221,6 +221,29 @@ class Caldera_Forms_Files{
             self::delete_uploaded_files( $args[0], $args[1] );
         }
 
+    }
+
+	/**
+	 * Check if file field's uploads are private or not
+	 *
+	 * @since 1.4.4
+	 *
+	 * @param array $field Field config
+	 *
+	 * @return bool
+	 */
+    public static function is_private( array  $field ){
+
+    	if( Caldera_Forms_Field_Util::is_file_field( $field ) ) {
+		    if( isset( $field[ 'config']['media_lib'] ) && true == $field['config']['media_lib'] ){
+		    	return false;
+		    }else{
+		    	return true;
+		    }
+
+	    }
+
+	    return true;
     }
 
 }

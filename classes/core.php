@@ -2290,6 +2290,11 @@ class Caldera_Forms {
 											) ) ) {
 												continue;
 											}
+
+											if( Caldera_Forms_Field_Util::is_file_field( $field_id, $form ) && Caldera_Forms_Files::is_private( Caldera_Forms_Field_Util::get_field( $field_id, $form ) ) ){
+												continue;
+											}
+
 											// filter the field to get field data
 											$field = apply_filters( 'caldera_forms_render_get_field', $field, $this_form );
 											$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field[ 'type' ], $field, $this_form );

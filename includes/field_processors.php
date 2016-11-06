@@ -110,7 +110,7 @@ function cf_handle_file_upload( $entry, $field, $form ){
 				continue;
 			}
 
-            if( isset( $field['config']['media_lib'] ) && true == $field['config']['media_lib'] ){
+            if( ! Caldera_Forms_Files::is_private( $field ) ){
                 $upload_args = array(
                     'private' => false,
                 );

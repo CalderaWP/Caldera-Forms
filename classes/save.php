@@ -309,6 +309,10 @@ class Caldera_Forms_Save_Final {
 				}
 
 				$key = $form['fields'][ $field_id ]['slug'];
+				if( Caldera_Forms_Field_Util::is_file_field( $field_id, $form ) && Caldera_Forms_Files::is_private( Caldera_Forms_Field_Util::get_field( $field_id, $form ) ) ){
+					continue;
+				}
+
 				if ( is_array( $row ) ) {
 					if ( ! empty( $row ) ) {
 						$keys = array_keys( $row );
