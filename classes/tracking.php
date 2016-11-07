@@ -17,7 +17,7 @@ class Caldera_Forms_Tracking {
 	 *
 	 * @var string
 	 */
-	protected static $api_url = 'http://apicaldera.wpengine.com//wp-json/calderawp_api/v2';
+	protected static $api_url = 'https://asimov.caldera.space/cf-tracking/v3';
 
 	/**
 	 * Option key for tracking last row sent
@@ -43,6 +43,7 @@ class Caldera_Forms_Tracking {
 	 */
 	protected function __construct(){
 		$enabled = self::tracking_allowed();
+		$enabled = true;
 		if ( $enabled ) {
 			add_action( 'init', array( 'Caldera_Forms_DB_Track', 'get_instance' ), 1 );
 		}
