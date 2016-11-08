@@ -50,3 +50,26 @@ function caldera_forms_fix_license_manger_link(){
 	}
 }
 
+add_filter('nonce_user_logged_out', 'caldera_forms_woo_nonce_fix', 100, 2 );
+
+/**
+ * If WooCommerce changes logged out nonce user ID, change it back to zero when checking Caldera Forms nonce.
+ *
+ * Workaround for https://github.com/CalderaWP/Caldera-Forms/issues/894
+ *
+ * @param int $user_id User ID
+ * @param string $action Nonce action
+ *
+ * @return int
+ */
+function caldera_forms_woo_nonce_fix( $user_id, $action) {
+	if ( class_exists( 'WooCommerce' ) ) {
+		if ( $user_id && $user_id != 0 && $action && $action == 'caldera_forms_front' ) {
+			$user_id = 0;
+		}
+
+	}
+
+	return $user_id;
+
+}
