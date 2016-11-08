@@ -246,4 +246,28 @@ class Caldera_Forms_Files{
 	    return true;
     }
 
+	/**
+	 * Get the callback function for file uploads
+	 *
+	 * @since 1.4.4
+	 *
+	 * @param array $form Form config
+	 * @param array $field Field config
+	 *
+	 * @return array|string|callable
+	 */
+    public static function get_upload_handler( $form, $field ){
+
+    	/**
+	     * Filter the callback function for file uploads
+	     *
+	     * @since 1.4.4
+	     *
+	     * @param array|string|callable Callable
+	     * @param array $form Form config
+	     * @param array $field Field config
+	     */
+    	return apply_filters( 'caldera_forms_file_upload_handler', array( 'Caldera_Forms_Files', 'upload' ), $form, $field );
+    }
+
 }
