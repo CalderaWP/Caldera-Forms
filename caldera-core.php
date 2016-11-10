@@ -49,7 +49,10 @@ function caldera_forms_load(){
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Email', CFCORE_PATH . 'classes/email' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Admin', CFCORE_PATH . 'classes/admin' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Render', CFCORE_PATH . 'classes/render' );
+	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_CSV', CFCORE_PATH . 'classes/csv' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Processor_Interface', CFCORE_PATH . 'processors/classes/interfaces' );
+	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_API', CFCORE_PATH . 'classes/api' );
+	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Field', CFCORE_PATH . 'classes/field' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Processor', CFCORE_PATH . 'processors/classes' );
 
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms', CFCORE_PATH . 'classes' );
@@ -62,6 +65,7 @@ function caldera_forms_load(){
 	include_once CFCORE_PATH . 'includes/filter_addon_plugins.php';
 	include_once CFCORE_PATH . 'includes/compat.php';
 	include_once CFCORE_PATH . 'processors/functions.php';
+	include_once CFCORE_PATH . 'includes/functions.php';
 
 	/**
 	 * Runs after all of the includes and autoload setup is done in Caldera Forms core
@@ -80,4 +84,5 @@ add_action( 'plugins_loaded', array( 'Caldera_Forms_Tracking', 'get_instance' ) 
 if ( is_admin() || defined( 'DOING_AJAX' ) ) {
 	add_action( 'plugins_loaded', array( 'Caldera_Forms_Admin', 'get_instance' ) );
 	add_action( 'plugins_loaded', array( 'Caldera_Forms_Support', 'get_instance' ) );
+	include_once CFCORE_PATH . 'includes/plugin-page-banner.php';
 }

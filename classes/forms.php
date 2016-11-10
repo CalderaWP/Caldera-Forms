@@ -617,4 +617,38 @@ class Caldera_Forms_Forms {
 
 	}
 
+	/**
+	 * Get all fields of a form
+	 *
+	 * @since 1.4.4
+	 *
+	 * @param array $form The form config
+	 * @param bool $in_order Optional. Return in layout order, the default, or in stored order (false).
+	 *
+	 * @return array|mixed
+	 */
+	public static function get_fields( array $form, $in_order = true ){
+		if( empty( $form[ 'fields' ] ) ){
+			return array();
+		}
+
+		$fields = $form[ 'fields' ];
+		if ( $in_order ) {
+			$order   = array_keys( $form[ 'layout_grid' ][ 'fields' ] );
+			$ordered = array();
+			foreach ( $order as $key ) {
+				if ( isset( $fields[ $key ] ) ) {
+					$ordered[ $key ] = $fields[ $key ];
+				}
+
+			}
+
+			return $ordered;
+		}else{
+			return $fields;
+		}
+
+
+	}
+
 }

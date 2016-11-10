@@ -60,6 +60,15 @@ class Caldera_Forms {
 	protected static $footer_modals;
 
 	/**
+	 * CF-API v2
+	 *
+	 * @since 1.4.4
+	 *
+	 * @var Caldera_Forms_API_Load
+	 */
+	protected static $api;
+
+	/**
 	 * Initialize the plugin by setting localization, filters, and administration functions.
 	 *
 	 */
@@ -77,15 +86,9 @@ class Caldera_Forms {
 		add_action('caldera_forms_edit_end', array($this, 'calculations_templates') );
 		add_filter('caldera_forms_render_get_field', array( $this, 'auto_populate_options_field' ), 10, 2);
 		add_filter('caldera_forms_render_get_field', array( $this, 'apply_conditional_groups' ), 10, 2);
-		//add_filter('caldera_forms_render_get_field_type-radio', array( $this, 'auto_populate_options_field' ), 10, 2);
-		//add_filter('caldera_forms_render_get_field_type-checkbox', array( $this, 'auto_populate_options_field' ), 10, 2);
-		//add_filter('caldera_forms_render_get_field_type-dropdown', array( $this, 'auto_populate_options_field' ), 10, 2);
-		//add_filter('caldera_forms_render_get_field_type-toggle_switch', array( $this, 'auto_populate_options_field' ), 10, 2);
-		add_filter('caldera_forms_view_field_paragraph', 'wpautop' );
+        add_filter('caldera_forms_view_field_paragraph', 'wpautop' );
 
-		// magic tags
-		//add_filter('caldera_forms_render_magic_tag', array( $this, 'do_magic_tags'));
-		// mailser
+		//mailer magic
 		add_filter('caldera_forms_get_magic_tags', array( $this, 'set_magic_tags'),1);
 		add_filter('caldera_forms_mailer', array( $this, 'mail_attachment_check'),10, 3);
 
@@ -110,8 +113,12 @@ class Caldera_Forms {
 			add_action( 'wp_ajax_cf_email_save', array( 'Caldera_Forms_Email_Settings', 'save' ) );
 		}
 
+		//auto-population via Easy Pods/ Easy Queries
 		add_action( 'caldera_forms_render_start', array( __CLASS__, 'easy_pods_queries_setup' ) );
 
+        //delete file uploads that are not going in media library
+        add_action( 'caldera_forms_submit_complete', array( 'Caldera_Forms_Files', 'cleanup' ) );
+        add_action( Caldera_Forms_Files::CRON_ACTION, array( 'Caldera_Forms_Files', 'cleanup_via_cron' ) );
 
 		if( current_user_can( Caldera_Forms::get_manage_cap( 'admin' ) ) ) {
 			$id = null;
@@ -712,24 +719,15 @@ class Caldera_Forms {
 			}
 
 		}
-		
+
 		if(! empty( $form[ 'db_support' ] ) ) {
 			Caldera_Forms_Save_Final::save_in_db( $form, $entryid );
 		}
 
-		if( !empty( $transdata['edit'] ) ){
-			// update
-			if( empty($form['mailer']['on_update'] ) ){
-				return;
-			}
-		}else{
-			// insert
-			if( empty( $form['mailer']['enable_mailer'] ) && empty($form['mailer']['on_insert'] ) ){
-				return;
-			}
-		}
 
-		Caldera_Forms_Save_Final::do_mailer( $form, $entryid );
+        if ( self::should_send_mail( $form, $transdata ) ) {
+            Caldera_Forms_Save_Final::do_mailer($form, $entryid);
+        }
 
 
 	}
@@ -2277,39 +2275,52 @@ class Caldera_Forms {
 
 									} else {
 										$html = false;
+										$pattern = '';
 									}
 
 									$out = array();
-									foreach ( $this_form[ 'fields' ] as $field_id => $field ) {
+									$ordered_fields = Caldera_Forms_Forms::get_fields( $form );
+									if ( ! empty( $ordered_fields ) ) {
+										foreach ( $ordered_fields as $field_id => $field ) {
 
-										if ( in_array( $field[ 'type' ], array( 'button', 'recaptcha', 'html' ) ) ) {
-											continue;
-										}
-										// filter the field to get field data
-										$field = apply_filters( 'caldera_forms_render_get_field', $field, $this_form );
-										$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field[ 'type' ], $field, $this_form );
-										$field = apply_filters( 'caldera_forms_render_get_field_slug-' . $field[ 'slug' ], $field, $this_form );
-
-										$field_values = (array) self::get_field_data( $field_id, $this_form );
-
-										if ( isset( $field_values[ 'label' ] ) ) {
-											$field_values = $field_values[ 'value' ];
-										} else {
-											foreach ( $field_values as $field_key => $field_value ) {
-												if ( isset( $field_value[ 'label' ] ) && isset( $field_value[ 'value' ] ) ) {
-													$field_value[ $field_key ] = $field_value[ 'value' ];
-												}
-
+											if ( in_array( $field[ 'type' ], array(
+												'button',
+												'recaptcha',
+												'html'
+											) ) ) {
+												continue;
 											}
-										}
 
-										$field_value = implode( ', ', (array) $field_values );
+											if( Caldera_Forms_Field_Util::is_file_field( $field_id, $form ) && Caldera_Forms_Files::is_private( Caldera_Forms_Field_Util::get_field( $field_id, $form ) ) ){
+												continue;
+											}
 
-										if ( $field_value !== null && strlen( $field_value ) > 0 ) {
-											if ( $html ) {
-												$out[] = sprintf( $pattern, $field[ 'label' ], $field_value );
+											// filter the field to get field data
+											$field = apply_filters( 'caldera_forms_render_get_field', $field, $this_form );
+											$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field[ 'type' ], $field, $this_form );
+											$field = apply_filters( 'caldera_forms_render_get_field_slug-' . $field[ 'slug' ], $field, $this_form );
+
+											$field_values = (array) self::get_field_data( $field_id, $this_form );
+
+											if ( isset( $field_values[ 'label' ] ) ) {
+												$field_values = $field_values[ 'value' ];
 											} else {
-												$out[] = $field[ 'label' ] . ': ' . $field_value;
+												foreach ( $field_values as $field_key => $field_value ) {
+													if ( isset( $field_value[ 'label' ] ) && isset( $field_value[ 'value' ] ) ) {
+														$field_value[ $field_key ] = $field_value[ 'value' ];
+													}
+
+												}
+											}
+
+											$field_value = implode( ', ', (array) $field_values );
+
+											if ( $field_value !== null && strlen( $field_value ) > 0 ) {
+												if ( $html ) {
+													$out[] = sprintf( $pattern, $field[ 'label' ], $field_value );
+												} else {
+													$out[] = $field[ 'label' ] . ': ' . $field_value;
+												}
 											}
 										}
 									}
@@ -3813,9 +3824,6 @@ class Caldera_Forms {
 			return;
 		}
 
-		//theres forms, bring in the globals
-		wp_enqueue_style( 'cf-field-styles' );
-
 		Caldera_Forms_Render_Assets::optional_style_includes();
 
 		foreach( $page_forms as $form_id ){
@@ -3875,7 +3883,8 @@ class Caldera_Forms {
 		if ( ! isset( $wp_query->query_vars['cf_api'] ) ){
 			return;
 		}
-		// check if form exists
+
+        // check if form exists
 		$form = Caldera_Forms_Forms::get_form( $wp_query->query_vars['cf_api'] );
 		$atts = array(
 			'id' => $wp_query->query_vars['cf_api'],
@@ -3981,27 +3990,8 @@ class Caldera_Forms {
 		global $post, $wp_query, $process_id, $form;
 
 		// setup script and style urls
-		$style_urls = array(
-			'modals' => CFCORE_URL . 'assets/css/remodal.min.css',
-			'modals-theme' => CFCORE_URL . 'assets/css/remodal-default-theme.min.css',
-			'grid' => CFCORE_URL . 'assets/css/caldera-grid.css',
-			'form' => CFCORE_URL . 'assets/css/caldera-form.css',
-			'alert' => CFCORE_URL . 'assets/css/caldera-alert.css',
-			'field' => CFCORE_URL . 'assets/css/fields.min.css',
-		);
-		$script_urls = array(
-			'dynamic'	=>	CFCORE_URL . 'assets/js/formobject.min.js',
-			'modals'	=>	CFCORE_URL . 'assets/js/remodal.min.js',
-			'baldrick'	=>	CFCORE_URL . 'assets/js/jquery.baldrick.min.js',
-			'ajax'		=>	CFCORE_URL . 'assets/js/ajax-core.min.js',
-			'field'	=>	CFCORE_URL . 'assets/js/fields.min.js',
-			'conditionals' => CFCORE_URL . 'assets/js/conditionals.min.js',
-			'validator-i18n' => null,
-			'validator' => CFCORE_URL . 'assets/js/parsley.min.js',
-			//'polyfiller' => CFCORE_URL . 'assets/js/polyfiller.min.js',
-			'init'		=>	CFCORE_URL . 'assets/js/frontend-script-init.min.js',
-		);
-
+		$style_urls = Caldera_Forms_Render_Assets::get_core_styles();
+		$script_urls = Caldera_Forms_Render_Assets::get_core_scripts();
 		$script_style_urls = array();
 
 		// check to see language and include the language add on
@@ -4052,6 +4042,8 @@ class Caldera_Forms {
 			}
 			wp_register_style( 'cf-' . $style_key . '-styles', $style_url, array(), CFCORE_VER );
 		}
+
+		wp_register_style( 'cf-front-styles', CFCORE_URL . 'assets/css/caldera-forms-front.min.css', array(), CFCORE_VER );
 		// register scripts
 		foreach( $script_style_urls['script'] as $script_key => $script_url ){
 			if( empty( $script_url ) ){
@@ -4429,7 +4421,7 @@ class Caldera_Forms {
 			"field_before"		=>	"<div class=\"" . $field_input_class ."\">\r\n",
 			"label_before"		=>	( empty($field['hide_label']) ? "<label id=\"" . $field['ID'] ."Label\" for=\"" . $field['ID'].'_'.$current_form_count . "\" class=\"" . implode(' ', $field_classes['field_label'] ) . "\">" : null ),
 			"label"				=>	( empty($field['hide_label']) ? $field['label'] : null ),
-			"label_required"	=>	( empty($field['hide_label']) ? ( !empty($field['required']) ? " <span aria-hidden=\"true\" role=\"presentation\" class=\"" . implode(' ', $field_classes['field_required_tag'] ) . "\" style=\"color:#ff2222;\">*</span>" : "" ) : null ),
+			"label_required"	=>	( empty($field['hide_label']) ? ( !empty($field['required']) ? " <span aria-hidden=\"true\" role=\"presentation\" class=\"" . implode(' ', $field_classes['field_required_tag'] ) . "\" style=\"color:#ee0000;\">*</span>" : "" ) : null ),
 			"label_after"		=>	( empty($field['hide_label']) ? "</label>" : null ),
 			"field_placeholder" =>	( !empty($field['hide_label']) ? 'placeholder="' . htmlentities( $field['label'] ) .'"' : null),
 			"field_required"	=>	( !empty($field['required']) ? 'required="required"' : null),
@@ -4651,10 +4643,6 @@ class Caldera_Forms {
 
 		Caldera_Forms_Render_Assets::optional_style_includes();
 
-		// fallback for function based rendering in case it missed detection
-		wp_enqueue_style( 'cf-field-styles' );
-
-
 
 		include_once CFCORE_PATH . "classes/caldera-grid.php";
 
@@ -4688,6 +4676,9 @@ class Caldera_Forms {
 		$grid_settings = apply_filters( 'caldera_forms_render_grid_settings', $grid_settings, $form);
 
 		$form['grid_object'] = new Caldera_Form_Grid($grid_settings);
+		if( empty( $form['layout_grid'] ) ) {
+			$form['layout_grid'] = array( 'structure' => '' );
+		}
 
 		// Build Pages Breaks
 		if( false !== strpos($form['layout_grid']['structure'], '#')){
@@ -4846,6 +4837,7 @@ class Caldera_Forms {
 				$notices['success']['note'] = $form['success'];
 			}
 		}
+
 
 		// build grid & pages
 		$form['grid_object']->setLayout($form['layout_grid']['structure']);
@@ -5385,5 +5377,71 @@ class Caldera_Forms {
 
 
 	}
+
+	/**
+	 * Load the Caldera Forms REST API
+	 *
+	 * @since 1.4.4
+	 *
+	 * @uses "rest_api_init" action
+	 */
+	public static function init_rest_api(){
+		self::$api = new Caldera_Forms_API_Load( Caldera_Forms_API_Util::api_namespace() );
+
+		/**
+		 * Runs after REST API loader is initialized, but before routes are initialized.
+		 *
+		 * Use this hook to register routes in add-ons
+		 *
+		 * do_action( 'caldera_forms_rest_api_pre_init', function( $api ){ $api->add_route(...
+		 *
+		 * @since 1.4.4
+		 *
+		 * @param Caldera_Forms_API_Load $api API Load class
+		 */
+		do_action( 'caldera_forms_rest_api_pre_init', self::$api );
+
+		self::$api->init_routes();
+
+		/**
+		 * Runs after Caldera Forms REST API is loaded
+		 *
+		 * @since 1.4.4
+		 */
+		do_action( 'caldera_forms_rest_api_init' );
+
+	}
+
+	public static function should_send_mail( $form, $transadata = array() ){
+	    $send = true;
+	    if( empty( $transadata ) ){
+	        global $transadata;
+        }
+
+        if( !empty( $transdata['edit'] ) ){
+            // update
+            if( empty($form['mailer']['on_update'] ) ){
+                $send = false;
+            }
+        }else{
+            // insert
+            if( empty( $form['mailer']['enable_mailer'] ) && empty($form['mailer']['on_insert'] ) ){
+                $send = false;
+            }
+        }
+
+        /**
+         * Change programmed decision to send mailer or not
+         *
+         * Useful for causing emails to send on entry edit, when they normally would not
+         *
+         * @since 1.4.4
+         *
+         * @param bool $send Whether to send or not
+         * @param array $form Form config
+         */
+        return apply_filters( 'caldera_forms_send_email', $send, $form );
+
+    }
 
 }

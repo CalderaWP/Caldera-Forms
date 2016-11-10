@@ -1143,9 +1143,7 @@ class Caldera_Forms_Admin {
 
 			$field_types = apply_filters( 'caldera_forms_get_field_types', array() );
 
-			wp_enqueue_style( 'cf-grid-styles' );
-			wp_enqueue_style( 'cf-form-styles' );
-			wp_enqueue_style( 'cf-alert-styles' );
+
 			wp_enqueue_style( 'cf-field-styles' );
 
 			wp_enqueue_script( 'cf-field' );
@@ -1489,12 +1487,13 @@ class Caldera_Forms_Admin {
 			if( empty( $headers ) ){
 				wp_die( esc_html_e( 'Could not process export. This is most likely due to a problem with the form configuration.', 'caldera-forms' ) );
 			}
+			$encoding = Caldera_Forms_CSV_Util::character_encoding( $form );
 
 			header("Pragma: public");
 			header("Expires: 0");
 			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 			header("Cache-Control: private",false);
-			header("Content-Type: text/csv charset=utf-8;");
+			header("Content-Type: text/csv charset=$encoding;");
 			header("Content-Disposition: attachment; filename=\"" . sanitize_file_name( $form['name'] ) . ".csv\";" );
 			header("Content-Transfer-Encoding: binary");
 			$df = fopen("php://output", 'w');

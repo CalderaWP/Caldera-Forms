@@ -93,7 +93,9 @@ function cf_handle_file_upload( $entry, $field, $form ){
 			}
 		}
 
-		if ( ! function_exists( 'wp_handle_upload' ) ) require_once( ABSPATH . 'wp-admin/includes/file.php' );
+		if ( ! function_exists( 'wp_handle_upload' ) ) {
+		    require_once( ABSPATH . 'wp-admin/includes/file.php' );
+        }
 		
 		$files = array();
 		foreach( (array) $_FILES[$field['ID']] as $file_key=>$file_parts ){
@@ -107,7 +109,25 @@ function cf_handle_file_upload( $entry, $field, $form ){
 			if( ! $required && 0 == $file[ 'size' ] ){
 				continue;
 			}
-			$upload = wp_handle_upload($file, array( 'test_form' => false ), date('Y/m') );
+
+            if( ! Caldera_Forms_Files::is_private( $field ) ){
+                $upload_args = array(
+                    'private' => false,
+                );
+            }else{
+                $upload_args = array(
+                    'private' => true,
+                    'field_id' => $field['ID'],
+                    'form_id' => $form['ID']
+                );
+            }
+
+			$uploader = Caldera_Forms_Files::get_upload_handler( $form, $field );
+			if( is_callable( $uploader) ){
+				$upload = call_user_func( $uploader, $file, $upload_args );
+			}else{
+				return new WP_Error( 'invalid-upload-handler', __( sprintf( 'Invalid file upload handler. See %s', ' https://calderawp.com/doc/alternative-file-upload-directory/'), 'caldera-forms') );
+			}
 
 			if( !empty( $upload['error'] ) ){
 				return new WP_Error( 'fail', $upload['error'] );
@@ -115,27 +135,7 @@ function cf_handle_file_upload( $entry, $field, $form ){
 			$uploads[] = $upload['url'];
 			// check media handler
 			if( !empty( $field['config']['media_lib'] ) ){
-				// send to media library
-				// Make sure that this file is included, as wp_generate_attachment_metadata() depends on it.
-				require_once( ABSPATH . 'wp-admin/includes/media.php' );
-				require_once( ABSPATH . 'wp-admin/includes/image.php' );
-
-				// create
-				$media_item = array(
-					'guid'           => $upload['file'],
-					'post_mime_type' => $upload['type'],
-					'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $upload['file'] ) ),
-					'post_content'   => '',
-					'post_status'    => 'inherit'
-				);
-
-				// Insert the media_item.
-				$media_id = wp_insert_attachment( $media_item, $upload['file'] );
-
-				// Generate the metadata for the media_item, and update the database record.
-				$media_data = wp_generate_attachment_metadata( $media_id, $upload['file'] );
-				wp_update_attachment_metadata( $media_id, $media_data );
-
+                Caldera_Forms_Files::add_to_media_library( $upload );
 			}
 		}
 
@@ -166,3 +166,24 @@ function cf_handle_file_upload( $entry, $field, $form ){
 	}
 
 }
+
+
+add_filter( 'caldera_forms_render_get_field_type-hidden', 'caldera_forms_allow_edit_hidden_fields' );
+
+/**
+ * When editing a form from entry viewer, convert hidden fields to text fields to so they too can be edited.
+ *
+ * @since 1.4.3
+ *
+ * @uses "caldera_forms_render_get_field_type-hidden" filter
+ *
+ * @param array $field Field config
+ *
+ * @return mixed
+ */
+function caldera_forms_allow_edit_hidden_fields( $field ){
+	if( ( ! empty( $_GET[ 'modal' ] ) && 'view_entry' == $_GET[ 'modal' ]  ) || ( ! empty( $_POST[ '_cf_frm_edt' ] ) )  ){
+		$field[ 'type' ] = 'text';
+	}
+	return $field;
+};

@@ -69,25 +69,39 @@ class Caldera_Forms_Render_Assets {
 	 * @since 1.4.3
 	 */
 	public static function optional_style_includes() {
-		$style_includes = get_option( '_caldera_forms_styleincludes' );
-
-		/**
-		 * Disable/enable including of front-end styles
-		 *
-		 * @since unknown
-		 *
-		 * @param array $style_includes To include or not. Default is value of option "_caldera_forms_styleincludes"
-		 */
-		$style_includes = apply_filters( 'caldera_forms_get_style_includes', $style_includes );
-
-		if ( ! empty( $style_includes[ 'grid' ] ) ) {
-			wp_enqueue_style( 'cf-grid-styles' );
+		$style_includes = self::get_style_includes();
+		$all = true;
+		$styles = array();
+		if ( true == $style_includes[ 'grid' ]  ) {
+			$styles[] =  'cf-grid-styles';
+		}else{
+			$all = false;
 		}
-		if ( ! empty( $style_includes[ 'form' ] ) ) {
-			wp_enqueue_style( 'cf-form-styles' );
+
+		if ( true == $style_includes[ 'form' ]  ) {
+			$styles[] = 'cf-form-styles';
+		} else{
+
+			$all = false;
 		}
-		if ( ! empty( $style_includes[ 'alert' ] ) ) {
-			wp_enqueue_style( 'cf-alert-styles' );
+
+		if ( true == $style_includes[ 'alert' ]  ) {
+			$styles[] = 'cf-alert-styles';
+
+		}else{
+			$all = false;
+		}
+
+		if( $all ){
+			wp_enqueue_style( 'cf-front-styles' );
+		}else{
+			if (  ! empty( $styles ) ) {
+				foreach ( $styles as $style ) {
+					wp_enqueue_style( $style );
+				}
+
+			}
+
 		}
 
 	}
@@ -123,6 +137,92 @@ class Caldera_Forms_Render_Assets {
 
 		return isset( self::$loaded[ $type ][ $slug ] );
 
+	}
+
+	/**
+	 * Get which of the optional styles are to be used
+	 *
+	 * @since 1.4.4.
+	 *
+	 * @return array
+	 */
+	protected static function get_style_includes() {
+		$style_includes = get_option( '_caldera_forms_styleincludes' );
+
+		/**
+		 * Disable/enable including of front-end styles
+		 *
+		 * @since unknown
+		 *
+		 * @param array $style_includes To include or not. Default is value of option "_caldera_forms_styleincludes"
+		 */
+		$style_includes = apply_filters( 'caldera_forms_get_style_includes', $style_includes );
+		$style_includes = wp_parse_args( $style_includes, array(
+			'grid'  => true,
+			'alert' => true,
+			'form'  => true
+		) );
+
+		return $style_includes;
+	}
+
+	/**
+	 * Get URLs and handles for our CSS
+	 *
+	 * @since 1.4.4
+	 *
+	 * @return array
+	 */
+	public static function get_core_styles(){
+		$style_urls = array(
+			'modals' => CFCORE_URL . 'assets/css/remodal.min.css',
+			'modals-theme' => CFCORE_URL . 'assets/css/remodal-default-theme.min.css',
+			'grid' => CFCORE_URL . 'assets/css/caldera-grid.css',
+			'form' => CFCORE_URL . 'assets/css/caldera-form.css',
+			'alert' => CFCORE_URL . 'assets/css/caldera-alert.css',
+			'field' => CFCORE_URL . 'assets/css/fields.min.css',
+		);
+
+		$all = true;
+		foreach ( self::get_style_includes()  as $script => $use ){
+			if( false == $use ){
+				$all = false;
+				unset($style_urls[  $script ] );
+			}
+
+		}
+		if( $all ){
+			foreach ( self::get_style_includes()  as $script => $use ){
+				unset( $style_urls[ $script ] );
+			}
+
+		}
+
+
+		return $style_urls;
+	}
+
+	/**
+	 * Get URLs and handles for our JavaScripts
+	 *
+	 * @since 1.4.4
+	 *
+	 * @return array
+	 */
+	public static function get_core_scripts(){
+		 $script_urls = array(
+			'dynamic'	=>	CFCORE_URL . 'assets/js/formobject.min.js',
+			'modals'	=>	CFCORE_URL . 'assets/js/remodal.min.js',
+			'baldrick'	=>	CFCORE_URL . 'assets/js/jquery.baldrick.min.js',
+			'ajax'		=>	CFCORE_URL . 'assets/js/ajax-core.min.js',
+			'field'	=>	CFCORE_URL . 'assets/js/fields.min.js',
+			'conditionals' => CFCORE_URL . 'assets/js/conditionals.min.js',
+			'validator-i18n' => null,
+			'validator' => CFCORE_URL . 'assets/js/parsley.min.js',
+			'init'		=>	CFCORE_URL . 'assets/js/frontend-script-init.min.js',
+		);
+
+		return $script_urls;
 	}
 
 }
