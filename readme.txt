@@ -1,8 +1,8 @@
 === Caldera Forms - Drag and drop responsive WordPress form builder ===
 Contributors: Desertsnowman, Shelob9
 Tags: forms, formbuilder, form builder, contact form, form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, echecks, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, eCheck,dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, gravity forms, contact, email, auto-responder, aweber, converkit, builder, contact forms, search, ab testing, a/b testing, split testing, shortcode, wordpress, awesome plugin, plugin, easy, braintree form, dwolla form, authorize.net form, mailchimp form, mailchimp popup, aweber form, converkit form, stripe form, stripe popup, eCheck form
-Requires at least: 4.3
-Tested up to: 4.6.1
+Requires at least: 4.4
+Tested up to: 4.7.0
 Stable tag: 1.4.3.1
 License: GPLv2
 
@@ -13,7 +13,7 @@ Create beautiful, responsive forms with a simple drag and drop editor.
 
 Caldera Forms' visual editor simplifies form building for WordPress. Set up your form with multiple columns, add additional pages, and funnel user responses with conditional logic to get more robust data and relevant information from your customers and site visitors. Anti-spam, AJAX, notification emails, and database entry tracking are enabled by default.
 
-Caldera Forms is a free plugin by <a href="https://CalderaWP.com?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms" title="CalderaWP: Transform Your WordPress Experience">CalderaWP</a> developed by [Josh Pollock](http://JoshPress.net) and [David Cramer](http://digilab.co.za/).
+Caldera Forms is a free plugin by <a href="https://CalderaWP.com?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms" title="CalderaWP: Transform Your WordPress Experience">CalderaWP</a> developed by [Josh Pollock](https://JoshPress.net) and [David Cramer](http://digilab.co.za/).
 
 > 5 Stars! "Exceptionally well thought out and executed."
 >
@@ -722,6 +722,26 @@ The [Trumbowyg](https://alex-d.github.io/Trumbowyg/) JavaScript library is used
 4. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
+
+= Caldera Forms 1.4.4 ( November 10, 2016  ) =
+* FIXED: Issue where Caldera Forms submit nonce did not verify when using WooCommerce and a non logged in user had items in cart.
+* ADDED: caldera_forms_file_upload_handler Filter for alternative file upload handler. See: [https://calderawp.com/doc/alternative-file-upload-directory/](https://calderawp.com/doc/alternative-file-upload-directory/)
+* CHANGED: Usage tracking API URL.
+* ADDED: Redirect for old license manager page to new license manager page for less confusion when activating Caldera Forms add-ons
+* ADDED: Add to Media Library option for regular file fields.
+* FIXED: Previously, files not set to add to media library were left in uploads directory. That was bad, now they are added to a uploads/<hashed-string> and then deleted when no longer needed.
+* ADDED: Welcome banner. You are now welcomed to Caldera Forms. Thanks Matt for the cool [example code](https://wordimpress.com/brand-your-freemium-plugin-without-ruining-user-experience/).
+* FIXED: For accessibility reasons, added an Alt tag on Gravatar field display.
+* FIXED: For accessibility reasons, the warning color red was changed for better contrast.
+* FIXED: Emailed CSVs were showing stored JSON for checkbox fields, now they show checkbox values, which is much better.
+* FIXED: Previously you could not edit a hidden form field in the entry editor. Now you can.
+* ADDED: Infrastructure for REST API. Will be used more later, right now, it's for add-ons to make use of.
+* FIXED: That thing where people ask Josh how he's using REST API in Caldera Forms and he has to say "not at all."
+* ADDED: caldera_forms_csv_character_encoding filter for changing character encoding of CSV exports. See [https://calderawp.com/doc/caldera_forms_csv_character_encoding/](https://calderawp.com/doc/caldera_forms_csv_character_encoding/)
+* FIXED: For accessibility reasons, added alt tag to toggle switch form field.
+* FIXED: Made summary magic tag output fields in order they appear in form, not order they were added. This used to be how it worked, which was good, then it stopped being how it worked, which was bad. But now it is fixed.
+* IMPROVED: CSS loading. There are three optional stylesheets, most people select all three, when that happens we now load 1 minified style sheet, instead of 3. That's a good start. Will improve that more in next release.
+
 = Caldera Forms 1.4.3.1 ( October 4th, 2016  ) =
 * FIXED: jQuery syntax error in HTML form field JavaScript
 
