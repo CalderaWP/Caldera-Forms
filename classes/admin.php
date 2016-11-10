@@ -1143,9 +1143,7 @@ class Caldera_Forms_Admin {
 
 			$field_types = apply_filters( 'caldera_forms_get_field_types', array() );
 
-			wp_enqueue_style( 'cf-grid-styles' );
-			wp_enqueue_style( 'cf-form-styles' );
-			wp_enqueue_style( 'cf-alert-styles' );
+
 			wp_enqueue_style( 'cf-field-styles' );
 
 			wp_enqueue_script( 'cf-field' );

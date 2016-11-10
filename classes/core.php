@@ -3824,9 +3824,6 @@ class Caldera_Forms {
 			return;
 		}
 
-		//theres forms, bring in the globals
-		wp_enqueue_style( 'cf-field-styles' );
-
 		Caldera_Forms_Render_Assets::optional_style_includes();
 
 		foreach( $page_forms as $form_id ){
@@ -3993,27 +3990,8 @@ class Caldera_Forms {
 		global $post, $wp_query, $process_id, $form;
 
 		// setup script and style urls
-		$style_urls = array(
-			'modals' => CFCORE_URL . 'assets/css/remodal.min.css',
-			'modals-theme' => CFCORE_URL . 'assets/css/remodal-default-theme.min.css',
-			'grid' => CFCORE_URL . 'assets/css/caldera-grid.css',
-			'form' => CFCORE_URL . 'assets/css/caldera-form.css',
-			'alert' => CFCORE_URL . 'assets/css/caldera-alert.css',
-			'field' => CFCORE_URL . 'assets/css/fields.min.css',
-		);
-		$script_urls = array(
-			'dynamic'	=>	CFCORE_URL . 'assets/js/formobject.min.js',
-			'modals'	=>	CFCORE_URL . 'assets/js/remodal.min.js',
-			'baldrick'	=>	CFCORE_URL . 'assets/js/jquery.baldrick.min.js',
-			'ajax'		=>	CFCORE_URL . 'assets/js/ajax-core.min.js',
-			'field'	=>	CFCORE_URL . 'assets/js/fields.min.js',
-			'conditionals' => CFCORE_URL . 'assets/js/conditionals.min.js',
-			'validator-i18n' => null,
-			'validator' => CFCORE_URL . 'assets/js/parsley.min.js',
-			//'polyfiller' => CFCORE_URL . 'assets/js/polyfiller.min.js',
-			'init'		=>	CFCORE_URL . 'assets/js/frontend-script-init.min.js',
-		);
-
+		$style_urls = Caldera_Forms_Render_Assets::get_core_styles();
+		$script_urls = Caldera_Forms_Render_Assets::get_core_scripts();
 		$script_style_urls = array();
 
 		// check to see language and include the language add on
@@ -4664,10 +4642,6 @@ class Caldera_Forms {
 		do_action('caldera_forms_render_start', $form);
 
 		Caldera_Forms_Render_Assets::optional_style_includes();
-
-		// fallback for function based rendering in case it missed detection
-		wp_enqueue_style( 'cf-field-styles' );
-
 
 
 		include_once CFCORE_PATH . "classes/caldera-grid.php";
