@@ -723,6 +723,8 @@ The [Trumbowyg](https://alex-d.github.io/Trumbowyg/) JavaScript library is used
 4. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
+= Caldera Forms 1.4.4.1 ( November 11, 2016  ) =
+* FIXED: Missing CSS that caused the date and color picker fields to not work.
 
 = Caldera Forms 1.4.4 ( November 10, 2016  ) =
 * FIXED: Issue where Caldera Forms submit nonce did not verify when using WooCommerce and a non logged in user had items in cart.
