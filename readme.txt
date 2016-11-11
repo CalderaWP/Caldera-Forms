@@ -3,7 +3,7 @@ Contributors: Desertsnowman, Shelob9
 Tags: forms, formbuilder, form builder, contact form, form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, echecks, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, eCheck,dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, gravity forms, contact, email, auto-responder, aweber, converkit, builder, contact forms, search, ab testing, a/b testing, split testing, shortcode, wordpress, awesome plugin, plugin, easy, braintree form, dwolla form, authorize.net form, mailchimp form, mailchimp popup, aweber form, converkit form, stripe form, stripe popup, eCheck form
 Requires at least: 4.4
 Tested up to: 4.7.0
-Stable tag: 1.4.3
+Stable tag: 1.4.4.1
 License: GPLv2
 
 A different kind of WordPress form builder.
@@ -124,7 +124,7 @@ Caldera Forms to PDF is now available! Learn more at [https://Caldera.space](Cal
 * [FileTrip](https://codecanyon.net/item/filetrip-easily-upload-to-dropbox-google-drive-ftp-wordpress/11267642?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) Upload fields to Dropbox or Google Drive from Caldera Forms.
 * [Nexmo](https://calderawp.com/downloads/nexmo-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) Get SMS notifications of form submissions.
 * [Mail Templates](https://calderawp.com/downloads/mail-templates-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Add your logo, and your brand's color scheme to your emails sent from Caldera Forms.
-* [Translations](https://wordpress.org/plugins/caldera-forms-translations) - Multi-lingual WordPress forms. Translate all form fields. One form, all the languages!
+* [Translations](https://wordpress.org/plugins/caldera-forms-translation) - Multi-lingual WordPress forms. Translate all form fields. One form, all the languages!
 * [Caldera Custom Fields](https://calderawp.com/downloads/caldera-form-metabox?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Save form submissions as post and post meta.
 * [Verify Email for Caldera Forms](https://calderawp.com/downloads/verify-email-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Send an email with a validate link to verify the email address before completing the form submission.
 * [Form as Metabox - Custom Fields](https://calderawp.com/downloads/caldera-form-metabox?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Use a Caldera Form as a metabox in the post editor to save custom field values.
@@ -708,12 +708,6 @@ The following language codes are supported:
 Before saving to the database, the field’s value is sanitized using [wp_kses](https://codex.wordpress.org/Function_Reference/wp_kses). The “permissive” setting for **Sanitization Level** will cause the “post” context to be used via [wp_kses_allowed_html](https://codex.wordpress.org/Function_Reference/wp_kses_allowed_html). The “restrictive” option will caused the “data” context to be used. You can filter allowed tags using [the wp_kses_allowed_html filter](https://codex.wordpress.org/Function_Reference/wp_kses_allowed_html).
 
 The [Trumbowyg](https://alex-d.github.io/Trumbowyg/) JavaScript library is used for WYSIWYG fields created using the Caldera Forms form builder. The options passed to [Trumbowyg](https://alex-d.github.io/Trumbowyg/) when instantiating it on the field can be modified using the [caldera_forms_wysiwyg_options](https://calderawp.com/doc/caldera_forms_wysiwyg_options) filter.
-
-
-
-
-
-
 
 
 == Screenshots ==
