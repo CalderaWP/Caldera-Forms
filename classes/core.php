@@ -1011,7 +1011,9 @@ class Caldera_Forms {
 	}
 
 	/**
-	 * Increment an internal value
+	 * Increment value using the incrimental value processor
+     *
+     * @since unknown
 	 *
 	 * @param array $config Processor config
 	 * @param array $form Form config
@@ -1019,17 +1021,31 @@ class Caldera_Forms {
 	 * @return array Key is new value.
 	 */
 	public function increment_value( $config, $form ){
+        $option = '_increment_' . $config[ 'processor_id' ];
+        $field_id = $field_value = false;
 
-		// get increment value;
-		$increment_value = get_option('_increment_' . $config['processor_id'], $config['start'] );
+        if( ! empty( $config[ 'field' ] ) ){
+            $field_id = $config[ 'field' ];
+            $field_value = Caldera_Forms::get_field_data( $field_id, $form );
+        }
 
-		update_option( '_increment_' . $config['processor_id'], $increment_value + 1 );
+		$saved_value = get_option( $option, $config[ 'start' ] );
 
-		if( !empty( $config['field'] ) ){
-			self::set_field_data( $config['field'], $increment_value, $form );
+        if( is_numeric( $field_value ) ){
+            $increment_value = $saved_value + $field_value;
+        }else{
+            $increment_value = $saved_value + 1;
+        }
+
+		update_option( $option, $increment_value );
+
+		if( $field_id  ){
+			self::set_field_data( $field_id, $increment_value, $form );
 		}
 
-		return array('increment_value' => $increment_value );
+		return array(
+		    'increment_value' => $increment_value
+        );
 
 	}
 
