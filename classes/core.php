@@ -1037,6 +1037,19 @@ class Caldera_Forms {
             $increment_value = $saved_value + 1;
         }
 
+        /**
+         * Filter value for incremental processor
+         *
+         * Runs after logic of incremental value is calculated, before is written to field value or tracking option
+         *
+         * @since 1.4.5
+         *
+         * @param int $increment_value New value
+         * @param int $saved_value Previous value
+         * @param array $config Processor config
+         * @param array $form Form config
+         */
+        $increment_value = apply_filters( 'caldera_forms_incremental_value', $increment_value, $saved_value, $config, $form );
 		update_option( $option, $increment_value );
 
 		if( $field_id  ){
