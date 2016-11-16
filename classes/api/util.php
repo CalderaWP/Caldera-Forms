@@ -15,7 +15,7 @@ class Caldera_Forms_API_Util {
 	/**
 	 * The namespace for Caldera Forms REST API
 	 *
-	 * @since 1.5.0
+	 * @since 1.4.4
 	 *
 	 * @return string
 	 */
@@ -26,7 +26,7 @@ class Caldera_Forms_API_Util {
 	/**
 	 * The URL for Caldera Forms REST API
 	 *
-	 * @since 1.5.0
+	 * @since 1.4.4
 	 *
 	 * @return string
 	 */

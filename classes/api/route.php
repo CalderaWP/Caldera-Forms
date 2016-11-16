@@ -14,7 +14,7 @@ interface Caldera_Forms_API_Route {
 	/**
 	 * Add the routes for this set of endpoints
 	 *
-	 * @since 1.5.0
+	 * @since 1.4.4
 	 *
 	 * @param string $namespace API namespace
 	 *

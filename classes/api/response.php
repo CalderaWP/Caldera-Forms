@@ -14,7 +14,7 @@ class Caldera_Forms_API_Response extends \WP_REST_Response {
 	/**
 	 * @inheritdoc
 	 *
-	 * @since 1.5.0
+	 * @since 1.4.4
 	 */
 	public function __construct( $data, $status, array $headers ) {
 		parent::__construct( $data, $status, $headers );
