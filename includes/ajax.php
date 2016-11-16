@@ -232,6 +232,10 @@ function cf_ajax_redirect($type, $url, $form){
 	$out['form_name'] = $form['name'];	
 	$out['status'] = $type;
 
+	if( ! empty( $form[ 'scroll_top' ] ) ){
+		$out[ 'scroll' ] = Caldera_Forms_Render_Util::notice_element_id( $form, absint( $_POST[ '_cf_frm_ct' ]  ) );
+	}
+
 	$out = apply_filters( 'caldera_forms_ajax_return', $out, $form);
 
 	wp_send_json( $out );

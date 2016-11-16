@@ -5064,7 +5064,8 @@ class Caldera_Forms {
 			$notices['error'] = array( 'note' => __( 'WARNING: Form is in Mailer Debug mode. Disable before going live.', 'caldera-forms' ) );
 		}
 
-		$out .= '<div id="caldera_notices_'.$current_form_count.'" data-spinner="'. admin_url( 'images/spinner.gif' ).'">';
+		$notice_element_id = Caldera_Forms_Render_Util::notice_element_id( $form, $current_form_count );
+		$out .= '<div id="'.$notice_element_id.'" data-spinner="'. esc_url( admin_url( 'images/spinner.gif' ) ).'">';
 		if(!empty($notices)){
 			// do notices
 			// entry id
@@ -5097,7 +5098,8 @@ class Caldera_Forms {
 				'method'	=>	'POST',
 				'enctype'	=>	'multipart/form-data',
 				'role'		=>	'form',
-				'id'		=>	$form['ID'] . '_' . $current_form_count
+				'id'		=>	$form['ID'] . '_' . $current_form_count,
+				'notices'   => $notice_element_id
 			);
 
 			/**
@@ -5142,7 +5144,7 @@ class Caldera_Forms {
 			$out .= wp_nonce_field( "caldera_forms_front", "_cf_verify", true, false);
 			$out .= "<input type=\"hidden\" name=\"_cf_frm_id\" value=\"" . $form['ID'] . "\">\r\n";
 			$out .= "<input type=\"hidden\" name=\"_cf_frm_ct\" value=\"" . $current_form_count . "\">\r\n";
-			$fieldjs_config = Caldera_Forms_Render_Assets::prepare_field_js_config( $form, $current_form_count );
+			$fieldjs_config = new Caldera_Forms_Render_FieldsJS( $form, $current_form_count );
 			$out .= sprintf( '<input type="hidden" class="cf-fieldjs-config" value="%s" />', esc_attr( wp_json_encode( $fieldjs_config ) ) );
 			if( !empty( $form['form_ajax'] ) ){
 				$out .= "<input type=\"hidden\" name=\"cfajax\" value=\"" . $form['ID'] . "\">\r\n";

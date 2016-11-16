@@ -30,6 +30,13 @@ class Caldera_Forms_Render_FieldsJS {
 	 */
 	protected $data;
 
+	/**
+	 * Form instance count
+	 *
+	 * @since 1.5.0
+	 *
+	 * @var int
+	 */
 	protected $form_count;
 
 	/**
@@ -38,6 +45,7 @@ class Caldera_Forms_Render_FieldsJS {
 	 * @since 1.5.0
 	 *
 	 * @param array $form Form config
+	 * @param int $form_count Form instance count
 	 */
 	public function __construct( array $form, $form_count ) {
 		$this->form = $form;
