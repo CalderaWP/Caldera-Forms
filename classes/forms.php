@@ -460,7 +460,8 @@ class Caldera_Forms_Forms {
 			"hide_form"		=> 1,
 			"check_honey" 	=> 1,
 			"db_support"    => 1,
-			'mailer'		=>	array( 'on_insert' => 1 )
+			'mailer'		=>	array( 'on_insert' => 1 ),
+			'scroll_top'    => 1
 		);
 		// is template?
 		if( !empty( $form_template ) && is_array( $form_template ) ){
