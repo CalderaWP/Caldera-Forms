@@ -16,7 +16,7 @@ class Caldera_Forms_API_Response extends \WP_REST_Response {
 	 *
 	 * @since 1.4.4
 	 */
-	public function __construct( $data, $status, array $headers ) {
+	public function __construct( $data = null, $status = 200, $headers = array() ) {
 		parent::__construct( $data, $status, $headers );
 		if ( empty( $data ) ) {
 			$this->set_status( 404 );

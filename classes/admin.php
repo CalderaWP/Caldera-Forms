@@ -1143,9 +1143,7 @@ class Caldera_Forms_Admin {
 
 			$field_types = apply_filters( 'caldera_forms_get_field_types', array() );
 
-			wp_enqueue_style( 'cf-grid-styles' );
-			wp_enqueue_style( 'cf-form-styles' );
-			wp_enqueue_style( 'cf-alert-styles' );
+
 			wp_enqueue_style( 'cf-field-styles' );
 
 			wp_enqueue_script( 'cf-field' );
@@ -1489,12 +1487,13 @@ class Caldera_Forms_Admin {
 			if( empty( $headers ) ){
 				wp_die( esc_html_e( 'Could not process export. This is most likely due to a problem with the form configuration.', 'caldera-forms' ) );
 			}
+			$encoding = Caldera_Forms_CSV_Util::character_encoding( $form );
 
 			header("Pragma: public");
 			header("Expires: 0");
 			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 			header("Cache-Control: private",false);
-			header("Content-Type: text/csv charset=utf-8;");
+			header("Content-Type: text/csv charset=$encoding;");
 			header("Content-Disposition: attachment; filename=\"" . sanitize_file_name( $form['name'] ) . ".csv\";" );
 			header("Content-Transfer-Encoding: binary");
 			$df = fopen("php://output", 'w');
@@ -1848,8 +1847,18 @@ class Caldera_Forms_Admin {
 			$url       = Caldera_Forms_Tracking::api_url( 'notices' );
 			$r_notices = Caldera_Forms_Tracking::send_to_api( $url );
 			if ( ! empty( $r_notices ) ) {
-				$notices = array_merge( $notices, $r_notices );
-				update_option( '_cf_admin_alerts', $notices );
+			    if( is_string( $r_notices ) ){
+			        $r_notices = json_decode( $r_notices );
+                }
+
+			    if( is_object( $r_notices ) ){
+                    $r_notices = (array) $r_notices;
+                }
+
+                if ( is_array( $r_notices ) ) {
+                    $notices = array_merge($notices, $r_notices);
+                    update_option('_cf_admin_alerts', $notices);
+                }
 			}
 
 		}

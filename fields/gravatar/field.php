@@ -14,7 +14,7 @@ if(!empty($field['config']['email'])){
 		<span style="overflow: hidden;border-radius:<?php echo esc_attr( $field['config']['border_radius'] ); ?>px; border:<?php echo esc_attr( $field['config']['border_size'] ); ?>px solid <?php echo esc_attr( $field['config']['border_color'] ); ?>;display: inline-block;">
 			<span style="border-radius:<?php echo esc_attr( $field['config']['border_radius'] ); ?>px;width:<?php echo esc_attr( $field['config']['size'] ); ?>px;height:<?php echo esc_attr( $field['config']['size'] ); ?>px;display:inline-block;" id="<?php echo esc_attr( $field_id ); ?>_gravatar"><?php
 
-				echo get_avatar( $email, (int) $field['config']['size'], $field['config']['generator']);
+				echo get_avatar( $email, (int) $field['config']['size'], $field['config']['generator'], esc_html__( 'Gravatar Image', 'caldera-forms' ) );
 
 			?></span>
 		</span>

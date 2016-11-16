@@ -17,7 +17,7 @@ class Caldera_Forms_Tracking {
 	 *
 	 * @var string
 	 */
-	protected static $api_url = 'http://apicaldera.wpengine.com//wp-json/calderawp_api/v2';
+	protected static $api_url = 'https://asimov.caldera.space/cf-tracking/v3';
 
 	/**
 	 * Option key for tracking last row sent
@@ -99,6 +99,7 @@ class Caldera_Forms_Tracking {
 		$last_row = self::get_last_sent_row();
 		include_once CFCORE_PATH . 'classes/db/track.php';
 		$highest = Caldera_Forms_DB_Track::get_instance()->highest_id();
+
 		if( $highest <= $last_row ){
 			return;
 		}
@@ -112,10 +113,11 @@ class Caldera_Forms_Tracking {
 
 		$rows = self::prepare_rows_to_send( $last_row, $highest );
 		$body = array(
-			'url' => urlencode( home_url() ),
 			'rows' => $rows,
 			'plugins' => Caldera_Forms_Support::get_plugins()
 		);
+
+		$body = array_merge( $body, self::site_data() );
 
 		$sent = self::send_to_api( self::$api_url . '/tracking', 'POST', $body );
 		if( ! is_numeric( $sent  ) ){
@@ -162,7 +164,7 @@ class Caldera_Forms_Tracking {
 				return;
 			}
 
-			$args[ 'body' ] = $body;
+			$args[ 'body' ] = json_encode( $body );
 		}
 
 		$r = wp_remote_request( $url,  $args  );
@@ -186,15 +188,31 @@ class Caldera_Forms_Tracking {
 	 * @return string
 	 */
 	public static function api_url( $endpoint ){
-		global $wp_version;
-		$tracking_optin = intval( self::tracking_optin_status() );
+
 		$url = trailingslashit( self::$api_url ) . $endpoint;
-		$url = add_query_arg( array( 'wp' => urlencode( $wp_version ), 'php' => urlencode( PHP_VERSION ), 'db' => get_option( 'CF_DB', 0 ), 'url' => urlencode( site_url() ), 'tracking_optin' => $tracking_optin  ),  $url  );
-		if( self::tracking_allowed() ){
-			$url = add_query_arg( 'email', urlencode( get_option( 'admin_email' ) ), $url );
-		}
+		$url = add_query_arg( self::site_data(), $url );
 
 		return $url;
+	}
+
+	/**
+	 * Site data for API
+	 *
+	 * @since 1.4.4
+	 *
+	 * @return array
+	 */
+	protected static function site_data(){
+		global $wp_version;
+		$tracking_optin = intval( self::tracking_optin_status() );
+		$data = array( 'wp' => urlencode( $wp_version ), 'php' => urlencode( PHP_VERSION ), 'db' => get_option( 'CF_DB', 0 ), 'url' => urlencode( site_url() ), 'tracking_optin' => $tracking_optin  );
+		if( self::tracking_allowed() ){
+			$data[ 'email' ] = urlencode( get_option( 'admin_email' ) );
+		}else{
+			$data[ 'email' ] = 0;
+		}
+
+		return $data;
 	}
 
 	/**

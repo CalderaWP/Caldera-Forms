@@ -28,10 +28,11 @@ class Caldera_Forms_API_Util {
 	 *
 	 * @since 1.4.4
 	 *
+	 * @param string $endpoint Optional. Endpoint.
 	 * @return string
 	 */
-	public static function url(){
-		return rest_url( self::api_namespace() );
+	public static function url( $endpoint = '' ){
+		return rest_url( self::api_namespace() . '/' . $endpoint );
 	}
 
 }
