@@ -1847,8 +1847,18 @@ class Caldera_Forms_Admin {
 			$url       = Caldera_Forms_Tracking::api_url( 'notices' );
 			$r_notices = Caldera_Forms_Tracking::send_to_api( $url );
 			if ( ! empty( $r_notices ) ) {
-				$notices = array_merge( $notices, $r_notices );
-				update_option( '_cf_admin_alerts', $notices );
+			    if( is_string( $r_notices ) ){
+			        $r_notices = json_decode( $r_notices );
+                }
+
+			    if( is_object( $r_notices ) ){
+                    $r_notices = (array) $r_notices;
+                }
+
+                if ( is_array( $r_notices ) ) {
+                    $notices = array_merge($notices, $r_notices);
+                    update_option('_cf_admin_alerts', $notices);
+                }
 			}
 
 		}
