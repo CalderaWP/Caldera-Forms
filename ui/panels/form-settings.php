@@ -35,45 +35,28 @@
 	</div>
 
 	<div class="caldera-config-group">
-		<label for="cf-form-description">
-			<?php esc_html_e( 'Form Description', 'caldera-forms' ); ?>
-		</label>
-		<div class="caldera-config-field">
-			<textarea id="cf-form-description" name="config[description]" class="field-config" style="width:500px;" rows="5">
-				<?php echo htmlentities( $element[ 'description' ] ); ?>
-			</textarea>
-		</div>
-	</div>
-
-	<div class="caldera-config-group">
-		<fieldset>
-				<legend>
-					<?php esc_html_e( 'State', 'caldera-forms' ); ?>
-				</legend>
-				<div class="caldera-config-field">
-					<label for="cf-forms-state">
-						<input type="checkbox" id="cf-forms-state" class="field-config" name="config[form_draft]" value="1" <?php if ( ! empty( $element[ 'form_draft' ] ) ){ ?>checked="checked"<?php } ?>>
-						<?php esc_html_e( 'Deactivate / Draft', 'caldera-forms' ); ?>
-					</label>
-				</div>
-		</fieldset>
-	</div>
-
-	<div class="caldera-config-group">
 		<fieldset>
 			<legend>
-				<?php esc_html_e( 'Capture Entries', 'caldera-forms' ); ?>
+				<?php esc_html_e( 'Save Entries', 'caldera-forms' ); ?>
 			</legend>
 			<div class="caldera-config-field">
 				<label for="db_support-enable">
-					<input id="db_support-enable" type="radio" class="field-config" name="config[db_support]" value="1" <?php if ( ! empty( $element[ 'db_support' ] ) ){ ?>checked="checked"<?php } ?>>
+					<input id="db_support-enable" type="radio" class="field-config" name="config[db_support]" value="1" <?php if ( ! empty( $element[ 'db_support' ] ) ){ ?>checked="checked"<?php } ?> aria-describedby="db_support-disable-description">
 					<?php esc_html_e( 'Enable', 'caldera-forms' ); ?>
+					<p class="description" id="db_support-disable-description">
+						<?php esc_html_e( 'Track form submissions in the WordPress database.', 'caldera-forms' ); ?>
+					</p>
 				</label>
 				<label for="db_support-disable">
-					<input id="db_support-disable" type="radio" class="field-config" name="config[db_support]" value="0" <?php if ( empty( $element[ 'db_support' ] ) ){ ?>checked="checked"<?php } ?>>
-						<?php esc_html_e( 'Disabled', 'caldera-forms' ); ?>
+					<input id="db_support-disable" type="radio" class="field-config" name="config[db_support]" value="0" <?php if ( empty( $element[ 'db_support' ] ) ){ ?>checked="checked"<?php } ?> aria-describedby="db_support-enable-description">
+					<?php esc_html_e( 'Disabled', 'caldera-forms' ); ?>
+					<p class="description" id="db_support-enable-description">
+						<?php esc_html_e( 'Keep no record of form submissions.', 'caldera-forms' ); ?>
+					</p>
 				</label>
 			</div>
+
+
 		</fieldset>
 	</div>
 
@@ -115,32 +98,57 @@
 					</label>
 					<hr>
 					<?php
-						global $wp_roles;
-						$all_roles      = $wp_roles->roles;
-						$editable_roles = apply_filters( 'editable_roles', $all_roles );
+					global $wp_roles;
+					$all_roles      = $wp_roles->roles;
+					$editable_roles = apply_filters( 'editable_roles', $all_roles );
 
-						foreach ( $editable_roles as $role => $role_details ) {
-							if ( 'administrator' === $role ) {
-								continue;
-							}
-							$id = 'cf-pin-role-' . $role;
-							?>
-							<label for="<?php echo esc_attr( $id ); ?>">
-								<input id="<?php echo esc_attr( $id ); ?>" type="checkbox"
-								       class="field-config form_role_role_check gen_role_check"
-								       data-set="form_role" name="config[pin_roles][access_role][<?php echo $role; ?>]"
-								       value="1" <?php if ( ! empty( $element[ 'pin_roles' ][ 'access_role' ][ $role ] ) ) {
-									echo 'checked="checked"';
-								} ?>>
-								<?php echo esc_html( $role_details[ 'name' ] ); ?>
-							</label>
-							<?php
+					foreach ( $editable_roles as $role => $role_details ) {
+						if ( 'administrator' === $role ) {
+							continue;
 						}
+						$id = 'cf-pin-role-' . $role;
+						?>
+						<label for="<?php echo esc_attr( $id ); ?>">
+							<input id="<?php echo esc_attr( $id ); ?>" type="checkbox"
+							       class="field-config form_role_role_check gen_role_check"
+							       data-set="form_role" name="config[pin_roles][access_role][<?php echo $role; ?>]"
+							       value="1" <?php if ( ! empty( $element[ 'pin_roles' ][ 'access_role' ][ $role ] ) ) {
+								echo 'checked="checked"';
+							} ?>>
+							<?php echo esc_html( $role_details[ 'name' ] ); ?>
+						</label>
+						<?php
+					}
 
 					?>
 				</div>
 			</fieldset>
 		</div>
+	</div>
+
+	<div class="caldera-config-group">
+		<label for="cf-form-description">
+			<?php esc_html_e( 'Form Description', 'caldera-forms' ); ?>
+		</label>
+		<div class="caldera-config-field">
+			<textarea id="cf-form-description" name="config[description]" class="field-config" style="width:500px;" rows="5">
+				<?php echo htmlentities( $element[ 'description' ] ); ?>
+			</textarea>
+		</div>
+	</div>
+
+	<div class="caldera-config-group">
+		<fieldset>
+				<legend>
+					<?php esc_html_e( 'State', 'caldera-forms' ); ?>
+				</legend>
+				<div class="caldera-config-field">
+					<label for="cf-forms-state">
+						<input type="checkbox" id="cf-forms-state" class="field-config" name="config[form_draft]" value="1" <?php if ( ! empty( $element[ 'form_draft' ] ) ){ ?>checked="checked"<?php } ?>>
+						<?php esc_html_e( 'Deactivate / Draft', 'caldera-forms' ); ?>
+					</label>
+				</div>
+		</fieldset>
 	</div>
 
 	<div class="caldera-config-group">
