@@ -104,7 +104,7 @@ $field_types = apply_filters( 'caldera_forms_get_field_types', array() );
 // sort fields
 
 // Get Elements
-$panel_extensions = apply_filters( 'caldera_forms_get_panel_extensions', array() );
+$panel_extensions = Caldera_Forms_Admin_Panel::get_panels();
 
 
 $field_type_list = array();
@@ -851,7 +851,13 @@ foreach($panel_extensions as $panel){
 
 
 			}elseif(!empty($tab_setup['canvas'])){
-				include $tab_setup['canvas'];
+				if( 'layout' != $panel_slug) {
+					echo sprintf( '<div id="%s" class="cf-canvas-ajax" data-cf-canvas-ajax="%s" data-cf-canvas-ajax-form="%s" data-cf-canvas-ajax-nonce="%s"></div>', esc_attr( 'cf-panel-load-' . $panel_slug ), esc_attr( $panel_slug ), esc_attr( $element[ 'ID' ] ), esc_attr( Caldera_Forms_Admin_AJAXPanels::nonce( $panel_slug ) ) );
+				}else{
+					include $tab_setup['canvas'];
+				}
+
+
 			}
 
 			if(!empty($tab_setup['side_panel'])){
