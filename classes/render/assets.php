@@ -210,7 +210,7 @@ class Caldera_Forms_Render_Assets {
 	 * @return array
 	 */
 	public static function get_core_scripts(){
-		 $script_urls = array(
+		$script_urls = array(
 			'dynamic'	=>	CFCORE_URL . 'assets/js/formobject.min.js',
 			'modals'	=>	CFCORE_URL . 'assets/js/remodal.min.js',
 			'baldrick'	=>	CFCORE_URL . 'assets/js/jquery.baldrick.min.js',
