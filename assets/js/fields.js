@@ -4868,8 +4868,8 @@ function Caldera_Forms_Field_Config( configs, $ ){
 
 	};
 
-	this.button = function( feild ){
-		var field_id  = feild.id;
+	this.button = function( field ){
+		var field_id  = field.id;
 		$(document).on('click dblclick', '#' + field_id, function( e ){
 			$('#' + field_id + '_btn').val( e.type ).trigger('change');
 		});
@@ -4901,6 +4901,10 @@ function Caldera_Forms_Field_Config( configs, $ ){
 
 	this.paragraph = function( field ){
 
+	};
+
+	this.better_field = function( field ){
+		$( document.getElementById( field.id ) ).intlTelInput(field.options );
 	};
 
 	this.wysiwyg = function( field ){

@@ -1280,8 +1280,22 @@ class Caldera_Forms {
 					)
 				)
 			),
+			'phone_better' => array(
+				"field"		=>	__( 'Phone Number (Better)', 'caldera-forms' ),
+				"description" => __( 'Phone number with advanced options and international formatting', 'caldera-forms' ),
+				"file"		=>	CFCORE_PATH . "fields/phone_better/field.php",
+				"category"	=>	__( 'Basic', 'caldera-forms' ),
+				"setup"		=>	array(
+					"template"	=>	CFCORE_PATH . "fields/phone_better/config.php",
+					"preview"	=>	CFCORE_PATH . "fields/phone_better/preview.php",
+					"default"	=>	array(
+						'default'	=> '',
+
+					)
+				)
+			),
 			'phone' => array(
-				"field"		=>	__( 'Phone Number', 'caldera-forms' ),
+				"field"		=>	__( 'Phone Number (Basic)', 'caldera-forms' ),
 				"description" => __( 'Phone number with masking', 'caldera-forms' ),
 				"file"		=>	CFCORE_PATH . "fields/phone/field.php",
 				"category"	=>	__( 'Basic', 'caldera-forms' ),
@@ -1293,7 +1307,13 @@ class Caldera_Forms {
 						'type'	=>	'local',
 						'custom'=> '(999)999-9999'
 					)
-				)
+				),
+				"scripts" => array(
+					CFCORE_URL . 'fields/better_phone/assets/js/intlTelInput.min.js'
+				),
+				"styles"	=> array(
+					CFCORE_URL . 'fields/better_phone/assets/css/intlTelInput.css'
+				),
 			),
 			'paragraph' => array(
 				"field"		=>	__( 'Paragraph Textarea', 'caldera-forms' ),

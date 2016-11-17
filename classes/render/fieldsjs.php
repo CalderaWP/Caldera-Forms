@@ -140,4 +140,20 @@ class Caldera_Forms_Render_FieldsJS {
 
 		return $options;
 	}
+
+	/**
+	 * Setup better_phone fields
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param $field_id
+	 *
+	 * @return void
+	 */
+	protected function better_phone( $field_id ){
+		$this->data[ $field_id ] = array(
+			'id' => $this->field_id( $field_id ),
+			'options' => array()
+		);
+	}
 }
