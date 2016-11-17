@@ -84,7 +84,3 @@ if ( is_admin() || defined( 'DOING_AJAX' ) ) {
 	add_action( 'plugins_loaded', array( 'Caldera_Forms_Admin', 'get_instance' ) );
 	add_action( 'plugins_loaded', array( 'Caldera_Forms_Support', 'get_instance' ) );
 }
-
-
-add_action( 'wp_ajax_caldera_forms_ajax_canvas', array( 'Caldera_Forms_Admin_AJAXPanels', 'callback') );
-

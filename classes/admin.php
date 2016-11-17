@@ -1186,7 +1186,7 @@ class Caldera_Forms_Admin {
 		$field_types = apply_filters( 'caldera_forms_get_field_types', array() );
 
 		// load panels
-		$panel_extensions = Caldera_Forms_Admin_Panel::get_panels();
+		$panel_extensions = apply_filters( 'caldera_forms_get_panel_extensions', array() );
 
 		// load processors
 		$form_processors = $processors = Caldera_Forms_Processor_Load::get_instance()->get_processors();
@@ -1595,17 +1595,9 @@ class Caldera_Forms_Admin {
 
 	}
 
-	/**
-	 * Get internal panel extensions
-	 *
-	 * @uses "caldera_forms_get_panel_extensions"
-	 *
-	 * @since unknown
-	 *
-	 * @param array $panels
-	 *
-	 * @return array
-	 */
+
+	// get internal panel extensions
+
 	public function get_panel_extensions($panels){
 
 		$path = CFCORE_PATH . "ui/panels/";
