@@ -11,6 +11,13 @@
  */
 class Caldera_Forms_Render_Assets {
 
+	/**
+	 * Array of loaded script/style slugs
+	 *
+	 * @since 1.4.3
+	 *
+	 * @var array
+	 */
 	protected static $loaded;
 
 
@@ -23,20 +30,13 @@ class Caldera_Forms_Render_Assets {
 	 * @param array $field Current field
 	 */
 	public static function enqueue_field_scripts( $field_types, $field ) {
+		if( ! did_action( 'caldera_forms_assets_registered' ) ){
+			self::register();
+		}
 
 		if( !empty( $field_types[$field['type']]['styles'])){
 			foreach($field_types[$field['type']]['styles'] as $style){
-				if( false !== strpos($style, '//')){
-					$slug = self::make_slug( $style );
-					if ( ! self::is_loaded( $slug, 'css' )  ) {
-						wp_enqueue_style( $slug, $style, array(), CFCORE_VER );
-						self::$loaded[ 'css' ][ $slug ] = true;
-					}
-				}else{
-					if ( ! wp_style_is( $style ) ) {
-						wp_enqueue_style( $style );
-					}
-				}
+				self::enqueue_style( $style );
 			}
 		}
 
@@ -44,17 +44,7 @@ class Caldera_Forms_Render_Assets {
 		if ( ! empty( $field_types[ $field[ 'type' ] ][ 'scripts' ] ) ) {
 			$depts = array( 'jquery' );
 			foreach ( $field_types[ $field[ 'type' ] ][ 'scripts' ] as $script ) {
-				if ( false !== strpos( $script, '//' ) ) {
-					$slug = self::make_slug( $script );
-					if (  ! self::is_loaded( $slug ) ) {
-						wp_enqueue_script( $slug, $script, $depts, CFCORE_VER );
-						self::$loaded[ 'js' ][ $slug ] = true;
-					}
-				} else {
-					if (  ! wp_script_is( $script ) ) {
-						wp_enqueue_script( $script );
-					}
-				}
+				self::enqueue_script( $script, $depts );
 
 			}
 
@@ -69,6 +59,10 @@ class Caldera_Forms_Render_Assets {
 	 * @since 1.4.3
 	 */
 	public static function optional_style_includes() {
+		if( ! did_action( 'caldera_forms_assets_registered' ) ){
+			self::register();
+		}
+
 		$style_includes = self::get_style_includes();
 		$all = true;
 		$styles = array();
@@ -116,7 +110,12 @@ class Caldera_Forms_Render_Assets {
 	 * @return string
 	 */
 	public static function make_slug( $script ) {
-		$slug = 'cf-' . sanitize_key( basename( $script ) );
+		if( wp_script_is( 'cf-' . $script )  ){
+			$slug = 'cf-' . $script;
+		}else{
+			$slug = 'cf-' . sanitize_key( basename( $script ) );
+		}
+
 		return $slug;
 	}
 
@@ -211,18 +210,187 @@ class Caldera_Forms_Render_Assets {
 	 */
 	public static function get_core_scripts(){
 		$script_urls = array(
-			'dynamic'	=>	CFCORE_URL . 'assets/js/formobject.min.js',
-			'modals'	=>	CFCORE_URL . 'assets/js/remodal.min.js',
-			'baldrick'	=>	CFCORE_URL . 'assets/js/jquery.baldrick.min.js',
-			'ajax'		=>	CFCORE_URL . 'assets/js/ajax-core.min.js',
-			'field'	=>	CFCORE_URL . 'assets/js/fields.min.js',
-			'conditionals' => CFCORE_URL . 'assets/js/conditionals.min.js',
+			'dynamic'        => CFCORE_URL . 'assets/js/formobject.min.js',
+			'modals'         => CFCORE_URL . 'assets/js/remodal.min.js',
+			'baldrick'       => CFCORE_URL . 'assets/js/jquery.baldrick.min.js',
+			'ajax'           => CFCORE_URL . 'assets/js/ajax-core.min.js',
+			'field'          => CFCORE_URL . 'assets/js/fields.min.js',
+			'conditionals'   => CFCORE_URL . 'assets/js/conditionals.min.js',
 			'validator-i18n' => null,
-			'validator' => CFCORE_URL . 'assets/js/parsley.min.js',
-			'init'		=>	CFCORE_URL . 'assets/js/frontend-script-init.min.js',
+			'validator'      => CFCORE_URL . 'assets/js/parsley.min.js',
+			'init'           => CFCORE_URL . 'assets/js/frontend-script-init.min.js',
+			'handlebars'     => CFCORE_URL . 'assets/js/handlebars.js'
 		);
 
 		return $script_urls;
+	}
+
+
+	public static function enqueue_all_fields(){
+		if( ! did_action( 'caldera_forms_assets_registered' ) ){
+			self::register();
+		}
+
+		$field_types = Caldera_Forms_Field_Util::get_all();
+
+		wp_enqueue_style( 'cf-field-styles' );
+
+		wp_enqueue_script( 'cf-field' );
+		wp_enqueue_script( 'cf-conditionals' );
+		wp_enqueue_script( 'cf-validator' );
+		wp_enqueue_script( 'cf-init' );
+
+		foreach ( $field_types as $field ) {
+			if ( ! empty( $field[ 'styles' ] ) ) {
+				foreach ( $field[ 'styles' ] as $style ) {
+					self::enqueue_style( $style );
+
+				}
+			}
+
+			if ( ! empty( $field[ 'scripts' ] ) ) {
+				// check for jquery deps
+				$depts[] = 'jquery';
+				foreach ( $field[ 'scripts' ] as $script ) {
+					self::enqueue_script( $script, $depts );
+				}
+			}
+		}
+	}
+
+	/**
+	 * Registers all front-end scripts and styles
+	 *
+	 * @since 1.5.0
+	 */
+	public static function register(){
+		$style_urls = self::get_core_styles();
+		$script_urls = self::get_core_scripts();
+
+		$script_style_urls = array();
+
+		// check to see language and include the language add on
+		$locale = get_locale();
+		if( $locale !== 'en_US' ){
+			// not default lets go find if there is a translation available
+			if( file_exists( CFCORE_PATH . 'assets/js/i18n/' . $locale . '.js' ) ){
+				// nice- its there
+				$locale_file = $locale;
+			}elseif ( file_exists( CFCORE_PATH . 'assets/js/i18n/' . strtolower( $locale ) . '.js' ) ){
+				$locale_file = strtolower( $locale );
+			}elseif ( file_exists( CFCORE_PATH . 'assets/js/i18n/' . strtolower( str_replace('_', '-', $locale ) ) . '.js' ) ){
+				$locale_file = strtolower( str_replace('_', '-', $locale ) );
+			}elseif ( file_exists( CFCORE_PATH . 'assets/js/i18n/' . strtolower( substr( $locale,0, 2 ) ) . '.js' ) ){
+				$locale_file = strtolower( substr( $locale,0, 2 ) );
+			}elseif ( file_exists( CFCORE_PATH . 'assets/js/i18n/' . strtolower( substr( $locale,3 ) ) . '.js' ) ){
+				$locale_file = strtolower( substr( $locale,3 ) );
+			}
+			if( !empty( $locale_file ) ){
+				$script_urls['validator-i18n'] = CFCORE_URL . 'assets/js/i18n/' . $locale_file . '.js';
+				$script_style_urls['config']['validator_lang'] = $locale_file;
+			}
+
+		}
+
+		/**
+		 * Filter script URLS for Caldera Forms on the frontend, before they are enqueued.
+		 *
+		 * @since 1.3.1
+		 *
+		 * @param array $script_urls array containing all urls to register
+		 */
+		$script_style_urls['script'] = apply_filters( 'caldera_forms_script_urls', $script_urls );
+
+		/**
+		 * Filter style URLS for Caldera Forms on the frontend, before they are enqueued.
+		 *
+		 * @since 1.3.1
+		 *
+		 * @param array $script_urls array containing all urls to register
+		 */
+		$script_style_urls['style'] = apply_filters( 'caldera_forms_style_urls', $style_urls );
+
+		// register styles
+		foreach( $script_style_urls['style'] as $style_key => $style_url ){
+			if( empty( $style_url ) ){
+				continue;
+			}
+			wp_register_style( 'cf-' . $style_key . '-styles', $style_url, array(), CFCORE_VER );
+		}
+		// register scripts
+		foreach( $script_style_urls['script'] as $script_key => $script_url ){
+			if( empty( $script_url ) ){
+				continue;
+			}
+			wp_register_script( 'cf-' . $script_key, $script_url, array('jquery'), CFCORE_VER, true );
+		}
+
+		// localize for dynamic form generation
+		wp_localize_script( 'cf-dynamic', 'cfModals', $script_style_urls );
+
+		/**
+		 * Runs after scripts and styles are registered
+		 *
+		 * @since 1.5.0
+		 *
+		 * @param array $script_style_urls URLs of registered scripts and styles
+		 */
+		do_action( 'caldera_forms_assets_registered', $script_style_urls );
+	}
+
+	/**
+	 * Enqueue a style for Caldera Forms front-end
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $style Slug or URL
+	 */
+	public static function enqueue_style( $style ){
+		if ( ! wp_style_is( $style,  'enqueued'  ) ) {
+			if ( false !== strpos( $style, '//' ) ) {
+				$slug = self::make_slug( $style );
+				if ( ! self::is_loaded( $slug, 'css' ) ) {
+					wp_enqueue_style( $slug, $style, array(), CFCORE_VER );
+					self::$loaded[ 'css' ][ $slug ] = true;
+				}
+			} else {
+				if ( wp_style_is( $style, 'registered') ) {
+					wp_enqueue_style( $style );
+				}elseif ( 'cf-' !== substr( $style, 0, 2 ) ) {
+					if ( wp_style_is(  'cf-' . $style, 'registered' ) ) {
+						wp_enqueue_script( 'cf-' . $style );
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Enqueue a script for Caldera Forms front-end
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $script Script slug or URL
+	 * @param array $depts Optional. Array of dependencies. Default is jQuery
+	 */
+	public static function enqueue_script( $script, $depts = array( 'jquery' ) ){
+		if ( ! wp_script_is( $script, 'enqueued') ) {
+			if ( false !== strpos( $script, '//' ) ) {
+				$slug = self::make_slug( $script );
+				if ( ! self::is_loaded( $slug ) ) {
+					wp_enqueue_script( $slug, $script, $depts, CFCORE_VER );
+					self::$loaded[ 'js' ][ $slug ] = true;
+				}
+			} else {
+				if ( wp_script_is( $script, 'registered' ) ) {
+					wp_enqueue_script( $script );
+				} elseif ( 'cf-' !== substr( $script, 0, 2 ) ) {
+					if ( wp_script_is(  'cf-' . $script, 'registered' ) ) {
+						wp_enqueue_script( 'cf-' . $script );
+					}
+				}
+			}
+		}
 	}
 
 }

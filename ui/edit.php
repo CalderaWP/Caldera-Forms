@@ -104,7 +104,7 @@ $field_types = apply_filters( 'caldera_forms_get_field_types', array() );
 // sort fields
 
 // Get Elements
-$panel_extensions = apply_filters( 'caldera_forms_get_panel_extensions', array() );
+$panel_extensions = Caldera_Forms_Admin_Panel::get_panels();
 
 
 $field_type_list = array();

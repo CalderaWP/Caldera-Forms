@@ -11,6 +11,37 @@
  */
 class Caldera_Forms_Field_Util {
 
+	/**
+	 * Get all field definitions
+	 *
+	 * @since 1.5.0
+	 *
+	 * @return array
+	 */
+	public static function get_all(){
+
+		/**
+		 * Register or remove field types
+		 *
+		 * @since unknown
+		 *
+		 * @param array $field_types Field types
+		 */
+		$field_types =  apply_filters( 'caldera_forms_get_field_types', array() );
+
+
+		if ( ! empty( $field_types ) ) {
+			foreach ( $field_types as $fieldType => $fieldConfig ) {
+				// check for a viewer
+				if ( isset( $fieldConfig[ 'viewer' ] ) ) {
+					add_filter( 'caldera_forms_view_field_' . $fieldType, $fieldConfig[ 'viewer' ], 10, 3 );
+				}
+			}
+		}
+
+		return $field_types;
+
+	}
 
 	/**
 	 *  Get a field's type
@@ -69,5 +100,7 @@ class Caldera_Forms_Field_Util {
 		$field = self::get_field( $field, $form );
 		return in_array( self::get_type( $field, $form ), array( 'advanced_file', 'file' ) );
 	}
+
+
 
 }
