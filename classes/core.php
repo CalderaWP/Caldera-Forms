@@ -3862,6 +3862,12 @@ class Caldera_Forms {
 			return;
 		}
 
+		if( $code == 'caldera_form_modal' ){
+
+			Caldera_Forms_Render_Assets::enqueue_script( 'handlebars' );
+			Caldera_Forms_Render_Assets::enqueue_script( 'modals' );
+		}
+
 		//theres forms, bring in the globals
 		wp_enqueue_style( 'cf-field-styles' );
 
@@ -4317,6 +4323,8 @@ class Caldera_Forms {
 			$width = ' width: ' . floatval( $atts['width'] ).'px; margin-left: -' . ( floatval( $atts['width'] ) / 2 ) . 'px;';
 		}
 
+		Caldera_Forms_Render_Assets::enqueue_script( 'handlebars' );
+		Caldera_Forms_Render_Assets::enqueue_script( 'modals' );
 		ob_start();
 		?>
 		<div id="<?php echo esc_attr( $modal_id ); ?>" class="caldera-front-modal-container" <?php echo $current_state; ?> data-form-id="<?php echo esc_attr( $modal_id ); ?>">

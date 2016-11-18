@@ -64,39 +64,23 @@ class Caldera_Forms_Render_Assets {
 		}
 
 		$style_includes = self::get_style_includes();
+
 		$all = true;
-		$styles = array();
-		if ( true == $style_includes[ 'grid' ]  ) {
-			$styles[] =  'cf-grid-styles';
-		}else{
-			$all = false;
-		}
+		foreach( $style_includes as $style_include => $use ){
+			if( false == $use ){
+				$all = false;
+			}
+			self::enqueue_style( self::make_style_slug( $style_include ) );
 
-		if ( true == $style_includes[ 'form' ]  ) {
-			$styles[] = 'cf-form-styles';
-		} else{
-
-			$all = false;
-		}
-
-		if ( true == $style_includes[ 'alert' ]  ) {
-			$styles[] = 'cf-alert-styles';
-
-		}else{
-			$all = false;
 		}
 
 		if( $all ){
-			wp_enqueue_style( 'cf-front-styles' );
-		}else{
-			if (  ! empty( $styles ) ) {
-				foreach ( $styles as $style ) {
-					wp_enqueue_style( $style );
-				}
-
+			self::enqueue_style( 'front' );
+			foreach( array_keys(  $style_includes ) as $style_include  ){
+				wp_dequeue_style( self::make_slug( $style_include ) );
 			}
-
 		}
+
 
 	}
 
@@ -110,10 +94,28 @@ class Caldera_Forms_Render_Assets {
 	 * @return string
 	 */
 	public static function make_slug( $script ) {
-		if( wp_script_is( 'cf-' . $script )  ){
+		if( wp_script_is( 'cf-' . $script, 'registered' )  ){
 			$slug = 'cf-' . $script;
+		}elseif( wp_script_is( 'cf-' . $script . '-scripts', 'registered' )  ){
+			$slug =  'cf-' . $script . '-scripts';
+		} elseif( wp_style_is( 'cf-' . $script, 'registered' )  ){
+			$slug = 'cf-' . $script;
+		}elseif( wp_style_is( 'cf-' . $script . '-styles', 'registered' )  ){
+			$slug =  'cf-' . $script . '-styles';
 		}else{
 			$slug = 'cf-' . sanitize_key( basename( $script ) );
+		}
+
+		return $slug;
+	}
+
+	protected static function make_style_slug( $style ){
+		if ( wp_style_is( 'cf-' . $style . '-styles', 'registered' ) ) {
+			$slug = 'cf-' . $style . '-styles';
+		}elseif ( wp_style_is( 'cf-' . $style, 'registered' ) ) {
+			$slug = 'cf-' . $style;
+		}else {
+			$slug = 'cf-' . sanitize_key( basename( $style ) );
 		}
 
 		return $slug;
@@ -174,19 +176,20 @@ class Caldera_Forms_Render_Assets {
 	 */
 	public static function get_core_styles(){
 		$style_urls = array(
-			'modals' => CFCORE_URL . 'assets/css/remodal.min.css',
-			'modals-theme' => CFCORE_URL . 'assets/css/remodal-default-theme.min.css',
-			'grid' => CFCORE_URL . 'assets/css/caldera-grid.css',
-			'form' => CFCORE_URL . 'assets/css/caldera-form.css',
-			'alert' => CFCORE_URL . 'assets/css/caldera-alert.css',
-			'field' => CFCORE_URL . 'assets/css/fields.min.css',
+			'modals'       => self::make_url( 'remodal', false ),
+			'modals-theme' => self::make_url( 'remodal-default-theme', false ),
+			'grid'         => self::make_url( 'caldera-grid', false ),
+			'form'         => self::make_url( 'caldera-form', false ),
+			'alert'        => self::make_url( 'caldera-alert', false ),
+			'field'        => self::make_url( 'fields', false ),
+			'front'        => self::make_url( 'caldera-forms-front', false )
 		);
 
 		$all = true;
 		foreach ( self::get_style_includes()  as $script => $use ){
 			if( false == $use ){
 				$all = false;
-				unset($style_urls[  $script ] );
+				unset( $style_urls[  $script ] );
 			}
 
 		}
@@ -210,15 +213,15 @@ class Caldera_Forms_Render_Assets {
 	 */
 	public static function get_core_scripts(){
 		$script_urls = array(
-			'dynamic'        => CFCORE_URL . 'assets/js/formobject.min.js',
-			'modals'         => CFCORE_URL . 'assets/js/remodal.min.js',
-			'baldrick'       => CFCORE_URL . 'assets/js/jquery.baldrick.min.js',
-			'ajax'           => CFCORE_URL . 'assets/js/ajax-core.min.js',
-			'field'          => CFCORE_URL . 'assets/js/fields.min.js',
-			'conditionals'   => CFCORE_URL . 'assets/js/conditionals.min.js',
+			'dynamic'        => self::make_url( 'formobject' ),
+			'modals'         => self::make_url( 'remodal' ),
+			'baldrick'       => self::make_url( 'jquery-baldrick' ),
+			'ajax'           => self::make_url( 'ajax-core' ),
+			'field'          => self::make_url( 'fields' ),
+			'conditionals'   => self::make_url( 'conditionals' ),
 			'validator-i18n' => null,
-			'validator'      => CFCORE_URL . 'assets/js/parsley.min.js',
-			'init'           => CFCORE_URL . 'assets/js/frontend-script-init.min.js',
+			'validator'      => self::make_url( 'parsley' ),
+			'init'           => self::make_url( 'frontend-script-init' ),
 			'handlebars'     => CFCORE_URL . 'assets/js/handlebars.js'
 		);
 
@@ -315,7 +318,7 @@ class Caldera_Forms_Render_Assets {
 			if( empty( $style_url ) ){
 				continue;
 			}
-			wp_register_style( 'cf-' . $style_key . '-styles', $style_url, array(), CFCORE_VER );
+			wp_register_style( self::make_style_slug( $style_key ), $style_url, array(), CFCORE_VER );
 		}
 		// register scripts
 		foreach( $script_style_urls['script'] as $script_key => $script_url ){
@@ -348,7 +351,7 @@ class Caldera_Forms_Render_Assets {
 	public static function enqueue_style( $style ){
 		if ( ! wp_style_is( $style,  'enqueued'  ) ) {
 			if ( false !== strpos( $style, '//' ) ) {
-				$slug = self::make_slug( $style );
+				$slug = self::make_style_slug( $style );
 				if ( ! self::is_loaded( $slug, 'css' ) ) {
 					wp_enqueue_style( $slug, $style, array(), CFCORE_VER );
 					self::$loaded[ 'css' ][ $slug ] = true;
@@ -356,7 +359,11 @@ class Caldera_Forms_Render_Assets {
 			} else {
 				if ( wp_style_is( $style, 'registered') ) {
 					wp_enqueue_style( $style );
-				}elseif ( 'cf-' !== substr( $style, 0, 2 ) ) {
+				}elseif( wp_style_is( self::make_style_slug( $style ), 'registered' ) ){
+					wp_enqueue_style( self::make_style_slug( $style ) );
+				} elseif( wp_style_is( self::make_slug( $style ), 'registered' ) ){
+					wp_enqueue_style( self::make_slug( $style ) );
+				} elseif ( 'cf-' !== substr( $style, 0, 2 ) ) {
 					if ( wp_style_is(  'cf-' . $style, 'registered' ) ) {
 						wp_enqueue_script( 'cf-' . $style );
 					}
@@ -391,6 +398,17 @@ class Caldera_Forms_Render_Assets {
 				}
 			}
 		}
+	}
+
+
+	public static function make_url( $name, $script = true ){
+		$root_url = CFCORE_URL;
+		if( $script ) {
+			return $root_url . 'assets/build/js/' . $name . '.min.js';
+		}else{
+			return $root_url . 'assets/build/css/' . $name . '.min.css';
+		}
+
 	}
 
 }

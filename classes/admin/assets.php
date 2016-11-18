@@ -65,21 +65,21 @@ class Caldera_Forms_Admin_Assets {
 	public static function register_scripts(){
 		$version = Caldera_Forms::VERSION;
 
-		wp_register_script( self::slug( 'shortcode', '-insert' ), CFCORE_URL . 'assets/js/shortcode-insert.min.js', array( 'jquery', 'wp-color-picker' ), $version );
+		wp_register_script( self::slug( 'shortcode', '-insert' ), Caldera_Forms_Render_Assets::make_url( 'shortcode-insert' ), array( 'jquery', 'wp-color-picker' ), $version );
 
 
-		wp_register_script( self::slug( 'baldrick' ), CFCORE_URL . 'assets/js/wp-baldrick-full.js', array( 'jquery' ), $version );
-		wp_register_script( self::slug( 'admin' ), CFCORE_URL . 'assets/js/admin.min.js', array(
+		wp_register_script( self::slug( 'baldrick' ), Caldera_Forms_Render_Assets::make_url( 'wp-baldrick-full' ), array( 'jquery' ), $version );
+		wp_register_script( self::slug( 'admin' ), Caldera_Forms_Render_Assets::make_url( 'admin' ), array(
 			self::slug( 'baldrick' ),
 			'wp-pointer',
 			'password-strength-meter'
 		), $version );
 
-		wp_register_script( self::slug( 'edit-fields' ), CFCORE_URL . 'assets/js/fields.min.js', array( 'jquery', 'wp-color-picker' ), $version );
+		wp_register_script( self::slug( 'edit-fields' ), Caldera_Forms_Render_Assets::make_url( 'fields' ), array( 'jquery', 'wp-color-picker' ), $version );
 
-		wp_register_script( self::slug( 'edit-editor' ), CFCORE_URL . 'assets/js/edit.min.js', array( 'jquery', 'wp-color-picker' ), $version );
+		wp_register_script( self::slug( 'edit-editor' ), Caldera_Forms_Render_Assets::make_url( 'edit' ), array( 'jquery', 'wp-color-picker' ), $version );
 
-		wp_register_script( self::slug(  'support-page' ), CFCORE_URL . 'assets/js/support-page.js', array( 'jquery' ), $version );
+		wp_register_script( self::slug(  'support-page' ), Caldera_Forms_Render_Assets::make_url( 'support-page' ), array( 'jquery' ), $version );
 
 		/**
 		 * Runs after scripts are registered for Caldera Forms admin
@@ -96,16 +96,16 @@ class Caldera_Forms_Admin_Assets {
 	 */
 	public static function register_styles(){
 		$version = Caldera_Forms::VERSION;
-		wp_register_style( self::slug( 'fields', false ), CFCORE_URL . 'assets/css/fields.min.css', array( 'wp-color-picker' ), $version );
-		wp_register_style( self::slug( 'modals', false ), CFCORE_URL . 'assets/css/modals.css', array( 'wp-color-picker' ), $version );
-		wp_register_style( self::slug( 'admin', false ), CFCORE_URL . 'assets/css/admin.css', array(
+		wp_register_style( self::slug( 'fields', false ), Caldera_Forms_Render_Assets::make_url( 'fields', false ), array( 'wp-color-picker' ), $version );
+		wp_register_style( self::slug( 'modals', false ), Caldera_Forms_Render_Assets::make_url( 'modals', false ), array( 'wp-color-picker' ), $version );
+		wp_register_style( self::slug( 'admin', false ), Caldera_Forms_Render_Assets::make_url( 'admin', false ), array(
 			self::slug( 'modals', false ),
 			self::slug( 'fields', false ),
 			'wp-pointer'
 		), $version );
 
-		wp_register_style( self::slug( 'processors', false ), CFCORE_URL . 'assets/css/processors-edit.css', array(), $version );
-		wp_register_style( self::slug( 'editor-grid', false ), CFCORE_URL . 'assets/css/editor-grid.css', array(
+		wp_register_style( self::slug( 'processors', false ), Caldera_Forms_Render_Assets::make_url( 'processors-edit', false ), array(), $version );
+		wp_register_style( self::slug( 'editor-grid', false ), Caldera_Forms_Render_Assets::make_url( 'editor-grid', false ), array(
 			self::slug( 'processors', false )
 		), $version );
 
@@ -210,7 +210,7 @@ class Caldera_Forms_Admin_Assets {
 	 *
 	 * @since 1.5.0
 	 */
-	protected function maybe_register_all_admin(){
+	protected static function maybe_register_all_admin(){
 		$front = false;
 		if( ! did_action( 'caldera_forms_admin_assets_styles_registered' ) ){
 			Caldera_Forms_Render_Assets::register();
