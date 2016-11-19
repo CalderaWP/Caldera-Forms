@@ -67,12 +67,12 @@ module.exports = function (grunt) {
         },
         watch: {
             scripts: {
-                files: ['assets/js/src/**.js'],
-                tasks: ['default'],
+                files: ['assets/js/*.js'],
+                tasks: ['js'],
                 options: {
-                    spawn: false
-                }
-            }
+                    spawn: false,
+                },
+            },
         },
         copy: {
             fonts: {
@@ -118,6 +118,12 @@ module.exports = function (grunt) {
         'concat',
         'copy'
     ] );
+
+    grunt.registerTask( 'js',  [
+        'uglify',
+        'concat',
+    ] );
+
     grunt.registerTask( 'version_number', [ 'replace' ] );
 
 

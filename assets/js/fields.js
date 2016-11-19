@@ -4851,7 +4851,7 @@ function toggle_button_init(id, el){
 }
 
 /** Dynamic Field Configuration **/
-function Caldera_Forms_Field_Config( configs, $ ){
+function Caldera_Forms_Field_Config( configs, $form, $ ){
 	var self = this;
 
 	this.init = function(){
@@ -4903,8 +4903,55 @@ function Caldera_Forms_Field_Config( configs, $ ){
 
 	};
 
-	this.better_field = function( field ){
-		$( document.getElementById( field.id ) ).intlTelInput(field.options );
+	this.phone_better = function( field ){
+
+		var $field = $( document.getElementById( field.id ) );
+		var $parent = $field.parent().parent();
+
+		var validatorName = 'phone_better_validator-' + field.validator;
+		$( document ).on( 'cf.fieldsInit', function(e){
+			console.log( cf_validate_form );
+			cf_validate_form.parsely.addValidator( field.validator,
+				function (v) {
+					console.log( v );
+					return valid();
+
+				}, 32 )
+				.addMessage('en', 'myvalidator', 'my validator failed');
+		} );
+
+		$field.intlTelInput( field.options );
+		$form.on( 'submit', function(e){
+			validation();
+		});
+
+		$field.on( 'change', function(){
+			validation();
+		});
+
+		var validation = function(){
+			var error = document.getElementById( 'cf-error-'+ field.id );
+			if(  null != error ){
+				error.remove();
+			}
+
+			if( valid() ){
+				$parent.addClass( 'has-error' ).append( '<span id="cf-error-'+ field.id +'" class="help-block help-block-phone_better">' + field.options.invalid  + '</span>' );
+				return false;
+			}else{
+				$parent.removeClass( 'has-error' );
+				return true;
+			}
+
+		}
+
+		function valid(){
+			if (  false == $field.intlTelInput("isValidNumber") && 0 != $field.intlTelInput("getValidationError") ){
+				return false;
+			}else{
+				return true;
+			}
+		}
 	};
 
 	this.wysiwyg = function( field ){
@@ -4929,8 +4976,8 @@ jQuery(document).ready(function($){
 	$( '.caldera_forms_form' ).each( function( i, el ){
 		form_id =  $( el ).attr( 'id' );
 		config = $( '#' + form_id + ' .cf-fieldjs-config' );
-		if( 1 == config.length ){
-			config_object = new Caldera_Forms_Field_Config( JSON.parse( config.val() ), $ );
+		if( 1 >= config.length ){
+			config_object = new Caldera_Forms_Field_Config( JSON.parse( config.val() ),$( document.getElementById( form_id ) ), $ );
 			config_object.init();
 		}
 	});

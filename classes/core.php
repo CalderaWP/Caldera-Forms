@@ -1292,7 +1292,13 @@ class Caldera_Forms {
 						'default'	=> '',
 
 					)
-				)
+				),
+				"scripts" => array(
+					CFCORE_URL . 'fields/phone_better/assets/js/intlTelInput.min.js',
+				),
+				"styles"	=> array(
+					CFCORE_URL . 'fields/phone_better/assets/css/intlTelInput.css'
+				),
 			),
 			'phone' => array(
 				"field"		=>	__( 'Phone Number (Basic)', 'caldera-forms' ),
@@ -1307,13 +1313,7 @@ class Caldera_Forms {
 						'type'	=>	'local',
 						'custom'=> '(999)999-9999'
 					)
-				),
-				"scripts" => array(
-					CFCORE_URL . 'fields/phone_better/assets/js/intlTelInput.min.js'
-				),
-				"styles"	=> array(
-					CFCORE_URL . 'fields/phone_better/assets/css/intlTelInput.css'
-				),
+				)
 			),
 			'paragraph' => array(
 				"field"		=>	__( 'Paragraph Textarea', 'caldera-forms' ),

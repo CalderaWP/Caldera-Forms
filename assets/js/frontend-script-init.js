@@ -1,4 +1,4 @@
-var cf_jsfields_init, cf_validate_form;
+var cf_jsfields_init, cf_presubmit;
 (function($){
 
 	// validation
@@ -14,8 +14,9 @@ var cf_jsfields_init, cf_validate_form;
 		}).on('field:success', function() {
 			this.$element.closest('.form-group').removeClass('has-error');
 		});
-	}
+	};
 
+	
 	// init sync
 	$('[data-sync]').each( function(){
 		var field = $( this ),
@@ -78,6 +79,8 @@ var cf_jsfields_init, cf_validate_form;
 		if( typeof resBaldrickTriggers === 'undefined' && $('.caldera_forms_form').length ){
 
 		}
+
+		$( document ).trigger( 'cf.fieldsInit' );
 
 	};	
 
@@ -254,6 +257,7 @@ var cf_jsfields_init, cf_validate_form;
 			form = clicked.closest('.caldera_forms_form'),
 			validator = cf_validate_form( form );
 
+		console.log( cf_pre_submit( form ).allow );
 		if( !validator.validate() ){
 			e.preventDefault();
 		}else{
@@ -264,3 +268,5 @@ var cf_jsfields_init, cf_validate_form;
 	
 
 })(jQuery);
+
+

@@ -101,6 +101,12 @@ class Caldera_Forms_Field_Util {
 		return in_array( self::get_type( $field, $form ), array( 'advanced_file', 'file' ) );
 	}
 
+	public static function better_phone_validator( $field_id, $current_form_count = null ){
+		if( null == $current_form_count ){
+			global $current_form_count;
+		}
+		return 'phone_better_validator' . $field_id . $current_form_count;
+	}
 
 
 }

@@ -10,7 +10,7 @@
  * @link
  * @copyright 2016 CalderaWP LLC
  */
-class Caldera_Forms_Render_FieldsJS {
+class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 
 	/**
 	 * Form config
@@ -63,10 +63,21 @@ class Caldera_Forms_Render_FieldsJS {
 		if( ! empty( $this->form[ 'fields' ] ) ){
 			foreach( $this->form[ 'fields' ] as $field ){
 				if( method_exists( $this, $field[ 'type' ] ) ){
-					call_user_func( array( $this, $field[ 'type' ] ), $field[ 'ID' ] );
+					call_user_func( array( $this, $field[ 'type' ] ), $field[ 'ID' ], $field );
 				}
 			}
 		}
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function jsonSerialize() {
+		if( empty( $this->data ) ){
+			$this->prepare_data();
+		}
+
+		return $this->get_data();
 	}
 
 	/**
@@ -147,13 +158,27 @@ class Caldera_Forms_Render_FieldsJS {
 	 * @since 1.5.0
 	 *
 	 * @param $field_id
+	 * @param array $field Field config
 	 *
 	 * @return void
 	 */
-	protected function better_phone( $field_id ){
+	protected function phone_better( $field_id, $field ){
 		$this->data[ $field_id ] = array(
+			'type' => 'phone_better',
 			'id' => $this->field_id( $field_id ),
-			'options' => array()
+			'validator' => Caldera_Forms_Field_Util::better_phone_validator( $field_id, $this->form_count ),
+			'options' => array(
+				'autoHideDialCode' => false,
+				'utilsScript' => CFCORE_URL . 'fields/phone_better/assets/js/utils.js'
+			)
 		);
+
+		if( isset( $field[ 'config' ][ 'invalid_message' ] ) ){
+			$this->data[ $field_id ][ 'options' ][ 'invalid' ] = $field[ 'config' ][ 'invalid_message' ];
+		}else{
+			$this->data[ $field_id ][ 'options' ][ 'invalid' ] = esc_html__( 'Invalid number', 'caldera-forms' );
+		}
+
+
 	}
 }

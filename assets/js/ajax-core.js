@@ -1,1 +1,206 @@
-var resBaldrickTriggers;jQuery(function(a){var b=[],c=function(c,d,e){var f=a("#progress-file-"+d),g=a("."+d+" .file-size");b.push(1),cf_uploader_filelist[d].state=2,a.ajax({xhr:function(){var a=new window.XMLHttpRequest;return a.upload.addEventListener("progress",function(a){if(a.lengthComputable){var b=a.loaded/a.total*100;f.width(b+"%"),g.html(size_format(a.loaded)+" / "+size_format(a.total))}},!1),a.addEventListener("progress",function(a){if(a.lengthComputable){a.loaded/a.total}},!1),a},url:c.data("request")+"/upload/",type:"POST",data:e,processData:!1,contentType:!1,success:function(e,f,g){if(e.success&&e.success===!0){b.pop();var h=a('[data-file="'+d+'"]');h.next().addClass("file-uploaded"),h.remove(),cf_uploader_filelist[d].state=3,c.submit()}else if(e.data&&!e.success)return a("."+d).addClass("has-error"),c.find(":submit").prop("disabled",!1),c.find(".cf-uploader-trigger").slideDown(),void a("."+d+" .file-error").html(e.data)},error:function(a,b,d){c.data("postDisable")||buttons.prop("disabled",!1)}})};(resBaldrickTriggers=function(){a(".cfajax-trigger").baldrick({request:"./",method:"POST",init:function(d,e){e.preventDefault();var f=a(d),g=f.find(":submit");if(f.data("_cf_manual"))return f.find('[name="cfajax"]').remove(),!1;if(f.data("postDisable")||g.prop("disabled",!0),"object"==typeof cf_uploader_filelist){f.find(".cf-uploader-trigger").slideUp();var h=!1,i=b.length;for(var j in cf_uploader_filelist)if(!(cf_uploader_filelist[j].state>1||0===cf_uploader_filelist[j].state)){h=!0;var k=new FormData,l=j,m=a("#"+l.split("_file_")[0]);if(k.append(m.data("field"),cf_uploader_filelist[j].file),k.append("field",m.data("field")),k.append("control",m.data("controlid")),c(f,l,k),i++,1===i)break}if(!0===h||b.length)return!1}},error:function(a){404===a.jqxhr.status&&this.trigger.data("_cf_manual",!0).trigger("submit")},callback:function(b){b.params.trigger.find(":submit").prop("disabled",!1);b.params.trigger.data("instance");if(b.params.trigger.data("customCallback")&&"function"==typeof window[b.params.trigger.data("customCallback")]&&window[b.params.trigger.data("customCallback")](b.data),b.params.trigger.data("inhibitnotice")||(a(".caldera_ajax_error_wrap").removeClass("caldera_ajax_error_wrap").removeClass("has-error"),a(".caldera_ajax_error_block").remove(),"complete"===b.data.status||"success"===b.data.type?(b.data.html&&b.params.target.html(b.data.html),b.params.trigger.data("hiderows")&&b.params.trigger.find("div.row").remove()):"preprocess"===b.data.status?b.params.target.html(b.data.html):"error"===b.data.status&&b.params.target.html(b.data.html)),"complete"!==b.data.status&&"success"!==b.data.type||b.data.entry||b.params.trigger[0].reset(),b.data.url&&(b.params.trigger.hide(),window.location=b.data.url),b.params.trigger.find(".cf-uploader-trigger").slideDown(),b.data.fields)for(var d in b.data.fields){var e=b.params.trigger.find('[data-field="'+d+'"]'),f=e.parent();f.is("label")&&(f=f.parent(),(f.hasClass("checkbox")||f.hasClass("radio"))&&(f=f.parent()));var g=f.find(".help-block").not(".caldera_ajax_error_block");f.addClass("has-error").addClass("caldera_ajax_error_wrap"),g.length&&g.hide(),f.append('<span class="help-block caldera_ajax_error_block">'+b.data.fields[d]+"</span>")}if("object"==typeof b.data&&"undefined"!=b.data.scroll){var h=a(document.getElementById(b.data.scroll));a("html, body").animate({scrollTop:h.offset().top-h.outerHeight()-25},500)}a(document).trigger("cf.submission",b),a(document).trigger("cf."+b.data.type)}})})()});
+var resBaldrickTriggers;
+
+jQuery(function($){
+
+    var cf_upload_queue = [];
+    // admin stuff!
+    var cf_push_file_upload = function( form, file_number, data ){
+        var progress = $('#progress-file-' + file_number ),
+            filesize = $('.' + file_number + ' .file-size');
+        cf_upload_queue.push(1);
+        cf_uploader_filelist[ file_number ].state = 2;
+        $.ajax({
+            xhr: function(){
+                var xhr = new window.XMLHttpRequest();
+                //Upload progress
+                xhr.upload.addEventListener("progress", function(evt){
+                    if (evt.lengthComputable) {
+                        var percentComplete = ( evt.loaded / evt.total ) * 100;
+                        progress.width( percentComplete + '%' );
+                        filesize.html( size_format(evt.loaded) + ' / ' + size_format( evt.total ) );
+                    }
+                }, false);
+                //Download progress
+                xhr.addEventListener("progress", function(evt){
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        //Do something with download progress
+
+                    }
+                }, false);
+                return xhr;
+            },
+            url : form.data('request') + "/upload/",
+            type: "POST",
+            data : data,
+            processData: false,
+            contentType: false,
+            success:function(data, textStatus, jqXHR){
+
+                if( data.success && data.success === true ){
+
+                    cf_upload_queue.pop();
+                    var file_remover = $('[data-file="' + file_number + '"]');
+                    file_remover.next().addClass('file-uploaded');
+                    file_remover.remove();
+
+                    cf_uploader_filelist[ file_number ].state = 3;
+
+                    form.submit();
+
+
+                }else if( data.data && !data.success ){
+                    //show error
+                    $('.' + file_number ).addClass('has-error');
+                    form.find(':submit').prop('disabled',false);
+                    form.find('.cf-uploader-trigger').slideDown();
+                    $('.' + file_number +' .file-error' ).html( data.data );
+
+                    return;
+                }
+
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                //if fails  - push error
+                if( !form.data( 'postDisable' ) ){
+                    buttons.prop('disabled',false);
+                }
+            }
+        });
+    }
+    // Baldrick Bindings
+    resBaldrickTriggers = function(){
+        $('.cfajax-trigger').baldrick({
+            request			:	'./',
+            method			:	'POST',
+            init			: function(el, ev){
+
+                ev.preventDefault();
+
+                var form	=	$(el),
+                    buttons = 	form.find(':submit');
+
+                if( form.data('_cf_manual') ){
+                    form.find('[name="cfajax"]').remove();
+                    return false;
+                }
+
+                if( !form.data( 'postDisable' ) ){
+                    buttons.prop('disabled',true);
+                }
+
+
+                if( typeof cf_uploader_filelist === 'object'  ){
+                    // verify required
+                    form.find('.cf-uploader-trigger').slideUp();
+                    // setup file uploader
+                    var has_files = false;
+                    var count = cf_upload_queue.length;
+                    for( var file in cf_uploader_filelist ){
+                        if( cf_uploader_filelist[ file ].state > 1 || cf_uploader_filelist[ file ].state === 0 ){
+                            // state 2 and 3 is transferring and complete, state 0 is error and dont upload
+                            continue;
+                        }
+
+                        has_files = true;
+                        var data = new FormData(),
+                            file_number = file,
+                            field = $('#' + file_number.split('_file_')[0] );
+                        data.append( field.data('field'), cf_uploader_filelist[ file ].file );
+                        data.append( 'field', field.data('field') );
+                        data.append( 'control', field.data('controlid') );
+
+
+                        cf_push_file_upload( form, file_number, data );
+                        count++;
+                        if( count === 1 ){
+                            break;
+                        }
+
+                    }
+                    if( true === has_files || cf_upload_queue.length ){
+                        return false;
+                    }
+                }
+
+            },
+            error : function( obj ){
+                if( obj.jqxhr.status === 404){
+                    this.trigger.data('_cf_manual', true ).trigger('submit');
+                }
+            },
+            callback		: function(obj){
+
+                obj.params.trigger.find(':submit').prop('disabled',false);
+
+                var instance = obj.params.trigger.data('instance');
+
+                // run callback if set.
+                if( obj.params.trigger.data('customCallback') && typeof window[obj.params.trigger.data('customCallback')] === 'function' ){
+
+                    window[obj.params.trigger.data('customCallback')](obj.data);
+
+                }
+
+                if( !obj.params.trigger.data('inhibitnotice') ){
+
+                    $('.caldera_ajax_error_wrap').removeClass('caldera_ajax_error_wrap').removeClass('has-error');
+                    $('.caldera_ajax_error_block').remove();
+
+                    if(obj.data.status === 'complete' || obj.data.type === 'success'){
+                        if(obj.data.html){
+                            obj.params.target.html(obj.data.html);
+                        }
+                        if(obj.params.trigger.data('hiderows')){
+                            obj.params.trigger.find('div.row').remove();
+                        }
+                    }else if(obj.data.status === 'preprocess'){
+                        obj.params.target.html(obj.data.html);
+                    }else if(obj.data.status === 'error'){
+                        obj.params.target.html(obj.data.html);
+                    }
+
+                }
+                // hit reset
+                if( ( obj.data.status === 'complete' || obj.data.type === 'success' ) && !obj.data.entry ){
+                    obj.params.trigger[0].reset();
+                }
+
+                // do a redirect if set
+                if(obj.data.url){
+                    obj.params.trigger.hide();
+                    window.location = obj.data.url;
+                }
+                // show trigger
+                obj.params.trigger.find('.cf-uploader-trigger').slideDown();
+                if(obj.data.fields){
+
+                    for(var i in obj.data.fields){
+                        var field = obj.params.trigger.find('[data-field="' + i + '"]'),
+                            wrap = field.parent();
+                        if( wrap.is('label') ){
+                            wrap = wrap.parent();
+                            if( wrap.hasClass('checkbox') || wrap.hasClass('radio') ){
+                                wrap = wrap.parent();
+                            }
+                        }
+                        var has_block = wrap.find('.help-block').not('.caldera_ajax_error_block');
+
+                        wrap.addClass('has-error').addClass('caldera_ajax_error_wrap');
+                        if( has_block.length ){
+                            has_block.hide();
+                        }
+                        wrap.append('<span class="help-block caldera_ajax_error_block">' + obj.data.fields[i] + '</span>');
+
+                    }
+                }
+                // trigger global event
+                $( document ).trigger( 'cf.submission', obj );
+                $( document ).trigger( 'cf.' + obj.data.type );
+
+            }
+        });
+    };
+
+    resBaldrickTriggers();
+});
