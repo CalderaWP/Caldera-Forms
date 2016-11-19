@@ -4860,10 +4860,6 @@ function Caldera_Forms_Field_Config( configs, $form, $ ){
 		} );
 	};
 
-	this.advanced_file = function( field ){
-
-	};
-
 	this.calculation = function( field ){
 
 	};
@@ -4943,14 +4939,10 @@ function Caldera_Forms_Field_Config( configs, $form, $ ){
 				return true;
 			}
 
-		}
+		};
 
 		function valid(){
-			if (  false == $field.intlTelInput("isValidNumber") && 0 != $field.intlTelInput("getValidationError") ){
-				return false;
-			}else{
-				return true;
-			}
+			return false == $field.intlTelInput("isValidNumber") && 0 != $field.intlTelInput("getValidationError");
 		}
 	};
 
@@ -4971,15 +4963,20 @@ function Caldera_Forms_Field_Config( configs, $form, $ ){
 	};
 }
 
-jQuery(document).ready(function($){
-	var form_id, config_object, config;
-	$( '.caldera_forms_form' ).each( function( i, el ){
-		form_id =  $( el ).attr( 'id' );
-		config = $( '#' + form_id + ' .cf-fieldjs-config' );
-		if( 1 >= config.length ){
-			config_object = new Caldera_Forms_Field_Config( JSON.parse( config.val() ),$( document.getElementById( form_id ) ), $ );
-			config_object.init();
-		}
-	});
+window.addEventListener("load", function(){
+	(function( $ ) {
+		'use strict';
+		var form_id, config_object, config;
+		$( '.caldera_forms_form' ).each( function( i, el ){
+			form_id =  $( el ).attr( 'id' );
+			config = $( '#' + form_id + ' .cf-fieldjs-config' );
+			if( 1 >= config.length ){
+				config_object = new Caldera_Forms_Field_Config( JSON.parse( config.val() ),$( document.getElementById( form_id ) ), $ );
+				config_object.init();
+			}
+		});
+
+	})( jQuery );
+
 
 });
