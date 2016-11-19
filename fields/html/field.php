@@ -1,30 +1,17 @@
 <?php
 
-
-
 // magics!
-$html_template = $field['config']['default'];
-preg_match_all("/%(.+?)%/", $html_template, $hastags);
-$bindfields = array();
-if(!empty($hastags[1])){
-	$binds = array();
+$syncer = new Caldera_Forms_Field_SyncHTML( $form, $field, $field_base_id );
+$sync = $syncer->can_sync();
+$default = $syncer->get_default();
+if( $sync ){
 
-	foreach($hastags[1] as $tag_key=>$tag){
-
-		foreach($form['fields'] as $key_id=>$fcfg){
-			if($fcfg['slug'] === $tag){
-				$binds[] = '[data-field="'.$key_id.'"]';
-				$bindfields[] = '"'.$key_id.'"';
-				$html_template = str_replace($hastags[0][$tag_key], '{{'.$key_id.'}}', $html_template);
-			}
-		}
-	}
 	echo '<div id="html-content-' . esc_attr( $field_id ) . '" data-field="' . esc_attr( $field_id ) . '" class="' . esc_attr( $field['config']['custom_class'] ) . '"></div>';
 
 	// create template block
 	ob_start();
 	echo '<script type="text/html" id="html-content-' . esc_attr( $field_id ) . '-tmpl">';
-		echo do_shortcode( Caldera_Forms::do_magic_tags( $html_template ) );
+		echo do_shortcode( Caldera_Forms::do_magic_tags( wpautop( $syncer->get_default() ) ) );
 	echo '</script>';
 	
 	?>
@@ -35,7 +22,7 @@ if(!empty($hastags[1])){
 
 				var template = jQuery('#html-content-<?php echo $field_id; ?>-tmpl').html(),
 					target = jQuery('#html-content-<?php echo $field_id; ?>'),
-					list = [<?php echo implode(',', $bindfields); ?>];
+					list = [<?php echo implode(',', $syncer->get_bind_fields() ); ?>];
 
 				for(var i =0; i < list.length; i++){
 					
@@ -62,7 +49,7 @@ if(!empty($hastags[1])){
 				target.html(template).trigger('change');
 
 			}
-			jQuery('body').on('change keyup', '<?php echo implode(',', $binds); ?>', htmltemplate<?php echo $field_id; ?>);
+			jQuery('body').on('change keyup', '<?php echo implode(',', $syncer->get_attr_binds() ); ?>', htmltemplate<?php echo $field_id; ?>);
 
 			htmltemplate<?php echo $field_id; ?>();
 

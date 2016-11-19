@@ -181,8 +181,8 @@ class Caldera_Forms_Field_Sync {
 					}
 
 					if ( $fcfg[ 'slug' ] === $tag ) {
-						$this->binds[]                        = $key_id;
-						$this->default = str_replace( $this->tags[0][ $tag_key ], '{{' . $key_id . '}}', $this->field[ 'config' ][ 'default' ] );
+						$this->add_bind( $key_id );
+						$this->set_default( $tag_key, $key_id );
 					}
 
 				}
@@ -192,6 +192,46 @@ class Caldera_Forms_Field_Sync {
 		}
 
 	}
+
+	/**
+	 * Add a field binding
+	 * 
+	 * @since 1.5.0
+	 *
+	 * @param string $key_id The ID of field to bound to
+	 */
+	protected function add_bind( $key_id ) {
+		$this->binds[] = $key_id;
+	}
+
+	/**
+	 * Set default value for field
+	 *
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $tag_key Index in $this->tags[0] to use for replace
+	 * @param string $key_id The ID of field to bound to
+	 */
+	protected function set_default( $tag_key, $key_id ) {
+		$this->default = $this->calculate_default( $tag_key, $key_id );
+	}
+
+	/**
+	 * Calculate default value for field
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $tag_key Index in $this->tags[0] to use for replace
+	 * @param string $key_id The ID of field to bound to
+	 *
+	 * @return string
+	 */
+	protected function calculate_default( $tag_key, $key_id ){
+		return str_replace( $this->tags[ 0 ][ $tag_key ], '{{' . $key_id . '}}', $this->default );
+	}
+
+
 
 
 }
