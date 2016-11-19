@@ -157,7 +157,7 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param $field_id
+	 * @param string $field_id Id of field
 	 * @param array $field Field config
 	 *
 	 * @return void
@@ -179,6 +179,10 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 			$this->data[ $field_id ][ 'options' ][ 'invalid' ] = esc_html__( 'Invalid number', 'caldera-forms' );
 		}
 
+
+	}
+
+	protected function html( $field_id, $field ){
 
 	}
 }

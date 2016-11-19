@@ -4,7 +4,7 @@ if(!empty($field['config']['placeholder'])){
 	$field_placeholder = 'placeholder="'. esc_attr( $placeholder ).'"';
 }
 
-$syncer = new Caldera_Forms_Field_Sync( $form, $field, $field_base_id );
+$syncer = Caldera_Forms_Field_SyncFactory::get_object( $form, $field, $field_base_id );
 $sync = $syncer->can_sync();
 $default = $syncer->get_default();
 

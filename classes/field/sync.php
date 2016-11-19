@@ -2,7 +2,8 @@
 
 /**
  * Prepares field sync and sets in $this->binds the array to be serialized in data-binds attribute of inputs for field sync.
- * -
+ *
+ * IMPORTANT: Should be created using Caldera_Forms_Field_Syncfactory::get_object()
  *
  * @package Caldera_Forms
  * @author    Josh Pollock <Josh@CalderaWP.com>
@@ -71,6 +72,8 @@ class Caldera_Forms_Field_Sync {
 
 	/**
 	 * Caldera_Forms_Field_Sync constructor.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @param array $form Form config
 	 * @param array $field Field config
