@@ -4919,6 +4919,33 @@ function Caldera_Forms_Field_Config( configs, $form, $ ){
 	};
 
 	this.range_slider = function( field ){
+		var $el = $(document.getElementById(field.id));
+		function init() {
+
+			$el.rangeslider({
+				onSlide: function (position, value) {
+					value = value.toFixed(field.value);
+				},
+				onInit: function () {
+					$el.parent().find('.rangeslider').css('backgroundColor', field.trackcolor );
+					$el.parent().find('.rangeslider__fill').css('backgroundColor',  field.color );
+					$el.parent().find('.rangeslider__handle').css('backgroundColor', field.handle ).css('borderColor', field.handleborder );
+				},
+				polyfill: false
+			});
+		}
+
+
+		$el.on('change', function(){
+			$('#' + field.id + '_value').html(this.value);
+		}).css("width", "100%");
+
+
+		$(document).on('cf.pagenav cf.add cf.disable cf.modal', function(){
+			init();
+		});
+
+		init();
 
 	};
 

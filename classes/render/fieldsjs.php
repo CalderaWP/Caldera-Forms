@@ -213,4 +213,45 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 			}
 		}
 	}
+
+
+	/**
+	 * Setup HTML fields
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $field_id Id of field
+	 * @param array $field Field config
+	 * @return void
+	 */
+	public function range_slider( $field_id, $field ){
+		$this->data[ $field_id ] = array(
+			'type' => 'range_slider',
+			'id' => $this->field_id( $field_id ),
+			'value' => 0,
+			'trackcolor' => $field['config']['trackcolor']
+		);
+
+		foreach( array(
+			'handleborder',
+			'trackcolor',
+			'color',
+			'handle',
+		) as $setting ){
+			if( isset( $field[ 'config'][ $setting ] ) ){
+				$value = $field[ 'config'][ $setting ];
+			}else{
+				$value = '';
+			}
+
+			$this->data[ $field_id ][ $setting ] = $value;
+		}
+
+		if( false !== strpos( $field['config']['step'], '.' ) ) {
+			$part = explode( '.', $field[ 'config' ][ 'step' ] );
+			$this->data[ $field_id ][ 'value' ] = strlen( $part[1] );
+		}
+
+
+	}
 }

@@ -1385,7 +1385,10 @@ class Caldera_Forms {
 						'handleborder'	=> '#cccccc',
 						'trackcolor' => '#e6e6e6'
 					),
-				)
+				),
+				"styles"	=> array(
+					CFCORE_URL . "fields/range_slider/rangeslider.css",
+				),
 			),
 			'star_rating' 	=> array(
 				"field"		=>	__( 'Star Rating', 'caldera-forms' ),
