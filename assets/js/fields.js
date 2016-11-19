@@ -4969,7 +4969,7 @@ function Caldera_Forms_Field_Config( configs, $form, $ ){
 	};
 
 	this.toggle_switch = function( field ) {
-		$( document ).on('reset', '#' . field.id, function(e){
+		$( document ).on('reset', '#' + field.id, function(e){
 			$.each( field.options, function( i, option ){
 				$( document.getElemenetById( option ) ).removeClass( field.selectedClassName ).addClass( field.defaultClassName );
 			});
@@ -4977,9 +4977,6 @@ function Caldera_Forms_Field_Config( configs, $form, $ ){
 		} );
 	};
 
-	this.paragraph = function( field ){
-
-	};
 
 	this.phone_better = function( field ){
 

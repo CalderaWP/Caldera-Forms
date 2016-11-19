@@ -29,9 +29,10 @@ var cf_jsfields_init, cf_presubmit;
 					id = $(this).data('field'),
 					reg = new RegExp( "\{\{([^\}]*?)\}\}", "g" ),
 					template = str.match( reg );
-					if( field.data( 'unsync' ) ){
+					if( field.data( 'unsync' ) || undefined == template || ! template.length ){
 						return;
 					}
+
 					for( var t = 0; t < template.length; t++ ){
 						var select = template[ t ].replace(/\}/g,'').replace(/\{/g,'');
 						var re = new RegExp( template[ t ] ,"g");
