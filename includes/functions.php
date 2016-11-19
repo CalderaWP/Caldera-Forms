@@ -73,3 +73,59 @@ function caldera_forms_woo_nonce_fix( $user_id, $action) {
 	return $user_id;
 
 }
+
+
+/**
+ * Create (with escaping) a field attributes string for a Caldera Forms field input
+ *
+ * @since 1.5.0
+ *
+ * @param array $attrs Array of attributes, $name => $value
+ * @param array $field Field config
+ * @param array $form Form config
+ *
+ *
+ * @return  string
+ */
+function caldera_forms_field_attributes( array $attrs, array $field, array $form ){
+	$field_type = Caldera_Forms_Field_Util::get_type( $field, $form );
+
+	/**
+	 * Filter field attributes before rendering
+	 *
+	 * @param array $attrs Array of attributes, $name => $value
+	 * @param array $field Field config
+	 * @param array $form Form config
+	 */
+	$attrs = apply_filters( 'caldera_forms_field_attributes', $attrs, $field, $form );
+	$attrs = apply_filters( "caldera_forms_field_attributes-$field_type", $attrs, $form );
+
+	return implode( ' ', caldera_forms_escape_field_attributes_array( $attrs ) );
+
+}
+
+/**
+ *  Escape an array of HTML attributes
+ *
+ * @since 1.5.0
+ *
+ * @param array $attrs Array of attributes, $name => $value
+ *
+ * @return array
+ */
+function caldera_forms_escape_field_attributes_array( array  $attrs ){
+	$out = array();
+	foreach (  $attrs as $attr => $value  ) {
+		if( is_array( $value ) ){
+			$_value = '';
+			foreach ( $value as $v ){
+				$_value .= esc_attr( $v );
+			}
+			$out[ $attr ] = $_value;
+		}else{
+			$out[ $attr ] = esc_attr( $attr );
+		}
+	}
+
+	return $out;
+}
