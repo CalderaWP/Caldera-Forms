@@ -31,6 +31,7 @@ module.exports = function (grunt) {
         uglify: {
             core: {
                 files: [{
+                    sourceMap: true,
                     expand: true,
                     cwd: 'assets/js',
                     src: '*.js',
@@ -62,7 +63,7 @@ module.exports = function (grunt) {
                     'assets/build/css/caldera-alert.min.css',
                     'assets/build/css/caldera-form.min.css'
                  ],
-                dest: 'assets/build/css/caldera-forms-front.min.css'
+                dest: 'assets/css/caldera-forms-front.css'
             }
         },
         watch: {

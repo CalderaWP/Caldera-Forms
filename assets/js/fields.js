@@ -4875,7 +4875,46 @@ function Caldera_Forms_Field_Config( configs, $form, $ ){
 
 	};
 
-	this.html = function ( field ) {
+	this.html = function ( fieldConfig ) {
+
+		function templateSystem() {
+			var template = $( document.getElementById( fieldConfig.tmplId ) ).html(),
+				$target = $( document.getElementById( fieldConfig.contentId ) ),
+				list = fieldConfig.binds;
+			for (var i = 0; i < list.length; i++) {
+
+				var field = $('[data-field="' + list[i] + '"]'),
+					value = [];
+				for (var f = 0; f < field.length; f++) {
+					if ($(field[f]).is(':radio,:checkbox')) {
+						if (!$(field[f]).prop('checked')) {
+							continue;
+						}
+					}
+					if ($(field[f]).is('input:file')) {
+						var file_parts = field[f].value.split('\\');
+						value.push(file_parts[file_parts.length - 1]);
+					} else {
+						if (field[f].value) {
+							value.push(field[f].value);
+						}
+					}
+				}
+
+				template = template.replace(new RegExp("\{\{" + list[i] + "\}\}", "g"), value.join(', '));
+			}
+
+			$target.html(template).trigger('change');
+
+		}
+
+
+		$.each( fieldConfig.bindFields, function( i, id ){
+			$( document.getElementById( id ) ).on( 'change keyup', templateSystem );
+		});
+
+		templateSystem();
+
 
 	};
 
@@ -4906,10 +4945,8 @@ function Caldera_Forms_Field_Config( configs, $form, $ ){
 
 		var validatorName = 'phone_better_validator-' + field.validator;
 		$( document ).on( 'cf.fieldsInit', function(e){
-			console.log( cf_validate_form );
 			cf_validate_form.parsely.addValidator( field.validator,
 				function (v) {
-					console.log( v );
 					return valid();
 
 				}, 32 )

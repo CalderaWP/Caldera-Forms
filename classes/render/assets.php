@@ -400,13 +400,40 @@ class Caldera_Forms_Render_Assets {
 		}
 	}
 
-
+	/**
+	 * Create a URL for a script/style used by Caldera Forms
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $name Name of script/style (no .js/.css or min please)
+	 * @param bool $script Optional. True if is script, the default, false if is style
+	 *
+	 * @return string
+	 */
 	public static function make_url( $name, $script = true ){
 		$root_url = CFCORE_URL;
-		if( $script ) {
-			return $root_url . 'assets/build/js/' . $name . '.min.js';
+
+		/**
+		 * Filter for disabling minimization of script(s)/style(s)
+		 *
+		 * @since 1.5.0
+		 *
+		 * @param bool $minify Whether to minfify or not.
+		 * @param bool $script If is script or not.
+		 */
+		$min = apply_filters( 'caldera_forms_render_assets_minify', true, $script );
+		if ( $min ) {
+			if ( $script ) {
+				return $root_url . 'assets/build/js/' . $name . '.min.js';
+			} else {
+				return $root_url . 'assets/build/css/' . $name . '.min.css';
+			}
 		}else{
-			return $root_url . 'assets/build/css/' . $name . '.min.css';
+			if ( $script ) {
+				return $root_url . 'assets/js/' . $name . '.js';
+			} else {
+				return $root_url . 'assets/css/' . $name . '.css';
+			}
 		}
 
 	}
