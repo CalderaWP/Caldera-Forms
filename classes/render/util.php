@@ -38,4 +38,19 @@ class Caldera_Forms_Render_Util {
 
 	}
 
+	/**
+	 * Get the current forms number
+	 *
+	 * If 1 form on page, will be 1, if 2 and is scodn form rendered will be 2...
+	 * This is a wrapper for global $current_form_count in hopes that one day, that global will be removed
+	 *
+	 * @since 1.5.0
+	 *
+	 * @return int
+	 */
+	public static function get_current_form_count(){
+		global $current_form_count;
+		return absint( $current_form_count );
+	}
+
 }

@@ -43,6 +43,14 @@ class Caldera_Forms_Field_SyncHTML  extends Caldera_Forms_Field_Sync {
 		}
 	}
 
+	public function template_id(){
+		return 'html-content-' . $this->field_base_id . '-tmpl';
+	}
+
+	public function content_id(){
+		return 'html-content-' . $this->field_base_id;
+	}
+
 	/**
 	 * Get the quoted binds list
 	 *

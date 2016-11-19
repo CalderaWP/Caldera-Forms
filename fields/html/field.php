@@ -1,61 +1,19 @@
 <?php
 
 // magics!
-$syncer = Caldera_Forms_Field_SyncFactory::get_object( $form, $field, $field_base_id );
+$syncer = Caldera_Forms_Field_Syncfactory::get_object( $form, $field, Caldera_Forms_Field_Util::get_base_id( $field, null, $form ) );
 $sync = $syncer->can_sync();
 $default = $syncer->get_default();
 if( $sync ){
 
-	echo '<div id="html-content-' . esc_attr( $field_id ) . '" data-field="' . esc_attr( $field_id ) . '" class="' . esc_attr( $field['config']['custom_class'] ) . '"></div>';
+	echo '<div id="'. esc_attr( $syncer->content_id() ) . '" data-field="' . esc_attr( $field_id ) . '" class="' . esc_attr( $field['config']['custom_class'] ) . '"></div>';
 
 	// create template block
 	ob_start();
-	echo '<script type="text/html" id="html-content-' . esc_attr( $field_id ) . '-tmpl">';
+	echo '<script type="text/html" id="'. esc_attr( $syncer->template_id() ) . '">';
 		echo do_shortcode( Caldera_Forms::do_magic_tags( wpautop( $syncer->get_default() ) ) );
 	echo '</script>';
-	
-	?>
-	<script type="text/javascript">
-		window.addEventListener("load", function(){
-			
-			function htmltemplate<?php echo $field_id; ?>(){
 
-				var template = jQuery('#html-content-<?php echo $field_id; ?>-tmpl').html(),
-					target = jQuery('#html-content-<?php echo $field_id; ?>'),
-					list = [<?php echo implode(',', $syncer->get_bind_fields() ); ?>];
-
-				for(var i =0; i < list.length; i++){
-					
-					var field = jQuery('[data-field="'+list[i]+'"]'),
-						value = [];
-					for(var f=0; f < field.length; f++){
-						if( jQuery(field[f]).is(':radio,:checkbox') ){
-							if(!jQuery(field[f]).prop('checked')){
-								continue;
-							}
-						}
-						if( jQuery(field[f]).is('input:file') ){
-							var file_parts = field[f].value.split('\\');
-							value.push( file_parts[file_parts.length-1] );
-						}else{
-							if( field[f].value ){
-								value.push( field[f].value );
-							}
-						}
-					}
-
-					template = template.replace( new RegExp("\{\{" + list[i] + "\}\}","g"), value.join(', ') );
-				}
-				target.html(template).trigger('change');
-
-			}
-			jQuery('body').on('change keyup', '<?php echo implode(',', $syncer->get_attr_binds() ); ?>', htmltemplate<?php echo $field_id; ?>);
-
-			htmltemplate<?php echo $field_id; ?>();
-
-		})
-	</script>
-	<?php
 	$script_template = ob_get_clean();
 	if( ! empty( $form[ 'grid_object' ] ) && is_object( $form[ 'grid_object' ] ) ){
 		$form[ 'grid_object' ]->append( $script_template, $field[ 'grid_location' ] );

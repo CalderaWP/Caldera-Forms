@@ -87,6 +87,26 @@ class Caldera_Forms_Field_Util {
 	}
 
 	/**
+	 * Get field ID attr
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string|array $field Field config or field ID
+	 * @param null $current_form_count Optional. Current form count. If is nbull, the default, global will be used.
+	 *
+	 * @return string
+	 */
+	public static function get_base_id( $field, $current_form_count = null, $form = null ){
+		$field = self::get_field( $field, $form );
+		if( null == $current_form_count ){
+			$current_form_count = Caldera_Forms_Render_Util::get_current_form_count();
+		}
+
+		return $field['ID'] . '_' . $current_form_count;
+
+	}
+
+	/**
 	 * Check if a field is a file field of either type
 	 *
 	 * @since 1.4.4

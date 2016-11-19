@@ -121,7 +121,7 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 	 * @return string
 	 */
 	protected function field_id( $field_id ) {
-		return $field_id . '_' . $this->form_count;
+		return Caldera_Forms_Field_Util::get_base_id( $field_id, $this->form_count, $this->form );
 	}
 
 	/**
@@ -182,7 +182,35 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 
 	}
 
-	protected function html( $field_id, $field ){
 
+	/**
+	 * Setup HTML fields
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $field_id Id of field
+	 * @param array $field Field config
+	 *
+	 * @return void
+	 */
+	protected function html( $field_id, $field ){
+		$id_attr = $this->field_id( $field_id );
+		/** @var Caldera_Forms_Field_SyncHTML $syncer */
+		$syncer = Caldera_Forms_Field_Syncfactory::get_object( $this->form, $field, $id_attr );
+		if ( $syncer->can_sync() ) {
+			$this->data[ $field_id ] = array(
+				'type'       => 'html',
+				'id'         => $id_attr,
+				'binds'      => $syncer->get_binds(),
+				'sync'       => true,
+				'tmplId'     => $syncer->template_id(),
+				'contentId'  => $syncer->content_id(),
+				'bindFields' => array(),
+			);
+
+			foreach ( $syncer->get_binds() as $bind ){
+				$this->data[ $field_id ][ 'bindFields' ][] = $bind . '_' . $this->form_count;
+			}
+		}
 	}
 }

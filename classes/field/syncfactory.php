@@ -22,7 +22,7 @@ class Caldera_Forms_Field_Syncfactory {
 	 * @param array $field Field config
 	 * @param string $field_base_id Field ID attribute
 	 *
-	 * @return Caldera_Forms_Field_Sync
+	 * @return Caldera_Forms_Field_Sync|Caldera_Forms_Field_SyncHTML
 	 */
 	public static function get_object( $form, $field, $field_base_id ){
 

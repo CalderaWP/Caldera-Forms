@@ -4478,7 +4478,8 @@ class Caldera_Forms {
 		// blank default
 		$field_value = $field_structure['field_value'];
 		// setup base instance ID
-		$field_base_id = $field['ID'];
+		$field_base_id = Caldera_Forms_Field_Util::get_base_id( $field, $current_form_count, $form );
+		$field_base_id = $field[ 'ID' ];
 
 		// register strings
 		$form_field_strings[ $field_structure['id'] ] = array( 'id' => $field_structure['id'], 'instance' => $current_form_count, 'slug' => $field['slug'], 'label' => $field['label'] );
@@ -4920,7 +4921,7 @@ class Caldera_Forms {
 					Caldera_Forms_Render_Assets::enqueue_field_scripts( $field_types, $field );
 
 
-					$field_base_id = $field['ID'] . '_' . $current_form_count;
+					$field_base_id = Caldera_Forms_Field_Util::get_base_id( $field, $current_form_count, $form );
 
 					$field_error = array();
 					if( isset( $field_errors[ $field[ 'ID' ] ] ) ){
