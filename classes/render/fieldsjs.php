@@ -304,4 +304,30 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 			$this->data[ $field_id ][ 'options' ][ 'single' ] = true;
 		}
 	}
+
+	protected function toggle_switch( $field_id, $field ){
+		$selectedClassName = 'btn-success';
+		if ( ! empty( $field[ 'config' ][ 'selected_class' ] ) ) {
+			$selectedClassName = $field[ 'config' ][ 'selected_class' ];
+		}
+
+		$defaultClassName = 'btn-default';
+		if ( ! empty( $field[ 'config' ][ 'default_class' ] ) ) {
+			$defaultClassName = $field[ 'config' ][ 'default_class' ];
+		}
+
+		$options = array();
+		foreach ( $field[ 'config' ][ 'option' ] as $option_key => $option ) {
+			$options[] = $this->field_id( $field_id ) . '_' . $option_key;
+		}
+
+		$this->data[ $field_id ] = array(
+			'type' => 'toggle_switch',
+			'id' => $this->field_id( $field_id ),
+			'selectedClassName' => $selectedClassName,
+			'defaultClassName' => $defaultClassName,
+			'options' => $options
+
+		);
+	}
 }

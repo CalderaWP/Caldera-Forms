@@ -4969,7 +4969,12 @@ function Caldera_Forms_Field_Config( configs, $form, $ ){
 	};
 
 	this.toggle_switch = function( field ) {
-
+		$( document ).on('reset', '#' . field.id, function(e){
+			$.each( field.options, function( i, option ){
+				$( document.getElemenetById( option ) ).removeClass( field.selectedClassName ).addClass( field.defaultClassName );
+			});
+			$( document.getElementById( field.id )).prop('checked','');
+		} );
 	};
 
 	this.paragraph = function( field ){

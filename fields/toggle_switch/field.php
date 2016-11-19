@@ -71,21 +71,3 @@ if(!empty($field['config']['orientation']) && $field['config']['orientation'] ==
 	</div>
 	<?php echo $field_after; ?>
 <?php echo $wrapper_after; ?>
-<?php
-ob_start();
-?>
-<script>
-jQuery( function( $ ){ 
-	$(document).on('reset', '.<?php echo $form['ID']; ?>', function(e){
-		$('a[data-field="<?php echo esc_attr( $field_base_id ); ?>"]').removeClass('<?php echo $selectedClassName; ?>').addClass('<?php echo $defaultClassName; ?>');
-		$('input[data-field="<?php echo esc_attr( $field_base_id ); ?>"]').prop('checked','');
-	});
-});
-</script>
-<?php
-	$script_template = ob_get_clean();
-	if ( ! empty( $form[ 'grid_object' ] ) && is_object( $form[ 'grid_object' ] ) ) {
-		$form[ 'grid_object' ]->append( $script_template, $field[ 'grid_location' ] );
-	} else {
-		echo $script_template;
-	}
