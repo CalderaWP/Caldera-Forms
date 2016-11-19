@@ -5232,6 +5232,7 @@ class Caldera_Forms {
 		 */
 		do_action('caldera_forms_render_end', $form);
 
+		wp_enqueue_style( 'cf-field' );
 		wp_enqueue_script( 'cf-field' );
 		wp_enqueue_script( 'cf-validator' );
 		wp_enqueue_script( 'cf-validator-i18n' );

@@ -128,5 +128,8 @@ class Caldera_Forms_Field_Util {
 		return 'phone_better_validator' . $field_id . $current_form_count;
 	}
 
+	public static function star_target( $id_attr ){
+		return $id_attr . '_stars';
+	}
 
 }

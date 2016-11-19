@@ -4953,8 +4953,19 @@ function Caldera_Forms_Field_Config( configs, $form, $ ){
 
 	};
 
-	this.star_rate = function( field ){
-
+	this.star_rating = function( field ){
+		var $el = $( document.getElementById( field.id ) );
+		function init(){
+			var options = field.options;
+			options[ 'click' ] = function(){
+				$el.trigger( 'change' );
+			};
+			$el.raty(
+				options
+			);
+		}
+		init();
+		jQuery( document ).on('cf.add', init );
 	};
 
 	this.toggle_switch = function( field ) {

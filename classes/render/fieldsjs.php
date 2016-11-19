@@ -214,9 +214,8 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 		}
 	}
 
-
 	/**
-	 * Setup HTML fields
+	 * Setup range slider fields
 	 *
 	 * @since 1.5.0
 	 *
@@ -229,7 +228,6 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 			'type' => 'range_slider',
 			'id' => $this->field_id( $field_id ),
 			'value' => 0,
-			'trackcolor' => $field['config']['trackcolor']
 		);
 
 		foreach( array(
@@ -253,5 +251,57 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 		}
 
 
+	}
+
+
+	/**
+	 * Setup star rate fields
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $field_id Id of field
+	 * @param array $field Field config
+	 * @return void
+	 */
+	protected function star_rating( $field_id, $field ){
+		$type = $field['config']['type'];
+		if ( ! isset( $field[ 'config' ][ 'track_color' ] ) ) {
+			$field[ 'config' ][ 'track_color' ] = '#AFAFAF';
+		}
+		if ( ! isset( $field[ 'config' ][ 'type' ] ) ) {
+			$field[ 'config' ][ 'type' ] = 'star';
+		}
+
+		$this->data[ $field_id ] = array(
+			'type' => 'star_rating',
+			'id' => $this->field_id( $field_id ),
+			'options' => array(
+				'starOn' => 'raty-'.  $type . '-on',
+				'starOff' => 'raty-'.  $type . '-off',
+				'spaceWidth' => $field['config']['space'],
+				'number' => $field['config']['number'],
+				'color' => $field['config']['color'],
+				'cancel' => false,
+				'single' => false,
+				'target' => '#' . Caldera_Forms_Field_Util::star_target( $this->field_id( $field_id ) ),
+				'targetKeep' => true,
+				'targetType' => 'score',
+				'score' => $field[ 'config' ][ 'default' ],
+				'hints' => array( 1,2,3,4,5),
+				'starType' => 'f',
+				'starColor' => $field['config']['color'],
+				'numberMax' => 100,
+
+			)
+
+		);
+
+		if(!empty($field['config']['cancel']) ){
+			$this->data[ $field_id ][ 'options' ][ 'cancel' ] = true;
+		}
+
+		if( !empty($field['config']['single'] ) ){
+			$this->data[ $field_id ][ 'options' ][ 'single' ] = true;
+		}
 	}
 }

@@ -97,7 +97,7 @@ class Caldera_Forms_Field_Sync {
 	public function can_sync(){
 		$this->find_tags();
 		$this->find_binds();
-		return ! empty( $this->binds );
+ 		return ! empty( $this->binds );
 	}
 
 	/**
