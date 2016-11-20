@@ -68,7 +68,8 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 </div>
 
 <div class="form-admin-page-wrap">
-	<div class="form-panel-wrap">
+	<div id="caldera-forms-admin-page-left">
+		<div class="form-panel-wrap">
 	<?php
 
 	// admin notices
@@ -206,7 +207,9 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 			<?php } ?>
 		<?php } ?>
 	</div>
-	<div class="form-entries-wrap" aria-live="polite" aria-relevant="additions removals">
+	</div>
+	<div id="caldera-forms-admin-page-right">
+		<div class="form-entries-wrap" aria-live="polite" aria-relevant="additions removals">
 	<?php include CFCORE_PATH . 'ui/entries_toolbar.php'; ?>
 	<div id="form-entries-viewer"></div>
 
@@ -223,6 +226,7 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 				</span>
 			</div>
 		</div>
+	</div>
 	</div>
 </div>
 
