@@ -234,7 +234,7 @@ class Caldera_Forms_Render_Assets {
 			self::register();
 		}
 
-		$field_types = Caldera_Forms_Field_Util::get_all();
+		$field_types = Caldera_Forms_Fields::get_all();
 
 		wp_enqueue_style( 'cf-field-styles' );
 

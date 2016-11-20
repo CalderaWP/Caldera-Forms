@@ -891,7 +891,7 @@ class Caldera_Forms_Admin {
 					$ids[] = $an_entry->get_entry_id();
 				}
 				// init field types to initialize view rendering in entry lists
-				Caldera_Forms_Field_Util::get_all();
+				Caldera_Forms_Fields::get_all();
 
 				foreach ( $ids as $entry_id ) {
 					$rows = $entries->get_rows( $page, (int) $entry_id, $status );
@@ -1291,7 +1291,7 @@ class Caldera_Forms_Admin {
 			//build labels
 			$labels = array();
 			$structure = array();
-			$field_types = Caldera_Forms_Field_Util::get_all();
+			$field_types = Caldera_Forms_Fields::get_all();
 			$headers = array();
 			if(!empty($form['fields'])){
 				$headers['date_submitted'] = 'Submitted';
