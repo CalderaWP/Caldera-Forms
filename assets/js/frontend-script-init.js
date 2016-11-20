@@ -19,41 +19,8 @@ var cf_jsfields_init, cf_presubmit;
 	
 	// init sync
 	$('[data-sync]').each( function(){
-		var field = $( this ),
-			binds = field.data('binds'),
-			instance = field.closest('form');
-
-		for( var i = 0; i < binds.length; i++ ){
-			$( document ).on('keyup change blur mouseover', "[data-field='" + binds[ i ] + "']", function(){
-				var str = field.data('sync')
-					id = $(this).data('field'),
-					reg = new RegExp( "\{\{([^\}]*?)\}\}", "g" ),
-					template = str.match( reg );
-					if( field.data( 'unsync' ) || undefined == template || ! template.length ){
-						return;
-					}
-
-					for( var t = 0; t < template.length; t++ ){
-						var select = template[ t ].replace(/\}/g,'').replace(/\{/g,'');
-						var re = new RegExp( template[ t ] ,"g");
-						var sync = instance.find( "[data-field='" + select + "']" );
-						var val = '';
-						for( var i =0; i < sync.length; i++ ){
-							var this_field = $( sync[i] );
-							if( ( this_field.is(':radio') || this_field.is(':checkbox') ) && ! this_field.is(':checked') ){
-								// skip.
-							}else{
-								val += this_field.val();
-							}
-
-						}
-						str = str.replace( re , val );
-					}
-					field.val( str );
-			} );
-			$("[data-field='" + binds[ i ] + "']").trigger('change');
-
-		}
+		var $field = $( this );
+		new CalderaFormsFieldSync( $field, $field.data('binds'), $field.closest('form'), $ );
 	});
 	$( document ).on('change keypress', "[data-sync]", function(){
 		$(this).data( 'unsync', true );
@@ -269,5 +236,41 @@ var cf_jsfields_init, cf_presubmit;
 	
 
 })(jQuery);
+
+
+function CalderaFormsFieldSync( $field, binds, $form, $  ){
+	for( var i = 0; i < binds.length; i++ ){
+
+		$( document ).on('keyup change blur mouseover', "[data-field='" + binds[ i ] + "']", function(){
+			var str = $field.data('sync')
+			id = $field.data('field'),
+				reg = new RegExp( "\{\{([^\}]*?)\}\}", "g" ),
+				template = str.match( reg );
+			if( $field.data( 'unsync' ) || undefined == template || ! template.length ){
+				return;
+			}
+
+			for( var t = 0; t < template.length; t++ ){
+				var select = template[ t ].replace(/\}/g,'').replace(/\{/g,'');
+				var re = new RegExp( template[ t ] ,"g");
+				var sync = $form.find( "[data-field='" + select + "']" );
+				var val = '';
+				for( var i =0; i < sync.length; i++ ){
+					var this_field = $( sync[i] );
+					if( ( this_field.is(':radio') || this_field.is(':checkbox') ) && ! this_field.is(':checked') ){
+						// skip.
+					}else{
+						val += this_field.val();
+					}
+
+				}
+				str = str.replace( re , val );
+			}
+			$field.val( str );
+		} );
+		$("[data-field='" + binds[ i ] + "']").trigger('change');
+
+	}
+}
 
 

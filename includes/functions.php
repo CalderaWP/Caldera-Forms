@@ -99,8 +99,9 @@ function caldera_forms_field_attributes( array $attrs, array $field, array $form
 	 */
 	$attrs = apply_filters( 'caldera_forms_field_attributes', $attrs, $field, $form );
 	$attrs = apply_filters( "caldera_forms_field_attributes-$field_type", $attrs, $form );
+	return caldera_forms_implode_field_attributes( caldera_forms_escape_field_attributes_array( $attrs ) );
 
-	return implode( ' ', caldera_forms_escape_field_attributes_array( $attrs ) );
+
 
 }
 
@@ -113,9 +114,13 @@ function caldera_forms_field_attributes( array $attrs, array $field, array $form
  *
  * @return array
  */
-function caldera_forms_escape_field_attributes_array( array  $attrs ){
+function caldera_forms_escape_field_attributes_array( array  $attrs, $prefix = null ){
 	$out = array();
-	foreach (  $attrs as $attr => $value  ) {
+	foreach ( $attrs as $attr => $value  ) {
+		if( $prefix ){
+			$attr = $prefix . $attr;
+		}
+
 		if( is_array( $value ) ){
 			$_value = '';
 			foreach ( $value as $v ){
@@ -123,8 +128,27 @@ function caldera_forms_escape_field_attributes_array( array  $attrs ){
 			}
 			$out[ $attr ] = $_value;
 		}else{
-			$out[ $attr ] = esc_attr( $attr );
+			$out[ $attr ] = esc_attr( $value );
 		}
+	}
+
+	return $out;
+}
+
+/**
+ * Implode an escaped array of field attributes
+ *
+ * @since 1.5.0
+ *
+ * @param array $attrs
+ *
+ * @return string
+ */
+function caldera_forms_implode_field_attributes( array $attrs ){
+	$out = '';
+	$pattern = '%s="%s" ';
+	foreach (  $attrs as $attr => $value  ) {
+		$out .= sprintf( $pattern, $attr, $value );
 	}
 
 	return $out;

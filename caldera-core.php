@@ -66,7 +66,7 @@ function caldera_forms_load(){
 	include_once CFCORE_PATH . 'includes/filter_addon_plugins.php';
 	include_once CFCORE_PATH . 'includes/compat.php';
 	include_once CFCORE_PATH . 'processors/functions.php';
-
+	include_once CFCORE_PATH . 'includes/functions.php';
 	/**
 	 * Runs after all of the includes and autoload setup is done in Caldera Forms core
 	 *

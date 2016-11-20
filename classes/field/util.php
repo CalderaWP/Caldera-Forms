@@ -128,8 +128,59 @@ class Caldera_Forms_Field_Util {
 		return 'phone_better_validator' . $field_id . $current_form_count;
 	}
 
+	/**
+	 * Get ID attribute for the element that displays star field stars
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $id_attr ID attribute of actual input
+	 *
+	 * @return string
+	 */
 	public static function star_target( $id_attr ){
 		return $id_attr . '_stars';
+	}
+
+	protected static $field_classes = array();
+
+	/**
+	 * Prepare field classes
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param array $field Field config array
+	 * @param array $form Form config array
+	 *
+	 * @return array
+	 */
+	public static function prepare_field_classes( $field, $form ){
+		if( ! isset( self::$field_classes[ $form[ 'ID' ] ] ) ){
+			self::$field_classes[ $form[ 'ID' ] ] = array(
+
+			);
+		}
+
+		if (  empty( self::$field_classes[ $form[ 'ID' ] ][ $field[ 'ID' ] ] ) ) {
+			self::$field_classes[ $form[ 'ID' ] ][ $field[ 'ID' ] ] = array();
+			$field_classes = array(
+				"control_wrapper"    => array( "form-group" ),
+				"field_label"        => array( "control-label" ),
+				"field_required_tag" => array( "field_required" ),
+				"field_wrapper"      => array(),
+				"field"              => array( "form-control" ),
+				"field_caption"      => array( "help-block" ),
+				"field_error"        => array( "has-error" ),
+			);
+
+			$field_classes = apply_filters( 'caldera_forms_render_field_classes', $field_classes, $field, $form );
+			$field_classes = apply_filters( 'caldera_forms_render_field_classes_type-' . $field[ 'type' ], $field_classes, $field, $form );
+			$field_classes = apply_filters( 'caldera_forms_render_field_classes_slug-' . $field[ 'slug' ], $field_classes, $field, $form );
+
+
+			self::$field_classes[ $form[ 'ID' ] ][ $field[ 'ID' ] ] = $field_classes;
+		}
+
+		return self::$field_classes[ $form[ 'ID' ] ][ $field[ 'ID' ] ];
 	}
 
 }

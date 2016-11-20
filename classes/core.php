@@ -4376,21 +4376,7 @@ class Caldera_Forms {
 	static public function render_field($field, $form = null, $entry_data = array(), $field_errors = array() ){
 		global $current_form_count, $grid;
 
-		$field_classes = array(
-			"control_wrapper"	=> array("form-group"),
-			"field_label"		=> array("control-label"),
-			"field_required_tag"=> array("field_required"),
-			"field_wrapper"		=> array(),
-			"field"				=> array("form-control"),
-			"field_caption"		=> array("help-block"),
-			"field_error"		=> array("has-error"),
-		);
-
-		$field_classes = apply_filters( 'caldera_forms_render_field_classes', $field_classes, $field, $form);
-		$field_classes = apply_filters( 'caldera_forms_render_field_classes_type-' . $field['type'], $field_classes, $field, $form);
-		$field_classes = apply_filters( 'caldera_forms_render_field_classes_slug-' . $field['slug'], $field_classes, $field, $form);
-
-
+		$field_classes = Caldera_Forms_Field_Util::prepare_field_classes( $field, $form );
 
 		$field_wrapper_class = implode(' ',$field_classes['control_wrapper']);
 		$field_input_class = implode(' ',$field_classes['field_wrapper']);
@@ -4419,18 +4405,7 @@ class Caldera_Forms {
 			"wrapper_after"		=>  "</div>\r\n",
 			"aria"				=> 	array()
 		);
-		// if has label
-		if( empty( $field['hide_label'] ) ){
-			// visible label, set labelled by
-			$field_structure['aria']['labelledby'] = $field['ID'] . 'Label';
-		}else{
-			// hidden label, aria label instead
-			$field_structure['aria']['label'] = $field['label'];
-		}
-		// if has caption
-		if( !empty( $field['caption'] ) ){
-			$field_structure['aria']['describedby'] = $field['ID'] . 'Caption';
-		}
+
  
 		// add error
 		if ( ! empty( $field_errors ) ) {
@@ -4469,7 +4444,7 @@ class Caldera_Forms {
 		}
 
 		$field_name = $field_structure['name'];
-		$field_id = $field_structure['id'] . '_' .$current_form_count;
+		$field_id = Caldera_Forms_Field_Util::get_base_id( $field, $current_form_count, $form );
 		$wrapper_before = $field_structure['wrapper_before'];
 		$field_before = $field_structure['field_before'];
 		$field_label = $field_structure['label_before'] . $field_structure['label'] . $field_structure['label_required'] . $field_structure['label_after']."\r\n";
@@ -4481,7 +4456,6 @@ class Caldera_Forms {
 		// blank default
 		$field_value = $field_structure['field_value'];
 		// setup base instance ID
-		$field_base_id = Caldera_Forms_Field_Util::get_base_id( $field, $current_form_count, $form );
 		$field_base_id = $field[ 'ID' ];
 
 		// register strings
