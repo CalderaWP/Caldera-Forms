@@ -204,6 +204,16 @@ class Caldera_Forms_Fields {
 					CFCORE_URL . "fields/wysiwyg/wysiwyg.min.css",
 				),
 			),
+			'url'            => array(
+				"field"       => __( 'URL', 'caldera-forms' ),
+				"description" => __( 'URL input for website addresses', 'caldera-forms' ),
+				"file"        => CFCORE_PATH . "fields/generic-input.php",
+				"category"    => __( 'Basic', 'caldera-forms' ),
+				"setup"       => array(
+					"preview"  => CFCORE_PATH . "fields/url/preview.php",
+					"template" => CFCORE_PATH . "fields/url/config.php"
+				)
+			),
 
 			//special
 			'calculation'      => array(
@@ -423,7 +433,7 @@ class Caldera_Forms_Fields {
 				"field"       => __( 'Color Picker', 'caldera-forms' ),
 				"description" => __( 'Color Picker', 'caldera-forms' ),
 				"category"    => __( 'Select', 'caldera-forms' ),
-				"file"        => CFCORE_PATH . "fields/color_picker/field.php",
+				"file"        => CFCORE_PATH . "fields/generic-input.php",
 				"setup"       => array(
 					"preview"  => CFCORE_PATH . "fields/color_picker/preview.php",
 					"template" => CFCORE_PATH . "fields/color_picker/setup.php",

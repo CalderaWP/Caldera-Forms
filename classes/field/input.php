@@ -40,7 +40,7 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 			'id' => $field[ 'ID'],
 			'name' => $field_structure['name'],
 			'value' => $default,
-
+			'data-type' => $type
 		);
 
 		if( 'number' == $type ){
@@ -54,7 +54,6 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 				}
 			}
 		}
-
 		if( $field_structure['field_required'] ){
 			$required = 'required';
 			$attrs[ 'aria-required' ] = 'true';
