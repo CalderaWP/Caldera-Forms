@@ -151,4 +151,31 @@ class Caldera_Forms_Field_Util {
 		return self::$field_classes[ $form[ 'ID' ] ][ $field[ 'ID' ] ];
 	}
 
+	/**
+	 * Prepare aria attributes for a field
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param array $field_structure Field structure
+	 *
+	 * @return array
+	 */
+	public static function prepare_aria_attrs( $field_structure ){
+		// if has label
+		if( empty( $field['hide_label'] ) ){
+			// visible label, set labelled by
+			$field_structure['aria']['labelledby'] = $field['ID'] . 'Label';
+		}else{
+			// hidden label, aria label instead
+			$field_structure['aria']['label'] = $field['label'];
+		}
+		// if has caption
+		if( !empty( $field['caption'] ) ){
+			$field_structure['aria']['describedby'] = $field['ID'] . 'Caption';
+		}
+
+
+		return $field_structure;
+	}
+
 }

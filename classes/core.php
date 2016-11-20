@@ -4012,9 +4012,9 @@ class Caldera_Forms {
 			"field_caption"		=>	( !empty($field['caption']) ? "<span id=\"" . $field['ID'] ."Caption\" class=\"" . implode(' ', $field_classes['field_caption'] ) . "\">" . $field['caption'] . "</span>\r\n" : ""),
 			"field_after"		=>  "</div>\r\n",
 			"wrapper_after"		=>  "</div>\r\n",
-			"aria"				=> 	array()
 		);
 
+		$field_structure = Caldera_Forms_Field_Util::prepare_aria_attrs( $field_structure );
  
 		// add error
 		if ( ! empty( $field_errors ) ) {
@@ -4050,6 +4050,8 @@ class Caldera_Forms {
 				$aria_atts .= ' aria-' . $att . '="' . esc_attr( $att_val ) . '"';
 			}
 			$field_structure['aria'] = $aria_atts;
+		}else{
+			$field_structure['aria'] = '';
 		}
 
 		$field_name = $field_structure['name'];
