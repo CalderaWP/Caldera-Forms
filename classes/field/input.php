@@ -88,7 +88,8 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 			'text',
 			'email',
 			'html',
-			'number'
+			'number',
+			'hidden'
 		);
 	}
 
