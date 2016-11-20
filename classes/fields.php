@@ -150,6 +150,16 @@ class Caldera_Forms_Fields {
 					CFCORE_URL . 'fields/phone_better/assets/css/intlTelInput.css'
 				),
 			),
+			'number'            => array(
+				"field"       => __( 'Number', 'caldera-forms' ),
+				"description" => __( 'Number with minimum and maximum controls', 'caldera-forms' ),
+				"file"        => CFCORE_PATH . "fields/generic-input.php",
+				"category"    => __( 'Basic', 'caldera-forms' ),
+				"setup"       => array(
+					"preview"  => CFCORE_PATH . "fields/number/preview.php",
+					"template" => CFCORE_PATH . "fields/number/config.php"
+				)
+			),
 			'phone'            => array(
 				"field"       => __( 'Phone Number (Basic)', 'caldera-forms' ),
 				"description" => __( 'Phone number with masking', 'caldera-forms' ),

@@ -43,6 +43,18 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 
 		);
 
+		if( 'number' == $type ){
+			foreach( array(
+				'min',
+				'max',
+				'step'
+			) as $index ){
+				if( isset( $field[ 'config' ][ $index ] ) ){
+					$attrs[ $index ] = $field[ 'config' ][ 'index' ];
+				}
+			}
+		}
+
 		if( $field_structure['field_required'] ){
 			$required = 'required';
 			$attrs[ 'aria-required' ] = 'true';
@@ -76,7 +88,8 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 		return array(
 			'text',
 			'email',
-			'html'
+			'html',
+			'number'
 		);
 	}
 
