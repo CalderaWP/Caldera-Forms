@@ -37,7 +37,7 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 			'type' => $type,
 			'data-field' =>$field[ 'ID'],
 			'class' => $field_classes[ 'field' ],
-			'id' => $field[ 'ID'],
+			'id' => $field_base_id,
 			'name' => $field_structure['name'],
 			'value' => $default,
 			'data-type' => $type
@@ -50,10 +50,14 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 				'step'
 			) as $index ){
 				if( isset( $field[ 'config' ][ $index ] ) ){
-					$attrs[ $index ] = $field[ 'config' ][ 'index' ];
+					$attrs[ $index ] = $field[ 'config' ][ $index ];
 				}
 			}
+		}elseif ( 'phone_better' == $type ){
+			$attrs[ 'data-parsely' ] = $validator = Caldera_Forms_Field_Util::better_phone_validator( $field_base_id );
+			$attrs[ 'type' ] = 'tel';
 		}
+
 		if( $field_structure['field_required'] ){
 			$required = 'required';
 			$attrs[ 'aria-required' ] = 'true';

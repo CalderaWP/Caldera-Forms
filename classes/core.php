@@ -4014,7 +4014,7 @@ class Caldera_Forms {
 			"wrapper_after"		=>  "</div>\r\n",
 		);
 
-		$field_structure = Caldera_Forms_Field_Util::prepare_aria_attrs( $field_structure );
+		$field_structure = Caldera_Forms_Field_Util::prepare_aria_attrs( $field_structure, $field );
  
 		// add error
 		if ( ! empty( $field_errors ) ) {

@@ -225,8 +225,7 @@ var cf_jsfields_init, cf_presubmit;
 			form = clicked.closest('.caldera_forms_form'),
 			validator = cf_validate_form( form );
 
-		console.log( cf_pre_submit( form ).allow );
-		if( !validator.validate() ){
+		if( ! validator.validate() ){
 			e.preventDefault();
 		}else{
 			validator.destroy();

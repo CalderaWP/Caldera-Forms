@@ -38,7 +38,9 @@ abstract  class Caldera_Forms_Field_HTML   {
 	 * @return string
 	 */
 	protected static function aria_string( $field_structure ){
-		if ( ! empty( $field_structure[ 'aria' ] ) ) {
+		if( is_string( $field_structure[ 'aria' ] ) ){
+			return $field_structure[ 'aria' ];
+		}elseif ( ! empty( $field_structure[ 'aria' ] ) ) {
 			$attrs = caldera_forms_escape_field_attributes_array( $field_structure[ 'aria' ], 'aria-' );
 			return caldera_forms_implode_field_attributes( $attrs );
 		}

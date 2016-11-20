@@ -89,10 +89,21 @@ class Caldera_Forms_Field_Util {
 		return in_array( self::get_type( $field, $form ), array( 'advanced_file', 'file' ) );
 	}
 
+	/**
+	 * Create the attribute value for custom better phone parsely validatior
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $field_id The field's config ID
+	 * @param null|int $current_form_count Optional. The current form instance count. Optional to get global value.
+	 *
+	 * @return string
+	 */
 	public static function better_phone_validator( $field_id, $current_form_count = null ){
 		if( null == $current_form_count ){
-			global $current_form_count;
+			$current_form_count = Caldera_Forms_Render_Util::get_current_form_count();
 		}
+
 		return 'phone_better_validator' . $field_id . $current_form_count;
 	}
 
@@ -160,7 +171,7 @@ class Caldera_Forms_Field_Util {
 	 *
 	 * @return array
 	 */
-	public static function prepare_aria_attrs( $field_structure ){
+	public static function prepare_aria_attrs( $field_structure, $field ){
 		// if has label
 		if( empty( $field['hide_label'] ) ){
 			// visible label, set labelled by

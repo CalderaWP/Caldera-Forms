@@ -133,7 +133,7 @@ class Caldera_Forms_Fields {
 			'phone_better'     => array(
 				"field"       => __( 'Phone Number (Better)', 'caldera-forms' ),
 				"description" => __( 'Phone number with advanced options and international formatting', 'caldera-forms' ),
-				"file"        => CFCORE_PATH . "fields/phone_better/field.php",
+				"file"        => CFCORE_PATH . "fields/generic-input.php",
 				"category"    => __( 'Basic', 'caldera-forms' ),
 				"setup"       => array(
 					"template" => CFCORE_PATH . "fields/phone_better/config.php",
