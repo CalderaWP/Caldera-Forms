@@ -1225,7 +1225,7 @@ class Caldera_Forms {
 			'text' => array(
 				"field"		=>	__( 'Single Line Text', 'caldera-forms' ),
 				"description" => __( 'Single Line Text', 'caldera-forms' ),
-				"file"		=>	CFCORE_PATH . "fields/text/field.php",
+				"file"		=>	CFCORE_PATH . "fields/generic-input.php",
 				"category"	=>	__( 'Basic', 'caldera-forms' ),
 				"setup"		=>	array(
 					"template"	=>	CFCORE_PATH . "fields/text/config.php",
@@ -1252,7 +1252,7 @@ class Caldera_Forms {
 			'email' => array(
 				"field"		=>	__( 'Email Address', 'caldera-forms' ),
 				"description" => __( 'Email Address', 'caldera-forms' ),
-				"file"		=>	CFCORE_PATH . "fields/email/field.php",
+				"file"		=>	CFCORE_PATH . "fields/generic-input.php",
 				"category"	=>	__( 'Basic', 'caldera-forms' ),
 				"setup"		=>	array(
 					"preview"	=>	CFCORE_PATH . "fields/email/preview.php",
