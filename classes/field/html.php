@@ -65,22 +65,6 @@ abstract  class Caldera_Forms_Field_HTML   {
 
 	}
 
-	/**
-	 * Get input mask config string
-	 *
-	 * @since 1.5.0
-	 *
-	 * @param array $field
-	 *
-	 * @return string
-	 */
-	protected static function get_mask_string( array  $field ){
-		if(!empty($field['config']['masked'])){
-			return "data-inputmask=\"'mask': '".$field['config']['mask']."'\" ";
-		}
-
-		return '';
-	}
 
 
 }

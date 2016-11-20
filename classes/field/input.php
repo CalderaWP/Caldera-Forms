@@ -61,7 +61,7 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 
 		$aria = self::aria_string( $field_structure );
 
-		return '<input ' .  $place_holder . $mask .  $required . $attr_string   . ' >';
+		return '<input ' .  $place_holder . $mask .  $required . $attr_string   . $aria .' >';
 
 	}
 
@@ -78,5 +78,33 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 			'email',
 			'html'
 		);
+	}
+
+
+	/**
+	 * Get input mask config string
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param array $field
+	 *
+	 * @return string
+	 */
+	protected static function get_mask_string( array  $field ){
+		$mask = '';
+		if ( 'phone' != Caldera_Forms_Field_Util::get_type( $field ) ) {
+			if ( ! empty( $field[ 'config' ][ 'masked' ] ) ) {
+				$mask = "data-inputmask=\"'mask': '" . $field[ 'config' ][ 'mask' ] . "'\" ";
+			}
+		} else {
+			$mask = '(999)999-9999';
+			if( $field['config']['type'] == 'international' ){
+				$mask = '+99 99 999 9999';
+			}elseif ( $field['config']['type'] == 'custom' ) {
+				$mask = $field['config']['custom'];
+			}
+		}
+
+		return $mask;
 	}
 }

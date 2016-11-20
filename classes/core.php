@@ -1303,7 +1303,7 @@ class Caldera_Forms {
 			'phone' => array(
 				"field"		=>	__( 'Phone Number (Basic)', 'caldera-forms' ),
 				"description" => __( 'Phone number with masking', 'caldera-forms' ),
-				"file"		=>	CFCORE_PATH . "fields/phone/field.php",
+				"file"		=>	CFCORE_PATH . "fields/generic-input.php",
 				"category"	=>	__( 'Basic', 'caldera-forms' ),
 				"setup"		=>	array(
 					"template"	=>	CFCORE_PATH . "fields/phone/config.php",
