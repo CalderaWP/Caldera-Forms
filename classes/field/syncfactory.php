@@ -1,4 +1,4 @@
-<?phpgit
+<?php
 /**
  * Factory for creating or retrieving from cache Caldera_Forms_Field_Sync objects
  *
