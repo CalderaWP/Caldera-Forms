@@ -1,7 +1,6 @@
-<?php
-
+<?phpgit
 /**
- * Factory for creating or retrieving from cache/container Caldera_Forms_Field_Sync objects
+ * Factory for creating or retrieving from cache Caldera_Forms_Field_Sync objects
  *
  *
  * @package Caldera_Forms
@@ -14,7 +13,7 @@ class Caldera_Forms_Field_Syncfactory {
 
 
 	/**
-	 * Get a Caldera_Forms_Field_Sync by creating it, pulling it from container or cache
+	 * Get a Caldera_Forms_Field_Sync by creating it or pulling from cache
 	 *
 	 * @since 1.5.0
 	 *
@@ -25,28 +24,20 @@ class Caldera_Forms_Field_Syncfactory {
 	 * @return Caldera_Forms_Field_Sync|Caldera_Forms_Field_SyncHTML
 	 */
 	public static function get_object( $form, $field, $field_base_id ){
-
-		$syncs = Caldera_Forms_Field_Syncs::get_instance();
 		$id = self::identifier( $form[ 'ID' ], $field[ 'ID' ], $field_base_id );
-		if ( $syncs->has( $id ) ){
-			return $syncs->get( $id );
-		}else{
-			$object = self::get_cache( $id );
-			if( $object ){
-				$syncs->add( $id, $object );
-			}else{
-				$object = self::create( $form, $field, $field_base_id );
-				$syncs->add( $id, $object );
-			}
 
-			return $object;
-
-
+		$object = self::get_cache( $id );
+		if ( ! is_object( $object ) ) {
+			$object = self::create( $form, $field, $field_base_id );
+			self::add_to_cache( $id, $object );
 		}
+
+		return $object;
+
 	}
 
 	/**
-	 * Get identifier for cache/container
+	 * Get identifier for cache
 	 *
 	 * @since 1.5.0
 	 *
