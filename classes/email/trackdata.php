@@ -111,8 +111,6 @@ class Caldera_Forms_Email_TrackData {
 			$this->failed();
 		}
 
-		$this->stats[ 'failed' ] = 3;
-
 		$this->stats[ 'success_rate' ] = 100;
 
 		if ( 0 != $this->stats[ 'failed' ] ) {

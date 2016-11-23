@@ -134,7 +134,7 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 						><?php if( !empty( $form['form_draft'] ) ) { echo __('Activate', 'caldera-forms'); }else{ echo __('Deactivate', 'caldera-forms'); } ?></a> | </span><?php } ?>
 
 						<?php if(!empty($form['db_support'])){ ?><span class="edit">
-							<a class="form-control form-entry-trigger ajax-trigger" href="#entres"
+							<a class="form-control form-entry-trigger ajax-trigger cf-entry-viewer-link" href="#entres"
 						            data-nonce="<?php echo wp_create_nonce( 'view_entries' ); ?>"
 									data-action="browse_entries"
 									data-target="#form-entries-viewer"
@@ -209,6 +209,14 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 	</div>
 	</div>
 	<div id="caldera-forms-admin-page-right">
+		<div id="caldera-forms-clippy">
+			<div class="caldera-forms-clippy-zone" id="caldera-forms-clippy-p1" style="background-image: url( '<?php echo esc_url( CFCORE_URL . '/assets/images/caldera-globe-logo-sm.png' ); ?>' );">
+			</div>
+			<div class="caldera-forms-clippy-zone" id="caldera-forms-clippy-p2" style="background-image: url( '<?php echo esc_url( CFCORE_URL . '/assets/images/caldera-globe-logo-sm.png' ); ?>' );" >
+			</div>
+			<div class="caldera-forms-clippy-zone" id="caldera-forms-clippy-p3" style="background-image: url( '<?php echo esc_url( CFCORE_URL . '/assets/images/caldera-globe-logo-sm.png' ); ?>' );">
+			</div>
+		</div>
 		<div class="form-entries-wrap" aria-live="polite" aria-relevant="additions removals">
 	<?php include CFCORE_PATH . 'ui/entries_toolbar.php'; ?>
 	<div id="form-entries-viewer"></div>
