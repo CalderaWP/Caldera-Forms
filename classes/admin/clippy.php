@@ -61,7 +61,7 @@ class Caldera_Forms_Admin_Clippy {
 	 * @return array
 	 */
 	protected function localizer(){
-		return array(
+		$data = array(
 			'api' => 'https://octaviabutler.caldera.space',
 			'p1' => $this->randoms(),
 			'p2' => $this->randoms(),
@@ -72,6 +72,14 @@ class Caldera_Forms_Admin_Clippy {
 			'template' => $this->template(),
 			'email_clippy' => $this->email_clippy()
 		);
+
+		$forms = Caldera_Forms_Forms::get_forms();
+		if( empty( $forms ) ){
+			$data[ 'no_forms' ] = $this->create_form_clippy();
+			unset( $data[ 'email_clippy' ] );
+		}
+
+		return $data;
 	}
 
 	/**
@@ -146,6 +154,27 @@ class Caldera_Forms_Admin_Clippy {
 		return $clippy;
 	}
 
+	protected function create_form_clippy()
+	{
+		$clippy = array(
+			'title' => array(
+				'content' => __( 'Need Help Creating A Form?', 'caldera-forms' ),
+			),
+			'content' => array(
+				'content' => 'Click the "New Form" button at the top of the page, or read or getting started guide for creating forms.',
+			),
+			'btn' => array(
+				'content' => __( 'Read The Guide', 'caldera-forms' ),
+				'color' => 'orange'
+			),
+			'link' => array(
+				'url' => 'https://calderawp.com/doc/creating-new-form?utm_source=obs&utm_campaign=admin-page&utm_medium=caldera-forms&utm_term=no_forms',
+				'bt' => 'email-stats'
+			)
+		);
+
+		return $clippy;
+	}
 
 	/**
 	 * Fallback clippy with link to getting started guide for when the API can't br reached
@@ -160,7 +189,7 @@ class Caldera_Forms_Admin_Clippy {
 				'content' => __( 'New To Caldera Forms?', 'caldera-forms' ),
 			),
 			'content' => array(
-				'content' => __( 'We have a complete getting stared guide for new users.', 'caldera-forms' ),
+				'content' => __( 'We have a complete getting started guide for new users.', 'caldera-forms' ),
 			),
 			'btn' => array(
 				'content' => __( 'Read Now', 'caldera-forms' ),

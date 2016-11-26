@@ -186,9 +186,12 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 		?></tbody>
 		</table>
 		<?php }else{ ?>
-		<p>
-			<?php esc_html_e( 'You don\'t have any forms.', 'caldera-forms'); ?>
-		</p>
+		<div id="cf-you-have-no-forms">
+			<p style="margin: 24px;">
+				<?php esc_html_e( 'You don\'t have any forms yet.', 'caldera-forms'); ?>
+			</p>
+
+		</div>
 		<?php
 			// check db and only show the upgrade if db version is not there since its confusing
 			$db_version = get_option( 'CF_DB', 0 );
