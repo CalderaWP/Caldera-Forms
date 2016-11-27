@@ -113,6 +113,8 @@ function cf_handle_file_upload( $entry, $field, $form ){
             if( ! Caldera_Forms_Files::is_private( $field ) ){
                 $upload_args = array(
                     'private' => false,
+                    'field_id' => $field['ID'],
+                    'form_id' => $form['ID']
                 );
             }else{
                 $upload_args = array(
