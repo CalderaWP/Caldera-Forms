@@ -12,6 +12,30 @@
 </div>
 
 <div class="caldera-config-group">
+	<label for="{{_id}}-type_override">
+		<?php _e('HTML5 Type', 'caldera-forms'); ?>
+	</label>
+	<div class="caldera-config-field">
+		<select class="field-config {{_id}}_type_override" name="{{_name}}[type_override]" id="{{_id}}-type_override" aria-describedby="{{_id}}-type_override-description">
+			<option {{#is type_override value="text"}}selected="selected"{{/is}}value="text">text</option>
+			<option {{#is type_override value="date"}}selected="selected"{{/is}}value="date">date</option>
+			<option {{#is type_override value="datetime"}}selected="selected"{{/is}}value="datetime">datetime</option>
+			<option {{#is type_override value="datetime-local"}}selected="selected"{{/is}}value="datetime-local">datetime-local</option>
+			<option {{#is type_override value="month"}}selected="selected"{{/is}}value="month">month</option>
+			<option {{#is type_override value="number"}}selected="selected"{{/is}}value="number">number</option>
+			<option {{#is type_override value="search"}}selected="selected"{{/is}}value="search">search</option>
+			<option {{#is type_override value="tel"}}selected="selected"{{/is}}value="tel">tel</option>
+			<option {{#is type_override value="time"}}selected="selected"{{/is}}value="time">time</option>
+			<option {{#is type_override value="url"}}selected="selected"{{/is}}value="url">url</option>
+			<option {{#is type_override value="week"}}selected="selected"{{/is}}value="week">week</option>
+		</select>
+		<p class="description" id="{{_id}}-type_override-description">
+			<?php _e('Change the field type.','caldera-forms');?>
+		</p>
+	</div>
+</div>
+
+<div class="caldera-config-group">
 	<label><?php _e('Masked Input', 'caldera-forms'); ?></label>
 	<div class="caldera-config-field">
 		<label><input type="checkbox" class="field-config {{_id}}_masked" name="{{_name}}[masked]" value="1" {{#if masked}}checked="checked"{{/if}}> <?php _e('Enable input mask', 'caldera-forms'); ?></label>
@@ -39,25 +63,7 @@
 
 	</div>
 </div>
-<div class="caldera-config-group">
-	<label><?php _e('Type override', 'caldera-forms'); ?></label>
-	<div class="caldera-config-field">
-		<select class="field-config {{_id}}_type_override" name="{{_name}}[type_override]">
-			<option {{#is type_override value="text"}}selected="selected"{{/is}}value="text">text</option>
-			<option {{#is type_override value="date"}}selected="selected"{{/is}}value="date">date</option>
-			<option {{#is type_override value="datetime"}}selected="selected"{{/is}}value="datetime">datetime</option>
-			<option {{#is type_override value="datetime-local"}}selected="selected"{{/is}}value="datetime-local">datetime-local</option>
-			<option {{#is type_override value="month"}}selected="selected"{{/is}}value="month">month</option>
-			<option {{#is type_override value="number"}}selected="selected"{{/is}}value="number">number</option>
-			<option {{#is type_override value="search"}}selected="selected"{{/is}}value="search">search</option>
-			<option {{#is type_override value="tel"}}selected="selected"{{/is}}value="tel">tel</option>
-			<option {{#is type_override value="time"}}selected="selected"{{/is}}value="time">time</option>
-			<option {{#is type_override value="url"}}selected="selected"{{/is}}value="url">url</option>
-			<option {{#is type_override value="week"}}selected="selected"{{/is}}value="week">week</option>
-		</select>
-		<p class="description"><?php _e('Advanced: These type overrides are not supported by all browsers and will revert to a text field. Use at your own discretion.','caldera-forms');?></p>
-	</div>
-</div>
+
 {{#script}}
 	jQuery(function($){
 
