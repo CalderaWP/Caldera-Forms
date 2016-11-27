@@ -2300,7 +2300,15 @@ class Caldera_Forms {
 								if ( ! empty( $this_form[ 'fields' ] ) ) {
 									if ( ! isset( $this_form[ 'mailer' ][ 'email_type' ] ) || $this_form[ 'mailer' ][ 'email_type' ] == 'html' ) {
 										$html    = true;
-										$pattern = '<strong>%s</strong><div style="margin-bottom:20px;">%s</div>';
+										/**
+										 * Change the sprintf pattern for the {summary} magic tag
+										 *
+										 * @since 1.4.5
+										 *
+										 * @param string $pattern The sprintf pattern to use
+										 * @param array $this_form Form config
+										 */
+										$pattern = apply_filters( 'caldera_forms_summary_magic_pattern', '<strong>%s</strong><div style="margin-bottom:20px;">%s</div>', $this_form );
 
 									} else {
 										$html = false;
