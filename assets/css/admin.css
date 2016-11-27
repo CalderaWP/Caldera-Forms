@@ -1907,12 +1907,20 @@ input.cf-shortcode-preview {
   width: 260px;
 }
 span.cf-form-shortcode-preview {
-  color: #afafaf;
+  background: #fff;
+  color: #000;
+  border: 1px solid #a3bf61;
   cursor: pointer;
-  display: inline-block;
-  font-size: 9px;
-  padding: 4px 5px 0 0;
+  display: block;
+  padding: 2px;
+  border-radius: 2px;
 }
+span.cf-form-shortcode-preview:hover {
+  color: #fff;
+  background-color: #ff7e30;
+}
+
+
 @media screen and ( max-width: 782px ) {
   /* smaller */
   .caldera-editor-header {
