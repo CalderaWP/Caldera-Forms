@@ -17,7 +17,12 @@ if( !isset( $field['config']['thousand_separator'] ) ){
 	$field['config']['thousand_separator'] = ',';
 }
 
+if( !isset( $field['config']['decimal_separator'] ) ){
+	$field['config']['decimal_separator'] = '.';
+}
+
 $thousand_separator = $field['config']['thousand_separator'];
+$decimal_separator = $field['config']['decimal_separator'];
 
 ?><?php echo $wrapper_before; ?>
 	<?php echo $field_label; ?>
@@ -111,9 +116,10 @@ if(!empty($binds)){
 				nStr += '';
 				x = nStr.split('.');
 				x1 = x[0];
-				x2 = x.length > 1 ? '.' + x[1] : '';
+				x2 = x.length > 1 ? '<?php echo $decimal_separator; ?>' + x[1] : '';
 				var rgx = /(\d+)(\d{3})/;
 				while (rgx.test(x1)) {
+
 					x1 = x1.replace(rgx, '$1' + '<?php echo $thousand_separator; ?>' + '$2');
 				}
 				return x1 + x2;
