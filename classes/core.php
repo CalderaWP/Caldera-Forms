@@ -3211,20 +3211,19 @@ class Caldera_Forms {
 		if(isset($_POST['_cf_frm_edt'])){
 			$entry_id = (int) $_POST['_cf_frm_edt'];
 		}
-		// dont get data with ID else update wont work. since it will update the same thing
-		//$data = self::get_submission_data($form, $entry_id);
+
 		$data = self::get_submission_data($form);
-		//dump($data);
-		// requireds
-		// set transient for returns submittions
+
+		// set transient for returns submissions
 		if(empty($transdata)){
 			$transdata = array(
 				'transient' 	=> $process_id,
 				'form_instance' => $form_instance_number,
-				'expire'		=> 120,
+				'expire'		=> 600,
 				'data' 			=> array_merge($_POST, $data),
 			);
 		}
+
 		// remove AJAX value for tp_
 		if(isset($transdata['data']['cfajax'])){
 			unset($transdata['data']['cfajax']);

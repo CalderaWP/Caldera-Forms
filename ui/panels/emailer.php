@@ -27,6 +27,7 @@ if ( ! empty( $element['mailer']['enable_mailer'] ) ) {
 
 ?>
 <div class="mailer-control-panel wrapper-instance-pane">
+
 	<div class="caldera-config-group">
 		<label class="screen-reader-text"><?php esc_html_e('Use The Mailer', 'caldera-forms'); ?> </label>
 		<div class="caldera-config-field">
