@@ -2117,3 +2117,8 @@ span.cf-form-shortcode-preview:hover {
 
 
 }
+
+.caldera-config-group p.description.help-block {
+  margin-top: -12px;
+  margin-bottom: 12px;
+}
