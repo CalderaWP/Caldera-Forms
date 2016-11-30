@@ -616,6 +616,10 @@ class Caldera_Forms {
 			}
 		}
 
+		if( ! isset( $field['ID'], $field[ 'slug' ] ) ){
+			return;
+		}
+
 		$data = self::get_field_data($field['ID'], $form );
 
 		if( empty($data) && 0 != $data ){
