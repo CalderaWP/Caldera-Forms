@@ -29,10 +29,19 @@
 </div>
 
 <div class="caldera-config-group" id="{{_id}}_thousand_separator">
-	<label for="{{_id}}_sep"><?php echo __('Separator', 'caldera-forms'); ?></label>
+	<label for="{{_id}}_sep">
+		<?php esc_html_e('Thousands Separator', 'caldera-forms'); ?>
+	</label>
 	<div class="caldera-config-field">
 		<input id="{{_id}}_sep" type="text" class="field-config" name="{{_name}}[thousand_separator]" value="{{#if thousand_separator}}{{thousand_separator}}{{else}},{{/if}}">
-		<p class="description"><?php echo __('Setup a custom thousand separator. e.g 10,000.00 or 10.000.00', 'caldera-forms'); ?></p>
+	</div>
+</div>
+<div class="caldera-config-group" id="{{_id}}_decimal_separator">
+	<label for="{{_id}}_sep_decimal">
+		<?php esc_html_e('Decimal Separator', 'caldera-forms'); ?>
+	</label>
+	<div class="caldera-config-field">
+		<input id="{{_id}}_sep_decimal" type="text" class="field-config" name="{{_name}}[decimal_separator]" value="{{#if decimal_separator}}{{decimal_separator}}{{else}}.{{/if}}">
 	</div>
 </div>
 

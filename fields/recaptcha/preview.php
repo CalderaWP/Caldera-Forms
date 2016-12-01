@@ -1,5 +1,5 @@
 <div class="notice notice-error"><?php
-	printf( '<p>%s <a href="https://calderawp.com/doc/recaptcha-field/" title="%s" target="_blank">%s</a></p>',
+	printf( '<p>%s <a href="https://calderaforms.com/doc/recaptcha-field/" title="%s" target="_blank">%s</a></p>',
 		esc_html__( 'This field type is discontinued.', 'caldera-forms' ),
 		esc_attr__( 'Documenation for this field type', 'caldera-forms' ),
 		esc_html__( 'Click here for more information.', 'caldera-forms' )

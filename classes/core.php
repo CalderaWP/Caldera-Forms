@@ -616,6 +616,10 @@ class Caldera_Forms {
 			}
 		}
 
+		if( ! isset( $field['ID'], $field[ 'slug' ] ) ){
+			return;
+		}
+
 		$data = self::get_field_data($field['ID'], $form );
 
 		if( empty($data) && 0 != $data ){
@@ -1011,7 +1015,9 @@ class Caldera_Forms {
 	}
 
 	/**
-	 * Increment an internal value
+	 * Increment value using the incrimental value processor
+     *
+     * @since unknown
 	 *
 	 * @param array $config Processor config
 	 * @param array $form Form config
@@ -1019,17 +1025,44 @@ class Caldera_Forms {
 	 * @return array Key is new value.
 	 */
 	public function increment_value( $config, $form ){
+        $option = '_increment_' . $config[ 'processor_id' ];
+        $field_id = $field_value = false;
 
-		// get increment value;
-		$increment_value = get_option('_increment_' . $config['processor_id'], $config['start'] );
+        if( ! empty( $config[ 'field' ] ) ){
+            $field_id = $config[ 'field' ];
+            $field_value = Caldera_Forms::get_field_data( $field_id, $form );
+        }
 
-		update_option( '_increment_' . $config['processor_id'], $increment_value + 1 );
+		$saved_value = get_option( $option, $config[ 'start' ] );
 
-		if( !empty( $config['field'] ) ){
-			self::set_field_data( $config['field'], $increment_value, $form );
+        if( is_numeric( $field_value ) ){
+            $increment_value = $saved_value + $field_value;
+        }else{
+            $increment_value = $saved_value + 1;
+        }
+
+        /**
+         * Filter value for incremental processor
+         *
+         * Runs after logic of incremental value is calculated, before is written to field value or tracking option
+         *
+         * @since 1.4.5
+         *
+         * @param int $increment_value New value
+         * @param int $saved_value Previous value
+         * @param array $config Processor config
+         * @param array $form Form config
+         */
+        $increment_value = apply_filters( 'caldera_forms_incremental_value', $increment_value, $saved_value, $config, $form );
+		update_option( $option, $increment_value );
+
+		if( $field_id  ){
+			self::set_field_data( $field_id, $increment_value, $form );
 		}
 
-		return array('increment_value' => $increment_value );
+		return array(
+		    'increment_value' => $increment_value
+        );
 
 	}
 
@@ -2271,7 +2304,15 @@ class Caldera_Forms {
 								if ( ! empty( $this_form[ 'fields' ] ) ) {
 									if ( ! isset( $this_form[ 'mailer' ][ 'email_type' ] ) || $this_form[ 'mailer' ][ 'email_type' ] == 'html' ) {
 										$html    = true;
-										$pattern = '<strong>%s</strong><div style="margin-bottom:20px;">%s</div>';
+										/**
+										 * Change the sprintf pattern for the {summary} magic tag
+										 *
+										 * @since 1.4.5
+										 *
+										 * @param string $pattern The sprintf pattern to use
+										 * @param array $this_form Form config
+										 */
+										$pattern = apply_filters( 'caldera_forms_summary_magic_pattern', '<strong>%s</strong><div style="margin-bottom:20px;">%s</div>', $this_form );
 
 									} else {
 										$html = false;
@@ -3174,20 +3215,19 @@ class Caldera_Forms {
 		if(isset($_POST['_cf_frm_edt'])){
 			$entry_id = (int) $_POST['_cf_frm_edt'];
 		}
-		// dont get data with ID else update wont work. since it will update the same thing
-		//$data = self::get_submission_data($form, $entry_id);
+
 		$data = self::get_submission_data($form);
-		//dump($data);
-		// requireds
-		// set transient for returns submittions
+
+		// set transient for returns submissions
 		if(empty($transdata)){
 			$transdata = array(
 				'transient' 	=> $process_id,
 				'form_instance' => $form_instance_number,
-				'expire'		=> 120,
+				'expire'		=> 600,
 				'data' 			=> array_merge($_POST, $data),
 			);
 		}
+
 		// remove AJAX value for tp_
 		if(isset($transdata['data']['cfajax'])){
 			unset($transdata['data']['cfajax']);

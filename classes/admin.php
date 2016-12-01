@@ -680,7 +680,7 @@ class Caldera_Forms_Admin {
 		global $post;
 		if(!empty($post)){
 			echo "<a id=\"caldera-forms-form-insert\" title=\"". esc_attr__( 'Add Form to Page', 'caldera-forms' ) . "\" class=\"button caldera-forms-insert-button\" href=\"#inst\">\n";
-			echo "	<img src=\"". CFCORE_URL . "assets/images/lgo-icon.png\" alt=\"". esc_attr__( 'Insert Form Shortcode' , 'caldera-forms') . "\" style=\"padding: 0px 2px 0px 0px; width: 16px; margin: -2px 0px 0px;\" /> ".__('Caldera Form', 'caldera-forms' )."\n";
+			echo "	<img src=\"". CFCORE_URL . "assets/images/caldera-globe-logo-sm.png\" alt=\"". esc_attr__( 'Insert Form Shortcode' , 'caldera-forms') . "\" style=\"padding: 0px 2px 0px 0px; width: 16px; margin: -2px 0px 0px;\" /> ".__('Caldera Form', 'caldera-forms' )."\n";
 			echo "</a>\n";
 		}
 	}
@@ -1143,7 +1143,8 @@ class Caldera_Forms_Admin {
 
 			$field_types = apply_filters( 'caldera_forms_get_field_types', array() );
 
-
+			$clippy = new Caldera_Forms_Admin_Clippy( $this->plugin_slug, site_url() );
+			$clippy->assets();
 			wp_enqueue_style( 'cf-field-styles' );
 
 			wp_enqueue_script( 'cf-field' );
@@ -1760,15 +1761,14 @@ class Caldera_Forms_Admin {
 	public static function admin_alerts(){
 		$optin_status = Caldera_Forms_Tracking::tracking_optin_status();
 		if(  'dismiss' !== $optin_status && 0 == $optin_status ){
-			$base_url = add_query_arg( 'page', 'caldera-forms' );
-			$base_url = add_query_arg( 'cal_tracking_nonce', wp_create_nonce(), $base_url );
-			$allow = add_query_arg( 'cal_tracking', 1, $base_url );
-			$dismiss = add_query_arg( 'cal_tracking', 'dismiss', $base_url );
+
+			$allow = Caldera_Forms_Tracking::allow_url();
+			$dismiss = Caldera_Forms_Tracking::dismiss();
 			$message[] = __( 'Allow us to track basic usage data and receive a 10% discount at CalderaWP.com.', 'caldera-forms' );
 			$message[] = __( 'No form entries, or sensitive data will be saved.', 'caldera-forms' );
 			$message[] = __( 'This data is used to help improve Caldera Forms and it will never be shared with a third-party.', 'caldera-forms' );
 			$message[] = __( 'If you choose to allow us to track data, a 10% discount code for CalderaWP.com will be sent to the admin email for this site.', 'caldera-forms' );
-			$message[] = sprintf( '<em><a href="https://calderawp.com/?post_type=doc&p=17228" target="_blank" title="%s">%s</a></em>',
+			$message[] = sprintf( '<em><a href="https://calderaforms.com/?post_type=doc&p=17228" target="_blank" title="%s">%s</a></em>',
 				esc_html__( 'Information on CalderaWP site about usage tracking', 'caldera-forms' ),
 				esc_html__( 'Learn more about what is tracked here.', 'caldera-forms' )
 			);
@@ -1847,8 +1847,18 @@ class Caldera_Forms_Admin {
 			$url       = Caldera_Forms_Tracking::api_url( 'notices' );
 			$r_notices = Caldera_Forms_Tracking::send_to_api( $url );
 			if ( ! empty( $r_notices ) ) {
-				$notices = array_merge( $notices, $r_notices );
-				update_option( '_cf_admin_alerts', $notices );
+			    if( is_string( $r_notices ) ){
+			        $r_notices = json_decode( $r_notices );
+                }
+
+			    if( is_object( $r_notices ) ){
+                    $r_notices = (array) $r_notices;
+                }
+
+                if ( is_array( $r_notices ) ) {
+                    $notices = array_merge($notices, $r_notices);
+                    update_option('_cf_admin_alerts', $notices);
+                }
 			}
 
 		}
@@ -1884,7 +1894,7 @@ class Caldera_Forms_Admin {
 						 *
 						 * @param array|WP_Error Response data or WP_Error
 						 */
-						add_action( 'caldera_form_after_tracking_optin', $response );
+						do_action( 'caldera_form_after_tracking_optin', $response );
 					}
 				}elseif( 'dismiss' == trim( $value ) ){
 					update_option( '_caldera_forms_tracking_allowed', trim( $value ) );
@@ -1952,6 +1962,8 @@ class Caldera_Forms_Admin {
 		}
 
 	}
+
+
 	
 	
 

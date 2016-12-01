@@ -291,6 +291,54 @@ class Caldera_Forms_DB_Track extends Caldera_Forms_DB_Base {
 		return true;
 	}
 
+	/**
+	 * Get tracking data by event name
+	 *
+	 * @since 1.4.5
+	 *
+	 * @param string $event Event name
+	 * @param bool $return_forms Optional. If true, the default, form IDs are returned. If false, event meta data is returned.
+	 *
+	 * @return array|null
+	 */
+	public function by_event( $event, $return_forms = true ){
+		$metas = $this->query_meta( 'event', $event );
+		if( ! empty( $metas ) ){
+
+			if( $return_forms ){
+				$event_ids = array_unique( wp_list_pluck( $metas, 'event_id' ) );
+				$forms = $this->form_ids_for_events( $event_ids );
+				if( ! empty( $forms ) ){
+					return wp_list_pluck( $forms, 'form_id' );
+				}
+
+			}else{
+				return $metas;
+			}
+
+
+		}
+
+		return array();
+
+	}
+
+	/**
+	 * Get form IDs or an array of event IDs
+	 *
+	 * @since 1.4.5
+	 *
+	 * @param array $event_ids Event IDs to find form IDs for
+	 *
+	 * @return array|null
+	 */
+	protected function form_ids_for_events( $event_ids ){
+		global $wpdb;
+		$table = $this->get_table_name( false );
+		$sql = $wpdb->prepare( "SELECT `form_id` FROM $table WHERE `ID` IN( '%s' )", implode( ',', $event_ids ) );
+		return $wpdb->get_results( $sql, ARRAY_A );
+	}
+
 
 
 }

@@ -29,7 +29,6 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 ?><div class="caldera-editor-header">
 	<ul class="caldera-editor-header-nav">
 		<li class="caldera-editor-logo">
-			<span class="dashicons-cf-logo"></span>
 			<span class="caldera-forms-name">Caldera Forms</span>
 		</li>
 		<li class="caldera-forms-version">
@@ -68,7 +67,8 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 </div>
 
 <div class="form-admin-page-wrap">
-	<div class="form-panel-wrap">
+	<div id="caldera-forms-admin-page-left">
+		<div class="form-panel-wrap">
 	<?php
 
 	// admin notices
@@ -133,7 +133,7 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 						><?php if( !empty( $form['form_draft'] ) ) { echo __('Activate', 'caldera-forms'); }else{ echo __('Deactivate', 'caldera-forms'); } ?></a> | </span><?php } ?>
 
 						<?php if(!empty($form['db_support'])){ ?><span class="edit">
-							<a class="form-control form-entry-trigger ajax-trigger" href="#entres"
+							<a class="form-control form-entry-trigger ajax-trigger cf-entry-viewer-link" href="#entres"
 						            data-nonce="<?php echo wp_create_nonce( 'view_entries' ); ?>"
 									data-action="browse_entries"
 									data-target="#form-entries-viewer"
@@ -185,9 +185,12 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 		?></tbody>
 		</table>
 		<?php }else{ ?>
-		<p>
-			<?php esc_html_e( 'You don\'t have any forms.', 'caldera-forms'); ?>
-		</p>
+		<div id="cf-you-have-no-forms">
+			<p style="margin: 24px;">
+				<?php esc_html_e( 'You don\'t have any forms yet.', 'caldera-forms'); ?>
+			</p>
+
+		</div>
 		<?php
 			// check db and only show the upgrade if db version is not there since its confusing
 			$db_version = get_option( 'CF_DB', 0 );
@@ -197,7 +200,7 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 				<p>
 					<?php
 					echo __( sprintf( 'If you recently updated Caldera Forms and can no longer see saved forms, %s',
-						sprintf( '<a href="https://calderawp.com/doc/caldera-forms-form-config-changes/" target="_blank"><strong>%s</strong></a>.', esc_html__( 'no data is lost. Click here for more information', 'caldera-forms' ),  'caldera-forms' ) ) ); ?>
+						sprintf( '<a href="https://calderaforms.com/doc/caldera-forms-form-config-changes/" target="_blank"><strong>%s</strong></a>.', esc_html__( 'no data is lost. Click here for more information', 'caldera-forms' ),  'caldera-forms' ) ) ); ?>
 				</p>
 				<p>
 					<?php printf( '<a href="%s" class="button">%s</a>', esc_url( add_query_arg( array( 'page' => 'caldera-forms', 'cal_db_update' => wp_create_nonce() ) ) ), esc_html__( 'Run The Updater', 'caldera-forms' ) ); ?>
@@ -206,7 +209,17 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 			<?php } ?>
 		<?php } ?>
 	</div>
-	<div class="form-entries-wrap" aria-live="polite" aria-relevant="additions removals">
+	</div>
+	<div id="caldera-forms-admin-page-right">
+		<div id="caldera-forms-clippy">
+			<div class="caldera-forms-clippy-zone" id="caldera-forms-clippy-p1" style="background-image: url( '<?php echo esc_url( CFCORE_URL . '/assets/images/caldera-globe-logo-sm.png' ); ?>' );">
+			</div>
+			<div class="caldera-forms-clippy-zone" id="caldera-forms-clippy-p2" style="background-image: url( '<?php echo esc_url( CFCORE_URL . '/assets/images/caldera-globe-logo-sm.png' ); ?>' );" >
+			</div>
+			<div class="caldera-forms-clippy-zone" id="caldera-forms-clippy-p3" style="background-image: url( '<?php echo esc_url( CFCORE_URL . '/assets/images/caldera-globe-logo-sm.png' ); ?>' );">
+			</div>
+		</div>
+		<div class="form-entries-wrap" aria-live="polite" aria-relevant="additions removals">
 	<?php include CFCORE_PATH . 'ui/entries_toolbar.php'; ?>
 	<div id="form-entries-viewer"></div>
 
@@ -223,6 +236,7 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 				</span>
 			</div>
 		</div>
+	</div>
 	</div>
 </div>
 

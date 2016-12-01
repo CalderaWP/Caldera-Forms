@@ -1,14 +1,14 @@
 <?php
 /*
   Plugin Name: Caldera Forms
-  Plugin URI: https://calderawp.com/caldera-forms/
+  Plugin URI: https://CalderaForms.com
   Description: Easy to use, grid based responsive form builder for creating simple to complex forms.
   Author: CalderaWP
-  Version: 1.4.4.1
-  Author URI: https://calderawp.com
+  Version: 1.4.5-b-1
+  Author URI: http://CalderaLabs.org
   Text Domain: caldera-forms
   GitHub Plugin URI: https://github.com/CalderaWP/Caldera-Forms/
-  GitHub Branch:     master
+  GitHub Branch:     1.4.x
  */
 
 
@@ -19,7 +19,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 define('CFCORE_PATH', plugin_dir_path(__FILE__));
 define('CFCORE_URL', plugin_dir_url(__FILE__));
-define('CFCORE_VER', '1.4.4.1');
+define('CFCORE_VER', '1.4.5-b-1');
 define('CFCORE_EXTEND_URL', 'https://api.calderaforms.com/1.0/');
 define('CFCORE_BASENAME', plugin_basename( __FILE__ ));
 

@@ -424,4 +424,22 @@ abstract class Caldera_Forms_DB_Base {
 
 	}
 
+	/**
+	 * Query by meta key
+	 *
+	 * @since 1.4.5
+	 *
+	 * @param string $key Meta key to query by
+	 * @param string $value Meta value to query for
+	 *
+	 * @return array|null
+	 */
+	protected function query_meta( $key, $value ){
+		global $wpdb;
+		$table = $this->get_table_name( true );
+		$sql = $wpdb->prepare( "SELECT * FROM $table WHERE  `meta_key` = '%s' AND `meta_value` = '%s' ", $key, $value );
+		$r = $wpdb->get_results( $sql, ARRAY_A );
+		return $r;
+	}
+
 }

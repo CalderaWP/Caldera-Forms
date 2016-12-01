@@ -1,7 +1,7 @@
 var baldrickTriggers, loop_loader;
 
 jQuery(document).ready(function($){
-	
+
 	// admin stuff!
 	// Baldrick Bindings
 	baldrickTriggers = function(){
@@ -14,7 +14,7 @@ jQuery(document).ready(function($){
 
 				var nonce 		= $('#cf_toolbar_actions'),
 					referer		= nonce.parent().find('[name="_wp_http_referer"]');
-					
+
 				if( nonce.length && referer.length ){
 					clicked.data('cf_toolbar_actions', nonce.val() );
 					clicked.data('_wp_http_referer', referer.val() );
@@ -68,13 +68,13 @@ jQuery(document).ready(function($){
 	$('body').on('click', '.caldera-group-remover', function(e){
 
 		e.preventDefault();
-		
+
 		var clicked = $(this),
 			parent = clicked.closest('.caldera-repeater-group');
 
-			parent.slideUp(200, function(){
-				parent.remove();
-			});
+		parent.slideUp(200, function(){
+			parent.remove();
+		});
 
 
 	});
@@ -106,6 +106,19 @@ jQuery(document).ready(function($){
 			if( list_toggle.is(':visible') && forms_panel.is(':visible') ){
 				list_toggle.trigger('click');
 			}
+		}
+	});
+
+
+	//setup clippy on admin, not edit
+	var CFclippy;
+	if( undefined != typeof  CF_CLIPPY && 'object' == typeof  CF_CLIPPY ){
+		CFclippy = new CalderaFormsAdminClippys( $( document.getElementById( 'caldera-forms-clippy' ) ), CF_CLIPPY, $ );
+		CFclippy.init();
+	}
+	$( '.cf-entry-viewer-link' ).on( 'click', function(){
+		if ( 'object' == typeof  CFclippy ){
+			CFclippy.remove();
 		}
 	});
 

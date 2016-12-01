@@ -633,8 +633,27 @@ class Caldera_Forms_Forms {
 		}
 
 		$fields = $form[ 'fields' ];
+
 		if ( $in_order ) {
-			$order   = array_keys( $form[ 'layout_grid' ][ 'fields' ] );
+
+			if( isset( $form[ 'layout_grid' ][ 'fields' ] ) ){
+				$order   = array_keys( $form[ 'layout_grid' ][ 'fields' ] );
+			}else{
+				$order = array_keys( $fields );
+			}
+
+			/**
+			 * Change order of fields
+			 *
+			 * Very useful for reordering fields outputted with {summary} magic tag
+			 *
+			 * @since 1.4.5
+			 *
+			 * @param array $order Order -- array of field IDs
+			 * @param array $form Form config
+			 */
+			$order = apply_filters( 'caldera_forms_get_field_order', $order, $form );
+
 			$ordered = array();
 			foreach ( $order as $key ) {
 				if ( isset( $fields[ $key ] ) ) {
@@ -644,6 +663,7 @@ class Caldera_Forms_Forms {
 			}
 
 			return $ordered;
+
 		}else{
 			return $fields;
 		}
