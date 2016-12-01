@@ -1,14 +1,14 @@
 <?php
 /*
   Plugin Name: Caldera Forms
-  Plugin URI: https://calderawp.com/caldera-forms/
+  Plugin URI: https://CalderaForms.com
   Description: Easy to use, grid based responsive form builder for creating simple to complex forms.
   Author: CalderaWP
   Version: 1.4.5-b-1
-  Author URI: https://calderawp.com
+  Author URI: http://CalderaLabs.org
   Text Domain: caldera-forms
   GitHub Plugin URI: https://github.com/CalderaWP/Caldera-Forms/
-  GitHub Branch:     master
+  GitHub Branch:     1.4.x
  */
 
 

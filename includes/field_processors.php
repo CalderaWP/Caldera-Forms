@@ -128,7 +128,7 @@ function cf_handle_file_upload( $entry, $field, $form ){
 			if( is_callable( $uploader) ){
 				$upload = call_user_func( $uploader, $file, $upload_args );
 			}else{
-				return new WP_Error( 'invalid-upload-handler', __( sprintf( 'Invalid file upload handler. See %s', ' https://calderawp.com/doc/alternative-file-upload-directory/'), 'caldera-forms') );
+				return new WP_Error( 'invalid-upload-handler', __( sprintf( 'Invalid file upload handler. See %s', ' https://calderaforms.com/doc/alternative-file-upload-directory/'), 'caldera-forms') );
 			}
 
 			if( !empty( $upload['error'] ) ){

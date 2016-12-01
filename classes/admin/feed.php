@@ -18,7 +18,7 @@ class Caldera_Forms_Admin_Feed {
 	 *
 	 * @var string
 	 */
-	protected static  $api_url = 'https://calderawp.com/wp-json/calderawp_api/v2/';
+	protected static  $api_url = 'https://calderaforms.com/wp-json/calderawp_api/v2/';
 
 	/**
 	 * Get the data for the request from remote site

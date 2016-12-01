@@ -134,7 +134,7 @@ class Caldera_Forms_Admin_Clippy {
 				'grey' => 'orange'
 			),
 			'link' => array(
-				'url' => 'https://calderawp.com/caldera-forms-emails?utm_source=obs&utm_campaign=admin-page&utm_medium=caldera-forms&utm_term=fallback',
+				'url' => 'https://calderaforms.com/caldera-forms-emails?utm_source=obs&utm_campaign=admin-page&utm_medium=caldera-forms&utm_term=fallback',
 				'bt' => 'email-stats'
 			)
 		);
@@ -168,7 +168,7 @@ class Caldera_Forms_Admin_Clippy {
 				'color' => 'orange'
 			),
 			'link' => array(
-				'url' => 'https://calderawp.com/doc/creating-new-form?utm_source=obs&utm_campaign=admin-page&utm_medium=caldera-forms&utm_term=no_forms',
+				'url' => 'https://calderaforms.com/doc/creating-new-form?utm_source=obs&utm_campaign=admin-page&utm_medium=caldera-forms&utm_term=no_forms',
 				'bt' => 'email-stats'
 			)
 		);
@@ -196,7 +196,7 @@ class Caldera_Forms_Admin_Clippy {
 				'color' => 'orange'
 			),
 			'link' => array(
-				'url' => 'https://calderawp.com/getting-started?utm_source=obs&utm_campaign=admin-page&utm_medium=caldera-forms&utm_term=fallback'
+				'url' => 'https://calderaforms.com/getting-started?utm_source=obs&utm_campaign=admin-page&utm_medium=caldera-forms&utm_term=fallback'
 			)
 		);
 	}

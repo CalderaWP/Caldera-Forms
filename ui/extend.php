@@ -49,12 +49,12 @@
 			<span class="caldera-forms-name">Caldera Forms</span>
 		</li>
 		<li class="caldera-forms-toolbar-item active">
-			<a href="https://calderawp.com/caldera-forms-add-ons?utm_source=dashboard&utm_medium=extend-submenu&utm_campaign=caldera-forms" title="<?php esc_attr_e( 'View Caldera Forms Add-ons', 'caldera-forms' ); ?>" target="_blank">
+			<a href="https://calderaforms.com/caldera-forms-add-ons?utm_source=dashboard&utm_medium=extend-submenu&utm_campaign=caldera-forms" title="<?php esc_attr_e( 'View Caldera Forms Add-ons', 'caldera-forms' ); ?>" target="_blank">
 				<?php esc_html_e('Caldera Forms Add-ons', 'caldera-forms'); ?>
 			</a>
 		</li>
 		<li class="caldera-forms-toolbar-item">
-			<a href="https://calderawp.com/caldera-forms-bundles?utm_source=dashboard&utm_medium=extend-submenu&utm_campaign=caldera-forms" title="<?php esc_attr_e( 'View Caldera Forms Bundles', 'caldera-forms' ); ?>" target="_blank">
+			<a href="https://calderaforms.com/caldera-forms-bundles?utm_source=dashboard&utm_medium=extend-submenu&utm_campaign=caldera-forms" title="<?php esc_attr_e( 'View Caldera Forms Bundles', 'caldera-forms' ); ?>" target="_blank">
 				<?php esc_html_e('Save With Bundles', 'caldera-forms'); ?>
 			</a>
 		</li>
