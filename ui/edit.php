@@ -632,8 +632,7 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 <div class="caldera-editor-header">
 	<ul class="caldera-editor-header-nav">
 		<li class="caldera-editor-logo">
-			<span class="dashicons-cf-logo"></span>
-			<?php esc_html_e( 'Caldera Forms', 'caldera-forms' ); ?>
+			<span class="caldera-forms-name">Caldera Forms</span>
 		</li>
 		<li class="caldera-element-type-label">
 			<?php echo $element['name']; ?>

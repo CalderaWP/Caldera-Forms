@@ -46,8 +46,7 @@
 <div class="caldera-editor-header">
 	<ul class="caldera-editor-header-nav">
 		<li class="caldera-editor-logo">
-			<span class="dashicons-cf-logo"></span>
-				Caldera Forms
+			<span class="caldera-forms-name">Caldera Forms</span>
 		</li>
 		<li class="caldera-forms-toolbar-item active">
 			<a href="https://calderawp.com/caldera-forms-add-ons?utm_source=dashboard&utm_medium=extend-submenu&utm_campaign=caldera-forms" title="<?php esc_attr_e( 'View Caldera Forms Add-ons', 'caldera-forms' ); ?>" target="_blank">

@@ -2122,3 +2122,14 @@ span.cf-form-shortcode-preview:hover {
   margin-top: -12px;
   margin-bottom: 12px;
 }
+
+li.caldera-editor-logo {
+  background-image: url( '../images/caldera-globe-logo-sm.png' );
+  background-repeat: no-repeat;
+  background-position-y: 10%;
+  background-size: 40px;
+}
+
+.caldera-forms-name {
+  margin-left: 44px;
+}

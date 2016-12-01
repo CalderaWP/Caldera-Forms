@@ -13,8 +13,10 @@
 <div class="caldera-editor-header">
 	<ul class="caldera-editor-header-nav">
 		<li class="caldera-editor-logo">
-			<span class="dashicons-cf-logo"></span>
-			<?php esc_html_e( 'Caldera Forms: Support', 'caldera-forms' ); ?>
+			<span class="caldera-forms-name">
+				<?php esc_html_e( 'Caldera Forms: Support', 'caldera-forms' ); ?>
+			</span>
+
 		</li>
 		<li class="caldera-forms-toolbar-link" id="support-nav-info">
 			<a href="#info">
