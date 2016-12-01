@@ -1058,7 +1058,9 @@ var system_values = <?php echo json_encode( $magic_script ); ?>;
 var preset_options = <?php echo json_encode( $option_presets ); ?>
 </script>
 
-
+<script type="text/javascript">
+	jQuery('.error,.notice,.notice-error').remove();
+</script>
 
 
 
