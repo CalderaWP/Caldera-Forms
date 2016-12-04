@@ -69,7 +69,11 @@ function CalderaFormsAdminClippys( $zone, config, $ ){
     };
 
     function  addClippyToDOM( clippy, elId ) {
-        document.getElementById( elId ).innerHTML = template(clippy);
+        var el = document.getElementById( elId );
+        if( null != el ){
+            el.innerHTML = template(clippy);
+
+        }
 
     }
 
