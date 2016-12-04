@@ -3,7 +3,7 @@ Contributors: Desertsnowman, Shelob9
 Tags: forms, formbuilder, form builder, contact form, form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, echecks, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, eCheck,dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, gravity forms, contact, email, auto-responder, aweber, converkit, builder, contact forms, search, ab testing, a/b testing, split testing, shortcode, wordpress, awesome plugin, plugin, easy, braintree form, dwolla form, authorize.net form, mailchimp form, mailchimp popup, aweber form, converkit form, stripe form, stripe popup, eCheck form
 Requires at least: 4.4
 Tested up to: 4.7.0
-Stable tag: 1.4.5
+Stable tag: 1.4.5.1
 License: GPLv2
 
 A different kind of WordPress form builder.
@@ -725,6 +725,10 @@ The [Trumbowyg](https://alex-d.github.io/Trumbowyg/) JavaScript library is used
 4. **Great Looking Forms** - Create great looking forms.
 
 == Changelog ==
+= Caldera Forms 1.4.5.1 ( December 4, 2016 ) #WCUS =
+* FIXED: Submenu entry viewer had a JavaScript error, it has been eradicated.
+* FIXED: Submenu entry viewer header had both old logo and new logo overlapping, which was kind of poetic, but looked bad.
+
 = Caldera Forms 1.4.5 ( December 1, 2016 ) Tacos! Tacos! Tacos! =
 * ADDED: caldera_forms_get_field_order filter. Changes order of fields, when you ask for them in layout order. Can use this to change order of fields with {summary} magic tag.
 * FIXED: Admin notices were showing up in the form editor and making things look bad. Josh killed them with fire (or jQuery, hard to say.)
