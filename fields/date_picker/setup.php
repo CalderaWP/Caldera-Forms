@@ -31,14 +31,14 @@
 <div class="caldera-config-group">
     <label><?php _e('Start Date', 'caldera-forms'); ?></label>
     <div class="caldera-config-field">
-        <input type="text" class="cfdatepicker-set-format block-input field-config" name="{{_name}}[start-date]" value="">
+        <input type="text" class="cfdatepicker-set-format block-input field-config" id="{{id}}" name="{{_name}}[start-date]" value="{{start-date}}">
         <p class="description"><?php _e('The starting date of the date picker like +1d, -2y, +4m. 0d for today ', 'caldera-forms'); ?></p>
     </div>
 </div>
 <div class="caldera-config-group">
     <label><?php _e('End Date', 'caldera-forms'); ?></label>
     <div class="caldera-config-field">
-        <input type="text" class="cfdatepicker-set-format block-input field-config" name="{{_name}}[end-date]" value="">
+        <input type="text" class="cfdatepicker-set-format block-input field-config" id="{{id}}" name="{{_name}}[end-date]" value="{{end-date}}">
         <p class="description"><?php _e('The ending date of the date picker like +1d, -2y, +4m. 0d for today ', 'caldera-forms'); ?></p>
     </div>
 </div>
