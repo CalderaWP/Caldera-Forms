@@ -86,7 +86,7 @@ class Caldera_Forms {
 		add_action('caldera_forms_edit_end', array($this, 'calculations_templates') );
 		add_filter('caldera_forms_render_get_field', array( $this, 'auto_populate_options_field' ), 10, 2);
 		add_filter('caldera_forms_render_get_field', array( $this, 'apply_conditional_groups' ), 10, 2);
-        add_filter('caldera_forms_view_field_paragraph', 'wpautop' );
+		add_filter('caldera_forms_view_field_paragraph', 'wpautop' );
 
 		//mailer magic
 		add_filter('caldera_forms_get_magic_tags', array( $this, 'set_magic_tags'),1);
@@ -94,7 +94,7 @@ class Caldera_Forms {
 
 		// action
 		add_action('caldera_forms_submit_complete', array( $this, 'save_final_form'),50);
-		
+
 		// find if profile is loaded
 		add_action('wp_loaded', array( $this, 'cf_init_system'), 25 );
 		add_action('wp', array( $this, 'cf_init_preview'));
@@ -116,9 +116,9 @@ class Caldera_Forms {
 		//auto-population via Easy Pods/ Easy Queries
 		add_action( 'caldera_forms_render_start', array( __CLASS__, 'easy_pods_queries_setup' ) );
 
-        //delete file uploads that are not going in media library
-        add_action( 'caldera_forms_submit_complete', array( 'Caldera_Forms_Files', 'cleanup' ) );
-        add_action( Caldera_Forms_Files::CRON_ACTION, array( 'Caldera_Forms_Files', 'cleanup_via_cron' ) );
+		//delete file uploads that are not going in media library
+		add_action( 'caldera_forms_submit_complete', array( 'Caldera_Forms_Files', 'cleanup' ) );
+		add_action( Caldera_Forms_Files::CRON_ACTION, array( 'Caldera_Forms_Files', 'cleanup_via_cron' ) );
 
 		if( current_user_can( Caldera_Forms::get_manage_cap( 'admin' ) ) ) {
 			$id = null;
@@ -133,7 +133,7 @@ class Caldera_Forms {
 			new Caldera_Forms_Email_Previews( $id, $view );
 
 		}
-		
+
 
 		/**
 		 * Runs after Caldera Forms core is initialized
@@ -275,7 +275,7 @@ class Caldera_Forms {
 		if ( ! empty( $wpdb->collate ) ) {
 			$charset_collate .= " COLLATE $wpdb->collate";
 		}
-		
+
 		/*
 		 * Indexes have a maximum size of 767 bytes. Historically, we haven't need to be concerned about that.
 		 * As of WordPress 4.2, however, we moved to utf8mb4, which uses 4 bytes per character. This means that an index which
@@ -347,7 +347,7 @@ class Caldera_Forms {
 			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
 			if( !in_array($wpdb->prefix.'cf_form_entries', $alltables) ){
-			
+
 				$entry_table = "CREATE TABLE `" . $wpdb->prefix . "cf_form_entries` (
 				`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
 				`form_id` varchar(18) NOT NULL DEFAULT '',
@@ -366,7 +366,7 @@ class Caldera_Forms {
 			}
 
 			if( !in_array($wpdb->prefix.'cf_form_entry_values', $alltables) ){
-				
+
 				$values_table = "CREATE TABLE `" . $wpdb->prefix . "cf_form_entry_values` (
 				`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
 				`entry_id` int(11) NOT NULL,
@@ -729,9 +729,9 @@ class Caldera_Forms {
 		}
 
 
-        if ( self::should_send_mail( $form, $transdata ) ) {
-            Caldera_Forms_Save_Final::do_mailer($form, $entryid);
-        }
+		if ( self::should_send_mail( $form, $transdata ) ) {
+			Caldera_Forms_Save_Final::do_mailer($form, $entryid);
+		}
 
 
 	}
@@ -1016,8 +1016,8 @@ class Caldera_Forms {
 
 	/**
 	 * Increment value using the incrimental value processor
-     *
-     * @since unknown
+	 *
+	 * @since unknown
 	 *
 	 * @param array $config Processor config
 	 * @param array $form Form config
@@ -1025,35 +1025,35 @@ class Caldera_Forms {
 	 * @return array Key is new value.
 	 */
 	public function increment_value( $config, $form ){
-        $option = '_increment_' . $config[ 'processor_id' ];
-        $field_id = $field_value = false;
+		$option = '_increment_' . $config[ 'processor_id' ];
+		$field_id = $field_value = false;
 
-        if( ! empty( $config[ 'field' ] ) ){
-            $field_id = $config[ 'field' ];
-            $field_value = Caldera_Forms::get_field_data( $field_id, $form );
-        }
+		if( ! empty( $config[ 'field' ] ) ){
+			$field_id = $config[ 'field' ];
+			$field_value = Caldera_Forms::get_field_data( $field_id, $form );
+		}
 
 		$saved_value = get_option( $option, $config[ 'start' ] );
 
-        if( is_numeric( $field_value ) ){
-            $increment_value = $saved_value + $field_value;
-        }else{
-            $increment_value = $saved_value + 1;
-        }
+		if( is_numeric( $field_value ) ){
+			$increment_value = $saved_value + $field_value;
+		}else{
+			$increment_value = $saved_value + 1;
+		}
 
-        /**
-         * Filter value for incremental processor
-         *
-         * Runs after logic of incremental value is calculated, before is written to field value or tracking option
-         *
-         * @since 1.4.5
-         *
-         * @param int $increment_value New value
-         * @param int $saved_value Previous value
-         * @param array $config Processor config
-         * @param array $form Form config
-         */
-        $increment_value = apply_filters( 'caldera_forms_incremental_value', $increment_value, $saved_value, $config, $form );
+		/**
+		 * Filter value for incremental processor
+		 *
+		 * Runs after logic of incremental value is calculated, before is written to field value or tracking option
+		 *
+		 * @since 1.4.5
+		 *
+		 * @param int $increment_value New value
+		 * @param int $saved_value Previous value
+		 * @param array $config Processor config
+		 * @param array $form Form config
+		 */
+		$increment_value = apply_filters( 'caldera_forms_incremental_value', $increment_value, $saved_value, $config, $form );
 		update_option( $option, $increment_value );
 
 		if( $field_id  ){
@@ -1061,8 +1061,8 @@ class Caldera_Forms {
 		}
 
 		return array(
-		    'increment_value' => $increment_value
-        );
+			'increment_value' => $increment_value
+		);
 
 	}
 
@@ -2788,7 +2788,11 @@ class Caldera_Forms {
 						}
 					}
 				}else{
-					$processed_data[$indexkey][$field_id] = self::do_magic_tags($field['config']['default']);
+					if( ! empty( $entry  ) ) {
+						$processed_data[$indexkey][$field_id] = $entry;
+					}else{
+						$processed_data[$indexkey][$field_id] = self::do_magic_tags($field['config']['default']);
+					}
 				}
 			}else{
 				// dynamic
@@ -3924,7 +3928,7 @@ class Caldera_Forms {
 			return;
 		}
 
-        // check if form exists
+		// check if form exists
 		$form = Caldera_Forms_Forms::get_form( $wp_query->query_vars['cf_api'] );
 		$atts = array(
 			'id' => $wp_query->query_vars['cf_api'],
@@ -4019,7 +4023,7 @@ class Caldera_Forms {
 		 * @param string $form_id  ID of form.
 		 */
 		return apply_filters( 'caldera_forms_submission_url', $url, $form_id );
-		
+
 	}
 
 	/**
@@ -4321,7 +4325,7 @@ class Caldera_Forms {
 		// allow plugins to alter the entry
 		$data = apply_filters( 'caldera_forms_get_entry', $data, $entry_id, $form);
 
-		
+
 		return $data;
 	}
 
@@ -4483,7 +4487,7 @@ class Caldera_Forms {
 		if( !empty( $field['caption'] ) ){
 			$field_structure['aria']['describedby'] = $field['ID'] . 'Caption';
 		}
- 
+
 		// add error
 		if ( ! empty( $field_errors ) ) {
 			if( is_string( $field_errors ) ){
@@ -5454,35 +5458,35 @@ class Caldera_Forms {
 	}
 
 	public static function should_send_mail( $form, $transadata = array() ){
-	    $send = true;
-	    if( empty( $transadata ) ){
-	        global $transadata;
-        }
+		$send = true;
+		if( empty( $transadata ) ){
+			global $transadata;
+		}
 
-        if( !empty( $transdata['edit'] ) ){
-            // update
-            if( empty($form['mailer']['on_update'] ) ){
-                $send = false;
-            }
-        }else{
-            // insert
-            if( empty( $form['mailer']['enable_mailer'] ) && empty($form['mailer']['on_insert'] ) ){
-                $send = false;
-            }
-        }
+		if( !empty( $transdata['edit'] ) ){
+			// update
+			if( empty($form['mailer']['on_update'] ) ){
+				$send = false;
+			}
+		}else{
+			// insert
+			if( empty( $form['mailer']['enable_mailer'] ) && empty($form['mailer']['on_insert'] ) ){
+				$send = false;
+			}
+		}
 
-        /**
-         * Change programmed decision to send mailer or not
-         *
-         * Useful for causing emails to send on entry edit, when they normally would not
-         *
-         * @since 1.4.4
-         *
-         * @param bool $send Whether to send or not
-         * @param array $form Form config
-         */
-        return apply_filters( 'caldera_forms_send_email', $send, $form );
+		/**
+		 * Change programmed decision to send mailer or not
+		 *
+		 * Useful for causing emails to send on entry edit, when they normally would not
+		 *
+		 * @since 1.4.4
+		 *
+		 * @param bool $send Whether to send or not
+		 * @param array $form Form config
+		 */
+		return apply_filters( 'caldera_forms_send_email', $send, $form );
 
-    }
+	}
 
 }
