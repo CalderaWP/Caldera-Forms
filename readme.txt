@@ -719,10 +719,11 @@ The [Trumbowyg](https://alex-d.github.io/Trumbowyg/) JavaScript library is used
 
 
 == Screenshots ==
-1. **Layout Builder** - Easy to use Drag & Drop grid based form builder.
-2. **Form Processors** - With many processors available and more coming, each form can handle submissions in very unique and powerful ways.
-3. **Stackable, condition based Form Processors** - Add as many form processors as needed and add conditions for each to create specific processing flow based on user input.
-4. **Great Looking Forms** - Create great looking forms.
+1. **Mobile Friendly** - Looks Great On Any Device!
+2. **Easy, Powerful Grid-based Form Builder** - Drag and drop editor!
+3. **All The Field Types You Need** - Tons of fields! So Many Fields!
+4. **Powerful Conditional Logic** - Hide and show fields based on user input!
+5. **Go Further With Form Processors** - Auto-responsers, redirects included! Go further with our add-ons!
 
 == Changelog ==
 = Caldera Forms 1.4.5.1 ( December 4, 2016 ) #WCUS =
