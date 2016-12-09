@@ -29,6 +29,8 @@ class Caldera_Forms_Magic_Summary extends Caldera_Forms_Magic_Parser {
 	 */
 	protected $pattern = '';
 
+	protected $ordered_fields;
+
 	/**
 	 * Set if we should use HTML tags or not
 	 *
@@ -38,6 +40,10 @@ class Caldera_Forms_Magic_Summary extends Caldera_Forms_Magic_Parser {
 	 */
 	public function set_html_mode( $html ){
 		$this->html = (bool) $html;
+	}
+
+	public function set_fields( $fields ){
+		$this->ordered_fields = $fields;
 	}
 
 
@@ -50,7 +56,13 @@ class Caldera_Forms_Magic_Summary extends Caldera_Forms_Magic_Parser {
 		}
 
 		$out = array();
-		$ordered_fields = Caldera_Forms_Forms::get_fields( $this->form );
+		if( empty( $this->ordered_fields ) ){
+			$this->ordered_fields = $ordered_fields = Caldera_Forms_Forms::get_fields( $this->form );
+		}else{
+			$ordered_fields = $this->ordered_fields;
+		}
+
+
 		if ( ! empty( $ordered_fields ) ) {
 			foreach ( $ordered_fields as $field_id => $field ) {
 
@@ -74,7 +86,10 @@ class Caldera_Forms_Magic_Summary extends Caldera_Forms_Magic_Parser {
 				if (  null == $this->data ) {
 					$field_values = (array) Caldera_Forms::get_field_data( $field_id, $this->form );
 				}else{
-					$field_values = $this->data;
+					if( ! isset( $this->data[ $field_id ] ) ){
+						continue;
+					}
+					$field_values = (array) $this->data[ $field_id ];
 				}
 
 				if ( isset( $field_values[ 'label' ] ) ) {
