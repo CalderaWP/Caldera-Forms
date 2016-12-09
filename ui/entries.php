@@ -1,12 +1,11 @@
 <div class="caldera-editor-header">
 	<ul class="caldera-editor-header-nav">
 		<li class="caldera-editor-logo">
-			<span class="dashicons-cf-logo"></span>
-			<?php echo $form['name']; ?>
+			<span class="caldera-forms-name"><?php echo esc_html(  $form[ 'name' ] ); ?><span class="caldera-forms-name">
 		</li>
 		<?php if(!empty($form['description'])){ ?>
 		<li class="caldera-element-type-label">
-			<?php echo $form['description']; ?>
+			<?php echo esc_html(  $form[ 'description' ] ); ?>
 		</li>
 		<?php } ?>
 		<?php if( current_user_can( 'delete_others_posts' ) && empty( $form['_external_form'] ) ){ ?>
