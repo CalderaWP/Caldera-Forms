@@ -1127,19 +1127,10 @@ class Caldera_Forms_Admin {
 			wp_enqueue_script( 'cf-validator' );
 			wp_enqueue_script( 'cf-init' );
 
-			foreach ( $field_types as $field ) {
-				if ( ! empty( $field[ 'styles' ] ) ) {
-					foreach ( $field[ 'styles' ] as $style ) {
-						if ( false !== strpos( $style, '//' ) ) {
-							wp_enqueue_style( 'cf-' . sanitize_key( basename( $style ) ), $style, array() );
-						} else {
-							wp_enqueue_style( $style );
-						}
-					}
-				}
 
-		if ( ! empty( $_GET[ 'edit-entry' ] ) ) {
-			Caldera_Forms_Render_Assets::enqueue_style( 'grid' );
+			if ( ! empty( $_GET[ 'edit-entry' ] ) ) {
+				Caldera_Forms_Render_Assets::enqueue_style( 'grid' );
+			}
 		}
 
 
