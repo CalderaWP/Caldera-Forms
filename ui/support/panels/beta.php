@@ -38,8 +38,8 @@
 			<?php esc_html_e( 'You can download the latest beta as a zip file and install it manually.', 'caldera-forms' ); ?>
 		</li>
 		<li style="margin-left:10px">
-			<em><a href="http://calderawp.com/cf-latest-beta"
-			       target="_blank">http://calderawp.com/cf-latest-beta</a></em>
+			<em><a href="http://calderaforms.com/cf-latest-beta"
+			       target="_blank">http://calderaforms.com/cf-latest-beta</a></em>
 		</li>
 	</ul>
 

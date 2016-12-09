@@ -1,17 +1,16 @@
 <?php
 /*
   Plugin Name: Caldera Forms
-  Plugin URI: https://calderawp.com/caldera-forms/
+  Plugin URI: https://CalderaForms.com
   Description: Easy to use, grid based responsive form builder for creating simple to complex forms.
   Author: CalderaWP
-  Version: 1.5.0-b1
-  Author URI: https://calderawp.com
+  Version: 1.4.5.1
+  Author URI: http://CalderaLabs.org
   Text Domain: caldera-forms
   GitHub Plugin URI: https://github.com/CalderaWP/Caldera-Forms/
-  GitHub Branch:     current-stable
+  GitHub Branch:     1.4.x
  */
 
-//initilize plugin
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -20,7 +19,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 define('CFCORE_PATH', plugin_dir_path(__FILE__));
 define('CFCORE_URL', plugin_dir_url(__FILE__));
-define('CFCORE_VER', '1.5.0-b1');
+define('CFCORE_VER', '1.4.5.1');
 define('CFCORE_EXTEND_URL', 'https://api.calderaforms.com/1.0/');
 define('CFCORE_BASENAME', plugin_basename( __FILE__ ));
 
@@ -34,7 +33,7 @@ define('CFCORE_BASENAME', plugin_basename( __FILE__ ));
 define( 'CF_DB', 4 );
 
 // init internals of CF
-include_once CFCORE_PATH . 'classes/core.php'; // neeeds the core at the very least before plugins loaded
+include_once CFCORE_PATH . 'classes/core.php'; // needs the core at the very least before plugins loaded
 add_action( 'init', array( 'Caldera_Forms', 'init_cf_internal' ) );
 // table builder
 register_activation_hook( __FILE__, array( 'Caldera_Forms', 'activate_caldera_forms' ) );
@@ -48,13 +47,14 @@ function caldera_forms_load(){
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_DB', CFCORE_PATH . 'classes/db' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Entry', CFCORE_PATH . 'classes/entry' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Email', CFCORE_PATH . 'classes/email' );
-	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Processor_Interface', CFCORE_PATH . 'processors/classes/interfaces' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Admin', CFCORE_PATH . 'classes/admin' );
-    Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Render', CFCORE_PATH . 'classes/render' );
+	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Render', CFCORE_PATH . 'classes/render' );
+	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_CSV', CFCORE_PATH . 'classes/csv' );
+	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Processor_Interface', CFCORE_PATH . 'processors/classes/interfaces' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_API', CFCORE_PATH . 'classes/api' );
-	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Processor', CFCORE_PATH . 'processors/classes' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Field', CFCORE_PATH . 'classes/field' );
-
+	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Magic', CFCORE_PATH . 'classes/magic' );
+	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Processor', CFCORE_PATH . 'processors/classes' );
 
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms', CFCORE_PATH . 'classes' );
 	Caldera_Forms_Autoloader::register();
@@ -67,6 +67,7 @@ function caldera_forms_load(){
 	include_once CFCORE_PATH . 'includes/compat.php';
 	include_once CFCORE_PATH . 'processors/functions.php';
 	include_once CFCORE_PATH . 'includes/functions.php';
+
 	/**
 	 * Runs after all of the includes and autoload setup is done in Caldera Forms core
 	 *
@@ -84,4 +85,5 @@ add_action( 'plugins_loaded', array( 'Caldera_Forms_Tracking', 'get_instance' ) 
 if ( is_admin() || defined( 'DOING_AJAX' ) ) {
 	add_action( 'plugins_loaded', array( 'Caldera_Forms_Admin', 'get_instance' ) );
 	add_action( 'plugins_loaded', array( 'Caldera_Forms_Support', 'get_instance' ) );
+	include_once CFCORE_PATH . 'includes/plugin-page-banner.php';
 }

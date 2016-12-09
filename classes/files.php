@@ -49,8 +49,9 @@ class Caldera_Forms_Files{
                 $args[ 'field_id' ],
                 $args[ 'form_id' ]
             ) );
-            self::add_upload_filter( $args[ 'field_id' ],  $args[ 'form_id' ] );
         }
+
+	    self::add_upload_filter( $args[ 'field_id' ],  $args[ 'form_id' ], $private );
 
         $upload = wp_handle_upload($file, array( 'test_form' => false ), date('Y/m') );
 
@@ -96,8 +97,26 @@ class Caldera_Forms_Files{
      * @param string $field_id The field ID for file field
      * @param string $form_id The form ID
      */
-    public static function add_upload_filter( $field_id , $form_id ){
-        self::$dir = self::secret_dir( $field_id, $form_id );
+    public static function add_upload_filter( $field_id , $form_id, $private = true ){
+	    if ( $private ) {
+		    self::$dir = self::secret_dir( $field_id, $form_id );
+	    }else{
+		    /**
+		     * Filter directory for uploaded files
+		     *
+		     * If null, the file path will be WordPress' default
+		     *
+		     * @since 1.4.5
+		     *
+		     * @param string|null Directory
+		     * @param string $field_id Field ID
+		     * @param string $form_id Form ID
+		     */
+	    	$dir = apply_filters( 'caldera_forms_upload_directory', null, $field_id, $form_id );
+		    if( null != $dir ){
+		    	self::$dir = $dir;
+		    }
+	    }
         add_filter( 'upload_dir', array( __CLASS__, 'uploads_filter' ) );
     }
 

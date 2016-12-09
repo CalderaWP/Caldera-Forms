@@ -165,6 +165,10 @@ jQuery(document).ready(function($){
         parent.find('.toggle_show_values').trigger('change');
 
         if( !$('.caldera-select-field-type').not('.field-initialized').length){
+            if(!core_form){
+                core_form = jQuery('.caldera-forms-options-form');
+            }
+
             // build previews
             if(!core_form.hasClass('builder-loaded')){
 
@@ -1255,6 +1259,7 @@ rebuild_field_binding = function(){
     if(!core_form){
         core_form = jQuery('.caldera-forms-options-form');
     }
+
 
     if(!core_form.hasClass('builder-loaded')){
         return;
@@ -2569,6 +2574,5 @@ Handlebars.registerHelper('_field', function(args) {
 Handlebars.registerHelper('console', function(context, options) {
     console.log(this);
 });
-
 
 

@@ -255,4 +255,42 @@ class Caldera_Forms_Tracking {
 
 		return $rows;
 	}
+
+	/**
+	 * Get tracking optin url
+	 *
+	 * @since 1.4.5
+	 *
+	 * @return string
+	 */
+	protected static function optin_url(){
+		$url = add_query_arg( array(
+			'page' => 'caldera-forms',
+			'cal_tracking_nonce' => wp_create_nonce(),
+		), self_admin_url( 'admin.php' ) );
+
+		return $url;
+	}
+
+	/**
+	 * Get the allow tracking URL
+	 *
+	 * @since 1.4.5
+	 *
+	 * @return string
+	 */
+	public static function allow_url(){
+		return add_query_arg( array( 'cal_tracking' => 1 ), self::optin_url() );
+	}
+
+	/**
+	 * Get the dismiss tracking URL
+	 *
+	 * @since 1.4.5
+	 *
+	 * @return string
+	 */
+	public static function dismiss(){
+		return add_query_arg( array( 'cal_tracking' =>'dismiss' ), self::optin_url()  );
+	}
 }
