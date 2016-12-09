@@ -53,6 +53,7 @@ function caldera_forms_load(){
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Processor_Interface', CFCORE_PATH . 'processors/classes/interfaces' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_API', CFCORE_PATH . 'classes/api' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Field', CFCORE_PATH . 'classes/field' );
+	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Magic', CFCORE_PATH . 'classes/magic' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Processor', CFCORE_PATH . 'processors/classes' );
 
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms', CFCORE_PATH . 'classes' );

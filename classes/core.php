@@ -2304,86 +2304,16 @@ class Caldera_Forms {
 								if ( ! empty( $this_form[ 'fields' ] ) ) {
 									if ( ! isset( $this_form[ 'mailer' ][ 'email_type' ] ) || $this_form[ 'mailer' ][ 'email_type' ] == 'html' ) {
 										$html    = true;
-										/**
-										 * Change the sprintf pattern for the {summary} magic tag
-										 *
-										 * @since 1.4.5
-										 *
-										 * @param string $pattern The sprintf pattern to use
-										 * @param array $this_form Form config
-										 */
-										$pattern = apply_filters( 'caldera_forms_summary_magic_pattern', '<strong>%s</strong><div style="margin-bottom:20px;">%s</div>', $this_form );
+
 
 									} else {
 										$html = false;
-										$pattern = '';
 									}
 
-									$out = array();
-									$ordered_fields = Caldera_Forms_Forms::get_fields( $form );
-									if ( ! empty( $ordered_fields ) ) {
-										foreach ( $ordered_fields as $field_id => $field ) {
+									$magic_paser = new Caldera_Forms_Magic_Summary( $form, null );
+									$magic_paser->set_html_mode( $html );
+									$magic_tag = $magic_paser->get_tag();
 
-											if ( in_array( $field[ 'type' ], array(
-												'button',
-												'recaptcha',
-												'html'
-											) ) ) {
-												continue;
-											}
-
-											if( Caldera_Forms_Field_Util::is_file_field( $field_id, $form ) && Caldera_Forms_Files::is_private( Caldera_Forms_Field_Util::get_field( $field_id, $form ) ) ){
-												continue;
-											}
-
-											// filter the field to get field data
-											$field = apply_filters( 'caldera_forms_render_get_field', $field, $this_form );
-											$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field[ 'type' ], $field, $this_form );
-											$field = apply_filters( 'caldera_forms_render_get_field_slug-' . $field[ 'slug' ], $field, $this_form );
-
-											$field_values = (array) self::get_field_data( $field_id, $this_form );
-
-											if ( isset( $field_values[ 'label' ] ) ) {
-												$field_values = $field_values[ 'value' ];
-											} else {
-												foreach ( $field_values as $field_key => $field_value ) {
-													if ( isset( $field_value[ 'label' ] ) && isset( $field_value[ 'value' ] ) ) {
-														$field_value[ $field_key ] = $field_value[ 'value' ];
-													}
-
-												}
-											}
-
-											$field_value = implode( ', ', (array) $field_values );
-
-											if ( $field_value !== null && strlen( $field_value ) > 0 ) {
-												if ( $html ) {
-													$out[] = sprintf( $pattern, $field[ 'label' ], $field_value );
-												} else {
-													$out[] = $field[ 'label' ] . ': ' . $field_value;
-												}
-											}
-										}
-									}
-
-									// vars
-									if ( ! empty( $this_form[ 'variables' ] ) ) {
-										foreach ( $this_form[ 'variables' ][ 'keys' ] as $var_key => $var_label ) {
-											if ( $this_form[ 'variables' ][ 'types' ][ $var_key ] == 'entryitem' ) {
-												$label = ucfirst( str_replace( '_', ' ', $var_label ) );
-												if ( $html ) {
-													$out[] = sprintf( $pattern, $label, $this_form[ 'variables' ][ 'values' ][ $var_key ] );
-												} else {
-													$out[] = $label . ': ' . $this_form[ 'variables' ][ 'values' ][ $var_key ];
-												}
-											}
-										}
-									}
-									if ( ! empty( $out ) ) {
-										$magic_tag = implode( "\r\n", $out );
-									} else {
-										$magic_tag = '';
-									}
 								}
 								break;
 							case 'login_url' :
