@@ -48,3 +48,57 @@ div.wp-menu-image.dashicons-cf-logo:before{
 .wp-not-current-submenu:hover div.wp-menu-image.dashicons-cf-logo:before{
   color: inherit !important;
 }
+
+
+
+
+
+
+/* New Font icon */
+@font-face {
+  font-family: 'caldera-logo-2016';
+  src: url('fonts/caldera-logo-2016.eot?61760117');
+  src: url('fonts/caldera-logo-2016.eot?61760117#iefix') format('embedded-opentype'),
+               url('fonts/caldera-logo-2016.woff2?61760117') format('woff2'),
+               url('fonts/caldera-logo-2016.woff?61760117') format('woff'),
+               url('fonts/caldera-logo-2016.ttf?61760117') format('truetype'),
+               url('fonts/caldera-logo-2016.svg?61760117#fontello') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+.dashicons-caldera-logo-2016, .dashicons-caldera-logo-2016:before {
+  font-family: 'caldera-logo-2016';
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+
+.dashicons-caldera-logo-2016:before { content: '\e800'; } /* '' */
