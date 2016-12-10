@@ -1,14 +1,6 @@
 <?php
 
-/**
- * Utility functions related to admin panels for form editor
- *
- * @package Caldera_Forms
- * @author    Josh Pollock <Josh@CalderaWP.com>
- * @license   GPL-2.0+
- * @link
- * @copyright 2016 CalderaWP LLC
- */
+
 class Caldera_Forms_Admin_Panel {
 
 

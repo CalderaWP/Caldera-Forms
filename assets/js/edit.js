@@ -44,6 +44,30 @@ function build_conditions_config(obj){
 
 }
 
+/**
+ * Pre compile all Handelbars templates
+ */
+function pre_compile_templates(){
+    var pretemplates = jQuery('.cf-editor-template');
+    for( var t = 0; t < pretemplates.length; t++){
+        compiled_templates[pretemplates[t].id] = Handlebars.compile( pretemplates[t].innerHTML );
+    }
+
+}
+
+/**
+ * Get a compiled Handlebars template or the fallback template
+ * @param template
+ * @returns {*}
+ */
+function get_compiled_template( template ) {
+    if( 'object' !=  typeof compiled_templates ){
+        pre_compile_templates();
+    }
+    return ( compiled_templates[ template + '_tmpl'] ? compiled_templates[ template + '_tmpl'] : compiled_templates.noconfig_field_templ );
+
+}
+
 
 jQuery(document).ready(function($){
 
@@ -102,10 +126,11 @@ jQuery(document).ready(function($){
     function build_fieldtype_config(el){
 
 
-        var select 			= $(el),
-            parent			= select.closest('.caldera-editor-field-config-wrapper'),
+        var select 			= $(el);
+        var val = select.val();
+        var parent			= select.closest('.caldera-editor-field-config-wrapper'),
             target			= parent.find('.caldera-config-field-setup'),
-            template 		= ( compiled_templates[select.val() + '_tmpl'] ? compiled_templates[select.val() + '_tmpl'] : compiled_templates.noconfig_field_templ ),//Handlebars.compile(templ),
+            template 		= get_compiled_template( val );
             config			= parent.find('.field_config_string').val(),
             current_type	= select.data('type');
 
@@ -209,14 +234,15 @@ jQuery(document).ready(function($){
 
     function build_field_preview(id){
 
-        var panel 			= $('#' + id);
-            var select			= panel.find('.caldera-select-field-type');
-            var val             = select.val();
+
+        var select			= panel.find('.caldera-select-field-type');
+        var val             = select.val();
         var
+            panel 			= $('#' + id),
             preview_parent	= $('.layout-form-field[data-config="' + id + '"]'),
             preview_target	= preview_parent.find('.field_preview'),
             preview			= $('#preview-' + val + '_tmpl').html(),
-            template 		= compiled_templates['preview-' + val + '_tmpl'],// Handlebars.compile(preview),
+            template 		= get_compiled_template( 'preview-' + val ),
             config			= {'id': id},
             data_fields		= panel.find('.field-config'),
             objects			= [];
@@ -1190,15 +1216,11 @@ jQuery(document).ready(function($){
     });
 
     // precompile tempaltes
-    var pretemplates = $('.cf-editor-template');
-    for( var t = 0; t < pretemplates.length; t++){
-        compiled_templates[pretemplates[t].id] = Handlebars.compile( pretemplates[t].innerHTML );
-        //compiled_templates
-    }
+    pre_compile_templates();
     //compiled_templates
 
     // build configs on load:
-    // allows us to keep changes on reload as not to loose settings on accedental navigation
+    // allows us to keep changes on reload as not to loose settings on accidental navigation
     $('.caldera-select-field-type').not('.field-initialized').each(function(k,v){
         build_fieldtype_config(v);
     });

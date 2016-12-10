@@ -7,7 +7,7 @@ if( ! isset( $_GET['edit'] ) || ! is_string( $_GET['edit'] ) ){
 	wp_die( esc_html__( 'Invalid form ID', 'caldera-forms'  ) );
 }
 // Load element
-$element = Caldera_Forms_Forms::get_form( $_GET['edit'] );
+$element = $form = Caldera_Forms_Forms::get_form( $_GET['edit'] );
 if( empty( $element ) || ! is_array( $element ) ){
 	wp_die( esc_html__( 'Invalid form', 'caldera-forms'  ) );
 }
@@ -345,6 +345,7 @@ $field_type_list = array(
 	esc_html__( 'Special', 'caldera-forms' ) => array(),
 	
 );
+
 // Build Field Types List
 foreach($field_types as $field_slug=>$config){
 
