@@ -189,4 +189,68 @@ class Caldera_Forms_Field_Util {
 		return $field_structure;
 	}
 
+	public static function get_math_functions( array $form ){
+		$math_functions =  array(
+			'pow',
+			'abs',
+			'acos',
+			'asin',
+			'atan',
+			'atan2',
+			'ciel',
+			'cos',
+			'exp',
+			'floor',
+			'log',
+			'max',
+			'min',
+			'random',
+			'round',
+			'sin',
+			'sqrt',
+			'tan'
+		);
+
+		/**
+		 * Filter the allowed math functions
+		 *
+		 * Useful for removing functions
+		 *
+		 * Add functions with extreme caution, must be name of a function in PHP global scope and a method of JavaScript Math object.
+		 *
+		 * @since 1.5.0
+		 *
+		 * @param array $math_functions Functions allowed
+		 * @param array $form Form Config
+		 */
+		return apply_filters( 'caldera_forms_field_util_math_functions', $math_functions, $form );
+	}
+
+
+	/**
+	 * Get the configuration for a field.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $slug Slug of field to get config for.
+	 * @param array $form Form config array.
+	 *
+	 * @return bool|mixed|void
+	 */
+	static public function get_field_by_slug($slug, $form){
+
+		foreach ( $form[ 'fields' ] as $field_id => $field ) {
+
+			if ( $field[ 'slug' ] == $slug ) {
+
+				return apply_filters( 'caldera_forms_render_get_field', $field, $form );
+
+			}
+		}
+
+		return false;
+
+	}
+
 }
+

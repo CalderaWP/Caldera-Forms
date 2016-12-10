@@ -3,15 +3,13 @@
  function Caldera_Forms_Field_Config( configs, $form, $ ){
      var self = this;
 
+     var fields = {};
      this.init = function(){
          $.each( configs, function( i, config ){
-             self[config.type]( config );
+             fields[ config.id ] = self[config.type]( config );
          } );
      };
 
-     this.calculation = function( field ){
-
-     };
 
      this.button = function( field ){
          var field_id  = field.id;
@@ -188,3 +186,4 @@
 
      };
  }
+

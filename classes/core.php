@@ -2747,6 +2747,8 @@ class Caldera_Forms {
 	/**
 	 * Get the configuration for a field.
 	 *
+	 * @deprecated (Soft deprecated in 1.5.0, will be for reals deprecated in 1.6.0)
+	 *
 	 * @param string $slug Slug of field to get config for.
 	 * @param array $form Form config array.
 	 *
@@ -2754,16 +2756,7 @@ class Caldera_Forms {
 	 */
 	static public function get_field_by_slug($slug, $form){
 
-		foreach($form['fields'] as $field_id=>$field){
-
-			if($field['slug'] == $slug){
-
-				return apply_filters( 'caldera_forms_render_get_field', $field, $form );
-
-			}
-		}
-
-		return false;
+		return Caldera_Forms_Field_Util::get_field_by_slug( $slug, $form );
 
 	}
 
@@ -5087,6 +5080,11 @@ class Caldera_Forms {
 			if(!empty($edit_token)){
 				$out .= "<input type=\"hidden\" name=\"_cf_frm_edt_tkn\" value=\"" . $edit_token . "\">\r\n";
 			}
+
+			//setup fieldjs
+			Caldera_Forms_Field_Localizer::add_form( $form, Caldera_Forms_Render_Util::get_current_form_count() );
+
+
 
 
 			// auto pagination
