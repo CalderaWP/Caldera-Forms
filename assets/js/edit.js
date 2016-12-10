@@ -234,11 +234,10 @@ jQuery(document).ready(function($){
 
     function build_field_preview(id){
 
-
+        var panel           = $('#' + id);
         var select			= panel.find('.caldera-select-field-type');
         var val             = select.val();
         var
-            panel 			= $('#' + id),
             preview_parent	= $('.layout-form-field[data-config="' + id + '"]'),
             preview_target	= preview_parent.find('.field_preview'),
             preview			= $('#preview-' + val + '_tmpl').html(),
