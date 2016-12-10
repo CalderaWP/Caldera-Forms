@@ -4853,7 +4853,7 @@ function toggle_button_init(id, el){
 window.addEventListener("load", function(){
 	(function( $ ) {
 		'use strict';
-		if( 'undefined' != CFFIELD_CONFIG ) {
+		if( 'object' === typeof CFFIELD_CONFIG ) {
 
 
 			var form_id, config_object, config, instance, $el;

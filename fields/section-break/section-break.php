@@ -12,8 +12,13 @@ if( 0 <= $width ){
 
 $width .= '%';
 
+$custom_class = '';
+if( ! empty( $field[ 'config'][ 'custom_class'] ) ){
+	$custom_class = $field[ 'config'][ 'custom_class'];
+}
+
 printf( '<hr id="%s" class="%s" style="width: %s" />',
     esc_attr( $field_id ),
-    esc_attr( $field[ 'config'][ 'custom_class'] ),
+    esc_attr( $custom_class ),
     $width
 );

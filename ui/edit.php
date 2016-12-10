@@ -100,8 +100,7 @@ echo "<input id=\"form_id_field\" name=\"config[ID]\" value=\"" . $_GET['edit'] 
 do_action('caldera_forms_edit_start', $element);
 
 // Get Fieldtpyes
-$field_types = apply_filters( 'caldera_forms_get_field_types', array() );
-// sort fields
+$field_types = Caldera_Forms_Fields::get_all();
 
 // Get Elements
 $panel_extensions = Caldera_Forms_Admin_Panel::get_panels();
@@ -423,9 +422,13 @@ foreach($field_types as $field_slug=>$config){
 			// blank default
 			$field_value = null;
 			$field_class = "preview-field-config";
-
+			if( file_exists( $config[ 'file' ] ) ){
+				$file = $config[ 'file' ];
+			}else{
+				$file = CFCORE_PATH . 'fields/generic-input';
+			}
 			ob_start();
-			include $config['file'];
+			include $file;
 			$field_type_templates['preview-' . sanitize_key( $field_slug ) . "_tmpl"] = ob_get_clean();
 		}
 	}else{
