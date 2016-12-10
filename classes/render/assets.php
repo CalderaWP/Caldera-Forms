@@ -455,5 +455,19 @@ class Caldera_Forms_Render_Assets {
 
 	}
 
+	/**
+	 * Load form JS
+	 *
+	 * @since 1.5.0
+	 */
+	public static function enqueue_form_assets(){
+		self::enqueue_style( 'field-styles' );
+		self::enqueue_script( 'field-config' );
+		self::enqueue_script( 'field' );
+		self::enqueue_script( 'validator' );
+		self::enqueue_script( 'validator-i18n' );
+		self::enqueue_script( 'init' );
+
+	}
 
 }

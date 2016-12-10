@@ -4853,13 +4853,7 @@ class Caldera_Forms {
 		 */
 		do_action('caldera_forms_render_end', $form);
 
-		wp_enqueue_style( 'cf-field-styles' );
-		wp_enqueue_script( 'cf-field' );
-		wp_enqueue_script( 'cf-validator' );
-		wp_enqueue_script( 'cf-validator-i18n' );
-
-		wp_enqueue_script( 'cf-init' );
-
+		Caldera_Forms_Render_Assets::enqueue_form_assets();
 		/**
 		 * Filter final HTML of form
 		 *
