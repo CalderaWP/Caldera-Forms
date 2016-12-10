@@ -111,6 +111,15 @@ class Caldera_Forms_Render_Assets {
 		return $slug;
 	}
 
+	/**
+	 * Make slug for a CSS
+	 *
+	 * @since 1.4.3
+	 *
+	 * @param string $style Base name
+	 *
+	 * @return string
+	 */
 	protected static function make_style_slug( $style ){
 		if ( wp_style_is( 'cf-' . $style . '-styles', 'registered' ) ) {
 			$slug = 'cf-' . $style . '-styles';

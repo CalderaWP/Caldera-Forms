@@ -62,8 +62,9 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 
 		if( ! empty( $this->form[ 'fields' ] ) ){
 			foreach( $this->form[ 'fields' ] as $field ){
-				if( method_exists( $this, $field[ 'type' ] ) ){
-					call_user_func( array( $this, $field[ 'type' ] ), $field[ 'ID' ], $field );
+				$type = Caldera_Forms_Field_Util::get_type( $field, $this->form );
+				if( 'calculation' != $type && method_exists( $this, $type ) ){
+					call_user_func( array( $this, $type ), $field[ 'ID' ], $field );
 				}
 			}
 		}

@@ -41,6 +41,8 @@ class Caldera_Forms_Field_Localizer {
 	/**
 	 * Output the configs as CDATA
 	 *
+	 * @since 1.5.0
+	 *
 	 * @uses "wp_footer"
 	 */
 	public static function localize_cb(){
