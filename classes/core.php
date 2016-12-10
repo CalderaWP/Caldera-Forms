@@ -179,15 +179,23 @@ class Caldera_Forms {
 	 * @return array
 	 */
 	public static function load_field( $form, $field_base_id ) {
+		if ( ! empty( $form[ 'fields' ][ $field_base_id ] ) ) {
+			$field = $form[ 'fields' ][ $field_base_id ];
+		}else{
+			//probably bad, but opportunity to defined using "caldera_forms_render_setup_field"
+			$field = array();
+		}
 		/**
 		 * Filter the field setup before render
+		 *
+		 * Note, $field might be empty, must be array after this or field will not render, which is useful for preventing render or creating field types at this filter.
 		 *
 		 * @since unknown
 		 *
 		 * @param string $notice Notices HTML
 		 * @param array $config Form config
 		 */
-		$field = apply_filters( 'caldera_forms_render_setup_field', $form[ 'fields' ][ $field_base_id ], $form );
+		$field = apply_filters( 'caldera_forms_render_setup_field', $field, $form );
 
 		return $field;
 	}
@@ -558,7 +566,7 @@ class Caldera_Forms {
 	public static function update_field_data($field, $entry_id, $form){
 		global $wpdb, $form;
 
-		$field_types = self::get_field_types();
+		$field_types = Caldera_Forms_Fields::get_all();
 		// is capture?
 		if(isset($field_types[$form['fields'][$field['ID']]['type']]['setup']['not_supported'])){
 			if(in_array('entry_list', $field_types[$form['fields'][$field['ID']]['type']]['setup']['not_supported'])){
@@ -2083,23 +2091,14 @@ class Caldera_Forms {
 	/**
 	 * Get all types of fields currently available.
 	 *
+	 * @deprecated Soft deprecated in 1.5.0, will hard deprecated in 1.5.1
+	 *
 	 * @return array Array of field types.
 	 */
 	static public function get_field_types(){
 
 
-		$field_types = apply_filters( 'caldera_forms_get_field_types', array() );
-
-		if(!empty($field_types)){
-			foreach($field_types as $fieldType=>$fieldConfig){
-				// check for a viewer
-				if(isset($fieldConfig['viewer'])){
-					add_filter('caldera_forms_view_field_' . $fieldType, $fieldConfig['viewer'], 10, 3);
-				}
-			}
-		}
-
-		return $field_types;
+		return Caldera_Forms_Fields::get_all();
 
 	}
 
@@ -2283,7 +2282,7 @@ class Caldera_Forms {
 				return null;
 			}
 			// get field types
-			$field_types = self::get_field_types();
+			$field_types = Caldera_Forms_Fields::get_all();
 
 			if(!isset($field_types[$field['type']])){
 				return null;
@@ -2422,7 +2421,7 @@ class Caldera_Forms {
 			$slug = array_shift($slug_parts);
 		}
 
-		$field_types = self::get_field_types();
+		$field_types = Caldera_Forms_Fields::get_all();
 
 		foreach($form['fields'] as $field_id=>$field){
 
@@ -2730,7 +2729,7 @@ class Caldera_Forms {
 		}
 
 		// get all fieldtype
-		$field_types = self::get_field_types();
+		$field_types = Caldera_Forms_Fields::get_all();
 
 		// setup fieldtypes field submissions
 		if(!empty($field_types)){
@@ -3448,7 +3447,7 @@ class Caldera_Forms {
 
 				// has a form - get field type
 				if(!isset($field_types)){
-					$field_types = self::get_field_types();
+					$field_types = Caldera_Forms_Fields::get_all();
 				}
 
 				if(!empty($form['fields'])){
@@ -3740,7 +3739,7 @@ class Caldera_Forms {
 
 
 		// get fields
-		$field_types = self::get_field_types();
+		$field_types = Caldera_Forms_Fields::get_all();
 
 		$entry = self::get_submission_data($form, $entry_id);
 		$data = array(
@@ -4109,7 +4108,7 @@ class Caldera_Forms {
 		// register strings
 		$form_field_strings[ $field_structure['id'] ] = array( 'id' => $field_structure['id'], 'instance' => $current_form_count, 'slug' => $field['slug'], 'label' => $field['label'] );
 
-		$field_types = self::get_field_types();
+		$field_types = Caldera_Forms_Fields::get_all();
 
 		$field_file = $field_types[$field['type']]['file'];
 		/**
@@ -4248,7 +4247,7 @@ class Caldera_Forms {
 			$current_form_count = absint( $atts['instance'] );
 		}
 
-		$field_types = self::get_field_types();
+		$field_types = Caldera_Forms_Fields::get_all();
 
 		do_action('caldera_forms_render_start', $form);
 
