@@ -14,7 +14,7 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 	/**
 	 * @inheritdoc
 	 */
-	public static function html( array $field, array $field_structure,array $form ){
+	public static function html( array $field, array $field_structure, array $form ){
 		$type = Caldera_Forms_Field_Util::get_type( $field );
 		$field_base_id = Caldera_Forms_Field_Util::get_base_id( $field, null, $form );
 		$default = $field[ 'config' ][ 'default' ];
@@ -37,6 +37,7 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 		$field_classes = Caldera_Forms_Field_Util::prepare_field_classes( $field, $form );
 		$mask = self::get_mask_string( $field );
 		$place_holder = self::place_holder_string( $field );
+		$default = Caldera_Forms::do_magic_tags( $default, null, $form );
 		$attrs = array(
 			'type' => $type,
 			'data-field' =>$field[ 'ID'],
@@ -80,7 +81,7 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 
 		$aria = self::aria_string( $field_structure );
 
-		return '<input ' .  $place_holder . $mask .  $required . $attr_string   . $aria .' >';
+		return '<input ' .  $place_holder . ' ' . $mask . ' ' .  $required . ' ' . $attr_string   . ' ' . $aria .' >';
 
 	}
 

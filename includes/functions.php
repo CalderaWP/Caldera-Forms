@@ -124,7 +124,7 @@ function caldera_forms_escape_field_attributes_array( array  $attrs, $prefix = n
 		if( is_array( $value ) ){
 			$_value = '';
 			foreach ( $value as $v ){
-				$_value .= esc_attr( $v );
+				$_value .= ' ' . esc_attr( $v );
 			}
 			$out[ $attr ] = $_value;
 		}else{

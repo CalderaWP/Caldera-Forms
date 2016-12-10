@@ -1,11 +1,11 @@
 <?php
-
+$html_template = '';
 // magics!
 $syncer = Caldera_Forms_Field_Syncfactory::get_object( $form, $field, Caldera_Forms_Field_Util::get_base_id( $field, null, $form ) );
 $sync = $syncer->can_sync();
-$default = $syncer->get_default();
-if( $sync ){
 
+if( $sync ){
+	$default = $syncer->get_default();
 	echo '<div id="'. esc_attr( $syncer->content_id() ) . '" data-field="' . esc_attr( $field_id ) . '" class="' . esc_attr( $field['config']['custom_class'] ) . '"></div>';
 
 	// create template block
@@ -22,6 +22,7 @@ if( $sync ){
 	}
 			
 }else{
+	$html_template = $field[ 'config' ][ 'default' ];
 	echo '<div class="' . esc_attr( $field['config']['custom_class'] ) . '">' . do_shortcode( Caldera_Forms::do_magic_tags( $html_template ) ) . '</div>';
 }
 

@@ -83,7 +83,7 @@ class Caldera_Forms_Field_Sync {
 		$this->form = $form;
 		$this->field = $field;
 		$this->field_base_id = $field_base_id;
-		if ( isset( $this->field[ 'config' ][ 'default '] ) ) {
+		if ( isset( $this->field[ 'config' ][ 'default' ] ) ) {
 			$this->default = $this->field[ 'config' ][ 'default' ];
 		}else{
 			$this->default = '';
