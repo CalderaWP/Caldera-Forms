@@ -34,6 +34,8 @@ class Caldera_Forms_Render_Assets {
 			self::register();
 		}
 
+		wp_enqueue_script( self::make_slug( 'field-config' ) );
+
 		if( !empty( $field_types[$field['type']]['styles'])){
 			foreach($field_types[$field['type']]['styles'] as $style){
 				self::enqueue_style( $style );
@@ -109,6 +111,15 @@ class Caldera_Forms_Render_Assets {
 		return $slug;
 	}
 
+	/**
+	 * Make slug for a CSS
+	 *
+	 * @since 1.4.3
+	 *
+	 * @param string $style Base name
+	 *
+	 * @return string
+	 */
 	protected static function make_style_slug( $style ){
 		if ( wp_style_is( 'cf-' . $style . '-styles', 'registered' ) ) {
 			$slug = 'cf-' . $style . '-styles';
@@ -217,6 +228,7 @@ class Caldera_Forms_Render_Assets {
 			'modals'         => self::make_url( 'remodal' ),
 			'baldrick'       => self::make_url( 'jquery-baldrick' ),
 			'ajax'           => self::make_url( 'ajax-core' ),
+			'field-config'   => self::make_url( 'field-config' ),
 			'field'          => self::make_url( 'fields' ),
 			'conditionals'   => self::make_url( 'conditionals' ),
 			'validator-i18n' => null,
@@ -325,7 +337,12 @@ class Caldera_Forms_Render_Assets {
 			if( empty( $script_url ) ){
 				continue;
 			}
-			wp_register_script( 'cf-' . $script_key, $script_url, array('jquery'), CFCORE_VER, true );
+			$depts = array( 'jquery' );
+			if( 'field' == $script_key ) {
+				$depts[] = self::make_slug( 'field-config' );
+			}
+
+			wp_register_script( 'cf-' . $script_key, $script_url, $depts, CFCORE_VER, true );
 		}
 
 		// localize for dynamic form generation
@@ -437,5 +454,6 @@ class Caldera_Forms_Render_Assets {
 		}
 
 	}
+
 
 }

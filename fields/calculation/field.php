@@ -144,7 +144,7 @@ if(!empty($binds)){
 		});
 		jQuery( document ).on('cf.remove cf.add', function( e ){
 			docalc_<?php echo $field_base_id; ?>();
-		})
+		});
 		docalc_<?php echo $field_base_id; ?>();
 	});
 	
@@ -158,4 +158,5 @@ if(!empty($binds)){
 		echo $script_template;
 	}
 
-} ?>
+}
+?>

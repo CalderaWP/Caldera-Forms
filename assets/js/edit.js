@@ -209,12 +209,14 @@ jQuery(document).ready(function($){
 
     function build_field_preview(id){
 
-        var panel 			= $('#' + id),
-            select			= panel.find('.caldera-select-field-type'),
+        var panel 			= $('#' + id);
+            var select			= panel.find('.caldera-select-field-type');
+            var val             = select.val();
+        var
             preview_parent	= $('.layout-form-field[data-config="' + id + '"]'),
             preview_target	= preview_parent.find('.field_preview'),
-            preview			= $('#preview-' + select.val() + '_tmpl').html(),
-            template 		= compiled_templates['preview-' + select.val() + '_tmpl'],// Handlebars.compile(preview),
+            preview			= $('#preview-' + val + '_tmpl').html(),
+            template 		= compiled_templates['preview-' + val + '_tmpl'],// Handlebars.compile(preview),
             config			= {'id': id},
             data_fields		= panel.find('.field-config'),
             objects			= [];

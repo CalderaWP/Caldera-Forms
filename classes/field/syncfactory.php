@@ -80,7 +80,7 @@ class Caldera_Forms_Field_Syncfactory {
 	/**
 	 * Create object
 	 *
-	 * This is the actual factory, but not exposed publically, because Josh wanted to force cache/containter usage
+	 * This is the actual factory, but not exposed publicly, because Josh wanted to force cache/container usage
 	 *
 	 * @since 1.5.0
 	 *
@@ -88,14 +88,22 @@ class Caldera_Forms_Field_Syncfactory {
 	 * @param array $field Field config
 	 * @param string $field_base_id Field ID attribute
 	 *
-	 * @return Caldera_Forms_Field_Sync|Caldera_Forms_Field_SyncHTML
+	 * @return Caldera_Forms_Field_Sync|Caldera_Forms_Field_SyncHTML|Caldera_Forms_Field_SyncCalc
 	 */
 	protected static function create( $form, $field, $field_base_id ){
-		if( 'html' === Caldera_Forms_Field_Util::get_type( $field ) ){
-			return new  Caldera_Forms_Field_SyncHTML( $form, $field, $field_base_id );
-
+		$type = Caldera_Forms_Field_Util::get_type( $field );
+		switch( $type ) {
+			case 'html' :
+				return new  Caldera_Forms_Field_SyncHTML( $form, $field, $field_base_id );
+			break;
+			case 'calculation' :
+				return new  Caldera_Forms_Field_SyncCalc( $form, $field, $field_base_id );
+			break;
+			default :
+				return new  Caldera_Forms_Field_Sync( $form, $field, $field_base_id );
+			break;
 		}
-		return new  Caldera_Forms_Field_Sync( $form, $field, $field_base_id );
+
 	}
 
 

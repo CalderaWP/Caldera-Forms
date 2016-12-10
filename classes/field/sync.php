@@ -83,7 +83,11 @@ class Caldera_Forms_Field_Sync {
 		$this->form = $form;
 		$this->field = $field;
 		$this->field_base_id = $field_base_id;
-		$this->default = $this->field[ 'config' ][ 'default' ];
+		if ( isset( $this->field[ 'config' ][ 'default '] ) ) {
+			$this->default = $this->field[ 'config' ][ 'default' ];
+		}else{
+			$this->default = '';
+		}
 		add_filter( 'caldera_forms_render_get_field', array( $this, 'reset_default' ), 25, 2 );
 	}
 
@@ -166,7 +170,7 @@ class Caldera_Forms_Field_Sync {
 	 * @since 1.5.0
 	 */
 	protected function find_tags(){
-		preg_match_all("/%(.+?)%/", $this->field['config']['default'], $this->tags );
+		preg_match_all("/%(.+?)%/", $this->default, $this->tags );
 	}
 
 	/**
@@ -184,8 +188,7 @@ class Caldera_Forms_Field_Sync {
 					}
 
 					if ( $fcfg[ 'slug' ] === $tag ) {
-						$this->add_bind( $key_id );
-						$this->set_default( $tag_key, $key_id );
+						$this->handle_match( $key_id, $tag_key );
 					}
 
 				}
@@ -204,7 +207,14 @@ class Caldera_Forms_Field_Sync {
 	 * @param string $key_id The ID of field to bound to
 	 */
 	protected function add_bind( $key_id ) {
-		$this->binds[] = $key_id;
+		if( ! is_array( $this->binds ) ){
+			$this->binds = array();
+		}
+
+		if( ! in_array( $key_id, $this->binds ) ){
+			$this->binds[] = $key_id;
+		}
+
 	}
 
 	/**
@@ -234,7 +244,18 @@ class Caldera_Forms_Field_Sync {
 		return str_replace( $this->tags[ 0 ][ $tag_key ], '{{' . $key_id . '}}', $this->default );
 	}
 
-
+	/**
+	 * Handle a matched tag
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string  $key_id  The ID of field to bound to
+	 * @param string $tag_key Index in $this->tags[0] to use for replace
+	 */
+	protected function handle_match( $key_id, $tag_key ) {
+		$this->add_bind( $key_id );
+		$this->set_default( $tag_key, $key_id );
+	}
 
 
 }
