@@ -276,7 +276,17 @@ window.addEventListener("load", function(){
 });
 
 
-
+/**
+ * Sets up field synce
+ *
+ * @since 1.5.0
+ *
+ * @param $field jQuery object for field
+ * @param binds Field IDs to bind to
+ * @param $form jQuery object for form
+ * @param $ jQuery
+ * @constructor
+ */
 function CalderaFormsFieldSync( $field, binds, $form, $  ){
 	for( var i = 0; i < binds.length; i++ ){
 
@@ -312,10 +322,25 @@ function CalderaFormsFieldSync( $field, binds, $form, $  ){
 	}
 }
 
+/**
+ * Handles nonce refresh for forms
+ *
+ * @since 1.5.0
+ *
+ * @param formId ID of form
+ * @param config API/nonce config (Probably the CF_API_DATA CDATA)
+ * @param $ jQuery
+ * @constructor
+ */
 function CalderaFormsResetNonce( formId, config, $ ){
 
 	var $nonceField;
 
+	/**
+	 * Run system, replace nonce if needed
+	 *
+	 * @since 1.5.0
+     */
 	this.init = function(){
 		$nonceField = $( '#' + config.nonce.field + '_' + formId );
 		if( isNonceOld( $nonceField.data( 'nonce-time' ) ) ){
@@ -328,6 +353,8 @@ function CalderaFormsResetNonce( formId, config, $ ){
 	 *
 	 * If not, not worth the HTTP request
 	 *
+	 * @since 1.5.0
+	 *
 	 * @param time Time nonce was generated
 	 * @returns {boolean}
      */
@@ -339,6 +366,11 @@ function CalderaFormsResetNonce( formId, config, $ ){
 		return false;
 	}
 
+	/**
+	 * Replace nonce via AJAX
+	 *
+	 * @since 1.5.0
+     */
 	function replaceNonce(){
 		$.post( config.rest.tokens.nonce, {
 			form_id: formId
