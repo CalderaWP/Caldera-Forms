@@ -3592,86 +3592,6 @@ class Caldera_Forms {
 
 		global $post, $wp_query, $process_id, $form;
 
-		// setup script and style urls
-		$style_urls        = Caldera_Forms_Render_Assets::get_core_styles();
-		$script_urls       = Caldera_Forms_Render_Assets::get_core_scripts();
-		$script_style_urls = array();
-
-		// check to see language and include the language add on
-		$locale = get_locale();
-		if ( $locale !== 'en_US' ) {
-			// not default lets go find if there is a translation available
-			if ( file_exists( CFCORE_PATH . 'assets/js/i18n/' . $locale . '.js' ) ) {
-				// nice- its there
-				$locale_file = $locale;
-			} elseif ( file_exists( CFCORE_PATH . 'assets/js/i18n/' . strtolower( $locale ) . '.js' ) ) {
-				$locale_file = strtolower( $locale );
-			} elseif ( file_exists( CFCORE_PATH . 'assets/js/i18n/' . strtolower( str_replace( '_', '-', $locale ) ) . '.js' ) ) {
-				$locale_file = strtolower( str_replace( '_', '-', $locale ) );
-			} elseif ( file_exists( CFCORE_PATH . 'assets/js/i18n/' . strtolower( substr( $locale, 0, 2 ) ) . '.js' ) ) {
-				$locale_file = strtolower( substr( $locale, 0, 2 ) );
-			} elseif ( file_exists( CFCORE_PATH . 'assets/js/i18n/' . strtolower( substr( $locale, 3 ) ) . '.js' ) ) {
-				$locale_file = strtolower( substr( $locale, 3 ) );
-			}
-			if ( ! empty( $locale_file ) ) {
-				$script_urls[ 'validator-i18n' ]                   = CFCORE_URL . 'assets/js/i18n/' . $locale_file . '.js';
-				$script_style_urls[ 'config' ][ 'validator_lang' ] = $locale_file;
-			}
-
-		}
-
-		/**
-		 * Filter script URLS for Caldera Forms on the frontend, before they are enqueued.
-		 *
-		 * @since 1.3.1
-		 *
-		 * @param array $script_urls array containing all urls to register
-		 */
-		$script_style_urls[ 'script' ] = apply_filters( 'caldera_forms_script_urls', $script_urls );
-
-		/**
-		 * Filter style URLS for Caldera Forms on the frontend, before they are enqueued.
-		 *
-		 * @since 1.3.1
-		 *
-		 * @param array $script_urls array containing all urls to register
-		 */
-		$script_style_urls[ 'style' ] = apply_filters( 'caldera_forms_style_urls', $style_urls );
-
-		// register styles
-		foreach ( $script_style_urls[ 'style' ] as $style_key => $style_url ) {
-			if ( empty( $style_url ) ) {
-				continue;
-			}
-			wp_register_style( 'cf-' . $style_key . '-styles', $style_url, array(), CFCORE_VER );
-		}
-
-		wp_register_style( 'cf-front-styles', CFCORE_URL . 'assets/css/caldera-forms-front.min.css', array(), CFCORE_VER );
-		// register scripts
-		foreach ( $script_style_urls[ 'script' ] as $script_key => $script_url ) {
-			if ( empty( $script_url ) ) {
-				continue;
-			}
-			wp_register_script( 'cf-' . $script_key, $script_url, array( 'jquery' ), CFCORE_VER, true );
-		}
-
-		// localize for dynamic form generation
-		wp_localize_script( 'cf-dynamic', 'cfModals', $script_style_urls );
-
-		// catch a transient process
-		if ( ! empty( $_GET[ 'cf_tp' ] ) ) {
-
-			// process a transient stored entry
-			$data = get_transient( $_GET[ 'cf_tp' ] );
-			if ( ! empty( $data ) && $data[ 'transient' ] === $_GET[ 'cf_tp' ] && isset( $data[ 'data' ] ) ) {
-				// create post values
-				$_POST = array_merge( $_POST, $data[ 'data' ] );
-				// set transient id
-				$_POST[ '_cf_frm_tr' ] = $data[ 'transient' ];
-			}
-		}
-
-
 		// hook into submission
 		if ( isset( $_POST[ '_cf_verify' ] ) && isset( $_POST[ '_cf_frm_id' ] ) ) {
 			if ( Caldera_Forms_Render_Nonce::verify_nonce( $_POST[ '_cf_verify' ], $_POST[ '_cf_frm_id' ] ) ) {
@@ -3685,7 +3605,6 @@ class Caldera_Forms {
 			exit;
 			/// end form and redirect to submit page or result page.
 		}
-
 	}
 
 	/**
