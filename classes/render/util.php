@@ -2,7 +2,7 @@
 /**
  * Utility functions for use when rendering form
  *
- * Will be placed in .cf-fieldjs-config for each field
+ * Will be placed in added to DOM as CDATA
  *
  * @package Caldera_Forms
  * @author    Josh Pollock <Josh@CalderaWP.com>

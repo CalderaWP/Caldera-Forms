@@ -3493,9 +3493,17 @@ class Caldera_Forms {
 					$_POST['_wp_http_referer_true'] = 'api';
 					$_POST['_cf_frm_id'] 			=  $_POST['cfajax']	= $wp_query->query_vars['cf_api'];
 
+					if ( isset( $_POST[ '_cf_verify' ] ) && isset( $_POST[ '_cf_frm_id' ] ) ) {
+						if( Caldera_Forms_Render_Nonce::verify_nonce( $_POST['_cf_verify'], $_POST[ '_cf_frm_id' ] ) ){
+							$submission = Caldera_Forms::process_submission();
+							wp_send_json( $submission );
+						}else{
+							status_header( 400 );
+							exit;
+						}
 
-					$submission = Caldera_Forms::process_submission();
-					wp_send_json( $submission );
+					}
+
 				}
 			}
 		}
@@ -3628,12 +3636,14 @@ class Caldera_Forms {
 
 
 		// hook into submission
-		if(isset($_POST['_cf_verify']) && isset( $_POST['_cf_frm_id'] )){
-			if(wp_verify_nonce( $_POST['_cf_verify'], 'caldera_forms_front' )){
+		if ( isset( $_POST[ '_cf_verify' ] ) && isset( $_POST[ '_cf_frm_id' ] ) ) {
+			if( Caldera_Forms_Render_Nonce::verify_nonce( $_POST['_cf_verify'], $_POST[ '_cf_frm_id' ] ) ){
 
 				self::process_submission();
 				exit;
 
+			}else{
+				status_header( 400 );
 			}
 			exit;
 			/// end form and redirect to submit page or result page.
@@ -4648,7 +4658,7 @@ class Caldera_Forms {
 
 			// render only non success
 			$out .= "<" . $form_element . " data-instance=\"" . $current_form_count . "\" class=\"" . implode(' ', $form_classes) . "\" " . implode(" ", $attributes) . ">\r\n";
-			$out .= wp_nonce_field( "caldera_forms_front", "_cf_verify", true, false);
+			$out .= Caldera_Forms_Render_Nonce::create_verify_nonce( $form[ 'ID' ] );
 			$out .= "<input type=\"hidden\" name=\"_cf_frm_id\" value=\"" . $form['ID'] . "\">\r\n";
 			$out .= "<input type=\"hidden\" name=\"_cf_frm_ct\" value=\"" . $current_form_count . "\">\r\n";
 			if( !empty( $form['form_ajax'] ) ){
