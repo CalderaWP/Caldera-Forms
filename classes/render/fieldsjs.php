@@ -241,7 +241,9 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 	protected function html( $field_id, $field ){
 		$id_attr = $this->field_id( $field_id );
 
-		$this->data[ $field_id ] = $this->create_config_array( $field_id, Caldera_Forms_Field_Util::get_type( $field ), array() );
+		$this->data[ $field_id ] = $this->create_config_array( $field_id, Caldera_Forms_Field_Util::get_type( $field ), array(
+			'sync' => false
+		) );
 
 		/** @var Caldera_Forms_Field_SyncHTML $syncer */
 		$syncer = Caldera_Forms_Field_Syncfactory::get_object( $this->form, $field, $id_attr );

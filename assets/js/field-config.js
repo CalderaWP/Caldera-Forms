@@ -40,8 +40,11 @@
      };
 
      this.html = function ( fieldConfig ) {
-
+         if( false == fieldConfig.sync ){
+             return;
+         }
          function templateSystem() {
+
              var template = $( document.getElementById( fieldConfig.tmplId ) ).html(),
                  $target = $( document.getElementById( fieldConfig.contentId ) ),
                  list = fieldConfig.binds;
