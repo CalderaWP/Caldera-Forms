@@ -69,11 +69,18 @@ module.exports = function (grunt) {
         watch: {
             scripts: {
                 files: ['assets/js/*.js'],
-                tasks: ['js'],
+                tasks: ['default'],
                 options: {
                     spawn: false,
                 },
             },
+            css: {
+                files: ['assets/css/*.css'],
+                tasks: ['default'],
+                options: {
+                    spawn: false,
+                },
+            }
         },
         copy: {
             fonts: {

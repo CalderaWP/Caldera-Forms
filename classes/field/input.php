@@ -59,6 +59,7 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 			$attrs[ 'type' ] = 'tel';
 		}elseif ( 'credit_card_number' == $type ){
 			$attrs[ 'type' ] = 'tel';
+			$attrs[ 'class' ][] = 'cf-credit-card ';
 			$attr[ 'data-parsley-creditcard' ] = Caldera_Forms_Field_Util::credit_card_types( $field, $form );
 		}elseif( 'credit_card_exp' == $type ){
 			$attrs[ 'type' ] = 'tel';

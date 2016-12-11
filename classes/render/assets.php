@@ -34,6 +34,11 @@ class Caldera_Forms_Render_Assets {
 			self::register();
 		}
 
+		$type = Caldera_Forms_Field_Util::get_type( $field );
+		if( in_array( $type , array( 'credit_card_number' ) ) ){
+			self::enqueue_style( 'font' );
+		}
+
 		self::enqueue_script( self::make_slug( 'field-config' ) );
 
 		if( !empty( $field_types[$field['type']]['styles'])){
@@ -193,7 +198,8 @@ class Caldera_Forms_Render_Assets {
 			'form'         => self::make_url( 'caldera-form', false ),
 			'alert'        => self::make_url( 'caldera-alert', false ),
 			'field'        => self::make_url( 'fields', false ),
-			'front'        => self::make_url( 'caldera-forms-front', false )
+			'front'        => self::make_url( 'caldera-forms-front', false ),
+			'font'         => self::make_url( 'cfont', false )
 		);
 
 		$all = true;
@@ -429,15 +435,7 @@ class Caldera_Forms_Render_Assets {
 	public static function make_url( $name, $script = true ){
 		$root_url = CFCORE_URL;
 
-		/**
-		 * Filter for disabling minimization of script(s)/style(s)
-		 *
-		 * @since 1.5.0
-		 *
-		 * @param bool $minify Whether to minfify or not.
-		 * @param bool $script If is script or not.
-		 */
-		$min = apply_filters( 'caldera_forms_render_assets_minify', true, $script );
+		$min = self::should_minify( $script );
 		if ( $min ) {
 			if ( $script ) {
 				return $root_url . 'assets/build/js/' . $name . '.min.js';
@@ -452,6 +450,27 @@ class Caldera_Forms_Render_Assets {
 			}
 		}
 
+	}
+
+	/**
+	 * Should we mbe minifying script/styles?
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param bool $script Optional. True if is script, the default, false if is style
+	 *
+	 * @return bool
+	 */
+	public static function should_minify( $script = true ){
+		/**
+		 * Filter for disabling minimization of script(s)/style(s)
+		 *
+		 * @since 1.5.0
+		 *
+		 * @param bool $minify Whether to minfify or not.
+		 * @param bool $script If is script or not.
+		 */
+		return apply_filters( 'caldera_forms_render_assets_minify', true, $script );
 	}
 
 	/**

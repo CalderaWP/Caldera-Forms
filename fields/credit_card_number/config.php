@@ -6,6 +6,7 @@
 		<input type="text" id="{{_id}}_placeholder" class="block-input field-config" name="{{_name}}[placeholder]" value="{{placeholder}}">
 	</div>
 </div>
+
 <div class="caldera-config-group">
 	<label for="{{_id}}_default">
 		<?php esc_html_e('Default', 'caldera-forms' ); ?>

@@ -15,6 +15,8 @@
 
      function handleValidationMarkup( valid, $field, message, extraClass ){
          var $parent = $field.parent().parent();
+         $parent.removeClass( 'has-error' );
+         $parent.find( '.help-block' ).remove();
          if( ! valid ){
              $parent.addClass( 'has-error' ).append( '<span id="cf-error-'+ $field.attr('id') +'" class="help-block ' + extraClass +'">' + message  + '</span>' );
              $field.addClass( 'parsely-error' );
@@ -203,16 +205,37 @@
 
      this.credit_card_number = function( fieldConfig ){
          var $field = $( document.getElementById( fieldConfig.id ) );
+
          if( $field.length ){
              $field.payment('formatCardNumber');
              $field.blur( function(){
                  var val =  $field.val();
                  var valid = $.payment.validateCardNumber( val );
-                 if ( valid ) {
-                     var type = $.payment.cardType(val);
+                 var type = $.payment.cardType(val);
+                 handleValidationMarkup( valid, $field, fieldConfig.invalid, 'help-block-credit_card_number help-block-credit_card' );
+                 if( valid ){
+                     setImage( type );
                  }
-                 handleValidationMarkup( valid, $field, field.invalid, 'help-block-credit_card_number help-block-credit_card' );
              })
+         }
+
+         function setImage( type ){
+             var iconTypes = {
+                 0: 'amex',
+                 1: 'discover',
+                 2: 'visa',
+                 3: 'discover',
+                 4: 'mastercard'
+             };
+             var icon = 'credit-card.svg';
+             $.each( iconTypes, function( i, card ){
+                if( 0 === type.indexOf( card ) ){
+                    icon = 'cc-' + card + '.svg';
+                    return false;
+                }
+             });
+
+             $field.css( 'background', 'url("' + fieldConfig.imgPath + icon + '")' );
          }
 
      };
@@ -222,9 +245,10 @@
          if( $field.length ){
              $field.payment('formatCardExpiry');
              $field.blur( function () {
-                 var valid = $.payment.validateCardExpiry( $field.val );
-                 handleValidationMarkup( valid, $field, field.invalid, 'help-block-credit_card_exp help-block-credit_card' );
+                 var val =  $field.val().split( '/');
 
+                 var valid = $.payment.validateCardExpiry( val[0].trim(), val[1].trim() );
+                 handleValidationMarkup( valid, $field, fieldConfig.invalid, 'help-block-credit_card_exp help-block-credit_card' );
              });
          }
      };
@@ -233,16 +257,22 @@
          var $field = $( document.getElementById( fieldConfig.id ) );
          if( $field.length ){
              $field.payment('formatCardCVC');
-             $field.blur( function () {
-                 var val =  $field.val();
-                 var valid = $.payment.validateCardNumber( val );
-                 if ( valid ) {
-                     var type = $.payment.cardType(val);
-                     $.payment.validateCardCVC(val, type)
-                 }
-                 handleValidationMarkup( valid, $field, field.invalid, 'help-block-credit_card_cvc help-block-credit_card' );
+             if( false !== fieldConfig.ccField ) {
+                 $ccField = $( document.getElementById( fieldConfig.ccField ) );
+                 $field.blur( function () {
+                     var val =  $field.val();
+                     var cardValid = $.payment.validateCardNumber( $ccField.val() );
+                     var valid = false;
+                     if ( cardValid ) {
+                         var type = $.payment.cardType( $ccField.val() );
+                         valid = $.payment.validateCardCVC( val, type)
+                     }
 
-             });
+                     handleValidationMarkup( valid, $field, fieldConfig.invalid, 'help-block-credit_card_cvc help-block-credit_card' );
+
+                 });
+             }
+
          }
      };
 

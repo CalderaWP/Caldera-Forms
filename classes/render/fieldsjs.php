@@ -444,6 +444,12 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 			'invalid' => __( 'Invalid Card Number', 'caldera-forms' ),
 		) );
 
+		if( Caldera_Forms_Render_Assets::should_minify( false ) ){
+			$this->data[ $field_id ][ 'imgPath' ] = CFCORE_URL . 'assets/build/images/';
+		}else{
+			$this->data[ $field_id ][ 'imgPath' ] = CFCORE_URL . 'assets/images/';
+		}
+
 
 	}
 
@@ -459,7 +465,12 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 
 		$this->data[ $field_id ] = $this->create_config_array( $field_id, __FUNCTION__, array(
 			'invalid' => __( 'Invalid Expiration Date', 'caldera-forms' ),
+			'ccField' => false
 		) );
+
+		if( ! empty( $field[ 'config' ][ 'credit_card_field' ] ) ){
+			$this->data[ $field_id ][ 'ccField'  ] = $this->field_id( $field[ 'config' ][ 'credit_card_field' ] );
+		}
 
 
 	}
@@ -476,7 +487,12 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 
 		$this->data[ $field_id ] = $this->create_config_array( $field_id, __FUNCTION__, array(
 			'invalid' => __( 'Invalid Security Code', 'caldera-forms' ),
+			'ccField' => false
 		) );
+
+		if( ! empty( $field[ 'config' ][ 'credit_card_field' ] ) ){
+			$this->data[ $field_id ][ 'ccField'  ] = $this->field_id( $field[ 'config' ][ 'credit_card_field' ] );
+		}
 
 
 	}
