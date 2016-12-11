@@ -174,8 +174,10 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 	protected function phone_better( $field_id, $field ){
 		$args =  array(
 			'options' => array(
+				'initialCountry' => 'us',
 				'autoHideDialCode' => false,
-				'utilsScript' => CFCORE_URL . 'fields/phone_better/assets/js/utils.js'
+				'utilsScript' => CFCORE_URL . 'fields/phone_better/assets/js/utils.js',
+				'preferredCountries' => array( 'us' )
 			)
 		);
 

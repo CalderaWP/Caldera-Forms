@@ -170,7 +170,6 @@
          $field.blur(function() {
              reset();
              validation();
-
          });
 
          $field.on( 'change', validation );
