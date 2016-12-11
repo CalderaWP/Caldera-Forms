@@ -2380,10 +2380,12 @@ class Caldera_Forms {
 						}
 					}
 				}else{
-					if( ! empty( $entry  ) ) {
-						$processed_data[$indexkey][$field_id] = $entry;
+					if ( ! empty( $entry ) ) {
+						$processed_data[ $indexkey ][ $field_id ] = $entry;
+					} elseif( isset( $field[ 'config' ][ 'default' ] )) {
+						$processed_data[ $indexkey ][ $field_id ] = self::do_magic_tags( $field[ 'config' ][ 'default' ] );
 					}else{
-						$processed_data[$indexkey][$field_id] = self::do_magic_tags($field['config']['default']);
+						$processed_data[ $indexkey ][ $field_id ] = '';
 					}
 				}
 			}else{
