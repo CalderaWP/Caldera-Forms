@@ -130,45 +130,53 @@
          var $field = $( document.getElementById( field.id ) );
          var $parent = $field.parent().parent();
 
-         var validatorName = 'phone_better_validator-' + field.validator;
-         $( document ).on( 'cf.fieldsInit', function(e){
-             cf_validate_form.parsely.addValidator( field.validator,
-                 function (v) {
-                     return valid();
+         var $submits = $form.find(':submit');
 
-                 }, 32 )
-                 .addMessage('en', 'myvalidator', 'my validator failed');
-         } );
-
-         $field.intlTelInput( field.options );
-         $form.on( 'submit', function(e){
-             validation();
-         });
-
-         $field.on( 'change', function(){
-             validation();
-         });
-
-         var validation = function(){
+         var reset = function(){
              var error = document.getElementById( 'cf-error-'+ field.id );
              if(  null != error ){
                  error.remove();
              }
+         };
 
-             if( valid() ){
+         var validation = function(){
+             reset();
+             var valid;
+             if ($.trim($field.val())) {
+                 if ($field.intlTelInput("isValidNumber")) {
+                     valid = true;
+                 } else {
+                     valid = false;
+                 }
+             }
+
+             if( ! valid ){
                  $parent.addClass( 'has-error' ).append( '<span id="cf-error-'+ field.id +'" class="help-block help-block-phone_better">' + field.options.invalid  + '</span>' );
+                 $field.addClass( 'parsely-error' );
+                 $submits.prop( 'disabled',true).attr( 'aria-disabled', true  );
                  return false;
              }else{
                  $parent.removeClass( 'has-error' );
+                 $submits.prop( 'disabled',false).attr( 'aria-disabled', false  );
+
                  return true;
              }
 
          };
 
-         function valid(){
-             return false == $field.intlTelInput("isValidNumber") && 0 != $field.intlTelInput("getValidationError");
-         }
+         $field.intlTelInput( field.options );
+         $field.on( 'keyup change', reset );
+
+         $field.blur(function() {
+             reset();
+             validation();
+
+         });
+
+         $field.on( 'change', validation );
+
      };
+
 
      this.wysiwyg = function( field ){
 

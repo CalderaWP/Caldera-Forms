@@ -14,3 +14,17 @@
 		<input type="text" id="{{_id}}_default" class="block-input field-config" name="{{_name}}[default]" value="{{default}}">
 	</div>
 </div>
+
+<div class="caldera-config-group">
+	<fieldset>
+		<legend>
+			<?php esc_html_e('Use Country Code', 'caldera-forms'); ?>
+		</legend>
+		<div class="caldera-config-field">
+			<input type="checkbox" id="{{_id}}_nationalMode" class="block-input field-config" name="{{_name}}[nationalMode]" {{#if nationalMode}}checked="checked"{{/if}}">
+			<label for="{{_id}}_nationalMode">
+				<?php esc_html_e( 'If not checked, formatting will be for local use, without country code', 'caldera-forms' ); ?>
+			</label>
+		</div>
+	</fieldset>
+</div>

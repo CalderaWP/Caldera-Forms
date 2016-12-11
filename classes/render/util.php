@@ -53,4 +53,19 @@ class Caldera_Forms_Render_Util {
 		return absint( $current_form_count );
 	}
 
+	/**
+	 * Get ID attribute for a form
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param int $current_form_count Current form count on page
+	 *
+	 * @return string
+	 */
+	public static function field_id_attribute( $current_form_count ){
+		//JOSH - Don't put a filter here SO MANY things assume this is the way it is
+		$form_wrap_id = "caldera_form_" . $current_form_count;
+		return $form_wrap_id;
+	}
+
 }

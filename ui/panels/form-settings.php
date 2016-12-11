@@ -35,24 +35,25 @@
 	</div>
 
 	<div class="caldera-config-group">
+		<label for="cf-form-description">
+			<?php esc_html_e( 'Form Description', 'caldera-forms' ); ?>
+		</label>
+		<div class="caldera-config-field">
+			<textarea id="cf-form-description" name="config[description]" class="field-config" style="width:500px;" rows="5">
+				<?php echo htmlentities( $element[ 'description' ] ); ?>
+			</textarea>
+		</div>
+	</div>
+
+	<div class="caldera-config-group">
 		<fieldset>
 			<legend>
-				<?php esc_html_e( 'Scroll To Top On Submit', 'caldera-forms' ); ?>
+				<?php esc_html_e( 'State', 'caldera-forms' ); ?>
 			</legend>
 			<div class="caldera-config-field">
-				<label for="scroll_top-enable">
-					<input id="scroll_top-enable" type="radio" class="field-config" name="config[scroll_top]" value="1" <?php if ( ! empty( $element[ 'scroll_top' ] ) ){ ?>checked="checked"<?php } ?> aria-describedby="scroll_top-disable-description">
-					<?php esc_html_e( 'Enable', 'caldera-forms' ); ?>
-					<p class="description" id="scroll_top-disable-description">
-						<?php esc_html_e( 'When form is submitted, scroll page to form message.', 'caldera-forms' ); ?>
-					</p>
-				</label>
-				<label for="scroll_top-disable">
-					<input id="scroll_top-disable" type="radio" class="field-config" name="config[scroll_top]" value="0" <?php if ( empty( $element[ 'scroll_top' ] ) ){ ?>checked="checked"<?php } ?> aria-describedby="scroll_top-enable-description">
-					<?php esc_html_e( 'Disabled', 'caldera-forms' ); ?>
-					<p class="description" id="scroll_top-enable-description">
-						<?php esc_html_e( 'When form is submitted, do not scroll page.', 'caldera-forms' ); ?>
-					</p>
+				<label for="cf-forms-state">
+					<input type="checkbox" id="cf-forms-state" class="field-config" name="config[form_draft]" value="1" <?php if ( ! empty( $element[ 'form_draft' ] ) ){ ?>checked="checked"<?php } ?>>
+					<?php esc_html_e( 'Deactivate / Draft', 'caldera-forms' ); ?>
 				</label>
 			</div>
 		</fieldset>
@@ -61,22 +62,16 @@
 	<div class="caldera-config-group">
 		<fieldset>
 			<legend>
-				<?php esc_html_e( 'Save Entries', 'caldera-forms' ); ?>
+				<?php esc_html_e( 'Capture Entries', 'caldera-forms' ); ?>
 			</legend>
 			<div class="caldera-config-field">
 				<label for="db_support-enable">
-					<input id="db_support-enable" type="radio" class="field-config" name="config[db_support]" value="1" <?php if ( ! empty( $element[ 'db_support' ] ) ){ ?>checked="checked"<?php } ?> aria-describedby="db_support-disable-description">
+					<input id="db_support-enable" type="radio" class="field-config" name="config[db_support]" value="1" <?php if ( ! empty( $element[ 'db_support' ] ) ){ ?>checked="checked"<?php } ?>>
 					<?php esc_html_e( 'Enable', 'caldera-forms' ); ?>
-					<p class="description" id="db_support-disable-description">
-						<?php esc_html_e( 'Track form submissions in the WordPress database.', 'caldera-forms' ); ?>
-					</p>
 				</label>
 				<label for="db_support-disable">
-					<input id="db_support-disable" type="radio" class="field-config" name="config[db_support]" value="0" <?php if ( empty( $element[ 'db_support' ] ) ){ ?>checked="checked"<?php } ?> aria-describedby="db_support-enable-description">
+					<input id="db_support-disable" type="radio" class="field-config" name="config[db_support]" value="0" <?php if ( empty( $element[ 'db_support' ] ) ){ ?>checked="checked"<?php } ?>>
 					<?php esc_html_e( 'Disabled', 'caldera-forms' ); ?>
-					<p class="description" id="db_support-enable-description">
-						<?php esc_html_e( 'Keep no record of form submissions.', 'caldera-forms' ); ?>
-					</p>
 				</label>
 			</div>
 		</fieldset>
@@ -146,31 +141,6 @@
 				</div>
 			</fieldset>
 		</div>
-	</div>
-
-	<div class="caldera-config-group">
-		<label for="cf-form-description">
-			<?php esc_html_e( 'Form Description', 'caldera-forms' ); ?>
-		</label>
-		<div class="caldera-config-field">
-			<textarea id="cf-form-description" name="config[description]" class="field-config" style="width:500px;" rows="5">
-				<?php echo htmlentities( $element[ 'description' ] ); ?>
-			</textarea>
-		</div>
-	</div>
-
-	<div class="caldera-config-group">
-		<fieldset>
-				<legend>
-					<?php esc_html_e( 'State', 'caldera-forms' ); ?>
-				</legend>
-				<div class="caldera-config-field">
-					<label for="cf-forms-state">
-						<input type="checkbox" id="cf-forms-state" class="field-config" name="config[form_draft]" value="1" <?php if ( ! empty( $element[ 'form_draft' ] ) ){ ?>checked="checked"<?php } ?>>
-						<?php esc_html_e( 'Deactivate / Draft', 'caldera-forms' ); ?>
-					</label>
-				</div>
-		</fieldset>
 	</div>
 
 	<div class="caldera-config-group">
@@ -251,4 +221,3 @@
 	do_action( 'caldera_forms_general_settings_panel', $element );
 	?>
 </div>
-

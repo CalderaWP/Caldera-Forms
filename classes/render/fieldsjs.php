@@ -111,20 +111,17 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 	 * @param string $field_id Field ID
 	 */
 	protected function button( $field_id ){
-		$this->data[ $field_id ] = array(
-			'type' => 'button',
-			'id' => $this->field_id( $field_id )
-		);
+		$this->data[ $field_id ] = $this->create_config_array( $field_id, __FUNCTION__, array() );
 	}
 
 	protected function wysiwyg( $field_id ){
-		$options = $this->wysiqyg_options( $field_id );
 
-		$this->data[ $field_id ] = array(
-			'type' => 'wysiwyg',
-			'id' => $this->field_id( $field_id ),
-			'options' => $options
-		);
+
+		$this->data[ $field_id ] = $this->create_config_array( $field_id, __FUNCTION__, array(
+			'options' => $this->wysiqyg_options( $field_id )
+		) );
+
+
 	}
 
 	/**
@@ -175,15 +172,19 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 	 * @return void
 	 */
 	protected function phone_better( $field_id, $field ){
-		$this->data[ $field_id ] = array(
-			'type' => 'phone_better',
-			'id' => $this->field_id( $field_id ),
-			'validator' => Caldera_Forms_Field_Util::better_phone_validator( $field_id, $this->form_count ),
+		$args =  array(
 			'options' => array(
 				'autoHideDialCode' => false,
 				'utilsScript' => CFCORE_URL . 'fields/phone_better/assets/js/utils.js'
 			)
 		);
+
+		if( ! empty( $field[ 'config' ][ 'nationalMode' ] ) ){
+			$options[ 'nationalMode' ] = true;
+		}
+
+
+		$this->data[ $field_id ] = $this->create_config_array( $field_id, __FUNCTION__, $args );
 
 		if( isset( $field[ 'config' ][ 'invalid_message' ] ) ){
 			$this->data[ $field_id ][ 'options' ][ 'invalid' ] = $field[ 'config' ][ 'invalid_message' ];
@@ -207,18 +208,23 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 	 */
 	protected function html( $field_id, $field ){
 		$id_attr = $this->field_id( $field_id );
+
+		$this->data[ $field_id ] = $this->create_config_array( $field_id, __FUNCTION__, array() );
+
 		/** @var Caldera_Forms_Field_SyncHTML $syncer */
 		$syncer = Caldera_Forms_Field_Syncfactory::get_object( $this->form, $field, $id_attr );
+
+
+
+
 		if ( $syncer->can_sync() ) {
-			$this->data[ $field_id ] = array(
-				'type'       => 'html',
-				'id'         => $id_attr,
+			$this->data[ $field_id ] = array_merge( $this->data[ $field_id ], array(
 				'binds'      => $syncer->get_binds(),
 				'sync'       => true,
 				'tmplId'     => $syncer->template_id(),
 				'contentId'  => $syncer->content_id(),
 				'bindFields' => array(),
-			);
+			) );
 
 			foreach ( $syncer->get_binds() as $bind ){
 				$this->data[ $field_id ][ 'bindFields' ][] = $bind . '_' . $this->form_count;
@@ -236,11 +242,11 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 	 * @return void
 	 */
 	public function range_slider( $field_id, $field ){
-		$this->data[ $field_id ] = array(
-			'type' => 'range_slider',
-			'id' => $this->field_id( $field_id ),
+
+
+		$this->data[ $field_id ] = $this->create_config_array( $field_id, __FUNCTION__, array(
 			'value' => 0,
-		);
+		) );
 
 		foreach( array(
 			'handleborder',
@@ -284,9 +290,7 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 			$field[ 'config' ][ 'type' ] = 'star';
 		}
 
-		$this->data[ $field_id ] = array(
-			'type' => 'star_rating',
-			'id' => $this->field_id( $field_id ),
+		$args = array(
 			'options' => array(
 				'starOn' => 'raty-'.  $type . '-on',
 				'starOff' => 'raty-'.  $type . '-off',
@@ -305,6 +309,14 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 				'numberMax' => 100,
 
 			)
+		);
+
+		$this->data[ $field_id ] = $this->create_config_array( $field_id, __FUNCTION__, $args );
+
+		$this->data[ $field_id ] = array(
+			'type' => 'star_rating',
+			'id' => $this->field_id( $field_id ),
+
 
 		);
 
@@ -333,14 +345,14 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 			$options[] = $this->field_id( $field_id ) . '_' . $option_key;
 		}
 
-		$this->data[ $field_id ] = array(
-			'type' => 'toggle_switch',
-			'id' => $this->field_id( $field_id ),
+		$args = array(
 			'selectedClassName' => $selectedClassName,
 			'defaultClassName' => $defaultClassName,
 			'options' => $options
-
 		);
+
+		$this->data[ $field_id ] = $this->create_config_array( $field_id, __FUNCTION__, $args );
+
 	}
 
 	/**
@@ -370,9 +382,7 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 		//this creates binds array BTW
 		$syncer->can_sync();
 		$formula = $syncer->get_formula( true );
-		$this->data[ $field_id ] = array(
-			'type' => 'calculation',
-			'id' => $this->field_id( $field_id ),
+		$args = array(
 			'formula' => $formula,
 			'binds' => $syncer->get_binds(),
 			'decimalSeparator' => $decimal_separator,
@@ -381,8 +391,47 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 			'fieldBinds' => $syncer->get_bind_fields(),
 		);
 
+		$this->data[ $field_id ] = $this->create_config_array( $field_id, __FUNCTION__, $args );
+
 		if(!empty($field['config']['fixed'])){
 			$this->data[ $field_id ][ 'fixed' ] = true;
 		}
+	}
+
+	/**
+	 * Create config array
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $field_id Field ID
+	 * @param string $type Field type
+	 * @param array $args Additional data.
+	 *
+	 * @return array
+	 */
+	protected function create_config_array( $field_id, $type, $args ){
+		$basic =  array(
+			'type' => $type,
+			'id' => $this->field_id( $field_id ),
+
+		);
+		return array_merge( $basic, wp_parse_args( $args, $this->default_config_args() ) );
+	}
+
+	protected function default_config_args(){
+		/**
+		 * Default values passed to field configs to be printed in DOM for field types
+		 *
+		 * Useful for customizing field setups in bulk
+		 *
+		 * @since 1.5.0
+		 *
+		 * @param array $args
+		 */
+		return apply_filters( 'caldera_forms_field_js_config_defaults', array(
+			'form_id' => $this->form[ 'ID' ],
+			'form_id_attr' => Caldera_Forms_Render_Util::field_id_attribute( $this->form_count )
+
+		));
 	}
 }
