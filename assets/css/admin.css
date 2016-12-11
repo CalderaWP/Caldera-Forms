@@ -1989,3 +1989,7 @@ span.cf-form-shortcode-preview {
   }
 
 }
+
+.caldera-config-group p.description {
+  margin: 0 0 24px;
+}

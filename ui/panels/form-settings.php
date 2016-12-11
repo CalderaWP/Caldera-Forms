@@ -35,29 +35,47 @@
 	</div>
 
 	<div class="caldera-config-group">
-		<label for="cf-form-description">
-			<?php esc_html_e( 'Form Description', 'caldera-forms' ); ?>
-		</label>
-		<div class="caldera-config-field">
-			<textarea id="cf-form-description" name="config[description]" class="field-config" style="width:500px;" rows="5">
-				<?php echo htmlentities( $element[ 'description' ] ); ?>
-			</textarea>
-		</div>
-	</div>
-
-	<div class="caldera-config-group">
 		<fieldset>
 			<legend>
-				<?php esc_html_e( 'State', 'caldera-forms' ); ?>
+				<?php esc_html_e( 'Scroll To Top On Submit', 'caldera-forms' ); ?>
 			</legend>
 			<div class="caldera-config-field">
-				<label for="cf-forms-state">
-					<input type="checkbox" id="cf-forms-state" class="field-config" name="config[form_draft]" value="1" <?php if ( ! empty( $element[ 'form_draft' ] ) ){ ?>checked="checked"<?php } ?>>
-					<?php esc_html_e( 'Deactivate / Draft', 'caldera-forms' ); ?>
+				<label for="scroll_top-enable">
+					<input id="scroll_top-enable" type="radio" class="field-config" name="config[scroll_top]" value="1" <?php if ( ! empty( $element[ 'scroll_top' ] ) ){ ?>checked="checked"<?php } ?> aria-describedby="scroll_top-disable-description">
+					<?php esc_html_e( 'Enable', 'caldera-forms' ); ?>
+					<p class="description" id="scroll_top-disable-description">
+						<?php esc_html_e( 'When form is submitted, scroll page to form message.', 'caldera-forms' ); ?>
+					</p>
+				</label>
+				<label for="scroll_top-disable">
+					<input id="scroll_top-disable" type="radio" class="field-config" name="config[scroll_top]" value="0" <?php if ( empty( $element[ 'scroll_top' ] ) ){ ?>checked="checked"<?php } ?> aria-describedby="scroll_top-enable-description">
+					<?php esc_html_e( 'Disabled', 'caldera-forms' ); ?>
+					<p class="description" id="scroll_top-enable-description">
+						<?php esc_html_e( 'When form is submitted, do not scroll page.', 'caldera-forms' ); ?>
+					</p>
 				</label>
 			</div>
 		</fieldset>
 	</div>
+
+
+	<div class="caldera-config-group" style="width:500px;">
+		<label for="cf-success-message">
+			<?php esc_html_e( 'Success Message', 'caldera-forms' ); ?>
+		</label>
+		<div class="caldera-config-field">
+			<textarea id="cf-success-message" class="field-config block-input magic-tag-enabled required" name="config[success]" required="required" aria-describedby="cf-success-message-description"><?php if ( ! empty( $element[ 'success' ] ) ) {
+					esc_html_e( $element[ 'success' ] );
+				} else {
+					esc_html_e( 'Form has been successfully submitted. Thank you.', 'caldera-forms' );
+				} ?>
+			</textarea>
+		</div>
+		<p class="description" id="cf-success-message-description">
+			<?php esc_html_e( 'Message to show after form is submitted.', 'caldera-forms' ); ?>
+		</p>
+	</div>
+
 
 	<div class="caldera-config-group">
 		<fieldset>
@@ -146,6 +164,20 @@
 	<div class="caldera-config-group">
 		<fieldset>
 			<legend>
+				<?php esc_html_e( 'State', 'caldera-forms' ); ?>
+			</legend>
+			<div class="caldera-config-field">
+				<label for="cf-forms-state">
+					<input type="checkbox" id="cf-forms-state" class="field-config" name="config[form_draft]" value="1" <?php if ( ! empty( $element[ 'form_draft' ] ) ){ ?>checked="checked"<?php } ?>>
+					<?php esc_html_e( 'Deactivate / Draft', 'caldera-forms' ); ?>
+				</label>
+			</div>
+		</fieldset>
+	</div>
+
+	<div class="caldera-config-group">
+		<fieldset>
+			<legend>
 				<?php esc_html_e( 'Hide Form', 'caldera-forms' ); ?>
 			</legend>
 			<div class="caldera-config-field">
@@ -173,20 +205,6 @@
 		</fieldset>
 	</div>
 
-	<div class="caldera-config-group" style="width:500px;">
-		<label for="cf-success-message">
-			<?php esc_html_e( 'Success Message', 'caldera-forms' ); ?>
-		</label>
-		<div class="caldera-config-field">
-			<textarea id="cf-success-message" class="field-config block-input magic-tag-enabled required" name="config[success]"
-			          required="required"><?php if ( ! empty( $element[ 'success' ] ) ) {
-					esc_html_e( $element[ 'success' ] );
-				} else {
-					esc_html_e( 'Form has been successfully submitted. Thank you.', 'caldera-forms' );
-				} ?>
-			</textarea>
-		</div>
-	</div>
 
 	<div class="caldera-config-group">
 		<label for="cf-gravatar-field">
@@ -206,6 +224,17 @@
 			<p class="description" id="cf-gravatar-field-description">
 				<?php esc_html_e( 'Used when viewing an entry from a non-logged in user.', 'caldera-forms' ); ?>
 			</p>
+		</div>
+	</div>
+
+	<div class="caldera-config-group">
+		<label for="cf-form-description">
+			<?php esc_html_e( 'Form Description', 'caldera-forms' ); ?>
+		</label>
+		<div class="caldera-config-field">
+			<textarea id="cf-form-description" name="config[description]" class="field-config" style="width:500px;" rows="5">
+				<?php echo htmlentities( $element[ 'description' ] ); ?>
+			</textarea>
 		</div>
 	</div>
 
