@@ -16,7 +16,7 @@
      function handleValidationMarkup( valid, $field, message, extraClass ){
          var $parent = $field.parent().parent();
          if( ! valid ){
-             $parent.addClass( 'has-error' ).append( '<span id="cf-error-'+ field.id +'" class="help-block ' + extraClass +'">' + message  + '</span>' );
+             $parent.addClass( 'has-error' ).append( '<span id="cf-error-'+ $field.attr('id') +'" class="help-block ' + extraClass +'">' + message  + '</span>' );
              $field.addClass( 'parsely-error' );
              $submits.prop( 'disabled',true).attr( 'aria-disabled', true  );
              return false;

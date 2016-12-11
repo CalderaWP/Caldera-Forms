@@ -461,15 +461,9 @@ class Caldera_Forms_Render_Assets {
 	 */
 	public static function enqueue_form_assets(){
 		self::enqueue_style( 'field-styles' );
-		//self::enqueue_script( 'validator' );
 		self::enqueue_script( 'validator-i18n' );
-		/** This hack is a sign that this whole system isn't right */
-		wp_dequeue_script( self::make_slug( 'validator' ) );
-		wp_dequeue_script( self::make_slug( 'field-config' ) );
-		wp_enqueue_script( self::make_slug( 'validator' ), self::make_url( 'parsley' ), array( 'jquery', self::make_slug( 'validator-i18n' ) ), CFCORE_VER );
-		wp_enqueue_script( self::make_slug( 'field-config' ), self::make_url( 'field-config' ), array( 'jquery', self::make_slug( 'validator' ) ), CFCORE_VER );
-
-		//self::enqueue_script( 'field-config', array( self::make_slug( 'validator' ), self::make_slug( 'field' ) ) );
+		self::enqueue_script( 'validator' );
+		self::enqueue_script( 'field-config', array( self::make_slug( 'validator' ), self::make_slug( 'field' ) ) );
 		self::enqueue_script( 'field' );
 
 		self::enqueue_script( 'init' );
