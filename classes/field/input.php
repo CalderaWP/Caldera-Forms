@@ -17,10 +17,7 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 	public static function html( array $field, array $field_structure, array $form ){
 		$type = Caldera_Forms_Field_Util::get_type( $field );
 		$field_base_id = Caldera_Forms_Field_Util::get_base_id( $field, null, $form );
-		$default = $field[ 'config' ][ 'default' ];
-		if ( isset( $field[ 'slug' ] ) && isset( $_GET[ $field[ 'slug' ] ] ) ) {
-			$default = Caldera_Forms_Sanitize::sanitize( $_GET[ $field[ 'slug' ] ] );
-		}
+		$default = self::find_default( $field );
 
 		$sync = false;
 		if( in_array( $type, self::sync_fields() ) ){
@@ -128,4 +125,6 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 
 		return $mask;
 	}
+
+
 }

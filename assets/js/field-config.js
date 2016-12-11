@@ -62,8 +62,9 @@
 
          templateSystem();
 
-
      };
+
+     this.summary = this.html;
 
      this.range_slider = function( field ){
          var $el = $(document.getElementById(field.id));

@@ -21,7 +21,7 @@ class Caldera_Forms_Field_Syncfactory {
 	 * @param array $field Field config
 	 * @param string $field_base_id Field ID attribute
 	 *
-	 * @return Caldera_Forms_Field_Sync|Caldera_Forms_Field_SyncHTML
+	 * @return Caldera_Forms_Field_Sync|Caldera_Forms_Field_SyncHTML|Caldera_Forms_Field_SyncSummary
 	 */
 	public static function get_object( $form, $field, $field_base_id ){
 		$id = self::identifier( $form[ 'ID' ], $field[ 'ID' ], $field_base_id );
@@ -88,7 +88,7 @@ class Caldera_Forms_Field_Syncfactory {
 	 * @param array $field Field config
 	 * @param string $field_base_id Field ID attribute
 	 *
-	 * @return Caldera_Forms_Field_Sync|Caldera_Forms_Field_SyncHTML|Caldera_Forms_Field_SyncCalc
+	 * @return Caldera_Forms_Field_Sync|Caldera_Forms_Field_SyncHTML|Caldera_Forms_Field_SyncCalc|Caldera_Forms_Field_SyncSummary
 	 */
 	protected static function create( $form, $field, $field_base_id ){
 		$type = Caldera_Forms_Field_Util::get_type( $field );
@@ -98,6 +98,9 @@ class Caldera_Forms_Field_Syncfactory {
 			break;
 			case 'calculation' :
 				return new  Caldera_Forms_Field_SyncCalc( $form, $field, $field_base_id );
+			break;
+			case 'summary' :
+				return new Caldera_Forms_Field_SyncSummary( $form, $field, $field_base_id );
 			break;
 			default :
 				return new  Caldera_Forms_Field_Sync( $form, $field, $field_base_id );

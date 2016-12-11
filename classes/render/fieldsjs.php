@@ -63,6 +63,9 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 		if( ! empty( $this->form[ 'fields' ] ) ){
 			foreach( $this->form[ 'fields' ] as $field ){
 				$type = Caldera_Forms_Field_Util::get_type( $field, $this->form );
+				if( 'summary' == $type ){
+					$type = 'html';
+				}
 				if( 'calculation' != $type && method_exists( $this, $type ) ){
 					call_user_func( array( $this, $type ), $field[ 'ID' ], $field );
 				}
@@ -238,13 +241,10 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 	protected function html( $field_id, $field ){
 		$id_attr = $this->field_id( $field_id );
 
-		$this->data[ $field_id ] = $this->create_config_array( $field_id, __FUNCTION__, array() );
+		$this->data[ $field_id ] = $this->create_config_array( $field_id, Caldera_Forms_Field_Util::get_type( $field ), array() );
 
 		/** @var Caldera_Forms_Field_SyncHTML $syncer */
 		$syncer = Caldera_Forms_Field_Syncfactory::get_object( $this->form, $field, $id_attr );
-
-
-
 
 		if ( $syncer->can_sync() ) {
 			$this->data[ $field_id ] = array_merge( $this->data[ $field_id ], array(
@@ -259,6 +259,7 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 				$this->data[ $field_id ][ 'bindFields' ][] = $bind . '_' . $this->form_count;
 			}
 		}
+
 	}
 
 	/**

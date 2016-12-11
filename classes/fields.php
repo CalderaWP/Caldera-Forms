@@ -327,6 +327,21 @@ class Caldera_Forms_Fields {
 					)
 				)
 			),
+			'summary'             => array(
+				"field"       => __( 'Summary', 'caldera-forms' ),
+				"description" => __( 'Live updating summary of submission', 'caldera-forms' ),
+				"file"        => CFCORE_PATH . "fields/summary/field.php",
+				"category"    => __( 'Content', 'caldera-forms' ),
+				"capture"     => false,
+				"setup"       => array(
+					"preview"       => CFCORE_PATH . "fields/summary/preview.php",
+					"template"      => CFCORE_PATH . "fields/summary/config.php",
+					"not_supported" => array(
+						'required',
+						'entry_list'
+					)
+				)
+			),
 			'section_break'    => array(
 				"field"       => __( 'Section Break', 'caldera-forms' ),
 				"description" => __( 'An HR tag to separate sections of your form.', 'caldera-forms' ),

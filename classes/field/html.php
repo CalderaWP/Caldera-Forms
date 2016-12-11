@@ -67,6 +67,26 @@ abstract  class Caldera_Forms_Field_HTML   {
 
 	}
 
+	/**
+	 * Get field default value
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param array $field
+	 *
+	 * @return mixed
+	 */
+	public static function find_default( array $field ) {
+		$default = '';
+		if ( isset( $field[ 'slug' ] ) && isset( $_GET[ $field[ 'slug' ] ] ) ) {
+			$default = Caldera_Forms_Sanitize::sanitize( $_GET[ $field[ 'slug' ] ] );
+
+
+		}
+
+		return $default;
+	}
+
 
 
 }

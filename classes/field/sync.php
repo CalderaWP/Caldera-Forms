@@ -83,11 +83,7 @@ class Caldera_Forms_Field_Sync {
 		$this->form = $form;
 		$this->field = $field;
 		$this->field_base_id = $field_base_id;
-		if ( isset( $this->field[ 'config' ][ 'default' ] ) ) {
-			$this->default = $this->field[ 'config' ][ 'default' ];
-		}else{
-			$this->default = '';
-		}
+		$this->initial_set_default();
 		add_filter( 'caldera_forms_render_get_field', array( $this, 'reset_default' ), 25, 2 );
 	}
 
@@ -255,6 +251,22 @@ class Caldera_Forms_Field_Sync {
 	protected function handle_match( $key_id, $tag_key ) {
 		$this->add_bind( $key_id );
 		$this->set_default( $tag_key, $key_id );
+	}
+
+	/**
+	 * Set default property when object is constructed based on field settings
+	 *
+	 * Property gets changed later if sync is happening
+	 *
+	 * @since 1.5.0
+	 *
+	 */
+	protected function initial_set_default() {
+		if ( isset( $this->field[ 'config' ][ 'default' ] ) ) {
+			$this->default = $this->field[ 'config' ][ 'default' ];
+		} else {
+			$this->default = '';
+		}
 	}
 
 

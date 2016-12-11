@@ -29,6 +29,15 @@ class Caldera_Forms_Field_SyncHTML  extends Caldera_Forms_Field_Sync {
 	protected $bind_fields;
 
 	/**
+	 * Prefix for template and content ID attributes
+	 *
+	 * @since 1.5.0
+	 *
+	 * @var string
+	 */
+	protected $template_prefix = 'html-content-';
+
+	/**
 	 * Get the date-field formatted binds
 	 *
 	 * @since 1.5.0
@@ -43,12 +52,26 @@ class Caldera_Forms_Field_SyncHTML  extends Caldera_Forms_Field_Sync {
 		}
 	}
 
+	/**
+	 * Get ID of the template
+	 *
+	 * @since 1.5.0
+	 *
+	 * @return string
+	 */
 	public function template_id(){
-		return 'html-content-' . $this->field_base_id . '-tmpl';
+		return $this->template_prefix . $this->field_base_id . '-tmpl';
 	}
 
+	/**
+	 * Get ID of the content attribute
+	 *
+	 * @since 1.5.0
+	 *
+	 * @return string
+	 */
 	public function content_id(){
-		return 'html-content-' . $this->field_base_id;
+		return $this->template_prefix . $this->field_base_id;
 	}
 
 	/**
