@@ -35,6 +35,30 @@
 	</div>
 
 	<div class="caldera-config-group">
+		<fieldset>
+			<legend>
+				<?php esc_html_e( 'Scroll To Top On Submit', 'caldera-forms' ); ?>
+			</legend>
+			<div class="caldera-config-field">
+				<label for="scroll_top-enable">
+					<input id="scroll_top-enable" type="radio" class="field-config" name="config[scroll_top]" value="1" <?php if ( ! empty( $element[ 'scroll_top' ] ) ){ ?>checked="checked"<?php } ?> aria-describedby="scroll_top-disable-description">
+					<?php esc_html_e( 'Enable', 'caldera-forms' ); ?>
+					<p class="description" id="scroll_top-disable-description">
+						<?php esc_html_e( 'When form is submitted, scroll page to form message.', 'caldera-forms' ); ?>
+					</p>
+				</label>
+				<label for="scroll_top-disable">
+					<input id="scroll_top-disable" type="radio" class="field-config" name="config[scroll_top]" value="0" <?php if ( empty( $element[ 'scroll_top' ] ) ){ ?>checked="checked"<?php } ?> aria-describedby="scroll_top-enable-description">
+					<?php esc_html_e( 'Disabled', 'caldera-forms' ); ?>
+					<p class="description" id="scroll_top-enable-description">
+						<?php esc_html_e( 'When form is submitted, do not scroll page.', 'caldera-forms' ); ?>
+					</p>
+				</label>
+			</div>
+		</fieldset>
+	</div>
+
+	<div class="caldera-config-group">
 		<label for="cf-form-description">
 			<?php esc_html_e( 'Form Description', 'caldera-forms' ); ?>
 		</label>
