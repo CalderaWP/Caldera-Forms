@@ -238,6 +238,25 @@ class Caldera_Forms_Field_Util {
 
 	}
 
+	static public function credit_card_types( $field, $form ){
+		$types = array(
+			'amex',
+			'china_union_pay',
+			'dankort',
+			'diners_club_carte_blanche',
+			'diners_club_international',
+			'diners_club_us_and_canada',
+			'discover',
+			'jcb',
+			'laser',
+			'maestro',
+			'mastercard',
+			'visa',
+			'visa_electron'
+		);
+
+		return $types;
+	}
 
 }
 

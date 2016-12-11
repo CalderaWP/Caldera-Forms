@@ -57,6 +57,15 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 			}
 		}elseif ( 'phone_better' == $type ){
 			$attrs[ 'type' ] = 'tel';
+		}elseif ( 'credit_card_number' == $type ){
+			$attrs[ 'type' ] = 'tel';
+			$attr[ 'data-parsley-creditcard' ] = Caldera_Forms_Field_Util::credit_card_types( $field, $form );
+		}elseif( 'credit_card_exp' == $type ){
+			$attrs[ 'type' ] = 'tel';
+			$attr[ 'data-parsley-creditcard' ] = '';
+		}elseif ( 'credit_card_cvv' == $type ){
+			$attrs[ 'type' ] = 'tel';
+			$attr[ 'data-parsley-creditcard' ] = '';
 		}
 
 		if( $field_structure['field_required'] ){

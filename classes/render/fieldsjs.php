@@ -429,6 +429,59 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 	}
 
 	/**
+	 * Config for credit card number fields
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $field_id The field ID
+	 * @param array $field The field config
+	 */
+	protected function credit_card_number( $field_id, $field ){
+
+		$this->data[ $field_id ] = $this->create_config_array( $field_id, __FUNCTION__, array(
+			'invalid' => __( 'Invalid Card Number', 'caldera-forms' ),
+		) );
+
+
+	}
+
+	/**
+	 * Config for credit card expiration fields
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $field_id The field ID
+	 * @param array $field The field config
+	 */
+	protected function credit_card_exp( $field_id, $field ){
+
+		$this->data[ $field_id ] = $this->create_config_array( $field_id, __FUNCTION__, array(
+			'invalid' => __( 'Invalid Expiration Date', 'caldera-forms' ),
+		) );
+
+
+	}
+
+	/**
+	 * Config for credit card cvv fields
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $field_id The field ID
+	 * @param array $field The field config
+	 */
+	protected function credit_card_cvc( $field_id, $field ){
+
+		$this->data[ $field_id ] = $this->create_config_array( $field_id, __FUNCTION__, array(
+			'invalid' => __( 'Invalid Security Code', 'caldera-forms' ),
+		) );
+
+
+	}
+
+
+
+	/**
 	 * Create config array
 	 *
 	 * @since 1.5.0

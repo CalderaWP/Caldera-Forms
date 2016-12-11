@@ -215,6 +215,48 @@ class Caldera_Forms_Fields {
 				)
 			),
 
+			//eCommerce
+			'credit_card_number' => array(
+				"field"       => __( 'Credit Card Number', 'caldera-forms' ),
+				"description" => __( 'Credit Card Number With Validation', 'caldera-forms' ),
+				"file"        => CFCORE_PATH . "fields/generic-input.php",
+				"category"    => __( 'eCommerce', 'caldera-forms' ),
+				"setup"       => array(
+					"template" => CFCORE_PATH . "fields/credit_card_number/config.php",
+					"preview"  => CFCORE_PATH . "fields/credit_card_number/preview.php"
+				),
+				"scripts" => array(
+					CFCORE_URL . 'fields/credit_card_number/credit-card.js'
+				)
+			),
+			'credit_card_exp' => array(
+				"field"       => __( 'Credit Card Expiration', 'caldera-forms' ),
+				"description" => __( 'Credit Card Expiration Date With Validation', 'caldera-forms' ),
+				"file"        => CFCORE_PATH . "fields/generic-input.php",
+				"category"    => __( 'eCommerce', 'caldera-forms' ),
+				"setup"       => array(
+					"template" => CFCORE_PATH . "fields/credit_card_number/config.php",
+					"preview"  => CFCORE_PATH . "fields/credit_card_number/preview.php"
+				),
+				"scripts" => array(
+					CFCORE_URL . 'fields/credit_card_number/credit-card.js'
+				)
+			),
+			'credit_card_cvc' => array(
+				"field"       => __( 'Credit Card CVC', 'caldera-forms' ),
+				"description" => __( 'Credit Card CVC With Validation', 'caldera-forms' ),
+				"file"        => CFCORE_PATH . "fields/generic-input.php",
+				"category"    => __( 'eCommerce', 'caldera-forms' ),
+				"setup"       => array(
+					"template" => CFCORE_PATH . "fields/credit_card_cvc/config.php",
+					"preview"  => CFCORE_PATH . "fields/credit_card_cvc/preview.php"
+				),
+				"scripts" => array(
+					CFCORE_URL . 'fields/credit_card_number/credit-card.js'
+				)
+			),
+
+
 			//special
 			'calculation'      => array(
 				"field"       => __( 'Calculation', 'caldera-forms' ),

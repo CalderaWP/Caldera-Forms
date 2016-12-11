@@ -3429,59 +3429,7 @@ class Caldera_Forms {
 				}
 			}
 		}
-		//none!
-		if( empty( $page_forms ) ){
-			return;
-		}
 
-		Caldera_Forms_Render_Assets::optional_style_includes();
-
-		foreach( $page_forms as $form_id ){
-			// has form get  stuff for it
-			$form = Caldera_Forms_Forms::get_form( $form_id );
-			if(!empty($form)){
-				// get list of used fields
-				if(empty($form['fields'])){
-					/// no filds - next form
-				}
-
-				// has a form - get field type
-				if(!isset($field_types)){
-					$field_types = Caldera_Forms_Fields::get_all();
-				}
-
-				if(!empty($form['fields'])){
-					foreach($form['fields'] as $field){
-						//enqueue styles
-						if( !empty( $field_types[$field['type']]['styles'])){
-							foreach($field_types[$field['type']]['styles'] as $style){
-								if(filter_var($style, FILTER_VALIDATE_URL)){
-									wp_enqueue_style( 'cf-' . sanitize_key( basename( $style ) ), $style, array(), self::VERSION );
-									wp_enqueue_style( 'cf-' . sanitize_key( basename( $style ) ), $style, array(), self::VERSION );
-								}else{
-									wp_enqueue_style( $style );
-								}
-							}
-						}
-
-						//enqueue scripts
-						if( !empty( $field_types[$field['type']]['scripts'])){
-							// check for jquery deps
-							$depts[] = 'jquery';
-							foreach($field_types[$field['type']]['scripts'] as $script){
-								if(filter_var($script, FILTER_VALIDATE_URL)){
-									wp_enqueue_script( 'cf-' . sanitize_key( basename( $script ) ), $script, $depts, self::VERSION );
-								}else{
-									wp_enqueue_script( $script );
-								}
-							}
-						}
-					}
-				}
-
-			}
-
-		}
 
 
 	}

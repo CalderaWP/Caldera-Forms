@@ -340,6 +340,7 @@ $default_template = "
 $field_type_list = array(
 	esc_html__( 'Basic', 'caldera-forms' )       => array(),
 	esc_html__( 'Select', 'caldera-forms' )         => array(),
+	esc_html__( 'eCommerce', 'caldera-forms' )         => array(),
 	esc_html__( 'File', 'caldera-forms' )      => array(),
 	esc_html__( 'Content', 'caldera-forms' )      => array(),
 	esc_html__( 'Special', 'caldera-forms' ) => array(),

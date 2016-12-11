@@ -34,7 +34,7 @@ class Caldera_Forms_Render_Assets {
 			self::register();
 		}
 
-		wp_enqueue_script( self::make_slug( 'field-config' ) );
+		self::enqueue_script( self::make_slug( 'field-config' ) );
 
 		if( !empty( $field_types[$field['type']]['styles'])){
 			foreach($field_types[$field['type']]['styles'] as $style){
@@ -44,7 +44,7 @@ class Caldera_Forms_Render_Assets {
 
 
 		if ( ! empty( $field_types[ $field[ 'type' ] ][ 'scripts' ] ) ) {
-			$depts = array( 'jquery' );
+			$depts = array( 'jquery', self::make_slug( 'field'), self::make_slug( 'field-config' ), self::make_slug( 'validator' ) );
 			foreach ( $field_types[ $field[ 'type' ] ][ 'scripts' ] as $script ) {
 				self::enqueue_script( $script, $depts );
 
@@ -248,12 +248,7 @@ class Caldera_Forms_Render_Assets {
 
 		$field_types = Caldera_Forms_Fields::get_all();
 
-		wp_enqueue_style( 'cf-field-styles' );
-
-		wp_enqueue_script( 'cf-field' );
-		wp_enqueue_script( 'cf-conditionals' );
-		wp_enqueue_script( 'cf-validator' );
-		wp_enqueue_script( 'cf-init' );
+		self::enqueue_form_assets();
 
 		foreach ( $field_types as $field ) {
 			if ( ! empty( $field[ 'styles' ] ) ) {
@@ -264,7 +259,6 @@ class Caldera_Forms_Render_Assets {
 			}
 
 			if ( ! empty( $field[ 'scripts' ] ) ) {
-				// check for jquery deps
 				$depts[] = 'jquery';
 				foreach ( $field[ 'scripts' ] as $script ) {
 					self::enqueue_script( $script, $depts );
@@ -339,7 +333,11 @@ class Caldera_Forms_Render_Assets {
 			}
 			$depts = array( 'jquery' );
 			if( 'field' == $script_key ) {
+				$depts[] = self::make_slug( 'validator' );
 				$depts[] = self::make_slug( 'field-config' );
+
+			}elseif ( 'field-config' == $script_key ){
+				$depts[] = self::make_slug( 'validator' );
 			}
 
 			wp_register_script( 'cf-' . $script_key, $script_url, $depts, CFCORE_VER, true );
@@ -402,10 +400,11 @@ class Caldera_Forms_Render_Assets {
 			if ( false !== strpos( $script, '//' ) ) {
 				$slug = self::make_slug( $script );
 				if ( ! self::is_loaded( $slug ) ) {
-					wp_enqueue_script( $slug, $script, $depts, CFCORE_VER );
+					wp_enqueue_script( $slug, $script, $depts, CFCORE_VER, true );
 					self::$loaded[ 'js' ][ $slug ] = true;
 				}
 			} else {
+
 				if ( wp_script_is( $script, 'registered' ) ) {
 					wp_enqueue_script( $script );
 				} elseif ( 'cf-' !== substr( $script, 0, 2 ) ) {
@@ -462,10 +461,17 @@ class Caldera_Forms_Render_Assets {
 	 */
 	public static function enqueue_form_assets(){
 		self::enqueue_style( 'field-styles' );
-		self::enqueue_script( 'field-config' );
-		self::enqueue_script( 'field' );
-		self::enqueue_script( 'validator' );
+		//self::enqueue_script( 'validator' );
 		self::enqueue_script( 'validator-i18n' );
+		/** This hack is a sign that this whole system isn't right */
+		wp_dequeue_script( self::make_slug( 'validator' ) );
+		wp_dequeue_script( self::make_slug( 'field-config' ) );
+		wp_enqueue_script( self::make_slug( 'validator' ), self::make_url( 'parsley' ), array( 'jquery', self::make_slug( 'validator-i18n' ) ), CFCORE_VER );
+		wp_enqueue_script( self::make_slug( 'field-config' ), self::make_url( 'field-config' ), array( 'jquery', self::make_slug( 'validator' ) ), CFCORE_VER );
+
+		//self::enqueue_script( 'field-config', array( self::make_slug( 'validator' ), self::make_slug( 'field' ) ) );
+		self::enqueue_script( 'field' );
+
 		self::enqueue_script( 'init' );
 
 	}

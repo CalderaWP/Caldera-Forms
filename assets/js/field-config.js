@@ -4,12 +4,29 @@
      var self = this;
 
      var fields = {};
+
+     var $submits = $form.find(':submit');
+
      this.init = function(){
          $.each( configs, function( i, config ){
              fields[ config.id ] = self[config.type]( config );
          } );
      };
 
+     function handleValidationMarkup( valid, $field, message, extraClass ){
+         var $parent = $field.parent().parent();
+         if( ! valid ){
+             $parent.addClass( 'has-error' ).append( '<span id="cf-error-'+ field.id +'" class="help-block ' + extraClass +'">' + message  + '</span>' );
+             $field.addClass( 'parsely-error' );
+             $submits.prop( 'disabled',true).attr( 'aria-disabled', true  );
+             return false;
+         }else{
+             $parent.removeClass( 'has-error' );
+             $submits.prop( 'disabled',false).attr( 'aria-disabled', false  );
+
+             return true;
+         }
+     }
 
      this.button = function( field ){
          var field_id  = field.id;
@@ -129,9 +146,6 @@
      this.phone_better = function( field ){
 
          var $field = $( document.getElementById( field.id ) );
-         var $parent = $field.parent().parent();
-
-         var $submits = $form.find(':submit');
 
          var reset = function(){
              var error = document.getElementById( 'cf-error-'+ field.id );
@@ -151,17 +165,7 @@
                  }
              }
 
-             if( ! valid ){
-                 $parent.addClass( 'has-error' ).append( '<span id="cf-error-'+ field.id +'" class="help-block help-block-phone_better">' + field.options.invalid  + '</span>' );
-                 $field.addClass( 'parsely-error' );
-                 $submits.prop( 'disabled',true).attr( 'aria-disabled', true  );
-                 return false;
-             }else{
-                 $parent.removeClass( 'has-error' );
-                 $submits.prop( 'disabled',false).attr( 'aria-disabled', false  );
-
-                 return true;
-             }
+             handleValidationMarkup( valid, $field, field.options.invalid, 'help-block-phone_better' );
 
          };
 
@@ -193,5 +197,52 @@
          }
 
      };
+
+     this.credit_card_number = function( fieldConfig ){
+         var $field = $( document.getElementById( fieldConfig.id ) );
+         if( $field.length ){
+             $field.payment('formatCardNumber');
+             $field.blur( function(){
+                 var val =  $field.val();
+                 var valid = $.payment.validateCardNumber( val );
+                 if ( valid ) {
+                     var type = $.payment.cardType(val);
+                 }
+                 handleValidationMarkup( valid, $field, field.invalid, 'help-block-credit_card_number help-block-credit_card' );
+             })
+         }
+
+     };
+     
+     this.credit_card_exp = function ( fieldConfig ) {
+         var $field = $( document.getElementById( fieldConfig.id ) );
+         if( $field.length ){
+             $field.payment('formatCardExpiry');
+             $field.blur( function () {
+                 var valid = $.payment.validateCardExpiry( $field.val );
+                 handleValidationMarkup( valid, $field, field.invalid, 'help-block-credit_card_exp help-block-credit_card' );
+
+             });
+         }
+     };
+
+     this.credit_card_cvc = function ( fieldConfig ) {
+         var $field = $( document.getElementById( fieldConfig.id ) );
+         if( $field.length ){
+             $field.payment('formatCardCVC');
+             $field.blur( function () {
+                 var val =  $field.val();
+                 var valid = $.payment.validateCardNumber( val );
+                 if ( valid ) {
+                     var type = $.payment.cardType(val);
+                     $.payment.validateCardCVC(val, type)
+                 }
+                 handleValidationMarkup( valid, $field, field.invalid, 'help-block-credit_card_cvc help-block-credit_card' );
+
+             });
+         }
+     };
+
+
  }
 
