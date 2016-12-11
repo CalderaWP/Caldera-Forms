@@ -59,7 +59,6 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 				}
 			}
 		}elseif ( 'phone_better' == $type ){
-			$attrs[ 'data-parsely' ] = $validator = Caldera_Forms_Field_Util::better_phone_validator( $field_base_id );
 			$attrs[ 'type' ] = 'tel';
 		}
 

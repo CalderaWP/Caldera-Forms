@@ -90,24 +90,6 @@ class Caldera_Forms_Field_Util {
 	}
 
 	/**
-	 * Create the attribute value for custom better phone parsely validatior
-	 *
-	 * @since 1.5.0
-	 *
-	 * @param string $field_id The field's config ID
-	 * @param null|int $current_form_count Optional. The current form instance count. Optional to get global value.
-	 *
-	 * @return string
-	 */
-	public static function better_phone_validator( $field_id, $current_form_count = null ){
-		if( null == $current_form_count ){
-			$current_form_count = Caldera_Forms_Render_Util::get_current_form_count();
-		}
-
-		return 'phone_better_validator' . $field_id . $current_form_count;
-	}
-
-	/**
 	 * Get ID attribute for the element that displays star field stars
 	 *
 	 * @since 1.5.0
@@ -255,6 +237,7 @@ class Caldera_Forms_Field_Util {
 		return false;
 
 	}
+
 
 }
 

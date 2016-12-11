@@ -173,18 +173,8 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 	 */
 	protected function phone_better( $field_id, $field ){
 		$args =  array(
-			'options' => array(
-				'initialCountry' => 'us',
-				'autoHideDialCode' => false,
-				'utilsScript' => CFCORE_URL . 'fields/phone_better/assets/js/utils.js',
-				'preferredCountries' => array( 'us' )
-			)
+			'options' => $this->better_phone_field_js_options( $field )
 		);
-
-		if( ! empty( $field[ 'config' ][ 'nationalMode' ] ) ){
-			$options[ 'nationalMode' ] = true;
-		}
-
 
 		$this->data[ $field_id ] = $this->create_config_array( $field_id, __FUNCTION__, $args );
 
@@ -195,6 +185,43 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 		}
 
 
+	}
+
+	/**
+	 * Prepare options for better phone fields
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param array $field Field config
+	 *
+	 * @return array
+	 */
+	protected function better_phone_field_js_options( array  $field  ){
+		$options = array(
+			'initialCountry' => 'us',
+			'autoHideDialCode' => false,
+			'utilsScript' => CFCORE_URL . 'fields/phone_better/assets/js/utils.js',
+			'preferredCountries' => array( 'us' )
+		);
+
+		if( ! empty( $field[ 'config' ][ 'nationalMode' ] ) ){
+			$options[ 'nationalMode' ] = true;
+		}
+
+		/**
+		 * Filter config options for better phone fields.
+		 *
+		 * This  will be passed in JavaScript to constructor for the jQuery plugin that powers these fields.
+		 * @see https://github.com/jackocnr/intl-tel-input
+		 *
+		 * @since 1.5.0
+		 *
+		 * @param array $options Options to use for this field
+		 * @param array $field Field config
+		 * @param array $form config
+		 *
+		 */
+		return apply_filters( 'caldera_forms_phone_js_options', $options, $field, $this->form );
 	}
 
 
