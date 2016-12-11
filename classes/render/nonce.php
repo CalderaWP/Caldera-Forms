@@ -34,6 +34,22 @@ class Caldera_Forms_Render_Nonce {
 	}
 
 	/**
+	 * Get name of nonce field
+	 *
+	 * @since 1.5.0
+	 *
+	 * @return string
+	 */
+	public static function nonce_field_name( $form_id = false ){
+		$name = '_cf_verify';
+		if( $form_id ){
+			$name .= '_' . $form_id;
+		}
+
+		return $name;
+	}
+
+	/**
 	 * Verify the verification nonce
 	 *
 	 * @since 1.5.0
@@ -52,12 +68,15 @@ class Caldera_Forms_Render_Nonce {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param string $form_id Form ID
+	 * @param $form_id
 	 *
 	 * @return string
 	 */
 	public static function nonce_field( $form_id ){
-		return wp_nonce_field( self::nonce_action( $form_id ), '_cf_verify', true, false );
+
+		$nonce_field = '<input type="hidden" id="' . esc_attr( self::nonce_field_name( $form_id ) ) . '" name="' . esc_attr( self::nonce_field_name() ) . '" value="' . esc_attr( self::create_verify_nonce( $form_id ) ) . '"  data-nonce-time="' . esc_attr( time() ) . ' " />';
+		$nonce_field .= wp_referer_field( false );
+		return $nonce_field;
 	}
 
 	/**
@@ -69,7 +88,7 @@ class Caldera_Forms_Render_Nonce {
 	 *
 	 * @return string
 	 */
-	protected function nonce_action( $form_id ){
+	protected static function nonce_action( $form_id ){
 		return self::$action . $form_id;
 	}
 

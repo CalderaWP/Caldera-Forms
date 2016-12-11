@@ -236,6 +236,46 @@ var cf_jsfields_init, cf_presubmit;
 
 })(jQuery);
 
+/** Setup Form Front-end **/
+window.addEventListener("load", function(){
+	(function( $ ) {
+		'use strict';
+
+		/** Check nonce **/
+		if( 'object' === typeof CF_API_DATA ) {
+			var nonceCheckers = {};
+			var formId;
+			$('.caldera_forms_form').each(function (i, el) {
+				formId = $(el).data( 'form-id' );
+				nonceCheckers[ formId ] = new CalderaFormsResetNonce( formId, CF_API_DATA, $ );
+				nonceCheckers[ formId ].init();
+			});
+
+		}
+
+		/** Setup forms */
+		if( 'object' === typeof CFFIELD_CONFIG ) {
+			var form_id, config_object, config, instance, $el;
+			$('.caldera_forms_form').each(function (i, el) {
+				$el = $(el);
+				form_id = $el.attr('id');
+				instance = $el.data('instance');
+
+				if ('object' === typeof CFFIELD_CONFIG[instance] ) {
+					config = CFFIELD_CONFIG[instance];
+					config_object = new Caldera_Forms_Field_Config( config, $(document.getElementById(form_id)), $);
+					config_object.init();
+				}
+			});
+
+		}
+
+	})( jQuery );
+
+
+});
+
+
 
 function CalderaFormsFieldSync( $field, binds, $form, $  ){
 	for( var i = 0; i < binds.length; i++ ){
@@ -272,4 +312,40 @@ function CalderaFormsFieldSync( $field, binds, $form, $  ){
 	}
 }
 
+function CalderaFormsResetNonce( formId, config, $ ){
+
+	var $nonceField;
+
+	this.init = function(){
+		$nonceField = $( '#' + config.nonce.field + '_' + formId );
+		if( isNonceOld( $nonceField.data( 'nonce-time' ) ) ){
+			replaceNonce();
+		}
+	};
+
+	/**
+	 * Check if nonce is more than an hour old
+	 *
+	 * If not, not worth the HTTP request
+	 *
+	 * @param time Time nonce was generated
+	 * @returns {boolean}
+     */
+	function isNonceOld( time ){
+		var now = new Date().getTime();
+		if( now - 36000 > time ){
+			return true;
+		}
+		return false;
+	}
+
+	function replaceNonce(){
+		$.post( config.rest.tokens.nonce, {
+			form_id: formId
+		}).success( function( r){
+			$nonceField.val( r.nonce );
+			$nonceField.attr( 'nonce-time', new Date().getTime() );
+		});
+	}
+}
 

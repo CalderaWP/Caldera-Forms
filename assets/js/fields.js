@@ -4849,30 +4849,3 @@ function toggle_button_init(id, el){
 	}
 
 }
-
-window.addEventListener("load", function(){
-	(function( $ ) {
-		'use strict';
-		if( 'object' === typeof CFFIELD_CONFIG ) {
-
-
-			var form_id, config_object, config, instance, $el;
-			$('.caldera_forms_form').each(function (i, el) {
-				$el = $(el);
-				form_id = $el.attr('id');
-				instance = $el.data('instance');
-
-				if ('object' === typeof CFFIELD_CONFIG[instance] ) {
-					config = CFFIELD_CONFIG[instance];
-					config_object = new Caldera_Forms_Field_Config( config, $(document.getElementById(form_id)), $);
-					config_object.init();
-				}
-			});
-
-		}
-
-	})( jQuery );
-
-
-});
-
