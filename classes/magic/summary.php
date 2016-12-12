@@ -97,11 +97,19 @@ class Caldera_Forms_Magic_Summary extends Caldera_Forms_Magic_Parser {
 				} else {
 					foreach ( $field_values as $field_key => $field_value ) {
 						if ( isset( $field_value[ 'label' ] ) && isset( $field_value[ 'value' ] ) ) {
-							$field_value[ $field_key ] = $field_value[ 'value' ];
+							$field_values[ $field_key ] = $field_value[ 'value' ];
 						}
 
 					}
 				}
+
+				$should_use_label = $this->should_use_label( $field );
+				if( $should_use_label ){
+					foreach ( $field_values as $field_key => $field_value ) {
+						$field_values[ $field_key ] = $this->option_value_to_label( $field_value, $field );
+					}
+				}
+
 
 				$field_value = implode( ', ', (array) $field_values );
 
@@ -153,6 +161,57 @@ class Caldera_Forms_Magic_Summary extends Caldera_Forms_Magic_Parser {
 		 */
 		$this->pattern = apply_filters( 'caldera_forms_summary_magic_pattern', '<strong>%s</strong><div style="margin-bottom:20px;">%s</div>', $this->form );
 
+	}
+
+	/**
+	 * Check if field should use label instead of value
+	 *
+	 * @since 1.4.6
+	 *
+	 * @param array $field Field config
+	 *
+	 * @return bool
+	 */
+	protected function should_use_label( array $field ){
+		if( empty( $field[ 'config' ][ 'option' ] ) ){
+			return false;
+		}
+
+		/**
+		 * Set a single-select field to show label instead of value in {summary} magic tag
+		 *
+		 * @since 1.4.6
+		 *
+		 * @param bool $use Use or not?
+		 * @param array $field Field config
+		 * @param array $form Form config
+		 */
+		return wp_validate_boolean( apply_filters( 'caldera_forms_magic_summary_should_use_label', false, $field, $this->form ) );
+	}
+
+	/**
+	 * Convert option value to label
+	 *
+	 * @since 1.4.6
+	 *
+	 * @param mixed $value Value to find label for
+	 * @param array$field
+	 *
+	 * @return bool|mixed False if not found, else value
+	 */
+	protected function option_value_to_label( $value, $field ){
+		if( empty( $field[ 'config' ][ 'option' ] ) ){
+			return false;
+		}
+
+		foreach ( $field[ 'config' ][ 'option' ]  as $opt_id => $option ){
+			if( $value == $option[ 'value'] ){
+				return $option[ 'label' ];
+			}
+
+		}
+
+		return false;
 	}
 
 }
