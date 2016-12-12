@@ -891,6 +891,7 @@ do_action('caldera_forms_edit_end', $element);
 			__( 'Select', 'caldera-forms' ) => '',
 			__( 'File', 'caldera-forms' ) => '',
 			__( 'Content', 'caldera-forms' ) => '',
+			__( 'eCommerce', 'caldera-forms' )  => '',
 			__( 'Special', 'caldera-forms' ) => '',
 			
 		);
