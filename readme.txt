@@ -1423,4 +1423,4 @@ Major update! Better emails form your form, better form editor. Caldera Forms !!
 See: https://wp.me/p5JPPE-9bv for details.
 
 = 1.4.6 =
-See: https://calderaforms.com/cwp_updates/caldera-forms-1-4-6/
+See: https://calderaforms.com/updates/caldera-forms-1-4-6/
