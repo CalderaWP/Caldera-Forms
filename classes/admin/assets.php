@@ -50,6 +50,12 @@ class Caldera_Forms_Admin_Assets {
 		self::maybe_register_all_admin();
 		Caldera_Forms_Render_Assets::enqueue_style( 'grid' );
 		self::enqueue_style( 'admin' );
+		wp_localize_script( self::slug( 'admin' ), 'CF_ADMIN', array(
+			'adminAjax' => esc_url_raw( admin_url( 'admin-ajax.php' ) ),
+			'rest' => array(
+				'root' => esc_url_raw( Caldera_Forms_API_Util::url() ),
+			)
+		) );
 		self::enqueue_style( 'modal' );
 		self::enqueue_style( 'field' );
 

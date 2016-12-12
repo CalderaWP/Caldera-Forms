@@ -18,19 +18,7 @@
 	</ul>
 </div>
 <span class="form_entry_row highlight">
-<span class="form-control form-entry-trigger ajax-trigger"
-      data-autoload="true" data-page="1" 
-      data-status="active"
-      data-callback="setup_pagination" 
-      data-group="entry_nav" 
-      data-active-class="highlight" 
-      data-load-class="spinner"
-      data-active-element="#form_row_<?php echo $form[ 'ID' ]; ?>" 
-      data-template="#forms-list-alt-tmpl"
-      data-form="<?php echo $form[ 'ID' ]; ?>" 
-      data-target="#form-entries-viewer" data-action="browse_entries"
-      data-nonce="<?php echo wp_create_nonce( 'view_entries' ); ?>"
-></span>
+	<?php echo Caldera_Forms_Entry_Viewer::entry_trigger( $form[ 'ID' ] ); ?>
 </span>
 <?php 
 $is_pinned = true;
@@ -43,7 +31,6 @@ include CFCORE_PATH . 'ui/entries/toolbar.php';
 
 <?php
 	Caldera_Forms_Entry_Viewer::print_scripts();
-	do_action('caldera_forms_admin_templates');
 ?>
 
 

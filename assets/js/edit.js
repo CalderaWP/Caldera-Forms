@@ -70,7 +70,13 @@ function get_compiled_template( template ) {
 
 
 jQuery(document).ready(function($){
-
+    var adminAJAX;
+    if( 'object' == typeof  CF_ADMIN ){
+        adminAJAX = CF_ADMIN.adminAjax
+    } else {
+        //yolo
+        adminAJAX = ajaxurl;
+    }
 
     $('.caldera-header-save-button').baldrick({
         method			:	'POST',
@@ -2088,7 +2094,7 @@ jQuery(document).ready(function($) {
             }
         };
 
-        $.post(ajaxurl, data, function(res){
+        $.post( adminAJAX, data, function(res){
 
             clicked.parent().find('.spinner').css('display', 'none');
 
@@ -2512,7 +2518,7 @@ jQuery(document).ready(function($) {
 
         // initialise baldrick triggers
         $('.wp-baldrick').baldrick({
-            request     : ajaxurl,
+            request     : adminAJAX,
             method      : 'POST',
             before		: function(el){
 

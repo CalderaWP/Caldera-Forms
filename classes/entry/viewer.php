@@ -20,7 +20,7 @@ class Caldera_Forms_Entry_Viewer {
 	 *
 	 * @return string
 	 */
-	public static function full_viewer(){
+	public static function full_viewer( $with_toolbar = true ){
 		ob_start();
 		include CFCORE_PATH . 'ui/entries/viewer.php';
 		return ob_get_clean();
@@ -32,7 +32,77 @@ class Caldera_Forms_Entry_Viewer {
 	 * @since 1.5.0
 	 */
 	public static function print_scripts(){
-		include CFCORE_PATH . 'ui/entries/navigation.php';
+		include CFCORE_PATH . 'ui/entries/scripts_templates.php';
+	}
+
+	/**
+	 * Create span that triggers AJAX action for loading a single form's entries into viewer
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $form_id The from ID
+	 *
+	 * @return string
+	 */
+	public static function entry_trigger( $form_id ){
+		$atts = array(
+			'class'               => 'form-control form-entry-trigger ajax-trigger',
+			'data-autoload'       => 'true',
+			'data-page'           => '1',
+			'data-status'         => 'active',
+			'data-callback'       => 'setup_pagination',
+			'data-group'          => 'entry_nav',
+			'data-active-class'   => 'highlight',
+			'data-load-class'     => 'spinner',
+			'data-active-element' => '#form_row_' . $form_id,
+			'data-template'       => '#forms-list-alt-tmpl',
+			'data-form'           => $form_id,
+			'data-target'         => '#form-entries-viewer',
+			'data-action'         => 'browse_entries',
+			'data-nonce'          => wp_create_nonce( 'view_entries' ),
+		);
+
+		return sprintf( '<span %s ></span>', caldera_forms_implode_field_attributes( caldera_forms_escape_field_attributes_array( $atts ) ) );
+
+	}
+
+	/**
+	 * Show entry viewer for one form
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param $form_id
+	 * @param bool $with_toolbar
+	 *
+	 * @return string
+	 */
+	public static function form_entry_viewer( $form_id, $with_toolbar = false ){
+		Caldera_Forms_Admin_Assets::admin_common();
+
+
+		$viewer = self::full_viewer( $with_toolbar );
+		$viewer .= self::entry_trigger( $form_id );
+		if( ! did_action( 'wp_footer' ) ){
+			add_action( 'wp_footer', array( __CLASS__, 'print_scripts' ) );
+		}else{
+			ob_start();
+			self::print_scripts();
+			$viewer .= ob_get_clean();
+		}
+
+		return $viewer;
+
+	}
+
+	/**
+	 * Get saved # of entries per page to show
+	 *
+	 * @since 1.5.0
+	 *
+	 * @return int
+	 */
+	public static function entries_per_page(){
+		return absint( get_option( '_caldera_forms_entry_perpage', 20 ) );
 	}
 
 }

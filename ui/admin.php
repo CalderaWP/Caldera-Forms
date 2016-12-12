@@ -8,7 +8,7 @@ $per_page_limit = 20;
 $forms = Caldera_Forms_Forms::get_forms( true );
 $forms = apply_filters( 'caldera_forms_admin_forms', $forms );
 
-$entry_perpage = get_option( '_caldera_forms_entry_perpage', 20 );
+
 $style_includes = get_option( '_caldera_forms_styleincludes' );
 if(empty($style_includes)){
 	$style_includes = array(

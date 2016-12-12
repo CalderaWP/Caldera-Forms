@@ -2,6 +2,7 @@
 if( ! defined( 'ABSPATH' ) ){
 	exit;
 }
+$entry_perpage = Caldera_Forms_Entry_Viewer::entries_per_page();
 ?>
 <div class="tablenav caldera-table-nav" style="display:none;">
 
@@ -9,7 +10,7 @@ if( ! defined( 'ABSPATH' ) ){
 		<label class="screen-reader-text" id="cf-entries-list-items">
 			<?php esc_html__( 'Posts Per Page', 'caldera-forms' ); ?>
 		</label>
-		<input title="<?php echo esc_attr( esc_html__( 'Entries per page', 'caldera-forms' ) ); ?>" id="cf-entries-list-items" type="number" value="<?php echo $entry_perpage; ?>" class="screen-per-page" />
+		<input title="<?php echo esc_attr( esc_html__( 'Entries per page', 'caldera-forms' ) ); ?>" id="cf-entries-list-items" type="number" value="<?php echo esc_attr( $entry_perpage ); ?>" class="screen-per-page" />
 		<span class="pagination-links">
 				<a href="#first" title="<?php esc_attr_e( 'Go to the first page', 'caldera-forms' ); ?>" data-page="first" class="first-page">«</a>
 				<a href="#prev" title="<?php esc_attr_e( 'Go to the previous page', 'caldera-forms' ); ?>" data-page="prev" class="prev-page">‹</a>

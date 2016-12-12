@@ -280,3 +280,91 @@ if( ! defined( 'ABSPATH' ) ){
 	});
 
 </script>
+
+<script type="text/html" id="forms-list-alt-tmpl">
+
+	{{#if entries}}
+	<div class="list form-panel postbox" data-form="{{form}}">
+		<table class="table table-condensed cf-table-viewer">
+			<thead>
+			<tr>
+				<th style="width:16px;"><input type="checkbox" class="cf-bulkcheck"></th>
+				<th><?php esc_html_e('ID', 'caldera-forms' ); ?></th>
+				<th><?php esc_html_e('Submitted', 'caldera-forms' ); ?></th>
+				{{#each fields}}
+				<th>{{this}}</th>
+				{{/each}}
+				<th style="width: 100px;"></th>
+			</tr>
+			</thead>
+			<tbody>
+			{{#if entries}}
+			{{#each entries}}
+			<tr id="entry_row_{{_entry_id}}">
+				<td style="width:16px;"><input type="checkbox" class="cf-entrycheck" value="{{_entry_id}}"></td>
+				<td>{{_entry_id}}</td>
+				<td>{{_date}}</td>
+				{{#each data}}
+				<td>{{#if label}}{{value}}{{else}}{{{this}}}{{/if}}</td>
+				{{/each}}
+				<td style="text-align: right; width: 100px;white-space: nowrap;">
+					<?php do_action('caldera_forms_entry_actions'); ?>
+				</td>
+			</tr>
+			{{/each}}
+			{{else}}
+			<tr><td colspan="100"><?php esc_html_e('No entries found', 'caldera-forms' ); ?></td></tr>
+			{{/if}}
+			</tbody>
+		</table>
+	</div>
+	{{else}}
+	<p class="description"><?php esc_html_e('No entries yet.', 'caldera-forms' ); ?></p>
+	{{/if}}
+</script>
+
+<script type="text/html" id="view-entry-tmpl">
+	{{#if user}}
+	<div class="user-avatar user-avatar-{{user/ID}}"{{#if user/name}} title="{{user/name}}"{{/if}} style="margin-top:-1px;">
+	{{{user/avatar}}}
+	</div>
+	{{/if}}
+
+	<div id="main-entry-panel" class="tab-detail-panel" data-tab="<?php esc_html_e('Entry', 'caldera-forms' ); ?>">
+		<h4>
+			<?php  esc_html_e('Submitted', 'caldera-forms' ); ?> <small class="description">{{date}}</small>
+		</h4>
+		<hr>
+		{{#each data}}
+		<div class="entry-line">
+			<label>{{label}}</label>
+			<div>{{#if view/label}}{{view/value}}{{else}}{{{view}}}{{/if}}&nbsp;</div>
+		</div>
+		{{/each}}
+	</div>
+
+
+	{{#if meta}}
+	{{#each meta}}
+	<div id="meta-{{@key}}" data-tab="{{name}}" class="tab-detail-panel">
+		<h4>{{name}}</h4>
+		<hr>
+		{{#unless template}}
+		{{#each data}}
+		{{#if title}}
+		<h4>{{title}}</h4>
+		{{/if}}
+		{{#each entry}}
+		<div class="entry-line">
+			<label>{{meta_key}}</label>
+			<div>{{{meta_value}}}&nbsp;</div>
+		</div>
+		{{/each}}
+		{{/each}}
+		{{/unless}}
+		<?php do_action('caldera_forms_entry_meta_templates'); ?>
+	</div>
+	{{/each}}
+	{{/if}}
+
+</script>
