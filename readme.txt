@@ -726,6 +726,12 @@ The [Trumbowyg](https://alex-d.github.io/Trumbowyg/) JavaScript library is used
 5. **Go Further With Form Processors** - Auto-responsers, redirects included! Go further with our add-ons!
 
 == Changelog ==
+= Caldera Forms 1.4.6 ( December 12, 2016 ) Summary Magic Tag: No with 15% more magic! =
+* FIXED: Bug preventing hidden field values, set in browser (via jQuery or whatever) from being saved properly. This bug was fun:)
+* ADDED: caldera_forms_magic_summary_should_use_label Filter for showing label instead of value for select fields in {summary} magic tags.
+* FIXED: Issue where Josh didn't have a good answer for how to do what caldera_forms_magic_summary_should_use_label filter now does.
+* FIXED: Issue, which was pretty rare, where summary magic tag might now have the right form's data and therefore summarizes nothing, which isn't really a summary at all.
+
 = Caldera Forms 1.4.5.1 ( December 4, 2016 ) #WCUS =
 * FIXED: Submenu entry viewer had a JavaScript error, it has been eradicated.
 * FIXED: Submenu entry viewer header had both old logo and new logo overlapping, which was kind of poetic, but looked bad.
