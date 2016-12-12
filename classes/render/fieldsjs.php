@@ -442,6 +442,8 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 
 		$this->data[ $field_id ] = $this->create_config_array( $field_id, __FUNCTION__, array(
 			'invalid' => __( 'Invalid Card Number', 'caldera-forms' ),
+			'cvc' => false,
+			'exp' => false,
 		) );
 
 		if( Caldera_Forms_Render_Assets::should_minify( false ) ){
@@ -450,6 +452,13 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 			$this->data[ $field_id ][ 'imgPath' ] = CFCORE_URL . 'assets/images/';
 		}
 
+		if( ! empty( $field[ 'config' ][ 'cvc'] ) ){
+			$this->data[ $field_id ][ 'cvc' ] = $this->field_id( $field[ 'config' ][ 'cvc' ] );
+		}
+
+		if( ! empty( $field[ 'config' ][ 'exp'] ) ){
+			$this->data[ $field_id ][ 'exp' ] = $this->field_id( $field[ 'config' ][ 'exp' ] );
+		}
 
 	}
 

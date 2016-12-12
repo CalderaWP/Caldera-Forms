@@ -24,7 +24,8 @@
 		{{{_field slug="credit_card_field" type="credit_card_number"  }}}
 	</div>
 	<p class="description">
-		<?php esc_html_e( 'Link to credit card field to link verification.', 'caldera-forms' ); ?>
+		<?php esc_html_e( 'If set, the type of card will be used for verification.', 'caldera-forms' ); ?>
 	</p>
 </div>
+
 

@@ -5,6 +5,7 @@ $btn_action = null;
 if($field['config']['type'] == 'next' || $field['config']['type'] == 'prev'){
 	$btnType = 'button';
 	$btn_action = 'data-page="'.$field['config']['type'].'"';
+	$field[ 'config' ][ 'class' ] = $field[ 'config' ][ 'class' ] . ' cf-page-btn cf-page-btn-' . $field[ 'config' ][ 'type' ];
 }elseif( $field['config']['type'] == 'button' && !empty( $field['config']['target'] ) ){
 	$field['config']['class'] .= ' cf-form-trigger';
 	$btn_action = 'data-target="'. esc_attr( $field['config']['target'] ).'"';
@@ -14,7 +15,6 @@ if($field['config']['type'] == 'next' || $field['config']['type'] == 'prev'){
 
 
 }
-
 
 
 ?>

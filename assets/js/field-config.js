@@ -5,7 +5,7 @@
 
      var fields = {};
 
-     var $submits = $form.find(':submit');
+     var $submits = $form.find(':submit, .cf-page-btn-next' );
 
      this.init = function(){
          $.each( configs, function( i, config ){
@@ -19,15 +19,22 @@
          $parent.find( '.help-block' ).remove();
          if( ! valid ){
              $parent.addClass( 'has-error' ).append( '<span id="cf-error-'+ $field.attr('id') +'" class="help-block ' + extraClass +'">' + message  + '</span>' );
+             disableAdvance();
              $field.addClass( 'parsely-error' );
-             $submits.prop( 'disabled',true).attr( 'aria-disabled', true  );
              return false;
          }else{
              $parent.removeClass( 'has-error' );
-             $submits.prop( 'disabled',false).attr( 'aria-disabled', false  );
-
+             allowAdvance();
              return true;
          }
+     }
+
+     function disableAdvance(){
+         $submits.prop( 'disabled',true).attr( 'aria-disabled', true  );
+     }
+
+     function allowAdvance(){
+         $submits.prop( 'disabled',false).attr( 'aria-disabled', false  );
      }
 
      this.button = function( field ){
@@ -206,6 +213,10 @@
      this.credit_card_number = function( fieldConfig ){
          var $field = $( document.getElementById( fieldConfig.id ) );
 
+         if( false != fieldConfig.exp || false != fieldConfig.cvc ){
+             setupLink();
+         }
+
          if( $field.length ){
              $field.payment('formatCardNumber');
              $field.blur( function(){
@@ -217,6 +228,16 @@
                      setImage( type );
                  }
              })
+         }
+
+         function setupLink(){
+             disableAdvance();
+             var $cvcField = $( document.getElementById( fieldConfig.cvc ) ),
+                 $expField = $( document.getElementById( fieldConfig.exp ) );
+             $cvc.blur( function(){
+                 self.creditCardUtil.validateCVC( $field, $cvcField );
+                 self.creditCardUtil.validateExp( $expField );
+             });
          }
 
          function setImage( type ){
@@ -236,6 +257,7 @@
              });
 
              $field.css( 'background', 'url("' + fieldConfig.imgPath + icon + '")' );
+             
          }
 
      };
@@ -245,9 +267,7 @@
          if( $field.length ){
              $field.payment('formatCardExpiry');
              $field.blur( function () {
-                 var val =  $field.val().split( '/');
-
-                 var valid = $.payment.validateCardExpiry( val[0].trim(), val[1].trim() );
+                 var valid = self.creditCardUtil.validateExp( $field );
                  handleValidationMarkup( valid, $field, fieldConfig.invalid, 'help-block-credit_card_exp help-block-credit_card' );
              });
          }
@@ -258,23 +278,33 @@
          if( $field.length ){
              $field.payment('formatCardCVC');
              if( false !== fieldConfig.ccField ) {
-                 $ccField = $( document.getElementById( fieldConfig.ccField ) );
+                 var $ccField = $( document.getElementById( fieldConfig.ccField ) );
                  $field.blur( function () {
-                     var val =  $field.val();
-                     var cardValid = $.payment.validateCardNumber( $ccField.val() );
-                     var valid = false;
-                     if ( cardValid ) {
-                         var type = $.payment.cardType( $ccField.val() );
-                         valid = $.payment.validateCardCVC( val, type)
-                     }
-
-                     handleValidationMarkup( valid, $field, fieldConfig.invalid, 'help-block-credit_card_cvc help-block-credit_card' );
-
+                     var valid = self.creditCardUtil.validateExp( $ccField, $field);
+                     handleValidationMarkup(valid, $field, fieldConfig.invalid, 'help-block-credit_card_cvc help-block-credit_card');
                  });
              }
 
          }
      };
+
+     this.creditCardUtil = {
+         validateCVC: function( $ccField, $cvcField ){
+             var val =  $cvcField.val();
+             var cardValid = $.payment.validateCardNumber( $ccField.val() );
+             var valid = false;
+             if ( cardValid ) {
+                 var type = $.payment.cardType( $ccField.val() );
+                 valid = $.payment.validateCardCVC( val, type)
+             }
+
+             return valid;
+         },
+         validateExp: function( $expField ){
+             var val =  $expField.val().split( '/');
+             var valid = $.payment.validateCardExpiry( val[0].trim(), val[1].trim() );
+         }
+     }
 
 
  }
