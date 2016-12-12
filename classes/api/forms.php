@@ -172,8 +172,7 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
      * @param $form
      * @return mixed
      */
-    protected function prepare_processors_for_response($form)
-    {
+    protected function prepare_processors_for_response($form) {
         if (!empty($form['processors'])) {
             $processors = array();
             foreach ($form['processors'] as $id => $processor) {
@@ -193,8 +192,7 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
      * @param $form
      * @return mixed
      */
-    protected function prepare_mailer_for_response($form)
-    {
+    protected function prepare_mailer_for_response($form) {
         if (!empty($form['mailer'])) {
             if (!empty($form['mailer']['on_insert'])) {
 
