@@ -1,7 +1,12 @@
 <script type="text/html" id="bulk-actions-active-tmpl">
-	<option selected="selected" value=""><?php esc_html_e( 'Bulk Actions', 'caldera-forms' ); ?></option>
-	<option value="export"><?php esc_html_e( 'Export Selected', 'caldera-forms' ); ?></option>
-	<?php if( current_user_can( Caldera_Forms::get_manage_cap( 'manage' ) ) ){ ?><option value="trash"><?php esc_html_e( 'Move to Trash', 'caldera-forms' ); ?></option><?php } ?>
+	<option selected="selected" value="">
+		<?php esc_html_e( 'Bulk Actions', 'caldera-forms' ); ?>
+	</option>
+	<option value="export">
+		<?php esc_html_e( 'Export Selected', 'caldera-forms' ); ?>
+	</option>
+	<?php if( current_user_can( Caldera_Forms::get_manage_cap( 'manage' ) ) ){ ?>
+		<option value="trash"><?php esc_html_e( 'Move to Trash', 'caldera-forms' ); ?></option><?php } ?>
 </script>
 
 <script type="text/html" id="cf-export-template">
@@ -9,37 +14,60 @@
 		<input type="hidden" name="cal_del" value="{{nonce}}">
 
 		<div class="caldera-config-group">
-			<label><?php echo esc_html__( 'Export Type', 'caldera-forms' ); ?></label>
+			<label for="cf-export-format">
+				<?php echo esc_html__( 'Export Type', 'caldera-forms' ); ?>
+			</label>
 			<div class="caldera-config-field">
-				<select class="form-export-type" name="format" style="width: 230px;">
+				<select class="form-export-type" name="format" id="cf-export-format" style="width: 230px;">
 					<option value="json"><?php esc_html_e('Backup / Importable (json)' , 'caldera-forms' ); ?></option>
 					<option value="php"><?php esc_html_e('PHP include File' , 'caldera-forms' ); ?></option>
 				</select>
 			</div>
 		</div>
-		<p class="description" id="json_export_option"><?php esc_html_e( 'This gives you a .json file that can be imported into Caldera Forms.', 'caldera-forms' ); ?></p>
+
+		<p class="description" id="json_export_option">
+			<?php esc_html_e( 'This gives you a .json file that can be imported into Caldera Forms.', 'caldera-forms' ); ?>
+		</p>
 		<div style="display:none;" id="php_export_options">
 			<div class="caldera-config-group">
-				<label><?php echo esc_html__( 'Form ID', 'caldera-forms' ); ?></label>
+				<label for="cf-export-form-id">
+					<?php echo esc_html__( 'Form ID', 'caldera-forms' ); ?>
+				</label>
 				<div class="caldera-config-field">
-					<input type="text" class="block-input field-config" data-format="slug" name="form_id" value="{{formslug}}" required="required">
+					<input type="text" id="cf-export-form-id" class="block-input field-config" data-format="slug" name="form_id" value="{{formslug}}" required="required">
 				</div>
 			</div>
+
 			<div class="caldera-config-group">
-				<label><?php echo esc_html__( 'Pin to Admin', 'caldera-forms' ); ?></label>
+				<label for="cf-export-pin-menu">
+					<?php echo esc_html__( 'Pin to Admin', 'caldera-forms' ); ?>
+				</label>
 				<div class="caldera-config-field">
-					<label><input type="checkbox" name="pin_menu" value="1"> <?php esc_html_e( 'Set form to be pinned to Admin Menu', 'caldera-forms' ); ?></label>
+					<label><input type="checkbox" name="pin_menu" id="cf-export-pin-menu" value="1">
+						<?php esc_html_e( 'Set form to be pinned to Admin Menu', 'caldera-forms' ); ?>
+					</label>
 				</div>
 			</div>
+
 			<div class="caldera-config-group">
-				<label><?php echo esc_html__( 'Field Slugs', 'caldera-forms' ); ?></label>
+				<label for="cf-export-convert-ids">
+					<?php echo esc_html__( 'Field Slugs', 'caldera-forms' ); ?>
+				</label>
 				<div class="caldera-config-field">
-					<label><input type="checkbox" name="convert_slugs" value="1"> <?php esc_html_e( "Convert Field ID's to use field slugs", 'caldera-forms' ); ?></label>
+					<label>
+						<input type="checkbox" name="convert_slugs" value="1" id="cf-export-convert-ids">
+						<?php esc_html_e( "Convert Field ID's to use field slugs", 'caldera-forms' ); ?>
+					</label>
 				</div>
 			</div>
+
 			<hr>
-			<p class="description"><?php esc_html_e('This gives you a hardcoded .php file that can be included in projects. It includes the correct filter for the ID specific form allowing you to easily use the form by simply including the file.', 'caldera-forms'); ?></p>
-			<p class="description"><?php esc_html_e('This is not a backup and cannot be imported.', 'caldera-forms'); ?></p>
+			<p class="description">
+				<?php esc_html_e('This gives you a hardcoded .php file that can be included in projects. It includes the correct filter for the ID specific form allowing you to easily use the form by simply including the file.', 'caldera-forms'); ?>
+			</p>
+			<p class="description">
+				<?php esc_html_e('This is not a backup and cannot be imported.', 'caldera-forms'); ?>
+			</p>
 
 		</div>
 
@@ -61,9 +89,16 @@
 
 </script>
 <script type="text/html" id="bulk-actions-trash-tmpl">
-	<option selected="selected" value=""><?php esc_html_e( 'Bulk Actions', 'caldera-forms' ); ?></option>
-	<option value="export"><?php esc_html_e( 'Export Selected', 'caldera-forms' ); ?></option>
-	<?php if( current_user_can( 'delete_others_posts' ) ){ ?><option value="active"><?php esc_html_e( 'Restore', 'caldera-forms' ); ?></option>
+	<option selected="selected" value="">
+		<?php esc_html_e( 'Bulk Actions', 'caldera-forms' ); ?>
+	</option>
+	<option value="export">
+		<?php esc_html_e( 'Export Selected', 'caldera-forms' ); ?>
+	</option>
+	<?php if( current_user_can( 'delete_others_posts' ) ){ ?>
+		<option value="active">
+			<?php esc_html_e( 'Restore', 'caldera-forms' ); ?>
+		</option>
 	<option value="delete"><?php esc_html_e( 'Delete Permanently', 'caldera-forms' ); ?></option><?php } ?>
 </script>
 <script type="text/html" id="import-form-tmpl">
@@ -73,15 +108,19 @@
 		do_action('caldera_forms_import_form_template_start');
 		?>
 		<div class="caldera-config-group">
-			<label for=""><?php esc_html_e( 'Form Name', 'caldera-forms' ); ?></label>
+			<label for="cf-new-form-name">
+				<?php esc_html_e( 'Form Name', 'caldera-forms' ); ?>
+			</label>
 			<div class="caldera-config-field">
-				<input type="text" class="new-form-name block-input field-config" autocomplete="off" name="name" value="" required="required">
+				<input id="cf-new-form-name" type="text" class="new-form-name block-input field-config" autocomplete="off" name="name" value="" required="required">
 			</div>
 		</div>
 		<div class="caldera-config-group">
-			<label for=""><?php esc_html_e( 'Form File', 'caldera-forms' ); ?></label>
+			<label for="cf-cf-new-form-file">
+				<?php esc_html_e( 'Form File', 'caldera-forms' ); ?>
+			</label>
 			<div class="caldera-config-field">
-				<input type="file" class="new-form-name" name="import_file" required="required" style="width: 230px;">
+				<input type="file" id="cf-new-form-file" class="new-form-name" name="import_file" required="required" style="width: 230px;">
 			</div>
 		</div>
 		
@@ -93,7 +132,12 @@
 
 		
 		<?php
-		do_action('caldera_forms_import_form_template_end');
+			/**
+			 * Runs at bottom of new form template
+			 *
+			 * @since unknown
+			 */
+			do_action('caldera_forms_import_form_template_end');
 		?>
 	</form>
 </script>
@@ -114,8 +158,12 @@
 	?>
 	<div class="caldera-settings-group">
 		<div class="caldera-settings">
-			<strong><?php esc_html_e( 'Alert Styles' , 'caldera-forms' ); ?></strong>
-			<p class="description"><?php esc_html_e( 'Includes Bootstrap 3 styles on the frontend for form alert notices', 'caldera-forms' ); ?></p>
+			<strong>
+				<?php esc_html_e( 'Alert Styles' , 'caldera-forms' ); ?>
+			</strong>
+			<p class="description">
+				<?php esc_html_e( 'Includes Bootstrap 3 styles on the frontend for form alert notices', 'caldera-forms' ); ?>
+			</p>
 			<div class="clear"></div>
 		</div>
 		<div class="caldera-setting">
@@ -129,8 +177,12 @@
 
 	<div class="caldera-settings-group">
 		<div class="caldera-settings">
-			<strong><?php esc_html_e( 'Form Styles' , 'caldera-forms' ); ?></strong>
-			<p class="description"><?php esc_html_e( 'Includes Bootstrap 3 styles on the frontend for form fields and buttons', 'caldera-forms' ); ?></p>
+			<strong>
+				<?php esc_html_e( 'Form Styles' , 'caldera-forms' ); ?>
+			</strong>
+			<p class="description">
+				<?php esc_html_e( 'Includes Bootstrap 3 styles on the frontend for form fields and buttons', 'caldera-forms' ); ?>
+			</p>
 			<div class="clear"></div>
 		</div>
 		<div class="caldera-setting">
@@ -144,8 +196,12 @@
 
 	<div class="caldera-settings-group">
 		<div class="caldera-settings">
-			<strong><?php esc_html_e( 'Grid Structures' , 'caldera-forms' ); ?></strong>
-			<p class="description"><?php esc_html_e( 'Includes Bootstrap 3 styles on the frontend for form grid layouts', 'caldera-forms' ); ?></p>
+			<strong>
+				<?php esc_html_e( 'Grid Structures' , 'caldera-forms' ); ?>
+			</strong>
+			<p class="description">
+				<?php esc_html_e( 'Includes Bootstrap 3 styles on the frontend for form grid layouts', 'caldera-forms' ); ?>
+			</p>
 			<div class="clear"></div>
 		</div>
 		<div class="caldera-setting">
@@ -173,9 +229,11 @@
 		{{/if}}
 		{{#if clone}}
 		<div class="caldera-config-group">
-			<label for=""><?php esc_html_e( 'Form Name', 'caldera-forms' ); ?></label>
+			<label for="cf-clone-form-name">
+				<?php esc_html_e( 'Form Name', 'caldera-forms' ); ?>
+			</label>
 			<div class="caldera-config-field">
-				<input type="text" class="new-form-name block-input field-config" name="name" value="" required="required">
+				<input type="text" id="cf-clone-form-name" class="new-form-name block-input field-config" name="name" value="" required="required">
 			</div>
 		</div>
 		<input type="hidden" name="clone" value="{{clone}}">
@@ -240,7 +298,9 @@
 {{/if}}
 
 	<div id="main-entry-panel" class="tab-detail-panel" data-tab="<?php esc_html_e('Entry', 'caldera-forms' ); ?>">
-		<h4><?php echo esc_html_e('Submitted', 'caldera-forms' ); ?> <small class="description">{{date}}</small></h4>
+		<h4>
+			<?php  esc_html_e('Submitted', 'caldera-forms' ); ?> <small class="description">{{date}}</small>
+		</h4>
 		<hr>
 		{{#each data}}
 			<div class="entry-line">
@@ -275,97 +335,11 @@
 	{{/if}}
 
 </script>
-<script type="text/javascript">
-
-jQuery(function($){
-
-	$('body').on('change', '.cf-bulkcheck', function(){
-
-		var checked = $(this),
-			parent = checked.closest('.cf-table-viewer'),
-			checks = parent.find('.cf-entrycheck'),
-			action = $('#cf_bulk_action');
-
-		checks.prop('checked', checked.prop('checked'));
-
-	});
-	
-	$('body').on('change', '.cf-entrycheck', function(){
-
-		var checkall	= $('.cf-bulkcheck'),
-			allchecks	= $('.cf-entrycheck'),
-			checked 	= $('.cf-entrycheck:checked');
-
-		if(allchecks.length != checked.length){
-			checkall.prop('checked', false);
-		}else{
-			checkall.prop('checked', true);
-		}
-
-	});
-	$('body').on('click', '.cf-bulk-action', function(){
-
-		var action 		= $('#cf_bulk_action'),
-			bulkCheck 	= $('.cf-bulkcheck'),
-			nonce 		= $('#cf_toolbar_actions'),
-			referer		= nonce.parent().find('[name="_wp_http_referer"]');
-
-		if( !action.val().length){
-			return;
-		}
-
-		action.prop('disabled', true);
-		var checks 	= $('#form-entries-viewer .cf-entrycheck:checked'),
-			form	= $('#form-entries-viewer .list.form-panel').data('form');
-
-		if(checks.length){
-
-			var list = [],
-				rows = [];
-			for( var i = 0; i<checks.length; i++){
-				list.push(checks[i].value);
-				rows.push('#entry_row_' + checks[i].value);
-			}
-			var row_items = $(rows.join(','));
-
-			var data = {
-				'action'	:	'cf_bulk_action',
-				'do'		:	action.val(),
-				'items'		:	list,
-				'form'		:	form,
-				'cf_toolbar_actions' : nonce.val(),
-				'_wp_http_referer' : referer.val()
-			}
-
-			row_items.animate({"opacity": .4}, 500);
-			$.post(ajaxurl, data, function(res){
-				if(res.status && res.entries && res.total){
-					row_items.remove();
-					$('.entry_count_' + form).html(res.total);
-					$('input.current-page').trigger('change');
-				}else if(res.url){
-					row_items.animate({"opacity": 1}, 500);
-					window.location = res.url;
-				}else if(res.status === 'reload'){
-					$('input.current-page').trigger('change');
-				}
-				action.val('').prop('disabled', false);
-				bulkCheck.prop('checked', false);				
-			});
-		}else{
-			action.prop('disabled', false);
-		}
-
-	});
-
-});
-
-</script>
 
 
 <?php 
 $forms = Caldera_Forms_Forms::get_forms( true );
-foreach( $forms as $form_id=>$form_conf ){ ?>
+foreach ( $forms as $form_id => $form_conf ) { ?>
 
 <script type="text/html" id="cfajax_<?php echo esc_attr( $form_id ); ?>-tmpl">
 	{{#script}}
@@ -386,13 +360,6 @@ foreach( $forms as $form_id=>$form_conf ){ ?>
 </script>
 
 <?php } ?>
-
-
-
-
-
-
-
 
 
 

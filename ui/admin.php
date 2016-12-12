@@ -217,24 +217,8 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 			<div class="caldera-forms-clippy-zone" id="caldera-forms-clippy-p3" style="background-image: url( '<?php echo esc_url( CFCORE_URL . '/assets/images/caldera-globe-logo-sm.png' ); ?>' );">
 			</div>
 		</div>
-		<div class="form-entries-wrap" aria-live="polite" aria-relevant="additions removals">
-	<?php include CFCORE_PATH . 'ui/entries_toolbar.php'; ?>
-	<div id="form-entries-viewer"></div>
+		<?php echo Caldera_Forms_Entry_Viewer::full_viewer(); ?>
 
-		<div class="tablenav caldera-table-nav" style="display:none;">
-
-			<div class="tablenav-pages">
-				<input title="<?php echo esc_attr( esc_html__( 'Entries per page', 'caldera-forms' ) ); ?>" id="cf-entries-list-items" type="number" value="<?php echo $entry_perpage; ?>" class="screen-per-page">
-				<span class="pagination-links">
-					<a href="#first" title="Go to the first page" data-page="first" class="first-page">«</a>
-					<a href="#prev" title="Go to the previous page" data-page="prev" class="prev-page">‹</a>
-					<span class="paging-input"><input type="text" size="1" name="paged" title="Current page" class="current-page"> of <span class="total-pages"></span></span>
-					<a href="#next" title="Go to the next page" data-page="next" class="next-page">›</a>
-					<a href="#last" title="Go to the last page" data-page="last" class="last-page">»</a>
-				</span>
-			</div>
-		</div>
-	</div>
 	</div>
 </div>
 
@@ -494,8 +478,11 @@ jQuery( function( $ ){
 </script>
 <?php
 
-include CFCORE_PATH . 'ui/entry_navigation.php';
 
-
+/**
+ * Runs at the bottom of the main Caldera Forms admi page
+ *
+ * @since unknown
+ */
 do_action('caldera_forms_admin_footer');
 ?>

@@ -1159,9 +1159,13 @@ class Caldera_Forms_Admin {
 			include CFCORE_PATH . 'ui/entries.php';
 
 		}else{
+			add_action( 'caldera_forms_admin_footer', array( 'Caldera_Forms_Entry_Viewer', 'print_scripts' ) );
 			include CFCORE_PATH . 'ui/admin.php';
+
 		}
 		echo "	</div>\r\n";
+
+
 
 	}
 

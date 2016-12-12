@@ -60,5 +60,12 @@
 
 		</div>
 
-		<?php do_action('caldera_forms_entries_toolbar'); ?>
+		<?php
+		/**
+		 * Runs at the end of the entries toolbar
+		 *
+		 * @since unknown
+		 */
+		do_action('caldera_forms_entries_toolbar');
+		?>
 
