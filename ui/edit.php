@@ -906,9 +906,14 @@ do_action('caldera_forms_edit_end', $element);
 				$cats = explode(',', $config['category']);
 			}
 
+			$svg = false;
 			$icon = CFCORE_URL . "assets/images/field.png";
 			if(!empty($config['icon'])){
 				$icon = $config['icon'];
+				if( false !== strpos( $icon, '.svg' ) ){
+					$svg = true;
+				}
+
 			}
 			foreach($cats as $cat){
 				$cat = trim($cat);
@@ -917,9 +922,13 @@ do_action('caldera_forms_edit_end', $element);
 				}
 				$template = '<div class="form-modal-add-line">';
 					$template .= '<button type="button" class="button info-button set-current-field" data-field="{{id}}" data-type="' . $field_slug . '">' . esc_html__( 'Set Field', 'caldera-forms' ) . '</button>';
-					$template .= '<img src="'. $icon .'" class="form-modal-lgo" width="45" height="45">';
+					$class = 'form-modal-lgo';
+					if( $svg ){
+						$class .= ' form-modal-lgo-svg';
+					}
+					$template .= '<img src="'. $icon .'" class="' . $class . '" width="45" height="45">';
 					$template .= '<strong>' . $config['field'] . '</strong>';
-					$template .= '<p class="description">' . (!empty($config['description']) ? $config['description'] : esc_html__( 'No description given', 'caldera-forms' ) ) . '</p>';
+					$template .= '<p class="description">' . (!empty($config['description']) ? esc_html__( $config[ 'description' ] ) : esc_html__( 'No description given', 'caldera-forms' ) ) . '</p>';
 				$template .= '</div>';
 				if(!isset($sorted_field_types[$cat])){
 					$cat = __( 'Special', 'caldera-forms' );
