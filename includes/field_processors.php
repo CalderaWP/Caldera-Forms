@@ -37,6 +37,7 @@ function cf_handle_file_upload( $entry, $field, $form ){
 	if( is_string( $entry ) ){
 		$transdata = get_transient( $entry );
 		if( !empty( $transdata ) ){
+
 			return $transdata;
 		}
 	}

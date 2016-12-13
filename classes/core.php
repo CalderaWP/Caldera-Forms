@@ -484,30 +484,55 @@ class Caldera_Forms {
 	 *
 	 * @return array
 	 */
-	public static function mail_attachment_check($mail, $data, $form){
-		foreach ( $form[ 'fields' ] as $field_id => $field ) {
-			if ( ( $field[ 'type' ] == 'file' || $field[ 'type' ] == 'advanced_file' )  && isset( $field[ 'config' ][ 'attach' ] ) ) {
-				$dir  = wp_upload_dir();
-				$file = str_replace( $dir[ 'baseurl' ], $dir[ 'basedir' ], self::get_field_data( $field_id, $form ) );
+	public static function mail_attachment_check( $mail, $data, $form){
+		foreach ( Caldera_Forms_Forms::get_fields( $form, false ) as $field_id => $field ) {
+			if ( Caldera_Forms_Field_Util::is_file_field( $field, $form )  ) {
+				$dir = wp_upload_dir();
+				if ( isset( $data[ $field_id ] ) && is_array( $data[ $field_id ] ) ) {
+					foreach ( $data[ $field_id ] as $file ) {
+						$file = str_replace( $dir[ 'baseurl' ], $dir[ 'basedir' ], $file );
+						if ( file_exists( $file ) ) {
+							$mail[ 'attachments' ][] = $file;
+						}
+					}
+
+					continue;
+
+				}
+
+
+				if ( isset( $data[ $field_id ] ) ) {
+					$file = $data[ $field_id ];
+				} else {
+					$file = self::get_field_data( $field_id, $form );
+				}
+
 				if ( is_array( $file ) ) {
 					foreach ( $file as $a_file ) {
+						$file = str_replace( $dir[ 'baseurl' ], $dir[ 'basedir' ], $file );
 						if ( is_string( $a_file ) && file_exists( $a_file ) ) {
 							$mail[ 'attachments' ][] = $a_file;
 
 						}
 					}
 
-				} elseif ( is_string( $file ) && file_exists( $file ) ) {
-					$mail[ 'attachments' ][] = $file;
+					continue;
+
+
 				} else {
-					if ( isset( $data[ $field_id ] ) && filter_var( $data[ $field_id ], FILTER_VALIDATE_URL ) ) {
-						$mail[ 'attachments' ][] = $data[ $field_id ];
-					} elseif ( isset( $_POST[ $field_id ] ) && filter_var( $_POST[ $field_id ], FILTER_VALIDATE_URL ) && 0 === strpos( $_POST[ $field_id ], $dir[ 'url' ] ) ) {
-						$mail[ 'attachments' ][] = $_POST[ $field_id ];
-
+					$file = str_replace( $dir[ 'baseurl' ], $dir[ 'basedir' ], $file );
+					if ( is_string( $file ) && file_exists( $file ) ) {
+						$mail[ 'attachments' ][] = $file;
 					} else {
-						continue;
+						if ( isset( $data[ $field_id ] ) && filter_var( $data[ $field_id ], FILTER_VALIDATE_URL ) ) {
+							$mail[ 'attachments' ][] = $data[ $field_id ];
+						} elseif ( isset( $_POST[ $field_id ] ) && filter_var( $_POST[ $field_id ], FILTER_VALIDATE_URL ) && 0 === strpos( $_POST[ $field_id ], $dir[ 'url' ] ) ) {
+							$mail[ 'attachments' ][] = $_POST[ $field_id ];
 
+						} else {
+							continue;
+
+						}
 					}
 				}
 
