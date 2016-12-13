@@ -47,6 +47,9 @@ class Caldera_Forms_Field_Util {
 		if ( is_array( $field ) ) {
 			return $field;
 		}else{
+			if( ! is_array( $form ) ){
+				global  $form;
+			}
 			$fields = Caldera_Forms_Forms::get_fields( $form, false );
 			if ( isset( $fields[ $field ] ) ) {
 				return $fields[ $field ];
