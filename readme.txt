@@ -3,7 +3,7 @@ Contributors: Desertsnowman, Shelob9
 Tags: forms, formbuilder, form builder, contact form, form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, echecks, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, eCheck,dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, gravity forms, contact, email, auto-responder, aweber, converkit, builder, contact forms, search, ab testing, a/b testing, split testing, shortcode, wordpress, awesome plugin, plugin, easy, braintree form, dwolla form, authorize.net form, mailchimp form, mailchimp popup, aweber form, converkit form, stripe form, stripe popup, eCheck form
 Requires at least: 4.4
 Tested up to: 4.7.0
-Stable tag: 1.4.6
+Stable tag: 1.4.6.1
 License: GPLv2
 
 A different kind of WordPress form builder.
@@ -723,9 +723,13 @@ The [Trumbowyg](https://alex-d.github.io/Trumbowyg/) JavaScript library is used
 2. **Easy, Powerful Grid-based Form Builder** - Drag and drop editor!
 3. **All The Field Types You Need** - Tons of fields! So Many Fields!
 4. **Powerful Conditional Logic** - Hide and show fields based on user input!
-5. **Go Further With Form Processors** - Auto-responsers, redirects included! Go further with our add-ons!
+5. **Go Further With Form Processors** - Auto-responders, redirects included! Go further with our add-ons!
 
 == Changelog ==
+= Caldera Forms 1.4.6.1 ( December 13, 2016 ) File Fields FTW! =
+* FIXED: Bug where advanced file fields, with multiple files, not set to be added to media library, were not attached to email. Ok, that's bad, but super glad I figured it out.
+* FIXED: Edge case where  Caldera_Forms_Field_Util::get_field() didn't have a value for $form, but needed it.
+
 = Caldera Forms 1.4.6 ( December 12, 2016 ) Summary Magic Tag: No with 15% more magic! =
 * FIXED: Bug preventing hidden field values, set in browser (via jQuery or whatever) from being saved properly. This bug was fun:)
 * ADDED: caldera_forms_magic_summary_should_use_label Filter for showing label instead of value for select fields in {summary} magic tags.
@@ -1424,3 +1428,6 @@ See: https://wp.me/p5JPPE-9bv for details.
 
 = 1.4.6 =
 See: https://calderaforms.com/updates/caldera-forms-1-4-6/
+
+= 1.4.6.1 =
+See: https://calderaforms.com/updates/caldera-forms-1-4-6-1/
