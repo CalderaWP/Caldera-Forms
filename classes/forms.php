@@ -672,4 +672,25 @@ class Caldera_Forms_Forms {
 
 	}
 
+	/**
+	 * Get entry list fields of a form
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param array $form Form config
+	 *
+	 * @return array
+	 */
+	public static function entry_list_fields( array  $form ){
+		$fields = self::get_fields( $form );
+		$entry_list_fields = array();
+		foreach ( $fields as $field_id => $field ){
+			if( ! empty( $field[ 'entry_list'])){
+				$entry_list_fields[] = $field_id;
+			}
+		}
+
+		return $entry_list_fields;
+ 	}
+
 }

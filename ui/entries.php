@@ -1,3 +1,15 @@
+<?php
+if( ! defined( 'ABSPATH' ) ){
+	exit;
+}
+if( isset( $_GET[ 'cf-alt-viewer' ] ) ){
+	$form = Caldera_Forms_Forms::get_form( $_GET[ 'cf-alt-viewer' ] );
+	$vue = new Caldera_Forms_Entry_Vue( $form );
+	echo $vue->display();
+	return;
+}
+?>
+
 <div class="caldera-editor-header">
 	<ul class="caldera-editor-header-nav">
 		<li class="caldera-editor-logo">

@@ -160,8 +160,8 @@ if( ! defined( 'ABSPATH' ) ){
 				current			= parseInt(form_trigger.data('page')),
 				pagenav			= jQuery('.caldera-table-nav'),
 				page_links		= pagenav.find('.pagination-links'),
-				total			= parseInt(pagenav.data('total'));
-
+				total			= parseInt(pagenav.data('total')),
+				perpage         = parseInt( $( '#cf-entries-list-items' ).val() );
 
 
 			if(clicked.data('page') === 'first'){

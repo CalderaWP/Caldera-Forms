@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'cfont';
-  src:  url('fonts/cfont.eot?kgjivd');
-  src:  url('fonts/cfont.eot?kgjivd#iefix') format('embedded-opentype'),
-    url('fonts/cfont.ttf?kgjivd') format('truetype'),
-    url('fonts/cfont.woff?kgjivd') format('woff'),
-    url('fonts/cfont.svg?kgjivd#cfont') format('svg');
+  src:  url('fonts/cfont.eot?dtntrf');
+  src:  url('fonts/cfont.eot?dtntrf#iefix') format('embedded-opentype'),
+  url('fonts/cfont.ttf?dtntrf') format('truetype'),
+  url('fonts/cfont.woff?dtntrf') format('woff'),
+  url('fonts/cfont.svg?dtntrf#cfont') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,8 +24,56 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.cfont-plus:before {
+  content: "\f067";
+}
+.cfont-envelope-o:before {
+  content: "\f003";
+}
+.cfont-star:before {
+  content: "\f005";
+}
+.cfont-user:before {
+  content: "\f007";
+}
+.cfont-cog:before {
+  content: "\f013";
+}
+.cfont-gear:before {
+  content: "\f013";
+}
+.cfont-lock:before {
+  content: "\f023";
+}
+.cfont-align-justify:before {
+  content: "\f039";
+}
+.cfont-list:before {
+  content: "\f03a";
+}
+.cfont-eye:before {
+  content: "\f06e";
+}
 .cfont-credit-card:before {
   content: "\f09d";
+}
+.cfont-chain:before {
+  content: "\f0c1";
+}
+.cfont-link:before {
+  content: "\f0c1";
+}
+.cfont-cloud-upload:before {
+  content: "\f0ee";
+}
+.cfont-mobile:before {
+  content: "\f10b";
+}
+.cfont-mobile-phone:before {
+  content: "\f10b";
+}
+.cfont-folder-open-o:before {
+  content: "\f115";
 }
 .cfont-slack:before {
   content: "\f198";
@@ -44,6 +92,9 @@
 }
 .cfont-resistance:before {
   content: "\f1d0";
+}
+.cfont-calculator:before {
+  content: "\f1ec";
 }
 .cfont-paypal:before {
   content: "\f1ed";
@@ -65,5 +116,14 @@
 }
 .cfont-cc-stripe:before {
   content: "\f1f5";
+}
+.cfont-paint-brush:before {
+  content: "\f1fc";
+}
+.cfont-cart-plus:before {
+  content: "\f217";
+}
+.cfont-volume-control-phone:before {
+  content: "\f2a0";
 }
 

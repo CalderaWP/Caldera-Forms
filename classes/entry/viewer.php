@@ -105,4 +105,6 @@ class Caldera_Forms_Entry_Viewer {
 		return absint( get_option( '_caldera_forms_entry_perpage', 20 ) );
 	}
 
+
+
 }

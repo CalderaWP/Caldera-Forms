@@ -64,6 +64,13 @@ module.exports = function (grunt) {
                     'assets/build/css/caldera-form.min.css'
                  ],
                 dest: 'assets/css/caldera-forms-front.css'
+            },
+            vue: {
+                src: [
+                    'assets/js/vue/vue.js',
+                    'assets/js/vue/vue-filters.js'
+                ],
+                dest: 'assets/js/vue.js'
             }
         },
         watch: {

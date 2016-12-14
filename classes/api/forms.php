@@ -158,13 +158,28 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
      * @param $form
      * @return mixed
      */
-    protected function prepare_form_for_response($form){
+    protected function prepare_form_for_response( $form ){
+
+    	$form = $this->prepare_field_details( $form );
 
         $form = $this->prepare_processors_for_response($form);
 
         $form = $this->prepare_mailer_for_response($form);
 
         return $form;
+
+    }
+
+    protected function prepare_field_details( $form ){
+	    $form[ 'field_details' ] = array(
+	    	'order'      => array(),
+		    'entry_list' => array()
+	    );
+    	$in_order = Caldera_Forms_Forms::get_fields( $form, true );
+	    $form[ 'field_details' ][ 'order' ] = wp_list_pluck( $in_order, 'ID' );
+	    $form[ 'field_details' ][ 'entry_list' ] = Caldera_Forms_Forms::entry_list_fields( $form );
+
+	    return $form;
 
     }
 

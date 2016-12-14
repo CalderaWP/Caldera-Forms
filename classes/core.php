@@ -137,6 +137,9 @@ class Caldera_Forms {
 
 		add_action( 'rest_api_init', array( __CLASS__, 'init_rest_api' ) );
 
+		//entry viewer shortcode
+		add_shortcode( Caldera_Forms_Entry_Shortcode::get_shortcode_name(), array( 'Caldera_Forms_Entry_Shortcode', 'shortcode_callback' ) );
+
 		/**
 		 * Runs after Caldera Forms core is initialized
 		 *
@@ -4893,13 +4896,27 @@ class Caldera_Forms {
 	 * @return string
 	 */
 	public static function localize_time( $submitted ) {
+
+
+		$format = self::time_format();
+		$time   = get_date_from_gmt( $submitted, $format );
+
+		return $time;
+	}
+
+	/**
+	 * Get time format
+	 *
+	 * @since 1.5.0
+	 *
+	 * @return string
+	 */
+	public static function time_format(){
 		$dateformat = get_option( 'date_format' );
 		$timeformat = get_option( 'time_format' );
 
 		$format = $dateformat . ' ' . $timeformat;
-		$time   = get_date_from_gmt( $submitted, $format );
-
-		return $time;
+		return $format;
 	}
 
 	/**
