@@ -1,4 +1,4 @@
-/*! Caldera-Forms - v1.5.0-b-1 - 2016-12-14 */
+/*! Caldera-Forms - v1.5.0-b-1 - 2016-12-15 */
  /** Dynamic Field Configuration **/
  function Caldera_Forms_Field_Config( configs, $form, $ ){
      var self = this;

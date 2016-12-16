@@ -72,6 +72,15 @@ module.exports = function (grunt) {
                 ],
                 dest: 'assets/js/vue.js'
             },
+            entry: {
+                src: [
+                    'assets/js/api/client.js',
+                    'assets/js/api/stores.js',
+                    'assets/js/viewer/viewer.js',
+                    'assets/js/viewer/init.js'
+                ],
+                dest: 'assets/js/entry-viewer-2.js'
+            },
             form: {
                 src: [
                     'assets/js/parsely.js',
