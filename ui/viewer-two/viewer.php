@@ -6,8 +6,9 @@ if( ! defined( 'ABSPATH' ) ){
 
 
 <script type="text/html" id="caldera-forms-entry-tmpl">
-	<div>
-		<a href="#" title="<?php esc_attr_e( 'Click To Close', 'caldera-forms' ); ?>" role="button" v-on:click="close">x</a>
+	<div v-bind="{'data-remodal-id': entry.id }">
+		<button data-remodal-action="close" class="remodal-close"  title="<?php esc_attr_e( 'Click To Close', 'caldera-forms' ); ?>" v-on:click="close" ></button>
+
 		<ul v-for="field in fields">
 			<li>
 				{{field.label}}

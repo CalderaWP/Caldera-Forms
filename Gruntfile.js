@@ -105,7 +105,16 @@ module.exports = function (grunt) {
                 tasks: ['default'],
                 options: {
                     spawn: false,
-                },
+                }
+            },
+            entry: {
+                files: [
+                    'assets/js/api/client.js',
+                    'assets/js/api/stores.js',
+                    'assets/js/viewer/viewer.js',
+                    'assets/js/viewer/init.js'
+                ],
+                tasks: ['concat:entry', 'uglify'],
             }
         },
         copy: {
@@ -150,7 +159,6 @@ module.exports = function (grunt) {
         'concat',
         'uglify',
         'cssmin',
-
         'copy'
     ] );
 

@@ -232,8 +232,9 @@ function CFEntryViewer2( formId, formStore, entryStore, api, config ){
 
             },
             showSingle: function( entryId ){
-                var entry = entryStore.getEntry( entryId );
-                var fields = formStore.getAllFields();
+                var $modal,
+                    entry = entryStore.getEntry( entryId ),
+                    fields = formStore.getAllFields();
                 var single = Vue.extend({
                     template: '#' + config.templates.entry,
                     data: function(){
@@ -254,6 +255,7 @@ function CFEntryViewer2( formId, formStore, entryStore, api, config ){
                         },
                         close: function () {
                             $singleEntryZone.empty();
+                            $modal.destroy();
                         }
                     },
                 });
@@ -263,6 +265,9 @@ function CFEntryViewer2( formId, formStore, entryStore, api, config ){
                 jQuery( newDiv ).attr( 'id', config.targets.entry + '-' + entryId );
                 jQuery( newDiv ).appendTo( $singleEntryZone );
                 new single().$mount('#' + config.targets.entry + '-' + entryId );
+                $modal = jQuery('[data-remodal-id=' + entryId +']').remodal();
+                $modal.open();
+
             }
         }
     });
