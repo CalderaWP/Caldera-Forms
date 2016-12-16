@@ -5,9 +5,11 @@ if( ! defined( 'ABSPATH' ) ){
 ?>
 <script type="text/javascript">
 	var init_cf_baldrick;
+	var perPage = jQuery('#cf-entries-list-items').val();
 	function cf_set_limits( el ){
-		jQuery( el ).data('perpage', jQuery('#cf-entries-list-items').val() );
+		jQuery( el ).data('perpage', perPage );
 	}
+
 	function cf_refresh_view(obj){
 
 		jQuery('.entry_count_' + obj.params.trigger.data('form')).html(obj.rawData.total);
@@ -140,6 +142,7 @@ if( ! defined( 'ABSPATH' ) ){
 						});
 					}
 					calders_forms_init_conditions();
+
 				}
 			});
 
@@ -194,6 +197,19 @@ if( ! defined( 'ABSPATH' ) ){
 	function cf_clear_panel(el){
 		jQuery(jQuery(el).data('target')).empty();
 	}
+
+	var ready_limit_change;
+	jQuery(document).on('change', '#cf-entries-list-items', function(){
+		perPage = jQuery( this ).val();
+
+		if( ready_limit_change ){
+			clearTimeout( ready_limit_change );
+		}
+		ready_limit_change = setTimeout( function(){
+			jQuery('.status_toggles.button-primary').trigger('click');
+		}, 280 );
+
+	});
 
 
 	jQuery(function($){
@@ -308,7 +324,9 @@ if( ! defined( 'ABSPATH' ) ){
 				<td>{{#if label}}{{value}}{{else}}{{{this}}}{{/if}}</td>
 				{{/each}}
 				<td style="text-align: right; width: 100px;white-space: nowrap;">
-					<?php do_action('caldera_forms_entry_actions'); ?>
+					<?php
+						do_action('caldera_forms_entry_actions');
+					?>
 				</td>
 			</tr>
 			{{/each}}

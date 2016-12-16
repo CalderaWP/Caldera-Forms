@@ -320,16 +320,6 @@ jQuery( function( $ ){
 			$('.cf-notification-panel').slideToggle();
 		});
 	}
-	var ready_limit_change;
-	$(document).on('change', '#cf-entries-list-items', function(){
-		if( ready_limit_change ){
-			clearTimeout( ready_limit_change );
-		}
-		ready_limit_change = setTimeout( function(){
-			$('.status_toggles.button-primary').trigger('click');
-		}, 280 );
-
-	});
 
 	$( document ).on('submit', '#new_form_baldrickModal', function(e){
 		e.preventDefault();
