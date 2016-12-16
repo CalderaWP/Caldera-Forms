@@ -89,23 +89,14 @@ class Caldera_Forms_Entry_Vue {
 	protected function config_defualts(){
 		return array(
 			'formId' => $this->form[ 'ID' ],
-			'dataFormat' => Caldera_Forms::time_format(),
+			'dateFormat' => Caldera_Forms::time_format(),
 			'api' => array(
 				'root'    => esc_url( trailingslashit( Caldera_Forms_API_Util::url() ) ),
 				'form'    => esc_url( trailingslashit( Caldera_Forms_API_Util::url( 'forms' ) ) ),
 				'entries' => esc_url( trailingslashit( Caldera_Forms_API_Util::url( 'entries' ) ) ),
 				'nonce'   => wp_create_nonce( 'wp_rest' ),
 			),
-			'defaultColumns' => array(
-				array(
-					'label' => 'ID',
-					'id' => 'id'
-				),
-				array(
-					'label' => __( 'Submitted', 'caldera-forms'),
-					'id' => 'time'
-				)
-			),
+
 			'templates' => array(
 				'entries' => 'caldera-forms-entries-tmpl',
                 'entry' =>  'caldera-forms-entry-tmpl'

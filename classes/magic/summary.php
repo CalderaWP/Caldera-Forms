@@ -74,7 +74,7 @@ class Caldera_Forms_Magic_Summary extends Caldera_Forms_Magic_Parser {
 					continue;
 				}
 
-				if( Caldera_Forms_Field_Util::is_file_field( $field_id, $this->form ) && Caldera_Forms_Files::is_private( Caldera_Forms_Field_Util::get_field( $field_id, $form ) ) ){
+				if( Caldera_Forms_Field_Util::is_file_field( $field_id, $this->form ) && Caldera_Forms_Files::is_private( Caldera_Forms_Field_Util::get_field( $field_id, $this->form ) ) ){
 					continue;
 				}
 

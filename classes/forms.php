@@ -678,15 +678,20 @@ class Caldera_Forms_Forms {
 	 * @since 1.5.0
 	 *
 	 * @param array $form Form config
+	 * @param bool $configs Optional. If true, field config arrays are returned. If false, the default, field IDs are returned
 	 *
 	 * @return array
 	 */
-	public static function entry_list_fields( array  $form ){
+	public static function entry_list_fields( array  $form, $configs = false ){
 		$fields = self::get_fields( $form );
 		$entry_list_fields = array();
 		foreach ( $fields as $field_id => $field ){
 			if( ! empty( $field[ 'entry_list'])){
-				$entry_list_fields[] = $field_id;
+				if ( $configs  ) {
+					$entry_list_fields[ $field_id ] = $field;
+				}else{
+					$entry_list_fields[] = $field_id;
+				}
 			}
 		}
 

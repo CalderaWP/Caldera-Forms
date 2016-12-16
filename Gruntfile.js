@@ -71,6 +71,15 @@ module.exports = function (grunt) {
                     'assets/js/vue/vue-filters.js'
                 ],
                 dest: 'assets/js/vue.js'
+            },
+            form: {
+                src: [
+                    'assets/js/parsely.js',
+                    'assets/js/field-config.js',
+                    'assets/js/fields.js',
+                    'assets/js/init.js',
+                ],
+                dest: 'assets/js/caldera-forms-front.js'
             }
         },
         watch: {

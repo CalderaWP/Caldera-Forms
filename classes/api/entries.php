@@ -163,7 +163,7 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
 			/** @var Caldera_Forms_Entry_Field $field */
 			foreach(  $fields as $field ){
                 if ( is_object( $field )) {
-                    $response_data[$id]['fields'][$field->id ] = $field->to_array(false);
+                    $response_data[$id]['fields'][$field->field_id ] = $field->to_array(false);
                 }
 			}
 

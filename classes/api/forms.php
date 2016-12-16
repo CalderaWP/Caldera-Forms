@@ -170,17 +170,62 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
 
     }
 
+	/**
+	 * Prepare field details section of form response
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param array $form Form config
+	 *
+	 * @return array
+	 */
     protected function prepare_field_details( $form ){
 	    $form[ 'field_details' ] = array(
 	    	'order'      => array(),
 		    'entry_list' => array()
 	    );
-    	$in_order = Caldera_Forms_Forms::get_fields( $form, true );
-	    $form[ 'field_details' ][ 'order' ] = wp_list_pluck( $in_order, 'ID' );
-	    $form[ 'field_details' ][ 'entry_list' ] = Caldera_Forms_Forms::entry_list_fields( $form );
+	    $order = Caldera_Forms_Forms::get_fields( $form, true );
+	    $entry_list = Caldera_Forms_Forms::entry_list_fields( $form, true );
+
+	    array_walk( $order, array( $this, 'prepare_field' ) );
+	    array_walk( $entry_list, array( $this, 'prepare_field' ) );
+
+	    $form[ 'field_details' ][ 'order' ] = $order;
+	    $entry_list_defaults = array(
+	    	'id' => array(
+	    		'id' => 'id',
+			    'label' => __( 'ID', 'caldera-forms' )
+		    ),
+		    'datestamp' => array(
+			    'id' => 'datestamp',
+			    'label' => __( 'Submitted', 'caldera-forms' )
+		    ),
+	    );
+
+	    if( is_array( $entry_list ) && ! empty( $entry_list ) ){
+		    $form[ 'field_details' ][ 'entry_list' ] = array_merge( $entry_list_defaults, $entry_list );
+	    }else{
+		    $form[ 'field_details' ][ 'entry_list' ]  = $entry_list_defaults;
+	    }
 
 	    return $form;
 
+    }
+
+	/**
+	 * Reduce field to id/label
+	 *
+	 * Designed to be callback for array_walk used in $this->prepare_field_details
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param $field
+	 */
+    protected function prepare_field(  &$field ){
+		$field = array(
+			'id' => $field[ 'ID' ],
+			'label' => $field[ 'label' ]
+		);
     }
 
     /**

@@ -4,96 +4,59 @@ if( ! defined( 'ABSPATH' ) ){
 }
 ?>
 
-<script type="text/x-template" id="caldera-forms-entries-tmpl">
+
+<script type="text/html" id="caldera-forms-entry-tmpl">
+	<div>
+		<a href="#" title="<?php esc_attr_e( 'Click To Close', 'caldera-forms' ); ?>" role="button" v-on:click="close">x</a>
+		<ul v-for="field in fields">
+			<li>
+				{{field.label}}
+				<br>
+				{{ fieldValue( field.id, entry ) }}
+			</li>
+		</ul>
+	</div>
+</script>
+
+<div id="caldera-forms-entries">
 	<div class="caldera-table">
 		<table class="table table-striped">
 			<thead>
-			<tr>
-				<th v-for="key in columns"
-				    @click="sortBy(key)"
-				    :class="{ active: sortKey == key }">
-					{{ key.label | capitalize }}
-
-				</th>
-			</tr>
+				<tr>
+					<th v-for="field in form.listFields">
+						{{field.label}}
+					</th>
+					<th></th>
+				</tr>
 			</thead>
 			<tbody>
-			<tr v-if="! single" v-for="entry in filteredData">
-				<td v-for="key in columns">
-
-				<span v-if="key == 'Submitted'">
-					{{entry[key.id]}}
-				</span>
-					<span v-else>
-					{{entry[key.id]}}
-				</span>
-				</td>
-				<td>
-					<a href="#" role="button" v-on:click="showDetails(entry.id)" class="button cf-entry-view-details" title="<?php esc_attr_e( 'Click to view details', 'caldera-forms' ); ?>" :data-entry-id=entry.id>
-						<?php esc_html_e( 'View', 'caldera-forms' ); ?>
-					</a>
-					<?php if( current_user_can( Caldera_Forms::get_manage_cap( 'admin' ) ) ) { ?>
-						<a href="#" role="button" v-on:click="delete(entry.id)" class="button cf-entry-delete" title="<?php esc_attr_e( 'Click to delete item', 'caldera-forms' ); ?>" :data-entry-id=entry.id>
-							<?php esc_html_e( 'Delete', 'caldera-forms' ); ?>
+				<tr v-for="(entry, id) in entries.entries">
+					<td v-for="field in form.listFields">
+						{{ fieldValue( field.id, entry ) }}
+					</td>
+					<td>
+						<a class="button" role="button" href="#" title="<?php esc_html_e( 'View Entry Details', 'caldera-forms' ); ?>" @click="showSingle(id)" >
+							<?php esc_html_e( 'Details', 'caldera-forms' ); ?>
 						</a>
-					<?php } ?>
-				</td>
-			</tr>
+					</td>
+				</tr>
 			</tbody>
-		</table></div>
-</script>
+		</table>
+	</div>
 
 
-<div id="caldera-forms-entries">
-
-	<form id="caldera-forms-entries-toolbar">
-		<div class="caldera-config-field">
-			<label for="caldera-forms-entries-toolbar-filter">
-				<?php esc_html_e( 'Filter', 'caldera-forms' ); ?>
-			</label>
-			<input id="caldera-forms-entries-toolbar-filter" name="query" v-model="searchQuery">
-		</div>
-		<div class="caldera-config-field">
-			<label for="caldera-forms-entries-toolbar-perpage">
-				<?php esc_html_e( 'Entries Per Page', 'caldera-forms' ); ?>
-			</label>
-			<input id="caldera-forms-entries-toolbar-perpage" type="number" min="1" max="100" name="perpage" v-model="perPage">
-		</div>
-		<span class="pagination-links">
-				<a href="#first" title="<?php esc_attr_e( 'Go to the first page', 'caldera-forms' ); ?>" data-page="first" class="first-page">«</a>
-				<a href="#prev" title="<?php esc_attr_e( 'Go to the previous page', 'caldera-forms' ); ?>" data-page="prev" class="prev-page">‹</a>
-				<input type="number" class="current-page" v-model="page"></input>
-				<a href="#next" title="<?php esc_attr_e( 'Go to the next page', 'caldera-forms' ); ?>" data-page="next" class="next-page">›</a>
-				<a href="#last" title="<?php esc_attr_e( 'Go to the last page', 'caldera-forms' ); ?>" data-page="last" class="last-page">»</a>
-			</span>
-	</form>
-	<caldera-forms-entries
-		:data="gridData"
-		:columns="gridColumns"
-		:filter-key="searchQuery">
-	</caldera-forms-entries>
+	<button v-on:click="nextPage" class="caldera-forms-entry-viewer-next-button">
+		<?php esc_html_e( 'Next', 'caldera-forms' ); ?>
+	</button>
+	<button v-on:click="prevPage" class="caldera-forms-entry-viewer-prev-button">
+		<?php esc_html_e( 'Previous', 'caldera-forms' ); ?>
+	</button>
+	<div class="caldera-field-config">
+		<label for="caldera-entry-viewer-2-per-page">
+			<?php esc_html_e( 'Entries Per Page', 'caldera-forms' ); ?>
+		</label>
+		<input type="number" min="1" v-model="perPage" v-on:change="updatePerPage" >
+	</div>
 </div>
-<div id="caldera-forms-entry-tmpl" class="caldera-table" aria-live="assertive" aria-hidden="true" style="display: none;visibility: hidden">
+<div id="caldera-forms-entry"></div>
 
-	<table class="table table-striped">
-		<thead>
-
-		<template>
-			<tr>
-				<td v-for="header in headers">
-					{{header.label}}
-				</td>
-			</tr>
-
-		</template>
-
-		</thead>
-		<tbody>
-		<tr>
-			<template v-for="field in fields">
-				<th>{{data[field]}}</th>
-			</template>
-		</tr>
-		</tbody>
-	</table>
-</div>
