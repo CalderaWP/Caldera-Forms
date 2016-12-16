@@ -135,6 +135,11 @@ class Caldera_Forms {
 
 		}
 
+		/** Entry Viewer v1 */
+		add_action( 'wp_ajax_browse_entries', array( Caldera_Forms_Entry_UI::get_instance(), 'view_entries' ) );
+		add_action( 'wp_ajax_get_entry', array( Caldera_Forms_Entry_UI::get_instance(), 'view_entry' ) );
+		add_action( 'caldera_forms_entry_actions', array( Caldera_Forms_Entry_UI::get_instance(), 'get_entry_actions'),1);
+
 		add_action( 'rest_api_init', array( __CLASS__, 'init_rest_api' ) );
 
 		//entry viewer shortcode
