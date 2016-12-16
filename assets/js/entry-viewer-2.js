@@ -1,4 +1,4 @@
-/*! Caldera-Forms - v1.5.0-b-1 - 2016-12-15 *//**
+/*! GENERATED SOURCE FILE Caldera-Forms - v1.5.0-b-1 - 2016-12-15 *//**
  * API Client for Caldera Forms API for a single form
  *
  * @since 1.5.0
@@ -42,7 +42,8 @@ function CFAPI( routes, perPage,formId, $ ) {
 
     }
 }
- /**
+
+/**
  * A factory for a form state containers
  *
  * Can be used constructed with CFAPI() or other data. Designed to provide data to our VueJS entry viewer, but is framework agnostic.
@@ -126,7 +127,8 @@ function CFEntriesStoreFactory( formId, entries ){
             return false;
         }
     }
-} /**
+}
+/**
  * A VueJS-powered entry viewer for Caldera Forms
  *
  * @since 1.5.0
@@ -265,7 +267,8 @@ function CFEntryViewer2( formId, formStore, entryStore, api, config ){
         }
     });
 }
- /**
+
+/**
  * Set up the entry viewer
  *
  * @since 1.5.0

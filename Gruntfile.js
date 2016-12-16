@@ -53,8 +53,9 @@ module.exports = function (grunt) {
         },
         concat: {
             options: {
-                separator: ' ',
-                banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
+                separator: "\n",
+                banner: '/*! GENERATED SOURCE FILE '
+                + '<%= pkg.name %> - v<%= pkg.version %> - ' +
                 '<%= grunt.template.today("yyyy-mm-dd") %> */',
             },
             front_css: {
@@ -146,9 +147,10 @@ module.exports = function (grunt) {
 
     //register default task
     grunt.registerTask( 'default',  [
+        'concat',
         'uglify',
         'cssmin',
-        'concat',
+
         'copy'
     ] );
 

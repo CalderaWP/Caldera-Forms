@@ -1,4 +1,4 @@
-/*! Caldera-Forms - v1.5.0-b-1 - 2016-12-15 */
+/*! GENERATED SOURCE FILE Caldera-Forms - v1.5.0-b-1 - 2016-12-15 */
  /** Dynamic Field Configuration **/
  function Caldera_Forms_Field_Config( configs, $form, $ ){
      var self = this;
@@ -309,7 +309,8 @@
 
  }
 
- /*
+
+/*
  * jQuery miniColors: A small color selector
  *
  * Copyright 2011 Cory LaViska for A Beautiful Site, LLC. (http://abeautifulsite.net/)
