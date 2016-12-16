@@ -51,9 +51,19 @@
 				
 			</span>
 			<span class="cf-tools-row cf-tools-row-second">
-
-
+				<label for="cf_bulk_action" class="screen-reader-text">
+					<?php esc_html_e( 'Bulk Action For Entries', 'caldera-forms' ); ?>
+				</label>
 				<select id="cf_bulk_action" name="action" style="vertical-align: top;">
+					<option selected="selected" value="">
+						<?php esc_html_e( 'Bulk Actions', 'caldera-forms' ); ?>
+					</option>
+					<option value="export">
+						<?php esc_html_e( 'Export Selected', 'caldera-forms' ); ?>
+					</option>
+					<option value="trash">
+						<?php esc_html_e( 'Move to Trash', 'caldera-forms' ); ?>
+					</option>
 				</select>
 				<button type="button" class="button cf-bulk-action">
 					<?php esc_html_e( 'Apply', 'caldera-forms' ); ?>
