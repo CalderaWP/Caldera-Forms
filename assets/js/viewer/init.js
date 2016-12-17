@@ -7,7 +7,7 @@ jQuery( document ).ready( function ($) {
     if( 'object' == typeof CF_ENTRY_VIEWER_2_CONFIG ){
 
         var formId = CF_ENTRY_VIEWER_2_CONFIG.formId;
-        var api = new CFAPI( CF_ENTRY_VIEWER_2_CONFIG.api, CF_ENTRY_VIEWER_2_CONFIG.perPage, formId, $ );
+        var api = new CFAPI( CF_ENTRY_VIEWER_2_CONFIG.api, CF_ENTRY_VIEWER_2_CONFIG.perPage, formId, CF_ENTRY_VIEWER_2_CONFIG.api.nonce, $ );
         $.when( api.getForm(), api.getEntries(1) ).then( function( d1, d2 ){
             var form = d1[0];
 

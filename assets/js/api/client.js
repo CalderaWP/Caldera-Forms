@@ -6,23 +6,36 @@
  * @param routes URLs for endpoints, should have URL for /entries and /forms
  * @param perPage How many items to return for page
  * @param formId Form ID
+ * @param nonce WordPress REST API authentication nonce.
  * @param $ jQuery
  *
  * @returns {{getForm: getForm, getEntries: getEntries, paginatedEntryURL: paginatedEntryURL, setPerPage: setPerPage}}
  *
  * @constructor
  */
-function CFAPI( routes, perPage,formId, $ ) {
+function CFAPI( routes, perPage, formId, nonce,  $ ) {
     return {
         getForm: function () {
-            return $.get(routes.form + formId).success(function (r) {
+            return $.ajax({
+                url: routes.form + formId,
+                method: 'GET',
+                beforeSend: function ( xhr ) {
+                    xhr.setRequestHeader( 'X-WP-Nonce', nonce );
+                }
+            }).success(function (r) {
                 return r;
             }).error(function (r) {
                 console.log(r);
             });
         },
         getEntries: function ( page ) {
-            return $.get(this.paginatedEntryURL(formId, page, perPage ) ).success(function (r) {
+            return $.ajax({
+                url: this.paginatedEntryURL(formId, page, perPage ),
+                method: 'GET',
+                beforeSend: function ( xhr ) {
+                    xhr.setRequestHeader( 'X-WP-Nonce', nonce );
+                }
+            } ).success(function (r) {
                 return r;
             }).error(function (r) {
                 console.log(r);
