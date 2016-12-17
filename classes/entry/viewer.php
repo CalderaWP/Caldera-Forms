@@ -105,6 +105,20 @@ class Caldera_Forms_Entry_Viewer {
 		return absint( get_option( '_caldera_forms_entry_perpage', 20 ) );
 	}
 
+	/**
+	 * Updated saved # of entries per page to show
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param int $per_page New value
+	 *
+	 * @return int
+	 */
+	public static function update_entries_per_page( $per_page ){
+		update_option( '_caldera_forms_entry_perpage', absint( $per_page ) );
+		return self::entries_per_page();
+	}
+
 
 
 }

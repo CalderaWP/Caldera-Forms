@@ -98,7 +98,8 @@ class Caldera_Forms_Entry_Vue {
 				'root'    => esc_url( trailingslashit( Caldera_Forms_API_Util::url() ) ),
 				'form'    => esc_url( trailingslashit( Caldera_Forms_API_Util::url( 'forms' ) ) ),
 				'entries' => esc_url( trailingslashit( Caldera_Forms_API_Util::url( 'entries' ) ) ),
-				'nonce'   => wp_create_nonce( 'wp_rest' ),
+				'entrySettings' => esc_url( trailingslashit( Caldera_Forms_API_Util::url( 'settings/entries' )  ) ),
+ 				'nonce'   => wp_create_nonce( 'wp_rest' ),
 			),
 
 			'templates' => array(

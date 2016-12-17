@@ -51,6 +51,27 @@ function CFAPI( routes, perPage, formId, nonce,  $ ) {
         },
         setPerPage : function( newPerPage ) {
             perPage = newPerPage;
+        },
+        getPerPage :function () {
+            return perPage;
+        },
+        savePerPage: function(){
+            return $.ajax({
+                url: routes.entrySettings,
+                method: 'POST',
+                dataType: 'json',
+                beforeSend: function ( xhr ) {
+                    xhr.setRequestHeader( 'X-WP-Nonce', nonce );
+                },
+                data:{
+                    per_page: perPage
+                }
+            }).success( function( r ){
+                return r.per_page;
+            }).error( function( r ){
+                console.log(r);
+            })
+
         }
 
     }

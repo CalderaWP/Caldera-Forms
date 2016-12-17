@@ -22,7 +22,7 @@ function CFEntryViewer2( formId, formStore, entryStore, api, config ){
                 form: formStore.state,
                 entries: entryStore.state,
                 page: 1,
-                perPage: 2,
+                perPage: api.getPerPage(),
                 totalPages: entryStore.getTotalPages(),
                 singleEntry: {},
                 currentView: 'empty'
@@ -95,6 +95,7 @@ function CFEntryViewer2( formId, formStore, entryStore, api, config ){
                     entryStore.setEntries(d);
                     self.$set( self, 'entries', entryStore.state );
                 });
+                api.savePerPage( this.perPage );
             },
             fieldValue: function( fieldId, entry ){
                 if( 'string' == typeof  entry[ fieldId ] ){
