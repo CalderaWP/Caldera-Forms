@@ -198,15 +198,17 @@ class Caldera_Forms_Render_Assets {
 	 */
 	public static function get_core_styles(){
 		$style_urls = array(
-			'modals'       => self::make_url( 'remodal', false ),
-			'modals-theme' => self::make_url( 'remodal-default-theme', false ),
-			'grid'         => self::make_url( 'caldera-grid', false ),
-			'form'         => self::make_url( 'caldera-form', false ),
-			'alert'        => self::make_url( 'caldera-alert', false ),
-			'field'        => self::make_url( 'fields', false ),
-			'front'        => self::make_url( 'caldera-forms-front', false ),
-			'font'         => self::make_url( 'cfont', false ),
-			'table'        => self::make_url( 'caldera-table', false ),
+			'modals'            => self::make_url( 'remodal', false ),
+			'modals-theme'      => self::make_url( 'remodal-default-theme', false ),
+			'grid'              => self::make_url( 'caldera-grid', false ),
+			'form'              => self::make_url( 'caldera-form', false ),
+			'alert'             => self::make_url( 'caldera-alert', false ),
+			'field'             => self::make_url( 'fields', false ),
+			'front'             => self::make_url( 'caldera-forms-front', false ),
+			'font'              => self::make_url( 'cfont', false ),
+			'table'             => self::make_url( 'caldera-table', false ),
+			'entry-viewer-2'    => self::make_url( 'entry-viewer-2', false ),
+
 		);
 
 		$all = true;

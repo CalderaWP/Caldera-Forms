@@ -64,6 +64,7 @@ class Caldera_Forms_Entry_Vue {
 	public function enqueue(){
 		Caldera_Forms_Render_Assets::enqueue_style( 'table' );
 		Caldera_Forms_Render_Assets::enqueue_style( 'modals' );
+		Caldera_Forms_Render_Assets::enqueue_style( 'entry-viewer-2' );
 		Caldera_Forms_Render_Assets::enqueue_style( 'modals-theme' );
 		Caldera_Forms_Render_Assets::enqueue_script( 'modals' );
 		Caldera_Forms_Render_Assets::enqueue_script( 'entry-viewer-2' );

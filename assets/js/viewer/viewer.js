@@ -89,7 +89,12 @@ function CFEntryViewer2( formId, formStore, entryStore, api, config ){
                 }
             },
             updatePerPage: function(){
-                console.log( this.perPage );
+                var self = this;
+                api.setPerPage( this.perPage );
+                jQuery.when( api.getEntries( self.page ) ).then( function(d){
+                    entryStore.setEntries(d);
+                    self.$set( self, 'entries', entryStore.state );
+                });
             },
             fieldValue: function( fieldId, entry ){
                 if( 'string' == typeof  entry[ fieldId ] ){

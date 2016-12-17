@@ -1,0 +1,26 @@
+li.entry-detail {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 4px;
+}
+
+.caldera-forms-entry-viewer .entry-detail .label {
+    clear: left;
+    float: left;
+    font-weight: 700;
+    margin-bottom: 3px;
+    margin-right: 8px;
+    min-width: 130px;
+    text-transform: capitalize;
+}
+
+.caldera-forms-entry-right {
+    width: 80%;
+    float: right;
+    display: inline;
+}
+
+.caldera-forms-entry-left {
+    display: inline;
+    float: left;
+    width: 20%;
+}

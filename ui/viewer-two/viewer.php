@@ -6,16 +6,21 @@ if( ! defined( 'ABSPATH' ) ){
 
 
 <script type="text/html" id="caldera-forms-entry-tmpl">
-	<div v-bind="{'data-remodal-id': entry.id }">
+	<div v-bind="{'data-remodal-id': entry.id }" class="caldera-forms-entry-viewer">
 		<button data-remodal-action="close" class="remodal-close"  title="<?php esc_attr_e( 'Click To Close', 'caldera-forms' ); ?>" v-on:click="close" ></button>
 
-		<ul v-for="field in fields">
-			<li>
-				{{field.label}}
-				<br>
-				{{ fieldValue( field.id, entry ) }}
-			</li>
-		</ul>
+		<div class="caldera-forms-entry-left">
+
+		</div>
+		<div class="caldera-forms-entry-right">
+			<ul v-for="field in fields">
+				<li class="entry-detail">
+					<span class="label">{{field.label}}</span> {{ fieldValue( field.id, entry ) }}
+
+				</li>
+			</ul>
+		</div>
+
 	</div>
 </script>
 
@@ -56,7 +61,7 @@ if( ! defined( 'ABSPATH' ) ){
 		<label for="caldera-entry-viewer-2-per-page">
 			<?php esc_html_e( 'Entries Per Page', 'caldera-forms' ); ?>
 		</label>
-		<input type="number" min="1" v-model="perPage" v-on:change="updatePerPage" >
+		<input type="number" min="1" v-model="perPage" v-on:change="updatePerPage" id="caldera-entry-viewer-2-per-page">
 	</div>
 </div>
 <div id="caldera-forms-entry"></div>

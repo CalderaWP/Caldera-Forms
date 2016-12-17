@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE Caldera-Forms - v1.5.0-b-1 - 2016-12-16 *//**
+/*! GENERATED SOURCE FILE Caldera-Forms - v1.5.0-b-1 - 2016-12-17 *//**
  * API Client for Caldera Forms API for a single form
  *
  * @since 1.5.0
@@ -219,7 +219,12 @@ function CFEntryViewer2( formId, formStore, entryStore, api, config ){
                 }
             },
             updatePerPage: function(){
-                console.log( this.perPage );
+                var self = this;
+                api.setPerPage( this.perPage );
+                jQuery.when( api.getEntries( self.page ) ).then( function(d){
+                    entryStore.setEntries(d);
+                    self.$set( self, 'entries', entryStore.state );
+                });
             },
             fieldValue: function( fieldId, entry ){
                 if( 'string' == typeof  entry[ fieldId ] ){
