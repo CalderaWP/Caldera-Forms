@@ -55,7 +55,8 @@ function CFEntriesStoreFactory( formId, entries ){
             formId: formId,
             entries: entries,
             total: 0,
-            totalPages: 0
+            totalPages: 0,
+            page: 0
         },
         setEntries: function (entries) {
             this.state.entries = entries;
@@ -63,11 +64,20 @@ function CFEntriesStoreFactory( formId, entries ){
         setTotal: function( total ){
             this.state.total = total;
         },
+        getTotal: function(){
+            return this.state.total;
+        },
         setTotalPages: function( totalPages ){
             this.state.totalPages = totalPages;
         },
         getTotalPages: function(){
             return this.state.totalPages;
+        },
+        setPage: function( page ){
+            this.state.page = page;
+        },
+        getPage: function(){
+            return this.state.page;
         },
         getEntry :function( id ){
             if( 'object' == typeof this.state.entries[id] ){

@@ -42,29 +42,35 @@ function CFEntryViewer2( formId, formStore, entryStore, api, config ){
 
         },
         mounted: function () {
-            var self = this;
-            var $el = jQuery( self.$el );
-            var $next = $el.find( '.caldera-forms-entry-viewer-next-button' ),
-                $prev = $el.find( '.caldera-forms-entry-viewer-prev-button' );
-
-
-            if( self.page >= this.totalPages ){
-                $next.prop( 'disabled', true );
-            }
-
-            if( self.page = 1 ){
-                $prev.prop( 'disabled', true );
-            }
-
+            this.paginationButtons();
         },
         methods:{
+            paginationButtons: function(){
+                var $el = jQuery( this.$el );
+                var $next = $el.find( '.caldera-forms-entry-viewer-next-button' ),
+                    $prev = $el.find( '.caldera-forms-entry-viewer-prev-button' );
+
+
+                if( this.page >= this.totalPages ){
+                    $next.prop( 'disabled', true ).attr( 'aria-disabled', true );
+                }else{
+                    $next.prop( 'disabled', false ).attr( 'aria-disabled', false );
+                }
+
+                if( this.page == 1 ){
+                    $prev.prop( 'disabled', true ).attr( 'aria-disabled', true );
+                }else{
+                    $prev.prop( 'disabled', false ).attr( 'aria-disabled', false )
+
+                }
+            },
             nextPage: function(){
                 var self = this;
                 this.$set( this, 'page', this.page + 1 );
                 jQuery.when( api.getEntries( self.page ) ).then( function(d){
-
                     entryStore.setEntries(d);
                     self.$set( self, 'entries', entryStore.state );
+                    self.paginationButtons();
                 });
 
             },
@@ -77,6 +83,7 @@ function CFEntryViewer2( formId, formStore, entryStore, api, config ){
                 jQuery.when( api.getEntries( self.page ) ).then( function(d){
                     entryStore.setEntries(d);
                     self.$set( self, 'entries', entryStore.state );
+                    self.paginationButtons();
                 });
 
             },

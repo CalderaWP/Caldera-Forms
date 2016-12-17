@@ -134,7 +134,8 @@ function CFEntriesStoreFactory( formId, entries ){
             formId: formId,
             entries: entries,
             total: 0,
-            totalPages: 0
+            totalPages: 0,
+            page: 0
         },
         setEntries: function (entries) {
             this.state.entries = entries;
@@ -142,11 +143,20 @@ function CFEntriesStoreFactory( formId, entries ){
         setTotal: function( total ){
             this.state.total = total;
         },
+        getTotal: function(){
+            return this.state.total;
+        },
         setTotalPages: function( totalPages ){
             this.state.totalPages = totalPages;
         },
         getTotalPages: function(){
             return this.state.totalPages;
+        },
+        setPage: function( page ){
+            this.state.page = page;
+        },
+        getPage: function(){
+            return this.state.page;
         },
         getEntry :function( id ){
             if( 'object' == typeof this.state.entries[id] ){
@@ -206,29 +216,35 @@ function CFEntryViewer2( formId, formStore, entryStore, api, config ){
 
         },
         mounted: function () {
-            var self = this;
-            var $el = jQuery( self.$el );
-            var $next = $el.find( '.caldera-forms-entry-viewer-next-button' ),
-                $prev = $el.find( '.caldera-forms-entry-viewer-prev-button' );
-
-
-            if( self.page >= this.totalPages ){
-                $next.prop( 'disabled', true );
-            }
-
-            if( self.page = 1 ){
-                $prev.prop( 'disabled', true );
-            }
-
+            this.paginationButtons();
         },
         methods:{
+            paginationButtons: function(){
+                var $el = jQuery( this.$el );
+                var $next = $el.find( '.caldera-forms-entry-viewer-next-button' ),
+                    $prev = $el.find( '.caldera-forms-entry-viewer-prev-button' );
+
+
+                if( this.page >= this.totalPages ){
+                    $next.prop( 'disabled', true ).attr( 'aria-disabled', true );
+                }else{
+                    $next.prop( 'disabled', false ).attr( 'aria-disabled', false );
+                }
+
+                if( this.page == 1 ){
+                    $prev.prop( 'disabled', true ).attr( 'aria-disabled', true );
+                }else{
+                    $prev.prop( 'disabled', false ).attr( 'aria-disabled', false )
+
+                }
+            },
             nextPage: function(){
                 var self = this;
                 this.$set( this, 'page', this.page + 1 );
                 jQuery.when( api.getEntries( self.page ) ).then( function(d){
-
                     entryStore.setEntries(d);
                     self.$set( self, 'entries', entryStore.state );
+                    self.paginationButtons();
                 });
 
             },
@@ -241,6 +257,7 @@ function CFEntryViewer2( formId, formStore, entryStore, api, config ){
                 jQuery.when( api.getEntries( self.page ) ).then( function(d){
                     entryStore.setEntries(d);
                     self.$set( self, 'entries', entryStore.state );
+                    self.paginationButtons();
                 });
 
             },
@@ -329,11 +346,12 @@ jQuery( document ).ready( function ($) {
             var entries = d2[0];
             var formStore = new CFFormStoreFactory( formId, form.field_details.order, form.field_details.entry_list );
             var entriesStore = new CFEntriesStoreFactory( formId, entries );
+            entriesStore.setPage(1);
             if( null != d2[2].getResponseHeader( 'X-CF-API-TOTAL-PAGES')  ){
-                entriesStore.setTotalPages = d2[2].getResponseHeader( 'X-CF-API-TOTAL-PAGES' );
+                entriesStore.setTotalPages(d2[2].getResponseHeader( 'X-CF-API-TOTAL-PAGES' ) );
             }
             if( null != d2[2].getResponseHeader( 'X-CF-API-TOTAL' ) ){
-                entriesStore.setTotalPages = d2[2].getResponseHeader( 'X-CF-API-TOTAL' );
+                entriesStore.setTotal( d2[2].getResponseHeader( 'X-CF-API-TOTAL' ) );
             }
             var viewer = new CFEntryViewer2( formId, formStore, entriesStore, api, CF_ENTRY_VIEWER_2_CONFIG );
 

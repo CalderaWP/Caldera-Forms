@@ -50,19 +50,22 @@ if( ! defined( 'ABSPATH' ) ){
 		</table>
 	</div>
 
+	<div id="caldera-forms-entries-nav" role="navigation">
+		<a href="#" v-on:click="prevPage" class="caldera-forms-entry-viewer-prev-button button" title="<?php esc_attr_e( 'Previous page of entries', 'caldera-forms' ); ?>">
+			<?php esc_html_e( 'Previous', 'caldera-forms' ); ?>
+		</a>
+		<a href="#" v-on:click="nextPage" class="caldera-forms-entry-viewer-next-button button" title="<?php esc_attr_e( 'Next page of entries', 'caldera-forms' ); ?>">
+			<?php esc_html_e( 'Next', 'caldera-forms' ); ?>
+		</a>
 
-	<button v-on:click="nextPage" class="caldera-forms-entry-viewer-next-button">
-		<?php esc_html_e( 'Next', 'caldera-forms' ); ?>
-	</button>
-	<button v-on:click="prevPage" class="caldera-forms-entry-viewer-prev-button">
-		<?php esc_html_e( 'Previous', 'caldera-forms' ); ?>
-	</button>
-	<div class="caldera-field-config">
-		<label for="caldera-entry-viewer-2-per-page">
-			<?php esc_html_e( 'Entries Per Page', 'caldera-forms' ); ?>
-		</label>
-		<input type="number" min="1" v-model="perPage" v-on:change="updatePerPage" id="caldera-entry-viewer-2-per-page">
+		<div class="caldera-field-config">
+			<label for="caldera-entry-viewer-2-per-page">
+				<?php esc_html_e( 'Entries Per Page', 'caldera-forms' ); ?>
+			</label>
+			<input type="number" min="1" v-model="perPage" v-on:change="updatePerPage" id="caldera-entry-viewer-2-per-page">
+		</div>
 	</div>
+
 </div>
 <div id="caldera-forms-entry"></div>
 

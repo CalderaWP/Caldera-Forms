@@ -14,11 +14,12 @@ jQuery( document ).ready( function ($) {
             var entries = d2[0];
             var formStore = new CFFormStoreFactory( formId, form.field_details.order, form.field_details.entry_list );
             var entriesStore = new CFEntriesStoreFactory( formId, entries );
+            entriesStore.setPage(1);
             if( null != d2[2].getResponseHeader( 'X-CF-API-TOTAL-PAGES')  ){
-                entriesStore.setTotalPages = d2[2].getResponseHeader( 'X-CF-API-TOTAL-PAGES' );
+                entriesStore.setTotalPages(d2[2].getResponseHeader( 'X-CF-API-TOTAL-PAGES' ) );
             }
             if( null != d2[2].getResponseHeader( 'X-CF-API-TOTAL' ) ){
-                entriesStore.setTotalPages = d2[2].getResponseHeader( 'X-CF-API-TOTAL' );
+                entriesStore.setTotal( d2[2].getResponseHeader( 'X-CF-API-TOTAL' ) );
             }
             var viewer = new CFEntryViewer2( formId, formStore, entriesStore, api, CF_ENTRY_VIEWER_2_CONFIG );
 

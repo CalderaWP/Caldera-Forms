@@ -24,3 +24,8 @@ li.entry-detail {
     float: left;
     width: 20%;
 }
+
+#caldera-forms-entries-nav .caldera-field-config {
+    display: inline;
+    float: right;
+}
