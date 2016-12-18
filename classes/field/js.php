@@ -10,7 +10,7 @@
  * @link
  * @copyright 2016 CalderaWP LLC
  */
-class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
+class Caldera_Forms_Field_JS implements JsonSerializable {
 
 	/**
 	 * Form config

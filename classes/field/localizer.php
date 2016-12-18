@@ -31,7 +31,7 @@ class Caldera_Forms_Field_Localizer {
 	 * @param $current_form_count
 	 */
 	public static function add_form( array  $form, $current_form_count ){
-		$fieldjs = new Caldera_Forms_Render_FieldsJS( $form, $current_form_count  );
+		$fieldjs = new Caldera_Forms_Field_JS( $form, $current_form_count  );
 
 		self::$localized[ $current_form_count ] = $fieldjs->to_array();
 		add_action( 'wp_footer', array( __CLASS__, 'localize_cb' ), 100 );
