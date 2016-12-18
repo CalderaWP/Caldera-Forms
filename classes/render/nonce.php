@@ -60,7 +60,18 @@ class Caldera_Forms_Render_Nonce {
 	 * @return false|int
 	 */
 	public static function verify_nonce( $nonce, $form_id ){
-		return wp_verify_nonce( $nonce, self::nonce_action( $form_id ) );
+		$valid = wp_verify_nonce( $nonce, self::nonce_action( $form_id ) );
+		if( ! $valid ){
+			/**
+			 * Fires when form submission is stopped by invalid security token
+			 *
+			 * @since 1.5.0
+			 *
+			 * @param string $form_id ID of form that the
+			 */
+			do_action( 'caldera_forms_verification_token_failed', $form_id );
+		}
+		return $valid;
 	}
 
 	/**
@@ -73,8 +84,7 @@ class Caldera_Forms_Render_Nonce {
 	 * @return string
 	 */
 	public static function nonce_field( $form_id ){
-
-		$nonce_field = '<input type="hidden" id="' . esc_attr( self::nonce_field_name( $form_id ) ) . '" name="' . esc_attr( self::nonce_field_name() ) . '" value="' . esc_attr( self::create_verify_nonce( $form_id ) ) . '"  data-nonce-time="' . esc_attr( time() ) . ' " />';
+		$nonce_field = '<input type="hidden" id="' . esc_attr( self::nonce_field_name( $form_id ) ) . '" name="' . esc_attr( self::nonce_field_name() ) . '" value="' . esc_attr( self::create_verify_nonce( $form_id ) ) . '"  data-nonce-time="' . esc_attr( time() ) . '" />';
 		$nonce_field .= wp_referer_field( false );
 		return $nonce_field;
 	}
