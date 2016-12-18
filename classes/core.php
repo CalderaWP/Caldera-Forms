@@ -2304,8 +2304,6 @@ class Caldera_Forms {
 								if ( ! empty( $this_form[ 'fields' ] ) ) {
 									if ( ! isset( $this_form[ 'mailer' ][ 'email_type' ] ) || $this_form[ 'mailer' ][ 'email_type' ] == 'html' ) {
 										$html    = true;
-
-
 									} else {
 										$html = false;
 									}
