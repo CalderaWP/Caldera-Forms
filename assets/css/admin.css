@@ -553,7 +553,7 @@ h3.caldera-editor-field-title {
   display: block;
   margin: 4px 0 0;
 }
-.caldera-config-group > label, .caldera-config-group > legend {
+.caldera-config-group > label, .caldera-config-group > legend, .caldera-config-group legend {
   float: left;
   margin: -2px 0 0 -140px;
   padding: 6px 0;

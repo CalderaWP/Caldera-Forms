@@ -21,11 +21,14 @@
 		<legend>
 			<?php esc_html_e('Use Country Code', 'caldera-forms'); ?>
 		</legend>
-		<div class="caldera-config-field">
+
 			<input type="checkbox" id="{{_id}}_nationalMode" class="field-config" name="{{_name}}[nationalMode]" {{#if nationalMode}}checked="checked"{{/if}}">
 			<label for="{{_id}}_nationalMode">
 				<?php esc_html_e( 'If not checked, formatting will be for local use, without country code', 'caldera-forms' ); ?>
 			</label>
-		</div>
+
+
+
+
 	</fieldset>
 </div>
