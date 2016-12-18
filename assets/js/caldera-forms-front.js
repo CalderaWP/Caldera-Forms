@@ -2078,7 +2078,7 @@ if ('undefined' !== typeof window.ParsleyValidator)
              disableAdvance();
              var $cvcField = $( document.getElementById( fieldConfig.cvc ) ),
                  $expField = $( document.getElementById( fieldConfig.exp ) );
-             $cvc.blur( function(){
+             $cvcField.blur( function(){
                  self.creditCardUtil.validateCVC( $field, $cvcField );
                  self.creditCardUtil.validateExp( $expField );
              });
