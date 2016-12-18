@@ -21,7 +21,7 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 
 		$sync = false;
 		if( in_array( $type, self::sync_fields() ) ){
-			$syncer = Caldera_Forms_Field_Syncfactory::get_object( $form, $field, $field_base_id );
+			$syncer = Caldera_Forms_Sync_Factory::get_object( $form, $field, $field_base_id );
 			$sync = $syncer->can_sync();
 			$default = $syncer->get_default();
 		}
@@ -104,7 +104,10 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 			'email',
 			'html',
 			'number',
-			'hidden'
+			'hidden',
+			'url',
+			'phone_better',
+			'paragraph'Sync should support URL, new phone and paragraph fields #1034
 		);
 	}
 
