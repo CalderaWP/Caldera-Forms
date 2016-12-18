@@ -372,11 +372,17 @@ function CalderaFormsResetNonce( formId, config, $ ){
 	 * @since 1.5.0
      */
 	function replaceNonce(){
-		$.post( config.rest.tokens.nonce, {
-			form_id: formId
+		$.ajax({
+			url:config.rest.tokens.nonce,
+			method: 'POST',
+			beforeSend: function ( xhr ) {
+				xhr.setRequestHeader( 'X-WP-Nonce', nonce );
+			},data:{
+				form_id: formId
+			}
 		}).success( function( r){
 			$nonceField.val( r.nonce );
-			$nonceField.attr( 'nonce-time', new Date().getTime() );
+			$nonceField.data( 'nonce-time', new Date().getTime() );
 		});
 	}
 }

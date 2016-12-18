@@ -522,7 +522,8 @@ class Caldera_Forms_Render_Assets {
 				'root' => esc_url_raw( Caldera_Forms_API_Util::url() ),
 				'tokens' => array(
 					'nonce' => esc_url_raw( Caldera_Forms_API_Util::url( 'tokens/form' ) )
-				)
+				),
+				'nonce' => wp_create_nonce( 'WP_REST' )
 			),
 			'nonce' => array(
 				'field' => Caldera_Forms_Render_Nonce::nonce_field_name(),

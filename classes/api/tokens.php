@@ -55,7 +55,8 @@ class Caldera_Forms_API_Tokens implements Caldera_Forms_API_Route {
 	 * @return Caldera_Forms_API_Response
 	 */
 	public function get_new_nonce( WP_REST_Request $request ){
-		$nonce = Caldera_Forms_Render_Nonce::create_verify_nonce( $request[ 'form_id' ] );
+		$form_id = $request[ 'form_id' ];
+		$nonce = Caldera_Forms_Render_Nonce::create_verify_nonce( $form_id );
 		$response = new Caldera_Forms_API_Response( array(
 			'nonce' => $nonce,
 		) );

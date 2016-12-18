@@ -176,16 +176,19 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 	 */
 	protected function phone_better( $field_id, $field ){
 		$args =  array(
-			'options' => $this->better_phone_field_js_options( $field )
+			'options' => $this->better_phone_field_js_options( $field ),
+			'messages' => array(
+				'generic' => __( 'Invalid number', 'caldera-forms' ),
+				'1' => __( 'Invalid country code', 'caldera-forms' ),
+				'4' => __( 'Not a number', 'caldera-forms' ),
+				'3' => __( 'Number is too long', 'caldera-forms' ),
+				'2' => __( 'Number is too short', 'calera-forms' )
+
+			)
 		);
 
 		$this->data[ $field_id ] = $this->create_config_array( $field_id, __FUNCTION__, $args );
 
-		if( isset( $field[ 'config' ][ 'invalid_message' ] ) ){
-			$this->data[ $field_id ][ 'options' ][ 'invalid' ] = $field[ 'config' ][ 'invalid_message' ];
-		}else{
-			$this->data[ $field_id ][ 'options' ][ 'invalid' ] = esc_html__( 'Invalid number', 'caldera-forms' );
-		}
 
 
 	}
@@ -207,8 +210,12 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 			'preferredCountries' => array( 'us' )
 		);
 
-		if( ! empty( $field[ 'config' ][ 'nationalMode' ] ) ){
+		if( empty( $field[ 'config' ][ 'nationalMode' ] ) ){
 			$options[ 'nationalMode' ] = true;
+			$options[ 'autoHideDialCode' ] = true;
+		}else{
+			$options[ 'nationalMode' ] = false;
+			$options[ 'autoHideDialCode' ] = false;
 		}
 
 		/**

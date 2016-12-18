@@ -170,14 +170,28 @@
              reset();
              var valid;
              if ($.trim($field.val())) {
-                 if ($field.intlTelInput("isValidNumber")) {
+                 if ($field.intlTelInput("isValidNumber" )) {
                      valid = true;
                  } else {
                      valid = false;
                  }
              }
 
-             handleValidationMarkup( valid, $field, field.options.invalid, 'help-block-phone_better' );
+             var message;
+             var errorCode = $field.intlTelInput("getValidationError");
+             if( 0 == errorCode ){
+                 valid = true;
+                 message = '';
+             }else{
+                 if( 'undefined' != field.messages[errorCode]  ) {
+                     message = field.messages[errorCode]
+                 }else{
+                     message = field.messages.generic;
+                 }
+             }
+
+
+             handleValidationMarkup( valid, $field, message, 'help-block-phone_better' );
 
          };
 
