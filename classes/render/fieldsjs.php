@@ -245,8 +245,8 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 			'sync' => false
 		) );
 
-		/** @var Caldera_Forms_Field_SyncHTML $syncer */
-		$syncer = Caldera_Forms_Field_Syncfactory::get_object( $this->form, $field, $id_attr );
+		/** @var Caldera_Forms_Sync_HTML $syncer */
+		$syncer = Caldera_Forms_Sync_Factory::get_object( $this->form, $field, $id_attr );
 
 		if ( $syncer->can_sync() ) {
 			$this->data[ $field_id ] = array_merge( $this->data[ $field_id ], array(
@@ -408,8 +408,8 @@ class Caldera_Forms_Render_FieldsJS implements JsonSerializable {
 
 		$thousand_separator = $field['config']['thousand_separator'];
 		$decimal_separator = $field['config']['decimal_separator'];
-		/** @var Caldera_Forms_Field_SyncCalc $syncer */
-		$syncer = Caldera_Forms_Field_Syncfactory::get_object( $this->form, $field, Caldera_Forms_Field_Util::get_base_id( $field, null, $this->form ) );
+		/** @var Caldera_Forms_Sync_Calc $syncer */
+		$syncer = Caldera_Forms_Sync_Factory::get_object( $this->form, $field, Caldera_Forms_Field_Util::get_base_id( $field, null, $this->form ) );
 
 		//this creates binds array BTW
 		$syncer->can_sync();

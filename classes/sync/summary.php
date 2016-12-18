@@ -9,7 +9,7 @@
  * @link
  * @copyright 2016 CalderaWP LLC
  */
-class Caldera_Forms_Field_SyncSummary extends Caldera_Forms_Field_SyncHTML {
+class Caldera_Forms_Sync_Summary extends Caldera_Forms_Sync_HTML {
 
 
 	/**

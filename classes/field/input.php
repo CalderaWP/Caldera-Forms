@@ -107,7 +107,7 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 			'hidden',
 			'url',
 			'phone_better',
-			'paragraph'Sync should support URL, new phone and paragraph fields #1034
+			'paragraph'
 		);
 	}
 

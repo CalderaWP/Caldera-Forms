@@ -11,7 +11,7 @@
  * @link
  * @copyright 2016 CalderaWP LLC
  */
-class Caldera_Forms_Field_Sync {
+class Caldera_Forms_Sync_Sync {
 
 	/**
 	 * Config of field being synced

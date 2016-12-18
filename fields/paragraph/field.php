@@ -16,7 +16,7 @@ if(!empty($field['config']['placeholder'])){
 }
 
 
-$syncer = Caldera_Forms_Field_SyncFactory::get_object( $form, $field, $field_base_id );
+$syncer = Caldera_Forms_Sync_Factory::get_object( $form, $field, $field_base_id );
 $sync = $syncer->can_sync();
 $field_value = $default = $syncer->get_default();
 

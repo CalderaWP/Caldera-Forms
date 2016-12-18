@@ -9,7 +9,7 @@
  * @link
  * @copyright 2016 CalderaWP LLC
  */
-class Caldera_Forms_Field_SyncCalc  extends Caldera_Forms_Field_Sync {
+class Caldera_Forms_Sync_Calc  extends Caldera_Forms_Sync_Sync {
 
 
 	protected  $formula;

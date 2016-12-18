@@ -8,7 +8,7 @@
  * @link
  * @copyright 2016 CalderaWP LLC
  */
-class Caldera_Forms_Field_SyncHTML  extends Caldera_Forms_Field_Sync {
+class Caldera_Forms_Sync_HTML  extends Caldera_Forms_Sync_Sync {
 
 	/**
 	 * Bind field list as field data-field attrs

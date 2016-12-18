@@ -9,7 +9,7 @@
  * @link
  * @copyright 2016 CalderaWP LLC
  */
-class Caldera_Forms_Field_Syncfactory {
+class Caldera_Forms_Sync_Factory {
 
 
 	/**
@@ -21,7 +21,7 @@ class Caldera_Forms_Field_Syncfactory {
 	 * @param array $field Field config
 	 * @param string $field_base_id Field ID attribute
 	 *
-	 * @return Caldera_Forms_Field_Sync|Caldera_Forms_Field_SyncHTML|Caldera_Forms_Field_SyncSummary
+	 * @return Caldera_Forms_Sync_Sync|Caldera_Forms_Sync_HTML|Caldera_Forms_Sync_Summary
 	 */
 	public static function get_object( $form, $field, $field_base_id ){
 		$id = self::identifier( $form[ 'ID' ], $field[ 'ID' ], $field_base_id );
@@ -58,7 +58,7 @@ class Caldera_Forms_Field_Syncfactory {
 	 *
 	 * @param string $identifier Unique identifier for this object
 	 *
-	 * @return bool|Caldera_Forms_Field_Sync|Caldera_Forms_Field_SyncHTML
+	 * @return bool|Caldera_Forms_Sync_Sync|Caldera_Forms_Sync_HTML
 	 */
 	protected static function get_cache( $identifier ){
 		return wp_cache_get( $identifier, __CLASS__ );
@@ -71,9 +71,9 @@ class Caldera_Forms_Field_Syncfactory {
 	 * @since 1.5.0
 	 *
 	 * @param string $identifier Unique identifier for this object
-	 * @param Caldera_Forms_Field_Sync|Caldera_Forms_Field_SyncHTML $object Object tocache
+	 * @param Caldera_Forms_Sync_Sync|Caldera_Forms_Sync_HTML $object Object tocache
 	 */
-	protected static function add_to_cache( $identifier, Caldera_Forms_Field_Sync $object ){
+	protected static function add_to_cache( $identifier, Caldera_Forms_Sync_Sync $object ){
 		wp_cache_set( $identifier, $object, __CLASS__ );
 	}
 
@@ -88,22 +88,22 @@ class Caldera_Forms_Field_Syncfactory {
 	 * @param array $field Field config
 	 * @param string $field_base_id Field ID attribute
 	 *
-	 * @return Caldera_Forms_Field_Sync|Caldera_Forms_Field_SyncHTML|Caldera_Forms_Field_SyncCalc|Caldera_Forms_Field_SyncSummary
+	 * @return Caldera_Forms_Sync_Sync|Caldera_Forms_Sync_HTML|Caldera_Forms_Sync_Calc|Caldera_Forms_Sync_Summary
 	 */
 	protected static function create( $form, $field, $field_base_id ){
 		$type = Caldera_Forms_Field_Util::get_type( $field );
 		switch( $type ) {
 			case 'html' :
-				return new  Caldera_Forms_Field_SyncHTML( $form, $field, $field_base_id );
+				return new  Caldera_Forms_Sync_HTML( $form, $field, $field_base_id );
 			break;
 			case 'calculation' :
-				return new  Caldera_Forms_Field_SyncCalc( $form, $field, $field_base_id );
+				return new  Caldera_Forms_Sync_Calc( $form, $field, $field_base_id );
 			break;
 			case 'summary' :
-				return new Caldera_Forms_Field_SyncSummary( $form, $field, $field_base_id );
+				return new Caldera_Forms_Sync_Summary( $form, $field, $field_base_id );
 			break;
 			default :
-				return new  Caldera_Forms_Field_Sync( $form, $field, $field_base_id );
+				return new  Caldera_Forms_Sync_Sync( $form, $field, $field_base_id );
 			break;
 		}
 

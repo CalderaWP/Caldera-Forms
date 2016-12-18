@@ -49,6 +49,7 @@ function caldera_forms_load(){
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Email', CFCORE_PATH . 'classes/email' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Admin', CFCORE_PATH . 'classes/admin' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Render', CFCORE_PATH . 'classes/render' );
+	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Sync', CFCORE_PATH . 'classes/sync' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_CSV', CFCORE_PATH . 'classes/csv' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Processor_Interface', CFCORE_PATH . 'processors/classes/interfaces' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_API', CFCORE_PATH . 'classes/api' );

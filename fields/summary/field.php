@@ -8,7 +8,7 @@
  * @link
  * @copyright 2016 CalderaWP LLC
  */
-$syncer = Caldera_Forms_Field_Syncfactory::get_object( $form, $field, Caldera_Forms_Field_Util::get_base_id( $field, null, $form ) );
+$syncer = Caldera_Forms_Sync_Factory::get_object( $form, $field, Caldera_Forms_Field_Util::get_base_id( $field, null, $form ) );
 $el_classes = array( 'caldera-forms-summary-field' );
 if( ! empty( $field[ 'config' ][ 'custom_class' ]  ) ){
 	$el_classes[] = $field[ 'config' ][ 'custom_class' ];
@@ -29,7 +29,7 @@ $attr_string = caldera_forms_field_attributes(
 	$form
 );
 
-$syncer = Caldera_Forms_Field_Syncfactory::get_object( $form, $field, Caldera_Forms_Field_Util::get_base_id( $field, null, $form ) );
+$syncer = Caldera_Forms_Sync_Factory::get_object( $form, $field, Caldera_Forms_Field_Util::get_base_id( $field, null, $form ) );
 $sync = $syncer->can_sync();
 
 if( $sync ){

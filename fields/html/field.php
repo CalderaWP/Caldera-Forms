@@ -1,7 +1,7 @@
 <?php
 $html_template = '';
 // magics!
-$syncer = Caldera_Forms_Field_Syncfactory::get_object( $form, $field, Caldera_Forms_Field_Util::get_base_id( $field, null, $form ) );
+$syncer = Caldera_Forms_Sync_Factory::get_object( $form, $field, Caldera_Forms_Field_Util::get_base_id( $field, null, $form ) );
 $sync = $syncer->can_sync();
 
 if( $sync ){
