@@ -55,6 +55,14 @@ function pre_compile_templates(){
 
 }
 
+var cfAdminAJAX;
+if( 'object' == typeof  CF_ADMIN ){
+    cfAdminAJAX = CF_ADMIN.adminAjax;
+} else {
+    //yolo
+    cfAdminAJAX = ajaxurl;
+}
+
 /**
  * Get a compiled Handlebars template or the fallback template
  * @param template
@@ -70,13 +78,7 @@ function get_compiled_template( template ) {
 
 
 jQuery(document).ready(function($){
-    var adminAJAX;
-    if( 'object' == typeof  CF_ADMIN ){
-        adminAJAX = CF_ADMIN.adminAjax
-    } else {
-        //yolo
-        adminAJAX = ajaxurl;
-    }
+
 
     $('.caldera-header-save-button').baldrick({
         method			:	'POST',
@@ -2094,7 +2096,7 @@ jQuery(document).ready(function($) {
             }
         };
 
-        $.post( adminAJAX, data, function(res){
+        $.post( cfAdminAJAX, data, function(res){
 
             clicked.parent().find('.spinner').css('display', 'none');
 
@@ -2518,7 +2520,7 @@ jQuery(document).ready(function($) {
 
         // initialise baldrick triggers
         $('.wp-baldrick').baldrick({
-            request     : adminAJAX,
+            request     : cfAdminAJAX,
             method      : 'POST',
             before		: function(el){
 
