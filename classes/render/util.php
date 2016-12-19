@@ -12,6 +12,8 @@
  */
 class Caldera_Forms_Render_Util {
 
+	public static $footer_objects;
+
 	/**
 	 * Get ID of form notice HTML element
 	 *
@@ -66,6 +68,35 @@ class Caldera_Forms_Render_Util {
 		//JOSH - Don't put a filter here SO MANY things assume this is the way it is
 		$form_wrap_id = "caldera_form_" . $current_form_count;
 		return $form_wrap_id;
+	}
+
+	/**
+	 * Add data to be printed in footer
+	 *
+	 * Container/factory for Caldera_Forms_Render_Footer objects
+	 *
+	 * @uses 1.5.0
+	 *
+	 * @param string $data Data to add
+	 * @param array $form Form config
+	 *
+	 * @return bool True if added, false if invalid or could not be added (not string or added too late)
+	 */
+	public static function add_inline_data( $data, array $form ){
+		if( ! empty(  $form[ 'ID' ] ) ){
+			$form_id =  $form[ 'ID' ];
+		}else{
+			return false;
+		}
+
+		if( empty( self::$footer_objects[ $form[ 'ID' ] ] ) ){
+			if ( is_array( $form ) ) {
+				self::$footer_objects[ $form_id ] = new Caldera_Forms_Render_Footer( $form );
+			}
+		}
+		/** @var Caldera_Forms_Render_Footer */
+		return self::$footer_objects[ $form_id ]->add_data( $data );
+
 	}
 
 }

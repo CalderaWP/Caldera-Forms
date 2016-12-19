@@ -15,12 +15,8 @@ if( $sync ){
 	echo '</script>';
 
 	$script_template = ob_get_clean();
-	if( ! empty( $form[ 'grid_object' ] ) && is_object( $form[ 'grid_object' ] ) ){
-		$form[ 'grid_object' ]->append( $script_template, $field[ 'grid_location' ] );
-	}else{
-		echo $script_template;
-	}
-			
+	Caldera_Forms_Render_Util::add_inline_data( $script_template, $form );
+
 }else{
 	$html_template = $field[ 'config' ][ 'default' ];
 	echo '<div class="' . esc_attr( $field['config']['custom_class'] ) . '">' . do_shortcode( Caldera_Forms::do_magic_tags( $html_template ) ) . '</div>';
