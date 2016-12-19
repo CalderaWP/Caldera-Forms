@@ -3561,16 +3561,7 @@ class Caldera_Forms {
 					$_POST[ '_wp_http_referer_true' ] = 'api';
 					$_POST[ '_cf_frm_id' ]            = $_POST[ 'cfajax' ] = $wp_query->query_vars[ 'cf_api' ];
 
-					if ( isset( $_POST[ '_cf_verify' ] ) && isset( $_POST[ '_cf_frm_id' ] ) ) {
-						if ( Caldera_Forms_Render_Nonce::verify_nonce( $_POST[ '_cf_verify' ], $_POST[ '_cf_frm_id' ] ) ) {
-							$submission = Caldera_Forms::process_submission();
-							wp_send_json( $submission );
-						} else {
-							status_header( 400 );
-							exit;
-						}
-
-					}
+					Caldera_Forms::process_form_via_post();
 
 				}
 			}
@@ -3626,18 +3617,8 @@ class Caldera_Forms {
 		global $post, $wp_query, $process_id, $form;
 
 		// hook into submission
-		if ( isset( $_POST[ '_cf_verify' ] ) && isset( $_POST[ '_cf_frm_id' ] ) ) {
-			if ( Caldera_Forms_Render_Nonce::verify_nonce( $_POST[ '_cf_verify' ], $_POST[ '_cf_frm_id' ] ) ) {
+		self::process_form_via_post();
 
-				self::process_submission();
-				exit;
-
-			} else {
-				status_header( 400 );
-			}
-			exit;
-			/// end form and redirect to submit page or result page.
-		}
 	}
 
 	/**
@@ -4267,31 +4248,10 @@ class Caldera_Forms {
 
 		// setup notcies
 		$notices              = array();
-		$note_general_classes = array(
-			'alert'
-		);
-		$note_general_classes = apply_filters( 'caldera_forms_render_note_general_classes', $note_general_classes, $form );
 
-		$note_classes = array(
-			'success' => array_merge( $note_general_classes, array(
-				'alert-success'
-			) ),
-			'error'   => array_merge( $note_general_classes, array(
-				'alert-error'
-			) ),
-			'info'    => array_merge( $note_general_classes, array(
-				'alert-info'
-			) ),
-			'warning' => array_merge( $note_general_classes, array(
-				'alert-warning'
-			) ),
-			'danger'  => array_merge( $note_general_classes, array(
-				'alert-danger'
-			) ),
-		);
+		$note_general_classes = Caldera_Forms_Render_Notices::get_note_general_classes( $form );
 
-		$note_classes = apply_filters( 'caldera_forms_render_note_classes', $note_classes, $form );
-
+		$note_classes = Caldera_Forms_Render_Notices::get_note_classes( $note_general_classes, $form );
 		$field_errors = array();
 
 		// edit entry from url
@@ -4569,15 +4529,7 @@ class Caldera_Forms {
 		$form_wrap_id = Caldera_Forms_Render_Util::field_id_attribute( $current_form_count );
 		$out          = sprintf( '<div class="%s" id="%s" data-cf-ver="%s" data-cf-form-id="%s">', esc_attr( implode( ' ', $form_wrapper_classes ) ), esc_attr( $form_wrap_id ), esc_attr( CFCORE_VER ), esc_attr( $form[ 'ID' ] ) );
 
-		/**
-		 * Filter final HTML for notices
-		 *
-		 * @since unknown
-		 *
-		 * @param string $notice Notices HTML
-		 * @param array $config Form config
-		 */
-		$notices = apply_filters( 'caldera_forms_render_notices', $notices, $form );
+		$notices = Caldera_Forms_Render_Notices::prepare_notices( $notices, $form );
 
 		// set debug notice
 		if ( ! empty( $form[ 'mailer' ][ 'enable_mailer' ] ) && ! empty( $form[ 'debug_mailer' ] ) ) {
@@ -5035,6 +4987,45 @@ class Caldera_Forms {
 		 * @param array $form Form config
 		 */
 		return apply_filters( 'caldera_forms_send_email', $send, $form );
+
+	}
+
+
+	/**
+	 * The one true handler for submissions via POST
+	 *
+	 * Does nonce check and then processes and returns, else 400.
+	 *
+	 * @since 1.5.0
+	 */
+	public static function process_form_via_post(){
+		if ( isset( $_POST[ '_cf_frm_id' ] ) ) {
+			if ( 1==7 && isset( $_POST[ '_cf_verify' ] ) && Caldera_Forms_Render_Nonce::verify_nonce( $_POST[ '_cf_verify' ], $_POST[ '_cf_frm_id' ] ) ) {
+				$submission = Caldera_Forms::process_submission();
+				wp_send_json( $submission );
+				exit;
+			}
+
+			status_header( 400 );
+			$form = Caldera_Forms_Forms::get_form(  $_POST[ '_cf_frm_id' ]  );
+			$notices              = array();
+			$notices[ 'error' ][ 'note' ] = __( 'Submission rejected, token invalid', 'caldera-forms' );
+
+			$note_general_classes = Caldera_Forms_Render_Notices::get_note_general_classes( $form );
+
+			$note_classes = Caldera_Forms_Render_Notices::get_note_classes( $note_general_classes, $form );
+
+			$out = array(
+				'html' => Caldera_Forms_Render_Notices::html_from_notices( $notices, $note_classes ),
+
+			);
+
+
+			wp_send_json_error( $out );
+			exit;
+
+		}
+
 
 	}
 

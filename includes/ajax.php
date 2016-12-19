@@ -21,15 +21,7 @@ function cf_form_process_ajax(){
 		$post = get_post( (int) $_POST['_cf_cr_pst'] );
 	}
 
-	if(isset($_POST['_cf_verify']) && isset( $_POST['_cf_frm_id'] )){
-		if ( Caldera_Forms_Render_Nonce::verify_nonce( $_POST[ '_cf_verify' ], $_POST[ '_cf_frm_id' ] ) ) {
-			$submission = Caldera_Forms::process_submission();
-			wp_send_json( $submission );
-		} else {
-			status_header( 400 );
-			exit;
-		}
-	}
+	Caldera_Forms::process_form_via_post();
 }
 
 
@@ -136,10 +128,7 @@ function cf_ajax_redirect($type, $url, $form){
 	}
 
 	$notices = array();
-	$note_general_classes = array(
-		'alert'
-	);
-	$note_general_classes = apply_filters( 'caldera_forms_render_note_general_classes', $note_general_classes, $form);
+	$note_general_classes = Caldera_Forms_Render_Notices::get_note_general_classes( $form );
 
 	// base id
 	$form_id = 'caldera_form_1';
@@ -184,39 +173,11 @@ function cf_ajax_redirect($type, $url, $form){
 			}
 		}
 	}
-	$notices = apply_filters( 'caldera_forms_render_notices', $notices, $form);
 
-	$note_classes = array(
-		'success'	=> array_merge($note_general_classes, array(
-			'alert-success'
-		)),
-		'error'	=> array_merge($note_general_classes, array(
-			'alert-error'
-		)),
-		'info'	=> array_merge($note_general_classes, array(
-			'alert-info'
-		)),
-		'warning'	=> array_merge($note_general_classes, array(
-			'alert-warning'
-		)),
-		'danger'	=> array_merge($note_general_classes, array(
-			'alert-danger'
-		)),
-	);
-	
-	$note_classes = apply_filters( 'caldera_forms_render_note_classes', $note_classes, $form);
+	$notices = Caldera_Forms_Render_Notices::prepare_notices( $notices, $form );
+	$note_classes = Caldera_Forms_Render_Notices::get_note_classes( $note_general_classes, $form );
 
-	$html = '';
-
-	if(!empty($notices)){
-		// do notices
-		foreach($notices as $note_type => $notice){
-			if(!empty($notice['note'])){
-				$result = Caldera_Forms::do_magic_tags( $notice['note'] );
-				$html .= '<div class=" '. implode(' ', $note_classes[$note_type]) . '">' . $result .'</div>';	
-			}
-		}
-	}
+	$html = Caldera_Forms_Render_Notices::html_from_notices( $notices, $note_classes );
 
 	if(!empty($result)){
 		$out['result'] = $result;

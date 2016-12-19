@@ -127,7 +127,19 @@ jQuery(function($){
             error : function( obj ){
                 if( obj.jqxhr.status === 404){
                     this.trigger.data('_cf_manual', true ).trigger('submit');
+                }else{
+                    var instance = obj.params.trigger.data('instance');
+
+                    if( obj.jqxhr.responseJSON.data.html ){
+                        var $notice = $( '#caldera_notices_' + instance );
+                        $notice.html (obj.jqxhr.responseJSON.data.html );
+                        $('html,body').animate({
+                            scrollTop: $notice.offset().top - $notice.outerHeight()
+                        }, 300 );
+
+                    }
                 }
+
             },
             callback		: function(obj){
 
