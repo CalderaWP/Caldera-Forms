@@ -39,9 +39,7 @@ $attr_string =  caldera_forms_field_attributes( $attrs, $field, $form );
 ?><?php echo $wrapper_before; ?>
 	<?php echo $field_label; ?>
 	<?php echo $field_before; ?>
-		<textarea <?php echo $attr_string . ' ' . $field_required . ' ' . $field_structure['aria']; ?> >
-			<?php echo esc_html( $field_value ); ?>
-		</textarea>
+		<textarea <?php echo $attr_string . ' ' . $field_required . ' ' . $field_structure['aria']; ?> ><?php echo esc_html( $field_value ); ?></textarea>
 		<?php echo $field_caption; ?>
 	<?php echo $field_after; ?>
 <?php echo $wrapper_after; ?>
