@@ -2932,8 +2932,33 @@ class Caldera_Forms {
 				$failed = false;
 				// run validators
 				if ( has_filter( 'caldera_forms_validate_field_' . $field[ 'type' ] ) ) {
+					/**
+					 * Add custom validation by field type or change field value.
+					 *
+					 * Return WP_Error to trigger validation error
+					 *
+					 * @since unknown
+					 *
+					 * @param mixed $entry Field value
+					 * @param array $field Field config
+					 * @param array $form Form config
+					 */
 					$entry = apply_filters( 'caldera_forms_validate_field_' . $field[ 'type' ], $entry, $field, $form );
 				}
+
+				/**
+				 * Add custom validation by field ID or change field value.
+				 *
+				 * Return WP_Error to trigger validation error
+				 *
+				 * @since 1.5.0
+				 *
+				 * @param mixed $entry Field value
+				 * @param array $field Field config
+				 * @param array $form Form config
+				 */
+				$entry = apply_filters( 'caldera_forms_validate_field_' . $field[ 'ID' ], $entry, $field, $form );
+
 				// if required, check the validators returned errors or not.
 				if ( ! empty( $field[ 'required' ] ) ) {
 					// check is supported
