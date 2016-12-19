@@ -241,7 +241,6 @@ class Caldera_Forms_Save_Final {
 			if ( ! isset( $form['mailer']['email_type'] ) || $form['mailer']['email_type'] == 'html' ) {
 				$mail['headers'][] = "Content-type: text/html";
 				$mail['html']      = true;
-				$mail['message']   = wpautop( $mail['message'] );
 			} else {
 				$mail['html'] = false;
 			}

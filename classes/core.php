@@ -120,6 +120,9 @@ class Caldera_Forms {
 		add_action( 'caldera_forms_submit_complete', array( 'Caldera_Forms_Files', 'cleanup' ) );
 		add_action( Caldera_Forms_Files::CRON_ACTION, array( 'Caldera_Forms_Files', 'cleanup_via_cron' ) );
 
+		//format email
+		add_filter( 'caldera_forms_mailer', array( $this, 'format_message' ) );
+
 		if( current_user_can( Caldera_Forms::get_manage_cap( 'admin' ) ) ) {
 			$id = null;
 			$view = false;
@@ -5415,6 +5418,24 @@ class Caldera_Forms {
 		 */
 		return apply_filters( 'caldera_forms_send_email', $send, $form );
 
+	}
+
+	/**
+	 * Apply wpautop to email message.
+	 *
+	 * This was separated out from main email generation method in 1.4.7 so it would be removable, see: https://github.com/CalderaWP/Caldera-Forms/issues/1048
+	 *
+	 * @since 1.4.7
+	 *
+	 * @uses "caldera_forms_mailer" filter
+	 *
+	 * @param array $mail
+	 *
+	 * @return mixed
+	 */
+	public static function format_message( $mail ){
+		$mail[ 'message' ] = wpautop( $mail[ 'message' ] );
+		return $mail;
 	}
 
 }
