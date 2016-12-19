@@ -93,12 +93,25 @@ function caldera_forms_field_attributes( array $attrs, array $field, array $form
 	/**
 	 * Filter field attributes before rendering
 	 *
+	 * @since 1.5.0
+	 *
 	 * @param array $attrs Array of attributes, $name => $value
 	 * @param array $field Field config
 	 * @param array $form Form config
 	 */
 	$attrs = apply_filters( 'caldera_forms_field_attributes', $attrs, $field, $form );
+
+	/**
+	 * Filter field attributes before rendering for a specific field type
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param array $attrs Array of attributes, $name => $value
+	 * @param array $field Field config
+	 * @param array $form Form config
+	 */
 	$attrs = apply_filters( "caldera_forms_field_attributes-$field_type", $attrs, $form );
+
 	return caldera_forms_implode_field_attributes( caldera_forms_escape_field_attributes_array( $attrs ) );
 
 

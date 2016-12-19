@@ -24,11 +24,21 @@ if( !isset( $field['config']['decimal_separator'] ) ){
 $thousand_separator = $field['config']['thousand_separator'];
 $decimal_separator = $field['config']['decimal_separator'];
 
+$attrs = array(
+	'type' => 'hidden',
+	'name' => $field_name,
+	'value' => 0,
+	'data-field' => $field_base_id,
+);
+$attr_string =  caldera_forms_field_attributes( $attrs, $field, $form );
+
+
 ?><?php echo $wrapper_before; ?>
 	<?php echo $field_label; ?>
 	<?php echo $field_before; ?>
-		<<?php echo $elementType . $field_structure['aria']; ?> class="<?php echo $field['config']['classes']; ?>"><?php echo $field['config']['before']; ?><span id="<?php echo esc_attr( $field_id ); ?>"><?php echo $field_value; ?></span><?php echo $field['config']['after']; ?></<?php echo $elementType; ?>>
-		<input type="hidden" name="<?php echo esc_attr( $field_name ); ?>" value="0" data-field="<?php echo esc_attr( $field_base_id ); ?>" >
+		<<?php echo $elementType . $field_structure['aria']; ?> class="<?php echo $field['config']['classes']; ?>"><?php echo $field['config']['before']; ?>
+			<span id="<?php echo esc_attr( $field_id ); ?>"><?php echo $field_value; ?></span><?php echo $field['config']['after']; ?></<?php echo $elementType; ?>>
+				<input type="hidden" <?php echo $attr_string; ?>" >
 		<?php echo $field_caption; ?>
 	<?php echo $field_after; ?>
 <?php echo $wrapper_after; ?>
