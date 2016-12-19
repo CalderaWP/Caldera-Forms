@@ -5000,7 +5000,7 @@ class Caldera_Forms {
 	 */
 	public static function process_form_via_post(){
 		if ( isset( $_POST[ '_cf_frm_id' ] ) ) {
-			if ( 1==7 && isset( $_POST[ '_cf_verify' ] ) && Caldera_Forms_Render_Nonce::verify_nonce( $_POST[ '_cf_verify' ], $_POST[ '_cf_frm_id' ] ) ) {
+			if ( isset( $_POST[ '_cf_verify' ] ) && Caldera_Forms_Render_Nonce::verify_nonce( $_POST[ '_cf_verify' ], $_POST[ '_cf_frm_id' ] ) ) {
 				$submission = Caldera_Forms::process_submission();
 				wp_send_json( $submission );
 				exit;
