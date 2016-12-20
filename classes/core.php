@@ -149,6 +149,9 @@ class Caldera_Forms {
 		//entry viewer shortcode
 		add_shortcode( Caldera_Forms_Entry_Shortcode::get_shortcode_name(), array( 'Caldera_Forms_Entry_Shortcode', 'shortcode_callback' ) );
 
+		//init Credit card # hash class here, not on hook, so it can't be unhooked
+		new Caldera_Forms_Field_Credit;
+
 		/**
 		 * Runs after Caldera Forms core is initialized
 		 *
