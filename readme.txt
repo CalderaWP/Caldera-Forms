@@ -1438,11 +1438,8 @@ See: https://wp.me/p5JPPE-9bv for details.
 See: https://calderaforms.com/updates/caldera-forms-1-4-6/
 
 = 1.4.6.1 =
-<<<<<<< HEAD
-See: https://calderaforms.com/updates/caldera-forms-1-4-6-1/
-=======
 See: https://calderaforms.com/updates/caldera-forms-1-4-6-1/
 
 = 1.4.7 =
 See: https://calderaforms.com/updates/caldera-forms-1-4-7/
->>>>>>> 1.4.x
+
