@@ -329,6 +329,12 @@ class Caldera_Forms_Fields {
 						'track_color' => '#AFAFAF',
 						'type'        => 'star',
 					),
+				),
+				"scripts"     => array(
+					CFCORE_URL . "fields/star-rate/jquery.raty.js",
+				),
+				"styles"      => array(
+					CFCORE_URL . "fields/star-rate/jquery.raty.css",
 				)
 			),
 
@@ -517,7 +523,6 @@ class Caldera_Forms_Fields {
 					"default"  => array(
 						'default' => '#FFFFFF'
 					),
-
 				),
 			),
 			'states'           => array(

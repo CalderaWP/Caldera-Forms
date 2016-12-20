@@ -330,6 +330,7 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 		}
 
 		$args = array(
+			'starFieldId' => Caldera_Forms_Field_Util::star_target( Caldera_Forms_Field_Util::get_base_id( $field, $this->form_count, $this->form ) ),
 			'options' => array(
 				'starOn' => 'raty-'.  $type . '-on',
 				'starOff' => 'raty-'.  $type . '-off',
@@ -338,26 +339,22 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 				'color' => $field['config']['color'],
 				'cancel' => false,
 				'single' => false,
-				'target' => '#' . Caldera_Forms_Field_Util::star_target( $this->field_id( $field_id ) ),
+				'targetScore' => '#' . $this->field_id( $field_id ),
 				'targetKeep' => true,
 				'targetType' => 'score',
-				'score' => $field[ 'config' ][ 'default' ],
+				'score' => 0,
 				'hints' => array( 1,2,3,4,5),
 				'starType' => 'f',
 				'starColor' => $field['config']['color'],
 				'numberMax' => 100,
-
 			)
 		);
 
+		if( ! empty( $field[ 'config' ][ 'default' ] ) && is_numeric( $field[ 'config' ][ 'default' ] ) ){
+			$args[ 'options' ][ 'score' ] = $field[ 'config' ][ 'default' ];
+		}
+
 		$this->data[ $field_id ] = $this->create_config_array( $field_id, __FUNCTION__, $args );
-
-		$this->data[ $field_id ] = array(
-			'type' => 'star_rating',
-			'id' => $this->field_id( $field_id ),
-
-
-		);
 
 		if(!empty($field['config']['cancel']) ){
 			$this->data[ $field_id ][ 'options' ][ 'cancel' ] = true;

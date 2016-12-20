@@ -121,8 +121,9 @@ class Caldera_Forms {
 		add_action( 'caldera_forms_submit_complete', array( 'Caldera_Forms_Files', 'cleanup' ) );
 		add_action( Caldera_Forms_Files::CRON_ACTION, array( 'Caldera_Forms_Files', 'cleanup_via_cron' ) );
 
-		if ( current_user_can( Caldera_Forms::get_manage_cap( 'admin' ) ) ) {
-			$id   = null;
+		if( current_user_can( Caldera_Forms::get_manage_cap( 'admin' ) ) ) {
+			$id = null;
+
 			$view = false;
 			if ( isset( $_GET[ 'cf-email-preview' ], $_GET[ 'cf-email-preview-form' ] ) ) {
 				if ( wp_verify_nonce( $_GET[ 'cf-email-preview' ], $_GET[ 'cf-email-preview-form' ] ) ) {
@@ -134,6 +135,9 @@ class Caldera_Forms {
 			new Caldera_Forms_Email_Previews( $id, $view );
 
 		}
+
+        //format email
+        add_filter( 'caldera_forms_mailer', array( $this, 'format_message' ) );
 
 		/** Entry Viewer v1 */
 		add_action( 'wp_ajax_browse_entries', array( Caldera_Forms_Entry_UI::get_instance(), 'view_entries' ) );
@@ -506,39 +510,64 @@ class Caldera_Forms {
 	 *
 	 * @return array
 	 */
-	public static function mail_attachment_check( $mail, $data, $form ) {
-		foreach ( $form[ 'fields' ] as $field_id => $field ) {
-			if ( ( $field[ 'type' ] == 'file' || $field[ 'type' ] == 'advanced_file' ) && isset( $field[ 'config' ][ 'attach' ] ) ) {
-				$dir  = wp_upload_dir();
-				$file = str_replace( $dir[ 'baseurl' ], $dir[ 'basedir' ], self::get_field_data( $field_id, $form ) );
-				if ( is_array( $file ) ) {
-					foreach ( $file as $a_file ) {
-						if ( is_string( $a_file ) && file_exists( $a_file ) ) {
-							$mail[ 'attachments' ][] = $a_file;
+    public static function mail_attachment_check( $mail, $data, $form){
+        foreach ( Caldera_Forms_Forms::get_fields( $form, false ) as $field_id => $field ) {
+            if ( Caldera_Forms_Field_Util::is_file_field( $field, $form )  ) {
+                $dir = wp_upload_dir();
+                if ( isset( $data[ $field_id ] ) && is_array( $data[ $field_id ] ) ) {
+                    foreach ( $data[ $field_id ] as $file ) {
+                        $file = str_replace( $dir[ 'baseurl' ], $dir[ 'basedir' ], $file );
+                        if ( file_exists( $file ) ) {
+                            $mail[ 'attachments' ][] = $file;
+                        }
+                    }
 
-						}
-					}
+                    continue;
 
-				} elseif ( is_string( $file ) && file_exists( $file ) ) {
-					$mail[ 'attachments' ][] = $file;
-				} else {
-					if ( isset( $data[ $field_id ] ) && filter_var( $data[ $field_id ], FILTER_VALIDATE_URL ) ) {
-						$mail[ 'attachments' ][] = $data[ $field_id ];
-					} elseif ( isset( $_POST[ $field_id ] ) && filter_var( $_POST[ $field_id ], FILTER_VALIDATE_URL ) && 0 === strpos( $_POST[ $field_id ], $dir[ 'url' ] ) ) {
-						$mail[ 'attachments' ][] = $_POST[ $field_id ];
+                }
 
-					} else {
-						continue;
 
-					}
-				}
+                if ( isset( $data[ $field_id ] ) ) {
+                    $file = $data[ $field_id ];
+                } else {
+                    $file = self::get_field_data( $field_id, $form );
+                }
 
-			}
-		}
+                if ( is_array( $file ) ) {
+                    foreach ( $file as $a_file ) {
+                        $file = str_replace( $dir[ 'baseurl' ], $dir[ 'basedir' ], $file );
+                        if ( is_string( $a_file ) && file_exists( $a_file ) ) {
+                            $mail[ 'attachments' ][] = $a_file;
 
-		return $mail;
+                        }
+                    }
 
-	}
+                    continue;
+
+
+                } else {
+                    $file = str_replace( $dir[ 'baseurl' ], $dir[ 'basedir' ], $file );
+                    if ( is_string( $file ) && file_exists( $file ) ) {
+                        $mail[ 'attachments' ][] = $file;
+                    } else {
+                        if ( isset( $data[ $field_id ] ) && filter_var( $data[ $field_id ], FILTER_VALIDATE_URL ) ) {
+                            $mail[ 'attachments' ][] = $data[ $field_id ];
+                        } elseif ( isset( $_POST[ $field_id ] ) && filter_var( $_POST[ $field_id ], FILTER_VALIDATE_URL ) && 0 === strpos( $_POST[ $field_id ], $dir[ 'url' ] ) ) {
+                            $mail[ 'attachments' ][] = $_POST[ $field_id ];
+
+                        } else {
+                            continue;
+
+                        }
+                    }
+                }
+
+            }
+        }
+
+        return $mail;
+
+    }
 
 	/**
 	 * Check a captcha
@@ -1975,9 +2004,8 @@ class Caldera_Forms {
 							case 'summary':
 								if ( ! empty( $this_form[ 'fields' ] ) ) {
 									if ( ! isset( $this_form[ 'mailer' ][ 'email_type' ] ) || $this_form[ 'mailer' ][ 'email_type' ] == 'html' ) {
-										$html = true;
 
-
+										$html    = true;
 									} else {
 										$html = false;
 									}
@@ -4990,7 +5018,6 @@ class Caldera_Forms {
 
 	}
 
-
 	/**
 	 * The one true handler for submissions via POST
 	 *
@@ -4998,34 +5025,55 @@ class Caldera_Forms {
 	 *
 	 * @since 1.5.0
 	 */
+
 	public static function process_form_via_post(){
-		if ( isset( $_POST[ '_cf_frm_id' ] ) ) {
-			if ( isset( $_POST[ '_cf_verify' ] ) && Caldera_Forms_Render_Nonce::verify_nonce( $_POST[ '_cf_verify' ], $_POST[ '_cf_frm_id' ] ) ) {
-				$submission = Caldera_Forms::process_submission();
-				wp_send_json( $submission );
-				exit;
-			}
-
-			status_header( 400 );
-			$form = Caldera_Forms_Forms::get_form(  $_POST[ '_cf_frm_id' ]  );
-			$notices              = array();
-			$notices[ 'error' ][ 'note' ] = __( 'Submission rejected, token invalid', 'caldera-forms' );
-
-			$note_general_classes = Caldera_Forms_Render_Notices::get_note_general_classes( $form );
-
-			$note_classes = Caldera_Forms_Render_Notices::get_note_classes( $note_general_classes, $form );
-
-			$out = array(
-				'html' => Caldera_Forms_Render_Notices::html_from_notices( $notices, $note_classes ),
-
-			);
+        if (isset($_POST['_cf_frm_id'])) {
+	        if ( isset( $_POST[ '_cf_verify' ] ) && Caldera_Forms_Render_Nonce::verify_nonce( $_POST[ '_cf_verify' ], $_POST[ '_cf_frm_id' ] ) ) {
+                $submission = Caldera_Forms::process_submission();
+                wp_send_json($submission);
+                exit;
+            }
 
 
-			wp_send_json_error( $out );
-			exit;
+            status_header(400);
+            $form = Caldera_Forms_Forms::get_form($_POST['_cf_frm_id']);
+            $notices = array();
+            $notices['error']['note'] = __('Submission rejected, token invalid', 'caldera-forms');
 
-		}
+            $note_general_classes = Caldera_Forms_Render_Notices::get_note_general_classes($form);
 
+            $note_classes = Caldera_Forms_Render_Notices::get_note_classes($note_general_classes, $form);
+
+            $out = array(
+                'html' => Caldera_Forms_Render_Notices::html_from_notices($notices, $note_classes),
+
+            );
+
+
+            wp_send_json_error($out);
+            exit;
+
+        }
+
+    }
+
+
+	/**
+	 * Apply wpautop to email message.
+	 *
+	 * This was separated out from main email generation method in 1.4.7 so it would be removable, see: https://github.com/CalderaWP/Caldera-Forms/issues/1048
+	 *
+	 * @since 1.4.7
+	 *
+	 * @uses "caldera_forms_mailer" filter
+	 *
+	 * @param array $mail
+	 *
+	 * @return mixed
+	 */
+	public static function format_message( $mail ){
+		$mail[ 'message' ] = wpautop( $mail[ 'message' ] );
+		return $mail;
 
 	}
 

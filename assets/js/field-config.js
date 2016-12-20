@@ -131,18 +131,43 @@
      };
 
      this.star_rating = function( field ){
-         var $el = $( document.getElementById( field.id ) );
-         function init(){
+
+         var score = field.options.score;
+         var $el = $( document.getElementById( field.starFieldId ) );
+         var $input = $( document.getElementById( field.id ) );
+         var init =  function(){
              var options = field.options;
+             options.score = score;
              options[ 'click' ] = function(){
+                 score = $el.raty('score');
                  $el.trigger( 'change' );
              };
              $el.raty(
                  options
              );
-         }
+
+
+             $el.raty('score', score );
+         };
+
          init();
-         jQuery( document ).on('cf.add', init );
+         var updating = false;
+        jQuery( document ).on('cf.add', function(){
+            return;
+            if( false === updating ){
+                updating = true;
+                if( $el.length ){
+                    $el.raty( 'destroy' );
+                    init();
+                }
+                setTimeout(function(){
+                    updating = false
+                }, 500 );
+            }
+
+
+
+        } );
      };
 
      this.toggle_switch = function( field ) {
