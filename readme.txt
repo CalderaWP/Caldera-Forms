@@ -723,9 +723,20 @@ The [Trumbowyg](https://alex-d.github.io/Trumbowyg/) JavaScript library is used
 2. **Easy, Powerful Grid-based Form Builder** - Drag and drop editor!
 3. **All The Field Types You Need** - Tons of fields! So Many Fields!
 4. **Powerful Conditional Logic** - Hide and show fields based on user input!
-5. **Go Further With Form Processors** - Auto-responsers, redirects included! Go further with our add-ons!
+5. **Go Further With Form Processors** - Auto-responders, redirects included! Go further with our add-ons!
 
 == Changelog ==
+= Caldera Forms 1.4.6.1 ( December 19, 2016 ) Happy Early Christmas! =
+* FIXED: Bug where checkboxes showed up as JSON data not selected options in emails.
+* FIXED: Wrong variable scope in summary magic tag check if field is advanced file field. Didn't break anything, but still.
+* ADDED: Ability to remove wpautop formatting on email messages.
+* FIXED: Some notices were still showing up in our admin. Commonly used hooks for notices are now removed. The quest to remove all WordPress admin notices continues.
+* FIXED: AJAX settings in form settings tab's HTML markup lacked proper accessibility markup.
+
+= Caldera Forms 1.4.6.1 ( December 13, 2016 ) File Fields FTW! =
+* FIXED: Bug where advanced file fields, with multiple files, not set to be added to media library, were not attached to email. Ok, that's bad, but super glad I figured it out.
+* FIXED: Edge case where  Caldera_Forms_Field_Util::get_field() didn't have a value for $form, but needed it.
+
 = Caldera Forms 1.4.6 ( December 12, 2016 ) Summary Magic Tag: No with 15% more magic! =
 * FIXED: Bug preventing hidden field values, set in browser (via jQuery or whatever) from being saved properly. This bug was fun:)
 * ADDED: caldera_forms_magic_summary_should_use_label Filter for showing label instead of value for select fields in {summary} magic tags.
@@ -1421,3 +1432,12 @@ Major update! Better emails form your form, better form editor. Caldera Forms !!
 
 = 1.4.5 =
 See: https://wp.me/p5JPPE-9bv for details.
+
+= 1.4.6 =
+See: https://calderaforms.com/updates/caldera-forms-1-4-6/
+
+= 1.4.6.1 =
+See: https://calderaforms.com/updates/caldera-forms-1-4-6-1/
+
+= 1.4.7 =
+See: https://calderaforms.com/updates/caldera-forms-1-4-7/
