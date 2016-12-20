@@ -1055,6 +1055,7 @@ class Caldera_Forms_Admin {
 			return;
 		}
 
+		add_action( 'admin_head', array( __CLASS__, 'remove_notice_actions' ) );
 		if( 'caldera-forms_page_caldera-forms-extend' == $screen->base ){
 			add_action( 'admin_enqueue_scripts', array( 'Caldera_Forms_Admin_Extend', 'scripts' ), 55 );
 			return;
@@ -1780,8 +1781,21 @@ class Caldera_Forms_Admin {
 		}
 
 	}
-	
-	
+
+    /**
+     * Remove hooks for admin notices while in Caldera Forms admin
+     *
+     * Caldera Forms admin does not play nice with admin notices, so we use a series of steps to remove most of them, sadly can not beat them all.
+     *
+     * @since 1.4.7
+     * @uses "admin_head" action
+     */
+	public static function remove_notice_actions(){
+        remove_all_actions( 'admin_notices' );
+        remove_all_actions( 'network_admin_notices' );
+        remove_all_actions( 'user_admin_notices' );
+        remove_all_actions( 'all_admin_notices' );
+    }
 
 }
 

@@ -233,12 +233,11 @@ class Caldera_Forms_Save_Final {
 			}
 
 			// Filter Mailer first as not to have user input be filtered
-			$mail['message'] = Caldera_Forms::do_magic_tags( $mail['message'], $entryid, $form );
+			$mail['message'] = Caldera_Forms::do_magic_tags( $mail['message'], null, $data );
 
 			if ( ! isset( $form['mailer']['email_type'] ) || $form['mailer']['email_type'] == 'html' ) {
 				$mail['headers'][] = "Content-type: text/html";
 				$mail['html']      = true;
-				$mail['message']   = wpautop( $mail['message'] );
 			} else {
 				$mail['html'] = false;
 			}
