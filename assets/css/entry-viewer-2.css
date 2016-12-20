@@ -1,11 +1,10 @@
 li.entry-detail {
     border-bottom: 1px solid #ddd;
     margin-bottom: 4px;
+    padding-bottom: 8px;
 }
 
 .caldera-forms-entry-viewer .entry-detail .label {
-    clear: left;
-    float: left;
     font-weight: 700;
     margin-bottom: 3px;
     margin-right: 8px;

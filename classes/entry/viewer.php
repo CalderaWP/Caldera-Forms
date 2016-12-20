@@ -67,7 +67,7 @@ class Caldera_Forms_Entry_Viewer {
 	}
 
 	/**
-	 * Show entry viewer for one form
+	 * Show entry viewer (v1) for one form
 	 *
 	 * @since 1.5.0
 	 *
@@ -76,7 +76,7 @@ class Caldera_Forms_Entry_Viewer {
 	 *
 	 * @return string
 	 */
-	public static function form_entry_viewer( $form_id, $with_toolbar = false ){
+	public static function form_entry_viewer_1( $form_id, $with_toolbar = false ){
 		Caldera_Forms_Admin_Assets::admin_common();
 
 
@@ -117,6 +117,23 @@ class Caldera_Forms_Entry_Viewer {
 	public static function update_entries_per_page( $per_page ){
 		update_option( '_caldera_forms_entry_perpage', absint( $per_page ) );
 		return self::entries_per_page();
+	}
+
+	/**
+	 * Factory Caldera_Forms_Entry_Vue class that creates entry viewer v2
+	 *
+	 * Enqueues script and outputs HTML
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param array $form Form config
+	 *
+	 * @return string Rendered HTML of entry viewer
+	 */
+	public static function form_entry_viewer_2( array  $form ){
+		$vue = new Caldera_Forms_Entry_Vue( $form );
+		return  $vue->display();
+
 	}
 
 

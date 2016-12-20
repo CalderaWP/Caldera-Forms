@@ -25,13 +25,8 @@ if( ! defined( 'ABSPATH' ) ){
 <div class="form-extend-page-wrap">
 <?php
 if( isset( $_GET[ 'cf-alt-viewer' ] ) ){
-	Caldera_Forms_Render_Assets::enqueue_script( 'entry-viewer-2' );
-	Caldera_Forms_Render_Assets::enqueue_style( 'table' );
-
 	$form = Caldera_Forms_Forms::get_form( $_GET[ 'cf-alt-viewer' ] );
-	$vue = new Caldera_Forms_Entry_Vue( $form );
-	$view =  $vue->display();
-
+	echo Caldera_Forms_Entry_Viewer::form_entry_viewer_2( $form );
 }else{
 	?>
 	<span class="form_entry_row highlight">

@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE Caldera-Forms - v1.5.0-b-1 - 2016-12-18 *//*!
+/*! GENERATED SOURCE FILE Caldera-Forms - v1.5.0-b-1 - 2016-12-19 *//*!
 * Parsleyjs
 * Guillaume Potier - <guillaume@wisembly.com>
 * Version 2.2.0-rc2 - built Tue Oct 06 2015 10:20:13
@@ -1961,18 +1961,43 @@ if ('undefined' !== typeof window.ParsleyValidator)
      };
 
      this.star_rating = function( field ){
-         var $el = $( document.getElementById( field.id ) );
-         function init(){
+
+         var score = field.options.score;
+         var $el = $( document.getElementById( field.starFieldId ) );
+         var $input = $( document.getElementById( field.id ) );
+         var init =  function(){
              var options = field.options;
+             options.score = score;
              options[ 'click' ] = function(){
+                 score = $el.raty('score');
                  $el.trigger( 'change' );
              };
              $el.raty(
                  options
              );
-         }
+
+
+             $el.raty('score', score );
+         };
+
          init();
-         jQuery( document ).on('cf.add', init );
+         var updating = false;
+        jQuery( document ).on('cf.add', function(){
+            return;
+            if( false === updating ){
+                updating = true;
+                if( $el.length ){
+                    $el.raty( 'destroy' );
+                    init();
+                }
+                setTimeout(function(){
+                    updating = false
+                }, 500 );
+            }
+
+
+
+        } );
      };
 
      this.toggle_switch = function( field ) {
