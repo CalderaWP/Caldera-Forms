@@ -196,5 +196,44 @@ class Caldera_Forms_Entry_UI {
 
 	}
 
+	/**
+	 * Filter permissions for entry view or export
+	 *
+	 * @since 1.5.0
+	 *
+	 * @uses "caldera_forms_manage_cap"
+	 *
+	 * @param string $cap A capability. By default "manage_options".
+	 * @param string $context Context to check in.
+	 * @param array|null $form Form config if it was passed.
+	 *
+	 * @return int|string
+	 */
+	public static function permissions( $cap, $context, $form ){
+		if( ! is_array( $form ) ){
+			return $cap;
+		}
+
+		switch( $context ) {
+			case 'export' :
+			case 'entry-view' :
+				if( ! empty( $form[ 'pinned' ] ) ){
+					if( isset( $form[ 'pin_roles' ][ 'access_role' ] ) && is_array($form[ 'pin_roles' ][ 'access_role' ] ) ){
+						$user = wp_get_current_user();
+						foreach( $form[ 'pin_roles' ][ 'access_role' ] as $role => $i ) {
+							if( in_array( $role, $user->roles ) ){
+								return $role;
+							}
+						}
+					}
+				}
+
+				break;
+
+		}
+
+		return $cap;
+	}
+
 
 }

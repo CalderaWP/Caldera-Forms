@@ -42,17 +42,17 @@ class Caldera_Forms_Entry_Shortcode {
 	 */
 	public static function shortcode_callback( $atts ){
 		$atts = shortcode_atts( array(
-			'form_id' => strip_tags( $_GET[ 'cf_id' ] ),
+			'id' => strip_tags( ! isset( $_GET[ 'cf_id' ] ) ? null : $_GET[ 'cf_id' ] ),
 			'version' => '2',
 			'with_toolbar' => false,
 		), $atts, self::$name );
 
-		$form = Caldera_Forms_Forms::get_form( $atts[ 'form_id' ] );
+		$form = Caldera_Forms_Forms::get_form( $atts[ 'id' ] );
 		if ( ! empty( $form ) ) {
 			if ( '2' == $atts[ 'version' ] ) {
-		return Caldera_Forms_Entry_Viewer::form_entry_viewer_2( $form );
+				return Caldera_Forms_Entry_Viewer::form_entry_viewer_2( $form );
 			}else{
-				return Caldera_Forms_Entry_Viewer::form_entry_viewer_1( $atts[ 'form_id' ], wp_validate_boolean( $atts[ 'with_toolbar' ] ) );
+				return Caldera_Forms_Entry_Viewer::form_entry_viewer_1( $atts[ 'id' ], wp_validate_boolean( $atts[ 'with_toolbar' ] ) );
 
 			}
 

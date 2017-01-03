@@ -40,7 +40,7 @@ class Caldera_Forms_Entry_Vue {
 	public function __construct( array  $form, array $config = array()) {
 		$this->form = $form;
 		$this->set_config( $config );
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
+		$this->enqueue();
 	}
 
 	/**
@@ -62,6 +62,7 @@ class Caldera_Forms_Entry_Vue {
 	 * @since 1.5.0
 	 */
 	public function enqueue(){
+		Caldera_Forms_Render_Assets::maybe_register();
 		Caldera_Forms_Render_Assets::enqueue_style( 'table' );
 		Caldera_Forms_Render_Assets::enqueue_style( 'modals' );
 		Caldera_Forms_Render_Assets::enqueue_style( 'entry-viewer-2' );

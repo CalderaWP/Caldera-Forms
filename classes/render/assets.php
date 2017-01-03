@@ -30,9 +30,7 @@ class Caldera_Forms_Render_Assets {
 	 * @param array $field Current field
 	 */
 	public static function enqueue_field_scripts( $field_types, $field ) {
-		if( ! did_action( 'caldera_forms_assets_registered' ) ){
-			self::register();
-		}
+		self::maybe_register();
 
 		$type = Caldera_Forms_Field_Util::get_type( $field );
 		if( in_array( $type , array( 'credit_card_number' ) ) ){
@@ -72,9 +70,7 @@ class Caldera_Forms_Render_Assets {
 	 * @since 1.4.3
 	 */
 	public static function optional_style_includes() {
-		if( ! did_action( 'caldera_forms_assets_registered' ) ){
-			self::register();
-		}
+		self::maybe_register();
 
 		$style_includes = self::get_style_includes();
 
@@ -261,9 +257,7 @@ class Caldera_Forms_Render_Assets {
 
 
 	public static function enqueue_all_fields(){
-		if( ! did_action( 'caldera_forms_assets_registered' ) ){
-			self::register();
-		}
+		self::maybe_register();
 
 		$field_types = Caldera_Forms_Fields::get_all();
 
@@ -351,6 +345,7 @@ class Caldera_Forms_Render_Assets {
 			}
 			wp_register_style( self::make_style_slug( $style_key ), $style_url, array(), CFCORE_VER );
 		}
+
 		// register scripts
 		foreach( $script_style_urls['script'] as $script_key => $script_url ){
 			if( empty( $script_url ) ){
@@ -393,6 +388,10 @@ class Caldera_Forms_Render_Assets {
 	 * @param string $style Slug or URL
 	 */
 	public static function enqueue_style( $style ){
+		if( ( 'table' == $style || $style == self::make_style_slug( 'table' ) ) && self::should_minify( false ) ){
+			$style = self::make_style_slug( 'entry-viewer-2' );
+		}
+
 		if ( ! wp_style_is( $style,  'enqueued'  ) ) {
 			if ( false !== strpos( $style, '//' ) ) {
 				$slug = self::make_style_slug( $style );
@@ -411,6 +410,8 @@ class Caldera_Forms_Render_Assets {
 					if ( wp_style_is(  'cf-' . $style, 'registered' ) ) {
 						wp_enqueue_script( 'cf-' . $style );
 					}
+				}elseif( in_array( $style, array_keys( self::get_core_styles() ) )) {
+
 				}
 			}
 		}
@@ -530,6 +531,19 @@ class Caldera_Forms_Render_Assets {
 			),
 		) );
 
+	}
+
+	/**
+	 * Register scripts if not already registered
+	 *
+	 * @since 1.5.0
+	 *
+	 * Calls self::do_register() if not already ran
+	 */
+	public static function maybe_register() {
+		if ( ! did_action( 'caldera_forms_assets_registered' ) ) {
+			self::register();
+		}
 	}
 
 }
