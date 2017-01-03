@@ -21,7 +21,7 @@ class Caldera_Forms_Admin_Assets {
 		wp_enqueue_style( 'wp-color-picker' );
 		wp_enqueue_script( 'wp-color-picker' );
 
-		self::enqueue_style( 'modal' );
+		self::admin_common();
 		self::enqueue_script( 'shortcode-insert' );
 	}
 
@@ -70,8 +70,7 @@ class Caldera_Forms_Admin_Assets {
 	 */
 	public static function register_scripts(){
 		$version = Caldera_Forms::VERSION;
-
-		wp_register_script( self::slug( 'shortcode', '-insert' ), Caldera_Forms_Render_Assets::make_url( 'shortcode-insert' ), array( 'jquery', 'wp-color-picker' ), $version );
+		wp_register_script( self::slug( 'shortcode-insert' ), Caldera_Forms_Render_Assets::make_url( 'shortcode-insert' ), array( 'jquery', 'wp-color-picker' ), $version );
 
 
 		wp_register_script( self::slug( 'baldrick' ), Caldera_Forms_Render_Assets::make_url( 'wp-baldrick-full' ), array( 'jquery' ), $version );
