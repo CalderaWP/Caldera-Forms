@@ -96,7 +96,7 @@ class Caldera_Forms_Magic_Summary extends Caldera_Forms_Magic_Parser {
 					$field_values = $field_values[ 'value' ];
 				} else {
 					foreach ( $field_values as $field_key => $field_value ) {
-						if ( isset( $field_value[ 'label' ] ) && array_key_exists( 'label', $field_value ) && isset( $field_value[ 'value' ] ) && array_key_exists( 'value', $field_value ) ) {
+						if ( true === is_array( $field_value ) && true === array_key_exists( 'label', $field_value ) && true === array_key_exists( 'value', $field_value ) ) {
 							$field_values[ $field_key ] = $field_value[ 'value' ];
 						}
 
