@@ -28,7 +28,7 @@
 				<?php if(empty($field['config']['inline'])){ ?>
 				<div class="checkbox">
 				<?php } ?>
-				<label<?php if(!empty($field['config']['inline'])){ ?> class="checkbox-inline"<?php } ?> for="<?php echo esc_attr( $field_id . '_' . $option_key ); ?>"><input <?php echo $parsley_req; ?> type="checkbox" data-label="<?php echo esc_attr( $option['label'] );?>" data-field="<?php echo esc_attr( $field_base_id ); ?>" id="<?php echo $field_id . '_' . $option_key; ?>" class="<?php echo $field_id . $req_class; ?>" name="<?php echo esc_attr( $field_name ); ?>[<?php echo esc_attr( $option_key ); ?>]" value="<?php echo esc_attr( $option['value'] ); ?>" <?php if( in_array( $option['value'], (array) $field_value) ){ ?>checked="checked"<?php } ?>> <?php echo $option['label']; ?></label>&nbsp;
+				<label<?php if(!empty($field['config']['inline'])){ ?> class="checkbox-inline"<?php } ?> for="<?php echo esc_attr( $field_id . '_' . $option_key ); ?>"><input <?php echo $parsley_req; ?> type="checkbox" data-label="<?php echo esc_attr( $option['label'] );?>" data-field="<?php echo esc_attr( $field_base_id ); ?>" id="<?php echo $field_id . '_' . $option_key; ?>" class="<?php echo $field_id . $req_class; ?>" name="<?php echo esc_attr( $field_name ); ?>[<?php echo esc_attr( $option_key ); ?>]" value="<?php echo esc_attr( $option['value'] ); ?>" <?php if( in_array( $option['value'], (array) $field_value) ){ ?>checked="checked"<?php } ?>> <?php echo $option['label']; ?></label>
 				<?php if(empty($field['config']['inline'])){ ?>
 				</div>
 				<?php } ?>
