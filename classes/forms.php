@@ -450,7 +450,13 @@ class Caldera_Forms_Forms {
 			}
 		}
 
-		$id = uniqid('CF');
+		$forms = self::get_forms();
+		if( ! isset( $newform[ 'ID' ] ) || ( ! isset( $newform[ 'ID' ] ) && array_key_exists( $newform[ 'ID' ], $forms ) ) ) {
+			$id = uniqid('CF');
+		}else{
+			$id = $newform[ 'ID' ];
+		}
+
 		$newform = array(
 			"ID" 			=> $id,
 			"name" 			=> $newform['name'],
