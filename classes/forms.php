@@ -457,10 +457,10 @@ class Caldera_Forms_Forms {
 			$id = $newform[ 'ID' ];
 		}
 
-		$newform = array(
+		$defaults = array(
 			"ID" 			=> $id,
-			"name" 			=> $newform['name'],
-			"description" 	=> $newform['description'],
+			"name" 			=> '',
+			"description" 	=> '',
 			"success"		=>	__('Form has been successfully submitted. Thank you.', 'caldera-forms'),
 			"form_ajax"		=> 1,
 			"hide_form"		=> 1,
@@ -468,6 +468,9 @@ class Caldera_Forms_Forms {
 			"db_support"    => 1,
 			'mailer'		=>	array( 'on_insert' => 1 )
 		);
+
+		$newform = wp_parse_args( $newform, $defaults );
+
 		// is template?
 		if( !empty( $form_template ) && is_array( $form_template ) ){
 			$newform = array_merge( $form_template, $newform );
