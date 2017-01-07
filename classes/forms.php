@@ -450,11 +450,17 @@ class Caldera_Forms_Forms {
 			}
 		}
 
-		$id = uniqid('CF');
-		$newform = array(
+		$forms = self::get_forms();
+		if( ! isset( $newform[ 'ID' ] ) || ( ! isset( $newform[ 'ID' ] ) && array_key_exists( $newform[ 'ID' ], $forms ) ) ) {
+			$id = uniqid('CF');
+		}else{
+			$id = $newform[ 'ID' ];
+		}
+
+		$defaults = array(
 			"ID" 			=> $id,
-			"name" 			=> $newform['name'],
-			"description" 	=> $newform['description'],
+			"name" 			=> '',
+			"description" 	=> '',
 			"success"		=>	__('Form has been successfully submitted. Thank you.', 'caldera-forms'),
 			"form_ajax"		=> 1,
 			"hide_form"		=> 1,
@@ -463,6 +469,9 @@ class Caldera_Forms_Forms {
 			'mailer'		=>	array( 'on_insert' => 1 ),
 			'scroll_top'    => 1
 		);
+
+		$newform = wp_parse_args( $newform, $defaults );
+
 		// is template?
 		if( !empty( $form_template ) && is_array( $form_template ) ){
 			$newform = array_merge( $form_template, $newform );
