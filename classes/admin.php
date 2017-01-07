@@ -119,8 +119,6 @@ class Caldera_Forms_Admin {
 
 		add_action( 'admin_init', array( $this, 'watch_tracking' ) );
 
-		add_filter( 'caldera_forms_manage_cap', array( __CLASS__ , 'save_form_cap_filter' ), 9, 3 );
-
 		add_action( 'caldera_forms_prerender_edit', array( __CLASS__, 'easy_pods_auto_populate' ) );
 
 		/**
@@ -630,7 +628,7 @@ class Caldera_Forms_Admin {
 		global $post;
 		if(!empty($post)){
 			echo "<a id=\"caldera-forms-form-insert\" title=\"". esc_attr__( 'Add Form to Page', 'caldera-forms' ) . "\" class=\"button caldera-forms-insert-button\" href=\"#inst\">\n";
-			echo "	<img src=\"". CFCORE_URL . "assets/images/lgo-icon.png\" alt=\"". esc_attr__( 'Insert Form Shortcode' , 'caldera-forms') . "\" style=\"padding: 0px 2px 0px 0px; width: 16px; margin: -2px 0px 0px;\" /> ".__('Caldera Form', 'caldera-forms' )."\n";
+			echo "	<img src=\"". CFCORE_URL . "assets/images/caldera-globe-logo-sm.png\" alt=\"". esc_attr__( 'Insert Form Shortcode' , 'caldera-forms') . "\" style=\"padding: 0px 2px 0px 0px; width: 16px; margin: -2px 0px 0px;\" /> ".__('Caldera Form', 'caldera-forms' )."\n";
 			echo "</a>\n";
 		}
 	}
@@ -1720,46 +1718,6 @@ class Caldera_Forms_Admin {
 				}
 			}
 		}
-	}
-
-	/**
-	 * Filter permissions used in self::save_form()
-	 *
-	 * @since 1.3.5
-	 *
-	 * @uses "caldera_forms_manage_cap"
-	 *
-	 * @param string $cap A capability. By default "manage_options".
-	 * @param string $context Context to check in.
-	 * @param array|null $form Form config if it was passed.
-	 *
-	 * @return int|string
-	 */
-	public static function save_form_cap_filter( $cap, $context, $form ){
-		if( ! is_array( $form ) ){
-			return $cap;
-		}
-
-		switch( $context ) {
-			case 'export' :
-			case 'entry-view' :
-				if( ! empty( $form[ 'pinned' ] ) ){
-					if( isset( $form[ 'pin_roles' ][ 'access_role' ] ) && is_array($form[ 'pin_roles' ][ 'access_role' ] ) ){
-						$user = wp_get_current_user();
-						foreach( $form[ 'pin_roles' ][ 'access_role' ] as $role => $i ) {
-							if( in_array( $role, $user->roles ) ){
-								return $role;
-							}
-						}
-					}
-				}
-
-				break;
-
-		}
-
-		return $cap;
-
 	}
 
 	/**

@@ -209,7 +209,7 @@ class Caldera_Forms_Entry_UI {
 	 *
 	 * @return int|string
 	 */
-	public static function permissions( $cap, $context, $form ){
+	public static function permissions_filter( $cap, $context, $form ){
 		if( ! is_array( $form ) ){
 			return $cap;
 		}
@@ -234,6 +234,14 @@ class Caldera_Forms_Entry_UI {
 
 		return $cap;
 	}
+
+	public static function is_public( array $form ){
+		return apply_filters( 'caldera_forms_entry_viewer_public', false, $form );
+
+	}
+
+
+
 
 
 }

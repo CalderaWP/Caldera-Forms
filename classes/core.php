@@ -121,6 +121,9 @@ class Caldera_Forms {
 		add_action( 'caldera_forms_submit_complete', array( 'Caldera_Forms_Files', 'cleanup' ) );
 		add_action( Caldera_Forms_Files::CRON_ACTION, array( 'Caldera_Forms_Files', 'cleanup_via_cron' ) );
 
+		//entry permission
+		add_filter( 'caldera_forms_manage_cap', array( 'Caldera_Forms_Entry_UI', 'permissions_filter' ), 9, 3 );
+
 		if( current_user_can( Caldera_Forms::get_manage_cap( 'admin' ) ) ) {
 			$id = null;
 

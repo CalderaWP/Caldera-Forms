@@ -195,8 +195,13 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
 	 * @return bool
 	 */
 	public function get_items_permissions_check( WP_REST_Request $request ){
-		$allowed = current_user_can( Caldera_Forms::get_manage_cap( 'entry-view' ), $request[ 'form_id' ] );
+		$form_id =  $request[ 'form_id' ];
+		$allowed = current_user_can( Caldera_Forms::get_manage_cap( 'entry-view' ), $form_id );
 
+		if( ! $allowed ){
+			$allowed = Caldera_Forms_API_Util::check_api_token( $request );
+		}
+		
 		/**
 		 * Filter permissions for viewing entries via Caldera Forms REST API
 		 *
@@ -206,7 +211,7 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
 		 * @param string $form_id The form ID
 		 * @param WP_REST_Request $request The current request
 		 */
-		return apply_filters( 'caldera_forms_api_allow_entry_view', $allowed, $request[ 'form_id' ], $request );
+		return apply_filters( 'caldera_forms_api_allow_entry_view', $allowed, $form_id, $request );
 
 	}
 
@@ -268,7 +273,10 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
 	 *
 	 * @since 1.5.0
 	 */
-	public function request_args() {}
+	public function request_args() {
+		return array(
+		);
+	}
 
 	/**
 	 * Form the endpoint URL that includes item ID

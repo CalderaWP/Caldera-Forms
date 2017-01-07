@@ -130,11 +130,12 @@ class Caldera_Forms_Entry_Viewer {
 	 *
 	 * @return string Rendered HTML of entry viewer
 	 */
-	public static function form_entry_viewer_2( array  $form ){
-		$vue = new Caldera_Forms_Entry_Vue( $form );
+	public static function form_entry_viewer_2( array  $form, $config = array() ){
+		$vue = new Caldera_Forms_Entry_Vue( $form, $config );
 		return  $vue->display();
 
 	}
+
 
 
 

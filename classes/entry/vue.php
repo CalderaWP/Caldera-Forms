@@ -35,7 +35,7 @@ class Caldera_Forms_Entry_Vue {
 	 * @since 1.5.0
 	 *
 	 * @param array $form Form config
-	 * @param array $config Optional. Viewer confing default overides
+	 * @param array $config Optional. Viewer config default overrides
 	 */
 	public function __construct( array  $form, array $config = array()) {
 		$this->form = $form;
@@ -81,7 +81,10 @@ class Caldera_Forms_Entry_Vue {
 	 * @param array $config
 	 */
 	protected function set_config($config ){
-		$this->config = wp_parse_args( $config, $this->config_defualts() );
+		$this->config = wp_parse_args( $config, $this->config_defaults() );
+		if( isset( $config[ 'token' ] ) ){
+			$this->config[ 'api' ][ 'token' ] = $config[ 'token' ];
+		}
 	}
 
 	/**
@@ -91,7 +94,7 @@ class Caldera_Forms_Entry_Vue {
 	 *
 	 * @return array
 	 */
-	protected function config_defualts(){
+	protected function config_defaults(){
 		return array(
 			'formId' => $this->form[ 'ID' ],
 			'dateFormat' => Caldera_Forms::time_format(),
@@ -101,6 +104,7 @@ class Caldera_Forms_Entry_Vue {
 				'entries' => esc_url( trailingslashit( Caldera_Forms_API_Util::url( 'entries' ) ) ),
 				'entrySettings' => esc_url( trailingslashit( Caldera_Forms_API_Util::url( 'settings/entries' )  ) ),
  				'nonce'   => wp_create_nonce( 'wp_rest' ),
+				'token'   => 'false',
 			),
 
 			'templates' => array(

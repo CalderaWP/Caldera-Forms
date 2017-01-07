@@ -45,12 +45,14 @@ class Caldera_Forms_Entry_Shortcode {
 			'id' => strip_tags( ! isset( $_GET[ 'cf_id' ] ) ? null : $_GET[ 'cf_id' ] ),
 			'version' => '2',
 			'with_toolbar' => false,
+			'role' => 'admin'
 		), $atts, self::$name );
 
 		$form = Caldera_Forms_Forms::get_form( $atts[ 'id' ] );
 		if ( ! empty( $form ) ) {
 			if ( '2' == $atts[ 'version' ] ) {
-				return Caldera_Forms_Entry_Viewer::form_entry_viewer_2( $form );
+
+				return Caldera_Forms_Entry_Viewer::form_entry_viewer_2( $form, array( 'token' => Caldera_Forms_API_Token::make_token( $atts[ 'role' ], $atts[ 'id' ] ) ) );
 			}else{
 				return Caldera_Forms_Entry_Viewer::form_entry_viewer_1( $atts[ 'id' ], wp_validate_boolean( $atts[ 'with_toolbar' ] ) );
 

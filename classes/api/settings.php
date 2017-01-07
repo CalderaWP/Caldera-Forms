@@ -29,6 +29,7 @@ class Caldera_Forms_API_Settings implements  Caldera_Forms_API_Route{
 				)
 			)
 		);
+
 	}
 
 	/**
@@ -48,19 +49,7 @@ class Caldera_Forms_API_Settings implements  Caldera_Forms_API_Route{
 		return $response;
 	}
 
-	/**
-	 * Permissions for read/write settings
-	 *
-	 * @since 1.5.0
-	 *
-	 * @param WP_REST_Request $request
-	 *
-	 * @return bool
-	 */
-	public function permissions_check( WP_REST_Request $request ){
-		$allowed = current_user_can( Caldera_Forms::get_manage_cap( 'admin' ) );
-		return $allowed;
 
-	}
+
 
 }
