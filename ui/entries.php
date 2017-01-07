@@ -8,11 +8,6 @@ if( ! defined( 'ABSPATH' ) ){
 		<li class="caldera-editor-logo">
 			<span class="caldera-forms-name"><?php echo esc_html(  $form[ 'name' ] ); ?><span class="caldera-forms-name">
 		</li>
-		<?php if(!empty($form['description'])){ ?>
-			<li class="caldera-element-type-label">
-				<?php echo esc_html(  $form[ 'description' ] ); ?>
-			</li>
-		<?php } ?>
 		<?php if( current_user_can( Caldera_Forms::get_manage_cap( 'admin' ) ) && empty( $form['_external_form'] ) ){ ?>
 			<li class="caldera-forms-toolbar-item">
 				<a class="button" href="admin.php?page=caldera-forms&edit=<?php echo $form['ID']; ?>">
