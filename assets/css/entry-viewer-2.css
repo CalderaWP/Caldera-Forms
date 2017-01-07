@@ -28,3 +28,9 @@ li.entry-detail {
     display: inline;
     float: right;
 }
+
+
+[v-cloak] {
+    display: none;
+    visibility: hidden;
+}

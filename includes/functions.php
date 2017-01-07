@@ -166,3 +166,30 @@ function caldera_forms_implode_field_attributes( array $attrs ){
 
 	return $out;
 }
+
+/**
+ * Get all editable WordPress roles
+ *
+ * @since 1.5.0
+ *
+ * @return array
+ */
+function caldera_forms_get_roles(){
+	global $wp_roles;
+	$all_roles      = $wp_roles->roles;
+	return  apply_filters( 'editable_roles', $all_roles );
+
+}
+
+/**
+ * Returns the current release series
+ *
+ * For 1.5.x will return 5 -- when we get to 2, should return 20, 21, etc.
+ *
+ * @since 1.5.0
+ *
+ * @return string
+ */
+function caldera_forms_get_release_series(){
+	return substr( CFCORE_VER, 2, 1 );
+}

@@ -133,7 +133,7 @@
 	<div class="caldera-config-group">
 		<fieldset>
 			<legend>
-				<?php esc_html_e( 'Show Entry View Page?', 'caldera-forms' ); ?>
+				<?php esc_html_e( 'Show Entry View Admin Page?', 'caldera-forms' ); ?>
 			</legend>
 			<div class="caldera-config-field">
 				<label for="pin-toggle-roles-enable">
@@ -168,9 +168,8 @@
 					</label>
 					<hr>
 					<?php
-					global $wp_roles;
-					$all_roles      = $wp_roles->roles;
-					$editable_roles = apply_filters( 'editable_roles', $all_roles );
+
+					$editable_roles = caldera_forms_get_roles();
 
 					foreach ( $editable_roles as $role => $role_details ) {
 						if ( 'administrator' === $role ) {

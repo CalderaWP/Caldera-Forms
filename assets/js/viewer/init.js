@@ -7,7 +7,15 @@ jQuery( document ).ready( function ($) {
     if( 'object' == typeof CF_ENTRY_VIEWER_2_CONFIG ){
 
         var formId = CF_ENTRY_VIEWER_2_CONFIG.formId;
-        var api = new CFAPI( CF_ENTRY_VIEWER_2_CONFIG.api, CF_ENTRY_VIEWER_2_CONFIG.perPage, formId, CF_ENTRY_VIEWER_2_CONFIG.api.nonce, $ );
+
+        var tokens = {
+            //REST API Nonce
+            nonce: CF_ENTRY_VIEWER_2_CONFIG.api.nonce,
+            //Special token for entry viewer
+            token: CF_ENTRY_VIEWER_2_CONFIG.api.token
+        };
+
+        var api = new CFAPI( CF_ENTRY_VIEWER_2_CONFIG.api, CF_ENTRY_VIEWER_2_CONFIG.perPage, formId, tokens, $ );
         $.when( api.getForm(), api.getEntries(1) ).then( function( d1, d2 ){
             var form = d1[0];
 
@@ -24,6 +32,7 @@ jQuery( document ).ready( function ($) {
             var viewer = new CFEntryViewer2( formId, formStore, entriesStore, api, CF_ENTRY_VIEWER_2_CONFIG );
 
         });
+
     }
 
 });

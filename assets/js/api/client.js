@@ -6,21 +6,35 @@
  * @param routes URLs for endpoints, should have URL for /entries and /forms
  * @param perPage How many items to return for page
  * @param formId Form ID
- * @param nonce WordPress REST API authentication nonce.
+ * @param tokens Either WordPress REST API authentication nonce as string, or object with index nonce and token (token is Caldera Forms Entry Token)
  * @param $ jQuery
  *
  * @returns {{getForm: getForm, getEntries: getEntries, paginatedEntryURL: paginatedEntryURL, setPerPage: setPerPage}}
  *
  * @constructor
  */
-function CFAPI( routes, perPage, formId, nonce,  $ ) {
+function CFAPI( routes, perPage, formId, tokens,  $ ) {
+    var nonce, token;
+    if( 'object' == typeof  tokens ){
+        nonce = typeof  tokens.nonce == 'string' ?  tokens.nonce : false;
+        token = typeof  tokens.nonce == 'string' ?  tokens.token : false;
+    }else{
+        nonce = tokens;
+    }
+
+    function addHeaders( xhr ){
+        xhr.setRequestHeader( 'X-CF-ENTRY-TOKEN', token );
+        xhr.setRequestHeader( 'X-WP-Nonce', nonce );
+    }
+
+
     return {
         getForm: function () {
             return $.ajax({
                 url: routes.form + formId,
                 method: 'GET',
                 beforeSend: function ( xhr ) {
-                    xhr.setRequestHeader( 'X-WP-Nonce', nonce );
+                    addHeaders( xhr );
                 }
             }).success(function (r) {
                 return r;
@@ -33,7 +47,7 @@ function CFAPI( routes, perPage, formId, nonce,  $ ) {
                 url: this.paginatedEntryURL(formId, page, perPage ),
                 method: 'GET',
                 beforeSend: function ( xhr ) {
-                    xhr.setRequestHeader( 'X-WP-Nonce', nonce );
+                    addHeaders( xhr );
                 }
             } ).success(function (r) {
                 return r;
@@ -61,7 +75,7 @@ function CFAPI( routes, perPage, formId, nonce,  $ ) {
                 method: 'POST',
                 dataType: 'json',
                 beforeSend: function ( xhr ) {
-                    xhr.setRequestHeader( 'X-WP-Nonce', nonce );
+                    addHeaders( xhr );
                 },
                 data:{
                     per_page: perPage
@@ -72,7 +86,8 @@ function CFAPI( routes, perPage, formId, nonce,  $ ) {
                 console.log(r);
             })
 
-        }
+        },
+
 
     }
 }

@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE Caldera-Forms - v1.5.0-b-1 - 2016-12-19 *//**
+/*! GENERATED SOURCE FILE Caldera-Forms - v1.5.0-b-1 - 2017-01-06 *//**
  * API Client for Caldera Forms API for a single form
  *
  * @since 1.5.0
@@ -6,21 +6,35 @@
  * @param routes URLs for endpoints, should have URL for /entries and /forms
  * @param perPage How many items to return for page
  * @param formId Form ID
- * @param nonce WordPress REST API authentication nonce.
+ * @param tokens Either WordPress REST API authentication nonce as string, or object with index nonce and token (token is Caldera Forms Entry Token)
  * @param $ jQuery
  *
  * @returns {{getForm: getForm, getEntries: getEntries, paginatedEntryURL: paginatedEntryURL, setPerPage: setPerPage}}
  *
  * @constructor
  */
-function CFAPI( routes, perPage, formId, nonce,  $ ) {
+function CFAPI( routes, perPage, formId, tokens,  $ ) {
+    var nonce, token;
+    if( 'object' == typeof  tokens ){
+        nonce = typeof  tokens.nonce == 'string' ?  tokens.nonce : false;
+        token = typeof  tokens.nonce == 'string' ?  tokens.token : false;
+    }else{
+        nonce = tokens;
+    }
+
+    function addHeaders( xhr ){
+        xhr.setRequestHeader( 'X-CF-ENTRY-TOKEN', token );
+        xhr.setRequestHeader( 'X-WP-Nonce', nonce );
+    }
+
+
     return {
         getForm: function () {
             return $.ajax({
                 url: routes.form + formId,
                 method: 'GET',
                 beforeSend: function ( xhr ) {
-                    xhr.setRequestHeader( 'X-WP-Nonce', nonce );
+                    addHeaders( xhr );
                 }
             }).success(function (r) {
                 return r;
@@ -33,7 +47,7 @@ function CFAPI( routes, perPage, formId, nonce,  $ ) {
                 url: this.paginatedEntryURL(formId, page, perPage ),
                 method: 'GET',
                 beforeSend: function ( xhr ) {
-                    xhr.setRequestHeader( 'X-WP-Nonce', nonce );
+                    addHeaders( xhr );
                 }
             } ).success(function (r) {
                 return r;
@@ -61,7 +75,7 @@ function CFAPI( routes, perPage, formId, nonce,  $ ) {
                 method: 'POST',
                 dataType: 'json',
                 beforeSend: function ( xhr ) {
-                    xhr.setRequestHeader( 'X-WP-Nonce', nonce );
+                    addHeaders( xhr );
                 },
                 data:{
                     per_page: perPage
@@ -72,7 +86,8 @@ function CFAPI( routes, perPage, formId, nonce,  $ ) {
                 console.log(r);
             })
 
-        }
+        },
+
 
     }
 }
@@ -339,7 +354,15 @@ jQuery( document ).ready( function ($) {
     if( 'object' == typeof CF_ENTRY_VIEWER_2_CONFIG ){
 
         var formId = CF_ENTRY_VIEWER_2_CONFIG.formId;
-        var api = new CFAPI( CF_ENTRY_VIEWER_2_CONFIG.api, CF_ENTRY_VIEWER_2_CONFIG.perPage, formId, CF_ENTRY_VIEWER_2_CONFIG.api.nonce, $ );
+
+        var tokens = {
+            //REST API Nonce
+            nonce: CF_ENTRY_VIEWER_2_CONFIG.api.nonce,
+            //Special token for entry viewer
+            token: CF_ENTRY_VIEWER_2_CONFIG.api.token
+        };
+
+        var api = new CFAPI( CF_ENTRY_VIEWER_2_CONFIG.api, CF_ENTRY_VIEWER_2_CONFIG.perPage, formId, tokens, $ );
         $.when( api.getForm(), api.getEntries(1) ).then( function( d1, d2 ){
             var form = d1[0];
 
@@ -356,6 +379,7 @@ jQuery( document ).ready( function ($) {
             var viewer = new CFEntryViewer2( formId, formStore, entriesStore, api, CF_ENTRY_VIEWER_2_CONFIG );
 
         });
+
     }
 
 });
