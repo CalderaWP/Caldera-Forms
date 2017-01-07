@@ -129,7 +129,8 @@ class Caldera_Forms_Entry_Vue {
 			),
 			'perPage' => absint( Caldera_Forms_Entry_Viewer::entries_per_page() ),
 			'strings' => array(
-				'not_allowed' => __( 'You are not allowed to view this.', 'caldera-forms' )
+				'no_entries' => esc_html__( 'No Entries To Display', 'caldera-forms' ),
+				'not_allowed' => esc_html__( 'You are not allowed to view this.', 'caldera-forms' )
 			)
 		);
 	}
