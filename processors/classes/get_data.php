@@ -246,14 +246,17 @@ class Caldera_Forms_Processor_Get_Data {
 	 *
 	 * @since 1.3.5.3
 	 *
-	 * @param $field
+	 * @param string $field Name of field
+	 * @param mixed  $default Optional. Default value to return if none set. @since 1.5.0
 	 *
 	 * @return mixed
 	 */
-	public function get_value( $field ){
+	public function get_value( $field, $default = null  ){
 		if( isset( $this->values[ $field ] ) ){
 			return $this->values[ $field ];
 		}
+
+		return $default;
 	}
 
 }
