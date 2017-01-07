@@ -25,7 +25,7 @@ if( ! defined( 'ABSPATH' ) ){
 </script>
 
 <div id="caldera-forms-entries">
-	<div class="caldera-table">
+	<div class="caldera-table" v-cloak>
 		<table class="table table-striped">
 			<thead>
 				<tr>

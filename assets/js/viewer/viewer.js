@@ -71,6 +71,8 @@ function CFEntryViewer2( formId, formStore, entryStore, api, config ){
                     entryStore.setEntries(d);
                     self.$set( self, 'entries', entryStore.state );
                     self.paginationButtons();
+                }, function(){
+                    self.notAllowed();
                 });
 
             },
@@ -84,6 +86,8 @@ function CFEntryViewer2( formId, formStore, entryStore, api, config ){
                     entryStore.setEntries(d);
                     self.$set( self, 'entries', entryStore.state );
                     self.paginationButtons();
+                }, function(){
+                    self.notAllowed();
                 });
 
             },
@@ -151,6 +155,13 @@ function CFEntryViewer2( formId, formStore, entryStore, api, config ){
                 $modal = jQuery('[data-remodal-id=' + entryId +']').remodal();
                 $modal.open();
 
+            },
+            notAllowed: function (r) {
+                if ( 'object' != typeof  r && 404 != r.status ) {
+                    $singleEntryZone.remove();
+                    jQuery('#caldera-forms-entries-nav').remove();
+                    jQuery(document.getElementById('caldera-forms-entries')).html('<div class="alert alert-warning">' + config.strings.not_allowed + '</div>');
+                }
             }
         }
     });

@@ -260,6 +260,8 @@ function CFEntryViewer2( formId, formStore, entryStore, api, config ){
                     entryStore.setEntries(d);
                     self.$set( self, 'entries', entryStore.state );
                     self.paginationButtons();
+                }, function(){
+                    self.notAllowed();
                 });
 
             },
@@ -273,6 +275,8 @@ function CFEntryViewer2( formId, formStore, entryStore, api, config ){
                     entryStore.setEntries(d);
                     self.$set( self, 'entries', entryStore.state );
                     self.paginationButtons();
+                }, function(){
+                    self.notAllowed();
                 });
 
             },
@@ -340,6 +344,14 @@ function CFEntryViewer2( formId, formStore, entryStore, api, config ){
                 $modal = jQuery('[data-remodal-id=' + entryId +']').remodal();
                 $modal.open();
 
+            },
+            notAllowed: function (r) {
+
+                if ( 'object' != typeof  r && 404 != r.status ) {
+                    $singleEntryZone.remove();
+                    jQuery('#caldera-forms-entries-nav').remove();
+                    jQuery(document.getElementById('caldera-forms-entries')).html('<div class="alert alert-warning">' + config.strings.not_allowed + '</div>');
+                }
             }
         }
     });
@@ -378,6 +390,16 @@ jQuery( document ).ready( function ($) {
             }
             var viewer = new CFEntryViewer2( formId, formStore, entriesStore, api, CF_ENTRY_VIEWER_2_CONFIG );
 
+        }, function(r){
+            var entriesId = typeof CF_ENTRY_VIEWER_2_CONFIG.targets == 'object' && typeof CF_ENTRY_VIEWER_2_CONFIG.targets.entries == 'string' ? CF_ENTRY_VIEWER_2_CONFIG.targets.entries : 'caldera-forms-entries';
+            var navId = typeof CF_ENTRY_VIEWER_2_CONFIG.targets == 'object' && typeof CF_ENTRY_VIEWER_2_CONFIG.targets.nav == 'string' ? CF_ENTRY_VIEWER_2_CONFIG.targets.nav : 'caldera-forms-entries-nav';
+            jQuery('#' + navId).remove();
+            if ( 'object' == typeof r && 404 == r.status  ) {
+                jQuery('#' + entriesId).html('<div class="alert alert-error">' + CF_ENTRY_VIEWER_2_CONFIG.strings.no_entries + '</div>');
+            }else{
+                jQuery('#' + entriesId).html('<div class="alert alert-error">' + CF_ENTRY_VIEWER_2_CONFIG.strings.not_allowed + '</div>');
+
+            }
         });
 
     }

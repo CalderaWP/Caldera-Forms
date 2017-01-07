@@ -34,3 +34,55 @@ li.entry-detail {
     display: none;
     visibility: hidden;
 }
+
+
+#caldera-forms-entries .alert {
+    padding: 8px;
+    margin-bottom: 18px;
+    border-radius: 2px;
+}
+
+
+
+#caldera-forms-entries .alert .alert-link {
+    font-weight: bold;
+}
+#caldera-forms-entries .alert-dismissable {
+    padding-right: 28px;
+}
+
+#caldera-forms-entries .alert-success {
+    background-color: #dff0d8;
+    border-color: #a3d48e;
+    color: #3c763d;
+}
+
+
+
+#caldera-forms-entries .alert-success hr {
+    border-top-color: #93cd7c;
+}
+#caldera-forms-entries .alert-success .alert-link {
+    color: #2b542c;
+}
+
+
+#caldera-forms-entries .alert-error,
+
+#caldera-forms-entries .alert-error hr{
+    border-top-color: #ce8383;
+}
+#caldera-forms-entries .alert-error .alert-link {
+    color: #843534;
+}
+
+#caldera-forms-entries .alert-success,
+#caldera-forms-entries .alert-error {
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+#caldera-forms-entries .alert-error{
+    background-color: #f2dede;
+    border-color: #d59595;
+    color: #a94442;
+}
