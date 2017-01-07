@@ -41,7 +41,7 @@ if( ! defined( 'ABSPATH' ) ){
 						{{ fieldValue( field.id, entry ) }}
 					</td>
 					<td>
-						<a class="button" role="button" href="#" title="<?php esc_html_e( 'View Entry Details', 'caldera-forms' ); ?>" @click="showSingle(id)" >
+						<a class="btn btn-default caldera-forms-entry-viewer-btn caldera-forms-entry-viewer-details-btn" role="button" href="#" title="<?php esc_html_e( 'View Entry Details', 'caldera-forms' ); ?>" @click="showSingle(id)" >
 							<?php esc_html_e( 'Details', 'caldera-forms' ); ?>
 						</a>
 					</td>
@@ -51,19 +51,18 @@ if( ! defined( 'ABSPATH' ) ){
 	</div>
 
 	<div id="caldera-forms-entries-nav" role="navigation">
-		<a href="#" v-on:click="prevPage" class="caldera-forms-entry-viewer-prev-button button" title="<?php esc_attr_e( 'Previous page of entries', 'caldera-forms' ); ?>">
+		<a href="#" v-on:click.prevent="prevPage" class="caldera-forms-entry-viewer-prev-btn btn btn-default caldera-forms-entry-viewer-btn caldera-forms-entry-viewer-nav-btn" title="<?php esc_attr_e( 'Previous page of entries', 'caldera-forms' ); ?>">
 			<?php esc_html_e( 'Previous', 'caldera-forms' ); ?>
 		</a>
-		<a href="#" v-on:click="nextPage" class="caldera-forms-entry-viewer-next-button button" title="<?php esc_attr_e( 'Next page of entries', 'caldera-forms' ); ?>">
+		<a href="#" v-on:click.prevent="nextPage" class="caldera-forms-entry-viewer-next-btn btn btn-default caldera-forms-entry-viewer-btn caldera-forms-entry-viewer-nav-bt"  title="<?php esc_attr_e( 'Next page of entries', 'caldera-forms' ); ?>">
 			<?php esc_html_e( 'Next', 'caldera-forms' ); ?>
 		</a>
+		<label for="caldera-entry-viewer-2-per-page" class="screen-reader-text">
+			<?php esc_html_e( 'Entries Per Page', 'caldera-forms' ); ?>
+		</label>
+		<input type="number" min="1" max="100" v-model="perPage" v-on:change="updatePerPage" id="caldera-entry-viewer-2-per-page">
 
-		<div class="caldera-field-config">
-			<label for="caldera-entry-viewer-2-per-page">
-				<?php esc_html_e( 'Entries Per Page', 'caldera-forms' ); ?>
-			</label>
-			<input type="number" min="1" v-model="perPage" v-on:change="updatePerPage" id="caldera-entry-viewer-2-per-page">
-		</div>
+
 	</div>
 
 </div>

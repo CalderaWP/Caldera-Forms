@@ -346,7 +346,6 @@ function CFEntryViewer2( formId, formStore, entryStore, api, config ){
 
             },
             notAllowed: function (r) {
-
                 if ( 'object' != typeof  r && 404 != r.status ) {
                     $singleEntryZone.remove();
                     jQuery('#caldera-forms-entries-nav').remove();
