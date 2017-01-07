@@ -85,6 +85,18 @@ class Caldera_Forms_Entry_Vue {
 		if( isset( $config[ 'token' ] ) ){
 			$this->config[ 'api' ][ 'token' ] = $config[ 'token' ];
 		}
+
+		/**
+		 * Filter configuration (passed to JavaScript) for Entry Viewer (v2)
+		 *
+		 * @since 1.5.0
+		 *
+		 * @param array $config Configuration to filter
+		 * @param array $form Form config
+		 *
+		 */
+		$this->config = apply_filters( 'caldera_forms_entry_viewer_2_config', $this->config, $this->form );
+
 	}
 
 	/**
@@ -115,7 +127,10 @@ class Caldera_Forms_Entry_Vue {
 				'entries' => 'caldera-forms-entries',
                 'entry' => 'caldera-forms-entry'
 			),
-			'perPage' => absint( Caldera_Forms_Entry_Viewer::entries_per_page() )
+			'perPage' => absint( Caldera_Forms_Entry_Viewer::entries_per_page() ),
+			'strings' => array(
+				'not_allowed' => __( 'You are not allowed to view this.', 'caldera-forms' )
+			)
 		);
 	}
 }
