@@ -44,7 +44,9 @@
          $parent.find( '.help-block' ).remove();
          if( ! valid ){
              $parent.addClass( 'has-error' ).append( '<span id="cf-error-'+ $field.attr('id') +'" class="help-block ' + extraClass +'">' + message  + '</span>' );
-             disableAdvance();
+             if ( $field.prop( 'required' ) ) {
+                 disableAdvance();
+             }
              $field.addClass( 'parsely-error' );
              return false;
          }else{
