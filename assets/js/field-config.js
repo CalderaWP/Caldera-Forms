@@ -153,7 +153,7 @@
          init();
          var updating = false;
         jQuery( document ).on('cf.add', function(){
-            return;
+
             if( false === updating ){
                 updating = true;
                 if( $el.length ){
@@ -193,6 +193,7 @@
 
          var validation = function(){
              reset();
+             var x = $field.intlTelInput("isValidNumber" );
              var valid;
              if ($.trim($field.val())) {
                  if ($field.intlTelInput("isValidNumber" )) {
@@ -327,6 +328,13 @@
          }
      };
 
+     /**
+      * Validators for credit card CVC and expirations
+      *
+      * @since 1.5.0
+      *
+      * @type {{validateCVC: Caldera_Forms_Field_Config.creditCardUtil.validateCVC, validateExp: Caldera_Forms_Field_Config.creditCardUtil.validateExp}}
+      */
      this.creditCardUtil = {
          validateCVC: function( $ccField, $cvcField ){
              var val =  $cvcField.val();
@@ -342,6 +350,7 @@
          validateExp: function( $expField ){
              var val =  $expField.val().split( '/');
              var valid = $.payment.validateCardExpiry( val[0].trim(), val[1].trim() );
+             return valid;
          }
      }
 

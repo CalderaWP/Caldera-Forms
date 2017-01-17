@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE Caldera-Forms - v1.5.0-b-1 - 2017-01-06 *//*!
+/*! GENERATED SOURCE FILE Caldera-Forms - v1.5.0-b-1 - 2017-01-16 *//*!
 * Parsleyjs
 * Guillaume Potier - <guillaume@wisembly.com>
 * Version 2.2.0-rc2 - built Tue Oct 06 2015 10:20:13
@@ -1983,7 +1983,7 @@ if ('undefined' !== typeof window.ParsleyValidator)
          init();
          var updating = false;
         jQuery( document ).on('cf.add', function(){
-            return;
+
             if( false === updating ){
                 updating = true;
                 if( $el.length ){
@@ -2023,6 +2023,7 @@ if ('undefined' !== typeof window.ParsleyValidator)
 
          var validation = function(){
              reset();
+             var x = $field.intlTelInput("isValidNumber" );
              var valid;
              if ($.trim($field.val())) {
                  if ($field.intlTelInput("isValidNumber" )) {
@@ -2157,6 +2158,13 @@ if ('undefined' !== typeof window.ParsleyValidator)
          }
      };
 
+     /**
+      * Validators for credit card CVC and expirations
+      *
+      * @since 1.5.0
+      * 
+      * @type {{validateCVC: Caldera_Forms_Field_Config.creditCardUtil.validateCVC, validateExp: Caldera_Forms_Field_Config.creditCardUtil.validateExp}}
+      */
      this.creditCardUtil = {
          validateCVC: function( $ccField, $cvcField ){
              var val =  $cvcField.val();
@@ -2172,6 +2180,7 @@ if ('undefined' !== typeof window.ParsleyValidator)
          validateExp: function( $expField ){
              var val =  $expField.val().split( '/');
              var valid = $.payment.validateCardExpiry( val[0].trim(), val[1].trim() );
+             return valid;
          }
      }
 
