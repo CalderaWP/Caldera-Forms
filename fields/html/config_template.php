@@ -1,5 +1,7 @@
 <div class="caldera-config-group">
-	<label><?php _e('Content'); ?></label>
+	<label for="{{_id}}editor">
+        <?php esc_html_e('Content', 'caldera-forms'); ?>
+    </label>
 </div>
 <div style="clear:both;"></div>
 <div style="position:relative;">

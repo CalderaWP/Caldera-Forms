@@ -18,7 +18,7 @@ class Caldera_Forms_Support {
 	 *
 	 * @var      string
 	 */
-	protected $plugin_slug = 'caldera-forms';
+	protected $plugin_slug;
 
 	/**
 	 * Class instance
@@ -35,7 +35,7 @@ class Caldera_Forms_Support {
 	 * @since 1.3.5
 	 */
 	protected function __construct(){
-
+		$this->plugin_slug = Caldera_Forms::PLUGIN_SLUG;
 		add_action( 'admin_menu', array( $this, 'add_menu_page' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'scripts' ) );
 	}
@@ -104,9 +104,10 @@ class Caldera_Forms_Support {
 	 * @param string $hook Current menu hook
 	 */
 	public function scripts( $hook ){
+
 		if( 'caldera-forms_page_caldera-form-support' == $hook ){
-			wp_enqueue_style( $this->plugin_slug . '-admin-styles', CFCORE_URL . 'assets/css/admin.css', array(), CFCORE_VER );
-			wp_enqueue_script( $this->plugin_slug . 'support-page', CFCORE_URL . 'assets/js/support-page.js', array( 'jquery' ), CFCORE_VER );
+			Caldera_Forms_Admin_Assets::enqueue_style( 'admin' );
+			Caldera_Forms_Admin_Assets::enqueue_script( 'support-page' );
 		}
 	}
 

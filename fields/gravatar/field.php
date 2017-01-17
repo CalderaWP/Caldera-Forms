@@ -87,9 +87,6 @@ if( !empty( $form['fields'][ $field['config']['email'] ] ) ){
 	</script>
 	<?php
 		$script_template = ob_get_clean();
-		if( ! empty( $form[ 'grid_object' ] ) && is_object( $form[ 'grid_object' ] ) ){
-			$form[ 'grid_object' ]->append( $script_template, $field[ 'grid_location' ] );
-		}else{
-			echo $script_template;
-		}
-	}
+		Caldera_Forms_Render_Util::add_inline_data( $script_template, $form );
+
+}
