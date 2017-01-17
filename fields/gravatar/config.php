@@ -1,5 +1,7 @@
 <div class="caldera-config-group">
-	<label><?php _e('Email Field', 'caldera-forms'); ?></label>
+	<label>
+        <?php esc_html_e('Email Field', 'caldera-forms'); ?>
+    </label>
 	<div class="caldera-config-field">
 		{{{_field slug="email" type="email"}}}
 	</div>
@@ -18,10 +20,12 @@ $avatar_defaults = array(
 
 ?>
 <div class="caldera-config-group">
-	<label><?php _e('Fallback', 'caldera-forms'); ?></label>
+	<label for="{{_id}}_fallback">
+        <?php esc_html_e('Fallback', 'caldera-forms'); ?>
+    </label>
 	<div class="caldera-config-field">
 
-		<select class="field-config block-input" name="{{_name}}[generator]">
+		<select class="field-config block-input" name="{{_name}}[generator]" id="{{_id}}_fallback">
 		<?php foreach($avatar_defaults as $av_type=>$av_name){
 			echo "<option value=\"".$av_type."\" {{#is generator value=\"".$av_type."\"}}selected=\"selected\"{{/is}}>".$av_name."</option>\r\n";
 		}
@@ -32,9 +36,11 @@ $avatar_defaults = array(
 
 
 <div class="caldera-config-group">
-	<label><?php _e('Size', 'caldera-forms'); ?></label>
+	<label for="{{_id}}_size">
+        <?php esc_html_e('Size', 'caldera-forms'); ?>
+    </label>
 	<div class="caldera-config-field">
-		<input type="number" class="field-config" name="{{_name}}[size]" value="{{#if size}}{{size}}{{else}}100{{/if}}" style="width:70px;"> px
+		<input id="{{_id}}_size" type="number" class="field-config" name="{{_name}}[size]" value="{{#if size}}{{size}}{{else}}100{{/if}}" style="width:70px;"> px
 	</div>
 </div>
 

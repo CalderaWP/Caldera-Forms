@@ -1,12 +1,19 @@
 var baldrickTriggers, loop_loader;
 
 jQuery(document).ready(function($){
+	var adminAJAX;
+	if( 'object' == typeof  CF_ADMIN ){
+		adminAJAX = CF_ADMIN.adminAjax
+	}else{
+		//yolo
+		adminAJAX = ajaxurl;
+	}
 
 	// admin stuff!
 	// Baldrick Bindings
 	baldrickTriggers = function(){
 		$('.ajax-trigger').baldrick({
-			request			:	ajaxurl,
+			request			:	adminAJAX,
 			method			:	'POST',
 			before			:	function( el, e ){
 				var clicked = $( el );
