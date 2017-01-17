@@ -35,4 +35,13 @@ class Caldera_Forms_API_Util {
 		return rest_url( self::api_namespace() . '/' . $endpoint );
 	}
 
+	public static function check_api_token( WP_REST_Request $request ){
+		$allowed = false;
+			if( false != ( $token = $request->get_header( 'x_cf_entry_token') ) && is_string( $request[ 'form_id' ] ) ){
+				$allowed = Caldera_Forms_API_Token::check_token( $token, $request[ 'form_id' ] );
+			}
+
+		return $allowed;
+	}
+
 }

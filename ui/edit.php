@@ -7,7 +7,7 @@ if( ! isset( $_GET['edit'] ) || ! is_string( $_GET['edit'] ) ){
 	wp_die( esc_html__( 'Invalid form ID', 'caldera-forms'  ) );
 }
 // Load element
-$element = Caldera_Forms_Forms::get_form( $_GET['edit'] );
+$element = $form = Caldera_Forms_Forms::get_form( $_GET['edit'] );
 if( empty( $element ) || ! is_array( $element ) ){
 	wp_die( esc_html__( 'Invalid form', 'caldera-forms'  ) );
 }
@@ -100,11 +100,10 @@ echo "<input id=\"form_id_field\" name=\"config[ID]\" value=\"" . $_GET['edit'] 
 do_action('caldera_forms_edit_start', $element);
 
 // Get Fieldtpyes
-$field_types = apply_filters( 'caldera_forms_get_field_types', array() );
-// sort fields
+$field_types = Caldera_Forms_Fields::get_all();
 
 // Get Elements
-$panel_extensions = apply_filters( 'caldera_forms_get_panel_extensions', array() );
+$panel_extensions = Caldera_Forms_Admin_Panel::get_panels();
 
 
 $field_type_list = array();
@@ -341,11 +340,13 @@ $default_template = "
 $field_type_list = array(
 	esc_html__( 'Basic', 'caldera-forms' )       => array(),
 	esc_html__( 'Select', 'caldera-forms' )         => array(),
+	esc_html__( 'eCommerce', 'caldera-forms' )         => array(),
 	esc_html__( 'File', 'caldera-forms' )      => array(),
 	esc_html__( 'Content', 'caldera-forms' )      => array(),
 	esc_html__( 'Special', 'caldera-forms' ) => array(),
 	
 );
+
 // Build Field Types List
 foreach($field_types as $field_slug=>$config){
 
@@ -423,9 +424,13 @@ foreach($field_types as $field_slug=>$config){
 			// blank default
 			$field_value = null;
 			$field_class = "preview-field-config";
-
+			if( file_exists( $config[ 'file' ] ) ){
+				$file = $config[ 'file' ];
+			}else{
+				$file = CFCORE_PATH . 'fields/generic-input';
+			}
 			ob_start();
-			include $config['file'];
+			include $file;
 			$field_type_templates['preview-' . sanitize_key( $field_slug ) . "_tmpl"] = ob_get_clean();
 		}
 	}else{
@@ -886,6 +891,7 @@ do_action('caldera_forms_edit_end', $element);
 			__( 'Select', 'caldera-forms' ) => '',
 			__( 'File', 'caldera-forms' ) => '',
 			__( 'Content', 'caldera-forms' ) => '',
+			__( 'eCommerce', 'caldera-forms' )  => '',
 			__( 'Special', 'caldera-forms' ) => '',
 			
 		);
@@ -900,9 +906,14 @@ do_action('caldera_forms_edit_end', $element);
 				$cats = explode(',', $config['category']);
 			}
 
+			$svg = false;
 			$icon = CFCORE_URL . "assets/images/field.png";
 			if(!empty($config['icon'])){
 				$icon = $config['icon'];
+				if( false !== strpos( $icon, '.svg' ) ){
+					$svg = true;
+				}
+
 			}
 			foreach($cats as $cat){
 				$cat = trim($cat);
@@ -911,9 +922,13 @@ do_action('caldera_forms_edit_end', $element);
 				}
 				$template = '<div class="form-modal-add-line">';
 					$template .= '<button type="button" class="button info-button set-current-field" data-field="{{id}}" data-type="' . $field_slug . '">' . esc_html__( 'Set Field', 'caldera-forms' ) . '</button>';
-					$template .= '<img src="'. $icon .'" class="form-modal-lgo" width="45" height="45">';
+					$class = 'form-modal-lgo';
+					if( $svg ){
+						$class .= ' form-modal-lgo-svg';
+					}
+					$template .= '<img src="'. $icon .'" class="' . $class . '" width="45" height="45">';
 					$template .= '<strong>' . $config['field'] . '</strong>';
-					$template .= '<p class="description">' . (!empty($config['description']) ? $config['description'] : esc_html__( 'No description given', 'caldera-forms' ) ) . '</p>';
+					$template .= '<p class="description">' . (!empty($config['description']) ? esc_html__( $config[ 'description' ] ) : esc_html__( 'No description given', 'caldera-forms' ) ) . '</p>';
 				$template .= '</div>';
 				if(!isset($sorted_field_types[$cat])){
 					$cat = __( 'Special', 'caldera-forms' );

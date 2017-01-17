@@ -45,3 +45,28 @@ function caldera_forms_get_current_url(){
 	return $url;
 
 }
+
+/**
+ * Get fields for conditional recipients processor
+ *
+ * @since 1.5.0
+ *
+ * @return array
+ */
+function caldera_forms_conditional_recipients_fields(){
+	return array(
+		array(
+			'id'    => 'conditional-recipient',
+			'type'  => 'email',
+			'label' => __( 'Email Address', 'caldera-forms' ),
+			'magic' => true
+		),
+		array(
+			'id'    => 'remove-default',
+			'type'  => 'checkbox',
+			'label' => __( 'Remove Default?', 'caldera-forms' ),
+			'description' => __( 'If this conditional is used, default recipient will be removed from recipients', 'caldera-forms' )
+		)
+	);
+
+}

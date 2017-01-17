@@ -20,7 +20,8 @@ class Caldera_Forms_Admin_Extend {
 	 * @since 1.4.2
 	 */
 	public static function scripts(){
-		wp_enqueue_script( Caldera_Forms::PLUGIN_SLUG . '-handlebars', CFCORE_URL . 'assets/js/handlebars.js', array( 'jquery' )  );
-		wp_enqueue_style( Caldera_Forms::PLUGIN_SLUG  . '-admin-styles', CFCORE_URL . 'assets/css/admin.css', array(), Caldera_Forms::VERSION );
+		Caldera_Forms_Render_Assets::register();
+		Caldera_Forms_Render_Assets::enqueue_script( 'handlebars' );
+		Caldera_Forms_Admin_Assets::enqueue_style( 'admin' );
 	}
 }
