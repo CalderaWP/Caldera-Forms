@@ -1540,7 +1540,7 @@ class Caldera_Forms {
 
 		if ( ! empty( $field[ 'config' ][ 'option' ] ) ) {
 			foreach ( $field[ 'config' ][ 'option' ] as &$option ) {
-				if ( empty( $field[ 'config' ][ 'show_values' ] ) || strlen( $option[ 'value' ] ) === 0 ) {
+				if ( strlen( $option[ 'value' ] ) === 0 ) {
 					$option[ 'value' ] = $option[ 'label' ] = self::do_magic_tags( $option[ 'label' ] );
 				} else {
 					$option[ 'value' ] = self::do_magic_tags( $option[ 'value' ] );
