@@ -146,7 +146,7 @@ if ( ! empty( $element['mailer']['enable_mailer'] ) ) {
 					'textarea_name' => 'config[mailer][email_message]') );
 				?>
 				<p class="description">
-					<?php esc_html_e('Magic tags, %field_slug% are replaced with submitted data. Use {summary} to build an automatic mail based on form content. Leaving the mailer blank, will create and automatic summary.', 'caldera-forms'); ?>
+					<?php esc_html_e('Magic tags, %field_slug% are replaced with submitted data. Use {summary} to build an automatic mail based on form content. Leaving the mailer blank, will create an automatic summary.', 'caldera-forms'); ?>
 				</p>
 			</div>
 		</div>
