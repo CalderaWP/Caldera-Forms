@@ -1930,6 +1930,12 @@ span.cf-form-shortcode-preview:hover {
     padding-top: 0;
     top: 57px;
   }
+  .caldera-editor-header.caldera-editor-subnav{
+   margin-top:10px;
+  }
+  /*.caldera-editor-body.caldera-config-editor-panel.caldera-config-has-side{
+    margin-top:50px;
+  }*/
   li.caldera-forms-version{
     display: none;
   }
@@ -1972,6 +1978,9 @@ span.cf-form-shortcode-preview:hover {
   .caldera-table-nav .tablenav-pages {
     text-align: center;
     width: 100%;
+  }
+  .caldera-editor-body h3{
+    margin-top:-95px;
   }
  
 }
