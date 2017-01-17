@@ -53,7 +53,7 @@ class Caldera_Forms_Entry_Shortcode {
 			$id = $atts[ 'id' ];
 		}elseif ( isset( $atts[ 'ID' ] ) ){
 			$id = $atts[ 'ID' ];
-		}elseif( isset( $atts[ 'form_id' ] ){
+		}elseif( isset( $atts[ 'form_id' ] ) ){
 			$id = $atts[ 'form_id' ];
 		}else{
 			$id = null;
