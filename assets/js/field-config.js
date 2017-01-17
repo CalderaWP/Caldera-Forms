@@ -1,18 +1,43 @@
-
- /** Dynamic Field Configuration **/
+/**
+ * Dynamic Field Configuration
+ *
+ * @since 1.5.0
+ *
+ * @param configs
+ * @param $form
+ * @param $
+ * @constructor
+ */
  function Caldera_Forms_Field_Config( configs, $form, $ ){
      var self = this;
 
      var fields = {};
 
+
      var $submits = $form.find(':submit, .cf-page-btn-next' );
 
+     /**
+      * Start system
+      *
+      * @since 1.5.0
+      */
      this.init = function(){
          $.each( configs, function( i, config ){
              fields[ config.id ] = self[config.type]( config );
          } );
      };
 
+     /**
+      * Validation handler for adding/removing errors for field types
+      *
+      * @since 1.5.0
+      *
+      * @param valid
+      * @param $field
+      * @param message
+      * @param extraClass
+      * @returns {boolean}
+      */
      function handleValidationMarkup( valid, $field, message, extraClass ){
          var $parent = $field.parent().parent();
          $parent.removeClass( 'has-error' );
@@ -29,14 +54,31 @@
          }
      }
 
+     /**
+      * Utility method for preventing advance (next page/submit)
+      *
+      * @since 1.5.0
+      */
      function disableAdvance(){
          $submits.prop( 'disabled',true).attr( 'aria-disabled', true  );
      }
 
+     /**
+      * Utility method for allowing advance (next page/submit)
+      *
+      * @since 1.5.0
+      */
      function allowAdvance(){
          $submits.prop( 'disabled',false).attr( 'aria-disabled', false  );
      }
 
+     /**
+      * Handler for button fields
+      *
+      * @since 1.5.0
+      *
+      * @param field
+      */
      this.button = function( field ){
          var field_id  = field.id;
          $(document).on('click dblclick', '#' + field_id, function( e ){
@@ -44,10 +86,14 @@
          });
      };
 
-     this.gravatar = function( field ){
 
-     };
-
+     /**
+      * Handler for HTML fields
+      *
+      * @since 1.5.0
+      *
+      * @param fieldConfig
+      */
      this.html = function ( fieldConfig ) {
          if( false == fieldConfig.sync ){
              return;
@@ -93,8 +139,24 @@
 
      };
 
+     /**
+      * Handler to summary fields
+      *
+      * A copy of handler for HTML fields
+      *
+      * @since 1.5.0
+      *
+      * @type {any}
+      */
      this.summary = this.html;
 
+     /**
+      * Handler for range slider fields
+      *
+      * @since 1.5.0
+      *
+      * @param field
+      */
      this.range_slider = function( field ){
          var $el = $(document.getElementById(field.id));
          function init() {
@@ -126,10 +188,13 @@
 
      };
 
-     this.select2 = function( field ){
-
-     };
-
+     /**
+      * Handler for star ratings fields
+      *
+      * @since 1.5.0
+      *
+      * @param field
+      */
      this.star_rating = function( field ){
 
          var score = field.options.score;
@@ -137,7 +202,7 @@
          var $input = $( document.getElementById( field.id ) );
          var init =  function(){
              var options = field.options;
-             options.score = score;
+
              options[ 'click' ] = function(){
                  score = $el.raty('score');
                  $el.trigger( 'change' );
@@ -170,6 +235,13 @@
         } );
      };
 
+     /**
+      * Handler for new toggle swich fields
+      *
+      * @since 1.5.0
+      *
+      * @param field
+      */
      this.toggle_switch = function( field ) {
          $( document ).on('reset', '#' + field.id, function(e){
              $.each( field.options, function( i, option ){
@@ -179,10 +251,17 @@
          } );
      };
 
-
+     /**
+      * Handler for new phone fields
+      *
+      * @since 1.5.0
+      *
+      * @param field
+      */
      this.phone_better = function( field ){
 
          var $field = $( document.getElementById( field.id ) );
+
 
          var reset = function(){
              var error = document.getElementById( 'cf-error-'+ field.id );
@@ -233,7 +312,13 @@
 
      };
 
-
+     /**
+      * Handler for WYSIWYG fields
+      *
+      * @since 1.5.0
+      *
+      * @param field
+      */
      this.wysiwyg = function( field ){
 
          var actual_field = document.getElementById( field.id );
@@ -250,6 +335,13 @@
 
      };
 
+     /**
+      * Handler for credit card fields
+      *
+      * @since 1.5.0
+      *
+      * @param fieldConfig
+      */
      this.credit_card_number = function( fieldConfig ){
          var $field = $( document.getElementById( fieldConfig.id ) );
 
@@ -270,6 +362,12 @@
              })
          }
 
+         /**
+          * Link fields in credit card group
+          *
+          * @since 1.5.0
+          *
+          */
          function setupLink(){
              disableAdvance();
              var $cvcField = $( document.getElementById( fieldConfig.cvc ) ),
@@ -280,6 +378,13 @@
              });
          }
 
+         /**
+          * If possible change the icon in the credit card input
+          *
+          * @since 1.5.0
+          *
+          * @param type
+          */
          function setImage( type ){
              var iconTypes = {
                  0: 'amex',
@@ -301,7 +406,14 @@
          }
 
      };
-     
+
+     /**
+      * Handler for credit card expiration fields
+      *
+      * @since 1.5.0
+      *
+      * @param fieldConfig
+      */
      this.credit_card_exp = function ( fieldConfig ) {
          var $field = $( document.getElementById( fieldConfig.id ) );
          if( $field.length ){
@@ -313,6 +425,13 @@
          }
      };
 
+     /**
+      * Handler for credit card secret code fields
+      *
+      * @since 1.5.0
+      *
+      * @param fieldConfig
+      */
      this.credit_card_cvc = function ( fieldConfig ) {
          var $field = $( document.getElementById( fieldConfig.id ) );
          if( $field.length ){
