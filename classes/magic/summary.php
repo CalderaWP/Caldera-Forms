@@ -103,7 +103,11 @@ class Caldera_Forms_Magic_Summary extends Caldera_Forms_Magic_Parser {
 					}
 				}
 
-				$should_use_label = $this->should_use_label( $field );
+				$should_use_label = false;
+				if ( is_array( $field ) ) {
+					$should_use_label = $this->should_use_label( $field );
+				}
+
 				if( $should_use_label ){
 					foreach ( $field_values as $field_key => $field_value ) {
 						$field_values[ $field_key ] = $this->option_value_to_label( $field_value, $field );
