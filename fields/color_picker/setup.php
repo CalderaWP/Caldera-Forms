@@ -1,6 +1,8 @@
 <div class="caldera-config-group">
-	<label><?php _e('Default'); ?> <?php _e('Color', 'caldera-forms'); ?></label>
+	<label for="{{_id}}_default_color">
+        <?php esc_html_e('Default Color', 'caldera-forms' ); ?>
+    </label>
 	<div class="caldera-config-field">
-		<input type="text" class="color-field field-config" name="{{_name}}[default]" value="{{default}}">
+		<input id="{{_id}}_default_color" type="text" class="color-field field-config" name="{{_name}}[default]" value="{{default}}">
 	</div>
 </div>

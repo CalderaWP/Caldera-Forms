@@ -1,4 +1,4 @@
-var cf_jsfields_init, cf_validate_form;
+var cf_jsfields_init, cf_presubmit;
 (function($){
 
 	// validation
@@ -14,44 +14,13 @@ var cf_jsfields_init, cf_validate_form;
 		}).on('field:success', function() {
 			this.$element.closest('.form-group').removeClass('has-error');
 		});
-	}
+	};
 
+	
 	// init sync
 	$('[data-sync]').each( function(){
-		var field = $( this ),
-			binds = field.data('binds'),
-			instance = field.closest('form');
-
-		for( var i = 0; i < binds.length; i++ ){
-			$( document ).on('keyup change blur mouseover', "[data-field='" + binds[ i ] + "']", function(){
-				var str = field.data('sync')
-					id = $(this).data('field'),
-					reg = new RegExp( "\{\{([^\}]*?)\}\}", "g" ),
-					template = str.match( reg );
-					if( field.data( 'unsync' ) ){
-						return;
-					}
-					for( var t = 0; t < template.length; t++ ){
-						var select = template[ t ].replace(/\}/g,'').replace(/\{/g,'');
-						var re = new RegExp( template[ t ] ,"g");
-						var sync = instance.find( "[data-field='" + select + "']" );
-						var val = '';
-						for( var i =0; i < sync.length; i++ ){
-							var this_field = $( sync[i] );
-							if( ( this_field.is(':radio') || this_field.is(':checkbox') ) && ! this_field.is(':checked') ){
-								// skip.
-							}else{
-								val += this_field.val();
-							}
-
-						}
-						str = str.replace( re , val );
-					}
-					field.val( str );
-			} );
-			$("[data-field='" + binds[ i ] + "']").trigger('change');
-
-		}
+		var $field = $( this );
+		new CalderaFormsFieldSync( $field, $field.data('binds'), $field.closest('form'), $ );
 	});
 	$( document ).on('change keypress', "[data-sync]", function(){
 		$(this).data( 'unsync', true );
@@ -78,6 +47,8 @@ var cf_jsfields_init, cf_validate_form;
 		if( typeof resBaldrickTriggers === 'undefined' && $('.caldera_forms_form').length ){
 
 		}
+
+		$( document ).trigger( 'cf.fieldsInit' );
 
 	};	
 
@@ -254,7 +225,7 @@ var cf_jsfields_init, cf_validate_form;
 			form = clicked.closest('.caldera_forms_form'),
 			validator = cf_validate_form( form );
 
-		if( !validator.validate() ){
+		if( ! validator.validate() ){
 			e.preventDefault();
 		}else{
 			validator.destroy();
@@ -264,3 +235,155 @@ var cf_jsfields_init, cf_validate_form;
 	
 
 })(jQuery);
+
+/** Setup Form Front-end **/
+window.addEventListener("load", function(){
+	(function( $ ) {
+		'use strict';
+
+		/** Check nonce **/
+		if( 'object' === typeof CF_API_DATA ) {
+			var nonceCheckers = {};
+			var formId;
+			$('.caldera_forms_form').each(function (i, el) {
+				formId = $(el).data( 'form-id' );
+				nonceCheckers[ formId ] = new CalderaFormsResetNonce( formId, CF_API_DATA, $ );
+				nonceCheckers[ formId ].init();
+			});
+
+		}
+
+		/** Setup forms */
+		if( 'object' === typeof CFFIELD_CONFIG ) {
+			var form_id, config_object, config, instance, $el;
+			$('.caldera_forms_form').each(function (i, el) {
+				$el = $(el);
+				form_id = $el.attr('id');
+				instance = $el.data('instance');
+
+				if ('object' === typeof CFFIELD_CONFIG[instance] ) {
+					config = CFFIELD_CONFIG[instance];
+					config_object = new Caldera_Forms_Field_Config( config, $(document.getElementById(form_id)), $);
+					config_object.init();
+				}
+			});
+
+		}
+
+	})( jQuery );
+
+
+});
+
+
+/**
+ * Sets up field synce
+ *
+ * @since 1.5.0
+ *
+ * @param $field jQuery object for field
+ * @param binds Field IDs to bind to
+ * @param $form jQuery object for form
+ * @param $ jQuery
+ * @constructor
+ */
+function CalderaFormsFieldSync( $field, binds, $form, $  ){
+	for( var i = 0; i < binds.length; i++ ){
+
+		$( document ).on('keyup change blur mouseover', "[data-field='" + binds[ i ] + "']", function(){
+			var str = $field.data('sync')
+			id = $field.data('field'),
+				reg = new RegExp( "\{\{([^\}]*?)\}\}", "g" ),
+				template = str.match( reg );
+			if( $field.data( 'unsync' ) || undefined == template || ! template.length ){
+				return;
+			}
+
+			for( var t = 0; t < template.length; t++ ){
+				var select = template[ t ].replace(/\}/g,'').replace(/\{/g,'');
+				var re = new RegExp( template[ t ] ,"g");
+				var sync = $form.find( "[data-field='" + select + "']" );
+				var val = '';
+				for( var i =0; i < sync.length; i++ ){
+					var this_field = $( sync[i] );
+					if( ( this_field.is(':radio') || this_field.is(':checkbox') ) && ! this_field.is(':checked') ){
+						// skip.
+					}else{
+						val += this_field.val();
+					}
+
+				}
+				str = str.replace( re , val );
+			}
+			$field.val( str );
+		} );
+		$("[data-field='" + binds[ i ] + "']").trigger('change');
+
+	}
+}
+
+/**
+ * Handles nonce refresh for forms
+ *
+ * @since 1.5.0
+ *
+ * @param formId ID of form
+ * @param config API/nonce config (Probably the CF_API_DATA CDATA)
+ * @param $ jQuery
+ * @constructor
+ */
+function CalderaFormsResetNonce( formId, config, $ ){
+
+	var $nonceField;
+
+	/**
+	 * Run system, replace nonce if needed
+	 *
+	 * @since 1.5.0
+     */
+	this.init = function(){
+		$nonceField = $( '#' + config.nonce.field + '_' + formId );
+		if( isNonceOld( $nonceField.data( 'nonce-time' ) ) ){
+			replaceNonce();
+		}
+	};
+
+	/**
+	 * Check if nonce is more than an hour old
+	 *
+	 * If not, not worth the HTTP request
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param time Time nonce was generated
+	 * @returns {boolean}
+     */
+	function isNonceOld( time ){
+		var now = new Date().getTime();
+		if( now - 36000 > time ){
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Replace nonce via AJAX
+	 *
+	 * @since 1.5.0
+     */
+	function replaceNonce(){
+		$.ajax({
+			url:config.rest.tokens.nonce,
+			method: 'POST',
+			beforeSend: function ( xhr ) {
+				xhr.setRequestHeader( 'X-WP-Nonce', config.rest.nonce );
+			},data:{
+				form_id: formId
+			}
+		}).success( function( r){
+			$nonceField.val( r.nonce );
+			$nonceField.data( 'nonce-time', new Date().getTime() );
+		});
+	}
+}
+

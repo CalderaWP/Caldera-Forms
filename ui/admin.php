@@ -8,7 +8,7 @@ $per_page_limit = 20;
 $forms = Caldera_Forms_Forms::get_forms( true );
 $forms = apply_filters( 'caldera_forms_admin_forms', $forms );
 
-$entry_perpage = get_option( '_caldera_forms_entry_perpage', 20 );
+
 $style_includes = get_option( '_caldera_forms_styleincludes' );
 if(empty($style_includes)){
 	$style_includes = array(
@@ -20,8 +20,6 @@ if(empty($style_includes)){
 }
 
 
-// load fields
-//$field_types = apply_filters( 'caldera_forms_get_field_types', array() );
 
 // create user modal buttons
 $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : "create_form", "data-active-class": "disabled", "data-load-class": "disabled", "data-callback": "new_form_redirect", "data-before" : "serialize_modal_form", "data-modal-autoclose" : "new_form" }|right';
@@ -219,24 +217,8 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 			<div class="caldera-forms-clippy-zone" id="caldera-forms-clippy-p3" style="background-image: url( '<?php echo esc_url( CFCORE_URL . '/assets/images/caldera-globe-logo-sm.png' ); ?>' );">
 			</div>
 		</div>
-		<div class="form-entries-wrap" aria-live="polite" aria-relevant="additions removals">
-	<?php include CFCORE_PATH . 'ui/entries_toolbar.php'; ?>
-	<div id="form-entries-viewer"></div>
+		<?php echo Caldera_Forms_Entry_Viewer::full_viewer(); ?>
 
-		<div class="tablenav caldera-table-nav" style="display:none;">
-
-			<div class="tablenav-pages">
-				<input title="<?php echo esc_attr( esc_html__( 'Entries per page', 'caldera-forms' ) ); ?>" id="cf-entries-list-items" type="number" value="<?php echo $entry_perpage; ?>" class="screen-per-page">
-				<span class="pagination-links">
-					<a href="#first" title="Go to the first page" data-page="first" class="first-page">«</a>
-					<a href="#prev" title="Go to the previous page" data-page="prev" class="prev-page">‹</a>
-					<span class="paging-input"><input type="text" size="1" name="paged" title="Current page" class="current-page"> of <span class="total-pages"></span></span>
-					<a href="#next" title="Go to the next page" data-page="next" class="next-page">›</a>
-					<a href="#last" title="Go to the last page" data-page="last" class="last-page">»</a>
-				</span>
-			</div>
-		</div>
-	</div>
 	</div>
 </div>
 
@@ -338,16 +320,6 @@ jQuery( function( $ ){
 			$('.cf-notification-panel').slideToggle();
 		});
 	}
-	var ready_limit_change;
-	$(document).on('change', '#cf-entries-list-items', function(){
-		if( ready_limit_change ){
-			clearTimeout( ready_limit_change );
-		}
-		ready_limit_change = setTimeout( function(){
-			$('.status_toggles.button-primary').trigger('click');
-		}, 280 );
-
-	});
 
 	$( document ).on('submit', '#new_form_baldrickModal', function(e){
 		e.preventDefault();
@@ -496,8 +468,11 @@ jQuery( function( $ ){
 </script>
 <?php
 
-include CFCORE_PATH . 'ui/entry_navigation.php';
 
-
+/**
+ * Runs at the bottom of the main Caldera Forms admi page
+ *
+ * @since unknown
+ */
 do_action('caldera_forms_admin_footer');
 ?>

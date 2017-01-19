@@ -31,7 +31,7 @@ class Caldera_Forms_Email_Previews {
 			$this->id = $id;
 			$this->view();
 		}else{
-			add_filter( 'caldera_forms_mailer', array( $this, 'maybe_create_preview' ), 10, 3 );
+			add_filter( 'caldera_forms_mailer', array( $this, 'maybe_create_preview' ), 99, 3 );
 		}
 
 
