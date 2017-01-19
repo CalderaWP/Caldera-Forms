@@ -965,6 +965,9 @@ class Caldera_Forms {
 			$message = self::do_magic_tags( $message );
 		}
 
+		if( true != $config[ 'html' ] ){
+			$message = strip_tags( $message );
+		}
 
 		// setup mailer
 		$subject = $config[ 'subject' ];
