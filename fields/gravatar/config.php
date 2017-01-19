@@ -45,22 +45,28 @@ $avatar_defaults = array(
 </div>
 
 <div class="caldera-config-group">
-	<label><?php _e('Border Color'); ?></label>
+	<label for="{{_id}}_border_color">
+		<?php esc_html_e('Border Color'); ?>
+	</label>
 	<div class="caldera-config-field">
-		<input type="text" class="color-field field-config" name="{{_name}}[border_color]" value="{{#if config/border_color}}{{config/border_color}}{{else}}#efefef{{/if}}">
+		<input type="text" class="color-field field-config" id="{{_id}}_border_color" name="{{_name}}[border_color]" value="{{#if config/border_color}}{{config/border_color}}{{else}}#efefef{{/if}}">
 	</div>
 </div>
 
 <div class="caldera-config-group">
-	<label><?php _e('Border Size', 'caldera-forms'); ?></label>
+	<label for="{{_id}}_border_size">
+		<?php esc_html_e('Border Size', 'caldera-forms'); ?>
+	</label>
 	<div class="caldera-config-field">
-		<input type="number" class="field-config" name="{{_name}}[border_size]" value="{{#if border_size}}{{border_size}}{{else}}3{{/if}}" style="width:70px;"> px
+		<input type="number" class="field-config" name="{{_name}}[border_size]" id="{{_id}}_border_size" value="{{#if border_size}}{{border_size}}{{else}}3{{/if}}" style="width:70px;"> px
 	</div>
 </div>
 
 <div class="caldera-config-group">
-	<label><?php _e('Border Radius', 'caldera-forms'); ?></label>
+	<label for="{{_id}}_border_radius">
+		<?php esc_html_e('Border Radius', 'caldera-forms'); ?>
+	</label>
 	<div class="caldera-config-field">
-		<input type="number" class="field-config" name="{{_name}}[border_radius]" value="{{#if border_radius}}{{border_radius}}{{else}}3{{/if}}" style="width:70px;"> px
+		<input type="number" class="field-config" id="{{_id}}_border_radius" name="{{_name}}[border_radius]" value="{{#if border_radius}}{{border_radius}}{{else}}3{{/if}}" style="width:70px;"> px
 	</div>
 </div>

@@ -34,7 +34,7 @@
 		<label for="{{_id}}_phone_type_international">
             <?php esc_html_e('International', 'caldera-forms'); ?>
         </label>
-		<input type="radio" id={{_id}}_phone_type_international" aria-describedby="{{_id}}_phone_type_international_desc" class="field-config {{_id}}_type international" name="{{_name}}[type]" value="international" {{#is type value="international"}}checked="checked"{{/is}}>
+		<input type="radio" id="{{_id}}_phone_type_international" aria-describedby="{{_id}}_phone_type_international_desc" class="field-config {{_id}}_type international" name="{{_name}}[type]" value="international" {{#is type value="international"}}checked="checked"{{/is}}>
 
 		<p class="description" id="{{_id}}_phone_type_international_desc">+99 99 999 9999</p>
 	</div>
