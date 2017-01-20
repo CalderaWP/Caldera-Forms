@@ -957,15 +957,17 @@ class Caldera_Forms {
 		// set header
 		$headers[] = 'From: ' . $config[ 'sender_name' ] . ' <' . $config[ 'sender_email' ] . '>';
 
+		$html = false;
 		if ( ! isset( $config[ 'html' ] ) || true == $config[ 'html' ] ) {
 			$headers[] = "Content-type: text/html";
 			$message   = wpautop( self::do_magic_tags( $message ) );
+			$html = true;
 
 		} else {
 			$message = self::do_magic_tags( $message );
 		}
 
-		if( true != $config[ 'html' ] ){
+		if( ! $html ){
 			$message = strip_tags( $message );
 		}
 

@@ -394,7 +394,7 @@ class Caldera_Forms_Save_Final {
 
 		}
 
-		if( ! $mail['html'] ){
+		if( ! $mail['html']     ){
 			$mail[ 'message' ] = strip_tags( $mail['message'] );
 		}
 
