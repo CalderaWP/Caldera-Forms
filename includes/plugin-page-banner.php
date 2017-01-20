@@ -251,14 +251,14 @@ function caldera_forms_activation_admin_notice() {
 				<div class="caldera_forms-banner-actions">
 
 					<div class="caldera_forms-banner-action">
-						<a href="https://calderaforms.com/getting-started?utm_source=wordpress&utm_medium=plugin-page&utm_term=v1.4.3&utm_campaign=post-install-banner">
+						<a href="https://calderaforms.com/getting-started?utm_source=wordpress&utm_medium=plugin-page&utm_term=v<?php echo CFCORE_VER; ?>&utm_campaign=post-install-banner">
 							<span class="dashicons dashicons-admin-settings"></span>
 							<?php esc_html_e('Get Started','caldera-forms'); ?>
 						</a>
 					</div>
 
 					<div class="caldera_forms-banner-action">
-						<a href="https://calderaforms.com/caldera-forms-addons?utm_source=wordpress&utm_medium=plugin-page&utm_term=v1.4.3&utm_campaign=post-install-banner" target="_blank">
+						<a href="https://calderaforms.com/caldera-forms-add-ons?utm_source=wordpress&utm_medium=plugin-page&utm_term=v<?php echo CFCORE_VER; ?>&utm_campaign=post-install-banner" target="_blank">
 							<span class="dashicons dashicons-download"></span>
 							<?php esc_html_e('Go Further','caldera-forms'); ?>
 						</a>
