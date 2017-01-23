@@ -107,31 +107,23 @@ class Caldera_Forms_Entry_Vue {
 	 * @return array
 	 */
 	protected function config_defaults(){
-		return array(
-			'formId' => $this->form[ 'ID' ],
-			'dateFormat' => Caldera_Forms::time_format(),
-			'api' => array(
-				'root'    => esc_url( trailingslashit( Caldera_Forms_API_Util::url() ) ),
-				'form'    => esc_url( trailingslashit( Caldera_Forms_API_Util::url( 'forms' ) ) ),
-				'entries' => esc_url( trailingslashit( Caldera_Forms_API_Util::url( 'entries' ) ) ),
-				'entrySettings' => esc_url( trailingslashit( Caldera_Forms_API_Util::url( 'settings/entries' )  ) ),
- 				'nonce'   => wp_create_nonce( 'wp_rest' ),
-				'token'   => 'false',
-			),
-
-			'templates' => array(
-				'entries' => 'caldera-forms-entries-tmpl',
-                'entry' =>  'caldera-forms-entry-tmpl'
-			),
-			'targets' => array(
-				'entries' => 'caldera-forms-entries',
-                'entry' => 'caldera-forms-entry'
-			),
-			'perPage' => absint( Caldera_Forms_Entry_Viewer::entries_per_page() ),
-			'strings' => array(
-				'no_entries' => esc_html__( 'No Entries To Display', 'caldera-forms' ),
-				'not_allowed' => esc_html__( 'You are not allowed to view this.', 'caldera-forms' )
+		$config = new Caldera_Forms_API_JsConfig( $this->form );
+		$default = array_merge( $config->toArray(), array(
+				'templates' => array(
+					'entries' => 'caldera-forms-entries-tmpl',
+	                'entry' =>  'caldera-forms-entry-tmpl'
+				),
+				'targets' => array(
+					'entries' => 'caldera-forms-entries',
+	                'entry' => 'caldera-forms-entry'
+				),
+				'perPage' => absint( Caldera_Forms_Entry_Viewer::entries_per_page() ),
+				'strings' => array(
+					'no_entries' => esc_html__( 'No Entries To Display', 'caldera-forms' ),
+					'not_allowed' => esc_html__( 'You are not allowed to view this.', 'caldera-forms' )
+				)
 			)
 		);
+		return $default;
 	}
 }
