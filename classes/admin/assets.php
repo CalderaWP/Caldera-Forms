@@ -82,7 +82,8 @@ class Caldera_Forms_Admin_Assets {
 
 		wp_register_script( self::slug( 'edit-fields' ), Caldera_Forms_Render_Assets::make_url( 'fields' ), array( 'jquery', 'wp-color-picker' ), $version );
 
-		wp_register_script( self::slug( 'edit-editor' ), Caldera_Forms_Render_Assets::make_url( 'edit' ), array( 'jquery', 'wp-color-picker' ), $version );
+		//this is bad, but fixes -> https://github.com/CalderaWP/Caldera-Forms/issues/1141
+		wp_register_script( self::slug( 'edit-editor' ), CFCORE_URL . 'assets/js/edit.js', array( 'jquery', 'wp-color-picker' ), $version );
 
 		wp_register_script( self::slug(  'support-page' ), Caldera_Forms_Render_Assets::make_url( 'support-page' ), array( 'jquery' ), $version );
 
