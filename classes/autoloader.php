@@ -60,6 +60,8 @@ class Caldera_Forms_Autoloader {
 				$file = $dir . 'core.php';
 			} elseif ( 'Caldera_Forms_Fields' === $class ) {
 				$file = CFCORE_PATH . 'classes/fields.php';
+			} elseif ( 'Caldera_Forms_Magic' === $class ) {
+				$file = CFCORE_PATH . 'classes/magic.php';
 			}elseif ( 'Caldera_Form_Grid' == $class ) {
 				$file = $dir . 'caldera-grid.php';
 			} elseif( 'Caldera_Forms_Entry' == $class ) {

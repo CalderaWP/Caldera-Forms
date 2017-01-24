@@ -328,8 +328,11 @@ class Caldera_Forms_Save_Final {
 						$row = null;
 					}
 				}
-				$mail['message'] = str_replace( '%' . $key . '%', $row, $mail['message'] );
-				$mail['subject'] = str_replace( '%' . $key . '%', $row, $mail['subject'] );
+
+				$tag =  '%' . $key . '%';
+				$parsed = Caldera_Forms_Magic_Doer::do_field_magic( $tag, $entryid, $form );
+				$mail['message'] = str_replace( $tag, $parsed, $mail['message'] );
+				$mail['subject'] = str_replace( $tag, $parsed, $mail['subject'] );
 
 				$submission[] = $row;
 				$labels[]     = $form['fields'][ $field_id ]['label'];

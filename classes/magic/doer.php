@@ -1,6 +1,6 @@
 <?php
 /**
- * Helper functions for magic tag parsing
+ * This class is the doer of magic -- parses magic tags
  *
  * @package   Caldera_Forms
  * @author    Josh Pollock <Josh@CalderaWP.com>
@@ -8,81 +8,7 @@
  * @link
  * @copyright 2017 CalderaWP LLC
  */
-class Caldera_Forms_Magic_Util {
-
-	/**
-	 * Find field based on field magic tags
-	 *
-	 * @since 1.5.0
-	 *
-	 * @param string $field_magic
-	 * @param array $form Optional. Form config.
-	 *
-	 * @return bool|mixed|void
-	 */
-	public static function find_field( $field_magic, $form = array() ) {
-		if( empty( $form ) ){
-			global  $form;
-		}
-
-
-		$part_tags = self::split_tags( $field_magic );
-		if ( ! empty( $part_tags[1] ) ) {
-			$tag = $part_tags[0];
-
-		}else{
-			$tag = $field_magic;
-
-		}
-
-		return Caldera_Forms_Field_Util::get_field_by_slug( $tag, $form );
-
-	}
-
-	/**
-	 * Prepare a magic tag that uses brackets
-	 *
-	 * @since 1.5.0
-	 *
-	 * @param $value
-	 *
-	 * @return array
-	 */
-	public static function explode_bracket_magic( $value ){
-		preg_match_all( "/\{(.+?)\}/", $value, $matches );
-		return $matches;
-	}
-
-	/**
-	 * Prepare a magic tag that uses % %
-	 *
-	 * @since 1.5.0
-	 *
-	 * @param $value
-	 *
-	 * @return array
-	 */
-	public static function explode_field_magic( $value ){
-		$regex = "/%([a-zA-Z0-9_:]*)%/";
-
-		preg_match_all( $regex, $value, $matches );
-		return $matches;
-	}
-
-	/**
-	 * Split tags by colon
-	 *
-	 * @since 1.5.0
-	 *
-	 * @param string $field_magic
-	 *
-	 * @return array
-	 */
-	public static function split_tags( $field_magic ) {
-		$part_tags = explode( ':', $field_magic );
-
-		return $part_tags;
-	}
+class Caldera_Forms_Magic_Doer {
 
 
 	/**
@@ -185,9 +111,40 @@ class Caldera_Forms_Magic_Util {
 	}
 
 
-	public static function do_bracket_magic(){
+	/**
+	 * Handles bracket type magic tags
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $value Value to attempt to parse
+	 * @param array $form Form config
+	 * @param int $entry_id Entry ID
+	 * @param array $magic_caller
+	 * @param string $referrer
+	 *
+	 * @return string|void
+	 */
+	public static function do_bracket_magic( $value, $form, $entry_id, $magic_caller, $referrer ){
 		$magics = Caldera_Forms_Magic_Util::explode_bracket_magic( $value );
 		if ( ! empty( $magics[ 1 ] ) ) {
+			/**
+			 * Early entry point for custom parsing of bracket magic tags
+			 *
+			 * Return a non-null value to prevent default parsing
+			 *
+			 * @since 1.5.0
+			 *
+			 * @param null $_value Value to return
+			 * @param string|mixed $value Value being substituted.
+			 * @param array $magics Result of preg_match
+			 * @param int $entry_id Current entry ID
+			 * @param array $form Current form ID
+			 */
+			$_value = apply_filters( 'caldera_forms_pre_do_bracket_magic', null, $value, $magics, $entry_id, $form );
+			if( ! is_null( $_value ) ){
+				return $_value;
+			}
+
 			foreach ( $magics[ 1 ] as $magic_key => $magic_tag ) {
 
 				$magic = explode( ':', $magic_tag, 2 );
@@ -226,7 +183,7 @@ class Caldera_Forms_Magic_Util {
 									if ( $var_key == $magic[ 1 ] ) {
 										if ( ! in_array( $magic_tag, $magic_caller ) ) {
 											$magic_caller[] = $magic_tag;
-											$magic_tag      = self::do_magic_tags( $this_form[ 'variables' ][ 'values' ][ $var_index ], $entry_id, $magic_caller );
+											$magic_tag      = Caldera_Forms::do_magic_tags( $this_form[ 'variables' ][ 'values' ][ $var_index ], $entry_id, $magic_caller );
 										} else {
 											$magic_tag = $this_form[ 'variables' ][ 'values' ][ $var_index ];
 										}
@@ -307,11 +264,11 @@ class Caldera_Forms_Magic_Util {
 				} else {
 					switch ( $magic_tag ) {
 						case 'entry_id':
-							$magic_tag = self::get_field_data( '_entry_id', $this_form );
+							$magic_tag = Caldera_Forms::get_field_data( '_entry_id', $form );
 							if ( $magic_tag === null ) {
 								// check if theres an entry
 								if ( ! empty( $_GET[ 'cf_ee' ] ) ) {
-									$entry = self::get_entry_detail( $_GET[ 'cf_ee' ], $this_form );
+									$entry = Caldera_Forms::get_entry_detail( $_GET[ 'cf_ee' ], $form );
 									if ( ! empty( $entry ) ) {
 										$magic_tag = $entry[ 'id' ];
 									}
@@ -319,7 +276,7 @@ class Caldera_Forms_Magic_Util {
 							}
 							break;
 						case 'entry_token':
-							$magic_tag = self::get_field_data( '_entry_token', $this_form );
+							$magic_tag = Caldera_Forms::get_field_data( '_entry_token', $form );
 							break;
 						case 'ip':
 
@@ -368,6 +325,17 @@ class Caldera_Forms_Magic_Util {
 					}
 				}
 
+				/**
+				 * Change the filtered value of a bracket magic tag
+				 *
+				 * Can be used to make custom magic tags, but read https://calderaforms.com/?post_type=doc&p=40609 first
+				 *
+				 * @since unknown
+				 *
+				 * @param string $magic_tag Valuye after magic parsing
+				 * @param string $match The matched tag
+				 *
+				 */
 				$filter_value = apply_filters( 'caldera_forms_do_magic_tag', $magic_tag, $magics[ 0 ][ $magic_key ] );
 
 				if ( ! empty( $this_form[ 'ID' ] ) ) {
@@ -414,8 +382,21 @@ class Caldera_Forms_Magic_Util {
 				}
 
 			}
-		}
-	}
 
+			/**
+			 * Change value of parse bracket magic tag
+			 *
+			 * @since 1.5.0
+			 *
+			 * @param string|mixed $value Value after parsing.
+			 * @param array $magics Result of preg_match
+			 * @param int $entry_id Current entry ID
+			 * @param array $form Current form ID
+			 */
+			return apply_filters( 'caldera_forms_do_field_bracket_value', $value, $magics, $entry_id, $form );
+		}
+
+		return $value;
+	}
 
 }

@@ -261,5 +261,20 @@ class Caldera_Forms_Field_Util {
 		return $types;
 	}
 
+	/**
+	 * Check if a form has a type of field
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $type Type to check for
+	 * @param array $form Form config to check in
+	 *
+	 * @return bool
+	 */
+	static public function has_field_type( $type, array  $form ){
+		$types = wp_list_pluck( $form[ 'fields' ], 'type' );
+		return in_array( $type, array_values( $types ) );
+	}
+
 }
 
