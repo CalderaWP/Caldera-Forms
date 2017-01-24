@@ -242,8 +242,8 @@ class Caldera_Forms_Fields {
 				'icon'        => CFCORE_URL . 'assets/build/images/credit-card.svg',
 				"category"    => __( 'eCommerce', 'caldera-forms' ),
 				"setup"       => array(
-					"template" => CFCORE_PATH . "fields/credit_card_number/config.php",
-					"preview"  => CFCORE_PATH . "fields/credit_card_number/preview.php"
+					"template" => CFCORE_PATH . "fields/credit_card_exp/config.php",
+					"preview"  => CFCORE_PATH . "fields/credit_card_exp/preview.php"
 				),
 				"scripts" => array(
 					CFCORE_URL . 'fields/credit_card_number/credit-card.js'
