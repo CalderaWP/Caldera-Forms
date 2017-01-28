@@ -16,7 +16,7 @@ class Caldera_Forms_Render_Inline {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @var
+	 * @var string
 	 */
 	protected static $scripts;
 

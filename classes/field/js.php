@@ -66,7 +66,13 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 				if( 'summary' == $type ){
 					$type = 'html';
 				}
-				if( 'calculation' != $type && method_exists( $this, $type ) ){
+				//skip these types -- maybe add filter here later
+				$skip = array(
+					'calculation',
+					'star_rating',
+					'range_slider'
+				);
+				if( ! in_array( $type, $skip ) && method_exists( $this, $type ) ){
 					call_user_func( array( $this, $type ), $field[ 'ID' ], $field );
 				}
 			}

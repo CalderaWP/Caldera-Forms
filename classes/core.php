@@ -4262,7 +4262,7 @@ class Caldera_Forms {
 							$field_html = null;
 						}
 						// wrapp it up
-						$field_html = '<span class="caldera-forms-conditional-field" role="region" aria-live="polite" id="conditional_' . $field_base_id . '">' . $field_html . '</span>';
+						$field_html = '<span class="caldera-forms-conditional-field" role="region" aria-live="polite" id="conditional_' . $field_base_id . '" data-field-id="' . $field_base_id . '">' . $field_html . '</span>';
 					}
 
 					$form[ 'grid_object' ]->append( $field_html, $field[ 'grid_location' ] );
@@ -4498,9 +4498,9 @@ class Caldera_Forms {
 				}
 			}
 
-			$conditions_str = json_encode( $conditions_configs );
-			// find %tags%
-			preg_match_all( "/%(.+?)%/", $conditions_str, $hastags );
+			$conditions_str = wp_json_encode( $conditions_configs );
+
+			$hastags = Caldera_Forms_Magic_Util::explode_field_magic( $conditions_str );
 			if ( ! empty( $hastags[ 1 ] ) ) {
 
 				foreach ( $hastags[ 1 ] as $tag_key => $tag ) {
