@@ -606,7 +606,7 @@
     margin-top: 5px;
 }
 
-#caldera-forms-entry-right ul li, #caldera-forms-entry-right ul, #caldera-forms-entry-right .entry-detail {
+.caldera-forms-entry-right ul li, .caldera-forms-entry-right ul, .caldera-forms-entry-right .entry-detail {
     list-style: none;
 }
 
@@ -624,4 +624,26 @@
     height: 1px;
     width: 1px;
     overflow: hidden;
+}
+
+.caldera-forms-entry-viewer li.entry-detail {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 4px;
+}
+
+.caldera-forms-entry-viewer span.entry-label {
+    clear: left;
+    float: left;
+    font-weight: 700;
+    margin-bottom: 3px;
+    margin-right: 8px;
+    min-width: 130px;
+    text-transform: capitalize;
+
+}
+
+.caldera-forms-entry-viewer .entry-value {
+    display: inline-block;
+    margin-bottom: 4px;
+    min-width: 355px;
 }
