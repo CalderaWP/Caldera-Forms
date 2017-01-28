@@ -186,6 +186,32 @@ class Caldera_Forms_Sanitize {
 		return $output;
 
 	}
+
+	/**
+	 * Remove an array of tags and their contents from a string
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $html HTML to remove from
+	 * @param array $tags The tags to remove, no < or > for example array( 'iframe', 'form' )
+	 *
+	 * @return string
+	 */
+	public static function remove_tags( $html, array $tags ){
+		if (  ! empty( $tags ) ) {
+			$doc = new DOMDocument();
+			$doc->loadHTML( $html );
+			$xpath = new DOMXPath( $doc );
+			foreach ( $tags as $tag ) {
+				foreach ( $xpath->query( '//' . $tag ) as $node ) {
+					$node->parentNode->removeChild( $node );
+				}
+			}
+
+			$html = $doc->saveHTML();
+		}
+		return $html;
+	}
 	
 }
 
