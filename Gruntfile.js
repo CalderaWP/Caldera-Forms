@@ -62,7 +62,8 @@ module.exports = function (grunt) {
                 src: [
                     'assets/build/css/caldera-grid.min.css',
                     'assets/build/css/caldera-alert.min.css',
-                    'assets/build/css/caldera-form.min.css'
+                    'assets/build/css/caldera-form.min.css',
+                    'assets/build/css/fields.min.css'
                  ],
                 dest: 'assets/css/caldera-forms-front.css'
             },

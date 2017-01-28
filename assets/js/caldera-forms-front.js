@@ -7408,6 +7408,8 @@ window.addEventListener("load", function(){
 	(function( $ ) {
 		'use strict';
 
+
+
 		/** Check nonce **/
 		if( 'object' === typeof CF_API_DATA ) {
 			var nonceCheckers = {};
