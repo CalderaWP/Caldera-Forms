@@ -3417,7 +3417,7 @@ class Caldera_Forms {
 	 * @param int $entry_id Entry ID
 	 * @param string|array $form Optional. Config array, or ID of form.
 	 *
-	 * @return array
+	 * @return array|WP_Error|void
 	 */
 	static public function get_entry( $entry_id, $form ) {
 		if ( is_string( $form ) ) {
@@ -3447,12 +3447,12 @@ class Caldera_Forms {
 				continue;
 			}
 
-			if ( isset( $field_types[ $form[ 'fields' ][ $field_id ][ 'type' ] ][ 'setup' ][ 'not_supported' ] ) ) {
-				if ( in_array( 'entry_list', $field_types[ $form[ 'fields' ][ $field_id ][ 'type' ] ][ 'setup' ][ 'not_supported' ] ) ) {
-					continue;
-				}
+			//remove if not_supported
+			$type = Caldera_Forms_Field_Util::get_type( Caldera_Forms_Field_Util::get_field( $field_id, $form ) );
+			if ( Caldera_Forms_Fields::not_support( $type, 'entry_list' ) ){
+				continue;
 			}
-			//not_supported
+
 
 			$field = $form[ 'fields' ][ $field_id ];
 

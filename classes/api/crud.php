@@ -40,11 +40,7 @@ abstract class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_item' ),
 					'permission_callback' => array( $this, 'get_item_permissions_check' ),
-					'args'                => array(
-						'context' => array(
-							'default' => 'view',
-						)
-					),
+					'args'                => $this->get_item_args()
 				),
 				array(
 					'methods'             => \WP_REST_Server::EDITABLE,
@@ -78,6 +74,18 @@ abstract class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 			'methods' => 'GET',
 			'callback'            => array( $this, 'index' ),
 		) );
+	}
+
+	public function get_item_args(){
+		return array(
+			'context' => array(
+				'default' => 'view',
+			),
+			'entry_list_only_fields' => array(
+				'required' => false,
+				'default' => false,
+			)
+		);
 	}
 
 	/**

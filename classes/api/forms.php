@@ -31,7 +31,7 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
         }
 
 
-        $form = $this->prepare_form_for_response($form);
+        $form = $this->prepare_form_for_response($form, $request );
         return new Caldera_Forms_API_Response( $form, 200, array( ) );
 
     }
@@ -53,7 +53,7 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
         if( ! empty( $forms ) && $request[ 'full' ] ){
             $prepared = array();
             foreach( $forms as $id => $form ){
-                $prepared[ $id ] = $this->prepare_form_for_response( Caldera_Forms_Forms::get_form( $id ) );
+                $prepared[ $id ] = $this->prepare_form_for_response( Caldera_Forms_Forms::get_form( $id ), $request );
             }
 
         }
@@ -156,17 +156,21 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
         return '/' . $this->route_base() . '/(?P<form_id>[\w-]+)';
     }
 
-    /**
-     * @param $form
-     * @return mixed
-     */
-    protected function prepare_form_for_response( $form ){
+	/**
+	 * Format repsonse for form
+	 *
+	 * @param $form
+	 * @param WP_REST_Request $request
+	 *
+	 * @return array|mixed
+	 */
+    protected function prepare_form_for_response( $form, WP_REST_Request $request ){
 
-    	$form = $this->prepare_field_details( $form );
+    	$form = $this->prepare_field_details( $form, $request );
 
-        $form = $this->prepare_processors_for_response($form);
+        $form = $this->prepare_processors_for_response( $form );
 
-        $form = $this->prepare_mailer_for_response($form);
+        $form = $this->prepare_mailer_for_response( $form );
 
         return $form;
 
@@ -181,16 +185,35 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
 	 *
 	 * @return array
 	 */
-    protected function prepare_field_details( $form ){
+    protected function prepare_field_details( $form, WP_REST_Request $request ){
 	    $form[ 'field_details' ] = array(
 	    	'order'      => array(),
 		    'entry_list' => array()
 	    );
+
 	    $order = Caldera_Forms_Forms::get_fields( $form, true );
 	    $entry_list = Caldera_Forms_Forms::entry_list_fields( $form, true );
 
 	    array_walk( $order, array( $this, 'prepare_field' ) );
 	    array_walk( $entry_list, array( $this, 'prepare_field' ) );
+
+	    if( false == $request[ 'entry_list_only_fields' ] ){
+		    foreach ( $order as $field_id => $field ){
+			    $type = Caldera_Forms_Field_Util::get_type( Caldera_Forms_Field_Util::get_field( $field_id, $form ) );
+			    if ( Caldera_Forms_Fields::not_support( $type, 'entry_list' ) ){
+				    unset( $order[ $field_id ] );
+			    }
+		    }
+
+		    foreach ( $entry_list as $field_id => $field ){
+			    $type = Caldera_Forms_Field_Util::get_type( Caldera_Forms_Field_Util::get_field( $field_id, $form ) );
+			    if ( Caldera_Forms_Fields::not_support( $type, 'entry_list' ) ){
+				    unset( $entry_list[ $field_id ] );
+			    }
+		    }
+
+	    }
+
 
 	    $form[ 'field_details' ][ 'order' ] = $order;
 	    $entry_list_defaults = array(

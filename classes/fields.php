@@ -54,11 +54,38 @@ class Caldera_Forms_Fields {
 	 */
 	public static function definition( $type ){
 		$fields = self::get_all();
-		if( in_array( $type, $fields ) ){
-			return $fields[ 'type' ];
+		if( array_key_exists( $type, $fields ) ){
+			return $fields[ $type ];
 		}
 
 		return array();
+
+	}
+
+	/**
+	 * Check if a field definition has defined a specific "not support" argument
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $type The field type
+	 * @param string $not_support The not support argument, for example "entry_list"
+	 *
+	 * @return bool|null True if not supported, false if not not supported. Null if invalid field type
+	 */
+	public static function not_support( $type, $not_support ){
+		$field = self::definition( $type );
+		if( ! empty( $field ) ){
+			if( ! isset( $field[ 'setup' ], $field[ 'setup' ][ 'not_supported' ] )  ){
+				return false;
+			}
+			if( ! empty(  $field[ 'setup' ][ 'not_supported' ] ) &&  in_array( $not_support, $field[ 'setup' ][ 'not_supported' ] )  ){
+				return true;
+			}
+
+			return false;
+		}
+
+		return null;
 
 	}
 
@@ -412,6 +439,7 @@ class Caldera_Forms_Fields {
 						'hide_label',
 						'caption',
 						'required',
+						'entry_list'
 					)
 				)
 			),
