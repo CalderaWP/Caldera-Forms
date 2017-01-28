@@ -332,9 +332,6 @@ class Caldera_Forms_Fields {
 				),
 				"scripts"     => array(
 					CFCORE_URL . "fields/star-rate/jquery.raty.js",
-				),
-				"styles"      => array(
-					CFCORE_URL . "fields/star-rate/jquery.raty.css",
 				)
 			),
 
