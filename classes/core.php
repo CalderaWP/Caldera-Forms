@@ -4522,7 +4522,7 @@ class Caldera_Forms {
 			}
 
 			// enqueue conditionls app.
-			wp_enqueue_script( 'cf-conditionals' );
+			Caldera_Forms_Render_Assets::enqueue_script( 'conditionals' );
 		}
 
 		/**
@@ -4625,7 +4625,7 @@ class Caldera_Forms {
 				$form = sprintf( '<a href="#" class="caldera-forms-modal" %1s title="%2s">%3s</a>', $tag_atts, $title, $content );
 			}
 
-			wp_enqueue_script( 'cf-dynamic' );
+			Caldera_Forms_Render_Assets::enqueue_script( 'dynamic' );
 		} else {
 			$form = self::render_form( $atts );
 		}

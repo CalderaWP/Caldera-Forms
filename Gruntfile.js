@@ -87,7 +87,7 @@ module.exports = function (grunt) {
                     'assets/js/parsley.js',
                     'assets/js/field-config.js',
                     'assets/js/fields.js',
-                    'assets/js/init.js',
+                    'assets/js/frontend-script-init.js',
                 ],
                 dest: 'assets/js/caldera-forms-front.js'
             }

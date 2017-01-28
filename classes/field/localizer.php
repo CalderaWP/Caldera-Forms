@@ -47,17 +47,17 @@ class Caldera_Forms_Field_Localizer {
 	 */
 	public static function localize_cb(){
 		if ( ! empty( self::$localized ) ) {
-			Caldera_Forms_Render_Assets::enqueue_script( Caldera_Forms_Render_Assets::make_slug( 'field-config' ), array( Caldera_Forms_Render_Assets::make_slug( 'field' ), 'jquery' ) );
 
+			$slug = Caldera_Forms_Render_Assets::field_script_to_localize_slug();
 			$data = array();
 			foreach ( self::$localized as $form_instance => $form_data ){
 				$data[ $form_instance ] = $form_data;
 			}
 
 			$wp_scripts = wp_scripts();
-			wp_localize_script( Caldera_Forms_Render_Assets::make_slug( 'field-config' ), 'CFFIELD_CONFIG', $data );
+			wp_localize_script( $slug, 'CFFIELD_CONFIG', $data );
 
-			$wp_scripts->print_extra_script( Caldera_Forms_Render_Assets::make_slug( 'field-config' ) );
+			$wp_scripts->print_extra_script( $slug, true );
 
 		}
 	}
