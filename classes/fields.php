@@ -524,6 +524,9 @@ class Caldera_Forms_Fields {
 						'default' => '#FFFFFF'
 					),
 				),
+				'styles' => array(
+					CFCORE_URL . 'fields/color_picker/minicolors.min.css'
+				)
 			),
 			'states'           => array(
 				"field"       => __( 'State/ Province Select', 'caldera-forms' ),

@@ -468,12 +468,16 @@
 
              return valid;
          },
-         validateExp: function( $expField ){
-             var val =  $expField.val().split( '/');
-             var valid = $.payment.validateCardExpiry( val[0].trim(), val[1].trim() );
-             return valid;
+         validateExp: function ($expField) {
+             var val = $expField.val().split('/');
+             return $.payment.validateCardExpiry(val[0].trim(), val[1].trim());
          }
-     }
+     };
+     
+     this.color_picker = function ( fieldConfig ) {
+         $( document.getElementById( fieldConfig.id ) ).miniColors( fieldConfig.settings );
+     };
+
 
 
  }
