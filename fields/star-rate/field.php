@@ -53,4 +53,4 @@ $star_target = Caldera_Forms_Field_Util::star_target( Caldera_Forms_Field_Util::
 		});
 	</script>
 <?php
-Caldera_Forms_Render_Inline::add_script( ob_get_clean() );
+Caldera_Forms_Render_Util::add_inline_data( ob_get_clean(), $form );
