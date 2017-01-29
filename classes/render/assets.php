@@ -463,7 +463,13 @@ class Caldera_Forms_Render_Assets {
 	public static function make_url( $name, $script = true ){
 		$root_url = CFCORE_URL;
 
-		$min = self::should_minify( $script );
+		if( ! $script && 'fields' == $name ){
+			$min = true;
+		}else{
+			$min = self::should_minify( $script );
+		}
+
+
 		if ( $min ) {
 			if ( $script ) {
 				return $root_url . 'assets/build/js/' . $name . '.min.js';
