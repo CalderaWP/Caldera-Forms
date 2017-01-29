@@ -70,7 +70,6 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 				$skip = array(
 					'calculation',
 					'star_rating',
-					'range_slider'
 				);
 				if( ! in_array( $type, $skip ) && method_exists( $this, $type ) ){
 					call_user_func( array( $this, $type ), $field[ 'ID' ], $field );
@@ -580,8 +579,10 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 		$basic =  array(
 			'type' => $type,
 			'id' => $this->field_id( $field_id ),
-
+			'default' => Caldera_Forms_Field_Util::get_default( $field_id, $this->form )
 		);
+
+
 		return array_merge( $basic, wp_parse_args( $args, $this->default_config_args() ) );
 	}
 

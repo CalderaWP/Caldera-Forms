@@ -226,7 +226,7 @@ class Caldera_Forms_Field_Util {
 	 *
 	 * @return bool|mixed|void
 	 */
-	static public function get_field_by_slug($slug, $form){
+	 public static function get_field_by_slug($slug, $form){
 
 		foreach ( $form[ 'fields' ] as $field_id => $field ) {
 
@@ -241,7 +241,7 @@ class Caldera_Forms_Field_Util {
 
 	}
 
-	static public function credit_card_types( $field, $form ){
+	public static  function credit_card_types( $field, $form ){
 		$types = array(
 			'amex',
 			'china_union_pay',
@@ -271,9 +271,32 @@ class Caldera_Forms_Field_Util {
 	 *
 	 * @return bool
 	 */
-	static public function has_field_type( $type, array  $form ){
+	public static function has_field_type( $type, array  $form ){
 		$types = wp_list_pluck( $form[ 'fields' ], 'type' );
 		return in_array( $type, array_values( $types ) );
+	}
+
+	/**
+	 * Get field default value
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param array|string $field Field config or field ID
+	 * @param array $form Form config
+	 *
+	 * @return bool
+	 */
+	public static function get_default( $field, array  $form ){
+		if( is_string( $field ) ){
+			$field = self::get_field( $field, $form );
+		}
+
+		if( ! is_array( $field ) || empty( $field[ 'config' ][ 'default' ] ) ){
+			return false;
+		}
+
+		return $field[ 'config' ][ 'default' ];
+
 	}
 
 }
