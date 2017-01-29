@@ -139,7 +139,7 @@ class Caldera_Forms_Processor_Get_Data {
 
 			if ( isset( $config[ $field ]) ) {
 				if ( $args[ 'magic' ] ) {
-					$value = Caldera_Forms::do_magic_tags( $config[ $field ] );
+					$value = Caldera_Forms::do_magic_tags( $config[ $field ], null, $form );
 				} else {
 					$value = $config[ $field ];
 				}

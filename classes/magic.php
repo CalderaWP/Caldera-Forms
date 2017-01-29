@@ -39,10 +39,18 @@ class Caldera_Forms_Magic {
 	 */
 	public function field_magic( $_value, $value, $matches, $entry_id, $form ){
 
-		if( ! empty( $matches ) && ! empty( $matches[1] ) ){
+		if( ! empty( $matches ) && ! empty( $matches[1] ) && ! empty( $matches[1][0]) ){
 
 			if ( Caldera_Forms_Field_Util::has_field_type(  'credit_card_exp', $form ) ) {
-				$_value = $this->expiration_magic( $value, $matches, $entry_id, $form );
+				$split = Caldera_Forms_Magic_Util::split_tags( $matches[1][0] );
+				if( is_array( $split ) && ! empty( $split[1] ) && in_array( $split[1], array( 'month', 'year' ) ) ){
+					$field = Caldera_Forms_Field_Util::get_field_by_slug( $split[0], $form );
+					$type = Caldera_Forms_Field_Util::get_type( $field, $form );
+					if ( 'credit_card_exp' == $type ) {
+						$_value = $this->expiration_magic( $value, $matches, $entry_id, $form );
+					}
+				}
+
 			}
 
 		}
@@ -82,11 +90,11 @@ class Caldera_Forms_Magic {
 							switch ( $semi ) {
 								case ':year':
 									$tag    = '%' . $field[ 'slug' ] . ':year' . '%';
-									$_value = str_replace( $tag, trim( $parts[ 0 ] ), $value );
+									$_value = str_replace( $tag, trim( $parts[ 1 ] ), $value );
 									break;
 								case ':month':
 									$tag    = '%' . $field[ 'slug' ] . ':month' . '%';
-									$_value = str_replace( $tag, trim( $parts[ 1 ] ), $value );
+									$_value = str_replace( $tag, trim( $parts[ 0 ] ), $value );
 									break;
 							}
 						}
