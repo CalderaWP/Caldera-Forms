@@ -2132,3 +2132,21 @@ li.caldera-editor-logo {
 img.form-modal-lgo.form-modal-lgo-svg {
   opacity: .4;
 }
+
+span.cf-form-shortcode-preview {
+  background: #fff;
+  font-size: 1em;
+  color: #000;
+  border: 1px solid #a3bf61;
+  cursor: pointer;
+  display: block;
+  padding: 2px;
+  border-radius: 2px;
+}
+span.cf-form-shortcode-preview:hover {
+  color: #fff;
+  background-color: #ff7e30;
+}
+span.cf-form-name-preview{
+  font-weight: bold;
+}
