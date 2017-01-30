@@ -66,7 +66,12 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 				if( 'summary' == $type ){
 					$type = 'html';
 				}
-				if( 'calculation' != $type && method_exists( $this, $type ) ){
+				//skip these types -- maybe add filter here later
+				$skip = array(
+					'calculation',
+					'star_rating',
+				);
+				if( ! in_array( $type, $skip ) && method_exists( $this, $type ) ){
 					call_user_func( array( $this, $type ), $field[ 'ID' ], $field );
 				}
 			}
@@ -510,6 +515,53 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 
 	}
 
+	/**
+	 * Config for color picker fields
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $field_id The field ID
+	 * @param array $field The field config
+	 */
+	public function color_picker( $field_id, $field ){
+		/**
+		 * Change settings for color picker fields passed to JavaScript
+		 *
+		 * @since 1.5.0
+		 *
+		 * @see http://labs.abeautifulsite.net/jquery-minicolors/#settings
+		 *
+		 * @param array $settings The settings
+		 * @param array $field Field config
+		 * @param array $form Form config
+		 */
+		$settings = apply_filters( 'caldera_forms_field_js_color_picker_settings', array(
+			'animationSpeed' => 50,
+	        'animationEasing' => 'swing',
+	        'change' => null,
+	        'changeDelay' => 0,
+	        'control' => 'hue',
+	        'dataUris' =>true,
+	        'defaultValue' =>  '',
+	        'format' =>  'hex',
+	        'hide' => null,
+	        'hideSpeed' => 100,
+	        'inline' => false,
+	        'keywords' => '',
+	        'letterCase' => 'lowercase',
+	        'opacity' => false,
+	        'position' => 'bottom left',
+	        'show' => null,
+	        'showSpeed' => 100,
+	        'theme' => 'default',
+	        'swatches' => array()
+		), $field, $this->form );
+
+		$this->data[ $field_id ] = $this->create_config_array( $field_id, __FUNCTION__, array(
+			'settings' => $settings
+		) );
+	}
+
 
 
 	/**
@@ -527,8 +579,10 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 		$basic =  array(
 			'type' => $type,
 			'id' => $this->field_id( $field_id ),
-
+			'default' => Caldera_Forms_Field_Util::get_default( $field_id, $this->form )
 		);
+
+
 		return array_merge( $basic, wp_parse_args( $args, $this->default_config_args() ) );
 	}
 

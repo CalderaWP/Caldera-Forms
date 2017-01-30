@@ -8,7 +8,7 @@
 </div>
 
 <div class="caldera-config-group">
-	<label id="{{_id}}_default">
+	<label for="{{_id}}_default">
         <?php esc_html_e('Default', 'caldera-forms'); ?>
     </label>
 	<div class="caldera-config-field">
@@ -17,7 +17,7 @@
 </div>
 
 <div class="caldera-config-group">
-	<label id="{{_id}}_min">
+	<label for="{{_id}}_min">
 		<?php esc_html_e('Minimum', 'caldera-forms'); ?>
 	</label>
 	<div class="caldera-config-field">
@@ -26,7 +26,7 @@
 </div>
 
 <div class="caldera-config-group">
-	<label id="{{_id}}_max">
+	<label for="{{_id}}_max">
 		<?php esc_html_e('Maximum', 'caldera-forms'); ?>
 	</label>
 	<div class="caldera-config-field">
@@ -35,7 +35,7 @@
 </div>
 
 <div class="caldera-config-group">
-	<label id="{{_id}}_step">
+	<label for="{{_id}}_step">
 		<?php esc_html_e('Step (increment size)', 'caldera-forms'); ?>
 	</label>
 	<div class="caldera-config-field">

@@ -21,14 +21,14 @@ if ( is_array( $field_value ) )  {
 $attrs = array(
 	'type'        => 'range',
 	'name'        => $field_name,
-	'value'       => $field_value,
+	'value'       => intval( $field_value ),
 	'data-field'  => $field_base_id,
 	'class'       => $field_class,
 	'id'          => $field_id,
 	'data-handle' => $field[ 'config' ][ 'handle' ],
-	'min'         => $field[ 'config' ][ 'min' ],
-	'max'         => $field[ 'config' ][ 'max' ],
-	'step'        => $field[ 'config' ][ 'step' ]
+	'min'         => intval( $field[ 'config' ][ 'min' ] ),
+	'max'         => intval($field[ 'config' ][ 'max' ] ),
+	'step'        => floatval( $field[ 'config' ][ 'step' ] )
 );
 
 $attr_string =  caldera_forms_field_attributes( $attrs, $field, $form );

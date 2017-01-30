@@ -152,6 +152,8 @@
       */
      this.summary = this.html;
 
+    var rangeSliders = {};
+
      /**
       * Handler for range slider fields
       *
@@ -161,29 +163,49 @@
       */
      this.range_slider = function( field ){
          var $el = $(document.getElementById(field.id));
-         function init() {
 
-             $el.rangeslider({
+         function init() {
+             if ('object' != rangeSliders[field.id]) {
+                 rangeSliders[field.id] = {
+                     value: field.default,
+                     init: {}
+                 };
+             }
+
+             var init = {
+
                  onSlide: function (position, value) {
+                     rangeSliders[field.id].value = value;
                      value = value.toFixed(field.value);
+                     $('#' + field.id + '_value').html(value);
                  },
                  onInit: function () {
-                     $el.parent().find('.rangeslider').css('backgroundColor', field.trackcolor );
-                     $el.parent().find('.rangeslider__fill').css('backgroundColor',  field.color );
-                     $el.parent().find('.rangeslider__handle').css('backgroundColor', field.handle ).css('borderColor', field.handleborder );
+                     this.value = rangeSliders[field.id].value;
+                     $el.parent().find('.rangeslider').css('backgroundColor', field.trackcolor);
+                     $el.parent().find('.rangeslider__fill').css('backgroundColor', field.color);
+                     $el.parent().find('.rangeslider__handle').css('backgroundColor', field.handle).css('borderColor', field.handleborder);
                  },
                  polyfill: false
-             });
+             };
+
+             $el.rangeslider(init);
+             rangeSliders[field.id].init = init;
+
+
          }
 
 
-         $el.on('change', function(){
+         $el.on('change', function () {
              $('#' + field.id + '_value').html(this.value);
          }).css("width", "100%");
 
 
-         $(document).on('cf.pagenav cf.add cf.disable cf.modal', function(){
-             init();
+         $(document).on('cf.pagenav cf.add cf.disable cf.modal', function () {
+             var el = document.getElementById(field.id);
+             if (null != el) {
+                 var $el = $(el);
+                 $el.rangeslider(rangeSliders[field.id].init);
+             }
          });
 
          init();
@@ -468,12 +490,16 @@
 
              return valid;
          },
-         validateExp: function( $expField ){
-             var val =  $expField.val().split( '/');
-             var valid = $.payment.validateCardExpiry( val[0].trim(), val[1].trim() );
-             return valid;
+         validateExp: function ($expField) {
+             var val = $expField.val().split('/');
+             return $.payment.validateCardExpiry(val[0].trim(), val[1].trim());
          }
-     }
+     };
+     
+     this.color_picker = function ( fieldConfig ) {
+         $( document.getElementById( fieldConfig.id ) ).miniColors( fieldConfig.settings );
+     };
+
 
 
  }

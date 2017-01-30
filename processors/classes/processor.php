@@ -131,7 +131,6 @@ abstract class Caldera_Forms_Processor_Processor implements Caldera_Forms_Proces
 	 * @param array $form Form config
 	 */
 	protected function set_data_object_initial( array $config, array $form ){
-
 		$this->data_object = new Caldera_Forms_Processor_Get_Data( $config, $form, $this->fields() );
 
 	}

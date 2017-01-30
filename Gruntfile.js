@@ -62,7 +62,8 @@ module.exports = function (grunt) {
                 src: [
                     'assets/build/css/caldera-grid.min.css',
                     'assets/build/css/caldera-alert.min.css',
-                    'assets/build/css/caldera-form.min.css'
+                    'assets/build/css/caldera-form.min.css',
+                    'assets/build/css/fields.min.css'
                  ],
                 dest: 'assets/css/caldera-forms-front.css'
             },
@@ -84,17 +85,20 @@ module.exports = function (grunt) {
             },
             form: {
                 src: [
+                    'assets/js/fields.js',
                     'assets/js/parsley.js',
                     'assets/js/field-config.js',
-                    'assets/js/fields.js',
-                    'assets/js/init.js',
+                    'assets/js/frontend-script-init.js',
                 ],
                 dest: 'assets/js/caldera-forms-front.js'
             }
         },
         watch: {
             scripts: {
-                files: ['assets/js/*.js'],
+                files: [
+                    'assets/js/*.js',
+                    'assets/css/*.css'
+                ],
                 tasks: ['default'],
                 options: {
                     spawn: false,

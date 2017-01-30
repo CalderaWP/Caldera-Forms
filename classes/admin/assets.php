@@ -57,10 +57,11 @@ class Caldera_Forms_Admin_Assets {
 			)
 		) );
 		self::enqueue_style( 'modal' );
-		self::enqueue_style( 'field' );
+		self::enqueue_script( 'admin' );
+		Caldera_Forms_Render_Assets::enqueue_style( 'field' );
 
 		self::enqueue_script( 'baldrick' );
-		self::enqueue_script( 'admin' );
+
 	}
 
 	/**
@@ -82,7 +83,8 @@ class Caldera_Forms_Admin_Assets {
 
 		wp_register_script( self::slug( 'edit-fields' ), Caldera_Forms_Render_Assets::make_url( 'fields' ), array( 'jquery', 'wp-color-picker' ), $version );
 
-		wp_register_script( self::slug( 'edit-editor' ), Caldera_Forms_Render_Assets::make_url( 'edit' ), array( 'jquery', 'wp-color-picker' ), $version );
+		//this is bad, but fixes -> https://github.com/CalderaWP/Caldera-Forms/issues/1141
+		wp_register_script( self::slug( 'edit-editor' ), CFCORE_URL . 'assets/js/edit.js', array( 'jquery', 'wp-color-picker' ), $version );
 
 		wp_register_script( self::slug(  'support-page' ), Caldera_Forms_Render_Assets::make_url( 'support-page' ), array( 'jquery' ), $version );
 
@@ -101,11 +103,10 @@ class Caldera_Forms_Admin_Assets {
 	 */
 	public static function register_styles(){
 		$version = Caldera_Forms::VERSION;
-		wp_register_style( self::slug( 'fields', false ), Caldera_Forms_Render_Assets::make_url( 'fields', false ), array( 'wp-color-picker' ), $version );
 		wp_register_style( self::slug( 'modals', false ), Caldera_Forms_Render_Assets::make_url( 'modals', false ), array( 'wp-color-picker' ), $version );
 		wp_register_style( self::slug( 'admin', false ), Caldera_Forms_Render_Assets::make_url( 'admin', false ), array(
 			self::slug( 'modals', false ),
-			self::slug( 'fields', false ),
+			'wp-color-picker',
 			'wp-pointer'
 		), $version );
 

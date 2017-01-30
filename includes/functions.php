@@ -161,7 +161,9 @@ function caldera_forms_implode_field_attributes( array $attrs ){
 	$out = '';
 	$pattern = '%s="%s" ';
 	foreach (  $attrs as $attr => $value  ) {
-		$out .= sprintf( $pattern, $attr, $value );
+		if( ! empty( $value ) ){
+			$out .= sprintf( $pattern, $attr, $value );
+		}
 	}
 
 	return $out;

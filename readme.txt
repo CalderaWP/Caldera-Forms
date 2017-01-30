@@ -1,9 +1,9 @@
 === Caldera Forms - Drag and drop responsive WordPress form builder ===
-Contributors: Shelob9, Desertsnowman
+Contributors: Shelob9, Desertsnowman, christiechirinos, saraseiser
 Tags: forms, formbuilder, form builder, contact form, form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, echecks, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, eCheck,dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, gravity forms, contact, email, auto-responder, aweber, converkit, builder, contact forms, search, ab testing, a/b testing, split testing, shortcode, wordpress, awesome plugin, plugin, easy, braintree form, dwolla form, authorize.net form, mailchimp form, mailchimp popup, aweber form, converkit form, stripe form, stripe popup, eCheck form
 Requires at least: 4.4
-Tested up to: 4.7.0
-Stable tag: 1.4.7
+Tested up to: 4.7.1
+Stable tag: 1.4.8
 License: GPLv2
 
 A different kind of WordPress form builder.
@@ -574,8 +574,10 @@ You can auto-populate field options with just a few clicks in our form builder. 
 
 The auto-populate can be extended using the `caldera_forms_render_get_field_type-checkbox` filter.
 
-= Is Anyone Reading This Far Down The FAQ ? =
-It's hard to know. To be honest I'm very curious, if you're reading the FAQ for our fine form builder this far down the FAQ, tweet at Josh [@Josh412](https://witter.com/josh412) and he will send you a prize. He might also ask you what Batman's personal preferance in free WordPress form builders is. I think you know what Josh thinks that Batman thinks about WordPress form builders.
+= Is Caldera Forms A Great Choice For WordPress Contact Forms ? =
+Yes, Caldera Forms is a great choice for creating contact forms on your WordPress site. Yes, it has tons of super powerful features, but even if you just need a simple contact form, you're going to want to make sure your contact form is accessible, that your contact form is responsive and that your contact form is beautiful. Caldera Forms does that and more for your contact forms. You also get multiple auto-responders for your contact forms, database storage of entries to your contact form all for free. You could even add mailing list sign up to your contact form when integrating your contact form with MailChimp, Aweber or Convertkit add-ons.
+
+Make your WordPress contact forms the best contact forms with Caldera Forms for free!
 
 = Does Caldera Forms Have Dropdown Select Fields ? =
 Yes, it does, over course it does. What kind of WordPress form builder would not?
@@ -727,16 +729,26 @@ The [Trumbowyg](https://alex-d.github.io/Trumbowyg/) JavaScript library is used
 
 == Changelog ==
 
+= Caldera Forms 1.4.8 ( January 18, 2017 ) 1.5 Awaits! =
+* SEE: [https://calderaforms.com/updates/caldera-forms-1-4-8](https://calderaforms.com/updates/caldera-forms-1-4-8/)
+* IMPORTANT: Caldera Forms 1.5 beta 2 will be released shortly, please test, Caldera Forms 1.5 is a big update.
+* FIXED: Potential conflict when using Caldera Forms SendGrid mode and the SendGrid plugin, which BTW you shouldn't do, but still, it shouldn't break stuff.
+* ADDED: caldera_forms_affiliate_id filter for kind plugin & theme authors who are including Caldera Forms to append their affiliate ID to links to our site in extend tab.
+* FIXED: Bad link to Caldera Forms add-ons page, featuring such find add-ons as our Mailchimp and PayPal add-ons, in out post-install banner.
+* FIXED: Type on Caldera Forms email notification tab.
+* FIXED: Bug where only first letter of field entry was sent when using summary magic tag in Caldera Forms email and PHP version was 5.3 or later. If this affected you, we're sorry, but you also really need to get your host to update your PHP version to PHP 5.6 or PHP7, or get a new host.
+* FIXED: Removed extra &nbsp; from radio and checkbox form fields
+* FIXED: In some cases when importing or copying a form ID was changed, even if no form of that ID existed.
+* FIXED: Importing a form from another WordPress site or a backup now maintains its basic email settings, such as enable.
+
 = Caldera Forms 1.4.7 ( December 19, 2016 ) Happy Early Christmas! =
+* SEE: [https://calderaforms.com/updates/caldera-forms-1-4-7](https://calderaforms.com/updates/caldera-forms-1-4-7/)
 * FIXED: Bug where checkboxes showed up as JSON data not selected options in emails.
 * FIXED: Wrong variable scope in summary magic tag check if field is advanced file field. Didn't break anything, but still.
 * ADDED: Ability to remove wpautop formatting on email messages.
 * FIXED: Some notices were still showing up in our admin. Commonly used hooks for notices are now removed. The quest to remove all WordPress admin notices continues.
 * FIXED: AJAX settings in form settings tab's HTML markup lacked proper accessibility markup.
 
-= Caldera Forms 1.4.6.1 ( December 13, 2016 ) File Fields FTW! =
-* FIXED: Bug where advanced file fields, with multiple files, not set to be added to media library, were not attached to email. Ok, that's bad, but super glad I figured it out.
-* FIXED: Edge case where  Caldera_Forms_Field_Util::get_field() didn't have a value for $form, but needed it.
 
 = Caldera Forms 1.4.6 ( December 12, 2016 ) Summary Magic Tag: No with 15% more magic! =
 * FIXED: Bug preventing hidden field values, set in browser (via jQuery or whatever) from being saved properly. This bug was fun:)
@@ -1443,3 +1455,5 @@ See: https://calderaforms.com/updates/caldera-forms-1-4-6-1/
 = 1.4.7 =
 See: https://calderaforms.com/updates/caldera-forms-1-4-7/
 
+= 1.4.8 =
+See: https://calderaforms.com/updates/caldera-forms-1-4-8/

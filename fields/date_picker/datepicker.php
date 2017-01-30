@@ -3,11 +3,12 @@ $has_lang = '';
 
 $attrs = array(
 	'type' => 'text',
-	'data-provider' => 'cfdatepicker',
+	'data-provide' => 'cfdatepicker',
 	'name' => $field_name,
 	'value' => $field_value,
+	'id' => Caldera_Forms_Field_Util::get_base_id( $field ),
 	'data-field' => $field_base_id,
-	'class' => $field_class . ' is-cfdatepicker',
+	'class' => $field_class . ' cfdatepicker is-cfdatepicker',
 	'data-date-format' => $field['config']['format'],
 
 );

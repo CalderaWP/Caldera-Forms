@@ -36,7 +36,7 @@ class Caldera_Forms_Email_SendGrid extends Caldera_Forms_Email_Client{
 	 * @inheritdoc
 	 */
 	public function include_sdk() {
-		if( class_exists('\\SendGrid\\Response') ){
+		if( class_exists('SendGrid') ){
 			return;
 		}
 		include_once __DIR__ . '/sendgrid/sendgrid-php.php';

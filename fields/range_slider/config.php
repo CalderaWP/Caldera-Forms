@@ -53,7 +53,7 @@
        <?php esc_html_e('Steps', 'caldera-forms'); ?>
     </label>
 	<div class="caldera-config-field">
-		<input id="{{_id}}_step" type="text" class="block-input field-config" name="{{_name}}[step]" value="{{step}}" style="width:70px;">
+		<input id="{{_id}}_step" type="number" class="block-input field-config" name="{{_name}}[step]" value="{{step}}" style="width:70px;">
 	</div>
 </div>
 <div class="caldera-config-group">
@@ -61,7 +61,7 @@
        <?php esc_html_e('Minimum', 'caldera-forms'); ?>
     </label>
 	<div class="caldera-config-field">
-		<input id="{{_id}}_min" type="text" class="block-input field-config" name="{{_name}}[min]" value="{{min}}" style="width:70px;">
+		<input id="{{_id}}_min" type="number" class="block-input field-config" name="{{_name}}[min]" value="{{min}}" style="width:70px;">
 	</div>
 </div>
 <div class="caldera-config-group">
@@ -69,7 +69,7 @@
        <?php esc_html_e('Maximum', 'caldera-forms'); ?>
     </label>
 	<div class="caldera-config-field">
-		<input id="{{_id}}_max" type="text" class="block-input field-config" name="{{_name}}[max]" value="{{max}}" style="width:70px;">
+		<input id="{{_id}}_max" type="number" class="block-input field-config" name="{{_name}}[max]" value="{{max}}" style="width:70px;">
 	</div>
 </div>
 <div class="caldera-config-group">

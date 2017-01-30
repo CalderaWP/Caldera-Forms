@@ -1,5 +1,4 @@
 
-
 jQuery(function($){
 
 	$('.caldera-editor-body').on('keyup', '.cfdatepicker-set-format', function(){

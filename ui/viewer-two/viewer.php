@@ -15,7 +15,7 @@ if( ! defined( 'ABSPATH' ) ){
 		<div class="caldera-forms-entry-right">
 			<ul v-for="field in fields">
 				<li class="entry-detail">
-					<span class="label">{{field.label}}</span> {{ fieldValue( field.id, entry ) }}
+					<span class="entry-label">{{field.label}}</span> <div class="entry-content">{{ fieldValue( field.id, entry ) }}</div>
 
 				</li>
 			</ul>

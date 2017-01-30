@@ -104,7 +104,7 @@ class Caldera_Forms_Processor_Get_Data {
 			$fields[ $key ] = wp_parse_args( $args, $default_args );
 
 			if ( isset( $config[ $key ] ) ) {
-				$_field = Caldera_Forms::get_field_by_slug( str_replace( '%', '', $config[ $key ] ), $form );
+				$_field = Caldera_Forms_Field_Util::get_field_by_slug( str_replace( '%', '', $config[ $key ] ), $form );
 			} else {
 				$_field = null;
 			}
@@ -139,7 +139,7 @@ class Caldera_Forms_Processor_Get_Data {
 
 			if ( isset( $config[ $field ]) ) {
 				if ( $args[ 'magic' ] ) {
-					$value = Caldera_Forms::do_magic_tags( $config[ $field ] );
+					$value = Caldera_Forms::do_magic_tags( $config[ $field ], null, $form );
 				} else {
 					$value = $config[ $field ];
 				}

@@ -155,6 +155,9 @@ class Caldera_Forms {
 		//init Credit card # hash class here, not on hook, so it can't be unhooked
 		new Caldera_Forms_Field_Credit;
 
+		/** Load magic tag system */
+		new Caldera_Forms_Magic();
+
 		/**
 		 * Runs after Caldera Forms core is initialized
 		 *
@@ -957,14 +960,19 @@ class Caldera_Forms {
 		// set header
 		$headers[] = 'From: ' . $config[ 'sender_name' ] . ' <' . $config[ 'sender_email' ] . '>';
 
+		$html = false;
 		if ( ! isset( $config[ 'html' ] ) || true == $config[ 'html' ] ) {
 			$headers[] = "Content-type: text/html";
 			$message   = wpautop( self::do_magic_tags( $message ) );
+			$html = true;
 
 		} else {
 			$message = self::do_magic_tags( $message );
 		}
 
+		if( ! $html ){
+			$message = strip_tags( $message );
+		}
 
 		// setup mailer
 		$subject = $config[ 'subject' ];
@@ -1857,286 +1865,10 @@ class Caldera_Forms {
 
 		if ( is_string( $value ) ) {
 			// check for magics
-			preg_match_all( "/\{(.+?)\}/", $value, $magics );
-			if ( ! empty( $magics[ 1 ] ) ) {
-				foreach ( $magics[ 1 ] as $magic_key => $magic_tag ) {
-
-					$magic = explode( ':', $magic_tag, 2 );
-
-					if ( count( $magic ) == 2 ) {
-						switch ( strtolower( $magic[ 0 ] ) ) {
-							case 'get':
-								if ( isset( $_GET[ $magic[ 1 ] ] ) ) {
-									$magic_tag = Caldera_Forms_Sanitize::sanitize( $_GET[ $magic[ 1 ] ] );
-								} else {
-									// check on referer.
-									if ( isset( $referrer[ 'query' ][ $magic[ 1 ] ] ) ) {
-										$magic_tag = $referrer[ 'query' ][ $magic[ 1 ] ];
-									} else {
-										$magic_tag = null;
-									}
-								}
-								break;
-							case 'post':
-								if ( isset( $_POST[ $magic[ 1 ] ] ) ) {
-									$magic_tag = Caldera_Forms_Sanitize::sanitize( $_POST[ $magic[ 1 ] ] );
-								} else {
-									$magic_tag = null;
-								}
-								break;
-							case 'request':
-								if ( isset( $_REQUEST[ $magic[ 1 ] ] ) ) {
-									$magic_tag = Caldera_Forms_Sanitize::sanitize( $_REQUEST[ $magic[ 1 ] ] );
-								} else {
-									$magic_tag = null;
-								}
-								break;
-							case 'variable':
-								if ( ! empty( $this_form[ 'variables' ][ 'keys' ] ) ) {
-									foreach ( $this_form[ 'variables' ][ 'keys' ] as $var_index => $var_key ) {
-										if ( $var_key == $magic[ 1 ] ) {
-											if ( ! in_array( $magic_tag, $magic_caller ) ) {
-												$magic_caller[] = $magic_tag;
-												$magic_tag      = self::do_magic_tags( $this_form[ 'variables' ][ 'values' ][ $var_index ], $entry_id, $magic_caller );
-											} else {
-												$magic_tag = $this_form[ 'variables' ][ 'values' ][ $var_index ];
-											}
-										}
-									}
-								}
-								break;
-							case 'date':
-								$magic_tag = get_date_from_gmt( date( 'Y-m-d H:i:s' ), $magic[ 1 ] );
-								break;
-							case 'user':
-								if ( is_user_logged_in() ) {
-									$user = get_userdata( get_current_user_id() );
-									if ( isset( $user->data->{$magic[ 1 ]} ) ) {
-										$magic_tag = $user->data->{$magic[ 1 ]};
-									} else {
-										if ( strtolower( $magic[ 1 ] ) == 'id' ) {
-											$magic_tag = $user->ID;
-										} else {
-											$magic_tag = get_user_meta( $user->ID, $magic[ 1 ], true );
-										}
-									}
-								} else {
-									$magic_tag = null;
-								}
-								break;
-							case 'embed_post':
-								global $post;
-
-								if ( is_object( $post ) ) {
-									if ( isset( $post->{$magic[ 1 ]} ) ) {
-										$magic_tag = $post->{$magic[ 1 ]};
-									} else {
-
-										// extra post data
-										switch ( $magic[ 1 ] ) {
-											case 'permalink':
-												$magic_tag = get_permalink( $post->ID );
-												break;
-
-										}
-
-									}
-								} else {
-									$magic_tag = null;
-								}
-								break;
-							case 'post_meta':
-								global $post;
-
-								if ( is_object( $post ) ) {
-									$post_metavalue = get_post_meta( $post->ID, $magic[ 1 ] );
-									if ( false !== strpos( $magic[ 1 ], ':' ) ) {
-										$magic[ 3 ] = explode( ':', $magic[ 1 ] );
-									}
-									if ( empty( $post_metavalue ) ) {
-										$magic_tag = null;
-									} else {
-										if ( empty( $magic[ 3 ] ) ) {
-											$magic_tag = implode( ', ', $post_metavalue );
-										} else {
-											$outmagic = array();
-											foreach ( $magic[ 3 ] as $subkey => $subvalue ) {
-												foreach ( (array) $post_metavalue as $subsubkey => $subsubval ) {
-													if ( isset( $subsubval[ $subvalue ] ) ) {
-														$outmagic[] = $post_metavalue;
-													}
-												}
-											}
-											$magic_tag = implode( ', ', $outmagic );
-										}
-									}
-								} else {
-									$magic_tag = null;
-								}
-								break;
-						}
-					} else {
-						switch ( $magic_tag ) {
-							case 'entry_id':
-								$magic_tag = self::get_field_data( '_entry_id', $this_form );
-								if ( $magic_tag === null ) {
-									// check if theres an entry
-									if ( ! empty( $_GET[ 'cf_ee' ] ) ) {
-										$entry = self::get_entry_detail( $_GET[ 'cf_ee' ], $this_form );
-										if ( ! empty( $entry ) ) {
-											$magic_tag = $entry[ 'id' ];
-										}
-									}
-								}
-								break;
-							case 'entry_token':
-								$magic_tag = self::get_field_data( '_entry_token', $this_form );
-								break;
-							case 'ip':
-
-								$ip = $_SERVER[ 'REMOTE_ADDR' ];
-								if ( ! empty( $_SERVER[ 'HTTP_CLIENT_IP' ] ) ) {
-									$ip = $_SERVER[ 'HTTP_CLIENT_IP' ];
-								} elseif ( ! empty( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ) ) {
-									$ip = $_SERVER[ 'HTTP_X_FORWARDED_FOR' ];
-								}
-
-								$magic_tag = $ip;
-
-								break;
-							case 'ua':
-								$magic_tag = $_SERVER[ 'HTTP_USER_AGENT' ];
-								break;
-							case 'summary':
-								if ( ! empty( $this_form[ 'fields' ] ) ) {
-									if ( ! isset( $this_form[ 'mailer' ][ 'email_type' ] ) || $this_form[ 'mailer' ][ 'email_type' ] == 'html' ) {
-
-										$html    = true;
-									} else {
-										$html = false;
-									}
-
-									$magic_paser = new Caldera_Forms_Magic_Summary( $form, null );
-									$magic_paser->set_html_mode( $html );
-									$magic_tag = $magic_paser->get_tag();
-
-								}
-								break;
-							case 'login_url' :
-								$magic_tag = wp_login_url();
-								break;
-							case 'logout_url' :
-								$magic_tag = wp_logout_url();
-								break;
-							case 'register_url' :
-								$magic_tag = wp_registration_url();
-								break;
-							case 'lostpassword_url' :
-								$magic_tag = wp_lostpassword_url();
-								break;
-
-
-						}
-					}
-
-					$filter_value = apply_filters( 'caldera_forms_do_magic_tag', $magic_tag, $magics[ 0 ][ $magic_key ] );
-
-					if ( ! empty( $this_form[ 'ID' ] ) ) {
-
-						// split processor
-
-						if ( ! empty( $magic[ 1 ] ) ) {
-							if ( false !== strpos( $magic[ 1 ], ':' ) ) {
-								$magic = array_reverse( explode( ':', $magic[ 1 ] ) );
-							}
-						}
-						// check if its a process id or processor slug
-						if ( empty( $processed_meta[ $this_form[ 'ID' ] ][ $magic[ 0 ] ] ) && ! empty( $this_form[ 'processors' ] ) ) {
-
-							// if not a direct chec if theres a slug
-							foreach ( $this_form[ 'processors' ] as $processid => $processor ) {
-								if ( $processor[ 'type' ] === $magic[ 0 ] ) {
-									if ( ! empty( $processed_meta[ $this_form[ 'ID' ] ][ $processid ] ) ) {
-										$magic[ 0 ] = $processid;
-										break;
-									}
-								}
-							}
-						}
-						if ( ! empty( $processed_meta[ $this_form[ 'ID' ] ][ $magic[ 0 ] ] ) ) {
-
-							if ( isset( $processed_meta[ $this_form[ 'ID' ] ][ $magic[ 0 ] ][ $magic[ 1 ] ] ) ) {
-								// direct fined
-								$filter_value = implode( ', ', (array) $processed_meta[ $this_form[ 'ID' ] ][ $magic[ 0 ] ][ $magic[ 1 ] ] );
-							} else {
-								foreach ( $processed_meta[ $this_form[ 'ID' ] ][ $magic[ 0 ] ] as $return_array ) {
-									foreach ( $return_array as $return_line ) {
-										if ( isset( $return_line[ $magic[ 1 ] ] ) ) {
-											$filter_value = $return_line[ $magic[ 1 ] ];
-										}
-									}
-								}
-							}
-						}
-					}
-
-					if ( $filter_value != $magics[ 1 ][ $magic_key ] ) {
-						$value = str_replace( $magics[ 0 ][ $magic_key ], $filter_value, $value );
-					}
-
-				}
-			}
+			$value = Caldera_Forms_Magic_Doer::do_bracket_magic( $value, $this_form, $entry_id, $magic_caller, $referrer );
 
 			// fields
-			$regex = "/%([a-zA-Z0-9_:]*)%/";
-
-			preg_match_all( $regex, $value, $matches );
-			if ( ! empty( $matches[ 1 ] ) ) {
-				foreach ( $matches[ 1 ] as $key => $tag ) {
-					// check for parts
-					$part_tags = explode( ':', $tag );
-					if ( ! empty( $part_tags[ 1 ] ) ) {
-						$tag = $part_tags[ 0 ];
-					}
-					$entry = self::get_slug_data( $tag, $this_form, $entry_id );
-
-					if ( $entry !== null ) {
-						$field = self::get_field_by_slug( $tag, $this_form );
-					}
-
-
-					if ( ! empty( $field ) && ! empty( $part_tags[ 1 ] ) && $part_tags[ 1 ] == 'label' ) {
-						if ( ! is_array( $entry ) ) {
-							$entry = (array) $entry;
-						}
-						foreach ( (array) $entry as $entry_key => $entry_line ) {
-							if ( ! empty( $field[ 'config' ][ 'option' ] ) ) {
-								foreach ( $field[ 'config' ][ 'option' ] as $option ) {
-									if ( $option[ 'value' ] == $entry_line ) {
-										$entry[ $entry_key ] = $option[ 'label' ];
-									}
-								}
-							}
-						}
-					}
-
-					if ( is_array( $entry ) ) {
-
-						if ( count( $entry ) === 1 ) {
-							$entry = array_shift( $entry );
-						} elseif ( count( $entry ) === 2 ) {
-							$entry = implode( ', ', $entry );
-						} elseif ( count( $entry ) > 2 ) {
-							$last  = array_pop( $entry );
-							$entry = implode( ', ', $entry ) . ', ' . $last;
-						} else {
-							$entry = null;
-						}
-					}
-
-					$value = str_replace( $matches[ 0 ][ $key ], $entry, $value );
-				}
-			}
+			$value = Caldera_Forms_Magic_Doer::do_field_magic( $value, $entry_id, $this_form);
 		}
 
 		return $value;
@@ -3685,7 +3417,7 @@ class Caldera_Forms {
 	 * @param int $entry_id Entry ID
 	 * @param string|array $form Optional. Config array, or ID of form.
 	 *
-	 * @return array
+	 * @return array|WP_Error|void
 	 */
 	static public function get_entry( $entry_id, $form ) {
 		if ( is_string( $form ) ) {
@@ -3715,12 +3447,12 @@ class Caldera_Forms {
 				continue;
 			}
 
-			if ( isset( $field_types[ $form[ 'fields' ][ $field_id ][ 'type' ] ][ 'setup' ][ 'not_supported' ] ) ) {
-				if ( in_array( 'entry_list', $field_types[ $form[ 'fields' ][ $field_id ][ 'type' ] ][ 'setup' ][ 'not_supported' ] ) ) {
-					continue;
-				}
+			//remove if not_supported
+			$type = Caldera_Forms_Field_Util::get_type( Caldera_Forms_Field_Util::get_field( $field_id, $form ) );
+			if ( Caldera_Forms_Fields::not_support( $type, 'entry_list' ) ){
+				continue;
 			}
-			//not_supported
+
 
 			$field = $form[ 'fields' ][ $field_id ];
 
@@ -4530,7 +4262,7 @@ class Caldera_Forms {
 							$field_html = null;
 						}
 						// wrapp it up
-						$field_html = '<span class="caldera-forms-conditional-field" role="region" aria-live="polite" id="conditional_' . $field_base_id . '">' . $field_html . '</span>';
+						$field_html = '<span class="caldera-forms-conditional-field" role="region" aria-live="polite" id="conditional_' . $field_base_id . '" data-field-id="' . $field_base_id . '">' . $field_html . '</span>';
 					}
 
 					$form[ 'grid_object' ]->append( $field_html, $field[ 'grid_location' ] );
@@ -4766,9 +4498,9 @@ class Caldera_Forms {
 				}
 			}
 
-			$conditions_str = json_encode( $conditions_configs );
-			// find %tags%
-			preg_match_all( "/%(.+?)%/", $conditions_str, $hastags );
+			$conditions_str = wp_json_encode( $conditions_configs );
+
+			$hastags = Caldera_Forms_Magic_Util::explode_field_magic( $conditions_str );
 			if ( ! empty( $hastags[ 1 ] ) ) {
 
 				foreach ( $hastags[ 1 ] as $tag_key => $tag ) {
@@ -4790,7 +4522,7 @@ class Caldera_Forms {
 			}
 
 			// enqueue conditionls app.
-			wp_enqueue_script( 'cf-conditionals' );
+			Caldera_Forms_Render_Assets::enqueue_script( 'conditionals' );
 		}
 
 		/**
@@ -4893,7 +4625,7 @@ class Caldera_Forms {
 				$form = sprintf( '<a href="#" class="caldera-forms-modal" %1s title="%2s">%3s</a>', $tag_atts, $title, $content );
 			}
 
-			wp_enqueue_script( 'cf-dynamic' );
+			Caldera_Forms_Render_Assets::enqueue_script( 'dynamic' );
 		} else {
 			$form = self::render_form( $atts );
 		}

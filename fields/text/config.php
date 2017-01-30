@@ -1,11 +1,14 @@
 <div class="caldera-config-group">
-	<label><?php _e('Placeholder', 'caldera-forms'); ?></label>
+	<label for="{{_id}}_placeholder">
+		<?php esc_html_e('Placeholder', 'caldera-forms'); ?></label>
 	<div class="caldera-config-field">
 		<input type="text" id="{{_id}}_placeholder" class="block-input field-config" name="{{_name}}[placeholder]" value="{{placeholder}}">
 	</div>
 </div>
 <div class="caldera-config-group">
-	<label><?php _e('Default'); ?></label>
+	<label for="{{_id}}_default">
+		<?php esc_html_e('Default'); ?>
+	</label>
 	<div class="caldera-config-field">
 		<input type="text" id="{{_id}}_default" class="block-input field-config magic-tag-enabled" name="{{_name}}[default]" value="{{default}}">
 	</div>
@@ -13,7 +16,7 @@
 
 <div class="caldera-config-group">
 	<label for="{{_id}}-type_override">
-		<?php _e('HTML5 Type', 'caldera-forms'); ?>
+		<?php esc_html_e( 'HTML5 Type', 'caldera-forms'); ?>
 	</label>
 	<div class="caldera-config-field">
 		<select class="field-config {{_id}}_type_override" name="{{_name}}[type_override]" id="{{_id}}-type_override" aria-describedby="{{_id}}-type_override-description">
@@ -30,7 +33,7 @@
 			<option {{#is type_override value="week"}}selected="selected"{{/is}}value="week">week</option>
 		</select>
 		<p class="description" id="{{_id}}-type_override-description">
-			<?php _e('Change the field type.','caldera-forms');?>
+			<?php esc_html_e('Change the field type.','caldera-forms');?>
 		</p>
 	</div>
 </div>

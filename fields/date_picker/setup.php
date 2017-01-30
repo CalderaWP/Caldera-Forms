@@ -16,7 +16,7 @@
 </div>
 <div class="caldera-config-group">
     <label>
-        <?php _e('Autoclose', 'caldera-forms'); ?>
+        <?php esc_html_e('Autoclose', 'caldera-forms'); ?>
     </label>
     <div class="caldera-config-field">
         <label id="{{_id}}_autoclosed">
