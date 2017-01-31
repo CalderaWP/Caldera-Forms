@@ -256,6 +256,8 @@ class Caldera_Forms_Forms {
 			$id = $data[ 'ID' ]   = uniqid( 'CF' );
 		}
 
+		$data[ 'ID' ] = trim( $id );
+
 		return self::save_form( $data );
 
 	}
@@ -458,7 +460,7 @@ class Caldera_Forms_Forms {
 		}
 
 		$defaults = array(
-			"ID" 			=> $id,
+			"ID" 			=> trim( $id ),
 			"name" 			=> '',
 			"description" 	=> '',
 			"success"		=>	__('Form has been successfully submitted. Thank you.', 'caldera-forms'),
