@@ -1,13 +1,21 @@
 <?php
+/**
+ * Caldera Forms - PHP Export 
+ * Job Application 
+ * @version    1.5.0-b-2
+ * @license   GPL-2.0+
+ * 
+ */
+
 
  return array(
-  '_last_updated' => 'Mon, 30 Jan 2017 14:23:12 +0000',
-  'ID' => 'job-application-form',
+  '_last_updated' => 'Tue, 31 Jan 2017 13:03:37 +0000',
+  'ID' => 'job-application',
   'cf_version' => '1.5.0-b-2',
-  'name' => 'Job Application Form',
+  'name' => 'Job Application',
   'scroll_top' => 1,
-  'description' => '														',
-  'success' => 'Form has been successfully submitted. Thank you.						',
+  'description' => '							',
+  'success' => 'Form has been successfully submitted. Thank you.			',
   'db_support' => 1,
   'pinned' => 0,
   'hide_form' => 1,
@@ -141,7 +149,7 @@
     'fld_6830845' => 
     array(
       'ID' => 'fld_6830845',
-      'type' => 'text',
+      'type' => 'email',
       'label' => 'Email Address',
       'slug' => 'user_email',
       'conditions' => 
@@ -155,8 +163,6 @@
         'custom_class' => '',
         'placeholder' => '',
         'default' => '',
-        'type_override' => 'text',
-        'mask' => '',
       ),
     ),
     'fld_645468' => 
@@ -273,6 +279,28 @@
         'default' => '<h2>Information Summary</h2>',
       ),
     ),
+    'fld_3540500' => 
+    array(
+      'ID' => 'fld_3540500',
+      'type' => 'live_gravatar',
+      'label' => 'profile',
+      'slug' => 'profile',
+      'conditions' => 
+      array(
+        'type' => '',
+      ),
+      'caption' => '',
+      'config' => 
+      array(
+        'custom_class' => '',
+        'email' => 'fld_6830845',
+        'generator' => 'mystery',
+        'size' => 100,
+        'border_color' => '#efefef',
+        'border_size' => 3,
+        'border_radius' => 3,
+      ),
+    ),
     'fld_8862269' => 
     array(
       'ID' => 'fld_8862269',
@@ -328,28 +356,6 @@
         'target' => '',
       ),
     ),
-    'fld_3540500' => 
-    array(
-      'ID' => 'fld_3540500',
-      'type' => 'live_gravatar',
-      'label' => 'profile',
-      'slug' => 'profile',
-      'conditions' => 
-      array(
-        'type' => '',
-      ),
-      'caption' => '',
-      'config' => 
-      array(
-        'custom_class' => '',
-        'email' => 'user:user_email',
-        'generator' => 'mystery',
-        'size' => 100,
-        'border_color' => '#efefef',
-        'border_size' => 3,
-        'border_radius' => 3,
-      ),
-    ),
   ),
   'page_names' => 
   array(
@@ -359,13 +365,13 @@
   'mailer' => 
   array(
     'on_insert' => 1,
-    'sender_name' => 'Job Application Form',
-    'sender_email' => 'youremail@email.com',
+    'sender_name' => 'Caldera Forms Notification',
+    'sender_email' => 'admin@admin.admin',
     'reply_to' => '',
     'email_type' => 'html',
     'recipients' => '',
     'bcc_to' => '',
-    'email_subject' => 'Job Application Form',
+    'email_subject' => 'Job Application',
     'email_message' => '{summary}',
   ),
   'conditional_groups' => 
