@@ -365,8 +365,8 @@
   'mailer' => 
   array(
     'on_insert' => 1,
-    'sender_name' => 'Caldera Forms Notification',
-    'sender_email' => 'admin@admin.admin',
+    'sender_name' => 'Job Application Form',
+    'sender_email' => 'myemail@email.com',
     'reply_to' => '',
     'email_type' => 'html',
     'recipients' => '',
