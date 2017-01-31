@@ -211,27 +211,27 @@ class Caldera_Forms_Admin {
 
 		$internal_templates = array(
 			'starter_contact_form' => array(
-				'name'     => esc_html__( 'Starter Contact Form', 'caldera-forms' ),
+				'name'     => esc_html__( 'Contact Form', 'caldera-forms' ),
 				'template' => include CFCORE_PATH . 'includes/templates/starter-contact-form.php'
 			),
 			'variable_price_example' => array(
-				'name'     => esc_html__( 'Variable Pricing Form, with add-on products.', 'caldera-forms' ),
+				'name'     => esc_html__( 'Variable Pricing Form - with add-on products', 'caldera-forms' ),
 				'template' => include CFCORE_PATH . 'includes/templates/variable-price-example.php'
 			),
 			'registration' => array(
-				'name'     => esc_html__( 'Registration Form, with optional additional participants.', 'caldera-forms' ),
+				'name'     => esc_html__( 'Registration Form - with optional additional participants', 'caldera-forms' ),
 				'template' => include CFCORE_PATH . 'includes/templates/registration-form-example.php'
 			),
 			'simple_booking_form_example' => array(
-				'name'     => esc_html__( 'Simple Booking Form.', 'caldera-forms' ),
+				'name'     => esc_html__( 'Simple Booking Form', 'caldera-forms' ),
 				'template' => include CFCORE_PATH . 'includes/templates/simple-booking-form-example.php'
 			),
 			'rate-our-service-example' => array(
-				'name'     => esc_html__( 'Rate Our Service Contact Form, with star review.', 'caldera-forms' ),
+				'name'     => esc_html__( 'Rate Our Service Form - with star review', 'caldera-forms' ),
 				'template' => include CFCORE_PATH . 'includes/templates/rate-our-service-example.php'
 			),
 			'job-application-form-example' => array(
-				'name'     => esc_html__( 'Job Application Form, with Gravatar preview.', 'caldera-forms' ),
+				'name'     => esc_html__( 'Job Application Form - with Gravatar preview', 'caldera-forms' ),
 				'template' => include CFCORE_PATH . 'includes/templates/job-application-form-example.php'
 			),
 
