@@ -3739,13 +3739,14 @@ class Caldera_Forms {
 
 		global $post, $form;
 
-		if(!empty($_GET['cf_preview'])){
-			$form = Caldera_Forms_Forms::get_form( $_GET['cf_preview'] );
+		$preview_id = trim( $_GET['cf_preview'] );
+		if(!empty( $preview_id )){
+			$form = Caldera_Forms_Forms::get_form($preview_id );
 
 			$userid = get_current_user_id();
 			if( !empty( $userid ) ){
 
-				if(empty($form['ID']) || $form['ID'] !== $_GET['cf_preview']){
+				if(empty( $form['ID']) || $form['ID'] !== trim( $preview_id ) ){
 					return;
 				}
 				if( empty($post) || $post->post_title !== 'Caldera Forms Preview' ){
@@ -3762,13 +3763,13 @@ class Caldera_Forms {
 							'comment_status' => 'closed'
 						);
 						$page_id = wp_insert_post( $post );
-						wp_redirect( trailingslashit( get_home_url() ) . '?page_id='.$page_id.'&preview=true&cf_preview='.$_GET['cf_preview'] );
+						wp_redirect( trailingslashit( get_home_url() ) . '?page_id='.$page_id.'&preview=true&cf_preview='.$preview_id );
 						exit;
 					}
 					if( $temp_page->post_status !== 'draft'){
 						wp_update_post( array( 'ID' => $temp_page->ID, 'post_status' => 'draft' ) );
 					}
-					wp_redirect( trailingslashit( get_home_url() ) . '?page_id='.$temp_page->ID.'&preview=true&cf_preview='.$_GET['cf_preview'] );
+					wp_redirect( trailingslashit( get_home_url() ) . '?page_id='.$temp_page->ID.'&preview=true&cf_preview='.$preview_id );
 					exit;
 				}
 				$post->post_title = $form['name'];
