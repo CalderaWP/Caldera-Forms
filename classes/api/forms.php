@@ -58,7 +58,7 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
 
         }
 
-        $response = new Caldera_Forms_API_Response( $forms, 200, array( ) );
+        $response = new Caldera_Forms_API_Response( $prepared, 200, array( ) );
         $response->set_total_header( count( $forms ) );
         return $response;
     }
