@@ -709,4 +709,17 @@ class Caldera_Forms_Forms {
 		return $entry_list_fields;
  	}
 
+	/**
+	 * Delete all forms on this site
+	 *
+	 * @since 1.5.0
+	 */
+ 	public static function delete_all_forms(){
+ 		$forms = self::get_forms();
+	    foreach( $forms as $form ){
+	    	self::delete_form( $form );
+	    }
+	    
+    }
+
 }
