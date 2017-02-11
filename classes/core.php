@@ -3183,6 +3183,10 @@ class Caldera_Forms {
 	 * Makes Caldera Forms load the preview
 	 */
 	static public function cf_init_preview(){
+		if( ! isset( $_GET, $_GET['cf_preview'] ) ){
+			return;
+		}
+
 		global $post, $form;
 		$preview_id = trim( $_GET['cf_preview'] );
 		if(!empty( $preview_id )){
