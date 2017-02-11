@@ -719,7 +719,9 @@ class Caldera_Forms_Forms {
 	    foreach( $forms as $form ){
 	    	self::delete_form( $form );
 	    }
-	    
+
+	   self::update_registry( array( ) );
+
     }
 
 }
