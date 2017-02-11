@@ -122,7 +122,7 @@ class Caldera_Forms_Admin_Feed {
 			 */
 			$affiliate_id = apply_filters( 'caldera_forms_affiliate_id', null );
 			if ( 0 < absint( $affiliate_id ) ) {
-				add_query_arg( 'thnx', $affiliate_id, $data->link );
+                		$data->link = add_query_arg( 'thnx', $affiliate_id, $data->link );
 			}
 		}
 

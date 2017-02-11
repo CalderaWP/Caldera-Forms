@@ -260,7 +260,7 @@ abstract class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 	 */
 	protected function not_yet_response() {
 		$error =  new Caldera_Forms_API_Error( 'not-implemented-yet', __( 'Route Not Yet Implemented :(', 'caldera-forms' )  );
-		return new Caldera_Forms_API_Response( $error, 501, [] );
+		return new Caldera_Forms_API_Response( $error, 501, array() );
 	}
 
 	/**
