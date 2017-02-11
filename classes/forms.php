@@ -636,15 +636,23 @@ class Caldera_Forms_Forms {
 	 *
 	 * @param array $form The form config
 	 * @param bool $in_order Optional. Return in layout order, the default, or in stored order (false).
+	 * @param bool $filter Optional. Apply field filters? Default is false. @since 1.5.0
 	 *
 	 * @return array|mixed
 	 */
-	public static function get_fields( array $form, $in_order = true ){
+	public static function get_fields( array $form, $in_order = true, $filter = false ){
 		if( empty( $form[ 'fields' ] ) ){
 			return array();
 		}
 
 		$fields = $form[ 'fields' ];
+
+		if( $filter ){
+			foreach ( $fields as $field_id => $field ){
+				$fields[ $field_id ] = Caldera_Forms_Field_Util::apply_field_filters( $field, $form );
+			}
+
+		}
 
 		if ( $in_order ) {
 

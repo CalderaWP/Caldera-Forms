@@ -11,6 +11,22 @@
  */
 abstract class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 
+	/**
+	 * Form object for this response
+	 *
+	 * @since 1.5.0
+	 *
+	 * @var Caldera_Forms_API_Form
+	 */
+	protected $form;
+
+	/**
+	 * Namespace for API
+	 *
+	 * @since 1.5.0
+	 *
+	 * @var string
+	 */
 	protected $namespace;
 
 	/**
@@ -320,6 +336,36 @@ abstract class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 				'sanitize_callback' => 'absint',
 			)
 		);
+	}
+
+	/**
+	 * Factory for Caldera_Forms_API_Form objects
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $id Form ID
+	 * @param WP_REST_Request $request Current REST API request
+	 * @param bool $set_prop Optional. Set in $form property of object if true, the default. If false, return.
+	 *
+	 * @return Caldera_Forms_API_Form|void
+	 * @throws Exception
+	 */
+	protected function form_object_factory( $id, WP_REST_Request $request, $set_prop = true ){
+		$form = Caldera_Forms_Forms::get_form( $id );
+		if( empty( $form ) ){
+			throw new Exception();
+		}
+
+		$obj = new Caldera_Forms_API_Form( $form );
+		$obj->set_request( $request );
+		if ( $set_prop ) {
+			$this->form = $obj;
+
+		} else {
+
+			return $obj;
+		}
+
 	}
 
 }

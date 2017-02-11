@@ -23,14 +23,13 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
 	 * @return Caldera_Forms_API_Error|Caldera_Forms_API_Response
 	 */
 	public function get_item( WP_REST_Request $request ) {
-		$form_id = $request[ 'form_id' ];
-		$form = Caldera_Forms_Forms::get_form( $form_id );
-		if( ! is_array( $form ) ){
+		try{
+			$this->form_object_factory( $request[ 'form_id' ], $request );
+		}catch ( Exception $e ){
 			return Caldera_Forms_API_Response_Factory::error_form_not_found();
 		}
 
-
-		$entry = new Caldera_Forms_Entry( $form, $request[ 'entry_id' ] );
+		$entry = new Caldera_Forms_Entry( $this->form->toArray(), $request[ 'entry_id' ] );
 
 		if( null == $entry->get_entry() ){
 			return Caldera_Forms_API_Response_Factory::error_entry_not_found();
@@ -54,9 +53,9 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
 	 * @return Caldera_Forms_API_Error|Caldera_Forms_API_Response
 	 */
 	public function get_items( WP_REST_Request $request ) {
-		$form_id = $request[ 'form_id' ];
-		$form = Caldera_Forms_Forms::get_form( $form_id );
-		if( ! is_array( $form ) ){
+		try{
+			$this->form_object_factory( $request[ 'form_id' ], $request );
+		}catch ( Exception $e ){
 			return Caldera_Forms_API_Response_Factory::error_form_not_found();
 		}
 
@@ -65,7 +64,7 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
 			$per_page = 1;
 		}
 
-		$entries = new Caldera_Forms_Entry_Entries( $form, $per_page );
+		$entries = new Caldera_Forms_Entry_Entries( $this->form->toArray(), $per_page );
 		$data = $this->prepare_entries_for_response( $entries->get_page( $request[ 'page' ], $request[ 'status' ] ) );
 		$entries->get_page( $request[ 'page' ], $request[ 'status' ] );
 		$pages = ceil( $entries->get_total( $request[ 'status' ] ) / $per_page );
@@ -162,8 +161,8 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
 		if( ! empty( $fields ) ){
 			/** @var Caldera_Forms_Entry_Field $field */
 			foreach(  $fields as $field ){
-                if ( is_object( $field )) {
-                    $response_data[$id]['fields'][$field->field_id ] = $field->to_array(false);
+                if ( $this->form->is_api_field( $field->field_id ) &&  is_object( $field ) ) {
+	                $response_data[ $id ][ 'fields' ][ $field->field_id ] = $field->to_array( false );
                 }
 			}
 
