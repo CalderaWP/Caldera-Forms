@@ -289,4 +289,33 @@ class Caldera_Forms_Files{
     	return apply_filters( 'caldera_forms_file_upload_handler', array( 'Caldera_Forms_Files', 'upload' ), $form, $field );
     }
 
+	/**
+	 * Check if field's files should be attatched
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param array $field
+	 *
+	 * @return bool
+	 */
+    public static function should_attach( array  $field ){
+    	if( in_array( Caldera_Forms_Field_Util::get_type( $field ), self::types() ) ){
+		    return ! empty( $field[ 'config' ][ 'attach'] );
+	    }
+
+	    return false;
+
+    }
+
+	/**
+	 * Get types of file fields
+	 *
+	 * @since 1.5.0
+	 *
+	 * @return array
+	 */
+    public static function types(){
+    	return array( 'advanced_file', 'file'  );
+    }
+
 }

@@ -490,6 +490,9 @@ class Caldera_Forms {
 	public static function mail_attachment_check( $mail, $data, $form){
 		foreach ( Caldera_Forms_Forms::get_fields( $form, false ) as $field_id => $field ) {
 			if ( Caldera_Forms_Field_Util::is_file_field( $field, $form )  ) {
+				if( ! Caldera_Forms_Files::should_attach( $field ) ){
+					continue;
+				}
 				$dir = wp_upload_dir();
 				if ( isset( $data[ $field_id ] ) && is_array( $data[ $field_id ] ) ) {
 					foreach ( $data[ $field_id ] as $file ) {
@@ -3736,7 +3739,9 @@ class Caldera_Forms {
 	 * Makes Caldera Forms load the preview
 	 */
 	static public function cf_init_preview(){
-
+		if( ! isset( $_GET, $_GET['cf_preview'] ) ){
+			return;
+		}
 		global $post, $form;
 
 		$preview_id = trim( $_GET['cf_preview'] );
