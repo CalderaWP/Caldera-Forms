@@ -14,10 +14,19 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 	/**
 	 * @inheritdoc
 	 */
-	public static function html( array $field, array $field_structure, array $form ){
+	public static function html( array $field, array $field_structure, array $form, $value = null ){
 		$type = Caldera_Forms_Field_Util::get_type( $field );
 		$field_base_id = Caldera_Forms_Field_Util::get_base_id( $field, null, $form );
-		$default = self::find_default( $field );
+		if ( null === $value ) {
+			if( ! empty( $field_structure [ 'field_value' ] ) ){
+				$value = $field_structure [ 'field_value' ];
+			}else{
+				$value = self::find_default( $field );
+			}
+
+
+
+		}
 
 		$sync = false;
 		if( in_array( $type, self::sync_fields() ) ){
@@ -41,7 +50,7 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 			'class' => $field_classes[ 'field' ],
 			'id' => $field_base_id,
 			'name' => $field_structure['name'],
-			'value' => $default,
+			'value' => $value,
 			'data-type' => $type
 		);
 
