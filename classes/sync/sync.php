@@ -127,7 +127,6 @@ class Caldera_Forms_Sync_Sync {
 	 *
 	 * @since 1.5.0
 	 *
-	 *
 	 * @uses "caldera_forms_render_get_field" filter
 	 *
 	 * @param array $field Field congig

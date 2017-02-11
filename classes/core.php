@@ -2516,9 +2516,7 @@ class Caldera_Forms {
 
 		if ( ! empty( $form[ 'fields' ] ) ) {
 			foreach ( $form[ 'fields' ] as $field_id => $field ) {
-				$field = apply_filters( 'caldera_forms_render_get_field', $field, $form );
-				$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field[ 'type' ], $field, $form );
-				$field = apply_filters( 'caldera_forms_render_get_field_slug-' . $field[ 'slug' ], $field, $form );
+				$field = Caldera_Forms_Field_Util::get_field( $field, $form );
 				if ( ! is_array( $field ) || empty( $field ) ) {
 					unset( $form[ 'fields' ][ $field_id ] );
 				} else {
@@ -3495,33 +3493,7 @@ class Caldera_Forms {
 
 			$field = $form[ 'fields' ][ $field_id ];
 
-			/**
-			 * Filter field config.
-			 *
-			 * @param array $field The field config.
-			 * @param array $form The form config.
-			 */
-			$field = apply_filters( 'caldera_forms_render_get_field', $field, $form );
-
-			/**
-			 * Filter field config for fields of a given type.
-			 *
-			 * Filter name is dynamic, based on field type. For example "caldera_forms_render_get_field_type-hidden" or "caldera_forms_render_get_field_type-radio"
-			 *
-			 * @param array $field The field config.
-			 * @param array $form The form config.
-			 */
-			$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field[ 'type' ], $field, $form );
-
-			/**
-			 * Filter field config for fields with a given slug
-			 *
-			 * Filter name is dynamic, based on field type. For example "caldera_forms_render_get_field_slug-salsa" or "caldera_forms_render_get_field_slug-chips"
-			 *
-			 * @param array $field The field config.
-			 * @param array $form The form config.
-			 */
-			$field = apply_filters( 'caldera_forms_render_get_field_slug-' . $field[ 'slug' ], $field, $form );
+			$field = Caldera_Forms_Field_Util::get_field( $field, $form, true );
 
 			if ( is_string( $field_value ) ) {
 				// maybe json?

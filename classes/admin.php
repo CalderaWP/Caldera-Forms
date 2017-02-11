@@ -890,11 +890,7 @@ class Caldera_Forms_Admin {
 							$label = $field_labels[ $row->slug ];
 
 							// check view handler
-							$field = $fields[ $row->slug ];
-							// filter the field to get field data
-							$field = apply_filters( 'caldera_forms_render_get_field', $field, $form );
-							$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field[ 'type' ], $field, $form );
-							$field = apply_filters( 'caldera_forms_render_get_field_slug-' . $field[ 'slug' ], $field, $form );
+							$field = Caldera_Forms_Field_Util::get_field(  $row->slug, $form, true );
 
 							// maybe json?
 							$is_json = json_decode( $row->value, ARRAY_A );

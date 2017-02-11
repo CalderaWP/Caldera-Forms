@@ -78,10 +78,7 @@ class Caldera_Forms_Magic_Summary extends Caldera_Forms_Magic_Parser {
 					continue;
 				}
 
-				// filter the field to get field data
-				$field = apply_filters( 'caldera_forms_render_get_field', $field, $this->form );
-				$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field[ 'type' ], $field, $this->form );
-				$field = apply_filters( 'caldera_forms_render_get_field_slug-' . $field[ 'slug' ], $field, $this->form );
+				$field = Caldera_Forms_Field_Util::apply_field_filters( $field, $this->form );
 
 				if (  null == $this->data ) {
 					$field_values = (array) Caldera_Forms::get_field_data( $field_id, $this->form );

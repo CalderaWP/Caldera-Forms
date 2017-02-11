@@ -34,7 +34,9 @@ class Caldera_Forms_Render_AutoPopulation {
 	/**
 	 * Auto-populate Easy Pods-based select fields
 	 *
-	 * @since "caldera_forms_render_get_field"
+	 * @uses "caldera_forms_render_get_field"
+	 *
+	 * @since 1.4.3
 	 *
 	 * @param array $field Field config
 	 * @param array $form Form config

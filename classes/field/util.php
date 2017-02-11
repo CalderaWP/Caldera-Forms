@@ -39,22 +39,29 @@ class Caldera_Forms_Field_Util {
 	 *
 	 * @param string|array $field Field ID. If you pass an array, that will be returned.
 	 * @param array|null $form
+	 * @param bool $filter Optional. Apply field filters? Default is false. Added in 1.5.0
 	 *
 	 * @return bool|array
 	 */
-	public static function get_field( $field, array $form = null ){
-		if ( is_array( $field ) ) {
-			return $field;
-		}else{
+	public static function get_field( $field, array $form = null, $filter = false ){
+		if ( ! is_array( $field ) ) {
 			if( ! is_array( $form ) ){
 				global  $form;
 			}
+
 			$fields = Caldera_Forms_Forms::get_fields( $form, false );
 			if ( isset( $fields[ $field ] ) ) {
-				return $fields[ $field ];
+				$field =  $fields[ $field ];
+			}else{
+				return false;
 			}
 		}
-		return false;
+
+		if( $filter ){
+			$field = self::apply_field_filters( $field, $form );
+		}
+
+		return $field;
 	}
 
 	/**
@@ -232,7 +239,7 @@ class Caldera_Forms_Field_Util {
 
 			if ( $field[ 'slug' ] == $slug ) {
 
-				return apply_filters( 'caldera_forms_render_get_field', $field, $form );
+				return self::apply_field_filters( $field, $form );
 
 			}
 		}
@@ -241,6 +248,65 @@ class Caldera_Forms_Field_Util {
 
 	}
 
+	/**
+	 * Wrapper for multi-use field filters
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param array $field Field config
+	 * @param array $form Form config
+	 *
+	 * @return array
+	 */
+	public static function apply_field_filters( $field, $form  ){
+
+		/**
+		 * Filter field config.
+		 *
+		 * @since unknown
+		 *
+		 * @param array $field The field config.
+		 * @param array $form The form config.
+		 */
+		$field = apply_filters( 'caldera_forms_render_get_field', $field, $form );
+
+		/**
+		 * Filter field config for fields of a given type.
+		 *
+		 * Filter name is dynamic, based on field type. For example "caldera_forms_render_get_field_type-hidden" or "caldera_forms_render_get_field_type-radio"
+		 *
+		 * @since unknown
+		 *
+		 * @param array $field The field config.
+		 * @param array $form The form config.
+		 */
+		$field = apply_filters( 'caldera_forms_render_get_field_type-' . $field[ 'type' ], $field, $form );
+
+		/**
+		 * Filter field config for fields with a given slug
+		 *
+		 * Filter name is dynamic, based on field type. For example "caldera_forms_render_get_field_slug-salsa" or "caldera_forms_render_get_field_slug-chips"
+		 *
+		 * @since unknown
+		 *
+		 * @param array $field The field config.
+		 * @param array $form The form config.
+		 */
+		$field = apply_filters( 'caldera_forms_render_get_field_slug-' . $field[ 'slug' ], $field, $form );
+
+		return $field;
+	}
+
+	/**
+	 * Get types of credit cards we can do UI stuff to with CC field
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param array $field Field config
+	 * @param array $form Form config
+	 *
+	 * @return array
+	 */
 	public static  function credit_card_types( $field, $form ){
 		$types = array(
 			'amex',
@@ -258,7 +324,15 @@ class Caldera_Forms_Field_Util {
 			'visa_electron'
 		);
 
-		return $types;
+		/**
+		 * Change types of credit cards we can do UI stuff to with CC field
+		 *
+		 * @since 1.5.0
+		 *
+		 * @param array $field Field config
+		 * @param array $form Form config
+		 */
+		return apply_filters( 'caldera_forms_credit_card_types', $types, $field, $form );
 	}
 
 	/**
