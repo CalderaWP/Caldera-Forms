@@ -4649,6 +4649,23 @@ class Caldera_Forms {
 
 		Caldera_Forms_Render_Assets::optional_style_includes();
 
+		$form_attributes = array(
+			'method'	=>	'POST',
+			'enctype'	=>	'multipart/form-data',
+			'role'		=>	'form',
+			'id'		=>	$form['ID'] . '_' . $current_form_count
+		);
+
+		/**
+		 * Modify HTML attributes applied to form element
+		 *
+		 * @since unknown
+		 *
+		 * @param array $form_attributes Array of HTML attributes
+		 * @param array $config Form config
+		 */
+		$form_attributes = apply_filters( 'caldera_forms_render_form_attributes', $form_attributes, $form);
+
 
 		include_once CFCORE_PATH . "classes/caldera-grid.php";
 
@@ -4676,6 +4693,8 @@ class Caldera_Forms {
 			"column_single"		=> 'single',
 			"column_before"		=> '<div %1$s class="col-'.$gridsize.'-%2$d %3$s">',
 			"column_after"		=> '</div>',
+			'form_id'           => $form['ID'],
+			'form_id_attr' =>   $form_attributes[ 'id']
 		);
 
 		// filter settings
@@ -5050,13 +5069,6 @@ class Caldera_Forms {
 				'caldera_forms_form',
 			);
 
-			$form_attributes = array(
-				'method'	=>	'POST',
-				'enctype'	=>	'multipart/form-data',
-				'role'		=>	'form',
-				'id'		=>	$form['ID'] . '_' . $current_form_count
-			);
-
 			/**
 			 * Change what type of element form is in.
 			 *
@@ -5079,15 +5091,7 @@ class Caldera_Forms {
 			 */
 			$form_classes = apply_filters( 'caldera_forms_render_form_classes', $form_classes, $form);
 
-			/**
-			 * Modify HTML attributes applied to form element
-			 *
-			 * @since unknown
-			 *
-			 * @param array $form_attributes Array of HTML attributes
-			 * @param array $config Form config
-			 */
-			$form_attributes = apply_filters( 'caldera_forms_render_form_attributes', $form_attributes, $form);
+
 
 			$attributes = array();
 			foreach($form_attributes as $attribute=>$value){
