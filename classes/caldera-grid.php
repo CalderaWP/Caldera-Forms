@@ -215,7 +215,7 @@ if( !class_exists( 'Caldera_Form_Grid' )){
 				 *
 				 * @since 1.4.9
 				 *
-				 * @param string $rowID The row's ID attribute
+				 * @param string $rowClass The row's classes
 				 * @param int $row Row number
 				 * @param array $config Grid config. Contains form ID in form_id key.
 				 */
