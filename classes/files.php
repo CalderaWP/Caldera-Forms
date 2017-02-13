@@ -53,7 +53,7 @@ class Caldera_Forms_Files{
 
 	    self::add_upload_filter( $args[ 'field_id' ],  $args[ 'form_id' ], $private );
 
-        $upload = wp_handle_upload($file, array( 'test_form' => false ), date('Y/m') );
+        $upload = wp_handle_upload($file, array( 'test_form' => false ) );
 
         if( $private ){
             self::remove_upload_filter();
@@ -141,13 +141,15 @@ class Caldera_Forms_Files{
      */
     public static function uploads_filter( $args ){
 
-        $newdir = '/' . self::$dir;
+	    if (  self::$dir ) {
+		    $newdir = '/' . self::$dir;
 
-        $args['path']    = str_replace( $args['subdir'], '', $args['path'] );
-        $args['url']     = str_replace( $args['subdir'], '', $args['url'] );
-        $args['subdir']  = $newdir;
-        $args['path']   .= $newdir;
-        $args['url']    .= $newdir;
+		    $args[ 'path' ]   = str_replace( $args[ 'subdir' ], '', $args[ 'path' ] );
+		    $args[ 'url' ]    = str_replace( $args[ 'subdir' ], '', $args[ 'url' ] );
+		    $args[ 'subdir' ] = $newdir;
+		    $args[ 'path' ] .= $newdir;
+		    $args[ 'url' ] .= $newdir;
+	    }
 
         return $args;
     }

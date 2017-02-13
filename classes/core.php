@@ -3149,7 +3149,7 @@ class Caldera_Forms {
 
 
 		if(isset($_POST['_cf_frm_tr'])){
-			$pretransient = get_transient( $_POST['_cf_frm_tr'] );
+			$pretransient = Caldera_Forms_Transient::get_transient( $_POST['_cf_frm_tr'] );
 			if(	!empty( $pretransient['transient'] ) && $pretransient['transient'] === $_POST['_cf_frm_tr']){
 				$transdata = $pretransient;
 				$process_id = $transdata['transient'];
@@ -3329,7 +3329,7 @@ class Caldera_Forms {
 			$referrer = apply_filters( 'caldera_forms_submit_return_redirect', $referrer, $form, $process_id);
 			$referrer = apply_filters( 'caldera_forms_submit_return_redirect_required', $referrer, $form, $process_id);
 
-			set_transient( $process_id, $transdata, $transdata['expire']);
+			Caldera_Forms_Transient::set_transient( $process_id, $transdata, $transdata['expire']);
 
 			return self::form_redirect('error', $referrer, $form, $process_id );
 		}
@@ -3459,7 +3459,7 @@ class Caldera_Forms {
 						$referrer = apply_filters( 'caldera_forms_submit_return_redirect-'.$processor['type'], $referrer, $config, $form, $process_id);
 
 						// set transient data
-						set_transient( $process_id, $transdata, $transdata['expire']);
+						Caldera_Forms_Transient::set_transient( $process_id, $transdata, $transdata['expire']);
 
 						return self::form_redirect('preprocess', $referrer, $form, $process_id );
 					}
@@ -3605,7 +3605,7 @@ class Caldera_Forms {
 					$referrer = apply_filters( 'caldera_forms_submit_error_redirect_pre_process', $referrer, $form, $process_id);
 
 					// set transient data
-					set_transient( $process_id, $transdata, $transdata['expire']);
+					Caldera_Forms_Transient::set_transient( $process_id, $transdata, $transdata['expire']);
 
 					return self::form_redirect('error', $referrer, $form, $process_id );
 				}
@@ -3915,7 +3915,7 @@ class Caldera_Forms {
 
 					if( !empty( $_POST['control'] ) ){
 						$transient_name = sanitize_key( $_POST['control'] );
-						$transdata = get_transient( $transient_name );
+						$transdata = Caldera_Forms_Transient::get_transient( $transient_name );
 						if( false === $transdata ){
 							$transdata = array();
 						}
@@ -3930,7 +3930,7 @@ class Caldera_Forms {
 
 							$transdata[] = $data;
 							//set
-							set_transient( $transient_name, $transdata, DAY_IN_SECONDS );
+							Caldera_Forms_Transient::set_transient( $transient_name, $transdata, DAY_IN_SECONDS );
 							// maybe put in some checks on file then can say yea or nei
 							wp_send_json_success( array(
 
@@ -4065,7 +4065,7 @@ class Caldera_Forms {
 		if(!empty($_GET['cf_tp'])){
 
 			// process a transient stored entry
-			$data = get_transient( $_GET['cf_tp'] );
+			$data = Caldera_Forms_Transient::get_transient( get_transient( $_GET[ 'cf_tp' ] ) );
 			if(!empty($data) && $data['transient'] === $_GET['cf_tp'] && isset($data['data'])){
 				// create post values
 				$_POST = array_merge( $_POST, $data['data']);
@@ -4331,7 +4331,7 @@ class Caldera_Forms {
 
 		$current_state = 'style="display:none;"';
 		if(!empty($_GET['cf_er'])){
-			$transdata = get_transient( $_GET['cf_er'] );
+			$transdata = Caldera_Forms_Transient::get_transient( $_GET[ 'cf_er' ] );
 			if($transdata['transient'] == $_GET['cf_er']){
 				$current_state = 'style="display:block;"';
 			}
@@ -4656,6 +4656,12 @@ class Caldera_Forms {
 			'id'		=>	$form['ID'] . '_' . $current_form_count
 		);
 
+		//add extra attributes to make AJAX submissions JS do its thing
+		if( ! empty( $form[ 'form_ajax'] ) ){
+			add_filter('caldera_forms_render_form_attributes', 'cf_ajax_setatts', 10, 2);
+
+		}
+
 		/**
 		 * Modify HTML attributes applied to form element
 		 *
@@ -4820,7 +4826,7 @@ class Caldera_Forms {
 		}
 
 		if(!empty($_GET['cf_er'])){
-			$prev_post = get_transient( $_GET['cf_er'] );
+			$prev_post = Caldera_Forms_Transient::get_transient( $_GET['cf_er'] );
 			if(!empty($prev_post['transient'])){
 
 				if($prev_post['transient'] === $_GET['cf_er']){

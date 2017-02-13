@@ -48,11 +48,13 @@ function cf_handle_file_upload( $entry, $field, $form ){
 
 	// check transdata if string based entry
 	if( is_string( $entry ) ){
-		$transdata = get_transient( $entry );
+		$transdata = Caldera_Forms_Transient::get_transient( $entry );
+
 		if( !empty( $transdata ) ){
 
 			return $transdata;
 		}
+
 	}
 
 	if( isset($_POST[ '_cf_frm_edt' ] ) ) {
