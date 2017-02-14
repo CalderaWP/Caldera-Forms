@@ -1,9 +1,9 @@
 === Caldera Forms - Drag and drop responsive WordPress form builder ===
-Contributors: Shelob9, Desertsnowman, christiechirinos, saraseiser
+Contributors: Shelob9, Desertsnowman, christiechirinos
 Tags: forms, formbuilder, form builder, contact form, form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, echecks, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, eCheck,dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, gravity forms, contact, email, auto-responder, aweber, converkit, builder, contact forms, search, ab testing, a/b testing, split testing, shortcode, wordpress, awesome plugin, plugin, easy, braintree form, dwolla form, authorize.net form, mailchimp form, mailchimp popup, aweber form, converkit form, stripe form, stripe popup, eCheck form
 Requires at least: 4.4
-Tested up to: 4.7.1
-Stable tag: 1.4.8
+Tested up to: 4.7.2
+Stable tag: 1.4.9
 License: GPLv2
 
 A different kind of WordPress form builder.
@@ -13,7 +13,7 @@ Create beautiful, responsive forms with a simple drag and drop editor.
 
 Caldera Forms' visual editor simplifies form building for WordPress. Set up your form with multiple columns, add additional pages, and funnel user responses with conditional logic to get more robust data and relevant information from your customers and site visitors. Anti-spam, AJAX, notification emails, and database entry tracking are enabled by default.
 
-Caldera Forms is a free plugin by <a href="https://CalderaWP.com?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms" title="CalderaWP: Transform Your WordPress Experience">CalderaWP</a> developed by [Josh Pollock](https://JoshPress.net) and [David Cramer](http://digilab.co.za/).
+Caldera Forms is a free plugin by <a href="http://CalderaLabs.org?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms" title="Caldera : Makers of fine WordPress">Caldera Labs</a>. Learn more about Caldera Forms at <a href="https://calderaforms.com?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms">CalderaForms.com</a>
 
 > 5 Stars! "Exceptionally well thought out and executed."
 >
@@ -129,7 +129,6 @@ Caldera Forms to PDF is now available! Learn more at [https://Caldera.space](Cal
 * [Dwolla](https://calderaforms.com/downloads/dwolla-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Accept payments with low fees using Dwolla.
 * [Authorize.net](https://calderaforms.com/downloads/authorize-net-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) Accept all major credit cards by integrating Caldera Forms with Authorize.net.
 * [BrainTree](https://calderaforms.com/downloads/braintree-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) Accept credit card payments in your form through BrainTree.
-* [FileTrip](https://codecanyon.net/item/filetrip-easily-upload-to-dropbox-google-drive-ftp-wordpress/11267642?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) Upload fields to Dropbox or Google Drive from Caldera Forms.
 * [Nexmo](https://calderaforms.com/downloads/nexmo-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) Get SMS notifications of form submissions.
 * [Mail Templates](https://calderaforms.com/downloads/mail-templates-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Add your logo, and your brand's color scheme to your emails sent from Caldera Forms.
 * [Translations](https://wordpress.org/plugins/caldera-forms-translation) - Multi-lingual WordPress forms. Translate all form fields. One form, all the languages!
@@ -141,6 +140,13 @@ Caldera Forms to PDF is now available! Learn more at [https://Caldera.space](Cal
 * [Sprout Invoices Integration](https://wordpress.org/plugins/caldera-forms-sprout-invoices-integration?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Use Caldera Forms for [Sprout Invoice](https://sproutapps.co/sprout-invoices/) forms.
 * [Conditional Fail](https://wordpress.org/plugins/conditional-fail-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Set conditions to cause that if met will allow or prevent form submssion.
 * [Postmatic](https://calderaforms.com/downloads/postmatic-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Subscribe users to your posts and comments using Postmatic.
+
+Third-party add-ons and integrations:
+* [FileTrip](https://codecanyon.net/item/filetrip-easily-upload-to-dropbox-google-drive-ftp-wordpress/11267642?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) Upload fields to Dropbox or Google Drive from Caldera Forms.
+* [WP HTML Email](https://wordpress.org/plugins/wp-html-mail/) Design fancy, responsive emails for Caldera Forms email notifications.
+* [CleanTalk Anti-Spam](https://wordpress.org/plugins/cleantalk-spam-protect/) - Additional anti-spam protection for your forms.
+* [AffiliateWP](https://affiliatewp.com/integrations/caldera-forms/)  - Register affiliate referral commissions when a Caldera Form is submitted.
+* [UpiCrm](http://www.upicrm.com/caldera-forms-support-upicrm) - Use Caldera Forms to add content to the UpiCRM database.
 
 [youtube https://www.youtube.com/watch?v=vHprwapE33Q]
 
@@ -728,6 +734,12 @@ The [Trumbowyg](https://alex-d.github.io/Trumbowyg/) JavaScript library is used
 5. **Go Further With Form Processors** - Auto-responders, redirects included! Go further with our add-ons!
 
 == Changelog ==
+= Caldera Forms 1.4.9 ( February 14, 2017 ) Be My Plugin Update =
+* SEE: [https://calderaforms.com/updates/caldera-forms-1-4-9](https://calderaforms.com/updates/caldera-forms-1-4-9/)
+* FIXED: File upload fields were attatching files to emails when added to media library, but not set to attatch.
+* ADDED: New filter: caldera_forms_grid_row_class - adds custom classes to rows in form layout builder. https://calderaforms.com/doc/caldera_forms_grid_row_class/
+* ADDED: New filter: caldera_forms_grid_row_id - change row id attribute in form layout builder. https://calderaforms.com/doc/caldera_forms_grid_row_id/
+* FIXED: Potential PHPMailer Exception when BCC is not set.
 
 = Caldera Forms 1.4.8 ( January 18, 2017 ) 1.5 Awaits! =
 * SEE: [https://calderaforms.com/updates/caldera-forms-1-4-8](https://calderaforms.com/updates/caldera-forms-1-4-8/)
@@ -1457,3 +1469,6 @@ See: https://calderaforms.com/updates/caldera-forms-1-4-7/
 
 = 1.4.8 =
 See: https://calderaforms.com/updates/caldera-forms-1-4-8/
+
+= 1.4.9 =
+See: https://calderaforms.com/updates/caldera-forms-1-4-9/
