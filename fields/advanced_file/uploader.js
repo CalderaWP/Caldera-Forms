@@ -159,7 +159,6 @@ jQuery( function( $ ){
 			cf_uploader_filelist = {};
 			field.parent().find('.cf-uploader-trigger').hide();
 		}
-		console.log( field );
 		handleFileSelect( e, config );
 	});
 
