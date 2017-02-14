@@ -19,7 +19,7 @@ $attrs = array(
 	'class' => $el_classes,
 	'id' => $syncer->content_id(),
 	'name' => $field_structure['name'],
-	'value' => Caldera_Forms_Field_HTML::find_default( $field ),
+	'value' => Caldera_Forms_Field_HTML::find_default( $field, $form ),
 	'data-type' => 'summary'
 );
 

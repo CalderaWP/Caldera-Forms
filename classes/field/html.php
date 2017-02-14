@@ -73,15 +73,17 @@ abstract  class Caldera_Forms_Field_HTML   {
 	 * @since 1.5.0
 	 *
 	 * @param array $field
+	 * @param array $form
 	 *
 	 * @return mixed
 	 */
-	public static function find_default( array $field ) {
-		$default = '';
+	public static function find_default( array $field, array $form ) {
 		if ( isset( $field[ 'slug' ] ) && isset( $_GET[ $field[ 'slug' ] ] ) ) {
 			$default = Caldera_Forms_Sanitize::sanitize( $_GET[ $field[ 'slug' ] ] );
-
-
+		}elseif ( isset( $field[ 'config' ][ 'default' ] ) ){
+			$default = Caldera_Forms::do_magic_tags( $field[ 'config' ][ 'default' ], null, $form );
+		}else{
+			$default = '';
 		}
 
 		return $default;

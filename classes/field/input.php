@@ -19,9 +19,9 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 		$field_base_id = Caldera_Forms_Field_Util::get_base_id( $field, null, $form );
 		if ( null === $value ) {
 			if( ! empty( $field_structure [ 'field_value' ] ) ){
-				$value = $field_structure [ 'field_value' ];
+				$value = Caldera_Forms::do_magic_tags( $field_structure [ 'field_value' ], null, $form );
 			}else{
-				$value = self::find_default( $field );
+				$value = self::find_default( $field, $form );
 			}
 
 
@@ -43,7 +43,6 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 		$field_classes = Caldera_Forms_Field_Util::prepare_field_classes( $field, $form );
 		$mask = self::get_mask_string( $field );
 		$place_holder = self::place_holder_string( $field );
-		$default = Caldera_Forms::do_magic_tags( $default, null, $form );
 		$attrs = array(
 			'type' => $type,
 			'data-field' =>$field[ 'ID'],
