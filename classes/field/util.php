@@ -70,7 +70,7 @@ class Caldera_Forms_Field_Util {
 	 */
 	public static function is_file_field( $field, array $form = null ){
 		$field = self::get_field( $field, $form );
-		return in_array( self::get_type( $field, $form ), array( 'advanced_file', 'file' ) );
+		return in_array( self::get_type( $field, $form ), Caldera_Forms_Files::types() );
 	}
 
 }

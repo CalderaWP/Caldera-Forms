@@ -53,7 +53,7 @@ class Caldera_Forms_Files{
 
 	    self::add_upload_filter( $args[ 'field_id' ],  $args[ 'form_id' ], $private );
 
-        $upload = wp_handle_upload($file, array( 'test_form' => false ), date('Y/m') );
+        $upload = wp_handle_upload($file, array( 'test_form' => false ) );
 
         if( $private ){
             self::remove_upload_filter();
@@ -141,13 +141,15 @@ class Caldera_Forms_Files{
      */
     public static function uploads_filter( $args ){
 
-        $newdir = '/' . self::$dir;
+	    if (  self::$dir ) {
+		    $newdir = '/' . self::$dir;
 
-        $args['path']    = str_replace( $args['subdir'], '', $args['path'] );
-        $args['url']     = str_replace( $args['subdir'], '', $args['url'] );
-        $args['subdir']  = $newdir;
-        $args['path']   .= $newdir;
-        $args['url']    .= $newdir;
+		    $args[ 'path' ]   = str_replace( $args[ 'subdir' ], '', $args[ 'path' ] );
+		    $args[ 'url' ]    = str_replace( $args[ 'subdir' ], '', $args[ 'url' ] );
+		    $args[ 'subdir' ] = $newdir;
+		    $args[ 'path' ] .= $newdir;
+		    $args[ 'url' ] .= $newdir;
+	    }
 
         return $args;
     }
@@ -287,6 +289,35 @@ class Caldera_Forms_Files{
 	     * @param array $field Field config
 	     */
     	return apply_filters( 'caldera_forms_file_upload_handler', array( 'Caldera_Forms_Files', 'upload' ), $form, $field );
+    }
+
+	/**
+	 * Check if field's files should be attatched
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param array $field
+	 *
+	 * @return bool
+	 */
+    public static function should_attach( array  $field ){
+    	if( in_array( Caldera_Forms_Field_Util::get_type( $field ), self::types() ) ){
+		    return ! empty( $field[ 'config' ][ 'attach'] );
+	    }
+
+	    return false;
+
+    }
+
+	/**
+	 * Get types of file fields
+	 *
+	 * @since 1.5.0
+	 *
+	 * @return array
+	 */
+    public static function types(){
+    	return array( 'advanced_file', 'file'  );
     }
 
 }

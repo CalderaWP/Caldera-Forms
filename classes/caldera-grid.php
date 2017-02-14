@@ -161,10 +161,31 @@ if( !class_exists( 'Caldera_Form_Grid' )){
 				$rowAfter = '';
 				
 				if(isset($cols['id'])){
-					$rowID = 'id="'.$cols['id'].'" ';
+					$rowID = $cols['id'];
 					unset($cols['id']);
 				}
-				
+
+				if( empty( $rowID ) ){
+					$rowID = $row;
+				}
+
+				if( ! empty( $this->config[ 'form_id_attr' ] ) ){
+					$rowID = $this->config[ 'form_id_attr' ]  . '-row-' . $rowID;
+				}
+
+				/**
+				 * Alter row ID attribute in Caldera Grid
+				 *
+				 * @since 1.4.9
+				 *
+				 * @param string $rowID The row's ID attribute
+				 * @param int $row Row number
+				 * @param array $config Grid config. Contains form ID in form_id key.
+				 */
+				$rowID = apply_filters( 'caldera_forms_grid_row_id', $rowID, $row, $this->config );
+
+				$rowID = 'id="'.$rowID.'" ';
+
 				if(isset($cols['class'])){
 					$rowClass = $cols['class'];
 					unset($cols['class']);
@@ -187,7 +208,19 @@ if( !class_exists( 'Caldera_Form_Grid' )){
 					unset($cols['before']);
 				}
 
-				$this->output .= sprintf($this->config['before'], $rowID, $rowClass);//"<div ".$rowID."class=\"".$gridClass." ".$rowClass."\">\n";
+				/**
+				 * Alter row class attribute in Caldera Grid
+				 *
+				 * STRONGLY recommended you use this to add, but not subtract classes.
+				 *
+				 * @since 1.4.9
+				 *
+				 * @param string $rowClass The row's classes
+				 * @param int $row Row number
+				 * @param array $config Grid config. Contains form ID in form_id key.
+				 */
+				$rowClass = apply_filters( 'caldera_forms_grid_row_class', $rowClass, $row, $this->config );
+				$this->output .= sprintf($this->config['before'], $rowID, $rowClass);
 				
 				if(!is_array($cols)){
 					echo $cols;

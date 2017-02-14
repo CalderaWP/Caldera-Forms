@@ -490,6 +490,9 @@ class Caldera_Forms {
 	public static function mail_attachment_check( $mail, $data, $form){
 		foreach ( Caldera_Forms_Forms::get_fields( $form, false ) as $field_id => $field ) {
 			if ( Caldera_Forms_Field_Util::is_file_field( $field, $form )  ) {
+				if( ! Caldera_Forms_Files::should_attach( $field ) ){
+					continue;
+				}
 				$dir = wp_upload_dir();
 				if ( isset( $data[ $field_id ] ) && is_array( $data[ $field_id ] ) ) {
 					foreach ( $data[ $field_id ] as $file ) {
@@ -1445,7 +1448,7 @@ class Caldera_Forms {
 					"template"	=>	CFCORE_PATH . "fields/advanced_file/config_template.php"
 				),
 				"scripts"	=> array(
-					CFCORE_URL . 'fields/advanced_file/uploader.js'
+					CFCORE_URL . 'fields/advanced_file/uploader.min.js'
 				),
 
 			),
@@ -3146,7 +3149,7 @@ class Caldera_Forms {
 
 
 		if(isset($_POST['_cf_frm_tr'])){
-			$pretransient = get_transient( $_POST['_cf_frm_tr'] );
+			$pretransient = Caldera_Forms_Transient::get_transient( $_POST['_cf_frm_tr'] );
 			if(	!empty( $pretransient['transient'] ) && $pretransient['transient'] === $_POST['_cf_frm_tr']){
 				$transdata = $pretransient;
 				$process_id = $transdata['transient'];
@@ -3326,7 +3329,7 @@ class Caldera_Forms {
 			$referrer = apply_filters( 'caldera_forms_submit_return_redirect', $referrer, $form, $process_id);
 			$referrer = apply_filters( 'caldera_forms_submit_return_redirect_required', $referrer, $form, $process_id);
 
-			set_transient( $process_id, $transdata, $transdata['expire']);
+			Caldera_Forms_Transient::set_transient( $process_id, $transdata, $transdata['expire']);
 
 			return self::form_redirect('error', $referrer, $form, $process_id );
 		}
@@ -3456,7 +3459,7 @@ class Caldera_Forms {
 						$referrer = apply_filters( 'caldera_forms_submit_return_redirect-'.$processor['type'], $referrer, $config, $form, $process_id);
 
 						// set transient data
-						set_transient( $process_id, $transdata, $transdata['expire']);
+						Caldera_Forms_Transient::set_transient( $process_id, $transdata, $transdata['expire']);
 
 						return self::form_redirect('preprocess', $referrer, $form, $process_id );
 					}
@@ -3602,7 +3605,7 @@ class Caldera_Forms {
 					$referrer = apply_filters( 'caldera_forms_submit_error_redirect_pre_process', $referrer, $form, $process_id);
 
 					// set transient data
-					set_transient( $process_id, $transdata, $transdata['expire']);
+					Caldera_Forms_Transient::set_transient( $process_id, $transdata, $transdata['expire']);
 
 					return self::form_redirect('error', $referrer, $form, $process_id );
 				}
@@ -3736,16 +3739,19 @@ class Caldera_Forms {
 	 * Makes Caldera Forms load the preview
 	 */
 	static public function cf_init_preview(){
-
+		if( ! isset( $_GET, $_GET['cf_preview'] ) ){
+			return;
+		}
 		global $post, $form;
 
-		if(!empty($_GET['cf_preview'])){
-			$form = Caldera_Forms_Forms::get_form( $_GET['cf_preview'] );
+		$preview_id = trim( $_GET['cf_preview'] );
+		if(!empty( $preview_id )){
+			$form = Caldera_Forms_Forms::get_form($preview_id );
 
 			$userid = get_current_user_id();
 			if( !empty( $userid ) ){
 
-				if(empty($form['ID']) || $form['ID'] !== $_GET['cf_preview']){
+				if(empty( $form['ID']) || $form['ID'] !== trim( $preview_id ) ){
 					return;
 				}
 				if( empty($post) || $post->post_title !== 'Caldera Forms Preview' ){
@@ -3762,13 +3768,13 @@ class Caldera_Forms {
 							'comment_status' => 'closed'
 						);
 						$page_id = wp_insert_post( $post );
-						wp_redirect( trailingslashit( get_home_url() ) . '?page_id='.$page_id.'&preview=true&cf_preview='.$_GET['cf_preview'] );
+						wp_redirect( trailingslashit( get_home_url() ) . '?page_id='.$page_id.'&preview=true&cf_preview='.$preview_id );
 						exit;
 					}
 					if( $temp_page->post_status !== 'draft'){
 						wp_update_post( array( 'ID' => $temp_page->ID, 'post_status' => 'draft' ) );
 					}
-					wp_redirect( trailingslashit( get_home_url() ) . '?page_id='.$temp_page->ID.'&preview=true&cf_preview='.$_GET['cf_preview'] );
+					wp_redirect( trailingslashit( get_home_url() ) . '?page_id='.$temp_page->ID.'&preview=true&cf_preview='.$preview_id );
 					exit;
 				}
 				$post->post_title = $form['name'];
@@ -3909,7 +3915,7 @@ class Caldera_Forms {
 
 					if( !empty( $_POST['control'] ) ){
 						$transient_name = sanitize_key( $_POST['control'] );
-						$transdata = get_transient( $transient_name );
+						$transdata = Caldera_Forms_Transient::get_transient( $transient_name );
 						if( false === $transdata ){
 							$transdata = array();
 						}
@@ -3924,7 +3930,7 @@ class Caldera_Forms {
 
 							$transdata[] = $data;
 							//set
-							set_transient( $transient_name, $transdata, DAY_IN_SECONDS );
+							Caldera_Forms_Transient::set_transient( $transient_name, $transdata, DAY_IN_SECONDS );
 							// maybe put in some checks on file then can say yea or nei
 							wp_send_json_success( array(
 
@@ -4059,7 +4065,7 @@ class Caldera_Forms {
 		if(!empty($_GET['cf_tp'])){
 
 			// process a transient stored entry
-			$data = get_transient( $_GET['cf_tp'] );
+			$data = Caldera_Forms_Transient::get_transient( get_transient( $_GET[ 'cf_tp' ] ) );
 			if(!empty($data) && $data['transient'] === $_GET['cf_tp'] && isset($data['data'])){
 				// create post values
 				$_POST = array_merge( $_POST, $data['data']);
@@ -4325,7 +4331,7 @@ class Caldera_Forms {
 
 		$current_state = 'style="display:none;"';
 		if(!empty($_GET['cf_er'])){
-			$transdata = get_transient( $_GET['cf_er'] );
+			$transdata = Caldera_Forms_Transient::get_transient( $_GET[ 'cf_er' ] );
 			if($transdata['transient'] == $_GET['cf_er']){
 				$current_state = 'style="display:block;"';
 			}
@@ -4643,6 +4649,29 @@ class Caldera_Forms {
 
 		Caldera_Forms_Render_Assets::optional_style_includes();
 
+		$form_attributes = array(
+			'method'	=>	'POST',
+			'enctype'	=>	'multipart/form-data',
+			'role'		=>	'form',
+			'id'		=>	$form['ID'] . '_' . $current_form_count
+		);
+
+		//add extra attributes to make AJAX submissions JS do its thing
+		if( ! empty( $form[ 'form_ajax'] ) ){
+			add_filter('caldera_forms_render_form_attributes', 'cf_ajax_setatts', 10, 2);
+
+		}
+
+		/**
+		 * Modify HTML attributes applied to form element
+		 *
+		 * @since unknown
+		 *
+		 * @param array $form_attributes Array of HTML attributes
+		 * @param array $config Form config
+		 */
+		$form_attributes = apply_filters( 'caldera_forms_render_form_attributes', $form_attributes, $form);
+
 
 		include_once CFCORE_PATH . "classes/caldera-grid.php";
 
@@ -4670,6 +4699,8 @@ class Caldera_Forms {
 			"column_single"		=> 'single',
 			"column_before"		=> '<div %1$s class="col-'.$gridsize.'-%2$d %3$s">',
 			"column_after"		=> '</div>',
+			'form_id'           => $form['ID'],
+			'form_id_attr' =>   $form_attributes[ 'id']
 		);
 
 		// filter settings
@@ -4795,7 +4826,7 @@ class Caldera_Forms {
 		}
 
 		if(!empty($_GET['cf_er'])){
-			$prev_post = get_transient( $_GET['cf_er'] );
+			$prev_post = Caldera_Forms_Transient::get_transient( $_GET['cf_er'] );
 			if(!empty($prev_post['transient'])){
 
 				if($prev_post['transient'] === $_GET['cf_er']){
@@ -5044,13 +5075,6 @@ class Caldera_Forms {
 				'caldera_forms_form',
 			);
 
-			$form_attributes = array(
-				'method'	=>	'POST',
-				'enctype'	=>	'multipart/form-data',
-				'role'		=>	'form',
-				'id'		=>	$form['ID'] . '_' . $current_form_count
-			);
-
 			/**
 			 * Change what type of element form is in.
 			 *
@@ -5073,15 +5097,7 @@ class Caldera_Forms {
 			 */
 			$form_classes = apply_filters( 'caldera_forms_render_form_classes', $form_classes, $form);
 
-			/**
-			 * Modify HTML attributes applied to form element
-			 *
-			 * @since unknown
-			 *
-			 * @param array $form_attributes Array of HTML attributes
-			 * @param array $config Form config
-			 */
-			$form_attributes = apply_filters( 'caldera_forms_render_form_attributes', $form_attributes, $form);
+
 
 			$attributes = array();
 			foreach($form_attributes as $attribute=>$value){

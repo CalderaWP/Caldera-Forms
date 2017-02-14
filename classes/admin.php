@@ -1451,7 +1451,7 @@ class Caldera_Forms_Admin {
 			$filter = null;
 			// export set - transient
 			if(!empty($_GET['tid'])){
-				$items = get_transient( $_GET['tid'] );
+				$items = Caldera_Forms_Transient::get_transient( $_GET['tid'] );
 				if(!empty($items)){
 					$filter = ' AND `entry`.`id` IN (' . implode(',', $items) . ') ';
 				}else{

@@ -159,7 +159,7 @@ function cf_ajax_redirect($type, $url, $form){
 		}
 	}elseif($type == 'preprocess'){
 		if(isset($query['cf_er'])){
-			$data = get_transient( $query['cf_er'] );
+			$data = Caldera_Forms_Transient::get_transient( $query['cf_er'] );
 			if(!empty($data['note'])){
 				$notices[$data['type']]['note'] = $data['note'];
 			}
@@ -170,7 +170,7 @@ function cf_ajax_redirect($type, $url, $form){
 		}
 
 	}elseif($type == 'error'){
-		$data = get_transient( $query['cf_er'] );
+		$data = Caldera_Forms_Transient::get_transient( $query['cf_er'] );
 		if(!empty($data['note'])){
 			$notices['error']['note'] = $data['note'];
 		}
@@ -253,8 +253,7 @@ function cf_ajax_register_scripts($classes, $form){
 	if(empty($form['form_ajax'])){
 		return $classes;
 	}	
-	// setup attributes action
-	add_filter('caldera_forms_render_form_attributes', 'cf_ajax_setatts', 10, 2);
+
 
 	// enqueue scripts
 	wp_enqueue_script( 'cf-baldrick' );
