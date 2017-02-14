@@ -256,6 +256,7 @@ class Caldera_Forms_Forms {
 			$id = $data[ 'ID' ]   = uniqid( 'CF' );
 		}
 
+
 		$data[ 'ID' ] = trim( $id );
 
 		return self::save_form( $data );
@@ -459,8 +460,9 @@ class Caldera_Forms_Forms {
 			$id = $newform[ 'ID' ];
 		}
 
+		$id = trim( $id );
 		$defaults = array(
-			"ID" 			=> trim( $id ),
+			"ID" 			=> $id,
 			"name" 			=> '',
 			"description" 	=> '',
 			"success"		=>	__('Form has been successfully submitted. Thank you.', 'caldera-forms'),
@@ -468,8 +470,7 @@ class Caldera_Forms_Forms {
 			"hide_form"		=> 1,
 			"check_honey" 	=> 1,
 			"db_support"    => 1,
-			'mailer'		=>	array( 'on_insert' => 1 ),
-			'scroll_top'    => 1
+			'mailer'		=>	array( 'on_insert' => 1 )
 		);
 
 		$newform = wp_parse_args( $newform, $defaults );
@@ -636,23 +637,15 @@ class Caldera_Forms_Forms {
 	 *
 	 * @param array $form The form config
 	 * @param bool $in_order Optional. Return in layout order, the default, or in stored order (false).
-	 * @param bool $filter Optional. Apply field filters? Default is false. @since 1.5.0
 	 *
 	 * @return array|mixed
 	 */
-	public static function get_fields( array $form, $in_order = true, $filter = false ){
+	public static function get_fields( array $form, $in_order = true ){
 		if( empty( $form[ 'fields' ] ) ){
 			return array();
 		}
 
 		$fields = $form[ 'fields' ];
-
-		if( $filter ){
-			foreach ( $fields as $field_id => $field ){
-				$fields[ $field_id ] = Caldera_Forms_Field_Util::apply_field_filters( $field, $form );
-			}
-
-		}
 
 		if ( $in_order ) {
 
@@ -690,46 +683,5 @@ class Caldera_Forms_Forms {
 
 
 	}
-
-	/**
-	 * Get entry list fields of a form
-	 *
-	 * @since 1.5.0
-	 *
-	 * @param array $form Form config
-	 * @param bool $configs Optional. If true, field config arrays are returned. If false, the default, field IDs are returned
-	 *
-	 * @return array
-	 */
-	public static function entry_list_fields( array  $form, $configs = false ){
-		$fields = self::get_fields( $form );
-		$entry_list_fields = array();
-		foreach ( $fields as $field_id => $field ){
-			if( ! empty( $field[ 'entry_list'])){
-				if ( $configs  ) {
-					$entry_list_fields[ $field_id ] = $field;
-				}else{
-					$entry_list_fields[] = $field_id;
-				}
-			}
-		}
-
-		return $entry_list_fields;
- 	}
-
-	/**
-	 * Delete all forms on this site
-	 *
-	 * @since 1.5.0
-	 */
- 	public static function delete_all_forms(){
- 		$forms = self::get_forms();
-	    foreach( $forms as $form ){
-	    	self::delete_form( $form );
-	    }
-
-	   self::update_registry( array( ) );
-
-    }
 
 }

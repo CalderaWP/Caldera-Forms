@@ -217,7 +217,7 @@ class Caldera_Forms_Save_Final {
 
 			// if added a bcc
 			$mail['bcc'] = false;
-			if ( isset( $form['mailer']['bcc_to'] ) ) {
+			if ( isset( $form['mailer']['bcc_to'] ) && ! empty( $form['mailer']['bcc_to'] ) ) {
 				$mail['bcc']       = $form['mailer']['bcc_to'];
 				$mail['headers'][] = Caldera_Forms::do_magic_tags( 'Bcc: ' . $form['mailer']['bcc_to'] );
 			}

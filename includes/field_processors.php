@@ -30,16 +30,31 @@ function cf_handle_multi_view( $data, $field ){
 add_filter('caldera_forms_process_field_file', 'cf_handle_file_upload', 10, 3);
 add_filter('caldera_forms_process_field_advanced_file', 'cf_handle_file_upload', 10, 3);
 
-
+/**
+ * Handle uploading of files from file fields
+ *
+ * @since unknown
+ *
+ * @param $entry
+ * @param $field
+ * @param $form
+ *
+ * @return bool|mixed
+ */
 function cf_handle_file_upload( $entry, $field, $form ){
+	if( ! Caldera_Forms_Field_Util::is_file_field( $field, $form ) ){
+		return false;
+	}
 
 	// check transdata if string based entry
 	if( is_string( $entry ) ){
-		$transdata = get_transient( $entry );
+		$transdata = Caldera_Forms_Transient::get_transient( $entry );
+
 		if( !empty( $transdata ) ){
 
 			return $transdata;
 		}
+
 	}
 
 	if( isset($_POST[ '_cf_frm_edt' ] ) ) {
