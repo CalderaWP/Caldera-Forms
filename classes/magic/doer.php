@@ -127,6 +127,7 @@ class Caldera_Forms_Magic_Doer {
 	public static function do_bracket_magic( $value, $form, $entry_id, $magic_caller, $referrer ){
 		$magics = Caldera_Forms_Magic_Util::explode_bracket_magic( $value );
 		if ( ! empty( $magics[ 1 ] ) ) {
+
 			/**
 			 * Early entry point for custom parsing of bracket magic tags
 			 *
@@ -178,14 +179,14 @@ class Caldera_Forms_Magic_Doer {
 							}
 							break;
 						case 'variable':
-							if ( ! empty( $this_form[ 'variables' ][ 'keys' ] ) ) {
-								foreach ( $this_form[ 'variables' ][ 'keys' ] as $var_index => $var_key ) {
+							if ( ! empty( $form[ 'variables' ][ 'keys' ] ) ) {
+								foreach ( $form[ 'variables' ][ 'keys' ] as $var_index => $var_key ) {
 									if ( $var_key == $magic[ 1 ] ) {
 										if ( ! in_array( $magic_tag, $magic_caller ) ) {
 											$magic_caller[] = $magic_tag;
-											$magic_tag      = Caldera_Forms::do_magic_tags( $this_form[ 'variables' ][ 'values' ][ $var_index ], $entry_id, $magic_caller );
+											$magic_tag      = Caldera_Forms::do_magic_tags( $form[ 'variables' ][ 'values' ][ $var_index ], $entry_id, $magic_caller );
 										} else {
-											$magic_tag = $this_form[ 'variables' ][ 'values' ][ $var_index ];
+											$magic_tag = $form[ 'variables' ][ 'values' ][ $var_index ];
 										}
 									}
 								}
@@ -294,8 +295,8 @@ class Caldera_Forms_Magic_Doer {
 							$magic_tag = $_SERVER[ 'HTTP_USER_AGENT' ];
 							break;
 						case 'summary':
-							if ( ! empty( $this_form[ 'fields' ] ) ) {
-								if ( ! isset( $this_form[ 'mailer' ][ 'email_type' ] ) || $this_form[ 'mailer' ][ 'email_type' ] == 'html' ) {
+							if ( ! empty( $form[ 'fields' ] ) ) {
+								if ( ! isset( $form[ 'mailer' ][ 'email_type' ] ) || $form[ 'mailer' ][ 'email_type' ] == 'html' ) {
 
 									$html    = true;
 								} else {
@@ -338,7 +339,7 @@ class Caldera_Forms_Magic_Doer {
 				 */
 				$filter_value = apply_filters( 'caldera_forms_do_magic_tag', $magic_tag, $magics[ 0 ][ $magic_key ] );
 
-				if ( ! empty( $this_form[ 'ID' ] ) ) {
+				if ( ! empty( $form[ 'ID' ] ) ) {
 
 					// split processor
 
@@ -348,25 +349,25 @@ class Caldera_Forms_Magic_Doer {
 						}
 					}
 					// check if its a process id or processor slug
-					if ( empty( $processed_meta[ $this_form[ 'ID' ] ][ $magic[ 0 ] ] ) && ! empty( $this_form[ 'processors' ] ) ) {
+					if ( empty( $processed_meta[ $form[ 'ID' ] ][ $magic[ 0 ] ] ) && ! empty( $form[ 'processors' ] ) ) {
 
 						// if not a direct chec if theres a slug
-						foreach ( $this_form[ 'processors' ] as $processid => $processor ) {
+						foreach ( $form[ 'processors' ] as $processid => $processor ) {
 							if ( $processor[ 'type' ] === $magic[ 0 ] ) {
-								if ( ! empty( $processed_meta[ $this_form[ 'ID' ] ][ $processid ] ) ) {
+								if ( ! empty( $processed_meta[ $form[ 'ID' ] ][ $processid ] ) ) {
 									$magic[ 0 ] = $processid;
 									break;
 								}
 							}
 						}
 					}
-					if ( ! empty( $processed_meta[ $this_form[ 'ID' ] ][ $magic[ 0 ] ] ) ) {
+					if ( ! empty( $processed_meta[ $form[ 'ID' ] ][ $magic[ 0 ] ] ) ) {
 
-						if ( isset( $processed_meta[ $this_form[ 'ID' ] ][ $magic[ 0 ] ][ $magic[ 1 ] ] ) ) {
+						if ( isset( $processed_meta[ $form[ 'ID' ] ][ $magic[ 0 ] ][ $magic[ 1 ] ] ) ) {
 							// direct fined
-							$filter_value = implode( ', ', (array) $processed_meta[ $this_form[ 'ID' ] ][ $magic[ 0 ] ][ $magic[ 1 ] ] );
+							$filter_value = implode( ', ', (array) $processed_meta[ $form[ 'ID' ] ][ $magic[ 0 ] ][ $magic[ 1 ] ] );
 						} else {
-							foreach ( $processed_meta[ $this_form[ 'ID' ] ][ $magic[ 0 ] ] as $return_array ) {
+							foreach ( $processed_meta[ $form[ 'ID' ] ][ $magic[ 0 ] ] as $return_array ) {
 								foreach ( $return_array as $return_line ) {
 									if ( isset( $return_line[ $magic[ 1 ] ] ) ) {
 										$filter_value = $return_line[ $magic[ 1 ] ];
