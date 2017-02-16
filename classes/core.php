@@ -607,12 +607,11 @@ class Caldera_Forms {
 	public static function update_field_data( $field, $entry_id, $form ) {
 		global $wpdb, $form;
 
-		$field_types = Caldera_Forms_Fields::get_all();
 		// is capture?
-		if ( isset( $field_types[ $form[ 'fields' ][ $field[ 'ID' ] ][ 'type' ] ][ 'setup' ][ 'not_supported' ] ) ) {
-			if ( in_array( 'entry_list', $field_types[ $form[ 'fields' ][ $field[ 'ID' ] ][ 'type' ] ][ 'setup' ][ 'not_supported' ] ) ) {
-				return;
-			}
+		$field_type = Caldera_Forms_Field_Util::get_type( $field, $form );
+		$not_support = Caldera_Forms_Fields::not_support( $field_type, 'entry_list' );
+		if ( $not_support ) {
+			return;
 		}
 
 		$new_data      = self::get_field_data( $field[ 'ID' ], $form );
