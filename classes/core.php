@@ -4065,7 +4065,7 @@ class Caldera_Forms {
 		if(!empty($_GET['cf_tp'])){
 
 			// process a transient stored entry
-			$data = Caldera_Forms_Transient::get_transient( get_transient( $_GET[ 'cf_tp' ] ) );
+			$data = Caldera_Forms_Transient::get_transient( $_GET[ 'cf_tp' ] );
 			if(!empty($data) && $data['transient'] === $_GET['cf_tp'] && isset($data['data'])){
 				// create post values
 				$_POST = array_merge( $_POST, $data['data']);
