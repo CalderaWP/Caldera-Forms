@@ -3411,12 +3411,19 @@ class Caldera_Forms {
 	/**
 	 * Makes Caldera Forms go in front-end!
 	 */
-	/**
-	 * Makes Caldera Forms go in front-end!
-	 */
 	static public function cf_init_system() {
 
-		global $post, $wp_query, $process_id, $form;
+		if(!empty($_GET['cf_tp'])){
+
+			// process a transient stored entry
+			$data = Caldera_Forms_Transient::get_transient( $_GET[ 'cf_tp' ] );
+			if(!empty($data) && $data['transient'] === $_GET['cf_tp'] && isset($data['data'])){
+				// create post values
+				$_POST = array_merge( $_POST, $data['data']);
+				// set transient id
+				$_POST['_cf_frm_tr'] = $data['transient'];
+			}
+		}
 
 		// hook into submission
 		self::process_form_via_post();
