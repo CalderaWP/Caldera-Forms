@@ -198,6 +198,10 @@ class Caldera_Forms_Sanitize {
 	 * @return string
 	 */
 	public static function remove_tags( $html, array $tags ){
+		if( empty( $html ) || ! is_string( $html ) ){
+			return '';
+		}
+		
 		if (  ! empty( $tags ) ) {
 			$doc = new DOMDocument();
 			$doc->loadHTML( $html );
