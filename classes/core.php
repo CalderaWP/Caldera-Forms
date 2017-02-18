@@ -139,6 +139,9 @@ class Caldera_Forms {
 
 		}
 
+		//check for forms on page
+		add_action( 'template_redirect', array( $this, 'maybe_load_styles' ) );
+
 		//format email
 		add_filter( 'caldera_forms_mailer', array( $this, 'format_message' ) );
 
@@ -189,6 +192,92 @@ class Caldera_Forms {
 	 */
 	public static function get_forms( $internal = false ) {
 		return Caldera_Forms_Forms::get_forms( true, $internal );
+
+	}
+
+	/**
+	 * Load styles early if shortcodes or widgets are used on page
+	 *
+	 * @uses "template_redirect" action
+	 *
+	 * @since 1.5.0
+	 */
+	public static function maybe_load_styles(){
+		/**
+		 * Use this filter to force Caldera Forms styles to enqueue early -- IE force them into header
+		 *
+		 * @since 1.5.0
+		 *
+		 * @param bool $use To use or not
+		 */
+		$use = apply_filters( 'caldera_forms_force_enqueue_styles_early', false  );
+		$on_page = self::check_for_forms_on_page();
+		if( $use || $on_page ){
+			add_action( 'wp_enqueue_scripts', array( 'Caldera_Forms_Render_Assets' , 'optional_style_includes' ) );
+
+		}
+
+	}
+
+	/**
+	 * Check if there are forms on page
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param WP_Post $post Optional, current post object
+	 *
+	 * @return bool
+	 */
+	public static function check_for_forms_on_page( $post = null ) {
+		if( is_null( $post ) ){
+			global $post;
+		}
+
+		if ( ! isset( $post->post_content ) ) {
+			return false;
+		}
+
+		$page_forms = array();
+		// check active widgets
+		$sidebars = get_option( 'sidebars_widgets' );
+		if ( is_array( $sidebars ) && ! empty( $sidebars ) ) {
+			$form_widgets = get_option( 'widget_caldera_forms_widget' );
+			unset( $sidebars[ 'wp_inactive_widgets' ] );
+			foreach ( $sidebars as $sidebar => $set ) {
+				if ( is_active_sidebar( $sidebar ) ) {
+					foreach ( $set as $setup ) {
+						if ( false !== strpos( $setup, 'caldera_forms_widget-' ) ) {
+							$widget_instance = str_replace( 'caldera_forms_widget-', '', $setup );
+							if ( ! empty( $form_widgets[ $widget_instance ][ 'form' ] ) ) {
+								$form_id                = $form_widgets[ $widget_instance ][ 'form' ];
+								$page_forms[ $form_id ] = $form_id;
+							}
+						}
+					}
+				}
+			}
+		}
+		$codes = get_shortcode_regex();
+		preg_match_all( '/' . $codes . '/s', $post->post_content, $found );
+		if ( ! empty( $found[ 0 ][ 0 ] ) ) {
+			foreach ( $found[ 2 ] as $index => $code ) {
+				if ( 'caldera_form' === $code || $code == 'caldera_form_modal' ) {
+					if ( ! empty( $found[ 3 ][ $index ] ) ) {
+						$atts = shortcode_parse_atts( $found[ 3 ][ $index ] );
+						if ( isset( $atts[ 'id' ] ) ) {
+							$page_forms[ $atts[ 'id' ] ] = $atts[ 'id' ];
+						}
+					}
+				}
+			}
+		}
+
+		//none!
+		if ( empty( $page_forms ) ) {
+			return false;
+		}
+
+		return true;
 
 	}
 
@@ -3217,90 +3306,10 @@ class Caldera_Forms {
 				$post->post_content = '[caldera_form id="'.$_GET['cf_preview'].'"]';
 			}
 		}
-		// not a post-
-		if(!isset($post->post_content)){
-			return;
-		}
-		$page_forms = array();
-		// check active widgets
-		$sidebars     = get_option( 'sidebars_widgets' );
-		if ( is_array( $sidebars ) && ! empty( $sidebars )  ) {
-			$form_widgets = get_option( 'widget_caldera_forms_widget' );
-			unset( $sidebars[ 'wp_inactive_widgets' ] );
-			foreach ( $sidebars as $sidebar => $set ) {
-				if ( is_active_sidebar( $sidebar ) ) {
-					foreach ( $set as $setup ) {
-						if ( false !== strpos( $setup, 'caldera_forms_widget-' ) ) {
-							$widget_instance = str_replace( 'caldera_forms_widget-', '', $setup );
-							if ( ! empty( $form_widgets[ $widget_instance ][ 'form' ] ) ) {
-								$form_id                = $form_widgets[ $widget_instance ][ 'form' ];
-								$page_forms[ $form_id ] = $form_id;
-							}
-						}
-					}
-				}
-			}
-		}
-		$codes = get_shortcode_regex();
-		preg_match_all('/' . $codes . '/s', $post->post_content, $found);
-		if(!empty($found[0][0])){
-			foreach($found[2] as $index=>$code){
-				if( 'caldera_form' === $code || $code == 'caldera_form_modal' ){
-					if(!empty($found[3][$index])){
-						$atts = shortcode_parse_atts($found[3][$index]);
-						if(isset($atts['id'])){
-							$page_forms[ $atts['id'] ] = $atts['id'];
-						}
-					}
-				}
-			}
-		}
-		//none!
-		if( empty( $page_forms ) ){
-			return;
-		}
-		Caldera_Forms_Render_Assets::optional_style_includes();
-		foreach( $page_forms as $form_id ){
-			// has form get  stuff for it
-			$form = Caldera_Forms_Forms::get_form( $form_id );
-			if(!empty($form)){
-				// get list of used fields
-				if(empty($form['fields'])){
-					/// no filds - next form
-				}
-				// has a form - get field type
-				if(!isset($field_types)){
-					$field_types = self::get_field_types();
-				}
-				if(!empty($form['fields'])){
-					foreach($form['fields'] as $field){
-						//enqueue styles
-						if( !empty( $field_types[$field['type']]['styles'])){
-							foreach($field_types[$field['type']]['styles'] as $style){
-								if(filter_var($style, FILTER_VALIDATE_URL)){
-									wp_enqueue_style( 'cf-' . sanitize_key( basename( $style ) ), $style, array(), self::VERSION );
-									wp_enqueue_style( 'cf-' . sanitize_key( basename( $style ) ), $style, array(), self::VERSION );
-								}else{
-									wp_enqueue_style( $style );
-								}
-							}
-						}
-						//enqueue scripts
-						if( !empty( $field_types[$field['type']]['scripts'])){
-							// check for jquery deps
-							$depts[] = 'jquery';
-							foreach($field_types[$field['type']]['scripts'] as $script){
-								if(filter_var($script, FILTER_VALIDATE_URL)){
-									wp_enqueue_script( 'cf-' . sanitize_key( basename( $script ) ), $script, $depts, self::VERSION );
-								}else{
-									wp_enqueue_script( $script );
-								}
-							}
-						}
-					}
-				}
-			}
-		}
+
+
+		$form = self::check_for_forms_on_page( );
+
 	}
 
 	public function api_handler() {
@@ -3895,6 +3904,7 @@ class Caldera_Forms {
 			return;
 		}
 
+
 		// is this form allowed to render ( check state )
 		if ( isset( $form[ 'form_draft' ] ) ) {
 			if ( ! isset( $_GET[ 'cf_preview' ] ) || $_GET[ 'cf_preview' ] != $form[ 'ID' ] ) {
@@ -3908,6 +3918,8 @@ class Caldera_Forms {
 				echo '<div class="caldera-grid"><p class="alert alert-error alert-danger">' . __( 'Form is currently not active.', 'caldera-forms' ) . '</p></div>';
 			}
 		}
+
+		Caldera_Forms_Render_Assets::optional_style_includes();
 
 		if ( isset( $atts[ 'ajax' ] ) ) {
 			if ( ! empty( $atts[ 'ajax' ] ) ) {
@@ -3975,8 +3987,6 @@ class Caldera_Forms {
 		$field_types = Caldera_Forms_Fields::get_all();
 
 		do_action( 'caldera_forms_render_start', $form );
-
-		Caldera_Forms_Render_Assets::optional_style_includes();
 
 		$form_attributes = array(
 			'method'	=>	'POST',
