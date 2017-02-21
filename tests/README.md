@@ -3,7 +3,7 @@
 * Switch to Dir (if using VM, should be done inside of VM)
 * On Josh's VVV:
 
-    cd /srv/www/wordpress-trunk/wp-content/plugins/Caldera-Forms/
+    cd /srv/www/cf-dev/htdocs/wp-content/plugins/Caldera-Forms
     
 * If needed install tests and then switch back to main repo
 

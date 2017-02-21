@@ -26,13 +26,13 @@
 			<em><a href="https://github.com/afragen/github-updater/archive/develop.zip" target="_blank">https://github.com/afragen/github-updater/archive/develop.zip</a></em>
 		</li>
 		<li>
-			<?php esc_html_e( 'If you have installed the plugin via Git, you can pull the "current-dev" branch.', 'caldera-forms' ); ?>
+			<?php esc_html_e( 'If you have installed the plugin via Git, you can pull the "develop" branch.', 'caldera-forms' ); ?>
 		</li>
 		<li style="margin-left:10px">
-			<em><a href="https://github.com/Desertsnowman/Caldera-Forms/tree/current-dev" target="_blank">https://github.com/Desertsnowman/Caldera-Forms/tree/current-dev</a></em>
+			<em><a href="https://github.com/CalderaWP/Caldera-Forms/tree/develop" target="_blank">https://github.com/CalderaWP/Caldera-Forms/tree/develop</a></em>
 		</li>
 		<li style="margin-left:10px">
-			<pre>git checkout current-dev</pre>
+			<pre>git checkout develop</pre>
 		</li>
 		<li>
 			<?php esc_html_e( 'You can download the latest beta as a zip file and install it manually.', 'caldera-forms' ); ?>

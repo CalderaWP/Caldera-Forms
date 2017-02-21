@@ -9,4 +9,7 @@ phpunit.xml.dist
 screenshot-1.png
 screenshot-2.png
 screenshot-3.png
+node_modules
+Gruntfile.js
+package.json
 ISSUE_TEMPLATE

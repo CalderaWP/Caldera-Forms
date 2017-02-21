@@ -175,6 +175,7 @@ class Caldera_Forms_Entry {
 		
 	}
 
+
 	/**
 	 * @param $id
 	 *
@@ -354,8 +355,14 @@ class Caldera_Forms_Entry {
 			//@todo some error or exception or something
 			return;
 		}
-		$wpdb->insert( $wpdb->prefix . 'cf_form_entries', $this->entry->to_array() );
-		$this->entry_id = $this->entry->id = $wpdb->insert_id;
+		if ( ! $this->entry_id ) {
+			$wpdb->insert( $wpdb->prefix . 'cf_form_entries', $this->entry->to_array() );
+			$this->entry_id = $this->entry->id = $wpdb->insert_id;
+		} else {
+			$wpdb->update( $wpdb->prefix . 'cf_form_entries', $this->entry->to_array(), array(
+				'id' => $this->entry_id
+			));
+		}
 	}
 
 	/**

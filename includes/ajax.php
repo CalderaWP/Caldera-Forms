@@ -21,10 +21,7 @@ function cf_form_process_ajax(){
 		$post = get_post( (int) $_POST['_cf_cr_pst'] );
 	}
 
-	if(isset($_POST['_cf_verify']) && isset( $_POST['_cf_frm_id'] )){
-		Caldera_Forms::process_submission();
-		exit;
-	}
+	Caldera_Forms::process_form_via_post();
 }
 
 
@@ -141,10 +138,7 @@ function cf_ajax_redirect($type, $url, $form){
 	}
 
 	$notices = array();
-	$note_general_classes = array(
-		'alert'
-	);
-	$note_general_classes = apply_filters( 'caldera_forms_render_note_general_classes', $note_general_classes, $form);
+	$note_general_classes = Caldera_Forms_Render_Notices::get_note_general_classes( $form );
 
 	// base id
 	$form_id = 'caldera_form_1';
@@ -189,39 +183,11 @@ function cf_ajax_redirect($type, $url, $form){
 			}
 		}
 	}
-	$notices = apply_filters( 'caldera_forms_render_notices', $notices, $form);
 
-	$note_classes = array(
-		'success'	=> array_merge($note_general_classes, array(
-			'alert-success'
-		)),
-		'error'	=> array_merge($note_general_classes, array(
-			'alert-error'
-		)),
-		'info'	=> array_merge($note_general_classes, array(
-			'alert-info'
-		)),
-		'warning'	=> array_merge($note_general_classes, array(
-			'alert-warning'
-		)),
-		'danger'	=> array_merge($note_general_classes, array(
-			'alert-danger'
-		)),
-	);
-	
-	$note_classes = apply_filters( 'caldera_forms_render_note_classes', $note_classes, $form);
+	$notices = Caldera_Forms_Render_Notices::prepare_notices( $notices, $form );
+	$note_classes = Caldera_Forms_Render_Notices::get_note_classes( $note_general_classes, $form );
 
-	$html = '';
-
-	if(!empty($notices)){
-		// do notices
-		foreach($notices as $note_type => $notice){
-			if(!empty($notice['note'])){
-				$result = Caldera_Forms::do_magic_tags( $notice['note'] );
-				$html .= '<div class=" '. implode(' ', $note_classes[$note_type]) . '">' . $result .'</div>';	
-			}
-		}
-	}
+	$html = Caldera_Forms_Render_Notices::html_from_notices( $notices, $note_classes );
 
 	if(!empty($result)){
 		$out['result'] = $result;
@@ -241,6 +207,10 @@ function cf_ajax_redirect($type, $url, $form){
 	$out['form_id'] = $form['ID'];
 	$out['form_name'] = $form['name'];	
 	$out['status'] = $type;
+
+	if( ! empty( $form[ 'scroll_top' ] ) ){
+		$out[ 'scroll' ] = Caldera_Forms_Render_Util::notice_element_id( $form, absint( $_POST[ '_cf_frm_ct' ]  ) );
+	}
 
 	$out = apply_filters( 'caldera_forms_ajax_return', $out, $form);
 

@@ -1,0 +1,43 @@
+.cfont-credit-card {
+  *zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf09d;');
+}
+.cfont-slack {
+  *zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf198;');
+}
+.cfont-envelope-square {
+  *zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf199;');
+}
+.cfont-wordpress {
+  *zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf19a;');
+}
+.cfont-ra {
+  *zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf1d0;');
+}
+.cfont-rebel {
+  *zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf1d0;');
+}
+.cfont-resistance {
+  *zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf1d0;');
+}
+.cfont-paypal {
+  *zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf1ed;');
+}
+.cfont-cc-visa {
+  *zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf1f0;');
+}
+.cfont-cc-mastercard {
+  *zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf1f1;');
+}
+.cfont-cc-discover {
+  *zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf1f2;');
+}
+.cfont-cc-amex {
+  *zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf1f3;');
+}
+.cfont-cc-paypal {
+  *zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf1f4;');
+}
+.cfont-cc-stripe {
+  *zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf1f5;');
+}
+

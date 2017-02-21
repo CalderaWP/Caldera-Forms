@@ -634,7 +634,6 @@
 .caldera-grid .col-md-12,
 .caldera-grid .col-lg-12 {
   position: relative;
-  min-height: 1px;
   padding-left: 7.5px;
   padding-right: 7.5px;
 }

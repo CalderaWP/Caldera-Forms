@@ -11,7 +11,4 @@
  */
 abstract class Caldera_Forms_Processor_Payment extends Caldera_Forms_Processor_Processor implements Caldera_Forms_Processor_Interface_Payment  {
 
-	
-
-
 }

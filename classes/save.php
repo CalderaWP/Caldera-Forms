@@ -225,11 +225,8 @@ class Caldera_Forms_Save_Final {
 			// if added a replyto
 			$mail['replyto'] = false;
 			if ( isset( $form['mailer']['reply_to'] ) ) {
-				$reply_to = trim( $form['mailer']['reply_to'] );
-				if ( ! empty( $reply_to ) ) {
-					$mail['replyto']   = $reply_to;
-					$mail['headers'][] = Caldera_Forms::do_magic_tags( 'Reply-To: <' . $reply_to . '>' );
-				}
+                                $mail['replyto']   = $form['mailer']['reply_to'];
+                                $mail['headers'][] = Caldera_Forms::do_magic_tags( 'Reply-To: ' . $form['mailer']['reply_to'] );
 			}
 			if ( ! $mail['replyto'] ) {
 				$mail['replyto'] = $mail['from'];
@@ -331,8 +328,11 @@ class Caldera_Forms_Save_Final {
 						$row = null;
 					}
 				}
-				$mail['message'] = str_replace( '%' . $key . '%', $row, $mail['message'] );
-				$mail['subject'] = str_replace( '%' . $key . '%', $row, $mail['subject'] );
+
+				$tag =  '%' . $key . '%';
+				$parsed = Caldera_Forms_Magic_Doer::do_field_magic( $tag, $entryid, $form );
+				$mail['message'] = str_replace( $tag, $parsed, $mail['message'] );
+				$mail['subject'] = str_replace( $tag, $parsed, $mail['subject'] );
 
 				$submission[] = $row;
 				$labels[]     = $form['fields'][ $field_id ]['label'];
@@ -395,6 +395,10 @@ class Caldera_Forms_Save_Final {
 		if ( empty( $mail ) || ! is_array( $mail ) ) {
 			return;
 
+		}
+
+		if( ! $mail['html']     ){
+			$mail[ 'message' ] = strip_tags( $mail['message'] );
 		}
 
 		$headers = implode("\r\n", $mail['headers']);

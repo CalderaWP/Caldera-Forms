@@ -1,51 +1,80 @@
 <div class="caldera-config-group">
-	<label><?php _e('Default'); ?></label>
+	<label for="{{_id}}_default">
+        <?php esc_html_e('Default', 'caldera-forms'); ?>
+    </label>
 	<div class="caldera-config-field">
-		<input type="text" class="block-input field-config is-not-cfdatepicker magic-tag-enabled" data-dontprovide="cfdatepicker" id="{{id}}" data-date-format="{{format}}" name="{{_name}}[default]" value="{{default}}">
+		<input id="{{_id}}_default" type="text" class="block-input field-config is-not-cfdatepicker magic-tag-enabled" data-dontprovide="cfdatepicker" id="{{id}}" data-date-format="{{format}}" name="{{_name}}[default]" value="{{default}}" />
 	</div>
 </div>
 <div class="caldera-config-group">
-	<label><?php _e('Format', 'caldera-forms'); ?></label>
+	<label for="{{_id}}_format">
+        <?php esc_html_e('Format', 'caldera-forms'); ?>
+    </label>
 	<div class="caldera-config-field">
-		<input type="text" class="cfdatepicker-set-format block-input field-config" id="{{id}}" name="{{_name}}[format]" value="{{format}}">
+		<input id="{{_id}}_format" type="text" class="cfdatepicker-set-format block-input field-config" id="{{id}}" name="{{_name}}[format]" value="{{format}}">
 	</div>
 </div>
 <div class="caldera-config-group">
-    <label><?php _e('Autoclose', 'caldera-forms'); ?></label>
+    <label>
+        <?php esc_html_e('Autoclose', 'caldera-forms'); ?>
+    </label>
     <div class="caldera-config-field">
-        <label><input type="checkbox" class="field-config {{_id}}_autoclosed" name="{{_name}}[autoclose]" value="1" {{#if autoclose}}checked="checked"{{/if}}> <?php _e('Enable autoclose', 'caldera-forms'); ?></label>
-        <p class="description"><?php _e('If enabled, the date picker will automatically close after selecting the final input', 'caldera-forms'); ?></p>
+        <label id="{{_id}}_autoclosed">
+            <input id="{{_id}}_autoclosed" aria-describedby="{{_id}}_autoclosed-description" type="checkbox" class="field-config {{_id}}_autoclosed" name="{{_name}}[autoclose]" value="1" {{#if autoclose}}checked="checked"{{/if}} />
+            <?php esc_html_e('Enable autoclose', 'caldera-forms'); ?>
+        </label>
+        <p class="description" id="{{_id}}_autoclosed-description">
+            <?php esc_html_e('If enabled, the date picker will automatically close after selecting the final input', 'caldera-forms'); ?>
+        </p>
     </div>
 </div>
 <div class="caldera-config-group">
-    <label><?php _e('Start View', 'caldera-forms'); ?></label>
+    <label for="{{_id}}_startview">
+        <?php esc_html_e('Start View', 'caldera-forms'); ?>
+    </label>
     <div class="caldera-config-field">
-        <select class="block-input field-config" name="{{_name}}[start_view]">
-            <option value="month" {{#is start_view value="month"}}selected="selected"{{/is}}><?php _e('Month (Default)', 'caldera-forms'); ?></option>
-            <option value="year" {{#is start_view value="year"}}selected="selected"{{/is}}><?php _e('Year', 'caldera-forms'); ?></option>
-            <option value="decade" {{#is start_view value="decade"}}selected="selected"{{/is}}><?php _e('Decade', 'caldera-forms'); ?></option>
+        <select class="block-input field-config" name="{{_name}}[start_view]" id="{{_id}}_startview" aria-describedby="{{_id}}_startview-description">
+            <option value="month" {{#is start_view value="month"}}selected="selected"{{/is}}>
+                <?php esc_html_e('Month (Default)', 'caldera-forms'); ?>
+            </option>
+            <option value="year" {{#is start_view value="year"}}selected="selected"{{/is}}>
+                <?php esc_html_e('Year', 'caldera-forms'); ?>
+            </option>
+            <option value="decade" {{#is start_view value="decade"}}selected="selected"{{/is}}>
+                <?php esc_html_e('Decade', 'caldera-forms'); ?>
+            </option>
         </select>
-        <p class="description"><?php _e('The starting view of the date picker (month, year, decade)', 'caldera-forms'); ?></p>
+        <p class="description" id="{{_id}}_startview-description"><?php _e('The starting view of the date picker (month, year, decade)', 'caldera-forms'); ?></p>
     </div>
 </div>
 <div class="caldera-config-group">
-    <label><?php _e('Start Date', 'caldera-forms'); ?></label>
+    <label for="{{_id}}_startdate">
+        <?php esc_html_e('Start Date', 'caldera-forms'); ?>
+    </label>
     <div class="caldera-config-field">
-        <input type="text" class="cfdatepicker-set-format block-input field-config" name="{{_name}}[start_date]" value="{{start_date}}">
-        <p class="description"><?php _e('The starting date of the date picker like +1d, -2y, +4m. 0d for today ', 'caldera-forms'); ?></p>
+        <input id="{{_id}}_startdate" aria-describedby="{{_id}}_startdate-description" type="text" class="cfdatepicker-set-format block-input field-config" name="{{_name}}[start_date]" value="{{start_date}}">
+        <p class="description" id="{{_id}}_startdate-description">
+            <?php esc_html_e('The starting date of the date picker like +1d, -2y, +4m. 0d for today ', 'caldera-forms'); ?>
+        </p>
     </div>
 </div>
 <div class="caldera-config-group">
-    <label><?php _e('End Date', 'caldera-forms'); ?></label>
+    <label for="{{_id}}_end-date">
+        <?php esc_html_e('End Date', 'caldera-forms'); ?>
+    </label>
     <div class="caldera-config-field">
-        <input type="text" class="cfdatepicker-set-format block-input field-config" name="{{_name}}[end_date]" value="{{end_date}}">
-        <p class="description"><?php _e('The ending date of the date picker like +1d, -2y, +4m. 0d for today ', 'caldera-forms'); ?></p>
+        <input id="{{_id}}_end-date" aria-describedby="{{_id}}_end-date-description" type="text" class="cfdatepicker-set-format block-input field-config" name="{{_name}}[end_date]" value="{{end_date}}">
+        <p class="description" id="{{_id}}_end-date-description">
+                <?php esc_html_e('The ending date of the date picker like +1d, -2y, +4m. 0d for today ', 'caldera-forms'); ?>
+        </p>
     </div>
 </div>
 <div class="caldera-config-group">
-	<label><?php _e('language', 'caldera-forms'); ?></label>
+	<label for="{{_id}}_language">
+        <?php esc_html_e('language', 'caldera-forms'); ?>
+    </label>
 	<div class="caldera-config-field">
-		<select class="cfdatepicker-set-language block-input field-config" id="{{id}}" name="{{_name}}[language]" style="width: 90px;">
+		<select id="{{_id}}_language" aria-describedby="{{_id}}_language-description" class="cfdatepicker-set-language block-input field-config" id="{{id}}" name="{{_name}}[language]" style="width: 90px;">
 			<option value="">en-US</option>
 			<option value="ar" {{#is language value="ar"}}selected="selected"{{/is}}>ar</option>
 			<option value="az" {{#is language value="az"}}selected="selected"{{/is}}>az</option>
@@ -111,6 +140,8 @@
 
 		</select>
 
-		<p class="description"><?php _e('Language to use. e.g. pt-BR', 'caldera-forms'); ?></p>
+		<p class="description" id="{{_id}}_language-description">
+            <?php esc_html_e('Language to use. e.g. pt-BR', 'caldera-forms'); ?>
+        </p>
 	</div>
 </div>

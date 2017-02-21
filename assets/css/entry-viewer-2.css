@@ -1,0 +1,649 @@
+#caldera-forms-entries [role="button"], #caldera-forms-entries-nav [role="button"] {
+    cursor: pointer;
+}
+#caldera-forms-entries .btn, #caldera-forms-entries-nav .btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+#caldera-forms-entries .btn:focus,
+#caldera-forms-entries .btn:active:focus,
+#caldera-forms-entries .btn.active:focus,
+#caldera-forms-entries .btn.focus,
+#caldera-forms-entries .btn:active.focus,
+#caldera-forms-entries .btn.active.focus, #caldera-forms-entries-nav .btn:focus,
+#caldera-forms-entries-nav .btn:active:focus,
+#caldera-forms-entries-nav .btn.active:focus,
+#caldera-forms-entries-nav .btn.focus,
+#caldera-forms-entries-nav .btn:active.focus,
+#caldera-forms-entries-nav .btn.active.focus {
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
+}
+#caldera-forms-entries .btn:hover,
+#caldera-forms-entries .btn:focus,
+#caldera-forms-entries .btn.focus, #caldera-forms-entries-nav .btn:hover,
+#caldera-forms-entries-nav .btn:focus,
+#caldera-forms-entries-nav .btn.focus {
+    color: #333333;
+    text-decoration: none;
+}
+#caldera-forms-entries .btn:active,
+#caldera-forms-entries .btn.active, #caldera-forms-entries-nav .btn:active,
+#caldera-forms-entries-nav .btn.active {
+    outline: 0;
+    background-image: none;
+    -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+#caldera-forms-entries .btn.disabled,
+#caldera-forms-entries .btn[disabled],
+#caldera-forms-entries fieldset[disabled] .btn, #caldera-forms-entries-nav .btn.disabled,
+#caldera-forms-entries-nav .btn[disabled],
+#caldera-forms-entries-nav fieldset[disabled] .btn {
+    cursor: not-allowed;
+    opacity: 0.65;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+#caldera-forms-entries a.btn.disabled,
+#caldera-forms-entries fieldset[disabled] a.btn, #caldera-forms-entries-nav a.btn.disabled,
+#caldera-forms-entries-nav fieldset[disabled] a.btn {
+    pointer-events: none;
+}
+#caldera-forms-entries .btn-default, #caldera-forms-entries-nav .btn-default {
+    color: #333333;
+    background-color: #ffffff;
+    border-color: #cccccc;
+}
+#caldera-forms-entries .btn-default:focus,
+#caldera-forms-entries .btn-default.focus, #caldera-forms-entries-nav .btn-default:focus,
+#caldera-forms-entries-nav .btn-default.focus {
+    color: #333333;
+    background-color: #e6e6e6;
+    border-color: #8c8c8c;
+}
+#caldera-forms-entries .btn-default:hover, #caldera-forms-entries-nav .btn-default:hover {
+    color: #333333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+}
+#caldera-forms-entries .btn-default:active,
+#caldera-forms-entries .btn-default.active,
+#caldera-forms-entries .open > .dropdown-toggle.btn-default, #caldera-forms-entries-nav .btn-default:active,
+#caldera-forms-entries-nav .btn-default.active,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-default {
+    color: #333333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+}
+#caldera-forms-entries .btn-default:active:hover,
+#caldera-forms-entries .btn-default.active:hover,
+#caldera-forms-entries .open > .dropdown-toggle.btn-default:hover,
+#caldera-forms-entries .btn-default:active:focus,
+#caldera-forms-entries .btn-default.active:focus,
+#caldera-forms-entries .open > .dropdown-toggle.btn-default:focus,
+#caldera-forms-entries .btn-default:active.focus,
+#caldera-forms-entries .btn-default.active.focus,
+#caldera-forms-entries .open > .dropdown-toggle.btn-default.focus, #caldera-forms-entries-nav .btn-default:active:hover,
+#caldera-forms-entries-nav .btn-default.active:hover,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-default:hover,
+#caldera-forms-entries-nav .btn-default:active:focus,
+#caldera-forms-entries-nav .btn-default.active:focus,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-default:focus,
+#caldera-forms-entries-nav .btn-default:active.focus,
+#caldera-forms-entries-nav .btn-default.active.focus,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-default.focus {
+    color: #333333;
+    background-color: #d4d4d4;
+    border-color: #8c8c8c;
+}
+#caldera-forms-entries .btn-default:active,
+#caldera-forms-entries .btn-default.active,
+#caldera-forms-entries .open > .dropdown-toggle.btn-default, #caldera-forms-entries-nav .btn-default:active,
+#caldera-forms-entries-nav .btn-default.active,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-default {
+    background-image: none;
+}
+#caldera-forms-entries .btn-default.disabled:hover,
+#caldera-forms-entries .btn-default[disabled]:hover,
+#caldera-forms-entries fieldset[disabled] .btn-default:hover,
+#caldera-forms-entries .btn-default.disabled:focus,
+#caldera-forms-entries .btn-default[disabled]:focus,
+#caldera-forms-entries fieldset[disabled] .btn-default:focus,
+#caldera-forms-entries .btn-default.disabled.focus,
+#caldera-forms-entries .btn-default[disabled].focus,
+#caldera-forms-entries fieldset[disabled] .btn-default.focus, #caldera-forms-entries-nav .btn-default.disabled:hover,
+#caldera-forms-entries-nav .btn-default[disabled]:hover,
+#caldera-forms-entries-nav fieldset[disabled] .btn-default:hover,
+#caldera-forms-entries-nav .btn-default.disabled:focus,
+#caldera-forms-entries-nav .btn-default[disabled]:focus,
+#caldera-forms-entries-nav fieldset[disabled] .btn-default:focus,
+#caldera-forms-entries-nav .btn-default.disabled.focus,
+#caldera-forms-entries-nav .btn-default[disabled].focus,
+#caldera-forms-entries-nav fieldset[disabled] .btn-default.focus {
+    background-color: #ffffff;
+    border-color: #cccccc;
+}
+#caldera-forms-entries .btn-default .badge, #caldera-forms-entries-nav .btn-default .badge {
+    color: #ffffff;
+    background-color: #333333;
+}
+#caldera-forms-entries .btn-primary, #caldera-forms-entries-nav .btn-primary {
+    color: #ffffff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+}
+#caldera-forms-entries .btn-primary:focus,
+#caldera-forms-entries .btn-primary.focus, #caldera-forms-entries-nav .btn-primary:focus,
+#caldera-forms-entries-nav .btn-primary.focus {
+    color: #ffffff;
+    background-color: #286090;
+    border-color: #122b40;
+}
+#caldera-forms-entries .btn-primary:hover, #caldera-forms-entries-nav .btn-primary:hover {
+    color: #ffffff;
+    background-color: #286090;
+    border-color: #204d74;
+}
+#caldera-forms-entries .btn-primary:active,
+#caldera-forms-entries .btn-primary.active,
+#caldera-forms-entries .open > .dropdown-toggle.btn-primary, #caldera-forms-entries-nav .btn-primary:active,
+#caldera-forms-entries-nav .btn-primary.active,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-primary {
+    color: #ffffff;
+    background-color: #286090;
+    border-color: #204d74;
+}
+#caldera-forms-entries .btn-primary:active:hover,
+#caldera-forms-entries .btn-primary.active:hover,
+#caldera-forms-entries .open > .dropdown-toggle.btn-primary:hover,
+#caldera-forms-entries .btn-primary:active:focus,
+#caldera-forms-entries .btn-primary.active:focus,
+#caldera-forms-entries .open > .dropdown-toggle.btn-primary:focus,
+#caldera-forms-entries .btn-primary:active.focus,
+#caldera-forms-entries .btn-primary.active.focus,
+#caldera-forms-entries .open > .dropdown-toggle.btn-primary.focus, #caldera-forms-entries-nav .btn-primary:active:hover,
+#caldera-forms-entries-nav .btn-primary.active:hover,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-primary:hover,
+#caldera-forms-entries-nav .btn-primary:active:focus,
+#caldera-forms-entries-nav .btn-primary.active:focus,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-primary:focus,
+#caldera-forms-entries-nav .btn-primary:active.focus,
+#caldera-forms-entries-nav .btn-primary.active.focus,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-primary.focus {
+    color: #ffffff;
+    background-color: #204d74;
+    border-color: #122b40;
+}
+#caldera-forms-entries .btn-primary:active,
+#caldera-forms-entries .btn-primary.active,
+#caldera-forms-entries .open > .dropdown-toggle.btn-primary, #caldera-forms-entries-nav .btn-primary:active,
+#caldera-forms-entries-nav .btn-primary.active,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-primary {
+    background-image: none;
+}
+#caldera-forms-entries .btn-primary.disabled:hover,
+#caldera-forms-entries .btn-primary[disabled]:hover,
+#caldera-forms-entries fieldset[disabled] .btn-primary:hover,
+#caldera-forms-entries .btn-primary.disabled:focus,
+#caldera-forms-entries .btn-primary[disabled]:focus,
+#caldera-forms-entries fieldset[disabled] .btn-primary:focus,
+#caldera-forms-entries .btn-primary.disabled.focus,
+#caldera-forms-entries .btn-primary[disabled].focus,
+#caldera-forms-entries fieldset[disabled] .btn-primary.focus, #caldera-forms-entries-nav .btn-primary.disabled:hover,
+#caldera-forms-entries-nav .btn-primary[disabled]:hover,
+#caldera-forms-entries-nav fieldset[disabled] .btn-primary:hover,
+#caldera-forms-entries-nav .btn-primary.disabled:focus,
+#caldera-forms-entries-nav .btn-primary[disabled]:focus,
+#caldera-forms-entries-nav fieldset[disabled] .btn-primary:focus,
+#caldera-forms-entries-nav .btn-primary.disabled.focus,
+#caldera-forms-entries-nav .btn-primary[disabled].focus,
+#caldera-forms-entries-nav fieldset[disabled] .btn-primary.focus {
+    background-color: #337ab7;
+    border-color: #2e6da4;
+}
+#caldera-forms-entries .btn-primary .badge, #caldera-forms-entries-nav .btn-primary .badge {
+    color: #337ab7;
+    background-color: #ffffff;
+}
+#caldera-forms-entries .btn-success, #caldera-forms-entries-nav .btn-success {
+    color: #ffffff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+#caldera-forms-entries .btn-success:focus,
+#caldera-forms-entries .btn-success.focus, #caldera-forms-entries-nav .btn-success:focus,
+#caldera-forms-entries-nav .btn-success.focus {
+    color: #ffffff;
+    background-color: #449d44;
+    border-color: #255625;
+}
+#caldera-forms-entries .btn-success:hover, #caldera-forms-entries-nav .btn-success:hover {
+    color: #ffffff;
+    background-color: #449d44;
+    border-color: #398439;
+}
+#caldera-forms-entries .btn-success:active,
+#caldera-forms-entries .btn-success.active,
+#caldera-forms-entries .open > .dropdown-toggle.btn-success, #caldera-forms-entries-nav .btn-success:active,
+#caldera-forms-entries-nav .btn-success.active,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-success {
+    color: #ffffff;
+    background-color: #449d44;
+    border-color: #398439;
+}
+#caldera-forms-entries .btn-success:active:hover,
+#caldera-forms-entries .btn-success.active:hover,
+#caldera-forms-entries .open > .dropdown-toggle.btn-success:hover,
+#caldera-forms-entries .btn-success:active:focus,
+#caldera-forms-entries .btn-success.active:focus,
+#caldera-forms-entries .open > .dropdown-toggle.btn-success:focus,
+#caldera-forms-entries .btn-success:active.focus,
+#caldera-forms-entries .btn-success.active.focus,
+#caldera-forms-entries .open > .dropdown-toggle.btn-success.focus, #caldera-forms-entries-nav .btn-success:active:hover,
+#caldera-forms-entries-nav .btn-success.active:hover,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-success:hover,
+#caldera-forms-entries-nav .btn-success:active:focus,
+#caldera-forms-entries-nav .btn-success.active:focus,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-success:focus,
+#caldera-forms-entries-nav .btn-success:active.focus,
+#caldera-forms-entries-nav .btn-success.active.focus,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-success.focus {
+    color: #ffffff;
+    background-color: #398439;
+    border-color: #255625;
+}
+#caldera-forms-entries .btn-success:active,
+#caldera-forms-entries .btn-success.active,
+#caldera-forms-entries .open > .dropdown-toggle.btn-success, #caldera-forms-entries-nav .btn-success:active,
+#caldera-forms-entries-nav .btn-success.active,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-success {
+    background-image: none;
+}
+#caldera-forms-entries .btn-success.disabled:hover,
+#caldera-forms-entries .btn-success[disabled]:hover,
+#caldera-forms-entries fieldset[disabled] .btn-success:hover,
+#caldera-forms-entries .btn-success.disabled:focus,
+#caldera-forms-entries .btn-success[disabled]:focus,
+#caldera-forms-entries fieldset[disabled] .btn-success:focus,
+#caldera-forms-entries .btn-success.disabled.focus,
+#caldera-forms-entries .btn-success[disabled].focus,
+#caldera-forms-entries fieldset[disabled] .btn-success.focus, #caldera-forms-entries-nav .btn-success.disabled:hover,
+#caldera-forms-entries-nav .btn-success[disabled]:hover,
+#caldera-forms-entries-nav fieldset[disabled] .btn-success:hover,
+#caldera-forms-entries-nav .btn-success.disabled:focus,
+#caldera-forms-entries-nav .btn-success[disabled]:focus,
+#caldera-forms-entries-nav fieldset[disabled] .btn-success:focus,
+#caldera-forms-entries-nav .btn-success.disabled.focus,
+#caldera-forms-entries-nav .btn-success[disabled].focus,
+#caldera-forms-entries-nav fieldset[disabled] .btn-success.focus {
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+#caldera-forms-entries .btn-success .badge, #caldera-forms-entries-nav .btn-success .badge {
+    color: #5cb85c;
+    background-color: #ffffff;
+}
+#caldera-forms-entries .btn-info, #caldera-forms-entries-nav .btn-info {
+    color: #ffffff;
+    background-color: #5bc0de;
+    border-color: #46b8da;
+}
+#caldera-forms-entries .btn-info:focus,
+#caldera-forms-entries .btn-info.focus, #caldera-forms-entries-nav .btn-info:focus,
+#caldera-forms-entries-nav .btn-info.focus {
+    color: #ffffff;
+    background-color: #31b0d5;
+    border-color: #1b6d85;
+}
+#caldera-forms-entries .btn-info:hover, #caldera-forms-entries-nav .btn-info:hover {
+    color: #ffffff;
+    background-color: #31b0d5;
+    border-color: #269abc;
+}
+#caldera-forms-entries .btn-info:active,
+#caldera-forms-entries .btn-info.active,
+#caldera-forms-entries .open > .dropdown-toggle.btn-info, #caldera-forms-entries-nav .btn-info:active,
+#caldera-forms-entries-nav .btn-info.active,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-info {
+    color: #ffffff;
+    background-color: #31b0d5;
+    border-color: #269abc;
+}
+#caldera-forms-entries .btn-info:active:hover,
+#caldera-forms-entries .btn-info.active:hover,
+#caldera-forms-entries .open > .dropdown-toggle.btn-info:hover,
+#caldera-forms-entries .btn-info:active:focus,
+#caldera-forms-entries .btn-info.active:focus,
+#caldera-forms-entries .open > .dropdown-toggle.btn-info:focus,
+#caldera-forms-entries .btn-info:active.focus,
+#caldera-forms-entries .btn-info.active.focus,
+#caldera-forms-entries .open > .dropdown-toggle.btn-info.focus, #caldera-forms-entries-nav .btn-info:active:hover,
+#caldera-forms-entries-nav .btn-info.active:hover,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-info:hover,
+#caldera-forms-entries-nav .btn-info:active:focus,
+#caldera-forms-entries-nav .btn-info.active:focus,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-info:focus,
+#caldera-forms-entries-nav .btn-info:active.focus,
+#caldera-forms-entries-nav .btn-info.active.focus,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-info.focus {
+    color: #ffffff;
+    background-color: #269abc;
+    border-color: #1b6d85;
+}
+#caldera-forms-entries .btn-info:active,
+#caldera-forms-entries .btn-info.active,
+#caldera-forms-entries .open > .dropdown-toggle.btn-info, #caldera-forms-entries-nav .btn-info:active,
+#caldera-forms-entries-nav .btn-info.active,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-info {
+    background-image: none;
+}
+#caldera-forms-entries .btn-info.disabled:hover,
+#caldera-forms-entries .btn-info[disabled]:hover,
+#caldera-forms-entries fieldset[disabled] .btn-info:hover,
+#caldera-forms-entries .btn-info.disabled:focus,
+#caldera-forms-entries .btn-info[disabled]:focus,
+#caldera-forms-entries fieldset[disabled] .btn-info:focus,
+#caldera-forms-entries .btn-info.disabled.focus,
+#caldera-forms-entries .btn-info[disabled].focus,
+#caldera-forms-entries fieldset[disabled] .btn-info.focus, #caldera-forms-entries-nav .btn-info.disabled:hover,
+#caldera-forms-entries-nav .btn-info[disabled]:hover,
+#caldera-forms-entries-nav fieldset[disabled] .btn-info:hover,
+#caldera-forms-entries-nav .btn-info.disabled:focus,
+#caldera-forms-entries-nav .btn-info[disabled]:focus,
+#caldera-forms-entries-nav fieldset[disabled] .btn-info:focus,
+#caldera-forms-entries-nav .btn-info.disabled.focus,
+#caldera-forms-entries-nav .btn-info[disabled].focus,
+#caldera-forms-entries-nav fieldset[disabled] .btn-info.focus {
+    background-color: #5bc0de;
+    border-color: #46b8da;
+}
+#caldera-forms-entries .btn-info .badge, #caldera-forms-entries-nav .btn-info .badge {
+    color: #5bc0de;
+    background-color: #ffffff;
+}
+#caldera-forms-entries .btn-warning, #caldera-forms-entries-nav .btn-warning {
+    color: #ffffff;
+    background-color: #f0ad4e;
+    border-color: #eea236;
+}
+#caldera-forms-entries .btn-warning:focus,
+#caldera-forms-entries .btn-warning.focus, #caldera-forms-entries-nav .btn-warning:focus,
+#caldera-forms-entries-nav .btn-warning.focus {
+    color: #ffffff;
+    background-color: #ec971f;
+    border-color: #985f0d;
+}
+#caldera-forms-entries .btn-warning:hover, #caldera-forms-entries-nav .btn-warning:hover {
+    color: #ffffff;
+    background-color: #ec971f;
+    border-color: #d58512;
+}
+#caldera-forms-entries .btn-warning:active,
+#caldera-forms-entries .btn-warning.active,
+#caldera-forms-entries .open > .dropdown-toggle.btn-warning, #caldera-forms-entries-nav .btn-warning:active,
+#caldera-forms-entries-nav .btn-warning.active,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-warning {
+    color: #ffffff;
+    background-color: #ec971f;
+    border-color: #d58512;
+}
+#caldera-forms-entries .btn-warning:active:hover,
+#caldera-forms-entries .btn-warning.active:hover,
+#caldera-forms-entries .open > .dropdown-toggle.btn-warning:hover,
+#caldera-forms-entries .btn-warning:active:focus,
+#caldera-forms-entries .btn-warning.active:focus,
+#caldera-forms-entries .open > .dropdown-toggle.btn-warning:focus,
+#caldera-forms-entries .btn-warning:active.focus,
+#caldera-forms-entries .btn-warning.active.focus,
+#caldera-forms-entries .open > .dropdown-toggle.btn-warning.focus, #caldera-forms-entries-nav .btn-warning:active:hover,
+#caldera-forms-entries-nav .btn-warning.active:hover,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-warning:hover,
+#caldera-forms-entries-nav .btn-warning:active:focus,
+#caldera-forms-entries-nav .btn-warning.active:focus,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-warning:focus,
+#caldera-forms-entries-nav .btn-warning:active.focus,
+#caldera-forms-entries-nav .btn-warning.active.focus,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-warning.focus {
+    color: #ffffff;
+    background-color: #d58512;
+    border-color: #985f0d;
+}
+#caldera-forms-entries .btn-warning:active,
+#caldera-forms-entries .btn-warning.active,
+#caldera-forms-entries .open > .dropdown-toggle.btn-warning, #caldera-forms-entries-nav .btn-warning:active,
+#caldera-forms-entries-nav .btn-warning.active,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-warning {
+    background-image: none;
+}
+#caldera-forms-entries .btn-warning.disabled:hover,
+#caldera-forms-entries .btn-warning[disabled]:hover,
+#caldera-forms-entries fieldset[disabled] .btn-warning:hover,
+#caldera-forms-entries .btn-warning.disabled:focus,
+#caldera-forms-entries .btn-warning[disabled]:focus,
+#caldera-forms-entries fieldset[disabled] .btn-warning:focus,
+#caldera-forms-entries .btn-warning.disabled.focus,
+#caldera-forms-entries .btn-warning[disabled].focus,
+#caldera-forms-entries fieldset[disabled] .btn-warning.focus, #caldera-forms-entries-nav .btn-warning.disabled:hover,
+#caldera-forms-entries-nav .btn-warning[disabled]:hover,
+#caldera-forms-entries-nav fieldset[disabled] .btn-warning:hover,
+#caldera-forms-entries-nav .btn-warning.disabled:focus,
+#caldera-forms-entries-nav .btn-warning[disabled]:focus,
+#caldera-forms-entries-nav fieldset[disabled] .btn-warning:focus,
+#caldera-forms-entries-nav .btn-warning.disabled.focus,
+#caldera-forms-entries-nav .btn-warning[disabled].focus,
+#caldera-forms-entries-nav fieldset[disabled] .btn-warning.focus {
+    background-color: #f0ad4e;
+    border-color: #eea236;
+}
+#caldera-forms-entries .btn-warning .badge, #caldera-forms-entries-nav .btn-warning .badge {
+    color: #f0ad4e;
+    background-color: #ffffff;
+}
+#caldera-forms-entries .btn-danger, #caldera-forms-entries-nav .btn-danger {
+    color: #ffffff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}
+#caldera-forms-entries .btn-danger:focus,
+#caldera-forms-entries .btn-danger.focus, #caldera-forms-entries-nav .btn-danger:focus,
+#caldera-forms-entries-nav .btn-danger.focus {
+    color: #ffffff;
+    background-color: #c9302c;
+    border-color: #761c19;
+}
+#caldera-forms-entries .btn-danger:hover, #caldera-forms-entries-nav .btn-danger:hover {
+    color: #ffffff;
+    background-color: #c9302c;
+    border-color: #ac2925;
+}
+#caldera-forms-entries .btn-danger:active,
+#caldera-forms-entries .btn-danger.active,
+#caldera-forms-entries .open > .dropdown-toggle.btn-danger, #caldera-forms-entries-nav .btn-danger:active,
+#caldera-forms-entries-nav .btn-danger.active,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-danger {
+    color: #ffffff;
+    background-color: #c9302c;
+    border-color: #ac2925;
+}
+#caldera-forms-entries .btn-danger:active:hover,
+#caldera-forms-entries .btn-danger.active:hover,
+#caldera-forms-entries .open > .dropdown-toggle.btn-danger:hover,
+#caldera-forms-entries .btn-danger:active:focus,
+#caldera-forms-entries .btn-danger.active:focus,
+#caldera-forms-entries .open > .dropdown-toggle.btn-danger:focus,
+#caldera-forms-entries .btn-danger:active.focus,
+#caldera-forms-entries .btn-danger.active.focus,
+#caldera-forms-entries .open > .dropdown-toggle.btn-danger.focus, #caldera-forms-entries-nav .btn-danger:active:hover,
+#caldera-forms-entries-nav .btn-danger.active:hover,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-danger:hover,
+#caldera-forms-entries-nav .btn-danger:active:focus,
+#caldera-forms-entries-nav .btn-danger.active:focus,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-danger:focus,
+#caldera-forms-entries-nav .btn-danger:active.focus,
+#caldera-forms-entries-nav .btn-danger.active.focus,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-danger.focus {
+    color: #ffffff;
+    background-color: #ac2925;
+    border-color: #761c19;
+}
+#caldera-forms-entries .btn-danger:active,
+#caldera-forms-entries .btn-danger.active,
+#caldera-forms-entries .open > .dropdown-toggle.btn-danger, #caldera-forms-entries-nav .btn-danger:active,
+#caldera-forms-entries-nav .btn-danger.active,
+#caldera-forms-entries-nav .open > .dropdown-toggle.btn-danger {
+    background-image: none;
+}
+#caldera-forms-entries .btn-danger.disabled:hover,
+#caldera-forms-entries .btn-danger[disabled]:hover,
+#caldera-forms-entries fieldset[disabled] .btn-danger:hover,
+#caldera-forms-entries .btn-danger.disabled:focus,
+#caldera-forms-entries .btn-danger[disabled]:focus,
+#caldera-forms-entries fieldset[disabled] .btn-danger:focus,
+#caldera-forms-entries .btn-danger.disabled.focus,
+#caldera-forms-entries .btn-danger[disabled].focus,
+#caldera-forms-entries fieldset[disabled] .btn-danger.focus, #caldera-forms-entries-nav .btn-danger.disabled:hover,
+#caldera-forms-entries-nav .btn-danger[disabled]:hover,
+#caldera-forms-entries-nav fieldset[disabled] .btn-danger:hover,
+#caldera-forms-entries-nav .btn-danger.disabled:focus,
+#caldera-forms-entries-nav .btn-danger[disabled]:focus,
+#caldera-forms-entries-nav fieldset[disabled] .btn-danger:focus,
+#caldera-forms-entries-nav .btn-danger.disabled.focus,
+#caldera-forms-entries-nav .btn-danger[disabled].focus,
+#caldera-forms-entries-nav fieldset[disabled] .btn-danger.focus {
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}
+#caldera-forms-entries .btn-danger .badge, #caldera-forms-entries-nav .btn-danger .badge {
+    color: #d9534f;
+    background-color: #ffffff;
+}
+#caldera-forms-entries .btn-link, #caldera-forms-entries-nav .btn-link {
+    color: #337ab7;
+    font-weight: normal;
+    border-radius: 0;
+}
+#caldera-forms-entries .btn-link,
+#caldera-forms-entries .btn-link:active,
+#caldera-forms-entries .btn-link.active,
+#caldera-forms-entries .btn-link[disabled],
+#caldera-forms-entries fieldset[disabled] .btn-link, #caldera-forms-entries-nav .btn-link,
+#caldera-forms-entries-nav .btn-link:active,
+#caldera-forms-entries-nav .btn-link.active,
+#caldera-forms-entries-nav .btn-link[disabled],
+#caldera-forms-entries-nav fieldset[disabled] .btn-link {
+    background-color: transparent;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+#caldera-forms-entries .btn-link,
+#caldera-forms-entries .btn-link:hover,
+#caldera-forms-entries .btn-link:focus,
+#caldera-forms-entries .btn-link:active, #caldera-forms-entries-nav .btn-link,
+#caldera-forms-entries-nav .btn-link:hover,
+#caldera-forms-entries-nav .btn-link:focus,
+#caldera-forms-entries-nav .btn-link:active {
+    border-color: transparent;
+}
+#caldera-forms-entries .btn-link:hover,
+#caldera-forms-entries .btn-link:focus, #caldera-forms-entries-nav .btn-link:hover,
+#caldera-forms-entries-nav .btn-link:focus {
+    color: #23527c;
+    text-decoration: underline;
+    background-color: transparent;
+}
+#caldera-forms-entries .btn-link[disabled]:hover,
+#caldera-forms-entries fieldset[disabled] .btn-link:hover,
+#caldera-forms-entries .btn-link[disabled]:focus,
+#caldera-forms-entries fieldset[disabled] .btn-link:focus, #caldera-forms-entries-nav .btn-link[disabled]:hover,
+#caldera-forms-entries-nav fieldset[disabled] .btn-link:hover,
+#caldera-forms-entries-nav .btn-link[disabled]:focus,
+#caldera-forms-entries-nav fieldset[disabled] .btn-link:focus {
+    color: #777777;
+    text-decoration: none;
+}
+#caldera-forms-entries .btn-lg, #caldera-forms-entries-nav .btn-lg {
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.3333333;
+    border-radius: 6px;
+}
+#caldera-forms-entries .btn-sm, #caldera-forms-entries-nav .btn-sm {
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+#caldera-forms-entries .btn-xs, #caldera-forms-entries-nav .btn-xs {
+    padding: 1px 5px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+#caldera-forms-entries .btn-block, #caldera-forms-entries-nav .btn-block {
+    display: block;
+    width: 100%;
+}
+#caldera-forms-entries .btn-block + .btn-block, #caldera-forms-entries-nav .btn-block + .btn-block {
+    margin-top: 5px;
+}
+
+.caldera-forms-entry-right ul li, .caldera-forms-entry-right ul, .caldera-forms-entry-right .entry-detail {
+    list-style: none;
+}
+
+#caldera-forms-entries-nav input {
+    display:inline;
+    float:right;
+    width: 20%;
+}
+
+.screen-reader-text {
+    clip: rect(1px, 1px, 1px, 1px);
+    clip-path: polygon(0px 0px, 0px 0px,0px 0px, 0px 0px);
+    position: absolute !important;
+    white-space: nowrap;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+}
+
+.caldera-forms-entry-viewer li.entry-detail {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 4px;
+}
+
+.caldera-forms-entry-viewer span.entry-label {
+    clear: left;
+    float: left;
+    font-weight: 700;
+    margin-bottom: 3px;
+    margin-right: 8px;
+    min-width: 130px;
+    text-transform: capitalize;
+
+}
+
+.caldera-forms-entry-viewer .entry-value {
+    display: inline-block;
+    margin-bottom: 4px;
+    min-width: 355px;
+}

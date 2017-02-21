@@ -123,5 +123,125 @@ class Caldera_Forms_Entry_UI {
 
 	}
 
+	/**
+	 * Get the entry editor (v1) buttons
+	 *
+	 * @since 1.5.0
+	 *
+	 * @uses "caldera_forms_entry_actions"
+	 */
+	public static function get_entry_actions(){
+		/**
+		 * Change allowed entry viewer (v1) buttons
+		 *
+		 * @since unknown
+		 *
+		 * @params array $buttons
+		 */
+		$viewer_buttons_array = apply_filters( 'caldera_forms_entry_viewer_buttons', array());
+		$viewer_buttons = null;
+		if(!empty($viewer_buttons_array)){
+			$viewer_buttons = array();
+			foreach($viewer_buttons_array as $button){
+
+				if(is_array($button['config'])){
+					$config = $button['label'].'|'.json_encode($button['config']);
+				}else{
+					$config = $button['label'].'|'.$button['config'];
+				}
+				if( isset( $button['class'] ) ){
+					$config .= '|' . $button['class'];
+				}
+				$viewer_buttons[] = $config;
+			}
+
+			$viewer_buttons = 'data-modal-buttons=\'' . implode(';', $viewer_buttons) . '\'';
+		}
+
+		/**
+		 * Change allowed entry editor (v1) buttons
+		 *
+		 * @since unknown
+		 *
+		 * @params array $buttons
+		 */
+		$editor_buttons_array = apply_filters( 'caldera_forms_entry_editor_buttons', array());
+		$editor_buttons = null;
+		if(!empty($editor_buttons_array)){
+			$editor_buttons = array();
+			foreach($editor_buttons_array as $button){
+
+				if(is_array($button['config'])){
+					$config = $button['label'].'|'.json_encode($button['config']);
+				}else{
+					$config = $button['label'].'|'.$button['config'];
+				}
+				if( isset( $button['class'] ) ){
+					$config .= '|' . $button['class'];
+				}
+				$editor_buttons[] = $config;
+			}
+
+			$editor_buttons = 'data-modal-buttons=\'' . implode(';', $editor_buttons) . '\'';
+		}
+
+		if( current_user_can( 'edit_others_posts' ) ){
+			echo '{{#if ../../is_active}}<button class="hidden button button-small cfajax-trigger edit-entry-btn" id="edit-entry-{{_entry_id}}" data-active-class="current-edit" data-static="true" data-load-class="spinner" ' . $editor_buttons . ' data-modal-element="div" data-group="editentry" data-entry="{{_entry_id}}" data-form="{{../../form}}" data-request="' . esc_url( Caldera_Forms::get_submit_url() ) . '{{../../form}}/{{_entry_id}}/" data-method="get" data-modal="view_entry" data-modal-width="700" data-modal-height="auto" data-modal-title="' . esc_attr__( 'Editing Entry ', 'caldera-forms' ) . ' #{{_entry_id}}" type="button">' . esc_html__( 'Edit', 'caldera-forms' ) . '</button> {{/if}}';
+
+		}
+		echo '{{#if ../../is_active}}<button class="button button-small ajax-trigger view-entry-btn" id="view-entry-{{_entry_id}}" data-active-class="current-view"  data-static="true" data-load-class="spinner" ' . $viewer_buttons . ' data-group="viewentry" data-entry="{{_entry_id}}" data-form="{{../../form}}" data-action="get_entry" data-modal="view_entry" data-modal-width="700" data-modal-height="700" data-modal-title="' . esc_attr__('Entry', 'caldera-forms' ) . ' #{{_entry_id}}" data-template="#view-entry-tmpl" type="button" data-nonce="' .  wp_create_nonce( 'cf_view_entry'  ) . '">' . esc_html__( 'View', 'caldera-forms' ) . '</button> {{/if}}';
+		if( current_user_can( 'delete_others_posts' ) ){
+			echo '<button type="button" class="button button-small ajax-trigger" data-load-class="active" data-panel="{{#if ../../is_trash}}trash{{/if}}{{#if ../../is_active}}active{{/if}}" data-do="{{#if ../../is_trash}}active{{/if}}{{#if ../../is_active}}trash{{/if}}" data-callback="cf_refresh_view" data-form="{{../../form}}" data-active-class="disabled" data-group="row{{_entry_id}}" data-load-element="#entry_row_{{_entry_id}}" data-action="cf_bulk_action" data-items="{{_entry_id}}">{{#if ../../is_trash}}' . __('Restore', 'caldera-forms' ) . '{{/if}}{{#if ../../is_active}}' . esc_html__( 'Trash', 'caldera-forms' ) . '{{/if}}</button>';
+		}
+
+	}
+
+	/**
+	 * Filter permissions for entry view or export
+	 *
+	 * @since 1.5.0
+	 *
+	 * @uses "caldera_forms_manage_cap"
+	 *
+	 * @param string $cap A capability. By default "manage_options".
+	 * @param string $context Context to check in.
+	 * @param array|null $form Form config if it was passed.
+	 *
+	 * @return int|string
+	 */
+	public static function permissions_filter( $cap, $context, $form ){
+		if( ! is_array( $form ) ){
+			return $cap;
+		}
+
+		switch( $context ) {
+			case 'export' :
+			case 'entry-view' :
+				if( ! empty( $form[ 'pinned' ] ) ){
+					if( isset( $form[ 'pin_roles' ][ 'access_role' ] ) && is_array($form[ 'pin_roles' ][ 'access_role' ] ) ){
+						$user = wp_get_current_user();
+						foreach( $form[ 'pin_roles' ][ 'access_role' ] as $role => $i ) {
+							if( in_array( $role, $user->roles ) ){
+								return $role;
+							}
+						}
+					}
+				}
+
+				break;
+
+		}
+
+		return $cap;
+	}
+
+	public static function is_public( array $form ){
+		return apply_filters( 'caldera_forms_entry_viewer_public', false, $form );
+
+	}
+
+
+
+
 
 }

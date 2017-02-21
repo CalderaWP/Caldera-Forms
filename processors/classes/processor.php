@@ -96,6 +96,12 @@ abstract class Caldera_Forms_Processor_Processor implements Caldera_Forms_Proces
 			'pre_processor' => array( $this, 'pre_processor' ),
 			'processor' => array( $this, 'processor' )
 		));
+
+		if( isset( $processor_config[ 'post_processor' ] ) ){
+			if( method_exists( $this, $processor_config[ 'post_processor' ] ) ){
+				$this->processor_config[ 'post_processor' ] = array( $this, $processor_config[ 'post_processor' ] );
+			}
+		}
 	}
 
 	/**
@@ -125,7 +131,6 @@ abstract class Caldera_Forms_Processor_Processor implements Caldera_Forms_Proces
 	 * @param array $form Form config
 	 */
 	protected function set_data_object_initial( array $config, array $form ){
-
 		$this->data_object = new Caldera_Forms_Processor_Get_Data( $config, $form, $this->fields() );
 
 	}

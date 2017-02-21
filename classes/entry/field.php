@@ -23,9 +23,8 @@ class Caldera_Forms_Entry_Field  extends Caldera_Forms_Entry_Object {
 	/** @var  string */
 	protected $slug;
 	
-	/** @var  string\array */
+	/** @var  string|array */
 	protected $value;
-
 
 	/**
 	 * Apply deserialization/json_decoding if needed to value column
@@ -64,6 +63,8 @@ class Caldera_Forms_Entry_Field  extends Caldera_Forms_Entry_Object {
 		return $this->value;
 		
 	}
+
+
 
 
 
