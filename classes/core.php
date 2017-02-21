@@ -1125,6 +1125,12 @@ class Caldera_Forms {
 				"template"    => CFCORE_PATH . "processors/redirect/config.php",
 				"single"      => false
 			),
+			'conditional_recipient'	=> array(
+				"name"        => __( 'Conditional Recipient', 'caldera-forms' ),
+				"description" => __( 'Send email to different recipients depending on conditons', 'caldera-forms' ),
+				"template"    => CFCORE_PATH . "processors/conditional_recipient/config.php",
+				"single"      => false
+			),
 			'increment_capture' => array(
 				"name"         => __( 'Increment Value', 'caldera-forms' ),
 				"description"  => __( 'Increment a value per entry.', 'caldera-forms' ),
