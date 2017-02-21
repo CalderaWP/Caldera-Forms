@@ -1,20 +1,19 @@
 Caldera-Forms
 =============
-<a href="https://calderawp.com/caldera-forms-add-ons/"><img src="https://calderawp.com/wp-content/uploads/2015/07/caldera-forms-banner-alt-title.png" /></a>
+<a href="https://calderaforms.com/"><img src="https://calderaforms.com/content/uploads/2016/06/cf-banner.png" /></a>
 
 
-# Drag & Drop Responsive Form Builder
+# Drag & Drop WordPress Responsive Form Builder
 
-#### By <a href="https://CalderaWP.com" title="CalderaWP: Transform Your WordPress Experience">CalderaWP</a>
 
 ### Docs, Add-ons & More Information:
-* [Premium Add-ons](https://calderawp.com/caldera-forms-add-ons/)
-* [More Information](https://calderawp.com/caldera-forms/)
-* [Documentation](http://docs.calderaforms.com/)
+* [More Information](https://calderaforms.com/)
+* [Documentation](https://calderaforms.com/documentation/caldera-forms-documentation/)
+* [Add-ons](https://calderawp.com/caldera-forms-add-ons/)
 
 
 ### Contributing/ Using This Repo, Etc.
 * The default branch is "master" that should be the same as WordPress.org
-* The current version of Caldera Forms is 1.4.1. We are currently developing 1.4.2 and 1.5.0.
-* Development for version 1.4 point releases uses "1.4.x" branch. Please submit bug fixes pull requests again 1.4.x branch.
-* Development for version 1.5 uses "1.5.x" branch. Please submit new feature pull requests against 1.5.x branch.
+* Development happens on the "develop" branch.
+* If you find a bug, or would like to make a feature request, [please open an issue]()https://github.com/CalderaWP/Caldera-Forms/issues/ .
+* If you fixed a bug, or made a new feature, please submit a pull request against the develop branch.
