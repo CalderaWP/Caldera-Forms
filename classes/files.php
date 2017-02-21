@@ -292,7 +292,7 @@ class Caldera_Forms_Files{
     }
 
 	/**
-	 * Check if field's files should be attatched
+	 * Check if field's files should be attached
 	 *
 	 * @since 1.5.0
 	 *
