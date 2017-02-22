@@ -17,7 +17,6 @@ class Caldera_Forms_Magic {
 	 */
 	public function __construct() {
 		add_filter( 'caldera_forms_pre_do_field_magic', array( $this, 'field_magic' ), 10,  5 );
-		//add_filter( 'caldera_forms_processor_value', array( $this, 'cc_exp_processor_value' ), 10 );
 
 	}
 
