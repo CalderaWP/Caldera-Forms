@@ -38,6 +38,9 @@ class Caldera_Forms_Magic {
 	 * @return mixed
 	 */
 	public function field_magic( $_value, $value, $matches, $entry_id, $form ){
+		if( empty( $form ) ){
+			global  $form;
+		}
 
 		if( ! empty( $matches ) && ! empty( $matches[1] ) && ! empty( $matches[1][0]) ){
 
