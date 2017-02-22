@@ -611,7 +611,7 @@ class Caldera_Forms {
 	public static function mail_attachment_check( $mail, $data, $form){
 		foreach ( Caldera_Forms_Forms::get_fields( $form, false ) as $field_id => $field ) {
 			if ( Caldera_Forms_Field_Util::is_file_field( $field, $form )  ) {
-				if( ! Caldera_Forms_Files::should_attach( $field ) ){
+				if( ! Caldera_Forms_Files::should_attach( $field, $form ) ){
 					continue;
 				}
 				$dir = wp_upload_dir();

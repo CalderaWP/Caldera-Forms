@@ -297,11 +297,11 @@ class Caldera_Forms_Files{
 	 * @since 1.5.0
 	 *
 	 * @param array $field
-	 *
+	 * @param array $form Form config
 	 * @return bool
 	 */
-    public static function should_attach( array  $field ){
-    	if( in_array( Caldera_Forms_Field_Util::get_type( $field ), self::types() ) ){
+    public static function should_attach( array  $field, array $form ){
+    	if( in_array( Caldera_Forms_Field_Util::get_type( $field ), $form ) ){
 		    return ! empty( $field[ 'config' ][ 'attach'] );
 	    }
 
