@@ -12,8 +12,7 @@ if( $sync ){
 	// create template block
 	ob_start();
 	echo '<script type="text/html" id="'. esc_attr( $syncer->template_id() ) . '">';
-		$content = do_shortcode( Caldera_Forms::do_magic_tags( wpautop(  $syncer->get_default(), $forbidden_tags ) ) );
-	echo Caldera_Forms_Sanitize::remove_tags( $content, $forbidden_tags );
+		echo do_shortcode( Caldera_Forms::do_magic_tags( wpautop(  $syncer->get_default(), $forbidden_tags ) ) );
 	echo '</script>';
 
 	$script_template = ob_get_clean();
@@ -22,7 +21,7 @@ if( $sync ){
 }else{
 	$html_template = $field[ 'config' ][ 'default' ];
 	$content = do_shortcode( Caldera_Forms::do_magic_tags(  $html_template, $forbidden_tags  ) );
-	echo '<div class="' . esc_attr( $field['config']['custom_class'] ) . '">' . Caldera_Forms_Sanitize::remove_tags( $content, $forbidden_tags ) . '</div>';
+	echo '<div class="' . esc_attr( $field['config']['custom_class'] ) . '">' . $content . '</div>';
 }
 
 
