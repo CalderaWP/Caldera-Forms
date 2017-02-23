@@ -298,7 +298,8 @@ class Caldera_Forms_Save_Final {
 				$mail['recipients'][] = get_option( 'admin_email' );
 			}
 
-			$submission = array();
+
+			$submission = $labels = array();
 			foreach ( $data as $field_id => $row ) {
 				if ( $row === null || ! isset( $form['fields'][ $field_id ] ) ) {
 					continue;

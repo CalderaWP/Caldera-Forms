@@ -611,7 +611,7 @@ class Caldera_Forms {
 	public static function mail_attachment_check( $mail, $data, $form){
 		foreach ( Caldera_Forms_Forms::get_fields( $form, false ) as $field_id => $field ) {
 			if ( Caldera_Forms_Field_Util::is_file_field( $field, $form )  ) {
-				if( ! Caldera_Forms_Files::should_attach( $field ) ){
+				if( ! Caldera_Forms_Files::should_attach( $field, $form ) ){
 					continue;
 				}
 				$dir = wp_upload_dir();
@@ -2146,7 +2146,7 @@ class Caldera_Forms {
 			}
 
 			return $processed_data[ $indexkey ][ $field_id ];
-			//return $processed_data[$indexkey][$field_id] = ;
+
 		}
 
 		if ( isset( $form[ 'fields' ][ $field_id ] ) ) {
@@ -2206,6 +2206,9 @@ class Caldera_Forms {
 						foreach ( $entry as $option_id => $option ) {
 							if ( isset( $field[ 'config' ][ 'option' ][ $option_id ] ) ) {
 								if ( ! isset( $field[ 'config' ][ 'option' ][ $option_id ][ 'value' ] ) ) {
+									$field[ 'config' ][ 'option' ][ $option_id ][ 'value' ] = $field[ 'config' ][ 'option' ][ $option_id ][ 'label' ];
+								}
+								if( empty( $field[ 'config' ][ 'option' ][ $option_id ][ 'value' ] ) ){
 									$field[ 'config' ][ 'option' ][ $option_id ][ 'value' ] = $field[ 'config' ][ 'option' ][ $option_id ][ 'label' ];
 								}
 								$out[ $option_id ] = self::do_magic_tags( $field[ 'config' ][ 'option' ][ $option_id ][ 'value' ] );
@@ -2817,7 +2820,11 @@ class Caldera_Forms {
 					}
 					// check if conditions match first. ignore vailators if not part of condition
 					if ( ! empty( $field[ 'conditions' ][ 'type' ] ) ) {
-						if ( ! self::check_condition( $field[ 'conditions' ], $form ) ) {
+						$conditional =  $field[ 'conditions' ];
+						if ( ! empty( $form[ 'conditional_groups'][ 'conditions'][ $field[ 'conditions' ]['type' ] ] )  ) {
+							$conditional = $form[ 'conditional_groups' ][ 'conditions' ][ $field[ 'conditions' ][ 'type' ] ];
+						}
+						if ( ! self::check_condition( $conditional, $form ) ) {
 							continue;
 						}
 					}

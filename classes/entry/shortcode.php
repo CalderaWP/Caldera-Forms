@@ -45,7 +45,7 @@ class Caldera_Forms_Entry_Shortcode {
 			'form_id' => strip_tags( ! isset( $_GET[ 'cf_id' ] ) ? null : $_GET[ 'cf_id' ] ),
 			'id' => strip_tags( ! isset( $_GET[ 'cf_id' ] ) ? null : $_GET[ 'cf_id' ] ),
 			'ID' => strip_tags( ! isset( $_GET[ 'cf_id' ] ) ? null : $_GET[ 'cf_id' ] ),
-			'version' => '2',
+			'type' => '2',
 			'with_toolbar' => false,
 			'role' => 'admin'
 		), $atts, self::$name );
@@ -63,11 +63,11 @@ class Caldera_Forms_Entry_Shortcode {
 		if ( ! is_null( $id ) ) {
 			$form = Caldera_Forms_Forms::get_form( $id );
 			if ( ! empty( $form ) ) {
-				if ( '2' == $atts[ 'version' ] ) {
-
-					return Caldera_Forms_Entry_Viewer::form_entry_viewer_2( $form, array( 'token' => Caldera_Forms_API_Token::make_token( $atts[ 'role' ], $id ) ) );
-				} else {
+				if ( 'classic' == $atts[ 'type' ] ) {
 					return Caldera_Forms_Entry_Viewer::form_entry_viewer_1( $id, wp_validate_boolean( $atts[ 'with_toolbar' ] ) );
+
+				} else {
+					return Caldera_Forms_Entry_Viewer::form_entry_viewer_2( $form, array( 'token' => Caldera_Forms_API_Token::make_token( $atts[ 'role' ], $id ) ) );
 
 				}
 
