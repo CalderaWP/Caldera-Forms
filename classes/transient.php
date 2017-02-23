@@ -1,10 +1,4 @@
 <?php
-/**
- * @TODO What this does
- *
- * @package cf
- * Copyright 2017 Josh Pollock <Josh@CalderaWP.com
- */
 
 /**
  * Class Caldera_Forms_Transient
@@ -28,5 +22,6 @@ class Caldera_Forms_Transient {
 
 		return set_transient( self::$prefix . $id, $data, $expires );
 	}
+
 
 }

@@ -2817,7 +2817,8 @@ class Caldera_Forms {
 					}
 					// check if conditions match first. ignore vailators if not part of condition
 					if ( ! empty( $field[ 'conditions' ][ 'type' ] ) ) {
-						if ( ! self::check_condition( $field[ 'conditions' ], $form ) ) {
+						$group = $form[ 'conditional_groups'][ 'conditions'][ $field[ 'conditions' ]['type' ] ];
+						if ( ! self::check_condition( $group, $form ) ) {
 							continue;
 						}
 					}
