@@ -1127,7 +1127,7 @@ class Caldera_Forms {
 			),
 			'conditional_recipient'	=> array(
 				"name"        => __( 'Conditional Recipient', 'caldera-forms' ),
-				"description" => __( 'Send email to different recipients depending on conditons', 'caldera-forms' ),
+				"description" => __( 'Send email to different recipients depending on conditions', 'caldera-forms' ),
 				"template"    => CFCORE_PATH . "processors/conditional_recipient/config.php",
 				"single"      => false
 			),
@@ -1352,11 +1352,15 @@ class Caldera_Forms {
 			}
 		}
 
+		if( false !== strpos( $formula, '/0' ) ){
+			return new WP_Error( $field[ 'ID' ] . '-calculation', __( 'Calculation is invalid (division by zero)', 'caldera-forms' ) );
+		}
+
 		$total_function = create_function( null, 'return ' . $formula . ';' );
 		$total          = $total_function();
 
-		if ( ! is_numeric( $total ) ) {
-			return new WP_Error( $field[ 'ID' ] . '-calculation', __( 'Calculation is invalid' ) );
+		if ( is_infinite( $total ) || ! is_numeric( $total ) ) {
+			return new WP_Error( $field[ 'ID' ] . '-calculation', __( 'Calculation is invalid', 'caldera-forms' ) );
 		}
 
 		if ( isset( $field[ 'config' ][ 'fixed' ] ) ) {
@@ -2189,7 +2193,6 @@ class Caldera_Forms {
 				$entry = apply_filters( 'caldera_forms_process_field_' . $field[ 'type' ], $entry, $field, $form );
 				if ( is_wp_error( $entry ) ) {
 					$processed_data[ $indexkey ][ $field_id ] = $entry;
-
 					return $entry;
 				}
 			}
