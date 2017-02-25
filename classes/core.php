@@ -1307,6 +1307,9 @@ class Caldera_Forms {
 	 * @return int|string
 	 */
 	static public function run_calculation( $value, $field, $form ) {
+		if( false === Caldera_Forms_Field_Util::check_conditional( $field, $form ) ){
+			return;
+		}
 
 		$formula = $field[ 'config' ][ 'formular' ];
 
@@ -2822,15 +2825,10 @@ class Caldera_Forms {
 						continue;
 					}
 					// check if conditions match first. ignore vailators if not part of condition
-					if ( ! empty( $field[ 'conditions' ][ 'type' ] ) ) {
-						$conditional =  $field[ 'conditions' ];
-						if ( ! empty( $form[ 'conditional_groups'][ 'conditions'][ $field[ 'conditions' ]['type' ] ] )  ) {
-							$conditional = $form[ 'conditional_groups' ][ 'conditions' ][ $field[ 'conditions' ][ 'type' ] ];
-						}
-						if ( ! self::check_condition( $conditional, $form ) ) {
-							continue;
-						}
+					if ( false === Caldera_Forms_Field_Util::check_conditional( $field, $form ) ) {
+						continue;
 					}
+
 					// if error - return so
 					if ( is_wp_error( $entry ) ) {
 						$transdata[ 'fields' ][ $field_id ] = $entry->get_error_message();
