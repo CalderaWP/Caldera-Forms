@@ -237,7 +237,17 @@ class Caldera_Forms {
 			return false;
 		}
 
-		$page_forms = array();
+		$has_shortcode = has_shortcode( $post->post_content, 'caldera_form' );
+		if( $has_shortcode ){
+			return true;
+		}
+
+		$has_shortcode = has_shortcode( $post->post_content, 'caldera_form_modal' );
+		if( $has_shortcode ){
+			return true;
+		}
+
+
 		// check active widgets
 		$sidebars = get_option( 'sidebars_widgets' );
 		if ( is_array( $sidebars ) && ! empty( $sidebars ) ) {
@@ -249,35 +259,16 @@ class Caldera_Forms {
 						if ( false !== strpos( $setup, 'caldera_forms_widget-' ) ) {
 							$widget_instance = str_replace( 'caldera_forms_widget-', '', $setup );
 							if ( ! empty( $form_widgets[ $widget_instance ][ 'form' ] ) ) {
-								$form_id                = $form_widgets[ $widget_instance ][ 'form' ];
-								$page_forms[ $form_id ] = $form_id;
+								return true;
 							}
 						}
 					}
 				}
 			}
 		}
-		$codes = get_shortcode_regex();
-		preg_match_all( '/' . $codes . '/s', $post->post_content, $found );
-		if ( ! empty( $found[ 0 ][ 0 ] ) ) {
-			foreach ( $found[ 2 ] as $index => $code ) {
-				if ( 'caldera_form' === $code || $code == 'caldera_form_modal' ) {
-					if ( ! empty( $found[ 3 ][ $index ] ) ) {
-						$atts = shortcode_parse_atts( $found[ 3 ][ $index ] );
-						if ( isset( $atts[ 'id' ] ) ) {
-							$page_forms[ $atts[ 'id' ] ] = $atts[ 'id' ];
-						}
-					}
-				}
-			}
-		}
 
-		//none!
-		if ( empty( $page_forms ) ) {
-			return false;
-		}
 
-		return true;
+		return false;
 
 	}
 
