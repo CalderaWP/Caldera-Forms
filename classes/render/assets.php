@@ -257,8 +257,8 @@ class Caldera_Forms_Render_Assets {
 			'vue'        => self::make_url( 'vue/vue' ),
 			'vue-filter' => self::make_url( 'vue/vue-filter' ),
 			'form-front' => self::make_url( 'caldera-forms-front' ),
-            'api-client' => self::make_url( 'api/client.js' ),
-            'api-stores' => self::make_url( 'api/stores.js' )
+            'api-client' => self::make_url( 'api/client' ),
+            'api-stores' => self::make_url( 'api/stores' )
 		);
 
 

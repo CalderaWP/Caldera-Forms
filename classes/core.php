@@ -161,6 +161,8 @@ class Caldera_Forms {
 		/** Load magic tag system */
 		new Caldera_Forms_Magic();
 
+		//clear syncer cache on form update
+		add_action( 'caldera_forms_save_form', array( 'Caldera_Forms_Sync_Factory', 'clear_cache' ) );
 		/**
 		 * Runs after Caldera Forms core is initialized
 		 *
