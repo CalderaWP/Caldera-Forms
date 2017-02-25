@@ -261,12 +261,14 @@ class Caldera_Forms_Render_Assets {
             'api-stores' => self::make_url( 'api/stores' )
 		);
 
-
-
 		return $script_urls;
 	}
 
-
+	/**
+	 * Enqueue CSS/JS for all field types
+	 *
+	 * @since 1.5.0
+	 */
 	public static function enqueue_all_fields(){
 		self::maybe_register();
 

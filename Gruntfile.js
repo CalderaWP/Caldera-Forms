@@ -25,8 +25,7 @@ module.exports = function (grunt) {
                     to: "Stable tag: <%= pkg.version %>"
                 }]
 
-            },
-
+            }
         },
         uglify: {
             core: {
@@ -39,6 +38,36 @@ module.exports = function (grunt) {
                     ext: '.min.js'
                 }]
             },
+            vue: {
+                files: [{
+                    sourceMap: true,
+                    expand: true,
+                    cwd: 'assets/js/vue',
+                    src: '*.js',
+                    dest: 'assets/build/js/vue',
+                    ext: '.min.js'
+                }]
+            },
+            api: {
+                files: [{
+                    sourceMap: true,
+                    expand: true,
+                    cwd: 'assets/js/api',
+                    src: '*.js',
+                    dest: 'assets/build/js/api',
+                    ext: '.min.js'
+                }]
+            },
+            viewer: {
+                files: [{
+                    sourceMap: true,
+                    expand: true,
+                    cwd: 'assets/js/viewer',
+                    src: '*.js',
+                    dest: 'assets/build/js/viewer',
+                    ext: '.min.js'
+                }]
+            }
         },
         cssmin: {
             core: {
