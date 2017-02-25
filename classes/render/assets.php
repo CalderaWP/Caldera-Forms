@@ -537,6 +537,7 @@ class Caldera_Forms_Render_Assets {
 
 		}
 
+		wp_localize_script( self::field_script_to_localize_slug(), 'cfValidatorLocal', get_locale() );
 		wp_localize_script(  self::field_script_to_localize_slug(), 'CF_API_DATA', array(
 			'rest' => array(
 				'root' => esc_url_raw( Caldera_Forms_API_Util::url() ),
