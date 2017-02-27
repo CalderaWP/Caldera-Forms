@@ -1122,6 +1122,7 @@ class Caldera_Forms {
 				"name"        => __( 'Conditional Recipient', 'caldera-forms' ),
 				"description" => __( 'Send email to different recipients depending on conditions', 'caldera-forms' ),
 				"template"    => CFCORE_PATH . "processors/conditional_recipient/config.php",
+				'post_processor' => array( 'Caldera_Forms_Processor_Conditional_Recipient', 'post_processor' ),
 				"single"      => false
 			),
 			'increment_capture' => array(
