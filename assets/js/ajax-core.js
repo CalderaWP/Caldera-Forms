@@ -214,6 +214,15 @@ jQuery(function($){
 
                     }
                 }
+
+                if ( 'undefined' != obj.data.scroll ) {
+                    var $scrollToEl = $( document.getElementById( obj.data.scroll ) );
+                    $('html,body').animate({
+                        scrollTop: $scrollToEl.offset().top - $scrollToEl.outerHeight() - 12
+                    }, 300);
+                }
+
+
                 // trigger global event
                 $( document ).trigger( 'cf.submission', obj );
                 $( document ).trigger( 'cf.' + obj.data.type );

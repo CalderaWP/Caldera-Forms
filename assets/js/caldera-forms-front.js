@@ -7297,6 +7297,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
              var el = document.getElementById(field.id);
              if (null != el) {
                  var $el = $(el);
+                 $el.rangeslider('destroy');
                  $el.rangeslider(rangeSliders[field.id].init);
              }
          });
