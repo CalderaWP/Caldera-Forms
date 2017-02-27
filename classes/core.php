@@ -3757,16 +3757,20 @@ class Caldera_Forms {
 			$field_wrapper_class .= " " . implode( ' ', $field_classes[ 'field_error' ] );
 		}
 
+		if ( ! empty( $field[ 'hide_label' ] ) ) {
+			$field_classes[ 'field_label' ][] = 'screen-reader-text';
+		}
+
 		$field_structure = array(
 			"field"             => $field,
 			"id"                => $field[ 'ID' ],//'fld_' . $field['slug'],
 			"name"              => $field[ 'ID' ],//$field['slug'],
 			"wrapper_before"    => "<div role=\"field\" data-field-wrapper=\"" . $field[ 'ID' ] . "\" class=\"" . $field_wrapper_class . "\">\r\n",
 			"field_before"      => "<div class=\"" . $field_input_class . "\">\r\n",
-			"label_before"      => ( empty( $field[ 'hide_label' ] ) ? "<label id=\"" . $field[ 'ID' ] . "Label\" for=\"" . $field[ 'ID' ] . '_' . $current_form_count . "\" class=\"" . implode( ' ', $field_classes[ 'field_label' ] ) . "\">" : null ),
-			"label"             => ( empty( $field[ 'hide_label' ] ) ? $field[ 'label' ] : null ),
+			"label_before"      =>  "<label id=\"" . $field[ 'ID' ] . "Label\" for=\"" . $field[ 'ID' ] . '_' . $current_form_count . "\" class=\"" . implode( ' ', $field_classes[ 'field_label' ] ) . "\">",
+			"label"             =>  $field[ 'label' ],
 			"label_required"    => ( empty( $field[ 'hide_label' ] ) ? ( ! empty( $field[ 'required' ] ) ? " <span aria-hidden=\"true\" role=\"presentation\" class=\"" . implode( ' ', $field_classes[ 'field_required_tag' ] ) . "\" style=\"color:#ee0000;\">*</span>" : "" ) : null ),
-			"label_after"       => ( empty( $field[ 'hide_label' ] ) ? "</label>" : null ),
+			"label_after"       => "</label>",
 			"field_placeholder" => ( ! empty( $field[ 'hide_label' ] ) ? 'placeholder="' . htmlentities( $field[ 'label' ] ) . '"' : null ),
 			"field_required"    => ( ! empty( $field[ 'required' ] ) ? 'required="required"' : null ),
 			"field_value"       => null,
@@ -3775,14 +3779,9 @@ class Caldera_Forms {
 			"wrapper_after"     => "</div>\r\n",
 			"aria"              => array()
 		);
-		// if has label
-		if ( empty( $field[ 'hide_label' ] ) ) {
-			// visible label, set labelled by
-			$field_structure[ 'aria' ][ 'labelledby' ] = $field[ 'ID' ] . 'Label';
-		} else {
-			// hidden label, aria label instead
-			$field_structure[ 'aria' ][ 'label' ] = $field[ 'label' ];
-		}
+
+		$field_structure[ 'aria' ][ 'labelledby' ] = $field[ 'ID' ] . 'Label';
+
 		// if has caption
 		if ( ! empty( $field[ 'caption' ] ) ) {
 			$field_structure[ 'aria' ][ 'describedby' ] = $field[ 'ID' ] . 'Caption';
