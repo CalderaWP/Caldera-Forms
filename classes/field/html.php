@@ -60,7 +60,7 @@ abstract  class Caldera_Forms_Field_HTML   {
 	 * @return string
 	 */
 	protected static function place_holder_string( array  $field, $placeholder = '' ){
-		if( empty( $placeholder ) ){
+		if( empty( $placeholder ) && ! empty( $field[ 'config' ][ 'placeholder' ] ) ){
 			$placeholder = $field[ 'config' ][ 'placeholder' ];
 		}
 
