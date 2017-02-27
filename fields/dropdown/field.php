@@ -60,3 +60,6 @@ $attr_string =  caldera_forms_field_attributes( $attrs, $field, $form );
 		<?php echo $field_caption; ?>
 	<?php echo $field_after; ?>
 <?php echo $wrapper_after; ?>
+
+
+<div data-value="7"><img src="/"></div>

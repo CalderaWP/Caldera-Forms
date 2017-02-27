@@ -55,12 +55,17 @@ abstract  class Caldera_Forms_Field_HTML   {
 	 * @since 1.5.0
 	 *
 	 * @param array $field Field config
+	 * @param string $placeholder Optional. Ovveride for field's configured placeholder
 	 *
 	 * @return string
 	 */
-	protected static function place_holder_string( array  $field ){
-		if ( ! empty( $field[ 'config' ][ 'placeholder' ] ) ) {
-			return 'placeholder="' . esc_attr( Caldera_Forms::do_magic_tags( $field[ 'config' ][ 'placeholder' ] ) ) . '"';
+	protected static function place_holder_string( array  $field, $placeholder = '' ){
+		if( empty( $placeholder ) ){
+			$placeholder = $field[ 'config' ][ 'placeholder' ];
+		}
+
+		if ( ! empty( $placeholder ) ) {
+			return 'placeholder="' . esc_attr( Caldera_Forms::do_magic_tags( $placeholder ) ) . '"';
 		}
 
 		return '';

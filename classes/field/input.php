@@ -53,6 +53,11 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 			'data-type' => $type
 		);
 
+
+		if( ! empty( $field[ 'hide_label' ] ) && empty( $place_holder ) ){
+			$place_holder  = self::place_holder_string( $field, $field[ 'label' ] );
+		}
+
 		if( 'number' == $type ){
 			foreach( array(
 				'min',
