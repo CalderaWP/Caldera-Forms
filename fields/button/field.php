@@ -24,7 +24,9 @@ if($field['config']['type'] == 'next' || $field['config']['type'] == 'prev'){
 }
 
 $attrs[ 'class' ] = $field[ 'config' ][ 'class' ];
-
+if( 'submit' !== $btnType ){
+	$attrs[ 'type' ] = 'button';
+}
 
 $attr_string_button =  caldera_forms_field_attributes( $attrs, $field, $form );
 
