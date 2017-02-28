@@ -652,4 +652,12 @@ class Caldera_Forms_Render_Assets {
 
 		return self::make_slug( $localize_slug );
 	}
+
+	public static function enqueue_modals(){
+		self::maybe_register();
+		self::enqueue_style( 'modals' );
+		self::enqueue_style( 'modals-theme' );
+		self::enqueue_script( 'modals' );
+
+	}
 }

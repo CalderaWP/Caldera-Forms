@@ -275,6 +275,37 @@ class Caldera_Forms {
 	}
 
 	/**
+	 * @param $atts
+	 * @param $content
+	 * @param $form
+	 *
+	 * @return string
+	 */
+	protected static function modal_button( $atts, $content, $form, $modal_id ){
+		if ( empty( $content ) ) {
+			$content = $form[ 'name' ];
+		}
+
+		$tag_atts = sprintf( 'data-form="%1s"', $form[ 'ID' ] );
+
+		if ( ! empty( $atts[ 'width' ] ) ) {
+			$tag_atts .= sprintf( ' data-width="%1s"', $atts[ 'width' ] );
+		}
+		if ( ! empty( $atts[ 'height' ] ) ) {
+			$tag_atts .= sprintf( ' data-height="%1s"', $atts[ 'height' ] );
+		}
+
+
+		$title = __( sprintf( 'Click to open the form %1s in a modal', $form[ 'name' ] ), 'caldera-forms' );
+		if ( ! empty( $atts[ 'type' ] ) && $atts[ 'type' ] == 'button' ) {
+			$tag_atts .= sprintf( 'data-remodal-target="%1s"', $modal_id );
+			return sprintf( '<button class="caldera-forms-modal" %s title="%s">%s</button>', $tag_atts, $title, $content );
+		} else {
+			return sprintf( '<a href="%s" class="caldera-forms-modal" %s title="%s">%s</a>', '#' . $modal_id, $tag_atts, esc_attr( $title ), $content );
+		}
+	}
+
+	/**
 	 * Load a field from form
 	 *
 	 * @since 1.4.2
@@ -3629,8 +3660,6 @@ class Caldera_Forms {
 	 *
 	 * @since unknown
 	 *
-	 * @deprecated 1.3.1
-	 *
 	 * @param string|array $atts Shortcode atts or form ID
 	 * @param string $content Content to use in trigger link.
 	 *
@@ -3650,19 +3679,11 @@ class Caldera_Forms {
 		if ( ! empty( $atts[ 'entry' ] ) ) {
 			$form_atts[ 'entry' ] = $atts[ 'entry' ];
 		}
-		$modal_button_classes = array(
-			"cf_modal_button"
-		);
 
-		if ( ! empty( $atts[ 'classes' ] ) ) {
-			$modal_button_classes = array_merge( $modal_button_classes, explode( ',', $atts[ 'classes' ] ) );
-		}
+		$modal_id = 'cf-modal-' . uniqid( $form[ 'ID' ] );
 
-		$modal_id = uniqid( $form[ 'ID' ] );
+		$out = self::modal_button( $atts, $content, $form, $modal_id );
 
-		$out = "<a class=\" " . implode( ' ', $modal_button_classes ) . "\" href=\"#" . $modal_id . "\">" . $content . "</a>\r\n";
-
-		$current_state = 'style="display:none;"';
 		if(!empty($_GET['cf_er'])){
 			$transdata = Caldera_Forms_Transient::get_transient( $_GET[ 'cf_er' ] );
 			if($transdata['transient'] == $_GET['cf_er']){
@@ -3674,32 +3695,17 @@ class Caldera_Forms {
 			unset( $_GET[ 'cf_su' ] );
 		}
 
-		$width = '';
-		if ( ! empty( $atts[ 'width' ] ) ) {
-			$width = ' width: ' . floatval( $atts[ 'width' ] ) . 'px; margin-left: -' . ( floatval( $atts[ 'width' ] ) / 2 ) . 'px;';
-		}
-
 		ob_start();
 		?>
-		<div id="<?php echo esc_attr( $modal_id ); ?>"
-		     class="caldera-front-modal-container" <?php echo $current_state; ?>
-		     data-form-id="<?php echo esc_attr( $modal_id ); ?>">
-			<div class="caldera-backdrop"></div>
-			<div id="<?php echo $modal_id; ?>_modal_wrap" tabindex="-1"
-			     arialabelled-by="<?php echo $modal_id; ?>_modal_label"
-			     class="caldera-modal-wrap caldera-front-modal-wrap" style="display: block; <?php echo $width; ?>">
-				<div class="caldera-modal-title" id="<?php echo $modal_id; ?>_modal_title" style="display: block;">
-					<a href="#close" class="caldera-modal-closer caldera-front-modal-closer" data-dismiss="modal"
-					   aria-hidden="true" id="<?php echo $modal_id; ?>_modal_closer">&times;</a>
-					<h3 class="modal-label"
-					    id="<?php echo $modal_id; ?>_modal_label"><?php echo $form[ 'name' ]; ?></h3>
-				</div>
-				<div class="caldera-modal-body caldera-front-modal-body" id="<?php echo $modal_id; ?>_modal_body">
-					<?php echo self::render_form( $form_atts ); ?>
-				</div>
+		<div data-remodal-id="<?php echo esc_attr( $modal_id ); ?>"  id="<?php echo esc_attr( $modal_id ); ?>" class="remodal caldera-front-modal-container" data-form-id="<?php echo esc_attr( $modal_id ); ?>"  data-remodal-options="hashTracking: true, closeOnOutsideClick: false">
+			<button data-remodal-action="close" class="remodal-close"></button>
+			<div class="caldera-modal-body caldera-front-modal-body" id="<?php echo $modal_id; ?>_modal_body">
+				<?php echo self::render_form( $form_atts ); ?>
 			</div>
 		</div>
+
 		<?php
+		Caldera_Forms_Render_Assets::enqueue_modals();
 		self::$footer_modals .= ob_get_clean();
 
 		return $out;
@@ -4638,42 +4644,11 @@ class Caldera_Forms {
 			return;
 		}
 		if ( $shortcode === 'caldera_form_modal' ) {
-			$atts[ 'modal' ] = true;
+			return self::render_modal_form( $atts, $content );
 		}
 
-		if ( isset( $atts[ 'modal' ] ) && $atts[ 'modal' ] ) {
-			$form = Caldera_Forms_Forms::get_form( $atts[ 'id' ] );
-			if ( ! is_array( $form ) ) {
-				return;
-			}
+		$form = self::render_form( $atts );
 
-			if ( empty( $content ) ) {
-				$content = $form[ 'name' ];
-			}
-
-			$tag_atts = sprintf( 'data-form="%1s"', $form[ 'ID' ] );
-			if ( empty( $atts[ 'preview' ] ) ) {
-				$tag_atts .= sprintf( 'data-remodal-target="modal-%1s"', $form[ 'ID' ] );
-			}
-			if ( ! empty( $atts[ 'width' ] ) ) {
-				$tag_atts .= sprintf( ' data-width="%1s"', $atts[ 'width' ] );
-			}
-			if ( ! empty( $atts[ 'height' ] ) ) {
-				$tag_atts .= sprintf( ' data-height="%1s"', $atts[ 'height' ] );
-			}
-
-
-			$title = __( sprintf( 'Click to open the form %1s in a modal', $form[ 'name' ] ), 'caldera-forms' );
-			if ( ! empty( $atts[ 'type' ] ) && $atts[ 'type' ] == 'button' ) {
-				$form = sprintf( '<button class="caldera-forms-modal" %1s title="%2s">%3s</button>', $tag_atts, $title, $content );
-			} else {
-				$form = sprintf( '<a href="#" class="caldera-forms-modal" %1s title="%2s">%3s</a>', $tag_atts, $title, $content );
-			}
-
-			Caldera_Forms_Render_Assets::enqueue_script( 'dynamic' );
-		} else {
-			$form = self::render_form( $atts );
-		}
 
 		return $form;
 
