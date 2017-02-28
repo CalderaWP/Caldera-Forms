@@ -372,9 +372,6 @@ class Caldera_Forms_Render_Assets {
             self::register_script($script_key, $script_url );
 		}
 
-		// localize for dynamic form generation
-		wp_localize_script( 'cf-dynamic', 'cfModals', $script_style_urls );
-
 		foreach ( self::get_field_styles() as $style ){
 			$slug = self::make_style_slug( $style );
 			self::$registered[ 'styles'][] = $slug;
@@ -653,6 +650,11 @@ class Caldera_Forms_Render_Assets {
 		return self::make_slug( $localize_slug );
 	}
 
+	/**
+	 * Enqueue CSS/JS for modals
+	 *
+	 * @since 1.5.0.4
+	 */
 	public static function enqueue_modals(){
 		self::maybe_register();
 		self::enqueue_style( 'modals' );
