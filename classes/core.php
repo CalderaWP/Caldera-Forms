@@ -275,9 +275,13 @@ class Caldera_Forms {
 	}
 
 	/**
-	 * @param $atts
-	 * @param $content
-	 * @param $form
+	 * Create a modal button's HTML
+	 *
+	 * @since 1.5.0.4
+	 *
+	 * @param array $atts Form atts
+	 * @param string $content Content for opener
+	 * @param array $form Form config
 	 *
 	 * @return string
 	 */
@@ -4643,7 +4647,8 @@ class Caldera_Forms {
 		if ( ! isset( $atts[ 'id' ] ) ) {
 			return;
 		}
-		if ( $shortcode === 'caldera_form_modal' ) {
+
+		if ( $shortcode === 'caldera_form_modal' || ( ! empty( $atts[ 'modal' ] ) && $atts[ 'modal' ] ) ) {
 			return self::render_modal_form( $atts, $content );
 		}
 
