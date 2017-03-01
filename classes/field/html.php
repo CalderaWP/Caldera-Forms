@@ -60,11 +60,11 @@ abstract  class Caldera_Forms_Field_HTML   {
 	 * @return string
 	 */
 	protected static function place_holder_string( array  $field, $placeholder = '' ){
-		if( empty( $placeholder ) && ! empty( $field[ 'config' ][ 'placeholder' ] ) ){
+		if( empty( $placeholder ) && ( is_numeric( $field[ 'config' ][ 'placeholder' ] ) || ! empty( $field[ 'config' ][ 'placeholder' ] ) ) ){
 			$placeholder = $field[ 'config' ][ 'placeholder' ];
 		}
 
-		if ( ! empty( $placeholder ) ) {
+		if ( ! empty( $placeholder ) || is_numeric( $placeholder ) ) {
 			return 'placeholder="' . esc_attr( Caldera_Forms::do_magic_tags( $placeholder ) ) . '"';
 		}
 
