@@ -529,7 +529,7 @@ class Caldera_Forms_Render_Assets {
 		$should_minify = self::should_minify();
 		if( $should_minify  ){
 
-			self::enqueue_script( 'form-front', array( self::make_slug( 'validator' ) ) );
+			self::enqueue_script( 'form-front', array( self::make_slug( 'validator' ), self::make_slug( 'validator-i18n' ) ) );
 			foreach ( array(
 				'validator',
 				'field-config',
@@ -546,7 +546,7 @@ class Caldera_Forms_Render_Assets {
 		}
 
 		if ( ! empty( self::$locale  ) ) {
-			wp_localize_script( self::field_script_to_localize_slug(), 'cfValidatorLocal', self::$locale  );
+			//wp_localize_script( self::field_script_to_localize_slug(), 'cfValidatorLocal', self::$locale  );
 		}
 		wp_localize_script(  self::field_script_to_localize_slug(), 'CF_API_DATA', array(
 			'rest' => array(

@@ -35,12 +35,6 @@ var cf_jsfields_init, cf_presubmit;
 			}
 		});
 
-		if( typeof cfValidatorLocal !== 'undefined' ){
-			setLocale( cfValidatorLocal );
-		}
-		if( typeof cfModals !== 'undefined' && typeof cfModals.config !== 'undefined' && typeof cfModals.config.validator_lang !== 'undefined' ){
-			setLocale( cfModals.config.validator_lang );
-		}
 		window.Parsley.on('field:validated', function() {
 			setTimeout( function(){$(document).trigger('cf.error');}, 15 );
 		});
@@ -55,6 +49,8 @@ var cf_jsfields_init, cf_presubmit;
 			if ('undefined' != typeof window.Parsley._validatorRegistry.catalog[locale] ){
 				window.Parsley.setLocale( locale );
 			}
+				console.log( window.Parsley._validatorRegistry.catalog);
+
 
 		}
 
