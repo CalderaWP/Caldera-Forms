@@ -24,6 +24,15 @@ class Caldera_Forms_Render_Assets {
 
 	protected static $enqueued;
 
+	/**
+	 * Local language code
+	 *
+	 * @since 1.5.0.5
+	 *
+	 * @var string
+	 */
+	protected static $locale;
+
 
 	/**
 	 * Enqueue styles for field type
@@ -330,7 +339,7 @@ class Caldera_Forms_Render_Assets {
 			}
 			if( !empty( $locale_file ) ){
 				$script_urls['validator-i18n'] = CFCORE_URL . 'assets/js/i18n/' . $locale_file . '.js';
-				$script_style_urls['config']['validator_lang'] = $locale_file;
+				$script_style_urls['config']['validator_lang'] = self::$locale =  $locale_file;
 			}
 
 		}
@@ -536,7 +545,9 @@ class Caldera_Forms_Render_Assets {
 
 		}
 
-		wp_localize_script( self::field_script_to_localize_slug(), 'cfValidatorLocal', get_locale() );
+		if ( ! empty( self::$locale  ) ) {
+			wp_localize_script( self::field_script_to_localize_slug(), 'cfValidatorLocal', self::$locale  );
+		}
 		wp_localize_script(  self::field_script_to_localize_slug(), 'CF_API_DATA', array(
 			'rest' => array(
 				'root' => esc_url_raw( Caldera_Forms_API_Util::url() ),
