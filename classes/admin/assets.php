@@ -48,6 +48,13 @@ class Caldera_Forms_Admin_Assets {
 	 */
 	public static function admin_common(){
 		self::maybe_register_all_admin();
+		Caldera_Forms_Render_Assets::maybe_register();
+		Caldera_Forms_Render_Assets::enqueue_script( 'validator' );
+		$locale = get_locale();
+		if( $locale !== 'en_US' ){
+			Caldera_Forms_Render_Assets::enqueue_validator_i18n();
+		}
+
 		Caldera_Forms_Render_Assets::enqueue_style( 'grid' );
 		self::enqueue_style( 'admin' );
 		wp_localize_script( self::slug( 'admin' ), 'CF_ADMIN', array(
@@ -56,6 +63,8 @@ class Caldera_Forms_Admin_Assets {
 				'root' => esc_url_raw( Caldera_Forms_API_Util::url() ),
 			)
 		) );
+
+
 		self::enqueue_style( 'modal' );
 		self::enqueue_script( 'admin' );
 		Caldera_Forms_Render_Assets::enqueue_style( 'field' );
@@ -71,6 +80,11 @@ class Caldera_Forms_Admin_Assets {
 	 */
 	public static function register_scripts(){
 		$version = Caldera_Forms::VERSION;
+		$locale = get_locale();
+		if( $locale !== 'en_US' ){
+			Caldera_Forms_Render_Assets::register_validator_i18n( $locale );
+		}
+
 		wp_register_script( self::slug( 'shortcode-insert' ), Caldera_Forms_Render_Assets::make_url( 'shortcode-insert' ), array( 'jquery', 'wp-color-picker' ), $version );
 
 

@@ -324,24 +324,7 @@ class Caldera_Forms_Render_Assets {
 		// check to see language and include the language add on
 		$locale = get_locale();
 		if( $locale !== 'en_US' ){
-			// not default lets go find if there is a translation available
-			if( file_exists( CFCORE_PATH . 'assets/js/i18n/' . $locale . '.js' ) ){
-				// nice- its there
-				$locale_file = $locale;
-			}elseif ( file_exists( CFCORE_PATH . 'assets/js/i18n/' . strtolower( $locale ) . '.js' ) ){
-				$locale_file = strtolower( $locale );
-			}elseif ( file_exists( CFCORE_PATH . 'assets/js/i18n/' . strtolower( str_replace('_', '-', $locale ) ) . '.js' ) ){
-				$locale_file = strtolower( str_replace('_', '-', $locale ) );
-			}elseif ( file_exists( CFCORE_PATH . 'assets/js/i18n/' . strtolower( substr( $locale,0, 2 ) ) . '.js' ) ){
-				$locale_file = strtolower( substr( $locale,0, 2 ) );
-			}elseif ( file_exists( CFCORE_PATH . 'assets/js/i18n/' . strtolower( substr( $locale,3 ) ) . '.js' ) ){
-				$locale_file = strtolower( substr( $locale,3 ) );
-			}
-			if( !empty( $locale_file ) ){
-				$script_urls['validator-i18n'] = CFCORE_URL . 'assets/js/i18n/' . $locale_file . '.js';
-				$script_style_urls['config']['validator_lang'] = self::$locale =  $locale_file;
-			}
-
+			self::register_validator_i18n( $locale );
 		}
 
 		/**
@@ -377,7 +360,10 @@ class Caldera_Forms_Render_Assets {
 			if( empty( $script_url ) ){
 				continue;
 			}
-
+			if( 'validator' == $script_key ){
+				wp_register_script( self::make_slug( $script_key ), $script_url, array(), CFCORE_VER, false );
+				continue;
+			}
             self::register_script($script_key, $script_url );
 		}
 
@@ -447,8 +433,15 @@ class Caldera_Forms_Render_Assets {
 		$slug = self::make_slug( $script );
 		if ( ! wp_script_is( $slug, 'enqueued') && wp_script_is( $slug, 'registered' ) ) {
 
-				self::$enqueued[ 'styles' ][] = $slug;
-				wp_enqueue_script( $slug, $script, $depts, CFCORE_VER, true );
+			self::$enqueued[ 'styles' ][] = $slug;
+			$in_footer                    = true;
+			if ( in_array( $slug, array( self::make_slug( 'validator' ) ) ) ) {
+				$depts = array();
+				$in_footer = false;
+			}
+
+
+			wp_enqueue_script( $slug, $script, $depts, CFCORE_VER, $in_footer );
 
 
 		}elseif ( wp_script_is( $script, 'registered' ) ) {
@@ -531,7 +524,6 @@ class Caldera_Forms_Render_Assets {
 
 			self::enqueue_script( 'form-front', array( self::make_slug( 'validator' ), self::make_slug( 'validator-i18n' ) ) );
 			foreach ( array(
-				'validator',
 				'field-config',
 				'field',
 				'init'
@@ -545,9 +537,7 @@ class Caldera_Forms_Render_Assets {
 
 		}
 
-		if ( ! empty( self::$locale  ) ) {
-			//wp_localize_script( self::field_script_to_localize_slug(), 'cfValidatorLocal', self::$locale  );
-		}
+
 		wp_localize_script(  self::field_script_to_localize_slug(), 'CF_API_DATA', array(
 			'rest' => array(
 				'root' => esc_url_raw( Caldera_Forms_API_Util::url() ),
@@ -589,7 +579,6 @@ class Caldera_Forms_Render_Assets {
 
         $depts = array('jquery');
         if ('field' == $script_key) {
-            $depts[] = self::make_slug('validator');
             $depts[] = self::make_slug('field-config');
         } elseif ('field-config' == $script_key) {
             $depts[] = self::make_slug('validator');
@@ -672,5 +661,35 @@ class Caldera_Forms_Render_Assets {
 		self::enqueue_style( 'modals-theme' );
 		self::enqueue_script( 'modals' );
 
+	}
+
+	public static function register_validator_i18n( $locale = null ){
+		if( ! $locale ){
+			$locale = get_locale();
+		}
+
+		if( file_exists( CFCORE_PATH . 'assets/js/i18n/' . $locale . '.js' ) ){
+			// no need to check other possibilities- break if/else early
+
+		}elseif ( file_exists( CFCORE_PATH . 'assets/js/i18n/' . strtolower( $locale ) . '.js' ) ){
+			$locale = strtolower( $locale );
+		}elseif ( file_exists( CFCORE_PATH . 'assets/js/i18n/' . strtolower( str_replace('_', '-', $locale ) ) . '.js' ) ){
+			$locale = strtolower( str_replace('_', '-', $locale ) );
+		}elseif ( file_exists( CFCORE_PATH . 'assets/js/i18n/' . strtolower( substr( $locale,0, 2 ) ) . '.js' ) ){
+			$locale = strtolower( substr( $locale,0, 2 ) );
+		}elseif ( file_exists( CFCORE_PATH . 'assets/js/i18n/' . strtolower( substr( $locale,3 ) ) . '.js' ) ){
+			$locale = strtolower( substr( $locale,3 ) );
+		}
+
+		wp_register_script( self::make_slug( 'validator-i18n' ), CFCORE_URL . 'assets/js/i18n/' . $locale . '.js', false, CFCORE_VER, true );
+
+		self::$locale = $locale;
+		return $locale;
+
+	}
+
+	public static function enqueue_validator_i18n( ){
+
+		self::enqueue_script( self::make_slug( 'validator-i18n' ) );
 	}
 }
