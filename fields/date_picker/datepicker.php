@@ -29,7 +29,7 @@ if( !empty( $field['config']['end_date'] ) ){
 if( !empty( $field['config']['language'] ) ){
 	if( file_exists( CFCORE_PATH . 'fields/date_picker/js/locales/bootstrap-datepicker.' . $field['config']['language'] . '.js' ) ){
 		$attrs[ 'data-date-language' ] = $field['config']['language'];
-		wp_enqueue_script( 'cf-frontend-date-picker-lang', CFCORE_URL . 'fields/date_picker/js/locales/bootstrap-datepicker.' . $field['config']['language'] . '.js', array('cf-field'), null, true);
+		wp_enqueue_script( 'cf-frontend-date-picker-lang', CFCORE_URL . 'fields/date_picker/js/locales/bootstrap-datepicker.' . $field['config']['language'] . '.js', array( Caldera_Forms_Render_Assets::field_script_to_localize_slug() ), null, true);
 	}
 }
 
