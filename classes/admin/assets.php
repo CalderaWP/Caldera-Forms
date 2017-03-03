@@ -80,17 +80,14 @@ class Caldera_Forms_Admin_Assets {
 	 */
 	public static function register_scripts(){
 		$version = Caldera_Forms::VERSION;
-		$locale = get_locale();
-		if( $locale !== 'en_US' ){
-			Caldera_Forms_Render_Assets::register_validator_i18n( $locale );
-		}
+		Caldera_Forms_Render_Assets::maybe_validator_i18n( true );
 
 		wp_register_script( self::slug( 'shortcode-insert' ), Caldera_Forms_Render_Assets::make_url( 'shortcode-insert' ), array( 'jquery', 'wp-color-picker' ), $version );
-
 
 		wp_register_script( self::slug( 'baldrick' ), Caldera_Forms_Render_Assets::make_url( 'wp-baldrick-full' ), array( 'jquery' ), $version );
 		wp_register_script( self::slug( 'admin' ), Caldera_Forms_Render_Assets::make_url( 'admin' ), array(
 			self::slug( 'baldrick' ),
+			Caldera_Forms_Render_Assets::make_slug( 'conditionals' ),
 			'wp-pointer',
 			'password-strength-meter'
 		), $version );
