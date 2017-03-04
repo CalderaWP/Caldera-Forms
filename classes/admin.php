@@ -72,7 +72,7 @@ class Caldera_Forms_Admin {
 		add_action( 'admin_menu', array( $this, 'register_admin_page' ), 9 );
 
 		// Add admin scritps and styles
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_stylescripts' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_stylescripts' ), 1 );
 		
 		// add element & fields filters
 		add_filter('caldera_forms_get_panel_extensions', array( $this, 'get_panel_extensions'), 1);
@@ -1047,7 +1047,6 @@ class Caldera_Forms_Admin {
 
 		$screen = get_current_screen();
 		Caldera_Forms_Render_Assets::register();
-		Caldera_Forms_Render_Assets::enqueue_all_fields();
 		Caldera_Forms_Admin_Assets::register_scripts();
 		Caldera_Forms_Admin_Assets::register_styles();
 
@@ -1076,14 +1075,6 @@ class Caldera_Forms_Admin {
 		} else {
 
 			Caldera_Forms_Render_Assets::enqueue_all_fields();
-
-
-			wp_enqueue_style( 'cf-field-styles' );
-
-			wp_enqueue_script( 'cf-field' );
-			wp_enqueue_script( 'cf-conditionals' );
-			wp_enqueue_script( 'cf-validator' );
-			wp_enqueue_script( 'cf-init' );
 
 
 			if ( ! empty( $_GET[ 'edit-entry' ] ) ) {

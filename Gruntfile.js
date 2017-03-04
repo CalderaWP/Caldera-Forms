@@ -138,7 +138,6 @@ module.exports = function (grunt) {
             form: {
                 src: [
                     'assets/js/fields.js',
-                    'assets/js/parsley.js',
                     'assets/js/field-config.js',
                     'assets/js/frontend-script-init.js',
                 ],
