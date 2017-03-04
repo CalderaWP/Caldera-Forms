@@ -13,6 +13,12 @@ $attrs = array(
 
 );
 
+$required = '';
+if( $field_structure['field_required'] ){
+	$attrs[ 'required'] = true;
+	$required = 'required';
+}
+
 // prevent errors for fields of previous version
 $start_end_atts = '';
 if( !empty( $field['config']['start_view'] ) ){
@@ -45,7 +51,7 @@ $attr_string =  caldera_forms_field_attributes( $attrs, $field, $form );
 <?php echo $wrapper_before; ?>
 	<?php echo $field_label; ?>
 	<?php echo $field_before; ?>
-		<input  <?php echo  $attr_string . ' ' . $field_structure['aria']; ?>  />
+		<input  <?php echo  $attr_string . ' ' . $field_structure['aria'] . ' ' . $required; ?>  />
 		<?php echo $field_caption; ?>
 	<?php echo $field_after; ?>
 <?php echo $wrapper_after; ?>
