@@ -1,8 +1,7 @@
-<div class="caldera-config-group">
-	<label for="{{_id}}_value">
-        <?php esc_html_e('Value', 'caldera-forms'); ?>
-    </label>
-	<div class="caldera-config-field">
-		<input id="{{_id}}_value" type="text" class="block-input field-config magic-tag-enabled" name="{{_name}}[default]" value="{{default}}">
-	</div>
-</div>
+<?php
+echo Caldera_Forms_Admin_UI::fields( array(
+	Caldera_Forms_Admin_UI::text_field(
+		'value',
+		__( 'Value', 'caldera-forms' )
+	)
+), 'hidden' )

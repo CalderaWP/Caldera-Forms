@@ -24,7 +24,6 @@ $fields = array(
 
 ?>
 
-
 <div class="caldera-config-group">
 	<label for="{{_id}}_size">
         <?php esc_html_e('Size', 'caldera-forms'); ?>
