@@ -1,38 +1,28 @@
-<div class="caldera-config-group">
-	<label>
-        <?php esc_html_e('Email Field', 'caldera-forms'); ?>
-    </label>
-	<div class="caldera-config-field">
-		{{{_field slug="email" type="email"}}}
-	</div>
-</div>
-
 <?php
-$avatar_defaults = array(
-	'mystery' => __('Mystery Man'),
-	'blank' => __('Blank'),
-	'gravatar_default' => __('Gravatar Logo'),
-	'identicon' => __('Identicon (Generated)'),
-	'wavatar' => __('Wavatar (Generated)'),
-	'monsterid' => __('MonsterID (Generated)'),
-	'retro' => __('Retro (Generated)')
+
+$fields = array(
+	Caldera_Forms_Admin_UI::select_field(
+		'email',
+		__( 'Email Field', 'caldera-forms' ),
+		'{{{_field slug="email" type="email"}}}'
+	),
+	Caldera_Forms_Admin_UI::select_field(
+		'fallback',
+		__( 'Default Gravatar', 'caldera-forms' ),
+		array(
+			'mystery' => __('Mystery Man'),
+			'blank' => __('Blank'),
+			'gravatar_default' => __('Gravatar Logo'),
+			'identicon' => __('Identicon (Generated)'),
+			'wavatar' => __('Wavatar (Generated)'),
+			'monsterid' => __('MonsterID (Generated)'),
+			'retro' => __('Retro (Generated)')
+		)
+
+	)
 );
 
 ?>
-<div class="caldera-config-group">
-	<label for="{{_id}}_fallback">
-        <?php esc_html_e('Fallback', 'caldera-forms'); ?>
-    </label>
-	<div class="caldera-config-field">
-
-		<select class="field-config block-input" name="{{_name}}[generator]" id="{{_id}}_fallback">
-		<?php foreach($avatar_defaults as $av_type=>$av_name){
-			echo "<option value=\"".$av_type."\" {{#is generator value=\"".$av_type."\"}}selected=\"selected\"{{/is}}>".$av_name."</option>\r\n";
-		}
-		?>
-		</select> 
-	</div>
-</div>
 
 
 <div class="caldera-config-group">
