@@ -152,7 +152,7 @@ function CFFormEditStore( form ) {
          * @returns {*|{}}
          */
         addField : function (fieldId,fieldType) {
-            form.fields[fieldId] = fieldFactory(fieldId,fieldType);
+            form.fields[fieldId] = this.fieldFactory(fieldId,fieldType);
             return this.getField(fieldId);
         },
         /**

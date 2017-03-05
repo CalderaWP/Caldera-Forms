@@ -34,7 +34,7 @@ CFObj.prototype.fieldKeys = [
  * @returns {boolean}
  */
 CFObj.prototype.has = function (object, key) {
-        return object ? hasOwnProperty.call(object, key) : false;
+    return object ? hasOwnProperty.call(object, key) : false;
 };
 
 /**
@@ -57,15 +57,15 @@ CFObj.prototype.emptyObject = function (obj) {
  * @param type
  * @returns {{ID: *, type: *, config: {}}}
  */
-CFObj.prototype.fieldFactory =-function (fieldId, type) {
-        var field = {
+CFObj.prototype.fieldFactory = function (fieldId, type) {
+    var field = {
         ID: fieldId,
         type: type,
         config: {}
     };
 
-    fieldKeys.forEach(function (index) {
-        if (!has(field, index)) {
+    this.fieldKeys.forEach(function (index) {
+        if( field.hasOwnProperty( index ) ){
             field[index] = '';
         }
     });

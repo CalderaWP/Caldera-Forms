@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.1-b-1 - 2017-03-04 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.1-b-1 - 2017-03-05 *//**
  * API Client for Caldera Forms API for a single form
  *
  * @since 1.5.0
@@ -94,7 +94,7 @@ function CFAPI( routes, perPage, formId, tokens,  $ ) {
  * Form API for use in editor
  *
  * @since 1.5.1
- * 
+ *
  * @param routes
  * @param formId
  * @param nonce
@@ -106,7 +106,6 @@ function CFFormEditorAPI( routes, formId, nonce, $ ) {
     function addHeaders(xhr) {
         xhr.setRequestHeader('X-WP-Nonce', nonce);
     }
-
     return {
         getForm: function () {
             return $.ajax({
@@ -280,7 +279,7 @@ function CFFormEditStore( form ) {
          * @returns {*|{}}
          */
         addField : function (fieldId,fieldType) {
-            form.fields[fieldId] = fieldFactory(fieldId,fieldType);
+            form.fields[fieldId] = this.fieldFactory(fieldId,fieldType);
             return this.getField(fieldId);
         },
         /**
