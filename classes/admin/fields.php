@@ -126,7 +126,7 @@ class Caldera_Forms_Admin_Fields {
 	protected function select_group( $label_text, $field_name,  $options, array $args ){
 		$description = $this->description( $field_name,  $args[ 'description'] );
 		if( is_array( $options ) ){
-			$this->select( $options, $field_name, (bool) $description );
+			$this->select( $options, $field_name, (bool) $description, $args );
 		}
 
 
@@ -277,12 +277,16 @@ class Caldera_Forms_Admin_Fields {
 	 *
 	 * @return string
 	 */
-	protected function select( $options, $field_name, $has_description ){
+	protected function select( $options, $field_name, $has_description, array $args ){
+		$classes = 'field-config ' . $field_name . ' ' . $args[ 'classes'];
+		if( true == $args[ 'block' ] ){
+			$classes .= ' block-input';
+		}
 		return sprintf( '
 			<select class="%s" name="%s" id="%s" %s>
 				%s
 			</select>',
-			esc_attr( 'field-config ' . $field_name . '_type_override' ),
+			esc_attr( $classes ),
 			esc_attr(  '{{_id}}-', $field_name ),
 			esc_attr( '{{_name}}['. $field_name . ']' ),
 			$this->options( $options, $field_name ),
