@@ -52,7 +52,7 @@ class Caldera_Forms_Admin_UI {
 	 * @since 1.5.1
 	 *
 	 * @param array $fields Contents must be Caldera_Forms_Admin_Field or the name of a field that has generic generator in the class
-	 * @param string $field_type The field type (not input type, but use type -- defaultm placeholder) used for cache.
+	 * @param string $field_type The CF field type (text, advanced_file, etc) used for cache.
 	 *
 	 * @return string
 	 */
@@ -79,6 +79,67 @@ class Caldera_Forms_Admin_UI {
 		}
 
 		return $html;
+	}
+
+
+	/**
+	 * Generator for text fields
+	 *
+	 * @since 1.5.1
+	 *
+	 * @param string $field_name Field name
+	 * @param string $label_text Label (legend) text
+	 * @param string $description Optional. Field description.
+	 *
+	 * @return Caldera_Forms_Admin_Field
+	 */
+	public static function text_field( $field_name, $label_text,$description = '' ){
+		$field = new Caldera_Forms_Admin_Field();
+		$field->set_from_array(
+			array(
+				'type' => 'text',
+				'name' => $field_name,
+				'label' => $label_text,
+				'args' => array(
+					'description' => $description,
+					'block' => true,
+					'magic' => true,
+				)
+			)
+		);
+
+		return $field;
+	}
+
+	/**
+	 * Generator for checkbox fields
+	 *
+	 * @since 1.5.1
+	 *
+	 * @param string $field_name Field name
+	 * @param string $label_text Label (legend) text
+	 * @param array $options Array of options 'option' => 'label'
+	 * @param string $description Optional. Field description.
+	 *
+	 * @return Caldera_Forms_Admin_Field
+	 */
+	public static function checkbox_field( $field_name, $label_text, $options, $description = '' ){
+		$field = new Caldera_Forms_Admin_Field();
+		$field->set_from_array(
+			array(
+				'type' => 'checkbox',
+				'name' => $field_name,
+				'label' => $label_text,
+				'options' => $options,
+				'args' => array(
+					'description' => $description,
+					'block' => false,
+					'magic' => false,
+				)
+			)
+		);
+
+		return $field;
 	}
 
 	/**

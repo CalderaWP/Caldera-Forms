@@ -37,9 +37,11 @@ echo Caldera_Forms_Admin_UI::fields( $fields, 'text' );
 
 
 <div class="caldera-config-group">
-	<label><?php _e('Masked Input', 'caldera-forms'); ?></label>
+	<label for="{{_id}}_masked">
+		<?php _e('Masked Input', 'caldera-forms'); ?>
+	</label>
 	<div class="caldera-config-field">
-		<label><input type="checkbox" class="field-config {{_id}}_masked" name="{{_name}}[masked]" value="1" {{#if masked}}checked="checked"{{/if}}> <?php _e('Enable input mask', 'caldera-forms'); ?></label>
+		<label><input id="{{_id}}_masked" type="checkbox" class="field-config {{_id}}_masked" name="{{_name}}[masked]" value="1" {{#if masked}}checked="checked"{{/if}}> <?php _e('Enable input mask', 'caldera-forms'); ?></label>
 	</div>
 </div>
 <div id="{{_id}}_maskwrap">

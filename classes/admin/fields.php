@@ -148,6 +148,38 @@ class Caldera_Forms_Admin_Fields {
 
 	}
 
+	protected function checkbox_group( $label_text, array $options, $field_name, array $args ){
+
+		$description = $this->description( $field_name, $args[ 'description' ] );
+		return sprintf( '
+			<div class="caldera-config-group">
+				<fieldset>
+					<legend>
+						%s
+					</legend>
+					<div class="caldera-config-field">
+						%s
+					</div>
+					%s
+				</fieldset>
+			</div>', esc_html( $label_text ), $this->checkboxes( $options, $field_name ), $description
+		);
+	}
+
+	protected function checkboxes(array $options, $field_name ){
+		$out = array();
+		foreach ( $options as $option_name => $label ){
+			$out[] = $this->checkbox( $field_name, $option_name ) . $this->label( $label, $field_name );
+		}
+
+		return implode( "\\n", $out );
+
+	}
+
+	protected function checkbox( $field_name, $option_name ){
+		return sprintf( '<input id="{{_id}}_media_library" type="checkbox" class="field-config" name="%s" value="1" {{#if %s}}checked="checked"{{/if}}>', esc_attr(  '{{_id}}_' . $field_name ), esc_attr( '{{_name}}[' . $field_name . ']' ), $option_name );
+	}
+
 	/**
 	 * Generate HTML for label
 	 *
@@ -227,7 +259,7 @@ class Caldera_Forms_Admin_Fields {
 	 */
 	protected function description( $field_name, $description ){
 		if ( ! empty( $description ) ) {
-			return sprintf( '<p class="description" id="%s">%s</p>', esc_attr( $this->description_id_attr( $field_name ), esc_html( $description ) ) );
+			return sprintf( '<p class="description" id="%s">%s</p>', esc_attr( $this->description_id_attr( $field_name ) ), esc_html( $description ) );
 		}
 		return '';
 	}
