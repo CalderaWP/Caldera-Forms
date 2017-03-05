@@ -63,14 +63,10 @@ class Caldera_Forms_Admin_Fields {
 	 */
 	public function html(){
 		$html = '';
-		$arg_fields = array(
-			'description' => '',
-			'block' => false,
-			'magic' => false,
-		);
+
 		/** @var Caldera_Forms_Admin_Field $field */
 		foreach ( $this->fields as $field ) {
-			$args = wp_parse_args( $field->args, $arg_fields );
+			$args = $field->args;
 			switch ( $field->type ){
 				case 'text':
 					$html .= $this->input_group( $field->type, $field->label, $field->name, $args );
@@ -112,7 +108,7 @@ class Caldera_Forms_Admin_Fields {
 				</div>
 				%s
 			</div>
-		', $this->label( $label_text, $field_name ), $this->input( $type, $field_name, $has_description, $args[ 'block' ], $args[ 'magic'] ), $description );
+		', $this->label( $label_text, $field_name ), $this->input( $type, $field_name, $has_description, $args ), $description );
 	}
 
 	/**
@@ -209,20 +205,23 @@ class Caldera_Forms_Admin_Fields {
 	 * @param string $type For input attribute
 	 * @param string $field_name Field name
 	 * @param bool $has_description
-	 * @param bool $block Is block input?
-	 * @param bool $magic Is magic tag enabled?
+	 * @param array $args Additonal args
 	 *
 	 * @return string
 	 */
-	protected function input( $type, $field_name, $has_description, $block, $magic ){
+	protected function input( $type, $field_name, $has_description, $args ){
 		$description_aria = $this->decription_aria_tag( $field_name, $has_description );
 		$classes = 'field-config';
-		if( $magic ){
+		if( true == $args[ 'magic'] ){
 			$classes .= ' magic-tag-enabled';
 		}
 
-		if( $block ){
+		if( true == $args[ 'block'] ){
 			$classes .= ' block-input';
+		}
+
+		if( ! empty( $args[ 'classes' ] ) ){
+			$classes .= ' ' . $args[ 'classes' ];
 		}
 
 		return sprintf('<input type="%s" id="%s" class="%s" name="%s" value="%s" data-config-type="%s" %s >',

@@ -81,10 +81,17 @@ class Caldera_Forms_Admin_Field extends Caldera_Forms_Object{
 	 */
 	protected function args_get(){
 		if( ! is_array( $this->args ) ){
-			return array();
+			$this->args = array();
 		}
 
-		return $this->args;
+		return wp_parse_args( $this->args,
+			array(
+				'description' => '',
+				'block'       => false,
+				'magic'       => false,
+				'classes'     => ''
+			)
+		);
 	}
 
 
