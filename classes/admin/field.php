@@ -45,7 +45,7 @@ class Caldera_Forms_Admin_Field extends Caldera_Forms_Object{
 	 *
 	 * @since 1.5.1
 	 *
-	 * @param array $options Optiona for a select field
+	 * @param array $options Options for a for a select field
 	 *
 	 * @return bool
 	 */
@@ -62,10 +62,10 @@ class Caldera_Forms_Admin_Field extends Caldera_Forms_Object{
 	 *
 	 * @since 1.5.1
 	 *
-	 * @return array
+	 * @return array|string
 	 */
 	protected function options_get(){
-		if( ! is_array( $this->options ) ){
+		if( empty( $this->options ) ){
 			return array();
 		}
 

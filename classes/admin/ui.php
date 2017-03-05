@@ -118,12 +118,12 @@ class Caldera_Forms_Admin_UI {
 	 *
 	 * @param string $field_name Field name
 	 * @param string $label_text Label text
-	 * @param array $options Array of options 'option' => 'label'
+	 * @param array|string $options Array of options 'option' => 'label' or dynamic options string
 	 * @param string $description Optional. Field description.
 	 *
 	 * @return Caldera_Forms_Admin_Field
 	 */
-	public static function select_field( $field_name, $label_text, array $options, $description = '' ){
+	public static function select_field( $field_name, $label_text, $options, $description = '' ){
 		$field = new Caldera_Forms_Admin_Field();
 		$field->set_from_array(
 			array(

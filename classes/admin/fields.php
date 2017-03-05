@@ -122,13 +122,16 @@ class Caldera_Forms_Admin_Fields {
 	 *
 	 * @param string $label_text The text of the label
 	 * @param string $field_name The field name
-	 * @param array $options Field options 'value' => 'label'
+	 * @param array|string $options Array of field options 'value' => 'label' or handlebars markup for dynamic
 	 * @param array $args Additional args
 	 *
 	 * @return string
 	 */
-	protected function select_group( $label_text, $field_name, array  $options, array $args ){
+	protected function select_group( $label_text, $field_name,  $options, array $args ){
 		$description = $this->description( $field_name,  $args[ 'description'] );
+		if( is_array( $options ) ){
+			$this->select( $options, $field_name, (bool) $description );
+		}
 
 
 		return sprintf( '
@@ -141,7 +144,7 @@ class Caldera_Forms_Admin_Fields {
 			</div>
 		',
 			$this->label( $label_text, $field_name ),
-			$this->select( $options, $field_name, (bool) $description ),
+			$options,
 			$description
 		);
 
