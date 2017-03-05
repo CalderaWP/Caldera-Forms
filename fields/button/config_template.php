@@ -15,7 +15,9 @@ $fields = array(
 		'target',
 		__('Click Target', 'caldera-forms' )
 	)
-)
+);
+
+echo Caldera_Forms_Admin_UI::fields( $fields, 'button' );
 ?>
 
 {{#script}}

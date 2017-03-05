@@ -1,55 +1,50 @@
-<div class="caldera-config-group">
-	<label for="{{_id}}_element"><?php echo __('Element', 'caldera-forms'); ?></label>
-	<div class="caldera-config-field">
-		<input id="{{_id}}_element" type="text" class="input-block field-config" name="{{_name}}[element]" value="{{element}}">
-	</div>
-</div>
-<div class="caldera-config-group">
-	<label for="{{_id}}_classes"><?php echo __('Classes', 'caldera-forms'); ?></label>
-	<div class="caldera-config-field">
-		<input id="{{_id}}_classes" type="text" class="input-block field-config" name="{{_name}}[classes]" value="{{classes}}">
-	</div>
-</div>
-<div class="caldera-config-group">
-	<label for="{{_id}}_before"><?php echo __('Before', 'caldera-forms'); ?></label>
-	<div class="caldera-config-field">
-		<input id="{{_id}}_before" type="text" class="input-block field-config" name="{{_name}}[before]" value="{{before}}">
-	</div>
-</div>
-<div class="caldera-config-group">
-	<label for="{{_id}}_after"><?php echo __('After', 'caldera-forms'); ?></label>
-	<div class="caldera-config-field">
-		<input id="{{_id}}_after" type="text" class="input-block field-config" name="{{_name}}[after]" value="{{after}}">
-	</div>
-</div>
-<div class="caldera-config-group">
-	<div class="caldera-config-field">
-		<label><input id="{{_id}}_fixed" type="checkbox" class="field-config" name="{{_name}}[fixed]" value="1" {{#if fixed}}checked="checked"{{/if}}> <?php echo __('Money Format', 'caldera-forms'); ?></label>
-	</div>
-</div>
+<?php
 
-<div class="caldera-config-group" id="{{_id}}_thousand_separator">
-	<label for="{{_id}}_sep">
-		<?php esc_html_e('Thousands Separator', 'caldera-forms'); ?>
-	</label>
-	<div class="caldera-config-field">
-		<input id="{{_id}}_sep" type="text" class="field-config" name="{{_name}}[thousand_separator]" value="{{#if thousand_separator}}{{thousand_separator}}{{else}},{{/if}}">
-	</div>
-</div>
-<div class="caldera-config-group" id="{{_id}}_decimal_separator">
-	<label for="{{_id}}_sep_decimal">
-		<?php esc_html_e('Decimal Separator', 'caldera-forms'); ?>
-	</label>
-	<div class="caldera-config-field">
-		<input id="{{_id}}_sep_decimal" type="text" class="field-config" name="{{_name}}[decimal_separator]" value="{{#if decimal_separator}}{{decimal_separator}}{{else}}.{{/if}}">
-	</div>
-</div>
+$fields = array(
+	Caldera_Forms_Admin_UI::text_field(
+		'element',
+		__('Element', 'caldera-forms' )
+	),
+	Caldera_Forms_Admin_UI::text_field(
+		'classes',
+		__( 'Classes', 'caldera-forms' )
+	),
+	Caldera_Forms_Admin_UI::text_field(
+		'before',
+		__( 'Before', 'caldera-forms' )
+	),
+	Caldera_Forms_Admin_UI::text_field(
+		'after',
+		__( 'After', 'caldera-forms' )
+	),
+	Caldera_Forms_Admin_UI::checkbox_field(
+		'fixed',
+		__( 'Format', 'caldera-forms' ),
+		array(
+			'fixed' => __( 'Money Format', 'caldera-forms' )
+		)
+	),
+	Caldera_Forms_Admin_UI::text_field(
+		'sep',
+		__( 'Thousands Separator', 'caldera-forms' )
+	),
+	Caldera_Forms_Admin_UI::text_field(
+		'sep_decimal',
+		__( 'Decimal Separator', 'caldera-forms' )
+	),
+	Caldera_Forms_Admin_UI::checkbox_field(
+		'manual',
+		__( 'Manual Format', 'caldera-forms' ),
+		array(
+			'fixed' => __( 'Enable', 'caldera-forms' )
+		)
+	),
 
-<div class="caldera-config-group">
-	<div class="caldera-config-field">
-		<label><input id="{{_id}}_manual" type="checkbox" class="field-config" name="{{_name}}[manual]" value="1" {{#if manual}}checked="checked"{{/if}}> <?php echo __('Manual Formula', 'caldera-forms'); ?></label>
-	</div>
-</div>
+);
+
+echo Caldera_Forms_Admin_UI::fields( $fields, 'calculation' );
+
+?>
 <div id="{{_id}}_autobox">
 	<div class="caldera-config-group caldera-config-group-full">
 		<button type="button" class="button block-button add-operator-group ajax-trigger" 
