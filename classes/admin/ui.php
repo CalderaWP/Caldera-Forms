@@ -112,6 +112,37 @@ class Caldera_Forms_Admin_UI {
 	}
 
 	/**
+	 * Generator for select fields
+	 *
+	 * @since 1.5.1
+	 *
+	 * @param string $field_name Field name
+	 * @param string $label_text Label text
+	 * @param array $options Array of options 'option' => 'label'
+	 * @param string $description Optional. Field description.
+	 *
+	 * @return Caldera_Forms_Admin_Field
+	 */
+	public static function select_field( $field_name, $label_text, array $options, $description = '' ){
+		$field = new Caldera_Forms_Admin_Field();
+		$field->set_from_array(
+			array(
+				'type' => 'select',
+				'name' => $field_name,
+				'label' => $label_text,
+				'options' => $options,
+				'args' => array(
+					'description' => $description,
+					'block' => false,
+					'magic' => false,
+				)
+			)
+		);
+
+		return $field;
+	}
+
+	/**
 	 * Generator for checkbox fields
 	 *
 	 * @since 1.5.1
