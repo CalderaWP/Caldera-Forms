@@ -521,7 +521,6 @@ function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{
 				</div>
 			</div>
 
-
 			<div class="caldera-config-group">
 				<label for="<?php echo $id; ?>_lable">
 					<?php echo esc_html__( 'Name', 'caldera-forms' ); ?>

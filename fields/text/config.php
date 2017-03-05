@@ -1,42 +1,40 @@
-<div class="caldera-config-group">
-	<label for="{{_id}}_placeholder">
-		<?php esc_html_e('Placeholder', 'caldera-forms'); ?></label>
-	<div class="caldera-config-field">
-		<input type="text" id="{{_id}}_placeholder" class="block-input field-config" name="{{_name}}[placeholder]" value="{{placeholder}}">
-	</div>
-</div>
-<div class="caldera-config-group">
-	<label for="{{_id}}_default">
-		<?php esc_html_e('Default'); ?>
-	</label>
-	<div class="caldera-config-field">
-		<input type="text" id="{{_id}}_default" class="block-input field-config magic-tag-enabled" name="{{_name}}[default]" value="{{default}}">
-	</div>
-</div>
+<?php
+$type_override = new Caldera_Forms_Admin_Field();
+$type_override->set_from_array(
+	array(
+		'type' => 'select',
+		'name' => 'type_override',
+		'label' => __( 'Placeholder', 'caldera-forms' ),
+		'options' => array(
+			'text'           => __( 'Text', 'caldera-forms' ),
+			'date'           => __( 'Date', 'caldera-forms' ),
+			'datetime'       => __( 'Datetime', 'caldera-forms' ),
+			'datetime-local' => __( 'Datetime Local', 'caldera-forms' ),
+			'month'          => __( 'Month', 'caldera-forms' ),
+			'number'         => __( 'Number', 'caldera-forms' ),
+			'search'         => __( 'Search', 'caldera-forms' ),
+			'tel'            => __( 'Telephone', 'caldera-forms' ),
+			'time'           => __( 'Time', 'caldera-forms' ),
+			'url'            => __( 'URL', 'caldera-forms' ),
+			'week'           => __( 'Week', 'caldera-forms' ),
+		),
+		'args' => array(
+			'description' => __('Change the field type.','caldera-forms' ),
+			'block' => false,
+			'magic' => false,
+		)
+	)
+);
 
-<div class="caldera-config-group">
-	<label for="{{_id}}-type_override">
-		<?php esc_html_e( 'HTML5 Type', 'caldera-forms'); ?>
-	</label>
-	<div class="caldera-config-field">
-		<select class="field-config {{_id}}_type_override" name="{{_name}}[type_override]" id="{{_id}}-type_override" aria-describedby="{{_id}}-type_override-description">
-			<option {{#is type_override value="text"}}selected="selected"{{/is}}value="text">text</option>
-			<option {{#is type_override value="date"}}selected="selected"{{/is}}value="date">date</option>
-			<option {{#is type_override value="datetime"}}selected="selected"{{/is}}value="datetime">datetime</option>
-			<option {{#is type_override value="datetime-local"}}selected="selected"{{/is}}value="datetime-local">datetime-local</option>
-			<option {{#is type_override value="month"}}selected="selected"{{/is}}value="month">month</option>
-			<option {{#is type_override value="number"}}selected="selected"{{/is}}value="number">number</option>
-			<option {{#is type_override value="search"}}selected="selected"{{/is}}value="search">search</option>
-			<option {{#is type_override value="tel"}}selected="selected"{{/is}}value="tel">tel</option>
-			<option {{#is type_override value="time"}}selected="selected"{{/is}}value="time">time</option>
-			<option {{#is type_override value="url"}}selected="selected"{{/is}}value="url">url</option>
-			<option {{#is type_override value="week"}}selected="selected"{{/is}}value="week">week</option>
-		</select>
-		<p class="description" id="{{_id}}-type_override-description">
-			<?php esc_html_e('Change the field type.','caldera-forms');?>
-		</p>
-	</div>
-</div>
+$fields = array(
+	'default',
+	'placeholder',
+	$type_override
+);
+
+echo Caldera_Forms_Admin_UI::fields( $fields, 'text' );
+?>
+
 
 <div class="caldera-config-group">
 	<label><?php _e('Masked Input', 'caldera-forms'); ?></label>

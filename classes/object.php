@@ -18,6 +18,24 @@ abstract class Caldera_Forms_Object {
 	}
 
 	/**
+	 * Set data from an array
+	 *
+	 * @since 1.5.1
+	 *
+	 * @param array $array
+	 */
+	public function set_from_array( array  $array ){
+		$vars = get_object_vars(  $this );
+		foreach ( $vars as $property => $value ){
+			if( isset( $array[ $property ]  )  ){
+				$this->$property = $array[ $property ];
+			}
+
+		}
+
+	}
+
+	/**
 	 * Translate from a stdClass object to this object type
 	 *
 	 * @since 1.4.0
@@ -26,7 +44,10 @@ abstract class Caldera_Forms_Object {
 	 */
 	public function set_form_object( stdClass $obj ){
 		foreach( $obj as $property => $value ){
-			$this->$property = $value;
+			if(  property_exists( $this, $property ) ){
+				$this->$property = $value;
+			}
+
 		}
 	}
 

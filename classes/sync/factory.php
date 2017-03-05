@@ -67,7 +67,7 @@ class Caldera_Forms_Sync_Factory {
 	/**
 	 * Get cache prefix
 	 *
-	 * Needs to be set seperate form identifier so we can increment it.
+	 * Needs to be set separate form identifier so we can increment it.
 	 *
 	 * @since 1.5.0.4
 	 *
