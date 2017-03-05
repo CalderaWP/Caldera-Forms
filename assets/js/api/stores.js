@@ -104,77 +104,7 @@ function CFEntriesStoreFactory( formId, entries ){
  * @constructor
  */
 function CFFormEditStore( form ) {
-    /**
-     * Check if object has a key
-     *
-     * @since 1.5.1
-     *
-     * @param object
-     * @param key
-     * @returns {boolean}
-     */
-    function has(object, key) {
-        return object ? hasOwnProperty.call(object, key) : false;
-    }
-
-    /**
-     * Check if is empty object
-     *
-     * @since 1.5.1
-     *
-     * @param obj
-     * @returns {boolean}
-     */
-    function emptyObject(obj) {
-        return Object.keys(obj).length === 0 && obj.constructor === Object;
-    }
-
-    /**
-     * Keys of field config
-     *
-     * @since 1.5.1
-     *
-     * @type {string[]}
-     */
-    var fieldKeys = [
-        'ID',
-        'type',
-        'label',
-        'slug',
-        'config',
-        'caption',
-        'custom_class',
-        'default',
-        'conditions'
-    ];
-
-    /**
-     * Create a new field config object
-     *
-     * @since 1.5.1
-     *
-     * @param fieldId
-     * @param type
-     * @returns {{ID: *, type: *, config: {}}}
-     */
-    function fieldFactory(fieldId, type) {
-        var field = {
-            ID: fieldId,
-            type: type,
-            config: {}
-        };
-
-       fieldKeys.forEach( function (index) {
-            if( ! has(field, index ) ){
-                field[index] = '';
-            }
-        });
-
-        return field;
-    }
-
-
-    return {
+    return Object.assign( Object.create( CFObj.prototype ), {
         /**
          * Get all fields of form
          *
@@ -192,7 +122,7 @@ function CFFormEditStore( form ) {
          * @returns {*}
          */
         getField : function ( id ) {
-            if( has( form.fields, id ) ){
+            if( this.has( form.fields, id ) ){
                 return form.fields[id];
             }
             return {}
@@ -207,7 +137,7 @@ function CFFormEditStore( form ) {
          */
         getFieldType: function ( id ) {
             var field = this.getField(id);
-            if( field ){
+            if( ! this.emptyObject( field ) ){
                 return field.type;
             }
             return false;
@@ -237,8 +167,8 @@ function CFFormEditStore( form ) {
          */
         updateField: function (id, key, data ) {
             var field = this.getField(id);
-            if( ! emptyObject(field) ){
-                if( fieldKeys.indexOf( key ) ){
+            if( ! this.emptyObject(field) ){
+                if( this.fieldKeys.indexOf( key ) ){
                     form.fields[id][key] = data;
                     return this.getField(id);
                 }
@@ -265,7 +195,7 @@ function CFFormEditStore( form ) {
          * @returns {*}
          */
         getConditional : function ( id ) {
-            if( has( form.conditional_groups.conditions, id ) ){
+            if( this.has( form.conditional_groups.conditions, id ) ){
                 return form.conditional_groups.conditions[id];
             }
             return {}
@@ -289,11 +219,13 @@ function CFFormEditStore( form ) {
          * @returns {*}
          */
         getProcessor: function ( id ) {
-            if( has( form.processors, id )){
+            if( this.has( form.processors, id )){
                 return form.processors[id];
             }
             return {}
         }
 
-    }
+    });
+
 }
+

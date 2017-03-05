@@ -81,8 +81,8 @@ foreach( (array) $element['layout_grid']['structure'] as $page_key=>$page_struct
 					if(isset($fields[$row][$column])){
 						foreach($fields[$row][$column] as $field){
 						?>
-						<div class="layout-form-field" data-config="<?php echo $field['ID']; ?>">
-							<i style="display:none;" class="icon-edit"></i>
+						<div class="layout-form-field" data-config="<?php echo esc_attr( $field[ 'ID' ] ); ?>">
+							<i style="display:none;" class="icon-edit" data-field="<?php echo esc_attr( $field[ 'ID' ] ); ?>"></i>
 							<i style="display:none;" class="dashicons dashicons-admin-page"></i>
 							<div class="drag-handle">
 								<div class="field_preview"><span class="spinner" style="display: block; float: left;"></span></div>

@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.0.4 - 2017-03-02 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.1-b-1 - 2017-03-04 *//**
  * API Client for Caldera Forms API for a single form
  *
  * @since 1.5.0
@@ -26,7 +26,6 @@ function CFAPI( routes, perPage, formId, tokens,  $ ) {
         xhr.setRequestHeader( 'X-CF-ENTRY-TOKEN', token );
         xhr.setRequestHeader( 'X-WP-Nonce', nonce );
     }
-
 
     return {
         getForm: function () {
@@ -86,12 +85,47 @@ function CFAPI( routes, perPage, formId, tokens,  $ ) {
                 console.log(r);
             })
 
-        },
-
-
+        }
     }
 }
 
+
+/**
+ * Form API for use in editor
+ *
+ * @since 1.5.1
+ * 
+ * @param routes
+ * @param formId
+ * @param nonce
+ * @param $
+ * @returns {{getForm: getForm, saveForm: saveForm}}
+ * @constructor
+ */
+function CFFormEditorAPI( routes, formId, nonce, $ ) {
+    function addHeaders(xhr) {
+        xhr.setRequestHeader('X-WP-Nonce', nonce);
+    }
+
+    return {
+        getForm: function () {
+            return $.ajax({
+                url: routes.form + formId + '?full=true',
+                method: 'GET',
+                beforeSend: function (xhr) {
+                    addHeaders(xhr);
+                }
+            }).success(function (r) {
+                return r;
+            }).error(function (r) {
+                console.log(r);
+            });
+        },
+        saveForm: function () {
+            //placeholder
+        }
+    }
+}
 /**
  * A factory for a form state containers
  *
@@ -187,6 +221,143 @@ function CFEntriesStoreFactory( formId, entries ){
         }
     }
 }
+
+/**
+ * A factory for creating a form store for use in form  editor
+ *
+ * @since 1.5.1
+ *
+ * @param form
+ * @returns {{getFields: getFields, getField: getField, getFieldType: getFieldType, addField: addField, updateField: updateField, getConditionals: getConditionals, getConditional: getConditional, getProcessors: getProcessors, getProcessor: getProcessor}}
+ * @constructor
+ */
+function CFFormEditStore( form ) {
+    return Object.assign( Object.create( CFObj.prototype ), {
+        /**
+         * Get all fields of form
+         *
+         * @returns {*}
+         */
+        getFields : function(){
+            return form.fields;
+        },
+        /**
+         * Get a field of a form
+         *
+         *  @since 1.5.1
+         *
+         * @param id
+         * @returns {*}
+         */
+        getField : function ( id ) {
+            if( this.has( form.fields, id ) ){
+                return form.fields[id];
+            }
+            return {}
+        },
+        /**
+         * Get field type by field ID
+         *
+         *  @since 1.5.1
+         *
+         * @param id
+         * @returns {*}
+         */
+        getFieldType: function ( id ) {
+            var field = this.getField(id);
+            if( ! this.emptyObject( field ) ){
+                return field.type;
+            }
+            return false;
+        },
+        /**
+         * Add a field to collection
+         *
+         *  @since 1.5.1
+         *
+         * @param fieldId
+         * @param fieldType
+         * @returns {*|{}}
+         */
+        addField : function (fieldId,fieldType) {
+            form.fields[fieldId] = fieldFactory(fieldId,fieldType);
+            return this.getField(fieldId);
+        },
+        /**
+         * Update field in collection
+         *
+         *  @since 1.5.1
+         *
+         * @param id
+         * @param key
+         * @param data
+         * @returns {*}
+         */
+        updateField: function (id, key, data ) {
+            var field = this.getField(id);
+            if( ! this.emptyObject(field) ){
+                if( this.fieldKeys.indexOf( key ) ){
+                    form.fields[id][key] = data;
+                    return this.getField(id);
+                }
+
+            }
+            return false;
+        },
+        /**
+         * Get conditional groups of form
+         *
+         * @since 1.5.1
+         *
+         * @returns {*}
+         */
+        getConditionals : function () {
+            return form.conditional_groups.conditions;
+        },
+        /**
+         * Get a conditional group by ID
+         *
+         *  @since 1.5.1
+         *
+         * @param id
+         * @returns {*}
+         */
+        getConditional : function ( id ) {
+            if( this.has( form.conditional_groups.conditions, id ) ){
+                return form.conditional_groups.conditions[id];
+            }
+            return {}
+        },
+        /**
+         * Get processors of form
+         *
+         * @since 1.5.1
+         *
+         * @returns {*}
+         */
+        getProcessors : function() {
+            return form.processors;
+        },
+        /**
+         * Get a form processor
+         *
+         * @since 1.5.1
+         *
+         * @param id
+         * @returns {*}
+         */
+        getProcessor: function ( id ) {
+            if( this.has( form.processors, id )){
+                return form.processors[id];
+            }
+            return {}
+        }
+
+    });
+
+}
+
+
 /**
  * A VueJS-powered entry viewer for Caldera Forms
  *

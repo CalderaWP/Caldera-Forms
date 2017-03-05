@@ -142,15 +142,26 @@ module.exports = function (grunt) {
                     'assets/js/frontend-script-init.js',
                 ],
                 dest: 'assets/js/caldera-forms-front.js'
+            },
+            editor : {
+                src: [
+                    'assets/js/form-editor/conditionals.js',
+                    'assets/js/form-editor/form-editor.js',
+                    'assets/js/form-editor/init.js'
+                ],
+                dest: 'assets/js/form-builder.js'
             }
         },
         watch: {
             scripts: {
                 files: [
                     'assets/js/*.js',
-                    'assets/css/*.css'
+                    'assets/css/*.css',
+                    'assets/js/api/*.js',
+                    'assets/js/form-editor/*.js',
+                    'assets/js/viewer/*.js'
                 ],
-                tasks: ['default'],
+                tasks: ['concat:editor', 'uglify' ],
                 options: {
                     spawn: false,
                 },

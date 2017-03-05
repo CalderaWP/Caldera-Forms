@@ -1097,7 +1097,7 @@ class Caldera_Forms_Admin {
 
 		echo "	<div class=\"wrap\">\r\n";
 		if(!empty($_GET['edit'])){
-			echo "<form method=\"POST\" action=\"admin.php?page=" . $this->plugin_slug . "\" data-load-element=\"#save_indicator\" data-sender=\"ajax\" class=\"caldera-forms-options-form edit-update-trigger\">\r\n";
+			echo "<form method=\"POST\" action=\"admin.php?page=" . $this->plugin_slug . "\" data-load-element=\"#save_indicator\" data-sender=\"ajax\" class=\"caldera-forms-options-form edit-update-trigger\" id=\"". $_GET['edit'] . "\" >\r\n";
 			include CFCORE_PATH . 'ui/edit.php';
 			echo "</form>\r\n";
 		}elseif(!empty($_GET['page']) && $_GET['page'] == 'caldera-forms-extend'){

@@ -27,7 +27,6 @@ function CFAPI( routes, perPage, formId, tokens,  $ ) {
         xhr.setRequestHeader( 'X-WP-Nonce', nonce );
     }
 
-
     return {
         getForm: function () {
             return $.ajax({
@@ -86,8 +85,43 @@ function CFAPI( routes, perPage, formId, tokens,  $ ) {
                 console.log(r);
             })
 
+        }
+    }
+}
+
+
+/**
+ * Form API for use in editor
+ *
+ * @since 1.5.1
+ *
+ * @param routes
+ * @param formId
+ * @param nonce
+ * @param $
+ * @returns {{getForm: getForm, saveForm: saveForm}}
+ * @constructor
+ */
+function CFFormEditorAPI( routes, formId, nonce, $ ) {
+    function addHeaders(xhr) {
+        xhr.setRequestHeader('X-WP-Nonce', nonce);
+    }
+    return {
+        getForm: function () {
+            return $.ajax({
+                url: routes.form + formId + '?full=true',
+                method: 'GET',
+                beforeSend: function (xhr) {
+                    addHeaders(xhr);
+                }
+            }).success(function (r) {
+                return r;
+            }).error(function (r) {
+                console.log(r);
+            });
         },
-
-
+        saveForm: function () {
+            //placeholder
+        }
     }
 }

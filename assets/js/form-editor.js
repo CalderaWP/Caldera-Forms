@@ -1,3 +1,235 @@
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.1-b-1 - 2017-03-04 *//**
+ * Created by josh on 3/4/17.
+ */
+
+function CFFormEditor( editorConfig, fields, $ ){
+
+    var editorAPI,
+        store,
+        self = this,
+        $coreForm,
+        fieldConfigs,
+        currentFromFields = {},
+        $editorBody = $('.caldera-editor-body'),
+        $saveButton = $('.caldera-header-save-button');
+
+
+    this.init = function () {
+        setUpClickHandlers();
+        $coreForm = $( 'form#' + editorConfig.formId );
+        editorAPI = new CFFormEditorAPI(
+            editorConfig.api, editorConfig.formId, editorConfig.nonce, $
+        );
+        $.when( editorAPI.getForm() ).then( function (r,z) {
+            store = new CFFormEditStore( r );
+            self.createFieldPreviews();
+        });
+    };
+
+    this.createFieldPreviews = function () {
+      $.each( this.getStore().getFields(), function(fieldId, field){
+            self.buildFieldPreview(fieldId);
+      });
+    };
+
+    /**
+     *
+     * @since 1.5.1
+     *
+     * @returns CFFormEditStore
+     */
+    this.getStore = function () {
+        return store;
+    };
+
+    this.enableSubmit = function () {
+        $saveButton.prop('disabled', false);
+    };
+
+    this.disableSubmit = function () {
+        $saveButton.prop('disabled', true);
+    };
+
+    /**
+     * Create a field type config
+     *
+     * @since 1.5.1
+     *
+     * @param el
+     */
+    this.buildFieldTypeConfig = function(el){
+
+        var select 			= $(el);
+        var fieldId = select.data( 'field' );
+
+
+        var fieldType = select.val(),
+            parent			= select.closest('.caldera-editor-field-config-wrapper'),
+            target			= parent.find('.caldera-config-field-setup'),
+            template 		= get_compiled_template( fieldType ),
+            config			= store.getField(fieldId),
+            current_type	= select.data('type'),
+            newField = false;
+
+
+        parent.find('.caldera-config-group').show();
+
+        select.addClass('field-initialized');
+
+        // Be sure to load the fields preset when switching back to the initial field type.
+        if(config.length && current_type === select.val() ){
+           // config = JSON.parse(config);
+        }else{
+            // default config
+            newField = true;
+            config = fieldtype_defaults[select.val() + '_cfg'];
+        }
+
+        // build template
+        if(!config){
+            newField = true;
+        }
+
+        if( newField ){
+            config = store.addField(fieldId,fieldType);
+        }
+
+        config._id = fieldId;
+        config._name = 'config[fields][' + fieldId + '][config]';
+
+
+        template = $('<div>').html( template( config ) );
+
+        // send to target
+        target.html( template.html() );
+
+        // check for init function
+        if( typeof window[select.val() + '_init'] === 'function' ){
+            window[select.val() + '_init']( fieldId, target);
+        }
+
+        // remove not supported stuff
+        if(fieldtype_defaults[select.val() + '_nosupport']){
+
+            if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('hide_label') >= 0){
+                parent.find('.hide-label-field').hide().find('.field-config').prop('checked', false);
+            }
+            if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('caption') >= 0){
+                parent.find('.caption-field').hide().find('.field-config').val('');
+            }
+            if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('required') >= 0){
+                parent.find('.required-field').hide().find('.field-config').prop('checked', false);
+            }
+            if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('custom_class') >= 0){
+                parent.find('.customclass-field').hide().find('.field-config').val('');
+            }
+            if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('entry_list') >= 0){
+                parent.find('.entrylist-field').hide().find('.field-config').prop('checked', false);
+            }
+        }
+
+        // seup options
+        parent.find('.toggle_show_values').trigger('change');
+
+        if( !$('.caldera-select-field-type').not('.field-initialized').length){
+
+            // build previews
+            if(! $coreForm.hasClass('builder-loaded')){
+
+                var fields = $('.caldera-select-field-type.field-initialized');
+                for( var f = 0; f < fields.length; f++){
+                    self.buildFieldPreview( $(fields[f]).data('field') );
+                }
+                $coreForm.addClass('builder-loaded');
+            }else{
+                self.buildFieldPreview( select.data('field') );
+            }
+
+            self.enableSubmit();
+            rebuild_field_binding();
+            baldrickTriggers();
+        }
+        if( $('.color-field').length ){
+            $('.color-field').wpColorPicker({
+                change: function(obj){
+
+                    var trigger = $(this);
+
+
+                    if( trigger.data('ev') ){
+                        clearTimeout( trigger.data('ev') );
+                    }
+                    trigger.data('ev', setTimeout( function(){
+                        trigger.trigger('record');
+                    },200) );
+                    if( trigger.data('target') ){
+                        $( trigger.data('target') ).css( trigger.data('style'), trigger.val() );
+                        $( trigger.data('target') ).val( trigger.val() );
+                    }
+
+                }
+            });
+        }
+    };
+
+    /**
+     * Render the field preview
+     *
+     * @since 1.5.1
+     *
+     * @param fieldId
+     * @param config
+     */
+    function renderFieldPreview( fieldId, config) {
+        var
+            type = self.getStore().getFieldType(fieldId),
+            $preview_parent	= $('.layout-form-field[data-config="' + fieldId + '"]'),
+            preview_target	= $preview_parent.find('.field_preview'),
+            preview			= $('#preview-' + type + '_tmpl').html(),
+            template 		= get_compiled_template( 'preview-' + type );
+        preview_target.html(template(config));
+        $preview_parent.removeClass('button');
+        $preview_parent.find( ':input').prop( 'disabled', true );
+        self.enableSubmit();
+    }
+
+    /**
+     * Build field preview
+     *
+     * @since 1.5.1
+     *
+     * @param id
+     */
+    this.buildFieldPreview = function(id){
+        var config = self.getStore().getField(id);
+        renderFieldPreview( id,config );
+    };
+
+
+    function setUpClickHandlers() {
+        // Change Field Type
+        $editorBody.on('change', '.caldera-select-field-type', function(e){
+            self.buildFieldTypeConfig(this);
+        });
+
+        $editorBody.on('change record', '.field-config', function(e){
+
+            var $editField 	= $(this),
+                $parent 	= $editField.closest('.caldera-editor-field-config-wrapper'),
+                fieldId = $parent.prop('id'),
+                editType = $editField.data( 'config-type' ),
+                updated = store.updateField( fieldId, editType, this.value );
+
+            if( updated ){
+                renderFieldPreview( fieldId, updated );
+            }
+
+        });
+
+    }
+
+
+}
 /* contains edit.js, layout-grid.js, processors.js */
 function new_conditional_group(obj){
 
@@ -78,6 +310,14 @@ function get_compiled_template( template ) {
 
 
 jQuery(document).ready(function($){
+    var theEditor;
+    if ( 'object' == typeof  CF_FORM_EDITOR ) {
+
+        theEditor = new CFFormEditor( CF_FORM_EDITOR, $('.caldera-select-field-type').not('.field-initialized'), $  );
+        theEditor.init();
+    }else{
+        alert( ':(' );
+    }
 
 
     $('.caldera-header-save-button').baldrick({
@@ -126,159 +366,6 @@ jQuery(document).ready(function($){
         }
     });
 
-    /*
-     *	Build the fieltypes config
-     *	configs are stored in the .caldera-config-field-setup field within the parent wrapper
-     *
-     */
-    function build_fieldtype_config(el){
-
-
-        var select 			= $(el);
-        var val = select.val();
-        var parent			= select.closest('.caldera-editor-field-config-wrapper'),
-            target			= parent.find('.caldera-config-field-setup'),
-            template 		= get_compiled_template( val );
-        config			= parent.find('.field_config_string').val(),
-            current_type	= select.data('type');
-
-
-        parent.find('.caldera-config-group').show();
-
-        select.addClass('field-initialized');
-
-        // Be sure to load the fields preset when switching back to the initial field type.
-        if(config.length && current_type === select.val() ){
-            config = JSON.parse(config);
-        }else{
-            // default config
-            config = fieldtype_defaults[select.val() + '_cfg'];
-        }
-
-        // build template
-        if(!config){
-            config = {};
-        }
-
-        config._id = select.data('field');
-        config._name = 'config[fields][' + select.data('field') + '][config]';
-
-
-        template = $('<div>').html( template( config ) );
-
-        // send to target
-        target.html( template.html() );
-
-        // check for init function
-        if( typeof window[select.val() + '_init'] === 'function' ){
-            window[select.val() + '_init'](select.data('field'), target);
-        }
-
-        // remove not supported stuff
-        if(fieldtype_defaults[select.val() + '_nosupport']){
-
-            if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('hide_label') >= 0){
-                parent.find('.hide-label-field').hide().find('.field-config').prop('checked', false);
-            }
-            if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('caption') >= 0){
-                parent.find('.caption-field').hide().find('.field-config').val('');
-            }
-            if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('required') >= 0){
-                parent.find('.required-field').hide().find('.field-config').prop('checked', false);
-            }
-            if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('custom_class') >= 0){
-                parent.find('.customclass-field').hide().find('.field-config').val('');
-            }
-            if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('entry_list') >= 0){
-                parent.find('.entrylist-field').hide().find('.field-config').prop('checked', false);
-            }
-        }
-
-        // seup options
-        parent.find('.toggle_show_values').trigger('change');
-
-        if( !$('.caldera-select-field-type').not('.field-initialized').length){
-            if(!core_form){
-                core_form = jQuery('.caldera-forms-options-form');
-            }
-
-            // build previews
-            if(!core_form.hasClass('builder-loaded')){
-
-                var fields = $('.caldera-select-field-type.field-initialized');
-                for( var f = 0; f < fields.length; f++){
-                    build_field_preview( $(fields[f]).data('field') );
-                }
-                core_form.addClass('builder-loaded');
-            }else{
-                build_field_preview( select.data('field') );
-            }
-            $('.caldera-header-save-button').prop('disabled', false);
-            rebuild_field_binding();
-            baldrickTriggers();
-        }
-        if( $('.color-field').length ){
-            $('.color-field').wpColorPicker({
-                change: function(obj){
-
-                    var trigger = $(this);
-
-
-                    if( trigger.data('ev') ){
-                        clearTimeout( trigger.data('ev') );
-                    }
-                    trigger.data('ev', setTimeout( function(){
-                        trigger.trigger('record');
-                    },200) );
-                    if( trigger.data('target') ){
-                        $( trigger.data('target') ).css( trigger.data('style'), trigger.val() );
-                        $( trigger.data('target') ).val( trigger.val() );
-                    }
-
-                }
-            });
-        }
-    }
-
-    function build_field_preview(id){
-
-        var panel           = $('#' + id);
-        var select			= panel.find('.caldera-select-field-type');
-        var val             = select.val();
-        var
-            preview_parent	= $('.layout-form-field[data-config="' + id + '"]'),
-            preview_target	= preview_parent.find('.field_preview'),
-            preview			= $('#preview-' + val + '_tmpl').html(),
-            template 		= get_compiled_template( 'preview-' + val ),
-            config			= {'id': id},
-            data_fields		= panel.find('.field-config'),
-            objects			= [];
-
-        data_fields.each(function(k,v){
-            var field 		= $(v),
-                basename 	= field.prop('name').split('[' + id + ']')[1].substr(1),
-                name		= basename.substr(0, basename.length-1).split(']['),
-                value 		= ( field.is(':checkbox,:radio') ? field.filter(':checked').val() : field.val() ),
-                lineconf 	= {};
-
-            for(var i = name.length-1; i >= 0; i--){
-
-                if(i === name.length-1){
-                    lineconf[name[i]] = value;
-                }else{
-                    var newobj = lineconf;
-                    lineconf = {};
-                    lineconf[name[i]] = newobj;
-                }
-            }
-            $.extend(true, config, lineconf);
-        });
-
-        preview_target.html( template(config) );
-        preview_parent.removeClass('button');
-
-        $('.preview-field-config').prop('disabled', true);
-    }
 
     // switch active group
     function switch_active_group(id){
@@ -413,11 +500,6 @@ jQuery(document).ready(function($){
     });
 
 
-    // Change Field Type
-    $('.caldera-editor-body').on('change', '.caldera-select-field-type', function(e){
-        // push element to config function
-        build_fieldtype_config(this);
-    });
 
     // build group navigation
     $('.caldera-editor-body').on('click', '.caldera-group-nav a', function(e){
@@ -812,33 +894,6 @@ jQuery(document).ready(function($){
 
     });
 
-    $('.caldera-editor-body').on('change record', '.field-config', function(e){
-
-        var field 	= $(this),
-            parent 	= field.closest('.caldera-editor-field-config-wrapper');
-
-        if(!current_form_fields){
-            return;
-        }
-        //
-        if(field.prop('id') === parent.prop('id') + '_lable'){
-            // update field bind label
-            current_form_fields[parent.prop('id')].label = this.value;
-        }
-        if(field.prop('id') === parent.prop('id') + '_slug'){
-            // update field bind slug
-            current_form_fields[parent.prop('id')].slug = this.value;
-        }
-        if(field.prop('id') === parent.prop('id') + '_type'){
-            // update field bind type
-            current_form_fields[parent.prop('id')].type = this.value;
-        }
-
-        if(parent.length){
-            build_field_preview(parent.prop('id'));
-        }
-
-    });
 
     $('.caldera-editor-body').on('focus', '.caldera-field-bind', function(e){
         var field = $(this),
@@ -1222,15 +1277,8 @@ jQuery(document).ready(function($){
 
     });
 
-    // precompile tempaltes
+    // precompile templates
     pre_compile_templates();
-    //compiled_templates
-
-    // build configs on load:
-    // allows us to keep changes on reload as not to loose settings on accidental navigation
-    $('.caldera-select-field-type').not('.field-initialized').each(function(k,v){
-        build_fieldtype_config(v);
-    });
 
 });//
 
@@ -1853,7 +1901,6 @@ jQuery(document).ready(function($) {
 
             });
         }
-        //return;
 
         row.slideUp(200, function(){
             $(this).remove();
@@ -2605,4 +2652,5 @@ Handlebars.registerHelper('_field', function(args) {
 Handlebars.registerHelper('console', function(context, options) {
     console.log(this);
 });
+
 

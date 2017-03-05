@@ -36,6 +36,7 @@ CFObj.prototype.fieldKeys = [
 CFObj.prototype.has = function (object, key) {
         return object ? hasOwnProperty.call(object, key) : false;
 };
+
 /**
  * Check if is empty object
  *
