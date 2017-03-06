@@ -284,7 +284,14 @@ function CFFormEditor( editorConfig, $ ){
                 $parent 	= $editField.closest('.caldera-editor-field-config-wrapper'),
                 fieldId = $parent.prop('id'),
                 editType = $editField.data( 'config-type' ),
-                updated = store.updateField( fieldId, editType, this.value );
+                newVal,
+                updated;
+                if( 'checkbox' == $editField.attr( 'type' ) ){
+                    newVal = $editField.prop( 'checked' );
+                }else{
+                    newVal = $editField.val();
+                }
+                updated = store.updateField( fieldId, editType, newVal );
 
             if( updated ){
                 renderFieldPreview( fieldId, updated );

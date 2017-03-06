@@ -106,9 +106,10 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
      */
     public function get_items_permissions_check( WP_REST_Request $request ){
         $allowed = current_user_can( Caldera_Forms::get_manage_cap( 'entry-view' ), $request[ 'form_id' ] );
-	    if( ! $allowed ){
+	    if( ! $allowed && true != $request[ 'full' ] ){
 		    $allowed = Caldera_Forms_API_Util::check_api_token( $request );
 	    }
+
         /**
          * Filter permissions for viewing form config via Caldera Forms REST API
          *

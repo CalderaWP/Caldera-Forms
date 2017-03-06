@@ -126,7 +126,7 @@ class Caldera_Forms_Admin_Fields {
 	protected function select_group( $label_text, $field_name,  $options, array $args ){
 		$description = $this->description( $field_name,  $args[ 'description'] );
 		if( is_array( $options ) ){
-			$this->select( $options, $field_name, (bool) $description, $args );
+			$options = $this->select( $options, $field_name, (bool) $description, $args );
 		}
 
 
@@ -176,7 +176,7 @@ class Caldera_Forms_Admin_Fields {
 	}
 
 	protected function checkbox( $field_name, $option_name ){
-		return sprintf( '<input id="{{_id}}_media_library" type="checkbox" class="field-config" name="%s" value="1" {{#if %s}}checked="checked"{{/if}}>', esc_attr(  '{{_id}}_' . $field_name ), esc_attr( '{{_name}}[' . $field_name . ']' ), $option_name );
+		return sprintf( '<input id="{{_id}}_media_library" type="checkbox" class="field-config" name="%s" value="1" data-config-type="%s" {{#if %s}}checked="checked"{{/if}} >', esc_attr(  '{{_id}}_' . $field_name ), esc_attr( '{{_name}}[' . $field_name . ']' ),  esc_attr( $field_name ), $option_name );
 	}
 
 	/**
@@ -288,14 +288,15 @@ class Caldera_Forms_Admin_Fields {
 			$classes .= ' block-input';
 		}
 		return sprintf( '
-			<select class="%s" name="%s" id="%s" %s>
+			<select class="%s" name="%s" id="%s" %s data-config-type="%s">
 				%s
 			</select>',
 			esc_attr( $classes ),
 			esc_attr(  '{{_id}}-', $field_name ),
 			esc_attr( '{{_name}}['. $field_name . ']' ),
 			$this->options( $options, $field_name ),
-			$description_aria = $this->decription_aria_tag( $field_name, $has_description )
+			$description_aria = $this->decription_aria_tag( $field_name, $has_description ),
+			esc_attr( $field_name )
 		);
 	}
 

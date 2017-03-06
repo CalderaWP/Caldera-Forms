@@ -240,14 +240,16 @@ function CFFormEditStore( form ) {
         'caption',
         'custom_class',
         'default',
-        'conditions'
+        'conditions',
+        'hide_label'
     ];
 
     function fieldFactory (fieldId, type) {
         var field = {
             ID: fieldId,
             type: type,
-            config: {}
+            config: {},
+            hide_label: false,
         };
 
         fieldKeys.forEach(function (index) {
@@ -333,8 +335,11 @@ function CFFormEditStore( form ) {
         updateField: function (id, key, data ) {
             var field = this.getField(id);
             if( ! emptyObject(field) ){
-                if( fieldKeys.indexOf( key ) ){
+                if( -1 < fieldKeys.indexOf( key ) ){
                     form.fields[id][key] = data;
+                    return this.getField(id);
+                }else if( 'placeholder' == key || 'default' == key ){
+                    form.fields[id].config[ 'placeholder' ] = data;
                     return this.getField(id);
                 }
 
