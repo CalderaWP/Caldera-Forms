@@ -1,9 +1,12 @@
-<div class="caldera-config-group">
+<?php
 
-	<div class="caldera-config-field">
-		<label for="{{_id}}_inline">
-            <input id="{{_id}}_inline" type="checkbox" class="field-config" name="{{_name}}[inline]" value="1" {{#if inline}}checked="checked"{{/if}}>
-            <?php esc_html_e('Inline', 'caldera-forms'); ?>
-        </label>
-	</div>
-</div>
+$fields = array(
+	Caldera_Forms_Admin_UI::checkbox_field(
+		'inline',
+		__( 'Inline Options', 'caldera-forms' ),
+		array(
+			'inline' => __( 'Inline Options', 'caldera-forms' ),
+		)
+	)
+);
+echo Caldera_Forms_Admin_UI::fields( $fields, 'radio' );
