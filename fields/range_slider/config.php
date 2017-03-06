@@ -1,101 +1,95 @@
 <?php
-/*<div class="caldera-config-group">
-	<label for="{{_id}}_pollyfill"><?php _e('Polyfill', 'caldera-forms'); ?></label>
-	<div class="caldera-config-field">
-		<label><input id="{{_id}}_pollyfill_check" type="checkbox" class="field-config" name="{{_name}}[pollyfill]" value="1" {{#if pollyfill}}checked="checked"{{/if}}><?php esc_html_e('Use only on old browsers.','caldera-forms'); ?></label>
-	</div>
-</div>*/
+$args = array(
+	'type' => 'text',
+	'args' => array(
+		'block' => true,
+		'magic' => true,
+		'classes' => 'color-field'
+	)
+);
+$color_fields = array();
+$color_field_settings = array(
+	array(
+		'name' => 'trackcolor',
+		'label' => __( 'Track', 'caldera-forms' ),
+	),
+	array(
+		'name' => 'color',
+		'label' => __( 'Highlight', 'caldera-forms' ),
+	),
+
+	array(
+		'name' => 'handle',
+		'label' => __( 'Handle', 'caldera-forms' ),
+	),
+	array(
+		'name' => 'handleborder',
+		'label' =>  __( 'Border', 'caldera-forms' )
+	)
+
+);
+
+foreach ( $color_field_settings as $settings ){
+	$obj = new Caldera_Forms_Admin_Field();
+	$obj->set_from_array(
+		wp_parse_args( $settings, $args )
+	);
+	$color_fields[] = $obj;
+}
+
+
+
+
+$fields = array(
+	'default',
+	$color_fields,
+	Caldera_Forms_Admin_UI::number_field(
+		'step',
+		__( 'Steps', 'caldera-forms' ),
+		'',
+		array(
+			'min' => '0',
+			'style' => 'width:70px;'
+		)
+	),
+	Caldera_Forms_Admin_UI::number_field(
+		'min',
+		__( 'Minimum', 'caldera-forms' ),
+		'',
+		array(
+			'style' => 'width:70px;'
+		)
+	),
+	Caldera_Forms_Admin_UI::number_field(
+		'max',
+		__( 'Maximum', 'caldera-forms' ),
+		'',
+		array(
+			'style' => 'width:70px;'
+		)
+	),
+	Caldera_Forms_Admin_UI::checkbox_field(
+		'showval',
+		__( 'Show Value?', 'caldera-forms' ),
+		array(
+			'showval' => __( 'Enable', 'caldera-forms' ),
+		)
+	),
+	Caldera_Forms_Admin_UI::text_field(
+		'prefix',
+		__( 'Prefix', 'caldera-forms' )
+	),
+	Caldera_Forms_Admin_UI::text_field(
+		'suffix',
+		__( 'Suffix', 'caldera-forms' )
+	)
+
+);
+
+echo Caldera_Forms_Admin_UI::fields( $fields, 'range_slider' );
+
 ?>
-<div class="caldera-config-group">
-	<label for="{{_id}}_default">
-       <?php esc_html_e('Default', 'caldera-forms'); ?>
-    </label>
-	<div class="caldera-config-field">
-		<input id="{{_id}}_default" type="text" class="block-input field-config" name="{{_name}}[default]" value="{{default}}" style="width:70px;">
-	</div>
-</div>
-<div id="{{_id}}_style">
-	<div class="caldera-config-group">
-		<label for="{{_id}}_trackcolor">
-           <?php esc_html_e('Track', 'caldera-forms'); ?>
-        </label>
-		<div class="caldera-config-field">
-			<input id="{{_id}}_trackcolor" type="text" class="color-field field-config" name="{{_name}}[trackcolor]" value="{{trackcolor}}">
-		</div>
-	</div>
-	<div class="caldera-config-group">
-		<label for="{{_id}}_color">
-           <?php esc_html_e('Highlight', 'caldera-forms'); ?>
-        </label>
-		<div class="caldera-config-field">
-			<input id="{{_id}}_color" type="text" class="color-field field-config" name="{{_name}}[color]" value="{{color}}">
-		</div>
-	</div>
-	<div class="caldera-config-group">
-		<label for="{{_id}}_handle">
-           <?php esc_html_e('Handle', 'caldera-forms'); ?>
-        </label>
-		<div class="caldera-config-field">
-			<input id="{{_id}}_handle" type="text" class="color-field field-config" name="{{_name}}[handle]" value="{{handle}}">
-		</div>
-	</div>
-	<div class="caldera-config-group">
-		<label for="{{_id}}_handleborder">
-           <?php esc_html_e('Border', 'caldera-forms'); ?>
-        </label>
-		<div class="caldera-config-field">
-			<input id="{{_id}}_handleborder" type="text" class="color-field field-config" name="{{_name}}[handleborder]" value="{{handleborder}}">
-		</div>
-	</div>
-</div>
-<div class="caldera-config-group">
-	<label for="{{_id}}_step">
-       <?php esc_html_e('Steps', 'caldera-forms'); ?>
-    </label>
-	<div class="caldera-config-field">
-		<input id="{{_id}}_step" type="number" class="block-input field-config" name="{{_name}}[step]" value="{{step}}" style="width:70px;">
-	</div>
-</div>
-<div class="caldera-config-group">
-	<label for="{{_id}}_min">
-       <?php esc_html_e('Minimum', 'caldera-forms'); ?>
-    </label>
-	<div class="caldera-config-field">
-		<input id="{{_id}}_min" type="number" class="block-input field-config" name="{{_name}}[min]" value="{{min}}" style="width:70px;">
-	</div>
-</div>
-<div class="caldera-config-group">
-	<label for="{{_id}}_max">
-       <?php esc_html_e('Maximum', 'caldera-forms'); ?>
-    </label>
-	<div class="caldera-config-field">
-		<input id="{{_id}}_max" type="number" class="block-input field-config" name="{{_name}}[max]" value="{{max}}" style="width:70px;">
-	</div>
-</div>
-<div class="caldera-config-group">
-	<label for="{{_id}}_showval">
-       <?php esc_html_e('Show Value', 'caldera-forms'); ?>
-    </label>
-	<div class="caldera-config-field">
-		<input id="{{_id}}_showval" type="checkbox" class="field-config" name="{{_name}}[showval]" value="1" {{#if showval}}checked="checked"{{/if}}>
-	</div>
-</div>
-<div class="caldera-config-group">
-	<label for="{{_id}}_prefix">
-       <?php esc_html_e('Prefix', 'caldera-forms'); ?>
-    </label>
-	<div class="caldera-config-field">
-		<input id="{{_id}}_prefix" type="text" class="block-input field-config" name="{{_name}}[prefix]" value="{{prefix}}" style="width:70px;">
-	</div>
-</div>
-<div class="caldera-config-group">
-	<label for="{{_id}}_suffix">
-       <?php esc_html_e('Suffix', 'caldera-forms'); ?>
-    </label>
-	<div class="caldera-config-field">
-		<input id="{{_id}}_suffix" type="text" class="block-input field-config" name="{{_name}}[suffix]" value="{{suffix}}" style="width:70px;">
-	</div>
-</div>
+
 {{#script}}
 jQuery(function($){
 	//jQuery('#{{_id}}_trackcolor').miniColors();

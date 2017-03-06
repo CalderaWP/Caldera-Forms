@@ -93,7 +93,7 @@ class Caldera_Forms_Admin_UI {
 	 *
 	 * @return Caldera_Forms_Admin_Field
 	 */
-	public static function text_field( $field_name, $label_text,$description = '' ){
+	public static function text_field( $field_name, $label_text, $description = '' ){
 		$field = new Caldera_Forms_Admin_Field();
 		$field->set_from_array(
 			array(
@@ -109,6 +109,33 @@ class Caldera_Forms_Admin_UI {
 		);
 
 		return $field;
+	}
+
+	/**
+	 * Create a number field with attribues like min/max
+	 *
+	 * @since 1.5.1
+	 *
+	 * @param string $field_name Field name
+	 * @param string $label_text Label (legend) text
+	 * @param string $description Optional. Field description.
+	 * @param array $attributes Optional. Attributes
+	 */
+	public static function number_field( $field_name, $label_text, $description = '', array $attributes = array( ) ){
+		$field = new Caldera_Forms_Admin_Field();
+		$field->set_from_array(
+			array(
+				'type' => 'text',
+				'name' => $field_name,
+				'label' => $label_text,
+				'args' => array(
+					'description' => $description,
+					'block' => true,
+					'magic' => false,
+					'attrs' => $attributes
+				)
+			)
+		);
 	}
 
 	/**

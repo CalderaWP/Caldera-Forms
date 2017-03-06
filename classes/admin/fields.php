@@ -205,7 +205,7 @@ class Caldera_Forms_Admin_Fields {
 	 * @param string $type For input attribute
 	 * @param string $field_name Field name
 	 * @param bool $has_description
-	 * @param array $args Additonal args
+	 * @param array $args Additional args
 	 *
 	 * @return string
 	 */
@@ -224,6 +224,11 @@ class Caldera_Forms_Admin_Fields {
 			$classes .= ' ' . $args[ 'classes' ];
 		}
 
+		$attrs = '';
+		if( ! empty( $args[ 'attrs' ] ) ){
+			$attrs = caldera_forms_escape_field_attributes_array( $args[ 'attrs' ] );
+		}
+
 		return sprintf('<input type="%s" id="%s" class="%s" name="%s" value="%s" data-config-type="%s" %s >',
 			esc_attr( $type ),
 			esc_attr( '{{_id}}_' . $field_name ),
@@ -231,7 +236,7 @@ class Caldera_Forms_Admin_Fields {
 			esc_attr( '{{_name}}[' . $field_name . ']'),
 			esc_attr( '{{' . $field_name . '}}' ),
 			esc_attr( $field_name ),
-			$description_aria
+			$description_aria . ' ' . $attrs
 		);
 
 	}
