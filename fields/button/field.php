@@ -13,20 +13,30 @@ $attrs = array(
 );
 
 
+
 if($field['config']['type'] == 'next' || $field['config']['type'] == 'prev'){
 	$btnType = 'button';
 	$attrs[ 'data-page' ] = $field['config']['type'];
 	$field[ 'config' ][ 'class' ] = $field[ 'config' ][ 'class' ] . ' cf-page-btn cf-page-btn-' . $field[ 'config' ][ 'type' ];
-}elseif( $field['config']['type'] == 'button' && !empty( $field['config']['target'] ) ){
-	$field['config']['class'] .= ' cf-form-trigger';
-	$attrs[ 'data-target' ] =  esc_attr( $field['config']['target'] );
-	wp_enqueue_script( 'cf-form-object' );
+}elseif( 'button' == $field['config']['type' ] ){
+	$btnType = 'button';
+	if( !empty( $field['config']['target'] ) ){
+		$field['config']['class'] .= ' cf-form-trigger';
+		$attrs[ 'data-target' ] =  esc_attr( $field['config']['target'] );
+	}
+
+}elseif( 'reset' == $field['config']['type'] ){
+	$btnType = 'reset';
+}else{
+	$btnType = 'submit';
 }
 
-$attrs[ 'class' ] = $field[ 'config' ][ 'class' ];
-if( 'submit' !== $btnType ){
-	$attrs[ 'type' ] = 'button';
+if ( ! empty( $field[ 'config' ][ 'class' ] )  ) {
+	$attrs[ 'class' ] = $field[ 'config' ][ 'class' ];
 }
+
+$attrs[ 'type' ] = $btnType;
+
 
 $attr_string_button =  caldera_forms_field_attributes( $attrs, $field, $form );
 
