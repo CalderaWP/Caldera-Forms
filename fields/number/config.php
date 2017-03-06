@@ -18,3 +18,4 @@ $fields = array(
 
 );
 
+echo Caldera_Forms_Admin_UI::fields( $fields, 'number' );
