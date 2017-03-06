@@ -347,15 +347,19 @@ function CFFormEditor( editorConfig, $ ){
 
     }
 
+    function compileTemplate(pretemplates, t) {
+        compiledTemplates[pretemplates[t].id] = Handlebars.compile(pretemplates[t].innerHTML);
+    }
+
     /**
-     * Pre compile all Handlears templates
+     * Pre compile all handlebar templates
      *
      * @since 1.5.1
      */
     function preCompileTemplates(){
         var pretemplates = jQuery('.cf-editor-template');
         for( var t = 0; t < pretemplates.length; t++){
-            compiledTemplates[pretemplates[t].id] = Handlebars.compile( pretemplates[t].innerHTML );
+            compileTemplate(pretemplates, t);
         }
 
     }

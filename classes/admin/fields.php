@@ -74,6 +74,8 @@ class Caldera_Forms_Admin_Fields {
 				case 'select' :
 					$html .= $this->select_group( $field->label, $field->name, $field->options, $args );
 					break;
+				case 'textarea' :
+					$html .= $this->textarea( $field->label, $field->name );
 			}
 		}
 
@@ -147,6 +149,17 @@ class Caldera_Forms_Admin_Fields {
 
 	}
 
+	/**
+	 * Creates a group of checkboxes
+	 *
+	 * @since 1.5.1
+	 *
+	 * @param string $label_text The text of the label
+	 * @param string $field_name The field name
+	 * @param array $options Array of field options
+	 * @param array $args Additional args
+	 * @return string
+	 */
 	protected function checkbox_group( $label_text, array $options, $field_name, array $args ){
 
 		$description = $this->description( $field_name, $args[ 'description' ] );
@@ -163,6 +176,30 @@ class Caldera_Forms_Admin_Fields {
 				</fieldset>
 			</div>', esc_html( $label_text ), $this->checkboxes( $options, $field_name ), $description
 		);
+	}
+
+	protected function textarea( $label, $field_name ){
+		$id_attr = '{{_id}}_' . $field_name;
+		$field = sprintf('
+		<div class="caldera-config-group">
+			<label for="%s">
+		       %s
+		    </label>
+			<div class="caldera-config-field">
+				<textarea id="%s" class="block-input field-config magic-tag-enabled" name="%s" data-config-type="default">%s</textarea>
+			</div>
+		
+		</div>
+		',
+			esc_attr( $id_attr ),
+			esc_html( $label ),
+			esc_attr( $id_attr ),
+			esc_attr( '{{_name}}[' . $field_name . ']' ),
+			esc_attr( '{{' . $field_name . '}}' )
+
+
+		);
+		return $field;
 	}
 
 	protected function checkboxes(array $options, $field_name ){

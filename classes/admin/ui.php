@@ -200,18 +200,32 @@ class Caldera_Forms_Admin_UI {
 		return $field;
 	}
 
-	public static function textarea_default( $label ){
-		return '
-		<div class="caldera-config-group">
-			<label for="{{_id}}_default">
-		        ' .  esc_html( $label ) . '
-		    </label>
-			<div class="caldera-config-field">
-				<textarea id="{{_id}}_defaults" class="block-input field-config magic-tag-enabled" name="{{_name}}[default]">{{default}}</textarea>
-			</div>
-		
-		</div>
-		';
+	/**
+	 * Default text area field
+	 *
+	 * @since 1.5.1
+	 *
+	 * @param $label_text
+	 * @param string $field_name
+	 * @param string $description
+	 *
+	 * @return Caldera_Forms_Admin_Field
+	 */
+	public static function textarea_default( $label_text, $field_name = 'default', $description = '' ){
+		$field = $field = new Caldera_Forms_Admin_Field();
+		$field->set_from_array(
+			array(
+				'type' => 'textarea',
+				'name' => $field_name,
+				'label' => $label_text,
+				'args' => array(
+					'description' => $description,
+					'block' => false,
+					'magic' => false,
+				)
+			)
+		);
+		return $field;
 	}
 
 	/**
