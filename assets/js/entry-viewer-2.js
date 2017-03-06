@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.1-b-1 - 2017-03-05 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.1-b-1 - 2017-03-06 *//**
  * API Client for Caldera Forms API for a single form
  *
  * @since 1.5.0
@@ -231,7 +231,45 @@ function CFEntriesStoreFactory( formId, entries ){
  * @constructor
  */
 function CFFormEditStore( form ) {
-    return Object.assign( Object.create( CFObj.prototype ), {
+    var fieldKeys = [
+        'ID',
+        'type',
+        'label',
+        'slug',
+        'config',
+        'caption',
+        'custom_class',
+        'default',
+        'conditions'
+    ];
+
+    function fieldFactory (fieldId, type) {
+        var field = {
+            ID: fieldId,
+            type: type,
+            config: {}
+        };
+
+        fieldKeys.forEach(function (index) {
+            if( ! field.hasOwnProperty( index ) ){
+                field[index] = '';
+            }
+        });
+
+        return field;
+    }
+
+    function has(object,key) {
+        return object ? hasOwnProperty.call(object, key) : false;
+    }
+
+    function emptyObject( object ) {
+        return Object.keys(object).length === 0 && object.constructor === Object;
+
+    }
+
+
+    return {
         /**
          * Get all fields of form
          *
@@ -245,12 +283,12 @@ function CFFormEditStore( form ) {
          *
          *  @since 1.5.1
          *
-         * @param id
+         * @param fieldId
          * @returns {*}
          */
-        getField : function ( id ) {
-            if( this.has( form.fields, id ) ){
-                return form.fields[id];
+        getField : function ( fieldId ) {
+            if( has( form.fields, fieldId ) ){
+                return form.fields[fieldId];
             }
             return {}
         },
@@ -259,12 +297,12 @@ function CFFormEditStore( form ) {
          *
          *  @since 1.5.1
          *
-         * @param id
+         * @param fieldId
          * @returns {*}
          */
-        getFieldType: function ( id ) {
-            var field = this.getField(id);
-            if( ! this.emptyObject( field ) ){
+        getFieldType: function ( fieldId ) {
+            var field = this.getField(fieldId);
+            if( ! emptyObject( field ) ){
                 return field.type;
             }
             return false;
@@ -279,7 +317,7 @@ function CFFormEditStore( form ) {
          * @returns {*|{}}
          */
         addField : function (fieldId,fieldType) {
-            form.fields[fieldId] = this.fieldFactory(fieldId,fieldType);
+            form.fields[fieldId] = fieldFactory(fieldId,fieldType);
             return this.getField(fieldId);
         },
         /**
@@ -294,8 +332,8 @@ function CFFormEditStore( form ) {
          */
         updateField: function (id, key, data ) {
             var field = this.getField(id);
-            if( ! this.emptyObject(field) ){
-                if( this.fieldKeys.indexOf( key ) ){
+            if( ! emptyObject(field) ){
+                if( fieldKeys.indexOf( key ) ){
                     form.fields[id][key] = data;
                     return this.getField(id);
                 }
@@ -322,7 +360,7 @@ function CFFormEditStore( form ) {
          * @returns {*}
          */
         getConditional : function ( id ) {
-            if( this.has( form.conditional_groups.conditions, id ) ){
+            if( has( form.conditional_groups.conditions, id ) ){
                 return form.conditional_groups.conditions[id];
             }
             return {}
@@ -346,13 +384,13 @@ function CFFormEditStore( form ) {
          * @returns {*}
          */
         getProcessor: function ( id ) {
-            if( this.has( form.processors, id )){
+            if( has( form.processors, id )){
                 return form.processors[id];
             }
             return {}
         }
 
-    });
+    }
 
 }
 
