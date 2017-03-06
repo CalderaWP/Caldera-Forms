@@ -3,7 +3,7 @@ Contributors: Shelob9, Desertsnowman, christiechirinos
 Tags: forms, formbuilder, form builder, contact form, form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, echecks, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, eCheck,dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, gravity forms, contact, email, auto-responder, aweber, converkit, builder, contact forms, search, ab testing, a/b testing, split testing, shortcode, wordpress, awesome plugin, plugin, easy, braintree form, dwolla form, authorize.net form, mailchimp form, mailchimp popup, aweber form, converkit form, stripe form, stripe popup, eCheck form
 Requires at least: 4.5
 Tested up to: 4.7.3
-Stable tag: 1.5.0.5-rc-1
+Stable tag: 1.5.0.4
 License: GPLv2
 
 A different kind of WordPress form builder.
@@ -743,8 +743,16 @@ This could also be a sign of a more serious issue on your server, but is probabl
 5. **Go Further With Form Processors** - Auto-responders, redirects included! Go further with our add-ons!
 
 == Changelog ==
-= Caldera Forms 1.5.0.4 ( Wednesday March 1st, 2017 ) =
-* See: [https://calderaforms.com/updates/caldera-forms-1-5-0-4](https://calderaforms.com/updates/caldera-forms-1-5-0-4)
+= Caldera Forms 1.5.0.5 ( March 6st, 2017 ) This Field Is Required =
+See: [https://calderaforms.com/updates/caldera-forms-1-5-0-5?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms](https://calderaforms.com/updates/caldera-forms-1-5-0-5)
+* FIXED: JavaScript error when validator (parsely) was loaded in the wrong order.
+* FIXED: Field validation messages like "This Field Is Required" were not translating properly.
+* FIXED: Datepickers were not translated when scripts were not minified.
+* FIXED: Datepickers that were required and left empty were not marked as invalid.
+* FIXED: Reset buttons were not reset buttons.
+
+= Caldera Forms 1.5.0.4 ( March 1st, 2017 ) =
+* See: [https://calderaforms.com/updates/caldera-forms-1-5-0-4?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms](https://calderaforms.com/updates/caldera-forms-1-5-0-4)
 * FIXED: When select field or radio or checkbox had 0 or '0' as default, default was ignored.
 * FIXED: An input with a placeholder of 0 or '0' did not receive a placeholder.
 * FIXED: When a label for an input was hidden, label was not used as placeholder.
@@ -758,7 +766,7 @@ This could also be a sign of a more serious issue on your server, but is probabl
 * FIXED: Conditional calculation fields that shouldn't have calculated were calcuating.
 
 = Caldera Forms 1.5.0.1-3 ( February 22st, 2017) Über Sorry About HTML Fields =
-* See: [https://calderaforms.com/updates/caldera-forms-1-5-0-1](https://calderaforms.com/updates/caldera-forms-1-5-0-1)
+* See: [https://calderaforms.com/updates/caldera-forms-1-5-0-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms](https://calderaforms.com/updates/caldera-forms-1-5-0-1)
 * FIXED: HTML fields were super-broken with accents, cyrillic, non standard UTF-8, and lots of other things.
 * FIXED: Fields hidden by conditional logic, which should have not made server-side validation errors were, but errors didn't show and it looked broken.
 * FIXED: Entry export or view could cause an error.
@@ -1587,3 +1595,8 @@ See: https://calderaforms.com/2017/02/update-new-fields-front-end-entry-viewer/
 = 1.5.0.1 =
 See: https://calderaforms.com/updates/caldera-forms-1.5.0.1/
 
+= 1.5.0.4 =
+See: https://calderaforms.com/updates/caldera-forms-1.5.0.4/
+
+= 1.5.0.4 =
+See: https://calderaforms.com/updates/caldera-forms-1.5.0.5/
