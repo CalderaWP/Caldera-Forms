@@ -89,7 +89,7 @@ class Caldera_Forms_Admin_Field extends Caldera_Forms_Object{
 				'description' => '',
 				'block'       => false,
 				'magic'       => false,
-				'classes'     => ''
+				'classes'     => '',
 			)
 		);
 	}

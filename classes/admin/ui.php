@@ -173,6 +173,20 @@ class Caldera_Forms_Admin_UI {
 		return $field;
 	}
 
+	public static function textarea_default( $label ){
+		return '
+		<div class="caldera-config-group">
+			<label for="{{_id}}_default">
+		        ' .  esc_html( $label ) . '
+		    </label>
+			<div class="caldera-config-field">
+				<textarea id="{{_id}}_defaults" class="block-input field-config magic-tag-enabled" name="{{_name}}[default]">{{default}}</textarea>
+			</div>
+		
+		</div>
+		';
+	}
+
 	/**
 	 * Get fields for file/advanced_file field
 	 *
