@@ -220,6 +220,24 @@ function CFFormEditStore( form ) {
             return false;
         },
         /**
+         * Change a field's type
+         *
+         * @since 1.5.1
+         *
+         * @param fieldId
+         * @param newType
+         * @returns {*}
+         */
+        changeFieldType: function (fieldId, newType ) {
+            var field = this.getField( fieldId );
+            if( ! emptyObject( field ) ){
+                field.type = newType;
+                return this.getField(fieldId);
+            }
+
+            return false;
+        },
+        /**
          * Get conditional groups of form
          *
          * @since 1.5.1

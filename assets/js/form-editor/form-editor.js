@@ -255,11 +255,11 @@ function CFFormEditor( editorConfig, $ ){
      *
      * @since 1.5.1
      *
-     * @param id
+     * @param fieldId
      */
-    this.buildFieldPreview = function(id){
-        var config = self.getStore().getField(id);
-        renderFieldPreview( id,config );
+    this.buildFieldPreview = function(fieldId){
+        var config = self.getStore().getField(fieldId);
+        renderFieldPreview( fieldId,config );
     };
 
     /**
@@ -326,6 +326,18 @@ function CFFormEditor( editorConfig, $ ){
 
             if( type === 'radio' || type === 'checkbox' || type === 'dropdown' || type === 'toggle_switch' ){
                 $('#' + $panel.data('config') + '_auto').trigger('change');
+            }
+        });
+
+        //Field type change
+        $editorBody.on( 'change record', '.caldera-select-field-type', function () {
+            var $this = $(this),
+                newType = $this.val(),
+                fieldId = $this.data( 'field' ),
+                updated = self.getStore().changeFieldType( fieldId, $this.val() );
+            if (updated) {
+                renderFieldConfig($this.parent(), updated);
+                renderFieldPreview(fieldId, updated);
             }
         });
 

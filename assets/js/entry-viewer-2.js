@@ -339,11 +339,29 @@ function CFFormEditStore( form ) {
                     form.fields[id][key] = data;
                     return this.getField(id);
                 }else if( 'placeholder' == key || 'default' == key ){
-                    form.fields[id].config[ 'placeholder' ] = data;
+                    form.fields[id].config[ key ] = data;
                     return this.getField(id);
                 }
 
             }
+            return false;
+        },
+        /**
+         * Change a field's type
+         *
+         * @since 1.5.1
+         *
+         * @param fieldId
+         * @param newType
+         * @returns {*}
+         */
+        changeFieldType: function (fieldId, newType ) {
+            var field = this.getField( fieldId );
+            if( ! emptyObject( field ) ){
+                field.type = newType;
+                return this.getField(fieldId);
+            }
+
             return false;
         },
         /**
