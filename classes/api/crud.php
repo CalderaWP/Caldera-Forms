@@ -356,7 +356,12 @@ abstract class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 			throw new Exception();
 		}
 
-		$obj = new Caldera_Forms_API_Form( $form );
+		$full = false;
+		if( ! empty( $request[ 'full' ] ) ){
+			$full = true;
+		}
+
+		$obj = new Caldera_Forms_API_Form( $form, $full );
 		$obj->set_request( $request );
 		if ( $set_prop ) {
 			$this->form = $obj;

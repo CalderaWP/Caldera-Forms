@@ -134,6 +134,22 @@ function CFFormEditStore( form ) {
         return field;
     }
 
+    /**
+     * Create a new option
+     *
+     * @sine 1.5.1
+     *
+     * @returns {{}}
+     */
+    function optionFactory() {
+        return {
+            label: '',
+            value: '',
+            default : false
+        };
+
+    }
+
     function has(object,key) {
         return object ? hasOwnProperty.call(object, key) : false;
     }
@@ -141,6 +157,20 @@ function CFFormEditStore( form ) {
     function emptyObject( object ) {
         return Object.keys(object).length === 0 && object.constructor === Object;
 
+    }
+
+    /**
+     * Set a field config
+     *
+     * form.fields shouldn't be changed anywhere else. This is the one place to do so it can emit an event, when we get to that sort of thing.
+     *
+     * @since 1.5.1
+     *
+     * @param fieldId Field ID
+     * @param config New field config
+     */
+    function setField(fieldId, config){
+        form.fields[fieldId] = config;
     }
 
 
@@ -162,9 +192,10 @@ function CFFormEditStore( form ) {
          * @returns {*}
          */
         getField : function ( fieldId ) {
-            if( has( form.fields, fieldId ) ){
+            if( form.fields.hasOwnProperty( fieldId )  ){
                 return form.fields[fieldId];
             }
+
             return {}
         },
         /**
@@ -192,7 +223,7 @@ function CFFormEditStore( form ) {
          * @returns {*|{}}
          */
         addField : function (fieldId,fieldType) {
-            form.fields[fieldId] = fieldFactory(fieldId,fieldType);
+            setField(fieldId, fieldFactory(fieldId,fieldType ) );
             return this.getField(fieldId);
         },
         /**
@@ -200,23 +231,61 @@ function CFFormEditStore( form ) {
          *
          *  @since 1.5.1
          *
-         * @param id
+         * @param fieldId
          * @param key
          * @param data
          * @returns {*}
          */
-        updateField: function (id, key, data ) {
-            var field = this.getField(id);
-            if( ! emptyObject(field) ){
+        updateField: function (fieldId, key, data ) {
+            var field = this.getField(fieldId);
+            if( ! emptyObject(field) && undefined != key  ){
                 if( -1 < fieldKeys.indexOf( key ) ){
-                    form.fields[id][key] = data;
-                    return this.getField(id);
+                    field[key] = data;
+                    setField( fieldId, field );
+                    return this.getField(fieldId);
                 }else if( 'placeholder' == key || 'default' == key ){
-                    form.fields[id].config[ key ] = data;
-                    return this.getField(id);
+                    field.config[ key ] = data;
+                    setField( fieldId, field );
+                    return this.getField(fieldId);
+                }else if( 'option-value' == key || 'option-value' == key || 'option' == key  ) {
+                    throw new Error( 'Invalid field key to update. Use this.UpdateFieldOptions' );
+                }else{
+                    throw new Error( 'Invalid field key to update. Not supported.' );
                 }
 
             }
+            return false;
+        },
+        /**
+         * Add an option label or value to the
+         * @param fieldId
+         * @param type
+         * @param opt
+         * @param value
+         * @returns {*}
+         */
+        updateFieldOption: function (fieldId, type, opt, value ) {
+            var field = this.getField(fieldId);
+            if( ! emptyObject(field) && ( 'value' == type || 'label' == type || 'default' == type ) ){
+                if( ! field.config.hasOwnProperty( 'option' ) ){
+                    field.config[ 'option' ] = {};
+                }
+                if( ! field.config.option.hasOwnProperty( opt ) ){
+                    field.config.option[ opt ] = optionFactory( opt );
+                }
+                field.config.option[opt][type] = value;
+                setField( fieldId, field );
+                return this.getField(fieldId);
+            }
+
+            return false;
+        },
+        getFieldOptions: function (fieldId ) {
+            var field = this.getField(fieldId);
+            if( ! emptyObject(field) && field.hasOwnProperty( 'config' ) && field.config.hasOwnProperty( 'option' ) ){
+                return field.config.option;
+            }
+
             return false;
         },
         /**
@@ -232,6 +301,7 @@ function CFFormEditStore( form ) {
             var field = this.getField( fieldId );
             if( ! emptyObject( field ) ){
                 field.type = newType;
+                setField( fieldId, field );
                 return this.getField(fieldId);
             }
 

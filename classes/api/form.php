@@ -39,14 +39,25 @@ class Caldera_Forms_API_Form  implements  ArrayAccess {
 	protected $request;
 
 	/**
+	 * If full form details are to be returned.
+	 *
+	 * @since 1.5.1
+	 *
+	 * @var bool
+	 */
+	protected $full;
+
+	/**
 	 * Caldera_Forms_API_Form constructor.
 	 *
 	 * @since 1.5.0
 	 *
 	 * @param array $form Form config
+	 * @param bool $full Optional. If full form details are to be returned. Default is false.
 	 */
-	public function __construct( array  $form ) {
+	public function __construct( array  $form, $full = false ) {
 		$this->form = $form;
+		$this->full = $full;
 		//JOSH - don't call $this->set_fields() here, or WP_REST_Request object will not be available to filter.
 	}
 
@@ -84,7 +95,7 @@ class Caldera_Forms_API_Form  implements  ArrayAccess {
 	public function get_field( $field_id ){
 		$this->maybe_set_fields();
 		if( $this->is_api_field( $field_id )){
-			return $this->is_api_field( $field_id );
+			return $this->fields[ $field_id ];
 		}
 
 		return null;
@@ -143,7 +154,7 @@ class Caldera_Forms_API_Form  implements  ArrayAccess {
 	 * @since 1.5.0
 	 */
 	protected function set_fields(){
-		$this->fields = Caldera_Forms_Forms::get_fields( $this->form, true, true );
+		$this->fields = Caldera_Forms_Forms::get_fields( $this->form, true );
 		if( ! empty( $this->fields ) ){
 			foreach ( $this->fields as $field_id => $field ){
 
@@ -161,6 +172,10 @@ class Caldera_Forms_API_Form  implements  ArrayAccess {
 				if( false == apply_filters( 'caldera_forms_api_show_field', true, $field_id, $field, $this->form, $this->request ) ){
 					unset( $this->fields[ $field_id ] );
 					unset( $this->form[ 'fields' ][ $field_id ] );
+				}
+
+				if( ! $this->full ){
+					unset( $this->fields[ $field_id ][ 'config' ] );
 				}
 
 			}

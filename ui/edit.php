@@ -288,7 +288,7 @@ $field_options_template = "
 	$field_options_template .= ob_get_clean() . "
 
 </div>
-<div class=\"caldera-config-group-toggle-options\" {{#if auto}}style=\"display:none;\"{{/if}}>
+<div class=\"caldera-config-group-toggle-options\" {{#if auto}}style=\"display:none;\"{{/if}} data-field=\"{{_id}}\">
 	<div class=\"caldera-config-group caldera-config-group-full\">
 		<button type=\"button\" class=\"button add-toggle-option\" style=\"width: 180px;\">" . esc_html__( 'Add Option', 'caldera-forms' ) . "</button>
 		<button type=\"button\" data-bulk=\"#{{_id}}_bulkwrap\" class=\"button add-toggle-option\" style=\"width: 190px;\">" . esc_html__( 'Bulk Insert / Preset', 'caldera-forms' ) . "</button>
@@ -310,13 +310,13 @@ $field_options_template = "
 		<span style=\"display: block; clear: left; padding-left: 65px; float: left; width: 142px;\">" . esc_html__( 'Value', 'caldera-forms' ) . "</span>
 		<span style=\"float: left;\">" . esc_html__( 'Label', 'caldera-forms' ) . "</span>
 	</div>
-	<div class=\"caldera-config-group caldera-config-group-full toggle-options caldera-config-field\">
+	<div class=\"caldera-config-group caldera-config-group-full toggle-options caldera-config-field\" data-field=\"{{_id}}\" id=\"field-options-{{_id}}\">
 		{{#each option}}
 		<div class=\"toggle_option_row\">
 			<i class=\"dashicons dashicons-sort\" style=\"padding: 4px 9px;\"></i>
-			<input type=\"radio\" class=\"toggle_set_default field-config\" name=\"{{../_name}}[default]\" value=\"{{@key}}\" {{#is ../default value=\"@key\"}}checked=\"checked\"{{/is}}>
-			<span style=\"position: relative; display: inline-block;\"><input{{#unless ../show_values}} style=\"display:none;\"{{/unless}} type=\"text\" class=\"toggle_value_field field-config required magic-tag-enabled\" name=\"{{../_name}}[option][{{@key}}][value]\" value=\"{{#if ../show_values}}{{value}}{{else}}{{label}}{{/if}}\" placeholder=\"value\"></span>
-			<input{{#unless ../show_values}} style=\"width:245px;\"{{/unless}} type=\"text\" data-option=\"{{@key}}\" class=\"toggle_label_field field-config required\" name=\"{{../_name}}[option][{{@key}}][label]\" value=\"{{label}}\" placeholder=\"label\">
+			<input type=\"radio\" data-config-type=\"option-default\" class=\"toggle_set_default field-config\" name=\"{{../_name}}[default]\" value=\"{{@key}}\" {{#is ../default value=\"@key\"}}checked=\"checked\"{{/is}}>
+			<span style=\"position: relative; display: inline-block;\"><input{{#unless ../show_values}} style=\"display:none;\"{{/unless}} type=\"text\" class=\"toggle_value_field field-config required magic-tag-enabled\" name=\"{{../_name}}[option][{{@key}}][value]\" value=\"{{#if ../show_values}}{{value}}{{else}}{{label}}{{/if}}\" placeholder=\"value\" data-config-type=\"option-value\"></span>
+			<input{{#unless ../show_values}} style=\"width:245px;\"{{/unless}} type=\"text\" data-option=\"{{@key}}\" class=\"toggle_label_field field-config required\" name=\"{{../_name}}[option][{{@key}}][label]\" value=\"{{label}}\" placeholder=\"label\" data-config-type=\"option-label\">
 			<button class=\"button button-small toggle-remove-option\" type=\"button\"><i class=\"icn-delete\"></i></button>		
 		</div>
 		{{/each}}
@@ -375,6 +375,7 @@ foreach($field_types as $field_slug=>$config){
 			include $config['setup']['template'];
 		}
 	}
+
 	$field_type_templates[sanitize_key( $field_slug ) . "_tmpl"] = ob_get_clean();
 
 	if(isset($config['options'])){
@@ -973,18 +974,22 @@ do_action('caldera_forms_edit_end', $element);
 </script>
 <script type="text/html" id="field-option-row-tmpl">
 	{{#each option}}
-	<div class="toggle_option_row">
-		<i class="dashicons dashicons-sort" style="padding: 4px 9px;"></i>
-		<input type="radio" class="toggle_set_default field-config" name="{{../_name}}[default]" value="{{@key}}" {{#is ../default value="@key"}}checked="checked"{{/is}}>
-		<span style="position: relative; display: inline-block;"><input type="text" class="toggle_value_field field-config magic-tag-enabled" name="{{../_name}}[option][{{@key}}][value]" value="{{value}}" placeholder="value"></span>
-		<input type="text" class="toggle_label_field field-config" data-option="{{@key}}"  name="{{../_name}}[option][{{@key}}][label]" value="{{label}}" placeholder="label">
-		<button class="button button-small toggle-remove-option" type="button"><i class="icn-delete"></i></button>		
-	</div>
+			<div class="toggle_option_row">
+				<i class="dashicons dashicons-sort" style="padding: 4px 9px;"></i>
+				<input type="radio" class="toggle_set_default field-config" name="{{../_name}}[default]" value="{{@key}}" {{#is ../default value="@key"}}checked="checked"{{/is}} data-config-type="option-default">
+				<span style="position: relative; display: inline-block;">
+					<input type="text" class="toggle_value_field field-config magic-tag-enabled"  name="{{../_name}}[option][{{@key}}][value]" value="{{value}}" placeholder="value" data-option="{{@key}}" data-config-type="option-value">
+				</span>
+				<input type="text" class="toggle_label_field field-config" data-option="{{@key}}"  name="{{../_name}}[option][{{@key}}][label]" value="{{label}}" placeholder="label" data-config-type="option-label">
+				<button class="button button-small toggle-remove-option" type="button"><i class="icn-delete"></i></button>
+			</div>
 	{{/each}}
 </script>
 <script type="text/html" id="noconfig_field_templ" class="cf-editor-template">
 <div class="caldera-config-group">
-	<label>Default</label>
+	<label>
+		<?php esc_html_e( 'Default', 'caldera-forms' ); ?>
+	</label>
 	<div class="caldera-config-field">
 		<input type="text" class="block-input field-config" name="{{_name}}[default]" value="{{default}}">
 	</div>

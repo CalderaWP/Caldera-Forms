@@ -54,7 +54,7 @@ function CFFormEditor( editorConfig, $ ){
      *
      * @since 1.5.1
      *
-     * @returns {CFFormEditStore}
+     * @returns CFFormEditStore
      */
     this.getStore = function () {
         return store;
@@ -95,11 +95,20 @@ function CFFormEditor( editorConfig, $ ){
         fieldConfig._id = fieldId;
         fieldConfig._name = 'config[fields][' + fieldId + '][config]';
 
-
         template = $('<div>').html( template( fieldConfig ) );
 
         // send to target
         target.html( template.html() );
+        var selects = [
+            'dropdown',
+            'checkbox'
+        ];
+        if( self.isStoreReady() && -1 < selects.indexOf( fieldType )  ){
+            var opts = self.getStore().getFieldOptions( fieldId );
+            if( opts ){
+                renderOptions(fieldId, opts );
+            }
+        }
 
         // check for init function
         if( typeof window[fieldType + '_init'] === 'function' ){
@@ -262,6 +271,15 @@ function CFFormEditor( editorConfig, $ ){
         renderFieldPreview( fieldId,config );
     };
 
+
+    this.isStoreReady = function () {
+        if ( 'object' == typeof store ){
+            return true;
+        }
+        return false;
+    };
+
+
     /**
      * Setup click handlers for editor
      *
@@ -275,19 +293,38 @@ function CFFormEditor( editorConfig, $ ){
 
         //Change to settings
         $editorBody.on('change record', '.field-config', function(e){
+            if( ! self.isStoreReady() ){
+                return;
+            }
 
             var $editField 	= $(this),
                 $parent 	= $editField.closest('.caldera-editor-field-config-wrapper'),
-                fieldId = $parent.prop('id'),
+                fieldId = $parent.prop( 'id' ),
                 editType = $editField.data( 'config-type' ),
                 newVal,
                 updated;
+            if( ! editType  ){
+                return;
+            }else if( 'option-value' == editType || 'option-label' == editType || 'option-default' == editType ){
+                editType = editType.replace( 'option-', '' );
+                if ( 'default' !== editType ) {
+                    newVal = $editField.val();
+                } else {
+                    newVal = $editField.prop( 'checked')
+                }
+                updated = self.getStore().updateFieldOption( fieldId, editType, $editField.data( 'option' ), newVal );
+
+
+            } else {
                 if( 'checkbox' == $editField.attr( 'type' ) ){
                     newVal = $editField.prop( 'checked' );
                 }else{
                     newVal = $editField.val();
                 }
-                updated = store.updateField( fieldId, editType, newVal );
+
+                updated = self.getStore().updateField( fieldId, editType, newVal );
+
+            }
 
             if( updated ){
                 renderFieldPreview( fieldId, updated );
@@ -301,7 +338,7 @@ function CFFormEditor( editorConfig, $ ){
                 $panel 	= $clicked.parent(),
                 type 	= $('#' + $panel.data('config') +'_type').val();
 
-            if ( 'object' == typeof store ) {
+            if ( self.isStoreReady()) {
                 var config = $panel.data('config');
                 if ('string' == typeof config) {
                     var $wrapper = getFieldConfigWrapper( config );
@@ -331,7 +368,12 @@ function CFFormEditor( editorConfig, $ ){
 
         //Field type change
         $editorBody.on( 'change record', '.caldera-select-field-type', function () {
-            var $this = $(this),
+            if( ! self.isStoreReady() ){
+                return;
+            }
+
+            var $this = $(this);
+            var field = self.getStore().getField( $this.data( 'field' ) ),
                 newType = $this.val(),
                 fieldId = $this.data( 'field' ),
                 updated = self.getStore().changeFieldType( fieldId, $this.val() );
@@ -343,22 +385,15 @@ function CFFormEditor( editorConfig, $ ){
 
     }
 
-    /**
-     * Pre compile all Handlears templates
-     *
-     * @since 1.5.1
-     */
-    function preCompileTemplates(){
-        var pretemplates = jQuery('.cf-editor-template');
-        for( var t = 0; t < pretemplates.length; t++){
-            compiledTemplates[pretemplates[t].id] = Handlebars.compile( pretemplates[t].innerHTML );
-        }
 
-    }
+
 
 
     /**
      * Get a compiled Handlebars template or the fallback template
+     *
+     * @since 1.5.1
+     *
      * @param template
      * @returns {*}
      */
@@ -374,6 +409,53 @@ function CFFormEditor( editorConfig, $ ){
         }
 
     }
+
+    /**
+     * Holds the compiled template for options sections
+     *
+     * @since 1.5.1
+     */
+    var optTmpl;
+
+    /**
+     * Render options sections
+     *
+     * @since 1.5.1
+     *
+     * @param fieldId
+     * @param options
+     */
+    function renderOptions(fieldId, options ) {
+        if( ! optTmpl ){
+            optTmpl =Handlebars.compile( document.getElementById( 'field-option-row-tmpl' ).innerHTML );
+        }
+
+        if ( ! options.hasOwnProperty( 'option' ) ) {
+            options = {option: options};
+        }
+
+        var el =  document.getElementById( 'field-options-' + fieldId );
+        if( null != el ){
+            el.innerHTML = optTmpl(options);
+        }else{
+            throw Error( 'Field options wrapper for options not found.' );
+        }
+
+    }
+
+    /**
+     * Pre compile all Handlebars templates
+     *
+     * @since 1.5.1
+     */
+    function preCompileTemplates(){
+        var pretemplates = $('.cf-editor-template');
+        for( var t = 0; t < pretemplates.length; t++){
+            compiledTemplates[pretemplates[t].id] = Handlebars.compile( pretemplates[t].innerHTML );
+        }
+
+    }
+
 
     /**
      * Check if object has a key
