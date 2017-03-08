@@ -76,6 +76,9 @@ class Caldera_Forms_Admin_Fields {
 					break;
 				case 'textarea' :
 					$html .= $this->textarea( $field->label, $field->name );
+					break;
+				case 'checkbox' :
+					$html .= $this->checkbox_group( $field->label, $field->options, $field->name, $args );
 			}
 		}
 
@@ -212,8 +215,24 @@ class Caldera_Forms_Admin_Fields {
 
 	}
 
+	/**
+	 * Generate checkbox input HTML
+	 *
+	 * @since 1.5.1
+	 *
+	 * @param string $field_name Field name
+	 * @param string $option_name Option name
+	 *
+	 * @return string
+	 */
 	protected function checkbox( $field_name, $option_name ){
-		return sprintf( '<input id="{{_id}}_media_library" type="checkbox" class="field-config" name="%s" value="1" data-config-type="%s" {{#if %s}}checked="checked"{{/if}} >', esc_attr(  '{{_id}}_' . $field_name ), esc_attr( '{{_name}}[' . $field_name . ']' ),  esc_attr( $field_name ), $option_name );
+		return  sprintf( '<input id="%0s" type="checkbox" class="field-config" name="%1s" value="1" data-config-type="%2s" {{#if %3s}}checked="checked"{{/if}} >',
+			esc_attr( '{{_id}}_' . $field_name ),
+			esc_attr( '{{_name}}[' . $field_name . ']' ),
+			esc_attr( $field_name ),
+			$option_name
+		);
+
 	}
 
 	/**

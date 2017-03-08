@@ -253,13 +253,13 @@ class Caldera_Forms_Admin_UI {
 				array( 'allow_multiple' => __('Enable', 'caldera-forms') )
 			),
 			Caldera_Forms_Admin_UI::text_field(
-				'allow_multiple_text',
-				__('Add to Media Library', 'caldera-forms' )
-			),
-			Caldera_Forms_Admin_UI::text_field(
 				'allowed',
 				__('Allowed Types', 'caldera-forms' ),
 				__('Comma separated eg. jpg,pdf,txt. No periods. Must be allowed by WordPress/ server.', 'caldera-forms')
+			),
+			Caldera_Forms_Admin_UI::text_field(
+				'allow_multiple_text',
+				__( 'Button Text', 'caldera-forms' )
 			),
 		);
 		return $fields;

@@ -362,6 +362,9 @@ function CFFormEditStore( form ) {
         /**
          * Update field in collection
          *
+         * This is the primary, public way to update a field. Special handling for options is available.
+         * Developer Note: don't change form.fields here, use setField() for that always.
+         *
          *  @since 1.5.1
          *
          * @param fieldId
@@ -372,6 +375,7 @@ function CFFormEditStore( form ) {
         updateField: function (fieldId, key, data ) {
             var field = this.getField(fieldId);
             if( ! emptyObject(field) && undefined != key  ){
+
                 if( -1 < fieldKeys.indexOf( key ) ){
                     field[key] = data;
                     setField( fieldId, field );
@@ -383,7 +387,9 @@ function CFFormEditStore( form ) {
                 }else if( 'option-value' == key || 'option-value' == key || 'option' == key  ) {
                     throw new Error( 'Invalid field key to update. Use this.UpdateFieldOptions' );
                 }else{
-                    throw new Error( 'Invalid field key to update. Not supported.' );
+                    field.config[ key ] = data;
+                    setField( fieldId, field );
+                    return this.getField(fieldId);
                 }
 
             }

@@ -446,15 +446,6 @@ foreach($field_types as $field_slug=>$config){
 
 function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{{slug}}', $caption = '{{caption}}', $hide_label = '{{hide_label}}', $required = '{{required}}', $entry_list = '{{entry_list}}', $type = null, $config_str = '{{json config}}', $conditions_str = '{"type" : ""}'){
 
-	if(is_array($config_str)){
-		$config 	= $config_str;
-		$config_str = json_encode( $config_str );
-
-	}else{
-		$config = json_decode($config_str, true);
-	}
-
-
 	$condition_type = '';
 	if(!empty($conditions_str)){
 		$conditions = json_decode($conditions_str, true);

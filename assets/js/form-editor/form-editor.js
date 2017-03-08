@@ -219,6 +219,26 @@ function CFFormEditor( editorConfig, $ ){
             }
         }
 
+        if ( fieldConfig.hasOwnProperty( 'config' ) ) {
+            var checkboxes = $wrapper.find('input:checkbox');
+            if (checkboxes.length) {
+                fieldConfig = self.getStore().getField(fieldId);
+                var configType, $check;
+                $.each(checkboxes, function (i, v) {
+                    $check = $(v);
+                    configType = $check.data('config-type');
+                    if (configType) {
+                        if (fieldConfig.config.hasOwnProperty(configType) && false == fieldConfig.config[configType]) {
+                            //don't check
+                        } else {
+                            $check.prop('checked', true);
+                        }
+                    }
+
+                });
+            }
+        }
+
     }
 
     /**
