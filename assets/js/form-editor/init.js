@@ -63,52 +63,6 @@ jQuery(document).ready(function($){
     }
 
 
-    $('.caldera-header-save-button').baldrick({
-        method			:	'POST',
-        request			:	'admin.php?page=caldera-forms',
-        before			: function(el, e){
-            e.preventDefault();
-
-            if(!check_required_bindings()){
-                return false;
-            }
-
-            $('#save_indicator').addClass('loading');
-            if( typeof tinyMCE !== 'undefined'){
-                tinyMCE.triggerSave();
-            }
-
-            var data_fields		= $('.caldera-forms-options-form').formJSON();
-            if( data_fields.conditions ){
-                data_fields.config.conditional_groups = { conditions : data_fields.conditions };
-            }
-            $(el).data('cf_edit_nonce', data_fields.cf_edit_nonce);
-            $(el).data('_wp_http_referer', data_fields._wp_http_referer);
-            $(el).data('sender', 'ajax');
-            $(el).data('config', JSON.stringify(data_fields.config));
-
-            return true;
-
-        },
-        callback: function( obj ){
-
-            if( false === obj.data ){
-                var notice = $('.updated_notice_box');
-
-                notice.stop().animate({top: 0}, 200, function(){
-                    setTimeout( function(){
-                        notice.stop().animate({top: -75}, 200);
-                    }, 2000);
-                });
-            }
-        },
-        complete: function( obj ){
-
-            $('.wrapper-instance-pane .field-config').prop('disabled', false);
-
-        }
-    });
-
 
     // switch active group
     function switch_active_group(id){
@@ -2011,13 +1965,6 @@ jQuery(document).ready(function($) {
             batch.val( preset_options[ preset ].data );
         }
     });
-    // remove an option row
-    $('.caldera-editor-body').on('click', '.toggle-remove-option', function(e){
-        var triggerfield = $(this).closest('.caldera-editor-field-config-wrapper').find('.field-config').first();
-        $(this).parent().remove();
-        triggerfield.trigger('change');
-        $(document).trigger('option.remove');
-    });
 
     $('.caldera-editor-body').on('click', '.page-toggle', function(e){
         var clicked = $(this),
@@ -2069,8 +2016,10 @@ jQuery(document).ready(function($) {
                 if( options[ i ] === options[ f ] ){ continue; }
 
                 if( options[ i ].value === options[ f ].value ){
-                    $( options[ f ] ).addClass('has-error');
-                    repeats++;
+                    if ( options[ i ].value || options[ f ].value ) {
+                        $(options[f]).addClass('has-error');
+                        repeats++;
+                    }
                 }
             }
             if( repeats > 0 ){

@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.1-b-1 - 2017-03-06 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.1-b-1 - 2017-03-07 *//**
  * API Client for Caldera Forms API for a single form
  *
  * @since 1.5.0
@@ -293,7 +293,6 @@ function CFFormEditStore( form ) {
      *
      * @since 1.5.1
      *
-     *
      * @param fieldId Field ID
      * @param config New field config
      */
@@ -321,6 +320,12 @@ function CFFormEditStore( form ) {
          */
         getField : function ( fieldId ) {
             if( form.fields.hasOwnProperty( fieldId )  ){
+                if( ! form.fields[fieldId].hasOwnProperty( 'config' ) ){
+                    var field = form.fields[fieldId];
+                    field.config = {};
+                    setField(fieldId, field );
+                    return this.getField( fieldId );
+                }
                 return form.fields[fieldId];
             }
 
@@ -385,7 +390,10 @@ function CFFormEditStore( form ) {
             return false;
         },
         /**
-         * Add an option label or value to the
+         * Add an option label or value to a field
+         *
+         * @since 1.5.1
+         *
          * @param fieldId
          * @param type
          * @param opt
@@ -401,6 +409,9 @@ function CFFormEditStore( form ) {
                 if( ! field.config.option.hasOwnProperty( opt ) ){
                     field.config.option[ opt ] = optionFactory( opt );
                 }
+                if( type == 'default' ){
+                    field.config.default = opt;
+                }
                 field.config.option[opt][type] = value;
                 setField( fieldId, field );
                 return this.getField(fieldId);
@@ -408,10 +419,74 @@ function CFFormEditStore( form ) {
 
             return false;
         },
+        /**
+         * Replace all options of a field
+         *
+         * @since 1.5.1.
+         *
+         * @param fieldId
+         * @param options
+         * @returns {*}
+         */
+        updateFieldOptions: function (fieldId, options) {
+            var field = this.getField(fieldId);
+            if (!emptyObject(field)) {
+                field.config.option = options;
+                setField(fieldId, field);
+                return this.getField(fieldId);
+            }
+
+            return false;
+        },
+        /**
+         * Get all options of a field
+         *
+         * @since 1.5.1
+         *
+         * @param fieldId
+         * @returns {*}
+         */
         getFieldOptions: function (fieldId ) {
             var field = this.getField(fieldId);
             if( ! emptyObject(field) && field.hasOwnProperty( 'config' ) && field.config.hasOwnProperty( 'option' ) ){
+                if( field.config.option.hasOwnProperty( 'undefined' ) ){
+                    delete field.config.option.undefined;
+                    setField(fieldId, field);
+                }
+
                 return field.config.option;
+
+            }
+
+            return false;
+        },
+        /**
+         * Remove an option from a field
+         *
+         * @since 1.5.1
+         *
+         * @param fieldId
+         * @param optId
+         * @returns {*}
+         */
+        removeFieldOption: function( fieldId, optId ){
+            var field = this.getField(fieldId );
+            if( ! emptyObject( field ) ){
+                if( field.config.option.hasOwnProperty(optId) ){
+                    delete field.config.option[ optId ];
+                    setField(optId);
+                    return this.getField(fieldId);
+                }
+            }
+
+            return false;
+        },
+        getFieldOptionDefault :function ( fieldId ) {
+            var field = this.getField( fieldId );
+            if( ! emptyObject( field ) ){
+                if( field.config.hasOwnProperty( 'default' ) ){
+                    return field.config.default;
+                }
             }
 
             return false;

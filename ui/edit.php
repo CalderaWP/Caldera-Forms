@@ -303,7 +303,7 @@ $field_options_template = "
 		</div>
 	</div>
 	<div class=\"caldera-config-group caldera-config-group-full\">
-	<label style=\"padding: 10px;\"><input type=\"radio\" class=\"toggle_set_default field-config\" name=\"{{_name}}[default]\" value=\"\" {{#unless default}}checked=\"checked\"{{/unless}}> " . esc_html__( 'No Default', 'caldera-forms' ) . "</label>
+	<label style=\"padding: 10px;\"><input type=\"radio\" class=\"toggle_set_default no-default field-config\" name=\"{{_name}}[default]\" value=\"\" {{#unless default}}checked=\"checked\"{{/unless}}> " . esc_html__( 'No Default', 'caldera-forms' ) . "</label>
 	<label class=\"pull-right\" style=\"padding: 10px;\"><input type=\"checkbox\" class=\"toggle_show_values field-config\" name=\"{{_name}}[show_values]\" value=\"1\" {{#if show_values}}checked=\"checked\"{{/if}}> " . esc_html__( 'Show Values', 'caldera-forms' ) . "</label>
 	</div>
 	<div class=\"caldera-config-group-option-labels\" {{#unless show_values}}style=\"display:none;\"{{/unless}}>
@@ -973,15 +973,15 @@ do_action('caldera_forms_edit_end', $element);
 ?>
 </script>
 <script type="text/html" id="field-option-row-tmpl">
-	{{#each option}}
+	{{#each config.option}}
 			<div class="toggle_option_row">
 				<i class="dashicons dashicons-sort" style="padding: 4px 9px;"></i>
-				<input type="radio" class="toggle_set_default field-config" name="{{../_name}}[default]" value="{{@key}}" {{#is ../default value="@key"}}checked="checked"{{/is}} data-config-type="option-default">
+				<input type="radio" class="toggle_set_default field-config" name="{{../_name}}[default]" value="{{@key}}" {{#is ../default value="@key"}}checked="checked"{{/is}} data-config-type="option-default" data-option="{{@key}}" id="value-default-{{@key}}">
 				<span style="position: relative; display: inline-block;">
 					<input type="text" class="toggle_value_field field-config magic-tag-enabled"  name="{{../_name}}[option][{{@key}}][value]" value="{{value}}" placeholder="value" data-option="{{@key}}" data-config-type="option-value">
 				</span>
 				<input type="text" class="toggle_label_field field-config" data-option="{{@key}}"  name="{{../_name}}[option][{{@key}}][label]" value="{{label}}" placeholder="label" data-config-type="option-label">
-				<button class="button button-small toggle-remove-option" type="button"><i class="icn-delete"></i></button>
+				<button class="button button-small toggle-remove-option" type="button" data-option="{{@key}}" ><i class="icn-delete"></i></button>
 			</div>
 	{{/each}}
 </script>

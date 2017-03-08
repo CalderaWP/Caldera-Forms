@@ -78,6 +78,51 @@ function CFFormEditor( editorConfig, $ ){
         $saveButton.prop('disabled', true);
     };
 
+    this.saveForms = function () {
+        return {
+            before: function (el, e) {
+                e.preventDefault();
+
+                if (!check_required_bindings()) {
+                    return false;
+                }
+
+                $('#save_indicator').addClass('loading');
+                if (typeof tinyMCE !== 'undefined') {
+                    tinyMCE.triggerSave();
+                }
+
+                var data_fields = $('.caldera-forms-options-form').formJSON();
+                if (data_fields.conditions) {
+                    data_fields.config.conditional_groups = {conditions: data_fields.conditions};
+                }
+                $(el).data('cf_edit_nonce', data_fields.cf_edit_nonce);
+                $(el).data('_wp_http_referer', data_fields._wp_http_referer);
+                $(el).data('sender', 'ajax');
+
+                //this would let us get fields from store, but not ready for that yet.
+                //data_fields.config.fields = self.getStore().getFields();
+                $(el).data('config', JSON.stringify(data_fields.config));
+
+                return true;
+            },
+            callback: function (obj) {
+                if (false === obj.data) {
+                    var $notice = $('.updated_notice_box');
+
+                    $notice.stop().animate({top: 0}, 200, function () {
+                        setTimeout(function () {
+                            $notice.stop().animate({top: -75}, 200);
+                        }, 2000);
+                    });
+                }
+            },
+            complete: function (obj) {
+                $('.wrapper-instance-pane .field-config').prop('disabled', false);
+            }
+        }
+    };
+
     /**
      * Render a field config panel
      *
@@ -99,14 +144,52 @@ function CFFormEditor( editorConfig, $ ){
 
         // send to target
         target.html( template.html() );
-        var selects = [
-            'dropdown',
-            'checkbox'
-        ];
-        if( self.isStoreReady() && -1 < selects.indexOf( fieldType )  ){
+
+        if( self.isStoreReady() && isSelect( fieldType )  ){
             var opts = self.getStore().getFieldOptions( fieldId );
             if( opts ){
                 renderOptions(fieldId, opts );
+
+                //the rest of this conditional is why I wish I was using Vue or something :(
+
+                //Prevent no default and a default from being checked
+                $wrapper.find( '.toggle_set_default' ).not( '.no-default' ).on( 'change', function () {
+                    $wrapper.find( '.no-default' ).prop( 'checked', false );
+                    $wrapper.find( '.toggle_set_default' ).prop( 'checked', false );
+                    $(this).prop( 'checked', true );
+                });
+
+                $wrapper.find( '.no-default' ).on( 'change', function () {
+                    //nice vintage vibe here
+                    if( $(this).is(':checked') ){
+                        $wrapper.find( '.toggle_set_default' ).not( '.no-default' ).prop( 'checked', false );
+                    }
+                });
+
+                //this hack to prevent showing values when not needed, sucks.
+                var showValues = true;
+                $.each( opts, function (i,v) {
+                    if ( ! v.value ) {
+                        showValues = false;
+                        return false;
+                    }
+
+                } );
+
+                if( showValues ){
+                    $wrapper.find( '.toggle_show_values' ).prop( 'checked', true ).trigger( 'change' );
+                }else{
+                    $wrapper.find( '.toggle_show_values' ).prop( 'checked', false ).trigger( 'change' );
+                }
+
+                var fieldDefault = self.getStore().getFieldOptionDefault( fieldId );
+                if( fieldDefault  ){
+                    $( '#value-default-' + fieldDefault ).prop( 'checked', true );
+                    $wrapper.find( '.no-default' ).prop( 'checked', false );
+
+                }else{
+                    $wrapper.find( '.no-default' ).prop( 'checked', true );
+                }
             }
         }
 
@@ -181,7 +264,7 @@ function CFFormEditor( editorConfig, $ ){
 
         renderFieldConfig( $wrapper, config );
 
-        // seup options
+        // setup options
         $wrapper.find('.toggle_show_values').trigger('change');
 
         if( !$('.caldera-select-field-type').not('.field-initialized').length){
@@ -227,6 +310,54 @@ function CFFormEditor( editorConfig, $ ){
     };
 
     /**
+     * Build field preview
+     *
+     * @since 1.5.1
+     *
+     * @param fieldId
+     */
+    this.buildFieldPreview = function(fieldId){
+        var config = self.getStore().getField(fieldId);
+        renderFieldPreview( fieldId,config );
+    };
+
+    /**
+     * Check if store is ready
+     *
+     * @since 1.5.1
+     *
+     * @returns {boolean}
+     */
+    this.isStoreReady = function () {
+        if ( 'object' == typeof store ){
+            return true;
+        }
+        return false;
+    };
+
+    /**
+     * Check if we should treat a type as a select
+     *
+     * @since 1.5.1
+     *
+     * @param type
+     * @returns {boolean}
+     */
+    function isSelect(type) {
+        if (-1 < [
+            'color_picker',
+            'filtered_select2',
+            'radio',
+            'dropdown',
+            'checkbox'
+        ].indexOf(type)) {
+            return true;
+        }
+
+    }
+
+
+    /**
      * Render the field preview
      *
      * @since 1.5.1
@@ -235,6 +366,10 @@ function CFFormEditor( editorConfig, $ ){
      * @param config
      */
     function renderFieldPreview( fieldId, config) {
+        if( emptyObject( config ) ){
+            config = self.getStore().getField( fieldId );
+        }
+
         var
             type = self.getStore().getFieldType(fieldId),
             $preview_parent	= $('.layout-form-field[data-config="' + fieldId + '"]'),
@@ -259,25 +394,6 @@ function CFFormEditor( editorConfig, $ ){
         return $( '#' + fieldId )
     }
 
-    /**
-     * Build field preview
-     *
-     * @since 1.5.1
-     *
-     * @param fieldId
-     */
-    this.buildFieldPreview = function(fieldId){
-        var config = self.getStore().getField(fieldId);
-        renderFieldPreview( fieldId,config );
-    };
-
-
-    this.isStoreReady = function () {
-        if ( 'object' == typeof store ){
-            return true;
-        }
-        return false;
-    };
 
 
     /**
@@ -286,9 +402,21 @@ function CFFormEditor( editorConfig, $ ){
      * @since 1.5.1
      */
     function setUpClickHandlers() {
+        //Save form
+        $saveButton.baldrick({
+            method: 'POST',
+            request: 'admin.php?page=caldera-forms',
+            before: self.saveForms().before,
+            callback: self.saveForms().callback,
+            complete: self.saveForms().complete,
+        });
+
         // Change Field Type
         $editorBody.on('change', '.caldera-select-field-type', function(e){
-            self.buildFieldTypeConfig(this);
+            if( ! isSelect( self.getStore().getFieldType( $( this ).data( 'field' ) ) ) ){
+                self.buildFieldTypeConfig(this);
+            }
+
         });
 
         //Change to settings
@@ -334,7 +462,11 @@ function CFFormEditor( editorConfig, $ ){
 
         //Open field settings
         $( document ).on('click', '.layout-form-field .icon-edit', function(){
-            var $clicked = $(this),
+            var $clicked = $(this);
+            if( $clicked.hasClass( 'caldera-select-field-type') ){
+                return;
+            }
+            var
                 $panel 	= $clicked.parent(),
                 type 	= $('#' + $panel.data('config') +'_type').val();
 
@@ -372,17 +504,32 @@ function CFFormEditor( editorConfig, $ ){
                 return;
             }
 
-            var $this = $(this);
-            var field = self.getStore().getField( $this.data( 'field' ) ),
+            var $this = $(this),
+                field = self.getStore().getField( $this.data( 'field' ) ),
                 newType = $this.val(),
                 fieldId = $this.data( 'field' ),
-                updated = self.getStore().changeFieldType( fieldId, $this.val() );
-            if (updated) {
-                renderFieldConfig($this.parent(), updated);
-                renderFieldPreview(fieldId, updated);
+                opts = self.getStore().getFieldOptions( fieldId ),
+                config = self.getStore().changeFieldType( fieldId, $this.val() );
+            if (config) {
+                config = self.getStore().updateFieldOptions( fieldId, opts );
+                renderFieldConfig($this.parent(), config );
+                renderFieldPreview(fieldId, config );
             }
         });
 
+
+
+        // remove an option row
+        $('.caldera-editor-body').on('click', '.toggle-remove-option', function(e){
+            var $this = $(this);
+            var $triggerfield = $(this).closest('.caldera-editor-field-config-wrapper').find('.field-config').first();
+            var fieldId =$triggerfield.val();
+            self.getStore().removeFieldOption( fieldId, $this.data( 'option') );
+            $this.parent().remove();
+            $triggerfield.trigger('change');
+            $(document).trigger('option.remove');
+            renderFieldPreview(fieldId, {} );
+        });
     }
 
 
@@ -427,16 +574,17 @@ function CFFormEditor( editorConfig, $ ){
      */
     function renderOptions(fieldId, options ) {
         if( ! optTmpl ){
-            optTmpl =Handlebars.compile( document.getElementById( 'field-option-row-tmpl' ).innerHTML );
+            optTmpl = Handlebars.compile( document.getElementById( 'field-option-row-tmpl' ).innerHTML );
         }
 
         if ( ! options.hasOwnProperty( 'option' ) ) {
             options = {option: options};
         }
 
+
         var el =  document.getElementById( 'field-options-' + fieldId );
         if( null != el ){
-            el.innerHTML = optTmpl(options);
+            el.innerHTML = optTmpl(self.getStore().getField( fieldId ));
         }else{
             throw Error( 'Field options wrapper for options not found.' );
         }
