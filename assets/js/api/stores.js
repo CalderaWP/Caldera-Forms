@@ -389,6 +389,15 @@ function CFFormEditStore( form ) {
 
             return false;
         },
+        deleteField : function (fieldId ) {
+            var field = this.getField(fieldId);
+            if( ! emptyObject( field ) ){
+                delete form.fields[fieldId];
+                return true;
+            }
+
+            return false;
+        },
         /**
          * Get conditional groups of form
          *

@@ -414,6 +414,28 @@ function CFFormEditor( editorConfig, $ ){
         return $( '#' + fieldId )
     }
 
+    function deleteField( fieldId ) {
+        // remove config
+        $('#' + field).remove();
+        // remove options
+        $('option[value="' + field + '"]').remove();
+        $('[data-bind="' + field + '"]').remove();
+
+        // remove field
+        delete current_form_fields[field];
+        self.getStore().deleteField(fieldId);
+
+        $('[data-config="' + field + '"]').slideUp(200, function(){
+            var line = $(this);
+            // remove line
+            line.remove();
+            rebuild_field_binding();
+            $(document).trigger('field.removed');
+        });
+
+
+    }
+
 
 
     /**
@@ -432,79 +454,79 @@ function CFFormEditor( editorConfig, $ ){
         });
 
         // Change Field Type
-        $editorBody.on('change', '.caldera-select-field-type', function(e){
-            if( ! isSelect( self.getStore().getFieldType( $( this ).data( 'field' ) ) ) ){
+        $editorBody.on('change', '.caldera-select-field-type', function (e) {
+            if (!isSelect(self.getStore().getFieldType($(this).data('field')))) {
                 self.buildFieldTypeConfig(this);
             }
 
         });
 
         //Change to settings
-        $editorBody.on('change record', '.field-config', function(e){
-            if( ! self.isStoreReady() ){
+        $editorBody.on('change record', '.field-config', function (e) {
+            if (!self.isStoreReady()) {
                 return;
             }
 
-            var $editField 	= $(this),
-                $parent 	= $editField.closest('.caldera-editor-field-config-wrapper'),
-                fieldId = $parent.prop( 'id' ),
-                editType = $editField.data( 'config-type' ),
+            var $editField = $(this),
+                $parent = $editField.closest('.caldera-editor-field-config-wrapper'),
+                fieldId = $parent.prop('id'),
+                editType = $editField.data('config-type'),
                 newVal,
                 updated;
-            if( ! editType  ){
+            if (!editType) {
                 return;
-            }else if( 'option-value' == editType || 'option-label' == editType || 'option-default' == editType ){
-                editType = editType.replace( 'option-', '' );
-                if ( 'default' !== editType ) {
+            } else if ('option-value' == editType || 'option-label' == editType || 'option-default' == editType) {
+                editType = editType.replace('option-', '');
+                if ('default' !== editType) {
                     newVal = $editField.val();
                 } else {
-                    newVal = $editField.prop( 'checked')
+                    newVal = $editField.prop('checked')
                 }
-                updated = self.getStore().updateFieldOption( fieldId, editType, $editField.data( 'option' ), newVal );
+                updated = self.getStore().updateFieldOption(fieldId, editType, $editField.data('option'), newVal);
 
 
             } else {
-                if( 'checkbox' == $editField.attr( 'type' ) ){
-                    newVal = $editField.prop( 'checked' );
-                }else{
+                if ('checkbox' == $editField.attr('type')) {
+                    newVal = $editField.prop('checked');
+                } else {
                     newVal = $editField.val();
                 }
 
-                updated = self.getStore().updateField( fieldId, editType, newVal );
+                updated = self.getStore().updateField(fieldId, editType, newVal);
 
             }
 
-            if( updated ){
-                renderFieldPreview( fieldId, updated );
+            if (updated) {
+                renderFieldPreview(fieldId, updated);
             }
 
         });
 
         //Open field settings
-        $( document ).on('click', '.layout-form-field .icon-edit', function(){
+        $(document).on('click', '.layout-form-field .icon-edit', function () {
             var $clicked = $(this);
-            if( $clicked.hasClass( 'caldera-select-field-type') ){
+            if ($clicked.hasClass('caldera-select-field-type')) {
                 return;
             }
             var
-                $panel 	= $clicked.parent(),
-                type 	= $('#' + $panel.data('config') +'_type').val();
+                $panel = $clicked.parent(),
+                type = $('#' + $panel.data('config') + '_type').val();
 
-            if ( self.isStoreReady()) {
+            if (self.isStoreReady()) {
                 var config = $panel.data('config');
                 if ('string' == typeof config) {
-                    var $wrapper = getFieldConfigWrapper( config );
+                    var $wrapper = getFieldConfigWrapper(config);
                     config = store.getField(config);
-                    renderFieldConfig( $wrapper, config );
+                    renderFieldConfig($wrapper, config);
                 }
 
             }
 
             $('.caldera-editor-field-config-wrapper').hide();
 
-            if($panel.hasClass('field-edit-open')){
+            if ($panel.hasClass('field-edit-open')) {
                 $panel.removeClass('field-edit-open');
-            }else{
+            } else {
                 $('.layout-form-field').removeClass('field-edit-open');
                 $panel.addClass('field-edit-open');
                 $('#' + $panel.data('config')).show();
@@ -513,47 +535,56 @@ function CFFormEditor( editorConfig, $ ){
             $(document).trigger('show.' + $panel.data('config'));
             $(document).trigger('show.fieldedit');
 
-            if( type === 'radio' || type === 'checkbox' || type === 'dropdown' || type === 'toggle_switch' ){
+            if (type === 'radio' || type === 'checkbox' || type === 'dropdown' || type === 'toggle_switch') {
                 $('#' + $panel.data('config') + '_auto').trigger('change');
             }
         });
 
         //Field type change
-        $editorBody.on( 'change record', '.caldera-select-field-type', function () {
-            if( ! self.isStoreReady() ){
+        $editorBody.on('change record', '.caldera-select-field-type', function () {
+            if (!self.isStoreReady()) {
                 return;
             }
 
             var $this = $(this),
-                field = self.getStore().getField( $this.data( 'field' ) ),
+                field = self.getStore().getField($this.data('field')),
                 newType = $this.val(),
-                fieldId = $this.data( 'field' ),
-                opts = self.getStore().getFieldOptions( fieldId ),
-                config = self.getStore().changeFieldType( fieldId, $this.val() );
+                fieldId = $this.data('field'),
+                opts = self.getStore().getFieldOptions(fieldId),
+                config = self.getStore().changeFieldType(fieldId, $this.val());
             if (config) {
-                config = self.getStore().updateFieldOptions( fieldId, opts );
-                renderFieldConfig($this.parent(), config );
-                renderFieldPreview(fieldId, config );
+                config = self.getStore().updateFieldOptions(fieldId, opts);
+                renderFieldConfig($this.parent(), config);
+                renderFieldPreview(fieldId, config);
             }
         });
 
 
-
         // remove an option row
-        $('.caldera-editor-body').on('click', '.toggle-remove-option', function(e){
+        $('.caldera-editor-body').on('click', '.toggle-remove-option', function (e) {
             var $this = $(this);
             var $triggerfield = $(this).closest('.caldera-editor-field-config-wrapper').find('.field-config').first();
-            var fieldId =$triggerfield.val();
-            self.getStore().removeFieldOption( fieldId, $this.data( 'option') );
+            var fieldId = $triggerfield.val();
+            self.getStore().removeFieldOption(fieldId, $this.data('option'));
             $this.parent().remove();
             $triggerfield.trigger('change');
             $(document).trigger('option.remove');
-            renderFieldPreview(fieldId, {} );
+            renderFieldPreview(fieldId, {});
         });
+
+        //delete field
+        $editorBody.on('click', '.delete-field', function () {
+            var clicked = $(this),
+                field = clicked.closest('.caldera-editor-field-config-wrapper').prop('id');
+
+            if (!confirm(clicked.data('confirm'))) {
+                return;
+            }
+            deleteField(fieldId);
+        });
+
+
     }
-
-
-
 
 
     /**

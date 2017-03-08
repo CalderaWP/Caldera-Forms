@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.1-b-1 - 2017-03-07 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.1-b-1 - 2017-03-08 *//**
  * API Client for Caldera Forms API for a single form
  *
  * @since 1.5.0
@@ -512,6 +512,15 @@ function CFFormEditStore( form ) {
                 field.type = newType;
                 setField( fieldId, field );
                 return this.getField(fieldId);
+            }
+
+            return false;
+        },
+        deleteField : function (fieldId ) {
+            var field = this.getField(fieldId);
+            if( ! emptyObject( field ) ){
+                delete form.fields[fieldId];
+                return true;
             }
 
             return false;
