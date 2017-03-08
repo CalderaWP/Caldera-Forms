@@ -120,12 +120,14 @@ class Caldera_Forms_Admin_UI {
 	 * @param string $label_text Label (legend) text
 	 * @param string $description Optional. Field description.
 	 * @param array $attributes Optional. Attributes
+	 *
+	 * @return  Caldera_Forms_Admin_Field
 	 */
 	public static function number_field( $field_name, $label_text, $description = '', array $attributes = array( ) ){
 		$field = new Caldera_Forms_Admin_Field();
 		$field->set_from_array(
 			array(
-				'type' => 'text',
+				'type' => 'number',
 				'name' => $field_name,
 				'label' => $label_text,
 				'args' => array(
@@ -136,6 +138,8 @@ class Caldera_Forms_Admin_UI {
 				)
 			)
 		);
+
+		return $field;
 	}
 
 	/**

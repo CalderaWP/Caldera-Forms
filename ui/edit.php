@@ -444,49 +444,10 @@ foreach($field_types as $field_slug=>$config){
 }
 
 
-function field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{{slug}}', $caption = '{{caption}}', $hide_label = '{{hide_label}}', $required = '{{required}}', $entry_list = '{{entry_list}}', $type = null, $config_str = '{{json config}}', $conditions_str = '{"type" : ""}'){
+function caldera_forms_field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{{slug}}', $caption = '{{caption}}', $hide_label = '{{hide_label}}', $required = '{{required}}', $entry_list = '{{entry_list}}', $type = null ){
 
-	$condition_type = '';
-	if(!empty($conditions_str)){
-		$conditions = json_decode($conditions_str, true);
-		if(!empty($conditions['type'])){
-			$condition_type = $conditions['type'];
-		}
-		if(!empty($conditions['group'])){
-			$groups = array();
-			foreach ($conditions['group'] as $groupid => $group) {
-				$group_tmp = array(
-					'id' => $groupid,
-					'type'	=> 'fields',
-					'lines' => array()
-				);
-				if(!empty($group)){
-					foreach($group as $line_id => $line){
-						$group_line = $line;
-						$group_line['id'] = $line_id;
-						$group_tmp['lines'][] = $group_line;
-					}
-				}
-				$groups[] = $group_tmp;
-			}
-			$conditions['group'] = $groups;
-			$conditions_str = json_encode($conditions);
-		}
-	}	
-	//dump($conditions,0);
 	?>
-	<div class="caldera-editor-field-config-wrapper caldera-editor-config-wrapper ajax-trigger" 
-	
-	data-request="setup_field_type" 
-	data-event="field.drop"
-	data-load-class="none"
-	data-modal="field_setup"
-	data-modal-title="<?php echo esc_html__( 'Fields', 'caldera-forms' ); ?>"
-	data-template="#form-fields-selector-tmpl"
-	data-modal-width="700"
-	data-modal-height="680"
-
-	id="<?php echo $id; ?>" style="display:none;">
+	<div class="caldera-editor-field-config-wrapper caldera-editor-config-wrapper " id="<?php echo $id; ?>" style="display:none;">
 		
 
 		<h3 class="caldera-editor-field-title"><?php echo $label; ?>&nbsp;</h3>		
@@ -960,7 +921,7 @@ do_action('caldera_forms_edit_end', $element);
 </script>
 <script type="text/html" id="caldera_field_config_wrapper_templ">
 <?php
-	echo field_wrapper_template();
+	echo caldera_forms_field_wrapper_template();
 ?>
 </script>
 <script type="text/html" id="field-option-row-tmpl">
