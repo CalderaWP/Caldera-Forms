@@ -38,50 +38,51 @@ foreach ( $color_field_settings as $settings ){
 }
 
 
-
-
-$fields = array(
+$fields = array_merge( array(
 	'default',
-	$color_fields,
-	Caldera_Forms_Admin_UI::number_field(
-		'step',
-		__( 'Steps', 'caldera-forms' ),
-		'',
-		array(
-			'min' => '0',
-			'style' => 'width:70px;'
+), $color_fields );
+
+$fields = array_merge( $fields, array(
+		Caldera_Forms_Admin_UI::number_field(
+			'step',
+			__( 'Steps', 'caldera-forms' ),
+			'',
+			array(
+				'min' => '0',
+				'style' => 'width:70px;'
+			)
+		),
+		Caldera_Forms_Admin_UI::number_field(
+			'min',
+			__( 'Minimum', 'caldera-forms' ),
+			'',
+			array(
+				'style' => 'width:70px;'
+			)
+		),
+		Caldera_Forms_Admin_UI::number_field(
+			'max',
+			__( 'Maximum', 'caldera-forms' ),
+			'',
+			array(
+				'style' => 'width:70px;'
+			)
+		),
+		Caldera_Forms_Admin_UI::checkbox_field(
+			'showval',
+			__( 'Show Value?', 'caldera-forms' ),
+			array(
+				'showval' => __( 'Enable', 'caldera-forms' ),
+			)
+		),
+		Caldera_Forms_Admin_UI::text_field(
+			'prefix',
+			__( 'Prefix', 'caldera-forms' )
+		),
+		Caldera_Forms_Admin_UI::text_field(
+			'suffix',
+			__( 'Suffix', 'caldera-forms' )
 		)
-	),
-	Caldera_Forms_Admin_UI::number_field(
-		'min',
-		__( 'Minimum', 'caldera-forms' ),
-		'',
-		array(
-			'style' => 'width:70px;'
-		)
-	),
-	Caldera_Forms_Admin_UI::number_field(
-		'max',
-		__( 'Maximum', 'caldera-forms' ),
-		'',
-		array(
-			'style' => 'width:70px;'
-		)
-	),
-	Caldera_Forms_Admin_UI::checkbox_field(
-		'showval',
-		__( 'Show Value?', 'caldera-forms' ),
-		array(
-			'showval' => __( 'Enable', 'caldera-forms' ),
-		)
-	),
-	Caldera_Forms_Admin_UI::text_field(
-		'prefix',
-		__( 'Prefix', 'caldera-forms' )
-	),
-	Caldera_Forms_Admin_UI::text_field(
-		'suffix',
-		__( 'Suffix', 'caldera-forms' )
 	)
 
 );

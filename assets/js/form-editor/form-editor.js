@@ -219,6 +219,8 @@ function CFFormEditor( editorConfig, $ ){
             }
         }
 
+        colorFieldsInit( $wrapper );
+
         if ( fieldConfig.hasOwnProperty( 'config' ) ) {
             var checkboxes = $wrapper.find('input:checkbox');
             if (checkboxes.length) {
@@ -239,6 +241,31 @@ function CFFormEditor( editorConfig, $ ){
             }
         }
 
+    }
+
+    function colorFieldsInit($wrapper) {
+        var colorFields = $wrapper.find( '.color-field' );
+        if (colorFields.length) {
+            colorFields.wpColorPicker({
+                change: function (obj) {
+
+                    var trigger = $(this);
+
+
+                    if (trigger.data('ev')) {
+                        clearTimeout(trigger.data('ev'));
+                    }
+                    trigger.data('ev', setTimeout(function () {
+                        trigger.trigger('record');
+                    }, 200));
+                    if (trigger.data('target')) {
+                        $(trigger.data('target')).css(trigger.data('style'), trigger.val());
+                        $(trigger.data('target')).val(trigger.val());
+                    }
+
+                }
+            });
+        }
     }
 
     /**
@@ -306,27 +333,7 @@ function CFFormEditor( editorConfig, $ ){
             baldrickTriggers();
         }
 
-        if( $('.color-field').length ){
-            $('.color-field').wpColorPicker({
-                change: function(obj){
 
-                    var trigger = $(this);
-
-
-                    if( trigger.data('ev') ){
-                        clearTimeout( trigger.data('ev') );
-                    }
-                    trigger.data('ev', setTimeout( function(){
-                        trigger.trigger('record');
-                    },200) );
-                    if( trigger.data('target') ){
-                        $( trigger.data('target') ).css( trigger.data('style'), trigger.val() );
-                        $( trigger.data('target') ).val( trigger.val() );
-                    }
-
-                }
-            });
-        }
     };
 
     /**

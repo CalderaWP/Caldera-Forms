@@ -223,6 +223,8 @@ function CFFormEditor( editorConfig, $ ){
             }
         }
 
+        colorFieldsInit( $wrapper );
+
         if ( fieldConfig.hasOwnProperty( 'config' ) ) {
             var checkboxes = $wrapper.find('input:checkbox');
             if (checkboxes.length) {
@@ -243,6 +245,31 @@ function CFFormEditor( editorConfig, $ ){
             }
         }
 
+    }
+
+    function colorFieldsInit($wrapper) {
+        var colorFields = $wrapper.find( '.color-field' );
+        if (colorFields.length) {
+            colorFields.wpColorPicker({
+                change: function (obj) {
+
+                    var trigger = $(this);
+
+
+                    if (trigger.data('ev')) {
+                        clearTimeout(trigger.data('ev'));
+                    }
+                    trigger.data('ev', setTimeout(function () {
+                        trigger.trigger('record');
+                    }, 200));
+                    if (trigger.data('target')) {
+                        $(trigger.data('target')).css(trigger.data('style'), trigger.val());
+                        $(trigger.data('target')).val(trigger.val());
+                    }
+
+                }
+            });
+        }
     }
 
     /**
@@ -310,27 +337,7 @@ function CFFormEditor( editorConfig, $ ){
             baldrickTriggers();
         }
 
-        if( $('.color-field').length ){
-            $('.color-field').wpColorPicker({
-                change: function(obj){
 
-                    var trigger = $(this);
-
-
-                    if( trigger.data('ev') ){
-                        clearTimeout( trigger.data('ev') );
-                    }
-                    trigger.data('ev', setTimeout( function(){
-                        trigger.trigger('record');
-                    },200) );
-                    if( trigger.data('target') ){
-                        $( trigger.data('target') ).css( trigger.data('style'), trigger.val() );
-                        $( trigger.data('target') ).val( trigger.val() );
-                    }
-
-                }
-            });
-        }
     };
 
     /**
@@ -1071,33 +1078,6 @@ jQuery(document).ready(function($){
 
     });
 
-    // bind delete field
-    $('.caldera-editor-body').on('click', '.delete-field', function(){
-        var clicked = $(this),
-            field	= clicked.closest('.caldera-editor-field-config-wrapper').prop('id');
-
-        if(!confirm(clicked.data('confirm'))){
-            return;
-        }
-        // remove config
-        $('#' + field).remove();
-        // remove options
-        $('option[value="' + field + '"]').remove();
-        $('[data-bind="' + field + '"]').remove();
-
-        // remove field
-        delete current_form_fields[field];
-
-        $('[data-config="' + field + '"]').slideUp(200, function(){
-            var line = $(this);
-
-            // remove line
-            line.remove();
-            rebuild_field_binding();
-            $(document).trigger('field.removed');
-        });
-
-    });
 
 
     // bind add new group button

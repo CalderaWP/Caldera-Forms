@@ -69,6 +69,7 @@ class Caldera_Forms_Admin_Fields {
 			$args = $field->args;
 			switch ( $field->type ){
 				case 'text':
+				case 'number':
 					$html .= $this->input_group( $field->type, $field->label, $field->name, $args );
 					break;
 				case 'select' :
@@ -283,6 +284,7 @@ class Caldera_Forms_Admin_Fields {
 		$attrs = '';
 		if( ! empty( $args[ 'attrs' ] ) ){
 			$attrs = caldera_forms_escape_field_attributes_array( $args[ 'attrs' ] );
+			$attrs = caldera_forms_implode_field_attributes( $attrs );
 		}
 
 		return sprintf('<input type="%s" id="%s" class="%s" name="%s" value="%s" data-config-type="%s" %s >',

@@ -383,33 +383,6 @@ jQuery(document).ready(function($){
 
     });
 
-    // bind delete field
-    $('.caldera-editor-body').on('click', '.delete-field', function(){
-        var clicked = $(this),
-            field	= clicked.closest('.caldera-editor-field-config-wrapper').prop('id');
-
-        if(!confirm(clicked.data('confirm'))){
-            return;
-        }
-        // remove config
-        $('#' + field).remove();
-        // remove options
-        $('option[value="' + field + '"]').remove();
-        $('[data-bind="' + field + '"]').remove();
-
-        // remove field
-        delete current_form_fields[field];
-
-        $('[data-config="' + field + '"]').slideUp(200, function(){
-            var line = $(this);
-
-            // remove line
-            line.remove();
-            rebuild_field_binding();
-            $(document).trigger('field.removed');
-        });
-
-    });
 
 
     // bind add new group button
