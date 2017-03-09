@@ -248,6 +248,8 @@ function CFFormEditor( editorConfig, $ ){
 
         if( self.isStoreReady() && isSelect( fieldType )  ){
             setUpOptions($wrapper,fieldId);
+        }else{
+            $wrapper.find( '.caldera-config-group-toggle-options' ).remove();
         }
 
         // check for init function
@@ -611,13 +613,20 @@ function CFFormEditor( editorConfig, $ ){
             }
 
             var $this = $(this),
-                field = self.getStore().getField($this.data('field')),
+                config = self.getStore().getField($this.data('field')),
                 newType = $this.val(),
                 fieldId = $this.data('field'),
-                opts = self.getStore().getFieldOptions(fieldId),
+                opts = {};
+
+
+                if( isSelect(self.getStore().getFieldType(fieldId) ) && isSelect( newType )){
+                    opts = self.getStore().getFieldOptions(fieldId);
+                }
                 config = self.getStore().changeFieldType(fieldId, $this.val());
             if (config) {
-                config = self.getStore().updateFieldOptions(fieldId, opts);
+                if ( ! emptyObject( opts ) ) {
+                    config = self.getStore().updateFieldOptions(fieldId, opts);
+                }
                 renderFieldConfig($this.parent(), config);
                 renderFieldPreview(fieldId, config);
             }
