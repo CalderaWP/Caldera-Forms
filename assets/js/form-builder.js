@@ -127,6 +127,107 @@ function CFFormEditor( editorConfig, $ ){
         }
     };
 
+    function setUpOptions($wrapper,fieldId) {
+        var opts = self.getStore().getFieldOptions( fieldId );
+        if( opts ){
+            renderOptions(fieldId );
+
+            //the rest of this conditional is why I wish I was using Vue or something :(
+
+            //Prevent no default and a default from being checked
+            $wrapper.find( '.toggle_set_default' ).not( '.no-default' ).on( 'change', function () {
+                $wrapper.find( '.no-default' ).prop( 'checked', false );
+                $wrapper.find( '.toggle_set_default' ).prop( 'checked', false );
+                $(this).prop( 'checked', true );
+            });
+
+            $wrapper.find( '.no-default' ).on( 'change', function () {
+                //nice vintage vibe here
+                if( $(this).is(':checked') ){
+                    $wrapper.find( '.toggle_set_default' ).not( '.no-default' ).prop( 'checked', false );
+                }
+            });
+
+            //this hack to prevent showing values when not needed, sucks.
+            var showValues = true;
+            $.each( opts, function (i,v) {
+                if ( ! v.value ) {
+                    showValues = false;
+                    return false;
+                }
+
+            } );
+
+            if( showValues ){
+                $wrapper.find( '.toggle_show_values' ).prop( 'checked', true ).trigger( 'change' );
+            }else{
+                $wrapper.find( '.toggle_show_values' ).prop( 'checked', false ).trigger( 'change' );
+            }
+
+            var fieldDefault = self.getStore().getFieldOptionDefault( fieldId );
+            if( fieldDefault  ){
+                $( '#value-default-' + fieldDefault ).prop( 'checked', true );
+                $wrapper.find( '.no-default' ).prop( 'checked', false );
+
+            }else{
+                $wrapper.find( '.no-default' ).prop( 'checked', true );
+            }
+        }
+
+        $wrapper.on('click', '.add-toggle-option', function(e){
+            var $clicked		= $(this),
+                fieldId = $clicked.data( 'field' );
+
+            if($clicked.data('bulk')){
+                $($clicked.data('bulk')).toggle();
+                $($clicked.data('bulk')).find('textarea').focus();
+                return;
+            }
+
+            var            $toggleRows	= $wrapper.find('.toggle-options'),
+                template = getOptRowTmpl();
+
+            if($clicked.data('options')){
+                var batchinput 	= $($clicked.data('options')),
+                    batch 		= batchinput.val().split("\n"),
+                    has_vals 	= false;
+                for( var i = 0; i < batch.length; i ++){
+                    var label = batch[i],
+                        val = label,
+                        parts = val.split('|');
+                    if( parts.length > 1 ){
+                        val = parts[0];
+                        label = parts[1];
+                        has_vals = true;
+                    }
+                    self.getStore().addFieldOption( fieldId, val, label );
+                }
+                $($clicked.data('options')).parent().hide();
+                batchinput.val('');
+                if( true === has_vals ){
+                    $wrapper.find('.toggle_show_values').prop( 'checked', true );
+                }else{
+                    $wrapper.find('.toggle_show_values').prop( 'checked', false );
+                }
+                $toggleRows.empty();
+            }else{
+                self.getStore().addFieldOption( fieldId, false, false );
+            }
+            $('.preset_options').val('');
+
+            renderOptions(fieldId);
+            $wrapper.find('.toggle_show_values').trigger('change');
+
+
+            $('.toggle-options').sortable({
+                handle: ".dashicons-sort"
+            });
+            if(!batch){
+                $toggleRows.find('.toggle_label_field').last().focus();
+            }
+        });
+    }
+
     /**
      * Render a field config panel
      *
@@ -150,51 +251,7 @@ function CFFormEditor( editorConfig, $ ){
         target.html( template.html() );
 
         if( self.isStoreReady() && isSelect( fieldType )  ){
-            var opts = self.getStore().getFieldOptions( fieldId );
-            if( opts ){
-                renderOptions(fieldId, opts );
-
-                //the rest of this conditional is why I wish I was using Vue or something :(
-
-                //Prevent no default and a default from being checked
-                $wrapper.find( '.toggle_set_default' ).not( '.no-default' ).on( 'change', function () {
-                    $wrapper.find( '.no-default' ).prop( 'checked', false );
-                    $wrapper.find( '.toggle_set_default' ).prop( 'checked', false );
-                    $(this).prop( 'checked', true );
-                });
-
-                $wrapper.find( '.no-default' ).on( 'change', function () {
-                    //nice vintage vibe here
-                    if( $(this).is(':checked') ){
-                        $wrapper.find( '.toggle_set_default' ).not( '.no-default' ).prop( 'checked', false );
-                    }
-                });
-
-                //this hack to prevent showing values when not needed, sucks.
-                var showValues = true;
-                $.each( opts, function (i,v) {
-                    if ( ! v.value ) {
-                        showValues = false;
-                        return false;
-                    }
-
-                } );
-
-                if( showValues ){
-                    $wrapper.find( '.toggle_show_values' ).prop( 'checked', true ).trigger( 'change' );
-                }else{
-                    $wrapper.find( '.toggle_show_values' ).prop( 'checked', false ).trigger( 'change' );
-                }
-
-                var fieldDefault = self.getStore().getFieldOptionDefault( fieldId );
-                if( fieldDefault  ){
-                    $( '#value-default-' + fieldDefault ).prop( 'checked', true );
-                    $wrapper.find( '.no-default' ).prop( 'checked', false );
-
-                }else{
-                    $wrapper.find( '.no-default' ).prop( 'checked', true );
-                }
-            }
+            setUpOptions($wrapper,fieldId);
         }
 
         // check for init function
@@ -622,9 +679,26 @@ function CFFormEditor( editorConfig, $ ){
     /**
      * Holds the compiled template for options sections
      *
+     * Fon't call directly, use getOptRowTmpl() which lazy-loads it
+     *
      * @since 1.5.1
      */
     var optTmpl;
+
+    /**
+     * Get option row template
+     *
+     * @since 1.5.1
+     *
+     * @returns {*}
+     */
+    function getOptRowTmpl() {
+        if (!optTmpl) {
+            tmpl = Handlebars.compile(document.getElementById('field-option-row-tmpl').innerHTML);
+        }
+
+        return tmpl;
+    }
 
     /**
      * Render options sections
@@ -632,23 +706,15 @@ function CFFormEditor( editorConfig, $ ){
      * @since 1.5.1
      *
      * @param fieldId
-     * @param options
      */
-    function renderOptions(fieldId, options ) {
-        if( ! optTmpl ){
-            optTmpl = Handlebars.compile( document.getElementById( 'field-option-row-tmpl' ).innerHTML );
-        }
-
-        if ( ! options.hasOwnProperty( 'option' ) ) {
-            options = {option: options};
-        }
-
+    function renderOptions(fieldId ) {
+        var optTmpl = getOptRowTmpl();
 
         var el =  document.getElementById( 'field-options-' + fieldId );
         if( null != el ){
             el.innerHTML = optTmpl(self.getStore().getField( fieldId ));
         }else{
-            throw Error( 'Field options wrapper for options not found.' );
+            throw Error( 'Field options wrapper for options not found. field-options-' + fieldId  );
         }
 
     }
@@ -2547,75 +2613,6 @@ jQuery(document).ready(function($) {
     });
 
 
-    //toggle_option_row
-    $('.caldera-editor-body').on('click', '.add-toggle-option', function(e){
-
-        var clicked		= $(this);
-
-        if(clicked.data('bulk')){
-            $(clicked.data('bulk')).toggle();
-            $(clicked.data('bulk')).find('textarea').focus();
-            return;
-        }
-
-        var	wrapper		= clicked.closest('.caldera-editor-field-config-wrapper'),
-            toggle_rows	= wrapper.find('.toggle-options'),
-            row			= $('#field-option-row-tmpl').html(),
-            template	= Handlebars.compile( row ),
-            key			= "opt" + parseInt( ( Math.random() + 1 ) * 0x100000 ),
-            config		= {
-                _name	:	'config[fields][' + wrapper.prop('id') + '][config]',
-                option	: {}
-            };
-
-        if(clicked.data('options')){
-            var batchinput 	= $(clicked.data('options')),
-                batch 		= batchinput.val().split("\n"),
-                has_vals 	= false;
-            for( var i = 0; i < batch.length; i ++){
-                var label = batch[i],
-                    val = label,
-                    parts = val.split('|');
-                if( parts.length > 1 ){
-                    val = parts[0];
-                    label = parts[1];
-                    has_vals = true;
-                }
-                config.option["opt" + parseInt( ( Math.random() + i ) * 0x100000 )] = {
-                    value	:	val,
-                    label	:	label,
-                    default	:	false
-                }
-            }
-            $(clicked.data('options')).parent().hide();
-            batchinput.val('');
-            if( true === has_vals ){
-                wrapper.find('.toggle_show_values').prop( 'checked', true );
-            }else{
-                wrapper.find('.toggle_show_values').prop( 'checked', false );
-            }
-            toggle_rows.empty();
-        }else{
-            // add new option
-            config.option[key]	=	{
-                value	:	'',
-                label	:	'',
-                default :	false
-            };
-        }
-        $('.preset_options').val('');
-        // place new row
-        toggle_rows.append( template( config ) );
-        wrapper.find('.toggle_show_values').trigger('change');
-
-
-        $('.toggle-options').sortable({
-            handle: ".dashicons-sort"
-        });
-        if(!batch){
-            toggle_rows.find('.toggle_label_field').last().focus();
-        }
-    });
     // presets
     $('.caldera-editor-body').on('change', '.preset_options', function(e){
         var select = $( this ),

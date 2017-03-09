@@ -317,6 +317,33 @@ function CFFormEditStore( form ) {
 
             return false;
         },
+        addFieldOption: function ( fieldId, value, label ) {
+            var option = optionFactory();
+            if( value ){
+                option.value = value;
+            }
+            if( label ){
+                option.label = label;
+            }
+            var opt = "opt" + parseInt( ( Math.random() ) * 0x100000 );
+
+            var options = this.getFieldOptions(fieldId);
+            options[opt] = option;
+            this.updateFieldOptions(fieldId,options);
+            return this.getFieldOption(fieldId, opt );
+        },
+        getFieldOption : function( fieldId, opt ){
+            var field = this.getField(fieldId);
+            if( ! emptyObject( field ) ){
+                if ( field.config.option.hasOwnProperty(opt)) {
+                    var option = field.config.option[opt];
+                    if (!emptyObject(option)) {
+                        return option;
+                    }
+                }
+            }
+            return false;
+        },
         /**
          * Get all options of a field
          *
