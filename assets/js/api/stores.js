@@ -416,6 +416,46 @@ function CFFormEditStore( form ) {
 
             return false;
         },
+        getFieldCalcGroups: function (fieldId) {
+            var field = this.getField( fieldId );
+            if( ! emptyObject( field ) ){
+                if( field.config.hasOwnProperty( 'config' ) && field.config.config.hasOwnProperty( 'group' ) ){
+                    return field.config.config.group;
+                }
+            }
+
+            return false;
+        },
+        getFieldCalcLines: function (fieldId) {
+            var groups = this.getFieldCalcGroups(fieldId);
+            if( ! emptyObject( groups ) ){
+                var lines = {};
+                for( var i = 0; i <= 0; i++ ){
+                    if( groups[i].hasOwnProperty('lines') ){
+                        lines[i]= groups[i];
+                    }
+                }
+                return lines;
+            }
+        },
+        getFieldCalcFormula: function (fieldId) {
+            var field = this.getField(fieldId);
+            if( ! emptyObject( field ) ){
+                if( field.config.hasOwnProperty( 'formular' ) ){
+                    return field.config.formular;
+                }else{
+                    return '';
+                }
+            }
+            return false;
+        },
+        updateFieldCalcFormula: function (fieldId, formula ) {
+            var field = this.getField(fieldId);
+            if( ! emptyObject( field ) ){
+                field.config.formular = formula;
+            }
+            return false;
+        },
         deleteField : function (fieldId ) {
             var field = this.getField(fieldId);
             if( ! emptyObject( field ) ){

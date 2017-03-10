@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.1-b-1 - 2017-03-08 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.1-b-1 - 2017-03-09 *//**
  * API Client for Caldera Forms API for a single form
  *
  * @since 1.5.0
@@ -541,6 +541,46 @@ function CFFormEditStore( form ) {
                 return this.getField(fieldId);
             }
 
+            return false;
+        },
+        getFieldCalcGroups: function (fieldId) {
+            var field = this.getField( fieldId );
+            if( ! emptyObject( field ) ){
+                if( field.config.hasOwnProperty( 'config' ) && field.config.config.hasOwnProperty( 'group' ) ){
+                    return field.config.config.group;
+                }
+            }
+
+            return false;
+        },
+        getFieldCalcLines: function (fieldId) {
+            var groups = this.getFieldCalcGroups(fieldId);
+            if( ! emptyObject( groups ) ){
+                var lines = {};
+                for( var i = 0; i <= 0; i++ ){
+                    if( groups[i].hasOwnProperty('lines') ){
+                        lines[i]= groups[i];
+                    }
+                }
+                return lines;
+            }
+        },
+        getFieldCalcFormula: function (fieldId) {
+            var field = this.getField(fieldId);
+            if( ! emptyObject( field ) ){
+                if( field.config.hasOwnProperty( 'formular' ) ){
+                    return field.config.formular;
+                }else{
+                    return '';
+                }
+            }
+            return false;
+        },
+        updateFieldCalcFormula: function (fieldId, formula ) {
+            var field = this.getField(fieldId);
+            if( ! emptyObject( field ) ){
+                field.config.formular = formula;
+            }
             return false;
         },
         deleteField : function (fieldId ) {

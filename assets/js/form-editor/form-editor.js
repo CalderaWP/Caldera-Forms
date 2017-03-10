@@ -300,6 +300,10 @@ function CFFormEditor( editorConfig, $ ){
             }
         }
 
+        if( 'calculation' == self.getStore().getFieldType( fieldId ) ){
+            calcField(fieldId, $wrapper );
+        }
+
     }
 
     function colorFieldsInit($wrapper) {
@@ -325,6 +329,217 @@ function CFFormEditor( editorConfig, $ ){
                 }
             });
         }
+    }
+
+    function calcField( fieldId, $wrapper){
+        /**
+         * data-template="#calculator-group-tmpl"
+         data-target="#{{_id}}_operator_groups"
+         data-target-insert="append"
+         data-name="{{_name}}"
+         data-id="{{_id}}"
+         data-request="calc_add_group"
+         data-callback="init_calc_group"
+         * @type {any}
+         */
+        var field = self.getStore().getField( fieldId ),
+            $addButton = $( '#' + fieldId + '_add_group'),
+            $opGroups = $( '#' + fieldId + '_operator_groups' ),
+            $fixedButton = $(  '#' + fieldId + '_fixed'),
+            $manualButton = $( '#' + fieldId + '_manual' ),
+            $autoBox = $( '#' + fieldId + '_autobox' ),
+            $manualBox = $( '#' + fieldId + '_manualbox' ),
+            $separator = $(  '#' + fieldId + '_thousand_separator'),
+            groups = self.getStore().getFieldCalcGroups( fieldId ),
+            formula = self.getStore().getFieldCalcFormula(fieldId );
+
+
+        buildFormuala();
+        
+        function buildFormuala(){
+            var lines = self.getStore().getFieldCalcGroups( fieldId );
+            var newFormula = '';
+            $.each( lines, function (i,lineGroups) {
+                if( lineGroups.hasOwnProperty( 'operator' ) ){
+                    newFormula += ' ' + lineGroups.operator + ' ';
+                }else{
+                    $.each(lineGroups, function (lI, lineGroup) {
+                        newFormula += '( ';
+                        var line;
+                        for (var lGI = 0; lGI <= lineGroup.length; lGI++) {
+                            line = lineGroup[lGI];
+                            if ('object' == typeof line) {
+                                newFormula += ' ' + line.field;
+                                //length is 1 more than keying
+                                if (lGI + 1 != lineGroup.length) {
+                                    newFormula += ' ' + ' ' + line.operator;
+                                }
+                            }
+
+
+                        }
+
+                        newFormula += ' )';
+                    });
+                }
+
+            });
+            return self.getStore().updateFieldCalcFormula( fieldId, newFormula );
+
+
+        }
+
+        $addButton.on( 'change', 'select', function (e) {
+            buildFormuala();
+        });
+
+        $fixedButton.on( 'change', function(e){
+
+            var $checked = $(this);
+
+            if($checked.prop('checked')){
+                $separator.show();
+            }else{
+                $separator.hide();
+            }
+
+        });
+
+        $manualButton.on( 'change', function () {
+            var $checked = $(this);
+
+            if($checked.prop('checked')){
+                $autoBox.hide();
+                $manualBox.show();
+            }else{
+                visualCalcEditor(fieldId, $autoBox);
+                $autoBox.show();
+
+                $manualBox.hide();
+            }
+        });
+    }
+
+    /**
+     * Holds visual editor for calculation fields template
+     *
+     * @since 1.5.1
+     */
+    var calcTmpl;
+
+    /**
+     *
+     * @param fieldId
+     * @param $autoBox
+     * @returns {*}
+     */
+    function visualCalcEditor(fieldId, $autoBox) {
+        if( ! calcTmpl ){
+            calcTmpl = Handlebars.compile( document.getElementById( 'calculator-group-tmpl' ).innerHTML );
+        }
+        var field = self.getStore().getField(fieldId);
+
+        if (field) {
+            var rendered = calcTmpl(field.config.config);
+
+        }else{
+            return false;
+        }
+
+        var list = optList();
+        var $sel;
+
+        $autoBox.html( rendered );
+        $autoBox.find( '.calculation-operator-field' ).each(function (i,sel) {
+            $sel = $(sel);
+            optListSelect( $sel, list, $sel.data( 'default' ), false, fieldId );
+        });
+    }
+
+    /**
+     * Creates the option list of fields, system tags
+     *
+     * @since 1.5.1
+     *
+     * @TODO lazy-loader/not recreating -- need to have system for emptying when field added/removed first.
+     *
+     * @returns {{system: {}, fields: {}}}
+     */
+    function optList(){
+
+        var list = {
+            system: {},
+            fields: {}
+        },
+            fields = self.getStore().getFields();
+        var i = 0;
+        for( var fieldId in fields ){
+            list.fields[i] = {
+                value: fields[fieldId].ID,
+                label: fields[fieldId].label
+            };
+            i++;
+
+        }
+
+         var si = 0,
+             sysTags = system_values.system.tags,
+             sysBefore = system_values.system.wrap[0],
+             sysAfter = system_values.system.wrap[1];
+        for( var tag in sysTags ){
+            sysTags[ tag ].forEach( function(text){
+                list.system[si] = {
+                    value: sysBefore + text + sysAfter,
+                    label: sysBefore + text + sysAfter
+                };
+                si++;
+            });
+
+        }
+
+        return list;
+    }
+
+    /**
+     * Populate a selector setting with all fields and optionally system values
+     *
+     * @since 1.5.1
+     *
+     * @param $el Select EL
+     * @param list List to parse
+     * @param selected Default value
+     * @param includeSystem To include system magic tags?
+     * @param excludes fieldId as string or array of field IDs and system tags to exclude
+     */
+    function optListSelect($el, list, selected, includeSystem, excludes ) {
+        if( 'string' == typeof  excludes ){
+            excludes = [ excludes ];
+        }
+        for ( var fieldId in list.fields ) {
+            if( -1 === excludes.indexOf( list.fields[fieldId].value ) ){
+                $el.append($('<option>', {
+                    value: list.fields[fieldId].value,
+                    text: list.fields[fieldId].label
+                }));
+            }
+
+        }
+
+
+        if (includeSystem) {
+            for( var sysTag in list.system ){
+                if( -1 === excludes.indexOf( list.system[sysTag] ) ) {
+                    $el.append($('<option>', {
+                        value: list.system[sysTag].value,
+                        text: list.system[sysTag].label
+                    }));
+                }
+            }
+
+
+        }
+
+        $el.val(selected);
     }
 
     /**
@@ -693,16 +908,18 @@ function CFFormEditor( editorConfig, $ ){
     /**
      * Get option row template
      *
+     * Acts as lazy-loader for compilation
+     *
      * @since 1.5.1
      *
      * @returns {*}
      */
     function getOptRowTmpl() {
         if (!optTmpl) {
-            tmpl = Handlebars.compile(document.getElementById('field-option-row-tmpl').innerHTML);
+            optTmpl = Handlebars.compile(document.getElementById('field-option-row-tmpl').innerHTML);
         }
 
-        return tmpl;
+        return optTmpl;
     }
 
     /**

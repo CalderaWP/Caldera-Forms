@@ -47,14 +47,11 @@ echo Caldera_Forms_Admin_UI::fields( $fields, 'calculation' );
 ?>
 <div id="{{_id}}_autobox">
 	<div class="caldera-config-group caldera-config-group-full">
-		<button type="button" class="button block-button add-operator-group ajax-trigger" 
-		data-template="#calculator-group-tmpl" 
-		data-target="#{{_id}}_operator_groups" 
-		data-target-insert="append" 
-		data-name="{{_name}}" 
+		<button type="button" class="button block-button add-operator-group "
+		data-name="{{_name}}"
 		data-id="{{_id}}"
-		data-request="calc_add_group"
-		data-callback="init_calc_group"
+        data-field="{{_id}}"
+		id="{{_id}}_add_group"
 		><?php echo __('Add Operator Group', 'caldera-forms'); ?></button>
 	</div>
 	<br>
@@ -66,45 +63,6 @@ echo Caldera_Forms_Admin_UI::fields( $fields, 'calculation' );
 	<textarea name="{{_name}}[manual_formula]" class="field-config block-input">{{manual_formula}}</textarea>
 	<p class="description"><?php echo __('Use %field_slug% as field value variables', 'caldera-forms'); ?></p>
 </div>
-<br><br><br>
-{{#script}}
-//<script>
-
-
-function {{_id}}_build_formula(obj){
-	build_calculations_formular('{{_id}}', obj);
-	rebind_field_bindings();
-};
-
-jQuery('#{{_id}}_operator_groups').on('change', 'select', function(e){
-	{{_id}}_build_formula();
-});
-jQuery('body').on('change', '#{{_id}}_fixed', function(e){
-
-	var checked = jQuery(this);
-
-	if(checked.prop('checked')){
-		jQuery('#{{_id}}_thousand_separator').show();
-	}else{
-		jQuery('#{{_id}}_thousand_separator').hide();
-	}	
-
-});
-jQuery('body').on('change', '#{{_id}}_manual', function(e){
-	var checked = jQuery(this);
-
-	if(checked.prop('checked')){
-		jQuery('#{{_id}}_autobox').hide();
-		jQuery('#{{_id}}_manualbox').show();
-	}else{
-		jQuery('#{{_id}}_autobox').show();
-		jQuery('#{{_id}}_manualbox').hide();
-	}
-});
-
-jQuery('#{{_id}}_manual,#{{_id}}_fixed').trigger('change');
-
-{{/script}}
 
 
 
