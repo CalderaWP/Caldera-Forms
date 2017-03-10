@@ -331,31 +331,50 @@ function CFFormEditor( editorConfig, $ ){
         }
     }
 
+    /**
+     * Setup a calcualation field
+     *
+     * @since 1.5.1
+     *
+     * @param fieldId
+     * @param $wrapper
+     */
     function calcField( fieldId, $wrapper){
-        /**
-         * data-template="#calculator-group-tmpl"
-         data-target="#{{_id}}_operator_groups"
-         data-target-insert="append"
-         data-name="{{_name}}"
-         data-id="{{_id}}"
-         data-request="calc_add_group"
-         data-callback="init_calc_group"
-         * @type {any}
-         */
-        var field = self.getStore().getField( fieldId ),
-            $addButton = $( '#' + fieldId + '_add_group'),
+
+        var
+            field = self.getStore().getField( fieldId ),
+            $addGroupButton = $( '#' + fieldId + '_add_group'),
             $opGroups = $( '#' + fieldId + '_operator_groups' ),
             $fixedButton = $(  '#' + fieldId + '_fixed'),
             $manualButton = $( '#' + fieldId + '_manual' ),
             $autoBox = $( '#' + fieldId + '_autobox' ),
             $manualBox = $( '#' + fieldId + '_manualbox' ),
             $separator = $(  '#' + fieldId + '_thousand_separator'),
-            groups = self.getStore().getFieldCalcGroups( fieldId ),
-            formula = self.getStore().getFieldCalcFormula(fieldId );
+            formula = self.getStore().getFieldCalcFormula(fieldId ),
+            $formular = $( '#' + fieldId + '_formular');
 
+        if( ! formula ){
+            updateFormula();
+        }
 
-        buildFormuala();
-        
+        /**
+         * Update formula in store and DOM
+         *
+         * @since 1.5.1
+         */
+        function updateFormula() {
+            formula = buildFormuala();
+            self.getStore().updateFieldCalcFormula( fieldId, buildFormuala() );
+            $formular.val( formula );
+        }
+
+        /**
+         * Create formula from visual editor
+         *
+         * @since 1.5.1
+         *
+         * @returns {*}
+         */
         function buildFormuala(){
             var lines = self.getStore().getFieldCalcGroups( fieldId );
             var newFormula = '';
@@ -389,9 +408,78 @@ function CFFormEditor( editorConfig, $ ){
 
         }
 
-        $addButton.on( 'change', 'select', function (e) {
-            buildFormuala();
+
+
+        //add new line
+        $autoBox.on( 'click', '.calculation-add-line', function () {
+            var $this = $(this),
+                lines = self.getStore().getFieldCalcGroups( fieldId ),
+                $newLine = $this.prev().find('.calculation-group-line').last().clone(),
+                group = $this.data( 'group'),
+                lineId = $newLine.data( 'line' ) + 1;
+
+            $newLine.appendTo($this.prev());
+            var newLine = self.getStore().newFieldCalcGroup( fieldId, group, lineId );
+            $newLine.find('select').prepend( '<option />').val('').attr( 'data-group', group ).attr( 'data-line', lineId ).first().focus();
+            $newLine.attr( 'data-group', group ).attr( 'data-line', lineId );
         });
+
+        //remove line
+        $autoBox.on( 'click', '.remove-operator-line', function () {
+            var $this = $(this),
+                $parent = $this.parent(),
+                groupId = $parent.data( 'group' ),
+                lineId = $parent.data( 'line' );
+            var group = self.getStore().removeFieldCalcLine( fieldId, groupId, lineId );
+            //see if we need to remove operator
+            if (0 === group.lines.length ) {
+                var opGroupId = groupId + 1;
+                self.getStore().removeFieldCalcGroup( fieldId, groupId );
+                self.getStore().removeFieldCalcGroup( fieldId, opGroupId );
+                $( '#op-group-' + opGroupId ).remove();
+                $( '#calculation-group-' + groupId ).parent().remove();
+            }
+
+            
+            $parent.remove();
+        });
+
+        //change  operator for line or operator group
+        $autoBox.on( 'change', '.calculation-operator', function () {
+            var $this = $(this),
+                isLine = false,
+                lineId = $this.data( 'line' ),
+                groupId = $this.data( 'group' ),
+                val = $this.val();
+
+            if( $this.hasClass( 'calculation-operator-line'  ) ){
+                self.getStore().updateFieldCalcLine( fieldId, groupId, lineId, 'operator', val );
+            }else{
+                self.getStore().updateFieldCalcOpGroup( fieldId, groupId, val );
+
+            }
+
+
+
+        });
+
+        //change field for line
+        $autoBox.on( 'change', '.calculation-operator-field', function () {
+            var $this = $(this),
+                groupId = $this.data( 'group'),
+                lineId = $this.data( 'line' ),
+                val = $this.val(),
+                type = 'field';
+            if( $this.hasClass( 'calculation-operator-line' ) ){
+                type = 'operator';
+            }
+            self.getStore().updateFieldCalcLine( fieldId, groupId, lineId, type, val );
+
+
+        });
+
+        //add operator group
+
 
         $fixedButton.on( 'change', function(e){
 
@@ -418,6 +506,7 @@ function CFFormEditor( editorConfig, $ ){
                 $manualBox.hide();
             }
         });
+
     }
 
     /**
@@ -454,6 +543,8 @@ function CFFormEditor( editorConfig, $ ){
             $sel = $(sel);
             optListSelect( $sel, list, $sel.data( 'default' ), false, fieldId );
         });
+
+
     }
 
     /**

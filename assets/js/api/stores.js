@@ -117,6 +117,30 @@ function CFFormEditStore( form ) {
         'hide_label'
     ];
 
+    /**
+     * Set a field config
+     *
+     * form.fields shouldn't be changed anywhere else. This is the one place to do so it can emit an event, when we get to that sort of thing.
+     *
+     * @since 1.5.1
+     *
+     * @param fieldId Field ID
+     * @param config New field config
+     */
+    function setField(fieldId, config){
+        form.fields[fieldId] = config;
+    }
+
+
+    /**
+     * Create a field congig
+     *
+     * @since 1.5.1
+     *
+     * @param fieldId
+     * @param type
+     * @returns {{ID: *, type: *, config: {}, hide_label: boolean}}
+     */
     function fieldFactory (fieldId, type) {
         var field = {
             ID: fieldId,
@@ -149,6 +173,22 @@ function CFFormEditStore( form ) {
         };
 
     }
+    /**
+     * Create a new calculation line
+     *
+     * @since 1.5.1
+     * @param lineGroup
+     * @param lineI
+     * @returns {{operator: string, field: string, line-group: *, line: *}}
+     */
+    function calcLineFactory(lineGroup,lineI) {
+        return {
+            operator: '',
+            field: '',
+            'line-group': lineGroup,
+            line: lineI
+        };
+    }
 
     function has(object,key) {
         return object ? hasOwnProperty.call(object, key) : false;
@@ -159,19 +199,6 @@ function CFFormEditStore( form ) {
 
     }
 
-    /**
-     * Set a field config
-     *
-     * form.fields shouldn't be changed anywhere else. This is the one place to do so it can emit an event, when we get to that sort of thing.
-     *
-     * @since 1.5.1
-     *
-     * @param fieldId Field ID
-     * @param config New field config
-     */
-    function setField(fieldId, config){
-        form.fields[fieldId] = config;
-    }
 
 
     return {
@@ -317,6 +344,16 @@ function CFFormEditStore( form ) {
 
             return false;
         },
+        /**
+         * Add a new option to a select field
+         *
+         * @since 1.5.1
+         *
+         * @param fieldId
+         * @param value
+         * @param label
+         * @returns {*}
+         */
         addFieldOption: function ( fieldId, value, label ) {
             var option = optionFactory();
             if( value ){
@@ -332,6 +369,15 @@ function CFFormEditStore( form ) {
             this.updateFieldOptions(fieldId,options);
             return this.getFieldOption(fieldId, opt );
         },
+        /**
+         * Get a field option
+         *
+         * @since 1.5.1
+         *
+         * @param fieldId
+         * @param opt
+         * @returns {*}
+         */
         getFieldOption : function( fieldId, opt ){
             var field = this.getField(fieldId);
             if( ! emptyObject( field ) ){
@@ -387,6 +433,14 @@ function CFFormEditStore( form ) {
 
             return false;
         },
+        /**
+         * Get a field's option default
+         *
+         * @since 1.5.1
+         *
+         * @param fieldId
+         * @returns {*}
+         */
         getFieldOptionDefault :function ( fieldId ) {
             var field = this.getField( fieldId );
             if( ! emptyObject( field ) ){
@@ -416,6 +470,14 @@ function CFFormEditStore( form ) {
 
             return false;
         },
+        /**
+         * Get calculation field groups for builder
+         *
+         * @since 1.5.1
+         *
+         * @param fieldId
+         * @returns {*}
+         */
         getFieldCalcGroups: function (fieldId) {
             var field = this.getField( fieldId );
             if( ! emptyObject( field ) ){
@@ -426,18 +488,144 @@ function CFFormEditStore( form ) {
 
             return false;
         },
-        getFieldCalcLines: function (fieldId) {
-            var groups = this.getFieldCalcGroups(fieldId);
-            if( ! emptyObject( groups ) ){
-                var lines = {};
-                for( var i = 0; i <= 0; i++ ){
-                    if( groups[i].hasOwnProperty('lines') ){
-                        lines[i]= groups[i];
+
+        /**
+         * Change field calculation groups
+         *
+         * @since 1.5.1
+         *
+         * @param fieldId
+         * @param groups
+         * @returns {*}
+         */
+        setFieldCalcGroups: function (fieldId, groups ) {
+            var field = this.getField( fieldId );
+            if( ! emptyObject( field ) ){
+                field.config.config.group = groups;
+                return this.getField(fieldId);
+            }
+
+            return false;
+        },
+        /**
+         * Add a new field calculation line group
+         *
+         * @since 1.5.1
+         *
+         * @param fieldId
+         * @param groupId
+         * @param lineId
+         * @returns {*}
+         */
+        newFieldCalcGroup: function (fieldId, groupId, lineId ) {
+            var field = this.getField( fieldId );
+            if( ! emptyObject( field ) ){
+                var newLine = calcLineFactory( groupId, lineId );
+                var groups = this.getFieldCalcGroups(fieldId);
+                groups[groupId].lines  = newLine;
+                this.setFieldCalcGroups(fieldId, groups );
+                return newLine;
+            }
+
+            return false;
+        },
+        /**
+         * Update a calucaltion field line
+         *
+         * @since 1.5.1
+         *
+         * @param fieldId
+         * @param groupId
+         * @param lineId
+         * @param type
+         * @param data
+         * @returns {*}
+         */
+        updateFieldCalcLine: function (fieldId, groupId, lineId, type, data ) {
+            if( type === 'operator' || type === 'field' ) {
+                var groups = this.getFieldCalcGroups(fieldId);
+                if (!emptyObject(groups) && groups.hasOwnProperty(groupId)) {
+                    if (groups[groupId].hasOwnProperty('lines') && groups[groupId].lines.hasOwnProperty(lineId)) {
+                        groups[groupId].lines[lineId][type] = data;
+                        this.setFieldCalcGroups(fieldId, groups);
+                        return groups[groupId];
                     }
                 }
-                return lines;
+                return false;
+            }else{
+                throw new Error( 'Invalid calcualtion group key to update. Type arg must be operator or field' );
             }
         },
+        /**
+         * Update a field calculation operator ( operator group, no operator for a line)
+         *
+         * @since 1.5.1
+         *
+         * @param fieldId
+         * @param groupId
+         * @param newOperator
+         * @returns {*}
+         */
+        updateFieldCalcOpGroup: function (fieldId, groupId, newOperator ) {
+            var groups = this.getFieldCalcGroups(fieldId);
+            if ( ! emptyObject( groups ) && groups[groupId].hasOwnProperty('operator') ) {
+                groups[groupId].operator = newOperator;
+                this.setFieldCalcGroups(fieldId, groups);
+                return groups[groupId];
+            }
+            return false;
+        },
+        /**
+         * Remove a line from a field's calculation groups
+         *
+         * @since 1.5.1
+         *
+         * @param fieldId
+         * @param groupId
+         * @param lineId
+         * @returns {*}
+         */
+        removeFieldCalcLine: function (fieldId, groupId, lineId) {
+            var groups = this.getFieldCalcGroups( fieldId );
+            if( ! emptyObject( groups ) && groups.hasOwnProperty( groupId ) ){
+                if( groups[ groupId ].hasOwnProperty( 'lines' ) && groups[ groupId ].lines.hasOwnProperty( lineId ) ){
+                    delete groups[ groupId ].lines[ lineId ];
+                    groups[ groupId ].lines.length--;
+                    this.setFieldCalcGroups( fieldId, groups );
+                    return  groups[ groupId ];
+                }
+            }
+            return false;
+        },
+        /**
+         * Remove a group form a field's calculations
+         *
+         * @since 1.5.1
+         *
+         * @param fieldId
+         * @param groupId
+         * @returns {*}
+         */
+        removeFieldCalcGroup: function( fieldId, groupId ){
+            var groups = this.getFieldCalcGroups( fieldId );
+            if( ! emptyObject( groups ) && groups.hasOwnProperty( groupId ) ){
+                delete groups[ groupId ];
+                groups.length--;
+                return groups[ groupId ];
+
+            }
+            return false;
+        },
+        /**
+         * Get saved simple formula for a calculation field
+         *
+         * AKA formular
+         *
+         * @since 1.5.1
+         *
+         * @param fieldId
+         * @returns {*}
+         */
         getFieldCalcFormula: function (fieldId) {
             var field = this.getField(fieldId);
             if( ! emptyObject( field ) ){
@@ -449,6 +637,15 @@ function CFFormEditStore( form ) {
             }
             return false;
         },
+        /**
+         * Update simple field for calculation field
+         *
+         * @since 1.5.1
+         *
+         * @param fieldId
+         * @param formula
+         * @returns {boolean}
+         */
         updateFieldCalcFormula: function (fieldId, formula ) {
             var field = this.getField(fieldId);
             if( ! emptyObject( field ) ){
@@ -456,6 +653,14 @@ function CFFormEditStore( form ) {
             }
             return false;
         },
+        /**
+         * Remove field
+         *
+         * @since 1.5.1
+         *
+         * @param fieldId
+         * @returns {boolean}
+         */
         deleteField : function (fieldId ) {
             var field = this.getField(fieldId);
             if( ! emptyObject( field ) ){

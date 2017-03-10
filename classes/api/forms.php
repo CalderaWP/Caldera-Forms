@@ -191,7 +191,7 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
 	 * @return array
 	 */
     protected function prepare_field_details( Caldera_Forms_API_Form $form, WP_REST_Request $request ){
-	    $order = $form->get_fields();
+	    $order =  $fields = $form->get_fields();
 	    $entry_list = $form->get_entry_list_fields();
 
 	    $form = $form->toArray();
@@ -238,6 +238,8 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
 	    }else{
 		    $form[ 'field_details' ][ 'entry_list' ]  = $entry_list_defaults;
 	    }
+
+	    $form[ 'fields' ] = $fields;
 
 	    return $form;
 

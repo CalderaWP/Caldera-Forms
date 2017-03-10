@@ -178,6 +178,25 @@ class Caldera_Forms_API_Form  implements  ArrayAccess {
 					unset( $this->fields[ $field_id ][ 'config' ] );
 				}
 
+				if( $this->full && 'calculation' == Caldera_Forms_Field_Util::get_type( $field, $this->form ) ){
+					if( ! empty(  $field[ 'config' ][ 'config' ] ) && ! empty( $field[ 'config' ][ 'config' ][ 'group' ] ) ){
+						$op_id =  0;
+						foreach (  $field[ 'config' ][ 'config' ][ 'group' ] as $i => $calc_part ){
+							if( isset( $calc_part[ 'lines' ] ) ){
+								foreach (  $calc_part[ 'lines' ] as $li => $line ){
+									$field[ 'config' ][ 'config' ][ 'group' ][ $i ][ 'lines' ][ $li ][ 'line-group' ] = $i;
+									$field[ 'config' ][ 'config' ][ 'group' ][ $i ][ 'lines' ][ $li ][ 'line' ] = $li;
+								}
+							}elseif( isset($calc_part[ 'operator' ]  ) ){
+								$field[ 'config' ][ 'config' ][ 'group' ][ $i ][ 'op-id' ] = $op_id;
+								$field[ 'config' ][ 'config' ][ 'group' ][ $i ][ 'line-group' ] = $i;
+								$op_id ++;
+							}
+						}
+					}
+					$this->fields[ $field_id ] = $field;
+				}
+
 			}
 
 		}
