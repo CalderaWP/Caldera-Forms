@@ -72,6 +72,9 @@ class Caldera_Forms_Admin_Fields {
 				case 'number':
 					$html .= $this->input_group( $field->type, $field->label, $field->name, $args );
 					break;
+				case 'hidden':
+					$html .= $this->input( 'hidden', $field->name, false, $args );
+					break;
 				case 'select' :
 					$html .= $this->select_group( $field->label, $field->name, $field->options, $args );
 					break;
@@ -80,6 +83,7 @@ class Caldera_Forms_Admin_Fields {
 					break;
 				case 'checkbox' :
 					$html .= $this->checkbox_group( $field->label, $field->options, $field->name, $args );
+					break;
 			}
 		}
 
@@ -100,6 +104,7 @@ class Caldera_Forms_Admin_Fields {
 	 * @return string
 	 */
 	protected function input_group( $type, $label_text, $field_name, array $args  ){
+
 		$has_description = false;
 		$description = $this->description( $field_name,  $args[ 'description'] );
 		if( ! empty( $description ) ){
@@ -287,12 +292,23 @@ class Caldera_Forms_Admin_Fields {
 			$attrs = caldera_forms_implode_field_attributes( $attrs );
 		}
 
+		if( ! empty( $args[ 'value' ] ) ){
+			if( is_array( $args[ 'value' ] ) ){
+				$args[ 'value' ] = wp_json_encode( $args[ 'value' ] );
+			}
+
+			$value = $args[ 'value' ];
+
+		}else{
+			$value = '{{' . $field_name . '}}';
+		}
+
 		return sprintf('<input type="%s" id="%s" class="%s" name="%s" value="%s" data-config-type="%s" %s >',
 			esc_attr( $type ),
 			esc_attr( '{{_id}}_' . $field_name ),
 			esc_attr( $classes ),
 			esc_attr( '{{_name}}[' . $field_name . ']'),
-			esc_attr( '{{' . $field_name . '}}' ),
+			esc_attr( $value ),
 			esc_attr( $field_name ),
 			$description_aria . ' ' . $attrs
 		);

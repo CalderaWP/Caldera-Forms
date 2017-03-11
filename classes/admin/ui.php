@@ -112,6 +112,35 @@ class Caldera_Forms_Admin_UI {
 	}
 
 	/**
+	 * Generator for hidden fields
+	 *
+	 * @since 1.5.1
+	 *
+	 * @param string $field_name Field name
+	 * @param array $attributes Optional. Attributes
+	 *
+	 * @return Caldera_Forms_Admin_Field
+	 */
+	public static function hidden_field( $field_name, $attributes = array() ){
+		$field = new Caldera_Forms_Admin_Field();
+		$field->set_from_array(
+			array(
+				'type' => 'hidden',
+				'name' => $field_name,
+				'label' => '  ',
+				'args' => array(
+					'attrs' => $attributes,
+					'block' => false,
+					'magic' => false,
+				)
+			)
+		);
+
+		return $field;
+	}
+
+
+	/**
 	 * Create a number field with attribues like min/max
 	 *
 	 * @since 1.5.1
@@ -216,6 +245,21 @@ class Caldera_Forms_Admin_UI {
 	 * @return Caldera_Forms_Admin_Field
 	 */
 	public static function textarea_default( $label_text, $field_name = 'default', $description = '' ){
+		return self::textarea_field(  $field_name, $label_text, $description );
+	}
+
+	/**
+	 * Generator for textarea fields
+	 *
+	 * @since 1.5.1
+	 *
+	 *  @param string $field_name
+	 * @param $label_text
+	 * @param string $description
+	 *
+	 * @return Caldera_Forms_Admin_Field
+	 */
+	public static function textarea_field( $field_name, $label_text, $description = '' ){
 		$field = $field = new Caldera_Forms_Admin_Field();
 		$field->set_from_array(
 			array(

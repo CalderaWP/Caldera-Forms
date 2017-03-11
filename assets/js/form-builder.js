@@ -356,11 +356,18 @@ function CFFormEditor( editorConfig, $ ){
             $manualFormula = $( '#' + fieldId + '_manual_formula_input' ),
             $separator = $(  '#' + fieldId + '_thousand_separator'),
             formula = self.getStore().getFieldCalcFormula(fieldId ),
-            $formular = $( '#' + fieldId + '_formular');
+            $formular = $( '#' + fieldId + '_formular'),
+            $build_formula = $( '#' + fieldId + '_config' );
 
         if( ! formula ){
             updateFormulaFromAuto();
         }
+
+        if( ! field.config.hasOwnProperty( 'manual' ) || false == field.config.manual ){
+            $manualButton.prop( 'checked', false );
+        }
+        //hide/show manual/auto box on first render
+        typeBoxes($manualButton.prop('checked'));
 
         /**
          * Set formula in in DOM and store
@@ -370,8 +377,16 @@ function CFFormEditor( editorConfig, $ ){
          * @param formula
          */
         function updateFormula(formula) {
-            self.getStore().updateFieldCalcFormula(fieldId, buildFormuala());
+            self.getStore().updateFieldCalcFormula(fieldId, formula);
             $formular.val(formula);
+            var field = self.getStore().getField(fieldId);
+            if( ! field.config.hasOwnProperty( 'config' ) ){
+                $build_formula.val( JSON.stringify( {group: [] } ) );
+            }else{
+                $build_formula.val( JSON.stringify( field.config.config ) );
+
+            }
+
         }
 
         /**
@@ -380,7 +395,7 @@ function CFFormEditor( editorConfig, $ ){
          * @since 1.5.1
          */
         function updateFormulaFromAuto() {
-            formula = buildFormuala();
+            var formula = buildFormuala();
             updateFormula(formula);
         }
 
@@ -404,8 +419,11 @@ function CFFormEditor( editorConfig, $ ){
                         for (var lGI = 0; lGI <= lineGroup.length; lGI++) {
                             line = lineGroup[lGI];
                             if ('object' == typeof line) {
+                                if( '' == line.operator ){
+                                    line.operator = '+';
+                                }
+
                                 newFormula += ' ' + line.field;
-                                //length is 1 more than keying
                                 if (lGI + 1 != lineGroup.length) {
                                     newFormula += ' ' + ' ' + line.operator;
                                 }
@@ -418,7 +436,7 @@ function CFFormEditor( editorConfig, $ ){
                 }
 
             });
-            return self.getStore().updateFieldCalcFormula( fieldId, newFormula );
+            return newFormula;
         }
 
 
@@ -426,9 +444,8 @@ function CFFormEditor( editorConfig, $ ){
         //add new line
         $autoBox.on( 'click', '.calculation-add-line', function () {
             var $this = $(this),
-                lines = self.getStore().getFieldCalcGroups( fieldId ),
                 $newLine = $this.prev().find('.calculation-group-line').last().clone(),
-                group = $this.data( 'group'),
+                group = $this.data( 'group' ),
                 lineId = $newLine.data( 'line' ) + 1;
 
             $newLine.appendTo($this.prev());
@@ -534,8 +551,6 @@ function CFFormEditor( editorConfig, $ ){
             updateFormula( $manualFormula.val() );
         });
 
-        //hide/show manual/auto box on first render
-        typeBoxes($manualButton.prop('checked'));
 
     }
 

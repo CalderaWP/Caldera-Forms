@@ -607,7 +607,7 @@ function CFFormEditStore(form) {
             if (!emptyObject(field)) {
                 var newLine = calcLineFactory(groupId, lineId);
                 var groups = this.getFieldCalcGroups(fieldId);
-                groups[groupId].lines = newLine;
+                groups[groupId].lines.push(newLine);
                 this.setFieldCalcGroups(fieldId, groups);
                 return newLine;
             }
@@ -737,6 +737,7 @@ function CFFormEditStore(form) {
             if (!emptyObject(field)) {
                 field.config.formular = formula;
                 setField(fieldId, field);
+                return true;
             }
             return false;
         },

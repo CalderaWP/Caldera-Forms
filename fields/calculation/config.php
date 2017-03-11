@@ -1,4 +1,18 @@
 <?php
+$config_field = new Caldera_Forms_Admin_Field();
+$config_field->set_from_array(
+	array(
+		'type' => 'hidden',
+		'name' => 'build_formula',
+		'label' => '  ',
+		'args' => array(
+			'value' => '{{#if config/group}}{{json config}}{{else}}{{config}}{{/if}}',
+			'attrs' => array( 'class' => 'build_formula' ),
+			'block' => false,
+			'magic' => false,
+		)
+	)
+);
 
 $fields = array(
 	Caldera_Forms_Admin_UI::text_field(
@@ -39,25 +53,34 @@ $fields = array(
 			'fixed' => __( 'Enable', 'caldera-forms' )
 		)
 	),
-
+	Caldera_Forms_Admin_UI::hidden_field(
+		'formular',
+		array(
+			'class' => 'calculation-formular',
+		)
+	),
 );
 
 echo Caldera_Forms_Admin_UI::fields( $fields, 'calculation' );
 
 ?>
+
 <div id="{{_id}}_autobox">
-	<div class="caldera-config-group caldera-config-group-full"></div>
+	<div class="caldera-config-group caldera-config-group-full">
+
+	</div>
+	<br>
 	<div id="{{_id}}_operator_groups" class="calculation-groups-wrap"></div>
 	<input type="hidden" class="block-input field-config calculation-formular" name="{{_name}}[formular]" id="{{_id}}_formular" value="{{formular}}">
 
 </div>
 <div id="{{_id}}_manualbox" style="display:none;">
-	<textarea name="{{_name}}[manual_formula]" class="field-config block-input" id="{{_id}}_manual_formula_input">{{manual_formula}}</textarea>
+	<textarea name="{{_name}}[manual_formula]" class="field-config block-input">{{manual_formula}}</textarea>
 	<p class="description"><?php echo __('Use %field_slug% as field value variables', 'caldera-forms'); ?></p>
 </div>
 
 
-
+<input type="hidden" class="block-input field-config build_formula" name="{{_name}}[config]" id="{{_id}}_config" value="{{#if config/group}}{{json config}}{{else}}{{config}}{{/if}}">
 
 
 
