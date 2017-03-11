@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.1-b-1 - 2017-03-09 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.1-b-1 - 2017-03-10 *//**
  * Created by josh on 3/4/17.
  */
 
@@ -353,23 +353,35 @@ function CFFormEditor( editorConfig, $ ){
             $manualButton = $( '#' + fieldId + '_manual' ),
             $autoBox = $( '#' + fieldId + '_autobox' ),
             $manualBox = $( '#' + fieldId + '_manualbox' ),
+            $manualFormula = $( '#' + fieldId + '_manual_formula_input' ),
             $separator = $(  '#' + fieldId + '_thousand_separator'),
             formula = self.getStore().getFieldCalcFormula(fieldId ),
             $formular = $( '#' + fieldId + '_formular');
 
         if( ! formula ){
-            updateFormula();
+            updateFormulaFromAuto();
         }
 
         /**
-         * Update formula in store and DOM
+         * Set formula in in DOM and store
+         *
+         * @since 1.5.0
+         *
+         * @param formula
+         */
+        function updateFormula(formula) {
+            self.getStore().updateFieldCalcFormula(fieldId, buildFormuala());
+            $formular.val(formula);
+        }
+
+        /**
+         * Build formuala form AutoBox (buildFormulaa() ) and update formula in store and DOM (updateFormula() )
          *
          * @since 1.5.1
          */
-        function updateFormula() {
+        function updateFormulaFromAuto() {
             formula = buildFormuala();
-            self.getStore().updateFieldCalcFormula( fieldId, buildFormuala() );
-            $formular.val( formula );
+            updateFormula(formula);
         }
 
         /**
@@ -401,15 +413,12 @@ function CFFormEditor( editorConfig, $ ){
 
 
                         }
-
                         newFormula += ' )';
                     });
                 }
 
             });
             return self.getStore().updateFieldCalcFormula( fieldId, newFormula );
-
-
         }
 
 
@@ -462,8 +471,7 @@ function CFFormEditor( editorConfig, $ ){
                 self.getStore().updateFieldCalcOpGroup( fieldId, groupId, val );
 
             }
-
-
+            updateFormulaFromAuto();
 
         });
 
@@ -478,38 +486,56 @@ function CFFormEditor( editorConfig, $ ){
                 type = 'operator';
             }
             self.getStore().updateFieldCalcLine( fieldId, groupId, lineId, type, val );
-
-
+            updateFormulaFromAuto();
         });
 
         //add operator group
-
+        $wrapper.on( 'click', '.add-operator-group', function () {
+            self.getStore().addFieldCalcGroup( fieldId );
+            //re-render (maybe later break up template into parts so this isn't needed
+            visualCalcEditor(fieldId, $autoBox );
+            updateFormulaFromAuto();
+        });
 
         $fixedButton.on( 'change', function(e){
-
             var $checked = $(this);
-
             if($checked.prop('checked')){
                 $separator.show();
             }else{
                 $separator.hide();
             }
-
         });
 
-        $manualButton.on( 'change', function () {
-            var $checked = $(this);
-
-            if($checked.prop('checked')){
+        /**
+         * Change hide/show of visual/manual builder based on conditionals
+         *
+         * @since 1.5.1
+         *
+         * @param checked
+         */
+        function typeBoxes(checked) {
+            if (checked) {
                 $autoBox.hide();
                 $manualBox.show();
-            }else{
+            } else {
                 visualCalcEditor(fieldId, $autoBox);
                 $autoBox.show();
-
                 $manualBox.hide();
             }
+        }
+
+        //when manaul checkbox changes, update hide/show
+        $manualButton.on( 'change', function () {
+            typeBoxes($manualButton.prop('checked'));
         });
+
+        //when manual formula changes update
+        $manualFormula.on( 'change', function () {
+            updateFormula( $manualFormula.val() );
+        });
+
+        //hide/show manual/auto box on first render
+        typeBoxes($manualButton.prop('checked'));
 
     }
 
@@ -1049,7 +1075,6 @@ function CFFormEditor( editorConfig, $ ){
 
     }
 
-
     /**
      * Check if object has a key
      *
@@ -1076,6 +1101,8 @@ function CFFormEditor( editorConfig, $ ){
     }
 
 }
+
+
 /* contains edit.js, layout-grid.js, processors.js */
 function new_conditional_group(obj){
 

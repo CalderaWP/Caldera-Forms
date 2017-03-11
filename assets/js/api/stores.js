@@ -13,20 +13,20 @@
  *
  * @constructor
  */
-function CFFormStoreFactory( formId, allFields, listFields ){
+function CFFormStoreFactory(formId, allFields, listFields) {
     return {
         state: {
             formId: formId,
             allFields: allFields,
             listFields: listFields
         },
-        setFormId: function(newValue) {
+        setFormId: function (newValue) {
             this.state.formId = newValue
         },
-        setAllFields: function(newValue) {
+        setAllFields: function (newValue) {
             this.state.allFields = newValue
         },
-        setListFields: function(newValue) {
+        setListFields: function (newValue) {
             this.state.listFields = newValue
         },
         getAllFields: function () {
@@ -49,7 +49,7 @@ function CFFormStoreFactory( formId, allFields, listFields ){
  *
  * @constructor
  */
-function CFEntriesStoreFactory( formId, entries ){
+function CFEntriesStoreFactory(formId, entries) {
     return {
         state: {
             formId: formId,
@@ -61,32 +61,32 @@ function CFEntriesStoreFactory( formId, entries ){
         setEntries: function (entries) {
             this.state.entries = entries;
         },
-        setTotal: function( total ){
+        setTotal: function (total) {
             this.state.total = total;
         },
-        getTotal: function(){
+        getTotal: function () {
             return this.state.total;
         },
-        setTotalPages: function( totalPages ){
+        setTotalPages: function (totalPages) {
             this.state.totalPages = totalPages;
         },
-        getTotalPages: function(){
+        getTotalPages: function () {
             return this.state.totalPages;
         },
-        setPage: function( page ){
+        setPage: function (page) {
             this.state.page = page;
         },
-        getPage: function(){
+        getPage: function () {
             return this.state.page;
         },
-        getEntry :function( id ){
-            if( 'object' == typeof this.state.entries[id] ){
+        getEntry: function (id) {
+            if ('object' == typeof this.state.entries[id]) {
                 return this.state.entries[id];
             }
             return false;
         },
-        getFieldFromEntry: function( entry, fieldId ){
-            if( 'object' == typeof entry.fields[fieldId ]) {
+        getFieldFromEntry: function (entry, fieldId) {
+            if ('object' == typeof entry.fields[fieldId]) {
                 return entry.fields[fieldId];
             }
             return false;
@@ -103,7 +103,7 @@ function CFEntriesStoreFactory( formId, entries ){
  * @returns {{getFields: getFields, getField: getField, getFieldType: getFieldType, addField: addField, updateField: updateField, getConditionals: getConditionals, getConditional: getConditional, getProcessors: getProcessors, getProcessor: getProcessor}}
  * @constructor
  */
-function CFFormEditStore( form ) {
+function CFFormEditStore(form) {
     var fieldKeys = [
         'ID',
         'type',
@@ -127,7 +127,7 @@ function CFFormEditStore( form ) {
      * @param fieldId Field ID
      * @param config New field config
      */
-    function setField(fieldId, config){
+    function setField(fieldId, config) {
         form.fields[fieldId] = config;
     }
 
@@ -141,7 +141,7 @@ function CFFormEditStore( form ) {
      * @param type
      * @returns {{ID: *, type: *, config: {}, hide_label: boolean}}
      */
-    function fieldFactory (fieldId, type) {
+    function fieldFactory(fieldId, type) {
         var field = {
             ID: fieldId,
             type: type,
@@ -150,7 +150,7 @@ function CFFormEditStore( form ) {
         };
 
         fieldKeys.forEach(function (index) {
-            if( ! field.hasOwnProperty( index ) ){
+            if (!field.hasOwnProperty(index)) {
                 field[index] = '';
             }
         });
@@ -169,35 +169,116 @@ function CFFormEditStore( form ) {
         return {
             label: '',
             value: '',
-            default : false
+            default: false
         };
 
     }
+
     /**
      * Create a new calculation line
      *
      * @since 1.5.1
+     *
      * @param lineGroup
-     * @param lineI
-     * @returns {{operator: string, field: string, line-group: *, line: *}}
+     * @param lineId
+     * @returns {{operator: string, field: string, 'line-group': *, line: *}}
      */
-    function calcLineFactory(lineGroup,lineI) {
+    function calcLineFactory(lineGroup, lineId) {
         return {
             operator: '',
             field: '',
             'line-group': lineGroup,
-            line: lineI
+            line: lineId
         };
     }
 
-    function has(object,key) {
+    /**
+     * Create a new calculation operator group
+     *
+     * @since 1.5.1
+     *
+     * @param lineGroup
+     * @param opId
+     * @returns {{operator: string, 'op-id': *, 'line-group': *}}
+     */
+    function calcOpGroupFactory(lineGroup, opId) {
+        return {
+            operator: "+",
+            'op-id': opId,
+            'line-group': lineGroup
+        };
+    }
+
+    /**
+     * Check if object has a key
+     *
+     * @since 1.5.1
+     *
+     * @param object
+     * @param key
+     * @returns {boolean}
+     */
+    function has(object, key) {
         return object ? hasOwnProperty.call(object, key) : false;
     }
 
-    function emptyObject( object ) {
-        return Object.keys(object).length === 0 && object.constructor === Object;
+    /**
+     * Check if object is empty
+     *
+     * Will return true (IE empty) if not object
+     * @since 1.5.1
+     *
+     *
+     * @param object
+     * @returns {boolean}
+     */
+    function emptyObject(object) {
+        if ( 'object' == typeof  object) {
+            return Object.keys(object).length === 0 && object.constructor === Object;
+        }
+        return true;
 
     }
+
+    /**
+     * Check if a value is numeric
+     *
+     * @since 1.5.1.
+     * @param n
+     * @returns {boolean}
+     */
+    function isNumber(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+    }
+
+    /**
+     * Search on array or object by item key and return highest
+     *
+     * @since 1.5.1
+     *
+     * @param obj
+     * @param index
+     * @returns {*}
+     */
+    function maxItem(obj, index) {
+
+        var apexVal = 0,
+            apexItem,
+            changed = false;
+        for (var i = 0; i < obj.length; i++) {
+            if (obj[i].hasOwnProperty(index)) {
+                var x = obj[i][index];
+                if (isNumber(obj[i][index]) && ( !changed || obj[i][index] > apexVal )) {
+                    apexVal = obj[i][index];
+                    apexItem = obj[i];
+                    changed = true;
+                }
+            }
+        }
+
+        return apexItem;
+    }
+
 
 
 
@@ -207,7 +288,7 @@ function CFFormEditStore( form ) {
          *
          * @returns {*}
          */
-        getFields : function(){
+        getFields: function () {
             return form.fields;
         },
         /**
@@ -218,13 +299,13 @@ function CFFormEditStore( form ) {
          * @param fieldId
          * @returns {*}
          */
-        getField : function ( fieldId ) {
-            if( form.fields.hasOwnProperty( fieldId )  ){
-                if( ! form.fields[fieldId].hasOwnProperty( 'config' ) ){
+        getField: function (fieldId) {
+            if (form.fields.hasOwnProperty(fieldId)) {
+                if (!form.fields[fieldId].hasOwnProperty('config')) {
                     var field = form.fields[fieldId];
                     field.config = {};
-                    setField(fieldId, field );
-                    return this.getField( fieldId );
+                    setField(fieldId, field);
+                    return this.getField(fieldId);
                 }
                 return form.fields[fieldId];
             }
@@ -239,9 +320,9 @@ function CFFormEditStore( form ) {
          * @param fieldId
          * @returns {*}
          */
-        getFieldType: function ( fieldId ) {
+        getFieldType: function (fieldId) {
             var field = this.getField(fieldId);
-            if( ! emptyObject( field ) ){
+            if (!emptyObject(field)) {
                 return field.type;
             }
             return false;
@@ -255,8 +336,8 @@ function CFFormEditStore( form ) {
          * @param fieldType
          * @returns {*|{}}
          */
-        addField : function (fieldId,fieldType) {
-            setField(fieldId, fieldFactory(fieldId,fieldType ) );
+        addField: function (fieldId, fieldType) {
+            setField(fieldId, fieldFactory(fieldId, fieldType));
             return this.getField(fieldId);
         },
         /**
@@ -272,23 +353,23 @@ function CFFormEditStore( form ) {
          * @param data
          * @returns {*}
          */
-        updateField: function (fieldId, key, data ) {
+        updateField: function (fieldId, key, data) {
             var field = this.getField(fieldId);
-            if( ! emptyObject(field) && undefined != key  ){
+            if (!emptyObject(field) && undefined != key) {
 
-                if( -1 < fieldKeys.indexOf( key ) ){
+                if (-1 < fieldKeys.indexOf(key)) {
                     field[key] = data;
-                    setField( fieldId, field );
+                    setField(fieldId, field);
                     return this.getField(fieldId);
-                }else if( 'placeholder' == key || 'default' == key ){
-                    field.config[ key ] = data;
-                    setField( fieldId, field );
+                } else if ('placeholder' == key || 'default' == key) {
+                    field.config[key] = data;
+                    setField(fieldId, field);
                     return this.getField(fieldId);
-                }else if( 'option-value' == key || 'option-value' == key || 'option' == key  ) {
-                    throw new Error( 'Invalid field key to update. Use this.UpdateFieldOptions' );
-                }else{
-                    field.config[ key ] = data;
-                    setField( fieldId, field );
+                } else if ('option-value' == key || 'option-value' == key || 'option' == key) {
+                    throw new Error('Invalid field key to update. Use this.UpdateFieldOptions');
+                } else {
+                    field.config[key] = data;
+                    setField(fieldId, field);
                     return this.getField(fieldId);
                 }
 
@@ -306,20 +387,20 @@ function CFFormEditStore( form ) {
          * @param value
          * @returns {*}
          */
-        updateFieldOption: function (fieldId, type, opt, value ) {
+        updateFieldOption: function (fieldId, type, opt, value) {
             var field = this.getField(fieldId);
-            if( ! emptyObject(field) && ( 'value' == type || 'label' == type || 'default' == type ) ){
-                if( ! field.config.hasOwnProperty( 'option' ) ){
-                    field.config[ 'option' ] = {};
+            if (!emptyObject(field) && ( 'value' == type || 'label' == type || 'default' == type )) {
+                if (!field.config.hasOwnProperty('option')) {
+                    field.config['option'] = {};
                 }
-                if( ! field.config.option.hasOwnProperty( opt ) ){
-                    field.config.option[ opt ] = optionFactory( opt );
+                if (!field.config.option.hasOwnProperty(opt)) {
+                    field.config.option[opt] = optionFactory(opt);
                 }
-                if( type == 'default' ){
+                if (type == 'default') {
                     field.config.default = opt;
                 }
                 field.config.option[opt][type] = value;
-                setField( fieldId, field );
+                setField(fieldId, field);
                 return this.getField(fieldId);
             }
 
@@ -354,20 +435,20 @@ function CFFormEditStore( form ) {
          * @param label
          * @returns {*}
          */
-        addFieldOption: function ( fieldId, value, label ) {
+        addFieldOption: function (fieldId, value, label) {
             var option = optionFactory();
-            if( value ){
+            if (value) {
                 option.value = value;
             }
-            if( label ){
+            if (label) {
                 option.label = label;
             }
-            var opt = "opt" + parseInt( ( Math.random() ) * 0x100000 );
+            var opt = "opt" + parseInt(( Math.random() ) * 0x100000);
 
             var options = this.getFieldOptions(fieldId);
             options[opt] = option;
-            this.updateFieldOptions(fieldId,options);
-            return this.getFieldOption(fieldId, opt );
+            this.updateFieldOptions(fieldId, options);
+            return this.getFieldOption(fieldId, opt);
         },
         /**
          * Get a field option
@@ -378,10 +459,10 @@ function CFFormEditStore( form ) {
          * @param opt
          * @returns {*}
          */
-        getFieldOption : function( fieldId, opt ){
+        getFieldOption: function (fieldId, opt) {
             var field = this.getField(fieldId);
-            if( ! emptyObject( field ) ){
-                if ( field.config.option.hasOwnProperty(opt)) {
+            if (!emptyObject(field)) {
+                if (field.config.option.hasOwnProperty(opt)) {
                     var option = field.config.option[opt];
                     if (!emptyObject(option)) {
                         return option;
@@ -398,10 +479,10 @@ function CFFormEditStore( form ) {
          * @param fieldId
          * @returns {*}
          */
-        getFieldOptions: function (fieldId ) {
+        getFieldOptions: function (fieldId) {
             var field = this.getField(fieldId);
-            if( ! emptyObject(field) && field.hasOwnProperty( 'config' ) && field.config.hasOwnProperty( 'option' ) ){
-                if( field.config.option.hasOwnProperty( 'undefined' ) ){
+            if (!emptyObject(field) && field.hasOwnProperty('config') && field.config.hasOwnProperty('option')) {
+                if (field.config.option.hasOwnProperty('undefined')) {
                     delete field.config.option.undefined;
                     setField(fieldId, field);
                 }
@@ -421,11 +502,11 @@ function CFFormEditStore( form ) {
          * @param optId
          * @returns {*}
          */
-        removeFieldOption: function( fieldId, optId ){
-            var field = this.getField(fieldId );
-            if( ! emptyObject( field ) ){
-                if( field.config.option.hasOwnProperty(optId) ){
-                    delete field.config.option[ optId ];
+        removeFieldOption: function (fieldId, optId) {
+            var field = this.getField(fieldId);
+            if (!emptyObject(field)) {
+                if (field.config.option.hasOwnProperty(optId)) {
+                    delete field.config.option[optId];
                     setField(optId);
                     return this.getField(fieldId);
                 }
@@ -441,10 +522,10 @@ function CFFormEditStore( form ) {
          * @param fieldId
          * @returns {*}
          */
-        getFieldOptionDefault :function ( fieldId ) {
-            var field = this.getField( fieldId );
-            if( ! emptyObject( field ) ){
-                if( field.config.hasOwnProperty( 'default' ) ){
+        getFieldOptionDefault: function (fieldId) {
+            var field = this.getField(fieldId);
+            if (!emptyObject(field)) {
+                if (field.config.hasOwnProperty('default')) {
                     return field.config.default;
                 }
             }
@@ -460,11 +541,11 @@ function CFFormEditStore( form ) {
          * @param newType
          * @returns {*}
          */
-        changeFieldType: function (fieldId, newType ) {
-            var field = this.getField( fieldId );
-            if( ! emptyObject( field ) ){
+        changeFieldType: function (fieldId, newType) {
+            var field = this.getField(fieldId);
+            if (!emptyObject(field)) {
                 field.type = newType;
-                setField( fieldId, field );
+                setField(fieldId, field);
                 return this.getField(fieldId);
             }
 
@@ -479,9 +560,9 @@ function CFFormEditStore( form ) {
          * @returns {*}
          */
         getFieldCalcGroups: function (fieldId) {
-            var field = this.getField( fieldId );
-            if( ! emptyObject( field ) ){
-                if( field.config.hasOwnProperty( 'config' ) && field.config.config.hasOwnProperty( 'group' ) ){
+            var field = this.getField(fieldId);
+            if (!emptyObject(field)) {
+                if (field.config.hasOwnProperty('config') && field.config.config.hasOwnProperty('group')) {
                     return field.config.config.group;
                 }
             }
@@ -498,10 +579,14 @@ function CFFormEditStore( form ) {
          * @param groups
          * @returns {*}
          */
-        setFieldCalcGroups: function (fieldId, groups ) {
-            var field = this.getField( fieldId );
-            if( ! emptyObject( field ) ){
+        setFieldCalcGroups: function (fieldId, groups) {
+            var field = this.getField(fieldId);
+            if (!emptyObject(field)) {
+                if( ! field.config.hasOwnProperty( 'config' ) ){
+                    field.config.config = {};
+                }
                 field.config.config.group = groups;
+                setField(fieldId, field);
                 return this.getField(fieldId);
             }
 
@@ -517,20 +602,20 @@ function CFFormEditStore( form ) {
          * @param lineId
          * @returns {*}
          */
-        newFieldCalcGroup: function (fieldId, groupId, lineId ) {
-            var field = this.getField( fieldId );
-            if( ! emptyObject( field ) ){
-                var newLine = calcLineFactory( groupId, lineId );
+        newFieldCalcGroup: function (fieldId, groupId, lineId) {
+            var field = this.getField(fieldId);
+            if (!emptyObject(field)) {
+                var newLine = calcLineFactory(groupId, lineId);
                 var groups = this.getFieldCalcGroups(fieldId);
-                groups[groupId].lines  = newLine;
-                this.setFieldCalcGroups(fieldId, groups );
+                groups[groupId].lines = newLine;
+                this.setFieldCalcGroups(fieldId, groups);
                 return newLine;
             }
 
             return false;
         },
         /**
-         * Update a calucaltion field line
+         * Update a calculation field line
          *
          * @since 1.5.1
          *
@@ -541,8 +626,8 @@ function CFFormEditStore( form ) {
          * @param data
          * @returns {*}
          */
-        updateFieldCalcLine: function (fieldId, groupId, lineId, type, data ) {
-            if( type === 'operator' || type === 'field' ) {
+        updateFieldCalcLine: function (fieldId, groupId, lineId, type, data) {
+            if (type === 'operator' || type === 'field') {
                 var groups = this.getFieldCalcGroups(fieldId);
                 if (!emptyObject(groups) && groups.hasOwnProperty(groupId)) {
                     if (groups[groupId].hasOwnProperty('lines') && groups[groupId].lines.hasOwnProperty(lineId)) {
@@ -552,8 +637,8 @@ function CFFormEditStore( form ) {
                     }
                 }
                 return false;
-            }else{
-                throw new Error( 'Invalid calcualtion group key to update. Type arg must be operator or field' );
+            } else {
+                throw new Error('Invalid calcualtion group key to update. Type arg must be operator or field');
             }
         },
         /**
@@ -566,9 +651,9 @@ function CFFormEditStore( form ) {
          * @param newOperator
          * @returns {*}
          */
-        updateFieldCalcOpGroup: function (fieldId, groupId, newOperator ) {
+        updateFieldCalcOpGroup: function (fieldId, groupId, newOperator) {
             var groups = this.getFieldCalcGroups(fieldId);
-            if ( ! emptyObject( groups ) && groups[groupId].hasOwnProperty('operator') ) {
+            if (!emptyObject(groups) && groups[groupId].hasOwnProperty('operator')) {
                 groups[groupId].operator = newOperator;
                 this.setFieldCalcGroups(fieldId, groups);
                 return groups[groupId];
@@ -586,13 +671,13 @@ function CFFormEditStore( form ) {
          * @returns {*}
          */
         removeFieldCalcLine: function (fieldId, groupId, lineId) {
-            var groups = this.getFieldCalcGroups( fieldId );
-            if( ! emptyObject( groups ) && groups.hasOwnProperty( groupId ) ){
-                if( groups[ groupId ].hasOwnProperty( 'lines' ) && groups[ groupId ].lines.hasOwnProperty( lineId ) ){
-                    delete groups[ groupId ].lines[ lineId ];
-                    groups[ groupId ].lines.length--;
-                    this.setFieldCalcGroups( fieldId, groups );
-                    return  groups[ groupId ];
+            var groups = this.getFieldCalcGroups(fieldId);
+            if (!emptyObject(groups) && groups.hasOwnProperty(groupId)) {
+                if (groups[groupId].hasOwnProperty('lines') && groups[groupId].lines.hasOwnProperty(lineId)) {
+                    delete groups[groupId].lines[lineId];
+                    groups[groupId].lines.length--;
+                    this.setFieldCalcGroups(fieldId, groups);
+                    return groups[groupId];
                 }
             }
             return false;
@@ -606,12 +691,13 @@ function CFFormEditStore( form ) {
          * @param groupId
          * @returns {*}
          */
-        removeFieldCalcGroup: function( fieldId, groupId ){
-            var groups = this.getFieldCalcGroups( fieldId );
-            if( ! emptyObject( groups ) && groups.hasOwnProperty( groupId ) ){
-                delete groups[ groupId ];
+        removeFieldCalcGroup: function (fieldId, groupId) {
+            var groups = this.getFieldCalcGroups(fieldId);
+            if (!emptyObject(groups) && groups.hasOwnProperty(groupId)) {
+                delete groups[groupId];
                 groups.length--;
-                return groups[ groupId ];
+                this.setFieldCalcGroups(fieldId, groups);
+                return groups[groupId];
 
             }
             return false;
@@ -628,10 +714,10 @@ function CFFormEditStore( form ) {
          */
         getFieldCalcFormula: function (fieldId) {
             var field = this.getField(fieldId);
-            if( ! emptyObject( field ) ){
-                if( field.config.hasOwnProperty( 'formular' ) ){
+            if (!emptyObject(field)) {
+                if (field.config.hasOwnProperty('formular')) {
                     return field.config.formular;
-                }else{
+                } else {
                     return '';
                 }
             }
@@ -646,12 +732,56 @@ function CFFormEditStore( form ) {
          * @param formula
          * @returns {boolean}
          */
-        updateFieldCalcFormula: function (fieldId, formula ) {
+        updateFieldCalcFormula: function (fieldId, formula) {
             var field = this.getField(fieldId);
-            if( ! emptyObject( field ) ){
+            if (!emptyObject(field)) {
                 field.config.formular = formula;
+                setField(fieldId, field);
             }
             return false;
+        },
+        /**
+         * Add a new field calc group with operator and new line group
+         *
+         * @since 1.5.1
+         *
+         * @param fieldId
+         * @returns {*}
+         */
+        addFieldCalcGroup: function (fieldId) {
+            var groups = this.getFieldCalcGroups(fieldId),
+                highestGroupId = -1,
+                highestOpGroupId = -1;
+
+            if (emptyObject(groups)) {
+                groups = [];
+                groups.push( {
+                    lines: [calcLineFactory(0, 0)]
+                });
+            } else {
+                var x = groups.length;
+                if( 1 > groups.length ){
+                    highestGroupId = 1;
+                }else{
+                    highestGroupId = groups.length -1;
+                    if ( 1 == groups.length ) {
+                        highestOpGroupId =  -1;
+                    }else{
+                        highestOpGroupId =  groups[highestGroupId - 1]['op-id'];
+                    }
+                    groups.push( calcOpGroupFactory(highestGroupId + 1, highestOpGroupId + 1 ) );
+                    highestGroupId = highestGroupId + 1;
+                }
+
+                groups.push( {
+                    lines: [calcLineFactory(highestGroupId + 1, 0)]
+                });
+
+            }
+
+            this.setFieldCalcGroups(fieldId, groups);
+            return this.getFieldCalcGroups(fieldId);
+
         },
         /**
          * Remove field
@@ -661,9 +791,9 @@ function CFFormEditStore( form ) {
          * @param fieldId
          * @returns {boolean}
          */
-        deleteField : function (fieldId ) {
+        deleteField: function (fieldId) {
             var field = this.getField(fieldId);
-            if( ! emptyObject( field ) ){
+            if (!emptyObject(field)) {
                 delete form.fields[fieldId];
                 return true;
             }
@@ -677,7 +807,7 @@ function CFFormEditStore( form ) {
          *
          * @returns {*}
          */
-        getConditionals : function () {
+        getConditionals: function () {
             return form.conditional_groups.conditions;
         },
         /**
@@ -688,8 +818,8 @@ function CFFormEditStore( form ) {
          * @param id
          * @returns {*}
          */
-        getConditional : function ( id ) {
-            if( has( form.conditional_groups.conditions, id ) ){
+        getConditional: function (id) {
+            if (has(form.conditional_groups.conditions, id)) {
                 return form.conditional_groups.conditions[id];
             }
             return {}
@@ -701,7 +831,7 @@ function CFFormEditStore( form ) {
          *
          * @returns {*}
          */
-        getProcessors : function() {
+        getProcessors: function () {
             return form.processors;
         },
         /**
@@ -712,8 +842,8 @@ function CFFormEditStore( form ) {
          * @param id
          * @returns {*}
          */
-        getProcessor: function ( id ) {
-            if( has( form.processors, id )){
+        getProcessor: function (id) {
+            if (has(form.processors, id)) {
                 return form.processors[id];
             }
             return {}

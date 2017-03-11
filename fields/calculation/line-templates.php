@@ -1,4 +1,7 @@
 <script type="text/html" id="calculator-group-tmpl">
+	<button type="button" class="button block-button add-operator-group">
+		<?php echo __('Add Operator Group', 'caldera-forms'); ?>
+	</button>
 	{{#each group}}
 		{{#if operator}}
 			<div class="caldera-config-group caldera-config-group-full calculation-group-connect calculation-group" style="text-align:center;" id="op-group-{{line-group}}">
@@ -35,14 +38,8 @@
 		{{/if}}
 
 	{{/each}}
+
 </script>
-
-
-
-
-
-
-
 
 
 
