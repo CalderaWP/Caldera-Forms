@@ -365,6 +365,9 @@ class Caldera_Forms {
 
 			self::$internal_init = true;
 
+
+
+
 			// check update version
 			$db_version   = get_option( 'CF_DB', 0 );
 			$force_update = false;
@@ -381,6 +384,13 @@ class Caldera_Forms {
 				if ( $db_version < 4 || $force_update ) {
 					self::activate_caldera_forms( true );
 					caldera_forms_write_db_flag( 4 );
+				}
+
+			}else{
+				$version = get_option( '_calderaforms_lastupdate' );
+				if ( empty( $version ) || version_compare( $version, CFCORE_VER ) !== 0 ) {
+					flush_rewrite_rules();
+					update_option( '_calderaforms_lastupdate', CFCORE_VER );
 				}
 
 			}
@@ -402,18 +412,8 @@ class Caldera_Forms {
 		// ensure urls are there
 		self::init_cf_internal();
 
-		$version = get_option( '_calderaforms_lastupdate' );
-
 		// ensure rewrites
 		flush_rewrite_rules();
-
-		if ( false == $force && ! empty( $version ) ) {
-			if ( version_compare( $version, CFCORE_VER ) === 0 ) { // no change
-				return;
-			}
-		}
-
-		update_option( '_calderaforms_lastupdate', CFCORE_VER );
 
 		$charset_collate = '';
 
