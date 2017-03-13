@@ -13,7 +13,9 @@
 	<i class="icon-edit" style="display:none;"></i>
 	<i class="dashicons dashicons-admin-page" style="display:none;"></i>
 	<i class="dashicons dashicons-menu" style="display:none;"></i>
-	<span id="new-form-element" class="layout_field_name"><span class="dashicons dashicons-menu" style="margin: 1px 0px 0px -5px;"></span> <?php echo __('Add Field', 'caldera-forms'); ?></span>
+	<span id="new-form-element" class="layout_field_name"><span class="dashicons dashicons-move" style="margin: 1px 0px 0px -5px;"></span>
+		<?php esc_html_e( 'Add Field', 'caldera-forms' ); ?>
+	</span>
 	<div class="drag-handle">
 		<div class="field_preview"></div>
 	</div><input value="" type="hidden" class="field-location">	
