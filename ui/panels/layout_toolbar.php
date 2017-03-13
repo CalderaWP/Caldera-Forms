@@ -9,7 +9,7 @@
 	data-callback="add_page_grid"
 
  href="#code_panels_tag"><?php echo __('Add Page', 'caldera-forms'); ?></a>
-<div id="newfield-tool" class="button button-primary button-small layout-new-form-field" title="<?php echo __('Drag onto the form grid below', 'caldera-forms'); ?>">
+<div id="newfield-tool" class="button button-primary button-small layout-new-form-field" title="<?php esc_attr_e( 'Drag this box onto the layout grid where you want the field to appear', 'caldera-forms'); ?>">
 	<i class="icon-edit" style="display:none;"></i>
 	<i class="dashicons dashicons-admin-page" style="display:none;"></i>
 	<i class="dashicons dashicons-menu" style="display:none;"></i>
