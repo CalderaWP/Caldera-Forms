@@ -2093,6 +2093,12 @@ class Caldera_Forms {
 			$form = Caldera_Forms_Forms::get_form( $form );
 		}
 
+		$field = Caldera_Forms_Field_Util::get_field( $field_id, $form );
+		if( is_array( $field ) && false === Caldera_Forms_Field_Util::check_conditional( $field, $form ) ){
+			return;
+		}
+
+
 		// form object
 		if ( isset( $form[ 'ID' ] ) ) {
 			if ( isset( $form[ 'fields' ][ $field_id ] ) ) {
@@ -2129,12 +2135,16 @@ class Caldera_Forms {
 	static public function get_field_data( $field_id, $form, $entry_id = false ) {
 		global $processed_data;
 
-		//echo $field_id.'<br>';
 		if ( is_string( $form ) ) {
 			$form = Caldera_Forms_Forms::get_form( $form );
 			if ( ! isset( $form[ 'ID' ] ) || $form[ 'ID' ] !== $form ) {
 				return null;
 			}
+		}
+
+		$field = Caldera_Forms_Field_Util::get_field( $field_id, $form );
+		if( is_array( $field ) && false === Caldera_Forms_Field_Util::check_conditional( $field, $form ) ){
+			return;
 		}
 
 		$indexkey = $form[ 'ID' ];
