@@ -394,10 +394,11 @@ jQuery( function( $ ){
 	var inEmailSettings = false;
 	$( '#cf-email-settings' ).on( 'click', function(e){
 		e.preventDefault();
-		var $mainUI = $( '.form-panel-wrap, .form-entries-wrap' );
-		var $emailSettingsUI = $( '#cf-email-settings-ui' );
-		var $otherButtons = $( '.caldera-forms-toolbar-item a' );
-		var $toggles = $( '.toggle_option_preview, #render-with-label' );
+		var $mainUI = $( '.form-panel-wrap, .form-entries-wrap' ),
+			$emailSettingsUI = $('#cf-email-settings-ui'),
+			$otherButtons = $('.caldera-forms-toolbar-item a'),
+			$toggles = $('.toggle_option_preview, #render-with-label'),
+			$clippy = $('#caldera-forms-clippy');
 
 		if( inEmailSettings ){
 			$( this ).html( '<?php esc_html_e( 'Email Settings', 'caldera-forms' ); ?>' );
@@ -406,6 +407,7 @@ jQuery( function( $ ){
 			$emailSettingsUI.hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
 			$mainUI.show().attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' );
 			$toggles.show().attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' );
+			$clippy.show().attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' );
 		}else{
 			inEmailSettings = true;
 			$( this ).html( '<?php esc_html_e( 'Close Email Settings', 'caldera-forms' ); ?>' );
@@ -413,9 +415,8 @@ jQuery( function( $ ){
 			$mainUI.hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
 			$emailSettingsUI.show().attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' );
 			$( this ).html = "<?php esc_html__( 'Email Settings', 'caldera-forms' ); ?>";
-
+			$clippy.hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
 			$toggles.hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
-			$( this ).on( 'click' )
 		}
 
 
