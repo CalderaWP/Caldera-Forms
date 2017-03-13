@@ -743,6 +743,17 @@ This could also be a sign of a more serious issue on your server, but is probabl
 5. **Go Further With Form Processors** - Auto-responders, redirects included! Go further with our add-ons!
 
 == Changelog ==
+= Caldera Forms 1.5.0.6 ( March 13th, 2017 )  =
+See: [https://calderaforms.com/updates/caldera-forms-1-5-0-6?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms](https://calderaforms.com/updates/caldera-forms-1-5-0-6)
+* FIXED: Fields hidden by conditional logic's values were being recorded. This was not the behaviour in 1.4.x and was causing issues with calculations calcualting the wrong amount
+* FIXED: The "New Field" button,  that isn't really a button, had a confusing icon. It is now move, not hamburger.
+* FIXED: The text attribute for "New Field" button, that isn't really a button, was not useful enough. It is now 150% more useful.
+* ADDED: Abstraction for entry edit tokens for editing form entries, which Josh felt was going to be immediately useful, but wasn't but, whatever, it will be.
+* FIXED: Rewrites were not being flushed on every Caldera Forms update.
+* FIXED: Form edit view in admin wasn't working, because rewrites were not being flushed on every Caldera Forms update.
+* FIXED: Processor magic tags were not being parsed for forms.
+* ADDED: New method for more more reliable and performant meta-based magic tags like those from form processors.
+
 = Caldera Forms 1.5.0.5 ( March 6st, 2017 ) This Field Is Required =
 See: [https://calderaforms.com/updates/caldera-forms-1-5-0-5?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms](https://calderaforms.com/updates/caldera-forms-1-5-0-5)
 * FIXED: JavaScript error when validator (parsely) was loaded in the wrong order.
@@ -1598,5 +1609,8 @@ See: https://calderaforms.com/updates/caldera-forms-1.5.0.1/
 = 1.5.0.4 =
 See: https://calderaforms.com/updates/caldera-forms-1.5.0.4/
 
-= 1.5.0.4 =
+= 1.5.0.5 =
 See: https://calderaforms.com/updates/caldera-forms-1.5.0.5/
+
+= 1.5.0.6 =
+See: https://calderaforms.com/updates/caldera-forms-1.5.0.6/
