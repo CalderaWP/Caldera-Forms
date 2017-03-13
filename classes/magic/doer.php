@@ -10,6 +10,15 @@
  */
 class Caldera_Forms_Magic_Doer {
 
+	/**
+	 * Holds entry details prepared using self::magic_tag_meta_prepare()
+	 *
+	 * @since 1.5.0.6
+	 *
+	 * @var array
+	 */
+	protected static $entry_details;
+
 
 	/**
 	 * Parse field magic tags
@@ -398,6 +407,78 @@ class Caldera_Forms_Magic_Doer {
 		}
 
 		return $value;
+	}
+
+
+	/**
+	 * Do magic tags for processors
+	 *
+	 * @since 1.5.6
+	 *
+	 * @param string $value String to parse on
+	 * @param array $entry_details Prepared entry details.
+	 *
+	 * @return mixed
+	 */
+	public static function do_processor_magic( $value, $entry_details  ){
+		if( empty( $entry_details[ 'meta' ] ) || empty( $entry_details[ 'meta' ][ 'processed' ] ) ){
+			return $value;
+		}
+
+		$processed = $entry_details[ 'meta' ][ 'processed' ];
+		$magics = Caldera_Forms_Magic_Util::explode_bracket_magic( $value );
+		if( is_array( $magics ) && ! empty( $magics[1] ) ){
+			foreach ( $magics[1] as $tag ){
+				$parts = explode( ':', $tag );
+				if( isset( $processed[ $parts[0] ]  ) && isset( $parts[1] ) && ! empty(  $processed[ $parts[0] ][ $parts[1] ] ) ){
+					$value = str_replace( '{' . $tag . '}', $processed[ $parts[0] ][ $parts[1] ], $value );
+				}
+
+
+			}
+		}
+
+		return $value;
+	}
+
+	/**
+	 * Prepare (if not already prepared) entry meta data
+	 *
+	 * @since 1.5.0.6
+	 *
+	 * @param int $entry_id
+	 *
+	 * @return array
+	 */
+	public static function magic_tag_meta_prepare( $entry_id ){
+		if( ! is_array( self::$entry_details ) )  {
+			self::$entry_details = array();
+		}
+
+
+		if( ! isset( self::$entry_details[ $entry_id ] ) ) {
+			$entry_details = Caldera_Forms::get_entry_detail( $entry_id );
+			$this_form     = Caldera_Forms_Forms::get_form( $entry_details[ 'form_id' ] );
+			if ( ! empty( $entry_details[ 'meta' ] ) ) {
+				foreach ( $entry_details[ 'meta' ] as $meta_type => $meta_block ) {
+					if ( ! empty( $meta_block[ 'data' ] ) ) {
+						$entry_details[ 'meta' ][ 'processed' ][ $meta_type ] = array();
+						foreach ( $meta_block[ 'data' ] as $meta_process_id => $proces_meta_data ) {
+							foreach ( $proces_meta_data[ 'entry' ] as $process_meta_key => $process_meta_entry ) {
+								$processed_meta[ $this_form[ 'ID' ] ][ $meta_process_id ][ $process_meta_key ] = $process_meta_entry[ 'meta_value' ];
+								$entry_details[ 'meta' ][ 'processed' ][ $meta_type ][ $process_meta_key ]     = $process_meta_entry[ 'meta_value' ];
+							}
+						}
+					}
+				}
+			}
+
+			self::$entry_details[ $entry_id ] = $entry_details;
+
+		}
+
+		return self::$entry_details[ $entry_id ];
+
 	}
 
 }

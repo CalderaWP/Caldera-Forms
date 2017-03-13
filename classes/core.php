@@ -1960,29 +1960,22 @@ class Caldera_Forms {
 	 */
 	static public function do_magic_tags( $value, $entry_id = null, $magic_caller = array() ) {
 
-		global $processed_meta, $form, $referrer;
-		/// get meta entry for magic tags defined.
+		global  $form, $referrer;
 
+		$entry_details = array();
 		$input_value = $value;
 		$this_form   = $form;
 		// pull in the metadata for entry ID
 		if ( null !== $entry_id ) {
-			$entry_details = self::get_entry_detail( $entry_id );
-			$this_form     = Caldera_Forms_Forms::get_form( $entry_details[ 'form_id' ] );
-			if ( ! empty( $entry_details[ 'meta' ] ) ) {
-				foreach ( $entry_details[ 'meta' ] as $meta_block ) {
-					if ( ! empty( $meta_block[ 'data' ] ) ) {
-						foreach ( $meta_block[ 'data' ] as $meta_process_id => $proces_meta_data ) {
-							foreach ( $proces_meta_data[ 'entry' ] as $process_meta_key => $process_meta_entry ) {
-								$processed_meta[ $this_form[ 'ID' ] ][ $meta_process_id ][ $process_meta_key ] = $process_meta_entry[ 'meta_value' ];
-							}
-						}
-					}
-				}
-			}
+			$entry_details = Caldera_Forms_Magic_Doer::magic_tag_meta_prepare( $entry_id );
+
 		}
 
 		if ( is_string( $value ) ) {
+			if( ! empty( $entry_details ) ){
+				$value = Caldera_Forms_Magic_Doer::do_processor_magic( $value, $entry_details );
+			}
+
 			// check for magics
 			$value = Caldera_Forms_Magic_Doer::do_bracket_magic( $value, $this_form, $entry_id, $magic_caller, $referrer );
 
