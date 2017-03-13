@@ -19,8 +19,13 @@ $attrs = array(
 	'data-field' => $field_base_id,
 	'class' => $field_class,
 	'id' => $field_id,
-	'rows' => $field['config']['rows']
 );
+
+if( ! empty( $field['config']['rows'] ) ){
+	$attrs[ 'rows' ] = absint( $field[ 'config' ][ 'rows' ] );
+}else{
+	$attrs[ 'rows' ] = 5;
+}
 
 if(!empty($field['config']['placeholder'])){
 	$attrs[ 'placeholder' ] = Caldera_Forms::do_magic_tags( $field['config']['placeholder'] );
