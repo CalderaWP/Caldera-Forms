@@ -17,12 +17,12 @@ class Caldera_Forms_Entry_Token {
 	 * @since 1.5.0.6
 	 *
 	 * @param string $test_token Encoded token to test
-	 * @param string $form_id ID of form to test
 	 * @param string $entry_id ID of entry to test
+	 * @param string $form_id ID of form to test
 	 *
 	 * @return bool|WP_Error
 	 */
-	public function verify_token( $test_token, $form_id, $entry_id ){
+	public static function verify_token( $test_token, $entry_id, $form_id ){
 		$compare_token = self::make_test_token( $entry_id, $form_id );
 		if( ! hash_equals(  $compare_token, $test_token ) ){
 			return new WP_Error( 'error', __( "Permission denied.", 'caldera-forms' ) );
@@ -43,7 +43,7 @@ class Caldera_Forms_Entry_Token {
 	 *
 	 * @return string
 	 */
-	public function create_entry_token( $entry_id, $form ){
+	public static function  create_entry_token( $entry_id, $form ){
 		$details = Caldera_Forms::get_entry_detail( $entry_id, $form );
 		return self::make_token( $entry_id, $form[ 'ID' ], $details[ 'datestamp' ],  $details[ 'user_id' ]  );
 	}

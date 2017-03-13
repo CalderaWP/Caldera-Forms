@@ -860,19 +860,14 @@ class Caldera_Forms {
 			// check token
 			if ( isset( $_POST[ '_cf_frm_edt_tkn' ] ) ) {
 
-				// build token
-				$token_array = array(
-					'id'        => (int) $details[ 'id' ],
-					'datestamp' => $details[ 'datestamp' ],
-					'user_id'   => (int) $details[ 'user_id' ],
-					'form_id'   => $form[ 'ID' ]
-				);
-				if ( sha1( json_encode( $token_array ) ) !== trim( $_POST[ '_cf_frm_edt_tkn' ] ) ) {
-					return new WP_Error( 'error', __( "Permission denied.", 'caldera-forms' ) );
+				$validated = Caldera_Forms_Entry_Token::verify_token( $_POST[ '_cf_frm_edt_tkn' ],$details[ 'id' ], $form[ 'ID' ] );
+				if ( is_wp_error( $validated ) ) {
+					return $validated;
 				} else {
-					$entryid    = (int) $details[ 'id' ];
-					$edit_token = sha1( json_encode( $token_array ) );
+					$entry_id   = (int) $details[ 'id' ];
+					$edit_token = Caldera_Forms_Entry_Token::create_entry_token( $entry_id, $form[ 'ID' ] );
 				}
+
 
 			} else {
 
@@ -2771,18 +2766,12 @@ class Caldera_Forms {
 			// check token
 			if ( isset( $_POST[ '_cf_frm_edt_tkn' ] ) ) {
 
-				// build token
-				$token_array = array(
-					'id'        => (int) $entry_id,
-					'datestamp' => $details[ 'datestamp' ],
-					'user_id'   => (int) $details[ 'user_id' ],
-					'form_id'   => $form[ 'ID' ]
-				);
-				if ( sha1( json_encode( $token_array ) ) !== trim( $_POST[ '_cf_frm_edt_tkn' ] ) ) {
-					return new WP_Error( 'error', __( "Permission denied.", 'caldera-forms' ) );
+				$validated = Caldera_Forms_Entry_Token::verify_token( $_POST[ '_cf_frm_edt_tkn' ],$entry_id, $form[ 'ID' ] );
+				if ( is_wp_error( $validated ) ) {
+					return $validated;
 				} else {
 					$entry_id   = (int) $details[ 'id' ];
-					$edit_token = sha1( json_encode( $token_array ) );
+					$edit_token = Caldera_Forms_Entry_Token::create_entry_token( $entry_id, $form[ 'ID' ] );
 				}
 
 			} else {
@@ -3077,15 +3066,10 @@ class Caldera_Forms {
 
 			// save entry_id
 			self::set_field_data( '_entry_id', $entryid, $form );
-			// set entry token
-			$token_array = array(
-				'id'        => (int) $entryid,
-				'datestamp' => $new_entry[ 'datestamp' ],
-				'user_id'   => (int) $new_entry[ 'user_id' ],
-				'form_id'   => $form[ 'ID' ]
-			);
+			$token = Caldera_Forms_Entry_Token::create_entry_token( $entryid, $form );
+
 			// set edit token
-			self::set_field_data( '_entry_token', sha1( json_encode( $token_array ) ), $form );
+			self::set_field_data( '_entry_token', $token, $form );
 
 		} elseif ( ! empty( $transdata[ 'edit' ] ) ) {
 			$entryid = $transdata[ 'edit' ];
@@ -3360,6 +3344,7 @@ class Caldera_Forms {
 
 	public function api_handler() {
 		global $wp_query;
+
 		// check for API
 		// if this is not a request for json or a singular object then bail
 		if ( ! isset( $wp_query->query_vars[ 'cf_api' ] ) ) {
@@ -4110,17 +4095,12 @@ class Caldera_Forms {
 			$details = self::get_entry_detail( $entry_id, $form );
 			if ( ! empty( $_GET[ 'cf_et' ] ) ) {
 				// build token
-				$token_array = array(
-					'id'        => (int) $entry_id,
-					'datestamp' => $details[ 'datestamp' ],
-					'user_id'   => (int) $details[ 'user_id' ],
-					'form_id'   => $form[ 'ID' ]
-				);
-				if ( sha1( json_encode( $token_array ) ) !== trim( $_GET[ 'cf_et' ] ) ) {
+				$validated = Caldera_Forms_Entry_Token::verify_token( trim( $_GET[ 'cf_et' ] ), $_GET[ 'cf_et' ], $form[ 'ID' ]  );
+				if ( ! is_wp_error( $validated ) ) {
 					$notices[ 'error' ][ 'note' ] = __( 'Permission denied or entry does not exist.', 'caldera-forms' );
 				} else {
 					$entry_id   = (int) $details[ 'id' ];
-					$edit_token = sha1( json_encode( $token_array ) );
+					$edit_token = Caldera_Forms_Entry_Token::create_entry_token( $entry_id, $form[ 'ID' ] );
 				}
 
 			} else {
