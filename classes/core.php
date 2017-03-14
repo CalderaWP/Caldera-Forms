@@ -2638,7 +2638,7 @@ class Caldera_Forms {
 
 		if ( ! empty( $form[ 'fields' ] ) ) {
 			foreach ( $form[ 'fields' ] as $field_id => $field ) {
-				$field = Caldera_Forms_Field_Util::get_field( $field, $form );
+				$field = Caldera_Forms_Field_Util::get_field( $field, $form, true );
 				if ( ! is_array( $field ) || empty( $field ) ) {
 					unset( $form[ 'fields' ][ $field_id ] );
 				} else {
