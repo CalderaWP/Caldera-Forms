@@ -3,7 +3,7 @@ Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza
 Tags: forms, formbuilder, form builder, contact form, form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, echecks, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, eCheck,dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, gravity forms, contact, email, auto-responder, aweber, convertkit, builder, contact forms, search, ab testing, a/b testing, split testing, shortcode, wordpress, awesome plugin, plugin, easy, braintree form, dwolla form, authorize.net form, mailchimp form, mailchimp popup, aweber form, convertkit form, stripe form, stripe popup, eCheck form
 Requires at least: 4.5
 Tested up to: 4.7.3
-Stable tag: 1.5.0.5
+Stable tag: 1.5.0.6
 License: GPLv2
 
 A different kind of WordPress form builder.
@@ -743,9 +743,9 @@ This could also be a sign of a more serious issue on your server, but is probabl
 5. **Go Further With Form Processors** - Auto-responders, redirects included! Go further with our add-ons!
 
 == Changelog ==
-= Caldera Forms 1.5.0.6 ( March 13th, 2017 )  =
+= Caldera Forms 1.5.0.6 ( March 13th, 2017 ) Apex Calculations =
 See: [https://calderaforms.com/updates/caldera-forms-1-5-0-6?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms](https://calderaforms.com/updates/caldera-forms-1-5-0-6)
-* FIXED: Fields hidden by conditional logic's values were being recorded. This was not the behaviour in 1.4.x and was causing issues with calculations calcualting the wrong amount
+* FIXED: Fields hidden by conditional logic's values were being recorded. This was not the behavior in 1.4.x and was causing issues with calculations calculating the wrong amount.
 * FIXED: The "New Field" button,  that isn't really a button, had a confusing icon. It is now move, not hamburger.
 * FIXED: The text attribute for "New Field" button, that isn't really a button, was not useful enough. It is now 150% more useful.
 * ADDED: Abstraction for entry edit tokens for editing form entries, which Josh felt was going to be immediately useful, but wasn't but, whatever, it will be.
