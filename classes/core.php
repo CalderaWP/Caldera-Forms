@@ -3969,11 +3969,12 @@ class Caldera_Forms {
 		 *
 		 * @since 1.3.4
 		 *
-		 * @param null|string $html By defualt, null. If string is returned, method will immediately return that string.
+		 * @param null|string $html By default, null. If string is returned, method will immediately return that string.
 		 * @param int $entry_id The entry ID.
 		 * @param array $form Form config.
+		 * @param array $atts Shortcode/function atts
 		 */
-		$html = apply_filters( 'caldera_forms_pre_render_form', null, $entry_id, $form );
+		$html = apply_filters( 'caldera_forms_pre_render_form', null, $entry_id, $form, $atts );
 		if ( is_string( $html ) ) {
 			return $html;
 
