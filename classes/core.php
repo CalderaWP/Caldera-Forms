@@ -4622,11 +4622,23 @@ class Caldera_Forms {
 	 *
 	 * @param array $atts Array of shortcode attributes
 	 * @param string $content Enclosed content
-	 * @param string $shortcode Shortcode type caldera_forms|caldera_forms_modal
+	 * @param string $shortcode Shortcode type caldera_form|caldera_forms_modal
 	 *
 	 * @return string|void
 	 */
 	public static function shortcode_handler( $atts, $content, $shortcode ) {
+		if( ! in_array(  $shortcode, array(
+			'caldera_form',
+			'caldera_forms_modal'
+
+		) ) ){
+			return;
+		}
+
+		$atts = shortcode_atts(array (
+			'id' => null
+		), $atts, $shortcode );
+
 		if ( ! isset( $atts[ 'id' ] ) ) {
 			return;
 		}
