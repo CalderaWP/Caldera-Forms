@@ -35,6 +35,10 @@ class Caldera_Forms_Magic_Doer {
 		$matches = Caldera_Forms_Magic_Util::explode_field_magic( $value );
 
 		if ( ! empty( $matches[ 1 ] ) ) {
+			if( ! is_array( $form  ) ){
+				global  $form;
+			}
+
 			/**
 			 * Early entry point for custom parsing of field magic tags
 			 *
