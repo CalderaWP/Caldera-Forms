@@ -4630,7 +4630,7 @@ class Caldera_Forms {
 	public static function shortcode_handler( $atts, $content, $shortcode ) {
 		if( ! in_array(  $shortcode, array(
 			'caldera_form',
-			'caldera_forms_modal'
+			'caldera_form_modal'
 
 		) ) ){
 			return;
