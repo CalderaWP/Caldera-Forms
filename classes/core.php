@@ -3669,7 +3669,7 @@ class Caldera_Forms {
 
 		$form_atts = array( 'id' => $form[ 'ID' ], 'ajax' => true );
 		if ( ! empty( $atts[ 'entry' ] ) ) {
-			$form_atts[ 'entry' ] = $atts[ 'entry' ];
+			$form_atts[ 'entry' ] = $atts[ 'entry$' ];
 		}
 
 		$modal_id = 'cf-modal-' . uniqid( $form[ 'ID' ] );
@@ -4637,9 +4637,17 @@ class Caldera_Forms {
 		}
 
 		$atts = shortcode_atts(array (
-			'id' => null
+			'id' => null,
+			'width' => null,
+			'height' => null,
+			'type' => 'link',
+			'entry' => null,
+			'ID' => null,
 		), $atts, $shortcode );
 
+		if( ! empty( $atts[ 'ID' ] ) && empty( $atts[ 'id' ] )){
+			$atts[ 'id' ] = $atts[ 'ID' ];
+		}
 		if ( ! isset( $atts[ 'id' ] ) ) {
 			return;
 		}
