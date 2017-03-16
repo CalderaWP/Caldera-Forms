@@ -52,6 +52,8 @@ class Caldera_Forms {
 	/**
 	 * Holds modal HTML to be loaded in footer
 	 *
+	 * @deprecated 1.5.0.7
+	 *
 	 * @since 1.4.2
 	 *
 	 * @var string
@@ -101,7 +103,7 @@ class Caldera_Forms {
 		add_shortcode( 'caldera_form', array( $this, 'shortcode_handler' ) );
 		// modal shortcode
 		add_shortcode( 'caldera_form_modal', array( $this, 'shortcode_handler' ) );
-		add_action( 'wp_footer', array( $this, 'render_footer_modals' ) );
+		add_action( 'wp_footer', array( 'Caldera_Forms_Render_Modals', 'render_footer_modals' ) );
 
 		//emails
 		add_action( 'caldera_forms_core_init', array( 'Caldera_Forms_Email_Settings', 'maybe_add_hooks' ) );
@@ -278,6 +280,7 @@ class Caldera_Forms {
 	 * Create a modal button's HTML
 	 *
 	 * @since 1.5.0.4
+	 * @deprecated 1.5.0.7
 	 *
 	 * @param array $atts Form atts
 	 * @param string $content Content for opener
@@ -286,27 +289,8 @@ class Caldera_Forms {
 	 * @return string
 	 */
 	protected static function modal_button( $atts, $content, $form, $modal_id ){
-		if ( empty( $content ) ) {
-			$content = $form[ 'name' ];
-		}
-
-		$tag_atts = sprintf( 'data-form="%1s"', $form[ 'ID' ] );
-
-		if ( ! empty( $atts[ 'width' ] ) ) {
-			$tag_atts .= sprintf( ' data-width="%1s"', $atts[ 'width' ] );
-		}
-		if ( ! empty( $atts[ 'height' ] ) ) {
-			$tag_atts .= sprintf( ' data-height="%1s"', $atts[ 'height' ] );
-		}
-
-
-		$title = __( sprintf( 'Click to open the form %1s in a modal', $form[ 'name' ] ), 'caldera-forms' );
-		if ( ! empty( $atts[ 'type' ] ) && $atts[ 'type' ] == 'button' ) {
-			$tag_atts .= sprintf( 'data-remodal-target="%1s"', $modal_id );
-			return sprintf( '<button class="caldera-forms-modal" %s title="%s">%s</button>', $tag_atts, $title, $content );
-		} else {
-			return sprintf( '<a href="%s" class="caldera-forms-modal" %s title="%s">%s</a>', '#' . $modal_id, $tag_atts, esc_attr( $title ), $content );
-		}
+		_deprecated_function( __METHOD__, '1.5.0.7', 'Caldera_Forms_Render_Modals::modal_button' );
+		return Caldera_Forms_Render_Modals::modal_button( $atts, $content, $form, $modal_id );
 	}
 
 	/**
@@ -3651,6 +3635,7 @@ class Caldera_Forms {
 	 * Load a Caldera Form in a modal.
 	 *
 	 * @since unknown
+	 * @deprecated  1.5.0.7
 	 *
 	 * @param string|array $atts Shortcode atts or form ID
 	 * @param string $content Content to use in trigger link.
@@ -3658,49 +3643,8 @@ class Caldera_Forms {
 	 * @return string
 	 */
 	static public function render_modal_form( $atts, $content ) {
-
-		if ( empty( $atts[ 'id' ] ) ) {
-			return $content;
-		}
-		$form = Caldera_Forms_Forms::get_form( $atts[ 'id' ] );
-		if ( empty( $form[ 'ID' ] ) || $form[ 'ID' ] != $atts[ 'id' ] ) {
-			return $content;
-		}
-
-		$form_atts = array( 'id' => $form[ 'ID' ], 'ajax' => true );
-		if ( ! empty( $atts[ 'entry' ] ) ) {
-			$form_atts[ 'entry' ] = $atts[ 'entry$' ];
-		}
-
-		$modal_id = 'cf-modal-' . uniqid( $form[ 'ID' ] );
-
-		$out = self::modal_button( $atts, $content, $form, $modal_id );
-
-		if(!empty($_GET['cf_er'])){
-			$transdata = Caldera_Forms_Transient::get_transient( $_GET[ 'cf_er' ] );
-			if($transdata['transient'] == $_GET['cf_er']){
-				$current_state = 'style="display:block;"';
-			}
-		}
-		if ( ! empty( $_GET[ 'cf_su' ] ) ) {
-			// disable notices
-			unset( $_GET[ 'cf_su' ] );
-		}
-
-		ob_start();
-		?>
-		<div data-remodal-id="<?php echo esc_attr( $modal_id ); ?>"  id="<?php echo esc_attr( $modal_id ); ?>" class="remodal caldera-front-modal-container" data-form-id="<?php echo esc_attr( $modal_id ); ?>"  data-remodal-options="hashTracking: true, closeOnOutsideClick: false">
-			<button data-remodal-action="close" class="remodal-close"></button>
-			<div class="caldera-modal-body caldera-front-modal-body" id="<?php echo $modal_id; ?>_modal_body">
-				<?php echo self::render_form( $form_atts ); ?>
-			</div>
-		</div>
-
-		<?php
-		Caldera_Forms_Render_Assets::enqueue_modals();
-		self::$footer_modals .= ob_get_clean();
-
-		return $out;
+		_deprecated_function( __METHOD__, '1.5.0.7', 'Caldera_Forms_Render_Modals::render_modal_form' );
+		return Caldera_Forms_Render_Modals::modal_form( $atts, $content );
 	}
 
 	/**
@@ -3711,11 +3655,8 @@ class Caldera_Forms {
 	 * @uses "wp_footer"
 	 */
 	static public function render_footer_modals() {
-		$footer_modals = self::$footer_modals;
-		if ( ! empty( $footer_modals ) && is_string( $footer_modals ) ) {
-			echo $footer_modals;
-		}
-
+		_deprecated_function( __METHOD__, '1.5.0.7', 'Caldera_Forms_Render_Modals::render_footer_modals' );
+		Caldera_Forms_Render_Modals::render_footer_modals();
 	}
 
 	/**
@@ -4653,7 +4594,7 @@ class Caldera_Forms {
 		}
 
 		if ( $shortcode === 'caldera_form_modal' || ( ! empty( $atts[ 'modal' ] ) && $atts[ 'modal' ] ) ) {
-			return self::render_modal_form( $atts, $content );
+			return Caldera_Forms_Render_Modals::modal_form( $atts, $content );
 		}
 
 		$form = self::render_form( $atts );
