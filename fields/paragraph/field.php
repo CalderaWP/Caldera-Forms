@@ -10,7 +10,7 @@ if ( is_array( $field_value ) )  {
 
 $syncer = Caldera_Forms_Sync_Factory::get_object( $form, $field, $field_base_id );
 $sync = $syncer->can_sync();
-$field_value = $default = $syncer->get_default();
+$default = $syncer->get_default();
 
 
 $attrs = array(
