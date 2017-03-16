@@ -62,13 +62,17 @@ if(!empty($field['config']['manual'])){
 			}
 		}
 	}
-	// fix POW
+
+	//use preg_replace to avoid changing atan() to a.Math.tan()
+	//see https://github.com/CalderaWP/Caldera-Forms/issues/1412
+	$formula = preg_replace('/\batan\(\b/', 'Math.atan(', $formula);
+	$formula = preg_replace('/\batan2\(\b/', 'Math.atan2(', $formula);
+	$formula = preg_replace('/\btan\(\b/', 'Math.tan(', $formula);
+
 	$formula = str_replace('pow(', 'Math.pow(', $formula);
 	$formula = str_replace('abs(', 'Math.abs(', $formula);
 	$formula = str_replace('acos(', 'Math.acos(', $formula);
 	$formula = str_replace('asin(', 'Math.asin(', $formula);
-	$formula = str_replace('atan(', 'Math.atan(', $formula);
-	$formula = str_replace('atan2(', 'Math.atan2(', $formula);
 	$formula = str_replace('ceil(', 'Math.ceil(', $formula);
 	$formula = str_replace('cos(', 'Math.cos(', $formula);
 	$formula = str_replace('exp(', 'Math.exp(', $formula);
@@ -80,7 +84,7 @@ if(!empty($field['config']['manual'])){
 	$formula = str_replace('round(', 'Math.round(', $formula);
 	$formula = str_replace('sin(', 'Math.sin(', $formula);
 	$formula = str_replace('sqrt(', 'Math.sqrt(', $formula);
-	$formula = str_replace('tan(', 'Math.tan(', $formula);
+
 }
 $formula = str_replace("\r",'', str_replace("\n",'', str_replace(' ','', trim( Caldera_Forms::do_magic_tags( $formula ) ) ) ) );
 $binds = array();
