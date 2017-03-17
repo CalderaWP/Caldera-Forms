@@ -58,9 +58,9 @@ class Caldera_Forms_Render_Modals {
 			unset( $_GET[ 'cf_su' ] );
 		}
 
-		$form =  Caldera_Forms::render_form( $atts );
+		$form_html =  Caldera_Forms::render_form( $atts );
 
-		self::add_to_footer( self::modal_body( $form, $modal_id ) );
+		self::add_to_footer( self::modal_body( $form_html, $modal_id, $atts[ 'id' ] ) );
 
 		return $out;
 	}
@@ -76,7 +76,7 @@ class Caldera_Forms_Render_Modals {
 	 *
 	 * @return string
 	 */
-	public static function modal_body( $form_html, $modal_id, $classes = '' ){
+	public static function modal_body( $form_html, $modal_id, $form_id, $classes = '' ){
 		$class_attr = 'remodal caldera-front-modal-container';
 		if( ! empty( $classes ) ){
 			$class_attr .= $classes;
@@ -84,7 +84,7 @@ class Caldera_Forms_Render_Modals {
 
 		ob_start();
 		?>
-		<div data-remodal-id="<?php echo esc_attr( $modal_id ); ?>"  id="<?php echo esc_attr( $modal_id ); ?>" class="<?php esc_attr( $class_attr ); ?>" data-form-id="<?php echo esc_attr( $modal_id ); ?>"  data-remodal-options="hashTracking: true, closeOnOutsideClick: false">
+		<div data-remodal-id="<?php echo esc_attr( $modal_id ); ?>" id="<?php echo esc_attr( $modal_id ); ?>" class="<?php echo esc_attr( $class_attr ); ?>" data-form-id="<?php echo esc_attr( $form_id ); ?>"  data-remodal-options="hashTracking: true, closeOnOutsideClick: false">
 			<button data-remodal-action="close" class="remodal-close"></button>
 			<div class="caldera-modal-body caldera-front-modal-body" id="<?php echo $modal_id; ?>_modal_body">
 				<?php echo $form_html ?>
