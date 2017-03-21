@@ -185,6 +185,15 @@ class Caldera_Forms_Field_Util {
 		return $field_structure;
 	}
 
+	/**
+	 * Get allowed math functions with ability to filter allowed function
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param array $form
+	 *
+	 * @return array
+	 */
 	public static function get_math_functions( array $form ){
 		$math_functions =  array(
 			'pow',

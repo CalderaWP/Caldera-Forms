@@ -63,36 +63,20 @@ if(!empty($field['config']['manual'])){
 		}
 	}
 
-	//use preg_replace to avoid changing atan() to a.Math.tan()
-	//see https://github.com/CalderaWP/Caldera-Forms/issues/1412
-	$formula = preg_replace('/\batan\(\b/', 'Math.atan(', $formula);
-	$formula = preg_replace('/\batan2\(\b/', 'Math.atan2(', $formula);
-	$formula = preg_replace('/\btan\(\b/', 'Math.tan(', $formula);
-
-	$formula = str_replace('pow(', 'Math.pow(', $formula);
-	$formula = str_replace('abs(', 'Math.abs(', $formula);
-	$formula = str_replace('acos(', 'Math.acos(', $formula);
-	$formula = str_replace('asin(', 'Math.asin(', $formula);
-	$formula = str_replace('ceil(', 'Math.ceil(', $formula);
-	$formula = str_replace('cos(', 'Math.cos(', $formula);
-	$formula = str_replace('exp(', 'Math.exp(', $formula);
-	$formula = str_replace('floor(', 'Math.floor(', $formula);
-	$formula = str_replace('log(', 'Math.log(', $formula);
-	$formula = str_replace('max(', 'Math.max(', $formula);
-	$formula = str_replace('min(', 'Math.min(', $formula);
-	$formula = str_replace('random(', 'Math.random(', $formula);
-	$formula = str_replace('round(', 'Math.round(', $formula);
-	$formula = str_replace('sin(', 'Math.sin(', $formula);
-	$formula = str_replace('sqrt(', 'Math.sqrt(', $formula);
+	$functions = Caldera_Forms_Field_Util::get_math_functions( $form );
+	$formula = str_replace(  ' ', '', $formula );
+	foreach ( $functions as $function ){
+		$formula = preg_replace("/\b$function\(\b/", "Math.$function(", $formula);
+	}
 
 }
+
 $formula = str_replace("\r",'', str_replace("\n",'', str_replace(' ','', trim( Caldera_Forms::do_magic_tags( $formula ) ) ) ) );
 $binds = array();
 $binds_wrap = array();
 $binds_vars = array();
 foreach($form['fields'] as $fid=>$cfg){
 	if(false !== strpos($formula, $fid)){
-		//dump($cfg,0);
 		$formula = str_replace($fid, $fid, $formula);
 		$binds_vars[] = $fid." = parseFloat( jQuery('[data-field=\"".$fid."\"]').is(':checkbox') ? checked_total_" . $field_base_id. "(jQuery('[data-field=\"".$fid."\"]:checked')) : jQuery('[data-field=\"".$fid."\"]').is(':radio') ? jQuery('[data-field=\"".$fid."\"]:checked').val() : jQuery('[data-field=\"".$fid."\"]').val() ) || 0 ";
 
