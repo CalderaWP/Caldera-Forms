@@ -373,5 +373,31 @@ class Caldera_Forms_Field_Util {
 
 	}
 
+	/**
+	 * Check a field's conditional logic
+	 *
+	 * @since 1.5.0.4
+	 *
+	 * @param array|string $field Field config or field ID
+	 * @param array $form Form config
+	 *
+	 * @return bool
+	 */
+	public static function check_conditional(  $field, array $form ){
+		if( is_string( $field ) ){
+			$field = self::get_field( $field, $form );
+		}
+
+		if ( ! empty( $field[ 'conditions' ][ 'type' ] ) ) {
+			$conditional =  $field[ 'conditions' ];
+			if ( ! empty( $form[ 'conditional_groups'][ 'conditions'][ $field[ 'conditions' ]['type' ] ] )  ) {
+				$conditional = $form[ 'conditional_groups' ][ 'conditions' ][ $field[ 'conditions' ][ 'type' ] ];
+			}
+			return Caldera_Forms::check_condition( $conditional, $form );
+		}
+
+		return true;
+	}
+
 }
 

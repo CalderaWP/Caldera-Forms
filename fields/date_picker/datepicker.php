@@ -13,6 +13,12 @@ $attrs = array(
 
 );
 
+$required = '';
+if( $field_structure['field_required'] ){
+	$attrs[ 'required'] = true;
+	$required = 'required';
+}
+
 // prevent errors for fields of previous version
 $start_end_atts = '';
 if( !empty( $field['config']['start_view'] ) ){
@@ -29,7 +35,7 @@ if( !empty( $field['config']['end_date'] ) ){
 if( !empty( $field['config']['language'] ) ){
 	if( file_exists( CFCORE_PATH . 'fields/date_picker/js/locales/bootstrap-datepicker.' . $field['config']['language'] . '.js' ) ){
 		$attrs[ 'data-date-language' ] = $field['config']['language'];
-		wp_enqueue_script( 'cf-frontend-date-picker-lang', CFCORE_URL . 'fields/date_picker/js/locales/bootstrap-datepicker.' . $field['config']['language'] . '.js', array('cf-field'), null, true);
+		wp_enqueue_script( 'cf-frontend-date-picker-lang', CFCORE_URL . 'fields/date_picker/js/locales/bootstrap-datepicker.' . $field['config']['language'] . '.js', array( Caldera_Forms_Render_Assets::field_script_to_localize_slug() ), null, true);
 	}
 }
 
@@ -45,7 +51,7 @@ $attr_string =  caldera_forms_field_attributes( $attrs, $field, $form );
 <?php echo $wrapper_before; ?>
 	<?php echo $field_label; ?>
 	<?php echo $field_before; ?>
-		<input  <?php echo  $attr_string . ' ' . $field_structure['aria']; ?>  />
+		<input  <?php echo  $attr_string . ' ' . $field_structure['aria'] . ' ' . $required; ?>  />
 		<?php echo $field_caption; ?>
 	<?php echo $field_after; ?>
 <?php echo $wrapper_after; ?>

@@ -70,6 +70,11 @@ jQuery(function($){
     }
     // Baldrick Bindings
     resBaldrickTriggers = function(){
+
+        function setNoticeEl(obj) {
+            return $('#caldera_notices_' + obj.params.trigger.data('instance'));
+        }
+
         $('.cfajax-trigger').baldrick({
             request			:	'./',
             method			:	'POST',
@@ -128,10 +133,9 @@ jQuery(function($){
                 if( obj.jqxhr.status === 404){
                     this.trigger.data('_cf_manual', true ).trigger('submit');
                 }else{
-                    var instance = obj.params.trigger.data('instance');
+                    var $notice = setNoticeEl(obj);
 
                     if( obj.jqxhr.responseJSON.data.html ){
-                        var $notice = $( '#caldera_notices_' + instance );
                         $notice.html (obj.jqxhr.responseJSON.data.html );
                         $('html,body').animate({
                             scrollTop: $notice.offset().top - $notice.outerHeight()
@@ -142,10 +146,9 @@ jQuery(function($){
 
             },
             callback		: function(obj){
-
                 obj.params.trigger.find(':submit').prop('disabled',false);
 
-                var instance = obj.params.trigger.data('instance');
+                var $notice = setNoticeEl( obj );
 
                 // run callback if set.
                 if( obj.params.trigger.data('customCallback') && typeof window[obj.params.trigger.data('customCallback')] === 'function' ){
@@ -190,22 +193,39 @@ jQuery(function($){
                     for(var i in obj.data.fields){
                         var field = obj.params.trigger.find('[data-field="' + i + '"]'),
                             wrap = field.parent();
-                        if( wrap.is('label') ){
-                            wrap = wrap.parent();
-                            if( wrap.hasClass('checkbox') || wrap.hasClass('radio') ){
-                                wrap = wrap.parent();
-                            }
-                        }
-                        var has_block = wrap.find('.help-block').not('.caldera_ajax_error_block');
+                        if( ! field.length ){
+                            $notice.html ( '<p class="alert alert-danger ">' + obj.data.fields[i] + '</p>' );
 
-                        wrap.addClass('has-error').addClass('caldera_ajax_error_wrap');
-                        if( has_block.length ){
-                            has_block.hide();
+                        }else{
+                            if (wrap.is('label')) {
+                                wrap = wrap.parent();
+                                if (wrap.hasClass('checkbox') || wrap.hasClass('radio')) {
+                                    wrap = wrap.parent();
+                                }
+                            }
+                            var has_block = wrap.find('.help-block').not('.caldera_ajax_error_block');
+
+                            wrap.addClass('has-error').addClass('caldera_ajax_error_wrap');
+                            if (has_block.length) {
+                                has_block.hide();
+                            }
+                            wrap.append('<span class="help-block caldera_ajax_error_block">' + obj.data.fields[i] + '</span>');
                         }
-                        wrap.append('<span class="help-block caldera_ajax_error_block">' + obj.data.fields[i] + '</span>');
 
                     }
                 }
+
+                if ( 'undefined' != obj.data.scroll ) {
+                    var el = document.getElementById( obj.data.scroll );
+                    if ( null != el ) {
+                        var $scrollToEl = $( el );
+                        $('html,body').animate({
+                            scrollTop: $scrollToEl.offset().top - $scrollToEl.outerHeight() - 12
+                        }, 300);
+                    }
+                }
+
+
                 // trigger global event
                 $( document ).trigger( 'cf.submission', obj );
                 $( document ).trigger( 'cf.' + obj.data.type );

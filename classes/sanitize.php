@@ -201,7 +201,8 @@ class Caldera_Forms_Sanitize {
 		if( empty( $html ) || ! is_string( $html ) ){
 			return '';
 		}
-		
+
+
 		if (  ! empty( $tags ) ) {
 			$doc = new DOMDocument();
 			$doc->loadHTML( $html );
@@ -211,9 +212,9 @@ class Caldera_Forms_Sanitize {
 					$node->parentNode->removeChild( $node );
 				}
 			}
-
-			$html = $doc->saveHTML();
+			$html = $doc->textContent;
 		}
+
 		return $html;
 	}
 	

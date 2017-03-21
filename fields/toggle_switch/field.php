@@ -42,7 +42,7 @@ if(!empty($field['config']['orientation']) && $field['config']['orientation'] ==
 					$option['value'] = $option['label'];
 				}
 				$selclass = $defaultClassName;
-				if($field_value == $option['value']){
+				if($field_value === $option['value']){
 					$selclass = $selectedClassName;
 				}
 
@@ -58,7 +58,7 @@ if(!empty($field['config']['orientation']) && $field['config']['orientation'] ==
 					$option['value'] = $option['label'];
 				}
 				$sel = '';
-				if($field_value == $option['value']){
+				if($field_value === $option['value']){
 					$sel = 'checked="checked"';
 				}
 				?>

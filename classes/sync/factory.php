@@ -48,7 +48,41 @@ class Caldera_Forms_Sync_Factory {
 	 * @return string
 	 */
 	public static function identifier( $form_id, $field_id, $field_base_id ){
-		return md5(  __CLASS__ .  $form_id . $field_id . $field_base_id );
+
+		return self::get_prefix() . md5(  __CLASS__ .  $form_id . $field_id . $field_base_id );
+	}
+
+	/**
+	 * Clear cache
+	 *
+	 * @since 1.5.0.4
+	 *
+	 * @uses "caldera_forms_save_form" action
+	 */
+	public static function clear_cache(){
+		wp_cache_incr( self::get_prefix() );
+		wp_cache_set(  __CLASS__ . 'ns', __CLASS__ . 'ns_prefix' . rand() );
+	}
+
+	/**
+	 * Get cache prefix
+	 *
+	 * Needs to be set seperate form identifier so we can increment it.
+	 *
+	 * @since 1.5.0.4
+	 *
+	 * @return string
+	 */
+	protected static  function get_prefix(){
+		$prefix =  wp_cache_get( __CLASS__ . 'ns' );
+		if( empty( $prefix ) ){
+			$prefix = __CLASS__ . 'ns_prefix';
+			wp_cache_set(  __CLASS__ . 'ns', $prefix );
+
+		}
+
+		return $prefix;
+
 	}
 
 	/**
@@ -108,6 +142,8 @@ class Caldera_Forms_Sync_Factory {
 		}
 
 	}
+
+
 
 
 }

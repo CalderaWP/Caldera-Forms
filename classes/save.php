@@ -10,10 +10,6 @@
  */
 class Caldera_Forms_Save_Final {
 
-	public static function determine_type( $form, $_cf_frm_edt ) {
-
-	}
-
 	/**
 	 * Save form in database
 	 *
@@ -233,7 +229,7 @@ class Caldera_Forms_Save_Final {
 			}
 
 			// Filter Mailer first as not to have user input be filtered
-			$mail['message'] = Caldera_Forms::do_magic_tags( $mail['message'], null, $data );
+			$mail['message'] = Caldera_Forms::do_magic_tags( $mail['message'], $entryid, $data );
 
 			if ( ! isset( $form['mailer']['email_type'] ) || $form['mailer']['email_type'] == 'html' ) {
 				$mail['headers'][] = "Content-type: text/html";
@@ -298,7 +294,10 @@ class Caldera_Forms_Save_Final {
 				$mail['recipients'][] = get_option( 'admin_email' );
 			}
 
-			$submission = array();
+
+
+
+			$submission = $labels = array();
 			foreach ( $data as $field_id => $row ) {
 				if ( $row === null || ! isset( $form['fields'][ $field_id ] ) ) {
 					continue;
@@ -339,8 +338,8 @@ class Caldera_Forms_Save_Final {
 			}
 
 			// final magic
-			$mail['message'] = Caldera_Forms::do_magic_tags( $mail['message'] );
-			$mail['subject'] = Caldera_Forms::do_magic_tags( $mail['subject'] );
+			$mail['message'] = Caldera_Forms::do_magic_tags( $mail['message'], $entryid, $form );
+			$mail['subject'] = Caldera_Forms::do_magic_tags( $mail['subject'], $entryid, $form );
 
 			// CSV
 			$mail['csv'] = $csvfile = false;

@@ -156,7 +156,9 @@ jQuery( function( $ ){
 			config = field.data('config');
 		config.id = field.prop('id');
 		if( !field.prop( 'multiple' ) ){
-			cf_uploader_filelist = {};
+			if ('object' != typeof  cf_uploader_filelist) {
+				cf_uploader_filelist = {};
+			}
 			field.parent().find('.cf-uploader-trigger').hide();
 		}
 		handleFileSelect( e, config );

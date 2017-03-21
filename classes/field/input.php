@@ -28,7 +28,7 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 
 		}
 
-		$sync = false;
+		$sync =  $syncer = $default = false;
 		if( in_array( $type, self::sync_fields() ) ){
 			$syncer = Caldera_Forms_Sync_Factory::get_object( $form, $field, $field_base_id );
 			$sync = $syncer->can_sync();
@@ -52,6 +52,11 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 			'value' => $value,
 			'data-type' => $type
 		);
+
+
+		if( ! empty( $field[ 'hide_label' ] ) && empty( $place_holder ) ){
+			$place_holder  = self::place_holder_string( $field, $field[ 'label' ] );
+		}
 
 		if( 'number' == $type ){
 			foreach( array(

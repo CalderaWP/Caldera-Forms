@@ -1,5 +1,28 @@
 module.exports = function (grunt) {
+    files_list = [
+        '**',
+        '!.idea',
+        '!.distignore',
+        '!.git/**',
+        '!ISSUE_TEMPLATE',
+        '!bin/**',
+        '!node_modules/**',
+        '!build/**',
+        '!sources/**',
+        '!tests/**',
+        '!vendor/**',
+        '!.gitattributes',
+        '!.gitignore',
+        '!.gitmodules',
+        '!.travis.yml',
+        '!composer.lock',
+        '!CONTRIBUTING.md',
+        '!Gruntfile.js',
+        '!package.json',
+        '!phpunit.xml.dist'
+    ];
 
+    require( 'load-grunt-tasks' )( grunt );
 
     // Project configuration.
     grunt.initConfig({
@@ -25,8 +48,7 @@ module.exports = function (grunt) {
                     to: "Stable tag: <%= pkg.version %>"
                 }]
 
-            },
-
+            }
         },
         uglify: {
             core: {
@@ -39,6 +61,36 @@ module.exports = function (grunt) {
                     ext: '.min.js'
                 }]
             },
+            vue: {
+                files: [{
+                    sourceMap: true,
+                    expand: true,
+                    cwd: 'assets/js/vue',
+                    src: '*.js',
+                    dest: 'assets/build/js/vue',
+                    ext: '.min.js'
+                }]
+            },
+            api: {
+                files: [{
+                    sourceMap: true,
+                    expand: true,
+                    cwd: 'assets/js/api',
+                    src: '*.js',
+                    dest: 'assets/build/js/api',
+                    ext: '.min.js'
+                }]
+            },
+            viewer: {
+                files: [{
+                    sourceMap: true,
+                    expand: true,
+                    cwd: 'assets/js/viewer',
+                    src: '*.js',
+                    dest: 'assets/build/js/viewer',
+                    ext: '.min.js'
+                }]
+            }
         },
         cssmin: {
             core: {
@@ -86,7 +138,6 @@ module.exports = function (grunt) {
             form: {
                 src: [
                     'assets/js/fields.js',
-                    'assets/js/parsley.js',
                     'assets/js/field-config.js',
                     'assets/js/frontend-script-init.js',
                 ],
@@ -145,33 +196,55 @@ module.exports = function (grunt) {
                 dest: 'assets/build/images',
                 flatten: true,
                 filter: 'isFile'
+            },
+            build: {
+                expand: true,
+                options: {
+                    mode:true
+                },
+                src:  files_list,
+                dest: 'build/<%= pkg.version %>',
+            }
+        },
+
+        clean: {
+            post_build: [
+                'build'
+            ]
+        },
+
+
+        mkdir: {
+            build: {
+                options: {
+                    mode: 0755,
+                    create: [ 'build' ]
+                }
             }
         }
 
     });
 
-    //load modules
-    grunt.loadNpmTasks( 'grunt-text-replace' );
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
 
+
+
+    grunt.registerTask( 'buildCopy', [ 'copy:i18n', 'copy:fonts', 'copy:images'] );
     //register default task
     grunt.registerTask( 'default',  [
         'concat',
         'uglify',
         'cssmin',
-        'copy'
+        'buildCopy'
     ] );
 
     grunt.registerTask( 'js',  [
         'uglify',
-        'concat',
+        'concat'
     ] );
 
     grunt.registerTask( 'version_number', [ 'replace' ] );
+    grunt.registerTask( 'build', [  'version_number', 'default', 'mkdir:build', 'copy:build' ] );
+
 
 
 };

@@ -204,6 +204,7 @@
              var el = document.getElementById(field.id);
              if (null != el) {
                  var $el = $(el);
+                 $el.rangeslider('destroy');
                  $el.rangeslider(rangeSliders[field.id].init);
              }
          });
