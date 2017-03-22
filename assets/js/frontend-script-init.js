@@ -9,12 +9,23 @@ var cf_jsfields_init, cf_presubmit;
 			errorsContainer : function( field ){
 				return field.$element.closest('.form-group');
 			}					
-		}).on('field:error', function() {
-			this.$element.closest('.form-group').addClass('has-error');
-		}).on('field:success', function() {
+		}).on('field:error', function(fieldInstance) {
+            if ( 'number' == this.$element.attr( 'type' ) && 0 == this.$element.attr( 'min' )  ) {
+                var val = this.$element.val();
+                if( 0 <= val && ( undefined == this.$element.attr( 'max' ) || val <= this.$element.attr( 'max' )  ) ){
+                    fieldInstance.validationResult = true;
+                }
+
+                return;
+            }
+
+            this.$element.closest('.form-group').addClass('has-error');
+        }).on('field:success', function() {
 			this.$element.closest('.form-group').removeClass('has-error');
 		});
 	};
+
+
 
 	
 	// init sync

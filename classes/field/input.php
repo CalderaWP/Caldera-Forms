@@ -68,6 +68,7 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 					$attrs[ $index ] = $field[ 'config' ][ $index ];
 				}
 			}
+			$attrs[ 'data-parsley-type' ] = 'number';
 		}elseif ( 'phone_better' == $type ){
 			$attrs[ 'type' ] = 'tel';
 		}elseif ( 'credit_card_number' == $type ){
