@@ -71,10 +71,15 @@ class Caldera_Forms_Magic_Doer {
 				}
 
 
+				if( is_string( $entry ) ){
+					$entry = self::maybe_implode_opts( $entry );
+				}
+
 				if ( ! empty( $field ) && ! empty( $part_tags[ 1 ] ) && $part_tags[ 1 ] == 'label' ) {
 					if ( ! is_array( $entry ) ) {
 						$entry = (array) $entry;
 					}
+
 					foreach ( (array) $entry as $entry_key => $entry_line ) {
 						if ( ! empty( $field[ 'config' ][ 'option' ] ) ) {
 							foreach ( $field[ 'config' ][ 'option' ] as $option ) {
@@ -484,5 +489,28 @@ class Caldera_Forms_Magic_Doer {
 		return self::$entry_details[ $entry_id ];
 
 	}
+
+	/**
+	 * Implode "opts" -- IE checkboxes stored as "opts" as needed
+	 *
+	 * @since 1.5.0.7
+	 *
+	 * @param string $value Value to check and possibly convert
+	 *
+	 * @return string
+	 */
+	public static function maybe_implode_opts( $value ){
+		if( is_string( $value ) && '{"opt' == substr( $value, 0, 5 ) ){
+			$_value = json_decode( $value );
+			if( is_object( $_value ) ){
+				$value = implode( ', ', (array) $_value );
+			}
+
+		}
+
+		return $value;
+
+	}
+
 
 }

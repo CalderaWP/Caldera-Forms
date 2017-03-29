@@ -150,15 +150,9 @@ class Caldera_Forms_Save_Final {
 		//Josh - Please find time to redo all CSV rendering please. Your buddy, Josh
 		if( ! empty( $data ) ){
 			foreach ( $data as $id => $datum ){
-
-				if( is_string( $datum ) && '{"opt' == substr( $datum, 0, 5 ) ){
-					$_value = json_decode( $datum );
-					if( is_object( $_value ) ){
-						$data[ $id ] = implode( ', ', (array) $_value );
-					}
-
-				}
+				$data[ $id ] = Caldera_Forms_Magic_Doer::maybe_implode_opts( $datum );
 			}
+
 		}
 
 		// add entry ID to transient data
