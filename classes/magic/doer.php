@@ -72,7 +72,15 @@ class Caldera_Forms_Magic_Doer {
 
 
 				if( is_string( $entry ) ){
-					$entry = self::maybe_implode_opts( $entry );
+					if( ! empty( $field ) && ! empty( $part_tags[ 1 ] ) && $part_tags[ 1 ] == 'label' ) {
+						$_entry = json_decode( $entry );
+						if( is_object( $_entry ) ){
+							$entry = $_entry;
+						}
+					}else{
+						$entry = self::maybe_implode_opts( $entry );
+
+					}
 				}
 
 				if ( ! empty( $field ) && ! empty( $part_tags[ 1 ] ) && $part_tags[ 1 ] == 'label' ) {
