@@ -26,6 +26,35 @@ class Caldera_Forms_Entry_Field  extends Caldera_Forms_Entry_Object {
 	/** @var  string|array */
 	protected $value;
 
+
+	/**
+	 * Set field value
+	 *
+	 * NOTE: Does not update in DB
+	 *
+	 * @since 1.5.0.7
+	 *
+	 * @param string|array $value New value
+	 *
+	 * @return array|string
+	 */
+	public function set_value( $value ){
+		$this->value_set( $value );
+		return $this->value;
+
+	}
+
+	/**
+	 * Get field value
+	 *
+	 * @since 1.5.0.7
+	 *
+	 * @return array|int|string
+	 */
+	public function get_value(){
+		return $this->value_get();
+	}
+
 	/**
 	 * Apply deserialization/json_decoding if needed to value column
 	 *
