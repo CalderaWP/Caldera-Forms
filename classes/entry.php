@@ -295,7 +295,9 @@ class Caldera_Forms_Entry {
 		if( is_numeric( $this->entry_id   ) ){
 			if ( ! empty( $this->fields ) ) {
 				foreach ( $this->fields as $i =>  $field ) {
-					$this->fields[ $i ] = $this->save_field( $field );
+					if ( $field instanceof  Caldera_Forms_Entry_Field ) {
+						$this->fields[ $i ] = $this->save_field( $field );
+					}
 
 				}
 				
@@ -303,7 +305,9 @@ class Caldera_Forms_Entry {
 
 			if ( ! empty( $this->meta ) ) {
 				foreach ( $this->meta as $i => $meta ) {
-					$this->meta[ $i ] = $this->save_meta( $meta );
+					if ( $meta instanceof Caldera_Forms_Entry_Meta ) {
+						$this->meta[ $i ] = $this->save_meta( $meta );
+					}
 				}
 
 			}
@@ -340,7 +344,13 @@ class Caldera_Forms_Entry {
 	public function add_field( Caldera_Forms_Entry_Field $field ){
 
 		$field->entry_id = $this->entry_id;
-		$this->fields[] = $field;
+		$key = $this->find_field_index( $field->field_id );
+		if( ! is_null( $key ) ){
+			$this->fields[ $key ] = $field;
+		}else{
+			$this->fields[] = $field;
+		}
+
 
 	}
 
@@ -382,13 +392,22 @@ class Caldera_Forms_Entry {
 	 * @since 1.4.0
 	 *
 	 * @param \Caldera_Forms_Entry_Field $field
+	 *
+	 * @return  Caldera_Forms_Entry_Field
 	 */
 	protected function save_field( Caldera_Forms_Entry_Field $field ){
 		$field->entry_id = $this->entry_id;
 		global $wpdb;
 		$data = $field->to_array();
-		unset( $data[ 'id' ] );
-		$wpdb->insert( $wpdb->prefix . 'cf_form_entry_values', $data  );
+
+		if (  ! isset( $data[ 'id' ] ) ) {
+			$wpdb->insert( $wpdb->prefix . 'cf_form_entry_values', $data );
+		}else{
+			$wpdb->update( $wpdb->prefix . 'cf_form_entry_values', $data, array(
+				'id' => $field->id
+			) );
+		}
+
 		$field->id = $wpdb->insert_id;
 		return $field;
 	}
@@ -399,6 +418,8 @@ class Caldera_Forms_Entry {
 	 * @since 1.4.0
 	 *
 	 * @param \Caldera_Forms_Entry_Meta $meta
+	 *
+	 * @return Caldera_Forms_Entry_Meta
 	 */
 	protected function save_meta( Caldera_Forms_Entry_Meta $meta ){
 		$meta->entry_id = $this->entry_id;
@@ -441,9 +462,9 @@ class Caldera_Forms_Entry {
 	 * @return Caldera_Forms_Entry_Field|null
 	 */
 	protected function find_field_by_id( $field_id ){
-		$this->get_field_map();
-		if( ! empty( $this->field_map ) && isset( $this->field_map[ $field_id ] ) ){
-			return $this->fields[ $this->field_map[ $field_id ] ];
+		$key = $this->find_field_index( $field_id );
+		if( ! is_null( $key ) ){
+			return $this->fields[ $key ];
 		}
 
 		return null;
@@ -465,6 +486,15 @@ class Caldera_Forms_Entry {
 
 		return $this->field_map;
 
+	}
+
+	private function find_field_index( $field_id ){
+		$this->get_field_map();
+		if( ! empty( $this->field_map ) && isset( $this->field_map[ $field_id ] ) ){
+			return $this->field_map[ $field_id ];
+		}
+
+		return null;
 	}
 }
 
