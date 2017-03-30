@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.0.7-b-1 - 2017-03-21 *//*
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.0.7-b-1 - 2017-03-29 *//*
  * jQuery miniColors: A small color selector
  *
  * Copyright 2011 Cory LaViska for A Beautiful Site, LLC. (http://abeautifulsite.net/)
@@ -5250,8 +5250,12 @@ function toggle_button_init(id, el){
              var $cvcField = $( document.getElementById( fieldConfig.cvc ) ),
                  $expField = $( document.getElementById( fieldConfig.exp ) );
              $cvcField.blur( function(){
-                 self.creditCardUtil.validateCVC( $field, $cvcField );
-                 self.creditCardUtil.validateExp( $expField );
+                 if ( $cvcField.val() ) {
+                     self.creditCardUtil.validateCVC($field, $cvcField);
+                 }
+                 if ( $expField.val() ) {
+                     self.creditCardUtil.validateExp($expField);
+                 }
              });
          }
 
@@ -5345,8 +5349,11 @@ function toggle_button_init(id, el){
          },
          validateExp: function ($expField) {
              var val = $expField.val().split('/');
-             return $.payment.validateCardExpiry(val[0].trim(), val[1].trim());
+             if (  val && 2 == val.length ) {
+                 return $.payment.validateCardExpiry(val[0].trim(), val[1].trim());
+             }
          }
+
      };
      
      this.color_picker = function ( fieldConfig ) {

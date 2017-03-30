@@ -398,8 +398,12 @@
              var $cvcField = $( document.getElementById( fieldConfig.cvc ) ),
                  $expField = $( document.getElementById( fieldConfig.exp ) );
              $cvcField.blur( function(){
-                 self.creditCardUtil.validateCVC( $field, $cvcField );
-                 self.creditCardUtil.validateExp( $expField );
+                 if ( $cvcField.val() ) {
+                     self.creditCardUtil.validateCVC($field, $cvcField);
+                 }
+                 if ( $expField.val() ) {
+                     self.creditCardUtil.validateExp($expField);
+                 }
              });
          }
 
@@ -493,8 +497,11 @@
          },
          validateExp: function ($expField) {
              var val = $expField.val().split('/');
-             return $.payment.validateCardExpiry(val[0].trim(), val[1].trim());
+             if (  val && 2 == val.length ) {
+                 return $.payment.validateCardExpiry(val[0].trim(), val[1].trim());
+             }
          }
+
      };
      
      this.color_picker = function ( fieldConfig ) {
