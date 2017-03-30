@@ -66,6 +66,15 @@ class Caldera_Forms_Entry {
 	 */
 	protected $found;
 
+	/**
+	 * Holds the map of field_id to index of $this->fields. Lazy loaded by $this->get_field_map()
+	 *
+	 * @since 1.5.0.7
+	 *
+	 * @var array
+	 */
+	private $field_map;
+
 
 	/**
 	 * Caldera_Forms_Entry constructor.
@@ -177,14 +186,16 @@ class Caldera_Forms_Entry {
 
 
 	/**
-	 * @param $id
+	 * Get a specific field
 	 *
-	 * @return Caldera_Forms_Entry_Field
+	 * @since 1.4.0
+	 *
+	 * @param string $id Field ID
+	 *
+	 * @return Caldera_Forms_Entry_Field|null
 	 */
 	public function get_field( $id ){
-		if( isset( $this->fields[ $id ] ) ){
-			return $this->fields[ $id ];
-		}
+		return $this->find_field_by_id( $id );
 	}
 
 	/**
@@ -420,6 +431,41 @@ class Caldera_Forms_Entry {
 		return true;
 	}
 
+	/**
+	 * Find field object by field ID
+	 *
+	 * @since 1.5.0.7
+	 *
+	 * @param $field_id
+	 *
+	 * @return Caldera_Forms_Entry_Field|null
+	 */
+	protected function find_field_by_id( $field_id ){
+		$this->get_field_map();
+		if( ! empty( $this->field_map ) && isset( $this->field_map[ $field_id ] ) ){
+			return $this->fields[ $this->field_map[ $field_id ] ];
+		}
+
+		return null;
+	}
+
+	/**
+	 * Lazy-loader for "field map" that provides field_id => index of $this->field
+	 *
+	 * @since 1.5.0.7
+	 *
+	 * @return array
+	 */
+	protected function get_field_map(){
+		$this->get_fields();
+		if( empty( $this->field_map ) && ! empty( $this->fields ) ){
+			//Wouldn't it be better to use array_column() ? Yes it would, but PHP 5.2 so :(
+			$this->field_map = array_combine( wp_list_pluck( $this->fields, 'field_id' ), array_keys( $this->fields ) );
+		}
+
+		return $this->field_map;
+
+	}
 }
 
 
