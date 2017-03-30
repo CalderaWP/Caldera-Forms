@@ -50,8 +50,6 @@ class Caldera_Forms_Render_Assets {
 			self::enqueue_style( 'font' );
 		}
 
-		self::enqueue_script( self::make_slug( 'field-config' ) );
-
 		if( !empty( $field_types[$field['type']]['styles'])){
 			foreach($field_types[$field['type']]['styles'] as $style){
 				self::enqueue_style( $style );
@@ -60,13 +58,7 @@ class Caldera_Forms_Render_Assets {
 
 
 		if ( ! empty( $field_types[ $field[ 'type' ] ][ 'scripts' ] ) ) {
-			$depts = array( 'jquery', self::make_slug( 'validator' ) );
-			if( self::should_minify( ) ){
-				$depts[] = self::make_slug( 'form-front' );
-			}else{
-				$depts[] = self::make_slug( 'field' );
-				$depts[] = self::make_slug( 'field-config' );
-			}
+			$depts = self::field_script_dependencies();
 			foreach ( $field_types[ $field[ 'type' ] ][ 'scripts' ] as $script ) {
 				self::enqueue_script( $script, $depts );
 			}
@@ -290,7 +282,7 @@ class Caldera_Forms_Render_Assets {
 
 		}
 
-		$depts = array( 'jquery' );
+		$depts = self::field_script_dependencies();
 		foreach ( self::get_field_scripts() as $script ) {
 			self::enqueue_script( self::make_slug( $script ), $depts );
 		}
@@ -372,8 +364,9 @@ class Caldera_Forms_Render_Assets {
 
 		}
 
+		$depts = self::field_script_dependencies();
 		foreach ( self::get_field_scripts() as $script ) {
-			self::register_script( self::make_slug( $script ), $script );
+			self::register_script( self::make_slug( $script ), $script, $depts );
 		}
 
 		/**
@@ -436,7 +429,11 @@ class Caldera_Forms_Render_Assets {
 		if ( ! wp_script_is( $slug, 'enqueued' ) && wp_script_is( $slug, 'registered' ) ) {
 
 			self::$enqueued[ 'scripts' ][] = $slug;
-			wp_enqueue_script( $slug  );
+			if (  ! empty( $depts)  && is_array( $depts ) && ! filter_var( $script, FILTER_VALIDATE_URL )  ) {
+				wp_enqueue_script( $slug );
+			} else {
+				wp_enqueue_script( $slug, $script, $depts, CFCORE_VER, false );
+			}
 
 
 		}elseif ( wp_script_is( $script, 'registered' ) ) {
@@ -559,18 +556,23 @@ class Caldera_Forms_Render_Assets {
 		}
 	}
 
-    /**
-     * @param $script_key
-     * @return string
-     */
-    protected static function register_script($script_key, $script_url ) {
+	/**
+	 * Register a script
+	 *
+	 * @since 1.5.0
+	 *
+	 *
+	 * @param string $script_key Slug or URL
+	 * @param string $script_url URL
+	 * @param array $depts Optional. Dependencies argument. Assumed to be jquery.
+	 */
+    protected static function register_script($script_key, $script_url, $depts = array( 'jquery' ) ) {
     	if( 0 === strpos( $script_key, 'cf-' ) ){
 		    $slug = $script_key;
 	    }else{
 		    $slug = self::make_slug( $script_key );
 	    }
 
-        $depts = array('jquery');
         if ('field' == $script_key) {
             $depts[] = self::make_slug('field-config');
         } elseif ('field-config' == $script_key) {
@@ -698,5 +700,26 @@ class Caldera_Forms_Render_Assets {
 	public static function enqueue_validator_i18n( ){
 
 		self::enqueue_script( self::make_slug( 'validator-i18n' ) );
+	}
+
+	/**
+	 * Get field script dependencies for wp_enqueue_script()
+	 *
+	 * @since 1.5.0.7
+	 *
+	 * @return array
+	 */
+	protected static function field_script_dependencies(){
+		$depts = array( 'jquery', self::make_slug( 'validator' ) );
+		if ( self::should_minify() ) {
+			$depts[] = self::field_script_to_localize_slug();
+
+		} else {
+			$depts[] = self::make_slug( 'field' );
+			$depts[] = self::make_slug( 'field-config' );
+
+		}
+
+		return $depts;
 	}
 }
