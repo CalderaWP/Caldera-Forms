@@ -399,16 +399,14 @@ class Caldera_Forms_Entry {
 		$field->entry_id = $this->entry_id;
 		global $wpdb;
 		$data = $field->to_array();
-
 		if (  ! isset( $data[ 'id' ] ) ) {
 			$wpdb->insert( $wpdb->prefix . 'cf_form_entry_values', $data );
+			$field->id = $wpdb->insert_id;
 		}else{
-			$wpdb->update( $wpdb->prefix . 'cf_form_entry_values', $data, array(
-				'id' => $field->id
-			) );
+			Caldera_Forms_Entry_Update::update_field( $field );
 		}
 
-		$field->id = $wpdb->insert_id;
+
 		return $field;
 	}
 
