@@ -1675,7 +1675,6 @@ class Caldera_Forms {
 		if ( empty( $conditions[ 'group' ] ) ) {
 			return true;
 		}
-		//$data = self::get_submission_data($form);
 
 		foreach ( $conditions[ 'group' ] as $groupid => $lines ) {
 			$truelines = array();
@@ -2257,7 +2256,9 @@ class Caldera_Forms {
 						}
 					}
 				}else{
-					if ( ! empty( $entry ) ) {
+					if( '0' === $entry || 0 === $entry ){
+						$processed_data[ $indexkey ][ $field_id ] = $entry;
+					}elseif ( ! empty( $entry ) ) {
 						$processed_data[ $indexkey ][ $field_id ] = $entry;
 					} elseif( isset( $field[ 'config' ][ 'default' ] )) {
 						$processed_data[ $indexkey ][ $field_id ] = self::do_magic_tags( $field[ 'config' ][ 'default' ] );
