@@ -396,6 +396,10 @@ class Caldera_Forms_Save_Final {
 
 		$headers = implode("\r\n", $mail['headers']);
 
+		if( empty( $mail[ 'message' ] ) ){
+			$mail[ 'message' ] = '  ';
+		}
+
 		/**
 		 * Runs before mail is sent, but after data is prepared
 		 *
