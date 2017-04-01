@@ -5175,12 +5175,11 @@ function toggle_button_init(id, el){
              }
          };
 
-         var validation = function(){
+         var validation = function () {
              reset();
-             var x = $field.intlTelInput("isValidNumber" );
              var valid;
              if ($.trim($field.val())) {
-                 if ($field.intlTelInput("isValidNumber" )) {
+                 if ($field.intlTelInput("isValidNumber")) {
                      valid = true;
                  } else {
                      valid = false;
@@ -5189,20 +5188,20 @@ function toggle_button_init(id, el){
 
              var message;
              var errorCode = $field.intlTelInput("getValidationError");
-             if( 0 == errorCode ){
+             if (0 == errorCode) {
                  valid = true;
                  message = '';
-             }else{
-                 if( 'undefined' != field.messages[errorCode]  ) {
+             } else {
+                 if ('undefined' != field.messages[errorCode]) {
                      message = field.messages[errorCode]
-                 }else{
+                 } else {
                      message = field.messages.generic;
                  }
              }
 
 
-             handleValidationMarkup( valid, $field, message, 'help-block-phone_better' );
-
+             handleValidationMarkup(valid, $field, message, 'help-block-phone_better');
+             return valid;
          };
 
          $field.intlTelInput( field.options );
@@ -5214,6 +5213,10 @@ function toggle_button_init(id, el){
          });
 
          $field.on( 'change', validation );
+
+         $form.on( 'submit', function(){
+             validation();
+         })
 
      };
 
