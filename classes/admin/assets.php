@@ -99,6 +99,7 @@ class Caldera_Forms_Admin_Assets {
 
 		wp_register_script( self::slug(  'support-page' ), Caldera_Forms_Render_Assets::make_url( 'support-page' ), array( 'jquery' ), $version );
 
+		wp_localize_script( self::slug( 'edit-fields' ), 'CF_ADMIN_TOOLTIPS', self::get_tooltips() );
 		/**
 		 * Runs after scripts are registered for Caldera Forms admin
 		 *
@@ -243,6 +244,28 @@ class Caldera_Forms_Admin_Assets {
 			}
 			self::register_scripts();
 		}
+	}
+
+	/**
+	 * Get strings for admin tooltips
+	 *
+	 * @since 1.5.0.7
+	 *
+	 * @return array
+	 */
+	public static function get_tooltips(){
+		$tooltips = array(
+			'add_field_row' => esc_html__( 'Add field to row', 'caldera-forms' ),
+			'split_row' => esc_html__( 'Split row.', 'caldera-forms' ),
+			'delete_row' => esc_html__( 'Delete row.', 'caldera-forms' ),
+		);
+
+		/**
+		 * Filter admin tooltips
+		 *
+		 * @since 1.5.0.7
+		 */
+		return apply_filters( 'caldera_forms_admin_tooltip_strings', $tooltips );
 	}
 
 }
