@@ -74,6 +74,7 @@
          $submits.prop( 'disabled',false).attr( 'aria-disabled', false  );
      }
 
+
      /**
       * Handler for button fields
       *
@@ -90,7 +91,7 @@
 
 
      /**
-      * Handler for HTML fields
+      * Handler for HTML fields (and summary fields since this.summary is alias of this.html)
       *
       * @since 1.5.0
       *
@@ -100,27 +101,39 @@
          if( false == fieldConfig.sync ){
              return;
          }
-         function templateSystem() {
 
-             var template = $( document.getElementById( fieldConfig.tmplId ) ).html(),
-                 $target = $( document.getElementById( fieldConfig.contentId ) ),
-                 list = fieldConfig.binds;
+         var templates = {},
+             list = fieldConfig.binds;
+         /**
+          * The actual template system for HTML/summary fields
+          *
+          * @since 1.5.0
+          */
+         function templateSystem() {
+             if( undefined == templates[ fieldConfig.tmplId ] ){
+                 templates[ fieldConfig.tmplId ] = $( document.getElementById( fieldConfig.tmplId ) ).html()
+             }
+
+             var
+                 template = templates[ fieldConfig.tmplId ],
+                 $target = $( document.getElementById( fieldConfig.contentId ) );
+
              for (var i = 0; i < list.length; i++) {
 
-                 var field = $('[data-field="' + list[i] + '"]'),
+                 var $field = $('[data-field="' + list[i] + '"]'),
                      value = [];
-                 for (var f = 0; f < field.length; f++) {
-                     if ($(field[f]).is(':radio,:checkbox')) {
-                         if (!$(field[f]).prop('checked')) {
+                 for (var f = 0; f < $field.length; f++) {
+                     if ($($field[f]).is(':radio,:checkbox')) {
+                         if (!$($field[f]).prop('checked')) {
                              continue;
                          }
                      }
-                     if ($(field[f]).is('input:file')) {
-                         var file_parts = field[f].value.split('\\');
+                     if ($($field[f]).is('input:file')) {
+                         var file_parts = $field[f].value.split('\\');
                          value.push(file_parts[file_parts.length - 1]);
                      } else {
-                         if (field[f].value) {
-                             value.push(field[f].value);
+                         if ($field[f].value) {
+                             value.push($field[f].value);
                          }
                      }
                  }
@@ -132,10 +145,25 @@
 
          }
 
+         /**
+          * On change/keyup events of fields that are used by this field.
+          *
+          * @since 1.5.0.7 -based on legacy code
+          */
+         function bindFields() {
+             $.each(fieldConfig.bindFields, function (i, id) {
+                 $( document.getElementById(id) ).on( 'click keyup', templateSystem );
+             });
+         }
 
-         $.each( fieldConfig.bindFields, function( i, id ){
-             $( document.getElementById( id ) ).on( 'change keyup', templateSystem );
+         /**
+          * Rebind on conditional and page nav
+          */
+         $(document).on('cf.pagenav cf.add cf.disable', function () {
+             bindFields();
          });
+
+         bindFields();
 
          templateSystem();
 
