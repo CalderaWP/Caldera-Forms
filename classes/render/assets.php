@@ -658,6 +658,14 @@ class Caldera_Forms_Render_Assets {
 
 	}
 
+	/**
+	 * If needed register or enqueue parsley translations
+	 *
+	 *
+	 * @since 1.5.0.5
+	 *
+	 * @param bool $register Optional. If false, file is enqueued. Default is true, which registers.
+	 */
 	public static function maybe_validator_i18n( $register = true ){
 		$locale = get_locale();
 		if( $locale == 'en_US' ){
@@ -667,11 +675,27 @@ class Caldera_Forms_Render_Assets {
 		if( $register ){
 			self::register_validator_i18n( $locale );
 		}else{
+			if ( self::$locale ) {
+				$code = self::$locale;
+			}else{
+				$code = $locale;
+			}
+			$script = "<script> setTimeout(function(){window.Parsley.setLocale('$code'); }, 2000 );</script>";
+			Caldera_Forms_Render_Util::add_inline_data( $script, array( 'ID' => rand() )  );
 			self::enqueue_validator_i18n();
 		}
 
 	}
 
+	/**
+	 * Register parsley translations
+	 *
+	 * @since 1.5.0.5
+	 *
+	 * @param null|string $locale Optional. Locale code, if null, the default, get_local is used;
+	 *
+	 * @return null|string Returns locale code if found
+	 */
 	public static function register_validator_i18n( $locale = null ){
 		if( ! $locale ){
 			$locale = get_locale();
@@ -697,6 +721,11 @@ class Caldera_Forms_Render_Assets {
 
 	}
 
+	/**
+	 * Enqueue previously registered parsely translations
+	 *
+	 * @since 1.5.0.5
+	 */
 	public static function enqueue_validator_i18n( ){
 
 		self::enqueue_script( self::make_slug( 'validator-i18n' ) );

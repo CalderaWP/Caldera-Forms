@@ -5451,12 +5451,9 @@ var cf_jsfields_init, cf_presubmit;
 		$( document ).trigger( 'cf.fieldsInit' );
 
 		function setLocale( locale ){
-
 			if ('undefined' != typeof window.Parsley._validatorRegistry.catalog[locale] ){
 				window.Parsley.setLocale( locale );
 			}
-				console.log( window.Parsley._validatorRegistry.catalog);
-
 
 		}
 
