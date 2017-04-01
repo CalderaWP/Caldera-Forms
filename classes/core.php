@@ -1044,6 +1044,10 @@ class Caldera_Forms {
 		// set header
 		$headers[] = 'From: ' . $config[ 'sender_name' ] . ' <' . $config[ 'sender_email' ] . '>';
 
+		if( empty( $message ) ){
+			$message = '  ';
+		}
+
 		$html = false;
 		if ( ! isset( $config[ 'html' ] ) || true == $config[ 'html' ] ) {
 			$headers[] = "Content-type: text/html";
