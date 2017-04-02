@@ -39,7 +39,7 @@ class Caldera_Forms_Processor_Conditional_Recipient  {
 			}
 		}
 
-		if( $config[ 'remove-default' ] ){
+		if( ! empty( $config[ 'remove-default' ]  ) && $config[ 'remove-default' ] ){
 			add_filter( 'caldera_forms_mailer', array( __CLASS__, 'remove_default' ), 2  );
 		}
 
