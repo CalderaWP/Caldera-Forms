@@ -473,7 +473,7 @@ class Caldera_Forms_Admin {
 			case 'export':
 
 				$transientid = uniqid('cfe');
-				set_transient( $transientid, $_POST['items'], 180 );
+				Caldera_Forms_Transient::set_transient(  $transientid, $_POST['items'], 180 );
 				$out['url'] = "admin.php?page=caldera-forms&export=" . $_POST['form'] . "&tid=" . $transientid;
 				wp_send_json( $out );
 				exit();
@@ -1267,8 +1267,10 @@ class Caldera_Forms_Admin {
 			$filter = null;
 			// export set - transient
 			if(!empty($_GET['tid'])){
-				$items = Caldera_Forms_Transient::get_transient( $_GET['tid'] );
+				$items = Caldera_Forms_Transient::get_transient( $_GET[ 'tid' ] );
+
 				if(!empty($items)){
+					Caldera_Forms_Transient::delete_transient( $_GET[ 'tid' ] );
 					$filter = ' AND `entry`.`id` IN (' . implode(',', $items) . ') ';
 				}else{
 					wp_die( __('Export selection has expired', 'caldera-forms' ) , __('Export Expired', 'caldera-forms' ) );
