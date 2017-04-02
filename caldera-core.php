@@ -56,6 +56,7 @@ function caldera_forms_load(){
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Field', CFCORE_PATH . 'classes/field' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Magic', CFCORE_PATH . 'classes/magic' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Processor', CFCORE_PATH . 'processors/classes' );
+	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Shortcode', CFCORE_PATH . 'classes/shortcode' );
 
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms', CFCORE_PATH . 'classes' );
 	Caldera_Forms_Autoloader::register();

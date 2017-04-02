@@ -105,6 +105,10 @@ class Caldera_Forms {
 		add_shortcode( 'caldera_form_modal', array( $this, 'shortcode_handler' ) );
 		add_action( 'wp_footer', array( 'Caldera_Forms_Render_Modals', 'render_footer_modals' ) );
 
+		//filter shortcode atts for defaults
+		add_filter( 'shortcode_atts_caldera_form', array( 'Caldera_Forms_Shortcode_Atts', 'allow_default_set' ), 5, 4 );
+		add_filter( 'shortcode_atts_caldera_form_modal', array( 'Caldera_Forms_Shortcode_Atts', 'allow_default_set' ), 5, 4 );
+
 		//emails
 		add_action( 'caldera_forms_core_init', array( 'Caldera_Forms_Email_Settings', 'maybe_add_hooks' ) );
 		add_action( 'caldera_forms_admin_footer', array( 'Caldera_Forms_Email_Settings', 'ui' ) );
@@ -165,6 +169,9 @@ class Caldera_Forms {
 
 		//clear syncer cache on form update
 		add_action( 'caldera_forms_save_form', array( 'Caldera_Forms_Sync_Factory', 'clear_cache' ) );
+
+
+
 		/**
 		 * Runs after Caldera Forms core is initialized
 		 *
