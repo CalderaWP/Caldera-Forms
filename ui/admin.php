@@ -110,7 +110,7 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 
 				?>
 
-				<tr id="<?php echo esc_html__( esc_attr( 'form_row_' , $form_id ) ); ?>" class="<?php echo $class; ?> form_entry_row">
+				<tr id="<?php  echo esc_attr( trim( 'form_row_' . $form_id ) ); ?>" class="<?php echo $class; ?> form_entry_row">
 					<td class="<?php if( !empty( $form['form_draft'] ) ) { echo 'draft-form'; }else{ echo 'active-form'; } ?>">
 						<span class="cf-form-name-preview"><?php esc_html_e( $form[ 'name' ] ); ?></span> <input readonly type="text" class="cf-shortcode-preview" value="<?php echo esc_attr( '[caldera_form id="' . trim( $form[ 'ID' ] ) . '"]'); ?>"> <span class="cf-form-shortcode-preview"><?php echo esc_html__( 'Get Shortcode', 'caldera-forms' ); ?></span>
 

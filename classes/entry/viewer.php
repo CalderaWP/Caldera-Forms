@@ -47,6 +47,7 @@ class Caldera_Forms_Entry_Viewer {
 	public static function entry_trigger( $form_id ){
 		$atts = array(
 			'class'               => 'form-control form-entry-trigger ajax-trigger',
+			'id'                  => esc_attr( 'entry-trigger-' .  trim( $form_id ) ),
 			'data-autoload'       => 'true',
 			'data-page'           => '1',
 			'data-status'         => 'active',
@@ -136,7 +137,16 @@ class Caldera_Forms_Entry_Viewer {
 
 	}
 
-
+	public static function print_triggers(){
+		if( isset( $_GET[ 'page' ]) && 'caldera-forms' == $_GET[ 'page' ] &&  ! isset( $_GET[ 'edit' ] ) ){
+			$forms = Caldera_Forms_Forms::get_forms( false );
+			if( ! empty( $forms ) ){
+				foreach ( $forms as $form ){
+					echo self::entry_trigger( $form );
+				}
+			}
+		}
+	}
 
 
 }

@@ -182,10 +182,10 @@ if( ! defined( 'ABSPATH' ) ){
 			}
 		}
 
-		$('body').on('change','.current-page', function(e){
+		$( document ).on('change','.current-page', function(e){
 			do_page_navigate(this);
 		});
-		$('body').on('click','.pagination-links a', function(e){
+		$( document ).on('click','.pagination-links a', function(e){
 			e.preventDefault();
 			do_page_navigate(this);
 		});

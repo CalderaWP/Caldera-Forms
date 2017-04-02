@@ -105,6 +105,7 @@ class Caldera_Forms_Admin {
 		add_action("wp_ajax_cf_get_form_preview", array( $this, 'get_form_preview') );
 
 		add_action( 'caldera_forms_admin_footer', array( $this, 'admin_alerts' ) );
+		//add_action( 'caldera_forms_admin_footer', array( 'Caldera_Forms_Entry_Viewer', 'print_triggers' ) );
 		add_action( 'admin_footer', array( $this, 'add_shortcode_inserter'));
 
 
