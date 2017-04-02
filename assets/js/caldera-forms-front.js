@@ -5087,7 +5087,7 @@ function toggle_button_init(id, el){
                      val = $el.val();
                  $el.rangeslider('destroy');
                  $el.rangeslider(rangeSliders[field.id].init);
-                 $el.val( val );
+                 $el.val( val ).change();
              }
          });
 
