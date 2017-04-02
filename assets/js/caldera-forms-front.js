@@ -5083,9 +5083,11 @@ function toggle_button_init(id, el){
          $(document).on('cf.pagenav cf.add cf.disable cf.modal', function () {
              var el = document.getElementById(field.id);
              if (null != el) {
-                 var $el = $(el);
+                 var $el = $(el),
+                     val = $el.val();
                  $el.rangeslider('destroy');
                  $el.rangeslider(rangeSliders[field.id].init);
+                 $el.val( val );
              }
          });
 
