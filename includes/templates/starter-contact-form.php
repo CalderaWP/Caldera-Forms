@@ -154,8 +154,8 @@ return array (
 		array (
 			'ID' => 'fld_7908577',
 			'type' => 'button',
-			'label' => 'Send Form',
-			'slug' => 'send_form',
+			'label' => 'Send Message',
+			'slug' => 'submit',
 			'caption' => '',
 			'config' => 
 			array (
@@ -181,9 +181,9 @@ return array (
 			'type' => 'auto_responder',
 			'config' => 
 			array (
-				'sender_name' => 'Site Admin',
+				'sender_name' => get_option( 'blogname' ),
 				'sender_email' => get_option( 'admin_email' ),
-				'subject' => 'Contact auto-response',
+				'subject' => 'Thanks For Getting In Touch',
 				'recipient_name' => '%first_name% %last_name%',
 				'recipient_email' => '%email_address%',
 				'message' => 'Hi %recipient_name%.
@@ -209,10 +209,10 @@ Here\'s a summary of your message:
 	'mailer' => 
 	array (
 		'enable_mailer' => '1',
-		'sender_name' => 'Caldera Forms Notification',
-		'sender_email' => '',
+		'sender_name' => 'Contact Form Submission',
+		'sender_email' => '%email_address',
 		'email_type' => 'html',
-		'recipients' => '',
+		'recipients' => get_option( 'admin_email' ),
 		'email_subject' => 'Contact Form',
 		'email_message' => '{summary}',
 	),

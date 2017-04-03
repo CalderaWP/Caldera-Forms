@@ -539,6 +539,9 @@
      
      this.color_picker = function ( fieldConfig ) {
          $( document.getElementById( fieldConfig.id ) ).miniColors( fieldConfig.settings );
+         $(document).on('cf.pagenav cf.add cf.disable cf.modal', function () {
+             $(document.getElementById(fieldConfig.id)).miniColors(fieldConfig.settings);
+         });
      };
 
 
