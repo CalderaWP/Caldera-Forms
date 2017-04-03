@@ -1,7 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.1-b-1 - 2017-03-10 *//**
- * Created by josh on 3/4/17.
- */
-
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.1-b-1 - 2017-04-03 */
 /**
  * Form editor system
  *
@@ -419,13 +416,10 @@ function CFFormEditor( editorConfig, $ ){
                         for (var lGI = 0; lGI <= lineGroup.length; lGI++) {
                             line = lineGroup[lGI];
                             if ('object' == typeof line) {
-                                if( '' == line.operator ){
-                                    line.operator = '+';
-                                }
 
-                                newFormula += ' ' + line.field;
+                                newFormula +=  line.operator + line.field;
                                 if (lGI + 1 != lineGroup.length) {
-                                    newFormula += ' ' + ' ' + line.operator;
+                                  //  newFormula += ' ' + ' ' + line.operator;
                                 }
                             }
 
@@ -588,6 +582,14 @@ function CFFormEditor( editorConfig, $ ){
             $sel = $(sel);
             optListSelect( $sel, list, $sel.data( 'default' ), false, fieldId );
         });
+
+        $autoBox.find( '.calculation-operator-line[data-line="0"]' ).hide().each( function(){
+           console.log( $(this).find( 'option' ) );
+            $(this).find( 'option' ).prop( 'selected', '' );
+            
+        })
+
+
 
 
     }

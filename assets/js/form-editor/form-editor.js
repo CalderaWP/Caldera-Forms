@@ -415,13 +415,10 @@ function CFFormEditor( editorConfig, $ ){
                         for (var lGI = 0; lGI <= lineGroup.length; lGI++) {
                             line = lineGroup[lGI];
                             if ('object' == typeof line) {
-                                if( '' == line.operator ){
-                                    line.operator = '+';
-                                }
 
-                                newFormula += ' ' + line.field;
+                                newFormula +=  line.operator + line.field;
                                 if (lGI + 1 != lineGroup.length) {
-                                    newFormula += ' ' + ' ' + line.operator;
+                                  //  newFormula += ' ' + ' ' + line.operator;
                                 }
                             }
 
@@ -448,6 +445,7 @@ function CFFormEditor( editorConfig, $ ){
             var newLine = self.getStore().newFieldCalcGroup( fieldId, group, lineId );
             $newLine.find('select').prepend( '<option />').val('').attr( 'data-group', group ).attr( 'data-line', lineId ).first().focus();
             $newLine.attr( 'data-group', group ).attr( 'data-line', lineId );
+            $newLine.find( '.calculation-operator-line' ).show().attr( 'aria-hidden', false );
         });
 
         //remove line
@@ -513,9 +511,9 @@ function CFFormEditor( editorConfig, $ ){
         $fixedButton.on( 'change', function(e){
             var $checked = $(this);
             if($checked.prop('checked')){
-                $separator.show();
+                $separator.show().attr( 'aria-hidden', false );
             }else{
-                $separator.hide();
+                $separator.hide().attr( 'aria-hidden', true );
             }
         });
 
@@ -528,12 +526,12 @@ function CFFormEditor( editorConfig, $ ){
          */
         function typeBoxes(checked) {
             if (checked) {
-                $autoBox.hide();
+                $autoBox.hide().attr( 'aria-hidden', false );
                 $manualBox.show();
             } else {
                 visualCalcEditor(fieldId, $autoBox);
                 $autoBox.show();
-                $manualBox.hide();
+                $manualBox.hide().attr( 'aria-hidden', true );
             }
         }
 
@@ -585,7 +583,9 @@ function CFFormEditor( editorConfig, $ ){
             optListSelect( $sel, list, $sel.data( 'default' ), false, fieldId );
         });
 
-
+        $autoBox.find( '.calculation-operator-line[data-line="0"]' ).hide().attr( 'aria-hidden', true ).each( function(){
+            $(this).find( 'option' ).prop( 'selected', '' );
+        });
     }
 
     /**

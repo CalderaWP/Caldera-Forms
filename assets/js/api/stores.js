@@ -131,6 +131,39 @@ function CFFormEditStore(form) {
         form.fields[fieldId] = config;
     }
 
+    /**
+     * Repair calculation group if needed
+     *
+     * @since 1.5.1
+     * @param calc
+     * @returns {*}
+     */
+    function validateCalc( calc ){
+        if( 'object' != typeof  calc ){
+            return false;
+        }
+
+        for (var i in calc) {
+            if (calc[i].hasOwnProperty('lines')) {
+                i = parseInt(i);
+                for (var ii in calc[i].lines) {
+                    ii = parseInt(ii);
+                    if (0 == ii) {
+                        calc[i].lines[ii].operator = '';
+                    } else if (undefined === calc[i].lines[ii].operator || '' == calc[i].lines[ii].operator) {
+                        calc[i].lines[ii].operator = '+';
+                    }
+                    if( undefined === calc[i].lines[ii].field ){
+                        calc[i].lines[ii].field = '';
+                    }
+                }
+
+            }
+        }
+
+        return calc;
+    }
+
 
     /**
      * Create a field congig
@@ -563,7 +596,7 @@ function CFFormEditStore(form) {
             var field = this.getField(fieldId);
             if (!emptyObject(field)) {
                 if (field.config.hasOwnProperty('config') && field.config.config.hasOwnProperty('group')) {
-                    return field.config.config.group;
+                    return validateCalc(field.config.config.group);
                 }
             }
 
@@ -585,7 +618,7 @@ function CFFormEditStore(form) {
                 if( ! field.config.hasOwnProperty( 'config' ) ){
                     field.config.config = {};
                 }
-                field.config.config.group = groups;
+                field.config.config.group = validateCalc(groups);
                 setField(fieldId, field);
                 return this.getField(fieldId);
             }
@@ -760,7 +793,6 @@ function CFFormEditStore(form) {
                     lines: [calcLineFactory(0, 0)]
                 });
             } else {
-                var x = groups.length;
                 if( 1 > groups.length ){
                     highestGroupId = 1;
                 }else{
