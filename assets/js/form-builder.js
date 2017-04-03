@@ -104,6 +104,13 @@ function CFFormEditor( editorConfig, $ ){
                 //this would let us get fields from store, but not ready for that yet.
                 //data_fields.config.fields = self.getStore().getFields();
                 $(el).data('config', JSON.stringify(data_fields.config));
+                if ( data_fields.config.hasOwnProperty( 'fields')) {
+                    for (var i in data_fields.config.fields) {
+                        if( 'calculation' === self.getStore().getFieldType( data_fields.config.fields[i].ID ) ){
+                            data_fields.config.fields[i] = self.getStore().getField( data_fields.config.fields[i].ID );
+                        }
+                    }
+                }
 
                 return true;
             },
