@@ -410,21 +410,18 @@ function CFFormEditor( editorConfig, $ ){
                     newFormula += ' ' + lineGroups.operator + ' ';
                 }else{
                     $.each(lineGroups, function (lI, lineGroup) {
-                        newFormula += '( ';
+                        newFormula += '(';
                         var line;
                         for (var lGI = 0; lGI <= lineGroup.length; lGI++) {
                             line = lineGroup[lGI];
                             if ('object' == typeof line) {
 
                                 newFormula +=  line.operator + line.field;
-                                if (lGI + 1 != lineGroup.length) {
-                                  //  newFormula += ' ' + ' ' + line.operator;
-                                }
                             }
 
 
                         }
-                        newFormula += ' )';
+                        newFormula += ')';
                     });
                 }
 
@@ -445,7 +442,8 @@ function CFFormEditor( editorConfig, $ ){
             var newLine = self.getStore().newFieldCalcGroup( fieldId, group, lineId );
             $newLine.find('select').prepend( '<option />').val('').attr( 'data-group', group ).attr( 'data-line', lineId ).first().focus();
             $newLine.attr( 'data-group', group ).attr( 'data-line', lineId );
-            $newLine.find( '.calculation-operator-line' ).show().attr( 'aria-hidden', false );
+            $autoBox.find( '.calculation-operator-line[data-line="'+lineId+'"]' ).show().attr( 'aria-hidden', false );
+
         });
 
         //remove line

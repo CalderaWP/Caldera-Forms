@@ -446,6 +446,8 @@ function CFFormEditor( editorConfig, $ ){
             var newLine = self.getStore().newFieldCalcGroup( fieldId, group, lineId );
             $newLine.find('select').prepend( '<option />').val('').attr( 'data-group', group ).attr( 'data-line', lineId ).first().focus();
             $newLine.attr( 'data-group', group ).attr( 'data-line', lineId );
+            $autoBox.find( '.calculation-operator-line[data-line="'+lineId+'"]' ).show().attr( 'aria-hidden', false );
+
         });
 
         //remove line
@@ -511,9 +513,9 @@ function CFFormEditor( editorConfig, $ ){
         $fixedButton.on( 'change', function(e){
             var $checked = $(this);
             if($checked.prop('checked')){
-                $separator.show();
+                $separator.show().attr( 'aria-hidden', false );
             }else{
-                $separator.hide();
+                $separator.hide().attr( 'aria-hidden', true );
             }
         });
 
@@ -526,12 +528,12 @@ function CFFormEditor( editorConfig, $ ){
          */
         function typeBoxes(checked) {
             if (checked) {
-                $autoBox.hide();
+                $autoBox.hide().attr( 'aria-hidden', false );
                 $manualBox.show();
             } else {
                 visualCalcEditor(fieldId, $autoBox);
                 $autoBox.show();
-                $manualBox.hide();
+                $manualBox.hide().attr( 'aria-hidden', true );
             }
         }
 
@@ -583,15 +585,9 @@ function CFFormEditor( editorConfig, $ ){
             optListSelect( $sel, list, $sel.data( 'default' ), false, fieldId );
         });
 
-        $autoBox.find( '.calculation-operator-line[data-line="0"]' ).hide().each( function(){
-           console.log( $(this).find( 'option' ) );
+        $autoBox.find( '.calculation-operator-line[data-line="0"]' ).hide().attr( 'aria-hidden', true ).each( function(){
             $(this).find( 'option' ).prop( 'selected', '' );
-            
-        })
-
-
-
-
+        });
     }
 
     /**
