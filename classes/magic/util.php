@@ -78,12 +78,12 @@ class Caldera_Forms_Magic_Util {
 	 *
 	 * @return array
 	 */
-	public static function split_tags( $field_magic )
-	{
+	public static function split_tags( $field_magic ){
 		$part_tags = explode( ':', $field_magic );
 
 		return $part_tags;
 	}
+
 
 
 }

@@ -541,7 +541,7 @@ class Caldera_Forms_Magic_Doer {
 	 *
 	 * @return bool|string Returns false if field is private.
 	 */
-	public static function magic_image( $field, $url, array $form = null ){
+	public static function magic_image( array $field, $url, array $form = null ){
 		if( Caldera_Forms_Files::is_private( $field ) || ! filter_var( $url, FILTER_VALIDATE_URL ) ){
 			return false;
 		}
@@ -568,5 +568,25 @@ class Caldera_Forms_Magic_Doer {
 
 
 	}
+
+	/**
+	 * Format calculation field
+	 *
+	 * @since 1.5.0.7
+	 *
+	 * @param array  $field Array field config
+	 * @param string|int|float $value Field value
+	 *
+	 * @return string
+	 */
+	public static function calculation_magic( array $field, $value ){
+		foreach ( array( 'before', 'after' ) as $config_field ) {
+			if( ! isset( $field[ 'config' ][ $config_field ] ) || ! is_string( $field[ 'config' ][ $config_field ] ) ){
+				$field[ 'config' ][ $config_field ] = '';
+			}
+		}
+		return $field[ 'config' ][ 'before' ]  . $value . $field[ 'config' ][ 'after' ];
+	}
+
 
 }

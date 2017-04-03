@@ -408,5 +408,53 @@ class Caldera_Forms_Field_Util {
 		return true;
 	}
 
+	/**
+	 * Apply formatting, such as money formatting to a calculation field value
+	 *
+	 * @since 1.5.0.7
+	 *
+	 * @param array $field Field config
+	 * @param string|float|int $value Value
+	 *
+	 * @return string
+	 */
+	public static function format_calc_field( $field, $value ){
+		if (  ! empty( $field[ 'config' ][ 'thousand_separator' ] ) ) {
+			$thousands_sep= $field[ 'config' ][ 'thousand_separator' ];
+		}else{
+			$thousands_sep = ',';
+		}
+
+		if (  ! empty( $field[ 'config' ][ 'decimal_separator' ] ) ) {
+			$decimal_sep = $field[ 'config' ][ 'decimal_separator' ];
+		}else{
+			$decimal_sep = '.';
+		}
+
+		if ( isset( $field[ 'config' ][ 'fixed' ] ) ) {
+			$money = true;
+			$decimals = 2;
+		}else{
+			$money = false;
+			//Add filter or UI option?
+			$decimals = 12;
+		}
+
+		if ( $money ) {
+			if ( function_exists( 'money_format' ) ) {
+				$value = money_format( '%i', $value );
+			} else {
+				$value = sprintf( '%01.2f', $value );
+			}
+
+		}
+
+		$value = number_format( $value, $decimals, $decimal_sep, $thousands_sep );
+
+
+		return $value;
+
+
+	}
 }
 

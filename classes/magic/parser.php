@@ -82,4 +82,27 @@ abstract class Caldera_Forms_Magic_Parser {
 		$this->tag = '';
 	}
 
+	/**
+	 * Getter for field data
+	 *
+	 * @since 1.5.0.7
+	 *
+	 * @param string $field_id Field ID to get
+	 *
+	 * @return mixed|null
+	 */
+	protected function get_field_value( $field_id ){
+		if( ! is_array( $this->data ) ){
+			$this->data = Caldera_Forms::get_submission_data( $this->form );
+		}
+
+		$value = null;
+		if( isset( $this->data[ $field_id ]  ) ){
+			$value = $this->data[ $field_id ];
+		}
+
+		//Add filter?
+		return $value;
+	}
+
 }

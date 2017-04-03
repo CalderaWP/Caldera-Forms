@@ -74,51 +74,60 @@ class Caldera_Forms_Magic_Summary extends Caldera_Forms_Magic_Parser {
 					continue;
 				}
 
-				if( Caldera_Forms_Field_Util::is_file_field( $field_id, $this->form )  ){
-					$field_value = Caldera_Forms_Magic_Doer::magic_image( $field,  $this->data[ $field_id ], $this->form );
-					if( false === $field_value ){
-						continue;
-					}
+				if( Caldera_Forms_Field_Util::is_file_field( $field_id, $this->form ) && Caldera_Forms_Files::is_private( $field )  ){
+					continue;
 
 				}
 
-				$field = Caldera_Forms_Field_Util::apply_field_filters( $field, $this->form );
-
-				if (  null == $this->data ) {
-					$field_values = (array) Caldera_Forms::get_field_data( $field_id, $this->form );
-				}else{
-					if( ! isset( $this->data[ $field_id ] ) ){
-						continue;
-					}
-					$field_values = (array) $this->data[ $field_id ];
-				}
-
-				if ( isset( $field_values[ 'label' ] ) ) {
-					$field_values = $field_values[ 'value' ];
-				} else {
-					foreach ( $field_values as $field_key => $field_value ) {
-						if ( true === is_array( $field_value ) && true === array_key_exists( 'label', $field_value ) && true === array_key_exists( 'value', $field_value ) ) {
-							$field_values[ $field_key ] = $field_value[ 'value' ];
+				$field_value = false;
+				$type = Caldera_Forms_Field_Util::get_type( $field, $this->form );
+				switch( $type ){
+					case 'file'  :
+						$field_value = Caldera_Forms_Magic_Doer::magic_image( $field,  $this->get_field_value( $field_id ), $this->form );
+						break;
+					case 'calculation' :
+						$field_value = Caldera_Forms_Magic_Doer::calculation_magic( $field, $this->get_field_value( $field_id ) );
+						break;
+					default :
+						if (  null == $this->data ) {
+							$field_values = (array) Caldera_Forms::get_field_data( $field_id, $this->form );
+						}else{
+							if( ! isset( $this->data[ $field_id ] ) ){
+								continue;
+							}
+							$field_values = (array) $this->get_field_value( $field_id );
 						}
 
-					}
+						if ( isset( $field_values[ 'label' ] ) ) {
+							$field_values = $field_values[ 'value' ];
+						} else {
+							foreach ( $field_values as $field_key => $field_value ) {
+								if ( true === is_array( $field_value ) && true === array_key_exists( 'label', $field_value ) && true === array_key_exists( 'value', $field_value ) ) {
+									$field_values[ $field_key ] = $field_value[ 'value' ];
+								}
+
+							}
+						}
+
+						$should_use_label = false;
+						if ( is_array( $field ) ) {
+							$should_use_label = $this->should_use_label( $field );
+						}
+
+						if( $should_use_label ){
+							foreach ( $field_values as $field_key => $field_value ) {
+								$field_values[ $field_key ] = $this->option_value_to_label( $field_value, $field );
+							}
+						}
+
+
+						$field_value = implode( ', ', (array) $field_values );
+						break;
+
 				}
 
-				$should_use_label = false;
-				if ( is_array( $field ) ) {
-					$should_use_label = $this->should_use_label( $field );
-				}
 
-				if( $should_use_label ){
-					foreach ( $field_values as $field_key => $field_value ) {
-						$field_values[ $field_key ] = $this->option_value_to_label( $field_value, $field );
-					}
-				}
-
-
-				$field_value = implode( ', ', (array) $field_values );
-
-				if ( $field_value !== null && strlen( $field_value ) > 0 ) {
+				if ( $field_value !== null && ! is_array( $field_value ) && strlen( (string) $field_value ) > 0 ) {
 					if ( $this->html ) {
 						$out[] = sprintf( $this->pattern, $field[ 'label' ], $field_value );
 					} else {

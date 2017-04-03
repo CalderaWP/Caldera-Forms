@@ -1385,14 +1385,7 @@ class Caldera_Forms {
 			return new WP_Error( $field[ 'ID' ] . '-calculation', __( 'Calculation is invalid', 'caldera-forms' ) );
 		}
 
-		if ( isset( $field[ 'config' ][ 'fixed' ] ) ) {
-			if ( function_exists( 'money_format' ) ) {
-				return money_format( '%i', $total );
-			} else {
-				return sprintf( '%01.2f', $total );
-			}
-
-		}
+		$total = Caldera_Forms_Field_Util::format_calc_field( $field, $total );
 
 		return $total;
 	}
