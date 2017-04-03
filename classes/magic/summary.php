@@ -74,8 +74,12 @@ class Caldera_Forms_Magic_Summary extends Caldera_Forms_Magic_Parser {
 					continue;
 				}
 
-				if( Caldera_Forms_Field_Util::is_file_field( $field_id, $this->form ) && Caldera_Forms_Files::is_private( Caldera_Forms_Field_Util::get_field( $field_id, $this->form ) ) ){
-					continue;
+				if( Caldera_Forms_Field_Util::is_file_field( $field_id, $this->form )  ){
+					$field_value = Caldera_Forms_Magic_Doer::magic_image( $field,  $this->data[ $field_id ], $this->form );
+					if( false === $field_value ){
+						continue;
+					}
+
 				}
 
 				$field = Caldera_Forms_Field_Util::apply_field_filters( $field, $this->form );

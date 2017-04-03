@@ -70,6 +70,17 @@ class Caldera_Forms_Magic_Doer {
 					$field = Caldera_Forms_Field_Util::get_field_by_slug( $tag, $form );
 				}
 
+				if( Caldera_Forms_Field_Util::is_file_field( $field, $form ) ){
+					$_value = self::magic_image( $field, $entry, $form );
+					if( false !== $_value ){
+						$value = $_value;
+					}
+
+					continue;
+
+
+				}
+
 
 				if( is_string( $entry ) ){
 					if( ! empty( $field ) && ! empty( $part_tags[ 1 ] ) && $part_tags[ 1 ] == 'label' ) {
@@ -520,5 +531,42 @@ class Caldera_Forms_Magic_Doer {
 
 	}
 
+	/**
+	 * Create image magic
+	 *
+	 * @since 1.5.0.7
+	 *
+	 * @param array $field Field config
+	 * @param array|null $form Form config
+	 *
+	 * @return bool|string Returns false if field is private.
+	 */
+	public static function magic_image( $field, $url, array $form = null ){
+		if( Caldera_Forms_Files::is_private( $field ) || ! filter_var( $url, FILTER_VALIDATE_URL ) ){
+			return false;
+		}
+
+		if( null === $form ){
+			global  $form;
+		}
+
+		/**
+		 * Switch from link markup to image markup for imag magic tag
+		 *
+		 * @since 1.5.0.7
+		 *
+		 * @param bool $use_link If true link markup is used. If false image markup is used
+		 * @param array $field Field config
+		 * @param array $form Form config
+		 */
+		$use_link = apply_filters( 'caldera_forms_magic_file_use_link', true, $field, $form );
+		if( $use_link ){
+			return sprintf( '<a href="%s">%s</a>', esc_url( $url ), esc_url( $url ) );
+		}
+
+		return sprintf( '<img src="%s" class="%s" />', esc_url( $url ), esc_attr( 'cf-image-magic-tag cf-image-magic-tag-' . $form[ 'ID' ]  ) );
+
+
+	}
 
 }
