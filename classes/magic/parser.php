@@ -41,6 +41,15 @@ abstract class Caldera_Forms_Magic_Parser {
 	protected $tag;
 
 	/**
+	 * Holds instance of credit card hasher class
+	 *
+	 * @since 1.5.0.7
+	 *
+	 * @var Caldera_Forms_Field_Credit
+	 */
+	protected $credit_card_hasher;
+
+	/**
 	 * Caldera_Forms_Magic_Parser constructor.
 	 *
 	 * @since 1.4.6
@@ -105,4 +114,19 @@ abstract class Caldera_Forms_Magic_Parser {
 		return $value;
 	}
 
+	/**
+	 * Get credit card hasher class
+	 *
+	 * @since 1.5.0.7
+	 *
+	 * @return Caldera_Forms_Field_Credit
+	 */
+	protected function get_credit_card_hasher(){
+		if( null === $this->credit_card_hasher ){
+			$this->credit_card_hasher = new Caldera_Forms_Field_Credit;
+		}
+
+		return $this->credit_card_hasher;
+
+	}
 }

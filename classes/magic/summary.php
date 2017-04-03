@@ -88,6 +88,12 @@ class Caldera_Forms_Magic_Summary extends Caldera_Forms_Magic_Parser {
 					case 'calculation' :
 						$field_value = Caldera_Forms_Magic_Doer::calculation_magic( $field, $this->get_field_value( $field_id ) );
 						break;
+					case 'credit_card_number' :
+						$field_value = $this->get_credit_card_hasher()->credit_card_number( $this->get_field_value( $field_id ) );
+						break;
+					case 'credit_card_cvc' :
+						$field_value = $this->get_credit_card_hasher()->credit_card_cvc( $this->get_field_value( $field_id ) );
+						break;
 					default :
 						if (  null == $this->data ) {
 							$field_values = (array) Caldera_Forms::get_field_data( $field_id, $this->form );
