@@ -1168,10 +1168,14 @@ class Caldera_Forms_Admin {
 						$data[ 'name' ] = strip_tags( $_POST[ 'name' ] );
 
 						$new_form_id = Caldera_Forms_Forms::import_form( $data );
+						if( is_string( $new_form_id )  ){
 
-						if( is_string( $new_form_id ) ){
-							cf_redirect( 'admin.php?page=caldera-forms&edit=' . $new_form_id, 302 );
+							cf_redirect( add_query_arg(array(
+								'page' => 'caldera-forms',
+								'edit' => $new_form_id
+							), admin_url( 'admin.php' ) ), 302 );
 							exit;
+
 						}else{
 							wp_die( esc_html__( 'Form could not be imported.', 'caldera-forms' ) );
 						}
