@@ -766,8 +766,6 @@ See: [https://calderaforms.com/updates/caldera-forms-1-5-0-7](https://calderafor
 * FIXED: In some cases fields removed by conditional logic would still be validated and therefore trigger incorrect validation errors server-side.
 * FIXED: Shortcode wasn't using "shortcode_atts" filter.
 
-
-
 = Caldera Forms 1.5.0.6 ( March 13th, 2017 ) Apex Calculations =
 See: [https://calderaforms.com/updates/caldera-forms-1-5-0-6](https://calderaforms.com/updates/caldera-forms-1-5-0-6?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms)
 * FIXED: Fields hidden by conditional logic's values were being recorded. This was not the behavior in 1.4.x and was causing issues with calculations calculating the wrong amount.
