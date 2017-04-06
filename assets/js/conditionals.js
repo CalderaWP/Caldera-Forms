@@ -278,7 +278,6 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 					jQuery(document).trigger('cf.add').trigger('cf.enable');					
 				}else{
 					target_field.prop('disabled', false);
-					$field.prop('disabled', false);
 				}
 			}else if (action === 'disable'){
 
@@ -288,7 +287,6 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 					jQuery('[data-field="' + field + '"]').prop('disabled', 'disabled');
 				}else{
 					target_field.prop('disabled', 'disabled');
-					$field.prop('disabled', 'disabled');
 				}
 			}
 
