@@ -354,19 +354,31 @@
              return valid;
          };
 
-         $field.intlTelInput( field.options );
-         $field.on( 'keyup change', reset );
+         var init = function() {
+             if( ! $field.length ){
+                 $field = $( document.getElementById( field.id ) );
+             }
 
-         $field.blur(function() {
-             reset();
-             validation();
-         });
+             $field.intlTelInput( field.options );
+             $field.on( 'keyup change', reset );
 
-         $field.on( 'change', validation );
+             $field.blur(function() {
+                 reset();
+                 validation();
+             });
 
-         $form.on( 'submit', function(){
-             validation();
-         })
+             $field.on( 'change', validation );
+             $form.on( 'submit', function(){
+                 validation();
+             })
+
+         };
+
+         $(document).on('cf.pagenav cf.add cf.disable cf.modal', init );
+
+         init();
+
+
 
      };
 

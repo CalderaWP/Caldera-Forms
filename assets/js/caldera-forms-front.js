@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.0.7 - 2017-04-06 *//*
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.0.7 - 2017-04-07 *//*
  * jQuery miniColors: A small color selector
  *
  * Copyright 2011 Cory LaViska for A Beautiful Site, LLC. (http://abeautifulsite.net/)
@@ -5206,19 +5206,31 @@ function toggle_button_init(id, el){
              return valid;
          };
 
-         $field.intlTelInput( field.options );
-         $field.on( 'keyup change', reset );
+         var init = function() {
+             if( ! $field.length ){
+                 $field = $( document.getElementById( field.id ) );
+             }
 
-         $field.blur(function() {
-             reset();
-             validation();
-         });
+             $field.intlTelInput( field.options );
+             $field.on( 'keyup change', reset );
 
-         $field.on( 'change', validation );
+             $field.blur(function() {
+                 reset();
+                 validation();
+             });
 
-         $form.on( 'submit', function(){
-             validation();
-         })
+             $field.on( 'change', validation );
+             $form.on( 'submit', function(){
+                 validation();
+             })
+
+         };
+
+         $(document).on('cf.pagenav cf.add cf.disable cf.modal', init );
+
+         init();
+
+
 
      };
 
