@@ -1,5 +1,6 @@
 /* contains edit.js, layout-grid.js, processors.js */
 function new_conditional_group(obj){
+
     var id 	  	=	obj.trigger.data('id'),
         lineid 	=	'cl' + Math.round(Math.random() * 18746582734),
         rowid	=	'rw' + Math.round(Math.random() * 98347598345),
@@ -14,9 +15,10 @@ function new_conditional_group(obj){
                 ]
             }
         ];
+
+
     return {group : group, id: id};
 }
-//a
 function new_conditional_line(obj){
 
     var id 	  	=	obj.trigger.data('id'),

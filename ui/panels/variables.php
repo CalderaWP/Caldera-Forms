@@ -20,15 +20,22 @@ if(!isset($element['variables'])){
 	if(!empty($element['variables']['keys'])){
 		foreach($element['variables']['keys'] as $var_index=>$var_value){
 			?>
-			<div class="caldera-config-group">
-				<label style="padding:2px 0;"><input type="text" class="block-input field-config set-system-variable" name="config[variables][keys][]" value="<?php echo $var_value; ?>"></label>
+			<div class="caldera-config-group cf-variable">
+				<label style="padding:2px 0;">
+					<input type="text" class="block-input field-config set-system-variable cf-variable-name" name="config[variables][keys][]" value="<?php echo $var_value; ?>">
+				</label>
 				<div class="caldera-config-field" style="width:400px;">
-					<input type="text" class="field-config var-value block-input magic-tag-enabled" name="config[variables][values][]" value="<?php echo $element['variables']['values'][$var_index]; ?>">
+					<input type="text" class="field-config var-value block-input magic-tag-enabled cf-variable-value" name="config[variables][values][]" value="<?php echo $element['variables']['values'][$var_index]; ?>">
 				</div>
-				<select name="config[variables][types][]" class="field-config" style="vertical-align: baseline;">
-					<option value="static" <?php if( $element['variables']['types'][$var_index] == 'static'){ echo 'selected="selected"'; } ?>><?php echo __('Static', 'caldera-forms'); ?></option>
-					<option value="passback" <?php if( $element['variables']['types'][$var_index] == 'passback'){ echo 'selected="selected"'; } ?>><?php echo __('Passback', 'caldera-forms'); ?></option>
-					<option value="entryitem" <?php if( $element['variables']['types'][$var_index] == 'entryitem'){ echo 'selected="selected"'; } ?>><?php echo __('Entry List', 'caldera-forms'); ?></option>
+				<select name="config[variables][types][]" class="field-config cf-variable-type" style="vertical-align: baseline;">
+					<option value="static" <?php if( $element['variables']['types'][$var_index] == 'static'){ echo 'selected="selected"'; } ?>>
+						<?php esc_html_e('Static', 'caldera-forms'); ?>
+					</option>
+					<option  value="passback" <?php if( $element['variables']['types'][$var_index] == 'passback'){ echo 'selected="selected"'; } ?>>
+						<?php esc_html_e('Passback', 'caldera-forms'); ?></option>
+					<option  value="entryitem" <?php if( $element['variables']['types'][$var_index] == 'entryitem'){ echo 'selected="selected"'; } ?>>
+						<?php esc_html_e('Entry List', 'caldera-forms'); ?>
+					</option>
 				</select>
 				&nbsp;<button type="button" class="button remove-this-variable">&times;</button>
 			</div>
@@ -40,15 +47,23 @@ if(!isset($element['variables'])){
 </div>
 <?php do_action( 'caldera_forms_variables_config', $element ); ?>
 <script type="text/html" id="variable-fields-tmpl">
-	<div class="caldera-config-group">
-		<label style="padding:2px 0;"><input type="text" class="block-input field-config set-system-variable" name="config[variables][keys][]" value=""></label>
+	<div class="caldera-config-group cf-variable">
+		<label style="padding:2px 0;">
+			<input type="text" class="block-input field-config set-system-variable cf-variable-name" name="config[variables][keys][]" value="">
+		</label>
 		<div class="caldera-config-field" style="width:400px;">
-			<input type="text" class="field-config var-value block-input magic-tag-enabled" name="config[variables][values][]" value="">
+			<input type="text" class="field-config var-value block-input magic-tag-enabled  cf-variable-value" name="config[variables][values][]" value="">
 		</div>
-		<select name="config[variables][types][]" class="field-config" style="vertical-align: baseline;">
-			<option value="static"><?php echo __('Static', 'caldera-forms'); ?></option>
-			<option value="passback"><?php echo __('Passback', 'caldera-forms'); ?></option>
-			<option value="entryitem"><?php echo __('Entry List', 'caldera-forms'); ?></option>
+		<select name="config[variables][types][]" class="field-config cf-variable-type" style="vertical-align: baseline;">
+			<option value="static">
+				<?php esc_html_e('Static', 'caldera-forms'); ?>
+			</option>
+			<option  value="passback">
+				<?php esc_html_e('Passback', 'caldera-forms'); ?>
+			</option>
+			<option  value="entryitem">
+				<?php esc_html_e('Entry List', 'caldera-forms'); ?>
+			</option>
 		</select>
 		&nbsp;<button type="button" class="button remove-this-variable">&times;</button>
 	</div>

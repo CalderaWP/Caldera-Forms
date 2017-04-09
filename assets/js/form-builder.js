@@ -600,10 +600,12 @@ function CFFormEditor( editorConfig, $ ){
 
         var list = {
             system: {},
-            fields: {}
+            fields: {},
+            variables: self.variables.getAll()
         },
-            fields = self.getStore().getFields();
-        var i = 0;
+            fields = self.getStore().getFields(),
+            i = 0;
+
         for( var fieldId in fields ){
             list.fields[i] = {
                 value: fields[fieldId].ID,
@@ -646,6 +648,9 @@ function CFFormEditor( editorConfig, $ ){
         if( 'string' == typeof  excludes ){
             excludes = [ excludes ];
         }
+
+        $el.append( '<optgroup label="Fields">' );
+
         for ( var fieldId in list.fields ) {
             if( -1 === excludes.indexOf( list.fields[fieldId].value ) ){
                 $el.append($('<option>', {
@@ -656,8 +661,19 @@ function CFFormEditor( editorConfig, $ ){
 
         }
 
+        $el.append( '<optgroup label="Variables">' );
+
+        list.variables.forEach(function( variable){
+            $el.append($('<option>', {
+                value: variable.name,
+                text: variable.name
+            }));
+        });
+
+
 
         if (includeSystem) {
+            $el.append( '<optgroup label="System">' );
             for( var sysTag in list.system ){
                 if( -1 === excludes.indexOf( list.system[sysTag] ) ) {
                     $el.append($('<option>', {
@@ -847,7 +863,6 @@ function CFFormEditor( editorConfig, $ ){
 
 
     }
-
 
 
     /**
@@ -1110,11 +1125,91 @@ function CFFormEditor( editorConfig, $ ){
         return Object.keys(obj).length === 0 && obj.constructor === Object;
     }
 
+    /**
+     * Form Variables
+     *
+     * For now pulls of of DOM.
+     *
+     * @todo Use form store for variables
+     *
+     * @since 1.5.1
+     *
+     * @type {{self: CFFormEditor, findAll: CFFormEditor.variables.findAll, getAll: CFFormEditor.variables.getAll, getType: CFFormEditor.variables.getType, getName: CFFormEditor.variables.getName, getValue: CFFormEditor.variables.getValue}}
+     */
+    this.variables = {
+        self: this,
+        /**
+         * Collect all form variables in an array
+         *
+         *
+         *
+         * @returns {Array}
+         */
+        getAll: function () {
+            var variables = [],
+                $variable,
+                $variables = this.findAll();
+            for (var i = 0; i <= $variables.length; i++) {
+                $variable = $($variables[i]);
+                variables.push({
+                    name: this.getName($variable),
+                    type: this.getType($variable),
+                    value: this.getValue($variable),
+                });
+            }
+            return variables;
+        },
+        /**
+         * Get all form variables from DOM jQuery
+         *
+         * @since 1.5.1
+         *
+         * @returns {*|jQuery|HTMLElement}
+         */
+        findAll: function () {
+            return $( '.cf-variable' );
+        },
+        /**
+         * Get variable type from jQuery
+         *
+         * @since 1.5.1
+         *
+         * @param $variable
+         * @returns {*}
+         */
+        getType: function ( $variable) {
+            return $variable.find( '.cf-variable-type' ).val();
+        },
+        /**
+         * Get variable name from jQuery
+         *
+         * @since 1.5.1
+         *
+         * @param $variable
+         * @returns {*}
+         */
+        getName: function ( $variable ) {
+            return $variable.find( '.cf-variable-name' ).val();
+        },
+        /**
+         * Get variable value from jQuery
+         *
+         * @since 1.5.1
+         *
+         * @param $variable
+         * @returns {*}
+         */
+        getValue: function ( $variable ) {
+            return $variable.find( '.cf-variable-value' ).val();
+        }
+    }
+
 }
 
 
 /* contains edit.js, layout-grid.js, processors.js */
 function new_conditional_group(obj){
+
     var id 	  	=	obj.trigger.data('id'),
         lineid 	=	'cl' + Math.round(Math.random() * 18746582734),
         rowid	=	'rw' + Math.round(Math.random() * 98347598345),
@@ -1129,8 +1224,10 @@ function new_conditional_group(obj){
                 ]
             }
         ];
-    return {group : group, id: id};
 
+
+    return {group : group, id: id};
+}
 function new_conditional_line(obj){
 
     var id 	  	=	obj.trigger.data('id'),
