@@ -2,7 +2,7 @@ let gulp = require('gulp');
 let minify = require('gulp-minify');
 let webpack = require('gulp-webpack');
 let concat = require( 'gulp-concat' );
-//let watch = require( 'watch' );
+let  watch = require('gulp-watch');
 
 const formEditor =  'assets/js/form-editor/*.js';
 
