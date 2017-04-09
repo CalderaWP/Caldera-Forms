@@ -752,7 +752,7 @@ jQuery(document).ready(function($){
     });
     // show magic tag autocompletes
     $('body').on('keyup  focus select click init.magic', '.magic-tag-enabled', function(e){
-
+        return;
         init_magic_tags();
         var input = $(this),
             wrap = input.parent(),
@@ -961,6 +961,7 @@ var rebuild_field_binding,
     compiled_templates = {};
 
 init_magic_tags = function(){
+    return;
     //init magic tags
     var magicfields = jQuery('.magic-tag-enabled');
 
@@ -998,9 +999,10 @@ init_magic_tags = function(){
         }
     });
 
-}
+};
 
 rebuild_field_binding = function(){
+    return;
 
     // check form is loaded first
     if(!core_form){
@@ -1059,6 +1061,7 @@ rebuild_field_binding = function(){
 };
 
 rebind_field_bindings = function(){
+    return;
 
     //return;
     var bindings = jQuery('.caldera-field-bind').not('.bound_field'),

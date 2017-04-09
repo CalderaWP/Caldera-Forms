@@ -190,20 +190,20 @@ function CFFormEditor( editorConfig, $ ){
             $list.append( '<li class="tag" data-tag="%'+ field.slug + '%"><strong></strong>%'+ field.slug + '%</li>')
         });
 
-        if ( includeSystem ) {
+        if (includeSystem) {
             $list.append('<li class="header">System Tags</li>');
-            $.each( list.system, function (i,tag) {
-                $list.append('<li class="tag" data-tag="{' + tag.value + '}"><strong></strong>{' + tag.label + '}</li>');
+            $.each(list.system, function (i, tag) {
+                $list.append('<li class="tag" data-tag="' + tag.value + '"><strong></strong>' + tag.label + '</li>');
             });
 
-            $.each( list.processors, function (i,processor) {
+            $.each(list.processors, function (i, processor) {
                 $list.append('<li class="header">' + processor.name + '</li>');
                 var tagGroup;
-               for( tagGroup in processor.tags ){
-                   $.each( processor.tags[ tagGroup ], function (i,tag) {
-                       $list.append( '<li class="tag" data-tag="{'+tag +'}"><strong></strong>{'+tag+'} </li>');
-                   });
-               }
+                for (tagGroup in processor.tags) {
+                    $.each(processor.tags[tagGroup], function (i, tag) {
+                        $list.append('<li class="tag" data-tag="{' + tag + '}"><strong></strong>{' + tag + '} </li>');
+                    });
+                }
             });
 
 
@@ -784,7 +784,7 @@ function CFFormEditor( editorConfig, $ ){
         list.variables.forEach(function( variable){
             $el.append($('<option>', {
                 value: variable.name,
-                text: variable.name
+                text: 'Variable: ' +variable.name
             }));
         });
 
@@ -1135,6 +1135,44 @@ function CFFormEditor( editorConfig, $ ){
                 return;
             }
             deleteField(fieldId);
+        });
+
+        $editorBody.on('keyup  focus select click init.magic', '.magic-tag-enabled', function(e) {
+            var $input = $(this),
+                includeSystem = true;
+            if($input.parents('.caldera-editor-field-config-wrapper').length > 0) {
+               includeSystem = false;
+            }
+
+            var $list = self.magicTagsUl(includeSystem),
+                $wrap = $input.parent(),
+                $wrapper = $( '<div class="magic-tags-autocomplete" style="display: none;"></div>' ),
+                remove = function () {
+                    setTimeout(function(){
+                        $wrapper.slideUp(150);
+                    }, 100 );
+                    setTimeout(function(){
+                        $wrapper.remove();
+                        $wrap.find( '.description' ).show().attr( 'aria-hidden', false );
+                    }, 300);
+                };
+
+
+
+            $wrap.append( $wrapper );
+            $wrap.find( '.description' ).hide().attr( 'aria-hidden', true );
+            //Yes slidedown is a little annoying, but it scrolls list into view
+            $wrapper.append( $list ).slideDown(150);
+
+            if(e.type === 'focusout'){
+               remove();
+            }
+            $input.on( 'focusout', remove );
+            $wrapper.find( 'li' ).on( 'click', function () {
+                $input.val( $(this).data('tag'));
+                remove();
+            });
+
         });
 
 
@@ -2081,7 +2119,7 @@ jQuery(document).ready(function($){
     });
     // show magic tag autocompletes
     $('body').on('keyup  focus select click init.magic', '.magic-tag-enabled', function(e){
-
+        return;
         init_magic_tags();
         var input = $(this),
             wrap = input.parent(),
@@ -2290,6 +2328,7 @@ var rebuild_field_binding,
     compiled_templates = {};
 
 init_magic_tags = function(){
+    return;
     //init magic tags
     var magicfields = jQuery('.magic-tag-enabled');
 
@@ -2327,9 +2366,10 @@ init_magic_tags = function(){
         }
     });
 
-}
+};
 
 rebuild_field_binding = function(){
+    return;
 
     // check form is loaded first
     if(!core_form){
@@ -2388,6 +2428,7 @@ rebuild_field_binding = function(){
 };
 
 rebind_field_bindings = function(){
+    return;
 
     //return;
     var bindings = jQuery('.caldera-field-bind').not('.bound_field'),

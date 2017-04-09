@@ -189,20 +189,20 @@ function CFFormEditor( editorConfig, $ ){
             $list.append( '<li class="tag" data-tag="%'+ field.slug + '%"><strong></strong>%'+ field.slug + '%</li>')
         });
 
-        if ( includeSystem ) {
+        if (includeSystem) {
             $list.append('<li class="header">System Tags</li>');
-            $.each( list.system, function (i,tag) {
+            $.each(list.system, function (i, tag) {
                 $list.append('<li class="tag" data-tag="{' + tag.value + '}"><strong></strong>{' + tag.label + '}</li>');
             });
 
-            $.each( list.processors, function (i,processor) {
+            $.each(list.processors, function (i, processor) {
                 $list.append('<li class="header">' + processor.name + '</li>');
                 var tagGroup;
-               for( tagGroup in processor.tags ){
-                   $.each( processor.tags[ tagGroup ], function (i,tag) {
-                       $list.append( '<li class="tag" data-tag="{'+tag +'}"><strong></strong>{'+tag+'} </li>');
-                   });
-               }
+                for (tagGroup in processor.tags) {
+                    $.each(processor.tags[tagGroup], function (i, tag) {
+                        $list.append('<li class="tag" data-tag="{' + tag + '}"><strong></strong>{' + tag + '} </li>');
+                    });
+                }
             });
 
 
@@ -783,7 +783,7 @@ function CFFormEditor( editorConfig, $ ){
         list.variables.forEach(function( variable){
             $el.append($('<option>', {
                 value: variable.name,
-                text: variable.name
+                text: 'Variable: ' +variable.name
             }));
         });
 
@@ -1134,6 +1134,41 @@ function CFFormEditor( editorConfig, $ ){
                 return;
             }
             deleteField(fieldId);
+        });
+
+        $editorBody.on('keyup  focus select click init.magic', '.magic-tag-enabled', function(e) {
+            var $input = $(this),
+                includeSystem = true;
+            if($input.parents('.caldera-editor-field-config-wrapper').length > 0) {
+               includeSystem = false;
+            }
+
+            var $list = self.magicTagsUl(),
+                $wrap = $input.parent(),
+                $wrapper = $( '<div class="magic-tags-autocomplete" style="display: none;"></div>' ),
+                remove = function () {
+                    setTimeout(function(){
+                        $wrapper.slideUp(150);
+                    }, 100 );
+                    setTimeout(function(){
+                        $wrapper.remove();
+                    }, 300);
+                };
+
+
+
+            $wrap.append( $wrapper );
+            //Yes slidedown is a little annoying, but it scrolls list into view
+            $wrapper.append( $list ).slideDown(150);
+            if(e.type === 'focusout'){
+               remove();
+            }
+            $input.on( 'focusout', remove );
+            $wrapper.find( 'li' ).on( 'click', function () {
+                $input.val( $(this).data('tag'));
+                remove();
+            });
+
         });
 
 
