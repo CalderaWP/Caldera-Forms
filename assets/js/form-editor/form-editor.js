@@ -64,7 +64,7 @@ function CFFormEditor( editorConfig, $ ){
      *
      * @since 1.5.1
      *
-     * @returns CFFormEditStore
+     * @returns {CFFormEditStore}
      */
     this.getStore = function () {
         return store;
@@ -712,7 +712,8 @@ function CFFormEditor( editorConfig, $ ){
             list.fields[i] = {
                 value: field.value,
                 label: field.label,
-                slug: field.slug
+                slug: field.slug,
+                ID: field.ID
             };
             i++;
 
@@ -765,11 +766,13 @@ function CFFormEditor( editorConfig, $ ){
 
         $el.append( '<optgroup label="Fields">' );
 
-        for ( var fieldId in list.fields ) {
-            if( -1 === excludes.indexOf( list.fields[fieldId].value ) ){
+        var field;
+        for ( var i in list.fields ) {
+            if( -1 === excludes.indexOf( list.fields[i].value ) ){
+                field = self.getStore().getFieldSimple( list.fields[i].ID);
                 $el.append($('<option>', {
-                    value: list.fields[fieldId].value,
-                    text: list.fields[fieldId].label
+                    value: field.ID,
+                    text: field.label
                 }));
             }
 

@@ -100,7 +100,7 @@ function CFEntriesStoreFactory(formId, entries) {
  * @since 1.5.1
  *
  * @param form
- * @returns {{getFields: getFields, getField: getField, getFieldType: getFieldType, addField: addField, updateField: updateField, getConditionals: getConditionals, getConditional: getConditional, getProcessors: getProcessors, getProcessor: getProcessor}}
+ * @returns {{getFields: getFields, getField: getField, getFieldSimple: getFieldSimple, getFieldType: getFieldType, addField: addField, updateField: updateField, updateFieldOption: updateFieldOption, updateFieldOptions: updateFieldOptions, addFieldOption: addFieldOption, getFieldOption: getFieldOption, getFieldOptions: getFieldOptions, removeFieldOption: removeFieldOption, getFieldOptionDefault: getFieldOptionDefault, changeFieldType: changeFieldType, getFieldCalcGroups: getFieldCalcGroups, setFieldCalcGroups: setFieldCalcGroups, newFieldCalcGroup: newFieldCalcGroup, updateFieldCalcLine: updateFieldCalcLine, updateFieldCalcOpGroup: updateFieldCalcOpGroup, removeFieldCalcLine: removeFieldCalcLine, removeFieldCalcGroup: removeFieldCalcGroup, getFieldCalcFormula: getFieldCalcFormula, updateFieldCalcFormula: updateFieldCalcFormula, addFieldCalcGroup: addFieldCalcGroup, deleteField: deleteField, getConditionals: getConditionals, getConditional: getConditional, getProcessors: getProcessors, getProcessor: getProcessor}}
  * @constructor
  */
 function CFFormEditStore(form) {
@@ -345,6 +345,25 @@ function CFFormEditStore(form) {
 
             return {}
         },
+		/**
+		 * Get a smaller representation of the field
+		 *
+		 * @since 1.5.1
+		 *
+		 * @param fieldID
+		 * @returns {{ID: *, slug: *, label: *, type: *}}
+		 */
+		getFieldSimple: function (fieldID) {
+        	var field = this.getField(fieldID);
+			if( ! emptyObject(field)){
+				return{
+					ID: field.ID,
+					slug: field.slug,
+					label: field.label,
+					type: field.type
+				};
+			}
+		},
         /**
          * Get field type by field ID
          *
