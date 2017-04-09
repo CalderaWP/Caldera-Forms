@@ -4295,7 +4295,7 @@ class Caldera_Forms {
 		 */
 		$form_wrapper_classes = apply_filters( 'caldera_forms_render_form_wrapper_classes', $form_wrapper_classes, $form );
 
-		$form_wrap_id = Caldera_Forms_Render_Util::field_id_attribute( $current_form_count );
+		$form_wrap_id = Caldera_Forms_Render_Util::form_id_attr( $current_form_count );
 		$out          = sprintf( '<div class="%s" id="%s" data-cf-ver="%s" data-cf-form-id="%s">', esc_attr( implode( ' ', $form_wrapper_classes ) ), esc_attr( $form_wrap_id ), esc_attr( CFCORE_VER ), esc_attr( $form[ 'ID' ] ) );
 
 		$notices = Caldera_Forms_Render_Notices::prepare_notices( $notices, $form );

@@ -598,7 +598,7 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 		 */
 		return apply_filters( 'caldera_forms_field_js_config_defaults', array(
 			'form_id' => $this->form[ 'ID' ],
-			'form_id_attr' => Caldera_Forms_Render_Util::field_id_attribute( $this->form_count )
+			'form_id_attr' => Caldera_Forms_Render_Util::form_id_attr( $this->form_count )
 
 		));
 	}

@@ -56,14 +56,32 @@ class Caldera_Forms_Render_Util {
 	/**
 	 * Get ID attribute for a form
 	 *
+	 * @since 1.5.8
+	 *
+	 * @param int $current_form_count Current form count on page
+	 *
+	 * @return string
+	 */
+	public static function form_id_attr( $current_form_count ){
+		//JOSH - Don't put a filter here SO MANY things assume this is the way it is
+		$form_wrap_id = "caldera_form_" . $current_form_count;
+		return $form_wrap_id;
+	}
+
+	/**
+	 * Get ID attribute for a form
+	 *
 	 * @since 1.5.0
+	 * @deprecated 1.5.0.8
 	 *
 	 * @param int $current_form_count Current form count on page
 	 *
 	 * @return string
 	 */
 	public static function field_id_attribute( $current_form_count ){
-		//JOSH - Don't put a filter here SO MANY things assume this is the way it is
+		//Deprecated beacuse naming was wrong
+		//See: https://github.com/CalderaWP/Caldera-Forms/issues/1489
+		_deprecated_function( 'Caldera_Forms_Render_Util::field_id_attribute', 'Caldera_Forms_Render_Util::form_id_attr', '1.5.0.8');
 		$form_wrap_id = "caldera_form_" . $current_form_count;
 		return $form_wrap_id;
 	}
