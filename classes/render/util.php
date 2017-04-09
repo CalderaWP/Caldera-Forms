@@ -2,8 +2,6 @@
 /**
  * Utility functions for use when rendering form
  *
- * Will be placed in added to DOM as CDATA
- *
  * @package Caldera_Forms
  * @author    Josh Pollock <Josh@CalderaWP.com>
  * @license   GPL-2.0+
@@ -99,6 +97,71 @@ class Caldera_Forms_Render_Util {
 
 	}
 
+	/**
+	 * Add an inline script to footer scripts
+	 *
+	 * @since 1.5.0.8
+	 *
+	 * @param string $script JavaScript with not <script> tags
+	 * @param array $form Form config
+	 *
+	 * @return bool
+	 */
+	public static function add_inline_script( $script, array  $form ){
+		$script = self::create_inline_script( $script );
+
+		return self::add_inline_data( $script, $form );
+	}
+
+	/**
+	 * Add CData markup to footer scripts
+	 *
+	 * @since 1.5.0.8
+	 *
+	 * @param $script
+	 * @param array $form
+	 *
+	 * @return bool
+	 */
+	public static function add_cdata( $script, array $form ){
+		$output = self::create_cdata( $script );
+		return self::add_inline_data(  $output, $form );
+
+	}
+
+	/**
+	 * Create inline script markup
+	 *
+	 * @since 1.5.0.8
+	 *
+	 * @param string $script JavaScript with not <script> tags
+	 *
+	 * @return string
+	 */
+	protected static function create_inline_script( $script ){
+		$script = sprintf( "<script type='text/javascript'>\n%s\n</script>\n", $script );
+
+		return $script;
+	}
+
+	/**
+	 * Create CData markup
+	 *
+	 * @since 1.5.0.8
+	 *
+	 * @param string $script JavaScript with not <script> tags
+	 *
+	 * @return string
+	 */
+	public static function create_cdata( $script ){
+		$output = "<script type='text/javascript'>\n"; // CDATA and type='text/javascript' is not needed for HTML 5
+		$output .= "/* <![CDATA[ */\n";
+		$output .= "$script\n";
+		$output .= "/* ]]> */\n";
+		$output .= "</script>\n";
+
+		return $output;
+	}
 
 
 }
