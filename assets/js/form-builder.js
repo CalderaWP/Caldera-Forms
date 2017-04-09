@@ -18,7 +18,15 @@ function CFFormEditor( editorConfig, $ ){
         currentFromFields = {},
         compiledTemplates = {},
         $editorBody = $('.caldera-editor-body'),
-        $saveButton = $('.caldera-header-save-button');
+        $saveButton = $('.caldera-header-save-button'),
+        lastMagicList = {
+            system: {},
+            notSystem: {}
+        },
+        lastMagicObj = {
+            system: {},
+            notSystem: {}
+        };
 
     /**
      * Initialize editor
@@ -37,6 +45,8 @@ function CFFormEditor( editorConfig, $ ){
             var firstField = $('.layout-grid-panel .icon-edit').first().data( 'field' );
             renderFieldConfig(getFieldConfigWrapper(firstField), self.getStore().getField( firstField ) );
         });
+
+
     };
 
     /**
@@ -123,6 +133,95 @@ function CFFormEditor( editorConfig, $ ){
             }
         }
     };
+
+    /**
+     * Get all processors currently in form
+     *
+     * @todo Use store not DOM
+     *
+     * @since 1.5.1
+     *
+     * @returns {Array}
+     */
+    this.getCurrentProcessors = function() {
+        //for now, pull of DOM
+        var $el,
+            processors = [];
+        $( '.caldera-editor-processor-config-wrapper' ).each(function (i,el) {
+            $el = $( el );
+            processors.push({
+                id: $el.attr( 'id' ),
+                type: $el.data( 'type' ),
+                name: $el.find( 'h3' ).first().html()
+            });
+        });
+
+        return processors;
+    };
+
+    /**
+     * Create magic tag list as UL
+     *
+     * @since 1.5.1
+     * 
+     * @param includeSystem
+     * @returns {*|jQuery|HTMLElement}
+     */
+    this.magicTagsUl = function ( includeSystem ) {
+        var cachedObj,
+            cachedList,
+            list = optList(true),
+            $list = $( '<ul>' ),
+            i;
+        if( includeSystem ){
+            cachedObj = lastMagicObj.system;
+            cachedList = lastMagicList.system;
+        }else{
+            cachedObj = lastMagicObj.notSystem;
+            cachedList = lastMagicList.notSystem;
+        }
+        if( ! emptyObject( cachedObj ) && ! emptyObject( cachedList ) && JSON.stringify(cachedObj) === JSON.stringify(list)  ){
+            return cachedList;
+        }
+
+        //@todo translations!
+        $list.append( '<li class="header">Fields</li>' );
+        $.each( list.fields, function (i,field) {
+            $list.append( '<li class="tag" data-tag="%'+ field.slug + '%"><strong></strong>%'+ field.slug + '%</li>')
+        });
+
+        if ( includeSystem ) {
+            $list.append('<li class="header">System Tags</li>');
+            $.each( list.system, function (i,tag) {
+                $list.append('<li class="tag" data-tag="{' + tag.value + '}"><strong></strong>{' + tag.label + '}</li>');
+            });
+
+            $.each( list.processors, function (i,processor) {
+                $list.append('<li class="header">' + processor.name + '</li>');
+                var tagGroup;
+               for( tagGroup in processor.tags ){
+                   $.each( processor.tags[ tagGroup ], function (i,tag) {
+                       $list.append( '<li class="tag" data-tag="{'+tag +'}"><strong></strong>{'+tag+'} </li>');
+                   });
+               }
+            });
+
+
+        };
+
+        if( includeSystem ){
+            lastMagicObj.system = list;
+            lastMagicList.system = $list;
+        }else{
+            lastMagicObj.notSystem = list;
+            lastMagicList.notSystem = $list;
+        }
+
+        return $list;
+
+
+    };
+
 
     function setUpOptions($wrapper,fieldId) {
         var opts = self.getStore().getFieldOptions( fieldId );
@@ -573,7 +672,7 @@ function CFFormEditor( editorConfig, $ ){
             return false;
         }
 
-        var list = optList();
+        var list = optList(false);
         var $sel;
 
         $autoBox.html( rendered );
@@ -592,42 +691,58 @@ function CFFormEditor( editorConfig, $ ){
      *
      * @since 1.5.1
      *
-     * @TODO lazy-loader/not recreating -- need to have system for emptying when field added/removed first.
+     * @TODO lazy-loader/not recreating -- need to have system for emptying when field added/removed first. Also for processors.
      *
-     * @returns {{system: {}, fields: {}}}
+     * @param includeSystem
+     * @returns {{system: {}, fields: {}, variables: *}}
      */
-    function optList(){
+    function optList(includeSystem){
 
         var list = {
             system: {},
             fields: {},
-            variables: self.variables.getAll()
+            variables: self.variables.getAll(),
+            processors : {}
         },
             fields = self.getStore().getFields(),
-            i = 0;
+            i = 0,
+            field;
 
         for( var fieldId in fields ){
+            field = self.getStore().getField( fieldId );
             list.fields[i] = {
-                value: fields[fieldId].ID,
-                label: fields[fieldId].label
+                value: field.value,
+                label: field.label,
+                slug: field.slug
             };
             i++;
 
         }
 
-         var si = 0,
-             sysTags = system_values.system.tags,
-             sysBefore = system_values.system.wrap[0],
-             sysAfter = system_values.system.wrap[1];
-        for( var tag in sysTags ){
-            sysTags[ tag ].forEach( function(text){
-                list.system[si] = {
-                    value: sysBefore + text + sysAfter,
-                    label: sysBefore + text + sysAfter
-                };
-                si++;
-            });
+        if ( includeSystem ) {
+            var si = 0,
+                sysTags = system_values.system.tags,
+                sysBefore = system_values.system.wrap[0],
+                sysAfter = system_values.system.wrap[1];
+            for (var tag in sysTags) {
+                sysTags[tag].forEach(function (text) {
+                    list.system[si] = {
+                        value: sysBefore + text + sysAfter,
+                        label: sysBefore + text + sysAfter
+                    };
+                    si++;
+                });
 
+            }
+
+            self.getCurrentProcessors().forEach(function (proccesor) {
+                if (undefined != typeof  system_values[proccesor.type]) {
+                    list.processors[proccesor.type] = {
+                        name: proccesor.name,
+                        tags: system_values[proccesor.type].tags
+                    };
+                }
+            });
         }
 
         return list;
@@ -688,6 +803,8 @@ function CFFormEditor( editorConfig, $ ){
 
         $el.val(selected);
     }
+    
+
 
     /**
      * Create a field type config
@@ -1202,7 +1319,7 @@ function CFFormEditor( editorConfig, $ ){
         getValue: function ( $variable ) {
             return $variable.find( '.cf-variable-value' ).val();
         }
-    }
+    };
 
 }
 
