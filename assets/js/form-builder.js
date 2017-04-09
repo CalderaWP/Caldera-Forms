@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.1-b-1 - 2017-04-03 */
+
 /**
  * Form editor system
  *
@@ -104,13 +104,6 @@ function CFFormEditor( editorConfig, $ ){
                 //this would let us get fields from store, but not ready for that yet.
                 //data_fields.config.fields = self.getStore().getFields();
                 $(el).data('config', JSON.stringify(data_fields.config));
-                if ( data_fields.config.hasOwnProperty( 'fields')) {
-                    for (var i in data_fields.config.fields) {
-                        if( 'calculation' === self.getStore().getFieldType( data_fields.config.fields[i].ID ) ){
-                            data_fields.config.fields[i] = self.getStore().getField( data_fields.config.fields[i].ID );
-                        }
-                    }
-                }
 
                 return true;
             },
@@ -418,21 +411,18 @@ function CFFormEditor( editorConfig, $ ){
                     newFormula += ' ' + lineGroups.operator + ' ';
                 }else{
                     $.each(lineGroups, function (lI, lineGroup) {
-                        newFormula += '( ';
+                        newFormula += '(';
                         var line;
                         for (var lGI = 0; lGI <= lineGroup.length; lGI++) {
                             line = lineGroup[lGI];
                             if ('object' == typeof line) {
 
                                 newFormula +=  line.operator + line.field;
-                                if (lGI + 1 != lineGroup.length) {
-                                  //  newFormula += ' ' + ' ' + line.operator;
-                                }
                             }
 
 
                         }
-                        newFormula += ' )';
+                        newFormula += ')';
                     });
                 }
 
@@ -1125,7 +1115,6 @@ function CFFormEditor( editorConfig, $ ){
 
 /* contains edit.js, layout-grid.js, processors.js */
 function new_conditional_group(obj){
-
     var id 	  	=	obj.trigger.data('id'),
         lineid 	=	'cl' + Math.round(Math.random() * 18746582734),
         rowid	=	'rw' + Math.round(Math.random() * 98347598345),
@@ -1140,10 +1129,8 @@ function new_conditional_group(obj){
                 ]
             }
         ];
-
-
     return {group : group, id: id};
-}
+
 function new_conditional_line(obj){
 
     var id 	  	=	obj.trigger.data('id'),

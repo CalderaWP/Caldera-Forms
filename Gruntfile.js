@@ -119,38 +119,7 @@ module.exports = function (grunt) {
                  ],
                 dest: 'assets/css/caldera-forms-front.css'
             },
-            vue: {
-                src: [
-                    'assets/js/vue/vue.js',
-                    'assets/js/vue/vue-filters.js'
-                ],
-                dest: 'assets/js/vue.js'
-            },
-            entry: {
-                src: [
-                    'assets/js/api/client.js',
-                    'assets/js/api/stores.js',
-                    'assets/js/viewer/viewer.js',
-                    'assets/js/viewer/init.js'
-                ],
-                dest: 'assets/js/entry-viewer-2.js'
-            },
-            form: {
-                src: [
-                    'assets/js/fields.js',
-                    'assets/js/field-config.js',
-                    'assets/js/frontend-script-init.js',
-                ],
-                dest: 'assets/js/caldera-forms-front.js'
-            },
-            editor : {
-                src: [
-                    'assets/js/form-editor/conditionals.js',
-                    'assets/js/form-editor/form-editor.js',
-                    'assets/js/form-editor/init.js'
-                ],
-                dest: 'assets/js/form-builder.js'
-            }
+
         },
         watch: {
             scripts: {
@@ -173,15 +142,6 @@ module.exports = function (grunt) {
                     spawn: false,
                 }
             },
-            entry: {
-                files: [
-                    'assets/js/api/client.js',
-                    'assets/js/api/stores.js',
-                    'assets/js/viewer/viewer.js',
-                    'assets/js/viewer/init.js'
-                ],
-                tasks: ['concat:entry', 'uglify'],
-            }
         },
         copy: {
             fonts: {
