@@ -1140,13 +1140,17 @@ function CFFormEditor( editorConfig, $ ){
             var $input = $(this),
                 includeSystem = true;
             if($input.parents('.caldera-editor-field-config-wrapper').length > 0) {
-               includeSystem = false;
+                includeSystem = false;
             }
 
             var $list = self.magicTagsUl(includeSystem),
                 $wrap = $input.parent(),
                 $wrapper = $( '<div class="magic-tags-autocomplete" style="display: none;"></div>' ),
-                remove = function (e) {
+                scrolling = false,
+                remove = function () {
+                    if( true === scrolling ){
+                        return;
+                    }
                     setTimeout(function(){
                         $wrapper.slideUp(150);
                     }, 100 );
@@ -1162,7 +1166,7 @@ function CFFormEditor( editorConfig, $ ){
             //Yes slidedown is a little annoying, but it scrolls list into view
             $wrapper.append( $list ).slideDown(150);
             if(e.type === 'focusout'){
-               remove();
+                remove();
             }
             $input.on( 'focusout', remove );
             $wrapper.find( 'li' ).on( 'click', function () {
@@ -1171,13 +1175,12 @@ function CFFormEditor( editorConfig, $ ){
             });
 
             $wrapper.on( 'scroll', function () {
-               console.log('scrolling');
+                scrolling = true;
             });
 
             $wrapper.scrollEnd(function() {
-                console.log('scraollend' );
-
-            },10);
+                scrolling = false;
+            },250);
         });
 
 
