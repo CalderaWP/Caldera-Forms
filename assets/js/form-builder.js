@@ -193,7 +193,7 @@ function CFFormEditor( editorConfig, $ ){
         if (includeSystem) {
             $list.append('<li class="header">System Tags</li>');
             $.each(list.system, function (i, tag) {
-                $list.append('<li class="tag" data-tag="{' + tag.value + '}"><strong></strong>{' + tag.label + '}</li>');
+                $list.append('<li class="tag" data-tag="' + tag.value + '"><strong></strong>' + tag.label + '</li>');
             });
 
             $.each(list.processors, function (i, processor) {
@@ -1153,7 +1153,8 @@ function CFFormEditor( editorConfig, $ ){
                         return;
                     }
                     setTimeout(function(){
-                        $wrapper.slideUp(150);
+						$wrap.find( 'p' ).show().attr( 'aria-hidden', 'false' );
+						$wrapper.slideUp(150);
                     }, 100 );
                     setTimeout(function(){
                         $wrapper.remove();
@@ -1161,7 +1162,7 @@ function CFFormEditor( editorConfig, $ ){
                 };
             $wrapper.attr( 'data-active-tag', 'true' );
             $input.attr( 'data-active-tag', 'true' );
-
+			$wrap.find( 'p' ).hide().attr( 'aria-hidden', 'true' );
 
             $wrap.append( $wrapper );
             //Yes slidedown is a little annoying, but it scrolls list into view
