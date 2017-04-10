@@ -1144,10 +1144,14 @@ function CFFormEditor( editorConfig, $ ){
                includeSystem = false;
             }
 
-            var $list = self.magicTagsUl(),
+            var $list = self.magicTagsUl(includeSystem),
                 $wrap = $input.parent(),
                 $wrapper = $( '<div class="magic-tags-autocomplete" style="display: none;"></div>' ),
+                scrolling = false,
                 remove = function () {
+                    if( true === scrolling ){
+                    	return;
+					}
                     setTimeout(function(){
                         $wrapper.slideUp(150);
                     }, 100 );
@@ -1155,7 +1159,8 @@ function CFFormEditor( editorConfig, $ ){
                         $wrapper.remove();
                     }, 300);
                 };
-
+            $wrapper.attr( 'data-active-tag', 'true' );
+            $input.attr( 'data-active-tag', 'true' );
 
 
             $wrap.append( $wrapper );
@@ -1170,6 +1175,13 @@ function CFFormEditor( editorConfig, $ ){
                 remove();
             });
 
+            $wrapper.on( 'scroll', function () {
+               scrolling = true;
+            });
+
+            $wrapper.scrollEnd(function() {
+              scrolling = false;
+            },250);
         });
 
 
@@ -3164,3 +3176,13 @@ Handlebars.registerHelper('console', function(context, options) {
 });
 
 
+
+jQuery.fn.scrollEnd = function(callback, timeout) {
+	jQuery(this).scroll(function(){
+		var jQuerythis = jQuery(this);
+		if (jQuerythis.data('scrollTimeout')) {
+			clearTimeout(jQuerythis.data('scrollTimeout'));
+		}
+		jQuerythis.data('scrollTimeout', setTimeout(callback,timeout));
+	});
+};

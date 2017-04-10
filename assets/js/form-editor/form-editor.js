@@ -1143,10 +1143,10 @@ function CFFormEditor( editorConfig, $ ){
                includeSystem = false;
             }
 
-            var $list = self.magicTagsUl(),
+            var $list = self.magicTagsUl(includeSystem),
                 $wrap = $input.parent(),
                 $wrapper = $( '<div class="magic-tags-autocomplete" style="display: none;"></div>' ),
-                remove = function () {
+                remove = function (e) {
                     setTimeout(function(){
                         $wrapper.slideUp(150);
                     }, 100 );
@@ -1154,7 +1154,8 @@ function CFFormEditor( editorConfig, $ ){
                         $wrapper.remove();
                     }, 300);
                 };
-
+            $wrapper.attr( 'data-active-tag', 'true' );
+            $input.attr( 'data-active-tag', 'true' );
 
 
             $wrap.append( $wrapper );
@@ -1169,6 +1170,14 @@ function CFFormEditor( editorConfig, $ ){
                 remove();
             });
 
+            $wrapper.on( 'scroll', function () {
+               console.log('scrolling');
+            });
+
+            $wrapper.scrollEnd(function() {
+                console.log('scraollend' );
+
+            },10);
         });
 
 
