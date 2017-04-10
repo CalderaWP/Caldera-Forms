@@ -62,9 +62,6 @@ jQuery(document).ready(function($){
         alert( ':(' );
     }
 
-
-
-
     // switch active group
     function switch_active_group(id){
         var fields_panel	= $('.caldera-editor-fields-panel'),

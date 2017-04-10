@@ -17,6 +17,7 @@ function CFFormEditor( editorConfig, $ ){
         fieldConfigs = {},
         currentFromFields = {},
         compiledTemplates = {},
+		compiledTemplatesList = {},
         $editorBody = $('.caldera-editor-body'),
         $saveButton = $('.caldera-header-save-button'),
         lastMagicList = {
@@ -1208,7 +1209,6 @@ function CFFormEditor( editorConfig, $ ){
 		});
     }
 
-
     /**
      * Get a compiled Handlebars template or the fallback template
      *
@@ -1219,14 +1219,25 @@ function CFFormEditor( editorConfig, $ ){
      */
     function getCompiledTemplate( template ) {
         if ( emptyObject( compiledTemplates) ) {
-            preCompileTemplates();
+			var pretemplates = $('.cf-editor-template');
+			for( var t = 0; t < pretemplates.length; t++){
+				if( null != pretemplates[t] ){
+					compiledTemplatesList[pretemplates[t].id] = pretemplates[t].innerHTML;
+				}
+			}
         }
 
-        if (has( compiledTemplates, template + '_tmpl')) {
-            return compiledTemplates[template + '_tmpl'];
-        } else {
-            return compiledTemplates.noconfig_field_templ;
-        }
+        var key =  template + '_tmpl';
+		if (has( compiledTemplates, key)) {
+            return compiledTemplates[key];
+		}else if ( -1 !== compiledTemplatesList.hasOwnProperty(key) ) {
+			compiledTemplates[key] = Handlebars.compile(compiledTemplatesList[key] );
+			delete compiledTemplatesList[key];
+			return compiledTemplates[key];
+        }else{
+			return compiledTemplates.noconfig_field_templ;
+
+		}
 
     }
 
@@ -1275,18 +1286,7 @@ function CFFormEditor( editorConfig, $ ){
 
     }
 
-    /**
-     * Pre compile all Handlebars templates
-     *
-     * @since 1.5.1
-     */
-    function preCompileTemplates(){
-        var pretemplates = $('.cf-editor-template');
-        for( var t = 0; t < pretemplates.length; t++){
-            compiledTemplates[pretemplates[t].id] = Handlebars.compile( pretemplates[t].innerHTML );
-        }
-
-    }
+   
 
     /**
      * Check if object has a key
