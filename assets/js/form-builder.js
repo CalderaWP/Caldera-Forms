@@ -1,4 +1,7 @@
 
+function CFFieldBrowser( fieldTypes, $tmpl, $el, $ ){
+
+}
 /**
  * Form editor system
  *
@@ -8,6 +11,7 @@
  * @param $ jQuery
  * @constructor
  */
+
 function CFFormEditor( editorConfig, $ ){
 
     var editorAPI,
@@ -221,7 +225,17 @@ function CFFormEditor( editorConfig, $ ){
 
 
     };
+    
+    this.newField = function ($target) {
+			var x = 1;
+	};
 
+	this.hideEditor = function () {
+		$editorBody.hide().attr( 'aria-hidden', true );
+	};
+	this.showEditor = function () {
+		$editorBody.show().attr( 'aria-hidden', true );
+	};
 
     function setUpOptions($wrapper,fieldId) {
         var opts = self.getStore().getFieldOptions( fieldId );
@@ -1186,6 +1200,16 @@ function CFFormEditor( editorConfig, $ ){
         });
 
 
+		//Add field to grid
+		$( ".layout-column" ).droppable({
+			greedy: true,
+			activeClass: "ui-state-dropper",
+			hoverClass: "ui-state-hoverable",
+			accept: ".layout-new-form-field",
+			drop: function( event, ui ) {
+				self.newField( $(this) );
+			}
+		});
     }
 
 
@@ -1438,6 +1462,7 @@ jQuery(document).ready(function($){
     }else{
         alert( ':(' );
     }
+
 
 
 
@@ -2351,6 +2376,8 @@ jQuery(document).ready(function($) {
     }
 
     function insert_new_field(newfield, target, field_default){
+    	return theEditor.newField(target);
+		return;
         var name = "fld_" + Math.round( Math.random() * 10000000 ),
             new_name 	= name,
             field_conf	= $('#field_config_panels'),
@@ -2448,19 +2475,7 @@ jQuery(document).ready(function($) {
                 $( ".layout-column" ).sortable("refresh");
             }
         });
-        // Tools Bar Items
-        $( ".layout-column" ).droppable({
-            greedy: true,
-            activeClass: "ui-state-dropper",
-            hoverClass: "ui-state-hoverable",
-            accept: ".layout-new-form-field",
-            drop: function( event, ui ) {
-                var newfield= ui.draggable.clone(),
-                    target = $(this);
 
-                insert_new_field(newfield, target);
-            }
-        });
 
 
         buildLayoutString();

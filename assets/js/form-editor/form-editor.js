@@ -7,6 +7,7 @@
  * @param $ jQuery
  * @constructor
  */
+
 function CFFormEditor( editorConfig, $ ){
 
     var editorAPI,
@@ -220,7 +221,17 @@ function CFFormEditor( editorConfig, $ ){
 
 
     };
+    
+    this.newField = function ($target) {
+			var x = 1;
+	};
 
+	this.hideEditor = function () {
+		$editorBody.hide().attr( 'aria-hidden', true );
+	};
+	this.showEditor = function () {
+		$editorBody.show().attr( 'aria-hidden', true );
+	};
 
     function setUpOptions($wrapper,fieldId) {
         var opts = self.getStore().getFieldOptions( fieldId );
@@ -1185,6 +1196,16 @@ function CFFormEditor( editorConfig, $ ){
         });
 
 
+		//Add field to grid
+		$( ".layout-column" ).droppable({
+			greedy: true,
+			activeClass: "ui-state-dropper",
+			hoverClass: "ui-state-hoverable",
+			accept: ".layout-new-form-field",
+			drop: function( event, ui ) {
+				self.newField( $(this) );
+			}
+		});
     }
 
 

@@ -64,6 +64,7 @@ jQuery(document).ready(function($){
 
 
 
+
     // switch active group
     function switch_active_group(id){
         var fields_panel	= $('.caldera-editor-fields-panel'),
@@ -974,6 +975,8 @@ jQuery(document).ready(function($) {
     }
 
     function insert_new_field(newfield, target, field_default){
+    	return theEditor.newField(target);
+		return;
         var name = "fld_" + Math.round( Math.random() * 10000000 ),
             new_name 	= name,
             field_conf	= $('#field_config_panels'),
@@ -1071,19 +1074,7 @@ jQuery(document).ready(function($) {
                 $( ".layout-column" ).sortable("refresh");
             }
         });
-        // Tools Bar Items
-        $( ".layout-column" ).droppable({
-            greedy: true,
-            activeClass: "ui-state-dropper",
-            hoverClass: "ui-state-hoverable",
-            accept: ".layout-new-form-field",
-            drop: function( event, ui ) {
-                var newfield= ui.draggable.clone(),
-                    target = $(this);
 
-                insert_new_field(newfield, target);
-            }
-        });
 
 
         buildLayoutString();
