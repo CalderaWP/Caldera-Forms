@@ -1948,7 +1948,6 @@ jQuery(document).ready(function($){
 
         if(e.type && e.type === 'focusin'){
             field.removeClass('bound_field').addClass('reload-binding');
-            rebind_field_bindings();
             this.value = value;
             return;
         }
