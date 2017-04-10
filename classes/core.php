@@ -3704,7 +3704,7 @@ class Caldera_Forms {
 		}
 
 		if ( ! empty( $field[ 'hide_label' ] ) ) {
-			$field_classes[ 'field_label' ][] = 'screen-reader-text';
+			$field_classes[ 'field_label' ][] = 'screen-reader-text sr-only';
 		}
 
 		$field_structure = array(

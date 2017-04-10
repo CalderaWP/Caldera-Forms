@@ -57,7 +57,7 @@ if( ! defined( 'ABSPATH' ) ){
 		<a href="#" v-on:click.prevent="nextPage" class="caldera-forms-entry-viewer-next-btn btn btn-default caldera-forms-entry-viewer-btn caldera-forms-entry-viewer-nav-bt"  title="<?php esc_attr_e( 'Next page of entries', 'caldera-forms' ); ?>">
 			<?php esc_html_e( 'Next', 'caldera-forms' ); ?>
 		</a>
-		<label for="caldera-entry-viewer-2-per-page" class="screen-reader-text">
+		<label for="caldera-entry-viewer-2-per-page" class="screen-reader-text sr-only">
 			<?php esc_html_e( 'Entries Per Page', 'caldera-forms' ); ?>
 		</label>
 		<input type="number" min="1" max="100" v-model="perPage" v-on:change="updatePerPage" id="caldera-entry-viewer-2-per-page">
