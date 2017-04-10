@@ -2101,13 +2101,16 @@ class Caldera_Forms {
 	/**
 	 * Get a field's data.
 	 *
+	 * @since 1.5.0.8
+	 *
 	 * @param string $field_id ID of field.
 	 * @param string|array $form Form config array or ID of form.
 	 * @param bool|false $entry_id Optional. Entry ID to save in.
+	 * @param bool $check_conditionals. Optional. If conditionals should be checked. Default is true. @since 1.5.0.8
 	 *
 	 * @return bool
 	 */
-	static public function get_field_data( $field_id, $form, $entry_id = false ) {
+	static public function get_field_data( $field_id, $form, $entry_id = false, $check_conditionals = true ) {
 		global $processed_data;
 
 		if ( is_string( $form ) ) {
@@ -2118,7 +2121,7 @@ class Caldera_Forms {
 		}
 
 		$field = Caldera_Forms_Field_Util::get_field( $field_id, $form );
-		if( is_array( $field ) && false === Caldera_Forms_Field_Util::check_conditional( $field, $form ) ){
+		if( $check_conditionals && is_array( $field ) && false === Caldera_Forms_Field_Util::check_conditional( $field, $form ) ){
 			return;
 		}
 
@@ -2494,12 +2497,15 @@ class Caldera_Forms {
 	/**
 	 * Get submission data from a form being submitted or a saved entry
 	 *
+	 * @since unknown
+	 *
 	 * @param array $form Form Config.
 	 * @param bool|false $entry_id Optional. Entry ID to get data for, or if false, the default, get form current submission.
+	 * @param bool $check_conditionals. Optional. If conditionals should be checked. Default is true. @since 1.5.0.8
 	 *
 	 * @return array|\WP_Error
 	 */
-	static public function get_submission_data( $form, $entry_id = false ) {
+	static public function get_submission_data( $form, $entry_id = false, $check_conditionals = true ) {
 		global $processed_data;
 
 		if ( is_string( $form ) ) {
@@ -2526,12 +2532,12 @@ class Caldera_Forms {
 		foreach ( $form[ 'fields' ] as $field_id => $field ) {
 			// get data
 			if ( ! empty( $field[ 'conditions' ][ 'type' ] ) ) {
-				if ( ! self::check_condition( $field[ 'conditions' ], $form, $entry_id ) ) {
+				if ( $check_conditionals && ! self::check_condition( $field[ 'conditions' ], $form, $entry_id ) ) {
 					continue;
 				}
 			}
 
-			self::get_field_data( $field_id, $form, $entry_id );
+			self::get_field_data( $field_id, $form, $entry_id, $check_conditionals );
 		}
 
 		return $processed_data[ $indexkey ];
@@ -3510,7 +3516,9 @@ class Caldera_Forms {
 		// get fields
 		$field_types = Caldera_Forms_Fields::get_all();
 
-		$entry = self::get_submission_data( $form, $entry_id );
+		//False for third arg added in 1.5.0.8 to prevent conditions from being shown
+		//See: https://github.com/CalderaWP/Caldera-Forms/issues/1494
+		$entry = self::get_submission_data( $form, $entry_id, false );
 		$data  = array(
 			'data' => array()
 		);

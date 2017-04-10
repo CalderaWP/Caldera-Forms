@@ -1310,7 +1310,7 @@ class Caldera_Forms_Admin {
 			}
 
 			if( empty( $headers ) ){
-				wp_die( esc_html_e( 'Could not process export. This is most likely due to a problem with the form configuration.', 'caldera-forms' ) );
+				wp_die( esc_html__( 'Could not process export. This is most likely due to a problem with the form configuration.', 'caldera-forms' ) );
 			}
 			$encoding = Caldera_Forms_CSV_Util::character_encoding( $form );
 
