@@ -1,13 +1,13 @@
 {
   "name": "caldera-forms",
-  "version": "1.5.0.7",
+  "version": "1.5.0.8",
   "description": "Apex WordPress Forms",
   "repository": {
     "type": "git",
     "url": "https://github.com/CalderaWP/caldera-forms"
   },
   "author": "CalderaWP",
-  "license": "GPLv2+",
+  "license": "GPL-2.0",
   "bugs": {
     "url": "https://github.com/CalderaWP/caldera-forms"
   },
