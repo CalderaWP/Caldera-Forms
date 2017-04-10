@@ -419,25 +419,11 @@ class Caldera_Forms_Field_Util {
 	 * @return string
 	 */
 	public static function format_calc_field( $field, $value ){
-		if (  ! empty( $field[ 'config' ][ 'thousand_separator' ] ) ) {
-			$thousands_sep= $field[ 'config' ][ 'thousand_separator' ];
-		}else{
-			$thousands_sep = ',';
-		}
-
-		if (  ! empty( $field[ 'config' ][ 'decimal_separator' ] ) ) {
-			$decimal_sep = $field[ 'config' ][ 'decimal_separator' ];
-		}else{
-			$decimal_sep = '.';
-		}
-
 		if ( isset( $field[ 'config' ][ 'fixed' ] ) ) {
 			$money = true;
-			$decimals = 2;
 		}else{
 			$money = false;
-			//Add filter or UI option?
-			$decimals = 12;
+
 		}
 
 		if ( $money ) {
@@ -449,11 +435,7 @@ class Caldera_Forms_Field_Util {
 
 		}
 
-		$value = number_format( $value, $decimals, $decimal_sep, $thousands_sep );
-
-
 		return $value;
-
 
 	}
 }
