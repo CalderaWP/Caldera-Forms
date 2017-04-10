@@ -9,11 +9,11 @@ License: GPLv2
 Responsive form builder for contact forms, user registration and login forms, Mailchimp, and more.
 
 == Description ==
-Create beautiful, responsive forms with a simple drag and drop editor.
+Create beautiful, responsive forms with a simple drag and drop editor. Learn more about Caldera Forms at <a href="https://calderaforms.com?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms">CalderaForms.com</a>.
 
 Caldera Forms' visual editor simplifies form building for WordPress. Set up your form with multiple columns, add additional pages, and funnel user responses with conditional logic to get more robust data and relevant information from your customers and site visitors. Anti-spam, AJAX, notification emails, and database entry tracking are enabled by default.
 
-Caldera Forms is a free plugin by <a href="http://CalderaLabs.org?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms" title="Caldera : Makers of fine WordPress">Caldera Labs</a>. Learn more about Caldera Forms at <a href="https://calderaforms.com?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms">CalderaForms.com</a>
+Caldera Forms is a free plugin by <a href="http://CalderaLabs.org?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms" title="Caldera : Makers of fine WordPress">Caldera Labs</a>.
 
 > 5 Stars! "Exceptionally well thought out and executed."
 >
@@ -743,6 +743,14 @@ This could also be a sign of a more serious issue on your server, but is probabl
 5. **Go Further With Form Processors** - Auto-responders, redirects included! Go further with our add-ons!
 
 == Changelog ==
+= Caldera Forms 1.5.0.8 (April 10, 2017) The Earth Is Round, Contact Forms Are Good =
+See: [https://calderaforms.com/updates/caldera-forms-1-5-0-8](https://calderaforms.com/updates/caldera-forms-1-5-0-8?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.0.8)
+* FIXED: Calculations fields were rounded wrong in some cases.
+* FIXED: Fields that are shown with conditions did not always show up in entry viewer or CSV exports.
+* DEPRECATED: Caldera_Forms_Render_Util::field_id_attribute() since it gets form, not field ID attribute.
+* ADDED: Caldera_Forms_Render_Util::form_id_attr() to get form ID attribute.
+* ADDED: Utility methods for formatting inline JavaScript that were needed in add-ons.
+
 = Caldera Forms 1.5.0.7 ( April 4, 2017 ) %funny_name_for_release%
 See: [https://calderaforms.com/updates/caldera-forms-1-5-0-7](https://calderaforms.com/updates/caldera-forms-1-5-0-7?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.0.7)
 * FIXED: Checkbox fields were rendering as {"opt": "ccc" ... which is so bad. Fixed the crap out of that.
@@ -1640,3 +1648,6 @@ See: https://calderaforms.com/updates/caldera-forms-1.5.0.6/
 
 = 1.5.0.7 =
 See: https://calderaforms.com/updates/caldera-forms-1.5.0.7
+
+= 1.5.0.8 =
+See: https://calderaforms.com/updates/caldera-forms-1-5-0-8
