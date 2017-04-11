@@ -142,6 +142,13 @@ module.exports = function (grunt) {
                     'assets/js/frontend-script-init.js',
                 ],
                 dest: 'assets/js/caldera-forms-front.js'
+            },
+            parsley: {
+                src: [
+                    'assets/js/parsley.js',
+                    'assets/js/parsley-aria.js'
+                ],
+                dest: 'assets/js/parsley.min.js'
             }
         },
         watch: {

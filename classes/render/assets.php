@@ -252,6 +252,7 @@ class Caldera_Forms_Render_Assets {
 			'conditionals'   => self::make_url( 'conditionals' ),
 			'validator-i18n' => null,
 			'validator'      => self::make_url( 'parsley' ),
+			'validator-aria' => self::make_url( 'parsley-aria' ),
 			'init'           => self::make_url( 'frontend-script-init' ),
 			'handlebars'     => CFCORE_URL . 'assets/js/handlebars.js',
 			'entry-viewer-2' => self::make_url( 'entry-viewer-2'),
@@ -353,6 +354,8 @@ class Caldera_Forms_Render_Assets {
 			if( 'validator' == $script_key ){
 				wp_register_script( self::make_slug( $script_key ), $script_url, array(), CFCORE_VER, false );
 				continue;
+			}elseif ( 'validator-aria' == $script_key ){
+				wp_register_script( self::make_slug( $script_key ), $script_url, array( 'jquery', self::make_slug( 'validator' ) ), CFCORE_VER, false );
 			}
             self::register_script($script_key, $script_url );
 		}
@@ -377,6 +380,7 @@ class Caldera_Forms_Render_Assets {
 		 * @param array $script_style_urls URLs of registered scripts and styles
 		 */
 		do_action( 'caldera_forms_assets_registered', $script_style_urls );
+
 
 	}
 
@@ -424,6 +428,9 @@ class Caldera_Forms_Render_Assets {
 		if( in_array( $script, array( 'validator', self::make_slug( 'validator' ) ) ) ){
 			$scripts = self::get_core_scripts();
 			wp_enqueue_script( self::make_slug( 'validator' ), $scripts[ 'validator' ], array(), CFCORE_VER, false );
+			if( ! self::should_minify() ){
+				wp_enqueue_script( self::make_slug( 'validator-aria' ) );
+			}
 		}
 		$slug = self::make_slug( $script );
 		if ( ! wp_script_is( $slug, 'enqueued' ) && wp_script_is( $slug, 'registered' ) ) {
@@ -572,6 +579,7 @@ class Caldera_Forms_Render_Assets {
 	    }else{
 		    $slug = self::make_slug( $script_key );
 	    }
+
 
         if ('field' == $script_key) {
             $depts[] = self::make_slug('field-config');
