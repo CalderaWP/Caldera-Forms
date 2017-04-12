@@ -105,12 +105,9 @@ class Caldera_Forms_Admin {
 		add_action("wp_ajax_cf_get_form_preview", array( $this, 'get_form_preview') );
 
 		add_action( 'caldera_forms_admin_footer', array( $this, 'admin_alerts' ) );
-		//add_action( 'caldera_forms_admin_footer', array( 'Caldera_Forms_Entry_Viewer', 'print_triggers' ) );
 		add_action( 'admin_footer', array( $this, 'add_shortcode_inserter'));
 
-
 		$this->addons = apply_filters( 'caldera_forms_get_active_addons', array() );
-
 
 		add_action('admin_footer-edit.php', array( $this, 'render_editor_template')); // Fired on the page with the posts table
 		add_action('admin_footer-post.php', array( $this, 'render_editor_template')); // Fired on post edit page
@@ -1070,7 +1067,7 @@ class Caldera_Forms_Admin {
 
 		Caldera_Forms_Admin_Assets::admin_common();
 
-		if ( ! empty( $_GET[ 'edit' ] ) ) {
+		if ( Caldera_Forms_Admin::is_edit() ) {
 			Caldera_Forms_Admin_Assets::form_editor();
 
 		} else {
@@ -1761,6 +1758,51 @@ class Caldera_Forms_Admin {
         remove_all_actions( 'user_admin_notices' );
         remove_all_actions( 'all_admin_notices' );
     }
+
+	/**
+	 * Check if is a Caldera Forms page
+	 *
+	 * @since 1.5.0.9
+	 *
+	 * @param null|string $page Optional. Pass page name (get var) for sub page
+	 *
+	 * @return bool
+	 */
+	public static function is_page( $page = null ){
+		if( is_admin() && isset( $_GET[ 'page' ] )  ){
+			if( is_null( $page ) ){
+				return  Caldera_Forms::PLUGIN_SLUG == $_GET[ 'page' ];
+			}elseif ( ! is_string( $page ) ){
+				return  $page == $_GET[ 'page' ];
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Check if is form editor page
+	 *
+	 * @since 1.5.0.9
+	 *
+	 * @return bool
+	 */
+	public static function is_edit(){
+		return Caldera_Forms_Admin::is_page() && isset( $_GET[ 'edit' ] );
+
+	}
+
+	/**
+	 * Check if is main admin page
+	 *
+	 * @since 1.5.0.9
+	 *
+	 * @return bool
+	 */
+	public static function is_main_page(){
+		return Caldera_Forms_Admin::is_page() && ! isset( $_GET[ 'edit' ] );
+
+	}
 
 }
 
