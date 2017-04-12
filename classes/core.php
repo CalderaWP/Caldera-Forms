@@ -3685,22 +3685,9 @@ class Caldera_Forms {
 	 * @return void|string HTML for form, if it was able to be loaded,
 	 */
 	static public function render_field( $field, $form = null, $entry_data = array(), $field_errors = array() ) {
-		global $current_form_count, $grid;
+		$current_form_count = Caldera_Forms_Render_Util::get_current_form_count();
 
-		$field_classes = array(
-			"control_wrapper"    => array( "form-group" ),
-			"field_label"        => array( "control-label" ),
-			"field_required_tag" => array( "field_required" ),
-			"field_wrapper"      => array(),
-			"field"              => array( "form-control" ),
-			"field_caption"      => array( "help-block" ),
-			"field_error"        => array( "has-error" ),
-		);
-
-		$field_classes = apply_filters( 'caldera_forms_render_field_classes', $field_classes, $field, $form );
-		$field_classes = apply_filters( 'caldera_forms_render_field_classes_type-' . $field[ 'type' ], $field_classes, $field, $form );
-		$field_classes = apply_filters( 'caldera_forms_render_field_classes_slug-' . $field[ 'slug' ], $field_classes, $field, $form );
-
+		$field_classes = Caldera_Forms_Field_Util::prepare_field_classes( $field, $form );
 
 		$field_wrapper_class = implode( ' ', $field_classes[ 'control_wrapper' ] );
 		$field_input_class   = implode( ' ', $field_classes[ 'field_wrapper' ] );
