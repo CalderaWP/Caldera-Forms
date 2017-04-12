@@ -101,11 +101,9 @@ class Caldera_Forms_Support {
 	 *
 	 * @uses "admin_enqueue_scripts" hook
 	 *
-	 * @param string $hook Current menu hook
 	 */
-	public function scripts( $hook ){
-
-		if( 'caldera-forms_page_caldera-form-support' == $hook ){
+	public function scripts(  ){
+		if( Caldera_Forms_Admin::is_page( 'caldera-form-support' ) ){
 			Caldera_Forms_Admin_Assets::enqueue_style( 'admin' );
 			Caldera_Forms_Admin_Assets::enqueue_script( 'support-page' );
 		}

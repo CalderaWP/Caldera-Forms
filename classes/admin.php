@@ -1060,7 +1060,7 @@ class Caldera_Forms_Admin {
 		}
 
 		add_action( 'admin_head', array( __CLASS__, 'remove_notice_actions' ) );
-		if( 'caldera-forms_page_caldera-forms-extend' == $screen->base ){
+		if( self::is_page( 'caldera-forms-extend' ) ){
 			add_action( 'admin_enqueue_scripts', array( 'Caldera_Forms_Admin_Extend', 'scripts' ), 55 );
 			return;
 		}
@@ -1772,7 +1772,7 @@ class Caldera_Forms_Admin {
 		if( is_admin() && isset( $_GET[ 'page' ] )  ){
 			if( is_null( $page ) ){
 				return  Caldera_Forms::PLUGIN_SLUG == $_GET[ 'page' ];
-			}elseif ( ! is_string( $page ) ){
+			}elseif ( is_string( $page ) ){
 				return  $page == $_GET[ 'page' ];
 			}
 		}
