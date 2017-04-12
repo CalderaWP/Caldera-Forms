@@ -66,11 +66,9 @@ class Caldera_Forms_Magic_Summary extends Caldera_Forms_Magic_Parser {
 		if ( ! empty( $ordered_fields ) ) {
 			foreach ( $ordered_fields as $field_id => $field ) {
 
-				if ( in_array( $field[ 'type' ], array(
-					'button',
-					'recaptcha',
-					'html'
-				) ) ) {
+				$type = Caldera_Forms_Field_Util::get_type( $field, $this->form );
+				$not_support = Caldera_Forms_Fields::not_support( $type, 'entry_list' );
+				if( $not_support ){
 					continue;
 				}
 
@@ -80,7 +78,6 @@ class Caldera_Forms_Magic_Summary extends Caldera_Forms_Magic_Parser {
 				}
 
 				$field_value = false;
-				$type = Caldera_Forms_Field_Util::get_type( $field, $this->form );
 				switch( $type ){
 					case 'file'  :
 						$field_value = Caldera_Forms_Magic_Doer::magic_image( $field,  $this->get_field_value( $field_id ), $this->form );
