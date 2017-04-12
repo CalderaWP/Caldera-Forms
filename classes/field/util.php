@@ -143,10 +143,6 @@ class Caldera_Forms_Field_Util {
 				"field_error"        => array( "has-error" ),
 			);
 
-			if( ! empty(  $field[ 'config' ][ 'custom_class' ] ) ){
-				$field_classes[ 'field' ][] = $field[ 'config' ][ 'custom_class' ];
-			}
-
 			$field_classes = apply_filters( 'caldera_forms_render_field_classes', $field_classes, $field, $form );
 			$field_classes = apply_filters( 'caldera_forms_render_field_classes_type-' . $field[ 'type' ], $field_classes, $field, $form );
 			$field_classes = apply_filters( 'caldera_forms_render_field_classes_slug-' . $field[ 'slug' ], $field_classes, $field, $form );
