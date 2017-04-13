@@ -125,14 +125,21 @@ class Caldera_Forms_Field_Util {
 	 * @return array
 	 */
 	public static function prepare_field_classes( $field, $form ){
+		$current_form_count = Caldera_Forms_Render_Util::get_current_form_count();
 		if( ! isset( self::$field_classes[ $form[ 'ID' ] ] ) ){
 			self::$field_classes[ $form[ 'ID' ] ] = array(
 
 			);
 		}
 
-		if (  empty( self::$field_classes[ $form[ 'ID' ] ][ $field[ 'ID' ] ] ) ) {
-			self::$field_classes[ $form[ 'ID' ] ][ $field[ 'ID' ] ] = array();
+		if( ! isset( self::$field_classes[ $form[ 'ID' ] ][ $current_form_count ]) ){
+			self::$field_classes[ $form[ 'ID' ] ][ $current_form_count ] = array(
+
+			);
+		}
+
+		if (  empty( self::$field_classes[ $form[ 'ID' ] ][ $current_form_count ][ $field[ 'ID' ] ] ) ) {
+			self::$field_classes[ $form[ 'ID' ] ][ $current_form_count ][ $field[ 'ID' ] ] = array();
 			$field_classes = array(
 				"control_wrapper"    => array( "form-group" ),
 				"field_label"        => array( "control-label" ),
@@ -143,15 +150,16 @@ class Caldera_Forms_Field_Util {
 				"field_error"        => array( "has-error" ),
 			);
 
+
+
 			$field_classes = apply_filters( 'caldera_forms_render_field_classes', $field_classes, $field, $form );
 			$field_classes = apply_filters( 'caldera_forms_render_field_classes_type-' . $field[ 'type' ], $field_classes, $field, $form );
 			$field_classes = apply_filters( 'caldera_forms_render_field_classes_slug-' . $field[ 'slug' ], $field_classes, $field, $form );
 
-
-			self::$field_classes[ $form[ 'ID' ] ][ $field[ 'ID' ] ] = $field_classes;
+			self::$field_classes[ $form[ 'ID' ] ][ $current_form_count ][ $field[ 'ID' ] ] = $field_classes;
 		}
 
-		return self::$field_classes[ $form[ 'ID' ] ][ $field[ 'ID' ] ];
+		return self::$field_classes[ $form[ 'ID' ] ][ $current_form_count ][ $field[ 'ID' ] ];
 	}
 
 	/**

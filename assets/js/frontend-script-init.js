@@ -98,6 +98,7 @@ var cf_jsfields_init, cf_presubmit;
 		var clicked = $(this),
 			page_box = clicked.closest('.caldera-form-page'),
 			form 	 = clicked.closest('form.caldera_forms_form'),
+			form_id = form.attr( 'id' ),
 			instance = form.data('instance'),
 			current_page = form.find('.caldera-form-page:visible').data('formpage'),
 			page	 = page_box.data('formpage') ? page_box.data('formpage') : clicked.data('page') ,
@@ -106,7 +107,8 @@ var cf_jsfields_init, cf_presubmit;
 			prev,
 			fields,
 			run = true,
-			checks = {};
+			focusPage = current_page;
+
 		if( !form.length ){
 			return;
 		}
@@ -116,59 +118,63 @@ var cf_jsfields_init, cf_presubmit;
 		fields = form.find('[data-field]');		
 		form.find('.has-error').removeClass('has-error');
 
-		
 		if( clicked.data('page') !== 'prev' && page >= current_page ){
+			fields =  $('#caldera_form_' + instance + ' [data-formpage="' + current_page + '"] [data-field]'  );
 
-			for(var f = 0; f < fields.length; f++){
-				var this_field = $(fields[f]);
-				if( this_field.is(':radio,:checkbox') ){
-					if( !this_field.hasClass('option-required') || false === this_field.is(':visible') ){continue}
-					if( !checks[this_field.data('field')] ){
-						checks[this_field.data('field')] = [];
-					}
-					checks[this_field.data('field')].push(this_field.prop('checked'));
-				}else{
-					if( this_field.prop('required') && false === this_field.is(':visible') ){ continue }
-					if( this_field.prop('required') ){
+			var this_field,
+				valid;
+			for (var f = 0; f < fields.length; f++) {
+				this_field = $(fields[f]);
+				this_field.parsley().validate();
+				valid = this_field.parsley().isValid({force: true});
+				if (true === valid) {
+					continue;
+				}
 
-						if( true !== this_field.parsley().isValid() ){
-							// ye nope!
-							if( this_field.is(":visible") ){
-								// on this page.
-								this_field.parsley().validate();
-								e.preventDefault();
-								//return;
-							}else{
-								// not on this page
-								//get page and highlight if lower than this one (aka backwards not forwards)
-								var that_page = parseFloat( this_field.closest('.caldera-form-page[data-formpage]').data('formpage') );
-								if(  that_page < parseFloat(page) ){
-									form.find('[data-page="' + that_page + '"]').addClass('has-error');
-								}
-							}
-							run = false;
+				e.preventDefault();
+				run = false;
+
+			}
+
+			if( true === run && page > current_page ){
+				for( var i = page - 1; i >= 1; i -- ){
+					fields =  $('#caldera_form_' + instance + ' [data-formpage="' + i + '"] [data-field]'  );
+
+					for (var f = 0; f < fields.length; f++) {
+						this_field = $(fields[f]);
+						this_field.parsley().validate();
+						valid = this_field.parsley().isValid({force: true});
+						if (true === valid) {
+							continue;
 						}
+
+						e.preventDefault();
+						run = false;
+						if( i > focusPage ){
+							focusPage = i;
+						}
+
 					}
 				}
+
 			}
+
+
 		}
 
-		
-		for( var ch in checks ){
-			if( checks[ch].indexOf(true) < 0){
-				$('[for="' + ch + '_' + instance + '"]').parent().addClass('has-error');
-				run = false;				
-			}else{
-				$('[for="' + ch + '_' + instance + '"]').parent().removeClass('has-error');
-			}
-		}
-		
+
+
+
 		if( false === run ){
+			if( focusPage !== current_page ){
+				$( '#form_page_' + instance + '_pg_' + current_page ).hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
+				$( '#form_page_' + instance + '_pg_' + focusPage ).show().attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' );
+			}
 			cf_validate_form( form ).validate();
 			return false;
 		}
 		
-		if(clicked.data('page') === 'next'){
+		if( clicked.data('page') === 'next'){
 			
 			if(breadcrumb){
 				breadcrumb.find('li.active').removeClass('active').children().attr('aria-expanded', 'false');
@@ -209,7 +215,8 @@ var cf_jsfields_init, cf_presubmit;
 		
 		$(document).trigger('cf.pagenav');
 
-	})
+	});
+
 	// init page errors
 	var tab_navclick;
 	$('.caldera-grid .breadcrumb').each(function(k,v){

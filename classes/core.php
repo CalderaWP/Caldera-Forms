@@ -4154,7 +4154,6 @@ class Caldera_Forms {
 			$total_rows = substr_count( $form[ 'layout_grid' ][ 'structure' ], '|' ) + 1;
 			$form[ 'grid_object' ]->before( '<div id="form_page_' . $current_form_count . '_pg_1" data-formpage="1" class="caldera-form-page" style="display:' . $display . ';" role="region" aria-labelledby="breadcrumb_' . $current_form_count . '_pg_1" aria-hidden="' . $hidden . '">', 1 );
 			$form[ 'grid_object' ]->after( '</div>', $total_rows );
-			//dump($page_breaks);
 			foreach ( $page_breaks as $page => $break ) {
 
 				$form[ 'grid_object' ]->after( '</div>', $break );
@@ -4223,7 +4222,7 @@ class Caldera_Forms {
 					}
 
 					$field[ 'grid_location' ] = $location;
-
+					//$field[ 'page' ] = $cr
 
 					Caldera_Forms_Render_Assets::enqueue_field_scripts( $field_types, $field );
 
