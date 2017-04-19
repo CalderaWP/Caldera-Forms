@@ -222,7 +222,7 @@ function cf_ajax_redirect($type, $url, $form){
 function cf_ajax_register_scripts($classes, $form){
 	if(empty($form['form_ajax'])){
 		return $classes;
-	}	
+	}
 
 
 	// enqueue scripts

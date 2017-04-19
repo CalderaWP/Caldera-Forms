@@ -69,6 +69,8 @@ class Caldera_Forms_Files{
      * @since 1.4.4
      *
      * @param array $upload Uploaded file data
+     *
+     * @return int|string The ID of attachment @since 1.5.0.8
      */
     public static function add_to_media_library( $upload ){
         require_once( ABSPATH . 'wp-admin/includes/media.php' );
@@ -87,6 +89,7 @@ class Caldera_Forms_Files{
         $media_data = wp_generate_attachment_metadata( $media_id, $upload['file'] );
         wp_update_attachment_metadata( $media_id, $media_data );
 
+	    return $media_id;
     }
 
     /**
