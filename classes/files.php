@@ -70,9 +70,13 @@ class Caldera_Forms_Files{
      *
      * @param array $upload Uploaded file data
      *
-     * @return int|string The ID of attachment @since 1.5.0.8
+     * @return int|string|bool The ID of attachment or false if error @since 1.5.0.8
      */
     public static function add_to_media_library( $upload ){
+    	if( isset( $upload[ 'error' ] ) ){
+    		return false;
+	    }
+
         require_once( ABSPATH . 'wp-admin/includes/media.php' );
         require_once( ABSPATH . 'wp-admin/includes/image.php' );
 
