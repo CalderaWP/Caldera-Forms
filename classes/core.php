@@ -2057,7 +2057,7 @@ class Caldera_Forms {
 	 * @param string|array form Form config array or ID of form.
 	 * @param bool|false $entry_id Optional. Entry ID to save in.
 	 *
-	 * @return bool
+	 * @return mixed
 	 */
 	static public function set_field_data( $field_id, $data, $form, $entry_id = false ) {
 		global $processed_data;
@@ -2066,6 +2066,14 @@ class Caldera_Forms {
 
 		if ( is_string( $form ) ) {
 			$form = Caldera_Forms_Forms::get_form( $form );
+		}
+
+		if( ! is_array( $form ) ){
+			global  $form;
+		}
+
+		if( ! is_array( $form ) ){
+			return null;
 		}
 
 		$field = Caldera_Forms_Field_Util::get_field( $field_id, $form );
@@ -2118,6 +2126,14 @@ class Caldera_Forms {
 			if ( ! isset( $form[ 'ID' ] ) || $form[ 'ID' ] !== $form ) {
 				return null;
 			}
+		}
+
+		if( ! is_array( $form ) ){
+			global  $form;
+		}
+
+		if( ! is_array( $form ) ){
+			return null;
 		}
 
 		$field = Caldera_Forms_Field_Util::get_field( $field_id, $form );
