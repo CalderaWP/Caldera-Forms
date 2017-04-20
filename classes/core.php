@@ -2544,16 +2544,21 @@ class Caldera_Forms {
 		// prep data array
 		$processed_data[ $indexkey ] = array();
 
-		// initialize process data
-		foreach ( $form[ 'fields' ] as $field_id => $field ) {
-			// get data
-			if ( ! empty( $field[ 'conditions' ][ 'type' ] ) ) {
-				if ( $check_conditionals && ! self::check_condition( $field[ 'conditions' ], $form, $entry_id ) ) {
-					continue;
+		if( ! isset( $form[ 'fields' ] ) ){
+			$x= 1;
+		}else{
+			// initialize process data
+			foreach ( $form[ 'fields' ] as $field_id => $field ) {
+				// get data
+				if ( ! empty( $field[ 'conditions' ][ 'type' ] ) ) {
+					if ( $check_conditionals && ! self::check_condition( $field[ 'conditions' ], $form, $entry_id ) ) {
+						continue;
+					}
 				}
+
+				self::get_field_data( $field_id, $form, $entry_id, $check_conditionals );
 			}
 
-			self::get_field_data( $field_id, $form, $entry_id, $check_conditionals );
 		}
 
 		return $processed_data[ $indexkey ];
