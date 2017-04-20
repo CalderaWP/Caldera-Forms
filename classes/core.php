@@ -3515,6 +3515,8 @@ class Caldera_Forms {
 	/**
 	 * Load a saved entry.
 	 *
+	 * @since unknown
+	 *
 	 * @param int $entry_id Entry ID
 	 * @param string|array $form Optional. Config array, or ID of form.
 	 *
@@ -3653,17 +3655,37 @@ class Caldera_Forms {
 			}
 		}
 
-		// allow plugins to alter the profile.
+		if ( ! isset( $data[ 'user' ] ) ) {
+			$data[ 'user' ] = array();
+		}
+
+		/**
+		 * Allows changes to user profile of entry
+		 *
+		 * @since unknown
+		 *
+		 * @param array $data_user The user data
+		 * @param int $entry_id ID of entry being returned
+		 * @param array $form Form config
+		 */
 		$data[ 'user' ] = apply_filters( 'caldera_forms_get_entry_user', $data[ 'user' ], $entry_id, $form );
 
 		// set the entry status
 		$data[ 'status' ] = $entry_detail[ 'status' ];
 
-		// allow plugins to alter the entry
+		/**
+		 * Changes entry being returned.
+		 *
+		 * @since unknown
+		 *
+		 * @param array $data The entry data
+		 * @param int $entry_id ID of entry
+		 * @param array $form Form config
+		 */
 		$data = apply_filters( 'caldera_forms_get_entry', $data, $entry_id, $form );
 
-
 		return $data;
+
 	}
 
 	/**
