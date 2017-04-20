@@ -33,11 +33,10 @@ $star_target = Caldera_Forms_Field_Util::star_target( Caldera_Forms_Field_Util::
 					target: '#<?php echo $field_id; ?>',
 					spaceWidth: <?php echo $field['config']['space']; ?>,
 					targetKeep: true, targetType: 'score',
-					<?php if(!empty($field_value)){ echo "score: ".$field_value.","; }; ?>
 					hints: [1,2,3,4,5],
 					number: <?php echo $field['config']['number']; ?>,
 					starType: 'f',
-					score: <?php echo $star_target; ?>Score,
+					score: <?php if ( !empty($field_value) ) { echo $field_value; } else { echo $star_target."Score"; } ?>,
 					starColor: '<?php echo $field['config']['color']; ?>',
 					numberMax: 100,
 					click :function(nScore){
