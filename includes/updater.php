@@ -51,3 +51,14 @@ function caldera_forms_db_v2_update(){
 function caldera_forms_write_db_flag( $version = CF_DB ){
 	update_option( 'CF_DB',  $version );
 }
+
+/**
+ * Gets the last update version
+ *
+ * @since 1.5.0.9
+ *
+ * @return string
+ */
+function caldera_forms_get_last_update_version(){
+	return get_option( '_calderaforms_lastupdate' );
+}
