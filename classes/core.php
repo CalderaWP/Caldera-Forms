@@ -366,8 +366,9 @@ class Caldera_Forms {
 				$force_update = (bool) wp_verify_nonce( $_GET[ 'cal_db_update' ] );
 			}
 
+			include_once CFCORE_PATH . 'includes/updater.php';
+
 			if ( CF_DB > $db_version || $force_update ) {
-				include_once CFCORE_PATH . 'includes/updater.php';
 				if ( $db_version < 2 || $force_update ) {
 					caldera_forms_db_v2_update();
 				}
@@ -378,7 +379,7 @@ class Caldera_Forms {
 				}
 
 			}else{
-				$version = get_option( '_calderaforms_lastupdate' );
+				$version = caldera_forms_get_last_update_version();
 				if ( empty( $version ) || version_compare( $version, CFCORE_VER ) !== 0 ) {
 					flush_rewrite_rules();
 					update_option( '_calderaforms_lastupdate', CFCORE_VER );
@@ -397,6 +398,9 @@ class Caldera_Forms {
 	 * @param bool $force Optional. If true, tables are checked no matter what. Default is false
 	 */
 	public static function activate_caldera_forms( $force = false ) {
+		include_once CFCORE_PATH . 'includes/updater.php';
+		$version = caldera_forms_get_last_update_version();
+
 		wp_schedule_event( time(), 'daily', 'caldera_forms_tracking_send_rows' );
 		global $wpdb;
 
