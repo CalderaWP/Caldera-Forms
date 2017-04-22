@@ -2,15 +2,11 @@
   "name": "caldera-forms",
   "version": "1.5.0.9-b-1",
   "description": "Apex WordPress Forms",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/CalderaWP/caldera-forms"
+  "main": "Gruntfile.js",
+  "directories": {
+    "test": "tests"
   },
-  "author": "CalderaWP",
-  "license": "GPL-2.0",
-  "bugs": {
-    "url": "https://github.com/CalderaWP/caldera-forms"
-  },
+  "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-cli": "~0.1.11",
@@ -27,4 +23,20 @@
     "grunt-text-replace": "^0.4.0",
     "load-grunt-tasks": "^3.5.2"
   }
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CalderaWP/Caldera-Forms.git"
+  },
+  "keywords": [
+    "WordPress"
+  ],
+  "author": "Caldera Labs",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/CalderaWP/Caldera-Forms/issues"
+  },
+  "homepage": "https://github.com/CalderaWP/Caldera-Forms#readme",
 }
