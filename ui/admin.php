@@ -33,8 +33,8 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 			<?php echo CFCORE_VER; ?>
 		</li>
 		<li class="caldera-forms-toolbar-item">
-			<a class="button button-primary ajax-trigger" data-request="start_new_form" data-modal-no-buttons='<?php echo $modal_new_form; ?>' data-modal-width="70%" data-modal-height="80%" data-load-class="none" data-modal="new_form" data-nonce="<?php echo wp_create_nonce( 'cf_create_form' ); ?>" data-modal-title="<?php echo __('Create New Form', 'caldera-forms'); ?>" data-template="#new-form-tmpl">
-			<?php echo __('New Form', 'caldera-forms'); ?>
+			<a class="button button-primary ajax-trigger cf-new-form-button" data-request="start_new_form" data-modal-no-buttons='<?php echo $modal_new_form; ?>' data-modal-width="70%" data-modal-height="80%" data-load-class="none" data-modal="new_form" data-nonce="<?php echo wp_create_nonce( 'cf_create_form' ); ?>" data-modal-title="<?php echo __('Create New Form', 'caldera-forms'); ?>" data-template="#new-form-tmpl">
+		    	<?php echo __('New Form', 'caldera-forms'); ?>
 			</a>
 		</li>
 		<li class="caldera-forms-toolbar-item">

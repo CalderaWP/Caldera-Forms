@@ -2358,12 +2358,24 @@ jQuery(document).ready(function($) {
     rebuild_field_binding();
     $(document).trigger('load.page');
 
+    var $btn = $('.new-processor-button');
+    var addProcessorButtonPulser;
+
     // build processor sortables
     function build_processor_sortables(){
         // set sortable groups
         $( ".caldera-editor-processors-panel ul" ).sortable({
             update: function(){
                 rebuild_field_binding();
+            },
+            create: function() {
+                if( 0 == $( '.caldera-editor-processors-panel ul' ).children().length) {
+                    $btn.addClass('button-primary');
+                    addProcessorButtonPulser = new CalderaFormsButtonPulse( $btn );
+                    window.setTimeout(function(){
+                        addProcessorButtonPulser.startPulse();
+                    }, 3000);
+                }
             }
         });
 
@@ -2384,6 +2396,10 @@ jQuery(document).ready(function($) {
     });
 
     $('body').on('click', '.add-new-processor', function(e){
+        $btn.removeClass( 'button-primary' );
+        if( 'object' === typeof addProcessorButtonPulser ){
+            addProcessorButtonPulser.stopPulse();
+        }
 
         var clicked = $(this),
             new_conf_templ = Handlebars.compile( $('#processor-wrapper-tmpl').html() );

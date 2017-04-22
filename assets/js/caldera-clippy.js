@@ -12,7 +12,9 @@ function CalderaFormsAdminClippys( $zone, config, $ ){
         if( 'object' == typeof config.no_forms ){
             $( document.getElementById( 'cf-you-have-no-forms' ) ).append( '<div id="cf-no-forms-clippy"></div>' );
             addClippyToDOM( config.no_forms,  'cf-no-forms-clippy'  );
-            window.setTimeout( pulseNewFormButton, 500 );
+            var $btn = $('.cf-new-form-button');
+            var pulse = new CalderaFormsButtonPulse($btn);
+            pulse.startPulse();
         }else{
             $.when( get() ).done( function( d ) {
                 if( 'object' == typeof d && undefined != typeof d.p  ){
@@ -97,19 +99,6 @@ function CalderaFormsAdminClippys( $zone, config, $ ){
         });
 
         return config.api + '/cf/get?' + params;
-    }
-
-    function pulseNewFormButton() {
-
-        $( '.button-primary' ).animate({
-            opacity: 0.25
-        }, 500 , function() {
-            $( this ).animate({
-                opacity: 1
-            }, 500 );
-        });
-
-        window.setTimeout( pulseNewFormButton, 1000 );
     }
 
 
