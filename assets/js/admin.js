@@ -130,3 +130,56 @@ jQuery(document).ready(function($){
 	});
 
 });
+
+/**
+ * Makes arbitrary button pulse
+ *
+ * @since 1.5.0.9
+ *
+ * @param $btn The button as a jQuery object
+ * @constructor
+ */
+function CalderaFormsButtonPulse( $btn ){
+
+	var pulseEffect;
+	var pulseLoop;
+
+    /**
+	 * Animates the pulse effect
+	 *
+	 * @since 1.5.0.9
+     */
+	pulseEffect = function() {
+        $btn.animate({
+            opacity: 0.25
+        }, 500 , function() {
+            $btn.animate({
+                opacity: 1
+            }, 500 );
+        });
+
+	};
+
+    /**
+	 * Starts the pulse effect loop
+	 *
+	 * @since 1.5.0.9
+     */
+    this.startPulse = function() {
+        pulseLoop = setInterval( function(){
+        	pulseEffect();
+		}, 1000 );
+
+	};
+
+    /**
+	 * Ends the pulse effect loop
+	 *
+	 * @since 1.5.0.9
+     */
+	this.stopPulse = function() {
+		clearInterval(pulseLoop);
+
+	};
+
+}
