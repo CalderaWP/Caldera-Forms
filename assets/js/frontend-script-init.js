@@ -9,7 +9,8 @@ var cf_jsfields_init, cf_presubmit;
 			errorsContainer : function( field ){
 				return field.$element.closest('.form-group');
 			}					
-		}).on('field:error', function(fieldInstance) {
+		}).on('field:error', function( fieldInstance ) {
+
             if ( 'number' == this.$element.attr( 'type' ) && 0 == this.$element.attr( 'min' )  ) {
                 var val = this.$element.val();
                 if( 0 <= val && ( undefined == this.$element.attr( 'max' ) || val <= this.$element.attr( 'max' )  ) ){
@@ -20,9 +21,31 @@ var cf_jsfields_init, cf_presubmit;
             }
 
             this.$element.closest('.form-group').addClass('has-error');
-        }).on('field:success', function() {
+			$( document ).trigger( 'cf.validate.fieldError', {
+				inst: fieldInstance,
+				form: form,
+				el: this.$element
+			} );
+        }).on('field:success', function( fieldInstance ) {
 			this.$element.closest('.form-group').removeClass('has-error');
-		});
+			$( document ).trigger( 'cf.validate.fieldSuccess', {
+				inst: fieldInstance,
+				form: form,
+				el: this.$element
+			} );
+		}).on('form:success', function ( formInstance ) {
+			$( document ).trigger( 'cf.validate.FormSuccess', {
+				inst: formInstance,
+				form: form,
+				el: this.$element
+			} );
+		}).on( 'form:error', function ( formInstance ) {
+			$( document ).trigger( 'cf.validate.FormError', {
+				inst: formInstance,
+				form: form,
+				el: this.$element
+			} );
+		})
 	};
 
 
