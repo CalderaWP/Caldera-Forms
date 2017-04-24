@@ -1258,7 +1258,7 @@ class Caldera_Forms_Admin {
 			$headers = array();
 			if(!empty($form['fields'])){
 				$headers['date_submitted'] = 'Submitted';
-				foreach($form['fields'] as $field_id=>$field){
+				foreach( Caldera_Forms_Forms::get_fields( $form, true ) as $field_id => $field ){
 					if(isset($field_types[$field['type']]['capture']) &&  false === $field_types[$field['type']]['capture']){
 						continue;
 					}
