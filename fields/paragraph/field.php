@@ -31,6 +31,10 @@ if(!empty($field['config']['placeholder'])){
 	$attrs[ 'placeholder' ] = Caldera_Forms::do_magic_tags( $field['config']['placeholder'] );
 }
 
+if(!empty($field['config']['default'])){
+	$attrs[ 'default' ] = Caldera_Forms::do_magic_tags( $field['config']['default'] );
+}
+
 
 if( ! empty( $sync ) ){
 	$attrs[ 'data-binds' ] = wp_json_encode($syncer->get_binds() );
