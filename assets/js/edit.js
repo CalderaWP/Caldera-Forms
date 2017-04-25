@@ -2358,7 +2358,7 @@ jQuery(document).ready(function($) {
     rebuild_field_binding();
     $(document).trigger('load.page');
 
-    var $btn = $('.new-processor-button');
+    var $newProcessorButton = $('.new-processor-button');
     var addProcessorButtonPulser;
 
     // build processor sortables
@@ -2368,10 +2368,15 @@ jQuery(document).ready(function($) {
             update: function(){
                 rebuild_field_binding();
             },
+            /**
+             * Pulses processor button, changes to primary color if processor list is empty to make obvious to user
+             *
+             * @since 1.5.0.9
+             */
             create: function() {
                 if( 0 == $( '.caldera-editor-processors-panel ul' ).children().length) {
-                    $btn.addClass('button-primary');
-                    addProcessorButtonPulser = new CalderaFormsButtonPulse( $btn );
+                    $newProcessorButton.addClass('button-primary');
+                    addProcessorButtonPulser = new CalderaFormsButtonPulse( $newProcessorButton );
                     window.setTimeout(function(){
                         addProcessorButtonPulser.startPulse();
                     }, 3000);
@@ -2396,8 +2401,8 @@ jQuery(document).ready(function($) {
     });
 
     $('body').on('click', '.add-new-processor', function(e){
-        $btn.removeClass( 'button-primary' );
         if( 'object' === typeof addProcessorButtonPulser ){
+            $newProcessorButton.removeClass( 'button-primary' );
             addProcessorButtonPulser.stopPulse();
         }
 
