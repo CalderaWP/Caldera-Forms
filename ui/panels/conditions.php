@@ -5,7 +5,7 @@ if( !empty( $element['conditional_groups']['fields'] ) ){
 	unset( $element['conditional_groups']['fields'] );
 }
 ?>
-<button style="width:250px;" class="button ajax-trigger" data-request="cf_new_condition_group" data-template="#conditions-tmpl" data-target="#caldera-forms-conditions-panel" type="button"><?php _e( 'Add Conditional Group', 'caldera-forms' ); ?></button>
+<button style="width:250px;" id="new-conditional" class="button ajax-trigger" data-request="cf_new_condition_group" data-template="#conditions-tmpl" data-target="#caldera-forms-conditions-panel" type="button"><?php _e( 'Add Conditional Group', 'caldera-forms' ); ?></button>
 <input type="hidden" name="_magic" value="<?php echo esc_attr( json_encode( $magic_tags['system']['tags'] ) ); ?>">
 <input type="hidden" id="cf-conditions-db" name="config[conditional_groups]" value="<?php echo esc_attr( json_encode( $element['conditional_groups'] ) ); ?>" 
 class="ajax-trigger"
@@ -210,8 +210,19 @@ data-autoload="true"
 			get_base_form();
 			db.val( JSON.stringify( data ) ).trigger( 'rebuild-conditions' );
 		});
-		
+
+        var $newConditionalButton = $( '#new-conditional' );
+        var addProcessorButtonPulser;
+
+        $newConditionalButton.on( 'click', function(){
+            if( 'object' === typeof addProcessorButtonPulser ){
+                $newConditionalButton.removeClass( 'button-primary' );
+                addProcessorButtonPulser.stopPulse();
+            }
+        });
+
 		$( document ).on('click', '[data-add-group]', function(){
+
 			var clicked = $( this ),
 				pid = clicked.data('addGroup'),
 				db = $('#cf-conditions-db'),
@@ -254,17 +265,28 @@ data-autoload="true"
 			db.val( JSON.stringify( data ) ).trigger( 'rebuild-conditions' );
 			
 		});
-		$( document ).on('click', '#tab_conditions', function(){
+
+        $( document ).on( 'click', '#tab_conditions' , function(){
+
+            if( 0 === $('.active-conditions-list').children().length ) {
+                $newConditionalButton.addClass('button-primary');
+                addProcessorButtonPulser = new CalderaFormsButtonPulse( $newConditionalButton );
+                window.setTimeout(function(){
+                    addProcessorButtonPulser.startPulse();
+                }, 3000);
+            }
 
 			var data = get_base_form(),
 				db = $('#cf-conditions-db');
 
 			db.val( JSON.stringify( data ) ).trigger( 'rebuild-conditions' );
-			
+
 		});
 
 		$( document ).on('click', '[data-open-group]', function(){
-			var clicked = $( this ),
+
+
+            var clicked = $( this ),
 				id = clicked.data('openGroup'),
 				db = $('#cf-conditions-db'),
 				data = get_base_form();
