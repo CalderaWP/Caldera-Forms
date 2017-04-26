@@ -27,6 +27,15 @@ class Caldera_Forms_Entry_Bulk {
 		$result = $wpdb->query( "DELETE FROM `" . $wpdb->prefix . "cf_form_entry_values` WHERE `entry_id` IN (" . implode( ',', $entry_ids ) . ");" );
 		$result = $wpdb->query( "DELETE FROM `" . $wpdb->prefix . "cf_form_entry_meta` WHERE `entry_id` IN (" . implode( ',', $entry_ids ) . ");" );
 
+		/**
+		 * Fires after Caldera Forms entries are deleted
+		 *
+		 * @since 1.5.0.9
+		 *
+		 * @param array $entry_ids Array of entries that were deleted
+		 */
+		do_action( 'caldera_forms_delete_entries', $entry_ids );
+
 		return $result;
 		
 	}
