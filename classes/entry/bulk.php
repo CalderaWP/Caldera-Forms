@@ -41,11 +41,11 @@ class Caldera_Forms_Entry_Bulk {
 	}
 
 	/**
-	 * Update statuses for an array of entries
+	 * Update status for an array of entries
 	 *
 	 * @since 1.4.0
 	 *
-	 * @param array $entry_ids Array of entries to delete
+	 * @param array $entry_ids Array of entries to change
 	 * @param string $status New status
 	 *
 	 * @return false|int
@@ -53,7 +53,19 @@ class Caldera_Forms_Entry_Bulk {
 	public static function change_status( $entry_ids, $status ){
 		global $wpdb;
 		$result = $wpdb->query( $wpdb->prepare( "UPDATE `" . $wpdb->prefix . "cf_form_entries` SET `status` = %s WHERE `id` IN (" . implode( ',', $entry_ids ) . ");", $status ) );
+
+		/**
+		 * Fires after selected entries' status is updated
+		 *
+		 * @since 1.5.0.9
+		 *
+		 * @param array $entry_ids Array of entries changed
+		 * @param string $status New status
+		 */
+		do_action( 'caldera_forms_change_entry_status', $entry_ids, $status );
+
 		return $result;
+
 	}
 
 	/**

@@ -15,7 +15,7 @@
 class Caldera_Forms_Entry_Update {
 
 	/**
-	 * Update an entry status
+	 * Update an entry's status
 	 *
 	 * @since 1.5.0
 	 *
@@ -25,17 +25,9 @@ class Caldera_Forms_Entry_Update {
 	 * @return bool
 	 */
 	public static function update_entry_status(  $new_status, $entry_id ){
-		global $wpdb;
-		$updated = $wpdb->update($wpdb->prefix . 'cf_form_entries', array(
-			'status' => caldera_forms_very_safe_string( $new_status ),
-		), array(
-			'id' => absint( $entry_id )
-		) );
-		if( false !== $updated ){
-			return true;
-		}
+		$result = Caldera_Forms_Entry_Bulk::change_status( array( $entry_id ), $new_status );
 
-		return false;
+		return is_int( $result );
 
 	}
 
