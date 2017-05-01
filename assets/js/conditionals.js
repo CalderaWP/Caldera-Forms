@@ -255,7 +255,6 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 			}
 
 
-
 			if(action === 'show'){
 				// show - get template and place it in.
 				if(!target.html().length){
@@ -272,22 +271,28 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 					target.empty().trigger('cf.remove');
 					jQuery(document).trigger('cf.remove');
 				}
-			}else if (action === 'enable'){
-				if(!target.html().length){					
-					target.html(template).trigger('cf.add');
-					jQuery(document).trigger('cf.add').trigger('cf.enable');					
-				}else{
-					target_field.prop('disabled', false);
-				}
-			}else if (action === 'disable'){
+			}else if ('enable' === action || 'disable' === action ){
+				var dField = jQuery( '#' + field );
+				if( 'enable' == action ){
+					if(!target.html().length){
+						target.html(template).trigger('cf.add');
+						jQuery(document).trigger('cf.add').trigger('cf.enable');
+						dField.prop('disabled', false);
+					}else{
+						dField.prop('disabled', false);
+					}
 
-				if(!target.html().length){
-					target.html(template).trigger('cf.remove');
-					jQuery(document).trigger('cf.remove').trigger('cf.disable');
-					jQuery('[data-field="' + field + '"]').prop('disabled', 'disabled');
-				}else{
-					target_field.prop('disabled', 'disabled');
+				}else {
+					if (!target.html().length) {
+						target.html(template).trigger('cf.remove');
+						jQuery(document).trigger('cf.remove').trigger('cf.disable');
+						dField.prop('disabled', 'disabled');
+					} else {
+						dField.prop('disabled', 'disabled');
+					}
+
 				}
+
 			}
 
 		}	
