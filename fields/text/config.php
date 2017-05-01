@@ -22,8 +22,6 @@
 		<select class="field-config {{_id}}_type_override" name="{{_name}}[type_override]" id="{{_id}}-type_override" aria-describedby="{{_id}}-type_override-description">
 			<option {{#is type_override value="text"}}selected="selected"{{/is}}value="text">text</option>
 			<option {{#is type_override value="date"}}selected="selected"{{/is}}value="date">date</option>
-			<option {{#is type_override value="datetime"}}selected="selected"{{/is}}value="datetime">datetime</option>
-			<option {{#is type_override value="datetime-local"}}selected="selected"{{/is}}value="datetime-local">datetime-local</option>
 			<option {{#is type_override value="month"}}selected="selected"{{/is}}value="month">month</option>
 			<option {{#is type_override value="number"}}selected="selected"{{/is}}value="number">number</option>
 			<option {{#is type_override value="search"}}selected="selected"{{/is}}value="search">search</option>
