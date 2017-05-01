@@ -39,7 +39,6 @@ function new_conditional_line(obj){
 function build_conditions_config(obj){
     var config = JSON.parse(obj.trigger.val());
     config.id = obj.trigger.data('id');
-
     return config;
 
 }
@@ -876,12 +875,18 @@ jQuery(document).ready(function($){
             field.addClass('bound_triggered');
         }
         // check if a value is present
-        if(curval.length){
+
+
+        if( curval.length){
             if(curval.val().length){
                 target.data('value', curval.val());
-
             }
+        }else if( 0 === target.val() ){
+            target.data('value', 0 );
+        }else if( '0' === target.val() ){
+            target.data('value', '0' );
         }
+
         field_compare.show();
         if(options_wrap.length){
             var options_rows = options_wrap.find('.toggle_option_row'),

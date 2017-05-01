@@ -209,14 +209,18 @@ function build_processor_types($default = null){
 	if(!empty($element['processors'])){
 		foreach($element['processors'] as $processor_id=>$config){
 			if(!empty($config['type'])){
+
 				$config_str = array();
 				if(!empty($config['config'])){
-					$config_str = json_encode($config['config']);
+					$config_str = json_encode( $config['config'] );
 				}
-				$conditions = '{}';
-				if(!empty($config['conditions'])){
-					$conditions = json_encode($config['conditions']);
+
+				if ( ! empty( $config[ 'conditions' ] ) ) {
+					$conditions = wp_json_encode( $config[ 'conditions' ] );
+				} else {
+					$conditions = '{}';
 				}
+
 				// runtime conditions where introduced in 1.3.2
 				// as was the cf_version in form config. so its safe to say that id this value is set, its the same version or higher
 				if( empty( $element['cf_version'] ) ){
