@@ -743,6 +743,26 @@ This could also be a sign of a more serious issue on your server, but is probabl
 5. **Go Further With Form Processors** - Auto-responders, redirects included! Go further with our add-ons!
 
 == Changelog ==
+= Caldera Forms 1.5.0.9 (May 2, 2017) =
+See: [https://calderaforms.com/updates/caldera-forms-1-5-0-8](https://calderaforms.com/updates/caldera-forms-1-5-0-9?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.0.9)
+
+* IMPROVED: Multi-page form validation. Validation logic is improved to work with new add-ons and to be faster.
+* FIXED: Calculation fields could target wrong fields if two of the same form were on the same page.
+* FIXED: Disable conditionals were not enabling or disabling.
+* REMOVED: HTML5 datetime type for text fields, since it has no browser support.
+* FIXED: When 0 was the value for a conditional to check against, it was lost on form editor reload.
+* IMPROVED: Processor and conditional interface to highlight new processor/conditional button.
+* NEW ACTION: caldera_forms_delete_entries - Runs when entries are deleted
+* NEW ACTION: caldera_forms_change_entry_status - Runs when entry status is changed.
+* IMPROVED: Made CSV headers match layout order of forms.
+* FIXED: Fatal error could happen when exporting due to Caldera_Forms_Field_Util::check_conditional() not being passed an array
+* ADDED: JavaScript events on validation. See: [https://calderaforms.com/doc/validation-events/](https://calderaforms.com/doc/validation-events?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.0.9)
+* FIXED: PHP notice when getting saved entry and user was not logged in when entry was created.
+* FIXED: Required toggle switches didn't trigger validation errors on multi-page forms.
+* FIXED: Ensured that summary magic tag used correct internal APIs.
+* FIXED: Bad conditional in database updater causing PHP notices.
+
+
 = Caldera Forms 1.5.0.8 (April 10, 2017) The Earth Is Round, Contact Forms Are Good =
 See: [https://calderaforms.com/updates/caldera-forms-1-5-0-8](https://calderaforms.com/updates/caldera-forms-1-5-0-8?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.0.8)
 * FIXED: Calculations fields were rounded wrong in some cases.
