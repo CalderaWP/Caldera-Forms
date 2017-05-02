@@ -23,12 +23,14 @@ if( !isset( $field['config']['decimal_separator'] ) ){
 
 $thousand_separator = $field['config']['thousand_separator'];
 $decimal_separator = $field['config']['decimal_separator'];
-
+$current_form_count = Caldera_Forms_Render_Util::get_current_form_count();
+$target_id = Caldera_Forms_Field_Util::get_base_id( $field, $current_form_count, $form );
+$form_id_atr = $form['ID' ] . '_' . $current_form_count;
 $attrs = array(
 	'type' => 'hidden',
 	'name' => $field_name,
 	'value' => 0,
-	'data-field' => $field_base_id,
+	'data-field' => $target_id,
 );
 $attr_string =  caldera_forms_field_attributes( $attrs, $field, $form );
 
@@ -38,7 +40,7 @@ $attr_string =  caldera_forms_field_attributes( $attrs, $field, $form );
 	<?php echo $field_before; ?>
 		<<?php echo $elementType . $field_structure['aria']; ?> class="<?php echo $field['config']['classes']; ?>"><?php echo $field['config']['before']; ?>
 			<span id="<?php echo esc_attr( $field_id ); ?>"><?php echo $field_value; ?></span><?php echo $field['config']['after']; ?></<?php echo $elementType; ?>>
-				<input type="hidden" <?php echo $attr_string; ?>" >
+				<input type="hidden" <?php echo $attr_string; ?> >
 		<?php echo $field_caption; ?>
 	<?php echo $field_after; ?>
 <?php echo $wrapper_after; ?>
@@ -75,12 +77,37 @@ $formula = str_replace("\r",'', str_replace("\n",'', str_replace(' ','', trim( C
 $binds = array();
 $binds_wrap = array();
 $binds_vars = array();
-foreach($form['fields'] as $fid=>$cfg){
+foreach ( Caldera_Forms_Forms::get_fields( $form, false ) as $fid => $c_field ) {
 	if(false !== strpos($formula, $fid)){
-		$formula = str_replace($fid, $fid, $formula);
-		$binds_vars[] = $fid." = parseFloat( jQuery('[data-field=\"".$fid."\"]').is(':checkbox') ? checked_total_" . $field_base_id. "(jQuery('[data-field=\"".$fid."\"]:checked')) : jQuery('[data-field=\"".$fid."\"]').is(':radio') ? jQuery('[data-field=\"".$fid."\"]:checked').val() : jQuery('[data-field=\"".$fid."\"]').val() ) || 0 ";
+		$formula  = str_replace($fid, $fid, $formula);
+		$bind_var = $bind = '';
+		$type     = Caldera_Forms_Field_Util::get_type( $c_field, $form );
+		$_fid     = $fid . '_' . $current_form_count;
+		switch( $type ){
+			case 'checkbox' :
+				//data-checkbox-field
+				$bind_var = "checked_total_" . $target_id. "(jQuery('[data-checkbox-field=\"".$_fid."\"]:checked'))";
+				$bind = "[data-checkbox-field=\"".$_fid."\"]";
+				break;
+			case 'radio' :
+				$bind_var = "jQuery( '#" . $form_id_atr . "').find('[data-radio-field=\"".$_fid."\"]:checked').val()";
+				$bind = "[data-radio-field=\"".$_fid."\"]";
 
-		$binds[] = "[data-field=\"".$fid."\"]";
+				break;
+			case 'calculation' :
+				$bind_var = "jQuery( '#" . $form_id_atr . "').find( '[data-field=\"$_fid\"]' ).val()";
+				$bind     = '[data-field="' . $_fid . '"]';
+				break;
+			default :
+				$bind_var = "jQuery( '#" . $form_id_atr . "').find( '[data-field=\"" . $fid . "\"]' ).val()";
+				break;
+		}
+		$bind_var     = trim( $bind_var );
+		$binds_vars[] = $fid." = parseFloat( $bind_var  ) || 0 ";
+		if( ! $bind ){
+			$bind = "#$_fid";
+		}
+		$binds[] = $bind;
 		// include a conditional wrapper
 		$binds_wrap[] = "#conditional_".$fid;		
 	}
@@ -95,16 +122,16 @@ if(!empty($binds)){
 <script type="text/javascript">
 	window.addEventListener("load", function(){
 
-		function checked_total_<?php echo $field_base_id; ?>(items){
+		function checked_total_<?php echo $target_id; ?>(items){
 			var sum = 0;
-			
+			console.log(items);
 			items.each(function(k,v){
 				var val = jQuery(v).val();
 				sum += parseFloat( val );
 			});
 			return sum;
 		}
-		function docalc_<?php echo $field_base_id; ?>(){
+		function docalc_<?php echo $target_id; ?>(){
 			var <?php echo implode(', ',$binds_vars); ?>,
 				total = <?php echo $formula; ?>,
 				view_total = total;
@@ -134,16 +161,16 @@ if(!empty($binds)){
 				view_total = Math.round( view_total );
 			}
 			jQuery('#<?php echo $field_id; ?>').html( view_total );
-			jQuery('[data-field="<?php echo esc_attr( $field_base_id ); ?>"]').val( total ).trigger('change');
+			jQuery('[data-field="<?php echo esc_attr( $target_id ); ?>"]').val( total ).trigger('change');
 
 		}
 		jQuery('body').on('change keyup', '<?php echo implode(',', $bindtriggers); ?>', function(e){
-			docalc_<?php echo $field_base_id; ?>();
+			docalc_<?php echo $target_id; ?>();
 		});
 		jQuery( document ).on('cf.remove cf.add', function( e ){
-			docalc_<?php echo $field_base_id; ?>();
+			docalc_<?php echo $target_id; ?>();
 		});
-		docalc_<?php echo $field_base_id; ?>();
+		docalc_<?php echo $target_id; ?>();
 	});
 	
 </script>
