@@ -19,7 +19,20 @@ Caldera Forms is a free plugin by <a href="http://CalderaLabs.org?utm_source=dot
 >
 > -Pippin Williamson: Developer of Easy Digital Downloads, Restrict Content Pro and AffiliateWP.
 
+== Top Features ==
+* Intuitive user interface !
+* Responsive and accessible by default!
+* NO LIMITATIONS on the number of forms or fields or submissions!
+* Tons of great field types - the basics and "fancy" fields are included!
+* Conditional logic for form fields, processors and auto-responder recipients!
+* Export entries to CSV!
+* Front-end post submissions and post editing with the free [Caldera Custom Fields add-on][Caldera Custom Fields](https://calderaforms.com/downloads/caldera-form-metabox?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=features+list)
+* Unlimited auto-responders!
+* Default anti-spam is to stop those bots!
+* A ton of add-ons to take your forms farther!
+
 [youtube https://www.youtube.com/watch?v=KmKj02aE0nc&index=1&list=PLgeaHmX3MoiuXOhRlDdYn7k0RcL4afLzQ]
+
 
 = Responsive By Design =
 
@@ -55,14 +68,21 @@ Caldera Forms has tons of field types to make a great form that will help your w
 
 Caldera Forms field types include:
 
+* Text
+* Credit Card Number
+* Credit Card Expiration
+* Credit Card Secret Code
 * Auto-complete
+* URL
 * Calculation
 * Range Slider
 * Star Rating
+* Summary
+* WYSIWYG - rich text editor
 * Phone
 * Text
 * File Upload
-* HTML content block
+* HTML
 * Hidden
 * Button
 * Email
@@ -73,7 +93,8 @@ Caldera Forms field types include:
 * Radio
 * Date Picker
 * Color Picker
-* Auto-complete
+
+All of these field types are included in the free version! We don't call basic field types like URL or hidden fancy and charge extra. We even throw in the fancy field types like calculation and and phone fields!
 
 > "WordPress should have more plugins like this. Adding new forms, editing their settings and stuff is fun."
 >
@@ -104,7 +125,7 @@ Caldera Forms is more than just an awesome form builder. You can use Caldera For
 = Track, Edit and View Your Form Submissions =
 Caldera Forms tracks all of your form submission data in the WordPress database. The entry viewer is fast, dynamic and responsive. You can choose to create sub-menu pages for viewing form submissions and chose which users roles are allowed to view those pages.
 
-Entry editing is a core feature of Caldera Forms. When editing entries, click the "Edit Entry" button to edit your saved data.
+Entry editing is a core feature of Caldera Forms. When editing entries, click the "Edit Entry" button to edit your saved data. Display your form entries with [the Front-End Entry Viewer](https://calderaforms.com/doc/caldera-forms-wordpress-form-entry-viewer/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms)!
 
 > "While Gravity Forms may be the more established form solution plugin for WordPress, there is another contender out there that is a real gem. And that gem is Caldera Forms."
 >
@@ -116,33 +137,43 @@ Entry editing is a core feature of Caldera Forms. When editing entries, click th
 
 Caldera Forms to PDF is now available! Learn more at [https://Caldera.space](Caldera.space) or [get the plugin](https://wordpress.org/plugins/caldera-forms-pdf).
 
+**Grow Your Email List**
 * [MailChimp](https://calderaforms.com/downloads/caldera-forms-mailchimp-add-on?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Seamlessly integrate MailChimp optins into your forms.
-* [Stripe](https://calderaforms.com/downloads/caldera-forms-stripe-add-on?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Accept credit card payments via Stripe.
-* [PayPal Express](https://calderaforms.com/downloads/caldera-forms-paypal-express-add-on?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Accept payments via Paypal Express.
-* [Connected Forms](https://calderaforms.com/downloads/caldera-forms-connector?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Create sequences of forms with conditional logic. Split your forms into smaller pieces, with total control over what comes next.
-* [Users](https://calderaforms.com/downloads/caldera-forms-users-add?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Register or login users from your form.
-* [Google Analytics](https://calderaforms.com/downloads/caldera-forms-google-analytics-tracking/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Track custom events and eCommerce conversions.
-* [A/B Testing](https://calderaforms.com/downloads/ingot-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - A/B testing for your forms. Powered by [Ingot](https://IngotHQ.com?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms)
 * [Aweber](https://calderaforms.com/downloads/aweber-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Aweber marketting automation meets Caldera Forms.
 * [ConvertKit](https://calderaforms.com/downloads/convertkit-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Convert leads to customers the ConvertKit way.
-* [Geolocation](https://calderaforms.com/downloads/geolocation-field-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Make a text field a geolocation auto-complete field and recorded geocoded data.
-* [Mark Viewed](https://calderaforms.com/downloads/caldera-forms-mark-viewed?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Let users track what content they have viewed using a Caldera Forms.
+
+**Accept Payments**
+* [Stripe](https://calderaforms.com/downloads/caldera-forms-stripe-add-on?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Accept credit card payments via Stripe.
+* [PayPal Express](https://calderaforms.com/downloads/caldera-forms-paypal-express-add-on?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Accept payments via Paypal Express.
 * [Dwolla](https://calderaforms.com/downloads/dwolla-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Accept payments with low fees using Dwolla.
 * [Authorize.net](https://calderaforms.com/downloads/authorize-net-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) Accept all major credit cards by integrating Caldera Forms with Authorize.net.
 * [BrainTree](https://calderaforms.com/downloads/braintree-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) Accept credit card payments in your form through BrainTree.
-* [Nexmo](https://calderaforms.com/downloads/nexmo-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) Get SMS notifications of form submissions.
-* [Mail Templates](https://calderaforms.com/downloads/mail-templates-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Add your logo, and your brand's color scheme to your emails sent from Caldera Forms.
-* [Translations](https://wordpress.org/plugins/caldera-forms-translation) - Multi-lingual WordPress forms. Translate all form fields. One form, all the languages!
+
+**Increase And Measure Conversions**
+* [Google Analytics](https://calderaforms.com/downloads/caldera-forms-google-analytics-tracking/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Track custom events and eCommerce conversions.
+* [Connected Forms](https://calderaforms.com/downloads/caldera-forms-connector?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Create sequences of forms with conditional logic. Split your forms into smaller pieces, with total control over what comes next.
+* [A/B Testing](https://calderaforms.com/downloads/ingot-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - A/B testing for your forms. Powered by [Ingot](https://IngotHQ.com?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms)
+
+**Front-End Post and User Profile Editing**
+* [Users](https://calderaforms.com/downloads/caldera-forms-users-add?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Register or login users from your form.
 * [Caldera Custom Fields](https://calderaforms.com/downloads/caldera-form-metabox?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Save form submissions as post and post meta.
+
+**Cool Tools!**
+* [Connected Forms](https://calderaforms.com/downloads/caldera-forms-connector?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Create sequences of forms with conditional logic. Split your forms into smaller pieces, with total control over what comes next.
+* [Geolocation](https://calderaforms.com/downloads/geolocation-field-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Make a text field a geolocation auto-complete field and recorded geocoded data.
+* [Mark Viewed](https://calderaforms.com/downloads/caldera-forms-mark-viewed?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Let users track what content they have viewed using a Caldera Forms.
+* [Mail Templates](https://calderaforms.com/downloads/mail-templates-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Add your logo, and your brand's color scheme to your emails sent from Caldera Forms.
+* [Nexmo](https://calderaforms.com/downloads/nexmo-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) Get SMS notifications of form submissions.
+* [Translations](https://wordpress.org/plugins/caldera-forms-translation) - Multi-lingual WordPress forms. Translate all form fields. One form, all the languages!
 * [Verify Email for Caldera Forms](https://calderaforms.com/downloads/verify-email-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Send an email with a validate link to verify the email address before completing the form submission.
 * [Form as Metabox - Custom Fields](https://calderaforms.com/downloads/caldera-form-metabox?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Use a Caldera Form as a metabox in the post editor to save custom field values.
 * [Slack Integration for Caldera Forms](https://calderaforms.com/downloads/caldera-forms-slack-integration?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Get notifications in Slack whenever a Caldera Form is submitted.
 * [Run Action](https://calderaforms.com/downloads/caldera-forms-run-action?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Trigger a WordPress action with your form submission.
-* [Sprout Invoices Integration](https://wordpress.org/plugins/caldera-forms-sprout-invoices-integration?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Use Caldera Forms for [Sprout Invoice](https://sproutapps.co/sprout-invoices/) forms.
-* [Conditional Fail](https://wordpress.org/plugins/conditional-fail-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Set conditions to cause that if met will allow or prevent form submssion.
+* [Conditional Fail](https://wordpress.org/plugins/conditional-fail-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Set conditions to cause that if met will allow or prevent form submission.
 * [Postmatic](https://calderaforms.com/downloads/postmatic-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Subscribe users to your posts and comments using Postmatic.
 
 Third-party add-ons and integrations:
+* [Caldera Forms Google Sheets](https://wordpress.org/plugins/cf-google-sheets/) Create spreadsheats in Google Drive with form submissions.
 * [Testify](http://testimonialplugin.com/) - Testimonials plugin with front-end submissions powered by Caldera Forms.
 * [AffiliateWP](https://affiliatewp.com/integrations/caldera-forms/) - Register affiliate referral commissions when a Caldera Form is submitted.
 * [PowerPack Beaver Builder Addon](http://wpbeaveraddons.com/demo/forms/) - Style Caldera Forms in the Beaver Builder layout
@@ -761,7 +792,7 @@ See: [https://calderaforms.com/updates/caldera-forms-1-5-0-8](https://calderafor
 * FIXED: Required toggle switches didn't trigger validation errors on multi-page forms.
 * FIXED: Ensured that summary magic tag used correct internal APIs.
 * FIXED: Bad conditional in database updater causing PHP notices.
-
+* FIXED: Field errors were not associated to their field using proper ARIA tag.
 
 = Caldera Forms 1.5.0.8 (April 10, 2017) The Earth Is Round, Contact Forms Are Good =
 See: [https://calderaforms.com/updates/caldera-forms-1-5-0-8](https://calderaforms.com/updates/caldera-forms-1-5-0-8?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.0.8)
