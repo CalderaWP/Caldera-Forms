@@ -141,8 +141,9 @@ jQuery(document).ready(function($){
  */
 function CalderaFormsButtonPulse( $btn ){
 
-	var pulseEffect;
-	var pulseLoop;
+	var pulseEffect,
+		pulseLoop,
+		stopped = false;
 
     /**
 	 * Animates the pulse effect
@@ -166,9 +167,13 @@ function CalderaFormsButtonPulse( $btn ){
 	 * @since 1.5.0.9
      */
     this.startPulse = function() {
-        pulseLoop = setInterval( function(){
-        	pulseEffect();
-		}, 1000 );
+    	if( false ===  stopped ){
+			pulseLoop = setInterval( function(){
+				pulseEffect();
+			}, 1000 );
+		}
+
+
 
 	};
 
@@ -178,6 +183,7 @@ function CalderaFormsButtonPulse( $btn ){
 	 * @since 1.5.0.9
      */
 	this.stopPulse = function() {
+		stopped = true;
 		clearInterval(pulseLoop);
 
 	};

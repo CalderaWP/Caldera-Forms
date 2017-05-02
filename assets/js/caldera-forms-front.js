@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.0.9-b-1 - 2017-05-01 *//*
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.0.9-b-1 - 2017-05-02 *//*
  * jQuery miniColors: A small color selector
  *
  * Copyright 2011 Cory LaViska for A Beautiful Site, LLC. (http://abeautifulsite.net/)
