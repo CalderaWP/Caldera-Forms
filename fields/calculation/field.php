@@ -85,7 +85,6 @@ foreach ( Caldera_Forms_Forms::get_fields( $form, false ) as $fid => $c_field ) 
 		$_fid     = $fid . '_' . $current_form_count;
 		switch( $type ){
 			case 'checkbox' :
-				//data-checkbox-field
 				$bind_var = "checked_total_" . $target_id. "(jQuery('[data-checkbox-field=\"".$_fid."\"]:checked'))";
 				$bind = "[data-checkbox-field=\"".$_fid."\"]";
 				break;
@@ -124,7 +123,6 @@ if(!empty($binds)){
 
 		function checked_total_<?php echo $target_id; ?>(items){
 			var sum = 0;
-			console.log(items);
 			items.each(function(k,v){
 				var val = jQuery(v).val();
 				sum += parseFloat( val );
