@@ -2150,3 +2150,6 @@ span.cf-form-shortcode-preview:hover {
 span.cf-form-name-preview{
   font-weight: bold;
 }
+a.disabled {
+  color: #8e8e8e;
+}

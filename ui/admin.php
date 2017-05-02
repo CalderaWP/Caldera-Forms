@@ -130,21 +130,27 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 
 						><?php if( !empty( $form['form_draft'] ) ) { echo __('Activate', 'caldera-forms'); }else{ echo __('Deactivate', 'caldera-forms'); } ?></a> | </span><?php } ?>
 
-						<?php if(!empty($form['db_support'])){ ?><span class="edit">
-							<a class="form-control form-entry-trigger ajax-trigger cf-entry-viewer-link" href="#entres"
-						            data-nonce="<?php echo wp_create_nonce( 'view_entries' ); ?>"
-									data-action="browse_entries"
-									data-target="#form-entries-viewer"
-									data-form="<?php echo esc_attr( trim( $form_id ) ); ?>"
-									data-template="#forms-list-alt-tmpl"
-									data-active-element="<?php echo esc_attr( '#form_row_' . trim( $form_id ) ); ?>"
-									data-load-class="spinner"
-									data-active-class="highlight"
-									data-group="entry_nav"
-									data-callback="setup_pagination"
-									data-status="active"
-									data-page="1"
-						><?php esc_html_e( 'Entries', 'caldera-forms'); ?></a> | </span><?php } ?>
+						<?php if(!empty($form['db_support'])) { ?>
+							<span class="edit">
+								<?php if (  version_compare( PHP_VERSION, '5.3.0', '>=' ) ) {
+									echo '<span  title="' . esc_attr( __( sprintf( 'Entry viewer is disabled due to your PHP version, see: %s', 'https://calderaforms.com/php' ), 'caldera-forms' ) ) .'" data-toggle="tooltip" data-placement="bottom" class="disabled">' . esc_html__( 'Entries', 'caldera-forms' ) . '</span> |';
+								} else { ?>
+									<a class="form-control form-entry-trigger ajax-trigger cf-entry-viewer-link"
+									   href="#entres"
+									   data-nonce="<?php echo wp_create_nonce( 'view_entries' ); ?>"
+									   data-action="browse_entries"
+									   data-target="#form-entries-viewer"
+									   data-form="<?php echo esc_attr( trim( $form_id ) ); ?>"
+									   data-template="#forms-list-alt-tmpl"
+									   data-active-element="<?php echo esc_attr( '#form_row_' . trim( $form_id ) ); ?>"
+									   data-load-class="spinner"
+									   data-active-class="highlight"
+									   data-group="entry_nav"
+									   data-callback="setup_pagination"
+									   data-status="active"
+									   data-page="1"
+									><?php esc_html_e( 'Entries', 'caldera-forms' ); ?></a> | </span><?php }
+						}?>
 						<input type="hidden" id="form-export-<?php echo $form_id; ?>" value='{ "formslug" : "<?php echo sanitize_title( $form['name'] ); ?>", "formid" : "<?php echo $form_id; ?>", "nonce" : "<?php echo wp_create_nonce( 'cf_del_frm' ); ?>" }'>
 						<?php if( empty( $form['_external_form'] ) ){ ?><span class="export"><a class="form-control ajax-trigger"
 							<?php
