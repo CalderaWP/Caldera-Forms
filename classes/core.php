@@ -1345,7 +1345,7 @@ class Caldera_Forms {
 
 				foreach ( $hastags[ 1 ] as $tag_key => $tag ) {
 
-					foreach ( $form[ 'fields' ] as $key_id => $fcfg ) {
+					foreach ( Caldera_Forms_Forms::get_fields( $form, false ) as $key_id => $fcfg ) {
 						if ( $fcfg[ 'slug' ] === $tag ) {
 							$binds[]      = '#' . $key_id;
 							$bindfields[] = '"' . $key_id . '"';
@@ -1364,15 +1364,9 @@ class Caldera_Forms {
 		if ( false !== strpos( $formula, 'Math.' ) ) {
 			$formula = str_replace( 'Math.', '', $formula );
 		}
-		foreach ( $form[ 'fields' ] as $fid => $cfg ) {
+		foreach ( Caldera_Forms_Forms::get_fields( $form, false ) as $fid => $field ) {
 			if ( false !== strpos( $formula, $fid ) ) {
-				$entry_value = self::get_field_data( $fid, $form );
-
-				if ( is_array( $entry_value ) ) {
-					$number = floatval( array_sum( $entry_value ) );
-				} else {
-					$number = floatval( $entry_value );
-				}
+				$number = Caldera_Forms_Field_Calculation::get_value(  $field, $form );
 
 				$formula = str_replace( $fid, $number, $formula );
 			}

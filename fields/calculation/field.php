@@ -85,7 +85,12 @@ foreach ( Caldera_Forms_Forms::get_fields( $form, false ) as $fid => $c_field ) 
 		$_fid     = $fid . '_' . $current_form_count;
 		switch( $type ){
 			case 'checkbox' :
-				$bind_var = "checked_total_" . $target_id. "(jQuery('[data-checkbox-field=\"".$_fid."\"]:checked'))";
+				$checkbox_sum = Caldera_Forms_Field_Calculation::checkbox_mode( $c_field, $form );
+				if( $checkbox_sum ){
+					$bind_var = "checked_total_" . $target_id. "(jQuery('[data-checkbox-field=\"".$_fid."\"]:checked'))";
+				}else{
+					$bind_var = "checked_highest_" . $target_id. "(jQuery('[data-checkbox-field=\"".$_fid."\"]:checked'))";
+				}
 				$bind = "[data-checkbox-field=\"".$_fid."\"]";
 				break;
 			case 'radio' :
@@ -129,6 +134,17 @@ if(!empty($binds)){
 			});
 			return sum;
 		}
+
+		function checked_highest_<?php echo $target_id; ?>(items){
+			var highest = 0;
+			items.each(function(k,v){
+				if( parseFloat( v.value ) > parseFloat( highest ) ){
+					highest = parseFloat( v.value );
+				}
+			});
+			return highest;
+		}
+
 		function docalc_<?php echo $target_id; ?>(){
 			var <?php echo implode(', ',$binds_vars); ?>,
 				total = <?php echo $formula; ?>,
