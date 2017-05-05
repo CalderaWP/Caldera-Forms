@@ -93,6 +93,7 @@ foreach ( Caldera_Forms_Forms::get_fields( $form, false ) as $fid => $c_field ) 
 				}
 				$bind = "[data-checkbox-field=\"".$_fid."\"]";
 				break;
+			case 'toggle_switch' :
 			case 'radio' :
 				$bind_var = "jQuery( '#" . $form_id_atr . "').find('[data-radio-field=\"".$_fid."\"]:checked').val()";
 				$bind = "[data-radio-field=\"".$_fid."\"]";
@@ -102,6 +103,7 @@ foreach ( Caldera_Forms_Forms::get_fields( $form, false ) as $fid => $c_field ) 
 				$bind_var = "jQuery( '#" . $form_id_atr . "').find( '[data-field=\"$_fid\"]' ).val()";
 				$bind     = '[data-field="' . $_fid . '"]';
 				break;
+
 			default :
 				$bind_var = "jQuery( '#" . $form_id_atr . "').find( '[data-field=\"" . $fid . "\"]' ).val()";
 				break;
