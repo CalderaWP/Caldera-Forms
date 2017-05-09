@@ -160,6 +160,11 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 						compareelement = compareelement.filter(':checked');
 					}else if( compareelement.is('div')){
 						compareelement = jQuery('<input>').val( compareelement.html() );
+					}else if ( ! compareelement.length ){
+						var _calc = $form.find('[data-calc-field="' + lines[lid].field + '"]');
+						if( _calc.length ){
+							compareelement 	= $form.find('[data-calc-field="' + lines[lid].field + '"]');
+						}
 					}
 					
 					if(!compareelement.length){

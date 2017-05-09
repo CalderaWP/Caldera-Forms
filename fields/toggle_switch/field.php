@@ -31,7 +31,6 @@ if(!empty($field['config']['orientation']) && $field['config']['orientation'] ==
 
 			}
 
-
 			if(empty($field['config']['option'])){ ?>
 					
 					<a id="<?php echo esc_attr( $field_id ); ?>_1" class="button" data-value="true" <?php echo $field_structure['aria']; ?>><?php  esc_html_e('Enable', 'caldera-forms'); ?></a>
