@@ -58,7 +58,7 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 			$place_holder  = self::place_holder_string( $field, $field[ 'label' ] );
 		}
 
-		if( 'number' == $type ){
+		if( 'number' === $type ){
 			foreach( array(
 				'min',
 				'max',
@@ -69,19 +69,23 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 				}
 			}
 			$attrs[ 'data-parsley-type' ] = 'number';
-		}elseif ( 'phone_better' == $type ){
+		}elseif ( 'phone_better' === $type ){
 			$attrs[ 'type' ] = 'tel';
-		}elseif ( 'credit_card_number' == $type ){
+		}elseif ( 'credit_card_number' === $type ){
 			$attrs[ 'type' ] = 'tel';
 			$attrs[ 'class' ][] = 'cf-credit-card ';
 			$attr[ 'data-parsley-creditcard' ] = Caldera_Forms_Field_Util::credit_card_types( $field, $form );
-		}elseif( 'credit_card_exp' == $type ){
+		}elseif( 'credit_card_exp' === $type ){
 			$attrs[ 'type' ] = 'tel';
 			$attr[ 'data-parsley-creditcard' ] = '';
 		}elseif ( 'credit_card_cvv' == $type ){
 			$attrs[ 'type' ] = 'tel';
 			$attr[ 'data-parsley-creditcard' ] = '';
-		}
+		}elseif ( 'hidden' === $type ){
+            if ( ! empty( $field[ 'config' ][ 'custom_class' ] ) ) {
+                $attrs['class'] = $field['config']['custom_class'];
+            }
+        }
 
 		if( $field_structure['field_required'] ){
 			$required = 'required';
