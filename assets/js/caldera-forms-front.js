@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.0.10-b-1 - 2017-05-09 *//*
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.0.10-b-1 - 2017-05-11 *//*
  * jQuery miniColors: A small color selector
  *
  * Copyright 2011 Cory LaViska for A Beautiful Site, LLC. (http://abeautifulsite.net/)
@@ -5507,7 +5507,6 @@ var cf_jsfields_init, cf_presubmit;
 		cf_jsfields_init();		
 	});
 
-
 	// if pages, disable enter
 	if( $('.caldera-form-page').length ){
 		$('.caldera-form-page').on('keypress', '[data-field]:not(textarea)', function( e ){
@@ -5678,18 +5677,51 @@ var cf_jsfields_init, cf_presubmit;
 
 	// validator
 	$( document ).on('click', 'form.caldera_forms_form [type="submit"]', function( e ){
-		var clicked = $( this ),
-			form = clicked.closest('.caldera_forms_form'),
-			validator = cf_validate_form( form );
+		var $clicked = $( this ),
+			$form = $clicked.closest('.caldera_forms_form'),
+			validator = cf_validate_form( $form );
+
 
 		if( ! validator.validate() ){
+			if( $('.caldera-form-page').length ) {
+				var currentPage = $clicked.parents('.caldera-form-page').data('formpage');
+
+				var invalids = [],
+					future = [];
+				validator.fields.forEach(function (field, i) {
+					if( true === field.validationResult ){
+						return;
+					}
+					var $pageParent = field.$element.parents('.caldera-form-page');
+					if (undefined != $pageParent && $pageParent.length && field.$element.parents('.caldera-form-page').data('formpage') > currentPage) {
+						future.push(field.$element.data(  'field' ) );
+						return;
+					}
+
+					invalids.push( field );
+				});
+				if( ! invalids.length ){
+					if( future.length ){
+						$form.append( '<input type="hidden" name="_cf_future" value="' + future.toString() + '">' );
+
+					}
+
+
+					validator.destroy();
+					return;
+
+				}
+
+			}
+
 			e.preventDefault();
 		}else{
 			validator.destroy();
 		}
 	});
 
-	
+
+
 
 })(jQuery);
 

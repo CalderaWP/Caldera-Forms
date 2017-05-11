@@ -2809,6 +2809,14 @@ class Caldera_Forms {
 			}
 		}
 
+		//check if we added the field to indicate fields from pages not needed
+		//@see https://github.com/CalderaWP/Caldera-Forms/issues/1579
+		if( empty( $_POST[ '_cf_future' ] ) ){
+			$future_fields = '';
+		}else{
+			$future_fields = $_POST[ '_cf_future' ];
+		}
+
 
 		// start brining in entries
 		foreach ( $form[ 'fields' ] as $field_id => $field ) {
@@ -2855,6 +2863,13 @@ class Caldera_Forms {
 					if ( isset( $field_types[ $field[ 'type' ] ][ 'setup' ][ 'not_supported' ] ) && in_array( 'required', (array) $field_types[ $field[ 'type' ] ][ 'setup' ][ 'not_supported' ] ) ) {
 						continue;
 					}
+
+					//check if field is on a page after submit button
+					//@see https://github.com/CalderaWP/Caldera-Forms/issues/1579
+					if( false !== strpos( $future_fields, $field[ 'ID' ] ) ){
+						continue;
+					}
+
 					// check if conditions match first. ignore vailators if not part of condition
 					if ( false === Caldera_Forms_Field_Util::check_conditional( $field, $form ) ) {
 						continue;
