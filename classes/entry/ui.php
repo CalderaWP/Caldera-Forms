@@ -216,6 +216,12 @@ class Caldera_Forms_Entry_UI {
 		}
 
 		switch( $context ) {
+			case 'delete-entry':
+					$cap = 'delete_others_posts';
+				break;
+			case 'edit-entry' :
+					$cap = 'edit_others_posts';
+				break;
 			case 'export' :
 			case 'entry-view' :
 				if( ! empty( $form[ 'pinned' ] ) ){

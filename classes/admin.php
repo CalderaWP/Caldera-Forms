@@ -440,7 +440,7 @@ class Caldera_Forms_Admin {
 
 				switch ( $do_action ) {
 					case 'delete':
-						if( current_user_can( 'delete_others_posts' ) ){
+						if( current_user_can( Caldera_Forms::get_manage_cap( 'delete-entry' ) ) ){
 							$result = Caldera_Forms_Entry_Bulk::delete_entries( $items );
 						}
 						$out['status'] = 'reload';
@@ -448,7 +448,7 @@ class Caldera_Forms_Admin {
 						break;
 
 					default:
-						if( current_user_can( 'edit_others_posts' ) ){
+						if( current_user_can( Caldera_Forms::get_manage_cap( 'edit-entry' ) ) ){
 							$result = Caldera_Forms_Entry_Bulk::change_status( $items, $do_action  );
 						}
 						break;
@@ -577,7 +577,7 @@ class Caldera_Forms_Admin {
 			'class'  => 'right'
 		);
 
-		if ( current_user_can( 'edit_others_posts' ) ) {
+		if ( current_user_can( Caldera_Forms::get_manage_cap( 'edit-entry' ) ) ) {
 			$buttons[ 'edit_entry' ] = array(
 				'label'  => esc_html__( 'Edit Entry', 'caldera-forms' ),
 				'config' => array(
