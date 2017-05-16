@@ -39,6 +39,17 @@ if( !empty( $field['config']['language'] ) ){
 	}
 }
 
+if( ! empty( $field[ 'hide_label' ] ) ) {
+	if( ! empty( $field[ 'config' ][ 'placeholder' ] ) ){
+		$place_holder = $field[ 'config' ][ 'placeholder' ];
+	}else{
+		$place_holder = $field[ 'label' ];
+	}
+
+	$attrs[ 'placeholder' ]  = Caldera_Forms::do_magic_tags( $place_holder );
+
+}
+
 // check for autoclose
 $is_autoclose = null;
 if( !empty( $field['config']['autoclose'] ) ){
