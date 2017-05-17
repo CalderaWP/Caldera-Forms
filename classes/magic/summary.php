@@ -62,10 +62,21 @@ class Caldera_Forms_Magic_Summary extends Caldera_Forms_Magic_Parser {
 			$ordered_fields = $this->ordered_fields;
 		}
 
+		/**
+		 * Modify fields used in summary magic tag
+		 *
+		 * @since 1.5.0.10
+		 *
+		 * @param array $ordered_fields Fields in order they will be displayed
+		 * @param array $form Form config
+		 */
+		$this->ordered_fields = $ordered_fields = apply_filters( 'caldera_forms_summary_magic_fields', $ordered_fields, $this->form );
+
 
 		if ( ! empty( $ordered_fields ) ) {
+			$tag_i = -1;
 			foreach ( $ordered_fields as $field_id => $field ) {
-
+				$tag_i++;
 				$type = Caldera_Forms_Field_Util::get_type( $field, $this->form );
 				$not_support = Caldera_Forms_Fields::not_support( $type, 'entry_list' );
 				if( $not_support ){
@@ -131,11 +142,24 @@ class Caldera_Forms_Magic_Summary extends Caldera_Forms_Magic_Parser {
 
 
 				if ( $field_value !== null && ! is_array( $field_value ) && strlen( (string) $field_value ) > 0 ) {
+
+					/**
+					 * Change value displayed for field inside Caldera Forms summary magic tag
+					 *
+					 * @since 1.5.0.10
+					 *
+					 * @param string $field_value The value
+					 * @param array $field Field config
+					 * @param array $form Form config
+					 */
+					$field_value = apply_filters( 'caldera_forms_magic_summary_field_value', $field_value, $field, $this->form );
+
 					if ( $this->html ) {
-						$out[] = sprintf( $this->pattern, $field[ 'label' ], $field_value );
+						$out[ $tag_i ] = sprintf( $this->pattern, $field[ 'label' ], $field_value );
 					} else {
-						$out[] = $field[ 'label' ] . ': ' . $field_value;
+						$out[ $tag_i ] = $field[ 'label' ] . ': ' . $field_value;
 					}
+
 				}
 			}
 		}
