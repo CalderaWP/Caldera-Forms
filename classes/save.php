@@ -383,8 +383,9 @@ class Caldera_Forms_Save_Final {
 		 * @param array $mail Email data
 		 * @param array $data Form entry data
 		 * @param array $form The form config
+		 * @param int|null $entryid Entry ID @since 1.5.0.10
 		 */
-		$mail = apply_filters( 'caldera_forms_mailer', $mail, $data, $form);
+		$mail = apply_filters( 'caldera_forms_mailer', $mail, $data, $form, $entryid );
 		if ( empty( $mail ) || ! is_array( $mail ) ) {
 			return;
 
