@@ -442,5 +442,6 @@ class Caldera_Forms_Field_Util {
 		return $value;
 
 	}
+
 }
 

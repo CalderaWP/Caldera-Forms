@@ -71,6 +71,15 @@ class Caldera_Forms_Sync_Sync {
 	protected $default;
 
 	/**
+	 * The current form count
+	 *
+	 * @since 1.5.0.10
+	 *
+	 * @var
+	 */
+	protected  $current_form_count;
+
+	/**
 	 * Caldera_Forms_Field_Sync constructor.
 	 *
 	 * @since 1.5.0
@@ -78,11 +87,17 @@ class Caldera_Forms_Sync_Sync {
 	 * @param array $form Form config
 	 * @param array $field Field config
 	 * @param string $field_base_id Field ID attribute
+	 * @param int|null $current_form_count Optional. Current form ID.  Global is used if not provided
 	 */
-	public function __construct( array $form, array  $field, $field_base_id ) {
+	public function __construct( array $form, array  $field, $field_base_id, $current_form_count = null ) {
 		$this->form = $form;
 		$this->field = $field;
 		$this->field_base_id = $field_base_id;
+		if( ! $current_form_count ){
+			$current_form_count = Caldera_Forms_Render_Util::get_current_form_count();
+		}
+
+		$this->current_form_count = $current_form_count;
 		$this->initial_set_default();
 		add_filter( 'caldera_forms_render_get_field', array( $this, 'reset_default' ), 25, 2 );
 	}

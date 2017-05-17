@@ -95,9 +95,17 @@ class Caldera_Forms_Sync_HTML  extends Caldera_Forms_Sync_Sync {
 	 */
 	protected function add_bind( $key_id ) {
 		$this->binds[] = $key_id;
-		$this->attr_binds[] = '[data-field="'.$key_id.'"]';
+		$type = Caldera_Forms_Field_Util::get_type( $key_id, $this->form );
+		if( 'calculation' == $type ){
+			$this->attr_binds[] = '[data-calc-field="'.$key_id . '_' . $this->current_form_count.'"]';
+
+		}else{
+			$this->attr_binds[] = '[data-field="'.$key_id.'"]';
+		}
+
 		$this->bind_fields[] = '"'.$key_id.'"';
 	}
+
 
 
 

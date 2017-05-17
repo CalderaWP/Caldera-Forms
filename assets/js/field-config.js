@@ -13,6 +13,7 @@
 
      var fields = {};
 
+     var formInstance = $form.data( 'instance' );
 
      var $submits = $form.find(':submit, .cf-page-btn-next' );
 
@@ -103,7 +104,9 @@
          }
 
          var templates = {},
-             list = fieldConfig.binds;
+             list = fieldConfig.binds,
+			 theBindFields = [];
+
          /**
           * The actual template system for HTML/summary fields
           *
@@ -120,9 +123,16 @@
 
              for (var i = 0; i < list.length; i++) {
 
-                 var $field = $('[data-field="' + list[i] + '"]'),
+				 var $field = $('[data-field="' + list[i] + '"]'),
                      value = [];
-                 for (var f = 0; f < $field.length; f++) {
+				 if( ! $field.length ){
+				 	$field = $('[data-field="' + list[i] + '_' + formInstance + '"]');
+				 }
+				 if( $field.length ){
+					 theBindFields.push( $field );
+				 }
+
+				 for (var f = 0; f < $field.length; f++) {
                      if ($($field[f]).is(':radio,:checkbox')) {
                          if (!$($field[f]).prop('checked')) {
                              continue;
@@ -143,6 +153,8 @@
 
              $target.html(template).trigger('change');
 
+
+
          }
 
          /**
@@ -151,8 +163,8 @@
           * @since 1.5.0.7 -based on legacy code
           */
          function bindFields() {
-             $.each(fieldConfig.bindFields, function (i, id) {
-                 $( document.getElementById(id) ).on( 'click keyup', templateSystem );
+			 theBindFields.forEach( function ($field) {
+				 $field.on('click keyup change', templateSystem);
              });
          }
 
@@ -163,9 +175,10 @@
              bindFields();
          });
 
-         bindFields();
+		 templateSystem();
 
-         templateSystem();
+		 bindFields();
+
 
      };
 

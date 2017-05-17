@@ -78,6 +78,7 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 		}
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */

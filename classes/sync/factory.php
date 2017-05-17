@@ -20,11 +20,16 @@ class Caldera_Forms_Sync_Factory {
 	 * @param array $form Form config
 	 * @param array $field Field config
 	 * @param string $field_base_id Field ID attribute
+	 * @param int|null $current_form_count Optional. Current form ID.  Global is used if not provided
 	 *
 	 * @return Caldera_Forms_Sync_Sync|Caldera_Forms_Sync_HTML|Caldera_Forms_Sync_Summary
 	 */
-	public static function get_object( $form, $field, $field_base_id ){
-		$id = self::identifier( $form[ 'ID' ], $field[ 'ID' ], $field_base_id );
+	public static function get_object( $form, $field, $field_base_id, $current_form_count = null ){
+		if( ! $current_form_count ){
+			$current_form_count = Caldera_Forms_Render_Util::get_current_form_count();
+		}
+
+		$id = self::identifier( $form[ 'ID' ], $field[ 'ID' ], $field_base_id, $current_form_count );
 
 		$object = self::get_cache( $id );
 		if ( ! is_object( $object ) ) {
@@ -44,12 +49,17 @@ class Caldera_Forms_Sync_Factory {
 	 * @param string $form_id ID of form
 	 * @param string $field_id If of field
 	 * @param string $field_base_id Field ID attribute
+	 * @param int|null $current_form_count Optional. Current form ID.  Global is used if not provided
 	 *
 	 * @return string
 	 */
-	public static function identifier( $form_id, $field_id, $field_base_id ){
+	public static function identifier( $form_id, $field_id, $field_base_id, $current_form_count ){
+		if( ! $current_form_count ){
+			$current_form_count = Caldera_Forms_Render_Util::get_current_form_count();
+		}
 
-		return self::get_prefix() . md5(  __CLASS__ .  $form_id . $field_id . $field_base_id );
+		return rand();
+		return self::get_prefix() . md5(  __CLASS__ . CFCORE_VER . $form_id . $field_id . $field_base_id, $current_form_count );
 	}
 
 	/**

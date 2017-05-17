@@ -31,7 +31,8 @@ $attrs = array(
 	'name' => $field_name,
 	'value' => 0,
 	'data-field' => $target_id,
-	'data-calc-field' => $field[ 'ID' ]
+	'data-calc-field' => $field[ 'ID' ],
+	'data-type' => 'calculation'
 );
 $attr_string =  caldera_forms_field_attributes( $attrs, $field, $form );
 

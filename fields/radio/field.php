@@ -21,7 +21,7 @@ if(empty($field['config']['option'])){
 
 	?>
 
-	<input type="radio" id="<?php echo esc_attr( $field_id ); ?>" data-field="<?php echo esc_attr( $field_base_id ); ?>" class="field-config<?php echo $req_class; ?>" name="<?php echo esc_attr( $field_name ); ?>" value="1" <?php if(!empty($field_value)){ ?>checked="checked"<?php } ?> data-radio-field="<?php echo esc_attr( $field_id ); ?> />
+	<input type="radio" id="<?php echo esc_attr( $field_id ); ?>" data-field="<?php echo esc_attr( $field_base_id ); ?>" class="field-config<?php echo $req_class; ?>" name="<?php echo esc_attr( $field_name ); ?>" value="1" <?php if(!empty($field_value)){ ?>checked="checked"<?php } ?> data-radio-field="<?php echo esc_attr( $field_id ); ?> data-type="radio" />
 
 <?php }else{
 	foreach($field['config']['option'] as $option_key=>$option){
@@ -44,7 +44,7 @@ if(empty($field['config']['option'])){
 		<?php if(empty($field['config']['inline'])){ ?>
 			<div class="radio">
 		<?php } ?>
-		<label<?php if(!empty($field['config']['inline'])){ ?> class="radio-inline"<?php } ?> data-label="<?php echo esc_attr( $option['label'] ); ?>" for="<?php echo esc_attr( $field_id . '_' . $option_key ); ?>"><input type="radio" id="<?php echo esc_attr( $field_id . '_' . $option_key ); ?>" data-field="<?php echo esc_attr( $field_base_id ); ?>" class="<?php echo esc_attr( $field_id . $req_class ); ?>" name="<?php echo esc_attr( $field_name ); ?>" value="<?php echo esc_attr( $option['value'] ); ?>" <?php if( $checked ){ ?>checked="checked"<?php } ?> <?php if( $disabled ){ ?>disabled<?php } ?> <?php echo $field_required; ?> data-radio-field="<?php echo esc_attr( $field_id ); ?>" />
+		<label<?php if(!empty($field['config']['inline'])){ ?> class="radio-inline"<?php } ?> data-label="<?php echo esc_attr( $option['label'] ); ?>" for="<?php echo esc_attr( $field_id . '_' . $option_key ); ?>"><input type="radio" id="<?php echo esc_attr( $field_id . '_' . $option_key ); ?>" data-field="<?php echo esc_attr( $field_base_id ); ?>" class="<?php echo esc_attr( $field_id . $req_class ); ?>" name="<?php echo esc_attr( $field_name ); ?>" value="<?php echo esc_attr( $option['value'] ); ?>" <?php if( $checked ){ ?>checked="checked"<?php } ?> <?php if( $disabled ){ ?>disabled<?php } ?> <?php echo $field_required; ?> data-radio-field="<?php echo esc_attr( $field_id ); ?>" data-type="radio" />
 			<?php echo $option['label']; ?>
 		</label>
 		<?php if(empty($field['config']['inline'])){ ?>

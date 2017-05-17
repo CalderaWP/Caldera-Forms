@@ -315,7 +315,7 @@ window.addEventListener("load", function(){
 	(function( $ ) {
 		'use strict';
 
-
+		window.CALDERA_FORMS = {};
 
 		/** Check nonce **/
 		if( 'object' === typeof CF_API_DATA ) {
