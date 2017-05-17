@@ -80,6 +80,16 @@ class Caldera_Forms_Sync_Sync {
 	protected  $current_form_count;
 
 	/**
+	 * Marks field as being syncable
+	 *
+	 * @since 1.5.0.10
+	 *
+	 * @var bool
+	 */
+	protected $can_sync;
+
+
+	/**
 	 * Caldera_Forms_Field_Sync constructor.
 	 *
 	 * @since 1.5.0
@@ -100,6 +110,7 @@ class Caldera_Forms_Sync_Sync {
 		$this->current_form_count = $current_form_count;
 		$this->initial_set_default();
 		add_filter( 'caldera_forms_render_get_field', array( $this, 'reset_default' ), 25, 2 );
+
 	}
 
 	/**
@@ -110,9 +121,13 @@ class Caldera_Forms_Sync_Sync {
 	 * @return bool
 	 */
 	public function can_sync(){
+		if( true === $this->can_sync ){
+			return true;
+		}
 		$this->find_tags();
 		$this->find_binds();
- 		return ! empty( $this->binds );
+		$this->can_sync =  ! empty( $this->binds );
+		return $this->can_sync;
 	}
 
 	/**
@@ -151,7 +166,7 @@ class Caldera_Forms_Sync_Sync {
 	 */
 	public function reset_default( $field, $form ){
 		if( $field[ 'ID' ] === $this->field[ 'ID' ] && $form[ 'ID' ] === $this->form[ 'ID' ] ) {
-			$field[ 'config' ][ 'default' ] = $this->get_default();
+			//$field[ 'config' ][ 'default' ] = $this->get_default();
 		}
 
 		return $field;

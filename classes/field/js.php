@@ -259,7 +259,7 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 		) );
 
 		/** @var Caldera_Forms_Sync_HTML $syncer */
-		$syncer = Caldera_Forms_Sync_Factory::get_object( $this->form, $field, $id_attr );
+		$syncer = Caldera_Forms_Sync_Factory::get_object( $this->form, $field, $id_attr, $this->form_count );
 
 		if ( $syncer->can_sync() ) {
 			$this->data[ $field_id ] = array_merge( $this->data[ $field_id ], array(

@@ -33,7 +33,7 @@ class Caldera_Forms_Sync_Factory {
 
 		$object = self::get_cache( $id );
 		if ( ! is_object( $object ) ) {
-			$object = self::create( $form, $field, $field_base_id );
+			$object = self::create( $form, $field, $field_base_id, $current_form_count );
 			self::add_to_cache( $id, $object );
 		}
 
@@ -58,7 +58,6 @@ class Caldera_Forms_Sync_Factory {
 			$current_form_count = Caldera_Forms_Render_Util::get_current_form_count();
 		}
 
-		return rand();
 		return self::get_prefix() . md5(  __CLASS__ . CFCORE_VER . $form_id . $field_id . $field_base_id, $current_form_count );
 	}
 
@@ -134,20 +133,20 @@ class Caldera_Forms_Sync_Factory {
 	 *
 	 * @return Caldera_Forms_Sync_Sync|Caldera_Forms_Sync_HTML|Caldera_Forms_Sync_Calc|Caldera_Forms_Sync_Summary
 	 */
-	protected static function create( $form, $field, $field_base_id ){
+	protected static function create( $form, $field, $field_base_id, $current_form_count ){
 		$type = Caldera_Forms_Field_Util::get_type( $field );
 		switch( $type ) {
 			case 'html' :
-				return new  Caldera_Forms_Sync_HTML( $form, $field, $field_base_id );
+				return new  Caldera_Forms_Sync_HTML( $form, $field, $field_base_id, $current_form_count );
 			break;
 			case 'calculation' :
-				return new  Caldera_Forms_Sync_Calc( $form, $field, $field_base_id );
+				return new  Caldera_Forms_Sync_Calc( $form, $field, $field_base_id, $current_form_count );
 			break;
 			case 'summary' :
-				return new Caldera_Forms_Sync_Summary( $form, $field, $field_base_id );
+				return new Caldera_Forms_Sync_Summary( $form, $field, $field_base_id, $current_form_count);
 			break;
 			default :
-				return new  Caldera_Forms_Sync_Sync( $form, $field, $field_base_id );
+				return new  Caldera_Forms_Sync_Sync( $form, $field, $field_base_id, $current_form_count );
 			break;
 		}
 

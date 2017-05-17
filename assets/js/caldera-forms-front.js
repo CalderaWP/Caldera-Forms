@@ -4969,16 +4969,18 @@ function toggle_button_init(id, el){
                  templates[ fieldConfig.tmplId ] = $( document.getElementById( fieldConfig.tmplId ) ).html()
              }
 
+
              var
                  template = templates[ fieldConfig.tmplId ],
                  $target = $( document.getElementById( fieldConfig.contentId ) );
 
+			 var x = 1;
              for (var i = 0; i < list.length; i++) {
 
-				 var $field = $('[data-field="' + list[i] + '"]'),
+				 var $field = $form.find('[data-field="' + list[i] + '"]'),
                      value = [];
 				 if( ! $field.length ){
-				 	$field = $('[data-field="' + list[i] + '_' + formInstance + '"]');
+				 	$field = $form.find('[data-field="' + list[i] + '_' + formInstance + '"]');
 				 }
 				 if( $field.length ){
 					 theBindFields.push( $field );
@@ -5004,8 +5006,6 @@ function toggle_button_init(id, el){
              }
 
              $target.html(template).trigger('change');
-
-
 
          }
 
