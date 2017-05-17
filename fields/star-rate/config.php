@@ -1,4 +1,12 @@
 <div class="caldera-config-group">
+	<label for="{{_id}}_default">
+		<?php esc_html_e('Default', 'caldera-forms'); ?>
+	</label>
+	<div class="caldera-config-field">
+		<input type="text" id="{{_id}}_default" class="block-input field-config" name="{{_name}}[default]" value="{{default}}">
+	</div>
+</div>
+<div class="caldera-config-group">
 	<label for="{{_id}}_number">
         <?php esc_html_e('Number of Stars', 'caldera-forms'); ?>
     </label>

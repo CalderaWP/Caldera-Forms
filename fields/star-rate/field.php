@@ -1,10 +1,21 @@
 <?php
+if ( ! isset( $field[ 'config' ] [ 'default' ] ) ) {
+	$field[ 'config' ][ 'default' ] = 2;
+}
+
+if ( $field[ 'config' ][ 'number' ] < $field[ 'config' ][ 'default' ] ) {
+	$field[ 'config' ][ 'default' ] = $field[ 'config' ][ 'number' ];
+}
+
+$default = intval( $field[ 'config' ][ 'default' ] );
+
 $attrs = array(
 	'type'        => 'text',
 	'name'        => $field_name,
 	'data-field'  => $field_base_id,
 	'class'       => $field_class,
 	'id'          => $field_id,
+	'value'      => $default
 );
 
 $attr_string =  caldera_forms_field_attributes( $attrs, $field, $form );
@@ -15,7 +26,7 @@ $star_target = Caldera_Forms_Field_Util::star_target( Caldera_Forms_Field_Util::
 	<?php echo $field_before; ?>
 		<div style="position: relative;">
 			<div id="<?php echo esc_attr( $star_target  ); ?>" style="color:<?php echo esc_attr( $field['config']['track_color'] ); ?>;font-size:<?php echo floatval( $field['config']['size'] ); ?>px;" ></div>
-			<input <?php echo $attr_string . ' ' . $field_required; ?> style="position: absolute; width: 0px; height: 0px; padding: 0px; bottom: 0px; left: 12px; opacity: 0; z-index: -1000;" />
+			<input <?php echo $attr_string . ' ' . $field_required; ?> style="position: absolute; width: 0px; height: 0px; padding: 0px; bottom: 0px; left: 12px; opacity: 0; z-index: -1000;" value="<?php esc_attr( $default ); ?>" />
 		</div>
 		<?php echo $field_caption; ?>
 	<?php echo $field_after; ?>
@@ -37,7 +48,7 @@ $star_target = Caldera_Forms_Field_Util::star_target( Caldera_Forms_Field_Util::
 					hints: [1,2,3,4,5],
 					number: <?php echo $field['config']['number']; ?>,
 					starType: 'f',
-					score: <?php echo $star_target; ?>Score,
+					score: <?php echo $default; ?>,
 					starColor: '<?php echo $field['config']['color']; ?>',
 					numberMax: 100,
 					click :function(nScore){
