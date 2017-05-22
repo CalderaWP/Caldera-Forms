@@ -31,8 +31,12 @@ if(!empty($field['config']['placeholder'])){
 	$attrs[ 'placeholder' ] = Caldera_Forms::do_magic_tags( $field['config']['placeholder'] );
 }
 
+if( isset( $entry_data, $entry_data[ $field[ 'ID' ] ] ) ){
+	$field['config']['default'] = $entry_data[ $field[ 'ID' ] ];
+}
+
 if(!empty($field['config']['default'])){
-	$attrs[ 'default' ] = Caldera_Forms::do_magic_tags( $field['config']['default'] );
+	$attrs[ 'default' ] = $field_value =  Caldera_Forms::do_magic_tags( $field['config']['default'] );
 }
 
 
@@ -41,6 +45,7 @@ if( ! empty( $sync ) ){
 	$attrs[ 'data-sync' ] = $field['config']['default'];
 
 }
+
 
 $attr_string =  caldera_forms_field_attributes( $attrs, $field, $form );
 
