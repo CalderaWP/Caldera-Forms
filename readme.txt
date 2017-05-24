@@ -769,9 +769,9 @@ This could also be a sign of a more serious issue on your server, but is probabl
 == Screenshots ==
 1. **Mobile Friendly** - Looks Great On Any Device!
 2. **Easy, Powerful Grid-based Form Builder** - Drag and drop editor!
-3. **All The Field Types You Need** - Tons of fields! So Many Fields!
-4. **Powerful Conditional Logic** - Hide and show fields based on user input!
-5. **Go Further With Form Processors** - Auto-responders, redirects included! Go further with our add-ons!
+3. **All The Field Types You Need** - Tons of fields! The fancy fields are included!
+4. **Powerful Conditional Logic** - Hide, show and disable fields based on user input!  Don't pay for conditional logic!
+5. **Go Further With Form Processors** - Auto-responders, conditional recipients, redirects are included! Go further with our add-ons!
 
 == Changelog ==
 = Caldera Forms 1.5.0.10 (May 24th, 2017) We Got A Cute Cat Mascot =
