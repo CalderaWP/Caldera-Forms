@@ -365,9 +365,6 @@ class Caldera_Forms_Save_Final {
 			$csvfile = $settings[ 'csv' ];
 		}
 
-		var_dump($mail);
-		die();
-
 		if( empty( $mail ) ){
 			/**
 			 * Runs if mail was not sent because mail variable is empty.
