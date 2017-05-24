@@ -2,8 +2,8 @@
 Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza
 Tags: form builder, contact form,  contact me, custom form, forms, form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, echecks, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, eCheck,dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, gravity forms, contact, email, auto-responder, aweber, convertkit, builder, contact forms, search, ab testing, a/b testing, split testing, shortcode, wordpress, awesome plugin, plugin, easy, braintree form, dwolla form, authorize.net form, mailchimp form, mailchimp popup, aweber form, convertkit form, stripe form, stripe popup, eCheck form, formbuilder
 Requires at least: 4.5
-Tested up to: 4.7.4
-Stable tag: 1.5.0.10-b-1
+Tested up to: 4.8.0
+Stable tag: 1.5.0.10
 License: GPLv2
 
 Responsive form builder for contact forms, user registration and login forms, Mailchimp, and more.
@@ -26,7 +26,7 @@ Caldera Forms is a free plugin by <a href="http://CalderaLabs.org?utm_source=dot
 * Tons of great field types - the basics and "fancy" fields are included!
 * Conditional logic for form fields, processors and auto-responder recipients!
 * Export entries to CSV!
-* Front-end post submissions and post editing with the free [Caldera Custom Fields add-on][Caldera Custom Fields](https://calderaforms.com/downloads/caldera-form-metabox?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=features+list)
+* Front-end post submissions and post editing with the free [Caldera Custom Fields add-on](https://calderaforms.com/downloads/caldera-form-metabox?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=features+list)
 * Unlimited auto-responders!
 * Default anti-spam is to stop those bots!
 * A ton of add-ons to take your forms farther!
@@ -774,8 +774,26 @@ This could also be a sign of a more serious issue on your server, but is probabl
 5. **Go Further With Form Processors** - Auto-responders, redirects included! Go further with our add-ons!
 
 == Changelog ==
-= Caldera Forms 1.5.0.9 (May 2, 2017) =
-See: [https://calderaforms.com/updates/caldera-forms-1-5-0-8](https://calderaforms.com/updates/caldera-forms-1-5-0-9?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.0.9)
+= Caldera Forms 1.5.0.10 (May 24th, 2017) We Got A Cute Cat Mascot =
+See: [https://calderaforms.com/updates/caldera-forms-1-5-0-10](https://calderaforms.com/updates/caldera-forms-1-5-0-10?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.0.10)
+* NEW FEATURE: Changed banner to include Catdera mascot.
+* NEW FEATURE: Star rating fields now have a setting for the default number of stars.
+* NEW FEATURE: The caldera_forms_mailer filter now exposes the entry ID.
+* NEW FEATURE: All entry management actions are now filterable via the caldera_forms_manage_cap filter.
+* NEW FEATURE: Added support for radio and checkbox fields in summary fields.
+* NEW FILTER: caldera_forms_summary_magic_fields -- to change which fields are used in the summary magic tag.
+* NEW FILTER: caldera_forms_magic_summary_field_value -- to change how a field is displayed in the summary magic tag.
+* FIXED: If a submit button was shown on a page of a multi-page for before the last page, it might not work because future pages were validated.
+* FIXED: Conditionals based on calculation fields were not updating properly.
+* FIXED: Hidden classes were not applied to hidden fields.
+* FIXED: Toggle switches values were not included in calucaltions
+* FIXED: Label for datepicker fields were not showing as label when labels where hidden.
+* FIXED: Duplicate column 'status' error on plugin activation. Hi Shawn.
+* FIXED: Datepicker fields could not be edited in the form editor. Added more z-index.
+* FIXED: Paragraph fields didn't show saved value in entry editor.
+
+= Caldera Forms 1.5.0.9 (May 2, 2017) Bring Me To Your Contact Form =
+See: [https://calderaforms.com/updates/caldera-forms-1-5-0-9](https://calderaforms.com/updates/caldera-forms-1-5-0-9?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.0.9)
 
 * IMPROVED: Multi-page form validation. Validation logic is improved to work with new add-ons and to be faster.
 * FIXED: Calculation fields could target wrong fields if two of the same form were on the same page.
@@ -802,7 +820,7 @@ See: [https://calderaforms.com/updates/caldera-forms-1-5-0-8](https://calderafor
 * ADDED: Caldera_Forms_Render_Util::form_id_attr() to get form ID attribute.
 * ADDED: Utility methods for formatting inline JavaScript that were needed in add-ons.
 
-= Caldera Forms 1.5.0.7 ( April 4, 2017 ) %funny_name_for_release%
+= Caldera Forms 1.5.0.7 ( April 4, 2017 ) %funny_name_for_release% =
 See: [https://calderaforms.com/updates/caldera-forms-1-5-0-7](https://calderaforms.com/updates/caldera-forms-1-5-0-7?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.0.7)
 * FIXED: Checkbox fields were rendering as {"opt": "ccc" ... which is so bad. Fixed the crap out of that.
 * ADDED: [New Filter: caldera_forms_magic_file_use_link Allows for showing an image tag in email for file field](https://calderaforms.com/doc/caldera_forms_magic_file_use_link/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.0.7)
@@ -1702,3 +1720,10 @@ See: https://calderaforms.com/updates/caldera-forms-1.5.0.7
 
 = 1.5.0.8 =
 See: https://calderaforms.com/updates/caldera-forms-1-5-0-8
+
+= 1.5.0.9 =
+See: https://calderaforms.com/updates/caldera-forms-1-5-0-9
+
+= 1.5.0.10 =
+See: https://calderaforms.com/updates/caldera-forms-1-5-0-10
+
