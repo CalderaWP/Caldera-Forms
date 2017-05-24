@@ -14,7 +14,7 @@ interface Caldera_Forms_Processor_Interface_CRM extends Caldera_Forms_Processor_
 	/**
 	 * Update CRM Records using an Email Address as the lookup key
 	 *
-	 * @since 1.5.0.10
+	 * @since 1.5.1
 	 *
 	 * @param string $email The e-mail address to lookup in the CRM
 	 * @param array $form_data An array containing the fields to be updated
