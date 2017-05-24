@@ -23,10 +23,11 @@ class Test_Caldera_Forms_Entry_Crud_API extends CF_Rest_Test_Case {
 	public function test_get_entry() {
 		add_filter( 'caldera_forms_api_allow_entry_view', '__return_true' );
 		$current_time = current_time( 'mysql' );
-		$form = Caldera_Forms_Forms::create_form( [
+		$test_form = array(
 			'name' => 'Hi Roy',
 			'description' => 'test form of industry'
-		]);
+		);
+		$form = Caldera_Forms_Forms::create_form( $test_form );
 		$form_id = $form[ 'ID' ];
 		$this->assertEquals( Caldera_Forms_Forms::get_form( $form_id ), $form );
 		$entry_id = $this->create_entry( $form, $current_time );
