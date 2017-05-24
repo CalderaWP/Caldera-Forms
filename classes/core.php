@@ -568,6 +568,10 @@ class Caldera_Forms {
 			$columns = $wpdb->get_results( "SHOW COLUMNS FROM `" . $wpdb->prefix . "cf_form_entries`", ARRAY_A );
 			$fields  = array();
 
+			foreach ( $columns as $column ) {
+				$fields[] = $column[ 'Field' ];
+			}
+
 			if ( ! in_array( 'status', $fields ) && $version < '1.2.0' ) {
 				$wpdb->query( "ALTER TABLE `" . $wpdb->prefix . "cf_form_entries` ADD `status` varchar(20) NOT NULL DEFAULT 'active' AFTER `datestamp`;" );
 				$wpdb->query( "CREATE INDEX `status` ON `" . $wpdb->prefix . "cf_form_entries` (`status`); " );
