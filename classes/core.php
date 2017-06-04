@@ -1856,6 +1856,7 @@ class Caldera_Forms {
 			'entry_token',
 			'ip',
 			'user:id',
+			'user:roles',
 			'user:user_login',
 			'user:first_name',
 			'user:last_name',
