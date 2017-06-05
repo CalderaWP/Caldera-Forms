@@ -3,7 +3,7 @@
 // Just some basics.
 $per_page_limit = 20;
 
-
+Caldera_Forms::check_tables();
 // get all forms
 $forms = Caldera_Forms_Forms::get_forms( true );
 $forms = apply_filters( 'caldera_forms_admin_forms', $forms );
