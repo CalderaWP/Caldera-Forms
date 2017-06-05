@@ -224,11 +224,11 @@ class Caldera_Forms_DB_Tables {
 		$charset_collate = '';
 
 		if ( ! empty( $this->wpdb->charset ) ) {
-			$charset_collate = "DEFAULT CHARACTER SET $this->wpdb->charset";
+			$charset_collate = "DEFAULT CHARACTER SET " . $this->wpdb->charset;
 		}
 
 		if ( ! empty( $this->wpdb->collate ) ) {
-			$charset_collate .= " COLLATE $this->wpdb->collate";
+			$charset_collate .= " COLLATE " .$this->wpdb->collate;
 		}
 
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
