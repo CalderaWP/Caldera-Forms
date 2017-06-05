@@ -1094,7 +1094,22 @@ class Caldera_Forms {
 			$config[ 'sender_email' ] = get_option( 'admin_email' );
 		}
 
+		/**
+		 * Filter email to be sent as auto responder
+		 *
+		 * Return null to prevent sending
+		 *
+		 * @since unknown
+		 *
+		 * @param array $email_message Message to send
+		 * @param array $config Auto-responder config
+		 * @param array $form Form config
+		 *
+		 */
 		$email_message = apply_filters( 'caldera_forms_autoresponse_mail', $email_message, $config, $form );
+		if( null === $email_message ){
+			return;
+		}
 
 		if ( 'wp' !== Caldera_Forms_Email_Settings::get_method() ) {
 			$email_message[ 'from' ]      = $email_message[ 'replyto' ] = $config[ 'sender_email' ];
