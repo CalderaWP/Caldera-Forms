@@ -370,7 +370,9 @@ class Caldera_Forms {
 			// check update version
 			$db_version   = get_option( 'CF_DB', 0 );
 			$force_update = false;
-			if( Caldera_Forms::get_manage_cap( 'admin' ) && isset( $_GET[ 'cal_db_update' ] ) ) { // ensure that admin can only force update
+
+			// ensure that admin can only force update
+			if( Caldera_Forms::get_manage_cap( 'admin' ) && isset( $_GET[ 'cal_db_update' ] ) ) {
 				$force_update = (bool) wp_verify_nonce( $_GET[ 'cal_db_update' ] );
 			}
 

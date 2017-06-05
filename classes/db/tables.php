@@ -118,6 +118,30 @@ class Caldera_Forms_DB_Tables {
 	}
 
 	/**
+	 * Add cf_form_entry_meta table
+	 *
+	 * Warning: does not check if it exists first, which could cause SQL errors.
+	 *
+	 * @since 1.5.1
+	 */
+	public function entry_meta(){
+		$this->set_charset();
+
+		$meta_table = "CREATE TABLE `" . $this->wpdb->prefix . "cf_form_entry_meta` (
+			`meta_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			`entry_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+			`process_id` varchar(255) DEFAULT NULL,
+			`meta_key` varchar(255) DEFAULT NULL,
+			`meta_value` longtext,
+			PRIMARY KEY (`meta_id`),
+			KEY `meta_key` (meta_key(" . $this->max_index_length . ")),
+			KEY `entry_id` (`entry_id`)
+			) " . $this->charset_collate . ";";
+
+		dbDelta( $meta_table );
+
+	}
+	/**
 	 * Add the cf_tracking table
 	 *
 	 * Warning: does not check if it exists first, which could cause SQL errors.
