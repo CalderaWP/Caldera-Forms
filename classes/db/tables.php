@@ -124,7 +124,7 @@ class Caldera_Forms_DB_Tables {
 	 *
 	 * @since 1.5.1
 	 */
-	public function entry_meta(){
+	public function form_entry_meta(){
 		$this->set_charset();
 
 		$meta_table = "CREATE TABLE `" . $this->wpdb->prefix . "cf_form_entry_meta` (
