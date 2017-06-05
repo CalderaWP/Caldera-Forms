@@ -389,6 +389,8 @@ class Caldera_Forms {
 					caldera_forms_write_db_flag( 4 );
 				}
 
+				caldera_forms_write_db_flag( 5 );
+
 			}else{
 				$version = caldera_forms_get_last_update_version();
 				if ( empty( $version ) || version_compare( $version, CFCORE_VER ) !== 0 ) {
