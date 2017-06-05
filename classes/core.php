@@ -40,6 +40,16 @@ class Caldera_Forms {
 	 */
 	protected static $instance = null;
 
+
+	/**
+	 * Table install/check object
+	 *
+	 * @since 1.5.1
+	 *
+	 * @var Caldera_Forms_DB_Tables
+	 */
+	protected  static $tables;
+
 	/**
 	 * Used to track if system has initialized and prevent recursion in init_cf_internal() method.
 	 *
@@ -357,18 +367,17 @@ class Caldera_Forms {
 			self::$internal_init = true;
 
 
-
-
 			// check update version
 			$db_version   = get_option( 'CF_DB', 0 );
 			$force_update = false;
-			if ( is_admin() && isset( $_GET[ 'cal_db_update' ] ) ) { // ensure that admin can only force update
+			if( Caldera_Forms::get_manage_cap( 'admin' ) && isset( $_GET[ 'cal_db_update' ] ) ) { // ensure that admin can only force update
 				$force_update = (bool) wp_verify_nonce( $_GET[ 'cal_db_update' ] );
 			}
 
 			include_once CFCORE_PATH . 'includes/updater.php';
 
 			if ( CF_DB > $db_version || $force_update ) {
+				self::check_tables();
 				if ( $db_version < 2 || $force_update ) {
 					caldera_forms_db_v2_update();
 				}
@@ -410,172 +419,84 @@ class Caldera_Forms {
 		// ensure rewrites
 		flush_rewrite_rules();
 
-		$charset_collate = '';
+		//make sure we have all tables
+		self::check_tables();
 
-		if ( ! empty( $wpdb->charset ) ) {
-			$charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
+		if ( $version >= '1.1.5' ) {
+			return; // only if 1.1.4 or lower
 		}
 
-		if ( ! empty( $wpdb->collate ) ) {
-			$charset_collate .= " COLLATE $wpdb->collate";
+		// check for field_id from 1.0.4
+		$columns = $wpdb->get_results( "SHOW COLUMNS FROM `" . $wpdb->prefix . "cf_form_entry_values`", ARRAY_A );
+		$fields  = array();
+		foreach ( $columns as $column ) {
+			$fields[] = $column[ 'Field' ];
 		}
-
-		/*
-		 * Indexes have a maximum size of 767 bytes. Historically, we haven't need to be concerned about that.
-		 * As of WordPress 4.2, however, we moved to utf8mb4, which uses 4 bytes per character. This means that an index which
-		 * used to have room for floor(767/3) = 255 characters, now only has room for floor(767/4) = 191 characters.
-		 */
-		$max_index_length = 191;
-
-		$tables = $wpdb->get_results( "SHOW TABLES", ARRAY_A );
-		foreach ( $tables as $table ) {
-			$alltables[] = implode( $table );
-		}
-
-		// meta table
-		if ( ! in_array( $wpdb->prefix . 'cf_form_entry_meta', $alltables ) ) {
-			// create meta tables
-			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-
-			$meta_table = "CREATE TABLE `" . $wpdb->prefix . "cf_form_entry_meta` (
-			`meta_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-			`entry_id` bigint(20) unsigned NOT NULL DEFAULT '0',
-			`process_id` varchar(255) DEFAULT NULL,
-			`meta_key` varchar(255) DEFAULT NULL,
-			`meta_value` longtext,
-			PRIMARY KEY (`meta_id`),
-			KEY `meta_key` (meta_key(" . $max_index_length . ")),
-			KEY `entry_id` (`entry_id`)
-			) " . $charset_collate . ";";
-
-			dbDelta( $meta_table );
-
-		}
-
-		// tracking table
-		if ( ! in_array( $wpdb->prefix . 'cf_tracking', $alltables ) ) {
-			// create meta tables
-			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-			$tacking_table = "CREATE TABLE `" . $wpdb->prefix . "cf_tracking` (
-			`ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-			`form_id` varchar(255) DEFAULT NULL,
-			`process_id` varchar(255) DEFAULT NULL,
-			PRIMARY KEY (`ID`)
-			) " . $charset_collate . ";";
-
-			dbDelta( $tacking_table );
-
-		}
-
-		//tracking meta
-		if ( ! in_array( $wpdb->prefix . 'cf_tracking_meta', $alltables ) ) {
-			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-
-			$meta_table = "CREATE TABLE `" . $wpdb->prefix . "cf_tracking_meta` (
-			`meta_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-			`event_id` bigint(20) unsigned NOT NULL DEFAULT '0',
-			`meta_key` varchar(255) DEFAULT NULL,
-			`meta_value` longtext,
-			PRIMARY KEY (`meta_id`),
-			KEY `meta_key` (`meta_key`(" . $max_index_length . ")),
-			KEY `event_id` (`event_id`)
-			) " . $charset_collate . ";";
-
-			dbDelta( $meta_table );
-
-		}
-
-
-		if ( ! in_array( $wpdb->prefix . 'cf_form_entries', $alltables ) || ! in_array( $wpdb->prefix . 'cf_form_entry_values', $alltables ) ) {
-			// create tables
-			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-
-			if ( ! in_array( $wpdb->prefix . 'cf_form_entries', $alltables ) ) {
-
-				$entry_table = "CREATE TABLE `" . $wpdb->prefix . "cf_form_entries` (
-				`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-				`form_id` varchar(18) NOT NULL DEFAULT '',
-				`user_id` int(11) NOT NULL,
-				`datestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-				`status` varchar(20) NOT NULL DEFAULT 'active',
-				PRIMARY KEY (`id`),
-				KEY `form_id` (`form_id`),
-				KEY `user_id` (`user_id`),
-				KEY `date_time` (`datestamp`),
-				KEY `status` (`status`)
-				) " . $charset_collate . ";";
-
-
-				dbDelta( $entry_table );
-			}
-
-			if ( ! in_array( $wpdb->prefix . 'cf_form_entry_values', $alltables ) ) {
-
-				$values_table = "CREATE TABLE `" . $wpdb->prefix . "cf_form_entry_values` (
-				`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-				`entry_id` int(11) NOT NULL,
-				`field_id` varchar(20) NOT NULL,
-				`slug` varchar(255) NOT NULL DEFAULT '',
-				`value` longtext NOT NULL,
-				PRIMARY KEY (`id`),
-				KEY `form_id` (`entry_id`),
-				KEY `field_id` (`field_id`),
-				KEY `slug` (`slug`(" . $max_index_length . "))
-				) " . $charset_collate . ";";
-
-				dbDelta( $values_table );
-			}
-
-		} else {
-			if ( $version >= '1.1.5' ) {
-				return; // only if 1.1.4 or lower
-			}
-			// check for field_id from 1.0.4
-			$columns = $wpdb->get_results( "SHOW COLUMNS FROM `" . $wpdb->prefix . "cf_form_entry_values`", ARRAY_A );
-			$fields  = array();
-			foreach ( $columns as $column ) {
-				$fields[] = $column[ 'Field' ];
-			}
-			if ( ! in_array( 'field_id', $fields ) ) {
-				$wpdb->query( "ALTER TABLE `" . $wpdb->prefix . "cf_form_entry_values` ADD `field_id` varchar(20) NOT NULL AFTER `entry_id`;" );
-				$wpdb->query( "CREATE INDEX `field_id` ON `" . $wpdb->prefix . "cf_form_entry_values` (`field_id`); " );
-				// update all entries
-				$forms = $wpdb->get_results( "SELECT `id`,`form_id` FROM `" . $wpdb->prefix . "cf_form_entries`", ARRAY_A );
-				$known = array();
-				if ( ! empty( $forms ) ) {
-					foreach ( $forms as $form ) {
-						if ( ! isset( $known[ $form[ 'form_id' ] ] ) ) {
-							$config = Caldera_Forms_Forms::get_form( $form[ 'form_id' ] );
-							if ( empty( $config ) ) {
-								continue;
-							}
-							$known[ $form[ 'form_id' ] ] = $config;
-						} else {
-							$config = $known[ $form[ 'form_id' ] ];
+		if ( ! in_array( 'field_id', $fields ) ) {
+			$wpdb->query( "ALTER TABLE `" . $wpdb->prefix . "cf_form_entry_values` ADD `field_id` varchar(20) NOT NULL AFTER `entry_id`;" );
+			$wpdb->query( "CREATE INDEX `field_id` ON `" . $wpdb->prefix . "cf_form_entry_values` (`field_id`); " );
+			// update all entries
+			$forms = $wpdb->get_results( "SELECT `id`,`form_id` FROM `" . $wpdb->prefix . "cf_form_entries`", ARRAY_A );
+			$known = array();
+			if ( ! empty( $forms ) ) {
+				foreach ( $forms as $form ) {
+					if ( ! isset( $known[ $form[ 'form_id' ] ] ) ) {
+						$config = Caldera_Forms_Forms::get_form( $form[ 'form_id' ] );
+						if ( empty( $config ) ) {
+							continue;
 						}
-
-						foreach ( $config[ 'fields' ] as $field_id => $field ) {
-							$wpdb->update( $wpdb->prefix . "cf_form_entry_values", array( 'field_id' => $field_id ), array(
-								'entry_id' => $form[ 'id' ],
-								'slug'     => $field[ 'slug' ]
-							) );
-						}
-
+						$known[ $form[ 'form_id' ] ] = $config;
+					} else {
+						$config = $known[ $form[ 'form_id' ] ];
 					}
+
+					foreach ( $config[ 'fields' ] as $field_id => $field ) {
+						$wpdb->update( $wpdb->prefix . "cf_form_entry_values", array( 'field_id' => $field_id ), array(
+							'entry_id' => $form[ 'id' ],
+							'slug'     => $field[ 'slug' ]
+						) );
+					}
+
 				}
 			}
-			// add status
-			$columns = $wpdb->get_results( "SHOW COLUMNS FROM `" . $wpdb->prefix . "cf_form_entries`", ARRAY_A );
-			$fields  = array();
+		}
+		// add status
+		$columns = $wpdb->get_results( "SHOW COLUMNS FROM `" . $wpdb->prefix . "cf_form_entries`", ARRAY_A );
+		$fields  = array();
 
-			foreach ( $columns as $column ) {
-				$fields[] = $column[ 'Field' ];
-			}
+		foreach ( $columns as $column ) {
+			$fields[] = $column[ 'Field' ];
+		}
 
-			if ( ! in_array( 'status', $fields ) && $version < '1.2.0' ) {
-				$wpdb->query( "ALTER TABLE `" . $wpdb->prefix . "cf_form_entries` ADD `status` varchar(20) NOT NULL DEFAULT 'active' AFTER `datestamp`;" );
-				$wpdb->query( "CREATE INDEX `status` ON `" . $wpdb->prefix . "cf_form_entries` (`status`); " );
-			}
+		if ( ! in_array( 'status', $fields ) && $version < '1.2.0' ) {
+			$wpdb->query( "ALTER TABLE `" . $wpdb->prefix . "cf_form_entries` ADD `status` varchar(20) NOT NULL DEFAULT 'active' AFTER `datestamp`;" );
+			$wpdb->query( "CREATE INDEX `status` ON `" . $wpdb->prefix . "cf_form_entries` (`status`); " );
+		}
+
+	}
+
+
+	/**
+	 * Check that we have all tables
+	 *
+	 * @since 1.5.1
+	 */
+	public static function check_tables(){
+		if( ! did_action( 'caldera_forms_checked_tables' ) ){
+			global $wpdb;
+			self::$tables = new Caldera_Forms_DB_Tables( $wpdb );
+			self::$tables->add_if_needed();
+
+			/**
+			 * Runs after checking for all database tables being present
+			 *
+			 * Mainly exists to prevent this from running multiple times
+			 *
+			 * @since 1.5.1
+			 *
+			 * @param Caldera_Forms_DB_Tables $tables  Caldera_Forms_DB_Tables object
+			 */
+			do_action( 'caldera_forms_checked_tables', self::$tables );
 
 		}
 

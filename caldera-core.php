@@ -38,6 +38,7 @@ add_action( 'init', array( 'Caldera_Forms', 'init_cf_internal' ) );
 // table builder
 register_activation_hook( __FILE__, array( 'Caldera_Forms', 'activate_caldera_forms' ) );
 
+
 // load system
 add_action( 'plugins_loaded', 'caldera_forms_load', 0 );
 function caldera_forms_load(){
