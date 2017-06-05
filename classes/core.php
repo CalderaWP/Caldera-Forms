@@ -1043,6 +1043,7 @@ class Caldera_Forms {
 	 */
 	public static function send_auto_response( $config, $form ) {
 		global $form;
+		$entry_id = self::get_field_data( '_entry_id', $form );
 
 		// new filter to alter the config.
 		$config = apply_filters( 'caldera_forms_autoresponse_config', $config, $form );
@@ -1104,9 +1105,10 @@ class Caldera_Forms {
 		 * @param array $email_message Message to send
 		 * @param array $config Auto-responder config
 		 * @param array $form Form config
+		 * @param int $entry_id Entry ID
 		 *
 		 */
-		$email_message = apply_filters( 'caldera_forms_autoresponse_mail', $email_message, $config, $form );
+		$email_message = apply_filters( 'caldera_forms_autoresponse_mail', $email_message, $config, $form, $entry_id );
 		if( null === $email_message ){
 			return;
 		}
