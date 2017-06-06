@@ -33,7 +33,8 @@ define('CFCORE_BASENAME', plugin_basename( __FILE__ ));
 define( 'CF_DB', 5 );
 
 // init internals of CF
-include_once CFCORE_PATH . 'classes/core.php'; // needs the core at the very least before plugins loaded
+include_once CFCORE_PATH . 'classes/core.php';
+
 add_action( 'init', array( 'Caldera_Forms', 'init_cf_internal' ) );
 // table builder
 register_activation_hook( __FILE__, array( 'Caldera_Forms', 'activate_caldera_forms' ) );

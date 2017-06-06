@@ -488,6 +488,10 @@ class Caldera_Forms {
 	public static function check_tables(){
 		if( ! did_action( 'caldera_forms_checked_tables' ) ){
 			global $wpdb;
+			if( ! class_exists( 'Caldera_Forms_DB_Tables' )){
+				include_once CFCORE_PATH . 'classes/db/tables.php';
+			}
+
 			self::$tables = new Caldera_Forms_DB_Tables( $wpdb );
 			self::$tables->add_if_needed();
 
