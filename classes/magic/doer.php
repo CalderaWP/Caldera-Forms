@@ -240,6 +240,8 @@ class Caldera_Forms_Magic_Doer {
 								} else {
 									if ( strtolower( $magic[ 1 ] ) == 'id' ) {
 										$magic_tag = $user->ID;
+									} elseif ( strtolower( $magic[ 1 ] ) == 'roles' ) {
+										$magic_tag = implode(',',$user->roles);
 									} else {
 										$magic_tag = get_user_meta( $user->ID, $magic[ 1 ], true );
 									}
