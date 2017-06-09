@@ -1314,9 +1314,9 @@ class Caldera_Forms {
 		if ( false !== strpos( $formula, 'Math.' ) ) {
 			$formula = str_replace( 'Math.', '', $formula );
 		}
-		foreach ( Caldera_Forms_Forms::get_fields( $form, false ) as $fid => $field ) {
+		foreach ( Caldera_Forms_Forms::get_fields( $form, false ) as $fid => $form_field ) {
 			if ( false !== strpos( $formula, $fid ) ) {
-				$number = Caldera_Forms_Field_Calculation::get_value(  $field, $form );
+				$number = Caldera_Forms_Field_Calculation::get_value( $form_field, $form );
 
 				$formula = str_replace( $fid, $number, $formula );
 			}
@@ -1336,6 +1336,7 @@ class Caldera_Forms {
 		$total = Caldera_Forms_Field_Util::format_calc_field( $field, $total );
 
 		return $total;
+
 	}
 
 	/**
