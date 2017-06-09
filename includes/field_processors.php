@@ -153,7 +153,7 @@ function cf_handle_file_upload( $entry, $field, $form ){
 			$uploads[] = $upload['url'];
 			// check media handler
 			if( !empty( $field['config']['media_lib'] ) ){
-                Caldera_Forms_Files::add_to_media_library( $upload );
+                Caldera_Forms_Files::add_to_media_library( $upload, $field );
 			}
 		}
 
