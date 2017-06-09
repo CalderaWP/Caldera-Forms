@@ -443,5 +443,18 @@ class Caldera_Forms_Field_Util {
 
 	}
 
+	public static function get_option_calculation_value( array $option, array $field, array  $form ){
+		$calc_val = 0;
+		if( isset( $option[ 'calc_value' ] ) ){
+			$calc_val = $option[ 'calc_value' ];
+		}elseif ( isset( $option[ 'value' ]) ){
+			$calc_val = $option[ 'value' ];
+		}elseif ( isset( $option[ 'label' ] ) ){
+			$calc_val = $option[ 'label' ];
+		}
+
+		return apply_filters( 'caldera_forms_get_option_calculation_value', $calc_val, $field, $form );
+	}
+
 }
 
