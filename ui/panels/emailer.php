@@ -64,7 +64,8 @@ if ( ! empty( $element['mailer']['enable_mailer'] ) ) {
 			<div class="caldera-config-field">
 				<input type="email" class="field-config" name="config[mailer][sender_email]" value="<?php echo $element['mailer']['sender_email']; ?>" style="width:400px;" id="cf-email-from-email" aria-describedby="cf-email-from-email-description">
 				<p class="description" id="cf-email-from-email-description">
-					<?php esc_html_e( 'Email Address for sender. Try not to use a field from the form. Instead, use your own email and use a form field in the "Reply To Email" below.', 'caldera-forms'); ?>
+					<?php esc_html_e( 'Email Address for sender. If you want to use a form field use the "Reply To Email" setting below.', 'caldera-forms'); ?>
+					<strong><?php esc_html_e( 'Do Not Use A Magic Tag', 'caldera-forms' ); ?>.</strong>
 				</p>
 			</div>
 		</div>
