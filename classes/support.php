@@ -66,7 +66,7 @@ class Caldera_Forms_Support {
 		add_submenu_page(
 			'caldera-forms',
 			__( 'Support', 'caldera-forms' ),
-			__( 'Support', 'caldera-forms' ),
+			'<span class="caldera-forms-menu-dashicon"><span class="dashicons dashicons-sos"></span></span>' . __( 'Support', 'caldera-forms' ) . '</span>',
 			Caldera_Forms::get_manage_cap( 'admin' ),
 			'caldera-form-support',
 			array( __CLASS__, 'page' )

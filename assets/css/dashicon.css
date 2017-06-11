@@ -48,3 +48,9 @@ div.wp-menu-image.dashicons-cf-logo:before{
 .wp-not-current-submenu:hover div.wp-menu-image.dashicons-cf-logo:before{
   color: inherit !important;
 }
+
+.caldera-forms-menu-dashicon .dashicons {
+  width: 15px;
+  height: 15px;
+  font-size: 15px;
+}

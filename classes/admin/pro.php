@@ -54,7 +54,7 @@ class Caldera_Forms_Admin_Pro {
 		add_submenu_page(
 			Caldera_Forms::PLUGIN_SLUG,
 			__( 'Caldera Forms Pro', 'caldera-forms'),
-			__( 'Caldera Forms Pro', 'caldera-forms'),
+			'<span class="caldera-forms-menu-dashicon"><span class="dashicons dashicons-star-filled"></span>' .__( 'Caldera Forms Pro', 'caldera-forms') . '</span>',
 			Caldera_Forms::get_manage_cap( 'admin' ),
 			$this->slug,
 			array( $this, 'render_page' )

@@ -972,13 +972,29 @@ class Caldera_Forms_Admin {
 		// get current user
 		if( current_user_can( Caldera_Forms::get_manage_cap() ) ){
 
-			$this->screen_prefix[] = add_menu_page( __('Caldera Forms', 'caldera-forms' ), __('Caldera Forms', 'caldera-forms' ), Caldera_Forms::get_manage_cap(), $this->plugin_slug, array( $this, 'render_admin' ), 'dashicons-cf-logo', 52.81321 );
-			add_submenu_page( $this->plugin_slug, __('Caldera Forms Admin', 'caldera-forms' ), __('Forms', 'caldera-forms' ), Caldera_Forms::get_manage_cap(), $this->plugin_slug, array( $this, 'render_admin' ) );
+			$this->screen_prefix[] = add_menu_page(
+				__('Caldera Forms', 'caldera-forms' ),
+				__('Caldera Forms', 'caldera-forms' ),
+				Caldera_Forms::get_manage_cap(),
+				$this->plugin_slug, array( $this, 'render_admin' ),
+				'dashicons-cf-logo',
+				52.81321
+			);
+			add_submenu_page(
+				$this->plugin_slug,
+				__('Caldera Forms Admin', 'caldera-forms' ),
+				__('Forms', 'caldera-forms' ),
+				Caldera_Forms::get_manage_cap(),
+				$this->plugin_slug, array( $this, 'render_admin' ) );
 
 			if( ! empty( $forms ) ){
 				foreach($forms as $form_id=>$form){
 					if(!empty($form['pinned'])){
-						$this->screen_prefix[] 	 = add_submenu_page( $this->plugin_slug, __('Caldera Forms', 'caldera-forms' ).' - ' . $form['name'], '- '.$form['name'], Caldera_Forms::get_manage_cap(), $this->plugin_slug . '-pin-' . $form_id, array( $this, 'render_admin' ) );
+						$this->screen_prefix[] 	 = add_submenu_page(
+							$this->plugin_slug,
+							__('Caldera Forms', 'caldera-forms' ).' - ' . $form['name'], '- '.$form['name'],
+							Caldera_Forms::get_manage_cap(), $this->plugin_slug . '-pin-' . $form_id, array( $this, 'render_admin' )
+						);
 					}
 				}
 			}
@@ -987,7 +1003,7 @@ class Caldera_Forms_Admin {
 			$this->screen_prefix[] = add_submenu_page(
 				$this->plugin_slug,
 				__( 'Add-ons', 'caldera-forms' ),
-				__( 'Add-ons', 'caldera-forms' ),
+				'<span class="caldera-forms-menu-dashicon"><span class="dashicons dashicons-admin-plugins"></span>' . __( 'Add-ons', 'caldera-forms' ) . '</span>',
 				Caldera_Forms::get_manage_cap(),
 				$this->plugin_slug . '-extend',
 				array( $this, 'render_admin' )
