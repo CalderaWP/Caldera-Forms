@@ -768,6 +768,13 @@ foreach($panel_extensions as $panel){
 				echo "<div id=\"" . $panel_slug . "-config-panel-main\" class=\"caldera-config-editor-main-panel\">\r\n";
 			}
 			echo '<h3>'.$tab_setup['label'];
+				if( isset( $tab_setup[ 'tip' ] ) && is_array( $tab_setup[ 'tip' ] ) ) {
+					printf( '<a href="%s" target="_blank" class="dashicons dashicons-editor-help caldera-forms-tab-help-bublle" data-toggle="tooltip" data-placement="top"  title="%s"><span class="screen-reader-text">%s</span></a>',
+						esc_url( $tab_setup[ 'tip' ][ 'link' ] ),
+						esc_attr( $tab_setup[ 'tip' ][ 'text'] ),
+						esc_html__( 'Click to view help doc on CalderaForms.com' )
+					);
+				}
 				if( !empty( $tab_setup['repeat'] ) ){
 					// add a repeater button
 					echo " <a href=\"#" . $panel_slug . "_tag\" class=\"add-new-h2 caldera-add-group\" data-group=\"" . $panel_slug . "\">" . esc_html__( 'Add New', 'caldera-forms' ) . "</a>\r\n";

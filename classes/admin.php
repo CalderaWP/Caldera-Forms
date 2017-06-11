@@ -1422,8 +1422,17 @@ class Caldera_Forms_Admin {
 	}
 
 
-	// get internal panel extensions
-
+	/**
+	 * Set panels to be used in Caldera Forms form editor
+	 *
+	 * @since unknown
+	 *
+	 * @uses "caldera_forms_get_panel_extensions" fitler
+	 *
+	 * @param array $panels
+	 *
+	 * @return array
+	 */
 	public function get_panel_extensions($panels){
 
 		$path = CFCORE_PATH . "ui/panels/";
@@ -1454,30 +1463,50 @@ class Caldera_Forms_Admin {
 						"repeat" => 0,
 						"canvas" => $path . "layout.php",
 						"side_panel" => $path . "layout_side.php",
+						'tip' => array(
+							'link' => 'https://calderaforms.com/doc/form-layout-grid-builder/?utm_source=wp-admin&utm_medium=form-editor&utm_term=email-tab',
+							'text' => __( 'Caldera Forms layout builder getting started guide', 'caldera-forms' ),
+						)
 					),
 					"pages" => array(
 						"name" => __( 'Pages', 'caldera-forms' ),
 						"location" => "lower",
 						"label" => __( 'Form Pages', 'caldera-forms' ),
 						"canvas" => $path . "pages.php",
+						'tip' => array(
+							'link' => 'https://calderaforms.com/doc/using-multi-page-forms/?utm_source=wp-admin&utm_medium=form-editor&utm_term=tabs',
+							'text' => __( 'Using multi-page forms.', 'caldera-forms' ),
+						)
 					),
 					"mailer" => array(
 						"name" => __( 'Email', 'caldera-forms' ),
 						"location" => "lower",
 						"label" => __( 'Email Notification Settings', 'caldera-forms' ),
 						"canvas" => $path . "emailer.php",
+						'tip' => array(
+							'link' => 'https://calderaforms.com/caldera-forms-emails/?utm_source=wp-admin&utm_medium=form-editor&utm_term=tabs',
+							'text' => __( 'Learn to use the Caldera Forms email notification', 'caldera-forms' )
+						)
 					),
 					"processors" => array(
 						"name" => __( 'Processors', 'caldera-forms' ),
 						"location" => "lower",
 						"label" => __( 'Form Processors', 'caldera-forms' ),
 						"canvas" => $path . "processors.php",
+						'tip' => array(
+							'link' => 'https://calderaforms.com/doc/using-form-processors/?utm_source=wp-admin&utm_medium=form-editor&utm_term=tabs',
+							'text' => __( 'Processors getting started guide', 'caldera-forms' )
+						)
 					),
 					"conditions" => array(
 						"name" => __( 'Conditions', 'caldera-forms' ),
 						"location" => "lower",
 						"label" => __( 'Conditions', 'caldera-forms' ),
 						"canvas" => $path . "conditions.php",
+						'tip' => array(
+							'link' => 'https://calderaforms.com/doc/using-form-conditionals/?utm_source=wp-admin&utm_medium=form-editor&utm_term=tabs',
+							'text' => __( 'Conditionals getting started guide', 'caldera-forms' )
+						)
 					),
 					"variables" => array(
 						"name" => __( 'Variables', 'caldera-forms' ),
@@ -1487,6 +1516,10 @@ class Caldera_Forms_Admin {
 						"actions" => array(
 							$path . "variable_add.php"
 						),
+						'tip' => array(
+							'link' => 'https://calderaforms.com/doc/using-form-variables/?utm_source=wp-admin&utm_medium=form-editor&utm_term=tabs',
+							'text' => __( 'Variables getting started guide', 'caldera-forms' )
+						)
 					),
 					"responsive" => array(
 						"name" => __( 'Responsive', 'caldera-forms' ),
@@ -1522,6 +1555,10 @@ class Caldera_Forms_Admin {
 								),
 							)
 						),
+						'tip' => array(
+							'link' => 'https://calderaforms.com/doc/configure-responsive-settings/?utm_source=wp-admin&utm_medium=form-editor&utm_term=tabs',
+							'text' => __( 'Responsive settings getting started guide', 'caldera-forms' )
+						)
 					),
 				),
 			),
