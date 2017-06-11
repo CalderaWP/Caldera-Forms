@@ -443,5 +443,38 @@ class Caldera_Forms_Field_Util {
 
 	}
 
+	/**
+	 * Get a dropdown, radio or toggle's calculation value
+	 *
+	 * @since 1.5.1
+	 *
+	 * @param array $option Option configuration
+	 * @param array $field Field configuration
+	 * @param array $form Form configuration
+	 *
+	 * @return int|string|float
+	 */
+	public static function get_option_calculation_value( array $option, array $field, array  $form ){
+		$calc_val = 0;
+		if( isset( $option[ 'calc_value' ] ) ){
+			$calc_val = $option[ 'calc_value' ];
+		}elseif ( isset( $option[ 'value' ]) ){
+			$calc_val = $option[ 'value' ];
+		}elseif ( isset( $option[ 'label' ] ) ){
+			$calc_val = $option[ 'label' ];
+		}
+
+		/**
+		 * Change the value to be provided by an option to calcualation field.
+		 *
+		 * @since 1.5.1
+		 *
+		 * @param int $calc_val Calculate value
+		 * @param array $field Field configuration
+		 * @param array $form Form configuration
+		 */
+		return apply_filters( 'caldera_forms_get_option_calculation_value', $calc_val, $field, $form );
+	}
+
 }
 

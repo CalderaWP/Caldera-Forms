@@ -40,19 +40,21 @@ $attr_string =  caldera_forms_field_attributes( $attrs, $field, $form );
 			}
 
 
-		if(!empty($field['config']['option'])){
-			if(!empty($field['config']['default'])){
-				if(!isset($field['config']['option'][$field['config']['default']])){
+		if ( ! empty( $field[ 'config' ][ 'option' ] ) ) {
+			if ( ! empty( $field[ 'config' ][ 'default' ] ) ) {
+				if ( ! isset( $field[ 'config' ][ 'option' ][ $field[ 'config' ][ 'default' ] ] ) ) {
 					echo "<option value=\"\"></option>\r\n";
 				}
 			}
-			foreach($field['config']['option'] as $option_key=>$option){
-				if(!isset($option['value'])){
-					$option['value'] = $option['label'];
+			foreach ( $field[ 'config' ][ 'option' ] as $option_key => $option ) {
+				if ( ! isset( $option[ 'value' ] ) ) {
+					$option[ 'value' ] = $option[ 'label' ];
 				}
 
 				?>
-				<option value="<?php echo esc_attr( $option['value'] ); ?>" <?php if( $field_value == $option['value'] ){ ?>selected="selected"<?php } ?>><?php echo esc_html( $option['label'] ); ?></option>
+				<option value="<?php echo esc_attr( $option[ 'value' ] ); ?>" <?php if ( $field_value == $option[ 'value' ] ){ ?>selected="selected"<?php } ?> data-calc-value="<?php echo esc_attr( Caldera_Forms_Field_Util::get_option_calculation_value( $option, $field, $form ) ); ?>" >
+					<?php echo esc_html( $option[ 'label' ] ); ?>
+				</option>
 				<?php
 			}
 		} ?>

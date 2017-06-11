@@ -68,6 +68,12 @@ class Caldera_Forms_Field_Calculation {
 						}
 					}
 				break;
+			case 'radio':
+			case 'dropdown':
+			case 'toggle' :
+				$number = self::find_calc_value( $entry_value, $field, $form );
+
+				break;
 			default :
 				$number = self::find_value( $entry_value );
 				break;
@@ -97,6 +103,28 @@ class Caldera_Forms_Field_Calculation {
 
 			return $number;
 		}
+	}
+
+	/**
+	 * Get a dropdown, radio or toggle's calculation value based on selected option and its possible calcualtion value
+	 *
+	 * @since 1.5.1
+	 *
+	 * @param int|float|string $entry_value Resulting value
+	 * @param array $field Field configuration
+	 * @param array $form Form configuration
+	 *
+	 * @return float|int|string
+	 */
+	protected static function find_calc_value( $entry_value, $field, $form ){
+		foreach ( $field[ 'config' ][ 'option' ] as $opt_id => $option ){
+			if( $entry_value == $option[ 'value' ] ){
+				$entry_value = Caldera_Forms_Field_Util::get_option_calculation_value( $option, $field, $form );
+				break;
+			}
+
+		}
+		return $entry_value;
 	}
 
 }
