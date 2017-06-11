@@ -50,6 +50,10 @@ class Caldera_Forms_Render_Util {
 	 */
 	public static function get_current_form_count(){
 		global $current_form_count;
+		if( 0 >= absint( $current_form_count ) ){
+			$current_form_count = 1;
+		}
+
 		return absint( $current_form_count );
 	}
 
