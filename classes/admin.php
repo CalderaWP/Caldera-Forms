@@ -983,7 +983,7 @@ class Caldera_Forms_Admin {
 			add_submenu_page(
 				$this->plugin_slug,
 				__('Caldera Forms Admin', 'caldera-forms' ),
-				__('Forms', 'caldera-forms' ),
+				'<span class="caldera-forms-menu-dashicon"><span class="dashicons dashicons-feedback"></span>' . __('Forms', 'caldera-forms' ) . '</span>',
 				Caldera_Forms::get_manage_cap(),
 				$this->plugin_slug, array( $this, 'render_admin' ) );
 
