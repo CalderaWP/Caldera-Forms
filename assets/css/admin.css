@@ -100,7 +100,7 @@
 }
 .toggle_option_row .toggle_value_field,
 .toggle_option_row .toggle_label_field {
-  width: 120px;
+
 }
 .toggle_processor_event,
 .toggle_option_tab {
@@ -2152,4 +2152,28 @@ span.cf-form-name-preview{
 }
 a.disabled {
   color: #8e8e8e;
+}
+
+
+button.button.button-small.toggle-remove-option {
+    width: 100%;
+}
+
+.option-setting input{
+    width: 70% !important;
+    float: left;
+    display: inline;
+
+}
+
+label.option-setting-label {
+    display: inline;
+    width: 50%;
+    float: left;
+}
+
+.toggle_option_row {
+  border: 1px solid #cfcfcf;
+  border-radius: 4px;
+  padding: 2px;
 }
