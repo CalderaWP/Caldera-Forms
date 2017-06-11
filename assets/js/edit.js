@@ -962,24 +962,36 @@ jQuery(document).ready(function($){
 
     // toggle set values
     $('.caldera-editor-body').on('change', '.toggle_show_values', function(e){
-        var clicked = $(this),
-            wrap = clicked.closest('.caldera-config-group-toggle-options');
-        values = wrap.find('.toggle_value_field'),
-            lables = wrap.find('.toggle_label_field'),
-            field_lables = wrap.find('.caldera-config-group-option-labels');
+    	var $clicked = $(this),
+			$wrap =  $clicked.closest('.caldera-config-group-toggle-options'),
+			$labelInputs = $wrap.find('.toggle_label_field'),
+			$valueInputs = $wrap.find('.toggle_value_field, .toggle_calc_value_field'),
+			$valueLabels = $wrap.find( '.option-setting-label-for-value' ),
+			$labelLabel = $wrap.find( '.option-setting-label-for-label' ),
+			$optionGroupControl = $wrap.find( '.option-group-control' ),
+			inputCss = {
+				width: '100%',
+				display: 'inline',
+				float: 'left',
+			};
+		if( ! $clicked.prop( 'checked' ) ){
+			$valueInputs.hide().attr( 'aria-hidden', true );
+			$valueLabels.hide().attr( 'aria-hidden', true );
+			$labelInputs.css('width', 245);
+			$labelLabel.css( 'display', 'inline' );
 
-        if(!clicked.prop('checked')){
-            values.hide().parent().hide();
-            lables.css('width', 245);
-            field_lables.hide();
-        }else{
-            values.show().parent().show();
-            values.show().parent().parent().show();
-            lables.css('width', '');
-            field_lables.show();
-        }
 
-        lables.trigger('toggle.values');
+		}else{
+			$valueInputs.show().css(inputCss).attr( 'aria-hidden', false );
+			$labelInputs.show().css(inputCss).attr( 'aria-hidden', false );
+			$valueLabels.show().css({
+				display: 'inline-block'
+			});
+			$labelLabel.css( 'display', 'inline' );
+		}
+
+
+		$labelInputs.trigger('toggle.values');
         init_magic_tags();
 
     });
