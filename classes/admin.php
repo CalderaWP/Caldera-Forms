@@ -192,8 +192,12 @@ class Caldera_Forms_Admin {
 					"Saskatchewan",
 					"Yukon",
 				),
-			),			
-	 	));
+			),
+		    'us_states' => array(
+			    'name' => __( 'US States', 'caldera-forms'),
+			    'data' => file_get_contents( CFCORE_PATH . 'includes/presets/us_states.txt' ),
+		    ),
+	    ));
 
 	 	return $internal;
 	 }
