@@ -984,7 +984,14 @@ class Caldera_Forms_Admin {
 			}
 
 
-			$this->screen_prefix[] 	 = add_submenu_page( $this->plugin_slug, __('Caldera Forms', 'caldera-forms' ) . ' - ' . __('Extend', 'caldera-forms' ), __('Extend', 'caldera-forms' ), Caldera_Forms::get_manage_cap(), $this->plugin_slug . '-extend', array( $this, 'render_admin' ) );
+			$this->screen_prefix[] = add_submenu_page(
+				$this->plugin_slug,
+				__( 'Add-ons', 'caldera-forms' ),
+				__( 'Add-ons', 'caldera-forms' ),
+				Caldera_Forms::get_manage_cap(),
+				$this->plugin_slug . '-extend',
+				array( $this, 'render_admin' )
+			);
 		}else{
 			// not an admin - pin for user
 			if( ! empty( $forms ) ){
