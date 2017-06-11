@@ -162,6 +162,7 @@ class Caldera_Forms_Magic_Doer {
 	 * @return string|void
 	 */
 	public static function do_bracket_magic( $value, $form, $entry_id, $magic_caller, $referrer ){
+		global $processed_meta;
 		$magics = Caldera_Forms_Magic_Util::explode_bracket_magic( $value );
 		if ( ! empty( $magics[ 1 ] ) ) {
 
@@ -479,6 +480,7 @@ class Caldera_Forms_Magic_Doer {
 	 * @return array
 	 */
 	public static function magic_tag_meta_prepare( $entry_id ){
+		global $processed_meta;		
 		if( ! is_array( self::$entry_details ) )  {
 			self::$entry_details = array();
 		}
