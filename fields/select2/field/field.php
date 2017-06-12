@@ -59,18 +59,18 @@ if( empty( $field['config']['color'] ) ){
 			
 			// If default exists and val doesn't, set it
 			if( isset($field['config']) && 
-				isset($field['config']['default_option']) && 
-				isset($field['config']['option'][$field['config']['default_option']])){
+				isset($field['config']['option']) &&
+				isset($field['config']['option'][$field['config']['option']])){
 				if( $field_value == null ){
-					$field_value = $field['config']['option'][$field['config']['default_option']]['value'];
+					$field_value = $field['config']['option'][$field['config']['option']]['value'];
 				}
 
 			}
 
 
 		if(!empty($field['config']['option'])){
-			if(!empty($field['config']['default_option'])){
-				if(!isset($field['config']['option'][$field['config']['default_option']])){
+			if(!empty($field['config']['option'])){
+				if(!isset($field['config']['option'][$field['config']['option']])){
 					echo "<option value=\"\"></option>\r\n";
 				}
 			}elseif( !empty( $field['config']['placeholder'] ) ){

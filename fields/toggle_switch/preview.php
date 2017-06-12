@@ -3,7 +3,7 @@
 	<div class="preview-caldera-config-field">
 		<div class="toggle_option_preview{{#is config/orientation value="vertical"}} toggle_vertical{{/is}}">
 		{{#each config/option}}
-		<button class="button {{#is ../config/default_option value="@key"}}button-primary{{/is}}" type="button">{{label}}</button>
+		<button class="button {{#is ../config/option value="@key"}}button-primary{{/is}}" type="button">{{label}}</button>
 		{{/each}}
 		</div>
 		<span class="help-block">{{caption}}</span>

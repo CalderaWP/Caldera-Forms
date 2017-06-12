@@ -303,7 +303,7 @@ $field_options_template = "
 		</div>
 	</div>
 	<div class=\"caldera-config-group caldera-config-group-full\">
-	<label style=\"padding: 10px;\"><input type=\"radio\" class=\"toggle_set_default field-config\" name=\"{{_name}}[default_option]\" value=\"\" {{#unless default_option}}checked=\"checked\"{{/unless}}> " . esc_html__( 'No Default', 'caldera-forms' ) . "</label>
+	<label style=\"padding: 10px;\"><input type=\"radio\" class=\"toggle_set_default field-config\" name=\"{{_name}}[option]\" value=\"\" {{#unless option}}checked=\"checked\"{{/unless}}> " . esc_html__( 'No Default', 'caldera-forms' ) . "</label>
 	<label class=\"pull-right\" style=\"padding: 10px;\"><input type=\"checkbox\" class=\"toggle_show_values field-config\" name=\"{{_name}}[show_values]\" value=\"1\" {{#if show_values}}checked=\"checked\"{{/if}}> " . esc_html__( 'Show Values', 'caldera-forms' ) . "</label>
 	</div>
 	
@@ -312,7 +312,7 @@ $field_options_template = "
 			<div class=\"toggle_option_row 315\">
 					<i class=\"dashicons dashicons-sort option-group-control\" style=\"padding: 4px 9px;\"></i>
 					
-					<input type=\"radio\" class=\"toggle_set_default field-config option-group-control\" name=\"{{../_name}}[default_option]\" value=\"{{@key}}\" {{#is ../default_option value=\"@key\"}}checked=\"checked\"{{/is}}>
+					<input type=\"radio\" class=\"toggle_set_default field-config option-group-control\" name=\"{{../_name}}[option]\" value=\"{{@key}}\" {{#is ../option value=\"@key\"}}checked=\"checked\"{{/is}}>
 					
 					<a href=\"https://calderaforms.com/doc/select-options/?utm_source=wp-admin&utm_medium=form-editor&utm_content=discount\" target=\"_blank\" class=\"dashicons dashicons-editor-help\" style=\"float:right;\" data-toggle=\"tooltip\" data-placement=\"bottom\"  title=\"" . esc_attr( __( 'Learn more about using select field options', 'caldera-forms' ) ) . "\"></a>
 		
@@ -992,7 +992,7 @@ do_action('caldera_forms_edit_end', $element);
 	{{#each option}}
 	<div class="toggle_option_row 962">
 		<i class="dashicons dashicons-sort" style="padding: 4px 9px;"></i>
-		<input type="radio" class="toggle_set_default field-config" name="{{../_name}}[default_option]" value="{{@key}}" {{#is ../default_option value="@key"}}checked="checked"{{/is}}>
+		<input type="radio" class="toggle_set_default field-config" name="{{../_name}}[option]" value="{{@key}}" {{#is ../default value="@key"}}checked="checked"{{/is}}>
 		<span style="position: relative; display: inline-block;">
 			<input type="text" class="toggle_calc_value_field field-config magic-tag-enabled" name="{{../_name}}[option][{{@key}}][calc_value]" value="{{calc_value}}" placeholder="calc_value">
 			<input type="text" class="toggle_value_field field-config magic-tag-enabled" name="{{../_name}}[option][{{@key}}][value]" value="{{value}}" placeholder="value">

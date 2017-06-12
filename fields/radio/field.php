@@ -22,10 +22,10 @@ if( !empty($field['config']['option']) ){
 
 // If default exists and val doesn't, set it
 if( isset( $field['config'] ) && 
-	isset($field['config']['default_option']) && 
-	isset($field['config']['option'][$field['config']['default_option']])){
+	isset($field['config']['option']) &&
+	isset($field['config']['option'][$field['config']['option']])){
 	if( $field_value == null ){
-		$field_value = $field['config']['option'][$field['config']['default_option']]['value'];
+		$field_value = $field['config']['option'][$field['config']['option']]['value'];
 	}
 
 }
