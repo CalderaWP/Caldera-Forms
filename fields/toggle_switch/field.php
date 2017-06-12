@@ -25,22 +25,18 @@ if(!empty($field['config']['orientation']) && $field['config']['orientation'] ==
 			<?php
 
 			// If the field value set doesn't exist, set it back to null
-			if( !empty($field['config']['option']) ){
-				$option_values = array_map( function($v){ 
-					return isset($v['value']) ? $v['value'] : $v['label']; 
-				}, $field[ 'config' ][ 'option' ] );
+			if ( ! empty( $field[ 'config' ][ 'option' ] ) ) {
+				$option_values = Caldera_Forms_Field_Util::find_option_values( $field );
 
-				if(!in_array($field_value, $option_values)){
+				if ( ! in_array( $field_value, $option_values ) ) {
 					$field_value = null;
 				}
 			}
 
 			// If default exists and val doesn't, set it
-			if( isset( $field['config'] ) && 
-				isset($field['config']['option']) &&
-				isset($field['config']['option'][$field['config']['option']])){
-				if( $field_value == null ){
-					$field_value = $field['config']['option'][$field['config']['option']]['value'];
+			if ( isset( $field[ 'config' ] ) && isset( $field[ 'config' ][ 'option' ] ) && isset( $field[ 'config' ][ 'option' ][ $field[ 'config' ][ 'option' ] ] ) ) {
+				if ( null == $field_value ) {
+					$field_value = $field[ 'config' ][ 'option' ][ $field[ 'config' ][ 'option' ] ][ 'value' ];
 				}
 			}
 
