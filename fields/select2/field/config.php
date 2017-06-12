@@ -33,4 +33,11 @@
 		<input id="{{_id}}_border" type="text" class="color-field field-config" name="{{_name}}[border]" value="{{#if border}}{{border}}{{else}}#4b8dc9{{/if}}">		
 	</div>
 </div>
-
+<div class="caldera-config-group">
+	<label for="{{_id}}_default">
+		<?php esc_html_e('Default Value'); ?>
+	</label>
+	<div class="caldera-config-field">
+		<input type="text" id="{{_id}}_default" class="block-input field-config magic-tag-enabled" name="{{_name}}[default]" value="{{default}}" placeholder='Matched against values'>
+	</div>
+</div>

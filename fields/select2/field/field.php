@@ -12,9 +12,18 @@ if( !empty( $field['config']['advanced_populate']['filter'] ) ){
 				}
 			}
 		}
-	}
+	}	
+}
 
-	
+// If the field value set doesn't exist, set it back to null
+if( !empty($field['config']['option']) ){
+	$option_values = array_map( function($v){ 
+		return isset($v['value']) ? $v['value'] : $v['label']; 
+	}, $field[ 'config' ][ 'option' ] );
+
+	if(!in_array($field_value, $option_values)){
+		$field_value = null;
+	}
 }
 
 // default
@@ -60,7 +69,7 @@ if( empty( $field['config']['color'] ) ){
 
 
 		if(!empty($field['config']['option'])){
-			if(!empty($field['config']['default'])){
+			if(!empty($field['config']['default_option'])){
 				if(!isset($field['config']['option'][$field['config']['default_option']])){
 					echo "<option value=\"\"></option>\r\n";
 				}

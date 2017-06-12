@@ -24,6 +24,17 @@ if(!empty($field['config']['orientation']) && $field['config']['orientation'] ==
 		<div class="cf-toggle-group-buttons <?php echo $groupOrientation; ?>">
 			<?php
 
+			// If the field value set doesn't exist, set it back to null
+			if( !empty($field['config']['option']) ){
+				$option_values = array_map( function($v){ 
+					return isset($v['value']) ? $v['value'] : $v['label']; 
+				}, $field[ 'config' ][ 'option' ] );
+
+				if(!in_array($field_value, $option_values)){
+					$field_value = null;
+				}
+			}
+
 			// If default exists and val doesn't, set it
 			if( isset( $field['config'] ) && 
 				isset($field['config']['default_option']) && 

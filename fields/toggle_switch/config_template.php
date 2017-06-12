@@ -28,3 +28,11 @@
 		<input id="{{_id}}_inactiveclass"type="text" value="{{#if default_class}}{{default_class}}{{else}}btn-default{{/if}}" name="{{_name}}[default_class]" class="block-input field-config">
 	</div>
 </div>
+<div class="caldera-config-group">
+	<label for="{{_id}}_default">
+		<?php esc_html_e('Default Value'); ?>
+	</label>
+	<div class="caldera-config-field">
+		<input type="text" id="{{_id}}_default" class="block-input field-config magic-tag-enabled" name="{{_name}}[default]" value="{{default}}" placeholder='Matched against values'>
+	</div>
+</div>
