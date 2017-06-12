@@ -7,11 +7,15 @@
         </label>
 	</div>
 </div>
+
 <div class="caldera-config-group">
 	<label for="{{_id}}_default">
-		<?php esc_html_e('Default Value', 'caldera-forms'); ?>
+		<?php esc_html_e( 'Default Option', 'caldera-forms' ); ?>
 	</label>
 	<div class="caldera-config-field">
-		<input type="text" id="{{_id}}_default" class="block-input field-config magic-tag-enabled" name="{{_name}}[default]" value="{{default}}" placeholder="<?php esc_attr_e( 'Default Value', 'caldera-forms' ); ?>" />
+		<input type="text" id="{{_id}}_default" class="block-input field-config magic-tag-enabled" name="{{_name}}[default]" value="{{default}}"  aria-describedby="{{_id}}_default-description" />
+		<p class="description" id="{{_id}}_default-description">
+			<?php esc_html_e( 'Overwrite default option - useful for setting default with magic tags.', 'caldera-forms' ); ?>
+		</p>
 	</div>
 </div>
