@@ -9,16 +9,29 @@ if( !empty( $field['required'] ) ){
 }
 
 
-if(empty($field['config']['option'])){
+// If the field value set doesn't exist, set it back to null
+if( !empty($field['config']['option']) ){
+	$option_values = array_map( function($v){ 
+		return isset($v['value']) ? $v['value'] : $v['label']; 
+	}, $field[ 'config' ][ 'option' ] );
 
-	if(isset( $field['config'] ) && isset($field['config']['default']) && isset($field['config']['option'][$field['config']['default']])){
+	if(!in_array($field_value, $option_values)){
+		$field_value = null;
+	}
+}
 
-		if( $field['config']['default'] === $field_value ){
-			$field_value = $field['config']['option'][$field['config']['default']]['value'];
-		}
-
+// If default exists and val doesn't, set it
+if( isset( $field['config'] ) && 
+	isset($field['config']['default_option']) && 
+	isset($field['config']['option'][$field['config']['default_option']])){
+	if( $field_value == null ){
+		$field_value = $field['config']['option'][$field['config']['default_option']]['value'];
 	}
 
+}
+
+
+if(empty($field['config']['option'])){
 	?>
 
 	<input type="radio" id="<?php echo esc_attr( $field_id ); ?>" data-field="<?php echo esc_attr( $field_base_id ); ?>" class="field-config<?php echo $req_class; ?>" name="<?php echo esc_attr( $field_name ); ?>" value="1" <?php if(!empty($field_value)){ ?>checked="checked"<?php } ?> data-radio-field="<?php echo esc_attr( $field_id ); ?> data-type="radio" data-calc-value="<?php echo esc_attr( Caldera_Forms_Field_Util::get_option_calculation_value( $option, $field, $form ) ); ?>" />
@@ -27,7 +40,7 @@ if(empty($field['config']['option'])){
 	foreach($field['config']['option'] as $option_key=>$option){
 		$checked = false;
 		$disabled = false;
-		if( $field_value === $option['value'] || $field_value === $option_key ) {
+		if( $field_value === $option['value'] ) {
 			$checked = true;
 		}
 

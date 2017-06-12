@@ -10,12 +10,26 @@
 			$parsley_req = 'data-parsley-required="true" data-parsley-group="' . esc_attr( $field_id ) . '" data-parsley-multiple="' . esc_attr( $field_id ). '"';
 		}
 
+		/////// Note this needs to be updated in order to handle array field_values !!
+		// If the field value set doesn't exist, set it back to null
+		if( !empty($field['config']['option']) ){
+			$option_values = array_map( function($v){ 
+				return isset($v['value']) ? $v['value'] : $v['label']; 
+			}, $field[ 'config' ][ 'option' ] );
+
+			if(!in_array($field_value, $option_values)){
+				$field_value = null;
+			}
+		}
+
 		if(!empty($field['config']['option'])){
 			
-			if(isset( $field['config'] ) && isset($field['config']['default']) && isset($field['config']['option'][$field['config']['default']])){
-				
-				if( $field['config']['default'] === $field_value ){
-					$field_value = (array) $field['config']['option'][$field['config']['default']]['value'];
+			// If default exists and val doesn't, set it
+			if( isset( $field['config'] ) && 
+				isset($field['config']['default_option']) && 
+				isset($field['config']['option'][$field['config']['default_option']])){
+				if( $field_value == null ){
+					$field_value = (array) $field['config']['option'][$field['config']['default_option']]['value'];
 				}
 
 			}
