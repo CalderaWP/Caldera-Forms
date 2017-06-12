@@ -1885,7 +1885,7 @@ class Caldera_Forms {
 	 *
 	 * @param string $value
 	 * @param null|int $entry_id Optional. Entry ID to test by.
-	 * @param array $magic_caller The form/processorr/entry to evaluate against. May also be a powerful wizard.
+	 * @param array $magic_caller The form/processor/entry to evaluate against. May also be a powerful wizard.
 	 *
 	 * @return mixed
 	 */

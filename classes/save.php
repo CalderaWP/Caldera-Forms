@@ -209,7 +209,13 @@ class Caldera_Forms_Save_Final {
 			$mail['bcc'] = false;
 			if ( isset( $form['mailer']['bcc_to'] ) && ! empty( $form['mailer']['bcc_to'] ) ) {
 				$mail['bcc']       = $form['mailer']['bcc_to'];
-				$mail['headers'][] = Caldera_Forms::do_magic_tags( 'Bcc: ' . $form['mailer']['bcc_to'] );
+
+				$bcc_array = array_map('trim', preg_split( '/[;,]/', Caldera_Forms::do_magic_tags( $form['mailer']['bcc_to'] ) ) );
+				foreach( $bcc_array as $bcc_to ) {
+					if ( is_email( $bcc_to ) ) {
+						$mail['headers'][] = 'Bcc: ' . $bcc_to;
+					}
+				}
 			}
 
 			// if added a replyto
@@ -283,13 +289,15 @@ class Caldera_Forms_Save_Final {
 
 
 			if ( ! empty( $form['mailer']['recipients'] ) ) {
-				$mail['recipients'] = explode( ',', Caldera_Forms::do_magic_tags( $form['mailer']['recipients'] ) );
+				$recipients_array = array_map('trim', preg_split( '/[;,]/', Caldera_Forms::do_magic_tags( $form['mailer']['recipients'] ) ) );
+				foreach( $recipients_array as $recipient ) {
+					if ( is_email( $recipient ) ) {
+						$mail['recipients'][] = $recipient;
+					}
+				}
 			} else {
 				$mail['recipients'][] = get_option( 'admin_email' );
 			}
-
-
-
 
 			$submission = $labels = array();
 			foreach ( $data as $field_id => $row ) {
