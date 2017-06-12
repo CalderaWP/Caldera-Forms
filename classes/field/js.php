@@ -383,8 +383,10 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 		}
 
 		$options = array();
-		foreach ( $field[ 'config' ][ 'option' ] as $option_key => $option ) {
-			$options[] = $this->field_id( $field_id ) . '_' . $option_key;
+		if ( ! empty( $field[ 'config' ][ 'option' ] ) ) {
+			foreach ( $field[ 'config' ][ 'option' ] as $option_key => $option ) {
+				$options[] = $this->field_id( $field_id ) . '_' . $option_key;
+			}
 		}
 
 		$args = array(
