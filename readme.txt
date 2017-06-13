@@ -774,6 +774,27 @@ This could also be a sign of a more serious issue on your server, but is probabl
 5. **Go Further With Form Processors** - Auto-responders, conditional recipients, redirects are included! Go further with our add-ons!
 
 == Changelog ==
+= Caldera Forms 1.5.1 (June 12, 2017) Select Pro =
+See: [https://calderaforms.com/updates/caldera-forms-1-5-0-10](https://calderaforms.com/updates/caldera-forms-1-5-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.1)
+* NEW FEATURE: Default option that can be set by magic tag for dropdown, radio, checkboxes and toggles
+* NEW FEATURE: Ability for select field options to provide a different value to calculations then their value attribute.
+* IMPROVED: Headers for sub tabs with links to docs.
+* IMPROVED: Description for "from" setting in main mailer
+* NEW ACTION: caldera_forms_autoloader_fail Runs when autoloader can't find class file. Useful for debugging or non-standard autoloading.
+* IMPROVED: Refactored adding of custom tables. Separated each add table statement and added a check for missing tables whenever you go to Caldera Forms main admin page.
+* NEW ACTION: caldera_forms_file_added_to_media_library Runs after Caldera Forms adds a file to media library.
+* IMPROVED: If caldera_forms_autoresponse_mail returns null, message isn't sent, making it a early return.
+* IMPROVED: Made caldera_forms_autoresponse_mail filter expose entry ID.
+* ADDED: Dashicons for submenu items.
+* ADDED: Add interface & base class to support future CRM processors, which you and or Shawn should make.
+* CHANGED: Page for Caldera Forms Pro
+* CHANGED: Extend submenu page to add-ons.
+* FIXED: Bug where Caldera_Forms_Render_Util::get_current_form_count() could return 0. It should never be less than 1.
+* FIXED: Bug preventing more than one BCC.
+* FIXED: Magic tags based on meta -- for example processor magic tags were not being parsed.
+* FIXED: Money format setting for calculation fields was not properly rounding.
+
+
 = Caldera Forms 1.5.0.10 (May 24th, 2017) We Got A Cute Cat Mascot =
 See: [https://calderaforms.com/updates/caldera-forms-1-5-0-10](https://calderaforms.com/updates/caldera-forms-1-5-0-10?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.0.10)
 * NEW FEATURE: Changed banner to include Catdera mascot.
