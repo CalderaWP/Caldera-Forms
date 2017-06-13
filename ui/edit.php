@@ -303,7 +303,7 @@ $field_options_template = "
 		</div>
 	</div>
 	<div class=\"caldera-config-group caldera-config-group-full\">
-	<label style=\"padding: 10px;\"><input type=\"radio\" class=\"toggle_set_default field-config\" name=\"{{_name}}[option]\" value=\"\" {{#unless option}}checked=\"checked\"{{/unless}}> " . esc_html__( 'No Default', 'caldera-forms' ) . "</label>
+	<label style=\"padding: 10px;\"><input type=\"radio\" class=\"toggle_set_default field-config\" name=\"{{_name}}[default]\" value=\"\" {{#unless default}}checked=\"checked\"{{/unless}}> " . esc_html__( 'No Default', 'caldera-forms' ) . "</label>
 	<label class=\"pull-right\" style=\"padding: 10px;\"><input type=\"checkbox\" class=\"toggle_show_values field-config\" name=\"{{_name}}[show_values]\" value=\"1\" {{#if show_values}}checked=\"checked\"{{/if}}> " . esc_html__( 'Show Values', 'caldera-forms' ) . "</label>
 	</div>
 	
@@ -312,7 +312,7 @@ $field_options_template = "
 			<div class=\"toggle_option_row 315\">
 					<i class=\"dashicons dashicons-sort option-group-control\" style=\"padding: 4px 9px;\"></i>
 					
-					<input type=\"radio\" class=\"toggle_set_default field-config option-group-control\" name=\"{{../_name}}[option]\" value=\"{{@key}}\" {{#is ../option value=\"@key\"}}checked=\"checked\"{{/is}}>
+					<input type=\"radio\" class=\"toggle_set_default field-config option-group-control\" name=\"{{../_name}}[default]\" value=\"{{@key}}\" {{#is ../default value=\"@key\"}}checked=\"checked\"{{/is}}>
 					
 					<a href=\"https://calderaforms.com/doc/select-options/?utm_source=wp-admin&utm_medium=form-editor&utm_content=discount\" target=\"_blank\" class=\"dashicons dashicons-editor-help\" style=\"float:right;\" data-toggle=\"tooltip\" data-placement=\"bottom\"  title=\"" . esc_attr( __( 'Learn more about using select field options', 'caldera-forms' ) ) . "\"></a>
 		
@@ -991,14 +991,35 @@ do_action('caldera_forms_edit_end', $element);
 <script type="text/html" id="field-option-row-tmpl">
 	{{#each option}}
 	<div class="toggle_option_row 962">
-		<i class="dashicons dashicons-sort" style="padding: 4px 9px;"></i>
-		<input type="radio" class="toggle_set_default field-config" name="{{../_name}}[option]" value="{{@key}}" {{#is ../default value="@key"}}checked="checked"{{/is}}>
-		<span style="position: relative; display: inline-block;">
-			<input type="text" class="toggle_calc_value_field field-config magic-tag-enabled" name="{{../_name}}[option][{{@key}}][calc_value]" value="{{calc_value}}" placeholder="calc_value">
-			<input type="text" class="toggle_value_field field-config magic-tag-enabled" name="{{../_name}}[option][{{@key}}][value]" value="{{value}}" placeholder="value">
-		</span>
-		<input type="text" class="toggle_label_field field-config" data-option="{{@key}}"  name="{{../_name}}[option][{{@key}}][label]" value="{{label}}" placeholder="label">
-		<button class="button button-small toggle-remove-option" type="button"><i class="icn-delete"></i></button>		
+		<i class="dashicons dashicons-sort option-group-control" style="padding: 4px 9px;"></i>
+
+		<input type="radio" class="toggle_set_default field-config option-group-control" name="{{../_name}}[default]" value="{{@key}}" {{#is ../default value="@key"}}checked="checked"{{/is}}>
+
+		<a href="https://calderaforms.com/doc/select-options/?utm_source=wp-admin&utm_medium=form-editor&utm_content=discount" target="_blank" class="dashicons dashicons-editor-help" style="float:right;" data-toggle="tooltip" data-placement="bottom"  title="<?php  esc_attr_e( 'Learn more about using select field options', 'caldera-forms'  ); ?>"></a>
+
+		<div class="caldera-config-group">
+			<label class="option-setting-label option-setting-label-for-value" for="opt-calc-val-{{@key}}">
+				<?php esc_html_e( 'Calculation Value', 'caldera-forms' ); ?>
+			</label>
+			<input{{#unless ../show_values}} style="display:none;"{{/unless}} type="text" class="toggle_calc_value_field field-config option-setting " name="{{../_name}}[option][{{@key}}][calc_value]" value="{{#if ../show_values}}{{calc_value}}{{else}}{{label}}{{/if}}" placeholder="" . esc_attr( __( 'Calculation Value', 'caldera-forms' ) ) . "" id="opt-calc-val-{{@key}}" />
+		</div>
+
+		<div class="caldera-config-group">
+			<label class="option-setting-label option-setting-label-for-value" for="opt-val-{{@key}}">
+				<?php esc_html_e( 'Value', 'caldera-forms' ); ?>
+			</label>
+			<input{{#unless ../show_values}} style="display:none;"{{/unless}} type="text" class="toggle_value_field option-setting field-config  required " name="{{../_name}}[option][{{@key}}][value]" value="{{#if ../show_values}}{{value}}{{else}}{{label}}{{/if}}" <?php esc_html_e( ' Value', 'caldera-forms' ); ?>" id="opt-val-{{@key}}" />
+		</div>
+
+		<div class="caldera-config-group">
+			<label class="option-setting-label option-setting-label-for-label" for="opt-label-{{@key}}">
+				<?php esc_html_e( 'Label', 'caldera-forms' ); ?>
+			</label>
+			<input{{#unless ../show_values}} style="width:245px;"{{/unless}} type="text" data-option="{{@key}}" class="toggle_label_field option-setting field-config required" name="{{../_name}}[option][{{@key}}][label]" value="{{label}}" placeholder="<?php esc_attr_e( 'Label', 'caldera-forms' ); ?>" for="opt-label-{{@key}}" />
+		</div>
+		<button class="button button-small toggle-remove-option" type="button">
+			<i class="icn-delete"></i>
+		</button>
 	</div>
 	{{/each}}
 </script>

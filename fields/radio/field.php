@@ -9,21 +9,7 @@ if( !empty( $field['required'] ) ){
 }
 
 
-// If the field value set doesn't exist, set it back to null
-if ( ! empty( $field[ 'config' ][ 'option' ] ) ) {
-	$option_values = Caldera_Forms_Field_Util::find_option_values( $field );
-
-}
-
-// If default exists and val doesn't, set it
-if( isset( $field['config'] ) && 
-	isset($field['config']['option']) &&
-	isset($field['config']['option'][$field['config']['option']])){
-	if( $field_value == null ){
-		$field_value = $field['config']['option'][$field['config']['option']]['value'];
-	}
-
-}
+$field_value = Caldera_Forms_Field_Util::find_select_field_value( $field, $field_value );
 
 
 if(empty($field['config']['option'])){

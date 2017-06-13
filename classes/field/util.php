@@ -21,8 +21,7 @@ class Caldera_Forms_Field_Util {
 	 *
 	 * @return bool
 	 */
-	public static function get_type( $field, array  $form = null )
-	{
+	public static function get_type( $field, array  $form = null ){
 		if ( is_string( $field ) && is_array( $form ) ) {
 			$field = self::get_field( $field, $form );
 		} elseif ( is_string( $field ) && null == $form ) {
@@ -44,8 +43,7 @@ class Caldera_Forms_Field_Util {
 	 *
 	 * @return bool|array
 	 */
-	public static function get_field( $field, array $form = null, $filter = false )
-	{
+	public static function get_field( $field, array $form = null, $filter = false ){
 		if ( ! is_array( $field ) ) {
 			if ( ! is_array( $form ) ) {
 				global $form;
@@ -76,8 +74,7 @@ class Caldera_Forms_Field_Util {
 	 *
 	 * @return string
 	 */
-	public static function get_base_id( $field, $current_form_count = null, $form = null )
-	{
+	public static function get_base_id( $field, $current_form_count = null, $form = null ){
 		$field = self::get_field( $field, $form );
 		if ( null == $current_form_count ) {
 			$current_form_count = Caldera_Forms_Render_Util::get_current_form_count();
@@ -97,8 +94,7 @@ class Caldera_Forms_Field_Util {
 	 *
 	 * @return bool
 	 */
-	public static function is_file_field( $field, array $form = null )
-	{
+	public static function is_file_field( $field, array $form = null ){
 		$field = self::get_field( $field, $form );
 
 		return in_array( self::get_type( $field, $form ), Caldera_Forms_Files::types() );
@@ -113,8 +109,7 @@ class Caldera_Forms_Field_Util {
 	 *
 	 * @return string
 	 */
-	public static function star_target( $id_attr )
-	{
+	public static function star_target( $id_attr ){
 		return $id_attr . '_stars';
 	}
 
@@ -130,8 +125,7 @@ class Caldera_Forms_Field_Util {
 	 *
 	 * @return array
 	 */
-	public static function prepare_field_classes( $field, $form )
-	{
+	public static function prepare_field_classes( $field, $form ){
 		$current_form_count = Caldera_Forms_Render_Util::get_current_form_count();
 		if ( ! isset( self::$field_classes[ $form[ 'ID' ] ] ) ) {
 			self::$field_classes[ $form[ 'ID' ] ] = array();
@@ -173,8 +167,7 @@ class Caldera_Forms_Field_Util {
 	 *
 	 * @return array
 	 */
-	public static function prepare_aria_attrs( $field_structure, $field )
-	{
+	public static function prepare_aria_attrs( $field_structure, $field ){
 		// if has label
 		if ( empty( $field[ 'hide_label' ] ) ) {
 			// visible label, set labelled by
@@ -201,8 +194,7 @@ class Caldera_Forms_Field_Util {
 	 *
 	 * @return array
 	 */
-	public static function get_math_functions( array $form )
-	{
+	public static function get_math_functions( array $form ){
 		$math_functions = array(
 			'pow',
 			'abs',
@@ -250,8 +242,7 @@ class Caldera_Forms_Field_Util {
 	 *
 	 * @return bool|mixed|void
 	 */
-	public static function get_field_by_slug( $slug, $form )
-	{
+	public static function get_field_by_slug( $slug, $form ){
 
 		foreach ( $form[ 'fields' ] as $field_id => $field ) {
 
@@ -276,8 +267,7 @@ class Caldera_Forms_Field_Util {
 	 *
 	 * @return array
 	 */
-	public static function apply_field_filters( $field, $form )
-	{
+	public static function apply_field_filters( $field, $form ){
 
 		/**
 		 * Filter field config.
@@ -326,8 +316,7 @@ class Caldera_Forms_Field_Util {
 	 *
 	 * @return array
 	 */
-	public static function credit_card_types( $field, $form )
-	{
+	public static function credit_card_types( $field, $form ){
 		$types = array(
 			'amex',
 			'china_union_pay',
@@ -365,8 +354,7 @@ class Caldera_Forms_Field_Util {
 	 *
 	 * @return bool
 	 */
-	public static function has_field_type( $type, array  $form )
-	{
+	public static function has_field_type( $type, array  $form ){
 		$types = wp_list_pluck( $form[ 'fields' ], 'type' );
 
 		return in_array( $type, array_values( $types ) );
@@ -382,8 +370,7 @@ class Caldera_Forms_Field_Util {
 	 *
 	 * @return bool
 	 */
-	public static function get_default( $field, array  $form )
-	{
+	public static function get_default( $field, array  $form ){
 		if ( is_string( $field ) ) {
 			$field = self::get_field( $field, $form );
 		}
@@ -406,8 +393,7 @@ class Caldera_Forms_Field_Util {
 	 *
 	 * @return bool
 	 */
-	public static function check_conditional( $field, array $form )
-	{
+	public static function check_conditional( $field, array $form ){
 		if ( is_string( $field ) ) {
 			$field = self::get_field( $field, $form );
 		}
@@ -434,8 +420,7 @@ class Caldera_Forms_Field_Util {
 	 *
 	 * @return string
 	 */
-	public static function format_calc_field( $field, $value )
-	{
+	public static function format_calc_field( $field, $value ){
 		if ( isset( $field[ 'config' ][ 'fixed' ] ) ) {
 			$money = true;
 		} else {
@@ -467,8 +452,7 @@ class Caldera_Forms_Field_Util {
 	 *
 	 * @return int|string|float
 	 */
-	public static function get_option_calculation_value( array $option, array $field, array  $form )
-	{
+	public static function get_option_calculation_value( array $option, array $field, array  $form ){
 		$calc_val = 0;
 		if ( isset( $option[ 'calc_value' ] ) && '' !== $option[ 'calc_value' ] ) {
 			$calc_val = $option[ 'calc_value' ];
@@ -479,7 +463,7 @@ class Caldera_Forms_Field_Util {
 		}
 
 		/**
-		 * Change the value to be provided by an option to calcualation field.
+		 * Change the value to be provided by an option to calculation field.
 		 *
 		 * @since 1.5.1
 		 *
@@ -504,12 +488,47 @@ class Caldera_Forms_Field_Util {
 		$option_values = array();
 		if( isset(  $field[ 'config' ][ 'option' ] ) && is_array(  $field[ 'config' ][ 'option' ] ) ){
 
-			foreach ( $field[ 'config' ][ 'option' ] as $option){
-				$option_values[] = isset( $option[ 'value' ] ) ? $option[ 'value' ] : $option[ 'label' ];
+			foreach ( $field[ 'config' ][ 'option' ] as $opt_id => $option){
+				$option_values[ $opt_id ] = isset( $option[ 'value' ] ) ? $option[ 'value' ] : $option[ 'label' ];
 			}
 		}
 
 		return $option_values;
+	}
+
+	/**
+	 * Identify the field value for a select field
+	 *
+	 * @since 1.5.1
+	 *
+	 * @param array $field Field config
+	 * @param string|array $field_value Current value
+	 *
+	 * @return mixed|null
+	 */
+	public static function find_select_field_value(   $field, $field_value ){
+		//if is checkbox saved as array just return as is.
+		if( is_array( $field_value ) ){
+			return $field_value;
+		}
+
+		if ( ! empty( $field[ 'config' ][ 'option' ] ) ) {
+			$option_values = Caldera_Forms_Field_Util::find_option_values( $field );
+
+			if( isset( $field['config'] ) && ! empty( $field[ 'config' ][ 'default_option' ] ) ) {
+				$field_value = $field['config']['default_option'];
+			}elseif( is_string( $field_value ) && array_key_exists( $field_value, $option_values ) ){
+				$field_value = $option_values[ $field_value ];
+			}
+
+			if ( ! in_array( $field_value, $option_values ) ) {
+				$field_value = null;
+			}
+
+		}
+
+		return $field_value;
+
 	}
 
 }

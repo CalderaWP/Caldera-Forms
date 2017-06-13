@@ -24,22 +24,7 @@ if(!empty($field['config']['orientation']) && $field['config']['orientation'] ==
 		<div class="cf-toggle-group-buttons <?php echo $groupOrientation; ?>">
 			<?php
 
-			// If the field value set doesn't exist, set it back to null
-			if ( ! empty( $field[ 'config' ][ 'option' ] ) ) {
-				$option_values = Caldera_Forms_Field_Util::find_option_values( $field );
-
-				if ( ! in_array( $field_value, $option_values ) ) {
-					$field_value = null;
-				}
-			}
-
-			// If default exists and val doesn't, set it
-			if ( isset( $field[ 'config' ] ) && isset( $field[ 'config' ][ 'option' ] ) && isset( $field[ 'config' ][ 'option' ][ $field[ 'config' ][ 'option' ] ] ) ) {
-				if ( null == $field_value ) {
-					$field_value = $field[ 'config' ][ 'option' ][ $field[ 'config' ][ 'option' ] ][ 'value' ];
-				}
-			}
-
+			$field_value = Caldera_Forms_Field_Util::find_select_field_value( $field, $field_value );
 			if(empty($field['config']['option'])){ ?>
 					
 					<a id="<?php echo esc_attr( $field_id ); ?>_1" class="button" data-value="true" <?php echo $field_structure['aria']; ?>><?php  esc_html_e('Enable', 'caldera-forms'); ?></a>

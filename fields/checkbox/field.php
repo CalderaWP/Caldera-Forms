@@ -10,26 +10,12 @@
 			$parsley_req = 'data-parsley-required="true" data-parsley-group="' . esc_attr( $field_id ) . '" data-parsley-multiple="' . esc_attr( $field_id ). '"';
 		}
 
-		/////// Note this needs to be updated in order to handle array field_values !!
-		// If the field value set doesn't exist, set it back to null
-		if ( ! empty( $field[ 'config' ][ 'option' ] ) ) {
-			$option_values = Caldera_Forms_Field_Util::find_option_values( $field );
+		$field_value = Caldera_Forms_Field_Util::find_select_field_value( $field, $field_value );
 
-			if ( ! in_array( $field_value, $option_values ) ) {
-				$field_value = null;
-			}
-		}
 
 		if ( ! empty( $field[ 'config' ][ 'option' ] ) ) {
 
-			// If default exists and val doesn't, set it
-			if ( isset( $field[ 'config' ] ) && isset( $field[ 'config' ][ 'default' ] ) && isset( $field[ 'config' ][ 'option' ][ $field[ 'config' ][ 'option' ] ] ) ) {
-				if ( $field_value == null ) {
-					$field_value = (array) $field[ 'config' ][ 'option' ][ $field[ 'config' ][ 'option' ] ][ 'value' ];
-				}
 
-			}
-						
 			foreach($field['config']['option'] as $option_key=>$option){
 				if(!isset($option['value'])){
 					$option['value'] = $option['label'];

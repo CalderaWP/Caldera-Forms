@@ -19,55 +19,38 @@ $attr_string =  caldera_forms_field_attributes( $attrs, $field, $form );
 		<select <?php echo $attr_string . ' ' . $field_required . ' ' . $field_structure['aria']; ?> >
 		<?php
 
-			// If the field value set doesn't exist, set it back to null
-			if ( ! empty( $field[ 'config' ][ 'option' ] ) ) {
-				$option_values = Caldera_Forms_Field_Util::find_option_values( $field );
+		$field_value = Caldera_Forms_Field_Util::find_select_field_value( $field, $field_value );
 
-				if ( ! in_array( $field_value, $option_values ) ) {
-					$field_value = null;
-				}
-
-			}
-
-			// If default exists and val doesn't, set it
-			if ( isset( $field[ 'config' ] ) && isset( $field[ 'config' ][ 'option' ] ) && isset( $field[ 'config' ][ 'option' ][ $field[ 'config' ][ 'option' ] ] ) ) {
-				if ( null  == $field_value ) {
-					$field_value = $field[ 'config' ][ 'option' ][ $field[ 'config' ][ 'option' ] ][ 'value' ];
-				}
-
+		if( empty( $field['config']['placeholder'] ) ){
+				echo '<option value="">' . ( !empty($field['hide_label']) ? $field['label'] : null ) . '</option>';
 			}else{
-				if( empty( $field['config']['placeholder'] ) ){
-					echo '<option value="">' . ( !empty($field['hide_label']) ? $field['label'] : null ) . '</option>';
-				}else{
-					$sel = '';
-					if( empty( $field_value ) ){
-						$sel = 'selected';
-					}
-					$placeholder = Caldera_Forms::do_magic_tags( $field['config']['placeholder'] );
-
-					echo '<option value="" disabled ' . $sel . '>' . $placeholder . '</option>';
+				$sel = '';
+				if( empty( $field_value ) ){
+					$sel = 'selected';
 				}
+				$placeholder = Caldera_Forms::do_magic_tags( $field['config']['placeholder'] );
+
+				echo '<option value="" disabled ' . $sel . '>' . $placeholder . '</option>';
 			}
 
-
-		if ( ! empty( $field[ 'config' ][ 'option' ] ) ) {
-			if ( ! empty( $field[ 'config' ][ 'default' ] ) ) {
-				if ( ! isset( $field[ 'config' ][ 'option' ][ $field[ 'config' ][ 'default' ] ] ) ) {
+			if ( ! empty( $field[ 'config' ][ 'option' ] ) ) {
+				if ( ! empty( $field_value ) ) {
 					echo "<option value=\"\"></option>\r\n";
 				}
-			}
-			foreach ( $field[ 'config' ][ 'option' ] as $option_key => $option ) {
-				if ( ! isset( $option[ 'value' ] ) ) {
-					$option[ 'value' ] = $option[ 'label' ];
-				}
 
-				?>
-				<option value="<?php echo esc_attr( $option[ 'value' ] ); ?>" <?php if ( $field_value == $option[ 'value' ] ){ ?>selected="selected"<?php } ?> data-calc-value="<?php echo esc_attr( Caldera_Forms_Field_Util::get_option_calculation_value( $option, $field, $form ) ); ?>" >
-					<?php echo esc_html( $option[ 'label' ] ); ?>
-				</option>
-				<?php
-			}
-		} ?>
+
+				foreach ( $field[ 'config' ][ 'option' ] as $option_key => $option ) {
+					if ( ! isset( $option[ 'value' ] ) ) {
+						$option[ 'value' ] = $option[ 'label' ];
+					}
+
+					?>
+					<option value="<?php echo esc_attr( $option[ 'value' ] ); ?>" <?php if ( $field_value == $option[ 'value' ] ){ ?>selected="selected"<?php } ?> data-calc-value="<?php echo esc_attr( Caldera_Forms_Field_Util::get_option_calculation_value( $option, $field, $form ) ); ?>" >
+						<?php echo esc_html( $option[ 'label' ] ); ?>
+					</option>
+					<?php
+				}
+			} ?>
 		</select>
 		<?php echo $field_caption; ?>
 	<?php echo $field_after; ?>
