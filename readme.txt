@@ -28,8 +28,10 @@ Caldera Forms is a free plugin by <a href="http://CalderaLabs.org?utm_source=dot
 * Export entries to CSV!
 * Front-end post submissions and post editing with the free [Caldera Custom Fields add-on](https://calderaforms.com/downloads/caldera-form-metabox?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=features+list)
 * Unlimited auto-responders!
-* Default anti-spam is to stop those bots!
-* A ton of add-ons to take your forms farther!
+* Anti-spam by default to stop those bots!
+* Accessible by default!
+* [A ton of add-ons to take your forms farther!](https://calderaforms.com/caldera-forms-add-ons?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=features-list)
+* [Caldera Forms Pro Makes Caldera Forms Messages More Awesome!](https://calderaforms.com/pro?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=features-list)
 
 [youtube https://www.youtube.com/watch?v=KmKj02aE0nc&index=1&list=PLgeaHmX3MoiuXOhRlDdYn7k0RcL4afLzQ]
 
@@ -61,7 +63,6 @@ Spam is annoying. No form builder is complete without a robust anti-spam system.
  > "A drag-and-drop builder that’s both easy and fun to use, we reckon Caldera Forms is possibly one of the best, most advanced free form builders available, and we highly recommend it."
  >
  > - Lisa-Robyn Keown - Aspen Grove Studios
-
 
 = All The Fields You Need =
 Caldera Forms has tons of field types to make a great form that will help your website succeed for you. You can set field defaults using the power of [Caldera Forms magic tags](https://calderaforms.com/doc/using-magic-tags-caldera-forms/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms). Impress your site's visitors when you take advantage of [field sync](https://calderaforms.com/doc/field-sync/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms)!
