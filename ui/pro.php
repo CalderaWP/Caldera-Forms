@@ -21,7 +21,9 @@ if( ! defined( 'ABSPATH' ) ){
 	</h2>
 	<div class="inside">
 		<div class="main">
-			<h3><?php esc_html_e( 'What Is Caldera Forms Pro?', 'caldera-forms' ); ?></h3>
+
+			<h3 style="display: inline"><?php esc_html_e( 'What Is Caldera Forms Pro?', 'caldera-forms' ); ?></h3>
+			<img  style="display: inline;width:300px;height: auto;float: right" src="<?php echo esc_url( CFCORE_URL . 'assets/build/images/cf-pro-logo.png'); ?>" />
 
 			<p>
 				<?php
