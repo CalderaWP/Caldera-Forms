@@ -136,7 +136,7 @@ if(!empty($binds)){
 		function checked_total_<?php echo $target_id; ?>(items){
 			var sum = 0;
 			items.each(function(k,v){
-				var val = jQuery(v).val();
+				var val = jQuery(v).data( 'calc-value' );
 				sum += parseFloat( val );
 			});
 			return sum;
