@@ -67,15 +67,27 @@ class Caldera_Forms_Entry_Field  extends Caldera_Forms_Entry_Object {
 	 * @return int New row ID or 0 on fail
 	 */
 	public static function insert( $data ){
-		global  $wpdb;
+
 		//Will remove disallowed keys
 		if( ! is_object( $data ) ){
 			$data = (object) $data;
 		}
 
 		$obj = new self( $data );
-		$_data = $obj->to_array();
-		$wpdb->insert( $wpdb->prefix . 'cf_form_entry_values', $_data );
+		return $obj->save();
+
+	}
+
+	/**
+	 * Save the field value
+	 *
+	 * @since 1.5.2
+	 *
+	 * @return int New row ID or 0 on fail
+	 */
+	public function save(){
+		global  $wpdb;
+		$wpdb->insert( $wpdb->prefix . 'cf_form_entry_values', $this->to_array() );
 		return (int) $wpdb->insert_id;
 
 	}
