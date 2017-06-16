@@ -726,11 +726,31 @@ class Caldera_Forms {
 			$entry = Caldera_Forms_Sanitize::sanitize( $raw_entry );
 
 			if ( has_filter( 'caldera_forms_save_field' ) ) {
-				$entry = apply_filters( 'caldera_forms_save_field', $entry, $field );
+				/**
+				 * Filter field data before saving
+				 *
+				 * @since unknown
+				 *
+				 * @param mixed $entry Field data to save
+				 * @param array $field Field config
+				 * @param array $form Form config @since 1.5.2
+				 * @param int $entry_id ID of entry to save for  @since 1.5.2
+				 */
+				$entry = apply_filters( 'caldera_forms_save_field', $entry, $field, $form, $entry_id );
 			}
 
 			if ( has_filter( 'caldera_forms_save_field_' . $field[ 'type' ] ) ) {
-				$entry = apply_filters( 'caldera_forms_save_field_' . $field[ 'type' ], $entry, $field );
+				/**
+				 * Filter field data before saving for a specific field type
+				 *
+				 * @since unknown
+				 *
+				 * @param mixed $entry Field data to save
+				 * @param array $field Field config
+				 * @param array $form Form config @since 1.5.2
+				 * @param int $entry_id ID of entry to save for  @since 1.5.2
+				 */
+				$entry = apply_filters( 'caldera_forms_save_field_' . $field[ 'type' ], $entry, $field, $form, $entry_id );
 			}
 
 			$field_item = array(
@@ -2626,7 +2646,7 @@ class Caldera_Forms {
 				}
 				// check for a hash
 				if ( isset( $fieldConfig[ 'save' ] ) ) {
-					add_filter( 'caldera_forms_save_field_' . $fieldType, $fieldConfig[ 'save' ], 10, 3 );
+					add_filter( 'caldera_forms_save_field_' . $fieldType, $fieldConfig[ 'save' ], 10, 4 );
 				}
 				// check for a hash
 				if ( isset( $fieldConfig[ 'validate' ] ) ) {
