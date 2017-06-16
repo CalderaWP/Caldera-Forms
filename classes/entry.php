@@ -400,8 +400,7 @@ class Caldera_Forms_Entry {
 		global $wpdb;
 		$data = $field->to_array();
 		if (  ! isset( $data[ 'id' ] ) ) {
-			$wpdb->insert( $wpdb->prefix . 'cf_form_entry_values', $data );
-			$field->id = $wpdb->insert_id;
+			$field->id = $field->save();
 		}else{
 			Caldera_Forms_Entry_Update::update_field( $field );
 		}
