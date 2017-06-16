@@ -690,7 +690,7 @@ class Caldera_Forms {
 				'slug'     => $field[ 'slug' ],
 				'value'    => $entry_data,
 			);
-			$wpdb->insert( $wpdb->prefix . 'cf_form_entry_values', $new_entry );
+			Caldera_Forms_Entry_Field::insert( $new_entry );
 		}
 
 	}
@@ -767,7 +767,7 @@ class Caldera_Forms {
 				$field_item[ 'slug' ] .= '.' . $key;
 			}
 			// Save
-			$wpdb->insert( $wpdb->prefix . 'cf_form_entry_values', $field_item );
+			Caldera_Forms_Entry_Field::insert( $field_item );
 		}
 
 		if ( ! empty( $keyed ) ) {
@@ -782,7 +782,7 @@ class Caldera_Forms {
 				'slug'     => $field[ 'slug' ],
 				'value'    => json_encode( $data )
 			);
-			$wpdb->insert( $wpdb->prefix . 'cf_form_entry_values', $field_item );
+			Caldera_Forms_Entry_Field::insert( $field_item );
 		}
 
 	}
