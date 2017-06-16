@@ -56,6 +56,31 @@ class Caldera_Forms_Entry_Field  extends Caldera_Forms_Entry_Object {
 	}
 
 	/**
+	 * Insert an entry
+	 *
+	 * Factory to create and save in one go
+	 *
+	 * @since 1.5.2
+	 *
+	 * @param array|stdClass $data
+	 *
+	 * @return int New row ID or 0 on fail
+	 */
+	public static function insert( $data ){
+		global  $wpdb;
+		//Will remove disallowed keys
+		if( ! is_object( $data ) ){
+			$data = (object) $data;
+		}
+
+		$obj = new self( $data );
+		$_data = $obj->to_array();
+		$wpdb->insert( $wpdb->prefix . 'cf_form_entry_values', $_data );
+		return (int) $wpdb->insert_id;
+
+	}
+
+	/**
 	 * Apply deserialization/json_decoding if needed to value column
 	 *
 	 * @since 1.4.0
@@ -92,9 +117,6 @@ class Caldera_Forms_Entry_Field  extends Caldera_Forms_Entry_Object {
 		return $this->value;
 		
 	}
-
-
-
 
 
 }
