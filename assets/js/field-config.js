@@ -209,18 +209,25 @@
              if ('object' != rangeSliders[field.id]) {
                  rangeSliders[field.id] = {
                      value: field.default,
-                     init: {}
+                     init: {},
+					 inited : false
                  };
              }
 
              var init = {
-
-                 onSlide: function (position, value) {
-                     rangeSliders[field.id].value = value;
-                     value = value.toFixed(field.value);
-                     $('#' + field.id + '_value').html(value);
-                 },
+				 onSlide: function (position, value) {
+					 if (!$el.is(':visible') || ! rangeSliders[field.id].inited ) {
+						 return;
+					 }
+					 rangeSliders[field.id].value = value;
+					 value = value.toFixed(field.value);
+					 $('#' + field.id + '_value').html(value);
+				 },
                  onInit: function () {
+					 if (!$el.is(':visible')) {
+						 return;
+					 }
+					 rangeSliders[field.id].inited = true;
                      this.value = rangeSliders[field.id].value;
                      $el.parent().find('.rangeslider').css('backgroundColor', field.trackcolor);
                      $el.parent().find('.rangeslider__fill').css('backgroundColor', field.color);
@@ -238,6 +245,7 @@
 
          $el.on('change', function () {
              $('#' + field.id + '_value').html(this.value);
+			 rangeSliders[field.id].value = this.value;
          }).css("width", "100%");
 
 
@@ -245,14 +253,29 @@
              var el = document.getElementById(field.id);
              if (null != el) {
                  var $el = $(el),
+					 doChange = false,
                      val = $el.val();
-                 $el.rangeslider('destroy');
-                 $el.rangeslider(rangeSliders[field.id].init);
-                 $el.val( val ).change();
+				 if (!$el.is(':visible')) {
+					 return;
+				 }
+
+				 if( rangeSliders[field.id].inited ){
+				 	doChange = true;
+				 }
+
+				 $el.rangeslider('destroy');
+				 $el.rangeslider(rangeSliders[field.id].init);
+				 if ( doChange ) {
+					 $el.val(val).change();
+				 }else{
+					 $el.val(field.default).change();
+				 }
+
              }
          });
 
-         init();
+		 init();
+
 
      };
 
