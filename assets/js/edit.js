@@ -2289,14 +2289,14 @@ jQuery(document).ready(function($) {
 
     $('.caldera-editor-body').on('blur toggle.values', '.toggle_label_field', function(e){
 
-        var label = $(this),
-            value = label.prev();
+        var $label = $(this),
+            $value = $( '.toggle_value_field[data-opt="' + $label.data( 'option' ) + '"]' );
 
-        if(value.val().length){
+        if( $value.val().length ){
             return;
         }
 
-        value.val(label.val());
+		$value.val( $label.val() );
     });
 
 
@@ -2315,7 +2315,9 @@ jQuery(document).ready(function($) {
             var option = options[ i ].value,
                 repeats = 0;
             for( var f = 0; f < options.length; f++ ){
-                if( options[ i ] === options[ f ] ){ continue; }
+                if( options[ i ] === options[ f ] ){
+                    continue;
+                }
 
                 if( options[ i ].value === options[ f ].value ){
                     $( options[ f ] ).addClass('has-error');
@@ -2335,7 +2337,8 @@ jQuery(document).ready(function($) {
             notice.slideUp();
         }
 
-    })
+    });
+
     var is_pulsating = false, pulsing_adders;
 
     focus_initial_field = function(e){
