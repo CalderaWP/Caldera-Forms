@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.1 - 2017-06-13 *//*
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.2-b-1 - 2017-06-20 *//*
  * jQuery miniColors: A small color selector
  *
  * Copyright 2011 Cory LaViska for A Beautiful Site, LLC. (http://abeautifulsite.net/)
@@ -5061,18 +5061,25 @@ function toggle_button_init(id, el){
              if ('object' != rangeSliders[field.id]) {
                  rangeSliders[field.id] = {
                      value: field.default,
-                     init: {}
+                     init: {},
+					 inited : false
                  };
              }
 
              var init = {
-
-                 onSlide: function (position, value) {
-                     rangeSliders[field.id].value = value;
-                     value = value.toFixed(field.value);
-                     $('#' + field.id + '_value').html(value);
-                 },
+				 onSlide: function (position, value) {
+					 if (!$el.is(':visible') || ! rangeSliders[field.id].inited ) {
+						 return;
+					 }
+					 rangeSliders[field.id].value = value;
+					 value = value.toFixed(field.value);
+					 $('#' + field.id + '_value').html(value);
+				 },
                  onInit: function () {
+					 if (!$el.is(':visible')) {
+						 return;
+					 }
+					 rangeSliders[field.id].inited = true;
                      this.value = rangeSliders[field.id].value;
                      $el.parent().find('.rangeslider').css('backgroundColor', field.trackcolor);
                      $el.parent().find('.rangeslider__fill').css('backgroundColor', field.color);
@@ -5090,6 +5097,7 @@ function toggle_button_init(id, el){
 
          $el.on('change', function () {
              $('#' + field.id + '_value').html(this.value);
+			 rangeSliders[field.id].value = this.value;
          }).css("width", "100%");
 
 
@@ -5097,14 +5105,29 @@ function toggle_button_init(id, el){
              var el = document.getElementById(field.id);
              if (null != el) {
                  var $el = $(el),
+					 doChange = false,
                      val = $el.val();
-                 $el.rangeslider('destroy');
-                 $el.rangeslider(rangeSliders[field.id].init);
-                 $el.val( val ).change();
+				 if (!$el.is(':visible')) {
+					 return;
+				 }
+
+				 if( rangeSliders[field.id].inited ){
+				 	doChange = true;
+				 }
+
+				 $el.rangeslider('destroy');
+				 $el.rangeslider(rangeSliders[field.id].init);
+				 if ( doChange ) {
+					 $el.val(val).change();
+				 }else{
+					 $el.val(field.default).change();
+				 }
+
              }
          });
 
-         init();
+		 init();
+
 
      };
 
