@@ -361,22 +361,6 @@ class Caldera_Forms_Fields {
 					CFCORE_URL . "fields/star-rate/jquery.raty.js",
 				)
 			),
-			'utm'      => array(
-				'field'       => __( 'UTM', 'caldera-forms' ),
-				'file' => CFCORE_PATH . 'fields/utm/field.php' ,
-				'category'    => __( 'Special', 'caldera-forms' ),
-				'description' => __( 'Capture all UTM tags', 'caldera-forms' ),
-				'setup'       => array(
-					'template' => CFCORE_PATH . 'fields/utm/config.php',
-					'preview'  => CFCORE_PATH . 'fields/utm/preview.php',
-					'not_supported' => array(
-						'hide_label',
-						'caption',
-						'required',
-					)
-				),
-				'handler' => array( 'Caldera_Forms_Field_Utm', 'handler' )
-			),
 
 
 			//file
