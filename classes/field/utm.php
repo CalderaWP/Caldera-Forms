@@ -6,10 +6,13 @@
  */
 class Caldera_Forms_Field_Utm {
 
+	/**
+	 * Add hooks for UTM fields
+	 *
+	 * @since 1.5.2
+	 */
 	public static function add_hooks(){
-		/** Filters for UTM fields */
 		add_filter( 'caldera_forms_field_attributes-utm', array( 'Caldera_Forms_Field_Utm', 'handle_attrs'), 1 );
-		add_filter( 'caldera_forms_save_field_utm', array( 'Caldera_Forms_Field_Utm', 'handle_save' ), 10, 4 );
 		add_filter( 'caldera_forms_view_field_utm', array( 'Caldera_Forms_Field_Utm', 'view' ), 10, 3 );
 
 	}
@@ -33,7 +36,24 @@ class Caldera_Forms_Field_Utm {
 		return $attrs;
 	}
 
+	/**
+	 * Format field view for utm fields
+	 *
+	 * @since 1.5.2
+	 *
+	 * @uses "caldera_forms_view_field_utm" filter
+	 *
+	 * @param mixed $field_value Saved value
+	 * @param array $field Field config
+	 * @param array $form Form config
+	 *
+	 * @return string
+	 */
 	public static function view( $field_value, $field, $form ){
+		if( ! is_array( $field_value ) ){
+			return $field_value;
+		}
+
 		$out = array();
 		$pattern = '<li><strong>%s</strong>: %s</li>';
 		foreach ( self::tags() as $tag ){
@@ -44,42 +64,36 @@ class Caldera_Forms_Field_Utm {
 		}
 
 		if (  ! empty( $out ) ) {
-			$field_value = '<ul>' . implode( ' ', $out ) . '</ul>';
+			$field_value = '<ul class="caldera-forms-utm-field-view">' . implode( ' ', $out ) . '</ul>';
 		}
 
 		return $field_value;
 	}
 
-	public static function handle_save(  $new_data, $field, $form, $entry_id ){
+	/**
+	 * Save handler for UTM tag field
+	 *
+	 * @since 1.5.2
+	 *
+	 * @param mixed $value Saved value
+	 * @param array $field Field config
+	 * @param array $form Form config
+	 *
+	 * @return array
+	 */
+	public static function handler( $value, $field, $form ){
+		$_value = array();
+
 		foreach ( self::tags() as $tag ){
 			$utm_field = self::config( $field, $tag );
-			$value = '';
-			if( isset( $_POST[ $utm_field[ 'ID' ] ] ) ){
-				$value    = self::find_in_post( $utm_field );
-
+			$__value    = self::find_in_post( $utm_field );
+			if (  ! empty( $__value ) ) {
+				$_value[ $tag ] = $__value;
 			}
-
-			$data = array(
-				'entry_id' => $entry_id,
-				'field_id' => $field[ 'ID' ],
-				'slug'     => $field[ 'slug' ],
-				'value'    =>  $value
-			);
-
-			Caldera_Forms_Entry_Field::insert( $data );
-
 		}
 
-		return $new_data;
-	}
-
-	public static function handler( $value, $field, $form ){
-		$value = array();
-
-		foreach ( self::tags() as $tag ){
-			$utm_field = self::config( $field, $tag );
-			$_value    = self::find_in_post( $utm_field );
-			$value[ $tag ] = $_value;
+		if( ! empty( $_value ) ){
+			$value = $_value;
 		}
 
 		return $value;
@@ -87,7 +101,16 @@ class Caldera_Forms_Field_Utm {
 	}
 
 
-
+	/**
+	 * Creates config for individual tag fields
+	 *
+	 * @since 1.5.2
+	 *
+	 * @param array $field Field config
+	 * @param string $tag Which tag
+	 *
+	 * @return array
+	 */
 	public static function config( $field, $tag ){
 		$tag = 'utm_' . $tag;
 		$utm_field_config = $field;
@@ -99,6 +122,13 @@ class Caldera_Forms_Field_Utm {
 		return $utm_field_config;
 	}
 
+	/**
+	 * Array of types of UTM tags
+	 *
+	 * @since 1.5.2
+	 *
+	 * @return array
+	 */
 	public static function tags(){
 		return  array(
 			'source',
@@ -110,10 +140,13 @@ class Caldera_Forms_Field_Utm {
 	}
 
 	/**
-	 * @param $utm_field
-	 * @param $count
+	 * Find in POST data
 	 *
-	 * @return array|mixed|object|string|void
+	 * @since 1.5.2
+	 *
+	 * @param array $utm_field Field config
+	 *
+	 * @return string
 	 */
 	protected static function find_in_post( $utm_field ){
 		$count = Caldera_Forms_Render_Util::get_current_form_count();
@@ -121,6 +154,10 @@ class Caldera_Forms_Field_Utm {
 		$tag_key = $utm_field[ 'ID' ] . '_' . $count;
 		if ( isset( $_POST[ $tag_key ] ) ) {
 			$_value = Caldera_Forms_Sanitize::sanitize( $_POST[ $tag_key ] );
+		}
+
+		if( ! is_string( $_value ) ){
+			return '';
 		}
 
 		return $_value;
