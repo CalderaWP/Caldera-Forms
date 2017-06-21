@@ -3945,6 +3945,7 @@ class Caldera_Forms {
 
 		}
 
+		$current_form_count = Caldera_Forms_Render_Util::get_current_form_count();
 		if ( empty( $current_form_count ) ) {
 			$current_form_count = 0;
 		}
