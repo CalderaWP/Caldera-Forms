@@ -910,7 +910,6 @@ class Caldera_Forms_Admin {
 
 							$row->value = apply_filters( 'caldera_forms_view_field_' . $field[ 'type' ], $row->value, $field, $form );
 
-
 							if ( isset( $data[ 'entries' ][ $e ][ 'data' ][ $row->slug ] ) ) {
 								// array based - add another entry
 								if ( ! is_array( $data[ 'entries' ][ $e ][ 'data' ][ $row->slug ] ) ) {

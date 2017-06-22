@@ -177,6 +177,10 @@ class Caldera_Forms {
 		/** Load magic tag system */
 		new Caldera_Forms_Magic();
 
+		//init utm tag field handler
+		$utm = new Caldera_Forms_Field_Utm();
+		$utm->add_hooks();
+
 		//clear syncer cache on form update
 		add_action( 'caldera_forms_save_form', array( 'Caldera_Forms_Sync_Factory', 'clear_cache' ) );
 
