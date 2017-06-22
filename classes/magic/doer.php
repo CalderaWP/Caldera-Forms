@@ -359,9 +359,11 @@ class Caldera_Forms_Magic_Doer {
 						case 'lostpassword_url' :
 							$magic_tag = wp_lostpassword_url();
 							break;
-
-
+						case 'current_url' :
+							$magic_tag = urldecode( caldera_forms_get_current_url() );
+							break;
 					}
+
 				}
 
 				/**
