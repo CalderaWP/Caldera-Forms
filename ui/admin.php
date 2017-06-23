@@ -60,6 +60,12 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 			?>
 			</a>
 		</li>
+		<?php if ( isset( $_GET['message_resent' ] ) ){?>
+		<li class="caldera-forms-toolbar-item separator" >&nbsp;&nbsp;</li>
+			<li class="caldera-forms-toolbar-item success">
+				<?php esc_html_e( 'Message Resent', 'caldera-forms' ); ?>
+			</li>
+		<?php } ?>
 
 	</ul>
 </div>

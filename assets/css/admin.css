@@ -2177,3 +2177,12 @@ label.option-setting-label {
   border-radius: 4px;
   padding: 2px;
 }
+
+li.caldera-forms-toolbar-item.success {
+  background: #ff7e30;
+  color: white;
+  font-weight: 500;
+  margin-top: 4px;
+  border-radius: 2px;
+  text-align: center;
+}

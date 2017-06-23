@@ -121,6 +121,8 @@ class Caldera_Forms_Admin {
 
 		add_action( 'init', array( $this, 'init_pro_admin' ) );
 
+		add_action( 'init', array( 'Caldera_Forms_Admin_Resend', 'watch_for_resend' ) );
+
 		/**
 		 * Runs after Caldera Forms admin is initialized
 		 *
@@ -591,7 +593,9 @@ class Caldera_Forms_Admin {
 				),
 				'class'  => 'button-primary'
 			);
+
 		}
+
 
 		return $buttons;
 	}
@@ -1879,6 +1883,17 @@ class Caldera_Forms_Admin {
 	public static function init_pro_admin(){
 		$pro_admin = new Caldera_Forms_Admin_Pro;
 		$pro_admin->add_hooks();
+	}
+
+	/**
+	 * Get URL for main admin page
+	 *
+	 * @since 1.5.2
+	 *
+	 * @return string
+	 */
+	public static function main_admin_page_url(){
+		return add_query_arg( 'page', Caldera_Forms::PLUGIN_SLUG, admin_url( 'admin.php' ) );
 	}
 
 }
