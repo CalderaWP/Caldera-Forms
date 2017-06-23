@@ -29,6 +29,13 @@ class Caldera_Forms_Magic_Summary extends Caldera_Forms_Magic_Parser {
 	 */
 	protected $pattern = '';
 
+	/**
+	 * Fields ordered
+	 *
+	 * @since 1.5.0.10
+	 *
+	 * @var array
+	 */
 	protected $ordered_fields;
 
 	/**
