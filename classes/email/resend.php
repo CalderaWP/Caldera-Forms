@@ -54,6 +54,7 @@ class Caldera_Forms_Email_Resend {
 	public function resend(){
 		add_filter( 'caldera_forms_magic_form', array( $this, 'provide_form' ), 10, 2 );
 		add_action( 'caldera_forms_magic_parser_data', array( $this, 'provide_data' ), 10, 2 );
+		$this->apply_conditional_recipients();
 		Caldera_Forms_Save_Final::do_mailer( $this->form, $this->entry_id, $this->get_data() );
 		remove_filter( 'caldera_forms_magic_form', array( $this, 'provide_form' ), 10 );
 		remove_filter( 'caldera_forms_magic_parser_data', array( $this, 'provide_data' ), 10 );
@@ -75,6 +76,7 @@ class Caldera_Forms_Email_Resend {
 		}
 
 		return $this->data;
+
 	}
 
 	/**
@@ -115,6 +117,42 @@ class Caldera_Forms_Email_Resend {
 		}
 
 		return $data;
+	}
+
+	/**
+	 * Apply conditional recipients processor's logic, if needed
+	 *
+	 * @since 1.5.2
+	 */
+	protected function apply_conditional_recipients(){
+		//This is to make sure processors are loaded properly, which they should be, but...
+		Caldera_Forms_Processor_Load::get_instance()->get_processors();
+
+		$conditional_recipient_processors = array();
+		if ( ! empty( $this->form[ 'processors' ] ) ) {
+			foreach ( $this->form[ 'processors' ] as $processor_id => $processor ) {
+				if ( 'conditional_recipient' === $processor[ 'type' ] ) {
+					if ( isset( $processor[ 'conditions' ] ) && ! empty( $processor[ 'conditions' ][ 'type' ] ) ) {
+						if ( ! Caldera_Forms::check_condition( $processor[ 'conditions' ], $this->form, $this->entry_id ) ) {
+							continue;
+						}
+					}
+
+					$conditional_recipient_processors[] = $processor;
+
+				}
+
+			}
+
+		}
+
+		if ( ! empty( $conditional_recipient_processors ) ) {
+			foreach ( $conditional_recipient_processors as $processor ) {
+				Caldera_Forms_Processor_Conditional_Recipient::post_processor( $processor[ 'config' ] );
+			}
+
+		}
+
 	}
 
 }
