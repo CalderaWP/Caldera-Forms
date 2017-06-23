@@ -20,10 +20,14 @@ $attr_string =  caldera_forms_field_attributes( $attrs, $field, $form );
 		<?php
 
 		$field_value = Caldera_Forms_Field_Util::find_select_field_value( $field, $field_value );
+		$showed_empty = false;
+		if( ! empty( $field['config']['placeholder'] ) ){
 
-		if( empty( $field['config']['placeholder'] ) ){
-				echo '<option value="">' . ( !empty($field['hide_label']) ? $field['label'] : null ) . '</option>';
-			}else{
+				if ( empty( $field_value ) ) {
+					$showed_empty = true;
+					echo '<option value="">' . ( !empty($field['hide_label']) ? $field['label'] : null ) . '</option>';
+				}
+
 				$sel = '';
 				if( empty( $field_value ) ){
 					$sel = 'selected';
@@ -34,7 +38,7 @@ $attr_string =  caldera_forms_field_attributes( $attrs, $field, $form );
 			}
 
 			if ( ! empty( $field[ 'config' ][ 'option' ] ) ) {
-				if ( ! empty( $field_value ) ) {
+				if ( empty( $field_value ) && ! $showed_empty ) {
 					echo "<option value=\"\"></option>\r\n";
 				}
 
@@ -50,7 +54,14 @@ $attr_string =  caldera_forms_field_attributes( $attrs, $field, $form );
 					</option>
 					<?php
 				}
-			} ?>
+			}else{
+				if( ! $showed_empty ) {
+					echo "<option value=\"\"></option>\r\n";
+				}
+			}
+
+
+			?>
 		</select>
 		<?php echo $field_caption; ?>
 	<?php echo $field_after; ?>
