@@ -55,6 +55,19 @@ class Caldera_Forms_Email_Resend {
 		add_filter( 'caldera_forms_magic_form', array( $this, 'provide_form' ), 10, 2 );
 		add_action( 'caldera_forms_magic_parser_data', array( $this, 'provide_data' ), 10, 2 );
 		$this->apply_conditional_recipients();
+
+		/**
+		 * Runs right before email resending is sent to emailer
+		 *
+		 * @since 1.5.2
+		 *
+		 * @param array $form Form config
+		 * @param int $entry_id Entry ID
+		 * @param array $data Submission data
+		 *
+		 */
+		do_action( 'caldera_forms_pre_email_resend', $this->form, $this->entry_id, $this->get_data() );
+
 		Caldera_Forms_Save_Final::do_mailer( $this->form, $this->entry_id, $this->get_data() );
 		remove_filter( 'caldera_forms_magic_form', array( $this, 'provide_form' ), 10 );
 		remove_filter( 'caldera_forms_magic_parser_data', array( $this, 'provide_data' ), 10 );
