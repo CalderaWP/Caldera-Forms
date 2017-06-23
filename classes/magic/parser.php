@@ -59,7 +59,16 @@ abstract class Caldera_Forms_Magic_Parser {
 	 */
 	public function __construct( array $form, array $data = null ) {
 		$this->form = $form;
-		$this->data = $data;
+
+		/**
+		 * Filter data for use by magic parsers extending the Caldera_Forms_Magic_Parser class sunch as summary
+		 *
+		 * @since 1.5.2
+		 *
+		 * @param array $data Data to use
+		 * @param array $form Form config
+		 */
+		$this->data = apply_filters( 'caldera_forms_magic_parser_data', $data, $this->form );
 
 	}
 
