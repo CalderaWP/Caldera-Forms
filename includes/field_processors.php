@@ -206,3 +206,29 @@ function caldera_forms_allow_edit_hidden_fields( $field ){
 	return $field;
 };
 
+add_filter( 'caldera_forms_validate_field_phone_better', 'caldera_forms_validate_phone_better', 10, 3 );
+/**
+ * Prevent phone number fields submitted with country code only from being considered valid.
+ *
+ * @uses "caldera_forms_validate_field_phone_better" filter
+ *
+ * @since 1.5.2
+ *
+ * @param string|mixed $entry
+ * @param array $field
+ * @param array $form
+ *
+ * @return WP_Error|string
+ */
+function caldera_forms_validate_phone_better( $entry, $field, $form ){
+	if( empty( $field[ 'required' ] ) ){
+		return $entry;
+	}
+
+	if( false !== strpos( $entry, '+' ) && 4 >= strlen( $entry ) ){
+		return new WP_Error( );
+	}
+
+	return $entry;
+}
+
