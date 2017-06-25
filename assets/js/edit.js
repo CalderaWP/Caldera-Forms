@@ -101,6 +101,9 @@ jQuery(document).ready(function($){
             $(el).data('cf_edit_nonce', data_fields.cf_edit_nonce);
             $(el).data('_wp_http_referer', data_fields._wp_http_referer);
             $(el).data('sender', 'ajax');
+            $( document ).trigger( 'cf.presave', {
+                config: data_fields.config
+            });
             $(el).data('config', JSON.stringify(data_fields.config));
 
             return true;

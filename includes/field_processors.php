@@ -231,4 +231,3 @@ function caldera_forms_validate_phone_better( $entry, $field, $form ){
 
 	return $entry;
 }
-
