@@ -904,13 +904,19 @@ class Caldera_Forms_Admin {
 							$is_json = json_decode( $row->value, ARRAY_A );
 							if ( ! empty( $is_json ) ) {
 								$row->value = $is_json;
+							}else  {
+								$row->value = maybe_unserialize( $row->value );
 							}
 
-						if( is_string( $row->value ) ){
-							$row->value = esc_html( stripslashes_deep( $row->value ) );
-						}else{
-							$row->value = stripslashes_deep( Caldera_Forms_Sanitize::sanitize( $row->value ) );
-						}
+							if( is_array( $row->value )  ) {
+								$row->value = implode( ',' , $row->value );
+							}
+
+							if( is_string( $row->value ) ){
+								$row->value = esc_html( stripslashes_deep( $row->value ) );
+							}else{
+								$row->value = stripslashes_deep( Caldera_Forms_Sanitize::sanitize( $row->value ) );
+							}
 
 							$row->value = apply_filters( 'caldera_forms_view_field_' . $field[ 'type' ], $row->value, $field, $form );
 

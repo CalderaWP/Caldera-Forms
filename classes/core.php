@@ -3555,6 +3555,7 @@ class Caldera_Forms {
 				} else {
 					$field_value = esc_html( stripslashes_deep( $field_value ) );
 				}
+
 			}
 			// set view
 			$field_view = apply_filters( 'caldera_forms_view_field_' . $field[ 'type' ], $field_value, $field, $form );

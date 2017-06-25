@@ -138,7 +138,7 @@ class Caldera_Forms_Entry_Entries {
 		if ( ! empty( $field_values ) ) {
 			/** @var Caldera_Forms_Entry_Field $_field */
 			foreach ( $field_values as $_field ) {
-				$field  = array_merge( $_field->to_array(), $_entry );
+				$field  = array_merge( $_field->to_array( false ), $_entry );
 				$data[] = (object) $field;
 			}
 		}
