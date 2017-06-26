@@ -120,7 +120,7 @@ return array (
 				array (
 					'ID' => 'fld_3993413',
 					'type' => 'checkbox',
-					'label' => 'Want Option 1?',
+					'label' => esc_html__( 'Want Option 1?', 'caldera-forms' ),
 					'slug' => 'option_1',
 					'caption' => '',
 					'config' =>
@@ -150,7 +150,7 @@ return array (
 				array (
 					'ID' => 'fld_5161425',
 					'type' => 'dropdown',
-					'label' => 'Option 2 Type',
+					'label' => esc_html__( 'Option 2 Type', 'caldera-forms' ),
 					'slug' => 'option_2',
 					'caption' => '',
 					'config' =>
@@ -185,7 +185,7 @@ return array (
 				array (
 					'ID' => 'fld_8997460',
 					'type' => 'calculation',
-					'label' => 'Total',
+					'label' => esc_html__( 'Total', 'caldera-forms' ),
 					'slug' => 'total',
 					'caption' => '',
 					'config' =>
@@ -241,7 +241,7 @@ return array (
 				array (
 					'ID' => 'fld_1338703',
 					'type' => 'button',
-					'label' => 'Pay',
+					'label' => esc_html__( 'Pay', 'caldera-forms' ),
 					'slug' => 'pay',
 					'caption' => '',
 					'config' =>

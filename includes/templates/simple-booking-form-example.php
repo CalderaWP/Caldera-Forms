@@ -15,9 +15,9 @@
   'avatar_field' => NULL,
   'form_ajax' => 1,
   'custom_callback' => '',
-  'layout_grid' => 
+  'layout_grid' =>
   array(
-    'fields' => 
+    'fields' =>
     array(
       'fld_185917' => '1:1',
       'fld_6892512' => '1:2',
@@ -32,21 +32,21 @@
     ),
     'structure' => '6:6|12|6:6|6:6|12',
   ),
-  'fields' => 
+  'fields' =>
   array(
-    'fld_185917' => 
+    'fld_185917' =>
     array(
       'ID' => 'fld_185917',
       'type' => 'text',
-      'label' => 'First Name',
+      'label' => esc_html__( 'First Name', 'caldera-forms' ),
       'slug' => 'first_name',
-      'conditions' => 
+      'conditions' =>
       array(
         'type' => '',
       ),
       'required' => 1,
       'caption' => '',
-      'config' => 
+      'config' =>
       array(
         'custom_class' => '',
         'placeholder' => '',
@@ -55,19 +55,19 @@
         'mask' => '',
       ),
     ),
-    'fld_6892512' => 
+    'fld_6892512' =>
     array(
       'ID' => 'fld_6892512',
       'type' => 'text',
-      'label' => 'Last Name',
+      'label' => esc_html__( 'Last Name', 'caldera-forms' ),
       'slug' => 'last_name',
-      'conditions' => 
+      'conditions' =>
       array(
         'type' => '',
       ),
       'required' => 1,
       'caption' => '',
-      'config' => 
+      'config' =>
       array(
         'custom_class' => '',
         'placeholder' => '',
@@ -76,20 +76,20 @@
         'mask' => '',
       ),
     ),
-    'fld_2254781' => 
+    'fld_2254781' =>
     array(
       'ID' => 'fld_2254781',
       'type' => 'phone_better',
-      'label' => 'Mobile Number',
+      'label' => esc_html__( 'Mobile Number', 'caldera-forms' ),
       'slug' => 'mobile_number',
-      'conditions' => 
+      'conditions' =>
       array(
         'type' => '',
       ),
       'required' => 1,
       'caption' => '',
       'entry_list' => 1,
-      'config' => 
+      'config' =>
       array(
         'custom_class' => '',
         'placeholder' => '',
@@ -97,38 +97,38 @@
         'nationalMode' => 'on',
       ),
     ),
-    'fld_7900587' => 
+    'fld_7900587' =>
     array(
       'ID' => 'fld_7900587',
       'type' => 'email',
-      'label' => 'Email Address',
+      'label' => esc_html__( 'Email Address', 'caldera-forms' ),
       'slug' => 'email_address',
-      'conditions' => 
+      'conditions' =>
       array(
         'type' => '',
       ),
       'required' => 1,
       'caption' => '',
-      'config' => 
+      'config' =>
       array(
         'custom_class' => '',
         'placeholder' => '',
         'default' => '',
       ),
     ),
-    'fld_9356744' => 
+    'fld_9356744' =>
     array(
       'ID' => 'fld_9356744',
       'type' => 'text',
-      'label' => 'Check in date',
+      'label' => esc_html__( 'Check in date', 'caldera-forms' ),
       'slug' => 'check_in_date',
-      'conditions' => 
+      'conditions' =>
       array(
         'type' => '',
       ),
       'required' => 1,
       'caption' => '',
-      'config' => 
+      'config' =>
       array(
         'custom_class' => '',
         'placeholder' => '',
@@ -137,19 +137,19 @@
         'mask' => '',
       ),
     ),
-    'fld_9099709' => 
+    'fld_9099709' =>
     array(
       'ID' => 'fld_9099709',
       'type' => 'text',
-      'label' => 'Check out date',
+      'label' => esc_html__( 'Check out date', 'caldera-forms' ),
       'slug' => 'check_out_date',
-      'conditions' => 
+      'conditions' =>
       array(
         'type' => '',
       ),
       'required' => 1,
       'caption' => '',
-      'config' => 
+      'config' =>
       array(
         'custom_class' => '',
         'placeholder' => '',
@@ -158,19 +158,19 @@
         'mask' => '',
       ),
     ),
-    'fld_6496615' => 
+    'fld_6496615' =>
     array(
       'ID' => 'fld_6496615',
       'type' => 'number',
-      'label' => 'Number of adults',
+      'label' => esc_html__( 'Number of adults', 'caldera-forms' ),
       'slug' => 'number_of_adults',
-      'conditions' => 
+      'conditions' =>
       array(
         'type' => '',
       ),
       'required' => 1,
       'caption' => '',
-      'config' => 
+      'config' =>
       array(
         'custom_class' => '',
         'placeholder' => '',
@@ -180,18 +180,18 @@
         'step' => 1,
       ),
     ),
-    'fld_5630664' => 
+    'fld_5630664' =>
     array(
       'ID' => 'fld_5630664',
       'type' => 'number',
-      'label' => 'Number of children',
+      'label' => esc_html__( 'Number of children', 'caldera-forms' ),
       'slug' => 'number_of_children',
-      'conditions' => 
+      'conditions' =>
       array(
         'type' => '',
       ),
       'caption' => '',
-      'config' => 
+      'config' =>
       array(
         'custom_class' => '',
         'placeholder' => '',
@@ -201,18 +201,18 @@
         'step' => 1,
       ),
     ),
-    'fld_4089741' => 
+    'fld_4089741' =>
     array(
       'ID' => 'fld_4089741',
       'type' => 'paragraph',
       'label' => 'Comments',
       'slug' => 'comments',
-      'conditions' => 
+      'conditions' =>
       array(
         'type' => '',
       ),
       'caption' => '',
-      'config' => 
+      'config' =>
       array(
         'custom_class' => '',
         'placeholder' => '',
@@ -220,18 +220,18 @@
         'default' => '',
       ),
     ),
-    'fld_7167496' => 
+    'fld_7167496' =>
     array(
       'ID' => 'fld_7167496',
       'type' => 'button',
-      'label' => 'Submit',
+      'label' => esc_html__( 'Submit', 'caldera-forms' ),
       'slug' => 'submit',
-      'conditions' => 
+      'conditions' =>
       array(
         'type' => '',
       ),
       'caption' => '',
-      'config' => 
+      'config' =>
       array(
         'custom_class' => '',
         'type' => 'submit',
@@ -240,11 +240,11 @@
       ),
     ),
   ),
-  'page_names' => 
+  'page_names' =>
   array(
     0 => 'Page 1',
   ),
-  'mailer' => 
+  'mailer' =>
   array(
     'on_insert' => 1,
     'sender_name' => 'Caldera Forms Notification',
@@ -256,13 +256,13 @@
     'email_subject' => 'Simple Booking Form',
     'email_message' => '{summary}',
   ),
-  'conditional_groups' => 
+  'conditional_groups' =>
   array(
     '_open_condition' => '',
   ),
-  'settings' => 
+  'settings' =>
   array(
-    'responsive' => 
+    'responsive' =>
     array(
       'break_point' => 'sm',
     ),

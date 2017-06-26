@@ -44,7 +44,7 @@ return array (
 				array (
 					'ID' => 'fld_1327818',
 					'type' => 'toggle_switch',
-					'label' => 'Number of People',
+					'label' => esc_html__( 'Number of People', 'caldera-forms' ),
 					'slug' => 'number_of_people',
 					'conditions' =>
 						array (
@@ -86,7 +86,7 @@ return array (
 				array (
 					'ID' => 'fld_1812913',
 					'type' => 'text',
-					'label' => 'Person One Name',
+					'label' => esc_html__( 'Person One Name', 'caldera-forms' ),
 					'slug' => 'person_one_name',
 					'conditions' =>
 						array (
@@ -106,7 +106,7 @@ return array (
 				array (
 					'ID' => 'fld_7290902',
 					'type' => 'email',
-					'label' => 'Person One Email',
+					'label' => esc_html__( 'Person One Email', 'caldera-forms' ),
 					'slug' => 'person_one_email',
 					'conditions' =>
 						array (
@@ -125,7 +125,7 @@ return array (
 				array (
 					'ID' => 'fld_6900741',
 					'type' => 'text',
-					'label' => 'Person Two Name',
+					'label' => esc_html__( 'Person Two Name', 'caldera-forms' ),
 					'slug' => 'person_two_name',
 					'conditions' =>
 						array (
@@ -145,7 +145,7 @@ return array (
 				array (
 					'ID' => 'fld_1561974',
 					'type' => 'email',
-					'label' => 'Person Two Email',
+					'label' => esc_html__( 'Person Two Email', 'caldera-forms' ),
 					'slug' => 'person_two_email',
 					'conditions' =>
 						array (
@@ -164,7 +164,7 @@ return array (
 				array (
 					'ID' => 'fld_2458053',
 					'type' => 'email',
-					'label' => 'Person Three Email',
+					'label' => esc_html__( 'Person Three Email', 'caldera-forms' ),
 					'slug' => 'person_three_email',
 					'conditions' =>
 						array (
@@ -183,7 +183,7 @@ return array (
 				array (
 					'ID' => 'fld_6241168',
 					'type' => 'text',
-					'label' => 'Person Three Name',
+					'label' => esc_html__( 'Person Three Name', 'caldera-forms' ),
 					'slug' => 'person_three_name',
 					'conditions' =>
 						array (
@@ -203,7 +203,7 @@ return array (
 				array (
 					'ID' => 'fld_2668148',
 					'type' => 'button',
-					'label' => 'Submit',
+					'label' => esc_html__( 'Submit', 'caldera-forms' ),
 					'slug' => 'submit',
 					'conditions' =>
 						array (
