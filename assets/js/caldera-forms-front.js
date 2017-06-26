@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.2-b-1 - 2017-06-22 *//*
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.2-b-2 - 2017-06-26 *//*
  * jQuery miniColors: A small color selector
  *
  * Copyright 2011 Cory LaViska for A Beautiful Site, LLC. (http://abeautifulsite.net/)
@@ -4970,11 +4970,9 @@ function toggle_button_init(id, el){
              }
 
 
-             var
-                 template = templates[ fieldConfig.tmplId ],
+             var template = templates[ fieldConfig.tmplId ],
                  $target = $( document.getElementById( fieldConfig.contentId ) );
 
-			 var x = 1;
              for (var i = 0; i < list.length; i++) {
 
 				 var $field = $form.find('[data-field="' + list[i] + '"]'),
@@ -5002,7 +5000,12 @@ function toggle_button_init(id, el){
                      }
                  }
 
-                 template = template.replace(new RegExp("\{\{" + list[i] + "\}\}", "g"), value.join(', '));
+                 value = value.join(', ');
+                 if( 'string' === typeof  value ){
+                     value = value.replace(/(?:\r\n|\r|\n)/g, '<br />');
+                 }
+
+                 template = template.replace(new RegExp("\{\{" + list[i] + "\}\}", "g"), value );
              }
 
              $target.html(template).trigger('change');

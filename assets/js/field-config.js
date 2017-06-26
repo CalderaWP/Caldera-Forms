@@ -118,11 +118,9 @@
              }
 
 
-             var
-                 template = templates[ fieldConfig.tmplId ],
+             var template = templates[ fieldConfig.tmplId ],
                  $target = $( document.getElementById( fieldConfig.contentId ) );
 
-			 var x = 1;
              for (var i = 0; i < list.length; i++) {
 
 				 var $field = $form.find('[data-field="' + list[i] + '"]'),
@@ -150,7 +148,12 @@
                      }
                  }
 
-                 template = template.replace(new RegExp("\{\{" + list[i] + "\}\}", "g"), value.join(', '));
+                 value = value.join(', ');
+                 if( 'string' === typeof  value ){
+                     value = value.replace(/(?:\r\n|\r|\n)/g, '<br />');
+                 }
+
+                 template = template.replace(new RegExp("\{\{" + list[i] + "\}\}", "g"), value );
              }
 
              $target.html(template).trigger('change');
