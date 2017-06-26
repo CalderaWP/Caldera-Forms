@@ -1,10 +1,10 @@
 <?php
 /**
- * Caldera Forms - PHP Export 
- * Job Application 
+ * Caldera Forms - PHP Export
+ * Job Application
  * @version    1.5.0-b-2
  * @license   GPL-2.0+
- * 
+ *
  */
 
 
@@ -23,9 +23,9 @@
   'avatar_field' => '',
   'form_ajax' => 1,
   'custom_callback' => '',
-  'layout_grid' => 
+  'layout_grid' =>
   array(
-    'fields' => 
+    'fields' =>
     array(
       'fld_1529543' => '1:1',
       'fld_3688899' => '1:1',
@@ -44,20 +44,20 @@
     ),
     'structure' => '12|6:6|12#12|6:6',
   ),
-  'fields' => 
+  'fields' =>
   array(
-    'fld_1529543' => 
+    'fld_1529543' =>
     array(
       'ID' => 'fld_1529543',
       'type' => 'dropdown',
-      'label' => 'Title',
+      'label' => esc_html__( 'Title', 'caldera-forms' ),
       'slug' => 'title',
-      'conditions' => 
+      'conditions' =>
       array(
         'type' => '',
       ),
       'caption' => '',
-      'config' => 
+      'config' =>
       array(
         'custom_class' => '',
         'placeholder' => '',
@@ -69,34 +69,34 @@
         'orderby_post' => 'name',
         'order' => 'ASC',
         'default' => 'opt1421110',
-        'option' => 
+        'option' =>
         array(
-          'opt1421110' => 
+          'opt1421110' =>
           array(
             'value' => 'Choose One',
             'label' => 'Choose One',
           ),
-          'opt1521658' => 
+          'opt1521658' =>
           array(
             'value' => 'Mr.',
             'label' => 'Mr.',
           ),
-          'opt1664029' => 
+          'opt1664029' =>
           array(
             'value' => 'Ms.',
             'label' => 'Ms.',
           ),
-          'opt1467463' => 
+          'opt1467463' =>
           array(
             'value' => 'Mrs.',
             'label' => 'Mrs.',
           ),
-          'opt1876827' => 
+          'opt1876827' =>
           array(
             'value' => 'Prof.',
             'label' => 'Prof.',
           ),
-          'opt1641302' => 
+          'opt1641302' =>
           array(
             'value' => 'Dr.',
             'label' => 'Dr.',
@@ -104,19 +104,19 @@
         ),
       ),
     ),
-    'fld_3688899' => 
+    'fld_3688899' =>
     array(
       'ID' => 'fld_3688899',
       'type' => 'text',
-      'label' => 'First Name',
+      'label' => esc_html__( 'First Name', 'caldera-forms'),
       'slug' => 'first_name',
-      'conditions' => 
+      'conditions' =>
       array(
         'type' => '',
       ),
       'required' => 1,
       'caption' => '',
-      'config' => 
+      'config' =>
       array(
         'custom_class' => '',
         'placeholder' => '',
@@ -125,19 +125,19 @@
         'mask' => '',
       ),
     ),
-    'fld_6829296' => 
+    'fld_6829296' =>
     array(
       'ID' => 'fld_6829296',
       'type' => 'text',
-      'label' => 'Last Name',
+      'label' => esc_html__( 'Last Name', 'caldera-forms' ),
       'slug' => 'last_name',
-      'conditions' => 
+      'conditions' =>
       array(
         'type' => '',
       ),
       'required' => 1,
       'caption' => '',
-      'config' => 
+      'config' =>
       array(
         'custom_class' => '',
         'placeholder' => '',
@@ -146,38 +146,38 @@
         'mask' => '',
       ),
     ),
-    'fld_6830845' => 
+    'fld_6830845' =>
     array(
       'ID' => 'fld_6830845',
       'type' => 'email',
-      'label' => 'Email Address',
+      'label' => esc_html__( 'Email Address', 'caldera-forms' ),
       'slug' => 'user_email',
-      'conditions' => 
+      'conditions' =>
       array(
         'type' => '',
       ),
       'required' => 1,
       'caption' => '',
-      'config' => 
+      'config' =>
       array(
         'custom_class' => '',
         'placeholder' => '',
         'default' => '',
       ),
     ),
-    'fld_645468' => 
+    'fld_645468' =>
     array(
       'ID' => 'fld_645468',
       'type' => 'phone_better',
-      'label' => 'Contact Number',
+      'label' => esc_html__( 'Contact Number', 'caldera-forms' ),
       'slug' => 'home_number',
-      'conditions' => 
+      'conditions' =>
       array(
         'type' => '',
       ),
       'required' => 1,
       'caption' => '',
-      'config' => 
+      'config' =>
       array(
         'custom_class' => '',
         'placeholder' => '',
@@ -185,19 +185,19 @@
         'nationalMode' => 'on',
       ),
     ),
-    'fld_193439' => 
+    'fld_193439' =>
     array(
       'ID' => 'fld_193439',
       'type' => 'phone_better',
-      'label' => 'Alternate Contact Number',
+      'label' => esc_html__( 'Alternate Contact Number', 'caldera-forms' ),
       'slug' => 'alternate_contact_number',
-      'conditions' => 
+      'conditions' =>
       array(
         'type' => '',
       ),
       'required' => 1,
       'caption' => '',
-      'config' => 
+      'config' =>
       array(
         'custom_class' => '',
         'placeholder' => '',
@@ -205,18 +205,18 @@
         'nationalMode' => 'on',
       ),
     ),
-    'fld_1720034' => 
+    'fld_1720034' =>
     array(
       'ID' => 'fld_1720034',
       'type' => 'advanced_file',
-      'label' => 'Upload CV',
+      'label' => esc_html__( 'Upload CV', 'caldera-forms' ),
       'slug' => 'cv',
-      'conditions' => 
+      'conditions' =>
       array(
         'type' => '',
       ),
-      'caption' => 'Please upload your CV in PDF format.',
-      'config' => 
+      'caption' => esc_html__( 'Please upload your CV in PDF format.', 'caldera-forms' ),
+      'config' =>
       array(
         'custom_class' => '',
         'attach' => 1,
@@ -224,18 +224,18 @@
         'allowed' => 'pdf',
       ),
     ),
-    'fld_6566084' => 
+    'fld_6566084' =>
     array(
       'ID' => 'fld_6566084',
       'type' => 'paragraph',
-      'label' => 'Message/Comments',
+      'label' => esc_html__( 'Message/Comments', 'caldera-forms' ),
       'slug' => 'messagecomments',
-      'conditions' => 
+      'conditions' =>
       array(
         'type' => '',
       ),
       'caption' => '',
-      'config' => 
+      'config' =>
       array(
         'custom_class' => '',
         'placeholder' => '',
@@ -243,18 +243,18 @@
         'default' => '',
       ),
     ),
-    'fld_7007738' => 
+    'fld_7007738' =>
     array(
       'ID' => 'fld_7007738',
       'type' => 'button',
-      'label' => 'Preview Information',
+      'label' => esc_html__( 'Preview Information', 'caldera-forms' ),
       'slug' => 'preview_info',
-      'conditions' => 
+      'conditions' =>
       array(
         'type' => '',
       ),
       'caption' => '',
-      'config' => 
+      'config' =>
       array(
         'custom_class' => '',
         'type' => 'next',
@@ -262,35 +262,35 @@
         'target' => '',
       ),
     ),
-    'fld_8684460' => 
+    'fld_8684460' =>
     array(
       'ID' => 'fld_8684460',
       'type' => 'html',
       'label' => 'html_header_1',
       'slug' => 'html_header_1',
-      'conditions' => 
+      'conditions' =>
       array(
         'type' => '',
       ),
       'caption' => '',
-      'config' => 
+      'config' =>
       array(
         'custom_class' => '',
         'default' => '<h2>Information Summary</h2>',
       ),
     ),
-    'fld_3540500' => 
+    'fld_3540500' =>
     array(
       'ID' => 'fld_3540500',
       'type' => 'live_gravatar',
       'label' => 'profile',
       'slug' => 'profile',
-      'conditions' => 
+      'conditions' =>
       array(
         'type' => '',
       ),
       'caption' => '',
-      'config' => 
+      'config' =>
       array(
         'custom_class' => '',
         'email' => 'fld_6830845',
@@ -301,35 +301,35 @@
         'border_radius' => 3,
       ),
     ),
-    'fld_8862269' => 
+    'fld_8862269' =>
     array(
       'ID' => 'fld_8862269',
       'type' => 'summary',
       'label' => 'summary',
       'hide_label' => 1,
       'slug' => 'summary',
-      'conditions' => 
+      'conditions' =>
       array(
         'type' => '',
       ),
       'caption' => '',
-      'config' => 
+      'config' =>
       array(
         'custom_class' => '',
       ),
     ),
-    'fld_3202325' => 
+    'fld_3202325' =>
     array(
       'ID' => 'fld_3202325',
       'type' => 'button',
       'label' => 'Edit information',
       'slug' => 'edit_information',
-      'conditions' => 
+      'conditions' =>
       array(
         'type' => '',
       ),
       'caption' => '',
-      'config' => 
+      'config' =>
       array(
         'custom_class' => '',
         'type' => 'prev',
@@ -337,18 +337,18 @@
         'target' => '',
       ),
     ),
-    'fld_8728190' => 
+    'fld_8728190' =>
     array(
       'ID' => 'fld_8728190',
       'type' => 'button',
-      'label' => 'Submit',
+      'label' => esc_html__( 'Submit', 'caldera-forms' ),
       'slug' => 'submit',
-      'conditions' => 
+      'conditions' =>
       array(
         'type' => '',
       ),
       'caption' => '',
-      'config' => 
+      'config' =>
       array(
         'custom_class' => '',
         'type' => 'submit',
@@ -357,12 +357,12 @@
       ),
     ),
   ),
-  'page_names' => 
+  'page_names' =>
   array(
     0 => 'Page 1',
     1 => 'Page 2',
   ),
-  'mailer' => 
+  'mailer' =>
   array(
     'on_insert' => 1,
     'sender_name' => 'Job Application Form',
@@ -374,12 +374,12 @@
     'email_subject' => 'Job Application',
     'email_message' => '{summary}',
   ),
-  'conditional_groups' => 
+  'conditional_groups' =>
   array(
   ),
-  'settings' => 
+  'settings' =>
   array(
-    'responsive' => 
+    'responsive' =>
     array(
       'break_point' => 'sm',
     ),

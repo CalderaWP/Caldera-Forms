@@ -15,9 +15,9 @@
   'avatar_field' => '',
   'form_ajax' => 1,
   'custom_callback' => '',
-  'layout_grid' => 
+  'layout_grid' =>
   array(
-    'fields' => 
+    'fields' =>
     array(
       'fld_9014900' => '1:1',
       'fld_8004623' => '1:1',
@@ -27,21 +27,21 @@
     ),
     'structure' => '12|6:6|12',
   ),
-  'fields' => 
+  'fields' =>
   array(
-    'fld_9014900' => 
+    'fld_9014900' =>
     array(
       'ID' => 'fld_9014900',
       'type' => 'text',
-      'label' => 'Full Name',
+      'label' => esc_html__( 'Full Name', 'caldera-forms' ),
       'slug' => 'full_name',
-      'conditions' => 
+      'conditions' =>
       array(
         'type' => '',
       ),
       'required' => 1,
       'caption' => '',
-      'config' => 
+      'config' =>
       array(
         'custom_class' => '',
         'placeholder' => '',
@@ -50,38 +50,38 @@
         'mask' => '',
       ),
     ),
-    'fld_8004623' => 
+    'fld_8004623' =>
     array(
       'ID' => 'fld_8004623',
       'type' => 'email',
-      'label' => 'Email',
+      'label' => esc_html__( 'Email', 'caldera-forms' ),
       'slug' => 'email',
-      'conditions' => 
+      'conditions' =>
       array(
         'type' => '',
       ),
       'required' => 1,
       'caption' => '',
-      'config' => 
+      'config' =>
       array(
         'custom_class' => '',
         'placeholder' => '',
         'default' => '',
       ),
     ),
-    'fld_841260' => 
+    'fld_841260' =>
     array(
       'ID' => 'fld_841260',
       'type' => 'star_rating',
-      'label' => 'How would you rate your experience',
+      'label' => esc_html__( 'How would you rate your experience', 'caldera-forms' ),
       'slug' => 'how_would_you_rate_your_experience',
-      'conditions' => 
+      'conditions' =>
       array(
         'type' => '',
       ),
       'required' => 1,
       'caption' => '',
-      'config' => 
+      'config' =>
       array(
         'custom_class' => '',
         'number' => 5,
@@ -92,18 +92,18 @@
         'track_color' => '#AFAFAF',
       ),
     ),
-    'fld_4412757' => 
+    'fld_4412757' =>
     array(
       'ID' => 'fld_4412757',
       'type' => 'paragraph',
-      'label' => 'Comments/Messages',
+      'label' => esc_html__( 'Comments/Messages', 'caldera-forms' ),
       'slug' => 'commentsmessages',
-      'conditions' => 
+      'conditions' =>
       array(
         'type' => '',
       ),
       'caption' => '',
-      'config' => 
+      'config' =>
       array(
         'custom_class' => '',
         'placeholder' => '',
@@ -111,18 +111,18 @@
         'default' => '',
       ),
     ),
-    'fld_1889239' => 
+    'fld_1889239' =>
     array(
       'ID' => 'fld_1889239',
       'type' => 'button',
-      'label' => 'Submit',
+      'label' => esc_html__( 'Submit', 'caldera-forms' ),
       'slug' => 'submit',
-      'conditions' => 
+      'conditions' =>
       array(
         'type' => '',
       ),
       'caption' => '',
-      'config' => 
+      'config' =>
       array(
         'custom_class' => '',
         'type' => 'submit',
@@ -131,11 +131,11 @@
       ),
     ),
   ),
-  'page_names' => 
+  'page_names' =>
   array(
     0 => 'Page 1',
   ),
-  'mailer' => 
+  'mailer' =>
   array(
     'on_insert' => 1,
     'sender_name' => 'Rate our service',
@@ -147,12 +147,12 @@
     'email_subject' => 'Rate our service',
     'email_message' => '{summary}',
   ),
-  'conditional_groups' => 
+  'conditional_groups' =>
   array(
   ),
-  'settings' => 
+  'settings' =>
   array(
-    'responsive' => 
+    'responsive' =>
     array(
       'break_point' => 'sm',
     ),

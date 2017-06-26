@@ -5,7 +5,7 @@
  * @package   Caldera_Forms
  * @author    David <david@digilab.co.za>
  * @license   GPL-2.0+
- * @link      
+ * @link
  * @copyright 2014 David Cramer
  */
 
@@ -17,9 +17,9 @@ return array (
 	'success' => 'Thank you, your message has been sent.',
 	'avatar_field' => 'fld_6009157',
 	'form_ajax' => '1',
-	'layout_grid' => 
+	'layout_grid' =>
 	array (
-		'fields' => 
+		'fields' =>
 		array (
 			'fld_29462' => '1:1',
 			'fld_8768091' => '2:1',
@@ -31,155 +31,155 @@ return array (
 		),
 		'structure' => '12|4:4:4|12|12|12',
 	),
-	'fields' => 
+	'fields' =>
 	array (
-		'fld_29462' => 
+		'fld_29462' =>
 		array (
 			'ID' => 'fld_29462',
 			'type' => 'html',
 			'label' => 'header',
 			'slug' => 'header',
 			'caption' => '',
-			'config' => 
+			'config' =>
 			array (
 				'custom_class' => '',
 				'default' => '<h2>Your Details</h2>
 <p>Let us know how to get back to you.</p>
 <hr>',
 			),
-			'conditions' => 
+			'conditions' =>
 			array (
 				'type' => '',
 			),
 		),
-		'fld_8768091' => 
+		'fld_8768091' =>
 		array (
 			'ID' => 'fld_8768091',
 			'type' => 'text',
-			'label' => 'First name',
+			'label' => esc_html__( 'First name', 'caldera-forms' ),
 			'slug' => 'first_name',
 			'required' => '1',
 			'caption' => '',
-			'config' => 
+			'config' =>
 			array (
 				'custom_class' => '',
 				'placeholder' => '',
 				'default' => '',
 				'mask' => '',
 			),
-			'conditions' => 
+			'conditions' =>
 			array (
 				'type' => '',
 			),
 		),
-		'fld_9970286' => 
+		'fld_9970286' =>
 		array (
 			'ID' => 'fld_9970286',
 			'type' => 'text',
-			'label' => 'Last name',
+			'label' => esc_html__( 'Last name', 'caldera-forms' ),
 			'slug' => 'last_name',
 			'required' => '1',
 			'caption' => '',
-			'config' => 
+			'config' =>
 			array (
 				'custom_class' => '',
 				'placeholder' => '',
 				'default' => '',
 				'mask' => '',
 			),
-			'conditions' => 
+			'conditions' =>
 			array (
 				'type' => '',
 			),
 		),
-		'fld_6009157' => 
+		'fld_6009157' =>
 		array (
 			'ID' => 'fld_6009157',
 			'type' => 'email',
-			'label' => 'Email Address',
+			'label' => esc_html__( 'Email Address', 'caldera-forms' ),
 			'slug' => 'email_address',
 			'required' => '1',
 			'caption' => '',
-			'config' => 
+			'config' =>
 			array (
 				'custom_class' => '',
 				'placeholder' => '',
 				'default' => '',
 			),
-			'conditions' => 
+			'conditions' =>
 			array (
 				'type' => '',
 			),
 		),
-		'fld_2758980' => 
+		'fld_2758980' =>
 		array (
 			'ID' => 'fld_2758980',
 			'type' => 'html',
 			'label' => 'message',
 			'slug' => 'message',
 			'caption' => '',
-			'config' => 
+			'config' =>
 			array (
 				'custom_class' => '',
 				'default' => '<h2>How can we help?</h2>
 <p>Feel free to ask a question or simply leave a comment.</p>
 <hr>',
 			),
-			'conditions' => 
+			'conditions' =>
 			array (
 				'type' => '',
 			),
 		),
-		'fld_7683514' => 
+		'fld_7683514' =>
 		array (
 			'ID' => 'fld_7683514',
 			'type' => 'paragraph',
-			'label' => 'Comments / Questions',
+			'label' => esc_html__( 'Comments / Questions', 'caldera-forms' ),
 			'slug' => 'comments_questions',
 			'required' => '1',
 			'caption' => '',
-			'config' => 
+			'config' =>
 			array (
 				'custom_class' => '',
 				'placeholder' => '',
 				'rows' => '7',
 				'default' => '',
 			),
-			'conditions' => 
+			'conditions' =>
 			array (
 				'type' => '',
 			),
 		),
-		'fld_7908577' => 
+		'fld_7908577' =>
 		array (
 			'ID' => 'fld_7908577',
 			'type' => 'button',
-			'label' => 'Send Form',
+			'label' => esc_html__( 'Send Form', 'caldera-forms' ),
 			'slug' => 'send_form',
 			'caption' => '',
-			'config' => 
+			'config' =>
 			array (
 				'custom_class' => '',
 				'type' => 'submit',
 				'class' => 'btn btn-default',
 			),
-			'conditions' => 
+			'conditions' =>
 			array (
 				'type' => '',
 			),
 		),
 	),
-	'page_names' => 
+	'page_names' =>
 	array (
 		0 => 'Page 1',
 	),
-	'processors' => 
+	'processors' =>
 	array (
-		'fp_17689566' => 
+		'fp_17689566' =>
 		array (
 			'ID' => 'fp_17689566',
 			'type' => 'auto_responder',
-			'config' => 
+			'config' =>
 			array (
 				'sender_name' => 'Site Admin',
 				'sender_email' => get_option( 'admin_email' ),
@@ -193,20 +193,20 @@ Here\'s a summary of your message:
 ------------------------
 {summary}',
 			),
-			'conditions' => 
+			'conditions' =>
 			array (
 				'type' => '',
 			),
 		),
 	),
-	'settings' => 
+	'settings' =>
 	array (
-		'responsive' => 
+		'responsive' =>
 		array (
 			'break_point' => 'sm',
 		),
 	),
-	'mailer' => 
+	'mailer' =>
 	array (
 		'enable_mailer' => '1',
 		'sender_name' => 'Caldera Forms Notification',
