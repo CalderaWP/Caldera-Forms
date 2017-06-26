@@ -147,6 +147,10 @@ class Caldera_Forms_Field_Util {
 				"field_error"        => array( "has-error" ),
 			);
 
+			if( self::is_file_field( $field, $form ) ){
+				$field_classes[ 'field' ] = array();
+			}
+
 
 			$field_classes = apply_filters( 'caldera_forms_render_field_classes', $field_classes, $field, $form );
 			$field_classes = apply_filters( 'caldera_forms_render_field_classes_type-' . $field[ 'type' ], $field_classes, $field, $form );
