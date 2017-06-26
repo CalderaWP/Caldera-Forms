@@ -1,7 +1,7 @@
 <?php
 
 if(!isset($element['mailer']['sender_name'])){
-	$element['mailer']['sender_name'] = __('Caldera Forms Notification');
+	$element['mailer']['sender_name'] = __('Caldera Forms Notification', 'caldera-forms');
 }
 if(!isset($element['mailer']['sender_email'])){
 	$element['mailer']['sender_email'] = get_option( 'admin_email' );
