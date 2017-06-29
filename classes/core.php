@@ -3881,7 +3881,7 @@ class Caldera_Forms {
 
 
 		// is this form allowed to render ( check state )
-		if ( isset( $form[ 'form_draft' ] ) ) {
+		if ( ! empty( $form[ 'form_draft' ] ) ) {
 			if ( ! isset( $_GET[ 'cf_preview' ] ) || $_GET[ 'cf_preview' ] != $form[ 'ID' ] ) {
 				if ( isset( $_POST[ 'action' ] ) && $_POST[ 'action' ] == 'cf_get_form_preview' ) {
 					echo '<p style="color: #cf0000;">' . __( 'Form is currently not active.', 'caldera-forms' ) . '</p>';
