@@ -29,7 +29,7 @@ class Caldera_Forms_Field_Utm {
 	 * @return array
 	 */
 	public static function handle_attrs( $attrs ){
-		$count = Caldera_Forms_Render_Util::get_current_form_count();
+		$count = self::get_count();
 		$attrs[ 'type' ] = 'hidden';
 		$attrs[ 'name' ] = str_replace( $count . '_', '', $attrs[ 'id' ] );
 
@@ -149,9 +149,8 @@ class Caldera_Forms_Field_Utm {
 	 * @return string
 	 */
 	protected static function find_in_post( $utm_field ){
-		$count = Caldera_Forms_Render_Util::get_current_form_count();
 		$_value = '';
-		$tag_key = $utm_field[ 'ID' ] . '_' . $count;
+		$tag_key = $utm_field[ 'ID' ] . '_' . self::get_count();
 		if ( isset( $_POST[ $tag_key ] ) ) {
 			$_value = Caldera_Forms_Sanitize::sanitize( $_POST[ $tag_key ] );
 		}
@@ -161,6 +160,24 @@ class Caldera_Forms_Field_Utm {
 		}
 
 		return $_value;
+	}
+
+	/**
+	 * Get current form count
+	 *
+	 * @since 1.5.2
+	 *
+	 * @return int
+	 */
+	protected static function get_count(){
+		$count = Caldera_Forms_Render_Util::get_current_form_count();
+		if ( 1 > $count ) {
+			$count = 1;
+
+			return $count;
+		}
+
+		return $count;
 	}
 
 
