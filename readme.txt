@@ -775,8 +775,32 @@ This could also be a sign of a more serious issue on your server, but is probabl
 5. **Go Further With Form Processors** - Auto-responders, conditional recipients, redirects are included! Go further with our add-ons!
 
 == Changelog ==
+= Caldera Forms 1.5.2 (July 30, 2017) Broken Foot Edition =
+See: [https://calderaforms.com/updates/caldera-forms-1-5-2](https://calderaforms.com/updates/caldera-forms-1-5-2?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.2)
+* NEW FEATURE: Ability to resend messages from saved entries.
+* NEW FEATURE: UTM Fields.
+* NEW FEATURE: {current_url} magic tag for the current page URL.
+* ADDED: cf.presave JS event before the form is saved.
+* ADDED: $entry_id as param of caldera_forms_save_field and caldera_forms_save_field-$field_type filters
+* ADDED: Caldera_Forms_Entry_Field::insert() method for saving a field value to database.
+* FIXED: Select fields without values shown get non-unique values error
+* FIXED: Calculation value setting for checkboxes was not respected.
+* FIXED: Form wrap ID postfix was never less than 2.
+* FIXED: Defaults set from magic tags were not setting select field defaults properly.
+* FIXED: Range sliders on page 2 or greater were not respecting their default value properly.
+* FIXED: HTML fields live preview didn't respect line breaks from textarea (paragraph) fields
+* FIXED: In some cases phone fields could be submitted empty.
+* FIXED: File fields were getting an extra outline because form-control class was added when it shouldn't have been.
+* FIXED: In entry list, checkbox fields were not being transformed from JSON.
+* FIXED: Extra empty option select (dropdown) fields
+* FIXED: Forms showed inactive state error when after being reactivated.
+* FIXED: Toggle-switches were not using calculation values on server-side.
+* FIXED: Missing translation string functions in form templates
+* FIXED: Missing translation text domain for mailer from name default setting.
+* FIXED: Issue where readme only said "Hi Roy" twice :)
+
 = Caldera Forms 1.5.1 (June 12, 2017) Select Pro =
-See: [https://calderaforms.com/updates/caldera-forms-1-5-0-10](https://calderaforms.com/updates/caldera-forms-1-5-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.1)
+See: [https://calderaforms.com/updates/caldera-forms-1-5-1](https://calderaforms.com/updates/caldera-forms-1-5-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.1)
 * NEW FEATURE: Default option that can be set by magic tag for dropdown, radio, checkboxes and toggles
 * NEW FEATURE: Ability for select field options to provide a different value to calculations then their value attribute.
 * IMPROVED: Headers for sub tabs with links to docs.
@@ -1750,3 +1774,8 @@ See: https://calderaforms.com/updates/caldera-forms-1-5-0-9
 = 1.5.0.10 =
 See: https://calderaforms.com/updates/caldera-forms-1-5-0-10
 
+= 1.5.1 =
+See: https://calderaforms.com/updates/caldera-forms-1-5-1
+
+= 1.5.2 =
+See: https://calderaforms.com/updates/caldera-forms-1-5-2
