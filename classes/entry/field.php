@@ -63,10 +63,11 @@ class Caldera_Forms_Entry_Field  extends Caldera_Forms_Entry_Object {
 	 * @since 1.5.2
 	 *
 	 * @param array|stdClass $data
+	 * @param bool $return_object Optional. If false, the default, row ID is returned, if true object is returned.
 	 *
-	 * @return int New row ID or 0 on fail
+	 * @return int|Caldera_Forms_Entry_Field
 	 */
-	public static function insert( $data ){
+	public static function insert( $data, $return_object = false ){
 
 		//Will remove disallowed keys
 		if( ! is_object( $data ) ){
@@ -74,7 +75,12 @@ class Caldera_Forms_Entry_Field  extends Caldera_Forms_Entry_Object {
 		}
 
 		$obj = new self( $data );
-		return $obj->save();
+		$id = $obj->save();
+		if( $return_object  ){
+			return $obj;
+		}else{
+			return $id;
+		}
 
 	}
 
