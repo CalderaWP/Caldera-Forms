@@ -776,6 +776,7 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 == Changelog ==
 = Caldera Forms 1.5.2.1 (July 5, 2017) (bool) =
+See: [https://calderaforms.com/updates/caldera-forms-1-5-2-1](https://calderaforms.com/updates/caldera-forms-1-5-2-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-5-2-1)
 * FIXED: We were using boolval() which is not PHP 5.2-5.4 compatible.
 
 = Caldera Forms 1.5.2 (June 30, 2017) Broken Foot Edition =
