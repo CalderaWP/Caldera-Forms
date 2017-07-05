@@ -2320,7 +2320,6 @@ class Caldera_Forms {
 		}
 
 		$field_types = Caldera_Forms_Fields::get_all();
-
 		foreach ( $form[ 'fields' ] as $field_id => $field ) {
 
 			if ( $field[ 'slug' ] == $slug ) {

@@ -199,3 +199,15 @@ function caldera_forms_get_roles(){
 function caldera_forms_get_release_series(){
 	return substr( CFCORE_VER, 2, 1 );
 }
+
+/**
+ * Shim for boolval added in PHP v5.5
+ *
+ * @since 1.5.2.1
+ */
+if ( ! function_exists( 'boolval' ) ) {
+	function boolval( $val ){
+		return (bool) $val;
+	}
+
+}
