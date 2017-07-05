@@ -3,7 +3,7 @@ Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza
 Tags: form builder, contact form,  contact me, custom form, forms, form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, echecks, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, eCheck,dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, gravity forms, contact, email, auto-responder, aweber, convertkit, builder, contact forms, search, ab testing, a/b testing, split testing, shortcode, wordpress, awesome plugin, plugin, easy, braintree form, dwolla form, authorize.net form, mailchimp form, mailchimp popup, aweber form, convertkit form, stripe form, stripe popup, eCheck form, formbuilder
 Requires at least: 4.5
 Tested up to: 4.8.0
-Stable tag: 1.5.2
+Stable tag: 1.5.2.1
 License: GPLv2
 
 Responsive form builder for contact forms, user registration and login forms, Mailchimp, and more.
@@ -775,7 +775,10 @@ This could also be a sign of a more serious issue on your server, but is probabl
 5. **Go Further With Form Processors** - Auto-responders, conditional recipients, redirects are included! Go further with our add-ons!
 
 == Changelog ==
-= Caldera Forms 1.5.2 (July 30, 2017) Broken Foot Edition =
+= Caldera Forms 1.5.2.1 (July 5, 2017) (bool) =
+* FIXED: We were using boolval() which is not PHP 5.2-5.4 compatible.
+
+= Caldera Forms 1.5.2 (June 30, 2017) Broken Foot Edition =
 See: [https://calderaforms.com/updates/caldera-forms-1-5-2](https://calderaforms.com/updates/caldera-forms-1-5-2?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.2)
 * NEW FEATURE: Ability to resend messages from saved entries.
 * NEW FEATURE: UTM Fields.
