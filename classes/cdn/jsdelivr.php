@@ -22,7 +22,7 @@ class Caldera_Forms_CDN_Jsdelivr extends Caldera_Forms_CDN {
 	 * @since 1.5.3
 	 */
 	public function cdn_url( ){
-		return '//cdn.jsdelivr.net/wp/caldera-forms/tags/' . $this->version . '/';
+		return '//cdn.jsdelivr.net/gh/CalderaWP/Caldera-Forms@' . $this->cdn_version . '/';
 	}
 
 	/**

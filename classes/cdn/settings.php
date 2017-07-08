@@ -85,6 +85,18 @@ class Caldera_Forms_CDN_Settings extends Caldera_Forms_Settings_Option {
 	}
 
 	/**
+	 * Is combine mode enabled?
+	 *
+	 * @since 1.5.3
+	 *
+	 * @return bool
+	 */
+	public function combine(){
+		$settings = $this->get_settings();
+		return $settings[ 'combine' ];
+	}
+
+	/**
 	 * Enable CDN
 	 *
 	 * @since 1.5.3
@@ -97,11 +109,6 @@ class Caldera_Forms_CDN_Settings extends Caldera_Forms_Settings_Option {
 		return $this->save_settings( $settings );
 	}
 
-	public function combine(){
-		return true;
-		$settings = $this->get_settings();
-		return $settings[ 'combine' ];
-	}
 
 	/**
 	 * Disable CDN

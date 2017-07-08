@@ -39,6 +39,15 @@ abstract class Caldera_Forms_CDN implements Caldera_Forms_CDN_Contract{
 	protected $version;
 
 	/**
+	 * Version to provide to CDN
+	 *
+	 * @since 1.5.3
+	 *
+	 * @var string
+	 */
+	protected $cdn_version;
+
+	/**
 	 * Url for Caldera Forms dir to be replaces
 	 *
 	 * @since 1.5.3
@@ -68,6 +77,7 @@ abstract class Caldera_Forms_CDN implements Caldera_Forms_CDN_Contract{
 		$this->base_url = $base_url;
 		$this->version = $version;
 		$this->set_protocol();
+		$this->set_cdn_version();
 	}
 
 	/**
@@ -177,6 +187,22 @@ abstract class Caldera_Forms_CDN implements Caldera_Forms_CDN_Contract{
 		 * NOTE: return with : IE http: or https"
 		 */
 		$this->protocol = apply_filters( 'caldera_forms_cdn_protocol', $this->protocol );
+	}
+
+	/**
+	 * Set version to use with CDN
+	 *
+	 * @since 1.5.3
+	 */
+	protected function set_cdn_version(){
+		/**
+		 * Use to set version of scripts and styles to request via CDN
+		 *
+		 * If you have checked out Caldera Forms from Github and are on master branch current version might not exist in CDN yet, setting to "latest" will pull latest form Github
+		 *
+		 * @since 1.5.3
+		 */
+		$this->cdn_version = apply_filters( 'caldera_forms_cdn_version', $this->version );
 	}
 
 }

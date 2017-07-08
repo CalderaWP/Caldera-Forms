@@ -7,6 +7,10 @@
 class Caldera_Forms_CDN_Init {
 
 	/**
+	 * In use CDN implementation
+	 *
+	 * @since 1.5.3
+	 *
 	 * @var Caldera_Forms_CDN_Jsdelivr|Caldera_Forms_CDN
 	 */
 	protected static $cdn;
@@ -25,6 +29,10 @@ class Caldera_Forms_CDN_Init {
 	}
 
 	/**
+	 * Get CDN implementation
+	 *
+	 * @since 1.5.3
+	 *
 	 * @return Caldera_Forms_CDN_Jsdelivr|Caldera_Forms_CDN
 	 */
 	public static function get_cdn(){
