@@ -20,8 +20,22 @@ class Caldera_Forms_Render_Assets {
 	 */
 	protected static $loaded;
 
+	/**
+	 * Array of registered script/style slugs
+	 *
+	 * @since 1.4.3
+	 *
+	 * @var array
+	 */
 	protected static $registered;
 
+	/**
+	 * Array of enqueued script/style slugs
+	 *
+	 * @since 1.4.3
+	 *
+	 * @var array
+	 */
 	protected static $enqueued;
 
 	/**
@@ -448,6 +462,10 @@ class Caldera_Forms_Render_Assets {
 			wp_enqueue_script( $slug );
 		}
 
+		if( Caldera_Forms::settings()->get_cdn()->combine() ){
+			Caldera_Forms_CDN_Init::get_cdn()->add_to_combiner( $slug );
+		}
+
 	}
 
 
@@ -759,4 +777,6 @@ class Caldera_Forms_Render_Assets {
 
 		return $depts;
 	}
+
+
 }

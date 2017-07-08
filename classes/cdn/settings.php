@@ -97,6 +97,12 @@ class Caldera_Forms_CDN_Settings extends Caldera_Forms_Settings_Option {
 		return $this->save_settings( $settings );
 	}
 
+	public function combine(){
+		return true;
+		$settings = $this->get_settings();
+		return $settings[ 'combine' ];
+	}
+
 	/**
 	 * Disable CDN
 	 *

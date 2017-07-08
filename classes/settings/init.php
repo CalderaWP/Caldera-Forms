@@ -22,6 +22,9 @@ class Caldera_Forms_Settings_Init {
 		//Call the Caldera_Forms::setings() method to trigger "caldera_forms_settings_registered" action
 		add_action( 'caldera_forms_core_init', array( 'Caldera_Forms', 'settings' ) );
 		add_action( 'caldera_forms_settings_registered', array( __CLASS__, 'add_core_settings' ) );
+		if( ! is_admin() ){
+			add_action( 'caldera_forms_settings_registered', array( 'Caldera_Forms_CDN_Init', 'init' ), 15 );
+		}
 	}
 
 	/**
@@ -38,5 +41,6 @@ class Caldera_Forms_Settings_Init {
 	public static function add_core_settings(){
 		Caldera_Forms::settings()->add( new Caldera_Forms_CDN_Settings() );
 	}
+
 
 }

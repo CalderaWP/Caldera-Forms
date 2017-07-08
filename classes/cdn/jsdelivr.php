@@ -12,6 +12,11 @@
 
 class Caldera_Forms_CDN_Jsdelivr extends Caldera_Forms_CDN {
 
+	protected $combines = array(
+		'scripts' => array(),
+		'styles'  => array()
+	);
+
 	/**
 	 * @inheritdoc
 	 * @since 1.5.3
@@ -26,6 +31,7 @@ class Caldera_Forms_CDN_Jsdelivr extends Caldera_Forms_CDN {
 	 */
 	public function add_hooks(){
 		add_action( 'wp_footer', array( $this, 'radar_tag' ) );
+
 		parent::add_hooks();
 	}
 
@@ -50,5 +56,24 @@ class Caldera_Forms_CDN_Jsdelivr extends Caldera_Forms_CDN {
 	public function radar_tag(){
 		echo '<script async src="' . $this->protocol . '//radar.cedexis.com/1/11475/radar.js"></script>';
 	}
+
+
+	/**
+	 * Add scripts/style slugs to list to be combined
+	 *
+	 * @since 1.5.3
+	 *
+	 * @param $slug
+	 * @param bool $script
+	 */
+	public function add_to_combiner( $slug, $script = true ){
+		if( $script ){
+			$this->combines[ 'scripts' ] = $slug;
+		}else {
+			$this->combines[ 'styles' ] = $slug;
+		}
+	}
+
+
 
 }
