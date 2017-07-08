@@ -158,6 +158,7 @@
 	?>
 	<div class="caldera-settings-group">
 		<div class="caldera-settings">
+			<a href="https://calderaforms.com/doc/global-email-general-settings/?utm_source=wp-admin&utm_medium=general-settings&utm_content=alert" target="_blank" class="dashicons dashicons-editor-help" style="float:right;" data-toggle="tooltip" data-placement="bottom"  title="<?php esc_attr_e( 'Learn more about the free CSN and usage sharing.', 'caldera-forms'  ); ?>"></a>
 			<strong>
 				<?php esc_html_e( 'Alert Styles' , 'caldera-forms' ); ?>
 			</strong>
@@ -177,6 +178,7 @@
 
 	<div class="caldera-settings-group">
 		<div class="caldera-settings">
+			<a href="https://calderaforms.com/doc/global-email-general-settings/?utm_source=wp-admin&utm_medium=general-settings&utm_content=form" target="_blank" class="dashicons dashicons-editor-help" style="float:right;" data-toggle="tooltip" data-placement="bottom"  title="<?php esc_attr_e( 'Learn more about the free CSN and usage sharing.', 'caldera-forms'  ); ?>"></a>
 			<strong>
 				<?php esc_html_e( 'Form Styles' , 'caldera-forms' ); ?>
 			</strong>
@@ -196,6 +198,7 @@
 
 	<div class="caldera-settings-group">
 		<div class="caldera-settings">
+			<a href="https://calderaforms.com/doc/global-email-general-settings/?utm_source=wp-admin&utm_medium=general-settings&utm_content=grid" target="_blank" class="dashicons dashicons-editor-help" style="float:right;" data-toggle="tooltip" data-placement="bottom"  title="<?php esc_attr_e( 'Learn more about the free CSN and usage sharing.', 'caldera-forms'  ); ?>"></a>
 			<strong>
 				<?php esc_html_e( 'Grid Structures' , 'caldera-forms' ); ?>
 			</strong>
@@ -213,14 +216,18 @@
 		</div>
 		<div class="clear"></div>
 	</div>
+
 	<div class="caldera-settings-group">
 		<div class="caldera-settings">
+			<a href="https://calderaforms.com/doc/improving-caldera-performance-free-cdn?utm_source=wp-admin&utm_medium=general-settings&utm_content=cdn_enable" target="_blank" class="dashicons dashicons-editor-help" style="float:right;" data-toggle="tooltip" data-placement="bottom"  title="<?php esc_attr_e( 'Learn more about the free CSN and usage sharing.', 'caldera-forms'  ); ?>"></a>
 			<strong>
-				<?php esc_html_e( 'Enable CDN' , 'caldera-forms' ); ?>
+				<?php esc_html_e( 'Enable Free CDN' , 'caldera-forms' ); ?>
 			</strong>
 			<p class="description">
-				<?php esc_html_e( 'Load front-end JavaScript and ', 'caldera-forms' ); ?>
+				<?php esc_html_e( 'Some usage data will be shared with CDN providers.', 'caldera-forms' ); ?>
+
 			</p>
+
 			<div class="clear"></div>
 		</div>
 		<div class="caldera-setting">

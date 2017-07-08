@@ -314,7 +314,7 @@ $field_options_template = "
 					
 					<input type=\"radio\" class=\"toggle_set_default field-config option-group-control\" name=\"{{../_name}}[default]\" value=\"{{@key}}\" {{#is ../default value=\"@key\"}}checked=\"checked\"{{/is}}>
 					
-					<a href=\"https://calderaforms.com/doc/select-options/?utm_source=wp-admin&utm_medium=form-editor&utm_content=discount\" target=\"_blank\" class=\"dashicons dashicons-editor-help\" style=\"float:right;\" data-toggle=\"tooltip\" data-placement=\"bottom\"  title=\"" . esc_attr( __( 'Learn more about using select field options', 'caldera-forms' ) ) . "\"></a>
+					<a href=\"https://calderaforms.com/doc/select-options/?utm_source=wp-admin&utm_medium=form-editor&utm_content=select-options\" target=\"_blank\" class=\"dashicons dashicons-editor-help\" style=\"float:right;\" data-toggle=\"tooltip\" data-placement=\"bottom\"  title=\"" . esc_attr( __( 'Learn more about using select field options', 'caldera-forms' ) ) . "\"></a>
 		
 					<div class=\"caldera-config-group\">
 						<label class=\"option-setting-label option-setting-label-for-value\" for=\"opt-calc-val-{{@key}}\">
