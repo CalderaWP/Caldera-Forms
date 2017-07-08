@@ -79,6 +79,18 @@ class Caldera_Forms {
 	 */
 	protected static $api;
 
+
+	/**
+	 * Settings collection
+	 *
+	 * Access via Caldera_Forms::settings()
+	 *
+	 * @since 1.5.3
+	 *
+	 * @var Caldera_Forms_Settings
+	 */
+	protected static $settings;
+
 	/**
 	 * Initialize the plugin by setting localization, filters, and administration functions.
 	 *
@@ -184,7 +196,8 @@ class Caldera_Forms {
 		//clear syncer cache on form update
 		add_action( 'caldera_forms_save_form', array( 'Caldera_Forms_Sync_Factory', 'clear_cache' ) );
 
-
+		//initialize settings
+		Caldera_Forms_Settings_Init::load();
 
 		/**
 		 * Runs after Caldera Forms core is initialized
@@ -4761,7 +4774,6 @@ class Caldera_Forms {
 	 *
 	 * @since 1.5.0
 	 */
-
 	public static function process_form_via_post(){
 		if (isset($_POST['_cf_frm_id'])) {
 			if ( isset( $_POST[ '_cf_verify' ] ) && Caldera_Forms_Render_Nonce::verify_nonce( $_POST[ '_cf_verify' ], $_POST[ '_cf_frm_id' ] ) ) {
@@ -4811,6 +4823,29 @@ class Caldera_Forms {
 		$mail[ 'message' ] = wpautop( $mail[ 'message' ] );
 		return $mail;
 
+	}
+
+	/**
+	 * Get main instance of Caldera_Forms_Settings class
+	 *
+	 * @since 1.5.3
+	 *
+	 * @return Caldera_Forms_Settings
+	 */
+	public static function settings(){
+		if( ! self::$settings ){
+			self::$settings = new Caldera_Forms_Settings();
+			/**
+			 * Runs after main instance of Caldera_Forms_Settings is created
+			 *
+			 * Access via Caldera_Forms::settings()
+			 *
+			 * @since 1.5.3
+			 */
+			do_action( 'caldera_forms_settings_registered' );
+		}
+
+		return self::$settings;
 	}
 
 }
