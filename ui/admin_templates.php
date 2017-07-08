@@ -224,7 +224,7 @@
 			<div class="clear"></div>
 		</div>
 		<div class="caldera-setting">
-			<div class="switch setting_toggle_grid <?php if( Caldera_Forms::settings()->get_cdn()->enabled() ){ ?>active<?php } ?>">
+			<div class="switch setting_toggle_cdn_enable <?php if( Caldera_Forms::settings()->get_cdn()->enabled() ){ ?>active<?php } ?>">
 				<div data-action="save_cf_setting" data-load-element="_parent" data-load-class="load" data-set="cdn_enable" data-callback="update_setting_toggle" class="ajax-trigger box-wrapper"></div>
 				<div class="box"><span class="spinner"></span></div>
 			</div>

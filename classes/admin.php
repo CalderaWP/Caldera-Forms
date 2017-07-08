@@ -623,6 +623,9 @@ class Caldera_Forms_Admin {
 	}
 
 	/**
+	 * Handles saving general settings
+	 *
+	 * @since unknown
 	 *
 	 * @uses "wp_ajax_save_cf_setting" action
 	 */
@@ -632,7 +635,6 @@ class Caldera_Forms_Admin {
 			exit;
 		}
 		$style_includes = get_option( '_caldera_forms_styleincludes' );
-
 
 
 		if( 'cdn_enable' == $_POST[ 'set' ] ){
@@ -647,7 +649,12 @@ class Caldera_Forms_Admin {
 			update_option( '_caldera_forms_styleincludes', $style_includes);
 
 		}
-		wp_send_json( $style_includes );
+
+		$return_data = array_merge( $style_includes, array(
+			'cdn_enable' => Caldera_Forms::settings()->get_cdn()->enabled()
+		) );
+
+		wp_send_json( $return_data );
 		exit;
 	}
 
