@@ -34,7 +34,7 @@ abstract class Caldera_Forms_Settings_Option implements Caldera_Forms_Settings_C
 	 */
 	public function save_settings( array $settings ){
 		$settings = $this->prepare( $settings );
-		update_option( $this->get_option_key(), $this->get_defaults() );
+		update_option( $this->get_option_key(), $settings );
 		return $settings;
 	}
 

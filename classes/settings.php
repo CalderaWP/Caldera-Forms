@@ -67,4 +67,17 @@ class Caldera_Forms_Settings {
 		return isset( $this->settings[ $name ] );
 
 	}
+
+	/**
+	 *
+	 *
+	 * @return Caldera_Forms_CDN_Settings|WP_Error
+	 */
+	public function get_cdn(){
+		if( ! did_action( 'caldera_forms_settings_registered' ) ){
+			return new WP_Error( 500 );
+		}
+
+		return $this->get( 'cdn' );
+	}
 }

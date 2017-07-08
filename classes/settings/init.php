@@ -36,7 +36,7 @@ class Caldera_Forms_Settings_Init {
 	 * @since 1.5.3
 	 */
 	public static function add_core_settings(){
-		Caldera_Forms::settings()->add( new Caldera_Forms_CDN_Setting() );
+		Caldera_Forms::settings()->add( new Caldera_Forms_CDN_Settings() );
 	}
 
 }
