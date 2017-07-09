@@ -89,10 +89,11 @@ class Caldera_Forms_Forms {
 	 * @since 1.3.4
 	 *
 	 * @param string $id_name ID or name of form.
+	 * @param string $type Optional. Default is "primary" the main form. Can also be "revision" for getting a revision.
 	 *
 	 * @return array|null Form config array if found. If not null.
 	 */
-	public static function get_form( $id_name ){
+	public static function get_form( $id_name, $type = 'primary' ){
 		$id_name = sanitize_text_field( $id_name );
 
 		$forms = self::get_forms();
@@ -100,12 +101,25 @@ class Caldera_Forms_Forms {
 
 		if ( self::is_internal_form( $id_name ) ) {
 			if ( isset( $forms[ $id_name ] ) ) {
-				$form = get_option( $forms[ $id_name ] );
+				$form = self::get_from_db( $id_name, $type );
+				if( empty( $form ) ){
+					$form = get_option( $forms[ $id_name ] );
+					if( ! empty( $form ) ){
+						$form = self::maybe_migrate( $form );
+					}
+				}
+
 			} else {
 				$forms = self::get_forms( true );
 				foreach ( $forms as $form_id => $form_maybe ) {
 					if ( trim( strtolower( $id_name ) ) == strtolower( $form_maybe[ 'name' ] ) && empty( $form_maybe[ '_external_form' ] ) ) {
-						$form = get_option( $form_maybe[ 'ID' ] );
+						$form = self::get_from_db(  $form_maybe[ 'ID' ], $type );
+						if( empty( $form ) ){
+							$form = get_option( $forms[ $id_name ] );
+							if( ! empty( $form ) ){
+								$form = self::maybe_migrate( $form );
+							}
+						}
 					}
 				}
 			}
@@ -113,23 +127,11 @@ class Caldera_Forms_Forms {
 
 		if( empty( $form ) ){
 			$external = true;
+		}else{
+			$form = self::db_to_return( $form );
 		}
 
-		/**
-		 * Filter settings of a form or all forms or use to define a form in file
-		 *
-		 * @param array $form Form config
-		 * @param string $id_name ID or name of form
-		 */
-		$form = apply_filters( 'caldera_forms_get_form', $form, $id_name );
-
-		/**
-		 * Filter settings of a specific form or all forms or use to define a form in file
-		 *
-		 * @param array $form Form config
-		 * @param string $id_name ID or name of form
-		 */
-		$form = apply_filters( 'caldera_forms_get_form-' . $id_name, $form, $id_name );
+		$form = self::filter_form( $id_name, $form );
 
 		if( is_array( $form ) && empty( $form['ID'] ) ){
 			$form['ID'] = $id_name;
@@ -219,6 +221,31 @@ class Caldera_Forms_Forms {
 	}
 
 	/**
+	 * Check if a form is a revision
+	 *
+	 * @since 1.5.4
+	 *
+	 * @param array $form Form config
+	 *
+	 * @return bool
+	 */
+	public static function is_revision( array  $form ){
+		return isset( $form[ 'type' ] )  && 'revision' === $form[ 'type' ];
+
+	}
+
+	/**
+	 * Make a reivison the primary form
+	 *
+	 * @since 1.5.3
+	 *
+	 * @param int $revision_id Revision ID
+	 */
+	public static function restore_revision( $revision_id ){
+		return Caldera_Forms_DB_Form::get_instance( )->make_revision_primary( $revision_id );
+	}
+
+	/**
 	 * Get forms stored in DB
 	 *
 	 * @since 1.3.4
@@ -265,6 +292,72 @@ class Caldera_Forms_Forms {
 		}
 
 		return $new_form;
+
+	}
+
+	/**
+	 * Apply caldera_forms_get_form filters
+	 *
+	 * @since 1.5.3
+	 *
+	 * @param string $id_name Form ID or name
+	 * @param array $config Form config
+	 * @param bool $is_revision Optional. Is this a revision of a form? Default is false
+	 *
+	 * @return mixed|void
+	 */
+	protected static function filter_form( $id_name, $config, $is_revision = false ){
+
+		if( ! isset( $config[ 'type' ] ) ){
+			if( $is_revision ){
+				$config[ 'type' ] = 'revision';
+			}else{
+				$config[ 'type' ] = 'primary';
+			}
+
+		}
+
+		/**
+		 * Filter settings of a form or all forms or use to define a form in file
+		 *
+		 * @since unknown
+		 *
+		 * @param array $config Form config
+		 * @param string $id_name ID or name of form
+		 * @param bool $is_revision Is this a revision of a form? @since 1.5.3
+		 */
+		$config = apply_filters( 'caldera_forms_get_form', $config, $id_name, $is_revision );
+
+		/**
+		 * Filter settings of a specific form or all forms or use to define a form in file
+		 *
+		 * @since unknown
+		 *
+		 * @param array $config Form config
+		 * @param string $id_name ID or name of form
+		 * @param bool $is_revision Is this a revision of a form? @since 1.5.3
+		 */
+		$config = apply_filters( 'caldera_forms_get_form-' . $id_name, $config, $id_name, $is_revision );
+
+		return $config;
+
+	}
+
+	/**
+	 * Convert array returned from database to form config array expected by admin and front-end and like everything
+	 *
+	 * @since 1.5.3
+	 *
+	 * @param $form
+	 *
+	 * @return mixed
+	 */
+	protected static function db_to_return( $form ){
+		$_form            = $form[ 'config' ];
+		$_form[ 'db_id' ] = $form[ 'id' ];
+		$_form[ 'type' ]  = $form[ 'type' ];
+
+		return $_form;
 
 	}
 
@@ -352,11 +445,13 @@ class Caldera_Forms_Forms {
 	 *
 	 * @since 1.3.4
 	 *
-	 * @param array $data
+	 * @param array $data Form config
+	 * @param string $type Optional. Default is "primary" the main form. Can also be "revision" for saving a revision. @since 1.5.3
+
 	 *
 	 * @return string|bool Form ID if updated, false if not
 	 */
-	public static function save_form( $data ){
+	public static function save_form( $data, $type = 'primary' ){
 
 		// option value labels
 		if(!empty($data['fields'])){
@@ -414,6 +509,8 @@ class Caldera_Forms_Forms {
 
 		// add from to list
 		$updated = update_option( $data['ID'], $data);
+
+		self::save_to_db( $data, $type );
 
 		/**
 		 * Fires after a form is saved
@@ -505,7 +602,7 @@ class Caldera_Forms_Forms {
 		}
 
 		// add form to db
-		$added = add_option( $id, $newform, false );
+		$added = self::save_to_db( $newform, 'primary' );
 		if( ! $added ){
 			return false;
 
@@ -525,11 +622,13 @@ class Caldera_Forms_Forms {
 	/**
 	 * Delete a form
 	 *
+	 * Will delete all revisions
+	 *
 	 * @since 1.3.4
 	 *
 	 * @param string $id Form ID
 	 *
-	 * @return bol
+	 * @return bool
 	 */
 	public static function delete_form( $id ){
 		$forms = self::get_forms();
@@ -539,6 +638,7 @@ class Caldera_Forms_Forms {
 
 		unset( $forms[ $id ] );
 		$deleted = delete_option( $id );
+		Caldera_Forms_DB_Form::get_instance()->delete_by_form_id( $id );
 		if ( $deleted ) {
 			self::update_registry( $forms );
 
@@ -715,4 +815,104 @@ class Caldera_Forms_Forms {
 		return $entry_list_fields;
 	}
 
+	/**
+	 * Get all revisions of  a forms
+	 *
+	 * @since 1.5.3
+	 *
+	 * @param string $form_id Form ID
+	 *
+	 * @return array
+	 */
+	public static function get_revisions( $form_id ){
+		$forms = Caldera_Forms_DB_Form::get_instance()->get_by_form_id( $form_id, false );
+		$revisions = array();
+		if( ! empty( $forms ) ){
+			foreach ( $forms as $i => $form ){
+				if( 'revision' == $form[ 'type' ] ){
+					$form = self::db_to_return( $form );
+					$revisions[] = self::filter_form( $form[ 'ID' ], $form, true );
+				}
+			}
+		}
+
+
+		return $revisions;
+	}
+
+	/**
+	 * Get a revision of a form
+	 *
+	 * @since 1.5.3
+	 *
+	 * @param int $id Revision ID
+	 *
+	 * @return array
+	 */
+	public static function get_revision( $id ){
+		$form = Caldera_Forms_DB_Form::get_instance()->get_record( $id );
+		$form = self::db_to_return( $form );
+		$form = self::filter_form( $form[ 'ID' ], $form, true );
+		return $form;
+	}
+
+	/**
+	 * If necessary migrate to database table added in Caldera Forms 1.5.3
+	 *
+	 * @since 1.5.3
+	 *
+	 * @param array $form Form config
+	 *
+	 * @return array|bool
+	 */
+	protected static function maybe_migrate( array $form ){
+		$in_db = Caldera_Forms_DB_Form::get_instance()->get_by_form_id( $form[ 'ID' ] );
+		if( empty( $in_db ) ){
+			self::save_to_db( $form, 'primary' );
+		}
+
+		return self::get_from_db( $form[ 'ID' ] );
+	}
+
+	/**
+	 * Save form to database
+	 *
+	 * @param array $form Form config
+	 * @param string $type Optional. What type of form state is "primary" or "revision". Default is primary.
+	 *
+	 * @return bool|false|int|null
+	 */
+	protected static function save_to_db( array  $form, $type = 'primary' ){
+		$data = array(
+			'form_id' => $form[ 'ID' ],
+			'config' => $form,
+			'type' => $type
+		);
+
+		if( isset( $form[ 'db_id' ] ) ){
+			$data[ 'db_id' ] = $form[ 'db_id' ];
+			$db_id = Caldera_Forms_DB_Form::get_instance()->update( $data );
+		}else{
+			$db_id = Caldera_Forms_DB_Form::get_instance()->create( $data );
+
+		}
+
+
+		return $db_id;
+	}
+
+	/**
+	 * Get a form or forms (IE revisions of form) from database
+	 *
+	 * @since 1.5.3
+	 *
+	 * @param string $form_id Form ID
+	 * @param bool $primary_only Optional. Default is true, to only return primary form. False to include all revisions.
+	 *
+	 * @return array|bool
+	 */
+	protected static function get_from_db( $form_id, $primary_only = true ){
+		return Caldera_Forms_DB_Form::get_instance()->get_by_form_id( $form_id, $primary_only );
+
+	}
 }

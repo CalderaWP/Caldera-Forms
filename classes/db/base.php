@@ -121,7 +121,7 @@ abstract class Caldera_Forms_DB_Base {
 	}
 
 	/**
-	 * Create a new entry with meta
+	 * Create a new entry with meta (if supported)
 	 *
 	 * @since 1.3.5
 	 *
@@ -202,6 +202,11 @@ abstract class Caldera_Forms_DB_Base {
 			return false;
 		}
 
+		if( ! isset( $data[ 'formats' ] ) ){
+			foreach ( $this->primary_fields as $name => $args ){
+				$data[ 'formats' ][] = $args[0];
+			}
+		}
 		if( ! empty( $data ) ){
 			global $wpdb;
 			$inserted = $wpdb->insert(

@@ -33,12 +33,17 @@ class Caldera_Forms_Render_Modals {
 	 *
 	 * @return string
 	 */
-	public static function modal_form( $atts, $content ) {
+	public static function modal_form( $atts, $content, $is_revision = false ) {
 
 		if ( empty( $atts[ 'id' ] ) ) {
 			return $content;
 		}
-		$form = Caldera_Forms_Forms::get_form( $atts[ 'id' ] );
+		if ( ! $is_revision ) {
+			$form = Caldera_Forms_Forms::get_form( $atts[ 'id' ] );
+		}else{
+			$form = $atts;
+		}
+
 		if ( empty( $form[ 'ID' ] ) || $form[ 'ID' ] != $atts[ 'id' ] ) {
 			return $content;
 		}

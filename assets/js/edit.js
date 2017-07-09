@@ -78,7 +78,26 @@ function get_compiled_template( template ) {
 
 jQuery(document).ready(function($){
 
+    var $spinner = $('#save_indicator');
 
+    $( '#caldera-forms-restore-revision' ).on( 'click', function(e){
+        e.preventDefault();
+        var $el = $(this);
+        $spinner.addClass('loading');
+
+        $.post({
+            url: 'admin.php?page=caldera-forms',
+            data:{
+                cf_edit_nonce: $( '#cf_edit_nonce' ).val(),
+                form: $el.data( 'form' ),
+                revision: $el.data( 'form' ),
+                restore_revision: true
+            },
+            success: function(){
+                window.location = $el.data( 'edit-link' );
+            }
+        })
+    });
     $('.caldera-header-save-button').baldrick({
         method			:	'POST',
         request			:	'admin.php?page=caldera-forms',
@@ -89,7 +108,7 @@ jQuery(document).ready(function($){
                 return false;
             }
 
-            $('#save_indicator').addClass('loading');
+            $spinner.addClass('loading');
             if( typeof tinyMCE !== 'undefined'){
                 tinyMCE.triggerSave();
             }
