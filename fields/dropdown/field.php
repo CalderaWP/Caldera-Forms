@@ -22,12 +22,7 @@ $attr_string =  caldera_forms_field_attributes( $attrs, $field, $form );
 		$field_value = Caldera_Forms_Field_Util::find_select_field_value( $field, $field_value );
 		$showed_empty = false;
 		if( ! empty( $field['config']['placeholder'] ) ){
-
-				if ( empty( $field_value ) ) {
-					$showed_empty = true;
-					echo '<option value="">' . ( !empty($field['hide_label']) ? $field['label'] : null ) . '</option>';
-				}
-
+				$showed_empty = true;
 				$sel = '';
 				if( empty( $field_value ) ){
 					$sel = 'selected';
