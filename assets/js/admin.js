@@ -120,9 +120,10 @@ jQuery(document).ready(function($){
 	//setup clippy on admin, not edit
 	var CFclippy;
 	if( undefined != typeof  CF_CLIPPY && 'object' == typeof  CF_CLIPPY ){
-		CFclippy = new CalderaFormsAdminClippys( $( document.getElementById( 'caldera-forms-clippy' ) ), CF_CLIPPY, $ );
+		CFclippy = new CalderaFormsAdminClippys2(  'caldera-forms-clippy', CF_CLIPPY, $ );
 		CFclippy.init();
 	}
+
 	$( '.cf-entry-viewer-link' ).on( 'click', function(){
 		if ( 'object' == typeof  CFclippy ){
 			CFclippy.remove();
