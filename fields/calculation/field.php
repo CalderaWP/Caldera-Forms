@@ -185,12 +185,13 @@ if(!empty($binds)){
 			jQuery('[data-field="<?php echo esc_attr( $target_id ); ?>"]').val( total ).trigger('change');
 
 		}
-		jQuery('body').on('change keyup', '<?php echo implode(',', $bindtriggers); ?>', function(e){
+		jQuery('body').on('change keyup', '<?php echo implode(',', $bindtriggers); ?>',  cf_debounce(function(e){
 			docalc_<?php echo $target_id; ?>();
-		});
-		jQuery( document ).on('cf.remove cf.add', function( e ){
+		}));
+		jQuery( document ).on('cf.remove cf.add', cf_debounce(function( e ){
+
 			docalc_<?php echo $target_id; ?>();
-		});
+		}));
 		docalc_<?php echo $target_id; ?>();
 	});
 	

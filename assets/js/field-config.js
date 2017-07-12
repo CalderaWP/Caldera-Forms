@@ -75,6 +75,21 @@
          $submits.prop( 'disabled',false).attr( 'aria-disabled', false  );
      }
 
+     function debounce(func, wait, immediate) {
+        var timeout;
+        return function() {
+            var context = this, args = arguments;
+            var later = function() {
+                timeout = null;
+                if (!immediate) func.apply(context, args);
+            };
+            var callNow = immediate && !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+            if (callNow) func.apply(context, args);
+        };
+    };
+
 
      /**
       * Handler for button fields
@@ -105,7 +120,9 @@
 
          var templates = {},
              list = fieldConfig.binds,
-			 theBindFields = [];
+			 theBindFields = [],
+             isUpdating = false,
+             lastValue = '';
 
          /**
           * The actual template system for HTML/summary fields
@@ -113,6 +130,10 @@
           * @since 1.5.0
           */
          function templateSystem() {
+             if( isUpdating ){
+                 return;
+             }
+             isUpdating = true;
              if( undefined == templates[ fieldConfig.tmplId ] ){
                  templates[ fieldConfig.tmplId ] = $( document.getElementById( fieldConfig.tmplId ) ).html()
              }
@@ -153,10 +174,16 @@
                      value = value.replace(/(?:\r\n|\r|\n)/g, '<br />');
                  }
 
+
                  template = template.replace(new RegExp("\{\{" + list[i] + "\}\}", "g"), value );
              }
 
-             $target.html(template).trigger('change');
+			 if ( lastValue !== template ) {
+                 lastValue = template;
+                 $target.html(template).trigger('change');
+             }
+
+             isUpdating = false;
 
          }
 
@@ -166,9 +193,11 @@
           * @since 1.5.0.7 -based on legacy code
           */
          function bindFields() {
+             isUpdating = true;
 			 theBindFields.forEach( function ($field) {
 				 $field.on('click keyup change', templateSystem);
              });
+             isUpdating = false;
          }
 
          /**
