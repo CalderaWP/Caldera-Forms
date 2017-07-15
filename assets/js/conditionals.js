@@ -43,7 +43,8 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 			timeout = setTimeout(later, wait);
 			if (callNow) func.apply(context, args);
 		};
-	};	
+	};
+
 	calders_forms_check_conditions = function( inst_id ){
 
 		if( typeof caldera_conditionals === "undefined" || typeof caldera_conditionals[inst_id] === "undefined"){
@@ -62,16 +63,39 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
          */
 		function resetValue( field ){
 			var val = getSavedFieldValue( field );
+			var $field;
 			if( undefined != val ){
 				if( 'object' == typeof  val  ){
 					for( var id in val ){
 						if( true === val[id] ){
-							$( document.getElementById( id ) ).prop( 'checked', true );
+							$field = $( document.getElementById( id ) );
+							$field.prop( 'checked', true );
 						}
 					}
 				}else{
-					$( '#' + field ).val( val );
+					$field = $( '#' + field );
+					$field.val( val );
 				}
+			}
+
+			if( ! $field ){
+				$field = $field = $( document.getElementById( id ) );
+			}
+
+			//put back in state
+			var state = getStateObjectByField($field);
+			if ( null !== state ) {
+				if( 'object' === typeof  val ){
+					var _val = [];
+					jQuery.each(val, function( inputId, value ){
+						if( value ){
+							_val.push( $( '#' + inputId ).val() );
+						}
+					});
+
+					val = _val;
+				}
+				state.mutateState(field, val);
 			}
 		}
 
@@ -85,8 +109,9 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 		 */
 		function saveFieldValue(field) {
 			var $field = $( document.getElementById( field ) );
+			var state;
 			if( $field.length ){
-
+				state = getStateObjectByField($field);
 				var val = $field.val();
 				if( val ){
 					fieldVals[ field ] = val;
@@ -96,6 +121,7 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 			}else{
 				var $el;
 				$field = $( '.' + field );
+				state = getStateObjectByField($field);
 				fieldVals[ field ] = {};
 				$field.each( function( i, el ){
 					$el = $( el );
@@ -106,6 +132,11 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 					}
 
 				});
+			}
+
+			//remove from state
+			if ( null !== state ) {
+				state.mutateState(field, '');
 			}
 
 		}
@@ -300,7 +331,38 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 
 			}
 
-		}	
+		}
+
+		/**
+		 * Get the CFState object by form ID
+		 *
+		 * @since 1.5.3
+		 *
+		 * @param {String} formId Form ID
+		 * @returns {CFState|null}
+		 */
+		function getStateObj( formId ) {
+			if( 'object' === typeof  window.cfstate && window.cfstate.hasOwnProperty(formId) ){
+				return  window.cfstate[formId];
+			}
+
+			return null;
+		}
+
+		/**
+		 * Get the CFState object by a jQuery object for field in form
+		 *
+		 * Uses $.closest('form') to find ID of parent form
+		 *
+		 * @since 1.5.3
+		 *
+		 * @param $field {jQuery}
+		 * @returns {CFState}
+		 *
+		 */
+		function getStateObjectByField( $field ) {
+			return getStateObj( $field.closest('form').attr( 'id' ));
+		}
 	};
 
 	calders_forms_init_conditions = function(){

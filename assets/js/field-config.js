@@ -141,7 +141,7 @@
 
 					if( 'string' === typeof  value ){
 						value = value.replace(/(?:\r\n|\r|\n)/g, '<br />');
-					}else  if( ! value || undefined === value || 'undefined' == typeof value){
+					}else  if( ! value || undefined == value.join || undefined === value || 'undefined' == typeof value){
 						value = '';
 					} else{
 						value = value.join(', ');

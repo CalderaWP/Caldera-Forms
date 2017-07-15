@@ -5376,7 +5376,7 @@ function toggle_button_init(id, el){
 
 					if( 'string' === typeof  value ){
 						value = value.replace(/(?:\r\n|\r|\n)/g, '<br />');
-					}else  if( ! value || undefined === value || 'undefined' == typeof value){
+					}else  if( ! value || undefined == value.join || undefined === value || 'undefined' == typeof value){
 						value = '';
 					} else{
 						value = value.join(', ');
@@ -6160,6 +6160,10 @@ window.addEventListener("load", function(){
 					config = CFFIELD_CONFIG[instance].configs;
 
 					var state = initState( CFFIELD_CONFIG[instance].fields);
+					if( 'object' !== typeof window.cfstate ){
+						window.cfstate = {};
+					}
+					window.cfstate[ form_id ] = state;
 					config_object = new Caldera_Forms_Field_Config( config, $(document.getElementById(form_id)), $, state );
 					config_object.init();
 				}
