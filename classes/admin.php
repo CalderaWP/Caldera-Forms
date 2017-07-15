@@ -1375,6 +1375,13 @@ class Caldera_Forms_Admin {
 			header("Content-Disposition: attachment; filename=\"" . sanitize_file_name( $form['name'] ) . ".csv\";" );
 			header("Content-Transfer-Encoding: binary");
 			$df = fopen("php://output", 'w');
+
+			$csv_data = apply_filters( 'caldera_forms_admin_csv', array(
+				'headers' => $headers,
+				'data' => $data
+			), $form );
+			$data = $csv_data[ 'data' ];
+			$headers = $csv_data[ 'headers' ];
 			fputcsv($df, $headers);
 			foreach($data as $row){
 				$csvrow = array();
