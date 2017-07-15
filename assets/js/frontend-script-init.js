@@ -331,18 +331,43 @@ window.addEventListener("load", function(){
 
 		/** Setup forms */
 		if( 'object' === typeof CFFIELD_CONFIG ) {
-			var form_id, config_object, config, instance, $el;
+			var form_id, config_object, config, instance, $el, state;
 			$('.caldera_forms_form').each(function (i, el) {
 				$el = $(el);
 				form_id = $el.attr('id');
 				instance = $el.data('instance');
 
 				if ('object' === typeof CFFIELD_CONFIG[instance] ) {
-					config = CFFIELD_CONFIG[instance];
-					config_object = new Caldera_Forms_Field_Config( config, $(document.getElementById(form_id)), $);
+					config = CFFIELD_CONFIG[instance].configs;
+
+					var state = initState( CFFIELD_CONFIG[instance].fields);
+					config_object = new Caldera_Forms_Field_Config( config, $(document.getElementById(form_id)), $, state );
 					config_object.init();
 				}
 			});
+
+		}
+
+		function initState( fields ){
+			var groups = [],
+				inputs = [];
+			for( var gi in fields.groups ){
+				if( 'object' === typeof  fields.groups[gi] && fields.groups[gi].hasOwnProperty( 'id' ) ){
+					groups.push(fields.groups[gi].id);
+				}
+
+			}
+
+			for( var ii in fields.inputs ){
+				if( 'object' === typeof  fields.inputs[ii] && fields.inputs[ii].hasOwnProperty( 'id' ) ) {
+					inputs.push(fields.inputs[ii].id);
+				}
+			}
+
+			var state = new CFState();
+			state.init( inputs, groups );
+			return state;
+
 
 		}
 
