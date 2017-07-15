@@ -3744,6 +3744,8 @@ class Caldera_Forms {
 
 		$field_id_attr = Caldera_Forms_Field_Util::get_base_id( $field, $current_form_count, $form );
 
+		$type = Caldera_Forms_Field_Util::get_type( $field, $form );
+
 		$field_structure = array(
 			"field"             => $field,
 			"id"                => $field[ 'ID' ],//'fld_' . $field['slug'],
@@ -3763,7 +3765,9 @@ class Caldera_Forms {
 			"aria"              => array()
 		);
 
-		$field_structure[ 'aria' ][ 'labelledby' ] = $field[ 'ID' ] . 'Label';
+		if ( 'button' !== $type ) {
+			$field_structure[ 'aria' ][ 'labelledby' ] = $field[ 'ID' ] . 'Label';
+		}
 
 		// if has caption
 		if ( ! empty( $field[ 'caption' ] ) ) {
@@ -3804,6 +3808,8 @@ class Caldera_Forms {
 				$aria_atts .= ' aria-' . $att . '="' . esc_attr( $att_val ) . '"';
 			}
 			$field_structure[ 'aria' ] = $aria_atts;
+		}else{
+			$field_structure[ 'aria' ] = '';
 		}
 
 		$field_name        = $field_structure[ 'name' ];
