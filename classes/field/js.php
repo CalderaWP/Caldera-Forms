@@ -188,7 +188,7 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 				'1' => __( 'Invalid country code', 'caldera-forms' ),
 				'4' => __( 'Not a number', 'caldera-forms' ),
 				'3' => __( 'Number is too long', 'caldera-forms' ),
-				'2' => __( 'Number is too short', 'calera-forms' )
+				'2' => __( 'Number is too short', 'caldera-forms' )
 
 			)
 		);
