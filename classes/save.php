@@ -299,8 +299,9 @@ class Caldera_Forms_Save_Final {
 				$mail['recipients'][] = get_option( 'admin_email' );
 			}
 
-			$submission = $labels = array();
+			$csv_data = array();
 			foreach ( $data as $field_id => $row ) {
+
 				if ( $row === null || ! isset( $form['fields'][ $field_id ] ) ) {
 					continue;
 				}
@@ -335,8 +336,13 @@ class Caldera_Forms_Save_Final {
 				$mail['message'] = str_replace( $tag, $parsed, $mail['message'] );
 				$mail['subject'] = str_replace( $tag, $parsed, $mail['subject'] );
 
-				$submission[] = $row;
-				$labels[]     = $form['fields'][ $field_id ]['label'];
+				$csv_data[] = array(
+					'label' => $form['fields'][ $field_id ]['label'],
+					'data' => $row
+				);
+
+
+
 			}
 
 			// final magic
@@ -346,6 +352,17 @@ class Caldera_Forms_Save_Final {
 			// CSV
 			$mail['csv'] = $csvfile = false;
 			if ( ! empty( $form['mailer']['csv_data'] ) ) {
+				/**
+				 * Modify label or values for CSV attatched to Caldera Forms email
+				 *
+				 * @since 1.5.3
+				 *
+				 * @param array $csv_data Has key for labels and key for data
+				 * @param array $form Form config
+				 */
+				$csv_data = apply_filters( 'caldera_forms_email_csv_data', $csv_data, $form );
+				$labels = wp_list_pluck( $csv_data , 'label' );
+				$submission = wp_list_pluck( $csv_data, 'data' );
 				ob_start();
 				$df = fopen( "php://output", 'w' );
 				fputcsv( $df, $labels );
