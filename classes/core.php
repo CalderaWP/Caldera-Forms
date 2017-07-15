@@ -79,6 +79,18 @@ class Caldera_Forms {
 	 */
 	protected static $api;
 
+
+	/**
+	 * Settings collection
+	 *
+	 * Access via Caldera_Forms::settings()
+	 *
+	 * @since 1.5.3
+	 *
+	 * @var Caldera_Forms_Settings
+	 */
+	protected static $settings;
+
 	/**
 	 * Initialize the plugin by setting localization, filters, and administration functions.
 	 *
@@ -184,7 +196,8 @@ class Caldera_Forms {
 		//clear syncer cache on form update
 		add_action( 'caldera_forms_save_form', array( 'Caldera_Forms_Sync_Factory', 'clear_cache' ) );
 
-
+		//initialize settings
+		Caldera_Forms_Settings_Init::load();
 
 		/**
 		 * Runs after Caldera Forms core is initialized
@@ -2320,7 +2333,6 @@ class Caldera_Forms {
 		}
 
 		$field_types = Caldera_Forms_Fields::get_all();
-
 		foreach ( $form[ 'fields' ] as $field_id => $field ) {
 
 			if ( $field[ 'slug' ] == $slug ) {
@@ -3730,13 +3742,15 @@ class Caldera_Forms {
 			$field_classes[ 'field_label' ][] = 'screen-reader-text sr-only';
 		}
 
+		$field_id_attr = Caldera_Forms_Field_Util::get_base_id( $field, $current_form_count, $form );
+
 		$field_structure = array(
 			"field"             => $field,
 			"id"                => $field[ 'ID' ],//'fld_' . $field['slug'],
 			"name"              => $field[ 'ID' ],//$field['slug'],
-			"wrapper_before"    => "<div role=\"field\" data-field-wrapper=\"" . $field[ 'ID' ] . "\" class=\"" . $field_wrapper_class . "\">\r\n",
+			"wrapper_before"    => "<div role=\"field\" data-field-wrapper=\"" . $field[ 'ID' ] . "\" class=\"" . $field_wrapper_class . "\" id=\"" . $field_id_attr . "-wrap\">\r\n",
 			"field_before"      => "<div class=\"" . $field_input_class . "\">\r\n",
-			"label_before"      =>  "<label id=\"" . $field[ 'ID' ] . "Label\" for=\"" . $field[ 'ID' ] . '_' . $current_form_count . "\" class=\"" . implode( ' ', $field_classes[ 'field_label' ] ) . "\">",
+			"label_before"      =>  "<label id=\"" . $field[ 'ID' ] . "Label\" for=\"" . $field_id_attr. "\" class=\"" . implode( ' ', $field_classes[ 'field_label' ] ) . "\">",
 			"label"             =>  $field[ 'label' ],
 			"label_required"    => ( empty( $field[ 'hide_label' ] ) ? ( ! empty( $field[ 'required' ] ) ? " <span aria-hidden=\"true\" role=\"presentation\" class=\"" . implode( ' ', $field_classes[ 'field_required_tag' ] ) . "\" style=\"color:#ee0000;\">*</span>" : "" ) : null ),
 			"label_after"       => "</label>",
@@ -4762,7 +4776,6 @@ class Caldera_Forms {
 	 *
 	 * @since 1.5.0
 	 */
-
 	public static function process_form_via_post(){
 		if (isset($_POST['_cf_frm_id'])) {
 			if ( isset( $_POST[ '_cf_verify' ] ) && Caldera_Forms_Render_Nonce::verify_nonce( $_POST[ '_cf_verify' ], $_POST[ '_cf_frm_id' ] ) ) {
@@ -4812,6 +4825,29 @@ class Caldera_Forms {
 		$mail[ 'message' ] = wpautop( $mail[ 'message' ] );
 		return $mail;
 
+	}
+
+	/**
+	 * Get main instance of Caldera_Forms_Settings class
+	 *
+	 * @since 1.5.3
+	 *
+	 * @return Caldera_Forms_Settings
+	 */
+	public static function settings(){
+		if( ! self::$settings ){
+			self::$settings = new Caldera_Forms_Settings();
+			/**
+			 * Runs after main instance of Caldera_Forms_Settings is created
+			 *
+			 * Access via Caldera_Forms::settings()
+			 *
+			 * @since 1.5.3
+			 */
+			do_action( 'caldera_forms_settings_registered' );
+		}
+
+		return self::$settings;
 	}
 
 }

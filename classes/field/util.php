@@ -535,4 +535,18 @@ class Caldera_Forms_Field_Util {
 
 	}
 
+	/**
+	 * Create ID attribute for a radio/checkbox field option
+	 *
+	 * @since 1.5.3
+	 *
+	 * @param string $field_id_attr ID attribute of field
+	 * @param string $opt_id Option ID
+	 *
+	 * @return string
+	 */
+	public static function opt_id_attr( $field_id_attr, $opt_id ){
+		return $field_id_attr . '_' . $opt_id;
+	}
+
 }

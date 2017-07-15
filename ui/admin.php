@@ -51,7 +51,7 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 		</li>
 		<li class="caldera-forms-toolbar-item separator">&nbsp;&nbsp;</li>
 		<li class="caldera-forms-toolbar-item">
-			<a class="button ajax-trigger cf-general-settings" data-request="toggle_front_end_settings" data-modal-width="400" data-modal-height="400" data-modal-element="div" data-load-class="none" data-modal="front_settings" data-template="#front-settings-tmpl" data-callback="toggle_front_end_settings" data-modal-title="<?php echo __('General Settings', 'caldera-forms'); ?>" title="<?php echo __('General Settings', 'caldera-forms'); ?>" >
+			<a class="button ajax-trigger cf-general-settings" data-request="toggle_front_end_settings" data-modal-width="400" data-modal-height="405" data-modal-element="div" data-load-class="none" data-modal="front_settings" data-template="#front-settings-tmpl" data-callback="toggle_front_end_settings" data-modal-title="<?php esc_attr_e('General Settings', 'caldera-forms'); ?>" title="<?php  esc_attr_e( 'General Settings', 'caldera-forms' ); ?>" >
 			<?php
 				printf( '<span title="%s">%s</span>',
 					esc_attr__( 'Click to modify Caldera Forms general settings', 'caldera-forms'  ),

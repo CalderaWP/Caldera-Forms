@@ -20,8 +20,22 @@ class Caldera_Forms_Render_Assets {
 	 */
 	protected static $loaded;
 
+	/**
+	 * Array of registered script/style slugs
+	 *
+	 * @since 1.4.3
+	 *
+	 * @var array
+	 */
 	protected static $registered;
 
+	/**
+	 * Array of enqueued script/style slugs
+	 *
+	 * @since 1.4.3
+	 *
+	 * @var array
+	 */
 	protected static $enqueued;
 
 	/**
@@ -260,7 +274,9 @@ class Caldera_Forms_Render_Assets {
 			'vue-filter' => self::make_url( 'vue/vue-filter' ),
 			'form-front' => self::make_url( 'caldera-forms-front' ),
             'api-client' => self::make_url( 'api/client' ),
-            'api-stores' => self::make_url( 'api/stores' )
+            'api-stores' => self::make_url( 'api/stores' ),
+			'state-events' => self::make_url( 'state/events' ),
+			'state-state' => self::make_url( 'state/state' ),
 		);
 
 		return $script_urls;
@@ -448,6 +464,10 @@ class Caldera_Forms_Render_Assets {
 			wp_enqueue_script( $slug );
 		}
 
+		if( Caldera_Forms::settings()->get_cdn()->combine() ){
+			Caldera_Forms_CDN_Init::get_cdn()->add_to_combiner( $slug );
+		}
+
 	}
 
 
@@ -526,7 +546,9 @@ class Caldera_Forms_Render_Assets {
 			foreach ( array(
 				'field-config',
 				'field',
-				'init'
+				'init',
+				'state-state',
+				'state-events',
 			) as  $script ) {
 				wp_dequeue_script( self::make_slug( $script ) );
 			}
@@ -585,6 +607,8 @@ class Caldera_Forms_Render_Assets {
             $depts[] = self::make_slug('field-config');
         } elseif ('field-config' == $script_key) {
             $depts[] = self::make_slug('validator');
+            $depts[] = self::make_slug('state-state');
+            $depts[] = self::make_slug('state-events');
         } elseif ('entry-viewer-2' == $script_key) {
             $depts = array('jquery', self::make_slug('vue'), 'underscore');
         } elseif ('vue-filter' == $script_key) {
@@ -599,7 +623,18 @@ class Caldera_Forms_Render_Assets {
             wp_register_script( $slug, $script_url, $depts, CFCORE_VER, true);
             remove_filter('caldera_forms_render_assets_minify', '__return_false', 51);
 			return;
+        } elseif (in_array($script_key, array(
+	        'state-events',
+	        'state-state'
+        ))) {
+	        add_filter('caldera_forms_render_assets_minify', '__return_false', 51);
+	        $script_url = self::make_url(str_replace('-', '/', $script_key));
+	        self::$registered[ 'scripts' ][] = $slug;
+	        wp_register_script( $slug, $script_url, $depts, CFCORE_VER, true);
+	        remove_filter('caldera_forms_render_assets_minify', '__return_false', 51);
+	        return;
         }
+
 		self::$registered[ 'scripts' ][] = $slug;
         wp_register_script( $slug, $script_url, $depts, CFCORE_VER, true);
 
@@ -759,4 +794,6 @@ class Caldera_Forms_Render_Assets {
 
 		return $depts;
 	}
+
+
 }

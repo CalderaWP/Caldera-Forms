@@ -58,6 +58,15 @@ abstract class Caldera_Forms_DB_Base {
 	protected $table_name;
 
 	/**
+	 * Flag to designate that there is a meta table
+	 *
+	 * @since 1.5.0
+	 *
+	 * @var bool
+	 */
+	protected $has_meta = true;
+
+	/**
 	 * Constructor -- protected to force singleton upon subclasses.
 	 */
 	protected function __construct(){}
@@ -93,17 +102,21 @@ abstract class Caldera_Forms_DB_Base {
 
 		$fields[ 'primary' ] = array_keys( $this->primary_fields );
 
-		$fields[ 'meta_keys' ] = array_keys( $this->meta_keys );
+		if ( $this->has_meta ) {
+			$fields[ 'meta_keys' ] = array_keys( $this->meta_keys );
 
-		/**
-		 * Filter the allowed meta keys that can be saved
-		 *
-		 * @since 1.4.0
-		 *
-		 * @param array $fields Allowed fields
-		 * @param string $table_name Name of table
-		 */
-		$fields[ 'meta_fields' ] = apply_filters( 'caldera_forms_db_meta_fields',  array_keys( $this->meta_fields ), $this->get_table_name( true ) );
+			/**
+			 * Filter the allowed meta keys that can be saved
+			 *
+			 * @since 1.4.0
+			 *
+			 * @param array $fields Allowed fields
+			 * @param string $table_name Name of table
+			 */
+			$fields[ 'meta_fields' ] = apply_filters( 'caldera_forms_db_meta_fields', array_keys( $this->meta_fields ), $this->get_table_name( true ) );
+
+		}
+
 		return $fields;
 	}
 
@@ -133,7 +146,7 @@ abstract class Caldera_Forms_DB_Base {
 				$_data[ 'formats' ][] = $this->primary_fields[ $field ][0];
 			}
 
-			if( $this->valid_field( $field, 'meta_key' ) ){
+			if( $this->has_meta && $this->valid_field( $field, 'meta_key' ) ){
 				$_meta[ 'fields' ][ $field ][ 'value' ] = call_user_func( $this->meta_keys[ $field ][1], $datum );
 				$_meta[ 'fields' ][ $field ][ 'format' ] = $this->meta_keys[ $field ][0];
 			}
@@ -141,7 +154,7 @@ abstract class Caldera_Forms_DB_Base {
 		}
 
 		$id = $this->save( $_data );
-		if( is_numeric( $id ) && ! empty( $_meta[ 'fields' ] ) ){
+		if( is_numeric( $id ) && $this->has_meta && ! empty( $_meta[ 'fields' ] ) ){
 			
 			foreach( $_meta as $meta ){
 
@@ -185,6 +198,9 @@ abstract class Caldera_Forms_DB_Base {
 	 * @return bool|int|null
 	 */
 	protected function save( array $data, $meta = false ){
+		if( $meta && ! $this->has_meta  ){
+			return false;
+		}
 
 		if( ! empty( $data ) ){
 			global $wpdb;
@@ -225,7 +241,7 @@ abstract class Caldera_Forms_DB_Base {
 	}
 
 	/**
-	 * Get a complete record or recrods -- primary or meta fields
+	 * Get a complete record or records -- primary or meta fields
 	 *
 	 * @since 1.3.5
 	 *
@@ -239,22 +255,30 @@ abstract class Caldera_Forms_DB_Base {
 			if( is_array( $id ) ) {
 				$data = array();
 				foreach( $primary as $record ){
-					$meta = $this->get_meta( $record[ 'ID' ] );
-					$record = $this->add_meta_to_record( $meta, $record );
+					if (  $this->has_meta ) {
+						$meta   = $this->get_meta( $record[ 'ID' ] );
+						$record = $this->add_meta_to_record( $meta, $record );
+					}
+
 					$data[] = $record;
 				}
 
 				return $data;
 
 			}else{
-				$meta = $this->get_meta( $id );
+				$meta = null;
+				if ( $this->has_meta ) {
+					$meta = $this->get_meta( $id );
+				}
+
 				$data = $primary;
-				if( is_array( $meta ) ){
+				if( $this->has_meta && is_array( $meta ) ){
 					return $this->add_meta_to_record( $meta, $data );
 
 				}else{
 					return $primary;
 				}
+
 			}
 
 		}
@@ -300,6 +324,10 @@ abstract class Caldera_Forms_DB_Base {
 	 * @return array|null|object
 	 */
 	public function get_meta( $id, $key = false ){
+		if( ! $this->has_meta ){
+			return null;
+		}
+
 		global $wpdb;
 		$table_name = $this->get_table_name( true );
 		if( is_array( $id ) ) {
@@ -356,9 +384,15 @@ abstract class Caldera_Forms_DB_Base {
 				return array_key_exists( $field, $this->primary_fields );
 			break;
 			case 'meta' :
+				if( ! $this->has_meta ){
+					return false;
+				}
 				return array_key_exists( $field, $this->meta_fields );
 			break;
 			case 'meta_key' :
+				if( ! $this->has_meta ){
+					return false;
+				}
 				return array_key_exists( $field, $this->meta_keys );
 			break;
 			default:
@@ -402,6 +436,9 @@ abstract class Caldera_Forms_DB_Base {
 	 * @return mixed
 	 */
 	protected function add_meta_to_record( array $meta, array $data ) {
+		if( ! $this->has_meta ){
+			return false;
+		}
 		if ( ! empty( $meta ) ) {
 			foreach ( $this->meta_keys as $key => $field ) {
 				$data[ $key ] = $this->reduce_meta( $meta, $key );
@@ -435,11 +472,16 @@ abstract class Caldera_Forms_DB_Base {
 	 * @return array|null
 	 */
 	protected function query_meta( $key, $value ){
+		if( ! $this->has_meta ){
+			return null;
+		}
+
 		global $wpdb;
 		$table = $this->get_table_name( true );
 		$sql = $wpdb->prepare( "SELECT * FROM $table WHERE  `meta_key` = '%s' AND `meta_value` = '%s' ", $key, $value );
 		$r = $wpdb->get_results( $sql, ARRAY_A );
 		return $r;
+
 	}
 
 }

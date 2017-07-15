@@ -199,3 +199,18 @@ function caldera_forms_get_roles(){
 function caldera_forms_get_release_series(){
 	return substr( CFCORE_VER, 2, 1 );
 }
+
+/**
+ * Shim for boolval added in PHP v5.5
+ *
+ * Developer note: Don't use boolval() use (bool) $value but this is here for saftey's sake.
+ * @See: https://github.com/CalderaWP/Caldera-Forms/issues/1727
+ *
+ * @since 1.5.2.1
+ */
+if ( ! function_exists( 'boolval' ) ) {
+	function boolval( $val ){
+		return (bool) $val;
+	}
+
+}

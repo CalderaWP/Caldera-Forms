@@ -70,10 +70,13 @@ class Caldera_Forms_Autoloader {
 				$file = CFCORE_PATH . 'classes/save.php';
 			} elseif( 'Caldera_Forms_Admin' == $class ){
 				$file = CFCORE_PATH . 'classes/admin.php';
+			} elseif( 'Caldera_Forms_CDN' == $class ){
+				$file = CFCORE_PATH . 'classes/cdn.php';
+			} elseif( 'Caldera_Forms_Settings' == $class ){
+				$file = CFCORE_PATH . 'classes/settings.php';
 			}else {
 				$file = $dir . self::get_base( $class, $root );
 			}
-
 
 			if ( is_file( $file ) ) {
 				require_once $file;

@@ -34,7 +34,7 @@ class Caldera_Forms_Field_Calculation {
 		 * @param array $form Form config
 		 *
 		 */
-		return boolval( apply_filters( 'caldera_forms_checkbox_calculate_sum', true, $field, $form ) );
+		return (bool) apply_filters( 'caldera_forms_checkbox_calculate_sum', true, $field, $form );
 
 	}
 
