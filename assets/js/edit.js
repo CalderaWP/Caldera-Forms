@@ -2685,7 +2685,7 @@ function cf_revisions_ui() {
     if (null === templateEl) {
         return;
     }
-    var $btn = jQuery( '#caldera-forms-revision-go' );
+
     var $spinner = jQuery( '#caldera-forms-revisions-spinner' );
     $spinner.css({
         visibility: 'visible',
@@ -2706,8 +2706,9 @@ function cf_revisions_ui() {
         });
 
         jQuery('input[type=radio][name=caldera-forms-revision]').change(function() {
-           $btn.attr( 'href', jQuery( this ).data( 'edit' ) ).css({
-               display: 'block',
+            jQuery( '#caldera-forms-revision-go' ).attr( 'href', jQuery( this ).data( 'edit' ) )
+                .css({
+               display: 'inline-block',
                visibility: 'visible'
            }).attr( 'aria-hidden', false );
 
