@@ -107,6 +107,7 @@ class Caldera_Forms_Forms {
 					if( ! empty( $form ) ){
 						$form = self::maybe_migrate( $form );
 					}
+
 				}
 
 			} else {
@@ -240,6 +241,8 @@ class Caldera_Forms_Forms {
 	 * @since 1.5.3
 	 *
 	 * @param int $revision_id Revision ID
+	 *
+	 * @return false|int
 	 */
 	public static function restore_revision( $revision_id ){
 		return Caldera_Forms_DB_Form::get_instance( )->make_revision_primary( $revision_id );
@@ -359,6 +362,29 @@ class Caldera_Forms_Forms {
 
 		return $_form;
 
+	}
+
+	/**
+	 * Get the filter value for maximum revisions
+	 *
+	 * @since 1.5.3
+	 *
+	 * @param array $form Form config
+	 *
+	 * @return int
+	 */
+	protected static function max_revisions( array $form ){
+		/**
+		 * Change the number fo form revisions to store per form
+		 *
+		 * @since 1.5.3
+		 *
+		 * @param int|bool Number of revisions to save. Set to false or 0 to disable form revisions.
+		 * @param array $form Form Config
+		 */
+		$max_revisions = apply_filters( 'caldera_forms_max_form_revisions', 15, $form );
+
+		return (int) $max_revisions;
 	}
 
 	/**
@@ -824,14 +850,22 @@ class Caldera_Forms_Forms {
 	 *
 	 * @return array
 	 */
-	public static function get_revisions( $form_id ){
+	public static function get_revisions( $form_id, $simple = false ){
 		$forms = Caldera_Forms_DB_Form::get_instance()->get_by_form_id( $form_id, false );
 		$revisions = array();
 		if( ! empty( $forms ) ){
 			foreach ( $forms as $i => $form ){
-				if( 'revision' == $form[ 'type' ] ){
-					$form = self::db_to_return( $form );
-					$revisions[] = self::filter_form( $form[ 'ID' ], $form, true );
+				if( 'revision' === $form[ 'type' ] ){
+					if( empty( $form ) || ! isset( $form[ 'id' ] ) ){
+						continue;
+					}
+					if( $simple ){
+						$revisions[] = $form[ 'id'  ];
+					}else{
+						$form = self::db_to_return( $form );
+						$revisions[] = self::filter_form( $form[ 'ID' ], $form, true );
+					}
+
 				}
 			}
 		}
@@ -883,6 +917,13 @@ class Caldera_Forms_Forms {
 	 * @return bool|false|int|null
 	 */
 	protected static function save_to_db( array  $form, $type = 'primary' ){
+		if( 'primary' !== $type ){
+			$max_revisions = self::max_revisions( $form );
+			if( ! $max_revisions ){
+				return false;
+			}
+		}
+
 		$data = array(
 			'form_id' => $form[ 'ID' ],
 			'config' => $form,
@@ -892,6 +933,7 @@ class Caldera_Forms_Forms {
 		if( isset( $form[ 'db_id' ] ) ){
 			$data[ 'db_id' ] = $form[ 'db_id' ];
 			$db_id = Caldera_Forms_DB_Form::get_instance()->update( $data );
+			self::maybe_delete_old_revisions( $form );
 		}else{
 			$db_id = Caldera_Forms_DB_Form::get_instance()->create( $data );
 
@@ -915,4 +957,34 @@ class Caldera_Forms_Forms {
 		return Caldera_Forms_DB_Form::get_instance()->get_by_form_id( $form_id, $primary_only );
 
 	}
+
+	/**
+	 * Delete form revisions if there are more than the max revisions
+	 *
+	 *
+	 * @since 1.5.3
+	 *
+	 * @param array $form Form config
+	 */
+	protected static function maybe_delete_old_revisions( array  $form ){
+		$revisions = self::get_revisions( $form[ 'ID' ], true);
+		if( ! empty( $revisions ) ) {
+			$max_revisions = self::max_revisions( $form );
+
+			if( $max_revisions < count( $revisions ) ){
+				sort( $revisions );
+				$deletes = array();
+				foreach ( $revisions as $key => $id ){
+					if( $key + 1 < $max_revisions ){
+						$deletes[] = $id;
+					}
+				}
+				Caldera_Forms_DB_Form::get_instance()->delete( $deletes );
+
+			}
+
+		}
+
+	}
+
 }

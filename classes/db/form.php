@@ -159,12 +159,18 @@ class Caldera_Forms_DB_Form extends Caldera_Forms_DB_Base {
      * @since 1.5.3
      *
      * @param int $revision_id Revision ID
-     */
+     *
+	 * @return false|int
+	 */
     public function make_revision_primary( $revision_id ){
-		$revision = $this->get_record( $revision_id );
+
+	    $revision = $this->get_record( $revision_id );
 	    if( ! empty( $revision ) ){
+		    $primary = $this->get_by_form_id( $revision[ 'form_id' ] );
 	    	$revision[ 'type' ] = 'primary';
-		    $this->update( $revision );
+		    $primary[ 'type' ] = 'revision';
+		    $this->update( $primary, false );
+		    return $this->update( $revision, false );
 	    }
 
     }
@@ -206,7 +212,7 @@ class Caldera_Forms_DB_Form extends Caldera_Forms_DB_Base {
 	    }
 
 	    if( $primary_only ){
-		    return $this->prepare_found(  $found[0] );
+		    return $this->prepare_found( $found[0] );
 	    }
 
 	    $forms = array();
@@ -231,9 +237,41 @@ class Caldera_Forms_DB_Form extends Caldera_Forms_DB_Base {
 	 */
     public function delete_by_form_id($form_id ){
     	global  $wpdb;
-	    return $wpdb->delete( $this->table_name, array(
+	    return $wpdb->delete( $this->get_table_name(), array(
 	    	'form_id' => $form_id
 	    ));
+    }
+
+	/**
+	 * Delete one or more form configs, including revisions by id(s)
+	 *
+	 * @since 1.5.3
+	 *
+	 * @param int|array $ids Id or array of IDs -- DB id not form ID
+	 *
+	 * @return bool|false|int
+	 */
+    public function delete( $ids ){
+    	if( is_numeric( $ids ) ){
+    		$ids = array( $ids );
+	    }
+
+	    if( ! is_array( $ids ) ){
+	    	return false;
+	    }
+
+	    global  $wpdb;
+
+	    foreach ( $ids as &$id ){
+	    	$id = absint( $id );
+	    }
+
+	    $in = implode( ',', $ids );
+
+	    $table = $this->get_table_name();
+	    $sql = $wpdb->prepare( "DELETE FROM $table WHERE `id` IN( %s )", $in );
+	    return $wpdb->query($sql);
+
     }
 
 	/**

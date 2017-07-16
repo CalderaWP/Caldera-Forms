@@ -90,8 +90,8 @@ jQuery(document).ready(function($){
             data:{
                 cf_edit_nonce: $( '#cf_edit_nonce' ).val(),
                 form: $el.data( 'form' ),
-                revision: $el.data( 'form' ),
-                restore_revision: true
+                cf_revision: $( '#form_db_id_field' ).val(),
+                restore: true
             },
             success: function(){
                 window.location = $el.data( 'edit-link' );
@@ -138,11 +138,13 @@ jQuery(document).ready(function($){
                         notice.stop().animate({top: -75}, 200);
                     }, 2000);
                 });
+
+                cf_revisions_ui();
             }
         },
         complete: function( obj ){
 
-            $('.wrapper-instance-pane .field-config').prop('disabled', false);
+            $('.wrapper-instance-pane .field-config').prop('sabled', false);
 
         }
     });
@@ -1534,6 +1536,9 @@ rebind_field_bindings = function(){
     init_magic_tags();
     jQuery(document).trigger('bound.fields');
     jQuery('.caldera-header-save-button').prop("disabled", false);
+    if( undefined != typeof  cf_revisions_ui ){
+        cf_revisions_ui();
+    }
 };
 
 function setup_field_type(obj){
@@ -2667,5 +2672,50 @@ Handlebars.registerHelper('_field', function(args) {
 Handlebars.registerHelper('console', function(context, options) {
     console.log(this);
 });
+
+var revisions = {};
+/**
+ * Get revisions from API and update panel UI
+ *
+ * @since 1.5.3
+ */
+function cf_revisions_ui() {
+    var url = CF_ADMIN.rest.revisions;
+    var templateEl = document.getElementById('tmpl--revisions');
+    if (null === templateEl) {
+        return;
+    }
+    var $btn = jQuery( '#caldera-forms-revision-go' );
+    var $spinner = jQuery( '#caldera-forms-revisions-spinner' );
+    $spinner.css({
+        visibility: 'visible',
+        float:'none'
+    });
+    jQuery.get(url, function (r) {
+        var data = {
+            revisions: r
+        };
+        revisions = r;
+        var template = templateEl.innerHTML;
+        var source = jQuery('#tmpl--revisions').html();
+        template = Handlebars.compile(source);
+        document.getElementById('caldera-forms-revisions').innerHTML = template(data);
+        $spinner.css({
+            visibility: 'hidden',
+            float:'none'
+        });
+
+        jQuery('input[type=radio][name=caldera-forms-revision]').change(function() {
+           $btn.attr( 'href', jQuery( this ).data( 'edit' ) ).css({
+               display: 'block',
+               visibility: 'visible'
+           }).attr( 'aria-hidden', false );
+
+        });
+
+
+    });
+
+}
 
 

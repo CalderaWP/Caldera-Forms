@@ -1452,12 +1452,13 @@ class Caldera_Forms_Admin {
 			return;
 		}
 
-		if( isset( $_POST[ 'cf_edit_nonce' ], $_POST[ 'revision' ], $_POST[ 'form' ], $_POST[ 'restore' ] ) ){
+		/** Resotre revisions */
+		if( isset( $_POST[ 'cf_edit_nonce' ], $_POST[ self::REVISION_KEY ], $_POST[ 'form' ], $_POST[ 'restore' ] ) ){
 			if( ! current_user_can( Caldera_Forms::get_manage_cap( 'manage' ) ) || ! wp_verify_nonce( $_POST[ 'cf_edit_nonce' ], 'cf_edit_element' ) ){
 				wp_send_json_error();
 
 			}
-			$restored = Caldera_Forms_Forms::restore_revision( absint( $_POST[ 'revision' ] ));
+			$restored = Caldera_Forms_Forms::restore_revision( absint( $_POST[ self::REVISION_KEY ] ));
 			if( $restored ){
 				wp_send_json_success();
 			}else{
@@ -1668,6 +1669,13 @@ class Caldera_Forms_Admin {
 				),
 			),
 		);
+
+
+		if( self::is_revision_edit() ){
+			unset( $internal_panels[ 'revisions' ] );
+		}
+
+
 
 		return array_merge( $panels, $internal_panels );
 
@@ -1934,7 +1942,7 @@ class Caldera_Forms_Admin {
 	 * @return bool
 	 */
 	public static function is_edit(){
-		return Caldera_Forms_Admin::is_page() && isset( $_GET[ 'edit' ] );
+		return Caldera_Forms_Admin::is_page() && isset( $_GET[ self::EDIT_KEY ] );
 
 	}
 
