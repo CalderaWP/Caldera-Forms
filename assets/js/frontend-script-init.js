@@ -369,7 +369,7 @@ window.addEventListener("load", function(){
 			}
 
 			var state = new CFState();
-			state.init( inputs, groups );
+			state.init( inputs, groups, fields.defaults );
 			return state;
 
 

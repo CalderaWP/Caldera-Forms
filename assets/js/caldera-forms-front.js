@@ -92,6 +92,7 @@ function CFState() {
 		self = this,
 		state = {},
 		els = {},
+		defaults = {},
 		events = new CFEvents(this);
 
 	/**
@@ -101,13 +102,23 @@ function CFState() {
 	 *
 	 * @param inputAndSelectFields {Array} Array of field IDs for fields that are not checkboxes or radios or other types of multi-input fields.
 	 * @param groupFields {Array} Array of field IDs for fields that are checkboxes or radios or other types of multi-input fields.
+	 * @param fieldDefaults {object}
 	 */
-	this.init = function ( inputAndSelectFields, groupFields) {
+	this.init = function ( inputAndSelectFields, groupFields, fieldDefaults ) {
+
 		inputAndSelectFields.forEach(function (id) {
+			defaults[id] = {
+				value: fieldDefaults.hasOwnProperty( 'id' ) ? fieldDefaults.id : '',
+				type: 'input'
+			};
 			addInput(id);
 		});
 		groupFields.forEach(function (id) {
 			addGroup(id);
+			defaults[id] = {
+				value: fieldDefaults.hasOwnProperty( 'id' ) ? fieldDefaults.id : '',
+				type: 'group'
+			};
 		});
 
 
@@ -125,7 +136,7 @@ function CFState() {
 	 * @returns {boolean}
 	 */
 	this.mutateState = function (id, value) {
-		if (!inState(id)) {
+		if ( ! inState(id) && ! maybeAddLate(id) ) {
 			return false;
 		}
 
@@ -147,7 +158,7 @@ function CFState() {
 	 * @returns {*}
 	 */
 	this.getState = function (id) {
-		if (!inState(id)) {
+		if ( ! inState(id) && ! maybeAddLate(id) ) {
 			return false;
 		}
 
@@ -307,6 +318,31 @@ function CFState() {
 		}
 	}
 
+	/**
+	 * Add a field to the state late
+	 *
+	 * Needed if field was not in DOM (ie removed by condititonals when init() ran
+	 *
+	 * @since 1.5.3
+	 *
+	 * @param id {String}
+	 * @returns {boolean}
+	 */
+	function maybeAddLate(id){
+		if( defaults.hasOwnProperty( id ) ){
+			if( 'group' == defaults[id].type ) {
+				addGroup(id);
+			}else{
+				addInput(id);
+			}
+
+			return true;
+
+		}
+
+		return false;
+	}
+
 
 	/**
 	 * Set state for field
@@ -387,6 +423,8 @@ function CFState() {
 
 		return el.hasAttribute( 'data-calc-val' ) ? el.getAttribute( 'data-calc-value' ) : el.value;
 	}
+
+
 
 }
 /*
@@ -5452,11 +5490,13 @@ function toggle_button_init(id, el){
 					 $('#' + field.id + '_value').html(value);
 				 },
                  onInit: function () {
-					 if (!$el.is(':visible')) {
+                     this.value = state.getState(field.id);
+
+                     if (!$el.is(':visible')) {
 						 return;
 					 }
 					 rangeSliders[field.id].inited = true;
-                     this.value = rangeSliders[field.id].value;
+                     this.value = state.getState(field.id);
                      $el.parent().find('.rangeslider').css('backgroundColor', field.trackcolor);
                      $el.parent().find('.rangeslider__fill').css('backgroundColor', field.color);
                      $el.parent().find('.rangeslider__handle').css('backgroundColor', field.handle).css('borderColor', field.handleborder);
@@ -6196,7 +6236,7 @@ window.addEventListener("load", function(){
 			}
 
 			var state = new CFState();
-			state.init( inputs, groups );
+			state.init( inputs, groups, fields.defaults );
 			return state;
 
 

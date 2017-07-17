@@ -209,11 +209,13 @@
 					 $('#' + field.id + '_value').html(value);
 				 },
                  onInit: function () {
-					 if (!$el.is(':visible')) {
+                     this.value = state.getState(field.id);
+
+                     if (!$el.is(':visible')) {
 						 return;
 					 }
 					 rangeSliders[field.id].inited = true;
-                     this.value = rangeSliders[field.id].value;
+                     this.value = state.getState(field.id);
                      $el.parent().find('.rangeslider').css('backgroundColor', field.trackcolor);
                      $el.parent().find('.rangeslider__fill').css('backgroundColor', field.color);
                      $el.parent().find('.rangeslider__handle').css('backgroundColor', field.handle).css('borderColor', field.handleborder);
