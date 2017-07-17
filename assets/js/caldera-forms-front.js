@@ -366,7 +366,7 @@ function CFState() {
 	 *  @param el {Object} DOM node or other object with value property
 	 */
 	function getValue(el){
-		if( 'object' !== typeof  el || ! el.hasOwnProperty( value) ) {
+		if( 'object' !== typeof  el || ! el.hasOwnProperty( 'value' ) ) {
 			return '';
 		}
 
@@ -381,7 +381,7 @@ function CFState() {
 	 *  @param el {Object} DOM node or other compatible object
 	 */
 	function getCalcValue(el){
-		if( 'object' !== typeof  el || ! el.hasOwnProperty( value) ) {
+		if( 'object' !== typeof  el || ! el.hasOwnProperty( 'value' ) ) {
 			return '';
 		}
 
