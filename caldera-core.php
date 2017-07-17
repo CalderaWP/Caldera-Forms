@@ -30,7 +30,7 @@ define('CFCORE_BASENAME', plugin_basename( __FILE__ ));
  *
  * PLEASE keep this an integer
  */
-define( 'CF_DB', 5 );
+define( 'CF_DB', 6 );
 
 // init internals of CF
 include_once CFCORE_PATH . 'classes/core.php';
