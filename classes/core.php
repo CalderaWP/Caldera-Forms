@@ -3742,13 +3742,17 @@ class Caldera_Forms {
 			$field_classes[ 'field_label' ][] = 'screen-reader-text sr-only';
 		}
 
+		$field_id_attr = Caldera_Forms_Field_Util::get_base_id( $field, $current_form_count, $form );
+
+		$type = Caldera_Forms_Field_Util::get_type( $field, $form );
+
 		$field_structure = array(
 			"field"             => $field,
 			"id"                => $field[ 'ID' ],//'fld_' . $field['slug'],
 			"name"              => $field[ 'ID' ],//$field['slug'],
-			"wrapper_before"    => "<div role=\"field\" data-field-wrapper=\"" . $field[ 'ID' ] . "\" class=\"" . $field_wrapper_class . "\">\r\n",
+			"wrapper_before"    => "<div role=\"field\" data-field-wrapper=\"" . $field[ 'ID' ] . "\" class=\"" . $field_wrapper_class . "\" id=\"" . $field_id_attr . "-wrap\">\r\n",
 			"field_before"      => "<div class=\"" . $field_input_class . "\">\r\n",
-			"label_before"      =>  "<label id=\"" . $field[ 'ID' ] . "Label\" for=\"" . $field[ 'ID' ] . '_' . $current_form_count . "\" class=\"" . implode( ' ', $field_classes[ 'field_label' ] ) . "\">",
+			"label_before"      =>  "<label id=\"" . $field[ 'ID' ] . "Label\" for=\"" . $field_id_attr. "\" class=\"" . implode( ' ', $field_classes[ 'field_label' ] ) . "\">",
 			"label"             =>  $field[ 'label' ],
 			"label_required"    => ( empty( $field[ 'hide_label' ] ) ? ( ! empty( $field[ 'required' ] ) ? " <span aria-hidden=\"true\" role=\"presentation\" class=\"" . implode( ' ', $field_classes[ 'field_required_tag' ] ) . "\" style=\"color:#ee0000;\">*</span>" : "" ) : null ),
 			"label_after"       => "</label>",
@@ -3761,7 +3765,9 @@ class Caldera_Forms {
 			"aria"              => array()
 		);
 
-		$field_structure[ 'aria' ][ 'labelledby' ] = $field[ 'ID' ] . 'Label';
+		if ( 'button' !== $type ) {
+			$field_structure[ 'aria' ][ 'labelledby' ] = $field[ 'ID' ] . 'Label';
+		}
 
 		// if has caption
 		if ( ! empty( $field[ 'caption' ] ) ) {
@@ -3802,6 +3808,8 @@ class Caldera_Forms {
 				$aria_atts .= ' aria-' . $att . '="' . esc_attr( $att_val ) . '"';
 			}
 			$field_structure[ 'aria' ] = $aria_atts;
+		}else{
+			$field_structure[ 'aria' ] = '';
 		}
 
 		$field_name        = $field_structure[ 'name' ];
