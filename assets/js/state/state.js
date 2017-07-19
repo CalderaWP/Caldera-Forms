@@ -71,10 +71,17 @@ function CFState() {
 	 * @returns {*}
 	 */
 	this.getState = function (id) {
-		if ( ! inState(id) && ! maybeAddLate(id) ) {
+		if ( ! inState(id) ){
+			if( maybeAddLate(id)){
+				return true;
+			}
+
 			return false;
 		}
 
+		if( ! state[id].hasOwnProperty('value' ) ){
+			state[id].value = '';
+		}
 
 		return state[id].value;
 	};
@@ -315,7 +322,8 @@ function CFState() {
 	 *  @param el {Object} DOM node or other object with value property
 	 */
 	function getValue(el){
-		if( 'object' !== typeof  el || ! el.hasOwnProperty( 'value' ) ) {
+
+		if( 'object' !== typeof  el || undefined == el ) {
 			return '';
 		}
 
