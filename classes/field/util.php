@@ -374,7 +374,7 @@ class Caldera_Forms_Field_Util {
 	 *
 	 * @return bool
 	 */
-	public static function get_default( $field, array  $form ){
+	public static function get_default( $field, array  $form, $convert_opt = false ){
 		if ( is_string( $field ) ) {
 			$field = self::get_field( $field, $form );
 		}
@@ -383,7 +383,13 @@ class Caldera_Forms_Field_Util {
 			return false;
 		}
 
-		return $field[ 'config' ][ 'default' ];
+		$default = $field[ 'config' ][ 'default' ];
+
+		if( $convert_opt && 0 === strpos( $default, 'opt' ) ){
+			$default = self::find_select_field_value( $field, $default );
+		}
+
+		return $default;
 
 	}
 

@@ -340,7 +340,9 @@ window.addEventListener("load", function(){
 				if ('object' === typeof CFFIELD_CONFIG[instance] ) {
 					config = CFFIELD_CONFIG[instance].configs;
 
-					var state = initState( CFFIELD_CONFIG[instance].fields);
+					var state = new CFState(formId, $ );
+					state.init( CFFIELD_CONFIG[instance].fields.defaults );
+
 					if( 'object' !== typeof window.cfstate ){
 						window.cfstate = {};
 					}
@@ -352,28 +354,6 @@ window.addEventListener("load", function(){
 
 		}
 
-		function initState( fields ){
-			var groups = [],
-				inputs = [];
-			for( var gi in fields.groups ){
-				if( 'object' === typeof  fields.groups[gi] && fields.groups[gi].hasOwnProperty( 'id' ) ){
-					groups.push(fields.groups[gi].id);
-				}
-
-			}
-
-			for( var ii in fields.inputs ){
-				if( 'object' === typeof  fields.inputs[ii] && fields.inputs[ii].hasOwnProperty( 'id' ) ) {
-					inputs.push(fields.inputs[ii].id);
-				}
-			}
-
-			var state = new CFState();
-			state.init( inputs, groups, fields.defaults );
-			return state;
-
-
-		}
 
 	})( jQuery );
 
