@@ -138,7 +138,7 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 
 			//remove from state
 			if ( null !== state ) {
-				state.unBind(field);
+				state.unbind(field);
 			}
 
 		}
