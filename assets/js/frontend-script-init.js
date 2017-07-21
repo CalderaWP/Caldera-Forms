@@ -144,11 +144,18 @@ var cf_jsfields_init, cf_presubmit;
 			fields =  $('#caldera_form_' + instance + ' [data-formpage="' + current_page + '"] [data-field]'  );
 
 			var this_field,
-				valid;
+				valid,
+				_valid;
 			for (var f = 0; f < fields.length; f++) {
 				this_field = $(fields[f]);
-				this_field.parsley().validate();
+				_valid = this_field.parsley().validate();
 				valid = this_field.parsley().isValid({force: true});
+
+				//@see https://github.com/CalderaWP/Caldera-Forms/issues/1765
+				if( ! valid && true === _valid && 'email' === this_field.attr( 'type' ) ){
+					continue;
+				}
+
 				if (true === valid) {
 					continue;
 				}
