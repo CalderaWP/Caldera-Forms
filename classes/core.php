@@ -3448,7 +3448,7 @@ class Caldera_Forms {
 				$url = set_url_scheme( $url, 'https' );
 			}
 		}
-
+		
 		/**
 		 * Filter the Caldera Forms APU url
 		 *
