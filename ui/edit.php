@@ -326,7 +326,7 @@ $field_options_template = "
 						<label class=\"option-setting-label option-setting-label-for-value\" for=\"opt-calc-val-{{@key}}\">
 							". esc_html__( 'Calculation Value', 'caldera-forms' ) . "
 						</label>
-						<input{{#unless ../show_values}} style=\"display:none;\"{{/unless}} type=\"text\" class=\"toggle_calc_value_field field-config option-setting \" name=\"{{../_name}}[option][{{@key}}][calc_value]\" value=\"{{#if ../show_values}}{{calc_value}}{{else}}{{label}}{{/if}}\" placeholder=\"" . esc_attr( __( 'Calculation Value', 'caldera-forms' ) ) . "\" id=\"opt-calc-val-{{@key}}\" data-opt=\"{{@key}}\" />
+						<input{{#unless ../show_values}} style=\"display:none;\"{{/unless}} type=\"number\" class=\"toggle_calc_value_field field-config option-setting \" name=\"{{../_name}}[option][{{@key}}][calc_value]\" value=\"{{#if ../show_values}}{{calc_value}}{{else}}{{label}}{{/if}}\" placeholder=\"" . esc_attr( __( 'Calculation Value', 'caldera-forms' ) ) . "\" id=\"opt-calc-val-{{@key}}\" data-opt=\"{{@key}}\" />
 					</div>
 					
 					<div class=\"caldera-config-group\">
@@ -1034,7 +1034,7 @@ do_action('caldera_forms_edit_end', $element);
 			<label class="option-setting-label option-setting-label-for-value" for="opt-calc-val-{{@key}}">
 				<?php esc_html_e( 'Calculation Value', 'caldera-forms' ); ?>
 			</label>
-			<input{{#unless ../show_values}} style="display:none;"{{/unless}} type="text" class="toggle_calc_value_field field-config option-setting " name="{{../_name}}[option][{{@key}}][calc_value]" value="{{#if ../show_values}}{{calc_value}}{{else}}{{label}}{{/if}}" placeholder="" . esc_attr( __( 'Calculation Value', 'caldera-forms' ) ) . "" id="opt-calc-val-{{@key}}" />
+			<input{{#unless ../show_values}} style="display:none;"{{/unless}} type="number" class="toggle_calc_value_field field-config option-setting " name="{{../_name}}[option][{{@key}}][calc_value]" value="{{#if ../show_values}}{{calc_value}}{{else}}{{label}}{{/if}}" placeholder="" . esc_attr( __( 'Calculation Value', 'caldera-forms' ) ) . "" id="opt-calc-val-{{@key}}" />
 		</div>
 
 		<div class="caldera-config-group">
