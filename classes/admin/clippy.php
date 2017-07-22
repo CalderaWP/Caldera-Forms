@@ -30,6 +30,14 @@ class Caldera_Forms_Admin_Clippy {
 	protected $url_hash;
 
 	/**
+	 * Title of extend clippy
+	 *
+	 * @since 1.5.3
+	 *
+	 * @var string
+	 */
+	protected $extend_title;
+	/**
 	 * Caldera_Forms_Admin_Clippy constructor.
 	 *
 	 * @since 1.4.5
@@ -40,6 +48,8 @@ class Caldera_Forms_Admin_Clippy {
 	public function __construct( $plugin_slug, $url  ) {
 		$this->script_handle = $plugin_slug . '-clippy';
 		$this->url_hash      = md5( $url );
+		add_action( 'admin_footer', array( $this, 'print_templates' ) );
+
 	}
 
 	/**
@@ -49,8 +59,10 @@ class Caldera_Forms_Admin_Clippy {
 	 */
 	public function assets(){
 
-		wp_enqueue_script( $this->script_handle, CFCORE_URL . 'assets/js/caldera-clippy.js', array( 'jquery' ), Caldera_Forms::VERSION );
+		Caldera_Forms_Render_Assets::enqueue_script( 'vue' );
+		wp_enqueue_script( $this->script_handle, CFCORE_URL . 'assets/js/caldera-clippy.js', array( 'jquery', Caldera_Forms_Render_Assets::make_slug( 'vue' ) ), Caldera_Forms::VERSION );
 		wp_localize_script( $this->script_handle, 'CF_CLIPPY', $this->localizer() );
+
 	}
 
 	/**
@@ -61,16 +73,17 @@ class Caldera_Forms_Admin_Clippy {
 	 * @return array
 	 */
 	protected function localizer(){
+
 		$data = array(
-			'api' => 'https://octaviabutler.caldera.space',
-			'p1' => $this->randoms(),
-			'p2' => $this->randoms(),
-			'p3' => $this->randoms(),
-			'url' => $this->url_hash,
-			'l' => get_locale(),
+			'cfdotcom' => array(
+				'api' => array(
+					'search' => 'https://calderaforms.com/wp-json/wp/v2/doc?search=',
+					'important' => 'https://calderaforms.com/wp-json/calderawp_api/v2/docs/important',
+					'product' => $this->product_endpoint()
+				),
+			),
 			'fallback' => $this->fallback_clippy(),
-			'template' => $this->template(),
-			'email_clippy' => $this->email_clippy()
+			'extend_title' => $this->extend_title
 		);
 
 		$forms = Caldera_Forms_Forms::get_forms();
@@ -110,7 +123,11 @@ class Caldera_Forms_Admin_Clippy {
 	 */
 	protected function template(){
 		/** Don't unmifiy this!! */
-		return '<div class="caldera-forms-clippy-zone-inner-wrap"><div class="caldera-forms-clippy" ><h2>{{title.content}}</h2><p>{{content.content}}</p><a href="{{link.url}}" data-bt={{link.bt}} target="_blank" class="bt-btn btn btn-{{btn.color}}">{{ btn.content }}</a></div></div>';
+		return '<script type="text/html" id="tmpl--caldera-clippy"><div class="caldera-forms-clippy-zone-inner-wrap"><div class="caldera-forms-clippy" ><h2>{{title}}</h2><p>{{content}}</p><a href="{{link.url}}" target="_blank" class="bt-btn btn btn-organge">{{ btn.content }}</a></div></div></script>';
+	}
+
+	public function print_templates(){
+		include CFCORE_PATH . 'ui/support/clippy_templates.php';
 	}
 
 
@@ -199,6 +216,45 @@ class Caldera_Forms_Admin_Clippy {
 				'url' => 'https://calderaforms.com/getting-started?utm_source=obs&utm_campaign=admin-page&utm_medium=caldera-forms&utm_term=fallback'
 			)
 		);
+	}
+
+
+	/**
+	 * Get endpoint to use in products clippy
+	 *
+	 * @since 1.5.3
+	 *
+	 * @return string
+	 */
+	protected function product_endpoint(){
+		$endpoints = array(
+			'free' => 'https://calderaforms.com/wp-json/calderawp_api/v2/products/cf-addons?category=free',
+			'featured' => 'https://calderaforms.com/wp-json/calderawp_api/v2/products/cf-addons?category=featured',
+			'pro' => 'https://calderaforms.com/wp-json/calderawp_api/v2/products/64101'
+		);
+		$key = '_cf_clippy_first';
+		$first_time = get_option( '_cf_clippy_first', 0 );
+
+		if( 0 === $first_time ){
+			update_option( $key, time(), false );
+			return $endpoints[ 'free' ];
+		}
+
+		$date_diff = date_diff(  DateTime::createFromFormat( 'U', $first_time ), DateTime::createFromFormat( 'U', $first_time ) );
+		if( 10 > $date_diff->d ){
+			$this->extend_title = __( 'Get A Free Add-on For Caldera Forms', 'caldera-forms' );
+			return $endpoints[ 'free' ];
+		}
+
+
+		if( 1 == rand(1,2) ){
+			$this->extend_title = __( 'Have You Tried Caldera Forms Pro Yet?', 'caldera-forms' );
+			return $endpoints[ 'pro' ];
+		}else{
+			$this->extend_title = __( 'Extend Caldera Forms With Our Add-ons', 'caldera-forms' );
+			return $endpoints[ 'featured' ];
+		}
+
 	}
 
 }
