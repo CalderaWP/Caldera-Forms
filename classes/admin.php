@@ -1381,7 +1381,7 @@ class Caldera_Forms_Admin {
 
 			foreach( $rawdata as $entry){
 				$submission = Caldera_Forms::get_entry( $entry->_entryid, $form);
-				$data[$entry->_entryid]['date_submitted'] = $entry->_date_submitted;
+				$data[$entry->_entryid]['date_submitted'] = Caldera_Forms::localize_time( $entry->_date_submitted );
 
 				foreach ($structure as $slug => $field_id) {
 					$data[$entry->_entryid][$slug] = ( isset( $submission['data'][$field_id]['value'] ) ? $submission['data'][$field_id]['value'] : null );
@@ -1402,6 +1402,13 @@ class Caldera_Forms_Admin {
 			header("Content-Disposition: attachment; filename=\"" . sanitize_file_name( $form['name'] ) . ".csv\";" );
 			header("Content-Transfer-Encoding: binary");
 			$df = fopen("php://output", 'w');
+
+			$csv_data = apply_filters( 'caldera_forms_admin_csv', array(
+				'headers' => $headers,
+				'data' => $data
+			), $form );
+			$data = $csv_data[ 'data' ];
+			$headers = $csv_data[ 'headers' ];
 			fputcsv($df, $headers);
 			foreach($data as $row){
 				$csvrow = array();

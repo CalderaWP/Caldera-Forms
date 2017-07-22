@@ -39,6 +39,9 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 	 */
 	protected $form_count;
 
+
+	protected $fields;
+
 	/**
 	 * Caldera_Forms_Render_FieldsJS constructor.
 	 *
@@ -51,6 +54,10 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 		$this->form = $form;
 		$this->form_count = $form_count;
 		$this->data = array();
+		$this->fields = array(
+			'inputs' => array(),
+			'groups' => array()
+		);
 	}
 
 	/**
@@ -63,6 +70,7 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 		if( ! empty( $this->form[ 'fields' ] ) ){
 			foreach( $this->form[ 'fields' ] as $field ){
 				$type = Caldera_Forms_Field_Util::get_type( $field, $this->form );
+				$this->map_field( $type, $field );
 				if( 'summary' == $type ){
 					$type = 'html';
 				}
@@ -109,6 +117,12 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 	 * @return array
 	 */
 	public function get_data(){
+		$_data = $this->data;
+		$this->data = array(
+			'configs' => $_data,
+			'fields' => $this->fields
+		);
+
 		return $this->data;
 	}
 
@@ -188,7 +202,7 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 				'1' => __( 'Invalid country code', 'caldera-forms' ),
 				'4' => __( 'Not a number', 'caldera-forms' ),
 				'3' => __( 'Number is too long', 'caldera-forms' ),
-				'2' => __( 'Number is too short', 'calera-forms' )
+				'2' => __( 'Number is too short', 'caldera-forms' )
 
 			)
 		);
@@ -263,7 +277,6 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 
 		if ( $syncer->can_sync() ) {
 			$this->data[ $field_id ] = array_merge( $this->data[ $field_id ], array(
-				'binds'      => $syncer->get_binds(),
 				'sync'       => true,
 				'tmplId'     => $syncer->template_id(),
 				'contentId'  => $syncer->content_id(),
@@ -271,7 +284,11 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 			) );
 
 			foreach ( $syncer->get_binds() as $bind ){
-				$this->data[ $field_id ][ 'bindFields' ][] = $bind . '_' . $this->form_count;
+				$this->data[ $field_id ][ 'bindFields' ][]  =  array(
+					'tag' => '{{' . $bind . '}}',
+					'to' => $bind . '_' . $this->form_count
+				);
+
 			}
 		}
 
@@ -605,4 +622,53 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 
 		));
 	}
+
+	/**
+	 * Adds field to the $field property
+	 *
+	 * @since 1.5.3
+	 *
+	 * @param string $type Field type
+	 * @param array $field Field config
+	 *
+	 */
+	protected function map_field( $type, $field ){
+		$default =Caldera_Forms_Field_Util::get_default( $field, $this->form, true );
+
+		$_field = array(
+			'type'    => $type,
+			'fieldId' => $field[ 'ID' ],
+			'id'      => $this->field_id( $field[ 'ID' ] ),
+			'options' => array(),
+			'default' => $default
+		);
+
+		$group = false;
+		if ( in_array( $type, array(
+			'checkbox',
+			'radio',
+			'toggle_switch'
+		) ) ) {
+			$group = true;
+			if ( ! empty( $field[ 'config' ][ 'option' ] ) ) {
+				foreach ( $field[ 'config' ][ 'option' ] as $option => $args ) {
+					$_field[ 'options' ][] = $option;
+				}
+
+			}
+
+		}
+		if ( $group ) {
+			$this->fields[ 'groups' ][] = $_field;
+		}else{
+			$this->fields[ 'inputs' ][] = $_field;
+
+		}
+
+
+
+		$this->fields[ 'defaults' ][ $this->field_id( $field[ 'ID' ] ) ] = $default;
+
+	}
+
 }

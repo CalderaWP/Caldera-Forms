@@ -374,7 +374,7 @@ class Caldera_Forms_Field_Util {
 	 *
 	 * @return bool
 	 */
-	public static function get_default( $field, array  $form ){
+	public static function get_default( $field, array  $form, $convert_opt = false ){
 		if ( is_string( $field ) ) {
 			$field = self::get_field( $field, $form );
 		}
@@ -383,7 +383,13 @@ class Caldera_Forms_Field_Util {
 			return false;
 		}
 
-		return $field[ 'config' ][ 'default' ];
+		$default = $field[ 'config' ][ 'default' ];
+
+		if( $convert_opt && 0 === strpos( $default, 'opt' ) ){
+			$default = self::find_select_field_value( $field, $default );
+		}
+
+		return $default;
 
 	}
 
@@ -533,6 +539,20 @@ class Caldera_Forms_Field_Util {
 
 		return $field_value;
 
+	}
+
+	/**
+	 * Create ID attribute for a radio/checkbox field option
+	 *
+	 * @since 1.5.3
+	 *
+	 * @param string $field_id_attr ID attribute of field
+	 * @param string $opt_id Option ID
+	 *
+	 * @return string
+	 */
+	public static function opt_id_attr( $field_id_attr, $opt_id ){
+		return $field_id_attr . '_' . $opt_id;
 	}
 
 }

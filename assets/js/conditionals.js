@@ -43,7 +43,8 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 			timeout = setTimeout(later, wait);
 			if (callNow) func.apply(context, args);
 		};
-	};	
+	};
+
 	calders_forms_check_conditions = function( inst_id ){
 
 		if( typeof caldera_conditionals === "undefined" || typeof caldera_conditionals[inst_id] === "undefined"){
@@ -52,6 +53,7 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 
 
 		var $form = $( document.getElementById( inst_id ) );
+		var state = getStateObj( inst_id );
 
 		/**
 		 * Reset field value after its unhidden
@@ -59,19 +61,44 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 		 * @since 1.5.0.7
 		 *
 		 * @param field Field ID
-         */
-		function resetValue( field ){
+		 * @param state {CFState} @since 1.5.3
+		 */
+		function resetValue( field, state ){
 			var val = getSavedFieldValue( field );
+			var $field;
 			if( undefined != val ){
 				if( 'object' == typeof  val  ){
 					for( var id in val ){
 						if( true === val[id] ){
-							$( document.getElementById( id ) ).prop( 'checked', true );
+							$field = $( document.getElementById( id ) );
+							$field.prop( 'checked', true );
 						}
 					}
 				}else{
-					$( '#' + field ).val( val );
+					$field = $( '#' + field );
+					$field.val( val );
 				}
+			}
+
+			if( ! $field ){
+				$field = $field = $( document.getElementById( field ) );
+			}
+
+			//put back in state
+
+			if ( null !== state ) {
+				if( 'object' === typeof  val ){
+					var _val = [];
+					jQuery.each(val, function( inputId, value ){
+						if( value ){
+							_val.push( $( '#' + inputId ).val() );
+						}
+					});
+
+					val = _val;
+				}
+				state.rebind(field);
+				state.mutateState(field, val);
 			}
 		}
 
@@ -82,11 +109,11 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 		 * @since 1.5.0.7
 		 *
 		 * @param field Field ID
+		 * @param state {CFState} @since 1.5.3
 		 */
-		function saveFieldValue(field) {
+		function saveFieldValue(field,state) {
 			var $field = $( document.getElementById( field ) );
 			if( $field.length ){
-
 				var val = $field.val();
 				if( val ){
 					fieldVals[ field ] = val;
@@ -106,6 +133,12 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 					}
 
 				});
+			}
+
+
+			//remove from state
+			if ( null !== state ) {
+				state.unbind(field);
 			}
 
 		}
@@ -266,12 +299,12 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 
 					target.html(template).trigger('cf.add');
 					jQuery(document).trigger('cf.add');
-					resetValue( field );
+					resetValue( field, state );
 
 				}
 			}else if (action === 'hide'){
 				if(target.html().length){
-					saveFieldValue(  field  );
+					saveFieldValue(  field, state  );
 					target_field.val('').empty().prop('checked', false);
 					target.empty().trigger('cf.remove');
 					jQuery(document).trigger('cf.remove');
@@ -300,7 +333,25 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 
 			}
 
-		}	
+		}
+
+		/**
+		 * Get the CFState object by form ID
+		 *
+		 * @since 1.5.3
+		 *
+		 * @param {String} formId Form ID
+		 * @returns {CFState|null}
+		 */
+		function getStateObj( formId ) {
+			if( 'object' === typeof  window.cfstate && window.cfstate.hasOwnProperty(formId) ){
+				return  window.cfstate[formId];
+			}
+
+			return null;
+		}
+
+
 	};
 
 	calders_forms_init_conditions = function(){
