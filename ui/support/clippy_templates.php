@@ -79,7 +79,7 @@
 
 			<div class="caldera-forms-clippy" >
 				<h2>{{title}}</h2>
-				<h4>{{product.name}}</h4>
+				<h4 v-if="product.name != 'Caldera Forms Pro'">{{product.name}}</h4>
 				<p v-html="product.excerpt"></p>
 				<a v-bind:href="product.link" target="_blank" class="bt-btn btn btn-orange">
 					<?php esc_html_e( 'Learn More', 'caldera-forms' ); ?>

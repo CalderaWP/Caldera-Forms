@@ -1,4 +1,4 @@
-function CalderaFormsAdminClippys( elId, config, $ ){
+function CalderaFormsAdminClippys2( elId, config, $ ){
 
 	var self = this;
 
@@ -66,9 +66,6 @@ function CalderaFormsAdminClippys( elId, config, $ ){
 	this.remove = function () {
 		$( document.getElementById( elId ).remove() );
 	};
-
-
-
 
 
 

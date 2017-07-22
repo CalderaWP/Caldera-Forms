@@ -234,6 +234,7 @@ class Caldera_Forms_Admin_Clippy {
 		);
 		$key = '_cf_clippy_first';
 		$first_time = get_option( '_cf_clippy_first', 0 );
+
 		if( 0 === $first_time ){
 			update_option( $key, time(), false );
 			return $endpoints[ 'free' ];
@@ -253,9 +254,6 @@ class Caldera_Forms_Admin_Clippy {
 			$this->extend_title = __( 'Extend Caldera Forms With Our Add-ons', 'caldera-forms' );
 			return $endpoints[ 'featured' ];
 		}
-
-
-
 
 	}
 
