@@ -190,7 +190,15 @@
      this.range_slider = function( field ){
          var $el = $(document.getElementById(field.id));
 
+         function setCss($el){
+             $el.parent().find('.rangeslider').css('backgroundColor', field.trackcolor);
+             $el.parent().find('.rangeslider__fill').css('backgroundColor', field.color);
+             $el.parent().find('.rangeslider__handle').css('backgroundColor', field.handle).css('borderColor', field.handleborder);
+         }
+
          function init() {
+
+
              if ('object' != rangeSliders[field.id]) {
                  rangeSliders[field.id] = {
                      value: field.default,
@@ -199,65 +207,57 @@
                  };
              }
 
+
+
              var init = {
 				 onSlide: function (position, value) {
-					 if (!$el.is(':visible') || ! rangeSliders[field.id].inited ) {
-						 return;
-					 }
-					 rangeSliders[field.id].value = value;
-					 value = value.toFixed(field.value);
-					 $('#' + field.id + '_value').html(value);
+                     state.mutateState(field.id, value );
+                     rangeSliders[field.id].value = value;
 				 },
                  onInit: function () {
                      this.value = state.getState(field.id);
-
-                     if (!$el.is(':visible')) {
-						 return;
-					 }
 					 rangeSliders[field.id].inited = true;
-                     this.value = state.getState(field.id);
-                     $el.parent().find('.rangeslider').css('backgroundColor', field.trackcolor);
-                     $el.parent().find('.rangeslider__fill').css('backgroundColor', field.color);
-                     $el.parent().find('.rangeslider__handle').css('backgroundColor', field.handle).css('borderColor', field.handleborder);
+                     setCss($el);
                  },
                  polyfill: false
              };
 
-             $el.rangeslider(init);
              rangeSliders[field.id].init = init;
+             state.events().subscribe(field.id, function (value) {
+                 $('#' + field.id + '_value').html(value);
+             });
+
+             if( ! $el.is( ':visible') ){
+                 return;
+             }
+
+             $el.rangeslider(init);
 
 
          }
 
 
-         $el.on('change', function () {
-             $('#' + field.id + '_value').html(this.value);
-			 rangeSliders[field.id].value = this.value;
-         }).css("width", "100%");
+
+
 
 
          $(document).on('cf.pagenav cf.add cf.disable cf.modal', function () {
              var el = document.getElementById(field.id);
              if (null != el) {
+
                  var $el = $(el),
-					 doChange = false,
-                     val = $el.val();
-				 if (!$el.is(':visible')) {
-					 return;
-				 }
+                     val = rangeSliders[field.id].value;
+                 if( ! $el.is( ':visible') ){
+                     return;
+                 }
 
-				 if( rangeSliders[field.id].inited ){
-				 	doChange = true;
-				 }
-
+                 $el.val( val );
 				 $el.rangeslider('destroy');
 				 $el.rangeslider(rangeSliders[field.id].init);
-				 if ( doChange ) {
-					 $el.val(val).change();
-				 }else{
-					 $el.val(field.default).change();
-				 }
+                 $el.val( val ).change();
+                 setCss($el);
 
+                 state.mutateState(field.id, val );
              }
          });
 
