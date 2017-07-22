@@ -3765,7 +3765,10 @@ class Caldera_Forms {
 			"aria"              => array()
 		);
 
-		if ( 'button' !== $type ) {
+		if ( ! in_array( $type, array(
+			'button',
+			'hidden'
+		) ) ) {
 			$field_structure[ 'aria' ][ 'labelledby' ] = $field[ 'ID' ] . 'Label';
 		}
 
