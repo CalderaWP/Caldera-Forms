@@ -90,7 +90,17 @@ module.exports = function (grunt) {
                     dest: 'assets/build/js/viewer',
                     ext: '.min.js'
                 }]
-            }
+            },
+            state: {
+                files: [{
+                    sourceMap: true,
+                    expand: true,
+                    cwd: 'assets/js/state',
+                    src: '*.js',
+                    dest: 'assets/build/js/state',
+                    ext: '.min.js'
+                }]
+            },
         },
         cssmin: {
             core: {
@@ -137,6 +147,8 @@ module.exports = function (grunt) {
             },
             form: {
                 src: [
+                    'assets/js/state/events.js',
+                    'assets/js/state/state.js',
                     'assets/js/fields.js',
                     'assets/js/field-config.js',
                     'assets/js/frontend-script-init.js',

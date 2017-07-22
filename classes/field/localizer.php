@@ -51,6 +51,9 @@ class Caldera_Forms_Field_Localizer {
 			$slug = Caldera_Forms_Render_Assets::field_script_to_localize_slug();
 			$data = array();
 			foreach ( self::$localized as $form_instance => $form_data ){
+				$form_data = array_merge( $form_data, array(
+					'error_strings' => self::error_strings()
+				));
 				$data[ $form_instance ] = $form_data;
 			}
 
@@ -60,5 +63,19 @@ class Caldera_Forms_Field_Localizer {
 			$wp_scripts->print_extra_script( $slug, true );
 
 		}
+	}
+
+	/**
+	 * Error messages to localize
+	 *
+	 * @since 1.5.3
+	 *
+	 * @return array
+	 */
+	protected static function error_strings(){
+		return array(
+			'mixed_protocol' => __( 'Submission URL and current URL protocols do not match. Form may not function properly.', 'caldera-forms' ),
+			'jquery_old'     => __( 'An out of date version of jQuery is loaded on the page. Form may not function properly.', 'caldera-forms' )
+		);
 	}
 }

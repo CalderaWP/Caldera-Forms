@@ -5,10 +5,12 @@
  *
  * @param configs
  * @param $form
- * @param $
+ * @param $ {jQuery}
+ * @param state {CFState} @since 1.5.3
+ *
  * @constructor
  */
- function Caldera_Forms_Field_Config( configs, $form, $ ){
+ function Caldera_Forms_Field_Config( configs, $form, $, state ){
      var self = this;
 
      var fields = {};
@@ -75,6 +77,21 @@
          $submits.prop( 'disabled',false).attr( 'aria-disabled', false  );
      }
 
+     function debounce(func, wait, immediate) {
+        var timeout;
+        return function() {
+            var context = this, args = arguments;
+            var later = function() {
+                timeout = null;
+                if (!immediate) func.apply(context, args);
+            };
+            var callNow = immediate && !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+            if (callNow) func.apply(context, args);
+        };
+    };
+
 
      /**
       * Handler for button fields
@@ -103,87 +120,52 @@
              return;
          }
 
-         var templates = {},
-             list = fieldConfig.binds,
-			 theBindFields = [];
+		 var templates = {},
+			 bindMap = fieldConfig.bindFields,
+			 templateSystem,
+			 $target = $( document.getElementById( fieldConfig.contentId ) ),
+			 regex = {};
+		 templateSystem = function () {
 
-         /**
-          * The actual template system for HTML/summary fields
-          *
-          * @since 1.5.0
-          */
-         function templateSystem() {
-             if( undefined == templates[ fieldConfig.tmplId ] ){
-                 templates[ fieldConfig.tmplId ] = $( document.getElementById( fieldConfig.tmplId ) ).html()
-             }
+			 if (undefined == templates[fieldConfig.tmplId]) {
+				 templates[fieldConfig.tmplId] = $(document.getElementById(fieldConfig.tmplId)).html();
+			 }
+			 var output = templates[fieldConfig.tmplId];
 
-
-             var template = templates[ fieldConfig.tmplId ],
-                 $target = $( document.getElementById( fieldConfig.contentId ) );
-
-             for (var i = 0; i < list.length; i++) {
-
-				 var $field = $form.find('[data-field="' + list[i] + '"]'),
-                     value = [];
-				 if( ! $field.length ){
-				 	$field = $form.find('[data-field="' + list[i] + '_' + formInstance + '"]');
-				 }
-				 if( $field.length ){
-					 theBindFields.push( $field );
-				 }
-
-				 for (var f = 0; f < $field.length; f++) {
-                     if ($($field[f]).is(':radio,:checkbox')) {
-                         if (!$($field[f]).prop('checked')) {
-                             continue;
-                         }
-                     }
-                     if ($($field[f]).is('input:file')) {
-                         var file_parts = $field[f].value.split('\\');
-                         value.push(file_parts[file_parts.length - 1]);
-                     } else {
-                         if ($field[f].value) {
-                             value.push($field[f].value);
-                         }
-                     }
-                 }
-
-                 value = value.join(', ');
-                 if( 'string' === typeof  value ){
-                     value = value.replace(/(?:\r\n|\r|\n)/g, '<br />');
-                 }
-
-                 template = template.replace(new RegExp("\{\{" + list[i] + "\}\}", "g"), value );
-             }
-
-             $target.html(template).trigger('change');
-
-         }
-
-         /**
-          * On change/keyup events of fields that are used by this field.
-          *
-          * @since 1.5.0.7 -based on legacy code
-          */
-         function bindFields() {
-			 theBindFields.forEach( function ($field) {
-				 $field.on('click keyup change', templateSystem);
-             });
-         }
-
-         /**
-          * Rebind on conditional and page nav
-          */
-         $(document).on('cf.pagenav cf.add cf.disable', function () {
-             bindFields();
-         });
-
-		 templateSystem();
-
-		 bindFields();
+			 var value;
+			 for (var i = 0; i <= bindMap.length; i++) {
+			 	if( 'object' === typeof   bindMap[i] &&  bindMap[i].hasOwnProperty( 'to' ) && bindMap[i].hasOwnProperty( 'tag' )){
 
 
-     };
+					value = state.getState(bindMap[i].to);
+
+					if( 'string' === typeof  value ){
+						value = value.replace(/(?:\r\n|\r|\n)/g, '<br />');
+					}else  if( ! value || undefined == value.join || undefined === value || 'undefined' == typeof value){
+						value = '';
+					} else{
+						value = value.join(', ');
+					}
+					output = output.replace( bindMap[i].tag, value );
+
+				}
+
+
+			 }
+
+			 $target.html(output).trigger('change');
+		 };
+
+		 (function bind() {
+			 for (var i = 0; i <= bindMap.length; i++) {
+			 	if( 'object' === typeof  bindMap[i] && bindMap[i].hasOwnProperty( 'to' ) ){
+					state.events().subscribe(bindMap[i].to, templateSystem);
+				}
+			 }
+		 }());
+
+         templateSystem();
+	 };
 
      /**
       * Handler to summary fields
@@ -208,7 +190,15 @@
      this.range_slider = function( field ){
          var $el = $(document.getElementById(field.id));
 
+         function setCss($el){
+             $el.parent().find('.rangeslider').css('backgroundColor', field.trackcolor);
+             $el.parent().find('.rangeslider__fill').css('backgroundColor', field.color);
+             $el.parent().find('.rangeslider__handle').css('backgroundColor', field.handle).css('borderColor', field.handleborder);
+         }
+
          function init() {
+
+
              if ('object' != rangeSliders[field.id]) {
                  rangeSliders[field.id] = {
                      value: field.default,
@@ -217,63 +207,57 @@
                  };
              }
 
+
+
              var init = {
 				 onSlide: function (position, value) {
-					 if (!$el.is(':visible') || ! rangeSliders[field.id].inited ) {
-						 return;
-					 }
-					 rangeSliders[field.id].value = value;
-					 value = value.toFixed(field.value);
-					 $('#' + field.id + '_value').html(value);
+                     state.mutateState(field.id, value );
+                     rangeSliders[field.id].value = value;
 				 },
                  onInit: function () {
-					 if (!$el.is(':visible')) {
-						 return;
-					 }
+                     this.value = state.getState(field.id);
 					 rangeSliders[field.id].inited = true;
-                     this.value = rangeSliders[field.id].value;
-                     $el.parent().find('.rangeslider').css('backgroundColor', field.trackcolor);
-                     $el.parent().find('.rangeslider__fill').css('backgroundColor', field.color);
-                     $el.parent().find('.rangeslider__handle').css('backgroundColor', field.handle).css('borderColor', field.handleborder);
+                     setCss($el);
                  },
                  polyfill: false
              };
 
-             $el.rangeslider(init);
              rangeSliders[field.id].init = init;
+             state.events().subscribe(field.id, function (value) {
+                 $('#' + field.id + '_value').html(value);
+             });
+
+             if( ! $el.is( ':visible') ){
+                 return;
+             }
+
+             $el.rangeslider(init);
 
 
          }
 
 
-         $el.on('change', function () {
-             $('#' + field.id + '_value').html(this.value);
-			 rangeSliders[field.id].value = this.value;
-         }).css("width", "100%");
+
+
 
 
          $(document).on('cf.pagenav cf.add cf.disable cf.modal', function () {
              var el = document.getElementById(field.id);
              if (null != el) {
+
                  var $el = $(el),
-					 doChange = false,
-                     val = $el.val();
-				 if (!$el.is(':visible')) {
-					 return;
-				 }
+                     val = rangeSliders[field.id].value;
+                 if( ! $el.is( ':visible') ){
+                     return;
+                 }
 
-				 if( rangeSliders[field.id].inited ){
-				 	doChange = true;
-				 }
-
+                 $el.val( val );
 				 $el.rangeslider('destroy');
 				 $el.rangeslider(rangeSliders[field.id].init);
-				 if ( doChange ) {
-					 $el.val(val).change();
-				 }else{
-					 $el.val(field.default).change();
-				 }
+                 $el.val( val ).change();
+                 setCss($el);
 
+                 state.mutateState(field.id, val );
              }
          });
 

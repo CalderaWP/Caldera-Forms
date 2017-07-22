@@ -584,6 +584,7 @@
 .caldera-grid .row {
   margin-left: -7.5px;
   margin-right: -7.5px;
+  max-width: 100%;
 }
 .caldera-grid .col-xs-1,
 .caldera-grid .col-sm-1,

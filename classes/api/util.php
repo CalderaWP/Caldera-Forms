@@ -29,10 +29,20 @@ class Caldera_Forms_API_Util {
 	 * @since 1.4.4
 	 *
 	 * @param string $endpoint Optional. Endpoint.
+	 * @param bool $add_nonce Optional. If true, _wp_nonce is set with WP REST API nonce. Default is false
 	 * @return string
 	 */
-	public static function url( $endpoint = '' ){
-		return rest_url( self::api_namespace() . '/' . $endpoint );
+	public static function url( $endpoint = '', $add_nonce = false ){
+		if( ! function_exists( 'rest_url' ) ){
+			return '';
+		}
+
+		$url =  rest_url( self::api_namespace() . '/' . $endpoint );
+		if( $add_nonce ){
+			$url = add_query_arg( '_wpnonce', self::get_core_nonce(), $url );
+		}
+
+		return $url;
 	}
 
 	public static function check_api_token( WP_REST_Request $request ){
@@ -42,6 +52,17 @@ class Caldera_Forms_API_Util {
 			}
 
 		return $allowed;
+	}
+
+	/**
+	 * Get the nonce for the WP REST API
+	 *
+	 * @since 1.5.3
+	 *
+	 * @return string
+	 */
+	public static function get_core_nonce(){
+		return wp_create_nonce( 'wp_rest' );
 	}
 
 }

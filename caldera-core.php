@@ -4,7 +4,7 @@
   Plugin URI: https://CalderaForms.com
   Description: Easy to use, grid based responsive form builder for creating simple to complex forms.
   Author: Caldera Labs
-  Version: 1.5.2.1
+  Version: 1.5.3-b-1
   Author URI: http://CalderaLabs.org
   Text Domain: caldera-forms
   GitHub Plugin URI: https://github.com/CalderaWP/Caldera-Forms/
@@ -19,7 +19,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 define('CFCORE_PATH', plugin_dir_path(__FILE__));
 define('CFCORE_URL', plugin_dir_url(__FILE__));
-define( 'CFCORE_VER', '1.5.2.1' );
+define( 'CFCORE_VER', '1.5.3-b-1' );
 define('CFCORE_EXTEND_URL', 'https://api.calderaforms.com/1.0/');
 define('CFCORE_BASENAME', plugin_basename( __FILE__ ));
 
@@ -30,7 +30,7 @@ define('CFCORE_BASENAME', plugin_basename( __FILE__ ));
  *
  * PLEASE keep this an integer
  */
-define( 'CF_DB', 5 );
+define( 'CF_DB', 6 );
 
 // init internals of CF
 include_once CFCORE_PATH . 'classes/core.php';
