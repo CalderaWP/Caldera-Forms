@@ -7,15 +7,39 @@
 class Caldera_Forms_DB_Tables {
 
 	/**
+	 * WPDB instance
+	 *
+	 * @since 1.5.1
+	 *
 	 * @var wpdb
 	 */
 	protected  $wpdb;
 
+	/**
+	 * Charector collation
+	 *
+	 * @since 1.5.1
+	 *
+	 * @var string
+	 */
 	protected  $charset_collate;
 
+	/**
+	 * Max index length
+	 *
+	 * @since 1.5.1
+	 *
+	 * @var int
+	 */
 	protected  $max_index_length = 191;
 
-
+	/**
+	 * Caldera_Forms_DB_Tables constructor.
+	 *
+	 * @since 1.5.1
+	 *
+	 * @param wpdb $wpdb
+	 */
 	public function __construct( wpdb $wpdb ){
 		$this->wpdb = $wpdb;
 
@@ -83,7 +107,8 @@ class Caldera_Forms_DB_Tables {
 			'cf_tracking',
 			'cf_tracking_meta',
 			'cf_form_entries',
-			'cf_form_entry_values'
+			'cf_form_entry_values',
+			'cf_forms'
 		);
 		foreach ( $tables as &$table ){
 			$table = $this->wpdb->prefix . $table;
@@ -231,8 +256,28 @@ class Caldera_Forms_DB_Tables {
 				KEY `status` (`status`)
 				) " . $this->charset_collate . ";";
 
-
 		dbDelta( $entry_table );
+	}
+
+	/**
+	 * Add cf_forms table
+	 *
+	 * Warning: does not check if it exists first, which could cause SQL errors.
+	 *
+	 * @since 1.5.3
+	 */
+	public function forms(){
+		$this->set_charset();
+
+		$forms_table = "CREATE TABLE `" . $this->wpdb->prefix . "cf_forms` (
+				`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+				`form_id` varchar(18) NOT NULL DEFAULT '',
+				`type` varchar(255) NOT NULL DEFAULT '',
+				`config` longtext NOT NULL,
+				PRIMARY KEY (`id`),
+				KEY `form_id` (`form_id`)
+				) " . $this->charset_collate . ";";
+		dbDelta( $forms_table );
 	}
 
 

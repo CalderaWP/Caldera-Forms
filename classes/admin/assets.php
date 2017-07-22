@@ -57,13 +57,21 @@ class Caldera_Forms_Admin_Assets {
 
 		Caldera_Forms_Render_Assets::enqueue_style( 'grid' );
 		self::enqueue_style( 'admin' );
-		wp_localize_script( self::slug( 'admin' ), 'CF_ADMIN', array(
+		$data = array(
 			'adminAjax' => esc_url_raw( admin_url( 'admin-ajax.php' ) ),
 			'rest' => array(
 				'root' => esc_url_raw( Caldera_Forms_API_Util::url() ),
+				'nonce' => Caldera_Forms_API_Util::get_core_nonce()
 			)
-		) );
+		);
 
+		if( Caldera_Forms_Admin::is_edit( ) ){
+			$form_id = trim( $_GET[ Caldera_Forms_Admin::EDIT_KEY ] );
+			$data[ 'rest' ][ 'form' ] = esc_url_raw( Caldera_Forms_API_Util::url( 'forms/' . $form_id, true ) );
+			$data[ 'rest' ][ 'revisions' ] = esc_url_raw( Caldera_Forms_API_Util::url( 'forms/' . $form_id . '/revisions', true ) );
+		}
+
+		wp_localize_script( self::slug( 'admin' ), 'CF_ADMIN', $data  );
 
 		self::enqueue_style( 'modal' );
 		self::enqueue_script( 'admin' );

@@ -287,10 +287,17 @@ select.caldera-type-selector {
 }
 .caldera-editor-header .button.caldera-header-save-button,
 .caldera-editor-header .caldera-header-email-preview-button,
-.caldera-editor-header .button.caldera-header-preview-button {
+.caldera-editor-header .button.caldera-header-preview-button,
+.caldera-header-restore-button
+{
   float: left;
   margin: 7px 12px 0 12px;
   position: relative;
+}
+
+.caldera-header-restore-button{
+  margin: 7px 12px 0 12px !important;
+
 }
 .caldera-editor-header-nav {
   list-style: none outside none;

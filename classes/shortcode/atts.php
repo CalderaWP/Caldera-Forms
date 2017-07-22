@@ -12,7 +12,7 @@
 class Caldera_Forms_Shortcode_Atts {
 
 	/**
-	 * Setup field defaults form shortocde attributees
+	 * Setup field defaults form shortocde attributes
 	 *
 	 * @since 1.5.0.7
 	 *
@@ -67,6 +67,31 @@ class Caldera_Forms_Shortcode_Atts {
 
 		return $out;
 
+	}
+
+	/**
+	 * Whitleist revision shortcode arg if user has permissions
+	 *
+	 * @since 1.5.3
+	 *
+	 * @uses "shortcode_atts_caldera_form" filter
+	 * @uses "shortcode_atts_caldera_form_modal" filter
+	 *
+	 * @param array $out
+	 * @param array $pairs
+	 * @param array $atts
+	 * @param string $shortcode
+	 *
+	 * @return array
+	 */
+	public static  function  maybe_allow_revision(  $out, $pairs, $atts, $shortcode ){
+		if( current_user_can( Caldera_Forms::get_manage_cap( 'admin' ) ) ){
+			if( isset( $atts[ 'revision' ] ) ){
+				$out[  'revision' ] = $atts[ 'revision' ];
+			}
+		}
+
+		return $out;
 	}
 
 }
