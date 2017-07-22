@@ -6254,7 +6254,8 @@ function CalderaFormsResetNonce( formId, config, $ ){
 function caldera_forms_check_protocol( url ){
 	var pageProtocol = window.location.protocol;
 	var parser = document.createElement('a');
-	return parser.url === pageProtocol;
+	parser.href = url;
+	return parser.protocol === pageProtocol;
 
 }
 
@@ -6272,9 +6273,12 @@ function CalderaFormsCrossOriginWarning( $form, $, errorStrings ){
 
 
 	this.maybeWarn = function () {
-		var url = $form.data( 'request' );
-		if( ! caldera_forms_check_protocol( url ) ){
-			showNotice();
+		if( $form.find( '[name="cfajax"]').length ){
+			var url = $form.data( 'request' );
+			if( ! caldera_forms_check_protocol( url ) ){
+				showNotice();
+			}
+
 		}
 
 	};
