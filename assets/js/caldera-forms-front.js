@@ -6097,7 +6097,7 @@ window.addEventListener("load", function(){
 
 		/** Setup forms */
 		if( 'object' === typeof CFFIELD_CONFIG ) {
-			var form_id, config_object, config, instance, $el, state, protocolCheck;
+			var form_id, config_object, config, instance, $el, state, protocolCheck, jQueryCheck;
 			$('.caldera_forms_form').each(function (i, el) {
 				$el = $(el);
 				form_id = $el.attr('id');
@@ -6107,6 +6107,9 @@ window.addEventListener("load", function(){
 					//check for protocol mis-match on submit url
 					protocolCheck = new CalderaFormsCrossOriginWarning( $el, $, CFFIELD_CONFIG[instance].error_strings );
 					protocolCheck.maybeWarn();
+					//check for old jQuery
+					jQueryCheck = new CalderaFormsJQueryWarning( $el, $, CFFIELD_CONFIG[instance].error_strings );
+					jQueryCheck.maybeWarn();
 
 					config = CFFIELD_CONFIG[instance].configs;
 
@@ -6271,7 +6274,11 @@ function caldera_forms_check_protocol( url ){
  */
 function CalderaFormsCrossOriginWarning( $form, $, errorStrings ){
 
-
+	/**
+	 * Do the check and warn if needed
+	 *
+	 * @since 1.5.3
+	 */
 	this.maybeWarn = function () {
 		if( $form.find( '[name="cfajax"]').length ){
 			var url = $form.data( 'request' );
@@ -6282,9 +6289,88 @@ function CalderaFormsCrossOriginWarning( $form, $, errorStrings ){
 		}
 
 	};
-	
+
+	/**
+	 * Append notice
+	 *
+	 * @since 1.5.3
+	 */
 	function showNotice() {
 		var $target = $( $form.data( 'target' ) );
-		$target.html( '<div class="alert alert-warning">' + errorStrings.mixed_protocol + '</div>' );
+		$target.append( '<div class="alert alert-warning">' + errorStrings.mixed_protocol + '</div>' );
+	}
+}
+
+/**
+ * Add a warning about bad jQuery versions
+ *
+ * @since 1.5.3
+ *
+ * @param $form {jQuery} Form element
+ * @param $ {jQuery}
+ * @param errorStrings {Object} Localized error strings for this form
+ * @constructor
+ */
+function CalderaFormsJQueryWarning( $form, $, errorStrings ){
+
+	/**
+	 * Do the check and warn if needed
+	 *
+	 * @since 1.5.3
+	 */
+	this.maybeWarn = function () {
+		var version = version();
+;		if(  'string' === typeof  version && '1.12.4' != version ) {
+			if( isOld( version ) ){
+				showNotice();
+			}
+		}
+
+	};
+
+	/**
+	 * Get version of jQuery
+	 *
+	 * @since 1.5.3
+	 *
+	 * @returns {boolean|string|*|string|string}
+	 */
+	function version(){
+		return $.fn.jquery;
+	}
+
+	/**
+	 * Append notice
+	 *
+	 * @since 1.5.3
+	 */
+	function showNotice() {
+		var $target = $( $form.data( 'target' ) );
+		$target.append( '<div class="alert alert-warning">' + errorStrings.jquery_old + '</div>' );
+	}
+
+	/**
+	 * Check if version is older than 1.12.4
+	 *
+	 * @since 1.5.3
+	 *
+	 * @param version
+	 * @returns {boolean}
+	 */
+	function isOld(version) {
+		var split = version.split( '.' );
+		if( 1 == split[0] ){
+			if( 12 > split[2] ){
+				return true;
+			}
+
+			if( 4 > split[2]){
+				return true;
+			}
+
+		}
+
+		return false;
+
 	}
 }
