@@ -75,6 +75,10 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
 			    'edit' => Caldera_Forms_Admin::form_edit_link( $form_id, $revision )
 		    );
 	    }
+	    if( empty( $response_data ) ){
+		    return new Caldera_Forms_API_Response( array( 'message' => __( 'No Revisions Found For This Form', 'caldera-forms' ) ) );
+
+	    }
 	    return new Caldera_Forms_API_Response( $response_data );
     }
 

@@ -2692,14 +2692,19 @@ function cf_revisions_ui() {
         float:'none'
     });
     jQuery.get(url, function (r) {
-        var data = {
-            revisions: r
-        };
-        revisions = r;
-        var template = templateEl.innerHTML;
-        var source = jQuery('#tmpl--revisions').html();
-        template = Handlebars.compile(source);
-        document.getElementById('caldera-forms-revisions').innerHTML = template(data);
+        if( r.hasOwnProperty( 'message' ) ){
+            document.getElementById('caldera-forms-revisions').innerHTML = '<p class="notice notice-large notice-info">' + r.message + '</p>';
+        }else{
+            var data = {
+                revisions: r
+            };
+            revisions = r;
+            var template = templateEl.innerHTML;
+            var source = jQuery('#tmpl--revisions').html();
+            template = Handlebars.compile(source);
+            document.getElementById('caldera-forms-revisions').innerHTML = template(data);
+        }
+
         $spinner.css({
             visibility: 'hidden',
             float:'none'
@@ -2711,10 +2716,14 @@ function cf_revisions_ui() {
                display: 'inline-block',
                visibility: 'visible'
            }).attr( 'aria-hidden', false );
-
         });
 
 
+    }).error( function () {
+        $spinner.css({
+            visibility: 'hidden',
+            float:'none'
+        });
     });
 
 }
