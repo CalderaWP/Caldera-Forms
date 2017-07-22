@@ -125,6 +125,8 @@ jQuery( function($){
 	<?php }else{ ?>	
 	var opts = {};
 	<?php } ?>
+	// Only works if placeholder is set
+	opts['allowClear'] = true;
 
 	$(document).on('cf.add', function(){
 		$('#<?php echo $field_id; ?>').select2( opts );
