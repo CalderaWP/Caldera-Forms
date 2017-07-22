@@ -47,7 +47,7 @@ Whether you are creating a simple contact form or a complex system, you'll love 
 > - Alex Vasquez: Owner of the DigiSavvy agency.
 
 = Get Started Quickly With Form Templates =
-Caldera Forms ships with form templates that help you create beutiful, responsive forms quickly. With our powerful grid-base form builder, you can add new fields or modify the layout quickly.
+Caldera Forms ships with form templates that help you create beautiful, responsive forms quickly. With our powerful grid-base form builder, you can add new fields or modify the layout quickly.
 
 Quickly configure the [email notification](https://calderaforms.com/doc/setting-caldera-forms-email-notification?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms), to let you know when a form has been submitted. Add one or more [auto-responder processors](https://calderaforms.com/doc/using-caldera-forms-auto-responder-processor?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) to your forms to send emails to your lead.
 
@@ -986,7 +986,7 @@ See: [https://calderaforms.com/updates/caldera-forms-1-5-0-5](https://calderafor
 * ADDED: caldera_forms_pre_do_bracket_magic filter for custom bracket magic tags.
 * ADDED: caldera_forms_do_field_bracket_value filter to change values of bracket magic tags.
 * ADDED: Spooky magic, not really, but I like using the word magic :)
-* ADDED: Caldera_Forms_Magic_Util class full of helful functions for performing Caldera Forms magic.
+* ADDED: Caldera_Forms_Magic_Util class full of helpful functions for performing Caldera Forms magic.
 * ADDED: Caldera_Forms_Render_Assets::register() Registers all Caldera Forms CSS and JavaScript
 * ADDED: Caldera_Forms_Render_Assets::enqueue_script() Utility method for enqueuing  JavaScript with the right slug.
 * ADDED: Caldera_Forms_Render_Assets::enqueue_script() Utility method for enqueuing  JavaScript with the right slug.
@@ -998,7 +998,7 @@ See: [https://calderaforms.com/updates/caldera-forms-1-5-0-5](https://calderafor
 * ADDED: Caldera_Forms_Render_Footer class for handling printing scripts and templates in footer.
 * ADDED: Caldera_Forms_Render_Nonce class for outputting and verifying front-end form nonce.
 * ADDED: caldera_forms_verification_token_failed action that fires when nonce verification fails.
-* ADDED: Caldera_Forms_Render_Notices class for streamlining perpetration of succes or error notices returned by from submission.
+* ADDED: Caldera_Forms_Render_Notices class for streamlining perpetuation of success or error notices returned by form submission.
 * ADDED: Caldera_Forms_Render_Util class that helps with outputting notices and other inline data.
 * ADDED: Caldera_Forms_Sync_Sync class and its children -- Caldera_Forms_Sync_HTML, Caldera_Forms_Sync_Summary and Caldera_Forms_Sync_Sync -- as well as its factory Caldera_Forms_Sync_Factory for improving magic sync capabilities.
 * ADDED: caldera_forms_field_attributes() function to prepare field attributes.
@@ -1013,7 +1013,7 @@ See: [https://calderaforms.com/updates/caldera-forms-1-5-0-5](https://calderafor
 NOTE: All bug fixes and new features from 1.4.x releases are included. So this section of changelog is shortish.
 * FIXED: Duplicate forms created.
 * FIXED: Bug preventing custom field options set by filters form working in some situations.
-* FIXED: Form settings tab got messy. We tied it up a bit.
+* FIXED: Form settings tab got messy. We tidied it up a bit.
 
 
 = Caldera Forms 1.4.9 ( February 14, 2017 ) Be My Plugin Update =
@@ -1065,7 +1065,7 @@ NOTE: All bug fixes and new features from 1.4.x releases are included. So this s
 * IMPROVED: Position of UI field descriptions.
 * ADDED: The ability to specify calculation field decimal separator.
 * INCREASED: Expiration of transient for submissions.
-* FIXED: Color contrast for required * was not sufficient. Fixed for accessibility reasons. Our form builder must be accesible by default!
+* FIXED: Color contrast for required * was not sufficient. Fixed for accessibility reasons. Our form builder must be accessible by default!
 * RESTYLED: Shortcode button in form list. Color contrast in old way was insufficient.
 * ADDED: caldera_forms_summary_magic_pattern filter for changing the sprintf pattern for the summary magic tag.
 * FIXED: A dumb mistake that was putting array_merge error in main admin page sometimes.
@@ -1129,7 +1129,7 @@ NOTE: All bug fixes and new features from 1.4.x releases are included. So this s
 
 
 = Caldera Forms 1.4.0 ( July 26, 2016 ) =
-* FIXED: Datepicker behaviour on mobile. Fallback to default date field behaviour on mobile.
+* FIXED: Datepicker behavior on mobile. Fallback to default date field behavior on mobile.
 * ADDED: Duplicate field button.
 * ADDED: Duplicate field button.
 * ADDED: ARIA tags for form fields.
@@ -1160,13 +1160,13 @@ NOTE: All bug fixes and new features from 1.4.x releases are included. So this s
 * ADDED: caldera_forms_ui_field_classes filter for filtering processor UI field classes
 * ADDED: Hidden fields to processor UI.
 * FIXED: Allowed hidden fields to use custom classes.
-* ADDED: New database abstraction, this will become very important soon, aslo it's pretty cool.
+* ADDED: New database abstraction, this will become very important soon, also it's pretty cool.
 * DEPRECATED: Caldera_Forms_Admin::browse_entries() use Caldera_Forms_Entry_UI::view_entries()
 * ADDED: caldera_forms_presave_form filter to change form config before saving
 * ADDED: Caldera_Forms_Save::create_entry() for creating entries programatically
 * ADDED: caldera_forms_widget_init action after widget is initialized.
 * ADDED: caldera_forms_sanitize() utility function.
-* ADDED: caldera_forms_very_safe_string() for sanatizing a string really hard.
+* ADDED: caldera_forms_very_safe_string() for sanitizing a string really hard.
 * ADDED: caldera_forms_field_option_presets filter for adding additional option field presets
 
 = Caldera Forms 1.3.5.3 ( May 23, 2016)  =
@@ -1275,7 +1275,7 @@ NOTE: All bug fixes and new features from 1.4.x releases are included. So this s
 * FIXED: Bug where CSS was being loaded in footer in some cases.
 * FIXED: Visual issue where datepick fields in Twenty Fifteen theme showed full width.
 * ADDED: Ability to set orderby field and order direction for auto-populated fields from UI.
-* ADDED: Ability to specifify allowed field types in file fields with or without dots.
+* ADDED: Ability to specify allowed field types in file fields with or without dots.
 * ADDED: support for Github Updater Plugin
 * ADDED: caldera_forms_processor_value filter for changing value of a field from a processor.
 * ADDED: caldera_forms_manage_cap filter for managing all capabilities by context.
@@ -1288,7 +1288,7 @@ NOTE: All bug fixes and new features from 1.4.x releases are included. So this s
 
 = Bugs Fixed =
 * Scripts and Styles now load only on pages with forms in the header where they belong
-* David should be fired, but acknowledges his lazyness so he got a mild warning.
+* David should be fired, but acknowledges his laziness so he got a mild warning.
 
 = Caldera Forms 1.3.0.1 ( September 8, 2015 ) =
 
@@ -1322,13 +1322,13 @@ NOTE: All bug fixes and new features from 1.4.x releases are included. So this s
 * Toggle switches magic tag now doesn't show ,,,
 * Range Slider in conditions improved
 * State / Province field correctly uses the required setting
-* issue where if you had a single entry in trach, would show no entries.
+* issue where if you had a single entry in trash, would show no entries.
 * some smaller annoying bugs solved
 
 = New Features =
 * Added form templates when creating new form.
-* Automcomplete (select2) field type.
-* File field can now be set to accept mulitple to allow selecting multiple files.
+* Autocomplete (select2) field type.
+* File field can now be set to accept multiple to allow selecting multiple files.
 * Portuguese translation thanks to Luis Martins
 * Turkish translation thanks to Yavuz Uyar
 * Added login/logout link magic tags: {login_url} {logout_url} {register_url} {lostpassword_url}
@@ -1343,7 +1343,7 @@ NOTE: All bug fixes and new features from 1.4.x releases are included. So this s
 = Caldera Forms 1.2.2 ( June, 2015) =
 
 = Bugs Fixed =
-* Fixed widget bug where forms in widget disapeared
+* Fixed widget bug where forms in widget disappeared
 * Fixed conditional logic where multiple forms on a page broke conditions
 * Fixed a bug that stopped forms from saving if visual editor was disabled in profile
 * A bunch of smaller bugs that was causing minor issues... again
@@ -1379,7 +1379,7 @@ NOTE: All bug fixes and new features from 1.4.x releases are included. So this s
 = Improvements =
 * Updated the visual styles
 * Added additional actions and filters
-* imroved saving speed
+* improved saving speed
 
 
 = Caldera Forms 1.1.10 ( April, 2015) =
@@ -1401,29 +1401,29 @@ NOTE: All bug fixes and new features from 1.4.x releases are included. So this s
 = Improvements =
 * Added setting for custom thousand separator on calculator in money format.
 * improved array handling
-* set conditions to look at lable not value.
-* slugs from option based fields can now reference the lable with %field_slug:label%
+* set conditions to look at label not value.
+* slugs from option based fields can now reference the label with %field_slug:label%
 
 = Bug fixes =
 * Corrected a bug in the file upload not stopping on incorrect file type
 * fixed an action in the autopopulate options for field config
-* fixed a bug that made the field bind autocomplete box dissapear when scrolling
+* fixed a bug that made the field bind autocomplete box disappear when scrolling
 
 
 
 = Caldera Forms 1.1.9.7 ( April, 2015) =
 
 = Bug fixes =
-* Corrected a bug that allowed setting a field to its own conditional (infinte loop)
+* Corrected a bug that allowed setting a field to its own conditional (infinite loop)
 
 = Additions =
-* Added a "Entry List" behaviour to Variables to allow the variable to show in entry list.
+* Added an "Entry List" behavior to Variables to allow the variable to show in the entry list.
 * Added filter 'caldera_forms_get_form' for filtering form structure before using it.
 * Added the ability to render forms directly from an array structure ( Experimental dev feature : Allows you to render forms from a structure without needing to import one ).
 
 = Improvements =
 * Made selected field in edit easier to see.
-* Added a Drfat / Deactivate mode for forms.
+* Added a Draft / Deactivate mode for forms.
 
 = Caldera Forms 1.1.9.6 ( April, 2015) =
 
@@ -1462,7 +1462,7 @@ NOTE: All bug fixes and new features from 1.4.x releases are included. So this s
 
 = Bug fixes =
 * Fixed a clash with FacetWP pagination
-* Fixed a bug that stoped the text editor from running on WordPress 3.9
+* Fixed a bug that stopped the text editor from running on WordPress 3.9
 * A few minor bug fixes and improvements
 
 
@@ -1470,7 +1470,7 @@ NOTE: All bug fixes and new features from 1.4.x releases are included. So this s
 
 = Improvements =
 * Added ID or Name value selector for autopopulation on selects
-* Importer now creates a new form and wont overide the original.
+* Importer now creates a new form and won't override the original.
 * Modals only close on the dismiss or cancel buttons. no longer on clicking the overlay. (better for management)
 * Added Filter: `caldera_forms_autoresponse_config` to allow modifiying the auto responder config
 * Added Filter: `caldera_forms_autoresponse_mail` to allow modifiying the auto responder mail object before sending
@@ -1539,7 +1539,7 @@ NOTE: All bug fixes and new features from 1.4.x releases are included. So this s
 = Caldera Forms 1.1.6 (25 September, 2014) =
 
 = Added =
-* Akismet spam filtering processor. Listed once Askismet plugin is active and activated.
+* Akismet spam filtering processor. Listed once Akismet plugin is active and activated.
 * Honeypot spamtrap option to place an invisible field in the form to trick spam bots.
 
 = Fixed =
@@ -1635,7 +1635,7 @@ NOTE: All bug fixes and new features from 1.4.x releases are included. So this s
 = Additions =
 * Form preview button
 * Processors can now return an error to stop process chain
-* Process transient now accessable for storing process data for redirects and such
+* Process transient now accessible for storing process data for redirects and such
 * Field ID added to field config panel for reference
 * Extra checks for valid data
 * Extra filters
@@ -1660,7 +1660,7 @@ NOTE: All bug fixes and new features from 1.4.x releases are included. So this s
 * Star Rating view filter (show starts in entry view)
 * Auto generate mail body from submissions + {summary} magic tag
 * field %field_slug% tags dynamically bound in HTML field type ( updates dynamically with field values )
-* Gravitar field binding to antry capture to show gravitar of form submitter if email is available - else uses userid of logged in user.
+* Gravatar field binding to entry capture to show Gravatar of form submitter if email is available - else uses userid of logged in user.
 * Trash, restore & delete for submission entry management.
 * Bulk actions for submission management (trash, delete, restore & export)
 * Form Processor return values are now bindable options for other processors
@@ -1676,7 +1676,7 @@ NOTE: All bug fixes and new features from 1.4.x releases are included. So this s
 * Added processor meta values so that form processors can add to the form submission
 * optimized js in editor UI
 * more filters and actions for developers
-* other stiff I can't remember
+* other stuff I can't remember
 
 = Caldera Forms 1.0.5 (13 July, 2014) =
 
@@ -1686,7 +1686,7 @@ NOTE: All bug fixes and new features from 1.4.x releases are included. So this s
 * Magic Tags on fields and mailer
 * tag conditionals on email message
 * Ajax return filter
-* Placeholder field to add a custom placeholder rather than using the lable.
+* Placeholder field to add a custom placeholder rather than using the label.
 
 = Bug Fixes =
 * Bug in ajax verification
@@ -1694,7 +1694,7 @@ NOTE: All bug fixes and new features from 1.4.x releases are included. So this s
 * Conditionals on checkboxes now works
 * Conditionals performance on frontend
 * Calculations field responds to conditionals correctly
-* Static field types (select options etc) cannot be minipulated from frontend. Preprocessing on submit restores set values.
+* Static field types (select options etc) cannot be manipulated from frontend. Preprocessing on submit restores set values.
 
 = Enhancements =
 * Switched redirect filter and action order
