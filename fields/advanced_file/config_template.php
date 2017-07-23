@@ -11,7 +11,7 @@
   <label role="presentation"></label>
   <div class="caldera-config-field">
     <label for="{{_id}}_image_with_preview"><input id="{{_id}}_image_with_preview" type="checkbox" class="field-config" name="{{_name}}[image_with_preview]" value="1" {{#if image_with_preview}}checked="checked"{{/if}}>
-            <?php echo esc_html__('Image with Preview', 'caldera-forms'); ?>
+            <?php echo esc_html__('Image with Preview and drag & drop', 'caldera-forms'); ?>
         </label>
   </div>
 </div>
