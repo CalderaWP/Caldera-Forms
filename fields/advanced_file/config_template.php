@@ -72,11 +72,11 @@
 
     image_with_preview_check.change(function(){
         if( $(this).prop('checked') ){
-          allow_multiple_text_wrap.hide();
+          allow_multiple_text_wrap.show();
           allow_multiple_check_wrap.hide();
           allowed_extensions.hide();
         }else{
-          allow_multiple_check_wrap.is(':checked') && allow_multiple_text_wrap.show();
+          allow_multiple_text_wrap.hide();
           allow_multiple_check_wrap.show();
           allowed_extensions.show();
         }

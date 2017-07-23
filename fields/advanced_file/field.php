@@ -1,6 +1,12 @@
 <?php
 	$is_multiple = null;
-	if( !empty( $field['config']['multi_upload'] ) ){
+	$has_preview = !empty($field['config']['image_with_preview']);
+
+	if( $has_preview ) {
+		 $wrapper_before = str_replace('class="', 'class=" has-drag-n-drop ', $wrapper_before);
+	}
+
+	if( !$has_preview && !empty( $field['config']['multi_upload'] ) ){
 		$is_multiple .= ' multiple="multiple"';
 	}
 	$uniqu_code = uniqid('trupl');		
@@ -18,24 +24,28 @@
 		}
 	}
 	$accept_tag = array();
-	if( !empty( $field['config']['allowed'] ) ){
-		$allowed = array_map('trim', explode(',', trim( $field['config']['allowed'] ) ) );
-		$field['config']['allowed'] = array();
-		foreach( $allowed as $ext ){
-			$ext = trim( $ext, '.' );
-			$file_type = wp_check_filetype( 'tmp.'. $ext );
-			$field['config']['allowed'][] = $file_type['type'];
-			$accept_tag[] = '.' . $ext;
+	if ($has_preview) {
+		$accept_tag = array('.jpg,.jpeg,.jpe,.gif,.png');
+	} else {
+		if( !empty( $field['config']['allowed'] ) ){
+			$allowed = array_map('trim', explode(',', trim( $field['config']['allowed'] ) ) );
+			$field['config']['allowed'] = array();
+			foreach( $allowed as $ext ){
+				$ext = trim( $ext, '.' );
+				$file_type = wp_check_filetype( 'tmp.'. $ext );
+				$field['config']['allowed'][] = $file_type['type'];
+				$accept_tag[] = '.' . $ext;
+			}
+		}else{
+			$allowed = get_allowed_mime_types();
+			$field['config']['allowed'] = array();
+			foreach( $allowed as $ext=>$mime ){
+				$field['config']['allowed'][] = $mime;
+				$accept_tag[] = '.' . str_replace('|', ',.', $ext );
+			}
 		}
-	}else{
-		$allowed = get_allowed_mime_types();
-		$field['config']['allowed'] = array();
-		foreach( $allowed as $ext=>$mime ){
-			$field['config']['allowed'][] = $mime;
-			$accept_tag[] = '.' . str_replace('|', ',.', $ext );
-		}
-		
 	}
+
 	$accept_tag = 'accept="' . esc_attr( implode(',', $accept_tag) ) . '"';
 
 	$field['config']['max_size'] = wp_max_upload_size();
@@ -59,3 +69,24 @@
 		<?php echo $field_caption; ?>
 	<?php echo $field_after; ?>
 <?php echo $wrapper_after; ?>
+
+<style type="text/css" media="screen">
+	.form-group.has-drag-n-drop {
+		border: 3px dashed #ccc;
+		padding: 10px;
+		text-align: center;
+	}
+
+	.form-group.has-drag-n-drop .btn {
+		background: #fafafa;
+		border: 1px solid #ccc;
+		font-weight: 700;
+		padding: 10px;
+	}
+
+	.form-group.has-drag-n-drop label {
+		font-size: 1.5em;
+		color: rgba(0,0,0, .3);
+		font-weight: 700;
+	}
+</style>
