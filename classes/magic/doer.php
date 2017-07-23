@@ -306,6 +306,9 @@ class Caldera_Forms_Magic_Doer {
 								$magic_tag = null;
 							}
 							break;
+						case 'query_var' :
+							$magic_tag = get_query_var($magic[ 1 ]);
+							break;
 					}
 				} else {
 					switch ( $magic_tag ) {
