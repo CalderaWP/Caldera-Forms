@@ -41,13 +41,38 @@ function size_format(bytes) {
   return converted;
 }
 
+
+function getFileQueueMarkup(file, i, state_class) {
+  return '<li class="cf-uploader-queue-item ' + i + ' ' + state_class + '">' +
+
+        '<a href="#remove-file" data-file="' + i + '" class="cf-file-remove">&times;</a>'+
+        '<span class="file-name">' +
+          file.file.name +
+        '</span>&nbsp;' +
+
+        '<div class="progress-bar" style="background:#ececec;">' +
+          '<div class="bar" id="progress-file-' + i + '" style="height:2px;width:0%;background:#a3be5f;"></div>' +
+        '</div>' +
+
+        '<small class="file-type">' +
+          file.file.type || 'n/a' +
+        '</small> ' +
+
+        '<small class="file-size">' + size_format(file.file.size) + '</small>' +
+
+        '<small class="file-error">' + file.message + '</small>' +
+      '</li>';
+}
+
 function handleFileSelect(evt, config) {
   evt.stopPropagation();
   evt.preventDefault();
+  var files;
+
   if (evt.dataTransfer) {
-    var files = evt.dataTransfer.files;
+    files = evt.dataTransfer.files;
   } else {
-    var files = evt.target.files;
+    files = evt.target.files;
   }
   // files is a FileList of File objects. List some properties.
   var output = [],
@@ -57,18 +82,17 @@ function handleFileSelect(evt, config) {
     var id = 'fl' + Math.round(Math.random() * 187465827348977),
       state = 1,
       error = '';
-    if (config.allowed.length) {
-      if (config.allowed.indexOf(files[i].type) < 0) {
-        state = 0;
-        error = config.notices.invalid_filetype;
-      }
+
+    if (config.allowed.length && config.allowed.indexOf(files[i].type) < 0) {
+      state = 0;
+      error = config.notices.invalid_filetype;
     }
-    if (config.max_size) {
-      if (files[i].size > config.max_size) {
-        state = 0;
-        error = config.notices.file_exceeds_size_limit;
-      }
+
+    if (config.max_size && files[i].size > config.max_size) {
+      state = 0;
+      error = config.notices.file_exceeds_size_limit;
     }
+
     if (!files[i].size) {
       state = 0;
       error = config.notices.zero_byte_file;
@@ -84,19 +108,16 @@ function handleFileSelect(evt, config) {
   // do preview
   for (var i in cf_uploader_filelist) {
     if (cf_uploader_filelist[i].field !== config.id) { continue; }
+
     var state_class = '',
       error_message = '';
+
     if (cf_uploader_filelist[i].state === 0) {
       state_class = 'has-error';
     }
 
-    output.push('<li class="cf-uploader-queue-item ' + i + ' ' + state_class + '">',
-      '<a href="#remove-file" data-file="' + i + '" class="cf-file-remove">&times;</a> <span class="file-name">', cf_uploader_filelist[i].file.name, '</span>&nbsp;',
-      '<div class="progress-bar" style="background:#ececec;"><div class="bar" id="progress-file-' + i + '" style="height:2px;width:0%;background:#a3be5f;"></div></div>',
-      '<small class="file-type">', cf_uploader_filelist[i].file.type || 'n/a', '</small> ',
-      '<small class="file-size">' + size_format(cf_uploader_filelist[i].file.size) + '</small>',
-      '<small class="file-error">' + cf_uploader_filelist[i].message + '</small>',
-      '</li>');
+    output.push(getFileQueueMarkup(cf_uploader_filelist[i], i, state_class));
+
     if (cf_uploader_filelist[i].message.length) {
       validator = cf_uploader_filelist[i].message;
     }
