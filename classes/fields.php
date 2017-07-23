@@ -403,7 +403,7 @@ class Caldera_Forms_Fields {
 					"template" => CFCORE_PATH . "fields/advanced_file/config_template.php"
 				),
 				"scripts"     => array(
-					CFCORE_URL . 'fields/advanced_file/uploader.min.js'
+					CFCORE_URL . 'fields/advanced_file/uploader.js'
 				),
 
 			),

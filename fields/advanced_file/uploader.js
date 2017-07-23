@@ -79,24 +79,23 @@ function handleFileSelect(evt, config) {
     validator = 'valid';
   // get length
   for (var i = 0; i < files.length; i++) {
-    var id = 'fl' + Math.round(Math.random() * 187465827348977),
-      state = 1,
-      error = '';
+    var id = 'fl' + Math.round(Math.random() * 187465827348977);
+    var error = '';
+    var state;
 
     if (config.allowed.length && config.allowed.indexOf(files[i].type) < 0) {
-      state = 0;
       error = config.notices.invalid_filetype;
     }
 
     if (config.max_size && files[i].size > config.max_size) {
-      state = 0;
       error = config.notices.file_exceeds_size_limit;
     }
 
     if (!files[i].size) {
-      state = 0;
       error = config.notices.zero_byte_file;
     }
+
+    state = error === '' ? 1 : 0;
 
     cf_uploader_filelist[evt.target.id + '_file_' + id] = {
       file: files[i],
@@ -129,16 +128,65 @@ function handleFileSelect(evt, config) {
   jQuery('#' + evt.target.id + '_validator').val(validator);
 }
 
-function handleDragOver(evt) {
-  evt.stopPropagation();
-  evt.preventDefault();
-  evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
-}
+function calderaFormsInitDragFileUploader() {
+  var $ = jQuery;
 
-function handleDragOver(event) {
-  event.stopPropagation();
-  event.preventDefault();
-  event.dataTransfer.dropEffect = 'copy';
+  $(document).on('click', '.clear-droppable-area', function(){
+    $(this).parent().removeClass('has-preview').empty();
+  });
+
+  function dragOver(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'copy';
+
+    var group = $(e.target).closest('.form-group');
+
+    if (e.type==='dragover') {
+      group.addClass('is-hovered');
+    } else {
+      group.removeClass('is-hovered');
+    }
+  }
+
+  function generatePreview(e, file) {
+    var group = $(e.target).closest('.form-group');
+    var preview = $('.droppable-area-preview', group);
+
+    if (file.type.indexOf("image") == 0) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        preview.html( $('<img src="' + e.target.result + '" />') );
+        preview.append('<span class="clear-droppable-area">&times;</span>');
+        preview.addClass('has-preview')
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  function drop(e) {
+    dragOver(e);
+    var files = e.target.files || e.dataTransfer.files;
+
+    for (var i = 0, file; file = files[i]; i++) {
+      generatePreview(e, file);
+    }
+  }
+
+
+  $('.form-group.has-drag-n-drop').each(function(i, group){
+    var field = $('.cf-multi-uploader', group);
+    var droppable = $('.droppable-area', group);
+
+    field[0].addEventListener("change", drop, false);
+    var xhr = new XMLHttpRequest();
+      if (xhr.upload) {
+
+        droppable[0].addEventListener("dragover", dragOver, false);
+        droppable[0].addEventListener("dragleave", dragOver, false);
+        droppable[0].addEventListener("drop", drop, false);
+      }
+  });
 }
 
 jQuery(function($) {
@@ -146,7 +194,9 @@ jQuery(function($) {
     var clicked = $(this);
     $('#' + clicked.data('parent')).trigger('click');
   });
+
   $('.cf-multi-uploader').hide();
+
   $(document).on('click', '.cf-file-remove', function(e) {
     e.preventDefault();
     var clicked = $(this),
@@ -158,9 +208,11 @@ jQuery(function($) {
     validator.val('');
 
     $('[data-parent="' + field + '"]').show();
+
     delete cf_uploader_filelist[clicked.data('file')];
     clicked.closest('.cf-multi-uploader-list').parent().find('.cf-uploader-trigger').show();
     clicked.parent().remove();
+
     if (!list.children().length) {
       list.remove();
     }
@@ -170,13 +222,14 @@ jQuery(function($) {
         validator.val(cf_uploader_filelist[fid].message);
       }
     }
-
   });
 
   $(document).on('change', '.cf-multi-uploader', function(e) {
     var field = $(this),
-      config = field.data('config');
+        config = field.data('config');
+
     config.id = field.prop('id');
+
     if (!field.prop('multiple')) {
       if ('object' != typeof cf_uploader_filelist) {
         cf_uploader_filelist = {};
@@ -185,6 +238,13 @@ jQuery(function($) {
     }
     handleFileSelect(e, config);
   });
+
+  if (window.File && window.FileList && window.FileReader) {
+    calderaFormsInitDragFileUploader();
+  } else {
+    $('.form-group.has-drag-n-drop').removeClass('has-drag-n-drop')
+  }
+
 
   window.Parsley
     .addValidator('fileType', {

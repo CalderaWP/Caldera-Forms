@@ -4,6 +4,7 @@
 
 	if( $has_preview ) {
 		 $wrapper_before = str_replace('class="', 'class=" has-drag-n-drop ', $wrapper_before);
+		 $wrapper_before .= '<div class="droppable-area-preview"></div><div class="droppable-area"></div>';
 	}
 
 	if( !$has_preview && !empty( $field['config']['multi_upload'] ) ){
@@ -75,18 +76,48 @@
 		border: 3px dashed #ccc;
 		padding: 10px;
 		text-align: center;
+		position: relative;
 	}
 
+	.form-group .droppable-area {
+		position:absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 2;
+	}
+
+	.form-group.has-drag-n-drop.is-hovered {
+		background: #bbdefb;
+	}
+
+	.form-group .clear-droppable-area,
 	.form-group.has-drag-n-drop .btn {
 		background: #fafafa;
 		border: 1px solid #ccc;
 		font-weight: 700;
 		padding: 10px;
+		position: relative;
+		z-index: 5;
+	}
+
+	.form-group .clear-droppable-area {
+		position: absolute;
+		z-index: 10;
+		top: 5px;
+		right: 5px;
+		cursor: pointer;
+		line-height: 1;
 	}
 
 	.form-group.has-drag-n-drop label {
 		font-size: 1.5em;
 		color: rgba(0,0,0, .3);
 		font-weight: 700;
+	}
+
+	.droppable-area-preview.has-preview ~ * {
+		display: none;
 	}
 </style>
