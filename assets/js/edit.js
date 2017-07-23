@@ -2237,6 +2237,7 @@ jQuery(document).ready(function($) {
                 }
                 config.option["opt" + parseInt( ( Math.random() + i ) * 0x100000 )] = {
                     value	:	val,
+                    calc_value: val,
                     label	:	label,
                     default	:	false
                 }
@@ -2254,6 +2255,7 @@ jQuery(document).ready(function($) {
             config.option[key]	=	{
                 value	:	'',
                 label	:	'',
+                calc_value: '',
                 default :	false
             };
         }

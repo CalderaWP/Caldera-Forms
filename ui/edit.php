@@ -326,7 +326,7 @@ $field_options_template = "
 						<label class=\"option-setting-label option-setting-label-for-value\" for=\"opt-calc-val-{{@key}}\">
 							". esc_html__( 'Calculation Value', 'caldera-forms' ) . "
 						</label>
-						<input{{#unless ../show_values}} style=\"display:none;\"{{/unless}} type=\"number\" class=\"toggle_calc_value_field field-config option-setting \" name=\"{{../_name}}[option][{{@key}}][calc_value]\" value=\"{{#if ../show_values}}{{calc_value}}{{else}}{{label}}{{/if}}\" placeholder=\"" . esc_attr( __( 'Calculation Value', 'caldera-forms' ) ) . "\" id=\"opt-calc-val-{{@key}}\" data-opt=\"{{@key}}\" />
+						<input{{#unless ../show_values}} style=\"display:none;\"{{/unless}} type=\"text\" class=\"toggle_calc_value_field field-config option-setting \" name=\"{{../_name}}[option][{{@key}}][calc_value]\" value=\"{{#if ../show_values}}{{calc_value}}{{else}}{{label}}{{/if}}\" placeholder=\"" . esc_attr( __( 'Calculation Value', 'caldera-forms' ) ) . "\" id=\"opt-calc-val-{{@key}}\" data-opt=\"{{@key}}\" />
 					</div>
 					
 					<div class=\"caldera-config-group\">
@@ -1034,22 +1034,49 @@ do_action('caldera_forms_edit_end', $element);
 			<label class="option-setting-label option-setting-label-for-value" for="opt-calc-val-{{@key}}">
 				<?php esc_html_e( 'Calculation Value', 'caldera-forms' ); ?>
 			</label>
-			<input{{#unless ../show_values}} style="display:none;"{{/unless}} type="number" class="toggle_calc_value_field field-config option-setting " name="{{../_name}}[option][{{@key}}][calc_value]" value="{{#if ../show_values}}{{calc_value}}{{else}}{{label}}{{/if}}" placeholder="" . esc_attr( __( 'Calculation Value', 'caldera-forms' ) ) . "" id="opt-calc-val-{{@key}}" />
+			<input
+				type="text"
+				class="toggle_calc_value_field field-config option-setting "
+				name="{{../_name}}[option][{{@key}}][calc_value]"
+				value="{{calc_value}}"
+				placeholder="<?php esc_attr_e( 'Calculation Value', 'caldera-forms'  ); ?>"
+				id="opt-calc-val-{{@key}}"
+				{{#unless ../show_values}} style="display:none;"{{/unless}}
+			/>
 		</div>
 
 		<div class="caldera-config-group">
 			<label class="option-setting-label option-setting-label-for-value" for="opt-val-{{@key}}">
 				<?php esc_html_e( 'Value', 'caldera-forms' ); ?>
 			</label>
-			<input{{#unless ../show_values}} style="display:none;"{{/unless}} type="text" class="toggle_value_field option-setting field-config  required " name="{{../_name}}[option][{{@key}}][value]" value="{{#if ../show_values}}{{value}}{{else}}{{label}}{{/if}}" <?php esc_html_e( ' Value', 'caldera-forms' ); ?>" id="opt-val-{{@key}}" data-opt="{{@key}}" />
+			<input
+				type="text"
+				class="toggle_value_field option-setting field-config  required "
+				name="{{../_name}}[option][{{@key}}][value]"
+				value="{{value}}"
+				placeholder="<?php esc_attr_e( 'Value', 'caldera-forms' ); ?>"
+				id="opt-val-{{@key}}"
+				data-opt="{{@key}}"
+				{{#unless ../show_values}} style="display:none;"{{/unless}}
+			/>
 		</div>
 
 		<div class="caldera-config-group">
 			<label class="option-setting-label option-setting-label-for-label" for="opt-label-{{@key}}">
 				<?php esc_html_e( 'Label', 'caldera-forms' ); ?>
 			</label>
-			<input{{#unless ../show_values}} style="width:245px;"{{/unless}} type="text" data-option="{{@key}}" class="toggle_label_field option-setting field-config required" name="{{../_name}}[option][{{@key}}][label]" value="{{label}}" placeholder="<?php esc_attr_e( 'Label', 'caldera-forms' ); ?>" for="opt-label-{{@key}}" data-opt="{{@key}}" />
+			<input
+				type="text"
+				data-option="{{@key}}"
+				class="toggle_label_field option-setting field-config required"
+				name="{{../_name}}[option][{{@key}}][label]" value="{{label}}"
+				placeholder="<?php esc_attr_e( 'Label', 'caldera-forms' ); ?>"
+				for="opt-label-{{@key}}"
+				data-opt="{{@key}}"
+				{{#unless ../show_values}} style="width:245px;"{{/unless}}
+			/>
 		</div>
+
 		<button class="button button-small toggle-remove-option" type="button">
 			<i class="icn-delete"></i>
 		</button>
