@@ -4,7 +4,7 @@
 
 	if( $has_preview ) {
 		 $wrapper_before = str_replace('class="', 'class=" has-drag-n-drop ', $wrapper_before);
-		 $wrapper_before .= '<div class="droppable-area-preview"></div><div class="droppable-area"></div>';
+		 $wrapper_before .= '<div class="droppable-area"></div><div class="droppable-area-preview"></div>';
 	}
 
 	if( !$has_preview && !empty( $field['config']['multi_upload'] ) ){

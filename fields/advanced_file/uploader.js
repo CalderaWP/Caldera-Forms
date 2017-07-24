@@ -1,4 +1,5 @@
 var cf_uploader_filelist = {};
+var cf_dropped_filelist = {};
 
 function size_format(bytes) {
   var converted = false;
@@ -135,14 +136,17 @@ function calderaFormsInitDragFileUploader() {
     $(this).parent().removeClass('has-preview').empty();
   });
 
-  function dragOver(e) {
+  function onDrag(e) {
     e.stopPropagation();
     e.preventDefault();
-    e.dataTransfer.dropEffect = 'copy';
+
+    if (e.dataTransfer) {
+      e.dataTransfer.dropEffect = 'copy';
+    }
 
     var group = $(e.target).closest('.form-group');
 
-    if (e.type==='dragover') {
+    if (e.type === 'dragover') {
       group.addClass('is-hovered');
     } else {
       group.removeClass('is-hovered');
@@ -153,24 +157,80 @@ function calderaFormsInitDragFileUploader() {
     var group = $(e.target).closest('.form-group');
     var preview = $('.droppable-area-preview', group);
 
-    if (file.type.indexOf("image") == 0) {
+    if (file.type.indexOf('image') === 0) {
       var reader = new FileReader();
+
       reader.onload = function(e) {
         preview.html( $('<img src="' + e.target.result + '" />') );
         preview.append('<span class="clear-droppable-area">&times;</span>');
-        preview.addClass('has-preview')
+        preview.addClass('has-preview');
       };
+
       reader.readAsDataURL(file);
     }
   }
 
-  function drop(e) {
-    dragOver(e);
+  function onDrop(e) {
+    onDrag(e);
     var files = e.target.files || e.dataTransfer.files;
+    var formID = $(e.target).closest('form').attr('id');
+    var field = $(e.target).parent().find('.cf-multi-uploader');
 
-    for (var i = 0, file; file = files[i]; i++) {
-      generatePreview(e, file);
+    cf_dropped_filelist[formID] = cf_dropped_filelist[formID] || {};
+
+    if (files.length) {
+      generatePreview(e, files[0]);
+      cf_dropped_filelist[formID][field[0].name] = files;
+    } else {
+      cf_dropped_filelist[formID][field[0].name] = false;
     }
+
+  }
+
+  function submitFileForm(e) {
+    var form = $(e.target);
+
+    if (form.hasClass('is-uploading')) {
+      return false;
+    }
+    e.preventDefault();
+
+    var fileFields = cf_dropped_filelist[form.attr('id')];
+
+    var ajaxData = new FormData(form[0]);
+
+
+    if (fileFields && !form.hasClass('is-uploaded')) {
+      $.each(fileFields, function(fieldName, files){
+        $.each(files, function(i, file){
+          ajaxData.append(fieldName, file);
+        });
+      });
+    }
+
+    $.ajax({
+      url: form.attr('action'),
+      type: form.attr('method'),
+      data: ajaxData,
+      dataType: 'json',
+      cache: false,
+      contentType: false,
+      processData: false,
+
+      complete: function() {
+        form.removeClass('is-uploading');
+        form.addClass('is-uploaded');
+      },
+      success: function(data) {
+        form.addClass( data.success === true ? 'is-success' : 'is-error' );
+        if (!data.success) $errorMsg.text(data.error);
+      },
+      error: function() {
+        // Log the error, show an alert, whatever works for you
+      }
+    });
+
+    return false;
   }
 
 
@@ -178,15 +238,20 @@ function calderaFormsInitDragFileUploader() {
     var field = $('.cf-multi-uploader', group);
     var droppable = $('.droppable-area', group);
 
-    field[0].addEventListener("change", drop, false);
-    var xhr = new XMLHttpRequest();
-      if (xhr.upload) {
+    field[0].addEventListener("change", onDrop, false);
 
-        droppable[0].addEventListener("dragover", dragOver, false);
-        droppable[0].addEventListener("dragleave", dragOver, false);
-        droppable[0].addEventListener("drop", drop, false);
-      }
+    droppable[0].addEventListener("dragover", onDrag, false);
+    droppable[0].addEventListener("dragleave", onDrag, false);
+    droppable[0].addEventListener("drop", onDrop, false);
   });
+
+  var form = $('.form-group.has-drag-n-drop').closest('form');
+
+  if (!form.attr('id')) {
+    form.attr('id', 'tmp-' + Math.round(Math.random() * 187465827348977));
+  }
+
+  form.on('submit', submitFileForm);
 }
 
 jQuery(function($) {
