@@ -561,7 +561,7 @@ function CalderaFormsJQueryWarning( $form, $, errorStrings ){
 	 * @since 1.5.3
 	 */
 	this.maybeWarn = function () {
-		var version = version();
+		var version =  $.fn.jquery;
 ;		if(  'string' === typeof  version && '1.12.4' != version ) {
 			if( isOld( version ) ){
 				showNotice();
@@ -569,17 +569,6 @@ function CalderaFormsJQueryWarning( $form, $, errorStrings ){
 		}
 
 	};
-
-	/**
-	 * Get version of jQuery
-	 *
-	 * @since 1.5.3
-	 *
-	 * @returns {boolean|string|*|string|string}
-	 */
-	function version(){
-		return $.fn.jquery;
-	}
 
 	/**
 	 * Append notice
