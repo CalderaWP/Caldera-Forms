@@ -408,7 +408,7 @@ class Caldera_Forms {
 					caldera_forms_write_db_flag( 4 );
 				}
 
-				if ( $db_version < 6 || $force_update ) {
+				if ( ( $db_version < 6 || $force_update ) && class_exists( 'Caldera_Forms_Forms' ) ) {
 					caldera_forms_db_v6_update();
 
 				}

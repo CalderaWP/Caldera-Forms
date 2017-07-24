@@ -59,6 +59,9 @@ function caldera_forms_db_v2_update(){
  * @since 1.5.3
  */
 function caldera_forms_db_v6_update(){
+	if( ! class_exists( 'Caldera_Forms_Forms' ) ){
+		return;
+	}
 
 	//This will make sure DB table is there if not already
 	Caldera_Forms::check_tables();
