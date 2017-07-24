@@ -456,14 +456,24 @@ class Caldera_Forms_Field_Util {
 	 *
 	 * @since 1.5.1
 	 *
-	 * @param array $option Option configuration
+	 * @param array|string $option Option configuration or opt ID
 	 * @param array $field Field configuration
 	 * @param array $form Form configuration
 	 *
 	 * @return int|string|float
 	 */
-	public static function get_option_calculation_value( array $option, array $field, array  $form ){
+	public static function get_option_calculation_value( $option, array $field, array  $form ){
 		$calc_val = 0;
+		if( is_string( $option ) ){
+			if( ! empty( $field[ 'config' ][ 'option' ] ) && array_key_exists( $option, $field[ 'config' ][ 'option' ]  ) ){
+				$option = $field[ 'config' ][ 'option' ][ $option ];
+			}
+		}
+
+		if( ! is_array( $option ) ){
+			return $calc_val;
+		}
+
 		if ( isset( $option[ 'calc_value' ] ) && '' !== $option[ 'calc_value' ] ) {
 			$calc_val = $option[ 'calc_value' ];
 		} elseif ( isset( $option[ 'value' ] ) ) {
