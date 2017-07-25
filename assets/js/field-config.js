@@ -127,6 +127,14 @@
 			 regex = {};
 		 templateSystem = function () {
 
+		     if( ! $target.length ){
+                 $target = $( document.getElementById( fieldConfig.contentId ) );
+             }
+
+             if( ! $target.length ){
+                 return;
+             }
+
 			 if (undefined == templates[fieldConfig.tmplId]) {
 				 templates[fieldConfig.tmplId] = $(document.getElementById(fieldConfig.tmplId)).html();
 			 }
@@ -162,6 +170,7 @@
 					state.events().subscribe(bindMap[i].to, templateSystem);
 				}
 			 }
+             $(document).on('cf.pagenav cf.modal', templateSystem );
 		 }());
 
          templateSystem();

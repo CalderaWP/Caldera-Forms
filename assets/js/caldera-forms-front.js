@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.3-b-2 - 2017-07-24 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.3-b-2 - 2017-07-25 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -5299,6 +5299,14 @@ function toggle_button_init(id, el){
 			 regex = {};
 		 templateSystem = function () {
 
+		     if( ! $target.length ){
+                 $target = $( document.getElementById( fieldConfig.contentId ) );
+             }
+
+             if( ! $target.length ){
+                 return;
+             }
+
 			 if (undefined == templates[fieldConfig.tmplId]) {
 				 templates[fieldConfig.tmplId] = $(document.getElementById(fieldConfig.tmplId)).html();
 			 }
@@ -5334,6 +5342,7 @@ function toggle_button_init(id, el){
 					state.events().subscribe(bindMap[i].to, templateSystem);
 				}
 			 }
+             $(document).on('cf.pagenav cf.modal', templateSystem );
 		 }());
 
          templateSystem();
