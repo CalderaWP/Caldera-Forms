@@ -233,13 +233,18 @@ class Caldera_Forms_DB_Form extends Caldera_Forms_DB_Base {
 	 *
 	 * @param string $form_id Form ID
 	 *
-	 * @return false|int
+	 * @return bool
 	 */
     public function delete_by_form_id($form_id ){
     	global  $wpdb;
-	    return $wpdb->delete( $this->get_table_name(), array(
+	    $rows =  $wpdb->delete( $this->get_table_name(), array(
 	    	'form_id' => $form_id
 	    ));
+	    if( $rows >= 1 ){
+	    	return true;
+	    }
+
+	    return false;
     }
 
 	/**

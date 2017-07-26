@@ -664,8 +664,8 @@ class Caldera_Forms_Forms {
 		}
 
 		unset( $forms[ $id ] );
-		$deleted = delete_option( $id );
-		Caldera_Forms_DB_Form::get_instance()->delete_by_form_id( $id );
+		delete_option( $id );
+		$deleted = Caldera_Forms_DB_Form::get_instance()->delete_by_form_id( $id );
 		if ( $deleted ) {
 			self::update_registry( $forms );
 
