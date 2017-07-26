@@ -771,6 +771,8 @@ This could also be a sign of a more serious issue on your server, but is probabl
 4. **Powerful Conditional Logic** - Hide, show and disable fields based on user input!  Don't pay for conditional logic!
 5. **Go Further With Form Processors** - Auto-responders, conditional recipients, redirects are included! Go further with our add-ons!
 
+
+== Changelog ==
 = Caldera Forms 1.5.3.1 (July 27th, 2017) Attack of the Clones! =
 See: [https://calderaforms.com/updates/caldera-forms-1-5-3-1](https://calderaforms.com/updates/caldera-forms-1-5-3-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.3.1)
 
@@ -798,7 +800,6 @@ See: [https://calderaforms.com/updates/caldera-forms-1-5-3](https://calderaforms
 * BUG FIXED: Option presets & option bulk creation was not populating options properly. Now it's fixed.
 * BUG FIXED: Checkbox fields used value, not calculations value when used in calculations.
 
-== Changelog ==
 = Caldera Forms 1.5.2.1 (July 5, 2017) (bool) =
 See: [https://calderaforms.com/updates/caldera-forms-1-5-2-1](https://calderaforms.com/updates/caldera-forms-1-5-2-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-5-2-1)
 
