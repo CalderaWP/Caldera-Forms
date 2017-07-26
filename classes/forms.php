@@ -624,6 +624,7 @@ class Caldera_Forms_Forms {
 			$clone_form = self::get_form( $clone );
 			if(!empty($clone_form['ID']) && $clone == $clone_form['ID']){
 				$newform = array_merge($clone_form, $newform);
+				unset( $newform[ 'db_id' ] );
 			}
 		}
 
