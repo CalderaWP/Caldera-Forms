@@ -15,7 +15,7 @@ if( Caldera_Forms_Admin::is_revision_edit() ){
 }
 
 if( empty( $element ) || ! is_array( $element ) ){
-	wp_die( esc_html__( 'Invalid form', 'caldera-forms'  ) );
+	wp_die( esc_html__( 'Invalid Form.', 'caldera-forms'  ) );
 }
 /**
  * Runs before form editor is rendered, after form is gotten from DB.
@@ -38,7 +38,7 @@ do_action( 'caldera_forms_prerender_edit', $element );
 $magic_tags = apply_filters( 'caldera_forms_get_magic_tags', array(), $element['ID'] );
 
 if(empty($element['success'])){
-	$element['success'] = esc_html__( 'Form has successfully been submitted. Thank you.', 'caldera-forms' );
+	$element['success'] = esc_html__( 'Form has been successfully submitted. Thank you.', 'caldera-forms' );
 }
 
 if(!isset($element['db_support'])){
