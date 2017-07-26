@@ -10,7 +10,7 @@ $entry_perpage = Caldera_Forms_Entry_Viewer::entries_per_page();
 		<label class="screen-reader-text" id="cf-entries-list-items">
 			<?php esc_html__( 'Posts Per Page', 'caldera-forms' ); ?>
 		</label>
-		<input title="<?php echo esc_attr( esc_html__( 'Entries per page', 'caldera-forms' ) ); ?>" id="cf-entries-list-items" type="number" value="<?php echo esc_attr( $entry_perpage ); ?>" class="screen-per-page" data-perpage="<?php echo esc_attr( $entry_perpage ); ?>" min="1" />
+		<input title="<?php echo esc_attr( esc_html__( 'Entries Per Page', 'caldera-forms' ) ); ?>" id="cf-entries-list-items" type="number" value="<?php echo esc_attr( $entry_perpage ); ?>" class="screen-per-page" data-perpage="<?php echo esc_attr( $entry_perpage ); ?>" min="1" />
 		<span class="pagination-links">
 				<a href="#first" title="<?php esc_attr_e( 'Go to the first page', 'caldera-forms' ); ?>" data-page="first" class="first-page">«</a>
 				<a href="#prev" title="<?php esc_attr_e( 'Go to the previous page', 'caldera-forms' ); ?>" data-page="prev" class="prev-page">‹</a>
