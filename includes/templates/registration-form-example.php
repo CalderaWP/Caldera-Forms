@@ -13,13 +13,13 @@
 return array (
 	'_last_updated' => 'Fri, 21 Aug 2015 20:42:39 +0000',
 	'ID' => 'CF55d78d3e3624f',
-	'name' => 'Registration Form',
+	'name' => __( 'Registration Form', 'caldera-forms' ),
 	'description' => '',
 	'db_support' => 1,
 	'pinned' => 0,
 	'hide_form' => 1,
 	'check_honey' => 1,
-	'success' => 'Form has been successfully submitted. Thank you.',
+	'success' => __( 'Form has been successfully submitted. Thank you.', 'caldera-forms' ),
 	'avatar_field' => '',
 	'form_ajax' => 1,
 	'custom_callback' => '',
@@ -44,7 +44,7 @@ return array (
 				array (
 					'ID' => 'fld_1327818',
 					'type' => 'toggle_switch',
-					'label' => 'Number of People',
+					'label' => __( 'Number of People', 'caldera-forms' ),
 					'slug' => 'number_of_people',
 					'conditions' =>
 						array (
@@ -67,17 +67,17 @@ return array (
 									'opt1186018' =>
 										array (
 											'value' => '',
-											'label' => 'One',
+											'label' => __( 'One', 'caldera-forms' ),
 										),
 									'opt1400463' =>
 										array (
 											'value' => '',
-											'label' => 'Two',
+											'label' => __( 'Two', 'caldera-forms' ),
 										),
 									'opt1453751' =>
 										array (
 											'value' => '',
-											'label' => 'Three',
+											'label' => __( 'Three', 'caldera-forms' ),
 										),
 								),
 						),
@@ -86,7 +86,7 @@ return array (
 				array (
 					'ID' => 'fld_1812913',
 					'type' => 'text',
-					'label' => 'Person One Name',
+					'label' => __( 'Person One Name', 'caldera-forms' ),
 					'slug' => 'person_one_name',
 					'conditions' =>
 						array (
@@ -106,7 +106,7 @@ return array (
 				array (
 					'ID' => 'fld_7290902',
 					'type' => 'email',
-					'label' => 'Person One Email',
+					'label' => __( 'Person One Email', 'caldera-forms' ),
 					'slug' => 'person_one_email',
 					'conditions' =>
 						array (
@@ -125,7 +125,7 @@ return array (
 				array (
 					'ID' => 'fld_6900741',
 					'type' => 'text',
-					'label' => 'Person Two Name',
+					'label' => __( 'Person Two Name', 'caldera-forms' ),
 					'slug' => 'person_two_name',
 					'conditions' =>
 						array (
@@ -145,7 +145,7 @@ return array (
 				array (
 					'ID' => 'fld_1561974',
 					'type' => 'email',
-					'label' => 'Person Two Email',
+					'label' => __( 'Person Two Email', 'caldera-forms' ),
 					'slug' => 'person_two_email',
 					'conditions' =>
 						array (
@@ -164,7 +164,7 @@ return array (
 				array (
 					'ID' => 'fld_2458053',
 					'type' => 'email',
-					'label' => 'Person Three Email',
+					'label' => __( 'Person Three Email', 'caldera-forms' ),
 					'slug' => 'person_three_email',
 					'conditions' =>
 						array (
@@ -183,7 +183,7 @@ return array (
 				array (
 					'ID' => 'fld_6241168',
 					'type' => 'text',
-					'label' => 'Person Three Name',
+					'label' => __( 'Person Three Name', 'caldera-forms' ),
 					'slug' => 'person_three_name',
 					'conditions' =>
 						array (
@@ -203,7 +203,7 @@ return array (
 				array (
 					'ID' => 'fld_2668148',
 					'type' => 'button',
-					'label' => 'Submit',
+					'label' => __( 'Submit', 'caldera-forms' ),
 					'slug' => 'submit',
 					'conditions' =>
 						array (
@@ -230,7 +230,7 @@ return array (
 					'con_9457156563497745' =>
 						array (
 							'id' => 'con_9457156563497745',
-							'name' => 'Two People',
+							'name' => __( 'Two People', 'caldera-forms' ),
 							'type' => 'show',
 							'fields' =>
 								array (
@@ -264,7 +264,7 @@ return array (
 					'con_4812944559945067' =>
 						array (
 							'id' => 'con_4812944559945067',
-							'name' => 'Three People',
+							'name' => __( 'Three People', 'caldera-forms' ),
 							'type' => 'show',
 							'group' =>
 								array (
@@ -296,7 +296,7 @@ return array (
 	'mailer' =>
 		array (
 			'enable_mailer' => 1,
-			'sender_name' => 'Caldera Forms Notification',
+			'sender_name' => __( 'Caldera Forms Notification', 'caldera-forms' ),
 			'sender_email' => 'admin@local.dev',
 			'reply_to' => '',
 			'email_type' => 'html',

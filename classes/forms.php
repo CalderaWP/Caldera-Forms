@@ -593,7 +593,7 @@ class Caldera_Forms_Forms {
 			"ID" 			=> $id,
 			"name" 			=> '',
 			"description" 	=> '',
-			"success"		=>	__('Form has been successfully submitted. Thank you.', 'caldera-forms'),
+			"success"		=>	__( 'Form has been successfully submitted. Thank you.', 'caldera-forms' ),
 			"form_ajax"		=> 1,
 			"hide_form"		=> 1,
 			"check_honey" 	=> 1,

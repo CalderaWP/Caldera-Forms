@@ -12,10 +12,10 @@
   '_last_updated' => 'Tue, 31 Jan 2017 13:03:37 +0000',
   'ID' => 'job-application',
   'cf_version' => '1.5.0-b-2',
-  'name' => 'Job Application',
+  'name' => __( 'Job Application', 'caldera-forms' ),
   'scroll_top' => 1,
   'description' => '							',
-  'success' => 'Form has been successfully submitted. Thank you.			',
+  'success' => __( 'Form has been successfully submitted. Thank you.', 'caldera-forms' ),
   'db_support' => 1,
   'pinned' => 0,
   'hide_form' => 1,
@@ -50,7 +50,7 @@
     array(
       'ID' => 'fld_1529543',
       'type' => 'dropdown',
-      'label' => 'Title',
+      'label' => __( 'Title', 'caldera-forms' ),
       'slug' => 'title',
       'conditions' => 
       array(
@@ -74,32 +74,32 @@
           'opt1421110' => 
           array(
             'value' => 'Choose One',
-            'label' => 'Choose One',
+            'label' => __( 'Choose One', 'caldera-forms' ),
           ),
           'opt1521658' => 
           array(
             'value' => 'Mr.',
-            'label' => 'Mr.',
+            'label' => __( 'Mr.', 'caldera-forms' ),
           ),
           'opt1664029' => 
           array(
             'value' => 'Ms.',
-            'label' => 'Ms.',
+            'label' => __( 'Ms.', 'caldera-forms' ),
           ),
           'opt1467463' => 
           array(
             'value' => 'Mrs.',
-            'label' => 'Mrs.',
+            'label' => __( 'Mrs.', 'caldera-forms' ),
           ),
           'opt1876827' => 
           array(
             'value' => 'Prof.',
-            'label' => 'Prof.',
+            'label' => __( 'Prof.', 'caldera-forms' ),
           ),
           'opt1641302' => 
           array(
             'value' => 'Dr.',
-            'label' => 'Dr.',
+            'label' => __( 'Dr.', 'caldera-forms' ),
           ),
         ),
       ),
@@ -108,7 +108,7 @@
     array(
       'ID' => 'fld_3688899',
       'type' => 'text',
-      'label' => 'First Name',
+      'label' => __( 'First Name', 'caldera-forms' ),
       'slug' => 'first_name',
       'conditions' => 
       array(
@@ -129,7 +129,7 @@
     array(
       'ID' => 'fld_6829296',
       'type' => 'text',
-      'label' => 'Last Name',
+      'label' => __( 'Last Name', 'caldera-forms' ),
       'slug' => 'last_name',
       'conditions' => 
       array(
@@ -150,7 +150,7 @@
     array(
       'ID' => 'fld_6830845',
       'type' => 'email',
-      'label' => 'Email Address',
+      'label' => __( 'Email Address', 'caldera-forms' ),
       'slug' => 'user_email',
       'conditions' => 
       array(
@@ -169,7 +169,7 @@
     array(
       'ID' => 'fld_645468',
       'type' => 'phone_better',
-      'label' => 'Contact Number',
+      'label' => __( 'Contact Number', 'caldera-forms' ),
       'slug' => 'home_number',
       'conditions' => 
       array(
@@ -189,7 +189,7 @@
     array(
       'ID' => 'fld_193439',
       'type' => 'phone_better',
-      'label' => 'Alternate Contact Number',
+      'label' => __( 'Alternate Contact Number', 'caldera-forms' ),
       'slug' => 'alternate_contact_number',
       'conditions' => 
       array(
@@ -209,7 +209,7 @@
     array(
       'ID' => 'fld_1720034',
       'type' => 'advanced_file',
-      'label' => 'Upload CV',
+      'label' => __( 'Upload CV', 'caldera-forms' ),
       'slug' => 'cv',
       'conditions' => 
       array(
@@ -228,7 +228,7 @@
     array(
       'ID' => 'fld_6566084',
       'type' => 'paragraph',
-      'label' => 'Message/Comments',
+      'label' => __( 'Message / Comments', 'caldera-forms' ),
       'slug' => 'messagecomments',
       'conditions' => 
       array(
@@ -247,7 +247,7 @@
     array(
       'ID' => 'fld_7007738',
       'type' => 'button',
-      'label' => 'Preview Information',
+      'label' => __( 'Preview Information', 'caldera-forms' ),
       'slug' => 'preview_info',
       'conditions' => 
       array(
@@ -283,7 +283,7 @@
     array(
       'ID' => 'fld_3540500',
       'type' => 'live_gravatar',
-      'label' => 'profile',
+      'label' => __( 'Profile', 'caldera-forms' ),
       'slug' => 'profile',
       'conditions' => 
       array(
@@ -305,7 +305,7 @@
     array(
       'ID' => 'fld_8862269',
       'type' => 'summary',
-      'label' => 'summary',
+      'label' => __( 'Summary', 'caldera-forms' ),
       'hide_label' => 1,
       'slug' => 'summary',
       'conditions' => 
@@ -322,7 +322,7 @@
     array(
       'ID' => 'fld_3202325',
       'type' => 'button',
-      'label' => 'Edit information',
+      'label' => __( 'Edit information', 'caldera-forms' ),
       'slug' => 'edit_information',
       'conditions' => 
       array(
@@ -341,7 +341,7 @@
     array(
       'ID' => 'fld_8728190',
       'type' => 'button',
-      'label' => 'Submit',
+      'label' => __( 'Submit', 'caldera-forms' ),
       'slug' => 'submit',
       'conditions' => 
       array(

@@ -44,7 +44,7 @@ function caldera_forms_tests_get_simple_form_with_just_a_text_field( $form ) {
 		'pinned'             => 0,
 		'hide_form'          => 1,
 		'check_honey'        => 1,
-		'success'            => 'Form has been successfully submitted. Thank you.',
+		'success'            => __( 'Form has been successfully submitted. Thank you.', 'caldera-forms' ),
 		'avatar_field'       => null,
 		'form_ajax'          => 1,
 		'custom_callback'    => '',
@@ -98,13 +98,13 @@ function caldera_forms_tests_get_simple_form_with_just_a_text_field( $form ) {
 		'mailer'             =>
 			array(
 				'on_insert'     => 1,
-				'sender_name'   => 'Caldera Forms Notification',
+				'sender_name'   => __( 'Caldera Forms Notification', 'caldera-forms' ),
 				'sender_email'  => 'admin@local.dev',
 				'reply_to'      => '',
 				'email_type'    => 'html',
 				'recipients'    => '',
 				'bcc_to'        => '',
-				'email_subject' => 'Simple Form With Just A Text Field',
+				'email_subject' => __( 'Simple Form With Just A Text Field', 'caldera-forms' ),
 				'email_message' => '{summary}',
 			),
 	);

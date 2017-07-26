@@ -64,7 +64,7 @@ class Test_Caldera_Forms_Forms extends Caldera_Forms_Test_Case {
 		$id = $new_form[ 'ID' ];
 		$saved = get_option( $id, 0 );
 		$expected = array_merge( $data, array(
-			"success"		=>	__('Form has been successfully submitted. Thank you.', 'caldera-forms'),
+			"success"		=>	__( 'Form has been successfully submitted. Thank you.', 'caldera-forms' ),
 			"form_ajax"		=> 1,
 			"hide_form"		=> 1,
 			"check_honey" 	=> 1,

@@ -14,13 +14,13 @@
 return array (
 	'_last_updated' => 'Fri, 21 Aug 2015 00:33:50 +0000',
 	'ID' => 'CF55d671ee14e40',
-	'name' => 'Variable Price Example',
+	'name' => __( 'Variable Price Example', 'caldera-forms' ),
 	'description' => '',
 	'db_support' => 1,
 	'pinned' => 0,
 	'hide_form' => 1,
 	'check_honey' => 1,
-	'success' => 'Form has been successfully submitted. Thank you.',
+	'success' => __( 'Form has been successfully submitted. Thank you.', 'caldera-forms' ),
 	'avatar_field' => '',
 	'form_ajax' => 1,
 	'custom_callback' => '',
@@ -45,7 +45,7 @@ return array (
 				array (
 					'ID' => 'fld_1316929',
 					'type' => 'hidden',
-					'label' => 'Two Big',
+					'label' => __( 'Two Big', 'caldera-forms' ),
 					'slug' => 'two_big',
 					'caption' => '',
 					'config' =>
@@ -74,7 +74,7 @@ return array (
 				array (
 					'ID' => 'fld_4338248',
 					'type' => 'hidden',
-					'label' => 'One',
+					'label' => __( 'One', 'caldera-forms' ),
 					'slug' => 'one',
 					'caption' => '',
 					'config' =>
@@ -103,7 +103,7 @@ return array (
 				array (
 					'ID' => 'fld_5987102',
 					'type' => 'hidden',
-					'label' => 'Base',
+					'label' => __( 'Base', 'caldera-forms' ),
 					'slug' => 'base',
 					'caption' => '',
 					'config' =>
@@ -120,7 +120,7 @@ return array (
 				array (
 					'ID' => 'fld_3993413',
 					'type' => 'checkbox',
-					'label' => 'Want Option 1?',
+					'label' => __( 'Want Option 1?', 'caldera-forms' ),
 					'slug' => 'option_1',
 					'caption' => '',
 					'config' =>
@@ -137,7 +137,7 @@ return array (
 									'opt1697235' =>
 										array (
 											'value' => '',
-											'label' => 'Yes',
+											'label' => __( 'Yes', 'caldera-forms' ),
 										),
 								),
 						),
@@ -150,7 +150,7 @@ return array (
 				array (
 					'ID' => 'fld_5161425',
 					'type' => 'dropdown',
-					'label' => 'Option 2 Type',
+					'label' => __( 'Option 2 Type', 'caldera-forms' ),
 					'slug' => 'option_2',
 					'caption' => '',
 					'config' =>
@@ -167,12 +167,12 @@ return array (
 									'opt1533135' =>
 										array (
 											'value' => '',
-											'label' => 'Big',
+											'label' => __( 'Big', 'caldera-forms' ),
 										),
 									'opt1786217' =>
 										array (
 											'value' => '',
-											'label' => 'Small',
+											'label' => __( 'Small', 'caldera-forms' ),
 										),
 								),
 						),
@@ -185,7 +185,7 @@ return array (
 				array (
 					'ID' => 'fld_8997460',
 					'type' => 'calculation',
-					'label' => 'Total',
+					'label' => __( 'Total', 'caldera-forms' ),
 					'slug' => 'total',
 					'caption' => '',
 					'config' =>
@@ -241,7 +241,7 @@ return array (
 				array (
 					'ID' => 'fld_1338703',
 					'type' => 'button',
-					'label' => 'Pay',
+					'label' => __( 'Pay', 'caldera-forms' ),
 					'slug' => 'pay',
 					'caption' => '',
 					'config' =>
@@ -259,7 +259,7 @@ return array (
 				array (
 					'ID' => 'fld_6796077',
 					'type' => 'hidden',
-					'label' => 'Two Small',
+					'label' => __( 'Two Small', 'caldera-forms' ),
 					'slug' => 'two_small',
 					'caption' => '',
 					'config' =>
@@ -299,7 +299,7 @@ return array (
 	'mailer' =>
 		array (
 			'enable_mailer' => 1,
-			'sender_name' => 'Caldera Forms Notification',
+			'sender_name' => __( 'Caldera Forms Notification', 'caldera-forms' ),
 			'sender_email' => 'admin@local.dev',
 			'reply_to' => '',
 			'email_type' => 'html',
