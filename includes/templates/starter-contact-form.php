@@ -10,11 +10,11 @@
  */
 
 return array (
-	'name' => 'Contact Form',
-	'description' => 'Basic starter contact form with auto-responder processor.',
+	'name' => __( 'Contact Form', 'caldera-forms' ),
+	'description' => __( 'Basic starter contact form with auto-responder processor.', 'caldera-forms' ),
 	'db_support' => '1',
 	'hide_form' => '1',
-	'success' => 'Thank you, your message has been sent.',
+	'success' => __( 'Form has been successfully submitted. Thank you.', 'caldera-forms' ),
 	'avatar_field' => 'fld_6009157',
 	'form_ajax' => '1',
 	'layout_grid' => 
@@ -43,8 +43,8 @@ return array (
 			'config' => 
 			array (
 				'custom_class' => '',
-				'default' => '<h2>Your Details</h2>
-<p>Let us know how to get back to you.</p>
+				'default' => '<h2>'.__( 'Your Details', 'caldera-forms' ).'</h2>
+<p>'.__( 'Let us know how to get back to you.', 'caldera-forms' ).'</p>
 <hr>',
 			),
 			'conditions' => 
@@ -56,7 +56,7 @@ return array (
 		array (
 			'ID' => 'fld_8768091',
 			'type' => 'text',
-			'label' => 'First name',
+			'label' => __( 'First Name', 'caldera-forms' ),
 			'slug' => 'first_name',
 			'required' => '1',
 			'caption' => '',
@@ -76,7 +76,7 @@ return array (
 		array (
 			'ID' => 'fld_9970286',
 			'type' => 'text',
-			'label' => 'Last name',
+			'label' => __( 'Last Name', 'caldera-forms' ),
 			'slug' => 'last_name',
 			'required' => '1',
 			'caption' => '',
@@ -96,7 +96,7 @@ return array (
 		array (
 			'ID' => 'fld_6009157',
 			'type' => 'email',
-			'label' => 'Email Address',
+			'label' => __( 'Email Address', 'caldera-forms' ),
 			'slug' => 'email_address',
 			'required' => '1',
 			'caption' => '',
@@ -115,14 +115,14 @@ return array (
 		array (
 			'ID' => 'fld_2758980',
 			'type' => 'html',
-			'label' => 'message',
+			'label' => __( 'Message', 'caldera-forms' ),
 			'slug' => 'message',
 			'caption' => '',
 			'config' => 
 			array (
 				'custom_class' => '',
-				'default' => '<h2>How can we help?</h2>
-<p>Feel free to ask a question or simply leave a comment.</p>
+				'default' => '<h2>'.__( 'How can we help?', 'caldera-forms' ).'</h2>
+<p>'.__( 'Feel free to ask a question or simply leave a comment.', 'caldera-forms' ).'</p>
 <hr>',
 			),
 			'conditions' => 
@@ -134,7 +134,7 @@ return array (
 		array (
 			'ID' => 'fld_7683514',
 			'type' => 'paragraph',
-			'label' => 'Comments / Questions',
+			'label' => __( 'Comments / Questions', 'caldera-forms' ),
 			'slug' => 'comments_questions',
 			'required' => '1',
 			'caption' => '',
@@ -154,7 +154,7 @@ return array (
 		array (
 			'ID' => 'fld_7908577',
 			'type' => 'button',
-			'label' => 'Send Message',
+			'label' => __( 'Send Message', 'caldera-forms' ),
 			'slug' => 'submit',
 			'caption' => '',
 			'config' => 
@@ -183,7 +183,7 @@ return array (
 			array (
 				'sender_name' => get_option( 'blogname' ),
 				'sender_email' => get_option( 'admin_email' ),
-				'subject' => 'Thanks For Getting In Touch',
+				'subject' => __( 'Thanks For Getting In Touch', 'caldera-forms' ),
 				'recipient_name' => '%first_name% %last_name%',
 				'recipient_email' => '%email_address%',
 				'message' => 'Hi %recipient_name%.
@@ -213,7 +213,7 @@ Here\'s a summary of your message:
 		'sender_email' => '%email_address',
 		'email_type' => 'html',
 		'recipients' => get_option( 'admin_email' ),
-		'email_subject' => 'Contact Form',
+		'email_subject' => __( 'Contact Form', 'caldera-forms' ),
 		'email_message' => '{summary}',
 	),
 );

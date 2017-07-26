@@ -73,7 +73,7 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
 		'pinned'             => 0,
 		'hide_form'          => 1,
 		'check_honey'        => 1,
-		'success'            => 'Form has been successfully submitted. Thank you.',
+		'success'            => __( 'Form has been successfully submitted. Thank you.', 'caldera-forms' ),
 		'avatar_field'       => null,
 		'form_ajax'          => 1,
 		'custom_callback'    => '',

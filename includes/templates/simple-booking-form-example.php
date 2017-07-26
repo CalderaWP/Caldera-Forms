@@ -4,10 +4,10 @@
   '_last_updated' => 'Mon, 30 Jan 2017 13:27:42 +0000',
   'ID' => 'simple-booking-form',
   'cf_version' => '1.5.0-b-2',
-  'name' => 'Simple Booking Form',
+  'name' => __( 'Simple Booking Form', 'caldera-forms' ),
   'scroll_top' => 1,
   'description' => '																												',
-  'success' => 'Form has been successfully submitted. Thank you.												',
+  'success' => __( 'Form has been successfully submitted. Thank you.', 'caldera-forms' ),
   'db_support' => 1,
   'pinned' => 0,
   'hide_form' => 1,
@@ -38,7 +38,7 @@
     array(
       'ID' => 'fld_185917',
       'type' => 'text',
-      'label' => 'First Name',
+      'label' => __( 'First Name', 'caldera-forms' ),
       'slug' => 'first_name',
       'conditions' => 
       array(
@@ -59,7 +59,7 @@
     array(
       'ID' => 'fld_6892512',
       'type' => 'text',
-      'label' => 'Last Name',
+      'label' => __( 'Last Name', 'caldera-forms' ),
       'slug' => 'last_name',
       'conditions' => 
       array(
@@ -80,7 +80,7 @@
     array(
       'ID' => 'fld_2254781',
       'type' => 'phone_better',
-      'label' => 'Mobile Number',
+      'label' => __( 'Mobile Number', 'caldera-forms' ),
       'slug' => 'mobile_number',
       'conditions' => 
       array(
@@ -101,7 +101,7 @@
     array(
       'ID' => 'fld_7900587',
       'type' => 'email',
-      'label' => 'Email Address',
+      'label' => __( 'Email Address', 'caldera-forms' ),
       'slug' => 'email_address',
       'conditions' => 
       array(
@@ -120,7 +120,7 @@
     array(
       'ID' => 'fld_9356744',
       'type' => 'text',
-      'label' => 'Check in date',
+      'label' => __( 'Check in date', 'caldera-forms' ),
       'slug' => 'check_in_date',
       'conditions' => 
       array(
@@ -141,7 +141,7 @@
     array(
       'ID' => 'fld_9099709',
       'type' => 'text',
-      'label' => 'Check out date',
+      'label' => __( 'Check out date', 'caldera-forms' ),
       'slug' => 'check_out_date',
       'conditions' => 
       array(
@@ -162,7 +162,7 @@
     array(
       'ID' => 'fld_6496615',
       'type' => 'number',
-      'label' => 'Number of adults',
+      'label' => __( 'Number of adults', 'caldera-forms' ),
       'slug' => 'number_of_adults',
       'conditions' => 
       array(
@@ -184,7 +184,7 @@
     array(
       'ID' => 'fld_5630664',
       'type' => 'number',
-      'label' => 'Number of children',
+      'label' => __( 'Number of children', 'caldera-forms' ),
       'slug' => 'number_of_children',
       'conditions' => 
       array(
@@ -205,7 +205,7 @@
     array(
       'ID' => 'fld_4089741',
       'type' => 'paragraph',
-      'label' => 'Comments',
+      'label' => __( 'Comments', 'caldera-forms' ),
       'slug' => 'comments',
       'conditions' => 
       array(
@@ -224,7 +224,7 @@
     array(
       'ID' => 'fld_7167496',
       'type' => 'button',
-      'label' => 'Submit',
+      'label' => __( 'Submit', 'caldera-forms' ),
       'slug' => 'submit',
       'conditions' => 
       array(
@@ -247,13 +247,13 @@
   'mailer' => 
   array(
     'on_insert' => 1,
-    'sender_name' => 'Caldera Forms Notification',
+    'sender_name' => __( 'Caldera Forms Notification', 'caldera-forms' ),
     'sender_email' => 'admin@admin.admin',
     'reply_to' => '',
     'email_type' => 'html',
     'recipients' => '',
     'bcc_to' => '',
-    'email_subject' => 'Simple Booking Form',
+    'email_subject' => __( 'Simple Booking Form', 'caldera-forms' ),
     'email_message' => '{summary}',
   ),
   'conditional_groups' => 

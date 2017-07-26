@@ -34,11 +34,11 @@ add_filter( 'caldera_forms_get_form-contact-form', 'caldera_forms_tests_get_cont
  */
 function caldera_forms_tests_get_contact_form( $form ) {
 	return array(
-		'name'         => 'Contact Form',
+		'name'         => __( 'Contact Form', 'caldera-forms' ),
 		'description'  => '',
 		'db_support'   => 1,
 		'hide_form'    => 1,
-		'success'      => 'Form has been successfully submitted. Thank you.',
+		'success'      => __( 'Form has been successfully submitted. Thank you.', 'caldera-forms' ),
 		'avatar_field' => 'email_address',
 		'form_ajax'    => 1,
 		'layout_grid'  =>
@@ -67,8 +67,8 @@ function caldera_forms_tests_get_contact_form( $form ) {
 						'config'     =>
 							array(
 								'custom_class' => '',
-								'default'      => '<h2>Your Details</h2>
-<p>Let us know how to get back to you.</p>
+								'default'      => '<h2>'.__( 'Your Details', 'caldera-forms' ).'</h2>
+<p>'.__( 'Let us know how to get back to you.', 'caldera-forms' ).'</p>
 <hr>',
 							),
 						'conditions' =>
@@ -80,7 +80,7 @@ function caldera_forms_tests_get_contact_form( $form ) {
 					array(
 						'ID'         => 'first_name',
 						'type'       => 'text',
-						'label'      => 'First name',
+						'label'      => __( 'First Name', 'caldera-forms' ),
 						'slug'       => 'first_name',
 						'required'   => '1',
 						'caption'    => '',
@@ -100,7 +100,7 @@ function caldera_forms_tests_get_contact_form( $form ) {
 					array(
 						'ID'         => 'last_name',
 						'type'       => 'text',
-						'label'      => 'Last name',
+						'label'      => __( 'Last Name', 'caldera-forms' ),
 						'slug'       => 'last_name',
 						'required'   => '1',
 						'caption'    => '',
@@ -120,7 +120,7 @@ function caldera_forms_tests_get_contact_form( $form ) {
 					array(
 						'ID'         => 'email_address',
 						'type'       => 'email',
-						'label'      => 'Email Address',
+						'label'      => __( 'Email Address', 'caldera-forms' ),
 						'slug'       => 'email_address',
 						'required'   => '1',
 						'caption'    => '',
@@ -139,14 +139,14 @@ function caldera_forms_tests_get_contact_form( $form ) {
 					array(
 						'ID'         => 'message',
 						'type'       => 'html',
-						'label'      => 'message',
+						'label'      => __( 'Message', 'caldera-forms' ),
 						'slug'       => 'message',
 						'caption'    => '',
 						'config'     =>
 							array(
 								'custom_class' => '',
-								'default'      => '<h2>How can we help?</h2>
-<p>Feel free to ask a question or simply leave a comment.</p>
+								'default'      => '<h2>'.__( 'How can we help?', 'caldera-forms' ).'</h2>
+<p>'.__( 'Feel free to ask a question or simply leave a comment.', 'caldera-forms' ).'</p>
 <hr>',
 							),
 						'conditions' =>
@@ -158,7 +158,7 @@ function caldera_forms_tests_get_contact_form( $form ) {
 					array(
 						'ID'         => 'comments_questions',
 						'type'       => 'paragraph',
-						'label'      => 'Comments / Questions',
+						'label'      => __( 'Comments / Questions', 'caldera-forms' ),
 						'slug'       => 'comments_questions',
 						'required'   => '1',
 						'caption'    => '',
@@ -178,7 +178,7 @@ function caldera_forms_tests_get_contact_form( $form ) {
 					array(
 						'ID'         => 'send_form',
 						'type'       => 'button',
-						'label'      => 'Send Form',
+						'label'      => __( 'Send Form', 'caldera-forms' ),
 						'slug'       => 'send_form',
 						'caption'    => '',
 						'config'     =>
@@ -207,7 +207,7 @@ function caldera_forms_tests_get_contact_form( $form ) {
 							array(
 								'sender_name'     => 'Site Admin',
 								'sender_email'    => get_option( 'admin_email' ),
-								'subject'         => 'Contact auto-response',
+								'subject'         => __( 'Contact auto-response', 'caldera-forms' ),
 								'recipient_name'  => '%first_name% %last_name%',
 								'recipient_email' => '%email_address%',
 								'message'         => 'Hi %recipient_name%.
