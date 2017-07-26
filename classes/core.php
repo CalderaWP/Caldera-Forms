@@ -130,6 +130,8 @@ class Caldera_Forms {
 		//filter shortcode atts for defaults
 		add_filter( 'shortcode_atts_caldera_form', array( 'Caldera_Forms_Shortcode_Atts', 'allow_default_set' ), 5, 4 );
 		add_filter( 'shortcode_atts_caldera_form_modal', array( 'Caldera_Forms_Shortcode_Atts', 'allow_default_set' ), 5, 4 );
+		add_filter( 'shortcode_atts_caldera_form', array( 'Caldera_Forms_Shortcode_Atts', 'maybe_allow_revision' ), 5, 4 );
+		add_filter( 'shortcode_atts_caldera_form_modal', array( 'Caldera_Forms_Shortcode_Atts', 'maybe_allow_revision' ), 5, 4 );
 
 		//emails
 		add_action( 'caldera_forms_core_init', array( 'Caldera_Forms_Email_Settings', 'maybe_add_hooks' ) );
@@ -406,7 +408,12 @@ class Caldera_Forms {
 					caldera_forms_write_db_flag( 4 );
 				}
 
-				caldera_forms_write_db_flag( 5 );
+				if ( ( $db_version < 6 || $force_update ) && class_exists( 'Caldera_Forms_Forms' ) ) {
+					caldera_forms_db_v6_update();
+
+				}
+
+				caldera_forms_write_db_flag( 6 );
 
 			}else{
 				$version = caldera_forms_get_last_update_version();
@@ -653,7 +660,7 @@ class Caldera_Forms {
 		$request = wp_remote_get( 'https://www.google.com/recaptcha/api/siteverify?' . build_query( $args ) );
 		$result  = json_decode( wp_remote_retrieve_body( $request ) );
 		if ( empty( $result->success ) ) {
-			return new WP_Error( 'error', __( "The wasn't entered correct.", 'caldera-forms' ) . ' <a href="#" class="reset_' . sanitize_text_field( $_POST[ $field[ 'ID' ] ] ) . '">' . __( 'Reset', 'caldera-forms' ) . '<a>.' );
+			return new WP_Error( 'error', __( "The captcha wasn't entered correctly.", 'caldera-forms' ) . ' <a href="#" class="reset_' . sanitize_text_field( $_POST[ $field[ 'ID' ] ] ) . '">' . __( 'Reset', 'caldera-forms' ) . '<a>.' );
 		}
 
 
@@ -3306,13 +3313,14 @@ class Caldera_Forms {
 	 * Makes Caldera Forms load the preview
 	 */
 	static public function cf_init_preview(){
-		if( ! isset( $_GET, $_GET['cf_preview'] ) ){
+		if( ! isset( $_GET, $_GET[ Caldera_Forms_Admin::PREVIEW_KEY ] ) ){
 			return;
 		}
 
 		global $post, $form;
 
-		$preview_id = trim( $_GET['cf_preview'] );
+
+		$preview_id = trim( $_GET[ Caldera_Forms_Admin::PREVIEW_KEY  ] );
 		if(!empty( $preview_id )){
 			$form = Caldera_Forms_Forms::get_form($preview_id );
 
@@ -3322,6 +3330,7 @@ class Caldera_Forms {
 				if(empty( $form['ID']) || $form['ID'] !== trim( $preview_id ) ){
 					return;
 				}
+
 				if( empty($post) || $post->post_title !== 'Caldera Forms Preview' ){
 					$temp_page = get_page_by_title('Caldera Forms Preview');
 					if(empty($temp_page)){
@@ -3336,17 +3345,46 @@ class Caldera_Forms {
 							'comment_status' => 'closed'
 						);
 						$page_id = wp_insert_post( $post );
-						wp_redirect( trailingslashit( get_home_url() ) . '?page_id='.$page_id.'&preview=true&cf_preview='.$preview_id );
+						$url = add_query_arg( array(
+							'page_id' => $page_id,
+							'preview' => true,
+							Caldera_Forms_Admin::PREVIEW_KEY => $preview_id
+
+						), home_url() );
+
+						if( isset( $_GET[ Caldera_Forms_Admin::REVISION_KEY ] ) ){
+							$url = add_query_arg( Caldera_Forms_Admin::REVISION_KEY, absint( $_GET[ Caldera_Forms_Admin::REVISION_KEY ] ), $url  );
+						}
+
+						wp_redirect( $url );
 						exit;
 					}
+
 					if( $temp_page->post_status !== 'draft'){
 						wp_update_post( array( 'ID' => $temp_page->ID, 'post_status' => 'draft' ) );
 					}
-					wp_redirect( trailingslashit( get_home_url() ) . '?page_id='.$temp_page->ID.'&preview=true&cf_preview='.$preview_id );
+
+					$url = add_query_arg( array(
+						'page_id' => $temp_page->ID,
+						'preview' => true,
+						Caldera_Forms_Admin::PREVIEW_KEY => $preview_id
+
+					), home_url() );
+
+					if( isset( $_GET[ Caldera_Forms_Admin::REVISION_KEY ] ) ){
+						$url = add_query_arg( Caldera_Forms_Admin::REVISION_KEY, absint( $_GET[ Caldera_Forms_Admin::REVISION_KEY ] ), $url  );
+					}
+
+					wp_redirect( $url );
 					exit;
 				}
+
 				$post->post_title = $form['name'];
-				$post->post_content = '[caldera_form id="'.$_GET['cf_preview'].'"]';
+				if( isset( $_GET[ Caldera_Forms_Admin::REVISION_KEY ] ) ){
+					$post->post_content = '[caldera_form id="' . $_GET[ Caldera_Forms_Admin::PREVIEW_KEY ]. ' revision="' . absint( $_GET[ Caldera_Forms_Admin::REVISION_KEY ] ) . '"]';
+				}else{
+					$post->post_content = '[caldera_form id="' . $_GET[ Caldera_Forms_Admin::PREVIEW_KEY ]. '"]';
+				}
 			}
 		}
 
@@ -3448,7 +3486,7 @@ class Caldera_Forms {
 				$url = set_url_scheme( $url, 'https' );
 			}
 		}
-
+		
 		/**
 		 * Filter the Caldera Forms APU url
 		 *
@@ -3765,7 +3803,10 @@ class Caldera_Forms {
 			"aria"              => array()
 		);
 
-		if ( 'button' !== $type ) {
+		if ( ! in_array( $type, array(
+			'button',
+			'hidden'
+		) ) ) {
 			$field_structure[ 'aria' ][ 'labelledby' ] = $field[ 'ID' ] . 'Label';
 		}
 
@@ -3867,7 +3908,7 @@ class Caldera_Forms {
 	 * @param null|int $entry_id Optional. Entry ID to load data from. Null, the default, loads form for creating a new entry.
 	 * @param null $shortcode No longer used.
 	 *
-	 * @return void|string HTML for form, if it was able to be laoded
+	 * @return void|string HTML for form, if it was able to be loaded
 	 */
 	static public function render_form( $atts, $entry_id = null, $shortcode = null ) {
 
@@ -3882,6 +3923,8 @@ class Caldera_Forms {
 			$form = Caldera_Forms_Forms::get_form( $atts );
 			$atts = array();
 
+		}elseif ( is_array( $atts ) && Caldera_Forms_Forms::is_revision( $atts )  ){
+			$form = $atts;
 		} elseif ( is_array( $atts ) && isset( $atts[ 'ID' ] ) ) {
 			$form = Caldera_Forms_Forms::get_form( $atts[ 'ID' ] );
 		} else {
@@ -4638,13 +4681,25 @@ class Caldera_Forms {
 		if( ! empty( $atts[ 'ID' ] ) && empty( $atts[ 'id' ] )){
 			$atts[ 'id' ] = $atts[ 'ID' ];
 		}
+
+		if( ! empty( $atts[ 'revision' ] ) ){
+			$revision = Caldera_Forms_Forms::get_revision( $atts[ 'revision' ] );
+			if( is_array( $revision ) ){
+				$atts = $revision;
+				$atts[ 'id' ] = $revision[ 'ID' ];
+			}
+		}
+
 		if ( ! isset( $atts[ 'id' ] ) ) {
 			return;
 		}
 
+
+
 		if ( $shortcode === 'caldera_form_modal' || ( ! empty( $atts[ 'modal' ] ) && $atts[ 'modal' ] ) ) {
 			return Caldera_Forms_Render_Modals::modal_form( $atts, $content );
 		}
+
 
 		$form = self::render_form( $atts );
 

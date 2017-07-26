@@ -633,11 +633,14 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 	 *
 	 */
 	protected function map_field( $type, $field ){
+		$default =Caldera_Forms_Field_Util::get_default( $field, $this->form, true );
+
 		$_field = array(
 			'type'    => $type,
 			'fieldId' => $field[ 'ID' ],
 			'id'      => $this->field_id( $field[ 'ID' ] ),
-			'options' => array()
+			'options' => array(),
+			'default' => $default
 		);
 
 		$group = false;
@@ -661,6 +664,10 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 			$this->fields[ 'inputs' ][] = $_field;
 
 		}
+
+
+
+		$this->fields[ 'defaults' ][ $this->field_id( $field[ 'ID' ] ) ] = $default;
 
 	}
 

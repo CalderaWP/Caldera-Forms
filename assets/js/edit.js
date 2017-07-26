@@ -78,7 +78,26 @@ function get_compiled_template( template ) {
 
 jQuery(document).ready(function($){
 
+    var $spinner = $('#save_indicator');
 
+    $( '#caldera-forms-restore-revision' ).on( 'click', function(e){
+        e.preventDefault();
+        var $el = $(this);
+        $spinner.addClass('loading');
+
+        $.post({
+            url: 'admin.php?page=caldera-forms',
+            data:{
+                cf_edit_nonce: $( '#cf_edit_nonce' ).val(),
+                form: $el.data( 'form' ),
+                cf_revision: $( '#form_db_id_field' ).val(),
+                restore: true
+            },
+            success: function(){
+                window.location = $el.data( 'edit-link' );
+            }
+        })
+    });
     $('.caldera-header-save-button').baldrick({
         method			:	'POST',
         request			:	'admin.php?page=caldera-forms',
@@ -89,7 +108,7 @@ jQuery(document).ready(function($){
                 return false;
             }
 
-            $('#save_indicator').addClass('loading');
+            $spinner.addClass('loading');
             if( typeof tinyMCE !== 'undefined'){
                 tinyMCE.triggerSave();
             }
@@ -119,11 +138,13 @@ jQuery(document).ready(function($){
                         notice.stop().animate({top: -75}, 200);
                     }, 2000);
                 });
+
+                cf_revisions_ui();
             }
         },
         complete: function( obj ){
 
-            $('.wrapper-instance-pane .field-config').prop('disabled', false);
+            $('.wrapper-instance-pane .field-config').prop('sabled', false);
 
         }
     });
@@ -1515,6 +1536,9 @@ rebind_field_bindings = function(){
     init_magic_tags();
     jQuery(document).trigger('bound.fields');
     jQuery('.caldera-header-save-button').prop("disabled", false);
+    if( undefined != typeof  cf_revisions_ui ){
+        cf_revisions_ui();
+    }
 };
 
 function setup_field_type(obj){
@@ -2213,6 +2237,7 @@ jQuery(document).ready(function($) {
                 }
                 config.option["opt" + parseInt( ( Math.random() + i ) * 0x100000 )] = {
                     value	:	val,
+                    calc_value: val,
                     label	:	label,
                     default	:	false
                 }
@@ -2230,6 +2255,7 @@ jQuery(document).ready(function($) {
             config.option[key]	=	{
                 value	:	'',
                 label	:	'',
+                calc_value: '',
                 default :	false
             };
         }
@@ -2648,5 +2674,60 @@ Handlebars.registerHelper('_field', function(args) {
 Handlebars.registerHelper('console', function(context, options) {
     console.log(this);
 });
+
+var revisions = {};
+/**
+ * Get revisions from API and update panel UI
+ *
+ * @since 1.5.3
+ */
+function cf_revisions_ui() {
+    var url = CF_ADMIN.rest.revisions;
+    var templateEl = document.getElementById('tmpl--revisions');
+    if (null === templateEl) {
+        return;
+    }
+
+    var $spinner = jQuery( '#caldera-forms-revisions-spinner' );
+    $spinner.css({
+        visibility: 'visible',
+        float:'none'
+    });
+    jQuery.get(url, function (r) {
+        if( r.hasOwnProperty( 'message' ) ){
+            document.getElementById('caldera-forms-revisions').innerHTML = '<p class="notice notice-large notice-info">' + r.message + '</p>';
+        }else{
+            var data = {
+                revisions: r
+            };
+            revisions = r;
+            var template = templateEl.innerHTML;
+            var source = jQuery('#tmpl--revisions').html();
+            template = Handlebars.compile(source);
+            document.getElementById('caldera-forms-revisions').innerHTML = template(data);
+        }
+
+        $spinner.css({
+            visibility: 'hidden',
+            float:'none'
+        });
+
+        jQuery('input[type=radio][name=caldera-forms-revision]').change(function() {
+            jQuery( '#caldera-forms-revision-go' ).attr( 'href', jQuery( this ).data( 'edit' ) )
+                .css({
+               display: 'inline-block',
+               visibility: 'visible'
+           }).attr( 'aria-hidden', false );
+        });
+
+
+    }).error( function () {
+        $spinner.css({
+            visibility: 'hidden',
+            float:'none'
+        });
+    });
+
+}
 
 

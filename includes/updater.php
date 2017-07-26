@@ -15,14 +15,19 @@
  * @since 1.3.4
  */
 function caldera_forms_db_v2_update(){
+	//Before 1.3.4 forms were tracked in options -- each one was autoloaded
+	//Also which forms exist tracked in a "registry" option _caldera_forms that was also autoload
+	//Old registry had the "details" fields of forms -- duplicate data oh my.
 	$forms = get_option( '_caldera_forms', array() );
 	if( ! empty( $forms ) ){
+		//set options storage to be not autoloaded
 		$where = '`option_name` = "' . implode( '" OR `option_name` = "', array_keys( $forms ) ) . '"';
 
 		global $wpdb;
 		$sql = sprintf( "UPDATE `%s` SET `autoload`='no' WHERE %s", $wpdb->options, $where );
 		$wpdb->get_results( $sql  );
 
+		//Create new registry that is just ID and not autoloaded
 		$new_registry = array();
 		if( ! empty( $forms ) ){
 			foreach( $forms as $id => $form ){
@@ -37,6 +42,42 @@ function caldera_forms_db_v2_update(){
 		caldera_forms_write_db_flag( 2 );
 		
 	}
+
+	//BTW old registry option didn't get deleted because maybe some one reverts...
+
+}
+
+/** BTW v3-5 did not require updater functions */
+
+/**
+ * Updated Caldera Forms DB system to v6
+ *
+ * Moves form configuration to custom table
+ *
+ * @see https://github.com/CalderaWP/Caldera-Forms/pull/1741
+ *
+ * @since 1.5.3
+ */
+function caldera_forms_db_v6_update(){
+	if( ! class_exists( 'Caldera_Forms_Forms' ) ){
+		return;
+	}
+
+	//This will make sure DB table is there if not already
+	Caldera_Forms::check_tables();
+	$forms = Caldera_Forms_Forms::get_forms( false, true );
+	if( ! empty( $forms ) ){
+		foreach ( $forms as $form ){
+			//Migration happens automatically when getting form config
+			//BTW means this isn't totally needed, but good to get it done in one go.
+			Caldera_Forms_Forms::get_form( $form );
+
+		}
+
+	}
+
+	//NOTE: Leaving options in place for now, especially beacuse of rollback.
+
 
 }
 

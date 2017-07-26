@@ -12,6 +12,25 @@
 class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
 
 
+	/**
+	 * @inheritdoc
+	 *
+	 * @since 1.5.3
+	 */
+	public function add_routes( $namespace ) {
+		parent::add_routes($namespace);
+		register_rest_route( $namespace, $this->id_endpoint_url() . '/revisions',
+			array(
+				'methods'             => \WP_REST_Server::READABLE,
+				'callback'            => array( $this, 'get_revisions' ),
+				'permission_callback' => array( $this, 'get_item_permissions_check' ),
+				'args'                => $this->get_item_args()
+			)
+		);
+
+
+	}
+
     /**
      * Get a form via REST API
      *
@@ -33,6 +52,34 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
         $response_form = $this->prepare_form_for_response( $this->form, $request );
         return new Caldera_Forms_API_Response( $response_form, 200, array( ) );
 
+    }
+
+	/**
+	 * Get form revisions
+	 *
+	 * GET /forms/<form-id>/revision
+	 *
+	 * @since 1.5.3
+	 *
+	 * @param WP_REST_Request $request
+	 *
+	 * @return Caldera_Forms_API_Response
+	 */
+    public function get_revisions( WP_REST_Request $request ){
+    	$form_id = $request[ 'form_id' ];
+    	$revisions = Caldera_Forms_Forms::get_revisions( $request[ 'form_id' ], true );
+	    $response_data = array();
+	    foreach ( $revisions as $revision ){
+		    $response_data[] = array(
+		    	'id' => $revision,
+			    'edit' => Caldera_Forms_Admin::form_edit_link( $form_id, $revision )
+		    );
+	    }
+	    if( empty( $response_data ) ){
+		    return new Caldera_Forms_API_Response( array( 'message' => __( 'No Revisions Found For This Form', 'caldera-forms' ) ) );
+
+	    }
+	    return new Caldera_Forms_API_Response( $response_data );
     }
 
     /**

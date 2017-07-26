@@ -1,19 +1,19 @@
 === Caldera Forms - More Than Contact Forms ===
 Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza
-Tags: form builder, contact form,  contact me, custom form, forms, form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, echecks, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, eCheck,dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, gravity forms, contact, email, auto-responder, aweber, convertkit, builder, contact forms, search, ab testing, a/b testing, split testing, shortcode, wordpress, awesome plugin, plugin, easy, braintree form, dwolla form, authorize.net form, mailchimp form, mailchimp popup, aweber form, convertkit form, stripe form, stripe popup, eCheck form, formbuilder
+Tags: free wordpress form builder, formbuilder, form builder, contact form,  contact me, custom form, forms, form, custom forms, forms creator, caldera forms, calderawp, wp form, wp form builder, form, drag and drop, email, awesome, wordpress free form builder, echecks, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, eCheck,dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, gravity forms, ninja forms, contact, email, auto-responder, aweber, convertkit, builder, contact forms, search, ab testing, a/b testing, split testing, shortcode, wordpress, awesome plugin, plugin, easy, braintree form, dwolla form, authorize.net form, mailchimp form, mailchimp popup, aweber form, convertkit form, stripe form, stripe popup, eCheck form, responsive,
 Requires at least: 4.5
 Tested up to: 4.8.0
-Stable tag: 1.5.3-b-1
+Stable tag: 1.5.3-b-2
 License: GPLv2
 
-Responsive form builder for contact forms, user registration and login forms, Mailchimp, and more.
+Responsive form builder for contact forms, user registration and login forms, Mailchimp, PayPal Express and more.
 
 == Description ==
-Create beautiful, responsive forms with a simple drag and drop editor. Learn more about Caldera Forms at <a href="https://calderaforms.com?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms">CalderaForms.com</a>.
+Caldera Form is a free and powerful WordPress plugin that creates responsive forms with a simple drag and drop editor. Caldera Forms has many free user-friendly add-ons for both beginners and web developers. Learn more about Caldera Forms at <a href="https://calderaforms.com?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms">CalderaForms.com</a>.
 
 Caldera Forms' visual editor simplifies form building for WordPress. Set up your form with multiple columns, add additional pages, and funnel user responses with conditional logic to get more robust data and relevant information from your customers and site visitors. Anti-spam, AJAX, notification emails, and database entry tracking are enabled by default.
 
-Caldera Forms is a free plugin by <a href="http://CalderaLabs.org?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms" title="Caldera : Makers of fine WordPress">Caldera Labs</a>.
+Caldera Forms is a free WordPress plugin by <a href="http://CalderaLabs.org?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms" title="Caldera : Makers of fine WordPress">Caldera Labs</a>.
 
 > 5 Stars! "Exceptionally well thought out and executed."
 >
@@ -21,15 +21,15 @@ Caldera Forms is a free plugin by <a href="http://CalderaLabs.org?utm_source=dot
 
 == Top Features ==
 * Intuitive user interface !
-* Responsive and accessible by default!
-* NO LIMITATIONS on the number of forms or fields or submissions!
-* Tons of great field types - the basics and "fancy" fields are included!
+* Easy to use - drag and drop !
+* Tons of great field types - calculation, dropdown select, radio, file upload
 * Conditional logic for form fields, processors and auto-responder recipients!
-* Export entries to CSV!
 * Front-end post submissions and post editing with the free [Caldera Custom Fields add-on](https://calderaforms.com/downloads/caldera-form-metabox?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=features+list)
+* NO LIMITATIONS on the number of forms or fields or submissions!
 * Unlimited auto-responders!
 * Anti-spam by default to stop those bots!
-* Accessible by default!
+* Export entries to CSV!
+* Responsive and accessible by default!
 * [A ton of add-ons to take your forms farther!](https://calderaforms.com/caldera-forms-add-ons?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=features-list)
 * [Caldera Forms Pro Makes Caldera Forms Messages More Awesome!](https://calderaforms.com/pro?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=features-list)
 
@@ -47,7 +47,7 @@ Whether you are creating a simple contact form or a complex system, you'll love 
 > - Alex Vasquez: Owner of the DigiSavvy agency.
 
 = Get Started Quickly With Form Templates =
-Caldera Forms ships with form templates that help you create beutiful, responsive forms quickly. With our powerful grid-base form builder, you can add new fields or modify the layout quickly.
+Caldera Forms ships with form templates that help you create beautiful, responsive forms quickly. With our powerful grid-base form builder, you can add new fields or modify the layout quickly.
 
 Quickly configure the [email notification](https://calderaforms.com/doc/setting-caldera-forms-email-notification?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms), to let you know when a form has been submitted. Add one or more [auto-responder processors](https://calderaforms.com/doc/using-caldera-forms-auto-responder-processor?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) to your forms to send emails to your lead.
 
@@ -58,11 +58,11 @@ Quickly configure the [email notification](https://calderaforms.com/doc/setting-
 = Anti-Spam By Default =
 Spam is annoying. No form builder is complete without a robust anti-spam system.
 
-Anti-spam is not an add-on with Caldera Forms, your forms will repel spam using a highly-effective honey pot. Anti-spam does not require configuration or adding a Captcha that will hurt your conversions.
+ Anti-spam is not an add-on with Caldera Forms, your forms will repel spam using a highly-effective honey pot. Anti-spam does not require configuration or adding a Captcha that will hurt your conversions.
 
-> "A drag-and-drop builder that’s both easy and fun to use, we reckon Caldera Forms is possibly one of the best, most advanced free form builders available, and we highly recommend it."
->
-> - Lisa-Robyn Keown - Aspen Grove Studios
+ > "A drag-and-drop builder that’s both easy and fun to use, we reckon Caldera Forms is possibly one of the best, most advanced free form builders available, and we highly recommend it."
+ >
+ > - Lisa-Robyn Keown - Aspen Grove Studios
 
 = All The Fields You Need =
 Caldera Forms has tons of field types to make a great form that will help your website succeed for you. You can set field defaults using the power of [Caldera Forms magic tags](https://calderaforms.com/doc/using-magic-tags-caldera-forms/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms). Impress your site's visitors when you take advantage of [field sync](https://calderaforms.com/doc/field-sync/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms)!
@@ -95,7 +95,7 @@ Caldera Forms field types include:
 * Date Picker
 * Color Picker
 
-All of these field types are included in the free version! We don't call basic field types like URL or hidden fancy and charge extra. We even throw in the fancy field types like calculation and phone fields!
+All of these field types are included in the free version! We don't call basic field types like URL or hidden fancy and charge extra. We even throw in the fancy field types like calculation and and phone fields!
 
 > "WordPress should have more plugins like this. Adding new forms, editing their settings and stuff is fun."
 >
@@ -135,8 +135,6 @@ Entry editing is a core feature of Caldera Forms. When editing entries, click th
 
 = Addons =
 [All Caldera Forms Add-ons](https://calderaforms.com/caldera-forms-add-ons?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms)
-
-Caldera Forms to PDF is now available! Learn more at [https://Caldera.space](Caldera.space) or [get the plugin](https://wordpress.org/plugins/caldera-forms-pdf).
 
 **Grow Your Email List**
 * [MailChimp](https://calderaforms.com/downloads/caldera-forms-mailchimp-add-on?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Seamlessly integrate MailChimp optins into your forms.
@@ -195,7 +193,7 @@ Once you have created a form using the Caldera Forms form builder, insert it in 
 
 == Frequently Asked Questions ==
 = Does Caldera Forms Have A Getting Started Guide? =
-Why yes it does. Check it out at [https://CalderaWP.com/getting-started](https://CalderaWP.com/getting-started?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) and start making awesome WordPress forms.
+Why yes it does. Check it out at [https://CalderaForms.com/getting-started](https://CalderaForms.com/getting-started?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) and start making awesome WordPress forms.
 
 = Are My Caldera Forms Going to Display Properly on All Types of Devices? =
 
@@ -211,15 +209,12 @@ Yes, we have many options for sending emails on each submission of your form. Ca
 
 = How Can I Get Support for Caldera Forms? =
 
-[Support for Caldera Forms is available on our site](https://CalderaWP.com/support?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms).   Support is available to paying users a [Caldera Forms add-ons](https://calderaforms.com/caldera-forms-add-ons?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) or one of our [cost-saving Caldera Forms bundles](https://calderaforms.com/caldera-forms-bundles/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms). Buy purchasing an add-on or bundle you get cool features, support and supports our work, which allows us to offer this awesome plugin for free.   Support for Caldera forms is not offered through WordPress.org.
+ [Support for Caldera Forms is available on our site](https://CalderaForms.com/support?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms).   Support is available to paying users a [Caldera Forms add-ons](https://calderaforms.com/caldera-forms-add-ons?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) or one of our [cost-saving Caldera Forms bundles](https://calderaforms.com/caldera-forms-bundles/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms). Buy purchasing an add-on or bundle you get cool features, support and supports our work, which allows us to offer this awesome plugin for free.   Support for Caldera forms is not offered through WordPress.org.
 
 = Does Caldera Forms Have Documentation? =
 
 Yes it does. Our [documentation can be searched here](https://calderaforms.com/documentation/caldera-forms-documentation/).  
 
-= Who Makes Caldera Forms? =
-
-Caldera Forms is a product of [CalderaWP](https://calderaforms.com?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms), a part of [Caldera Labs](http://calderalabs.org?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms). Caldera Forms' founding developer is [David Cramer](https://twitter.com/dcramer). Caldera Forms is now developed by David and [Josh Pollock](http://JoshPress.net?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms).  
 
 = Why Is Caldera Form So Awesome? Seriously, Even Its Free Version Has So Many Great Features! =
 
@@ -231,19 +226,19 @@ It's no secret that there are a lot of established leaders in this field. But we
 
 There are a lot of ways to send more than one email with Caldera Forms.
 
-If you'd like to send two different emails, for example, one email with all of the submission details to the site owner and an auto-response message to the person who filled out the form. In this situation, you can use the main email notification to send to you and then use the [auto-responder processor](https://calderaforms.com/doc/using-caldera-forms-auto-responder-processor?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) to send a simple "thank you, we will be in touch" message to the person who filled out the form.
+ If you'd like to send two different emails, for example, one email with all of the submission details to the site owner and an auto-response message to the person who filled out the form. In this situation, you can use the main email notification to send to you and then use the [auto-responder processor](https://calderaforms.com/doc/using-caldera-forms-auto-responder-processor?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) to send a simple "thank you, we will be in touch" message to the person who filled out the form.
 
-If you use the starter contact for form template to create a form this is already set up for you. Simply add your email address as the recipient in the email tab and you're ready to go.   You can add more than one auto-responder processor to your form. Since these processors can make use of Caldera Forms conditional logic, you can add multiple auto-responder processors and set them to run or not run based on form input.
+ If you use the starter contact for form template to create a form this is already set up for you. Simply add your email address as the recipient in the email tab and you're ready to go.   You can add more than one auto-responder processor to your form. Since these processors can make use of Caldera Forms conditional logic, you can add multiple auto-responder processors and set them to run or not run based on form input.
 
 = How Can I Save And View Forms Submissions? =
 
-Form submission tracking in your WordPress database, is a core feature of Caldera Forms.
+ Form submission tracking in your WordPress database, is a core feature of Caldera Forms.
 
-Tracking the entries from your forms is turned on for forms by default. You can turn it off from the settings tab of the form editor. When enabled all form entry data, with certain exceptions -- such as credit card numbers -- for security reasons, is saved.   You can view this information from the Caldera Forms admin page. You may optionally enable, form the form settings tab, a sub-menu page of the Caldera Forms menu page that will show entry data. You can choose to make these sub-menu pages available to users of other roles besides admins.  
+ Tracking the entries from your forms is turned on for forms by default. You can turn it off from the settings tab of the form editor. When enabled all form entry data, with certain exceptions -- such as credit card numbers -- for security reasons, is saved.   You can view this information from the Caldera Forms admin page. You may optionally enable, form the form settings tab, a sub-menu page of the Caldera Forms menu page that will show entry data. You can choose to make these sub-menu pages available to users of other roles besides admins.  
 
 = Can You Use Caldera Forms to Create a Event Registration Form? =
 
-Oh yes you can. Caldera forms is excellent for this if you need to accept payments for the event, you can use one of our [many payment processors](https://calderaforms.com/caldera-forms-add-ons?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms). If you need to register users, you can use our [users add-on](https://calderaforms.com/downloads/caldera-forms-users-add?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms).  
+ Oh yes you can. Caldera forms is excellent for this if you need to accept payments for the event, you can use one of our [many payment processors](https://calderaforms.com/caldera-forms-add-ons?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms). If you need to register users, you can use our [users add-on](https://calderaforms.com/downloads/caldera-forms-users-add?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms).  
 
 = Can I Use Caldera Forms For Front-end Editing Of Users? =
 
@@ -263,14 +258,14 @@ Multi-page forms are loaded on one page. This way of creating multi-page forms i
 
 In addition, Connected Forms tracks partial submissions between each step in the form sequence allow users to come back to where they left off in the sequence.
 
-= Does Caldera Forms Create Accessible WordPress Forms? =
+= Does Caldera Forms Create Accessible WordPress Forms ? =
 Some form builder plugins require an [add-on](https://wordpress.org/plugins/gravity-forms-wcag-20-form-fields/) to make their forms accessible to those with disabilities. That seems silly. Caldera Forms is committed to making the most accessible form builder possible. We do our best to add all necessary [ARIA tags](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) tags, use semantic markup and the correct title attributes. In addition Caldera Forms is 100% translation friendly.
 
 If you see a way Caldera Forms could be a more accessible form builder, please open an issue. We are currently working to address several remaining [accessibility issues](https://github.com/CalderaWP/Caldera-Forms/issues?q=is%3Aopen+is%3Aissue+label%3AAccesibility) and are always on the look out for other ways to improve our form builder so all vistors to your WordPress site are able to interact with your beautiful WordPress forms.
 
 = What Types Of Forms Can I Build With Caldera Forms? =
 
-Caldera Forms in one of the most robust WordPress form builders currently available, and, in combination with some of our extensions, can allow you to create a wide variety of forms using our drag and drop form builder. Here are some of the forms you can create:
+Caldera Forms in one of the most robust WordPress form builders currently available, and, in combination with some of our extensions, can allow you to create a wide variety of forms using our drag and drop form builder. Here are sometimes of forms you can create:
 
 * Standard Contact Forms
 * Fancy Contact Forms
@@ -338,7 +333,7 @@ Copy the shortcode by hovering over 1 form from the list of built forms and clic
 
 *   Option 2 :
 
-You can navigate to the form settings tab by clicking on **Form Settings** in the top Caldera Forms menu bar and copying the entire shortcode string.
+    You can navigate to the form settings tab by clicking on **Form Settings** in the top Caldera Forms menu bar and copying the entire shortcode string.
 
 Step 4 : Go To A Page Or Post
 
@@ -350,7 +345,7 @@ Insert a form’s shortcode by **pasting the shortcode** in the WordPress text e
 
 
 
-= How Do I Create A New Form From A Template For My WordPress Site? =
+= How Do I Create A New Form From A Template For My WordPress Site ? =
 
 If you are unfamiliar with building a form, using one of our pre-configured templates is a great way to learn our Caldera Forms as your form builder. Caldera Forms is an excellent way to quickly get a form up and running on your WordPress website.
 
@@ -391,113 +386,111 @@ In the pop-up window, click on Blank Form and enter a name in the Form Name fiel
 You can now go to the form builder to layout your form.
 
 
-= How Do I Export or Import A Caldera Form? =
+= How Do I Export or Import A Caldera Form ? =
 
-Creating a JSON export of your form is an easy way to copy a form from one WordPress website to another. It is also a good way to backup a form. It also is a good way to use one form and the basis for a new form that you then edit using the Caldera Forms form builder.
+  Creating a JSON export of your form is an easy way to copy a form from one WordPress website to another. It is also a good way to backup a form. It also is a good way to use one form and the basis for a new form that you then edit using the Caldera Forms form builder.
 
-Steps To Export A JSON Form Backup File
+  Steps To Export A JSON Form Backup File
 
-Step 1 : Go To The Caldera Forms Admin Page
+  Step 1 : Go To The Caldera Forms Admin Page
 
-Starting from the WordPress Dashboard, you can navigate to the Caldera Forms Admin Page by hovering over the Caldera Forms icon and in the drop-down menu clicking on Forms.
+  Starting from the WordPress Dashboard, you can navigate to the Caldera Forms Admin Page by hovering over the Caldera Forms icon and in the drop-down menu clicking on Forms.
 
-Step 2: Export The Form
+  Step 2: Export The Form
 
-Export the form by hovering over 1 form from the list of built forms and clicking on Export. This launches the Export Form pop-up window. Download the JSON file by selecting Backup/Importable (JSON) from the Export Type drop-down menu. Start exporting by clicking on Export Form. You receive a prompt to Save the file to your local computer.
+  backup-jsonExport the form by hovering over 1 form from the list of built forms and clicking on Export. This launches the Export Form pop-up window. Download the JSON file by selecting Backup/Importable (JSON) from the Export Type drop-down menu. Start exporting by clicking on Export Form. You receive a prompt to Save the file to your local computer.
 
-Steps To Import A JSON Form Backup File
+  Steps To Import A JSON Form Backup File
 
-Step 1 : Go To The Caldera Forms Admin Page
+  Step 1 : Go To The Caldera Forms Admin Page
 
-Starting from the WordPress Dashboard, you can navigate to the Caldera Forms Admin Page by hovering over the Caldera Forms icon and in the drop-down menu clicking on Forms.
+  Starting from the WordPress Dashboard, you can navigate to the Caldera Forms Admin Page by hovering over the Caldera Forms icon and in the drop-down menu clicking on Forms.
 
-Step 2 : Start The Import
+  Step 2 : Start The Import
 
-Importing a JSON Caldera Form fileImport the JSON file by clicking on Import in the top Caldera Forms menu bar. This launches the Import Form pop-up window where you enter a Form Name, then continue by clicking on Choose File. You receive a prompt to find and open the JSON file from your local computer. Start importing by clicking on Import Form.
+  Importing a JSON Caldera Form fileImport the JSON file by clicking on Import in the top Caldera Forms menu bar. This launches the Import Form pop-up window where you enter a Form Name, then continue by clicking on Choose File. You receive a prompt to find and open the JSON file from your local computer. Start importing by clicking on Import Form.
 
-You can not go to the Caldera Forms form builder and edit the form.
+  You can not go to the Caldera Forms form builder and edit the form.
 
-= How Do I Configure Caldera Forms Global Email Settings? =
+  = How Do I Configure Caldera Forms Global Email Settings? =
 
-These Global Email Settings control how the form submissions are sent from your WordPress website to your email address. They affect the email notification and the auto-responder processor.
+  These Global Email Settings control how the form submissions are sent from your WordPress website to your email address. They affect the email notification and the auto-responder processor.
 
-Steps To Configure Global Email Settings
+  Steps To Configure Global Email Settings
 
-Step 1 : Go To The Caldera Forms Admin Page
+  Step 1 : Go To The Caldera Forms Admin Page
 
-Starting from the WordPress Dashboard, you can navigate to the Caldera Forms Admin Page by hovering over the Caldera Forms icon and in the drop-down menu clicking on Forms.
+  Starting from the WordPress Dashboard, you can navigate to the Caldera Forms Admin Page by hovering over the Caldera Forms icon and in the drop-down menu clicking on Forms.
 
-Step 2 : Go To The Caldera Forms Email Settings Tab
+  Step 2 : Go To The Caldera Forms Email Settings Tab
 
-You can navigate to the Email Settings tab by clicking on Email Settings in the top Caldera Forms menu bar.
+  You can navigate to the Email Settings tab by clicking on Email Settings in the top Caldera Forms menu bar.
 
-Step 3 : Configure The Email Settings And Save The Form
+  Step 3 : Configure The Email Settings And Save The Form
 
-Email setting page displaying options and inputsEmail setting configuration has 2 settings:
+  Email setting page displaying options and inputsEmail setting configuration has 2 settings:
 
-WordPress: By default Caldera Forms uses WordPress to send emails. This is often not reliable.
-SendGrid: SendGrid is a 3rd party service that when properly configured will deliver emails reliably.
-Creating a SendGrid key and more information on how and why to setup SendGrid documentation is here.
-Selected an Email Gateway and click on Save Email Settings.
+  WordPress: By default Caldera Forms uses WordPress to send emails. This is often not reliable.
+  SendGrid: SendGrid is a 3rd party service that when properly configured will deliver emails reliably.
+  Creating a SendGrid key and more information on how and why to setup SendGrid documentation is here.
+  Selected an Email Gateway and click on Save Email Settings.
 
-Configuring Caldera Forms Global General Settings
+  Configuring Caldera Forms Global General Settings
 
-Most of the time these settings should not change. They can be used to prevent loading of different CSS stylesheets in the front-end when your form is rendered. If you turn these settings off it is up to you to style the form in the front-end.
+  Most of the time these settings should not change. They can be used to prevent loading of different CSS stylesheets in the front-end when your form is rendered. If you turn these settings off it is up to you to style the form in the front-end.
 
-Step 1 : Go To The Caldera Forms Admin Page
+  Step 1 : Go To The Caldera Forms Admin Page
 
-Starting from the WordPress Dashboard, you can navigate to the Caldera Forms Admin Page by hovering over the Caldera Forms icon and in the drop-down menu clicking on Forms.
+  Starting from the WordPress Dashboard, you can navigate to the Caldera Forms Admin Page by hovering over the Caldera Forms icon and in the drop-down menu clicking on Forms.
 
-Step 2 : Go To The Caldera Forms General Settings Tab
+  Step 2 : Go To The Caldera Forms General Settings Tab
 
-You can navigate to the General Settings tab by clicking on General Settings in the top Caldera Forms menu bar. This launches the General Settings pop-up window.
+  You can navigate to the General Settings tab by clicking on General Settings in the top Caldera Forms menu bar. This launches the General Settings pop-up window.
 
-Step 3 : Configure The General Settings And Save The Form
+  Step 3 : Configure The General Settings And Save The Form
 
-Configure general settings by clicking on the toggle switches to turn the setting ON or OFF.
+  Configure general settings by clicking on the toggle switches to turn the setting ON or OFF.
 
-General setting configuration has 3 options:
+  General setting configuration has 3 options:
 
-Alert Style: Turn this ON includes Bootstrap 3 styles on the frontend for form alert notices.
+  Alert Style: Turn this ON includes Bootstrap 3 styles on the frontend for form alert notices.
 
-Form Styles: Turn this ON includes Bootstrap 3 styles on the frontend for form fields and buttons.
+  Form Styles: Turn this ON includes Bootstrap 3 styles on the frontend for form fields and buttons.
 
-Grid Structure: Turn this ON includes Bootstrap 3 styles on the frontend for form grid layouts. Get more information by visiting the official Bootstrap website http://getbootstrap.com/css/.
+  Grid Structure: Turn this ON includes Bootstrap 3 styles on the frontend for form grid layouts. Get more information by visiting the official Bootstrap website http://getbootstrap.com/css/.
 
-Exit the pop-up window by clicking on the X in the top right corner, then, click on Save Form.
+  Exit the pop-up window by clicking on the X in the top right corner, then, click on Save Form.
 
-= How Do I Use The Form Layout Builder? =
+  = How Do I Use The Form Layout Builder? =
+  Caldera Forms offers a super awesome form builder system. You can [learn more about using our gird based form builder here](https://calderaforms.com/doc/form-layout-grid-builder?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-form).
 
-Caldera Forms offers a super awesome form builder system. You can [learn more about using our gird based form builder here](https://calderaforms.com/doc/form-layout-grid-builder?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-form).
 
+  = How Do I Save And Preview A Form ? =
+  The Caldera Forms form builder lets you layout your forms on a responsive grid. You can preview what you create in the form builder edit screen by using the preview button at the top of the form builer screen.
 
-= How Do I Save And Preview A Form? =
+  Steps To Saving And Previewing A New Form
 
-The Caldera Forms form builder lets you layout your forms on a responsive grid. You can preview what you create in the form builder edit screen by using the preview button at the top of the form builder screen.
+  Step 1 : Go To The Caldera Forms Admin Page
 
-Steps To Saving And Previewing A New Form
+  Starting from the WordPress Dashboard, you can navigate to the Caldera Forms Admin Page by hovering over the Caldera Forms icon and in the drop-down menu clicking on Forms.
 
-Step 1 : Go To The Caldera Forms Admin Page
+  Step 2 : Creating A New Form
 
-Starting from the WordPress Dashboard, you can navigate to the Caldera Forms Admin Page by hovering over the Caldera Forms icon and in the drop-down menu clicking on Forms.
+  Create a new form by clicking on New Form in the top Caldera Forms menu bar.
 
-Step 2 : Creating A New Form
+  Step 3 : Saving The Form
 
-Create a new form by clicking on New Form in the top Caldera Forms menu bar.
+  Save a form by clicking on Save Form in the top Caldera Forms menu bar. If successful, a pop-down notice appears and states “Updated Successfully”.
 
-Step 3 : Saving The Form
+  Step 4 : Previewing The Form
 
-Save a form by clicking on Save Form in the top Caldera Forms menu bar. If successful, a pop-down notice appears and states “Updated Successfully”.
+  Preview a form by clicking on Preview Form in the top Caldera Forms menu bar. A new browser tab automatically opens while the current form displays on the page.
 
-Step 4 : Previewing The Form
+  Please note:
 
-Preview a form by clicking on Preview Form in the top Caldera Forms menu bar. A new browser tab automatically opens while the current form displays on the page.
-
-Please note:
-
-*  Previewing a form is only available to the website administrator.
-*  Being in preview mode does not change form behavior. All emails will be sent, all processors will be processed.
-* We recommend that you do your final form testing on a published page using the form’s shortcode while logged out.
+ *  Previewing a form is only available to the website administrator.
+ *  Being in preview mode does not change form behavior. All emails will be sent, all processors will be processed.
+ * We recommend that you do your final form testing on a published page using the form’s shortcode while logged out.
 
 = How Do I Configure Form Settings? =
 
@@ -545,7 +538,7 @@ Step 3 : Configure The Responsive Settings And Save The Form
 The different screen width options are the specific “breakpoints” you can set your grid to collapse at. Collapsing a grid essentially means moving from a 2 column grid to a 1 column grid.
 Once you select a screen size, click on Save Form.
 
-= How Do I Set Up The Form Email Notification For My Contact Form? =
+= How Do I Set Up The Form Email Notification For My Contact Form ? =
 
 
 This getting started guide covers the processes of configuring Caldera Forms email notification settings. These settings control the notification process for _each_ form built within your current instance of Caldera Forms. Get more information on configuring global email settings by [visiting our General and Email Settings Guide.](https://calderaforms.com/doc/global-email-general-settings/)
@@ -557,7 +550,7 @@ These settings control who the form submissions send to as well as what informat
 Step 1 : Go To The Caldera Forms Admin Page And Create Or Edit A Form
 Starting from the WordPress Dashboard, you can navigate to the Caldera Forms Admin Page by hovering over the Caldera Forms icon and in the drop-down menu clicking on **Forms.** Create a new form by clicking on **New Form** in the top Caldera Forms menu bar. Edit an existing form by hovering over 1 form from the list of built forms and clicking on **Edit.** You are now in the Caldera Forms Layout Builder.
 
-Step 2 : Go To The Email Notification Settings Tab
+ Step 2 : Go To The Email Notification Settings Tab
 
 You can navigate to the Email Notification tab by clicking on **Email** in the Caldera Forms sub-menu bar.
 
@@ -572,32 +565,32 @@ You can fill in the notification settings here.
 Once you enter your settings, click on **Save Form.**
 
 = Does Caldera Forms Have File Upload Fields? =
-The Caldera Forms form builder has two types of file upload fields. Basic file fields let you add file uploads to your WordPress forms using the browser's native form file fields. Advanced File Upload Fields are fancier form fields that you can add with our form builder. These form fields have a better user interface.
+The Caldera Forms form builder has two types of file upload fields. Basic file fields let you add file uploads to your WordPress forms using the browser's native form file fields. Advanced File Upload Fields are fancier form fields that you can add with our form builder. These form fields have a btter user interface.
 
-The basic File Upload Field pptions in Caldera Forms let visitors to your WordPress site upload fields allow your users to add one or more files. Multiple uploads can be enabled with the “Allow Multiple” option.
+ The basic File Upload Field pptions in Caldera Forms let visitors to your WordPress site upload fields allow your users to add one or more files. Multiple uploads can be enabled with the “Allow Multiple” option.
 
-These files become attachments in the WordPress media library, and can optionally be attached to emails sent with the Caldera Forms mailer. Attaching to emails is enabled with the “Attach To Mailer” option.
+ These files become attachments in the WordPress media library, and can optionally be attached to emails sent with the Caldera Forms mailer. Attaching to emails is enabled with the “Attach To Mailer” option.
 
-If your form allows public submissions, care should be used with what file types are allowed. Allowed extensions can be entered into the “Allowed Types” option field, as a comma separated list of allowed extensions. For example, “jpg,png,gif” would limit to images of those types, while “pdf” would only allow PDFs.
+ If your form allows public submissions, care should be used with what file types are allowed. Allowed extensions can be entered into the “Allowed Types” option field, as a comma separated list of allowed extensions. For example, “jpg,png,gif” would limit to images of those types, while “pdf” would only allow PDFs.
 
-Native file upload fields are impossible to add custom CSS to. Also, while they do handle multiple file uploads, their handling of multiple files is not graceful. With a regular file field that is set to accept multiple files, all files must be added using the same file upload window, which is not good.
+ Native file upload fields are impossible to add custom CSS to. Also, while they do handle multiple file uploads, their handling off multiple files is not graceful. With a regular file field that is set to accept multiple files, all files must be added using the same file upload window, which is not good.
 
-Caldera Forms file fields can only use the file types that are allowed by WordPress and your server configuration. For more information on how to modify which file types WordPress allows, [see this article](http://www.wpbeginner.com/wp-tutorials/how-to-add-additional-file-types-to-be-uploaded-in-wordpress/).
+ Caldera Forms file fields can only use the file types that are allowed by WordPress and your server configuration. For more information on how to modify which file types WordPress allows, [see this article](http://www.wpbeginner.com/wp-tutorials/how-to-add-additional-file-types-to-be-uploaded-in-wordpress/).
 
-These limitations can be avoided by switching to an [Advanced File Upload Field](https://calderaforms.com/doc/advanced-file-field/).
+ These limitations can be avoided by switching to an [Advanced File Upload Field](https://calderaforms.com/doc/advanced-file-field/).
 
-The advanced file upload field available in the Caldera Forms form builder is an alternative to our regular [file field upload fields.](https://calderaforms.com/doc/file-upload-fields/) While the regular file fields use the native HTML file uploader — the advanced file upload fields have a custom, and a better user interface. They also can be targeted with custom CSS.
+ The advanced file upload field available in the Caldera Forms form builder is an alternative to our regular [file field upload fields.](https://calderaforms.com/doc/file-upload-fields/) While the regular file fields use the native HTML file uploader — the advanced file upload fields have a custom, and a better user interface. They also can be targeted with custom CSS.
 
-While regular file upload fields support multiple file uploads, we strongly recommend you use an advanced file field if you need multiple file uploads from the same field in your form.
+ While regular file upload fields support multiple file uploads, we strongly recommend you use an advanced file field if you need multiple file uploads from the same field in your form.
 
-Advanced fields upload fields allow your users to add one or more files. Multiple uploads can be enabled with the “Allow Multiple” option.
+ Advanced fields upload fields allow your users to add one or more files. Multiple uploads can be enabled with the “Allow Multiple” option.
 
-These files become attachments in the WordPress media library, and can optionally be attached to emails sent with the Caldera Forms mailer. Attaching to emails is enabled with the “Attach To Mailer” option.
+ These files become attachments in the WordPress media library, and can optionally be attached to emails sent with the Caldera Forms mailer. Attaching to emails is enabled with the “Attach To Mailer” option.
 
 = Does Caldera Forms Have Gravatar Fields? =
 The Gravatar field displays a users universal avatar based on their input to an email field. This field type binds to an email address field and dynamically shows the Gravatar for the email address. You can add these fields to your form from the form builder interface with a simple drag and drop. These form fields provide a nice bit of "wow" to your WordPress form as they automatically display the user's gravatar when they enter an email in an email field that matches their Gravatar user name.
 
-= Does Caldera Forms Have HTML Fields With Dynamic Fields? =
+= Does Caldera Forms Have HTML Fields With Dynamic Fields ? =
 
 Caldera Forms comes with an HMTL field type. This is not an input field but rather a content block for displaying HTML on the form. This is useful for adding instructions, creating breaks or simply making the form look a little better.
 
@@ -617,12 +610,12 @@ You can auto-populate field options with just a few clicks in our form builder. 
 
 The auto-populate can be extended using the `caldera_forms_render_get_field_type-checkbox` filter.
 
-= Is Caldera Forms A Great Choice For WordPress Contact Forms? =
+= Is Caldera Forms A Great Choice For WordPress Contact Forms ? =
 Yes, Caldera Forms is a great choice for creating contact forms on your WordPress site. Yes, it has tons of super powerful features, but even if you just need a simple contact form, you're going to want to make sure your contact form is accessible, that your contact form is responsive and that your contact form is beautiful. Caldera Forms does that and more for your contact forms. You also get multiple auto-responders for your contact forms, database storage of entries to your contact form all for free. You could even add mailing list sign up to your contact form when integrating your contact form with MailChimp, Aweber or Convertkit add-ons.
 
 Make your WordPress contact forms the best contact forms with Caldera Forms for free!
 
-= Does Caldera Forms Have Dropdown Select Fields? =
+= Does Caldera Forms Have Dropdown Select Fields ? =
 Yes, it does, over course it does. What kind of WordPress form builder would not?
 
 The dropdown select is for selecting a single option from a list. The configuration panel for the dropdown select field is much the same as all the [Select Option](http://docs.calderaforms.com/category/field-types/select-options/) types: Auto-Populate, and Options. Options are added in the Caldera Forms form builder one option at a time, or using the bulk inserter. Bulk inserting opens a textarea. Each line is an option. Clicking insert options creates the list.
@@ -643,14 +636,12 @@ Yep. You can use the Caldera Forms form builder to add checkox fields to your Wo
 
 Checkboxes can be used as a multi-select list, or a single toggle. The configuration panel for the checkbox is much the same as all the Select field types that are supported by our form builder: Auto-Populate, and Options.
 
-With checkbox fields you have an option in the form builder to make the options display either stacked, or side by side. This option in the Caldera Forms form builder is labelled as "inline"?
+ With checkbox fields you have an option in the form builder to make the options display either stacked, or side by side. This option in the Caldera Forms form builder is labelled as "inline" ?
 
-= Can I Get Some Caldera Forms Stickers? =
+ = Can I Get Some Caldera Forms Stickers ? =
+ Do you think Caldera Forms is a great free WordPress form builder and want to show it off your love in sticker form? We have two types of stickers as of version 1.4.3 - Tweet [@CalderaWP](http://twitter.com/calderawp) about how much you love our form builder & then ask politely for a sticker and we will send you one. Or come see us at WordCamp and we'll have all sorts of stickers for you to show off your love for Caldera Forms -- the awesome drag and drop responsive form builder for WordPress.
 
-Do you think Caldera Forms is a great free WordPress form builder and want to show it off your love in sticker form? We have two types of stickers as of version 1.4.3 - Tweet [@CalderaWP](http://twitter.com/calderawp) about how much you love our form builder & then ask politely for a sticker and we will send you one. Or come see us at WordCamp and we'll have all sorts of stickers for you to show off your love for Caldera Forms -- the awesome drag and drop responsive form builder for WordPress.
-
-= Does Caldera Forms Have Calculation Fields? =
-
+= Does Caldera Forms Have Calculation Fields ? =
 Yep, and they are one fo the coolest features of our form builder. Caldera Forms calculation fields are mainly used for calculating and displaying total prices based on form input. Calculation fields have two modes: visual and manual. The visual editor is a simple way to add, subtract, multiply and divide the values of fields or variables.
 
 In manual mode, you can create complex formulas. In manual mode, you can use any valid [JavaScript arithmetic operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Arithmetic_Operators). Field or variable values can be used via [magic tags](https://calderaforms.com/doc/using-magic-tags-caldera-forms/).
@@ -662,12 +653,11 @@ For this reason, it is important that when [using magic tags based on GET variab
 
 * Notes On Manual Calculations
 
-Manual calculations use JavaScript math functions. You should not use Math in front of your functions or you will create an error. For example, to multiply the value of a field with the slug field_1 by the value of a field with the slug field_2 raised to the second power, you would use `%field_1% * pow(%field_2%, 2 )`.
+Manual calculations are use JavaScript math functions. You should not use Math. In front of your functions or you will create an error. For example, to multiply the value of a field with the slug field_1 by the value of a field with the slug field_2 raised to the second power, you would use `%field_1% * pow(%field_2%, 2 )`.
 
 Also keep in mind that you should not end your formula with a semicolon. You also can not use any variables or call other types of functions.
 
-= What Kind Of Cool Button Fields Does Caldera Forms Have? =
-
+= What Kind Of Cool Button Fields Does Caldera Forms Have ? =
 The Caldera Forms form builder supports 5 button types for use in your WordPress forms.
 
 The primary use for the Button field it to trigger the form submission. Buttons can also be used to move to the next, or previous page of a multi-page form.
@@ -701,7 +691,7 @@ Buttons in a Caldera Form default to carrying the class “btn” and all Calder
 
 Note that these examples will change all buttons in the form. If you want to target one button, you will need to switch to using the button ID.
 
-= Does Caldera Forms Have A WYSIWYG / Rich Editor Field? =
+= Does Caldera Forms Have A WYSIWYG / Rich Editor Field ? =
 
 **Rich Editor WYSIWYG Fields are available in the form builder new feature in Caldera Forms 1.5.0.**
 Caldera Forms offers Rich Editor fields that offer a What You See Is What You Get fields (WYSIWYG) experience. These fields allow those interacting with your WordPress form to easily craft HTML with out writing any code. But they can if they want.
@@ -718,8 +708,8 @@ Rich editor fields have the standard form field options of other forms fields in
 
 *   **Default **: This is a text area, for the default value of the field. It is [magic ta](https://calderaforms.com/doc/using-magic-tags-caldera-forms/)g enabled.
 *   **Language Code **: By default, this field’s interface is in English. You can enter a supported language code here to change the language.
-*   [Click here for documentation on creating your own translation](https://alex-d.github.io/Trumbowyg/documentation.html#add-localization).
-*   **Sanitization Level **: This sets the type of HTML tags that are allowed. Developers should [see this section](#developer-info) for more information.
+    *   [Click here for documentation on creating your own translation](https://alex-d.github.io/Trumbowyg/documentation.html#add-localization).
+    *   **Sanitization Level **: This sets the type of HTML tags that are allowed. Developers should [see this section](#developer-info) for more information.
 
 ### Language Codes
 

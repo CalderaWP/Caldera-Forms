@@ -55,7 +55,15 @@ class Caldera_Forms_Field_Calculation {
 		switch( $type ){
 			case 'checkbox' :
 					if( true == self::checkbox_mode( $field, $form ) ){
-						$number = self::find_value( $entry_value );
+						if( ! empty(  $entry_value ) ){
+							foreach ( $entry_value as $opt => $value ){
+								 $entry_value[ $opt ] = Caldera_Forms_Field_Util::get_option_calculation_value( $opt, $field, $form );
+							}
+
+							$number = floatval( array_sum( $entry_value ) );
+						}
+
+
 					}else{
 						if( is_array( $entry_value ) ){
 							foreach (  $entry_value as $value ){
@@ -66,6 +74,8 @@ class Caldera_Forms_Field_Calculation {
 						}else{
 							$number = floatval( $entry_value );
 						}
+
+						$number = self::find_calc_value( $number, $field, $form );
 					}
 				break;
 			case 'radio':
@@ -95,6 +105,9 @@ class Caldera_Forms_Field_Calculation {
 	 */
 	protected static function find_value( $entry_value ){
 		if ( is_array( $entry_value ) ) {
+			foreach ( $entry_value as $i => $v ){
+				$x=1;
+			}
 			$number = floatval( array_sum( $entry_value ) );
 
 			return $number;

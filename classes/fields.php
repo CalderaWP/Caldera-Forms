@@ -263,7 +263,7 @@ class Caldera_Forms_Fields {
 				)
 			),
 			'credit_card_exp' => array(
-				"field"       => __( 'Credit Card Expiration', 'caldera-forms' ),
+				"field"       => __( 'Credit Card Expiration Date', 'caldera-forms' ),
 				"description" => __( 'Credit Card Expiration Date With Validation', 'caldera-forms' ),
 				"file"        => CFCORE_PATH . "fields/generic-input.php",
 				'icon'        => CFCORE_URL . 'assets/build/images/credit-card.svg',

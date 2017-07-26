@@ -3,13 +3,19 @@
 
 global $field_type_list, $field_type_templates;
 
-if( ! isset( $_GET['edit'] ) || ! is_string( $_GET['edit'] ) ){
+if( ! isset( $_GET[  Caldera_Forms_Admin::EDIT_KEY  ] ) || ! is_string(  Caldera_Forms_Admin::EDIT_KEY  ) ){
 	wp_die( esc_html__( 'Invalid form ID', 'caldera-forms'  ) );
 }
-// Load element
-$element = $form = Caldera_Forms_Forms::get_form( $_GET['edit'] );
+
+if( Caldera_Forms_Admin::is_revision_edit() ){
+	$element = $form = Caldera_Forms_Forms::get_revision( $_GET[ Caldera_Forms_Admin::REVISION_KEY ]  );
+} else{
+	$element = $form = Caldera_Forms_Forms::get_form( $_GET[ Caldera_Forms_Admin::EDIT_KEY ] );
+
+}
+
 if( empty( $element ) || ! is_array( $element ) ){
-	wp_die( esc_html__( 'Invalid form', 'caldera-forms'  ) );
+	wp_die( esc_html__( 'Invalid Form.', 'caldera-forms'  ) );
 }
 /**
  * Runs before form editor is rendered, after form is gotten from DB.
@@ -31,9 +37,8 @@ do_action( 'caldera_forms_prerender_edit', $element );
  */
 $magic_tags = apply_filters( 'caldera_forms_get_magic_tags', array(), $element['ID'] );
 
-//dump($element);
 if(empty($element['success'])){
-	$element['success'] = esc_html__( 'Form has successfully been submitted. Thank you.', 'caldera-forms' );
+	$element['success'] = esc_html__( 'Form has been successfully submitted. Thank you.', 'caldera-forms' );
 }
 
 if(!isset($element['db_support'])){
@@ -96,6 +101,7 @@ wp_nonce_field( 'cf_edit_element', 'cf_edit_nonce' );
 // Init check
 echo "<input id=\"last_updated_field\" name=\"config[_last_updated]\" value=\"" . date('r') . "\" type=\"hidden\">";
 echo "<input id=\"form_id_field\" name=\"config[ID]\" value=\"" . $_GET['edit'] . "\" type=\"hidden\">";
+echo "<input id=\"form_db_id_field\" name=\"config[db_id]\" value=\"" . $element['db_id'] . "\" type=\"hidden\">";
 
 do_action('caldera_forms_edit_start', $element);
 
@@ -679,13 +685,39 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 		<?php esc_html_e( 'Updated Successfully', 'caldera-forms'  ); ?>
 	</div>
 
-	<button class="button button-primary caldera-header-save-button" data-active-class="none" data-load-element="#save_indicator" type="button" disabled="disabled">
-		<?php esc_html_e( 'Save Form', 'caldera-forms' ); ?>
-		<span id="save_indicator" class="spinner" style="position: absolute; right: -33px;"></span>
-	</button>
-	<a class="button caldera-header-preview-button" target="_blank" href="<?php echo esc_url( add_query_arg( 'cf_preview', $element[ 'ID' ], get_home_url() ) ); ?>">
-		<?php esc_html_e( 'Preview Form', 'caldera-forms' ); ?>
-	</a>
+
+	<?php if( ! Caldera_Forms_Admin::is_revision_edit() ){ ?>
+
+		<button class="button button-primary caldera-header-save-button" data-active-class="none" data-load-element="#save_indicator" type="button" disabled="disabled">
+			<?php esc_html_e( 'Save Form', 'caldera-forms' ); ?>
+			<span id="save_indicator" class="spinner" style="position: absolute; right: -33px;"></span>
+		</button>
+
+		<a class="button caldera-header-preview-button" target="_blank" href="<?php echo esc_url( Caldera_Forms_Admin::preview_link( $element[ 'ID' ] ) ); ?>">
+			<?php esc_html_e( 'Preview Form', 'caldera-forms' ); ?>
+		</a>
+	<?php
+	}else{ ?>
+		<a
+			href="#"
+		    class="button button-primary caldera-header-restore-button"
+			id="caldera-forms-restore-revision"
+			data-form="<?php echo esc_attr( $element[ 'ID' ] ); ?>"
+			data-revision="<?php echo esc_attr( $element[ 'db_id' ] ); ?>"
+		    data-edit-link="<?php echo esc_url( Caldera_Forms_Admin::form_edit_link($element[ 'ID' ] )); ?>"
+		>
+			<?php esc_html_e( 'Restore Form Revision', 'caldera-forms' ); ?>
+			<span id="save_indicator" class="spinner" style="position: absolute; right: -33px;"></span>
+
+		</a>
+
+		<a class="button caldera-header-preview-button" target="_blank" href="<?php echo esc_url( Caldera_Forms_Admin::preview_link( $element[ 'ID' ], $element[ 'db_id' ] ) ); ?>">
+			<?php esc_html_e( 'Preview Form Revision', 'caldera-forms' ); ?>
+		</a>
+
+	<?php } ?>
+
+
 
 	<?php
 	if ( !empty( $element['mailer']['preview_email'] ) ){
@@ -1002,22 +1034,49 @@ do_action('caldera_forms_edit_end', $element);
 			<label class="option-setting-label option-setting-label-for-value" for="opt-calc-val-{{@key}}">
 				<?php esc_html_e( 'Calculation Value', 'caldera-forms' ); ?>
 			</label>
-			<input{{#unless ../show_values}} style="display:none;"{{/unless}} type="text" class="toggle_calc_value_field field-config option-setting " name="{{../_name}}[option][{{@key}}][calc_value]" value="{{#if ../show_values}}{{calc_value}}{{else}}{{label}}{{/if}}" placeholder="" . esc_attr( __( 'Calculation Value', 'caldera-forms' ) ) . "" id="opt-calc-val-{{@key}}" />
+			<input
+				type="text"
+				class="toggle_calc_value_field field-config option-setting "
+				name="{{../_name}}[option][{{@key}}][calc_value]"
+				value="{{calc_value}}"
+				placeholder="<?php esc_attr_e( 'Calculation Value', 'caldera-forms'  ); ?>"
+				id="opt-calc-val-{{@key}}"
+				{{#unless ../show_values}} style="display:none;"{{/unless}}
+			/>
 		</div>
 
 		<div class="caldera-config-group">
 			<label class="option-setting-label option-setting-label-for-value" for="opt-val-{{@key}}">
 				<?php esc_html_e( 'Value', 'caldera-forms' ); ?>
 			</label>
-			<input{{#unless ../show_values}} style="display:none;"{{/unless}} type="text" class="toggle_value_field option-setting field-config  required " name="{{../_name}}[option][{{@key}}][value]" value="{{#if ../show_values}}{{value}}{{else}}{{label}}{{/if}}" <?php esc_html_e( ' Value', 'caldera-forms' ); ?>" id="opt-val-{{@key}}" data-opt="{{@key}}" />
+			<input
+				type="text"
+				class="toggle_value_field option-setting field-config  required "
+				name="{{../_name}}[option][{{@key}}][value]"
+				value="{{value}}"
+				placeholder="<?php esc_attr_e( 'Value', 'caldera-forms' ); ?>"
+				id="opt-val-{{@key}}"
+				data-opt="{{@key}}"
+				{{#unless ../show_values}} style="display:none;"{{/unless}}
+			/>
 		</div>
 
 		<div class="caldera-config-group">
 			<label class="option-setting-label option-setting-label-for-label" for="opt-label-{{@key}}">
 				<?php esc_html_e( 'Label', 'caldera-forms' ); ?>
 			</label>
-			<input{{#unless ../show_values}} style="width:245px;"{{/unless}} type="text" data-option="{{@key}}" class="toggle_label_field option-setting field-config required" name="{{../_name}}[option][{{@key}}][label]" value="{{label}}" placeholder="<?php esc_attr_e( 'Label', 'caldera-forms' ); ?>" for="opt-label-{{@key}}" data-opt="{{@key}}" />
+			<input
+				type="text"
+				data-option="{{@key}}"
+				class="toggle_label_field option-setting field-config required"
+				name="{{../_name}}[option][{{@key}}][label]" value="{{label}}"
+				placeholder="<?php esc_attr_e( 'Label', 'caldera-forms' ); ?>"
+				for="opt-label-{{@key}}"
+				data-opt="{{@key}}"
+				{{#unless ../show_values}} style="width:245px;"{{/unless}}
+			/>
 		</div>
+
 		<button class="button button-small toggle-remove-option" type="button">
 			<i class="icn-delete"></i>
 		</button>
