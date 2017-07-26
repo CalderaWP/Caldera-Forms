@@ -43,7 +43,7 @@
 					esc_html__( 'SendGrid API Key', 'caldera-forms' ),
 					'https://CalderaWP.com/docs/configure-sendgrid',
 					esc_attr__( 'Documentation for configuring SendGrid API', 'caldera-forms' ),
-					esc_html__( 'Lean more here.', 'Caldera Forms' )
+					esc_html__( 'Learn More', 'Caldera Forms' )
 				);
 		?></p>
 

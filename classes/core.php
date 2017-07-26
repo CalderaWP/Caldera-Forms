@@ -660,7 +660,7 @@ class Caldera_Forms {
 		$request = wp_remote_get( 'https://www.google.com/recaptcha/api/siteverify?' . build_query( $args ) );
 		$result  = json_decode( wp_remote_retrieve_body( $request ) );
 		if ( empty( $result->success ) ) {
-			return new WP_Error( 'error', __( "The wasn't entered correct.", 'caldera-forms' ) . ' <a href="#" class="reset_' . sanitize_text_field( $_POST[ $field[ 'ID' ] ] ) . '">' . __( 'Reset', 'caldera-forms' ) . '<a>.' );
+			return new WP_Error( 'error', __( "The captcha wasn't entered correctly.", 'caldera-forms' ) . ' <a href="#" class="reset_' . sanitize_text_field( $_POST[ $field[ 'ID' ] ] ) . '">' . __( 'Reset', 'caldera-forms' ) . '<a>.' );
 		}
 
 
