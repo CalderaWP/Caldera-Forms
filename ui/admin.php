@@ -231,7 +231,7 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 							<?php esc_html_e( 'Need Support? Or Found A Bug?', 'caldera-forms' ); ?>
 						</h2>
 						<p>
-							<?php esc_html_e( 'In addition to our documentation, we have support licneses to get you extra help.', 'caldera-forms' ); ?>
+							<?php esc_html_e( 'In addition to our documentation, we have support licenses to get you extra help.', 'caldera-forms' ); ?>
 						</p>
 						<a href="https://calderaforms.com/support?utm-source=wp-admin&utm_campaign=clippy&utm_term=support" target="_blank" class="bt-btn btn btn-green">
 							<?php esc_html_e( 'Learn About Our Support Options', 'caldera-forms' ); ?>
