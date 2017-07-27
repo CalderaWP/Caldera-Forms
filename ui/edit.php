@@ -698,6 +698,16 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 		</a>
 	<?php
 	}else{ ?>
+
+		<a
+			href="<?php echo esc_url( Caldera_Forms_Admin::form_edit_link($element[ 'ID' ] )); ?>"
+		    class="button caldera-header-return-button"
+			id="caldera-forms-return-from-revision"
+		>
+			<?php esc_html_e( 'Return to last Form state', 'caldera-forms' ); ?>
+			
+		</a>
+
 		<a
 			href="#"
 		    class="button button-primary caldera-header-restore-button"
@@ -1191,54 +1201,4 @@ var preset_options = <?php echo json_encode( $option_presets ); ?>
 <script type="text/javascript">
 	jQuery('.error,.notice,.notice-error').remove();
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
