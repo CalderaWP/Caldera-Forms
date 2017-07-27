@@ -705,7 +705,7 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 			id="caldera-forms-return-from-revision"
 		>
 			<?php esc_html_e( 'Return to last Form state', 'caldera-forms' ); ?>
-			<span id="save_indicator" class="spinner" style="position: absolute; right: -33px;"></span>
+			
 		</a>
 
 		<a
