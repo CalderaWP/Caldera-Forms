@@ -134,7 +134,7 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 						data-callback="set_form_state"
 						data-form="<?php echo esc_attr( trim( $form_id ) ); ?>"
 
-						><?php if( !empty( $form['form_draft'] ) ) { echo __('Activate', 'caldera-forms'); }else{ echo __('Deactivate', 'caldera-forms'); } ?></a> | </span><?php } ?>
+						><?php if( !empty( $form['form_draft'] ) ) { echo __('Enable', 'caldera-forms'); }else{ echo __('Disable', 'caldera-forms'); } ?></a> | </span><?php } ?>
 
 						<?php if(!empty($form['db_support'])) { ?>
 							<span class="edit">

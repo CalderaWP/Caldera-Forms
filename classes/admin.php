@@ -730,11 +730,11 @@ class Caldera_Forms_Admin {
 
 			Caldera_Forms_Forms::form_state( $form );
 			$state = 'active-form';
-			$label = esc_html__( 'Deactivate', 'caldera-forms' );
+			$label = esc_html__( 'Disable', 'caldera-forms' );
 		}else{
 			Caldera_Forms_Forms::form_state( $form , false );
 			$state = 'draft-form';
-			$label = esc_html__( 'Activate', 'caldera-forms' );
+			$label = esc_html__( 'Enable', 'caldera-forms' );
 		}
 
 
