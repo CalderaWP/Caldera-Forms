@@ -1617,7 +1617,7 @@ class Caldera_Forms_Admin {
 						"canvas" => $path . "revisions.php",
 						'tip' => array(
 							'link' => 'https://calderaforms.com/doc/form-revisions-drafts/?utm_source=wp-admin&utm_medium=form-editor&utm_term=tabs',
-							'text' => __( 'Working with form revisions and drafrs', 'caldera-forms' )
+							'text' => __( 'Working with form revisions and drafts', 'caldera-forms' )
 						)
 					),
 
