@@ -491,8 +491,8 @@ class Caldera_Forms_Admin {
 
 				if( $result ){
 					$out[ 'status' ]    = $do_action;
-					$out[ 'undo' ]      = ( $do_action === 'trash' ? 'active' : esc_html__( 'Trash', 'caldera-forms' ) );
-					$out[ 'undo_text' ] = ( $do_action === 'trash' ? esc_html__( 'Restore', 'caldera-forms' ) : esc_html__( 'Trash', 'caldera-forms' ) );
+					$out[ 'undo' ]      = ( $do_action === 'trash' ? 'active' : esc_html_x( 'Trash', 'Verb: Action of moving to trash', 'caldera-forms' ) );
+					$out[ 'undo_text' ] = ( $do_action === 'trash' ? esc_html__( 'Restore', 'caldera-forms' ) : esc_html_x( 'Trash', 'Verb: Action of moving to trash', 'caldera-forms' ) );
 
 					$form             = strip_tags( $_POST[ 'form' ] );
 					$out[ 'entries' ] = implode( ',', $selectors );
@@ -730,11 +730,11 @@ class Caldera_Forms_Admin {
 
 			Caldera_Forms_Forms::form_state( $form );
 			$state = 'active-form';
-			$label = esc_html__( 'Deactivate', 'caldera-forms' );
+			$label = esc_html__( 'Disable', 'caldera-forms' );
 		}else{
 			Caldera_Forms_Forms::form_state( $form , false );
 			$state = 'draft-form';
-			$label = esc_html__( 'Activate', 'caldera-forms' );
+			$label = esc_html__( 'Enable', 'caldera-forms' );
 		}
 
 
@@ -1617,7 +1617,7 @@ class Caldera_Forms_Admin {
 						"canvas" => $path . "revisions.php",
 						'tip' => array(
 							'link' => 'https://calderaforms.com/doc/form-revisions-drafts/?utm_source=wp-admin&utm_medium=form-editor&utm_term=tabs',
-							'text' => __( 'Working with form revisions and drafrs', 'caldera-forms' )
+							'text' => __( 'Working with form revisions and drafts', 'caldera-forms' )
 						)
 					),
 

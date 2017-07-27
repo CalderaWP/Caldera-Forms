@@ -54,7 +54,7 @@
     <div class="caldera-config-field">
         <input id="{{_id}}_startdate" aria-describedby="{{_id}}_startdate-description" type="text" class="cfdatepicker-set-format block-input field-config" name="{{_name}}[start_date]" value="{{start_date}}">
         <p class="description" id="{{_id}}_startdate-description">
-            <?php esc_html_e('The starting date of the date picker like +1d, -2y, +4m. 0d for today ', 'caldera-forms'); ?>
+            <?php esc_html_e('The starting date of the date picker like +1d, -2y, +4m. 0d for today.', 'caldera-forms'); ?>
         </p>
     </div>
 </div>
@@ -65,7 +65,7 @@
     <div class="caldera-config-field">
         <input id="{{_id}}_end-date" aria-describedby="{{_id}}_end-date-description" type="text" class="cfdatepicker-set-format block-input field-config" name="{{_name}}[end_date]" value="{{end_date}}">
         <p class="description" id="{{_id}}_end-date-description">
-                <?php esc_html_e('The ending date of the date picker like +1d, -2y, +4m. 0d for today ', 'caldera-forms'); ?>
+                <?php esc_html_e('The ending date of the date picker like +1d, -2y, +4m. 0d for today.', 'caldera-forms'); ?>
         </p>
     </div>
 </div>

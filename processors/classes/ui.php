@@ -379,7 +379,7 @@ class Caldera_Forms_Processor_UI {
 			return;
 		}
 
-		return sprintf( '<div class="error"><p>%1s</p></div>', __( sprintf( '%1s requires a valid SSL certificate. It will only function in test mode unless SSL/HTTPS is used. Your site does not appear to be using the secure HTTPS protocol.', $name ), 'caldera-forms' ) );
+		return sprintf( '<div class="error"><p>%1s</p></div>', sprintf( __( '%s requires a valid SSL certificate. It will only function in test mode unless SSL/HTTPS is used. Your site does not appear to be using the secure HTTPS protocol.', 'caldera-forms' ), $name ) );
 
 	}
 
