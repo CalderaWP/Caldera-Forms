@@ -18,7 +18,7 @@ if( Caldera_Forms_Admin::is_revision_edit() ){
 
 				<div class="caldera-config-group">
 					<label for="restore-{{id}}">
-						<?php esc_html_e( 'Edit Revision: ', 'caldera-forms' ); ?> {{id}}
+						<?php esc_html_e( 'Edit Revision:', 'caldera-forms' ); ?> {{id}}
 					</label>
 					<input type="radio" name="caldera-forms-revision" value="{{id}}" id="restore-{{id}}" data-edit="{{edit}}" />
 				</div>
