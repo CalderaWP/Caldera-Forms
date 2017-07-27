@@ -46,7 +46,7 @@ return array (
 					'ID' => 'fld_1316929',
 					'type' => 'hidden',
 					'label' => __( '2 Big', 'caldera-forms' ),
-					'slug' => 'two_big',
+					'slug' => '2_big',
 					'caption' => '',
 					'config' =>
 						array (
@@ -74,8 +74,8 @@ return array (
 				array (
 					'ID' => 'fld_4338248',
 					'type' => 'hidden',
-					'label' => __( 'One', 'caldera-forms' ),
-					'slug' => 'one',
+					'label' => '1',
+					'slug' => '1',
 					'caption' => '',
 					'config' =>
 						array (
@@ -260,7 +260,7 @@ return array (
 					'ID' => 'fld_6796077',
 					'type' => 'hidden',
 					'label' => __( '2 Small', 'caldera-forms' ),
-					'slug' => 'two_small',
+					'slug' => '2_small',
 					'caption' => '',
 					'config' =>
 						array (
