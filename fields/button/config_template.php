@@ -5,7 +5,7 @@
 	<div class="caldera-config-field">
 		<select id="buttontype_{{_id}}" class="block-input field-config field-button-type" name="{{_name}}[type]">
             <option value="submit" {{#is type value="submit"}}selected="selected"{{/is}}>
-                <?php esc_html_e('Submit'); ?>
+                <?php esc_html_e('Submit', 'caldera-forms'); ?>
             </option>
             <option value="button" {{#is type value="button"}}selected="selected"{{/is}}>
                 <?php esc_html_e('Button', 'caldera-forms'); ?>
@@ -46,7 +46,7 @@
         </label>
 		<div class="caldera-config-field">
 			<input id="{{_id}}_target" type="text" class="block-input field-config" name="{{_name}}[target]" value="{{target}}" />
-			<p class="description"><?php _e('Selector or callback function to push form values on click.', 'caldera-form'); ?></p>
+			<p class="description"><?php _e('Selector or callback function to push form values on click.', 'caldera-forms'); ?></p>
 		</div>
 	</div>
 
