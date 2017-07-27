@@ -992,9 +992,9 @@ class Caldera_Forms {
 							parse_str( $redirect[ 'query' ], $redirect[ 'query' ] );
 							$base_redirect = explode( '?', $base_redirect, 2 );
 							$query_vars    = array_merge( $redirect[ 'query' ], $query_vars );
-							$redirect      = $base_redirect[ 0 ] . '?' . http_build_query( $query_vars );
+							$redirect      = add_query_arg( $query_vars, $base_redirect[ 0 ] );
 						} else {
-							$redirect = $base_redirect . '?' . http_build_query( $query_vars );
+							$redirect      = add_query_arg( $query_vars, $base_redirect );
 						}
 
 						return $redirect;
