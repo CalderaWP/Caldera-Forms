@@ -1221,7 +1221,7 @@ class Caldera_Forms_Admin {
 					wp_redirect( 'admin.php?page=caldera-forms' );
 					exit;
 				} else {
-					wp_die( __('Sorry, please try again', 'caldera-forms' ), __('Form could not be deleted.', 'caldera-forms' ) );
+					wp_die( __('Form could not be deleted.', 'caldera-forms' ) );
 				}
 
 			}

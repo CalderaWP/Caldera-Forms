@@ -31,7 +31,7 @@
             </option>
 		</select>
 		<p class="description" id="{{_id}}_theme-description">
-            <?php esc_html_e('Theme changes not available in preview. Update form and reload to see new theme.', 'caldera-forms'); ?>
+            <?php esc_html_e('Theme changes not available in preview. Save the form and reload to see new theme.', 'caldera-forms'); ?>
         </p>
 	</div>
 </div>

@@ -2,8 +2,8 @@
 Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza
 Tags: free wordpress form builder, formbuilder, form builder, contact form,  contact me, custom form, forms, form, custom forms, forms creator, caldera forms, calderawp, wp form, wp form builder, form, drag and drop, email, awesome, wordpress free form builder, echecks, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, eCheck,dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, gravity forms, ninja forms, contact, email, auto-responder, aweber, convertkit, builder, contact forms, search, ab testing, a/b testing, split testing, shortcode, wordpress, awesome plugin, plugin, easy, braintree form, dwolla form, authorize.net form, mailchimp form, mailchimp popup, aweber form, convertkit form, stripe form, stripe popup, eCheck form, responsive,
 Requires at least: 4.5
-Tested up to: 4.8.0
-Stable tag: 1.5.3-b-2
+Tested up to: 4.8.1
+Stable tag: 1.5.3.1
 License: GPLv2
 
 Responsive form builder for contact forms, user registration and login forms, Mailchimp, PayPal Express and more.
@@ -31,7 +31,9 @@ Caldera Forms is a free WordPress plugin by <a href="http://CalderaLabs.org?utm_
 * Export entries to CSV!
 * Responsive and accessible by default!
 * [A ton of add-ons to take your forms farther!](https://calderaforms.com/caldera-forms-add-ons?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=features-list)
-* [Caldera Forms Pro Makes Caldera Forms Messages More Awesome!](https://calderaforms.com/pro?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=features-list)
+* [Caldera Forms Pro makes your emails reliable and beautiful](https://calderaforms.com/pro?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=features-list)
+* [Free CDN to improve site speed](https://calderaforms.com/doc/improving-caldera-performance-free-cdn?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=features-list)
+
 
 [youtube https://www.youtube.com/watch?v=KmKj02aE0nc&index=1&list=PLgeaHmX3MoiuXOhRlDdYn7k0RcL4afLzQ]
 
@@ -769,13 +771,43 @@ This could also be a sign of a more serious issue on your server, but is probabl
 4. **Powerful Conditional Logic** - Hide, show and disable fields based on user input!  Don't pay for conditional logic!
 5. **Go Further With Form Processors** - Auto-responders, conditional recipients, redirects are included! Go further with our add-ons!
 
+
 == Changelog ==
+= Caldera Forms 1.5.3.1 (July 27th, 2017) Attack of the Clones! =
+See: [https://calderaforms.com/updates/caldera-forms-1-5-3-1](https://calderaforms.com/updates/caldera-forms-1-5-3-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.3.1)
+
+* BUG FIXED: Clone forms were not cloning properly.
+* BUG FIXED: Sometimes an error was shown after a form was deleted, even though it was actually deleted.
+* BUG FIXED: Translation strings were missing for form templates.
+
+= Caldera Forms 1.5.3 (July 26th, 2017) Canada! =
+See: [https://calderaforms.com/updates/caldera-forms-1-5-3](https://calderaforms.com/updates/caldera-forms-1-5-3?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-5-3-1)
+
+* NEW FEATURE: Ability to edit, view and restore forms. [Learn more](https://calderaforms.com/doc/form-revisions-drafts/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.3)
+* NEW FEATURE: 1 Switch turns on a free CDN for all Caldera Forms JavaScript and CSS. [Learn More](https://calderaforms.com/doc/improving-caldera-performance-free-cdn?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.3)
+* NEW FEATURE: {query_var:*} magic tag for WordPress query vars.
+* NEW FILTER: caldera_forms_email_csv_data for modifying data used in the CSV file attached to the email. [Learn More](https://calderaforms.com/doc/caldera_forms_email_csv_data/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.3)
+* NEW FILTER: caldera_forms_admin_csv for modifying data used in the CSV file exported in the admin. [Learn More](https://calderaforms.com/doc/caldera_forms_admin_csv/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.3)
+* ADDED: Warning if jQuery version is too old for Caldera Forms to work.
+* ADDED: Warning if submission is likely to result in a cross-origin error.
+* ADDED: CFState and CFEvents JavaScript objects for improving how state of form is tracked in front-end.
+* IMPROVED: HTML fields, summary fields now use CFState and CFEvents to improve performance and prevent some bugs.
+* BUG FIXED: Form became unresponsive after a select (or checkbox/radio) field triggers a condition & conditionally hides a hidden by conditional logic field that's value is used in a calculation field, whose value is showed in an HTML field.
+* BUG FIXED: Range sliders were not using the right color after being unhidden by conditional logic.
+* BUG FIXED: Some fields in modal forms were overflowing modal.
+* BUG FIXED: Some fields had aria-labelledby attribute when no corresponding label element existed or was needed.
+* BUG FIXED: Calculation value for a select option didn't have to be numeric.
+* BUG FIXED: Option presets & option bulk creation was not populating options properly. Now it's fixed.
+* BUG FIXED: Checkbox fields used value, not calculations value when used in calculations.
+
 = Caldera Forms 1.5.2.1 (July 5, 2017) (bool) =
 See: [https://calderaforms.com/updates/caldera-forms-1-5-2-1](https://calderaforms.com/updates/caldera-forms-1-5-2-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-5-2-1)
+
 * FIXED: We were using boolval() which is not PHP 5.2-5.4 compatible.
 
 = Caldera Forms 1.5.2 (June 30, 2017) Broken Foot Edition =
 See: [https://calderaforms.com/updates/caldera-forms-1-5-2](https://calderaforms.com/updates/caldera-forms-1-5-2?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.2)
+
 * NEW FEATURE: Ability to resend messages from saved entries.
 * NEW FEATURE: UTM Fields.
 * NEW FEATURE: {current_url} magic tag for the current page URL.
@@ -800,6 +832,7 @@ See: [https://calderaforms.com/updates/caldera-forms-1-5-2](https://calderaforms
 
 = Caldera Forms 1.5.1 (June 12, 2017) Select Pro =
 See: [https://calderaforms.com/updates/caldera-forms-1-5-1](https://calderaforms.com/updates/caldera-forms-1-5-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.1)
+
 * NEW FEATURE: Default option that can be set by magic tag for dropdown, radio, checkboxes and toggles
 * NEW FEATURE: Ability for select field options to provide a different value to calculations then their value attribute.
 * IMPROVED: Headers for sub tabs with links to docs.
@@ -822,6 +855,7 @@ See: [https://calderaforms.com/updates/caldera-forms-1-5-1](https://calderaforms
 
 = Caldera Forms 1.5.0.10 (May 24th, 2017) We Got A Cute Cat Mascot =
 See: [https://calderaforms.com/updates/caldera-forms-1-5-0-10](https://calderaforms.com/updates/caldera-forms-1-5-0-10?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.0.10)
+
 * NEW FEATURE: Changed banner to include Catdera mascot.
 * NEW FEATURE: Star rating fields now have a setting for the default number of stars.
 * NEW FEATURE: The caldera_forms_mailer filter now exposes the entry ID.

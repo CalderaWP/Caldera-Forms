@@ -34,7 +34,7 @@ if(empty($haspointer)){ ?>
 	
 	jQuery(document).ready( function($) {
 		$( '#new-form-element' ).pointer( {
-			content: '<h3>Form Elements & Fields</h3><p><img src="<?php echo CFCORE_URL . 'assets/images/howto.gif'; ?>"></p>',
+			content: '<h3><?php _e( 'Form Elements & Fields', 'caldera-forms' ); ?></h3><p><img src="<?php echo CFCORE_URL . 'assets/images/howto.gif'; ?>"></p>',
 			position: {
 				edge: 'top',
 				align: 'left'

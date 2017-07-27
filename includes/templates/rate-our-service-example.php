@@ -4,10 +4,10 @@
   '_last_updated' => 'Mon, 30 Jan 2017 13:53:00 +0000',
   'ID' => 'rate-our-service',
   'cf_version' => '1.5.0-b-2',
-  'name' => 'Rate our service',
+  'name' => __( 'Rate our service', 'caldera-forms' ),
   'scroll_top' => 1,
   'description' => '														',
-  'success' => 'Form has been successfully submitted. Thank you.						',
+  'success' => __( 'Form has been successfully submitted. Thank you.', 'caldera-forms' ),
   'db_support' => 1,
   'pinned' => 0,
   'hide_form' => 1,
@@ -33,7 +33,7 @@
     array(
       'ID' => 'fld_9014900',
       'type' => 'text',
-      'label' => 'Full Name',
+      'label' => __( 'Full Name', 'caldera-forms' ),
       'slug' => 'full_name',
       'conditions' => 
       array(
@@ -54,7 +54,7 @@
     array(
       'ID' => 'fld_8004623',
       'type' => 'email',
-      'label' => 'Email',
+      'label' => __( 'Email', 'caldera-forms' ),
       'slug' => 'email',
       'conditions' => 
       array(
@@ -73,7 +73,7 @@
     array(
       'ID' => 'fld_841260',
       'type' => 'star_rating',
-      'label' => 'How would you rate your experience',
+      'label' => __( 'How would you rate your experience', 'caldera-forms' ),
       'slug' => 'how_would_you_rate_your_experience',
       'conditions' => 
       array(
@@ -96,8 +96,8 @@
     array(
       'ID' => 'fld_4412757',
       'type' => 'paragraph',
-      'label' => 'Comments/Messages',
-      'slug' => 'commentsmessages',
+      'label' => __( 'Message / Comments', 'caldera-forms' ),
+      'slug' => 'messagecomments',
       'conditions' => 
       array(
         'type' => '',
@@ -115,7 +115,7 @@
     array(
       'ID' => 'fld_1889239',
       'type' => 'button',
-      'label' => 'Submit',
+      'label' => __( 'Submit', 'caldera-forms' ),
       'slug' => 'submit',
       'conditions' => 
       array(
@@ -138,13 +138,13 @@
   'mailer' => 
   array(
     'on_insert' => 1,
-    'sender_name' => 'Rate our service',
+    'sender_name' => __( 'Rate our service', 'caldera-forms' ),
     'sender_email' => 'myemail@email.com',
     'reply_to' => '',
     'email_type' => 'html',
     'recipients' => '',
     'bcc_to' => '',
-    'email_subject' => 'Rate our service',
+    'email_subject' => __( 'Rate our service', 'caldera-forms' ),
     'email_message' => '{summary}',
   ),
   'conditional_groups' => 
