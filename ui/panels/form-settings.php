@@ -109,7 +109,7 @@
 	<div class="caldera-config-group">
 		<fieldset>
 			<legend>
-				<?php esc_html_e( 'Show Entry View Admin Page', 'caldera-forms' ); ?>
+				<?php esc_html_e( 'Create sub-menu entry viewer', 'caldera-forms' ); ?>
 			</legend>
 			<div class="caldera-config-field">
 				<label for="pin-toggle-roles-enable">
