@@ -288,6 +288,7 @@ class Caldera_Forms_Forms {
 
 
 		$data[ 'ID' ] = trim( $id );
+		unset( $data[ 'db_id' ] );
 
 		$new_form = self::save_form( $data );
 		if( is_array( $new_form ) && isset( $new_form[ 'ID' ] ) ){

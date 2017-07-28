@@ -49,7 +49,7 @@
 				</label>
 				<label for="scroll_top-disable">
 					<input id="scroll_top-disable" type="radio" class="field-config" name="config[scroll_top]" value="0" <?php if ( empty( $element[ 'scroll_top' ] ) ){ ?>checked="checked"<?php } ?> aria-describedby="scroll_top-enable-description">
-					<?php esc_html_e( 'Disabled', 'caldera-forms' ); ?>
+					<?php esc_html_e( 'Disable', 'caldera-forms' ); ?>
 					<p class="description" id="scroll_top-enable-description">
 						<?php esc_html_e( 'When form is submitted, do not scroll page.', 'caldera-forms' ); ?>
 					</p>
@@ -100,7 +100,7 @@
 				</label>
 				<label for="db_support-disable">
 					<input id="db_support-disable" type="radio" class="field-config" name="config[db_support]" value="0" <?php if ( empty( $element[ 'db_support' ] ) ){ ?>checked="checked"<?php } ?>>
-					<?php esc_html_e( 'Disabled', 'caldera-forms' ); ?>
+					<?php esc_html_e( 'Disable', 'caldera-forms' ); ?>
 				</label>
 			</div>
 		</fieldset>
@@ -118,7 +118,7 @@
 				</label>
 				<label for="pin-toggle-roles-disable">
 					<input id="pin-toggle-roles-disable" type="radio" class="field-config pin-toggle-roles" name="config[pinned]" value="0" <?php if ( empty( $element[ 'pinned' ] ) ){ ?>checked="checked"<?php } ?> aria-describedby="pin-toggle-roles-description">
-					<?php  esc_html_e( 'Disabled', 'caldera-forms' ); ?>
+					<?php  esc_html_e( 'Disable', 'caldera-forms' ); ?>
 				</label>
 			</div>
 			<p class="description" id="pin-toggle-roles-description">

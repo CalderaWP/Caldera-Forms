@@ -272,8 +272,8 @@ function caldera_forms_activation_admin_notice() {
 									<p><small>
 											<?php esc_html_e('Get notified of plugin updates:','caldera-forms'); ?>
 										</small></p>
-									<input type="email" value="<?php echo esc_attr( get_option( 'admin_email' ) ); ?>" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
-									<input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="submit-button" style="background-color:#ff7e30">
+									<input type="email" value="<?php echo esc_attr( get_option( 'admin_email' ) ); ?>" name="EMAIL" class="email" id="mce-EMAIL" placeholder="<?php esc_attr_e('Email Address', 'caldera-forms'); ?>" required>
+									<input type="submit" value="<?php esc_attr_e('Subscribe', 'caldera-forms'); ?>" name="subscribe" id="mc-embedded-subscribe" class="submit-button" style="background-color:#ff7e30">
 
 								</div>
 								<div id="mce-responses" class="clear">

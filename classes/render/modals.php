@@ -161,7 +161,7 @@ class Caldera_Forms_Render_Modals {
 		}
 
 
-		$title = __( sprintf( 'Click to open the form %1s in a modal', $form[ 'name' ] ), 'caldera-forms' );
+		$title = sprintf( __( 'Click to open the form %s in a modal', 'caldera-forms' ), $form[ 'name' ] );
 		if ( ! empty( $atts[ 'type' ] ) && $atts[ 'type' ] == 'button' ) {
 			$tag_atts .= sprintf( 'data-remodal-target="%1s"', $modal_id );
 			return sprintf( '<button class="caldera-forms-modal" %s title="%s">%s</button>', $tag_atts, $title, $content );

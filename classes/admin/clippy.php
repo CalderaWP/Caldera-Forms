@@ -159,7 +159,7 @@ class Caldera_Forms_Admin_Clippy {
 		if( Caldera_Forms_Tracking::tracking_allowed() ){
 			$stats = new Caldera_Forms_Email_TrackData();
 			$stats = $stats->get_stats(  );
-			$clippy[ 'content' ][ 'content' ] = __( sprintf( 'Success rate for emails is %d percent of %s total emails', 100 * $stats[ 'success_rate' ], $stats[ 'total' ] ), 'caldera-forms' );
+			$clippy[ 'content' ][ 'content' ] = sprintf( __( 'Success rate for emails is %d percent of %s total emails.', 'caldera-forms' ), 100 * $stats[ 'success_rate' ], $stats[ 'total' ] );
 		}else{
 			$url = Caldera_Forms_Tracking::allow_url();
 			$clippy[ 'content' ][ 'content' ] = __( 'Enable usage tracking to get email stats.', 'caldera-forms' );

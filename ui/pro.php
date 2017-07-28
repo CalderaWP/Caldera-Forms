@@ -27,7 +27,7 @@ if( ! defined( 'ABSPATH' ) ){
 
 			<p>
 				<?php
-					esc_html_e( 'Caldera Forms Pro is a service that makes everything about Caldera Forms emails and notifications more awesome. ', 'caldera-forms' );
+					esc_html_e( 'Caldera Forms Pro is a service that makes everything about Caldera Forms emails and notifications more awesome.', 'caldera-forms' );
 				?>
 			</p>
 			<strong>
