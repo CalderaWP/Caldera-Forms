@@ -74,7 +74,7 @@ return array (
 				array (
 					'ID' => 'fld_4338248',
 					'type' => 'hidden',
-					'label' => '1',
+					'label' => __( '1', 'caldera-forms' ),
 					'slug' => '1',
 					'caption' => '',
 					'config' =>
