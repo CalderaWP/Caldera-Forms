@@ -61,7 +61,7 @@ data-autoload="true"
 					</div>
 					
 					<div class="caldera-config-group">
-						<label for="{{id}}_lable">Type</label>
+						<label for="{{id}}_lable"><?php _e( 'Type', 'caldera-forms' ); ?></label>
 						<div class="caldera-config-field">
 							<select name="conditions[{{id}}][type]" data-live-sync="true">
 								<option value=""></option>
