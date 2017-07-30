@@ -132,6 +132,7 @@ module.exports = function (grunt) {
             vue: {
                 src: [
                     'assets/js/vue/vue.js',
+                    'assets/js/vue/status-component.js',
                     'assets/js/vue/vue-filters.js'
                 ],
                 dest: 'assets/js/vue.js'

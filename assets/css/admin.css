@@ -2193,3 +2193,57 @@ li.caldera-forms-toolbar-item.success {
   border-radius: 2px;
   text-align: center;
 }
+
+
+.caldera-editor-header {
+  height: 50px !important;
+}
+
+.cf-alert {
+  display: inline-block;
+  padding: 4px;
+  border-radius: 4px;
+}
+.cf-alert-success {
+  background: #a3bf61;
+  color: #fff;
+}
+.cf-alert-error {
+  background: #ff0000;
+  color: #fff;
+}
+
+.cf-alert-wrap{
+  margin-top: -5px;
+}
+
+.cf-alert p {
+  padding: 0;
+}
+
+#cf-pro-save {
+  width:50%;
+}
+
+.caldera-config-field .cf-alert.cf-alert-error p {
+  margin: 0px;
+}
+
+[v-cloak] {
+  display: none;
+  visibility: hidden;
+}
+
+.cf-show {
+  visibility: visible;
+  display: inline-block;
+  -webkit-animation: fadein .5s 1;
+  animation: fadein .5s 1;
+}
+
+.cf-hide {
+  visibility: hidden;
+  display: none;
+  -webkit-animation: fadeout .5s 1;
+  animation: fadeout .5s 1;
+}

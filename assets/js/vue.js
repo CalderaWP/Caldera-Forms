@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.3.1 - 2017-07-26 *//*!
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.3.1 - 2017-07-29 *//*!
  * Vue.js v2.1.6
  * (c) 2014-2016 Evan You
  * Released under the MIT License.
@@ -8324,3 +8324,23 @@
     return Vue$3;
 
 })));
+/** globals Vue **/
+
+Vue.component('cf-status-indicator', {
+	template: '<div class="cf-alert-wrap cf-hide"><p class="cf-alert cf-alert-success" v-if="show && success">{{message}}</p><p class="cf-alert cf-alert-warning" v-if="show && ! success">{{message}}</p></div>',
+	props: [
+		'success',
+		'message',
+		'show'
+	],
+	watch : {
+		show: function () {
+			if( this.show ){
+				this.$el.className = "cf-alert-wrap cf-show";
+			}else{
+				this.$el.className = "cf-alert-wrap cf-hide";
+			}
+		}
+	}
+});
+

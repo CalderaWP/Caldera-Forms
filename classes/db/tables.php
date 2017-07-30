@@ -34,6 +34,15 @@ class Caldera_Forms_DB_Tables {
 	protected  $max_index_length = 191;
 
 	/**
+	 * List of missing tables
+	 *
+	 * @since 1.5.4
+	 *
+	 * @var array
+	 */
+	protected $missing_tables;
+
+	/**
 	 * Caldera_Forms_DB_Tables constructor.
 	 *
 	 * @since 1.5.1
@@ -52,19 +61,30 @@ class Caldera_Forms_DB_Tables {
 	 * @since 1.5.1
 	 */
 	public function add_if_needed(){
-		$missing = $this->find_missing_tables();
-		if( empty( $missing ) ){
+		$this->missing_tables = $this->find_missing_tables();
+		if( empty( $this->missing_tables ) ){
 			return;
 		}
 
 		$this->set_charset();
 
 		$search = $this->wpdb->prefix . 'cf_';
-		foreach( $missing as $table ){
+		foreach( $this->missing_tables as $table ){
 			call_user_func( array( $this, str_replace( $search, '', $table ) ) );
 		}
 
 
+	}
+
+	/**
+	 * Get list of missing tables
+	 *
+	 * @since 1.5.4
+	 *
+	 * @return array
+	 */
+	public function get_missing_tables(){
+		return $this->missing_tables;
 	}
 
 	/**
