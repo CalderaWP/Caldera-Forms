@@ -134,12 +134,12 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 						data-callback="set_form_state"
 						data-form="<?php echo esc_attr( trim( $form_id ) ); ?>"
 
-						><?php if( !empty( $form['form_draft'] ) ) { echo __('Activate', 'caldera-forms'); }else{ echo __('Deactivate', 'caldera-forms'); } ?></a> | </span><?php } ?>
+						><?php if( !empty( $form['form_draft'] ) ) { echo __('Enable', 'caldera-forms'); }else{ echo __('Disable', 'caldera-forms'); } ?></a> | </span><?php } ?>
 
 						<?php if(!empty($form['db_support'])) { ?>
 							<span class="edit">
 								<?php if (  ! version_compare( PHP_VERSION, '5.3.0', '>=' ) ) {
-									echo '<span  title="' . esc_attr( __( sprintf( 'Entry viewer is disabled due to your PHP version, see: %s', 'https://calderaforms.com/php' ), 'caldera-forms' ) ) .'" data-toggle="tooltip" data-placement="bottom" class="disabled">' . esc_html__( 'Entries', 'caldera-forms' ) . '</span> |';
+									echo '<span title="' . esc_attr( sprintf( __( 'Entry viewer is disabled due to your PHP version, see %s', 'caldera-forms' ), 'https://calderaforms.com/php' ) ) .'" data-toggle="tooltip" data-placement="bottom" class="disabled">' . esc_html__( 'Entries', 'caldera-forms' ) . '</span> |';
 								} else { ?>
 									<a class="form-control form-entry-trigger ajax-trigger cf-entry-viewer-link"
 									   href="#entres"
@@ -231,7 +231,7 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 							<?php esc_html_e( 'Need Support? Or Found A Bug?', 'caldera-forms' ); ?>
 						</h2>
 						<p>
-							<?php esc_html_e( 'In addition to our documentation, we have support licneses to get you extra help.', 'caldera-forms' ); ?>
+							<?php esc_html_e( 'In addition to our documentation, we have support licenses to get you extra help.', 'caldera-forms' ); ?>
 						</p>
 						<a href="https://calderaforms.com/support?utm-source=wp-admin&utm_campaign=clippy&utm_term=support" target="_blank" class="bt-btn btn btn-green">
 							<?php esc_html_e( 'Learn About Our Support Options', 'caldera-forms' ); ?>

@@ -43,7 +43,7 @@
 						data-perpage="<?php echo esc_attr( Caldera_Forms_Entry_Viewer::entries_per_page() ); ?>"
 						data-nonce="<?php echo esc_attr( wp_create_nonce( 'view_entries' ) ); ?>"
 				        data-status="trash"
-					><?php esc_html_e( 'Trash', 'caldera-forms' ); ?> <span class="current-status-count"></span></button>
+					><?php echo esc_html_x( 'Trash', 'Status: In trash', 'caldera-forms' ); ?> <span class="current-status-count"></span></button>
 				</span>
 				<a href="" class="button caldera-forms-entry-exporter">
 					<?php esc_html_e( 'Export All', 'caldera-forms' ); ?>

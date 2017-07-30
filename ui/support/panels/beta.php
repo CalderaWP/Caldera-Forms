@@ -10,7 +10,7 @@
  */
 ?>
 
-	<h2><?php esc_html_e( 'Options For Getting The Latest Version of Caldera Forms:', 'caldera-form' ); ?></h2>
+	<h2><?php esc_html_e( 'Options For Getting The Latest Version of Caldera Forms:', 'caldera-forms' ); ?></h2>
 
 	<ul>
 		<li>

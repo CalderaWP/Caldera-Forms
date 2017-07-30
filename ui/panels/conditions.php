@@ -90,7 +90,7 @@ data-autoload="true"
 								<input type="hidden" name="conditions[{{../../../id}}][fields][{{@key}}]" value="{{field}}" id="condition-bound-field-{{@key}}" data-live-sync="true">
 								<select style="max-width:120px;vertical-align: inherit;" name="conditions[{{../../id}}][group][{{parent}}][{{@key}}][field]" data-sync="#condition-bound-field-{{@key}}">
 									<option></option>
-									<optgroup label="Fields">
+									<optgroup label="<?php _e('Fields', 'caldera-forms'); ?>">
 									{{#each @root/fields}}
 										<option value="{{ID}}" {{#is ../field value=ID}}selected="selected"{{/is}} {{#is conditions/type value=../../../id}}disabled="disabled"{{/is}}>{{label}} [{{slug}}]</option>
 									{{/each}}
