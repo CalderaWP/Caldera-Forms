@@ -50,7 +50,7 @@
 		</div>
 	</div>
 	<div class="caldera-config-group">
-		<p class="description">e.g (aaa-99-999-a9-9*)</p>
+		<p class="description"><?php _e('e.g (aaa-99-999-a9-9*)', 'caldera-forms'); ?></p>
 		<ul>
 			<li>9 : <?php _e('numeric', 'caldera-forms'); ?></li>
 			<li>a : <?php _e('alphabetical', 'caldera-forms'); ?></li>
