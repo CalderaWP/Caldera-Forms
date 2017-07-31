@@ -15,5 +15,5 @@ Caldera-Forms
 ### Contributing/ Using This Repo, Etc.
 * The default branch is "master" that should be the same as WordPress.org.
 * Development happens on the "develop" branch.
-* If you find a bug, or would like to make a feature request, [please open an issue]()https://github.com/CalderaWP/Caldera-Forms/issues/.
+* If you find a bug, or would like to make a feature request, [please open an issue](https://github.com/CalderaWP/Caldera-Forms/issues/).
 * If you fixed a bug, or made a new feature, please submit a pull request against the develop branch.
