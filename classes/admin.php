@@ -726,8 +726,11 @@ class Caldera_Forms_Admin {
 			wp_send_json_error( );
 		}
 
-		if( isset( $form['form_draft'] ) ){
+		add_filter( 'caldera_forms_save_revision', '__return_false' );
 
+		if ( ! empty( $form[ 'form_draft' ] ) ) {
+			unset( $form['form_draft'] );
+			unset( $forms[ $form['ID'] ]['form_draft'] );
 			Caldera_Forms_Forms::form_state( $form );
 			$state = 'active-form';
 			$label = esc_html__( 'Disable', 'caldera-forms' );
@@ -736,6 +739,8 @@ class Caldera_Forms_Admin {
 			$state = 'draft-form';
 			$label = esc_html__( 'Enable', 'caldera-forms' );
 		}
+
+		add_filter( 'caldera_forms_save_revision', '__return_true' );
 
 
 		wp_send_json_success( array( 'ID' => $form['ID'], 'state' => $state, 'label' => $label ) );

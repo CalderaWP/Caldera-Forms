@@ -129,18 +129,40 @@ class Caldera_Forms_DB_Form extends Caldera_Forms_DB_Base {
 	 */
  	public function update( array $data ){
 	    global $wpdb;
+	    $table_name = $this->get_table_name();
 
-	    $old_db_id = $data[ 'db_id' ];
-	    $this->get_record( $old_db_id );
+	    $form_id = $data[ 'form_id' ];
+	    $db_id = $data[ 'db_id' ];
 
 	    unset( $data[ 'db_id' ] );
 	    unset( $data[ 'config' ][ 'db_id' ] );
 	    unset( $data[ 'config' ][ 'type' ] );
-	    $data[ 'config' ] = $this->prepare_config( $data[ 'config' ] );
 
-	    $old_update = $this->update_type( 'revision', $old_db_id );
-	    $data[ 'type' ] = 'primary';
-	    $updated = parent::create( $data );
+	    /**
+		 * Should form revision be saved?
+		 *
+		 * @since 1.5.4
+		 *
+		 * @param bool $save_revision Should revision be saved?
+		 * @param string $form_id ID of form being saved
+		 *
+		 */
+	    $save_revision = apply_filters( 'caldera_forms_save_revision', true, $form_id );
+
+	    if( $save_revision ){
+		    $old_update = $this->update_type( 'revision', $db_id );
+		    $data[ 'config' ] = $this->prepare_config( $data[ 'config' ] );
+		    $data[ 'type' ] = 'primary';
+		    $updated = parent::create( $data );
+
+	    }else{
+	    	$updated = $wpdb->update( $table_name,
+			    array( 'config' => $this->prepare_config( $data[ 'config' ] ) ),
+		        array( 'id' => $db_id )
+		    );
+	    }
+
+
 
 	    return $updated;
 
