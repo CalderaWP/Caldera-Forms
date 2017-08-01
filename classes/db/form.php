@@ -127,30 +127,39 @@ class Caldera_Forms_DB_Form extends Caldera_Forms_DB_Base {
 	 *
 	 * @return false|int
 	 */
- 	public function update( array $data, $convert_primary = true ){
+ 	public function update( array $data ){
 	    global $wpdb;
-	    $table_name = $this->get_table_name();
+
+	    $old_db_id = $data[ 'db_id' ];
+	    $this->get_record( $old_db_id );
+
+	    unset( $data[ 'db_id' ] );
 	    unset( $data[ 'config' ][ 'db_id' ] );
 	    unset( $data[ 'config' ][ 'type' ] );
 	    $data[ 'config' ] = $this->prepare_config( $data[ 'config' ] );
-	    unset( $data[ 'db_id' ] );
 
-	    if( $convert_primary ){
-	    	$_data = array(
-	    		'fields' => $data
-		    );
-			$updated = $this->save( $_data );
-	    }else{
-		    $updated = $wpdb->update( $table_name, $data, array( 'id' => $data[ 'id' ] ) );
-
-	    }
-
-	    if( $convert_primary ){
-	    	$this->convert_primary_to_revision( $data[ 'form_id' ] );
-	    }
+	    $old_update = $this->update_type( 'revision', $old_db_id );
+	    $data[ 'type' ] = 'primary';
+	    $updated = parent::create( $data );
 
 	    return $updated;
 
+    }
+
+	/**
+	 * Update type
+	 *
+	 * @since 1.5.4
+	 *
+	 * @param string $type Type primary|revision
+	 * @param int $id Row ID
+	 *
+	 * @return false|int
+	 */
+    protected function update_type( $type, $id ){
+	    global $wpdb;
+	    $table_name = $this->get_table_name();
+	    return $wpdb->update( $table_name, array( 'type' => $type ), array( 'id' => $id ) );
     }
 
     /**
@@ -167,25 +176,11 @@ class Caldera_Forms_DB_Form extends Caldera_Forms_DB_Base {
 	    $revision = $this->get_record( $revision_id );
 	    if( ! empty( $revision ) ){
 		    $primary = $this->get_by_form_id( $revision[ 'form_id' ] );
-	    	$revision[ 'type' ] = 'primary';
-		    $primary[ 'type' ] = 'revision';
-		    $this->update( $primary, false );
-		    return $this->update( $revision, false );
+		    $old_update = $this->update_type( 'revision', $primary[ 'id' ] );
 	    }
 
-    }
+	    return $this->update_type( 'primary', $revision_id );
 
-	/**
-	 * Save a revision
-	 *
-	 * @param $form_id
-	 *
-	 * @return false|int
-	 */
-    protected function convert_primary_to_revision( $form_id ){
-    	$primary = $this->get_by_form_id( $form_id );
-	    $primary[ 'type' ] = 'revision';
-	    return $this->update( $primary, false );
     }
 
 	/**
@@ -207,6 +202,7 @@ class Caldera_Forms_DB_Form extends Caldera_Forms_DB_Base {
 	    }
 
 	    $found = $wpdb->get_results( $sql, ARRAY_A );
+
 	    if( empty( $found ) ){
 	    	return false;
 	    }

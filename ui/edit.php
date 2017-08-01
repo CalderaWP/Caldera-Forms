@@ -704,7 +704,7 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 		    class="button caldera-header-return-button"
 			id="caldera-forms-return-from-revision"
 		>
-			<?php esc_html_e( 'Return to last Form state', 'caldera-forms' ); ?>
+			<?php esc_html_e( 'Exit Revision', 'caldera-forms' ); ?>
 			
 		</a>
 
