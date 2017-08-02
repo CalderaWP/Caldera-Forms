@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.3.1 - 2017-07-26 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.4-b-1 - 2017-08-01 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -6106,19 +6106,32 @@ window.addEventListener("load", function(){
 
 		/** Setup forms */
 		if( 'object' === typeof CFFIELD_CONFIG ) {
-			var form_id, config_object, config, instance, $el, state, protocolCheck, jQueryCheck;
+			var form_id, config_object, config, instance, $el, state, protocolCheck, jQueryCheck,
+				jQueryChecked = false,
+				protocolChecked = false;
 			$('.caldera_forms_form').each(function (i, el) {
 				$el = $(el);
 				form_id = $el.attr('id');
 				instance = $el.data('instance');
 
 				if ('object' === typeof CFFIELD_CONFIG[instance] ) {
-					//check for protocol mis-match on submit url
-					protocolCheck = new CalderaFormsCrossOriginWarning( $el, $, CFFIELD_CONFIG[instance].error_strings );
-					protocolCheck.maybeWarn();
-					//check for old jQuery
-					jQueryCheck = new CalderaFormsJQueryWarning( $el, $, CFFIELD_CONFIG[instance].error_strings );
-					jQueryCheck.maybeWarn();
+					if ( ! protocolChecked ) {
+						//check for protocol mis-match on submit url
+						protocolCheck = new CalderaFormsCrossOriginWarning($el, $, CFFIELD_CONFIG[instance].error_strings);
+						protocolCheck.maybeWarn();
+
+						//don't check twice
+						protocolChecked = true;
+					}
+
+					if ( ! jQueryChecked &&  CFFIELD_CONFIG[instance].error_strings.hasOwnProperty( 'jquery_old' ) ) {
+						//check for old jQuery
+						jQueryCheck = new CalderaFormsJQueryWarning($el, $, CFFIELD_CONFIG[instance].error_strings);
+						jQueryCheck.maybeWarn();
+
+						//don't check twice
+						jQueryChecked = true;
+					}
 
 					config = CFFIELD_CONFIG[instance].configs;
 
@@ -6329,7 +6342,7 @@ function CalderaFormsJQueryWarning( $form, $, errorStrings ){
 	 */
 	this.maybeWarn = function () {
 		var version =  $.fn.jquery;
-;		if(  'string' === typeof  version && '1.12.4' != version ) {
+		if(  'string' === typeof  version && '1.12.4' != version ) {
 			if( isOld( version ) ){
 				showNotice();
 			}

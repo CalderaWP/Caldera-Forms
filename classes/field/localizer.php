@@ -73,9 +73,16 @@ class Caldera_Forms_Field_Localizer {
 	 * @return array
 	 */
 	protected static function error_strings(){
-		return array(
+		$strings = array(
 			'mixed_protocol' => __( 'Submission URL and current URL protocols do not match. Form may not function properly.', 'caldera-forms' ),
 			'jquery_old'     => __( 'An out of date version of jQuery is loaded on the page. Form may not function properly.', 'caldera-forms' )
 		);
+
+		if( ! current_user_can( Caldera_Forms::get_manage_cap( 'admin' )) ){
+			unset( $strings[ 'jquery_old' ] );
+		}
+
+		return $strings;
+
 	}
 }
