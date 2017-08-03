@@ -255,7 +255,7 @@ class Caldera_Forms_Email_Settings {
 	 * @since 1.4.0
 	 */
 	public static function ui() {
-		if ( ! version_compare( PHP_VERSION, '5.4.0', '>=' ) ) {
+		if (  ! version_compare( PHP_VERSION, '5.4.0', '>=' ) ) {
 			printf( '<div class="notice notice-error error"><p>%s</p>', esc_html__( 'Switching email services requires PHP 5.4 or later. PHP 5.6 is strongly recommended.', 'caldera-forms' ) );
 		}else{
 			include CFCORE_PATH . '/ui/emails/settings.php';

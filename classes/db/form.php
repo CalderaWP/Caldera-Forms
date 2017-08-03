@@ -150,7 +150,7 @@ class Caldera_Forms_DB_Form extends Caldera_Forms_DB_Base {
 	    $save_revision = apply_filters( 'caldera_forms_save_revision', true, $form_id );
 
 	    if( $save_revision ){
-		    $old_update = $this->update_type( 'revision', $db_id );
+		    $old_update = $wpdb->update( $table_name, array( 'type' => 'revision' ), array( 'form_id' => $form_id ) );
 		    $data[ 'config' ] = $this->prepare_config( $data[ 'config' ] );
 		    $data[ 'type' ] = 'primary';
 		    $updated = parent::create( $data );
@@ -220,7 +220,7 @@ class Caldera_Forms_DB_Form extends Caldera_Forms_DB_Base {
  		$table_name = $this->get_table_name();
  		$sql = $wpdb->prepare( "SELECT * FROM $table_name WHERE `form_id` = '%s'", $form_id );
 	    if( $primary_only ){
-	    	$sql .= ' AND `type` = "primary"';
+	    	$sql .= ' AND `type` = "primary" ORDER BY `id` DESC';
 	    }
 
 	    $found = $wpdb->get_results( $sql, ARRAY_A );
@@ -230,6 +230,15 @@ class Caldera_Forms_DB_Form extends Caldera_Forms_DB_Base {
 	    }
 
 	    if( $primary_only ){
+	    	if( 1 < count( $found ) ){
+				foreach ( $found as $i => $data ){
+					if( 0 == $i ){
+						continue;
+					}
+					$this->update_type( 'revision', $data[ 'id' ] );
+
+				}
+		    }
 		    return $this->prepare_found( $found[0] );
 	    }
 
