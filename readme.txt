@@ -773,7 +773,7 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 
 == Changelog ==
-= Caldera Forms 1.5.4 (August 1, 2017) Revenge of The Sith =
+= Caldera Forms 1.5.4 (August 4, 2017) Revenge of The Sith =
 See: [https://calderaforms.com/updates/caldera-forms-1-5-4](https://calderaforms.com/updates/caldera-forms-1-5-4?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.4)
 * BUG FIXED: With some versions of MySQL when forms with a revision were saved, new version was marked a revision, not primary so it didn't look like it was saved.
 * IMPROVED: There is now a back button for exiting a revision.
@@ -785,6 +785,7 @@ See: [https://calderaforms.com/updates/caldera-forms-1-5-4](https://calderaforms
 * ADDED: A standard notification VueJS component, copied from CF Pro client, now available to all add-ons.
 * NEW FILTER: caldera_forms_save_revision disables or enables revisions
 * FIXED: Toggling form state (enabled/ disabled) no longer creates a new revision.
+* FIXED: Main admin experienced JavaScript errors when out of date PHP version was in use.
 
 = Caldera Forms 1.5.3.1 (July 27th, 2017) Attack of the Clones! =
 See: [https://calderaforms.com/updates/caldera-forms-1-5-3-1](https://calderaforms.com/updates/caldera-forms-1-5-3-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.3.1)
