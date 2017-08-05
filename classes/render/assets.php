@@ -270,7 +270,8 @@ class Caldera_Forms_Render_Assets {
 			'init'           => self::make_url( 'frontend-script-init' ),
 			'handlebars'     => CFCORE_URL . 'assets/js/handlebars.js',
 			'entry-viewer-2' => self::make_url( 'entry-viewer-2'),
-			'vue'        => self::make_url( 'vue/vue' ),
+			'vue'               => self::make_url( 'vue/vue' ),
+			'vue-status'        => self::make_url( 'vue/status-component' ),
 			'vue-filter' => self::make_url( 'vue/vue-filter' ),
 			'form-front' => self::make_url( 'caldera-forms-front' ),
             'api-client' => self::make_url( 'api/client' ),
@@ -323,6 +324,7 @@ class Caldera_Forms_Render_Assets {
 		if( self::should_minify( true ) ){
 			unset( $script_urls[ 'vue' ] );
 			unset( $script_urls[ 'vue-filters' ] );
+			unset( $script_urls[ 'vue-status' ] );
 			$slug = self::make_slug( 'vue' );
 			self::$registered[ 'scripts' ][] = $slug;
 			wp_register_script( $slug, self::make_url( 'vue' ), array( 'jquery' ), CFCORE_VER, true );
@@ -611,7 +613,7 @@ class Caldera_Forms_Render_Assets {
             $depts[] = self::make_slug('state-events');
         } elseif ('entry-viewer-2' == $script_key) {
             $depts = array('jquery', self::make_slug('vue'), 'underscore');
-        } elseif ('vue-filter' == $script_key) {
+        } elseif ('vue-filter' == $script_key || 'vue-status' == $script_key ) {
             $depts = array(self::make_slug('vue'));
         } elseif (in_array($script_key, array(
             'api-client',
