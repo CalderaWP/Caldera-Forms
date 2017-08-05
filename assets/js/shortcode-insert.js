@@ -102,8 +102,8 @@ jQuery(function($){
 	if( typeof wp !== 'undefined' && typeof wp.media !== 'undefined' ){
 
 		var media = wp.media;
-		if( typeof wp.mce.views.register === "function"){
-			wp.mce.views.register( 'caldera_form', {
+		if( typeof wp.media.View.register === "function"){
+            wp.media.View.register( 'caldera_form', {
 				template: media.template( 'editor-caldera-forms' ),
 				initialize: function() {					
 					this.fetch();
