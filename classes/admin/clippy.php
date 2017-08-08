@@ -240,7 +240,13 @@ class Caldera_Forms_Admin_Clippy {
 			return $endpoints[ 'free' ];
 		}
 
-		$date_diff = date_diff(  DateTime::createFromFormat( 'U', $first_time ), DateTime::createFromFormat( 'U', $first_time ) );
+		if ( function_exists( 'date_diff' ) ) {
+			$date_diff = date_diff( DateTime::createFromFormat( 'U', $first_time ), DateTime::createFromFormat( 'U', $first_time ) );
+		} else {
+			$date_diff = new stdClass();
+			$date_diff->d = rand( 5, 15 );
+		}
+
 		if( 10 > $date_diff->d ){
 			$this->extend_title = __( 'Get A Free Add-on For Caldera Forms', 'caldera-forms' );
 			return $endpoints[ 'free' ];
