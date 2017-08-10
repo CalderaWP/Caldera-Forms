@@ -27,6 +27,10 @@ var cf_jsfields_init, cf_presubmit;
 				el: this.$element
 			} );
         }).on('field:success', function( fieldInstance ) {
+        	if( 'star' === this.$element.data( 'type' ) && this.$element.prop('required') && 0 == this.$element.val() ){
+				fieldInstance.validationResult = false;
+				return;
+			}
 			this.$element.closest('.form-group').removeClass('has-error');
 			$( document ).trigger( 'cf.validate.fieldSuccess', {
 				inst: fieldInstance,

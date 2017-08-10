@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.4-b-3 - 2017-08-02 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.4-b-3 - 2017-08-10 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -5794,6 +5794,10 @@ var cf_jsfields_init, cf_presubmit;
 				el: this.$element
 			} );
         }).on('field:success', function( fieldInstance ) {
+        	if( 'star' === this.$element.data( 'type' ) && this.$element.prop('required') && 0 == this.$element.val() ){
+				fieldInstance.validationResult = false;
+				return;
+			}
 			this.$element.closest('.form-group').removeClass('has-error');
 			$( document ).trigger( 'cf.validate.fieldSuccess', {
 				inst: fieldInstance,

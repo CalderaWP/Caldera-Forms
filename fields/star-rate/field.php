@@ -15,7 +15,8 @@ $attrs = array(
 	'data-field'  => $field_base_id,
 	'class'       => $field_class,
 	'id'          => $field_id,
-	'value'      => $default
+	'value'      => $default,
+	'data-type' => 'star'
 );
 
 $attr_string =  caldera_forms_field_attributes( $attrs, $field, $form );
