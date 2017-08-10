@@ -125,7 +125,7 @@ class Caldera_Forms_Processor_Load {
 		 *
 		 * @since 1.3.5.3
 		 */
-		do_action( 'caldera_forms_pre_load_processors' );
+		do_action( 'caldera_forms_post_load_processors' );
 
 
 	}
