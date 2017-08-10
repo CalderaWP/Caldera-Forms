@@ -106,7 +106,7 @@ class Caldera_Forms_Processor_Load {
 		 * @param array $processors
 		 */
 		$processors = apply_filters( 'caldera_forms_get_form_processors', array() );
-		
+
 		$this->processors = array();
 		if ( is_array( $processors ) && ! empty( $processors ) ){
 			foreach ( $processors as $id => $processor ) {
@@ -179,7 +179,7 @@ class Caldera_Forms_Processor_Load {
 
 		}
 
-		if ( isset( $processor[ 'icon' ] ) ) {			
+		if ( isset( $processor[ 'icon' ] ) ) {
 			$works = (@fopen($processor[ 'icon' ],"r")==true);
 			if ( ! $works ) {
 				unset( $processor[ 'icon' ] );
