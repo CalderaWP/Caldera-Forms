@@ -16,10 +16,11 @@
 	<div class="caldera-config-field">
 		<input
             id="cf-autoresponder-from-email-{{_id}}"
-            type="text" class="block-input field-config magic-tag-enabled caldera-field-bind required" id="{{_id}}_sender_email" name="{{_name}}[sender_email]" value="{{sender_email}}"
+            type="text" class="block-input field-config magic-tag-enabled caldera-field-bind required" name="{{_name}}[sender_email]" value="{{sender_email}}"
         />
 	</div>
 </div>
+
 <div class="caldera-config-group">
 	<label for="cf-autoresponder-subject-{{_id}}">
 		<?php esc_html_e('Email Subject', 'caldera-forms'); ?>
@@ -27,7 +28,7 @@
 	<div class="caldera-config-field">
 		<input
             id="cf-autoresponder-subject-{{_id}}"
-            type="text" class="block-input field-config magic-tag-enabled caldera-field-bind required" id="{{_id}}_subject" name="{{_name}}[subject]" value="{{subject}}"
+            type="text" class="block-input field-config magic-tag-enabled caldera-field-bind required" name="{{_name}}[subject]" value="{{subject}}"
         />
 	</div>
 </div>
@@ -38,7 +39,7 @@
 	<div class="caldera-config-field">
 		<input
             id="cf-autoresponder-to-name-{{_id}}"
-            type="text" class="block-input field-config magic-tag-enabled caldera-field-bind required" id="{{_id}}_recipient_name" name="{{_name}}[recipient_name]" value="{{recipient_name}}"
+            type="text" class="block-input field-config magic-tag-enabled caldera-field-bind required" name="{{_name}}[recipient_name]" value="{{recipient_name}}"
         />
 	</div>
 </div>
@@ -49,7 +50,7 @@
 	<div class="caldera-config-field">
 		<input
             id="cf-autoresponder-to-email-{{_id}}"
-            type="text" class="block-input field-config magic-tag-enabled caldera-field-bind required" id="{{_id}}_recipient_email" name="{{_name}}[recipient_email]" value="{{recipient_email}}"
+            type="text" class="block-input field-config magic-tag-enabled caldera-field-bind required" name="{{_name}}[recipient_email]" value="{{recipient_email}}"
         />
 	</div>
 </div>
