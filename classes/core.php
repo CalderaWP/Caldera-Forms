@@ -1068,7 +1068,37 @@ class Caldera_Forms {
 			$config[ 'sender_email' ] = get_option( 'admin_email' );
 		}
 
-		/**
+		if( ! empty( $config[ 'reply_to' ] ) ){
+            $email_message[ 'replyto' ] = Caldera_Forms::do_magic_tags( $config[ 'reply_to' ] );
+            $mail['headers'][] = 'Reply-To: ' . $email_message[ 'replyto' ];
+		}
+
+
+        $email_message['bcc'] = false;
+        if (  ! empty( $config[ 'bcc' ] ) ) {
+            $email_message['bcc']       = Caldera_Forms::do_magic_tags( $config[ 'bcc' ] );
+
+            $bcc_array = array_map('trim', preg_split( '/[;,]/', Caldera_Forms::do_magic_tags( $config[ 'bcc' ] ) ) );
+            foreach( $bcc_array as $bcc_to ) {
+                if ( is_email( $bcc_to ) ) {
+                    $mail['headers'][] = 'Bcc: ' . $bcc_to;
+                }
+            }
+        }
+
+        $email_message['bcc'] = false;
+        if (  ! empty( $config[ 'bcc' ] ) ) {
+            $email_message[ 'bcc' ]       = Caldera_Forms::do_magic_tags( $config[ 'bcc' ] );
+
+            $bcc_array = array_map('trim', preg_split( '/[;,]/', Caldera_Forms::do_magic_tags( $config[ 'bcc' ] ) ) );
+            foreach( $bcc_array as $bcc_to ) {
+                if ( is_email( $bcc_to ) ) {
+                    $mail['headers'][] = 'Bcc: ' . $bcc_to;
+                }
+            }
+        }
+
+        /**
 		 * Filter email to be sent as auto responder
 		 *
 		 * Return null to prevent sending
