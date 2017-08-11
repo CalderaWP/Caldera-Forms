@@ -22,6 +22,18 @@
 </div>
 
 <div class="caldera-config-group">
+    <label for="cf-autoresponder-reply-to-{{_id}}">
+        <?php esc_html_e('Reply To', 'caldera-forms'); ?>
+    </label>
+    <div class="caldera-config-field">
+        <input
+            id="cf-autoresponder-reply-to-{{_id}}"
+            type="text" class="block-input field-config magic-tag-enabled caldera-field-bind" name="{{_name}}[reply_to]" value="{{reply_to}}"
+        />
+    </div>
+</div>
+
+<div class="caldera-config-group">
 	<label for="cf-autoresponder-subject-{{_id}}">
 		<?php esc_html_e('Email Subject', 'caldera-forms'); ?>
 	</label>
