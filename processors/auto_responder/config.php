@@ -23,7 +23,7 @@
 
 <div class="caldera-config-group">
     <label for="cf-autoresponder-reply-to-{{_id}}">
-        <?php esc_html_e('Reply To', 'caldera-forms'); ?>
+        <?php esc_html_e( 'Reply To', 'caldera-forms'); ?>
     </label>
     <div class="caldera-config-field">
         <input
@@ -32,6 +32,32 @@
         />
     </div>
 </div>
+
+<div class="caldera-config-group">
+    <label for="cf-autoresponder-cc-{{_id}}">
+        <?php esc_html_e( 'CC', 'caldera-forms'); ?>
+    </label>
+    <div class="caldera-config-field">
+        <input
+            id="cf-autoresponder-cc-{{_id}}"
+            type="text" class="block-input field-config magic-tag-enabled caldera-field-bind" name="{{_name}}[cc]" value="{{cc}}"
+        />
+    </div>
+</div>
+
+<div class="caldera-config-group">
+    <label for="cf-autoresponder-bcc-{{_id}}">
+        <?php esc_html_e( 'BCC', 'caldera-forms'); ?>
+    </label>
+    <div class="caldera-config-field">
+        <input
+            id="cf-autoresponder-cc-{{_id}}"
+            type="text" class="block-input field-config magic-tag-enabled caldera-field-bind" name="{{_name}}[bcc]" value="{{bcc}}"
+        />
+    </div>
+</div>
+
+
 
 <div class="caldera-config-group">
 	<label for="cf-autoresponder-subject-{{_id}}">
