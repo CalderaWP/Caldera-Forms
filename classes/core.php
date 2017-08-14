@@ -201,7 +201,7 @@ class Caldera_Forms {
 		//initialize settings
 		Caldera_Forms_Settings_Init::load();
 
-		/**
+        /**
 		 * Runs after Caldera Forms core is initialized
 		 *
 		 * @since 1.3.5.3
