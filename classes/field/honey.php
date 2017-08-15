@@ -18,12 +18,10 @@ class Caldera_Forms_Field_Honey{
      *
      * @param array $data Submission data
      * @param array $form Form config
-     * @param string|int $form_instance_number Current form instance identifier
-     * @param string $process_id Process ID for current submission attempt
      *
      * @return bool
      */
-    public static function check( array $data, $form, $form_instance_number, $process_id ){
+    public static function check( array $data, $form ){
         $honey_words = self::words( $form );
         foreach ( $data as $honey_word => $honey_value ) {
 
