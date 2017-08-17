@@ -1,178 +1,325 @@
 var cf_uploader_filelist = {};
+var cf_dropped_filelist = {};
+
 function size_format(bytes) {
-	var converted = false;
-	quant = [
-	{
-		unit: 'TB', 
-		mag: 1099511627776
-	},
+  var converted = false;
+  quant = [{
+      unit: 'TB',
+      mag: 1099511627776
+    },
 
-	{
-		unit: 'GB', 
-		mag: 1073741824
-	},
+    {
+      unit: 'GB',
+      mag: 1073741824
+    },
 
-	{
-		unit: 'MB', 
-		mag: 1048576
-	},
+    {
+      unit: 'MB',
+      mag: 1048576
+    },
 
-	{
-		unit: 'kB', 
-		mag: 1024
-	},
+    {
+      unit: 'kB',
+      mag: 1024
+    },
 
-	{
-		unit: 'B ', 
-		mag: 1
-	}
-	];
-	quant.forEach(function(v){
-		if (parseFloat(bytes) >= v.mag && converted == false){
-			converted = bytes/v.mag;
-			if( bytes > 1048576 ){
-				converted = converted.toFixed(2);
-			}else{
-				converted = Math.round( converted );
-			}
-			converted = converted +' '+v.unit;
-		}
-	});
-	return converted;
+    {
+      unit: 'B ',
+      mag: 1
+    }
+  ];
+  quant.forEach(function(v) {
+    if (parseFloat(bytes) >= v.mag && converted == false) {
+      converted = bytes / v.mag;
+      if (bytes > 1048576) {
+        converted = converted.toFixed(2);
+      } else {
+        converted = Math.round(converted);
+      }
+      converted = converted + ' ' + v.unit;
+    }
+  });
+  return converted;
 }
 
-  function handleFileSelect( evt, config ) {
-	evt.stopPropagation();
-	evt.preventDefault();
-	if(evt.dataTransfer){
-		var files = evt.dataTransfer.files;
-	}else{
-		var files = evt.target.files;
-	}
-	// files is a FileList of File objects. List some properties.
-	var output = [], validator = 'valid';
-	// get length
-	for (var i = 0; i < files.length ; i++) {
-	 var id = 'fl' + Math.round(Math.random() * 187465827348977),
-		state = 1,
-		error = '';
-		if( config.allowed.length ){
-			if( config.allowed.indexOf( files[ i ].type ) < 0 ){
-				state = 0;
-				error = config.notices.invalid_filetype;
-			}
-		}
-		if( config.max_size ){
-			if( files[ i ].size > config.max_size ){
-				state = 0;
-				error = config.notices.file_exceeds_size_limit;
-			}
-		}
-		if( ! files[ i ].size ){
-			state = 0;
-			error = config.notices.zero_byte_file;
-		}
 
-	  cf_uploader_filelist[ evt.target.id + '_file_' + id ] = {
-			file : files[ i ],
-			state : state,
-			field : config.id,
-			message : error
-		};
-	}
-	// do preview
-	for( var i in cf_uploader_filelist ){
-		if( cf_uploader_filelist[i].field !== config.id ){ continue; }
-		var state_class = '',
-		error_message = '';
-		if( cf_uploader_filelist[ i ].state === 0 ){
-			state_class = 'has-error';
-	  	}      
+function getFileQueueMarkup(file, i, state_class) {
+  return '<li class="cf-uploader-queue-item ' + i + ' ' + state_class + '">' +
 
-	  output.push('<li class="cf-uploader-queue-item ' + i + ' ' + state_class + '">',
-				  '<a href="#remove-file" data-file="' + i + '" class="cf-file-remove">&times;</a> <span class="file-name">', cf_uploader_filelist[ i ].file.name, '</span>&nbsp;',
-				  '<div class="progress-bar" style="background:#ececec;"><div class="bar" id="progress-file-' + i + '" style="height:2px;width:0%;background:#a3be5f;"></div></div>',                  
-				  '<small class="file-type">', cf_uploader_filelist[ i ].file.type || 'n/a', '</small> ',
-				  '<small class="file-size">' + size_format( cf_uploader_filelist[ i ].file.size ) + '</small>',
-				  '<small class="file-error">' + cf_uploader_filelist[ i ].message + '</small>',
-				  '</li>');
-		if( cf_uploader_filelist[ i ].message.length ){
-			validator = cf_uploader_filelist[ i ].message;
-		}
-	}
-	evt.target.value = null;
+        '<a href="#remove-file" data-file="' + i + '" class="cf-file-remove">&times;</a>'+
+        '<span class="file-name">' +
+          file.file.name +
+        '</span>&nbsp;' +
 
-	document.getElementById( evt.target.id + '_file_list' ).innerHTML = '<ul class="cf-adv-preview-list">' + output.join('') + '</ul>';
+        '<div class="progress-bar" style="background:#ececec;">' +
+          '<div class="bar" id="progress-file-' + i + '" style="height:2px;width:0%;background:#a3be5f;"></div>' +
+        '</div>' +
 
-	jQuery( '#' + evt.target.id + '_validator' ).val( validator );
-  }
+        '<small class="file-type">' +
+          file.file.type || 'n/a' +
+        '</small> ' +
 
-  function handleDragOver(evt) {
-	evt.stopPropagation();
-	evt.preventDefault();
-	evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
-  }
+        '<small class="file-size">' + size_format(file.file.size) + '</small>' +
 
-function handleDragOver(event) {
-	event.stopPropagation();
-	event.preventDefault();
-	event.dataTransfer.dropEffect = 'copy';
+        '<small class="file-error">' + file.message + '</small>' +
+      '</li>';
 }
 
-jQuery( function( $ ){
-	$( document ).on('click', '.cf-uploader-trigger', function(){
-		var clicked = $(this);
-		$( '#' + clicked.data('parent') ).trigger('click');
-	});
-	$('.cf-multi-uploader').hide();
-	$( document ).on('click', '.cf-file-remove', function( e ){
-		e.preventDefault();
-		var clicked = $( this ),
-			list = clicked.closest('.cf-adv-preview-list'),
-			field = clicked.closest('.cf-multi-uploader-list').data('field'),
-			field_id = clicked.closest('.cf-multi-uploader-list').data('id'),
-			validator = $('#' + field_id + '_validator');
+function handleFileSelect(evt, config) {
+  evt.stopPropagation();
+  evt.preventDefault();
+  var files;
 
-		validator.val('');
+  if (evt.dataTransfer) {
+    files = evt.dataTransfer.files;
+  } else {
+    files = evt.target.files;
+  }
+  // files is a FileList of File objects. List some properties.
+  var output = [],
+    validator = 'valid';
+  // get length
+  for (var i = 0; i < files.length; i++) {
+    var id = 'fl' + Math.round(Math.random() * 187465827348977);
+    var error = '';
+    var state;
 
-		$('[data-parent="' + field + '"]').show();
-		delete cf_uploader_filelist[ clicked.data('file') ];
-		clicked.closest('.cf-multi-uploader-list').parent().find('.cf-uploader-trigger').show();
-		clicked.parent().remove();
-		if( ! list.children().length ){
-			list.remove();
-		}
+    if (config.allowed.length && config.allowed.indexOf(files[i].type) < 0) {
+      error = config.notices.invalid_filetype;
+    }
 
-		for( var fid in cf_uploader_filelist ){
-			if( cf_uploader_filelist[ fid ].field === field_id && cf_uploader_filelist[ fid ].message.length ){
-				validator.val( cf_uploader_filelist[ fid ].message );
-			}
-		}
+    if (config.max_size && files[i].size > config.max_size) {
+      error = config.notices.file_exceeds_size_limit;
+    }
 
-	});    
+    if (!files[i].size) {
+      error = config.notices.zero_byte_file;
+    }
 
-	$( document ).on('change', '.cf-multi-uploader', function( e ){
-		var field = $(this),
-			config = field.data('config');
-		config.id = field.prop('id');
-		if( !field.prop( 'multiple' ) ){
-			if ('object' != typeof  cf_uploader_filelist) {
-				cf_uploader_filelist = {};
-			}
-			field.parent().find('.cf-uploader-trigger').hide();
-		}
-		handleFileSelect( e, config );
-	});
+    state = error === '' ? 1 : 0;
 
-	window.Parsley
-	.addValidator('fileType', {
-	requirementType: 'string',
-	validateString: function( value, requirement ) {
-	  if( value === 'valid' ){
-	  	return true;
-	  }
-	  return false;
-	}
-	});
+    cf_uploader_filelist[evt.target.id + '_file_' + id] = {
+      file: files[i],
+      state: state,
+      field: config.id,
+      message: error
+    };
+  }
+  // do preview
+  for (var i in cf_uploader_filelist) {
+    if (cf_uploader_filelist[i].field !== config.id) { continue; }
+
+    var state_class = '',
+      error_message = '';
+
+    if (cf_uploader_filelist[i].state === 0) {
+      state_class = 'has-error';
+    }
+
+    output.push(getFileQueueMarkup(cf_uploader_filelist[i], i, state_class));
+
+    if (cf_uploader_filelist[i].message.length) {
+      validator = cf_uploader_filelist[i].message;
+    }
+  }
+  evt.target.value = null;
+
+  document.getElementById(evt.target.id + '_file_list').innerHTML = '<ul class="cf-adv-preview-list">' + output.join('') + '</ul>';
+
+  jQuery('#' + evt.target.id + '_validator').val(validator);
+}
+
+function calderaFormsInitDragFileUploader() {
+  var $ = jQuery;
+
+  $(document).on('click', '.clear-droppable-area', function(){
+    $(this).parent().removeClass('has-preview').empty();
+  });
+
+  function onDrag(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    if (e.dataTransfer) {
+      e.dataTransfer.dropEffect = 'copy';
+    }
+
+    var group = $(e.target).closest('.form-group');
+
+    if (e.type === 'dragover') {
+      group.addClass('is-hovered');
+    } else {
+      group.removeClass('is-hovered');
+    }
+  }
+
+  function generatePreview(e, file) {
+    var group = $(e.target).closest('.form-group');
+    var preview = $('.droppable-area-preview', group);
+
+    if (file.type.indexOf('image') === 0) {
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+        preview.html( $('<img src="' + e.target.result + '" />') );
+        preview.append('<span class="clear-droppable-area">&times;</span>');
+        preview.addClass('has-preview');
+      };
+
+      reader.readAsDataURL(file);
+    }
+  }
+
+  function onDrop(e) {
+    onDrag(e);
+    var files = e.target.files || e.dataTransfer.files;
+    var formID = $(e.target).closest('form').attr('id');
+    var field = $(e.target).parent().find('.cf-multi-uploader');
+
+    cf_dropped_filelist[formID] = cf_dropped_filelist[formID] || {};
+
+    if (files.length) {
+      generatePreview(e, files[0]);
+      cf_dropped_filelist[formID][field[0].name] = files;
+    } else {
+      cf_dropped_filelist[formID][field[0].name] = false;
+    }
+
+  }
+
+  function submitFileForm(e) {
+    var form = $(e.target);
+
+    if (form.hasClass('is-uploading')) {
+      return false;
+    }
+    e.preventDefault();
+
+    var fileFields = cf_dropped_filelist[form.attr('id')];
+
+    var ajaxData = new FormData(form[0]);
+
+
+    if (fileFields && !form.hasClass('is-uploaded')) {
+      $.each(fileFields, function(fieldName, files){
+        $.each(files, function(i, file){
+          ajaxData.append(fieldName, file);
+        });
+      });
+    }
+
+    $.ajax({
+      url: form.attr('action'),
+      type: form.attr('method'),
+      data: ajaxData,
+      dataType: 'json',
+      cache: false,
+      contentType: false,
+      processData: false,
+
+      complete: function() {
+        form.removeClass('is-uploading');
+        form.addClass('is-uploaded');
+      },
+      success: function(data) {
+        form.addClass( data.success === true ? 'is-success' : 'is-error' );
+        if (!data.success) $errorMsg.text(data.error);
+      },
+      error: function() {
+        // Log the error, show an alert, whatever works for you
+      }
+    });
+
+    return false;
+  }
+
+
+  $('.form-group.has-drag-n-drop').each(function(i, group){
+    var field = $('.cf-multi-uploader', group);
+    var droppable = $('.droppable-area', group);
+
+    field[0].addEventListener("change", onDrop, false);
+
+    droppable[0].addEventListener("dragover", onDrag, false);
+    droppable[0].addEventListener("dragleave", onDrag, false);
+    droppable[0].addEventListener("drop", onDrop, false);
+  });
+
+  var form = $('.form-group.has-drag-n-drop').closest('form');
+
+  if (!form.attr('id')) {
+    form.attr('id', 'tmp-' + Math.round(Math.random() * 187465827348977));
+  }
+
+  form.on('submit', submitFileForm);
+}
+
+jQuery(function($) {
+  $(document).on('click', '.cf-uploader-trigger', function() {
+    var clicked = $(this);
+    $('#' + clicked.data('parent')).trigger('click');
+  });
+
+  $('.cf-multi-uploader').hide();
+
+  $(document).on('click', '.cf-file-remove', function(e) {
+    e.preventDefault();
+    var clicked = $(this),
+      list = clicked.closest('.cf-adv-preview-list'),
+      field = clicked.closest('.cf-multi-uploader-list').data('field'),
+      field_id = clicked.closest('.cf-multi-uploader-list').data('id'),
+      validator = $('#' + field_id + '_validator');
+
+    validator.val('');
+
+    $('[data-parent="' + field + '"]').show();
+
+    delete cf_uploader_filelist[clicked.data('file')];
+    clicked.closest('.cf-multi-uploader-list').parent().find('.cf-uploader-trigger').show();
+    clicked.parent().remove();
+
+    if (!list.children().length) {
+      list.remove();
+    }
+
+    for (var fid in cf_uploader_filelist) {
+      if (cf_uploader_filelist[fid].field === field_id && cf_uploader_filelist[fid].message.length) {
+        validator.val(cf_uploader_filelist[fid].message);
+      }
+    }
+  });
+
+  $(document).on('change', '.cf-multi-uploader', function(e) {
+    var field = $(this),
+        config = field.data('config');
+
+    config.id = field.prop('id');
+
+    if (!field.prop('multiple')) {
+      if ('object' != typeof cf_uploader_filelist) {
+        cf_uploader_filelist = {};
+      }
+      field.parent().find('.cf-uploader-trigger').hide();
+    }
+    handleFileSelect(e, config);
+  });
+
+  if (window.File && window.FileList && window.FileReader) {
+    calderaFormsInitDragFileUploader();
+  } else {
+    $('.form-group.has-drag-n-drop').removeClass('has-drag-n-drop')
+  }
+
+
+  window.Parsley
+    .addValidator('fileType', {
+      requirementType: 'string',
+      validateString: function(value, requirement) {
+        if (value === 'valid') {
+          return true;
+        }
+        return false;
+      }
+    });
 
 })
