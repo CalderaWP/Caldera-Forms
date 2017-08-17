@@ -773,6 +773,18 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 
 == Changelog ==
+= Caldera Forms 1.5.5 (August 17, 2017) We Had Fun In Canada ! =
+See: [https://calderaforms.com/updates/caldera-forms-1-5-5](https://calderaforms.com/updates/caldera-forms-1-5-5?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.5)
+* SECURITY FIX: Possible XSS vulnerability in form editor has been patched.
+* BUG FIXED: Email settings screen was not showing.
+* BUG FIXED: Some configurations caused a 502 error on WPEngine related to object caching.
+* BUG FIXED: caldera_forms_pre_load_processors action was repeated.
+* BUG FIXED: Star rating fields set to be required could be submitted with no rating in some browsers.
+* BUG FIXED: date_diff function was used, which is not PHP 5.2 compatible.
+* BUG FIXED: If field IDs are changed from fld1234 style to words and one of those words was a honey pot word, honey pot could return a false positive.
+* ADDED: Caldera_Forms_Field_Honey for honey-pot related functionality
+* ADDED: Additional classes to generated processor fields.
+
 = Caldera Forms 1.5.4 (August 4, 2017) Revenge of The Sith =
 See: [https://calderaforms.com/updates/caldera-forms-1-5-4](https://calderaforms.com/updates/caldera-forms-1-5-4?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.4)
 * BUG FIXED: With some versions of MySQL when forms with a revision were saved, new version was marked a revision, not primary so it didn't look like it was saved.
