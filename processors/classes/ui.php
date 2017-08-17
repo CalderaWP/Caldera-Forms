@@ -135,7 +135,7 @@ class Caldera_Forms_Processor_UI {
 			$classes[] = 'required';
 		}
 
-		$classes[] = $id;
+		$classes[] = $args['id'];
 
 		$args[ 'extra_classes' ][] = 'field-config';
 

@@ -150,6 +150,8 @@ class Caldera_Forms_Admin {
 
 		add_action( 'init', array( 'Caldera_Forms_Admin_Resend', 'watch_for_resend' ) );
 
+        add_action( 'caldera_forms_admin_footer', array( 'Caldera_Forms_Email_Settings', 'ui' ) );
+
 		/**
 		 * Runs after Caldera Forms admin is initialized
 		 *

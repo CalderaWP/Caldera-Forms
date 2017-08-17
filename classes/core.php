@@ -201,7 +201,7 @@ class Caldera_Forms {
 		//initialize settings
 		Caldera_Forms_Settings_Init::load();
 
-		/**
+        /**
 		 * Runs after Caldera Forms core is initialized
 		 *
 		 * @since 1.3.5.3
@@ -2597,33 +2597,16 @@ class Caldera_Forms {
 			$form_instance_number = $_POST[ '_cf_frm_ct' ];
 		}
 
-		// check honey
-		if ( isset( $form[ 'check_honey' ] ) ) {
-			// use multiple honey words
-			$honey_words = apply_filters( 'caldera_forms_get_honey_words', array(
-				'web_site',
-				'url',
-				'email',
-				'company',
-				'name'
-			) );
-			foreach ( $_POST as $honey_word => $honey_value ) {
+		// check honeypot
+        if ( Caldera_Forms_Field_Honey::active( $form ) ) {
+            $passed = Caldera_Forms_Field_Honey::check( $_POST, $form );
+            if( ! $passed ){
+                $url = Caldera_Forms_Field_Honey::redirect_url( $referrer, $form_instance_number, $process_id);
+                return self::form_redirect( 'complete', $url, $form, uniqid( '_cf_bliss_' ) );
+            }
 
-				if ( ! is_array( $honey_value ) && strlen( $honey_value ) && in_array( $honey_word, $honey_words ) ) {
-					// yupo - bye bye
-					$referrer[ 'query' ][ 'cf_su' ] = $form_instance_number;
-					$query_str                      = array(
-						'cf_er' => $process_id
-					);
-					if ( ! empty( $referrer[ 'query' ] ) ) {
-						$query_str = array_merge( $referrer[ 'query' ], $query_str );
-					}
-					$referrer = $referrer[ 'path' ] . '?' . http_build_query( $query_str );
+        }
 
-					return self::form_redirect( 'complete', $referrer, $form, uniqid( '_cf_bliss_' ) );
-				}
-			}
-		}
 		// init filter
 		$form = apply_filters( 'caldera_forms_submit_get_form', $form );
 
@@ -4503,30 +4486,13 @@ class Caldera_Forms {
 				$out .= "</ol></span>\r\n";
 			}
 
-			// sticky sticky honey
-			if ( isset( $form[ 'check_honey' ] ) ) {
-				$out .= "<div class=\"hide\" style=\"display:none; overflow:hidden;height:0;width:0;\">\r\n";
+            // sticky sticky honey
+            if ( Caldera_Forms_Field_Honey::active( $form ) ) {
+                $out .= Caldera_Forms_Field_Honey::field( $form );
+            }
 
-				/**
-				 * Change which words are used to form honey pot
-				 *
-				 * @since unknown
-				 *
-				 * @param array $words An array of words.
-				 */
-				$honey_words = apply_filters( 'caldera_forms_get_honey_words', array(
-					'web_site',
-					'url',
-					'email',
-					'company',
-					'name'
-				) );
-				$word        = $honey_words[ rand( 0, count( $honey_words ) - 1 ) ];
-				$out .= "<label>" . ucwords( str_replace( '_', ' ', $word ) ) . "</label><input type=\"text\" name=\"" . $word . "\" value=\"\" autocomplete=\"off\">\r\n";
-				$out .= "</div>";
-			}
 
-			$out .= $form[ 'grid_object' ]->renderLayout();
+            $out .= $form[ 'grid_object' ]->renderLayout();
 
 			$out .= "</" . $form_element . ">\r\n";
 		}
