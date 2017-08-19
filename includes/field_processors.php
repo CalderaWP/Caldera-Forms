@@ -51,7 +51,7 @@ function cf_handle_file_upload( $entry, $field, $form ){
 		$transdata = Caldera_Forms_Transient::get_transient( $entry );
 
 		if( !empty( $transdata ) ){
-
+			Caldera_Forms_Transient::delete_at_submission_complete( $entry );
 			return $transdata;
 		}
 

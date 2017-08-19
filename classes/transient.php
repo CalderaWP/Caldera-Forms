@@ -5,7 +5,13 @@
  */
 class Caldera_Forms_Transient {
 
-	protected static $prefix = 'cftransdata_';
+
+	protected static $delete_at_submission_complete;
+
+	/**
+	 * Hookname for wp-cron single events used to delete our "transients"
+	 */
+	const CRON_ACTION = 'caldera_forms_transient_delete';
 
 	/**
 	 * Set a transient
@@ -17,7 +23,7 @@ class Caldera_Forms_Transient {
 	 * @return mixed
 	 */
 	public static function get_transient( $id ){
-		return get_transient( self::prefix( $id ) );
+		return get_option( self::prefix( $id ) );
 	}
 
 	/**
@@ -40,7 +46,8 @@ class Caldera_Forms_Transient {
 			$expires = absint( $expires );
 		}
 
-		return set_transient( self::prefix( $id ), $data, $expires );
+		wp_schedule_single_event( time() + $expires, self::CRON_ACTION, array(  $id  ) );
+		return update_option( self::prefix( $id ), $data, false );
 	}
 
 	/**
@@ -53,7 +60,8 @@ class Caldera_Forms_Transient {
 	 * @return bool
 	 */
 	public static function delete_transient( $id ){
-		return delete_transient( self::prefix( $id ) );
+		return delete_option( self::prefix( $id ) );
+
 	}
 
 	/**
@@ -66,6 +74,45 @@ class Caldera_Forms_Transient {
 	 * @return string
 	 */
 	protected static function prefix( $id ){
-		return self::$prefix . $id;
+		return 'cftransdata_' . $id;
+	}
+
+	/**
+	 * Callback function for "transients" being deleted via CRON
+	 *
+	 * @since 1.5.6
+	 *
+	 * @param $args
+	 */
+	public static function cron_callback( $args ){
+		if( isset( $args[0] ) ){
+			self::delete_transient( $args[0] );
+		}
+	}
+
+	/**
+	 * Add a transient to be deleted at submission completed action
+	 *
+	 * @since 1.5.5
+	 *
+	 * @param string $id Transient ID -- not prefixed
+	 */
+	public static function delete_at_submission_complete( $id ){
+		self::$delete_at_submission_complete[] =  $id ;
+	}
+
+	/**
+	 * Clear any "transients" marked to be cleared when submission completes
+	 *
+	 * @since 1.5.5
+	 *
+	 * @uses "caldera_forms_submit_complete"
+	 */
+	public static function submission_complete(){
+		if( ! empty( self::$delete_at_submission_complete )  ){
+			foreach ( self::$delete_at_submission_complete as $id  ) {
+				self::delete_transient( $id );
+			}
+		}
 	}
 }
