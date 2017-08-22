@@ -207,8 +207,7 @@ if(!empty($binds)){
 		jQuery('body').on('change keyup', '<?php echo implode(',', $bindtriggers); ?>',  cf_debounce(function(e){
 			docalc_<?php echo $target_id; ?>();
 		}));
-		jQuery( document ).on('cf.remove cf.add', cf_debounce(function( e ){
-
+		jQuery( document ).on('cf.remove cf.add cf.pagenav', cf_debounce(function( e ){
 			docalc_<?php echo $target_id; ?>();
 		}));
 		docalc_<?php echo $target_id; ?>();
