@@ -76,7 +76,6 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 				}
 				//skip these types -- maybe add filter here later
 				$skip = array(
-					'calculation',
 					'star_rating',
 				);
 				if( ! in_array( $type, $skip ) && method_exists( $this, $type ) ){
