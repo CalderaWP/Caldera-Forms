@@ -140,4 +140,7 @@ class Caldera_Forms_Field_Calculation {
 		return $entry_value;
 	}
 
+	public static function js_function_name( $field_base_id ){
+		return 'do_calc_' . esc_attr( $field_base_id );
+	}
 }

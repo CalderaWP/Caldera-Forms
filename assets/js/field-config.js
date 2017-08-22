@@ -588,6 +588,40 @@
          });
      };
 
+	/**
+	 * Process a calculation field
+	 *
+	 * @since 1.5.6
+	 *
+	 * @param fieldConfig
+	 */
+	this.calculation = function (fieldConfig) {
+		var $display = $(document.getElementById(fieldConfig.id)),
+			$target = $( document.getElementById( fieldConfig.targetId ) ),
+			run = function(){
+				var result = window[fieldConfig.callback].apply(null, [state] );
+				if( isNaN( result ) ){
+					result = 0;
+				}
+				state.mutateState( fieldConfig.id, result );
+				$display.html( result );
+				$target.val( result );
+			};
+
+		$.each( fieldConfig.fieldBinds,  function (feild,feildId) {
+			state.events().subscribe( feildId, run );
+		});
+
+		$(document).on('cf.pagenav cf.add cf.remove cf.modal', function () {
+			run(state);
+		});
+
+		run(state);
+
+
+
+	}
+
 
 
  }

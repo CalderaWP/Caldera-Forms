@@ -12,10 +12,29 @@
 class Caldera_Forms_Sync_Calc  extends Caldera_Forms_Sync_Sync {
 
 
+	/**
+	 *
+	 * @sing 1.5.0
+	 *
+	 * @var string
+	 */
 	protected  $formula;
 
-
+	/**
+	 *
+	 * @sing 1.5.0
+	 *
+	 * @var array
+	 */
 	protected $bind_fields;
+
+	/**
+	 *
+	 * @sing 1.5.6
+	 *
+	 * @var array
+	 */
+	protected $field_binds;
 
 	/**
 	 * Get formula
@@ -44,8 +63,8 @@ class Caldera_Forms_Sync_Calc  extends Caldera_Forms_Sync_Sync {
 	 * @return mixed
 	 */
 	public function get_bind_fields(){
-		if ( is_array( $this->bind_fields ) ) {
-			return $this->bind_fields;
+		if ( is_array( $this->field_binds ) ) {
+			return $this->field_binds;
 		}
 
 		return array();
@@ -184,7 +203,7 @@ class Caldera_Forms_Sync_Calc  extends Caldera_Forms_Sync_Sync {
 		} else {
 			foreach ( Caldera_Forms_Forms::get_fields( $this->form, false ) as $field_id => $config ) {
 				if ( false !== strpos( $formula, $field_id ) ) {
-					$this->binds[] = $field_id;
+					$this->binds[] = esc_attr( $field_id );
 				}
 
 			}
@@ -193,8 +212,16 @@ class Caldera_Forms_Sync_Calc  extends Caldera_Forms_Sync_Sync {
 
 		$formula = str_replace( "\r", '', str_replace( "\n", '', str_replace( ' ', '', trim( Caldera_Forms::do_magic_tags( $formula ) ) ) ) );
 
+		$state_pattern = "state.getCalcValue('%s')";
+		foreach ( $this->binds as $bind ){
+			$id_attr = $bind .'_' . $this->current_form_count;
+			$formula = str_replace( $bind, sprintf( $state_pattern, esc_attr( $id_attr ) ), $formula );
+			$this->field_binds[ esc_attr( $bind ) ] = $id_attr;
+		}
 
-		return $this->convert_to_js( $formula );
+		$this->formula = $formula;
+
+		return 'function ' . Caldera_Forms_Field_Calculation::js_function_name( $this->field_base_id ) . '(state){return' . $formula . ';}';
 	}
 
 

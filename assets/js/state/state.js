@@ -15,7 +15,8 @@ function CFState(formId, $ ){
 		fields = {},
 		events = new CFEvents(this),
 		unBound = {},
-		fieldVals  = {};
+		fieldVals  = {},
+		calcVals = {};
 
 
 	/**
@@ -54,6 +55,20 @@ function CFState(formId, $ ){
 		}
 
 		return fieldVals[id];
+	};
+	
+	this.getCalcValue = function (id) {
+		var val = 0;
+
+		if( ! inState(id)){
+			return val;
+		}
+		if( calcVals.hasOwnProperty( id ) ){
+			val = calcVals[id];
+		}
+		val = self.getState(id);
+
+		return parseInt( val );
 	};
 
 	/**
@@ -102,6 +117,7 @@ function CFState(formId, $ ){
 		delete unBound[id];
 	};
 
+
 	/**
 	 * Accessor for the CFEvents object used for this state
 	 *
@@ -122,7 +138,6 @@ function CFState(formId, $ ){
 			subscribe: function( id, callback ){
 				if( inState(id)){
 					events.subscribe(id,callback);
-
 				}
 
 			},
@@ -167,6 +182,7 @@ function CFState(formId, $ ){
 		if ($field.length) {
 			$field.on('change keyup', function () {
 				var $el = $(this);
+				calcVals[$el.attr('id')] = $el.data( 'calc-value' );
 				self.mutateState([$el.attr('id')],$el.val());
 			});
 			return true;
@@ -204,6 +220,7 @@ function CFState(formId, $ ){
 
 						if( $this.prop( 'checked' ) ){
 							if( 'radio' === type ){
+								calcVals[$this.attr('id')] = $this.data( 'calc-value' );
 								val = $this.val();
 							}else{
 
@@ -228,6 +245,7 @@ function CFState(formId, $ ){
 		return false;
 
 	}
+
 
 
 }
