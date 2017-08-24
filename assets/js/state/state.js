@@ -56,19 +56,34 @@ function CFState(formId, $ ){
 
 		return fieldVals[id];
 	};
-	
+
+	/**
+	 *Get calculation value for a field
+	 *
+	 * @since 1.5.6
+	 *
+	 * @param id {String} Field id attribute
+	 * @returns {float}
+	 */
 	this.getCalcValue = function (id) {
 		var val = 0;
 
-		if( ! inState(id)){
+		if (! inState( id )) {
 			return val;
 		}
-		if( calcVals.hasOwnProperty( id ) ){
+		if (calcVals.hasOwnProperty(id)) {
 			val = calcVals[id];
-		}
-		val = self.getState(id);
+		} else {
+			val = self.getState(id);
 
-		return parseInt( val );
+			if ($.isArray(val)) {
+				val = val.reduce( function ( a, b) {
+					return parseFloat( a ) + parseFloat( b );
+				}, 0);
+			}
+		}
+
+		return parseFloat( val );
 	};
 
 	/**
@@ -182,7 +197,7 @@ function CFState(formId, $ ){
 		if ($field.length) {
 			$field.on('change keyup', function () {
 				var $el = $(this);
-				calcVals[$el.attr('id')] = $el.data( 'calc-value' );
+				calcVals[$el.attr('id')] = findCalcVal( $el );
 				self.mutateState([$el.attr('id')],$el.val());
 			});
 			return true;
@@ -214,21 +229,38 @@ function CFState(formId, $ ){
 							break;
 					}
 
-
-					$collection.each( function( i, el ){
-						var $this = $( el );
-
-						if( $this.prop( 'checked' ) ){
-							if( 'radio' === type ){
-								calcVals[$this.attr('id')] = $this.data( 'calc-value' );
-								val = $this.val();
-							}else{
-
-								val.push($this.val());
-
+					if( ! $collection.length ){
+						val = 0;
+					} else if ( 1 == $collection.length){
+						val = findCalcVal( $collection[0]);
+					} else if ( 'checkbox' === type ) {
+						var $v, sum = 0;
+						$collection.each(function (k, v) {
+							$v = $(v);
+							if( $v.prop('checked')){
+								sum += parseFloat(findCalcVal($v));
 							}
-						}
-					});
+							val.push($v.val());
+						});
+						calcVals[id] = sum;
+					}else{
+						$collection.each(function (i, el) {
+							var $this = $(el);
+
+							if ($this.prop('checked')) {
+								if ('radio' === type) {
+									calcVals[id] = findCalcVal($this);
+									val = $this.val();
+								} else {
+									val.push($this.val());
+								}
+							}
+						});
+					}
+
+
+
+
 
 
 					self.mutateState(id,val);
@@ -243,6 +275,23 @@ function CFState(formId, $ ){
 		self.unbind(id);
 
 		return false;
+
+	}
+
+	/**
+	 * Find calculation value for an element
+	 *
+	 * @since 1.5.6
+	 * @param $field
+	 * @returns {*}
+	 */
+	function findCalcVal( $field ) {
+		var attr = $field.attr('data-calc-value');
+
+		if (typeof attr !== typeof undefined && attr !== false) {
+			return $field.data( 'calc-value' );
+		}
+		return $field.val();
 
 	}
 
