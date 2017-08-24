@@ -71,6 +71,21 @@ class Caldera_Forms_Render_Footer {
 	}
 
 	/**
+	 * Get the data to print in footer as a string
+	 *
+	 * @since 1.5.6
+	 *
+	 * @return string
+	 */
+	public function get_data_as_string( ){
+		if( ! empty( $this->data ) )  {
+			return implode( "\n", $this->data );
+		}
+		return '';
+
+	}
+
+	/**
 	 * Add a string to be printed
 	 *
 	 * @since 1.5.0
@@ -96,9 +111,7 @@ class Caldera_Forms_Render_Footer {
 	 * @since 1.5.0
 	 */
 	public function print_data(){
-		if( ! empty( $this->data ) )  {
-			echo implode( "\n", $this->data );
-		}
+		echo $this->get_data_as_string();
 		$this->printed = true;
 	}
 }
