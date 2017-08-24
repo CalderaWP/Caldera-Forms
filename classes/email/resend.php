@@ -56,6 +56,8 @@ class Caldera_Forms_Email_Resend {
 		add_action( 'caldera_forms_magic_parser_data', array( $this, 'provide_data' ), 10, 2 );
 		$this->apply_conditional_recipients();
 
+		global  $form;
+		$form = $this->form;
 		/**
 		 * Runs right before email resending is sent to emailer
 		 *
