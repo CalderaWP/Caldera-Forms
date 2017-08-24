@@ -118,6 +118,7 @@ function CFState(formId, $ ){
 	this.unbind = function(id){
 		self.mutateState(id,'');
 		unBound[id] = true;
+		delete calcVals[id];
 	};
 
 	/**
@@ -129,6 +130,7 @@ function CFState(formId, $ ){
 	 */
 	this.rebind = function(id){
 		bindField(id);
+
 		delete unBound[id];
 	};
 
@@ -257,11 +259,6 @@ function CFState(formId, $ ){
 							}
 						});
 					}
-
-
-
-
-
 
 					self.mutateState(id,val);
 

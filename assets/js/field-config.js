@@ -596,17 +596,15 @@
 	 * @param fieldConfig
 	 */
 	this.calculation = function (fieldConfig) {
-		var $display = $(document.getElementById(fieldConfig.id)),
-			$target = $( document.getElementById( fieldConfig.targetId ) ),
-			run = function(){
-				var result = window[fieldConfig.callback].apply(null, [state] );
-				if( isNaN( result ) ){
-					result = 0;
-				}
-				state.mutateState( fieldConfig.id, result );
-				$display.html( result );
-				$target.val( result );
-			};
+		var run = function(){
+			var result = window[fieldConfig.callback].apply(null, [state] );
+			if( isNaN( result ) ){
+				result = 0;
+			}
+			state.mutateState( fieldConfig.id, result );
+			$( '#' + fieldConfig.id ).html( result );
+			$( '#' + fieldConfig.targetId ).val( result );
+		};
 
 		$.each( fieldConfig.fieldBinds,  function (feild,feildId) {
 			state.events().subscribe( feildId, debounce(run) );
@@ -618,10 +616,7 @@
 
 		run(state);
 
-
-
 	}
-
 
 
  }
