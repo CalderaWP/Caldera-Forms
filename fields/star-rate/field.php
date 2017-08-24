@@ -36,33 +36,36 @@ $star_target = Caldera_Forms_Field_Util::star_target( Caldera_Forms_Field_Util::
 ?>
 
 	<script type="text/javascript">
+		var <?php echo $star_target; ?>Score = 2;
+		function <?php echo $field_id; ?>_stars(){
+			jQuery( '#<?php echo $field_id; ?>_stars').raty({
+				starOff	: 'raty-<?php echo $field['config']['type']; ?>-off',
+				starOn : 'raty-<?php echo $field['config']['type']; ?>-on',
+				target: '#<?php echo $field_id; ?>',
+				spaceWidth: <?php echo $field['config']['space']; ?>,
+				targetKeep: true, targetType: 'score',
+				<?php if(!empty($field_value)){ echo "score: ".$field_value.","; }; ?>
+				hints: [1,2,3,4,5],
+				number: <?php echo $field['config']['number']; ?>,
+				starType: 'f',
+				score: <?php echo $default; ?>,
+				starColor: '<?php echo $field['config']['color']; ?>',
+				numberMax: 100,
+				click :function(nScore){
+					<?php echo $star_target; ?>Score = nScore;
+					jQuery( '#<?php echo $field_id; ?>').trigger( 'change' );
+				}
+				<?php if(!empty($field['config']['cancel'])){ echo ",cancel: true"; }; ?>
+				<?php if(!empty($field['config']['single'])){ echo ",single: true"; }; ?>
+			});
+		}
+
 		window.addEventListener("load", function(){
-			var <?php echo $star_target; ?>Score = 2;
-			function <?php echo $field_id; ?>_stars(){
-				jQuery( '#<?php echo $field_id; ?>_stars').raty({
-					starOff	: 'raty-<?php echo $field['config']['type']; ?>-off',
-					starOn : 'raty-<?php echo $field['config']['type']; ?>-on',
-					target: '#<?php echo $field_id; ?>',
-					spaceWidth: <?php echo $field['config']['space']; ?>,
-					targetKeep: true, targetType: 'score',
-					<?php if(!empty($field_value)){ echo "score: ".$field_value.","; }; ?>
-					hints: [1,2,3,4,5],
-					number: <?php echo $field['config']['number']; ?>,
-					starType: 'f',
-					score: <?php echo $default; ?>,
-					starColor: '<?php echo $field['config']['color']; ?>',
-					numberMax: 100,
-					click :function(nScore){
-						<?php echo $star_target; ?>Score = nScore;
-						jQuery( '#<?php echo $field_id; ?>').trigger( 'change' );
-					}
-					<?php if(!empty($field['config']['cancel'])){ echo ",cancel: true"; }; ?>
-					<?php if(!empty($field['config']['single'])){ echo ",single: true"; }; ?>
-				});
-			}
+
 			<?php echo $field_id; ?>_stars();
 			jQuery( document ).on('cf.add', <?php echo $field_id; ?>_stars );
 		});
 	</script>
 <?php
 Caldera_Forms_Render_Util::add_inline_data( ob_get_clean(), $form );
+
