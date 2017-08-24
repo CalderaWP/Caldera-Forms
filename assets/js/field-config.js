@@ -609,7 +609,7 @@
 			};
 
 		$.each( fieldConfig.fieldBinds,  function (feild,feildId) {
-			state.events().subscribe( feildId, run );
+			state.events().subscribe( feildId, debounce(run) );
 		});
 
 		$(document).on('cf.pagenav cf.add cf.remove cf.modal', function () {
