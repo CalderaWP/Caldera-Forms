@@ -286,6 +286,11 @@ function CFState(formId, $ ){
 	 * @returns {*}
 	 */
 	function findCalcVal( $field ) {
+		if( $field.is( 'select' ) && $field.has( 'option' ) ){
+			$field = $field.find(':selected');
+		}
+
+
 		var attr = $field.attr('data-calc-value');
 
 		if (typeof attr !== typeof undefined && attr !== false) {
