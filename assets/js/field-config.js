@@ -596,14 +596,35 @@
 	 * @param fieldConfig
 	 */
 	this.calculation = function (fieldConfig) {
+		var lastValue = null;
+		function addCommas(nStr){
+			nStr += '';
+			var x = nStr.split('.'),
+				x1 = x[0],
+				x2 = x.length > 1 ? '<?php echo $decimal_separator; ?>' + x[1] : '',
+				rgx = /(\d+)(\d{3})/;
+			while (rgx.test(x1)) {
+
+				x1 = x1.replace(rgx, '$1' + '<?php echo $thousand_separator; ?>' + '$2');
+			}
+			return x1 + x2;
+		}
+
+		if( 'number' != typeof  total ){
+			total = parseInt( total, 10 );
+		}
+
 		var run = function(){
 			var result = window[fieldConfig.callback].apply(null, [state] );
 			if( isNaN( result ) ){
 				result = 0;
 			}
-			state.mutateState( fieldConfig.id, result );
-			$( '#' + fieldConfig.id ).html( result );
-			$( '#' + fieldConfig.targetId ).val( result );
+			if ( null !== lastValue && result !== lastValue ) {
+				lastValue = result;
+				state.mutateState( fieldConfig.id, result );
+				$('#' + fieldConfig.id ).html(addCommas( result ) );
+				$('#' + fieldConfig.targetId ).val( result );
+			}
 		};
 
 		$.each( fieldConfig.fieldBinds,  function (feild,feildId) {
