@@ -636,7 +636,7 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 	 *
 	 */
 	protected function map_field( $type, $field ){
-		$default =Caldera_Forms_Field_Util::get_default( $field, $this->form, true );
+		$default = Caldera_Forms_Field_Util::get_default( $field, $this->form, true );
 
 		$_field = array(
 			'type'    => $type,
@@ -661,6 +661,10 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 			}
 
 		}
+		if( 'checkbox' === $type ){
+			$_field[ 'mode' ] = Caldera_Forms_Field_Calculation::checkbox_mode( $field, $this->form );
+		}
+
 		if ( $group ) {
 			$this->fields[ 'groups' ][] = $_field;
 		}else{
