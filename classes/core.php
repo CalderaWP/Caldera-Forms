@@ -3232,7 +3232,6 @@ class Caldera_Forms {
 						self::set_submission_meta( $metakey, $metavalue, $form, $processor_id );
 					}
 				}
-
 			}
 		}
 
