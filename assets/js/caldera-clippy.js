@@ -64,10 +64,8 @@ function CalderaFormsAdminClippys2( elId, config, $ ){
 
 
 	this.remove = function () {
-		$( document.getElementById( elId ).remove() );
+		$( '#' + elId  ).remove();
 	};
-
-
 
 	function get( url ) {
 		return $.get( url, {
@@ -87,7 +85,6 @@ function CalderaFormsAdminClippys2( elId, config, $ ){
 				result = prop;
 		return result;
 	}
-
 
 
 }
