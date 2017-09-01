@@ -610,9 +610,7 @@
 			return x1 + x2;
 		}
 
-		if( 'number' != typeof  total ){
-			total = parseInt( total, 10 );
-		}
+
 
 		var run = function(){
 			var result = window[fieldConfig.callback].apply(null, [state] );
@@ -622,6 +620,10 @@
 			if ( null !== lastValue && result !== lastValue ) {
 				lastValue = result;
 				state.mutateState( fieldConfig.id, result );
+                if( 'number' != typeof  result ){
+                    result = parseInt( result, 10 );
+                }
+
 				$('#' + fieldConfig.id ).html(addCommas( result ) );
 				$('#' + fieldConfig.targetId ).val( result );
 			}

@@ -63,14 +63,34 @@ function CFState(formId, $ ){
 	 * @since 1.5.6
 	 *
 	 * @param id {String} Field id attribute
+	 * @param highest {Boolean}
 	 * @returns {float}
 	 */
-	this.getCalcValue = function (id) {
+	this.getCalcValue = function (id,highest) {
 		var val = 0;
 
 		if (! inState( id )) {
 			return val;
 		}
+
+		if( highest ){
+			highest = 0;
+			var value = highest,
+				$item;
+			$( '#' + id ).each(function(){
+				value = 0;
+				$item = $( this );
+				if(  $item.prop('checked' ) ){
+					value = findCalcVal( $item );
+					if( parseFloat( value ) > parseFloat( highest ) ){
+						highest = parseFloat( value );
+					}
+				}
+
+			});
+			return highest;
+		}
+
 		if (calcVals.hasOwnProperty(id)) {
 			val = calcVals[id];
 		} else {

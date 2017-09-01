@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.5 - 2017-08-17 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.5 - 2017-08-31 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -102,7 +102,8 @@ function CFState(formId, $ ){
 		fields = {},
 		events = new CFEvents(this),
 		unBound = {},
-		fieldVals  = {};
+		fieldVals  = {},
+		calcVals = {};
 
 
 	/**
@@ -144,6 +145,55 @@ function CFState(formId, $ ){
 	};
 
 	/**
+	 *Get calculation value for a field
+	 *
+	 * @since 1.5.6
+	 *
+	 * @param id {String} Field id attribute
+	 * @param highest {Boolean}
+	 * @returns {float}
+	 */
+	this.getCalcValue = function (id,highest) {
+		var val = 0;
+
+		if (! inState( id )) {
+			return val;
+		}
+
+		if( highest ){
+			highest = 0;
+			var value = highest,
+				$item;
+			$( '#' + id ).each(function(){
+				value = 0;
+				$item = $( this );
+				if(  $item.prop('checked' ) ){
+					value = findCalcVal( $item );
+					if( parseFloat( value ) > parseFloat( highest ) ){
+						highest = parseFloat( value );
+					}
+				}
+
+			});
+			return highest;
+		}
+
+		if (calcVals.hasOwnProperty(id)) {
+			val = calcVals[id];
+		} else {
+			val = self.getState(id);
+
+			if ($.isArray(val)) {
+				val = val.reduce( function ( a, b) {
+					return parseFloat( a ) + parseFloat( b );
+				}, 0);
+			}
+		}
+
+		return parseFloat( val );
+	};
+
+	/**
 	 * Change state for a field
 	 *
 	 * @since 1.5.3
@@ -175,6 +225,7 @@ function CFState(formId, $ ){
 	this.unbind = function(id){
 		self.mutateState(id,'');
 		unBound[id] = true;
+		delete calcVals[id];
 	};
 
 	/**
@@ -186,8 +237,10 @@ function CFState(formId, $ ){
 	 */
 	this.rebind = function(id){
 		bindField(id);
+
 		delete unBound[id];
 	};
+
 
 	/**
 	 * Accessor for the CFEvents object used for this state
@@ -209,7 +262,6 @@ function CFState(formId, $ ){
 			subscribe: function( id, callback ){
 				if( inState(id)){
 					events.subscribe(id,callback);
-
 				}
 
 			},
@@ -254,6 +306,7 @@ function CFState(formId, $ ){
 		if ($field.length) {
 			$field.on('change keyup', function () {
 				var $el = $(this);
+				calcVals[$el.attr('id')] = findCalcVal( $el );
 				self.mutateState([$el.attr('id')],$el.val());
 			});
 			return true;
@@ -285,21 +338,34 @@ function CFState(formId, $ ){
 							break;
 					}
 
-
-					$collection.each( function( i, el ){
-						var $this = $( el );
-
-						if( $this.prop( 'checked' ) ){
-							if( 'radio' === type ){
-								val = $this.val();
-							}else{
-
-								val.push($this.val());
-
+					if( ! $collection.length ){
+						val = 0;
+					} else if ( 1 == $collection.length){
+						val = findCalcVal( $collection[0]);
+					} else if ( 'checkbox' === type ) {
+						var $v, sum = 0;
+						$collection.each(function (k, v) {
+							$v = $(v);
+							if( $v.prop('checked')){
+								sum += parseFloat(findCalcVal($v));
 							}
-						}
-					});
+							val.push($v.val());
+						});
+						calcVals[id] = sum;
+					}else{
+						$collection.each(function (i, el) {
+							var $this = $(el);
 
+							if ($this.prop('checked')) {
+								if ('radio' === type) {
+									calcVals[id] = findCalcVal($this);
+									val = $this.val();
+								} else {
+									val.push($this.val());
+								}
+							}
+						});
+					}
 
 					self.mutateState(id,val);
 
@@ -315,6 +381,29 @@ function CFState(formId, $ ){
 		return false;
 
 	}
+
+	/**
+	 * Find calculation value for an element
+	 *
+	 * @since 1.5.6
+	 * @param $field
+	 * @returns {*}
+	 */
+	function findCalcVal( $field ) {
+		if( $field.is( 'select' ) && $field.has( 'option' ) ){
+			$field = $field.find(':selected');
+		}
+
+
+		var attr = $field.attr('data-calc-value');
+
+		if (typeof attr !== typeof undefined && attr !== false) {
+			return $field.data( 'calc-value' );
+		}
+		return $field.val();
+
+	}
+
 
 
 }
@@ -5760,9 +5849,62 @@ function toggle_button_init(id, el){
          });
      };
 
+	/**
+	 * Process a calculation field
+	 *
+	 * @since 1.5.6
+	 *
+	 * @param fieldConfig
+	 */
+	this.calculation = function (fieldConfig) {
+		var lastValue = null;
+		function addCommas(nStr){
+			nStr += '';
+			var x = nStr.split('.'),
+				x1 = x[0],
+				x2 = x.length > 1 ? '<?php echo $decimal_separator; ?>' + x[1] : '',
+				rgx = /(\d+)(\d{3})/;
+			while (rgx.test(x1)) {
+
+				x1 = x1.replace(rgx, '$1' + '<?php echo $thousand_separator; ?>' + '$2');
+			}
+			return x1 + x2;
+		}
+
+
+
+		var run = function(){
+			var result = window[fieldConfig.callback].apply(null, [state] );
+			if( isNaN( result ) ){
+				result = 0;
+			}
+			if ( null !== lastValue && result !== lastValue ) {
+				lastValue = result;
+				state.mutateState( fieldConfig.id, result );
+                if( 'number' != typeof  result ){
+                    result = parseInt( result, 10 );
+                }
+
+				$('#' + fieldConfig.id ).html(addCommas( result ) );
+				$('#' + fieldConfig.targetId ).val( result );
+			}
+		};
+
+		$.each( fieldConfig.fieldBinds,  function (feild,feildId) {
+			state.events().subscribe( feildId, debounce(run) );
+		});
+
+		$(document).on('cf.pagenav cf.add cf.remove cf.modal', function () {
+			run(state);
+		});
+
+		run(state);
+
+	}
 
 
  }
+
 
 
 var cf_jsfields_init, cf_presubmit;
