@@ -673,7 +673,6 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 		}
 
 
-
 		$this->fields[ 'defaults' ][ $this->field_id( $field[ 'ID' ] ) ] = $default;
 
 	}

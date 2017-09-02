@@ -175,7 +175,7 @@ function CFState(formId, $ ){
 				}
 
 			});
-			return highest;
+			return parseFloat( highest );
 		}
 
 		if (calcVals.hasOwnProperty(id)) {
@@ -309,6 +309,7 @@ function CFState(formId, $ ){
 				calcVals[$el.attr('id')] = findCalcVal( $el );
 				self.mutateState([$el.attr('id')],$el.val());
 			});
+			self.mutateState([$field.attr('id')],$field.val());
 			return true;
 		} else {
 			$field = $('.' + id);
@@ -341,7 +342,7 @@ function CFState(formId, $ ){
 					if( ! $collection.length ){
 						val = 0;
 					} else if ( 1 == $collection.length){
-						val = findCalcVal( $collection[0]);
+						val = findCalcVal( $($collection[0]));
 					} else if ( 'checkbox' === type ) {
 						var $v, sum = 0;
 						$collection.each(function (k, v) {
@@ -393,15 +394,49 @@ function CFState(formId, $ ){
 		if( $field.is( 'select' ) && $field.has( 'option' ) ){
 			$field = $field.find(':selected');
 		}
-
+		var val = 0;
 
 		var attr = $field.attr('data-calc-value');
 
-		if (typeof attr !== typeof undefined && attr !== false) {
-			return $field.data( 'calc-value' );
+		if (typeof attr !== typeof undefined && attr !== false && ! isNaN(attr)) {
+			val = $field.data( 'calc-value' );
 		}
-		return $field.val();
+		val = $field.val();
+		if( ! isNaN( val ) ){
+			return val;
+		}
 
+		return 0;
+	}
+
+	/**
+	 * Parse float if we can parse float, else 0.
+	 *
+	 * @since 1.5.6
+	 *
+	 * @param number
+	 * @returns {*}
+	 */
+	function parseFloat( number ) {
+		if( ! number || isNaN( number) ){
+			return 0.0;
+		}
+		return window.parseFloat(number);
+	}
+
+	/**
+	 * Parse integer if we can parse integer, else 0.
+	 *
+	 * @since 1.5.6
+	 *
+	 * @param number
+	 * @returns {*}
+	 */
+	function parseIne( number ) {
+		if( ! number || isNaN( number) ){
+			return 0;
+		}
+		return window.parseInt(number);
 	}
 
 
@@ -5862,11 +5897,11 @@ function toggle_button_init(id, el){
 			nStr += '';
 			var x = nStr.split('.'),
 				x1 = x[0],
-				x2 = x.length > 1 ? '<?php echo $decimal_separator; ?>' + x[1] : '',
+				x2 = x.length > 1 ? fieldConfig.decimalSeparator + x[1] : '',
 				rgx = /(\d+)(\d{3})/;
 			while (rgx.test(x1)) {
 
-				x1 = x1.replace(rgx, '$1' + '<?php echo $thousand_separator; ?>' + '$2');
+				x1 = x1.replace(rgx, '$1' + fieldConfig.thousandSeparator + '$2');
 			}
 			return x1 + x2;
 		}
