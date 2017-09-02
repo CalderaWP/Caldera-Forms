@@ -3232,6 +3232,7 @@ class Caldera_Forms {
 						self::set_submission_meta( $metakey, $metavalue, $form, $processor_id );
 					}
 				}
+
 			}
 		}
 
@@ -3468,7 +3469,7 @@ class Caldera_Forms {
 				$url = set_url_scheme( $url, 'https' );
 			}
 		}
-		
+
 		/**
 		 * Filter the Caldera Forms APU url
 		 *
@@ -4014,7 +4015,8 @@ class Caldera_Forms {
 			'method'	=>	'POST',
 			'enctype'	=>	'multipart/form-data',
 			'role'		=>	'form',
-			'id'		=>	$form['ID'] . '_' . $current_form_count
+			'id'		=>	$form['ID'] . '_' . $current_form_count,
+			'data-form-id' => $form[ 'ID' ]
 		);
 
 		//add extra attributes to make AJAX submissions JS do its thing
