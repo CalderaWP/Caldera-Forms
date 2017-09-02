@@ -40,7 +40,7 @@ function CFEvents(state) {
 		}
 
 		events[id].forEach(function (callback) {
-			callback(state.getState(id));
+			callback(state.getState(id),id);
 		});
 
 	};
@@ -6044,6 +6044,11 @@ var cf_jsfields_init, cf_presubmit;
 		var $clicked = $( this ),
 			$form = $clicked.closest('.caldera_forms_form'),
 			validator = cf_validate_form( $form );
+		$( document ).trigger( 'cf.form.submit', {
+			e:e,
+			$form:$form
+		} );
+
 
 
 		if( ! validator.validate() ){
@@ -6080,6 +6085,10 @@ var cf_jsfields_init, cf_presubmit;
 
 			e.preventDefault();
 		}else{
+			$( document ).trigger( 'cf.form.validated', {
+				e:e,
+				$form:$form
+			} );
 			validator.destroy();
 		}
 	});
@@ -6147,7 +6156,6 @@ window.addEventListener("load", function(){
 						window.cfstate = {};
 					}
 
-
 					window.cfstate[ form_id ] = state;
 					config_object = new Caldera_Forms_Field_Config( config, $(document.getElementById(form_id)), $, state );
 					config_object.init();
@@ -6155,6 +6163,7 @@ window.addEventListener("load", function(){
 						idAttr:  form_id,
 						formId: formId,
 						state: state,
+						fieldIds: CFFIELD_CONFIG[instance].fields.hasOwnProperty( 'ids' ) ? CFFIELD_CONFIG[instance].fields.ids : []
 					});
 
 				}

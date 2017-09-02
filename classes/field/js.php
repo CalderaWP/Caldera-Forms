@@ -55,6 +55,7 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 		$this->form_count = $form_count;
 		$this->data = array();
 		$this->fields = array(
+			'ids'    => array(),
 			'inputs' => array(),
 			'groups' => array()
 		);
@@ -68,7 +69,8 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 	public function prepare_data(){
 
 		if( ! empty( $this->form[ 'fields' ] ) ){
-			foreach( $this->form[ 'fields' ] as $field ){
+			foreach( $this->form[ 'fields' ] as  $field ){
+				$this->fields[ 'ids' ][] = $this->field_id( $field[ 'ID' ] );
 				$type = Caldera_Forms_Field_Util::get_type( $field, $this->form );
 				$this->map_field( $type, $field );
 				if( 'summary' == $type ){
