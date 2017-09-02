@@ -601,11 +601,11 @@
 			nStr += '';
 			var x = nStr.split('.'),
 				x1 = x[0],
-				x2 = x.length > 1 ? '<?php echo $decimal_separator; ?>' + x[1] : '',
+				x2 = x.length > 1 ? fieldConfig.decimalSeparator + x[1] : '',
 				rgx = /(\d+)(\d{3})/;
 			while (rgx.test(x1)) {
 
-				x1 = x1.replace(rgx, '$1' + '<?php echo $thousand_separator; ?>' + '$2');
+				x1 = x1.replace(rgx, '$1' + fieldConfig.thousandSeparator + '$2');
 			}
 			return x1 + x2;
 		}
