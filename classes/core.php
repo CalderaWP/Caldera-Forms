@@ -1070,7 +1070,7 @@ class Caldera_Forms {
 
 		if( ! empty( $config[ 'reply_to' ] ) ){
             $email_message[ 'replyto' ] = Caldera_Forms::do_magic_tags( $config[ 'reply_to' ] );
-            $mail['headers'][] = 'Reply-To: ' . $email_message[ 'replyto' ];
+			$email_message['headers'][] = 'Reply-To: ' . $email_message[ 'replyto' ];
 		}
 
 
@@ -1081,7 +1081,7 @@ class Caldera_Forms {
             $bcc_array = array_map('trim', preg_split( '/[;,]/', Caldera_Forms::do_magic_tags( $config[ 'bcc' ] ) ) );
             foreach( $bcc_array as $bcc_to ) {
                 if ( is_email( $bcc_to ) ) {
-                    $mail['headers'][] = 'Bcc: ' . $bcc_to;
+	                $email_message['headers'][] = 'Cc: ' . $bcc_to;
                 }
             }
         }
@@ -1093,7 +1093,7 @@ class Caldera_Forms {
             $bcc_array = array_map('trim', preg_split( '/[;,]/', Caldera_Forms::do_magic_tags( $config[ 'bcc' ] ) ) );
             foreach( $bcc_array as $bcc_to ) {
                 if ( is_email( $bcc_to ) ) {
-                    $mail['headers'][] = 'Bcc: ' . $bcc_to;
+	                $email_message['headers'][] = 'Bcc: ' . $bcc_to;
                 }
             }
         }

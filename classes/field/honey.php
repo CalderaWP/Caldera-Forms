@@ -18,17 +18,14 @@ class Caldera_Forms_Field_Honey{
      *
      * @param array $data Submission data
      * @param array $form Form config
-     * @param string|int $form_instance_number Current form instance identifier
-     * @param string $process_id Process ID for current submission attempt
      *
      * @return bool
      */
-    public static function check( array $data, $form, $form_instance_number, $process_id ){
+    public static function check( array $data, $form ){
         $honey_words = self::words( $form );
         foreach ( $data as $honey_word => $honey_value ) {
 
             if ( ! is_array( $honey_value ) && strlen( $honey_value ) && in_array( $honey_word, $honey_words ) ) {
-
                 return false;
 
             }
@@ -65,6 +62,7 @@ class Caldera_Forms_Field_Honey{
          * @param string $url The URL to use
          */
         return apply_filters( 'caldera_forms_honey_redirect_url', $url );
+
     }
 
     /**
