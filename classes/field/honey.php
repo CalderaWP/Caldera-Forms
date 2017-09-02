@@ -26,7 +26,6 @@ class Caldera_Forms_Field_Honey{
         foreach ( $data as $honey_word => $honey_value ) {
 
             if ( ! is_array( $honey_value ) && strlen( $honey_value ) && in_array( $honey_word, $honey_words ) ) {
-
                 return false;
 
             }
@@ -63,6 +62,7 @@ class Caldera_Forms_Field_Honey{
          * @param string $url The URL to use
          */
         return apply_filters( 'caldera_forms_honey_redirect_url', $url );
+
     }
 
     /**
