@@ -334,7 +334,7 @@ function CFState(formId, $ ){
 		if( ! number || isNaN( number) ){
 			return 0.0;
 		}
-		return window.parseFloat(number);
+		return window.parseFloat( number );
 	}
 
 	/**
@@ -349,7 +349,7 @@ function CFState(formId, $ ){
 		if( ! number || isNaN( number) ){
 			return 0;
 		}
-		return window.parseInt(number);
+		return window.parseInt( number );
 	}
 
 
