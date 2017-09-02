@@ -188,7 +188,7 @@ return array (
 				'recipient_email' => '%email_address%',
 				'message' => 'Hi %recipient_name%.
 Thanks for your email.
-We\'ll get get back to you as soon as possible!
+We\'ll get back to you as soon as possible!
 Here\'s a summary of your message:
 ------------------------
 {summary}',
