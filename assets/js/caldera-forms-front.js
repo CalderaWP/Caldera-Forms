@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.5 - 2017-08-31 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.5 - 2017-09-02 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -5878,7 +5878,7 @@ function toggle_button_init(id, el){
 			if( isNaN( result ) ){
 				result = 0;
 			}
-			if ( null !== lastValue && result !== lastValue ) {
+			if ( null === lastValue || result !== lastValue ) {
 				lastValue = result;
 				state.mutateState( fieldConfig.id, result );
                 if( 'number' != typeof  result ){

@@ -617,7 +617,7 @@
 			if( isNaN( result ) ){
 				result = 0;
 			}
-			if ( null !== lastValue && result !== lastValue ) {
+			if ( null === lastValue || result !== lastValue ) {
 				lastValue = result;
 				state.mutateState( fieldConfig.id, result );
                 if( 'number' != typeof  result ){
