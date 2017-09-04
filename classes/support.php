@@ -79,15 +79,28 @@ class Caldera_Forms_Support {
 	 *
 	 * @since 1.3.5
 	 *
+	 * @param  bool $just_version Optional. If true, the default array is name => version. If false, name, version and URL are retuned.
+	 *
 	 * @return array
 	 */
-	public static function get_plugins() {
+	public static function get_plugins( $just_version = true, $active_only = true ) {
 		$plugins     = array();
 		include_once ABSPATH  . '/wp-admin/includes/plugin.php';
 		$all_plugins = get_plugins();
 		foreach ( $all_plugins as $plugin_file => $plugin_data ) {
-			if ( is_plugin_active( $plugin_file ) ) {
+			if ( $active_only && ! is_plugin_active( $plugin_file ) ) {
+				continue;
+			}
+
+			if ( $just_version ) {
 				$plugins[ $plugin_data[ 'Name' ] ] = $plugin_data[ 'Version' ];
+			} else {
+				$plugins[] = array(
+					'name' => $plugin_data[ 'Name' ],
+					'version' => $plugin_data[ 'Version' ],
+					'url' => $plugin_data[ 'PluginURI' ],
+					'active' => is_plugin_active($plugin_file )
+				);
 			}
 		}
 
@@ -132,7 +145,7 @@ class Caldera_Forms_Support {
 		$wp          = $wp_version;
 		$php         = phpversion();
 		$mysql       = $wpdb->db_version();
-		$plugins = self::get_plugins();
+		$plugins     = self::get_plugins( false, false );
 		$stylesheet    = get_stylesheet();
 		$theme         = wp_get_theme( $stylesheet );
 		$theme_name    = $theme->get( 'Name' );
@@ -165,7 +178,7 @@ class Caldera_Forms_Support {
 			'WP Multisite Mode'           => ( is_multisite() ? 'Yes' : 'No' ),
 			'WP Memory Limit'             => WP_MEMORY_LIMIT,
 			'Currently Active Theme'      => $theme_name . ': ' . $theme_version,
-			'Currently Active Plugins'    => $plugins
+			'Plugins'    => $plugins
 		);
 		if ( $html ) {
 			$debug = '';
@@ -174,7 +187,18 @@ class Caldera_Forms_Support {
 				if ( is_array( $version ) ) {
 					$debug .= '</p><ul class="ul-disc">';
 					foreach ( $version as $what_v => $v ) {
-						$debug .= '<li><strong>' . $what_v . '</strong>: ' . $v . '</li>';
+						if ( ! is_array( $v ) ) {
+							$debug .= '<li><strong>' . esc_html( $what_v ) . '</strong>: ' . esc_html( $v ) . '</li>';
+						} else {
+
+							if( $v[ 'active' ] ){
+								$active = __( 'Active', 'caldera-forms' );
+							}else{
+								$active = __( 'Not Active', 'caldera-forms' );
+							}
+							$debug .= '<li><strong>' . esc_html( $v[ 'name' ] ) . '</strong>: ' . esc_html( $v[ 'version' ] ) . ' <em>' . esc_html( $active ) . '</em></li>';
+
+						}
 					}
 					$debug .= '</ul>';
 				} else {
