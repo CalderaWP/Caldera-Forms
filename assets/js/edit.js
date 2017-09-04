@@ -2321,7 +2321,7 @@ jQuery(document).ready(function($) {
         var $label = $(this),
             $value = $( '.toggle_value_field[data-opt="' + $label.data( 'option' ) + '"]' );
 
-        if( $value.is( ':visible') ){
+        if( $value.is( ':visible' ) ){
             return;
         }
 
