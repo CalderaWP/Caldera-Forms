@@ -2067,6 +2067,23 @@ class Caldera_Forms_Admin {
 
 		return  add_query_arg( $args, get_home_url() );
 	}
+
+	/**
+	 * Prevent re-sending email on form edit
+	 *
+	 * @uses "caldera_forms_send_email" filter
+	 *
+	 * @param bool $send
+	 *
+	 * @return bool
+	 */
+	public static function block_email_on_edit( $send ){
+		if( isset( $_POST, $_POST[ '_cf_frm_edt' ] ) && 0 < absint( $_POST[ '_cf_frm_edt' ] ) ){
+			return false;
+		}
+
+		return $send;
+	}
 }
 
 

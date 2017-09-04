@@ -154,6 +154,8 @@ class Caldera_Forms {
 		//entry permission
 		add_filter( 'caldera_forms_manage_cap', array( 'Caldera_Forms_Entry_UI', 'permissions_filter' ), 9, 3 );
 
+		add_filter( 'caldera_forms_send_email', array( Caldera_Forms_Admin::get_instance(), 'block_email_on_edit' ), 9 );
+
 		if( current_user_can( Caldera_Forms::get_manage_cap( 'admin' ) ) ) {
 			$id = null;
 
