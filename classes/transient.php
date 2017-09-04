@@ -5,10 +5,10 @@
  *
  * Abstraction for backing global $transdata in DB and other data needed to be shared between sessions.
  *
- * History:
+ * History (A bold march towards a proper session API)
  * Before 1.4.9.1 get/set_transient was used as a convention.
  * In 1.4.9.1 This class was added as an API wrapping get/set_transient()
- * In 1.5.6 This API switched to using get/update_option() with CRON job to delete. Reasons explained in https://github.com/CalderaWP/Caldera-Forms/issues/1866
+ * In 1.5.6 This API switched to using get/update_option() with WordPress "CRON job" to delete if needed, which it should not be most of the time, transient should be deleted on caldera_forms_submit_complete aaction. Reasons explained in https://github.com/CalderaWP/Caldera-Forms/issues/1866
  */
 class Caldera_Forms_Transient {
 
