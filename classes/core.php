@@ -4711,15 +4711,18 @@ class Caldera_Forms {
 	 * @since 1.4.0
 	 *
 	 * @param string $submitted Timestamp
+	 * @param bool $remove_commas Optional. Default is false, true replaces commas with spaces. @since 1.5.6
 	 *
 	 * @return string
 	 */
-	public static function localize_time( $submitted ) {
+	public static function localize_time( $submitted, $remove_commas = false ) {
 
 
 		$format = self::time_format();
 		$time   = get_date_from_gmt( $submitted, $format );
-
+		if( $remove_commas ){
+			$time = str_replace( ',', ' ', $time );
+		}
 		return $time;
 	}
 

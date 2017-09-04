@@ -1386,9 +1386,14 @@ class Caldera_Forms_Admin {
 
 			$data = array();
 
+			$localize_time = Caldera_Forms_CSV_Util::should_localize_time( $form );
 			foreach( $rawdata as $entry){
 				$submission = Caldera_Forms::get_entry( $entry->_entryid, $form);
-				$data[$entry->_entryid]['date_submitted'] = Caldera_Forms::localize_time( $entry->_date_submitted );
+				if( $localize_time ){
+					$data[$entry->_entryid]['date_submitted'] = Caldera_Forms::localize_time( $entry->_date_submitted, true );
+				}else{
+					$data[$entry->_entryid]['date_submitted'] = $entry->_date_submitted;
+				}
 
 				foreach ($structure as $slug => $field_id) {
 					$data[$entry->_entryid][$slug] = ( isset( $submission['data'][$field_id]['value'] ) ? $submission['data'][$field_id]['value'] : null );
