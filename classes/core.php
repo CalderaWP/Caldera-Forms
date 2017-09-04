@@ -203,6 +203,10 @@ class Caldera_Forms {
 		//initialize settings
 		Caldera_Forms_Settings_Init::load();
 
+		//CRON callback for deleting our fake transients
+		add_action( Caldera_Forms_Transient::CRON_ACTION, array( 'Caldera_Forms_Transient', 'cron_callback' ) );
+		add_action( 'caldera_forms_submit_complete', array( 'Caldera_Forms_Transient', 'cron_callback' ) );
+
         /**
 		 * Runs after Caldera Forms core is initialized
 		 *
@@ -3318,7 +3322,7 @@ class Caldera_Forms {
 		$referrer = apply_filters( 'caldera_forms_submit_redirect_complete', $referrer, $form, $process_id );
 
 		// kill transient data
-		delete_transient( $process_id );
+		Caldera_Forms_Transient::delete_transient( $process_id );
 
 		return self::form_redirect( 'complete', $referrer, $form, $process_id );
 	}
