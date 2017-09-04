@@ -13,7 +13,9 @@
 class Caldera_Forms_Transient {
 
 	/**
-	 * Tracks the
+	 * Tracks the transients to be deleted at caldera_forms_submit_complete action
+	 *
+	 * @since 1.5.6
 	 *
 	 * @var array
 	 */
@@ -59,6 +61,7 @@ class Caldera_Forms_Transient {
 
 		wp_schedule_single_event( time() + $expires, self::CRON_ACTION, array(  $id  ) );
 		return update_option( self::prefix( $id ), $data, false );
+
 	}
 
 	/**
@@ -72,7 +75,6 @@ class Caldera_Forms_Transient {
 	 */
 	public static function delete_transient( $id ){
 		return delete_option( self::prefix( $id ) );
-
 	}
 
 	/**
@@ -99,6 +101,7 @@ class Caldera_Forms_Transient {
 		if( isset( $args[0] ) ){
 			self::delete_transient( $args[0] );
 		}
+
 	}
 
 	/**
@@ -109,7 +112,7 @@ class Caldera_Forms_Transient {
 	 * @param string $id Transient ID -- not prefixed
 	 */
 	public static function delete_at_submission_complete( $id ){
-		self::$delete_at_submission_complete[] =  $id ;
+		self::$delete_at_submission_complete[] = $id ;
 	}
 
 	/**
@@ -124,6 +127,8 @@ class Caldera_Forms_Transient {
 			foreach ( self::$delete_at_submission_complete as $id  ) {
 				self::delete_transient( $id );
 			}
+
 		}
+
 	}
 }
