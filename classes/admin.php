@@ -50,6 +50,16 @@ class Caldera_Forms_Admin {
 	const PREVIEW_KEY = 'cf_preview';
 
 	/**
+	 * GET var for what to order forms by
+	 *
+	 * @since 1.5.6
+	 *
+	 * @var string
+	 */
+	const ORDERBY_KEY = 'cf_orderby';
+
+
+	/**
 	 * @var      string
 	 */
 	protected $plugin_slug = 'caldera-forms';
@@ -2005,10 +2015,17 @@ class Caldera_Forms_Admin {
 	 *
 	 * @since 1.5.2
 	 *
+	 * @param string|bool $orderby Optional. If valid string ("name") then that is appended as orderby. Default is false, which does nothing, default link.
+	 *
 	 * @return string
 	 */
-	public static function main_admin_page_url(){
-		return add_query_arg( 'page', Caldera_Forms::PLUGIN_SLUG, admin_url( 'admin.php' ) );
+	public static function main_admin_page_url( $orderby = false ){
+		$url =  add_query_arg( 'page', Caldera_Forms::PLUGIN_SLUG, admin_url( 'admin.php' ) );
+		if( 'name' === $orderby ){
+			$url = add_query_arg( self::ORDERBY_KEY, 'name', $url );
+		}
+
+		return $url;
 	}
 
 	/**
