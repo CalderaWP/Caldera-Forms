@@ -84,7 +84,18 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 					call_user_func( array( $this, $type ), $field[ 'ID' ], $field );
 				}
 			}
+
+			foreach( $this->fields[ 'defaults' ] as &$default ){
+				if( 0 === strpos( $default, '%' ) ){
+					$default = $this->get_field_default(
+						Caldera_Forms_Field_Util::get_field_by_slug( str_replace( '%', '', $default ), $this->form )
+					);
+				}
+			}
+
 		}
+
+
 	}
 
 
@@ -606,11 +617,11 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 		$basic =  array(
 			'type' => $type,
 			'id' => $this->field_id( $field_id ),
-			'default' => Caldera_Forms_Field_Util::get_default( $field_id, $this->form )
+			'default' => $this->get_field_default( $this->form[ 'fields' ][ $field_id ] )
 		);
 
-
 		return array_merge( $basic, wp_parse_args( $args, $this->default_config_args() ) );
+
 	}
 
 	protected function default_config_args(){
@@ -640,7 +651,7 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 	 *
 	 */
 	protected function map_field( $type, $field ){
-		$default = Caldera_Forms_Field_Util::get_default( $field, $this->form, true );
+		$default = $this->get_field_default( $field );
 
 		$_field = array(
 			'type'    => $type,
@@ -679,6 +690,21 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 
 		$this->fields[ 'defaults' ][ $this->field_id( $field[ 'ID' ] ) ] = $default;
 
+	}
+
+	/**
+	 * Find the field's default
+	 *
+	 * @since 1.5.6
+	 *
+	 * @param array $field Field configuration
+	 *
+	 * @return bool
+	 */
+	protected function get_field_default( $field ){
+		$default = Caldera_Forms_Field_Util::get_default( $field, $this->form, true );
+
+		return $default;
 	}
 
 }
