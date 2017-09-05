@@ -59,6 +59,8 @@ class Caldera_Forms_Email_Resend {
 		global  $form;
  		$form = $this->form;
 
+		global  $form;
+		$form = $this->form;
 		/**
 		 * Runs right before email resending is sent to emailer
 		 *

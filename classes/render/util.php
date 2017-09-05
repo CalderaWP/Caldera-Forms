@@ -131,7 +131,7 @@ class Caldera_Forms_Render_Util {
 	 *
 	 * @since 1.5.0.8
 	 *
-	 * @param string $script JavaScript with not <script> tags
+	 * @param string $script JavaScript without <script> tags
 	 * @param array $form Form config
 	 *
 	 * @return bool
