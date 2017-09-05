@@ -154,6 +154,8 @@ class Caldera_Forms {
 		//entry permission
 		add_filter( 'caldera_forms_manage_cap', array( 'Caldera_Forms_Entry_UI', 'permissions_filter' ), 9, 3 );
 
+		add_filter( 'caldera_forms_send_email', array( Caldera_Forms_Admin::get_instance(), 'block_email_on_edit' ), 9 );
+
 		if( current_user_can( Caldera_Forms::get_manage_cap( 'admin' ) ) ) {
 			$id = null;
 
@@ -200,6 +202,10 @@ class Caldera_Forms {
 
 		//initialize settings
 		Caldera_Forms_Settings_Init::load();
+
+		//CRON callback for deleting our fake transients
+		add_action( Caldera_Forms_Transient::CRON_ACTION, array( 'Caldera_Forms_Transient', 'cron_callback' ) );
+		add_action( 'caldera_forms_submit_complete', array( 'Caldera_Forms_Transient', 'cron_callback' ) );
 
         /**
 		 * Runs after Caldera Forms core is initialized
@@ -1068,7 +1074,37 @@ class Caldera_Forms {
 			$config[ 'sender_email' ] = get_option( 'admin_email' );
 		}
 
-		/**
+		if( ! empty( $config[ 'reply_to' ] ) ){
+            $email_message[ 'replyto' ] = Caldera_Forms::do_magic_tags( $config[ 'reply_to' ] );
+			$email_message['headers'][] = 'Reply-To: ' . $email_message[ 'replyto' ];
+		}
+
+
+        $email_message['bcc'] = false;
+        if (  ! empty( $config[ 'bcc' ] ) ) {
+            $email_message['bcc']       = Caldera_Forms::do_magic_tags( $config[ 'bcc' ] );
+
+            $bcc_array = array_map('trim', preg_split( '/[;,]/', Caldera_Forms::do_magic_tags( $config[ 'bcc' ] ) ) );
+            foreach( $bcc_array as $bcc_to ) {
+                if ( is_email( $bcc_to ) ) {
+	                $email_message['headers'][] = 'Cc: ' . $bcc_to;
+                }
+            }
+        }
+
+        $email_message['bcc'] = false;
+        if (  ! empty( $config[ 'bcc' ] ) ) {
+            $email_message[ 'bcc' ]       = Caldera_Forms::do_magic_tags( $config[ 'bcc' ] );
+
+            $bcc_array = array_map('trim', preg_split( '/[;,]/', Caldera_Forms::do_magic_tags( $config[ 'bcc' ] ) ) );
+            foreach( $bcc_array as $bcc_to ) {
+                if ( is_email( $bcc_to ) ) {
+	                $email_message['headers'][] = 'Bcc: ' . $bcc_to;
+                }
+            }
+        }
+
+        /**
 		 * Filter email to be sent as auto responder
 		 *
 		 * Return null to prevent sending
@@ -3286,7 +3322,7 @@ class Caldera_Forms {
 		$referrer = apply_filters( 'caldera_forms_submit_redirect_complete', $referrer, $form, $process_id );
 
 		// kill transient data
-		delete_transient( $process_id );
+		Caldera_Forms_Transient::delete_transient( $process_id );
 
 		return self::form_redirect( 'complete', $referrer, $form, $process_id );
 	}
@@ -3469,7 +3505,7 @@ class Caldera_Forms {
 				$url = set_url_scheme( $url, 'https' );
 			}
 		}
-		
+
 		/**
 		 * Filter the Caldera Forms APU url
 		 *
@@ -4015,7 +4051,8 @@ class Caldera_Forms {
 			'method'	=>	'POST',
 			'enctype'	=>	'multipart/form-data',
 			'role'		=>	'form',
-			'id'		=>	$form['ID'] . '_' . $current_form_count
+			'id'		=>	$form['ID'] . '_' . $current_form_count,
+			'data-form-id' => $form[ 'ID' ]
 		);
 
 		//add extra attributes to make AJAX submissions JS do its thing
@@ -4680,15 +4717,18 @@ class Caldera_Forms {
 	 * @since 1.4.0
 	 *
 	 * @param string $submitted Timestamp
+	 * @param bool $remove_commas Optional. Default is false, true replaces commas with spaces. @since 1.5.6
 	 *
 	 * @return string
 	 */
-	public static function localize_time( $submitted ) {
+	public static function localize_time( $submitted, $remove_commas = false ) {
 
 
 		$format = self::time_format();
 		$time   = get_date_from_gmt( $submitted, $format );
-
+		if( $remove_commas ){
+			$time = str_replace( ',', ' ', $time );
+		}
 		return $time;
 	}
 

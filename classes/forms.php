@@ -166,20 +166,30 @@ class Caldera_Forms_Forms {
 	 *
 	 * @return array|mixed|void
 	 */
-	public static function get_forms( $with_details = false, $internal_only = false ){
+	public static function get_forms( $with_details = false, $internal_only = false, $orderby = false ){
 		if( isset( $_GET[ 'cf-cache-clear' ] ) ){
 			self::clear_cache();
 		}
 
 		if( $with_details ){
+			$_forms = array();
 			if( ! empty( self::$registry_cache ) ){
-				return self::$registry_cache;
+				$_forms = self::$registry_cache;
 			}elseif( false != ( self::$registry_cache = get_transient( self::$registry_cache_key ) ) ){
 				if ( is_array( self::$registry_cache ) ) {
-					return self::$registry_cache;
+					$_forms = self::$registry_cache;
 				}
 
 			}
+
+			if( ! empty( $_forms ) ){
+				if( ! $orderby ){
+					return $_forms;
+				}
+
+				return self::order_forms( $_forms, $orderby );
+
+			};
 
 		}
 
@@ -215,6 +225,10 @@ class Caldera_Forms_Forms {
 
 		if( ! is_array( $forms ) ){
 			$forms =  array();
+		}
+
+		if( $orderby && ! empty( $forms ) ){
+			return self::order_forms( $forms, $orderby );
 		}
 
 		return $forms;
@@ -989,4 +1003,51 @@ class Caldera_Forms_Forms {
 
 	}
 
+	/**
+	 * Order forms by a value
+	 *
+	 * @since 1.5.6
+	 *
+	 * @param array $forms Forms to sort.
+	 * @param string $by Optional. Default is "name" as of 1.5.6, no other values are allowed.
+	 *
+	 * @return array|mixed|void
+	 */
+	protected static function order_forms( array  $forms, $by = 'name' ){
+		if( ! in_array( $by, array(
+			'name',
+		))){
+			$by = 'name';
+		}
+
+		if( ! empty( $forms ) ){
+			$values = array_values($forms);
+
+			if( ! is_array( $values[0] ) ) {
+				$forms = self::get_forms( true );
+			}
+		}
+
+		if( empty( $forms ) ){
+			return $forms;
+		}
+
+		switch( $by ) {
+			case 'name' :
+				default :
+				$map = array_combine( wp_list_pluck( $forms, $by ), array_keys( $forms ) );
+
+				break;
+		}
+
+		ksort( $map, SORT_ASC );
+		$final  = array();
+		foreach( $map as $name => $id ){
+			$final[ $id ] = $forms[ $id ];
+		}
+
+		return $final;
+
+
+	}
 }

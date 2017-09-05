@@ -35,4 +35,24 @@ class Caldera_Forms_CSV_Util {
 		return apply_filters( 'caldera_forms_csv_character_encoding', 'utf-8', $form );
 	}
 
+	/**
+	 * Check if CSV export should show time in localized or UTC time.
+	 *
+	 * @since 1.5.6
+	 *
+	 * @param array $form
+	 *
+	 * @return bool
+	 */
+	public static function should_localize_time( array  $form ){
+		/**
+		 * Change if localized or UTC timestamp should be used in CSV export
+		 *
+		 * @since 1.5.6
+		 *
+		 * @param bool $localize. Default is false. Change to true to use localized time, instead of UTC.
+		 * @param array $form Current form configuration.
+		 */
+		return apply_filters( 'caldera_forms_csv_localize_time', false, $form );
+	}
 }

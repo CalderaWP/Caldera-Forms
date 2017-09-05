@@ -58,18 +58,6 @@
 		</fieldset>
 	</div>
 
-	<div class="caldera-config-group">
-		<label for="cf-form-description">
-			<?php esc_html_e( 'Form Description', 'caldera-forms' ); ?>
-		</label>
-		<div class="caldera-config-field">
-			<textarea id="cf-form-description" name="config[description]" class="field-config" style="width:500px;" rows="5">
-				<?php echo htmlentities( $element[ 'description' ] ); ?>
-			</textarea>
-		</div>
-	</div>
-
-	
 	<div class="caldera-config-group" style="width:500px;">
 		<label for="cf-success-message">
 			<?php esc_html_e( 'Success Message', 'caldera-forms' ); ?>
@@ -234,17 +222,6 @@
 			<p class="description" id="cf-gravatar-field-description">
 				<?php esc_html_e( 'Used when viewing an entry from a non-logged in user.', 'caldera-forms' ); ?>
 			</p>
-		</div>
-	</div>
-
-	<div class="caldera-config-group">
-		<label for="cf-form-description">
-			<?php esc_html_e( 'Form Description', 'caldera-forms' ); ?>
-		</label>
-		<div class="caldera-config-field">
-			<textarea id="cf-form-description" name="config[description]" class="field-config" style="width:500px;" rows="5">
-				<?php echo htmlentities( $element[ 'description' ] ); ?>
-			</textarea>
 		</div>
 	</div>
 

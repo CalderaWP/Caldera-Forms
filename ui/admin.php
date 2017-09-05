@@ -5,7 +5,8 @@ $per_page_limit = 20;
 
 Caldera_Forms::check_tables();
 // get all forms
-$forms = Caldera_Forms_Forms::get_forms( true );
+$orderby = isset( $_GET[ Caldera_Forms_Admin::ORDERBY_KEY ] ) && 'name' == $_GET[ Caldera_Forms_Admin::ORDERBY_KEY ] ? 'name' : false;
+$forms = Caldera_Forms_Forms::get_forms( true, false, $orderby );
 $forms = apply_filters( 'caldera_forms_admin_forms', $forms );
 
 
@@ -59,6 +60,23 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 				);
 			?>
 			</a>
+		</li>
+		<li class="caldera-forms-toolbar-item separator">&nbsp;&nbsp;</li>
+		<li class="caldera-forms-toolbar-item" id="cf-form-order-item">
+			<?php
+			if( 'name' === $orderby ){
+				$text = __( 'Order Forms By ID', 'caldera-forms' );
+				$url = Caldera_Forms_Admin::main_admin_page_url();
+			}else {
+				$text = __( 'Order Forms By Name', 'caldera-forms' );
+				$url = Caldera_Forms_Admin::main_admin_page_url( 'name' );
+			}
+			printf( '<a  class="button" id="cf-form-order" title="%s" href="%s">%s</a>',
+				esc_attr__( 'Click to change order of the forms', 'caldera-forms'  ),
+				esc_url( $url ),
+				esc_html__( $text )
+			);
+			?>
 		</li>
 		<?php if ( isset( $_GET['message_resent' ] ) ){?>
 		<li class="caldera-forms-toolbar-item separator" >&nbsp;&nbsp;</li>

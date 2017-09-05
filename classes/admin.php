@@ -50,6 +50,16 @@ class Caldera_Forms_Admin {
 	const PREVIEW_KEY = 'cf_preview';
 
 	/**
+	 * GET var for what to order forms by
+	 *
+	 * @since 1.5.6
+	 *
+	 * @var string
+	 */
+	const ORDERBY_KEY = 'cf_orderby';
+
+
+	/**
 	 * @var      string
 	 */
 	protected $plugin_slug = 'caldera-forms';
@@ -1386,9 +1396,14 @@ class Caldera_Forms_Admin {
 
 			$data = array();
 
+			$localize_time = Caldera_Forms_CSV_Util::should_localize_time( $form );
 			foreach( $rawdata as $entry){
 				$submission = Caldera_Forms::get_entry( $entry->_entryid, $form);
-				$data[$entry->_entryid]['date_submitted'] = Caldera_Forms::localize_time( $entry->_date_submitted );
+				if( $localize_time ){
+					$data[$entry->_entryid]['date_submitted'] = Caldera_Forms::localize_time( $entry->_date_submitted, true );
+				}else{
+					$data[$entry->_entryid]['date_submitted'] = $entry->_date_submitted;
+				}
 
 				foreach ($structure as $slug => $field_id) {
 					$data[$entry->_entryid][$slug] = ( isset( $submission['data'][$field_id]['value'] ) ? $submission['data'][$field_id]['value'] : null );
@@ -2000,10 +2015,17 @@ class Caldera_Forms_Admin {
 	 *
 	 * @since 1.5.2
 	 *
+	 * @param string|bool $orderby Optional. If valid string ("name") then that is appended as orderby. Default is false, which does nothing, default link.
+	 *
 	 * @return string
 	 */
-	public static function main_admin_page_url(){
-		return add_query_arg( 'page', Caldera_Forms::PLUGIN_SLUG, admin_url( 'admin.php' ) );
+	public static function main_admin_page_url( $orderby = false ){
+		$url =  add_query_arg( 'page', Caldera_Forms::PLUGIN_SLUG, admin_url( 'admin.php' ) );
+		if( 'name' === $orderby ){
+			$url = add_query_arg( self::ORDERBY_KEY, 'name', $url );
+		}
+
+		return $url;
 	}
 
 	/**
@@ -2044,6 +2066,23 @@ class Caldera_Forms_Admin {
 		}
 
 		return  add_query_arg( $args, get_home_url() );
+	}
+
+	/**
+	 * Prevent re-sending email on form edit
+	 *
+	 * @uses "caldera_forms_send_email" filter
+	 *
+	 * @param bool $send
+	 *
+	 * @return bool
+	 */
+	public static function block_email_on_edit( $send ){
+		if( isset( $_POST, $_POST[ '_cf_frm_edt' ] ) && 0 < absint( $_POST[ '_cf_frm_edt' ] ) ){
+			return false;
+		}
+
+		return $send;
 	}
 }
 
