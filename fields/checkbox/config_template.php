@@ -18,3 +18,20 @@
 		</p>
 	</div>
 </div>
+
+
+<div class="caldera-config-group">
+	<label for="{{_id}}_tmpl_type">
+		<?php esc_html_e( 'Template Type', 'caldera-forms'); ?>
+	</label>
+	<div class="caldera-config-field">
+		<select id="{{_id}}_tmpl_type" class="field-config" name="{{_name}}[tmpl_type"]">
+			<option value="new" {{#is tmpl_type value="new"}}selected="selected"{{/is}}>
+				<?php esc_html_e( 'New', 'caldera-forms'); ?>
+			</option>
+			<option value="old" {{#is tmpl_type value="old"}}selected="selected"{{/is}}>
+				<?php esc_html_e( 'Old', 'caldera-forms'); ?>
+			</option>
+		</select>
+	</div>
+</div>

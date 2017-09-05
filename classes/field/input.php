@@ -40,18 +40,9 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 		}
 		$required = '';
 
-		$field_classes = Caldera_Forms_Field_Util::prepare_field_classes( $field, $form );
 		$mask = self::get_mask_string( $field );
 		$place_holder = self::place_holder_string( $field );
-		$attrs = array(
-			'type' => $type,
-			'data-field' =>$field[ 'ID'],
-			'class' => $field_classes[ 'field' ],
-			'id' => $field_base_id,
-			'name' => $field_structure['name'],
-			'value' => $value,
-			'data-type' => $type
-		);
+		$attrs         = self::create_field_attrs( $field, $field_structure, $value, $field_base_id, $type, $form );
 
 
 		if( ! empty( $field[ 'hide_label' ] ) && empty( $place_holder ) ){
@@ -87,9 +78,10 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
             }
         }
 
-		if( $field_structure['field_required'] ){
+		if( ! empty( $attrs[ 'aria-required' ] ) ){
 			$required = 'required';
-			$attrs[ 'aria-required' ] = 'true';
+		}else{
+			$required = '';
 		}
 
 		if( $sync ){
@@ -156,6 +148,7 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 
 		return $mask;
 	}
+
 
 
 }

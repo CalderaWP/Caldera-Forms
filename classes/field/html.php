@@ -94,6 +94,35 @@ abstract  class Caldera_Forms_Field_HTML   {
 		return $default;
 	}
 
+	/**
+	 * @param array $field
+	 * @param array $field_structure
+	 * @param $value
+	 * @param $field_base_id
+	 * @param $type
+	 *
+	 * @return array
+	 */
+	protected static function create_field_attrs( array $field, array $field_structure, $value, $id_attr, $type, $form )
+	{
+		$field_classes = Caldera_Forms_Field_Util::prepare_field_classes( $field, $form );
+
+		$attrs = array(
+			'type'       => $type,
+			'data-field' => $field[ 'ID' ],
+			'class'      => $field_classes[ 'field' ],
+			'id'         => $id_attr,
+			'name'       => $field_structure[ 'name' ],
+			'data-type'  => $type
+		);
+
+		if( $field_structure['field_required'] ){
+			$attrs[ 'aria-required' ] = 'true';
+		}
+
+		return $attrs;
+	}
+
 
 
 }

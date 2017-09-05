@@ -133,6 +133,7 @@ class Caldera_Forms {
 		add_filter( 'shortcode_atts_caldera_form', array( 'Caldera_Forms_Shortcode_Atts', 'maybe_allow_revision' ), 5, 4 );
 		add_filter( 'shortcode_atts_caldera_form_modal', array( 'Caldera_Forms_Shortcode_Atts', 'maybe_allow_revision' ), 5, 4 );
 
+
 		//emails
 		add_action( 'caldera_forms_core_init', array( 'Caldera_Forms_Email_Settings', 'maybe_add_hooks' ) );
 		add_filter( 'pre_update_option__caldera_forms_email_api_settings', array(
@@ -202,6 +203,9 @@ class Caldera_Forms {
 
 		//initialize settings
 		Caldera_Forms_Settings_Init::load();
+
+		$field_updater = new Caldera_Forms_Field_New();
+		$field_updater->add_hooks();
 
         /**
 		 * Runs after Caldera Forms core is initialized
@@ -3781,6 +3785,12 @@ class Caldera_Forms {
 		$current_form_count = Caldera_Forms_Render_Util::get_current_form_count();
 
 		$field_classes = Caldera_Forms_Field_Util::prepare_field_classes( $field, $form );
+		$type = Caldera_Forms_Field_Util::get_type( $field, $form );
+
+		foreach ( $field_classes as $index => $value ){
+			$field_classes[ $index ][] = 'cf-' . $type;
+			$field_classes[ $index ][] = ' cf-' . $type . '-' . $index;
+		}
 
 		$field_wrapper_class = implode( ' ', $field_classes[ 'control_wrapper' ] );
 		$field_input_class   = implode( ' ', $field_classes[ 'field_wrapper' ] );
@@ -3797,12 +3807,11 @@ class Caldera_Forms {
 
 		$field_id_attr = Caldera_Forms_Field_Util::get_base_id( $field, $current_form_count, $form );
 
-		$type = Caldera_Forms_Field_Util::get_type( $field, $form );
-
 		$field_structure = array(
 			"field"             => $field,
-			"id"                => $field[ 'ID' ],//'fld_' . $field['slug'],
-			"name"              => $field[ 'ID' ],//$field['slug'],
+			"id"                => $field[ 'ID' ],
+			"name"              => $field[ 'ID' ],
+			"field_input_class" => $field_input_class,
 			"wrapper_before"    => "<div role=\"field\" data-field-wrapper=\"" . $field[ 'ID' ] . "\" class=\"" . $field_wrapper_class . "\" id=\"" . $field_id_attr . "-wrap\">\r\n",
 			"field_before"      => "<div class=\"" . $field_input_class . "\">\r\n",
 			"label_before"      =>  "<label id=\"" . $field[ 'ID' ] . "Label\" for=\"" . $field_id_attr. "\" class=\"" . implode( ' ', $field_classes[ 'field_label' ] ) . "\">",
@@ -4912,5 +4921,6 @@ class Caldera_Forms {
 
 		return self::$settings;
 	}
+
 
 }

@@ -607,4 +607,53 @@ class Caldera_Forms_Fields {
 		return $internal_fields;
 	}
 
+	/**
+	 * Change out field field for fields that have a new type.
+	 *
+	 * @since 1.5.6
+	 *
+	 * @uses "caldera_forms_render_field_file" filter
+	 *
+	 * @param $file
+	 * @param $type
+	 * @param $field_id
+	 * @param $field_file
+	 * @param $field_structure
+	 * @param $form
+	 *
+	 * @return mixed
+	 */
+	public static function maybe_update_field_html( $file, $type, $field_id, $field_file, $field_structure, $form ){
+		$field = Caldera_Forms_Field_Util::get_field( $field_id, $form, true );
+
+		if( self::is_new_tmpl_field( $field, $form ) ) {
+			if( is_array( $field ) && isset( $field[ 'config' ][ 'tmpl_type' ] ) && 'new' == $field[ 'config' ][ 'tmpl_type' ] ){
+				$file = str_replace(  basename( $file ), 'new-field.php', $file );
+			}
+		}
+
+		return $file;
+	}
+
+	public static function is_new_tmpl_field( array $field, array $form ){
+		$type = Caldera_Forms_Field_Util::get_type( $field, $form );
+		if( self::has_new( $type ) ) {
+			if( is_array( $field ) && isset( $field[ 'config' ][ 'tmpl_type' ] ) && 'new' == $field[ 'config' ][ 'tmpl_type' ] ){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
+	public static function filter_field_structure( $field_structure, $form ){
+
+	}
+
+	public static function has_new($type ){
+		return in_array( $type, array(
+			'checkbox'
+		));
+	}
+
 }

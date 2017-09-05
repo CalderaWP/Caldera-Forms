@@ -42,6 +42,11 @@
   word-wrap: normal !important;
 }
 
+.caldera-grid label.cf-new-checkbox-inline, .caldera-grid input.cf-new-checkbox-inline {
+  display: inline-block;
+  padding-left: 0px;
+}
+
 
 
 
