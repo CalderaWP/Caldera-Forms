@@ -614,14 +614,19 @@
 
 		var run = function(){
 			var result = window[fieldConfig.callback].apply(null, [state] );
-			if( isNaN( result ) ){
+			if( ! isFinite( result ) ){
 				result = 0;
 			}
+
 			if ( null === lastValue || result !== lastValue ) {
 				lastValue = result;
 				state.mutateState( fieldConfig.id, result );
                 if( 'number' != typeof  result ){
                     result = parseInt( result, 10 );
+                }
+
+                if( fieldConfig.moneyFormat ){
+                    result = result.toFixed(2);
                 }
 
 				$('#' + fieldConfig.id ).html(addCommas( result ) );

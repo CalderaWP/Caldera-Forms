@@ -419,6 +419,7 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 	 * For calculation fields
 	 *
 	 * NOTE: Implimented in 1.5.6
+	 *
 	 * @since 1.5.0
 	 *
 	 * @param $field_id
@@ -448,6 +449,7 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 			'binds' => $syncer->get_binds(),
 			'decimalSeparator' => $decimal_separator,
 			'thousandSeparator' => $thousand_separator,
+			'moneyFormat' => ! empty( $field[ 'config' ][ 'fixed' ] ) ? true : false,
 			'fixed' => false,
 			'fieldBinds' => $syncer->get_bind_fields(),
 			'targetId' => esc_attr( $target_id . '-value' ),

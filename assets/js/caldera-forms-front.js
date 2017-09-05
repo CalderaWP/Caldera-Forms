@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.5 - 2017-09-02 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.5 - 2017-09-05 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -5918,6 +5918,10 @@ function toggle_button_init(id, el){
 				state.mutateState( fieldConfig.id, result );
                 if( 'number' != typeof  result ){
                     result = parseInt( result, 10 );
+                }
+
+                if( fieldConfig.moneyFormat ){
+                    result = result.toFixed(2);
                 }
 
 				$('#' + fieldConfig.id ).html(addCommas( result ) );
