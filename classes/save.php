@@ -365,11 +365,19 @@ class Caldera_Forms_Save_Final {
 				$submission = wp_list_pluck( $csv_data, 'data' );
 				ob_start();
 				$df = fopen( "php://output", 'w' );
-				fputcsv( $df, $labels );
-				fputcsv( $df, $submission );
+				$file_type = Caldera_Forms_CSV_Util::file_type( $form );
+				if ( 'tsv' == $file_type ) {
+					$delimiter = chr(9);
+				} else {
+					$delimiter = ',';
+				}
+				fputcsv( $df, $labels, $delimiter );
+				fputcsv( $df, $submission, $delimiter );
 				fclose( $df );
 				$csv     = ob_get_clean();
-				$csvfile = wp_upload_bits( uniqid() . '.csv', null, $csv );
+
+
+				$csvfile = wp_upload_bits( uniqid() . '.' , $file_type, null, $csv );
 				if ( isset( $csvfile['file'] ) && false == $csvfile['error'] && file_exists( $csvfile['file'] ) ) {
 					$mail['attachments'][] = $csvfile[ 'file' ];
 					$mail[ 'csv' ]           = $csvfile[ 'file' ];

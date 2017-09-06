@@ -1416,22 +1416,30 @@ class Caldera_Forms_Admin {
 			}
 			$encoding = Caldera_Forms_CSV_Util::character_encoding( $form );
 
+			$file_type = Caldera_Forms_CSV_Util::file_type( $form );
+
 			header("Pragma: public");
 			header("Expires: 0");
 			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 			header("Cache-Control: private",false);
 			header("Content-Type: text/csv charset=$encoding;");
-			header("Content-Disposition: attachment; filename=\"" . sanitize_file_name( $form['name'] ) . ".csv\";" );
+			header("Content-Disposition: attachment; filename=\"" . sanitize_file_name( $form['name'] ) . ".$file_type\";" );
 			header("Content-Transfer-Encoding: binary");
 			$df = fopen("php://output", 'w');
 
+			if ( 'tsv' == $file_type ) {
+				$delimiter = chr(9);
+			} else {
+				$delimiter = ',';
+			}
 			$csv_data = apply_filters( 'caldera_forms_admin_csv', array(
 				'headers' => $headers,
 				'data' => $data
 			), $form );
 			$data = $csv_data[ 'data' ];
 			$headers = $csv_data[ 'headers' ];
-			fputcsv($df, $headers);
+			
+			fputcsv($df, $headers, $delimiter);
 			foreach($data as $row){
 				$csvrow = array();
 				foreach($headers as $key=>$label){
@@ -1455,7 +1463,7 @@ class Caldera_Forms_Admin {
 
 					$csvrow[] = $row[$key];
 				}
-				fputcsv($df, $row);
+				fputcsv($df, $row, $delimiter);
 			}
 			fclose($df);
 			exit;
