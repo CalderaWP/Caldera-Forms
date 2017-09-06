@@ -90,7 +90,11 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 					$default = $this->get_field_default(
 						Caldera_Forms_Field_Util::get_field_by_slug( str_replace( '%', '', $default ), $this->form )
 					);
+				}else{
+					$default = Caldera_Forms::do_magic_tags( $default, null, $this->form );
+
 				}
+
 			}
 
 		}

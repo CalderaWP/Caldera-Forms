@@ -146,8 +146,9 @@
 
 
 					value = state.getState(bindMap[i].to);
-
-					if( 'string' === typeof  value ){
+                    if( ! isNaN( value ) ){
+                        value = value.toString();
+                    } else if( 'string' === typeof  value ){
 						value = value.replace(/(?:\r\n|\r|\n)/g, '<br />');
 					}else  if( ! value || undefined == value.join || undefined === value || 'undefined' == typeof value){
 						value = '';

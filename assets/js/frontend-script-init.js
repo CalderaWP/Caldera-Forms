@@ -53,14 +53,6 @@ var cf_jsfields_init, cf_presubmit;
 		})
 	};
 
-
-
-
-	// init sync
-	$('[data-sync]').each( function(){
-		var $field = $( this );
-		new CalderaFormsFieldSync( $field, $field.data('binds'), $field.closest('form'), $ );
-	});
 	$( document ).on('change keypress', "[data-sync]", function(){
 		$(this).data( 'unsync', true );
 	});
@@ -352,15 +344,18 @@ window.addEventListener("load", function(){
 
 		/** Setup forms */
 		if( 'object' === typeof CFFIELD_CONFIG ) {
-			var form_id, config_object, config, instance, $el, state, protocolCheck, jQueryCheck,
+			var form_id, config_object, config, instance, $el, state, protocolCheck, jQueryCheck, $form,
 				jQueryChecked = false,
 				protocolChecked = false;
 			$('.caldera_forms_form').each(function (i, el) {
 				$el = $(el);
+
 				form_id = $el.attr('id');
 				instance = $el.data('instance');
 
 				if ('object' === typeof CFFIELD_CONFIG[instance] ) {
+					$form = $( document.getElementById( form_id ));
+
 					if ( ! protocolChecked ) {
 						//check for protocol mis-match on submit url
 						protocolCheck = new CalderaFormsCrossOriginWarning($el, $, CFFIELD_CONFIG[instance].error_strings);
@@ -390,6 +385,13 @@ window.addEventListener("load", function(){
 					}
 
 					window.cfstate[ form_id ] = state;
+
+					$form.find( '[data-sync]' ).each( function(){
+						var $field = $( this );
+						new CalderaFormsFieldSync( $field, $field.data('binds'), $form, $ , state);
+					});
+
+					
 					config_object = new Caldera_Forms_Field_Config( config, $(document.getElementById(form_id)), $, state );
 					config_object.init();
 					$( document ).trigger( 'cf.form.init',{
@@ -399,10 +401,15 @@ window.addEventListener("load", function(){
 						fieldIds: CFFIELD_CONFIG[instance].fields.hasOwnProperty( 'ids' ) ? CFFIELD_CONFIG[instance].fields.ids : []
 					});
 
+
+
 				}
 			});
 
 		}
+
+
+
 
 
 	})( jQuery );
@@ -420,9 +427,10 @@ window.addEventListener("load", function(){
  * @param binds Field IDs to bind to
  * @param $form jQuery object for form
  * @param $ jQuery
+ * @param {CFState} state
  * @constructor
  */
-function CalderaFormsFieldSync( $field, binds, $form, $  ){
+function CalderaFormsFieldSync( $field, binds, $form, $, state  ){
 	for( var i = 0; i < binds.length; i++ ){
 
 		$( document ).on('keyup change blur mouseover', "[data-field='" + binds[ i ] + "']", function(){
@@ -450,6 +458,7 @@ function CalderaFormsFieldSync( $field, binds, $form, $  ){
 				}
 				str = str.replace( re , val );
 			}
+			state.mutateState( $field.attr( 'id' ), val );
 			$field.val( str );
 		} );
 		$("[data-field='" + binds[ i ] + "']").trigger('change');
