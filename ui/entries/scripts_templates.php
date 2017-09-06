@@ -274,6 +274,8 @@ if( ! defined( 'ABSPATH' ) ){
 
 				row_items.animate({"opacity": .4}, 500);
 				$.post(ajaxurl, data, function(res){
+					action.val('').prop('disabled', false);
+					bulkCheck.prop('checked', false);
 					if(res.status && res.entries && res.total){
 						row_items.remove();
 						$('.entry_count_' + form).html(res.total);
@@ -284,8 +286,6 @@ if( ! defined( 'ABSPATH' ) ){
 					}else if(res.status === 'reload'){
 						$('input.current-page').trigger('change');
 					}
-					action.val('').prop('disabled', false);
-					bulkCheck.prop('checked', false);
 				});
 			}else{
 				action.prop('disabled', false);
