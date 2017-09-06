@@ -297,8 +297,12 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 				// show - get template and place it in.
 				if(!target.html().length){
 
-					target.html(template).trigger('cf.add');
-					jQuery(document).trigger('cf.add');
+					target.html(template).trigger('cf.add', {
+						field: field,
+					});
+					jQuery(document).trigger('cf.add',{
+						field: field,
+					});
 					resetValue( field, state );
 
 				}
@@ -306,15 +310,23 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 				if(target.html().length){
 					saveFieldValue(  field, state  );
 					target_field.val('').empty().prop('checked', false);
-					target.empty().trigger('cf.remove');
-					jQuery(document).trigger('cf.remove');
+					target.empty().trigger('cf.remove',{
+						field: field,
+					});
+					jQuery(document).trigger('cf.remove',{
+						field: field,
+					});
 				}
 			}else if ('enable' === action || 'disable' === action ){
 				var dField = jQuery( '#' + field );
 				if( 'enable' == action ){
 					if(!target.html().length){
-						target.html(template).trigger('cf.add');
-						jQuery(document).trigger('cf.add').trigger('cf.enable');
+						target.html(template).trigger('cf.add',{
+							field: field,
+						});
+						jQuery(document).trigger('cf.add').trigger('cf.enable', {
+							field: field,
+						});
 						dField.prop('disabled', false);
 					}else{
 						dField.prop('disabled', false);
@@ -323,10 +335,19 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 				}else {
 					if (!target.html().length) {
 						target.html(template).trigger('cf.remove');
-						jQuery(document).trigger('cf.remove').trigger('cf.disable');
-						dField.prop('disabled', 'disabled');
+						jQuery(document).trigger('cf.remove',{
+							field: field,
+						})
+						.trigger('cf.disable', {
+							field: field,
+						});
+						dField.prop('disabled', 'disabled', {
+							field: field,
+						});
 					} else {
-						dField.prop('disabled', 'disabled');
+						dField.prop('disabled', 'disabled',{
+							field: field,
+						});
 					}
 
 				}

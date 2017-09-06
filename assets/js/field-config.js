@@ -638,8 +638,13 @@
 			state.events().subscribe( feildId, debounce(run) );
 		});
 
-		$(document).on('cf.pagenav cf.add cf.remove cf.modal', function () {
-			run(state);
+		$(document).on('cf.pagenav cf.add cf.remove cf.modal', function (e,obj) {
+		    if( 'cf' == e.type && 'remove' === e.namespace && 'object' === typeof  obj && obj.hasOwnProperty('field' ) && obj.field === fieldConfig.id ){
+                    lastValue = null;
+            }else{
+                run(state);
+
+            }
 		});
 
 		run(state);
