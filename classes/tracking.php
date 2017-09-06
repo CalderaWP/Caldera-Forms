@@ -42,7 +42,7 @@ class Caldera_Forms_Tracking {
 	 *
 	 */
 	protected function __construct(){
-		$enabled = self::tracking_allowed();
+		$enabled = false;
 		if ( $enabled ) {
 			add_action( 'init', array( 'Caldera_Forms_DB_Track', 'get_instance' ), 1 );
 		}

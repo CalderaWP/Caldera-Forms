@@ -213,7 +213,7 @@ class Caldera_Forms_Admin_Clippy {
 				'color' => 'orange'
 			),
 			'link' => array(
-				'url' => 'https://calderaforms.com/getting-started?utm_source=obs&utm_campaign=admin-page&utm_medium=caldera-forms&utm_term=fallback'
+				'url' => 'https://calderaforms.com/getting-started?utm_source=obs&utm_campaign=clippy&utm_medium=caldera-forms&utm_term=fallback'
 			)
 		);
 	}
@@ -241,7 +241,7 @@ class Caldera_Forms_Admin_Clippy {
 		}
 
 		if ( function_exists( 'date_diff' ) ) {
-			$date_diff = date_diff( DateTime::createFromFormat( 'U', $first_time ), DateTime::createFromFormat( 'U', $first_time ) );
+			$date_diff = date_diff( DateTime::createFromFormat( 'U', $first_time ), DateTime::createFromFormat( 'U', time() ) );
 		} else {
 			$date_diff = new stdClass();
 			$date_diff->d = rand( 5, 15 );
@@ -253,12 +253,12 @@ class Caldera_Forms_Admin_Clippy {
 		}
 
 
-		if( 1 == rand(1,2) ){
-			$this->extend_title = __( 'Have You Tried Caldera Forms Pro Yet?', 'caldera-forms' );
-			return $endpoints[ 'pro' ];
-		}else{
+		if( 1 == rand(1,10) ){
 			$this->extend_title = __( 'Extend Caldera Forms With Our Add-ons', 'caldera-forms' );
 			return $endpoints[ 'featured' ];
+		}else{
+			$this->extend_title = __( 'Have You Tried Caldera Forms Pro Yet?', 'caldera-forms' );
+			return $endpoints[ 'pro' ];
 		}
 
 	}
