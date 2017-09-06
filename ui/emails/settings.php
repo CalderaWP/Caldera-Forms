@@ -10,7 +10,7 @@
  */
 ?>
 <div id="cf-email-settings-ui" aria-hidden="true" style="visibility: hidden;">
-	<div style="padding: 5%">
+	<div style="margin:20px;">
 		<div class="caldera-forms-clippy-zone-inner-wrap" style="background: white">
 			<div class="caldera-forms-clippy"
 			     style="background-color:white;border-left: 4px solid #dc3232;">
