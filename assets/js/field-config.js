@@ -636,7 +636,7 @@
 		};
 
 		$.each( fieldConfig.fieldBinds,  function (feild,feildId) {
-			state.events().subscribe( feildId, debounce(run) );
+			state.events().subscribe( feildId, debounce(run,250) );
 		});
 
 		$(document).on('cf.pagenav cf.add cf.remove cf.modal', function (e,obj) {
