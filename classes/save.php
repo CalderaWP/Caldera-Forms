@@ -163,7 +163,7 @@ class Caldera_Forms_Save_Final {
 		if ( empty( $settings ) ) {
 			$sendername = __( 'Caldera Forms Notification', 'caldera-forms' );
 			if ( ! empty( $form['mailer']['sender_name'] ) ) {
-				$sendername = $form['mailer']['sender_name'];
+				$sendername = Caldera_Forms::do_magic_tags( $form['mailer']['sender_name'] );
 				if ( false !== strpos( $sendername, '%' ) ) {
 					$isname = Caldera_Forms::get_slug_data( trim( $sendername, '%' ), $form );
 					if ( ! empty( $isname ) ) {
@@ -174,7 +174,7 @@ class Caldera_Forms_Save_Final {
 			if ( empty( $form['mailer']['sender_email'] ) ) {
 				$sendermail = get_option( 'admin_email' );
 			} else {
-				$sendermail = $form['mailer']['sender_email'];
+				$sendermail = Caldera_Forms::do_magic_tags( $form['mailer']['sender_email'] );
 				if ( false !== strpos( $sendermail, '%' ) ) {
 					$ismail = Caldera_Forms::get_slug_data( trim( $sendermail, '%' ), $form );
 					if ( is_email( $ismail ) ) {
