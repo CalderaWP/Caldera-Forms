@@ -192,9 +192,9 @@ class Caldera_Forms_Support {
 						} else {
 
 							if( $v[ 'active' ] ){
-								$active = __( 'Active', 'caldera-forms' );
+								$active = _x( 'Active', 'Plugin Status', 'caldera-forms' );
 							}else{
-								$active = __( 'Not Active', 'caldera-forms' );
+								$active = _x( 'Inactive', 'Plugin Status', 'caldera-forms' );
 							}
 							$debug .= '<li><strong>' . esc_html( $v[ 'name' ] ) . '</strong>: ' . esc_html( $v[ 'version' ] ) . ' <em>' . esc_html( $active ) . '</em></li>';
 
