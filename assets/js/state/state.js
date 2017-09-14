@@ -313,8 +313,10 @@ function CFState(formId, $ ){
 
 		if (typeof attr !== typeof undefined && attr !== false && ! isNaN(attr)) {
 			val = $field.data( 'calc-value' );
+		}else{
+			val = $field.val();
 		}
-		val = $field.val();
+
 		if( ! isNaN( val ) ){
 			return val;
 		}
