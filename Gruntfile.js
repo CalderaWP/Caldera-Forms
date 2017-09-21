@@ -150,6 +150,7 @@ module.exports = function (grunt) {
                 src: [
                     'assets/js/state/events.js',
                     'assets/js/state/state.js',
+                    'assets/js/inputmask.js',
                     'assets/js/fields.js',
                     'assets/js/field-config.js',
                     'assets/js/frontend-script-init.js',
