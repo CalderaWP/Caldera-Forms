@@ -83,10 +83,30 @@ class Caldera_Forms_Render_Nonce {
 	 *
 	 * @return string
 	 */
-	public static function nonce_field( $form_id ){
+	public static function nonce_field( $form_id, $from_esi = false ){
+
+		if ( ! $from_esi ) {
+			if ( method_exists( 'LiteSpeed_Cache_API', 'esi_enabled' ) && LiteSpeed_Cache_API::esi_enabled() ) {
+				if ( method_exists( 'LiteSpeed_Cache_API', 'v' ) && LiteSpeed_Cache_API::v( '1.2.4' ) ) {
+					$params = array( 'form_id' => $form_id ) ;
+					return LiteSpeed_Cache_API::esi_url( 'caldera_forms', 'Caldera Forms', $params ) ;
+				}
+			}
+		}
+
 		$nonce_field = '<input type="hidden" id="' . esc_attr( self::nonce_field_name( $form_id ) ) . '" name="' . esc_attr( self::nonce_field_name() ) . '" value="' . esc_attr( self::create_verify_nonce( $form_id ) ) . '"  data-nonce-time="' . esc_attr( time() ) . '" />';
 		$nonce_field .= wp_referer_field( false );
 		return $nonce_field;
+	}
+
+	/**
+	 * Handle ESI request
+	 *
+	 */
+	public static function hook_esi( $params ) {
+		$form_id = $params[ 'form_id' ] ;
+		echo self::nonce_field( $form_id, true ) ;
+		exit ;
 	}
 
 	/**

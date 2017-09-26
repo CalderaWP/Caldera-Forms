@@ -144,6 +144,11 @@ class Caldera_Forms {
 			add_action( 'wp_ajax_cf_email_save', array( 'Caldera_Forms_Email_Settings', 'save' ) );
 		}
 
+		// Add cache plugin support
+		if ( method_exists( 'LiteSpeed_Cache_API', 'esi_enabled' ) && LiteSpeed_Cache_API::esi_enabled() ) {
+			LiteSpeed_Cache_API::hook_tpl_esi( 'caldera_forms', 'Caldera_Forms_Render_Nonce::hook_esi' );
+		}
+
 		//auto-population via Easy Pods/ Easy Queries
 		add_action( 'caldera_forms_render_start', array( __CLASS__, 'easy_pods_queries_setup' ) );
 
