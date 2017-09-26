@@ -214,19 +214,21 @@ class Caldera_Forms_Sync_Calc  extends Caldera_Forms_Sync_Sync {
 
 		$formula = str_replace( "\r", '', str_replace( "\n", '', str_replace( ' ', '', trim( Caldera_Forms::do_magic_tags( $formula ) ) ) ) );
 
-		$state_pattern = "state.getCalcValue('%s', %s )";
-		foreach ( $this->binds as $bind ){
-			$arg2 = 'false';
-			$field = Caldera_Forms_Field_Util::get_field( $bind, $this->form );
-			if( is_array( $field ) && 'checkbox' == Caldera_Forms_Field_Util::get_type( $field, $this->form ) ){
-				$mode = Caldera_Forms_Field_Calculation::checkbox_mode( $field, $this->form );
-				if( false === $mode ){
-					$arg2 = 'true';
+		if (  ! empty( $this->binds ) ) {
+			$state_pattern = "state.getCalcValue('%s', %s )";
+			foreach ( $this->binds as $bind ) {
+				$arg2  = 'false';
+				$field = Caldera_Forms_Field_Util::get_field( $bind, $this->form );
+				if ( is_array( $field ) && 'checkbox' == Caldera_Forms_Field_Util::get_type( $field, $this->form ) ) {
+					$mode = Caldera_Forms_Field_Calculation::checkbox_mode( $field, $this->form );
+					if ( false === $mode ) {
+						$arg2 = 'true';
+					}
 				}
+				$id_attr                                = $bind . '_' . $this->current_form_count;
+				$formula                                = str_replace( $bind, sprintf( $state_pattern, esc_attr( $id_attr ), $arg2 ), $formula );
+				$this->field_binds[ esc_attr( $bind ) ] = $id_attr;
 			}
-			$id_attr = $bind .'_' . $this->current_form_count;
-			$formula = str_replace( $bind, sprintf( $state_pattern, esc_attr( $id_attr ), $arg2 ), $formula );
-			$this->field_binds[ esc_attr( $bind ) ] = $id_attr;
 		}
 
 		$this->formula = $formula;
