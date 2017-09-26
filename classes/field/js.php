@@ -50,14 +50,17 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 	 * @param array $form Form config
 	 * @param int $form_count Form instance count
 	 */
-	public function __construct( array $form, $form_count ) {
-		$this->form = $form;
+	public function __construct( array $form, $form_count )
+	{
+		$this->form       = $form;
 		$this->form_count = $form_count;
-		$this->data = array();
-		$this->fields = array(
-			'ids'    => array(),
-			'inputs' => array(),
-			'groups' => array()
+		$this->data       = array();
+		$this->fields     = array(
+			'ids'          => array(),
+			'inputs'       => array(),
+			'groups'       => array(),
+			'defaults'     => array(),
+			'calcDefaults' => array()
 		);
 	}
 
@@ -658,11 +661,11 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 		$default = $this->get_field_default( $field );
 
 		$_field = array(
-			'type'    => $type,
-			'fieldId' => $field[ 'ID' ],
-			'id'      => $this->field_id( $field[ 'ID' ] ),
-			'options' => array(),
-			'default' => $default
+			'type'        => $type,
+			'fieldId'     => $field[ 'ID' ],
+			'id'          => $this->field_id( $field[ 'ID' ] ),
+			'options'     => array(),
+			'default'     => $default,
 		);
 
 		$group = false;
@@ -693,6 +696,7 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 
 
 		$this->fields[ 'defaults' ][ $this->field_id( $field[ 'ID' ] ) ] = $default;
+		$this->fields[ 'calcDefaults' ][ $this->field_id( $field[ 'ID' ] ) ] = Caldera_Forms_Field_Util::get_default_calc_value( $field, $this->form );
 
 	}
 
@@ -707,8 +711,8 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 	 */
 	protected function get_field_default( $field ){
 		$default = Caldera_Forms_Field_Util::get_default( $field, $this->form, true );
-
 		return $default;
+
 	}
 
 }

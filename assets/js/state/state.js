@@ -26,7 +26,7 @@ function CFState(formId, $ ){
 	 *
 	 * @param formFields {Object} Should be flat field ID attribute : Field default
 	 */
-	this.init = function (formFields) {
+	this.init = function (formFields, calcDefaults) {
 		var $field,
 			$el;
 		for ( var id in formFields ){
@@ -35,6 +35,10 @@ function CFState(formId, $ ){
 			}else{
 				fieldVals[id] = '';
 				unBound[id] = true;
+			}
+
+			if( calcDefaults.hasOwnProperty(id) && null !== calcDefaults.id ){
+				calcVals[id] = calcDefaults[id];
 			}
 
 		}

@@ -597,7 +597,13 @@
 	 * @param fieldConfig
 	 */
 	this.calculation = function (fieldConfig) {
-		var lastValue = null;
+		var lastValue = null,
+            debouncedRunner = debounce(
+                function(){
+                    run(state)
+                }, 250
+            );
+		
 		function addCommas(nStr){
 			nStr += '';
 			var x = nStr.split('.'),
@@ -636,19 +642,19 @@
 		};
 
 		$.each( fieldConfig.fieldBinds,  function (feild,feildId) {
-			state.events().subscribe( feildId, debounce(run,250) );
+			state.events().subscribe( feildId, debouncedRunner );
 		});
 
 		$(document).on('cf.pagenav cf.add cf.remove cf.modal', function (e,obj) {
 		    if( 'cf' == e.type && 'remove' === e.namespace && 'object' === typeof  obj && obj.hasOwnProperty('field' ) && obj.field === fieldConfig.id ){
                     lastValue = null;
             }else{
-                run(state);
+                debouncedRunner();
 
             }
 		});
 
-		run(state);
+		debouncedRunner();
 
 	}
 

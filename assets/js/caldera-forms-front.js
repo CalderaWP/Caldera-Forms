@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.7-b-1 - 2017-09-21 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.7-b-1 - 2017-09-26 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -113,7 +113,7 @@ function CFState(formId, $ ){
 	 *
 	 * @param formFields {Object} Should be flat field ID attribute : Field default
 	 */
-	this.init = function (formFields) {
+	this.init = function (formFields, calcDefaults) {
 		var $field,
 			$el;
 		for ( var id in formFields ){
@@ -122,6 +122,10 @@ function CFState(formId, $ ){
 			}else{
 				fieldVals[id] = '';
 				unBound[id] = true;
+			}
+
+			if( calcDefaults.hasOwnProperty(id) && null !== calcDefaults.id ){
+				calcVals[id] = calcDefaults[id];
 			}
 
 		}
@@ -6745,7 +6749,13 @@ function toggle_button_init(id, el){
 	 * @param fieldConfig
 	 */
 	this.calculation = function (fieldConfig) {
-		var lastValue = null;
+		var lastValue = null,
+            debouncedRunner = debounce(
+                function(){
+                    run(state)
+                }, 250
+            );
+		
 		function addCommas(nStr){
 			nStr += '';
 			var x = nStr.split('.'),
@@ -6784,19 +6794,19 @@ function toggle_button_init(id, el){
 		};
 
 		$.each( fieldConfig.fieldBinds,  function (feild,feildId) {
-			state.events().subscribe( feildId, debounce(run,250) );
+			state.events().subscribe( feildId, debouncedRunner );
 		});
 
 		$(document).on('cf.pagenav cf.add cf.remove cf.modal', function (e,obj) {
 		    if( 'cf' == e.type && 'remove' === e.namespace && 'object' === typeof  obj && obj.hasOwnProperty('field' ) && obj.field === fieldConfig.id ){
                     lastValue = null;
             }else{
-                run(state);
+                debouncedRunner();
 
             }
 		});
 
-		run(state);
+		debouncedRunner();
 
 	}
 
@@ -7184,7 +7194,7 @@ window.addEventListener("load", function(){
 					config = CFFIELD_CONFIG[instance].configs;
 
 					var state = new CFState(formId, $ );
-					state.init( CFFIELD_CONFIG[instance].fields.defaults );
+					state.init( CFFIELD_CONFIG[instance].fields.defaults,CFFIELD_CONFIG[instance].fields.calcDefaults );
 
 					if( 'object' !== typeof window.cfstate ){
 						window.cfstate = {};

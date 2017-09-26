@@ -378,7 +378,7 @@ window.addEventListener("load", function(){
 					config = CFFIELD_CONFIG[instance].configs;
 
 					var state = new CFState(formId, $ );
-					state.init( CFFIELD_CONFIG[instance].fields.defaults );
+					state.init( CFFIELD_CONFIG[instance].fields.defaults,CFFIELD_CONFIG[instance].fields.calcDefaults );
 
 					if( 'object' !== typeof window.cfstate ){
 						window.cfstate = {};
