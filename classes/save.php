@@ -377,7 +377,7 @@ class Caldera_Forms_Save_Final {
 				$csv     = ob_get_clean();
 
 
-				$csvfile = wp_upload_bits( uniqid() . '.' , $file_type, null, $csv );
+				$csvfile = wp_upload_bits( uniqid() . '.' . $file_type, null, $csv );
 				if ( isset( $csvfile['file'] ) && false == $csvfile['error'] && file_exists( $csvfile['file'] ) ) {
 					$mail['attachments'][] = $csvfile[ 'file' ];
 					$mail[ 'csv' ]           = $csvfile[ 'file' ];
