@@ -191,6 +191,7 @@ class Caldera_Forms_Magic_Doer {
 				return $_value;
 			}
 
+			$defaultvalue = $value;
 			foreach ( $magics[ 1 ] as $magic_key => $magic_tag ) {
 
 				$magic = explode( ':', $magic_tag, 2 );
@@ -432,6 +433,15 @@ class Caldera_Forms_Magic_Doer {
 					$value = str_replace( $magics[ 0 ][ $magic_key ], $filter_value, $value );
 				}
 
+			}
+
+			/**
+			 * QCOSS-113: Check if the processed magic value is same as the default value.
+			 * If yes Make it blank. Required when processor is linked to magic tags and due to some conditions
+			 * they do not have actual value.
+			 */
+			if($defaultvalue == $value) {
+				$value = "";
 			}
 
 			/**
