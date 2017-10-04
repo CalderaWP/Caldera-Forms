@@ -167,7 +167,8 @@ class Caldera_Forms_Magic_Doer {
 		global $processed_meta;
 
 		/**
-		 * 
+		 *
+		 *
 		 */
 		$form   = self::filter_form( $form, $entry_id );
 		$magics = Caldera_Forms_Magic_Util::explode_bracket_magic( $value );
@@ -190,8 +191,7 @@ class Caldera_Forms_Magic_Doer {
 			if( ! is_null( $_value ) ){
 				return $_value;
 			}
-
-			$defaultvalue = $value;
+			
 			foreach ( $magics[ 1 ] as $magic_key => $magic_tag ) {
 
 				$magic = explode( ':', $magic_tag, 2 );
@@ -436,15 +436,6 @@ class Caldera_Forms_Magic_Doer {
 			}
 
 			/**
-			 * QCOSS-113: Check if the processed magic value is same as the default value.
-			 * If yes Make it blank. Required when processor is linked to magic tags and due to some conditions
-			 * they do not have actual value.
-			 */
-			if($defaultvalue == $value) {
-				$value = "";
-			}
-
-			/**
 			 * Change value of parse bracket magic tag
 			 *
 			 * @since 1.5.0
@@ -502,7 +493,7 @@ class Caldera_Forms_Magic_Doer {
 	 * @return array
 	 */
 	public static function magic_tag_meta_prepare( $entry_id ){
-		global $processed_meta;		
+		global $processed_meta;
 		if( ! is_array( self::$entry_details ) )  {
 			self::$entry_details = array();
 		}
