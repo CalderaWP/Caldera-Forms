@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.7-b-1 - 2017-09-26 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.6.2-b-2 - 2017-10-06 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -114,19 +114,22 @@ function CFState(formId, $ ){
 	 * @param formFields {Object} Should be flat field ID attribute : Field default
 	 */
 	this.init = function (formFields, calcDefaults) {
-		var $field,
-			$el;
+
 		for ( var id in formFields ){
 			if( bindField(id)){
 				fieldVals[id] = formFields[id];
+				if( calcDefaults.hasOwnProperty(id) && null !== calcDefaults.id ){
+					calcVals[id] = calcDefaults[id];
+				}else{
+					calcVals[id] = null;
+				}
 			}else{
 				fieldVals[id] = '';
 				unBound[id] = true;
+				calcVals[id] = null;
 			}
 
-			if( calcDefaults.hasOwnProperty(id) && null !== calcDefaults.id ){
-				calcVals[id] = calcDefaults[id];
-			}
+
 
 		}
 
@@ -182,8 +185,12 @@ function CFState(formId, $ ){
 			return parseFloat( highest );
 		}
 
-		if (calcVals.hasOwnProperty(id)) {
+		if (calcVals.hasOwnProperty(id) ) {
 			val = calcVals[id];
+			if( ! isNaN( val ) || false == val ){
+				val = findCalcVal($(document.getElementById(id)));
+				calcVals[id] = val;
+			}
 		} else {
 			val = self.getState(id);
 

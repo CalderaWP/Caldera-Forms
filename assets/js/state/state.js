@@ -27,19 +27,22 @@ function CFState(formId, $ ){
 	 * @param formFields {Object} Should be flat field ID attribute : Field default
 	 */
 	this.init = function (formFields, calcDefaults) {
-		var $field,
-			$el;
+
 		for ( var id in formFields ){
 			if( bindField(id)){
 				fieldVals[id] = formFields[id];
+				if( calcDefaults.hasOwnProperty(id) && null !== calcDefaults.id ){
+					calcVals[id] = calcDefaults[id];
+				}else{
+					calcVals[id] = null;
+				}
 			}else{
 				fieldVals[id] = '';
 				unBound[id] = true;
+				calcVals[id] = null;
 			}
 
-			if( calcDefaults.hasOwnProperty(id) && null !== calcDefaults.id ){
-				calcVals[id] = calcDefaults[id];
-			}
+
 
 		}
 
@@ -95,8 +98,12 @@ function CFState(formId, $ ){
 			return parseFloat( highest );
 		}
 
-		if (calcVals.hasOwnProperty(id)) {
+		if (calcVals.hasOwnProperty(id) ) {
 			val = calcVals[id];
+			if( ! isNaN( val ) || false == val ){
+				val = findCalcVal($(document.getElementById(id)));
+				calcVals[id] = val;
+			}
 		} else {
 			val = self.getState(id);
 
