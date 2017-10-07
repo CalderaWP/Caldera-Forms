@@ -408,8 +408,7 @@ class Caldera_Forms_Field_Util {
 	 */
 	public static function get_default_calc_value( $field, $form ){
 		$opt = self::get_default( $field, $form, false );
-		$opt = ( ! empty( $opt ) && isset( $field[ 'config' ][ 'option' ][ $opt ] ) ) ? $field[ 'config' ][ 'option' ][ $opt ][ 'calc_value' ] : null;
-		return $opt;
+		return ( ! empty( $opt ) && isset( $field[ 'config' ][ 'option' ][ $opt ] ) ) ? $field[ 'config' ][ 'option' ][ $opt ][ 'calc_value' ] : null;
 	}
 
 	/**
