@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.7-b-1 - 2017-09-26 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.6.2-b-2 - 2017-10-06 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -114,18 +114,19 @@ function CFState(formId, $ ){
 	 * @param formFields {Object} Should be flat field ID attribute : Field default
 	 */
 	this.init = function (formFields, calcDefaults) {
-		var $field,
-			$el;
+
 		for ( var id in formFields ){
 			if( bindField(id)){
 				fieldVals[id] = formFields[id];
+				if( calcDefaults.hasOwnProperty(id) ){
+					calcVals[id] = calcDefaults[id];
+				}else{
+					calcVals[id] = null;
+				}
 			}else{
 				fieldVals[id] = '';
 				unBound[id] = true;
-			}
-
-			if( calcDefaults.hasOwnProperty(id) && null !== calcDefaults.id ){
-				calcVals[id] = calcDefaults[id];
+				calcVals[id] = null;
 			}
 
 		}
@@ -182,7 +183,15 @@ function CFState(formId, $ ){
 			return parseFloat( highest );
 		}
 
-		if (calcVals.hasOwnProperty(id)) {
+		if (calcVals.hasOwnProperty(id) ) {
+			if( false === calcVals[id] || null === calcVals[id] ){
+				//@TODO use let here, when ES6.
+				var _val = findCalcVal( $( document.getElementById( id ) ) );
+				if( ! isNaN( _val ) ){
+					calcVals[id] = _val;
+				}
+			}
+
 			val = calcVals[id];
 		} else {
 			val = self.getState(id);
@@ -191,6 +200,10 @@ function CFState(formId, $ ){
 				val = val.reduce( function ( a, b) {
 					return parseFloat( a ) + parseFloat( b );
 				}, 0);
+			}
+
+			if( ! isNaN( val ) ){
+				calcVals[id] = val;
 			}
 		}
 
@@ -313,6 +326,7 @@ function CFState(formId, $ ){
 				calcVals[$el.attr('id')] = findCalcVal( $el );
 				self.mutateState([$el.attr('id')],$el.val());
 			});
+			calcVals[id] = findCalcVal( $( document.getElementById( id ) ) );
 			self.mutateState([$field.attr('id')],$field.val());
 			return true;
 		} else {
@@ -372,6 +386,7 @@ function CFState(formId, $ ){
 						});
 					}
 
+
 					self.mutateState(id,val);
 
 				});
@@ -398,6 +413,15 @@ function CFState(formId, $ ){
 		if( $field.is( 'select' ) && $field.has( 'option' ) ){
 			$field = $field.find(':selected');
 		}
+
+		if( ! $field.length ){
+			return 0;
+		}
+
+		if( $field.is( 'hidden' ) ){
+			return $field.val();
+		}
+
 		var val = 0;
 
 		var attr = $field.attr('data-calc-value');
