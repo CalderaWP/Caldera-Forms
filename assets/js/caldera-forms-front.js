@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.6.2-b-2 - 2017-10-06 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.6.2-b-2 - 2017-10-07 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -187,7 +187,11 @@ function CFState(formId, $ ){
 			if( false === calcVals[id] || null === calcVals[id] ){
 				//@TODO use let here, when ES6.
 				var _val = findCalcVal( $( document.getElementById( id ) ) );
-				if( ! isNaN( _val ) ){
+				if( isString( _val )  ) {
+					_val = parseFloat( _val );
+				}
+
+				if( isNumber( _val ) ){
 					calcVals[id] = _val;
 				}
 			}
@@ -202,7 +206,7 @@ function CFState(formId, $ ){
 				}, 0);
 			}
 
-			if( ! isNaN( val ) ){
+			if( isNumber( val ) ){
 				calcVals[id] = val;
 			}
 		}
@@ -432,11 +436,7 @@ function CFState(formId, $ ){
 			val = $field.val();
 		}
 
-		if( ! isNaN( val ) ){
-			return val;
-		}
-
-		return 0;
+		return parseFloat(val);
 	}
 
 	/**
@@ -462,11 +462,40 @@ function CFState(formId, $ ){
 	 * @param number
 	 * @returns {*}
 	 */
-	function parseIne( number ) {
+	function parseInt( number ) {
 		if( ! number || isNaN( number) ){
 			return 0;
 		}
 		return window.parseInt( number );
+	}
+
+
+	/**
+	 * Determine if a value is a Number
+	 *
+	 * @since 1.5.6.2
+	 *
+	 * Copied from axios/lib/utils.js
+	 *
+	 * @param {Object} val The value to test
+	 * @returns {boolean} True if value is a Number, otherwise false
+	 */
+	function isNumber(val) {
+		return typeof val === 'number';
+	}
+
+	/**
+	 * Determine if a value is a String
+	 *
+	 * @since 1.5.6.2
+	 *
+	 * Copied from axios/lib/utils.js
+
+	 * @param {Object} val The value to test
+	 * @returns {boolean} True if value is a String, otherwise false
+	 */
+	function isString(val) {
+		return typeof val === 'string';
 	}
 
 
