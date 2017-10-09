@@ -29,7 +29,12 @@ function CFState(formId, $ ){
 	this.init = function (formFields, calcDefaults) {
 
 		for ( var id in formFields ){
-			if( bindField(id)){
+			if( 'object' === typeof  calcDefaults[id] ){
+				if( 'calculation' == calcDefaults[id].type ){
+					bindCalcField(id,calcDefaults[id])
+				}
+
+			}else if( bindField(id)){
 				fieldVals[id] = formFields[id];
 				if( calcDefaults.hasOwnProperty(id) ){
 					calcVals[id] = calcDefaults[id];
@@ -232,7 +237,7 @@ function CFState(formId, $ ){
 	 *
 	 * @since 1.5.3
 	 *
-	 * @param id {String}
+	 * @param {String} id
 	 * @returns {boolean}
 	 */
 	function bindField(id) {
@@ -240,11 +245,14 @@ function CFState(formId, $ ){
 		if ($field.length) {
 			$field.on('change keyup', function () {
 				var $el = $(this);
+				console.log( $field.attr( 'type' ) );
+				console.log( $el.attr( 'type' ) );
 				calcVals[$el.attr('id')] = findCalcVal( $el );
 				self.mutateState([$el.attr('id')],$el.val());
 			});
 			calcVals[id] = findCalcVal( $( document.getElementById( id ) ) );
 			self.mutateState([$field.attr('id')],$field.val());
+
 			return true;
 		} else {
 			$field = $('.' + id);
@@ -320,11 +328,27 @@ function CFState(formId, $ ){
 	}
 
 	/**
+	 * Bind change on a calculation field so that when state changes, calc value changes with it.
+	 *
+	 * @since 1.5.6.2
+	 *
+	 * @param {String} id
+	 * @param {Object} config
+	 */
+	function bindCalcField(id,config) {
+		fieldVals[id] = 0;
+		calcVals[id] = 0;
+		self.events().subscribe(id,function (value,id) {
+			calcVals[id] = value;
+		});
+	}
+
+	/**
 	 * Find calculation value for an element
 	 *
 	 * @since 1.5.6
-	 * @param $field
-	 * @returns {*}
+	 * @param {jQuery} $field
+	 * @returns {float}
 	 */
 	function findCalcVal( $field ) {
 		if( $field.is( 'select' ) && $field.has( 'option' ) ){
