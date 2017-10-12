@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.6.2-b-2 - 2017-10-09 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.6.2 - 2017-10-12 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -435,7 +435,7 @@ function CFState(formId, $ ){
 	 *
 	 * @since 1.5.6
 	 * @param {jQuery} $field
-	 * @returns {Float}
+	 * @returns {float}
 	 */
 	function findCalcVal( $field ) {
 		if( $field.is( 'select' ) && $field.has( 'option' ) ){
