@@ -112,6 +112,11 @@ class Caldera_Forms_Processor_UI {
 			$input_type = 'checkbox';
 		}
 
+		if( 'dropdown' == $args[ 'type' ] ){
+			$args[ 'magic' ] = false;
+
+		}
+
 		if ( is_string( $args[ 'extra_classes']) ) {
 			$args[ 'extra_classes' ] = array( $args[ 'extra_classes' ] );
 		}
@@ -129,6 +134,8 @@ class Caldera_Forms_Processor_UI {
 		if ( $args[ 'required' ] ) {
 			$classes[] = 'required';
 		}
+
+		$classes[] = $args['id'];
 
 		$args[ 'extra_classes' ][] = 'field-config';
 
@@ -173,7 +180,7 @@ class Caldera_Forms_Processor_UI {
 			<label for="%s" id="%s">
 				%s
 			</label>
-			<div class="caldera-config-field">
+			<div class="%s">
 				%s
 			</div>
 			%s
@@ -182,6 +189,7 @@ class Caldera_Forms_Processor_UI {
 				esc_attr( $id ),
 				esc_attr( self::label_id( $id ) ),
 				$args[ 'label' ],
+				esc_attr( 'caldera-config-field ' . $id . '-wrap' ),
 				self::input( $input_type, $args, $id, $classes, $required, $has_desc ),
 				$desc
 			);
@@ -379,7 +387,7 @@ class Caldera_Forms_Processor_UI {
 			return;
 		}
 
-		return sprintf( '<div class="error"><p>%1s</p></div>', sprintf( __( '%s requires a valid SSL certificate. It will only function in test mode unless SSL/HTTPS is used. Your site does not appear to be using the secure HTTPS protocol.', 'caldera-forms' ), $name ) );
+		return sprintf( '<div class="error"><p>%1s</p></div>', __( sprintf( '%1s requires a valid SSL certificate. It will only function in test mode unless SSL/HTTPS is used. Your site does not appear to be using the secure HTTPS protocol.', $name ), 'caldera-forms' ) );
 
 	}
 

@@ -99,9 +99,9 @@ $element['conditional_groups']['fields'] = $element['fields'];
 wp_nonce_field( 'cf_edit_element', 'cf_edit_nonce' );
 
 // Init check
-echo "<input id=\"last_updated_field\" name=\"config[_last_updated]\" value=\"" . date('r') . "\" type=\"hidden\">";
-echo "<input id=\"form_id_field\" name=\"config[ID]\" value=\"" . $_GET['edit'] . "\" type=\"hidden\">";
-echo "<input id=\"form_db_id_field\" name=\"config[db_id]\" value=\"" . $element['db_id'] . "\" type=\"hidden\">";
+echo "<input id=\"last_updated_field\" name=\"config[_last_updated]\" value=\"" . esc_attr( date( 'r' ) ) . "\" type=\"hidden\">";
+echo "<input id=\"form_id_field\" name=\"config[ID]\" value=\"" . esc_attr( $_GET[ 'edit' ] ) . "\" type=\"hidden\">";
+echo "<input id=\"form_db_id_field\" name=\"config[db_id]\" value=\"" . esc_attr( $element[ 'db_id' ] ) . "\" type=\"hidden\">";
 
 do_action('caldera_forms_edit_start', $element);
 
@@ -130,7 +130,7 @@ $field_options_template = "
 {{#if auto}}{{#script}}jQuery('#{{_id}}_auto').trigger('change');{{/script}}{{/if}}
 <div class=\"caldera-config-group-auto-options\" style=\"display:none;\">
 	<div class=\"caldera-config-group\">
-		<label>". esc_html__( 'Auto Type', 'caldera-forms' ) . "</label>
+		<label>". esc_html__( 'Source', 'caldera-forms' ) . "</label>
 		<div class=\"caldera-config-field\">
 			<select class=\"block-input field-config auto-populate-type\" name=\"{{_name}}[auto_type]\">
 				<option value=\"\">" . esc_html__( 'Select a source', 'caldera-forms' ) . "</option>

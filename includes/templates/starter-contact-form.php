@@ -183,12 +183,12 @@ return array (
 			array (
 				'sender_name' => get_option( 'blogname' ),
 				'sender_email' => get_option( 'admin_email' ),
-				'subject' => __( 'Thanks For Getting In Touch', 'caldera-forms' ),
+				'subject' => __( 'Thank you for contacting us', 'caldera-forms' ),
 				'recipient_name' => '%first_name% %last_name%',
 				'recipient_email' => '%email_address%',
 				'message' => 'Hi %recipient_name%.
 Thanks for your email.
-We\'ll get get back to you as soon as possible!
+We\'ll get back to you as soon as possible!
 Here\'s a summary of your message:
 ------------------------
 {summary}',

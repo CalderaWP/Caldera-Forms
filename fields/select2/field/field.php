@@ -62,7 +62,12 @@ if( empty( $field['config']['color'] ) ){
 				}
 
 				?>
-				<option value="<?php echo $option['value']; ?>" <?php if( in_array( $option['value'] , (array) $field_value ) ){ ?>selected="selected"<?php } ?>><?php echo $option['label']; ?></option>
+				<option
+					data-calc-value="<?php echo esc_attr( Caldera_Forms_Field_Util::get_option_calculation_value( $option, $field, $form ) ); ?>"
+					value="<?php echo esc_attr( $option['value'] ); ?>"
+					<?php if( in_array( $option['value'] , (array) $field_value ) ){ ?>selected="selected"<?php } ?>>
+					<?php echo $option['label']; ?>
+				</option>
 				<?php
 			}
 		} ?>

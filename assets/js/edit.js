@@ -2321,11 +2321,12 @@ jQuery(document).ready(function($) {
         var $label = $(this),
             $value = $( '.toggle_value_field[data-opt="' + $label.data( 'option' ) + '"]' );
 
-        if( $value.val().length ){
+        if( $value.is( ':visible' ) ){
             return;
         }
 
-		$value.val( $label.val() );
+        $value.val( $label.val() );
+
     });
 
 

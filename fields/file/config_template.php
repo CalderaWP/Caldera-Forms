@@ -3,7 +3,7 @@
 	<div class="caldera-config-field">
 		<label for="{{_id}}_attach">
 			<input id="{{_id}}_attach" type="checkbox" class="field-config" name="{{_name}}[attach]" value="1" {{#if attach}}checked="checked"{{/if}}>
-			<?php esc_html_e('Attach to mailer', 'caldera-forms'); ?>
+			<?php esc_html_e('Attach to Mailer', 'caldera-forms'); ?>
 		</label>
 	</div>
 </div>

@@ -371,6 +371,7 @@ class Caldera_Forms_Field_Util {
 	 *
 	 * @param array|string $field Field config or field ID
 	 * @param array $form Form config
+	 * @param bool $convert_opt Optional. If false, the default, return will be identifier for default option, not it's value. If true, the value of the default option will be returned.
 	 *
 	 * @return bool
 	 */
@@ -379,11 +380,13 @@ class Caldera_Forms_Field_Util {
 			$field = self::get_field( $field, $form );
 		}
 
-		if ( ! is_array( $field ) || empty( $field[ 'config' ][ 'default' ] ) ) {
+		if ( ! is_array( $field )  ) {
 			return false;
+		}elseif( ! empty( $field[ 'config' ][ 'default' ] ) ){
+			$default = $field[ 'config' ][ 'default' ];
+		}else{
+			$default = false;
 		}
-
-		$default = $field[ 'config' ][ 'default' ];
 
 		if( $convert_opt && 0 === strpos( $default, 'opt' ) ){
 			$default = self::find_select_field_value( $field, $default );
@@ -391,6 +394,25 @@ class Caldera_Forms_Field_Util {
 
 		return $default;
 
+	}
+
+	/**
+	 * Get default option's calculation value
+	 *
+	 * @since 1.5.6.2
+	 *
+	 * @param array $field Field config
+	 * @param array $form Form config
+	 *
+	 * @return int|null
+	 */
+	public static function get_default_calc_value( $field, $form ){
+		$opt = self::get_default( $field, $form, false );
+		$opt = ( ! empty( $opt ) && isset( $field[ 'config' ][ 'option' ][ $opt ], $field[ 'config' ][ 'option' ][ $opt ][ 'calc_value' ] ) ) ? $field[ 'config' ][ 'option' ][ $opt ][ 'calc_value' ] : null;
+		if( is_null( $opt ) ){
+			return self::get_default( $field, $form, true );
+		}
+		return $opt;
 	}
 
 	/**

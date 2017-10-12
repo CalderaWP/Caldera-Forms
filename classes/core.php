@@ -144,6 +144,11 @@ class Caldera_Forms {
 			add_action( 'wp_ajax_cf_email_save', array( 'Caldera_Forms_Email_Settings', 'save' ) );
 		}
 
+		// Add cache plugin support
+		if ( method_exists( 'LiteSpeed_Cache_API', 'esi_enabled' ) && LiteSpeed_Cache_API::esi_enabled() ) {
+			LiteSpeed_Cache_API::hook_tpl_esi( 'caldera_forms', 'Caldera_Forms_Render_Nonce::hook_esi' );
+		}
+
 		//auto-population via Easy Pods/ Easy Queries
 		add_action( 'caldera_forms_render_start', array( __CLASS__, 'easy_pods_queries_setup' ) );
 
@@ -153,6 +158,8 @@ class Caldera_Forms {
 
 		//entry permission
 		add_filter( 'caldera_forms_manage_cap', array( 'Caldera_Forms_Entry_UI', 'permissions_filter' ), 9, 3 );
+
+		add_filter( 'caldera_forms_send_email', array( Caldera_Forms_Admin::get_instance(), 'block_email_on_edit' ), 9 );
 
 		if( current_user_can( Caldera_Forms::get_manage_cap( 'admin' ) ) ) {
 			$id = null;
@@ -201,7 +208,11 @@ class Caldera_Forms {
 		//initialize settings
 		Caldera_Forms_Settings_Init::load();
 
-		/**
+		//CRON callback for deleting our fake transients
+		add_action( Caldera_Forms_Transient::CRON_ACTION, array( 'Caldera_Forms_Transient', 'cron_callback' ) );
+		add_action( 'caldera_forms_submit_complete', array( 'Caldera_Forms_Transient', 'cron_callback' ) );
+
+        /**
 		 * Runs after Caldera Forms core is initialized
 		 *
 		 * @since 1.3.5.3
@@ -1068,7 +1079,37 @@ class Caldera_Forms {
 			$config[ 'sender_email' ] = get_option( 'admin_email' );
 		}
 
-		/**
+		if( ! empty( $config[ 'reply_to' ] ) ){
+            $email_message[ 'replyto' ] = Caldera_Forms::do_magic_tags( $config[ 'reply_to' ] );
+			$email_message['headers'][] = 'Reply-To: ' . $email_message[ 'replyto' ];
+		}
+
+
+        $email_message['bcc'] = false;
+        if (  ! empty( $config[ 'bcc' ] ) ) {
+            $email_message['bcc']       = Caldera_Forms::do_magic_tags( $config[ 'bcc' ] );
+
+            $bcc_array = array_map('trim', preg_split( '/[;,]/', Caldera_Forms::do_magic_tags( $config[ 'bcc' ] ) ) );
+            foreach( $bcc_array as $bcc_to ) {
+                if ( is_email( $bcc_to ) ) {
+	                $email_message['headers'][] = 'Cc: ' . $bcc_to;
+                }
+            }
+        }
+
+        $email_message['bcc'] = false;
+        if (  ! empty( $config[ 'bcc' ] ) ) {
+            $email_message[ 'bcc' ]       = Caldera_Forms::do_magic_tags( $config[ 'bcc' ] );
+
+            $bcc_array = array_map('trim', preg_split( '/[;,]/', Caldera_Forms::do_magic_tags( $config[ 'bcc' ] ) ) );
+            foreach( $bcc_array as $bcc_to ) {
+                if ( is_email( $bcc_to ) ) {
+	                $email_message['headers'][] = 'Bcc: ' . $bcc_to;
+                }
+            }
+        }
+
+        /**
 		 * Filter email to be sent as auto responder
 		 *
 		 * Return null to prevent sending
@@ -2597,33 +2638,16 @@ class Caldera_Forms {
 			$form_instance_number = $_POST[ '_cf_frm_ct' ];
 		}
 
-		// check honey
-		if ( isset( $form[ 'check_honey' ] ) ) {
-			// use multiple honey words
-			$honey_words = apply_filters( 'caldera_forms_get_honey_words', array(
-				'web_site',
-				'url',
-				'email',
-				'company',
-				'name'
-			) );
-			foreach ( $_POST as $honey_word => $honey_value ) {
+		// check honeypot
+        if ( Caldera_Forms_Field_Honey::active( $form ) ) {
+            $passed = Caldera_Forms_Field_Honey::check( $_POST, $form );
+            if( ! $passed ){
+                $url = Caldera_Forms_Field_Honey::redirect_url( $referrer, $form_instance_number, $process_id);
+                return self::form_redirect( 'complete', $url, $form, uniqid( '_cf_bliss_' ) );
+            }
 
-				if ( ! is_array( $honey_value ) && strlen( $honey_value ) && in_array( $honey_word, $honey_words ) ) {
-					// yupo - bye bye
-					$referrer[ 'query' ][ 'cf_su' ] = $form_instance_number;
-					$query_str                      = array(
-						'cf_er' => $process_id
-					);
-					if ( ! empty( $referrer[ 'query' ] ) ) {
-						$query_str = array_merge( $referrer[ 'query' ], $query_str );
-					}
-					$referrer = $referrer[ 'path' ] . '?' . http_build_query( $query_str );
+        }
 
-					return self::form_redirect( 'complete', $referrer, $form, uniqid( '_cf_bliss_' ) );
-				}
-			}
-		}
 		// init filter
 		$form = apply_filters( 'caldera_forms_submit_get_form', $form );
 
@@ -3303,7 +3327,7 @@ class Caldera_Forms {
 		$referrer = apply_filters( 'caldera_forms_submit_redirect_complete', $referrer, $form, $process_id );
 
 		// kill transient data
-		delete_transient( $process_id );
+		Caldera_Forms_Transient::delete_transient( $process_id );
 
 		return self::form_redirect( 'complete', $referrer, $form, $process_id );
 	}
@@ -3486,7 +3510,7 @@ class Caldera_Forms {
 				$url = set_url_scheme( $url, 'https' );
 			}
 		}
-		
+
 		/**
 		 * Filter the Caldera Forms APU url
 		 *
@@ -4032,7 +4056,8 @@ class Caldera_Forms {
 			'method'	=>	'POST',
 			'enctype'	=>	'multipart/form-data',
 			'role'		=>	'form',
-			'id'		=>	$form['ID'] . '_' . $current_form_count
+			'id'		=>	$form['ID'] . '_' . $current_form_count,
+			'data-form-id' => $form[ 'ID' ]
 		);
 
 		//add extra attributes to make AJAX submissions JS do its thing
@@ -4503,30 +4528,13 @@ class Caldera_Forms {
 				$out .= "</ol></span>\r\n";
 			}
 
-			// sticky sticky honey
-			if ( isset( $form[ 'check_honey' ] ) ) {
-				$out .= "<div class=\"hide\" style=\"display:none; overflow:hidden;height:0;width:0;\">\r\n";
+            // sticky sticky honey
+            if ( Caldera_Forms_Field_Honey::active( $form ) ) {
+                $out .= Caldera_Forms_Field_Honey::field( $form );
+            }
 
-				/**
-				 * Change which words are used to form honey pot
-				 *
-				 * @since unknown
-				 *
-				 * @param array $words An array of words.
-				 */
-				$honey_words = apply_filters( 'caldera_forms_get_honey_words', array(
-					'web_site',
-					'url',
-					'email',
-					'company',
-					'name'
-				) );
-				$word        = $honey_words[ rand( 0, count( $honey_words ) - 1 ) ];
-				$out .= "<label>" . ucwords( str_replace( '_', ' ', $word ) ) . "</label><input type=\"text\" name=\"" . $word . "\" value=\"\" autocomplete=\"off\">\r\n";
-				$out .= "</div>";
-			}
 
-			$out .= $form[ 'grid_object' ]->renderLayout();
+            $out .= $form[ 'grid_object' ]->renderLayout();
 
 			$out .= "</" . $form_element . ">\r\n";
 		}
@@ -4714,15 +4722,18 @@ class Caldera_Forms {
 	 * @since 1.4.0
 	 *
 	 * @param string $submitted Timestamp
+	 * @param bool $remove_commas Optional. Default is false, true replaces commas with spaces. @since 1.5.6
 	 *
 	 * @return string
 	 */
-	public static function localize_time( $submitted ) {
+	public static function localize_time( $submitted, $remove_commas = false ) {
 
 
 		$format = self::time_format();
 		$time   = get_date_from_gmt( $submitted, $format );
-
+		if( $remove_commas ){
+			$time = str_replace( ',', ' ', $time );
+		}
 		return $time;
 	}
 

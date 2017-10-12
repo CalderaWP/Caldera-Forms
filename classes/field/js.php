@@ -50,13 +50,17 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 	 * @param array $form Form config
 	 * @param int $form_count Form instance count
 	 */
-	public function __construct( array $form, $form_count ) {
-		$this->form = $form;
+	public function __construct( array $form, $form_count )
+	{
+		$this->form       = $form;
 		$this->form_count = $form_count;
-		$this->data = array();
-		$this->fields = array(
-			'inputs' => array(),
-			'groups' => array()
+		$this->data       = array();
+		$this->fields     = array(
+			'ids'          => array(),
+			'inputs'       => array(),
+			'groups'       => array(),
+			'defaults'     => array(),
+			'calcDefaults' => array()
 		);
 	}
 
@@ -68,7 +72,8 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 	public function prepare_data(){
 
 		if( ! empty( $this->form[ 'fields' ] ) ){
-			foreach( $this->form[ 'fields' ] as $field ){
+			foreach( $this->form[ 'fields' ] as  $field ){
+				$this->fields[ 'ids' ][] = $this->field_id( $field[ 'ID' ] );
 				$type = Caldera_Forms_Field_Util::get_type( $field, $this->form );
 				$this->map_field( $type, $field );
 				if( 'summary' == $type ){
@@ -76,14 +81,28 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 				}
 				//skip these types -- maybe add filter here later
 				$skip = array(
-					'calculation',
 					'star_rating',
 				);
 				if( ! in_array( $type, $skip ) && method_exists( $this, $type ) ){
 					call_user_func( array( $this, $type ), $field[ 'ID' ], $field );
 				}
 			}
+
+			foreach( $this->fields[ 'defaults' ] as &$default ){
+				if( 0 === strpos( $default, '%' ) ){
+					$default = $this->get_field_default(
+						Caldera_Forms_Field_Util::get_field_by_slug( str_replace( '%', '', $default ), $this->form )
+					);
+				}else{
+					$default = Caldera_Forms::do_magic_tags( $default, null, $this->form );
+
+				}
+
+			}
+
 		}
+
+
 	}
 
 
@@ -419,7 +438,7 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 	/**
 	 * For calculation fields
 	 *
-	 * NOTE: NOT USED AS OF 1.5
+	 * NOTE: Implimented in 1.5.6
 	 *
 	 * @since 1.5.0
 	 *
@@ -443,13 +462,19 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 		//this creates binds array BTW
 		$syncer->can_sync();
 		$formula = $syncer->get_formula( true );
+
+		$target_id = $this->calc_target_id( $field );
+
 		$args = array(
-			'formula' => $formula,
 			'binds' => $syncer->get_binds(),
 			'decimalSeparator' => $decimal_separator,
 			'thousandSeparator' => $thousand_separator,
+			'moneyFormat' => ! empty( $field[ 'config' ][ 'fixed' ] ) ? true : false,
 			'fixed' => false,
 			'fieldBinds' => $syncer->get_bind_fields(),
+			'targetId' => esc_attr( $this->calc_value_id( $field ) ),
+			'displayId' => esc_attr( $target_id ),
+			'callback' => Caldera_Forms_Field_Calculation::js_function_name( $target_id )
 		);
 
 		$this->data[ $field_id ] = $this->create_config_array( $field_id, __FUNCTION__, $args );
@@ -599,11 +624,11 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 		$basic =  array(
 			'type' => $type,
 			'id' => $this->field_id( $field_id ),
-			'default' => Caldera_Forms_Field_Util::get_default( $field_id, $this->form )
+			'default' => $this->get_field_default( $this->form[ 'fields' ][ $field_id ] )
 		);
 
-
 		return array_merge( $basic, wp_parse_args( $args, $this->default_config_args() ) );
+
 	}
 
 	protected function default_config_args(){
@@ -633,14 +658,14 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 	 *
 	 */
 	protected function map_field( $type, $field ){
-		$default =Caldera_Forms_Field_Util::get_default( $field, $this->form, true );
+		$default = $this->get_field_default( $field );
 
 		$_field = array(
-			'type'    => $type,
-			'fieldId' => $field[ 'ID' ],
-			'id'      => $this->field_id( $field[ 'ID' ] ),
-			'options' => array(),
-			'default' => $default
+			'type'        => $type,
+			'fieldId'     => $field[ 'ID' ],
+			'id'          => $this->field_id( $field[ 'ID' ] ),
+			'options'     => array(),
+			'default'     => $default,
 		);
 
 		$group = false;
@@ -658,6 +683,10 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 			}
 
 		}
+		if( 'checkbox' === $type ){
+			$_field[ 'mode' ] = Caldera_Forms_Field_Calculation::checkbox_mode( $field, $this->form );
+		}
+
 		if ( $group ) {
 			$this->fields[ 'groups' ][] = $_field;
 		}else{
@@ -665,10 +694,71 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 
 		}
 
+		$this->map_default( $field, $default );
 
+	}
 
-		$this->fields[ 'defaults' ][ $this->field_id( $field[ 'ID' ] ) ] = $default;
+	/**
+	 * Find the field's default
+	 *
+	 * @since 1.5.6
+	 *
+	 * @param array $field Field configuration
+	 *
+	 * @return bool
+	 */
+	protected function get_field_default( $field ){
+		$default = Caldera_Forms_Field_Util::get_default( $field, $this->form, true );
+		return $default;
 
+	}
+
+	/**
+	 * Map default values for field
+	 *
+	 * @since 1.5.6.2
+	 *
+	 * @param array $field Field config
+	 * @param mixed $default Currently identified default
+	 */
+	protected function map_default( $field, $default ){
+		$id_attr = $this->field_id( $field[ 'ID' ] );
+		$this->fields[ 'defaults' ][ $id_attr ]     = $default;
+		if ( 'calculation' != Caldera_Forms_Field_Util::get_type( $field, $this->form ) ) {
+			$this->fields[ 'calcDefaults' ][ $id_attr ] = Caldera_Forms_Field_Util::get_default_calc_value( $field, $this->form );
+		}else{
+			$this->fields[ 'calcDefaults' ][ $id_attr ] = array(
+				'type'      => 'calculation',
+				'target'    => $this->calc_value_id( $field )
+			);
+		}
+	}
+
+	/**
+	 * The ID attribute of HTML span  for a calculation field
+	 *
+	 * @since 1.5.6.2
+	 *
+	 * @param array $field Field config
+	 *
+	 * @return string
+	 */
+	protected function calc_target_id( array  $field ){
+		return Caldera_Forms_Field_Util::get_base_id( $field, $this->form_count, $this->form );
+
+	}
+
+	/**
+	 * The ID attribute of hidden field for a calculation field
+	 *
+	 * @since 1.5.6.2
+	 *
+	 * @param array $field Field config
+	 *
+	 * @return string
+	 */
+	protected function calc_value_id( array $field ){
+		return $this->calc_target_id( $field ) . '-value';
 	}
 
 }

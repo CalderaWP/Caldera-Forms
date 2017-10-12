@@ -8,22 +8,24 @@ function CalderaFormsAdminClippys2( elId, config, $ ){
 
 		var vm;
 
+		var linkCB = function(post,term){
+			return post.link + '?utm-source=wp-admin&utm_campaign=clippy&utm_term=' + term;
+		};
+
 		var docsComponent = {
 			template:  '#tmpl--caldera-help-clippy',
 			props: [ 'important' ],
-
+			methods: {
+				link:linkCB
+			}
 		};
 
 		var extendComponent = {
 			template: '#tmpl--caldera-extend-clippy',
-			props: [ 'product','title' ]
-		};
-
-		var supportComponent = {
-			template: '#tmpl--caldera-support-clippy',
-			props: [ 'type' ],
-
-
+			props: [ 'product','title' ],
+			methods: {
+				link:linkCB
+			}
 		};
 
 
@@ -38,7 +40,6 @@ function CalderaFormsAdminClippys2( elId, config, $ ){
 				el: '#caldera-forms-clippy',
 				components: {
 					docs : docsComponent,
-					support: supportComponent,
 					extend: extendComponent
 				},
 				data: function () {
@@ -47,13 +48,6 @@ function CalderaFormsAdminClippys2( elId, config, $ ){
 						products: products,
 						product: product,
 						extendTitle: config.extend_title,
-						support: 'wantPriority',
-						selected: 'A',
-						options: [
-							{ text: 'One', value: 'A' },
-							{ text: 'Two', value: 'B' },
-							{ text: 'Three', value: 'C' }
-						]
 					}
 				},
 			});
@@ -64,10 +58,8 @@ function CalderaFormsAdminClippys2( elId, config, $ ){
 
 
 	this.remove = function () {
-		$( document.getElementById( elId ).remove() );
+		$( '#' + elId  ).remove();
 	};
-
-
 
 	function get( url ) {
 		return $.get( url, {
@@ -87,7 +79,6 @@ function CalderaFormsAdminClippys2( elId, config, $ ){
 				result = prop;
 		return result;
 	}
-
 
 
 }

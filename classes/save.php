@@ -163,7 +163,7 @@ class Caldera_Forms_Save_Final {
 		if ( empty( $settings ) ) {
 			$sendername = __( 'Caldera Forms Notification', 'caldera-forms' );
 			if ( ! empty( $form['mailer']['sender_name'] ) ) {
-				$sendername = $form['mailer']['sender_name'];
+				$sendername = Caldera_Forms::do_magic_tags( $form['mailer']['sender_name'] );
 				if ( false !== strpos( $sendername, '%' ) ) {
 					$isname = Caldera_Forms::get_slug_data( trim( $sendername, '%' ), $form );
 					if ( ! empty( $isname ) ) {
@@ -174,7 +174,7 @@ class Caldera_Forms_Save_Final {
 			if ( empty( $form['mailer']['sender_email'] ) ) {
 				$sendermail = get_option( 'admin_email' );
 			} else {
-				$sendermail = $form['mailer']['sender_email'];
+				$sendermail = Caldera_Forms::do_magic_tags( $form['mailer']['sender_email'] );
 				if ( false !== strpos( $sendermail, '%' ) ) {
 					$ismail = Caldera_Forms::get_slug_data( trim( $sendermail, '%' ), $form );
 					if ( is_email( $ismail ) ) {
@@ -365,11 +365,19 @@ class Caldera_Forms_Save_Final {
 				$submission = wp_list_pluck( $csv_data, 'data' );
 				ob_start();
 				$df = fopen( "php://output", 'w' );
-				fputcsv( $df, $labels );
-				fputcsv( $df, $submission );
+				$file_type = Caldera_Forms_CSV_Util::file_type( $form );
+				if ( 'tsv' == $file_type ) {
+					$delimiter = chr(9);
+				} else {
+					$delimiter = ',';
+				}
+				fputcsv( $df, $labels, $delimiter );
+				fputcsv( $df, $submission, $delimiter );
 				fclose( $df );
 				$csv     = ob_get_clean();
-				$csvfile = wp_upload_bits( uniqid() . '.csv', null, $csv );
+
+
+				$csvfile = wp_upload_bits( uniqid() . '.' . $file_type, null, $csv );
 				if ( isset( $csvfile['file'] ) && false == $csvfile['error'] && file_exists( $csvfile['file'] ) ) {
 					$mail['attachments'][] = $csvfile[ 'file' ];
 					$mail[ 'csv' ]           = $csvfile[ 'file' ];

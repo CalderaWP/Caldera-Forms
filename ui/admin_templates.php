@@ -40,11 +40,11 @@
 
 			<div class="caldera-config-group">
 				<label for="cf-export-pin-menu">
-					<?php echo esc_html__( 'Pin to Admin', 'caldera-forms' ); ?>
+					<?php echo esc_html__( 'Create sub-menu entry viewer', 'caldera-forms' ); ?>
 				</label>
 				<div class="caldera-config-field">
 					<label><input type="checkbox" name="pin_menu" id="cf-export-pin-menu" value="1">
-						<?php esc_html_e( 'Set form to be pinned to Admin Menu', 'caldera-forms' ); ?>
+						<?php esc_html_e( 'Creates a sub-menu item of the Caldera Forms menu and a page to show entries for this form.', 'caldera-forms' ); ?>
 					</label>
 				</div>
 			</div>

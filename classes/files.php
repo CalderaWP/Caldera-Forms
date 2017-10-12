@@ -166,6 +166,9 @@ class Caldera_Forms_Files{
 		    $args[ 'subdir' ] = $newdir;
 		    $args[ 'path' ] .= $newdir;
 		    $args[ 'url' ] .= $newdir;
+		    if( ! file_exists( $args[ 'path' ] ) ){
+		    	$created = wp_mkdir_p( $args[ 'path' ] );
+		    }
 	    }
 
         return $args;

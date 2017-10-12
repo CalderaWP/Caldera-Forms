@@ -10,6 +10,13 @@
  */
 class Caldera_Forms_Render_Util {
 
+	/**
+	 * Array of  Caldera_Forms_Render_Footer objects
+	 *
+	 * @since 1.5.0
+	 *
+	 * @var array
+	 */
 	public static $footer_objects;
 
 	/**
@@ -124,7 +131,7 @@ class Caldera_Forms_Render_Util {
 	 *
 	 * @since 1.5.0.8
 	 *
-	 * @param string $script JavaScript with not <script> tags
+	 * @param string $script JavaScript without <script> tags
 	 * @param array $form Form config
 	 *
 	 * @return bool
@@ -185,5 +192,21 @@ class Caldera_Forms_Render_Util {
 		return $output;
 	}
 
+	/**
+	 * Get footer object, by form ID
+	 *
+	 * @since 1.5.6
+	 *
+	 * @param string $form_id Forms ID
+	 *
+	 * @return bool|Caldera_Forms_Render_Footer
+	 */
+	public static function get_footer_object( $form_id ){
+		if( isset( self::$footer_objects[ $form_id ] ) && is_object( self::$footer_objects[ $form_id ] ) ){
+			return self::$footer_objects[ $form_id ];
+		}
+
+		return false;
+	}
 
 }

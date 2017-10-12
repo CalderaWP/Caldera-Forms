@@ -15,7 +15,8 @@ function CFState(formId, $ ){
 		fields = {},
 		events = new CFEvents(this),
 		unBound = {},
-		fieldVals  = {};
+		fieldVals  = {},
+		calcVals = {};
 
 
 	/**
@@ -25,15 +26,25 @@ function CFState(formId, $ ){
 	 *
 	 * @param formFields {Object} Should be flat field ID attribute : Field default
 	 */
-	this.init = function (formFields) {
-		var $field,
-			$el;
+	this.init = function (formFields, calcDefaults) {
+
 		for ( var id in formFields ){
-			if( bindField(id)){
+			if( 'object' === typeof  calcDefaults[id] ){
+				if( 'calculation' == calcDefaults[id].type ){
+					bindCalcField(id,calcDefaults[id])
+				}
+
+			}else if( bindField(id)){
 				fieldVals[id] = formFields[id];
+				if( calcDefaults.hasOwnProperty(id) ){
+					calcVals[id] = calcDefaults[id];
+				}else{
+					calcVals[id] = null;
+				}
 			}else{
 				fieldVals[id] = '';
 				unBound[id] = true;
+				calcVals[id] = null;
 			}
 
 		}
@@ -54,6 +65,71 @@ function CFState(formId, $ ){
 		}
 
 		return fieldVals[id];
+	};
+
+	/**
+	 *Get calculation value for a field
+	 *
+	 * @since 1.5.6
+	 *
+	 * @param id {String} Field id attribute
+	 * @param highest {Boolean}
+	 * @returns {float}
+	 */
+	this.getCalcValue = function (id,highest) {
+		var val = 0;
+
+		if (! inState( id )) {
+			return val;
+		}
+
+		if( highest ){
+			highest = 0;
+			var value = highest,
+				$item;
+			$( '#' + id ).each(function(){
+				value = 0;
+				$item = $( this );
+				if(  $item.prop('checked' ) ){
+					value = findCalcVal( $item );
+					if( parseFloat( value ) > parseFloat( highest ) ){
+						highest = parseFloat( value );
+					}
+				}
+
+			});
+			return parseFloat( highest );
+		}
+
+		if (calcVals.hasOwnProperty(id) ) {
+			if( false === calcVals[id] || null === calcVals[id] ){
+				//@TODO use let here, when ES6.
+				var _val = findCalcVal( $( document.getElementById( id ) ) );
+				if( isString( _val )  ) {
+					_val = parseFloat( _val );
+				}
+
+				if( isNumber( _val ) ){
+					calcVals[id] = _val;
+				}
+			}
+
+			val = calcVals[id];
+		} else {
+			val = self.getState(id);
+
+			if ($.isArray(val)) {
+				val = val.reduce( function ( a, b) {
+					return parseFloat( a ) + parseFloat( b );
+				}, 0);
+			}
+
+			if( isNumber( val ) ){
+				calcVals[id] = val;
+			}
+		}
+
+		return parseFloat( val );
 	};
 
 	/**
@@ -88,6 +164,7 @@ function CFState(formId, $ ){
 	this.unbind = function(id){
 		self.mutateState(id,'');
 		unBound[id] = true;
+		delete calcVals[id];
 	};
 
 	/**
@@ -99,8 +176,10 @@ function CFState(formId, $ ){
 	 */
 	this.rebind = function(id){
 		bindField(id);
+
 		delete unBound[id];
 	};
+
 
 	/**
 	 * Accessor for the CFEvents object used for this state
@@ -122,7 +201,6 @@ function CFState(formId, $ ){
 			subscribe: function( id, callback ){
 				if( inState(id)){
 					events.subscribe(id,callback);
-
 				}
 
 			},
@@ -159,7 +237,7 @@ function CFState(formId, $ ){
 	 *
 	 * @since 1.5.3
 	 *
-	 * @param id {String}
+	 * @param {String} id
 	 * @returns {boolean}
 	 */
 	function bindField(id) {
@@ -167,8 +245,14 @@ function CFState(formId, $ ){
 		if ($field.length) {
 			$field.on('change keyup', function () {
 				var $el = $(this);
+				console.log( $field.attr( 'type' ) );
+				console.log( $el.attr( 'type' ) );
+				calcVals[$el.attr('id')] = findCalcVal( $el );
 				self.mutateState([$el.attr('id')],$el.val());
 			});
+			calcVals[id] = findCalcVal( $( document.getElementById( id ) ) );
+			self.mutateState([$field.attr('id')],$field.val());
+
 			return true;
 		} else {
 			$field = $('.' + id);
@@ -198,20 +282,34 @@ function CFState(formId, $ ){
 							break;
 					}
 
-
-					$collection.each( function( i, el ){
-						var $this = $( el );
-
-						if( $this.prop( 'checked' ) ){
-							if( 'radio' === type ){
-								val = $this.val();
-							}else{
-
-								val.push($this.val());
-
+					if( ! $collection.length ){
+						val = 0;
+					} else if ( 1 == $collection.length){
+						val = findCalcVal( $($collection[0]));
+					} else if ( 'checkbox' === type ) {
+						var $v, sum = 0;
+						$collection.each(function (k, v) {
+							$v = $(v);
+							if( $v.prop('checked')){
+								sum += parseFloat(findCalcVal($v));
 							}
-						}
-					});
+							val.push($v.val());
+						});
+						calcVals[id] = sum;
+					}else{
+						$collection.each(function (i, el) {
+							var $this = $(el);
+
+							if ($this.prop('checked')) {
+								if ('radio' === type) {
+									calcVals[id] = findCalcVal($this);
+									val = $this.val();
+								} else {
+									val.push($this.val());
+								}
+							}
+						});
+					}
 
 
 					self.mutateState(id,val);
@@ -228,6 +326,115 @@ function CFState(formId, $ ){
 		return false;
 
 	}
+
+	/**
+	 * Bind change on a calculation field so that when state changes, calc value changes with it.
+	 *
+	 * @since 1.5.6.2
+	 *
+	 * @param {String} id
+	 * @param {Object} config
+	 */
+	function bindCalcField(id,config) {
+		fieldVals[id] = 0;
+		calcVals[id] = 0;
+		self.events().subscribe(id,function (value,id) {
+			calcVals[id] = value;
+		});
+	}
+
+	/**
+	 * Find calculation value for an element
+	 *
+	 * @since 1.5.6
+	 * @param {jQuery} $field
+	 * @returns {float}
+	 */
+	function findCalcVal( $field ) {
+		if( $field.is( 'select' ) && $field.has( 'option' ) ){
+			$field = $field.find(':selected');
+		}
+
+		if( ! $field.length ){
+			return 0;
+		}
+
+		if( $field.is( 'hidden' ) ){
+			return $field.val();
+		}
+
+		var val = 0;
+
+		var attr = $field.attr('data-calc-value');
+
+		if (typeof attr !== typeof undefined && attr !== false && ! isNaN(attr)) {
+			val = $field.data( 'calc-value' );
+		}else{
+			val = $field.val();
+		}
+
+		return parseFloat(val);
+	}
+
+	/**
+	 * Parse float if we can parse float, else 0.
+	 *
+	 * @since 1.5.6
+	 *
+	 * @param number
+	 * @returns {*}
+	 */
+	function parseFloat( number ) {
+		if( ! number || isNaN( number) ){
+			return 0.0;
+		}
+		return window.parseFloat( number );
+	}
+
+	/**
+	 * Parse integer if we can parse integer, else 0.
+	 *
+	 * @since 1.5.6
+	 *
+	 * @param number
+	 * @returns {*}
+	 */
+	function parseInt( number ) {
+		if( ! number || isNaN( number) ){
+			return 0;
+		}
+		return window.parseInt( number );
+	}
+
+
+	/**
+	 * Determine if a value is a Number
+	 *
+	 * @since 1.5.6.2
+	 *
+	 * Copied from axios/lib/utils.js
+	 *
+	 * @param {Object} val The value to test
+	 * @returns {boolean} True if value is a Number, otherwise false
+	 */
+	function isNumber(val) {
+		return typeof val === 'number';
+	}
+
+	/**
+	 * Determine if a value is a String
+	 *
+	 * @since 1.5.6.2
+	 *
+	 * Copied from axios/lib/utils.js
+
+	 * @param {Object} val The value to test
+	 * @returns {boolean} True if value is a String, otherwise false
+	 */
+	function isString(val) {
+		return typeof val === 'string';
+	}
+
 
 
 }

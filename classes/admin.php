@@ -50,6 +50,16 @@ class Caldera_Forms_Admin {
 	const PREVIEW_KEY = 'cf_preview';
 
 	/**
+	 * GET var for what to order forms by
+	 *
+	 * @since 1.5.6
+	 *
+	 * @var string
+	 */
+	const ORDERBY_KEY = 'cf_orderby';
+
+
+	/**
 	 * @var      string
 	 */
 	protected $plugin_slug = 'caldera-forms';
@@ -149,6 +159,8 @@ class Caldera_Forms_Admin {
 		add_action( 'init', array( $this, 'init_pro_admin' ) );
 
 		add_action( 'init', array( 'Caldera_Forms_Admin_Resend', 'watch_for_resend' ) );
+
+        add_action( 'caldera_forms_admin_footer', array( 'Caldera_Forms_Email_Settings', 'ui' ) );
 
 		/**
 		 * Runs after Caldera Forms admin is initialized
@@ -1384,9 +1396,14 @@ class Caldera_Forms_Admin {
 
 			$data = array();
 
+			$localize_time = Caldera_Forms_CSV_Util::should_localize_time( $form );
 			foreach( $rawdata as $entry){
 				$submission = Caldera_Forms::get_entry( $entry->_entryid, $form);
-				$data[$entry->_entryid]['date_submitted'] = Caldera_Forms::localize_time( $entry->_date_submitted );
+				if( $localize_time ){
+					$data[$entry->_entryid]['date_submitted'] = Caldera_Forms::localize_time( $entry->_date_submitted, true );
+				}else{
+					$data[$entry->_entryid]['date_submitted'] = $entry->_date_submitted;
+				}
 
 				foreach ($structure as $slug => $field_id) {
 					$data[$entry->_entryid][$slug] = ( isset( $submission['data'][$field_id]['value'] ) ? $submission['data'][$field_id]['value'] : null );
@@ -1399,22 +1416,30 @@ class Caldera_Forms_Admin {
 			}
 			$encoding = Caldera_Forms_CSV_Util::character_encoding( $form );
 
+			$file_type = Caldera_Forms_CSV_Util::file_type( $form );
+
 			header("Pragma: public");
 			header("Expires: 0");
 			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 			header("Cache-Control: private",false);
 			header("Content-Type: text/csv charset=$encoding;");
-			header("Content-Disposition: attachment; filename=\"" . sanitize_file_name( $form['name'] ) . ".csv\";" );
+			header("Content-Disposition: attachment; filename=\"" . sanitize_file_name( $form['name'] ) . ".$file_type\";" );
 			header("Content-Transfer-Encoding: binary");
 			$df = fopen("php://output", 'w');
 
+			if ( 'tsv' == $file_type ) {
+				$delimiter = chr(9);
+			} else {
+				$delimiter = ',';
+			}
 			$csv_data = apply_filters( 'caldera_forms_admin_csv', array(
 				'headers' => $headers,
 				'data' => $data
 			), $form );
 			$data = $csv_data[ 'data' ];
 			$headers = $csv_data[ 'headers' ];
-			fputcsv($df, $headers);
+			
+			fputcsv($df, $headers, $delimiter);
 			foreach($data as $row){
 				$csvrow = array();
 				foreach($headers as $key=>$label){
@@ -1438,7 +1463,7 @@ class Caldera_Forms_Admin {
 
 					$csvrow[] = $row[$key];
 				}
-				fputcsv($df, $row);
+				fputcsv($df, $row, $delimiter);
 			}
 			fclose($df);
 			exit;
@@ -1998,10 +2023,17 @@ class Caldera_Forms_Admin {
 	 *
 	 * @since 1.5.2
 	 *
+	 * @param string|bool $orderby Optional. If valid string ("name") then that is appended as orderby. Default is false, which does nothing, default link.
+	 *
 	 * @return string
 	 */
-	public static function main_admin_page_url(){
-		return add_query_arg( 'page', Caldera_Forms::PLUGIN_SLUG, admin_url( 'admin.php' ) );
+	public static function main_admin_page_url( $orderby = false ){
+		$url =  add_query_arg( 'page', Caldera_Forms::PLUGIN_SLUG, admin_url( 'admin.php' ) );
+		if( 'name' === $orderby ){
+			$url = add_query_arg( self::ORDERBY_KEY, 'name', $url );
+		}
+
+		return $url;
 	}
 
 	/**
@@ -2042,6 +2074,23 @@ class Caldera_Forms_Admin {
 		}
 
 		return  add_query_arg( $args, get_home_url() );
+	}
+
+	/**
+	 * Prevent re-sending email on form edit
+	 *
+	 * @uses "caldera_forms_send_email" filter
+	 *
+	 * @param bool $send
+	 *
+	 * @return bool
+	 */
+	public static function block_email_on_edit( $send ){
+		if( isset( $_POST, $_POST[ '_cf_frm_edt' ] ) && 0 < absint( $_POST[ '_cf_frm_edt' ] ) ){
+			return false;
+		}
+
+		return $send;
 	}
 }
 

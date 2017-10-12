@@ -11,6 +11,17 @@
  */
 class Caldera_Forms_Sync_Factory {
 
+	/**
+	 * Object cache (non-persistent) for sync objects
+	 *
+	 * Not using actual object cache, see: https://github.com/CalderaWP/Caldera-Forms/issues/1860
+	 *
+	 * @since 1.5.5
+	 *
+	 * @var array
+	 */
+	protected static $cache;
+
 
 	/**
 	 * Get a Caldera_Forms_Field_Sync by creating it or pulling from cache
@@ -58,7 +69,7 @@ class Caldera_Forms_Sync_Factory {
 			$current_form_count = Caldera_Forms_Render_Util::get_current_form_count();
 		}
 
-		return self::get_prefix() . md5(  __CLASS__ . CFCORE_VER . $form_id . $field_id . $field_base_id, $current_form_count );
+		return md5( $form_id . $field_id . $field_base_id . $current_form_count );
 	}
 
 	/**
@@ -69,30 +80,10 @@ class Caldera_Forms_Sync_Factory {
 	 * @uses "caldera_forms_save_form" action
 	 */
 	public static function clear_cache(){
-		wp_cache_incr( self::get_prefix() );
-		wp_cache_set(  __CLASS__ . 'ns', __CLASS__ . 'ns_prefix' . rand() );
+		self::$cache = array();
 	}
 
-	/**
-	 * Get cache prefix
-	 *
-	 * Needs to be set seperate form identifier so we can increment it.
-	 *
-	 * @since 1.5.0.4
-	 *
-	 * @return string
-	 */
-	protected static  function get_prefix(){
-		$prefix =  wp_cache_get( __CLASS__ . 'ns' );
-		if( empty( $prefix ) ){
-			$prefix = __CLASS__ . 'ns_prefix';
-			wp_cache_set(  __CLASS__ . 'ns', $prefix );
 
-		}
-
-		return $prefix;
-
-	}
 
 	/**
 	 * Get object from object cache
@@ -104,7 +95,11 @@ class Caldera_Forms_Sync_Factory {
 	 * @return bool|Caldera_Forms_Sync_Sync|Caldera_Forms_Sync_HTML
 	 */
 	protected static function get_cache( $identifier ){
-		return wp_cache_get( $identifier, __CLASS__ );
+		if( isset( self::$cache[ $identifier ] ) &&  is_object( self::$cache[ $identifier ] ) ){
+			return self::$cache[ $identifier ];
+		}
+
+		return false;
 
 	}
 
@@ -117,7 +112,7 @@ class Caldera_Forms_Sync_Factory {
 	 * @param Caldera_Forms_Sync_Sync|Caldera_Forms_Sync_HTML $object Object tocache
 	 */
 	protected static function add_to_cache( $identifier, Caldera_Forms_Sync_Sync $object ){
-		wp_cache_set( $identifier, $object, __CLASS__ );
+		self::$cache[ $identifier ] = $object;
 	}
 
 	/**

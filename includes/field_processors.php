@@ -51,7 +51,7 @@ function cf_handle_file_upload( $entry, $field, $form ){
 		$transdata = Caldera_Forms_Transient::get_transient( $entry );
 
 		if( !empty( $transdata ) ){
-
+			Caldera_Forms_Transient::delete_at_submission_complete( $entry );
 			return $transdata;
 		}
 
@@ -144,7 +144,7 @@ function cf_handle_file_upload( $entry, $field, $form ){
 			if( is_callable( $uploader) ){
 				$upload = call_user_func( $uploader, $file, $upload_args );
 			}else{
-				return new WP_Error( 'invalid-upload-handler', sprintf( __( 'Invalid file upload handler. See %s', 'caldera-forms'), ' https://calderaforms.com/doc/alternative-file-upload-directory/') );
+				return new WP_Error( 'invalid-upload-handler', sprintf( __( 'Invalid file upload handler. See %s', 'caldera-forms'), 'https://calderaforms.com/doc/alternative-file-upload-directory/') );
 			}
 
 			if( !empty( $upload['error'] ) ){
@@ -226,8 +226,33 @@ function caldera_forms_validate_phone_better( $entry, $field, $form ){
 	}
 
 	if( false !== strpos( $entry, '+' ) && 4 >= strlen( $entry ) ){
-		return new WP_Error( );
+		return new WP_Error( 400, __( 'Country code is required', 'caldera-forms' ) );
 	}
 
 	return $entry;
+}
+
+add_filter( 'caldera_forms_validate_field_star_rating', 'caldera_forms_validate_field_star_rating', 10, 3 );
+
+/**
+ * Validate star rating fields
+ *
+ * Makes 0 an invalid entry for a required star rating field
+ *
+ * @since 1.5.5
+ *
+ * @uses "caldera_forms_validate_field_star_rating" filter
+ *
+ * @param int|string $entry Entyre value
+ * @param array $field
+ * @param array $form
+ * @return WP_Error|string|int
+ */
+function caldera_forms_validate_field_star_rating( $entry, $field, $form ){
+	if( ! empty( $field[ 'required' ] ) && empty( $entry ) ){
+		return new WP_Error( 400, __( 'Value is required', 'caldera-forms' ) );
+	}
+
+	return $entry;
+
 }

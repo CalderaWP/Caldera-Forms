@@ -1,3 +1,4 @@
+
 var cf_jsfields_init, cf_presubmit;
 (function($){
 
@@ -8,7 +9,7 @@ var cf_jsfields_init, cf_presubmit;
 			errorTemplate : '<span></span>',
 			errorsContainer : function( field ){
 				return field.$element.closest('.form-group');
-			}					
+			}
 		}).on('field:error', function( fieldInstance ) {
 
             if ( 'number' == this.$element.attr( 'type' ) && 0 == this.$element.attr( 'min' )  ) {
@@ -27,6 +28,10 @@ var cf_jsfields_init, cf_presubmit;
 				el: this.$element
 			} );
         }).on('field:success', function( fieldInstance ) {
+        	if( 'star' === this.$element.data( 'type' ) && this.$element.prop('required') && 0 == this.$element.val() ){
+				fieldInstance.validationResult = false;
+				return;
+			}
 			this.$element.closest('.form-group').removeClass('has-error');
 			$( document ).trigger( 'cf.validate.fieldSuccess', {
 				inst: fieldInstance,
@@ -48,14 +53,6 @@ var cf_jsfields_init, cf_presubmit;
 		})
 	};
 
-
-
-	
-	// init sync
-	$('[data-sync]').each( function(){
-		var $field = $( this );
-		new CalderaFormsFieldSync( $field, $field.data('binds'), $field.closest('form'), $ );
-	});
 	$( document ).on('change keypress', "[data-sync]", function(){
 		$(this).data( 'unsync', true );
 	});
@@ -85,11 +82,11 @@ var cf_jsfields_init, cf_presubmit;
 
 		}
 
-	};	
+	};
 
 	$('document').ready(function(){
-		// check for init function		
-		cf_jsfields_init();		
+		// check for init function
+		cf_jsfields_init();
 	});
 
 	// if pages, disable enter
@@ -113,7 +110,7 @@ var cf_jsfields_init, cf_presubmit;
 	});
 	// stuff trigger
 	$(document).on('cf.add cf.enable cf.disable cf.pagenav', cf_jsfields_init );
-	
+
 	// Page navigation
 	$(document).on('click', '[data-page]', function(e){
 
@@ -134,10 +131,10 @@ var cf_jsfields_init, cf_presubmit;
 		if( !form.length ){
 			return;
 		}
-		
+
 		cf_validate_form( form ).destroy();
 
-		fields = form.find('[data-field]');		
+		fields = form.find('[data-field]');
 		form.find('.has-error').removeClass('has-error');
 
 		if( clicked.data('page') !== 'prev' && page >= current_page ){
@@ -202,9 +199,9 @@ var cf_jsfields_init, cf_presubmit;
 			cf_validate_form( form ).validate();
 			return false;
 		}
-		
+
 		if( clicked.data('page') === 'next'){
-			
+
 			if(breadcrumb){
 				breadcrumb.find('li.active').removeClass('active').children().attr('aria-expanded', 'false');
 			}
@@ -236,12 +233,12 @@ var cf_jsfields_init, cf_presubmit;
 				$('#' + clicked.data('pagenav') + '	.caldera-form-page[data-formpage="'+ ( clicked.data('page') ) +'"]').show().attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' );
 				clicked.parent().addClass('active').children().attr('aria-expanded', 'true');
 			}
-			
+
 		}
 		$('html, body').animate({
 			scrollTop: form.offset().top - 100
 		}, 200);
-		
+
 		$(document).trigger('cf.pagenav');
 
 	});
@@ -272,6 +269,11 @@ var cf_jsfields_init, cf_presubmit;
 		var $clicked = $( this ),
 			$form = $clicked.closest('.caldera_forms_form'),
 			validator = cf_validate_form( $form );
+		$( document ).trigger( 'cf.form.submit', {
+			e:e,
+			$form:$form
+		} );
+
 
 
 		if( ! validator.validate() ){
@@ -308,6 +310,10 @@ var cf_jsfields_init, cf_presubmit;
 
 			e.preventDefault();
 		}else{
+			$( document ).trigger( 'cf.form.validated', {
+				e:e,
+				$form:$form
+			} );
 			validator.destroy();
 		}
 	});
@@ -334,20 +340,22 @@ window.addEventListener("load", function(){
 				nonceCheckers[ formId ] = new CalderaFormsResetNonce( formId, CF_API_DATA, $ );
 				nonceCheckers[ formId ].init();
 			});
-
 		}
 
 		/** Setup forms */
 		if( 'object' === typeof CFFIELD_CONFIG ) {
-			var form_id, config_object, config, instance, $el, state, protocolCheck, jQueryCheck,
+			var form_id, config_object, config, instance, $el, state, protocolCheck, jQueryCheck, $form,
 				jQueryChecked = false,
 				protocolChecked = false;
 			$('.caldera_forms_form').each(function (i, el) {
 				$el = $(el);
+
 				form_id = $el.attr('id');
 				instance = $el.data('instance');
 
 				if ('object' === typeof CFFIELD_CONFIG[instance] ) {
+					$form = $( document.getElementById( form_id ));
+
 					if ( ! protocolChecked ) {
 						//check for protocol mis-match on submit url
 						protocolCheck = new CalderaFormsCrossOriginWarning($el, $, CFFIELD_CONFIG[instance].error_strings);
@@ -366,21 +374,42 @@ window.addEventListener("load", function(){
 						jQueryChecked = true;
 					}
 
+					formId = $el.data( 'form-id' );
 					config = CFFIELD_CONFIG[instance].configs;
 
 					var state = new CFState(formId, $ );
-					state.init( CFFIELD_CONFIG[instance].fields.defaults );
+					state.init( CFFIELD_CONFIG[instance].fields.defaults,CFFIELD_CONFIG[instance].fields.calcDefaults );
 
 					if( 'object' !== typeof window.cfstate ){
 						window.cfstate = {};
 					}
+
 					window.cfstate[ form_id ] = state;
+
+					$form.find( '[data-sync]' ).each( function(){
+						var $field = $( this );
+						new CalderaFormsFieldSync( $field, $field.data('binds'), $form, $ , state);
+					});
+
+					
 					config_object = new Caldera_Forms_Field_Config( config, $(document.getElementById(form_id)), $, state );
 					config_object.init();
+					$( document ).trigger( 'cf.form.init',{
+						idAttr:  form_id,
+						formId: formId,
+						state: state,
+						fieldIds: CFFIELD_CONFIG[instance].fields.hasOwnProperty( 'ids' ) ? CFFIELD_CONFIG[instance].fields.ids : []
+					});
+
+
+
 				}
 			});
 
 		}
+
+
+
 
 
 	})( jQuery );
@@ -398,9 +427,10 @@ window.addEventListener("load", function(){
  * @param binds Field IDs to bind to
  * @param $form jQuery object for form
  * @param $ jQuery
+ * @param {CFState} state
  * @constructor
  */
-function CalderaFormsFieldSync( $field, binds, $form, $  ){
+function CalderaFormsFieldSync( $field, binds, $form, $, state  ){
 	for( var i = 0; i < binds.length; i++ ){
 
 		$( document ).on('keyup change blur mouseover', "[data-field='" + binds[ i ] + "']", function(){
@@ -428,6 +458,7 @@ function CalderaFormsFieldSync( $field, binds, $form, $  ){
 				}
 				str = str.replace( re , val );
 			}
+			state.mutateState( $field.attr( 'id' ), val );
 			$field.val( str );
 		} );
 		$("[data-field='" + binds[ i ] + "']").trigger('change');

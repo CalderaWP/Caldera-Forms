@@ -36,6 +36,7 @@ class Caldera_Forms_Admin_Assets {
 		self::enqueue_script( 'edit-fields' );
 		self::enqueue_script( 'edit-editor' );
 		self::enqueue_style( 'editor-grid' );
+
 		wp_enqueue_script( 'jquery-ui-users' );
 		wp_enqueue_script( 'jquery-ui-sortable' );
 		wp_enqueue_script( 'jquery-ui-droppable' );
@@ -100,7 +101,16 @@ class Caldera_Forms_Admin_Assets {
 			'password-strength-meter'
 		), $version );
 
-		wp_register_script( self::slug( 'edit-fields' ), Caldera_Forms_Render_Assets::make_url( 'fields' ), array( 'jquery', 'wp-color-picker' ), $version );
+		if( Caldera_Forms_Render_Assets::should_minify() ){
+			wp_register_script( Caldera_Forms_Render_Assets::make_slug( 'inputmask' ), Caldera_Forms_Render_Assets::make_url( 'inputmask' ), array( 'jquery' ), $version );
+		}
+
+		wp_register_script( self::slug( 'edit-fields' ), Caldera_Forms_Render_Assets::make_url( 'fields' ), array(
+			'jquery',
+			'wp-color-picker',
+			Caldera_Forms_Render_Assets::make_slug( 'inputmask' )
+
+		), $version );
 
 		//this is bad, but fixes -> https://github.com/CalderaWP/Caldera-Forms/issues/1141
 		wp_register_script( self::slug( 'edit-editor' ), CFCORE_URL . 'assets/js/edit.js', array( 'jquery', 'wp-color-picker' ), $version );

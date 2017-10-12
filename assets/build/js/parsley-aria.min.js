@@ -1,0 +1,1 @@
+jQuery(document).ready(function(a){window.Parsley.on("field:error",function(){this.$element.attr("aria-describedby",this._ui.errorsWrapperId).attr("aria-invalid","true"),this._ui.$errorsWrapper.attr("aria-live","polite")}),window.Parsley.on("field:success",function(){this.$element.attr("aria-invalid")&&this.$element.removeAttr("aria-invalid")})});
