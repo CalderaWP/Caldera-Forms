@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.7-b-1 - 2017-09-26 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.6.2-b-2 - 2017-10-09 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -114,18 +114,24 @@ function CFState(formId, $ ){
 	 * @param formFields {Object} Should be flat field ID attribute : Field default
 	 */
 	this.init = function (formFields, calcDefaults) {
-		var $field,
-			$el;
+
 		for ( var id in formFields ){
-			if( bindField(id)){
+			if( 'object' === typeof  calcDefaults[id] ){
+				if( 'calculation' == calcDefaults[id].type ){
+					bindCalcField(id,calcDefaults[id])
+				}
+
+			}else if( bindField(id)){
 				fieldVals[id] = formFields[id];
+				if( calcDefaults.hasOwnProperty(id) ){
+					calcVals[id] = calcDefaults[id];
+				}else{
+					calcVals[id] = null;
+				}
 			}else{
 				fieldVals[id] = '';
 				unBound[id] = true;
-			}
-
-			if( calcDefaults.hasOwnProperty(id) && null !== calcDefaults.id ){
-				calcVals[id] = calcDefaults[id];
+				calcVals[id] = null;
 			}
 
 		}
@@ -182,7 +188,19 @@ function CFState(formId, $ ){
 			return parseFloat( highest );
 		}
 
-		if (calcVals.hasOwnProperty(id)) {
+		if (calcVals.hasOwnProperty(id) ) {
+			if( false === calcVals[id] || null === calcVals[id] ){
+				//@TODO use let here, when ES6.
+				var _val = findCalcVal( $( document.getElementById( id ) ) );
+				if( isString( _val )  ) {
+					_val = parseFloat( _val );
+				}
+
+				if( isNumber( _val ) ){
+					calcVals[id] = _val;
+				}
+			}
+
 			val = calcVals[id];
 		} else {
 			val = self.getState(id);
@@ -191,6 +209,10 @@ function CFState(formId, $ ){
 				val = val.reduce( function ( a, b) {
 					return parseFloat( a ) + parseFloat( b );
 				}, 0);
+			}
+
+			if( isNumber( val ) ){
+				calcVals[id] = val;
 			}
 		}
 
@@ -302,7 +324,7 @@ function CFState(formId, $ ){
 	 *
 	 * @since 1.5.3
 	 *
-	 * @param id {String}
+	 * @param {String} id
 	 * @returns {boolean}
 	 */
 	function bindField(id) {
@@ -310,10 +332,14 @@ function CFState(formId, $ ){
 		if ($field.length) {
 			$field.on('change keyup', function () {
 				var $el = $(this);
+				console.log( $field.attr( 'type' ) );
+				console.log( $el.attr( 'type' ) );
 				calcVals[$el.attr('id')] = findCalcVal( $el );
 				self.mutateState([$el.attr('id')],$el.val());
 			});
+			calcVals[id] = findCalcVal( $( document.getElementById( id ) ) );
 			self.mutateState([$field.attr('id')],$field.val());
+
 			return true;
 		} else {
 			$field = $('.' + id);
@@ -372,6 +398,7 @@ function CFState(formId, $ ){
 						});
 					}
 
+
 					self.mutateState(id,val);
 
 				});
@@ -388,16 +415,41 @@ function CFState(formId, $ ){
 	}
 
 	/**
+	 * Bind change on a calculation field so that when state changes, calc value changes with it.
+	 *
+	 * @since 1.5.6.2
+	 *
+	 * @param {String} id
+	 * @param {Object} config
+	 */
+	function bindCalcField(id,config) {
+		fieldVals[id] = 0;
+		calcVals[id] = 0;
+		self.events().subscribe(id,function (value,id) {
+			calcVals[id] = value;
+		});
+	}
+
+	/**
 	 * Find calculation value for an element
 	 *
 	 * @since 1.5.6
-	 * @param $field
-	 * @returns {*}
+	 * @param {jQuery} $field
+	 * @returns {Float}
 	 */
 	function findCalcVal( $field ) {
 		if( $field.is( 'select' ) && $field.has( 'option' ) ){
 			$field = $field.find(':selected');
 		}
+
+		if( ! $field.length ){
+			return 0;
+		}
+
+		if( $field.is( 'hidden' ) ){
+			return $field.val();
+		}
+
 		var val = 0;
 
 		var attr = $field.attr('data-calc-value');
@@ -408,11 +460,7 @@ function CFState(formId, $ ){
 			val = $field.val();
 		}
 
-		if( ! isNaN( val ) ){
-			return val;
-		}
-
-		return 0;
+		return parseFloat(val);
 	}
 
 	/**
@@ -438,11 +486,40 @@ function CFState(formId, $ ){
 	 * @param number
 	 * @returns {*}
 	 */
-	function parseIne( number ) {
+	function parseInt( number ) {
 		if( ! number || isNaN( number) ){
 			return 0;
 		}
 		return window.parseInt( number );
+	}
+
+
+	/**
+	 * Determine if a value is a Number
+	 *
+	 * @since 1.5.6.2
+	 *
+	 * Copied from axios/lib/utils.js
+	 *
+	 * @param {Object} val The value to test
+	 * @returns {boolean} True if value is a Number, otherwise false
+	 */
+	function isNumber(val) {
+		return typeof val === 'number';
+	}
+
+	/**
+	 * Determine if a value is a String
+	 *
+	 * @since 1.5.6.2
+	 *
+	 * Copied from axios/lib/utils.js
+
+	 * @param {Object} val The value to test
+	 * @returns {boolean} True if value is a String, otherwise false
+	 */
+	function isString(val) {
+		return typeof val === 'string';
 	}
 
 
@@ -6750,12 +6827,25 @@ function toggle_button_init(id, el){
 	 */
 	this.calculation = function (fieldConfig) {
 		var lastValue = null,
+			/**
+			 * Debounced version of the run() function below
+			 *
+			 * @since 1.5.6
+			 */
             debouncedRunner = debounce(
                 function(){
                     run(state)
                 }, 250
             );
-		
+
+		/**
+		 * Adds commas or whatever to the display fo value
+		 *
+		 * @since 1.5.6
+		 *
+		 * @param {string} nStr
+		 * @returns {string}
+		 */
 		function addCommas(nStr){
 			nStr += '';
 			var x = nStr.split('.'),
@@ -6770,8 +6860,13 @@ function toggle_button_init(id, el){
 		}
 
 
-
-		var run = function(){
+		/**
+         * Function that triggers calcualtion and updates state/DOM if it changed
+         * NOTE: Don't use directly, use debounced version
+         *
+         * @since 1.5.6
+         */
+        var run = function(){
 			var result = window[fieldConfig.callback].apply(null, [state] );
 			if( ! isFinite( result ) ){
 				result = 0;
@@ -6788,19 +6883,23 @@ function toggle_button_init(id, el){
                     result = result.toFixed(2);
                 }
 
-				$('#' + fieldConfig.id ).html(addCommas( result ) );
-				$('#' + fieldConfig.targetId ).val( result );
+				$( '#' + fieldConfig.id ).html( addCommas( result ) ).data( 'calc-value', result );
+				$('#' + fieldConfig.targetId ).val( result ).trigger( 'change' );
 			}
 		};
 
+		//Update when any field that is part of the formula changes
 		$.each( fieldConfig.fieldBinds,  function (feild,feildId) {
 			state.events().subscribe( feildId, debouncedRunner );
 		});
 
+		//Run on CF page change, field added, field removed or modal opened.
 		$(document).on('cf.pagenav cf.add cf.remove cf.modal', function (e,obj) {
 		    if( 'cf' == e.type && 'remove' === e.namespace && 'object' === typeof  obj && obj.hasOwnProperty('field' ) && obj.field === fieldConfig.id ){
-                    lastValue = null;
+		    	//If calculation field is removed, make sure if it comes back, an update to DOM/state will be triggered.
+				lastValue = null;
             }else{
+            	//If trigger wasn't being removed, run.
                 debouncedRunner();
 
             }

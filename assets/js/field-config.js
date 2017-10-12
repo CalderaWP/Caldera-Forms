@@ -598,12 +598,25 @@
 	 */
 	this.calculation = function (fieldConfig) {
 		var lastValue = null,
+			/**
+			 * Debounced version of the run() function below
+			 *
+			 * @since 1.5.6
+			 */
             debouncedRunner = debounce(
                 function(){
                     run(state)
                 }, 250
             );
-		
+
+		/**
+		 * Adds commas or whatever to the display fo value
+		 *
+		 * @since 1.5.6
+		 *
+		 * @param {string} nStr
+		 * @returns {string}
+		 */
 		function addCommas(nStr){
 			nStr += '';
 			var x = nStr.split('.'),
@@ -618,8 +631,13 @@
 		}
 
 
-
-		var run = function(){
+		/**
+         * Function that triggers calcualtion and updates state/DOM if it changed
+         * NOTE: Don't use directly, use debounced version
+         *
+         * @since 1.5.6
+         */
+        var run = function(){
 			var result = window[fieldConfig.callback].apply(null, [state] );
 			if( ! isFinite( result ) ){
 				result = 0;
@@ -636,19 +654,23 @@
                     result = result.toFixed(2);
                 }
 
-				$('#' + fieldConfig.id ).html(addCommas( result ) );
-				$('#' + fieldConfig.targetId ).val( result );
+				$( '#' + fieldConfig.id ).html( addCommas( result ) ).data( 'calc-value', result );
+				$('#' + fieldConfig.targetId ).val( result ).trigger( 'change' );
 			}
 		};
 
+		//Update when any field that is part of the formula changes
 		$.each( fieldConfig.fieldBinds,  function (feild,feildId) {
 			state.events().subscribe( feildId, debouncedRunner );
 		});
 
+		//Run on CF page change, field added, field removed or modal opened.
 		$(document).on('cf.pagenav cf.add cf.remove cf.modal', function (e,obj) {
 		    if( 'cf' == e.type && 'remove' === e.namespace && 'object' === typeof  obj && obj.hasOwnProperty('field' ) && obj.field === fieldConfig.id ){
-                    lastValue = null;
+		    	//If calculation field is removed, make sure if it comes back, an update to DOM/state will be triggered.
+				lastValue = null;
             }else{
+            	//If trigger wasn't being removed, run.
                 debouncedRunner();
 
             }
