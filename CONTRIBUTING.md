@@ -30,6 +30,8 @@ Please also review the Google Doc in our drive "How To Release Caldera Forms To 
 * If tests pass, in master, change version number in package.json to the final version number (no rc or beta or whatever)
 * Use `grunt version_number` to update version number in other places.
 * Use `grunt build` to build tag for WordPress.org and then follow steps in "How To Release Caldera Forms To WordPress.org" to get it to WordPress/ release post/ etc.
+* Tag release
+	* If you skip this CDN will not work with new release, which is bad.
 * Merge master to develop.
 * Use grunt to change version number to <next-version>-b-1.
 
