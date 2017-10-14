@@ -510,7 +510,7 @@ class Caldera_Forms_Fields {
 				"file"        => CFCORE_PATH . "fields/select2/field/field.php",
 				'icon'          => CFCORE_URL . 'assets/build/images/plus.svg',
 				"category"    => __( 'Select', 'caldera-forms' ),
-				"description" => 'Select2 dropdown',
+				"description" => __( 'Select2 dropdown', 'caldera-forms' ),
 				"options"     => "multiple",
 				"static"      => true,
 				"setup"       => array(
