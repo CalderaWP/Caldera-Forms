@@ -1709,10 +1709,29 @@ class Caldera_Forms {
 	 */
 	static public function check_condition( $conditions, $form, $entry_id = null ) {
 
-		$trues = array();
+
 		if ( empty( $conditions[ 'group' ] ) ) {
 			return true;
 		}
+
+		/**
+		 * Determine result of condition before logic runs
+		 *
+		 * @since 1.5.7
+		 *
+		 * @param null|bool $result Return a boolean to bypass logic and use that as result. Else normal logic will be run.
+		 * @param array $conditions The condition to be checked
+		 * @param array $form Form config
+		 * @param int|null $entry_id Entry ID. May be null.
+		 */
+		$result = apply_filters( 'caldera_forms_pre_check_condition', null, $conditions, $form, $entry_id );
+
+		if( is_bool( $result ) ){
+			return $result;
+		}
+
+		$trues = array();
+
 
 		foreach ( $conditions[ 'group' ] as $groupid => $lines ) {
 			$truelines = array();
@@ -1833,16 +1852,28 @@ class Caldera_Forms {
 
 		if ( $conditions[ 'type' ] == 'use' || $conditions[ 'type' ] == 'show' ) {
 			if ( in_array( true, $trues ) ) {
-				return true;
+				$result =  true;
 			}
 		} elseif ( $conditions[ 'type' ] == 'not' || $conditions[ 'type' ] == 'hide' || $conditions[ 'type' ] == 'disable' ) {
 			if ( ! in_array( true, $trues ) ) {
-				return true;
+				$result = true;
 			}
 		}
 
 		// false if nothing happens
-		return false;
+		$result = false;
+
+		/**
+		 * Change result of condition after logic runs
+		 *
+		 * @since 1.5.7
+		 *
+		 * @param bool $result If condition passes or not
+		 * @param array $conditions The condition to be checked
+		 * @param array $form Form config
+		 * @param int|null $entry_id Entry ID. May be null.
+		 */
+		return apply_filters( 'caldera_forms_post_check_condition', $result, $conditions, $form, $entry_id );
 	}
 
 	// FRONT END STUFFF
