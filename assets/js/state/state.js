@@ -282,21 +282,27 @@ function CFState(formId, $ ){
 							break;
 					}
 
-					if( ! $collection.length ){
-						val = 0;
-					} else if ( 1 == $collection.length){
-						val = findCalcVal( $($collection[0]));
-					} else if ( 'checkbox' === type ) {
+					if ( 'checkbox' === type ) {
 						var $v, sum = 0;
-						$collection.each(function (k, v) {
-							$v = $(v);
-							if( $v.prop('checked')){
-								sum += parseFloat(findCalcVal($v));
-							}
-							val.push($v.val());
-						});
+						if ( $collection.length ) {
+							$collection.each(function (k, v) {
+								$v = $(v);
+								if ($v.prop('checked')) {
+									sum += parseFloat(findCalcVal($v));
+									val.push($v.val());
+								}
+							});
+						}else{
+							val = [];
+						}
+
 						calcVals[id] = sum;
-					}else{
+					} else if( ! $collection.length ){
+						val = 0;
+
+					} else if ( 1 == $collection.length ){
+						val = findCalcVal( $($collection[0]));
+					} else{
 						$collection.each(function (i, el) {
 							var $this = $(el);
 

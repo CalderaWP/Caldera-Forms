@@ -40,7 +40,23 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 	protected $form_count;
 
 
+	/**
+	 * Form field
+	 *
+	 * @since unknown
+	 *
+	 * @var array
+	 */
 	protected $fields;
+
+	/**
+	 * Field type lookup cache
+	 *
+	 * @since 1.5.7
+	 *
+	 * @var array
+	 */
+	protected $types;
 
 	/**
 	 * Caldera_Forms_Render_FieldsJS constructor.
@@ -74,7 +90,7 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 		if( ! empty( $this->form[ 'fields' ] ) ){
 			foreach( $this->form[ 'fields' ] as  $field ){
 				$this->fields[ 'ids' ][] = $this->field_id( $field[ 'ID' ] );
-				$type = Caldera_Forms_Field_Util::get_type( $field, $this->form );
+				$type = $this->get_field_type( $field );
 				$this->map_field( $type, $field );
 				if( 'summary' == $type ){
 					$type = 'html';
@@ -709,6 +725,15 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 	 */
 	protected function get_field_default( $field ){
 		$default = Caldera_Forms_Field_Util::get_default( $field, $this->form, true );
+		if( is_bool( $default ) ){
+			$default = '';
+		}
+
+		$type = $this->get_field_type( $field );
+		switch ( $type ){
+
+		}
+
 		return $default;
 
 	}
@@ -724,8 +749,15 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 	protected function map_default( $field, $default ){
 		$id_attr = $this->field_id( $field[ 'ID' ] );
 		$this->fields[ 'defaults' ][ $id_attr ]     = $default;
-		if ( 'calculation' != Caldera_Forms_Field_Util::get_type( $field, $this->form ) ) {
-			$this->fields[ 'calcDefaults' ][ $id_attr ] = Caldera_Forms_Field_Util::get_default_calc_value( $field, $this->form );
+		if ( 'calculation' != $this->get_field_type( $field ) ) {
+			$calc_default = Caldera_Forms_Field_Util::get_default_calc_value( $field, $this->form );
+			if( is_bool( $calc_default ) ){
+				$calc_default = (bool) $calc_default;
+			}elseif( ! is_numeric( $calc_default ) ){
+				$calc_default = 0;
+			}
+
+			$this->fields[ 'calcDefaults' ][ $id_attr ] = (float) $calc_default;
 		}else{
 			$this->fields[ 'calcDefaults' ][ $id_attr ] = array(
 				'type'      => 'calculation',
@@ -759,6 +791,23 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 	 */
 	protected function calc_value_id( array $field ){
 		return $this->calc_target_id( $field ) . '-value';
+	}
+
+	/**
+	 * Find type of field with caching
+	 *
+	 * @since 1.5.7
+	 *
+	 * @param array $field Field config
+	 *
+	 * @return string
+	 */
+	protected function get_field_type( $field ){
+		if( ! isset( $this->types[ $field[ 'ID' ] ] ) ){
+			$this->types[ $field[ 'ID' ] ] = Caldera_Forms_Field_Util::get_type( $field, $this->form );
+		}
+
+		return $this->types[ $field[ 'ID' ] ];
 	}
 
 }
