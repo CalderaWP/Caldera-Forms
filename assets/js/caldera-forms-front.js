@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.6.2 - 2017-10-12 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.7-b-1 - 2017-10-27 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -369,21 +369,27 @@ function CFState(formId, $ ){
 							break;
 					}
 
-					if( ! $collection.length ){
-						val = 0;
-					} else if ( 1 == $collection.length){
-						val = findCalcVal( $($collection[0]));
-					} else if ( 'checkbox' === type ) {
+					if ( 'checkbox' === type ) {
 						var $v, sum = 0;
-						$collection.each(function (k, v) {
-							$v = $(v);
-							if( $v.prop('checked')){
-								sum += parseFloat(findCalcVal($v));
-							}
-							val.push($v.val());
-						});
+						if ( $collection.length ) {
+							$collection.each(function (k, v) {
+								$v = $(v);
+								if ($v.prop('checked')) {
+									sum += parseFloat(findCalcVal($v));
+									val.push($v.val());
+								}
+							});
+						}else{
+							val = [];
+						}
+
 						calcVals[id] = sum;
-					}else{
+					} else if( ! $collection.length ){
+						val = 0;
+
+					} else if ( 1 == $collection.length ){
+						val = findCalcVal( $($collection[0]));
+					} else{
 						$collection.each(function (i, el) {
 							var $this = $(el);
 
