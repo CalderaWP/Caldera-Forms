@@ -21,6 +21,8 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
 
 	public function tearDown(){
 
+		$this->set_mock_form();
+
 		$forms = Caldera_Forms_Forms::get_forms();
 		if( ! empty( $forms  ) ){
 			foreach( $forms  as $id => $form) {
