@@ -75,8 +75,8 @@ class Test_Caldera_Forms_Forms extends Caldera_Forms_Test_Case {
 		));
 		$expected[ 'ID' ] = $id;
 
-		$this->assertSame( $id, $via_db_api[ "ID" ] );
-		$this->assertEquals( $expected, $saved );
+		$this->assertSame( $id, $config_via_db_api[ "ID" ] );
+		$this->assertEquals( $expected, $config_via_db_api );
 		$this->assertEquals( $expected, $new_form );
 
 	}
@@ -103,7 +103,7 @@ class Test_Caldera_Forms_Forms extends Caldera_Forms_Test_Case {
 
 		$via_forms_api = Caldera_Forms_Forms::get_form( $id );
 
-		$this->assertSame( $via_db_api[ 'ID' ], $via_forms_api[ 'ID' ] );
+		$this->assertSame( $new_form[ 'ID' ], $config_via_db_api[ 'ID' ] );
 
 		$this->assertSame( $config_via_db_api[ 'name' ], $via_forms_api[ 'name' ] );
 		$this->assertSame( $config_via_db_api[ 'description' ], $via_forms_api[ 'description' ] );
