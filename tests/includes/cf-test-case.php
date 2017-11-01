@@ -22,6 +22,7 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
 	public function tearDown(){
 
 		$forms = Caldera_Forms_Forms::get_forms();
+
 		if( ! empty( $forms  ) ){
 			foreach( $forms  as $id => $form) {
 				Caldera_Forms_Forms::delete_form( $id );
