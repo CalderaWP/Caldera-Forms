@@ -10,6 +10,8 @@
  */
 class Caldera_Forms_Test_Case extends \PHPUnit\Framework\TestCase {
 
+	const MOCK_FORM_ID = 'cf12345hiroy';
+
     /**
      * A form that isn't saved or on filter to use as a mock
      *
@@ -21,12 +23,13 @@ class Caldera_Forms_Test_Case extends \PHPUnit\Framework\TestCase {
 
     public function setUp(){
 		$this->set_mock_form();
+		//test that mock form is set properly
+		$this->assertSame( self::MOCK_FORM_ID, $this->mock_form[ 'ID' ] );
+		$this->assertSame( 1, $this->mock_form[ 'pinned' ] );
 		parent::setUp();
 	}
 
 	public function tearDown(){
-
-
 
 		$forms = Caldera_Forms_Forms::get_forms();
 
@@ -82,7 +85,7 @@ class Caldera_Forms_Test_Case extends \PHPUnit\Framework\TestCase {
      */
 	private function set_mock_form(){
         $this->mock_form = array(
-            'ID'                 => 'cf1234567890',
+            'ID'                 => self::MOCK_FORM_ID,
             'name'               => 'Another form',
             'description'        => '',
             'db_support'         => 1,
