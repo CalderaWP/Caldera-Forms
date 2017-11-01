@@ -21,13 +21,13 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
 
 	public function tearDown(){
 
-		$forms = get_option( '_caldera_forms_forms', array() );
+		$forms = Caldera_Forms_Forms::get_forms();
 		if( ! empty( $forms  ) ){
 			foreach( $forms  as $id => $form) {
-				delete_option( $id );
+				Caldera_Forms_Forms::delete_form( $id );
 			}
 		}
-		delete_option( '_caldera_forms_forms' );
+
 		wp_cache_delete( '_caldera_forms_forms', 'options' );
 		parent::tearDown();
 	}
