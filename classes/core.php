@@ -2228,22 +2228,32 @@ class Caldera_Forms {
 		// entry fetch
 		if ( ! empty( $entry_id ) && isset( $form[ 'fields' ][ $field_id ] ) ) {
 
+
 			if( ! empty( $processed_data[ $indexkey ][ $field_id ] ) ){
 				$entry = $processed_data[ $indexkey ][ $field_id ];
 			}elseif ( ! empty( $processed_data[ $form[ 'ID' ] ] ) && ! empty( $processed_data[ $form[ 'ID' ] ][ '_entry_id' ] ) ){
+				$entry = null;
 				if( $processed_data[ $form[ 'ID' ] ][ '_entry_id' ] === $entry_id ){
 					$processed_data[ $indexkey ] = $processed_data[ $form[ 'ID' ] ];
 					if( ! empty( $processed_data[ $indexkey ][ $field_id ]  ) ){
 						$entry = $processed_data[ $indexkey ][ $field_id ];
 					}
 				}
+			}else{
+				$entry = null;
 			}
 
 			if( ! $entry ){
 				global $wpdb;
+				
+				
+				$entry = $wpdb->get_results( $wpdb->prepare(
+					"SELECT `value` FROM `" . $wpdb->prefix . "cf_form_entry_values` WHERE `entry_id` = %d AND `field_id` = %s", $entry_id, $field_id
+				), ARRAY_A );
 
-				$entry = $wpdb->get_results( $wpdb->prepare( "
-				SELECT `value` FROM `" . $wpdb->prefix . "cf_form_entry_values` WHERE `entry_id` = %d AND `field_id` = %s AND `slug` = %s", $entry_id, $field_id, $form[ 'fields' ][ $field_id ][ 'slug' ] ), ARRAY_A );
+				//allow plugins to alter the value
+				$entry = apply_filters( 'caldera_forms_get_field_entry', $entry, $field_id, $form, $entry_id );
+				$processed_data[ $indexkey ][ $field_id ] = $entry;
 
 				if ( ! empty( $entry ) ) {
 					if ( count( $entry ) > 1 ) {
@@ -2254,14 +2264,15 @@ class Caldera_Forms {
 						$processed_data[ $indexkey ][ $field_id ] = $out;
 					} else {
 						$processed_data[ $indexkey ][ $field_id ] = $entry[ 0 ][ 'value' ];
+						if( isset( $processed_data[ $indexkey ][ $field_id ][ 'value' ] ) ){
+							$processed_data[ $indexkey ][ $field_id ] = $processed_data[ $indexkey ][ $field_id ][ 'value' ];
+						}
+
 					}
 				} else {
 					$processed_data[ $indexkey ][ $field_id ] = null;
 				}
 			}
-
-			//allow plugins to alter the value
-			$entry = apply_filters( 'caldera_forms_get_field_entry', $entry, $field_id, $form, $entry_id );
 
 
 
