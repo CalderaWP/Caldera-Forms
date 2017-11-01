@@ -8,7 +8,7 @@
  * @link
  * @copyright 2016 Josh Pollock
  */
-class Caldera_Forms_Test_Case extends WP_UnitTestCase {
+class Caldera_Forms_Test_Case extends \PHPUnit\Framework\TestCase {
 
     /**
      * A form that isn't saved or on filter to use as a mock
@@ -19,9 +19,14 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
      */
     protected $mock_form;
 
+    public function setUp(){
+		$this->set_mock_form();
+		parent::setUp();
+	}
+
 	public function tearDown(){
 
-		$this->set_mock_form();
+
 
 		$forms = Caldera_Forms_Forms::get_forms();
 
