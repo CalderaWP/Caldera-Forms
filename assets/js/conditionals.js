@@ -80,26 +80,10 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 				}
 			}
 
-			if( ! $field ){
-				$field = $field = $( document.getElementById( field ) );
+			if( null !== state ){
+				state.rebind(field)
 			}
 
-			//put back in state
-
-			if ( null !== state ) {
-				if( 'object' === typeof  val ){
-					var _val = [];
-					jQuery.each(val, function( inputId, value ){
-						if( value ){
-							_val.push( $( '#' + inputId ).val() );
-						}
-					});
-
-					val = _val;
-				}
-				state.rebind(field);
-				state.mutateState(field, val);
-			}
 		}
 
 
