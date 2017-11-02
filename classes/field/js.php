@@ -731,6 +731,12 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 
 		$type = $this->get_field_type( $field );
 		switch ( $type ){
+			case 'radio':
+			case 'dropdown':
+			case 'filtered_select2':
+			case 'toggle_switch' :
+				$default = Caldera_Forms_Field_Util::find_select_field_value( $field, $default );
+				break;
 
 		}
 
