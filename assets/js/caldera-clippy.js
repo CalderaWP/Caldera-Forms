@@ -38,9 +38,8 @@ function CalderaFormsAdminClippys2( elId, config, $ ){
 			var importantDocs = dImportant[0],
 				products = dProduct[0],
 				product = products[ pickRandomProperty(products) ],
-				showExtend = 0 < products.length,
-				showDocs = 0 < importantDocs.length;
-
+				showExtend = 0 < Object.keys(products).length,
+				showDocs = 0 < Object.keys(importantDocs).length;
 
 
 			vm = new Vue({
