@@ -50,11 +50,42 @@ class Caldera_Forms_Field_Localizer {
 
 			$slug = Caldera_Forms_Render_Assets::field_script_to_localize_slug();
 			$data = array();
+
+			if( ! has_filter( 'caldera_forms_field_default_state_sanitizer' ) ){
+				//add_filter( 'caldera_forms_field_default_state_sanitizer', array( 'Caldera_Forms_Sanitize', 'remove_scripts' ) );
+			}
 			foreach ( self::$localized as $form_instance => $form_data ){
 				$form_data = array_merge( $form_data, array(
 					'error_strings' => self::error_strings()
 				));
 				$data[ $form_instance ] = $form_data;
+
+				if(
+					! empty( self::$localized[ $form_instance ][ 'fields' ] )
+					&& ! empty( self::$localized[ $form_instance ][ 'fields' ][ 'defaults' ] )
+				){
+					foreach( self::$localized[ $form_instance ][ 'fields' ][ 'defaults' ]  as $field_id => &$default ){
+						if( empty( $default ) ){
+							continue;
+						} elseif ( is_numeric( $default ) || is_string( $default )) {
+							/**
+							 * Set callback function to sanitize default values passed to CFState JavaScript for fields
+							 *
+							 * @since 1.5.7
+							 *
+							 * @param bool $default Field default
+							 * @param
+							 */
+							$default = apply_filters( 'caldera_forms_field_default_state_sanitizer', $default, $field_id );
+						}else{
+							unset ( self::$localized[ $form_instance ][ 'fields' ][ 'defaults' ][ $field_id ] );
+
+						}
+
+					}
+
+				}
+
 			}
 
 			$wp_scripts = wp_scripts();

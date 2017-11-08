@@ -217,7 +217,22 @@ class Caldera_Forms_Sanitize {
 
 		return $html;
 	}
-	
+
+	/**
+	 * Strip all scripts -- not just tags -- from a string
+	 *
+	 * Loosely based on wp_strip_all_tags()
+	 *
+	 * @since 1.5.7
+	 *
+	 * @param string $string   String containing HTML tags
+	 * @return string The processed string.
+	 */
+	public static function remove_scripts($string ) {
+		return preg_replace( '@<(script)[^>]*?>.*?</\\1>@si', '', $string );
+
+	}
+
 }
 
 

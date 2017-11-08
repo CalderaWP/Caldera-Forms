@@ -2654,7 +2654,15 @@ class Caldera_Forms {
 	 * Process current POST data as form submission.
 	 */
 	static public function process_submission() {
-		//ob_flush();
+		/** You MUST not add anything before caldera_forms_submit_process_before action.  */
+
+		/**
+		 * Runs before Caldera_Forms::process_submission() does anything
+		 *
+		 * @since 1.5.7
+		 */
+		do_action( 'caldera_forms_submit_process_before'  );
+
 		global $post;
 		global $process_id;
 		global $form;
