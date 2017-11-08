@@ -1150,7 +1150,15 @@ class Caldera_Forms_Admin {
 
 		wp_enqueue_style( $this->plugin_slug . '-admin-icon-styles', CFCORE_URL . 'assets/css/dashicon.css', array(), self::VERSION );
 
-		if ( $screen->base === 'post' ) {
+		/**
+		 * Control if Caldera Forms assets run in post editor
+         *
+         * @since 1.5.7
+         *
+         * @param bool $use Return false to disable.
+         * @param string $post_type Current post type
+		 */
+		if ( $screen->base === 'post' && apply_filters( 'caldera_forms_insert_button_include', true, get_post_type() ) ) {
 			Caldera_Forms_Admin_Assets::post_editor();
 
 		}
