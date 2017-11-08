@@ -777,14 +777,17 @@ This could also be a sign of a more serious issue on your server, but is probabl
 == Changelog ==
 = Caldera Forms 1.5.7 (November 8, 2017) Prepare For Full Force Nico =
 See: [https://calderaforms.com/updates/caldera-forms-1-5-7](https://calderaforms.com/updates/caldera-forms-1-5-7?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-5-7)
-
-* NEW FILTER: caldera_forms_insert_button_include to prevent loading of Caldera Forms JavaScript or CSS in post editor.
+* NEW HOOK: caldera_forms_pre_check_condition filter. Early entry point for conditionals for logging or using an alternative conditional logic system.
+* NEW HOOK: caldera_forms_insert_button_include filter. Use to prevent loading of Caldera Forms JavaScript or CSS in post editor.
+* NEW HOOK: caldera_forms_submit_process_before filter. Early entry point for logging submissions, etc.
 * FIXED: Caldera_Forms::get_field_data() when passed an entry ID always returned null.
 * FIXED: Calculation fields used option value, not calculation value, serve-side, for select2 fields.
 * FIXED: Role parameter for front-end entry viewer didn't work as string.
 * FIXED: CF_API_DATA was being printed to DOM once per form instead of once.
 * FIXED: If "Default Option" was used to set select (including autocomplete) default, it's was not set in CFState, effecting summary, HTML and calculation fields.
 * FIXED: Checkbox fields were reporting all options in CFState, effecting summary, HTML and calculation fields.
+* FIXED: Default value of fields, if initially hidden by conditionals, were not initially tracked properly in CFState, effecting summary, HTML and calculation fields.
+* FIXED: Default values (unchanged) are shown in summary/html fields as "false".
 
 = Caldera Forms 1.5.6.2 (October 12, 2017) Tomorrow is my birthday. =
 See: [https://calderaforms.com/updates/caldera-forms-1-5-6-2](https://calderaforms.com/updates/caldera-forms-1-5-6-2?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-5-6-2)
