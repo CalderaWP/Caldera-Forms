@@ -47,6 +47,15 @@ class Caldera_Forms_Render_Assets {
 	 */
 	protected static $locale;
 
+	/**
+	 * Tracks if CF_API_DATA has been outputted or not
+	 *
+	 * @since 1.5.7
+	 *
+	 * @var array
+	 */
+	protected static $api_data_localized;
+
 
 	/**
 	 * Enqueue styles for field type
@@ -561,18 +570,23 @@ class Caldera_Forms_Render_Assets {
 			self::enqueue_script( 'field-config', array( self::make_slug( 'validator' ), self::make_slug( 'field' ) ) );
 		}
 
-		wp_localize_script(  self::field_script_to_localize_slug(), 'CF_API_DATA', array(
-			'rest' => array(
-				'root' => esc_url_raw( Caldera_Forms_API_Util::url() ),
-				'tokens' => array(
-					'nonce' => esc_url_raw( Caldera_Forms_API_Util::url( 'tokens/form' ) )
+		$field_script_to_localize = self::field_script_to_localize_slug();
+		if ( ! is_array( self::$api_data_localized ) || ! isset( self::$api_data_localized[ $field_script_to_localize ] ) ) {
+			wp_localize_script( $field_script_to_localize, 'CF_API_DATA', array(
+				'rest' => array(
+					'root' => esc_url_raw(Caldera_Forms_API_Util::url()),
+					'tokens' => array(
+						'nonce' => esc_url_raw(Caldera_Forms_API_Util::url('tokens/form'))
+					),
+					'nonce' => wp_create_nonce('wp_rest')
 				),
-				'nonce' => wp_create_nonce( 'wp_rest' )
-			),
-			'nonce' => array(
-				'field' => Caldera_Forms_Render_Nonce::nonce_field_name(),
-			),
-		) );
+				'nonce' => array(
+					'field' => Caldera_Forms_Render_Nonce::nonce_field_name(),
+				),
+			));
+
+			self::$api_data_localized[ $field_script_to_localize ] = true;
+		}
 
 	}
 

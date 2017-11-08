@@ -1,9 +1,9 @@
 === Caldera Forms - More Than Contact Forms ===
-Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza
+Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
 Tags: free wordpress form builder, formbuilder, form builder, contact form,  contact me, custom form, forms, form, custom forms, forms creator, caldera forms, calderawp, wp form, wp form builder, form, drag and drop, email, awesome, wordpress free form builder, echecks, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, eCheck,dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, gravity forms, ninja forms, contact, email, auto-responder, aweber, convertkit, builder, contact forms, search, ab testing, a/b testing, split testing, shortcode, wordpress, awesome plugin, plugin, easy, braintree form, dwolla form, authorize.net form, mailchimp form, mailchimp popup, aweber form, convertkit form, stripe form, stripe popup, eCheck form, responsive,
 Requires at least: 4.7
 Tested up to: 4.9.0
-Stable tag: 1.5.6.2
+Stable tag: 1.5.7-b-1
 License: GPLv2
 
 Responsive form builder for contact forms, user registration and login forms, Mailchimp, PayPal Express and more.
@@ -56,6 +56,8 @@ Quickly configure the [email notification](https://calderaforms.com/doc/setting-
 > "I've converted many sites from Gravity Forms because Caldera Forms is easier, more powerful, and the forms looks great on any device by default"
 >
 > - Matt Cromwell: Head of support for WordImpress
+
+https://youtu.be/O1pY_ZMMWUw
 
 = Anti-Spam By Default =
 Spam is annoying. No form builder is complete without a robust anti-spam system.
@@ -773,6 +775,20 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 
 == Changelog ==
+= Caldera Forms 1.5.7 (November 8, 2017) Prepare For Full Force Nico =
+See: [https://calderaforms.com/updates/caldera-forms-1-5-7](https://calderaforms.com/updates/caldera-forms-1-5-7?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-5-7)
+* NEW HOOK: caldera_forms_pre_check_condition filter. Early entry point for conditionals for logging or using an alternative conditional logic system.
+* NEW HOOK: caldera_forms_insert_button_include filter. Use to prevent loading of Caldera Forms JavaScript or CSS in post editor.
+* NEW HOOK: caldera_forms_submit_process_before filter. Early entry point for logging submissions, etc.
+* FIXED: Caldera_Forms::get_field_data() when passed an entry ID always returned null.
+* FIXED: Calculation fields used option value, not calculation value, serve-side, for select2 fields.
+* FIXED: Role parameter for front-end entry viewer didn't work as string.
+* FIXED: CF_API_DATA was being printed to DOM once per form instead of once.
+* FIXED: If "Default Option" was used to set select (including autocomplete) default, it's was not set in CFState, effecting summary, HTML and calculation fields.
+* FIXED: Checkbox fields were reporting all options in CFState, effecting summary, HTML and calculation fields.
+* FIXED: Default value of fields, if initially hidden by conditionals, were not initially tracked properly in CFState, effecting summary, HTML and calculation fields.
+* FIXED: Default values (unchanged) are shown in summary/html fields as "false".
+
 = Caldera Forms 1.5.6.2 (October 12, 2017) Tomorrow is my birthday. =
 See: [https://calderaforms.com/updates/caldera-forms-1-5-6-2](https://calderaforms.com/updates/caldera-forms-1-5-6-2?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-5-6-2)
 * UPDATED: Input masking library to version 4 - https://github.com/RobinHerbots/Inputmask/blob/4.x/dist/jquery.inputmask.bundle.js

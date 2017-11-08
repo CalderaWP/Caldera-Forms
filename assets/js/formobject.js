@@ -2,9 +2,8 @@
 (function($){
   
 $.fn.formJSON = function(){
-    var form = $(this);
-
-    var fields       = form.find('[name]'),
+    var form = $(this),
+        fields       = form.find('[name]'),
         json         = {},
         arraynames   = {};
     for( var v = 0; v < fields.length; v++){

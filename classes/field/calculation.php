@@ -80,6 +80,7 @@ class Caldera_Forms_Field_Calculation {
 				break;
 			case 'radio':
 			case 'dropdown':
+			case 'filtered_select2':
 			case 'toggle_switch' :
 				$number = self::find_calc_value( $entry_value, $field, $form );
 

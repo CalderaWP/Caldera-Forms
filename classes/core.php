@@ -1709,10 +1709,29 @@ class Caldera_Forms {
 	 */
 	static public function check_condition( $conditions, $form, $entry_id = null ) {
 
-		$trues = array();
+
 		if ( empty( $conditions[ 'group' ] ) ) {
 			return true;
 		}
+
+		/**
+		 * Determine result of condition before logic runs
+		 *
+		 * @since 1.5.7
+		 *
+		 * @param null|bool $result Return a boolean to bypass logic and use that as result. Else normal logic will be run.
+		 * @param array $conditions The condition to be checked
+		 * @param array $form Form config
+		 * @param int|null $entry_id Entry ID. May be null.
+		 */
+		$result = apply_filters( 'caldera_forms_pre_check_condition', null, $conditions, $form, $entry_id );
+
+		if( is_bool( $result ) ){
+			return $result;
+		}
+
+		$trues = array();
+
 
 		foreach ( $conditions[ 'group' ] as $groupid => $lines ) {
 			$truelines = array();
@@ -1833,16 +1852,28 @@ class Caldera_Forms {
 
 		if ( $conditions[ 'type' ] == 'use' || $conditions[ 'type' ] == 'show' ) {
 			if ( in_array( true, $trues ) ) {
-				return true;
+				$result =  true;
 			}
 		} elseif ( $conditions[ 'type' ] == 'not' || $conditions[ 'type' ] == 'hide' || $conditions[ 'type' ] == 'disable' ) {
 			if ( ! in_array( true, $trues ) ) {
-				return true;
+				$result = true;
 			}
 		}
 
 		// false if nothing happens
-		return false;
+		$result = false;
+
+		/**
+		 * Change result of condition after logic runs
+		 *
+		 * @since 1.5.7
+		 *
+		 * @param bool $result If condition passes or not
+		 * @param array $conditions The condition to be checked
+		 * @param array $form Form config
+		 * @param int|null $entry_id Entry ID. May be null.
+		 */
+		return apply_filters( 'caldera_forms_post_check_condition', $result, $conditions, $form, $entry_id );
 	}
 
 	// FRONT END STUFFF
@@ -2197,27 +2228,53 @@ class Caldera_Forms {
 		// entry fetch
 		if ( ! empty( $entry_id ) && isset( $form[ 'fields' ][ $field_id ] ) ) {
 
-			global $wpdb;
 
-			$entry = $wpdb->get_results( $wpdb->prepare( "
-				SELECT `value` FROM `" . $wpdb->prefix . "cf_form_entry_values` WHERE `entry_id` = %d AND `field_id` = %s AND `slug` = %s", $entry_id, $field_id, $form[ 'fields' ][ $field_id ][ 'slug' ] ), ARRAY_A );
-
-			//allow plugins to alter the value
-			$entry = apply_filters( 'caldera_forms_get_field_entry', $entry, $field_id, $form, $entry_id );
-
-			if ( ! empty( $entry ) ) {
-				if ( count( $entry ) > 1 ) {
-					$out = array();
-					foreach ( $entry as $item ) {
-						$out[] = $item[ 'value' ];
+			if( ! empty( $processed_data[ $indexkey ][ $field_id ] ) ){
+				$entry = $processed_data[ $indexkey ][ $field_id ];
+			}elseif ( ! empty( $processed_data[ $form[ 'ID' ] ] ) && ! empty( $processed_data[ $form[ 'ID' ] ][ '_entry_id' ] ) ){
+				$entry = null;
+				if( $processed_data[ $form[ 'ID' ] ][ '_entry_id' ] === $entry_id ){
+					$processed_data[ $indexkey ] = $processed_data[ $form[ 'ID' ] ];
+					if( ! empty( $processed_data[ $indexkey ][ $field_id ]  ) ){
+						$entry = $processed_data[ $indexkey ][ $field_id ];
 					}
-					$processed_data[ $indexkey ][ $field_id ] = $out;
-				} else {
-					$processed_data[ $indexkey ][ $field_id ] = $entry[ 0 ][ 'value' ];
 				}
-			} else {
-				$processed_data[ $indexkey ][ $field_id ] = null;
+			}else{
+				$entry = null;
 			}
+
+			if( ! $entry ){
+				global $wpdb;
+				
+				
+				$entry = $wpdb->get_results( $wpdb->prepare(
+					"SELECT `value` FROM `" . $wpdb->prefix . "cf_form_entry_values` WHERE `entry_id` = %d AND `field_id` = %s", $entry_id, $field_id
+				), ARRAY_A );
+
+				//allow plugins to alter the value
+				$entry = apply_filters( 'caldera_forms_get_field_entry', $entry, $field_id, $form, $entry_id );
+				$processed_data[ $indexkey ][ $field_id ] = $entry;
+
+				if ( ! empty( $entry ) ) {
+					if ( count( $entry ) > 1 ) {
+						$out = array();
+						foreach ( $entry as $item ) {
+							$out[] = $item[ 'value' ];
+						}
+						$processed_data[ $indexkey ][ $field_id ] = $out;
+					} else {
+						$processed_data[ $indexkey ][ $field_id ] = $entry[ 0 ][ 'value' ];
+						if( isset( $processed_data[ $indexkey ][ $field_id ][ 'value' ] ) ){
+							$processed_data[ $indexkey ][ $field_id ] = $processed_data[ $indexkey ][ $field_id ][ 'value' ];
+						}
+
+					}
+				} else {
+					$processed_data[ $indexkey ][ $field_id ] = null;
+				}
+			}
+
+
 
 			return $processed_data[ $indexkey ][ $field_id ];
 
@@ -2597,7 +2654,15 @@ class Caldera_Forms {
 	 * Process current POST data as form submission.
 	 */
 	static public function process_submission() {
-		//ob_flush();
+		/** You MUST not add anything before caldera_forms_submit_process_before action.  */
+
+		/**
+		 * Runs before Caldera_Forms::process_submission() does anything
+		 *
+		 * @since 1.5.7
+		 */
+		do_action( 'caldera_forms_submit_process_before'  );
+
 		global $post;
 		global $process_id;
 		global $form;

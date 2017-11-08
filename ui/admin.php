@@ -259,8 +259,15 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 					</div>
 				</div>
 			<?php endif ?>
-			<docs :important="importantDocs"></docs>
-			<extend :product="product" :title="extendTitle"></extend>
+			<docs
+                :important="importantDocs"
+                v-if="showDocs()"
+            ></docs>
+			<extend
+                :product="product"
+                :title="extendTitle"
+                v-if="showExtend()"
+            ></extend>
 			<div class="caldera-forms-clippy-zone" style="background-image: url( '<?php echo esc_url( CFCORE_URL . 'assets/images/caldera-globe-logo-sm.png' ); ?>' );">
 				<div class="caldera-forms-clippy-zone-inner-wrap">
 					<div class="caldera-forms-clippy">

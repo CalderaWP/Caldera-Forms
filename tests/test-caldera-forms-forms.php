@@ -62,7 +62,9 @@ class Test_Caldera_Forms_Forms extends Caldera_Forms_Test_Case {
 		$this->assertInternalType( 'array', $new_form );
 		$this->assertArrayHasKey( 'ID', $new_form );
 		$id = $new_form[ 'ID' ];
-		$saved = get_option( $id, 0 );
+		$via_db_api = Caldera_Forms_DB_Form::get_instance()->get_by_form_id( $id, false );
+		$config_via_db_api = $via_db_api[0]['config'];
+
 		$expected = array_merge( $data, array(
 			"success"		=>	__( 'Form has been successfully submitted. Thank you.', 'caldera-forms' ),
 			"form_ajax"		=> 1,
@@ -73,9 +75,8 @@ class Test_Caldera_Forms_Forms extends Caldera_Forms_Test_Case {
 		));
 		$expected[ 'ID' ] = $id;
 
-		$this->assertArrayHasKey( $id, get_option( '_caldera_forms_forms', array() ) );
-		$this->assertSame( $id, $saved[ "ID" ] );
-		$this->assertEquals( $expected, $saved );
+		$this->assertSame( $id, $config_via_db_api[ "ID" ] );
+		$this->assertEquals( $expected, $config_via_db_api );
 		$this->assertEquals( $expected, $new_form );
 
 	}
@@ -96,7 +97,17 @@ class Test_Caldera_Forms_Forms extends Caldera_Forms_Test_Case {
 		$new_form = Caldera_Forms_Forms::create_form( $data );
 		$id = $new_form[ 'ID' ];
 		$this->assertSame( $new_form, Caldera_Forms_Forms::get_form( $id ) );
-		$this->assertSame( get_option( $id ), Caldera_Forms_Forms::get_form( $id ) );
+
+		$via_db_api = Caldera_Forms_DB_Form::get_instance()->get_by_form_id( $id, false );
+		$config_via_db_api = $via_db_api[0]['config'];
+
+		$via_forms_api = Caldera_Forms_Forms::get_form( $id );
+
+		$this->assertSame( $new_form[ 'ID' ], $config_via_db_api[ 'ID' ] );
+
+		$this->assertSame( $config_via_db_api[ 'name' ], $via_forms_api[ 'name' ] );
+		$this->assertSame( $config_via_db_api[ 'description' ], $via_forms_api[ 'description' ] );
+
 
 	}
 
@@ -124,8 +135,11 @@ class Test_Caldera_Forms_Forms extends Caldera_Forms_Test_Case {
 		$mock[ 'description' ] = 'y';
 		$_id = Caldera_Forms_Forms::save_form( $mock );
 		$this->assertSame( $id, $_id );
-		$option = get_option( $id, array() );
-		$this->assertFalse( empty( $option ) );
+		$via_db_api = Caldera_Forms_DB_Form::get_instance()->get_by_form_id( $id, false );
+		$config_via_db_api = $via_db_api[0]['config'];
+
+
+		$this->assertFalse( empty( $config_via_api ) );
 		$method = Caldera_Forms_Forms::get_form( $id );
 		$this->assertFalse( empty( $method ) );
 
@@ -133,72 +147,30 @@ class Test_Caldera_Forms_Forms extends Caldera_Forms_Test_Case {
 		$keys_that_will_screw_up_assertions = array( '_last_updated', 'ID', 'version' );
 		foreach ( $keys_that_will_screw_up_assertions as $key ) {
 			$this->assertArrayHasKey( $key, $method );
-			$this->assertArrayHasKey( $key, $option );
+			$this->assertArrayHasKey( $key, $config_via_db_api );
 			unset( $mock[ $key ] );
-			unset( $option[ $key ] );
+			unset( $config_via_db_api[ $key ] );
 			unset( $method[ $key ] );
 		}
 
 		foreach ( $mock as $k => $v ) {
-			$this->assertSame( $v, $option[ $k ] );
+			$this->assertSame( $v, $config_via_db_api[ $k ] );
 			$this->assertSame( $v, $method[ $k ] );
 		}
 
 
-		foreach ( $option as $k => $v ) {
+		foreach ( $config_via_db_api as $k => $v ) {
 			$this->assertSame( $v, $mock[ $k ] );
 			$this->assertSame( $v, $method[ $k ] );
 		}
 
 		foreach ( $method as $k => $v ) {
 			$this->assertSame( $v, $mock[ $k ] );
-			$this->assertSame( $v, $option[ $k ] );
+			$this->assertSame( $v, $config_via_db_api[ $k ] );
 		}
 
-		$this->assertSame( $option, $method );
+		$this->assertSame( $config_via_db_api, $method );
 
 	}
-
-	/**
-	 * Test registry stays in sync properly and does not cause cache errors
-	 *
-	 * @since 1.3.4
-	 * 
-	 * @group db
-	 * @group db_form_config
-	 *
-	 * @covers Caldera_Forms_Forms::test_update_registry
-	 */
-	public function test_update_registry(){
-		delete_option( '_caldera_forms_forms' );
-		wp_cache_delete( '_caldera_forms_forms', 'options' );
-		$ids = array();
-
-		$this->assertSame( 0, count( get_option( '_caldera_forms_forms', array() ) ) );
-
-		$data = array(
-			"name"        => rand(),
-			"description" => rand(),
-		);
-
-		$new_form = Caldera_Forms_Forms::create_form( $data );
-
-		$id = $new_form[ 'ID' ];
-		$this->assertArrayHasKey( $id, get_option( '_caldera_forms_forms', array() ) );
-		$this->assertSame( Caldera_Forms_Forms::get_forms( false, true ), get_option( '_caldera_forms_forms' ) );
-		$ids[] = $id;
-		$data  = array(
-			"name"        => rand(),
-			"description" => rand(),
-		);
-
-		$new_form = Caldera_Forms_Forms::create_form( $data );
-
-
-		$this->assertSame( Caldera_Forms_Forms::get_forms( false, true ), get_option( '_caldera_forms_forms' ) );
-
-
-	}
-	
 
 }

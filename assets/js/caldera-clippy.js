@@ -16,7 +16,8 @@ function CalderaFormsAdminClippys2( elId, config, $ ){
 			template:  '#tmpl--caldera-help-clippy',
 			props: [ 'important' ],
 			methods: {
-				link:linkCB
+				link:linkCB,
+
 			}
 		};
 
@@ -24,7 +25,8 @@ function CalderaFormsAdminClippys2( elId, config, $ ){
 			template: '#tmpl--caldera-extend-clippy',
 			props: [ 'product','title' ],
 			methods: {
-				link:linkCB
+				link:linkCB,
+
 			}
 		};
 
@@ -34,8 +36,12 @@ function CalderaFormsAdminClippys2( elId, config, $ ){
 			get(config.cfdotcom.api.product)
 		).then(function (dImportant, dProduct) {
 			var importantDocs = dImportant[0],
-				products = dProduct[0];
-			var product = products[ pickRandomProperty(products) ];
+				products = dProduct[0],
+				product = products[ pickRandomProperty(products) ],
+				showExtend = 0 < Object.keys(products).length,
+				showDocs = 0 < Object.keys(importantDocs).length;
+
+
 			vm = new Vue({
 				el: '#caldera-forms-clippy',
 				components: {
@@ -50,6 +56,15 @@ function CalderaFormsAdminClippys2( elId, config, $ ){
 						extendTitle: config.extend_title,
 					}
 				},
+				methods: {
+					showDocs: function(){
+						return showDocs;
+					},
+					showExtend: function(){
+						return showExtend;
+					}
+
+				}
 			});
 		});
 
