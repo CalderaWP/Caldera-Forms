@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.7 - 2017-11-08 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.7.1-b-1 - 2017-11-09 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -6377,11 +6377,12 @@ function toggle_button_init(id, el){
 
 			 var value;
 			 for (var i = 0; i <= bindMap.length; i++) {
-			 	if( 'object' === typeof   bindMap[i] &&  bindMap[i].hasOwnProperty( 'to' ) && bindMap[i].hasOwnProperty( 'tag' )){
-
+			 	if( 'object' === typeof   bindMap[i] &&  bindMap[i].hasOwnProperty( 'to' ) && bindMap[i].hasOwnProperty( 'tag' ) ){
 
 					value = state.getState(bindMap[i].to);
-                    if( ! isNaN( value ) ){
+					if( 0 !== value && '0' !== value && ! value ){
+						value = '';
+                    }else if( ! isNaN( value ) ){
                         value = value.toString();
                     } else if( 'string' === typeof  value ){
 						value = value.replace(/(?:\r\n|\r|\n)/g, '<br />');
