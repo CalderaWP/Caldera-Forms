@@ -818,24 +818,27 @@ class Caldera_Forms_Admin {
 	 *
 	 * @since 1.2.1
 	 *
-	 * @param string|array $form Form ID or form config.
+	 * @param string|array $form_or_id Form ID or form config.
 	 * @param int $page Optional. Page of entries to get per page. Default is 1.
 	 * @param int $perpage Optional. Number of entries per page. Default is 20.
 	 * @param string $status Optional. Form status. Default is active.
 	 *
 	 * @return array
 	 */
-	public static function get_entries( $form, $page = 1, $perpage = 20, $status = 'active' ) {
+	public static function get_entries( $form_or_id, $page = 1, $perpage = 20, $status = 'active' ) {
 
-		if ( is_string( $form ) ) {
-			$form = Caldera_Forms_Forms::get_form( $form );
+		if ( is_string( $form_or_id ) ) {
+			$form_or_id = Caldera_Forms_Forms::get_form( $form_or_id );
 		}
 
-		if ( isset( $form[ 'ID' ])) {
-			$form_id = $form[ 'ID' ];
+		if ( isset( $form_or_id[ 'ID' ])) {
+			$form_id = $form_or_id[ 'ID' ];
 		}else{
 			return;
 		}
+
+        global $form;
+		$form = $form_or_id;
 
 		global $wpdb;
 
