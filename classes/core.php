@@ -1850,6 +1850,8 @@ class Caldera_Forms {
 			$trues[ $groupid ] = in_array( false, $truelines ) ? false : true;
 		}
 
+		$result = false;
+
 		if ( $conditions[ 'type' ] == 'use' || $conditions[ 'type' ] == 'show' ) {
 			if ( in_array( true, $trues ) ) {
 				$result =  true;
@@ -1859,9 +1861,6 @@ class Caldera_Forms {
 				$result = true;
 			}
 		}
-
-		// false if nothing happens
-		$result = false;
 
 		/**
 		 * Change result of condition after logic runs
