@@ -145,9 +145,7 @@
 			 	if( 'object' === typeof   bindMap[i] &&  bindMap[i].hasOwnProperty( 'to' ) && bindMap[i].hasOwnProperty( 'tag' ) ){
 
 					value = state.getState(bindMap[i].to);
-					if( 'object' === typeof value
-                        || (0 !== value && '0' !== value && ! value )
-                    ){
+					if( 0 !== value && '0' !== value && ! value ){
 						value = '';
                     }else if( ! isNaN( value ) ){
                         value = value.toString();
