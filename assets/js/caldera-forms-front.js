@@ -335,6 +335,7 @@ function CFState(formId, $ ){
 				console.log( $field.attr( 'type' ) );
 				console.log( $el.attr( 'type' ) );
 				calcVals[$el.attr('id')] = findCalcVal( $el );
+				console.log( calcVals[$el.attr('id')] );
 				self.mutateState([$el.attr('id')],$el.val());
 			});
 			calcVals[id] = findCalcVal( $( document.getElementById( id ) ) );
@@ -6874,6 +6875,7 @@ function toggle_button_init(id, el){
          * @since 1.5.6
          */
         var run = function(){
+            console.log(window[fieldConfig.callback]);
 			var result = window[fieldConfig.callback].apply(null, [state] );
 			if( ! isFinite( result ) ){
 				result = 0;
