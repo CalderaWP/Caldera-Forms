@@ -775,6 +775,10 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 
 == Changelog ==
+= Caldera Forms 1.5.7.1 (November 9, 2017) Quick Fix =
+* FIXED: JavaScript error when using conditionals and summary fields.
+* FIXED: With some field types, fields with conditional logic, might not be saved.
+
 = Caldera Forms 1.5.7 (November 8, 2017) Prepare For Full Force Nico =
 See: [https://calderaforms.com/updates/caldera-forms-1-5-7](https://calderaforms.com/updates/caldera-forms-1-5-7?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-5-7)
 * NEW HOOK: caldera_forms_pre_check_condition filter. Early entry point for conditionals for logging or using an alternative conditional logic system.
