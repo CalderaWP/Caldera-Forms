@@ -431,9 +431,9 @@
              $field.trumbowyg(field.options);
              var $editor = $field.parent().find( '.trumbowyg-editor');
 
-             $editor.html( $field.html() );
+             $editor.html( $field.val() );
              $editor.bind('input propertychange', function(){
-                 $field.html( $editor.html() );
+                 $field.val( $editor.html() );
              });
          }
 
