@@ -4119,7 +4119,6 @@ class Caldera_Forms {
 		$form_attributes = array(
 			'method'	=>	'POST',
 			'enctype'	=>	'multipart/form-data',
-			'role'		=>	'form',
 			'id'		=>	$form['ID'] . '_' . $current_form_count,
 			'data-form-id' => $form[ 'ID' ]
 		);
