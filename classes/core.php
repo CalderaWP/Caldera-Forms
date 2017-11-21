@@ -1085,14 +1085,14 @@ class Caldera_Forms {
 		}
 
 
-        $email_message['bcc'] = false;
-        if (  ! empty( $config[ 'bcc' ] ) ) {
-            $email_message['bcc']       = Caldera_Forms::do_magic_tags( $config[ 'bcc' ] );
+		$email_message['cc'] = false;
+        if (  ! empty( $config[ 'cc' ] ) ) {
+            $email_message['cc']       = Caldera_Forms::do_magic_tags( $config[ 'cc' ] );
 
-            $bcc_array = array_map('trim', preg_split( '/[;,]/', Caldera_Forms::do_magic_tags( $config[ 'bcc' ] ) ) );
-            foreach( $bcc_array as $bcc_to ) {
-                if ( is_email( $bcc_to ) ) {
-	                $email_message['headers'][] = 'Cc: ' . $bcc_to;
+            $cc_array = array_map('trim', preg_split( '/[;,]/', Caldera_Forms::do_magic_tags( $config[ 'cc' ] ) ) );
+            foreach( $cc_array as $cc_to ) {
+                if ( is_email( $cc_to ) ) {
+	                $email_message['headers'][] = 'Cc: ' . $cc_to;
                 }
             }
         }
