@@ -4116,11 +4116,13 @@ class Caldera_Forms {
 
 		do_action( 'caldera_forms_render_start', $form );
 
+		//aria-label="<?php echo $form[ 'name' ] . '"
 		$form_attributes = array(
 			'method'	=>	'POST',
 			'enctype'	=>	'multipart/form-data',
 			'id'		=>	$form['ID'] . '_' . $current_form_count,
-			'data-form-id' => $form[ 'ID' ]
+			'data-form-id' => $form[ 'ID' ],
+            'aria-label'    => $form[ 'name' ]
 		);
 
 		//add extra attributes to make AJAX submissions JS do its thing
