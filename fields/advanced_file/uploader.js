@@ -164,15 +164,4 @@ jQuery( function( $ ){
 		handleFileSelect( e, config );
 	});
 
-	window.Parsley
-	.addValidator('fileType', {
-	requirementType: 'string',
-	validateString: function( value, requirement ) {
-	  if( value === 'valid' ){
-	  	return true;
-	  }
-	  return false;
-	}
-	});
-
 })
