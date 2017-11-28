@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.7.1-b-1 - 2017-11-09 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.8-b-1 - 2017-11-28 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -332,8 +332,6 @@ function CFState(formId, $ ){
 		if ($field.length) {
 			$field.on('change keyup', function () {
 				var $el = $(this);
-				console.log( $field.attr( 'type' ) );
-				console.log( $el.attr( 'type' ) );
 				calcVals[$el.attr('id')] = findCalcVal( $el );
 				self.mutateState([$el.attr('id')],$el.val());
 			});
@@ -6666,9 +6664,9 @@ function toggle_button_init(id, el){
              $field.trumbowyg(field.options);
              var $editor = $field.parent().find( '.trumbowyg-editor');
 
-             $editor.html( $field.html() );
+             $editor.html( $field.val() );
              $editor.bind('input propertychange', function(){
-                 $field.html( $editor.html() );
+                 $field.val( $editor.html() );
              });
          }
 
@@ -6874,6 +6872,7 @@ function toggle_button_init(id, el){
          * @since 1.5.6
          */
         var run = function(){
+            console.log(window[fieldConfig.callback]);
 			var result = window[fieldConfig.callback].apply(null, [state] );
 			if( ! isFinite( result ) ){
 				result = 0;
