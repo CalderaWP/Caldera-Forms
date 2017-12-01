@@ -7,6 +7,8 @@ function cf_handle_multi_view( $data, $field ){
 	if( empty( $data ) || !is_array( $data ) ){
 		return $data;
 	}
+	// Remove the json total of checked options
+	array_pop($data);
 	// can put in the value as well.
 	$viewer = array();
 
