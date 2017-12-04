@@ -7,9 +7,8 @@
   Version: 1.5.8-b-1
   Author URI: http://CalderaLabs.org
   Text Domain: caldera-forms
-  GitHub Plugin URI: https://github.com/CalderaWP/Caldera-Forms/
-  GitHub Branch:     master
- */
+  GitHub Plugin URI: https://github.com/CalderaWP/caldera-forms
+*/
 
 
 // If this file is called directly, abort.
