@@ -218,6 +218,17 @@ class Caldera_Forms_Entry {
 		return $this->meta;
 	}
 
+    /**
+     * Get form config
+     *
+     * @since 1.5.8
+     *
+     * @return array
+     */
+	public function get_form(){
+        return $this->form;
+    }
+
 
 	/**
 	 * Query DB for saved entry data
