@@ -510,13 +510,21 @@ class Caldera_Forms_Entry {
 	 * @return array
 	 */
 	protected function get_field_map(){
-		$this->get_fields();
-		if( empty( $this->field_map ) && ! empty( $this->fields ) ){
-			//Wouldn't it be better to use array_column() ? Yes it would, but PHP 5.2 so :(
-			$this->field_map = array_combine( wp_list_pluck( $this->fields, 'field_id' ), array_keys( $this->fields ) );
-		}
+        $this->get_fields();
+        if(
+            empty( $this->field_map ) && ! empty( $this->fields )
+            || ! empty( $this->fields ) && count( $this->fields ) !== count( $this->field_map )
 
-		return $this->field_map;
+        ){
+            /** @var Caldera_Forms_Entry_Field $field */
+            foreach ( $this->fields as $index => $field ){
+                if ( ! isset( $this->field_map[ $field->field_id ] ) ) {
+                    $this->field_map[$field->field_id] = $index;
+                }
+            }
+        }
+
+        return $this->field_map;
 
 	}
 
