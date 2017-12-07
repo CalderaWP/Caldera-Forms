@@ -131,7 +131,7 @@ class Caldera_Forms_Entry {
 	 * @return mixed
 	 */
 	public function get_form_id(){
-		return $this->form[ 'id' ];
+		return $this->form[ 'ID' ];
 	}
 
 	/**
