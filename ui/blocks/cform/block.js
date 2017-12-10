@@ -3,6 +3,18 @@ const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
 const BlockControls = wp.blocks.BlockControls;
 const el = wp.element.createElement;
+let cfForms = [];
+let cfFormsOptions = {};
+if( CF_FORMS.forms.length ) {
+     cfFormsOptions = CF_FORMS.forms;
+}
+
+if( Object.keys( cfFormsOptions ).length ){
+    Object.keys( cfFormsOptions ).forEach( form => {
+        cfForms.push( form.id )
+    });
+}
+
 
 
 
@@ -80,12 +92,12 @@ registerBlockType( 'calderaforms/cform', {
          * @param {String} formId
          */
         function previewForm(formId) {
-            if (!formId) {
+            if ( false === formId || 'false' === formId ||  -1 < cfForms.indexOf( formId )  ) {
                 return;
             }
 
             let url = CF_FORMS.previewApi.replace('-formId-', formId);
-
+            let el = document.getElementById('caldera-forms-preview-' + id);
             wp.apiRequest({
                 url: url,
                 method: 'GET',
@@ -96,8 +108,9 @@ registerBlockType( 'calderaforms/cform', {
 
             })
                 .done(( response => {
-                    let el = document.getElementById('caldera-forms-preview-' + id);
+
                     if (null !== el) {
+                        el.innerHTML = '';
                         el.innerHTML = response.html;
                         Object.keys(response.css).forEach( key => {
                             appendCSSorJS('css',response.css[key],key);
@@ -109,7 +122,9 @@ registerBlockType( 'calderaforms/cform', {
 
                 } ))
                 .fail(function (response) {
-                    console.log(response);
+                    if (null !== el) {
+                        el.innerHTML = __( 'Form Not Found', 'caldera-forms' )
+                    }
                 });
         }
 
@@ -173,7 +188,8 @@ registerBlockType( 'calderaforms/cform', {
             {
                 value: formId,
                 id:selectId,
-                onChange: updateFormId
+                onChange: updateFormId,
+
             },
             formOptions,
 

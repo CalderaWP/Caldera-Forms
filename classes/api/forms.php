@@ -404,10 +404,11 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
     }
 
     /**
+     * Create form preview response
+     *
      * @return Caldera_Forms_API_Response
      */
-    protected function preview_response()
-    {
+    protected function preview_response(){
         $html = Caldera_Forms::render_form($this->form->toArray());
 
         $css = array_merge(

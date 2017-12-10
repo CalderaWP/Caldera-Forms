@@ -73,6 +73,17 @@ var registerBlockType = wp.blocks.registerBlockType; // Import registerBlockType
 
 var BlockControls = wp.blocks.BlockControls;
 var el = wp.element.createElement;
+var cfForms = [];
+var cfFormsOptions = {};
+if (CF_FORMS.forms.length) {
+    cfFormsOptions = CF_FORMS.forms;
+}
+
+if (Object.keys(cfFormsOptions).length) {
+    Object.keys(cfFormsOptions).forEach(function (form) {
+        cfForms.push(form.id);
+    });
+}
 
 /**
  * Register Caldera Forms block
@@ -151,12 +162,12 @@ registerBlockType('calderaforms/cform', {
          * @param {String} formId
          */
         function previewForm(formId) {
-            if (!formId) {
+            if (false === formId || 'false' === formId || -1 < cfForms.indexOf(formId)) {
                 return;
             }
 
             var url = CF_FORMS.previewApi.replace('-formId-', formId);
-
+            var el = document.getElementById('caldera-forms-preview-' + id);
             wp.apiRequest({
                 url: url,
                 method: 'GET',
@@ -166,8 +177,9 @@ registerBlockType('calderaforms/cform', {
                 cache: true
 
             }).done(function (response) {
-                var el = document.getElementById('caldera-forms-preview-' + id);
+
                 if (null !== el) {
+                    el.innerHTML = '';
                     el.innerHTML = response.html;
                     Object.keys(response.css).forEach(function (key) {
                         appendCSSorJS('css', response.css[key], key);
@@ -177,7 +189,9 @@ registerBlockType('calderaforms/cform', {
                     });
                 }
             }).fail(function (response) {
-                console.log(response);
+                if (null !== el) {
+                    el.innerHTML = __('Form Not Found', 'caldera-forms');
+                }
             });
         }
 
@@ -217,6 +231,7 @@ registerBlockType('calderaforms/cform', {
             value: formId,
             id: selectId,
             onChange: updateFormId
+
         }, formOptions);
 
         var formChooser = el('div', {}, [el('label', {

@@ -37,6 +37,16 @@ function caldera_forms_enqueue_block_assets() {
             'formId' => esc_attr( $form[ 'ID' ] )
         );
     }
+    $formOptions = array();
+    $formOptions[] = array(
+        'name' => esc_html( 'Contact Form' ),
+        'formId' => esc_attr( $form[ 'ID' ] )
+    );
+
+    $formOptions[] = array(
+        'name' => esc_html( 'Order Form' ),
+        'formId' => esc_attr( $form[ 'ID' ] )
+    );
 
     wp_localize_script(
         'calderaforms/cform',

@@ -359,7 +359,7 @@ abstract class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 	 */
 	protected function form_object_factory( $id, WP_REST_Request $request, $set_prop = true ){
 		$form = Caldera_Forms_Forms::get_form( $id );
-		if( empty( $form ) ){
+		if( empty( $form ) || empty( $form[ 'ID' ] ) || empty( $form[ 'name' ] ) ){
 			throw new Exception();
 		}
 
