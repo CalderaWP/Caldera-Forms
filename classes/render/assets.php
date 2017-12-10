@@ -668,7 +668,7 @@ class Caldera_Forms_Render_Assets {
 	 *
 	 * @return array
 	 */
-    protected static function get_field_scripts(){
+    public static function get_field_scripts(){
 	    $fields  = Caldera_Forms_Fields::get_all();
 	    $scripts = array();
 	    foreach ( $fields as $field ) {
@@ -687,7 +687,7 @@ class Caldera_Forms_Render_Assets {
 	 *
 	 * @return array
 	 */
-	protected static function get_field_styles(){
+	public static function get_field_styles(){
 		$fields = Caldera_Forms_Fields::get_all();
 		$styles = array();
 		foreach ( $fields as $field ) {
@@ -698,6 +698,13 @@ class Caldera_Forms_Render_Assets {
 		return $styles;
 	}
 
+    /**
+     * Find slug of script to use with wp_localize_script()
+     *
+     * @since unknown
+     *
+     * @return string
+     */
 	public static function field_script_to_localize_slug(){
 		$should_minify = self::should_minify();
 		if( $should_minify  ) {

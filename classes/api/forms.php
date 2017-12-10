@@ -28,8 +28,32 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
 			)
 		);
 
+        register_rest_route( $namespace, $this->id_endpoint_url() . '/preview',
+            array(
+                'methods'             => \WP_REST_Server::READABLE,
+                'callback'            => array( $this, 'get_preview' ),
+                'permission_callback' => array( $this, 'get_item_permissions_check' ),
+                'args'                => $this->get_item_args()
+            )
+        );
 
 	}
+
+    /**
+     * @inheritdoc
+     *
+     * @since 1.5.8
+     */
+	public function get_item_args(){
+	    $args = parent::get_item_args();
+	    $args[ 'preview' ] = array(
+	        'type' => 'boolean',
+            'default' => false,
+            'sanitization_callback' => 'rest_sanitize_boolean'
+        );
+
+	    return$args;
+    }
 
     /**
      * Get a form via REST API
@@ -49,10 +73,37 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
 		    return Caldera_Forms_API_Response_Factory::error_form_not_found();
 	    }
 
+        if ( $request->get_param( 'preview' ) ) {
+            return $this->preview_response();
+        }
+
         $response_form = $this->prepare_form_for_response( $this->form, $request );
         return new Caldera_Forms_API_Response( $response_form, 200, array( ) );
 
     }
+
+    /**
+     * Get a form preview via REST API
+     *
+     * /cf-api/v2/forms/<form_id>/preview
+     *
+     * @since 1.5.8
+     *
+     * @param WP_REST_Request $request Request object
+     *
+     * @return Caldera_Forms_API_Error|Caldera_Forms_API_Response
+     */
+    public function get_preview( WP_REST_Request $request ){
+        try{
+            $this->form_object_factory( $request[ 'form_id' ], $request );
+        }catch ( Exception $e ){
+            return Caldera_Forms_API_Response_Factory::error_form_not_found();
+        }
+
+        return $this->preview_response();
+
+    }
+
 
 	/**
 	 * Get form revisions
@@ -350,6 +401,46 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
             );
             return $form;
         }
+    }
+
+    /**
+     * @return Caldera_Forms_API_Response
+     */
+    protected function preview_response()
+    {
+        $html = Caldera_Forms::render_form($this->form->toArray());
+
+        $css = array_merge(
+            Caldera_Forms_Render_Assets::get_core_styles(),
+            Caldera_Forms_Render_Assets::get_field_styles()
+        );
+        $js = array_merge(
+            Caldera_Forms_Render_Assets::get_core_scripts(),
+            Caldera_Forms_Render_Assets::get_field_scripts()
+        );
+
+        $prepared_css = array();
+        $prepared_js = array();
+        foreach ( $css as $key => $url ){
+            $slug = Caldera_Forms_Render_Assets::make_slug( $key );
+            if( ! wp_style_is( $slug ) ){
+                continue;
+            }
+            $prepared_css[ $slug ] = esc_url( $url );
+        }
+        foreach ( $js as $key => $url ){
+            $slug = Caldera_Forms_Render_Assets::make_slug( $key );
+            if( ! wp_script_is( $slug ) ){
+                continue;
+            }
+           $prepared_js[ $slug ] = esc_url( $url );
+        }
+        $data = [
+            'html' => $html,
+            'css' => $prepared_css,
+            'js' => $prepared_js,
+        ];
+        return new Caldera_Forms_API_Response($data, 200, array());
     }
 
 }

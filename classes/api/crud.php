@@ -92,6 +92,13 @@ abstract class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 		) );
 	}
 
+    /**
+     * Get the allow attributes for get items calls
+     *
+     * @since unknown
+     *
+     * @return array
+     */
 	public function get_item_args(){
 		return array(
 			'context' => array(
@@ -107,7 +114,7 @@ abstract class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 	/**
 	 * Callback for the index of this collection
 	 *
-	 *  * @since 1.4.4 
+	 * @since 1.4.4
 	 *
 	 * @param WP_REST_Request $request
 	 *
