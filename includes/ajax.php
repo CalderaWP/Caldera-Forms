@@ -256,7 +256,7 @@ function cf_ajax_setatts($atts, $form){
 	}
 	$multi_reset = 1;
 	if ( isset( $form[ 'form_ajax_post_submission_no_reset' ] ) ) {
-		$multi_reset = $form[ 'form_ajax_post_submission_no_reset' ];
+		$multi_reset = ! $form[ 'form_ajax_post_submission_no_reset' ];
 	}
 	
 	$resatts = array(
