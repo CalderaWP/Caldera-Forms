@@ -113,15 +113,31 @@ class Caldera_Forms_Entry {
 	}
 
 	/**
-	 * Get entry object
+	 * Set entry object (seriously it's not a getter, it's a setter, don't use.)
 	 *
 	 * @since 1.4.0
+     * @deprecated 1.5.8
 	 *
 	 * @param \Caldera_Forms_Entry_Entry $entry
 	 */
 	public function get_entry_object( Caldera_Forms_Entry_Entry $entry ){
-		$this->entry = $entry;
+	    _deprecated_function( __FUNCTION__, '1.5.8', 'Caldera_Forms_Entry::set_entry_object' );
+		$this->set_entry_object( $entry );
 	}
+
+    /**
+     * Set entry object
+     *
+     * @since 1.5.8
+     *
+     * @param \Caldera_Forms_Entry_Entry $entry
+     *
+     * @return $this
+     */
+    public function set_entry_object( Caldera_Forms_Entry_Entry $entry ){
+        $this->entry = $entry;
+        return $this;
+    }
 
 	/**
 	 * Get form ID
