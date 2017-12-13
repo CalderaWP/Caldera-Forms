@@ -48,7 +48,7 @@
          if( ! valid ){
              $parent.addClass( 'has-error' ).append( '<span id="cf-error-'+ $field.attr('id') +'" class="help-block ' + extraClass +'">' + message  + '</span>' );
              if ( $field.prop( 'required' ) ) {
-                 disableAdvance();
+                 disableAdvance($field);
              }
              $field.addClass( 'parsely-error' );
              return false;
@@ -59,13 +59,42 @@
          }
      }
 
-     /**
+    /**
+     * Check if field is on the current page of a multi-page form.
+     *
+     * @since 1.5.8
+     *
+     * @param {jQuery} $field jQuery object of field to test.
+     *
+     * @return {Bool}
+     */
+    function fieldIsOnCurrentPage($field) {
+        return ! $field.closest('.caldera-form-page').attr('aria-hidden');
+    }
+
+    /**
+     * Get field of page field is on if on a multi-page form.
+     *
+     * @since 1.5.8
+     *
+     * @param {jQuery} $field jQuery object of field to test.
+     *
+     * @return {Bool}
+     */
+    function getFieldPage($field) {
+        return $field.closest( '.caldera-form-page' ).data( 'formpage' );
+    }
+
+    /**
       * Utility method for preventing advance (next page/submit)
       *
       * @since 1.5.0
       */
-     function disableAdvance(){
-         $submits.prop( 'disabled',true).attr( 'aria-disabled', true  );
+     function disableAdvance($field){
+         if( fieldIsOnCurrentPage($field) ){
+             $submits.prop( 'disabled',true).attr( 'aria-disabled', true  );
+         }
+
      }
 
      /**
@@ -473,7 +502,7 @@
           *
           */
          function setupLink(){
-             disableAdvance();
+             disableAdvance($field);
              var $cvcField = $( document.getElementById( fieldConfig.cvc ) ),
                  $expField = $( document.getElementById( fieldConfig.exp ) );
              $cvcField.blur( function(){
