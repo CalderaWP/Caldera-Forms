@@ -633,13 +633,13 @@
 
 
 		/**
-         * Function that triggers calcualtion and updates state/DOM if it changed
+         * Function that triggers calculation and updates state/DOM if it changed
          * NOTE: Don't use directly, use debounced version
          *
          * @since 1.5.6
          */
         var run = function(){
-            console.log(window[fieldConfig.callback]);
+
 			var result = window[fieldConfig.callback].apply(null, [state] );
 			if( ! isFinite( result ) ){
 				result = 0;
