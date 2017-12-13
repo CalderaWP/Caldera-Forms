@@ -3520,7 +3520,8 @@ class Caldera_Forms {
 							$transdata = array();
 						}
 						if ( ! empty( $_FILES ) && ! empty( $_POST[ 'field' ] ) ) {
-							$form  = Caldera_Forms_Forms::get_form( $wp_query->query_vars[ 'cf_api' ] );
+						    $form_id = str_replace( '/upload/', '', $wp_query->query_vars[ 'cf_api' ] );
+							$form  = Caldera_Forms_Forms::get_form( $form_id );
 
 							$field = Caldera_Forms_Field_Util::get_field( $form[ 'fields' ][ $_POST[ 'field' ] ], $form, true );
 							$data = cf_handle_file_upload( true, $field, $form );
