@@ -759,9 +759,11 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 			$calc_default = Caldera_Forms_Field_Util::get_default_calc_value( $field, $this->form );
 			if( is_bool( $calc_default ) ){
 				$calc_default = (bool) $calc_default;
-			}elseif( ! is_numeric( $calc_default ) ){
+			}elseif( ! is_numeric( $calc_default ) && ! is_numeric( $default ) ){
 				$calc_default = 0;
-			}
+			}else{
+			    $calc_default = $default;
+            }
 
 			$this->fields[ 'calcDefaults' ][ $id_attr ] = (float) $calc_default;
 		}else{
