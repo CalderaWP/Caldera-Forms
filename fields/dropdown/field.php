@@ -33,7 +33,7 @@ $attr_string =  caldera_forms_field_attributes( $attrs, $field, $form );
 			}
 
 			if ( ! empty( $field[ 'config' ][ 'option' ] ) ) {
-				if ( empty( $field_value ) && ! $showed_empty ) {
+				if (  ( empty( $field_value ) && ! $showed_empty ) && 0 !== $field_value ) {
 					echo "<option value=\"\"></option>\r\n";
 				}
 
