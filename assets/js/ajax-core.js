@@ -178,7 +178,9 @@ jQuery(function($){
                 }
                 // hit reset
                 if( ( obj.data.status === 'complete' || obj.data.type === 'success' ) && !obj.data.entry ){
-                    obj.params.trigger[0].reset();
+                    if( obj.params.trigger.data( 'reset' ) ) {
+                        obj.params.trigger[0].reset();
+                    }
                 }
 
                 // do a redirect if set

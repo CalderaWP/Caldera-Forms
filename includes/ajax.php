@@ -108,9 +108,22 @@ function cf_form_ajaxsetup($form){
 			<?php echo esc_html__( 'Multiple Ajax Submissions', 'caldera-forms'); ?>
 		</legend>
 		<div class="caldera-config-field">
-			<input for="caldera-forms-multi-ajax" type="checkbox" value="1" name="config[form_ajax_post_submission_disable]" class="field-config"<?php if(isset($form['form_ajax_post_submission_disable'])){ echo ' checked="checked"'; } ?>><label for="caldera-forms-multi-ajax"><?php esc_html_e( 'If set, form can be submitted multiple times with out a new page load.', 'caldera-forms'); ?></label>
+			<input for="caldera-forms-multi-ajax" type="checkbox" value="1" name="config[form_ajax_post_submission_disable]" class="field-config"<?php if(isset($form['form_ajax_post_submission_disable'])){ echo ' checked="checked"'; } ?> onclick="jQuery('#multiple_sub_panel').toggle();" ><label for="caldera-forms-multi-ajax"><?php esc_html_e( 'If set, form can be submitted multiple times with out a new page load.', 'caldera-forms'); ?></label>
 		</div>
 	</fieldset>
+</div>
+
+<div id="multiple_sub_panel" <?php if(empty($form['form_ajax_post_submission_disable'])){ echo 'style="display:none;"'; } ?> >
+	<div class="caldera-config-group">
+	<fieldset>
+		<legend>
+			<?php echo esc_html__( "No reset after Ajax Submission", 'caldera-forms'); ?>
+		</legend>
+		<div class="caldera-config-field">
+			<input for="caldera-forms-multi-ajax-no-reset" type="checkbox" value="1" name="config[form_ajax_post_submission_no_reset]" class="field-config"<?php if(isset($form['form_ajax_post_submission_no_reset'])){ echo ' checked="checked"'; } ?>><label for="caldera-forms-multi-ajax-no-reset"><?php esc_html_e( "If set, the form's fields will not be reset to their initial values after a submission.", 'caldera-forms'); ?></label>
+		</div>
+	</fieldset>
+	</div>
 </div>
 <?php	
 }
@@ -241,6 +254,10 @@ function cf_ajax_setatts($atts, $form){
 	if ( isset( $form[ 'form_ajax_post_submission_disable' ] ) ) {
 		$post_disable = $form[ 'form_ajax_post_submission_disable' ];
 	}
+	$multi_reset = 1;
+	if ( isset( $form[ 'form_ajax_post_submission_no_reset' ] ) ) {
+		$multi_reset = $form[ 'form_ajax_post_submission_no_reset' ];
+	}
 	
 	$resatts = array(
 		'data-target'		=>	'#caldera_notices_'.$current_form_count,
@@ -251,6 +268,7 @@ function cf_ajax_setatts($atts, $form){
 		'data-post-disable' =>	$post_disable,
 		'data-action'		=>	'cf_process_ajax_submit',
 		'data-request'		=>	cf_ajax_api_url( $form[ 'ID' ] ),
+		'data-reset'		=>	$multi_reset,
 	);
 	
 	if( !empty( $form['custom_callback'] ) ){
