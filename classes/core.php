@@ -1076,7 +1076,7 @@ class Caldera_Forms {
 		);
 
 		if ( ! is_email( $config[ 'sender_email' ] ) ) {
-			$config[ 'sender_email' ] = get_option( 'admin_email' );
+			$config[ 'sender_email' ] = Caldera_Forms_Email_Fallback::get_fallback( $form );
 		}
 
 		if( ! empty( $config[ 'reply_to' ] ) ){
