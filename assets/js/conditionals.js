@@ -81,7 +81,13 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 			}
 
 			if( null !== state ){
-				state.rebind(field)
+				state.rebind(field);
+				if( undefined === $field ){
+                    $field = $( '#' + field );
+				}
+                if ( undefined !== $field && $field.data( 'sync' ) && ! $field.data( 'unsync' ) ) {
+                    new CalderaFormsFieldSync($field, $field.data('binds'), $form, $, state);
+                }
 			}
 
 		}

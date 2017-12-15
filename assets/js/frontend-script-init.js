@@ -394,7 +394,9 @@ window.addEventListener("load", function(){
 
 					$form.find( '[data-sync]' ).each( function(){
 						var $field = $( this );
-						new CalderaFormsFieldSync( $field, $field.data('binds'), $form, $ , state);
+                        if ( ! $field.data( 'unsync' ) ) {
+                            new CalderaFormsFieldSync($field, $field.data('binds'), $form, $, state);
+                        }
 					});
 
 					
@@ -406,7 +408,6 @@ window.addEventListener("load", function(){
 						state: state,
 						fieldIds: CFFIELD_CONFIG[instance].fields.hasOwnProperty( 'ids' ) ? CFFIELD_CONFIG[instance].fields.ids : []
 					});
-
 
 
 				}

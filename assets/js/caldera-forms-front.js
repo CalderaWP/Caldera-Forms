@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.8-b-2 - 2017-12-12 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.8-b-2 - 2017-12-14 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -7344,7 +7344,9 @@ window.addEventListener("load", function(){
 
 					$form.find( '[data-sync]' ).each( function(){
 						var $field = $( this );
-						new CalderaFormsFieldSync( $field, $field.data('binds'), $form, $ , state);
+                        if ( ! $field.data( 'unsync' ) ) {
+                            new CalderaFormsFieldSync($field, $field.data('binds'), $form, $, state);
+                        }
 					});
 
 					
@@ -7356,7 +7358,6 @@ window.addEventListener("load", function(){
 						state: state,
 						fieldIds: CFFIELD_CONFIG[instance].fields.hasOwnProperty( 'ids' ) ? CFFIELD_CONFIG[instance].fields.ids : []
 					});
-
 
 
 				}
