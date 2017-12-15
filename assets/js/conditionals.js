@@ -85,7 +85,7 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 				if( undefined === $field ){
                     $field = $( '#' + field );
 				}
-                if ( undefined !== $field && $field.data( 'sync' ) && ! $field.data( 'unsync' ) ) {
+                if ( undefined !== $field && $field.data( 'sync' ) ) {
                     new CalderaFormsFieldSync($field, $field.data('binds'), $form, $, state);
                 }
 			}
