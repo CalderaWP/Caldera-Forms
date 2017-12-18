@@ -4221,8 +4221,8 @@ class Caldera_Forms {
 			$details = self::get_entry_detail( $entry_id, $form );
 			if ( ! empty( $_GET[ 'cf_et' ] ) ) {
 				// build token
-				$validated = Caldera_Forms_Entry_Token::verify_token( trim( $_GET[ 'cf_et' ] ), $_GET[ 'cf_et' ], $form[ 'ID' ]  );
-				if ( ! is_wp_error( $validated ) ) {
+				$validated = Caldera_Forms_Entry_Token::verify_token( trim( $_GET[ 'cf_et' ] ), $entry_id, $form[ 'ID' ]  );
+				if ( is_wp_error( $validated ) ) {
 					$notices[ 'error' ][ 'note' ] = __( 'Permission denied or entry does not exist.', 'caldera-forms' );
 				} else {
 					$entry_id   = (int) $details[ 'id' ];
