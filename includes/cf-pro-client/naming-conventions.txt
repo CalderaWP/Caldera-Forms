@@ -1,0 +1,6 @@
+Plugin Name -- Caldera Forms Pro
+Text domain -- caldera-forms
+Function prefix -- cf_pro
+Class prefix -- n/a
+Root namespace -- calderawp\calderaforms\pro\
+Hook Prefix -- caldera_forms_pro
