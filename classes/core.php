@@ -841,14 +841,14 @@ class Caldera_Forms {
 			$details = Caldera_Forms::get_entry_detail( $_POST[ '_cf_frm_edt' ], $form );
 
 			// check token
-			if ( isset( $_POST[ '_cf_frm_edt_tkn' ] ) ) {
+			if ( is_array( $details ) && isset( $_POST[ '_cf_frm_edt_tkn' ] ) ) {
 
-				$validated = Caldera_Forms_Entry_Token::verify_token( $_POST[ '_cf_frm_edt_tkn' ],$details[ 'id' ], $form[ 'ID' ] );
+				$validated = Caldera_Forms_Entry_Token::verify_token( $_POST[ '_cf_frm_edt_tkn' ], $details[ 'id' ], $form[ 'ID' ] );
 				if ( is_wp_error( $validated ) ) {
 					return $validated;
 				} else {
-					$entry_id   = (int) $details[ 'id' ];
-					$edit_token = Caldera_Forms_Entry_Token::create_entry_token( $entry_id, $form[ 'ID' ] );
+				    $entry_id = $details[ 'id' ];
+					$edit_token = Caldera_Forms_Entry_Token::create_entry_token( $entry_id, $form );
 				}
 
 
@@ -2862,8 +2862,7 @@ class Caldera_Forms {
 				if ( is_wp_error( $validated ) ) {
 					return $validated;
 				} else {
-					$entry_id   = (int) $details[ 'id' ];
-					$edit_token = Caldera_Forms_Entry_Token::create_entry_token( $entry_id, $form[ 'ID' ] );
+					$edit_token = Caldera_Forms_Entry_Token::create_entry_token( $entry_id, $form );
 				}
 
 			} else {
@@ -4221,12 +4220,11 @@ class Caldera_Forms {
 			$details = self::get_entry_detail( $entry_id, $form );
 			if ( ! empty( $_GET[ 'cf_et' ] ) ) {
 				// build token
-				$validated = Caldera_Forms_Entry_Token::verify_token( trim( $_GET[ 'cf_et' ] ), $_GET[ 'cf_et' ], $form[ 'ID' ]  );
-				if ( ! is_wp_error( $validated ) ) {
+				$validated = Caldera_Forms_Entry_Token::verify_token( trim( $_GET[ 'cf_et' ] ), $entry_id, $form[ 'ID' ]  );
+				if ( is_wp_error( $validated ) ) {
 					$notices[ 'error' ][ 'note' ] = __( 'Permission denied or entry does not exist.', 'caldera-forms' );
 				} else {
-					$entry_id   = (int) $details[ 'id' ];
-					$edit_token = Caldera_Forms_Entry_Token::create_entry_token( $entry_id, $form[ 'ID' ] );
+					$edit_token = Caldera_Forms_Entry_Token::create_entry_token( $entry_id, $form );
 				}
 
 			} else {
@@ -4235,7 +4233,7 @@ class Caldera_Forms {
 
 					if ( ! empty( $details ) ) {
 						// check user can edit
-						if ( current_user_can( 'edit_posts' ) || $details[ 'user_id' ] === $user_id ) {
+						if ( current_user_can( 'edit_posts' ) || ( is_array( $details ) && $details[ 'user_id' ] === $user_id ) ) {
 							// can edit.
 							$entry_id = (int) $details[ 'id' ];
 						} else {

@@ -23,7 +23,7 @@ class Caldera_Forms_Entry_Token {
 	 * @return bool|WP_Error
 	 */
 	public static function verify_token( $test_token, $entry_id, $form_id ){
-		$compare_token = self::make_test_token( $entry_id, $form_id );
+		$compare_token = self::make_test_token( $entry_id, Caldera_Forms_Forms::get_form( $form_id ) );
 		if( ! hash_equals(  $compare_token, $test_token ) ){
 			return new WP_Error( 'error', __( "Permission denied.", 'caldera-forms' ) );
 
