@@ -152,8 +152,6 @@ class Caldera_Forms_Admin {
 
 		add_action( 'caldera_forms_prerender_edit', array( __CLASS__, 'easy_pods_auto_populate' ) );
 
-		add_action( 'init', array( $this, 'init_pro_admin' ) );
-
 		add_action( 'init', array( 'Caldera_Forms_Admin_Resend', 'watch_for_resend' ) );
 
         add_action( 'caldera_forms_admin_footer', array( 'Caldera_Forms_Email_Settings', 'ui' ) );
@@ -1888,18 +1886,6 @@ class Caldera_Forms_Admin {
 	public static function is_main_page(){
 		return Caldera_Forms_Admin::is_page() && ! isset( $_GET[ self::EDIT_KEY ] );
 
-	}
-
-	/**
-	 * Initialize admin for Caldera Forms Pro
-	 *
-	 * @uses "init" action
-	 *
-	 * @since 1.5.1
-	 */
-	public static function init_pro_admin(){
-		$pro_admin = new Caldera_Forms_Admin_Pro;
-		$pro_admin->add_hooks();
 	}
 
 	/**
