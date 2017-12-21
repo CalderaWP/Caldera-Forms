@@ -1,6 +1,8 @@
+This used to be the CF Pro API client plugin. Now 
+
 ## Development Notes:
 0) Read section below on app URL
-1) CF pro requires PHP5.5 or later.
+1) CF pro requires PHP5.6 or later.
 3) Plugin only loads if CF_PRO_VER is not defined. This is useful because:
 * You can define that constant earlier to disable CF Pro.
 * We probably will add a version check on CF_PRO_VER there so that the CF API client can exist as a separate library for development and latest version will be used.
