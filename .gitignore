@@ -1,5 +1,4 @@
 node_modules
-vendor
 .idea
 build
 includes/cf-pro-api-client/node_modules

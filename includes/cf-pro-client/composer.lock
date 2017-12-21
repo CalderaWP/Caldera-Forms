@@ -4,7 +4,6 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "48249ad97827400f6587a6be299ceae2",
     "content-hash": "ee7be46a6e879fc30b1d6f529f6deb28",
     "packages": [
         {
@@ -72,7 +71,7 @@
                 "psr-3",
                 "wordpress"
             ],
-            "time": "2017-06-01 14:46:23"
+            "time": "2017-06-01T14:46:23+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -150,7 +149,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2017-06-19 01:22:40"
+            "time": "2017-06-19T01:22:40+00:00"
         },
         {
             "name": "psr/log",
@@ -197,7 +196,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-10-10 12:19:37"
+            "time": "2016-10-10T12:19:37+00:00"
         }
     ],
     "packages-dev": [],
