@@ -19,20 +19,21 @@ module.exports = function (grunt) {
         '!CONTRIBUTING.md',
         '!Gruntfile.js',
         '!package.json',
+        '!package-lock.json',
         '!phpunit.xml.dist',
         '!ui/blocks/cform/node_modules/**',
         '!ui/blocks/cform/package.json',
         '!ui/blocks/cform/package-lock.json',
         '!ui/blocks/cform/webpack.config.js',
-        '!includes/cf-pro-api-client/client/**',
-        '!includes/cf-pro-api-client/node_modules/**',
-        '!includes/cf-pro-api-client/DEV-README.MD',
-        '!includes/cf-pro-api-client/README.md',
-        '!includes/cf-pro-api-client/composer.json',
-        '!includes/cf-pro-api-client/composer-lock.json',
-        '!includes/cf-pro-api-client/package-lock.json',
-        '!includes/cf-pro-api-client/package.json',
-        '!includes/cf-pro-api-client/build/**'
+        '!includes/cf-pro-client/client/**',
+        '!includes/cf-pro-client/node_modules/**',
+        '!includes/cf-pro-client/DEV-README.MD',
+        '!includes/cf-pro-client/README.md',
+        '!includes/cf-pro-client/composer.json',
+        '!includes/cf-pro-client/composer.lock',
+        '!includes/cf-pro-client/package-lock.json',
+        '!includes/cf-pro-client/package.json',
+        '!includes/cf-pro-client/build/**'
     ];
 
     require( 'load-grunt-tasks' )( grunt );
