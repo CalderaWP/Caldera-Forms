@@ -3,23 +3,20 @@
 /**
  * Start Caldera Forms Pro API client
  *
- * NOTE: This file is included directly and MUST be PHP5.2 compatible. Hence why boostrap-cf-pro.php is a separate, non-PHp 5.2 compatible file.
+ * NOTE: This file is included directly and MUST be PHP5.2 compatible. Hence why boostrap-cf-pro.php is a separate, non-PHP 5.2 compatible file.
  */
 add_action( 'caldera_forms_includes_complete', 'caldera_forms_pro_client_init', 1 );
 remove_action( 'caldera_forms_includes_complete', 'caldera_forms_pro_init', 2 );
 
-
+/**
+ * Initialize Caldera Forms Pro API client if possible
+ *
+ * @since 1.5.8
+ */
 function caldera_forms_pro_client_init(){
 	if ( ! version_compare( PHP_VERSION, '5.6.0', '>=' ) ) {
-		add_action( 'admin_notices', 'caldera_forms_pro_version_fail_warning' );
-
-		function caldera_forms_pro_version_fail_warning(){
-			$class   = 'notice notice-error';
-			$message = __( 'Caldera Forms Pro could not be loaded because your PHP is out of date. Caldera Forms Pro requires PHP 5.6 or later.', 'cf-pro' );
-
-			printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) );
-		}
-
+        $admin = new Caldera_Forms_Admin_Pro( );
+        $admin->add_hooks();
 	} else {
 		if ( ! defined( 'CF_PRO_VER' ) ) {
 
@@ -42,4 +39,5 @@ function caldera_forms_pro_client_init(){
 		}
 
 	}
+
 }
