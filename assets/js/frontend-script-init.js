@@ -140,16 +140,22 @@ var cf_jsfields_init, cf_presubmit;
 		if( clicked.data('page') !== 'prev' && page >= current_page ){
 			fields =  $('#caldera_form_' + instance + ' [data-formpage="' + current_page + '"] [data-field]'  );
 
-			var this_field,
+			var $this_field,
 				valid,
 				_valid;
 			for (var f = 0; f < fields.length; f++) {
-				this_field = $(fields[f]);
-				_valid = this_field.parsley().validate();
-				valid = this_field.parsley().isValid({force: true});
+				$this_field = $(fields[f]);
+				if( $this_field.hasClass( 'cf-multi-uploader' ) || $this_field.hasClass( 'cf-multi-uploader-list') ){
+					continue;
+				}
+
+				_valid = $this_field.parsley().validate();
+				valid = $this_field.parsley().isValid({force: true});
+
+
 
 				//@see https://github.com/CalderaWP/Caldera-Forms/issues/1765
-				if( ! valid && true === _valid && 'email' === this_field.attr( 'type' ) ){
+				if( ! valid && true === _valid && 'email' === $this_field.attr( 'type' ) ){
 					continue;
 				}
 
@@ -167,9 +173,9 @@ var cf_jsfields_init, cf_presubmit;
 					fields =  $('#caldera_form_' + instance + ' [data-formpage="' + i + '"] [data-field]'  );
 
 					for (var f = 0; f < fields.length; f++) {
-						this_field = $(fields[f]);
-						this_field.parsley().validate();
-						valid = this_field.parsley().isValid({force: true});
+						$this_field = $(fields[f]);
+						$this_field.parsley().validate();
+						valid = $this_field.parsley().isValid({force: true});
 						if (true === valid) {
 							continue;
 						}
@@ -318,7 +324,11 @@ var cf_jsfields_init, cf_presubmit;
 		}
 	});
 
-
+    $( document ).on( "cf.form.submit", function(e,obj) {
+		var $form = obj.$form;
+        var $breadBreadcrumbs = $form.find( '.breadcrumb' );
+        $breadBreadcrumbs.hide().attr( 'aria-hidden', true ).css( 'visibility', 'hidden' );
+    });
 
 
 })(jQuery);

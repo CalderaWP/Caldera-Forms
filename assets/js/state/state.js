@@ -245,10 +245,7 @@ function CFState(formId, $ ){
 		if ($field.length) {
 			$field.on('change keyup', function () {
 				var $el = $(this);
-				console.log( $field.attr( 'type' ) );
-				console.log( $el.attr( 'type' ) );
 				calcVals[$el.attr('id')] = findCalcVal( $el );
-				console.log( calcVals[$el.attr('id')] );
 				self.mutateState([$el.attr('id')],$el.val());
 			});
 			calcVals[id] = findCalcVal( $( document.getElementById( id ) ) );

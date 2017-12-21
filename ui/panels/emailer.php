@@ -4,7 +4,7 @@ if(!isset($element['mailer']['sender_name'])){
 	$element['mailer']['sender_name'] = __('Caldera Forms Notification', 'caldera-forms');
 }
 if(!isset($element['mailer']['sender_email'])){
-	$element['mailer']['sender_email'] = get_option( 'admin_email' );
+	$element['mailer']['sender_email'] = Caldera_Forms_Email_Fallback::get_fallback( $element );
 }
 if(!isset($element['mailer']['email_type'])){
 	$element['mailer']['email_type'] = 'html';

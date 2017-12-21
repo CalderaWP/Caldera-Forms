@@ -99,7 +99,7 @@ jQuery(function($){
 
 	});
 	
-	if( typeof wp !== 'undefined' && typeof wp.media !== 'undefined' ){
+	if( typeof wp !== 'undefined' && typeof wp.media !== 'undefined' && $("#caldera-forms-form-insert").length != 0 ){
 
 		var media = wp.media;
 		if( typeof wp.mce.views.register === "function"){

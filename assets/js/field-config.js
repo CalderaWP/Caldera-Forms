@@ -48,7 +48,7 @@
          if( ! valid ){
              $parent.addClass( 'has-error' ).append( '<span id="cf-error-'+ $field.attr('id') +'" class="help-block ' + extraClass +'">' + message  + '</span>' );
              if ( $field.prop( 'required' ) ) {
-                 disableAdvance();
+                 disableAdvance($field);
              }
              $field.addClass( 'parsely-error' );
              return false;
@@ -59,13 +59,42 @@
          }
      }
 
-     /**
+    /**
+     * Check if field is on the current page of a multi-page form.
+     *
+     * @since 1.5.8
+     *
+     * @param {jQuery} $field jQuery object of field to test.
+     *
+     * @return {Bool}
+     */
+    function fieldIsOnCurrentPage($field) {
+        return ! $field.closest('.caldera-form-page').attr('aria-hidden');
+    }
+
+    /**
+     * Get field of page field is on if on a multi-page form.
+     *
+     * @since 1.5.8
+     *
+     * @param {jQuery} $field jQuery object of field to test.
+     *
+     * @return {Bool}
+     */
+    function getFieldPage($field) {
+        return $field.closest( '.caldera-form-page' ).data( 'formpage' );
+    }
+
+    /**
       * Utility method for preventing advance (next page/submit)
       *
       * @since 1.5.0
       */
-     function disableAdvance(){
-         $submits.prop( 'disabled',true).attr( 'aria-disabled', true  );
+     function disableAdvance($field){
+         if( fieldIsOnCurrentPage($field) ){
+             $submits.prop( 'disabled',true).attr( 'aria-disabled', true  );
+         }
+
      }
 
      /**
@@ -431,9 +460,9 @@
              $field.trumbowyg(field.options);
              var $editor = $field.parent().find( '.trumbowyg-editor');
 
-             $editor.html( $field.html() );
+             $editor.html( $field.val() );
              $editor.bind('input propertychange', function(){
-                 $field.html( $editor.html() );
+                 $field.val( $editor.html() );
              });
          }
 
@@ -473,7 +502,7 @@
           *
           */
          function setupLink(){
-             disableAdvance();
+             disableAdvance($field);
              var $cvcField = $( document.getElementById( fieldConfig.cvc ) ),
                  $expField = $( document.getElementById( fieldConfig.exp ) );
              $cvcField.blur( function(){
@@ -633,13 +662,13 @@
 
 
 		/**
-         * Function that triggers calcualtion and updates state/DOM if it changed
+         * Function that triggers calculation and updates state/DOM if it changed
          * NOTE: Don't use directly, use debounced version
          *
          * @since 1.5.6
          */
         var run = function(){
-            console.log(window[fieldConfig.callback]);
+
 			var result = window[fieldConfig.callback].apply(null, [state] );
 			if( ! isFinite( result ) ){
 				result = 0;

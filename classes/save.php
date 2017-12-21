@@ -172,7 +172,7 @@ class Caldera_Forms_Save_Final {
 				}
 			}
 			if ( empty( $form['mailer']['sender_email'] ) ) {
-				$sendermail = get_option( 'admin_email' );
+				$sendermail = Caldera_Forms_Email_Fallback::get_fallback( $form );
 			} else {
 				$sendermail = Caldera_Forms::do_magic_tags( $form['mailer']['sender_email'] );
 				if ( false !== strpos( $sendermail, '%' ) ) {
@@ -296,7 +296,7 @@ class Caldera_Forms_Save_Final {
 					}
 				}
 			} else {
-				$mail['recipients'][] = get_option( 'admin_email' );
+				$mail['recipients'][] = Caldera_Forms_Email_Fallback::get_fallback( $form );
 			}
 
 			$csv_data = array();

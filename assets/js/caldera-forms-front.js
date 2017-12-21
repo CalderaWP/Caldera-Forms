@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.7.1-b-1 - 2017-11-09 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.8-b-4 - 2017-12-21 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -332,10 +332,7 @@ function CFState(formId, $ ){
 		if ($field.length) {
 			$field.on('change keyup', function () {
 				var $el = $(this);
-				console.log( $field.attr( 'type' ) );
-				console.log( $el.attr( 'type' ) );
 				calcVals[$el.attr('id')] = findCalcVal( $el );
-				console.log( calcVals[$el.attr('id')] );
 				self.mutateState([$el.attr('id')],$el.val());
 			});
 			calcVals[id] = findCalcVal( $( document.getElementById( id ) ) );
@@ -6284,7 +6281,7 @@ function toggle_button_init(id, el){
          if( ! valid ){
              $parent.addClass( 'has-error' ).append( '<span id="cf-error-'+ $field.attr('id') +'" class="help-block ' + extraClass +'">' + message  + '</span>' );
              if ( $field.prop( 'required' ) ) {
-                 disableAdvance();
+                 disableAdvance($field);
              }
              $field.addClass( 'parsely-error' );
              return false;
@@ -6295,13 +6292,42 @@ function toggle_button_init(id, el){
          }
      }
 
-     /**
+    /**
+     * Check if field is on the current page of a multi-page form.
+     *
+     * @since 1.5.8
+     *
+     * @param {jQuery} $field jQuery object of field to test.
+     *
+     * @return {Bool}
+     */
+    function fieldIsOnCurrentPage($field) {
+        return ! $field.closest('.caldera-form-page').attr('aria-hidden');
+    }
+
+    /**
+     * Get field of page field is on if on a multi-page form.
+     *
+     * @since 1.5.8
+     *
+     * @param {jQuery} $field jQuery object of field to test.
+     *
+     * @return {Bool}
+     */
+    function getFieldPage($field) {
+        return $field.closest( '.caldera-form-page' ).data( 'formpage' );
+    }
+
+    /**
       * Utility method for preventing advance (next page/submit)
       *
       * @since 1.5.0
       */
-     function disableAdvance(){
-         $submits.prop( 'disabled',true).attr( 'aria-disabled', true  );
+     function disableAdvance($field){
+         if( fieldIsOnCurrentPage($field) ){
+             $submits.prop( 'disabled',true).attr( 'aria-disabled', true  );
+         }
+
      }
 
      /**
@@ -6667,9 +6693,9 @@ function toggle_button_init(id, el){
              $field.trumbowyg(field.options);
              var $editor = $field.parent().find( '.trumbowyg-editor');
 
-             $editor.html( $field.html() );
+             $editor.html( $field.val() );
              $editor.bind('input propertychange', function(){
-                 $field.html( $editor.html() );
+                 $field.val( $editor.html() );
              });
          }
 
@@ -6709,7 +6735,7 @@ function toggle_button_init(id, el){
           *
           */
          function setupLink(){
-             disableAdvance();
+             disableAdvance($field);
              var $cvcField = $( document.getElementById( fieldConfig.cvc ) ),
                  $expField = $( document.getElementById( fieldConfig.exp ) );
              $cvcField.blur( function(){
@@ -6869,13 +6895,13 @@ function toggle_button_init(id, el){
 
 
 		/**
-         * Function that triggers calcualtion and updates state/DOM if it changed
+         * Function that triggers calculation and updates state/DOM if it changed
          * NOTE: Don't use directly, use debounced version
          *
          * @since 1.5.6
          */
         var run = function(){
-            console.log(window[fieldConfig.callback]);
+
 			var result = window[fieldConfig.callback].apply(null, [state] );
 			if( ! isFinite( result ) ){
 				result = 0;
@@ -7064,16 +7090,22 @@ var cf_jsfields_init, cf_presubmit;
 		if( clicked.data('page') !== 'prev' && page >= current_page ){
 			fields =  $('#caldera_form_' + instance + ' [data-formpage="' + current_page + '"] [data-field]'  );
 
-			var this_field,
+			var $this_field,
 				valid,
 				_valid;
 			for (var f = 0; f < fields.length; f++) {
-				this_field = $(fields[f]);
-				_valid = this_field.parsley().validate();
-				valid = this_field.parsley().isValid({force: true});
+				$this_field = $(fields[f]);
+				if( $this_field.hasClass( 'cf-multi-uploader' ) || $this_field.hasClass( 'cf-multi-uploader-list') ){
+					continue;
+				}
+
+				_valid = $this_field.parsley().validate();
+				valid = $this_field.parsley().isValid({force: true});
+
+
 
 				//@see https://github.com/CalderaWP/Caldera-Forms/issues/1765
-				if( ! valid && true === _valid && 'email' === this_field.attr( 'type' ) ){
+				if( ! valid && true === _valid && 'email' === $this_field.attr( 'type' ) ){
 					continue;
 				}
 
@@ -7091,9 +7123,9 @@ var cf_jsfields_init, cf_presubmit;
 					fields =  $('#caldera_form_' + instance + ' [data-formpage="' + i + '"] [data-field]'  );
 
 					for (var f = 0; f < fields.length; f++) {
-						this_field = $(fields[f]);
-						this_field.parsley().validate();
-						valid = this_field.parsley().isValid({force: true});
+						$this_field = $(fields[f]);
+						$this_field.parsley().validate();
+						valid = $this_field.parsley().isValid({force: true});
 						if (true === valid) {
 							continue;
 						}
@@ -7242,7 +7274,11 @@ var cf_jsfields_init, cf_presubmit;
 		}
 	});
 
-
+    $( document ).on( "cf.form.submit", function(e,obj) {
+		var $form = obj.$form;
+        var $breadBreadcrumbs = $form.find( '.breadcrumb' );
+        $breadBreadcrumbs.hide().attr( 'aria-hidden', true ).css( 'visibility', 'hidden' );
+    });
 
 
 })(jQuery);

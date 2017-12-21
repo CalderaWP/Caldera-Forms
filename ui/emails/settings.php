@@ -18,7 +18,7 @@
 					<?php esc_html_e( 'Deprecated Functionality', 'caldera-forms' ); ?>
 				</h2>
 				<p style="margin-left: 12px">
-					<?php esc_html_e( 'SendGrid integration was our first attempt to improve email in Caldera Forms. But we deciced to create something easier and provides more value to you are users. We call it Caldera Forms Pro.', 'caldera-forms' ); ?>
+					<?php esc_html_e( 'SendGrid integration was our first attempt to improve email in Caldera Forms. But we decided to create something easier and provides more value to you -- our users. We call it Caldera Forms Pro.', 'caldera-forms' ); ?>
 				</p>
 				<a href="https://calderaforms.com/pro?utm-source=wp-admin&utm_campaign=email-settings&utm_term=email-setting"
 				   target="_blank" class="bt-btn btn btn-green" style="width: 80%;margin-left:5%;">

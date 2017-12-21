@@ -841,14 +841,14 @@ class Caldera_Forms {
 			$details = Caldera_Forms::get_entry_detail( $_POST[ '_cf_frm_edt' ], $form );
 
 			// check token
-			if ( isset( $_POST[ '_cf_frm_edt_tkn' ] ) ) {
+			if ( is_array( $details ) && isset( $_POST[ '_cf_frm_edt_tkn' ] ) ) {
 
-				$validated = Caldera_Forms_Entry_Token::verify_token( $_POST[ '_cf_frm_edt_tkn' ],$details[ 'id' ], $form[ 'ID' ] );
+				$validated = Caldera_Forms_Entry_Token::verify_token( $_POST[ '_cf_frm_edt_tkn' ], $details[ 'id' ], $form[ 'ID' ] );
 				if ( is_wp_error( $validated ) ) {
 					return $validated;
 				} else {
-					$entry_id   = (int) $details[ 'id' ];
-					$edit_token = Caldera_Forms_Entry_Token::create_entry_token( $entry_id, $form[ 'ID' ] );
+				    $entry_id = $details[ 'id' ];
+					$edit_token = Caldera_Forms_Entry_Token::create_entry_token( $entry_id, $form );
 				}
 
 
@@ -1076,7 +1076,7 @@ class Caldera_Forms {
 		);
 
 		if ( ! is_email( $config[ 'sender_email' ] ) ) {
-			$config[ 'sender_email' ] = get_option( 'admin_email' );
+			$config[ 'sender_email' ] = Caldera_Forms_Email_Fallback::get_fallback( $form );
 		}
 
 		if( ! empty( $config[ 'reply_to' ] ) ){
@@ -2862,8 +2862,7 @@ class Caldera_Forms {
 				if ( is_wp_error( $validated ) ) {
 					return $validated;
 				} else {
-					$entry_id   = (int) $details[ 'id' ];
-					$edit_token = Caldera_Forms_Entry_Token::create_entry_token( $entry_id, $form[ 'ID' ] );
+					$edit_token = Caldera_Forms_Entry_Token::create_entry_token( $entry_id, $form );
 				}
 
 			} else {
@@ -3520,7 +3519,8 @@ class Caldera_Forms {
 							$transdata = array();
 						}
 						if ( ! empty( $_FILES ) && ! empty( $_POST[ 'field' ] ) ) {
-							$form  = Caldera_Forms_Forms::get_form( $wp_query->query_vars[ 'cf_api' ] );
+						    $form_id = str_replace( '/upload/', '', $wp_query->query_vars[ 'cf_api' ] );
+							$form  = Caldera_Forms_Forms::get_form( $form_id );
 
 							$field = Caldera_Forms_Field_Util::get_field( $form[ 'fields' ][ $_POST[ 'field' ] ], $form, true );
 							$data = cf_handle_file_upload( true, $field, $form );
@@ -3876,7 +3876,7 @@ class Caldera_Forms {
 			"field"             => $field,
 			"id"                => $field[ 'ID' ],//'fld_' . $field['slug'],
 			"name"              => $field[ 'ID' ],//$field['slug'],
-			"wrapper_before"    => "<div role=\"field\" data-field-wrapper=\"" . $field[ 'ID' ] . "\" class=\"" . $field_wrapper_class . "\" id=\"" . $field_id_attr . "-wrap\">\r\n",
+			"wrapper_before"    => "<div data-field-wrapper=\"" . $field[ 'ID' ] . "\" class=\"" . $field_wrapper_class . "\" id=\"" . $field_id_attr . "-wrap\">\r\n",
 			"field_before"      => "<div class=\"" . $field_input_class . "\">\r\n",
 			"label_before"      =>  "<label id=\"" . $field[ 'ID' ] . "Label\" for=\"" . $field_id_attr. "\" class=\"" . implode( ' ', $field_classes[ 'field_label' ] ) . "\">",
 			"label"             =>  $field[ 'label' ],
@@ -4116,12 +4116,13 @@ class Caldera_Forms {
 
 		do_action( 'caldera_forms_render_start', $form );
 
+		//aria-label="<?php echo $form[ 'name' ] . '"
 		$form_attributes = array(
 			'method'	=>	'POST',
 			'enctype'	=>	'multipart/form-data',
-			'role'		=>	'form',
 			'id'		=>	$form['ID'] . '_' . $current_form_count,
-			'data-form-id' => $form[ 'ID' ]
+			'data-form-id' => $form[ 'ID' ],
+            'aria-label'    => $form[ 'name' ]
 		);
 
 		//add extra attributes to make AJAX submissions JS do its thing
@@ -4219,12 +4220,11 @@ class Caldera_Forms {
 			$details = self::get_entry_detail( $entry_id, $form );
 			if ( ! empty( $_GET[ 'cf_et' ] ) ) {
 				// build token
-				$validated = Caldera_Forms_Entry_Token::verify_token( trim( $_GET[ 'cf_et' ] ), $_GET[ 'cf_et' ], $form[ 'ID' ]  );
-				if ( ! is_wp_error( $validated ) ) {
+				$validated = Caldera_Forms_Entry_Token::verify_token( trim( $_GET[ 'cf_et' ] ), $entry_id, $form[ 'ID' ]  );
+				if ( is_wp_error( $validated ) ) {
 					$notices[ 'error' ][ 'note' ] = __( 'Permission denied or entry does not exist.', 'caldera-forms' );
 				} else {
-					$entry_id   = (int) $details[ 'id' ];
-					$edit_token = Caldera_Forms_Entry_Token::create_entry_token( $entry_id, $form[ 'ID' ] );
+					$edit_token = Caldera_Forms_Entry_Token::create_entry_token( $entry_id, $form );
 				}
 
 			} else {
@@ -4233,7 +4233,7 @@ class Caldera_Forms {
 
 					if ( ! empty( $details ) ) {
 						// check user can edit
-						if ( current_user_can( 'edit_posts' ) || $details[ 'user_id' ] === $user_id ) {
+						if ( current_user_can( 'edit_posts' ) || ( is_array( $details ) && $details[ 'user_id' ] === $user_id ) ) {
 							// can edit.
 							$entry_id = (int) $details[ 'id' ];
 						} else {

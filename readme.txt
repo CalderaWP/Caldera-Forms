@@ -3,7 +3,7 @@ Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
 Tags: free wordpress form builder, formbuilder, form builder, contact form,  contact me, custom form, forms, form, custom forms, forms creator, caldera forms, calderawp, wp form, wp form builder, form, drag and drop, email, awesome, wordpress free form builder, echecks, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, eCheck,dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, gravity forms, ninja forms, contact, email, auto-responder, aweber, convertkit, builder, contact forms, search, ab testing, a/b testing, split testing, shortcode, wordpress, awesome plugin, plugin, easy, braintree form, dwolla form, authorize.net form, mailchimp form, mailchimp popup, aweber form, convertkit form, stripe form, stripe popup, eCheck form, responsive,
 Requires at least: 4.7
 Tested up to: 4.9.0
-Stable tag: 1.5.7.1-b-1
+Stable tag: 1.5.8-b-4
 License: GPLv2
 
 Responsive form builder for contact forms, user registration and login forms, Mailchimp, PayPal Express and more.
@@ -775,6 +775,33 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 
 == Changelog ==
+= Caldera Forms 1.5.8 (December 21, 2017) We Got You A Block For Christmas =
+See: [https://calderaforms.com/updates/caldera-forms-1-5-8](https://calderaforms.com/updates/caldera-forms-1-5-8?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-5-8)
+* ADDED: [Caldera Forms block](https://calderaforms.com/doc/add-contact-form-new-wordpress-post-editor/)
+* ADDED: Caldera Forms Pro API client is now included, you're one step closer to more reliable email delivery with priority support and anti-spam tools.
+* ADDED: get_form method to Caldera_Forms_Entry class.
+* ADDED: aria-label attribute to form.
+* NEW FILTER: [caldera_forms_fallback_email](https://calderaforms.com/doc/caldera_forms_fallback_email/) - changes the default fallback email.
+* FIXED: BC and BCC not setting properly in main mailer with some configurations.
+* FIXED: Buttons in main admin page had confusing markup for screen readers that was invalid HTML.
+* FIXED: HTML attribute role of form was added to form, which confuses screen readers and is against HTML spec.
+* FIXED: HTML attribute role of field was added to element wrapping fields, which confuses screen readers and is against HTML spec.
+* FIXED: Edit tokens for front-end editing of entries.
+* FIXED: Breadcrumbs were not hiding after submission of multi-page form. Now they hide.
+* FIXED: Conflict with Pods effecting Pods Template editor when Caldera Forms is active.
+* FIXED: Entry viewer was displaying values of checkbox fields improperly.
+* FIXED: Advanced file field required option didn't block users from going to next page, if field was empty.
+* FIXED: Select field default was not used in calculation field default.
+* FIXED: Select fields were not outputting an empty option, if there default value was 0.
+* FIXED: Credit card fields were validating too soon on multi-page forms, preventing advancing to the next page.
+* FIXED: There was a console.log() left over from 1.5.7 dev, which is bad.
+* FIXED: Some field field uploads could not process as form ID was not set properly.
+* FIXED: Caldera_Forms_Entry::get_form_id() was not using all caps ID.
+* FIXED: Github plugin updater URL in header.
+* FIXED: WYSIWYG field saveds with extra whitespace and double escaped some values.
+* IMPROVED: Caldera_Forms_Entry class was using wp_list_pluck() making it impossible to test isolated from WordPress, which was a problem for tests we are doing.
+* IMPROVED: We now check if $wpdb is object before using in Caldera_Forms_Entry, making it possible to use this class without WordPress.
+
 = Caldera Forms 1.5.7.1 (November 9, 2017) Quick Fix =
 * FIXED: JavaScript error when using conditionals and summary fields.
 * FIXED: With some field types, fields with conditional logic, might not be saved.
