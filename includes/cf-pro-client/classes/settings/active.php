@@ -1,7 +1,7 @@
 <?php
 
-
 namespace calderawp\calderaforms\pro\settings;
+use calderawp\calderaforms\pro\container;
 
 
 /**
@@ -18,6 +18,10 @@ class active {
 	 * @return bool
 	 */
 	public static function get_status(){
+	    $active = container::get_instance()->get_settings()->get_api_keys()->get_public();
+	    if( $active ){
+	        $active = container::get_instance()->get_settings()->get_api_keys()->get_secret();
+        }
 		/**
 		 * Override active status
 		 *
@@ -25,7 +29,8 @@ class active {
 		 *
 		 * @param bool $status
 		 */
-		return (bool) apply_filters( 'caldera_forms_pro_is_active', true  );
+		return (bool) apply_filters( 'caldera_forms_pro_is_active', $active  );
+
 	}
 
 }
