@@ -35,7 +35,6 @@ class Caldera_Forms_Admin_Pro {
 	 * @since 1.5.1
 	 */
 	public function add_hooks(){
-		add_filter( 'plugins_api', array( $this, 'client_installer' ), 11, 3 );
 		add_action( 'admin_menu', array( $this, 'maybe_add_menu_page' ) );
 	}
 
