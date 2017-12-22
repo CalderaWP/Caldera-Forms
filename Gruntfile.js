@@ -26,6 +26,7 @@ module.exports = function (grunt) {
         '!ui/blocks/cform/package-lock.json',
         '!ui/blocks/cform/webpack.config.js',
         '!includes/cf-pro-client/client/**',
+        '!includes/cf-pro-client/client/dist/favicon.io',
         '!includes/cf-pro-client/node_modules/**',
         '!includes/cf-pro-client/DEV-README.MD',
         '!includes/cf-pro-client/README.md',
