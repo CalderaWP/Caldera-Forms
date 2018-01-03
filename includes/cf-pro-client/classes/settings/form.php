@@ -28,6 +28,7 @@ class form extends json_arrayable {
 		'pdf_link',
 		'layout',
 		'pdf_layout',
+		'send_local'
 	);
 
 	/**
@@ -173,6 +174,16 @@ class form extends json_arrayable {
 		return $this->form_id;
 	}
 
+	/**
+	 * Getter for send_local setting in form
+	 *
+	 * @since 1.5.9
+	 *
+	 * @return bool
+	 */
+	public function get_send_local(){
+		return $this->get_property( 'send_local' );
+	}
 
 	/**
 	 * Getter for send_local setting
@@ -183,7 +194,7 @@ class form extends json_arrayable {
 	 */
 	public function should_send_local(){
 		/**
-		 * Change if an indivdual form should use local email system or not.
+		 * Change if an individual form should use local email system or not.
 		 *
 		 * Default is system value
 		 *
@@ -191,8 +202,12 @@ class form extends json_arrayable {
 		 * @param string $form_id Form ID
 		 *
 		 */
-		return apply_filters( 'caldera_forms_pro_send_local', container::get_instance()->get_settings()->send_local(), $this->form_id );
-
+		$_send_local = $this->get_send_local();
+		if( $_send_local === true ) {
+			return apply_filters( 'caldera_forms_pro_send_local', true, $this->form_id );
+		} else {
+			return apply_filters( 'caldera_forms_pro_send_local', container::get_instance()->get_settings()->send_local(), $this->form_id );
+		}
 	}
 
 	/**
