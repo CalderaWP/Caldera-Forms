@@ -4271,7 +4271,7 @@ class Caldera_Forms {
 
 		if(!empty($_GET['cf_er'])){
 			$prev_post = Caldera_Forms_Transient::get_transient( $_GET['cf_er'] );
-			if(!empty($prev_post['transient'])){
+			if( !empty( $prev_post['transient'] ) && $prev_post['data']['_cf_frm_id'] === $form['ID'] ){
 
 				if ( $prev_post[ 'transient' ] === $_GET[ 'cf_er' ] ) {
 					foreach ( $prev_post[ 'data' ] as $field_id => $field_entry ) {
