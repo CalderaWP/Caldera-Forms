@@ -53,7 +53,13 @@ class settings implements \Caldera_Forms_API_Route {
 					),
 					'activate' => array(
 						'type' => 'boolean'
-					)
+					),
+					'logLevel' => array(
+						'type' => 'integer',
+						'required' => false,
+						'default'               => 250,
+						'sanatization_callback' => 'absint'
+					),
 				),
 				'permissions_callback' => array( $this, 'permissions' )
 			)
@@ -123,6 +129,10 @@ class settings implements \Caldera_Forms_API_Route {
 
 		if( true === $request[ 'enhancedDelivery' ]  ){
 			$settings->set_enhanced_delivery( 'true' );
+		}
+
+		if( ! empty( $request[ 'logLevel' ] ) ){
+			$settings->set_log_level( $request[ 'logLevel' ] );
 		}
 
 		$settings->save();

@@ -43,6 +43,7 @@
 						</tab>
 						<tab name="Settings">
 							<delivery></delivery>
+							<logs></logs>
 						</tab>
 					</tabs>
 				</div>
@@ -56,6 +57,7 @@
 	import AccountEdit from '../components/Account/Edit';
 	import FormsSettings from '../components/FormSettings/Forms';
 	import enhancedDelivery from '../components/GeneralSettings/enhancedDelivery';
+    import logLevel from '../components/GeneralSettings/logLevel';
 	import Status from '../components/Elements/Status/Status.vue'
 	export default{
 		components :{
@@ -63,6 +65,7 @@
 			'account-edit' : AccountEdit,
 			'forms-settings' : FormsSettings,
 			'delivery' : enhancedDelivery,
+            'logs' : logLevel,
 			'status' : Status
 		},
 		computed: mapState({
@@ -70,6 +73,7 @@
 			connected: state => state.connected,
 			publicKey: state => state.account.apiKeys.public,
 			enhancedDelivery: state => state.settings.enhancedDelivery,
+            logLevel: state => state.settings.logLevel,
 			mainAlert: state => state.mainAlert
 		}),
 		beforeMount(){

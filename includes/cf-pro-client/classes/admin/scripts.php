@@ -91,7 +91,8 @@ class scripts {
 					'auth' => array()
 				)
 			),
-			'settings' => container::get_instance()->get_settings()->toArray()
+			'settings'  => container::get_instance()->get_settings()->toArray(),
+			'logLevels' => container::get_instance()->get_settings()->log_levels()
 		);
 
 		$data[ 'formScreen' ] = \Caldera_Forms_Admin::is_edit() ? esc_attr( $_GET[ \Caldera_Forms_Admin::EDIT_KEY ] ) : false;

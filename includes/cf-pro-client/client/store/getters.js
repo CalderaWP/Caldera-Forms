@@ -20,10 +20,17 @@ export const GETTERS = {
 		return _default;
 	},
 	getFormsById: (state, getters) => (id) => {
-		return state.forms.find(form => form.form_id === id)
+		return state.forms.find(form => form.form_id === id);
 	},
+
 	enhancedDelivery: state => {
 		return state.settings.enhancedDelivery;
+	},
+	logLevels: state => {
+    	return state.logLevels;
+	},
+	logLevel: state => {
+		return state.settings.logLevel;
 	},
 	connected: state => {
 		return state.connected;
