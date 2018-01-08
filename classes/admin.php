@@ -960,11 +960,11 @@ class Caldera_Forms_Admin {
 							$field = Caldera_Forms_Field_Util::get_field(  $row->slug, $form, true );
 
 							// maybe json?
-                                if ( is_string($row->value) ) {
-                                    $is_json = json_decode( $row->value, ARRAY_A );
-                                } else if ( is_array($row->value) ) { //Process all checkbox values
-                                    $is_json = $row->value;
-                                }
+                                            if ( is_string($row->value) ) {
+                                                $is_json = json_decode( $row->value, ARRAY_A );
+                                            } else if ( is_array($row->value) ) { //Process all checkbox values
+                                                $is_json = $row->value;
+                                            }
 
 							if ( ! empty( $is_json ) ) {
 								$row->value = $is_json;
