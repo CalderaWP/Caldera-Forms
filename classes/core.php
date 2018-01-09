@@ -181,6 +181,8 @@ class Caldera_Forms {
 
 		//format email
 		add_filter( 'caldera_forms_mailer', array( $this, 'format_message' ) );
+		//format autoresponder email
+		add_filter( 'caldera_forms_autoresponse_mail', array( $this, 'format_autoresponse_message' ) );
 
 		/** Entry Viewer v1 */
 		add_action( 'wp_ajax_browse_entries', array( Caldera_Forms_Entry_UI::get_instance(), 'view_entries' ) );
@@ -1051,9 +1053,8 @@ class Caldera_Forms {
 		$html = false;
 		if ( ! isset( $config[ 'html' ] ) || true == $config[ 'html' ] ) {
 			$headers[] = "Content-type: text/html";
-			$message   = wpautop( self::do_magic_tags( $message ) );
+			$message   = self::do_magic_tags( $message );
 			$html = true;
-
 		} else {
 			$message = self::do_magic_tags( $message );
 		}
@@ -4985,5 +4986,25 @@ class Caldera_Forms {
 
 		return self::$settings;
 	}
+
+	/**
+	 * Apply wpautop to autoresponder message.
+	 *
+	 * This was separated out from main autoresponder generation method in 1.5.9 so it would be removable, see: https://github.com/CalderaWP/Caldera-Forms/issues/1917
+	 *
+	 * @since 1.5.9
+	 *
+	 * @uses "caldera_forms_autoresponse_mail" filter
+	 *
+	 * @param array $email
+	 *
+	 * @return mixed
+	 */
+	public static function format_autoresponse_message( $email ) {
+		$email[ 'message' ] = wpautop( $email[ 'message' ] );
+		return $email;
+
+	}
+
 
 }
