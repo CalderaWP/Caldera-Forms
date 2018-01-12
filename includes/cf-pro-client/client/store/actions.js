@@ -21,7 +21,7 @@ export const ACTIONS = {
 				context.commit('apiKeys', r.apiKeys);
 				context.commit('accountId', r.account_id);
 				context.commit('plan', r.plan);
-        		context.commit('logLevel', r.logLevel);
+        				context.commit('logLevel', r.logLevel);
 				context.commit('enhancedDelivery', r.enhancedDelivery);
 				context.commit('formScreen', r.hasOwnProperty( 'formScreen' ) ? r.formScreen : CFProConfig.formScreen );
 				resolve(response);
@@ -38,7 +38,7 @@ export const ACTIONS = {
 			enhancedDelivery: context.state.settings.enhancedDelivery,
 			plan: context.state.account.plan,
 			forms: context.state.forms,
-     		logLevel: context.state.settings.logLevel
+     				logLevel: context.state.settings.logLevel
 		}).then(r => {
 			if( r.data.hasOwnProperty( '_cfAlertMessage' ) ){
 				context.dispatch( 'updateMainAlert', _cfAlertMessage );

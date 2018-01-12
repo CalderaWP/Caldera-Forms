@@ -9,7 +9,7 @@
                         id="cf-pro-form-log-level-chooser"
                         v-model="logLevelValue"
                 >
-                    <option v-for="level in logLevels" v-bind:value="level.number">
+                    <option v-for="level in logLevels" v-bind:value="level.number" v-key="level.number">
                         {{ level.name }}
                     </option>
 

@@ -16,7 +16,7 @@ const STATE = {
 		logLevel: 250
 	},
 	layouts : [
-		{name:'FOFOF'}
+		{name:''}
 	],
 	account: {
 		plan: String,
