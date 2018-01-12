@@ -38,7 +38,7 @@ export const ACTIONS = {
 			enhancedDelivery: context.state.settings.enhancedDelivery,
 			plan: context.state.account.plan,
 			forms: context.state.forms,
-     				logLevel: context.state.settings.logLevel
+				logLevel: context.state.settings.logLevel
 		}).then(r => {
 			if( r.data.hasOwnProperty( '_cfAlertMessage' ) ){
 				context.dispatch( 'updateMainAlert', _cfAlertMessage );

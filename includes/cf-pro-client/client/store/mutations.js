@@ -23,9 +23,9 @@ export const MUTATIONS = {
 	forms(state, value){
 		state.forms = value;
 	},
-			logLevels(state, value){
-				state.logLevels = value;
-			},
+	logLevels(state, value){
+		state.logLevels = value;
+	},
 	connected(state,value ){
 		state.connected = value;
 	},

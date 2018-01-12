@@ -27,7 +27,7 @@ export const GETTERS = {
 		return state.settings.enhancedDelivery;
 	},
 	logLevels: state => {
-    			return state.logLevels;
+			return state.logLevels;
 	},
 	logLevel: state => {
 		return state.settings.logLevel;
