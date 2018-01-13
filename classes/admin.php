@@ -1058,6 +1058,7 @@ class Caldera_Forms_Admin {
 			if( ! empty( $forms ) ){
 				foreach($forms as $form_id=>$form){
 					if(!empty($form['pinned'])){
+
 						$this->screen_prefix[] 	 = add_submenu_page(
 							$this->plugin_slug,
 							__('Caldera Forms', 'caldera-forms' ).' - ' . $form['name'], '- '.$form['name'],
