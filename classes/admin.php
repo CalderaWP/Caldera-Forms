@@ -1051,7 +1051,7 @@ class Caldera_Forms_Admin {
 				Caldera_Forms::get_manage_cap(),
 				$this->plugin_slug, array( $this, 'render_admin' ),
 				'dashicons-cf-logo',
-				52.81321
+				'52.88'
 			);
 			add_submenu_page(
 				$this->plugin_slug,
