@@ -77,7 +77,7 @@ class handler extends  AbstractHandler {
 		 * @since 0.11.0
 		 *
 		 */
-		$highest = apply_filters( 'caldera_forms_pro_minimum_level', Monolog::NOTICE );
+		$highest = apply_filters( 'caldera_forms_pro_minimum_level', container::get_instance()->get_settings->get_log_level() );
 		if( ! is_numeric( $highest ) && array_key_exists( $highest, $levels ) ){
 			$highest = array_search( $highest, array_flip( $levels ) );
 
