@@ -79,7 +79,9 @@ class scripts {
 				'saved' => esc_html__( 'Settings Saved', 'caldera-forms' ),
 				'notSaved' => esc_html__( 'Settings could not be saved', 'caldera-forms' ),
                 'apiKeysViewText' => esc_html__( 'You must add your API keys to use Caldera Forms Pro', 'caldera-forms' ),
-                'apiKeysViewLink' => esc_url( $pro_url )
+                'apiKeysViewLink' => esc_url( $pro_url ),
+				'minLogLevelTitle' => esc_html__( 'Minimum Log Level', 'caldera-forms' ),
+				'minLogLevelInfo' => esc_html__( 'Setting a higher level than notice may affect performance, and should only be used when instructed by support.', 'caldera-forms' ),
 			],
 			'api' => array(
 				'cf' => array(

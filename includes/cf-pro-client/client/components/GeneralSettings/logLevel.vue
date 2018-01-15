@@ -1,9 +1,12 @@
 <template>
     <div>
         <div class="caldera-config-group">
-            <label for="cf-pro-form-log-level-chooser">
-                Set Log level
-            </label>
+            <div aria-labelledby="minLogLevelTitle" aria-describedby="minLogLevelInfo">
+                <label for="cf-pro-form-log-level-chooser" id="minLogLevelTitle">
+                    {{ strings.minLogLevelTitle }}
+                </label>
+                <p id="minLogLevelInfo">{{ strings.minLogLevelInfo}}</p>
+            </div>
             <div class="caldera-config-field">
                 <select
                         id="cf-pro-form-log-level-chooser"
@@ -26,7 +29,8 @@
         computed : {
             ...mapGetters([
                 'logLevels',
-                'logLevel'
+                'logLevel',
+                'strings'
             ]),
             logLevelValue: {
                 get() {
