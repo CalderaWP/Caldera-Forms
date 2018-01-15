@@ -157,7 +157,7 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 						<?php if(!empty($form['db_support'])) { ?>
 							<span class="edit">
 								<?php if (  ! version_compare( PHP_VERSION, '5.3.0', '>=' ) ) {
-									echo '<span title="' . esc_attr( sprintf( __( 'Entry viewer is disabled due to your PHP version, see %s', 'caldera-forms' ), 'https://calderaforms.com/php' ) ) .'" data-toggle="tooltip" data-placement="bottom" class="disabled">' . esc_html__( 'Entries', 'caldera-forms' ) . '</span> |';
+									echo '<span title="' . esc_attr( sprintf( __( 'Entry viewer is disabled due to your PHP version, see %s', 'caldera-forms' ), 'https://calderaforms.com/php?utm_source=wp-admin&utm_keyword=entry_viewer_php_version' ) ) .'" data-toggle="tooltip" data-placement="bottom" class="disabled">' . esc_html__( 'Entries', 'caldera-forms' ) . '</span> |';
 								} else { ?>
 									<a class="form-control form-entry-trigger ajax-trigger cf-entry-viewer-link"
 									   href="#entres"
