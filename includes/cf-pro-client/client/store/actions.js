@@ -31,10 +31,19 @@ export const ACTIONS = {
 		})
 	},
 	saveAccount(context) {
+		let key = context.state.account.apiKeys.public;
+		if( key && 'string' === typeof key ){
+			key = key.trim();
+		}
+        let secret = context.state.account.apiKeys.secret;
+        if( secret && 'string' === typeof secret ){
+            secret = secret.trim();
+        }
+
 		return localAPI.post('', {
 			accountId: context.state.account.id,
-			apiKey: context.state.account.apiKeys.public,
-			apiSecret: context.state.account.apiKeys.secret,
+			apiKey: key,
+			apiSecret: secret,
 			enhancedDelivery: context.state.settings.enhancedDelivery,
 			plan: context.state.account.plan,
 			forms: context.state.forms,
@@ -54,7 +63,7 @@ export const ACTIONS = {
 	},
 	testConnection({commit, state}) {
 		return new Promise((resolve, reject) => {
-			if (state.account.apiKeys.token) {
+			if (state.account.apiKeys.public && state.account.apiKeys.secret) {
 				return appAPI.get(
 					urlString(
 						{

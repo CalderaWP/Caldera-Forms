@@ -52,7 +52,7 @@
 				'secretKey',
 			]),
 			publicKeyChange(ev){
-				this.$store.commit('publicKey',ev.target.value);
+                this.$store.commit('publicKey',ev.target.value);
 			},
 			secretKeyChange(ev){
 				this.$store.commit('secretKey',ev.target.value);
@@ -60,3 +60,6 @@
 		}
 	}
 </script>
+<style>
+	@import "./style.css";
+</style>

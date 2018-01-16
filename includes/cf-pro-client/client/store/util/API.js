@@ -16,10 +16,10 @@ export const appAPI = axios.create({
 });
 
 export  const appToken = function (apiKeys) {
-	if( hasProp ( apiKeys,'token' ) ) {
-		return apiKeys.token;
-	}else if( objHasProp(apiKeys,'public') && objHasProp(apiKeys,'secret')){
-		return sha1(apiKeys.public . apiKeys.secret);
+	if( objHasProp(apiKeys,'public') && objHasProp(apiKeys,'secret')){
+		let publicKey = apiKeys.public;
+		let secret = apiKeys.secret;
+		return sha1( publicKey + secret);
 	}
 	return '';
 
