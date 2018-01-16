@@ -112,7 +112,6 @@ class Caldera_Forms {
 
 		//mailer magic
 		add_filter( 'caldera_forms_get_magic_tags', array( $this, 'set_magic_tags' ), 1 );
-		add_filter( 'caldera_forms_mailer', array( $this, 'mail_attachment_check' ), 10, 3 );
 
 		// action
 		add_action( 'caldera_forms_submit_complete', array( $this, 'save_final_form' ), 50 );
@@ -133,7 +132,7 @@ class Caldera_Forms {
 		add_filter( 'shortcode_atts_caldera_form', array( 'Caldera_Forms_Shortcode_Atts', 'maybe_allow_revision' ), 5, 4 );
 		add_filter( 'shortcode_atts_caldera_form_modal', array( 'Caldera_Forms_Shortcode_Atts', 'maybe_allow_revision' ), 5, 4 );
 
-		//emails
+		//email settings
 		add_action( 'caldera_forms_core_init', array( 'Caldera_Forms_Email_Settings', 'maybe_add_hooks' ) );
 		add_filter( 'pre_update_option__caldera_forms_email_api_settings', array(
 			'Caldera_Forms_Email_Settings',
@@ -179,10 +178,15 @@ class Caldera_Forms {
 		//check for forms on page
 		add_action( 'template_redirect', array( $this, 'maybe_load_styles' ) );
 
-		//format email
+		/** Email Filtering */
+		//Check email attachments
+        add_filter( 'caldera_forms_mailer', array( 'Caldera_Forms_Email_Filters', 'mail_attachment_check' ), 10, 3 );
+		//format email - using old method in case anyone removed the hook
 		add_filter( 'caldera_forms_mailer', array( $this, 'format_message' ) );
 		//format autoresponder email
-		add_filter( 'caldera_forms_autoresponse_mail', array( $this, 'format_autoresponse_message' ) );
+		add_filter( 'caldera_forms_autoresponse_mail', array( 'Caldera_Forms_Email_Filters', 'format_autoresponse_message' ) );
+		add_filter( 'caldera_forms_mailer', array( 'Caldera_Forms_Email_Filters', 'prepare_headers' ) );
+		add_filter( 'caldera_forms_autoresponse_mail', array( 'Caldera_Forms_Email_Filters', 'prepare_headers' ) );
 
 		/** Entry Viewer v1 */
 		add_action( 'wp_ajax_browse_entries', array( Caldera_Forms_Entry_UI::get_instance(), 'view_entries' ) );
@@ -595,6 +599,8 @@ class Caldera_Forms {
 	/**
 	 * Prepare email attachments
 	 *
+     * @deprecated
+     *
 	 * @param array $mail Email data
 	 * @param array $data Form data
 	 * @param array $form For config
@@ -602,51 +608,8 @@ class Caldera_Forms {
 	 * @return array
 	 */
 	public static function mail_attachment_check( $mail, $data, $form){
-		foreach ( Caldera_Forms_Forms::get_fields( $form, false ) as $field_id => $field ) {
-			if ( Caldera_Forms_Field_Util::is_file_field( $field, $form )  ) {
-				if( ! Caldera_Forms_Files::should_attach( $field, $form ) ){
-					continue;
-				}
-				$dir = wp_upload_dir();
-				if ( isset( $data[ $field_id ] ) && is_array( $data[ $field_id ] ) ) {
-					foreach ( $data[ $field_id ] as $file ) {
-						$file = str_replace( $dir[ 'baseurl' ], $dir[ 'basedir' ], $file );
-						if ( file_exists( $file ) ) {
-							$mail[ 'attachments' ][] = $file;
-						}
-					}
-					continue;
-				}
-				if ( isset( $data[ $field_id ] ) ) {
-					$file = $data[ $field_id ];
-				} else {
-					$file = self::get_field_data( $field_id, $form );
-				}
-				if ( is_array( $file ) ) {
-					foreach ( $file as $a_file ) {
-						$file = str_replace( $dir[ 'baseurl' ], $dir[ 'basedir' ], $file );
-						if ( is_string( $a_file ) && file_exists( $a_file ) ) {
-							$mail[ 'attachments' ][] = $a_file;
-						}
-					}
-					continue;
-				} else {
-					$file = str_replace( $dir[ 'baseurl' ], $dir[ 'basedir' ], $file );
-					if ( is_string( $file ) && file_exists( $file ) ) {
-						$mail[ 'attachments' ][] = $file;
-					} else {
-						if ( isset( $data[ $field_id ] ) && filter_var( $data[ $field_id ], FILTER_VALIDATE_URL ) ) {
-							$mail[ 'attachments' ][] = $data[ $field_id ];
-						} elseif ( isset( $_POST[ $field_id ] ) && filter_var( $_POST[ $field_id ], FILTER_VALIDATE_URL ) && 0 === strpos( $_POST[ $field_id ], $dir[ 'url' ] ) ) {
-							$mail[ 'attachments' ][] = $_POST[ $field_id ];
-						} else {
-							continue;
-						}
-					}
-				}
-			}
-		}
-		return $mail;
+		_deprecated_function(__METHOD__,'1.5.9','Caldera_Forms_Email_Filters::mail_attachment_check' );
+		return Caldera_Forms_Email_Filters::mail_attachment_check($mail,$data,$form);
 	}
 
 	/**
@@ -4959,8 +4922,8 @@ class Caldera_Forms {
 	 * @return mixed
 	 */
 	public static function format_message( $mail ){
-		$mail[ 'message' ] = wpautop( $mail[ 'message' ] );
-		return $mail;
+	    //using original hook because it may have been removed by an end-user
+		return Caldera_Forms_Email_Filters::format_message($mail);
 
 	}
 
@@ -4987,24 +4950,6 @@ class Caldera_Forms {
 		return self::$settings;
 	}
 
-	/**
-	 * Apply wpautop to autoresponder message.
-	 *
-	 * This was separated out from main autoresponder generation method in 1.5.9 so it would be removable, see: https://github.com/CalderaWP/Caldera-Forms/issues/1917
-	 *
-	 * @since 1.5.9
-	 *
-	 * @uses "caldera_forms_autoresponse_mail" filter
-	 *
-	 * @param array $email
-	 *
-	 * @return mixed
-	 */
-	public static function format_autoresponse_message( $email ) {
-		$email[ 'message' ] = wpautop( $email[ 'message' ] );
-		return $email;
-
-	}
 
 
 }
