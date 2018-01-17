@@ -43,7 +43,7 @@ class Caldera_Forms_Email_Filters{
                 if ( isset( $data[ $field_id ] ) ) {
                     $file = $data[ $field_id ];
                 } else {
-                    $file = self::get_field_data( $field_id, $form );
+                    $file = Caldera_Forms::get_field_data( $field_id, $form );
                 }
                 if ( is_array( $file ) ) {
                     foreach ( $file as $a_file ) {
