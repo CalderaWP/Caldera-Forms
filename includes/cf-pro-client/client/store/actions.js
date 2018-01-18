@@ -21,6 +21,7 @@ export const ACTIONS = {
 				context.commit('apiKeys', r.apiKeys);
 				context.commit('accountId', r.account_id);
 				context.commit('plan', r.plan);
+        				context.commit('logLevel', r.logLevel);
 				context.commit('enhancedDelivery', r.enhancedDelivery);
 				context.commit('formScreen', r.hasOwnProperty( 'formScreen' ) ? r.formScreen : CFProConfig.formScreen );
 				resolve(response);
@@ -30,13 +31,23 @@ export const ACTIONS = {
 		})
 	},
 	saveAccount(context) {
+		let key = context.state.account.apiKeys.public;
+		if( key && 'string' === typeof key ){
+			key = key.trim();
+		}
+        let secret = context.state.account.apiKeys.secret;
+        if( secret && 'string' === typeof secret ){
+            secret = secret.trim();
+        }
+
 		return localAPI.post('', {
 			accountId: context.state.account.id,
-			apiKey: context.state.account.apiKeys.public,
-			apiSecret: context.state.account.apiKeys.secret,
+			apiKey: key,
+			apiSecret: secret,
 			enhancedDelivery: context.state.settings.enhancedDelivery,
 			plan: context.state.account.plan,
-			forms: context.state.forms
+			forms: context.state.forms,
+			logLevel: context.state.settings.logLevel
 		}).then(r => {
 			if( r.data.hasOwnProperty( '_cfAlertMessage' ) ){
 				context.dispatch( 'updateMainAlert', _cfAlertMessage );
@@ -52,7 +63,7 @@ export const ACTIONS = {
 	},
 	testConnection({commit, state}) {
 		return new Promise((resolve, reject) => {
-			if (state.account.apiKeys.token) {
+			if (state.account.apiKeys.public && state.account.apiKeys.secret) {
 				return appAPI.get(
 					urlString(
 						{

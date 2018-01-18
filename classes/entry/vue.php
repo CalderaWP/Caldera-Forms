@@ -54,7 +54,7 @@ class Caldera_Forms_Entry_Vue {
 		$this->enqueue();
 		ob_start();
 		include  CFCORE_PATH .'ui/viewer-two/viewer.php';
-		return ob_start();
+		return ob_get_clean();
 	}
 	/**
 	 * Setup scripts/styles for entry viewer

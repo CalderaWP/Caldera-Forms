@@ -44,5 +44,17 @@ export default {
 	 *
 	 * @type {Object}
 	 */
-	strings: CF_PRO_ADMIN.strings
+	strings: CF_PRO_ADMIN.strings,
+
+    /**
+     * Levels of Monolog logs
+     *
+     * Created by "logLevels" index of generated in calderawp\calderaforms\pro\admin\scripts::data()
+     *
+     * @since 1.5.9
+     *
+     * @type array
+     */
+    logLevels: CF_PRO_ADMIN.logLevels,
+
 };

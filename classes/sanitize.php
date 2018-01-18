@@ -233,6 +233,19 @@ class Caldera_Forms_Sanitize {
 
 	}
 
+    /**
+     * Remove unintentional line breaks in a string, such as an email header
+     *
+     * @since 1.5.9
+     *
+     * @param string $header
+     * @return string
+     */
+	public static function sanitize_header($header){
+        return preg_replace( '=((<CR>|<LF>|0x0A/%0A|0x0D/%0D|\\n|\\r)\S).*=i', null, $header );
+
+    }
+
 }
 
 

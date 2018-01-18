@@ -23,6 +23,9 @@ export const MUTATIONS = {
 	forms(state, value){
 		state.forms = value;
 	},
+	logLevels(state, value){
+		state.logLevels = value;
+	},
 	connected(state,value ){
 		state.connected = value;
 	},
@@ -35,6 +38,9 @@ export const MUTATIONS = {
 			state.forms[index] = value;
 		}
 	},
+    logLevel(state,value){
+		state.settings.logLevel = value;
+    },
 	enhancedDelivery(state,value){
 		if(  'on' == value ){
 			value = true;

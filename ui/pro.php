@@ -21,6 +21,6 @@ if( ! defined( 'ABSPATH' ) ){
 	<?php
         $message = __( 'Caldera Forms Pro could not be loaded because your site\'s version of PHP is out of date. Caldera Forms Pro requires PHP 5.6 or later.', 'caldera-forms' );
         printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( 'notice notice-error' ), esc_html( $message ) );
-        printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( 'notice notice-warning' ), __( 'For more information, please see:', 'cf-pro' ) . ' <a href=https://calderaforms.com/php/">CalderaForms.com/php</a>' );
+        printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( 'notice notice-warning' ), __( 'For more information, please see: ', 'cf-pro' ) . ' <a href="https://calderaforms.com/php?utm_source=wp-admin&utm_keyword=php_version">CalderaForms.com/php</a>' );
     ?>
 </div>

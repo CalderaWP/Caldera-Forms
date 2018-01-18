@@ -4,6 +4,7 @@
 namespace calderawp\calderaforms\pro;
 use calderawp\calderaforms\pro\api\keys;
 use calderawp\calderaforms\pro\settings\form;
+use Monolog\Logger as Monolog;
 
 
 /**
@@ -71,6 +72,12 @@ class settings  extends repository{
 
 		if ( isset( $saved[ 'enhancedDelivery' ] ) ) {
 			$settings->set_enhanced_delivery( $saved[ 'enhancedDelivery' ] );
+		}
+
+		if( ! empty( $saved[ 'logLevel' ] ) ){
+			$settings->set_log_level( $saved[ 'logLevel' ] );
+		}else{
+			$settings->set_log_level( Monolog::NOTICE );
 		}
 
 		if( ! empty( $saved[ 'plan' ] ) ){
@@ -287,6 +294,57 @@ class settings  extends repository{
 	}
 
 	/**
+	 * List all log levels from Monolog
+	 *
+	 * @since 1.5.9
+	 *
+	 * @return array
+	 */
+	public function log_levels(){
+		$levels = Monolog::getLevels();
+		$all_levels= array();
+		$i = 0;
+		foreach( $levels as $name => $number) {
+			$all_levels[$i] = array(
+				'name' => $name,
+				'number' => $number
+			);
+			$i++;
+		}
+		return $all_levels;
+	}
+
+	/**
+	 * Set log level
+	 *
+	 * @since 1.5.9
+	 *
+	 * @param integer $level
+	 */
+	public function set_log_level( $level ){
+		$all_levels = $this->log_levels();
+
+		$levels = array();
+		foreach( $all_levels as $levelindex) {
+			$levels[] = $levelindex['number'];
+		}
+		if( in_array( $level, $levels) ) {
+			$this->set( 'logLevel', $level );
+		}
+	}
+
+	/**
+	 * Get log level
+	 *
+	 * @since 1.5.9
+	 *
+	 * @return integer
+	 */
+	public function get_log_level(){
+		return $this->get( 'logLevel', Monolog::NOTICE );
+	}
+
+	/**
 	 * Return if is basic plan
 	 *
 	 * @since 0.0.1
@@ -334,6 +392,7 @@ class settings  extends repository{
 			'forms'            => $this->forms_to_array(),
 			'enhancedDelivery' => $this->get_enhanced_delivery(),
 			'plan'             => $this->get_plan(),
+			'logLevel'         => $this->get_log_level()
 		);
 
 		return $data;

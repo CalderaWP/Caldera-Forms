@@ -959,8 +959,13 @@ class Caldera_Forms_Admin {
 							// check view handler
 							$field = Caldera_Forms_Field_Util::get_field(  $row->slug, $form, true );
 
-							// maybe json?
-							$is_json = json_decode( $row->value, ARRAY_A );
+                                                        // maybe json?
+                                                        if ( is_string($row->value) ) {
+                                                            $is_json = json_decode( $row->value, ARRAY_A );
+                                                        } else if ( is_array($row->value) ) { //Process all checkbox values
+                                                            $is_json = $row->value;
+                                                        }
+
 							if ( ! empty( $is_json ) ) {
 								$row->value = $is_json;
 							}else  {
@@ -1046,7 +1051,7 @@ class Caldera_Forms_Admin {
 				Caldera_Forms::get_manage_cap(),
 				$this->plugin_slug, array( $this, 'render_admin' ),
 				'dashicons-cf-logo',
-				52.81321
+				'52.88'
 			);
 			add_submenu_page(
 				$this->plugin_slug,

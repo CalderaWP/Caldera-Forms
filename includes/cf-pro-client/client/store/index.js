@@ -12,10 +12,11 @@ const STATE = {
 	],
 	settings : {
 		enhancedDelivery: false,
-		generatePDFs: false
+		generatePDFs: false,
+		logLevel: 250
 	},
 	layouts : [
-		{name:'FOFOF'}
+		{name:''}
 	],
 	account: {
 		plan: String,
@@ -31,7 +32,8 @@ const STATE = {
 		success: false,
 		message : '',
 		show: false
-	}
+	},
+	logLevels: CFProConfig.logLevels
 };
 
 

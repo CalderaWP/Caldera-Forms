@@ -464,7 +464,7 @@ class Caldera_Forms_Forms {
 
 		foreach ( $valid_forms as $form_id => $form  ) {
 			if ( ! isset( $base_forms[ $form_id ] ) ) {
-				$forms[ $form_id ][ '_external_form' ] = true;
+				$valid_forms[ $form_id ][ '_external_form' ] = true;
 				if ( empty( $forms[ $form_id ][ 'ID' ] ) ) {
 					$valid_forms[ $form_id ][ 'ID' ] = $form_id;
 				}
