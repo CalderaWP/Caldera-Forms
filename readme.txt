@@ -3,7 +3,7 @@ Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
 Tags: free wordpress form builder, formbuilder, form builder, contact form,  contact me, custom form, forms, form, custom forms, forms creator, caldera forms, calderawp, wp form, wp form builder, form, drag and drop, email, awesome, wordpress free form builder, echecks, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, eCheck,dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, gravity forms, ninja forms, contact, email, auto-responder, aweber, convertkit, builder, contact forms, search, ab testing, a/b testing, split testing, shortcode, wordpress, awesome plugin, plugin, easy, braintree form, dwolla form, authorize.net form, mailchimp form, mailchimp popup, aweber form, convertkit form, stripe form, stripe popup, eCheck form, responsive,
 Requires at least: 4.7
 Tested up to: 4.9.1
-Stable tag: 1.5.9-rc-1
+Stable tag: 1.5.9-rc.1
 License: GPLv2
 
 Responsive form builder for contact forms, user registration and login forms, Mailchimp, PayPal Express and more.
@@ -775,6 +775,22 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 
 == Changelog ==
+= Caldera Forms 1.5.9 (January, 23, 2018) =
+See: [https://calderaforms.com/updates/caldera-forms-1-5-9](https://calderaforms.com/updates/caldera-forms-1-5-9?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-5-8)
+
+Caldera Forms 1.5.9-rc.1 - January 18, 2018.
+
+* ADDED: Ability to remove wpautop formatting to auto-responder message, by removing a hook. `remove_filter(  'caldera_forms_autoresponse_mail', array( 'Caldera_Forms_Email_Filters', 'format_autoresponse_message' ) );`
+* IMPROVED: Caldera Forms Pro API key settings - made inputs wider and setting validate without a page refresh.
+* ADDED: Ability to disable enhanced delivery per form.
+* ADDED: Ability to change log level via UI.
+* FIXED: Files did not attach to emails if sub menu entry viewer was enabled.
+* FIXED: Menu order conflict with LifterLMS and some other plugins causing their menu to disappear.
+* FIXED: PHP warning: Fix json_decode expects parameter 1 to be a string admin.php affecting entry exports and entry viewer.
+* FIXED: The caldera_forms_entry_viewer shortcode was not using output buffering
+* FIXED: Field sync was not recovering from field hide (this fix is not included in 1.5.9-rc.1)
+
+
 = Caldera Forms 1.5.8 (December 21, 2017) We Got You A Block For Christmas =
 See: [https://calderaforms.com/updates/caldera-forms-1-5-8](https://calderaforms.com/updates/caldera-forms-1-5-8?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-5-8)
 * ADDED: [Caldera Forms block](https://calderaforms.com/doc/add-contact-form-new-wordpress-post-editor/)
