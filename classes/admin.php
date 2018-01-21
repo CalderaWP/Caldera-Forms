@@ -1321,6 +1321,7 @@ class Caldera_Forms_Admin {
 			}else{
 
 				$form_id = sanitize_key( $_GET['form_id'] );
+				$form['_external_form'] = 1;
 				if( !empty( $_GET['pin_menu'] ) ){
 					$form['pinned'] = 1;
 				}
