@@ -41,6 +41,7 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
 
 		wp_cache_delete( '_caldera_forms_forms', 'options' );
 		parent::tearDown();
+        reset_phpmailer_instance();
 	}
 
 	/**
@@ -253,6 +254,73 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
             'field_data' => $data,
             'form_id' => $form[ 'ID' ],
         );
+    }
+
+    /**
+     * Import contact form without auto-responder
+     *
+     * @since 1.5.9
+     *
+     * @return string
+     */
+    protected function import_contact_form(){
+        $json = file_get_contents( dirname(__FILE__ ) . '/forms/contact-forms-no-auto-responder.json' );
+        $config = $this->recursive_cast_array( json_decode( $json ) );
+        $form_id = Caldera_Forms_Forms::import_form(  $config );
+        return $form_id;
+    }
+
+    /**
+     * Cast array or object, like a form import, to array
+     *
+     * @since 1.5.9
+     *
+     * @param $array_or_object
+     * @return array
+     */
+    protected function recursive_cast_array( $array_or_object ){
+        $array_or_object = (array) $array_or_object;
+        foreach ( $array_or_object as $key => $value ){
+            if( is_array( $value ) || is_object( $value ) ){
+                $array_or_object[ $key ] = $this->recursive_cast_array( $value );
+            }
+
+        }
+        return $array_or_object;
+    }
+    protected function submission_data( $form_id = null ){
+        if( ! $form_id ){
+            $form_id = self::MOCK_FORM_ID;
+        }
+
+        $nonce = Caldera_Forms_Render_Nonce::create_verify_nonce( $form_id );
+
+        $data = array (
+            '_cf_verify' => $nonce,
+            '_wp_http_referer' => '/?page_id=4&preview=1&cf_preview=' . $form_id,
+            '_cf_frm_id' => $form_id,
+            '_cf_frm_ct' => '1',
+            'cfajax' => $form_id,
+            '_cf_cr_pst' => '4',
+            'email' => '',
+            'fld_8768091' => 'Roy',
+            'fld_9970286' => 'Sivan',
+            'fld_6009157' => 'roy@roysivan.com',
+            'fld_7683514' => 'Hi Roy',
+            'fld_7908577' => 'click',
+            'formId' => $form_id,
+            'instance' => '1',
+            'request' => site_url('/cf-api/CF5a665b9ca5513'),
+            'postDisable' => '0',
+            'target' => '#caldera_notices_1',
+            'loadClass' => 'cf_processing',
+            'loadElement' => '_parent',
+            'hiderows' => 'true',
+            'action' => 'cf_process_ajax_submit',
+            'template' => '#cfajax_CF5a665b9ca5513-tmpl',
+        );
+
+        return $data;
     }
 
 }
