@@ -1329,11 +1329,24 @@ class Caldera_Forms_Admin {
 				echo '<?php' . "\r\n";
 				echo "/**\r\n * Caldera Forms - PHP Export \r\n * {$form['name']} \r\n * @version    " . CFCORE_VER . "\r\n * @license   GPL-2.0+\r\n * \r\n */\r\n\r\n\r\n";
 
-				$structure = "/**\r\n * Filter admin forms to include custom form in admin\r\n *\r\n * @since 1.3.1\r\n *\r\n * @param array \$forms All registered forms\r\n */\r\n";
-				$structure .= 'add_filter( "caldera_forms_get_forms", function( $forms ){' . "\r\n";
-				$structure .= "\t" . '$forms["' . $form_id . '"] = apply_filters( "caldera_forms_get_form-' . $form_id . '", array() );' . "\r\n";
-				$structure .= "\t" . 'return $forms;' . "\r\n";
-				$structure .= "} );\r\n\r\n";
+				$structure = sprintf( '
+					/**
+					 * Filter admin forms to include custom form in admin
+					 *
+					 * @since 1.3.1
+					 *
+					 * @param array $forms All registered forms
+					 */
+					add_filter( "caldera_forms_get_forms", "caldera_forms_register_forms" );
+					add_filter( "caldera_forms_admin_forms", "caldera_forms_register_forms" );
+					function caldera_forms_register_forms( $forms ) {
+						$forms["%s"] = apply_filters( "caldera_forms_get_form-%s", array() );
+						return $forms;
+					};',
+					$form_id,
+					$form_id
+				);
+				$structure = str_replace( '					', '', $structure ) . "\r\n\r\n";
 
 				$structure .= "/**\r\n * Filter form request to include form structure to be rendered\r\n *\r\n * @since 1.3.1\r\n *\r\n * @param \$form array form structure\r\n */\r\n";
 				$structure .= "add_filter( 'caldera_forms_get_form-{$form_id}', function( \$form ){\r\n return " . var_export( $form, true ) . ";\r\n" . '} );' . "\r\n";
