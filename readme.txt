@@ -789,6 +789,8 @@ Caldera Forms 1.5.9-rc.1 - January 18, 2018.
 * FIXED: PHP warning: Fix json_decode expects parameter 1 to be a string admin.php affecting entry exports and entry viewer.
 * FIXED: The caldera_forms_entry_viewer shortcode was not using output buffering
 * FIXED: Field sync was not recovering from field hide (this fix is not included in 1.5.9-rc.1)
+* FIXED: Section breaks were showing in CSV
+* FIXED: External forms were not working with entry viewer.
 
 
 = Caldera Forms 1.5.8 (December 21, 2017) We Got You A Block For Christmas =
