@@ -3,7 +3,7 @@ language: php
 notifications:
   email:
     on_success: never
-    on_failure: change
+    on_failure: never
 
 php:
   - 5.3
@@ -13,11 +13,9 @@ php:
 
 env:
   - WP_VERSION=latest WP_MULTISITE=0
-  - WP_VERSION=4.3 WP_MULTISITE=0
-  - WP_VERSION=4.5 WP_MULTISITE=0
-  - WP_VERSION=4.6 WP_MULTISITE=0
   - WP_VERSION=4.7 WP_MULTISITE=0
   - WP_VERSION=4.8 WP_MULTISITE=0
+  - WP_VERSION=4.9 WP_MULTISITE=0
 
 matrix:
   include:
