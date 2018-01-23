@@ -26,6 +26,7 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
 		try{
 			$this->form_object_factory( $request[ 'form_id' ], $request );
 		}catch ( Exception $e ){
+		    return rest_ensure_response( [ 'id' => $request[ 'form_id' ] ] );
 			return Caldera_Forms_API_Response_Factory::error_form_not_found();
 		}
 
