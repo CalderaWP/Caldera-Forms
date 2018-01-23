@@ -261,14 +261,21 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
      *
      * @since 1.5.9
      *
+     * @param bool $main_mailer Optional. If true, the default, contact form for main mailer is imported. If false, contact form for auti-responder is imported.
      * @return string
      */
-    protected function import_contact_form(){
-        $json = file_get_contents( dirname(__FILE__ ) . '/forms/contact-forms-no-auto-responder.json' );
-        $config = $this->recursive_cast_array( json_decode( $json ) );
-        $form_id = Caldera_Forms_Forms::import_form(  $config );
-        return $form_id;
+    protected function import_contact_form($main_mailer = true ){
+        if ($main_mailer) {
+            $file = dirname(__FILE__) . '/forms/contact-forms-no-auto-responder.json';
+        } else {
+            $file = dirname(__FILE__) . '/forms/contact-form-autoresponder.json';
+
+        }
+
+        return $this->import_form($file);
     }
+
+
 
     /**
      * Cast array or object, like a form import, to array
@@ -288,14 +295,27 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
         }
         return $array_or_object;
     }
-    protected function submission_data( $form_id = null ){
+
+    /**
+     * Create submission data for mock submissions.
+     *
+     * Designed to be used to set $_POST for contact form tests or other mock submission requiring tests.
+     *
+     * @since 1.5.9
+     *
+     * @param null|string $form_id
+     * @param array $data
+     * @return array
+     */
+    protected function submission_data( $form_id = null, array $data = array() ){
         if( ! $form_id ){
             $form_id = self::MOCK_FORM_ID;
         }
 
         $nonce = Caldera_Forms_Render_Nonce::create_verify_nonce( $form_id );
 
-        $data = array (
+
+        $data = wp_parse_args( $data, array (
             '_cf_verify' => $nonce,
             '_wp_http_referer' => '/?page_id=4&preview=1&cf_preview=' . $form_id,
             '_cf_frm_id' => $form_id,
@@ -310,7 +330,7 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
             'fld_7908577' => 'click',
             'formId' => $form_id,
             'instance' => '1',
-            'request' => site_url('/cf-api/CF5a665b9ca5513'),
+            'request' => site_url("/cf-api/$form_id"),
             'postDisable' => '0',
             'target' => '#caldera_notices_1',
             'loadClass' => 'cf_processing',
@@ -318,9 +338,26 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
             'hiderows' => 'true',
             'action' => 'cf_process_ajax_submit',
             'template' => '#cfajax_CF5a665b9ca5513-tmpl',
-        );
+        ) );
+
 
         return $data;
     }
+
+    /**
+     * Import form by file path
+     *
+     * @since 1.5.9
+     *
+     * @param string $file Path to form config
+     * @return string
+     */
+    protected function import_form($file) {
+        $json = file_get_contents($file);
+        $config = $this->recursive_cast_array(json_decode($json));
+        $form_id = Caldera_Forms_Forms::import_form($config);
+        return $form_id;
+    }
+
 
 }
