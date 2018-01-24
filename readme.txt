@@ -858,24 +858,24 @@ See: [https://calderaforms.com/updates/caldera-forms-1-5-6-1](https://calderafor
 = Caldera Forms 1.5.6 (September 13, 2017) Sorry for the delay, we had a minor tropical storm issue. =
 See: [https://calderaforms.com/updates/caldera-forms-1-5-6](https://calderaforms.com/updates/caldera-forms-1-5-6?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1.5.6)
 * ADDED: BCC in auto-responder
-* ADDED: Rely-to in auto-responder
+* ADDED: Reply-to in auto-responder
 * ADDED: Warning in admin if your site is not using SSL.
-* ADDED: cf.form.submit JavaScript event triggered by form submission.
-* ADDED: cf.form.validated JavaScript event when form is validated
-* ADDED: cf.form.init JavaScript event triggered when form is initializes
-* ADDED: Field ID in object passed by cf.remove JavaScript event.
+* ADDED: cf.form.submit JavaScript event triggered by a form submission.
+* ADDED: cf.form.validated JavaScript event when a form is validated
+* ADDED: cf.form.init JavaScript event triggered when a form initializes
+* ADDED: Field ID in the object passed by cf.remove JavaScript event.
 * REMOVED: Setting for field description
 * NEW FILTER: caldera_forms_csv_file_type to change CSV to TSV.
 * SOFT DEPRECATED: Add a deprecation message on email settings screen, which will get absorbed into new settings screen. SendGrid API integration is supported, but discouraged.
-* MAJOR UPDATE: Front-end JavaScript for calculations. Rewritten for performance reasons and to make more extensible and easier to add new features to.
-* FIXED: From name and from email in main mailer din't work properly with bracket magic tags
-* FIXED: Email resend button could trigger fatal error with some form configurations.
+* MAJOR UPDATE: Front-end JavaScript for calculations. Rewritten for performance reasons and to make more extensible and easier to add new features too.
+* FIXED: From name and from email in the main mailer didn't work properly with bracket magic tags
+* FIXED: Email resend button could trigger a fatal error with some form configurations.
 * FIXED: Advanced file field file handling.
 * FIXED: Summary fields were showing magic tags of synced to field, instead of values, for fields that were field synced.
 * FIXED: Auto-complete field calculation value was ignored.
 * FIXED: Hidden option values (Labels Only mode) didn't update value on label change.
 * FIXED: CSV exports had non-parsable dates.
-* FIXED: Calculation fields were not running on page naviagation.
+* FIXED: Calculation fields were not running on page navigation.
 * FIXED: Caldera_Forms_Field_Honey::get() had unused parameters, which were required, but not called, which was causing honey pot issues.
 
 = Caldera Forms 1.5.5 (August 17, 2017) We Had Fun In Canada ! =
@@ -1892,7 +1892,7 @@ New conditional groups!
 = 1.3.5 =
 Better file fields, forms in modals, usage tracking for your forms!
 = 1.3.4 =
-Major update! Better emails form your form, better form editor. Caldera Forms !!
+Major update! Better emails from your form, better form editor. Caldera Forms !!
 
 = 1.4.5 =
 See: https://wp.me/p5JPPE-9bv for details.
