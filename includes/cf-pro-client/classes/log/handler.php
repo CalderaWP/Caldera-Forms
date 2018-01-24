@@ -35,8 +35,7 @@ class handler extends  AbstractHandler {
 	 * {@inheritdoc}
 	 * @since 0.5.0
 	 */
-	public function handle( array $record )
-	{
+	public function handle( array $record ) {
 		$level = isset( $record[ 'level_name' ] ) ? $record[ 'level_name' ] : Monolog::NOTICE;
 
 		if( ! $this->high_enough_level( $level ) ){
@@ -49,10 +48,7 @@ class handler extends  AbstractHandler {
 			return;
 		}
 
-
-
 		$prepared = $this->prepare( $record );
-
 
 		container::get_instance()->get_logger()->send(
 			$message,
@@ -62,11 +58,18 @@ class handler extends  AbstractHandler {
 
 	}
 
+    /**
+     * Find if a log level is high enough to report according to settings and filters.
+     *
+     * @since 1.5.9
+     *
+     * @param string $level The level
+     * @return bool
+     */
 	protected function high_enough_level( $level ){
 		$levels = Monolog::getLevels();
 		if (  array_key_exists( $level, $levels )  ) {
 			$level = array_search( $level, array_flip( $levels ) );
-
 		}else{
 			return true;
 		}
@@ -77,7 +80,7 @@ class handler extends  AbstractHandler {
 		 * @since 0.11.0
 		 *
 		 */
-		$highest = apply_filters( 'caldera_forms_pro_minimum_level', container::get_instance()->get_settings->get_log_level() );
+		$highest = apply_filters( 'caldera_forms_pro_minimum_level', container::get_instance()->get_settings()->get_log_level() );
 		if( ! is_numeric( $highest ) && array_key_exists( $highest, $levels ) ){
 			$highest = array_search( $highest, array_flip( $levels ) );
 
