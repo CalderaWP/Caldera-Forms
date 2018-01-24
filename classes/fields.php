@@ -448,7 +448,7 @@ class Caldera_Forms_Fields {
 				"description" => __( 'An HR tag to separate sections of your form.', 'caldera-forms' ),
 				"file"        => CFCORE_PATH . "fields/section-break/section-break.php",
 				"category"    => __( 'Content', 'caldera-forms' ),
-				"static"      => true,
+				"capture"     => false,
 				"setup"       => array(
 					"template"      => CFCORE_PATH . "fields/section-break/config.php",
 					"not_supported" => array(

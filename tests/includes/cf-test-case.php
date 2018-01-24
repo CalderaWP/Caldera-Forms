@@ -8,7 +8,7 @@
  * @link
  * @copyright 2016 Josh Pollock
  */
-class Caldera_Forms_Test_Case extends \PHPUnit\Framework\TestCase {
+class Caldera_Forms_Test_Case extends WP_UnitTestCase {
 
 	const MOCK_FORM_ID = 'cf12345hiroy';
 
@@ -89,7 +89,7 @@ class Caldera_Forms_Test_Case extends \PHPUnit\Framework\TestCase {
             'name'               => 'Another form',
             'description'        => '',
             'db_support'         => 1,
-            'pinned'             => 0,
+            'pinned'             => 1,
             'hide_form'          => 1,
             'check_honey'        => 1,
             'success'            => __( 'Form has been successfully submitted. Thank you.', 'caldera-forms' ),
@@ -217,6 +217,41 @@ class Caldera_Forms_Test_Case extends \PHPUnit\Framework\TestCase {
                     'email_subject' => 'Another form',
                     'email_message' => '{summary}',
                 ),
+        );
+    }
+
+    /**
+     * Create a mock entry to test
+     *
+     * @since 1.4.0
+     */
+    protected function create_entry( array $form = null ){
+        if ( ! $form ) {
+            $form = $this->mock_form;
+        }
+        $data = array();
+        $i = 0;
+        foreach( $form[ 'fields' ] as $field_id => $field_config ){
+            if ( 1 == $i ) {
+                $data[ $field_id ] = $field_id . '_' . rand();
+            } else {
+                $data[ $field_id ] = array(
+                    rand(),
+                    5 => rand(), rand(), 'batman'
+                );
+            }
+            if( 0 == $i ){
+                $i = 1;
+            }else{
+                $i = 0;
+            }
+        }
+
+        $entry_id = Caldera_Forms_Save_Final::create_entry( $form, $data  );
+        return array(
+            'id' => $entry_id,
+            'field_data' => $data,
+            'form_id' => $form[ 'ID' ],
         );
     }
 

@@ -775,7 +775,7 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 
 == Changelog ==
-= Caldera Forms 1.5.9 (January, 23, 2018) =
+= Caldera Forms 1.5.9 (January, 24, 2018) Happy 2018! =
 See: [https://calderaforms.com/updates/caldera-forms-1-5-9](https://calderaforms.com/updates/caldera-forms-1-5-9?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-5-8)
 
 Caldera Forms 1.5.9-rc.1 - January 18, 2018.
@@ -784,11 +784,13 @@ Caldera Forms 1.5.9-rc.1 - January 18, 2018.
 * IMPROVED: Caldera Forms Pro API key settings - made inputs wider and setting validate without a page refresh.
 * ADDED: Ability to disable enhanced delivery per form.
 * ADDED: Ability to change log level via UI.
+* ADDED: New unit tests.
 * FIXED: Files did not attach to emails if sub menu entry viewer was enabled.
 * FIXED: Menu order conflict with LifterLMS and some other plugins causing their menu to disappear.
 * FIXED: PHP warning: Fix json_decode expects parameter 1 to be a string admin.php affecting entry exports and entry viewer.
 * FIXED: The caldera_forms_entry_viewer shortcode was not using output buffering
-* FIXED: Field sync was not recovering from field hide (this fix is not included in 1.5.9-rc.1)
+* FIXED: Section breaks were showing in CSV
+* FIXED: External forms were not working with entry viewer.
 
 
 = Caldera Forms 1.5.8 (December 21, 2017) We Got You A Block For Christmas =
@@ -873,7 +875,7 @@ See: [https://calderaforms.com/updates/caldera-forms-1-5-6](https://calderaforms
 * FIXED: Auto-complete field calculation value was ignored.
 * FIXED: Hidden option values (Labels Only mode) didn't update value on label change.
 * FIXED: CSV exports had non-parsable dates.
-* FIXED: Calculation fields were noterunning on page naviagation.
+* FIXED: Calculation fields were not running on page naviagation.
 * FIXED: Caldera_Forms_Field_Honey::get() had unused parameters, which were required, but not called, which was causing honey pot issues.
 
 = Caldera Forms 1.5.5 (August 17, 2017) We Had Fun In Canada ! =
