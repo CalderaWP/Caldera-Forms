@@ -79,6 +79,7 @@ class Test_Main_Mailer extends Caldera_Forms_Mailer_Test_Case{
      *
      * @group email
      * @group mainmailer
+     * @group to
      * 
      * @covers Caldera_Forms_Save_Final::do_mailer()
      */
@@ -86,8 +87,14 @@ class Test_Main_Mailer extends Caldera_Forms_Mailer_Test_Case{
         $this->submit_contact_form();
         $mailer = tests_retrieve_phpmailer_instance();
         $this->assertEquals('to@example.com', $mailer->get_recipient('to')->address);
+
+        //The second value here is a magic tag value based on mock submission data
         $expected = 'To: to@example.com, roy@roysivan.com';
         $this->assertTrue(strpos($mailer->get_sent()->header, $expected) > 0);
+
+        $this->assertEquals('to@example.com', $mailer->get_recipient('to', 0, 0 )->address);
+        $this->assertEquals('roy@roysivan.com', $mailer->get_recipient('to', 0, 1 )->address);
+
 
     }
 
@@ -98,6 +105,7 @@ class Test_Main_Mailer extends Caldera_Forms_Mailer_Test_Case{
      *
      * @group email
      * @group mainmailer
+     * @group from
      * 
      * @covers Caldera_Forms_Save_Final::do_mailer()
      */
@@ -115,6 +123,7 @@ class Test_Main_Mailer extends Caldera_Forms_Mailer_Test_Case{
      *
      * @group email
      * @group mainmailer
+     * @group replyto
      * 
      * @covers Caldera_Forms_Save_Final::do_mailer()
      */
@@ -132,6 +141,7 @@ class Test_Main_Mailer extends Caldera_Forms_Mailer_Test_Case{
      *
      * @group email
      * @group mainmailer
+     * @group bcc
      * 
      * @covers Caldera_Forms_Save_Final::do_mailer()
      */
@@ -140,7 +150,8 @@ class Test_Main_Mailer extends Caldera_Forms_Mailer_Test_Case{
         $mailer = tests_retrieve_phpmailer_instance();
         $expected = 'bcc1@example.com, bcc2@example2.com';
         $this->assertTrue(strpos($mailer->get_sent()->header, $expected) > 0);
-
+        $this->assertSame('bcc1@example.com', $mailer->get_recipient('bcc', 0, 0)->address );
+        $this->assertSame('bcc2@example2.com', $mailer->get_recipient('bcc', 0, 1)->address );
     }
 
     /**
@@ -159,8 +170,6 @@ class Test_Main_Mailer extends Caldera_Forms_Mailer_Test_Case{
         $mailer = tests_retrieve_phpmailer_instance();
         $this->assertEquals('97cae2f8e53fc89902562dac3714475b', md5($mailer->get_sent()->body));
     }
-
-
 
 }
 

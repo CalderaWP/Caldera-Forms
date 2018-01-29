@@ -48,7 +48,7 @@ class Test_Auto_Responder extends Caldera_Forms_Mailer_Test_Case{
     }
 
     /**
-     * Test that the to setting of main email is set properly
+     * Test that the to setting of auto-responder is set properly
      *
      * @since 1.5.9
      *
@@ -73,64 +73,70 @@ class Test_Auto_Responder extends Caldera_Forms_Mailer_Test_Case{
      * @group autoresponder
      * @group processors
      *
-     * @covers Caldera_Forms_Save_Final::do_mailer()
+     * @covers Caldera_Forms_Save_Final::send_auto_response()
      */
     public function test_sent(){
         $this->submit_contact_form(false);
         $mailer = tests_retrieve_phpmailer_instance();
         $this->assertEquals( 0, did_action( 'caldera_forms_autoresponder_failed' ) );
-
         $this->assertEquals( 1, did_action( 'caldera_forms_do_autoresponse' )  );
+
     }
 
     /**
-     * Test that the to setting of main email is set properly
+     * Test that the to setting of auto-responder is set properly
      *
      * @since 1.5.9
      *
      * @group email
      * @group autoresponder
      * @group processors
+     * @group to
      *
-     * @covers Caldera_Forms_Save_Final::do_mailer()
+     * @covers Caldera_Forms_Save_Final::send_auto_response()
      */
     public function test_to(){
         $this->submit_contact_form(false);
         $mailer = tests_retrieve_phpmailer_instance();
-        $this->assertEquals('auto@example.com', $mailer->get_recipient('to')->address);
         $expected = 'Mike <auto@example.com>';
         $this->assertTrue(strpos($mailer->get_sent()->header, $expected) > 0);
+        $this->assertEquals('auto@example.com', $mailer->get_recipient('to')->address);
+        $this->assertSame('Mike', $mailer->get_recipient('to')->name );
 
     }
 
     /**
-     * Test that the FROM setting of main email is set properly
+     * Test that the FROM setting of auto-responder is set properly
      *
      * @since 1.5.9
      *
      * @group email
      * @group autoresponder
      * @group processors
+     * @group from
      * 
-     * @covers Caldera_Forms_Save_Final::do_mailer()
+     * @covers Caldera_Forms_Save_Final::send_auto_response()
      */
     public function test_from(){
         $this->submit_contact_form(false);
         $mailer = tests_retrieve_phpmailer_instance();
         $expected = 'From: FROM NAME <from@auto.com>';
         $this->assertTrue(strpos($mailer->get_sent()->header, $expected) > 0);
+
+
     }
 
     /**
-     * Test that the REPLYTO setting of main email is set properly
+     * Test that the REPLYTO setting of auto-responder is set properly
      *
      * @since 1.5.9
      *
      * @group email
      * @group autoresponder
      * @group processors
+     * @group replyto
      *
-     * @covers Caldera_Forms_Save_Final::do_mailer()
+     * @covers Caldera_Forms_Save_Final::send_auto_response()
      */
     public function test_replyto(){
         $this->submit_contact_form(false);
@@ -140,21 +146,75 @@ class Test_Auto_Responder extends Caldera_Forms_Mailer_Test_Case{
     }
 
     /**
-     * Test that the BCC setting of main email is set properly
+     * Test that the BCC setting of auto-responder is set properly
      *
      * @since 1.5.9
      *
      * @group email
      * @group autoresponder
      * @group processors
+     * @group bcc
      *
-     * @covers Caldera_Forms_Save_Final::do_mailer()
+     * @covers Caldera_Forms_Save_Final::send_auto_response()
      */
     public function test_bcc(){
         $this->submit_contact_form(false);
         $mailer = tests_retrieve_phpmailer_instance();
-        $expected = 'Bcc: bc1@auto.com';
-        $this->assertTrue(strpos($mailer->get_sent()->header, $expected) > 0);
+        $this->assertSame('bc1@auto.com', $mailer->get_recipient('bcc', 0, 0)->address );
+
+    }
+
+
+
+    /**
+     * Test that the BCC setting of auto-responder is set properly when there are multiple BCCs
+     *
+     * @since 1.5.10
+     *
+     * @group email
+     * @group autoresponder
+     * @group processors
+     * @group form
+     * @group bcc
+     *
+     * @covers Caldera_Forms_Save_Final::send_auto_response()
+     */
+    public function test_multi_bcc(){
+        //import test form (only has one bcc)
+        $json = file_get_contents($this->get_path_for_auto_responder_contact_form_import());
+        $config = $this->recursive_cast_array(json_decode($json));
+        $config[ 'ID' ] = uniqid('CF' );
+        $form_id = Caldera_Forms_Forms::import_form($config);
+        $this->form_id = $form_id;
+
+        //change bccs to two
+        $bccs = 'mbc1@example.com, mbc2@example.com';
+        $config[ 'processors' ][ 'fp_64814225' ][ 'config' ][ 'bcc' ] = $bccs;
+        $updated = Caldera_Forms_Forms::save_form( $config );
+        //Make sure save worked and ID didn't change
+        $this->assertTrue( is_string( $updated ) );
+        $this->assertSame( $updated, $this->form_id );
+
+        $this->form = Caldera_Forms_Forms::get_form($this->form_id);
+        $this->assertSame( 'Contact Form With Auto Responder', $this->form['name' ] );
+        //Make sure update worked
+        $this->assertSame( $this->form[ 'ID' ], $this->form_id );
+        $this->assertSame(
+            $config[ 'processors' ][ 'fp_64814225' ][ 'config' ][ 'bcc' ],
+            $this->form[ 'processors' ][ 'fp_64814225' ][ 'config' ][ 'bcc' ]
+        );
+
+
+        $this->submit_contact_form(false,true );
+
+        //make sure form sent -- other sends we trust because of this::test_sent() but this is a different way
+        $this->assertEquals( 1, did_action( 'caldera_forms_do_autoresponse' )  );
+        $this->assertEquals( 0, did_action( 'caldera_forms_autoresponder_failed' ) );
+
+        //Actual test
+        $mailer = tests_retrieve_phpmailer_instance();
+        $this->assertSame('mbc1@example.com', $mailer->get_recipient('bcc', 0, 0)->address );
+        $this->assertSame('mbc2@example.com', $mailer->get_recipient('bcc', 0, 1)->address );
 
     }
 
@@ -167,7 +227,7 @@ class Test_Auto_Responder extends Caldera_Forms_Mailer_Test_Case{
      * @group autoresponder
      * @group processors
      *
-     * @covers Caldera_Forms_Save_Final::do_mailer()
+     * @covers Caldera_Forms_Save_Final::send_auto_response()
      */
     public function test_content(){
         $this->submit_contact_form(false);

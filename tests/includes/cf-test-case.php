@@ -266,9 +266,9 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
      */
     protected function import_contact_form($main_mailer = true ){
         if ($main_mailer) {
-            $file = dirname(__FILE__) . '/forms/contact-forms-no-auto-responder.json';
+            $file = $this->get_path_for_main_mailer_form_import();
         } else {
-            $file = dirname(__FILE__) . '/forms/contact-form-autoresponder.json';
+            $file = $this->get_path_for_auto_responder_contact_form_import();
 
         }
 
@@ -334,7 +334,6 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
             'template' => "#cfajax_$form_id-tmpl",
         ) );
 
-
         return $data;
     }
 
@@ -353,5 +352,26 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
         return $form_id;
     }
 
+    /**
+     * Get file path for JSON export we import for contact form main mailer tests
+     *
+     * @since 1.5.10
+     *
+     * @return string
+     */
+    protected function get_path_for_main_mailer_form_import(){
+        return $file = dirname(__FILE__) . '/forms/contact-forms-no-auto-responder.json';
+    }
+
+    /**
+     * Get file path for JSON export we import for contact form auto-responder tests
+     *
+     * @since 1.5.10
+     *
+     * @return string
+     */
+    protected function get_path_for_auto_responder_contact_form_import(){
+        return dirname(__FILE__) . '/forms/contact-form-autoresponder.json';
+    }
 
 }

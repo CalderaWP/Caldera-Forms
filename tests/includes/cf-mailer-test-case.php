@@ -3,13 +3,15 @@
 abstract class Caldera_Forms_Mailer_Test_Case extends Caldera_Forms_Test_Case {
     /** @inheritdoc */
     public function tearDown(){
-
-        $this->form_id = null;
-        $this->form = null;
-        $this->submission_data = null;
+        $this->reset();
         parent::tearDown();
     }
 
+    /** @inheritdoc */
+    public function setUp(){
+        $this->reset();
+        parent::setUp();
+    }
 
     /**
      * ID of last form submitted
@@ -51,13 +53,15 @@ abstract class Caldera_Forms_Mailer_Test_Case extends Caldera_Forms_Test_Case {
      * Submit the contact form
      *
      * @param bool $main_mailer Optional. If true, the default, contact form for main mailer is used. If false, contact form for auto-responder is used.
-     *
+     * @param bool $skip_import Optional. If true, you must import form and set form and form_id props first. Default is false.
      * @since 1.5.9
      */
-    protected function submit_contact_form($main_mailer = true ){
-        //setup submit data and class properties we need for assertions
-        $this->form_id = $this->import_contact_form($main_mailer);
-        $this->form = Caldera_Forms_Forms::get_form($this->form_id);
+    protected function submit_contact_form($main_mailer = true, $skip_import = false ){
+        if ( false === $skip_import ) {
+            //setup submit data and class properties we need for assertions
+            $this->form_id = $this->import_contact_form($main_mailer);
+            $this->form = Caldera_Forms_Forms::get_form($this->form_id);
+        }
         $data = array(
             'fld_8768091' => 'Roy',
             'fld_9970286' => 'Sivan',
@@ -84,6 +88,7 @@ abstract class Caldera_Forms_Mailer_Test_Case extends Caldera_Forms_Test_Case {
                 'hiderows' => 'true',
                 'action' => 'cf_process_ajax_submit',
             );
+            add_filter( 'caldera_forms_send_email', '__return_false', 10000 );
             add_filter( 'caldera_forms_autoresponse_mail', array( $this, 'auto_callback' ), 51, 4);
         }else{
             //hook into mailer filter
@@ -102,6 +107,7 @@ abstract class Caldera_Forms_Mailer_Test_Case extends Caldera_Forms_Test_Case {
         //submit form
         Caldera_Forms::process_submission();
     }
+
 
     /**
      * Hook into caldera_forms_mailer to capture last entry ID
@@ -123,5 +129,21 @@ abstract class Caldera_Forms_Mailer_Test_Case extends Caldera_Forms_Test_Case {
         $this->entry_id = $entry_id;
         return $email_message;
     }
+
+    /**
+     * Reset test setup
+     *
+     * @since 1.5.10
+     *
+     * Nulls all properties and resets mock phpmailer
+     */
+    protected function reset(){
+        $this->entry_id = null;
+        $this->form_id = null;
+        $this->form = null;
+        $this->submission_data = null;
+        reset_phpmailer_instance();
+    }
+
 
 }
