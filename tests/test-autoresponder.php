@@ -17,6 +17,8 @@ class Test_Auto_Responder extends Caldera_Forms_Mailer_Test_Case{
      *
      * @group form
      * @group email
+     * @group autoresponder
+     * @group processors
      *
      * @covers Caldera_Forms_Forms::import_form()
      * @covers Caldera_Forms_Test_Case::import_contact_form()
@@ -51,6 +53,8 @@ class Test_Auto_Responder extends Caldera_Forms_Mailer_Test_Case{
      * @since 1.5.9
      *
      * @group email
+     * @group autoresponder
+     * @group processors
      *
      * @covers Test_Main_Mailer:submit_contact_form()
      * @covers Test_Main_Mailer:mailer_callback()
@@ -66,7 +70,8 @@ class Test_Auto_Responder extends Caldera_Forms_Mailer_Test_Case{
      * @since 1.5.9
      *
      * @group email
-     * @group now
+     * @group autoresponder
+     * @group processors
      *
      * @covers Caldera_Forms_Save_Final::do_mailer()
      */
@@ -84,7 +89,8 @@ class Test_Auto_Responder extends Caldera_Forms_Mailer_Test_Case{
      * @since 1.5.9
      *
      * @group email
-     * @group now
+     * @group autoresponder
+     * @group processors
      *
      * @covers Caldera_Forms_Save_Final::do_mailer()
      */
@@ -103,7 +109,9 @@ class Test_Auto_Responder extends Caldera_Forms_Mailer_Test_Case{
      * @since 1.5.9
      *
      * @group email
-     *
+     * @group autoresponder
+     * @group processors
+     * 
      * @covers Caldera_Forms_Save_Final::do_mailer()
      */
     public function test_from(){
@@ -119,6 +127,8 @@ class Test_Auto_Responder extends Caldera_Forms_Mailer_Test_Case{
      * @since 1.5.9
      *
      * @group email
+     * @group autoresponder
+     * @group processors
      *
      * @covers Caldera_Forms_Save_Final::do_mailer()
      */
@@ -135,6 +145,8 @@ class Test_Auto_Responder extends Caldera_Forms_Mailer_Test_Case{
      * @since 1.5.9
      *
      * @group email
+     * @group autoresponder
+     * @group processors
      *
      * @covers Caldera_Forms_Save_Final::do_mailer()
      */
@@ -152,6 +164,8 @@ class Test_Auto_Responder extends Caldera_Forms_Mailer_Test_Case{
      * @since 1.5.9
      *
      * @group email
+     * @group autoresponder
+     * @group processors
      *
      * @covers Caldera_Forms_Save_Final::do_mailer()
      */

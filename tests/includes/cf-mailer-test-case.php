@@ -58,7 +58,13 @@ abstract class Caldera_Forms_Mailer_Test_Case extends Caldera_Forms_Test_Case {
         //setup submit data and class properties we need for assertions
         $this->form_id = $this->import_contact_form($main_mailer);
         $this->form = Caldera_Forms_Forms::get_form($this->form_id);
-        $data = array();
+        $data = array(
+            'fld_8768091' => 'Roy',
+            'fld_9970286' => 'Sivan',
+            'fld_6009157' => 'roy@roysivan.com',
+            'fld_7683514' => 'Hi Roy',
+            'fld_7908577' => 'click',
+        );
         if( ! $main_mailer ){
             $data = array (
                 '_cf_frm_ct' => '1',

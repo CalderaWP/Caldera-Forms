@@ -9,7 +9,6 @@
 class Test_Main_Mailer extends Caldera_Forms_Mailer_Test_Case{
 
 
-
     /**
      * Test that the contact form import utility works
      *
@@ -17,7 +16,8 @@ class Test_Main_Mailer extends Caldera_Forms_Mailer_Test_Case{
      *
      * @group form
      * @group email
-     *
+     * @group mainmailer
+     * 
      * @covers Caldera_Forms_Forms::import_form()
      * @covers Caldera_Forms_Test_Case::import_contact_form()
      * @covers Caldera_Forms_Test_Case::recursive_cast_array()
@@ -40,12 +40,30 @@ class Test_Main_Mailer extends Caldera_Forms_Mailer_Test_Case{
     }
 
     /**
+     * Test that "caldera_forms_mailer_failed" action fired
+     *
+     * @since 1.5.9
+     *
+     * @group email
+     * @group mainmailer
+     * 
+     * @covers Caldera_Forms_Save_Final::do_mailer()
+     */
+    public function test_sent(){
+        $this->submit_contact_form(true);
+        $mailer = tests_retrieve_phpmailer_instance();
+        $this->assertEquals( 0, did_action( 'caldera_forms_mailer_failed' ) );
+        $this->assertEquals( 1, did_action( 'caldera_forms_mailer_complete' ) );
+    }
+
+    /**
      * Test that the to setting of main email is set properly
      *
      * @since 1.5.9
      *
      * @group email
-     *
+     * @group mainmailer
+     * 
      * @covers Test_Main_Mailer:submit_contact_form()
      * @covers Test_Main_Mailer:mailer_callback()
      */
@@ -60,7 +78,8 @@ class Test_Main_Mailer extends Caldera_Forms_Mailer_Test_Case{
      * @since 1.5.9
      *
      * @group email
-     *
+     * @group mainmailer
+     * 
      * @covers Caldera_Forms_Save_Final::do_mailer()
      */
     public function test_to(){
@@ -78,7 +97,8 @@ class Test_Main_Mailer extends Caldera_Forms_Mailer_Test_Case{
      * @since 1.5.9
      *
      * @group email
-     *
+     * @group mainmailer
+     * 
      * @covers Caldera_Forms_Save_Final::do_mailer()
      */
     public function test_from(){
@@ -94,7 +114,8 @@ class Test_Main_Mailer extends Caldera_Forms_Mailer_Test_Case{
      * @since 1.5.9
      *
      * @group email
-     *
+     * @group mainmailer
+     * 
      * @covers Caldera_Forms_Save_Final::do_mailer()
      */
     public function test_replyto(){
@@ -110,7 +131,8 @@ class Test_Main_Mailer extends Caldera_Forms_Mailer_Test_Case{
      * @since 1.5.9
      *
      * @group email
-     *
+     * @group mainmailer
+     * 
      * @covers Caldera_Forms_Save_Final::do_mailer()
      */
     public function test_bcc(){
@@ -127,8 +149,10 @@ class Test_Main_Mailer extends Caldera_Forms_Mailer_Test_Case{
      * @since 1.5.9
      *
      * @group email
+     * @group mainmailer
+     * @group mainmailer
      *
-     * @covers Caldera_Forms_Save_Final::do_mailer()
+     *  @covers Caldera_Forms_Save_Final::do_mailer()
      */
     public function test_content(){
         $this->submit_contact_form();

@@ -1,0 +1,81 @@
+{
+  "_last_updated": "Tue, 23 Jan 2018 00:03:48 +0000",
+  "ID": "CF5a667b201ae3e",
+  "cf_version": "1.5.9-rc.1",
+  "name": "File Test",
+  "scroll_top": 0,
+  "success": "Form has been successfully submitted. Thank you.\t\t\t",
+  "db_support": 1,
+  "pinned": 0,
+  "hide_form": 1,
+  "check_honey": 1,
+  "avatar_field": "",
+  "form_ajax": 1,
+  "custom_callback": "",
+  "layout_grid": {
+    "fields": {
+      "fld_7469605": "1:1",
+      "fld_3537903": "1:2"
+    },
+    "structure": "6:6"
+  },
+  "fields": {
+    "fld_7469605": {
+      "ID": "fld_7469605",
+      "type": "file",
+      "label": "File Field",
+      "slug": "file_field",
+      "conditions": {
+        "type": ""
+      },
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "attach": 1,
+        "multi_upload_text": "",
+        "allowed": ""
+      }
+    },
+    "fld_3537903": {
+      "ID": "fld_3537903",
+      "type": "button",
+      "label": "Please Click Me",
+      "slug": "please_click_me",
+      "conditions": {
+        "type": ""
+      },
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "type": "submit",
+        "class": "btn btn-primary",
+        "target": ""
+      }
+    }
+  },
+  "page_names": [
+    "Page 1"
+  ],
+  "mailer": {
+    "on_insert": 1,
+    "sender_name": "Caldera Forms Notification",
+    "sender_email": "dev-email@flywheel.local",
+    "reply_to": "",
+    "email_type": "html",
+    "recipients": "",
+    "bcc_to": "",
+    "email_subject": "File Test",
+    "email_message": "{summary}"
+  },
+  "conditional_groups": {
+    "fields": []
+  },
+  "settings": {
+    "responsive": {
+      "break_point": "sm"
+    }
+  },
+  "version": "1.5.9-rc.1",
+  "db_id": "10",
+  "type": "primary"
+}

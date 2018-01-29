@@ -314,7 +314,6 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
 
         $nonce = Caldera_Forms_Render_Nonce::create_verify_nonce( $form_id );
 
-
         $data = wp_parse_args( $data, array (
             '_cf_verify' => $nonce,
             '_wp_http_referer' => '/?page_id=4&preview=1&cf_preview=' . $form_id,
@@ -323,11 +322,6 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
             'cfajax' => $form_id,
             '_cf_cr_pst' => '4',
             'email' => '',
-            'fld_8768091' => 'Roy',
-            'fld_9970286' => 'Sivan',
-            'fld_6009157' => 'roy@roysivan.com',
-            'fld_7683514' => 'Hi Roy',
-            'fld_7908577' => 'click',
             'formId' => $form_id,
             'instance' => '1',
             'request' => site_url("/cf-api/$form_id"),
@@ -337,7 +331,7 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
             'loadElement' => '_parent',
             'hiderows' => 'true',
             'action' => 'cf_process_ajax_submit',
-            'template' => '#cfajax_CF5a665b9ca5513-tmpl',
+            'template' => "#cfajax_$form_id-tmpl",
         ) );
 
 
