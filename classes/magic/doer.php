@@ -126,6 +126,11 @@ class Caldera_Forms_Magic_Doer {
 					}
 				}
 
+                $magics = Caldera_Forms_Magic_Util::explode_bracket_magic( $entry );
+                if ( ! empty( $magics[ 1 ])) {
+                    $entry = "";
+                }
+
 				$value = str_replace( $matches[ 0 ][ $key ], $entry, $value );
 			}
 

@@ -757,7 +757,7 @@ class Caldera_Forms {
 				'entry_id' => $entry_id,
 				'field_id' => $field[ 'ID' ],
 				'slug'     => $field[ 'slug' ],
-				'value'    => self::do_clean_magic_tags( $entry )
+				'value'    => self::do_magic_tags( $entry )
 			);
 
 			// named key kets .key to slug
@@ -786,23 +786,6 @@ class Caldera_Forms {
 		}
 
 	}
-
-	/**
-	 * QCOSS-113: Clean magic tags value
-	 * Check if the processed magic value is same as the default value.
-	 * If yes Make it blank. Required when processor is linked to magic tags and due to some conditions
-	 * they do not have actual value.
-	 */
-	 public static function do_clean_magic_tags($value) {
-		 $magicvalue = self::do_magic_tags( $value );
-		 $magics = Caldera_Forms_Magic_Util::explode_bracket_magic( $value );
-		 if ( ! empty( $magics[ 1 ] ) && $value == $magicvalue) {
-			 $value = "";
-		 } else {
-			 $value = $magicvalue;
-		 }
-		 return $value;
-	 }
 
 	/**
 	 * Save final form data
