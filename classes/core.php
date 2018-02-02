@@ -1029,10 +1029,17 @@ class Caldera_Forms {
 		// setup mailer
 		$subject = $config[ 'subject' ];
 
+		if( Caldera_Forms_Email_Prepare::is_list( $config[ 'recipient_email' ] ) ){
+            $recipients = Caldera_Forms_Email_Prepare::prepare_email_array( explode(',', $config[ 'recipient_email' ] ));
+        }else{
+            $recipients = array(
+                $config[ 'recipient_name' ] . ' <' . $config[ 'recipient_email' ] . '>'
+            );
+        }
+
+
 		$email_message = array(
-			'recipients'  => array(
-				$config[ 'recipient_name' ] . ' <' . $config[ 'recipient_email' ] . '>'
-			),
+			'recipients'  => $recipients,
 			'subject'     => $subject,
 			'message'     => $message,
 			'headers'     => $headers,

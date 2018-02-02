@@ -179,10 +179,20 @@ class hooks {
                 \Caldera_Forms::do_magic_tags($config['sender_name'])
             );
 
-            $message->add_recipient('to',
-                \Caldera_Forms::do_magic_tags($config['recipient_email']),
-                \Caldera_Forms::do_magic_tags($config['recipient_name'])
-            );
+            if( is_array( $mail ['recipients'])){
+                foreach ( $mail[ 'recipients' ] as $recipient ){
+                    $message->add_recipient('to',
+                        $recipient['email'],
+                        $recipient['name']
+                    );
+                }
+            }else{
+                $message->add_recipient('to',
+                    \Caldera_Forms::do_magic_tags($config['recipient_email']),
+                    \Caldera_Forms::do_magic_tags($config['recipient_name'])
+                );
+            }
+
 
             $message->subject = $mail ['subject'];
             $message->content = $mail['message'];
