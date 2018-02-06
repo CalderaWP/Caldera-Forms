@@ -388,7 +388,7 @@ class Caldera_Forms_Field_Util {
 			$default = false;
 		}
 
-		if( $convert_opt && 0 === strpos( $default, 'opt' ) ){
+		if( is_array( $default ) || ( $convert_opt && 0 === strpos( $default, 'opt' ) ) ){
 			$default = self::find_select_field_value( $field, $default );
 		}
 
@@ -408,6 +408,21 @@ class Caldera_Forms_Field_Util {
 	 */
 	public static function get_default_calc_value( $field, $form ){
 		$opt = self::get_default( $field, $form, false );
+
+		// if default is an array, loop through each option and store it's calc_value
+		if( is_array( $opt ) && isset( $field['config']['option'] ) && count( $field['config']['option'] ) > 0 ){
+			$opts = array_map( function( $op ){
+				return isset( $op['cal_value'] ) ? $op['cal_value'] : null;
+			}, $field['config']['option'] );
+
+			// check if we have at least one calc_value set
+			$opts = array_filter( $opts );
+			if( empty( $opts ) ){
+				return self::get_default( $field, $form, true );
+			}
+			return $opts;
+		}
+
 		$opt = ( ! empty( $opt ) && isset( $field[ 'config' ][ 'option' ][ $opt ], $field[ 'config' ][ 'option' ][ $opt ][ 'calc_value' ] ) ) ? $field[ 'config' ][ 'option' ][ $opt ][ 'calc_value' ] : null;
 		if( is_null( $opt ) ){
 			return self::get_default( $field, $form, true );
