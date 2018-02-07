@@ -145,17 +145,17 @@ $cf_pro_active = caldera_forms_pro_is_active();
                 : $wrap
                     .hide()
                     .attr('aria-hidden', true)
-                    .prop('required', false)
+                    .prop('required', false);
         })
             .prop('checked') ?
             $wrap
                 .show()
                 .attr('aria-hidden', false)
                 .prop('required', true)
-            $wrap
+            : $wrap
                 .hide()
                 .attr('aria-hidden', true)
-                .prop('required', false )
+                .prop('required', false );
     });
 </script>
 
