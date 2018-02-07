@@ -38,7 +38,6 @@ class hooks {
 			add_action( 'caldera_forms_checked_tables', array( $this, 'capture_tables_object' ) );
 			add_action( 'caldera_forms_rest_api_pre_init', array( $this, 'init_file_api' ) );
 
-
 		}
 
 
@@ -190,6 +189,7 @@ class hooks {
             $message->layout = $form_settings->get_layout();
             $message->add_entry_data($entry_id, $form);
             $message->entry_id = $entry_id;
+            $this->maybe_anti_spam( $message, $form );
             $sent_message = send::send_via_api($message, $entry_id, $send_remote, 'auto');
         } else {
             $sent_message = null;
@@ -439,4 +439,22 @@ class hooks {
 		</script>
 		<?php
 	}
+
+    /**
+     * Sets anti-spam args for requests, if needed
+     *
+     * @since 1.5.10
+     *
+     * @param message $message Message to be sent
+     * @param array $form Form config
+     */
+	public function maybe_anti_spam( \calderawp\calderaforms\pro\api\message $message, array $form ){
+       $args = container::get_instance()->get_anti_spam_args();
+       if( empty( $args )){
+            $checker = new antispam( $message, $form);
+            if( $checker->should_check() ){
+                container::get_instance()->set_anti_spam_args( $checker->get_args() );
+            }
+       }
+    }
 }
