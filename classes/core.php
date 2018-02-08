@@ -2671,7 +2671,8 @@ class Caldera_Forms {
             $passed = Caldera_Forms_Field_Honey::check( $_POST, $form );
             if( ! $passed ){
                 $url = Caldera_Forms_Field_Honey::redirect_url( $referrer, $form_instance_number, $process_id);
-                return self::form_redirect( 'complete', $url, $form, uniqid( '_cf_bliss_' ) );
+
+                 self::form_redirect( 'complete', $url, $form, uniqid( '_cf_bliss_' ) );
             }
 
         }

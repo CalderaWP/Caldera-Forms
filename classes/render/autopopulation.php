@@ -64,7 +64,6 @@ class Caldera_Forms_Render_AutoPopulation {
 					}elseif( in_array( 'name', $fields) ){
 						$label_field = 'name';
 					}
-					$pod->
 
 					/**
 					 * The name of the Pods field to use for the label of the auto-populated field
