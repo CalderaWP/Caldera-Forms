@@ -34,6 +34,7 @@ create_testing_db_tables();
 
 //include test case
 include_once( dirname( __FILE__ ) . '/includes/cf-test-case.php' );
+include_once( dirname( __FILE__ ) . '/includes/cf-mailer-test-case.php' );
 include_once( dirname( __FILE__ ) . '/includes/cf-rest-test-case.php' );
 
 /**
