@@ -1,49 +1,49 @@
---- 
-before_script: 
+---
+before_script:
   - "bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION"
-env: 
+env:
   - "WP_VERSION=latest WP_MULTISITE=0"
   - "WP_VERSION=4.7 WP_MULTISITE=0"
   - "WP_VERSION=4.8 WP_MULTISITE=0"
   - "WP_VERSION=4.9 WP_MULTISITE=0"
 language: php
-matrix: 
-  exclude: 
-    - 
+matrix:
+  exclude:
+    -
       env: WP_VERSION=4.8
       php: 5.6
-    - 
+    -
       env: WP_VERSION=4.7
       php: 7.0
-    - 
+    -
       env: WP_VERSION=4.7
       php: 7.1
-  include: 
-    - 
+  include:
+    -
       dist: precise
       env: WP_VERSION=latest
       php: 5.3
-    - 
+    -
       dist: precise
       env: "WP_VERSION=latest WP_MULTISITE=1"
       php: 5.3
-    - 
+    -
       dist: precise
       env: WP_VERSION=4.7.7
       php: 5.3
-    - 
+    -
       dist: precise
       env: WP_VERSION=4.9.1
       php: 5.3
-    - 
+    -
       dist: precise
       env: WP_VERSION=4.8
       php: 5.3
-notifications: 
-  email: 
+notifications:
+  email:
     on_failure: never
     on_success: never
-php: 
+php:
   - 5.6
   - 7.0
   - 7.1
