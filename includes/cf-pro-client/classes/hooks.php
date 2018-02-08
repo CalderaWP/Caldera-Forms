@@ -362,10 +362,6 @@ class hooks {
 			\Caldera_Forms::check_tables();
 		}
 		\Inpsyde\Wonolog\bootstrap( new \calderawp\calderaforms\pro\log\handler() );
-		if (  is_ssl() ) {
-			//add_action( 'caldera_forms_admin_footer', [ $this, 'log_js' ] );
-			//add_action( 'wp_footer', [ $this, 'log_js' ] );
-		}
 
 	}
 
