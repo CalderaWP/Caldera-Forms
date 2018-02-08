@@ -411,12 +411,14 @@ class Caldera_Forms_Field_Util {
 
 		// if default is an array, loop through each option and store it's calc_value
 		if( is_array( $opt ) && isset( $field['config']['option'] ) && count( $field['config']['option'] ) > 0 ){
-			$opts = array_map( function( $op ){
-				return isset( $op['cal_value'] ) ? $op['cal_value'] : null;
-			}, $field['config']['option'] );
+			$opts = array();
+			foreach( $field['config']['option'] as $op ){
+				if( isset( $op['cal_value'] ) ){
+					$opts[] = $op['cal_value'];
+				}
+			}
 
 			// check if we have at least one calc_value set
-			$opts = array_filter( $opts );
 			if( empty( $opts ) ){
 				return self::get_default( $field, $form, true );
 			}
