@@ -93,7 +93,7 @@ $cf_pro_active = caldera_forms_pro_is_active();
                 <input
                         type="text"
                         id="cf-pro-anti-spam-sender-name"
-                        class=" field-config magic-tag-enabled required"
+                        class=" field-config magic-tag-enabled"
                         name="config[antispam][sender_name]"
                         value="<?php echo esc_attr($element['antispam']['sender_name']); ?>"
                         aria-describedby="cf-pro-anti-spam-sender-name-desc"
@@ -115,7 +115,7 @@ $cf_pro_active = caldera_forms_pro_is_active();
                 <input
                         type="text"
                         id="cf-pro-anti-spam-sender-name-email"
-                        class="field-config magic-tag-enabled caldera-field-bind required"
+                        class="field-config magic-tag-enabled caldera-field-bind"
                         name="config[antispam][sender_email]"
                         value="<?php echo esc_attr($element['antispam']['sender_email']); ?>"
                         aria-describedby="cf-pro-anti-spam-sender-name-email-desc" ,
@@ -136,26 +136,31 @@ $cf_pro_active = caldera_forms_pro_is_active();
 <script>
     jQuery(function ($) {
         var $wrap = $('#caldera-anti-spam-settings-wrap');
-        $('#cf-pro-anti-spam').change(function () {
-            $(this).prop('checked') ?
+        var $enable = $('#cf-pro-anti-spam');
+        var $inputs = $wrap.find( 'input' );
+        var hideShow = function () {
+            if ($enable.prop('checked') && !$enable.prop('disabled')) {
                 $wrap
                     .show()
-                    .attr('aria-hidden', false)
-                    .prop('required', true)
-                : $wrap
+                    .attr('aria-hidden', false);
+                $inputs.prop('required', true)
+                    .addClass('required');
+
+            } else {
+                $wrap
                     .hide()
-                    .attr('aria-hidden', true)
-                    .prop('required', false);
-        })
-            .prop('checked') ?
-            $wrap
-                .show()
-                .attr('aria-hidden', false)
-                .prop('required', true)
-            : $wrap
-                .hide()
-                .attr('aria-hidden', true)
-                .prop('required', false );
+                    .attr('aria-hidden', true);
+                $inputs
+                    .prop('required', false)
+                    .removeClass('required');
+            }
+        };
+
+        $enable.change(function () {
+            hideShow();
+        });
+
+        hideShow();
     });
 </script>
 
