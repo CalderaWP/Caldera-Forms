@@ -64,7 +64,7 @@ if ( ! empty( $element['mailer']['enable_mailer'] ) ) {
                 <?php esc_html_e('From Email', 'caldera-forms'); ?>
             </label>
             <label for="cf-email-from-email" class="pro-enhanced">
-                <?php esc_html_e('Reply-to Email', 'caldera-forms'); ?>
+                <?php esc_html_e('Reply To Email', 'caldera-forms'); ?>
             </label>
 
             <div class="caldera-config-field">
