@@ -1,7 +1,7 @@
 AL|Alabama
 AK|Alaska
 AZ|Arizona
-AK|Arkansas
+AR|Arkansas
 CA|California
 CO|Colorado
 CT|Connecticut
