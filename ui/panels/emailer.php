@@ -206,76 +206,85 @@ if ( ! empty( $element['mailer']['enable_mailer'] ) ) {
 </div>
 
 <?php //Set Different From email and Reply-to text depending on Pro delivery status of the form
-    $enhanced_delivery = \calderawp\calderaforms\pro\container::get_instance()->get_settings()->get_enhanced_delivery();
-    if( caldera_forms_pro_is_active() === true && $enhanced_delivery === true ) {
+    if( caldera_forms_pro_is_active() === true ) {
 
-        $send_local = \calderawp\calderaforms\pro\container::get_instance()->get_settings()->get_form( $element['ID'] )->get_send_local();
-        ?>
-        <script type="text/javascript">
-          var cfId = "<?php echo $element['ID'] ?>";
-          var $check = $("<input id='cf-pro-send-local-" + cfId + "' type='checkbox'/>" );
-          var $proSet = $(".pro-enhanced" );
-          var $regularSet = $(".no-pro-enhanced" );
-        </script>
-        <?php
-         if( $send_local === false ) { ?>
+        $enhanced_delivery = \calderawp\calderaforms\pro\container::get_instance()->get_settings()->get_enhanced_delivery();
+
+        if( $enhanced_delivery === true ) {
+
+            $send_local = \calderawp\calderaforms\pro\container::get_instance()->get_settings()->get_form( $element['ID'] )->get_send_local();
+            ?>
             <script type="text/javascript">
-                jQuery($check).prop('checked', false)
+              var cfId = "<?php echo $element['ID'] ?>";
+              var $check = $("<input id='cf-pro-send-local-" + cfId + "' type='checkbox'/>" );
+              var $proSet = $(".pro-enhanced" );
+              var $regularSet = $(".no-pro-enhanced" );
             </script>
-        <?php } else if ( $send_local === true ) { ?>
+            <?php
+             if( $send_local === false ) { ?>
+                <script type="text/javascript">
+                    jQuery($check).prop('checked', false)
+                </script>
+            <?php } else if ( $send_local === true ) { ?>
+                <script type="text/javascript">
+                    jQuery($check).prop('checked', true);
+                </script>
+            <?php } ?>
+
             <script type="text/javascript">
-                jQuery($check).prop('checked', true);
-            </script>
-        <?php } ?>
 
-        <script type="text/javascript">
-
-            jQuery(function ($) {
-              var checkProStatus = function () {
-                if ( $check.prop('checked') === true ) {
-                  $proSet
-                    .hide()
-                    .attr('aria-hidden', true);
-                  $regularSet
-                    .show()
-                    .attr('aria-hidden', false);
-                } else if ( $check.prop('checked') === false ) {
-                  $proSet
-                    .show()
-                    .attr('aria-hidden', false);
-                  $regularSet
-                    .hide()
-                    .attr('aria-hidden', true);
-                }
-              };
-
-              jQuery(function ($) {
-                  $( 'body' ).on( 'change', $check, function(e) {
-                    e.preventDefault();
-                    if( $( $check ).prop('checked') !== true ){
-                      jQuery($check).prop('checked', true);
-                    } else if( $( $check ).prop('checked') !== false ) {
-                      jQuery($check).prop('checked', false);
+                jQuery(function ($) {
+                  var checkProStatus = function () {
+                    if ( $check.prop('checked') === true ) {
+                      $proSet
+                        .hide()
+                        .attr('aria-hidden', true);
+                      $regularSet
+                        .show()
+                        .attr('aria-hidden', false);
+                    } else if ( $check.prop('checked') === false ) {
+                      $proSet
+                        .show()
+                        .attr('aria-hidden', false);
+                      $regularSet
+                        .hide()
+                        .attr('aria-hidden', true);
                     }
+                  };
+
+                  jQuery(function ($) {
+                      $( 'body' ).on( 'change', $check, function(e) {
+                        e.preventDefault();
+                        if( $( $check ).prop('checked') !== true ){
+                          jQuery($check).prop('checked', true);
+                        } else if( $( $check ).prop('checked') !== false ) {
+                          jQuery($check).prop('checked', false);
+                        }
+                      });
                   });
-              });
 
-              $('.caldera-forms-options-form').on('click', '#tab_mailer', function() {
-                checkProStatus();
-              });
+                  $('.caldera-forms-options-form').on('click', '#tab_mailer', function() {
+                    checkProStatus();
+                  });
 
-              checkProStatus();
-            });
+                  checkProStatus();
+                });
 
-        </script>
+            </script>
 
-    <?php } else { ?>
+        <?php } else { ?>
+            <script type="text/javascript">
+              jQuery(".pro-enhanced").hide().attr('aria-hidden', true);
+              jQuery(".no-pro-enhanced").show().attr('aria-hidden', false);
+            </script>
+        <?php }
+
+    } else { ?>
 
         <script type="text/javascript">
           jQuery(".pro-enhanced").hide().attr('aria-hidden', true);
           jQuery(".no-pro-enhanced").show().attr('aria-hidden', false);
         </script>
-
     <?php } ?>
 
 <script type="text/javascript">
