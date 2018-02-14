@@ -1031,6 +1031,13 @@ class Caldera_Forms {
 
 		if( Caldera_Forms_Email_Prepare::is_list( $config[ 'recipient_email' ] ) ){
             $recipients = Caldera_Forms_Email_Prepare::prepare_email_array( explode(',', $config[ 'recipient_email' ] ));
+            $send_local = \calderawp\calderaforms\pro\container::get_instance()->get_settings()->get_form( $form[ 'ID' ])->should_send_local();
+            if( $send_local ) {
+                foreach( $recipients as $recipient) {
+                    $f_recipients[] = $recipient[ 'name' ] . ' <' . $recipient[ 'email' ] . '>';
+                }
+                $recipients = $f_recipients;
+            }
         }else{
             $recipients = array(
                 $config[ 'recipient_name' ] . ' <' . $config[ 'recipient_email' ] . '>'
