@@ -1039,9 +1039,7 @@ class Caldera_Forms {
                 $recipients = $f_recipients;
             }
         }else{
-            $recipients = array(
-                $config[ 'recipient_name' ] . ' <' . $config[ 'recipient_email' ] . '>'
-            );
+            $recipients = $config[ 'recipient_name' ] . ' <' . $config[ 'recipient_email' ] . '>';
         }
 
 
