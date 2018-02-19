@@ -160,6 +160,12 @@ class Caldera_Forms_Entry {
 	 * @return \Caldera_Forms_Entry_Entry
 	 */
 	public function get_entry(){
+	    if( ! $this->entry ){
+	        $this->query();
+        }
+        if( ! $this->entry ){
+	        $this->entry = new Caldera_Forms_Entry_Entry;
+        }
 		return $this->entry;
 	}
 
