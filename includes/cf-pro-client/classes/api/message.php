@@ -176,6 +176,17 @@ class message extends repository {
 		return $array;
 	}
 
+    /**
+     * Get message content
+     *
+     * @since 1.5.10
+     *
+     * @return string
+     */
+	public function get_content(){
+	    return $this->get( 'content' );
+    }
+
 
 	/**
 	 * Add entry data in the correct forms
@@ -197,8 +208,7 @@ class message extends repository {
 				$data[ 'fields' ][ $field->field_id ] = $field->to_array( false );
 			}
 		}
-
-
+		$data[ 'form' ] = $form[ 'ID' ];
 		$this->items[ 'entry_data' ] = $data;
 
 	}

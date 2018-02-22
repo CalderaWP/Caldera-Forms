@@ -1,7 +1,7 @@
 <?php
 	$is_multiple = false;
 	if( !empty( $field['config']['multi_upload'] ) ){
-		$is_multiple = 'class="cf-multi-uploader" multiple="multiple"';		
+		$is_multiple = 'class="cf-multi-uploader" multiple="multiple"';
 		wp_enqueue_script( 'multi-file-uploader', CFCORE_URL . 'fields/file/uploader.js', array('jquery'), null, true );
 		if( $field_required !== null ){
 			$field_required = null;
@@ -11,23 +11,33 @@
 			$field['config']['multi_upload_text'] = __( 'Add Files', 'caldera-forms' );
 		}
 	}
-	$uniqu_code = uniqid('trupl');
+    $uniqu_code = uniqid('trupl');
+    /**
+     * Runs when a unique code for an field field is generated
+     *
+     * @since 1.5.9
+     *
+     * @param string $uniqid Unqiue Code for field
+     * @param array $field Field config
+     * @param array $form Form config
+     */
+    do_action( 'caldera_forms_file_uniqid', $uniqu_code, $field, $form );
 
-$attrs = array(
-	'type' => 'file',
-	'name' => $field_name,
-	'value' => $field_value,
-	'data-field' => $field_base_id,
-	'class' => $field_class,
-	'id' => $field_id,
-	'data-controlid' => $uniqu_code,
+    $attrs = array(
+        'type' => 'file',
+        'name' => $field_name,
+        'value' => $field_value,
+        'data-field' => $field_base_id,
+        'class' => $field_class,
+        'id' => $field_id,
+        'data-controlid' => $uniqu_code,
 
-);
+    );
 
-if( $is_multiple ){
-	$attrs[ 'data-required' ] = 'true';
-}
-$attr_string =  caldera_forms_field_attributes( $attrs, $field, $form );
+    if( $is_multiple ){
+        $attrs[ 'data-required' ] = 'true';
+    }
+    $attr_string =  caldera_forms_field_attributes( $attrs, $field, $form );
 
 
 ?><?php echo $wrapper_before; ?>
