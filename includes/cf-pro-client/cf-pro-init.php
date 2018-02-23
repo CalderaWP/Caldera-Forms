@@ -17,9 +17,10 @@ function caldera_forms_pro_client_init(){
 	if ( ! version_compare( PHP_VERSION, '5.6.0', '>=' ) ) {
         $admin = new Caldera_Forms_Admin_Pro( );
         $admin->add_hooks();
+        define( 'CF_PRO_NOT_LOADED',true);
 	} else {
 		if ( ! defined( 'CF_PRO_VER' ) ) {
-
+            define( 'CF_PRO_LOADED',true);
 			/**
 			 * Define Plugin basename for updater
 			 *

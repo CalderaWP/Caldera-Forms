@@ -182,4 +182,28 @@ class container extends repository{
 	public function get_tables(){
 		return $this->get( 'tables' );
 	}
+
+    /**
+     * Set anti-spam helper object in container
+     *
+     * @since 1.5.10
+     *
+     * @param array $args
+     */
+	public function set_anti_spam_args( array $args ){
+	    $this->set( 'anti_spam_args', $args );
+    }
+
+    /**
+     * Get anti-spam args from container
+     *
+     * @since 1.5.10
+     *
+     * @return array
+     */
+    public function get_anti_spam_args(){
+	    return is_array( $this->get( 'anti_spam_args' ) ) ? $this->get( 'anti_spam_args' ) : array();
+    }
+
+
 }

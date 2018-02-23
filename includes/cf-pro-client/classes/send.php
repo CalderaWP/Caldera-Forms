@@ -79,9 +79,11 @@ class send {
 			}
 		}
 		$message->entry_id = $entry_id;
-		$message->add_entry_data( $entry_id, \Caldera_Forms_Forms::get_form( $form_id ) );
+		$form = \Caldera_Forms_Forms::get_form( $form_id );
+		$message->add_entry_data( $entry_id, $form );
+        container::get_instance()->get_hooks()->maybe_anti_spam( $message, $form );
 
-		$response = self::send_via_api( $message, $entry_id, $send );
+        $response = self::send_via_api( $message, $entry_id, $send );
 
 		return $response;
 
@@ -123,7 +125,7 @@ class send {
 	 *
 	 * @return message|null|\WP_Error
 	 */
-	public static function send_via_api( \calderawp\calderaforms\pro\api\message $message, $entry_id, $send,  $type = 'main' ){
+	public static function send_via_api( \calderawp\calderaforms\pro\api\message $message, $entry_id, $send,  $type = 'main'){
 		$client   = container::get_instance()->get_api_client();
 		$response = $client->create_message( $message, $send, $entry_id, $type );
 
