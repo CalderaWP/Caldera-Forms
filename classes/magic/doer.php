@@ -497,7 +497,7 @@ class Caldera_Forms_Magic_Doer {
 			self::$entry_details = array();
 		}
 
-                if( ! is_numeric( $entry_id ) ) {
+                if( is_array( $entry_id ) || is_object( $entry_id ) ) {
                     return;
                 }
 
