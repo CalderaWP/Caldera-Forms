@@ -216,9 +216,9 @@ if ( ! empty( $element['mailer']['enable_mailer'] ) ) {
             ?>
             <script type="text/javascript">
               var cfId = "<?php echo $element['ID'] ?>";
-              var $check = $("<input id='cf-pro-send-local-" + cfId + "' type='checkbox'/>" );
-              var $proSet = $(".pro-enhanced" );
-              var $regularSet = $(".no-pro-enhanced" );
+              var $check = jQuery("<input id='cf-pro-send-local-" + cfId + "' type='checkbox'/>" );
+              var $proSet = jQuery(".pro-enhanced" );
+              var $regularSet = jQuery(".no-pro-enhanced" );
             </script>
             <?php
              if( $send_local === false ) { ?>
