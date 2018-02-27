@@ -168,7 +168,7 @@ class Test_Main_Mailer extends Caldera_Forms_Mailer_Test_Case {
 	public function test_content() {
 		$this->submit_contact_form();
 		$mailer = tests_retrieve_phpmailer_instance();
-		$this->assertEquals( '705d19401dc3ed12f82233d4c2b28b11', md5( $mailer->get_sent()->body ) );
+		$this->assertEquals( '97cae2f8e53fc89902562dac3714475b', md5( $mailer->get_sent()->body ) );
 	}
 
 }
