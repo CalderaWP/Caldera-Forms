@@ -6,6 +6,7 @@ include_once dirname( __FILE__ ) . '/email-test-case.php';
  */
 class Test_Email_Prepared extends Email_Test_Case {
 
+
 	/**
 	 * test return email from rfc822
 	 */
@@ -13,10 +14,11 @@ class Test_Email_Prepared extends Email_Test_Case {
 		$_rfc      = 'Roy Sivan <roy@sivan.com>';
 		$_expected = 'roy@sivan.com';
 
-		$_actual = Caldera_Forms_Email_Prepare::email_rfc822( $_rfc );
+		$_actual = Caldera_Forms_Email_Prepare::email_from_rfc822( $_rfc );
 
 		$this->assertEquals( $_expected, $_actual );
 	}
+
 
 	/**
 	 * test return name from rfc822
@@ -25,10 +27,11 @@ class Test_Email_Prepared extends Email_Test_Case {
 		$_rfc      = 'Roy Sivan <roy@sivan.com>';
 		$_expected = 'Roy Sivan';
 
-		$_actual = Caldera_Forms_Email_Prepare::email_from_rfc( $_rfc );
+		$_actual = Caldera_Forms_Email_Prepare::name_from_rfc822( $_rfc );
 
 		$this->assertEquals( $_expected, $_actual );
 	}
+
 
 	/**
 	 * check the email is rfc_822 format
@@ -39,6 +42,7 @@ class Test_Email_Prepared extends Email_Test_Case {
 
 		$this->assertNotNull( $_is_rfc );
 	}
+
 
 	/**
 	 * prepare array of emails and names using the dataProvider
@@ -55,6 +59,7 @@ class Test_Email_Prepared extends Email_Test_Case {
 		$this->assertEquals( $expected, $_actual );
 	}
 
+
 	/**
 	 * dataProvider for prepare_email_array test
 	 *
@@ -62,6 +67,7 @@ class Test_Email_Prepared extends Email_Test_Case {
 	 */
 	public function preparedEmailFormats() {
 		return array(
+
 			array(
 				array( 'Roy Sivan <roy@sivan.com>', 'Josh@Pollock.com' ),
 				array(
@@ -69,8 +75,10 @@ class Test_Email_Prepared extends Email_Test_Case {
 					array( 'name' => '', 'email' => 'Josh@Pollock.com' ),
 				),
 			),
+
 		);
 	}
+
 
 	/**
 	 * test if is array of email address

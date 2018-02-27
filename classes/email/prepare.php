@@ -8,6 +8,7 @@
  */
 class Caldera_Forms_Email_Prepare {
 
+
 	/**
 	 * Get email from rfc822 string
 	 *
@@ -20,13 +21,12 @@ class Caldera_Forms_Email_Prepare {
 	public static function email_from_rfc822( $rfc ) {
 		$regs = self::match_rfc( $rfc );
 		if ( ! empty( $regs ) ) {
-			$parsed = $regs[0];
-
-			return $parsed;
+			return $regs[0];
 		}
 
 		return null;
 	}
+
 
 	/**
 	 * If possible, get name from rfc_822 string
@@ -48,6 +48,7 @@ class Caldera_Forms_Email_Prepare {
 		return null;
 	}
 
+
 	/**
 	 * Check if email is in rfc822 format
 	 *
@@ -58,8 +59,9 @@ class Caldera_Forms_Email_Prepare {
 	 * @return bool
 	 */
 	public static function is_rfc822( $email ) {
-		return ! is_null( self::email_rfc822( $email ) );
+		return null !== self::email_from_rfc822( $email );
 	}
+
 
 	/**
 	 * Formats one or more emails into well formed array
@@ -74,15 +76,14 @@ class Caldera_Forms_Email_Prepare {
 	 */
 	public static function prepare_email_array( $emails ) {
 		$prepared = array();
-		if ( is_string( $emails ) ) {
-			$emails = array( $emails );
-		}
+//		if ( is_string( $emails ) ) { $emails = (array) $emails; }
+		$emails = (array) $emails;
 
 		foreach ( $emails as &$email ) {
 			if ( self::is_rfc822( $email ) ) {
 				$prepared[] = array(
-					'name'  => self::email_from_rfc( $email ),
-					'email' => self::email_rfc822( $email ),
+					'name'  => self::name_from_rfc822( $email ),
+					'email' => self::email_from_rfc822( $email ),
 				);
 			} else {
 				$prepared[] = array(
@@ -105,12 +106,9 @@ class Caldera_Forms_Email_Prepare {
 	 * @return bool
 	 */
 	public static function is_list( $email_string ) {
-		if ( false !== strpos( $email_string, ',' ) ) {
-			return true;
-		}
-
-		return false;
+		return false !== strpos( $email_string, ',' );
 	}
+
 
 	/**
 	 * Use pregmatch to detech emails in rfc_822 string
