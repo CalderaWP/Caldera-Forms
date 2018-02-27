@@ -29,15 +29,22 @@ class Caldera_Forms_Processor_Conditional_Recipient  {
 	 */
 	public static function post_processor( $config  ){
 
-		if( is_email( trim( $config[ 'conditional-recipient' ] ) )){
-			self::$recipients[] = $config[ 'conditional-recipient' ];
-		}else{
-			// not an email - try convert to field
-			$field = trim( Caldera_Forms::do_magic_tags($config['conditional-recipient']) );
-			if(is_email( $field )){
-				self::$recipients[] = $field;
-			}
-		}
+        if( !empty( $config[ 'conditional-recipient'] ) ) {
+            $recipients = explode( ',', $config[ 'conditional-recipient' ]);
+        }
+
+        foreach( $recipients as $recipient){
+            if( is_email( trim( $recipient ) )){
+                self::$recipients[] = $recipient;
+            }else{
+                // not an email - try convert to field
+                $field = trim( Caldera_Forms::do_magic_tags($recipient) );
+                if(is_email( $field )){
+                    self::$recipients[] = $field;
+                }
+            }
+        }
+
 
 		if( ! empty( $config[ 'remove-default' ]  ) && $config[ 'remove-default' ] ){
 			add_filter( 'caldera_forms_mailer', array( __CLASS__, 'remove_default' ), 2  );
