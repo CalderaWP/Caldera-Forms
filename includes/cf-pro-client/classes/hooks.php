@@ -178,10 +178,42 @@ class hooks {
                 \Caldera_Forms::do_magic_tags($config['sender_name'])
             );
 
-            $message->add_recipient('to',
-                \Caldera_Forms::do_magic_tags($config['recipient_email']),
-                \Caldera_Forms::do_magic_tags($config['recipient_name'])
-            );
+            if( is_array( $mail ['recipients'])){
+                foreach ( $mail[ 'recipients' ] as $recipient ){
+                    $message->add_recipient('to',
+                        $recipient['email'],
+                        $recipient['name']
+                    );
+                }
+            }else{
+                $message->add_recipient('to',
+                    \Caldera_Forms::do_magic_tags($config['recipient_email']),
+                    \Caldera_Forms::do_magic_tags($config['recipient_name'])
+                );
+            }
+
+
+            if (!empty($mail['cc'])) {
+                if (is_string($mail['cc'])) {
+                    $mail['cc'] = explode(',', $mail['cc']);
+                    foreach ($mail['cc'] as $cc) {
+                        if (is_email(trim($cc))) {
+                            $message->add_recipient('cc', trim($cc));
+                        }
+                    }
+                }
+            }
+
+            if (!empty($mail['bcc'])) {
+                if (is_string($mail['bcc'])) {
+                    $mail['bcc'] = explode(',', $mail['bcc']);
+                    foreach ($mail['bcc'] as $bcc) {
+                        if (is_email(trim($bcc))) {
+                            $message->add_recipient('bcc', trim($bcc));
+                        }
+                    }
+                }
+            }
 
             $message->subject = $mail ['subject'];
             $message->content = $mail['message'];
