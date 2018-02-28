@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.8.1 - 2017-12-21 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.6.0.beta2 - 2018-02-27 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -7273,13 +7273,6 @@ var cf_jsfields_init, cf_presubmit;
 			validator.destroy();
 		}
 	});
-
-    $( document ).on( "cf.form.submit", function(e,obj) {
-		var $form = obj.$form;
-        var $breadBreadcrumbs = $form.find( '.breadcrumb' );
-        $breadBreadcrumbs.hide().attr( 'aria-hidden', true ).css( 'visibility', 'hidden' );
-    });
-
 
 })(jQuery);
 

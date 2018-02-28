@@ -58,7 +58,6 @@ jQuery(function($){
 
                     return;
                 }
-
             },
             error: function(jqXHR, textStatus, errorThrown){
                 //if fails  - push error
@@ -70,10 +69,58 @@ jQuery(function($){
     }
     // Baldrick Bindings
     resBaldrickTriggers = function(){
-
-        function setNoticeEl(obj) {
+        var trackedElements = {};
+        /**
+         * Get Element for notices
+         *
+         * @since 1.5.x
+         *
+         * @param obj
+         * @returns {*|jQuery|HTMLElement}
+         */
+        var getNoticeEl = function(obj) {
             return $('#caldera_notices_' + obj.params.trigger.data('instance'));
-        }
+        };
+
+        /**
+         * Get breadcrumbs Element
+         *
+         * @since 1.6.0
+         *
+         * @param obj
+         * @returns {*|jQuery|HTMLElement}
+         */
+        var getBreadCrumbsEl = function (obj) {
+            return $('#caldera-forms-breadcrumb_' + obj.params.trigger.data('instance'));
+        };
+
+        /**
+         * Show breadcrumbs if possible
+         *
+         * @since 1.6.0
+         *
+         * @param obj
+         */
+        var maybeShowBreadCrumbs = function (obj) {
+            var $breadcrumbs = getBreadCrumbsEl(obj);
+            if ($breadcrumbs.length) {
+                $breadcrumbs.show().attr('aria-hidden', false).css('visibility', 'visible');
+            }
+        };
+
+        /**
+         * Show breadcrumbs if possible
+         *
+         * @since 1.6.0
+         *
+         * @param obj
+         */
+        var maybeHideBreadCrumbs = function (obj) {
+            var $breadcrumbs = getBreadCrumbsEl(obj);
+            if ($breadcrumbs.length) {
+                $breadcrumbs.show().attr('aria-hidden', true ).css('visibility', 'hidden');
+            }
+        };
 
         $('.cfajax-trigger').baldrick({
             request			:	'./',
@@ -133,8 +180,7 @@ jQuery(function($){
                 if( obj.jqxhr.status === 404){
                     this.trigger.data('_cf_manual', true ).trigger('submit');
                 }else{
-                    var $notice = setNoticeEl(obj);
-
+                    var $notice = getNoticeEl(obj);
                     if( obj.jqxhr.responseJSON.data.html ){
                         $notice.html (obj.jqxhr.responseJSON.data.html );
                         $('html,body').animate({
@@ -148,7 +194,7 @@ jQuery(function($){
             callback		: function(obj){
                 obj.params.trigger.find(':submit').prop('disabled',false);
 
-                var $notice = setNoticeEl( obj );
+                var $notice = getNoticeEl( obj );
 
                 // run callback if set.
                 if( obj.params.trigger.data('customCallback') && typeof window[obj.params.trigger.data('customCallback')] === 'function' ){
@@ -157,12 +203,14 @@ jQuery(function($){
 
                 }
 
+
                 if( !obj.params.trigger.data('inhibitnotice') ){
 
                     $('.caldera_ajax_error_wrap').removeClass('caldera_ajax_error_wrap').removeClass('has-error');
                     $('.caldera_ajax_error_block').remove();
 
                     if(obj.data.status === 'complete' || obj.data.type === 'success'){
+                        maybeHideBreadCrumbs(obj);
                         if(obj.data.html){
                             obj.params.target.html(obj.data.html);
                         }
@@ -170,8 +218,10 @@ jQuery(function($){
                             obj.params.trigger.find('div.row').remove();
                         }
                     }else if(obj.data.status === 'preprocess'){
+                        maybeShowBreadCrumbs(obj);
                         obj.params.target.html(obj.data.html);
                     }else if(obj.data.status === 'error'){
+                        maybeShowBreadCrumbs(obj);
                         obj.params.target.html(obj.data.html);
                     }
 
