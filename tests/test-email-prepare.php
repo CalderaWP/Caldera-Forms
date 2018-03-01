@@ -3,67 +3,110 @@ include_once dirname( __FILE__ ) . '/email-test-case.php';
 
 /**
  * Class testing Caldera_Forms_Email_Prepare
+ *
+ * Testing the static methods of the Caldera_Forms_Email_Prepare
+ *
+ * @since 1.6.0
  */
 class Test_Email_Prepared extends Email_Test_Case {
 
 
 	/**
-	 * test return email from rfc822
+	 * Test return email from rfc822 'name <email at domain.com>' format
+	 *
+	 * @since 1.6.0
+	 *
+	 * @group email
+	 *
+	 * @covers Caldera_Forms_Email_Prepare::email_from_rfc822()
+	 * @covers Caldera_Forms_Email_Prepare::match_rfc()
+	 *
 	 */
 	public function test_email_from_rfc822() {
-		$_rfc      = 'Roy Sivan <roy@sivan.com>';
-		$_expected = 'roy@sivan.com';
+		$rfc      = 'Roy Sivan <roy@sivan.com>';
+		$expected = 'roy@sivan.com';
 
-		$_actual = Caldera_Forms_Email_Prepare::email_from_rfc822( $_rfc );
+		$actual = Caldera_Forms_Email_Prepare::email_from_rfc822( $rfc );
 
-		$this->assertEquals( $_expected, $_actual );
+		$this->assertEquals( $expected, $actual );
 	}
 
 
 	/**
-	 * test return name from rfc822
+	 * Test return name from rfc822 'name <email at domain.com>' format
+	 *
+	 * @since 1.6.0
+	 *
+	 * @group email
+	 *
+	 * @covers Caldera_Forms_Email_Prepare::name_from_rfc822()
+	 * @cover Caldera_Forms_Email_Prepare::match_rfc()
+	 *
 	 */
 	public function test_name_from_rfc822() {
-		$_rfc      = 'Roy Sivan <roy@sivan.com>';
-		$_expected = 'Roy Sivan';
+		$rfc      = 'Roy Sivan <roy@sivan.com>';
+		$expected = 'Roy Sivan';
 
-		$_actual = Caldera_Forms_Email_Prepare::name_from_rfc822( $_rfc );
+		$actual = Caldera_Forms_Email_Prepare::name_from_rfc822( $rfc );
 
-		$this->assertEquals( $_expected, $_actual );
+		$this->assertEquals( $expected, $actual );
 	}
 
 
 	/**
-	 * check the email is rfc_822 format
+	 * Check the email is rfc_822 format
+	 *
+	 * @since 1.6.0
+	 *
+	 * @group email
+	 *
+	 * @covers Caldera_Forms_Email_Prepare::is_rfc822()
+	 * @covers Caldera_Forms_Email_Prepare::email_from_rfc822()
+	 *
 	 */
 	public function test_is_rfc822() {
-		$_rfc    = 'Roy Sivan <roy@sivan.com>';
-		$_is_rfc = Caldera_Forms_Email_Prepare::is_rfc822( $_rfc );
+		$rfc    = 'Roy Sivan <roy@sivan.com>';
+		$is_rfc = Caldera_Forms_Email_Prepare::is_rfc822( $rfc );
 
-		$this->assertNotNull( $_is_rfc );
+		$this->assertNotNull( $is_rfc );
 	}
 
 
 	/**
-	 * prepare array of emails and names using the dataProvider
+	 * Prepare array of emails and names using the dataProvider
 	 *
 	 * @dataProvider preparedEmailFormats
 	 *
-	 * @param $original
-	 * @param $expected
+	 * @since 1.6.0
+	 *
+	 * @group email
+	 *
+	 * @covers Caldera_Forms_Email_Prepare::prepare_email_array()
+	 * @covers Caldera_Forms_Email_Prepare::is_rfc822()
+	 *
+	 * @param array $original dataProvider array of items to test
+	 * @param array $expected dataProvider array of expected result from test
+	 *
 	 */
 	public function test_prepare_email_array( $original, $expected ) {
 
-		$_actual = Caldera_Forms_Email_Prepare::prepare_email_array( $original );
+		$actual = Caldera_Forms_Email_Prepare::prepare_email_array( $original );
 
-		$this->assertEquals( $expected, $_actual );
+		$this->assertEquals( $expected, $actual );
 	}
 
 
 	/**
-	 * dataProvider for prepare_email_array test
+	 * DataProvider for prepare_email_array test
 	 *
-	 * @return array
+	 * @since 1.6.0
+	 *
+	 * @group email
+	 *
+	 * @covers Caldera_Forms_Email_Prepare::prepare_email_array()
+	 *
+	 * @return array email and name combinations
+	 *
 	 */
 	public function preparedEmailFormats() {
 		return array(
@@ -81,14 +124,21 @@ class Test_Email_Prepared extends Email_Test_Case {
 
 
 	/**
-	 * test if is array of email address
+	 * Test if is array of rfc822 name|email formats
+	 *
+	 * @since 1.6.0
+	 *
+	 * @group email
+	 *
+	 * @covers Caldera_Forms_Email_Prepare::is_list()
+	 *
 	 */
 	public function test_is_list() {
-		$_email_string = 'Name <address@tld.com>, Another Name <another_address@different-tld.com>';
+		$email_string = 'Name <address@tld.com>, Another Name <another_address@different-tld.com>';
 
-		$_is_list = Caldera_Forms_Email_Prepare::is_list( $_email_string );
+		$is_list = Caldera_Forms_Email_Prepare::is_list( $email_string );
 
-		$this->assertTrue( $_is_list );
+		$this->assertTrue( $is_list );
 	}
 
 }
