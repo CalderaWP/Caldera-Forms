@@ -3151,7 +3151,7 @@ class Caldera_Forms {
 			// save entry_id
 			self::set_field_data( '_entry_id', $entryid, $form );
 			$token = Caldera_Forms_Entry_Token::create_entry_token( $entryid, $form );
-
+            $transdata['entry_id'] = $entryid;
 			// set edit token
 			self::set_field_data( '_entry_token', $token, $form );
 
@@ -3160,6 +3160,11 @@ class Caldera_Forms {
 		} else {
 			$entryid = false;
 		}
+
+		if( empty( $entryid ) && ! empty( $transdata['entry_id'] ) ){
+            $entryid =  $transdata['entry_id'];
+            self::set_field_data( '_entry_id', $entryid, $form );
+        }
 
 		/**
 		 * Runs before the 2nd stage of processors "process"
