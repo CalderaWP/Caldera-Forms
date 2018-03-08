@@ -156,7 +156,8 @@ class Caldera_Forms_Save_Final {
 		}
 
 		// add entry ID to transient data
-
+        //This should have already been set
+        //See https://github.com/CalderaWP/Caldera-Forms/issues/2295#issuecomment-371325361
 		$transdata['entry_id'] = $entryid;
 
 		// do mailer!
