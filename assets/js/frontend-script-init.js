@@ -53,10 +53,6 @@ var cf_jsfields_init, cf_presubmit;
 		})
 	};
 
-	$( document ).on('change keypress', "[data-sync]", function(){
-		$(this).data( 'unsync', true );
-	});
-
 	// make init function
 	cf_jsfields_init = function(){
 		$('.init_field_type[data-type]').each(function(k,v){
@@ -398,7 +394,9 @@ window.addEventListener("load", function(){
 
 					$form.find( '[data-sync]' ).each( function(){
 						var $field = $( this );
-						new CalderaFormsFieldSync( $field, $field.data('binds'), $form, $ , state);
+                        if ( ! $field.data( 'unsync' ) ) {
+                            new CalderaFormsFieldSync($field, $field.data('binds'), $form, $, state);
+                        }
 					});
 
 					
@@ -410,7 +408,6 @@ window.addEventListener("load", function(){
 						state: state,
 						fieldIds: CFFIELD_CONFIG[instance].fields.hasOwnProperty( 'ids' ) ? CFFIELD_CONFIG[instance].fields.ids : []
 					});
-
 
 
 				}
@@ -444,6 +441,9 @@ function CalderaFormsFieldSync( $field, binds, $form, $, state  ){
 	for( var i = 0; i < binds.length; i++ ){
 
 		$( document ).on('keyup change blur mouseover', "[data-field='" + binds[ i ] + "']", function(){
+			if( ! $field.data('sync') ){
+				return;
+			}
 			var str = $field.data('sync')
 			id = $field.data('field'),
 				reg = new RegExp( "\{\{([^\}]*?)\}\}", "g" ),
@@ -472,6 +472,11 @@ function CalderaFormsFieldSync( $field, binds, $form, $, state  ){
 			$field.val( str );
 		} );
 		$("[data-field='" + binds[ i ] + "']").trigger('change');
+        $field.on('keyup change blur mouseover', function(){
+        	$field.attr( 'data-unsync', '1' );
+            $field.removeAttr( 'data-sync' );
+            $field.removeAttr( 'data-binds' );
+        });
 
 	}
 }

@@ -2221,8 +2221,8 @@ class Caldera_Forms {
 
 			if( ! $entry ){
 				global $wpdb;
-				
-				
+
+
 				$entry = $wpdb->get_results( $wpdb->prepare(
 					"SELECT `value` FROM `" . $wpdb->prefix . "cf_form_entry_values` WHERE `entry_id` = %d AND `field_id` = %s", $entry_id, $field_id
 				), ARRAY_A );
@@ -3502,8 +3502,7 @@ class Caldera_Forms {
 							$transdata = array();
 						}
 						if ( ! empty( $_FILES ) && ! empty( $_POST[ 'field' ] ) ) {
-						    $form_id = str_replace( '/upload/', '', $wp_query->query_vars[ 'cf_api' ] );
-							$form  = Caldera_Forms_Forms::get_form( $form_id );
+							$form  = Caldera_Forms_Forms::get_form( $wp_query->query_vars[ 'cf_api' ] );
 
 							$field = Caldera_Forms_Field_Util::get_field( $form[ 'fields' ][ $_POST[ 'field' ] ], $form, true );
 							$data = cf_handle_file_upload( true, $field, $form );
