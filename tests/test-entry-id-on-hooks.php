@@ -63,7 +63,7 @@ class Test_Entry_ID_On_Hooks extends Caldera_Forms_Mailer_Test_Case
         add_action('caldera_forms_submit_process_end',
             function ($form, $referrer, $process_id, $entryid) {
                 $this->assertIsNumeric( $entryid );
-                $this->test_entry_id( $entryid, 'caldera_forms_submit_process_end' );
+                $this->check_entry_id( $entryid, 'caldera_forms_submit_process_end' );
                 $this->checks++;
                 return $form;
             },
@@ -73,7 +73,7 @@ class Test_Entry_ID_On_Hooks extends Caldera_Forms_Mailer_Test_Case
         add_action('caldera_forms_submit_post_process',
             function ($form, $referrer, $process_id, $entryid) {
                 $this->assertIsNumeric( $entryid );
-                $this->test_entry_id( $entryid, 'caldera_forms_submit_post_process' );
+                $this->check_entry_id( $entryid, 'caldera_forms_submit_post_process' );
                 $this->checks++;
                 return $form;
             },
@@ -83,7 +83,7 @@ class Test_Entry_ID_On_Hooks extends Caldera_Forms_Mailer_Test_Case
         add_action('caldera_forms_submit_post_process',
             function ($form, $referrer, $process_id, $entryid) {
                 $this->assertIsNumeric( $entryid );
-                $this->test_entry_id( $entryid, 'caldera_forms_submit_post_process' );
+                $this->check_entry_id( $entryid, 'caldera_forms_submit_post_process' );
                 $this->checks++;
                 return $form;
             },
@@ -93,7 +93,7 @@ class Test_Entry_ID_On_Hooks extends Caldera_Forms_Mailer_Test_Case
         add_action('caldera_forms_submit_post_process_end',
             function ($form, $referrer, $process_id, $entryid) {
                 $this->assertIsNumeric( $entryid );
-                $this->test_entry_id( $entryid, 'caldera_forms_submit_post_process_end' );
+                $this->check_entry_id( $entryid, 'caldera_forms_submit_post_process_end' );
                 $this->checks++;
                 return $form;
             },
@@ -103,7 +103,7 @@ class Test_Entry_ID_On_Hooks extends Caldera_Forms_Mailer_Test_Case
         add_action('caldera_forms_submit_complete',
             function ($form, $referrer, $process_id, $entryid) {
                 $this->assertIsNumeric( $entryid );
-                $this->test_entry_id( $entryid, 'caldera_forms_submit_complete' );
+                $this->check_entry_id( $entryid, 'caldera_forms_submit_complete' );
                 $this->checks++;
                 return $form;
             },
@@ -113,7 +113,7 @@ class Test_Entry_ID_On_Hooks extends Caldera_Forms_Mailer_Test_Case
         add_action('caldera_forms_mailer',
             function ($mail, $data, $form, $entryid) {
                 $this->assertIsNumeric( $entryid );
-                $this->test_entry_id( $entryid, 'caldera_forms_mailer' );
+                $this->check_entry_id( $entryid, 'caldera_forms_mailer' );
                 $this->checks++;
                 return $mail;
             },
@@ -125,8 +125,6 @@ class Test_Entry_ID_On_Hooks extends Caldera_Forms_Mailer_Test_Case
 
     }
 
-
-
     /**
      * Test that entry ID is correct
      *
@@ -136,7 +134,7 @@ class Test_Entry_ID_On_Hooks extends Caldera_Forms_Mailer_Test_Case
      *
      * @param int|null|bool $entry_id_from_hook
      */
-    public function test_entry_id( $entry_id_from_hook = null, $hook_name ){
+    public function check_entry_id( $entry_id_from_hook = null, $hook_name ){
         $_id = $this->get_entry_id();
         $this->assertIsNumeric($_id, $hook_name);
         $this->assertSame($_id, $entry_id_from_hook);
