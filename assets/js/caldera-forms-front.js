@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.8-b-2 - 2017-12-14 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.5.8-b-2 - 2018-03-08 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -7419,6 +7419,7 @@ function CalderaFormsFieldSync( $field, binds, $form, $, state  ){
 		} );
 		$("[data-field='" + binds[ i ] + "']").trigger('change');
         $field.on('change', function(){
+        	$field.attr( 'unsync', '1' );
             $field.removeAttr( 'data-sync' );
             $field.removeAttr( 'data-binds' );
         });

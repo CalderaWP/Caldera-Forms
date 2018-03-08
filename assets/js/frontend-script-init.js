@@ -469,6 +469,7 @@ function CalderaFormsFieldSync( $field, binds, $form, $, state  ){
 		} );
 		$("[data-field='" + binds[ i ] + "']").trigger('change');
         $field.on('change', function(){
+        	$field.attr( 'unsync', '1' );
             $field.removeAttr( 'data-sync' );
             $field.removeAttr( 'data-binds' );
         });
