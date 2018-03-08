@@ -5,7 +5,7 @@ class Test_Email extends Email_Test_Case {
     /**
      * Test that the to email is correct, when a name is not used along with email
      *
-     * @group torque
+     * @group email
      */
     public function test_to_without_name(){
         $to = 'hi@example.com';
@@ -20,7 +20,7 @@ class Test_Email extends Email_Test_Case {
     /**
      * Test that the to email is correct, when a name is used along with email
      *
-     * @group torque
+     * @group email
      */
     public function test_to_with_name(){
         $to = 'Someone W. Someone <hi@example.com>';
@@ -52,7 +52,7 @@ class Test_Email extends Email_Test_Case {
     /**
      * Test that the subject is correct
      *
-     * @group torque
+     * @group email
      */
     public function test_subject(){
         $to = 'Someone W. Someone <hi@example.com>';
@@ -67,7 +67,7 @@ class Test_Email extends Email_Test_Case {
     /**
      * Test that the body is correct
      *
-     * @group torque
+     * @group email
      */
     public function test_body(){
         $to = 'Someone W. Someone <hi@example.com>';

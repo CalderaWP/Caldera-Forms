@@ -23,20 +23,7 @@ class Test_Main_Mailer extends Caldera_Forms_Mailer_Test_Case{
      * @covers Caldera_Forms_Test_Case::recursive_cast_array()
      */
     public function test_contact_form_import(){
-        $form_id = $this->import_contact_form();
-        $form = Caldera_Forms_Forms::get_form($form_id);
-        $this->assertSame($form_id, $form['ID']);
-
-        $this->assertArrayHasKey('fields', $form);
-        $this->assertArrayHasKey('layout_grid', $form);
-        $this->assertArrayHasKey('pinned', $form);
-        $this->assertArrayHasKey('fields', $form);
-        $this->assertArrayHasKey('fld_29462', $form['fields']);
-        $this->assertArrayHasKey('slug', $form['fields']['fld_29462']);
-        $this->assertEquals('header', $form['fields']['fld_29462']['slug']);
-        $this->assertArrayHasKey('fld_8768091', $form['fields']);
-        $this->assertArrayHasKey('config', $form['fields']['fld_29462']);
-        $this->assertTrue(is_array($form['fields']['fld_29462']['config']));
+        parent::test_contact_form_import();
     }
 
     /**
