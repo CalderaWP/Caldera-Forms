@@ -58,6 +58,8 @@ class Test_Entry_ID_On_Hooks_File extends Test_File_Mailer
      * @group hooks
      * @group entry_id
      * @group file
+     *
+     * @requires PHP 5.4
      */
     public function test_entry_id_during_submission(){
         //Track number of tests so we can make sure all the hooks fired
@@ -141,6 +143,8 @@ class Test_Entry_ID_On_Hooks_File extends Test_File_Mailer
      * @covers Caldera_Forms::get_field_data()
      *
      * @param int|null|bool $entry_id_from_hook
+     *
+     * @requires PHP 5.4
      */
     public function check_entry_id( $entry_id_from_hook = null, $hook_name ){
         $_id = $this->get_entry_id();

@@ -50,6 +50,8 @@ class Test_Entry_ID_On_Hooks extends Caldera_Forms_Mailer_Test_Case
      * @group email
      * @group hooks
      * @group entry_id
+     *
+     * @requires PHP 5.4
      */
     public function test_entry_id_during_submission(){
         //Track number of tests so we can make sure all the hooks fired
@@ -133,8 +135,10 @@ class Test_Entry_ID_On_Hooks extends Caldera_Forms_Mailer_Test_Case
      * @covers Caldera_Forms::get_field_data()
      *
      * @param int|null|bool $entry_id_from_hook
+     *
+     * @requires PHP 5.4
      */
-    public function check_entry_id( $entry_id_from_hook = null, $hook_name ){
+    protected function check_entry_id( $entry_id_from_hook = null, $hook_name ){
         $_id = $this->get_entry_id();
         $this->assertIsNumeric($_id, $hook_name);
         $this->assertSame($_id, $entry_id_from_hook);

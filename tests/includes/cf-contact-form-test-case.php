@@ -20,7 +20,6 @@ class Caldera_Forms_Contact_Form_Test_Case extends Caldera_Forms_Test_Case
         parent::setUp();
     }
 
-
     /**
      * ID of last form submitted
      *
@@ -60,7 +59,7 @@ class Caldera_Forms_Contact_Form_Test_Case extends Caldera_Forms_Test_Case
     /**
      * Reset test setup
      *
-     * @since 1.5.10
+     * @since 1.6.0
      *
      * Nulls all properties and resets mock phpmailer
      */
