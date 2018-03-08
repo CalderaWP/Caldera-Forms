@@ -1,6 +1,6 @@
 Caldera-Forms
 =============
-<a href="https://calderaforms.com/"><img src="https://calderaforms.com/content/uploads/2016/06/cf-banner.png" /></a>
+<a href="https://calderaforms.com/"><img src="https://calderaforms.com/wp-content/uploads/2015/02/catdeta-caldera-forms-banner.png" /></a>
 
 
 # Drag & Drop WordPress Responsive Form Builder

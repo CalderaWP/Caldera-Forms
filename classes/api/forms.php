@@ -406,6 +406,8 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
     /**
      * Create form preview response
      *
+     * @since 1.5.8
+     *
      * @return Caldera_Forms_API_Response
      */
     protected function preview_response(){
@@ -436,11 +438,11 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
             }
            $prepared_js[ $slug ] = esc_url( $url );
         }
-        $data = [
+        $data = array(
             'html' => $html,
             'css' => $prepared_css,
             'js' => $prepared_js,
-        ];
+        );
         return new Caldera_Forms_API_Response($data, 200, array());
     }
 

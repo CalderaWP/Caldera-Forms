@@ -321,7 +321,7 @@ class Caldera_Forms_Files{
 	 * @return bool
 	 */
     public static function should_attach( array  $field, array $form ){
-    	if( in_array( Caldera_Forms_Field_Util::get_type( $field ), $form ) ){
+    	if( Caldera_Forms_Field_Util::is_file_field( $field, $form ) ){
 		    return ! empty( $field[ 'config' ][ 'attach'] );
 	    }
 

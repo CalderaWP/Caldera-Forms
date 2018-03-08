@@ -58,7 +58,7 @@ class Caldera_Forms_API_Token {
 			return self::verify_token( $token, 'public', $form_id );
 		}
 
-		foreach( array_merge( array_keys( caldera_forms_get_roles() ), 'public' ) as $role ){
+		foreach( array_merge( array_keys( caldera_forms_get_roles() ), array('public') ) as $role ){
 			if( true == self::verify_token( $token, $role, $form_id ) ){
 				return true;
 			}

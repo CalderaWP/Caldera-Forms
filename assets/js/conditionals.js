@@ -10,6 +10,15 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
      */
 	var fieldVals = {};
 
+    /**
+	 * Tracks fields that are set to "unsync" and have been hidden
+	 *
+	 * @since 1.6.0
+	 *
+     * @type {{}}
+     */
+	var unsynced = {};
+
 	// IE8 compatibility
 	if (!Array.prototype.indexOf){
 		Array.prototype.indexOf = function(elt /*, from*/){
@@ -85,6 +94,13 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 				if( undefined === $field ){
                     $field = $( '#' + field );
 				}
+
+				if( unsynced.hasOwnProperty( field ) ){
+                    $field.attr( 'data-unsync', '1' );
+                    $field.removeAttr( 'data-sync' );
+                    $field.removeAttr( 'data-binds' );
+				}
+
                 if ( undefined !== $field && $field.data( 'sync' ) ) {
                     new CalderaFormsFieldSync($field, $field.data('binds'), $form, $, state);
                 }
@@ -125,6 +141,9 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 				});
 			}
 
+			if( $field.data( 'unsync' ) ){
+				unsynced[ field ] = true;
+			}
 
 			//remove from state
 			if ( null !== state ) {
