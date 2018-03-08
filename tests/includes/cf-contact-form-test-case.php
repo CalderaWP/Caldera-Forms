@@ -1,6 +1,10 @@
 <?php
 
-
+/**
+ * Class Caldera_Forms_Contact_Form_Test_Case
+ *
+ * Test case for Contact Form tests
+ */
 class Caldera_Forms_Contact_Form_Test_Case extends Caldera_Forms_Test_Case
 {
 
