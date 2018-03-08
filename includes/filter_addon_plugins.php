@@ -5,7 +5,7 @@
 	add_filter( 'views_plugins', 'cf_filter_addons_filter_addons' );
 	add_filter( 'show_advanced_plugins', 'cf_filter_addons_do_filter_addons' );
 	add_action( 'check_admin_referer', 'cf_filter_addons_prepare_filter_addons_referer', 10, 2 );
-		
+
 	function cf_filter_addons_prepare_filter_addons_referer($a, $b){
 		global $status;
 		if( !function_exists('get_current_screen')){
@@ -24,14 +24,14 @@
 			if( false !== strpos($plugin_data['Name'], 'Caldera Forms') || false !== strpos($plugin_data['Description'], 'Caldera Forms') ){
 				$plugins['caldera_forms'][$plugin_slug] = $plugins['all'][$plugin_slug];
 				$plugins['caldera_forms'][$plugin_slug]['plugin'] = $plugin_slug;
-				// replicate teh next step
+				// replicate the next step
 				if ( current_user_can( 'update_plugins' ) ) {
 					$current = get_site_transient( 'update_plugins' );
 					if ( isset( $current->response[ $plugin_slug ] ) ) {
 						$plugins['caldera_forms'][$plugin_slug]['update'] = true;
 					}
 				}
-				
+
 			}
 		}
 
