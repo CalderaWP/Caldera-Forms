@@ -12,15 +12,6 @@ var cf_jsfields_init, cf_presubmit;
 			}
 		}).on('field:error', function( fieldInstance ) {
 
-            if ( 'number' == this.$element.attr( 'type' ) && 0 == this.$element.attr( 'min' )  ) {
-                var val = this.$element.val();
-                if( 0 <= val && ( undefined == this.$element.attr( 'max' ) || val <= this.$element.attr( 'max' )  ) ){
-                    fieldInstance.validationResult = true;
-                }
-
-                return;
-            }
-
             this.$element.closest('.form-group').addClass('has-error');
 			$( document ).trigger( 'cf.validate.fieldError', {
 				inst: fieldInstance,
@@ -137,24 +128,14 @@ var cf_jsfields_init, cf_presubmit;
 			fields =  $('#caldera_form_' + instance + ' [data-formpage="' + current_page + '"] [data-field]'  );
 
 			var $this_field,
-				valid,
-				_valid;
+				valid;
 			for (var f = 0; f < fields.length; f++) {
 				$this_field = $(fields[f]);
 				if( $this_field.hasClass( 'cf-multi-uploader' ) || $this_field.hasClass( 'cf-multi-uploader-list') ){
 					continue;
 				}
 
-				_valid = $this_field.parsley().validate();
-				valid = $this_field.parsley().isValid({force: true});
-
-
-
-				//@see https://github.com/CalderaWP/Caldera-Forms/issues/1765
-				if( ! valid && true === _valid && 'email' === $this_field.attr( 'type' ) ){
-					continue;
-				}
-
+				valid = $this_field.parsley().isValid();
 				if (true === valid) {
 					continue;
 				}
@@ -472,7 +453,7 @@ function CalderaFormsFieldSync( $field, binds, $form, $, state  ){
 			$field.val( str );
 		} );
 		$("[data-field='" + binds[ i ] + "']").trigger('change');
-        $field.on('keyup change blur mouseover', function(){
+        $field.on('keyup change', function(){
         	$field.attr( 'data-unsync', '1' );
             $field.removeAttr( 'data-sync' );
             $field.removeAttr( 'data-binds' );
