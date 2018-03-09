@@ -111,4 +111,23 @@ class Caldera_Forms_Admin_PHP{
         return self::$min_tested_version;
     }
 
+    /**
+     * Get the deprecation notice
+     *
+     * @since 1.6.0
+     *
+     * @return string Output is escaped
+     */
+    public static function get_deprecated_notice(){
+        return sprintf('%s %s',
+            esc_html__( sprintf('You are using a VERY out of date version of PHP: %s. Caldera Forms 1.7, will require PHP Version %s or later.',
+                PHP_VERSION, self::get_minimum_tested_version()
+            ), 'caldera-forms'),
+            sprintf('<a style="color:#fff;" href="https://calderaforms.com/php?utm_source=wp-admin&utm_campaign=php_deprecated" target="__blank">%s</a>',
+                esc_html__('Learn More', 'caldera-forms' )
+            )
+        );
+
+    }
+
 }

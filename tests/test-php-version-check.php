@@ -129,5 +129,19 @@ class Test_PHP_Version_Check extends Caldera_Forms_Test_Case{
         $this->assertFalse( Caldera_Forms_Admin_PHP::is_version_tested( '5.2.3' ) );
     }
 
+    /**
+     * Test deprecation notice
+     *
+     * @since 1.6.0
+     *
+     * @covers Caldera_Forms_Admin_PHP::get_deprecated_notice()
+     *
+     * @group php_check
+     */
+    public function test_deprecation_warning(){
+        //Will trigger error if sprintf was used wrong
+        $this->assertTrue( is_string( Caldera_Forms_Admin_PHP::get_deprecated_notice() ) );
+        $this->assertFalse( empty( Caldera_Forms_Admin_PHP::get_deprecated_notice() ) );
+    }
 
 }
