@@ -94,6 +94,15 @@ class Caldera_Forms_Admin {
 	 */
 	private static $admin_notices;
 
+    /**
+     * Holds our Freemius instance
+     *
+     * @since 1.6.0
+     *
+     * @var Freemius
+     */
+	private static $freemius;
+
 	/**
 	 * Initialize the plugin by setting localization, filters, and administration functions.
 	 *
@@ -2001,6 +2010,42 @@ class Caldera_Forms_Admin {
 
 		return $send;
 	}
+
+    /**
+     * Get our Freemius instance
+     *
+     * @return Freemius
+     */
+	public static function get_freemius(){
+	    if( ! self::$freemius ){
+            include_once CFCORE_PATH . 'includes/freemius/start.php';
+            self::$freemius = fs_dynamic_init(array(
+                'id' => '1767',
+                'slug' => 'caldera-forms',
+                'type' => 'plugin',
+                'public_key' => 'pk_d8e6325777a98c1b3e0d8cdbfad1e',
+                'is_premium' => false,
+                'has_addons' => false,
+                'has_paid_plans' => false,
+                'menu' => array(
+                    'slug' => 'caldera-forms',
+                    'account' => false,
+                    'support' => false,
+                    'contact' => false,
+                ),
+            ));
+            /**
+             * Fires after Freemius is initialized by Caldera Forms
+             *
+             * @since 1.6.0
+             *
+             * @param Freemius $freemius Freemius instance for Caldera Forms
+             */
+            do_action('caldera_forms_freemius_loaded', self::$freemius );
+        }
+
+        return self::$freemius;
+    }
 }
 
 
