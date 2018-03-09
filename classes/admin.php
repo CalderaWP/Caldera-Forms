@@ -2014,6 +2014,8 @@ class Caldera_Forms_Admin {
     /**
      * Get our Freemius instance
      *
+     * @since 1.6.0
+     *
      * @return Freemius
      */
 	public static function get_freemius(){
