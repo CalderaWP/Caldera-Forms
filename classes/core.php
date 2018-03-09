@@ -4555,7 +4555,7 @@ class Caldera_Forms {
 				// retain query string
 				$qurystr = array();
 				parse_str( $_SERVER[ 'QUERY_STRING' ], $qurystr );
-				$out .= "<span class=\"caldera-grid\"><ol class=\"breadcrumb\" data-form=\"caldera_form_" . $current_form_count . "\">\r\n";
+				$out .= "<span class=\"caldera-grid\"><ol class=\"breadcrumb\" data-form=\"caldera_form_" . $current_form_count . "\" id=\"caldera-forms-breadcrumb_" . $current_form_count . "\">\r\n";
 				$current_page = 1;
 				if ( ! empty( $_GET[ 'cf_pg' ] ) ) {
 					$current_page = $_GET[ 'cf_pg' ];

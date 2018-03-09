@@ -301,13 +301,6 @@ var cf_jsfields_init, cf_presubmit;
 		}
 	});
 
-    $( document ).on( "cf.form.submit", function(e,obj) {
-		var $form = obj.$form;
-        var $breadBreadcrumbs = $form.find( '.breadcrumb' );
-        $breadBreadcrumbs.hide().attr( 'aria-hidden', true ).css( 'visibility', 'hidden' );
-    });
-
-
 })(jQuery);
 
 /** Setup Form Front-end **/
