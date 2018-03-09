@@ -5,11 +5,12 @@
  *
  * This test submits the contact form and makes sure the entry ID is correct on all of the hooks it should be correct on.
  */
-class Test_Entry_ID_On_Hooks extends Caldera_Forms_Mailer_Test_Case
-{
+class Test_Entry_ID_On_Hooks extends Caldera_Forms_Mailer_Test_Case{
 
     /**
      * Tracks number of checks that have run
+     *
+     * @since 1.6.0
      *
      * @var int
      */
