@@ -1,6 +1,7 @@
 <?php
+trait Caldera_Forms_Submits_Contact_Form {
+    use Caldera_Forms_Imports_Form;
 
-abstract class Caldera_Forms_Mailer_Test_Case extends Caldera_Forms_Test_Case {
     /** @inheritdoc */
     public function tearDown(){
         $this->reset();
@@ -11,6 +12,21 @@ abstract class Caldera_Forms_Mailer_Test_Case extends Caldera_Forms_Test_Case {
     public function setUp(){
         $this->reset();
         parent::setUp();
+    }
+
+    /**
+     * Reset test setup
+     *
+     * @since 1.6.0
+     *
+     * Nulls all properties and resets mock phpmailer
+     */
+    protected function reset(){
+        $this->entry_id = null;
+        $this->form_id = null;
+        $this->form = null;
+        $this->submission_data = null;
+        reset_phpmailer_instance();
     }
 
     /**
@@ -107,74 +123,4 @@ abstract class Caldera_Forms_Mailer_Test_Case extends Caldera_Forms_Test_Case {
         //submit form
         Caldera_Forms::process_submission();
     }
-
-
-    /**
-     * Hook into caldera_forms_mailer to capture last entry ID
-     *
-     * @uses "caldera_forms_mailer" filter
-     *
-     * @param $mail
-     * @param $data
-     * @param $form
-     * @param $entryid
-     * @return array
-     */
-    public function mailer_callback($mail, $data, $form, $entryid) {
-        $this->entry_id = $entryid;
-        return $mail;
-    }
-
-    public function auto_callback( $email_message, $config, $form, $entry_id){
-        $this->entry_id = $entry_id;
-        return $email_message;
-    }
-
-    /**
-     * Reset test setup
-     *
-     * @since 1.5.10
-     *
-     * Nulls all properties and resets mock phpmailer
-     */
-    protected function reset(){
-        $this->entry_id = null;
-        $this->form_id = null;
-        $this->form = null;
-        $this->submission_data = null;
-        reset_phpmailer_instance();
-    }
-
-
-    /**
-     * Test that the contact form import utility works
-     *
-     * @since 1.5.10
-     *
-     * @group form
-     * @group email
-     * @group mainmailer
-     *
-     * @covers Caldera_Forms_Forms::import_form()
-     * @covers Caldera_Forms_Test_Case::import_contact_form()
-     * @covers Caldera_Forms_Test_Case::recursive_cast_array()
-     */
-    public function test_contact_form_import(){
-        $form_id = $this->import_contact_form();
-        $form = Caldera_Forms_Forms::get_form($form_id);
-        $this->assertSame($form_id, $form['ID']);
-
-        $this->assertArrayHasKey('fields', $form);
-        $this->assertArrayHasKey('layout_grid', $form);
-        $this->assertArrayHasKey('pinned', $form);
-        $this->assertArrayHasKey('fields', $form);
-        $this->assertArrayHasKey('fld_29462', $form['fields']);
-        $this->assertArrayHasKey('slug', $form['fields']['fld_29462']);
-        $this->assertEquals('header', $form['fields']['fld_29462']['slug']);
-        $this->assertArrayHasKey('fld_8768091', $form['fields']);
-        $this->assertArrayHasKey('config', $form['fields']['fld_29462']);
-        $this->assertTrue(is_array($form['fields']['fld_29462']['config']));
-    }
-
-
 }

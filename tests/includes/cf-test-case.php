@@ -21,6 +21,7 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
      */
     protected $mock_form;
 
+    /** @inheritdoc */
     public function setUp(){
 		$this->set_mock_form();
 		//test that mock form is set properly
@@ -29,7 +30,8 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
 		parent::setUp();
 	}
 
-	public function tearDown(){
+    /** @inheritdoc */
+    public function tearDown(){
 
 		$forms = Caldera_Forms_Forms::get_forms();
 
@@ -372,6 +374,17 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
      */
     protected function get_path_for_auto_responder_contact_form_import(){
         return dirname(__FILE__) . '/forms/contact-form-autoresponder.json';
+    }
+
+    /**
+     * Assert a value is numeric
+     *
+     * @since 1.6
+     *
+     * @param mixed $maybeNumeric
+     */
+    protected function assertIsNumeric( $maybeNumeric, $message = '' ){
+        $this->assertTrue( is_numeric( $maybeNumeric ), $message );
     }
 
 }

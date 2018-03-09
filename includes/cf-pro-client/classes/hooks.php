@@ -24,7 +24,7 @@ class hooks {
 	/**
 	 * Add hooks needed for CF Pro
 	 *
-	 * @since 0.0.1
+	 * @since 1.5.8
 	 */
 	public function add_hooks(){
 		add_action( 'caldera_forms_rest_api_pre_init', array( $this, 'init_api' ) );
@@ -48,7 +48,7 @@ class hooks {
 	/**
 	 * Remove hooks needed for CF Pro
 	 *
-	 * @since 0.0.1
+	 * @since 1.5.8
 	 */
 	public function remove_hooks(){
 		remove_filter( 'caldera_forms_mailer', array( $this, 'mailer' ), 10 );
@@ -65,7 +65,7 @@ class hooks {
 	 *
 	 * @uses "caldera_forms_mailer" filter
 	 *
-	 * @sine 0.0.1
+	 * @sine 1.5.8
 	 *
 	 * @param $mail
 	 * @param $data
@@ -76,11 +76,12 @@ class hooks {
 	 */
 	public function mailer( $mail, $data, $form, $entry_id ){
 		$form_settings = container::get_instance()->get_settings()->get_form( $form[ 'ID' ] );
+        $entry_id = $this->maybe_fix_entry_id( $entry_id );
 
 		/**
 		 * Runs before main mailer is handled by CF Pro
 		 *
-		 * @since  1.1.0
+		 * @since  1.5.8
 		 *
 		 * @param array $mail the array provided on "caldera_forms_mailer" filter
 		 * @param int $entry_id The entry ID
@@ -104,7 +105,7 @@ class hooks {
 		/**
 		 * Runs after main mailer is handled by CF Pro
 		 *
-		 * @since  1.1.0
+		 * @since  1.5.8
 		 *
 		 * @param  \calderawp\calderaforms\pro\message|\WP_Error|null $sent_message Message Object or error or null if not sending via CF Pro.
 		 * @param int $entry_id The entry ID
@@ -136,7 +137,7 @@ class hooks {
 	/**
 	 * Handle autoresponder emails
 	 *
-	 * @sine 0.0.1
+	 * @sine 1.5.8
 	 *
 	 * @uses "caldera_forms_autoresponse_mail" filter
 	 *
@@ -148,14 +149,13 @@ class hooks {
 	 * @return null
 	 */
 	public function auto_responder( $mail, $config, $form, $entry_id ){
-
-
 		$form_settings = container::get_instance()->get_settings()->get_form( $form[ 'ID' ] );
+        $entry_id = $this->maybe_fix_entry_id( $entry_id );
 
 		/**
 		 * Runs before autoresponder is handled by CF Pro
 		 *
-		 * @since  1.1.0
+		 * @since  1.5.8
 		 *
 		 * @param array $mail the array provided on "caldera_forms_mailer" filter
 		 * @param int $entry_id The entry ID
@@ -230,7 +230,7 @@ class hooks {
 		/**
 		 * Runs after autoresponder is handled by CF Pro
 		 *
-		 * @since  1.1.0
+		 * @since  1.5.8
 		 *
 		 * @param  \calderawp\calderaforms\pro\message|\WP_Error|null $sent_message Messsage Object or error or null if not sending via CF Pro.
 		 * @param int $entry_id The entry ID
@@ -253,7 +253,7 @@ class hooks {
 	/**
 	 * Add the PDF link to AJAX response
 	 *
-	 * @since 0.1.0
+	 * @since 1.5.8
 	 *
 	 * @uses "caldera_forms_ajax_return" filter
 	 *
@@ -289,7 +289,7 @@ class hooks {
 	/**
 	 * Add link to success messages when the form is NOT submitted via AJAX
 	 *
-	 * @since 0.0.1
+	 * @since 1.5.8
 	 *
 	 * @uses "caldera_forms_render_notices" filter
 	 *
@@ -326,7 +326,7 @@ class hooks {
 	/**
 	 * Sets up CF REST API endpoint for the settings
 	 *
-	 * @since 0.0.1
+	 * @since 1.5.8
 	 *
 	 * @uses "caldera_forms_rest_api_pre_init" action
 	 *
@@ -339,7 +339,7 @@ class hooks {
 	/**
 	 * Sets up CF REST API endpoint for files
 	 *
-	 * @since 0.9.0
+	 * @since 1.5.8
 	 *
 	 * @uses "caldera_forms_rest_api_pre_init" action
 	 *
@@ -352,7 +352,7 @@ class hooks {
 	/**
 	 * Delete a file
 	 *
-	 * @since 0.0.1
+	 * @since 1.5.8
 	 *
 	 * Uses cron action set in pdf::CRON_ACTION
 	 *
@@ -365,9 +365,7 @@ class hooks {
 	/**
 	 * Initialize remove logger
 	 *
-	 * @since 0.5.0
-	 *
-	 * @uses "
+	 * @since 1.5.8
 	 */
 	public function init_logger(){
 		/**
@@ -381,8 +379,8 @@ class hooks {
 
 		/**
 		 * Filter to disable Caldera Forms Pro log mode
-		 *
-		 * @since 0.6.0
+         *
+         * @since 1.5.8
 		 *
 		 * @param bool $param $use
 		 */
@@ -415,7 +413,7 @@ class hooks {
 	/**
 	 * Capture Caldera_Forms_DB_Tables object for reuse later
 	 *
-	 * @since 0.5.0
+	 * @since 1.5.8
 	 *
 	 * @uses "caldera_forms_checked_tables"
 	 *
@@ -423,53 +421,6 @@ class hooks {
 	 */
 	public function capture_tables_object( $tables ){
 		container::get_instance()->set_tables( $tables );
-	}
-
-	/**
-	 * Print the script to send console log errors to logger
-	 *
-	 * @since 0.5.0
-	 */
-	public function log_js(){
-
-		$keys = container::get_instance()->get_settings()->get_api_keys();
-
-		$public = $keys->get_public();
-		if( empty( $public ) ){
-			return;
-		}
-		$token = $keys->get_token();
-		$url = caldera_forms_pro_log_url();
-		if( ! is_ssl() ){
-			$url = str_replace( 'https', 'http', $url );
-		}
-		$url .= '/log';
-
-		?>
-		<script>
-			window.onerror = function( message, url, lineNumber) {
-				console.log( message );
-				jQuery.post({
-					crossOrigin: true,
-					url: "<?php echo ( $url ); ?>",
-					data: {
-						message: message,
-						data: {
-							line: lineNumber,
-							url: url
-						}
-					},
-					beforeSend: function (xhr) {
-						xhr.setRequestHeader( 'X-CS-PUBLIC', '<?php echo $public; ?>' );
-						xhr.setRequestHeader( 'X-CS-TOKEN', '<?php echo $token; ?>' );
-					}
-				} );
-				return true;
-			};
-
-
-		</script>
-		<?php
 	}
 
     /**
@@ -488,5 +439,25 @@ class hooks {
                 container::get_instance()->set_anti_spam_args( $checker->get_args() );
             }
        }
+    }
+
+
+    /**
+     * Check the entry ID and if it is not numeric and one can be found in transdata use that.
+     *
+     * @since 1.6.0
+     *
+     * @see https://github.com/CalderaWP/Caldera-Forms/issues/2295#issuecomment-371325361
+     *
+     * @param int|null|false $maybe_id Maybe the entry ID
+     * @return int|null
+     */
+    protected function maybe_fix_entry_id( $maybe_id ){
+	    if( is_numeric( $maybe_id ) ){
+	        return $maybe_id;
+        }
+        global $transdata;
+        return is_array( $transdata ) && isset( $transdata[ 'entry_id' ] )
+            ? $transdata[ 'entry_id' ] : null;
     }
 }

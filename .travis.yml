@@ -30,16 +30,21 @@ env:
 
 matrix:
   include:
+<<<<<<< HEAD
     # Ghost inspector
     - php: 7.1
-      env: WP_VERSION=latest WP_MULTISITE=0 GHOST=0
+      env: WP_VERSION=latest WP_MULTISITE=0 GHOST=1
     - php: 7.1
-      env: WP_VERSION=4.8.5 WP_MULTISITE=0 GHOST=0
+      env: WP_VERSION=4.8.5 WP_MULTISITE=0 GHOST=1
     # PHPUnit Only
     - php: 5.3
       env: WP_VERSION=latest WP_MULTISITE=0 GHOST=0
       dist: precise
+=======
+>>>>>>> 82e059e579e85489dea275056573cbcc57c4e6f8
     - php: 5.4
+      env: WP_VERSION=latest WP_MULTISITE=0 GHOST=0
+    - php: 5.5
       env: WP_VERSION=latest WP_MULTISITE=0 GHOST=0
     - php: 5.6
       env: WP_VERSION=latest WP_MULTISITE=0 GHOST=0
@@ -47,32 +52,18 @@ matrix:
       env: WP_VERSION=latest WP_MULTISITE=0 GHOST=0
     - php: 7.1
       env: WP_VERSION=latest WP_MULTISITE=0 GHOST=0
-    - php: 5.3
+    - php: 7.0
       env: WP_VERSION=latest WP_MULTISITE=1 GHOST=0
-      dist: precise
-    - php: 7.1
+    - php: 5.6
       env: WP_VERSION=latest WP_MULTISITE=1 GHOST=0
-    - php: 5.3
-      env: WP_VERSION=4.9.1 WP_MULTISITE=0 GHOST=0
-      dist: precise
-    - php: 7.1
-      env: WP_VERSION=4.9.1 WP_MULTISITE=0 GHOST=0
-    - php: 5.3
-      env: WP_VERSION=4.9.1 WP_MULTISITE=1 GHOST=0
-      dist: precise
-    - php: 7.1
-      env: WP_VERSION=4.9.1 WP_MULTISITE=1 GHOST=0
-    - php: 5.3
-      env: WP_VERSION=4.8.5 WP_MULTISITE=0 GHOST=0
-      dist: precise
     - php: 7.1
       env: WP_VERSION=4.8.5 WP_MULTISITE=0 GHOST=0
-    - php: 5.3
-      env: WP_VERSION=4.8.5 WP_MULTISITE=1 GHOST=0
-      dist: precise
+    - php: 5.6
+      env: WP_VERSION=4.8.5 WP_MULTISITE=0 GHOST=0
     - php: 7.1
-      env: WP_VERSION=4.8.5 WP_MULTISITE=1 GHOST=0
-
+      env: WP_VERSION=4.7.9 WP_MULTISITE=0 GHOST=0
+    - php: 5.6
+      env: WP_VERSION=4.7.9 WP_MULTISITE=0 GHOST=0
 addons:
   apt:
     packages:
