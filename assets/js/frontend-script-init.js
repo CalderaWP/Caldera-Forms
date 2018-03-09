@@ -453,7 +453,7 @@ function CalderaFormsFieldSync( $field, binds, $form, $, state  ){
 			$field.val( str );
 		} );
 		$("[data-field='" + binds[ i ] + "']").trigger('change');
-        $field.on('keyup change blur mouseover', function(){
+        $field.on('keyup change', function(){
         	$field.attr( 'data-unsync', '1' );
             $field.removeAttr( 'data-sync' );
             $field.removeAttr( 'data-binds' );
