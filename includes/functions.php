@@ -64,7 +64,6 @@ add_filter('nonce_user_logged_out', 'caldera_forms_woo_nonce_fix', 100, 2 );
  */
 function caldera_forms_woo_nonce_fix( $user_id, $action) {
 	if ( class_exists( 'WooCommerce' ) ) {
-		if ( $user_id && $user_id !== 0 && $action && strpos( $action, 'caldera_forms_front' ) !== false ) {
 			$user_id = 0;
 		}
 
