@@ -73,12 +73,8 @@ function caldera_forms_load(){
 	include_once CFCORE_PATH . 'processors/functions.php';
 	include_once CFCORE_PATH . 'includes/functions.php';
 	include_once CFCORE_PATH . 'ui/blocks/init.php';
-    include_once CFCORE_PATH . 'includes/cf-pro-client/cf-pro-init.php';
-
-    //Initialize Freemius
-    add_action( 'caldera_forms_includes_complete', array( 'Caldera_Forms_Admin', 'get_freemius' ) );
-
-    /**
+    	include_once CFCORE_PATH . 'includes/cf-pro-client/cf-pro-init.php';
+    	/**
 	 * Runs after all of the includes and autoload setup is done in Caldera Forms core
 	 *
 	 * @since 1.3.5.3
