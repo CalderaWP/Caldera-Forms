@@ -2,9 +2,9 @@ Caldera Forms, starting with 1.5.6.2 adpoted a new acceptance testing driven dev
 
 If you work for Caldera Labs, you have access in drive to the folder "Acceptance Testing" (SA1+) and are expected to follow those steps.
 
-If you don't work for us, just put in a pull request against the develop branch, we appreicate it and will handle testing.
+If you don't work for us, just put in a pull request against the develop branch, we appreciate it and will handle testing. Do not make changes to the develop branch in your local and then submit a PR develop against develop. Please make a branch in your fork, from develop, make changes there and submit a PR of that branch against develop.
 
-# TL;DR
+## TL;DR
 * Open Github issue
 * Make a test (don't worry about this if you're a community contributor.)
 * Make a branch from develop, call it `feature/<issue-number>` where `<issue-number>` is the issue number.
@@ -14,6 +14,26 @@ If you don't work for us, just put in a pull request against the develop branch,
 	* If you are a community contributor, don't worry about this.
 	* If you are employed by Caldera Labs, follow testing procedures documented in Google Drive folder "Acceptance Testing" or discuss alternative testing methodology with Josh.
 	
+## Development Scripts
+### Code Formatting
+Requires the dev dependencies install with Composer
+    - `composer install`
+    
+Usage: 
+* Run Fixes and then lints
+    - `composer clean`
+* Run PHPCS Code Sniffer
+    - `composer sniffs`
+* Run PHPCS Code Fixer
+    - `composer fixes`
+* Run Code linter
+    - `composer lints`
+
+### Tests
+Install tests `cd bin && bash install-wp-tests`
+
+Run tests (from main directory) `phpunit`
+
 
 ## Release Flow
 Starting from completing dev.
