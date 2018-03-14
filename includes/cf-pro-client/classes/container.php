@@ -186,7 +186,7 @@ class container extends repository{
     /**
      * Set anti-spam helper object in container
      *
-     * @since 1.5.10
+     * @since 1.6.0
      *
      * @param array $args
      */
@@ -197,7 +197,7 @@ class container extends repository{
     /**
      * Get anti-spam args from container
      *
-     * @since 1.5.10
+     * @since 1.6.0
      *
      * @return array
      */

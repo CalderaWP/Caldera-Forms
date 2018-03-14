@@ -357,7 +357,7 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
     /**
      * Get file path for JSON export we import for contact form main mailer tests
      *
-     * @since 1.5.10
+     * @since 1.6.0
      *
      * @return string
      */
@@ -368,7 +368,7 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
     /**
      * Get file path for JSON export we import for contact form auto-responder tests
      *
-     * @since 1.5.10
+     * @since 1.6.0
      *
      * @return string
      */

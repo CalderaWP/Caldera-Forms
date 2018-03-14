@@ -426,7 +426,7 @@ class hooks {
     /**
      * Sets anti-spam args for requests, if needed
      *
-     * @since 1.5.10
+     * @since 1.6.0
      *
      * @param message $message Message to be sent
      * @param array $form Form config
