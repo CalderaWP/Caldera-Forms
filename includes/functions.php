@@ -218,10 +218,12 @@ if ( ! function_exists( 'boolval' ) ) {
 /**
  * Check if CF Pro is active
  *
- * @since 1.5.10
+ * @since 1.6.0
  *
  * @return bool
  */
 function caldera_forms_pro_is_active(){
     return  ( version_compare( PHP_VERSION, '5.6.0', '>=' ) ) && defined( 'CF_PRO_LOADED' ) && CF_PRO_LOADED && \calderawp\calderaforms\pro\settings\active::get_status();
 }
+
+
