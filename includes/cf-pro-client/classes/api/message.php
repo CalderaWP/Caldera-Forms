@@ -179,7 +179,7 @@ class message extends repository {
     /**
      * Get message content
      *
-     * @since 1.5.10
+     * @since 1.6.0
      *
      * @return string
      */

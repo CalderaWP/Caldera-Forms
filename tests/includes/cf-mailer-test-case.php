@@ -133,7 +133,7 @@ abstract class Caldera_Forms_Mailer_Test_Case extends Caldera_Forms_Test_Case {
     /**
      * Reset test setup
      *
-     * @since 1.5.10
+     * @since 1.6.0
      *
      * Nulls all properties and resets mock phpmailer
      */
@@ -149,7 +149,7 @@ abstract class Caldera_Forms_Mailer_Test_Case extends Caldera_Forms_Test_Case {
     /**
      * Test that the contact form import utility works
      *
-     * @since 1.5.10
+     * @since 1.6.0
      *
      * @group form
      * @group email
