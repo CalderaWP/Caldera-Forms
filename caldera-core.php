@@ -75,7 +75,10 @@ function caldera_forms_load(){
 	include_once CFCORE_PATH . 'ui/blocks/init.php';
     include_once CFCORE_PATH . 'includes/cf-pro-client/cf-pro-init.php';
 
-	/**
+    //Initialize Freemius
+    add_action( 'caldera_forms_includes_complete', array( 'Caldera_Forms_Admin', 'get_freemius' ) );
+
+    /**
 	 * Runs after all of the includes and autoload setup is done in Caldera Forms core
 	 *
 	 * @since 1.3.5.3
@@ -94,3 +97,47 @@ if ( is_admin() || defined( 'DOING_AJAX' ) ) {
 	add_action( 'plugins_loaded', array( 'Caldera_Forms_Support', 'get_instance' ) );
 	include_once CFCORE_PATH . 'includes/plugin-page-banner.php';
 }
+
+
+/**
+ * Get the Caldera Forms Freemius instance
+ *
+ * @since 1.6.0
+ *
+ * @return Freemius
+ */
+function caldera_forms_freemius() {
+    global $caldera_forms_freemius;
+    if ( ! isset( $caldera_forms_freemius ) ) {
+        // Include Freemius SDK.
+        require_once CFCORE_PATH . 'includes/freemius/start.php';
+        $caldera_forms_freemius = fs_dynamic_init( array(
+            'id'                  => '1767',
+            'slug'                => 'caldera-forms',
+            'type'                => 'plugin',
+            'public_key'          => 'pk_d8e6325777a98c1b3e0d8cdbfad1e',
+            'is_premium'          => false,
+            'has_addons'          => false,
+            'has_paid_plans'      => false,
+            'menu'                => array(
+                'slug'           => 'caldera-forms',
+                'account'        => false,
+                'support'        => false,
+                'contact'        => false,
+            ),
+        ) );
+
+        /**
+         * Runs after Freemius loads
+         *
+         * @since 1.6.0
+         *
+         * @param Freemius $caldera_forms_freemius
+         */
+        do_action( 'caldera_forms_freemius_init', $caldera_forms_freemius );
+    }
+    return $caldera_forms_freemius;
+}
+
+//Load freemius
+caldera_forms_freemius();
