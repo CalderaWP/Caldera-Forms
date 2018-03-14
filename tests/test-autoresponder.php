@@ -169,7 +169,7 @@ class Test_Auto_Responder extends Caldera_Forms_Mailer_Test_Case{
     /**
      * Test that the BCC setting of auto-responder is set properly when there are multiple BCCs
      *
-     * @since 1.5.10
+     * @since 1.6.0
      *
      * @group email
      * @group autoresponder

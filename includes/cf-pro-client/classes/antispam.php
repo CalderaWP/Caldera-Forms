@@ -31,7 +31,7 @@ class antispam
     /**
      * Should anti-spam be checked for?
      *
-     * @since 1.5.10
+     * @since 1.6.0
      *
      * @return bool
      */
@@ -42,7 +42,7 @@ class antispam
     /**
      * Get anti-spam args
      *
-     * @since 1.5.10
+     * @since 1.6.0
      *
      * @return array
      */
@@ -65,7 +65,7 @@ class antispam
     /**
      * Get sender name
      *
-     * @since 1.5.10
+     * @since 1.6.0
      *
      * @return string
      */
@@ -76,7 +76,7 @@ class antispam
     /**
      * Get sender email
      *
-     * @since 1.5.10
+     * @since 1.6.0
      *
      * @return string
      */
