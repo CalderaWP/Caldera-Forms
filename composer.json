@@ -17,8 +17,9 @@
         "jakub-onderka/php-parallel-lint": "^1.0"
     },
     "scripts" : {
-        "sniffs" : "phpcs src/ && phpcs tests/",
-        "fixes" : "phpcbf src/ && phpcbf tests/",
-        "lints" : "parallel-lint ./src  --blame --exclude vendor && parallel-lint ./tests  --blame --exclude vendor"
+        "clean" : "composer fixes && composer lints",
+        "fixes" : "phpcbf classes/ && phpcbf processors/ && phpcbf ui/",
+        "sniffs" : "phpcs classes/ && phpcs processors/ && phpcs ui/",
+        "lints" : "parallel-lint classes/ && parallel-lint processors/ && parallel-lint ui/"
     }
 }
