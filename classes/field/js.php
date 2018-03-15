@@ -105,7 +105,7 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 			}
 
 			foreach( $this->fields[ 'defaults' ] as &$default ){
-				if( 0 === strpos( $default, '%' ) ){
+				if( !is_array( $default ) && 0 === strpos( $default, '%' ) ){
 					$default = $this->get_field_default(
 						Caldera_Forms_Field_Util::get_field_by_slug( str_replace( '%', '', $default ), $this->form )
 					);
@@ -480,7 +480,7 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 		$formula = $syncer->get_formula( true );
 
 		$target_id = $this->calc_target_id( $field );
-
+		
 		$args = array(
 			'binds' => $syncer->get_binds(),
 			'decimalSeparator' => $decimal_separator,

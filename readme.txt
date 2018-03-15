@@ -2,8 +2,8 @@
 Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
 Tags: free wordpress form builder, formbuilder, form builder, contact form,  contact me, custom form, forms, form, custom forms, forms creator, caldera forms, calderawp, wp form, wp form builder, form, drag and drop, email, awesome, wordpress free form builder, echecks, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, eCheck,dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, gravity forms, ninja forms, contact, email, auto-responder, aweber, convertkit, builder, contact forms, search, ab testing, a/b testing, split testing, shortcode, wordpress, awesome plugin, plugin, easy, braintree form, dwolla form, authorize.net form, mailchimp form, mailchimp popup, aweber form, convertkit form, stripe form, stripe popup, eCheck form, responsive,
 Requires at least: 4.7
-Tested up to: 4.9.2
-Stable tag: 1.5.9.1
+Tested up to: 4.9.5
+Stable tag: 1.6.0.beta2
 License: GPLv2
 
 Responsive form builder for contact forms, user registration and login forms, Mailchimp, PayPal Express and more.
@@ -775,10 +775,31 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 
 == Changelog ==
-= Caldera Forms 1.5.9 (January, 24, 2018) Happy 2018! =
-See: [https://calderaforms.com/updates/caldera-forms-1-5-9](https://calderaforms.com/updates/caldera-forms-1-5-9?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-5-8)
+= Caldera Forms 1.6.0 (March ?, 2018) <insert name>  =
+See: [https://calderaforms.com/updates/caldera-forms-1-6-0](https://calderaforms.com/updates/caldera-forms-1-6-0?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-6-0)
 
-Caldera Forms 1.5.9-rc.1 - January 18, 2018.
+Caldera Forms 1.6.0-rc.1 - March, 14, 2018.
+* ADDED: Multiple BCCs and CCs on auto-responders.
+* ADDED: Support for multiple checkboxes to be selected by default, using a filter.
+* ADDED: Enhanced support for Caldera Forms Pro advanced anti-spam.
+* ADDED: Freemius insights integration.
+* ADDED: Warnings if your PHP version is not supported.
+* DEPRECATED: Support for out of date PHP versions. [See this page for more information](https://calderaforms.com/php?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-6-0)
+* UPDATED: Parsely validation library to 2.8.1
+* IMPROVED: Made reply-to/from labels in main mailer more accurately reflect how Caldera Forms Pro works, when Caldera Forms Pro is being used.
+* FIXED: Work around that was previously in place for WooCommerce nonce validation when items are in cart is now updated to work again.
+* FIXED: Breadcrumbs on multi-page forms disappeared when form was submitted, but did not complete the submission.
+* FIXED: Multi-page forms not advancing with empty, non-required number fields.
+* FIXED: Field sync was not recovering when fields were hidden by conditional logic.
+* FIXED: CC and BCC fields not passing to Caldera Forms Pro properly.
+* FIXED: Some cases where file fields caused errors during submissions.
+* FIXED: Wrong country code was used for Arkansas. Sorry Arkansas.
+
+
+= Caldera Forms 1.5.9 (January 24, 2018) Happy 2018! =
+See: [https://calderaforms.com/updates/caldera-forms-1-5-9](https://calderaforms.com/updates/caldera-forms-1-5-9?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-5-9)
+
+Caldera Forms 1.5.9-rc.1 - January 18 2018.
 
 * ADDED: Ability to remove wpautop formatting to auto-responder message, by removing a hook. `remove_filter(  'caldera_forms_autoresponse_mail', array( 'Caldera_Forms_Email_Filters', 'format_autoresponse_message' ) );`
 * IMPROVED: Caldera Forms Pro API key settings - made inputs wider and setting validate without a page refresh.

@@ -1029,10 +1029,23 @@ class Caldera_Forms {
 		// setup mailer
 		$subject = $config[ 'subject' ];
 
+		if( Caldera_Forms_Email_Prepare::is_list( $config[ 'recipient_email' ] ) ){
+            $recipients = Caldera_Forms_Email_Prepare::prepare_email_array( explode(',', $config[ 'recipient_email' ] ));
+            $send_local = \calderawp\calderaforms\pro\container::get_instance()->get_settings()->get_form( $form[ 'ID' ])->should_send_local();
+            if( $send_local ) {
+                $array_recipients = array();
+                foreach( $recipients as $recipient) {
+                    $array_recipients[] = $recipient[ 'name' ] . ' <' . $recipient[ 'email' ] . '>';
+                }
+                $recipients = $array_recipients;
+            }
+        }else{
+            $recipients = $config[ 'recipient_name' ] . ' <' . $config[ 'recipient_email' ] . '>';
+        }
+
+
 		$email_message = array(
-			'recipients'  => array(
-				$config[ 'recipient_name' ] . ' <' . $config[ 'recipient_email' ] . '>'
-			),
+			'recipients'  => $recipients,
 			'subject'     => $subject,
 			'message'     => $message,
 			'headers'     => $headers,
@@ -2208,8 +2221,8 @@ class Caldera_Forms {
 
 			if( ! $entry ){
 				global $wpdb;
-				
-				
+
+
 				$entry = $wpdb->get_results( $wpdb->prepare(
 					"SELECT `value` FROM `" . $wpdb->prefix . "cf_form_entry_values` WHERE `entry_id` = %d AND `field_id` = %s", $entry_id, $field_id
 				), ARRAY_A );
@@ -2671,7 +2684,8 @@ class Caldera_Forms {
             $passed = Caldera_Forms_Field_Honey::check( $_POST, $form );
             if( ! $passed ){
                 $url = Caldera_Forms_Field_Honey::redirect_url( $referrer, $form_instance_number, $process_id);
-                return self::form_redirect( 'complete', $url, $form, uniqid( '_cf_bliss_' ) );
+
+                 self::form_redirect( 'complete', $url, $form, uniqid( '_cf_bliss_' ) );
             }
 
         }
@@ -3137,7 +3151,7 @@ class Caldera_Forms {
 			// save entry_id
 			self::set_field_data( '_entry_id', $entryid, $form );
 			$token = Caldera_Forms_Entry_Token::create_entry_token( $entryid, $form );
-
+            $transdata['entry_id'] = $entryid;
 			// set edit token
 			self::set_field_data( '_entry_token', $token, $form );
 
@@ -3146,6 +3160,11 @@ class Caldera_Forms {
 		} else {
 			$entryid = false;
 		}
+
+		if( empty( $entryid ) && ! empty( $transdata['entry_id'] ) ){
+            $entryid =  $transdata['entry_id'];
+            self::set_field_data( '_entry_id', $entryid, $form );
+        }
 
 		/**
 		 * Runs before the 2nd stage of processors "process"
@@ -3483,8 +3502,7 @@ class Caldera_Forms {
 							$transdata = array();
 						}
 						if ( ! empty( $_FILES ) && ! empty( $_POST[ 'field' ] ) ) {
-						    $form_id = str_replace( '/upload/', '', $wp_query->query_vars[ 'cf_api' ] );
-							$form  = Caldera_Forms_Forms::get_form( $form_id );
+							$form  = Caldera_Forms_Forms::get_form( $wp_query->query_vars[ 'cf_api' ] );
 
 							$field = Caldera_Forms_Field_Util::get_field( $form[ 'fields' ][ $_POST[ 'field' ] ], $form, true );
 							$data = cf_handle_file_upload( true, $field, $form );
@@ -4537,7 +4555,7 @@ class Caldera_Forms {
 				// retain query string
 				$qurystr = array();
 				parse_str( $_SERVER[ 'QUERY_STRING' ], $qurystr );
-				$out .= "<span class=\"caldera-grid\"><ol class=\"breadcrumb\" data-form=\"caldera_form_" . $current_form_count . "\">\r\n";
+				$out .= "<span class=\"caldera-grid\"><ol class=\"breadcrumb\" data-form=\"caldera_form_" . $current_form_count . "\" id=\"caldera-forms-breadcrumb_" . $current_form_count . "\">\r\n";
 				$current_page = 1;
 				if ( ! empty( $_GET[ 'cf_pg' ] ) ) {
 					$current_page = $_GET[ 'cf_pg' ];

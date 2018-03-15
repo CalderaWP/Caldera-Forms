@@ -3,7 +3,20 @@
 	if( !empty( $field['config']['multi_upload'] ) ){
 		$is_multiple .= ' multiple="multiple"';
 	}
-	$uniqu_code = uniqid('trupl');		
+
+
+	$uniqu_code = uniqid('trupl');
+    /**
+     * Runs when a unique code for an field field is generated
+     *
+     * @since 1.5.9
+     *
+     * @param string $uniqid Unqiue Code for field
+     * @param array $field Field config
+     * @param array $form Form config
+     */
+	do_action( 'caldera_forms_file_uniqid', $uniqu_code, $field, $form );
+
 	$required_check = '';
 	if( $field_required !== null ){
 		$required_check = 'required="required"';

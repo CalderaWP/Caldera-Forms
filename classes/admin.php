@@ -94,6 +94,7 @@ class Caldera_Forms_Admin {
 	 */
 	private static $admin_notices;
 
+
 	/**
 	 * Initialize the plugin by setting localization, filters, and administration functions.
 	 *
@@ -1664,6 +1665,16 @@ class Caldera_Forms_Admin {
 							'text' => __( 'Processors getting started guide', 'caldera-forms' )
 						)
 					),
+                    "antispam" => array(
+                        "name" => __( 'Anti-Spam', 'caldera-forms' ),
+                        "location" => "lower",
+                        "label" => __( 'Anti Spam', 'caldera-forms' ),
+                        "canvas" => $path . "anti-spam.php",
+                        'tip' => array(
+                            'link' => 'https://calderaforms.com/doc/protect-form-spam-caldera-forms/?utm_source=wp-admin&utm_medium=form-editor&utm_term=tabs',
+                            'text' => __( 'Anti-spam documentation', 'caldera-forms' )
+                        )
+                    ),
 					"conditions" => array(
 						"name" => __( 'Conditions', 'caldera-forms' ),
 						"location" => "lower",
@@ -1991,6 +2002,7 @@ class Caldera_Forms_Admin {
 
 		return $send;
 	}
+
 }
 
 
