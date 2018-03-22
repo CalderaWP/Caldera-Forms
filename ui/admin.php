@@ -26,66 +26,86 @@ if(empty($style_includes)){
 $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : "create_form", "data-active-class": "disabled", "data-load-class": "disabled", "data-callback": "new_form_redirect", "data-before" : "serialize_modal_form", "data-modal-autoclose" : "new_form" }|right';
 
 ?><div class="caldera-editor-header">
-	<ul class="caldera-editor-header-nav">
-		<li class="caldera-editor-logo">
-			<span class="caldera-forms-name">Caldera Forms</span>
-		</li>
-		<li class="caldera-forms-version">
-			<?php echo CFCORE_VER; ?>
-		</li>
-		<li class="caldera-forms-toolbar-item">
-			<button class="button button-primary ajax-trigger cf-new-form-button" data-request="start_new_form" data-modal-no-buttons='<?php echo $modal_new_form; ?>' data-modal-width="70%" data-modal-height="80%" data-load-class="none" data-modal="new_form" data-nonce="<?php echo wp_create_nonce( 'cf_create_form' ); ?>" data-modal-title="<?php echo __('Create New Form', 'caldera-forms'); ?>" data-template="#new-form-tmpl">
-		    	<?php echo __('New Form', 'caldera-forms'); ?>
-			</button>
-		</li>
-		<li class="caldera-forms-toolbar-item">
-			<button class="button ajax-trigger" data-request="start_new_form" data-modal-width="400" data-modal-height="192" data-modal-element="div" data-load-class="none" data-modal="import_form" data-template="#import-form-tmpl" data-modal-title="<?php echo __('Import Form', 'caldera-forms'); ?>" ><?php echo __('Import', 'caldera-forms'); ?></button>
-		</li>
-		<li class="caldera-forms-toolbar-item separator">&nbsp;&nbsp;</li>
-		<li class="caldera-forms-toolbar-item" id="cf-email-settings-item">
-			<?php
-				printf( '<button class="button" id="cf-email-settings" title="%s">%s</button>',
-					esc_attr__( 'Click to modify Caldera Forms email settings', 'caldera-forms'  ),
-					esc_html__( 'Email Settings', 'caldera-forms' )
-				);
-			?>
-		</li>
-		<li class="caldera-forms-toolbar-item separator">&nbsp;&nbsp;</li>
-		<li class="caldera-forms-toolbar-item">
-			<button class="button ajax-trigger cf-general-settings" data-request="toggle_front_end_settings" data-modal-width="400" data-modal-height="405" data-modal-element="div" data-load-class="none" data-modal="front_settings" data-template="#front-settings-tmpl" data-callback="toggle_front_end_settings" data-modal-title="<?php esc_attr_e('General Settings', 'caldera-forms'); ?>" title="<?php  esc_attr_e( 'General Settings', 'caldera-forms' ); ?>" >
-			<?php
-				printf( '<span title="%s">%s</span>',
-					esc_attr__( 'Click to modify Caldera Forms general settings', 'caldera-forms'  ),
-					esc_html__( 'General Settings', 'caldera-forms' )
-				);
-			?>
-			</button>
-		</li>
-		<li class="caldera-forms-toolbar-item separator">&nbsp;&nbsp;</li>
-		<li class="caldera-forms-toolbar-item" id="cf-form-order-item">
-			<?php
-			if( 'name' === $orderby ){
-				$text = __( 'Order Forms By ID', 'caldera-forms' );
-				$url = Caldera_Forms_Admin::main_admin_page_url();
-			}else {
-				$text = __( 'Order Forms By Name', 'caldera-forms' );
-				$url = Caldera_Forms_Admin::main_admin_page_url( 'name' );
-			}
-			printf( '<a  class="button" id="cf-form-order" title="%s" href="%s">%s</a>',
-				esc_attr__( 'Click to change order of the forms', 'caldera-forms'  ),
-				esc_url( $url ),
-				esc_html__( $text )
-			);
-			?>
-		</li>
-		<?php if ( isset( $_GET['message_resent' ] ) ){?>
-		<li class="caldera-forms-toolbar-item separator" >&nbsp;&nbsp;</li>
-			<li class="caldera-forms-toolbar-item success">
-				<?php esc_html_e( 'Message Resent', 'caldera-forms' ); ?>
-			</li>
-		<?php } ?>
 
-	</ul>
+        <ul class="caldera-editor-header-nav">
+            <li class="caldera-editor-logo">
+                <span class="caldera-forms-name">Caldera Forms</span>
+            </li>
+            <?php $deprecated = Caldera_Forms_Admin_PHP::is_version_deprecated( PHP_VERSION );
+            if ( ! $deprecated ): ?>
+                <li class="caldera-forms-version">
+                    <?php echo CFCORE_VER; ?>
+                </li>
+                <li class="caldera-forms-toolbar-item">
+                    <button class="button button-primary ajax-trigger cf-new-form-button" data-request="start_new_form"
+                            data-modal-no-buttons='<?php echo $modal_new_form; ?>' data-modal-width="70%"
+                            data-modal-height="80%" data-load-class="none" data-modal="new_form"
+                            data-nonce="<?php echo wp_create_nonce('cf_create_form'); ?>"
+                            data-modal-title="<?php echo __('Create New Form', 'caldera-forms'); ?>"
+                            data-template="#new-form-tmpl">
+                        <?php echo __('New Form', 'caldera-forms'); ?>
+                    </button>
+                </li>
+                <li class="caldera-forms-toolbar-item">
+                    <button class="button ajax-trigger" data-request="start_new_form" data-modal-width="400"
+                            data-modal-height="192" data-modal-element="div" data-load-class="none" data-modal="import_form"
+                            data-template="#import-form-tmpl"
+                            data-modal-title="<?php echo __('Import Form', 'caldera-forms'); ?>"><?php echo __('Import',
+                            'caldera-forms'); ?></button>
+                </li>
+                <li class="caldera-forms-toolbar-item separator">&nbsp;&nbsp;</li>
+                <li class="caldera-forms-toolbar-item" id="cf-email-settings-item">
+                    <?php
+                    printf('<button class="button" id="cf-email-settings" title="%s">%s</button>',
+                        esc_attr__('Click to modify Caldera Forms email settings', 'caldera-forms'),
+                        esc_html__('Email Settings', 'caldera-forms')
+                    );
+                    ?>
+                </li>
+                <li class="caldera-forms-toolbar-item separator">&nbsp;&nbsp;</li>
+                <li class="caldera-forms-toolbar-item">
+                    <button class="button ajax-trigger cf-general-settings" data-request="toggle_front_end_settings"
+                            data-modal-width="400" data-modal-height="405" data-modal-element="div" data-load-class="none"
+                            data-modal="front_settings" data-template="#front-settings-tmpl"
+                            data-callback="toggle_front_end_settings"
+                            data-modal-title="<?php esc_attr_e('General Settings', 'caldera-forms'); ?>"
+                            title="<?php esc_attr_e('General Settings', 'caldera-forms'); ?>">
+                        <?php
+                        printf('<span title="%s">%s</span>',
+                            esc_attr__('Click to modify Caldera Forms general settings', 'caldera-forms'),
+                            esc_html__('General Settings', 'caldera-forms')
+                        );
+                        ?>
+                    </button>
+                </li>
+                <li class="caldera-forms-toolbar-item separator">&nbsp;&nbsp;</li>
+                <li class="caldera-forms-toolbar-item" id="cf-form-order-item">
+                    <?php
+                    if ('name' === $orderby) {
+                        $text = __('Order Forms By ID', 'caldera-forms');
+                        $url = Caldera_Forms_Admin::main_admin_page_url();
+                    } else {
+                        $text = __('Order Forms By Name', 'caldera-forms');
+                        $url = Caldera_Forms_Admin::main_admin_page_url('name');
+                    }
+                    printf('<a  class="button" id="cf-form-order" title="%s" href="%s">%s</a>',
+                        esc_attr__('Click to change order of the forms', 'caldera-forms'),
+                        esc_url($url),
+                        esc_html__($text)
+                    );
+                    ?>
+                </li>
+                <?php if (isset($_GET['message_resent'])) { ?>
+                    <li class="caldera-forms-toolbar-item separator">&nbsp;&nbsp;</li>
+                    <li class="caldera-forms-toolbar-item success">
+                        <?php esc_html_e('Message Resent', 'caldera-forms'); ?>
+                    </li>
+            <?php } ?>
+            <?php else : //is deprecated
+                echo '<li id="cf-deprecated-notice-wrap cf-alert-wrap"><span class="cf-alert cf-alert-error">' . Caldera_Forms_Admin_PHP::get_deprecated_notice() . '</span></li>';
+            endif; //php version depreacted ?>
+        </ul>
+
 </div>
 
 <div class="form-admin-page-wrap">
