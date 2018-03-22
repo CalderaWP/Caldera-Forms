@@ -32,7 +32,7 @@ class Caldera_Forms_Admin_PHP{
      *
      * @var string
      */
-    private static $min_tested_version = '5.4';
+    private static $min_tested_version = '5.6';
 
     /**
      * Is a version of PHP supported by Caldera Forms?
@@ -120,7 +120,7 @@ class Caldera_Forms_Admin_PHP{
      */
     public static function get_deprecated_notice(){
         return sprintf('%s %s',
-            esc_html__( sprintf('You are using a VERY out of date version of PHP: %s. Caldera Forms 1.7, will require PHP Version %s or later.',
+            esc_html__( sprintf('You are using a VERY out of date version of PHP: %s. Caldera Forms 1.7 will require PHP Version %s or later.',
                 PHP_VERSION, self::get_minimum_tested_version()
             ), 'caldera-forms'),
             sprintf('<a style="color:#fff;" href="https://calderaforms.com/php?utm_source=wp-admin&utm_campaign=php_deprecated" target="__blank">%s</a>',
