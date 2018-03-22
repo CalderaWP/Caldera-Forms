@@ -5,6 +5,7 @@ Requires at least: 4.7
 Tested up to: 4.9.5
 Stable tag: 1.6.0.beta2
 License: GPLv2
+Requires PHP: 5.6
 
 Responsive form builder for contact forms, user registration and login forms, Mailchimp, PayPal Express and more.
 
