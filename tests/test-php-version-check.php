@@ -140,8 +140,9 @@ class Test_PHP_Version_Check extends Caldera_Forms_Test_Case{
      */
     public function test_deprecation_warning(){
         //Will trigger error if sprintf was used wrong
-        $this->assertTrue( is_string( Caldera_Forms_Admin_PHP::get_deprecated_notice() ) );
-        $this->assertFalse( empty( Caldera_Forms_Admin_PHP::get_deprecated_notice() ) );
+        $notice = Caldera_Forms_Admin_PHP::get_deprecated_notice();
+        $this->assertTrue( is_string( $notice) );
+        $this->assertFalse( empty( $notice );
     }
 
 }
