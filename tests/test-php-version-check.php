@@ -111,7 +111,7 @@ class Test_PHP_Version_Check extends Caldera_Forms_Test_Case{
         $this->assertEquals( '5.6', Caldera_Forms_Admin_PHP::get_minimum_tested_version() );
         $this->assertTrue( Caldera_Forms_Admin_PHP::is_version_tested( Caldera_Forms_Admin_PHP::get_minimum_tested_version() ) );
         $this->assertTrue( Caldera_Forms_Admin_PHP::is_version_tested( '5.4' ) );
-        $this->assertTrue( Caldera_Forms_Admin_PHP::is_version_tested( '5.5.6' ) );
+        $this->assertFalse( Caldera_Forms_Admin_PHP::is_version_tested( '5.5.6' ) );
         $this->assertTrue( Caldera_Forms_Admin_PHP::is_version_tested( '7.0' ) );
     }
 
