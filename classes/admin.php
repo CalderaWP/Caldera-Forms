@@ -94,6 +94,7 @@ class Caldera_Forms_Admin {
 	 */
 	private static $admin_notices;
 
+
 	/**
 	 * Initialize the plugin by setting localization, filters, and administration functions.
 	 *
@@ -2001,6 +2002,7 @@ class Caldera_Forms_Admin {
 
 		return $send;
 	}
+
 }
 
 

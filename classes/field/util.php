@@ -388,7 +388,7 @@ class Caldera_Forms_Field_Util {
 			$default = false;
 		}
 
-		if( $convert_opt && 0 === strpos( $default, 'opt' ) ){
+		if( is_array( $default ) || ( $convert_opt && 0 === strpos( $default, 'opt' ) ) ){
 			$default = self::find_select_field_value( $field, $default );
 		}
 
@@ -407,12 +407,32 @@ class Caldera_Forms_Field_Util {
 	 * @return int|null
 	 */
 	public static function get_default_calc_value( $field, $form ){
-		$opt = self::get_default( $field, $form, false );
-		$opt = ( ! empty( $opt ) && isset( $field[ 'config' ][ 'option' ][ $opt ], $field[ 'config' ][ 'option' ][ $opt ][ 'calc_value' ] ) ) ? $field[ 'config' ][ 'option' ][ $opt ][ 'calc_value' ] : null;
-		if( is_null( $opt ) ){
+		$option_values = self::get_default( $field, $form, false );
+		
+		// if default is an array, loop through each option and store it's calc_value
+		if( is_array( $option_values ) && isset( $field['config']['option'] ) && count( $field['config']['option'] ) > 0 ){
+			$opts = array();
+			foreach( $field['config']['option'] as $op ){
+                if (Caldera_Forms_Field_Util::is_checked_option($op[ 'value'], $option_values)) {
+                    $opts[] = self::get_option_calculation_value($op, $field, $form);
+                }
+			}
+
+			// check if we have at least one calc_value set
+			if( !empty( $opts ) ){
+				$opts = array_sum( $opts );
+			} else {
+				$opts = self::get_default( $field, $form, true );
+			}
+
+			return $opts;
+		}
+
+		$option_values = ( ! empty( $option_values ) && isset( $field[ 'config' ][ 'option' ][ $option_values ], $field[ 'config' ][ 'option' ][ $option_values ][ 'calc_value' ] ) ) ? $field[ 'config' ][ 'option' ][ $option_values ][ 'calc_value' ] : null;
+		if( is_null( $option_values ) ){
 			return self::get_default( $field, $form, true );
 		}
-		return $opt;
+		return $option_values;
 	}
 
 	/**
@@ -538,6 +558,19 @@ class Caldera_Forms_Field_Util {
 		return $option_values;
 	}
 
+    /**
+     * Check if an option value should be checked by a checkbox field
+     *
+     * @since 1.6.0
+     *
+     * @param string $option_value Option value
+     * @param array $field_values Field values to check in
+     * @return bool
+     */
+	public static function is_checked_option( $option_value, array $field_values){
+	    return ! empty( $field_values ) && in_array($option_value, (array)$field_values);
+    }
+
 	/**
 	 * Identify the field value for a select field
 	 *
@@ -548,7 +581,7 @@ class Caldera_Forms_Field_Util {
 	 *
 	 * @return mixed|null
 	 */
-	public static function find_select_field_value(   $field, $field_value ){
+	public static function find_select_field_value( $field, $field_value ){
 		//if is checkbox saved as array just return as is.
 		if( is_array( $field_value ) ){
 			return $field_value;

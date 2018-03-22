@@ -11,7 +11,7 @@ class Caldera_Forms_Email_Prepare{
     /**
      * Get email from rfc822 string
      *
-     * @since 1.5.10
+     * @since 1.6.0
      *
      * @param string $rfc rfc822 (or not) email string
      * @return string|null
@@ -28,7 +28,7 @@ class Caldera_Forms_Email_Prepare{
     /**
      * If possible, get name from rfc_822 string
      *
-     * @since 1.5.10
+     * @since 1.6.0
      *
      * @param string $rfc Email and name. SHOULD be in rfc_822 form
      * @return string|null Name only, if string was rfc_822. Null if not
@@ -44,7 +44,7 @@ class Caldera_Forms_Email_Prepare{
     /**
      * Check if email is in rfc822 format
      *
-     * @since 1.5.10
+     * @since 1.6.0
      *
      * @param string $email Email to test
      * @return bool
@@ -56,7 +56,7 @@ class Caldera_Forms_Email_Prepare{
     /**
      * Formats one or more emails into well formed array
      *
-     * @since 1.5.10
+     * @since 1.6.0
      *
      * NOTE: This array form is intentionally the same structure as expected by the fromArray() method for recipients in CF Pro and caldera-interop
      *
@@ -89,7 +89,7 @@ class Caldera_Forms_Email_Prepare{
     /**
      * Check if string has comma and therefore is probably a list of email addresses
      *
-     * @since 1.5.10
+     * @since 1.6.0
      *
      * @param  string $email_string Email address(s)
      * @return bool
@@ -105,7 +105,7 @@ class Caldera_Forms_Email_Prepare{
     /**
      * Use pregmatch to detech emails in rfc_822 string
      *
-     * @since 1.5.10
+     * @since 1.6.0
      *
      * @param string $rfc Email string
      * @return array
