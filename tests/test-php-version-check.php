@@ -92,6 +92,7 @@ class Test_PHP_Version_Check extends Caldera_Forms_Test_Case{
         //@todo increase this to match changes to Caldera_Forms_Admin_PHP::$min_supported_version
         $this->assertFalse( Caldera_Forms_Admin_PHP::is_version_supported( '5.1' ) );
         $this->assertFalse( Caldera_Forms_Admin_PHP::is_version_supported( '5.2.3' ) );
+        $this->assertTrue( Caldera_Forms_Admin_PHP::is_version_supported( '7.1' ) );
     }
 
     /**
@@ -107,7 +108,7 @@ class Test_PHP_Version_Check extends Caldera_Forms_Test_Case{
      */
     public function test_tested(){
         //@todo increase this to match changes to Caldera_Forms_Admin_PHP::$min_supported_version
-        $this->assertEquals( '5.4', Caldera_Forms_Admin_PHP::get_minimum_tested_version() );
+        $this->assertEquals( '5.6', Caldera_Forms_Admin_PHP::get_minimum_tested_version() );
         $this->assertTrue( Caldera_Forms_Admin_PHP::is_version_tested( Caldera_Forms_Admin_PHP::get_minimum_tested_version() ) );
         $this->assertTrue( Caldera_Forms_Admin_PHP::is_version_tested( '5.4' ) );
         $this->assertTrue( Caldera_Forms_Admin_PHP::is_version_tested( '5.5.6' ) );
@@ -127,6 +128,7 @@ class Test_PHP_Version_Check extends Caldera_Forms_Test_Case{
         //@todo increase this to match changes to Caldera_Forms_Admin_PHP::$min_supported_version
         $this->assertFalse( Caldera_Forms_Admin_PHP::is_version_tested( '5.3.1' ) );
         $this->assertFalse( Caldera_Forms_Admin_PHP::is_version_tested( '5.2.3' ) );
+        $this->assertFalse( Caldera_Forms_Admin_PHP::is_version_tested( '5.4' ) );
     }
 
     /**
@@ -142,7 +144,7 @@ class Test_PHP_Version_Check extends Caldera_Forms_Test_Case{
         //Will trigger error if sprintf was used wrong
         $notice = Caldera_Forms_Admin_PHP::get_deprecated_notice();
         $this->assertTrue( is_string( $notice) );
-        $this->assertFalse( empty( $notice );
+        $this->assertFalse( empty( $notice ) );
     }
 
 }
