@@ -268,6 +268,29 @@ function caldera_forms_pro_file_request_url( $path ){
 }
 
 /**
+ * Create the ARRAY for file attachments expected by Sendgrid API
+ *
+ * @since 1.6.0
+ *
+ * @param string $path File path
+ *
+ * @return array
+ */
+function caldera_forms_pro_attachments_array( $path ){
+    $type = pathinfo( $path, PATHINFO_EXTENSION);
+    $name = basename( $path );
+    $data = file_get_contents( $path );
+    $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+    return array(
+        'contents'       => $base64,
+        'mime'          =>  $type,
+        'name'      =>  $name,
+        'disposition'   =>  'attachment'
+    );
+}
+
+/**
  * Shim for boolval in PHP v5.5
  *
  * @since 0.3.1
