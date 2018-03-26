@@ -1273,10 +1273,9 @@ class Caldera_Forms_Admin {
 							wp_die( esc_html__( 'Form must have a name.', 'caldera-forms' ) );
 						}
 
-
 						$data[ 'name' ] = strip_tags( $_POST[ 'name' ] );
-
-						$new_form_id = Caldera_Forms_Forms::import_form( $data );
+                        $trusted = isset( $_POST[ 'import_trusted' ] ) ? boolval( $_POST[ 'import_trusted' ] ) : false;
+						$new_form_id = Caldera_Forms_Forms::import_form( $data, $trusted );
 						if( is_string( $new_form_id )  ){
 
 							cf_redirect( add_query_arg(array(

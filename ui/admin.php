@@ -29,7 +29,6 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 
         <ul class="caldera-editor-header-nav">
             <li class="caldera-editor-logo">
-                <span class="caldera-forms-name">Caldera Forms</span>
             </li>
             <?php $deprecated = Caldera_Forms_Admin_PHP::is_version_deprecated( PHP_VERSION );
             if ( ! $deprecated ): ?>
@@ -37,21 +36,30 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
                     <?php echo CFCORE_VER; ?>
                 </li>
                 <li class="caldera-forms-toolbar-item">
-                    <button class="button button-primary ajax-trigger cf-new-form-button" data-request="start_new_form"
-                            data-modal-no-buttons='<?php echo $modal_new_form; ?>' data-modal-width="70%"
-                            data-modal-height="80%" data-load-class="none" data-modal="new_form"
+                    <button class="button button-primary ajax-trigger cf-new-form-button"
+                            data-request="start_new_form"
+                            data-modal-no-buttons='<?php echo $modal_new_form; ?>'
+                            data-modal-width="70%"
+                            data-modal-height="80%"
+                            data-load-class="none" data-modal="new_form"
                             data-nonce="<?php echo wp_create_nonce('cf_create_form'); ?>"
-                            data-modal-title="<?php echo __('Create New Form', 'caldera-forms'); ?>"
+                            data-modal-title="<?php esc_attr_e('Create New Form', 'caldera-forms' ); ?>"
                             data-template="#new-form-tmpl">
-                        <?php echo __('New Form', 'caldera-forms'); ?>
+                        <?php  esc_html_e('New Form', 'caldera-forms'); ?>
                     </button>
                 </li>
                 <li class="caldera-forms-toolbar-item">
-                    <button class="button ajax-trigger" data-request="start_new_form" data-modal-width="400"
-                            data-modal-height="192" data-modal-element="div" data-load-class="none" data-modal="import_form"
+                    <button class="button ajax-trigger"
+                            data-request="start_new_form"
+                            data-modal-width="400"
+                            data-modal-height="270"
+                            data-modal-element="div"
+                            data-load-class="none"
+                            data-modal="import_form"
                             data-template="#import-form-tmpl"
-                            data-modal-title="<?php echo __('Import Form', 'caldera-forms'); ?>"><?php echo __('Import',
-                            'caldera-forms'); ?></button>
+                            data-modal-title="<?php esc_attr_e('Import Form', 'caldera-forms' ); ?>">
+                        <?php  esc_html_e('Import', 'caldera-forms'); ?>
+                    </button>
                 </li>
                 <li class="caldera-forms-toolbar-item separator">&nbsp;&nbsp;</li>
                 <li class="caldera-forms-toolbar-item" id="cf-email-settings-item">
@@ -553,7 +561,7 @@ jQuery( function( $ ){
 
 
 /**
- * Runs at the bottom of the main Caldera Forms admi page
+ * Runs at the bottom of the main Caldera Forms admin page
  *
  * @since unknown
  */

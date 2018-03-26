@@ -3,7 +3,7 @@ Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
 Tags: free wordpress form builder, formbuilder, form builder, contact form,  contact me, custom form, forms, form, custom forms, forms creator, caldera forms, calderawp, wp form, wp form builder, form, drag and drop, email, awesome, wordpress free form builder, echecks, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, eCheck,dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, gravity forms, ninja forms, contact, email, auto-responder, aweber, convertkit, builder, contact forms, search, ab testing, a/b testing, split testing, shortcode, wordpress, awesome plugin, plugin, easy, braintree form, dwolla form, authorize.net form, mailchimp form, mailchimp popup, aweber form, convertkit form, stripe form, stripe popup, eCheck form, responsive,
 Requires at least: 4.7
 Tested up to: 4.9.5
-Stable tag: 1.5.9.1
+Stable tag: 1.6.0.rc.4
 License: GPLv2
 Requires PHP: 5.6
 
@@ -780,7 +780,7 @@ This could also be a sign of a more serious issue on your server, but is probabl
 See: [https://calderaforms.com/updates/caldera-forms-1-6-0](https://calderaforms.com/updates/caldera-forms-1-6-0?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-6-0)
 
 Caldera Forms 1.6.0-rc.1 - March, 14, 2018.
-
+* SECURITY: CVE-2018-7747
 * ADDED: Multiple BCCs and CCs on auto-responders.
 * ADDED: Support for multiple checkboxes to be selected by default, using a filter.
 * ADDED: Caldera Forms Pro advanced anti-spam.
