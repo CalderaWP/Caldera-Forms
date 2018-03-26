@@ -41,12 +41,7 @@
 	wp_enqueue_script( 'json2' );
 	fs_enqueue_local_script( 'postmessage', 'nojquery.ba-postmessage.min.js' );
 	fs_enqueue_local_script( 'fs-postmessage', 'postmessage.js' );
-	fs_enqueue_local_style( 'fs_common', '/admin/common.css' );
 
-	/**
-	 * @var array    $VARS
-	 * @var Freemius $fs
-	 */
 	$fs        = freemius( $VARS['id'] );
 	$slug 	   = $fs->get_slug();
 	$timestamp = time();
@@ -78,12 +73,12 @@
 	}
 
 	$query_params = array_merge( $context_params, $_GET, array(
-		'next'             => $fs->_get_sync_license_url( false, false ),
-		'plugin_version'   => $fs->get_plugin_version(),
+		'next'           => $fs->_get_sync_license_url( false, false ),
+		'plugin_version' => $fs->get_plugin_version(),
 		// Billing cycle.
-		'billing_cycle'    => fs_request_get( 'billing_cycle', WP_FS__PERIOD_ANNUALLY ),
-		'is_network_admin' => fs_is_network_admin() ? 'true' : 'false',
+		'billing_cycle'  => fs_request_get( 'billing_cycle', WP_FS__PERIOD_ANNUALLY ),
 	) );
+
 
 	if ( ! $fs->is_registered() ) {
 		$template_data = array(
