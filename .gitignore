@@ -6,3 +6,4 @@ ui/blocks/cform/node_modules
 npm-debug.log
 **/.DS_Store
 vendor
+includes/freemius/assets/img/caldera-forms.png

@@ -220,10 +220,7 @@
 		 */
 		function api_error( $api_result, $wrapper = false ) {
 			$message = '';
-			if ( is_object( $api_result ) &&
-			     ! empty( $api_result->error ) &&
-			     ! empty( $api_result->error->message )
-			) {
+			if ( is_object( $api_result ) && isset( $api_result->error ) ) {
 				$message = $api_result->error->message;
 			} else if ( is_object( $api_result ) ) {
 				$message = var_export( $api_result, true );

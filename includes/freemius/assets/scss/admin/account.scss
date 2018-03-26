@@ -30,9 +30,12 @@
         width: 1.2em;
     }
 
-    .dashicons
+    .button
     {
-        vertical-align: middle;
+        i.dashicons
+        {
+            vertical-align: middle;
+        }
     }
 
     .fs-header-actions
@@ -154,55 +157,6 @@ label.fs-tag
     &.fs-error
     {
         background: #dc3232;
-    }
-}
-
-#fs_sites
-{
-    .fs-scrollable-table
-    {
-        .fs-table-body {
-            max-height: 200px;
-            overflow: auto;
-            border: 1px solid #e5e5e5;
-
-            & > table.widefat {
-                border: none !important;
-            }
-        }
-
-        .fs-main-column {
-            width: 100%;
-        }
-
-        .fs-site-details
-        {
-            td:first-of-type
-            {
-                text-align: right;
-                color:      grey;
-                width: 1px;
-            }
-
-            td:last-of-type
-            {
-                text-align: right;
-            }
-        }
-
-        .fs-install-details table
-        {
-            tr td
-            {
-                width: 1px;
-                white-space: nowrap;
-
-                &:last-of-type
-                {
-                    width: auto;
-                }
-            }
-        }
     }
 }
 
