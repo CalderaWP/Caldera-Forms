@@ -73,14 +73,14 @@ function caldera_forms_load(){
 	include_once CFCORE_PATH . 'processors/functions.php';
 	include_once CFCORE_PATH . 'includes/functions.php';
 	include_once CFCORE_PATH . 'ui/blocks/init.php';
-    	include_once CFCORE_PATH . 'includes/cf-pro-client/cf-pro-init.php';
-    	/**
+    include_once CFCORE_PATH . 'includes/cf-pro-client/cf-pro-init.php';
+    /**
 	 * Runs after all of the includes and autoload setup is done in Caldera Forms core
 	 *
 	 * @since 1.3.5.3
 	 */
 	do_action( 'caldera_forms_includes_complete' );
-
+    caldera_forms_freemius()->add_filter('plugin_icon', 'caldera_forms_freemius_icon_path' );
 }
 
 add_action( 'plugins_loaded', array( 'Caldera_Forms', 'get_instance' ) );
@@ -122,7 +122,6 @@ function caldera_forms_freemius() {
                 'contact'        => false,
             ),
         ) );
-
         /**
          * Runs after Freemius loads
          *
@@ -137,3 +136,14 @@ function caldera_forms_freemius() {
 
 //Load freemius
 caldera_forms_freemius();
+
+/**
+ * Get the path for the icon used by Caldera Forms
+ *
+ * @since 1.6.0
+ *
+ * @return string
+ */
+function caldera_forms_freemius_icon_path(){
+    return CFCORE_PATH . 'assets/build/images/new-icon.png';
+}
