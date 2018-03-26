@@ -227,7 +227,7 @@ class message extends repository {
 		if( ! file_exists( $path ) ){
 
 		}else{
-			$this->items[ 'attachments' ][] = esc_url_raw( caldera_forms_pro_file_request_url( $path ) );
+			$this->items[ 'attachments' ][ $path ] = caldera_forms_pro_attachments_array( $path );
 		}
 
 		return $this;
