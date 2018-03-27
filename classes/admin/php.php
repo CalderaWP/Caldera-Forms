@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Utility functions for determining if a PHP version is supported or not
  *

@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.6.0.beta2 - 2018-03-09 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.6.0 - 2018-03-27 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -343,8 +343,24 @@ function CFState(formId, $ ){
 			$field = $('.' + id);
 			if ($field.length) {
 
+                                //Rebind checkbox options when the checkbow field is unhidden
+                                    if( 'object' == typeof  $field  ){
+                                        var val = [];
+                                        var allSums = 0;
+                                        $field.each(function ( i, el ) {
+                                            var $this = $(el);
+                                            var sum = 0;
+                                            if ($this.prop('checked')) {
+                                                sum += parseFloat(findCalcVal($this));
+                                                allSums += sum;
+                                                val.push($this.val());
+                                            }
+                                            calcVals[id] = allSums;
+                                        });
+                                    }
 
-				$field.on('change', function () {
+
+                                    $field.on('change', function () {
 					var val = [];
 					var $el = $(this),
 					 	id,

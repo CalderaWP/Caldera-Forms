@@ -4,7 +4,7 @@
   Plugin URI: https://CalderaForms.com
   Description: Easy to use, grid based responsive form builder for creating simple to complex forms.
   Author: Caldera Labs
-  Version: 1.6.0.rc.2
+  Version: 1.6.0
   Author URI: http://CalderaLabs.org
   Text Domain: caldera-forms
   GitHub Plugin URI: https://github.com/CalderaWP/caldera-forms
@@ -18,7 +18,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 define('CFCORE_PATH', plugin_dir_path(__FILE__));
 define('CFCORE_URL', plugin_dir_url(__FILE__));
-define( 'CFCORE_VER', '1.6.0.rc.2' );
+define( 'CFCORE_VER', '1.6.0' );
 define('CFCORE_EXTEND_URL', 'https://api.calderaforms.com/1.0/');
 define('CFCORE_BASENAME', plugin_basename( __FILE__ ));
 
@@ -60,6 +60,7 @@ function caldera_forms_load(){
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Shortcode', CFCORE_PATH . 'classes/shortcode' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_CDN', CFCORE_PATH . 'classes/cdn' );
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Settings', CFCORE_PATH . 'classes/settings' );
+	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms_Import', CFCORE_PATH . 'classes/import' );
 
 	Caldera_Forms_Autoloader::add_root( 'Caldera_Forms', CFCORE_PATH . 'classes' );
 	Caldera_Forms_Autoloader::register();

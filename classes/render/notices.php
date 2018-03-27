@@ -105,7 +105,7 @@ class Caldera_Forms_Render_Notices {
 		foreach($notices as $note_type => $notice){
 			if(!empty($notice['note'])){
 				$result = Caldera_Forms::do_magic_tags( $notice['note'] );
-				$html .= '<div class=" '. implode(' ', $note_classes[$note_type]) . '">' . $result .'</div>';
+				$html .= '<div class=" '. implode(' ', $note_classes[$note_type]) . '">' . Caldera_Forms_Sanitize::remove_scripts($result ) .'</div>';
 			}
 		}
 

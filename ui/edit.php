@@ -812,7 +812,7 @@ foreach($panel_extensions as $panel){
 			}
 			echo '<h3>'.$tab_setup['label'];
 				if( isset( $tab_setup[ 'tip' ] ) && is_array( $tab_setup[ 'tip' ] ) ) {
-					printf( '<a href="%s" target="_blank" class="dashicons dashicons-editor-help caldera-forms-tab-help-bublle" data-toggle="tooltip" data-placement="top"  title="%s"><span class="screen-reader-text">%s</span></a>',
+					printf( '<a href="%s" target="_blank" class="dashicons dashicons-editor-help caldera-forms-tab-help-bubble" data-toggle="tooltip" data-placement="top"  title="%s"><span class="screen-reader-text">%s</span></a>',
 						esc_url( $tab_setup[ 'tip' ][ 'link' ] ),
 						esc_attr( $tab_setup[ 'tip' ][ 'text'] ),
 						esc_html__( 'Click to view help doc on CalderaForms.com' )
@@ -1202,3 +1202,10 @@ var preset_options = <?php echo json_encode( $option_presets ); ?>
 	jQuery('.error,.notice,.notice-error').remove();
 </script>
 
+<?php
+/**
+ * Runs at the bottom of the Caldera Forms form editor page
+ *
+ * @since 1.6.0
+ */
+do_action('caldera_forms_editor_footer');

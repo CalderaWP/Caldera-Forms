@@ -2493,7 +2493,7 @@ class Caldera_Forms {
 							'data' => array(
 								'_debug_log' => array(
 									'entry' => array(
-										'log' => $meta
+										'log' => Caldera_Forms_Sanitize::remove_scripts($meta)
 									)
 								)
 							)
