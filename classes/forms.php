@@ -302,7 +302,7 @@ class Caldera_Forms_Forms {
 
         $data[ 'ID' ] = trim( $id );
         unset( $data[ 'db_id' ] );
-
+		
         $importer = new Caldera_Forms_Import_Form($data, $trusted );
         $data = $importer->get_prepared_form();
         $new_form = self::save_form( $data );

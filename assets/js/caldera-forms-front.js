@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.6.0.rc.4 - 2018-03-26 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.6.0 - 2018-03-27 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.

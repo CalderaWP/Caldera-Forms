@@ -1280,7 +1280,8 @@ class Caldera_Forms_Admin {
 
 							cf_redirect( add_query_arg(array(
 								'page' => 'caldera-forms',
-								'edit' => $new_form_id
+								'edit' => $new_form_id,
+                                't' => $trusted
 							), admin_url( 'admin.php' ) ), 302 );
 							exit;
 
