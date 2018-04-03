@@ -776,6 +776,9 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 
 == Changelog ==
+= Caldera Forms 1.6.1 (MM DD, 2018) Name  =
+* FIXED: Logo looked bad on main admin page.
+
 = Caldera Forms 1.6.0 (March 26, 2018) Anti-Spam: Enhanced  =
 See: [https://calderaforms.com/updates/caldera-forms-1-6-0](https://calderaforms.com/updates/caldera-forms-1-6-0?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-6-0)
 
