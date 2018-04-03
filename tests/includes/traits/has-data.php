@@ -1,6 +1,13 @@
 <?php
+
+/**
+ * Trait Caldera_Forms_Has_Data
+ *
+ * Provides a way to create entry data and submission data
+ */
 trait Caldera_Forms_Has_Data {
 	use Caldera_Forms_Has_Mock_Form;
+
 	/**
 	 * Create a mock entry to test
 	 *

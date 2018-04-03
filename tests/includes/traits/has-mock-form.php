@@ -14,6 +14,7 @@ trait Caldera_Forms_Has_Mock_Form
 	 * Mock form ID
 	 *
 	 * @since 1.6.1
+	 *
 	 * @var string
 	 */
 	protected $mock_form_id;
