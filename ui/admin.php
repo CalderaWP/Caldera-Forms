@@ -29,6 +29,7 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 
         <ul class="caldera-editor-header-nav">
             <li class="caldera-editor-logo">
+                <span class="caldera-forms-name">Caldera Forms</span>
             </li>
             <?php $deprecated = Caldera_Forms_Admin_PHP::is_version_deprecated( PHP_VERSION );
             if ( ! $deprecated ): ?>
