@@ -34,8 +34,16 @@ create_testing_db_tables();
 
 //include test case
 include_once( dirname( __FILE__ ) . '/includes/cf-test-case.php' );
+include_once( dirname( __FILE__ ) . '/includes/cf-test-case.php' );
 include_once( dirname( __FILE__ ) . '/includes/cf-mailer-test-case.php' );
 include_once( dirname( __FILE__ ) . '/includes/cf-rest-test-case.php' );
+
+//include traits
+include_once( dirname( __FILE__ ) . '/includes/traits/has-mock-form.php' );
+include_once( dirname( __FILE__ ) . '/includes/traits/imports-form.php' );
+include_once( dirname( __FILE__ ) . '/includes/traits/has-data.php' );
+include_once( dirname( __FILE__ ) . '/includes/traits/submits-contact-form.php' );
+
 
 /**
  * Create a fake DB table
