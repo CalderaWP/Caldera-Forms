@@ -33,7 +33,7 @@ trait Caldera_Forms_Has_Mock_Form
 	 *
 	 * @since 1.6.1
 	 */
-	private function set_mock_form(){
+	protected function set_mock_form(){
 		$this->mock_form = array(
 			'ID'                 => $this->mock_form_id,
 			'name'               => 'Another form',
