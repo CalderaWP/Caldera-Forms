@@ -114,10 +114,12 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
 	protected function prepare_entries_for_response( $entries ){
 		$response_data = array();
 
-		 /** @var Caldera_Forms_Entry $entry Entry Object */
-		foreach( $entries as $id => $entry ){
-			$response_data = $this->add_entry_to_response( $entry, $response_data );
+		if ( ! empty( $entries ) ) {
+			/** @var Caldera_Forms_Entry $entry Entry Object */
+			foreach ($entries as $id => $entry) {
+				$response_data = $this->add_entry_to_response($entry, $response_data);
 
+			}
 		}
 
 		return $response_data;
