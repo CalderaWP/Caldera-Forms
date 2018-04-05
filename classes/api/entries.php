@@ -105,7 +105,7 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
 	/**
 	 * Prepare entry data for a response
 	 *
-	 * @since 1.0.5
+	 * @since 1.5.0
 	 *
 	 * @param array $entries Array of found Caldera_Forms_Entry objects
 	 *
@@ -114,10 +114,12 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
 	protected function prepare_entries_for_response( $entries ){
 		$response_data = array();
 
-		 /** @var Caldera_Forms_Entry $entry Entry Object */
-		foreach( $entries as $id => $entry ){
-			$response_data = $this->add_entry_to_response( $entry, $response_data );
+		if ( ! empty( $entries ) ) {
+			/** @var Caldera_Forms_Entry $entry Entry Object */
+			foreach ($entries as $id => $entry) {
+				$response_data = $this->add_entry_to_response($entry, $response_data);
 
+			}
 		}
 
 		return $response_data;
