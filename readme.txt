@@ -20,6 +20,9 @@ Caldera Forms is a free WordPress plugin by <a href="http://CalderaLabs.org?utm_
 >
 > -Pippin Williamson: Developer of Easy Digital Downloads, Restrict Content Pro and AffiliateWP.
 
+[youtube https://www.youtube.com/watch?v=O1pY_ZMMWUw]
+
+
 == Top Features ==
 * Intuitive user interface !
 * Easy to use - drag and drop !
@@ -35,9 +38,7 @@ Caldera Forms is a free WordPress plugin by <a href="http://CalderaLabs.org?utm_
 * [Caldera Forms Pro makes your emails reliable and beautiful](https://calderaforms.com/pro?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=features-list)
 * [Free CDN to improve site speed](https://calderaforms.com/doc/improving-caldera-performance-free-cdn?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=features-list)
 
-
-[youtube https://www.youtube.com/watch?v=KmKj02aE0nc&index=1&list=PLgeaHmX3MoiuXOhRlDdYn7k0RcL4afLzQ]
-
+[youtube https://www.youtube.com/watch?v=JmaWZ79mUO0]
 
 = Responsive By Design =
 
@@ -58,7 +59,23 @@ Quickly configure the [email notification](https://calderaforms.com/doc/setting-
 >
 > - Matt Cromwell: Head of support for WordImpress
 
-https://youtu.be/O1pY_ZMMWUw
+[youtube https://www.youtube.com/watch?v=KmKj02aE0nc&index=1&list=PLgeaHmX3MoiuXOhRlDdYn7k0RcL4afLzQ]
+
+= Go Pro =
+As makers of the most powerful free form plugin for WordPress, we know what makes form builders tick. Caldera Forms Pro makes form creation beautiful: with drag-and-drop builders for form & form notification, enhanced email delivery, and 27+ integrations, it just works.
+
+> Emails Send Every Time, Best In Class Support, Easy Form & Form Notification Design, Connect To The All The Apps You Love
+
+[youtube https://www.youtube.com/watch?v=jY6s-BG66R4&feature=youtu.be]
+
+Top Pro features:
+* Enhanced Email Delivery: It's getting harder to convince Gmail or Exchange emails from WordPress are legit, we make it simple.
+* Priority Support For Caldera Forms: Need help with a form or connecting Caldera Forms to another service or plugin? We can help.
+* HTML layout builder: Make your emails on brand and looking great.
+* 27+ Add-ons: Accept payments, build your mailing list, integrate with Google Analytics and create more powerful forms.
+* Form entries as PDFs: Create an easy to print record of all submissions.
+
+
 
 = Anti-Spam By Default =
 Spam is annoying. No form builder is complete without a robust anti-spam system.
