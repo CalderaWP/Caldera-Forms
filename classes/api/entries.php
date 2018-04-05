@@ -105,7 +105,7 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
 	/**
 	 * Prepare entry data for a response
 	 *
-	 * @since 1.0.5
+	 * @since 1.5.0
 	 *
 	 * @param array $entries Array of found Caldera_Forms_Entry objects
 	 *
