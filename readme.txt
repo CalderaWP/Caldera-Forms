@@ -795,7 +795,7 @@ This could also be a sign of a more serious issue on your server, but is probabl
 == Changelog ==
 = Caldera Forms 1.6.1 (MM DD, 2018) Name  =
 
-
+[Caldera Forms 1.6.1 Beta 1](https://calderaforms.com/updates/caldera-forms-1-6-1-beta-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-6-1-beta-1) April 5, 2018
 * FIXED: Logo looked bad on main admin page.
 * FIXED: Some sites had an error on update due to PHP 5.3 syntax.
 * FIXED: PHP warning when getting entries via REST API for a form with no saved entries.
