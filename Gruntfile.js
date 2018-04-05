@@ -261,9 +261,6 @@ module.exports = function (grunt) {
 
     });
 
-
-
-
     grunt.registerTask( 'buildCopy', [ 'copy:i18n', 'copy:fonts', 'copy:images'] );
     //register default task
     grunt.registerTask( 'default',  [
