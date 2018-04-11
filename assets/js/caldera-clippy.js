@@ -97,3 +97,7 @@ function CalderaFormsAdminClippys2( elId, config, $ ){
 
 
 }
+
+function CalderaFormsAdminClippys(elId, config, $){
+	return new CalderaFormsAdminClippys2( elId, config, $ );
+}
