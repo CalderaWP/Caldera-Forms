@@ -793,8 +793,10 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 
 == Changelog ==
-= Caldera Forms 1.6.1 (MM DD, 2018) Name  =
+= Caldera Forms 1.6.1 (April 12, 2018) Full Globe  =
+See: [https://calderaforms.com/updates/caldera-forms-1-6-1](https://calderaforms.com/updates/caldera-forms-1-6-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-6-1)
 
+[Caldera Forms 1.6.1 Release Candidate 1](https://calderaforms.com/updates/caldera-forms-1-6-1-rc-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-6-1-rc-1) April 11, 2018
 [Caldera Forms 1.6.1 Beta 1](https://calderaforms.com/updates/caldera-forms-1-6-1-beta-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-6-1-beta-1) April 5, 2018
 * FIXED: Logo looked bad on main admin page.
 * FIXED: Some sites had an error on update due to PHP 5.3 syntax.
@@ -804,7 +806,7 @@ This could also be a sign of a more serious issue on your server, but is probabl
 = Caldera Forms 1.6.0 (March 26, 2018) Anti-Spam: Enhanced  =
 See: [https://calderaforms.com/updates/caldera-forms-1-6-0](https://calderaforms.com/updates/caldera-forms-1-6-0?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-6-0)
 
-Caldera Forms 1.6.0-rc.1 - March, 14, 2018.
+= Caldera Forms 1.6.0-rc.1 - March, 14, 2018 =
 * SECURITY: CVE-2018-7747
 * ADDED: Multiple BCCs and CCs on auto-responders.
 * ADDED: Support for multiple checkboxes to be selected by default, using a filter.
