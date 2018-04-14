@@ -1,39 +1,117 @@
 <?php
 
-
+/**
+ * Class Caldera_Forms_Admin_Privacy
+ *
+ * Sets up privacy related fields in form editor
+ */
 class Caldera_Forms_Admin_Privacy{
+	/**
+	 * Fields to output the personally identifying info checkbox on
+	 *
+	 * @since 1.6.1
+	 *
+	 * @var array
+	 */
 	private $fields_to_show_personally_identifying_question;
 
-	public function add_personally_identifying_question($config, $type ){
-		if($this->should_show_personally_identifying_question($type)){
-			$idAttr =
+	/**
+	 * Form config
+	 *
+	 * @since 1.6.1
+	 *
+	 * @var array
+	 */
+	protected $form;
+
+	/**
+	 * Caldera_Forms_Admin_Privacy constructor.
+	 *
+	 * @since 1.6.1
+	 *
+	 * @param array $form
+	 */
+	public function __construct( array  $form )
+	{
+		$this->form = $form;
+
+	}
+
+	/**
+	 * Output the field template for the privacy field as needed
+	 *
+	 * @since 1.6.1
+	 *
+	 * @uses "caldera_forms_field_wrapper_before_field_setup" action
+	 *
+	 * @param array $config Field config's config
+	 * @param string $type Field Type
+	 * @param string $field_id Field ID
+ 	 */
+	public function add_personally_identifying_question($config, $type, $field_id ){
+		if(in_array( $type, $this->fields_to_show_personally_identifying_question() )){
+			$id_attr = $field_id . '_' . Caldera_Forms_Field_Util::CONFIG_PERSONAL;
+			$description_id_attr = $id_attr . '_description';
+			$is_personally_identifying = Caldera_Forms_Field_Util::is_personally_identifying($field_id, $this->form );
 			printf( '
-				<div class="caldera-config-group entrylist-field">
-					<label for="<?php echo esc_attr($id); ?>_entry_list"><?php echo esc_html__( \'Show in Entry List\', \'caldera-forms\' ); ?></label>
+				<div class="caldera-config-group privacy-field personally-identifying-field">
+					<label for="%s">
+						%s
+					</label>
 					<div class="caldera-config-field">
-						<input type="checkbox" class="field-config field-checkbox" id="<?php echo esc_attr($id); ?>_entry_list" name="config[fields][<?php echo esc_attr($id); ?>][entry_list]" value="1" <?php if($entry_list === 1){ echo \'checked="checked"\'; }else{?>{{#if entry_list}}checked="checked"{{/if}}<?php } ?>>
+						<input 
+							type="checkbox" 
+							class="field-config field-checkbox"
+							id="%s"
+							name="%s"
+							value="1"
+							aria-describedby="%s"
+							%s
+						/>
+						<p id="%s" class="description">
+							%s			
+						</p>
 					</div>
 				</div>
-			', );
+			',
+				esc_attr( $id_attr ),
+				esc_html__( 'Personally Identifying', 'caldera-forms' ),
+				esc_attr( $id_attr ),
+				sprintf( 'config[fields][%s][config][%s]',
+					esc_attr($field_id),
+					esc_attr( Caldera_Forms_Field_Util::CONFIG_PERSONAL )
+				),
+				esc_attr($description_id_attr),
+				$is_personally_identifying ? 'checked=checked' : '',
+				esc_attr($description_id_attr),
+				esc_html__( 'Does this field collect personally identifying information, as defined in the EU in the GPDR standard?', 'caldera-forms' )
+			);
 		}
 	}
 
-	protected function should_show_personally_identifying_question( $type ){
-		return in_array( $type, $this->fields_to_show_personally_identifying_question() );
-	}
-
+	/**
+	 * Get the fields to show privacy field on
+	 *
+	 * Lazy-sets the $fields_to_show_personally_identifying_question property
+	 *
+	 * @since 1.6.1
+	 *
+	 * @return array
+	 */
 	protected function fields_to_show_personally_identifying_question(){
 		if( ! $this->fields_to_show_personally_identifying_question ){
-			$this->fields_to_show_personally_identifying_question = array_keys( Caldera_Forms_Fields::get_all() );
-			foreach ( array(
-				'button',
-				'color_picker',
-				'calculation',
-				'html',
-				'section_break',
-					  ) as $field_type ){
-				unset( $this->fields_to_show_personally_identifying_question[$field_type ] );
+			$this->fields_to_show_personally_identifying_question = array();
+
+			foreach( Caldera_Forms_Fields::get_all() as $field_type => $field_config ){
+				if ( Caldera_Forms_Fields::not_support( $field_type, 'entry_list' ) ){
+					continue;
+				}
+				if( in_array( $field_type, array( 'recaptcha' ) ) ){
+					continue;
+				}
+				$this->fields_to_show_personally_identifying_question[] = $field_type;
 			}
+
 		}
 
 		return $this->fields_to_show_personally_identifying_question;
