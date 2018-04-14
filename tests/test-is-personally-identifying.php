@@ -17,8 +17,7 @@ class Test_Caldera_Forms_Is_Personally_Identifying extends Caldera_Forms_Test_Ca
 	 */
 	public function testFieldIs()
 	{
-
-		$this->setFieldAsPersonallyIdenifying();
+		$this->setFieldAsPersonallyIdentifying();
 		//Test with field ID for first arg
 		$this->assertTrue( Caldera_Forms_Field_Util::is_personally_identifying( self::FIELD_ID, $this->mock_form ) );
 		//Test with field config array as first arg
@@ -48,7 +47,7 @@ class Test_Caldera_Forms_Is_Personally_Identifying extends Caldera_Forms_Test_Ca
 	 * @covers Caldera_Forms_Forms::personally_identifying_fields()
 	 */
 	public function testFieldsAre(){
-		$this->setFieldAsPersonallyIdenifying();
+		$this->setFieldAsPersonallyIdentifying();
 		$personally_identifying_fields = Caldera_Forms_Forms::personally_identifying_fields($this->mock_form);
 		$this->assertFalse( empty( $personally_identifying_fields ) );
 		$this->assertTrue( is_array( $personally_identifying_fields ) );
