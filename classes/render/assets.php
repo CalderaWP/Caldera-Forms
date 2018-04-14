@@ -287,7 +287,8 @@ class Caldera_Forms_Render_Assets {
             'api-stores' => self::make_url( 'api/stores' ),
 			'state-events' => self::make_url( 'state/events' ),
 			'state-state' => self::make_url( 'state/state' ),
-			'inputmask' => self::make_url( 'inputmask')
+			'inputmask' => self::make_url( 'inputmask'),
+			'blocks' => self::make_url( 'blocks')
 		);
 
 		return $script_urls;
@@ -503,6 +504,9 @@ class Caldera_Forms_Render_Assets {
 			$min = self::should_minify( $script );
 		}
 
+		if( self::is_client_entry_point( $name ) ){
+			return "{$root_url}/clients/{$name}/build/index.min.js";
+		}
 
 		if ( $min ) {
 			if ( $script ) {
@@ -518,6 +522,10 @@ class Caldera_Forms_Render_Assets {
 			}
 		}
 
+	}
+
+	public static function is_client_entry_point( $name ){
+		return in_array( $name, array( 'blocks' ) );
 	}
 
 	/**
