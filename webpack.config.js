@@ -36,7 +36,13 @@ const extractConfig = {
 };
 
 // Define JavaScript entry points
-const entryPointNames = [ 'blocks' ];
+const entryPointNames = [
+    'admin',
+    'blocks',
+    'edit',
+    'form',
+    'viewer',
+];
 
 // Setup externals
 const externals = {};
