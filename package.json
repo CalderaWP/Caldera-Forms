@@ -24,7 +24,10 @@
   "browserslist": [
     "extends @wordpress/browserslist-config"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "@wordpress/dom-ready": "^1.0.4",
+    "inputmask": "^3.3.11"
+  },
   "devDependencies": {
     "@wordpress/browserslist-config": "^2.1.1",
     "classnames": "^2.2.5",

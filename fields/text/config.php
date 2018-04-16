@@ -65,6 +65,8 @@
 	</div>
 </div>
 
+<?php
+/**
 {{#script}}
 	jQuery(function($){
 
@@ -82,4 +84,4 @@
 		});
 		$('.{{_id}}_masked').trigger('change');
 	});
-{{/script}}
+{{/script}}**/

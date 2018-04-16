@@ -38,14 +38,18 @@ const extractConfig = {
 // Define JavaScript entry points
 const entryPointNames = [
     'admin',
+    'admin',
     'blocks',
-    'edit',
+    'editor',
     'form',
     'viewer',
+    'fields'
 ];
 
 // Setup externals
-const externals = {};
+const externals = {
+    jquery: 'jQuery'
+};
 // Setup external for each entry point
 entryPointNames.forEach( entryPointName => {
     externals[ '@/calderaForms' + entryPointName ] = {
@@ -61,6 +65,7 @@ wpDependencies.forEach( wpDependency => {
         this: [ 'wp', wpDependency ]
     };
 });
+
 
 // Start of main webpack config
 const config = {
@@ -88,7 +93,7 @@ const config = {
             {
                 // Run JavaScript files through Babel
                 test: /\.js$/,
-                exclude: /node_modules/,
+                exclude: /(node_modules|clients\/fields)/,
                 use: 'babel-loader'
             },
             {
@@ -111,7 +116,10 @@ const config = {
         new webpack.LoaderOptionsPlugin( {
             minimize: process.env.NODE_ENV === 'production',
             debug: process.env.NODE_ENV !== 'production'
-        } )
+        } ),
+        new webpack.ProvidePlugin({
+            jQuery: 'jquery'
+        })
     ],
     // Do not include information about children in stats
     stats: {
