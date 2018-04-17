@@ -475,7 +475,7 @@ foreach($field_types as $field_slug=>$config){
 
 
 
-function caldera_forms_field_wrapper_template($id = '{{id}}', $label = '{{label}}', $slug = '{{slug}}', $caption = '{{caption}}', $hide_label = '{{hide_label}}', $required = '{{required}}', $entry_list = '{{entry_list}}', $type = null, $config_str = '{{json config}}', $conditions_str = '{"type" : ""}'){
+function caldera_forms_field_wrapper_template($field_id = '{{field_id}}', $label = '{{label}}', $slug = '{{slug}}', $caption = '{{caption}}', $hide_label = '{{hide_label}}', $required = '{{required}}', $entry_list = '{{entry_list}}', $type = null, $config_str = '{{json config}}', $conditions_str = '{"type" : ""}'){
 
 	if(is_array($config_str)){
 		$config 	= $config_str;
@@ -496,14 +496,14 @@ function caldera_forms_field_wrapper_template($id = '{{id}}', $label = '{{label}
 			$groups = array();
 			foreach ($conditions['group'] as $groupid => $group) {
 				$group_tmp = array(
-					'id' => $groupid,
+					'field_id' => $groupid,
 					'type'	=> 'fields',
 					'lines' => array()
 				);
 				if(!empty($group)){
 					foreach($group as $line_id => $line){
 						$group_line = $line;
-						$group_line['id'] = $line_id;
+						$group_line['field_id'] = $line_id;
 						$group_tmp['lines'][] = $group_line;
 					}
 				}
@@ -524,7 +524,7 @@ function caldera_forms_field_wrapper_template($id = '{{id}}', $label = '{{label}
         data-template="#form-fields-selector-tmpl"
         data-modal-width="700"
         data-modal-height="680"
-	    id="<?php echo esc_attr($id); ?>"
+	    id="<?php echo esc_attr($field_id); ?>"
          style="display:none;"
     >
 		
@@ -532,14 +532,14 @@ function caldera_forms_field_wrapper_template($id = '{{id}}', $label = '{{label}
 		<h3 class="caldera-editor-field-title">
             <?php echo esc_html( $label ); ?>&nbsp;
         </h3>
-		<input type="hidden" class="field-config" name="config[fields][<?php echo esc_attr($id); ?>][ID]" value="<?php echo esc_attr($id); ?>">
+		<input type="hidden" class="field-config" name="config[fields][<?php echo esc_attr($field_id); ?>][ID]" value="<?php echo esc_attr($field_id); ?>">
 
-		<div id="<?php echo esc_attr($id); ?>_settings_pane" class="wrapper-instance-pane">
+		<div id="<?php echo esc_attr($field_id); ?>_settings_pane" class="wrapper-instance-pane">
 
             <div class="caldera-config-group">
-				<label for="<?php echo esc_attr($id); ?>_type"><?php echo esc_html__( 'Field Type', 'caldera-forms' ); ?></label>
+				<label for="<?php echo esc_attr($field_id); ?>_type"><?php echo esc_html__( 'Field Type', 'caldera-forms' ); ?></label>
 				<div class="caldera-config-field">
-					<select class="block-input caldera-select-field-type" data-field="<?php echo esc_attr($id); ?>" id="<?php echo esc_attr($id); ?>_type" name="config[fields][<?php echo esc_attr($id); ?>][type]" data-type="<?php echo $type; ?>">
+					<select class="block-input caldera-select-field-type" data-field="<?php echo esc_attr($field_id); ?>" id="<?php echo esc_attr($field_id); ?>_type" name="config[fields][<?php echo esc_attr($field_id); ?>][type]" data-type="<?php echo $type; ?>">
 						<?php
 						echo build_field_types($type);
 						?>
@@ -548,38 +548,38 @@ function caldera_forms_field_wrapper_template($id = '{{id}}', $label = '{{label}
 			</div>
 
 			<div class="caldera-config-group">
-				<label for="<?php echo esc_attr($id); ?>_fid"><?php echo esc_html__( 'ID', 'caldera-forms' ); ?></label>
+				<label for="<?php echo esc_attr($field_id); ?>_fid"><?php echo esc_html__( 'ID', 'caldera-forms' ); ?></label>
 				<div class="caldera-config-field">
-					<input type="text" class="block-input field-id" id="<?php echo esc_attr($id); ?>_fid" value="<?php echo esc_attr($id); ?>" readonly="readonly">
+					<input type="text" class="block-input field-id" id="<?php echo esc_attr($field_id); ?>_fid" value="<?php echo esc_attr($field_id); ?>" readonly="readonly">
 				</div>
 			</div>
 
 
 			<div class="caldera-config-group">
-				<label for="<?php echo esc_attr($id); ?>_lable"><?php echo esc_html__( 'Name', 'caldera-forms' ); ?></label>
+				<label for="<?php echo esc_attr($field_id); ?>_lable"><?php echo esc_html__( 'Name', 'caldera-forms' ); ?></label>
 				<div class="caldera-config-field">
-					<input type="text" class="block-input field-config field-label required" id="<?php echo esc_attr($id); ?>_lable" name="config[fields][<?php echo esc_attr($id); ?>][label]" value="<?php echo sanitize_text_field( $label ); ?>">
+					<input type="text" class="block-input field-config field-label required" id="<?php echo esc_attr($field_id); ?>_lable" name="config[fields][<?php echo esc_attr($field_id); ?>][label]" value="<?php echo sanitize_text_field( $label ); ?>">
 				</div>
 			</div>
 
 			<div class="caldera-config-group hide-label-field">
-				<label for="<?php echo esc_attr($id); ?>_hide_label"><?php echo esc_html__( 'Hide Label', 'caldera-forms' ); ?></label>
+				<label for="<?php echo esc_attr($field_id); ?>_hide_label"><?php echo esc_html__( 'Hide Label', 'caldera-forms' ); ?></label>
 				<div class="caldera-config-field">
-					<input type="checkbox" class="field-config field-checkbox" id="<?php echo esc_attr($id); ?>_hide_label" name="config[fields][<?php echo esc_attr($id); ?>][hide_label]" value="1" <?php if($hide_label === 1){ echo 'checked="checked"'; }else{?>{{#if hide_label}}checked="checked"{{/if}}<?php } ?>>
+					<input type="checkbox" class="field-config field-checkbox" id="<?php echo esc_attr($field_id); ?>_hide_label" name="config[fields][<?php echo esc_attr($field_id); ?>][hide_label]" value="1" <?php if($hide_label === 1){ echo 'checked="checked"'; }else{?>{{#if hide_label}}checked="checked"{{/if}}<?php } ?>>
 				</div>
 			</div>
 
 			<div class="caldera-config-group">
-				<label for="<?php echo esc_attr($id); ?>_slug"><?php echo esc_html__( 'Slug', 'caldera-forms' ); ?></label>
+				<label for="<?php echo esc_attr($field_id); ?>_slug"><?php echo esc_html__( 'Slug', 'caldera-forms' ); ?></label>
 				<div class="caldera-config-field">
-					<input type="text" class="block-input field-config field-slug required" id="<?php echo esc_attr($id); ?>_slug" name="config[fields][<?php echo esc_attr($id); ?>][slug]" value="<?php echo $slug; ?>">
+					<input type="text" class="block-input field-config field-slug required" id="<?php echo esc_attr($field_id); ?>_slug" name="config[fields][<?php echo esc_attr($field_id); ?>][slug]" value="<?php echo $slug; ?>">
 				</div>
 			</div>
 
 			<div class="caldera-config-group">
-				<label for="<?php echo esc_attr($id); ?>_fcond"><?php echo esc_html__( 'Condition', 'caldera-forms' ); ?></label>
+				<label for="<?php echo esc_attr($field_id); ?>_fcond"><?php echo esc_html__( 'Condition', 'caldera-forms' ); ?></label>
 				<div class="caldera-config-field">
-					<select id="field-condition-type-<?php echo esc_attr($id); ?>" name="config[fields][<?php echo esc_attr($id); ?>][conditions][type]" data-id="<?php echo esc_attr($id); ?>" class="caldera-conditionals-usetype block-input">
+					<select id="field-condition-type-<?php echo esc_attr($field_id); ?>" name="config[fields][<?php echo esc_attr($field_id); ?>][conditions][type]" data-id="<?php echo esc_attr($field_id); ?>" class="caldera-conditionals-usetype block-input">
 						<option></option>
 						<optgroup class="cf-conditional-selector">
 							<?php if( !in_array( $condition_type, array( 'show', 'hide','disable' ) ) ){ ?><option value="<?php echo $condition_type; ?>" selected="selected"><?php echo esc_html__( 'Disable', 'caldera-forms' ); ?></option><?php } ?></optgroup>
@@ -589,23 +589,23 @@ function caldera_forms_field_wrapper_template($id = '{{id}}', $label = '{{label}
 			</div>
 
 			<div class="caldera-config-group required-field">
-				<label for="<?php echo esc_attr($id); ?>_required"><?php echo esc_html__( 'Required', 'caldera-forms' ); ?></label>
+				<label for="<?php echo esc_attr($field_id); ?>_required"><?php echo esc_html__( 'Required', 'caldera-forms' ); ?></label>
 				<div class="caldera-config-field">
-					<input type="checkbox" class="field-config field-required field-checkbox" id="<?php echo esc_attr($id); ?>_required" name="config[fields][<?php echo esc_attr($id); ?>][required]" value="1" <?php if($required === 1){ echo 'checked="checked"'; }else{?>{{#if required}}checked="checked"{{/if}}<?php } ?>>
+					<input type="checkbox" class="field-config field-required field-checkbox" id="<?php echo esc_attr($field_id); ?>_required" name="config[fields][<?php echo esc_attr($field_id); ?>][required]" value="1" <?php if($required === 1){ echo 'checked="checked"'; }else{?>{{#if required}}checked="checked"{{/if}}<?php } ?>>
 				</div>
 			</div>
 
 			<div class="caldera-config-group caption-field">
-				<label for="<?php echo esc_attr($id); ?>_caption"><?php echo esc_html__( 'Description', 'caldera-forms' ); ?></label>
+				<label for="<?php echo esc_attr($field_id); ?>_caption"><?php echo esc_html__( 'Description', 'caldera-forms' ); ?></label>
 				<div class="caldera-config-field">
-					<input type="text" class="block-input field-config" id="<?php echo esc_attr($id); ?>_caption" name="config[fields][<?php echo esc_attr($id); ?>][caption]" value="<?php echo esc_html( $caption ); ?>">
+					<input type="text" class="block-input field-config" id="<?php echo esc_attr($field_id); ?>_caption" name="config[fields][<?php echo esc_attr($field_id); ?>][caption]" value="<?php echo esc_html( $caption ); ?>">
 				</div>
 			</div>
 			
 			<div class="caldera-config-group entrylist-field">
-				<label for="<?php echo esc_attr($id); ?>_entry_list"><?php echo esc_html__( 'Show in Entry List', 'caldera-forms' ); ?></label>
+				<label for="<?php echo esc_attr($field_id); ?>_entry_list"><?php echo esc_html__( 'Show in Entry List', 'caldera-forms' ); ?></label>
 				<div class="caldera-config-field">
-					<input type="checkbox" class="field-config field-checkbox" id="<?php echo esc_attr($id); ?>_entry_list" name="config[fields][<?php echo esc_attr($id); ?>][entry_list]" value="1" <?php if($entry_list === 1){ echo 'checked="checked"'; }else{?>{{#if entry_list}}checked="checked"{{/if}}<?php } ?>>
+					<input type="checkbox" class="field-config field-checkbox" id="<?php echo esc_attr($field_id); ?>_entry_list" name="config[fields][<?php echo esc_attr($field_id); ?>][entry_list]" value="1" <?php if($entry_list === 1){ echo 'checked="checked"'; }else{?>{{#if entry_list}}checked="checked"{{/if}}<?php } ?>>
 				</div>
 			</div>
 
@@ -617,8 +617,9 @@ function caldera_forms_field_wrapper_template($id = '{{id}}', $label = '{{label}
              *
              * @param array $config Field config
              * @param string $type Field type
+             * @param string $field_id Template representation of Field ID. Probably {{ID}}
              */
-            do_action( 'caldera_forms_field_wrapper_before_field_setup', $config, $type );
+            do_action( 'caldera_forms_field_wrapper_before_field_setup', $config, $type, $field_id );
 			?>
 
 			<div class="caldera-config-field-setup">
@@ -632,14 +633,15 @@ function caldera_forms_field_wrapper_template($id = '{{id}}', $label = '{{label}
 			 *
 			 * @param array $config Field config
 			 * @param string $type Field type
+             * @param string $field_id Template representation of Field ID. Probably {{ID}}
 			 */
-			do_action( 'caldera_forms_field_wrapper_after_field_setup', $config, $type );
+			do_action( 'caldera_forms_field_wrapper_after_field_setup', $config, $type, $field_id );
 			?>
 
 
 			<input type="hidden" class="field_config_string block-input" value="<?php echo htmlentities( $config_str ); ?>">
 
-            <input type="hidden" class="field_conditions_config_string block-input ajax-trigger" data-event="none" data-autoload="true" data-request="build_conditions_config" data-template="#conditional-group-tmpl" data-id="<?php echo esc_attr($id); ?>" data-target="#<?php echo esc_attr($id); ?>_conditional_wrap" data-type="fields" data-callback="rebuild_field_binding" value="<?php echo htmlentities( $conditions_str ); ?>">
+            <input type="hidden" class="field_conditions_config_string block-input ajax-trigger" data-event="none" data-autoload="true" data-request="build_conditions_config" data-template="#conditional-group-tmpl" data-id="<?php echo esc_attr($field_id); ?>" data-target="#<?php echo esc_attr($field_id); ?>_conditional_wrap" data-type="fields" data-callback="rebuild_field_binding" value="<?php echo htmlentities( $conditions_str ); ?>">
 
             <br>
 			<?php
@@ -650,8 +652,9 @@ function caldera_forms_field_wrapper_template($id = '{{id}}', $label = '{{label}
 			 *
 			 * @param array $config Field config
 			 * @param string $type Field type
+			 * @param string $field_id Template representation of Field ID. Probably {{ID}}
 			 */
-			do_action( 'caldera_forms_field_wrapper_before_delete', $config, $type );
+			do_action( 'caldera_forms_field_wrapper_before_delete', $config, $type, $field_id );
 			?>
 
 			<button class="button delete-field block-button" data-confirm="<?php echo esc_html__( 'Are you sure you want to remove this field?. \'Cancel\' to stop. \'OK\' to delete', 'caldera-forms' ); ?>" type="button"><?php echo esc_html__( 'Delete Field', 'caldera-forms' ); ?></button>
@@ -664,8 +667,9 @@ function caldera_forms_field_wrapper_template($id = '{{id}}', $label = '{{label}
 			 *
 			 * @param array $config Field config
 			 * @param string $type Field type
+			 * @param string $field_id Template representation of Field ID. Probably {{ID}}
 			 */
-			do_action( 'caldera_forms_field_wrapper_aftere_delete', $config, $type );
+			do_action( 'caldera_forms_field_wrapper_aftere_delete', $config, $type, $field_id );
 			?>
         </div>
 
