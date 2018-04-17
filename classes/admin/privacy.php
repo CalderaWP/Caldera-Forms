@@ -75,7 +75,7 @@ class Caldera_Forms_Admin_Privacy{
 				</div>
 			',
 				esc_attr( $id_attr ),
-				esc_html__( 'Personally Identifying', 'caldera-forms' ),
+				esc_html__( 'PII', 'caldera-forms' ),
 				esc_attr( $id_attr ),
 				sprintf( 'config[fields][%s][config][%s]',
 					esc_attr($field_id),
@@ -84,7 +84,11 @@ class Caldera_Forms_Admin_Privacy{
 				esc_attr($description_id_attr),
 				$is_personally_identifying ? 'checked=checked' : '',
 				esc_attr($description_id_attr),
-				esc_html__( 'Does this field collect personally identifying information, as defined in the EU in the GPDR standard?', 'caldera-forms' )
+				sprintf( '%s <a href="%s" target="_blank">%s</a>',
+					esc_html__( 'Does field contain Personally Identifying Information (PII)?', 'caldera-forms' ),
+					'https://calderaforms.com/gdpr#pii?utm_source=wp-admin&utm_medium=form-editor&utm_content=pii-learn-more',
+					esc_html__( 'Learn More', 'caldera-forms' )
+				)
 			);
 		}
 	}
