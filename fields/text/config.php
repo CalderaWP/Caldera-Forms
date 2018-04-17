@@ -66,22 +66,3 @@
 </div>
 
 <?php
-/**
-{{#script}}
-	jQuery(function($){
-
-		$('.{{_id}}_masked').change(function(){
-			if( $(this).prop('checked') ){
-				$('#{{_id}}_maskwrap').show();
-				$('#{{_id}}_default').inputmask($('#{{_id}}_mask').val(),{greedy: false});
-			}else{
-				$('#{{_id}}_maskwrap').hide();
-				$('#{{_id}}_default').inputmask('remove');
-			}
-		});	
-		$('#{{_id}}_mask, #{{_id}}_numeric').change(function(){
-			$('.{{_id}}_masked').trigger('change');
-		});
-		$('.{{_id}}_masked').trigger('change');
-	});
-{{/script}}**/

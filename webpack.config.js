@@ -1,16 +1,21 @@
 /**
  * External dependencies
  */
-
+//utils need for building pro
+const _ = require('./clients/pro/webpack/utils');
 // Load webpack for use of certain webpack tools and methods
 const webpack = require( 'webpack' );
 // For extracting CSS (and SASS) into separate files
 const ExtractTextPlugin = require( 'extract-text-webpack-plugin' );
 
+//Creates HTML for mounting using a PHP file
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+
 // Main CSS loader for everything but blocks..
 const cssExtractTextPlugin = new ExtractTextPlugin({
     // Extracts CSS into a build folder inside the directory current directory
-    filename: './scripts/[name]/build/style.css'
+    filename: './scripts/[name]/build/style.min.css'
 });
 
 // Configuration for the ExtractTextPlugin.
@@ -38,12 +43,8 @@ const extractConfig = {
 // Define JavaScript entry points
 const entryPointNames = [
     'admin',
-    'admin',
     'blocks',
-    'editor',
-    'form',
-    'viewer',
-    'fields'
+    'pro'
 ];
 
 // Setup externals
@@ -86,14 +87,24 @@ const config = {
     },
     // Fall back to node_modules for file resolution
     resolve: {
+        extensions: ['.js', '.vue', '.css', '.json'],
         modules: [ __dirname, 'node_modules' ]
     },
     module: {
         rules: [
+            //Compile Vue single file templates
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader',
+                exclude: /(node_modules|bower_components)/,
+                query: {
+                    presets: ['es2015']
+                }
+            },
             {
                 // Run JavaScript files through Babel
                 test: /\.js$/,
-                exclude: /(node_modules|clients\/fields)/,
+                exclude: /(node_modules|clients\/editor)/,
                 use: 'babel-loader'
             },
             {
@@ -118,8 +129,12 @@ const config = {
             debug: process.env.NODE_ENV !== 'production'
         } ),
         new webpack.ProvidePlugin({
-            jQuery: 'jquery'
-        })
+            jQuery: 'jquery',
+        }),
+        new webpack.LoaderOptionsPlugin(
+            _.loadersOptions()
+        )
+
     ],
     // Do not include information about children in stats
     stats: {

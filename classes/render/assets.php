@@ -501,6 +501,10 @@ class Caldera_Forms_Render_Assets {
 	public static function make_url( $name, $script = true ){
 		$root_url = CFCORE_URL;
 
+		if( 'editor' == $name && ! self::is_client_entry_point( $name ) ){
+			$name = 'edit';
+		}
+
 		if( ! $script && 'fields' == $name ){
 			$min = true;
 		}else{
@@ -508,7 +512,12 @@ class Caldera_Forms_Render_Assets {
 		}
 
 		if( self::is_client_entry_point( $name ) ){
-			return "{$root_url}clients/{$name}/build/index.min.js";
+			if( $script ){
+				return "{$root_url}clients/{$name}/build/index.min.js";
+			}else{
+				return "{$root_url}clients/{$name}/build/style.min.css";
+
+			}
 		}
 
 		if ( $min ) {
@@ -527,8 +536,16 @@ class Caldera_Forms_Render_Assets {
 
 	}
 
-	public static function is_client_entry_point( $name ){
-		return in_array( $name, array( 'blocks', 'editor', 'fields' ) );
+	/**
+	 * Is this the slug of a webpack entry point
+	 *
+	 * @since 1.6.2
+	 *
+	 * @param string $slug
+	 * @return bool
+	 */
+	public static function is_client_entry_point( $slug ){
+		return in_array( $slug, array( 'blocks', 'pro' ) );
 	}
 
 	/**
