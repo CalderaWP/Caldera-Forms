@@ -74,7 +74,6 @@ class client extends api
 
             }
 
-            if( )
         } elseif (is_wp_error($response)) {
             return $response;
         }
