@@ -709,8 +709,24 @@
 
 		debouncedRunner();
 
-	}
+	};
 
+    /**
+     * Init color picker fields
+     *
+     * @since 1.6.2
+     */
+	this.color_picker = function(){
+        function color_picker_init(){
+            jQuery('.minicolor-picker').miniColors();
+        }
+
+        document.addEventListener('load', color_picker_init , false);
+
+        jQuery( document ).ajaxComplete(function() {
+            color_picker_init();
+        });
+    };
 
  }
 

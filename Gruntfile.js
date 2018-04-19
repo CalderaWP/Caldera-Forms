@@ -34,8 +34,21 @@ module.exports = function (grunt) {
         '!includes/cf-pro-client/composer.lock',
         '!includes/cf-pro-client/package-lock.json',
         '!includes/cf-pro-client/package.json',
-        '!includes/cf-pro-client/build/**'
+        '!includes/cf-pro-client/build/**',
+        //Exclude client dir, most of it we don't need
+        '!clients'
     ];
+
+    //Include webpacked clients
+    [
+        'pro',
+        //'admin',
+        //'viewer',
+        'blocks'
+    ].forEach( (client) => {
+       files_list.push( `clients/${client}/build/index.min.js` );
+       files_list.push( `clients/${client}/build/style.min.css` );
+    });
 
     require( 'load-grunt-tasks' )( grunt );
 

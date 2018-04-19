@@ -6,11 +6,11 @@
 	</div>
 </div>
 {{#script}}
-	jQuery('#{{id}}_stars_preview').raty({ 
+	jQuery('#{{id}}_stars_preview').raty({
 		starOff	: 'raty-{{config/type}}-off',
-		starOn : 'raty-{{config/type}}-on',	
-		hints: [1,2,3,4,5], 
-		spaceWidth: {{config/space}}, 
+		starOn : 'raty-{{config/type}}-on',
+		hints: [1,2,3,4,5],
+		spaceWidth: {{config/space}},
 		number: {{config/number}},
 		starType: 'f',
 		starColor: '{{config/color}}',
