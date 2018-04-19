@@ -54,9 +54,14 @@ class client extends api
             $body = (array)json_decode(wp_remote_retrieve_body($response));
             if (isset($body['hash']) && isset($body['id'])) {
                 try {
-                    $saved_message = container::get_instance()->get_messages_db()->create($body['id'], $body['hash'],
-                        $entry_id, $type);
-                    return $saved_message;
+                    $saved_message = container::get_instance()
+						->get_messages_db()->create($body['id'], $body['hash'], $entry_id, $type);
+
+					if (!empty($anti_spam_args) && ! empty( $body[ 'spam_detected' ] ) && true === rest_sanitize_boolean( $body[ 'spam_detected' ] ) ) {
+						\Caldera_Forms_Entry_Update::update_entry_status( $entry_id, 'spam' );
+					}
+
+					return $saved_message;
                 } catch (Exception $e) {
                     return $e->log([
                         'type' => $type,
@@ -68,6 +73,7 @@ class client extends api
                 }
 
             }
+
         } elseif (is_wp_error($response)) {
             return $response;
         }

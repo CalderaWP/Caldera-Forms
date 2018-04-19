@@ -65,6 +65,8 @@ class Caldera_Forms_Fields {
 	/**
 	 * Check if a field definition has defined a specific "not support" argument
 	 *
+	 * Use to check if field of $type does $not_support
+	 *
 	 * @since 1.5.0
 	 *
 	 * @param string $type The field type
