@@ -76,6 +76,7 @@ class Caldera_Forms_Admin_Assets {
 
 		self::enqueue_style( 'modal' );
 		self::enqueue_script( 'admin' );
+		Caldera_Forms_Render_Assets::enqueue_style( 'front' );
 		Caldera_Forms_Render_Assets::enqueue_style( 'field' );
 
 		self::enqueue_script( 'baldrick' );
