@@ -20,11 +20,44 @@ Requires: git, npm, Grunt.
     - `cd Caldera-Forms.git`
 - npm install
     - `npm i`
+### Build For Release
+To create a build to ship to WordPress.org:
+`npm run package`
 
-### 
- - 
+This creates `/build/<version>` where `<version>` is the current version set in `package.json`.
+### Development
+
+Run watcher for development to auto-compile JavaScript and CSS
+
+#### `/clients/`
+This is the new stuff, built with webpack. Eventually everything UI will be here.
+
+* Clients:
+    * pro - The Caldera Forms Pro admin page and tab in the editor.
+    * blocks - The Gutenberg block(s).
+    * admin - The main admin page. Work in progress, not used in plugin.
+    * viewer - The entry viewer. Work not in progress, not used in plugin.
+    * editor - Theoretical.
+
+* Build for development and start watcher.
+    - `npm run dev`
+* Build for production
+    -  `npm run build:webpack`
+    
+#### `/assets/`
+This is the old stuff, built with grunt.
 
 
+* Build for development and start watcher.
+    - `npm run dev:grunt`
+* Build for production
+    -  `npm run build:grunt`
+
+## Contributing/ Using This Repo, Etc.
+* The default branch is "master" that should be the same as WordPress.org.
+* Development happens on the "develop" branch.
+* If you find a bug, or would like to make a feature request, [please open an issue](https://github.com/CalderaWP/Caldera-Forms/issues/).
+* If you fixed a bug, or made a new feature, please submit a pull request against the develop branch.
 
 
 ## Contributing/ Using This Repo, Etc.
