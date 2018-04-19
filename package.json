@@ -1,6 +1,6 @@
 {
   "name": "caldera-forms",
-  "version": "1.6.2",
+  "version": "1.6.2-b.1",
   "description": "Apex WordPress Forms",
   "main": "Gruntfile.js",
   "repository": {
@@ -20,7 +20,8 @@
     "build": "grunt && cross-env BABEL_ENV=default NODE_ENV=production webpack",
     "dev": "cross-env BABEL_ENV=default webpack --watch",
     "version": "grunt version_number",
-    "grunt-watch" : "grunt watch"
+    "grunt-watch" : "grunt watch",
+    "package": "npm run build && grunt "
   },
   "browserslist": [
     "last 2 versions",
