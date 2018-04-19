@@ -75,15 +75,7 @@ class Caldera_Forms_Admin_Assets {
 		wp_localize_script( self::slug( 'admin' ), 'CF_ADMIN', $data  );
 
 		self::enqueue_style( 'modal' );
-		$slug = self::slug('admin' );
-		if (!Caldera_Forms_Admin::is_edit() ) {
-			self::enqueue_script('admin');
-		} else {
-			$slug = self::slug('editor' );
-		}
-
-		wp_localize_script( $slug, 'CF_ADMIN', $data  );
-
+		self::enqueue_script( 'admin' );
 		Caldera_Forms_Render_Assets::enqueue_style( 'field' );
 
 		self::enqueue_script( 'baldrick' );

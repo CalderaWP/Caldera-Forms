@@ -545,7 +545,7 @@ class Caldera_Forms_Render_Assets {
 	 * @return bool
 	 */
 	public static function is_client_entry_point( $slug ){
-		return in_array( $slug, array( 'blocks', 'pro', 'editor' ) );
+		return in_array( $slug, array( 'blocks', 'pro' ) );
 	}
 
 	/**

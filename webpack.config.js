@@ -44,8 +44,7 @@ const extractConfig = {
 const entryPointNames = [
     'admin',
     'blocks',
-    'pro',
-    'editor'
+    'pro'
 ];
 
 // Setup externals
