@@ -69,6 +69,10 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
 		$entries->get_page( $request[ 'page' ], $request[ 'status' ] );
 		$pages = ceil( $entries->get_total( $request[ 'status' ] ) / $per_page );
 
+		if( rest_sanitize_boolean($request[ 'index_by_id' ]) && ! empty( $data ) ){
+			$data = array_values( $data );
+		}
+
 		return Caldera_Forms_API_Response_Factory::entry_data(
 			$data,
 			count( $data ),

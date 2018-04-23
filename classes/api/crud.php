@@ -326,6 +326,10 @@ abstract class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 	}
 
 	/**
+	 * Request arguments for GETing items
+	 *
+	 * @since 1.4.4
+	 *
 	 * @return array
 	 */
 	public function get_items_args() {
@@ -341,10 +345,26 @@ abstract class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 			'limit'    => array(
 				'default'           => 10,
 				'sanitize_callback' => 'absint',
-			)
+			),
+			'index_by_id' => $this->not_required_boolean_arg()
 		);
 	}
 
+	/**
+	 * Generates arguments for a non-required boolean arg
+	 *
+	 * @since 1.6.1
+	 *
+	 * @return array
+	 */
+	protected function not_required_boolean_arg(){
+		$not_required_boolean = array(
+			'type' => 'boolean',
+			'default' => false,
+			'sanitization_callback' => 'rest_sanitize_boolean'
+		);
+		return $not_required_boolean;
+	}
 	/**
 	 * Factory for Caldera_Forms_API_Form objects
 	 *

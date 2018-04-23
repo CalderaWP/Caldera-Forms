@@ -46,13 +46,8 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
      */
 	public function get_item_args(){
 	    $args = parent::get_item_args();
-	    $not_required_boolean = array(
-			'type' => 'boolean',
-			'default' => false,
-			'sanitization_callback' => 'rest_sanitize_boolean'
-		);
-	    $args[ 'preview' ] = $not_required_boolean;
-	    $args[ 'index_by_id' ] = $not_required_boolean;
+		$args[ 'preview' ] = $this->not_required_boolean_arg();
+
 
 	    return $args;
     }
@@ -458,5 +453,7 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
         );
         return new Caldera_Forms_API_Response($data, 200, array());
     }
+
+
 
 }
