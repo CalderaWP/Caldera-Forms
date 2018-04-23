@@ -157,7 +157,7 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
 
         }
 
-        if( ! rest_sanitize_boolean($request[ 'index_by_id' ]) && ! empty( $prepared ) ){
+        if( ! $this->should_index_by_id( $request )  && ! empty( $prepared ) ){
         	$prepared = array_values( $prepared );
 		}
 
@@ -165,6 +165,8 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
         $response->set_total_header( count( $forms ) );
         return $response;
     }
+
+
 
     /**
      * @since 1.5.0
@@ -309,7 +311,7 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
 	    array_walk( $order, array( $this, 'prepare_field' ) );
 	    array_walk( $entry_list, array( $this, 'prepare_field' ) );
 
-	    if( false == $request[ '15' ] ){
+	    if( false == $request[ 'entry_list_only_fields' ] ){
 		    foreach ( $order as $field_id => $field ){
 			    $type = Caldera_Forms_Field_Util::get_type( Caldera_Forms_Field_Util::get_field( $field_id, $form ) );
 			    if ( Caldera_Forms_Fields::not_support( $type, 'entry_list' ) ){
@@ -343,6 +345,11 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
 	    }else{
 		    $form[ 'field_details' ][ 'entry_list' ]  = $entry_list_defaults;
 	    }
+
+	    if( ! $this->should_index_by_id( $request ) ){
+			$form[ 'field_details' ][ 'order' ] = array_values( $form[ 'field_details' ][ 'order' ] );
+			$form[ 'fields' ] = array_values( $form[ 'fields' ] );
+		}
 
 	    return $form;
 

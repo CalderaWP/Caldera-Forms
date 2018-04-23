@@ -351,6 +351,19 @@ abstract class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 	}
 
 	/**
+	 * Should response index by id
+	 *
+	 * @since 1.6.2
+	 *
+	 * @param WP_REST_Request $request
+	 * @return bool
+	 */
+	protected function should_index_by_id( WP_REST_Request $request ){
+		return ! rest_sanitize_boolean($request[ 'index_by_id' ]);
+	}
+
+
+	/**
 	 * Generates arguments for a non-required boolean arg
 	 *
 	 * @since 1.6.1
