@@ -35,7 +35,7 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
 			return Caldera_Forms_API_Response_Factory::error_entry_not_found();
 		}
 
-		$data = $this->add_entry_to_response( $entry, array() );
+		$data = $this->add_entry_to_response( $entry, array(), $request );
 		$data = $data[ $request[ 'entry_id' ] ];
 		return Caldera_Forms_API_Response_Factory::entry_data( $data, 1, 1 );
 
@@ -65,7 +65,7 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
 		}
 
 		$entries = new Caldera_Forms_Entry_Entries( $this->form->toArray(), $per_page );
-		$data = $this->prepare_entries_for_response( $entries->get_page( $request[ 'page' ], $request[ 'status' ] ) );
+		$data = $this->prepare_entries_for_response( $entries->get_page( $request[ 'page' ], $request[ 'status' ] ), $request );
 		$entries->get_page( $request[ 'page' ], $request[ 'status' ] );
 		$pages = ceil( $entries->get_total( $request[ 'status' ] ) / $per_page );
 
@@ -112,16 +112,16 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
 	 * @since 1.5.0
 	 *
 	 * @param array $entries Array of found Caldera_Forms_Entry objects
-	 *
+	 * @param \WP_REST_Request Current REST request. @since 1.6.2
 	 * @return array
 	 */
-	protected function prepare_entries_for_response( $entries ){
+	protected function prepare_entries_for_response( $entries, WP_REST_Request $request ){
 		$response_data = array();
 
 		if ( ! empty( $entries ) ) {
 			/** @var Caldera_Forms_Entry $entry Entry Object */
 			foreach ($entries as $id => $entry) {
-				$response_data = $this->add_entry_to_response($entry, $response_data);
+				$response_data = $this->add_entry_to_response($entry, $response_data, $request );
 
 			}
 		}
@@ -137,10 +137,11 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
 	 *
 	 * @param Caldera_Forms_Entry $entry Entry object
 	 * @param array $response_data Current response collection
+	 * @param \WP_REST_Request $request Current REST request. @since 1.6.2
 	 *
 	 * @return array
 	 */
-	protected function add_entry_to_response( Caldera_Forms_Entry $entry,  array $response_data ){
+	protected function add_entry_to_response( Caldera_Forms_Entry $entry,  array $response_data, WP_REST_Request $request ){
 		$id = $entry->get_entry_id();
 		$response_data[ $id ] = array();
 
@@ -172,6 +173,10 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
                 }
 			}
 
+		}
+
+		if( ! $this->should_index_by_id( $request ) ){
+			$response_data[ $id ][ 'fields' ] = array_values( $response_data[ $id ][ 'fields' ] );
 		}
 
 		$metas = $entry->get_meta();
