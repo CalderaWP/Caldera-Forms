@@ -46,13 +46,15 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
      */
 	public function get_item_args(){
 	    $args = parent::get_item_args();
-	    $args[ 'preview' ] = array(
-	        'type' => 'boolean',
-            'default' => false,
-            'sanitization_callback' => 'rest_sanitize_boolean'
-        );
+	    $not_required_boolean = array(
+			'type' => 'boolean',
+			'default' => false,
+			'sanitization_callback' => 'rest_sanitize_boolean'
+		);
+	    $args[ 'preview' ] = $not_required_boolean;
+	    $args[ 'index_by_id' ] = $not_required_boolean;
 
-	    return$args;
+	    return $args;
     }
 
     /**
@@ -148,17 +150,21 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
 
         $forms = Caldera_Forms_Forms::get_forms( $request[ 'details' ] );
 	    $prepared = array();
-        if( ! empty( $forms ) && $request[ 'full' ] ){
+        if( ! empty( $forms ) ){
             foreach( $forms as $id => $form ){
 	            try{
-		            $form = $this->form_object_factory( $id, $request );
+		            $form = $this->form_object_factory( $id, $request, false );
 	            }catch ( Exception $e ){
 		           continue;
 	            }
-                $prepared[ $id ] = $this->prepare_form_for_response( $form, $request );
+                $prepared[ $id ] = $this->prepare_form_for_response( $form, $request, $request[ 'full' ] );
             }
 
         }
+
+        if( ! rest_sanitize_boolean($request[ 'index_by_id' ]) && ! empty( $prepared ) ){
+        	$prepared = array_values( $prepared );
+		}
 
         $response = new Caldera_Forms_API_Response( $prepared, 200, array( ) );
         $response->set_total_header( count( $forms ) );
@@ -266,13 +272,20 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
 	 *
 	 * @return array|mixed
 	 */
-    protected function prepare_form_for_response( Caldera_Forms_API_Form $form, WP_REST_Request $request ){
+    protected function prepare_form_for_response( Caldera_Forms_API_Form $form, WP_REST_Request $request, $full = true ){
+		if( $full ){
+			$form = $this->prepare_field_details( $form, $request );
 
-    	$form = $this->prepare_field_details( $form, $request );
+			$form = $this->prepare_processors_for_response( $form );
 
-        $form = $this->prepare_processors_for_response( $form );
+			$form = $this->prepare_mailer_for_response( $form );
+		}else{
+			$form = array(
+				'ID' => $form->get_id(),
+				'name' => $form->get_name(),
+			);
+		}
 
-        $form = $this->prepare_mailer_for_response( $form );
 
         return $form;
 
@@ -301,7 +314,7 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
 	    array_walk( $order, array( $this, 'prepare_field' ) );
 	    array_walk( $entry_list, array( $this, 'prepare_field' ) );
 
-	    if( false == $request[ 'entry_list_only_fields' ] ){
+	    if( false == $request[ '15' ] ){
 		    foreach ( $order as $field_id => $field ){
 			    $type = Caldera_Forms_Field_Util::get_type( Caldera_Forms_Field_Util::get_field( $field_id, $form ) );
 			    if ( Caldera_Forms_Fields::not_support( $type, 'entry_list' ) ){

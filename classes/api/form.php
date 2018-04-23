@@ -73,6 +73,29 @@ class Caldera_Forms_API_Form  implements  ArrayAccess {
 	}
 
 	/**
+	 * Get name of form
+	 *
+	 * @since 1.6.1
+	 *
+	 * @return string
+	 */
+	public function get_name(){
+		return !empty( $this->form[ 'name' ] ) ? $this->form[ 'name' ] : '';
+	}
+
+	/**
+	 * Get ID of form
+	 *
+	 * @since 1.6.1
+	 *
+	 * @return string
+	 */
+	public function get_id(){
+		return !empty( $this->form[ 'ID' ] ) ? $this->form[ 'ID' ] : '';
+	}
+
+
+	/**
 	 * Get a field config IF it should be returned in REST API response.
 	 *
 	 * @since 1.5.0
