@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.6.2-b.1 - 2018-04-19 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.6.2-b.1 - 2018-04-25 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -4298,18 +4298,6 @@ window.addEventListener("load", function(){
 		'use strict';
 
 		window.CALDERA_FORMS = {};
-
-		/** Check nonce **/
-		if( 'object' === typeof CF_API_DATA ) {
-			var nonceCheckers = {},
-				$el, formId;
-			$('.caldera_forms_form').each(function (i, el) {
-				$el = $(el);
-				formId = $el.data( 'form-id' );
-				nonceCheckers[ formId ] = new CalderaFormsResetNonce( formId, CF_API_DATA, $ );
-				nonceCheckers[ formId ].init();
-			});
-		}
 
 		/** Setup forms */
 		if( 'object' === typeof CFFIELD_CONFIG ) {
