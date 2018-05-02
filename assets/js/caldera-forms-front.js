@@ -3795,7 +3795,7 @@ function toggle_button_init(id, el){
              });
 
              $field.css( 'background', 'url("' + fieldConfig.imgPath + icon + '")' );
-             
+
          }
 
      };
@@ -3867,7 +3867,7 @@ function toggle_button_init(id, el){
          }
 
      };
-     
+
      this.color_picker = function ( fieldConfig ) {
          $( document.getElementById( fieldConfig.id ) ).miniColors( fieldConfig.settings );
          $(document).on('cf.pagenav cf.add cf.disable cf.modal', function () {
@@ -4362,7 +4362,7 @@ window.addEventListener("load", function(){
                         }
 					});
 
-					
+
 					config_object = new Caldera_Forms_Field_Config( config, $(document.getElementById(form_id)), $, state );
 					config_object.init();
 					$( document ).trigger( 'cf.form.init',{
@@ -4502,7 +4502,7 @@ function CalderaFormsResetNonce( formId, config, $ ){
 			},data:{
 				form_id: formId
 			}
-		}).success( function( r){
+		}).done( function( r){
 			$nonceField.val( r.nonce );
 			$nonceField.data( 'nonce-time', new Date().getTime() );
 		});
