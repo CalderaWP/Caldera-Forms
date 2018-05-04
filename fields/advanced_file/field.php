@@ -47,8 +47,13 @@
 			$field['config']['allowed'][] = $mime;
 			$accept_tag[] = '.' . str_replace('|', ',.', $ext );
 		}
-		
+
 	}
+
+    if (in_array( 'audio/mpeg',$field['config']['allowed']  )) {
+        $field['config']['allowed'][] = 'audio/mp3';
+    }
+
 	$accept_tag = 'accept="' . esc_attr( implode(',', $accept_tag) ) . '"';
 
 	$field['config']['max_size'] = wp_max_upload_size();
