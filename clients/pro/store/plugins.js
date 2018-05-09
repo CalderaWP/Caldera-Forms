@@ -6,8 +6,6 @@ export const accountSaver = store => {
 			case 'apiKeys' :
 			case 'secretKey':
 			case 'publicKey':
-				console.log(state.connected, state.account.apiKeys.secret, state.account.apiKeys.public);
-
 				if (!state.connected && state.account.apiKeys.secret && state.account.apiKeys.public) {
                     console.log(state.connected, state.account.apiKeys.secret, state.account.apiKeys.public);
 

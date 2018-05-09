@@ -30,6 +30,8 @@
 			$field['config']['multi_upload_text'] = __( 'Add Files', 'caldera-forms' );
 		}
 	}
+
+	//Set allowed types
 	$accept_tag = array();
 	if( !empty( $field['config']['allowed'] ) ){
 		$allowed = array_map('trim', explode(',', trim( $field['config']['allowed'] ) ) );
@@ -38,6 +40,7 @@
 			$ext = trim( $ext, '.' );
 			$file_type = wp_check_filetype( 'tmp.'. $ext );
 			$field['config']['allowed'][] = $file_type['type'];
+			$field['config']['allowed'][] = $file_type['ext'];
 			$accept_tag[] = '.' . $ext;
 		}
 	}else{
@@ -47,8 +50,22 @@
 			$field['config']['allowed'][] = $mime;
 			$accept_tag[] = '.' . str_replace('|', ',.', $ext );
 		}
-		
+
 	}
+
+	//Fix allowed types
+    // @see https://github.com/CalderaWP/Caldera-Forms/issues/2471
+    if ( ! empty( $field['config']['allowed'] )) {
+        if (in_array('audio/mpeg', $field['config']['allowed'])) {
+            $field['config']['allowed'][] = 'audio/mp3';
+        }
+        $field['config']['allowed'] = array_unique($field['config']['allowed']);
+    }
+
+    if (! empty( $accept_tag)) {
+        $accept_tag = array_unique($accept_tag);
+    }
+
 	$accept_tag = 'accept="' . esc_attr( implode(',', $accept_tag) ) . '"';
 
 	$field['config']['max_size'] = wp_max_upload_size();
