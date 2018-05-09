@@ -40,17 +40,36 @@
 	export default{
 
 		computed: {
-			...mapGetters([
-				'publicKey',
-				'secretKey',
-				'connected'
-			])
+			publicKey:{
+			    get(){
+                    return this.$store.getters.publicKey;
+				},
+				set(newValue){
+                    this.$store.commit('publicKey',newValue);
+				}
+			},
+            secretKey:{
+                get(){
+                    return this.$store.getters.secretKey;
+                },
+                set(newValue){
+                    this.$store.commit('secretKey',newValue);
+                }
+            },
+            connected:{
+                get(){
+                    return this.$store.getters.connected;
+                },
+                set(newValue){
+                    this.$store.commit('connected',newValue);
+                }
+            },
+
 		},
 		methods: {
-			...mapMutations([
-				'publicKey',
-				'secretKey',
-			]),
+			...mapMutations({
+                secretKey: 'secretKey',
+            }),
 			publicKeyChange(ev){
                 this.$store.commit('publicKey',ev.target.value);
 			},
