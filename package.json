@@ -18,11 +18,11 @@
   "homepage": "https://github.com/CalderaWP/Caldera-Forms#readme",
   "scripts": {
     "build": "grunt && cross-env BABEL_ENV=default NODE_ENV=production webpack",
-    "build:webpack" : "cross-env BABEL_ENV=default NODE_ENV=production webpack",
-    "build:grunt" : "grunt",
+    "build:webpack": "cross-env BABEL_ENV=default NODE_ENV=production webpack",
+    "build:grunt": "grunt",
     "dev": "cross-env BABEL_ENV=default webpack --watch",
     "dev:webpack": "cross-env BABEL_ENV=default webpack --watch",
-    "dev:grunt" : "grunt watch",
+    "dev:grunt": "grunt watch",
     "version": "grunt version_number",
     "package": "npm run build && grunt build"
   },
@@ -57,7 +57,7 @@
     "bootstrap": "^4.0.0",
     "classnames": "^2.2.5",
     "copy-webpack-plugin": "^4.5.1",
-    "cross-env": "^5.1.1",
+    "cross-env": "^5.1.5",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^0.9.0",
     "friendly-errors-webpack-plugin": "^1.1.2",
