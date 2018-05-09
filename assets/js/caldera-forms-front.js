@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.6.2-b.1 - 2018-05-04 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.6.2-b.1 - 2018-05-09 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -3795,7 +3795,7 @@ function toggle_button_init(id, el){
              });
 
              $field.css( 'background', 'url("' + fieldConfig.imgPath + icon + '")' );
-
+             
          }
 
      };
@@ -3867,7 +3867,7 @@ function toggle_button_init(id, el){
          }
 
      };
-
+     
      this.color_picker = function ( fieldConfig ) {
          $( document.getElementById( fieldConfig.id ) ).miniColors( fieldConfig.settings );
          $(document).on('cf.pagenav cf.add cf.disable cf.modal', function () {

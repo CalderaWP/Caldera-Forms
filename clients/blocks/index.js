@@ -1,31 +1,18 @@
 
+//Import WordPress APIs
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
-const BlockControls = wp.blocks.BlockControls;
-const el = wp.element.createElement;
-let cfForms = [];
-let cfFormsOptions = {};
-if( CF_FORMS.forms.length ) {
-     cfFormsOptions = CF_FORMS.forms;
-}
 
-if( Object.keys( cfFormsOptions ).length ){
-    Object.keys( cfFormsOptions ).forEach( form => {
-        cfForms.push( form.id )
-    });
-}
+//Setup store;
+import {CALDERA_FORMS_STORE_NAME,STORE,SET_CURRENT_FORM_ID,requestFormPreview} from "./store";
+const { registerStore, dispatch } = wp.data;
+const InspectorControls = wp.blocks.InspectorControls;
+const formStore = registerStore(CALDERA_FORMS_STORE_NAME,STORE);
+//Import CF components
+import {FormChooserWithSelect} from "./components/formChooser";
+import {FormPreview,FormPreviewWithSelect} from "./components/FormPreview";
 
-
-
-
-/**
- * Register Caldera Forms block
- *
- * @param  {string}   name     Block name.
- * @param  {Object}   settings Block settings.
- * @return {?WPBlock}          The block, if it has been successfully
- *                             registered; otherwise `undefined`.
- */
+//Create block
 registerBlockType( 'calderaforms/cform', {
 	title: __( 'Caldera Form', 'caldera-forms' ),
 	icon: 'feedback',
@@ -36,189 +23,54 @@ registerBlockType( 'calderaforms/cform', {
             default: 'false',
         }
     },
-    edit({ attributes, setAttributes, className, focus, id } ) {
-	    const assetsAppended = {
-            css: [],
-            js: [],
-        };
-
+    edit({ attributes, setAttributes, className, isSelected, id } ) {
         /**
-         * Append CSS or JavaScript as needed if not already done
+         * Utility function to load preview inside block
          *
-         * @since 1.5.8
-         *
-         * @param {String} type
-         * @param {String} url
-         * @param {String} identifier
-         */
-        function appendCSSorJS(type, url, identifier)
-        {
-
-            switch( type ){
-                case  'css' :
-                    if ( -1 < assetsAppended.css.indexOf( identifier ) ) {
-                        const fileref = document.createElement("link");
-                        fileref.rel = "stylesheet";
-                        fileref.type = "text/css";
-                        fileref.href = url;
-                        fileref.id = identifier;
-                        document.getElementsByTagName("head")[0].appendChild(fileref);
-                        assetsAppended.css.push(identifier);
-
-                    }
-
-                    break;
-                case 'js' :
-
-                    if ( -1 < assetsAppended.js.indexOf( identifier ) ) {
-                        const fileref = document.createElement("script");
-                        fileref.type = "text/javascript";
-                        fileref.src = url;
-                        fileref.id = identifier;
-                        document.getElementsByTagName("body")[0].appendChild(fileref);
-                        assetsAppended.js.push(identifier);
-                    }
-            }
-
-        }
-
-        /**
-         * Get a form preview and put where it goes
-         *
-         * NOTE: This is a super-hack, must replace
-         *
-         * @since 1.5.8
+         * @since 1.6.2
          *
          * @param {String} formId
          */
-        function previewForm(formId) {
-            if ( false === formId || 'false' === formId ||  -1 < cfForms.indexOf( formId )  ) {
-                return;
+        const loadPreview = function (formId) {
+            if ('false' !== formId && !formStore.getState().formPreviews.hasOwnProperty(formId)) {
+                requestFormPreview(formStore.getState(), formId);
             }
-
-            let url = CF_FORMS.previewApi.replace('-formId-', formId);
-            let el = document.getElementById('caldera-forms-preview-' + id);
-            wp.apiRequest({
-                url: url,
-                method: 'GET',
-                params: {
-                    preview: true
-                },
-                cache: true
-
-            })
-                .done(( response => {
-
-                    if (null !== el) {
-                        el.innerHTML = '';
-                        el.innerHTML = response.html;
-                        Object.keys(response.css).forEach( key => {
-                            appendCSSorJS('css',response.css[key],key);
-                        });
-                        Object.keys(response.js).forEach( key => {
-                            appendCSSorJS('js',response.js[key],key);
-                        });
-                    }
-
-                } ))
-                .fail(function (response) {
-                    if (null !== el) {
-                        el.innerHTML = __( 'Form Not Found', 'caldera-forms' )
-                    }
-                });
-        }
-
-        let previewEl = el(
-            'div',
-            {
-                id: 'caldera-forms-preview-' + id
-            },
-            [
-                el(
-                    'span',
-                    {
-                        className : "spinner is-active"
-                    }
-                )
-            ]
-        );
-        let formId = attributes.formId;
-        if( formId ){
-            previewForm(formId);
-        }
-        let formPreview = attributes.formPreview;
-        setAttributes( {formPreview:'Load'});
-
-        const updateFormId = event => {
-            formId = event.target.value;
-            setAttributes({ formId: formId});
-
-            previewForm(formId);
-
-
-            event.preventDefault();
-
         };
 
-        let formOptions = [
-            el(
-                'option',
-                {},
-                __( '-- Choose --', 'caldera-forms' )
-            )
-        ];
+        /**
+         * Change handler for when form in block changes
+         * 
+         * @since 1.6.2
+         *
+         * @param {String} newFormId
+         */
+        const setCurrentForm = (newFormId) => {
+            setAttributes({formId:newFormId});
+            loadPreview(newFormId);
+        };
 
-        if( CF_FORMS.forms.length ){
-            CF_FORMS.forms.forEach( form => {
-                formOptions.push(
-                    el(
-                        'option',
-                        {
-                            value: form.formId
-                        },
-                        form.name
-                    )
-                )
-            });
-        }
-
-        const selectId = 'caldera-forms-form-selector-';
-        let select = el(
-            'select',
-            {
-                value: formId,
-                id:selectId,
-                onChange: updateFormId,
-
-            },
-            formOptions,
-
-        );
-
-
-        const formChooser = el(
-            'div',
-            {},
-            [
-                el( 'label', {
-                    for: selectId
-                }, __( 'Form', 'caldera-forms' ) ),
-                select
-            ]
-		);
-
-        const focusControls = el(
-        	BlockControls, {
-        		key: 'controls'
-			},
-            formChooser
-        );
-
+        loadPreview(attributes.formId);
         return (
 			<div className={className}>
-                {previewEl}
+                <InspectorControls>
+                    <FormChooserWithSelect
+                        onChange={setCurrentForm}
+                        formId={attributes.formId}
+                    />
+                </InspectorControls>
 
-                { focus && focusControls }
+                {'false' === attributes.formId &&
+                    <FormChooserWithSelect
+                        onChange={setCurrentForm}
+                        formId={attributes.formId}
+                    />
+                }
+
+                {'false' !== attributes.formId &&
+                    <FormPreviewWithSelect
+                        formId={attributes.formId}
+                    />
+                }
             </div>
         );
     },

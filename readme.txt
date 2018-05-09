@@ -795,7 +795,7 @@ This could also be a sign of a more serious issue on your server, but is probabl
 == Changelog ==
 = Caldera Forms 1.6.2 (May X, 2018) =
 
-[Caldera Forms 1.6.2Beta 1](https://calderaforms.com/updates/caldera-forms-1-6-2-beta-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-6-2-beta-1) May 9, 2018
+[Caldera Forms 1.6.2 Beta 1](https://calderaforms.com/updates/caldera-forms-1-6-2-beta-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-6-2-beta-1) May 9, 2018
 * FIXED: Fixed deprecated jQuery XHR syntax in some places.
 * FIXED: mp3s were not allowed by some browsers when they should have been for file fields.
 * ADDED: Link to Caldera Forms Pro app from Caldera Forms Pro page.

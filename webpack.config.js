@@ -15,7 +15,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 // Main CSS loader for everything but blocks..
 const cssExtractTextPlugin = new ExtractTextPlugin({
     // Extracts CSS into a build folder inside the directory current directory
-    filename: './scripts/[name]/build/style.min.css'
+    filename: './build/[name]/build/style.min.css'
 });
 
 // Configuration for the ExtractTextPlugin.
@@ -59,7 +59,7 @@ entryPointNames.forEach( entryPointName => {
 } );
 
 // Define WordPress dependencies
-const wpDependencies = [ 'components', 'element', 'blocks', 'utils', 'date' ];
+const wpDependencies = [ 'components', 'element', 'blocks', 'utils', 'date', 'data', 'editor' ];
 // Setup externals for all WordPress dependencies
 wpDependencies.forEach( wpDependency => {
     externals[ '@wordpress/' + wpDependency ] = {
