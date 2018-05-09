@@ -648,7 +648,7 @@ function caldera_forms_field_wrapper_template($field_id = '{{field_id}}', $label
 			/**
 			 * Runs in field wrapper template before delete field button
 			 *
-			 * @since 1.6.1
+			 * @since 1.6.2
 			 *
 			 * @param array $config Field config
 			 * @param string $type Field type
@@ -663,13 +663,13 @@ function caldera_forms_field_wrapper_template($field_id = '{{field_id}}', $label
 			/**
 			 * Runs in field wrapper template after delete field button
 			 *
-			 * @since 1.6.1
+			 * @since 1.6.2
 			 *
 			 * @param array $config Field config
 			 * @param string $type Field type
 			 * @param string $field_id Template representation of Field ID. Probably {{ID}}
 			 */
-			do_action( 'caldera_forms_field_wrapper_aftere_delete', $config, $type, $field_id );
+			do_action( 'caldera_forms_field_wrapper_after_delete', $config, $type, $field_id );
 			?>
         </div>
 
