@@ -61,6 +61,20 @@ export const ACTIONS = {
 			}
 		});
 	},
+    openApp({commit, state}) {
+        return new Promise((resolve, reject) => {
+			const url = urlString(
+                {
+                    public: state.account.apiKeys.public,
+                    token: appToken( state.account.apiKeys ),
+                },
+                'https://app.calderaformspro.com/app'
+            );
+            const win = window.open(url, '_blank');
+            win.focus();
+        	resolve(true);
+        });
+	},
 	testConnection({commit, state}) {
 		return new Promise((resolve, reject) => {
 			if (state.account.apiKeys.public && state.account.apiKeys.secret) {

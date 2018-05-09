@@ -56,7 +56,7 @@ class scripts {
 		if( 'tab' === $context ){
 			$id = 'cf-pro-app-tab';
 		}else{
-			$id = 'cf-pro-tab';
+			$id = 'cf-pro-app';
 		}
 		return  sprintf('<div id="%s"></div>', $id );
 	}
