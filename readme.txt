@@ -3,11 +3,7 @@ Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
 Tags: free wordpress form builder, formbuilder, form builder, contact form,  contact me, custom form, forms, form, custom forms, forms creator, caldera forms, calderawp, wp form, wp form builder, form, drag and drop, email, awesome, wordpress free form builder, echecks, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, eCheck,dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, gravity forms, ninja forms, contact, email, auto-responder, aweber, convertkit, builder, contact forms, search, ab testing, a/b testing, split testing, shortcode, wordpress, awesome plugin, plugin, easy, braintree form, dwolla form, authorize.net form, mailchimp form, mailchimp popup, aweber form, convertkit form, stripe form, stripe popup, eCheck form, responsive,
 Requires at least: 4.7
 Tested up to: 4.9.5
-<<<<<<< HEAD
-Stable tag: 1.6.2.b.1
-=======
-Stable tag: 1.6.1.1
->>>>>>> master
+Stable tag: 1.6.1
 License: GPLv2
 Requires PHP: 5.6
 
@@ -797,7 +793,19 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 
 == Changelog ==
-= Caldera Forms 1.6.1.1 (April 12, 2018) Full Globe  =
+= Caldera Forms 1.6.2 (May X, 2018) =
+
+[Caldera Forms 1.6.2Beta 1](https://calderaforms.com/updates/caldera-forms-1-6-2-beta-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-6-2-beta-1) May 9, 2018
+* FIXED: Fixed deprecated jQuery XHR syntax in some places.
+* FIXED: mp3s were not allowed by some browsers when they should have been for file fields.
+* ADDED: Link to Caldera Forms Pro app from Caldera Forms Pro page.
+* IMPROVED: One webback build file for Pro and Blocks
+* FIXED: If spam was detected by CF Pro entry was still shown in entry viewer.
+* ADDED: Option to mark fields as containing personally identifying information.
+* ADDED: caldera_forms_field_wrapper_after_delete action
+* ADDED: caldera_forms_field_wrapper_before_delete action
+
+= Caldera Forms 1.6.1.1 (April 12, 2018)  =
 See: [https://calderaforms.com/updates/caldera-forms-1-6-1-1](https://calderaforms.com/updates/caldera-forms-1-6-1-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-6-1)
 * Additional SECURITY fix for CVE-2018-7747
 
