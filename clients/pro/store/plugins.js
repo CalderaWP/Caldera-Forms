@@ -13,7 +13,6 @@ export const accountSaver = store => {
                         store.dispatch('getLayouts');
 					}
 
-
 				} else if (!state.account.apiKeys.public || !state.account.apiKeys.secret) {
 					store.commit('connected', 0);
 				} else {

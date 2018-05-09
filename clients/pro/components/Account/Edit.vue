@@ -27,7 +27,9 @@
 				/>
 			</div>
 		</div>
-
+		<div v-if="connected">
+			<a id="cf-pro-link" v-on:click="clickedAppButton">Enter Caldera Forms Pro</a>
+		</div>
 		<p v-if="! connected">
 			You can find your API keys in your <a href="https://app.calderaformspro.com/app#/account" target="_blank">
 			Caldera Forms Pro Account
@@ -75,6 +77,9 @@
 			},
 			secretKeyChange(ev){
 				this.$store.commit('secretKey',ev.target.value);
+			},
+			clickedAppButton(){
+			    this.$store.dispatch('openApp');
 			}
 		}
 	}
