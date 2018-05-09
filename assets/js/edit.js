@@ -2722,7 +2722,7 @@ function cf_revisions_ui() {
         });
 
 
-    }).error( function () {
+    }).fail( function () {
         $spinner.css({
             visibility: 'hidden',
             float:'none'

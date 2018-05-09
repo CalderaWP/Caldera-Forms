@@ -58,21 +58,8 @@ class Caldera_Forms_Admin_Assets {
 
 		Caldera_Forms_Render_Assets::enqueue_style( 'grid' );
 		self::enqueue_style( 'admin' );
-		$data = array(
-			'adminAjax' => esc_url_raw( admin_url( 'admin-ajax.php' ) ),
-			'rest' => array(
-				'root' => esc_url_raw( Caldera_Forms_API_Util::url() ),
-				'nonce' => Caldera_Forms_API_Util::get_core_nonce()
-			)
-		);
-
-		if( Caldera_Forms_Admin::is_edit( ) ){
-			$form_id = trim( $_GET[ Caldera_Forms_Admin::EDIT_KEY ] );
-			$data[ 'rest' ][ 'form' ] = esc_url_raw( Caldera_Forms_API_Util::url( 'forms/' . $form_id, true ) );
-			$data[ 'rest' ][ 'revisions' ] = esc_url_raw( Caldera_Forms_API_Util::url( 'forms/' . $form_id . '/revisions', true ) );
-		}
-
-		wp_localize_script( self::slug( 'admin' ), 'CF_ADMIN', $data  );
+		$slug = self::slug( 'admin' );
+		self::set_cf_admin($slug);
 
 		self::enqueue_style( 'modal' );
 		self::enqueue_script( 'admin' );
@@ -280,6 +267,44 @@ class Caldera_Forms_Admin_Assets {
 		 * @since 1.5.0.7
 		 */
 		return apply_filters( 'caldera_forms_admin_tooltip_strings', $tooltips );
+	}
+
+	/**
+	 * Prepare data to pass to wp_localize_script in CF_ADMIN
+	 *
+	 * @since 1.6.2
+	 *
+	 * @return array
+	 */
+	protected static function data_to_localize(){
+		$data = array(
+			'adminAjax' => esc_url_raw(admin_url('admin-ajax.php')),
+			'rest' => array(
+				'root' => esc_url_raw(Caldera_Forms_API_Util::url()),
+				'nonce' => Caldera_Forms_API_Util::get_core_nonce()
+			)
+		);
+		$api_config = new Caldera_Forms_API_JsConfig;
+		$data = array_merge($data, $api_config->toArray());
+
+		if (Caldera_Forms_Admin::is_edit()) {
+			$form_id = trim($_GET[Caldera_Forms_Admin::EDIT_KEY]);
+			$data['rest']['form'] = esc_url_raw(Caldera_Forms_API_Util::url('forms/' . $form_id, true));
+			$data['rest']['revisions'] = esc_url_raw(Caldera_Forms_API_Util::url('forms/' . $form_id . '/revisions', true));
+		}
+		return $data;
+	}
+
+	/**
+	 * Sets up CF_ADMIN variable in JS land via wp_localize_script
+	 *
+	 * @since 1.6.2
+	 *
+	 * @param $slug
+	 */
+	public static function set_cf_admin($slug) {
+		$data = self::data_to_localize();
+		wp_localize_script($slug, 'CF_ADMIN', $data);
 	}
 
 }

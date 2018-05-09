@@ -8,7 +8,7 @@ export const ACTIONS = {
                 crossDomain: true
             } ).done( function(r){
                 return r;
-            }).error( function(){
+            }).fail( function(){
                 return false;
             });
         };

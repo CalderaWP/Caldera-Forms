@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.6.2-b.1 - 2018-04-25 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.6.2-b.2 - 2018-05-09 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -4350,7 +4350,7 @@ window.addEventListener("load", function(){
                         }
 					});
 
-					
+
 					config_object = new Caldera_Forms_Field_Config( config, $(document.getElementById(form_id)), $, state );
 					config_object.init();
 					$( document ).trigger( 'cf.form.init',{
@@ -4490,7 +4490,7 @@ function CalderaFormsResetNonce( formId, config, $ ){
 			},data:{
 				form_id: formId
 			}
-		}).success( function( r){
+		}).done( function( r){
 			$nonceField.val( r.nonce );
 			$nonceField.data( 'nonce-time', new Date().getTime() );
 		});

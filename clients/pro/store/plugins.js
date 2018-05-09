@@ -6,13 +6,13 @@ export const accountSaver = store => {
 			case 'apiKeys' :
 			case 'secretKey':
 			case 'publicKey':
-				console.log(state.connected, state.account.apiKeys.secret, state.account.apiKeys.public);
-
 				if (!state.connected && state.account.apiKeys.secret && state.account.apiKeys.public) {
-                    console.log(state.connected, state.account.apiKeys.secret, state.account.apiKeys.public);
+					if( 'string' === typeof state.account.apiKeys.public
+					&& 'string' === typeof state.account.apiKeys.secret  ) {
+                        store.dispatch('testConnection');
+                        store.dispatch('getLayouts');
+					}
 
-                    store.dispatch('testConnection');
-					store.dispatch('getLayouts');
 				} else if (!state.account.apiKeys.public || !state.account.apiKeys.secret) {
 					store.commit('connected', 0);
 				} else {
