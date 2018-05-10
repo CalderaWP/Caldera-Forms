@@ -310,18 +310,6 @@ window.addEventListener("load", function(){
 
 		window.CALDERA_FORMS = {};
 
-		/** Check nonce **/
-		if( 'object' === typeof CF_API_DATA ) {
-			var nonceCheckers = {},
-				$el, formId;
-			$('.caldera_forms_form').each(function (i, el) {
-				$el = $(el);
-				formId = $el.data( 'form-id' );
-				nonceCheckers[ formId ] = new CalderaFormsResetNonce( formId, CF_API_DATA, $ );
-				nonceCheckers[ formId ].init();
-			});
-		}
-
 		/** Setup forms */
 		if( 'object' === typeof CFFIELD_CONFIG ) {
 			var form_id, config_object, config, instance, $el, state, protocolCheck, jQueryCheck, $form,

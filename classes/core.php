@@ -4965,7 +4965,6 @@ class Caldera_Forms
 		 */
 		do_action('caldera_forms_rest_api_pre_init', self::$api);
 
-		self::$api->add_route(new Caldera_Forms_API_Tokens());
 		self::$api->add_route(new Caldera_Forms_API_Entries());
 		self::$api->add_route(new Caldera_Forms_API_Forms());
 		self::$api->add_route(new Caldera_Forms_API_Settings());
