@@ -122,11 +122,10 @@ export const STORE = {
                 let forms = state.forms;
                 const index = findFormIndexById(state, action.form.ID );
                 if(-1 <= index){
-                    forms[index] = action.from;
+                    forms.splice(index,1,action.form);
                 }else{
                     forms.push(action.form);
                 }
-                console.log(forms);
                 return {
                     ...state,
                     forms: forms

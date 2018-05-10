@@ -26,6 +26,7 @@ function caldera_forms_enqueue_block_assets() {
 
     $formOptions = array();
     $forms = Caldera_Forms_Forms::get_forms(true);
+    $forms =array_reverse($forms);
     foreach ( $forms as $form ){
         $formOptions[] = array(
             'name' => esc_html( $form[ 'name'  ] ),

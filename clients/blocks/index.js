@@ -6,7 +6,7 @@ const { registerBlockType } = wp.blocks;
 import {CALDERA_FORMS_STORE_NAME,STORE,SET_CURRENT_FORM_ID,requestFormPreview} from "./store";
 const { registerStore, dispatch } = wp.data;
 const InspectorControls = wp.blocks.InspectorControls;
-const Placeholder = wp.components.Placeholder;
+const {Placeholder} = wp.components;
 const formStore = registerStore(CALDERA_FORMS_STORE_NAME,STORE);
 //Import CF components
 import {FormChooserWithSelect} from "./components/formChooser";
