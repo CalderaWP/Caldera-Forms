@@ -29,7 +29,8 @@ function caldera_forms_enqueue_block_assets() {
     foreach ( $forms as $form ){
         $formOptions[] = array(
             'name' => esc_html( $form[ 'name'  ] ),
-            'formId' => esc_attr( $form[ 'ID' ] )
+            'formId' => esc_attr( $form[ 'ID' ] ),
+            'ID' => esc_attr( $form[ 'ID' ] )
         );
     }
 

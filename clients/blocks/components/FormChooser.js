@@ -13,7 +13,7 @@ export const FormChooser = (props) => {
     return (
         <SelectControl
             className={'caldera-forms-form-chooser'}
-            label={ __( 'Form' ) }
+            label={ __( 'Choose A Form' ) }
             value={ props.formId }
             options={ props.forms.map( (form) => ( {
                 value: form.formId,

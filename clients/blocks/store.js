@@ -1,6 +1,7 @@
 const { apiRequest } = wp;
 const { registerStore, dispatch } = wp.data;
 export const CALDERA_FORMS_STORE_NAME = 'caldera-forms/forms';
+export const SET_FORMS = 'SET_FORMS';
 export const SET_FORM = 'SET_FORM';
 export const SET_CURRENT_FORM_ID = 'SET_CURRENT_FORM_ID';
 export const ADD_FORM_PREVIEW = 'ADD_FORM_PREVIEW';
@@ -12,12 +13,33 @@ let cfAdmin = 'object' === typeof CF_ADMIN ? CF_ADMIN : {};
  *
  * @since 1.6.2
  *
- * @type {{forms, formPreviews: {}, currentFormId: string}}
+ * @type {{forms, formPreviews: {}}}
  */
 const DEFAULT_STATE = {
     forms: printedData.forms,
     formPreviews :{},
-    currentFormId: ''
+};
+
+/**
+ * Check if a form has the provided ID
+ *
+ * @since 1.6.2
+ *
+ * @param {Object} form Form config
+ * @param {String} formId
+ * @return {boolean}
+ */
+const formHasId = ( form, formId ) => {
+    if( 'object' !== typeof  form ){
+        return false;
+    }
+    if( form.hasOwnProperty('ID') ){
+        return formId === form.ID;
+    }
+    if( form.hasOwnProperty('formId') ){
+        return formId === form.formId;
+    }
+    return false;
 };
 
 /**
@@ -29,13 +51,35 @@ const DEFAULT_STATE = {
  * @param {String} formId
  */
 const findFormById = (state, formId) => {
-    return state.forms.map(form => {
-        return formId === form.ID
+    return state.forms.find(form => {
+        return formHasId(form,formId);
+    });
+};
+
+/**
+ * Find form index in state by Id
+ *
+ * @since 1.6.2
+ *
+ * @param {Object} state
+ * @param {String} formId
+ */
+const findFormIndexById = (state, formId) => {
+    return state.forms.findIndex(form => {
+        return formHasId(form,formId);
     });
 };
 
 //Track requests for previews to prevent multiple while pending
 let requestingPreviews = [];
+/**
+ * Request form preview HTML from server
+ *
+ * @since 1.6.2
+ *
+ * @param {Object} state
+ * @param {String} formId
+ */
 export const requestFormPreview = (state,formId) => {
     if( 'false' !== formId && requestingPreviews.includes(formId)){
         return;
@@ -52,10 +96,17 @@ export const requestFormPreview = (state,formId) => {
     } );
 };
 
+/**
+ * Caldera Forms Redux-store
+ *
+ * @since 1.6.2
+ *
+ * @type {{reducer: (function(*=, *)), actions: {setForm: (function(*=)), setForms: (function(*=)), addFormPreview: (function(*=, *=))}, selectors: {getForm: (function(*=, *=)), getForms: (function(*)), getFormPreview: (function(*, *=)), getFormPreviews: (function(*))}, resolvers: {getForm: (function(*, *): Promise)}}}
+ */
 export const STORE = {
     reducer( state = DEFAULT_STATE, action ) {
         switch ( action.type ) {
-            case SET_FORM:
+            case SET_FORMS:
                 return {
                     ...state,
                     forms: action.forms
@@ -67,12 +118,19 @@ export const STORE = {
                     ...state,
                     formPreviews:state.formPreviews
                 };
-            case  SET_CURRENT_FORM_ID:
-                return{
+            case SET_FORM :
+                let forms = state.forms;
+                const index = findFormIndexById(state, action.form.ID );
+                if(-1 <= index){
+                    forms[index] = action.from;
+                }else{
+                    forms.push(action.form);
+                }
+                console.log(forms);
+                return {
                     ...state,
-                    currentFormId:action.formId
+                    forms: forms
                 };
-
 
         }
 
@@ -80,9 +138,15 @@ export const STORE = {
     },
 
     actions: {
-        setForms( forms ) {
+        setForm(form){
             return {
                 type: SET_FORM,
+                form: form
+            }
+        },
+        setForms( forms ) {
+            return {
+                type: SET_FORMS,
                 forms:forms
             };
         },
@@ -93,12 +157,6 @@ export const STORE = {
                 html:html
             }
         },
-        setCurrentFormId(formId) {
-            return {
-                type: SET_CURRENT_FORM_ID,
-                formId: formId,
-            }
-        }
     },
     selectors: {
         getForm( state, formId ) {
@@ -107,13 +165,25 @@ export const STORE = {
         getForms( state ){
             return state.forms;
         },
-        getCurrentForm( state ){
-            return state.currentFormId
-        },
         getFormPreview( state,formId ){
-            console.log(formId);
-            return state.formPreviews[ formId ];
+            return state.hasOwnProperty( formId )
+                ?state.formPreviews[ formId ]
+                : '';
+        },
+        getFormPreviews(state){
+            return state.formPreviews;
         }
+    },
+    resolvers: {
+        async getForm( state, formId ) {
+            const form = await wp.apiRequest({
+                url: `${cfAdmin.api.form}${formId}?preview=false`,
+                method: 'GET',
+                cache: true
+
+            } );
+            dispatch( CALDERA_FORMS_STORE_NAME ).setForm( form );
+        },
     },
 
 };
