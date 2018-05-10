@@ -11,5 +11,15 @@
             "role" : "Lead Developer"
         }
     ],
-    "homepage" : "http://calderaforms.com"
+    "homepage" : "http://calderaforms.com",
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.2",
+        "jakub-onderka/php-parallel-lint": "^1.0"
+    },
+    "scripts" : {
+        "clean" : "composer fixes && composer lints",
+        "fixes" : "phpcbf classes/ && phpcbf processors/ && phpcbf ui/",
+        "sniffs" : "phpcs classes/ && phpcs processors/ && phpcs ui/",
+        "lints" : "parallel-lint classes/ && parallel-lint processors/ && parallel-lint ui/"
+    }
 }
