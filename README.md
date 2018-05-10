@@ -5,12 +5,12 @@ Drag & Drop WordPress Responsive Form Builder
 
 
 ## Docs, Add-ons & More Information:
-* [More Information](https://calderaforms.com/)
+* [Getting Started](https://calderaforms.com/getting-started)
 * [Documentation](https://calderaforms.com/documentation/caldera-forms-documentation/)
 * [Caldera Forms Pro](https://calderaforms.com/pro)
 
 ## Development
-
+[Contributor Guidleines](https://github.com/CalderaWP/Caldera-Forms/blob/master/CONTRIBUTING.md)
 
 ### Install for development
 Requires: git, npm, Grunt.
@@ -55,7 +55,7 @@ This is the old stuff, built with grunt.
 
 ## Contributing/ Using This Repo, Etc.
 * The default branch is "master" that should be the same as WordPress.org.
-* Development happens on the "develop" branch.
+* Development happens on the "develop" branch. [There may be an exception, see: https://github.com/CalderaWP/Caldera-Forms/blob/master/CONTRIBUTING.md#current-git-workflow--php-compatibility](https://github.com/CalderaWP/Caldera-Forms/blob/master/CONTRIBUTING.md#current-git-workflow--php-compatibility)
 * If you find a bug, or would like to make a feature request, [please open an issue](https://github.com/CalderaWP/Caldera-Forms/issues/).
 * If you fixed a bug, or made a new feature, please submit a pull request against the develop branch.
 
