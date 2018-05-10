@@ -112,7 +112,7 @@ export const STORE = {
                     forms: action.forms
                 };
             case ADD_FORM_PREVIEW:
-                state.formPreviews[action.formId] = action.html;
+                state.formPreviews[action.formId] = action.preview;
 
                 return {
                     ...state,
@@ -149,11 +149,11 @@ export const STORE = {
                 forms:forms
             };
         },
-        addFormPreview(formId,html){
+        addFormPreview(formId,preview){
             return {
                 type: ADD_FORM_PREVIEW,
                 formId: formId,
-                html:html
+                preview:preview
             }
         },
     },
@@ -165,9 +165,10 @@ export const STORE = {
             return state.forms;
         },
         getFormPreview( state,formId ){
-            return state.hasOwnProperty( formId )
+            return state.formPreviews.hasOwnProperty( formId )
                 ?state.formPreviews[ formId ]
                 : '';
+
         },
         getFormPreviews(state){
             return state.formPreviews;

@@ -3,8 +3,8 @@ import {appendAssets} from "../../functions/appendAssets";
 const { withSelect } = wp.data;
 const Spinner = wp.components.Spinner;
 
-function createMarkup(preview) {
-    return {__html: preview};
+function createMarkup(previewHtml) {
+    return {__html: previewHtml};
 }
 
 /**
@@ -17,11 +17,11 @@ function createMarkup(preview) {
  * @constructor
  */
 export const FormPreview = (props) => {
-    const preview = props.previews[props.formId];
     const className = 'caldera-forms-form-preview-' + props.formId;
-    if (undefined !== preview && preview.html ) {
-        appendAssets(preview.css, preview.js);
-        return <div className={className} dangerouslySetInnerHTML={createMarkup(preview.html)}/>;
+    if (undefined !== props.preview && props.preview.html ) {
+
+        appendAssets(props.preview.css, props.preview.js);
+        return <div className={className} dangerouslySetInnerHTML={createMarkup(props.preview.html)}/>;
     } else {
         return <div className={className}><Spinner /></div>;
     }
@@ -32,10 +32,10 @@ export const FormPreview = (props) => {
  * Wrap with data selectors
  */
 export const FormPreviewWithSelect = withSelect( (select, ownProps ) => {
-    const { getFormPreviews,getForm } = select( CALDERA_FORMS_STORE_NAME);
+    const { getFormPreview,getForm } = select( CALDERA_FORMS_STORE_NAME);
     return {
         form: getForm(ownProps.formId),
-        previews: getFormPreviews(),
+        preview: getFormPreview(ownProps.formId),
     };
 } )( FormPreview );
 

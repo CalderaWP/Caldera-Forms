@@ -52,6 +52,7 @@ registerBlockType( 'calderaforms/cform', {
         if( 'false' !== attributes.formId ){
             loadPreview(attributes.formId);
         }
+
         return (
 			<div>
                 <InspectorControls>
