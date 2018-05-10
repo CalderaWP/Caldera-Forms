@@ -29,7 +29,7 @@ function caldera_forms_sanitize( $input, $params = array() ){
  * @return string
  */
 function caldera_forms_very_safe_string( $string ){
-	return trim( strip_tags( stripslashes_deep( $string ) ) );
+	return Caldera_Forms_Sanitize::remove_scripts(trim( strip_tags( stripslashes_deep( $string ) ) ) );
 }
 
 

@@ -34,7 +34,7 @@ class Caldera_Forms_Admin_Assets {
 		self::maybe_register_all_admin();
 		wp_enqueue_style( 'wp-color-picker' );
 		self::enqueue_script( 'edit-fields' );
-		self::enqueue_script( 'edit-editor' );
+		self::enqueue_script( 'editor' );
 		self::enqueue_style( 'editor-grid' );
 
 		wp_enqueue_script( 'jquery-ui-users' );
@@ -58,24 +58,12 @@ class Caldera_Forms_Admin_Assets {
 
 		Caldera_Forms_Render_Assets::enqueue_style( 'grid' );
 		self::enqueue_style( 'admin' );
-		$data = array(
-			'adminAjax' => esc_url_raw( admin_url( 'admin-ajax.php' ) ),
-			'rest' => array(
-				'root' => esc_url_raw( Caldera_Forms_API_Util::url() ),
-				'nonce' => Caldera_Forms_API_Util::get_core_nonce()
-			)
-		);
-
-		if( Caldera_Forms_Admin::is_edit( ) ){
-			$form_id = trim( $_GET[ Caldera_Forms_Admin::EDIT_KEY ] );
-			$data[ 'rest' ][ 'form' ] = esc_url_raw( Caldera_Forms_API_Util::url( 'forms/' . $form_id, true ) );
-			$data[ 'rest' ][ 'revisions' ] = esc_url_raw( Caldera_Forms_API_Util::url( 'forms/' . $form_id . '/revisions', true ) );
-		}
-
-		wp_localize_script( self::slug( 'admin' ), 'CF_ADMIN', $data  );
+		$slug = self::slug( 'admin' );
+		self::set_cf_admin($slug);
 
 		self::enqueue_style( 'modal' );
 		self::enqueue_script( 'admin' );
+		Caldera_Forms_Render_Assets::enqueue_style( 'front' );
 		Caldera_Forms_Render_Assets::enqueue_style( 'field' );
 
 		self::enqueue_script( 'baldrick' );
@@ -101,23 +89,14 @@ class Caldera_Forms_Admin_Assets {
 			'password-strength-meter'
 		), $version );
 
-		if( Caldera_Forms_Render_Assets::should_minify() ){
-			wp_register_script( Caldera_Forms_Render_Assets::make_slug( 'inputmask' ), Caldera_Forms_Render_Assets::make_url( 'inputmask' ), array( 'jquery' ), $version );
-		}
-
 		wp_register_script( self::slug( 'edit-fields' ), Caldera_Forms_Render_Assets::make_url( 'fields' ), array(
 			'jquery',
 			'wp-color-picker',
-			Caldera_Forms_Render_Assets::make_slug( 'inputmask' )
-
 		), $version );
-
-		//this is bad, but fixes -> https://github.com/CalderaWP/Caldera-Forms/issues/1141
-		wp_register_script( self::slug( 'edit-editor' ), CFCORE_URL . 'assets/js/edit.js', array( 'jquery', 'wp-color-picker' ), $version );
 
 		wp_register_script( self::slug(  'support-page' ), Caldera_Forms_Render_Assets::make_url( 'support-page' ), array( 'jquery' ), $version );
 
-		wp_localize_script( self::slug( 'edit-fields' ), 'CF_ADMIN_TOOLTIPS', self::get_tooltips() );
+		wp_localize_script( self::slug( 'editor' ), 'CF_ADMIN_TOOLTIPS', self::get_tooltips() );
 		/**
 		 * Runs after scripts are registered for Caldera Forms admin
 		 *
@@ -195,6 +174,10 @@ class Caldera_Forms_Admin_Assets {
 	 * @return string
 	 */
 	public static function slug( $slug, $script = true ){
+		if( 'edit-editor' === $slug || 'editor' === $slug ){
+			return Caldera_Forms_Render_Assets::make_slug( 'editor' );
+		}
+
 		if( 'baldrick' == $slug ){
 			$slug = Caldera_Forms::PLUGIN_SLUG . '-' . $slug;
 			return $slug;
@@ -284,6 +267,44 @@ class Caldera_Forms_Admin_Assets {
 		 * @since 1.5.0.7
 		 */
 		return apply_filters( 'caldera_forms_admin_tooltip_strings', $tooltips );
+	}
+
+	/**
+	 * Prepare data to pass to wp_localize_script in CF_ADMIN
+	 *
+	 * @since 1.6.2
+	 *
+	 * @return array
+	 */
+	protected static function data_to_localize(){
+		$data = array(
+			'adminAjax' => esc_url_raw(admin_url('admin-ajax.php')),
+			'rest' => array(
+				'root' => esc_url_raw(Caldera_Forms_API_Util::url()),
+				'nonce' => Caldera_Forms_API_Util::get_core_nonce()
+			)
+		);
+		$api_config = new Caldera_Forms_API_JsConfig;
+		$data = array_merge($data, $api_config->toArray());
+
+		if (Caldera_Forms_Admin::is_edit()) {
+			$form_id = trim($_GET[Caldera_Forms_Admin::EDIT_KEY]);
+			$data['rest']['form'] = esc_url_raw(Caldera_Forms_API_Util::url('forms/' . $form_id, true));
+			$data['rest']['revisions'] = esc_url_raw(Caldera_Forms_API_Util::url('forms/' . $form_id . '/revisions', true));
+		}
+		return $data;
+	}
+
+	/**
+	 * Sets up CF_ADMIN variable in JS land via wp_localize_script
+	 *
+	 * @since 1.6.2
+	 *
+	 * @param $slug
+	 */
+	public static function set_cf_admin($slug) {
+		$data = self::data_to_localize();
+		wp_localize_script($slug, 'CF_ADMIN', $data);
 	}
 
 }

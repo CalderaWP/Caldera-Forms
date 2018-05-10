@@ -81,7 +81,7 @@ function CalderaFormsAdminClippys2( elId, config, $ ){
 			crossDomain: true
 		} ).done( function(r){
 			return r;
-		}).error( function(){
+		}).fail( function(){
 			return false;
 		});
 	}
@@ -96,4 +96,8 @@ function CalderaFormsAdminClippys2( elId, config, $ ){
 	}
 
 
+}
+
+function CalderaFormsAdminClippys(elId, config, $){
+	return new CalderaFormsAdminClippys2( elId, config, $ );
 }

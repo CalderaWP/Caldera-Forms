@@ -94,7 +94,6 @@ class Caldera_Forms_Admin {
 	 */
 	private static $admin_notices;
 
-
 	/**
 	 * Initialize the plugin by setting localization, filters, and administration functions.
 	 *
@@ -156,6 +155,8 @@ class Caldera_Forms_Admin {
 		add_action( 'init', array( 'Caldera_Forms_Admin_Resend', 'watch_for_resend' ) );
 
         add_action( 'caldera_forms_admin_footer', array( 'Caldera_Forms_Email_Settings', 'ui' ) );
+
+		add_action(  'caldera_forms_admin_init', array( __CLASS__ , 'init_privacy_settings' ) );
 
 		/**
 		 * Runs after Caldera Forms admin is initialized
@@ -1273,15 +1274,15 @@ class Caldera_Forms_Admin {
 							wp_die( esc_html__( 'Form must have a name.', 'caldera-forms' ) );
 						}
 
-
 						$data[ 'name' ] = strip_tags( $_POST[ 'name' ] );
-
-						$new_form_id = Caldera_Forms_Forms::import_form( $data );
+                        $trusted = isset( $_POST[ 'import_trusted' ] ) ? boolval( $_POST[ 'import_trusted' ] ) : false;
+						$new_form_id = Caldera_Forms_Forms::import_form( $data, $trusted );
 						if( is_string( $new_form_id )  ){
 
 							cf_redirect( add_query_arg(array(
 								'page' => 'caldera-forms',
-								'edit' => $new_form_id
+								'edit' => $new_form_id,
+                                't' => $trusted
 							), admin_url( 'admin.php' ) ), 302 );
 							exit;
 
@@ -2001,6 +2002,24 @@ class Caldera_Forms_Admin {
 		}
 
 		return $send;
+	}
+
+	/**
+	 * Setup privacy settings
+     *
+     * @since 1.6.1
+     *
+     * @uses "caldera_forms_admin_init" action
+	 */
+	public static function init_privacy_settings(){
+	    if( self::is_edit() ){
+	        $form = Caldera_Forms_Forms::get_form( caldera_forms_very_safe_string( $_GET[ self::EDIT_KEY ] ) );
+			if ( is_array( $form ) && isset( $form[ 'fields' ] ) ) {
+				$privacy = new Caldera_Forms_Admin_Privacy($form);
+				add_action('caldera_forms_field_wrapper_before_field_setup', array($privacy, 'add_personally_identifying_question'), 5, 3);
+			}
+        }
+
 	}
 
 }

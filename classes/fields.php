@@ -65,6 +65,8 @@ class Caldera_Forms_Fields {
 	/**
 	 * Check if a field definition has defined a specific "not support" argument
 	 *
+	 * Use to check if field of $type does $not_support
+	 *
 	 * @since 1.5.0
 	 *
 	 * @param string $type The field type
@@ -335,7 +337,10 @@ class Caldera_Forms_Fields {
 					),
 				),
 				"styles"      => array(
-					CFCORE_URL . "fields/range_slider/rangeslider.css",
+					CFCORE_URL . "fields/range_slider/rangeslider.min.css",
+				),
+				"scripts"      => array(
+					CFCORE_URL . "fields/range_slider/rangeslider.min.js",
 				),
 			),
 			'star_rating'      => array(
@@ -359,7 +364,10 @@ class Caldera_Forms_Fields {
 				),
 				"scripts"     => array(
 					CFCORE_URL . "fields/star-rate/jquery.raty.js",
-				)
+				),
+				"styles"      => array(
+					CFCORE_URL . "fields/star-rate/cf-raty.css",
+				),
 			),
 			'utm' => array(
 				'field'       => __( 'UTM', 'caldera-forms' ),
@@ -536,6 +544,12 @@ class Caldera_Forms_Fields {
 					"default"  => array(
 						'format' => 'yyyy-mm-dd'
 					),
+				),
+				"styles"     => array(
+					CFCORE_URL . "fields/date_picker/css/datepicker.css",
+				),
+				"scripts"      => array(
+					CFCORE_URL . "fields/date_picker/cf-datepicker.js",
 				)
 			),
 			'toggle_switch'    => array(
@@ -567,6 +581,9 @@ class Caldera_Forms_Fields {
 				),
 				'styles' => array(
 					CFCORE_URL . 'fields/color_picker/minicolors.min.css'
+				),
+				'scripts' => array(
+					CFCORE_URL . 'fields/color_picker/minicolors.js'
 				)
 			),
 			'states'           => array(

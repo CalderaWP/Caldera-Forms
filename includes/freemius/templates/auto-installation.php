@@ -11,8 +11,7 @@
 	}
 
 	/**
-	 * @var array    $VARS
-	 * @var Freemius $fs
+	 * @var array $VARS
 	 */
     $slug      = $VARS['slug'];
     $plugin_id = $VARS['target_module_id'];

@@ -283,35 +283,36 @@ class Caldera_Forms_Forms {
 	 * @since 1.3.4
 	 *
 	 * @param array $data Form config
+	 * @param bool $trusted Is import data trusted? Default is to trust.
 	 *
 	 * @return string Form ID
 	 */
-	public static function import_form( $data ){
-		$forms = self::get_forms();
-		if ( isset( $data[ 'ID' ] ) && array_key_exists( $data[ 'ID' ], $forms ) ) {
-			// generate a new ID
-			$data[ 'ID' ]   = uniqid( 'CF' );
+    public static function import_form( $data, $trusted = true ){
+        $forms = self::get_forms();
+        if ( isset( $data[ 'ID' ] ) && array_key_exists( $data[ 'ID' ], $forms ) ) {
+            // generate a new ID
+            $data[ 'ID' ]   = self::create_unique_form_id();
+        }
 
-		}
+        if( isset( $data[ 'ID' ] ) ){
+            $id = $data[ 'ID' ];
+        }else{
+            $id = $data[ 'ID' ]   = self::create_unique_form_id();
+        }
 
-		if( isset( $data[ 'ID' ] ) ){
-			$id = $data[ 'ID' ];
-		}else{
-			$id = $data[ 'ID' ]   = uniqid( 'CF' );
-		}
+        $data[ 'ID' ] = trim( $id );
+        unset( $data[ 'db_id' ] );
+		
+        $importer = new Caldera_Forms_Import_Form($data, $trusted );
+        $data = $importer->get_prepared_form();
+        $new_form = self::save_form( $data );
+        if( is_array( $new_form ) && isset( $new_form[ 'ID' ] ) ){
+            $new_form = $new_form[ 'ID' ];
+        }
 
+        return $new_form;
 
-		$data[ 'ID' ] = trim( $id );
-		unset( $data[ 'db_id' ] );
-
-		$new_form = self::save_form( $data );
-		if( is_array( $new_form ) && isset( $new_form[ 'ID' ] ) ){
-			$new_form = $new_form[ 'ID' ];
-		}
-
-		return $new_form;
-
-	}
+    }
 
 	/**
 	 * Apply caldera_forms_get_form filters
@@ -858,6 +859,33 @@ class Caldera_Forms_Forms {
 	}
 
 	/**
+	 * Get all fields of a form that provide personally identifying information
+	 *
+	 * @since 1.6.1
+	 *
+	 * @param array $form Form config
+	 * @param bool $ids_only Optional. If true, indexed array of field IDs is returned. If false, the default, array of field configs, keyed by field ID is returned.
+	 * @return array
+	 */
+	public static function personally_identifying_fields(array $form, $ids_only = false ){
+		$fields = self::get_fields( $form, false );
+		$personally_identifying_fields = array();
+		if( ! empty( $fields ) ){
+			foreach ( $fields as $field_id => $field ){
+				if( Caldera_Forms_Field_Util::is_personally_identifying( $field, $form ) ){
+					$personally_identifying_fields[ $field_id ] = $field;
+				}
+			}
+		}
+
+		if( $ids_only ){
+			return array_keys( $personally_identifying_fields );
+		}
+
+		return $personally_identifying_fields;
+	}
+
+	/**
 	 * Get all revisions of  a forms
 	 *
 	 * @since 1.5.3
@@ -1050,4 +1078,15 @@ class Caldera_Forms_Forms {
 
 
 	}
+
+    /**
+     * Create a unique form ID
+     *
+     * @since 1.6.0
+     *
+     * @return string
+     */
+    public static function create_unique_form_id(){
+        return uniqid( 'CF' );
+    }
 }

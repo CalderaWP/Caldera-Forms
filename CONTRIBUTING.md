@@ -1,8 +1,20 @@
-Caldera Forms, starting with 1.5.6.2 adpoted a new acceptance testing driven development approach. We record a baseline test, based on a protoype, or using last version that a bug was not present on. We then make a branch from develop, named for the github issue, for example feature/42 for issue 42, develop the fix or feature there and then once that branch passes the test, we run all the tests on that branch, if those pass, we merge to develop and then run the tests again on develop.
+
+
+##Overview
+Caldera Forms, starting with 1.5.6.2 adopted a new acceptance testing driven development approach. We record a baseline test, based on a protoype, or using last version that a bug was not present on. We then make a branch from develop, named for the github issue, for example feature/42 for issue 42, develop the fix or feature there and then once that branch passes the test, we run all the tests on that branch, if those pass, we merge to develop and then run the tests again on develop.
 
 If you work for Caldera Labs, you have access in drive to the folder "Acceptance Testing" (SA1+) and are expected to follow those steps.
 
 If you don't work for us, just put in a pull request against the develop branch, we appreciate it and will handle testing. Do not make changes to the develop branch in your local and then submit a PR develop against develop. Please make a branch in your fork, from develop, make changes there and submit a PR of that branch against develop.
+
+=======
+## Current Git Workflow & PHP Compatibility
+The develop branch is currently being used for 1.7 and therefore PHP 5.6 is the minimum supported PHP version.
+
+If 1.6.3+ is developed, a 1.6.x branch (branced from master) will be used. That branch must support PHP 5.2.
+
+Work on the [GDPR compliance](https://github.com/CalderaWP/Caldera-Forms/projects/3) is happening in a branch called "focus3" and is tagged for 1.7, so it can be PHP 5.6+.
+
 
 ## TL;DR
 * Open Github issue

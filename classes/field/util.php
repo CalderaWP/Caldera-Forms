@@ -12,6 +12,11 @@
 class Caldera_Forms_Field_Util {
 
 	/**
+	 * The index of the field config array used to indicate
+	 */
+	const CONFIG_PERSONAL = 'personally_identifying';
+
+	/**
 	 *  Get a field's type
 	 *
 	 * @since 1.4.4
@@ -620,4 +625,21 @@ class Caldera_Forms_Field_Util {
 		return $field_id_attr . '_' . $opt_id;
 	}
 
+	/**
+	 * Check if a field stores personally identifying data
+	 *
+	 * @since 1.6.1
+	 *
+	 * @param array|string $field Field config or field ID
+	 * @param array $form Form config
+	 *
+	 * @return bool
+	 */
+	public static function is_personally_identifying( $field, array $form ) {
+		if (is_string($field)) {
+			$field = self::get_field($field, $form);
+		}
+
+		return isset( $field[ 'config' ][ self::CONFIG_PERSONAL ] ) && rest_sanitize_boolean($field[ 'config' ][ self::CONFIG_PERSONAL ] );
+	}
 }
