@@ -30,6 +30,8 @@ if ( ! version_compare( PHP_VERSION, '5.6.0', '>=' ) ) {
 		</div>
 		<?php
 	}
+	add_shortcode('caldera_form', 'caldera_forms_fallback_shortcode' );
+	add_shortcode('caldera_form_modal', 'caldera_forms_fallback_shortcode' );
 	add_action( 'admin_notices', 'caldera_forms_php_version_nag' );
 }
 elseif ( ! version_compare( $wp_version, '4.7.0', '>=' ) ) {
@@ -42,6 +44,8 @@ elseif ( ! version_compare( $wp_version, '4.7.0', '>=' ) ) {
 		</div>
 		<?php
 	}
+	add_shortcode('caldera_form', 'caldera_forms_fallback_shortcode' );
+	add_shortcode('caldera_form_modal', 'caldera_forms_fallback_shortcode' );
 	add_action( 'admin_notices', 'caldera_forms_wp_version_nag' );
 } else{
 
@@ -180,4 +184,19 @@ elseif ( ! version_compare( $wp_version, '4.7.0', '>=' ) ) {
 
 }
 
+/**
+ * Shortcode handler to be used when Caldera Forms can not be loaded
+ *
+ * @since 1.7.0
+ *
+ * @return string
+ */
+function caldera_forms_fallback_shortcode(){
+	if( current_user_can( 'edit_posts' ) ) {
+		return esc_html__('Your version of WordPress or PHP is incompatible with Caldera Forms.', 'caldera-forms');
+	}
 
+	return esc_html__('Form could not be loaded. Contact the site administrator.', 'caldera-forms');
+
+
+}
