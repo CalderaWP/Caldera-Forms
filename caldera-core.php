@@ -148,3 +148,4 @@ caldera_forms_freemius();
 function caldera_forms_freemius_icon_path(){
 	return CFCORE_PATH . 'assets/build/images/new-icon.png';
 }
+
