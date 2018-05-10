@@ -30,28 +30,25 @@ env:
 
 matrix:
   include:
-    - php: 5.4
-      env: WP_VERSION=latest WP_MULTISITE=0 GHOST=0
-    - php: 5.5
-      env: WP_VERSION=latest WP_MULTISITE=0 GHOST=0
     - php: 5.6
-      env: WP_VERSION=latest WP_MULTISITE=0 GHOST=0
+      env: WP_VERSION=latest WP_MULTISITE=0
     - php: 7.0
-      env: WP_VERSION=latest WP_MULTISITE=0 GHOST=0
+      env: WP_VERSION=latest WP_MULTISITE=0
     - php: 7.1
-      env: WP_VERSION=latest WP_MULTISITE=0 GHOST=0
-    - php: 7.0
-      env: WP_VERSION=latest WP_MULTISITE=1 GHOST=0
-    - php: 5.6
-      env: WP_VERSION=latest WP_MULTISITE=1 GHOST=0
+      env: WP_VERSION=latest WP_MULTISITE=0
+    - php: 7.2
+      env: WP_VERSION=latest WP_MULTISITE=0
+    - php: 7.2
+      env: WP_VERSION=latest WP_MULTISITE=1
     - php: 7.1
-      env: WP_VERSION=4.8.5 WP_MULTISITE=0 GHOST=0
-    - php: 5.6
-      env: WP_VERSION=4.8.5 WP_MULTISITE=0 GHOST=0
+      env: WP_VERSION=trunk WP_MULTISITE=0
     - php: 7.1
-      env: WP_VERSION=4.7.9 WP_MULTISITE=0 GHOST=0
-    - php: 5.6
-      env: WP_VERSION=4.7.9 WP_MULTISITE=0 GHOST=0
+      env: WP_VERSION=4.8.5 WP_MULTISITE=0
+    - php: 7.1
+      env: WP_VERSION=4.8.5 WP_MULTISITE=0
+    - php: 7.1
+      env: WP_VERSION=4.7.9 WP_MULTISITE=0
+
 addons:
   apt:
     packages:
