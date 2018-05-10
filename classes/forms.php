@@ -859,6 +859,33 @@ class Caldera_Forms_Forms {
 	}
 
 	/**
+	 * Get all fields of a form that provide personally identifying information
+	 *
+	 * @since 1.6.1
+	 *
+	 * @param array $form Form config
+	 * @param bool $ids_only Optional. If true, indexed array of field IDs is returned. If false, the default, array of field configs, keyed by field ID is returned.
+	 * @return array
+	 */
+	public static function personally_identifying_fields(array $form, $ids_only = false ){
+		$fields = self::get_fields( $form, false );
+		$personally_identifying_fields = array();
+		if( ! empty( $fields ) ){
+			foreach ( $fields as $field_id => $field ){
+				if( Caldera_Forms_Field_Util::is_personally_identifying( $field, $form ) ){
+					$personally_identifying_fields[ $field_id ] = $field;
+				}
+			}
+		}
+
+		if( $ids_only ){
+			return array_keys( $personally_identifying_fields );
+		}
+
+		return $personally_identifying_fields;
+	}
+
+	/**
 	 * Get all revisions of  a forms
 	 *
 	 * @since 1.5.3

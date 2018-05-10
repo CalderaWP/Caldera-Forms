@@ -72,6 +72,13 @@ class Caldera_Forms_Magic_Doer {
 					$field = Caldera_Forms_Field_Util::get_field_by_slug( $tag, $form );
 				}
 
+				if( 'html' === Caldera_Forms_Field_Util::get_type( $tag, $form ) ){
+					$field = Caldera_Forms_Field_Util::get_field($tag,$form );
+					if( ! empty( $field[ 'config' ][ 'show_in_summary' ] ) ){
+						$value = Caldera_Forms::do_magic_tags( Caldera_Forms_Field_Util::get_default( $field, $form ) );
+					}
+				}
+
 				if( Caldera_Forms_Field_Util::is_file_field( $field, $form ) ){
 					$_value = self::magic_image( $field, $entry, $form );
 					if( false !== $_value ){

@@ -310,21 +310,9 @@ window.addEventListener("load", function(){
 
 		window.CALDERA_FORMS = {};
 
-		/** Check nonce **/
-		if( 'object' === typeof CF_API_DATA ) {
-			var nonceCheckers = {},
-				$el, formId;
-			$('.caldera_forms_form').each(function (i, el) {
-				$el = $(el);
-				formId = $el.data( 'form-id' );
-				nonceCheckers[ formId ] = new CalderaFormsResetNonce( formId, CF_API_DATA, $ );
-				nonceCheckers[ formId ].init();
-			});
-		}
-
 		/** Setup forms */
 		if( 'object' === typeof CFFIELD_CONFIG ) {
-			var form_id, config_object, config, instance, $el, state, protocolCheck, jQueryCheck, $form,
+			var form_id, formId, config_object, config, instance, $el, state, protocolCheck, jQueryCheck, $form,
 				jQueryChecked = false,
 				protocolChecked = false;
 			$('.caldera_forms_form').each(function (i, el) {
@@ -373,7 +361,7 @@ window.addEventListener("load", function(){
                         }
 					});
 
-					
+
 					config_object = new Caldera_Forms_Field_Config( config, $(document.getElementById(form_id)), $, state );
 					config_object.init();
 					$( document ).trigger( 'cf.form.init',{
@@ -513,7 +501,7 @@ function CalderaFormsResetNonce( formId, config, $ ){
 			},data:{
 				form_id: formId
 			}
-		}).success( function( r){
+		}).done( function( r){
 			$nonceField.val( r.nonce );
 			$nonceField.data( 'nonce-time', new Date().getTime() );
 		});
