@@ -17,8 +17,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 
-
-
+global $wp_version;
 if ( ! version_compare( PHP_VERSION, '5.6.0', '>=' ) ) {
 	function caldera_forms_php_version_nag() {
 		?>
@@ -32,7 +31,19 @@ if ( ! version_compare( PHP_VERSION, '5.6.0', '>=' ) ) {
 		<?php
 	}
 	add_action( 'admin_notices', 'caldera_forms_php_version_nag' );
-}else{
+}
+elseif ( ! version_compare( $wp_version, '4.7.0', '>=' ) ) {
+	function caldera_forms_wp_version_nag() {
+		?>
+		<div class="notice notice-error">
+			<p>
+				<?php _e( 'Your version of WordPress is incompatible with Caldera Forms and can not be used.', 'caldera-forms' ); ?>
+				</p>
+		</div>
+		<?php
+	}
+	add_action( 'admin_notices', 'caldera_forms_wp_version_nag' );
+} else{
 
 	define('CFCORE_PATH', plugin_dir_path(__FILE__));
 	define('CFCORE_URL', plugin_dir_url(__FILE__));
