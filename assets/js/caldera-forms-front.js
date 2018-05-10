@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.6.2-b.2 - 2018-05-10 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.6.2-rc.1 - 2018-05-10 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -4301,7 +4301,7 @@ window.addEventListener("load", function(){
 
 		/** Setup forms */
 		if( 'object' === typeof CFFIELD_CONFIG ) {
-			var form_id, config_object, config, instance, $el, state, protocolCheck, jQueryCheck, $form,
+			var form_id, formId, config_object, config, instance, $el, state, protocolCheck, jQueryCheck, $form,
 				jQueryChecked = false,
 				protocolChecked = false;
 			$('.caldera_forms_form').each(function (i, el) {
