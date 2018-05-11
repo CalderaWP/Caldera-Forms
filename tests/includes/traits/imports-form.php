@@ -1,6 +1,10 @@
 <?php
 
-
+/**
+ * Trait Caldera_Forms_Imports_Form
+ *
+ * Helps import forms from JSON
+ */
 trait Caldera_Forms_Imports_Form
 {
 
