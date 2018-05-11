@@ -105,7 +105,6 @@ before_script:
           ;;
       esac
     fi
-  - phpunit -v
   # Setup unit tests
   - |
     if [[ ! -z "$WP_VERSION" ]] ; then
