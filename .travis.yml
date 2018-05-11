@@ -101,6 +101,7 @@ before_script:
           echo "Using PHPUnit 4.x"
           composer global require "phpunit/phpunit:^4"
           ;;
+        *)
           echo "No PHPUnit version handling for PHP version $TRAVIS_PHP_VERSION"
           exit 1
           ;;
