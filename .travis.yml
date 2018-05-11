@@ -38,7 +38,7 @@ matrix:
       env: WP_VERSION=latest WP_MULTISITE=0
     - php: 7.2
       env: WP_VERSION=latest WP_MULTISITE=0
-    - php: 7.2
+    - php: 7.1
       env: WP_VERSION=latest WP_MULTISITE=1
     - php: 7.1
       env: WP_VERSION=trunk WP_MULTISITE=0
@@ -48,6 +48,8 @@ matrix:
       env: WP_VERSION=4.8.5 WP_MULTISITE=0
     - php: 7.1
       env: WP_VERSION=4.7.9 WP_MULTISITE=0
+  allow_failures:
+    - php: 7.2
 
 addons:
   apt:
@@ -103,7 +105,7 @@ before_script:
           ;;
       esac
     fi
-
+  - phpunit -v
   # Setup unit tests
   - |
     if [[ ! -z "$WP_VERSION" ]] ; then
