@@ -131,7 +131,7 @@ class Caldera_Forms_DB_Tables {
 			'cf_forms'
 		);
 
-		if( caldera_forms_pro_is_active() ){
+		if( function_exists( 'caldera_forms_pro_is_active') && caldera_forms_pro_is_active() ){
 		    $tables[] = 'cf_pro_messages';
         }
 
