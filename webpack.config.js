@@ -42,7 +42,6 @@ const extractConfig = {
 
 // Define JavaScript entry points
 const entryPointNames = [
-    'admin',
     'blocks',
     'pro'
 ];

@@ -81,7 +81,7 @@
     "locutus": "^2.0.9",
     "lodash.debounce": "^4.0.8",
     "lodash.isboolean": "^3.0.3",
-    "node-sass": "^4.7.2",
+    "node-sass": "^4.9.0",
     "offline-plugin": "^4.8.4",
     "postcss-loader": "^2.0.9",
     "postcss-nested": "^1.0.0",
