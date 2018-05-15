@@ -158,6 +158,8 @@ class Caldera_Forms_Admin {
 
 		add_action(  'caldera_forms_admin_init', array( __CLASS__ , 'init_privacy_settings' ) );
 
+        add_action( 'caldera_forms_admin_init', array( $this, 'plugin_add_suggested_privacy_content' ), 20 );
+
 		/**
 		 * Runs after Caldera Forms admin is initialized
 		 *
@@ -2021,6 +2023,24 @@ class Caldera_Forms_Admin {
         }
 
 	}
+
+    /**
+     * Return the default suggested privacy policy content.
+     *
+     * @return string The default policy content.
+     */
+    function plugin_get_default_privacy_content() {
+        return
+            '<h2>' . __( 'What personal data Caldera Forms collect and why Caldera Forms collect it' ) . '</h2>' .
+            '<p>' . __( 'This text describes what type of information the admin should include here or what they should do with this info you provide in your template.' ) . '</p>';
+    }
+    /**
+     * Add the suggested privacy policy text to the policy postbox.
+     */
+    function plugin_add_suggested_privacy_content() {
+        $content = self::plugin_get_default_privacy_content();
+        wp_add_privacy_policy_content( __( 'Caldera Forms', $this->plugin_slug ), $content );
+    }
 
 }
 
