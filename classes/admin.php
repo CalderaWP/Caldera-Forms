@@ -2033,19 +2033,19 @@ class Caldera_Forms_Admin {
      *
      * @return string The default policy content.
      */
-    public function cf_get_default_privacy_content() {
+    public static function get_default_privacy_content() {
         return
-            '<h2>' . __( 'What personal data Caldera Forms collect and why Caldera Forms collect it', $this->plugin_slug ) . '</h2>' .
-            '<p>' . __( 'This text describes what type of information the admin should include here or what they should do with this info you provide in your template.', $this->plugin_slug ) . '</p>';
+            '<h2>' . esc_html__( 'What personal data Caldera Forms collect and why Caldera Forms collect it', 'caldera-forms') . '</h2>' .
+            '<p>' . esc_html__( 'This text describes what type of information the admin should include here or what they should do with this info you provide in your template.', 'caldera-forms' ) . '</p>';
     }
     /**
      * Add the suggested privacy policy text to the policy postbox.
      *
      * @since 1.7.0
      */
-    public function cf_add_suggested_privacy_content() {
-        $content = self::cf_get_default_privacy_content();
-        wp_add_privacy_policy_content( __( 'Caldera Forms', $this->plugin_slug ), $content );
+    public static function cf_add_suggested_privacy_content() {
+        $content = self::get_default_privacy_content();
+        wp_add_privacy_policy_content( esc_html__( 'Caldera Forms', 'caldera-forms' ), $content );
     }
 
     /**
@@ -2054,7 +2054,7 @@ class Caldera_Forms_Admin {
      * @since 1.7.0
      *
      */
-    public function cf_delete_all_form_entries() {
+    public static function cf_delete_all_form_entries() {
 
         $formId = isset($_POST['formId']) ? $_POST['formId'] : '';
 
