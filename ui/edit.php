@@ -1093,7 +1093,7 @@ do_action('caldera_forms_edit_end', $element);
 </script>
 <script type="text/html" id="caldera_field_config_wrapper_templ">
 <?php
-    caldera_forms_field_wrapper_template();
+    caldera_forms_field_wrapper_template('{{id}}' );
 ?>
 </script>
 <script type="text/html" id="field-option-row-tmpl">
