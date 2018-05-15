@@ -24,7 +24,8 @@
     "homepage": "http://calderaforms.com",
     "require": {
         "php": ">=5.6.0",
-        "inpsyde/wonolog": "^1.0"
+        "inpsyde/wonolog": "^1.0",
+        "calderawp/caldera-forms-query" : "^0.1"
     },
     "autoload": {
         "psr-4": {
