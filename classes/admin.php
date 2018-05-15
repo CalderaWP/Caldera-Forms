@@ -2048,7 +2048,30 @@ class Caldera_Forms_Admin {
         wp_add_privacy_policy_content( __( 'Caldera Forms', $this->plugin_slug ), $content );
     }
 
+    /**
+     * Ajax action delete all entries saved for a form
+     *
+     * @since 1.7.0
+     *
+     */
+    public function cf_delete_all_form_entries() {
 
+        $formId = isset($_POST['formId']) ? $_POST['formId'] : '';
+
+        $entries = \calderawp\CalderaFormsQueries\CalderaFormsQueries()->selectByFormId( $formId, false );
+        $entryIds = [];
+        foreach( array_column( $entries, 'entry' ) as $entry ){
+            $entryIds[] = $entry->id;
+        }
+        if( ! empty( $entryIds ) ) {
+            Caldera_Forms_Entry_Bulk::delete_entries($entryIds);
+            echo 'Entries-deleted';
+        } else {
+            echo 'No-entries';
+        }
+
+        wp_die();
+    }
 
 }
 

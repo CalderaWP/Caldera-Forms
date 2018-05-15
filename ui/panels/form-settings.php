@@ -115,6 +115,24 @@
 		</fieldset>
 	</div>
 
+    <div class="caldera-config-group">
+        <label id="label-cf-delete-all-entries" for="cf-delete-entries-field">
+            <?php esc_html_e( 'Delete all entries', 'caldera-forms' ); ?>
+        </label>
+        <div class="caldera-config-field">
+            <button id="cf-delete-all-form-entries" class="button"><?php _e('Delete all entries', 'caldera-forms'); ?></button>
+            <div id="cf-confirm-delete-all-form-entries" style="display: none;">
+                <p><?php _e('Are you sure you want to delete all the entries saved for this form ?', 'caldera-forms'); ?></p>
+                <button id="cf-yes-confirm-delete-all-form-entries" class="button" data-cf-form-id="<?php echo $element[ 'ID' ]; ?>"><?php _e('Yes', 'caldera-forms'); ?></button>
+                <button id="cf-no-confirm-delete-all-form-entries" class="button"><?php _e('No', 'caldera-forms'); ?></button>
+            </div>
+            <p class="description" id="cf-delete-entries-description">
+                <?php esc_html_e( 'Delete all the entries saved for this form.', 'caldera-forms' ); ?>
+            </p>
+        </div>
+    </div>
+
+
 	<div id="caldera-pin-rules" <?php if ( empty( $element[ 'pinned' ] ) ){ ?>style="display:none;"<?php } ?>>
 		<div class="caldera-config-group">
 			<fieldset>
@@ -205,25 +223,25 @@
 
 
 	<div class="caldera-config-group">
-		<label for="cf-gravatar-field">
-			<?php esc_html_e( 'Gravatar Field', 'caldera-forms' ); ?>
-		</label>
-		<div class="caldera-config-field">
-			<select id="cf-gravatar-field" aria-describedby="cf-gravatar-field-description" style="width:500px;" class="field-config caldera-field-bind" name="config[avatar_field]"
-			        data-exclude="system" data-default="<?php if ( ! empty( $element[ 'avatar_field' ] ) ) {
-				echo $element[ 'avatar_field' ];
-			} ?>" data-type="email">
-				<?php
-				if ( ! empty( $element[ 'avatar_field' ] ) ) {
-					echo '<option value="' . $element[ 'avatar_field' ] . '"></option>';
-				}
-				?>
-			</select>
-			<p class="description" id="cf-gravatar-field-description">
-				<?php esc_html_e( 'Used when viewing an entry from a non-logged in user.', 'caldera-forms' ); ?>
-			</p>
-		</div>
-	</div>
+        <label for="cf-gravatar-field">
+            <?php esc_html_e( 'Gravatar Field', 'caldera-forms' ); ?>
+        </label>
+        <div class="caldera-config-field">
+            <select id="cf-gravatar-field" aria-describedby="cf-gravatar-field-description" style="width:500px;" class="field-config caldera-field-bind" name="config[avatar_field]"
+                    data-exclude="system" data-default="<?php if ( ! empty( $element[ 'avatar_field' ] ) ) {
+                echo $element[ 'avatar_field' ];
+            } ?>" data-type="email">
+                <?php
+                if ( ! empty( $element[ 'avatar_field' ] ) ) {
+                    echo '<option value="' . $element[ 'avatar_field' ] . '"></option>';
+                }
+                ?>
+            </select>
+            <p class="description" id="cf-gravatar-field-description">
+                <?php esc_html_e( 'Used when viewing an entry from a non-logged in user.', 'caldera-forms' ); ?>
+            </p>
+        </div>
+    </div>
 
 	<?php
 

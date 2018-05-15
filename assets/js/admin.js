@@ -2,8 +2,10 @@ var baldrickTriggers, loop_loader;
 
 jQuery(document).ready(function($){
 	var adminAJAX;
-	if( 'object' == typeof  CF_ADMIN ){
-		adminAJAX = CF_ADMIN.adminAjax
+	if( 'object' === typeof  CF_ADMIN ){
+		adminAJAX = CF_ADMIN.adminAjax;
+		yesDeletedText = CF_ADMIN.yesDeleted;
+		noDeletedText = CF_ADMIN.noDeleted;
 	}else{
 		//yolo
 		adminAJAX = ajaxurl;
@@ -129,6 +131,52 @@ jQuery(document).ready(function($){
 			CFclippy.remove();
 		}
 	});
+
+
+  /**
+   * Delete all entries saved in a form form Settings tab in the form
+   *
+   * @since 1.7.0
+   */
+  //Display controls
+  $('#cf-delete-all-form-entries').click(function(e) {
+    e.preventDefault();
+    $('#cf-confirm-delete-all-form-entries').slideToggle("fast");
+  });
+  //No clicked
+  $('#cf-no-confirm-delete-all-form-entries').click(function(e) {
+    e.preventDefault();
+    $('#cf-confirm-delete-all-form-entries').slideToggle("fast");
+  });
+  //Yes clicked
+  $('#cf-yes-confirm-delete-all-form-entries').click(function(e) {
+    e.preventDefault();
+    var formId = $( this ).attr('data-cf-form-id');
+    $.post(
+      adminAJAX,
+      {
+        'action': 'cf_delete_all_form_entries',
+        'formId': formId
+      },
+      function(response) {
+
+        if( response === "No-entries") {
+          $('#label-cf-delete-all-entries').append("<div class='NoDeleted'>" + noDeletedText + "</div>");
+          setTimeout(function() {
+            $('.NoDeleted').remove();
+          }, 5000);
+          $('#cf-confirm-delete-all-form-entries').slideToggle("fast");
+				} else if( response === "Entries-deleted") {
+          $('#label-cf-delete-all-entries').append("<div class='YesDeleted'>" + yesDeletedText + "</div>");
+          setTimeout(function() {
+            $('.YesDeleted').remove();
+          }, 5000);
+          $('#cf-confirm-delete-all-form-entries').slideToggle("fast");
+				}
+
+      });
+
+  });
 
 });
 

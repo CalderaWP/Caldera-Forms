@@ -282,7 +282,9 @@ class Caldera_Forms_Admin_Assets {
 			'rest' => array(
 				'root' => esc_url_raw(Caldera_Forms_API_Util::url()),
 				'nonce' => Caldera_Forms_API_Util::get_core_nonce()
-			)
+			),
+            'yesDeleted' => esc_html__( 'All entries were deleted.', 'caldera-forms' ),
+            'noDeleted' => esc_html__( 'No entry was deleted.', 'caldera-forms' ),
 		);
 		$api_config = new Caldera_Forms_API_JsConfig;
 		$data = array_merge($data, $api_config->toArray());
