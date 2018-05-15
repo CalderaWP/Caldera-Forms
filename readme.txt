@@ -793,9 +793,15 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 
 == Changelog ==
-= Caldera Forms 1.6.2 (May X, 2018) =
+= Caldera Forms 1.6.3 (May 15, 2018) The Mask =
+See: [(https://calderaforms.com/updates/caldera-forms-1-6-3?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-6-3)
 
-[Caldera Forms 1.6.2 Release Candidate 1](https://calderaforms.com/updates/caldera-forms-1-6-2-rc.1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-6-2-beta-1) May 10, 2018
+* FIXED: Could not edit new fields, without saving and reloading first.
+* FIXED: Input field masking was not working.
+
+= Caldera Forms 1.6.2 (May 14, 2018) GDPR Part 1 =
+See: [(https://calderaforms.com/updates/caldera-forms-1-6-2?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-6-2)
+
 * FIXED: Fixed deprecated jQuery XHR syntax in some places. Was causing jQuery errors in some browsers.
 * FIXED: mp3s were not allowed by some browsers when they should have been for file fields.
 * FIXED: If spam was detected by CF Pro entry was still shown in entry viewer.
@@ -807,6 +813,9 @@ This could also be a sign of a more serious issue on your server, but is probabl
 * ADDED: Option to mark fields as containing personally identifying information.
 * ADDED: caldera_forms_field_wrapper_after_delete action
 * ADDED: caldera_forms_field_wrapper_before_delete action
+* ADDED: Automatic repair of pro tables if not present.
+
+[Caldera Forms 1.6.2 Release Candidate 1](https://calderaforms.com/updates/caldera-forms-1-6-2-rc.1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-6-2-beta-1) May 10, 2018
 
 = Caldera Forms 1.6.1.1 (April 12, 2018)  =
 See: [https://calderaforms.com/updates/caldera-forms-1-6-1-1](https://calderaforms.com/updates/caldera-forms-1-6-1-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-6-1)
@@ -2017,3 +2026,6 @@ See: https://calderaforms.com/updates/caldera-forms-1-5-2
 
 = 1.6.1.1 =
 Security release related to CVE-2018-7747
+
+= 1.6.2 =
+See: https://calderaforms.com/updates/caldera-forms-1-6.2

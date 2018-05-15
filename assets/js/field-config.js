@@ -19,7 +19,8 @@
 
      var $submits = $form.find(':submit, .cf-page-btn-next' );
 
-     /**
+
+    /**
       * Start system
       *
       * @since 1.5.0
@@ -28,6 +29,8 @@
          $.each( configs, function( i, config ){
              fields[ config.id ] = self[config.type]( config );
          } );
+         
+         setupInputMasks();
      };
 
      /**
@@ -727,6 +730,16 @@
             color_picker_init();
         });
     };
+
+
+    /**
+     * Add input mask to any field that has the data attributes for it
+     *
+     * @since 1.6.2
+     */
+    function setupInputMasks() {
+        $form.find('[data-inputmask]').inputmask();
+    }
 
  }
 

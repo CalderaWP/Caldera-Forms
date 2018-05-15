@@ -16,6 +16,11 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+define('CFCORE_PATH', plugin_dir_path(__FILE__));
+define('CFCORE_URL', plugin_dir_url(__FILE__));
+define( 'CFCORE_VER', '1.6.3' );
+define('CFCORE_EXTEND_URL', 'https://api.calderaforms.com/1.0/');
+define('CFCORE_BASENAME', plugin_basename( __FILE__ ));
 
 global $wp_version;
 if ( ! version_compare( PHP_VERSION, '5.6.0', '>=' ) ) {

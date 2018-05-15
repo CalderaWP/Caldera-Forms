@@ -130,6 +130,11 @@ class Caldera_Forms_DB_Tables {
 			'cf_form_entry_values',
 			'cf_forms'
 		);
+
+		if( function_exists( 'caldera_forms_pro_is_active') && caldera_forms_pro_is_active() ){
+		    $tables[] = 'cf_pro_messages';
+        }
+
 		foreach ( $tables as &$table ){
 			$table = $this->wpdb->prefix . $table;
 		}
@@ -299,6 +304,21 @@ class Caldera_Forms_DB_Tables {
 				) " . $this->charset_collate . ";";
 		dbDelta( $forms_table );
 	}
+
+
+    /**
+     * Add cf_pro_messages table
+     *
+     * Warning: does not check if it exists first, which could cause SQL errors.
+     *
+     * @since 1.6.2
+     */
+	public function pro_messages(){
+        if ( function_exists( 'caldera_forms_pro_db_delta_1' ) ) {
+            caldera_forms_pro_db_delta_1();
+            caldera_forms_pro_db_delta_2();
+        }
+    }
 
 
 	/**

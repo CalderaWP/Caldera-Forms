@@ -512,6 +512,11 @@ class Caldera_Forms_Render_Assets {
 			$min = self::should_minify( $script );
 		}
 
+		//@SEE https://github.com/CalderaWP/Caldera-Forms/issues/2487#issuecomment-388445315
+		if( 'edit' === $name ){
+			$min = false;
+		}
+
 		if( self::is_client_entry_point( $name ) ){
 			if( $script ){
 				return "{$root_url}clients/{$name}/build/index.min.js";
