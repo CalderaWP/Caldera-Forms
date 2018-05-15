@@ -8,13 +8,6 @@ notifications:
     on_success: never
     on_failure: change
 
-branches:
-  only:
-    - master
-    - /^feature\/.*$/
-    - develop
-    - /^release\/.*$/
-
 cache:
   directories:
     - vendor
