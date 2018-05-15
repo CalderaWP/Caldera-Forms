@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c1d07df8ba8de7814626ab03747b556f",
+    "content-hash": "7e02403e0c141eba09a6a7a20e85925a",
     "packages": [
         {
             "name": "calderawp/caldera-containers",
@@ -50,16 +50,16 @@
         },
         {
             "name": "calderawp/caldera-forms-query",
-            "version": "0.1.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CalderaWP/caldera-forms-query.git",
-                "reference": "9fa2016df6635e910097b26a4437df1f12b996a2"
+                "reference": "527d79ed169861a0db38e730e1ed8f374b533d04"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CalderaWP/caldera-forms-query/zipball/9fa2016df6635e910097b26a4437df1f12b996a2",
-                "reference": "9fa2016df6635e910097b26a4437df1f12b996a2",
+                "url": "https://api.github.com/repos/CalderaWP/caldera-forms-query/zipball/527d79ed169861a0db38e730e1ed8f374b533d04",
+                "reference": "527d79ed169861a0db38e730e1ed8f374b533d04",
                 "shasum": ""
             },
             "require": {
@@ -102,20 +102,20 @@
                 }
             ],
             "description": "Caldera Forms Query Library",
-            "time": "2018-05-14T17:38:24+00:00"
+            "time": "2018-05-15T16:17:46+00:00"
         },
         {
             "name": "inpsyde/wonolog",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inpsyde/Wonolog.git",
-                "reference": "addffa6208968fe168392ce9d52d519549fcad1b"
+                "reference": "01605cd9e5a471df4cf9b8ed5260fd1355e8da11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inpsyde/Wonolog/zipball/addffa6208968fe168392ce9d52d519549fcad1b",
-                "reference": "addffa6208968fe168392ce9d52d519549fcad1b",
+                "url": "https://api.github.com/repos/inpsyde/Wonolog/zipball/01605cd9e5a471df4cf9b8ed5260fd1355e8da11",
+                "reference": "01605cd9e5a471df4cf9b8ed5260fd1355e8da11",
                 "shasum": ""
             },
             "require": {
@@ -123,8 +123,7 @@
                 "php": ">=5.6"
             },
             "require-dev": {
-                "brain/monkey": "^2.0.2",
-                "doctrine/instantiator": "1.0.5",
+                "brain/monkey": "^2.2.0",
                 "mikey179/vfsstream": "~1.6.4",
                 "phpunit/phpunit": "^5.7.21"
             },
@@ -170,7 +169,7 @@
                 "psr-3",
                 "wordpress"
             ],
-            "time": "2018-02-08T07:16:01+00:00"
+            "time": "2018-05-15T15:39:44+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -519,7 +518,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "calderawp/caldera-forms-query": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

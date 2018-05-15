@@ -49,11 +49,11 @@ matrix:
 addons:
   apt:
     packages:
-      - libjpeg-dev
-      - libpng12-dev
-      - php5-fpm
-      - php5-mysql
-      - nginx
+    - libjpeg-dev
+    - libpng12-dev
+    - php5-fpm
+    - php5-mysql
+    - nginx
   ssh_known_hosts:
   - gitlab.com
   - github.com

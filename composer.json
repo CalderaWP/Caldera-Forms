@@ -25,7 +25,7 @@
     "require": {
         "php": ">=5.6.0",
         "inpsyde/wonolog": "^1.0",
-        "calderawp/caldera-forms-query" : "^0.1"
+        "calderawp/caldera-forms-query" : "dev-master"
     },
     "autoload": {
         "psr-4": {
