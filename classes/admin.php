@@ -2022,7 +2022,16 @@ class Caldera_Forms_Admin {
 			}
         }
 
-	}
+        Caldera_Forms_Admin_Factory::menu_page( 'privacy', __( 'Privacy Settings', 'caldera-forms' ), '<div id="caldera-forms-privacy-settings"></div>',[
+                'scripts' => [
+                    'privacy',
+                    'admin',
+                ]
+        ] );
+
+
+
+    }
 
     /**
      * Return the default suggested privacy policy content.

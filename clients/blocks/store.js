@@ -1,74 +1,17 @@
 const { apiRequest } = wp;
 const { registerStore, dispatch } = wp.data;
 export const CALDERA_FORMS_STORE_NAME = 'caldera-forms/forms';
-export const SET_FORMS = 'SET_FORMS';
-export const SET_FORM = 'SET_FORM';
-export const SET_CURRENT_FORM_ID = 'SET_CURRENT_FORM_ID';
-export const ADD_FORM_PREVIEW = 'ADD_FORM_PREVIEW';
-let printedData = 'object' === typeof  CF_FORMS ? CF_FORMS : [];
-let cfAdmin = 'object' === typeof CF_ADMIN ? CF_ADMIN : {};
+import {SET_FORM} from "../state/actions/form";
+import {SET_FORMS} from "../state/actions/form";
+import {ADD_FORM_PREVIEW} from "../state/actions/form";
+import {actionFunctions} from "../state/actions/form";
+import {setFormInState,setFormsInState} from "../state/actions/mutations";
+import {findFormById} from "../state/actions/functions";
+import {printedData,cfAdmin} from "../state/api/cfAdmin";
+import {requestForm} from "../state/api";
 
-/**
- * Intial state
- *
- * @since 1.6.2
- *
- * @type {{forms, formPreviews: {}}}
- */
-const DEFAULT_STATE = {
-    forms: printedData.forms,
-    formPreviews :{},
-};
+import {DEFAULT_STATE} from "../state/actions/form";
 
-/**
- * Check if a form has the provided ID
- *
- * @since 1.6.2
- *
- * @param {Object} form Form config
- * @param {String} formId
- * @return {boolean}
- */
-const formHasId = ( form, formId ) => {
-    if( 'object' !== typeof  form ){
-        return false;
-    }
-    if( form.hasOwnProperty('ID') ){
-        return formId === form.ID;
-    }
-    if( form.hasOwnProperty('formId') ){
-        return formId === form.formId;
-    }
-    return false;
-};
-
-/**
- * Find form in state by Id
- *
- * @since 1.6.2
- *
- * @param {Object} state
- * @param {String} formId
- */
-const findFormById = (state, formId) => {
-    return state.forms.find(form => {
-        return formHasId(form,formId);
-    });
-};
-
-/**
- * Find form index in state by Id
- *
- * @since 1.6.2
- *
- * @param {Object} state
- * @param {String} formId
- */
-const findFormIndexById = (state, formId) => {
-    return state.forms.findIndex(form => {
-        return formHasId(form,formId);
-    });
-};
 
 //Track requests for previews to prevent multiple while pending
 let requestingPreviews = [];
@@ -96,6 +39,9 @@ export const requestFormPreview = (state,formId) => {
     } );
 };
 
+
+
+
 /**
  * Caldera Forms Redux-store
  *
@@ -107,10 +53,7 @@ export const STORE = {
     reducer( state = DEFAULT_STATE, action ) {
         switch ( action.type ) {
             case SET_FORMS:
-                return {
-                    ...state,
-                    forms: action.forms
-                };
+                return setFormsInState(state, action);
             case ADD_FORM_PREVIEW:
                 state.formPreviews[action.formId] = action.preview;
 
@@ -119,44 +62,14 @@ export const STORE = {
                     formPreviews:state.formPreviews
                 };
             case SET_FORM :
-                let forms = state.forms;
-                const index = findFormIndexById(state, action.form.ID );
-                if(-1 <= index){
-                    forms.splice(index,1,action.form);
-                }else{
-                    forms.push(action.form);
-                }
-                return {
-                    ...state,
-                    forms: forms
-                };
+                return setFormInState(state, action);
 
         }
 
         return state;
     },
 
-    actions: {
-        setForm(form){
-            return {
-                type: SET_FORM,
-                form: form
-            }
-        },
-        setForms( forms ) {
-            return {
-                type: SET_FORMS,
-                forms:forms
-            };
-        },
-        addFormPreview(formId,preview){
-            return {
-                type: ADD_FORM_PREVIEW,
-                formId: formId,
-                preview:preview
-            }
-        },
-    },
+    actions: actionFunctions,
     selectors: {
         getForm( state, formId ) {
             return findFormById(state, formId);
@@ -176,12 +89,7 @@ export const STORE = {
     },
     resolvers: {
         async getForm( state, formId ) {
-            const form = await wp.apiRequest({
-                url: `${cfAdmin.api.form}${formId}?preview=false`,
-                method: 'GET',
-                cache: true
-
-            } );
+            const form = await requestForm(formId);
             dispatch( CALDERA_FORMS_STORE_NAME ).setForm( form );
         },
     },
