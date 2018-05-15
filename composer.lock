@@ -4,20 +4,118 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a24a50311eb81c2f865e929be66dfd6f",
+    "content-hash": "7e02403e0c141eba09a6a7a20e85925a",
     "packages": [
         {
-            "name": "inpsyde/wonolog",
-            "version": "1.0.1",
+            "name": "calderawp/caldera-containers",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/inpsyde/Wonolog.git",
-                "reference": "addffa6208968fe168392ce9d52d519549fcad1b"
+                "url": "https://github.com/CalderaWP/caldera-containers.git",
+                "reference": "66eb851926e6872b4e8f5d5fdf7a1b80ebd43fba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inpsyde/Wonolog/zipball/addffa6208968fe168392ce9d52d519549fcad1b",
-                "reference": "addffa6208968fe168392ce9d52d519549fcad1b",
+                "url": "https://api.github.com/repos/CalderaWP/caldera-containers/zipball/66eb851926e6872b4e8f5d5fdf7a1b80ebd43fba",
+                "reference": "66eb851926e6872b4e8f5d5fdf7a1b80ebd43fba",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6|^7.0",
+                "pimple/pimple": "^3.2",
+                "psr/container": "^1.0@dev"
+            },
+            "require-dev": {
+                "jakub-onderka/php-parallel-lint": "^1.0",
+                "phpunit/phpunit": "5.0.*",
+                "squizlabs/php_codesniffer": "^3.2"
+            },
+            "type": "libary",
+            "autoload": {
+                "psr-4": {
+                    "calderawp\\CalderaContainers\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "josh",
+                    "email": "josh@calderawp.com"
+                }
+            ],
+            "time": "2018-04-05T19:34:50+00:00"
+        },
+        {
+            "name": "calderawp/caldera-forms-query",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/CalderaWP/caldera-forms-query.git",
+                "reference": "527d79ed169861a0db38e730e1ed8f374b533d04"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/CalderaWP/caldera-forms-query/zipball/527d79ed169861a0db38e730e1ed8f374b533d04",
+                "reference": "527d79ed169861a0db38e730e1ed8f374b533d04",
+                "shasum": ""
+            },
+            "require": {
+                "calderawp/caldera-containers": "^0.1.1",
+                "nilportugues/sql-query-builder": "^1.5",
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "composer/installers": "~1.0",
+                "desertsnowman/caldera-forms": "dev-feature/2404",
+                "jakub-onderka/php-parallel-lint": "^1.0",
+                "php": "^7.1",
+                "phpunit/phpunit": "^7.0",
+                "squizlabs/php_codesniffer": "^3.2"
+            },
+            "type": "library",
+            "extra": {
+                "installer-paths": {
+                    "Tests/plugins/{$name}/": [
+                        "type:wordpress-plugin"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "calderawp\\CalderaFormsQuery\\": "src"
+                },
+                "files": [
+                    "src/CalderaFormsQueries.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Josh Pollock",
+                    "email": "josh@calderawp.com"
+                }
+            ],
+            "description": "Caldera Forms Query Library",
+            "time": "2018-05-15T16:17:46+00:00"
+        },
+        {
+            "name": "inpsyde/wonolog",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/inpsyde/Wonolog.git",
+                "reference": "01605cd9e5a471df4cf9b8ed5260fd1355e8da11"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/inpsyde/Wonolog/zipball/01605cd9e5a471df4cf9b8ed5260fd1355e8da11",
+                "reference": "01605cd9e5a471df4cf9b8ed5260fd1355e8da11",
                 "shasum": ""
             },
             "require": {
@@ -25,8 +123,7 @@
                 "php": ">=5.6"
             },
             "require-dev": {
-                "brain/monkey": "^2.0.2",
-                "doctrine/instantiator": "1.0.5",
+                "brain/monkey": "^2.2.0",
                 "mikey179/vfsstream": "~1.6.4",
                 "phpunit/phpunit": "^5.7.21"
             },
@@ -72,7 +169,7 @@
                 "psr-3",
                 "wordpress"
             ],
-            "time": "2018-02-08T07:16:01+00:00"
+            "time": "2018-05-15T15:39:44+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -153,6 +250,224 @@
             "time": "2017-06-19T01:22:40+00:00"
         },
         {
+            "name": "nilportugues/sql-query-builder",
+            "version": "1.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nilportugues/php-sql-query-builder.git",
+                "reference": "4decdb547e5145d647c26b97ca1bea12d9b63a9f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nilportugues/php-sql-query-builder/zipball/4decdb547e5145d647c26b97ca1bea12d9b63a9f",
+                "reference": "4decdb547e5145d647c26b97ca1bea12d9b63a9f",
+                "shasum": ""
+            },
+            "require": {
+                "nilportugues/sql-query-formatter": "~1.2",
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "fabpot/php-cs-fixer": "~1.9",
+                "nilportugues/php_backslasher": "~0.2",
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "NilPortugues\\Sql\\QueryBuilder\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nil Portugués Calderó",
+                    "email": "contact@nilportugues.com",
+                    "homepage": "http://nilportugues.com",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Woody Gilk",
+                    "email": "woody.gilk@gmail.com",
+                    "homepage": "http://shadowhand.me/",
+                    "role": "Contributor"
+                }
+            ],
+            "description": "An elegant lightweight and efficient SQL QueryInterface BuilderInterface supporting bindings and complicated query generation.",
+            "homepage": "http://nilportugues.com",
+            "keywords": [
+                "builder",
+                "mysql",
+                "orm",
+                "query",
+                "query builder",
+                "sql"
+            ],
+            "time": "2017-06-21T14:30:14+00:00"
+        },
+        {
+            "name": "nilportugues/sql-query-formatter",
+            "version": "v1.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nilportugues/sql-query-formatter.git",
+                "reference": "a539162a13e3217827237d5809fbaf25e136dc0e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nilportugues/sql-query-formatter/zipball/a539162a13e3217827237d5809fbaf25e136dc0e",
+                "reference": "a539162a13e3217827237d5809fbaf25e136dc0e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "fabpot/php-cs-fixer": "~1.9",
+                "nilportugues/php_backslasher": "~0.2",
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "NilPortugues\\Sql\\QueryFormatter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nil Portugués Calderó",
+                    "email": "contact@nilportugues.com",
+                    "homepage": "http://nilportugues.com",
+                    "role": "Lead Developer"
+                }
+            ],
+            "description": "A very lightweight PHP class that reformats unreadable and computer-generated SQL query statements to human-friendly, readable text.",
+            "homepage": "http://nilportugues.com",
+            "keywords": [
+                "format",
+                "formatter",
+                "mysql",
+                "parser",
+                "query",
+                "reformat",
+                "sql",
+                "sql server",
+                "tokenizer"
+            ],
+            "time": "2015-11-02T23:24:39+00:00"
+        },
+        {
+            "name": "pimple/pimple",
+            "version": "v3.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/silexphp/Pimple.git",
+                "reference": "9e403941ef9d65d20cba7d54e29fe906db42cf32"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/silexphp/Pimple/zipball/9e403941ef9d65d20cba7d54e29fe906db42cf32",
+                "reference": "9e403941ef9d65d20cba7d54e29fe906db42cf32",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "psr/container": "^1.0"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "^3.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Pimple": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Pimple, a simple Dependency Injection Container",
+            "homepage": "http://pimple.sensiolabs.org",
+            "keywords": [
+                "container",
+                "dependency injection"
+            ],
+            "time": "2018-01-21T07:42:36+00:00"
+        },
+        {
+            "name": "psr/container",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/container.git",
+                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/container/zipball/b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
+                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Container\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common Container Interface (PHP FIG PSR-11)",
+            "homepage": "https://github.com/php-fig/container",
+            "keywords": [
+                "PSR-11",
+                "container",
+                "container-interface",
+                "container-interop",
+                "psr"
+            ],
+            "time": "2017-02-14T16:28:37+00:00"
+        },
+        {
             "name": "psr/log",
             "version": "1.0.2",
             "source": {
@@ -203,7 +518,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "calderawp/caldera-forms-query": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
