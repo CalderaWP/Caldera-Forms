@@ -161,7 +161,7 @@ jQuery(document).ready(function($){
         var val = select.val();
         var parent			= select.closest('.caldera-editor-field-config-wrapper'),
             target			= parent.find('.caldera-config-field-setup'),
-            template 		= get_compiled_template( val );
+            template 		= get_compiled_template( val ),
             config			= parent.find('.field_config_string').val(),
             current_type	= select.data('type');
 
@@ -519,7 +519,7 @@ jQuery(document).ready(function($){
     // field label bind
     $('.caldera-editor-body').on('change', '.field-label', function(e){
         var field 		= $(this).closest('.caldera-editor-field-config-wrapper').prop('id');
-        field_line	= $('[data-field="' + field + '"]'),
+        var field_line	= $('[data-field="' + field + '"]'),
             field_title	= $('#' + field + ' .caldera-editor-field-title, .layout-form-field.field-edit-open .layout_field_name'),
             slug		= $('#' + field + ' .field-slug');
 
@@ -1747,6 +1747,7 @@ jQuery(document).ready(function($) {
         }, field_default );
         // reset slug to blank
         field_set.slug = '';
+        var x = new_conf_templ( field_set );
         // pance new conf template
         field_conf.append( new_conf_templ( field_set ) );
 
