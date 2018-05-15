@@ -158,7 +158,9 @@ class Caldera_Forms_Admin {
 
 		add_action(  'caldera_forms_admin_init', array( __CLASS__ , 'init_privacy_settings' ) );
 
-        add_action( 'caldera_forms_admin_init', array( $this, 'plugin_add_suggested_privacy_content' ), 20 );
+        add_action( 'caldera_forms_admin_init', array( $this, 'cf_add_suggested_privacy_content' ), 20 );
+
+        add_action("wp_ajax_cf_delete_all_form_entries", array( $this, 'cf_delete_all_form_entries') );
 
 		/**
 		 * Runs after Caldera Forms admin is initialized
@@ -2027,20 +2029,26 @@ class Caldera_Forms_Admin {
     /**
      * Return the default suggested privacy policy content.
      *
+     * @since 1.7.0
+     *
      * @return string The default policy content.
      */
-    function plugin_get_default_privacy_content() {
+    public function cf_get_default_privacy_content() {
         return
             '<h2>' . __( 'What personal data Caldera Forms collect and why Caldera Forms collect it', $this->plugin_slug ) . '</h2>' .
             '<p>' . __( 'This text describes what type of information the admin should include here or what they should do with this info you provide in your template.', $this->plugin_slug ) . '</p>';
     }
     /**
      * Add the suggested privacy policy text to the policy postbox.
+     *
+     * @since 1.7.0
      */
-    function plugin_add_suggested_privacy_content() {
-        $content = self::plugin_get_default_privacy_content();
+    public function cf_add_suggested_privacy_content() {
+        $content = self::cf_get_default_privacy_content();
         wp_add_privacy_policy_content( __( 'Caldera Forms', $this->plugin_slug ), $content );
     }
+
+
 
 }
 
