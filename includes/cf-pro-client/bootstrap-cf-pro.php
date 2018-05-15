@@ -22,8 +22,6 @@ add_action( 'caldera_forms_includes_complete', function(){
 		update_option( $db_ver_option, 2 );
 	}
 
-	include_once __DIR__ .'/vendor/autoload.php';
-
 	//add menu page
 	if ( is_admin() ) {
 		$slug       = 'cf-pro';
@@ -287,7 +285,7 @@ if ( ! function_exists( 'boolval' ) ) {
  */
 function caldera_forms_pro_activation_hook_callback(){
 	//make sure we have autoloader
-	include_once __DIR__ .'/vendor/autoload.php';
+	include_once CFCORE_PATH .'vendor/autoload.php';
 
 	//delete old message tracking transient keys -- should only be one
 	$past_versions = get_option(  'cf_pro_past_versions', [] );
