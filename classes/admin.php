@@ -2031,8 +2031,8 @@ class Caldera_Forms_Admin {
      */
     function plugin_get_default_privacy_content() {
         return
-            '<h2>' . __( 'What personal data Caldera Forms collect and why Caldera Forms collect it' ) . '</h2>' .
-            '<p>' . __( 'This text describes what type of information the admin should include here or what they should do with this info you provide in your template.' ) . '</p>';
+            '<h2>' . __( 'What personal data Caldera Forms collect and why Caldera Forms collect it', $this->plugin_slug ) . '</h2>' .
+            '<p>' . __( 'This text describes what type of information the admin should include here or what they should do with this info you provide in your template.', $this->plugin_slug ) . '</p>';
     }
     /**
      * Add the suggested privacy policy text to the policy postbox.
