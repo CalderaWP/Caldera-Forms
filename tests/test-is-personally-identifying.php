@@ -171,8 +171,8 @@ class Test_Caldera_Forms_Is_Personally_Identifying extends Caldera_Forms_Test_Ca
         $this->assertTrue( is_a( $form->save_form(), Caldera_Forms_API_Form::class ) );
 
         $saved_form = Caldera_Forms_Forms::get_form( self::MOCK_FORM_ID );
-        $this->assertEquals( Caldera_Forms_Forms::email_identifying_fields($saved_form,true), $email_fields );
-        $this->assertEquals( Caldera_Forms_Forms::email_identifying_fields($saved_form,true), $form->get_email_identifying_fields() );
+        $this->assertEquals( $email_fields, Caldera_Forms_Forms::email_identifying_fields($saved_form,true)  );
+        $this->assertEquals( $form->get_email_identifying_fields(), Caldera_Forms_Forms::email_identifying_fields($saved_form,true) );
     }
 
     /**
