@@ -2248,9 +2248,9 @@ li.caldera-forms-toolbar-item.success {
   animation: fadeout .5s 1;
 }
 
-.YesDeleted {
+.caldera-forms-deleted {
   color: #a3be5f;
 }
-.NoDeleted {
+.caldera-forms-not-deleted {
   color: red;
 }

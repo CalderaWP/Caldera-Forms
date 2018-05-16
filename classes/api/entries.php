@@ -11,6 +11,22 @@
  */
 class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
 
+    /**
+     * @inheritdoc
+     *
+     * @since 1.7.0
+     */
+    public function add_routes( $namespace ) {
+        parent::add_routes($namespace);
+        register_rest_route($namespace, $this->non_id_endpoint_url() . '/delete',
+            array(
+                'methods'             => array( \WP_REST_Server::READABLE ),
+                'callback'            => array($this, 'delete_entries'),
+                'permission_callback' => array($this, 'update_item_permissions_check')
+            )
+        );
+    }
+
 	/**
 	 * Get an entry
 	 *
@@ -101,6 +117,50 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
 			return new Caldera_Forms_API_Error( 'not-deleted', __( 'Entry Not Deleted', 'caldera-forms' ) );
 		}
 	}
+
+    /**
+     * Delete all entries of a form based on Form ID
+     *
+     * GET /cf-api/v2/entries/form-id/delete
+     *
+     * @since 1.7.0
+     *
+     * @param WP_REST_Request $request
+     *
+     * @return Caldera_Forms_API_Error|Caldera_Forms_API_Response
+     */
+    public function delete_entries( WP_REST_Request $request ) {
+        try{
+            $this->form_object_factory( $request[ 'form_id' ], $request );
+        }catch ( Exception $e ){
+            return Caldera_Forms_API_Response_Factory::error_form_not_found();
+        }
+
+        $entries = \calderawp\CalderaFormsQueries\CalderaFormsQueries()->selectByFormId( $request[ 'form_id' ], false );
+
+        if( null != $entries ) {
+            $entryIds = [];
+            foreach( array_column( $entries, 'entry' ) as $entry ){
+                $entryIds[] = $entry->id;
+            }
+
+            Caldera_Forms_Entry_Bulk::delete_entries( $entryIds );
+            $data = array(
+                'deleted' => true,
+                'message' =>  __( 'Entries deleted', 'caldera-forms')
+            );
+            return new Caldera_Forms_API_Response( $data, 200, array() );
+
+        } else {
+            $data = array(
+                'deleted' => false,
+                'message' =>  __( 'No entries found', 'caldera-forms')
+            );
+            return new Caldera_Forms_API_Response( $data, 200, array() );
+        }
+
+    }
+
 
 	/**
 	 * Prepare entry data for a response
