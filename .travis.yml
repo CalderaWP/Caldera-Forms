@@ -113,6 +113,19 @@ before_script:
           ;;
       esac
     fi
+    
+ # Setup unit tests
+  - |
+    if [[ ! -z "$WP_VERSION" ]] ; then
+      bash bin/install-wp-tests.sh wordpress_unit_test root '' localhost $WP_VERSION
+    fi
+
+  # Setup phpcs if the env var is set
+  - |
+    if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
+      composer global require wp-coding-standards/wpcs
+      phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
+    fi
 
 script:
   # Run unit tests / phpcs
