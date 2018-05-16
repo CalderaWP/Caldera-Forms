@@ -80,6 +80,7 @@ class Caldera_Forms_API_Privacy extends Caldera_Forms_API_Form
         foreach( $this->get_fields() as $field ){
             $this->form[ 'fields' ][ $field[ 'ID' ] ][ 'config' ][ Caldera_Forms_Field_Util::CONFIG_PERSONAL] = (int) in_array( $field[ 'ID' ], $pii_fields );
         }
+        $this->set_fields();
         return $this;
     }
 
@@ -96,6 +97,7 @@ class Caldera_Forms_API_Privacy extends Caldera_Forms_API_Form
         foreach( $this->get_fields() as $field ){
             $this->form[ 'fields' ][ $field[ 'ID' ] ][ 'config' ][ Caldera_Forms_Field_Util::CONFIG_EMAIL_IDENTIFIER ] = (int) in_array( $field[ 'ID' ], $email_fields );
         }
+        $this->set_fields();
         return $this;
     }
 

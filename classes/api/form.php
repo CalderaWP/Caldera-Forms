@@ -220,7 +220,8 @@ class Caldera_Forms_API_Form  implements  ArrayAccess {
      * @return $this
      */
 	public function save_form(){
-	    Caldera_Forms_Forms::save_form($this->toArray() );
+	    //Not using toArray() since it is different in subclass
+	    Caldera_Forms_Forms::save_form($this->form );
         return $this;
 
     }

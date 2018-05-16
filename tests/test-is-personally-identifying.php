@@ -165,6 +165,7 @@ class Test_Caldera_Forms_Is_Personally_Identifying extends Caldera_Forms_Test_Ca
      */
     public function testUpdateEmailIdentifyingFields()
     {
+
         $email_fields = ['fld_1724450', 'fld_6125005'];
         $form = new Caldera_Forms_API_Privacy($this->mock_form);
         $this->assertTrue( is_a( $form->set_email_identifying_fields( $email_fields), Caldera_Forms_API_Form::class ) );
