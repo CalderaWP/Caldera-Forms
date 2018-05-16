@@ -13,11 +13,11 @@ class Caldera_Forms_API_Privacy extends Caldera_Forms_API_Form
      *
      * @since 1.7.0
      *
-     * @return array
+     * @return true
      */
     public function is_privacy_exporter_enabled()
     {
-        return Caldera_Forms_Forms::update_privacy_export_enabled( $this->form );
+        return Caldera_Forms_Forms::is_privacy_export_enabled( $this->form );
     }
 
     /**
