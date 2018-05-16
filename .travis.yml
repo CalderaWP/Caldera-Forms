@@ -130,3 +130,4 @@ script:
     if [[ "$GHOST" == 1 ]] ; then
        cd $WP_FOLDER && wp cgr run
     fi
+    
