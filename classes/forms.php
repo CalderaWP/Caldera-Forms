@@ -885,6 +885,33 @@ class Caldera_Forms_Forms {
 		return $personally_identifying_fields;
 	}
 
+    /**
+     * Get all fields of a form that represents the email of someone who's personal information is in the form submssion.
+     *
+     * @since 1.7.0
+     *
+     * @param array $form Form config
+     * @param bool $ids_only Optional. If true, indexed array of field IDs is returned. If false, the default, array of field configs, keyed by field ID is returned.
+     * @return array
+     */
+	public static function email_identifying_fields( array  $form, $ids_only = false ){
+        $fields = self::get_fields( $form, false );
+        $matching_fields = array();
+        if( ! empty( $fields ) ){
+            foreach ( $fields as $field_id => $field ){
+                if( Caldera_Forms_Field_Util::is_email_identifying_field( $field, $form ) ){
+                    $matching_fields[ $field_id ] = $field;
+                }
+            }
+        }
+
+        if( $ids_only ){
+            return array_keys( $matching_fields );
+        }
+
+        return $matching_fields;
+    }
+
 	/**
 	 * Get all revisions of  a forms
 	 *

@@ -212,6 +212,36 @@ class Caldera_Forms_API_Form  implements  ArrayAccess {
 		return isset($this->form[$offset]) ? $this->form[$offset] : null;
 	}
 
+    /**
+     * Save form in database
+     *
+     * @since 1.7.0
+     *
+     * @return $this
+     */
+	public function save_form(){
+	    Caldera_Forms_Forms::save_form($this->toArray() );
+        return $this;
+
+    }
+
+    /**
+     * (re)Set form config
+     *
+     * Does not save. Use $this->save_form()
+     *
+     * @since 1.7.0
+     *
+     * @param array $form Form configuration.
+     *
+     * @return $this
+     */
+    public function set_form(array $form )
+    {
+        $this->form = $form;
+        return $this;
+    }
+
 
 
 }

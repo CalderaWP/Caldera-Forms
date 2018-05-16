@@ -2,6 +2,7 @@ import {combineReducers} from 'redux'
 import {
     setForms,
     setForm,
+    UNSET_EDIT_FORM
 } from '../actions';
 import {SET_EDIT_FORM} from "../actions";
 import {SET_FORM, SET_FORMS} from "../../state/actions/form";
@@ -35,7 +36,12 @@ const formState = (state = initialState, action) =>
             return {
                 ...state,
                 editForm: editForm
-            }
+            };
+        case UNSET_EDIT_FORM :
+            return {
+                ...state,
+                editForm: {}
+            };
 
     }
 

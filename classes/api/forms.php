@@ -37,7 +37,55 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
             )
         );
 
+
+        register_rest_route( $namespace, $this->id_endpoint_url() . '/preview',
+            array(
+                'methods'             => \WP_REST_Server::READABLE,
+                'callback'            => array( $this, 'get_preview' ),
+                'permission_callback' => array( $this, 'get_item_permissions_check' ),
+                'args'                => $this->get_item_args()
+            )
+        );
+
+        register_rest_route( $namespace, $this->id_endpoint_url() . '/privacy',
+            array(
+                'methods'             => \WP_REST_Server::READABLE,
+                'callback'            => array( $this, 'get_privacy_settings' ),
+                'permission_callback' => array( $this, 'create_item_permissions_check' ),
+                'args'                => $this->get_item_args()
+            )
+        );
+
 	}
+
+    /**
+     * Fields for the privacy route
+     *
+     * @since 1.70
+     *
+     * @return array
+     */
+	protected function privacy_route_args()
+    {
+        return array(
+            'emailIdentifiers' => array(
+                'type' => 'array',
+                'required' => false,
+                'description' => esc_html__( 'Array of fields that can be used to find personally identifying information saved with this form.', 'caldera-forms' ),
+
+            ),
+            'piiFields' => array(
+                'type' => 'array',
+                'required' => false,
+                'description' => esc_html__( 'Array of fields that contain personally identifying information', 'caldera-forms' ),
+            )
+        );
+    }
+
+    public function get_privacy_settings( WP_REST_Request $request )
+    {
+        $form_id
+    }
 
     /**
      * @inheritdoc

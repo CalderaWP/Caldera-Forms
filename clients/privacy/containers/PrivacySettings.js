@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {FormSelectorNoGutenberg} from "../components/FormSelectorNoGutenberg";
 import { bindActionCreators } from 'redux'
-import {setEditForm} from "../actions";
+import {
+    setForm,
+    setEditForm,
+    unsetEditForm
+} from "../actions";
 import {requestForm} from "../../state/api";
-import {setForm} from "../actions";
 import {FormPrivacySettings} from "../components/FormPrivacySettings";
+import {FormSelectorNoGutenberg} from "../../components/FormSelectorNoGutenberg";
 
 export const PrivacySettings = (props) => {
     const onChange = (newFormsId) => {
@@ -18,7 +21,13 @@ export const PrivacySettings = (props) => {
     };
 
     if( props.editForm.hasOwnProperty( 'fields' ) ){
-        return <FormPrivacySettings form={props.editForm}/>
+        return <FormPrivacySettings
+            form={props.editForm}
+            onSave={() => {
+                    props.unsetEditForm();
+                }
+            }
+        />
     }
 
     return (
@@ -48,6 +57,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
     setEditForm,
     setForm,
+    unsetEditForm
 };
 
 

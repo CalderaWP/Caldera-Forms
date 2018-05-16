@@ -12,9 +12,18 @@
 class Caldera_Forms_Field_Util {
 
 	/**
-	 * The index of the field config array used to indicate
+	 * The index of the field config array used to indicate a field as containing personally identifying information
+     *
+     * @since 1.6.3
 	 */
 	const CONFIG_PERSONAL = 'personally_identifying';
+
+    /**
+     * The index of the field config array used to indicate a field as containing personally identifying information
+     *
+     * @since 1.7.0
+     */
+    const CONFIG_EMAIL_IDENTIFIER = 'email_identifier';
 
 	/**
 	 *  Get a field's type
@@ -642,4 +651,23 @@ class Caldera_Forms_Field_Util {
 
 		return isset( $field[ 'config' ][ self::CONFIG_PERSONAL ] ) && rest_sanitize_boolean($field[ 'config' ][ self::CONFIG_PERSONAL ] );
 	}
+
+    /**
+     * Check if a field is a field that we can use to lookup entry data belonging to the stored email.
+     *
+     * @since 1.7.0
+     *
+     * @param array|string $field Field config or field ID
+     * @param array $form Form config
+     *
+     * @return bool
+     */
+	public static function is_email_identifying_field($field,array  $form       )
+    {
+        if (is_string($field)) {
+            $field = self::get_field($field, $form);
+        }
+
+        return isset( $field[ 'config' ][ self::CONFIG_EMAIL_IDENTIFIER ] ) && rest_sanitize_boolean($field[ 'config' ][ self::CONFIG_EMAIL_IDENTIFIER ] );
+    }
 }
