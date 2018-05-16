@@ -175,6 +175,34 @@ class Test_Caldera_Forms_Is_Personally_Identifying extends Caldera_Forms_Test_Ca
         $this->assertEquals( Caldera_Forms_Forms::email_identifying_fields($saved_form,true), $form->get_email_identifying_fields() );
     }
 
+    /**
+     * Test reading and updated privacy exporter enable setting
+     *
+     * @since 1.7.0
+     *
+     * @covers Caldera_Forms_Forms::update_privacy_export_enabled()
+     * @covers Caldera_Forms_Forms::is_privacy_export_enabled()
+     */
+    public function testUpdateExporterEnable()
+    {
+        //Test with no setting saved first
+        $form = $this->mock_form;
+        $this->assertFalse( Caldera_Forms_Forms::is_privacy_export_enabled( $form) );
+        //Test update to true
+        $form = Caldera_Forms_Forms::update_privacy_export_enabled($form, true );
+        $this->assertTrue( Caldera_Forms_Forms::is_privacy_export_enabled( $form) );
+
+        //Test double update doesn't change anything
+        $form = Caldera_Forms_Forms::update_privacy_export_enabled($form, true );
+        $this->assertTrue( Caldera_Forms_Forms::is_privacy_export_enabled( $form) );
+
+
+        //Test update to false works
+        $form = Caldera_Forms_Forms::update_privacy_export_enabled($form, false );
+        $this->assertFalse( Caldera_Forms_Forms::is_privacy_export_enabled( $form) );
+
+    }
+
 	/**
 	 * Set a test field in mock form as personally identifying
 	 *
