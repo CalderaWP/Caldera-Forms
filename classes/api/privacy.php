@@ -106,10 +106,25 @@ class Caldera_Forms_API_Privacy extends Caldera_Forms_API_Form
     {
         return array(
             'ID' => $this->form[ 'ID' ],
+            'name' => $this->form[ 'name' ],
+            'fields' => $this->get_fields(),
             'email_identifying_fields' => $this->get_email_identifying_fields(),
             'pii_fields' => $this->get_pii_fields(),
             'privacy_exporter_enabled' => $this->is_privacy_exporter_enabled()
         );
     }
+
+    /** @inheritdoc */
+    public function set_fields()
+    {
+       foreach ( Caldera_Forms_Forms::get_fields($this->form, true ) as $field_id => $field ) {
+            $this->fields[ $field_id ] = [
+                'ID' => $field_id,
+                'name' => $field[ 'name' ],
+                'type' => Caldera_Forms_Field_Util::get_type( $field, $this->form )
+            ];
+        }
+    }
+
 
 }

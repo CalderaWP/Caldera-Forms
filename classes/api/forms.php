@@ -125,6 +125,10 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
      * @return Caldera_Forms_API_Error|Caldera_Forms_API_Response
      */
     public function get_item(WP_REST_Request $request){
+        if( $request->get_param( 'privacy' ) ){
+            return $this->get_privacy_settings( $request );
+        }
+
 	    try{
 		    $this->form_object_factory( $request[ 'form_id' ], $request );
 	    }catch ( Exception $e ){
@@ -134,6 +138,8 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
         if ( $request->get_param( 'preview' ) ) {
             return $this->preview_response();
         }
+
+
 
         $response_form = $this->prepare_form_for_response( $this->form, $request );
         return new Caldera_Forms_API_Response( $response_form, 200, array( ) );
@@ -313,7 +319,7 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
             'full' => array(
                 'required' => false,
                 'default' => false,
-            )
+            ),
         );
     }
 
