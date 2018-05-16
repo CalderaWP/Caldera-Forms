@@ -203,6 +203,35 @@ class Test_Caldera_Forms_Is_Personally_Identifying extends Caldera_Forms_Test_Ca
 
     }
 
+    /**
+     * Test reading and updated privacy exporter enable setting
+     *
+     * @since 1.7.0
+     *
+     * @covers Caldera_Forms_API_Form::save_form()
+     * @covers Caldera_Forms_API_Privacy::enable_privacy_exporter();
+     * @covers Caldera_Forms_API_Privacy::disable_privacy_exporter();
+     * @covers Caldera_Forms_API_Privacy::is_privacy_exporter_enabled();
+     */
+    public function testUpdateExporterEnableApiForm()
+    {
+        $form_id = Caldera_Forms_Forms::create_form($this->mock_form);
+        $obj = new Caldera_Forms_API_Privacy( Caldera_Forms_Forms::get_form( $form_id ) );
+        $this->assertFalse( $obj->is_privacy_exporter_enabled() );
+        $obj->enable_privacy_exporter();
+        $obj = new Caldera_Forms_API_Privacy( Caldera_Forms_Forms::get_form( $form_id ) );
+        $this->assertTrue( $obj->is_privacy_exporter_enabled() );
+        $obj->disable_privacy_exporter();
+        $obj = new Caldera_Forms_API_Privacy( Caldera_Forms_Forms::get_form( $form_id ) );
+        $this->assertFalse( $obj->is_privacy_exporter_enabled() );
+
+
+        //Test update to false works
+        $form = Caldera_Forms_Forms::update_privacy_export_enabled($form, false );
+        $this->assertFalse( Caldera_Forms_Forms::is_privacy_export_enabled( $form) );
+
+    }
+
 	/**
 	 * Set a test field in mock form as personally identifying
 	 *

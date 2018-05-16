@@ -8,9 +8,40 @@
 class Caldera_Forms_API_Privacy extends Caldera_Forms_API_Form
 {
 
-    public function exporter_enabled()
+    /**
+     * Report if this form has privacy/GDPR exporter enabled
+     *
+     * @since 1.7.0
+     *
+     * @return array
+     */
+    public function is_privacy_exporter_enabled()
     {
+        return Caldera_Forms_Forms::update_privacy_export_enabled( $this->form );
+    }
 
+    /**
+     * Enable privacy export for this form
+     *
+     * @since 1.7.0
+     *
+     * @return Caldera_Forms_API_Privacy
+     */
+    public function enable_privacy_exporter()
+    {
+        $this->form = Caldera_Forms_Forms::update_privacy_export_enabled($this->form, true );
+        return $this->save_form();
+    }
+
+    /**
+     * Disable privacy export for this form.
+     *
+     * @return Caldera_Forms_API_Privacy
+     */
+    public function disable_privacy_exporter()
+    {
+        $this->form = Caldera_Forms_Forms::update_privacy_export_enabled($this->form, false );
+        return $this->save_form();
     }
 
     /**
