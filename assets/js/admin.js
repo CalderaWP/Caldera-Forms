@@ -189,10 +189,10 @@ jQuery(document).ready(function($){
         $('#caldera-forms-confirm-delete-all-form-entries').slideToggle("fast");
       }
       $spinner.css({
-				visibility: 'hidden',
-				float:'none'
-			});
-		});
+        visibility: 'hidden',
+        float:'none'
+      });
+    });
 
   });
 
