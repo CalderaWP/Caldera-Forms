@@ -216,7 +216,8 @@ class Test_Caldera_Forms_Is_Personally_Identifying extends Caldera_Forms_Test_Ca
      */
     public function testUpdateExporterEnableApiForm()
     {
-        $form_id = Caldera_Forms_Forms::create_form($this->mock_form);
+        $form = Caldera_Forms_Forms::create_form($this->mock_form);
+        $form_id = $form[ 'ID' ];
         $obj = new Caldera_Forms_API_Privacy( Caldera_Forms_Forms::get_form( $form_id ) );
         $this->assertFalse( $obj->is_privacy_exporter_enabled() );
         $obj->enable_privacy_exporter();
