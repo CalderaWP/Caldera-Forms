@@ -175,8 +175,7 @@ jQuery(document).ready(function($){
           $('#caldera-forms-confirm-delete-all-form-entries').slideToggle("fast");
         }
       }
-
-		}).done(function () {
+      }).done(function () {
       $spinner.css({
         visibility: 'hidden',
         float:'none'
@@ -189,7 +188,7 @@ jQuery(document).ready(function($){
         }, 5000);
         $('#caldera-forms-confirm-delete-all-form-entries').slideToggle("fast");
       }
-			$spinner.css({
+      $spinner.css({
 				visibility: 'hidden',
 				float:'none'
 			});
