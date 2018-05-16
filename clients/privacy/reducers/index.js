@@ -3,9 +3,19 @@ import {
     setForms,
     setForm,
 } from '../actions';
-import {ADD_FORM_PREVIEW, SET_FORM, SET_FORMS} from "../../state/actions/form";
+import {SET_EDIT_FORM} from "../actions";
+import {SET_FORM, SET_FORMS} from "../../state/actions/form";
 import {DEFAULT_STATE} from "../../state/actions/form";
 import {setFormInState, setFormsInState} from "../../state/actions/mutations";
+import {findFormById} from "../../state/actions/functions";
+
+const initialState = {
+    ...{
+        editForm: {},
+    },
+    ...DEFAULT_STATE
+};
+
 
 /**
  * Simple form state b
@@ -13,18 +23,24 @@ import {setFormInState, setFormsInState} from "../../state/actions/mutations";
  * @param action
  * @returns {*}
  */
-const formState = (state = DEFAULT_STATE, action) =>
+const formState = (state = initialState, action) =>
 {
     switch (action.type) {
         case SET_FORMS:
             return setFormsInState(state, action);
         case SET_FORM :
             return setFormInState(state, action);
+        case SET_EDIT_FORM :
+            const editForm = findFormById(state,action.formId);
+            return {
+                ...state,
+                editForm: editForm
+            }
 
     }
 
     return state;
-}
+};
 
 const rootReducer = combineReducers({
     formState

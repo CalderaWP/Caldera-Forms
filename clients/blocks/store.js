@@ -56,7 +56,6 @@ export const STORE = {
                 return setFormsInState(state, action);
             case ADD_FORM_PREVIEW:
                 state.formPreviews[action.formId] = action.preview;
-
                 return {
                     ...state,
                     formPreviews:state.formPreviews

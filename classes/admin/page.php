@@ -69,6 +69,8 @@ class Caldera_Forms_Admin_Page
         $this->enqueue_assets();
         $handle =! empty( $this->assets['scripts'] ) && isset( $this->assets['scripts'][0] ) ? $this->assets[ 'scripts' ][0] : 'admin';
         caldera_forms_print_cf_forms_var($handle);
+        wp_enqueue_script( 'wp-api-request' );
+        Caldera_Forms_Admin_Assets::set_cf_admin(Caldera_Forms_Render_Assets::make_slug($handle));
         if (is_callable($this->render)) {
             call_user_func($this->render);
         } else {
