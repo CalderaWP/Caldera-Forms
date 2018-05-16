@@ -158,8 +158,10 @@ jQuery(document).ready(function($){
       float:'none'
     });
 
-    jQuery.get(url, function (r) {
-
+    wp.apiRequest({
+      url: url,
+      method: 'GET'
+      }).then(function (r) {
       if( r.hasOwnProperty( 'message' ) ) {
         if (r.deleted === true) {
           $('#caldera-forms-label-delete-all-entries').append("<div class='caldera-forms-deleted'>" + r.message + "</div>");
@@ -175,14 +177,14 @@ jQuery(document).ready(function($){
           $('#caldera-forms-confirm-delete-all-form-entries').slideToggle("fast");
         }
       }
-      }).done(function () {
       $spinner.css({
         visibility: 'hidden',
         float:'none'
       });
-    }).fail( function (r) {
-      if( r.hasOwnProperty( 'message' ) ) {
-        $('#caldera-forms-label-delete-all-entries').append("<div class='caldera-forms-not-deleted'>" + r.message + "</div>");
+
+    }).fail(function (r) {
+      if( r.responseJSON.hasOwnProperty( 'message' ) ) {
+        $('#caldera-forms-label-delete-all-entries').append("<div class='caldera-forms-not-deleted'>" + r.responseJSON.message + "</div>");
         setTimeout(function () {
           $('.caldera-forms-not-deleted').remove();
         }, 5000);

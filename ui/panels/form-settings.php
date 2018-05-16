@@ -120,7 +120,7 @@
             <?php esc_html_e( 'Delete all entries', 'caldera-forms' ); ?>
         </label>
         <div id="caldera-forms-delete-entries-field" class="caldera-config-field">
-            <button id="caldera-forms-delete-all-form-entries" class="button"><?php _e('Delete all entries', 'caldera-forms'); ?></button>
+            <button id="caldera-forms-delete-all-form-entries" class="button" aria-describedby="caldera-forms-delete-entries-description"><?php _e('Delete all form entries', 'caldera-forms'); ?></button>
             <div id="caldera-forms-confirm-delete-all-form-entries" style="display: none;">
                 <p><?php _e('Are you sure you want to delete all the entries saved for this form ?', 'caldera-forms'); ?></p>
                 <button id="caldera-forms-yes-confirm-delete-all-form-entries" class="button"><?php _e('Yes', 'caldera-forms'); ?></button>
@@ -128,7 +128,7 @@
                 <span id="caldera-forms-delete-entries-spinner" class="spinner"></span>
             </div>
             <p class="description" id="caldera-forms-delete-entries-description">
-                <?php esc_html_e( 'Delete all the entries saved for this form.', 'caldera-forms' ); ?>
+                <?php esc_html_e( 'Delete all the entries saved for this form. This can NOT be undone.', 'caldera-forms' ); ?>
             </p>
         </div>
     </div>

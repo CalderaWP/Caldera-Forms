@@ -133,7 +133,11 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
         try{
             $this->form_object_factory( $request[ 'form_id' ], $request );
         }catch ( Exception $e ){
-            return Caldera_Forms_API_Response_Factory::error_form_not_found();
+            $data = array(
+                'deleted' => false,
+                'message' =>  __( 'Form not found', 'caldera-forms')
+            );
+            return new Caldera_Forms_API_Response( $data, 404, array() );
         }
 
         $entries = \calderawp\CalderaFormsQueries\CalderaFormsQueries()->selectByFormId( $request[ 'form_id' ], false );
@@ -156,7 +160,7 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
                 'deleted' => false,
                 'message' =>  __( 'No entries found', 'caldera-forms')
             );
-            return new Caldera_Forms_API_Response( $data, 200, array() );
+            return new Caldera_Forms_API_Response( $data, 404, array() );
         }
 
     }
