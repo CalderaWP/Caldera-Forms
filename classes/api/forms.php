@@ -224,6 +224,7 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
         if( $save_required ){
             $this->form->save_form();
         }
+
         return new Caldera_Forms_API_Response( $this->form->toArray() );
 
     }

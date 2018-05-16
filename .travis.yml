@@ -8,106 +8,45 @@ notifications:
     on_success: never
     on_failure: change
 
+branches:
+  only:
+    - master
+
 cache:
   directories:
-    - vendor
     - $HOME/.composer/cache
-    - /^[^\/]+\/node_modules\/?(?:[^\/]+\/?)*$/gm
-
-env:
-  global:
-    - WP_TRAVISCI=travis:phpunit
-    - WP_FOLDER="/tmp/external-wordpress"
-    - DB_NAME="wordpress"
-    - WP_TABLE_PREFIX="wp_"
-    - WP_CLI_FOLDER="tools"
-    - WP_VERSION=latest WP_MULTISITE=0 GHOST=0
 
 matrix:
   include:
-    - php: 5.6
-      env: WP_VERSION=latest WP_MULTISITE=0
+    - php: 7.1
+      env: WP_VERSION=latest
     - php: 7.0
-      env: WP_VERSION=latest WP_MULTISITE=0
-    - php: 7.1
-      env: WP_VERSION=latest WP_MULTISITE=0
-    - php: 7.2
-      env: WP_VERSION=latest WP_MULTISITE=0
-    - php: 7.1
-      env: WP_VERSION=latest WP_MULTISITE=1
-    - php: 7.1
-      env: WP_VERSION=trunk WP_MULTISITE=0
-    - php: 7.1
-      env: WP_VERSION=4.8.5 WP_MULTISITE=0
-    - php: 7.1
-      env: WP_VERSION=4.8.5 WP_MULTISITE=0
-    - php: 7.1
-      env: WP_VERSION=4.7.9 WP_MULTISITE=0
-  allow_failures:
-    - php: 7.2
+      env: WP_VERSION=latest
+    - php: 5.6
+      env: WP_VERSION=4.4
+    - php: 5.6
+      env: WP_VERSION=latest
+    - php: 5.6
+      env: WP_VERSION=trunk
+    - php: 5.6
+      env: WP_TRAVISCI=phpcs
+    - php: 5.3
+      env: WP_VERSION=latest
+      dist: precise
 
-addons:
-  apt:
-    packages:
-    - libjpeg-dev
-    - libpng12-dev
-    - php5-fpm
-    - php5-mysql
-    - nginx
-  ssh_known_hosts:
-  - gitlab.com
-  - github.com
-
-before_install:
-  # Remove Xdebug for a huge performance increase:
+before_script:
+  - export PATH="$HOME/.composer/vendor/bin:$PATH"
   - |
     if [ -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then
       phpenv config-rm xdebug.ini
     else
       echo "xdebug.ini does not exist"
     fi
-
-  # Set up folder for tools
-  - mkdir -p $WP_FOLDER && mkdir tools
-
-  # Install WP-CLI
-  - wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -P $(pwd)/$WP_CLI_FOLDER/ && chmod +x $WP_CLI_FOLDER/wp-cli.phar && mv $WP_CLI_FOLDER/wp-cli.phar $WP_CLI_FOLDER/wp
-  - export PATH=$PATH:$(pwd)/$WP_CLI_FOLDER
-  - export PATH=vendor/bin:$PATH
-
-install:
-  - |
-    if [[ "$GHOST" == 1 ]] ; then
-       bash bin/install-ghost.sh;
-    fi
-
-before_script:
-  # Install the specified version of PHPUnit depending on the PHP version:
-  echo $TRAVIS_PHP_VERSION;
-  - |
-    if [[ "$WP_TRAVISCI" == "travis:phpunit" ]]; then
-      case "$TRAVIS_PHP_VERSION" in
-        7.0)
-          echo "Using PHPUnit 6.x"
-          composer global require "phpunit/phpunit:^6"
-          ;;
-        5.6)
-          echo "Using PHPUnit 5.x"
-          composer global require "phpunit/phpunit:^4"
-          ;;
-        *)
-          echo "Using PHPUnit 7.x"
-          composer global require "phpunit/phpunit:^7"
-          ;;
-      esac
-    fi
-  # Setup unit tests
   - |
     if [[ ! -z "$WP_VERSION" ]] ; then
-      bash bin/install-wp-tests.sh wordpress_unit_test root '' localhost $WP_VERSION
+      bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
+      composer global require "phpunit/phpunit=4.8.*|5.7.*"
     fi
-
-  # Setup phpcs if the env var is set
   - |
     if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
       composer global require wp-coding-standards/wpcs
@@ -115,7 +54,6 @@ before_script:
     fi
 
 script:
-  # Run unit tests / phpcs
   - |
     if [[ ! -z "$WP_VERSION" ]] ; then
       phpunit
@@ -124,9 +62,4 @@ script:
   - |
     if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
       phpcs
-    fi
-  # Run ghost inspector tests
-  - |
-    if [[ "$GHOST" == 1 ]] ; then
-       cd $WP_FOLDER && wp cgr run
     fi
