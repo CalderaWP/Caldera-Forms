@@ -98,4 +98,16 @@ class Caldera_Forms_API_Privacy extends Caldera_Forms_API_Form
         }
         return $this;
     }
+
+    /** @inheritdoc */
+    public function toArray()
+    {
+        return array(
+            'ID' => $this->form[ 'ID' ],
+            'email_identifying_fields' => $this->get_email_identifying_fields(),
+            'pii_fields' => $this->get_pii_fields(),
+            'privacy_exporter_enabled' => $this->is_privacy_exporter_enabled()
+        );
+    }
+
 }
