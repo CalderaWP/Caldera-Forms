@@ -254,6 +254,23 @@ class Test_Caldera_Forms_Is_Personally_Identifying extends Caldera_Forms_Test_Ca
         $this->mock_form['fields'][$fieldId]['config'][Caldera_Forms_Field_Util::CONFIG_EMAIL_IDENTIFIER] = 1;
     }
 
+    /**
+     * Create WP API request object to test privacy controller with
+     *
+     * @since 1.7.0
+     *
+     * @param string $form_id
+     * @param array $data
+     * @return WP_REST_Request
+     */
+    protected function privacy_request_factory($form_id, array $data = [] )
+    {
+        $request = new WP_REST_Request('GET', Caldera_Forms_API_Util::url("forms/$form_id/privacy") );
+        foreach($data as $k => $v ){
+            $request->set_param($k,$v );
+        }
+        return $request;
+    }
 
 
 }
