@@ -78,6 +78,20 @@ class scripts {
 				'apiKeysViewLink' => esc_url( $pro_url ),
 				'minLogLevelTitle' => esc_html__( 'Minimum Log Level', 'caldera-forms' ),
 				'minLogLevelInfo' => esc_html__( 'Setting a higher level than notice may affect performance, and should only be used when instructed by support.', 'caldera-forms' ),
+                'whatIsCFPro' => [
+                    'firstParagraph'    => esc_html__( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec dapibus felis, vitae malesuada libero. Integer rutrum sodales nulla,  eget fermentum ligula faucibus in. Nulla efficitur ac urna sit amet fringilla.', 'caldera-forms' ),
+                    'hTitle'    => esc_html__('Benefits', 'caldera-forms'),
+                    'firstLi'   => esc_html__('Lorem ipsum dolor sit amet.', 'caldera-forms'),
+                    'secondLi'   => esc_html__('Lorem ipsum dolor sit amet.', 'caldera-forms'),
+                    'thirdLi'   => esc_html__('Lorem ipsum dolor sit amet.', 'caldera-forms'),
+                    'fourthLi'   => esc_html__('Lorem ipsum dolor sit amet.', 'caldera-forms'),
+                ],
+                'freeTrial' => [
+                    'firstParagraph'    => esc_html__( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec dapibus felis, vitae malesuada libero. Integer rutrum sodales nulla,  eget fermentum ligula faucibus in. Nulla efficitur ac urna sit amet fringilla.', 'caldera-forms' ),
+                    'buttonLeft'    => esc_html__('View Documentation', 'caldera-forms'),
+                    'buttonRight'   => esc_html__('Start Free Trial', 'caldera-forms'),
+                ],
+
 			],
 			'api' => array(
 				'cf' => array(

@@ -1,25 +1,22 @@
 <template>
     <div>
-        <p class="paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec dapibus felis, vitae malesuada libero. Integer rutrum sodales nulla, eget fermentum ligula faucibus in. Nulla efficitur ac urna sit amet fringilla.</p>
+        <p class="paragraph">{{ strings.freeTrial.firstParagraph }}</p>
         <div>
-            <a class="cf-button-linked" v-on:click="clickedFreeTrial">View Documentation</a>
-            <a class="cf-button-linked" v-on:click="clickedDocumentation">Start Free Trial</a>
+            <a class="cf-button-linked" href="https://calderaforms.com/caldera-forms-documentation-2/" target="_blank">{{ strings.freeTrial.buttonLeft }}</a>
+            <a class="cf-button-linked" href="https://calderaforms.com/pro/#buy" target="_blank">{{ strings.freeTrial.buttonRight }}</a>
         </div>
     </div>
 </template>
 
 <script>
-  import { mapGetters,mapMutations } from 'vuex'
+  import { mapGetters } from 'vuex'
 
   export default {
     name: 'freeTrial',
-    method: {
-      clickedFreeTrial(){
-        this.$store.dispatch('freeTrialLink');
-      },
-      clickedDocumentation(){
-        this.$store.dispatch('documentationLink');
-      }
+    computed : {
+      ...mapGetters([
+        'strings'
+      ])
     }
   }
 </script>
@@ -34,5 +31,6 @@
         color: white;
         cursor: pointer;
         display: inline-block;
+        text-decoration: none;
     }
 </style>

@@ -1,19 +1,27 @@
 <template>
     <div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec dapibus felis, vitae malesuada libero. Integer rutrum sodales nulla, eget fermentum ligula faucibus in. Nulla efficitur ac urna sit amet fringilla.</p>
-        <h3>Benefits</h3>
+        <p>{{ strings.whatIsCFPro.firstParagraph }}</p>
+        <h3>{{ strings.whatIsCFPro.hTitle }}</h3>
         <ul class="list">
-            <li>Lorem ipsum dolor sit amet.</li>
-            <li>consectetur adipiscing elit.</li>
-            <li>consectetur adipiscing elit.</li>
-            <li>consectetur adipiscing elit.</li>
+            <li>{{ strings.whatIsCFPro.firstLi }}</li>
+            <li>{{ strings.whatIsCFPro.secondLi }}</li>
+            <li>{{ strings.whatIsCFPro.thirdLi }}</li>
+            <li>{{ strings.whatIsCFPro.fourthLi }}</li>
         </ul>
+
     </div>
 </template>
 
 <script>
+  import { mapGetters } from 'vuex';
+
   export default {
-    name: 'whatIsCalderaFormsPro'
+    name: 'whatIsCalderaFormsPro',
+    computed : {
+      ...mapGetters([
+        'strings'
+      ])
+    }
   }
 </script>
 
