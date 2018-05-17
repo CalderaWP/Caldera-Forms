@@ -130,9 +130,9 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
      * @return Caldera_Forms_API_Error|Caldera_Forms_API_Response
      */
     public function delete_entries( WP_REST_Request $request ) {
-        try{
-            $this->form_object_factory( $request[ 'form_id' ], $request );
-        }catch ( Exception $e ){
+        $formID = sanitize_text_field( $request[ 'form_id' ] );
+
+        if( false === Caldera_Forms_Forms::is_internal_form( $formID ) ){
             $data = array(
                 'deleted' => false,
                 'message' =>  __( 'Form not found', 'caldera-forms')
@@ -140,7 +140,7 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
             return new Caldera_Forms_API_Response( $data, 404, array() );
         }
 
-        $entries = \calderawp\CalderaFormsQueries\CalderaFormsQueries()->selectByFormId( $request[ 'form_id' ], false );
+        $entries = \calderawp\CalderaFormsQueries\CalderaFormsQueries()->selectByFormId(  $formID, false );
 
         if( null != $entries ) {
             $entryIds = [];
