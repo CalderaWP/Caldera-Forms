@@ -20,10 +20,13 @@ const initialState = {
 
 
 /**
- * Simple form state b
- * @param state
- * @param action
- * @returns {*}
+ * Reducer for Redux(-like) state managment of form settings
+ *
+ * @since 1.6.2
+ *
+ * @param {Object} state
+ * @param {Object} action
+ * @returns {Object}
  */
 const formState = (state = initialState, action) =>
 {
@@ -49,6 +52,13 @@ const formState = (state = initialState, action) =>
     return state;
 };
 
+/**
+ * Combined reducers for privacy screen
+ *
+ * @since 1.7.0
+ *
+ * @type {Reducer<any> | Reducer<any, AnyAction>}
+ */
 const rootReducer = combineReducers({
     formState,
     privacyState

@@ -2,6 +2,15 @@ import React from 'react';
 import PropTypes from "prop-types";
 import {FieldPrivacySettings} from "./FieldPrivacySettings";
 
+/**
+ * All field-related privacy settings for a form
+ *
+ * @since 1.7.0
+ *
+ * @param props
+ * @returns {*}
+ * @constructor
+ */
 export const FieldsPrivacySettings = (props) => {
     return (
         <div>

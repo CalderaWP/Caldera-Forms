@@ -4,12 +4,18 @@ import { FormGroup,FormControl,ControlLabel,HelpBlock,Panel,PanelGroup,Checkbox 
 import {IsEmailIdentifyingField} from "./IsEmailIdentifyingField";
 import {IsPiiField} from "./IsPiiField";
 
+/**
+ * Privacy Settings for one field of a form
+ *
+ * @since 1.7.0
+ *
+ * @param props
+ * @returns {*}
+ * @constructor
+ */
 export const FieldPrivacySettings = (props)  => {
-
-
         return(
            <section>
-               <p>{props.field.name}</p>
                <IsEmailIdentifyingField
                    field={props.field}
                    privacySettings={props.privacySettings}
@@ -20,14 +26,8 @@ export const FieldPrivacySettings = (props)  => {
                    privacySettings={props.privacySettings}
                    onCheck={props.onCheckIsPii}
                />
-
            </section>
-
-
-
         );
-
-
 };
 
 FieldPrivacySettings.propTypes = {

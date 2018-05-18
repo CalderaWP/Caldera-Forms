@@ -11,13 +11,30 @@ import {
 import {getFormPrivacySettings} from "../selectors/privacy";
 import {
     requestForm,
-    requestPrivacySettings
+    requestPrivacySettings,
+    requestUpdatePrivacySettings
 } from "../../state/api";
 import {FormPrivacySettings} from "../components/FormPrivacySettings";
 import {FormSelectorNoGutenberg} from "../../components/FormSelectorNoGutenberg";
-import {requestUpdatePrivacySettings} from "../../state/api";
 
+
+/**
+ * Container componet for privacy settings
+ *
+ * @since 1.7.0
+ *
+ * @param props
+ * @returns {*}
+ * @constructor
+ */
 export const PrivacySettings = (props) => {
+    /**
+     * When exporter is enabled for a change route changes
+     *
+     * @since 1.7.0
+     *
+     * @param {String} newFormsId
+     */
     const onToggleEnable = (newFormsId) => {
         const formRequest = requestForm(newFormsId);
         formRequest.then( (form) => {
@@ -30,6 +47,13 @@ export const PrivacySettings = (props) => {
         });
     };
 
+    /**
+     * When a form is saved, route changes, actions, etc.
+     *
+     * @since 1.7.0
+     *
+     * @param newPrivacySettings
+     */
     const onSaveForm = (newPrivacySettings) => {
         props.setFormPrivacyForm(newPrivacySettings);
         const update = requestUpdatePrivacySettings(props.editForm.ID,newPrivacySettings);
@@ -100,8 +124,6 @@ const mapDispatchToProps = {
     requestPrivacySettings,
     setFormPrivacyForm,
 };
-
-
 
 export const PrivacySettingsWrapped = connect(
     mapStateToProps,
