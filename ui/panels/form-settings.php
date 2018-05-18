@@ -116,18 +116,19 @@
 	</div>
 
     <div class="caldera-config-group">
-        <label id="label-cf-delete-all-entries" for="cf-delete-entries-field">
+        <label id="caldera-forms-label-delete-all-entries" for="caldera-forms-delete-entries-field">
             <?php esc_html_e( 'Delete all entries', 'caldera-forms' ); ?>
         </label>
-        <div class="caldera-config-field">
-            <button id="cf-delete-all-form-entries" class="button"><?php _e('Delete all entries', 'caldera-forms'); ?></button>
-            <div id="cf-confirm-delete-all-form-entries" style="display: none;">
+        <div id="caldera-forms-delete-entries-field" class="caldera-config-field">
+            <button id="caldera-forms-delete-all-form-entries" class="button" aria-describedby="caldera-forms-delete-entries-description"><?php _e('Delete all form entries', 'caldera-forms'); ?></button>
+            <div id="caldera-forms-confirm-delete-all-form-entries" style="display: none;">
                 <p><?php _e('Are you sure you want to delete all the entries saved for this form ?', 'caldera-forms'); ?></p>
-                <button id="cf-yes-confirm-delete-all-form-entries" class="button" data-cf-form-id="<?php echo $element[ 'ID' ]; ?>"><?php _e('Yes', 'caldera-forms'); ?></button>
-                <button id="cf-no-confirm-delete-all-form-entries" class="button"><?php _e('No', 'caldera-forms'); ?></button>
+                <button id="caldera-forms-yes-confirm-delete-all-form-entries" class="button"><?php _e('Yes', 'caldera-forms'); ?></button>
+                <button id="caldera-forms-no-confirm-delete-all-form-entries" class="button"><?php _e('No', 'caldera-forms'); ?></button>
+                <span id="caldera-forms-delete-entries-spinner" class="spinner"></span>
             </div>
-            <p class="description" id="cf-delete-entries-description">
-                <?php esc_html_e( 'Delete all the entries saved for this form.', 'caldera-forms' ); ?>
+            <p class="description" id="caldera-forms-delete-entries-description">
+                <?php esc_html_e( 'Delete all the entries saved for this form. This can NOT be undone.', 'caldera-forms' ); ?>
             </p>
         </div>
     </div>
