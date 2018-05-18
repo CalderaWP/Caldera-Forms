@@ -2022,6 +2022,8 @@ class Caldera_Forms_Admin {
 			}
         }
 
+
+
 	}
 
     /**
@@ -2033,17 +2035,25 @@ class Caldera_Forms_Admin {
      */
     public static function get_default_privacy_content() {
         return
-            '<h2>' . esc_html__( 'What personal data Caldera Forms collect and why Caldera Forms collect it', 'caldera-forms') . '</h2>' .
-            '<p>' . esc_html__( 'This text describes what type of information the admin should include here or what they should do with this info you provide in your template.', 'caldera-forms' ) . '</p>';
+            '<h2>' . esc_html__( 'Caldera Forms: Data Collection', 'caldera-forms') . '</h2>' .
+            '<em>' . esc_html__( 'Suggested Text (if you have entry tracking enabled) -', 'caldera-forms' ) . '</em>' .
+            '<p>' . esc_html__( 'Caldera Forms stores a record of all form submissions. Your data may be deleted by the site administrator. You may request a report of saved data related to your email address.', 'caldera-forms' ) . '</p>' .
+            '<em>' . esc_html__( 'Suggested Text (if you do not have entry tracking enabled) -', 'caldera-forms' ) . '</em>' .
+            '<p>' . esc_html__( 'Caldera Forms stores data only briefly for each submission. Uploaded media files may remain on the server' ) . '</p>' .
+            '<em>' . esc_html__( 'Suggested Text (if you use add-ons that interact with third party services) -', 'caldera-forms' ) . '</em>' .
+            '<p>' . esc_html__( 'Some data may be shared with other services including [list services such as MailChimp, PayPal', 'caldera-forms' ) . '</p>';
     }
+
     /**
      * Add the suggested privacy policy text to the policy postbox.
      *
      * @since 1.7.0
      */
     public static function cf_add_suggested_privacy_content() {
-        $content = self::get_default_privacy_content();
-        wp_add_privacy_policy_content( esc_html__( 'Caldera Forms', 'caldera-forms' ), $content );
+        if( function_exists( 'wp_add_privacy_policy_content' ) ){
+            $content = self::get_default_privacy_content();
+            wp_add_privacy_policy_content( esc_html__( 'Caldera Forms', 'caldera-forms' ), $content );
+        }
     }
 
 
