@@ -156,6 +156,7 @@ class Caldera_Forms_Admin_Page
         }
 
         Caldera_Forms_Admin_Assets::enqueue_style('editor-grid');
+        Caldera_Forms_Admin_Assets::enqueue_style('admin');
     }
 
     /**

@@ -44,7 +44,11 @@ export const IsEmailIdentifyingField = (props)  => {
                     }
                     checked={fieldIsEmailIdentifying(props.field,props.privacySettings)}
                 >
-                    Enable
+                    <span style={{
+                        marginLeft: '12px'
+                    }}>
+                        Enable
+                    </span>
                 </Checkbox>
                 <HelpBlock>Can this field be used to determine whose data an entry belongs to?</HelpBlock>}
             </FormGroup>

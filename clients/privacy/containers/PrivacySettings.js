@@ -16,6 +16,8 @@ import {
 } from "../../state/api";
 import {FormPrivacySettings} from "../components/FormPrivacySettings";
 import {FormSelectorNoGutenberg} from "../../components/FormSelectorNoGutenberg";
+import {CalderaHeader} from "../../components/CalderaHeader";
+import {PageBody} from "../../components/PageBody";
 
 /**
  * Container componet for privacy settings
@@ -65,24 +67,47 @@ export const PrivacySettings = (props) => {
 
     };
 
+    const headerText = 'Privacy and Data Settings';
     if( props.editForm.hasOwnProperty( 'fields' ) ){
         if( ! props.formPrivacySettings.loaded ){
             return <p>Loading Settings</p>
         }
-        return <FormPrivacySettings
-            privacySettings={props.formPrivacySettings.settings}
-            form={props.editForm}
-            onSave={onSaveForm}
-            onStateChange={props.setFormPrivacyForm}
-        />
+        return (
+                <PageBody>
+                    <CalderaHeader
+                        name={headerText}
+                    />
+                    <FormPrivacySettings
+                        privacySettings={props.formPrivacySettings.settings}
+                        form={props.editForm}
+                        onSave={onSaveForm}
+                        onStateChange={props.setFormPrivacyForm}
+                    />
+                </PageBody>
+            )
+
     }
 
     return (
         <div>
-            <FormSelectorNoGutenberg
-                forms={props.forms}
-                onChange={onToggleEnable}
-            />
+            <CalderaHeader
+                name={headerText}
+            >
+                <li
+                    style={{
+                        marginTop: '6px',
+                        paddingLeft: '12px'
+                    }}
+                >
+                    <FormSelectorNoGutenberg
+                        forms={props.forms}
+                        onChange={onToggleEnable}
+                    />
+                </li>
+            </CalderaHeader>
+            <PageBody>
+                <p className={'screen-reader-text' }>Choose a form to begin</p>
+            </PageBody>
         </div>
 
     )
