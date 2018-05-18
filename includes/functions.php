@@ -226,4 +226,22 @@ function caldera_forms_pro_is_active(){
     return  ( version_compare( PHP_VERSION, '5.6.0', '>=' ) ) && defined( 'CF_PRO_LOADED' ) && CF_PRO_LOADED && \calderawp\calderaforms\pro\settings\active::get_status();
 }
 
+/**
+ * Check if get_privacy_policy_url and gets the URL of the Privacy Policy Page set
+ *
+ * @since 1.7.0
+ *
+ * @return filtered Privacy policy page url or empty string 'caldera_forms_privacy_policy_page'
+ */
+function caldera_forms_privacy_policy_page_url(){
+
+    if( ! function_exists('get_privacy_policy_url') ) {
+        return;
+    }
+
+    $url = get_privacy_policy_url();
+
+    return apply_filters( 'caldera_forms_privacy_policy_page', $url );
+}
+
 
