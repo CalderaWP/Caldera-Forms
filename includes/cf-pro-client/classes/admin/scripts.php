@@ -67,7 +67,6 @@ class scripts {
 	 * @return array
 	 */
 	public function data(){
-
 		$pro_url = admin_url('admin.php?page=cf-pro');
 
 		$data = array(
@@ -91,7 +90,15 @@ class scripts {
                     'buttonLeft'    => esc_html__('View Documentation', 'caldera-forms'),
                     'buttonRight'   => esc_html__('Start Free Trial', 'caldera-forms'),
                 ],
-
+                'notConnected' => esc_html__( 'Not Connected', 'caldera-forms' ),
+                'connected' => esc_html__( 'Connected', 'caldera-forms' ),
+                'tabNames' => [
+                    'account' => esc_html__( 'Account', 'caldera-forms' ),
+                    'formSettings' => esc_html__( 'Form Settings', 'caldera-forms' ),
+                    'settings' => esc_html__( 'Settings', 'caldera-forms' ),
+                    'whatIsCFPro' => esc_html__( 'What is Caldera Forms Pro ?', 'caldera-forms' ),
+                    'freeTrial' => esc_html__( 'Free Trial', 'caldera-forms' ),
+                ]
 			],
 			'api' => array(
 				'cf' => array(

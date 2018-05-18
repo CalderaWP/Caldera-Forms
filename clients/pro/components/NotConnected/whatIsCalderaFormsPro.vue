@@ -8,7 +8,6 @@
             <li>{{ strings.whatIsCFPro.thirdLi }}</li>
             <li>{{ strings.whatIsCFPro.fourthLi }}</li>
         </ul>
-
     </div>
 </template>
 

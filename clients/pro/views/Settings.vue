@@ -9,10 +9,10 @@
 						</span>
 					</li>
 					<li class="status good" v-if="connected">
-						Connected
+						{{strings.connected}}
 					</li>
 					<li class="status bad" v-if="!connected">
-						Not Connected
+						{{strings.notConnected}}
 					</li>
 					<li class="cf-pro-save">
 						<input type="submit" class="button button-primary" value="Save" @click="save"/>
@@ -40,7 +40,7 @@
 							<delivery></delivery>
 							<logs></logs>
 						</tab>
-						<tab name="What is Caldera Forms Pro ?" v-if="! connected">
+						<tab name="What Is Caldera Forms Pro ?" v-if="! connected">
 							<what-is-caldera-forms-pro></what-is-caldera-forms-pro>
 						</tab>
 						<tab name="Free Trial" v-if="! connected">
@@ -80,7 +80,8 @@
 			publicKey: state => state.account.apiKeys.public,
 			enhancedDelivery: state => state.settings.enhancedDelivery,
             logLevel: state => state.settings.logLevel,
-			mainAlert: state => state.mainAlert
+			mainAlert: state => state.mainAlert,
+			strings: state => state.strings,
 		}),
 		beforeMount(){
 			[].forEach.call(document.querySelectorAll('.update-nag'),function(e){
