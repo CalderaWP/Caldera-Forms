@@ -137,11 +137,13 @@ export const FormPrivacySettings = (props) => {
                             Save
                         </Button>
                     </p>
-                    <ol>
+                    <ul
+                        style={{padding:'12px'}}
+                    >
                         <li>Email Identifying Fields: The field(s) of your form that can be used to determine whose data an entry belongs to.</li>
                         <li>Personally Identifying Fields (fields): The field(s) of your form that contain PII about the person identified in the email identifying field.</li>
                         <li><a href={'https://calderaforms.com/gdpr?utm_campaign=wp-admin'}>Learn More Here</a></li>
-                    </ol>
+                    </ul>
                 </div>
             </div>
 

@@ -28,16 +28,14 @@ export const IsEmailIdentifyingField = (props)  => {
     const idAttr  = `caldera-forms-privacy-gdpr-is-email-identifiying-${props.field.ID}`;
     if( 'email' === props.field.type || 'text' === props.field.text ){
         return (
-            <FormGroup
-                controlId={idAttr}
-            >
+            <FormGroup>
                 <ControlLabel
-                    controlId={idAttr}
+                    htmlFor={idAttr}
                 >
                     Email Identifying Field?
                 </ControlLabel>
                 <Checkbox
-                    controlId={idAttr}
+                    id={idAttr}
                     onChange={() => {
                             props.onCheck(props.field.ID)
                         }
@@ -47,10 +45,14 @@ export const IsEmailIdentifyingField = (props)  => {
                     <span style={{
                         marginLeft: '12px'
                     }}>
-                        Enable
+                        Yes
                     </span>
                 </Checkbox>
-                <HelpBlock>Can this field be used to determine whose data an entry belongs to?</HelpBlock>}
+                <HelpBlock
+                    className={'screen-reader-text'}
+                >
+                    Can this field be used to determine whose data an entry belongs to?
+                </HelpBlock>
             </FormGroup>
         )
     }

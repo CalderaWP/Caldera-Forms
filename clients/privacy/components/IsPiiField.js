@@ -27,9 +27,7 @@ function fieldIsPii(field,privacySettings ) {
 export const IsPiiField = (props) => {
     const idAttr  = `caldera-forms-privacy-gdpr-is-pii-field-${props.field.ID}`;
     return (
-        <FormGroup
-            controlid={idAttr}
-        >
+        <FormGroup>
             <ControlLabel
                htmlFor={idAttr}
             >
@@ -46,10 +44,14 @@ export const IsPiiField = (props) => {
                 <span style={{
                     marginLeft: '12px'
                 }}>
-                    Enable
+                    Yes
                 </span>
             </Checkbox>
-            <HelpBlock>Does field contain personally identifying data?</HelpBlock>
+            <HelpBlock
+                className={'screen-reader-text'}
+            >
+                Does field contain personally identifying data?
+            </HelpBlock>
         </FormGroup>
     );
 
