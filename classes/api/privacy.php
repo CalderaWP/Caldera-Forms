@@ -51,7 +51,7 @@ class Caldera_Forms_API_Privacy extends Caldera_Forms_API_Form
      *
      * @return array
      */
-    public function get_pii_fields()
+    public function get_piiFields()
     {
         return Caldera_Forms_Forms::personally_identifying_fields($this->form, true );
     }
@@ -73,12 +73,12 @@ class Caldera_Forms_API_Privacy extends Caldera_Forms_API_Form
      *
      * @since 1.7.0
      *
-     * @param array $pii_fields New value
+     * @param array $piiFields New value
      * @return $this
      */
-    public function set_pii_fields( $pii_fields ){
+    public function set_piiFields( $piiFields ){
         foreach( $this->get_fields() as $field ){
-            $this->form[ 'fields' ][ $field[ 'ID' ] ][ 'config' ][ Caldera_Forms_Field_Util::CONFIG_PERSONAL] = (int) in_array( $field[ 'ID' ], $pii_fields );
+            $this->form[ 'fields' ][ $field[ 'ID' ] ][ 'config' ][ Caldera_Forms_Field_Util::CONFIG_PERSONAL] = (int) in_array( $field[ 'ID' ], $piiFields );
         }
         $this->set_fields();
         return $this;
@@ -105,12 +105,12 @@ class Caldera_Forms_API_Privacy extends Caldera_Forms_API_Form
     public function toArray()
     {
         return array(
-            'ID' => $this->form[ 'ID' ],
-            'name' => $this->form[ 'name' ],
+            'ID' => caldera_forms_very_safe_string($this->form[ 'ID' ]),
+            'name' => isset( $this->form[ 'name' ] ) ? caldera_forms_very_safe_string( $this->form[ 'name' ] ) : '',
             'fields' => $this->get_fields(),
-            'email_identifying_fields' => $this->get_email_identifying_fields(),
-            'pii_fields' => $this->get_pii_fields(),
-            'privacy_exporter_enabled' => $this->is_privacy_exporter_enabled()
+            'emailIdentifyingFields' => $this->get_email_identifying_fields(),
+            'piiFields' => $this->get_piiFields(),
+            'privacyExporterEnabled' => $this->is_privacy_exporter_enabled()
         );
     }
 
@@ -119,8 +119,8 @@ class Caldera_Forms_API_Privacy extends Caldera_Forms_API_Form
     {
        foreach ( Caldera_Forms_Forms::get_fields($this->form, true ) as $field_id => $field ) {
             $this->fields[ $field_id ] = [
-                'ID' => $field_id,
-                'name' => $field[ 'name' ],
+                'ID' => caldera_forms_very_safe_string($field_id),
+                'name' => isset( $field[ 'label' ] ) ? caldera_forms_very_safe_string( $field[ 'label' ] ) : '',
                 'type' => Caldera_Forms_Field_Util::get_type( $field, $this->form )
             ];
         }

@@ -939,7 +939,7 @@ class Caldera_Forms_Forms {
      */
     public static function update_privacy_export_enabled(array $form, $enabled = true )
     {
-        $form[ 'privacy_exporter_enabled' ] = (bool) $enabled;
+        $form[ 'privacyExporterEnabled' ] = (bool) $enabled;
         return $form;
 
     }

@@ -1,6 +1,7 @@
 import {actionFunctions, SET_FORM} from "../../state/actions/form";
 export const SET_EDIT_FORM = 'SET_EDIT_FORM';
-export  const UNSET_EDIT_FORM = 'UNSET_EDIT_FORM';
+export const UNSET_EDIT_FORM = 'UNSET_EDIT_FORM';
+
 
 export const setForm = (form, formId ) => {
     return actionFunctions.setForm(form,formId);
@@ -23,4 +24,12 @@ export const setForms = (forms) => {
     return actionFunctions.setForms(forms);
 };
 
+
+export const SET_FORM_PRIVACY_SETTINGS = 'SET_FORM_PRIVACY_SETTINGS';
+export const setFormPrivacyForm = (settings) => {
+    return {
+        type: SET_FORM_PRIVACY_SETTINGS,
+        form: settings
+    }
+};
 

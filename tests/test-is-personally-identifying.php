@@ -107,13 +107,13 @@ class Test_Caldera_Forms_Is_Personally_Identifying extends Caldera_Forms_Test_Ca
      *
      * @since 1.7.0
      *
-     * @covers Caldera_Forms_API_Privacy::get_pii_fields()
+     * @covers Caldera_Forms_API_Privacy::get_piiFields()
      */
     public function testPiiFieldsInApiForm()
     {
         $this->setFieldAsPersonallyIdentifying();
         $form = new Caldera_Forms_API_Privacy($this->mock_form);
-        $this->assertEquals( Caldera_Forms_Forms::personally_identifying_fields($this->mock_form,true), $form->get_pii_fields() );
+        $this->assertEquals( Caldera_Forms_Forms::personally_identifying_fields($this->mock_form,true), $form->get_piiFields() );
     }
 
     /**
@@ -123,7 +123,7 @@ class Test_Caldera_Forms_Is_Personally_Identifying extends Caldera_Forms_Test_Ca
      *
      * @since 1.7.0
      *
-     * @covers Caldera_Forms_API_Privacy::get_pii_fields()
+     * @covers Caldera_Forms_API_Privacy::get_piiFields()
      */
     public function testEmailFieldsInApiForm()
     {
@@ -138,20 +138,20 @@ class Test_Caldera_Forms_Is_Personally_Identifying extends Caldera_Forms_Test_Ca
      *
      * @since 1.7.0
      *
-     * @covers Caldera_Forms_API_Privacy::set_pii_fields()
+     * @covers Caldera_Forms_API_Privacy::set_piiFields()
      * @covers Caldera_Forms_API_Form::save_form()
      */
     public function testUpdatePiiFields()
     {
 
-        $pii_fields = ['fld_1724450', 'fld_6125005'];
+        $piiFields = ['fld_1724450', 'fld_6125005'];
         $form = new Caldera_Forms_API_Privacy($this->mock_form);
-        $this->assertTrue( is_a( $form->set_pii_fields( $pii_fields), Caldera_Forms_API_Form::class ) );
+        $this->assertTrue( is_a( $form->set_piiFields( $piiFields), Caldera_Forms_API_Form::class ) );
         $this->assertTrue( is_a( $form->save_form(), Caldera_Forms_API_Form::class ) );
 
         $saved_form = Caldera_Forms_Forms::get_form( self::MOCK_FORM_ID );
-        $this->assertEquals( Caldera_Forms_Forms::personally_identifying_fields($saved_form,true), $pii_fields );
-        $this->assertEquals( Caldera_Forms_Forms::personally_identifying_fields($saved_form,true), $form->get_pii_fields() );
+        $this->assertEquals( Caldera_Forms_Forms::personally_identifying_fields($saved_form,true), $piiFields );
+        $this->assertEquals( Caldera_Forms_Forms::personally_identifying_fields($saved_form,true), $form->get_piiFields() );
 
     }
 

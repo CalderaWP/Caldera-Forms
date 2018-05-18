@@ -210,7 +210,7 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
         }
 
         if( isset( $request[ 'piiFields' ] ) && is_array( $request[ 'piiFields' ]  ) ){
-            $this->form->set_pii_fields( $request[ 'piiFields' ] );
+            $this->form->set_piiFields( $request[ 'piiFields' ] );
             $save_required = true;
 
         }
@@ -482,8 +482,8 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
 	 */
     protected function prepare_field(  &$field ){
 		$field = array(
-			'id' => $field[ 'ID' ],
-			'label' => $field[ 'label' ]
+			'id' => caldera_forms_very_safe_string( $field[ 'ID' ] ),
+			'label' =>  ! empty( $field[ 'label' ])  ? sanitize_text_field($field[ 'label' ]) : ! empty( $field[ 'label' ]) ? sanitize_text_field($field[ 'name' ]) : sanitize_text_field( $field['ID'])
 		);
     }
 

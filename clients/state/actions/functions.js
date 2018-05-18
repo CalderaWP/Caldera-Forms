@@ -28,7 +28,7 @@ export const formHasId = ( form, formId ) => {
  * @param {Object} state
  * @param {String} formId
  */
-export const findFormById = (state, formId) => {
+export const findFormById = (state, formId,) => {
     return state.forms.find(form => {
         return formHasId(form,formId);
     });

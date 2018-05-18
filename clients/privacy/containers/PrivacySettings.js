@@ -5,28 +5,51 @@ import { bindActionCreators } from 'redux'
 import {
     setForm,
     setEditForm,
-    unsetEditForm
+    unsetEditForm,
+    setFormPrivacyForm
 } from "../actions";
-import {requestForm} from "../../state/api";
+import {getFormPrivacySettings} from "../selectors/privacy";
+import {
+    requestForm,
+    requestPrivacySettings
+} from "../../state/api";
 import {FormPrivacySettings} from "../components/FormPrivacySettings";
 import {FormSelectorNoGutenberg} from "../../components/FormSelectorNoGutenberg";
+import {requestUpdatePrivacySettings} from "../../state/api";
 
 export const PrivacySettings = (props) => {
-    const onChange = (newFormsId) => {
+    const onToggleEnable = (newFormsId) => {
         const formRequest = requestForm(newFormsId);
         formRequest.then( (form) => {
             props.setForm(form,newFormsId);
             props.setEditForm(newFormsId);
-        })
+        });
+        const privacySettingsRequest = requestPrivacySettings(newFormsId);
+        privacySettingsRequest.then( (settings) => {
+            props.setFormPrivacyForm(settings)
+        });
+    };
+
+    const onSaveForm = (newPrivacySettings) => {
+        props.setFormPrivacyForm(newPrivacySettings);
+        const update = requestUpdatePrivacySettings(props.editForm.ID,newPrivacySettings);
+        update.then( (response) => {
+            props.setFormPrivacyForm(response);
+            props.unsetEditForm();
+        });
+
+
     };
 
     if( props.editForm.hasOwnProperty( 'fields' ) ){
+        if( ! props.formPrivacySettings.loaded ){
+            return <p>Loading Settings</p>
+        }
         return <FormPrivacySettings
+            privacySettings={props.formPrivacySettings.settings}
             form={props.editForm}
-            onSave={() => {
-                    props.unsetEditForm();
-                }
-            }
+            onSave={onSaveForm}
+            onStateChange={props.setFormPrivacyForm}
         />
     }
 
@@ -34,7 +57,7 @@ export const PrivacySettings = (props) => {
         <div>
             <FormSelectorNoGutenberg
                 forms={props.forms}
-                onChange={onChange}
+                onChange={onToggleEnable}
             />
         </div>
 
@@ -43,21 +66,39 @@ export const PrivacySettings = (props) => {
 
 PrivacySettings.propTypes = {
     forms: PropTypes.array.isRequired,
-    editForm: PropTypes.object
+    editForm: PropTypes.object,
 };
 
 const mapStateToProps = state => {
-    return {
+    let props = {
         forms : state.formState.forms,
         editForm: state.formState.editForm,
-        roy: 'hi'
+        roy: 'hi',
+        formPrivacySettings: {
+            loaded:false
+        }
+    };
+
+    if( props.editForm.hasOwnProperty('fields') ){
+        const settings =  getFormPrivacySettings(props.editForm.ID, state);
+        if (settings) {
+            props.formPrivacySettings = {
+                ...{loaded: true},
+                settings
+            }
+        }
+
     }
+
+    return props;
 };
 
 const mapDispatchToProps = {
     setEditForm,
     setForm,
-    unsetEditForm
+    unsetEditForm,
+    requestPrivacySettings,
+    setFormPrivacyForm,
 };
 
 

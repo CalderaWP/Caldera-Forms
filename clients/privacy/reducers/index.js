@@ -9,6 +9,7 @@ import {SET_FORM, SET_FORMS} from "../../state/actions/form";
 import {DEFAULT_STATE} from "../../state/actions/form";
 import {setFormInState, setFormsInState} from "../../state/actions/mutations";
 import {findFormById} from "../../state/actions/functions";
+import {privacyState} from "./privacyStore";
 
 const initialState = {
     ...{
@@ -49,7 +50,8 @@ const formState = (state = initialState, action) =>
 };
 
 const rootReducer = combineReducers({
-    formState
+    formState,
+    privacyState
 });
 
 export default rootReducer

@@ -1,51 +1,39 @@
 import React from  'react';
 import PropTypes from 'prop-types';
 import { FormGroup,FormControl,ControlLabel,HelpBlock,Panel,PanelGroup,Checkbox } from 'react-bootstrap';
+import {IsEmailIdentifyingField} from "./IsEmailIdentifyingField";
+import {IsPiiField} from "./IsPiiField";
 
-export  class FieldPrivacySettings extends React.Component {
+export const FieldPrivacySettings = (props)  => {
 
-    constructor(props){
-        super(props);
-        this.state = {
-            isIdentifying: false
-        };
-        this.handleCheck = this.handleCheck.bind(this);
-    }
 
-    handleCheck(){
-        this.setState( { isIdentifying: ! this.state.isIdentifying } );
-    };
-    render(){
         return(
-            <PanelGroup>
-                <Panel onClick={(e) => {}}>
-                    <Panel.Body>
-                        <Panel.header>
-                            <p>{field.label}</p>
-                        </Panel.header>
-                        <FormGroup controlId={`caldera-forms-privacy-is-email-identifier-field-${this.props.field.ID}`}>
-                            <ControlLabel>
-                                Submitter Email
-                            </ControlLabel>
-                            <Checkbox
-                                onChange={this.handleCheck}
-                                checked={this.state.isIdentifying}
-                            >
-                                Checkbox
-                            </Checkbox>
-                            <HelpBlock>Can this field be used to identify form submitter by email?</HelpBlock>}
-                        </FormGroup>
-                    </Panel.Body>
-                    <Panel.Footer>Panel footer</Panel.Footer>
-                </Panel>
-            </PanelGroup>
-        )
-    }
+           <section>
+               <p>{props.field.name}</p>
+               <IsEmailIdentifyingField
+                   field={props.field}
+                   privacySettings={props.privacySettings}
+                   onCheck={props.onCheckIsEmail}
+               />
+               <IsPiiField
+                   field={props.field}
+                   privacySettings={props.privacySettings}
+                   onCheck={props.onCheckIsPii}
+               />
+
+           </section>
 
 
-}
+
+        );
+
+
+};
 
 FieldPrivacySettings.propTypes = {
     field: PropTypes.object.isRequired,
-    formId: PropTypes.string.isRequired
+    formId: PropTypes.string.isRequired,
+    privacySettings: PropTypes.object.isRequired,
+    onCheckIsEmail: PropTypes.func.isRequired,
+    onCheckIsPii: PropTypes.func.isRequired
 };

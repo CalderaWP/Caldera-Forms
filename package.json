@@ -45,7 +45,8 @@
     "css-loader": "^0.28.11",
     "dangerously-set-inner-html": "^2.0.1",
     "exports-loader": "^0.7.0",
-    "inputmask": "^3.3.11"
+    "inputmask": "^3.3.11",
+    "lodash.remove": "^4.7.0"
   },
   "devDependencies": {
     "@wordpress/babel-preset-default": "^1.1.1",
