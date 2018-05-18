@@ -38,9 +38,14 @@ export const FormPrivacySettings = (props) => {
         if (!fields.length || !fields.includes(fieldId)) {
             fields.push(fieldId)
         } else {
-            fields = remove(fields, (ID) => {
-                return ID === fieldId;
-            });
+            if( 1 === fields.length ){
+                fields = [];
+            }else{
+                fields = remove(fields, (ID) => {
+                    return ID === fieldId;
+                });
+            }
+
         }
         return fields;
     }
