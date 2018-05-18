@@ -160,8 +160,6 @@ class Caldera_Forms_Admin {
 
         add_action( 'caldera_forms_admin_init', array( $this, 'cf_add_suggested_privacy_content' ), 20 );
 
-        add_action("wp_ajax_cf_delete_all_form_entries", array( $this, 'cf_delete_all_form_entries') );
-
 		/**
 		 * Runs after Caldera Forms admin is initialized
 		 *
@@ -2048,30 +2046,7 @@ class Caldera_Forms_Admin {
         wp_add_privacy_policy_content( esc_html__( 'Caldera Forms', 'caldera-forms' ), $content );
     }
 
-    /**
-     * Ajax action delete all entries saved for a form
-     *
-     * @since 1.7.0
-     *
-     */
-    public static function cf_delete_all_form_entries() {
 
-        $formId = isset($_POST['formId']) ? $_POST['formId'] : '';
-
-        $entries = \calderawp\CalderaFormsQueries\CalderaFormsQueries()->selectByFormId( $formId, false );
-        $entryIds = [];
-        foreach( array_column( $entries, 'entry' ) as $entry ){
-            $entryIds[] = $entry->id;
-        }
-        if( ! empty( $entryIds ) ) {
-            Caldera_Forms_Entry_Bulk::delete_entries($entryIds);
-            echo 'Entries-deleted';
-        } else {
-            echo 'No-entries';
-        }
-
-        wp_die();
-    }
 
 }
 
