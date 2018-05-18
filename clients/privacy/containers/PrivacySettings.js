@@ -17,7 +17,6 @@ import {
 import {FormPrivacySettings} from "../components/FormPrivacySettings";
 import {FormSelectorNoGutenberg} from "../../components/FormSelectorNoGutenberg";
 
-
 /**
  * Container componet for privacy settings
  *

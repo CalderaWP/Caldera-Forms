@@ -463,10 +463,17 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
 	 * @param $field
 	 */
     protected function prepare_field(  &$field ){
+        if( ! empty( $field[ 'label' ] ) ){
+            $label = sanitize_text_field($field[ 'label' ]);
+        }elseif ( ! empty( $field[ 'name' ] ) ){
+            $label = sanitize_text_field($field[ 'name' ]);
+        }else{
+            $label = $field[ 'ID' ];
+        }
 		$field = array(
 			'id' => caldera_forms_very_safe_string( $field[ 'ID' ] ),
-			'label' =>  ! empty( $field[ 'label' ])  ? sanitize_text_field($field[ 'label' ]) : ! empty( $field[ 'label' ]) ? sanitize_text_field($field[ 'name' ]) : sanitize_text_field( $field['ID'])
-		);
+			'label' =>  $label
+        );
     }
 
     /**

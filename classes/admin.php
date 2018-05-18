@@ -110,7 +110,7 @@ class Caldera_Forms_Admin {
 
 		// Add admin scritps and styles
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_stylescripts' ), 1 );
-		
+
 		// add element & fields filters
 		add_filter('caldera_forms_get_panel_extensions', array( $this, 'get_panel_extensions'), 1);
 		add_filter('caldera_forms_entry_viewer_buttons', array( $this, 'set_viewer_buttons'),10, 4);
@@ -307,9 +307,9 @@ class Caldera_Forms_Admin {
 
 					echo '<label class="caldera-grid cf-form-template' . $selected_template . '">';
 						echo '<small>' . $template['name'] . '</small>';
-						
+
 						echo '<input type="radio" name="template" value="' . $template_slug . '" class="cf-template-select"' . $selected_field . '>';
-						
+
 
 						// check a layout exists
 						if( !empty( $template['preview'] ) ){
@@ -318,7 +318,7 @@ class Caldera_Forms_Admin {
 						}
 						if( empty( $template['template']['layout_grid'] ) || empty( $template['template']['layout_grid']['structure'] ) || empty( $template['template']['layout_grid']['fields'] ) ){
 							echo '<p class="description" style="padding: 50px 0px; text-align: center;">' . esc_html__( 'Preview not available', 'caldera-forms' ) . '</p></label>';
-							continue;							
+							continue;
 						}
 
 						$struct = explode('|', $template['template']['layout_grid']['structure'] );
@@ -350,10 +350,10 @@ class Caldera_Forms_Admin {
 									echo '</div>';
 									echo '</div>';
 								}
-								
+
 							echo '</div>';
 						}
-					
+
 					echo '</label>';
 					// unset selection
 					$selected_field = null;
@@ -374,7 +374,7 @@ class Caldera_Forms_Admin {
 				</div>
 
 				<button type="button" class="cf-change-template-button"><span class="dashicons dashicons-arrow-left-alt"></span> <?php echo esc_html__( 'Change Template', 'caldera-forms' ); ?></button>
-				<button type="button" class="cf-create-form-button ajax-trigger" 
+				<button type="button" class="cf-create-form-button ajax-trigger"
 				 data-action="create_form"
 				 data-active-class="disabled"
 				 data-load-class="disabled"
@@ -843,7 +843,7 @@ class Caldera_Forms_Admin {
 		$field_labels = array();
 		$backup_labels = array();
 		$selects = array();
-		
+
 
 		$fields = array();
 		if ( ! empty( $form[ 'fields' ] ) ) {
@@ -1199,7 +1199,7 @@ class Caldera_Forms_Admin {
 		}
 
 		Caldera_Forms_Admin_Assets::panels();
-        
+
 	}
 
 	/**
@@ -1476,7 +1476,7 @@ class Caldera_Forms_Admin {
 			), $form );
 			$data = $csv_data[ 'data' ];
 			$headers = $csv_data[ 'headers' ];
-			
+
 			fputcsv($df, $headers, $delimiter);
 			foreach($data as $row){
 				$csvrow = array();
@@ -2013,21 +2013,26 @@ class Caldera_Forms_Admin {
      *
      * @uses "caldera_forms_admin_init" action
 	 */
-	public static function init_privacy_settings(){
-	    if( self::is_edit() ){
-	        $form = Caldera_Forms_Forms::get_form( caldera_forms_very_safe_string( $_GET[ self::EDIT_KEY ] ) );
-			if ( is_array( $form ) && isset( $form[ 'fields' ] ) ) {
-				$privacy = new Caldera_Forms_Admin_Privacy($form);
-				add_action('caldera_forms_field_wrapper_before_field_setup', array($privacy, 'add_personally_identifying_question'), 5, 3);
-			}
+    public static function init_privacy_settings()
+    {
+        if (self::is_edit()) {
+            $form = Caldera_Forms_Forms::get_form(caldera_forms_very_safe_string($_GET[self::EDIT_KEY]));
+            if (is_array($form) && isset($form['fields'])) {
+                $privacy = new Caldera_Forms_Admin_Privacy($form);
+                add_action('caldera_forms_field_wrapper_before_field_setup', array($privacy, 'add_personally_identifying_question'), 5, 3);
+            }
         }
 
-        Caldera_Forms_Admin_Factory::menu_page( 'privacy', __( 'Privacy Settings', 'caldera-forms' ), '<div id="caldera-forms-privacy-settings"></div>',[
-                'scripts' => [
-                    'privacy',
-                    'admin',
-                ]
-        ] );
+        Caldera_Forms_Admin_Factory::menu_page('privacy', __('Privacy Settings', 'caldera-forms'), '<div id="caldera-forms-privacy-settings"></div>', [
+            'scripts' => [
+                'privacy',
+                'admin',
+
+            ],
+            'styles' => [
+                'editor-grid'
+            ]
+        ]);
 
 
 

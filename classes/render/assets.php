@@ -460,6 +460,9 @@ class Caldera_Forms_Render_Assets {
 	 * @param array $depts Optional. Array of dependencies. Default is jQuery
 	 */
 	public static function enqueue_script( $script, $depts = array( 'jquery' ) ){
+	    if( 'editor-grid' === $script ){
+	        return Caldera_Forms_Admin_Assets::enqueue_script( $script );
+        }
 		if( in_array( $script, array( 'validator', self::make_slug( 'validator' ) ) ) ){
 			$scripts = self::get_core_scripts();
 			wp_enqueue_script( self::make_slug( 'validator' ), $scripts[ 'validator' ], array(), CFCORE_VER, false );
@@ -635,7 +638,7 @@ class Caldera_Forms_Render_Assets {
 	 */
 	public static function maybe_register() {
 		if ( ! did_action( 'caldera_forms_assets_registered' ) ) {
-			self::register();
+            self::register();
 		}
 	}
 

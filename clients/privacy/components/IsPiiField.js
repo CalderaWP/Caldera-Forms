@@ -31,7 +31,7 @@ export const IsPiiField = (props) => {
             controlid={idAttr}
         >
             <ControlLabel
-               id={idAttr}
+               htmlFor={idAttr}
             >
                Personally Identifying Field?
             </ControlLabel>
@@ -43,9 +43,13 @@ export const IsPiiField = (props) => {
                 }
                 checked={fieldIsPii(props.field,props.privacySettings)}
             >
-                Enable
+                <span style={{
+                    marginLeft: '12px'
+                }}>
+                    Enable
+                </span>
             </Checkbox>
-            <HelpBlock>Does field contain personally identifying data?</HelpBlock>}
+            <HelpBlock>Does field contain personally identifying data?</HelpBlock>
         </FormGroup>
     );
 

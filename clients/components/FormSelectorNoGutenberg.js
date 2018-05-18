@@ -5,15 +5,23 @@ import { FormGroup,FormControl,ControlLabel,HelpBlock } from 'react-bootstrap';
 
 
 export const FormSelectorNoGutenberg = (props) => {
+    const idAttr = props.idAttr ? props.idAttr :'caldera-forms-form-chooser';
     return (
-        <FormGroup controlId="formControlsSelect">
-            <ControlLabel>Select</ControlLabel>
-            <FormControl
-                componentClass="select"
+        <FormGroup controlId={idAttr}>
+            <label
+                htmlFor={idAttr}
+            >
+                Choose Form
+            </label>
+            <select
+                id={idAttr}
+                value={props.selected || ''}
+                className="select"
                 onChange={(e) => {
                     props.onChange(e.target.value)
                 }}
             >
+                <option value=''></option>
                 {Object.keys(props.forms).map( (formsIndex) => {
                     const form = props.forms[formsIndex];
                     return (
@@ -25,7 +33,7 @@ export const FormSelectorNoGutenberg = (props) => {
                         </option>
                     )
                 })}
-            </FormControl>
+            </select>
             <HelpBlock>Choose a form to edit privacy settings for.</HelpBlock>
         </FormGroup>
     )
@@ -33,5 +41,7 @@ export const FormSelectorNoGutenberg = (props) => {
 
 FormSelectorNoGutenberg.propTypes = {
     forms: PropTypes.array.isRequired,
-    onChange: PropTypes.func,
+    onChange: PropTypes.func.isRequired,
+    selected: PropTypes.string,
+    idAttr: PropTypes.string
 };
