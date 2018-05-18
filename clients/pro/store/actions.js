@@ -12,16 +12,20 @@ export const ACTIONS = {
 					if ('object' === typeof  maybe) {
 						r = maybe;
 					}else{
-						throw new Exception;
+                        context.commit('connected',false );
+                        throw new Exception;
 					}
 				} else {
 					r = response.data;
 				}
+				console.log(21);
 				context.commit('forms', r.forms);
-				context.commit('apiKeys', r.apiKeys);
-				context.commit('accountId', r.account_id);
+                context.commit('connected',false);//prevents next line form dispatching getLayouts
+                context.commit('apiKeys', r.apiKeys);
+                context.commit('connected',true);
+                context.commit('accountId', r.account_id);
 				context.commit('plan', r.plan);
-        				context.commit('logLevel', r.logLevel);
+				context.commit('logLevel', r.logLevel);
 				context.commit('enhancedDelivery', r.enhancedDelivery);
 				context.commit('formScreen', r.hasOwnProperty( 'formScreen' ) ? r.formScreen : CFProConfig.formScreen );
 				resolve(response);
@@ -77,6 +81,9 @@ export const ACTIONS = {
 	},
 	testConnection({commit, state}) {
 		return new Promise((resolve, reject) => {
+			if( state.connected ){
+                resolve('Already Connected');
+            }
 			if (state.account.apiKeys.public && state.account.apiKeys.secret) {
 				return appAPI.get(
 					urlString(
@@ -87,14 +94,16 @@ export const ACTIONS = {
 						'/account/verify'
 					)
 				).then(r => {
-						state.account.plan = r.plan;
+                        state.account.plan = r.plan;
 						state.account.id = r.id;
-						state.connected = true;
 						commit( 'connected', true );
 						resolve(r);
 					},
 					error => {
-						reject(error);
+                        console.log(101);
+
+                        context.commit('connected',false);
+                        reject(error);
 					});
 
 			}else{
