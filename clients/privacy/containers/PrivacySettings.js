@@ -52,11 +52,12 @@ export const PrivacySettings = (props) => {
      *
      * @since 1.7.0
      *
-     * @param newPrivacySettings
+     * @param {Object} newPrivacySettings
+     * @param {String} formId
      */
-    const onSaveForm = (newPrivacySettings) => {
+    const onSaveForm = (newPrivacySettings,formId) => {
         props.setFormPrivacyForm(newPrivacySettings);
-        const update = requestUpdatePrivacySettings(props.editForm.ID,newPrivacySettings);
+        const update = requestUpdatePrivacySettings(newPrivacySettings,formId);
         update.then( (response) => {
             props.setFormPrivacyForm(response);
             props.unsetEditForm();

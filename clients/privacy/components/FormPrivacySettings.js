@@ -41,7 +41,6 @@ export const FormPrivacySettings = (props) => {
             fields = remove(fields, (ID) => {
                 return ID === fieldId;
             });
-            console.log(fields);
         }
         return fields;
     }
@@ -109,7 +108,7 @@ export const FormPrivacySettings = (props) => {
                 <Button
                     type="submit"
                     onClick={() => {
-                        this.props.onSave(this.state)
+                        props.onSave(props.privacySettings,props.form.ID)
                     }}
                 >
                     Save

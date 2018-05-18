@@ -41,13 +41,13 @@ export async function requestPrivacySettings(formId) {
  *
  * @since 1.7.0
  *
- * @param {String} formId
  * @param {Object} settings
+ * @param {String} formId
  * @returns {Promise<*>}
  */
-export async function requestUpdatePrivacySettings(formId,settings) {
+export async function requestUpdatePrivacySettings(settings,formId) {
     const form = await wp.apiRequest({
-        url: `${cfAdmin.api.form}${formId}?privacy=true`,
+        url: `${cfAdmin.api.form}${formId}/privacy`,
         method: 'POST',
         data: settings,
     });
