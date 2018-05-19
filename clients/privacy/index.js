@@ -14,9 +14,6 @@ const store = createStore(
     reducer,
 );
 
-
-
-
 const ID = 'caldera-forms-privacy-settings';
 
 ReactDOM.render(

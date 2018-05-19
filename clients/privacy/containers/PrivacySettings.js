@@ -18,9 +18,16 @@ import {FormPrivacySettings} from "../components/FormPrivacySettings";
 import {FormSelectorNoGutenberg} from "../../components/FormSelectorNoGutenberg";
 import {CalderaHeader} from "../../components/CalderaHeader";
 import {PageBody} from "../../components/PageBody";
+import {StatusIndicator} from "../../components/StatusIndicator";
+import {
+    startSpinner,
+    stopSpinner,
+    closeStatus,
+    updateStatus
+} from "../actions/status";
 
 /**
- * Container componet for privacy settings
+ * Container component for privacy settings
  *
  * @since 1.7.0
  *
@@ -30,6 +37,31 @@ import {PageBody} from "../../components/PageBody";
  */
 export const PrivacySettings = (props) => {
     /**
+     * Stop spinner after a delay
+     *
+     * @since 1.7.0
+     *
+     * @param {Integer} delay Optional. Number of milliseconds to delay hiding by.
+     */
+    function stopSpinner(delay=300) {
+        setTimeout(() => {
+            props.stopSpinner();
+        },delay);
+    }
+
+    /**
+     * Hide status after a delay
+     *
+     * @since 1.7.0
+     *
+     * @param {Integer} delay Optional. Number of milliseconds to delay hiding by.
+     */
+    function hideStatusIndicator(delay=2500) {
+        setTimeout(() => {
+            props.closeStatus();
+        },delay);
+    }
+    /**
      * When exporter is enabled for a change route changes
      *
      * @since 1.7.0
@@ -37,15 +69,42 @@ export const PrivacySettings = (props) => {
      * @param {String} newFormsId
      */
     const onToggleEnable = (newFormsId) => {
+        props.startSpinner();
+        const notComplete = {
+            f:false,
+            p:false,
+            stopped:true,
+        };
+
+        //Find form details
         const formRequest = requestForm(newFormsId);
         formRequest.then( (form) => {
             props.setForm(form,newFormsId);
             props.setEditForm(newFormsId);
+            delete notComplete.f;
+            if( ! notComplete.hasOwnProperty('p') ){
+                stopSpinner();
+                notComplete.stopped =true;
+            }
         });
+
+        //Find privacy settings
         const privacySettingsRequest = requestPrivacySettings(newFormsId);
         privacySettingsRequest.then( (settings) => {
-            props.setFormPrivacyForm(settings)
+            props.setFormPrivacyForm(settings);
+            delete notComplete.p;
+            if( ! notComplete.hasOwnProperty('f') ){
+                stopSpinner();
+                notComplete.stopped =true;
+            }
         });
+
+        //Make sure spinner gets stopped
+        setTimeout(() => {
+            if( false === notComplete.stopped){
+                stopSpinner();
+            }
+        },2500)
     };
 
     /**
@@ -57,12 +116,19 @@ export const PrivacySettings = (props) => {
      * @param {String} formId
      */
     const onSaveForm = (newPrivacySettings,formId) => {
+        props.startSpinner();
         props.setFormPrivacyForm(newPrivacySettings);
         const update = requestUpdatePrivacySettings(newPrivacySettings,formId);
         update.then( (response) => {
             props.setFormPrivacyForm(response);
             props.unsetEditForm();
-        });
+            props.stopSpinner();
+            props.updateStatus('Settings Saved');
+            hideStatusIndicator();
+        }).catch( () => {
+            props.stopSpinner();
+            props.updateStatus('Error', true );
+        })
 
 
     };
@@ -72,11 +138,26 @@ export const PrivacySettings = (props) => {
         if( ! props.formPrivacySettings.loaded ){
             return <p>Loading Settings</p>
         }
+
         return (
                 <PageBody>
                     <CalderaHeader
                         name={headerText}
-                    />
+                    >
+
+                        <li>
+                            <StatusIndicator
+                                message={props.status.message}
+                                show={props.status.show}
+                                success={props.status.success}
+                            />
+                        </li>
+
+                        {true === props.spin &&
+                            <li className={'spinner is-active' }></li>
+                        }
+
+                    </CalderaHeader>
                     <FormPrivacySettings
                         privacySettings={props.formPrivacySettings.settings}
                         form={props.editForm}
@@ -104,6 +185,14 @@ export const PrivacySettings = (props) => {
                         onChange={onToggleEnable}
                     />
                 </li>
+                <li>
+                    <StatusIndicator
+                        message={props.status.message}
+                        show={props.status.show}
+                        success={props.status.success}
+                    />
+                </li>
+
             </CalderaHeader>
             <PageBody>
                 <p className={'screen-reader-text' }>Choose a form to begin</p>
@@ -125,7 +214,13 @@ const mapStateToProps = state => {
         roy: 'hi',
         formPrivacySettings: {
             loaded:false
-        }
+        },
+        status: {
+            show: state.statusState.show,
+            message: state.statusState.message,
+            success: state.statusState.success
+        },
+        spin: state.statusState.spin
     };
 
     if( props.editForm.hasOwnProperty('fields') ){
@@ -148,6 +243,10 @@ const mapDispatchToProps = {
     unsetEditForm,
     requestPrivacySettings,
     setFormPrivacyForm,
+    startSpinner,
+    stopSpinner,
+    closeStatus,
+    updateStatus
 };
 
 export const PrivacySettingsWrapped = connect(

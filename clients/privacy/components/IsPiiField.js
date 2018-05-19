@@ -1,6 +1,6 @@
 import React from  'react';
 import PropTypes from 'prop-types';
-import { FormGroup,FormControl,ControlLabel,HelpBlock,Panel,PanelGroup,Checkbox } from 'react-bootstrap';
+import { FormGroup,ControlLabel,HelpBlock,Checkbox } from 'react-bootstrap';
 
 /**
  * Determine if field is a PII field

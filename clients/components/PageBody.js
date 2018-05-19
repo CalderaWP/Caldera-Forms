@@ -1,3 +1,4 @@
+import React from  'react';
 /**
  * Wrapper for an admin page's content
  *
@@ -16,4 +17,4 @@ export const PageBody = (props) => {
             {props.children}
         </div>
     )
-}
+};
