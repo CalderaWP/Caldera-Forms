@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7e02403e0c141eba09a6a7a20e85925a",
+    "content-hash": "eb19ae53473911a7738d84b7f6fca274",
     "packages": [
         {
             "name": "calderawp/caldera-containers",
@@ -50,16 +50,16 @@
         },
         {
             "name": "calderawp/caldera-forms-query",
-            "version": "dev-master",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CalderaWP/caldera-forms-query.git",
-                "reference": "527d79ed169861a0db38e730e1ed8f374b533d04"
+                "reference": "389ca32a3543cbd881aa9e590e67de0b5f7a7e2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CalderaWP/caldera-forms-query/zipball/527d79ed169861a0db38e730e1ed8f374b533d04",
-                "reference": "527d79ed169861a0db38e730e1ed8f374b533d04",
+                "url": "https://api.github.com/repos/CalderaWP/caldera-forms-query/zipball/389ca32a3543cbd881aa9e590e67de0b5f7a7e2a",
+                "reference": "389ca32a3543cbd881aa9e590e67de0b5f7a7e2a",
                 "shasum": ""
             },
             "require": {
@@ -102,7 +102,7 @@
                 }
             ],
             "description": "Caldera Forms Query Library",
-            "time": "2018-05-15T16:17:46+00:00"
+            "time": "2018-05-19T12:45:10+00:00"
         },
         {
             "name": "inpsyde/wonolog",
@@ -518,9 +518,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "calderawp/caldera-forms-query": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
