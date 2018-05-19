@@ -2033,9 +2033,7 @@ class Caldera_Forms_Admin {
                 'editor-grid'
             ]
         ]);
-
-
-
+        
     }
 
     /**

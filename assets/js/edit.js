@@ -117,6 +117,11 @@ jQuery(document).ready(function($){
             if( data_fields.conditions ){
                 data_fields.config.conditional_groups = { conditions : data_fields.conditions };
             }
+
+            Object.keys(non_editor_fields).forEach(function (key) {
+                data_fields[key] = non_editor_fields[key];
+            });
+            console.log(data_fields);
             $(el).data('cf_edit_nonce', data_fields.cf_edit_nonce);
             $(el).data('_wp_http_referer', data_fields._wp_http_referer);
             $(el).data('sender', 'ajax');
