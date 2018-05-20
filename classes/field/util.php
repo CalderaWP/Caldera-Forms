@@ -662,7 +662,7 @@ class Caldera_Forms_Field_Util {
      *
      * @return bool
      */
-	public static function is_email_identifying_field($field,array  $form       )
+	public static function is_email_identifying_field($field, array $form       )
     {
         if (is_string($field)) {
             $field = self::get_field($field, $form);
