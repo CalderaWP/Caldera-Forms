@@ -35,7 +35,6 @@ class Caldera_Forms_Query_Pii
      */
     protected $paginated;
 
-
     /**
      *
      * @since 1.7.0
@@ -58,7 +57,7 @@ class Caldera_Forms_Query_Pii
     {
         $this->form = $form;
         $this->email = sanitize_email($email);
-        $this->limit = absint($limit) > 100 || absint($limit) <= 0 ? 25 : absint($limit);
+        $this->limit = caldera_forms_validate_number( $limit, 25, 100 );
     }
 
     /**
@@ -76,7 +75,6 @@ class Caldera_Forms_Query_Pii
         $results = $this->paginated->select_by_entry_ids($ids);
         return $this->reduce_results_to_pii( $results );
     }
-
 
     /**
      * Given a results set, reduce to PII fields only.

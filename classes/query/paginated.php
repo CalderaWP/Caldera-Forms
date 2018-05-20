@@ -63,7 +63,7 @@ class Caldera_Forms_Query_Paginated implements Caldera_Forms_Query_Paginates
      *
      * @param array $form The form configuration
      * @param Queries|null $queries Optional. Caldera Forms Query Tool feature container. Default is null.
-     * @param int $page Optional. Page of results to get. Default is 25
+     * @param int $page Optional. Page of results to get. Default is 1.
      * @param int $limit Optional. Total entries per page  of results. Default is 25.
      */
     public function __construct(array $form, Queries $queries = null, $page = 1, $limit = 25 )
@@ -147,7 +147,7 @@ class Caldera_Forms_Query_Paginated implements Caldera_Forms_Query_Paginates
     /** @inheritdoc */
     public function set_limit($limit)
     {
-        $this->limit = absint($limit) > 100 || $limit <= 0 ? 25 : absint($limit);
+        $this->limit = caldera_forms_validate_number( $limit, 25, 100 );
         return $this;
     }
 
