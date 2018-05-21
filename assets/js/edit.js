@@ -262,9 +262,9 @@ jQuery(document).ready(function($){
         }
 
         if (['html', 'section_break'].indexOf(select.val()) >= 0) {
-            var label = parent.find('.field-label');
-            if(!label.val()) {
-                label.val(select.val() + '__' +  parent.find('.field-id').val()).trigger('change');
+            var $label = parent.find('.field-label');
+            if(!$label.val()) {
+                $label.val(select.val() + '__' +  parent.find('.field-id').val()).trigger('change');
             }
         }
     }
