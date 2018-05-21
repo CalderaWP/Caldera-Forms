@@ -1,8 +1,8 @@
-ARG PHP_IMAGE_TAG
-FROM php:$PHP_IMAGE_TAG
+ARG TRAVIS_PHP_VERSION
+FROM php:$TRAVIS_PHP_VERSION
 ARG WORDPRESS_DB_PASSWORD
 ENV WORDPRESS_DB_PASSWORD=$WORDPRESS_DB_PASSWORD
-ARG WORDPRESS_VERSION
+ARG WP_VERSION_
 RUN echo "http://dl-3.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories &&\
     apk add --update --no-cache subversion mysql mysql-client git bash g++ make autoconf && \
     set -ex; \
@@ -24,7 +24,7 @@ RUN echo "http://dl-3.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories
     && chmod +x /tmp/wait-for-it.sh
 WORKDIR /tmp
 COPY ./bin/install-wp-tests.sh /tmp/install-wp-tests.sh
-RUN /tmp/install-wp-tests.sh wordpress_test root $WORDPRESS_DB_PASSWORD mysql $WORDPRESS_VERSION
+RUN /tmp/install-wp-tests.sh wordpress_test root $WORDPRESS_DB_PASSWORD mysql $WP_VERSION_
 COPY ./db-error.php /tmp/wordpress/wp-content/db-error.php
 WORKDIR /wordpress
 COPY composer.json /wordpress

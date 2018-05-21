@@ -21,8 +21,6 @@ php:
 
 env:
   - WP_VERSION=latest
-  - PHP_IMAGE_TAG=$TRAVIS_PHP_VERSION
-  - WORDPRESS_VERSION=$WP_VERSION
 
 matrix:
   include:
