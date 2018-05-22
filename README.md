@@ -66,6 +66,7 @@ Alternatively, because this, isn't 2014, you can use the provided Docker environ
 
 #### Commands
 * `composer wp-install` - Installs Docker-based test environment.
+* `composer wp-start` - Starts Docker-based test environment.
 * `composer wp-tests` - Runs phpunit inside of Docker container.
 * `composer wp-stop` - Stops Docker-based test environment, without destroying containers.
 * `composer wp-remove` - Stops Docker-based test environment and destroys containers.

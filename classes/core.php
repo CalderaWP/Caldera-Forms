@@ -225,6 +225,9 @@ class Caldera_Forms
 		add_action(Caldera_Forms_Transient::CRON_ACTION, array('Caldera_Forms_Transient', 'cron_callback'));
 		add_action('caldera_forms_submit_complete', array('Caldera_Forms_Transient', 'cron_callback'));
 
+		//Init GDPR exporters/erasers
+        add_action( 'init', [ Caldera_Forms_GDPR::class, 'register_gdpr' ] );
+
 		/**
 		 * Runs after Caldera Forms core is initialized
 		 *

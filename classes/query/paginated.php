@@ -84,7 +84,7 @@ class Caldera_Forms_Query_Paginated implements Caldera_Forms_Query_Paginates
      *
      * @return array
      */
-    public function select_by_entry_ids(array $ids )
+    public function select_by_entry_ids( array $ids )
     {
         $entries = $this
             ->get_queries_container()
@@ -108,9 +108,8 @@ class Caldera_Forms_Query_Paginated implements Caldera_Forms_Query_Paginates
     public function select_values_for_form( EntryValueSelect $entry_value_select )
     {
         $entry_value_select
-            ->in($this->get_entry_ids_of_form() )
+            ->in($this->get_entry_ids_of_form(), 'entry_id' )
             ->addPagination($this->get_page(), $this->get_limit() );
-
         return $this
             ->get_queries_container()
             ->collectResults( $this->select( $entry_value_select ) );
@@ -137,10 +136,8 @@ class Caldera_Forms_Query_Paginated implements Caldera_Forms_Query_Paginates
     /** @inheritdoc */
     public function set_page($page)
     {
-        if( 0 < (int) $page ){
-            $page = 1;
-        }
-        $this->page = $page;
+
+        $this->page = caldera_forms_validate_number( $page, 1, 20000 );
         return $this;
     }
 
@@ -180,19 +177,22 @@ class Caldera_Forms_Query_Paginated implements Caldera_Forms_Query_Paginates
      */
     protected function find_entry_ids_of_form()
     {
-        $entrySelector = $this->queries
-            ->getQueries()
-            ->entrySelect()
-            ->is( 'form_id', $this->form[ 'ID' ]  )
-            ->addPagination(1, $this->find_count())
-            ->getSelectQuery()
-            ->setColumns([ 'id'] );
-        $results = $this->select($entrySelector);
+        $real_page = $this->page;
+        $real_limit = $this->limit;
+        $this->page = 1;
+        $this->limit = $this->find_count();
+        $results = $this->select_all();
+        $this->page = $real_page;
+        $this->limit = $real_limit;
         if( empty( $results ) ){
-            return [];
+            $this->entry_ids = [];
+        }else{
+            foreach ( $results as $result ){
+                $this->entry_ids[] = intval($result->id);
+            }
+            sort($this->entry_ids );
         }
-        $this->entry_ids =  wp_list_pluck( $results, 'id' );
-
+        return $this->entry_ids;
     }
 
     /**
@@ -219,7 +219,26 @@ class Caldera_Forms_Query_Paginated implements Caldera_Forms_Query_Paginates
      */
     protected function select(SelectQueryBuilder $query )
     {
-        return$this->queries->getQueries()->select( $query );
+        return $this->queries->getQueries()->select( $query );
+    }
+
+    /**
+     * Queries for all entries of this form, given current pagination
+     *
+     * @since 1.7.0
+     *
+     * @return stdClass[]
+     */
+    public function select_all()
+    {
+        $entry_select = $this->queries
+            ->getQueries()
+            ->entrySelect()
+            ->is('form_id', $this->form['ID'])
+            ->addPagination($this->get_page(), $this->get_limit());
+
+        return $this->select($entry_select);
+
     }
 
 }

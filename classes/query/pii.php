@@ -57,6 +57,7 @@ class Caldera_Forms_Query_Pii
     {
         $this->form = $form;
         $this->email = sanitize_email($email);
+        $this->paginated = $paginated;
         $this->limit = caldera_forms_validate_number( $limit, 25, 100 );
     }
 
@@ -65,7 +66,7 @@ class Caldera_Forms_Query_Pii
      *
      * @since 1.7.0
      *
-     * @param string $page Which page of results?
+     * @param int $page Which page of results?
      * @return array
      */
     public function get_page($page)

@@ -54,12 +54,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/CalderaWP/caldera-forms-query.git",
-                "reference": "b4a9e7f7d3b5a395a74a88bbef947b09e83d3d97"
+                "reference": "52456bbc86ad2aac04ae361a33fb11c692ba74d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CalderaWP/caldera-forms-query/zipball/b4a9e7f7d3b5a395a74a88bbef947b09e83d3d97",
-                "reference": "b4a9e7f7d3b5a395a74a88bbef947b09e83d3d97",
+                "url": "https://api.github.com/repos/CalderaWP/caldera-forms-query/zipball/52456bbc86ad2aac04ae361a33fb11c692ba74d9",
+                "reference": "52456bbc86ad2aac04ae361a33fb11c692ba74d9",
                 "shasum": ""
             },
             "require": {
@@ -102,7 +102,7 @@
                 }
             ],
             "description": "Caldera Forms Query Library",
-            "time": "2018-05-19T21:43:09+00:00"
+            "time": "2018-05-22T13:55:41+00:00"
         },
         {
             "name": "inpsyde/wonolog",

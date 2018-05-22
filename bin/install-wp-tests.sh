@@ -91,6 +91,3 @@ install_test_suite() {
 
 install_wp
 install_test_suite
-install_db
-
-

@@ -123,7 +123,6 @@ class Caldera_Forms_Autoloader {
 	 * @return string|void
 	 */
 	protected static function get_dir( $root ){
-		if( 'Caldera_Forms_Fields')
 		if( array_key_exists( $root, self::$roots ) ){
 			return trailingslashit( self::$roots[ $root ] );
 		}

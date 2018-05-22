@@ -28,28 +28,48 @@ class Caldera_Forms_GDPR
 
             add_filter('wp_privacy_personal_data_erasers', function ($erasers) {
 
-                foreach (static::enabled_forms() as $form) {
-                    $exporters[] = [
-                        'eraser_friendly_name' => $form['name'],
-                        'callback' => [__CLASS__, 'eraser'],
-                    ];
+                foreach (static::enabled_forms() as $form_id) {
+                    $form = Caldera_Forms_Forms::get_form( $form_id );
+                    if (is_array( $form )) {
+                        $exporters[self::group_id($form)] = [
+                            'eraser_friendly_name' => $form['name'],
+                            'callback' => [__CLASS__, static ::callback_name( $form_id, 'eraser' )],
+                        ];
+                    }
                 }
                 return $erasers;
             });
 
             add_filter('wp_privacy_personal_data_exporters', function ($exporters) {
 
-                foreach (static::enabled_forms() as $form) {
-                    $exporters[] = [
-                        'exporter_friendly_name' => $form['name'],
-                        'callback' => [__CLASS__, 'exporter'],
-                    ];
+                foreach (static::enabled_forms() as $form_id) {
+                    $form = Caldera_Forms_Forms::get_form( $form_id );
+                    if (is_array( $form )) {
+                        $exporters[self::group_id($form)] = [
+                            'exporter_friendly_name' => $form['name'],
+                            'callback' => [__CLASS__, static::callback_name( $form_id ) ],
+                        ];
+                    }
                 }
 
                 return $exporters;
             });
         }
 
+    }
+
+    public static function callback_name( $form_id, $type = 'exporter' ){
+        switch ($type ){
+            case 'eraser':
+                $name = $type.$form_id;
+                break;
+            case 'exporter':
+            case 'default':
+                $name  ='exporter'.$form_id;
+                break;
+        }
+        return $name;
+        return sanitize_title_with_dashes( $name );
     }
 
     /**
@@ -65,9 +85,10 @@ class Caldera_Forms_GDPR
             return static::$enabled_forms;
         }
 
-        foreach ( Caldera_Forms_Forms::get_forms() as $form ){
-            if( Caldera_Forms_Forms::is_privacy_export_enabled($form)){
-                static::$enabled_forms = $form;
+        foreach ( Caldera_Forms_Forms::get_forms(false) as $form_id ){
+            $form = Caldera_Forms_Forms::get_form( $form_id );
+            if( is_array( $form ) && Caldera_Forms_Forms::is_privacy_export_enabled($form)){
+                static::$enabled_forms[] = $form_id;
             }
         }
 
@@ -86,14 +107,14 @@ class Caldera_Forms_GDPR
         if( 0 === strpos($name, 'exporter' ) ){
             $form_id = str_replace( 'exporter', '', $name );
             $form = Caldera_Forms_Forms::get_form($form_id );
-            return static::get_export_data($arguments[0], $form, $arguments[2]);
+            return static::get_export_data($arguments[0], $form, $arguments[1]);
         }
 
 
         if( 0 === strpos($name, 'eraser' ) ){
             $form_id = str_replace( 'eraser', '', $name );
             $form = Caldera_Forms_Forms::get_form($form_id );
-            return static::get_export_data($arguments[0], $form, $arguments[2]);
+            return static::get_export_data($arguments[0], $form, $arguments[1]);
         }
 
     }
@@ -123,6 +144,7 @@ class Caldera_Forms_GDPR
     {
         return 'Caldera Forms: ' . $form[ 'name' ];
     }
+
 
     /**
      * Process one page of export data
