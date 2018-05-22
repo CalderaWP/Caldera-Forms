@@ -8,16 +8,9 @@ notifications:
     on_success: never
     on_failure: change
 
-
 cache:
   directories:
     - $HOME/.composer/cache
-
-php:
-  - 7.2
-
-env:
-  - WP_VERSION=latest
 
 matrix:
   include:
