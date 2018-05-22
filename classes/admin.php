@@ -158,7 +158,7 @@ class Caldera_Forms_Admin {
 
 		add_action(  'caldera_forms_admin_init', array( __CLASS__ , 'init_privacy_settings' ) );
 
-        add_action( 'caldera_forms_admin_init', array( $this, 'plugin_add_suggested_privacy_content' ), 20 );
+        add_action( 'caldera_forms_admin_init', array( $this, 'add_suggested_privacy_content' ), 35 );
 
 		/**
 		 * Runs after Caldera Forms admin is initialized
@@ -2036,23 +2036,59 @@ class Caldera_Forms_Admin {
         
     }
 
+
     /**
      * Return the default suggested privacy policy content.
      *
+     * @since 1.7.0
+     *
      * @return string The default policy content.
      */
-    function plugin_get_default_privacy_content() {
+    protected static function core_privacy_content() {
         return
-            '<h2>' . __( 'What personal data Caldera Forms collect and why Caldera Forms collect it', $this->plugin_slug ) . '</h2>' .
-            '<p>' . __( 'This text describes what type of information the admin should include here or what they should do with this info you provide in your template.', $this->plugin_slug ) . '</p>';
+            '<h2>' . esc_html__( 'Caldera Forms: Data Collection', 'caldera-forms') . '</h2>' .
+            '<em>' . esc_html__( 'Suggested Text (if you have entry tracking enabled) -', 'caldera-forms' ) . '</em>' .
+            '<p>' . esc_html__( 'Caldera Forms stores a record of all form submissions. Your data may be deleted by the site administrator. You may request a report of saved data related to your email address.', 'caldera-forms' ) . '</p>' .
+            '<em>' . esc_html__( 'Suggested Text (if you do not have entry tracking enabled) -', 'caldera-forms' ) . '</em>' .
+            '<p>' . esc_html__( 'Caldera Forms stores data only briefly for each submission. Uploaded media files may remain on the server' ) . '</p>' .
+            '<em>' . esc_html__( 'Suggested Text (if you use add-ons that interact with third party services) -', 'caldera-forms' ) . '</em>' .
+            '<p>' . esc_html__( 'Some data may be shared with other services including [list services such as MailChimp, PayPal]', 'caldera-forms' ) . '</p>';
     }
+
+    /**
+     * Return the default suggested privacy policy content for Caldera Forms Pro.
+     *
+     * @since 1.7.0
+     *
+     * @return string The default policy content.
+     */
+    protected static function pro_privacy_content() {
+        return
+            '<h2>' . esc_html__( 'Caldera Forms Pro: Data Collection', 'caldera-forms') . '</h2>' .
+            '<p>' . esc_html__( 'This site uses a third-party service to deliver some emails.', 'caldera-forms' ) . '</p>' .
+            '<p>' . esc_html__( 'This data will be stored on servers controlled by CalderaWP LLC, the makers of Caldera Forms, and operated by Linode and Amazon Web Services. Meta data about emails will be stored by SendGrid and Amazon Web Services', 'caldera-forms' ) . '</p>';
+            '<p>' . esc_html__( 'If you request that personal data shared with this site is deleted, the corresponding data shared with CalderaWP will also be deleted when the request is fulfilled.', 'caldera-forms' ) . '</p>';
+    }
+
+
+
     /**
      * Add the suggested privacy policy text to the policy postbox.
+     *
+     * @uses "caldera_forms_admin_init" action
+     *
+     * @since 1.7.0
      */
-    function plugin_add_suggested_privacy_content() {
-        $content = self::plugin_get_default_privacy_content();
-        wp_add_privacy_policy_content( __( 'Caldera Forms', $this->plugin_slug ), $content );
+    public static function add_suggested_privacy_content() {
+        if( function_exists( 'wp_add_privacy_policy_content' ) ){
+            wp_add_privacy_policy_content( esc_html__( 'Caldera Forms', 'caldera-forms' ), self::core_privacy_content() );
+            if ( caldera_forms_pro_is_active() ) {
+                wp_add_privacy_policy_content(esc_html__('Caldera Forms Pro', 'caldera-forms'), self::pro_privacy_content());
+            }
+        }
     }
+
+
 
 }
 
