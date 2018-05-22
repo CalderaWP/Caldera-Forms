@@ -31,5 +31,15 @@
         "psr-4": {
             "calderawp\\calderaforms\\pro\\": "includes/cf-pro-client/classes/"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit":"~5.5.0"
+    },
+    "scripts" : {
+        "wp-install" : "docker-compose up --build -d",
+        "wp-tests" : "docker-compose run wordpress vendor/bin/phpunit",
+        "wp-stop" : "docker-compose stop",
+        "wp-remove": "docker-compose down"
+
     }
 }
