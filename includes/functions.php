@@ -242,4 +242,24 @@ function caldera_forms_pro_is_active(){
 function caldera_forms_validate_number( $number, $default, $max ){
     return intval(absint($number) > $max || $number <= 0 ? $default : absint($number));
 }
+ * Get privacy page URL
+ *
+ * Defaults to get_privacy_policy_url() if WP 4.9.6 or later
+ *
+ * @since 1.7.0
+ *
+ * @return string Privacy policy page url
+ */
+function caldera_forms_privacy_policy_page_url(){
+
+    $url = function_exists('get_privacy_policy_url') ? get_privacy_policy_url() : '';
+    /**
+     * Change URL of privacy page
+     *
+     * @since 1.7.0
+     *
+     * @param string $url URL of privacy page, by default, is value of get_privacy_policy_url()
+     */
+    return apply_filters( 'caldera_forms_privacy_policy_page_url', $url );
+}
 

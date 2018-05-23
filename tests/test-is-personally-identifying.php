@@ -275,4 +275,23 @@ class Test_Caldera_Forms_Is_Personally_Identifying extends Caldera_Forms_Test_Ca
     }
 
 
+     * Check URL of privacy page URL
+     *
+     * @since 1.7.0
+     */
+	  public function testPrivacyPageUrl(){
+	    if( function_exists(  'get_privacy_policy_url' ) ){
+	        $this->assertSame( get_privacy_policy_url(), caldera_forms_privacy_policy_page_url() );
+        }else{
+            $this->assertSame( '', caldera_forms_privacy_policy_page_url() );
+        }
+
+        add_filter( 'caldera_forms_privacy_policy_page_url', function(){
+            return 'https://hiroy.club/privacy';
+        });
+        $this->assertSame( 'https://hiroy.club/privacy', caldera_forms_privacy_policy_page_url() );
+
+    }
+
+
 }
