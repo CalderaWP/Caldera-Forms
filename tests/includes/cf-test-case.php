@@ -415,7 +415,7 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
      * @param string$name
      * @param string $email_slug
      * @param string $name_slug
-     * @return string Form ID
+     * @return int Entry ID
      */
     protected function save_identifiable_entry( array  $form, $email, $name, $email_slug = 'email_address', $name_slug = 'first_name' )
     {
@@ -435,7 +435,7 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
         }
 
         $entry = $this->create_entry( $form, $data );
-        return $entry[ 'id' ];
+        return intval($entry[ 'id' ]);
     }
 
     /**

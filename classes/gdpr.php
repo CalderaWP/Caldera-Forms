@@ -219,20 +219,20 @@ class Caldera_Forms_GDPR
                     }
                 }
 
-                $export_items[] = array(
+                $export_items[] =[
                     'group_id' => static::group_id($form),
                     'group_label' => static::group_label($form, $field_value),
                     'item_id' => self::get_entry_id_from_result($field_value),
                     'data' => $data
-                );
+                ];
             }
 
         }
 
-        return array(
+        return [
             'data' => $export_items,
             'done' => self::done($results),
-        );
+        ];
     }
 
     /**
@@ -267,12 +267,12 @@ class Caldera_Forms_GDPR
             $items_removed = true;
         }
 
-        return array(
+        return [
             'items_removed' => $items_removed,
             'items_retained' => $items_retained,
             'messages' => $messages,
             'done' => static::done($results),
-        );
+        ];
 
     }
 
