@@ -901,7 +901,7 @@ foreach($panel_extensions as $panel){
 				if(isset($element['settings'][$panel_slug])){
 					// find max depth
 					foreach($element['settings'][$panel_slug] as &$field_vars){
-						if(count($field_vars) > $depth){
+						if(is_countable($field_vars) && count($field_vars) > $depth){
 							$depth = count($field_vars);
 						}
 					}
