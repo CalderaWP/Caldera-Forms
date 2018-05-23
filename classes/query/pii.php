@@ -103,8 +103,8 @@ class Caldera_Forms_Query_Pii
 
             }
 
-
         }
+
         return $results;
 
     }

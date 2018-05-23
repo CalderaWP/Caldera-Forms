@@ -32,7 +32,7 @@ class Caldera_Forms_GDPR
                 foreach (static::enabled_forms() as $form_id) {
                     $form = Caldera_Forms_Forms::get_form( $form_id );
                     if (is_array( $form )) {
-                        $exporters[self::group_id($form)] = [
+                        $erasers[self::group_id($form)] = [
                             'eraser_friendly_name' => $form['name'],
                             'callback' => [__CLASS__, static ::callback_name( $form_id, 'eraser' )],
                         ];
@@ -114,7 +114,7 @@ class Caldera_Forms_GDPR
         if( 0 === strpos($name, 'eraser' ) ){
             $form_id = str_replace( 'eraser', '', $name );
             $form = Caldera_Forms_Forms::get_form($form_id );
-            return static::get_export_data($arguments[0], $form, $arguments[1]);
+            return static::perform_erase($arguments[0], $form, $arguments[1]);
         }
 
     }
@@ -164,7 +164,6 @@ class Caldera_Forms_GDPR
             $pii_fields = Caldera_Forms_Forms::personally_identifying_fields($form,true);
             /** @var Caldera_Forms_Entry_Field $field_value */
             foreach ( $results->get_fields() as $field_value ){
-                $email_identifying_field = Caldera_Forms_Field_Util::get_field($field_value->field_id, $form);
                 $entry_id = $field_value->entry_id;
                 $entry = Caldera_Forms::get_entry( $entry_id, $form );
                 $data = [
@@ -246,7 +245,8 @@ class Caldera_Forms_GDPR
                 $ids[] = static::get_entry_id_from_result($field_value);
 
             }
-            $items_removed = Caldera_Forms_Entry_Bulk::delete_entries($ids);
+            Caldera_Forms_Entry_Bulk::delete_entries($ids);
+            $items_removed = true;
         }
 
         return array(
