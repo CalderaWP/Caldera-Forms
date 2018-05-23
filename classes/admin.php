@@ -698,9 +698,16 @@ class Caldera_Forms_Admin {
 	/**
 	 * Insert shortcode media button
 	 *
+	 * Add shortcode insert button in classic editor
 	 *
+	 * Function is intentionally not static
+	 *
+	 * @since unknown
 	 */
-	function shortcode_insert_button(){
+	public function shortcode_insert_button(){
+		if( Caldera_Forms_Admin_Assets::is_woocommerce_page() ){
+			return;
+		}
 		global $post;
 		if(!empty($post)){
 			echo "<a id=\"caldera-forms-form-insert\" title=\"". esc_attr__( 'Add Form to Page', 'caldera-forms' ) . "\" class=\"button caldera-forms-insert-button\" href=\"#inst\">\n";
@@ -708,6 +715,8 @@ class Caldera_Forms_Admin {
 			echo "</a>\n";
 		}
 	}
+
+
 	function shortcode_insert_button_fs($buttons){
 
 		$buttons['caldera-forms'] = array(
