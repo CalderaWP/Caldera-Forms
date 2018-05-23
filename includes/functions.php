@@ -226,4 +226,20 @@ function caldera_forms_pro_is_active(){
     return  ( version_compare( PHP_VERSION, '5.6.0', '>=' ) ) && defined( 'CF_PRO_LOADED' ) && CF_PRO_LOADED && \calderawp\calderaforms\pro\settings\active::get_status();
 }
 
+/**
+ * Validate a number is between 0 and $max or return $default
+ *
+ * Return $number if its greater than 0 and less than max value.
+ * Returns $default if not.
+ *
+ * @since 1.7.0
+ *
+ * @param int|string $number
+ * @param int $default Default value
+ * @param int $max Maximum allowed value.
+ * @return int
+ */
+function caldera_forms_validate_number( $number, $default, $max ){
+    return intval(absint($number) > $max || $number <= 0 ? $default : absint($number));
+}
 

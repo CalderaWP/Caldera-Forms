@@ -885,6 +885,65 @@ class Caldera_Forms_Forms {
 		return $personally_identifying_fields;
 	}
 
+    /**
+     * Get all fields of a form that represents the email of someone who's personal information is in the form submssion.
+     *
+     * @since 1.7.0
+     *
+     * @param array $form Form config
+     * @param bool $ids_only Optional. If true, indexed array of field IDs is returned. If false, the default, array of field configs, keyed by field ID is returned.
+     * @return array
+     */
+	public static function email_identifying_fields( array  $form, $ids_only = false ){
+        $fields = self::get_fields( $form, false );
+        $matching_fields = array();
+        if( ! empty( $fields ) ){
+            foreach ( $fields as $field_id => $field ){
+                if( Caldera_Forms_Field_Util::is_email_identifying_field( $field, $form ) ){
+                    $matching_fields[ $field_id ] = $field;
+                }
+            }
+        }
+
+        if( $ids_only ){
+            return array_keys( $matching_fields );
+        }
+
+        return $matching_fields;
+    }
+
+    /**
+     * Discover if a form has GDPR/privacy exporter enabled
+     *
+     * @since 1.7.0
+     *
+     * @param array $form Form config
+     * @return bool
+     */
+    public static function is_privacy_export_enabled(array $form )
+    {
+        return ! empty( $form[ 'privacy_exporter_enabled' ]  );
+    }
+
+    /**
+     * Toggle enabling of GDPR/privacy exporter enabled
+     *
+     * Note, does not save. Use Caldera_Forms_Forms::save_form( Caldera_Forms_Forms::update_privacy_export_enabled( $form, true ) ) );
+     *
+     * @since 1.7.0
+     *
+     * @param array $form Form config
+     * @param  bool $enabled Optional. To enable or not. Default is true
+     *
+     * @return  array
+     */
+    public static function update_privacy_export_enabled(array $form, $enabled = true )
+    {
+        $form[ 'privacy_exporter_enabled' ] = (bool) $enabled;
+        return $form;
+
+    }
+
 	/**
 	 * Get all revisions of  a forms
 	 *

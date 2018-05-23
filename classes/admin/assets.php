@@ -229,7 +229,7 @@ class Caldera_Forms_Admin_Assets {
 	 *
 	 * @since 1.5.0
 	 */
-	protected static function maybe_register_all_admin(){
+	public static function maybe_register_all_admin(){
 		$front = false;
 		if( ! did_action( 'caldera_forms_admin_assets_styles_registered' ) ){
 			Caldera_Forms_Render_Assets::register();

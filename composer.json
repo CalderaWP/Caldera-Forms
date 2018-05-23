@@ -37,7 +37,9 @@
     },
     "scripts" : {
         "wp-install" : "docker-compose up --build -d",
-        "wp-tests" : "docker-compose run wordpress vendor/bin/phpunit",
+        "wp-tests" : "composer wp-install && composer wp-unit-test",
+        "wp-unit-test" : "docker-compose run wordpress vendor/bin/phpunit",
+        "wp-start" : "docker-compose up",
         "wp-stop" : "docker-compose stop",
         "wp-remove": "docker-compose down"
 
