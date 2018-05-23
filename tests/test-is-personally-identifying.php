@@ -274,7 +274,7 @@ class Test_Caldera_Forms_Is_Personally_Identifying extends Caldera_Forms_Test_Ca
         return $request;
     }
 
-
+    /**
      * Check URL of privacy page URL
      *
      * @since 1.7.0
