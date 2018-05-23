@@ -1257,10 +1257,28 @@ foreach($magic_tags as $magic_set_key=>$magic_tags_set){
 <?php
 // output fieldtype defaults
 echo implode("\r\n", $field_type_defaults);
-
 ?>
 var system_values = <?php echo json_encode( $magic_script ); ?>;
-var preset_options = <?php echo json_encode( $option_presets ); ?>
+var preset_options = <?php echo json_encode( $option_presets ); ?>;
+
+var non_editor_fields = <?php echo json_encode( array_merge(
+        [
+            'emailIdentifyingFields' => Caldera_Forms_Forms::email_identifying_fields($form, true ),
+            'piiFields' => Caldera_Forms_Forms::personally_identifying_fields($form,true),
+            'privacyExporterEnabled' => Caldera_Forms_Forms::is_privacy_export_enabled($form),
+        ],
+		/**
+		 * Add additional fields to the non-editor fields
+		 *
+		 * These values will be saved with the form, uneditted.
+		 *
+		 * @since 1.7.0
+		 *
+		 * @param array $field Extra fields.
+		 */
+		apply_filters( 'caldera_forms_editor_extra_fields', [] )
+
+)); ?>;
 </script>
 
 <script type="text/javascript">

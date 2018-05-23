@@ -5,6 +5,8 @@ services:
     volumes:
       - ./src:/wordpress/src
       - ./tests:/wordpress/tests
+      - ./:/wordpress/src/wp-content/plugins/Caldera-Forms
+
     build:
       context: .
       args:

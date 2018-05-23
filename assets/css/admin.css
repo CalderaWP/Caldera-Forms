@@ -2247,3 +2247,10 @@ li.caldera-forms-toolbar-item.success {
   -webkit-animation: fadeout .5s 1;
   animation: fadeout .5s 1;
 }
+
+.caldera-forms-deleted {
+  color: #a3be5f;
+}
+.caldera-forms-not-deleted {
+  color: red;
+}
