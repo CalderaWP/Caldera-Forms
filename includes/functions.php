@@ -227,21 +227,25 @@ function caldera_forms_pro_is_active(){
 }
 
 /**
- * Check if get_privacy_policy_url and gets the URL of the Privacy Policy Page set
+ * Get privacy page URL
+ *
+ * Defaults to get_privacy_policy_url() if WP 4.9.6 or later
  *
  * @since 1.7.0
  *
- * @return filtered Privacy policy page url or empty string 'caldera_forms_privacy_policy_page'
+ * @return string Privacy policy page url
  */
 function caldera_forms_privacy_policy_page_url(){
 
-    if( ! function_exists('get_privacy_policy_url') ) {
-        return;
-    }
-
-    $url = get_privacy_policy_url();
-
-    return apply_filters( 'caldera_forms_privacy_policy_page', $url );
+    $url = function_exists('get_privacy_policy_url') ? get_privacy_policy_url() : '';
+    /**
+     * Change URL of privacy page
+     *
+     * @since 1.7.0
+     *
+     * @param string $url URL of privacy page, by default, is value of get_privacy_policy_url()
+     */
+    return apply_filters( 'caldera_forms_privacy_policy_page_url', $url );
 }
 
 

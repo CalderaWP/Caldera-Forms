@@ -5,11 +5,9 @@ $req_class = '';
 $parsley_req = '';
 $req_class = ' option-required';
 $parsley_req = 'data-parsley-required="true" data-parsley-group="' . esc_attr( $field_id ) . '" data-parsley-multiple="' . esc_attr( $field_id ). '"';
-if( function_exists( 'caldera_forms_privacy_policy_page_url' ) ) {
-    $privacy_page_url = caldera_forms_privacy_policy_page_url();
-} else {
-    $privacy_page_url = '';
-}
+
+$privacy_page_url = caldera_forms_privacy_policy_page_url();
+
 ?>
 
     <div class="checkbox-inline">
@@ -34,7 +32,7 @@ if( function_exists( 'caldera_forms_privacy_policy_page_url' ) ) {
         ?>
         <a href="<?php echo esc_url( $privacy_page_url ); ?>"
            target="_blank"
-           title="<?php esc_html_e('Privacy policy Page', 'Caldera Forms'); ?>"
+           title="<?php echo esc_attr('Privacy policy Page', 'caldera-forms'); ?>"
            style="display: inline;"
         ><?php echo esc_textarea( $field['config']['linked_text'] ); ?></a>
     </label>

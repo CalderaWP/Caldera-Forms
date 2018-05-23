@@ -385,24 +385,21 @@ class Caldera_Forms_Fields {
 				),
 				'handler'     => array( 'Caldera_Forms_Field_Utm', 'handler' )
 			),
-        'gdpr' => array(
-            "field"       => __( 'GDPR Field', 'caldera-forms' ),
-            "description" => __( 'GDPR Example Field for Privacy Policy opt-in', 'caldera-forms' ),
-            "file"        => CFCORE_PATH . "fields/gdpr/field.php",
-            "category"    => __( 'Special', 'caldera-forms' ),
-            'handler'     =>  'cf_gdpr_field_handler',
-            "setup"       => array(
-                "template" => CFCORE_PATH . "fields/gdpr/config_template.php",
-                "preview"  => CFCORE_PATH . "fields/gdpr/preview.php"
-            ),
-            "not_supported" => array(
-                'caption',
-                'required',
-                'inline',
-                'entry_list'
-            )
-        ),
+            'gdpr' => array(
+                "field"       => __( 'Consent Field', 'caldera-forms' ),
+                "description" => __( 'Record consent to collect personally identifying information (PII).', 'caldera-forms' ),
+                "file"        => CFCORE_PATH . "fields/gdpr/field.php",
+                "category"    => __( 'Special', 'caldera-forms' ),
+                "setup"       => array(
+                    "template" => CFCORE_PATH . "fields/gdpr/config_template.php",
+                    "preview"  => CFCORE_PATH . "fields/gdpr/preview.php",
+                    "not_supported" => array(
+                        'caption',
+                        'required',
+                    )
+                ),
 
+            ),
 			//file
 			'file'             => array(
 				"field"       => __( 'File', 'caldera-forms' ),

@@ -12,14 +12,20 @@
         <?php esc_html_e( 'Linked Text', 'caldera-forms' ); ?>
     </label>
     <div class="caldera-config-field">
-        <textarea data-id="{{_id}}"
-                  id="{{_id}}_linked_text"
-                  class="block-input field-config"
-                  name="{{_name}}[linked_text]"
-                  aria-describedby="{{_id}}_linked_text-description"
-        >{{linked_text}}</textarea>
-        <p class="description" id="{{_id}}_linked_text-description">
-            <?php esc_html_e( 'This text will be linked to Privacy Policy content page.', 'caldera-forms' ); ?>
+        <textarea
+				data-id="{{_id}}"
+				id="{{_id}}_linked_text"
+				class="block-input field-config"
+				name="{{_name}}[linked_text]"
+				aria-describedby="{{_id}}_linked_text-description"
+		>
+			{{linked_text}}
+		</textarea>
+		<p
+				class="description"
+				id="{{_id}}_linked_text-description"
+		>
+            <?php esc_html_e( 'This text will be linked to Privacy Policy content page. Explain what data will', 'caldera-forms' ); ?>
         </p>
     </div>
 </div>
