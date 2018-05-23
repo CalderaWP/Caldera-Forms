@@ -203,7 +203,6 @@ jQuery(document).ready(function($){
 
         // remove not supported stuff
         if(fieldtype_defaults[select.val() + '_nosupport']){
-
             if(fieldtype_defaults[select.val() + '_nosupport'].indexOf('hide_label') >= 0){
                 parent.find('.hide-label-field').hide().find('.field-config').prop('checked', false);
             }
@@ -264,6 +263,13 @@ jQuery(document).ready(function($){
 
                 }
             });
+        }
+
+        if (['html', 'section_break'].indexOf(select.val()) >= 0) {
+            var $label = parent.find('.field-label');
+            if(!$label.val()) {
+                $label.val(select.val() + '__' +  parent.find('.field-id').val()).trigger('change');
+            }
         }
     }
 
