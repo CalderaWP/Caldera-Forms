@@ -56,6 +56,31 @@ class Test_Caldera_Forms_Entry_Fields_Collection extends Caldera_Forms_Test_Case
     }
 
     /**
+     * @covers Caldera_Forms_Entry_Fields::__construct()
+     * @covers Caldera_Forms_Entry_Fields::set_fields_form_array()
+     * @covers Caldera_Forms_Entry_Fields::count()
+     */
+    public function testSetThroughConstructorFromArrays(){
+        $form = $this->form( Caldera_Forms_Forms::create_unique_form_id() );
+        $field_one_array = [
+            'id' => 1,
+            'field_id' => 'fldOne',
+            'value' => rand(),
+            'slug' => 'fldOne',
+            'entry_id' => 1,
+        ];
+        $field_two_array = [
+            'id'=> 2,
+            'field_id' => 'fldTwo',
+            'value' => rand(),
+            'slug' => 'fldTwo',
+            'entry_id' => 1,
+        ];
+        $collection = new Caldera_Forms_Entry_Fields($form, [$field_one_array,$field_two_array]);
+        $this->assertSame( 2, $collection->count() );
+    }
+
+    /**
      * Test array conversion for collection is recursive
      *
      * @since 1.7.0

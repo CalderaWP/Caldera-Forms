@@ -24,6 +24,7 @@ class Caldera_Forms_GDPR
      */
     public static function register_gdpr()
     {
+
         if ( ! empty( static::enabled_forms() )) {
 
             add_filter('wp_privacy_personal_data_erasers', function ($erasers) {
@@ -69,7 +70,6 @@ class Caldera_Forms_GDPR
                 break;
         }
         return $name;
-        return sanitize_title_with_dashes( $name );
     }
 
     /**
@@ -129,7 +129,7 @@ class Caldera_Forms_GDPR
      */
     public static function group_id( array  $form )
     {
-        return 'caldera-forms-' . sanitize_title_with_dashes($form[ 'name' ]);
+        return 'caldera-forms-' . sanitize_title_with_dashes($form[ 'name' ] );
     }
 
     /**
@@ -142,7 +142,7 @@ class Caldera_Forms_GDPR
      */
     public static function group_label( array $form )
     {
-        return 'Caldera Forms: ' . $form[ 'name' ];
+        return $form[ 'name' ];
     }
 
 
@@ -160,21 +160,65 @@ class Caldera_Forms_GDPR
     {
         $results = self::get_results($email_address, $form, $page);
         $export_items = [];
-        if( ! empty( $results ) ){
-            foreach ( $results as $result ){
+        if( ! static::done($results) ){
+            $pii_fields = Caldera_Forms_Forms::personally_identifying_fields($form,true);
+            /** @var Caldera_Forms_Entry_Field $field_value */
+            foreach ( $results->get_fields() as $field_value ){
+                $email_identifying_field = Caldera_Forms_Field_Util::get_field($field_value->field_id, $form);
+                $entry_id = $field_value->entry_id;
+                $entry = Caldera_Forms::get_entry( $entry_id, $form );
+                $data = [
+                    [
+                        'name' => self::find_field_name($form, $field_value->field_id),
+                        'value' => $field_value->get_value()
+                    ],
+                    [
+                        'name' => __( 'Date', 'caldera-forms' ),
+                        'value' => $entry[ 'date' ]
+                    ]
+                ];
+
+                if( ! empty( $entry['user'] ) ){
+                    if (! empty( $entry[ 'user' ][ 'name' ] ) ) {
+                        $data[] = [
+                            'name' => __('WordPress User Name', 'caldera-forms'),
+                            'value' => $entry['user']['name']
+                        ];
+                    }
+                    if( $entry[ 'user' ][ 'email' ] ){
+                        $data[] = [
+                            'name' => __('WordPress User Email', 'caldera-forms'),
+                            'value' => $entry['user']['email']
+                        ];
+                    }
+                }
+
+                if( ! empty( $pii_fields ) ){
+
+                    foreach ( $pii_fields as $field_id ){
+                        if( array_key_exists( $field_id, $entry['data'] ) ){
+                            $data[] = [
+                                'name' => self::find_field_name($form, $field_id),
+                                'value' => $entry['data'][$field_id]['value']
+                            ];
+                        }
+
+                    }
+                }
+
                 $export_items[] = array(
                     'group_id'    => static::group_id( $form ),
-                    'group_label' => static::group_label( $form ),
-                    'item_id'     => self::get_entry_id_from_result($result),
-                    'data'        => $result,
+                    'group_label' => static::group_label( $form,$field_value ),
+                    'item_id'     => self::get_entry_id_from_result($field_value),
+                    'data'        => $data
                 );
             }
 
         }
-        
+
         return array(
             'data' => $export_items,
-            'done' => empty( $results ),
+            'done' => self::done($results),
         );
     }
 
@@ -195,10 +239,12 @@ class Caldera_Forms_GDPR
         $messages = array();
         $items_removed  = false;
         $items_retained = false;
-        if ( ! empty( $results )) {
+        if( ! static::done($results) ){
             $ids = [];
-            foreach ($results as $result) {
-               $ids[] = static::get_entry_id_from_result($result);
+            /** @var Caldera_Forms_Entry_Field $field_value */
+            foreach ( $results->get_fields() as $field_value ){
+                $ids[] = static::get_entry_id_from_result($field_value);
+
             }
             $items_removed = Caldera_Forms_Entry_Bulk::delete_entries($ids);
         }
@@ -207,7 +253,7 @@ class Caldera_Forms_GDPR
             'items_removed'  => $items_removed,
             'items_retained' => $items_retained,
             'messages'       => $messages,
-            'done'           => true,
+            'done'           => static::done($results),
         );
 
     }
@@ -221,9 +267,9 @@ class Caldera_Forms_GDPR
      * @param array $form The form configuration.
      * @param int $page Page of results to get.
      *
-     * @return array
+     * @return Caldera_Forms_Entry_Fields
      */
-    private static function get_results($email_address, array $form, $page)
+    public static function get_results($email_address, array $form, $page)
     {
         $pii_query = new Caldera_Forms_Query_Pii(
             $form,
@@ -239,12 +285,32 @@ class Caldera_Forms_GDPR
      *
      * @since 1.7.0
      *
-     * @param array $result Result set
+     * @param Caldera_Forms_Entry_Field $result Result set
      * @return string
      */
     private static function get_entry_id_from_result($result)
     {
-        return $result['entry']->id;
+        return $result->entry_id;
+    }
+
+    /**
+     * @param $results
+     * @return bool
+     */
+    protected static function done($results)
+    {
+        return 0 === $results->count();
+    }
+
+    /**
+     * @param array $form
+     * @param $field_id
+     * @return string
+     */
+    protected static function find_field_name(array $form, $field_id)
+    {
+        $field = Caldera_Forms_Field_Util::get_field($field_id, $form);
+       return is_array($field) && !empty($field['label']) ? $field['label'] : $field_id->slug;
     }
 
 }

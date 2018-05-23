@@ -86,6 +86,8 @@ class Caldera_Forms_Query_Paginated implements Caldera_Forms_Query_Paginates
      */
     public function select_by_entry_ids( array $ids )
     {
+        $x= 1;
+
         $entries = $this
             ->get_queries_container()
             ->collectResults(
@@ -107,12 +109,17 @@ class Caldera_Forms_Query_Paginated implements Caldera_Forms_Query_Paginates
     /** @inheritdoc */
     public function select_values_for_form( EntryValueSelect $entry_value_select )
     {
-        $entry_value_select
-            ->in($this->get_entry_ids_of_form(), 'entry_id' )
-            ->addPagination($this->get_page(), $this->get_limit() );
-        return $this
-            ->get_queries_container()
-            ->collectResults( $this->select( $entry_value_select ) );
+
+        if (! empty( $this->get_entry_ids_of_form() )) {
+            $entry_value_select
+                ->in($this->get_entry_ids_of_form(), 'entry_id')
+                ->addPagination($this->get_page(), $this->get_limit());
+            $results = $this->select($entry_value_select);
+        }else{
+            $results = [];
+        }
+        $fields =  new Caldera_Forms_Entry_Fields( $this->form, $results );
+        return $fields;
 
     }
 

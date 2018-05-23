@@ -72,14 +72,14 @@ class Test_Caldera_Forms_Query_Paginated extends Caldera_Forms_Test_Case {
     public function testSelectValuesForFormEntryIds()
     {
         $email_field = 'email_address';
-        $email = 'Roy@RoySivan.com';
+        $email = 'roy@hiroy.club';
         $form_id = $this->import_contact_form();
         $form_id_two = $this->import_autoresponder_form();
 
         $entry_ids = $this->save_identifiable_entries_for_two_forms($form_id, $form_id_two, $email, $email_field);
 
         $paginated = new Caldera_Forms_Query_Paginated( Caldera_Forms_Forms::get_form( $form_id ) );
-        $paginated->select_values_for_form(
+        $r = $paginated->select_values_for_form(
             $paginated
                 ->get_queries_container()
                 ->getQueries()
@@ -87,7 +87,6 @@ class Test_Caldera_Forms_Query_Paginated extends Caldera_Forms_Test_Case {
                 ->queryByFieldValue( $email_field, $email )
         );
         $this->assertAttributeEquals($entry_ids[ 'form_1' ], 'entry_ids', $paginated );
-
     }
 
     /**
@@ -100,7 +99,7 @@ class Test_Caldera_Forms_Query_Paginated extends Caldera_Forms_Test_Case {
     public function testSelectValuesForForm()
     {
         $email_field = 'email_address';
-        $email = 'Roy@RoySivan.com';
+        $email = 'roy@hiroy.club';
         //Will create in same from
         $form_id = $this->import_contact_form();
         $form_id_two = $form_id;
@@ -131,7 +130,7 @@ class Test_Caldera_Forms_Query_Paginated extends Caldera_Forms_Test_Case {
      */
     public function testSelectByEntryId(){
         $email_field = 'email_address';
-        $email = 'Roy@RoySivan.com';
+        $email = 'roy@hiroy.club';
         $form_id = $this->import_contact_form();
         $form_id_two = $form_id;
         $entry_ids = $this->save_identifiable_entries_for_two_forms($form_id, $form_id_two, $email, $email_field);
@@ -149,7 +148,7 @@ class Test_Caldera_Forms_Query_Paginated extends Caldera_Forms_Test_Case {
      */
     public function testPagination(){
         $email_field = 'email_address';
-        $email = 'Roy@RoySivan.com';
+        $email = 'roy@hiroy.club';
         $form_id = $this->import_contact_form();
         $form_id_two = $this->import_autoresponder_form();
         $entry_ids = [];
@@ -173,41 +172,8 @@ class Test_Caldera_Forms_Query_Paginated extends Caldera_Forms_Test_Case {
         $paginated->set_page( 5 );
         $this->assertSame(0, count($paginated->select_all()) );
 
-
     }
 
-    /**
-     * Save entries that are personally identifiable, for two forms.
-     *
-     * @since 1.7.0
-     *
-     * @param string $form_id
-     * @param string $form_id_two
-     * @param string $email
-     * @param string $email_field
-     *
-     * @return array
-     */
-    protected function save_identifiable_entries_for_two_forms($form_id, $form_id_two, $email, $email_field )
-    {
-        $form = Caldera_Forms_Forms::get_form($form_id);
-        $form_two = Caldera_Forms_Forms::get_form($form_id_two);
-        if ( $form_id !== $form_id_two) {
-            $this->assertNotEquals($form, $form_two);
-        } else {
-            $this->assertEquals( $form, $form_two );
-        }
-
-        $entry_ids = [
-            'form_1' => [],
-            'form_2' => [],
-        ];
-        for ($i = 0; $i <= 2; $i++) {
-            $entry_ids['form_1'][] = $this->save_identifiable_entry($form, $email, 'Roy', $email_field);
-            $entry_ids['form_2'][] = $this->save_identifiable_entry($form_two, $email, 'Roy', $email_field);
-        }
-        return $entry_ids;
-    }
 
 
 }

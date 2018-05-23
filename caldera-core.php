@@ -97,7 +97,6 @@ if (!version_compare(PHP_VERSION, '5.6.0', '>=')) {
         Caldera_Forms_Autoloader::add_root('Caldera_Forms_Settings', CFCORE_PATH . 'classes/settings');
         Caldera_Forms_Autoloader::add_root('Caldera_Forms_Import', CFCORE_PATH . 'classes/import');
         Caldera_Forms_Autoloader::add_root('Caldera_Forms_Query', CFCORE_PATH . 'classes/query');
-
         Caldera_Forms_Autoloader::add_root('Caldera_Forms', CFCORE_PATH . 'classes');
         Caldera_Forms_Autoloader::register();
 

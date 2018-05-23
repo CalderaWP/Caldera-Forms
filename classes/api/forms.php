@@ -198,12 +198,12 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
             return Caldera_Forms_API_Response_Factory::error_form_not_found();
         }
 
-        if( isset( $request[ 'emailIdentifiers' ] ) && is_array( $request[ 'emailIdentifiers' ]  ) ){
-            $this->form->set_email_identifying_fields( $request[ 'emailIdentifiers' ] );
+        if( isset( $request[ 'emailIdentifyingFields' ] ) && is_array( $request[ 'emailIdentifyingFields' ]  ) ){
+            $this->form->set_email_identifying_fields( $request[ 'emailIdentifyingFields' ] );
         }
 
         if( isset( $request[ 'piiFields' ] ) && is_array( $request[ 'piiFields' ]  ) ){
-            $this->form->set_piiFields( $request[ 'piiFields' ] );
+            $this->form->set_pii_fields( $request[ 'piiFields' ] );
 
         }
 

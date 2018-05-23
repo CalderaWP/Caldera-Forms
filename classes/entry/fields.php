@@ -92,7 +92,7 @@ class Caldera_Forms_Entry_Fields implements \calderawp\CalderaContainers\Interfa
      */
     public function add_field( Caldera_Forms_Entry_Field $field ){
         if ($this->form_has_field($field->field_id)) {
-            $this->fields[$field->field_id] = $field;
+            $this->fields[$field->entry_id] = $field;
         }
         return $this;
     }
@@ -123,10 +123,24 @@ class Caldera_Forms_Entry_Fields implements \calderawp\CalderaContainers\Interfa
      */
     protected function set_fields_form_array($fields){
         foreach ( $fields as $field ){
+            if( ! is_a( $field, Caldera_Forms_Entry_Field::class ) ){
+                $field = $this->cast_to_field($field);
+            }
             $this->add_field( $field );
         }
     }
 
+    /**
+     * Convert array to Caldera_Forms_Entry_Field
+     *
+     * @since 1.7.0
+     *
+     * @param array|object $field Field value
+     * @return Caldera_Forms_Entry_Field
+     */
+    protected function cast_to_field($field){
+        return new Caldera_Forms_Entry_Field((object)$field);
+    }
 
     /**
      * Check if form has a field

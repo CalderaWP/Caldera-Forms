@@ -67,14 +67,12 @@ class Caldera_Forms_Query_Pii
      * @since 1.7.0
      *
      * @param int $page Which page of results?
-     * @return array
+     * @return Caldera_Forms_Entry_Fields
      */
     public function get_page($page)
     {
-        $entries = $this->find_entries($page);
-        $ids = wp_list_pluck( $entries, 'id' );
-        $results = $this->paginated->select_by_entry_ids($ids);
-        return $this->reduce_results_to_pii( $results );
+        return $this->find_entries($page);
+
     }
 
     /**
@@ -85,28 +83,30 @@ class Caldera_Forms_Query_Pii
      * @param array $results
      * @return array
      */
-    public function reduce_results_to_pii(array $results)
+    public function reduce_results_to_pii(array $ids)
     {
-        /**
-         * @var int $result_index
-         * @var array $result
-         */
-        foreach ( $results as $result_index => $result ){
-            /**
-             * @var int $value_index
-             * @var Caldera_Forms_Entry_Field $field_value
-             */
-            foreach ( $result[ 'values' ] as $value_index => $field_value ){
+        $results = [];
+        foreach ($ids as $entry_id) {
+            $entry = new Caldera_Forms_Entry($this->form, $entry_id);
+            $entry->get_fields();
+            $results[ $entry_id ] = [];
+            /** @var Caldera_Forms_Entry_Field $field_value */
+            foreach ($entry->get_fields() as $field_value) {
+                $results[ $entry_id ][$field_value->field_id] = [];
 
-                if( Caldera_Forms_Field_Util::is_personally_identifying( $field_value->field_id, $this->form )
-                    ||Caldera_Forms_Field_Util::is_email_identifying_field( $field_value->field_id, $this->form)
-                ){
-                    continue;
+                if (Caldera_Forms_Field_Util::is_personally_identifying($field_value->field_id, $this->form)
+                    || Caldera_Forms_Field_Util::is_email_identifying_field($field_value->field_id, $this->form)
+                ) {
+                    $results[ $entry_id ][$field_value->field_id] = $field_value->get_value();
                 }
-                unset( $results[ $result_index ][ 'values' ][ $value_index ] );
+
+
             }
+
+
         }
         return $results;
+
     }
 
     /**
@@ -124,7 +124,7 @@ class Caldera_Forms_Query_Pii
             ->getQueries()
             ->entryValuesSelect();
         foreach (Caldera_Forms_Forms::email_identifying_fields($this->form) as $field) {
-            $entryValueSelect->is($field['slug'], $this->email);
+            $entryValueSelect->is('value', $this->email);
         }
 
         return $this

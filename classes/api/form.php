@@ -13,7 +13,8 @@
 class Caldera_Forms_API_Form  implements  ArrayAccess {
 
 	/**
-	 *
+	 * Form configuration
+     *
 	 * @since 1.5.0
 	 *
 	 * @var array

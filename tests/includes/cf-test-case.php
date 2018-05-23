@@ -236,6 +236,7 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
         if ( ! $form ) {
             $form = $this->mock_form;
         }
+        $x= 0;
         if (empty( $data )) {
             $data = array();
             $i = 0;
@@ -435,6 +436,39 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
 
         $entry = $this->create_entry( $form, $data );
         return $entry[ 'id' ];
+    }
+
+    /**
+     * Save entries that are personally identifiable, for two forms.
+     *
+     * @since 1.7.0
+     *
+     * @param string $form_id
+     * @param string $form_id_two
+     * @param string $email
+     * @param string $email_field
+     *
+     * @return array
+     */
+    protected function save_identifiable_entries_for_two_forms($form_id, $form_id_two, $email, $email_field )
+    {
+        $form = Caldera_Forms_Forms::get_form($form_id);
+        $form_two = Caldera_Forms_Forms::get_form($form_id_two);
+        if ( $form_id !== $form_id_two) {
+            $this->assertNotEquals($form, $form_two);
+        } else {
+            $this->assertEquals( $form, $form_two );
+        }
+
+        $entry_ids = [
+            'form_1' => [],
+            'form_2' => [],
+        ];
+        for ($i = 0; $i <= 2; $i++) {
+            $entry_ids['form_1'][] = $this->save_identifiable_entry($form, $email, 'Roy', $email_field);
+            $entry_ids['form_2'][] = $this->save_identifiable_entry($form_two, $email, 'Roy', $email_field);
+        }
+        return $entry_ids;
     }
 
 }
