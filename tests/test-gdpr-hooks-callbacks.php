@@ -45,6 +45,114 @@ class Test_Caldera_Forms_GDPR extends Caldera_Forms_Test_Case
     }
 
     /**
+     * Test that data fed to the exporter/eraser is paginating right
+     *
+     * @since 1.7.0
+     *
+     * @covers Caldera_Forms_GDPR::get_results()
+     */
+    public function testGetResults()
+    {
+
+        $email_field = 'email_address';
+        $email = 'Roy@hiRoy.club';
+        $form_id = $this->import_contact_form();
+        $form_id_two = $this->import_autoresponder_form();
+        $entry_ids = [];
+        for ($i = 0; $i <= 17; $i++) {
+            //Entries that should show in PII lookup by $email
+            $entries = $this->save_identifiable_entries_for_two_forms($form_id, $form_id_two, $email, $email_field);
+            $entry_ids = array_merge($entry_ids, $entries['form_1']);
+        }
+
+        $pii_fields = [
+            'fld_8768091',
+            'fld_9970286',
+        ];
+        $email_fields = ['fld_6009157'];
+
+        $form = Caldera_Forms_Forms::get_form($form_id);
+        $privacy = new Caldera_Forms_API_Privacy($form);
+        $privacy
+            ->set_pii_fields($pii_fields)
+            ->set_email_identifying_fields( $email_fields )
+            ->enable_privacy_exporter()
+            ->save_form();
+
+        $form = Caldera_Forms_Forms::get_form($form_id);
+
+        $total_query = new Caldera_Forms_Query_Pii(
+            $form,
+            $email,
+            new Caldera_Forms_Query_Paginated($form),
+            100//100 is max size
+        );
+
+        //54 results means first 2 pages should have 25 results, third should have 4, and fourth should have none.
+        $total = $total_query->get_page(1)->count();
+        $this->assertCount($total, $entry_ids );
+        $this->assertSame(54, $total );
+        $query = new Caldera_Forms_Query_Pii(
+            $form,
+            $email,
+            new Caldera_Forms_Query_Paginated($form),
+            25//25 is default
+        );
+        //25 entries in first 2 pages
+        $this->assertSame($query->get_page(1)->count(), Caldera_Forms_GDPR::get_results($email, $form,1 )->count());
+        $this->assertSame(25, Caldera_Forms_GDPR::get_results($email, $form,1 )->count());
+        $this->assertSame($query->get_page(2)->count(), Caldera_Forms_GDPR::get_results($email, $form,2 )->count());
+        //Page 1 and 2 should be same
+        $this->assertSame($query->get_page(1)->count(), Caldera_Forms_GDPR::get_results($email, $form,2 )->count());
+        //Page 3 should have 4
+        $this->assertSame($query->get_page(3)->count(), Caldera_Forms_GDPR::get_results($email, $form,3 )->count());
+        $this->assertSame(4, Caldera_Forms_GDPR::get_results($email, $form,3 )->count());
+
+        //last result empty
+        $this->assertSame(0, Caldera_Forms_GDPR::get_results($email, $form,4 )->count() );
+
+        //Compare to export_data() page 1
+        $export_data_one = Caldera_Forms_GDPR::get_export_data($email,$form,1);
+        $this->assertArrayHasKey( 'done', $export_data_one );
+        $this->assertArrayHasKey( 'data', $export_data_one );
+        $this->assertFalse($export_data_one['done']);
+        $this->assertCount(25,$export_data_one['data'] );
+        $this->assertNotEquals($export_data_one['data'][0],$export_data_one['data'][1]);
+
+
+        //Compare to export_data() page 2
+        $export_data_two = Caldera_Forms_GDPR::get_export_data($email,$form,2);
+        $this->assertArrayHasKey( 'done', $export_data_two );
+        $this->assertArrayHasKey( 'data', $export_data_two );
+        $this->assertFalse($export_data_two['done']);
+        $this->assertCount(25,$export_data_two['data'] );
+        $this->assertNotEquals($export_data_two['data'][0],$export_data_two['data'][1]);
+
+
+        $first_result_one = $export_data_one['data'][0];
+        $first_result_two = $export_data_two['data'][0];
+        $this->assertNotEquals($first_result_one,$first_result_two);
+
+        //Compare to export_data() page 3
+        $export_data = Caldera_Forms_GDPR::get_export_data($email,$form,3);
+        $this->assertArrayHasKey( 'done', $export_data );
+        $this->assertArrayHasKey( 'data', $export_data );
+        $this->assertFalse($export_data['done']);
+        $this->assertCount(4,$export_data['data'] );
+
+        //Compare to export_data() page 4
+        $export_data = Caldera_Forms_GDPR::get_export_data($email,$form,4);
+        $this->assertArrayHasKey( 'done', $export_data );
+        $this->assertArrayHasKey( 'data', $export_data );
+        $this->assertTrue($export_data['done']);
+        $this->assertCount(0,$export_data['data'] );
+
+
+
+    }
+
+
+    /**
      * Test that export data has the right data
      *
      * @since 1.7.0
@@ -189,7 +297,7 @@ class Test_Caldera_Forms_GDPR extends Caldera_Forms_Test_Case
             $form,
             $email,
             new Caldera_Forms_Query_Paginated($form),
-            2100
+            100
         );
         $this->assertSame(0,$query->get_page(1)->count() );
 
@@ -198,7 +306,7 @@ class Test_Caldera_Forms_GDPR extends Caldera_Forms_Test_Case
             $form,
             $email_not_delete,
             new Caldera_Forms_Query_Paginated($form),
-            2100
+            100
         );
         $this->assertNotEquals(0,$query->get_page(1)->count() );
 

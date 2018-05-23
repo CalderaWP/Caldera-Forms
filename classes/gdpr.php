@@ -125,7 +125,7 @@ class Caldera_Forms_GDPR
         if (0 === strpos($name, 'eraser')) {
             $form_id = str_replace('eraser', '', $name);
             $form = Caldera_Forms_Forms::get_form($form_id);
-            return static::perform_erase($arguments[0], $form, $arguments[1]);
+            return static::perform_erase($arguments[0], $form);
         }
 
     }
@@ -242,17 +242,17 @@ class Caldera_Forms_GDPR
      *
      * @param string $email_address Email address to search PII by
      * @param array $form The form configuration
-     * @param int $page Optional. Page of results to get. Default is 1.
      *
      * @return array
      */
-    public static function perform_erase($email_address, array $form, $page = 1)
+    public static function perform_erase($email_address, array $form)
     {
         if (!Caldera_Forms_Forms::is_privacy_export_enabled($form)) {
             return [];
         }
 
-        $results = self::get_results($email_address, $form, $page);
+        //always query for first page, because if this is page 2 of deletes, first page is already deleted
+        $results = self::get_results($email_address, $form, 1);
         $messages = array();
         $items_removed = false;
         $items_retained = false;

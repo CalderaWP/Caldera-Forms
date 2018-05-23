@@ -439,7 +439,9 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
     }
 
     /**
-     * Save entries that are personally identifiable, for two forms.
+     * Saves entries that are personally identifiable, for two forms.
+     *
+     * Creates 2 in each form, 4 total.
      *
      * @since 1.7.0
      *
