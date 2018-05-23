@@ -1,6 +1,10 @@
 <?php
 
-
+/**
+ * Class Caldera_Forms_Entry_Fields
+ *
+ * A collection of many field values, from different entries of the same form.
+ */
 class Caldera_Forms_Entry_Fields implements \calderawp\CalderaContainers\Interfaces\Arrayable
 {
 
@@ -60,15 +64,15 @@ class Caldera_Forms_Entry_Fields implements \calderawp\CalderaContainers\Interfa
     }
 
     /**
-     * Check if a field is in collection
+     * Check if there is an entry value for an entry ID in this collection
      *
      * @since 1.7.0
      *
-     * @param string $field_id The field's ID
+     * @param string $entry_id The entry's ID
      * @return bool
      */
-    public function has_field( $field_id ){
-        return $this->form_has_field($field_id ) && isset( $this->fields[ $field_id ] );
+    public function has_field( $entry_id ){
+        return isset( $this->fields[ $entry_id ] );
     }
 
     /**
@@ -91,9 +95,7 @@ class Caldera_Forms_Entry_Fields implements \calderawp\CalderaContainers\Interfa
      * @return $this
      */
     public function add_field( Caldera_Forms_Entry_Field $field ){
-        if ($this->form_has_field($field->field_id)) {
-            $this->fields[$field->entry_id] = $field;
-        }
+        $this->fields[$field->entry_id] = $field;
         return $this;
     }
 
@@ -121,37 +123,10 @@ class Caldera_Forms_Entry_Fields implements \calderawp\CalderaContainers\Interfa
      *
      * @param Caldera_Forms_Entry_Field[] $fields  Entry field objects to add
      */
-    protected function set_fields_form_array($fields){
+    protected function set_fields_form_array(array $fields){
         foreach ( $fields as $field ){
-            if( ! is_a( $field, Caldera_Forms_Entry_Field::class ) ){
-                $field = $this->cast_to_field($field);
-            }
-            $this->add_field( $field );
+            $this->add_field( Caldera_Forms_Entry_Factory::entry_field($field) );
         }
-    }
-
-    /**
-     * Convert array to Caldera_Forms_Entry_Field
-     *
-     * @since 1.7.0
-     *
-     * @param array|object $field Field value
-     * @return Caldera_Forms_Entry_Field
-     */
-    protected function cast_to_field($field){
-        return new Caldera_Forms_Entry_Field((object)$field);
-    }
-
-    /**
-     * Check if form has a field
-     *
-     * @since 1.7.0
-     *
-     * @param string $field_id Field ID (form config, not DB id column)
-     * @return bool
-     */
-    protected function form_has_field($field_id){
-        return ! empty( $this->form[ 'fields' ] ) && array_key_exists( $field_id, $this->form[ 'fields']  );
     }
 
 }

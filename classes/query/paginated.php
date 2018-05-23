@@ -86,7 +86,6 @@ class Caldera_Forms_Query_Paginated implements Caldera_Forms_Query_Paginates
      */
     public function select_by_entry_ids( array $ids )
     {
-        $x= 1;
 
         $entries = $this
             ->get_queries_container()

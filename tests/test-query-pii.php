@@ -10,11 +10,11 @@ class Test_Caldera_Forms_Query_Pii extends Caldera_Forms_Test_Case {
 
 
     /**
-     *  Test querying by entry ID
+     *  Test that paginated results have the right results
      *
      * @since 1.7.0
      *
-     * @covers Caldera_Forms_Query_Paginated::select_by_entry_ids()
+     * @covers Caldera_Forms_Query_Pii::select_by_entry_ids()
      */
     public function testPagination(){
         $email_field = 'email_address';
@@ -53,11 +53,13 @@ class Test_Caldera_Forms_Query_Pii extends Caldera_Forms_Test_Case {
                 15
         );
         $results_one = $query->get_page(1);
-        $this->assertSame( 15, count( $results_one ) );
+        $this->assertSame( 15, $results_one->count() );
         $results_two = $query->get_page(2);
-        $this->assertSame( 15, count( $results_two ) );
+        $this->assertSame( 15, $results_two->count() );
 
     }
+
+
 
 
 

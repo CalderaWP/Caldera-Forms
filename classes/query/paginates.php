@@ -66,7 +66,7 @@ interface Caldera_Forms_Query_Paginates
      * @since 1.7.0
      *
      * @param EntryValueSelect $entry_value_select
-     * @return array
+     * @return Caldera_Forms_Entry_Fields
      */
     public function select_values_for_form( EntryValueSelect $entry_value_select );
 }

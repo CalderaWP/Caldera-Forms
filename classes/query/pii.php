@@ -76,11 +76,11 @@ class Caldera_Forms_Query_Pii
     }
 
     /**
-     * Given a results set, reduce to PII fields only.
+     * Given an array of entry IDs, reduce to personally identifying fields only
      *
      * @since 1.7.0
      *
-     * @param array $results
+     * @param array $ids
      * @return array
      */
     public function reduce_results_to_pii(array $ids)

@@ -118,7 +118,7 @@ class Test_Caldera_Forms_Query_Paginated extends Caldera_Forms_Test_Case {
 
         );
 
-        $this->assertSame( count( $entry_ids[ 'form_1' ] ) + count($entry_ids[ 'form_2' ]), count($results) );
+        $this->assertSame( count( $entry_ids[ 'form_1' ] ) + count($entry_ids[ 'form_2' ]), $results->count() );
     }
 
     /**

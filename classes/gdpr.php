@@ -25,16 +25,16 @@ class Caldera_Forms_GDPR
     public static function register_gdpr()
     {
 
-        if ( ! empty( static::enabled_forms() )) {
+        if (!empty(static::enabled_forms())) {
 
             add_filter('wp_privacy_personal_data_erasers', function ($erasers) {
 
                 foreach (static::enabled_forms() as $form_id) {
-                    $form = Caldera_Forms_Forms::get_form( $form_id );
-                    if (is_array( $form )) {
+                    $form = Caldera_Forms_Forms::get_form($form_id);
+                    if (is_array($form)) {
                         $erasers[self::group_id($form)] = [
                             'eraser_friendly_name' => $form['name'],
-                            'callback' => [__CLASS__, static ::callback_name( $form_id, 'eraser' )],
+                            'callback' => [__CLASS__, static::callback_name($form_id, 'eraser')],
                         ];
                     }
                 }
@@ -44,11 +44,11 @@ class Caldera_Forms_GDPR
             add_filter('wp_privacy_personal_data_exporters', function ($exporters) {
 
                 foreach (static::enabled_forms() as $form_id) {
-                    $form = Caldera_Forms_Forms::get_form( $form_id );
-                    if (is_array( $form )) {
+                    $form = Caldera_Forms_Forms::get_form($form_id);
+                    if (is_array($form)) {
                         $exporters[self::group_id($form)] = [
                             'exporter_friendly_name' => $form['name'],
-                            'callback' => [__CLASS__, static::callback_name( $form_id ) ],
+                            'callback' => [__CLASS__, static::callback_name($form_id)],
                         ];
                     }
                 }
@@ -59,14 +59,24 @@ class Caldera_Forms_GDPR
 
     }
 
-    public static function callback_name( $form_id, $type = 'exporter' ){
-        switch ($type ){
+    /**
+     * Get the name of the magic callback function used to process export/erases
+     *
+     * @since 1.7.0
+     *
+     * @param string $form_id The ID of the form to process.
+     * @param string $type Optional. Type of callback. Default is "exporter", options: exporter|eraser
+     * @return string
+     */
+    public static function callback_name($form_id, $type = 'exporter')
+    {
+        switch ($type) {
             case 'eraser':
-                $name = $type.$form_id;
+                $name = $type . $form_id;
                 break;
             case 'exporter':
             case 'default':
-                $name  ='exporter'.$form_id;
+                $name = 'exporter' . $form_id;
                 break;
         }
         return $name;
@@ -77,17 +87,18 @@ class Caldera_Forms_GDPR
      *
      * @since 1.7.0
      *
+     * @param bool $reset Optional. If true, database will be queried for results. If false, the default, database will only be queried on first call of function/
      * @return array
      */
-    public static function enabled_forms()
+    public static function enabled_forms($reset = false)
     {
-        if( ! empty( static::$enabled_forms ) ){
+        if (false === $reset && !empty(static::$enabled_forms)) {
             return static::$enabled_forms;
         }
 
-        foreach ( Caldera_Forms_Forms::get_forms(false) as $form_id ){
-            $form = Caldera_Forms_Forms::get_form( $form_id );
-            if( is_array( $form ) && Caldera_Forms_Forms::is_privacy_export_enabled($form)){
+        foreach (Caldera_Forms_Forms::get_forms(false) as $form_id) {
+            $form = Caldera_Forms_Forms::get_form($form_id);
+            if (is_array($form) && Caldera_Forms_Forms::is_privacy_export_enabled($form)) {
                 static::$enabled_forms[] = $form_id;
             }
         }
@@ -104,16 +115,16 @@ class Caldera_Forms_GDPR
      */
     public static function __callStatic($name, $arguments)
     {
-        if( 0 === strpos($name, 'exporter' ) ){
-            $form_id = str_replace( 'exporter', '', $name );
-            $form = Caldera_Forms_Forms::get_form($form_id );
+        if (0 === strpos($name, 'exporter')) {
+            $form_id = str_replace('exporter', '', $name);
+            $form = Caldera_Forms_Forms::get_form($form_id);
             return static::get_export_data($arguments[0], $form, $arguments[1]);
         }
 
 
-        if( 0 === strpos($name, 'eraser' ) ){
-            $form_id = str_replace( 'eraser', '', $name );
-            $form = Caldera_Forms_Forms::get_form($form_id );
+        if (0 === strpos($name, 'eraser')) {
+            $form_id = str_replace('eraser', '', $name);
+            $form = Caldera_Forms_Forms::get_form($form_id);
             return static::perform_erase($arguments[0], $form, $arguments[1]);
         }
 
@@ -127,9 +138,9 @@ class Caldera_Forms_GDPR
      * @param array $form The form configuration
      * @return string
      */
-    public static function group_id( array  $form )
+    public static function group_id(array $form)
     {
-        return 'caldera-forms-' . sanitize_title_with_dashes($form[ 'name' ] );
+        return 'caldera-forms-' . sanitize_title_with_dashes($form['name']);
     }
 
     /**
@@ -140,9 +151,9 @@ class Caldera_Forms_GDPR
      * @param array $form The form configuration
      * @return string
      */
-    public static function group_label( array $form )
+    public static function group_label(array $form)
     {
-        return $form[ 'name' ];
+        return $form['name'];
     }
 
 
@@ -156,35 +167,38 @@ class Caldera_Forms_GDPR
      * @param int $page Optional. Page of results to get. Default is 1.
      * @return array
      */
-    public static function get_export_data($email_address, array $form, $page = 1 )
+    public static function get_export_data($email_address, array $form, $page = 1)
     {
+        if (!Caldera_Forms_Forms::is_privacy_export_enabled($form)) {
+            return [];
+        }
         $results = self::get_results($email_address, $form, $page);
         $export_items = [];
-        if( ! static::done($results) ){
-            $pii_fields = Caldera_Forms_Forms::personally_identifying_fields($form,true);
+        if (!static::done($results)) {
+            $pii_fields = Caldera_Forms_Forms::personally_identifying_fields($form, true);
             /** @var Caldera_Forms_Entry_Field $field_value */
-            foreach ( $results->get_fields() as $field_value ){
+            foreach ($results->get_fields() as $field_value) {
                 $entry_id = $field_value->entry_id;
-                $entry = Caldera_Forms::get_entry( $entry_id, $form );
+                $entry = Caldera_Forms::get_entry($entry_id, $form);
                 $data = [
                     [
                         'name' => self::find_field_name($form, $field_value->field_id),
                         'value' => $field_value->get_value()
                     ],
                     [
-                        'name' => __( 'Date', 'caldera-forms' ),
-                        'value' => $entry[ 'date' ]
+                        'name' => __('Date', 'caldera-forms'),
+                        'value' => $entry['date']
                     ]
                 ];
 
-                if( ! empty( $entry['user'] ) ){
-                    if (! empty( $entry[ 'user' ][ 'name' ] ) ) {
+                if (!empty($entry['user'])) {
+                    if (!empty($entry['user']['name'])) {
                         $data[] = [
                             'name' => __('WordPress User Name', 'caldera-forms'),
                             'value' => $entry['user']['name']
                         ];
                     }
-                    if( $entry[ 'user' ][ 'email' ] ){
+                    if (!empty($entry['user']['email'])) {
                         $data[] = [
                             'name' => __('WordPress User Email', 'caldera-forms'),
                             'value' => $entry['user']['email']
@@ -192,10 +206,10 @@ class Caldera_Forms_GDPR
                     }
                 }
 
-                if( ! empty( $pii_fields ) ){
+                if (!empty($pii_fields)) {
 
-                    foreach ( $pii_fields as $field_id ){
-                        if( array_key_exists( $field_id, $entry['data'] ) ){
+                    foreach ($pii_fields as $field_id) {
+                        if (array_key_exists($field_id, $entry['data'])) {
                             $data[] = [
                                 'name' => self::find_field_name($form, $field_id),
                                 'value' => $entry['data'][$field_id]['value']
@@ -206,10 +220,10 @@ class Caldera_Forms_GDPR
                 }
 
                 $export_items[] = array(
-                    'group_id'    => static::group_id( $form ),
-                    'group_label' => static::group_label( $form,$field_value ),
-                    'item_id'     => self::get_entry_id_from_result($field_value),
-                    'data'        => $data
+                    'group_id' => static::group_id($form),
+                    'group_label' => static::group_label($form, $field_value),
+                    'item_id' => self::get_entry_id_from_result($field_value),
+                    'data' => $data
                 );
             }
 
@@ -232,16 +246,20 @@ class Caldera_Forms_GDPR
      *
      * @return array
      */
-    public static function perform_erase(  $email_address, array $form, $page = 1 )
+    public static function perform_erase($email_address, array $form, $page = 1)
     {
+        if (!Caldera_Forms_Forms::is_privacy_export_enabled($form)) {
+            return [];
+        }
+
         $results = self::get_results($email_address, $form, $page);
         $messages = array();
-        $items_removed  = false;
+        $items_removed = false;
         $items_retained = false;
-        if( ! static::done($results) ){
+        if (!static::done($results)) {
             $ids = [];
             /** @var Caldera_Forms_Entry_Field $field_value */
-            foreach ( $results->get_fields() as $field_value ){
+            foreach ($results->get_fields() as $field_value) {
                 $ids[] = static::get_entry_id_from_result($field_value);
 
             }
@@ -250,10 +268,10 @@ class Caldera_Forms_GDPR
         }
 
         return array(
-            'items_removed'  => $items_removed,
+            'items_removed' => $items_removed,
             'items_retained' => $items_retained,
-            'messages'       => $messages,
-            'done'           => static::done($results),
+            'messages' => $messages,
+            'done' => static::done($results),
         );
 
     }
@@ -294,6 +312,10 @@ class Caldera_Forms_GDPR
     }
 
     /**
+     * Check if results are empty and therefore process is done
+     *
+     * @since 1.7.0
+     *
      * @param $results
      * @return bool
      */
@@ -303,6 +325,10 @@ class Caldera_Forms_GDPR
     }
 
     /**
+     * Finds the name of a form field
+     *
+     * @since 1.7.0
+     *
      * @param array $form
      * @param $field_id
      * @return string
@@ -310,7 +336,7 @@ class Caldera_Forms_GDPR
     protected static function find_field_name(array $form, $field_id)
     {
         $field = Caldera_Forms_Field_Util::get_field($field_id, $form);
-       return is_array($field) && !empty($field['label']) ? $field['label'] : $field_id->slug;
+        return is_array($field) && !empty($field['label']) ? $field['label'] : $field_id->slug;
     }
 
 }
