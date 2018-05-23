@@ -173,9 +173,6 @@ class Caldera_Forms_Magic_Doer {
 	public static function do_bracket_magic( $value, $form, $entry_id, $magic_caller, $referrer ){
 		global $processed_meta;
 
-		/**
-		 * 
-		 */
 		$form   = self::filter_form( $form, $entry_id );
 		$magics = Caldera_Forms_Magic_Util::explode_bracket_magic( $value );
 		if ( ! empty( $magics[ 1 ] ) ) {
@@ -316,6 +313,7 @@ class Caldera_Forms_Magic_Doer {
 						case 'query_var' :
 							$magic_tag = get_query_var($magic[ 1 ]);
 							break;
+
 					}
 				} else {
 					switch ( $magic_tag ) {
@@ -379,6 +377,9 @@ class Caldera_Forms_Magic_Doer {
 						case 'current_url' :
 							$magic_tag = urldecode( caldera_forms_get_current_url() );
 							break;
+                        case 'privacy_page':
+                            $magic_tag = esc_url_raw(caldera_forms_privacy_policy_page_url());
+                            break;
 					}
 
 				}
