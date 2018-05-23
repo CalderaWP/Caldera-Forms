@@ -18,9 +18,7 @@
 				class="block-input field-config"
 				name="{{_name}}[linked_text]"
 				aria-describedby="{{_id}}_linked_text-description"
-		>
-			{{linked_text}}
-		</textarea>
+		>{{linked_text}}</textarea><?php //keep on same line to avoid saving a tab in content ?>
 		<p
 				class="description"
 				id="{{_id}}_linked_text-description"
