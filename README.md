@@ -12,6 +12,7 @@ Drag & Drop WordPress Responsive Form Builder
 ## Development
 [Contributor Guidleines](https://github.com/CalderaWP/Caldera-Forms/blob/master/CONTRIBUTING.md)
 
+
 ### Install for development
 Requires: git, npm, Grunt.
 - Clone repo to plugin directory
@@ -25,7 +26,7 @@ To create a build to ship to WordPress.org:
 `npm run package`
 
 This creates `/build/<version>` where `<version>` is the current version set in `package.json`.
-### Development
+### JavaScript Development
 
 Run watcher for development to auto-compile JavaScript and CSS
 
@@ -52,6 +53,23 @@ This is the old stuff, built with grunt.
     - `npm run dev:grunt`
 * Build for production
     -  `npm run build:grunt`
+    
+### Test Environment
+All PHP tests are based off of the WordPress "unit" test suite, and therefore need a full WordPress test environment. The install script in '/bin' is pretty standard and should work with VVV or whatever.
+
+Alternatively, because this, isn't 2014, you can use the provided Docker environment.
+#### Requirements
+* Docker
+    - [Installation documentation](https://docs.docker.com/install/)
+* Composer
+    - [Installation documentation](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx)
+
+#### Commands
+* `composer wp-install` - Installs Docker-based test environment.
+* `composer wp-tests` - Runs phpunit inside of Docker container.
+* `composer wp-stop` - Stops Docker-based test environment, without destroying containers.
+* `composer wp-remove` - Stops Docker-based test environment and destroys containers.
+
 
 ## Contributing/ Using This Repo, Etc.
 * The default branch is "master" that should be the same as WordPress.org.
