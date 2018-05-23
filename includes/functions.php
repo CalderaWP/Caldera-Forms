@@ -242,6 +242,8 @@ function caldera_forms_pro_is_active(){
 function caldera_forms_validate_number( $number, $default, $max ){
     return intval(absint($number) > $max || $number <= 0 ? $default : absint($number));
 }
+
+/**
  * Get privacy page URL
  *
  * Defaults to get_privacy_policy_url() if WP 4.9.6 or later
