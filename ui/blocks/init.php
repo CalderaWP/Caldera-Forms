@@ -22,24 +22,21 @@ add_action( 'init', 'caldera_forms_register_block');
  * @since 1.5.8
  */
 function caldera_forms_enqueue_block_assets() {
-    wp_enqueue_script(
-        'calderaforms/cform',
-        plugins_url( 'cform/block.build.js', __FILE__ ),
-        array( 'wp-blocks', 'wp-i18n', 'wp-element' ),
-        CFCORE_VER
-    );
+	Caldera_Forms_Render_Assets::enqueue_script( 'blocks', array( 'wp-blocks', 'wp-i18n', 'wp-element' ) );
 
     $formOptions = array();
     $forms = Caldera_Forms_Forms::get_forms(true);
+    $forms =array_reverse($forms);
     foreach ( $forms as $form ){
         $formOptions[] = array(
             'name' => esc_html( $form[ 'name'  ] ),
-            'formId' => esc_attr( $form[ 'ID' ] )
+            'formId' => esc_attr( $form[ 'ID' ] ),
+            'ID' => esc_attr( $form[ 'ID' ] )
         );
     }
 
     wp_localize_script(
-        'calderaforms/cform',
+        Caldera_Forms_Render_Assets::make_slug( 'blocks' ),
         'CF_FORMS',
         array(
             'forms' => $formOptions,

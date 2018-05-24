@@ -17,6 +17,7 @@ use calderawp\calderaforms\pro\repository;
  */
 class message extends repository {
 
+
 	/**
 	 * API client
 	 *

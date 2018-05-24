@@ -200,9 +200,9 @@ data-autoload="true"
 				data.conditions[pid].group = {};
 			}
 			if( !data.conditions[pid].group[id] ){
-				data.conditions[pid].group[id] = {};	
+				data.conditions[pid].group[id] = {};
 			}
-			
+
 			// initial line
 			data.conditions[pid].group[id][cid] = {
 				parent		:	id
@@ -234,9 +234,9 @@ data-autoload="true"
 				data.conditions[pid].group = {};
 			}
 			if( !data.conditions[pid].group[id] ){
-				data.conditions[pid].group[id] = {};	
+				data.conditions[pid].group[id] = {};
 			}
-			
+
 			// initial line
 			data.conditions[pid].group[id][cid] = {
 				parent		:	id
@@ -252,7 +252,7 @@ data-autoload="true"
 			}
 			var db = $('#cf-conditions-db'),
 				data = get_base_form();
-			
+
 			data._open_condition = id;
 
 			db.val( JSON.stringify( data ) ).trigger( 'rebuild-conditions' );
@@ -263,7 +263,7 @@ data-autoload="true"
 				db = $('#cf-conditions-db');
 
 			db.val( JSON.stringify( data ) ).trigger( 'rebuild-conditions' );
-			
+
 		});
 
         $( document ).on( 'click', '#tab_conditions' , function(){
@@ -299,7 +299,7 @@ data-autoload="true"
 		$( document ).on('click', '[data-remove-line]', function(){
 			var clicked = $( this ),
 				id = clicked.data('removeLine');
-			
+
 			$('.condition-line-' + id).remove();
 
 			var db = $('#cf-conditions-db'),
@@ -311,7 +311,7 @@ data-autoload="true"
 		$( document ).on('click', '[data-remove-group]', function(){
 			var clicked = $( this ),
 				id = clicked.data('removeGroup');
-			
+
 			if( clicked.data('confirm') ){
 				if( !confirm( clicked.data('confirm') ) ){
 					return;
@@ -322,7 +322,7 @@ data-autoload="true"
 
 			var db = $('#cf-conditions-db'),
 				data = get_base_form();
-			
+
 			data._open_condition = '';
 
 			db.val( JSON.stringify( data ) ).trigger( 'rebuild-conditions' );
@@ -338,7 +338,7 @@ data-autoload="true"
 			}
 		});
 		$( document ).on( 'change', '[data-bind-condition]', function(){
-			
+
 			$(document).trigger('show.fieldedit');
 
 			var clicked = $(this),
@@ -377,14 +377,14 @@ data-autoload="true"
 					if( true === run ){
 						var sel = '',
 							line = '<option value="' + con + '" ' + ( selected === con ? 'selected="selected"' : '' ) + '>' + data.conditions[con].name + '</option>';
-						
+
 						select.append( line );
 					}
 				}
 
 			});
 		});
-		
+
 
 	} );
 

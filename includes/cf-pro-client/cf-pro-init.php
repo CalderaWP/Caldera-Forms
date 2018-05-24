@@ -31,7 +31,7 @@ function caldera_forms_pro_client_init(){
 			/**
 			 * Caldera Forms Pro Client Version
 			 */
-			define( 'CF_PRO_VER', '1.6.1' );
+			define( 'CF_PRO_VER', CFCORE_VER );
 
 			include_once dirname( __FILE__ ) . '/bootstrap-cf-pro.php';
 

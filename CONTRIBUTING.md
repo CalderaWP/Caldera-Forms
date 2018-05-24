@@ -8,9 +8,9 @@ If you work for Caldera Labs, you have access in drive to the folder "Acceptance
 If you don't work for us, just put in a pull request against the develop branch, we appreicate it and will handle testing.
 
 ## Current Git Workflow & PHP Compatibility
-The develop branch is currently being used for 1.6.x, which must support PHP 5.2.
+The develop branch is currently being used for 1.7 and therefore PHP 5.6 is the minimum supported PHP version.
 
-1.7 will support PHP 5.6+ only. 
+If 1.6.3+ is developed, a 1.6.x branch (branced from master) will be used. That branch must support PHP 5.2.
 
 Work on the [GDPR compliance](https://github.com/CalderaWP/Caldera-Forms/projects/3) is happening in a branch called "focus3" and is tagged for 1.7, so it can be PHP 5.6+.
 
