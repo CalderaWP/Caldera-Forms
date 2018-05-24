@@ -274,6 +274,11 @@ module.exports = function (grunt) {
                     create: [ 'build' ]
                 }
             }
+        },
+
+
+        exec: {
+            composerDist: 'composer clearcache && composer update --prefer-dist --no-dev --optimize-autoloader --ignore-platform-reqs'
         }
 
     });
@@ -293,8 +298,8 @@ module.exports = function (grunt) {
     ] );
 
     grunt.registerTask( 'version_number', [ 'replace' ] );
-    grunt.registerTask( 'build', [  'version_number', 'default', 'make' ] );
-    grunt.registerTask( 'make', [   'mkdir:build', 'copy:build' ] );
+    grunt.registerTask( 'build', [  'version_number', 'default',  'make' ] );
+    grunt.registerTask( 'make', [   'exec:composerDist', 'mkdir:build', 'copy:build' ] );
 
 
 
