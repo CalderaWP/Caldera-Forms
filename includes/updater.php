@@ -81,6 +81,16 @@ function caldera_forms_db_v6_update(){
 
 }
 
+function caldera_forms_db_v7_update(){
+    $registry_forms = get_option('_caldera_forms_forms' );
+    if( ! empty( $registry_forms ) ){
+        foreach ( $registry_forms as $id ){
+            delete_option( $id );
+        }
+    }
+    delete_option( '_caldera_forms_forms' );
+}
+
 
 /**
  * Write DB version flag to options

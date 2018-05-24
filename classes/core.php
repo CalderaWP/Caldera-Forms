@@ -445,10 +445,13 @@ class Caldera_Forms
 
 				if (($db_version < 6 || $force_update) && class_exists('Caldera_Forms_Forms')) {
 					caldera_forms_db_v6_update();
-
 				}
 
-				caldera_forms_write_db_flag(6);
+                if (($db_version < 7 || $force_update) ) {
+                    caldera_forms_db_v7_update();
+                }
+
+				caldera_forms_write_db_flag(CF_DB );
 
 			} else {
 				$version = caldera_forms_get_last_update_version();
