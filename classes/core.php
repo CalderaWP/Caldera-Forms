@@ -1415,8 +1415,8 @@ class Caldera_Forms
 
 		}
 		if (empty($formula)) {
-			return 0;
-		}
+            return 0;
+        }
 
 		$formula = self::do_magic_tags($formula, null, $form);
 		if (false !== strpos($formula, 'Math.')) {
@@ -1429,6 +1429,7 @@ class Caldera_Forms
 				$formula = str_replace($fid, $number, $formula);
 			}
 		}
+
 
 		if (false !== strpos($formula, '/0')) {
 			return new WP_Error($field['ID'] . '-calculation',
