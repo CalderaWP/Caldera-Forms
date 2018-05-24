@@ -10,7 +10,6 @@ module.exports = function (grunt) {
         '!build/**',
         '!sources/**',
         '!tests/**',
-        '!vendor/**',
         '!.gitattributes',
         '!.gitignore',
         '!.gitmodules',

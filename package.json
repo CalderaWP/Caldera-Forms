@@ -24,7 +24,7 @@
     "dev:webpack": "cross-env BABEL_ENV=default webpack --watch",
     "dev:grunt": "grunt watch",
     "version": "grunt version_number",
-    "package": "npm run build && grunt build"
+    "package": "npm run build && grunt make"
   },
   "browserslist": [
     "last 2 versions",
