@@ -53,7 +53,7 @@ if (!version_compare(PHP_VERSION, '5.6.0', '>=')) {
 
     define('CFCORE_PATH', plugin_dir_path(__FILE__));
     define('CFCORE_URL', plugin_dir_url(__FILE__));
-    define('CFCORE_VER', '1.7.0-b.1');
+    define( 'CFCORE_VER', '1.7.0-b.1' );
     define('CFCORE_EXTEND_URL', 'https://api.calderaforms.com/1.0/');
     define('CFCORE_BASENAME', plugin_basename(__FILE__));
 

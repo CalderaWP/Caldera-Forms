@@ -36,14 +36,18 @@ module.exports = function (grunt) {
         '!includes/cf-pro-client/package.json',
         '!includes/cf-pro-client/build/**',
         //Exclude client dir, most of it we don't need
-        '!clients'
+        '!clients/**',
+        '!src/**',
+        '!Dockerfile',
+        '!.env',
+        '!db-error.php',
+        '!webpack.config.js'
     ];
 
     //Include webpacked clients
     [
         'pro',
-        //'admin',
-        //'viewer',
+        'privacy',
         'blocks'
     ].forEach( (client) => {
        files_list.push( `clients/${client}/build/index.min.js` );
@@ -289,7 +293,8 @@ module.exports = function (grunt) {
     ] );
 
     grunt.registerTask( 'version_number', [ 'replace' ] );
-    grunt.registerTask( 'build', [  'version_number', 'default', 'mkdir:build', 'copy:build' ] );
+    grunt.registerTask( 'build', [  'version_number', 'default', 'make' ] );
+    grunt.registerTask( 'make', [   'mkdir:build', 'copy:build' ] );
 
 
 
