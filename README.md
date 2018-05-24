@@ -25,7 +25,10 @@ Requires: git, npm, Grunt.
 To create a build to ship to WordPress.org:
 `npm run package`
 
-This creates `/build/<version>` where `<version>` is the current version set in `package.json`.
+This creates `/build/<version>` where `<version>` is the current version set in `package.json`. This creates a directory you can ZIP up for testing or whatever.
+
+See "Release To WordPress.org" section below for more details on pushing this build to WordPress.org. 
+
 ### JavaScript Development
 
 Run watcher for development to auto-compile JavaScript and CSS
@@ -71,6 +74,24 @@ Alternatively, because this, isn't 2014, you can use the provided Docker environ
 * `composer wp-stop` - Stops Docker-based test environment, without destroying containers.
 * `composer wp-remove` - Stops Docker-based test environment and destroys containers.
 
+
+### Release To WordPress.org
+##### Requires
+* [svn](https://subversion.apache.org/quick-start#installing-the-client)
+* Grunt `npm install -g grunt-cli`
+* [npm](https://www.npmjs.com/get-npm)
+* [Have commit access to Caldera Forms svn](https://wordpress.org/plugins/caldera-forms/advanced/#committer-list)
+
+#### Steps
+* Build release file
+    - `npm package`
+* Push to WordPress.org
+    - `cd bin`
+    - `bash deploy-wp-org-tag.sh 12345 christiechirinos`
+
+#### Notes
+* This assumes your WordPress.org username is `christiechirinos`, and your password is `12345`.
+* The first argument is password, which is required. The second argument is username, which defaults to `Shelob9`, which is Josh's username.
 
 ## Contributing/ Using This Repo, Etc.
 * The default branch is "master" that should be the same as WordPress.org.
