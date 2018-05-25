@@ -103,8 +103,7 @@ export const FormPrivacySettings = (props) => {
                         >
                             Enable
                         </Checkbox>
-                        <HelpBlock>If checked data for this form will be added to GDPR personal data requests, and
-                            deletes.</HelpBlock>}
+                        <HelpBlock>If checked data for this form will be added to GDPR personal data requests, and deletes.</HelpBlock>
                     </FormGroup>
 
                     {props.privacySettings.privacyExporterEnabled &&
@@ -121,16 +120,17 @@ export const FormPrivacySettings = (props) => {
                     }
                 </div>
                 <HelpBox
-                    saveButton = {
-                    <Button
-                        type="submit"
-                        onClick={() => {
-                            props.onSave(props.privacySettings, props.form.ID)
-                        }}
-                        className={'primary button button-primary'}
-                    >
-                        Save
-                    </Button>}
+                    saveButton={
+                        <Button
+                            type="submit"
+                            onClick={() => {
+                                props.onSave(props.privacySettings, props.form.ID)
+                            }}
+                            className={'primary button button-primary'}
+                        >
+                            Save
+                        </Button>
+                    }
                 />
             </div>
 
