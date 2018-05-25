@@ -103,56 +103,56 @@ class Caldera_Forms_Fields {
 
 		$internal_fields = array(
 			//basic
-			'text'               => self::get_text_field(),
-			'hidden'             => self::get_hidden_field(),
-			'email'              => self::get_email_field(),
-			'button'             => self::get_button_field(),
-			'number'             => self::get_number_field(),
-			'phone'              => self::get_phone_field(),
-			'phone_better'       => self::get_phone_field_v2(),
-			'paragraph'          => self::get_paragraph_field(),
-			'wysiwyg'            => self::get_wysiwyg_field(),
-			'url'                => self::get_url_field(),
+			'text'               => self::get_text_config(),
+			'hidden'             => self::get_hidden_config(),
+			'email'              => self::get_email_config(),
+			'button'             => self::get_button_config(),
+			'number'             => self::get_number_config(),
+			'phone'              => self::get_phone_config(),
+			'phone_better'       => self::get_phone_config_v2(),
+			'paragraph'          => self::get_paragraph_config(),
+			'wysiwyg'            => self::get_wysiwyg_config(),
+			'url'                => self::get_url_config(),
 
 			//eCommerce
-			'credit_card_number' => self::get_credit_card_number_field(),
-			'credit_card_exp'    => self::get_credit_card_expiration_field(),
-			'credit_card_cvc'    => self::get_credit_card_cvc_field(),
+			'credit_card_number' => self::get_credit_card_number_config(),
+			'credit_card_exp'    => self::get_credit_card_expiration_config(),
+			'credit_card_cvc'    => self::get_credit_card_cvc_config(),
 
 			//special
-			'calculation'        => self::get_calculation_field(),
-			'range_slider'       => self::get_range_slider_field(),
-			'star_rating'        => self::get_star_rating_field(),
-			'utm'                => self::get_utm_field(),
-			'gdpr'               => self::get_gdpr_field(),
+			'calculation'        => self::get_calculation_config(),
+			'range_slider'       => self::get_range_slider_config(),
+			'star_rating'        => self::get_star_rating_config(),
+			'utm'                => self::get_utm_config(),
+			'gdpr'               => self::get_gdpr_config(),
 
 			//file
-			'file'               => self::get_file_uploader_field(),
-			'advanced_file'      => self::get_advanced_file_uploader_field(),
+			'file'               => self::get_file_uploader_config(),
+			'advanced_file'      => self::get_advanced_file_uploader_config(),
 
 			//content
-			'html'               => self::get_html_field(),
-			'summary'            => self::get_summary_field(),
-			'section_break'      => self::get_section_break_field(),
+			'html'               => self::get_html_config(),
+			'summary'            => self::get_summary_config(),
+			'section_break'      => self::get_section_break_config(),
 
 			//select
-			'dropdown'           => self::get_dropdown_field(),
-			'checkbox'           => self::get_checkbox_field(),
-			'radio'              => self::get_radio_field(),
-			'filtered_select2'   => self::get_filtered_select2_field(),
-			'date_picker'        => self::get_date_picker_field(),
-			'toggle_switch'      => self::get_toggle_switch_field(),
-			'color_picker'       => self::get_colorpicker_field(),
-			'states'             => self::get_states_field(),
+			'dropdown'           => self::get_dropdown_config(),
+			'checkbox'           => self::get_checkbox_config(),
+			'radio'              => self::get_radio_config(),
+			'filtered_select2'   => self::get_filtered_select2_config(),
+			'date_picker'        => self::get_date_picker_config(),
+			'toggle_switch'      => self::get_toggle_switch_config(),
+			'color_picker'       => self::get_colorpicker_config(),
+			'states'             => self::get_states_config(),
 
 			//discontinued
-			'recaptcha'          => self::get_recaptcha_field(),
+			'recaptcha'          => self::get_recaptcha_config(),
 		);
 
 		return $internal_fields;
 	}
 
-	public static function get_text_field()
+	public static function get_text_config()
 	{
 		return array(
 			"field"       => __( 'Single Line Text', 'caldera-forms' ),
@@ -166,7 +166,7 @@ class Caldera_Forms_Fields {
 		);
 	}
 
-	public static function get_hidden_field()
+	public static function get_hidden_config()
 	{
 		return array(
 			"field"       => __( 'Hidden', 'caldera-forms' ),
@@ -186,7 +186,7 @@ class Caldera_Forms_Fields {
 		);
 	}
 
-	public static function get_email_field()
+	public static function get_email_config()
 	{
 		return array(
 			"field"       => __( 'Email Address', 'caldera-forms' ),
@@ -201,7 +201,7 @@ class Caldera_Forms_Fields {
 		);
 	}
 
-	public static function get_button_field()
+	public static function get_button_config()
 	{
 		return array(
 			"field"       => __( 'Button', 'caldera-forms' ),
@@ -226,7 +226,7 @@ class Caldera_Forms_Fields {
 		);
 	}
 
-	public static function get_number_field()
+	public static function get_number_config()
 	{
 		return array(
 			"field"       => __( 'Number', 'caldera-forms' ),
@@ -240,7 +240,7 @@ class Caldera_Forms_Fields {
 		);
 	}
 
-	public static function get_phone_field()
+	public static function get_phone_config()
 	{
 		return array(
 			"field"       => __( 'Phone Number (Basic)', 'caldera-forms' ),
@@ -260,7 +260,7 @@ class Caldera_Forms_Fields {
 		);
 	}
 
-	public static function get_phone_field_v2()
+	public static function get_phone_config_v2()
 	{
 		return array(
 			"field"       => __( 'Phone Number (Better)', 'caldera-forms' ),
@@ -285,7 +285,7 @@ class Caldera_Forms_Fields {
 		);
 	}
 
-	public static function get_paragraph_field()
+	public static function get_paragraph_config()
 	{
 		return array(
 			"field"       => __( 'Paragraph Textarea', 'caldera-forms' ),
@@ -302,7 +302,7 @@ class Caldera_Forms_Fields {
 		);
 	}
 
-	public static function get_wysiwyg_field()
+	public static function get_wysiwyg_config()
 	{
 		return array(
 			"field"       => __( 'Rich Editor', 'caldera-forms' ),
@@ -323,7 +323,7 @@ class Caldera_Forms_Fields {
 		);
 	}
 
-	public static function get_url_field()
+	public static function get_url_config()
 	{
 		return array(
 			"field"       => __( 'URL', 'caldera-forms' ),
@@ -338,7 +338,7 @@ class Caldera_Forms_Fields {
 		);
 	}
 
-	public static function get_credit_card_number_field()
+	public static function get_credit_card_number_config()
 	{
 		return array(
 			"field"       => __( 'Credit Card Number', 'caldera-forms' ),
@@ -356,7 +356,7 @@ class Caldera_Forms_Fields {
 		);
 	}
 
-	public static function get_credit_card_expiration_field()
+	public static function get_credit_card_expiration_config()
 	{
 		return array(
 			"field"       => __( 'Credit Card Expiration Date', 'caldera-forms' ),
@@ -375,7 +375,7 @@ class Caldera_Forms_Fields {
 	}
 
 
-	public static function get_credit_card_cvc_field()
+	public static function get_credit_card_cvc_config()
 	{
 		return array(
 			"field"       => __( 'Credit Card CVC', 'caldera-forms' ),
@@ -393,7 +393,7 @@ class Caldera_Forms_Fields {
 		);
 	}
 
-	public static function get_calculation_field()
+	public static function get_calculation_config()
 	{
 		return array(
 			"field"       => __( 'Calculation', 'caldera-forms' ),
@@ -416,7 +416,7 @@ class Caldera_Forms_Fields {
 		);
 	}
 
-	public static function get_range_slider_field()
+	public static function get_range_slider_config()
 	{
 		return array(
 			"field"       => __( 'Range Slider', 'caldera-forms' ),
@@ -449,7 +449,7 @@ class Caldera_Forms_Fields {
 		);
 	}
 
-	public static function get_star_rating_field()
+	public static function get_star_rating_config()
 	{
 		return array(
 			"field"       => __( 'Star Rating', 'caldera-forms' ),
@@ -479,7 +479,7 @@ class Caldera_Forms_Fields {
 		);
 	}
 
-	public static function get_utm_field()
+	public static function get_utm_config()
 	{
 		return array(
 			'field'       => __( 'UTM', 'caldera-forms' ),
@@ -499,7 +499,7 @@ class Caldera_Forms_Fields {
 		);
 	}
 
-	public static function get_gdpr_field()
+	public static function get_gdpr_config()
 	{
 		return array(
 			"field"       => __( 'Consent Field', 'caldera-forms' ),
@@ -517,7 +517,7 @@ class Caldera_Forms_Fields {
 		);
 	}
 
-	public static function get_file_uploader_field()
+	public static function get_file_uploader_config()
 	{
 		return array(
 			"field"       => __( 'File', 'caldera-forms' ),
@@ -533,7 +533,7 @@ class Caldera_Forms_Fields {
 		);
 	}
 
-	public static function get_advanced_file_uploader_field()
+	public static function get_advanced_file_uploader_config()
 	{
 		return array(
 			"field"       => __( 'Advanced File Uploader', 'caldera-forms' ),
@@ -552,7 +552,7 @@ class Caldera_Forms_Fields {
 		);
 	}
 
-	public static function get_html_field()
+	public static function get_html_config()
 	{
 		return array(
 			"field"       => __( 'HTML', 'caldera-forms' ),
@@ -574,7 +574,7 @@ class Caldera_Forms_Fields {
 		);
 	}
 
-	public static function get_summary_field()
+	public static function get_summary_config()
 	{
 		return array(
 			"field"       => __( 'Summary', 'caldera-forms' ),
@@ -594,7 +594,7 @@ class Caldera_Forms_Fields {
 		);
 	}
 
-	public static function get_section_break_field()
+	public static function get_section_break_config()
 	{
 		return array(
 			"field"       => __( 'Section Break', 'caldera-forms' ),
@@ -614,7 +614,7 @@ class Caldera_Forms_Fields {
 		);
 	}
 
-	public static function get_dropdown_field()
+	public static function get_dropdown_config()
 	{
 		return array(
 			"field"       => __( 'Dropdown Select', 'caldera-forms' ),
@@ -633,7 +633,7 @@ class Caldera_Forms_Fields {
 		);
 	}
 
-	public static function get_checkbox_field()
+	public static function get_checkbox_config()
 	{
 		return array(
 			"field"       => __( 'Checkbox', 'caldera-forms' ),
@@ -652,7 +652,7 @@ class Caldera_Forms_Fields {
 		);
 	}
 
-	public static function get_radio_field()
+	public static function get_radio_config()
 	{
 		return array(
 			"field"       => __( 'Radio', 'caldera-forms' ),
@@ -670,7 +670,7 @@ class Caldera_Forms_Fields {
 		);
 	}
 
-	public static function get_filtered_select2_field()
+	public static function get_filtered_select2_config()
 	{
 		return array(
 			"field"       => __( 'Autocomplete', 'caldera-forms' ),
@@ -693,7 +693,7 @@ class Caldera_Forms_Fields {
 		);
 	}
 
-	public static function get_date_picker_field()
+	public static function get_date_picker_config()
 	{
 		return array(
 			"field"       => __( 'Date Picker', 'caldera-forms' ),
@@ -717,7 +717,7 @@ class Caldera_Forms_Fields {
 		);
 	}
 
-	public static function get_toggle_switch_field()
+	public static function get_toggle_switch_config()
 	{
 		return array(
 			"field"       => __( 'Toggle Switch', 'caldera-forms' ),
@@ -735,7 +735,7 @@ class Caldera_Forms_Fields {
 		);
 	}
 
-	public static function get_colorpicker_field()
+	public static function get_colorpicker_config()
 	{
 		return array(
 			"field"       => __( 'Color Picker', 'caldera-forms' ),
@@ -759,7 +759,7 @@ class Caldera_Forms_Fields {
 		);
 	}
 
-	public static function get_states_field()
+	public static function get_states_config()
 	{
 		return array(
 			"field"       => __( 'State/ Province Select', 'caldera-forms' ),
@@ -775,7 +775,7 @@ class Caldera_Forms_Fields {
 			)
 		);
 	}
-	public static function get_recaptcha_field()
+	public static function get_recaptcha_config()
 	{
 		return array(
 			"field"       => __( 'reCAPTCHA', 'caldera-forms' ),
