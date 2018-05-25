@@ -171,61 +171,35 @@ class Caldera_Forms_Forms {
 			self::clear_cache();
 		}
 
+		if( empty( static::$index ) ){
+		    static::$index = static::get_stored_forms();
+        }
+
+
+
+        if ( false === $internal_only ) {
+            /**
+             * Runs after getting internal forms, use to add forms defined in file system
+             *
+             * @since unknown
+             *
+             * @param array $base_forms Forms saved in DB
+             */
+            $forms = apply_filters('caldera_forms_get_forms', static::$index);
+            if (!empty($forms) && is_array($forms)) {
+                foreach ($forms as $form_id => $form) {
+                    $forms[$form_id] = $form_id;
+                }
+            }
+            self::$index = $forms;
+        }
+
+
 		if( $with_details ){
-			$_forms = array();
-			if( ! empty( self::$registry_cache ) ){
-				$_forms = self::$registry_cache;
-			}elseif( false != ( self::$registry_cache = get_transient( self::$registry_cache_key ) ) ){
-				if ( is_array( self::$registry_cache ) ) {
-					$_forms = self::$registry_cache;
-				}
-
-			}
-
-			if( ! empty( $_forms ) ){
-				if( ! $orderby ){
-					return $_forms;
-				}
-
-				return self::order_forms( $_forms, $orderby );
-
-			};
-
-		}
-
-		if ( empty( self::$index ) ) {
-			$base_forms = self::get_stored_forms();
-			if ( true === $internal_only ) {
-				return $base_forms;
-			}
-
-			/**
-			 * Runs after getting internal forms, use to add forms defined in file system
-			 *
-			 * @since unknown
-			 *
-			 * @param array $base_forms Forms saved in DB
-			 */
-			$forms = apply_filters( 'caldera_forms_get_forms', $base_forms );
-			if ( ! empty( $forms  ) && is_array( $forms )) {
-				foreach ( $forms as $form_id => $form ) {
-					$forms[ $form_id ] = $form_id;
-				}
-			}
-
-			self::$index = $forms;
-
+			$forms = self::add_details( static::$index );
 		}else{
-			$forms = self::$index;
-		}
-
-		if( $with_details ){
-			$forms = self::add_details( $forms );
-		}
-
-		if( ! is_array( $forms ) ){
-			$forms =  array();
-		}
+		    return static::$index;
+        }
 
 		if( $orderby && ! empty( $forms ) ){
 			return self::order_forms( $forms, $orderby );
@@ -270,8 +244,17 @@ class Caldera_Forms_Forms {
 	 * @return array|void
 	 */
 	protected static function get_stored_forms() {
+
 		if ( empty( self::$stored_forms ) ) {
-			self::$stored_forms = get_option( self::$registry_option_key, array() );
+            $forms = Caldera_Forms_DB_Form::get_instance()->get_all();
+            if( ! empty( $forms ) ){
+                foreach( $forms as $form ){
+                    if ( ! empty( $form[ 'config' ] ) ) {
+                        static::$stored_forms[$form['form_id']] = $form['form_id'];
+                    }
+                }
+
+            }
 		}
 
 		return self::$stored_forms;
@@ -430,7 +413,7 @@ class Caldera_Forms_Forms {
 	 * @return array
 	 */
 	protected static function add_details( $forms ){
-
+        
 		$valid_forms = array();
 		
 		foreach( $forms as $id => $form  ){
@@ -553,7 +536,7 @@ class Caldera_Forms_Forms {
 		$updated = update_option( $data['ID'], $data);
 
 		self::save_to_db( $data, $type );
-
+        self::clear_cache();
 		/**
 		 * Fires after a form is saved
 		 *

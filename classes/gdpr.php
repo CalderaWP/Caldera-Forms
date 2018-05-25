@@ -96,11 +96,16 @@ class Caldera_Forms_GDPR
             return static::$enabled_forms;
         }
 
-        foreach (Caldera_Forms_Forms::get_forms(false) as $form_id) {
-            $form = Caldera_Forms_Forms::get_form($form_id);
-            if (is_array($form) && Caldera_Forms_Forms::is_privacy_export_enabled($form)) {
-                static::$enabled_forms[] = $form_id;
+        $forms = Caldera_Forms_Forms::get_forms(false);
+        if ( ! empty($forms)) {
+            foreach ($forms as $form_id) {
+                $form = Caldera_Forms_Forms::get_form($form_id);
+                if (is_array($form) && Caldera_Forms_Forms::is_privacy_export_enabled($form)) {
+                    static::$enabled_forms[] = $form_id;
+                }
             }
+        } else {
+            static::$enabled_forms = [];
         }
 
         return static::$enabled_forms;
