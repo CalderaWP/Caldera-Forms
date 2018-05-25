@@ -152,6 +152,13 @@ class Caldera_Forms_Fields {
 		return $internal_fields;
 	}
 
+	/**
+	 * Gets configuration for text.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_text_config()
 	{
 		return [
@@ -166,6 +173,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
+	/**
+	 * Gets configuration for hidden.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_hidden_config()
 	{
 		return [
@@ -186,6 +200,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
+	/**
+	 * Gets configuration for email.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_email_config()
 	{
 		return [
@@ -201,6 +222,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
+	/**
+	 * Gets configuration for button.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_button_config()
 	{
 		return [
@@ -226,6 +254,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
+	/**
+	 * Gets configuration for number.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_number_config()
 	{
 		return [
@@ -240,6 +275,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
+	/**
+	 * Gets configuration for phone.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_phone_config()
 	{
 		return [
@@ -260,6 +302,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
+	/**
+	 * Gets configuration for phone (better).
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_phone_config_v2()
 	{
 		return [
@@ -285,6 +334,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
+	/**
+	 * Gets configuration for paragraph.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_paragraph_config()
 	{
 		return [
@@ -302,6 +358,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
+	/**
+	 * Gets configuration for wysiwyg.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_wysiwyg_config()
 	{
 		return [
@@ -323,6 +386,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
+	/**
+	 * Gets configuration for URL.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_url_config()
 	{
 		return [
@@ -338,6 +408,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
+	/**
+	 * Gets configuration for card number.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_credit_card_number_config()
 	{
 		return [
@@ -356,6 +433,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
+	/**
+	 * Gets configuration for card expiration.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_credit_card_expiration_config()
 	{
 		return [
@@ -374,7 +458,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
-
+	/**
+	 * Gets configuration for card cvc.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_credit_card_cvc_config()
 	{
 		return [
@@ -393,6 +483,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
+	/**
+	 * Gets configuration for calculation.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_calculation_config()
 	{
 		return [
@@ -416,6 +513,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
+	/**
+	 * Gets configuration for slider.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_range_slider_config()
 	{
 		return [
@@ -449,6 +553,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
+	/**
+	 * Gets configuration for star rating.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_star_rating_config()
 	{
 		return [
@@ -479,6 +590,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
+	/**
+	 * Gets configuration for utm.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_utm_config()
 	{
 		return [
@@ -499,6 +617,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
+	/**
+	 * Gets configuration for GDPR.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_gdpr_config()
 	{
 		return [
@@ -517,6 +642,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
+	/**
+	 * Gets configuration for uploader.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_file_uploader_config()
 	{
 		return [
@@ -533,6 +665,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
+	/**
+	 * Gets configuration for advanced uploader.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_advanced_file_uploader_config()
 	{
 		return [
@@ -552,6 +691,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
+	/**
+	 * Gets configuration for HTML.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_html_config()
 	{
 		return [
@@ -574,6 +720,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
+	/**
+	 * Gets configuration for summary.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_summary_config()
 	{
 		return [
@@ -594,6 +747,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
+	/**
+	 * Gets configuration for section break.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_section_break_config()
 	{
 		return [
@@ -614,6 +774,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
+	/**
+	 * Gets configuration for dropdown.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_dropdown_config()
 	{
 		return [
@@ -633,6 +800,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
+	/**
+	 * Gets configuration for checkbox.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_checkbox_config()
 	{
 		return [
@@ -652,6 +826,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
+	/**
+	 * Gets configuration for radio.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_radio_config()
 	{
 		return [
@@ -670,6 +851,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
+	/**
+	 * Gets configuration for select2.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_filtered_select2_config()
 	{
 		return [
@@ -693,6 +881,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
+	/**
+	 * Gets configuration for date picker.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_date_picker_config()
 	{
 		return [
@@ -717,6 +912,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
+	/**
+	 * Gets configuration for toggle switch.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_toggle_switch_config()
 	{
 		return [
@@ -735,6 +937,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
+	/**
+	 * Gets configuration for colorpicker.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_colorpicker_config()
 	{
 		return [
@@ -759,6 +968,13 @@ class Caldera_Forms_Fields {
 		];
 	}
 
+	/**
+	 * Gets configuration for states.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_states_config()
 	{
 		return [
@@ -775,6 +991,14 @@ class Caldera_Forms_Fields {
 			]
 		];
 	}
+
+	/**
+	 * Gets configuration for recaptcha.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return array		Field Configuration.
+	 */
 	public static function get_recaptcha_config()
 	{
 		return [
