@@ -42,6 +42,6 @@
   word-wrap: normal !important;
 }
 
-
-
-
+p.caldera-forms-consent-field-agreement {
+  display: inline;
+}

@@ -38,7 +38,6 @@ $privacy_page_url = caldera_forms_privacy_policy_page_url();
         <a href="<?php echo esc_url( $privacy_page_url ); ?>"
            target="_blank"
            title="<?php echo esc_attr('Privacy Policy Page', 'caldera-forms'); ?>"
-           style="display: inline;"
 		   class="caldera-forms-consent-field-linked_text"
         >
 			<?php echo esc_textarea( $field['config']['linked_text'] ); ?>
