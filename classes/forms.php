@@ -176,7 +176,6 @@ class Caldera_Forms_Forms {
         }
 
 
-
         if ( false === $internal_only ) {
             /**
              * Runs after getting internal forms, use to add forms defined in file system
@@ -241,7 +240,7 @@ class Caldera_Forms_Forms {
 	 *
 	 * @since 1.3.4
 	 *
-	 * @return array|void
+	 * @return array
 	 */
 	protected static function get_stored_forms() {
 
@@ -413,8 +412,11 @@ class Caldera_Forms_Forms {
 	 * @return array
 	 */
 	protected static function add_details( $forms ){
-        
-		$valid_forms = array();
+        if( ! empty( $valid_forms = get_transient( self::$registry_cache_key ) ) ) {
+            return $valid_forms;
+        }else{
+            $valid_forms = [];
+        }
 		
 		foreach( $forms as $id => $form  ){
 			$_form = self::get_form( $id );
@@ -532,8 +534,6 @@ class Caldera_Forms_Forms {
 		// add form to registry
 		self::update_registry( $data[ "ID" ] );
 
-		// add from to list
-		$updated = update_option( $data['ID'], $data);
 
 		self::save_to_db( $data, $type );
         self::clear_cache();
@@ -547,11 +547,8 @@ class Caldera_Forms_Forms {
 		 */
 		do_action('caldera_forms_save_form', $data, $data['ID']);
 
-		if( $updated && isset( $data[ 'ID' ] ) ){
-			$updated = $data[ 'ID' ];
-		}
 
-		return $updated;
+		return $data[ 'ID' ];
 	}
 
 	/**
@@ -679,23 +676,13 @@ class Caldera_Forms_Forms {
 	 *
 	 * @since 1.3.4
 	 *
-	 * @param string|array $new If is string, new index will be added, if is array, whole registry will be updated.
+	 * @param string|array $new Depreacted argument
 	 *
-	 * @return bool
 	 */
 	protected static function update_registry( $new ){
-		if( is_string( $new ) ){
-			$forms = self::get_stored_forms();
-			$forms[ $new ] = $new;
-		}elseif( is_array( $new ) ){
-			$forms = $new;
-		}else{
-			return false;
-		}
 
-		update_option( self::$registry_option_key, $forms, false );
 		self::clear_cache();
-		self::$index = $forms;
+		$forms = self::get_forms(false,true);
 
 		/**
 		 * Fires after form registry is updated by saving a from
