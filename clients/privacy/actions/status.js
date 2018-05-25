@@ -60,8 +60,12 @@ export const closeStatus = () => {
  * @returns {{type: string, message: *, show: boolean, success: boolean}}
  */
 export const updateStatus = (message, success = true, show = true) => {
+    if( ! message ){
+        message = !success ? 'Error' : 'Success';
+    }
+    
     return {
-        type: CLOSE_STATUS_INDICATOR,
+        type: UPDATE_STATUS_INDICATOR,
         message,
         show,
         success

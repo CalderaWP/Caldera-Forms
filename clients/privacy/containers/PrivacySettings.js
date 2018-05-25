@@ -61,6 +61,21 @@ export const PrivacySettings = (props) => {
             props.closeStatus();
         },delay);
     }
+
+    /**
+     * Report an API error using status component
+     *
+     * @since 1.7.0
+     *
+     * @param {Object} r
+     */
+    function reportApiError(r) {
+        props.stopSpinner();
+        const response = JSON.parse(r.responseText);
+        props.updateStatus(response.message, false);
+       // hideStatusIndicator();
+    }
+
     /**
      * When exporter is enabled for a change route changes
      *
@@ -86,6 +101,8 @@ export const PrivacySettings = (props) => {
                 stopSpinner();
                 notComplete.stopped =true;
             }
+        }).catch( (r) => {
+            reportApiError(r);
         });
 
         //Find privacy settings
@@ -97,6 +114,8 @@ export const PrivacySettings = (props) => {
                 stopSpinner();
                 notComplete.stopped =true;
             }
+        }).catch( (r) => {
+            reportApiError(r);
         });
 
         //Make sure spinner gets stopped
@@ -125,9 +144,8 @@ export const PrivacySettings = (props) => {
             props.stopSpinner();
             props.updateStatus('Settings Saved');
             hideStatusIndicator();
-        }).catch( () => {
-            props.stopSpinner();
-            props.updateStatus('Error', true );
+        }).catch( (r) => {
+            reportApiError(r);
         })
 
 
@@ -185,17 +203,19 @@ export const PrivacySettings = (props) => {
                         onChange={onToggleEnable}
                     />
                 </li>
-                <li>
+            </CalderaHeader>
+            <PageBody>
+                <p className={'screen-reader-text' }>Choose a form to begin</p>
+                <div>
                     <StatusIndicator
                         message={props.status.message}
                         show={props.status.show}
                         success={props.status.success}
                     />
-                </li>
-
-            </CalderaHeader>
-            <PageBody>
-                <p className={'screen-reader-text' }>Choose a form to begin</p>
+                </div>
+                {true === props.spin &&
+                    <p className={'spinner is-active' }></p>
+                }
             </PageBody>
         </div>
 
@@ -222,7 +242,6 @@ const mapStateToProps = state => {
         },
         spin: state.statusState.spin
     };
-
     if( props.editForm.hasOwnProperty('fields') ){
         const settings =  getFormPrivacySettings(props.editForm.ID, state);
         if (settings) {
@@ -233,7 +252,6 @@ const mapStateToProps = state => {
         }
 
     }
-
     return props;
 };
 
