@@ -34,7 +34,7 @@ class Caldera_Forms_GDPR
                     if (is_array($form)) {
                         $erasers[self::group_id($form)] = [
                             'eraser_friendly_name' => $form['name'],
-                            'callback' => [__CLASS__, static::callback_name($form_id, 'eraser')],
+                            'callback' => self::callback($form_id,'eraser'),
                         ];
                     }
                 }
@@ -48,7 +48,7 @@ class Caldera_Forms_GDPR
                     if (is_array($form)) {
                         $exporters[self::group_id($form)] = [
                             'exporter_friendly_name' => $form['name'],
-                            'callback' => [__CLASS__, static::callback_name($form_id)],
+                            'callback' => self::callback($form_id,'exporter'),
                         ];
                     }
                 }
@@ -57,6 +57,28 @@ class Caldera_Forms_GDPR
             });
         }
 
+    }
+
+    /**
+     * Get the name of the callback function for registered exporter or eraser
+     *
+     * @since 1.7.0
+     *
+     * @param string $form_id
+     * @param string $type Optional. Type of process. Default is 'exporter', could be 'eraser'.
+     * @return callable|array|string
+     */
+    protected static function callback($form_id, $type = 'exporter')
+    {
+        /**
+         * Modify callback function for data exporter or eraser
+         *
+         * @since 1.7.0
+         *
+         * @param callable|array|string $callback Callbale to use for export/erase
+         * @param string $type Type of process. exporter|eraser
+         */
+        return apply_filters( 'caldera_forms_gdpr_callback', [__CLASS__, static::callback_name($form_id, $type )], $type, $form_id );
     }
 
     /**
