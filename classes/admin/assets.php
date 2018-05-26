@@ -17,7 +17,7 @@ class Caldera_Forms_Admin_Assets {
 	 * @since 1.5.0
 	 */
 	public static function post_editor(){
-	    if( ! static::is_woocommerce_page() ){
+	    if( static::is_woocommerce_page() ){
 	        return;
         }
 		self::maybe_register_all_admin();
