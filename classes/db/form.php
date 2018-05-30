@@ -306,6 +306,31 @@ class Caldera_Forms_DB_Form extends Caldera_Forms_DB_Base {
 
     }
 
+    /**
+     * Get all forms
+     *
+     * @since 1.7.0
+     *
+     * @param bool $primary Optional. If true, primary forms are returned, if false revisions. Default is true
+     * @return array|bool Array of found forms or false if none found.
+     */
+    public function get_all( $primary = true ){
+        global $wpdb;
+        $table_name = $this->get_table_name();
+        $type = true === $primary ? 'primary' : 'revision';
+        $sql = $wpdb->prepare( "SELECT * FROM $table_name WHERE `type` = '%s'", $type );
+        $found = $wpdb->get_results( $sql, ARRAY_A );
+        if( empty( $found ) ){
+            return false;
+        }
+
+        $forms = array();
+        foreach (  $found as $form_data ){
+            $forms[] = $this->prepare_found( $form_data );
+        }
+        return $forms;
+
+    }
 	/**
 	 * Validate type when saving
 	 *
