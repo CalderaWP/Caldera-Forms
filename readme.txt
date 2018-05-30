@@ -793,8 +793,29 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 
 == Changelog ==
+= Caldera Forms 1.7.0 (May 31, 2017) GDPR, PHP, Onward =
+See: [https://calderaforms.com/updates/caldera-forms-1-7-0](https://calderaforms.com/updates/caldera-forms-1-7-0?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
+
+[GPDR Privacy Tools Preview Release](https://calderaforms.com/updates/caldera-forms-1-7-0-beta-1-gdpr-compliance-tools-preview?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0): May 15, 2018
+
+* ADDED: $GDPR [Consent fields and privacy page magic tag ](https://calderaforms.com/doc/consent-field/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
+* ADDED: $GDPR [Option to delete all entries of a from](https://calderaforms.com/doc/delete-saved-entries-caldera-form/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
+* ADDED: #GDPR [Integration with core exporters and erasers and a shiny new privacy page](https://calderaforms.com/doc/setting-caldera-forms-gdpr-data-requests/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
+* IMPROVED: #GDPR [Marking fields as containing personally identifiable information](https://calderaforms.com/gdpr#pii?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
+* ADDED: #GDPR [Developer-facing APIs](https://calderaforms.com/doc/gdpr-api/) for getting fields used for personally identifiable data, modifying the data supplied to WordPress' exporters and erasers by Caldera Forms and more.
+* ADDED: #GDPR [caldera_forms_gdpr_callback filter](https://calderaforms.com/doc/caldera_forms_gdpr_callback/) For creating custom GDPR exporters and erasers in plugins or custom site development.
+* ADDED: #GPDR [caldera_forms_privacy_policy_page_url filter](https://calderaforms.com/doc/caldera_forms_privacy_policy_page_url/)  To chane the privacy page link used by consent field and privacy page magic tag from its default -- WordPress' saved option for privacy page.
+* REMOVED: [SUPPORT FOR PHP 5.4 OR LOWER](http://calderaforms.com/php)
+* ADDED: [Helpful messages in place of forms when PHP or WordPress version requirements are not met](https://calderaforms.com/doc/php-wordpress-not-met-warning/)
+* ADDED: [Developer-facing tool for making selecting and deleting saved Caldera Forms entry data easier](https://calderaforms.com/doc/using-caldera-forms-queries/)
+* ADDED: [Developer-facing tool for custom, paginated queries of entry data](https://calderaforms.com/doc/using-caldera-forms-paginated-queries/)
+* FIXED: Warning in PHP 7.2 related to count() function
+* FIXED: JavaScript conflicts with WooCommerce pages, resolved by removing the Caldera Forms button from all WooCommerce post editors.
+* ADDED: Summary and HTML fields automatically set slug
+* IMPROVED: automated testing and better documentation for contributing to Caldera Forms. Please see the Github readme.
+
 = Caldera Forms 1.6.3 (May 15, 2018) The Mask =
-See: [(https://calderaforms.com/updates/caldera-forms-1-6-3?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-6-3)
+See: [https://calderaforms.com/updates/caldera-forms-1-6-3](https://calderaforms.com/updates/caldera-forms-1-6-3?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-6-3)
 
 * FIXED: Could not edit new fields, without saving and reloading first.
 * FIXED: Input field masking was not working.
