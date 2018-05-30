@@ -3,6 +3,14 @@ import {appendAssets} from "../../functions/appendAssets";
 const { withSelect } = wp.data;
 const Spinner = wp.components.Spinner;
 
+/**
+ * Function to set HTML inside a div
+ *
+ * @since 1.7.0
+ *
+ * @param previewHtml
+ * @returns {{__html: *}}
+ */
 function createMarkup(previewHtml) {
     return {__html: previewHtml};
 }
@@ -19,7 +27,6 @@ function createMarkup(previewHtml) {
 export const FormPreview = (props) => {
     const className = 'caldera-forms-form-preview-' + props.formId;
     if (undefined !== props.preview && props.preview.html ) {
-
         appendAssets(props.preview.css, props.preview.js);
         return <div className={className} dangerouslySetInnerHTML={createMarkup(props.preview.html)}/>;
     } else {
