@@ -697,11 +697,11 @@ class Caldera_Forms
 			return;
 		}
 
-		if (has_filter('caldera_forms_save_field')) {
+		if (has_filter('caldera_forms_update_field')) {
 			$new_data = apply_filters('caldera_forms_update_field', $new_data, $field, $form);
 		}
 
-		if (has_filter('caldera_forms_save_field_' . $field['type'])) {
+		if (has_filter('caldera_forms_update_field_' . $field['type'])) {
 			$new_data = apply_filters('caldera_forms_update_field_' . $field['type'], $new_data, $field, $form);
 		}
 
