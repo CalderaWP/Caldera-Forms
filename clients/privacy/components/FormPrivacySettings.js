@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {FormGroup, Button, ControlLabel, Checkbox, HelpBlock, PanelGroup, Panel} from 'react-bootstrap';
+import {FormGroup, ControlLabel, Checkbox, HelpBlock, Button } from 'react-bootstrap';
 import {FieldsPrivacySettings} from "./FieldsPrivacySettings";
 import remove from 'lodash.remove';
+import {HelpBox} from "./HelpBox";
 
 /**
  * All privacy settings for a form
@@ -102,8 +103,7 @@ export const FormPrivacySettings = (props) => {
                         >
                             Enable
                         </Checkbox>
-                        <HelpBlock>If checked data for this form will be added to GDPR personal data requests, and
-                            deletes.</HelpBlock>}
+                        <HelpBlock>If checked data for this form will be added to GDPR personal data requests, and deletes.</HelpBlock>
                     </FormGroup>
 
                     {props.privacySettings.privacyExporterEnabled &&
@@ -119,19 +119,8 @@ export const FormPrivacySettings = (props) => {
                         </section>
                     }
                 </div>
-                <div
-                    style={{
-                        backgroundColor: '#fff'
-                    }}
-                    className={'col-xs-4'}
-                >
-                    <p 
-                        style={{
-                            margin: 0,
-                            padding: '.7em 1em',
-                            borderBottom: '1px solid #eee'
-                        }}
-                    >
+                <HelpBox
+                    saveButton={
                         <Button
                             type="submit"
                             onClick={() => {
@@ -141,15 +130,8 @@ export const FormPrivacySettings = (props) => {
                         >
                             Save
                         </Button>
-                    </p>
-                    <ul
-                        style={{padding:'12px'}}
-                    >
-                        <li>Email Identifying Fields: The field(s) of your form that can be used to determine whose data an entry belongs to.</li>
-                        <li>Personally Identifying Fields (fields): The field(s) of your form that contain PII about the person identified in the email identifying field.</li>
-                        <li><a href={'https://calderaforms.com/gdpr?utm_campaign=wp-admin'}>Learn More Here</a></li>
-                    </ul>
-                </div>
+                    }
+                />
             </div>
 
 

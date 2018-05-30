@@ -46,7 +46,8 @@
     "dangerously-set-inner-html": "^2.0.1",
     "exports-loader": "^0.7.0",
     "inputmask": "^3.3.11",
-    "lodash.remove": "^4.7.0"
+    "lodash.remove": "^4.7.0",
+    "react-emoji-render": "^0.4.4"
   },
   "devDependencies": {
     "@wordpress/babel-preset-default": "^1.1.1",

@@ -10,7 +10,7 @@ $privacy_page_url = caldera_forms_privacy_policy_page_url();
 
 ?>
 
-    <div class="checkbox-inline">
+    <div class="checkbox-inline caldera-forms-consent-field">
     <input <?php echo $parsley_req; ?>
             type="checkbox" data-label="<?php echo esc_attr($field['label']); ?>"
             data-field="<?php echo esc_attr($field_base_id); ?>"
@@ -30,11 +30,18 @@ $privacy_page_url = caldera_forms_privacy_policy_page_url();
                 echo esc_html($field['label']);
             }
         ?>
+		<p
+			class="caldera-forms-consent-field-agreement"
+		>
+            <?php echo esc_textarea( $field['config']['agreement'] ); ?>
+		</p>
         <a href="<?php echo esc_url( $privacy_page_url ); ?>"
            target="_blank"
-           title="<?php echo esc_attr('Privacy policy Page', 'caldera-forms'); ?>"
-           style="display: inline;"
-        ><?php echo esc_textarea( $field['config']['linked_text'] ); ?></a>
+           title="<?php echo esc_attr('Privacy Policy Page', 'caldera-forms'); ?>"
+		   class="caldera-forms-consent-field-linked_text"
+        >
+			<?php echo esc_textarea( $field['config']['linked_text'] ); ?>
+		</a>
     </label>
     <span style="color:#ff0000;">*</span>
 </div>

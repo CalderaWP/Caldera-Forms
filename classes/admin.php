@@ -2023,15 +2023,7 @@ class Caldera_Forms_Admin {
      * @uses "caldera_forms_admin_init" action
 	 */
     public static function init_privacy_settings()
-    {
-        if (self::is_edit()) {
-            $form = Caldera_Forms_Forms::get_form(caldera_forms_very_safe_string($_GET[self::EDIT_KEY]));
-            if (is_array($form) && isset($form['fields'])) {
-                $privacy = new Caldera_Forms_Admin_Privacy($form);
-                add_action('caldera_forms_field_wrapper_before_field_setup', array($privacy, 'add_personally_identifying_question'), 5, 3);
-            }
-        }
-
+	{
         Caldera_Forms_Admin_Factory::menu_page('privacy', __('Privacy Settings', 'caldera-forms'), '<div id="caldera-forms-privacy-settings"></div>', [
             'scripts' => [
                 'privacy',
