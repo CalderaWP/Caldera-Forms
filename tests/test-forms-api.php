@@ -4,6 +4,39 @@ class Test_Caldera_Forms_API extends Caldera_Forms_Test_Case
 {
 
     /**
+     * Compare the database abstraction to the froms API
+     *
+     * @since 1.7.0
+     *
+     * @covers Caldera_Forms_Forms::get_forms()
+     * @covers Caldera_Forms_Forms::get_stored_forms()
+     */
+    public function testGetFormVsDbForm(){
+        $form_one_id = $this->import_autoresponder_form();
+        $form_two_id = $this->import_contact_form();
+        $db_results = Caldera_Forms_DB_Form::get_instance()->get_all( true );
+        $db_ids = wp_list_pluck( $db_results, 'form_id' );
+        $this->assertCount(2, $db_ids );
+        $this->assertCount(2, Caldera_Forms_Forms::get_forms(false, true ) );
+        $this->assertTrue( in_array( $form_one_id, $db_ids ) );
+        $this->assertTrue( in_array( $form_two_id, $db_ids ) );
+        $this->assertSame( array_values( $db_ids), array_values( Caldera_Forms_Forms::get_forms(false, true )));
+    }
+
+
+    /**
+     * Make sure forms added on the caldera_forms_get_forms fitler work
+     *
+     * @since 1.7.0
+     *
+     * covers caldera_forms_get_forms filter
+     * @covers Caldera_Forms_Forms::get_forms()
+     */
+    public function testFilterAddedForms(){
+        $this->assertCount(2, Caldera_Forms_Forms::get_forms(false, false ) );
+    }
+
+    /**
      * Test forms list without details
      *
      * @since 1.7.0
@@ -15,14 +48,14 @@ class Test_Caldera_Forms_API extends Caldera_Forms_Test_Case
     {
         $form_one_id = $this->import_autoresponder_form();
         $form_two_id = $this->import_contact_form();
-        $forms = Caldera_Forms_Forms::get_forms(false);
+        $forms = Caldera_Forms_Forms::get_forms(false,true );
         $this->assertCount(2, $forms);
         $this->assertArrayHasKey($form_one_id, $forms);
         $this->assertArrayHasKey($form_two_id, $forms);
         $this->assertEquals([$form_one_id, $form_two_id], array_keys($forms));
         $this->assertEquals([$form_one_id, $form_two_id], array_values($forms));
         $form_three_id = $this->import_contact_form(false);
-        $forms = Caldera_Forms_Forms::get_forms(false);
+        $forms = Caldera_Forms_Forms::get_forms(false,true);
         $this->assertCount(3, $forms);
         $this->assertArrayHasKey($form_one_id, $forms);
         $this->assertArrayHasKey($form_two_id, $forms);
@@ -44,7 +77,7 @@ class Test_Caldera_Forms_API extends Caldera_Forms_Test_Case
     {
         $form_one_id = $this->import_autoresponder_form();
         $form_two_id = $this->import_contact_form();
-        $forms = Caldera_Forms_Forms::get_forms(true);
+        $forms = Caldera_Forms_Forms::get_forms(true,true);
         $this->assertCount(2, $forms);
 
         $this->assertArrayHasKey($form_one_id, $forms);
