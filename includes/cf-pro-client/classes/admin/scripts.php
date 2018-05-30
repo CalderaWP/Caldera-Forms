@@ -67,7 +67,6 @@ class scripts {
 	 * @return array
 	 */
 	public function data(){
-
 		$pro_url = admin_url('admin.php?page=cf-pro');
 
 		$data = array(
@@ -78,6 +77,28 @@ class scripts {
 				'apiKeysViewLink' => esc_url( $pro_url ),
 				'minLogLevelTitle' => esc_html__( 'Minimum Log Level', 'caldera-forms' ),
 				'minLogLevelInfo' => esc_html__( 'Setting a higher level than notice may affect performance, and should only be used when instructed by support.', 'caldera-forms' ),
+                'whatIsCFPro' => [
+                    'firstParagraph'    => esc_html__("Caldera Forms Pro is an app + plugin that makes forms easy.", 'caldera-forms' ),
+                    'hTitle'    => esc_html__('Benefits', 'caldera-forms'),
+                    'firstLi'   => esc_html__('Enhanced Email Delivery', 'caldera-forms'),
+                    'secondLi'   => esc_html__('Form To PDF', 'caldera-forms'),
+                    'thirdLi'   => esc_html__('Priority Support.', 'caldera-forms'),
+                    'fourthLi'   => esc_html__('Add-ons Included in Yearly Plans', 'caldera-forms'),
+                ],
+                'freeTrial' => [
+                    'firstParagraph'    => esc_html__('Ready to try Caldera Forms Pro? Plans start at just 14.99/ month with a 7 day free trial.', 'caldera-forms' ),
+                    'buttonLeft'    => esc_html__('View Documentation', 'caldera-forms'),
+                    'buttonRight'   => esc_html__('Start Free Trial', 'caldera-forms'),
+                ],
+                'notConnected' => esc_html__( 'Not Connected', 'caldera-forms' ),
+                'connected' => esc_html__( 'Connected', 'caldera-forms' ),
+                'tabNames' => [
+                    'account' => esc_html__( 'Account', 'caldera-forms' ),
+                    'formSettings' => esc_html__( 'Form Settings', 'caldera-forms' ),
+                    'settings' => esc_html__( 'Settings', 'caldera-forms' ),
+                    'whatIsCFPro' => esc_html__( 'What is Caldera Forms Pro ?', 'caldera-forms' ),
+                    'freeTrial' => esc_html__( 'Free Trial', 'caldera-forms' ),
+                ]
 			],
 			'api' => array(
 				'cf' => array(

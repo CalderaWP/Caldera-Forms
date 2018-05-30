@@ -225,6 +225,9 @@ class Caldera_Forms
 		add_action(Caldera_Forms_Transient::CRON_ACTION, array('Caldera_Forms_Transient', 'cron_callback'));
 		add_action('caldera_forms_submit_complete', array('Caldera_Forms_Transient', 'cron_callback'));
 
+		//Init GDPR exporters/erasers
+        add_action( 'init', [ Caldera_Forms_GDPR::class, 'register_gdpr' ] );
+
 		/**
 		 * Runs after Caldera Forms core is initialized
 		 *
@@ -442,10 +445,13 @@ class Caldera_Forms
 
 				if (($db_version < 6 || $force_update) && class_exists('Caldera_Forms_Forms')) {
 					caldera_forms_db_v6_update();
-
 				}
 
-				caldera_forms_write_db_flag(6);
+                if (($db_version < 7 || $force_update) ) {
+                    caldera_forms_db_v7_update();
+                }
+
+				caldera_forms_write_db_flag(CF_DB );
 
 			} else {
 				$version = caldera_forms_get_last_update_version();

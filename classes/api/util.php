@@ -65,4 +65,30 @@ class Caldera_Forms_API_Util {
 		return wp_create_nonce( 'wp_rest' );
 	}
 
+    /**
+     * Given an array of field IDs and form config, reduce field IDs array to fields that form has
+     *
+     * @since 1.7.0
+     *
+     * @param array $field_ids
+     * @param array $form
+     * @return array
+     */
+	public static function validate_array_of_field_ids(array $field_ids, array $form )
+    {
+        $valid_fields = [];
+        $form_fields = array_keys(Caldera_Forms_Forms::get_fields( $form, false ));
+        if (! empty( $field_ids )) {
+            foreach ($field_ids as $field_id) {
+                $field_id = trim( $field_id );
+                if( in_array( $field_id, $form_fields ) ){
+                    $valid_fields[] = $field_id;
+                }
+
+            }
+        }
+
+        return $valid_fields;
+    }
+
 }

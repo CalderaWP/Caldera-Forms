@@ -37,7 +37,29 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
             )
         );
 
+
+        register_rest_route( $namespace, $this->id_endpoint_url() . '/preview',
+            array(
+                'methods'             => \WP_REST_Server::READABLE,
+                'callback'            => array( $this, 'get_preview' ),
+                'permission_callback' => array( $this, 'get_item_permissions_check' ),
+                'args'                => $this->get_item_args()
+            )
+        );
+
+        register_rest_route( $namespace, $this->id_endpoint_url() . '/privacy',
+            array(
+                'methods'             => \WP_REST_Server::EDITABLE,
+                'callback'            => array( $this, 'update_privacy_settings' ),
+                'permission_callback' => array( $this, 'update_item_permissions_check' ),
+                'args'                => $this->get_item_args()
+            )
+        );
+
+
 	}
+
+
 
     /**
      * @inheritdoc
@@ -49,10 +71,41 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
 	    $args[ 'preview' ] = array(
 	        'type' => 'boolean',
             'default' => false,
-            'sanitization_callback' => 'rest_sanitize_boolean'
+            'sanitize_callback' => 'rest_sanitize_boolean'
         );
 
-	    return$args;
+	    return $args;
+    }
+
+    /**
+     * Fields for the privacy route
+     *
+     * @since 1.70
+     *
+     * @return array
+     */
+    protected function privacy_route_args()
+    {
+        return array(
+            'emailIdentifiers' => array(
+                'type' => 'array',
+                'required' => false,
+                'description' => esc_html__( 'Array of fields that can be used to find personally identifying information saved with this form.', 'caldera-forms' ),
+                'sanitize_callback' => array( 'Caldera_Forms_API_Util', 'validate_array_of_field_ids' )
+            ),
+            'piiFields' => array(
+                'type' => 'array',
+                'required' => false,
+                'description' => esc_html__( 'Array of fields that contain personally identifying information', 'caldera-forms' ),
+                'sanitize_callback' => array( 'Caldera_Forms_API_Util', 'validate_array_of_field_ids' )
+            ),
+            'privacyExporterEnabled' => array(
+                'type' => 'boolean',
+                'required' => false,
+                'description' => esc_html__( 'Array of fields that contain personally identifying information', 'caldera-forms' ),
+                'sanitize_callback' => 'rest_sanitize_boolean'
+            )
+        );
     }
 
     /**
@@ -67,6 +120,10 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
      * @return Caldera_Forms_API_Error|Caldera_Forms_API_Response
      */
     public function get_item(WP_REST_Request $request){
+        if( $request->get_param( 'privacy' ) ){
+            return $this->get_privacy_settings( $request );
+        }
+
 	    try{
 		    $this->form_object_factory( $request[ 'form_id' ], $request );
 	    }catch ( Exception $e ){
@@ -76,6 +133,8 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
         if ( $request->get_param( 'preview' ) ) {
             return $this->preview_response();
         }
+
+
 
         $response_form = $this->prepare_form_for_response( $this->form, $request );
         return new Caldera_Forms_API_Response( $response_form, 200, array( ) );
@@ -101,6 +160,60 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
         }
 
         return $this->preview_response();
+
+    }
+
+    /**
+     * Get privacy settings for form
+     *
+     * @since 1.7.0
+     *
+     * @param WP_REST_Request $request
+     * @return Caldera_Forms_API_Response|Caldera_Forms_API_Error
+     */
+    public function get_privacy_settings( WP_REST_Request $request )
+    {
+        try{
+            $this->form_object_factory( $request[ 'form_id' ], $request );
+        }catch ( Exception $e ){
+            return Caldera_Forms_API_Response_Factory::error_form_not_found();
+        }
+
+        return new Caldera_Forms_API_Response( $this->form->toArray() );
+
+    }
+
+    /**
+     * Update a form's privacy settings
+     *
+     * @since 1.7.0
+     *
+     * @param WP_REST_Request $request
+     * @return Caldera_Forms_API_Error|Caldera_Forms_API_Response
+     */
+    public function update_privacy_settings( WP_REST_Request $request ){
+        try{
+            $this->form_object_factory( $request[ 'form_id' ], $request );
+        }catch ( Exception $e ){
+            return Caldera_Forms_API_Response_Factory::error_form_not_found();
+        }
+
+        if( isset( $request[ 'emailIdentifyingFields' ] ) && is_array( $request[ 'emailIdentifyingFields' ]  ) ){
+            $this->form->set_email_identifying_fields( $request[ 'emailIdentifyingFields' ] );
+        }
+
+        if( isset( $request[ 'piiFields' ] ) && is_array( $request[ 'piiFields' ]  ) ){
+            $this->form->set_pii_fields( $request[ 'piiFields' ] );
+
+        }
+
+        //This will save settings (form)
+        if( true === boolval($request[ 'privacyExporterEnabled' ] ) ){
+            $this->form = $this->form->enable_privacy_exporter();
+        }else {
+            $this->form->disable_privacy_exporter();
+        }
+        return new Caldera_Forms_API_Response( $this->form->toArray() );
 
     }
 
@@ -188,7 +301,7 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
             'full' => array(
                 'required' => false,
                 'default' => false,
-            )
+            ),
         );
     }
 
@@ -350,10 +463,17 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
 	 * @param $field
 	 */
     protected function prepare_field(  &$field ){
+        if( ! empty( $field[ 'label' ] ) ){
+            $label = sanitize_text_field($field[ 'label' ]);
+        }elseif ( ! empty( $field[ 'name' ] ) ){
+            $label = sanitize_text_field($field[ 'name' ]);
+        }else{
+            $label = $field[ 'ID' ];
+        }
 		$field = array(
-			'id' => $field[ 'ID' ],
-			'label' => $field[ 'label' ]
-		);
+			'id' => caldera_forms_very_safe_string( $field[ 'ID' ] ),
+			'label' =>  $label
+        );
     }
 
     /**

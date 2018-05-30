@@ -110,7 +110,7 @@ class Caldera_Forms_Admin_Privacy{
 				if ( Caldera_Forms_Fields::not_support( $field_type, 'entry_list' ) ){
 					continue;
 				}
-				if( in_array( $field_type, array( 'recaptcha' ) ) ){
+				if( in_array( $field_type, array( 'recaptcha', 'gdpr' ) ) ){
 					continue;
 				}
 				$this->fields_to_show_personally_identifying_question[] = $field_type;

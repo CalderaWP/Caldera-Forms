@@ -738,6 +738,9 @@
      * @since 1.6.2
      */
     function setupInputMasks() {
+        if (!$.prototype.inputmask){
+            return;
+        }
         $form.find('[data-inputmask]').inputmask();
     }
 

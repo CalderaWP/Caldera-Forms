@@ -171,61 +171,34 @@ class Caldera_Forms_Forms {
 			self::clear_cache();
 		}
 
+		if( empty( static::$index ) ){
+		    static::$index = static::get_stored_forms();
+        }
+
+
+        if ( false === $internal_only ) {
+            /**
+             * Runs after getting internal forms, use to add forms defined in file system
+             *
+             * @since unknown
+             *
+             * @param array $base_forms Forms saved in DB
+             */
+            $forms = apply_filters('caldera_forms_get_forms', static::$index);
+            if (!empty($forms) && is_array($forms)) {
+                foreach ($forms as $form_id => $form) {
+                    $forms[$form_id] = $form_id;
+                }
+            }
+            self::$index = $forms;
+        }
+
+
 		if( $with_details ){
-			$_forms = array();
-			if( ! empty( self::$registry_cache ) ){
-				$_forms = self::$registry_cache;
-			}elseif( false != ( self::$registry_cache = get_transient( self::$registry_cache_key ) ) ){
-				if ( is_array( self::$registry_cache ) ) {
-					$_forms = self::$registry_cache;
-				}
-
-			}
-
-			if( ! empty( $_forms ) ){
-				if( ! $orderby ){
-					return $_forms;
-				}
-
-				return self::order_forms( $_forms, $orderby );
-
-			};
-
-		}
-
-		if ( empty( self::$index ) ) {
-			$base_forms = self::get_stored_forms();
-			if ( true === $internal_only ) {
-				return $base_forms;
-			}
-
-			/**
-			 * Runs after getting internal forms, use to add forms defined in file system
-			 *
-			 * @since unknown
-			 *
-			 * @param array $base_forms Forms saved in DB
-			 */
-			$forms = apply_filters( 'caldera_forms_get_forms', $base_forms );
-			if ( ! empty( $forms  ) && is_array( $forms )) {
-				foreach ( $forms as $form_id => $form ) {
-					$forms[ $form_id ] = $form_id;
-				}
-			}
-
-			self::$index = $forms;
-
+			$forms = self::add_details( static::$index );
 		}else{
-			$forms = self::$index;
-		}
-
-		if( $with_details ){
-			$forms = self::add_details( $forms );
-		}
-
-		if( ! is_array( $forms ) ){
-			$forms =  array();
-		}
+		    return static::$index;
+        }
 
 		if( $orderby && ! empty( $forms ) ){
 			return self::order_forms( $forms, $orderby );
@@ -267,11 +240,20 @@ class Caldera_Forms_Forms {
 	 *
 	 * @since 1.3.4
 	 *
-	 * @return array|void
+	 * @return array
 	 */
 	protected static function get_stored_forms() {
+
 		if ( empty( self::$stored_forms ) ) {
-			self::$stored_forms = get_option( self::$registry_option_key, array() );
+            $forms = Caldera_Forms_DB_Form::get_instance()->get_all();
+            if( ! empty( $forms ) ){
+                foreach( $forms as $form ){
+                    if ( ! empty( $form[ 'config' ] ) ) {
+                        static::$stored_forms[$form['form_id']] = $form['form_id'];
+                    }
+                }
+
+            }
 		}
 
 		return self::$stored_forms;
@@ -430,8 +412,11 @@ class Caldera_Forms_Forms {
 	 * @return array
 	 */
 	protected static function add_details( $forms ){
-
-		$valid_forms = array();
+        if( ! empty( $valid_forms = get_transient( self::$registry_cache_key ) ) ) {
+            return $valid_forms;
+        }else{
+            $valid_forms = [];
+        }
 		
 		foreach( $forms as $id => $form  ){
 			$_form = self::get_form( $id );
@@ -549,11 +534,9 @@ class Caldera_Forms_Forms {
 		// add form to registry
 		self::update_registry( $data[ "ID" ] );
 
-		// add from to list
-		$updated = update_option( $data['ID'], $data);
 
 		self::save_to_db( $data, $type );
-
+        self::clear_cache();
 		/**
 		 * Fires after a form is saved
 		 *
@@ -564,11 +547,8 @@ class Caldera_Forms_Forms {
 		 */
 		do_action('caldera_forms_save_form', $data, $data['ID']);
 
-		if( $updated && isset( $data[ 'ID' ] ) ){
-			$updated = $data[ 'ID' ];
-		}
 
-		return $updated;
+		return $data[ 'ID' ];
 	}
 
 	/**
@@ -680,7 +660,6 @@ class Caldera_Forms_Forms {
 		}
 
 		unset( $forms[ $id ] );
-		delete_option( $id );
 		$deleted = Caldera_Forms_DB_Form::get_instance()->delete_by_form_id( $id );
 		if ( $deleted ) {
 			self::update_registry( $forms );
@@ -696,23 +675,13 @@ class Caldera_Forms_Forms {
 	 *
 	 * @since 1.3.4
 	 *
-	 * @param string|array $new If is string, new index will be added, if is array, whole registry will be updated.
+	 * @param string|array $new Depreacted argument
 	 *
-	 * @return bool
 	 */
 	protected static function update_registry( $new ){
-		if( is_string( $new ) ){
-			$forms = self::get_stored_forms();
-			$forms[ $new ] = $new;
-		}elseif( is_array( $new ) ){
-			$forms = $new;
-		}else{
-			return false;
-		}
 
-		update_option( self::$registry_option_key, $forms, false );
 		self::clear_cache();
-		self::$index = $forms;
+		$forms = self::get_forms(false,true);
 
 		/**
 		 * Fires after form registry is updated by saving a from
@@ -884,6 +853,65 @@ class Caldera_Forms_Forms {
 
 		return $personally_identifying_fields;
 	}
+
+    /**
+     * Get all fields of a form that represents the email of someone who's personal information is in the form submssion.
+     *
+     * @since 1.7.0
+     *
+     * @param array $form Form config
+     * @param bool $ids_only Optional. If true, indexed array of field IDs is returned. If false, the default, array of field configs, keyed by field ID is returned.
+     * @return array
+     */
+	public static function email_identifying_fields( array  $form, $ids_only = false ){
+        $fields = self::get_fields( $form, false );
+        $matching_fields = array();
+        if( ! empty( $fields ) ){
+            foreach ( $fields as $field_id => $field ){
+                if( Caldera_Forms_Field_Util::is_email_identifying_field( $field, $form ) ){
+                    $matching_fields[ $field_id ] = $field;
+                }
+            }
+        }
+
+        if( $ids_only ){
+            return array_keys( $matching_fields );
+        }
+
+        return $matching_fields;
+    }
+
+    /**
+     * Discover if a form has GDPR/privacy exporter enabled
+     *
+     * @since 1.7.0
+     *
+     * @param array $form Form config
+     * @return bool
+     */
+    public static function is_privacy_export_enabled(array $form )
+    {
+        return ! empty( $form[ 'privacy_exporter_enabled' ]  );
+    }
+
+    /**
+     * Toggle enabling of GDPR/privacy exporter enabled
+     *
+     * Note, does not save. Use Caldera_Forms_Forms::save_form( Caldera_Forms_Forms::update_privacy_export_enabled( $form, true ) ) );
+     *
+     * @since 1.7.0
+     *
+     * @param array $form Form config
+     * @param  bool $enabled Optional. To enable or not. Default is true
+     *
+     * @return  array
+     */
+    public static function update_privacy_export_enabled(array $form, $enabled = true )
+    {
+        $form[ 'privacy_exporter_enabled' ] = (bool) $enabled;
+        return $form;
+
+    }
 
 	/**
 	 * Get all revisions of  a forms

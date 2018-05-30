@@ -58,13 +58,9 @@
                     this.$store.commit('secretKey',newValue);
                 }
             },
-            connected:{
-                get(){
-                    return this.$store.getters.connected;
-                },
-                set(newValue){
-                    this.$store.commit('connected',newValue);
-                }
+            connected(){
+                return this.$store.getters.connected;
+
             },
 
 		},
