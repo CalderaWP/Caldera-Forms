@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.7.0-b.1 - 2018-05-25 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.7.0 - 2018-05-31 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -6397,6 +6397,9 @@ function toggle_button_init(id, el){
      * @since 1.6.2
      */
     function setupInputMasks() {
+        if (!$.prototype.inputmask){
+            return;
+        }
         $form.find('[data-inputmask]').inputmask();
     }
 

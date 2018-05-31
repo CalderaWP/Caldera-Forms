@@ -456,7 +456,6 @@ class Caldera_Forms
 			} else {
 				$version = caldera_forms_get_last_update_version();
 				if (empty($version) || version_compare($version, CFCORE_VER) !== 0) {
-					flush_rewrite_rules();
 					update_option('_calderaforms_lastupdate', CFCORE_VER);
 				}
 

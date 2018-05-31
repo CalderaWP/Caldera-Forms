@@ -40,7 +40,8 @@ module.exports = function (grunt) {
         '!Dockerfile',
         '!.env',
         '!db-error.php',
-        '!webpack.config.js'
+        '!webpack.config.js',
+        '!docker-compose.yml'
     ];
 
     //Include webpacked clients

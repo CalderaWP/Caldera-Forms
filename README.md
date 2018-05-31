@@ -78,16 +78,19 @@ Alternatively, because this, isn't 2014, you can use the provided Docker environ
 ### Release To WordPress.org
 ##### Requires
 * [svn](https://subversion.apache.org/quick-start#installing-the-client)
-* Grunt `npm install -g grunt-cli`
 * [npm](https://www.npmjs.com/get-npm)
+* Grunt `npm install -g grunt-cli`
 * [Have commit access to Caldera Forms svn](https://wordpress.org/plugins/caldera-forms/advanced/#committer-list)
 
 #### Steps
 * Build release file
     - `npm package`
-* Push to WordPress.org
+* Push Tag to WordPress.org
     - `cd bin`
     - `bash deploy-wp-org-tag.sh 12345 christiechirinos`
+* Install tag using WP Rollback on QA site and re-run Ghost Inspector tests.
+* Copy tag to trunk
+    - `bash deploy-wp-org-trunk.sh 12345 christiechirinos`
 
 #### Notes
 * This assumes your WordPress.org username is `christiechirinos`, and your password is `12345`.
