@@ -18,6 +18,6 @@ echo Tag $TAG_URL will be copied to $TRUNK_URL
 read -p "Are you sure? " -n 1 -r
 if [[ $REPLY =~ ^[Yy]$ ]]
     then
-        svn $TAG_URL SRC
+        svn copy $TAG_URL $TRUNK_URL
     fi
 
