@@ -28,16 +28,4 @@ before_script:
   - composer update
   - composer wp-install
 
-script:
-  - |
-    if [[ ! -z "$WP_VERSION" ]] ; then
-      phpunit
-    fi
-  - |
-    if [[ "$WORDPRESS_VERSION" == "phpcs" ]] ; then
-      composer wp-tests
-    fi
-  - |
-    if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
-      phpcs
-    fi
+script: composer wp-tests
