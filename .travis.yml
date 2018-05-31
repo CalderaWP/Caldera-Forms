@@ -34,9 +34,9 @@ script:
       phpunit
     fi
   - |
-  if [[ ! -z "$WORDPRESS_VERSION" ]] ; then
-    composer wp-tests
-  fi
+    if [[ "$WORDPRESS_VERSION" == "phpcs" ]] ; then
+      composer wp-tests
+    fi
   - |
     if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
       phpcs
