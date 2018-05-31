@@ -1,6 +1,6 @@
 {
   "name": "caldera-forms",
-  "version": "1.6.3",
+  "version": "1.7.0",
   "description": "Apex WordPress Forms",
   "main": "Gruntfile.js",
   "repository": {
@@ -24,7 +24,7 @@
     "dev:webpack": "cross-env BABEL_ENV=default webpack --watch",
     "dev:grunt": "grunt watch",
     "version": "grunt version_number",
-    "package": "npm run build && grunt build"
+    "package": "npm run build && grunt make"
   },
   "browserslist": [
     "last 2 versions",
@@ -45,15 +45,19 @@
     "css-loader": "^0.28.11",
     "dangerously-set-inner-html": "^2.0.1",
     "exports-loader": "^0.7.0",
-    "inputmask": "^3.3.11"
+    "inputmask": "^3.3.11",
+    "lodash.remove": "^4.7.0",
+    "react-emoji-render": "^0.4.4"
   },
   "devDependencies": {
     "@wordpress/babel-preset-default": "^1.1.1",
     "@wordpress/browserslist-config": "^2.1.1",
     "autoprefixer": "^8.3.0",
     "axios": "^0.18.0",
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
+    "babel-preset-react": "^6.24.1",
     "babel-preset-vue-app": "^2.0.0",
     "bootstrap": "^4.0.0",
     "classnames": "^2.2.5",
@@ -72,6 +76,7 @@
     "grunt-contrib-cssmin": "^1.0.2",
     "grunt-contrib-uglify": "^2.0.0",
     "grunt-contrib-watch": "^1.0.0",
+    "grunt-exec": "^3.0.0",
     "grunt-mkdir": "^1.0.0",
     "grunt-newer": "^1.2.0",
     "grunt-remove": "^0.1.0",
@@ -90,6 +95,9 @@
     "react": "^16.3.2",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.2.0",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.2.0",
     "rimraf": "^2.6.1",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.13.1",

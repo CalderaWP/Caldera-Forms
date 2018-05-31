@@ -42,6 +42,7 @@ const extractConfig = {
 
 // Define JavaScript entry points
 const entryPointNames = [
+    'privacy',
     'blocks',
     'pro'
 ];

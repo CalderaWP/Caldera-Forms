@@ -28,8 +28,10 @@
                 <label <?php if (!empty($field['config']['inline'])) { ?> class="checkbox-inline"<?php } ?>
                         for="<?php echo esc_attr($field_id . '_' . $option_key); ?>"
                 >
-                            <input <?php echo $parsley_req; ?>
-                                type="checkbox" data-label="<?php echo esc_attr($option['label']); ?>"
+                            <input
+                                <?php echo $parsley_req; ?>
+                                type="checkbox"
+                                data-label="<?php echo esc_attr($option['label']); ?>"
                                 data-field="<?php echo esc_attr($field_base_id); ?>"
                                 id="<?php echo esc_attr(Caldera_Forms_Field_Util::opt_id_attr($field_id, $option_key)); ?>"
                                 class="<?php echo $field_id . $req_class; ?>"

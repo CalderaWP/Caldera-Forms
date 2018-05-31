@@ -17,6 +17,9 @@ class Caldera_Forms_Admin_Assets {
 	 * @since 1.5.0
 	 */
 	public static function post_editor(){
+	    if( static::is_woocommerce_page() ){
+	        return;
+        }
 		self::maybe_register_all_admin();
 		wp_enqueue_style( 'wp-color-picker' );
 		wp_enqueue_script( 'wp-color-picker' );
@@ -104,6 +107,24 @@ class Caldera_Forms_Admin_Assets {
 		 */
 		do_action( 'caldera_forms_admin_assets_scripts_registered' );
 	}
+
+
+    /**
+     * Checks if current page is a WooCommerce admin page
+     *
+     * Will return false if WooCommerce is not active
+     *
+     * @since 1.7.0
+     *
+     * @return bool
+     */
+	public static function is_woocommerce_page(){
+	    if( ! function_exists( 'wc_get_screen_ids' ) ){
+	        return false;
+        }
+	    $current_screen = get_current_screen();
+	    return is_object( $current_screen ) && in_array( $current_screen->id, wc_get_screen_ids() );
+    }
 
 	/**
 	 * Register all styles for Caldera Forms admin
@@ -229,7 +250,7 @@ class Caldera_Forms_Admin_Assets {
 	 *
 	 * @since 1.5.0
 	 */
-	protected static function maybe_register_all_admin(){
+	public static function maybe_register_all_admin(){
 		$front = false;
 		if( ! did_action( 'caldera_forms_admin_assets_styles_registered' ) ){
 			Caldera_Forms_Render_Assets::register();
@@ -288,9 +309,10 @@ class Caldera_Forms_Admin_Assets {
 		$data = array_merge($data, $api_config->toArray());
 
 		if (Caldera_Forms_Admin::is_edit()) {
-			$form_id = trim($_GET[Caldera_Forms_Admin::EDIT_KEY]);
-			$data['rest']['form'] = esc_url_raw(Caldera_Forms_API_Util::url('forms/' . $form_id, true));
-			$data['rest']['revisions'] = esc_url_raw(Caldera_Forms_API_Util::url('forms/' . $form_id . '/revisions', true));
+                    $form_id = trim($_GET[Caldera_Forms_Admin::EDIT_KEY]);
+                    $data['rest']['form'] = esc_url_raw(Caldera_Forms_API_Util::url('forms/' . $form_id, true));
+                    $data['rest']['revisions'] = esc_url_raw(Caldera_Forms_API_Util::url('forms/' . $form_id . '/revisions', true));
+                    $data['rest']['delete_entries'] = esc_url_raw(Caldera_Forms_API_Util::url('entries/' . $form_id . '/delete', true));
 		}
 		return $data;
 	}

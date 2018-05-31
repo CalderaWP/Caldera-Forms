@@ -1,0 +1,29 @@
+version: '2.1'
+
+services:
+  wordpress:
+    volumes:
+      - ./src:/wordpress/src
+      - ./tests:/wordpress/tests
+      - ./:/wordpress/src/wp-content/plugins/Caldera-Forms
+
+    build:
+      context: .
+      args:
+        WORDPRESS_DB_PASSWORD: pass
+        PHP_IMAGE_TAG: $PHP_IMAGE_TAG
+        WORDPRESS_VERSION: $WORDPRESS_VERSION
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  mysql:
+    image: mariadb:latest
+    restart: always
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=pass --execute \"SHOW DATABASES;\""
+      interval: 1s
+      timeout: .5s
+      retries: 10
+    environment:
+      MYSQL_ROOT_PASSWORD: pass

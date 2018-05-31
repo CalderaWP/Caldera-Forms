@@ -82,7 +82,7 @@ registerBlockType( 'calderaforms/cform', {
             </div>
         );
     },
-    save: function( { attributes, className } ) {
+    save: function(  ) {
        return null;
     },
 } );

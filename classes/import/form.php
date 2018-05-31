@@ -208,7 +208,7 @@ class Caldera_Forms_Import_Form{
             'mailer' => array(
                 'on_insert' => 1
             ),
-            'hidden' => 1,
+            'hidden' => 0,
             'form_draft' => 0,
             'type' => 'primary'
         );
