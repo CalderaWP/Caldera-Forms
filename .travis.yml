@@ -31,8 +31,12 @@ before_script:
 script:
   - |
     if [[ ! -z "$WP_VERSION" ]] ; then
-      composer wp-tests
+      phpunit
     fi
+  - |
+  if [[ ! -z "$WORDPRESS_VERSION" ]] ; then
+    composer wp-tests
+  fi
   - |
     if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
       phpcs
