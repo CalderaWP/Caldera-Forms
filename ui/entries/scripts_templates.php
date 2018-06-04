@@ -14,6 +14,7 @@ if( ! defined( 'ABSPATH' ) ){
 
 		jQuery('.entry_count_' + obj.params.trigger.data('form')).html(obj.rawData.total);
 		jQuery('.status_toggles[data-status="trash"] .current-status-count').html(obj.rawData.trash);
+		jQuery('.status_toggles[data-status="spam"] .current-status-count').html(obj.rawData.spam);
 		jQuery('.status_toggles[data-status="active"] .current-status-count').html(obj.rawData.total);
 		if(obj.rawData.undo === obj.params.trigger.data('panel')){
 			obj.params.trigger.closest('tr').addClass('cf-deleted-row');
@@ -27,6 +28,7 @@ if( ! defined( 'ABSPATH' ) ){
 
 		var total			= obj.rawData.total,
 			trash			= obj.rawData.trash,
+          spam			= obj.rawData.spam,
 			active			= obj.rawData.active,
 			toggles			= jQuery('.status_toggles'),
 			exporter		= jQuery('.caldera-entry-exporter'),
