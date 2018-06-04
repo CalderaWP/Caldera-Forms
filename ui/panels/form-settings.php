@@ -244,11 +244,7 @@
 				<?php esc_html_e( 'Honeypot', 'caldera-forms' ); ?>
 			</legend>
 			<div class="caldera-config-field">
-				<label for="cf-honey">
-					<input id="cf-honey" type="checkbox" class="field-config" name="config[check_honey]" value="1" <?php if ( ! empty( $element[ 'check_honey' ] ) ){ ?>checked="checked"<?php } ?>>
-					<?php esc_html_e( 'Enable', 'caldera-forms' ); ?>
-					: <?php esc_html_e( 'Place an invisible field to trick spambots', 'caldera-forms' ); ?>
-				</label>
+			    <?php esc_html_e('This setting has moved to Anti-Spam tab', 'caldera-forms' ); ?>
 			</div>
 		</fieldset>
 	</div>
