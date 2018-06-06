@@ -161,9 +161,10 @@ jQuery(function($){
                         data.append( field.data('field'), cf_uploader_filelist[ file ].file );
                         data.append( 'field', field.data('field') );
                         data.append( 'control', field.data('controlid') );
-
-
                         cf_push_file_upload( form, file_number, data );
+                        field.val('');//@see https://github.com/CalderaWP/Caldera-Forms/issues/2514#issuecomment-395213433
+                        field.attr('type','hidden');
+                        field.val(field.data('controlid'));
                         count++;
                         if( count === 1 ){
                             break;
