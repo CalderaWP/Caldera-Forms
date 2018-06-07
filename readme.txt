@@ -798,8 +798,8 @@ See: [https://calderaforms.com/updates/caldera-forms-1-7-0](https://calderaforms
 
 [GPDR Privacy Tools Preview Release](https://calderaforms.com/updates/caldera-forms-1-7-0-beta-1-gdpr-compliance-tools-preview?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0): May 15, 2018
 
-* ADDED: $GDPR [Consent fields and privacy page magic tag ](https://calderaforms.com/doc/consent-field/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
-* ADDED: $GDPR [Option to delete all entries of a from](https://calderaforms.com/doc/delete-saved-entries-caldera-form/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
+* ADDED: #GDPR [Consent fields and privacy page magic tag ](https://calderaforms.com/doc/consent-field/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
+* ADDED: #GDPR [Option to delete all entries of a form](https://calderaforms.com/doc/delete-saved-entries-caldera-form/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0) ADDED: $GDPR [Option to delete all entries of a from](https://calderaforms.com/doc/delete-saved-entries-caldera-form/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
 * ADDED: #GDPR [Integration with core exporters and erasers and a shiny new privacy page](https://calderaforms.com/doc/setting-caldera-forms-gdpr-data-requests/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
 * IMPROVED: #GDPR [Marking fields as containing personally identifiable information](https://calderaforms.com/gdpr#pii?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
 * ADDED: #GDPR [Developer-facing APIs](https://calderaforms.com/doc/gdpr-api/) for getting fields used for personally identifiable data, modifying the data supplied to WordPress' exporters and erasers by Caldera Forms and more.
