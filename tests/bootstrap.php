@@ -10,6 +10,10 @@ if ( ! $_tests_dir ) {
 	$_tests_dir = '/tmp/wordpress-tests-lib';
 }
 
+if( ! defined( 'NONCE_SALT' ) ){
+    define( 'NONCE_SALT', '12345apexsecurity' );
+}
+
 // Give access to tests_add_filter() function.
 require_once $_tests_dir . '/includes/functions.php';
 
