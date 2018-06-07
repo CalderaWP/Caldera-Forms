@@ -25,7 +25,8 @@
     "dev:grunt": "grunt watch",
     "version": "grunt version_number",
     "package": "npm run build && grunt make",
-    "test": "jest"
+    "test": "jest",
+    "test:watch" : "jest --watch"
   },
   "browserslist": [
     "last 2 versions",
