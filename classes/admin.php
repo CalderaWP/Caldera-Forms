@@ -1564,7 +1564,7 @@ class Caldera_Forms_Admin {
 		$saved_form = Caldera_Forms_Forms::get_form( $data['ID'] );
 		if( ! empty( $saved_form ) && isset( $saved_form[ 'fields' ] ) ){
 			$extra_fields = self::get_editor_extra_fields($saved_form );
-			$form = new Caldera_Forms_API_Privacy($saved_form);
+			$form = new Caldera_Forms_API_Privacy($data);
 			if( isset( $extra_fields['email_identifying_fields'] ) ){
 				$form->set_email_identifying_fields( $extra_fields['email_identifying_fields'] );
 			}
@@ -1578,17 +1578,15 @@ class Caldera_Forms_Admin {
 			}
 		}
 
-
-
 		Caldera_Forms_Forms::save_form( $data );
+
 	}
 
 
     /**
      * Get the additional fields of form that are not used in the editor
 	 *
-	 * @since 1.71
-	 *
+	 * @since 1.7.1
 	 *
 	 * @param array $form Form config to get saved field values from
      * @return array
