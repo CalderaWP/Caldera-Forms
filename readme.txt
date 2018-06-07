@@ -793,7 +793,15 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 
 == Changelog ==
-= Caldera Forms 1.7.0 (May 31, 2017) GDPR, PHP, Onward =
+= Caldera Forms 1.7.1 (June 7, 2018) Flushing Meadows =
+See: [https://calderaforms.com/updates/caldera-forms-1-7-1](https://calderaforms.com/updates/caldera-forms-1-7-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-1)
+
+* FIXED: Rewrite rules could be flushed during activation in a way that causes an error.
+* FIXED: Forms with advanced file fields not submitting properly on Safari and Edge.
+* FIXED: Privacy settings being lost on form update.
+* FIXED: PHP Warning when there are no internal forms.
+
+= Caldera Forms 1.7.0 (May 31, 2018) GDPR, PHP, Onward =
 See: [https://calderaforms.com/updates/caldera-forms-1-7-0](https://calderaforms.com/updates/caldera-forms-1-7-0?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
 
 [GPDR Privacy Tools Preview Release](https://calderaforms.com/updates/caldera-forms-1-7-0-beta-1-gdpr-compliance-tools-preview?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0): May 15, 2018
