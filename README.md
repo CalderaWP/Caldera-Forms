@@ -31,7 +31,7 @@ See "Release To WordPress.org" section below for more details on pushing this bu
 
 ### JavaScript Development
 
-Run watcher for development to auto-compile JavaScript and CSS
+Run watcher for development to auto-compile JavaScript and CSS.
 
 #### `/clients/`
 This is the new stuff, built with webpack. Eventually everything UI will be here.
@@ -66,6 +66,14 @@ Alternatively, because this, isn't 2014, you can use the provided Docker environ
     - [Installation documentation](https://docs.docker.com/install/)
 * Composer
     - [Installation documentation](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx)
+* npm
+    - [Installation documentation](https://www.npmjs.com/get-npm)
+    
+### Test Structures
+* PHP tests go in /tests and are run using phpunit
+* JavaScript tests go in clients/tests
+- Unit tests go in clients/tests/unit and are run using [Jest](https://facebook.github.io/jest/docs/en/getting-started.html)
+- Unit tests must have the word test in file name. For example, `formConfig.test.js`
 
 #### Commands
 * `composer wp-install` - Installs Docker-based test environment.
