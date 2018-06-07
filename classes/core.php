@@ -482,13 +482,6 @@ class Caldera_Forms
 		// ensure urls are there
 		self::init_cf_internal();
 
-		// ensure rewrites
-        if ( $version !== CFCORE_VER ) {
-            add_action('admin_footer', function () {
-                flush_rewrite_rules();
-            });
-        }
-
         //make sure we have all tables
         self::check_tables();
 
