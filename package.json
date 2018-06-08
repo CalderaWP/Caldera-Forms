@@ -26,7 +26,7 @@
     "version": "grunt version_number",
     "package": "npm run build && grunt make",
     "test": "jest",
-    "test:watch" : "jest --watch"
+    "test:watch": "jest --watch"
   },
   "browserslist": [
     "last 2 versions",
@@ -52,6 +52,7 @@
     "react-emoji-render": "^0.4.4"
   },
   "devDependencies": {
+    "@caldera-labs/state": "^0.1.1",
     "@wordpress/babel-preset-default": "^1.1.1",
     "@wordpress/browserslist-config": "^2.1.1",
     "autoprefixer": "^8.3.0",
