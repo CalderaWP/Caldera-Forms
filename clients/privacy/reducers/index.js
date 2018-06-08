@@ -6,7 +6,7 @@ import {
 } from '../actions';
 import {SET_EDIT_FORM} from "../actions";
 import {SET_FORM, SET_FORMS} from "../../state/actions/form";
-import {DEFAULT_STATE} from "../../state/actions/form";
+import {DEFAULT_STATE} from "../../blocks/store";
 import {setFormInState, setFormsInState} from "../../state/actions/mutations";
 import {findFormById} from "../../state/actions/functions";
 import {privacyState} from "./privacyStore";

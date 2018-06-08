@@ -4,14 +4,20 @@ export const CALDERA_FORMS_STORE_NAME = 'caldera-forms/forms';
 import {SET_FORM} from "../state/actions/form";
 import {SET_FORMS} from "../state/actions/form";
 import {ADD_FORM_PREVIEW} from "../state/actions/form";
-import {actionFunctions} from "../state/actions/form";
 import {setFormInState,setFormsInState} from "../state/actions/mutations";
 import {findFormById} from "../state/actions/functions";
 import {printedData,cfAdmin} from "../state/api/cfAdmin";
 import {requestForm} from "../state/api";
 
-import {DEFAULT_STATE} from "../state/actions/form";
+import * as cfFormsState from '@caldera-labs/state';
 
+
+import {calderaFormsFormState} from "@caldera-labs/state";
+
+export const DEFAULT_STATE = {
+    forms: Array.isArray(printedData.forms)?printedData.forms:[],
+    formPreviews: {}
+};
 
 //Track requests for previews to prevent multiple while pending
 let requestingPreviews = [];
@@ -40,8 +46,6 @@ export const requestFormPreview = (state,formId) => {
 };
 
 
-
-
 /**
  * Caldera Forms Redux-store
  *
@@ -67,8 +71,7 @@ export const STORE = {
 
         return state;
     },
-
-    actions: actionFunctions,
+    actions: cfFormsState.store.actions,
     selectors: {
         getForm( state, formId ) {
             return findFormById(state, formId);

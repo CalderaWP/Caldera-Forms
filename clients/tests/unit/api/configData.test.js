@@ -1,6 +1,7 @@
 import {
     printedData,
-    cfAdmin
+    cfAdmin,
+    createCFadminConfig
 } from "../../../state/api/cfAdmin";
 
 describe( 'util functions for data printed by wp_localize_script', () => {
@@ -58,6 +59,53 @@ describe( 'util functions for data printed by wp_localize_script', () => {
                 expect(  cfAdmin.rest  ).toHaveProperty(apiKey);
                 expect(  typeof cfAdmin.rest[apiKey]  ).toBe('string');
             });
+        });
+
+        describe( 'createCFadminConfig', () => {
+            it( 'Looks like default', () => {
+                const inital = createCFadminConfig({});
+                Object.keys(mockCfAdminData).map((key) => {
+                    expect(inital).toHaveProperty(key);
+                });
+               expect(
+                   Object.keys(createCFadminConfig({})).sort()
+               ).toEqual(
+                   Object.keys(mockCfAdminData).sort()
+               )
+            });
+
+            describe( 'Passes values', () => {
+                const dF = 'F j, Y';
+
+                it( 'Passes strings to settings', () => {
+                    expect(
+                        createCFadminConfig({
+                            dateFormat: dF
+                        }).dateFormat
+                    ).toEqual(
+                        dF
+                    );
+                });
+
+                it( 'Passes objects to settings', () => {
+                    const rest = {
+                        root: '/wp-json/a/b',
+                        nonce: '12345',
+
+                    };
+                    expect(
+                        createCFadminConfig({
+                            rest
+                        }).rest
+                    ).toEqual(
+                        rest
+                    );
+                });
+
+
+
+            });
+
         });
     });
 
