@@ -1,6 +1,9 @@
 const SelectControl = wp.components.SelectControl;
 import {CALDERA_FORMS_STORE_NAME} from "../store";
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
+//Import wp.data's HOC
+import { withSelect } from "@wordpress/data";
+
 
 /**
  * Get ID of form
@@ -16,6 +19,7 @@ const getFormId = (form) => {
     }
     return form.hasOwnProperty('formId' ) ? form.formId : form.ID;
 };
+
 /**
  * Basic component to choose forms with
  *
@@ -39,8 +43,7 @@ export const FormChooser = (props) => {
     )
 };
 
-//Import wp.data's HOC
-const { withSelect } = wp.data;
+
 
 /**
  * Form chooser wrapped in form selector

@@ -1,6 +1,6 @@
 import {CALDERA_FORMS_STORE_NAME} from "../store";
 import {appendAssets} from "../../functions/appendAssets";
-const { withSelect } = wp.data;
+import { withSelect } from '@wordpress/data'
 const Spinner = wp.components.Spinner;
 
 /**

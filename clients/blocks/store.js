@@ -1,11 +1,6 @@
 const { apiRequest } = wp;
-const { registerStore, dispatch } = wp.data;
+import { registerStore, dispatch } from "@wordpress/data";
 export const CALDERA_FORMS_STORE_NAME = 'caldera-forms/forms';
-import {SET_FORM} from "../state/actions/form";
-import {SET_FORMS} from "../state/actions/form";
-import {ADD_FORM_PREVIEW} from "../state/actions/form";
-import {setFormInState,setFormsInState} from "../state/actions/mutations";
-import {findFormById} from "../state/actions/functions";
 import {printedData,cfAdmin} from "../state/api/cfAdmin";
 import {requestForm} from "../state/api";
 
