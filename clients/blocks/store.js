@@ -55,21 +55,7 @@ export const requestFormPreview = (state,formId) => {
  */
 export const STORE = {
     reducer( state = DEFAULT_STATE, action ) {
-        switch ( action.type ) {
-            case SET_FORMS:
-                return setFormsInState(state, action);
-            case ADD_FORM_PREVIEW:
-                state.formPreviews[action.formId] = action.preview;
-                return {
-                    ...state,
-                    formPreviews:state.formPreviews
-                };
-            case SET_FORM :
-                return setFormInState(state, action);
-
-        }
-
-        return state;
+        return cfFormsState.store.reducers.formsReducer(DEFAULT_STATE,action);
     },
     actions: cfFormsState.store.actions,
     selectors: {
