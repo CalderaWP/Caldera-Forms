@@ -24,7 +24,7 @@ const getFormId = (form) => {
  * @constructor
  */
 export const FormChooser = (props) => {
-    const opts = props.forms;
+    const opts = ! Array.isArray(props.forms) ? Object.values(props.forms) : props.forms;
     return (
         <SelectControl
             className={'caldera-forms-form-chooser'}

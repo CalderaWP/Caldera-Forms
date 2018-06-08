@@ -58,23 +58,7 @@ export const STORE = {
         return cfFormsState.store.reducers.formsReducer(DEFAULT_STATE,action);
     },
     actions: cfFormsState.store.actions,
-    selectors: {
-        getForm( state, formId ) {
-            return findFormById(state, formId);
-        },
-        getForms( state ){
-            return state.forms;
-        },
-        getFormPreview( state,formId ){
-            return state.formPreviews.hasOwnProperty( formId )
-                ?state.formPreviews[ formId ]
-                : '';
-
-        },
-        getFormPreviews(state){
-            return state.formPreviews;
-        }
-    },
+    selectors: cfFormsState.store.selectors,
     resolvers: {
         async getForm( state, formId ) {
             const form = await requestForm(formId);
