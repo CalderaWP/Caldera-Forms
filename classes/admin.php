@@ -158,7 +158,7 @@ class Caldera_Forms_Admin {
 
 		add_action(  'caldera_forms_admin_init', array( __CLASS__ , 'init_privacy_settings' ) );
 
-        add_action( 'caldera_forms_admin_init', array( $this, 'add_suggested_privacy_content' ), 35 );
+        add_action( 'admin_init', array( __CLASS__, 'add_suggested_privacy_content' ), 35 );
 
 		/**
 		 * Runs after Caldera Forms admin is initialized
