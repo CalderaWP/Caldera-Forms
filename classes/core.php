@@ -4698,7 +4698,10 @@ class Caldera_Forms
 			}
 
 
-			$out .= $form['grid_object']->renderLayout();
+			out .= sprintf('<div class="%s">%s</div>',
+				apply_filters('caldera_forms_grid_wrapper_class', 'cf-grid-wrapper', $form),
+				$form['grid_object']->renderLayout()
+			);
 
 			$out .= "</" . $form_element . ">\r\n";
 		}
