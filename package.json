@@ -29,11 +29,6 @@
     "test:watch": "jest --watch",
     "test:once": "jest"
   },
-  "jest": {
-    "setupFiles": [
-      "<rootDir>/clients/globals/wp.js"
-    ]
-  },
   "browserslist": [
     "last 2 versions",
     "ie > 8"
