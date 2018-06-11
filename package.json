@@ -53,6 +53,7 @@
     "react-emoji-render": "^0.4.4"
   },
   "devDependencies": {
+    "@caldera-labs/api-client": "^0.1.4",
     "@caldera-labs/state": "^0.4",
     "@wordpress/babel-preset-default": "^1.1.1",
     "@wordpress/browserslist-config": "^2.1.1",

@@ -10,10 +10,18 @@ Object.defineProperty( global.wp, 'element', {
     get: () => React
 } );
 
+/**
+ *
+ * @type {*}
+ */
 const store = createStore(
     reducer,
 );
 
+/**
+ *
+ * @type {string}
+ */
 const ID = 'caldera-forms-privacy-settings';
 
 ReactDOM.render(

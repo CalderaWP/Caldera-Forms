@@ -18,7 +18,6 @@ export const ACTIONS = {
 				} else {
 					r = response.data;
 				}
-				console.log(21);
 				context.commit('forms', r.forms);
                 context.commit('connected',false);//prevents next line form dispatching getLayouts
                 context.commit('apiKeys', r.apiKeys);

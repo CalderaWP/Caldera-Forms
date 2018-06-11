@@ -53,7 +53,7 @@ describe( 'Dependencies are available', () => {
                 },
             }).getState() ).toEqual(initalState);
         });
+        
+    });
 
-
-    })
 });

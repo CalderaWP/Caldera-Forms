@@ -43,8 +43,6 @@ export const FormChooser = (props) => {
     )
 };
 
-
-
 /**
  * Form chooser wrapped in form selector
  */

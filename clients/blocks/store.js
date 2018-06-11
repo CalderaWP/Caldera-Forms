@@ -1,13 +1,10 @@
-const { apiRequest } = wp;
 import { registerStore, dispatch } from "@wordpress/data";
 export const CALDERA_FORMS_STORE_NAME = 'caldera-forms/forms';
 import {printedData,cfAdmin} from "../state/api/cfAdmin";
 import {requestForm} from "../state/api";
-
 import * as cfFormsState from '@caldera-labs/state';
-
-
 import {calderaFormsFormState} from "@caldera-labs/state";
+import {formsAdminApiClient} from "../state/api/apiClients";
 
 export const DEFAULT_STATE = {
     forms: Array.isArray(printedData.forms)?printedData.forms:[],
@@ -30,12 +27,7 @@ export const requestFormPreview = (state,formId) => {
     }
     requestingPreviews.push(formId);
 
-    wp.apiRequest({
-        url: `${cfAdmin.api.form}${formId}?preview=true`,
-        method: 'GET',
-        cache: true
-
-    }).then( (r) => {
+	formsAdminApiClient.getFormPreview(formId).then( (r) => {
         dispatch(CALDERA_FORMS_STORE_NAME).addFormPreview(formId, r);
     } );
 };

@@ -1,7 +1,5 @@
 import {combineReducers} from 'redux'
 import {
-    setForms,
-    setForm,
     UNSET_EDIT_FORM
 } from '../actions';
 import {SET_EDIT_FORM} from "../actions";

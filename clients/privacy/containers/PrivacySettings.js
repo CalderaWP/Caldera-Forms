@@ -70,8 +70,15 @@ export const PrivacySettings = (props) => {
      */
     function reportApiError(r) {
         props.stopSpinner();
-        const response = JSON.parse(r.responseText);
-        props.updateStatus(response.message, false);
+		if (r.hasOwnProperty('responseText')) {
+			const response = JSON.parse(r.responseText);
+			props.updateStatus(response.message, false);
+		}else if( r.hasOwnProperty('message' ) ){
+			props.updateStatus(r.message, false);
+		}else{
+			props.updateStatus('Error', false);
+
+		}
        // hideStatusIndicator();
     }
 
@@ -107,7 +114,7 @@ export const PrivacySettings = (props) => {
         //Find privacy settings
         const privacySettingsRequest = requestPrivacySettings(newFormsId);
         privacySettingsRequest.then( (settings) => {
-            props.setFormPrivacyForm(settings);
+			props.setFormPrivacyForm(settings);
             delete notComplete.p;
             if( ! notComplete.hasOwnProperty('f') ){
                 stopSpinner();

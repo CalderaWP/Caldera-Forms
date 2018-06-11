@@ -109,4 +109,5 @@ describe( 'util functions for data printed by wp_localize_script', () => {
         });
     });
 
-})
+});
+

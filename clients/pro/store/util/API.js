@@ -1,8 +1,9 @@
 import axios from 'axios';
 import CFProConfig from './wpConfig';
 import sha1 from  'locutus/php/strings/sha1';
-import { objHasProp, hasProp } from './utils'
-
+export const objHasProp = function(obj,prop) {
+    return Object.prototype.hasOwnProperty.call(obj, prop);
+};
 const timeout = 30000;
 export const localAPI = axios.create({
 	baseURL: CFProConfig.localApiURL,
