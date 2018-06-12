@@ -1,3 +1,5 @@
+import * as cfFormsState from '@caldera-labs/state';
+
 /**
  * Check if a form has the provided ID
  *
@@ -8,16 +10,7 @@
  * @return {boolean}
  */
 export const formHasId = ( form, formId ) => {
-    if( 'object' !== typeof  form ){
-        return false;
-    }
-    if( form.hasOwnProperty('ID') ){
-        return formId === form.ID;
-    }
-    if( form.hasOwnProperty('formId') ){
-        return formId === form.formId;
-    }
-    return false;
+    return cfFormsState.util.formHasId(form,formId);
 };
 
 /**
@@ -29,9 +22,7 @@ export const formHasId = ( form, formId ) => {
  * @param {String} formId
  */
 export const findFormById = (state, formId,) => {
-    return state.forms.find(form => {
-        return formHasId(form,formId);
-    });
+    return cfFormsState.util.findFormById(state.forms,formId);
 };
 
 /**
@@ -43,8 +34,6 @@ export const findFormById = (state, formId,) => {
  * @param {String} formId
  */
 export const findFormIndexById = (state, formId) => {
-    return state.forms.findIndex(form => {
-        return formHasId(form,formId);
-    });
+    return cfFormsState.util.findFormIndexById(state.forms,formId);
 };
 
