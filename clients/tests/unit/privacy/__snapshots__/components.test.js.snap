@@ -212,7 +212,7 @@ exports[`Helpbox Does what it does. This needs broken up 1`] = `
 </div>
 `;
 
-exports[`Settings Email and PII Idnetify Field settings Email identifying field Works 1`] = `
+exports[`Settings Email and PII Identify Field settings Email identifying field Works 1`] = `
 <div
   id="caldera-forms-privacy-gdpr-is-email-identifiying-fld_9899154"
 >
@@ -220,7 +220,49 @@ exports[`Settings Email and PII Idnetify Field settings Email identifying field 
 </div>
 `;
 
-exports[`Settings Email and PII Idnetify Field settings Field settings  Works 1`] = `
+exports[`Settings Email and PII Identify Field settings Pii field Works 1`] = `
+<div
+  className="form-group"
+>
+  <label
+    className="control-label"
+    htmlFor="caldera-forms-privacy-gdpr-is-pii-field-fld_9899154"
+  >
+    Personally Identifying Field?
+  </label>
+  <div
+    className="checkbox"
+  >
+    <label
+      title=""
+    >
+      <input
+        checked={true}
+        disabled={false}
+        id="caldera-forms-privacy-gdpr-is-pii-field-fld_9899154"
+        onChange={[Function]}
+        type="checkbox"
+      />
+      <span
+        style={
+          Object {
+            "marginLeft": "12px",
+          }
+        }
+      >
+        Yes
+      </span>
+    </label>
+  </div>
+  <span
+    className="screen-reader-text help-block"
+  >
+    Does field contain personally identifying data?
+  </span>
+</div>
+`;
+
+exports[`Settings Field settings  Works 1`] = `
 <section
   className="row"
   style={
@@ -306,7 +348,7 @@ exports[`Settings Email and PII Idnetify Field settings Field settings  Works 1`
 </section>
 `;
 
-exports[`Settings Email and PII Idnetify Field settings Fields settings  Works 1`] = `
+exports[`Settings Fields settings  Works 1`] = `
 <div>
   <section
     className="row"
@@ -591,47 +633,5 @@ exports[`Settings Email and PII Idnetify Field settings Fields settings  Works 1
       </div>
     </div>
   </section>
-</div>
-`;
-
-exports[`Settings Email and PII Idnetify Field settings Pii field Works 1`] = `
-<div
-  className="form-group"
->
-  <label
-    className="control-label"
-    htmlFor="caldera-forms-privacy-gdpr-is-pii-field-fld_9899154"
-  >
-    Personally Identifying Field?
-  </label>
-  <div
-    className="checkbox"
-  >
-    <label
-      title=""
-    >
-      <input
-        checked={true}
-        disabled={false}
-        id="caldera-forms-privacy-gdpr-is-pii-field-fld_9899154"
-        onChange={[Function]}
-        type="checkbox"
-      />
-      <span
-        style={
-          Object {
-            "marginLeft": "12px",
-          }
-        }
-      >
-        Yes
-      </span>
-    </label>
-  </div>
-  <span
-    className="screen-reader-text help-block"
-  >
-    Does field contain personally identifying data?
-  </span>
 </div>
 `;

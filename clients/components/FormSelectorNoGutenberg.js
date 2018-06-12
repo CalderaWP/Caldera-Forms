@@ -1,9 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { FormGroup,FormControl,ControlLabel,HelpBlock } from 'react-bootstrap';
+import { FormGroup,HelpBlock } from 'react-bootstrap';
 
-
+/**
+ * Form selector with no dependency on Gutenberg
+ *
+ * @since 1.7.0
+ *
+ * @param props
+ * @returns {*}
+ * @constructor
+ */
 export const FormSelectorNoGutenberg = (props) => {
     const idAttr = props.idAttr ? props.idAttr :'caldera-forms-form-chooser';
     return (

@@ -1,11 +1,11 @@
 import renderer from 'react-test-renderer';
-import {FieldGroup} from "../../privacy/components/FieldGroup";
-import {HelpBox} from "../../privacy/components/HelpBox";
-import {IsEmailIdentifyingField} from "../../privacy/components/IsEmailIdentifyingField";
-import {IsPiiField} from "../../privacy/components/IsPiiField";
-import {FieldPrivacySettings} from "../../privacy/components/FieldPrivacySettings";
-import {FieldsPrivacySettings} from "../../privacy/components/FieldsPrivacySettings";
-import {FormPrivacySettings} from "../../privacy/components/FormPrivacySettings";
+import {FieldGroup} from "../../../privacy/components/FieldGroup";
+import {HelpBox} from "../../../privacy/components/HelpBox";
+import {IsEmailIdentifyingField} from "../../../privacy/components/IsEmailIdentifyingField";
+import {FormPrivacySettings} from "../../../privacy/components/FormPrivacySettings";
+import {FieldsPrivacySettings} from "../../../privacy/components/FieldsPrivacySettings";
+import {FieldPrivacySettings} from "../../../privacy/components/FieldPrivacySettings";
+import {IsPiiField} from "../../../privacy/components/IsPiiField";
 
 describe( 'Field group component', () => {
 	it('Works with help text',() => {
@@ -59,7 +59,7 @@ describe( 'Settings', () => {
 		'privacyExporterEnabled': true
 	};
 
-	describe('Email and PII Idnetify Field settings', () => {
+	describe('Email and PII Identify Field settings', () => {
 		describe('Email identifying field', () => {
 			it('Works', () => {
 				const emailSettings = renderer.create(
@@ -86,51 +86,53 @@ describe( 'Settings', () => {
 
 			});
 		});
-		describe('Field settings ', () => {
-			it('Works', () => {
-				const fieldPrivacySettings = renderer.create(
-					<FieldPrivacySettings
-						formId={formId}
-						field={field}
-						privacySettings={settings}
-						onCheck={() => {}}
-						onCheckIsEmail={() => {}}
-						onCheckIsPii={() => {}}
-					/>
-				);
-				expect(fieldPrivacySettings.toJSON()).toMatchSnapshot();
 
-			});
-		});
-		describe('Fields settings ', () => {
-			it('Works', () => {
-				const fieldsPrivacySettings = renderer.create(
-					<FieldsPrivacySettings
-						formId={formId}
-						fields={fields}
-						privacySettings={settings}
-						onCheckIsEmail={() => {}}
-						onCheckIsPii={() => {}}
-					/>
-				);
-				expect(fieldsPrivacySettings.toJSON()).toMatchSnapshot();
+	});
 
-			});
+	describe('Field settings ', () => {
+		it('Works', () => {
+			const fieldPrivacySettings = renderer.create(
+				<FieldPrivacySettings
+					formId={formId}
+					field={field}
+					privacySettings={settings}
+					onCheck={() => {}}
+					onCheckIsEmail={() => {}}
+					onCheckIsPii={() => {}}
+				/>
+			);
+			expect(fieldPrivacySettings.toJSON()).toMatchSnapshot();
+
 		});
-		describe( 'Form privacy settings', () => {
-			it( 'Works', () => {
-				const formPrivacySettings = renderer.create(
-					<FormPrivacySettings
-						form={{
-							ID: formId,
-							fields: fields
-						}}
-						onSave={() => {}}
-						privacySettings={settings}
-						onStateChange={() => {}}
-					/>
-				)
-			});
+	});
+	describe('Fields settings ', () => {
+		it('Works', () => {
+			const fieldsPrivacySettings = renderer.create(
+				<FieldsPrivacySettings
+					formId={formId}
+					fields={fields}
+					privacySettings={settings}
+					onCheckIsEmail={() => {}}
+					onCheckIsPii={() => {}}
+				/>
+			);
+			expect(fieldsPrivacySettings.toJSON()).toMatchSnapshot();
+
+		});
+	});
+	describe( 'Form privacy settings', () => {
+		it( 'Works', () => {
+			const formPrivacySettings = renderer.create(
+				<FormPrivacySettings
+					form={{
+						ID: formId,
+						fields: fields
+					}}
+					onSave={() => {}}
+					privacySettings={settings}
+					onStateChange={() => {}}
+				/>
+			)
 		});
 	});
 });
