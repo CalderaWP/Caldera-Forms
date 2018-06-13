@@ -1,7 +1,6 @@
 import React from 'react';
-import { createStore, applyMiddleware } from 'redux'
+import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import thunk from 'redux-thunk'
 import reducer from './reducers'
 import ReactDOM from "react-dom";
 import {PrivacySettingsWrapped} from "./containers/PrivacySettings";

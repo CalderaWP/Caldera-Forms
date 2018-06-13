@@ -121,7 +121,7 @@ export const PrivacySettings = (props) => {
                 notComplete.stopped =true;
             }
         }).catch( (r) => {
-            reportApiError(r);
+			reportApiError(r);
         });
 
         //Make sure spinner gets stopped
@@ -129,7 +129,7 @@ export const PrivacySettings = (props) => {
             if( false === notComplete.stopped){
                 stopSpinner();
             }
-        },2500)
+        },2500);
     };
 
     /**
@@ -152,8 +152,7 @@ export const PrivacySettings = (props) => {
             hideStatusIndicator();
         }).catch( (r) => {
             reportApiError(r);
-        })
-
+        });
 
     };
 

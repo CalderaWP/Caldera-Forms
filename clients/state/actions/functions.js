@@ -22,7 +22,7 @@ export const formHasId = ( form, formId ) => {
  * @param {String} formId
  */
 export const findFormById = (state, formId,) => {
-    return cfFormsState.util.findFormById(state.forms,formId);
+	return cfFormsState.util.findFormById(state.forms,formId);
 };
 
 /**
@@ -34,6 +34,6 @@ export const findFormById = (state, formId,) => {
  * @param {String} formId
  */
 export const findFormIndexById = (state, formId) => {
-    return cfFormsState.util.findFormIndexById(state.forms,formId);
+	return cfFormsState.util.findFormIndexById(state.forms,formId);
 };
 

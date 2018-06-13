@@ -25,12 +25,22 @@ describe( 'Dependencies are available', () => {
             expect(cfStateWebpack.store.actions.setForm({name:1})).toEqual({ type: 'SET_FORM', form: { name: 1 } });
         });
 
-        it( 'Can import CF state', () => {
+        it( 'Can import CF state store functions', () => {
             expect(cfStateWebpack).toHaveProperty('store');
-            expect(cfStateWebpack).toHaveProperty('state');
         });
+        it( 'Can import CF state state functions', () => {
+            expect(cfStateWebpack).toHaveProperty('store');
+        });
+        it( 'Can import CF state util functions', () => {
+            expect(cfStateWebpack).toHaveProperty('util');
+        });
+		it( 'Can import use CF state util functions', () => {
+			expect(typeof cfStateWebpack.util.findFormIndexById).toBe('function');
+		});
+
 
     });
+
 
     describe( 'wp.data', () => {
         it( 'registerStore is available',  () => {
