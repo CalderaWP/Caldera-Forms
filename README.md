@@ -81,8 +81,8 @@ Alternatively, because this, isn't 2014, you can use the provided Docker environ
 * `composer wp-tests` - Runs phpunit inside of Docker container.
 * `composer wp-stop` - Stops Docker-based test environment, without destroying containers.
 * `composer wp-remove` - Stops Docker-based test environment and destroys containers.
-* `npm test` - Run JavaScript unit tests once
-* `npm run test:watch` - Run JavaScript test watcher
+* `npm test` - Run JavaScript test watcher
+* `npm run test:once` - Run JavaScript unit tests once
 
 ### Release To WordPress.org
 ##### Requires
