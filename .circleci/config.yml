@@ -1,0 +1,87 @@
+# https://circleci.com/docs/2.0/workflows/#using-workspaces-to-share-data-among-jobs
+defaults: &defaults
+  docker:
+    - image: node:8.11.2
+  working_directory: ~/Caldera-Forms
+  environment:
+    TZ: "/usr/share/zoneinfo/America/Los_Angeles"
+    TERM: dumb
+
+version: 2
+jobs:
+    install_dependencies:
+        <<: *defaults
+        steps:
+            - checkout
+
+            - restore_cache:
+                keys:
+                    - node-cache-{{ checksum "package-lock.json" }}
+
+            - run:
+                name: Install node modules
+                command: npm install
+
+            - save_cache:
+                key: node-cache-{{ checksum "package-lock.json" }}
+                paths:
+                    - node_modules
+
+            # https://circleci.com/docs/2.0/workflows/#using-workspaces-to-share-data-among-jobs
+            - persist_to_workspace:
+                # Must be relative path from working_directory
+                root: .
+                # Must be relative path from root
+                paths:
+                    - node_modules
+
+    test:
+        <<: *defaults
+        steps:
+            - checkout
+
+            - attach_workspace:
+                # Must be absolute path or relative path from working_directory
+                at: /tmp
+
+            - run:
+                name: restore node_modules
+                command: mv /tmp/node_modules .
+
+            - run:
+                name: run tests
+                command: npm run test:once
+
+    lint:
+        <<: *defaults
+        steps:
+            - checkout
+
+            - attach_workspace:
+                # Must be absolute path or relative path from working_directory
+                at: /tmp
+
+            - run:
+                name: restore node_modules
+                command: mv /tmp/node_modules .
+
+            - run:
+                name: run code linting
+                command: npm run lint
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      # Install node dependencies
+      - install_dependencies
+      # Run code linting
+      - lint:
+            requires:
+                # Requires node_modules to be present
+                - install_dependencies
+      # Run tests
+      - test:
+            requires:
+                # Requires node_modules to be present
+                - install_dependencies
