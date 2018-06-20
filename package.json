@@ -25,6 +25,7 @@
     "dev:grunt": "grunt watch",
     "version": "grunt version_number",
     "package": "npm run build && grunt make",
+    "lint": "./node_modules/.bin/eslint src/",
     "test": "npm run test:watch",
     "test:watch": "jest --watch",
     "test:once": "jest"
