@@ -6,6 +6,7 @@ defaults: &defaults
   environment:
     TZ: "/usr/share/zoneinfo/America/Los_Angeles"
     TERM: dumb
+    NODE_ENV: development
 
 version: 2
 jobs:
