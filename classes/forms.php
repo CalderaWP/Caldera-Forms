@@ -412,6 +412,10 @@ class Caldera_Forms_Forms {
 	 * @return array
 	 */
 	protected static function add_details( $forms ){
+	    if( empty( $forms ) ){
+	        return [];
+        }
+
         if( ! empty( $valid_forms = get_transient( self::$registry_cache_key ) ) ) {
             return $valid_forms;
         }else{

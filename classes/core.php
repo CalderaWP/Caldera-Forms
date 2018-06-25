@@ -423,6 +423,7 @@ class Caldera_Forms
 
 			// check update version
 			$db_version = get_option('CF_DB', 0);
+			update_option( 'CF_DB', 7 );
 			$force_update = false;
 
 			// ensure that admin can only force update
@@ -432,13 +433,13 @@ class Caldera_Forms
 
 			include_once CFCORE_PATH . 'includes/updater.php';
 
-			if (CF_DB > $db_version || $force_update) {
+			if ( CF_DB > $db_version || $force_update) {
 				self::check_tables();
 				if ($db_version < 2 || $force_update) {
 					caldera_forms_db_v2_update();
 				}
 
-				if ($db_version < 4 || $force_update) {
+				if ( $db_version < 4 || $force_update) {
 					self::activate_caldera_forms(true);
 					caldera_forms_write_db_flag(4);
 				}
@@ -476,17 +477,13 @@ class Caldera_Forms
 		include_once CFCORE_PATH . 'includes/updater.php';
 		$version = caldera_forms_get_last_update_version();
 
-		wp_schedule_event(time(), 'daily', 'caldera_forms_tracking_send_rows');
 		global $wpdb;
 
 		// ensure urls are there
 		self::init_cf_internal();
 
-		// ensure rewrites
-		flush_rewrite_rules();
-
-		//make sure we have all tables
-		self::check_tables();
+        //make sure we have all tables
+        self::check_tables();
 
 		if ($version >= '1.1.5') {
 			return; // only if 1.1.4 or lower

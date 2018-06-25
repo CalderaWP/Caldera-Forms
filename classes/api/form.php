@@ -70,8 +70,20 @@ class Caldera_Forms_API_Form  implements  ArrayAccess {
 	 * @return array
 	 */
 	public function toArray(){
-		return $this->form;
+		return $this->get_form();
 	}
+
+    /**
+     * Get the form config as an array
+     *
+     * @since 1.7.0
+     *
+     * @return array
+     */
+	public function get_form()
+    {
+        return $this->form;
+    }
 
 	/**
 	 * Get a field config IF it should be returned in REST API response.
