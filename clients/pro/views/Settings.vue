@@ -88,7 +88,9 @@
 				e.parentNode.removeChild(e);
 			});
 
-			this.$store.dispatch( 'getAccount' );
+			this.$store.dispatch( 'testConnection' );
+			
+			
 		},
 		methods:{
 			save(){

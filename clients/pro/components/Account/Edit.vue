@@ -43,8 +43,8 @@
 
 		computed: {
 			publicKey:{
-			    get(){
-                    return this.$store.getters.publicKey;
+			    get() {
+					return this.$store.getters.publicKey;
 				},
 				set(newValue){
                     this.$store.commit('publicKey',newValue);
@@ -65,9 +65,6 @@
 
 		},
 		methods: {
-			...mapMutations({
-                secretKey: 'secretKey',
-            }),
 			publicKeyChange(ev){
                 this.$store.commit('publicKey',ev.target.value);
 			},

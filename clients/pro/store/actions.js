@@ -19,7 +19,6 @@ export const ACTIONS = {
 					r = response.data;
 				}
 				context.commit('forms', r.forms);
-                context.commit('connected',false);//prevents next line form dispatching getLayouts
                 context.commit('apiKeys', r.apiKeys);
                 context.commit('connected',true);
                 context.commit('accountId', r.account_id);
@@ -83,7 +82,8 @@ export const ACTIONS = {
 			if( state.connected ){
                 resolve('Already Connected');
             }
-			if (state.account.apiKeys.public && state.account.apiKeys.secret) {
+
+			if ('string' === typeof state.account.apiKeys.public && 'string' === typeof state.account.apiKeys.secret) {
 				return appAPI.get(
 					urlString(
 						{
@@ -93,21 +93,20 @@ export const ACTIONS = {
 						'/account/verify'
 					)
 				).then(r => {
+						commit( 'connected', true );
                         state.account.plan = r.plan;
 						state.account.id = r.id;
-						commit( 'connected', true );
 						resolve(r);
 					},
 					error => {
-                        console.log(101);
-
-                        context.commit('connected',false);
+                        commit('connected',false);
                         reject(error);
 					});
 
 			}else{
 				reject( 'Not Connected' );
 			}
+
 		});
 
 	},
@@ -118,7 +117,7 @@ export const ACTIONS = {
 					{
 						simple: true,
 						public: state.account.apiKeys.public,
-						token: state.account.apiKeys.token,
+						token: appToken( state.account.apiKeys ),
 					},
 					'/layouts/list'
 				)
