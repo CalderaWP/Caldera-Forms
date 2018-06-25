@@ -158,7 +158,7 @@ class Caldera_Forms_Admin {
 
 		add_action(  'caldera_forms_admin_init', array( __CLASS__ , 'init_privacy_settings' ) );
 
-        add_action( 'caldera_forms_admin_init', array( $this, 'add_suggested_privacy_content' ), 35 );
+        add_action( 'admin_init', array( __CLASS__, 'add_suggested_privacy_content' ), 35 );
 
 		/**
 		 * Runs after Caldera Forms admin is initialized
@@ -1561,7 +1561,56 @@ class Caldera_Forms_Admin {
 	 * @param array $data
 	 */
 	public static function save_a_form( $data ){
+		$saved_form = Caldera_Forms_Forms::get_form( $data['ID'] );
+		if( ! empty( $saved_form ) && isset( $saved_form[ 'fields' ] ) ){
+			$extra_fields = self::get_editor_extra_fields($saved_form );
+			$form = new Caldera_Forms_API_Privacy($data);
+			if( isset( $extra_fields['email_identifying_fields'] ) ){
+				$form->set_email_identifying_fields( $extra_fields['email_identifying_fields'] );
+			}
+			if( isset( $extra_fields['personally_identifying_fields'] ) ){
+				$form->set_pii_fields( $extra_fields['personally_identifying_fields'] );
+			}
+
+			$data = $form->get_form();
+			if( isset( $extra_fields['is_privacy_export_enabled'] ) ){
+				$data = Caldera_Forms_Forms::update_privacy_export_enabled( $data, boolval($extra_fields['is_privacy_export_enabled']));
+			}
+		}
+
 		Caldera_Forms_Forms::save_form( $data );
+
+	}
+
+
+    /**
+     * Get the additional fields of form that are not used in the editor
+	 *
+	 * @since 1.7.1
+	 *
+	 * @param array $form Form config to get saved field values from
+     * @return array
+     */
+	public static function get_editor_extra_fields(array $form )
+	{
+        return array_merge(
+            [
+                'email_identifying_fields' => Caldera_Forms_Forms::email_identifying_fields($form, true ),
+                'personally_identifying_fields' => Caldera_Forms_Forms::personally_identifying_fields($form,true),
+                'is_privacy_export_enabled' => Caldera_Forms_Forms::is_privacy_export_enabled($form),
+            ],
+            /**
+             * Add additional fields to the non-editor fields
+             *
+             * These values will be saved with the form, unedited.
+             *
+             * @since 1.7.0
+             *
+             * @param array $field Extra fields.
+             */
+            apply_filters( 'caldera_forms_editor_extra_fields', [] )
+
+        );
 	}
 
 	/**

@@ -3,7 +3,7 @@ Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
 Tags: free wordpress form builder, formbuilder, form builder, contact form,  contact me, custom form, forms, form, custom forms, forms creator, caldera forms, calderawp, wp form, wp form builder, form, drag and drop, email, awesome, wordpress free form builder, echecks, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, eCheck,dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, gravity forms, ninja forms, contact, email, auto-responder, aweber, convertkit, builder, contact forms, search, ab testing, a/b testing, split testing, shortcode, wordpress, awesome plugin, plugin, easy, braintree form, dwolla form, authorize.net form, mailchimp form, mailchimp popup, aweber form, convertkit form, stripe form, stripe popup, eCheck form, responsive,
 Requires at least: 4.7
 Tested up to: 4.9.7
-Stable tag: 1.7.0
+Stable tag: 1.7.1.4
 License: GPLv2
 Requires PHP: 5.6
 
@@ -793,13 +793,26 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 
 == Changelog ==
-= Caldera Forms 1.7.0 (May 31, 2017) GDPR, PHP, Onward =
+= Caldera Forms 1.7.1 (June 7, 2018) Flushing Meadows =
+See: [https://calderaforms.com/updates/caldera-forms-1-7-1](https://calderaforms.com/updates/caldera-forms-1-7-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-1)
+
+* FIXED: Rewrite rules could be flushed during activation in a way that causes an error.
+* FIXED: Forms with advanced file fields not submitting properly on Safari and Edge.
+* FIXED: Privacy settings being lost on form update.
+* FIXED: PHP Warning when there are no internal forms.
+* 1.7.1.1: Remove all flush rewrites
+* 1.7.1.2: https://github.com/CalderaWP/Caldera-Forms/issues/2595
+* 1.7.1.3: https://github.com/CalderaWP/Caldera-Forms/issues/2597
+* 1.7.1.4: https://github.com/CalderaWP/Caldera-Forms/issues/2574#issuecomment-395792791
+
+= Caldera Forms 1.7.0 (May 31, 2018) GDPR, PHP, Onward =
+
 See: [https://calderaforms.com/updates/caldera-forms-1-7-0](https://calderaforms.com/updates/caldera-forms-1-7-0?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
 
 [GPDR Privacy Tools Preview Release](https://calderaforms.com/updates/caldera-forms-1-7-0-beta-1-gdpr-compliance-tools-preview?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0): May 15, 2018
 
-* ADDED: $GDPR [Consent fields and privacy page magic tag ](https://calderaforms.com/doc/consent-field/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
-* ADDED: $GDPR [Option to delete all entries of a from](https://calderaforms.com/doc/delete-saved-entries-caldera-form/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
+* ADDED: #GDPR [Consent fields and privacy page magic tag ](https://calderaforms.com/doc/consent-field/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
+* ADDED: #GDPR [Option to delete all entries of a form](https://calderaforms.com/doc/delete-saved-entries-caldera-form/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0) ADDED: $GDPR [Option to delete all entries of a from](https://calderaforms.com/doc/delete-saved-entries-caldera-form/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
 * ADDED: #GDPR [Integration with core exporters and erasers and a shiny new privacy page](https://calderaforms.com/doc/setting-caldera-forms-gdpr-data-requests/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
 * IMPROVED: #GDPR [Marking fields as containing personally identifiable information](https://calderaforms.com/gdpr#pii?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
 * ADDED: #GDPR [Developer-facing APIs](https://calderaforms.com/doc/gdpr-api/) for getting fields used for personally identifiable data, modifying the data supplied to WordPress' exporters and erasers by Caldera Forms and more.

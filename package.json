@@ -1,6 +1,6 @@
 {
   "name": "caldera-forms",
-  "version": "1.7.0",
+  "version": "1.7.2",
   "description": "Apex WordPress Forms",
   "main": "Gruntfile.js",
   "repository": {
@@ -24,7 +24,9 @@
     "dev:webpack": "cross-env BABEL_ENV=default webpack --watch",
     "dev:grunt": "grunt watch",
     "version": "grunt version_number",
-    "package": "npm run build && grunt make"
+    "package": "npm run build && grunt make",
+    "test": "jest",
+    "test:watch" : "jest --watch"
   },
   "browserslist": [
     "last 2 versions",
@@ -82,6 +84,8 @@
     "grunt-remove": "^0.1.0",
     "grunt-text-replace": "^0.4.0",
     "html-webpack-plugin": "^2.22.0",
+    "jest": "^23.1.0",
+    "jest-cli": "^23.1.0",
     "load-grunt-tasks": "^3.5.2",
     "locutus": "^2.0.9",
     "lodash.debounce": "^4.0.8",
