@@ -6,7 +6,7 @@ Vue.use(Vuex);
 import CFProConfig from './util/wpConfig'
 
 const STATE = {
-	loading: false,
+	loading: false == CFProConfig.token ? false : true,
 	connected: false,
 	forms: [
 	],

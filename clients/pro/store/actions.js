@@ -1,10 +1,15 @@
-import { localAPI, appAPI, appToken } from './util/API';
+import { localAPI, appAPI, appToken, objHasProp } from './util/API';
 import { urlString } from './util/urlString';
 import CFProConfig from  './util/wpConfig';
 
 export const ACTIONS = {
 	getAccount(context){
+
 		return new Promise((resolve, reject) => {
+			if( ! context.connected ){
+				reject('Not connected');
+
+			}
 			localAPI.get().then(response => {
 				var r;
 				if ('string' == typeof response.data) {
@@ -18,14 +23,20 @@ export const ACTIONS = {
 				} else {
 					r = response.data;
 				}
-				context.commit('forms', r.forms);
-                context.commit('apiKeys', r.apiKeys);
-                context.commit('connected',true);
-                context.commit('accountId', r.account_id);
-				context.commit('plan', r.plan);
-				context.commit('logLevel', r.logLevel);
-				context.commit('enhancedDelivery', r.enhancedDelivery);
-				context.commit('formScreen', r.hasOwnProperty( 'formScreen' ) ? r.formScreen : CFProConfig.formScreen );
+				if( ! objHasProp( r.apiKeys, 'token' ) || false === r.apiKeys.token ){
+					context.commit('connected',false);
+
+				}else{
+					context.commit('forms', r.forms);
+					context.commit('connected',true);
+					context.commit('accountId', r.account_id);
+					context.commit('plan', r.plan);
+					context.commit('logLevel', r.logLevel);
+					context.commit('enhancedDelivery', r.enhancedDelivery);
+					context.commit('formScreen', r.hasOwnProperty( 'formScreen' ) ? r.formScreen : CFProConfig.formScreen );
+
+				}
+
 				resolve(response);
 			}, error => {
 				reject(error);
@@ -33,6 +44,7 @@ export const ACTIONS = {
 		})
 	},
 	saveAccount(context) {
+
 		let key = context.state.account.apiKeys.public;
 		if( key && 'string' === typeof key ){
 			key = key.trim();
@@ -65,6 +77,10 @@ export const ACTIONS = {
 	},
     openApp({commit, state}) {
         return new Promise((resolve, reject) => {
+			if( ! state.connected ){
+				reject('Not connected');
+
+			}
 			const url = urlString(
                 {
                     public: state.account.apiKeys.public,
