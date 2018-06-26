@@ -1,5 +1,67 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Docs links Renders 1`] = `
+<ul
+  className="list-group"
+  style={
+    Object {
+      "padding": "12px",
+    }
+  }
+>
+  <li
+    className="list-group-item"
+  >
+    <span
+      className="undefined"
+    >
+      <img
+        alt="👀"
+        src="http://twemoji.maxcdn.com/2/72x72/1f440.png"
+        style={
+          Object {
+            "height": "1em",
+            "margin": "0 .05em 0 .1em",
+            "verticalAlign": "-0.1em",
+            "width": "1em",
+          }
+        }
+      />
+    </span>
+    <a
+      href="https://calderaforms.com/doc/setting-caldera-forms-gdpr-data-requests/?utm_source=wp-admin&utm_campaign=privacy-settings"
+    >
+      Setting Up Caldera Forms For GDPR Requests
+    </a>
+  </li>
+  <li
+    className="list-group-item"
+  >
+    <span
+      className="undefined"
+    >
+      <img
+        alt="👀"
+        src="http://twemoji.maxcdn.com/2/72x72/1f440.png"
+        style={
+          Object {
+            "height": "1em",
+            "margin": "0 .05em 0 .1em",
+            "verticalAlign": "-0.1em",
+            "width": "1em",
+          }
+        }
+      />
+    </span>
+    <a
+      href="https://calderaforms.com/gdpr/?utm_source=wp-admin&utm_campaign=privacy-settings"
+    >
+      All Caldera Forms GDPR Compliance Tools
+    </a>
+  </li>
+</ul>
+`;
+
 exports[`Field group component Help text is optional 1`] = `
 <div
   className="form-group"
@@ -107,7 +169,11 @@ exports[`Helpbox Does what it does. This needs broken up 1`] = `
           }
         />
       </span>
-      Email Identifying Fields: The field(s) of your form that can be used to determine whose data an entry belongs to.
+      <a
+        href="https://calderaforms.com/doc/setting-caldera-forms-gdpr-data-requests/?utm_source=wp-admin&utm_campaign=privacy-settings"
+      >
+        Setting Up Caldera Forms For GDPR Requests
+      </a>
     </li>
     <li
       className="list-group-item"
@@ -128,7 +194,11 @@ exports[`Helpbox Does what it does. This needs broken up 1`] = `
           }
         />
       </span>
-      Personally Identifying Fields (PII): The field(s) of your form that contain PII about the person identified in the email identifying field.
+      <a
+        href="https://calderaforms.com/gdpr/?utm_source=wp-admin&utm_campaign=privacy-settings"
+      >
+        All Caldera Forms GDPR Compliance Tools
+      </a>
     </li>
   </ul>
   <h3>

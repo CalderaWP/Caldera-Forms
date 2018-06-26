@@ -1,7 +1,17 @@
 import React from 'react';
 import { Twemoji } from 'react-emoji-render';
 import {ListGroup, ListGroupItem } from 'react-bootstrap'
-export const DocLinks = () => {
+import PropTypes from 'prop-types';
+
+/**
+ * Shows the doc links in the Privacy settings page
+ *
+ * @since 1.7.2
+ *
+ * @param props
+ * @return {*}
+ */
+export const DocLinks = (props) => {
     return (
         <React.Fragment>
             <ListGroup
@@ -19,8 +29,16 @@ export const DocLinks = () => {
                        All Caldera Forms GDPR Compliance Tools
                     </a>
                 </ListGroupItem>
+				<ListGroupItem>
+                    <Twemoji text=":eyes:" />
+                    {props.children}
+                </ListGroupItem>
             </ListGroup>
         </React.Fragment>
     )
 };
 
+DocLinks.propTypes = {
+	extraLink: PropTypes.string,
+	extraLinkText: PropTypes.string
+};

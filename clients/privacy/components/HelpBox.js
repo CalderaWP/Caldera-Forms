@@ -29,22 +29,7 @@ export const HelpBox = (props) => {
             <h3>
                 <Twemoji text=":volcano: Documentation" />
             </h3>
-            <ListGroup
-                style={{padding:'12px'}}
-            >
-                <ListGroupItem>
-                    <Twemoji text=":eyes:" />
-                    <a href="https://calderaforms.com/doc/setting-caldera-forms-gdpr-data-requests/?utm_source=wp-admin&utm_campaign=privacy-settings">
-                        Setting Up Caldera Forms For GDPR Requests
-                    </a>
-                </ListGroupItem>
-                <ListGroupItem>
-                    <Twemoji text=":eyes:" />
-                    <a href="https://calderaforms.com/gdpr/?utm_source=wp-admin&utm_campaign=privacy-settings">
-                       All Caldera Forms GDPR Compliance Tools
-                    </a>
-                </ListGroupItem>
-            </ListGroup>
+            <HelpBox />
         </div>
     )
 };

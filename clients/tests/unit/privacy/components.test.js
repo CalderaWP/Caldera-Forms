@@ -1,6 +1,7 @@
 import renderer from 'react-test-renderer';
 import {FieldGroup} from "../../../privacy/components/FieldGroup";
 import {HelpBox} from "../../../privacy/components/HelpBox";
+import {DocLinks} from "../../../privacy/components/DocLinks";
 import {IsEmailIdentifyingField} from "../../../privacy/components/IsEmailIdentifyingField";
 import {FormPrivacySettings} from "../../../privacy/components/FormPrivacySettings";
 import {FieldsPrivacySettings} from "../../../privacy/components/FieldsPrivacySettings";
@@ -36,6 +37,16 @@ describe( 'Helpbox', () => {
 			<HelpBox
 				saveButton={<button>Push Me</button>}
 			/>
+		);
+		expect( helpBox.toJSON() ).toMatchSnapshot();
+
+	});
+});
+
+describe( 'Docs links', () => {
+	it( 'Renders', () => {
+		const helpBox = renderer.create(
+			<DocLinks/>
 		);
 		expect( helpBox.toJSON() ).toMatchSnapshot();
 

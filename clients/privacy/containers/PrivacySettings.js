@@ -18,6 +18,7 @@ import {FormSelectorNoGutenberg} from "../../components/FormSelectorNoGutenberg"
 import {CalderaHeader} from "../../components/CalderaHeader";
 import {PageBody} from "../../components/PageBody";
 import {StatusIndicator} from "../../components/StatusIndicator";
+import {DocLinks} from "../components/DocLinks";
 import {
     startSpinner,
     stopSpinner,
@@ -100,8 +101,13 @@ export const PrivacySettings = (props) => {
         //Find form details
         const formRequest = requestForm(newFormsId);
         formRequest.then( (form) => {
-            props.setForm(form,newFormsId);
-            props.setEditForm(newFormsId);
+            if( form.hasOwnProperty('responseText') ){
+				reportApiError(form);
+            }else{
+				props.setForm(form,newFormsId);
+				props.setEditForm(newFormsId);
+            }
+
             delete notComplete.f;
             if( ! notComplete.hasOwnProperty('p') ){
                 stopSpinner();
@@ -114,7 +120,11 @@ export const PrivacySettings = (props) => {
         //Find privacy settings
         const privacySettingsRequest = requestPrivacySettings(newFormsId);
         privacySettingsRequest.then( (settings) => {
-			props.setFormPrivacyForm(settings);
+			if( settings.hasOwnProperty('responseText') ) {
+			    reportApiError(settings);
+			}else{
+				props.setFormPrivacyForm(settings);
+			}
             delete notComplete.p;
             if( ! notComplete.hasOwnProperty('f') ){
                 stopSpinner();
@@ -217,9 +227,12 @@ export const PrivacySettings = (props) => {
                         show={props.status.show}
                         success={props.status.success}
                     />
+                    <DocLinks >
+                        {'Strange errors after loading a form? Make sure pretty permalinks are enabled.'}
+                    </DocLinks>
                 </div>
                 {true === props.spin &&
-                    <p className={'spinner is-active' }></p>
+                    <p className={'spinner is-active' } />
                 }
             </PageBody>
         </div>
