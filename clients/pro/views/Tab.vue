@@ -35,15 +35,15 @@
 			...mapActions([
 				'getLayouts',
 				'getAccount',
-				'saveAccount'
+				'saveAccount',
+				'testConnection'
 			]),
 		},
 		beforeMount(){
 			//If token is false, CF Pro is not connected
 			if (this.apiKeys.token) {
-				this.getAccount().then(() => {
-					this.getLayouts();
-					this.form = this.$store.getters.getFormsById(this.formScreen);
+				this.testConnection().then(() => {
+				
 				}, error => {
 					//error is already handled. But must be caught to avoid a new error
 				});
