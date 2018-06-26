@@ -258,3 +258,55 @@ function caldera_forms_validate_field_star_rating( $entry, $field, $form ){
 	return $entry;
 
 }
+
+add_filter( 'caldera_forms_validate_field_email', 'caldera_forms_validate_field_email', 10, 3 );
+/**
+ * Reject field value if ! is_email() on email fields
+ *
+ * @uses "caldera_forms_validate_field_email" filter
+ *
+ * @since 1.7.2
+ *
+ * @param string|mixed $entry
+ * @param array $field
+ * @param array $form
+ *
+ * @return WP_Error|string
+ */
+function caldera_forms_validate_field_email( $entry, $field, $form ){
+    if(  empty( $entry ) ){
+        return $entry;
+    }
+
+    if( ! is_email( $entry ) ){
+        return new WP_Error( 400, __( 'Not a valid email address', 'caldera-forms' ) );
+    }
+
+    return $entry;
+}
+
+add_filter( 'caldera_forms_validate_field_number', 'caldera_forms_validate_field_number', 10, 3 );
+/**
+ * Reject field value if ! is_numeric() on number fields
+ *
+ * @uses "caldera_forms_validate_field_number" filter
+ *
+ * @since 1.7.2
+ *
+ * @param string|mixed $entry
+ * @param array $field
+ * @param array $form
+ *
+ * @return WP_Error|string
+ */
+function caldera_forms_validate_field_number( $entry, $field, $form ){
+    if(  empty( $entry ) ){
+        return $entry;
+    }
+
+    if( ! is_numeric( $entry ) ){
+        return new WP_Error( 400, __( 'Not a number', 'caldera-forms' ) );
+    }
+
+    return $entry;
+}
