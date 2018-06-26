@@ -89,7 +89,9 @@ class keys implements arrayable {
 	 * @return string
 	 */
 	public function get_token(){
-		return sha1( $this->get_public() . $this->get_secret() );
+	    return $this->get_public() && $this->get_secret() ?
+		    sha1( $this->get_public() . $this->get_secret() )
+            : false;
 
 	}
 
