@@ -3952,25 +3952,39 @@ class Caldera_Forms
 
 		$type = Caldera_Forms_Field_Util::get_type($field, $form);
 
+		// Logic for grouped controls
+		if ($type == "radio" || $type == "checkbox") {
+			$wrapper_before = "<fieldset data-field-wrapper=\"" . $field['ID'] . "\" class=\"" . $field_wrapper_class . "\" id=\"" . $field_id_attr . "-wrap\">\r\n";
+			$label_before = "<legend id=\"" . $field['ID'] . "\" class=\"" . implode(' ',
+					$field_classes['field_label']) . "\">";
+			$label_after = "</legend>";
+			$wrapper_after = "</fieldset>\r\n";
+		} else {
+			$wrapper_before = "<div data-field-wrapper=\"" . $field['ID'] . "\" class=\"" . $field_wrapper_class . "\" id=\"" . $field_id_attr . "-wrap\">\r\n";
+			$label_before = "<label id=\"" . $field['ID'] . "Label\" for=\"" . $field_id_attr . "\" class=\"" . implode(' ',
+					$field_classes['field_label']) . "\">";
+			$label_after = "</label>";
+			$wrapper_after = "</div>\r\n";
+		}
+
 		$field_structure = array(
 			"field" => $field,
 			"id" => $field['ID'],//'fld_' . $field['slug'],
 			"name" => $field['ID'],//$field['slug'],
-			"wrapper_before" => "<div data-field-wrapper=\"" . $field['ID'] . "\" class=\"" . $field_wrapper_class . "\" id=\"" . $field_id_attr . "-wrap\">\r\n",
+			"wrapper_before" => $wrapper_before,
 			"field_before" => "<div class=\"" . $field_input_class . "\">\r\n",
-			"label_before" => "<label id=\"" . $field['ID'] . "Label\" for=\"" . $field_id_attr . "\" class=\"" . implode(' ',
-					$field_classes['field_label']) . "\">",
+			"label_before" => $label_before,
 			"label" => $field['label'],
 			"label_required" => (empty($field['hide_label']) ? (!empty($field['required']) ? " <span aria-hidden=\"true\" role=\"presentation\" class=\"" . implode(' ',
 					$field_classes['field_required_tag']) . "\" style=\"color:#ee0000;\">*</span>" : "") : null),
-			"label_after" => "</label>",
+			"label_after" => $label_after,
 			"field_placeholder" => (!empty($field['hide_label']) ? 'placeholder="' . htmlentities($field['label']) . '"' : null),
 			"field_required" => (!empty($field['required']) ? 'required="required"' : null),
 			"field_value" => null,
 			"field_caption" => (!empty($field['caption']) ? "<span id=\"" . $field['ID'] . "Caption\" class=\"" . implode(' ',
 					$field_classes['field_caption']) . "\">" . $field['caption'] . "</span>\r\n" : ""),
 			"field_after" => "</div>\r\n",
-			"wrapper_after" => "</div>\r\n",
+			"wrapper_after" => $wrapper_after,
 			"aria" => array()
 		);
 
