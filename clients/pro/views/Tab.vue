@@ -39,17 +39,22 @@
 			]),
 		},
 		beforeMount(){
-			this.getAccount().then( () => {
-				this.getLayouts();
-				this.form = this.$store.getters.getFormsById( this.formScreen );
-			});
-
+			//If token is false, CF Pro is not connected
+			if (this.apiKeys.token) {
+				this.getAccount().then(() => {
+					this.getLayouts();
+					this.form = this.$store.getters.getFormsById(this.formScreen);
+				}, error => {
+					//error is already handled. But must be caught to avoid a new error
+				});
+			}
 		},
 		computed: mapState({
 			layouts: state => state.layouts,
 			connected: state => state.connected,
 			formScreen: state => state.formScreen,
-			mainAlert: state => state.mainAlert
+			mainAlert: state => state.mainAlert,
+			apiKeys: state => state.account.apiKeys
 		}),
 		data(){
 			return{
