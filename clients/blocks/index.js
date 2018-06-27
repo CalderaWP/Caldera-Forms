@@ -3,9 +3,9 @@
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 //Setup store;
-import {CALDERA_FORMS_STORE_NAME,STORE,SET_CURRENT_FORM_ID,requestFormPreview} from "./store";
-const { registerStore, dispatch } = wp.data;
-const InspectorControls = wp.blocks.InspectorControls;
+import {CALDERA_FORMS_STORE_NAME,STORE,requestFormPreview} from "./store";
+const { registerStore,  } = wp.data;
+const InspectorControls = wp.editor.InspectorControls;
 const {Placeholder} = wp.components;
 const formStore = registerStore(CALDERA_FORMS_STORE_NAME,STORE);
 //Import CF components
@@ -13,7 +13,7 @@ import {FormChooserWithSelect} from "./components/formChooser";
 import {FormPreviewWithSelect} from "./components/FormPreview";
 //Create block
 registerBlockType( 'calderaforms/cform', {
-	title: __( 'Caldera Form', 'caldera-forms' ),
+	title: __( 'Caldera Form' ),
 	icon: 'feedback',
 	category: 'common',
     attributes: {
