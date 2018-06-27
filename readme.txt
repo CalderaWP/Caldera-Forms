@@ -3,7 +3,7 @@ Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
 Tags: free wordpress form builder, formbuilder, form builder, contact form,  contact me, custom form, forms, form, custom forms, forms creator, caldera forms, calderawp, wp form, wp form builder, form, drag and drop, email, awesome, wordpress free form builder, echecks, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, eCheck,dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, gravity forms, ninja forms, contact, email, auto-responder, aweber, convertkit, builder, contact forms, search, ab testing, a/b testing, split testing, shortcode, wordpress, awesome plugin, plugin, easy, braintree form, dwolla form, authorize.net form, mailchimp form, mailchimp popup, aweber form, convertkit form, stripe form, stripe popup, eCheck form, responsive,
 Requires at least: 4.7
 Tested up to: 4.9.7
-Stable tag: 1.7.1.4
+Stable tag: 1.7.2
 License: GPLv2
 Requires PHP: 5.6
 
@@ -793,6 +793,19 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 
 == Changelog ==
+= Caldera Forms 1.7.2 (June 27, 2018) Infinite Jest =
+See: [https://calderaforms.com/updates/caldera-forms-1-7-2](https://calderaforms.com/updates/caldera-forms-1-7-2?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-2)
+
+* FIXED: [Incorrect usage of Gutenberg InspectorControls](https://github.com/CalderaWP/Caldera-Forms/issues/2612)
+* FIXED: [Input masks not initialized if conditional logic is used on a field.](https://github.com/CalderaWP/Caldera-Forms/issues/2612)
+* FIXED: [HTML fields not applying wpautop formatting](https://github.com/CalderaWP/Caldera-Forms/issues/2619)
+* FIXED: [Caldera Forms Pro API keys did not appear to save](https://github.com/CalderaWP/Caldera-Forms/issues/2608)
+* FIXED: [Anti-spam Honey Pot Settings Not Saving](https://github.com/CalderaWP/Caldera-Forms/issues/2489)
+* ADDED: [JavaScript Unit Tests With Jest](https://github.com/CalderaWP/Caldera-Forms/issues/2596)
+* ADDED: [Documentation links in Privacy Screen Before Choosing Form](https://github.com/CalderaWP/Caldera-Forms/issues/2598)
+* ADDED: [API Client and State Modules](https://github.com/CalderaWP/Caldera-Forms/issues/2564)
+* ADDED: [Additional Server-side Validation for email and number fields](https://github.com/CalderaWP/Caldera-Forms/issues/2638)
+
 = Caldera Forms 1.7.1 (June 7, 2018) Flushing Meadows =
 See: [https://calderaforms.com/updates/caldera-forms-1-7-1](https://calderaforms.com/updates/caldera-forms-1-7-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-1)
 
