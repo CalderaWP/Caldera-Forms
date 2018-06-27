@@ -59,6 +59,9 @@ exports[`Docs links Renders 1`] = `
       All Caldera Forms GDPR Compliance Tools
     </a>
   </li>
+  <li
+    className="list-group-item"
+  />
 </ul>
 `;
 
@@ -139,7 +142,7 @@ exports[`Helpbox Does what it does. This needs broken up 1`] = `
           }
         }
       />
-       FAQ
+       Terms
     </span>
   </h3>
   <ul
@@ -169,11 +172,7 @@ exports[`Helpbox Does what it does. This needs broken up 1`] = `
           }
         />
       </span>
-      <a
-        href="https://calderaforms.com/doc/setting-caldera-forms-gdpr-data-requests/?utm_source=wp-admin&utm_campaign=privacy-settings"
-      >
-        Setting Up Caldera Forms For GDPR Requests
-      </a>
+      Email Identifying Fields: The field(s) of your form that can be used to determine whose data an entry belongs to.
     </li>
     <li
       className="list-group-item"
@@ -194,11 +193,7 @@ exports[`Helpbox Does what it does. This needs broken up 1`] = `
           }
         />
       </span>
-      <a
-        href="https://calderaforms.com/gdpr/?utm_source=wp-admin&utm_campaign=privacy-settings"
-      >
-        All Caldera Forms GDPR Compliance Tools
-      </a>
+      Personally Identifying Fields (PII): The field(s) of your form that contain PII about the person identified in the email identifying field.
     </li>
   </ul>
   <h3>
@@ -278,6 +273,9 @@ exports[`Helpbox Does what it does. This needs broken up 1`] = `
         All Caldera Forms GDPR Compliance Tools
       </a>
     </li>
+    <li
+      className="list-group-item"
+    />
   </ul>
 </div>
 `;

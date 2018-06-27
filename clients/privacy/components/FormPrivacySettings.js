@@ -81,6 +81,7 @@ export const FormPrivacySettings = (props) => {
         });
     };
 
+
     return (
         <section
             className={'layout-grid'}
@@ -121,15 +122,15 @@ export const FormPrivacySettings = (props) => {
                 </div>
                 <HelpBox
                     saveButton={
-                        <Button
-                            type="submit"
-                            onClick={() => {
-                                props.onSave(props.privacySettings, props.form.ID)
-                            }}
-                            className={'primary button button-primary'}
-                        >
-                            Save
-                        </Button>
+						<button
+							type="submit"
+							onClick={() => {
+								props.onSave(props.privacySettings, props.form.ID)
+							}}
+							className={'primary button button-primary'}
+						>
+							Save
+						</button>
                     }
                 />
             </div>

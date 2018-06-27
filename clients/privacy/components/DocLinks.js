@@ -30,7 +30,6 @@ export const DocLinks = (props) => {
                     </a>
                 </ListGroupItem>
 				<ListGroupItem>
-                    <Twemoji text=":eyes:" />
                     {props.children}
                 </ListGroupItem>
             </ListGroup>
