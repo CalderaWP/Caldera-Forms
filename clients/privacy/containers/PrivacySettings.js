@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux'
 import {
     setForm,
     setEditForm,
@@ -19,6 +18,7 @@ import {FormSelectorNoGutenberg} from "../../components/FormSelectorNoGutenberg"
 import {CalderaHeader} from "../../components/CalderaHeader";
 import {PageBody} from "../../components/PageBody";
 import {StatusIndicator} from "../../components/StatusIndicator";
+import {DocLinks} from "../components/DocLinks";
 import {
     startSpinner,
     stopSpinner,
@@ -71,8 +71,15 @@ export const PrivacySettings = (props) => {
      */
     function reportApiError(r) {
         props.stopSpinner();
-        const response = JSON.parse(r.responseText);
-        props.updateStatus(response.message, false);
+		if (r.hasOwnProperty('responseText')) {
+			const response = JSON.parse(r.responseText);
+			props.updateStatus(response.message, false);
+		}else if( r.hasOwnProperty('message' ) ){
+			props.updateStatus(r.message, false);
+		}else{
+			props.updateStatus('Error', false);
+
+		}
        // hideStatusIndicator();
     }
 
@@ -94,8 +101,13 @@ export const PrivacySettings = (props) => {
         //Find form details
         const formRequest = requestForm(newFormsId);
         formRequest.then( (form) => {
-            props.setForm(form,newFormsId);
-            props.setEditForm(newFormsId);
+            if( form.hasOwnProperty('responseText') ){
+				reportApiError(form);
+            }else{
+				props.setForm(form,newFormsId);
+				props.setEditForm(newFormsId);
+            }
+
             delete notComplete.f;
             if( ! notComplete.hasOwnProperty('p') ){
                 stopSpinner();
@@ -108,14 +120,18 @@ export const PrivacySettings = (props) => {
         //Find privacy settings
         const privacySettingsRequest = requestPrivacySettings(newFormsId);
         privacySettingsRequest.then( (settings) => {
-            props.setFormPrivacyForm(settings);
+			if( settings.hasOwnProperty('responseText') ) {
+			    reportApiError(settings);
+			}else{
+				props.setFormPrivacyForm(settings);
+			}
             delete notComplete.p;
             if( ! notComplete.hasOwnProperty('f') ){
                 stopSpinner();
                 notComplete.stopped =true;
             }
         }).catch( (r) => {
-            reportApiError(r);
+			reportApiError(r);
         });
 
         //Make sure spinner gets stopped
@@ -123,7 +139,7 @@ export const PrivacySettings = (props) => {
             if( false === notComplete.stopped){
                 stopSpinner();
             }
-        },2500)
+        },2500);
     };
 
     /**
@@ -146,8 +162,7 @@ export const PrivacySettings = (props) => {
             hideStatusIndicator();
         }).catch( (r) => {
             reportApiError(r);
-        })
-
+        });
 
     };
 
@@ -212,9 +227,12 @@ export const PrivacySettings = (props) => {
                         show={props.status.show}
                         success={props.status.success}
                     />
+                    <DocLinks >
+                        {'Strange errors after loading a form? Make sure pretty permalinks are enabled.'}
+                    </DocLinks>
                 </div>
                 {true === props.spin &&
-                    <p className={'spinner is-active' }></p>
+                    <p className={'spinner is-active' } />
                 }
             </PageBody>
         </div>

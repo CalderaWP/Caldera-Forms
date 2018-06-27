@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.7.1 - 2018-06-07 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.7.2-rc.2 - 2018-06-27 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -5690,7 +5690,8 @@ function toggle_button_init(id, el){
          } );
          
          setupInputMasks();
-     };
+		 $( document ).on( 'cf.add', setupInputMasks );
+	 };
 
      /**
       * Validation handler for adding/removing errors for field types

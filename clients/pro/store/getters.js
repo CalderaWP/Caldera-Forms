@@ -5,7 +5,7 @@ export const GETTERS = {
 		return state.account.apiKeys.public;
 	},
 	secretKey: state => {
-		return state.account.apiKeys.secret;
+		return  state.account.apiKeys.secret;
 	},
 	apiKeys: state => {
 		return state.account.apiKeys;
