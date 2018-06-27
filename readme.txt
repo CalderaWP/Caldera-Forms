@@ -813,8 +813,11 @@ See: [https://calderaforms.com/updates/caldera-forms-1-7-1](https://calderaforms
 * FIXED: PHP Warning when there are no internal forms.
 * 1.7.1.1: Remove all flush rewrites
 * 1.7.1.2: https://github.com/CalderaWP/Caldera-Forms/issues/2595
+* 1.7.1.3: https://github.com/CalderaWP/Caldera-Forms/issues/2597
+* 1.7.1.4: https://github.com/CalderaWP/Caldera-Forms/issues/2574#issuecomment-395792791
 
 = Caldera Forms 1.7.0 (May 31, 2018) GDPR, PHP, Onward =
+
 See: [https://calderaforms.com/updates/caldera-forms-1-7-0](https://calderaforms.com/updates/caldera-forms-1-7-0?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
 
 [GPDR Privacy Tools Preview Release](https://calderaforms.com/updates/caldera-forms-1-7-0-beta-1-gdpr-compliance-tools-preview?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0): May 15, 2018
