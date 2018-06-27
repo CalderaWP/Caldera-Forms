@@ -204,7 +204,6 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
 
         if( isset( $request[ 'piiFields' ] ) && is_array( $request[ 'piiFields' ]  ) ){
             $this->form->set_pii_fields( $request[ 'piiFields' ] );
-
         }
 
         //This will save settings (form)

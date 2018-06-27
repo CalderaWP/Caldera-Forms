@@ -57,4 +57,38 @@ export default {
      */
     logLevels: CF_PRO_ADMIN.logLevels,
 
+	/**
+	 * Levels of Monolog logs
+	 *
+	 * Created by "logLevels" index of generated in calderawp\calderaforms\pro\admin\scripts::data()
+	 *
+	 * @since 1.5.9
+	 *
+	 * @type array
+	 */
+	public: CF_PRO_ADMIN.settings.apiKeys.public,
+
+
+	/**
+	 * Levels of Monolog logs
+	 *
+	 * Created by "logLevels" index of generated in calderawp\calderaforms\pro\admin\scripts::data()
+	 *
+	 * @since 1.5.9
+	 *
+	 * @type array
+	 */
+	secret: CF_PRO_ADMIN.settings.apiKeys.secret,
+
+	/**
+	 * Levels of Monolog logs
+	 *
+	 * Created by "logLevels" index of generated in calderawp\calderaforms\pro\admin\scripts::data()
+	 *
+	 * @since 1.5.9
+	 *
+	 * @type array
+	 */
+	token: CF_PRO_ADMIN.settings.apiKeys.token,
+
 };

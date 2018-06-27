@@ -31,7 +31,8 @@
          } );
          
          setupInputMasks();
-     };
+		 $( document ).on( 'cf.add', setupInputMasks );
+	 };
 
      /**
       * Validation handler for adding/removing errors for field types
