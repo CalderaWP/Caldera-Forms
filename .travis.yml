@@ -1,4 +1,4 @@
-sudo: required
+gitsudo: required
 
 language: php
 
