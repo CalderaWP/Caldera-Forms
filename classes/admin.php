@@ -1175,8 +1175,15 @@ class Caldera_Forms_Admin {
          * @param string $post_type Current post type
 		 */
 		if ( $screen->base === 'post' && apply_filters( 'caldera_forms_insert_button_include', true, get_post_type() ) ) {
-			Caldera_Forms_Admin_Assets::post_editor();
 
+			add_action( 'caldera_forms_admin_enqueue_post_editor', ['Caldera_Forms_Admin_Assets', 'post_editor' ]);
+
+            /**
+             * This action causes the assets Caldera Forms loads in the post editor to be enqueued
+			 *
+			 * @since 1.7.3
+             */
+			do_action( 'caldera_forms_admin_enqueue_post_editor' );
 		}
 
 		if ( ! in_array( $screen->base, $this->screen_prefix ) ) {
@@ -1189,10 +1196,26 @@ class Caldera_Forms_Admin {
 			return;
 		}
 
+        add_action( 'caldera_forms_admin_main_enqueue', ['Caldera_Forms_Admin_Assets', 'admin_common' ]);
+
+        /**
+         * This action causes the assets Caldera Forms loads in the main admin page to be enqueued
+         *
+         * @since 1.7.3
+         */
+        do_action( 'caldera_forms_admin_main_enqueue' );
+
 		Caldera_Forms_Admin_Assets::admin_common();
 
 		if ( Caldera_Forms_Admin::is_edit() ) {
-			Caldera_Forms_Admin_Assets::form_editor();
+            add_action( 'caldera_forms_admin_enqueue_form_editor', ['Caldera_Forms_Admin_Assets', 'form_editor' ]);
+
+            /**
+             * This action causes the assets Caldera Forms loads in the form editor to be enqueued
+             *
+             * @since 1.7.3
+             */
+            do_action( 'caldera_forms_admin_enqueue_form_editor' );
 
 		} else {
 
