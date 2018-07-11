@@ -86,7 +86,7 @@ class scripts {
                     'fourthLi'   => esc_html__('Add-ons Included in Yearly Plans', 'caldera-forms'),
                 ],
                 'freeTrial' => [
-                    'firstParagraph'    => esc_html__('Ready to try Caldera Forms Pro? Plans start at just 14.99/ month with a 7 day free trial.', 'caldera-forms' ),
+                    'firstParagraph'    => esc_html__('Ready to try Caldera Forms Pro? Plans start at just $14.99/ month with a 7 day free trial.', 'caldera-forms' ),
                     'buttonLeft'    => esc_html__('View Documentation', 'caldera-forms'),
                     'buttonRight'   => esc_html__('Start Free Trial', 'caldera-forms'),
                 ],
