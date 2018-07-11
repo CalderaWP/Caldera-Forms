@@ -1166,6 +1166,16 @@ class Caldera_Forms_Admin {
 
 		wp_enqueue_style( $this->plugin_slug . '-admin-icon-styles', CFCORE_URL . 'assets/css/dashicon.css', array(), self::VERSION );
 
+        add_action( 'caldera_forms_admin_enqueue_post_editor', ['Caldera_Forms_Admin_Assets', 'post_editor' ]);
+        add_action( 'caldera_forms_admin_main_enqueue', ['Caldera_Forms_Admin_Assets', 'admin_common' ],1);
+        add_action( 'caldera_forms_admin_enqueue_form_editor', ['Caldera_Forms_Admin_Assets', 'form_editor' ]);
+
+        /**
+         * Runs directly before assets MIGHT be enqueued in the WordPress admin
+		 *
+		 * @since 1.7.3
+         */
+        do_action( 'caldera_forms_admin_pre_enqueue' );
 		/**
 		 * Control if Caldera Forms assets run in post editor
          *
@@ -1175,9 +1185,6 @@ class Caldera_Forms_Admin {
          * @param string $post_type Current post type
 		 */
 		if ( $screen->base === 'post' && apply_filters( 'caldera_forms_insert_button_include', true, get_post_type() ) ) {
-
-			add_action( 'caldera_forms_admin_enqueue_post_editor', ['Caldera_Forms_Admin_Assets', 'post_editor' ]);
-
             /**
              * This action causes the assets Caldera Forms loads in the post editor to be enqueued
 			 *
@@ -1196,7 +1203,6 @@ class Caldera_Forms_Admin {
 			return;
 		}
 
-        add_action( 'caldera_forms_admin_main_enqueue', ['Caldera_Forms_Admin_Assets', 'admin_common' ]);
 
         /**
          * This action causes the assets Caldera Forms loads in the main admin page to be enqueued
@@ -1205,10 +1211,7 @@ class Caldera_Forms_Admin {
          */
         do_action( 'caldera_forms_admin_main_enqueue' );
 
-		Caldera_Forms_Admin_Assets::admin_common();
-
 		if ( Caldera_Forms_Admin::is_edit() ) {
-            add_action( 'caldera_forms_admin_enqueue_form_editor', ['Caldera_Forms_Admin_Assets', 'form_editor' ]);
 
             /**
              * This action causes the assets Caldera Forms loads in the form editor to be enqueued
