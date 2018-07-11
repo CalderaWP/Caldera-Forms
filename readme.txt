@@ -4,6 +4,7 @@ Tags: free wordpress form builder, formbuilder, form builder, contact form,  con
 Requires at least: 4.7
 Tested up to: 4.9.7
 Stable tag: 1.7.3-a.1
+Stable tag: 1.7.2
 License: GPLv2
 Requires PHP: 5.6
 
@@ -794,6 +795,7 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 == Changelog ==
 = Caldera Forms 1.7.2 (June 27, 2018) Infinite Jest =
+See: [https://calderaforms.com/updates/caldera-forms-1-7-2](https://calderaforms.com/updates/caldera-forms-1-7-2?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-2)
 * FIXED: [Incorrect usage of Gutenberg InspectorControls](https://github.com/CalderaWP/Caldera-Forms/issues/2612)
 * FIXED: [Input masks not initialized if conditional logic is used on a field.](https://github.com/CalderaWP/Caldera-Forms/issues/2612)
 * FIXED: [HTML fields not applying wpautop formatting](https://github.com/CalderaWP/Caldera-Forms/issues/2619)
