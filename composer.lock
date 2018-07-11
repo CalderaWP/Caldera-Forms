@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "calderawp/caldera-containers",
-            "version": "0.1.1",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CalderaWP/caldera-containers.git",
-                "reference": "66eb851926e6872b4e8f5d5fdf7a1b80ebd43fba"
+                "reference": "32ba0d0e851cbdaaf733f78902bfcba17de7e4b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CalderaWP/caldera-containers/zipball/66eb851926e6872b4e8f5d5fdf7a1b80ebd43fba",
-                "reference": "66eb851926e6872b4e8f5d5fdf7a1b80ebd43fba",
+                "url": "https://api.github.com/repos/CalderaWP/caldera-containers/zipball/32ba0d0e851cbdaaf733f78902bfcba17de7e4b2",
+                "reference": "32ba0d0e851cbdaaf733f78902bfcba17de7e4b2",
                 "shasum": ""
             },
             "require": {
@@ -46,7 +46,7 @@
                     "email": "josh@calderawp.com"
                 }
             ],
-            "time": "2018-04-05T19:34:50+00:00"
+            "time": "2018-05-05T22:43:14+00:00"
         },
         {
             "name": "calderawp/caldera-forms-query",
@@ -54,16 +54,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/CalderaWP/caldera-forms-query.git",
-                "reference": "207ad68abc0ead15ed54bd295c87f3c3149a284a"
+                "reference": "37a7782a61b537fc442425348984a413313326df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CalderaWP/caldera-forms-query/zipball/207ad68abc0ead15ed54bd295c87f3c3149a284a",
-                "reference": "207ad68abc0ead15ed54bd295c87f3c3149a284a",
+                "url": "https://api.github.com/repos/CalderaWP/caldera-forms-query/zipball/37a7782a61b537fc442425348984a413313326df",
+                "reference": "37a7782a61b537fc442425348984a413313326df",
                 "shasum": ""
             },
             "require": {
-                "calderawp/caldera-containers": "^0.1.1",
+                "calderawp/caldera-containers": "^0.2",
                 "nilportugues/sql-query-builder": "^1.5",
                 "php": ">=5.6"
             },
@@ -102,7 +102,7 @@
                 }
             ],
             "description": "Caldera Forms Query Library",
-            "time": "2018-05-24T18:11:51+00:00"
+            "time": "2018-07-10T21:12:12+00:00"
         },
         {
             "name": "inpsyde/wonolog",
