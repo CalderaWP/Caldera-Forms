@@ -370,6 +370,36 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
         return '/' . $this->route_base() . '/(?P<form_id>[\w-]+)';
     }
 
+    /**
+     * Create a form
+     *
+     * @since 1.8.0
+     *
+     * @param WP_REST_Request $request Full data about the request.
+     * @return Caldera_Forms_API_Response|Caldera_Forms_API_Error
+     */
+    public function create_item( WP_REST_Request $request ) {
+        $data = [
+            'ID' => $request[ 'ID' ],
+            'name' => $request[ 'name' ],
+            'template' => $request[ 'template']
+        ];
+
+        $new_form = Caldera_Forms_Forms::create_form( $data );
+        if( ! empty($new_form ) ){
+            try{
+                $this->form_object_factory( $new_form[ 'ID' ], $request );
+            }catch ( Exception $e ){
+                return Caldera_Forms_API_Response_Factory::error_form_not_found();
+            }
+
+            $response_form = $this->prepare_form_for_response( $this->form, $request );
+            return new Caldera_Forms_API_Response( $response_form, 200, array( ) );
+        }
+        return Caldera_Forms_API_Response_Factory::error_form_not_created();
+
+    }
+
 	/**
 	 * Format repsonse for form
 	 *
