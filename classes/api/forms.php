@@ -452,6 +452,11 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
                 'type' => 'string',
                 'required' => false,
                 'enum' => array_keys($templates)
+            ],
+            'clone' => [
+                'description' => __( 'The ID of a form to clone', 'caldera-forms' ),
+                'type' => 'string',
+                'required' => false,
             ]
         ];
     }
