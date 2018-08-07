@@ -56,6 +56,23 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
             )
         );
 
+        register_rest_route( $namespace, $this->id_endpoint_url() . '/togle-active',
+            array(
+                'methods'             => \WP_REST_Server::EDITABLE,
+                'callback'            => array( $this, 'toggle_active' ),
+                'permission_callback' => array( $this, 'update_item_permissions_check' ),
+            )
+        );
+
+        register_rest_route( $namespace, $this->id_endpoint_url() . '/privacy',
+            array(
+                'methods'             => \WP_REST_Server::EDITABLE,
+                'callback'            => array( $this, 'update_privacy_settings' ),
+                'permission_callback' => array( $this, 'update_item_permissions_check' ),
+                'args'                => $this->get_item_args()
+            )
+        );
+
 
 	}
 
@@ -632,6 +649,36 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
             'js' => $prepared_js,
         );
         return new Caldera_Forms_API_Response($data, 200, array());
+    }
+
+
+    /**
+     * Toggle a form's active/inactive state
+     *
+     * @since 1.8.0
+     *
+     * @param WP_REST_Request $request
+     * @return Caldera_Forms_API_Error|Caldera_Forms_API_Response
+     */
+    public function toggle_active(\WP_REST_Request $request ){
+        add_filter( 'caldera_forms_save_revision', '__return_false' );
+        try{
+           $form = $this->form_object_factory( $request[ 'form_id' ], $request );
+        }catch ( Exception $e ){
+            return Caldera_Forms_API_Response_Factory::error_form_not_found();
+        }
+        $form = $form->get_form();
+        if ( ! empty( $form[ 'form_draft' ] ) ) {
+            Caldera_Forms_Forms::form_state( $form );
+        }else{
+            Caldera_Forms_Forms::form_state( $form , false );
+        }
+
+        $form = Caldera_Forms_Forms::get_form( $form['ID'] );
+        add_filter( 'caldera_forms_save_revision', '__return_true' );
+        return new Caldera_Forms_API_Response(
+            ['active' => $form[ 'form_draft' ]]
+        );
     }
 
 }
