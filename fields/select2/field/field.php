@@ -131,9 +131,35 @@ jQuery( function($){
 	var opts = {};
 	<?php } ?>
 
-	$(document).on('cf.add', function(){
-		$('#<?php echo $field_id; ?>').select2( opts );
-	}).trigger('cf.add');
+	// run a function no more than once every time the field needs to be initialized
+	// i.e either on page load or when the conditional field becomes visible
+	var run_on_init_add = function (field_id, init_func) {
+		var init = true;
+		// check if it's already added
+		var elem = $( '#' + field_id );
+		if ( elem.length ) {
+			init = false;
+			init_func( elem );
+		}
+		//TODO: for unconditional fields we don't need to do this
+		$(document).on( 'cf.add', function (event, field) {
+			if ( !init || field.field != field_id )
+				return;
+			var elem = $( '#' + field_id );
+			if ( !elem.length )
+				return;
+			init = false;
+			init_func( elem );
+		});
+		$(document).on( 'cf.remove', function (event, field) {
+			if ( field.field == field_id )
+				init = true;
+		});
+	};
+
+	run_on_init_add( '<?php echo $field_id; ?>', function (elem) {
+		elem.select2( opts );
+	});
 });
 </script>
 <?php
