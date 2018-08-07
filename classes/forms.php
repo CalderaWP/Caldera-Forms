@@ -571,6 +571,7 @@ class Caldera_Forms_Forms {
 		$form_templates = Caldera_Forms_Admin::internal_form_templates();
 
 
+		$original_function_args = $newform;
 		if(!empty($newform['clone'])){
 			$clone = $newform['clone'];
 		}
@@ -623,7 +624,7 @@ class Caldera_Forms_Forms {
 		if(!empty($clone)){
 			$clone_form = self::get_form( $clone );
 			if(!empty($clone_form['ID']) && $clone == $clone_form['ID']){
-				$newform = array_merge($clone_form, $newform);
+				$newform = array_merge($clone_form, $original_function_args);
 				unset( $newform[ 'db_id' ] );
 			}
 		}
