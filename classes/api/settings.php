@@ -29,6 +29,30 @@ class Caldera_Forms_API_Settings implements  Caldera_Forms_API_Route{
 				)
 			)
 		);
+        register_rest_route( $namespace, '/settings',
+            array(
+                'methods'         => array( 'POST' ),
+                'callback'        => array( $this, 'update_settings' ),
+                'permission_callback' => array( $this, 'permissions_check' ),
+                'args'            => array(
+                    'styleIncludes' => array(
+                        'required'          => 'false',
+                        'type'              => 'array',
+                    ),
+                    'cdnEnable' => array(
+                        'required'          => 'false',
+                        'type'              => 'boolean',
+                    ),
+                )
+            )
+        );
+        register_rest_route( $namespace, '/settings',
+            array(
+                'methods'         => array( 'GET' ),
+                'callback'        => array( $this, 'get_settings' ),
+                'permission_callback' => array( $this, 'permissions_check' ),
+            )
+        );
 
 	}
 
@@ -49,7 +73,50 @@ class Caldera_Forms_API_Settings implements  Caldera_Forms_API_Route{
 		return $response;
 	}
 
+    /**
+     * Update general settings
+     *
+     * @since 1.7.3
+     *
+     * @param WP_REST_Request $request
+     * @return Caldera_Forms_API_Response
+     */
+	public function update_settings( \WP_REST_Request $request ){
+        $style_includes = Caldera_Forms_Render_Assets::get_style_includes();
+        $new_values = [];
+        foreach ( $style_includes as $key => $saved ){
+            $new_values[ $key ] = isset($request[ 'styleIncludes' ][$key]) && $request[ 'styleIncludes' ][$key] ? true : false
+        }
 
+        update_option( '_caldera_forms_styleincludes', $new_values);
 
+        if( $request['cdnEnable' ] ){
+            Caldera_Forms::settings()->get_cdn()->enable();
+        }else{
+            Caldera_Forms::settings()->get_cdn()->disable();
+        }
+
+        return Caldera_Forms_API_Response_Factory::general_settings_response(
+            $new_values,
+            Caldera_Forms::settings()->get_cdn()->enabled(),
+            201
+        );
+
+    }
+
+    /**
+     * Get general settings
+     *
+     * @since 1.7.3
+     *
+     * @return Caldera_Forms_API_Response
+     */
+    public function get_settings(){
+        return Caldera_Forms_API_Response_Factory::general_settings_response(
+            Caldera_Forms_Render_Assets::get_style_includes(),
+            Caldera_Forms::settings()->get_cdn()->enabled(),
+            201
+        );
+    }
 
 }
