@@ -379,11 +379,10 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
      * @return Caldera_Forms_API_Response|Caldera_Forms_API_Error
      */
     public function create_item( WP_REST_Request $request ) {
-        $data = [
-            'ID' => $request[ 'ID' ],
-            'name' => $request[ 'name' ],
-            'template' => $request[ 'template']
-        ];
+        $data = [];
+        foreach ( array_keys($this->args_for_create()) as $key ){
+            $data[$key] = $request[$key];
+        }
 
         $new_form = Caldera_Forms_Forms::create_form( $data );
         if( ! empty($new_form ) ){
@@ -398,6 +397,46 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
         }
         return Caldera_Forms_API_Response_Factory::error_form_not_created();
 
+    }
+
+    /**
+     * @inheritdoc
+     * @since 1.8.0
+     */
+    public function args_for_create(){
+        $templates = Caldera_Forms_Admin::internal_form_templates();
+        return [
+            'ID' => [
+                'type' => 'string',
+                'description' => __( 'The desired form ID', 'caldera-forms' ),
+                'required' => false,
+                'default' => '',
+                'sanitize_callback' => 'caldera_forms_very_safe_string'
+            ],
+            'name' => [
+                'type' => 'string',
+                'description' => __( 'The name for the form', 'caldera-forms' ),
+                'required' => false,
+                'default' => '',
+                'sanitize_callback' => 'caldera_forms_very_safe_string'
+            ],
+            'type' => [
+                'type' => 'string',
+                'description' => __( 'The type of form to create', 'caldera-forms' ),
+                'required' => true,
+                'default' => 'primary',
+                'enum' => [
+                    'primary',
+                    'revision'
+                ]
+            ],
+            'template' => [
+                'description' => __( 'The form template to use', 'caldera-forms' ),
+                'type' => 'string',
+                'required' => false,
+                'enum' => array_keys($templates)
+            ]
+        ];
     }
 
 	/**

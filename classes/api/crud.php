@@ -141,16 +141,27 @@ abstract class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 	}
 
 	/**
-	 * Define query arguments
+	 * Define query arguments for GET requests
 	 *
 	 * @since 1.4.4 
 	 *
-	 * @return array(
+	 * @return array
 	 */
 	public function request_args(){
 		//must ovveride, should be abstract but PHP5.2
 		_doing_it_wrong( __FUNCTION__, '', '1.5.0' );
 	}
+
+    /**
+     * Define query arguments for POST/PUT requests
+     *
+     * @since 1.8.0
+     *
+     * @return array
+     */
+	public function args_for_create(){
+        return $this->request_args();
+    }
 
 	/**
 	 * Check if a given request has access to get items
