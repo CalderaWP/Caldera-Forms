@@ -85,7 +85,7 @@ class Caldera_Forms_API_Settings implements  Caldera_Forms_API_Route{
         $style_includes = Caldera_Forms_Render_Assets::get_style_includes();
         $new_values = [];
         foreach ( $style_includes as $key => $saved ){
-            $new_values[ $key ] = isset($request[ 'styleIncludes' ][$key]) && $request[ 'styleIncludes' ][$key] ? true : false
+            $new_values[ $key ] = isset($request[ 'styleIncludes' ][$key]) && $request[ 'styleIncludes' ][$key] ? true : false;
         }
 
         update_option( '_caldera_forms_styleincludes', $new_values);
