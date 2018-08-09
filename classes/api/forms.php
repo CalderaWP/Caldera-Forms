@@ -386,7 +386,17 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
 
         $form = $this->prepare_mailer_for_response( $form );
 
-        return $form;
+        /**
+         * Add or modify data for a form in REST API response
+         *
+         * Runs on requests for form list of single form
+         *
+         * @since 1.8.0
+         *
+         * @param array $form Form data to return via API
+         * @param \WP_REST_Request $request Current REST API request
+         */
+        return apply_filters( 'caldera_forms_api_prepare_form', $form, $request );
 
     }
 
