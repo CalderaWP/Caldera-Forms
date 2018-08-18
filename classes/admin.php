@@ -269,10 +269,6 @@ class Caldera_Forms_Admin {
 				'name'     => esc_html__( 'Simple Booking Form', 'caldera-forms' ),
 				'template' => include CFCORE_PATH . 'includes/templates/simple-booking-form-example.php'
 			),
-			'rate-our-service-example' => array(
-				'name'     => esc_html__( 'Rate Our Service Form - with star review', 'caldera-forms' ),
-				'template' => include CFCORE_PATH . 'includes/templates/rate-our-service-example.php'
-			),
 			'job-application-form-example' => array(
 				'name'     => esc_html__( 'Job Application Form - with Gravatar preview', 'caldera-forms' ),
 				'template' => include CFCORE_PATH . 'includes/templates/job-application-form-example.php'
