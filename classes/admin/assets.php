@@ -50,26 +50,34 @@ class Caldera_Forms_Admin_Assets {
 	 *
 	 * @since 1.5.0
 	 */
-	public static function admin_common(){
+	public static function admin_common( ){
 		self::maybe_register_all_admin();
 		Caldera_Forms_Render_Assets::maybe_register();
-		Caldera_Forms_Render_Assets::enqueue_script( 'validator' );
-		$locale = get_locale();
-		if( $locale !== 'en_US' ){
-			Caldera_Forms_Render_Assets::enqueue_validator_i18n();
-		}
+		$is_main_admin = true !== Caldera_Forms_Admin::is_main_page();
+        if( $is_main_admin ) {
+            Caldera_Forms_Render_Assets::enqueue_script('validator');
+            $locale = get_locale();
+            if ($locale !== 'en_US') {
+                Caldera_Forms_Render_Assets::enqueue_validator_i18n();
+            }
+            Caldera_Forms_Render_Assets::enqueue_style( 'grid' );
 
-		Caldera_Forms_Render_Assets::enqueue_style( 'grid' );
+        }
+
 		self::enqueue_style( 'admin' );
         $slug = self::main_admin_asset_slug();
         self::set_cf_admin($slug);
+        self::enqueue_script( 'admin' );
 
-		self::enqueue_style( 'modal' );
-		self::enqueue_script( 'admin' );
-		Caldera_Forms_Render_Assets::enqueue_style( 'front' );
-		Caldera_Forms_Render_Assets::enqueue_style( 'field' );
+        if( $is_main_admin ){
+            self::enqueue_style( 'modal' );
+            Caldera_Forms_Render_Assets::enqueue_style( 'front' );
+            Caldera_Forms_Render_Assets::enqueue_style( 'field' );
 
-		self::enqueue_script( 'baldrick' );
+            self::enqueue_script( 'baldrick' );
+        }
+
+
 
 	}
 
