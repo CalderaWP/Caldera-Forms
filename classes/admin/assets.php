@@ -61,8 +61,8 @@ class Caldera_Forms_Admin_Assets {
 
 		Caldera_Forms_Render_Assets::enqueue_style( 'grid' );
 		self::enqueue_style( 'admin' );
-		$slug = self::slug( 'admin' );
-		self::set_cf_admin($slug);
+        $slug = self::main_admin_asset_slug();
+        self::set_cf_admin($slug);
 
 		self::enqueue_style( 'modal' );
 		self::enqueue_script( 'admin' );
@@ -72,6 +72,8 @@ class Caldera_Forms_Admin_Assets {
 		self::enqueue_script( 'baldrick' );
 
 	}
+
+
 
 	/**
 	 * Register all scripts for Caldera Forms admin
@@ -162,6 +164,11 @@ class Caldera_Forms_Admin_Assets {
 	 * @param string $slug Style slug
 	 */
 	public static function enqueue_style( $slug ){
+	    if( $slug === self::main_admin_asset_slug() || Caldera_Forms_Render_Assets::is_client_entry_point( $slug ) ){
+
+	        wp_enqueue_style(self::main_admin_asset_slug());
+	        return;
+        }
 		if( 1 !== strpos( $slug, Caldera_Forms::PLUGIN_SLUG ) ){
 			$slug = self::slug( $slug, false );
 		}
@@ -177,6 +184,11 @@ class Caldera_Forms_Admin_Assets {
 	 * @param string $slug Script slug
 	 */
 	public static function enqueue_script( $slug ){
+        if( $slug === self::main_admin_asset_slug() || 'admin' === $slug ){
+            wp_enqueue_script( self::main_admin_asset_slug() );
+            return;
+        }
+
 		if( 1 !== strpos( $slug, Caldera_Forms::PLUGIN_SLUG ) ){
 			$slug = self::slug( $slug, true );
 		}
@@ -328,5 +340,18 @@ class Caldera_Forms_Admin_Assets {
 		$data = self::data_to_localize();
 		wp_localize_script($slug, 'CF_ADMIN', $data);
 	}
+
+    /**
+     * Get the slug form main admin page assets
+     *
+     * @since 1.8.0
+     *
+     * @return string
+     */
+    public static function main_admin_asset_slug()
+    {
+        $slug = self::slug('admin');
+        return $slug;
+    }
 
 }
