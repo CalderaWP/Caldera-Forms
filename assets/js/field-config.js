@@ -395,7 +395,8 @@
          var validation = function () {
              reset();
              var valid;
-             if ($.trim($field.val())) {
+             var value = $.trim($field.val());
+             if (value) {
                  if ($field.intlTelInput("isValidNumber")) {
                      valid = true;
                  } else {
@@ -405,7 +406,15 @@
 
              var message;
              var errorCode = $field.intlTelInput("getValidationError");
+             var selectedCountryData = $field.intlTelInput("getSelectedCountryData");
+
              if (0 == errorCode) {
+                 valid = true;
+                 message = '';
+             } else if (value ==  "+" + selectedCountryData.dialCode){
+                 valid = true;
+                 message = '';
+             } else if (!value) {
                  valid = true;
                  message = '';
              } else {
