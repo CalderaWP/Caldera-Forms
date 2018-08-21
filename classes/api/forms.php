@@ -264,6 +264,7 @@ class Caldera_Forms_API_Forms extends Caldera_Forms_API_CRUD
     public function get_items(WP_REST_Request $request)
     {
 
+        $request['details'] = true;
         $forms = Caldera_Forms_Forms::get_forms(true);
 
         if (!empty($forms) && (
@@ -272,6 +273,7 @@ class Caldera_Forms_API_Forms extends Caldera_Forms_API_CRUD
 
             )
         ) {
+
 
             foreach ($forms as $id => $form) {
                 try {
@@ -407,7 +409,6 @@ class Caldera_Forms_API_Forms extends Caldera_Forms_API_CRUD
 
         $form = $this->prepare_mailer_for_response($form);
 
-        return $form;
         /**
          * Add or modify data for a form in REST API response
          *
@@ -559,6 +560,27 @@ class Caldera_Forms_API_Forms extends Caldera_Forms_API_CRUD
     }
 
     /**
+     * Delete form via REST API
+     *
+     * DELETE /forms/<form-id>
+     *
+     * @param WP_REST_Request $request
+     * @return Caldera_Forms_API_Error|Caldera_Forms_API_Response
+     */
+    public function delete_item(WP_REST_Request $request)
+    {
+
+        $deleted = Caldera_Forms_Forms::delete_form(caldera_forms_very_safe_string($request['form']));
+        if ($deleted) {
+            return new Caldera_Forms_API_Response([
+                'delete' => true,
+            ], 200);
+        }
+        return Caldera_Forms_API_Response_Factory::error_form_not_found();
+    }
+
+
+    /**
      * Create form preview response
      *
      * @since 1.5.8
@@ -601,5 +623,6 @@ class Caldera_Forms_API_Forms extends Caldera_Forms_API_CRUD
         );
         return new Caldera_Forms_API_Response($data, 200, array());
     }
+
 
 }

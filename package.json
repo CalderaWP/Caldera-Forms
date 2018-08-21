@@ -44,6 +44,7 @@
     ]
   },
   "dependencies": {
+    "@caldera-labs/admin-client": "0",
     "@wordpress/dom-ready": "^1.0.4",
     "css-loader": "^0.28.11",
     "dangerously-set-inner-html": "^2.0.1",
