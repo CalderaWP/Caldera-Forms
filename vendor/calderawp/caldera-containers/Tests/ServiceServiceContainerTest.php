@@ -43,6 +43,7 @@ class ServiceContainerTest extends TestCase
         $this->assertSame( $classRef2, get_class( $container->make($classRef2 )) );
     }
 
+<<<<<<< HEAD
 	/**
 	 * Test using a service provider class
 	 *
@@ -61,6 +62,8 @@ class ServiceContainerTest extends TestCase
 		$this->assertSame( $providedData->Roy, 'Sivan' );
 	}
 
+=======
+>>>>>>> c56d3428ebf296435fa8f51e258c3af43155308b
     /**
      * Test that each object returned by bind, that is not set to be a singleton
      *
@@ -98,6 +101,7 @@ class ServiceContainerTest extends TestCase
         $container->singleton( $classRef, new \calderawp\CalderaContainers\Tests\Mocks\Something());
 
         $this->assertSame( $container->make($classRef), $container->make($classRef));
+<<<<<<< HEAD
 	}
 
 	/**
@@ -114,4 +118,8 @@ class ServiceContainerTest extends TestCase
 
 		$this->assertSame( $container->make('X'), $container->make('X' ) );
 	}
+=======
+
+    }
+>>>>>>> c56d3428ebf296435fa8f51e258c3af43155308b
 }

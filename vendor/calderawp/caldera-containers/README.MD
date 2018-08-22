@@ -1,4 +1,5 @@
 # Caldera Containers
+<<<<<<< HEAD
 A collection of useful containers for Caldera (or your) development.
 
 ## Install
@@ -6,6 +7,10 @@ A collection of useful containers for Caldera (or your) development.
 
 ## Requires PHP 5.6+
 * [Not tested in 5.6 or 7.0, but should work](https://github.com/CalderaWP/caldera-containers/issues/1)
+=======
+A collection of useful containers.
+
+>>>>>>> c56d3428ebf296435fa8f51e258c3af43155308b
 ## Containers
 
 * `calderawp\CalderaContainers\Container`
@@ -18,6 +23,7 @@ Basic PSR-11 compatible container decorating Pimple.
 Extends the base container but only allows in specified attributes.
     - Is abstract
 * `calderawp\CalderaContainers\Service\Coantainer`
+<<<<<<< HEAD
 A basic service container, with provider bindings, lazy-loaded objects, and singletons.
 
 ### Usage
@@ -76,6 +82,9 @@ $container->singleton( 'std', function (){
 //$obj1->foo === $obj2->foo
 $obj1 = $container->make('std');
 $obj2 = $container->make('std');
+=======
+A basic service container.
+>>>>>>> c56d3428ebf296435fa8f51e258c3af43155308b
 
 ## Stuff.
 Copyright 2018 CalderaWP LLC. License: GPL v2 or later.

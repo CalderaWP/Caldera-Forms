@@ -4,7 +4,11 @@
 
 namespace Composer\Autoload;
 
+<<<<<<< HEAD
 class ComposerStaticInit514f12b9f4ba0f86fe6e9c974350920d
+=======
+class ComposerStaticInit440fedb11d8f8a517ed5760aecad267d
+>>>>>>> c56d3428ebf296435fa8f51e258c3af43155308b
 {
     public static $files = array (
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
@@ -138,6 +142,7 @@ class ComposerStaticInit514f12b9f4ba0f86fe6e9c974350920d
     );
 
     public static $classMap = array (
+<<<<<<< HEAD
         'DeepCopy\\DeepCopy' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/DeepCopy.php',
         'DeepCopy\\Exception\\CloneException' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/Exception/CloneException.php',
         'DeepCopy\\Exception\\PropertyException' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/Exception/PropertyException.php',
@@ -352,6 +357,11 @@ class ComposerStaticInit514f12b9f4ba0f86fe6e9c974350920d
         'NilPortugues\\Sql\\QueryFormatter\\Tokenizer\\Parser\\UserDefined' => __DIR__ . '/..' . '/nilportugues/sql-query-formatter/src/Tokenizer/Parser/UserDefined.php',
         'NilPortugues\\Sql\\QueryFormatter\\Tokenizer\\Parser\\WhiteSpace' => __DIR__ . '/..' . '/nilportugues/sql-query-formatter/src/Tokenizer/Parser/WhiteSpace.php',
         'NilPortugues\\Sql\\QueryFormatter\\Tokenizer\\Tokenizer' => __DIR__ . '/..' . '/nilportugues/sql-query-formatter/src/Tokenizer/Tokenizer.php',
+=======
+        'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
+        'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',
+        'File_Iterator_Factory' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Factory.php',
+>>>>>>> c56d3428ebf296435fa8f51e258c3af43155308b
         'PHPUnit\\Framework\\TestCase' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/TestCase.php',
         'PHPUnit_Exception' => __DIR__ . '/..' . '/phpunit/phpunit/src/Exception.php',
         'PHPUnit_Extensions_GroupTestSuite' => __DIR__ . '/..' . '/phpunit/phpunit/src/Extensions/GroupTestSuite.php',
@@ -725,6 +735,7 @@ class ComposerStaticInit514f12b9f4ba0f86fe6e9c974350920d
         'PHP_Token_XOR_EQUAL' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD_FROM' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
+<<<<<<< HEAD
         'Pimple\\Container' => __DIR__ . '/..' . '/pimple/pimple/src/Pimple/Container.php',
         'Pimple\\Exception\\ExpectedInvokableException' => __DIR__ . '/..' . '/pimple/pimple/src/Pimple/Exception/ExpectedInvokableException.php',
         'Pimple\\Exception\\FrozenServiceException' => __DIR__ . '/..' . '/pimple/pimple/src/Pimple/Exception/FrozenServiceException.php',
@@ -845,6 +856,8 @@ class ComposerStaticInit514f12b9f4ba0f86fe6e9c974350920d
         'Psr\\Log\\NullLogger' => __DIR__ . '/..' . '/psr/log/Psr/Log/NullLogger.php',
         'Psr\\Log\\Test\\DummyTest' => __DIR__ . '/..' . '/psr/log/Psr/Log/Test/LoggerInterfaceTest.php',
         'Psr\\Log\\Test\\LoggerInterfaceTest' => __DIR__ . '/..' . '/psr/log/Psr/Log/Test/LoggerInterfaceTest.php',
+=======
+>>>>>>> c56d3428ebf296435fa8f51e258c3af43155308b
         'SebastianBergmann\\CodeCoverage\\CodeCoverage' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage.php',
         'SebastianBergmann\\CodeCoverage\\CoveredCodeNotExecutedException' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Exception/CoveredCodeNotExecutedException.php',
         'SebastianBergmann\\CodeCoverage\\Driver\\Driver' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Driver/Driver.php',
@@ -924,6 +937,7 @@ class ComposerStaticInit514f12b9f4ba0f86fe6e9c974350920d
         'SebastianBergmann\\RecursionContext\\InvalidArgumentException' => __DIR__ . '/..' . '/sebastian/recursion-context/src/InvalidArgumentException.php',
         'SebastianBergmann\\ResourceOperations\\ResourceOperations' => __DIR__ . '/..' . '/sebastian/resource-operations/src/ResourceOperations.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
+<<<<<<< HEAD
         'Symfony\\Component\\Yaml\\Command\\LintCommand' => __DIR__ . '/..' . '/symfony/yaml/Command/LintCommand.php',
         'Symfony\\Component\\Yaml\\Dumper' => __DIR__ . '/..' . '/symfony/yaml/Dumper.php',
         'Symfony\\Component\\Yaml\\Escaper' => __DIR__ . '/..' . '/symfony/yaml/Escaper.php',
@@ -1073,15 +1087,25 @@ class ComposerStaticInit514f12b9f4ba0f86fe6e9c974350920d
         'phpDocumentor\\Reflection\\Types\\String_' => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src/Types/String_.php',
         'phpDocumentor\\Reflection\\Types\\This' => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src/Types/This.php',
         'phpDocumentor\\Reflection\\Types\\Void_' => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src/Types/Void_.php',
+=======
+        'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
+>>>>>>> c56d3428ebf296435fa8f51e258c3af43155308b
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+<<<<<<< HEAD
             $loader->prefixLengthsPsr4 = ComposerStaticInit514f12b9f4ba0f86fe6e9c974350920d::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit514f12b9f4ba0f86fe6e9c974350920d::$prefixDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInit514f12b9f4ba0f86fe6e9c974350920d::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit514f12b9f4ba0f86fe6e9c974350920d::$classMap;
+=======
+            $loader->prefixLengthsPsr4 = ComposerStaticInit440fedb11d8f8a517ed5760aecad267d::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit440fedb11d8f8a517ed5760aecad267d::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit440fedb11d8f8a517ed5760aecad267d::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit440fedb11d8f8a517ed5760aecad267d::$classMap;
+>>>>>>> c56d3428ebf296435fa8f51e258c3af43155308b
 
         }, null, ClassLoader::class);
     }

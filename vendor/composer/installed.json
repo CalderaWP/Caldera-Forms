@@ -1,6 +1,7 @@
 [
     {
         "name": "calderawp/caldera-containers",
+<<<<<<< HEAD
         "version": "0.2.0",
         "version_normalized": "0.2.0.0",
         "source": {
@@ -12,6 +13,19 @@
             "type": "zip",
             "url": "https://api.github.com/repos/CalderaWP/caldera-containers/zipball/32ba0d0e851cbdaaf733f78902bfcba17de7e4b2",
             "reference": "32ba0d0e851cbdaaf733f78902bfcba17de7e4b2",
+=======
+        "version": "0.1.1",
+        "version_normalized": "0.1.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/CalderaWP/caldera-containers.git",
+            "reference": "66eb851926e6872b4e8f5d5fdf7a1b80ebd43fba"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/CalderaWP/caldera-containers/zipball/66eb851926e6872b4e8f5d5fdf7a1b80ebd43fba",
+            "reference": "66eb851926e6872b4e8f5d5fdf7a1b80ebd43fba",
+>>>>>>> c56d3428ebf296435fa8f51e258c3af43155308b
             "shasum": ""
         },
         "require": {
@@ -24,7 +38,11 @@
             "phpunit/phpunit": "5.0.*",
             "squizlabs/php_codesniffer": "^3.2"
         },
+<<<<<<< HEAD
         "time": "2018-05-05T22:43:14+00:00",
+=======
+        "time": "2018-04-05T19:34:50+00:00",
+>>>>>>> c56d3428ebf296435fa8f51e258c3af43155308b
         "type": "libary",
         "installation-source": "dist",
         "autoload": {
@@ -45,6 +63,7 @@
     },
     {
         "name": "calderawp/caldera-forms-query",
+<<<<<<< HEAD
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "source": {
@@ -60,6 +79,23 @@
         },
         "require": {
             "calderawp/caldera-containers": "^0.2",
+=======
+        "version": "0.3.0",
+        "version_normalized": "0.3.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/CalderaWP/caldera-forms-query.git",
+            "reference": "c8bbb363ed959c62e66808d61bb2fb893f2331c8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/CalderaWP/caldera-forms-query/zipball/c8bbb363ed959c62e66808d61bb2fb893f2331c8",
+            "reference": "c8bbb363ed959c62e66808d61bb2fb893f2331c8",
+            "shasum": ""
+        },
+        "require": {
+            "calderawp/caldera-containers": "^0.1.1",
+>>>>>>> c56d3428ebf296435fa8f51e258c3af43155308b
             "nilportugues/sql-query-builder": "^1.5",
             "php": ">=5.6"
         },
@@ -71,7 +107,11 @@
             "phpunit/phpunit": "^7.0",
             "squizlabs/php_codesniffer": "^3.2"
         },
+<<<<<<< HEAD
         "time": "2018-07-10T21:12:12+00:00",
+=======
+        "time": "2018-05-20T00:49:37+00:00",
+>>>>>>> c56d3428ebf296435fa8f51e258c3af43155308b
         "type": "library",
         "extra": {
             "installer-paths": {
