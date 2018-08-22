@@ -19,14 +19,6 @@ class Container implements ServiceContainer
 {
 
 	/**
-<<<<<<< HEAD
-	 * @var array
-	 */
-	protected $unBoundSingletons = [];
-
-	/**
-=======
->>>>>>> c56d3428ebf296435fa8f51e258c3af43155308b
 	 * @var ProvidesService[]
 	 */
 	protected $services;
@@ -50,21 +42,9 @@ class Container implements ServiceContainer
 	/** @inheritdoc */
 	public function make($alias)
 	{
-<<<<<<< HEAD
-		if( $this->isUnBoundSingleton( $alias ) ){
-			$binding = $this->unBoundSingletons[$alias];
-			$this->singleton($alias, $binding() );
-		}
-
 		if (! isset($this->services[$alias])) {
 			return $this->resolve($alias);
 		}
-
-=======
-		if (! isset($this->services[$alias])) {
-			return $this->resolve($alias);
-		}
->>>>>>> c56d3428ebf296435fa8f51e258c3af43155308b
 		if (is_callable($this->services[$alias])) {
 			return call_user_func_array($this->services[$alias], array($this));
 		}
@@ -80,30 +60,10 @@ class Container implements ServiceContainer
 		return $this->resolve($alias);
 	}
 
-<<<<<<< HEAD
-	private function isUnBoundSingleton($alias)
-	{
-
-		return  ! empty( $this->unBoundSingletons ) && array_key_exists( $alias, $this->unBoundSingletons  );
-	}
-
-	/** @inheritdoc */
-	public function singleton($alias, $binding)
-	{
-		if( is_callable( $binding ) ){
-			$this->unBoundSingletons[ $alias ] = $binding;
-		}else{
-			if( $this->isUnBoundSingleton( $alias ) ){
-				unset( $this->unBoundSingletons[$alias]);
-			}
-			$this->services[$alias] = $binding;
-		}
-=======
 	/** @inheritdoc */
 	public function singleton($alias, $binding)
 	{
 		$this->services[$alias] = $binding;
->>>>>>> c56d3428ebf296435fa8f51e258c3af43155308b
 	}
 
 

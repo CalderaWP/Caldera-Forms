@@ -1,14 +1,7 @@
 language: php
 php:
-<<<<<<< HEAD
-  - 7.1
-  - 7.2
-script: composer test
-install: composer install
-=======
   - 5.6
   - 7.0
   - 7.1
 script: composer test
 install: composer install
->>>>>>> c56d3428ebf296435fa8f51e258c3af43155308b

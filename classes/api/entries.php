@@ -19,17 +19,17 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
     public function add_routes( $namespace ) {
         parent::add_routes($namespace);
         register_rest_route($namespace, $this->non_id_endpoint_url() . '/delete',
-            array(
-                'methods'             => array( \WP_REST_Server::READABLE ),
-                'callback'            => array($this, 'delete_entries'),
-                'permission_callback' => array($this, 'update_item_permissions_check')
-            )
+            [
+                'methods'             => [ \WP_REST_Server::READABLE ],
+                'callback'            => [$this, 'delete_entries'],
+                'permission_callback' => [$this, 'update_item_permissions_check']
+            ]
         );
         register_rest_route($namespace, $this->id_endpoint_url() . '/resend',
-            array(
+            [
                 'methods' => 'POST',
-                'callback' => array($this, 'resend_entry'),
-                'permission_callback' => array($this, 'update_item_permissions_check'),
+                'callback' => [$this, 'resend_entry'],
+                'permission_callback' => [$this, 'update_item_permissions_check'],
                 'args' => [
                     'form_id' => [
                         'type' => 'string',
@@ -37,7 +37,7 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
                         'required' => true,
                     ]
                 ]
-        );
+        ]);
     }
 
 	/**

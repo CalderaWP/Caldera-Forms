@@ -251,16 +251,16 @@
         },
         {
             "name": "nilportugues/sql-query-builder",
-            "version": "1.5.2",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nilportugues/php-sql-query-builder.git",
-                "reference": "a941d33caba132f6adcb05f48ed32fe14849b095"
+                "reference": "277e87a8bca2ab833b18baad751eba64d0ddddd2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nilportugues/php-sql-query-builder/zipball/a941d33caba132f6adcb05f48ed32fe14849b095",
-                "reference": "a941d33caba132f6adcb05f48ed32fe14849b095",
+                "url": "https://api.github.com/repos/nilportugues/php-sql-query-builder/zipball/277e87a8bca2ab833b18baad751eba64d0ddddd2",
+                "reference": "277e87a8bca2ab833b18baad751eba64d0ddddd2",
                 "shasum": ""
             },
             "require": {
@@ -311,7 +311,7 @@
                 "query builder",
                 "sql"
             ],
-            "time": "2018-07-19T15:10:06+00:00"
+            "time": "2018-08-20T16:15:21+00:00"
         },
         {
             "name": "nilportugues/sql-query-formatter",
