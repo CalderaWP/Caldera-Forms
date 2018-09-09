@@ -1,5 +1,5 @@
 <div class="preview-caldera-config-group">
-	{{#unless hide_label}}<lable class="control-label">{{label}}{{#if required}} <span style="color:#ff0000;">*</span>{{/if}}</lable>{{/unless}}
+	{{#unless hide_label}}<lable class="control-label">{{label}}{{#if required}} <span style="color:#ff0000;">*</span>{{/if}}</label>{{/unless}}
 	<div class="preview-caldera-config-field">
 		{{#if config/showval}}<div class="col-xs-9" style="margin: {{#if config/pollyfill}}2px{{else}}6px{{/if}} 0px;">{{else}}<div style="margin: {{#if config/pollyfill}}2px{{else}}6px{{/if}} 0px;">{{/if}}
 			<input id="{{id}}_rangeslider" type="range" data-trackcolor="{{config/trackcolor}}" data-color="{{config/color}}" data-handle="{{config/handle}}" data-handleborder="{{config/handleborder}}" min="{{config/min}}" max="{{config/max}}" step="{{config/step}}" value="{{config/default}}" style="width:100%">
