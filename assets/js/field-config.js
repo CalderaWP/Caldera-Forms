@@ -382,9 +382,6 @@
       */
      this.phone_better = function( field ){
 
-         var $field = $( document.getElementById( field.id ) );
-
-
          var reset = function(){
              var error = document.getElementById( 'cf-error-'+ field.id );
              if(  null != error ){
@@ -393,6 +390,8 @@
          };
 
          var validation = function () {
+             var $field = $( document.getElementById( field.id ) );
+
              reset();
              var valid;
              var value = $.trim($field.val());
@@ -431,9 +430,7 @@
          };
 
          var init = function() {
-             if( ! $field.length ){
-                 $field = $( document.getElementById( field.id ) );
-             }
+             $field = $( document.getElementById( field.id ) );
 
              $field.intlTelInput( field.options );
              $field.on( 'keyup change', reset );

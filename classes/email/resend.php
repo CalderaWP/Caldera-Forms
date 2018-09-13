@@ -52,9 +52,8 @@ class Caldera_Forms_Email_Resend {
 	 * @since 1.5.2
 	 */
 	public function resend(){
-		add_filter( 'caldera_forms_magic_form', array( $this, 'provide_form' ), 10, 2 );
-		add_action( 'caldera_forms_magic_parser_data', array( $this, 'provide_data' ), 10, 2 );
-		$this->apply_conditional_recipients();
+        $this->add_magic_hooks();
+        $this->apply_conditional_recipients();
 		
 		global  $form;
  		$form = $this->form;
@@ -72,11 +71,12 @@ class Caldera_Forms_Email_Resend {
 		 *
 		 */
 		do_action( 'caldera_forms_pre_email_resend', $this->form, $this->entry_id, $this->get_data() );
-
+        $this->remove_magic_hooks();
+        $this->form['mailer'][ 'recipients' ] = Caldera_Forms::do_magic_tags($this->form['mailer'][ 'recipients' ], $this->entry_id, $this->data );
+        $this->add_magic_hooks();
 		Caldera_Forms_Save_Final::do_mailer( $this->form, $this->entry_id, $this->get_data() );
-		remove_filter( 'caldera_forms_magic_form', array( $this, 'provide_form' ), 10 );
-		remove_filter( 'caldera_forms_magic_parser_data', array( $this, 'provide_data' ), 10 );
-	}
+        $this->remove_magic_hooks();
+    }
 
 	/**
 	 * Find and prepare saved submission data
@@ -172,5 +172,27 @@ class Caldera_Forms_Email_Resend {
 		}
 
 	}
+
+    /**
+     * Add the hooks to filter magic tags when resending emails
+     *
+     * @since 1.7.3
+     */
+    protected function add_magic_hooks()
+    {
+        add_filter('caldera_forms_magic_form', array($this, 'provide_form'), 10, 2);
+        add_action('caldera_forms_magic_parser_data', array($this, 'provide_data'), 10, 2);
+    }
+
+    /**
+     * Remove the hooks to filter magic tags when resending emails
+     *
+     * @since 1.7.3
+     */
+    protected function remove_magic_hooks()
+    {
+        remove_filter('caldera_forms_magic_form', array($this, 'provide_form'), 10);
+        remove_filter('caldera_forms_magic_parser_data', array($this, 'provide_data'), 10);
+    }
 
 }
