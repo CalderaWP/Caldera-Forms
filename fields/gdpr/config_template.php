@@ -30,28 +30,6 @@
 </div>
 
 <div class="caldera-config-group">
-	<label for="{{_id}}_title_attr">
-        <?php esc_html_e( 'Link\'s title attribute', 'caldera-forms' ); ?>
-	</label>
-	<div class="caldera-config-field">
-		<input
-			data-id="{{_id}}"
-			id="{{_id}}_title_attr"
-			class="block-input field-config"
-			name="{{_name}}[title_attr]"
-			aria-describedby="{{_id}}_title_attr-description"
-			value="{{title_attr}}"
-		/>
-		<p
-			class="description"
-			id="{{_id}}_title_attr-description"
-		>
-		<?php esc_html_e( 'The text to be used as the title attribute of the Privacy Page link (leave empty to not display title attribute).', 'caldera-forms' ); ?>
-        </p>
-	</div>
-</div>
-
-<div class="caldera-config-group">
     <label for="{{_id}}_linked_text">
         <?php esc_html_e( 'Linked Text', 'caldera-forms' ); ?>
     </label>
@@ -72,4 +50,26 @@
             <?php esc_html_e( 'This text will be linked to Privacy Policy content page.', 'caldera-forms' ); ?>
         </p>
     </div>
+</div>
+
+<div class="caldera-config-group">
+	<label for="{{_id}}_title_attr">
+        <?php esc_html_e( 'Link\'s title attribute', 'caldera-forms' ); ?>
+	</label>
+	<div class="caldera-config-field">
+		<input
+			data-id="{{_id}}"
+			id="{{_id}}_title_attr"
+			class="block-input field-config"
+			name="{{_name}}[title_attr]"
+			aria-describedby="{{_id}}_title_attr-description"
+			value="{{title_attr}}"
+		/>
+		<p
+			class="description"
+			id="{{_id}}_title_attr-description"
+		>
+		<?php esc_html_e( 'The text to be used as the title attribute of the Privacy Page link (leave empty to not display title attribute).', 'caldera-forms' ); ?>
+        </p>
+	</div>
 </div>
