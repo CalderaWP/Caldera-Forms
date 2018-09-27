@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.7.0 - 2018-05-31 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.7.3-a.1 - 2018-09-13 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -337,6 +337,9 @@ function CFState(formId, $ ){
 			});
 			calcVals[id] = findCalcVal( $( document.getElementById( id ) ) );
 			self.mutateState([$field.attr('id')],$field.val());
+			$field.trigger('cf.bind', {
+				field: $field.attr('id')
+			});
 
 			return true;
 		} else {
@@ -420,6 +423,10 @@ function CFState(formId, $ ){
 
 
 					self.mutateState(id,val);
+					
+					$field.trigger('cf.bind', {
+						field: $field.attr('id')
+					});
 
 				});
 				return true;
@@ -5690,7 +5697,8 @@ function toggle_button_init(id, el){
          } );
          
          setupInputMasks();
-     };
+		 $( document ).on( 'cf.add', setupInputMasks );
+	 };
 
      /**
       * Validation handler for adding/removing errors for field types
@@ -6040,9 +6048,6 @@ function toggle_button_init(id, el){
       */
      this.phone_better = function( field ){
 
-         var $field = $( document.getElementById( field.id ) );
-
-
          var reset = function(){
              var error = document.getElementById( 'cf-error-'+ field.id );
              if(  null != error ){
@@ -6051,6 +6056,8 @@ function toggle_button_init(id, el){
          };
 
          var validation = function () {
+             var $field = $( document.getElementById( field.id ) );
+
              reset();
              var valid;
              if ($.trim($field.val())) {
@@ -6080,9 +6087,7 @@ function toggle_button_init(id, el){
          };
 
          var init = function() {
-             if( ! $field.length ){
-                 $field = $( document.getElementById( field.id ) );
-             }
+             $field = $( document.getElementById( field.id ) );
 
              $field.intlTelInput( field.options );
              $field.on( 'keyup change', reset );

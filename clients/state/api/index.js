@@ -1,4 +1,5 @@
-import {cfAdmin} from "./cfAdmin";
+import {formsAdminApiClient} from "./apiClients";
+import {privacySettingsClient} from "./apiClients";
 
 /**
  * Request a form from API
@@ -9,13 +10,7 @@ import {cfAdmin} from "./cfAdmin";
  * @returns {Promise<*>}
  */
 export async function requestForm(formId) {
-    const form = await wp.apiRequest({
-        url: `${cfAdmin.api.form}${formId}?preview=false`,
-        method: 'GET',
-        cache: true
-
-    });
-    return form;
+    return await formsAdminApiClient.getForm(formId);
 };
 
 /**
@@ -27,13 +22,7 @@ export async function requestForm(formId) {
  * @returns {Promise<*>}
  */
 export async function requestPrivacySettings(formId) {
-    const form = await wp.apiRequest({
-        url: `${cfAdmin.api.form}${formId}?privacy=true`,
-        method: 'GET',
-        cache: true
-
-    });
-    return form;
+	return await privacySettingsClient.getSettings(formId);
 };
 
 /**
@@ -46,11 +35,6 @@ export async function requestPrivacySettings(formId) {
  * @returns {Promise<*>}
  */
 export async function requestUpdatePrivacySettings(settings,formId) {
-    const form = await wp.apiRequest({
-        url: `${cfAdmin.api.form}${formId}/privacy`,
-        method: 'POST',
-        data: settings,
-    });
-    return form;
+	return await privacySettingsClient.updateSettings(formId,settings);
 };
 

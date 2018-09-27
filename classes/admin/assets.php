@@ -301,7 +301,7 @@ class Caldera_Forms_Admin_Assets {
 		$data = array(
 			'adminAjax' => esc_url_raw(admin_url('admin-ajax.php')),
 			'rest' => array(
-				'root' => esc_url_raw(Caldera_Forms_API_Util::url()),
+				'root' => esc_url_raw(untrailingslashit(Caldera_Forms_API_Util::url())),
 				'nonce' => Caldera_Forms_API_Util::get_core_nonce()
 			)
 		);

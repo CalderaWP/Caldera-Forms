@@ -17,10 +17,8 @@ export const UNSET_EDIT_FORM = 'UNSET_EDIT_FORM';
  * @returns {*|{type, form}}
  */
 export const setForm = (form, formId ) => {
-    return actionFunctions.setForm(form,formId);
-};
-
-/**
+    return actionFunctions.setForm(form, formId);
+}/**
  *
  * Designed for use with "form" reducer
  *

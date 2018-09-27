@@ -118,9 +118,6 @@ jQuery(document).ready(function($){
                 data_fields.config.conditional_groups = { conditions : data_fields.conditions };
             }
 
-            Object.keys(non_editor_fields).forEach(function (key) {
-                data_fields[key] = non_editor_fields[key];
-            });
             $(el).data('cf_edit_nonce', data_fields.cf_edit_nonce);
             $(el).data('_wp_http_referer', data_fields._wp_http_referer);
             $(el).data('sender', 'ajax');
@@ -2245,10 +2242,11 @@ jQuery(document).ready(function($) {
                     val = parts[0];
                     label = parts[1];
                     has_vals = true;
+                    var calc = parts[2] || false;
                 }
                 config.option["opt" + parseInt( ( Math.random() + i ) * 0x100000 )] = {
                     value	:	val,
-                    calc_value: val,
+                    calc_value: calc || val,
                     label	:	label,
                     default	:	false
                 }
