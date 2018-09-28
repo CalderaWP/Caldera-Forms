@@ -2,6 +2,8 @@ sudo: required
 
 language: php
 
+php: 7.1
+
 notifications:
   email:
     on_success: never
