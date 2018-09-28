@@ -26,5 +26,3 @@ env:
 before_script:
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
   - composer update
-
-script: composer wp-tests
