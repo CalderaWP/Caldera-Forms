@@ -28,19 +28,29 @@ const getFormId = (form) => {
  * @constructor
  */
 export const FormChooser = (props) => {
-    const opts = ! Array.isArray(props.forms) ? Object.values(props.forms) : props.forms;
+	const {forms,formId} = props;
+    const opts = ! Array.isArray(forms) ? Object.values(forms) : forms;
+
+    const value = formId && forms.hasOwnProperty(formId) ? formId : null;
+    if( ! value ){
+		opts.unshift({
+			value: null,
+			label: ''
+		});
+	}
+    console.log(value);
     return (
         <SelectControl
             className={'caldera-forms-form-chooser'}
             label={ __( 'Choose A Form' ) }
-            value={ props.formId }
+            value={ value }
             options={ opts.map( (form) => ( {
                 value: getFormId(form),
                 label: form.name,
             } ) ) }
             onChange={ (newValue) => {props.onChange(newValue)} }
         />
-    )
+    );
 };
 
 /**
