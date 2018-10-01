@@ -1,43 +1,29 @@
-version: '3.3'
+version: '2.1'
 
 services:
-
   wordpress:
-    image: wordpress:latest
-    ports:
-      - 8000:80
-    environment:
-      WORDPRESS_DB_PASSWORD: example
-      ABSPATH: /usr/src/wordpress/
     volumes:
-      - wordpress:/var/www/html
-      - .:/var/www/html/wp-content/plugins/caldera-forms
+      - ./src:/wordpress/src
+      - ./tests:/wordpress/tests
+      - ./:/wordpress/src/wp-content/plugins/Caldera-Forms
 
-  cli:
-    image: wordpress:cli
-    volumes:
-      - wordpress:/var/www/html
-      - .:/var/www/html/wp-content/plugins/caldera-forms
+    build:
+      context: .
+      args:
+        WORDPRESS_DB_PASSWORD: pass
+        PHP_IMAGE_TAG: $PHP_IMAGE_TAG
+        WORDPRESS_VERSION: $WORDPRESS_VERSION
+    depends_on:
+      mysql:
+        condition: service_healthy
 
   mysql:
-    image: mysql:5.7
+    image: mariadb:latest
+    restart: always
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=pass --execute \"SHOW DATABASES;\""
+      interval: 1s
+      timeout: .5s
+      retries: 10
     environment:
-      MYSQL_ROOT_PASSWORD: example
-      MYSQL_DATABASE: wordpress_test
-
-  wordpress_phpunit:
-    image: chriszarate/wordpress-phpunit
-    environment:
-      PHPUNIT_DB_HOST: mysql
-    volumes:
-      - .:/app
-      - testsuite:/tmp
-
-  composer:
-    image: composer
-    volumes:
-      - .:/app
-
-volumes:
-  testsuite:
-  wordpress:
+MYSQL_ROOT_PASSWORD: pass
