@@ -14,7 +14,7 @@ services:
         PHP_IMAGE_TAG: $PHP_IMAGE_TAG
         WORDPRESS_VERSION: $WORDPRESS_VERSION
     depends_on:
-      mysql:
+      - mysql:
         condition: service_healthy
 
   mysql:
