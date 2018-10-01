@@ -15,7 +15,6 @@ services:
         WORDPRESS_VERSION: $WORDPRESS_VERSION
     depends_on:
       - mysql:
-        condition: service_healthy
 
   mysql:
     image: mariadb:latest
