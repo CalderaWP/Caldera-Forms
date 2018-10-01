@@ -18,9 +18,9 @@ mysql:
   image: mariadb:latest
   restart: always
   healthcheck:
-    test: "/usr/bin/mysql --user=root --password=pass --execute \"SHOW DATABASES;\""
-    interval: 1s
+    test: ["/usr/bin/mysql --user=root --password=pass --execute \"SHOW DATABASES;\""]
+    interval: 10s
     timeout: .5s
-    retries: 10
+    retries: 5
   environment:
     MYSQL_ROOT_PASSWORD: pass
