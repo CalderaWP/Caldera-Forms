@@ -38,7 +38,7 @@ export const FormChooser = (props) => {
 			label: ''
 		});
 	}
-    console.log(value);
+
     return (
         <SelectControl
             className={'caldera-forms-form-chooser'}
