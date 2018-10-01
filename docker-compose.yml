@@ -13,15 +13,15 @@ services:
         WORDPRESS_DB_PASSWORD: pass
         PHP_IMAGE_TAG: $PHP_IMAGE_TAG
         WORDPRESS_VERSION: $WORDPRESS_VERSION
-      depends_on:
-        mysql:
-          condition: service_healthy
+    depends_on:
+      mysql:
+        condition: service_healthy
 
   mysql:
     image: mariadb:latest
     restart: always
     healthcheck:
-      test: ["/usr/bin/mysql --user=root --password=pass --execute \"SHOW DATABASES;\""]
+      test: "/usr/bin/mysql --user=root --password=pass --execute \"SHOW DATABASES;\""
       interval: 10s
       timeout: .5s
       retries: 5
