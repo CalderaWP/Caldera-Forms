@@ -10,6 +10,7 @@ const STATE = {
 	connected: false,
 	forms: [
 	],
+	formScreen: '',
 	settings : {
 		enhancedDelivery: false,
 		generatePDFs: false,
