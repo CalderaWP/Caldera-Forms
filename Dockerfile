@@ -17,7 +17,7 @@ RUN echo "http://dl-3.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories
     && chmod +x /tmp/wait-for-it.sh
 WORKDIR /tmp
 COPY ./bin/install-wp-tests.sh /tmp/install-wp-tests.sh
-CMD /tmp/install-wp-tests.sh wordpress_test root $WORDPRESS_DB_PASSWORD mysql $WORDPRESS_VERSION
+RUN /tmp/install-wp-tests.sh wordpress_test root $WORDPRESS_DB_PASSWORD mysql $WORDPRESS_VERSION
 COPY ./db-error.php /tmp/wordpress/wp-content/db-error.php
 WORKDIR /wordpress
 COPY composer.json /wordpress
