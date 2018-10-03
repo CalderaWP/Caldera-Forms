@@ -131,9 +131,9 @@ jQuery( function($){
 	var opts = {};
 	<?php } ?>
 
-	$(document).on('cf.add', function(){
-		$('#<?php echo $field_id; ?>').select2( opts );
-	}).trigger('cf.add');
+	$(document).on('cf.bind', '#<?php echo $field_id; ?>', function() {
+		$(this).select2( opts );
+	});
 });
 </script>
 <?php

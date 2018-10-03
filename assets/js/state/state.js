@@ -250,6 +250,9 @@ function CFState(formId, $ ){
 			});
 			calcVals[id] = findCalcVal( $( document.getElementById( id ) ) );
 			self.mutateState([$field.attr('id')],$field.val());
+			$field.trigger('cf.bind', {
+				field: $field.attr('id')
+			});
 
 			return true;
 		} else {
@@ -333,6 +336,10 @@ function CFState(formId, $ ){
 
 
 					self.mutateState(id,val);
+					
+					$field.trigger('cf.bind', {
+						field: $field.attr('id')
+					});
 
 				});
 				return true;
