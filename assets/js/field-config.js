@@ -425,7 +425,6 @@
 
              $field.intlTelInput( field.options );
              $field.on( 'keyup change', reset );
-
              $field.blur(function() {
                  reset();
                  validation();
@@ -439,6 +438,10 @@
          };
 
          $(document).on('cf.pagenav cf.add cf.disable cf.modal', init );
+         $(document).on('cf.add', function(){
+			 reset();
+			 validation();
+         } );
 
          init();
 
