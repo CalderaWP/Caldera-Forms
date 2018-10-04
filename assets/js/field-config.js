@@ -76,6 +76,7 @@
         return ! $field.closest('.caldera-form-page').attr('aria-hidden');
     }
 
+
     /**
      * Get field of page field is on if on a multi-page form.
      *
@@ -281,10 +282,6 @@
          }
 
 
-
-
-
-
          $(document).on('cf.pagenav cf.add cf.disable cf.modal', function () {
              var el = document.getElementById(field.id);
              if (null != el) {
@@ -381,17 +378,18 @@
       * @param field
       */
      this.phone_better = function( field ){
-
+         var fieldId = field.id;
+         var isValid = true;
          var reset = function(){
-             var error = document.getElementById( 'cf-error-'+ field.id );
-             if(  null != error ){
+             var error = document.getElementById( 'cf-error-'+ fieldId );
+			 isValid = true;
+             if( null != error ){
                  error.remove();
              }
          };
 
          var validation = function () {
-             var $field = $( document.getElementById( field.id ) );
-
+             var $field = $( document.getElementById( fieldId ) );
              reset();
              var valid;
              var value = $.trim($field.val());
@@ -424,13 +422,13 @@
                  }
              }
 
-
+			 isValid = valid;
              handleValidationMarkup(valid, $field, message, 'help-block-phone_better');
              return valid;
          };
 
          var init = function() {
-             $field = $( document.getElementById( field.id ) );
+             $field = $( document.getElementById( fieldId ) );
 
              $field.intlTelInput( field.options );
              $field.on( 'keyup change', reset );
@@ -451,6 +449,14 @@
 			 reset();
 			 validation();
          } );
+
+		 $(document).on('cf.remove', function(event,obj){
+			 if( obj.hasOwnProperty('field') && fieldId === obj.field ){
+			     if( ! isValid ){
+			         allowAdvance();
+                 }
+             }
+		 } );
 
          init();
 

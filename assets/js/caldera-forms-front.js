@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.7.3-a.1 - 2018-10-03 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.7.3-a.1 - 2018-10-04 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -5742,6 +5742,7 @@ function toggle_button_init(id, el){
         return ! $field.closest('.caldera-form-page').attr('aria-hidden');
     }
 
+
     /**
      * Get field of page field is on if on a multi-page form.
      *
@@ -5947,10 +5948,6 @@ function toggle_button_init(id, el){
          }
 
 
-
-
-
-
          $(document).on('cf.pagenav cf.add cf.disable cf.modal', function () {
              var el = document.getElementById(field.id);
              if (null != el) {
@@ -6047,20 +6044,22 @@ function toggle_button_init(id, el){
       * @param field
       */
      this.phone_better = function( field ){
-
+         var fieldId = field.id;
+         var isValid = true;
          var reset = function(){
-             var error = document.getElementById( 'cf-error-'+ field.id );
-             if(  null != error ){
+             var error = document.getElementById( 'cf-error-'+ fieldId );
+			 isValid = true;
+             if( null != error ){
                  error.remove();
              }
          };
 
          var validation = function () {
-             var $field = $( document.getElementById( field.id ) );
-
+             var $field = $( document.getElementById( fieldId ) );
              reset();
              var valid;
-             if ($.trim($field.val())) {
+             var value = $.trim($field.val());
+             if (value) {
                  if ($field.intlTelInput("isValidNumber")) {
                      valid = true;
                  } else {
@@ -6070,7 +6069,15 @@ function toggle_button_init(id, el){
 
              var message;
              var errorCode = $field.intlTelInput("getValidationError");
+             var selectedCountryData = $field.intlTelInput("getSelectedCountryData");
+
              if (0 == errorCode) {
+                 valid = true;
+                 message = '';
+             } else if (value ==  "+" + selectedCountryData.dialCode){
+                 valid = true;
+                 message = '';
+             } else if (!value) {
                  valid = true;
                  message = '';
              } else {
@@ -6081,13 +6088,13 @@ function toggle_button_init(id, el){
                  }
              }
 
-
+			 isValid = valid;
              handleValidationMarkup(valid, $field, message, 'help-block-phone_better');
              return valid;
          };
 
          var init = function() {
-             $field = $( document.getElementById( field.id ) );
+             $field = $( document.getElementById( fieldId ) );
 
              $field.intlTelInput( field.options );
              $field.on( 'keyup change', reset );
@@ -6108,6 +6115,14 @@ function toggle_button_init(id, el){
 			 reset();
 			 validation();
          } );
+
+		 $(document).on('cf.remove', function(event,obj){
+			 if( obj.hasOwnProperty('field') && fieldId === obj.field ){
+			     if( ! isValid ){
+			         allowAdvance();
+                 }
+             }
+		 } );
 
          init();
 
