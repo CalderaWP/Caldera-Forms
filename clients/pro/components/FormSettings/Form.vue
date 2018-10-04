@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div v-if="singleForm">
 		<div class="caldera-config-group">
 			<label v-if="singleForm.send_local != true" v-bind:for="sendLocalIdAttr">
 					Disable enhanced delivery for this form
@@ -79,6 +79,7 @@
 			</div>
 		</div>
 	</div>
+    <div v-else> loading... </div>
 </template>
 <script>
 	import { mapState } from 'vuex';
