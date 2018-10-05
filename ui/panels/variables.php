@@ -91,8 +91,7 @@ if(!isset($element['variables'])){
 				jQuery(variables[v]).closest('.caldera-config-group').find('.var-value').data('parent', variables[v].value);
 			}
 		}		
-
-		rebind_field_bindings();
+      
 	});
 
 	jQuery(function(){
