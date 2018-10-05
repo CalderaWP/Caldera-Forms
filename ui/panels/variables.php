@@ -93,9 +93,6 @@ if(!isset($element['variables'])){
 		}		
       
 	});
-
-	jQuery(function(){
-		jQuery('.set-system-variable').trigger('change');
-	});
+    
 
 </script>
