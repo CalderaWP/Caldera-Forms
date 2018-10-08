@@ -50,12 +50,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/CalderaWP/caldera-forms-query.git",
-            "reference": "b2af8a92e6f951e40ce88013f1bef9395bc68ea9"
+            "reference": "197b60e826db81e804fd28080ce97eb875881d5e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/CalderaWP/caldera-forms-query/zipball/b2af8a92e6f951e40ce88013f1bef9395bc68ea9",
-            "reference": "b2af8a92e6f951e40ce88013f1bef9395bc68ea9",
+            "url": "https://api.github.com/repos/CalderaWP/caldera-forms-query/zipball/197b60e826db81e804fd28080ce97eb875881d5e",
+            "reference": "197b60e826db81e804fd28080ce97eb875881d5e",
             "shasum": ""
         },
         "require": {
@@ -71,7 +71,7 @@
             "phpunit/phpunit": "^7.0",
             "squizlabs/php_codesniffer": "^3.2"
         },
-        "time": "2018-10-08T17:49:53+00:00",
+        "time": "2018-10-08T17:51:32+00:00",
         "type": "library",
         "extra": {
             "installer-paths": {
@@ -80,13 +80,13 @@
                 ]
             }
         },
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "psr-4": {
                 "calderawp\\CalderaFormsQuery\\": "src"
             },
             "files": [
-                "src/CalderaFormsQueries.php"
+                "CalderaFormsQueries.php"
             ]
         },
         "notification-url": "https://packagist.org/downloads/",
