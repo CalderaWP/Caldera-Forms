@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "57bcdad48633e11b8784675fce83f8f4",
+    "content-hash": "494e52091209f53d054ec79d7518d96d",
     "packages": [
         {
             "name": "calderawp/caldera-containers",
@@ -50,16 +50,16 @@
         },
         {
             "name": "calderawp/caldera-forms-query",
-            "version": "dev-master",
+            "version": "dev-feature/6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CalderaWP/caldera-forms-query.git",
-                "reference": "37a7782a61b537fc442425348984a413313326df"
+                "reference": "b2af8a92e6f951e40ce88013f1bef9395bc68ea9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CalderaWP/caldera-forms-query/zipball/37a7782a61b537fc442425348984a413313326df",
-                "reference": "37a7782a61b537fc442425348984a413313326df",
+                "url": "https://api.github.com/repos/CalderaWP/caldera-forms-query/zipball/b2af8a92e6f951e40ce88013f1bef9395bc68ea9",
+                "reference": "b2af8a92e6f951e40ce88013f1bef9395bc68ea9",
                 "shasum": ""
             },
             "require": {
@@ -102,7 +102,7 @@
                 }
             ],
             "description": "Caldera Forms Query Library",
-            "time": "2018-07-10T21:12:12+00:00"
+            "time": "2018-10-08T17:49:53+00:00"
         },
         {
             "name": "inpsyde/wonolog",

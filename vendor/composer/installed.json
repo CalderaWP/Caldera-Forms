@@ -45,17 +45,17 @@
     },
     {
         "name": "calderawp/caldera-forms-query",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
+        "version": "dev-feature/6",
+        "version_normalized": "dev-feature/6",
         "source": {
             "type": "git",
             "url": "https://github.com/CalderaWP/caldera-forms-query.git",
-            "reference": "37a7782a61b537fc442425348984a413313326df"
+            "reference": "b2af8a92e6f951e40ce88013f1bef9395bc68ea9"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/CalderaWP/caldera-forms-query/zipball/37a7782a61b537fc442425348984a413313326df",
-            "reference": "37a7782a61b537fc442425348984a413313326df",
+            "url": "https://api.github.com/repos/CalderaWP/caldera-forms-query/zipball/b2af8a92e6f951e40ce88013f1bef9395bc68ea9",
+            "reference": "b2af8a92e6f951e40ce88013f1bef9395bc68ea9",
             "shasum": ""
         },
         "require": {
@@ -71,7 +71,7 @@
             "phpunit/phpunit": "^7.0",
             "squizlabs/php_codesniffer": "^3.2"
         },
-        "time": "2018-07-10T21:12:12+00:00",
+        "time": "2018-10-08T17:49:53+00:00",
         "type": "library",
         "extra": {
             "installer-paths": {
