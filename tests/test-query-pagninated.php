@@ -8,6 +8,20 @@
 class Test_Caldera_Forms_Query_Paginated extends Caldera_Forms_Test_Case {
 
     /**
+     * Make sure that when loading Caldera Forms Query tool container:
+     *
+     * * It exists
+     * * Its dependencies exist.
+     * * It is an object
+     *
+     * @since 1.7.3
+     */
+    public function testDependencies()
+    {
+        $this->assertTrue( is_object( \calderawp\CalderaFormsQueries\CalderaFormsQueries() ) );
+        $this->assertTrue( is_object( \calderawp\CalderaFormsQueries\CalderaFormsQueries()->getBuilder() ) );
+    }
+    /**
      * Make sure limit is validated correctly
      *
      * @since 1.7.0

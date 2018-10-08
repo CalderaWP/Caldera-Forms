@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.7.3-a.1 - 2018-10-04 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.7.3-a.1 - 2018-10-08 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -6098,6 +6098,7 @@ function toggle_button_init(id, el){
 
              $field.intlTelInput( field.options );
              $field.on( 'keyup change', reset );
+
              $field.blur(function() {
                  reset();
                  validation();
@@ -6111,10 +6112,6 @@ function toggle_button_init(id, el){
          };
 
          $(document).on('cf.pagenav cf.add cf.disable cf.modal', init );
-         $(document).on('cf.add', function(){
-			 reset();
-			 validation();
-         } );
 
 		 $(document).on('cf.remove', function(event,obj){
 			 if( obj.hasOwnProperty('field') && fieldId === obj.field ){
