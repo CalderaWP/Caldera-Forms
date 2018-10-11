@@ -437,7 +437,7 @@
                  validation();
              });
 
-             $field.on( 'change', validation );
+             $field.on( 'keyup change', validation );
              $form.on( 'submit', function(){
                  validation();
              })
@@ -459,6 +459,19 @@
 		 } );
 
          init();
+
+       /*
+       * Run validation when submit button is clicked
+       */
+       $('.caldera-grid input[type="submit"]').click( function( e ) {
+
+         var valid = validation();
+
+         if( valid === false ){
+           e.preventDefault();
+         }
+
+       });
 
 
 

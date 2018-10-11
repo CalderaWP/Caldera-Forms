@@ -626,3 +626,29 @@ function CalderaFormsJQueryWarning( $form, $, errorStrings ){
 
 	}
 }
+
+/*
+ * Add Validation for phone_better field before a submit or next page button is clicked
+ *
+
+(function( $ ) {
+
+	$('.caldera-grid input[type="submit"], .caldera-grid input[data-page="next"]').click( function( e ) {
+
+		var phone_fields = $('.caldera-grid input[data-type="phone_better"]');
+		if( phone_fields.length > 0 ) {
+
+      phone_fields.each( function( i ){
+
+        if( $.isNumeric( this.value ) === true ){
+        	alert('cool');
+				}
+
+			});
+		}
+
+	});
+
+})( jQuery );
+
+ */

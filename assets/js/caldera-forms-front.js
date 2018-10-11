@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.7.3-a.1 - 2018-10-04 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.7.3-a.1 - 2018-10-11 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -6046,9 +6046,10 @@ function toggle_button_init(id, el){
      this.phone_better = function( field ){
          var fieldId = field.id;
          var isValid = true;
+
          var reset = function(){
-             var error = document.getElementById( 'cf-error-'+ fieldId );
-			 isValid = true;
+            var error = document.getElementById( 'cf-error-'+ fieldId );
+			      isValid = true;
              if( null != error ){
                  error.remove();
              }
@@ -6088,8 +6089,9 @@ function toggle_button_init(id, el){
                  }
              }
 
-			 isValid = valid;
+			      isValid = valid;
              handleValidationMarkup(valid, $field, message, 'help-block-phone_better');
+
              return valid;
          };
 
@@ -6103,7 +6105,7 @@ function toggle_button_init(id, el){
                  validation();
              });
 
-             $field.on( 'change', validation );
+             $field.on( 'keyup change', validation );
              $form.on( 'submit', function(){
                  validation();
              })
@@ -6112,23 +6114,34 @@ function toggle_button_init(id, el){
 
          $(document).on('cf.pagenav cf.add cf.disable cf.modal', init );
          $(document).on('cf.add', function(){
-			 reset();
-			 validation();
+           reset();
+           validation();
          } );
 
-		 $(document).on('cf.remove', function(event,obj){
-			 if( obj.hasOwnProperty('field') && fieldId === obj.field ){
-			     if( ! isValid ){
-			         allowAdvance();
+         $(document).on('cf.remove', function(event,obj){
+           if( obj.hasOwnProperty('field') && fieldId === obj.field ){
+               if( ! isValid ){
+                   allowAdvance();
+                     }
                  }
-             }
-		 } );
+         } );
+
+         /*
+          * Run validation when submit button is clicked
+          */
+         $('.caldera-grid input[type="submit"]').click( function( e ) {
+
+           var valid = validation();
+
+           if( valid === false ){
+             e.preventDefault();
+           }
+
+         });
 
          init();
 
-
-
-     };
+    };
 
      /**
       * Handler for WYSIWYG fields
@@ -7057,3 +7070,29 @@ function CalderaFormsJQueryWarning( $form, $, errorStrings ){
 
 	}
 }
+
+/*
+ * Add Validation for phone_better field before a submit or next page button is clicked
+ *
+
+(function( $ ) {
+
+	$('.caldera-grid input[type="submit"], .caldera-grid input[data-page="next"]').click( function( e ) {
+
+		var phone_fields = $('.caldera-grid input[data-type="phone_better"]');
+		if( phone_fields.length > 0 ) {
+
+      phone_fields.each( function( i ){
+
+        if( $.isNumeric( this.value ) === true ){
+        	alert('cool');
+				}
+
+			});
+		}
+
+	});
+
+})( jQuery );
+
+ */
