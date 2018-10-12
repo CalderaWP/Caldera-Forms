@@ -378,6 +378,7 @@
       * @param field
       */
      this.phone_better = function( field ){
+
          var fieldId = field.id;
          var isValid = true;
          var reset = function(){
@@ -446,9 +447,20 @@
 
          $(document).on('cf.pagenav cf.add cf.disable cf.modal', init );
          $(document).on('cf.add', function(){
-			 reset();
-			 validation();
-         } );
+           reset();
+           validation();
+         });
+
+        //Run Phone_better field validation when a submit or next page button is clicked
+       $('#' + field.form_id_attr + ' [data-page="next"], #' + field.form_id_attr + ' form.caldera_forms_form [type="submit"]').click( function(e){
+         var valid = validation();
+         if( valid === false ){
+           e.preventDefault();
+           e.stopPropagation();
+         }
+       });
+
+
 
 		 $(document).on('cf.remove', function(event,obj){
 			 if( obj.hasOwnProperty('field') && fieldId === obj.field ){
@@ -459,21 +471,6 @@
 		 } );
 
          init();
-
-       /*
-       * Run validation when submit button is clicked
-       */
-       $('.caldera-grid input[type="submit"]').click( function( e ) {
-
-         var valid = validation();
-
-         if( valid === false ){
-           e.preventDefault();
-         }
-
-       });
-
-
 
      };
 
