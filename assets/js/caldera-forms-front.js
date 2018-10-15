@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.7.3-a.1 - 2018-10-12 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.7.3-a.1 - 2018-10-15 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -6571,13 +6571,7 @@ var cf_jsfields_init, cf_presubmit;
 			var $this_field,
 				valid;
 			for (var f = 0; f < fields.length; f++) {
-
 				$this_field = $(fields[f]);
-
-        /*if($this_field[0].type = "tel"){
-          $( $this_field ).trigger( "phoneValidation", [ form_id ] );
-        }*/
-
 				if( $this_field.hasClass( 'cf-multi-uploader' ) || $this_field.hasClass( 'cf-multi-uploader-list') ){
 					continue;
 				}
@@ -6617,6 +6611,9 @@ var cf_jsfields_init, cf_presubmit;
 
 
 		}
+
+
+
 
 		if( false === run ){
 			if( focusPage !== current_page ){
@@ -6701,7 +6698,7 @@ var cf_jsfields_init, cf_presubmit;
 			$form:$form
 		} );
 
-    //q = validate_phone_field_better( $ );
+
 
 		if( ! validator.validate() ){
 			if( $('.caldera-form-page').length ) {
@@ -7071,3 +7068,28 @@ function CalderaFormsJQueryWarning( $form, $, errorStrings ){
 	}
 }
 
+/*
+ * Add Validation for phone_better field before a submit or next page button is clicked
+ *
+
+(function( $ ) {
+
+	$('.caldera-grid input[type="submit"], .caldera-grid input[data-page="next"]').click( function( e ) {
+
+		var phone_fields = $('.caldera-grid input[data-type="phone_better"]');
+		if( phone_fields.length > 0 ) {
+
+      phone_fields.each( function( i ){
+
+        if( $.isNumeric( this.value ) === true ){
+        	alert('cool');
+				}
+
+			});
+		}
+
+	});
+
+})( jQuery );
+
+ */
