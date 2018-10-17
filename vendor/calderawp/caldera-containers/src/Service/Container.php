@@ -19,6 +19,11 @@ class Container implements ServiceContainer
 {
 
 	/**
+	 * @var array
+	 */
+	protected $unBoundSingletons = [];
+
+	/**
 	 * @var ProvidesService[]
 	 */
 	protected $services;
@@ -42,9 +47,15 @@ class Container implements ServiceContainer
 	/** @inheritdoc */
 	public function make($alias)
 	{
+		if( $this->isUnBoundSingleton( $alias ) ){
+			$binding = $this->unBoundSingletons[$alias];
+			$this->singleton($alias, $binding() );
+		}
+
 		if (! isset($this->services[$alias])) {
 			return $this->resolve($alias);
 		}
+
 		if (is_callable($this->services[$alias])) {
 			return call_user_func_array($this->services[$alias], array($this));
 		}
@@ -60,10 +71,23 @@ class Container implements ServiceContainer
 		return $this->resolve($alias);
 	}
 
+	private function isUnBoundSingleton($alias)
+	{
+
+		return  ! empty( $this->unBoundSingletons ) && array_key_exists( $alias, $this->unBoundSingletons  );
+	}
+
 	/** @inheritdoc */
 	public function singleton($alias, $binding)
 	{
-		$this->services[$alias] = $binding;
+		if( is_callable( $binding ) ){
+			$this->unBoundSingletons[ $alias ] = $binding;
+		}else{
+			if( $this->isUnBoundSingleton( $alias ) ){
+				unset( $this->unBoundSingletons[$alias]);
+			}
+			$this->services[$alias] = $binding;
+		}
 	}
 
 

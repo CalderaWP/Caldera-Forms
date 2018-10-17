@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f72153190cb891ebe4e46134c8c284cc",
+    "content-hash": "03a95cdd6063846ac362887a5c14dc2f",
     "packages": [
         {
             "name": "calderawp/caldera-containers",
-            "version": "0.1.1",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CalderaWP/caldera-containers.git",
-                "reference": "66eb851926e6872b4e8f5d5fdf7a1b80ebd43fba"
+                "reference": "32ba0d0e851cbdaaf733f78902bfcba17de7e4b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CalderaWP/caldera-containers/zipball/66eb851926e6872b4e8f5d5fdf7a1b80ebd43fba",
-                "reference": "66eb851926e6872b4e8f5d5fdf7a1b80ebd43fba",
+                "url": "https://api.github.com/repos/CalderaWP/caldera-containers/zipball/32ba0d0e851cbdaaf733f78902bfcba17de7e4b2",
+                "reference": "32ba0d0e851cbdaaf733f78902bfcba17de7e4b2",
                 "shasum": ""
             },
             "require": {
@@ -46,24 +46,24 @@
                     "email": "josh@calderawp.com"
                 }
             ],
-            "time": "2018-04-05T19:34:50+00:00"
+            "time": "2018-05-05T22:43:14+00:00"
         },
         {
             "name": "calderawp/caldera-forms-query",
-            "version": "0.3.0",
+            "version": "0.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CalderaWP/caldera-forms-query.git",
-                "reference": "c8bbb363ed959c62e66808d61bb2fb893f2331c8"
+                "reference": "197b60e826db81e804fd28080ce97eb875881d5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CalderaWP/caldera-forms-query/zipball/c8bbb363ed959c62e66808d61bb2fb893f2331c8",
-                "reference": "c8bbb363ed959c62e66808d61bb2fb893f2331c8",
+                "url": "https://api.github.com/repos/CalderaWP/caldera-forms-query/zipball/197b60e826db81e804fd28080ce97eb875881d5e",
+                "reference": "197b60e826db81e804fd28080ce97eb875881d5e",
                 "shasum": ""
             },
             "require": {
-                "calderawp/caldera-containers": "^0.1.1",
+                "calderawp/caldera-containers": "^0.2",
                 "nilportugues/sql-query-builder": "^1.5",
                 "php": ">=5.6"
             },
@@ -88,7 +88,7 @@
                     "calderawp\\CalderaFormsQuery\\": "src"
                 },
                 "files": [
-                    "src/CalderaFormsQueries.php"
+                    "CalderaFormsQueries.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -102,7 +102,7 @@
                 }
             ],
             "description": "Caldera Forms Query Library",
-            "time": "2018-05-20T00:49:37+00:00"
+            "time": "2018-10-08T17:51:32+00:00"
         },
         {
             "name": "inpsyde/wonolog",
@@ -1797,16 +1797,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.4.14",
+            "version": "v3.4.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "810af2d35fc72b6cf5c01116806d2b65ccaaf2e2"
+                "reference": "640b6c27fed4066d64b64d5903a86043f4a4de7f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/810af2d35fc72b6cf5c01116806d2b65ccaaf2e2",
-                "reference": "810af2d35fc72b6cf5c01116806d2b65ccaaf2e2",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/640b6c27fed4066d64b64d5903a86043f4a4de7f",
+                "reference": "640b6c27fed4066d64b64d5903a86043f4a4de7f",
                 "shasum": ""
             },
             "require": {
@@ -1852,7 +1852,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2018-07-26T11:19:56+00:00"
+            "time": "2018-10-02T16:33:53+00:00"
         },
         {
             "name": "webmozart/assert",

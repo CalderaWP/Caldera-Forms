@@ -1,8 +1,12 @@
-sudo: required
+sudo: false
 
 language: php
 
-php: 7.1
+php:
+  - '7.2'
+  - '7.1'
+  - '7.0'
+  - '5.6'
 
 notifications:
   email:
@@ -10,22 +14,47 @@ notifications:
     on_failure: change
 
 
-cache:
-  directories:
-    - $HOME/.composer/cache
+cache: false
 
 env:
-  - PHP_IMAGE_TAG=7.2-alpine WORDPRESS_VERSION=latest
-  - PHP_IMAGE_TAG=7.2-alpine WORDPRESS_VERSION=trunk
-  - PHP_IMAGE_TAG=7.1-alpine WORDPRESS_VERSION=4.8
-  - PHP_IMAGE_TAG=7.1-alpine WORDPRESS_VERSION=4.7
-  - PHP_IMAGE_TAG=7.1-alpine WORDPRESS_VERSION=latest
-  - PHP_IMAGE_TAG=7.0-alpine WORDPRESS_VERSION=latest
-  - PHP_IMAGE_TAG=5.6-alpine WORDPRESS_VERSION=latest
+  - WP_VERSION=latest
+
+matrix:
+  include:
+    - php: 7.2
+      env: WP_VERSION=trunk
+    - php: 7.2
+      env: WP_VERSION=latest WP_MULTISITE=1
+    - php: 7.2
+      env: WP_VERSION=4.8
+    - php: 7.2
+      env: WP_VERSION=4.7.11
 
 before_script:
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
-  - composer update
-  - composer wp-install
-
-script: composer wp-tests
+  - composer update --prefer-dist
+  - |
+    if [ -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then
+      phpenv config-rm xdebug.ini
+    else
+      echo "xdebug.ini does not exist"
+    fi
+  - |
+    if [[ ! -z "$WP_VERSION" ]] ; then
+      bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
+      composer global require "phpunit/phpunit=4.8.*|5.7.*"
+    fi
+  - |
+    if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
+      composer global require wp-coding-standards/wpcs
+      phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
+    fi
+script:
+  - |
+    if [[ ! -z "$WP_VERSION" ]] ; then
+      phpunit
+    fi
+  - |
+    if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
+      phpcs
+    fi

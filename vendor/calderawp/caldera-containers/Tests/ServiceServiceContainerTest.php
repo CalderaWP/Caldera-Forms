@@ -43,6 +43,24 @@ class ServiceContainerTest extends TestCase
         $this->assertSame( $classRef2, get_class( $container->make($classRef2 )) );
     }
 
+	/**
+	 * Test using a service provider class
+	 *
+	 * @covers \calderawp\CalderaContainers\Interfaces\ProvidesService::registerService()
+	 * @covers \calderawp\CalderaContainers\ServiceContainer::bind()
+	 */
+    public function testProvidesService()
+	{
+		$container = new \calderawp\CalderaContainers\Service\Container();
+		$provider = new \calderawp\CalderaContainers\Tests\Mocks\Provider();
+		$provider->registerService($container);
+		$providedData = $container->make( $provider->getAlias() );
+		$this->assertObjectHasAttribute( 'Roy',$providedData );
+		$this->assertObjectHasAttribute( 'Mike',$providedData );
+		$this->assertSame( $providedData->Mike, 'Corkum' );
+		$this->assertSame( $providedData->Roy, 'Sivan' );
+	}
+
     /**
      * Test that each object returned by bind, that is not set to be a singleton
      *
@@ -80,6 +98,20 @@ class ServiceContainerTest extends TestCase
         $container->singleton( $classRef, new \calderawp\CalderaContainers\Tests\Mocks\Something());
 
         $this->assertSame( $container->make($classRef), $container->make($classRef));
+	}
 
-    }
+	/**
+	 * Test that we can use a function to create a lazy-loaded singleton
+	 */
+	public function testLazySingleton()
+	{
+		$container = new \calderawp\CalderaContainers\Service\Container();
+		$container->singleton( 'X', function (){
+			$x = new stdClass();
+			$x->sivan = 'Roy';
+			return $x;
+		});
+
+		$this->assertSame( $container->make('X'), $container->make('X' ) );
+	}
 }
