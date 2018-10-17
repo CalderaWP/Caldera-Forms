@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProFreeTrial component Matches snapshot with minimal props 1`] = `
+<div
+  className="caldera-forms-pro-free-trial"
+>
+  <p>
+    Ready to try Caldera Forms Pro? Plans start at just 14.99/ month with a 7 day free trial.
+  </p>
+  <div>
+    <a
+      autoFocus={undefined}
+      className="components-button button is-button is-default is-large is-link"
+      href="https://calderaforms.com/doc/caldera-forms-pro-getting-started/?utm_source=wp-admin&utm_campaign=pro-screen&utm_term=not-connected"
+      target={undefined}
+    >
+      Documentation
+    </a>
+    <a
+      autoFocus={undefined}
+      className="components-button button is-button is-default is-large is-link"
+      href="https://calderaforms.com/checkout?edd_action=add_to_cart&download_id=64101&edd_options[price_id]=1?utm_source=wp-admin&utm_campaign=pro-screen&utm_term=not-connected"
+      target={undefined}
+    >
+      Start Free Trial
+    </a>
+  </div>
+</div>
+`;

@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Settings component Renders with minimal props 1`] = `
+<div
+  className=""
+>
+  <div
+    className="caldera-config-field-setup"
+  >
+    <div
+      className="caldera-config-group"
+    >
+      <div
+        className="caldera-config-field"
+      >
+        <label
+          htmlFor="roy"
+        />
+        <input
+          aria-describedby={null}
+          className="field-config field-config"
+          disabled={false}
+          id="roy"
+          onBlur={undefined}
+          onChange={[Function]}
+          onFocus={undefined}
+          required={false}
+          type="number"
+          value="Sivan"
+        />
+      </div>
+    </div>
+  </div>
+  <button
+    autoFocus={undefined}
+    className="components-button"
+    disabled={undefined}
+    onClick={[Function]}
+    type="button"
+  >
+    Save
+  </button>
+</div>
+`;

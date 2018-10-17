@@ -1,0 +1,176 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Settings component Renders with minimal props 1`] = `
+<div
+  className="caldera-forms-global-settings"
+>
+  <div
+    aria-orientation="horizontal"
+    className="components-tab-panel__tabs"
+    onFocus={undefined}
+    onKeyDown={[Function]}
+    role="tablist"
+  >
+    <button
+      aria-controls="0-proSettings-view"
+      aria-selected={true}
+      className="pro-settings caldera-forms-settings-tab-active"
+      id="0-proSettings"
+      onClick={[Function]}
+      role="tab"
+      tabIndex={null}
+    >
+      Caldera Forms Pro
+    </button>
+    <button
+      aria-controls="0-privacySettings-view"
+      aria-selected={false}
+      className="privacy-settings "
+      id="0-privacySettings"
+      onClick={[Function]}
+      role="tab"
+      tabIndex={-1}
+    >
+      Privacy Settings
+    </button>
+    <button
+      aria-controls="0-generalSettings-view"
+      aria-selected={false}
+      className="global-form-settings "
+      id="0-generalSettings"
+      onClick={[Function]}
+      role="tab"
+      tabIndex={-1}
+    >
+      Global Form Settings
+    </button>
+  </div>
+  <div
+    aria-labelledby="0-proSettings"
+    className="components-tab-panel__tab-content"
+    id="0-proSettings-view"
+    role="tabpanel"
+    tabIndex="0"
+  >
+    <div
+      className="caldera-forms-pro-settings"
+    >
+      <div
+        aria-orientation="vertical"
+        className="components-tab-panel__tabs"
+        onFocus={undefined}
+        onKeyDown={[Function]}
+        role="tablist"
+      >
+        <button
+          aria-controls="1-apiKeys-view"
+          aria-selected={true}
+          className="pro-settings is-active"
+          id="1-apiKeys"
+          onClick={[Function]}
+          role="tab"
+          tabIndex={null}
+        >
+          Api Keys
+        </button>
+        <button
+          aria-controls="1-whatIs-view"
+          aria-selected={false}
+          className="pro-what-is "
+          id="1-whatIs"
+          onClick={[Function]}
+          role="tab"
+          tabIndex={-1}
+        >
+          What Is Caldera FormsSlot Pro ?
+        </button>
+        <button
+          aria-controls="1-freeTrial-view"
+          aria-selected={false}
+          className="pro-free-tiral "
+          id="1-freeTrial"
+          onClick={[Function]}
+          role="tab"
+          tabIndex={-1}
+        >
+          Free Trial
+        </button>
+      </div>
+      <div
+        aria-labelledby="1-apiKeys"
+        className="components-tab-panel__tab-content"
+        id="1-apiKeys-view"
+        role="tabpanel"
+        tabIndex="0"
+      >
+        <div
+          className="caldera-config-field-setup"
+        >
+          <div
+            className="caldera-config-group"
+          >
+            <div
+              className="caldera-config-field"
+            >
+              <label
+                htmlFor="proPublicKey"
+              >
+                Public Key
+              </label>
+              <input
+                aria-describedby="proPublicKey-description"
+                className="field-config field-config"
+                disabled={false}
+                id="proPublicKey"
+                onBlur={undefined}
+                onChange={[Function]}
+                onFocus={undefined}
+                required={false}
+                type="text"
+                value=""
+              />
+              <p
+                className="description"
+                id="proPublicKey-description"
+              >
+                Public Key For Caldera FormsSlot Pro
+              </p>
+            </div>
+          </div>
+          <div
+            className="caldera-config-group"
+          >
+            <div
+              className="caldera-config-field"
+            >
+              <label
+                htmlFor="propPrivateKey"
+              >
+                Private Key
+              </label>
+              <input
+                aria-describedby="propPrivateKey-description"
+                className="field-config field-config"
+                disabled={false}
+                id="propPrivateKey"
+                onBlur={undefined}
+                onChange={[Function]}
+                onFocus={undefined}
+                required={false}
+                type="text"
+                value=""
+              />
+              <p
+                className="description"
+                id="propPrivateKey-description"
+              >
+                Private Key For Caldera FormsSlot Pro
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

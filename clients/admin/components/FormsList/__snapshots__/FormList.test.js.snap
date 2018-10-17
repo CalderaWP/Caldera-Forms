@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Form List component Lists forms 1`] = `
+<table
+  className="widefat fixed"
+>
+  <thead>
+    <tr>
+      <th>
+        Form
+      </th>
+      <th
+        style={
+          Object {
+            "textAlign": "center",
+            "width": "5em",
+          }
+        }
+      >
+        Entries
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      className="form_entry_row"
+      id="form_row_cf1"
+    >
+      <td
+        className=""
+      >
+        <span
+          className="cf-form-name-preview"
+        >
+          Form One
+        </span>
+        <span
+          className="cf-form-view-shorcode"
+        >
+          <button
+            className="button cf-form-shortcode-preview-button"
+            onClick={[Function]}
+          >
+            Get Shortcode
+          </button>
+        </span>
+        <span
+          className="row-actions"
+        >
+          <span
+            className="edit"
+          >
+            <a
+              href="/foo/bar"
+            >
+              Edit
+            </a>
+          </span>
+        </span>
+      </td>
+      <td
+        className="entry_count_cf1"
+        style={
+          Object {
+            "textAign": "center",
+            "width": "4em",
+          }
+        }
+      >
+        Disabled
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;

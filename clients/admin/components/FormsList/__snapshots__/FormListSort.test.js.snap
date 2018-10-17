@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FormListSort component Matches snapshot 1`] = `
+<div>
+  <div
+    className="caldera-forms-admin-list-sort"
+  >
+    <div
+      className="caldera-config-group"
+    >
+      <div
+        className="caldera-config-field"
+      >
+        <label
+          htmlFor="cf-form-sort-options"
+        >
+          Sort Forms By
+        </label>
+        <select
+          className="field-config field-config"
+          disabled={false}
+          id="cf-form-sort-options"
+          onChange={[Function]}
+          value="name"
+        >
+          <option
+            className="caldera-config-option"
+            value="name"
+          >
+            Name
+          </option>
+          <option
+            className="caldera-config-option"
+            value="_last_updated"
+          >
+            Last Update
+          </option>
+        </select>
+        
+      </div>
+    </div>
+  </div>
+</div>
+`;

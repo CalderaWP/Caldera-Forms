@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ShortcodeViewer component Shows inital view 1`] = `
+<button
+  className="button cf-form-shortcode-preview-button"
+  onClick={[Function]}
+>
+  Get Shortcode
+</button>
+`;
+
+exports[`ShortcodeViewer component Shows shorcode actually 1`] = `
+<span>
+  <span>
+    [caldera_forms="
+    cf1
+    "]
+  </span>
+  <button
+    className="button cf-form-shortcode-preview-button"
+    onClick={[Function]}
+  >
+    Close
+  </button>
+</span>
+`;

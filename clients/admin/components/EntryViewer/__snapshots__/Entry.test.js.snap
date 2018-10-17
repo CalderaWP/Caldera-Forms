@@ -1,0 +1,223 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Entry component Handles not having a user 1`] = `
+<div>
+  <div
+    className="baldrick-modal-title"
+    style={
+      Object {
+        "display": "block",
+      }
+    }
+  >
+    <a
+      className="baldrick-modal-closer"
+    >
+      ×
+    </a>
+    <h3
+      className="modal-label"
+    >
+      Entry 
+      32
+    </h3>
+  </div>
+  <div>
+    <div
+      className="caldera-forms-entry-left"
+    >
+      <div
+        className="user-avatar-"
+        style={
+          Object {
+            "marginTop": "-1px",
+          }
+        }
+        title=""
+      >
+        <img
+          alt="User Avatar for "
+          src=""
+        />
+      </div>
+    </div>
+    <div
+      className="caldera-forms-entry-right tab-detail-panel"
+    >
+      <ul>
+        <li
+          className="entry-detail"
+        >
+          <span
+            className="entry-label"
+          >
+            first_name
+          </span>
+          <span
+            className="entry-content"
+          >
+            Mike
+          </span>
+        </li>
+        <li
+          className="entry-detail"
+        >
+          <span
+            className="entry-label"
+          >
+            last_name
+          </span>
+          <span
+            className="entry-content"
+          >
+            Corkum
+          </span>
+        </li>
+        <li
+          className="entry-detail"
+        >
+          <span
+            className="entry-label"
+          >
+            email_address
+          </span>
+          <span
+            className="entry-content"
+          >
+            mike@hiroy.club
+          </span>
+        </li>
+        <li
+          className="entry-detail"
+        >
+          <span
+            className="entry-label"
+          >
+            comments_questions
+          </span>
+          <span
+            className="entry-content"
+          >
+            Hi Mike
+            
+            Line 2
+            
+            Line 11
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Entry component Matches snapshot 1`] = `
+<div>
+  <div
+    className="baldrick-modal-title"
+    style={
+      Object {
+        "display": "block",
+      }
+    }
+  >
+    <a
+      className="baldrick-modal-closer"
+    >
+      ×
+    </a>
+    <h3
+      className="modal-label"
+    >
+      Entry 
+      32
+    </h3>
+  </div>
+  <div>
+    <div
+      className="caldera-forms-entry-left"
+    >
+      <div
+        className="user-avatar user-avatar-1"
+        style={
+          Object {
+            "marginTop": "-1px",
+          }
+        }
+        title="admin"
+      >
+        <img
+          alt="User Avatar for admin"
+          src={undefined}
+        />
+      </div>
+    </div>
+    <div
+      className="caldera-forms-entry-right tab-detail-panel"
+    >
+      <ul>
+        <li
+          className="entry-detail"
+        >
+          <span
+            className="entry-label"
+          >
+            first_name
+          </span>
+          <span
+            className="entry-content"
+          >
+            Mike
+          </span>
+        </li>
+        <li
+          className="entry-detail"
+        >
+          <span
+            className="entry-label"
+          >
+            last_name
+          </span>
+          <span
+            className="entry-content"
+          >
+            Corkum
+          </span>
+        </li>
+        <li
+          className="entry-detail"
+        >
+          <span
+            className="entry-label"
+          >
+            email_address
+          </span>
+          <span
+            className="entry-content"
+          >
+            mike@hiroy.club
+          </span>
+        </li>
+        <li
+          className="entry-detail"
+        >
+          <span
+            className="entry-label"
+          >
+            comments_questions
+          </span>
+          <span
+            className="entry-content"
+          >
+            Hi Mike
+            
+            Line 2
+            
+            Line 11
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Entry Row actions component matches snapshot 1`] = `
+<div>
+  <button
+    autoFocus={undefined}
+    className="components-button entry-view-action-view is-button is-default is-large"
+    disabled={undefined}
+    onClick={[Function]}
+    type="button"
+  >
+    View
+  </button>
+  <button
+    autoFocus={undefined}
+    className="components-button entry-view-action-delete is-button is-default is-large"
+    disabled={undefined}
+    onClick={[Function]}
+    type="button"
+  >
+    Delete
+  </button>
+  <button
+    autoFocus={undefined}
+    className="components-button entry-view-action-resend is-button is-default is-large"
+    disabled={undefined}
+    onClick={[Function]}
+    type="button"
+  >
+    Resend
+  </button>
+</div>
+`;
