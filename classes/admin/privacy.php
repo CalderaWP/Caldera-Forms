@@ -53,6 +53,8 @@ class Caldera_Forms_Admin_Privacy{
 			$id_attr = $field_id . '_' . Caldera_Forms_Field_Util::CONFIG_PERSONAL;
 			$description_id_attr = $id_attr . '_description';
 			$is_personally_identifying = Caldera_Forms_Field_Util::is_personally_identifying($field_id, $this->form );
+			/* translators: it's abbreviation for Personally Identifying Information */
+			$pii_text = esc_html__( 'PII', 'caldera-forms' );
 			printf( '
 				<div class="caldera-config-group privacy-field personally-identifying-field">
 					<label for="%s">
@@ -75,7 +77,7 @@ class Caldera_Forms_Admin_Privacy{
 				</div>
 			',
 				esc_attr( $id_attr ),
-				esc_html__( 'PII', 'caldera-forms' ),
+				$pii_text,
 				esc_attr( $id_attr ),
 				sprintf( 'config[fields][%s][config][%s]',
 					esc_attr($field_id),
