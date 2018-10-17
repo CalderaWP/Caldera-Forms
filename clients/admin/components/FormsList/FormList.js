@@ -28,6 +28,7 @@ export const FormList = (props) => {
 							form={form}
 							onFormUpdate={props.onFormUpdate}
 							openEntryViewerForForm={() => {
+								alert(21);
 								props.openEntryViewerForForm(form.ID);
 							}}
 							isAlternate={isAlternate}

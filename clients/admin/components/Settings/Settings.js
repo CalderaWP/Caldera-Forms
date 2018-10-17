@@ -4,29 +4,25 @@ import {TabPanel} from '@wordpress/components';
 import proSettingsConfigFields from './proSettingsConfigFields';
 import generalSettingsConfigFields from  './generalSettingsConfigFields';
 import {SettingsGroup} from "./SettingsGroup";
-import type {settingsType} from "../../types/types/settings";
 import Grid from 'react-css-grid';
 import {ProWhatIs} from "./ProSettings/ProWhatIs/ProWhatIs";
 import {ProFreeTrial} from "./ProSettings/ProFreeTrial/ProFreeTrial";
 import {ProEnterApp} from "./ProSettings/ProEnterApp/ProEnterApp";
+import PropTypes from 'prop-types';
 
-type Props = {
-	settings: settingsType,
-	proConnected: boolean
-}
 /**
  * Creates the UI for Caldera FormsSlot global settings
  */
-export class Settings extends React.PureComponent<Props> {
+export class Settings extends React.PureComponent {
 
 	/**
 	 * Create Settings componet
 	 * @param props
 	 */
-	constructor(props: Props) {
+	constructor(props) {
 		super(props);
-		(this: any).onSettingsSave = this.onSettingsSave.bind(this);
-		(this: any).getConfigFields = this.getConfigFields.bind(this);
+		this.onSettingsSave = this.onSettingsSave.bind(this);
+		this.getConfigFields = this.getConfigFields.bind(this);
 	}
 
 
@@ -111,8 +107,6 @@ export class Settings extends React.PureComponent<Props> {
 					}
 
 
-
-
 				</Grid>
 			</div>
 
@@ -120,7 +114,25 @@ export class Settings extends React.PureComponent<Props> {
 	}
 };
 
-
+Settings.propTypes = {
+	generalSettings: PropTypes.shape({
+		form: PropTypes.boolean,
+		grid:  PropTypes.boolean,
+		alert:  PropTypes.boolean,
+		cdn:  PropTypes.boolean
+	}),
+	proSettings: PropTypes.shape({
+		connected: PropTypes.boolean,
+		apiKeys:  PropTypes.shape({
+			proPublicKey: PropTypes.string,
+			proPrivateKey: PropTypes.string,
+		}),
+		proGeneralSettings: PropTypes.shape({
+			enhancedDelivery: PropTypes.boolean,
+			logLevel: PropTypes.string
+		}),
+	})
+};
 
 
 

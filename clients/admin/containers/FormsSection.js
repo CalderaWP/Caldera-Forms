@@ -37,7 +37,7 @@ export class FormsSection extends React.Component {
 			showFormList: true,
 			formOrderBy: 'name',
 			orderedForms: props.forms,
-			formSearchTerm: ''
+			formSearchTerm: '',
 		};
 
 		this.onChangeFormOrder = this.onChangeFormOrder.bind(this);

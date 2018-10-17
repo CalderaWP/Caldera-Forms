@@ -52,6 +52,7 @@
     "css-loader": "^0.28.11",
     "dangerously-set-inner-html": "^2.0.1",
     "dom-scroll-into-view": "1.0.1",
+    "dot-object": "^1.7.0",
     "exports-loader": "^0.7.0",
     "inputmask": "^3.3.11",
     "lodash.filter": "^4.6.0",

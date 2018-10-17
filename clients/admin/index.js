@@ -14,8 +14,9 @@ domReady( () => {
 		forms = JSON.parse(forms);
 	}
 
+	let templates = CF_ADMIN.templates;
 	ReactDOM.render(
-		<CalderaAdmin forms={Object.values(forms)} />,
+		<CalderaAdmin forms={Object.values(forms)} templates={templates}/>,
 		document.getElementById('caldera-forms-admin-client')
 	);
 } );

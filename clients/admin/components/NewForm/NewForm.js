@@ -143,7 +143,7 @@ export class NewForm extends React.PureComponent {
 NewForm.propTypes = {
 	fieldConfigs: PropTypes.array,
 	onCreate: PropTypes.func.isRequired,
-	templates: PropTypes.array,
+	templates: PropTypes.object,
 	forms: PropTypes.object
 };
 
