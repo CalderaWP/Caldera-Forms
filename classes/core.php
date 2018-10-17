@@ -851,7 +851,7 @@ class Caldera_Forms
 				if (!empty($user_id)) {
 					if (!empty($details)) {
 						// check user can edit
-						if (current_user_can('edit_posts') || $details['user_id'] === $user_id) {
+						if (current_user_can('edit_posts') || absint($details['user_id'] ) === $user_id) {
 							$entryid = $_POST['_cf_frm_edt'];
 						} else {
 							return new WP_Error('error', __("Permission denied.", 'caldera-forms'));
@@ -2932,7 +2932,7 @@ class Caldera_Forms
 						$transdata['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');
 					} else {
 						// check user can edit
-						if (current_user_can('edit_posts') || $details['user_id'] === $user_id) {
+						if (current_user_can('edit_posts') || absint($details['user_id'] ) === $user_id) {
 							// can edit.
 						} else {
 							$transdata['error'] = true;
@@ -4322,7 +4322,7 @@ class Caldera_Forms
 
 					if (!empty($details)) {
 						// check user can edit
-						if (current_user_can('edit_posts') || (is_array($details) && $details['user_id'] === $user_id)) {
+						if (current_user_can('edit_posts') || (is_array($details) && absint($details['user_id'] ) === $user_id)) {
 							// can edit.
 							$entry_id = (int)$details['id'];
 						} else {
