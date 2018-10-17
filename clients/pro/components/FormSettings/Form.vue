@@ -1,7 +1,7 @@
 <template>
-	<div>
+	<div v-if="singleForm">
 		<div class="caldera-config-group">
-			<label v-if="form.send_local != true" v-bind:for="sendLocalIdAttr">
+			<label v-if="singleForm.send_local != true" v-bind:for="sendLocalIdAttr">
 					Disable enhanced delivery for this form
 			</label>
 			<label v-else v-bind:for="sendLocalIdAttr">
@@ -10,21 +10,21 @@
 			<div class="caldera-config-field">
 				<input
 						type="checkbox"
-						v-model="form.send_local"
+						v-model="singleForm.send_local"
 						v-bind:id="sendLocalIdAttr"
 						@change="changeSendLocal"
 				/>
 			</div>
 		</div>
-		<div v-if="form.send_local != true">
+		<div v-if="singleForm.send_local != true">
 			<div class="caldera-config-group">
 				<label v-bind:for="layoutIdAttr">
-					Email Layout
+					Email Layout 
 				</label>
 				<div class="caldera-config-field">
 					<select
 						v-bind:id="layoutIdAttr"
-						v-model="form.layout"
+						v-model="singleForm.layout"
 						@change="changeLayout"
 					>
 						<option></option>
@@ -41,7 +41,7 @@
 					<div class="caldera-config-field">
 						<select
 								v-bind:id="pdfLayoutIdAttr"
-								v-model="form.pdf_layout"
+								v-model="singleForm.pdf_layout"
 								@change="changePDFLayout"
 						>
 							<option></option>
@@ -58,7 +58,7 @@
 				<div class="caldera-config-field">
 					<input
 						type="checkbox"
-						v-model="form.attach_pdf"
+						v-model="singleForm.attach_pdf"
 						v-bind:id="attachPDFIdAttr"
 						@change="changeAttachPDF"
 					/>
@@ -71,7 +71,7 @@
 				<div class="caldera-config-field">
 					<input
 						type="checkbox"
-						v-model="form.pdf_link"
+						v-model="singleForm.pdf_link"
 						v-bind:id="attachPDFIdAttr"
 						@change="changeLinkPDF"
 					/>
@@ -79,38 +79,56 @@
 			</div>
 		</div>
 	</div>
+    <div v-else> loading... </div>
 </template>
 <script>
-	import { mapState } from 'vuex'
+	import { mapState } from 'vuex';
+	import { mapGetters } from 'vuex';
 	import Checkbox from '../Elements/Field/Checkbox';
-	import { findForm } from '../../store/util/utils';
 
 	export default{
 		components :{
 			checkbox: Checkbox
 		},
 		props : [ 'form', 'layouts' ],
-		computed :{
+		computed : {
+			...mapState({
+				formScreen: state => state.formScreen
+			}),
+			formID(){
+				if(this.form.form_id){
+					return this.form.form_id;
+				} else {
+					return this.formScreen;
+				}
+			},
+			singleForm(){
+				if(this.form.form_id){
+					return this.form;
+				} else {
+					return this.$store.getters.getFormsById(this.formID);
+				}
+			},
 			layoutIdAttr(){
-				return 'cf-pro-layout-' + this.form.form_id;
+				return 'cf-pro-layout-' + this.formID;
 			},
 			pdfLayoutIdAttr(){
-				return 'cf-pro-layout-pdf-' + this.form.form_id;
+				return 'cf-pro-layout-pdf-' + this.formID;
 			},
 			attachPDFIdAttr(){
-				return 'cf-pro-layout-' + this.form.form_id;
+				return 'cf-pro-layout-' + this.formID;
 			},
 			linkPDFIdAttr(){
-				return 'cf-pro-layout-' + this.form.form_id;
+				return 'cf-pro-layout-' + this.formID;
 			},
-            sendLocalIdAttr(){
-                return 'cf-pro-send-local-' + this.form.form_id;
-            },
+			sendLocalIdAttr(){
+				return 'cf-pro-send-local-' + this.formID;
+			},
 		},
 		methods:{
 			commitChange(what,value){
-				this.form[what] = value;
-				this.$store.commit( 'form', this.form );
+				this.singleForm[what] = value;
+				this.$store.commit( 'form', this.singleForm );
 			},
 			changeLayout(ev){
 				this.commitChange(ev.target.value,'layout');
