@@ -1,16 +1,11 @@
 <?php
 
-
 class Caldera_Forms_API_Response_Factory {
 
     /**
-     * Form not found error response
-     *
-     * @since unknown
-     *
      * @return Caldera_Forms_API_Error
      */
-	public static function error_form_not_found(){
+    public static function error_form_not_found(){
 		return new Caldera_Forms_API_Error( 'form-not-found', __( 'Form not found', 'caldera-forms' ) );
 	}
 
@@ -20,8 +15,19 @@ class Caldera_Forms_API_Response_Factory {
      * @since unknown
      *
      * @return Caldera_Forms_API_Error
+     *
+     * @since 1.8.0
+     *
+     * @return Caldera_Forms_API_Error
      */
-	public static function error_entry_not_found(){
+    public static function error_form_not_created(){
+        return new Caldera_Forms_API_Error( 'form-not-created', __( 'Form not created', 'caldera-forms' ) );
+    }
+
+    /**
+     * @return Caldera_Forms_API_Error
+     */
+    public static function error_entry_not_found(){
 		return new Caldera_Forms_API_Error( 'form-entry-not-found', __( 'Form entry not found', 'caldera-forms' ) );
 	}
 
@@ -30,6 +36,7 @@ class Caldera_Forms_API_Response_Factory {
      *
      * @since unknown
      *
+
      * @param $data
      * @param null $total
      * @param bool $total_pages

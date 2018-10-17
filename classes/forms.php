@@ -572,6 +572,7 @@ class Caldera_Forms_Forms {
 
         $original_function_args = $newform;
 
+		$original_function_args = $newform;
 		if(!empty($newform['clone'])){
 			$clone = $newform['clone'];
 		}
