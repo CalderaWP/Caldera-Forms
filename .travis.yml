@@ -14,7 +14,10 @@ notifications:
     on_failure: change
 
 
-cache: false
+cache:
+  directories:
+  - node_modules
+  - vendor
 
 env:
   - WP_VERSION=latest
