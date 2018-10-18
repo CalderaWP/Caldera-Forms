@@ -99,7 +99,7 @@ The local server is [http://localhost:8228](http://localhost:8228)
     - Unit tests go in clients/tests/unit and are run using [Jest](https://facebook.github.io/jest/docs/en/getting-started.html)
     - Unit tests must have the word test in file name. For example, `formConfig.test.js`
 * End to end tests go in `cypress/integration` amd are written using [Cypress](https://cypress.io)
-    - See our [Cypress README for testing}(./cypress/README.md)
+    - See our [Cypress README for testing](./cypress/README.md)
 
 #### Commands
 * `composer wp:install` - Installs Docker-based test environment.
