@@ -72,15 +72,16 @@ Alternatively, because this, isn't 2014, you can use the provided Docker environ
 ### Test Structures
 * PHP tests go in /tests and are run using phpunit
 * JavaScript tests go in clients/tests
-- Unit tests go in clients/tests/unit and are run using [Jest](https://facebook.github.io/jest/docs/en/getting-started.html)
-- Unit tests must have the word test in file name. For example, `formConfig.test.js`
+    - Unit tests go in clients/tests/unit and are run using [Jest](https://facebook.github.io/jest/docs/en/getting-started.html)
+    - Unit tests must have the word test in file name. For example, `formConfig.test.js`
 
 #### Commands
-* `composer wp-install` - Installs Docker-based test environment.
-* `composer wp-start` - Starts Docker-based test environment.
-* `composer wp-tests` - Runs phpunit inside of Docker container.
-* `composer wp-stop` - Stops Docker-based test environment, without destroying containers.
-* `composer wp-remove` - Stops Docker-based test environment and destroys containers.
+* `composer wp:install` - Installs Docker-based test environment.
+* `composer wp:start` - Starts Docker-based test environment.
+* `composer wp:activate` - Activate plugins in Docker-based environment.
+* `composer wp:tests` - Runs the PHP integration tests using phpunit inside Docker-based environment .
+* `composer wp:stop` - Stops Docker-based test environment, without destroying containers.
+* `composer wp:destroy` - Removes (including the database) the test environment and destroys containers.
 * `npm test` - Run JavaScript test watcher
 * `npm run test:once` - Run JavaScript unit tests once
 

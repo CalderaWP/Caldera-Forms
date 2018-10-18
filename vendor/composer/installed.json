@@ -102,6 +102,128 @@
         "description": "Caldera Forms Query Library"
     },
     {
+        "name": "composer/installers",
+        "version": "v1.6.0",
+        "version_normalized": "1.6.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/composer/installers.git",
+            "reference": "cfcca6b1b60bc4974324efb5783c13dca6932b5b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/composer/installers/zipball/cfcca6b1b60bc4974324efb5783c13dca6932b5b",
+            "reference": "cfcca6b1b60bc4974324efb5783c13dca6932b5b",
+            "shasum": ""
+        },
+        "require": {
+            "composer-plugin-api": "^1.0"
+        },
+        "replace": {
+            "roundcube/plugin-installer": "*",
+            "shama/baton": "*"
+        },
+        "require-dev": {
+            "composer/composer": "1.0.*@dev",
+            "phpunit/phpunit": "^4.8.36"
+        },
+        "time": "2018-08-27T06:10:37+00:00",
+        "type": "composer-plugin",
+        "extra": {
+            "class": "Composer\\Installers\\Plugin",
+            "branch-alias": {
+                "dev-master": "1.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Composer\\Installers\\": "src/Composer/Installers"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Kyle Robinson Young",
+                "email": "kyle@dontkry.com",
+                "homepage": "https://github.com/shama"
+            }
+        ],
+        "description": "A multi-framework Composer library installer",
+        "homepage": "https://composer.github.io/installers/",
+        "keywords": [
+            "Craft",
+            "Dolibarr",
+            "Eliasis",
+            "Hurad",
+            "ImageCMS",
+            "Kanboard",
+            "Lan Management System",
+            "MODX Evo",
+            "Mautic",
+            "Maya",
+            "OXID",
+            "Plentymarkets",
+            "Porto",
+            "RadPHP",
+            "SMF",
+            "Thelia",
+            "WolfCMS",
+            "agl",
+            "aimeos",
+            "annotatecms",
+            "attogram",
+            "bitrix",
+            "cakephp",
+            "chef",
+            "cockpit",
+            "codeigniter",
+            "concrete5",
+            "croogo",
+            "dokuwiki",
+            "drupal",
+            "eZ Platform",
+            "elgg",
+            "expressionengine",
+            "fuelphp",
+            "grav",
+            "installer",
+            "itop",
+            "joomla",
+            "kohana",
+            "laravel",
+            "lavalite",
+            "lithium",
+            "magento",
+            "majima",
+            "mako",
+            "mediawiki",
+            "modulework",
+            "modx",
+            "moodle",
+            "osclass",
+            "phpbb",
+            "piwik",
+            "ppi",
+            "puppet",
+            "pxcms",
+            "reindex",
+            "roundcube",
+            "shopware",
+            "silverstripe",
+            "sydes",
+            "symfony",
+            "typo3",
+            "wordpress",
+            "yawik",
+            "zend",
+            "zikula"
+        ]
+    },
+    {
         "name": "doctrine/instantiator",
         "version": "1.1.0",
         "version_normalized": "1.1.0.0",
@@ -223,6 +345,140 @@
             "logging",
             "monolog",
             "psr-3",
+            "wordpress"
+        ]
+    },
+    {
+        "name": "johnpbloch/wordpress",
+        "version": "4.9.8",
+        "version_normalized": "4.9.8.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/johnpbloch/wordpress.git",
+            "reference": "de02cd79a41e06f36558040724414197cb7f6246"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/johnpbloch/wordpress/zipball/de02cd79a41e06f36558040724414197cb7f6246",
+            "reference": "de02cd79a41e06f36558040724414197cb7f6246",
+            "shasum": ""
+        },
+        "require": {
+            "johnpbloch/wordpress-core": "4.9.8",
+            "johnpbloch/wordpress-core-installer": "^1.0",
+            "php": ">=5.3.2"
+        },
+        "time": "2018-08-02T21:48:39+00:00",
+        "type": "package",
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "WordPress Community",
+                "homepage": "http://wordpress.org/about/"
+            }
+        ],
+        "description": "WordPress is web software you can use to create a beautiful website or blog.",
+        "homepage": "http://wordpress.org/",
+        "keywords": [
+            "blog",
+            "cms",
+            "wordpress"
+        ]
+    },
+    {
+        "name": "johnpbloch/wordpress-core",
+        "version": "4.9.8",
+        "version_normalized": "4.9.8.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/johnpbloch/wordpress-core.git",
+            "reference": "50323f9b91d7689d615b4af02caf9d80584b1cfc"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/johnpbloch/wordpress-core/zipball/50323f9b91d7689d615b4af02caf9d80584b1cfc",
+            "reference": "50323f9b91d7689d615b4af02caf9d80584b1cfc",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.2"
+        },
+        "provide": {
+            "wordpress/core-implementation": "4.9.8"
+        },
+        "time": "2018-08-02T21:48:32+00:00",
+        "type": "wordpress-core",
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0-or-later"
+        ],
+        "authors": [
+            {
+                "name": "WordPress Community",
+                "homepage": "http://wordpress.org/about/"
+            }
+        ],
+        "description": "WordPress is web software you can use to create a beautiful website or blog.",
+        "homepage": "http://wordpress.org/",
+        "keywords": [
+            "blog",
+            "cms",
+            "wordpress"
+        ]
+    },
+    {
+        "name": "johnpbloch/wordpress-core-installer",
+        "version": "1.0.0.2",
+        "version_normalized": "1.0.0.2",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/johnpbloch/wordpress-core-installer.git",
+            "reference": "7941acd71725710a789daabe0557429da63e7ac6"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/johnpbloch/wordpress-core-installer/zipball/7941acd71725710a789daabe0557429da63e7ac6",
+            "reference": "7941acd71725710a789daabe0557429da63e7ac6",
+            "shasum": ""
+        },
+        "require": {
+            "composer-plugin-api": "^1.0"
+        },
+        "conflict": {
+            "composer/installers": "<1.0.6"
+        },
+        "require-dev": {
+            "composer/composer": "^1.0",
+            "phpunit/phpunit": ">=4.8.35"
+        },
+        "time": "2018-01-29T14:49:29+00:00",
+        "type": "composer-plugin",
+        "extra": {
+            "class": "johnpbloch\\Composer\\WordPressCorePlugin"
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "johnpbloch\\Composer\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "John P. Bloch",
+                "email": "me@johnpbloch.com"
+            }
+        ],
+        "description": "A custom installer to handle deploying WordPress with composer",
+        "keywords": [
             "wordpress"
         ]
     },
@@ -1964,5 +2220,27 @@
             "check",
             "validate"
         ]
+    },
+    {
+        "name": "wpackagist-plugin/gutenberg",
+        "version": "4.0.0",
+        "version_normalized": "4.0.0.0",
+        "source": {
+            "type": "svn",
+            "url": "https://plugins.svn.wordpress.org/gutenberg/",
+            "reference": "tags/4.0.0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://downloads.wordpress.org/plugin/gutenberg.4.0.0.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "composer/installers": "~1.0"
+        },
+        "type": "wordpress-plugin",
+        "installation-source": "dist",
+        "homepage": "https://wordpress.org/plugins/gutenberg/"
     }
 ]

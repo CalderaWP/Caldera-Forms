@@ -56,6 +56,10 @@ class ComposerStaticInit734406fe75b0a330f41f48930525b165
             'Doctrine\\Instantiator\\' => 22,
             'DeepCopy\\' => 9,
         ),
+        'C' => 
+        array (
+            'Composer\\Installers\\' => 20,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -121,9 +125,20 @@ class ComposerStaticInit734406fe75b0a330f41f48930525b165
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
         ),
+        'Composer\\Installers\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers',
+        ),
     );
 
     public static $prefixesPsr0 = array (
+        'j' => 
+        array (
+            'johnpbloch\\Composer\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/johnpbloch/wordpress-core-installer/src',
+            ),
+        ),
         'P' => 
         array (
             'Prophecy\\' => 
