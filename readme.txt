@@ -3,7 +3,7 @@ Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
 Tags: form, contact form, forms, form creator, form manager, mailchimp, paypal, stripe, login, payment, forms manager, forms creation
 Requires at least: 4.7
 Tested up to: 4.9.7
-Stable tag: 1.7.3-a.1
+Stable tag: 1.8.0-a.1
 License: GPLv2
 Requires PHP: 5.6
 
@@ -793,6 +793,24 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 
 == Changelog ==
+= Caldera Forms 1.7.3 (October 17, 2018) We're Working On Big Things, Sorry About The Wait, We Wanted You To Have Some Bug Fixes =
+See: [https://calderaforms.com/updates/caldera-forms-1-7-3](https://calderaforms.com/updates/caldera-forms-1-7-3?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-3)
+* FIXED: Settings for disabling enhanced delivery via Caldera Forms Pro not saving.
+* FIXED: Improper validation for better phone fields.
+* FIXED: Non admin users were not able to edit their entries in the front-end.
+* FIXED: When resending emails, magic tag not parsed in recipients, causing fallback email to be used.
+* FIXED: Major performance issue with select2 fields.
+* FIXED: Email settings not copied when cloning forms.
+* ADDED: Support for calculation value using caldera_forms_field_option_presets filter for field presets.
+* ADDED: Translator comments for PII fields.
+* ADDED: New action caldera_forms_admin_pre_enqueue - runs before admin assets are enqueued, after they are registered.
+* IMPROVED: Markup for consent field link to privacy page.
+* FIXED: Dollar sign was not localized in CF Pro marketing.
+* FIXED: Could not select form in Gutenberg block if there was only one block.
+* FIXED: Dead code from older location of CF Pro API client.
+* FIXED: Conditionals from processors not saving if variables in use.
+
+
 = Caldera Forms 1.7.2 (June 27, 2018) Infinite Jest =
 See: [https://calderaforms.com/updates/caldera-forms-1-7-2](https://calderaforms.com/updates/caldera-forms-1-7-2?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-2)
 * FIXED: [Incorrect usage of Gutenberg InspectorControls](https://github.com/CalderaWP/Caldera-Forms/issues/2612)
