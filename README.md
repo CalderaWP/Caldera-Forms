@@ -60,7 +60,10 @@ This is the old stuff, built with grunt.
 ### Test Environment
 All PHP tests are based off of the WordPress "unit" test suite, and therefore need a full WordPress test environment. The install script in '/bin' is pretty standard and should work with VVV or whatever.
 
-Alternatively, because this, isn't 2014, you can use the provided Docker environment.
+We provide a docker-based development environment. It is recommended that you use this environment because the setup is scripted and all of the tests can be run with it.
+
+The local server is [http://localhost:8228](http://localhost:8228)
+
 #### Requirements
 * Docker
     - [Installation documentation](https://docs.docker.com/install/)
@@ -71,9 +74,11 @@ Alternatively, because this, isn't 2014, you can use the provided Docker environ
     
 ### Test Structures
 * PHP tests go in /tests and are run using phpunit
-* JavaScript tests go in clients/tests
+* JavaScript UNIT tests go in clients/tests
     - Unit tests go in clients/tests/unit and are run using [Jest](https://facebook.github.io/jest/docs/en/getting-started.html)
     - Unit tests must have the word test in file name. For example, `formConfig.test.js`
+* End to end tests go in `cypress/integration` amd are written using [Cypress](https://cypress.io)
+    - See our [Cypress README for testing}(./cypress/README.md)
 
 #### Commands
 * `composer wp:install` - Installs Docker-based test environment.
