@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Forms component Shows form 1`] = `
+<tr
+  className="form_entry_row"
+  id="form_row_cf1"
+>
+  <td
+    className=""
+  >
+    <span
+      className="cf-form-name-preview"
+    >
+      Form One
+    </span>
+    <span
+      className="cf-form-view-shorcode"
+    >
+      <button
+        className="button cf-form-shortcode-preview-button"
+        onClick={[Function]}
+      >
+        Get Shortcode
+      </button>
+    </span>
+    <span
+      className="row-actions"
+    >
+      <span
+        className="edit"
+      >
+        <a
+          href="/forms/edit/1"
+        >
+          Edit
+        </a>
+      </span>
+    </span>
+  </td>
+  <td
+    className="entry_count_cf1"
+    style={
+      Object {
+        "textAign": "center",
+        "width": "4em",
+      }
+    }
+  >
+    Disabled
+  </td>
+</tr>
+`;

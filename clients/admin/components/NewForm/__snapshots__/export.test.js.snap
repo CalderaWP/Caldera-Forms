@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewForm export index has the right types and keys 1`] = `"{\\"NewForm\\":\\"function\\"}"`;

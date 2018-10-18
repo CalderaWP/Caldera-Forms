@@ -190,6 +190,59 @@ if (!version_compare(PHP_VERSION, '5.6.0', '>=')) {
         return CFCORE_PATH . 'assets/build/images/new-icon.png';
     }
 
+
+    add_action('caldera_forms_admin_assets_styles_registered', function(){
+    	if( Caldera_Forms_Admin::is_main_page() ){
+            Caldera_Forms_Admin_Assets::set_cf_admin( Caldera_Forms_Admin_Assets::main_admin_asset_slug() );
+            wp_enqueue_style( 'caldera-forms-admin-scripts',
+                plugins_url('/assets/build/css/admin.min.css', __FILE__ )
+
+			);
+        }
+	});
+
+    /**
+     * Add additional data to the CF_ADMIN object printed by WordPress
+     */
+    add_filter('caldera_forms_api_js_config', function ($data) {
+        $templates = Caldera_Forms_Admin::internal_form_templates();
+        $data['templates'] = array_combine(
+            array_keys($templates),
+            array_column($templates, 'name')
+        );
+
+        $controller = new Caldera_Forms_API_Forms();
+        $request = new WP_REST_Request();
+        $request->set_param('details', true);
+        $forms = $controller->get_items($request);
+        $data['forms'] = json_encode($forms->data);
+        $data[ 'settings' ] = [
+            'generalSettings' => array_merge( Caldera_Forms_Render_Assets::get_style_includes(), [
+                'cdn' => Caldera_Forms::settings()->get_cdn()->enabled()
+            ]),
+        ];
+        if( caldera_forms_pro_is_active() ){
+            $data[ 'settings' ][ 'proSettings' ] = calderawp\CalderaForms\pro\container::get_instance()->get_settings()->toArray();
+        }
+        return $data;
+    });
+
+
+    /**
+     * Add entries count to form response
+     */
+    add_filter('caldera_forms_api_prepare_form', function ($form) {
+
+        $form['entries'] = [
+            'count' => absint(Caldera_Forms_Entry_Bulk::count($form['ID']))
+        ];
+        $_form = Caldera_Forms_Forms::get_form($form['ID']);
+        $form[ '_last_updated' ] = isset( $_form[ '_last_updated' ] ) ? $_form[ '_last_updated' ] : current_time('mysql');
+
+        $form[ 'editLink' ] = esc_url_raw( Caldera_Forms_Admin::form_edit_link( $form['ID']));
+        return $form;
+    });
+
 }
 
 /**

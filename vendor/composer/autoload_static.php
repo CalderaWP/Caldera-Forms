@@ -4,12 +4,12 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit734406fe75b0a330f41f48930525b165
+class ComposerStaticInite2cbee2c4ad2096cd86a72102d1cc5cf
 {
     public static $files = array (
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
-        '653f15cae3415bbad33eff25628b45a8' => __DIR__ . '/..' . '/calderawp/caldera-forms-query/src/CalderaFormsQueries.php',
+        '06fde87e58500ea7a749b937a220443b' => __DIR__ . '/..' . '/calderawp/caldera-forms-query/CalderaFormsQueries.php',
         '5e73ffc188f5a63fbd263c4490731358' => __DIR__ . '/..' . '/inpsyde/wonolog/inc/bootstrap.php',
     );
 
@@ -599,10 +599,10 @@ class ComposerStaticInit734406fe75b0a330f41f48930525b165
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit734406fe75b0a330f41f48930525b165::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit734406fe75b0a330f41f48930525b165::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit734406fe75b0a330f41f48930525b165::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit734406fe75b0a330f41f48930525b165::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInite2cbee2c4ad2096cd86a72102d1cc5cf::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInite2cbee2c4ad2096cd86a72102d1cc5cf::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInite2cbee2c4ad2096cd86a72102d1cc5cf::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInite2cbee2c4ad2096cd86a72102d1cc5cf::$classMap;
 
         }, null, ClassLoader::class);
     }

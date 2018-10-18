@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "57bcdad48633e11b8784675fce83f8f4",
+    "content-hash": "03a95cdd6063846ac362887a5c14dc2f",
     "packages": [
         {
             "name": "calderawp/caldera-containers",
@@ -50,16 +50,16 @@
         },
         {
             "name": "calderawp/caldera-forms-query",
-            "version": "dev-master",
+            "version": "0.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CalderaWP/caldera-forms-query.git",
-                "reference": "37a7782a61b537fc442425348984a413313326df"
+                "reference": "197b60e826db81e804fd28080ce97eb875881d5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CalderaWP/caldera-forms-query/zipball/37a7782a61b537fc442425348984a413313326df",
-                "reference": "37a7782a61b537fc442425348984a413313326df",
+                "url": "https://api.github.com/repos/CalderaWP/caldera-forms-query/zipball/197b60e826db81e804fd28080ce97eb875881d5e",
+                "reference": "197b60e826db81e804fd28080ce97eb875881d5e",
                 "shasum": ""
             },
             "require": {
@@ -88,7 +88,7 @@
                     "calderawp\\CalderaFormsQuery\\": "src"
                 },
                 "files": [
-                    "src/CalderaFormsQueries.php"
+                    "CalderaFormsQueries.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -102,7 +102,7 @@
                 }
             ],
             "description": "Caldera Forms Query Library",
-            "time": "2018-07-10T21:12:12+00:00"
+            "time": "2018-10-08T17:51:32+00:00"
         },
         {
             "name": "inpsyde/wonolog",
@@ -1907,9 +1907,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "calderawp/caldera-forms-query": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

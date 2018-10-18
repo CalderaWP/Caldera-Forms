@@ -1,33 +1,23 @@
-//Import CSS
 import './index.scss';
+import React from 'react';
+import ReactDOM from "react-dom";
+import domReady from '@wordpress/dom-ready';
+import {CalderaAdmin} from "./CalderaAdmin";
 
+Object.defineProperty( global.wp, 'element', {
+	get: () => React
+} );
 
-/** Vue App(s) **/
-import Vue from 'vue';
-import Vuex from 'vuex';
-Vue.use(Vuex);
-import store from './store/index';
-import AdminRight from './Views/AdminRight.vue';
+domReady( () => {
+	let forms = CF_ADMIN.forms;
+	if( 'string' === typeof  forms ){
+		forms = JSON.parse(forms);
+	}
 
-
-
-jQuery(document).ready(function($){
-
-    //setup clippy on admin, not edit
-    if( null !== document.getElementById( 'caldera-forms-clippy') ){
-        new Vue({
-            el:'#caldera-forms-clippy',
-            render(h){
-                return h(AdminRight);
-            },
-            store
-        });
-
-        $( '.cf-entry-viewer-link' ).on( 'click', function(){
-            jQuery( '.caldera-forms-clippy-zone' ).remove();
-        });
-    }
-
-});
-
+	let templates = CF_ADMIN.templates;
+	ReactDOM.render(
+		<CalderaAdmin forms={Object.values(forms)} templates={templates}/>,
+		document.getElementById('caldera-forms-admin-client')
+	);
+} );
 

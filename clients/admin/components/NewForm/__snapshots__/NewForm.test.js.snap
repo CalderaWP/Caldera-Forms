@@ -1,0 +1,192 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateFormSlot Component Matches snapshot 1`] = `
+<div>
+  <div
+    className="caldera-config-field"
+  >
+    <label
+      htmlFor="newFormName"
+    >
+      Name
+    </label>
+    <input
+      aria-describedby={null}
+      className="field-config field-config"
+      disabled={false}
+      id="newFormName"
+      onBlur={undefined}
+      onChange={[Function]}
+      onFocus={undefined}
+      required={false}
+      type="text"
+      value=""
+    />
+  </div>
+  <div
+    className="caldera-config-field"
+  >
+    <label
+      htmlFor="newFormTemplate"
+    >
+      Template
+    </label>
+    <select
+      className="field-config field-config"
+      disabled={false}
+      id="newFormTemplate"
+      onChange={[Function]}
+      value=""
+    />
+  </div>
+  <div
+    className="caldera-config-field"
+  >
+    <label
+      htmlFor="newFormCreateFrom"
+    >
+      Create Form Using
+    </label>
+    <select
+      className="field-config field-config"
+      disabled={false}
+      id="newFormCreateFrom"
+      onChange={[Function]}
+      value="templates"
+    >
+      <option
+        className="caldera-config-option"
+        value="templates"
+      >
+        From Template
+      </option>
+      <option
+        className="caldera-config-option"
+        value="clone"
+      >
+        Clone Existing
+      </option>
+    </select>
+  </div>
+  <div
+    className="caldera-config-field"
+  >
+    <label
+      htmlFor="newFormSubmitButton"
+    >
+      Create Form
+    </label>
+    <input
+      aria-describedby={null}
+      className="field-config field-config"
+      disabled={false}
+      id="newFormSubmitButton"
+      onBlur={undefined}
+      onClick={[Function]}
+      onFocus={undefined}
+      required={undefined}
+      type="submit"
+      value="Submit"
+    />
+  </div>
+</div>
+`;
+
+exports[`CreateFormSlot Component Matches snapshot with templates passed 1`] = `
+<div>
+  <div
+    className="caldera-config-field"
+  >
+    <label
+      htmlFor="newFormName"
+    >
+      Name
+    </label>
+    <input
+      aria-describedby={null}
+      className="field-config field-config"
+      disabled={false}
+      id="newFormName"
+      onBlur={undefined}
+      onChange={[Function]}
+      onFocus={undefined}
+      required={false}
+      type="text"
+      value=""
+    />
+  </div>
+  <div
+    className="caldera-config-field"
+  >
+    <label
+      htmlFor="newFormTemplate"
+    >
+      Template
+    </label>
+    <select
+      className="field-config field-config"
+      disabled={false}
+      id="newFormTemplate"
+      onChange={[Function]}
+      value=""
+    >
+      <option
+        className="caldera-config-option"
+        value="roy"
+      >
+        Roy
+      </option>
+    </select>
+  </div>
+  <div
+    className="caldera-config-field"
+  >
+    <label
+      htmlFor="newFormCreateFrom"
+    >
+      Create Form Using
+    </label>
+    <select
+      className="field-config field-config"
+      disabled={false}
+      id="newFormCreateFrom"
+      onChange={[Function]}
+      value="templates"
+    >
+      <option
+        className="caldera-config-option"
+        value="templates"
+      >
+        From Template
+      </option>
+      <option
+        className="caldera-config-option"
+        value="clone"
+      >
+        Clone Existing
+      </option>
+    </select>
+  </div>
+  <div
+    className="caldera-config-field"
+  >
+    <label
+      htmlFor="newFormSubmitButton"
+    >
+      Create Form
+    </label>
+    <input
+      aria-describedby={null}
+      className="field-config field-config"
+      disabled={false}
+      id="newFormSubmitButton"
+      onBlur={undefined}
+      onClick={[Function]}
+      onFocus={undefined}
+      required={undefined}
+      type="submit"
+      value="Submit"
+    />
+  </div>
+</div>
+`;

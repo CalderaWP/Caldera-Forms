@@ -192,11 +192,11 @@ class Caldera_Forms_Render_Assets {
 	/**
 	 * Get which of the optional styles are to be used
 	 *
-	 * @since 1.4.4.
+	 * @since 1.4.4
 	 *
 	 * @return array
 	 */
-	protected static function get_style_includes() {
+	public static function get_style_includes() {
 		$style_includes = get_option( '_caldera_forms_styleincludes' );
 
 		/**
@@ -292,7 +292,8 @@ class Caldera_Forms_Render_Assets {
 			'blocks' => self::make_url( 'blocks'),
 			'editor' => self::make_url( 'editor' ),
 			'pro' => self::make_url( 'pro' ),
-			'privacy' => self::make_url( 'privacy' )
+			'privacy' => self::make_url( 'privacy' ),
+            'admin' => Caldera_Forms_Admin_Assets::main_admin_asset_slug(),
 		);
 
 		$script_urls[ 'fields' ] = $script_urls[ 'privacy' ];
@@ -555,7 +556,13 @@ class Caldera_Forms_Render_Assets {
 	 * @return bool
 	 */
 	public static function is_client_entry_point( $slug ){
-		return in_array( $slug, array( 'blocks', 'pro', 'privacy' ) );
+		return in_array( $slug, [
+            'blocks',
+            'pro',
+            'privacy',
+            'admin',
+            Caldera_Forms_Admin_Assets::main_admin_asset_slug()
+        ]);
 	}
 
 	/**

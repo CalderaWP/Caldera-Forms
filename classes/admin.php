@@ -115,10 +115,8 @@ class Caldera_Forms_Admin {
 		add_filter('caldera_forms_get_panel_extensions', array( $this, 'get_panel_extensions'), 1);
 		add_filter('caldera_forms_entry_viewer_buttons', array( $this, 'set_viewer_buttons'),10, 4);
 		add_filter('caldera_forms_entry_editor_buttons', array( $this, 'set_editor_buttons'),10, 4);
+		
 
-		// action
-
-		add_action('caldera_forms_admin_templates', array( $this, 'get_admin_templates'),1);
 		add_action('caldera_forms_entry_meta_templates', array( $this, 'get_admin_meta_templates'),1);
 
 		add_action( 'init', array( $this, 'save_form') );
@@ -268,10 +266,6 @@ class Caldera_Forms_Admin {
 			'simple_booking_form_example' => array(
 				'name'     => esc_html__( 'Simple Booking Form', 'caldera-forms' ),
 				'template' => include CFCORE_PATH . 'includes/templates/simple-booking-form-example.php'
-			),
-			'rate-our-service-example' => array(
-				'name'     => esc_html__( 'Rate Our Service Form - with star review', 'caldera-forms' ),
-				'template' => include CFCORE_PATH . 'includes/templates/rate-our-service-example.php'
 			),
 			'job-application-form-example' => array(
 				'name'     => esc_html__( 'Job Application Form - with Gravatar preview', 'caldera-forms' ),
@@ -1222,15 +1216,13 @@ class Caldera_Forms_Admin {
 
 		} else {
 
-			Caldera_Forms_Render_Assets::enqueue_all_fields();
-
-
-			if ( ! empty( $_GET[ 'edit-entry' ] ) ) {
-				Caldera_Forms_Render_Assets::enqueue_style( 'grid' );
-			}else{
-                $clippy = new Caldera_Forms_Admin_Clippy( $this->plugin_slug, site_url() );
-                $clippy->assets();
+            if ( ! self::is_main_page() ) {
+                Caldera_Forms_Render_Assets::enqueue_all_fields();
             }
+
+            if ( ! empty( $_GET[ 'edit-entry' ] ) ) {
+				Caldera_Forms_Render_Assets::enqueue_style( 'grid' );
+			}
 		}
 
 		Caldera_Forms_Admin_Assets::panels();

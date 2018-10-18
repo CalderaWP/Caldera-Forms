@@ -50,28 +50,38 @@ class Caldera_Forms_Admin_Assets {
 	 *
 	 * @since 1.5.0
 	 */
-	public static function admin_common(){
+	public static function admin_common( ){
 		self::maybe_register_all_admin();
 		Caldera_Forms_Render_Assets::maybe_register();
-		Caldera_Forms_Render_Assets::enqueue_script( 'validator' );
-		$locale = get_locale();
-		if( $locale !== 'en_US' ){
-			Caldera_Forms_Render_Assets::enqueue_validator_i18n();
-		}
+		$is_main_admin = true !== Caldera_Forms_Admin::is_main_page();
+        if( $is_main_admin ) {
+            Caldera_Forms_Render_Assets::enqueue_script('validator');
+            $locale = get_locale();
+            if ($locale !== 'en_US') {
+                Caldera_Forms_Render_Assets::enqueue_validator_i18n();
+            }
+            Caldera_Forms_Render_Assets::enqueue_style( 'grid' );
 
-		Caldera_Forms_Render_Assets::enqueue_style( 'grid' );
+        }
+
 		self::enqueue_style( 'admin' );
-		$slug = self::slug( 'admin' );
-		self::set_cf_admin($slug);
+        $slug = self::main_admin_asset_slug();
+        self::set_cf_admin($slug);
+        self::enqueue_script( 'admin' );
 
-		self::enqueue_style( 'modal' );
-		self::enqueue_script( 'admin' );
-		Caldera_Forms_Render_Assets::enqueue_style( 'front' );
-		Caldera_Forms_Render_Assets::enqueue_style( 'field' );
+        if( $is_main_admin ){
+            self::enqueue_style( 'modal' );
+            Caldera_Forms_Render_Assets::enqueue_style( 'front' );
+            Caldera_Forms_Render_Assets::enqueue_style( 'field' );
 
-		self::enqueue_script( 'baldrick' );
+            self::enqueue_script( 'baldrick' );
+        }
+
+
 
 	}
+
+
 
 	/**
 	 * Register all scripts for Caldera Forms admin
@@ -83,7 +93,6 @@ class Caldera_Forms_Admin_Assets {
 		Caldera_Forms_Render_Assets::maybe_validator_i18n( true );
 
 		wp_register_script( self::slug( 'shortcode-insert' ), Caldera_Forms_Render_Assets::make_url( 'shortcode-insert' ), array( 'jquery', 'wp-color-picker' ), $version );
-
 		wp_register_script( self::slug( 'baldrick' ), Caldera_Forms_Render_Assets::make_url( 'wp-baldrick-full' ), array( 'jquery' ), $version );
 		wp_register_script( self::slug( 'admin' ), Caldera_Forms_Render_Assets::make_url( 'admin' ), array(
 			self::slug( 'baldrick' ),
@@ -162,6 +171,11 @@ class Caldera_Forms_Admin_Assets {
 	 * @param string $slug Style slug
 	 */
 	public static function enqueue_style( $slug ){
+	    if( $slug === self::main_admin_asset_slug() || Caldera_Forms_Render_Assets::is_client_entry_point( $slug ) ){
+
+	        wp_enqueue_style(self::main_admin_asset_slug());
+	        return;
+        }
 		if( 1 !== strpos( $slug, Caldera_Forms::PLUGIN_SLUG ) ){
 			$slug = self::slug( $slug, false );
 		}
@@ -177,6 +191,11 @@ class Caldera_Forms_Admin_Assets {
 	 * @param string $slug Script slug
 	 */
 	public static function enqueue_script( $slug ){
+        if( $slug === self::main_admin_asset_slug() || 'admin' === $slug ){
+            wp_enqueue_script( self::main_admin_asset_slug() );
+            return;
+        }
+
 		if( 1 !== strpos( $slug, Caldera_Forms::PLUGIN_SLUG ) ){
 			$slug = self::slug( $slug, true );
 		}
@@ -328,5 +347,18 @@ class Caldera_Forms_Admin_Assets {
 		$data = self::data_to_localize();
 		wp_localize_script($slug, 'CF_ADMIN', $data);
 	}
+
+    /**
+     * Get the slug form main admin page assets
+     *
+     * @since 1.8.0
+     *
+     * @return string
+     */
+    public static function main_admin_asset_slug()
+    {
+        $slug = self::slug('admin');
+        return $slug;
+    }
 
 }

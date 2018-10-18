@@ -19,12 +19,25 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
     public function add_routes( $namespace ) {
         parent::add_routes($namespace);
         register_rest_route($namespace, $this->non_id_endpoint_url() . '/delete',
-            array(
-                'methods'             => array( \WP_REST_Server::READABLE ),
-                'callback'            => array($this, 'delete_entries'),
-                'permission_callback' => array($this, 'update_item_permissions_check')
-            )
+            [
+                'methods'             => [ \WP_REST_Server::READABLE ],
+                'callback'            => [$this, 'delete_entries'],
+                'permission_callback' => [$this, 'update_item_permissions_check']
+            ]
         );
+        register_rest_route($namespace, $this->id_endpoint_url() . '/resend',
+            [
+                'methods' => 'POST',
+                'callback' => [$this, 'resend_entry'],
+                'permission_callback' => [$this, 'update_item_permissions_check'],
+                'args' => [
+                    'form_id' => [
+                        'type' => 'string',
+                        'description' => __( 'ID of form to resend', 'caldera-forms' ),
+                        'required' => true,
+                    ]
+                ]
+        ]);
     }
 
 	/**
@@ -56,6 +69,38 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
 		return Caldera_Forms_API_Response_Factory::entry_data( $data, 1, 1 );
 
 	}
+
+    /**
+     * Resend an entry
+     *
+     * POST /entries/<entry_id>/resend
+     *
+     * @param WP_REST_Request $request
+     * @return Caldera_Forms_API_Error|Caldera_Forms_API_Response
+     */
+	public function resend_entry( WP_REST_Request $request ){
+        try{
+            $this->form_object_factory( $request[ 'form_id' ], $request );
+        }catch ( Exception $e ){
+            return Caldera_Forms_API_Response_Factory::error_form_not_found();
+        }
+
+        $entry = new Caldera_Forms_Entry( $this->form->toArray(), $request[ 'entry_id' ] );
+
+        if( null == $entry->get_entry() ){
+            return Caldera_Forms_API_Response_Factory::error_entry_not_found();
+        }
+
+
+        $resender = new Caldera_Forms_Email_Resend( $entry->get_entry_id() , $this->form->toArray() );
+
+        $resender->resend();
+
+        return new Caldera_Forms_API_Response( [
+            'resent' => true,
+            'entry_id' => $request[ 'entry_id' ]
+        ]);
+    }
 
 	/**
 	 * Get entries

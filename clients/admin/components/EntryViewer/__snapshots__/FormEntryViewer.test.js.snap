@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Form entry viewer has working methods 1`] = `"[{\\"id\\":\\"99\\",\\"entry_id\\":\\"32\\",\\"field_id\\":\\"fld_8768091\\",\\"slug\\":\\"first_name\\",\\"value\\":\\"Mike\\"},{\\"id\\":\\"100\\",\\"entry_id\\":\\"32\\",\\"field_id\\":\\"fld_9970286\\",\\"slug\\":\\"last_name\\",\\"value\\":\\"Corkum\\"},{\\"id\\":\\"101\\",\\"entry_id\\":\\"32\\",\\"field_id\\":\\"fld_6009157\\",\\"slug\\":\\"email_address\\",\\"value\\":\\"mike@hiroy.club\\"},{\\"id\\":\\"102\\",\\"entry_id\\":\\"32\\",\\"field_id\\":\\"fld_7683514\\",\\"slug\\":\\"comments_questions\\",\\"value\\":\\"Hi Mike\\\\r\\\\n\\\\r\\\\nLine 2\\\\r\\\\n\\\\r\\\\nLine 11\\"}]"`;
