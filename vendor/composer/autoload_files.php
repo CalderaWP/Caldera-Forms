@@ -11,4 +11,5 @@ return array(
     '6124b4c8570aa390c21fafd04a26c69f' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
     '653f15cae3415bbad33eff25628b45a8' => $vendorDir . '/calderawp/caldera-forms-query/src/CalderaFormsQueries.php',
     '5e73ffc188f5a63fbd263c4490731358' => $vendorDir . '/inpsyde/wonolog/inc/bootstrap.php',
+    'e3b369f785b64e46a24dc3ca6f0257a1' => $baseDir . '/tests/testing-cli.php',
 );

@@ -64,6 +64,7 @@ We provide a docker-based development environment. It is recommended that you us
 
 The local server is [http://localhost:8228](http://localhost:8228)
 
+
 #### Requirements
 * Docker
     - [Installation documentation](https://docs.docker.com/install/)
@@ -71,6 +72,23 @@ The local server is [http://localhost:8228](http://localhost:8228)
     - [Installation documentation](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx)
 * npm
     - [Installation documentation](https://www.npmjs.com/get-npm)
+    
+    
+#### Install Test Environment
+* Make sure all dependencies are installed:
+    - `composer update && npm update`
+* Install local development environment
+    - `composer wp:install
+        - Runs installer. Make sure Docker is running. May take awhile.
+    - `composer wp:activate`
+        - Activates Caldera Forms and Gutenberg and sets permalinks.
+* Go to [http://localhost:8228](http://localhost:8228) and make sure you have a WordPress site and can login.
+    - Username: admin
+    - password: password
+
+* Install the tests forms and pages for them.
+    - `composer wp:setup-tests`
+    - Adds forms needed for e2e tests and one page for each form. Useful for manual QA as well.
     
 ### Test Structures
 * PHP tests go in /tests and are run using phpunit
@@ -90,6 +108,7 @@ The local server is [http://localhost:8228](http://localhost:8228)
 * `composer wp:tests` - Runs the PHP integration tests using phpunit inside Docker-based environment .
 * `composer wp:stop` - Stops Docker-based test environment, without destroying containers.
 * `composer wp:destroy` - Removes (including the database) the test environment and destroys containers.
+* `composer wp:setup-tests` - Adds test forms and puts them on pages.
 * `npm test` - Run JavaScript test watcher
 * `npm run test:once` - Run JavaScript unit tests once
 

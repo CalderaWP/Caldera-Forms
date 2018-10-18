@@ -19,6 +19,9 @@ services:
     - wordpress:/var/www/html
     - .:/var/www/html/wp-content/plugins/caldera-forms
     - ./wp-content/plugins/gutenberg:/var/www/html/wp-content/plugins/gutenberg
+    environment:
+      WORDPRESS_DB_PASSWORD: example
+      ABSPATH: /usr/src/wordpress/
   mysql:
     image: mysql:5.7
     environment:
