@@ -74,6 +74,9 @@ The local server is [http://localhost:8228](http://localhost:8228)
     
 ### Test Structures
 * PHP tests go in /tests and are run using phpunit
+    - Integration tests, which require WordPress, are in tests. These used to be all the tests we have.
+    - Unit tests -- isolated tests that do NOT require WordPress -- go in `tests/Unit`.
+    - The trait `calderawp\calderaforms\Util\Traits` should have all of the factories used for integration and unit tests (aspirational.)
 * JavaScript UNIT tests go in clients/tests
     - Unit tests go in clients/tests/unit and are run using [Jest](https://facebook.github.io/jest/docs/en/getting-started.html)
     - Unit tests must have the word test in file name. For example, `formConfig.test.js`

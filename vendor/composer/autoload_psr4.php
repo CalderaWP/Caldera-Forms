@@ -8,6 +8,9 @@ $baseDir = dirname($vendorDir);
 return array(
     'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/reflection-docblock/src', $vendorDir . '/phpdocumentor/type-resolver/src'),
     'calderawp\\calderaforms\\pro\\' => array($baseDir . '/includes/cf-pro-client/classes'),
+    'calderawp\\calderaforms\\Tests\\Util\\Traits\\' => array($baseDir . '/tests/Util/Traits'),
+    'calderawp\\calderaforms\\Tests\\Util\\' => array($baseDir . '/tests/Util'),
+    'calderawp\\calderaforms\\Tests\\Unit\\' => array($baseDir . '/tests/Unit'),
     'calderawp\\CalderaFormsQuery\\' => array($vendorDir . '/calderawp/caldera-forms-query/src'),
     'calderawp\\CalderaContainers\\' => array($vendorDir . '/calderawp/caldera-containers/src'),
     'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
@@ -22,4 +25,5 @@ return array(
     'Doctrine\\Instantiator\\' => array($vendorDir . '/doctrine/instantiator/src/Doctrine/Instantiator'),
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
     'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src/Composer/Installers'),
+    'Brain\\Monkey\\' => array($vendorDir . '/brain/monkey/src'),
 );
