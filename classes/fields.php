@@ -112,6 +112,17 @@ class Caldera_Forms_Fields {
 				),
 
 			),
+            'text2'             => array(
+                "field"       => __( 'text2', 'caldera-forms' ),
+                "description" => __( 'text2', 'caldera-forms' ),
+                "file"        => CFCORE_PATH . "fields/text2/field.php",
+                "category"    => __( 'Basic', 'caldera-forms' ),
+                "setup"       => array(
+                    "template" => CFCORE_PATH . "fields/text2/config.php",
+                    "preview"  => CFCORE_PATH . "fields/text2/preview.php"
+                ),
+
+            ),
 			'hidden'           => array(
 				"field"       => __( 'Hidden', 'caldera-forms' ),
 				"description" => __( 'Hidden', 'caldera-forms' ),

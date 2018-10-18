@@ -292,7 +292,8 @@ class Caldera_Forms_Render_Assets {
 			'blocks' => self::make_url( 'blocks'),
 			'editor' => self::make_url( 'editor' ),
 			'pro' => self::make_url( 'pro' ),
-			'privacy' => self::make_url( 'privacy' )
+			'privacy' => self::make_url( 'privacy' ),
+            'render' => self::make_url( 'render' )
 		);
 
 		$script_urls[ 'fields' ] = $script_urls[ 'privacy' ];
@@ -555,7 +556,7 @@ class Caldera_Forms_Render_Assets {
 	 * @return bool
 	 */
 	public static function is_client_entry_point( $slug ){
-		return in_array( $slug, array( 'blocks', 'pro', 'privacy' ) );
+		return in_array( $slug, array( 'blocks', 'pro', 'privacy','render' ) );
 	}
 
 	/**
@@ -589,6 +590,7 @@ class Caldera_Forms_Render_Assets {
 		self::maybe_validator_i18n( false );
 		self::enqueue_script( 'validator' );
 		self::enqueue_script( 'init' );
+		self::enqueue_script( 'render' );
 
 		$should_minify = self::should_minify();
 		if( $should_minify  ){
