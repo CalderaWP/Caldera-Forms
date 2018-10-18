@@ -292,7 +292,7 @@ class Caldera_Forms_Render_Assets {
 			'blocks' => self::make_url( 'blocks'),
 			'editor' => self::make_url( 'editor' ),
 			'pro' => self::make_url( 'pro' ),
-			'privacy' => self::make_url( 'privacy' ),
+			//'privacy' => self::make_url( 'privacy' ),
             'render' => self::make_url( 'render' )
 		);
 

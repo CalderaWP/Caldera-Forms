@@ -24,6 +24,7 @@ class Caldera_Forms
 	const VERSION = CFCORE_VER;
 
 	/**
+	/**
 	 * @since 1.4.2
 	 */
 	const PLUGIN_SLUG = 'caldera-forms';
@@ -4205,11 +4206,11 @@ class Caldera_Forms
 
 		do_action('caldera_forms_render_start', $form);
 
-		//aria-label="<?php echo $form[ 'name' ] . '"
+		$form_id_attribute = $form['ID'] . '_' . $current_form_count;
 		$form_attributes = array(
 			'method' => 'POST',
 			'enctype' => 'multipart/form-data',
-			'id' => $form['ID'] . '_' . $current_form_count,
+			'id' => $form_id_attribute,
 			'data-form-id' => $form['ID'],
 			'aria-label' => $form['name']
 		);
@@ -4639,6 +4640,7 @@ class Caldera_Forms
 			$out .= "<" . $form_element . " data-instance=\"" . $current_form_count . "\" class=\"" . implode(' ',
 					$form_classes) . "\" " . implode(" ", $attributes) . ">\r\n";
 			$out .= Caldera_Forms_Render_Nonce::nonce_field($form['ID']);
+			$out .= sprintf( '<div id="%s"></div>', esc_attr( "cf2-$form_id_attribute") );
 			$out .= "<input type=\"hidden\" name=\"_cf_frm_id\" value=\"" . $form['ID'] . "\">\r\n";
 			$out .= "<input type=\"hidden\" name=\"_cf_frm_ct\" value=\"" . $current_form_count . "\">\r\n";
 			if (!empty($form['form_ajax'])) {

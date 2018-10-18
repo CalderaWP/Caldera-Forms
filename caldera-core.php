@@ -122,16 +122,16 @@ if (!version_compare(PHP_VERSION, '5.6.0', '>=')) {
     }
 
     add_action('plugins_loaded', array('Caldera_Forms', 'get_instance'));
-    add_action('plugins_loaded', array('Caldera_Forms_Tracking', 'get_instance'));
 
 
-	// Admin & Admin Ajax stuff.
+    add_filter( 'caldera_forms_render_assets_minify', '__return_false' );
+
+    // Admin & Admin Ajax stuff.
     if (is_admin() || defined('DOING_AJAX')) {
         add_action('plugins_loaded', array('Caldera_Forms_Admin', 'get_instance'));
         add_action('plugins_loaded', array('Caldera_Forms_Support', 'get_instance'));
         include_once CFCORE_PATH . 'includes/plugin-page-banner.php';
     }
-
 
 
 }
