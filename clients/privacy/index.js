@@ -6,7 +6,7 @@ import ReactDOM from "react-dom";
 import {PrivacySettingsWrapped} from "./containers/PrivacySettings";
 
 Object.defineProperty( global.wp, 'element', {
-    get: () => require( 'react' )
+    get: () => React
 } );
 
 /**

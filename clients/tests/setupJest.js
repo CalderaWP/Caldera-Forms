@@ -10,5 +10,5 @@ global.wp = {
 };
 
 Object.defineProperty( global.wp, 'element', {
-	get: () => require( 'React' ),
+	get: () => React,
 } );
