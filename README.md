@@ -60,7 +60,11 @@ This is the old stuff, built with grunt.
 ### Test Environment
 All PHP tests are based off of the WordPress "unit" test suite, and therefore need a full WordPress test environment. The install script in '/bin' is pretty standard and should work with VVV or whatever.
 
-Alternatively, because this, isn't 2014, you can use the provided Docker environment.
+We provide a docker-based development environment. It is recommended that you use this environment because the setup is scripted and all of the tests can be run with it.
+
+The local server is [http://localhost:8228](http://localhost:8228)
+
+
 #### Requirements
 * Docker
     - [Installation documentation](https://docs.docker.com/install/)
@@ -69,18 +73,42 @@ Alternatively, because this, isn't 2014, you can use the provided Docker environ
 * npm
     - [Installation documentation](https://www.npmjs.com/get-npm)
     
+    
+#### Install Test Environment
+* Make sure all dependencies are installed:
+    - `composer update && npm update`
+* Install local development environment
+    - `composer wp:install
+        - Runs installer. Make sure Docker is running. May take awhile.
+    - `composer wp:activate`
+        - Activates Caldera Forms and Gutenberg and sets permalinks.
+* Go to [http://localhost:8228](http://localhost:8228) and make sure you have a WordPress site and can login.
+    - Username: admin
+    - password: password
+
+* Install the tests forms and pages for them.
+    - `composer wp:setup-tests`
+    - Adds forms needed for e2e tests and one page for each form. Useful for manual QA as well.
+    
 ### Test Structures
 * PHP tests go in /tests and are run using phpunit
-* JavaScript tests go in clients/tests
-- Unit tests go in clients/tests/unit and are run using [Jest](https://facebook.github.io/jest/docs/en/getting-started.html)
-- Unit tests must have the word test in file name. For example, `formConfig.test.js`
+    - Integration tests, which require WordPress, are in tests. These used to be all the tests we have.
+    - Unit tests -- isolated tests that do NOT require WordPress -- go in `tests/Unit`.
+    - The trait `calderawp\calderaforms\Util\Traits` should have all of the factories used for integration and unit tests (aspirational.)
+* JavaScript UNIT tests go in clients/tests
+    - Unit tests go in clients/tests/unit and are run using [Jest](https://facebook.github.io/jest/docs/en/getting-started.html)
+    - Unit tests must have the word test in file name. For example, `formConfig.test.js`
+* End to end tests go in `cypress/integration` amd are written using [Cypress](https://cypress.io)
+    - See our [Cypress README for testing](./cypress/README.md)
 
 #### Commands
-* `composer wp-install` - Installs Docker-based test environment.
-* `composer wp-start` - Starts Docker-based test environment.
-* `composer wp-tests` - Runs phpunit inside of Docker container.
-* `composer wp-stop` - Stops Docker-based test environment, without destroying containers.
-* `composer wp-remove` - Stops Docker-based test environment and destroys containers.
+* `composer wp:install` - Installs Docker-based test environment.
+* `composer wp:start` - Starts Docker-based test environment.
+* `composer wp:activate` - Activate plugins in Docker-based environment.
+* `composer wp:tests` - Runs the PHP integration tests using phpunit inside Docker-based environment .
+* `composer wp:stop` - Stops Docker-based test environment, without destroying containers.
+* `composer wp:destroy` - Removes (including the database) the test environment and destroys containers.
+* `composer wp:setup-tests` - Adds test forms and puts them on pages.
 * `npm test` - Run JavaScript test watcher
 * `npm run test:once` - Run JavaScript unit tests once
 
