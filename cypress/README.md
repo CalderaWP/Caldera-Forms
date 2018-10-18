@@ -14,7 +14,7 @@ In the Cypress app, you should se a list of tests, you can click one to launch i
 * Cypress gets 404s for all pages?
     - Did you start the development environment? `composer wp:start`
     - Are you trying to use your own URL? You need to modify cypress.json's env, but then you will break it for everyone, please use the provided environment.
-
+* Error in Cypress' Chrome `Whoops, we can't run your tests. This browser was not launched through Cypress. Tests cannot run.`
 ## How To Add A Test
 * Export your form
 * Save form in `cypress/forms` using form ID as file name

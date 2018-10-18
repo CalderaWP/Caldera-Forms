@@ -39,7 +39,7 @@ class CreatePages
         $testForms = $data['forms'];
 
         $created = [];
-        $contentPattern =  '[caldera_forms id="%s"]';
+        $contentPattern =  '[caldera_form id="%s"]';
 
         foreach ($testForms as $testForm) {
             $formId = $testForm['formId'];
