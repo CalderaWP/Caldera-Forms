@@ -60,6 +60,7 @@ script:
   - |
     if [[ ! -z "$WP_VERSION" ]] ; then
       phpunit
+      composer test:unit
     fi
   - |
     if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then

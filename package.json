@@ -28,7 +28,8 @@
     "test": "npm run test:watch",
     "test:watch": "jest --watch",
     "test:once": "jest",
-    "test:e2e": "cypress open"
+    "test:e2e": "cypress open",
+    "test:e2e:ci": "cypress run"
   },
   "browserslist": [
     "last 2 versions",
@@ -140,6 +141,10 @@
     "automock": false,
     "setupFiles": [
       "./clients/tests/setupJest.js"
+    ],
+    "testPathIgnorePatterns": [
+      "cypress",
+      "node_modules"
     ]
   }
 }
