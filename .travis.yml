@@ -25,7 +25,7 @@ env:
 matrix:
   include:
     - php: 7.2
-      env: WP_VERSION=trunk
+      env: WP_VERSION=trunk TEST_JS=yes
     - php: 7.2
       env: WP_VERSION=latest WP_MULTISITE=1
     - php: 7.2
@@ -52,6 +52,10 @@ before_script:
       composer global require wp-coding-standards/wpcs
       phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
     fi
+  - |
+    if [[ "$TEST_JS" == "yes" ]] ; then
+      npm install
+    fi
 script:
   - |
     if [[ ! -z "$WP_VERSION" ]] ; then
@@ -60,4 +64,8 @@ script:
   - |
     if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
       phpcs
+    fi
+  - |
+    if [[ "$TEST_JS" == "yes" ]] ; then
+      npm run test:once
     fi
