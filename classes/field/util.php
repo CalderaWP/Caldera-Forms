@@ -670,4 +670,10 @@ class Caldera_Forms_Field_Util {
 
         return isset( $field[ 'config' ][ self::CONFIG_EMAIL_IDENTIFIER ] ) && rest_sanitize_boolean($field[ 'config' ][ self::CONFIG_EMAIL_IDENTIFIER ] );
     }
+
+
+    public static function is_cf2_field_type($field_type){
+	    //This array should be created dynamically
+	    return in_array( $field_type, ['file_cf2', 'text2'] );
+    }
 }

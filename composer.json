@@ -45,7 +45,8 @@
     },
     "autoload": {
         "psr-4": {
-            "calderawp\\calderaforms\\pro\\": "includes/cf-pro-client/classes/"
+            "calderawp\\calderaforms\\pro\\": "includes/cf-pro-client/classes/",
+            "calderawp\\calderaforms\\cf2\\": "cf2"
         }
     },
     "autoload-dev": {

@@ -1,6 +1,6 @@
 import {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
-import {RenderComponentViaPortal} from "./Portal";
+import {RenderComponentViaPortal} from "./RenderComponentViaPortal";
 
 /**
  * Render a Caldera Forms v2 field via a RenderComponentViaPortal to an element inside a Caldera Forms v1 field

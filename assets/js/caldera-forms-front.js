@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.7.3-a.1 - 2018-10-15 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.8.0-a.1 - 2018-10-19 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -45,6 +45,16 @@ function CFEvents(state) {
 
 	};
 
+	this.emit = function (eventName, payload) {
+		if (!hasEvents(eventName)) {
+			return;
+		}
+
+		events[eventName].forEach(function (callback) {
+			callback(payload,eventName);
+		});
+
+	};
 	/**
 	 * Detach a bound event (remove_action)
 	 *
@@ -301,6 +311,9 @@ function CFState(formId, $ ){
 			 */
 			detach: function(id,callback){
 				events.detach(id,callback);
+			},
+			emit: function (eventName,payload) {
+				events.emit(eventName,payload);
 			}
 		}
 	};

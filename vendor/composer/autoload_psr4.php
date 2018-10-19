@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/reflection-docblock/src', $vendorDir . '/phpdocumentor/type-resolver/src'),
     'calderawp\\calderaforms\\pro\\' => array($baseDir . '/includes/cf-pro-client/classes'),
+    'calderawp\\calderaforms\\cf2\\' => array($baseDir . '/cf2'),
     'calderawp\\calderaforms\\Tests\\Util\\Traits\\' => array($baseDir . '/tests/Util/Traits'),
     'calderawp\\calderaforms\\Tests\\Util\\' => array($baseDir . '/tests/Util'),
     'calderawp\\calderaforms\\Tests\\Unit\\' => array($baseDir . '/tests/Unit'),

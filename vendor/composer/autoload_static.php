@@ -23,6 +23,7 @@ class ComposerStaticInit734406fe75b0a330f41f48930525b165
         'c' => 
         array (
             'calderawp\\calderaforms\\pro\\' => 27,
+            'calderawp\\calderaforms\\cf2\\' => 27,
             'calderawp\\calderaforms\\Tests\\Util\\Traits\\' => 41,
             'calderawp\\calderaforms\\Tests\\Util\\' => 34,
             'calderawp\\calderaforms\\Tests\\Unit\\' => 34,
@@ -81,6 +82,10 @@ class ComposerStaticInit734406fe75b0a330f41f48930525b165
         'calderawp\\calderaforms\\pro\\' => 
         array (
             0 => __DIR__ . '/../..' . '/includes/cf-pro-client/classes',
+        ),
+        'calderawp\\calderaforms\\cf2\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/cf2',
         ),
         'calderawp\\calderaforms\\Tests\\Util\\Traits\\' => 
         array (

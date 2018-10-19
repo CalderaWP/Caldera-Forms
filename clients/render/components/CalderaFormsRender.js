@@ -1,11 +1,21 @@
-import {Component, Fragment} from 'react';
+import {Component, Fragment, createContext} from 'react';
 import PropTypes from 'prop-types';
 import {CalderaFormsFieldPropType, CalderaFormsFieldRender} from "./CalderaFormsFieldRender";
 
 //Collection of change handlers to prevent re-creating
 const handlers = {};
 //Collection of cfState.events functions that subscribe to changes to prevent re-creating
-const subscribed = {};
+const stateChangeSubscriptions = {};
+const conditionalEventSubscriptions = {};
+
+
+const shouldShowKey = (fieldIdAttr) => {
+	return `shouldShow${fieldIdAttr}`;
+};
+
+const shouldDisableKey = (fieldIdAttr) => {
+	return `shouldDisable${fieldIdAttr}`;
+};
 
 /**
  * Handles rendering fo Caldera Forms v2 fields inside of a Caldera Form v1
@@ -31,11 +41,11 @@ export class CalderaFormsRender extends Component {
 				fieldDefault,
 				fieldIdAttr
 			} = field;
-			fieldValues[fieldIdAttr]=fieldDefault
+			fieldValues[fieldIdAttr] = fieldDefault;
+			fieldValues[shouldShowKey(fieldIdAttr)] = field.hasOwnProperty('shouldShow') && false === field.shouldShow ? false : true;
+			fieldValues[shouldDisableKey(fieldIdAttr)] = field.hasOwnProperty('shouldDisable') && true === field.shouldDisable ? true : false;
 		});
-		this.state = {
-			...fieldValues
-		};
+		this.state = fieldValues;
 		this.setFieldValue = this.setFieldValue.bind(this);
 	}
 
@@ -63,6 +73,20 @@ export class CalderaFormsRender extends Component {
 		return this.getCfState().getState(fieldIdAttr);
 	}
 
+	setFieldShouldShow(fieldIdAttr,show) {
+		const key = shouldShowKey(fieldIdAttr);
+		this.setState({
+			[key]: show
+		});
+	}
+
+	setFieldShouldDisable(fieldIdAttr,disable) {
+		const key = shouldDisableKey(fieldIdAttr);
+		this.setState({
+			[key]: disable
+		});
+	}
+
 	/**
 	 * Set a field's value
 	 *
@@ -74,11 +98,11 @@ export class CalderaFormsRender extends Component {
 	 * @param {String|Number|null|boolean|Array} newValue
 	 * @param {boolean} bubbleUp Optional. If true, the default, the new value is dispatched to CFState. If false it is not.
 	 */
-	setFieldValue(fieldIdAttr, newValue,bubbleUp = true) {
+	setFieldValue(fieldIdAttr, newValue, bubbleUp = true) {
 		this.setState(
-			{fieldIdAttr:newValue}
+			{fieldIdAttr: newValue}
 		);
-		if( bubbleUp) {
+		if (bubbleUp) {
 			this.getCfState().mutateState(fieldIdAttr, newValue);
 
 		}
@@ -107,16 +131,50 @@ export class CalderaFormsRender extends Component {
 	 * @param {String} fieldIdAttr The field's id attribute (not field ID, html id attribute)
 	 */
 	subscribe(fieldIdAttr) {
-		if (!subscribed.hasOwnProperty(fieldIdAttr)) {
-			subscribed[fieldIdAttr] = this.getCfState()
+		if (!stateChangeSubscriptions.hasOwnProperty(fieldIdAttr)) {
+			stateChangeSubscriptions[fieldIdAttr] = this.getCfState()
 				.events()
-				.subscribe(fieldIdAttr, (newValue, fieldIdAttr) => this.setFieldValue(fieldIdAttr, newValue, false ) )
+				.subscribe(fieldIdAttr, (newValue, fieldIdAttr) => this.setFieldValue(fieldIdAttr, newValue, false))
 		}
+		const conditioanlEvents = [
+			'show',
+			'hide',
+			'enable',
+			'disable',
+		];
+		const {formId, formIdAttr} = this.props;
+		if (!conditionalEventSubscriptions.hasOwnProperty(fieldIdAttr)) {
+			conditionalEventSubscriptions[fieldIdAttr] = {}
+		}
+		conditioanlEvents.forEach(conditionalEvent => {
+			if (!conditionalEventSubscriptions[fieldIdAttr].hasOwnProperty(conditionalEvent)) {
+				conditionalEventSubscriptions[fieldIdAttr][conditionalEvent] = this.getCfState()
+					.events().attatchEvent(`cf.conditionals.${conditionalEvent}`, (eventData, eventName) => {
+						if (formIdAttr === eventData.formIdAttr) {
+							const {eventType, fieldIdAttr} = eventData;
+							switch (eventType) {
+								case 'hide':
+										this.setFieldShouldShow(fieldIdAttr,false);
+									break;
+								case 'show' :
+									this.setFieldShouldShow(fieldIdAttr,true);
+									break;
+								case 'enable':
+								case 'disable':
+									break;
+
+							}
+						}
+					});
+			}
+		})
 	}
 
 	/** @inheritDoc */
 	render() {
-		const {fieldsToControl} = this.props;
+		const {state,props} = this;
+		const {fieldsToControl} =props;
+
 		return (
 			<Fragment>
 				{fieldsToControl.map(field => {
@@ -140,11 +198,16 @@ export class CalderaFormsRender extends Component {
 					this.subscribe(fieldIdAttr);
 					const props = {
 						field,
-						onChange: this.getHandler(fieldIdAttr)
+						onChange: this.getHandler(fieldIdAttr),
+						shouldShow: state[shouldShowKey(fieldIdAttr)],
+						shouldDisable: state[shouldDisableKey(fieldIdAttr)],
 					};
 
 					return (
-						<CalderaFormsFieldRender {...props} key={outterIdAttr}/>
+						<CalderaFormsFieldRender
+							{...props}
+							key={outterIdAttr}
+						/>
 					);
 				})}
 
@@ -168,6 +231,7 @@ CalderaFormsRender.propTypes = {
 	fieldsToControl: PropTypes.arrayOf(
 		CalderaFormsFieldPropType
 	),
+	formIdAttr: PropTypes.string.isRequired
 
 };
 

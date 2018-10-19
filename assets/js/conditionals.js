@@ -315,6 +315,18 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 					resetValue( field, state );
 
 				}
+
+				var cf2Field = jQuery( '.cf2-field-wrapper[data-field-id="'+field+'"]');
+				if( cf2Field.length){
+					var state = getStateObj(inst_id);
+					if( state){
+						state.mutateState(field,getSavedFieldValue( field ) );
+					}
+				}
+
+
+				emitConditionalEvent('show', field, inst_id );
+
 			}else if (action === 'hide'){
 				if(target.html().length){
 					saveFieldValue(  field, state  );
@@ -326,6 +338,9 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 						field: field,
 					});
 				}
+
+				emitConditionalEvent('hide', field, inst_id );
+
 			}else if ('enable' === action || 'disable' === action ){
 				var dField = jQuery( '#' + field );
 				if( 'enable' == action ){
@@ -340,6 +355,11 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 					}else{
 						dField.prop('disabled', false);
 					}
+
+					state.events().dispatch();
+
+					emitConditionalEvent('enable', field, inst_id );
+
 
 				}else {
 					if (!target.html().length) {
@@ -358,6 +378,8 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 							field: field,
 						});
 					}
+					emitConditionalEvent('disable', field, inst_id );
+
 
 				}
 
@@ -381,6 +403,19 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 			return null;
 		}
 
+		function emitConditionalEvent(eventName,field,formId){
+			function createEventName(){
+				return 'cf.conditionals.' + eventName;
+			}
+			var state = getStateObj(formId);
+			if( state ){
+				state.events().emit(createEventName(), {
+					fieldIdAttr: field,
+					formIdAttr: formId,
+					eventType: eventName
+				} );
+			}
+		}
 
 	};
 
