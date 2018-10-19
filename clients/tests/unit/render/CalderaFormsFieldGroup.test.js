@@ -93,7 +93,6 @@ describe('CalderaFormsFieldGroup component', () => {
 				...fieldConfig,
 				required: true
 			}}
-			shouldDiable={true}
 		/>);
 		const testInstance = testRenderer.root;
 

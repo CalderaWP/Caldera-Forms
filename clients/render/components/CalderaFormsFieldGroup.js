@@ -29,6 +29,18 @@ export const CalderaFormsFieldGroup = (props) => {
 	if (!shouldShow) {
 		return <Fragment/>;
 	}
+	const propsThatDoNotUseAnEquals = {};
+	if (shouldDisable) {
+		propsThatDoNotUseAnEquals.disabled = true;
+	} else {
+		propsThatDoNotUseAnEquals.disabled = false;
+	}
+	if (required) {
+		propsThatDoNotUseAnEquals.required = true;
+	} else {
+		propsThatDoNotUseAnEquals.required = false;
+	}
+
 	return (
 
 			<div className={'form-group cf2-field-group'}>
@@ -40,9 +52,8 @@ export const CalderaFormsFieldGroup = (props) => {
 				</label>
 				<input
 					type={type}
-					disabled={shouldDisable}
+					{...propsThatDoNotUseAnEquals}
 					value={fieldValue}
-					required={required}
 					className={'form-control'}
 					id={fieldIdAttr}
 					placeholder={fieldPlaceHolder}
