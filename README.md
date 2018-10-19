@@ -111,7 +111,8 @@ The local server is [http://localhost:8228](http://localhost:8228)
 * `composer wp:setup-tests` - Adds test forms and puts them on pages.
 * `npm test` - Run JavaScript test watcher
 * `npm run test:once` - Run JavaScript unit tests once
-
+* `npm run test:e2e` - Start Cypress e2e test runner.
+* `npm run test:e2e:ci` - Trigger Cypress.io test record.
 ### Release To WordPress.org
 ##### Requires
 * [svn](https://subversion.apache.org/quick-start#installing-the-client)

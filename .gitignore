@@ -10,3 +10,5 @@ bin/caldera-forms
 
 wordpress/*
 wp-content/*
+cypress/screenshots/*
+cypress/videos/*
