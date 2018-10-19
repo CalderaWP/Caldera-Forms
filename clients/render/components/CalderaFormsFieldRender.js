@@ -1,6 +1,7 @@
 import {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
 import {RenderComponentViaPortal} from "./RenderComponentViaPortal";
+import {CalderaFormsFieldGroup} from "./CalderaFormsFieldGroup";
 
 /**
  * Render a Caldera Forms v2 field via a RenderComponentViaPortal to an element inside a Caldera Forms v1 field
@@ -16,14 +17,6 @@ export const CalderaFormsFieldRender = (props) => {
 	const {
 		type,
 		outterIdAttr,
-		fieldId,
-		fieldLabel,
-		fieldCaption,
-		required,
-		fieldPlaceHolder,
-		fieldDefault,
-		fieldValue,
-		fieldIdAttr,
 	} = field;
 
 	if (!shouldShow) {
@@ -35,23 +28,13 @@ export const CalderaFormsFieldRender = (props) => {
 				domNode={document.getElementById(outterIdAttr)}
 				key={outterIdAttr}
 			>
-				<div>
-					<label
-						htmlFor={fieldIdAttr}
-					>
-						{fieldLabel}
-					</label>
-					<input
-						type={type}
-						disabled={shouldDisable}
-						value={fieldValue}
-						required={required}
-						className={'form-control'}
-						id={fieldIdAttr}
-						placeholder={fieldPlaceHolder}
-						onChange={onChange}
-					/>
-				</div>
+				<CalderaFormsFieldGroup
+					field={field}
+					onChange={onChange}
+					shouldShow={shouldShow}
+					shouldDisable={shouldDisable}
+
+				/>
 			</RenderComponentViaPortal>
 		</Fragment>
 

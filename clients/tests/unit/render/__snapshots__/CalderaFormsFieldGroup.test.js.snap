@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CalderaFormsFieldGroup component Matches snapshot with basic args 1`] = `
+<div
+  className="form-group cf2-field-group"
+>
+  <label
+    className="control-label"
+    htmlFor="fld_5843941_1"
+  >
+    Text 2 Field
+  </label>
+  <input
+    className="form-control"
+    disabled={false}
+    id="fld_5843941_1"
+    onChange={[Function]}
+    placeholder=""
+    required={false}
+    type="text"
+    value=""
+  />
+</div>
+`;

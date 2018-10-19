@@ -236,7 +236,7 @@ export class CalderaFormsRender extends Component {
 				})}
 
 			</Fragment>
-		)
+		);
 
 	}
 }
