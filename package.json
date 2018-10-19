@@ -52,7 +52,8 @@
     "exports-loader": "^0.7.0",
     "inputmask": "^3.3.11",
     "lodash.remove": "^4.7.0",
-    "react-emoji-render": "^0.4.6"
+    "react-emoji-render": "^0.4.6",
+    "validator": "^10.8.0"
   },
   "devDependencies": {
     "@caldera-labs/api-client": "^0.2.2",

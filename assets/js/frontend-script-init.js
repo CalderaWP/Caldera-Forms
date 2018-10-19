@@ -365,6 +365,7 @@ window.addEventListener("load", function(){
 					config_object = new Caldera_Forms_Field_Config( config, $(document.getElementById(form_id)), $, state );
 					config_object.init();
 					$( document ).trigger( 'cf.form.init',{
+						$form: $form,
 						idAttr:  form_id,
 						formId: formId,
 						state: state,

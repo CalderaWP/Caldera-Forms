@@ -2,6 +2,7 @@ import {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
 import {CalderaFormsFieldPropType} from "./CalderaFormsFieldRender";
 
+
 /**
  * Render a Caldera Forms v2 field
  *
@@ -12,7 +13,7 @@ import {CalderaFormsFieldPropType} from "./CalderaFormsFieldRender";
  * @constructor
  */
 export const CalderaFormsFieldGroup = (props) => {
-	const {field, onChange, shouldDisable, shouldShow} = props;
+	const {field, onChange, shouldDisable, shouldShow,hasMessage,isError,message} = props;
 	const {
 		type,
 		outterIdAttr,
@@ -24,6 +25,7 @@ export const CalderaFormsFieldGroup = (props) => {
 		fieldDefault,
 		fieldValue,
 		fieldIdAttr,
+		isInvalid
 	} = field;
 
 	if (!shouldShow) {
@@ -40,6 +42,7 @@ export const CalderaFormsFieldGroup = (props) => {
 	} else {
 		propsThatDoNotUseAnEquals.required = false;
 	}
+
 
 	return (
 
@@ -59,6 +62,14 @@ export const CalderaFormsFieldGroup = (props) => {
 					placeholder={fieldPlaceHolder}
 					onChange={onChange}
 				/>
+				{isInvalid &&
+					<span
+						className="help-block caldera_ajax_error_block filled"
+						aria-live="polite"
+					>
+						<span className="parsley-required">{message}</span>
+					</span>
+				}
 			</div>
 
 	);
@@ -78,7 +89,10 @@ CalderaFormsFieldGroup.propTypes = {
 	field: CalderaFormsFieldPropType,
 	onChange: PropTypes.func.isRequired,
 	shouldShow: PropTypes.bool,
-	shouldDisable: PropTypes.bool
+	shouldDisable: PropTypes.bool,
+	hasMessage: PropTypes.bool,
+	isInvalid: PropTypes.bool,
+	message: PropTypes.string
 };
 
 /**
@@ -91,5 +105,7 @@ CalderaFormsFieldGroup.propTypes = {
 CalderaFormsFieldGroup.defaultProps = {
 	shouldShow: true,
 	shouldDisable: false,
-	fieldValue: ''
+	fieldValue: '',
+	isInvalid: false,
+	message: 'Field is required'
 };

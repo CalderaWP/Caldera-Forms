@@ -16,7 +16,8 @@ domReady( function() {
 		const {
 			state,//CF state instance
 			formId, //Form's ID
-			idAttr //Form element id attribute
+			idAttr, //Form element id attribute,
+			//$form, //Form jQuery object
 		} = obj;
 		const fieldsToControl = [];
 
@@ -42,11 +43,16 @@ domReady( function() {
 			}
 		});
 
+		let shouldBeValidating = false;
+		jQuery(document).on( 'cf.form.submit', (event,obj) => {
+			shouldBeValidating = true;
+		});
 		ReactDOM.render( <CalderaFormsRender
 			cfState={state}
 			formId={formId}
 			formIdAttr={idAttr}
 			fieldsToControl={fieldsToControl}
+			shouldBeValidating={shouldBeValidating}
 		/>, document.getElementById(`cf2-${idAttr}`))
 	});
 } );

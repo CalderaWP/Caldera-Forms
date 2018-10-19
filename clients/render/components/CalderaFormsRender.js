@@ -1,6 +1,7 @@
 import {Component, Fragment, createContext} from 'react';
 import PropTypes from 'prop-types';
 import {CalderaFormsFieldPropType, CalderaFormsFieldRender} from "./CalderaFormsFieldRender";
+import isEmpty from 'validator/lib/isEmpty';
 
 //Collection of change handlers to prevent re-creating
 const handlers = {};
@@ -194,10 +195,20 @@ export class CalderaFormsRender extends Component {
 		});
 	}
 
+	isFieldRequired(fieldIdAttr){
+		const field = this.props.fieldsToControl
+			.find( field => fieldIdAttr === field.fieldIdAttr );
+		return field.hasOwnProperty('required' ) && true === field.required ? true : false;
+	}
+
+	isFieldValid(fieldIdAttr){
+		return this.isFieldRequired(fieldIdAttr) && ! isEmpty(this.state[fieldIdAttr]);
+	}
+
 	/** @inheritDoc */
 	render() {
 		const {state, props} = this;
-		const {fieldsToControl} = props;
+		const {fieldsToControl,shouldBeValidating} = props;
 
 		return (
 			<Fragment>
@@ -214,10 +225,13 @@ export class CalderaFormsRender extends Component {
 						fieldIdAttr
 					} = field;
 
+
 					field = {
 						...field,
 						fieldValue: this.getFieldValue(fieldIdAttr)
 					};
+
+					const isInvalid = shouldBeValidating && ! this.isFieldValid(fieldIdAttr);
 
 					this.subscribe(fieldIdAttr);
 					const props = {
@@ -231,6 +245,7 @@ export class CalderaFormsRender extends Component {
 						<CalderaFormsFieldRender
 							{...props}
 							key={outterIdAttr}
+							isInvalid={isInvalid}
 						/>
 					);
 				})}
@@ -255,7 +270,7 @@ CalderaFormsRender.propTypes = {
 	fieldsToControl: PropTypes.arrayOf(
 		CalderaFormsFieldPropType
 	),
-	formIdAttr: PropTypes.string.isRequired
-
+	formIdAttr: PropTypes.string.isRequired,
+	shouldBeValidating: PropTypes.bool.isRequired
 };
 
