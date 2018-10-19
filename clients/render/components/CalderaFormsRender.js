@@ -50,6 +50,7 @@ export class CalderaFormsRender extends Component {
 		this.setFieldValue = this.setFieldValue.bind(this);
 		this.setFieldShouldShow = this.setFieldShouldShow.bind(this);
 		this.setFieldShouldDisable = this.setFieldShouldDisable.bind(this);
+
 	}
 
 	/**
@@ -74,6 +75,29 @@ export class CalderaFormsRender extends Component {
 	 */
 	getFieldValue(fieldIdAttr) {
 		return this.getCfState().getState(fieldIdAttr);
+	}
+
+	getFieldValues()
+	{
+		const {fieldsToControl} = this.props;
+		//This is copied from caldera-admin. Choose one location.
+		const pickArray = (array, key) => {
+			return array.reduce(
+				(accumualtor, item) =>
+					accumualtor.concat([item[key]]), []
+			);
+		};
+
+
+		const fieldIds = pickArray(fieldsToControl,'fieldIdAttr');
+		const values = {};
+		Object.keys( this.state ).map( key => {
+			if( fieldIds.includes(key ) ){
+				const fieldId =  fieldsToControl.find( field => key === field.fieldIdAttr ).fieldId;
+				values[fieldId]=this.state[key];
+			}
+		} );
+		return values;
 	}
 
 	/**
