@@ -30,7 +30,6 @@
     "test:once": "jest",
     "test:e2e": "cypress open",
     "test:e2e:ci": "cypress run"
-
   },
   "browserslist": [
     "last 2 versions",
@@ -143,9 +142,9 @@
     "setupFiles": [
       "./clients/tests/setupJest.js"
     ],
-    "testPathIgnorePatterns" : [
-        "cypress",
-        "node_modules"
+    "testPathIgnorePatterns": [
+      "cypress",
+      "node_modules"
     ]
   }
 }
