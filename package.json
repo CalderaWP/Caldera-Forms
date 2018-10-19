@@ -142,6 +142,10 @@
     "automock": false,
     "setupFiles": [
       "./clients/tests/setupJest.js"
+    ],
+    "testPathIgnorePatterns" : [
+        "cypress",
+        "node_modules"
     ]
   }
 }
