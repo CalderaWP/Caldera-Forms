@@ -47,6 +47,8 @@ export class CalderaFormsRender extends Component {
 		});
 		this.state = fieldValues;
 		this.setFieldValue = this.setFieldValue.bind(this);
+		this.setFieldShouldShow = this.setFieldShouldShow.bind(this);
+		this.setFieldShouldDisable = this.setFieldShouldDisable.bind(this);
 	}
 
 	/**
@@ -73,14 +75,30 @@ export class CalderaFormsRender extends Component {
 		return this.getCfState().getState(fieldIdAttr);
 	}
 
-	setFieldShouldShow(fieldIdAttr,show) {
+	/**
+	 * Set a field show or hide
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param {String} fieldIdAttr The field's id attribute (not field ID, html id attribute)
+	 * @param {boolean} show If field should be shown (true) or hidden (false).
+	 */
+	setFieldShouldShow(fieldIdAttr, show) {
 		const key = shouldShowKey(fieldIdAttr);
 		this.setState({
 			[key]: show
 		});
 	}
 
-	setFieldShouldDisable(fieldIdAttr,disable) {
+	/**
+	 * Set a field  disabled or enabled
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param {String} fieldIdAttr The field's id attribute (not field ID, html id attribute)
+	 * @param {boolean} disable If field should be enabled (true) or disabled (false).
+	 */
+	setFieldShouldDisable(fieldIdAttr, disable) {
 		const key = shouldDisableKey(fieldIdAttr);
 		this.setState({
 			[key]: disable
@@ -136,7 +154,7 @@ export class CalderaFormsRender extends Component {
 				.events()
 				.subscribe(fieldIdAttr, (newValue, fieldIdAttr) => this.setFieldValue(fieldIdAttr, newValue, false))
 		}
-		const conditioanlEvents = [
+		const conditionalEvents = [
 			'show',
 			'hide',
 			'enable',
@@ -146,34 +164,40 @@ export class CalderaFormsRender extends Component {
 		if (!conditionalEventSubscriptions.hasOwnProperty(fieldIdAttr)) {
 			conditionalEventSubscriptions[fieldIdAttr] = {}
 		}
-		conditioanlEvents.forEach(conditionalEvent => {
+		conditionalEvents.forEach(conditionalEvent => {
 			if (!conditionalEventSubscriptions[fieldIdAttr].hasOwnProperty(conditionalEvent)) {
 				conditionalEventSubscriptions[fieldIdAttr][conditionalEvent] = this.getCfState()
-					.events().attatchEvent(`cf.conditionals.${conditionalEvent}`, (eventData, eventName) => {
-						if (formIdAttr === eventData.formIdAttr) {
-							const {eventType, fieldIdAttr} = eventData;
-							switch (eventType) {
-								case 'hide':
-										this.setFieldShouldShow(fieldIdAttr,false);
-									break;
-								case 'show' :
-									this.setFieldShouldShow(fieldIdAttr,true);
-									break;
-								case 'enable':
-								case 'disable':
-									break;
-
+					.events().
+					attatchEvent(`cf.conditionals.${conditionalEvent}`,
+						(eventData, eventName) => {
+							if (formIdAttr === eventData.formIdAttr) {
+								const {eventType, fieldIdAttr} = eventData;
+								switch (eventType) {
+									case 'hide':
+										this.setFieldShouldShow(fieldIdAttr, false);
+										break;
+									case 'show' :
+										this.setFieldShouldShow(fieldIdAttr, true);
+										break;
+									case 'enable':
+										this.setFieldShouldDisable(fieldIdAttr, false);
+										break;
+									case 'disable':
+										this.setFieldShouldDisable(fieldIdAttr, true);
+										break;
+									default:
+										break;
+								}
 							}
-						}
 					});
 			}
-		})
+		});
 	}
 
 	/** @inheritDoc */
 	render() {
-		const {state,props} = this;
-		const {fieldsToControl} =props;
+		const {state, props} = this;
+		const {fieldsToControl} = props;
 
 		return (
 			<Fragment>

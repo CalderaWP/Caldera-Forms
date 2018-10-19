@@ -45,6 +45,7 @@ export const CalderaFormsFieldRender = (props) => {
 						type={type}
 						disabled={shouldDisable}
 						value={fieldValue}
+						required={required}
 						className={'form-control'}
 						id={fieldIdAttr}
 						placeholder={fieldPlaceHolder}
