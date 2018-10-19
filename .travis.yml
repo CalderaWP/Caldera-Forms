@@ -18,20 +18,12 @@ cache:
   directories:
   - node_modules
   - vendor
+  - ~/.npm
+  - ~/.cache
 
 env:
   - WP_VERSION=latest
-
-matrix:
-  include:
-    - php: 7.2
-      env: WP_VERSION=trunk TEST_JS=yes
-    - php: 7.2
-      env: WP_VERSION=latest WP_MULTISITE=1
-    - php: 7.2
-      env: WP_VERSION=4.8
-    - php: 7.2
-      env: WP_VERSION=4.7.11
+  - TEST_JS=yes
 
 before_script:
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
@@ -68,4 +60,6 @@ script:
   - |
     if [[ "$TEST_JS" == "yes" ]] ; then
       npm run test:once
+      composer wp:install && composer wp:activate && composer wp:config && wp:setup-tests
+      npm run test:e2e:ci --record --key CYPRESS_RECORD_KEY
     fi
