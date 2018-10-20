@@ -1,6 +1,7 @@
 import {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
 import {CalderaFormsFieldPropType} from "./CalderaFormsFieldRender";
+import {Input} from "./Fields/Input";
 
 
 /**
@@ -31,21 +32,10 @@ export const CalderaFormsFieldGroup = (props) => {
 	if (!shouldShow) {
 		return <Fragment/>;
 	}
-	const propsThatDoNotUseAnEquals = {};
-	if (shouldDisable) {
-		propsThatDoNotUseAnEquals.disabled = true;
-	} else {
-		propsThatDoNotUseAnEquals.disabled = false;
-	}
-	if (required) {
-		propsThatDoNotUseAnEquals.required = true;
-	} else {
-		propsThatDoNotUseAnEquals.required = false;
-	}
+
 
 	const hasCaption = field.hasOwnProperty('caption' ) && field.caption.length;
 	const captionId = `${fieldIdAttr}Caption`;
-	const ariaAttr = hasCaption ? `aria-describedby="${captionId}"` : '';
 	return (
 
 			<div className={'form-group cf2-field-group'}>
@@ -56,17 +46,12 @@ export const CalderaFormsFieldGroup = (props) => {
 				>
 					{fieldLabel}
 				</label>
-				<input
-					type={type}
-					{...propsThatDoNotUseAnEquals}
-					{...ariaAttr}
-					value={fieldValue}
-					className={'form-control'}
-					id={fieldIdAttr}
-					placeholder={fieldPlaceHolder}
+				<Input
+					field={field}
 					onChange={onChange}
-					data-field={fieldId}
-					name={fieldId}
+					shouldDisable={shouldDisable}
+					isInvalid={isInvalid}
+					describedById={captionId}
 				/>
 				{hasCaption &&
 					<span
@@ -101,7 +86,7 @@ export const CalderaFormsFieldGroup = (props) => {
  * @type {{field: *, onChange: (e|*), shouldShow: *, shouldDisable: *}}
  */
 CalderaFormsFieldGroup.propTypes = {
-	field: CalderaFormsFieldPropType,
+	field: PropTypes.shape(CalderaFormsFieldPropType),
 	onChange: PropTypes.func.isRequired,
 	shouldShow: PropTypes.bool,
 	shouldDisable: PropTypes.bool,

@@ -12,6 +12,7 @@ exports[`CalderaFormsFieldGroup component Matches snapshot with basic args 1`] =
     Text 2 Field
   </label>
   <input
+    aria-describedby="fld_5843941_1Caption"
     className="form-control"
     data-field="fld_5843941"
     disabled={false}

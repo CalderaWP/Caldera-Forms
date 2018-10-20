@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input field matches snapshot with basic args 1`] = `
+<input
+  className="form-control"
+  data-field="fld_5843941"
+  disabled={false}
+  id="fld_5843941_1"
+  name="fld_5843941"
+  onChange={[Function]}
+  placeholder=""
+  required={false}
+  type="text"
+  value=""
+/>
+`;
+
+exports[`Input field prints aria attribute 1`] = `
+<input
+  aria-describedby="foo"
+  className="form-control"
+  data-field="fld_5843941"
+  disabled={false}
+  id="fld_5843941_1"
+  name="fld_5843941"
+  onChange={[Function]}
+  placeholder=""
+  required={false}
+  type="text"
+  value=""
+/>
+`;
