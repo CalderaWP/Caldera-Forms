@@ -127,8 +127,7 @@ class Caldera_Forms_Import_Form{
                     $field[ 'config'][ 'option' ][ $option_id ] = $this->sanitize_by_index($index,  $field[ 'config'][ 'option' ][ $option_id ] );
                 }
                 $index = 'calc_value';
-                $field[ 'config'][ 'option' ][ $option_id ][ $index ] = intval($this->sanitize_by_index($index,  $field[ 'config'][ 'option' ][ $option_id ]  ) );
-
+                $field[ 'config'][ 'option' ][ $option_id ][ $index ] = intval( $this->sanitize_value(  $field[ 'config'][ 'option' ][ $option_id ][$index] ) );
             }
         }
 
@@ -146,12 +145,22 @@ class Caldera_Forms_Import_Form{
      */
     protected function sanitize_by_index( $index, array $field ){
         if( isset( $field[ $index ] ) ){
-            $field[ $index ] = Caldera_Forms_Sanitize::sanitize( $field[ $index ], $this->sanitize_params );
+            $field[ $index ] = $this->sanitize_value($field[$index]);
         }
         return $field;
     }
 
-
+    /**
+     * Sanitize a value observing current sanitation settings
+     *
+     * @since 1.8.0
+     *
+     * @param mixed $value Value to sanitatize.
+     * @return mixed
+     */
+    protected function sanitize_value($value){
+        return Caldera_Forms_Sanitize::sanitize($value, $this->sanitize_params );
+    }
     /**
      * Remove all but lowercase alphanumeric charecters
      *
