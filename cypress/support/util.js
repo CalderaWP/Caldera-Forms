@@ -358,4 +358,33 @@ export const cfAddProcessor = (processorType) =>{
 
 export const cfGoToProcessorsTab=() => {
 	cy.get('#tab_processors a').click();
+};
+
+/**
+ * Check that a range slider field exists and has the extra stuff the jQuery plugin adds
+ * @param fieldId
+ */
+export const cfFieldWrapperHasRangeSliderInIt = (fieldId) => {
+
+	 cfFieldGetWrapper(fieldId).children().find( '.rangeslider__fill' );
+	 cfFieldGetWrapper(fieldId).children().find( '.rangeslider__handle' );
+
+};
+
+/**
+ *
+ * @param fieldId
+ * @param {Number}starValue Which star to click on
+ */
+export const cfSetStar = (fieldId,starValue) =>{
+	cfFieldGetWrapper(fieldId).find( `f.raty-star-on[title="${starValue}"]` ).trigger( 'click' );
+};
+
+
+export const cfStarFieldValueIs = (fieldId, starValue,maxStars)=> {
+	cfFieldHasValue(fieldId,starValue);
+	for(let i=1; i <= maxStars; i++ ){
+		const className = i <= starValue ? 'raty-star-on' : 'raty-star-off';
+		cfFieldGetWrapper(fieldId).find( `f.${className}[title="${i}"]` ).should( 'have.class',className );
+	};
 }

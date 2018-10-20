@@ -128,6 +128,14 @@
     {
       "formId" : "CF5a1163356fe7c",
       "pageSlug": "2090-select-created1-5-7-1-dev1-5-8"
+    },
+    {
+      "formId" : "CF5bcb67b899a38",
+      "pageSlug": "conditionals-fancy"
+    },
+    {
+      "formId" : "CF5bcb71a2d27bf",
+      "pageSlug": "conditionals-fancy-multi-page"
     }
   ]
 }
