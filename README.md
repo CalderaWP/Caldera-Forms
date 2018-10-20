@@ -87,7 +87,7 @@ The local server is [http://localhost:8228](http://localhost:8228)
     - password: password
 
 * Install the tests forms and pages for them.
-    - `composer wp:setup-tests`
+    - `composer wp:test:setup`
     - Adds forms needed for e2e tests and one page for each form. Useful for manual QA as well.
     
 ### Test Structures
@@ -108,11 +108,13 @@ The local server is [http://localhost:8228](http://localhost:8228)
 * `composer wp:tests` - Runs the PHP integration tests using phpunit inside Docker-based environment .
 * `composer wp:stop` - Stops Docker-based test environment, without destroying containers.
 * `composer wp:destroy` - Removes (including the database) the test environment and destroys containers.
-* `composer wp:setup-tests` - Adds test forms and puts them on pages.
+* `composer test:setup` - Adds test forms and puts them on pages.
+* `composer test:delete` - Delete test forms and pages the are on.
 * `npm test` - Run JavaScript test watcher
 * `npm run test:once` - Run JavaScript unit tests once
 * `npm run test:e2e` - Start Cypress e2e test runner.
 * `npm run test:e2e:ci` - Trigger Cypress.io test record.
+
 ### Release To WordPress.org
 ##### Requires
 * [svn](https://subversion.apache.org/quick-start#installing-the-client)

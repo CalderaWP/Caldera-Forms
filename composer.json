@@ -68,8 +68,8 @@
     "scripts" : {
         "wp:install": "bash ./bin/install-docker.sh && composer wp:config",
         "wp:activate": "bash ./bin/activate-plugin.sh",
-        "wp:setup-tests": "bash ./bin/setup-test-forms.sh",
-        "wp:delete-tests": "bash ./bin/delete-test-forms.sh",
+        "test:setup": "bash ./bin/setup-test-forms.sh",
+        "test:delete": "bash ./bin/delete-test-forms.sh",
         "wp:config": "docker-compose run --rm cli wp rewrite structure '/%postname%/'",
         "wp:start": "docker-compose up -d",
         "wp:tests": "docker-compose run --rm wordpress_phpunit phpunit --configuration phpunit-integration.xml.dist",
