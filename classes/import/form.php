@@ -127,7 +127,8 @@ class Caldera_Forms_Import_Form{
                     $field[ 'config'][ 'option' ][ $option_id ] = $this->sanitize_by_index($index,  $field[ 'config'][ 'option' ][ $option_id ] );
                 }
                 $index = 'calc_value';
-                $field[ 'config'][ 'option' ][ $option_id ][ $index ] = intval( $this->sanitize_value(  $field[ 'config'][ 'option' ][ $option_id ][$index] ) );
+                $value = Caldera_Forms_Field_Util::get_option_calculation_value( $option_id, $field, [] );
+                $field[ 'config'][ 'option' ][ $option_id ][ $index ] = intval( $this->sanitize_value(  $value ) );
             }
         }
 
