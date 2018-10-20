@@ -18,7 +18,7 @@ import {
 } from '../support/util';
 
 
-describe('Name of test', () => {
+describe('2013 html summary', () => {
 	beforeEach(() => {
 		visitPage('2013-html-summary-create1-5-2-1-dev1-5-7');
 	});

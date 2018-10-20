@@ -351,3 +351,11 @@ export const cfEditorIsFieldPreviewVisible = (fieldId ) => {
 export const cfEditorIsFieldPreviewNotVisible = (fieldId ) => {
 	return cfEditorGetFieldPreview(fieldId).not('be.visible');
 };
+export const cfAddProcessor = (processorType) =>{
+	cy.get( '.new-processor-button' ).click();
+	cy.get(`.add-new-processor[data-type="${processorType}"]`).click();
+}
+
+export const cfGoToProcessorsTab=() => {
+	cy.get('#tab_processors a').click();
+}
