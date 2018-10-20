@@ -32,41 +32,43 @@ describe('Calculations - money style', () => {
 	const calc3opt = 'fld_3489682';
 
 	it( 'Price option + Quantity option', () => {
-		cfFieldCalcFieldValueIs(calc1, '5.00' );
+		//cost calc1Quantity is x10 by default
+		cfFieldCalcFieldValueIs(calc1, '50.00' );
 
 		cfFieldSetValue(calc1Quantity, 42 );
-		cfFieldCalcFieldValueIs(calc1, '42.00' );
+		cfFieldCalcFieldValueIs(calc1, '420.00' );
 
-		cfFieldSelectValue(calc1Option,'1');
+		cfFieldSelectValue(calc1Option,'1');//cost is now calc1Quantityx100
 		cfFieldCalcFieldValueIs(calc1, '4200.00' );
 
+		cfFieldSelectValue(calc1Option,'2');//cost is now calc1Quantityx10
+
 		cfFieldSetValue(calc1Quantity, 41 );
-		cfFieldCalcFieldValueIs(calc1, '4100.00' );
+		cfFieldCalcFieldValueIs(calc1, '410.00' );
 
 	});
 
 	it( 'Radio-based options', () => {
-		cfFieldCalcFieldValueIs(calc2, '5.00' );
+		cfFieldCalcFieldValueIs(calc2, '50.00' );
 		cfFieldCheckValue(calc2Opt1, '2' );
-		cfFieldCalcFieldValueIs(calc2, '7.00' );
+		cfFieldCalcFieldValueIs(calc2, '52.00' );
 		cfFieldCheckValue(calc2Opt1, '1' );
-		cfFieldCalcFieldValueIs(calc2, '6.00' );
+		cfFieldCalcFieldValueIs(calc2, '51.00' );
 
 		cfFieldCheckValue(calc2Opt2, '2');
-		cfFieldCalcFieldValueIs(calc2, '26.00' );
+		cfFieldCalcFieldValueIs(calc2, '71.00' );
 
 		cfFieldCheckValue(calc2Opt2, '1');
-		cfFieldCalcFieldValueIs(calc2, '16.00' );
+		cfFieldCalcFieldValueIs(calc2, '61.00' );
 	});
 
 	it( 'Divides and accounts for hidden field being hidden', () => {
-		cfFieldCalcFieldValueIs(calc3,'5.00');
+		cfFieldCalcFieldValueIs(calc3,'50.00');
 		cfFieldCheckValue(calc2Opt1, '2' );
-		cfFieldCalcFieldValueIs(calc3,'6.00');
-		cfFieldCheckValue(calc3opt, 'Yes');
-		cfFieldCalcFieldValueIs(calc3,'12.00');
-		cfFieldUnCheckValue(calc3opt, 'Yes');
-		cfFieldCalcFieldValueIs(calc3,'6.00');
+		cfFieldCalcFieldValueIs(calc3,'51.00');
+		cfFieldCheckValue(calc3opt, 'Yes'); //remove dividing by one via hidden field
+		cfFieldCalcFieldValueIs(calc3,'102.00');
+
 
 	});
 });
