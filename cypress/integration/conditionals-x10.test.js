@@ -16,7 +16,7 @@ import {
 } from '../support/util';
 
 
-describe('Name of test', () => {
+describe('X10 Conditionals', () => {
 	beforeEach(() => {
 		visitPage('x10-conditionals-hide-single-page-create1-5-5');
 	});

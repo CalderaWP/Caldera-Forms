@@ -16,7 +16,7 @@ import {
 } from '../support/util';
 
 
-describe('Name of test', () => {
+describe('2107 Credit Cards', () => {
 	beforeEach(() => {
 		visitPage('2107-credit-card-created-dev1-5-8');
 	});

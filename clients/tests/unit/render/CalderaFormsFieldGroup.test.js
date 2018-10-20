@@ -100,4 +100,21 @@ describe('CalderaFormsFieldGroup component', () => {
 
 	});
 
+	it('Adds caption and aria attribute', () => {
+		const testRenderer = renderer.create(<CalderaFormsFieldGroup
+			onChange={handler}
+			field={{
+				...fieldConfig,
+				caption: "Click Me"
+			}}
+		/>);
+		const testInstance = testRenderer.root;
+		expect(testInstance.findByType('span').props.className).toBe( 'help-block');
+		expect(testInstance.findByType('span').props.children).toBe( 'Click Me');
+
+
+
+
+	});
+
 });

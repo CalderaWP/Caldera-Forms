@@ -16,7 +16,7 @@ import {
 } from '../support/util';
 
 
-describe('Name of test', () => {
+describe('X2 Calculations', () => {
 	beforeEach(() => {
 		visitPage('x2-calculations-create1-5-5-dev1-5-6-2');
 	});

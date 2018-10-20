@@ -13,7 +13,12 @@ import {
 	cfFieldIsNotDisabled,
 	cfFieldCheckAllValues,
 	cfFieldCalcFieldValueIs,
-	visitPluginPage, login, visitFormEditor, cfEditorIsFieldPreviewVisible, cfEditorIsFieldPreviewNotVisible
+	visitPluginPage,
+	login,
+	visitFormEditor,
+	cfEditorIsFieldPreviewVisible,
+	cfEditorIsFieldPreviewNotVisible,
+	cfGoToProcessorsTab, cfAddProcessor
 } from '../support/util';
 
 const formId = 'CF5bc64d633d2ea';
@@ -43,13 +48,17 @@ describe( 'Basic editing of form',  () => {
 		cy.get( '.processor-form_redirect' ).should('be.visible');
 	});
 
+
+
+
 	it( 'Can add a processor', () => {
-		cy.get( '#tab_processors a' ).click();
-		cy.get( '.new-processor-button' ).click();
-		cy.get( '.active-processors-list').children().should('have.length', 2);s
+		cfGoToProcessorsTab();
+		const processorType = 'auto_responder';
+		cfAddProcessor(processorType);
+		cy.get( '.active-processors-list').children().should('have.length', 2);
 	});
 
-	it( 'Page nav', () => {
+	it.skip( 'Page nav', () => {
 		cy.get('button[data-name="Page 1"]').should( 'have.class', 'button-primary');
 		cy.get('button[data-name="Page 2"]').not( 'have.class', 'button-primary');
 		cfEditorIsFieldPreviewVisible(text1);

@@ -16,7 +16,7 @@ import {
 } from '../support/util';
 
 
-describe('Name of test', () => {
+describe('1993 Calculations', () => {
 	beforeEach(() => {
 		visitPage('1993-calculations-created1-5-5-dev1-5-6-2');
 	});

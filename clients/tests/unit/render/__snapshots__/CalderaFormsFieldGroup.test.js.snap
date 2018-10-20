@@ -7,13 +7,16 @@ exports[`CalderaFormsFieldGroup component Matches snapshot with basic args 1`] =
   <label
     className="control-label"
     htmlFor="fld_5843941_1"
+    id="fld_5843941_1Label"
   >
     Text 2 Field
   </label>
   <input
     className="form-control"
+    data-field="fld_5843941"
     disabled={false}
     id="fld_5843941_1"
+    name="fld_5843941"
     onChange={[Function]}
     placeholder=""
     required={false}

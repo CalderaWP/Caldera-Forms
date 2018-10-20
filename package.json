@@ -47,6 +47,7 @@
   },
   "dependencies": {
     "@wordpress/dom-ready": "^1.2.0",
+    "@wordpress/url": "^2.1.0",
     "css-loader": "^0.28.11",
     "dangerously-set-inner-html": "^2.0.1",
     "exports-loader": "^0.7.0",

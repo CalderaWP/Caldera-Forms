@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.8.0-a.1 - 2018-10-19 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.8.0-a.1 - 2018-10-20 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -314,6 +314,9 @@ function CFState(formId, $ ){
 			},
 			emit: function (eventName,payload) {
 				events.emit(eventName,payload);
+			},
+			attatchEvent: function(eventName,callback){
+				events.subscribe(eventName,callback);
 			}
 		}
 	};
@@ -6819,6 +6822,7 @@ window.addEventListener("load", function(){
 					config_object = new Caldera_Forms_Field_Config( config, $(document.getElementById(form_id)), $, state );
 					config_object.init();
 					$( document ).trigger( 'cf.form.init',{
+						$form: $form,
 						idAttr:  form_id,
 						formId: formId,
 						state: state,

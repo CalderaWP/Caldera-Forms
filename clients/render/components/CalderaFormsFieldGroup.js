@@ -43,25 +43,39 @@ export const CalderaFormsFieldGroup = (props) => {
 		propsThatDoNotUseAnEquals.required = false;
 	}
 
-
+	const hasCaption = field.hasOwnProperty('caption' ) && field.caption.length;
+	const captionId = `${fieldIdAttr}Caption`;
+	const ariaAttr = hasCaption ? `aria-describedby="${captionId}"` : '';
 	return (
 
 			<div className={'form-group cf2-field-group'}>
 				<label
 					className={'control-label'}
 					htmlFor={fieldIdAttr}
+					id={`${fieldIdAttr}Label`}
 				>
 					{fieldLabel}
 				</label>
 				<input
 					type={type}
 					{...propsThatDoNotUseAnEquals}
+					{...ariaAttr}
 					value={fieldValue}
 					className={'form-control'}
 					id={fieldIdAttr}
 					placeholder={fieldPlaceHolder}
 					onChange={onChange}
+					data-field={fieldId}
+					name={fieldId}
 				/>
+				{hasCaption &&
+					<span
+						id={captionId}
+						className={'help-block'}
+					>
+							{field.caption}
+						</span>
+				}
 				{isInvalid &&
 					<span
 						className="help-block caldera_ajax_error_block filled"
@@ -70,6 +84,7 @@ export const CalderaFormsFieldGroup = (props) => {
 						<span className="parsley-required">{message}</span>
 					</span>
 				}
+
 			</div>
 
 	);

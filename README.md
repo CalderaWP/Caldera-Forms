@@ -87,7 +87,7 @@ The local server is [http://localhost:8228](http://localhost:8228)
     - password: password
 
 * Install the tests forms and pages for them.
-    - `composer wp:setup-tests`
+    - `composer wp:test:setup`
     - Adds forms needed for e2e tests and one page for each form. Useful for manual QA as well.
     
 ### Test Structures
@@ -102,17 +102,28 @@ The local server is [http://localhost:8228](http://localhost:8228)
     - See our [Cypress README for testing](./cypress/README.md)
 
 #### Commands
+##### Composer
 * `composer wp:install` - Installs Docker-based test environment.
 * `composer wp:start` - Starts Docker-based test environment.
 * `composer wp:activate` - Activate plugins in Docker-based environment.
 * `composer wp:tests` - Runs the PHP integration tests using phpunit inside Docker-based environment .
 * `composer wp:stop` - Stops Docker-based test environment, without destroying containers.
 * `composer wp:destroy` - Removes (including the database) the test environment and destroys containers.
-* `composer wp:setup-tests` - Adds test forms and puts them on pages.
+* `composer test:setup` - Adds test forms and puts them on pages.
+* `composer test:delete` - Delete test forms and pages the are on.
+
+##### Composer
 * `npm test` - Run JavaScript test watcher
 * `npm run test:once` - Run JavaScript unit tests once
 * `npm run test:e2e` - Start Cypress e2e test runner.
 * `npm run test:e2e:ci` - Trigger Cypress.io test record.
+
+##### wp-cli
+Probably don't use these directly. They will change. Must be prefaced with `docker-compose run --rm cli`
+* `wp cf import-test-forms` - Import test forms
+* `wp cf delete-test-forms` - Delete test forms
+* `wp cf create-test-pages` - Import test pages
+* `wp cf delete-test-pages` - Delete test pages
 ### Release To WordPress.org
 ##### Requires
 * [svn](https://subversion.apache.org/quick-start#installing-the-client)
