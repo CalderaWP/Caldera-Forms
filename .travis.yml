@@ -62,7 +62,7 @@ script:
       phpunit
     fi
  - |
-    if [[ ! -z "$WP_VERSION" && "$WP_VERSION" -ne "5.6" ]] ; then
+    if [[ ! -z "$WP_VERSION" && "$WP_VERSION" != "5.6" ]] ; then
       composer test:unit
     fi
   - |
