@@ -1,0 +1,323 @@
+{
+  "_last_updated": "Sun, 08 Oct 2017 06:17:07 +0000",
+  "ID": "CF59ce6f1747efb",
+  "cf_version": "1.5.5",
+  "name": "1979 Calculations Created@1.5.5 dev@1.5.6.2",
+  "scroll_top": 0,
+  "description": "\t\t\t\t\t\t\t",
+  "success": "Form has been successfully submitted. Thank you.\t\t\t\t\t\t",
+  "db_support": 1,
+  "pinned": 0,
+  "hide_form": 1,
+  "check_honey": 1,
+  "avatar_field": "",
+  "form_ajax": 1,
+  "custom_callback": "",
+  "layout_grid": {
+    "fields": {
+      "fld_9272690": "1:1",
+      "fld_7896676": "2:1",
+      "fld_1803763": "2:1",
+      "fld_6770247": "2:1",
+      "fld_3195385": "2:1",
+      "fld_1734684": "2:2",
+      "fld_6532733": "2:2"
+    },
+    "structure": "12|6:6"
+  },
+  "fields": {
+    "fld_9272690": {
+      "ID": "fld_9272690",
+      "type": "checkbox",
+      "label": "selections",
+      "slug": "selections",
+      "conditions": {
+        "type": ""
+      },
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "default_option": "",
+        "auto_type": "",
+        "taxonomy": "category",
+        "post_type": "post",
+        "value_field": "name",
+        "orderby_tax": "name",
+        "orderby_post": "name",
+        "order": "ASC",
+        "show_values": 1,
+        "default": "opt315190",
+        "option": {
+          "opt315190": {
+            "calc_value": 100,
+            "value": 100,
+            "label": "One"
+          },
+          "opt1234552": {
+            "calc_value": 200,
+            "value": 200,
+            "label": "Two"
+          },
+          "opt2318664": {
+            "calc_value": 300,
+            "value": 300,
+            "label": "Three"
+          }
+        }
+      }
+    },
+    "fld_7896676": {
+      "ID": "fld_7896676",
+      "type": "calculation",
+      "label": "total",
+      "slug": "total",
+      "conditions": {
+        "type": ""
+      },
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "element": "h3",
+        "classes": "total-line",
+        "before": "Sub Total: $",
+        "after": "",
+        "fixed": 1,
+        "thousand_separator": ",",
+        "decimal_separator": ".",
+        "formular": "fld_9272690",
+        "config": {
+          "group": [
+            {
+              "lines": [
+                {
+                  "operator": "+",
+                  "field": "fld_9272690"
+                }
+              ]
+            }
+          ]
+        },
+        "manual_formula": ""
+      }
+    },
+    "fld_1803763": {
+      "ID": "fld_1803763",
+      "type": "hidden",
+      "label": "disc1",
+      "slug": "disc1",
+      "conditions": {
+        "type": "con_4891587877948869"
+      },
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "default": 10
+      }
+    },
+    "fld_6770247": {
+      "ID": "fld_6770247",
+      "type": "hidden",
+      "label": "disc2",
+      "slug": "disc2",
+      "conditions": {
+        "type": "con_7537350517214687"
+      },
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "default": 20
+      }
+    },
+    "fld_3195385": {
+      "ID": "fld_3195385",
+      "type": "summary",
+      "label": "summary",
+      "slug": "summary",
+      "conditions": {
+        "type": ""
+      },
+      "caption": "",
+      "config": {
+        "custom_class": ""
+      }
+    },
+    "fld_1734684": {
+      "ID": "fld_1734684",
+      "type": "calculation",
+      "label": "discount",
+      "slug": "discount",
+      "conditions": {
+        "type": ""
+      },
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "element": "h3",
+        "classes": "total-line",
+        "before": "Discount: $",
+        "after": "",
+        "fixed": 1,
+        "thousand_separator": ",",
+        "decimal_separator": ".",
+        "manual": 1,
+        "formular": " ( fld_1803763+fld_6770247 ) ",
+        "config": {
+          "group": [
+            {
+              "lines": [
+                {
+                  "operator": "+",
+                  "field": "fld_1803763"
+                },
+                {
+                  "operator": "+",
+                  "field": "fld_6770247"
+                }
+              ]
+            }
+          ]
+        },
+        "manual_formula": "%disc1% + %disc2%"
+      }
+    },
+    "fld_6532733": {
+      "ID": "fld_6532733",
+      "type": "calculation",
+      "label": "grand total",
+      "slug": "grand_total",
+      "conditions": {
+        "type": ""
+      },
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "element": "h3",
+        "classes": "total-line",
+        "before": "Grand Total: $",
+        "after": "",
+        "fixed": 1,
+        "thousand_separator": ",",
+        "decimal_separator": ".",
+        "formular": " ( fld_9272690-fld_1803763-fld_6770247 ) ",
+        "config": {
+          "group": [
+            {
+              "lines": [
+                {
+                  "operator": "+",
+                  "field": "fld_9272690"
+                },
+                {
+                  "operator": "-",
+                  "field": "fld_1803763"
+                },
+                {
+                  "operator": "-",
+                  "field": "fld_6770247"
+                }
+              ]
+            }
+          ]
+        },
+        "manual_formula": ""
+      }
+    }
+  },
+  "page_names": [
+    "Page 1"
+  ],
+  "mailer": {
+    "on_insert": 1,
+    "sender_name": "Caldera Forms Notification",
+    "sender_email": "dryheat3@hahn-tech.com",
+    "reply_to": "",
+    "email_type": "html",
+    "recipients": "",
+    "bcc_to": "",
+    "email_subject": "bug report",
+    "email_message": "{summary}"
+  },
+  "conditional_groups": {
+    "conditions": {
+      "con_4891587877948869": {
+        "id": "con_4891587877948869",
+        "name": "chk1-2",
+        "type": "show",
+        "group": {
+          "rw9238428028085778": {
+            "cl8496363565190464": {
+              "parent": "rw9238428028085778",
+              "field": "fld_9272690",
+              "compare": "is",
+              "value": "opt315190"
+            },
+            "cl7713839815922961": {
+              "parent": "rw9238428028085778",
+              "field": "fld_9272690",
+              "compare": "is",
+              "value": "opt1234552"
+            }
+          }
+        },
+        "fields": {
+          "cl8496363565190464": "fld_9272690",
+          "cl7713839815922961": "fld_9272690"
+        }
+      },
+      "con_7537350517214687": {
+        "id": "con_7537350517214687",
+        "name": "chk1-2-3",
+        "type": "show",
+        "fields": {
+          "cl1451086636949535": "fld_9272690",
+          "cl279276517104136": "fld_9272690",
+          "cl1076875616164973": "fld_9272690"
+        },
+        "group": {
+          "rw4474515994153653": {
+            "cl1451086636949535": {
+              "parent": "rw4474515994153653",
+              "field": "fld_9272690",
+              "compare": "is",
+              "value": "opt315190"
+            },
+            "cl279276517104136": {
+              "parent": "rw4474515994153653",
+              "field": "fld_9272690",
+              "compare": "is",
+              "value": "opt1234552"
+            },
+            "cl1076875616164973": {
+              "parent": "rw4474515994153653",
+              "field": "fld_9272690",
+              "compare": "is",
+              "value": "opt2318664"
+            }
+          }
+        }
+      }
+    }
+  },
+  "variables": {
+    "keys": [
+      "discount1",
+      "discount2"
+    ],
+    "values": [
+      "%selections%",
+      20
+    ],
+    "types": [
+      "entryitem",
+      "entryitem"
+    ]
+  },
+  "settings": {
+    "responsive": {
+      "break_point": "sm"
+    }
+  },
+  "version": "1.5.6.2-b-2",
+  "type": "primary",
+  "db_id": "1"
+}
