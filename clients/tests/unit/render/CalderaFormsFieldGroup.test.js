@@ -1,6 +1,7 @@
 import {CalderaFormsFieldGroup} from "../../../render/components";
 import renderer from 'react-test-renderer';
-
+const handler = () => {
+};
 describe('CalderaFormsFieldGroup component', () => {
 	const fieldIdAttr = 'fld_5843941_1';
 	const fieldConfig = {
@@ -15,7 +16,9 @@ describe('CalderaFormsFieldGroup component', () => {
 		required: false,
 		type: "text",
 	};
-	const handler = () => {
+
+	const getFieldConfig = (fieldIdAttr) =>{
+		return fieldConfig;
 	};
 	it('Matches snapshot with basic args', () => {
 		expect(
@@ -23,6 +26,7 @@ describe('CalderaFormsFieldGroup component', () => {
 				<CalderaFormsFieldGroup
 					onChange={handler}
 					field={fieldConfig}
+					getFieldConfig={getFieldConfig}
 				/>
 			).toJSON()
 		).toMatchSnapshot();
@@ -36,6 +40,8 @@ describe('CalderaFormsFieldGroup component', () => {
 					onChange={handler}
 					field={fieldConfig}
 					shouldShow={false}
+					getFieldConfig={getFieldConfig}
+
 				/>
 			).toJSON()
 		).toEqual(null)
@@ -46,6 +52,7 @@ describe('CalderaFormsFieldGroup component', () => {
 			onChange={handler}
 			field={fieldConfig}
 			shouldDiable={true}
+			getFieldConfig={getFieldConfig}
 		/>);
 		const testInstance = testRenderer.root;
 
@@ -61,6 +68,7 @@ describe('CalderaFormsFieldGroup component', () => {
 		const testRenderer = renderer.create(<CalderaFormsFieldGroup
 			onChange={handler}
 			field={fieldConfig}
+			getFieldConfig={getFieldConfig}
 		/>);
 		const testInstance = testRenderer.root;
 
@@ -79,6 +87,7 @@ describe('CalderaFormsFieldGroup component', () => {
 			onChange={handler}
 			field={fieldConfig}
 			shouldDisable={true}
+			getFieldConfig={getFieldConfig}
 		/>);
 		const testInstance = testRenderer.root;
 
@@ -93,6 +102,8 @@ describe('CalderaFormsFieldGroup component', () => {
 				...fieldConfig,
 				required: true
 			}}
+			getFieldConfig={getFieldConfig}
+
 		/>);
 		const testInstance = testRenderer.root;
 
@@ -109,12 +120,70 @@ describe('CalderaFormsFieldGroup component', () => {
 			}}
 		/>);
 		const testInstance = testRenderer.root;
-		expect(testInstance.findByType('span').props.className).toBe( 'help-block');
-		expect(testInstance.findByType('span').props.children).toBe( 'Click Me');
-
-
-
+		expect(testInstance.findByType('span').props.className).toBe('help-block');
+		expect(testInstance.findByType('span').props.children).toBe('Click Me');
 
 	});
 
 });
+
+describe('chooses inner field', () => {
+	const fileFieldConfig = {
+		field:
+			{
+				type: 'file',
+				outterIdAttr: 'cf2-not_required_multiple_has_button_text',
+				fieldId: 'not_required_multiple_has_button_text',
+				fieldLabel: 'Not Required Multiple Has Button Text',
+				fieldCaption: '',
+				fieldPlaceHolder: '',
+				required: 'false',
+				fieldDefault: '',
+				fieldValue: '',
+				fieldIdAttr: 'not_required_multiple_has_button_text'
+			},
+		accept: '',
+		multiple: 'false',
+		multiUploadText: 'false'
+	};
+
+	const textFieldConfig = {
+		fieldCaption: "",
+		fieldDefault: "new default",
+		fieldId: "cf2-fdl1",
+		fieldIdAttr: "fdl1_1",
+		fieldLabel: "Text 2 Field",
+		fieldPlaceHolder: "",
+		fieldValue: "",
+		outterIdAttr: "cf2-fdl1_1",
+		required: false,
+		type: "text",
+	};
+
+	const getFieldConfig = (fieldIdAttr) =>{
+		return textFieldConfig;
+	};
+	it( 'uses text input for text field', () =>{
+		const testRenderer = renderer.create(<CalderaFormsFieldGroup
+			onChange={handler}
+			field={textFieldConfig}
+			getFieldConfig={getFieldConfig}
+		/>);
+		const testInstance = testRenderer.root;
+		expect(testInstance.findByType('input').props.type).toBe('text');
+		expect(testInstance.findByType('input').props.className).toBe('cf2-text form-control');
+
+	});
+
+	it( 'uses file input for text field', () =>{
+		const testRenderer = renderer.create(<CalderaFormsFieldGroup
+			onChange={handler}
+			field={fileFieldConfig.field}
+			getFieldConfig={getFieldConfig}
+		/>);
+		const testInstance = testRenderer.root;
+		expect(testInstance.findByType('input').props.type).toBe('file');
+		expect(testInstance.findByType('input').props.className).toBe('cf2-file form-control');
+	});
+
+})

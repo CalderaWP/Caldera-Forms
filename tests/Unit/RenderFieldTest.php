@@ -4,10 +4,11 @@ namespace calderawp\calderaforms\Tests\Unit;
 
 use calderawp\calderaforms\cf2\Fields\RenderField;
 use Brain\Monkey;
+use calderawp\calderaforms\Tests\Util\Traits\HasFileFieldConfigs;
 
 class RenderFieldTest extends TestCase
 {
-
+    use HasFileFieldConfigs;
     /**
      * @covers \calderawp\calderaforms\cf2\Fields\RenderField::__construct()
      * @covers \calderawp\calderaforms\cf2\Fields\RenderField::$field
@@ -65,9 +66,39 @@ class RenderFieldTest extends TestCase
             'fieldDefault' => '',
             'fieldValue' => '',
             'fieldIdAttr' => 'fld_1',
+            'configOptions' => []
         ],$data);
     }
 
+    /**
+     * @covers \calderawp\calderaforms\cf2\Fields\RenderField::data();
+     */
+    public function testDataFileFieldOptions()
+    {
+        $a = [];
+        foreach (array_keys($this->getFileFieldConfigs() ) as $fieldId){
+            $field = $this->fieldForRenderFactory($fieldId);
+            $formIdAttr = 'cf1_1';
+            $renderer = new RenderField($formIdAttr,$field );
+            $data = $renderer->data();
+            $fieldConfig = $this->getFileFieldConfig($fieldId)['config'];
+            $configOptions = $data['configOptions' ];
+            $a[$field['ID']]=$data;
+            $this->assertArrayHasKey('multiple',$configOptions);
+            $this->assertArrayHasKey('multiUploadText',$configOptions);
+            $this->assertArrayHasKey('allowedTypes',$configOptions);
+
+            if (isset($fieldConfig['multi_upload'])) {
+                $this->assertEquals($fieldConfig['multi_upload'], $configOptions['multiple']);
+            }
+            if (isset($fieldConfig['multi_upload_text'])) {
+                $this->assertEquals($fieldConfig['multi_upload_text'], $configOptions['multiUploadText']);
+            }
+            $this->assertEquals($fieldConfig['allowed'],$configOptions['allowedTypes']);
+        }
+
+
+    }
 
 
     /**
@@ -83,6 +114,7 @@ class RenderFieldTest extends TestCase
         $data = $renderer->data();
         $this->assertEquals('file',$data['type']);
     }
+
 
 
 
@@ -120,12 +152,19 @@ class RenderFieldTest extends TestCase
         $this->assertEquals("cf2-$fieldId", $renderer->getOuterIdAttr() );
     }
 
+
+
+
     /**
      * @return array
      */
     protected function fieldForRenderFactory($fieldId = null )
     {
-        $field = $this->fieldFactory('email', $fieldId);
+        if( empty($field = $this->getFileFieldConfig($fieldId))){
+            $field = $this->fieldFactory('email', $fieldId);
+        }else{
+            $field[ 'type' ] = 'cf2_file';
+        }
         $field = array_merge($field, ['fieldIdAttr' => $field['ID'] ]);
         return $field;
     }

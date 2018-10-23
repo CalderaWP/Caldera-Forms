@@ -369,7 +369,8 @@ window.addEventListener("load", function(){
 						idAttr:  form_id,
 						formId: formId,
 						state: state,
-						fieldIds: CFFIELD_CONFIG[instance].fields.hasOwnProperty( 'ids' ) ? CFFIELD_CONFIG[instance].fields.ids : []
+						fieldIds: CFFIELD_CONFIG[instance].fields.hasOwnProperty( 'ids' ) ? CFFIELD_CONFIG[instance].fields.ids : [],
+						nonce: jQuery( '#_cf_verify_' + formId ).val()
 					});
 
 

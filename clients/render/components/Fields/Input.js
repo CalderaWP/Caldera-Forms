@@ -38,16 +38,16 @@ export const Input = (props) => {
 			{...propsThatDoNotUseAnEquals}
 			aria-describedby={describedById}
 			value={fieldValue}
-			className={'form-control'}
+			className={'cf2-text form-control'}
 			id={fieldIdAttr}
 			placeholder={fieldPlaceHolder}
 			onChange={onChange}
 			data-field={fieldId}
+			data-type={'cf2-text'}
 			name={fieldId}
 		/>
 	)
 };
-
 Input.propTypes = {
 	field: PropTypes.shape(CalderaFormsFieldPropType),
 	onChange: PropTypes.func.isRequired,

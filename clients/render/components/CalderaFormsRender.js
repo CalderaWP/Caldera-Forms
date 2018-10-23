@@ -2,6 +2,7 @@ import {Component, Fragment, createContext} from 'react';
 import PropTypes from 'prop-types';
 import {CalderaFormsFieldPropType, CalderaFormsFieldRender} from "./CalderaFormsFieldRender";
 import isEmpty from 'validator/lib/isEmpty';
+import {getFieldConfigBy} from "../util";
 
 //Collection of change handlers to prevent re-creating
 const handlers = {};
@@ -87,6 +88,7 @@ export class CalderaFormsRender extends Component {
 		this.setFieldShouldShow = this.setFieldShouldShow.bind(this);
 		this.setFieldShouldDisable = this.setFieldShouldDisable.bind(this);
 		this.subscribe = this.subscribe.bind(this);
+		this.getFieldConfig = this.getFieldConfig.bind(this);
 
 	}
 
@@ -112,6 +114,9 @@ export class CalderaFormsRender extends Component {
 	 * @return {*}
 	 */
 	getFieldValue(fieldIdAttr) {
+		if( 'file' === this.getFieldConfig(fieldIdAttr).type){
+			return this.state[fieldIdAttr];
+		}
 		return this.getCfState().getState(fieldIdAttr);
 	}
 
@@ -165,6 +170,18 @@ export class CalderaFormsRender extends Component {
 	}
 
 	/**
+	 * Get the field config, by fieldIdAtte
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param {string} fieldIdAttr
+	 * @return {*}
+	 */
+	getFieldConfig(fieldIdAttr){
+		return getFieldConfigBy(this.props.fieldsToControl, 'fieldIdAttr', fieldIdAttr );
+	}
+
+	/**
 	 * Set a field  disabled or enabled
 	 *
 	 * @since 1.8.0
@@ -197,7 +214,7 @@ export class CalderaFormsRender extends Component {
 		const isDirty = newValue !== this.state[fieldIdAttr];
 		this.setState(
 			{
-				fieldIdAttr: newValue,
+				[fieldIdAttr]: newValue,
 				[fieldIsDirtyKey(fieldIdAttr)]: isDirty
 			}
 		);
@@ -217,7 +234,14 @@ export class CalderaFormsRender extends Component {
 	 */
 	getHandler(fieldIdAttr) {
 		if (!handlers.hasOwnProperty(fieldIdAttr)) {
-			handlers[fieldIdAttr] = (event) => this.setFieldValue(fieldIdAttr, event.target.value);
+			switch(this.getFieldConfig(fieldIdAttr).type){
+				case 'file':
+					handlers[fieldIdAttr] = (newValue) => this.setFieldValue(fieldIdAttr, newValue);
+					break;
+				default:
+					handlers[fieldIdAttr] = (event) => this.setFieldValue(fieldIdAttr, event.target.value);
+				break;
+			}
 		}
 		return handlers[fieldIdAttr];
 	}
@@ -327,6 +351,7 @@ export class CalderaFormsRender extends Component {
 							{...props}
 							key={outterIdAttr}
 							isInvalid={isInvalid}
+							getFieldConfig={this.getFieldConfig}
 						/>
 					);
 				})}

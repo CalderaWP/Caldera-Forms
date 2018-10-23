@@ -2,6 +2,7 @@ import {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
 import {CalderaFormsFieldPropType} from "./CalderaFormsFieldRender";
 import {Input} from "./Fields/Input";
+import {FileInput} from "./Fields/FileInput";
 
 
 /**
@@ -14,7 +15,7 @@ import {Input} from "./Fields/Input";
  * @constructor
  */
 export const CalderaFormsFieldGroup = (props) => {
-	const {field, onChange, shouldDisable, shouldShow,hasMessage,isError,message} = props;
+	const {field, onChange, shouldDisable, shouldShow,hasMessage,isError,message,getFieldConfig} = props;
 	const {
 		type,
 		outterIdAttr,
@@ -36,6 +37,34 @@ export const CalderaFormsFieldGroup = (props) => {
 
 	const hasCaption = field.hasOwnProperty('caption' ) && field.caption.length;
 	const captionId = `${fieldIdAttr}Caption`;
+
+	const Inside = () =>{
+		switch (type) {
+			case 'file':
+				const fileProps = FileInput.fieldConfigToProps(getFieldConfig(fieldIdAttr));
+				return<FileInput
+					onChange={onChange}
+					field={field}
+					shouldDisable={shouldDisable}
+					isInvalid={isInvalid}
+					describedById={captionId}
+					message={fileProps.message}
+					style={fileProps.style}
+					inputProps={fileProps.inputProps}
+					className={'cf2-file form-control'}
+				/>
+			case'text':
+			default:
+				return<Input
+					field={field}
+					onChange={onChange}
+					shouldDisable={shouldDisable}
+					isInvalid={isInvalid}
+					describedById={captionId}
+				/>
+
+		}
+	}
 	return (
 
 			<div className={'form-group cf2-field-group'}>
@@ -46,13 +75,8 @@ export const CalderaFormsFieldGroup = (props) => {
 				>
 					{fieldLabel}
 				</label>
-				<Input
-					field={field}
-					onChange={onChange}
-					shouldDisable={shouldDisable}
-					isInvalid={isInvalid}
-					describedById={captionId}
-				/>
+				<Inside/>
+
 				{hasCaption &&
 					<span
 						id={captionId}
@@ -92,7 +116,8 @@ CalderaFormsFieldGroup.propTypes = {
 	shouldDisable: PropTypes.bool,
 	hasMessage: PropTypes.bool,
 	isInvalid: PropTypes.bool,
-	message: PropTypes.string
+	message: PropTypes.string,
+	getFieldConfig: PropTypes.func.isRequired
 };
 
 /**

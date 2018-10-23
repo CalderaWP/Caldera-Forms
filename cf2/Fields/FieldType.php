@@ -4,7 +4,7 @@
 namespace calderawp\calderaforms\cf2\Fields;
 
 
-class FieldType
+abstract class FieldType implements FieldTypeContract
 {
 
 }

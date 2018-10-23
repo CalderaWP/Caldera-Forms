@@ -2,8 +2,9 @@
 
 exports[`Input field matches snapshot with basic args 1`] = `
 <input
-  className="form-control"
+  className="cf2-text form-control"
   data-field="fld_5843941"
+  data-type="cf2-text"
   disabled={false}
   id="fld_5843941_1"
   name="fld_5843941"
@@ -18,8 +19,9 @@ exports[`Input field matches snapshot with basic args 1`] = `
 exports[`Input field prints aria attribute 1`] = `
 <input
   aria-describedby="foo"
-  className="form-control"
+  className="cf2-text form-control"
   data-field="fld_5843941"
+  data-type="cf2-text"
   disabled={false}
   id="fld_5843941_1"
   name="fld_5843941"

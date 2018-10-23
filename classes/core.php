@@ -3935,8 +3935,6 @@ class Caldera_Forms
 		$current_form_count = Caldera_Forms_Render_Util::get_current_form_count();
         $type = Caldera_Forms_Field_Util::get_type($field, $form);
         $field_id_attr = Caldera_Forms_Field_Util::get_base_id($field, $current_form_count, $form);
-
-
         if( Caldera_Forms_Field_Util::is_cf2_field_type($type)){
             $form_id_attribute = $form['ID'] . '_' . $current_form_count;
             $field['required'] = ! empty( $field['required'] ) ? true : false;
@@ -4507,8 +4505,10 @@ class Caldera_Forms
 
 
 					if (empty($field) || !isset($field_types[$field['type']]['file']) || !file_exists($field_types[$field['type']]['file'])) {
-						continue;
-					}
+                        if (!Caldera_Forms_Field_Util::is_cf2_field_type($field['type'])) {
+                            continue;
+                        }
+                    }
 
 					$field['grid_location'] = $location;
 

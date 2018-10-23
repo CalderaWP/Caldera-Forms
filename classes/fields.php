@@ -112,17 +112,15 @@ class Caldera_Forms_Fields {
 				),
 
 			),
-            'text2'             => array(
-
-
+            'cf2_text'             => array(
                 "cf2" => true,
-                "field"       => __( 'text2', 'caldera-forms' ),
-                "description" => __( 'text2', 'caldera-forms' ),
-                "file"        => CFCORE_PATH . "fields/text2/field.php",
+                "field"       => __( 'cf2_text', 'caldera-forms' ),
+                "description" => __( 'cf2_text', 'caldera-forms' ),
+                "file"        => CFCORE_PATH . "fields/cf2_text/field.php",
                 "category"    => __( 'Basic', 'caldera-forms' ),
                 "setup"       => array(
-                    "template" => CFCORE_PATH . "fields/text2/config.php",
-                    "preview"  => CFCORE_PATH . "fields/text2/preview.php"
+                    "template" => CFCORE_PATH . "fields/cf2_text/config.php",
+                    "preview"  => CFCORE_PATH . "fields/cf2_text/preview.php"
                 ),
             ),
 			'hidden'           => array(
@@ -442,18 +440,15 @@ class Caldera_Forms_Fields {
 				),
 
 			),
-            'file_cf2'    => array(
+            'cf2_file'    => array(
                 "cf2" => true,
                 "field"       => __( 'File (CF2)', 'caldera-forms' ),
-
                 'icon'          => CFCORE_URL . 'assets/build/images/cloud-upload.svg',
                 "category"    => __( 'File', 'caldera-forms' ),
                 "setup"       => array(
                     "preview"  => CFCORE_PATH . "fields/file/preview.php",
                     "template" => CFCORE_PATH . "fields/file/config_template.php"
                 )
-
-
             ),
 
 			//content

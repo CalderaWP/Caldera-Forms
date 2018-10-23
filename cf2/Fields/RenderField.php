@@ -4,6 +4,9 @@
 namespace calderawp\calderaforms\cf2\Fields;
 
 
+use calderawp\calderaforms\cf2\Fields\FieldTypes\FileFieldType;
+use calderawp\calderaforms\cf2\Fields\FieldTypes\TextFieldType;
+
 class RenderField implements RenderFieldContract
 {
 
@@ -72,12 +75,12 @@ class RenderField implements RenderFieldContract
     protected function getType()
     {
         switch ($this->field['type']) {
-            case 'cf2_file' :
-                return 'file';
+            case FileFieldType::getCf1Identifier() :
+                return FileFieldType::getType();
                 break;
-            case 'text2':
+            case TextFieldType::getCf1Identifier() :
             default:
-                return 'text';
+                return TextFieldType::getType();
                 break;
         }
     }
@@ -85,22 +88,32 @@ class RenderField implements RenderFieldContract
     /** @inheritdoc */
     public function data()
     {
-        return [
+
+        $data = [
             'type' => $this->getType(),
             'outterIdAttr' => $this->getOuterIdAttr(),
             'fieldId' => $this->field['ID'],
             'fieldLabel' => $this->field['label'],
             'fieldCaption' => $this->field['caption'],
             'fieldPlaceHolder' => '',
-            'required' => $this->field['required'],
-            'fieldDefault' => $this->field['config']['default'],
+            'required' => ! empty($this->field['required'])?true:false,
+            'fieldDefault' => isset($this->field['config']['default'])? $this->field['config']['default'] : '',
             'fieldValue' => '',
             'fieldIdAttr' => $this->field['fieldIdAttr'],
+            'configOptions' => []
 
         ];
+        if( FileFieldType::getType() === $this->getType() ){
+            $data['configOptions'] = [
+                'multiple'=> ! empty($this->field[ 'config' ]['multi_upload' ]) ? $this->field[ 'config' ]['multi_upload' ] : false,
+                'multiUploadText' => ! empty($this->field[ 'config' ]['multi_upload_text' ]) ? $this->field[ 'config' ]['multi_upload_text' ] : false,
+                'allowedTypes' => ! empty($this->field[ 'config' ]['allowed' ]) ? $this->field[ 'config' ]['allowed' ] : false,
+            ];
+        }
+        return $data;
     }
 
-
+    /** @inheritdoc */
     public function getOuterIdAttr()
     {
         return sprintf('cf2-%s', $this->getFieldIdAttr());

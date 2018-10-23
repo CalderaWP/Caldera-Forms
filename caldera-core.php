@@ -152,3 +152,17 @@ function caldera_forms_fallback_shortcode()
     return esc_html__('Form could not be loaded. Contact the site administrator.', 'caldera-forms');
 
 }
+
+/**
+ * Switch advanced file fields to new type
+ *
+ * @since 1.8.0
+ *
+ * @TODO move this somewhere smarter
+ */
+add_filter('caldera_forms_render_get_field', function($field, $form){
+	if( 'advanced_file' === Caldera_Forms_Field_Util::get_type($field,$form) ){
+		$field['type'] = \calderawp\calderaforms\cf2\Fields\FieldTypes\FileFieldType::getCf1Identifier();
+	}
+	return $field;
+},1,2);
