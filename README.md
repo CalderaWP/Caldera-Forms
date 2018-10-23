@@ -19,8 +19,12 @@ Requires: git, npm, Grunt.
     - `git clone git@github.com:CalderaWP/Caldera-Forms.git`
 - Switch directory
     - `cd Caldera-Forms.git`
-- npm install
-    - `npm i`
+- If you are using your own local development environment:
+    - `npm i && composer install`
+- If you are wish to use the provided local development environment
+    - `composer dev:install`
+    
+    
 ### Build For Release
 To create a build to ship to WordPress.org:
 `npm run package`
@@ -75,21 +79,13 @@ The local server is [http://localhost:8228](http://localhost:8228)
     
     
 #### Install Test Environment
-* Make sure all dependencies are installed:
-    - `composer update && npm update`
-* Install local development environment
-    - `composer wp:install
-        - Runs installer. Make sure Docker is running. May take awhile.
-    - `composer wp:activate`
-        - Activates Caldera Forms and Gutenberg and sets permalinks.
+* Install local development environment, dependencies and setup test forms
+    - `composer dev:install`
+        -  May take awhile.
 * Go to [http://localhost:8228](http://localhost:8228) and make sure you have a WordPress site and can login.
     - Username: admin
     - password: password
 
-* Install the tests forms and pages for them.
-    - `composer wp:test:setup`
-    - Adds forms needed for e2e tests and one page for each form. Useful for manual QA as well.
-    
 ### Test Structures
 * PHP tests go in /tests and are run using phpunit
     - Integration tests, which require WordPress, are in tests. These used to be all the tests we have.
@@ -103,6 +99,8 @@ The local server is [http://localhost:8228](http://localhost:8228)
 
 #### Commands
 ##### Composer
+* `composer dev:install` - Installs dependencies, Docker-based test environment and sets up test forms.
+* `composer dev:destroy` - Deletes dependencies and the Docker-based test environment.
 * `composer wp:install` - Installs Docker-based test environment.
 * `composer wp:start` - Starts Docker-based test environment.
 * `composer wp:activate` - Activate plugins in Docker-based environment.
@@ -111,6 +109,7 @@ The local server is [http://localhost:8228](http://localhost:8228)
 * `composer wp:destroy` - Removes (including the database) the test environment and destroys containers.
 * `composer test:setup` - Adds test forms and puts them on pages.
 * `composer test:delete` - Delete test forms and pages the are on.
+* `composer nuke` - Deletes dependencies, including lock files -- NPM and Composer.
 
 ##### Composer
 * `npm test` - Run JavaScript test watcher
