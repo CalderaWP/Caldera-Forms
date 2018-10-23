@@ -5,8 +5,7 @@
  */
 
 
-$_plugin_root_dir = dirname(__FILE__, 2);
-
+$_plugin_root_dir = dirname(dirname(__FILE__ ));
 // Load Patchwork before everything else in order to allow us to redefine WordPress and plugin functions.
 require_once $_plugin_root_dir . '/vendor/brain/monkey/inc/patchwork-loader.php';
 require_once $_plugin_root_dir . '/vendor/autoload.php';
