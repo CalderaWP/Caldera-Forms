@@ -570,11 +570,12 @@ class Caldera_Forms_Forms {
 		// get form templates (PROBABLY NEED TO MOVE METHOD INTO THIS CLASS)
 		$form_templates = Caldera_Forms_Admin::internal_form_templates();
 
-        $original_function_args = $newform;
+        	$original_function_args = $newform;
 
 		if(!empty($newform['clone'])){
 			$clone = $newform['clone'];
 		}
+		
 		// load template if any
 		if( !empty( $newform['template'] ) ){
 			if( isset( $form_templates[ $newform['template'] ] ) && !empty( $form_templates[ $newform['template'] ]['template'] ) ){
@@ -618,7 +619,6 @@ class Caldera_Forms_Forms {
 		 */
 		$newform = apply_filters( 'caldera_forms_create_form', $newform);
 
-
 		self::update_registry( $id );
 
 		if(!empty($clone)){
@@ -626,6 +626,7 @@ class Caldera_Forms_Forms {
 			if(!empty($clone_form['ID']) && $clone == $clone_form['ID']){
 				$newform = array_merge($clone_form, $original_function_args);
 				unset( $newform[ 'db_id' ] );
+				$newform[ 'ID' ] = $id;
 			}
 		}
 

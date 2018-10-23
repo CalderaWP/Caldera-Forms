@@ -1,3 +1,5 @@
+import React from 'react';
+
 global.wp = {
 	shortcode: {
 
@@ -8,5 +10,5 @@ global.wp = {
 };
 
 Object.defineProperty( global.wp, 'element', {
-	get: () => require( 'React' ),
+	get: () => React,
 } );
