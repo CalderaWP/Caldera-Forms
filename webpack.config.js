@@ -11,12 +11,8 @@ const ExtractTextPlugin = require( 'extract-text-webpack-plugin' );
 //Creates HTML for mounting using a PHP file
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-
-// Main CSS loader for everything but blocks..
-const cssExtractTextPlugin = new ExtractTextPlugin({
-    // Extracts CSS into a build folder inside the directory current directory
-    filename: './build/[name]/build/style.min.css'
-});
+// Main CSS loader
+let cssExtractTextPlugin;
 
 // Configuration for the ExtractTextPlugin.
 // Handles CSS
@@ -57,6 +53,14 @@ entryPointNames.forEach( entryPointName => {
     externals[ '@/calderaForms' + entryPointName ] = {
         this: [ 'calderaForms', entryPointName ]
     }
+
+  // CSS loader for Admin client ( condition defines which client is using CSS loader )
+  if( entryPointName === 'admin' ){
+    cssExtractTextPlugin = new ExtractTextPlugin({
+      // Extracts CSS into a build folder inside the current directory
+      filename: './clients/' + entryPointName + '/build/style.min.css'
+    });
+  }
 } );
 
 // Define WordPress dependencies
