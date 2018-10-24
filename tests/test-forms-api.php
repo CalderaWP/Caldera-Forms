@@ -33,7 +33,7 @@ class Test_Caldera_Forms_API extends Caldera_Forms_Test_Case
      * @covers Caldera_Forms_Forms::get_forms()
      */
     public function testFilterAddedForms(){
-        $this->assertCount(2, Caldera_Forms_Forms::get_forms(false, false ) );
+        $this->assertCount(3, Caldera_Forms_Forms::get_forms(false, false ) );
     }
 
     /**

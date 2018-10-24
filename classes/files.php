@@ -53,7 +53,7 @@ class Caldera_Forms_Files{
 
 	    self::add_upload_filter( $args[ 'field_id' ],  $args[ 'form_id' ], $private );
 
-        $upload = wp_handle_upload($file, array( 'test_form' => false ) );
+        $upload = wp_handle_upload($file, array( 'test_form' => false, 'foo' => 'bnar' ) );
 
         if( $private ){
             self::remove_upload_filter();

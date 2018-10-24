@@ -27,6 +27,7 @@ class ComposerStaticInitb2d56b84f94cc35345b1871b7d51f461
             'calderawp\\calderaforms\\Tests\\Util\\Traits\\' => 41,
             'calderawp\\calderaforms\\Tests\\Util\\' => 34,
             'calderawp\\calderaforms\\Tests\\Unit\\' => 34,
+            'calderawp\\calderaforms\\Tests\\Integration\\' => 41,
             'calderawp\\CalderaFormsQuery\\' => 28,
             'calderawp\\CalderaContainers\\' => 28,
         ),
@@ -98,6 +99,10 @@ class ComposerStaticInitb2d56b84f94cc35345b1871b7d51f461
         'calderawp\\calderaforms\\Tests\\Unit\\' => 
         array (
             0 => __DIR__ . '/../..' . '/tests/Unit',
+        ),
+        'calderawp\\calderaforms\\Tests\\Integration\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/tests/Integration',
         ),
         'calderawp\\CalderaFormsQuery\\' => 
         array (

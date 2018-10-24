@@ -12,6 +12,7 @@ return array(
     'calderawp\\calderaforms\\Tests\\Util\\Traits\\' => array($baseDir . '/tests/Util/Traits'),
     'calderawp\\calderaforms\\Tests\\Util\\' => array($baseDir . '/tests/Util'),
     'calderawp\\calderaforms\\Tests\\Unit\\' => array($baseDir . '/tests/Unit'),
+    'calderawp\\calderaforms\\Tests\\Integration\\' => array($baseDir . '/tests/Integration'),
     'calderawp\\CalderaFormsQuery\\' => array($vendorDir . '/calderawp/caldera-forms-query/src'),
     'calderawp\\CalderaContainers\\' => array($vendorDir . '/calderawp/caldera-containers/src'),
     'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),

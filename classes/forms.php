@@ -255,7 +255,9 @@ class Caldera_Forms_Forms {
 
             }
 		}
-
+        if( ! is_array( self::$stored_forms ) ){
+            self::$stored_forms = [];
+        }
 		return self::$stored_forms;
 	}
 

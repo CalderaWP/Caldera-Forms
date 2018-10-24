@@ -20,6 +20,9 @@ require_once $_tests_dir . '/includes/functions.php';
  */
 function _manually_load_plugin() {
 	require dirname( dirname( __FILE__ ) ) . '/caldera-core.php';
+	add_action( 'plugins_loaded', function(){
+        (new \calderawp\calderaforms\Tests\Util\ImportForms() )->import();
+    });
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
@@ -31,6 +34,7 @@ require $_tests_dir . '/includes/bootstrap.php';
 //include test forms
 include_once( dirname( __FILE__ ) . '/includes/forms/contact-form-include.php' );
 include_once( dirname( __FILE__ ) . '/includes/forms/simple-form-with-just-a-text-field-include.php' );
+include_once( dirname( __FILE__ ) . '/includes/forms/cf2-file-include.php' );
 
 create_testing_db_tables();
 

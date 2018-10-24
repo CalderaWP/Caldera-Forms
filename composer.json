@@ -53,6 +53,7 @@
         "psr-4": {
             "calderawp\\calderaforms\\Tests\\Unit\\": "tests/Unit/",
             "calderawp\\calderaforms\\Tests\\Util\\": "tests/Util/",
+            "calderawp\\calderaforms\\Tests\\Integration\\": "tests/Integration/",
             "calderawp\\calderaforms\\Tests\\Util\\Traits\\": "tests/Util/Traits/"
         },
         "files" : [
@@ -77,6 +78,7 @@
         "wp:config": "docker-compose run --rm cli wp rewrite structure '/%postname%/'",
         "wp:start": "docker-compose up -d",
         "wp:tests": "docker-compose run --rm wordpress_phpunit phpunit --configuration phpunit-integration.xml.dist",
+        "wp:tests-now": "docker-compose run --rm wordpress_phpunit phpunit --configuration phpunit-integration.xml.dist --group now",
         "wp:destroy": "docker-compose rm --stop --force",
         "test:unit": "phpunit --configuration phpunit-unit.xml.dist"
     }

@@ -4995,8 +4995,15 @@ class Caldera_Forms
 		 * Runs after Caldera Forms REST API is loaded
 		 *
 		 * @since 1.4.4
+         *
+         * @param Caldera_Forms_API_Load $api_v2 Caldera Forms REST API v2
+         * @param \calderawp\calderaforms\cf2\RestApi\Register $api_v3 Caldera Forms REST API v2
 		 */
-		do_action('caldera_forms_rest_api_init');
+		do_action('caldera_forms_rest_api_init',
+            self::$api,
+            (new \calderawp\calderaforms\cf2\RestApi\Register(Caldera_Forms_API_Util::api_namespace('v3' ) ) )
+                ->initEndpoints()
+        );
 
 	}
 
