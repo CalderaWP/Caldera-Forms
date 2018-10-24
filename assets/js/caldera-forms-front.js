@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.8.0-a.1 - 2018-10-20 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.7.4 - 2018-10-24 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -6826,7 +6826,8 @@ window.addEventListener("load", function(){
 						idAttr:  form_id,
 						formId: formId,
 						state: state,
-						fieldIds: CFFIELD_CONFIG[instance].fields.hasOwnProperty( 'ids' ) ? CFFIELD_CONFIG[instance].fields.ids : []
+						fieldIds: CFFIELD_CONFIG[instance].fields.hasOwnProperty( 'ids' ) ? CFFIELD_CONFIG[instance].fields.ids : [],
+						nonce: jQuery( '#_cf_verify_' + formId ).val()
 					});
 
 
