@@ -193,10 +193,10 @@ if (!version_compare(PHP_VERSION, '5.6.0', '>=')) {
 
     add_action('caldera_forms_admin_assets_styles_registered', function(){
     	if( Caldera_Forms_Admin::is_main_page() ){
+    		$x= Caldera_Forms_Admin_Assets::main_admin_asset_slug();
             Caldera_Forms_Admin_Assets::set_cf_admin( Caldera_Forms_Admin_Assets::main_admin_asset_slug() );
-            wp_enqueue_style( 'caldera-forms-admin-scripts',
-                plugins_url('/assets/build/css/admin.min.css', __FILE__ )
-
+            wp_enqueue_style( Caldera_Forms_Admin_Assets::main_admin_asset_slug(),
+                plugins_url('/clients/admin/build/style.min.css', __FILE__ )
 			);
         }
 	});

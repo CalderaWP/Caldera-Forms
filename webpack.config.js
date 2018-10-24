@@ -52,7 +52,7 @@ const externals = {
 entryPointNames.forEach( entryPointName => {
     externals[ '@/calderaForms' + entryPointName ] = {
         this: [ 'calderaForms', entryPointName ]
-    }
+    };
 
   // CSS loader for Admin client ( condition defines which client is using CSS loader )
   if( entryPointName === 'admin' ){

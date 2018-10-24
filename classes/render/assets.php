@@ -557,12 +557,12 @@ class Caldera_Forms_Render_Assets {
      */
     public static function is_client_entry_point( $slug ){
 
-        $clients=  [
+        $clients =  [
             'blocks',
             'pro',
             'privacy',
-
         ];
+
         /**
          * Determine if we should use the new CF2 admin page client or not.
          *
@@ -570,7 +570,7 @@ class Caldera_Forms_Render_Assets {
          *
          * @param boolean $use_cf2 If new cf2 admin client should be used or not
          */
-        if( ( apply_filters( 'caldera_forms_use_cf2_admin', Caldera_Forms_Admin::is_main_page() ) ) ){
+        if( apply_filters( 'caldera_forms_use_cf2_admin', Caldera_Forms_Admin::is_main_page() ) ){
             $clients = array_merge( $clients, [
                 'admin',
                 Caldera_Forms_Admin_Assets::main_admin_asset_slug()
@@ -578,6 +578,7 @@ class Caldera_Forms_Render_Assets {
         }
         return in_array( $slug, $clients );
     }
+
 
     /**
      * Should we mbe minifying script/styles?
