@@ -12,3 +12,10 @@ wordpress/*
 wp-content/*
 cypress/screenshots/*
 cypress/videos/*
+
+
+wordpress
+wp-content
+cypress/screenshots
+cypress/videos
+build
