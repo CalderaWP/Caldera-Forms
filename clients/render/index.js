@@ -80,7 +80,7 @@ domReady(function () {
 						if ('file' === field.type) {
 							const verify = jQuery(`#_cf_verify_${field.formId}`).val();
 							const hashes = [];
-							const bianaries = [];
+							const binaries = [];
 							const files = [values[fieldId]];
 
 							files.forEach(file => {
@@ -94,7 +94,7 @@ domReady(function () {
 								readerForHashes.readAsArrayBuffer(file);
 								var readerForBianary = new FileReader();
 								readerForBianary.onload = () => {
-									bianaries.push( readerForHashes.result );
+									binaries.push( readerForHashes.result );
 								};
 
 								readerForBianary.readAsBinaryString(file);
@@ -102,7 +102,7 @@ domReady(function () {
 							});
 
 							const data = {
-								files: bianaries,
+								files: binaries,
 								hashes,
 								verify,
 								formId: field.formId,
