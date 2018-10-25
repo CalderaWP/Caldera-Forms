@@ -290,6 +290,7 @@ class FileUploadTest extends TestCase
             $field,
             new Cf1FileUploader()
         );
+
         $handler->processFiles($files, [md5_file($this->test_file)]);
     }
 

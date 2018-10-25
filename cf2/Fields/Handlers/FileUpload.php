@@ -47,7 +47,7 @@ class FileUpload
             $actual      = md5_file( $file['tmp_name'] );
 
             if ( $expected !== $actual ) {
-                throw new \Exception(__( 'Content hash did not match expected.' ), 412 );
+                throw new Exception(__( 'Content hash did not match expected.' ), 412 );
             }
 
 

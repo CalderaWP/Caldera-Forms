@@ -4,6 +4,7 @@
 namespace calderawp\calderaforms\cf2\RestApi\File;
 
 
+use calderawp\calderaforms\cf2\Exception;
 use calderawp\calderaforms\cf2\Fields\FieldTypes\FileFieldType;
 use calderawp\calderaforms\cf2\Fields\Handlers\Cf1FileUploader;
 use calderawp\calderaforms\cf2\Fields\Handlers\FileUpload;
@@ -76,7 +77,13 @@ class CreateFile extends File
      * @since 1.8.0
      *
      * @param \WP_REST_Request $request
-     * @return mixed|\WP_Error|\WP_REST_Response
+     * @return \WP_REST_Response
+     */
+
+    /**
+     * @param \WP_REST_Request $request
+     * @return mixed|null|\WP_REST_Response
+     * @throws \Exception
      */
     public function createItem(\WP_REST_Request $request)
     {
@@ -89,7 +96,8 @@ class CreateFile extends File
         $uploader = new Cf1FileUploader();
         if( is_wp_error( $uploader ) ){
             /** @var \WP_Error $uploader */
-            return new \WP_REST_Response(['message' => $uploader->get_error_message() ],$uploader->get_error_code() );
+            $e = Exception::fromWpError($uploader);
+            return $e->toResponse();
         }
         $hashes = $request->get_param( 'hashes');
         $controlCode = $request->get_param( 'control'  );
@@ -109,14 +117,14 @@ class CreateFile extends File
                 $transdata,
                 $uploads
             ), DAY_IN_SECONDS );
-        }catch( \Exception $e ){
-            return new \WP_REST_Response(['message' => $e->getMessage() ],$e->getCode() );
+        }catch( Exception $e ){
+            return $e->toResponse();
         }
 
-
-
         if( is_wp_error( $controlCode ) ){
-            return $controlCode;
+            $e = Exception::fromWpError($controlCode);
+            return $e->toResponse();
+
         }
 
         $response = rest_ensure_response([
