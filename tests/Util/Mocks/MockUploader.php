@@ -12,4 +12,13 @@ class MockUploader implements UploaderContract
         // TODO: Implement upload() method.
     }
 
+    public function removeFilter()
+    {
+        // TODO: Implement removeFilter() method.
+    }
+
+    public function addFilter($fieldId, $formId, $private)
+    {
+        // TODO: Implement addFilter() method.
+    }
 }

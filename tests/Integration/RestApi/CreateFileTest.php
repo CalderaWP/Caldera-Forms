@@ -174,6 +174,47 @@ class CreateFileTest extends RestApiTestCase
 
 
     /**
+     * Test that an invalid nonce prevents creation
+     *
+     * @since 1.8.0
+     *
+     * @covers \calderawp\calderaforms\cf2\RestApi\File\CreateFile::createItem()
+     * @covers \calderawp\calderaforms\cf2\Fields\Handlers\FileUpload::isAllowedType()
+     * @covers \calderawp\calderaforms\cf2\Fields\Handlers\FileUpload::processFiles()
+     *
+     * @group cf2
+     * @group file
+     * @group field
+     * @group cf2_file
+     */
+    public function testInvalidFileType(){
+        wp_set_current_user(1 );
+        $formId = 'cf2_file';
+        $fieldId = 'cf2_file_3';
+        $form = \Caldera_Forms_Forms::get_form( $formId );
+        $control = \Caldera_Forms_Field_Util::generate_file_field_unique_id(
+            \Caldera_Forms_Field_Util::get_field($fieldId,$form),
+            $form
+        );
+        $nonce = \Caldera_Forms_Render_Nonce::create_verify_nonce($formId );
+
+        $request = $this->createFileRequest($nonce,$formId,$control,$fieldId);
+
+        $request->set_param('verify', $nonce);
+        $request->set_param('formId', $formId);
+        $request->set_param('control', $control);
+        $request->set_param('fieldId', $fieldId);
+        $request->set_param('hashes', [
+            0 => md5_file($this->test_file)
+        ]);
+
+        $response = rest_get_server()->dispatch($request);
+        $this->assertEquals(415, $response->get_status());
+
+    }
+
+
+    /**
      * Test that the transient with file data is set for next request.
      *
      * @covers \calderawp\calderaforms\cf2\RestApi\File\CreateFile::createItem()
