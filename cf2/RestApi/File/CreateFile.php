@@ -5,6 +5,8 @@ namespace calderawp\calderaforms\cf2\RestApi\File;
 
 
 use calderawp\calderaforms\cf2\Fields\FieldTypes\FileFieldType;
+use calderawp\calderaforms\cf2\Fields\Handlers\FileUpload;
+use calderawp\calderaforms\cf2\Transients\Cf1TransientsApi;
 
 class CreateFile extends File
 {
@@ -86,48 +88,21 @@ class CreateFile extends File
         $uploader = $this->getUploader($field);
         $hashes = $request->get_param( 'hashes');
         $controlCode = $request->get_param( 'control'  );
-        $transdata = \Caldera_Forms_Transient::get_transient($controlCode);
-        if( ! is_array( $transdata ) ){
-            $transdata = [];
-        }
-
-        $i = 0;
-        foreach ($files as  $file) {
-            if (!\Caldera_Forms_Files::is_private($field)) {
-                $uploadArgs = array(
-                    'private' => false,
-                    'field_id' => $field['ID'],
-                    'form_id' => $this->getForm()['ID']
-                );
-            } else {
-                $uploadArgs = array(
-                    'private' => true,
-                    'field_id' => $field['ID'],
-                    'form_id' => $this->getForm()['ID']
-                );
-            }
-
-            $expected = $hashes[$i];
-            $actual      = md5_file( $file['tmp_name'] );
-
-            if ( $expected !== $actual ) {
-                return new \WP_Error( 'rest_upload_hash_mismatch', __( 'Content hash did not match expected.' ), array( 'status' => 412 ) );
-            }
-
-
-            $upload = wp_handle_upload($file, array( 'test_form' => false, 'action' => 'foo' ) );
-            if( !empty( $field['config']['media_lib'] ) ){
-                \Caldera_Forms_Files::add_to_media_library( $upload, $field );
-            }
-
-
-            $uploads[] = $upload['url'];
-            $i++;
+        $handler = new FileUpload(
+            $field,
+            $this->getForm(),
+            new Cf1TransientsApi()
+        );
+        try{
+            $controlCode = $handler->processFiles($files,$hashes,$controlCode);
+        }catch( \Exception $e ){
+            return new \WP_REST_Response(['message' => $e->getMessage() ],$e->getCode() );
 
         }
 
-        \Caldera_Forms_Transient::set_transient($controlCode, array_merge( $transdata, $uploads ), DAY_IN_SECONDS);
-
+        if( is_wp_error( $controlCode ) ){
+            return $controlCode;
+        }
         $response = rest_ensure_response([
             'control' => $controlCode
         ]);
@@ -149,6 +124,7 @@ class CreateFile extends File
 
         return $uploader;
     }
+
 
 
 }

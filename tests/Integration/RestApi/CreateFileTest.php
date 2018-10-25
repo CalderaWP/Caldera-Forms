@@ -51,7 +51,6 @@ class CreateFileTest extends RestApiTestCase
      *
      * @since 1.8.0
      *
-     * @group now
      * @group cf2
      * @group file
      * @group field
@@ -88,6 +87,7 @@ class CreateFileTest extends RestApiTestCase
      *
      * @covers \calderawp\calderaforms\cf2\RestApi\File\CreateFile::createItem()
      *
+     * @group now
      * @group cf2
      * @group file
      * @group field
@@ -118,7 +118,6 @@ class CreateFileTest extends RestApiTestCase
      *
      * @covers \calderawp\calderaforms\cf2\RestApi\File\CreateFile::createItem()
      *
-     * @group now
      * @group cf2
      * @group file
      * @group field
