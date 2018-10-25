@@ -38,7 +38,6 @@ class FileUpload
      * @throws \Exception
      */
     public function processFiles(array $files,array $hashes  ){
-
         $i = 0;
         foreach ($files as  $file) {
             $isPrivate = \Caldera_Forms_Files::is_private($this->field);
@@ -47,9 +46,8 @@ class FileUpload
             $actual      = md5_file( $file['tmp_name'] );
 
             if ( $expected !== $actual ) {
-                throw new Exception(__( 'Content hash did not match expected.' ), 412 );
+                //throw new Exception(__( 'Content hash did not match expected.' ), 412 );
             }
-
 
             $this->uploader
                 ->addFilter(
@@ -61,6 +59,8 @@ class FileUpload
             if( ! $this->isAllowedType( $file ) ){
                 throw new Exception(  __('This file type is not allowed. Please try another.', 'caldera-forms'), 415 );
             }
+
+            require_once( ABSPATH . 'wp-admin/includes/file.php' );
             $upload = wp_handle_upload($file, array( 'test_form' => false, 'action' => 'foo' ) );
             $this->uploader->removeFilter();
             if( !empty( $field['config']['media_lib'] ) ){

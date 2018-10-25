@@ -21,14 +21,20 @@ class RenderField implements RenderFieldContract
     protected $formIdAttr;
 
     /**
+     * @var array
+     */
+    protected $domArgs;
+
+    /**
      * RenderField constructor.
      * @param string $formIdAttr Id attribute for form
      * @param array $field Field configuration (MAKE THIS AN OBJECT!)
      */
-    public function __construct($formIdAttr, array $field)
+    public function __construct($formIdAttr, array $field, array $domArgs = [] )
     {
         $this->formIdAttr = $formIdAttr;
         $this->field = $field;
+        $this->domArgs = $domArgs;
     }
 
     /** @inheritdoc */
@@ -108,9 +114,10 @@ class RenderField implements RenderFieldContract
                 'multiple'=> ! empty($this->field[ 'config' ]['multi_upload' ]) ? $this->field[ 'config' ]['multi_upload' ] : false,
                 'multiUploadText' => ! empty($this->field[ 'config' ]['multi_upload_text' ]) ? $this->field[ 'config' ]['multi_upload_text' ] : false,
                 'allowedTypes' => ! empty($this->field[ 'config' ]['allowed' ]) ? $this->field[ 'config' ]['allowed' ] : false,
+                'control' => uniqid($this->getOuterIdAttr() ),
             ];
         }
-        return $data;
+        return array_merge( $data, $this->domArgs) ;
     }
 
     /** @inheritdoc */

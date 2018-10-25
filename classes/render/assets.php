@@ -616,6 +616,8 @@ class Caldera_Forms_Render_Assets {
 			wp_localize_script( $field_script_to_localize, 'CF_API_DATA', array(
 				'rest' => array(
 					'root' => esc_url_raw(Caldera_Forms_API_Util::url()),
+					'rootV3' => esc_url_raw(Caldera_Forms_API_Util::url('', false, 'v3') ),
+					'fileUpload' => esc_url_raw(Caldera_Forms_API_Util::url('file', false, 'v3') ),
 					'tokens' => array(
 						'nonce' => esc_url_raw(Caldera_Forms_API_Util::url('tokens/form'))
 					),

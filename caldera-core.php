@@ -16,6 +16,7 @@ if (!defined('WPINC')) {
     die;
 }
 
+
 global $wp_version;
 if (!version_compare(PHP_VERSION, '5.6.0', '>=')) {
     function caldera_forms_php_version_nag()
@@ -119,6 +120,8 @@ if (!version_compare(PHP_VERSION, '5.6.0', '>=')) {
          * @since 1.3.5.3
          */
         do_action('caldera_forms_includes_complete');
+
+
     }
 
     add_action('plugins_loaded', array('Caldera_Forms', 'get_instance'));

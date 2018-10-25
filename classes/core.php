@@ -3944,7 +3944,13 @@ class Caldera_Forms
                 array_merge( $field, [
                     'fieldIdAttr' => $field_id_attr,
                     'formIdAttr' => $form_id_attribute,
-                ]));
+                ]),
+                [
+                    'formId' => $form['ID'],
+                    'control' => uniqid( $type )
+
+                ]
+            );
             return $renderer->render();
         }
 		$field_classes = Caldera_Forms_Field_Util::prepare_field_classes($field, $form);

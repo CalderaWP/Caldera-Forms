@@ -1,3 +1,4 @@
+/** globals CF_API_DATA **/
 import {CalderaFormsRender} from "./components/CalderaFormsRender";
 
 import React from 'react';
@@ -18,6 +19,7 @@ domReady(function () {
 			//$form, //Form jQuery object
 		} = obj;
 		const fieldsToControl = [];
+
 
 		//Build configurations
 		document.querySelectorAll('.cf2-field-wrapper').forEach(function (fieldElement) {
@@ -53,20 +55,25 @@ domReady(function () {
 		let shouldBeValidating = false;
 
 
+		const API_FOR_FILES_URL = CF_API_DATA.rest.fileUpload;
+		const _wp_nonce = CF_API_DATA.rest.nonce;
 		function createMediaFromFile(file, additionalData) {
 			// Create upload payload
 			const data = new window.FormData();
 			data.append('file', file, file.name || file.type.replace('/', '.'));
 			data.append('title', file.name ? file.name.replace(/\.[^.]+$/, '') : file.type.replace('/', '.'));
-			forEach(additionalData, ((value, key) => data.append(key, value)));
-			/**
-			 return apiFetch( {
-				path: '/cf-api/v3/file',
+			Object.keys(additionalData)
+				.forEach( key => data.append(key, additionalData[key]));
+
+			 return fetch(API_FOR_FILES_URL,{
 				body: data,
 				method: 'POST',
+				 headers: {
+					 'X-WP-Nonce' : _wp_nonce
+				 }
 			} );
 
-			 **/
+
 		}
 
 
@@ -79,7 +86,7 @@ domReady(function () {
 					if (field) {
 						if ('file' === field.type) {
 							const verify = jQuery(`#_cf_verify_${field.formId}`).val();
-							const hashes = [];
+
 							const binaries = [];
 							const files = [values[fieldId]];
 
@@ -87,29 +94,29 @@ domReady(function () {
 								var readerForHashes = new FileReader();
 								readerForHashes.addEventListener(
 									'load',
-									function () {
-										hashes.push(CryptoJS.MD5(CryptoJS.lib.WordArray.create(this.result)).toString());
+									 () => {
+										const hash = CryptoJS.MD5(CryptoJS.lib.WordArray.create(this.result)).toString();
+										createMediaFromFile(file,{
+											hashes: [hash],
+											verify,
+											formId: field.formId,
+											fieldId: field.fieldId,
+											control: field.control,
+											_wp_nonce
+										}).then(
+											response => response.json()
+										).then(
+											success => console.log(success)
+										).catch(
+											error => console.log(error)
+										);
 									}
 								);
 								readerForHashes.readAsArrayBuffer(file);
-								var readerForBianary = new FileReader();
-								readerForBianary.onload = () => {
-									binaries.push( readerForHashes.result );
-								};
-
-								readerForBianary.readAsBinaryString(file);
 
 							});
 
-							const data = {
-								files: binaries,
-								hashes,
-								verify,
-								formId: field.formId,
-								fieldId: field.fieldId,
-								control: field.control
-							};
-							console.log(data);
+
 						}
 					} else {
 						obj.$form.data(fieldId, values[fieldId]);

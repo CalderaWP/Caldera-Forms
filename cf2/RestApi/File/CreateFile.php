@@ -60,11 +60,10 @@ class CreateFile extends File
      * @return bool
      */
     public function permissionsCallback(\WP_REST_Request $request ){
-        $form =  \Caldera_Forms_Forms::get_form($request->get_param( 'formId' ) );
+        $form =  \Caldera_Forms_Forms::get_form( $request->get_param( 'formId' ) );
         if( FileFieldType::getCf1Identifier() !== \Caldera_Forms_Field_Util::get_type( $request->get_param( 'fieldId' ), $form ) ){
             return false;
         }
-
         return \Caldera_Forms_Render_Nonce::verify_nonce(
             $request->get_param( 'verify'),
             $request->get_param( 'formId' )
@@ -89,6 +88,9 @@ class CreateFile extends File
     {
 
         $files = $request->get_file_params();
+        if( isset( $files[ 'file'] ) ){
+            $files = [$files['file']];
+        }
         $formId = $request->get_param('formId');
         $this->setFormById($formId);
         $fieldId = $request->get_param('fieldId');
@@ -108,6 +110,10 @@ class CreateFile extends File
             new Cf1FileUploader()
         );
         try{
+            if( is_string($hashes ) ){
+                $hashes = [$hashes];
+            }
+
             $uploads = $handler->processFiles($files,$hashes);
             $transdata = is_array( $transientApi->getTransient( $controlCode ) )
                 ? $transientApi->getTransient( $controlCode )
