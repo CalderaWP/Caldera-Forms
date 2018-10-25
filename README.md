@@ -99,6 +99,7 @@ The local server is [http://localhost:8228](http://localhost:8228)
 
 #### Commands
 ##### Composer
+* `composer test:php` - Run PHP tests -- isolated unit tests and the WordPress integration tests.
 * `composer dev:install` - Installs dependencies, Docker-based test environment and sets up test forms.
 * `composer dev:destroy` - Deletes dependencies and the Docker-based test environment.
 * `composer wp:install` - Installs Docker-based test environment.
@@ -123,6 +124,7 @@ Probably don't use these directly. They will change. Must be prefaced with `dock
 * `wp cf delete-test-forms` - Delete test forms
 * `wp cf create-test-pages` - Import test pages
 * `wp cf delete-test-pages` - Delete test pages
+
 ### Release To WordPress.org
 ##### Requires
 * [svn](https://subversion.apache.org/quick-start#installing-the-client)
