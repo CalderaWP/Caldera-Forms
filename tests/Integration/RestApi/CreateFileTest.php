@@ -4,12 +4,15 @@
 namespace calderawp\calderaforms\Tests\Integration\RestApi;
 
 
+
 class CreateFileTest extends RestApiTestCase
 {
-
+    /**
+     * @var string
+     */
     protected $test_file;
 
-
+    /** @inheritdoc */
     public function setUp()
     {
         $orig_file = __DIR__ . '/screenshot.jpeg';

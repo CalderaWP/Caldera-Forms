@@ -5,8 +5,10 @@ namespace calderawp\calderaforms\cf2\RestApi\File;
 
 
 use calderawp\calderaforms\cf2\Fields\FieldTypes\FileFieldType;
+use calderawp\calderaforms\cf2\Fields\Handlers\Cf1FileUploader;
 use calderawp\calderaforms\cf2\Fields\Handlers\FileUpload;
 use calderawp\calderaforms\cf2\Transients\Cf1TransientsApi;
+use calderawp\calderaforms\cf2\Fields\Handlers\UploaderContract;
 
 class CreateFile extends File
 {
@@ -84,45 +86,35 @@ class CreateFile extends File
         $this->setFormById($formId);
         $fieldId = $request->get_param('fieldId');
         $field = \Caldera_Forms_Field_Util::get_field($fieldId,$this->getForm());
-        $uploads = [];
-        $uploader = $this->getUploader($field);
+        $uploader = new Cf1FileUploader();
+        if( is_wp_error( $uploader ) ){
+            /** @var \WP_Error $uploader */
+            return new \WP_REST_Response(['message' => $uploader->get_error_message() ],$uploader->get_error_code() );
+        }
         $hashes = $request->get_param( 'hashes');
         $controlCode = $request->get_param( 'control'  );
         $handler = new FileUpload(
             $field,
             $this->getForm(),
-            new Cf1TransientsApi()
+            new Cf1TransientsApi(),
+            new Cf1FileUploader()
         );
         try{
             $controlCode = $handler->processFiles($files,$hashes,$controlCode);
         }catch( \Exception $e ){
             return new \WP_REST_Response(['message' => $e->getMessage() ],$e->getCode() );
-
         }
 
         if( is_wp_error( $controlCode ) ){
             return $controlCode;
         }
+
         $response = rest_ensure_response([
             'control' => $controlCode
         ]);
         $response->set_status(201);
 
         return $response;
-    }
-
-    /**
-     * @param $field
-     * @return callable|\WP_Error
-     */
-    protected function getUploader($field)
-    {
-        $uploader = \Caldera_Forms_Files::get_upload_handler( $this->getForm(), $field );
-        if( ! is_callable( $uploader) ){
-            return new \WP_Error( 'invalid-upload-handler', sprintf( __( 'Invalid file upload handler. See %s', 'caldera-forms'), 'https://calderaforms.com/doc/alternative-file-upload-directory/') );
-        }
-
-        return $uploader;
     }
 
 

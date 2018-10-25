@@ -4,7 +4,9 @@
 namespace calderawp\calderaforms\cf2\Fields\Handlers;
 
 
-class UploaderContract
+interface UploaderContract
 {
+
+    public function upload($file, array $args = array());
 
 }

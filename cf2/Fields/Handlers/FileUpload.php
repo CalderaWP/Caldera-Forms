@@ -2,6 +2,7 @@
 
 
 namespace calderawp\calderaforms\cf2\Fields\Handlers;
+use calderawp\calderaforms\cf2\Fields\FieldTypes\FileFieldType;
 use calderawp\calderaforms\cf2\Transients\TransientApiContract;
 
 
@@ -21,11 +22,18 @@ class FileUpload
      * @var TransientApiContract
      */
     protected  $transientApi;
-    public function __construct(array $field, array $form, TransientApiContract $transientApi )
+
+    /**
+     * @var UploaderContract
+     */
+    protected  $uploader;
+    public function __construct(array $field, array $form, TransientApiContract $transientApi, UploaderContract $uploader )
     {
+        //$field[ 'type' ] = FileFieldType::getCf1Identifier();
         $this->field = $field;
         $this->form = $form;
         $this->transientApi = $transientApi;
+        $this->uploader = $uploader;
     }
 
 
