@@ -22,7 +22,15 @@ class FileUploadTest extends TestCase
 
     /**
      * @throws \Exception
-     * @group now
+     *
+     * @since 1.8.0
+     *
+     * @covers \calderawp\calderaforms\cf2\Fields\Handlers\FileUpload::processFiles()
+     *
+     * @group cf2
+     * @group file
+     * @group field
+     * @group cf2_file
      */
     public function testProcessFile()
     {
@@ -50,16 +58,56 @@ class FileUploadTest extends TestCase
             $field,
             new Cf1FileUploader()
         );
-        $uploads = $handler->processFiles($files, [md5_file($this->test_file)], 'f1' );
+        $uploads = $handler->processFiles($files, [md5_file($this->test_file)] );
         $this->assertTrue( is_array( $uploads ));
         $this->assertEquals( 1, count($uploads ) );
 
     }
 
+    protected $filterWasCalled;
+    /**
+     * Test that caldera_forms_upload_directory filter is respected
+     *
+     * @since 1.8.0
+     *
+     * @covers \calderawp\calderaforms\cf2\Fields\Handlers\FileUpload::processFiles()
+     *
+     * @group cf2
+     * @group file
+     * @group field
+     * @group cf2_file
+     *
+     * @throws \Exception
+     */
     public function testFilterDirectoryForUpload(){
-        add_filter( 'caldera_forms_upload_directory', function(){
+        add_filter( 'caldera_forms_upload_directory', function() {
             return 'form-uploads';
         });
+
+        $formId = 'cf2_file';
+        $fieldId = 'cf2_file_2';
+        $form = \Caldera_Forms_Forms::get_form( $formId );
+        $field = \Caldera_Forms_Field_Util::get_field($fieldId,$form);
+        $this->assertFalse(  \Caldera_Forms_Files::is_private($field) );
+
+        $files = [
+            [
+                'file' => file_get_contents($this->test_file),
+                'name' => 'screenshot.jpeg',
+                'size' => filesize($this->test_file),
+                'tmp_name' => $this->test_file,
+            ]
+        ];
+
+        $handler = new FileUpload(
+            $field,
+            $field,
+            new Cf1FileUploader()
+        );
+
+        $uploads = $handler->processFiles($files, [md5_file($this->test_file)] );
+        $this->assertTrue( is_array($uploads));
+        $this->assertNotFalse( strpos($uploads[0], 'form-uploads'), $uploads[0]);
 
     }
 }

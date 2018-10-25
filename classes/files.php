@@ -337,7 +337,12 @@ class Caldera_Forms_Files{
 	 * @return array
 	 */
     public static function types(){
-    	return array( 'advanced_file', 'file'  );
+    	return array(
+    	    'advanced_file',
+            'file',
+            \calderawp\calderaforms\cf2\Fields\FieldTypes\FileFieldType::getCf1Identifier(),
+            \calderawp\calderaforms\cf2\Fields\FieldTypes\FileFieldType::getType()
+        );
     }
 
 }

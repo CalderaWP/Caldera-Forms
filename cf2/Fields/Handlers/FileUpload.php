@@ -33,27 +33,23 @@ class FileUpload
     /**
      * @param array $files
      * @param array $hashes
-     * @param $controlCode
      * @return array
      * @throws \Exception
      */
-    public function processFiles(array $files,array $hashes, $controlCode  ){
+    public function processFiles(array $files,array $hashes  ){
 
         $i = 0;
         foreach ($files as  $file) {
-            if (!\Caldera_Forms_Files::is_private($this->field)) {
-                $uploadArgs = array(
-                    'private' => false,
-                    'field_id' => $this->field['ID'],
-                    'form_id' => $this->form['ID']
-                );
-            } else {
+            $isPrivate = \Caldera_Forms_Files::is_private($this->field);
+
+
                 $uploadArgs = array(
                     'private' => true,
                     'field_id' => $this->field['ID'],
                     'form_id' => $this->form['ID']
                 );
-            }
+
+
 
             $expected = $hashes[$i];
             $actual      = md5_file( $file['tmp_name'] );
@@ -63,7 +59,16 @@ class FileUpload
             }
 
 
+            $this->uploader
+                ->addFilter(
+                    $this->field[ 'ID' ],
+                    $this->form[ 'ID' ],
+                    $isPrivate
+            );
+
+
             $upload = wp_handle_upload($file, array( 'test_form' => false, 'action' => 'foo' ) );
+            $this->uploader->removeFilter();
             if( !empty( $field['config']['media_lib'] ) ){
                 \Caldera_Forms_Files::add_to_media_library( $upload, $field );
             }

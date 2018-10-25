@@ -100,7 +100,7 @@ class CreateFile extends File
             new Cf1FileUploader()
         );
         try{
-            $uploads = $handler->processFiles($files,$hashes,$controlCode);
+            $uploads = $handler->processFiles($files,$hashes);
             $transdata = is_array( $transientApi->getTransient( $controlCode ) )
                 ? $transientApi->getTransient( $controlCode )
                 : [];

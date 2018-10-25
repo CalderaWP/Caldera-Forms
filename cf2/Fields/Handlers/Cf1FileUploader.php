@@ -14,4 +14,13 @@ class Cf1FileUploader implements UploaderContract
        return \Caldera_Forms_Files::upload($file,$args);
     }
 
+    public function addFilter($fieldId, $formId, $private)
+    {
+        \Caldera_Forms_Files::add_upload_filter($fieldId,$formId,$private);
+    }
+
+    public function removeFilter()
+    {
+       \Caldera_Forms_Files::remove_upload_filter();
+    }
 }
