@@ -2,7 +2,7 @@ import {CalderaFormsFieldGroup, Fragment} from "../CalderaFormsFieldGroup";
 import {CalderaFormsFieldPropType} from "../CalderaFormsFieldRender";
 import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
-
+const CryptoJS = require("crypto-js");
 
 export const FileInput = (props) => {
 	const{shouldDisable,accept,field,describedById,onChange,style,className,multiple,multiUploadText,inputProps} = props;
@@ -21,21 +21,12 @@ export const FileInput = (props) => {
 
 	const onDrop = (acceptedFiles, rejectedFiles) => {
 		acceptedFiles.forEach(file => {
-			const reader = new FileReader();
-			reader.onload = () => {
-				onChange(reader.result);
-			};
-			reader.onabort = () => console.log('file reading was aborted');
-			reader.onerror = () => console.log('file reading has failed');
-			reader.readAsBinaryString(file);
+			onChange(file);
+
 		});
 	};
 
-	const createImageFromFieldValue = (fieldValue) =>{
-		const img = new Image();
-		img.src = fieldValue;
-		return img;
-	};
+
 
 	return(
 		<Dropzone
@@ -50,13 +41,6 @@ export const FileInput = (props) => {
 			multiple={multiple}
 		>
 			<p>{multiUploadText}</p>
-			{fieldValue &&
-				<ul>
-					<li>
-						<img src={fieldValue} />
-					</li>
-				</ul>
-			}
 		</Dropzone>
 	)
 };
