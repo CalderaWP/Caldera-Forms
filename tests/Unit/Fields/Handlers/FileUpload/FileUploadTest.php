@@ -11,22 +11,23 @@ class FileUploadTest extends TestCase
 {
 
     /**
+     * Test setup of properties
+     *
+     * @since 1.8.0
+     *
      * @cover \calderawp\calderaforms\cf2\Fields\Handlers\FileUpload::__construct()
      * @cover \calderawp\calderaforms\cf2\Fields\Handlers\FileUpload::$field
      * @cover \calderawp\calderaforms\cf2\Fields\Handlers\FileUpload::$form
-     * @cover \calderawp\calderaforms\cf2\Fields\Handlers\FileUpload::$transientApi
      * @cover \calderawp\calderaforms\cf2\Fields\Handlers\FileUpload::$uploader
      */
     public function test__construct()
     {
         $field = [ 'ID' => 'fld1'];
         $form = ['ID' => 'cd1' ];
-        $transients = new Cf1TransientsApi();
         $uploader = new MockUploader();
-        $handler = new FileUpload($field,$form, $transients,$uploader);
+        $handler = new FileUpload($field,$form,$uploader);
         $this->assertAttributeEquals( $field,'field', $handler );
         $this->assertAttributeEquals( $form,'form', $handler );
-        $this->assertAttributeEquals( $transients,'transientApi', $handler );
         $this->assertAttributeEquals( $uploader,'uploader', $handler );
     }
 }

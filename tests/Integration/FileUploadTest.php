@@ -48,12 +48,18 @@ class FileUploadTest extends TestCase
         $handler = new FileUpload(
             $field,
             $field,
-            new Cf1TransientsApi(),
             new Cf1FileUploader()
         );
-        $returnedControlCode = $handler->processFiles($files, [md5_file($this->test_file)], 'f1' );
-        $this->assertEquals( 'f1', $returnedControlCode );
+        $uploads = $handler->processFiles($files, [md5_file($this->test_file)], 'f1' );
+        $this->assertTrue( is_array( $uploads ));
+        $this->assertEquals( 1, count($uploads ) );
 
+    }
+
+    public function testFilterDirectoryForUpload(){
+        add_filter( 'caldera_forms_upload_directory', function(){
+            return 'form-uploads';
+        });
 
     }
 }

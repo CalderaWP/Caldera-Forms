@@ -19,20 +19,13 @@ class FileUpload
     protected $form;
 
     /**
-     * @var TransientApiContract
-     */
-    protected  $transientApi;
-
-    /**
      * @var UploaderContract
      */
     protected  $uploader;
-    public function __construct(array $field, array $form, TransientApiContract $transientApi, UploaderContract $uploader )
+    public function __construct(array $field, array $form, UploaderContract $uploader )
     {
-        //$field[ 'type' ] = FileFieldType::getCf1Identifier();
         $this->field = $field;
         $this->form = $form;
-        $this->transientApi = $transientApi;
         $this->uploader = $uploader;
     }
 
@@ -41,14 +34,10 @@ class FileUpload
      * @param array $files
      * @param array $hashes
      * @param $controlCode
-     * @return mixed
+     * @return array
      * @throws \Exception
      */
     public function processFiles(array $files,array $hashes, $controlCode  ){
-        $transdata = call_user_func([$this->transientApi, 'getTransient'],$controlCode);
-        if( ! is_array( $transdata ) ){
-            $transdata = [];
-        }
 
         $i = 0;
         foreach ($files as  $file) {
@@ -85,9 +74,8 @@ class FileUpload
 
         }
 
-        call_user_func([$this->transientApi, 'setTransient'],$controlCode, array_merge( $transdata, $uploads ), 24 * 60 * 60 );
 
 
-        return $controlCode;
+        return $uploads;
     }
 }

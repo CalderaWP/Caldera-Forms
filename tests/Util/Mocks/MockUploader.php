@@ -7,7 +7,7 @@ use calderawp\calderaforms\cf2\Fields\Handlers\UploaderContract;
 class MockUploader implements UploaderContract
 {
 
-    public static function upload($file, array $args = array())
+    public function upload($file, array $args = array())
     {
         // TODO: Implement upload() method.
     }

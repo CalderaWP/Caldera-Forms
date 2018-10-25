@@ -93,17 +93,27 @@ class CreateFile extends File
         }
         $hashes = $request->get_param( 'hashes');
         $controlCode = $request->get_param( 'control'  );
+        $transientApi = new Cf1TransientsApi();
         $handler = new FileUpload(
             $field,
             $this->getForm(),
-            new Cf1TransientsApi(),
             new Cf1FileUploader()
         );
         try{
-            $controlCode = $handler->processFiles($files,$hashes,$controlCode);
+            $uploads = $handler->processFiles($files,$hashes,$controlCode);
+            $transdata = is_array( $transientApi->getTransient( $controlCode ) )
+                ? $transientApi->getTransient( $controlCode )
+                : [];
+
+            $transientApi->setTransient( $controlCode, array_merge(
+                $transdata,
+                $uploads
+            ), DAY_IN_SECONDS );
         }catch( \Exception $e ){
             return new \WP_REST_Response(['message' => $e->getMessage() ],$e->getCode() );
         }
+
+
 
         if( is_wp_error( $controlCode ) ){
             return $controlCode;
