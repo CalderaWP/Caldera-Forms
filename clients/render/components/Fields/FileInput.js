@@ -1,8 +1,11 @@
 import {CalderaFormsFieldGroup, Fragment} from "../CalderaFormsFieldGroup";
 import {CalderaFormsFieldPropType} from "../CalderaFormsFieldRender";
+import React from 'react';
+
 import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
 import { setFormInState } from '../../../state/actions/mutations'
+
 const CryptoJS = require("crypto-js");
 
 export class FileInput extends React.Component {
