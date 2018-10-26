@@ -26,22 +26,24 @@ export const FileInput = (props) => {
 		});
 	};
 
-
-
 	return(
-		<Dropzone
-			id={fieldIdAttr}
-			onDrop={onDrop}
-			style={style}
-			className={className}
-			accept={accept}
-			disabled={shouldDisable}
-			inputProps={inputProps}
-			disableClick={shouldDisable}
-			multiple={multiple}
-		>
-			<p>{multiUploadText}</p>
-		</Dropzone>
+
+			<Dropzone
+				id={fieldIdAttr}
+				onDrop={onDrop}
+				style={style}
+				className={className}
+				accept={accept}
+				disabled={shouldDisable}
+				inputProps={inputProps}
+				disableClick={shouldDisable}
+				multiple={multiple}
+			>
+        <button type="button" className="btn btn-block">
+					{multiUploadText}
+        </button>
+			</Dropzone>
+
 	)
 };
 
@@ -75,22 +77,23 @@ FileInput.defaultProps = {
 		message: ''
 	},
 	multiUploadText: 'Try dropping some files here, or click to select files to upload.',
-	style: {
-		margin: "0 auto",
-		position: "relative",
-		width: "200px",
-		height: "200px",
-		borderWidth: "2px",
-		borderColor: "rgb(102, 102, 102)",
-		borderStyle: "dashed",
-		borderRadius: "5px"
-	},
 	inputProps: {
 		type: 'file'
 	},
 	disableClick: false,
 	multiple: true,
-	className: 'cf2-file form-control'
+	className: 'cf2-file form-control',
+	style: {
+    	display: 'inline-block',
+		height: '100%',
+		width: '100%',
+		backgroundColor: 'transparent',
+		color: '#fff',
+		border: 'none',
+		borderRadius: '0px',
+		padding: '0px',
+		margin: '0px'
+	}
 };
 
 FileInput.fieldConfigToProps = (fieldConfig ) => {
