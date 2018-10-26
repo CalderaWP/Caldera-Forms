@@ -22,7 +22,17 @@ export class FileInput extends React.Component {
         files: [...prevState.files, file]
       }))
 		})
-		
+
+	}
+
+	removeFile(file) {
+
+		let tmpFiles = [...this.state.files];
+		const index = tmpFiles.indexOf(file);
+		tmpFiles.splice(index, 1);
+
+		this.setState({files: tmpFiles});
+
 	}
 
 	render() {
@@ -42,36 +52,40 @@ export class FileInput extends React.Component {
     } = field;
 
 		return(
+			<div className="dropzone">
+				<Dropzone
+					id={fieldIdAttr}
+					onDrop={this.onDrop.bind(this)}
+					style={style}
+					className={className}
+					accept={accept}
+					disabled={shouldDisable}
+					inputProps={inputProps}
+					disableClick={shouldDisable}
+					multiple={multiple}
+					value={files}
+				>
+					<button type="button" className="btn btn-block" >
+						{multiUploadText}
+					</button>
 
-			<Dropzone
-				id={fieldIdAttr}
-				onDrop={this.onDrop.bind(this)}
-				style={style}
-				className={className}
-				accept={accept}
-				disabled={shouldDisable}
-				inputProps={inputProps}
-				disableClick={shouldDisable}
-				multiple={multiple}
-			>
-				<button type="button" className="btn btn-block">
-					{multiUploadText}
-				</button>
+				</Dropzone>
+				<aside>
+					<ul>
+							{
+								files.map(
+								(file, index) =>
+									<li key={index} className="file-listed">
+										<img width="120" height="120" src={file.preview} alt={file.name} />
+										<br/>
+										{file.type} - {file.size} bytes - <button onClick={this.removeFile.bind(this)} >Remove</button>
 
-				<ul>
-					{
-						files.map(
-							(file, index) =>
-								<li key={index} className="file-listed">
-									<img width="120" height="120" src={file.preview} alt={file.name} />
-									<br/>
-										{file.type} - {file.size} bytes
-								</li>
-						)
-					}
-				</ul>
-
-			</Dropzone>
+									</li>
+								)
+							}
+					</ul>
+				</aside>
+			</div>
 
 		)
 
