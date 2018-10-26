@@ -11,18 +11,41 @@ class FileUpload
 {
 
     /**
+     * Field config
+     *
+     * @since 1.8.0
+     *
      * @var array
      */
     protected $field;
     /**
+     * Form config
+     *
+     * @since 1.8.0
+     *
      * @var array
      */
     protected $form;
 
     /**
+     * Upload handler
+     *
+     * @since 1.8.0
+     *
      * @var UploaderContract
      */
     protected  $uploader;
+
+
+    /**
+     * FileUpload constructor.
+     *
+     * @since 1.8.0
+     *
+     * @param array $field Field config
+     * @param array $form Form config
+     * @param UploaderContract $uploader Upload handler to use
+     */
     public function __construct(array $field, array $form, UploaderContract $uploader )
     {
         $this->field = $field;
@@ -32,8 +55,12 @@ class FileUpload
 
 
     /**
-     * @param array $files
-     * @param array $hashes
+     * Process file upload
+     *
+     * @since 1.8.0
+     *
+     * @param array $files Files to process
+     * @param array $hashes Supplied file hashes to compare actual hashes against
      * @return array
      * @throws \Exception
      */
@@ -110,4 +137,5 @@ class FileUpload
         }
         return $types;
     }
+
 }

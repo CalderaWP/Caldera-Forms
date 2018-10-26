@@ -6,8 +6,6 @@ namespace calderawp\calderaforms\cf2\RestApi;
 
 interface CalderaRestApiContract
 {
-
-
     /**
      * Get the namespace for Caldera Forms REST API
      *

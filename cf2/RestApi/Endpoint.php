@@ -8,9 +8,14 @@ abstract class Endpoint implements \Caldera_Forms_API_Route
 {
 
     /**
+     * Form config
+     *
+     * @since 1.8.0
+     *
      * @var array
      */
     private $form;
+
     // @phpcs:disable
     final public function add_routes($namespace)
     // @phpcs:enable
@@ -38,7 +43,9 @@ abstract class Endpoint implements \Caldera_Forms_API_Route
 
 
     /**
-     * @param string$formId
+     * Set $this->form by looking form up in db
+     *
+     * @param string $formId Form ID to find
      * @return $this
      */
     protected function setFormById( $formId )
@@ -48,6 +55,10 @@ abstract class Endpoint implements \Caldera_Forms_API_Route
     }
 
     /**
+     * Get form config
+     *
+     * @since 1.8.0
+     *
      * @return array
      */
     protected function getForm()

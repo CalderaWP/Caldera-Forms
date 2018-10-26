@@ -54,5 +54,4 @@ interface RenderFieldContract
      */
     public function getOuterIdAttr();
 
-
 }

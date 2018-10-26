@@ -18,7 +18,6 @@ class Register implements CalderaRestApiContract
      */
     private $namespace;
 
-
     /**
      * Register constructor.
      *

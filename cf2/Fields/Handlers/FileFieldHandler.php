@@ -17,16 +17,7 @@ class FileFieldHandler extends FieldHandler
      */
     protected $transientsUsed;
 
-    /**
-     * Process field entry (pre-save)
-     *
-     * @since 1.8.0
-     *
-     * @param mixed $entry Current value
-     * @param array $field Field config
-     * @param array $form Form config
-     * @return mixed
-     */
+    /** @inheritdoc */
     public function processField($entry, $field, $form)
     {
         if (is_null($entry)) {
@@ -45,17 +36,7 @@ class FileFieldHandler extends FieldHandler
         return $entry;
     }
 
-    /**
-     * Prepare to save field
-     *
-     * @since 1.8.0
-     *
-     * @param mixed $entry Current value
-     * @param array $field Field config
-     * @param array $form Form config
-     * @param int $entry_id The ID of the entry being saved
-     * @return mixed
-     */
+    /** @inheritdoc */
     public function saveField($entry, $field, $form, $entry_id)
     {
         $key = $this->key($field, $form);

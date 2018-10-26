@@ -11,22 +11,34 @@ class RenderField implements RenderFieldContract
 {
 
     /**
+     *
+     * @since 1.8.0
+     *
      * @var array
      */
     protected $field;
 
     /**
+     *
+     * @since 1.8.0
+     *
      * @var string
      */
     protected $formIdAttr;
 
     /**
+     *
+     * @since 1.8.0
+     *
      * @var array
      */
     protected $domArgs;
 
     /**
      * RenderField constructor.
+     *
+     * @since 1.8.0
+     *
      * @param string $formIdAttr Id attribute for form
      * @param array $field Field configuration (MAKE THIS AN OBJECT!)
      */
