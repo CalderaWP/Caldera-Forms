@@ -84,15 +84,8 @@ FileInput.defaultProps = {
 	multiple: true,
 	className: 'cf2-file form-control',
 	style: {
-    	display: 'inline-block',
-		height: '100%',
-		width: '100%',
-		backgroundColor: 'transparent',
-		color: '#fff',
 		border: 'none',
-		borderRadius: '0px',
-		padding: '0px',
-		margin: '0px'
+		padding: '0px'
 	}
 };
 
