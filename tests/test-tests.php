@@ -5,7 +5,7 @@ class TestsTest extends Caldera_Forms_Test_Case {
     /**
      * Make sure assertions work
      *
-     * @group now
+
      * @group test
      */
 	function testAsserts() {
@@ -18,7 +18,7 @@ class TestsTest extends Caldera_Forms_Test_Case {
     /**
      * Make sure we can read/write the DB
      *
-     * @group now
+
      * @group test
      */
 	public function testDB(){

@@ -169,3 +169,15 @@ add_filter('caldera_forms_render_get_field', function($field, $form){
 	}
 	return $field;
 },1,2);
+
+/**
+ * Init Cf2 system
+ *
+ * @since 1.8.0
+ *
+ * @TODO move this somewhere smarter
+ */
+add_action( 'caldera_forms_core_init', function(){
+	$container = new \calderawp\calderaforms\cf2\CalderaFormsV2();
+	$container->getHooks()->subscribe();
+});

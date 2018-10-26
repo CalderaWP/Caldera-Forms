@@ -3,6 +3,8 @@
 
 namespace calderawp\calderaforms\cf2\Transients;
 
+use calderawp\calderaforms\cf2\Exception;
+
 /**
  * Class Cf1TransientsApi
  *
@@ -33,5 +35,7 @@ class Cf1TransientsApi implements TransientApiContract
     public  function deleteTransient($id){
         return \Caldera_Forms_Transient::delete_transient($id);
     }
+
+
 
 }

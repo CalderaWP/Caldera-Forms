@@ -114,12 +114,12 @@ add_filter( 'caldera_forms_get_form-cf2_file', function( $form ){
                             ),
                     ),
 
-                'cf2_file_4_multi_allowed' =>
+                'cf2_file_4' =>
                     array(
-                        'ID' => 'cf2_file_4_multi_allowed',
-                        'type' => 'cf2_file_4_multi_allowed',
-                        'label' => 'PNG ONLY multiple uploads allowed',
-                        'slug' => 'cf2_file_4_multi_allowed',
+                        'ID' => 'cf2_file_4',
+                        'type' => 'cf2_file',
+                        'label' => 'multiple allowed',
+                        'slug' => 'cf2_file_4',
                         'conditions' =>
                             array(
                                 'type' => '',
@@ -127,8 +127,8 @@ add_filter( 'caldera_forms_get_form-cf2_file', function( $form ){
                         'caption' => '',
                         'config' =>
                             array(
-                                'custom_class' => '',
                                 'multi_upload' => true,
+                                'custom_class' => '',
                                 'multi_upload_text' => '',
                                 'allowed' => 'png',
                                 'email_identifier' => 0,

@@ -75,6 +75,7 @@ class Caldera_Forms_Transient  {
 	 * @return bool
 	 */
 	public static function delete_transient( $id ){
+        wp_clear_scheduled_hook(self::CRON_ACTION, array(  $id  ) );
 		return delete_option( self::prefix( $id ) );
 	}
 

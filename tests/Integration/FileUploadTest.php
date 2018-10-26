@@ -117,7 +117,7 @@ class FileUploadTest extends TestCase
      *
      * @covers \calderawp\calderaforms\cf2\Fields\Handlers\FileUpload::isAllowedType()
      *
-     * @group now
+
      * @group cf2
      * @group file
      * @group field

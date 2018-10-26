@@ -4,9 +4,17 @@
 namespace calderawp\calderaforms\Tests\Util\Traits;
 
 
+use calderawp\calderaforms\cf2\CalderaFormsV2;
+
 trait SharedFactories
 {
 
+    /**
+     * @return CalderaFormsV2
+     */
+    protected function getContainer(){
+        return new CalderaFormsV2();
+    }
     public function fieldFactory($type,$fieldId = 'fld_12345')
     {
         switch($type){
