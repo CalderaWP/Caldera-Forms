@@ -2,35 +2,50 @@ import {CalderaFormsFieldGroup, Fragment} from "../CalderaFormsFieldGroup";
 import {CalderaFormsFieldPropType} from "../CalderaFormsFieldRender";
 import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
+import { setFormInState } from '../../../state/actions/mutations'
 const CryptoJS = require("crypto-js");
 
-export const FileInput = (props) => {
-	const{shouldDisable,accept,field,describedById,onChange,style,className,multiple,multiUploadText,inputProps} = props;
-	const {
-		outterIdAttr,
-		fieldId,
-		fieldLabel,
-		fieldCaption,
-		required,
-		fieldPlaceHolder,
-		fieldDefault,
-		fieldValue,
-		fieldIdAttr,
-		isInvalid
-	} = field;
+export class FileInput extends React.Component {
 
-	const onDrop = (acceptedFiles, rejectedFiles) => {
-		acceptedFiles.forEach(file => {
-			onChange(file);
+  constructor(props) {
+    super(props);
+    this.state = {
+    	files: []
+		};
+  }
 
-		});
-	};
+	onDrop(files) {
 
-	return(
+		files.forEach(file => {
+			//onChange(file);
+      this.setState(prevState => ({
+        files: [...prevState.files, file]
+      }))
+		})
+		
+	}
+
+	render() {
+    const { files } = this.state;
+    const { shouldDisable,accept,field,describedById,onChange,style,className,multiple,multiUploadText,inputProps} = this.props;
+    const {
+      outterIdAttr,
+      fieldId,
+      fieldLabel,
+      fieldCaption,
+      required,
+      fieldPlaceHolder,
+      fieldDefault,
+      fieldValue,
+      fieldIdAttr,
+      isInvalid
+    } = field;
+
+		return(
 
 			<Dropzone
 				id={fieldIdAttr}
-				onDrop={onDrop}
+				onDrop={this.onDrop.bind(this)}
 				style={style}
 				className={className}
 				accept={accept}
@@ -39,13 +54,31 @@ export const FileInput = (props) => {
 				disableClick={shouldDisable}
 				multiple={multiple}
 			>
-        <button type="button" className="btn btn-block">
+				<button type="button" className="btn btn-block">
 					{multiUploadText}
-        </button>
+				</button>
+
+				<ul>
+					{
+						files.map(
+							(file, index) =>
+								<li key={index} className="file-listed">
+									<img width="120" height="120" src={file.preview} alt={file.name} />
+									<br/>
+										{file.type} - {file.size} bytes
+								</li>
+						)
+					}
+				</ul>
+
 			</Dropzone>
 
-	)
-};
+		)
+
+	}
+
+
+}
 
 FileInput.propTypes = {
 	field: PropTypes.shape(CalderaFormsFieldPropType),
