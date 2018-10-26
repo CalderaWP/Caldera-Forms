@@ -40,6 +40,15 @@
 </div>
 
 <div class="caldera-config-group">
+    <label role="presentation"></label>
+    <div class="caldera-config-field">
+        <label for="{{_id}}_persistent"><input id="{{_id}}_persistent" type="checkbox" class="field-config" name="{{_name}}[persistent]" value="1" {{#if persistent}}checked="checked"{{/if}}>
+            <?php echo esc_html__('Store file on server', 'caldera-forms'); ?>
+        </label>
+    </div>
+</div>
+
+<div class="caldera-config-group">
 	<label for="{{_id}}_allowed">
 		<?php esc_html_e('Allowed Types', 'caldera-forms'); ?>
 	</label>
@@ -62,7 +71,7 @@
 			}else{
 				$('#{{_id}}_allow_multiple_text_wrap').hide();
 			}
-		});	
+		});
 
 		$('#{{_id}}_allow_multiple').trigger('change');
 	});
