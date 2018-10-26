@@ -793,7 +793,7 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 
 == Changelog ==
-= Caldera Forms 1.7.4 (October 17, 2018) import {clone} from form =
+= Caldera Forms 1.7.4 (October 23, 2018) import {clone} from form =
 See: [https://calderaforms.com/updates/caldera-forms-1-7-4](https://calderaforms.com/updates/caldera-forms-1-7-4?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-4)
 * FIXED: When cloning a form, the clone had the same ID of the original form, causing the original form to appear to have been lost.
 * FIXED: When importing a form, the calculation values of select options were reset to 1.
