@@ -2,6 +2,7 @@
 
 
 namespace calderawp\calderaforms\cf2\Fields\Handlers;
+
 use calderawp\calderaforms\cf2\Exception;
 use calderawp\calderaforms\cf2\Fields\FieldTypes\FileFieldType;
 use calderawp\calderaforms\cf2\Transients\TransientApiContract;
@@ -34,7 +35,7 @@ class FileUpload
      *
      * @var UploaderContract
      */
-    protected  $uploader;
+    protected $uploader;
 
 
     /**
@@ -46,7 +47,7 @@ class FileUpload
      * @param array $form Form config
      * @param UploaderContract $uploader Upload handler to use
      */
-    public function __construct(array $field, array $form, UploaderContract $uploader )
+    public function __construct(array $field, array $form, UploaderContract $uploader)
     {
         $this->field = $field;
         $this->form = $form;
@@ -64,34 +65,35 @@ class FileUpload
      * @return array
      * @throws \Exception
      */
-    public function processFiles(array $files,array $hashes  ){
+    public function processFiles(array $files, array $hashes)
+    {
         $i = 0;
-        foreach ($files as  $file) {
+        foreach ($files as $file) {
             $isPrivate = \Caldera_Forms_Files::is_private($this->field);
 
             $expected = $hashes[$i];
-            $actual      = md5_file( $file['tmp_name'] );
+            $actual = md5_file($file['tmp_name']);
 
-            if ( $expected !== $actual ) {
+            if ($expected !== $actual) {
                 //throw new Exception(__( 'Content hash did not match expected.' ), 412 );
             }
 
             $this->uploader
                 ->addFilter(
-                    $this->field[ 'ID' ],
-                    $this->form[ 'ID' ],
+                    $this->field['ID'],
+                    $this->form['ID'],
                     $isPrivate
-            );
+                );
 
-            if( ! $this->isAllowedType( $file ) ){
-                throw new Exception(  __('This file type is not allowed. Please try another.', 'caldera-forms'), 415 );
+            if (!$this->isAllowedType($file)) {
+                throw new Exception(__('This file type is not allowed. Please try another.', 'caldera-forms'), 415);
             }
 
-            require_once( ABSPATH . 'wp-admin/includes/file.php' );
-            $upload = wp_handle_upload($file, array( 'test_form' => false, 'action' => 'foo' ) );
+            require_once(ABSPATH . 'wp-admin/includes/file.php');
+            $upload = wp_handle_upload($file, array('test_form' => false, 'action' => 'foo'));
             $this->uploader->removeFilter();
-            if( !empty( $field['config']['media_lib'] ) ){
-                \Caldera_Forms_Files::add_to_media_library( $upload, $field );
+            if (!empty($field['config']['media_lib'])) {
+                \Caldera_Forms_Files::add_to_media_library($upload, $field);
             }
 
 
@@ -99,7 +101,6 @@ class FileUpload
             $i++;
 
         }
-
 
 
         return $uploads;
@@ -114,12 +115,13 @@ class FileUpload
      * @return bool
      * @throws Exception
      */
-    public function isAllowedType($file){
-        if( empty( $this->field['config']['allowed'] )){
+    public function isAllowedType($file)
+    {
+        if (empty($this->field['config']['allowed'])) {
             return true;
         }
-        $filetype = wp_check_filetype( basename( $file['tmp_name'] ), null );
-       return in_array( strtolower( $filetype['ext'] ), $this->getAllowedTypes() );
+        $filetype = wp_check_filetype(basename($file['tmp_name']), null);
+        return in_array(strtolower($filetype['ext']), $this->getAllowedTypes());
     }
 
     /**
@@ -131,9 +133,9 @@ class FileUpload
      */
     public function getAllowedTypes()
     {
-        $types = ! empty( $this->field['config']['allowed'] ) ? $this->field['config']['allowed'] : [];
-        if( ! is_array( $types ) ){
-            $types = explode(',', $types );
+        $types = !empty($this->field['config']['allowed']) ? $this->field['config']['allowed'] : [];
+        if (!is_array($types)) {
+            $types = explode(',', $types);
         }
         return $types;
     }

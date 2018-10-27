@@ -47,8 +47,6 @@ class FileFieldHandlerTest extends TestCase
      *
      * @since 1.8.0
      *
-     * @group now
-     *
      * @covers \calderawp\calderaforms\cf2\Fields\Handlers\FileFieldHandler::saveField();
      */
     public function testDeletesTransient(){

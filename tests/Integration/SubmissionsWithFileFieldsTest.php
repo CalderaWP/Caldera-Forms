@@ -8,18 +8,12 @@ use Brain\Monkey\Actions;
 
 use calderawp\calderaforms\cf2\Transients\Cf1TransientsApi;
 use calderawp\calderaforms\Tests\Util\SubmissionHelpers;
+use calderawp\calderaforms\Tests\Util\Traits\TestsSubmissions;
 
 class SubmissionsWithFileFieldsTest extends TestCase
 {
 
-    /**
-     * Entry ID for current submission
-     *
-     * @since 1.8.0
-     *
-     * @var int
-     */
-    protected $entryId;
+    use TestsSubmissions;
     /**
      * ID of form we are testing
      *
@@ -44,6 +38,7 @@ class SubmissionsWithFileFieldsTest extends TestCase
     public function setUp()
     {
         $this->form = \Caldera_Forms_Forms::get_form( $this->formId );
+        add_action('caldera_forms_entry_saved', [$this, 'entrySaved'] );
         parent::setUp();
     }
 
@@ -54,22 +49,10 @@ class SubmissionsWithFileFieldsTest extends TestCase
             \Caldera_Forms_Entry_Bulk::delete_entries([$this->entryId]);
         }
         $this->entryId = null;
+        remove_action('caldera_forms_entry_saved', [$this, 'entrySaved'] );
         parent::tearDown();
     }
 
-    /**
-     * Capture entry ID when it is saved
-     *
-     * @since 1.8.0
-     *
-     * @uses "caldera_forms_entry_saved" hook
-     *
-     * @param string $entryId
-     */
-    public function entrySaved($entryId)
-    {
-        $this->entryId = $entryId;
-    }
 
     /**
      * Test that if a file field's value is a control code at submission, and that data is in a transient, it is saved in the submission.
@@ -78,7 +61,6 @@ class SubmissionsWithFileFieldsTest extends TestCase
      *
      * @covers Caldera_Forms::process_submission()
      *
-     * @group now
      * @group cf2
      * @group file
      * @group field
@@ -116,7 +98,6 @@ class SubmissionsWithFileFieldsTest extends TestCase
 
 
     /**
-     * @group now
      */
     public function testSubmissionsDoNotShareData()
     {
@@ -182,7 +163,6 @@ class SubmissionsWithFileFieldsTest extends TestCase
      *
      * @covers Caldera_Forms::process_submission()
      *
-     * @group now
      * @group cf2
      * @group file
      * @group field
@@ -289,7 +269,6 @@ class SubmissionsWithFileFieldsTest extends TestCase
      *
      * @covers Caldera_Forms::process_submission()
      *
-     * @group now
      * @group cf2
      * @group file
      * @group field

@@ -13,7 +13,7 @@ use \calderawp\calderaforms\Tests\Util\Traits\TestsWpMail;
 class SomethingTest extends TestCase {
     public function tearDown(){
         parent::tearDown();
-        $this->reset();
+        $this->resetWpMailTests();
     }
 
 }
@@ -26,7 +26,7 @@ trait TestsWpMail
 
 
     /** @inheritdoc */
-    public function reset()
+    public function resetWpMailTests()
     {
         $this->reset_mailer();
     }
