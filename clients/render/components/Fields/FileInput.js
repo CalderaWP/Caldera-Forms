@@ -4,43 +4,10 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
-import { setFormInState } from '../../../state/actions/mutations'
 
-const CryptoJS = require("crypto-js");
+export const FileInput = ( props )  => {
 
-export class FileInput extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-    	files: []
-		};
-  }
-
-	onDrop(files) {
-
-		files.forEach(file => {
-			//onChange(file);
-      this.setState(prevState => ({
-        files: [...prevState.files, file]
-      }))
-		})
-
-	}
-
-	removeFile(file) {
-
-		let tmpFiles = [...this.state.files];
-		const index = tmpFiles.indexOf(file);
-		tmpFiles.splice(index, 1);
-
-		this.setState({files: tmpFiles});
-
-	}
-
-	render() {
-    const { files } = this.state;
-    const { shouldDisable,accept,field,describedById,onChange,style,className,multiple,multiUploadText,inputProps} = this.props;
+    const { shouldDisable,accept,field,describedById,onChange,style,className,multiple,multiUploadText,inputProps} = props;
     const {
       outterIdAttr,
       fieldId,
@@ -49,16 +16,48 @@ export class FileInput extends React.Component {
       required,
       fieldPlaceHolder,
       fieldDefault,
-      fieldValue,
       fieldIdAttr,
       isInvalid
     } = field;
 
+    let {
+      fieldValue
+		} = field;
+
+  if( Array.isArray(fieldValue) === false ) {
+    fieldValue = [];
+  }
+
+  const listItemStyles = {
+  	listStyleType: 'none',
+		margin: '10px 0'
+	}
+
+  const onDrop = (accepted) => {
+
+		accepted.forEach( file => {
+			fieldValue.push(file);
+		})
+
+    onChange( fieldValue );
+
+  };
+
+  const removeFile = (e, file) => {
+
+		const index = fieldValue.indexOf(file);
+		fieldValue.splice(index, 1);
+
+		onChange( fieldValue );
+
+	}
+
 		return(
-			<div className="dropzone">
+
+			<div className="cf2-dropzone">
 				<Dropzone
 					id={fieldIdAttr}
-					onDrop={this.onDrop.bind(this)}
+					onDrop={onDrop}
 					style={style}
 					className={className}
 					accept={accept}
@@ -66,34 +65,33 @@ export class FileInput extends React.Component {
 					inputProps={inputProps}
 					disableClick={shouldDisable}
 					multiple={multiple}
-					value={files}
 				>
 					<button type="button" className="btn btn-block" >
 						{multiUploadText}
 					</button>
 
 				</Dropzone>
-				<aside>
-					<ul>
-							{
-								files.map(
-								(file, index) =>
-									<li key={index} className="file-listed">
-										<img width="120" height="120" src={file.preview} alt={file.name} />
-										<br/>
-										{file.type} - {file.size} bytes - <button onClick={this.removeFile.bind(this)} >Remove</button>
 
-									</li>
-								)
-							}
-					</ul>
-				</aside>
+				<ul>
+          {
+            fieldValue.map(
+              ( file, index ) =>
+                <li key={index} className="cf2-file-listed" style={listItemStyles}>
+                  <span className="cf2-remove-file" onClick={(e) => removeFile(e,file)} >X  </span>
+                  {file.type.startsWith("image") === true
+										? <img width="120" height="120" src={file.preview} alt={file.name} />
+										: <span>{file.name}</span>
+                  }
+                  <br/>
+                  {file.type} - {file.size} bytes
+                </li>
+            )
+          }
+				</ul>
+
 			</div>
 
 		)
-
-	}
-
 
 }
 
