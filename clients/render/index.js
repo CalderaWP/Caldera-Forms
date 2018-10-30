@@ -86,6 +86,8 @@ domReady(function () {
 					const field = fieldsToControl.find(field => fieldId === field.fieldId);
 					if (field) {
 						if ('file' === field.type) {
+							obj.$form.data(fieldId, field.control );
+
 							const verify = jQuery(`#_cf_verify_${field.formId}`).val();
 							const binaries = [];
 							const files = [values[fieldId]];
@@ -101,10 +103,7 @@ domReady(function () {
 									response => response.json()
 								).then(
 									success => {
-										if( 'object' === typeof  success && success.hasOwnProperty( 'control') ){
-											console.log(fieldId);
-											obj.$form.data(fieldId, success.control );
-										}
+										console.log(success);
 									}
 								).catch(
 									error => console.log(error)

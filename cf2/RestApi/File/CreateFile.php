@@ -134,7 +134,9 @@ class CreateFile extends File
         }
 
         $response = rest_ensure_response([
-            'control' => $controlCode
+            'control' => $controlCode,
+           // 'uploads' => $uploads,
+            //  'tr' => $transientApi->getTransient($controlCode)
         ]);
         $response->set_status(201);
 

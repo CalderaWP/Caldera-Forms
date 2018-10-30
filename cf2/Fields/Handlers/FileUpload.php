@@ -68,6 +68,7 @@ class FileUpload
     public function processFiles(array $files, array $hashes)
     {
         $i = 0;
+        $uploads = [];
         foreach ($files as $file) {
             $isPrivate = \Caldera_Forms_Files::is_private($this->field);
 
@@ -101,7 +102,6 @@ class FileUpload
             $i++;
 
         }
-
 
         return $uploads;
     }
