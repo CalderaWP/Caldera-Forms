@@ -4,6 +4,17 @@ import { Provider } from 'react-redux'
 import reducer from './reducers'
 import ReactDOM from "react-dom";
 import {PrivacySettingsWrapped} from "./containers/PrivacySettings";
+/**
+ *
+ * @type {string}
+ */
+const ID = 'caldera-forms-privacy-settings';
+const element =     document.getElementById(ID);
+
+if( null === element  ){
+    return;
+}
+global.wp = global.wp || {};
 
 Object.defineProperty( global.wp, 'element', {
     get: () => React
@@ -17,11 +28,7 @@ const store = createStore(
     reducer,
 );
 
-/**
- *
- * @type {string}
- */
-const ID = 'caldera-forms-privacy-settings';
+
 
 ReactDOM.render(
     <Provider store={store}>
