@@ -49,6 +49,13 @@ class FileFieldHandler extends FieldHandler
         return $entry;
     }
 
+    /** @inheritdoc */
+    public function viewField($field_value, $field, $form)
+    {
+        return $field_value;
+    }
+
+
     /**
      * Create the key for the array $this->transientsUsed
      *
