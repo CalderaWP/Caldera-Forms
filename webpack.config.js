@@ -15,7 +15,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 // Main CSS loader for everything but blocks..
 const cssExtractTextPlugin = new ExtractTextPlugin({
     // Extracts CSS into a build folder inside the directory current directory
-    filename: './build/[name]/build/style.min.css'
+    filename: './clients/[name]/build/style.min.css'
 });
 
 // Configuration for the ExtractTextPlugin.

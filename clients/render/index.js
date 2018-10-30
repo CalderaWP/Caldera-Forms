@@ -1,4 +1,5 @@
 /** globals CF_API_DATA **/
+import './index.scss';
 import {CalderaFormsRender} from "./components/CalderaFormsRender";
 
 import React from 'react';

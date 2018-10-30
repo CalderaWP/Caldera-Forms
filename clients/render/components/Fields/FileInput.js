@@ -28,11 +28,6 @@ export const FileInput = ( props )  => {
     fieldValue = [];
   }
 
-  const listItemStyles = {
-  	listStyleType: 'none',
-		margin: '10px 0'
-	}
-
   const onDrop = (accepted) => {
 
 		accepted.forEach( file => {
@@ -76,14 +71,14 @@ export const FileInput = ( props )  => {
           {
             fieldValue.map(
               ( file, index ) =>
-                <li key={index} className="cf2-file-listed" style={listItemStyles}>
-                  <span className="cf2-remove-file" onClick={(e) => removeFile(e,file)} >X  </span>
+                <li key={index} className="cf2-file-listed" >
+                  <span className="cf2-remove-file" onClick={(e) => removeFile(e,file)} > </span>
                   {file.type.startsWith("image") === true
-										? <img width="120" height="120" src={file.preview} alt={file.name} />
-										: <span>{file.name}</span>
+					? <img width="120" height="120" src={file.preview} alt={file.name} />
+					: <span>{file.name}</span>
                   }
                   <br/>
-                  {file.type} - {file.size} bytes
+					<span className="cf3-file-data"> {file.type} - {file.size} bytes</span>
                 </li>
             )
           }

@@ -235,6 +235,7 @@ class Caldera_Forms_Render_Assets {
 			'font'              => self::make_url( 'cfont', false ),
 			'table'             => self::make_url( 'caldera-table', false ),
 			'entry-viewer-2'    => self::make_url( 'entry-viewer-2', false ),
+            'render'            => self::make_url( 'render', false ),
 
 		);
 
@@ -609,6 +610,7 @@ class Caldera_Forms_Render_Assets {
 		}else{
 			self::enqueue_script( 'fields' );
 			self::enqueue_script( 'field-config', array( self::make_slug( 'validator' ), self::make_slug( 'field' ) ) );
+            self::enqueue_style( self::make_style_slug('render') );
 		}
 
 		$field_script_to_localize = self::field_script_to_localize_slug();
