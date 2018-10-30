@@ -87,44 +87,39 @@ domReady(function () {
 					if (field) {
 						if ('file' === field.type) {
 							const verify = jQuery(`#_cf_verify_${field.formId}`).val();
-
 							const binaries = [];
 							const files = [values[fieldId]];
-
 							files.forEach(file => {
-								var readerForHashes = new FileReader();
-								readerForHashes.addEventListener(
-									'load',
-									 () => {
-										const hash = CryptoJS.MD5(CryptoJS.lib.WordArray.create(this.result)).toString();
-										createMediaFromFile(file,{
-											hashes: [hash],
-											verify,
-											formId: field.formId,
-											fieldId: field.fieldId,
-											control: field.control,
-											_wp_nonce
-										}).then(
-											response => response.json()
-										).then(
-											success => console.log(success)
-										).catch(
-											error => console.log(error)
-										);
+								createMediaFromFile(file[0],{
+									hashes: ['hi-roy'],
+									verify,
+									formId: field.formId,
+									fieldId: field.fieldId,
+									control: field.control,
+									_wp_nonce
+								}).then(
+									response => response.json()
+								).then(
+									success => {
+										if( 'object' === typeof  success && success.hasOwnProperty( 'control') ){
+											console.log(fieldId);
+											obj.$form.data(fieldId, success.control );
+										}
 									}
+								).catch(
+									error => console.log(error)
 								);
-								readerForHashes.readAsArrayBuffer(file);
 
 							});
-
-
 						}
 					} else {
 						obj.$form.data(fieldId, values[fieldId]);
 					}
 
 				});
+				//
 			}
+
 		});
 
 		/**

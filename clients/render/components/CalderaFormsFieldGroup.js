@@ -134,3 +134,4 @@ CalderaFormsFieldGroup.defaultProps = {
 	isInvalid: false,
 	message: 'Field is required'
 };
+
