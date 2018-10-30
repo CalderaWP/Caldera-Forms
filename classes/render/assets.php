@@ -115,7 +115,9 @@ class Caldera_Forms_Render_Assets {
 			foreach( array_keys(  $style_includes ) as $style_include  ){
 				wp_dequeue_style( self::make_slug( $style_include ) );
 			}
-		}
+		}else{
+            self::enqueue_style( 'render' );
+        }
 
 
 	}
@@ -528,7 +530,6 @@ class Caldera_Forms_Render_Assets {
 				return "{$root_url}clients/{$name}/build/index.min.js";
 			}else{
 				return "{$root_url}clients/{$name}/build/style.min.css";
-
 			}
 		}
 
