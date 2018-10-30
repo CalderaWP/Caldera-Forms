@@ -56,11 +56,18 @@ class SubmissionHelpers
      * NOTE: is called by self::fakeFormSubmit()
      *
      * @since 1.8.0
+     *
+     * @param bool $blockEmail Optional. Should email be blocked form sending. Default is true.
+     * @param bool $blockAutoResponses Optional. Should auto-responders be blocked form sending. Default is true.
      */
-    public static function preventEmailAndRedirect(){
+    public static function preventEmailAndRedirect($blockEmail = true, $blockAutoResponses = true){
         //prevent emails
-        add_filter( 'caldera_forms_send_email', '__return_false', 10000 );
-        add_filter( 'caldera_forms_autoresponse_mail', '__return_false', 10000 );
+        if ($blockEmail) {
+            add_filter('caldera_forms_send_email', '__return_false', 10000);
+        }
+        if ($blockAutoResponses) {
+            add_filter('caldera_forms_autoresponse_mail', '__return_false', 10000);
+        }
         //prevent ajax redirect
         remove_action('caldera_forms_redirect', 'cf_ajax_redirect', 10);
         //prevent Caldera Forms from exiting PHP session
@@ -75,9 +82,11 @@ class SubmissionHelpers
      *
      * @param string $formId The form Id
      * @param array $data Array of field data
+     * @param bool $blockEmail Optional. Should email be blocked form sending. Default is true.
+     * @param bool $blockAutoResponses Optional. Should auto-responders be blocked form sending. Default is true.
      */
-    public static function fakeFormSubmit($formId,array $data){
-        static::preventEmailAndRedirect();
+    public static function fakeFormSubmit($formId,array $data,$blockEmail = true, $blockAutoResponses = true){
+        static::preventEmailAndRedirect($blockEmail,$blockAutoResponses);
         /**
          * @var \WP_Query
          */

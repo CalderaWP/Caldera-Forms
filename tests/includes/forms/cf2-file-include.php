@@ -5,8 +5,8 @@
  * Hooks to load form.
  * Remove "caldera_forms_admin_forms" if you do not want this form to show in admin entry viewer
  */
-add_filter( "caldera_forms_get_forms", "slug_register_caldera_forms_cf2file" );
-add_filter( "caldera_forms_admin_forms", "slug_register_caldera_forms_cf2file" );
+add_filter("caldera_forms_get_forms", "slug_register_caldera_forms_cf2file");
+add_filter("caldera_forms_admin_forms", "slug_register_caldera_forms_cf2file");
 /**
  * Add form to front-end and admin
  *
@@ -14,10 +14,13 @@ add_filter( "caldera_forms_admin_forms", "slug_register_caldera_forms_cf2file" )
  *
  * @return array
  */
-function slug_register_caldera_forms_cf2file( $forms ) {
-    $forms["cf2_file"] = apply_filters( "caldera_forms_get_form-cf2_file", array() );
+function slug_register_caldera_forms_cf2file($forms)
+{
+    $forms["cf2_file"] = apply_filters("caldera_forms_get_form-cf2_file", array());
     return $forms;
-};
+}
+
+;
 
 /**
  * Filter form request to include form structure to be rendered
@@ -26,7 +29,7 @@ function slug_register_caldera_forms_cf2file( $forms ) {
  *
  * @param $form array form structure
  */
-add_filter( 'caldera_forms_get_form-cf2_file', function( $form ){
+add_filter('caldera_forms_get_form-cf2_file', function ($form) {
     return array(
         '_last_updated' => 'Wed, 24 Oct 2018 19:34:12 +0000',
         'ID' => 'cf2_file',
@@ -37,7 +40,7 @@ add_filter( 'caldera_forms_get_form-cf2_file', function( $form ){
         'db_support' => 1,
         'pinned' => 0,
         'hide_form' => 1,
-        'avatar_field' => NULL,
+        'avatar_field' => null,
         'form_ajax' => 1,
         'custom_callback' => '',
         'layout_grid' =>
@@ -136,6 +139,28 @@ add_filter( 'caldera_forms_get_form-cf2_file', function( $form ){
                                 'media_lib' => true
                             ),
                     ),
+                'cf2_file_5' =>
+                    array(
+                        'ID' => 'cf2_file_5',
+                        'type' => 'cf2_file',
+                        'label' => '',
+                        'slug' => 'cf2_file_5',
+                        'conditions' =>
+                            array(
+                                'type' => '',
+                            ),
+                        'caption' => '',
+                        'config' =>
+                            array(
+                                'custom_class' => '',
+                                'attach' => true,
+                                'multi_upload_text' => 'Add More',
+                                'media_lib' => 1,
+                                'allowed' => '',
+                                'email_identifier' => 0,
+                                'personally_identifying' => 0,
+                            ),
+                    ),
                 'test_field_1' =>
                     array(
                         'ID' => 'test_field_1',
@@ -148,9 +173,7 @@ add_filter( 'caldera_forms_get_form-cf2_file', function( $form ){
                             ),
                         'caption' => '',
                         'config' =>
-                            array(
-
-                            ),
+                            array(),
                     ),
                 'submit' =>
                     array(
@@ -195,8 +218,7 @@ add_filter( 'caldera_forms_get_form-cf2_file', function( $form ){
                 'sender_email' => '',
             ),
         'conditional_groups' =>
-            array(
-            ),
+            array(),
         'settings' =>
             array(
                 'responsive' =>
@@ -210,4 +232,4 @@ add_filter( 'caldera_forms_get_form-cf2_file', function( $form ){
         'type' => 'primary',
         '_external_form' => 1,
     );
-} );
+});
