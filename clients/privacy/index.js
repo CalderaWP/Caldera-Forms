@@ -11,28 +11,27 @@ import {PrivacySettingsWrapped} from "./containers/PrivacySettings";
 const ID = 'caldera-forms-privacy-settings';
 const element =     document.getElementById(ID);
 
-if( null === element  ){
-    return;
+if( null !== element  ){
+	global.wp = global.wp || {};
+
+	Object.defineProperty( global.wp, 'element', {
+		get: () => React
+	} );
+
+	/**
+	 *
+	 * @type {*}
+	 */
+	const store = createStore(
+		reducer,
+	);
+
+
+
+	ReactDOM.render(
+		<Provider store={store}>
+			<PrivacySettingsWrapped />
+		</Provider>,
+		document.getElementById(ID)
+	);
 }
-global.wp = global.wp || {};
-
-Object.defineProperty( global.wp, 'element', {
-    get: () => React
-} );
-
-/**
- *
- * @type {*}
- */
-const store = createStore(
-    reducer,
-);
-
-
-
-ReactDOM.render(
-    <Provider store={store}>
-        <PrivacySettingsWrapped />
-    </Provider>,
-    document.getElementById(ID)
-);

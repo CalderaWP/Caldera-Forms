@@ -129,22 +129,43 @@ jQuery(function($){
 
                 ev.preventDefault();
 
-                var form	=	$(el),
-                    buttons = 	form.find(':submit');
+                var $form	=	$(el),
+                    buttons = 	$form.find(':submit');
+                var pending = [];
 
-                if( form.data('_cf_manual') ){
-                    form.find('[name="cfajax"]').remove();
+				/**
+                 * This event is triggered directly before the request for form submission is made
+                 *
+                 * Runs after cf.form.submit
+                 *
+                 * @since 1.8.0
+				 */
+				$( document ).trigger( 'cf.form.request', {
+                    $form: $form,
+                    formIdAttr: $form.attr( 'id' )
+                });
+
+				//Check if any cf2 fields are blocking submit
+				var cf2 = window.cf2[ $form.attr( 'id' ) ];
+				if( 'object' === typeof cf2 ){
+					if( cf2.hasOwnProperty( 'pending' ) && cf2.pending.length ){
+						return false;
+					}
+				}
+
+                if( $form.data('_cf_manual') ){
+                    $form.find('[name="cfajax"]').remove();
                     return false;
                 }
 
-                if( !form.data( 'postDisable' ) ){
+                if( !$form.data( 'postDisable' ) ){
                     buttons.prop('disabled',true);
                 }
 
 
                 if( typeof cf_uploader_filelist === 'object'  ){
                     // verify required
-                    form.find('.cf-uploader-trigger').slideUp();
+                    $form.find('.cf-uploader-trigger').slideUp();
                     // setup file uploader
                     var has_files = false;
                     var count = cf_upload_queue.length;
@@ -161,7 +182,7 @@ jQuery(function($){
                         data.append( field.data('field'), cf_uploader_filelist[ file ].file );
                         data.append( 'field', field.data('field') );
                         data.append( 'control', field.data('controlid') );
-                        cf_push_file_upload( form, file_number, data );
+                        cf_push_file_upload( $form, file_number, data );
                         field.val('');//@see https://github.com/CalderaWP/Caldera-Forms/issues/2514#issuecomment-395213433
                         field.attr('type','hidden');
                         field.val(field.data('controlid'));

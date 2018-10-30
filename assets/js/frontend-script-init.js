@@ -254,7 +254,7 @@ var cf_jsfields_init, cf_presubmit;
 			validator = cf_validate_form( $form );
 		$( document ).trigger( 'cf.form.submit', {
 			e:e,
-			$form:$form
+			$form:$form,
 		} );
 
 

@@ -5,6 +5,7 @@ import {CalderaFormsRender} from "./components/CalderaFormsRender";
 import React from 'react';
 import ReactDOM from "react-dom";
 import domReady from '@wordpress/dom-ready';
+
 const CryptoJS = require("crypto-js");
 Object.defineProperty(global.wp, 'element', {
 	get: () => React
@@ -58,69 +59,84 @@ domReady(function () {
 
 		const API_FOR_FILES_URL = CF_API_DATA.rest.fileUpload;
 		const _wp_nonce = CF_API_DATA.rest.nonce;
+
 		function createMediaFromFile(file, additionalData) {
 			// Create upload payload
 			const data = new window.FormData();
 			data.append('file', file, file.name || file.type.replace('/', '.'));
 			data.append('title', file.name ? file.name.replace(/\.[^.]+$/, '') : file.type.replace('/', '.'));
 			Object.keys(additionalData)
-				.forEach( key => data.append(key, additionalData[key]));
+				.forEach(key => data.append(key, additionalData[key]));
 
-			 return fetch(API_FOR_FILES_URL,{
+			return fetch(API_FOR_FILES_URL, {
 				body: data,
 				method: 'POST',
-				 headers: {
-					 'X-WP-Nonce' : _wp_nonce
-				 }
-			} );
+				headers: {
+					'X-WP-Nonce': _wp_nonce
+				}
+			});
 
 
 		}
 
 
-		//When form submits, push values onto form object before it is serialized
-		jQuery(document).on('cf.form.submit', (event, obj) => {
+		jQuery(document).on('cf.form.request', (event, obj) => {
 			const values = theComponent.getFieldValues();
+			const cf2 = window.cf2[obj.formIdAttr];
+			if ('object' !== typeof cf2) {
+				return;
+			}
+
+			cf2.pending = cf2.pending || [];
+			cf2.uploadStated = cf2.uploadStated || [];
+
 			if (Object.keys(values).length) {
 				Object.keys(values).forEach(fieldId => {
 					const field = fieldsToControl.find(field => fieldId === field.fieldId);
 					if (field) {
 						if ('file' === field.type) {
-							obj.$form.data(fieldId, field.control );
-
-							const verify = jQuery(`#_cf_verify_${field.formId}`).val();
-							const binaries = [];
-							const files = [values[fieldId]];
-							files.forEach(file => {
-								createMediaFromFile(file[0],{
-									hashes: ['hi-roy'],
-									verify,
-									formId: field.formId,
-									fieldId: field.fieldId,
-									control: field.control,
-									_wp_nonce
-								}).then(
-									response => response.json()
-								).then(
-									success => {
-										console.log(success);
+							if( -1 <= cf2.uploadStated ){
+								cf2.uploadStated.push(fieldId);
+								obj.$form.data(fieldId, field.control);
+								cf2.pending.push(fieldId);
+								const verify = jQuery(`#_cf_verify_${field.formId}`).val();
+								const binaries = [];
+								const files = [values[fieldId]];
+								files.forEach(file => {
+										createMediaFromFile(file[0], {
+											hashes: ['hi-roy'],
+											verify,
+											formId: field.formId,
+											fieldId: field.fieldId,
+											control: field.control,
+											_wp_nonce
+										}).then(
+											response => response.json()
+										).then(
+											success => {
+												const index = cf2.pending.findIndex(item => item === fieldId);
+												if (-1 < index) {
+													cf2.pending.splice(index, 1);
+												}
+												obj.$form.submit();
+											}
+										).catch(
+											error => console.log(error)
+										)
 									}
-								).catch(
-									error => console.log(error)
 								);
+							}
 
-							});
+
+
 						}
-					} else {
-						obj.$form.data(fieldId, values[fieldId]);
 					}
-
 				});
-				//
+			} else {
+				obj.$form.data(fieldId, values[fieldId]);
 			}
 
 		});
-
 		/**
 		 * Ref for rendered app
 		 *
@@ -144,6 +160,8 @@ domReady(function () {
 			document.getElementById(`cf2-${idAttr}`)
 		);
 
-
 	});
+
 });
+
+
