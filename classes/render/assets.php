@@ -607,7 +607,6 @@ class Caldera_Forms_Render_Assets {
 		}else{
 			self::enqueue_script( 'fields' );
 			self::enqueue_script( 'field-config', array( self::make_slug( 'validator' ), self::make_slug( 'field' ) ) );
-            self::enqueue_style( self::make_style_slug('render') );
 		}
 
 		$field_script_to_localize = self::field_script_to_localize_slug();
