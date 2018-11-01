@@ -71,7 +71,7 @@ export const FileInput = (props) => {
 
 	};
 
-	let ulExpanded;
+	let ulExpanded = fieldValue.length > 0;
 	if (fieldValue.length > 0) {
 		ulExpanded = true;
 	} else {

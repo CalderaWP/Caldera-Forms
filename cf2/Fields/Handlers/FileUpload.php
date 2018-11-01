@@ -37,7 +37,6 @@ class FileUpload
      */
     protected $uploader;
 
-
     /**
      * FileUpload constructor.
      *
@@ -67,8 +66,8 @@ class FileUpload
      */
     public function processFiles(array $files, array $hashes)
     {
-        $i = 0;
         $uploads = [];
+        $i = 0;
         foreach ($files as $file) {
             $isPrivate = \Caldera_Forms_Files::is_private($this->field);
 
@@ -92,9 +91,11 @@ class FileUpload
 
             require_once(ABSPATH . 'wp-admin/includes/file.php');
             $upload = wp_handle_upload($file, array('test_form' => false, 'action' => 'foo'));
+
+
             $this->uploader->removeFilter();
-            if (!empty($field['config']['media_lib'])) {
-                \Caldera_Forms_Files::add_to_media_library($upload, $field);
+            if (\Caldera_Forms_Files::should_attach($this->field, $this->form)) {
+                \Caldera_Forms_Files::add_to_media_library($upload, $this->field);
             }
 
 
