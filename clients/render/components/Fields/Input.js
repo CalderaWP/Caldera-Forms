@@ -2,7 +2,15 @@ import {CalderaFormsFieldGroup, Fragment} from "../CalderaFormsFieldGroup";
 import {CalderaFormsFieldPropType} from "../CalderaFormsFieldRender";
 import PropTypes from 'prop-types';
 
-
+/**
+ * Input component
+ *
+ * @since 1.8.0
+ *
+ * @param props
+ * @return {*}
+ * @constructor
+ */
 export const Input = (props) => {
 	const{shouldDisable,field,describedById,onChange} = props;
 	const {
@@ -48,6 +56,14 @@ export const Input = (props) => {
 		/>
 	)
 };
+
+/**
+ * Prop definitions for Input component
+ *
+ * @since 1.8.0
+ *
+ * @type {{field: *, onChange: (e|*), shouldDisable: *, isInvalid: *, describedById: *}}
+ */
 Input.propTypes = {
 	field: PropTypes.shape(CalderaFormsFieldPropType),
 	onChange: PropTypes.func.isRequired,
@@ -56,7 +72,14 @@ Input.propTypes = {
 	describedById: PropTypes.string,
 };
 
+/**
+ * Default props for Input component
+ *
+ * @since 1.8.0
+ *
+ * @type {{ariaAttr: string, isInvalid: boolean}}
+ */
 Input.defaultProps = {
 	ariaAttr: '',
 	isInvalid:false
-}
+};

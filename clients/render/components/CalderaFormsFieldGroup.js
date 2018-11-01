@@ -38,6 +38,14 @@ export const CalderaFormsFieldGroup = (props) => {
 	const hasCaption = field.hasOwnProperty('caption' ) && field.caption.length;
 	const captionId = `${fieldIdAttr}Caption`;
 
+	/**
+	 * Create the inside -- ie the input/select/etc -- of a field.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return {*}
+	 * @constructor
+	 */
 	const Inside = () =>{
 		switch (type) {
 			case 'file':
@@ -64,7 +72,8 @@ export const CalderaFormsFieldGroup = (props) => {
 				/>
 
 		}
-	}
+	};
+
 	return (
 
 			<div className={'form-group cf2-field-group'}>
@@ -98,7 +107,7 @@ export const CalderaFormsFieldGroup = (props) => {
 
 	);
 
-}
+};
 
 
 

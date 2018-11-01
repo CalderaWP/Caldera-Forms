@@ -103,7 +103,9 @@ The local server is [http://localhost:8228](http://localhost:8228)
 * `composer dev:install` - Installs dependencies, Docker-based test environment and sets up test forms.
 * `composer dev:destroy` - Deletes dependencies and the Docker-based test environment.
 * `composer wp:install` - Installs Docker-based test environment.
-* `composer wp:start` - Starts Docker-based test environment.
+* `composer wp:start` - Starts Docker-based test environment and echos the server's url.
+* `composer wp:server-start` - Starts Docker-based test environment.
+* `composer wp:server-url` - Echos the Docker-based test environment's server url.
 * `composer wp:activate` - Activate plugins in Docker-based environment.
 * `composer wp:tests` - Runs the PHP integration tests using phpunit inside Docker-based environment .
 * `composer wp:stop` - Stops Docker-based test environment, without destroying containers.

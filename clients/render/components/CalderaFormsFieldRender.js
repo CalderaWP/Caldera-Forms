@@ -40,7 +40,7 @@ export const CalderaFormsFieldRender = (props) => {
 
 	);
 
-}
+};
 
 /**
  * Prop Type describing a Caldera Forms field

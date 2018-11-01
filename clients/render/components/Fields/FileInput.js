@@ -5,112 +5,164 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
 
+/**
+ * A FileInput
+ *
+ * @since 1.8.0
+ *
+ * @param props
+ * @return {*}
+ * @constructor
+ */
+export const FileInput = (props) => {
 
-export const FileInput = ( props )  => {
+	const {shouldDisable, accept, field, describedById, onChange, style, className, multiple, multiUploadText, inputProps, text, previewStyle} = props;
+	const {
+		outterIdAttr,
+		fieldId,
+		fieldLabel,
+		fieldCaption,
+		required,
+		fieldPlaceHolder,
+		fieldDefault,
+		fieldIdAttr,
+		isInvalid
+	} = field;
 
-    const { shouldDisable,accept,field,describedById,onChange,style,className,multiple,multiUploadText,inputProps, text, previewStyle} = props;
-    const {
-      outterIdAttr,
-      fieldId,
-      fieldLabel,
-      fieldCaption,
-      required,
-      fieldPlaceHolder,
-      fieldDefault,
-      fieldIdAttr,
-      isInvalid
-    } = field;
+	let {
+		fieldValue
+	} = field;
 
-    let {
-      fieldValue
-		} = field;
-
-  if( Array.isArray(fieldValue) === false ) {
-    fieldValue = [];
-  }
-
-  const onDrop = (accepted) => {
-
-    accepted.forEach( file => {
-      fieldValue.push(file);
-    })
-
-    onChange( fieldValue );
-
-  };
-
-  const removeFile = (e, file) => {
-
-    const index = fieldValue.indexOf(file);
-    fieldValue.splice(index, 1);
-
-    onChange( fieldValue );
-
-  }
-
-  let ulExpanded;
-  if( fieldValue.length > 0 ) {
-  	ulExpanded = true;
-	} else {
-    ulExpanded = false;
+	if (Array.isArray(fieldValue) === false) {
+		fieldValue = [];
 	}
-  const removeFileID = fieldIdAttr + '_file_';
-  const buttonControls = fieldIdAttr + ', cf2-list-files';
 
- inputProps.id = fieldIdAttr;
+	/**
+	 * Handle a file being added
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param accepted
+	 */
+	const onDrop = (accepted) => {
 
-		return(
+		accepted.forEach(file => {
+			fieldValue.push(file);
+		})
 
-			<div className="cf2-dropzone">
-				<Dropzone
-					onDrop={onDrop}
-					className={className}
-					accept={accept}
-					style={style}
-					disabled={shouldDisable}
-					inputProps={inputProps}
-					disableClick={shouldDisable}
-					multiple={multiple}
+		onChange(fieldValue);
+
+	};
+
+	/**
+	 * Handle a file being removed
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param e
+	 * @param file
+	 */
+	const removeFile = (e, file) => {
+
+		const index = fieldValue.indexOf(file);
+		fieldValue.splice(index, 1);
+
+		onChange(fieldValue);
+
+	};
+
+	let ulExpanded;
+	if (fieldValue.length > 0) {
+		ulExpanded = true;
+	} else {
+		ulExpanded = false;
+	}
+
+
+	const removeFileID = fieldIdAttr + '_file_';
+	const buttonControls = fieldIdAttr + ', cf2-list-files';
+
+	inputProps.id = fieldIdAttr;
+
+	return (
+		<div className="cf2-dropzone">
+			<Dropzone
+				onDrop={onDrop}
+				className={className}
+				accept={accept}
+				style={style}
+				disabled={shouldDisable}
+				inputProps={inputProps}
+				disableClick={shouldDisable}
+				multiple={multiple}
+			>
+				<button
+					type="button"
+					className="btn btn-block"
+					aria-controls={buttonControls}
+					aria-expanded={ulExpanded}
 				>
-					<button
-						type="button"
-						className="btn btn-block"
-            aria-controls={buttonControls}
-            aria-expanded={ulExpanded}
-					>
-						{text.buttonText}
-					</button>
-				</Dropzone>
-				{fieldValue.length > 0 &&
-          <ul id="cf2-list-files" role="list" >
-            {
-              fieldValue.map(
-                ( file, index ) =>
-                  <li id={removeFileID + index} key={index} className="cf2-file-listed" role="listitem" aria-posinset={index} >
+					{text.buttonText}
+				</button>
+			</Dropzone>
+			{fieldValue.length > 0 &&
+			<ul
+				id="cf2-list-files"
+				role="list"
+			>
+				{
+					fieldValue.map(
+						(file, index) =>
+							<li
+								id={removeFileID + index}
+								key={index}
+								className="cf2-file-listed"
+								role="listitem"
+								aria-posinset={index}
+							>
 
-                      <button type="button" aria-controls={removeFileID + index} data-file={removeFileID + index} className="cf2-file-remove" onClick={(e) => removeFile(e,file)} >
-                        <span className="screen-reader-text sr-text">{text.removeFile}</span>
-                      </button>
+								<button
+									type="button"
+									aria-controls={removeFileID + index}
+									data-file={removeFileID + index}
+									className="cf2-file-remove"
+									onClick={(e) => removeFile(e, file)}
+								>
+									<span className="screen-reader-text sr-text">{text.removeFile}</span>
+								</button>
 
-                    <div>
-                    {file.type.startsWith("image") === true
-            ? <img className="cf2-file-field-img-preview" width={previewStyle.width} height={previewStyle.height} src={file.preview} alt={file.name} />
-            : <span>{file.name}</span>
-                    }
-                    <br/>
-            <span className="cf2-file-data"> {file.type} - {file.size} bytes</span>
-                    </div>
-                  </li>
-              )
-            }
-          </ul>
-        }
-			</div>
+								<div>
+									{file.type.startsWith("image") === true
+										? <img
+											className="cf2-file-field-img-preview"
+											width={previewStyle.width}
+											height={previewStyle.height}
+											src={file.preview}
+											alt={file.name}
+										/>
+										: <span>{file.name}</span>
+									}
+									<br/>
+									<span className="cf2-file-data"> {file.type} - {file.size} bytes</span>
+								</div>
+							</li>
+					)
+				}
+			</ul>
+			}
+		</div>
 
-		)
+	)
 
-}
+};
 
+/**
+ * Prop definitions for FileInput component
+ *
+ * @since 1.8.0
+ *
+ * @type {{field: *, onChange: (e|*), shouldDisable: *, isInvalid: *, describedById: *, multiple: *, text: *, multiUploadText: *, message: *, style: *, previewStyle: *, inputProps: *, className: *, accept: *}}
+ */
 FileInput.propTypes = {
 	field: PropTypes.shape(CalderaFormsFieldPropType),
 	onChange: PropTypes.func.isRequired,
@@ -128,7 +180,7 @@ FileInput.propTypes = {
 		message: PropTypes.string
 	}),
 	style: PropTypes.object,
-  previewStyle: PropTypes.object,
+	previewStyle: PropTypes.object,
 	inputProps: PropTypes.object,
 	className: PropTypes.string,
 	accept: PropTypes.oneOfType([
@@ -137,6 +189,13 @@ FileInput.propTypes = {
 	]),
 };
 
+/**
+ * Default props for a FileInput component
+ *
+ * @since 1.8.0
+ *
+ * @type {{message: {error: boolean, message: string}, text: {buttonText: string, removeFile: string}, multiUploadText: string, inputProps: {type: string}, disableClick: boolean, multiple: boolean, className: string, previewStyle: {height: string, width: string}}}
+ */
 FileInput.defaultProps = {
 	message: {
 		error: false,
@@ -154,12 +213,21 @@ FileInput.defaultProps = {
 	multiple: true,
 	className: 'cf2-file form-control',
 	previewStyle: {
-    height: '120',
-    width: '120'
+		height: '120',
+		width: '120'
 	}
 };
 
-FileInput.fieldConfigToProps = (fieldConfig ) => {
+/**
+ * Prepare a field's config to be used as props for FileInput component
+ *
+ * @since 1.8.0
+ *
+ * @param {*} fieldConfig The field's configuration
+ *
+ * @return {{field: *}}
+ */
+FileInput.fieldConfigToProps = (fieldConfig) => {
 	let props = {
 		field: fieldConfig
 	};
@@ -182,14 +250,14 @@ FileInput.fieldConfigToProps = (fieldConfig ) => {
 			};
 			props.accept = fieldConfig.configOptions.allowedTypes;
 
-		}else{
+		} else {
 			props.accept = '';
 		}
 		delete(fieldConfig.configOptions);
 	}
 	props.accept = '';
 	configOptionProps.forEach(key => {
-		if( ! props.hasOwnProperty(key)){
+		if (!props.hasOwnProperty(key)) {
 			props[key] = "false";
 		}
 	});
