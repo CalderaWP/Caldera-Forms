@@ -298,15 +298,32 @@ export class CalderaFormsRender extends Component {
 			}
 		});
 	}
-
+	/**
+	 * Check if a field is required
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param {string} fieldIdAttr
+	 *
+	 * @return {boolean}
+	 */
 	isFieldRequired(fieldIdAttr) {
 		const field = this.props.fieldsToControl
 			.find(field => fieldIdAttr === field.fieldIdAttr);
 		return field.hasOwnProperty('required') && true === field.required ? true : false;
 	}
 
+	/**
+	 * Check if a field is valid
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param {string} fieldIdAttr
+	 *
+	 * @return {boolean}
+	 */
 	isFieldValid(fieldIdAttr) {
-		if( this.isFieldRequired(fieldIdAttr) ){
+		if( !this.isFieldRequired(fieldIdAttr) ){
 			return true;
 		}
 		return !isEmpty(this.state[fieldIdAttr]);

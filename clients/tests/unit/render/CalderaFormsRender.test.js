@@ -77,6 +77,19 @@ export const formRenderTestProps = {
 			"formId": "CF5bdb2f3d8f7bd",
 		},
 		{
+			"type": "text",
+			"outterIdAttr": "cf2-fld_text_req_2",
+			"fieldId": "fld_text_req_2",
+			"fieldLabel": "Text field",
+			"fieldCaption": "",
+			"fieldPlaceHolder": "",
+			"required": true,
+			"fieldDefault": "Hi Roy",
+			"fieldValue": "",
+			"fieldIdAttr": "fld_text_req_2",
+			"formId": "CF5bdb2f3d8f7bd",
+		},
+		{
 			"type": "file",
 			"outterIdAttr": "cf2-fld_5899467_1",
 			"fieldId": "fld_5899467",
@@ -164,6 +177,20 @@ describe('Form render methods', () => {
 
 	});
 
+	test( 'sets default field value in state', () => {
+		const fakeState = new FakeOldState(formId, {});
+		const props = {...formRenderTestProps, state: fakeState};
+
+		const component = shallow(
+			<CalderaFormsRender
+				{...props}
+			/>
+		);
+
+
+		component.instance().getCfState().mutateState( 'fld_12_1', '' );
+		component.instance().getCfState().mutateState( 'fld_text_req_2', 'Hi Roy' );
+	});
 
 	test('getFieldValues returns values', () => {
 		const fakeState = new FakeOldState(formId, {});
@@ -180,7 +207,7 @@ describe('Form render methods', () => {
 			}
 		];
 		component.instance().getCfState().mutateState( 'fld_12_1', 'foot' );
-		expect(component.instance().getFieldValues()).toBe('foot');
+		expect(component.instance().getFieldValues().fld_12_1).toBe('foot');
 		expect(component.instance().getFieldValues().fld_7480239_1).toBe(value);
 
 	});
@@ -252,6 +279,7 @@ describe('Form render methods', () => {
 				{...props}
 			/>
 		);
+		console.log( component.state( 'fld_12_1' ) );
 		component.instance().setFieldShouldDisable('fld_12_1', true, '');
 		expect(component.state(shouldDisableKey('fld_12_1'))).toBe(true);
 	});
