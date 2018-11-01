@@ -6,7 +6,7 @@ var fs = require('fs');
 //979296365572B262DBDA9C5186C7D0BE
 const expectHash = '979296365572b262dbda9c5186c7d0be';
 
-describe( 'File hashing', () => {
+describe.skip( 'File hashing', () => {
 	it( 'Has php-compatible md5 file function', () => {
 		const contents = fs.readFileSync(__dirname + '/screenshot.jpeg');
 		const foundHash = CryptoJS.MD5(contents).toString();

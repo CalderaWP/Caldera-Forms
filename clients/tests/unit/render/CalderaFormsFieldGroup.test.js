@@ -73,7 +73,7 @@ describe('CalderaFormsFieldGroup component', () => {
 		const testInstance = testRenderer.root;
 
 		expect(testInstance.findByType('input').props.required).toBe(false);
-		expect(testInstance.findByType('input').props.className).toBe('form-control');
+		expect(testInstance.findByType('input').props.className).toBe('cf2-text form-control');
 		expect(testInstance.findByType('input').props.placeholder).toBe('');
 		expect(testInstance.findByType('input').props.type).toBe('text');
 		expect(testInstance.findByType('input').props.value).toBe('');
@@ -183,7 +183,7 @@ describe('chooses inner field', () => {
 		/>);
 		const testInstance = testRenderer.root;
 		expect(testInstance.findByType('input').props.type).toBe('file');
-		expect(testInstance.findByType('input').props.className).toBe('cf2-file form-control');
+		expect(testInstance.findByType('div').props.className).toBe('form-group cf2-field-group');
 	});
 
 })

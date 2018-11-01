@@ -2,336 +2,350 @@
 
 exports[`File Field  Matches snapshot for not_required_multiple_has_button_text 1`] = `
 <div
-  aria-disabled={false}
-  className="cf2-file form-control"
-  id="not_required_multiple_has_button_text"
-  onClick={[Function]}
-  onDragEnter={[Function]}
-  onDragLeave={[Function]}
-  onDragOver={[Function]}
-  onDragStart={[Function]}
-  onDrop={[Function]}
-  style={
-    Object {
-      "borderColor": "rgb(102, 102, 102)",
-      "borderRadius": "5px",
-      "borderStyle": "dashed",
-      "borderWidth": "2px",
-      "height": "200px",
-      "margin": "0 auto",
-      "position": "relative",
-      "width": "200px",
-    }
-  }
+  className="cf2-dropzone"
 >
-  <p>
-    false
-  </p>
-  <input
-    autoComplete="off"
-    disabled={false}
-    multiple="false"
-    onChange={[Function]}
+  <div
+    aria-disabled={false}
+    className="cf2-file form-control"
+    onClick={[Function]}
+    onDragEnter={[Function]}
+    onDragLeave={[Function]}
+    onDragOver={[Function]}
+    onDragStart={[Function]}
+    onDrop={[Function]}
     style={
       Object {
-        "bottom": 0,
-        "left": 0,
-        "opacity": 0.00001,
-        "pointerEvents": "none",
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
+        "position": "relative",
       }
     }
-    type="file"
-  />
+  >
+    <button
+      aria-controls="not_required_multiple_has_button_text, cf2-list-files"
+      aria-expanded={false}
+      className="btn btn-block"
+      type="button"
+    >
+      Try dropping some files here, or click to select files to upload.
+    </button>
+    <input
+      autoComplete="off"
+      disabled={false}
+      id="not_required_multiple_has_button_text"
+      multiple="false"
+      onChange={[Function]}
+      style={
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "opacity": 0.00001,
+          "pointerEvents": "none",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+      type="file"
+    />
+  </div>
 </div>
 `;
 
 exports[`File Field  Matches snapshot for not_required_multiple_no_button_text 1`] = `
 <div
-  aria-disabled={false}
-  className="cf2-file form-control"
-  id="not_required_multiple_no_button_text"
-  onClick={[Function]}
-  onDragEnter={[Function]}
-  onDragLeave={[Function]}
-  onDragOver={[Function]}
-  onDragStart={[Function]}
-  onDrop={[Function]}
-  style={
-    Object {
-      "borderColor": "rgb(102, 102, 102)",
-      "borderRadius": "5px",
-      "borderStyle": "dashed",
-      "borderWidth": "2px",
-      "height": "200px",
-      "margin": "0 auto",
-      "position": "relative",
-      "width": "200px",
-    }
-  }
+  className="cf2-dropzone"
 >
-  <p>
-    false
-  </p>
-  <input
-    autoComplete="off"
-    disabled={false}
-    multiple="false"
-    onChange={[Function]}
+  <div
+    aria-disabled={false}
+    className="cf2-file form-control"
+    onClick={[Function]}
+    onDragEnter={[Function]}
+    onDragLeave={[Function]}
+    onDragOver={[Function]}
+    onDragStart={[Function]}
+    onDrop={[Function]}
     style={
       Object {
-        "bottom": 0,
-        "left": 0,
-        "opacity": 0.00001,
-        "pointerEvents": "none",
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
+        "position": "relative",
       }
     }
-    type="file"
-  />
+  >
+    <button
+      aria-controls="not_required_multiple_no_button_text, cf2-list-files"
+      aria-expanded={false}
+      className="btn btn-block"
+      type="button"
+    >
+      Try dropping some files here, or click to select files to upload.
+    </button>
+    <input
+      autoComplete="off"
+      disabled={false}
+      id="not_required_multiple_no_button_text"
+      multiple="false"
+      onChange={[Function]}
+      style={
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "opacity": 0.00001,
+          "pointerEvents": "none",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+      type="file"
+    />
+  </div>
 </div>
 `;
 
 exports[`File Field  Matches snapshot for not_required_single 1`] = `
 <div
-  aria-disabled={false}
-  className="cf2-file form-control"
-  id="not_required_single"
-  onClick={[Function]}
-  onDragEnter={[Function]}
-  onDragLeave={[Function]}
-  onDragOver={[Function]}
-  onDragStart={[Function]}
-  onDrop={[Function]}
-  style={
-    Object {
-      "borderColor": "rgb(102, 102, 102)",
-      "borderRadius": "5px",
-      "borderStyle": "dashed",
-      "borderWidth": "2px",
-      "height": "200px",
-      "margin": "0 auto",
-      "position": "relative",
-      "width": "200px",
-    }
-  }
+  className="cf2-dropzone"
 >
-  <p>
-    false
-  </p>
-  <input
-    autoComplete="off"
-    disabled={false}
-    multiple="false"
-    onChange={[Function]}
+  <div
+    aria-disabled={false}
+    className="cf2-file form-control"
+    onClick={[Function]}
+    onDragEnter={[Function]}
+    onDragLeave={[Function]}
+    onDragOver={[Function]}
+    onDragStart={[Function]}
+    onDrop={[Function]}
     style={
       Object {
-        "bottom": 0,
-        "left": 0,
-        "opacity": 0.00001,
-        "pointerEvents": "none",
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
+        "position": "relative",
       }
     }
-    type="file"
-  />
+  >
+    <button
+      aria-controls="not_required_single, cf2-list-files"
+      aria-expanded={false}
+      className="btn btn-block"
+      type="button"
+    >
+      Try dropping some files here, or click to select files to upload.
+    </button>
+    <input
+      autoComplete="off"
+      disabled={false}
+      id="not_required_single"
+      multiple="false"
+      onChange={[Function]}
+      style={
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "opacity": 0.00001,
+          "pointerEvents": "none",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+      type="file"
+    />
+  </div>
 </div>
 `;
 
 exports[`File Field  Matches snapshot for required_multiple_has_button_text 1`] = `
 <div
-  aria-disabled={false}
-  className="cf2-file form-control"
-  id="required_multiple_has_button_text"
-  onClick={[Function]}
-  onDragEnter={[Function]}
-  onDragLeave={[Function]}
-  onDragOver={[Function]}
-  onDragStart={[Function]}
-  onDrop={[Function]}
-  style={
-    Object {
-      "borderColor": "rgb(102, 102, 102)",
-      "borderRadius": "5px",
-      "borderStyle": "dashed",
-      "borderWidth": "2px",
-      "height": "200px",
-      "margin": "0 auto",
-      "position": "relative",
-      "width": "200px",
-    }
-  }
+  className="cf2-dropzone"
 >
-  <p>
-    false
-  </p>
-  <input
-    autoComplete="off"
-    disabled={false}
-    multiple="false"
-    onChange={[Function]}
+  <div
+    aria-disabled={false}
+    className="cf2-file form-control"
+    onClick={[Function]}
+    onDragEnter={[Function]}
+    onDragLeave={[Function]}
+    onDragOver={[Function]}
+    onDragStart={[Function]}
+    onDrop={[Function]}
     style={
       Object {
-        "bottom": 0,
-        "left": 0,
-        "opacity": 0.00001,
-        "pointerEvents": "none",
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
+        "position": "relative",
       }
     }
-    type="file"
-  />
+  >
+    <button
+      aria-controls="required_multiple_has_button_text, cf2-list-files"
+      aria-expanded={false}
+      className="btn btn-block"
+      type="button"
+    >
+      Try dropping some files here, or click to select files to upload.
+    </button>
+    <input
+      autoComplete="off"
+      disabled={false}
+      id="required_multiple_has_button_text"
+      multiple="false"
+      onChange={[Function]}
+      style={
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "opacity": 0.00001,
+          "pointerEvents": "none",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+      type="file"
+    />
+  </div>
 </div>
 `;
 
 exports[`File Field  Matches snapshot for required_multiple_no_button_text 1`] = `
 <div
-  aria-disabled={false}
-  className="cf2-file form-control"
-  id="required_multiple_no_button_text"
-  onClick={[Function]}
-  onDragEnter={[Function]}
-  onDragLeave={[Function]}
-  onDragOver={[Function]}
-  onDragStart={[Function]}
-  onDrop={[Function]}
-  style={
-    Object {
-      "borderColor": "rgb(102, 102, 102)",
-      "borderRadius": "5px",
-      "borderStyle": "dashed",
-      "borderWidth": "2px",
-      "height": "200px",
-      "margin": "0 auto",
-      "position": "relative",
-      "width": "200px",
-    }
-  }
+  className="cf2-dropzone"
 >
-  <p>
-    false
-  </p>
-  <input
-    autoComplete="off"
-    disabled={false}
-    multiple="false"
-    onChange={[Function]}
+  <div
+    aria-disabled={false}
+    className="cf2-file form-control"
+    onClick={[Function]}
+    onDragEnter={[Function]}
+    onDragLeave={[Function]}
+    onDragOver={[Function]}
+    onDragStart={[Function]}
+    onDrop={[Function]}
     style={
       Object {
-        "bottom": 0,
-        "left": 0,
-        "opacity": 0.00001,
-        "pointerEvents": "none",
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
+        "position": "relative",
       }
     }
-    type="file"
-  />
+  >
+    <button
+      aria-controls="required_multiple_no_button_text, cf2-list-files"
+      aria-expanded={false}
+      className="btn btn-block"
+      type="button"
+    >
+      Try dropping some files here, or click to select files to upload.
+    </button>
+    <input
+      autoComplete="off"
+      disabled={false}
+      id="required_multiple_no_button_text"
+      multiple="false"
+      onChange={[Function]}
+      style={
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "opacity": 0.00001,
+          "pointerEvents": "none",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+      type="file"
+    />
+  </div>
 </div>
 `;
 
 exports[`File Field  Matches snapshot for required_single 1`] = `
 <div
-  aria-disabled={false}
-  className="cf2-file form-control"
-  id="required_single"
-  onClick={[Function]}
-  onDragEnter={[Function]}
-  onDragLeave={[Function]}
-  onDragOver={[Function]}
-  onDragStart={[Function]}
-  onDrop={[Function]}
-  style={
-    Object {
-      "borderColor": "rgb(102, 102, 102)",
-      "borderRadius": "5px",
-      "borderStyle": "dashed",
-      "borderWidth": "2px",
-      "height": "200px",
-      "margin": "0 auto",
-      "position": "relative",
-      "width": "200px",
-    }
-  }
+  className="cf2-dropzone"
 >
-  <p>
-    false
-  </p>
-  <input
-    autoComplete="off"
-    disabled={false}
-    multiple="false"
-    onChange={[Function]}
+  <div
+    aria-disabled={false}
+    className="cf2-file form-control"
+    onClick={[Function]}
+    onDragEnter={[Function]}
+    onDragLeave={[Function]}
+    onDragOver={[Function]}
+    onDragStart={[Function]}
+    onDrop={[Function]}
     style={
       Object {
-        "bottom": 0,
-        "left": 0,
-        "opacity": 0.00001,
-        "pointerEvents": "none",
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
+        "position": "relative",
       }
     }
-    type="file"
-  />
+  >
+    <button
+      aria-controls="required_single, cf2-list-files"
+      aria-expanded={false}
+      className="btn btn-block"
+      type="button"
+    >
+      Try dropping some files here, or click to select files to upload.
+    </button>
+    <input
+      autoComplete="off"
+      disabled={false}
+      id="required_single"
+      multiple="false"
+      onChange={[Function]}
+      style={
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "opacity": 0.00001,
+          "pointerEvents": "none",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+      type="file"
+    />
+  </div>
 </div>
 `;
 
 exports[`File Field  Matches snapshot for required_single_allow_png 1`] = `
 <div
-  aria-disabled={false}
-  className="cf2-file form-control"
-  id="required_single"
-  onClick={[Function]}
-  onDragEnter={[Function]}
-  onDragLeave={[Function]}
-  onDragOver={[Function]}
-  onDragStart={[Function]}
-  onDrop={[Function]}
-  style={
-    Object {
-      "borderColor": "rgb(102, 102, 102)",
-      "borderRadius": "5px",
-      "borderStyle": "dashed",
-      "borderWidth": "2px",
-      "height": "200px",
-      "margin": "0 auto",
-      "position": "relative",
-      "width": "200px",
-    }
-  }
+  className="cf2-dropzone"
 >
-  <p>
-    false
-  </p>
-  <input
-    autoComplete="off"
-    disabled={false}
-    multiple="false"
-    onChange={[Function]}
+  <div
+    aria-disabled={false}
+    className="cf2-file form-control"
+    onClick={[Function]}
+    onDragEnter={[Function]}
+    onDragLeave={[Function]}
+    onDragOver={[Function]}
+    onDragStart={[Function]}
+    onDrop={[Function]}
     style={
       Object {
-        "bottom": 0,
-        "left": 0,
-        "opacity": 0.00001,
-        "pointerEvents": "none",
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
+        "position": "relative",
       }
     }
-    type="file"
-  />
+  >
+    <button
+      aria-controls="required_single, cf2-list-files"
+      aria-expanded={false}
+      className="btn btn-block"
+      type="button"
+    >
+      Try dropping some files here, or click to select files to upload.
+    </button>
+    <input
+      autoComplete="off"
+      disabled={false}
+      id="required_single"
+      multiple="false"
+      onChange={[Function]}
+      style={
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "opacity": 0.00001,
+          "pointerEvents": "none",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+      type="file"
+    />
+  </div>
 </div>
 `;
