@@ -20,7 +20,7 @@ const conditionalEventSubscriptions = {};
  * @param fieldIdAttr
  * @return {string}
  */
-const shouldShowKey = (fieldIdAttr) => {
+export const shouldShowKey = (fieldIdAttr) => {
 	return `shouldShow${fieldIdAttr}`;
 };
 
@@ -34,7 +34,7 @@ const shouldShowKey = (fieldIdAttr) => {
  * @param fieldIdAttr
  * @return {string}
  */
-const shouldDisableKey = (fieldIdAttr) => {
+export const shouldDisableKey = (fieldIdAttr) => {
 	return `shouldDisable${fieldIdAttr}`;
 };
 /**
@@ -89,7 +89,6 @@ export class CalderaFormsRender extends Component {
 		this.setFieldShouldDisable = this.setFieldShouldDisable.bind(this);
 		this.subscribe = this.subscribe.bind(this);
 		this.getFieldConfig = this.getFieldConfig.bind(this);
-
 	}
 
 	/**
@@ -114,7 +113,7 @@ export class CalderaFormsRender extends Component {
 	 * @return {*}
 	 */
 	getFieldValue(fieldIdAttr) {
-		if( 'file' === this.getFieldConfig(fieldIdAttr).type){
+		if ('file' === this.getFieldConfig(fieldIdAttr).type) {
 			return this.state[fieldIdAttr];
 		}
 		return this.getCfState().getState(fieldIdAttr);
@@ -149,16 +148,16 @@ export class CalderaFormsRender extends Component {
 	 * @param {String} fieldIdAttr The field's id attribute (not field ID, html id attribute)
 	 * @param {boolean} show If field should be shown (true) or hidden (false).
 	 */
-	setFieldShouldShow(fieldIdAttr, show,fieldValue) {
+	setFieldShouldShow(fieldIdAttr, show, fieldValue) {
 		const key = shouldShowKey(fieldIdAttr);
 		const {state} = this;
-		if (state[key] !== show ) {
+		if (state[key] !== show) {
 			let update = {
 				[key]: show
 			};
-			if( show ){
-					update[fieldIdAttr]=fieldValue;
-					this.getCfState().mutateState(fieldIdAttr,fieldValue);
+			if (show) {
+				update[fieldIdAttr] = fieldValue;
+				this.getCfState().mutateState(fieldIdAttr, fieldValue);
 
 			}
 
@@ -177,8 +176,8 @@ export class CalderaFormsRender extends Component {
 	 * @param {string} fieldIdAttr
 	 * @return {*}
 	 */
-	getFieldConfig(fieldIdAttr){
-		return getFieldConfigBy(this.props.fieldsToControl, 'fieldIdAttr', fieldIdAttr );
+	getFieldConfig(fieldIdAttr) {
+		return getFieldConfigBy(this.props.fieldsToControl, 'fieldIdAttr', fieldIdAttr);
 	}
 
 	/**
@@ -191,7 +190,7 @@ export class CalderaFormsRender extends Component {
 	 */
 	setFieldShouldDisable(fieldIdAttr, disable) {
 		const key = shouldDisableKey(fieldIdAttr);
-		if (this.state[key] !== disable ) {
+		if (this.state[key] !== disable) {
 			this.setState({
 				[key]: disable
 			});
@@ -234,13 +233,13 @@ export class CalderaFormsRender extends Component {
 	 */
 	getHandler(fieldIdAttr) {
 		if (!handlers.hasOwnProperty(fieldIdAttr)) {
-			switch(this.getFieldConfig(fieldIdAttr).type){
+			switch (this.getFieldConfig(fieldIdAttr).type) {
 				case 'file':
 					handlers[fieldIdAttr] = (newValue) => this.setFieldValue(fieldIdAttr, newValue);
 					break;
 				default:
 					handlers[fieldIdAttr] = (event) => this.setFieldValue(fieldIdAttr, event.target.value);
-				break;
+					break;
 			}
 		}
 		return handlers[fieldIdAttr];
@@ -277,13 +276,13 @@ export class CalderaFormsRender extends Component {
 					.events().attatchEvent(`cf.conditionals.${conditionalEvent}`,
 						(eventData, eventName) => {
 							if (formIdAttr === eventData.formIdAttr) {
-								const {eventType, fieldIdAttr,fieldValue} = eventData;
+								const {eventType, fieldIdAttr, fieldValue} = eventData;
 								switch (eventType) {
 									case 'hide':
-										this.setFieldShouldShow(fieldIdAttr, false,fieldValue);
+										this.setFieldShouldShow(fieldIdAttr, false, fieldValue);
 										break;
 									case 'show' :
-										this.setFieldShouldShow(fieldIdAttr, true,fieldValue);
+										this.setFieldShouldShow(fieldIdAttr, true, fieldValue);
 										break;
 									case 'enable':
 										this.setFieldShouldDisable(fieldIdAttr, false);
@@ -307,7 +306,10 @@ export class CalderaFormsRender extends Component {
 	}
 
 	isFieldValid(fieldIdAttr) {
-		return this.isFieldRequired(fieldIdAttr) && !isEmpty(this.state[fieldIdAttr]);
+		if( this.isFieldRequired(fieldIdAttr) ){
+			return true;
+		}
+		return !isEmpty(this.state[fieldIdAttr]);
 	}
 
 	/** @inheritDoc */

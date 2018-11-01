@@ -1,7 +1,7 @@
 import {RenderComponentViaPortal} from "../../../render/components/RenderComponentViaPortal";
 import renderer from 'react-test-renderer';
 import {mount} from 'enzyme';
-const Adapter = require( '../createEnzymeAdapter' );
+import EnzymeAdapter from '../createEnzymeAdapter'
 const handler = () => {};
 
 

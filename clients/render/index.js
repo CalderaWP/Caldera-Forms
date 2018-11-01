@@ -137,6 +137,7 @@ domReady(function () {
 			}
 
 		});
+
 		/**
 		 * Ref for rendered app
 		 *

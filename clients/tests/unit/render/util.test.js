@@ -1,23 +1,12 @@
-import {hashFiles} from "../../../render/util";
+import {getFieldConfigBy} from "../../../render/util";
+import {formRenderTestProps} from "./CalderaFormsRender.test";
 
-const CryptoJS = require("crypto-js");
-
-var fs = require('fs');
-//979296365572B262DBDA9C5186C7D0BE
-const expectHash = '979296365572b262dbda9c5186c7d0be';
-
-describe.skip( 'File hashing', () => {
-	it( 'Has php-compatible md5 file function', () => {
-		const contents = fs.readFileSync(__dirname + '/screenshot.jpeg');
-		const foundHash = CryptoJS.MD5(contents).toString();
-		expect(foundHash).toEqual(expectHash );
-
+describe(  'getFieldConfigBy', () => {
+	it ( 'finds fields that exits by fieldId', () => {
+		expect( getFieldConfigBy(formRenderTestProps.fieldsToControl, 'fieldId', 'fld_5899467' ).fieldIdAttr).toBe( 'fld_5899467_1' )
 	});
 
-	it( 'Function hashes array', () => {
-		const hashes = hashFiles( [
-			fs.readFileSync(__dirname + '/screenshot.jpeg')
-		]);
-		expect( hashes[0] ).toBe( expectHash );
-	})
-})
+	it ( 'finds no fields when searching by invalid field id', () => {
+		expect( getFieldConfigBy(formRenderTestProps.fieldsToControl, 'fieldId', 'fld_1' )).toBe( undefined )
+	});
+});
