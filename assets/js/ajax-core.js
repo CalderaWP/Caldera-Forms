@@ -1,7 +1,32 @@
 var resBaldrickTriggers;
 
 jQuery(function($){
+	function fieldErrors(fields, $form, $notice) {
+	    console.log()
+		for (var i in fields) {
+			var field = $form.find('[data-field="' + i + '"]'),
+				wrap = field.parent();
+			if (!field.length) {
+				$notice.html('<p class="alert alert-danger ">' + fields[i] + '</p>');
 
+			} else {
+				if (wrap.is('label')) {
+					wrap = wrap.parent();
+					if (wrap.hasClass('checkbox') || wrap.hasClass('radio')) {
+						wrap = wrap.parent();
+					}
+				}
+				var has_block = wrap.find('.help-block').not('.caldera_ajax_error_block');
+
+				wrap.addClass('has-error').addClass('caldera_ajax_error_wrap');
+				if (has_block.length) {
+					has_block.hide();
+				}
+				wrap.append('<span class="help-block caldera_ajax_error_block">' + fields[i] + '</span>');
+			}
+
+		}
+	}
     var cf_upload_queue = [];
     // admin stuff!
     var cf_push_file_upload = function( form, file_number, data ){
@@ -142,7 +167,9 @@ jQuery(function($){
 				 */
 				$( document ).trigger( 'cf.form.request', {
                     $form: $form,
-                    formIdAttr: $form.attr( 'id' )
+                    formIdAttr: $form.attr( 'id' ),
+                    displayFieldErrors:fieldErrors,
+                    $notice: $( '#caldera_notices_' + $form.data( 'instance' ) )
                 });
 
 				//Check if any cf2 fields are blocking submit
@@ -265,30 +292,9 @@ jQuery(function($){
                 // show trigger
                 obj.params.trigger.find('.cf-uploader-trigger').slideDown();
                 if(obj.data.fields){
-
-                    for(var i in obj.data.fields){
-                        var field = obj.params.trigger.find('[data-field="' + i + '"]'),
-                            wrap = field.parent();
-                        if( ! field.length ){
-                            $notice.html ( '<p class="alert alert-danger ">' + obj.data.fields[i] + '</p>' );
-
-                        }else{
-                            if (wrap.is('label')) {
-                                wrap = wrap.parent();
-                                if (wrap.hasClass('checkbox') || wrap.hasClass('radio')) {
-                                    wrap = wrap.parent();
-                                }
-                            }
-                            var has_block = wrap.find('.help-block').not('.caldera_ajax_error_block');
-
-                            wrap.addClass('has-error').addClass('caldera_ajax_error_wrap');
-                            if (has_block.length) {
-                                has_block.hide();
-                            }
-                            wrap.append('<span class="help-block caldera_ajax_error_block">' + obj.data.fields[i] + '</span>');
-                        }
-
-                    }
+                    var $form = obj.params.trigger;
+                    var fields = obj.data.fields;
+                    this.fieldErrors(fields, $form, $notice);
                 }
 
                 if ( 'undefined' != obj.data.scroll ) {

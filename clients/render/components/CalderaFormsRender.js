@@ -333,7 +333,7 @@ export class CalderaFormsRender extends Component {
 	/** @inheritDoc */
 	render() {
 		const {state, props} = this;
-		const {fieldsToControl, shouldBeValidating} = props;
+		const {fieldsToControl, shouldBeValidating,messages} = props;
 
 		return (
 			<Fragment>
@@ -366,12 +366,15 @@ export class CalderaFormsRender extends Component {
 						shouldDisable: state[shouldDisableKey(fieldIdAttr)],
 					};
 
+					const hasMessage = 'object' === typeof messages && messages.hasOwnProperty(fieldIdAttr);
 					return (
 						<CalderaFormsFieldRender
 							{...props}
 							key={outterIdAttr}
 							isInvalid={isInvalid}
 							getFieldConfig={this.getFieldConfig}
+							message={hasMessage ? messages[fieldIdAttr] : {error:false,message:''}}
+							hasMessage={hasMessage}
 						/>
 					);
 				})}
@@ -397,6 +400,7 @@ CalderaFormsRender.propTypes = {
 		CalderaFormsFieldPropType
 	),
 	formIdAttr: PropTypes.string.isRequired,
-	shouldBeValidating: PropTypes.bool.isRequired
+	shouldBeValidating: PropTypes.bool.isRequired,
+	messages: PropTypes.object
 };
 

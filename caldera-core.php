@@ -181,3 +181,4 @@ add_action( 'caldera_forms_core_init', function(){
 	$container = new \calderawp\calderaforms\cf2\CalderaFormsV2();
 	$container->getHooks()->subscribe();
 });
+

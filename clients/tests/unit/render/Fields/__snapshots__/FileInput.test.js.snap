@@ -3,6 +3,7 @@
 exports[`File Field  Matches snapshot for not_required_multiple_has_button_text 1`] = `
 <div
   className="cf2-dropzone"
+  data-field="not_required_multiple_has_button_text"
 >
   <div
     aria-disabled={false}
@@ -53,6 +54,7 @@ exports[`File Field  Matches snapshot for not_required_multiple_has_button_text 
 exports[`File Field  Matches snapshot for not_required_multiple_no_button_text 1`] = `
 <div
   className="cf2-dropzone"
+  data-field="not_required_multiple_no_button_text"
 >
   <div
     aria-disabled={false}
@@ -103,6 +105,7 @@ exports[`File Field  Matches snapshot for not_required_multiple_no_button_text 1
 exports[`File Field  Matches snapshot for not_required_single 1`] = `
 <div
   className="cf2-dropzone"
+  data-field="not_required_single"
 >
   <div
     aria-disabled={false}
@@ -153,6 +156,7 @@ exports[`File Field  Matches snapshot for not_required_single 1`] = `
 exports[`File Field  Matches snapshot for required_multiple_has_button_text 1`] = `
 <div
   className="cf2-dropzone"
+  data-field="required_multiple_has_button_text"
 >
   <div
     aria-disabled={false}
@@ -203,6 +207,7 @@ exports[`File Field  Matches snapshot for required_multiple_has_button_text 1`] 
 exports[`File Field  Matches snapshot for required_multiple_no_button_text 1`] = `
 <div
   className="cf2-dropzone"
+  data-field="required_multiple_no_button_text"
 >
   <div
     aria-disabled={false}
@@ -253,6 +258,7 @@ exports[`File Field  Matches snapshot for required_multiple_no_button_text 1`] =
 exports[`File Field  Matches snapshot for required_single 1`] = `
 <div
   className="cf2-dropzone"
+  data-field="required_single"
 >
   <div
     aria-disabled={false}
@@ -303,6 +309,7 @@ exports[`File Field  Matches snapshot for required_single 1`] = `
 exports[`File Field  Matches snapshot for required_single_allow_png 1`] = `
 <div
   className="cf2-dropzone"
+  data-field="required_single"
 >
   <div
     aria-disabled={false}

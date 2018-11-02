@@ -37,6 +37,7 @@ export const CalderaFormsFieldGroup = (props) => {
 
 	const hasCaption = field.hasOwnProperty('caption' ) && field.caption.length;
 	const captionId = `${fieldIdAttr}Caption`;
+	const hasError = isError || hasMessage && message.error;
 
 	/**
 	 * Create the inside -- ie the input/select/etc -- of a field.
@@ -47,6 +48,9 @@ export const CalderaFormsFieldGroup = (props) => {
 	 * @constructor
 	 */
 	const Inside = () =>{
+		let className = 'form-control cf2-field';
+		className = hasError ? className + ' parsley-error' : className;
+		className = className + ' cf2-' +  type;
 		switch (type) {
 			case 'file':
 				const fileProps = FileInput.fieldConfigToProps(getFieldConfig(fieldIdAttr));
@@ -59,7 +63,7 @@ export const CalderaFormsFieldGroup = (props) => {
 					message={fileProps.message}
 					style={fileProps.style}
 					inputProps={fileProps.inputProps}
-					className={'cf2-file form-control'}
+					className={className}
 				/>
 			case'text':
 			default:
@@ -69,14 +73,38 @@ export const CalderaFormsFieldGroup = (props) => {
 					shouldDisable={shouldDisable}
 					isInvalid={isInvalid}
 					describedById={captionId}
+					className={className}
 				/>
 
 		}
 	};
 
+	function Error(message) {
+		return <span
+			className="help-block caldera_ajax_error_block filled"
+			aria-live="polite"
+		>
+			<span className="parsley-required">{message.message}</span>
+		</span>;
+	};
+
+	function  ErrorOrNotice(message) {
+		if( message.error ){
+			return Error(message);
+		}
+		return <span
+			className="help-block "
+			aria-live="polite"
+		>
+			<span>{message.message}</span>
+		</span>;
+	}
+
+	let className = 'form-group cf2-field-group';
+	className = hasError ? className + ' has-error' : className;
 	return (
 
-			<div className={'form-group cf2-field-group'}>
+			<div className={className}>
 				<label
 					className={'control-label'}
 					htmlFor={fieldIdAttr}
@@ -95,12 +123,11 @@ export const CalderaFormsFieldGroup = (props) => {
 						</span>
 				}
 				{isInvalid &&
-					<span
-						className="help-block caldera_ajax_error_block filled"
-						aria-live="polite"
-					>
-						<span className="parsley-required">{message}</span>
-					</span>
+					Error(message)
+				}
+
+				{hasMessage &&
+					ErrorOrNotice(message)
 				}
 
 			</div>
@@ -125,7 +152,10 @@ CalderaFormsFieldGroup.propTypes = {
 	shouldDisable: PropTypes.bool,
 	hasMessage: PropTypes.bool,
 	isInvalid: PropTypes.bool,
-	message: PropTypes.string,
+	message: PropTypes.shape({
+		error: PropTypes.bool,
+		message: PropTypes.string
+	}),
 	getFieldConfig: PropTypes.func.isRequired
 };
 
@@ -141,6 +171,9 @@ CalderaFormsFieldGroup.defaultProps = {
 	shouldDisable: false,
 	fieldValue: '',
 	isInvalid: false,
-	message: 'Field is required'
+	message: {
+		error: false,
+		message: ''
+	}
 };
 

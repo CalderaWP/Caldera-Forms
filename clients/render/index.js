@@ -56,7 +56,7 @@ domReady(function () {
 		 * @type {boolean}
 		 */
 		let shouldBeValidating = false;
-
+		let messages = {};
 
 		const API_FOR_FILES_URL = CF_API_DATA.rest.fileUpload;
 		const _wp_nonce = CF_API_DATA.rest.nonce;
@@ -82,8 +82,10 @@ domReady(function () {
 
 
 		jQuery(document).on('cf.form.request', (event, obj) => {
+			shouldBeValidating = true;
 			const values = theComponent.getFieldValues();
 			const cf2 = window.cf2[obj.formIdAttr];
+			const {displayFieldErrors,$notice,$form} = obj;
 			if ('object' !== typeof cf2) {
 				return;
 			}
@@ -91,10 +93,19 @@ domReady(function () {
 			cf2.pending = cf2.pending || [];
 			cf2.uploadStated = cf2.uploadStated || [];
 
+			/**
+			 * Hash a file then upload it
+			 *
+			 * @since 1.8.0
+			 *
+			 * @param {File} file File blob
+			 * @param {string} verify Nonce token
+			 * @param {object} field field config
+			 * @param {string} fieldId ID for field
+			 */
 			function hashAndUpload(file, verify, field, fieldId) {
 				if (file instanceof File) {
 					hashFile(file, (hash) => {
-
 						createMediaFromFile(file, {
 							hashes: [hash],
 							verify,
@@ -105,12 +116,25 @@ domReady(function () {
 						}).then(
 							response => response.json()
 						).then(
-							success => {
-								const index = cf2.pending.findIndex(item => item === fieldId);
-								if (-1 < index) {
-									cf2.pending.splice(index, 1);
+							response => {
+								if( 'object' !== typeof  response ){
+									throw response;
 								}
-								obj.$form.submit();
+								else if (response.hasOwnProperty('control')) {
+									const index = cf2.pending.findIndex(item => item === fieldId);
+									if (-1 < index) {
+										cf2.pending.splice(index, 1);
+									}
+									$form.submit();
+								}else{
+									if( response.hasOwnProperty('message') ){
+										messages[field.fieldIdAttr] = {
+											error: true,
+											message: response.hasOwnProperty('message') ? response.message : 'Invalid'
+										};
+									}
+									throw response;
+								}
 							}
 						).catch(
 							error => console.log(error)
@@ -131,7 +155,6 @@ domReady(function () {
 								const verify = jQuery(`#_cf_verify_${field.formId}`).val();
 								const binaries = [];
 								const files = [values[fieldId]];
-
 								files.forEach(file => {
 										if( Array.isArray( file ) ){
 											file = file[0];
@@ -170,6 +193,7 @@ domReady(function () {
 				ref={(component) => {
 					theComponent = component
 				}}
+				messages={messages}
 			/>,
 			document.getElementById(`cf2-${idAttr}`)
 		);

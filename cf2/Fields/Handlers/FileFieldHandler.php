@@ -20,7 +20,7 @@ class FileFieldHandler extends FieldHandler
     /** @inheritdoc */
     public function processField($entry, $field, $form)
     {
-        if (is_null($entry)) {
+    	if (is_null($entry)) {
             return $entry;
         }
         if (is_string($entry)) {

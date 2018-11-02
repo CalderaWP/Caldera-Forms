@@ -85,7 +85,7 @@ export const FileInput = (props) => {
 	inputProps.id = fieldIdAttr;
 
 	return (
-		<div className="cf2-dropzone">
+		<div className="cf2-dropzone" data-field={fieldId}>
 			<Dropzone
 				onDrop={onDrop}
 				className={className}

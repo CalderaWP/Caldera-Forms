@@ -12,7 +12,7 @@ import {CalderaFormsFieldGroup} from "./CalderaFormsFieldGroup";
  * @constructor
  */
 export const CalderaFormsFieldRender = (props) => {
-	const {field, onChange, shouldDisable, shouldShow,getFieldConfig} = props;
+	const {field, onChange, shouldDisable, shouldShow,getFieldConfig,message,hasMessage} = props;
 	const {
 		type,
 		outterIdAttr,
@@ -33,6 +33,8 @@ export const CalderaFormsFieldRender = (props) => {
 					shouldShow={shouldShow}
 					shouldDisable={shouldDisable}
 					getFieldConfig={getFieldConfig}
+					message={message}
+					hasMessage={hasMessage}
 				/>
 			</RenderComponentViaPortal>
 		</Fragment>
@@ -77,7 +79,11 @@ CalderaFormsFieldRender.propTypes = {
 	onChange: PropTypes.func.isRequired,
 	shouldShow: PropTypes.bool,
 	shouldDisable: PropTypes.bool,
-	getFieldConfig: PropTypes.func.isRequired
+	getFieldConfig: PropTypes.func.isRequired,
+	message: PropTypes.shape({
+		error: PropTypes.bool,
+		message: PropTypes.string
+	})
 
 };
 
@@ -91,5 +97,9 @@ CalderaFormsFieldRender.propTypes = {
 CalderaFormsFieldRender.defaultProps = {
 	shouldShow: true,
 	shouldDisable: false,
-	fieldValue: ''
+	fieldValue: '',
+	message: PropTypes.shape({
+		error: false,
+		message: 'f!'
+	})
 };
