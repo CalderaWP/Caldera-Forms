@@ -121,7 +121,8 @@ class FileUpload
         if (empty($this->field['config']['allowed'])) {
             return true;
         }
-        $filetype = wp_check_filetype(basename($file['tmp_name']), null);
+        $fileName = ! empty( $file[ 'name' ] ) ? $file[ 'name' ] :basename($file['tmp_name']);
+        $filetype = wp_check_filetype(basename($fileName), null);
         return in_array(strtolower($filetype['ext']), $this->getAllowedTypes());
     }
 
@@ -138,6 +139,9 @@ class FileUpload
         if (!is_array($types)) {
             $types = explode(',', $types);
         }
+        if( in_array( 'jpg', $types ) && ! in_array( 'jpeg', $types ) ){
+        	$types[] = 'jpeg';
+		}
         return $types;
     }
 

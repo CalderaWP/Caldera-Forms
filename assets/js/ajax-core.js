@@ -2,7 +2,6 @@ var resBaldrickTriggers;
 
 jQuery(function($){
 	function fieldErrors(fields, $form, $notice) {
-	    console.log()
 		for (var i in fields) {
 			var field = $form.find('[data-field="' + i + '"]'),
 				wrap = field.parent();

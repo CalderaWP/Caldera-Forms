@@ -104,6 +104,20 @@ domReady(function () {
 			 * @param {string} fieldId ID for field
 			 */
 			function hashAndUpload(file, verify, field, fieldId) {
+				function removeFromPending() {
+					const index = cf2.pending.findIndex(item => item === fieldId);
+					if (-1 < index) {
+						cf2.pending.splice(index, 1);
+					}
+				}
+
+				function removeFromUploadStarted() {
+					const index = cf2.uploadStated.findIndex(item => item === fieldId);
+					if (-1 < index) {
+						cf2.uploadStated.splice(index, 1);
+					}
+				}
+
 				if (file instanceof File) {
 					hashFile(file, (hash) => {
 						createMediaFromFile(file, {
@@ -118,13 +132,12 @@ domReady(function () {
 						).then(
 							response => {
 								if( 'object' !== typeof  response ){
+									removeFromUploadStarted();
+									removeFromPending();
 									throw response;
 								}
 								else if (response.hasOwnProperty('control')) {
-									const index = cf2.pending.findIndex(item => item === fieldId);
-									if (-1 < index) {
-										cf2.pending.splice(index, 1);
-									}
+									removeFromPending();
 									$form.submit();
 								}else{
 									if( response.hasOwnProperty('message') ){
@@ -133,8 +146,12 @@ domReady(function () {
 											message: response.hasOwnProperty('message') ? response.message : 'Invalid'
 										};
 									}
+									removeFromUploadStarted();
+									removeFromPending();
 									throw response;
 								}
+
+
 							}
 						).catch(
 							error => console.log(error)
@@ -153,7 +170,6 @@ domReady(function () {
 								obj.$form.data(fieldId, field.control);
 								cf2.pending.push(fieldId);
 								const verify = jQuery(`#_cf_verify_${field.formId}`).val();
-								const binaries = [];
 								const files = [values[fieldId]];
 								files.forEach(file => {
 										if( Array.isArray( file ) ){
