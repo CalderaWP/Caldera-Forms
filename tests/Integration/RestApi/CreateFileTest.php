@@ -110,9 +110,6 @@ class CreateFileTest extends RestApiTestCase
         $request = $this->createFileRequest($nonce, $formId, $control, $fieldId);
         $request->set_param( 'hashes', [ 0 => '1111' ] );
         $response = rest_get_server()->dispatch($request);
-        $this->markTestIncomplete(
-            'Hash checking not implemented yet'
-        );
         $this->assertEquals(412, $response->get_status());
 
     }

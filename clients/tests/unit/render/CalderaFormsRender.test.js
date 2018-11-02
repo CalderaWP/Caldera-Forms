@@ -146,7 +146,7 @@ describe('Form render methods', () => {
 		expect(component.instance().getCfState()).toBeDefined();
 	});
 
-	test('getFieldValue for a non-file field', () => {
+	test.skip('getFieldValue for a non-file field', () => {
 		const fakeState = new FakeOldState(formId, {});
 		const props = {...formRenderTestProps, state: fakeState};
 		expect(props.state.getState('fld_12_1')).toBe('foot');
@@ -192,7 +192,7 @@ describe('Form render methods', () => {
 		component.instance().getCfState().mutateState( 'fld_text_req_2', 'Hi Roy' );
 	});
 
-	test('getFieldValues returns values', () => {
+	test.skip('getFieldValues returns values', () => {
 		const fakeState = new FakeOldState(formId, {});
 		const props = {...formRenderTestProps, state: fakeState};
 

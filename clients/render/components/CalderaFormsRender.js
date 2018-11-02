@@ -2,7 +2,7 @@ import {Component, Fragment, createContext} from 'react';
 import PropTypes from 'prop-types';
 import {CalderaFormsFieldPropType, CalderaFormsFieldRender} from "./CalderaFormsFieldRender";
 import isEmpty from 'validator/lib/isEmpty';
-import {getFieldConfigBy} from "../util";
+import {getFieldConfigBy,hashFile} from "../util";
 
 //Collection of change handlers to prevent re-creating
 const handlers = {};
@@ -210,6 +210,7 @@ export class CalderaFormsRender extends Component {
 	 * @param {boolean} bubbleUp Optional. If true, the default, the new value is dispatched to CFState. If false it is not.
 	 */
 	setFieldValue(fieldIdAttr, newValue, bubbleUp = true) {
+
 		const isDirty = newValue !== this.state[fieldIdAttr];
 		this.setState(
 			{

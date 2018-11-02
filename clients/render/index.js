@@ -5,6 +5,7 @@ import {CalderaFormsRender} from "./components/CalderaFormsRender";
 import React from 'react';
 import ReactDOM from "react-dom";
 import domReady from '@wordpress/dom-ready';
+import {getFieldConfigBy, hashFile} from "./util";
 
 const CryptoJS = require("crypto-js");
 Object.defineProperty(global.wp, 'element', {
@@ -90,43 +91,55 @@ domReady(function () {
 			cf2.pending = cf2.pending || [];
 			cf2.uploadStated = cf2.uploadStated || [];
 
+			function hashAndUpload(file, verify, field, fieldId) {
+				if (file instanceof File) {
+					hashFile(file, (hash) => {
+
+						createMediaFromFile(file, {
+							hashes: [hash],
+							verify,
+							formId: field.formId,
+							fieldId: field.fieldId,
+							control: field.control,
+							_wp_nonce
+						}).then(
+							response => response.json()
+						).then(
+							success => {
+								const index = cf2.pending.findIndex(item => item === fieldId);
+								if (-1 < index) {
+									cf2.pending.splice(index, 1);
+								}
+								obj.$form.submit();
+							}
+						).catch(
+							error => console.log(error)
+						);
+					})
+				}
+			}
+
 			if (Object.keys(values).length) {
 				Object.keys(values).forEach(fieldId => {
 					const field = fieldsToControl.find(field => fieldId === field.fieldId);
 					if (field) {
 						if ('file' === field.type) {
-							if( -1 <= cf2.uploadStated ){
+							if (-1 <= cf2.uploadStated) {
 								cf2.uploadStated.push(fieldId);
 								obj.$form.data(fieldId, field.control);
 								cf2.pending.push(fieldId);
 								const verify = jQuery(`#_cf_verify_${field.formId}`).val();
 								const binaries = [];
 								const files = [values[fieldId]];
+
 								files.forEach(file => {
-										createMediaFromFile(file[0], {
-											hashes: ['hi-roy'],
-											verify,
-											formId: field.formId,
-											fieldId: field.fieldId,
-											control: field.control,
-											_wp_nonce
-										}).then(
-											response => response.json()
-										).then(
-											success => {
-												const index = cf2.pending.findIndex(item => item === fieldId);
-												if (-1 < index) {
-													cf2.pending.splice(index, 1);
-												}
-												obj.$form.submit();
-											}
-										).catch(
-											error => console.log(error)
-										)
+										if( Array.isArray( file ) ){
+											file = file[0];
+										}
+										hashAndUpload(file, verify, field, fieldId);
 									}
 								);
 							}
-
 
 
 						}
