@@ -20,7 +20,7 @@ class FieldTypeFactoryTest extends TestCase
 	{
 		$fieldTypeFactory = new FieldTypeFactory();
 		$fieldTypeFactory->add(new FileFieldType );
-		$this->assertInstanceOf( FileFieldType::class,$fieldTypeFactory->get(FileFieldType::getType()));
+		$this->assertInstanceOf( FileFieldType::class,$fieldTypeFactory->get(FileFieldType::getCf1Identifier()));
 	}
 	/**
 	 * @since 1.8.0
@@ -44,9 +44,9 @@ class FieldTypeFactoryTest extends TestCase
 	public function testHas ()
 	{
 		$fieldTypeFactory = new FieldTypeFactory();
-		$this->assertFalse($fieldTypeFactory->has( FileFieldType::getType() ) );
+		$this->assertFalse($fieldTypeFactory->has( FileFieldType::getCf1Identifier() ) );
 		$fieldTypeFactory->add(new FileFieldType );
-		$this->assertTrue($fieldTypeFactory->has( FileFieldType::getType() ) );
+		$this->assertTrue($fieldTypeFactory->has( FileFieldType::getCf1Identifier() ) );
 
 	}
 	/**
@@ -74,8 +74,8 @@ class FieldTypeFactoryTest extends TestCase
 		$fieldTypeFactory = new FieldTypeFactory();
 		$fieldTypeFactory->add(new TextFieldType );
 		$fieldTypeFactory->add(new FileFieldType() );
-		$this->assertTrue( $fieldTypeFactory->has( TextFieldType::getType() ) );
-		$this->assertTrue( $fieldTypeFactory->has( FileFieldType::getType() ) );
+		$this->assertTrue( $fieldTypeFactory->has( TextFieldType::getCf1Identifier() ) );
+		$this->assertTrue( $fieldTypeFactory->has( FileFieldType::getCf1Identifier() ) );
 
 	}
 }

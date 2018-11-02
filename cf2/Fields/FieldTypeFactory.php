@@ -22,8 +22,8 @@ class FieldTypeFactory implements FieldTypeFactoryContract
 	/** @inheritdoc */
 	public function add(FieldTypeContract $fieldType)
 	{
-		if (! $this->has(FileFieldType::getType())) {
-			$this->fields[ $fieldType::getType() ] = $fieldType;
+		if (! $this->has(FileFieldType::getCf1Identifier())) {
+			$this->fields[ $fieldType::getCf1Identifier() ] = $fieldType;
 		}
 		return $this;
 

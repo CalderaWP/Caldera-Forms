@@ -22,18 +22,18 @@ class FileFieldType extends FieldType
 	/** @inheritdoc */
 	public static function getCategory ()
 	{
-		return __( 'Basic', 'caldera-forms' );
+		return __( 'File', 'caldera-forms' );
 	}
 
 	/** @inheritdoc */
 	public static function getDescription ()
 	{
-		return __( 'Text Field With Super Powers', 'caldera-forms' );
+		return __( 'File Field With Super Powers', 'caldera-forms' );
 	}
 
 	/** @inheritdoc */
 	public static function getName ()
 	{
-		return __( 'Text Field (CF2)', 'caldera-forms' );
+		return __( 'File Field (CF2)', 'caldera-forms' );
 	}
 }

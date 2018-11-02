@@ -181,8 +181,7 @@ add_action( 'caldera_forms_core_init', function(){
 	$container = new \calderawp\calderaforms\cf2\CalderaFormsV2();
 	$container->setCoreDir(CFCORE_PATH);
 	$container->getFieldTypeFactory()
-		->add( new \calderawp\calderaforms\cf2\Fields\FieldTypes\FileFieldType() )
-		->add( new \calderawp\calderaforms\cf2\Fields\FieldTypes\TextFieldType() );
+		->add( new \calderawp\calderaforms\cf2\Fields\FieldTypes\FileFieldType() );
 
 	$container->getHooks()->subscribe();
 

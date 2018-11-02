@@ -114,7 +114,7 @@ class RenderFieldTest extends TestCase
 		$renderer = new RenderField($formIdAttr,$field );
 		$data = $renderer->data();
 		$allowed = $data['configOptions' ]['allowedTypes'];
-		$this->assertSame('.png', $allowed );
+		$this->assertSame('image/png,image/x-png', $allowed );
 
 
 	}
@@ -134,7 +134,7 @@ class RenderFieldTest extends TestCase
 		$renderer = new RenderField($formIdAttr,$field );
 		$data = $renderer->data();
 		$allowed = $data['configOptions' ]['allowedTypes'];
-		$this->assertSame('.png,.jpg', $allowed );
+		$this->assertSame('image/png,image/x-png,image/jpeg,image/pjpeg', $allowed );
 
 	}
 

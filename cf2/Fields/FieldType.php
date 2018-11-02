@@ -23,8 +23,8 @@ abstract class FieldType implements FieldTypeContract
 	public static function getSetup ()
 	{
 		return [
-			'template' => 'fields/' . static::getType() . '/config.php',
-			'preview' => 'fields/' . static::getType() . '/preview.php',
+			'template' => 'fields/' . static::getCf1Identifier() . '/config.php',
+			'preview' => 'fields/' . static::getCf1Identifier() . '/preview.php',
 		];
 	}
 }

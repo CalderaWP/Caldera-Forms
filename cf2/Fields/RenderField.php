@@ -6,11 +6,12 @@ namespace calderawp\calderaforms\cf2\Fields;
 
 use calderawp\calderaforms\cf2\Fields\FieldTypes\FileFieldType;
 use calderawp\calderaforms\cf2\Fields\FieldTypes\TextFieldType;
+use calderawp\calderaforms\cf2\Traits\ConvertsMimeTypes;
 use function foo\func;
 
 class RenderField implements RenderFieldContract
 {
-
+	use ConvertsMimeTypes;
     /**
      *
      * @since 1.8.0
@@ -153,11 +154,17 @@ class RenderField implements RenderFieldContract
 		if( is_string( $types ) ){
 			$types = explode(',', $types );
 			$types =array_map(function ($item){
-				if( false === strpos($item, '.') ){
-					$item = '.'.$item;
+				$mimeType = $this->extensionToMimeType($item);
+				if( $mimeType ){
+					return $mimeType;
 				}
 				return $item;
 			},$types);
+			foreach ( $types as $i  => $type ){
+				if( is_array( $type ) ){
+					$types[$i] = implode(',', $type );
+				}
+			}
 			$types = implode(',', $types );
 		}
 		return $types;
