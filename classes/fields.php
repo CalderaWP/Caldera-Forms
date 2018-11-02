@@ -112,17 +112,6 @@ class Caldera_Forms_Fields {
 				),
 
 			),
-            'cf2_text'             => array(
-                "cf2" => true,
-                "field"       => __( 'cf2_text', 'caldera-forms' ),
-                "description" => __( 'cf2_text', 'caldera-forms' ),
-                "file"        => CFCORE_PATH . "fields/cf2_text/field.php",
-                "category"    => __( 'Basic', 'caldera-forms' ),
-                "setup"       => array(
-                    "template" => CFCORE_PATH . "fields/cf2_text/config.php",
-                    "preview"  => CFCORE_PATH . "fields/cf2_text/preview.php"
-                ),
-            ),
 			'hidden'           => array(
 				"field"       => __( 'Hidden', 'caldera-forms' ),
 				"description" => __( 'Hidden', 'caldera-forms' ),
@@ -440,16 +429,6 @@ class Caldera_Forms_Fields {
 				),
 
 			),
-            'cf2_file'    => array(
-                "cf2" => true,
-                "field"       => __( 'File (CF2)', 'caldera-forms' ),
-                'icon'          => CFCORE_URL . 'assets/build/images/cloud-upload.svg',
-                "category"    => __( 'File', 'caldera-forms' ),
-                "setup"       => array(
-                    "preview"  => CFCORE_PATH . "fields/file/preview.php",
-                    "template" => CFCORE_PATH . "fields/file/config_template.php"
-                )
-            ),
 
 			//content
 			'html'             => array(

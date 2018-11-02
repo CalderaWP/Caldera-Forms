@@ -19,4 +19,12 @@ class MockFieldHandler extends FieldHandler
     {
         return $entry;
     }
+
+	/** @inheritdoc */
+	public function viewField ($field_value, $field, $form)
+	{
+		return $field_value;
+	}
+
+
 }

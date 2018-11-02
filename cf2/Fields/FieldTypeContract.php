@@ -23,4 +23,49 @@ interface FieldTypeContract
      * @return string
      */
     public static function getCf1Identifier();
+
+	/**
+	 * Get the field's setup array
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return array
+	 */
+    public static function getSetup();
+
+	/**
+	 * Get the field's category
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return string
+	 */
+    public static function getCategory();
+
+	/**
+	 * Get the field's description
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return string
+	 */
+    public static function getDescription();
+
+	/**
+	 * Get the field's name
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return string
+	 */
+    public static function getName();
+
+	/**
+	 * Convert to an array
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return array
+	 */
+    public static function toArray();
 }

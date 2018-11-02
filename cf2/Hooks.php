@@ -6,6 +6,7 @@ namespace calderawp\calderaforms\cf2;
 
 use calderawp\calderaforms\cf2\Fields\FieldTypes\FileFieldType;
 use calderawp\calderaforms\cf2\Fields\Handlers\FileFieldHandler;
+use calderawp\calderaforms\cf2\Fields\RegisterFields;
 
 class Hooks
 {
@@ -26,6 +27,11 @@ class Hooks
     public function subscribe()
     {
         $this->addFieldHandlers();
+        $register = new RegisterFields(
+        	$this->container->getFieldTypeFactory(),
+			$this->container->getCoreDir()
+		);
+        add_filter('caldera_forms_get_field_types', [$register, 'filter' ], 2 );
     }
 
 

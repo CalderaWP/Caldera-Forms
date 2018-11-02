@@ -19,4 +19,21 @@ class FileFieldType extends FieldType
     {
         return 'cf2_file';
     }
+	/** @inheritdoc */
+	public static function getCategory ()
+	{
+		return __( 'Basic', 'caldera-forms' );
+	}
+
+	/** @inheritdoc */
+	public static function getDescription ()
+	{
+		return __( 'Text Field With Super Powers', 'caldera-forms' );
+	}
+
+	/** @inheritdoc */
+	public static function getName ()
+	{
+		return __( 'Text Field (CF2)', 'caldera-forms' );
+	}
 }

@@ -179,6 +179,15 @@ add_filter('caldera_forms_render_get_field', function($field, $form){
  */
 add_action( 'caldera_forms_core_init', function(){
 	$container = new \calderawp\calderaforms\cf2\CalderaFormsV2();
+	$container->setCoreDir(CFCORE_PATH);
+	$container->getFieldTypeFactory()
+		->add( new \calderawp\calderaforms\cf2\Fields\FieldTypes\FileFieldType() )
+		->add( new \calderawp\calderaforms\cf2\Fields\FieldTypes\TextFieldType() );
+
 	$container->getHooks()->subscribe();
+
 });
+
+
+
 
