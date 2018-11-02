@@ -94,14 +94,53 @@ class RenderFieldTest extends TestCase
             if (isset($fieldConfig['multi_upload_text'])) {
                 $this->assertEquals($fieldConfig['multi_upload_text'], $configOptions['multiUploadText']);
             }
-            $this->assertEquals($fieldConfig['allowed'],$configOptions['allowedTypes']);
+
         }
 
 
     }
 
+	/**
+	 * @covers \calderawp\calderaforms\cf2\Fields\RenderField::data();
+	 */
+	public function testDataFileFieldIncludesAllowedType()
+	{
 
-    /**
+
+		$fieldId = 'allows_png_only';
+		$field = $this->fieldForRenderFactory($fieldId);
+		$field[ 'type' ] = 'cf2_file';
+		$formIdAttr = 'cf1_1';
+		$renderer = new RenderField($formIdAttr,$field );
+		$data = $renderer->data();
+		$allowed = $data['configOptions' ]['allowedTypes'];
+		$this->assertSame('.png', $allowed );
+
+
+	}
+
+
+	/**
+	 * @covers \calderawp\calderaforms\cf2\Fields\RenderField::data();
+	 */
+	public function testDataFileFieldIncludesAllowedTypes()
+	{
+
+
+		$fieldId = 'allows_jpg_and_png';
+		$field = $this->fieldForRenderFactory($fieldId);
+		$field[ 'type' ] = 'cf2_file';
+		$formIdAttr = 'cf1_1';
+		$renderer = new RenderField($formIdAttr,$field );
+		$data = $renderer->data();
+		$allowed = $data['configOptions' ]['allowedTypes'];
+		$this->assertSame('.png,.jpg', $allowed );
+
+	}
+
+
+
+	/**
      * @covers \calderawp\calderaforms\cf2\Fields\RenderField::getType();
      */
     public function testGetType()

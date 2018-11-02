@@ -64,6 +64,7 @@ export const CalderaFormsFieldGroup = (props) => {
 					style={fileProps.style}
 					inputProps={fileProps.inputProps}
 					className={className}
+					accept={fileProps.accept}
 				/>
 			case'text':
 			default:

@@ -127,24 +127,62 @@ trait HasFileFieldConfigs
                         ),
                 ),
             'not_required_multiple_has_button_text' =>
-                array (
-                    'ID' => 'not_required_multiple_has_button_text',
-                    'type' => 'advanced_file',
-                    'label' => 'Not Required Multiple Has Button Text',
-                    'slug' => 'not_required_multiple_has_button_text',
-                    'conditions' =>
-                        array (
-                            'type' => '',
-                        ),
-                    'caption' => '',
-                    'config' =>
-                        array (
-                            'custom_class' => '',
-                            'multi_upload' => 1,
-                            'multi_upload_text' => 'The Default Text',
-                            'allowed' => '',
-                        ),
-                ),
+				array (
+					'ID' => 'not_required_multiple_has_button_text',
+					'type' => 'advanced_file',
+					'label' => 'Not Required Multiple Has Button Text',
+					'slug' => 'not_required_multiple_has_button_text',
+					'conditions' =>
+						array (
+							'type' => '',
+						),
+					'caption' => '',
+					'config' =>
+						array (
+							'custom_class' => '',
+							'multi_upload' => 1,
+							'multi_upload_text' => 'The Default Text',
+							'allowed' => '',
+						),
+				),
+			'allows_png_only' =>
+				array (
+					'ID' => 'allows_png_only',
+					'type' => 'advanced_file',
+					'label' => 'Allows png only',
+					'slug' => 'allows_png_only',
+					'conditions' =>
+						array (
+							'type' => '',
+						),
+					'caption' => '',
+					'config' =>
+						array (
+							'custom_class' => '',
+							'multi_upload' => 1,
+							'multi_upload_text' => 'The Default Text',
+							'allowed' => 'png',
+						),
+				),
+			'allows_jpg_and_png' =>
+				array (
+					'ID' => 'allows_jpg_and_png',
+					'type' => 'advanced_file',
+					'label' => 'Allows png jpg',
+					'slug' => 'allows_jpg_and_png',
+					'conditions' =>
+						array (
+							'type' => '',
+						),
+					'caption' => '',
+					'config' =>
+						array (
+							'custom_class' => '',
+							'multi_upload' => 1,
+							'multi_upload_text' => 'The Default Text',
+							'allowed' => 'png,jpg',
+						),
+				),
         );
     }
 

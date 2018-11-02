@@ -6,6 +6,7 @@ namespace calderawp\calderaforms\cf2\Fields;
 
 use calderawp\calderaforms\cf2\Fields\FieldTypes\FileFieldType;
 use calderawp\calderaforms\cf2\Fields\FieldTypes\TextFieldType;
+use function foo\func;
 
 class RenderField implements RenderFieldContract
 {
@@ -125,10 +126,11 @@ class RenderField implements RenderFieldContract
             $data['configOptions'] = [
                 'multiple'=> ! empty($this->field[ 'config' ]['multi_upload' ]) ? $this->field[ 'config' ]['multi_upload' ] : false,
                 'multiUploadText' => ! empty($this->field[ 'config' ]['multi_upload_text' ]) ? $this->field[ 'config' ]['multi_upload_text' ] : false,
-                'allowedTypes' => ! empty($this->field[ 'config' ]['allowed' ]) ? $this->field[ 'config' ]['allowed' ] : false,
+                'allowedTypes' => $this->getAllowedTypes(),
                 'control' => uniqid($this->getOuterIdAttr() ),
             ];
         }
+
         return array_merge( $data, $this->domArgs) ;
     }
 
@@ -137,4 +139,27 @@ class RenderField implements RenderFieldContract
     {
         return sprintf('cf2-%s', $this->getFieldIdAttr());
     }
+
+	/**
+	 * Get the allowed types string
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return string|bool
+	 */
+	protected function getAllowedTypes()
+	{
+		$types = !empty($this->field[ 'config' ][ 'allowed' ]) ? $this->field[ 'config' ][ 'allowed' ] : false;
+		if( is_string( $types ) ){
+			$types = explode(',', $types );
+			$types =array_map(function ($item){
+				if( false === strpos($item, '.') ){
+					$item = '.'.$item;
+				}
+				return $item;
+			},$types);
+			$types = implode(',', $types );
+		}
+		return $types;
+	}
 }

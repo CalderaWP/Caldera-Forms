@@ -16,6 +16,7 @@ import Dropzone from 'react-dropzone';
  */
 export const FileInput = (props) => {
 
+
 	const {shouldDisable, accept, field, describedById, onChange, style, className, multiple, multiUploadText, inputProps, text, previewStyle} = props;
 	const {
 		outterIdAttr,
@@ -89,7 +90,7 @@ export const FileInput = (props) => {
 			<Dropzone
 				onDrop={onDrop}
 				className={className}
-				accept={accept}
+				accept={'string' === typeof  accept ? accept : ''}
 				style={style}
 				disabled={shouldDisable}
 				inputProps={inputProps}
@@ -185,7 +186,8 @@ FileInput.propTypes = {
 	className: PropTypes.string,
 	accept: PropTypes.oneOfType([
 		PropTypes.array,
-		PropTypes.string
+		PropTypes.string,
+		PropTypes.bool
 	]),
 };
 
@@ -215,7 +217,8 @@ FileInput.defaultProps = {
 	previewStyle: {
 		height: '120',
 		width: '120'
-	}
+	},
+	accept: false,
 };
 
 /**
@@ -255,7 +258,6 @@ FileInput.fieldConfigToProps = (fieldConfig) => {
 		}
 		delete(fieldConfig.configOptions);
 	}
-	props.accept = '';
 	configOptionProps.forEach(key => {
 		if (!props.hasOwnProperty(key)) {
 			props[key] = "false";
