@@ -10,6 +10,11 @@ class CalderaFormsV2 extends \calderawp\CalderaContainers\Service\Container impl
 {
 
 
+	/**
+	 * CalderaFormsV2 constructor.
+	 *
+	 * @since 1.8.0
+	 */
     public function __construct()
     {
         $this->singleton(Hooks::class, function(){
@@ -20,10 +25,24 @@ class CalderaFormsV2 extends \calderawp\CalderaContainers\Service\Container impl
         });
     }
 
+	/**
+	 * Get the singleton hooks instance
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return \calderawp\CalderaContainers\Interfaces\ProvidesService|Hooks
+	 */
     public function getHooks(){
         return $this->make(Hooks::class);
     }
 
+	/**
+	 * Get our transients API
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return \calderawp\CalderaContainers\Interfaces\ProvidesService|Cf1TransientsApi
+	 */
     public function getTransientsApi()
     {
        return $this->make(Cf1TransientsApi::class );
