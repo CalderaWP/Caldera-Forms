@@ -2,7 +2,7 @@ import {Component, Fragment, createContext} from 'react';
 import PropTypes from 'prop-types';
 import {CalderaFormsFieldPropType, CalderaFormsFieldRender} from "./CalderaFormsFieldRender";
 import isEmpty from 'validator/lib/isEmpty';
-import {getFieldConfigBy,hashFile} from "../util";
+import {getFieldConfigBy, hashFile} from "../util";
 
 //Collection of change handlers to prevent re-creating
 const handlers = {};
@@ -82,13 +82,15 @@ export class CalderaFormsRender extends Component {
 			fieldValues[fieldIsDirtyKey(fieldIdAttr)] = false
 		});
 		this.state = {
-			...fieldValues
+			...fieldValues,
+			messages: props.messages || {}
 		};
 		this.setFieldValue = this.setFieldValue.bind(this);
 		this.setFieldShouldShow = this.setFieldShouldShow.bind(this);
 		this.setFieldShouldDisable = this.setFieldShouldDisable.bind(this);
 		this.subscribe = this.subscribe.bind(this);
 		this.getFieldConfig = this.getFieldConfig.bind(this);
+		this.addFieldMessage = this.addFieldMessage.bind(this);
 	}
 
 	/**
@@ -218,6 +220,14 @@ export class CalderaFormsRender extends Component {
 				[fieldIsDirtyKey(fieldIdAttr)]: isDirty
 			}
 		);
+		if (this.state.messages.hasOwnProperty(fieldIdAttr)) {
+			this.setState({
+				messages: {
+					...this.state.messages,
+					[fieldIdAttr]: {error: false, message: ''}
+				}
+			})
+		}
 		if (bubbleUp) {
 			this.getCfState().mutateState(fieldIdAttr, newValue);
 
@@ -299,6 +309,7 @@ export class CalderaFormsRender extends Component {
 			}
 		});
 	}
+
 	/**
 	 * Check if a field is required
 	 *
@@ -309,9 +320,9 @@ export class CalderaFormsRender extends Component {
 	 * @return {boolean}
 	 */
 	isFieldRequired(fieldIdAttr) {
-		const field = this.props.fieldsToControl
-			.find(field => fieldIdAttr === field.fieldIdAttr);
-		return field.hasOwnProperty('required') && true === field.required ? true : false;
+		const field = this.getFieldConfig(fieldIdAttr);
+
+		return !!field.required;
 	}
 
 	/**
@@ -324,16 +335,34 @@ export class CalderaFormsRender extends Component {
 	 * @return {boolean}
 	 */
 	isFieldValid(fieldIdAttr) {
-		if( !this.isFieldRequired(fieldIdAttr) ){
+		if (!this.isFieldRequired(fieldIdAttr)) {
 			return true;
 		}
 		return !isEmpty(this.state[fieldIdAttr]);
 	}
 
+	addFieldMessage(fieldIdAttr, messageText, isError = true) {
+		if (!this.getFieldConfig(fieldIdAttr)) {
+			return;
+		}
+		this.setState({
+			messages: {
+				...this.state.messages,
+				[fieldIdAttr]: {
+					message: messageText,
+					error: isError
+				}
+			}
+
+		})
+	};
+
+
 	/** @inheritDoc */
 	render() {
 		const {state, props} = this;
-		const {fieldsToControl, shouldBeValidating,messages} = props;
+		const {messages} = state;
+		const {fieldsToControl, shouldBeValidating} = props;
 
 		return (
 			<Fragment>
@@ -373,7 +402,7 @@ export class CalderaFormsRender extends Component {
 							key={outterIdAttr}
 							isInvalid={isInvalid}
 							getFieldConfig={this.getFieldConfig}
-							message={hasMessage ? messages[fieldIdAttr] : {error:false,message:''}}
+							message={hasMessage ? messages[fieldIdAttr] : {error: false, message: ''}}
 							hasMessage={hasMessage}
 						/>
 					);

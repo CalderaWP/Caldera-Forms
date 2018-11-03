@@ -279,7 +279,6 @@ describe('Form render methods', () => {
 				{...props}
 			/>
 		);
-		console.log( component.state( 'fld_12_1' ) );
 		component.instance().setFieldShouldDisable('fld_12_1', true, '');
 		expect(component.state(shouldDisableKey('fld_12_1'))).toBe(true);
 	});
@@ -394,5 +393,69 @@ describe('Form render methods', () => {
 
 	});
 
+
+	test( 'Set message for field', () => {
+		const fakeState = new FakeOldState(formId, {});
+		const props = {...formRenderTestProps, state: fakeState};
+		const component = shallow(
+			<CalderaFormsRender
+				{...props}
+			/>
+		);
+		component.instance().addFieldMessage( 'fld_12_1', 'Good things!', false );
+		expect( typeof  component.state( 'messages')['fld_12_1']).toBe( 'object')
+		expect( component.state( 'messages')['fld_12_1'].message ).toBe( 'Good things!' );
+		expect( component.state( 'messages')['fld_12_1'].error ).toBe( false );
+
+	});
+
+
+	test( 'Updates message for field', () => {
+		const fakeState = new FakeOldState(formId, {});
+		const props = {...formRenderTestProps, state: fakeState};
+		const component = shallow(
+			<CalderaFormsRender
+				{...props}
+			/>
+		);
+		component.instance().addFieldMessage( 'fld_12_1', 'Good things!', false );
+		component.instance().addFieldMessage( 'fld_12_1', 'Bad things!', true );
+		expect( typeof  component.state( 'messages')['fld_12_1']).toBe( 'object')
+		expect( component.state( 'messages')['fld_12_1'].message ).toBe( 'Bad things!' );
+		expect( component.state( 'messages')['fld_12_1'].error ).toBe( true );
+
+	});
+
+	test( 'Can have two different messages for two different fields', () => {
+		const fakeState = new FakeOldState(formId, {});
+		const props = {...formRenderTestProps, state: fakeState};
+		const component = shallow(
+			<CalderaFormsRender
+				{...props}
+			/>
+		);
+		component.instance().addFieldMessage( 'fld_12_1', 'Good things!', false );
+		component.instance().addFieldMessage( 'fld_5899467_1', 'Bad things!' );
+		expect( typeof  component.state( 'messages')['fld_12_1']).toBe( 'object')
+		expect( component.state( 'messages')['fld_12_1'].message ).toBe( 'Good things!' );
+		expect( component.state( 'messages')['fld_5899467_1'].message ).toBe( 'Bad things!' );
+		expect( component.state( 'messages')['fld_12_1'].error ).toBe( false );
+		expect( component.state( 'messages')['fld_5899467_1'].error ).toBe( true );
+
+	});
+
+
+	test( 'Does not set message for non-existant fields', () => {
+		const fakeState = new FakeOldState(formId, {});
+		const props = {...formRenderTestProps, state: fakeState};
+		const component = shallow(
+			<CalderaFormsRender
+				{...props}
+			/>
+		);
+		component.instance().addFieldMessage( 'aaaa', 'Good things!', false );
+		component.instance().addFieldMessage( 'fld_5899467', 'Bad things!' );
+		expect( component.state( 'messages')).toEqual( {});
+	});
 
 });

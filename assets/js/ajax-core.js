@@ -156,6 +156,7 @@ jQuery(function($){
                 var $form	=	$(el),
                     buttons = 	$form.find(':submit');
                 var pending = [];
+                var fieldsBlocking = [];
 
 				/**
                  * This event is triggered directly before the request for form submission is made
@@ -164,17 +165,22 @@ jQuery(function($){
                  *
                  * @since 1.8.0
 				 */
-				$( document ).trigger( 'cf.form.request', {
+				$( document ).trigger( 'cf.ajax.request', {
                     $form: $form,
                     formIdAttr: $form.attr( 'id' ),
                     displayFieldErrors:fieldErrors,
+					fieldsBlocking: fieldsBlocking,
                     $notice: $( '#caldera_notices_' + $form.data( 'instance' ) )
                 });
 
 				//Check if any cf2 fields are blocking submit
 				var cf2 = window.cf2[ $form.attr( 'id' ) ];
 				if( 'object' === typeof cf2 ){
-					if( cf2.hasOwnProperty( 'pending' ) && cf2.pending.length ){
+					if( cf2.hasOwnProperty( 'pending' ) && 0 !== cf2.pending.length ){
+						return false;
+					}
+
+					if( cf2.hasOwnProperty( 'fieldsBlocking' ) && 0 !== cf2.fieldsBlocking.length ){
 						return false;
 					}
 				}
@@ -222,8 +228,6 @@ jQuery(function($){
                         return false;
                     }
                 }
-
-
 
 
 
@@ -293,7 +297,7 @@ jQuery(function($){
                 if(obj.data.fields){
                     var $form = obj.params.trigger;
                     var fields = obj.data.fields;
-                    this.fieldErrors(fields, $form, $notice);
+                    fieldErrors(fields, $form, $notice);
                 }
 
                 if ( 'undefined' != obj.data.scroll ) {

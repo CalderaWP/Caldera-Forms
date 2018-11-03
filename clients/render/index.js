@@ -81,17 +81,46 @@ domReady(function () {
 		}
 
 
-		jQuery(document).on('cf.form.request', (event, obj) => {
+
+		jQuery(document).on('cf.ajax.request', (event, obj) => {
 			shouldBeValidating = true;
 			const values = theComponent.getFieldValues();
 			const cf2 = window.cf2[obj.formIdAttr];
-			const {displayFieldErrors,$notice,$form} = obj;
+			const {displayFieldErrors,$notice,$form,fieldsBlocking} = obj;
 			if ('object' !== typeof cf2) {
 				return;
 			}
 
 			cf2.pending = cf2.pending || [];
-			cf2.uploadStated = cf2.uploadStated || [];
+			cf2.uploadStarted = cf2.uploadStarted || [];
+			cf2.uploadCompleted = cf2.uploadCompleted || [];
+			cf2.fieldsBlocking = cf2.fieldsBlocking || [];
+			function removeFromPending(fieldId) {
+				const index = cf2.pending.findIndex(item => item === fieldId);
+				if (-1 < index) {
+					cf2.pending.splice(index, 1);
+				}
+			}
+
+			function removeFromUploadStarted(fieldId) {
+				const index = cf2.uploadStarted.findIndex(item => item === fieldId);
+				if (-1 < index) {
+					cf2.uploadStarted.splice(index, 1);
+				}
+			}
+			function removeFromBlocking(fieldId) {
+				const index = cf2.fieldsBlocking.findIndex(item => item === fieldId);
+				if (-1 < index) {
+					cf2.fieldsBlocking.splice(index, 1);
+				}
+			}
+
+			function setBlocking(fieldId){
+				removeFromUploadStarted(fieldId);
+				removeFromPending(fieldId);
+				cf2.fieldsBlocking.push(fieldId);
+
+			}
 
 			/**
 			 * Hash a file then upload it
@@ -104,19 +133,7 @@ domReady(function () {
 			 * @param {string} fieldId ID for field
 			 */
 			function hashAndUpload(file, verify, field, fieldId) {
-				function removeFromPending() {
-					const index = cf2.pending.findIndex(item => item === fieldId);
-					if (-1 < index) {
-						cf2.pending.splice(index, 1);
-					}
-				}
 
-				function removeFromUploadStarted() {
-					const index = cf2.uploadStated.findIndex(item => item === fieldId);
-					if (-1 < index) {
-						cf2.uploadStated.splice(index, 1);
-					}
-				}
 
 				if (file instanceof File) {
 					hashFile(file, (hash) => {
@@ -132,12 +149,14 @@ domReady(function () {
 						).then(
 							response => {
 								if( 'object' !== typeof  response ){
-									removeFromUploadStarted();
-									removeFromPending();
+									removeFromUploadStarted(fieldId);
+									removeFromPending(fieldId);
 									throw response;
 								}
 								else if (response.hasOwnProperty('control')) {
-									removeFromPending();
+									removeFromPending(fieldId);
+									removeFromBlocking(fieldId);
+									cf2.uploadCompleted.push(fieldId);
 									$form.submit();
 								}else{
 									if( response.hasOwnProperty('message') ){
@@ -146,8 +165,8 @@ domReady(function () {
 											message: response.hasOwnProperty('message') ? response.message : 'Invalid'
 										};
 									}
-									removeFromUploadStarted();
-									removeFromPending();
+									removeFromUploadStarted(fieldId);
+									removeFromPending(fieldId);
 									throw response;
 								}
 
@@ -164,12 +183,32 @@ domReady(function () {
 				Object.keys(values).forEach(fieldId => {
 					const field = fieldsToControl.find(field => fieldId === field.fieldId);
 					if (field) {
+						const {fieldIdAttr} = field;
 						if ('file' === field.type) {
-							if (-1 <= cf2.uploadStated) {
-								cf2.uploadStated.push(fieldId);
+							//do not upload after complete
+							if ( cf2.uploadCompleted.includes(fieldId)) {
+								removeFromPending(fieldId);
+								removeFromBlocking(fieldId);
+								return;
+							}
+							//do not start upload if it has started uploading
+							if (-1 <= cf2.uploadStarted.indexOf(_fieldId => _fieldId === fieldId )
+								&& -1 <= cf2.pending.indexOf(_fieldId => _fieldId === fieldId)
+							) {
+								cf2.uploadStarted.push(fieldId);
 								obj.$form.data(fieldId, field.control);
 								cf2.pending.push(fieldId);
 								const verify = jQuery(`#_cf_verify_${field.formId}`).val();
+								if( '' === values[fieldId] ){
+									if( theComponent.isFieldRequired(fieldIdAttr) ){
+										theComponent.addFieldMessage( fieldIdAttr, "Field is required" );
+										shouldBeValidating = true;
+										setBlocking(fieldId);
+									}
+									removeFromPending(fieldId);
+									return;
+								}
+								removeFromBlocking(fieldId);
 								const files = [values[fieldId]];
 								files.forEach(file => {
 										if( Array.isArray( file ) ){

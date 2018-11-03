@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.7.4 - 2018-10-30 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.7.4 - 2018-11-02 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -6711,7 +6711,7 @@ var cf_jsfields_init, cf_presubmit;
 			validator = cf_validate_form( $form );
 		$( document ).trigger( 'cf.form.submit', {
 			e:e,
-			$form:$form
+			$form:$form,
 		} );
 
 
