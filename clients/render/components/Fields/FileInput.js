@@ -264,3 +264,10 @@ FileInput.fieldConfigToProps = (fieldConfig) => {
 	});
 	return props;
 };
+
+
+describe( 'DOM testing of File Input', () => {
+	test( 'Josh\'s theory', () => {
+		//CalderaFormsFieldGroup
+	});
+})

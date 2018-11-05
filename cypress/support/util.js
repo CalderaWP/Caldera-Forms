@@ -421,6 +421,7 @@ export const cfDropSingleFile = (fieldId, filesPaths, filesTypes)=> {
 	const dropEvent = [];
 	cy.fixture(filesPaths[0]).then((picture) => {
 		return Cypress.Blob.base64StringToBlob(picture, filesTypes.jpg).then((blob) => {
+			console.log(blob);
 			dropEvent.push(blob);
 		});
 	});
