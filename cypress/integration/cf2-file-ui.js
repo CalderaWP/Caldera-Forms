@@ -38,11 +38,11 @@ describe('Test CF2 file field interface', () => {
 		cfFieldIsVisible( fileField );
 	});
 
-	it( 'Drop event with one file', () => {
+	it.only( 'Drop event with one file', () => {
 		cfDropSingleFile( fileField, filesPaths, filesTypes );
 	});
 
-	it( 'Drop event with two files', () => {
+	it.only( 'Drop event with two files', () => {
 		cfDropMultipleFiles( fileField, filesPaths, filesTypes );
 	});
 

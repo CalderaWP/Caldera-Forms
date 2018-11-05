@@ -46,10 +46,9 @@ export const FileInput = (props) => {
 	 * @param accepted
 	 */
 	const onDrop = (accepted) => {
-
 		accepted.forEach(file => {
 			fieldValue.push(file);
-		})
+		});
 
 		onChange(fieldValue);
 

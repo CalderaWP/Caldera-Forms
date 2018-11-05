@@ -387,7 +387,7 @@ export const cfStarFieldValueIs = (fieldId, starValue,maxStars)=> {
 		const className = i <= starValue ? 'raty-star-on' : 'raty-star-off';
 		cfFieldGetWrapper(fieldId).find( `f.${className}[title="${i}"]` ).should( 'have.class',className );
 	};
-}
+};
 
 export const cfDropMultipleFiles = (fieldId, filesPaths, filesTypes)=> {
 
@@ -410,11 +410,11 @@ export const cfDropMultipleFiles = (fieldId, filesPaths, filesTypes)=> {
 		});
 
 	});
-		
 
-	cy.get('div[data-field=' + fieldId + ']').find( '.cf2-field.cf2-file' ).trigger('drop', dropEvent);
 
-}
+	return cfGetFileDropzone(fieldId).trigger('drop', dropEvent);
+
+};
 
 export const cfDropSingleFile = (fieldId, filesPaths, filesTypes)=> {
 
@@ -425,6 +425,11 @@ export const cfDropSingleFile = (fieldId, filesPaths, filesTypes)=> {
 		});
 	});
 
-	cy.get('div[data-field=' + fieldId + ']').find( '.cf2-field.cf2-file' ).trigger('drop', dropEvent);
+	//Cypress.$('div[data-field=' + fieldId + ']').find( '.cf2-field.cf2-file .cf2-dropzone' ).remove();
+	return cfGetFileDropzone(fieldId).trigger('drop', dropEvent);
 
-}
+};
+
+export const cfGetFileDropzone = ( fieldId => {
+	return cy.get('div[data-field=' + fieldId + ']').find( '.cf2-dropzone button' );
+});

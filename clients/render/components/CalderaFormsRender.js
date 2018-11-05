@@ -212,7 +212,6 @@ export class CalderaFormsRender extends Component {
 	 * @param {boolean} bubbleUp Optional. If true, the default, the new value is dispatched to CFState. If false it is not.
 	 */
 	setFieldValue(fieldIdAttr, newValue, bubbleUp = true) {
-
 		const isDirty = newValue !== this.state[fieldIdAttr];
 		this.setState(
 			{
