@@ -16,9 +16,6 @@ require_once $_tests_dir . '/includes/functions.php';
  */
 function _manually_load_plugin() {
 	require dirname( dirname( __FILE__ ) ) . '/caldera-core.php';
-	add_action( 'caldera_forms_includes_complete', function(){
-        (new \calderawp\calderaforms\Tests\Util\ImportForms() )->import();
-    });
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
