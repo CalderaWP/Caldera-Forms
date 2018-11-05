@@ -8,10 +8,6 @@ if ( ! $_tests_dir ) {
 	$_tests_dir = '/tmp/wordpress-tests-lib';
 }
 
-if( ! defined( 'NONCE_SALT' ) ){
-    define( 'NONCE_SALT', '12345apexsecurity' );
-}
-
 // Give access to tests_add_filter() function.
 require_once $_tests_dir . '/includes/functions.php';
 
@@ -20,7 +16,7 @@ require_once $_tests_dir . '/includes/functions.php';
  */
 function _manually_load_plugin() {
 	require dirname( dirname( __FILE__ ) ) . '/caldera-core.php';
-	add_action( 'plugins_loaded', function(){
+	add_action( 'caldera_forms_includes_complete', function(){
         (new \calderawp\calderaforms\Tests\Util\ImportForms() )->import();
     });
 }
