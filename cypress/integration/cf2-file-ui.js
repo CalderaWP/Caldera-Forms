@@ -12,18 +12,39 @@ import {
 	cfFieldUnCheckValue,
 	cfFieldIsNotDisabled,
 	cfFieldCheckAllValues,
-	cfFieldCalcFieldValueIs
+	cfFieldCalcFieldValueIs,
+	cfDropSingleFile,
+	cfDropMultipleFiles
 } from '../support/util';
 
 
-describe('Name of test', () => {
+describe('Test CF2 file field interface', () => {
 	beforeEach(() => {
-		visitPage('hello-world');
+		visitPage('conditionals-cf2-fields-2766');
 	});
 
-	const formId = 'cf111';
+	const formId = 'CF5bc8e4db50622';
+	const fileField = 'fld_9226671';
+	const filesPaths = [
+		'filesFieldTests/Fotolia_36098251_femme-automne-couronne-feuilles-et-chat-1.jpg',
+		'filesFieldTests/Fotolia_65129014-femme-fond-coucher-soleil-ete2.jpg'
+	];
+	const filesTypes = {
+		'jpg': 'image/jpg',
+		'png': 'image/png'
+	};
 
+	it( 'Check if field loaded in form', () => {
+		cfFieldIsVisible( fileField );
+	});
 
+	it( 'Drop event with one file', () => {
+		cfDropSingleFile( fileField, filesPaths, filesTypes );
+	});
+
+	it( 'Drop event with two files', () => {
+		cfDropMultipleFiles( fileField, filesPaths, filesTypes );
+	});
 
 	it( 'Can add an image and see preview', () => {
 		//Load form

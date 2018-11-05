@@ -388,3 +388,43 @@ export const cfStarFieldValueIs = (fieldId, starValue,maxStars)=> {
 		cfFieldGetWrapper(fieldId).find( `f.${className}[title="${i}"]` ).should( 'have.class',className );
 	};
 }
+
+export const cfDropMultipleFiles = (fieldId, filesPaths, filesTypes)=> {
+
+	let dropEvent = [];
+	filesPaths.forEach( file => {
+
+		//Set File Type
+		const fileExt = file.substr(file.length - 3);
+		const fileType = '';
+		/*if( fileExt === 'jpg' ){
+			fileType = filesTypes.jpg;
+		} else if ( fileExt === 'png' ) {
+			fileType = filesTypes.png;
+		}*/
+		//Push to DropEvent array
+		cy.fixture(file).then((picture) => {
+			return Cypress.Blob.base64StringToBlob(picture, filesTypes.jpg).then((blob) => {
+				dropEvent.push(blob);
+			});
+		});
+
+	});
+		
+
+	cy.get('div[data-field=' + fieldId + ']').find( '.cf2-field.cf2-file' ).trigger('drop', dropEvent);
+
+}
+
+export const cfDropSingleFile = (fieldId, filesPaths, filesTypes)=> {
+
+	const dropEvent = [];
+	cy.fixture(filesPaths[0]).then((picture) => {
+		return Cypress.Blob.base64StringToBlob(picture, filesTypes.jpg).then((blob) => {
+			dropEvent.push(blob);
+		});
+	});
+
+	cy.get('div[data-field=' + fieldId + ']').find( '.cf2-field.cf2-file' ).trigger('drop', dropEvent);
+
+}
