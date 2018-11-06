@@ -126,6 +126,7 @@ if (!version_compare(PHP_VERSION, '5.6.0', '>=')) {
 
     add_action('plugins_loaded', array('Caldera_Forms', 'get_instance'));
 
+
     add_filter( 'caldera_forms_render_assets_minify', '__return_false' );
 
     // Admin & Admin Ajax stuff.
@@ -193,7 +194,10 @@ add_action( 'caldera_forms_v2_init', function(\calderawp\calderaforms\cf2\Calder
 	$container->registerService(new \calderawp\calderaforms\cf2\Services\QueueSchedulerService(),true );
 
 	//Run the scheduler with CRON
-	$container->getService(\calderawp\calderaforms\cf2\Services\QueueSchedulerService::class)->runWithCron();
+    /** @var \calderawp\calderaforms\cf2\Jobs\Scheduler $scheduler */
+    $scheduler = $container->getService(\calderawp\calderaforms\cf2\Services\QueueSchedulerService::class);
+    $running = $scheduler->runWithCron();
+
 });
 
 

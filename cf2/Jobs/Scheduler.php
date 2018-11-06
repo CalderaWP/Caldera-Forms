@@ -56,10 +56,12 @@ class Scheduler
 	 * Run the queue with WP_Cron
 	 *
 	 * @since 1.8.0
+	 *
+	 * @return bool
 	 */
 	public function runWithCron()
 	{
-		$this->queue->cron(2);
+		return $this->queue->cron(2)->init();
 	}
 
 	/**
