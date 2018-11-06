@@ -24,8 +24,8 @@ class RunQueue extends Endpoint
         return [
 
             'methods' => 'POST',
-            'callback' => [$this, 'checkKeys'],
-            'permission_callback' => [$this, 'permissionsCallback' ],
+            'callback' => [$this, 'runQueue'],
+            'permission_callback' => [$this, 'checkKeys' ],
             'args' => [
                 'jobs' => [
                     'description' => __('Total jobs to run per back', 'caldera-forms'),
@@ -64,9 +64,9 @@ class RunQueue extends Endpoint
 		   ->runJobs($request['jobs']);
 
     	$statusCode = $totalJobs > 0 ? 201 : 200;
-        $r =  rest_ensure_response($totalJobs);
-        $r->set_status($statusCode);
-        return $r;
+        $response =  rest_ensure_response(['totalJobs' => $totalJobs]);
+		$response->set_status($statusCode);
+        return $response;
     }
 
 
