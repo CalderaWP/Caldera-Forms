@@ -60,6 +60,11 @@ class Caldera_Forms_Transient  {
 			$expires = absint( $expires );
 		}
 
+		//schedule delete with job manager
+		caldera_forms_get_v2_container()
+			->getService(\calderawp\calderaforms\cf2\Services\QueueSchedulerService::class)
+			->schedule( new \calderawp\calderaforms\cf2\Jobs\DeleteTransientJob($id), $expires );
+
 		return update_option( self::prefix( $id ), $data, false );
 
 	}
