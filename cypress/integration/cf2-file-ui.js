@@ -14,7 +14,10 @@ import {
 	cfFieldCheckAllValues,
 	cfFieldCalcFieldValueIs,
 	cfDropSingleFile,
-	cfDropMultipleFiles
+	cfDropMultipleFiles,
+	getCfForm,
+	cfFormHasFieldType,
+	cfGetFileDropzone
 } from '../support/util';
 
 
@@ -25,6 +28,7 @@ describe('Test CF2 file field interface', () => {
 
 	const formId = 'CF5bc8e4db50622';
 	const fileField = 'fld_9226671';
+	const type = 'file';
 	const filesPaths = [
 		'filesFieldTests/Fotolia_36098251_femme-automne-couronne-feuilles-et-chat-1.jpg',
 		'filesFieldTests/Fotolia_65129014-femme-fond-coucher-soleil-ete2.jpg'
@@ -38,12 +42,20 @@ describe('Test CF2 file field interface', () => {
 		cfFieldIsVisible( fileField );
 	});
 
-	it.only( 'Drop event with one file', () => {
+	it( 'Drop event with one file', () => {
 		cfDropSingleFile( fileField, filesPaths, filesTypes );
 	});
 
-	it.only( 'Drop event with two files', () => {
+	it( 'Drop event with two files', () => {
 		cfDropMultipleFiles( fileField, filesPaths, filesTypes );
+	});
+
+	it( 'Form contains a file field type' , () => {
+		cfFormHasFieldType( formId, type );
+	});
+
+	it( 'Test click on Dropzone', () => {
+		cfGetFileDropzone( fileField ).click({ force: true });
 	});
 
 	it( 'Can add an image and see preview', () => {

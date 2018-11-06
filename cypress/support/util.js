@@ -43,6 +43,26 @@ export const visitPage = (pageSlug) => {
 };
 
 /**
+ * Get the selector for a Caldera Forms Form by ID
+ *
+ * @param {String} formId CF Form ID, not ID attribute
+ * @return {String}
+ */
+export const getCfFormSelector = (formId) => {
+	return `[data-cf-form-id="${formId}"]`;
+};
+
+/**
+ * Get a Caldera Forms forms by ID
+ *
+ * @param {String} formId CF Form ID, not ID attribute
+ * @return {Cypress.Chainable<JQuery<HTMLElement>>}
+ */
+export const getCfForm = (formId) => {
+	return cy.get(getCfFormSelector(formId));
+};
+
+/**
  * Get a Caldera Forms field by ID
  *
  * @param {String} fieldId CF Field ID, not ID attribute
@@ -82,6 +102,18 @@ export const clearCfField = (fieldId) => {
  */
 export const cfFieldIsVisible = (fieldId) => {
 	return getCfField(fieldId).should('be.visible');
+};
+
+/**
+ * Check if Caldera Forms form contains a type of field
+ *
+
+ * @param {String} formId CF FormID, not ID attribute
+ * @param {String} type Type of field we want to check
+ * @return {Cypress.Chainable<JQuery<HTMLElement>>}
+ */
+export const cfFormHasFieldType = (formId, type) => {
+	return getCfForm(formId).find( `[type=${type}]` );
 };
 
 /**
