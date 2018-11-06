@@ -15,7 +15,9 @@ export const fileFieldConfigs  = {
 				{
 					multiple: 'false',
 					multiUploadText: 'false',
-					allowedTypes: 'false'
+					allowedTypes: 'false',
+					previewHeight: 24,
+					previewWidth: 24,
 				}
 		},
 	required_single_allow_png:
@@ -34,7 +36,8 @@ export const fileFieldConfigs  = {
 				{
 					multiple: 'false',
 					multiUploadText: 'false',
-					allowedTypes: 'image/png'
+					allowedTypes: 'image/png',
+
 				}
 		},
 	required_multiple_no_button_text:
@@ -53,7 +56,9 @@ export const fileFieldConfigs  = {
 				{
 					multiple: 'true',
 					multiUploadText: 'false',
-					allowedTypes: 'false'
+					allowedTypes: 'false',
+					previewHeight: 24,
+					previewWidth: 24,
 				}
 		},
 	required_multiple_has_button_text:
@@ -72,7 +77,9 @@ export const fileFieldConfigs  = {
 				{
 					multiple: 'true',
 					multiUploadText: 'The Default Text',
-					allowedTypes: 'false'
+					allowedTypes: 'false',
+					previewHeight: 24,
+					previewWidth: 24,
 				}
 		},
 	not_required_single:
@@ -91,7 +98,9 @@ export const fileFieldConfigs  = {
 				{
 					multiple: 'false',
 					multiUploadText: 'false',
-					allowedTypes: 'false'
+					allowedTypes: 'false',
+					previewHeight: 24,
+					previewWidth: 24,
 				}
 		},
 	not_required_multiple_no_button_text:
@@ -110,7 +119,9 @@ export const fileFieldConfigs  = {
 				{
 					multiple: 'true',
 					multiUploadText: 'false',
-					allowedTypes: 'false'
+					allowedTypes: 'false',
+					previewHeight: 24,
+					previewWidth: 24,
 				}
 		},
 	not_required_multiple_has_button_text:
@@ -129,7 +140,30 @@ export const fileFieldConfigs  = {
 				{
 					multiple: 'true',
 					multiUploadText: 'The Default Text',
-					allowedTypes: 'false'
+					allowedTypes: 'false',
+					previewHeight: 24,
+					previewWidth: 24,
+				}
+		},
+	width_40_height_20:
+		{
+			type: 'file',
+			outterIdAttr: 'cf2-width_40_height_20',
+			fieldId: 'width_40_height_20',
+			fieldLabel: 'Preview style set',
+			fieldCaption: '',
+			fieldPlaceHolder: '',
+			required: 'false',
+			fieldDefault: '',
+			fieldValue: '',
+			fieldIdAttr: 'width_40_height_20',
+			configOptions:
+				{
+					multiple: 'true',
+					multiUploadText: 'The Default Text',
+					allowedTypes: 'false',
+					previewHeight: 20,
+					previewWidth: 40,
 				}
 		}
 };

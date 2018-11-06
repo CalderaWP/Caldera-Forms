@@ -8,6 +8,7 @@ import {fileFieldConfigs} from "./Mocks/fileFieldConfigs";
 
 import React from 'react';
 import {MockRender} from "./Mocks/MockFileFieldRenderer";
+import {mount} from "enzyme/build";
 
 const handler = () => {
 };
@@ -25,7 +26,6 @@ describe('File Field ', () => {
 			expect(fileFieldConfigs[fieldId].hasOwnProperty('configOptions')).toBe(true);
 			expect(FileInput.fieldConfigToProps(fileFieldConfigs[fieldId]).hasOwnProperty('multiple')).toBe(true);
 			expect(FileInput.fieldConfigToProps(fileFieldConfigs[fieldId]).hasOwnProperty('multiUploadText')).toBe(true);
-			expect(FileInput.fieldConfigToProps(fileFieldConfigs[fieldId]).hasOwnProperty('accept')).toBe(false);
 		});
 	});
 
@@ -40,8 +40,6 @@ describe('File Field ', () => {
 
 	it.skip('Prepares props from field config that is required', () => {
 		const prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_multiple_has_button_text);
-		console.log(fileFieldConfigs);
-
 		expect(prepared.multiple).toEqual('true');
 		expect(prepared.field.hasOwnProperty('required')).toEqual(true);
 	});
@@ -49,6 +47,22 @@ describe('File Field ', () => {
 	it('Prepares props and sets multiple prop to false when it should', () => {
 		const prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_single_allow_png);
 		expect(prepared.multiple).toEqual('false');
+	});
+
+	it('Prepares props and sets previewStyle', () => {
+		const prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_single_allow_png);
+		expect(prepared.previewStyle).toEqual({
+			height: 24,
+			width: 24
+		});
+	});
+
+	it('Prepares props and sets previewStyle', () => {
+		const prepared = FileInput.fieldConfigToProps(fileFieldConfigs.width_40_height_20);
+		expect(prepared.previewStyle).toEqual({
+			height: 20,
+			width: 40
+		});
 	});
 
 	it.skip('Prepares props and sets the allowed types in inputProps when it should', () => {
@@ -74,7 +88,8 @@ describe('File Field ', () => {
 				/>).toJSON()
 			).toMatchSnapshot();
 		});
-	})
+	});
+
 });
 
 

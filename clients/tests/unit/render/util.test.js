@@ -8,5 +8,6 @@ describe(  'getFieldConfigBy', () => {
 	it ( 'finds no fields when searching by invalid field id', () => {
 		expect( getFieldConfigBy(formRenderTestProps.fieldsToControl, 'fieldId', 'fld_1' )).toBe( undefined )
 	});
+
 });
 

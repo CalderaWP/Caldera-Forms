@@ -180,7 +180,9 @@ class RenderFieldTest extends TestCase
     }
 
     /**
-     * @covers \calderawp\calderaforms\cf2\Fields\RenderField::getOuterIdAttr();
+     * @group now
+	 *
+	 * @covers \calderawp\calderaforms\cf2\Fields\RenderField::data();
      */
     public function testGetOuterIdAttr()
     {
@@ -191,9 +193,38 @@ class RenderFieldTest extends TestCase
         $this->assertEquals("cf2-$fieldId", $renderer->getOuterIdAttr() );
     }
 
+	/**
+	 * @covers \calderawp\calderaforms\cf2\Fields\RenderField::data();
+	 */
+	public function testPreviewSizeForFileFields(){
+		$field = $this->fieldForRenderFactory('width100_height_50');
+		$field[ 'type' ] = 'cf2_file';
+		$formIdAttr = 'cf1_1';
+		$renderer = new RenderField($formIdAttr,$field );
+		$data = $renderer->data();
+
+		$this->assertArrayHasKey('previewWidth',$data['configOptions' ] );
+		$this->assertArrayHasKey('previewHeight',$data['configOptions' ] );
+		$this->assertSame(100,$data['configOptions' ][ 'previewWidth'] );
+		$this->assertSame(50,$data['configOptions' ][ 'previewHeight'] );
+
+	}
+
+	/**
+	 * @covers \calderawp\calderaforms\cf2\Fields\RenderField::data();
+	 */
+	public function testPreviewSizeForFileFieldsDefaults(){
+		$fieldId = 'allows_png_only';
+		$field = $this->fieldForRenderFactory($fieldId);
+		$field[ 'type' ] = 'cf2_file';
+		$formIdAttr = 'cf1_1';
+		$renderer = new RenderField($formIdAttr,$field );
+		$data = $renderer->data();
 
 
-
+		$this->assertSame(24,$data['configOptions' ][ 'previewWidth'] );
+		$this->assertSame(24,$data['configOptions' ][ 'previewHeight'] );
+	}
     /**
      * @return array
      */

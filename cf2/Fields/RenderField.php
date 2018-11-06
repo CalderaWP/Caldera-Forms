@@ -122,14 +122,16 @@ class RenderField implements RenderFieldContract
             'fieldValue' => '',
             'fieldIdAttr' => $this->field['fieldIdAttr'],
             'configOptions' => []
-
         ];
+
         if( FileFieldType::getType() === $this->getType() ){
             $data['configOptions'] = [
                 'multiple'=> ! empty($this->field[ 'config' ]['multi_upload' ]) ? $this->field[ 'config' ]['multi_upload' ] : false,
                 'multiUploadText' => ! empty($this->field[ 'config' ]['multi_upload_text' ]) ? $this->field[ 'config' ]['multi_upload_text' ] : false,
                 'allowedTypes' => $this->getAllowedTypes(),
                 'control' => uniqid($this->getOuterIdAttr() ),
+				'previewWidth' => ! empty( $this->field[ 'config']['preview_width'] ) ? intval( $this->field[ 'config']['preview_width'] ) : 24,
+				'previewHeight' => ! empty( $this->field[ 'config']['preview_height'] ) ? intval( $this->field[ 'config']['preview_height'] ) : 24,
             ];
         }
 

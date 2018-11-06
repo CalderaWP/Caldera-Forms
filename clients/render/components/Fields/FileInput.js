@@ -214,10 +214,10 @@ FileInput.defaultProps = {
 	multiple: true,
 	className: 'cf2-file form-control',
 	previewStyle: {
-		height: '120',
-		width: '120'
+		height: '24',
+		width: '24'
 	},
-	accept: false,
+	accept: '',
 };
 
 /**
@@ -240,34 +240,29 @@ FileInput.fieldConfigToProps = (fieldConfig) => {
 		'previewStyle'
 	];
 	if (fieldConfig.hasOwnProperty('configOptions')) {
+		const {configOptions} = fieldConfig;
 		configOptionProps.forEach(key => {
-			props[key] = fieldConfig.configOptions[key];
+			props[key] = configOptions[key];
 
 		});
-		if (fieldConfig.configOptions.hasOwnProperty('allowedTypes')) {
+		if (configOptions.hasOwnProperty('allowedTypes')) {
 
 			props.inputProps = {
 				type: 'file',
-				accept: fieldConfig.configOptions.allowedTypes
+				accept: configOptions.allowedTypes
 			};
-			props.accept = fieldConfig.configOptions.allowedTypes;
+			props.accept = configOptions.allowedTypes;
 
 		} else {
 			props.accept = '';
 		}
-		delete(fieldConfig.configOptions);
+
+		props.previewStyle = {
+			height: configOptions.previewHeight ? configOptions.previewHeight : 24,
+			width: configOptions.previewWidth ? configOptions.previewWidth : 24
+		};
+
 	}
-	configOptionProps.forEach(key => {
-		if (!props.hasOwnProperty(key)) {
-			props[key] = "false";
-		}
-	});
+
 	return props;
 };
-
-
-describe( 'DOM testing of File Input', () => {
-	test( 'Josh\'s theory', () => {
-		//CalderaFormsFieldGroup
-	});
-})

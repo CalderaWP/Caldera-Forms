@@ -45,6 +45,7 @@ export class MockFileFieldRenderer extends React.Component {
 		const messageProp = {error,message};
 		let {field} = this.props;
 		field.isRequired = true;
+		field.fieldValue = value;
 		return (
 			<div>
 				<FileInput
@@ -57,7 +58,6 @@ export class MockFileFieldRenderer extends React.Component {
 					shouldDisable={shouldDisable}
 					isInvalid={isInvalid}
 					message={messageProp}
-					value={value}
 				/>
 			</div>
 		)

@@ -183,6 +183,27 @@ trait HasFileFieldConfigs
 							'allowed' => 'png,jpg',
 						),
 				),
+			'width100_height_50' =>
+				array (
+					'ID' => 'width100_height_50',
+					'type' => 'advanced_file',
+					'label' => 'Allows png jpg',
+					'slug' => 'allows_jpg_and_png',
+					'conditions' =>
+						array (
+							'type' => '',
+						),
+					'caption' => '',
+					'config' =>
+						array (
+							'custom_class' => '',
+							'multi_upload' => 1,
+							'multi_upload_text' => 'The Default Text',
+							'allowed' => 'png,jpg',
+							'preview_height' => '50',
+							'preview_width' => '100'
+						),
+				),
         );
     }
 
