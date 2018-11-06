@@ -5,6 +5,7 @@ namespace calderawp\calderaforms\cf2\RestApi;
 
 
 use calderawp\calderaforms\cf2\RestApi\File\CreateFile;
+use calderawp\calderaforms\cf2\RestApi\Queue\RunQueue;
 
 class Register implements CalderaRestApiContract
 {

@@ -7,9 +7,7 @@ class Test_Caldera_Forms_API extends Caldera_Forms_Test_Case
      * Compare the database abstraction to the forms API
      *
      * @since 1.7.0
-     *
-	 * @group now
-	 *
+     **
      * @covers Caldera_Forms_Forms::get_forms()
      * @covers Caldera_Forms_Forms::get_stored_forms()
      */

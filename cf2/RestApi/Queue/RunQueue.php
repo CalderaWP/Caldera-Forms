@@ -1,21 +1,17 @@
 <?php
 
 
-namespace calderawp\calderaforms\cf2\RestApi;
+namespace calderawp\calderaforms\cf2\RestApi\Queue;
 
 
-use calderawp\calderaforms\cf2\Exception;
-use calderawp\calderaforms\cf2\Fields\FieldTypes\FileFieldType;
-use calderawp\calderaforms\cf2\Fields\Handlers\Cf1FileUploader;
-use calderawp\calderaforms\cf2\Fields\Handlers\FileUpload;
+use calderawp\calderaforms\cf2\RestApi\AuthorizesRestApiRequestWithCfProKeys;
 use calderawp\calderaforms\cf2\RestApi\Endpoint;
 use calderawp\calderaforms\cf2\Services\QueueSchedulerService;
-use calderawp\calderaforms\cf2\Transients\Cf1TransientsApi;
-use calderawp\calderaforms\cf2\Fields\Handlers\UploaderContract;
+
 
 class RunQueue extends Endpoint
 {
-
+	use AuthorizesRestApiRequestWithCfProKeys;
 
 	public function getUri()
 	{
@@ -28,7 +24,7 @@ class RunQueue extends Endpoint
         return [
 
             'methods' => 'POST',
-            'callback' => [$this, 'runQueue'],
+            'callback' => [$this, 'checkKeys'],
             'permission_callback' => [$this, 'permissionsCallback' ],
             'args' => [
                 'jobs' => [
@@ -38,22 +34,15 @@ class RunQueue extends Endpoint
 					'sanitize_callback' => 'absint'
 
 				],
+				'public' => [
+					'type' => 'string',
+					'required' => false,
+					'default' => ''
+				]
             ]
         ];
     }
 
-    /**
-     * Permissions check for queue runner endpoint
-     *
-     * @since 1.8.0
-     *
-     * @param \WP_REST_Request $request Request object
-     *
-     * @return bool
-     */
-    public function permissionsCallback(\WP_REST_Request $request ){
-        return true;
-    }
 
     /**
      * Trigger queue manger from remote ping
