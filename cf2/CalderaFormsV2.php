@@ -6,7 +6,7 @@ namespace calderawp\calderaforms\cf2;
 
 use calderawp\calderaforms\cf2\Fields\FieldTypeFactory;
 use calderawp\calderaforms\cf2\Transients\Cf1TransientsApi;
-
+use calderawp\calderaforms\cf2\Services\ServiceContract;
 class CalderaFormsV2 extends \calderawp\CalderaContainers\Service\Container implements CalderaFormsV2Contract
 {
 
@@ -37,6 +37,40 @@ class CalderaFormsV2 extends \calderawp\CalderaContainers\Service\Container impl
 			return new FieldTypeFactory();
 		});
     }
+
+	/**
+	 * Register a service with container
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param ServiceContract $service The service to register
+	 *
+	 * @param boolean $isSingleton Is service a singleton?
+	 *
+	 * @return $this
+	 */
+    public function registerService( ServiceContract $service, $isSingleton ){
+		if (! $service->isSingleton()) {
+			$this->bind($service->getIdentifier(),  $service->register($this) );
+		}else{
+			$this->singleton($service->getIdentifier(), $service->register($this) );
+		}
+		return $this;
+	}
+
+
+	/**
+	 * Get service from container
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param string $identifier
+	 *
+	 * @return mixed
+	 */
+	public function getService($identifier){
+    	return $this->make($identifier);
+	}
 
 	/**
 	 * Set path to main plugin file
@@ -104,5 +138,12 @@ class CalderaFormsV2 extends \calderawp\CalderaContainers\Service\Container impl
 	public function getFieldTypeFactory()
 	{
 		return $this->make(FieldTypeFactory::class );
+	}
+
+	/** @inheritdoc */
+	public function getWpdb()
+	{
+		global $wpdb;
+		return $wpdb;
 	}
 }

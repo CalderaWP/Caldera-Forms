@@ -48,7 +48,10 @@
         "psr-4": {
             "calderawp\\calderaforms\\pro\\": "includes/cf-pro-client/classes/",
             "calderawp\\calderaforms\\cf2\\": "cf2"
-        }
+        },
+        "files" : [
+            "./cf2/functions.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

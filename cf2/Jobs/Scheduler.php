@@ -63,7 +63,7 @@ class Scheduler
 	}
 
 	/**
-	 *  Run jobs independently of WP_Cron
+	 * Run jobs independently of WP_Cron
 	 *
 	 * @since 1.8.0
 	 *

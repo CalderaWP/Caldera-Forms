@@ -25,7 +25,7 @@ class SchedulerTest extends TestCase
 	/** @inheritdoc */
 	public function setUp()
 	{
-		$this->callbackRan = false;
+		$this->callbackRan = FALSE;
 
 		parent::setUp();
 	}
@@ -36,8 +36,9 @@ class SchedulerTest extends TestCase
 	 *
 	 * @since 1.8.0
 	 */
-	public function callbackFunction(){
-		$this->callbackRan = true;
+	public function callbackFunction()
+	{
+		$this->callbackRan = TRUE;
 	}
 
 	/**
@@ -46,9 +47,10 @@ class SchedulerTest extends TestCase
 	 *
 	 * @covers MockQueueConnection::getRemainingJobCount()
 	 */
-	public function testMockConnection(){
+	public function testMockConnection()
+	{
 		$connection = new MockQueueConnection();
-		$connection->push( new MockJob() );
+		$connection->push(new MockJob());
 		$this->assertSame(1, $connection->getRemainingJobCount());
 	}
 
@@ -62,10 +64,11 @@ class SchedulerTest extends TestCase
 	{
 		$queue = new Queue(new MockQueueConnection());
 		$scheduler = new Scheduler($queue);
-		$this->assertInstanceOf( Worker::class, $scheduler->getWorker() );
+		$this->assertInstanceOf(Worker::class, $scheduler->getWorker());
 
 
 	}
+
 	/**
 	 *
 	 * @since 1.8.0
@@ -79,7 +82,7 @@ class SchedulerTest extends TestCase
 		$scheduler = new Scheduler($queue);
 		$job = new MockJob();
 		$job->setCallback($this->callbackFunction());
-		$scheduler->schedule($job );
+		$scheduler->schedule($job);
 		$scheduler->runWithCron();
 		$this->assertTrue($this->callbackRan);
 	}
@@ -90,13 +93,14 @@ class SchedulerTest extends TestCase
 	 *
 	 * @covers Scheduler::schedule()
 	 * @covers Scheduler::getWorker()
-	 */	public function testRunWithCron()
+	 */
+	public function testRunWithCron()
 	{
 		$queue = new Queue(new MockQueueConnection());
 		$scheduler = new Scheduler($queue);
 		$job = new MockJob();
 		$job->setCallback($this->callbackFunction());
-		$scheduler->schedule($job );
+		$scheduler->schedule($job);
 		$scheduler->runWithCron();
 		$this->assertTrue($this->callbackRan);
 	}
@@ -114,12 +118,12 @@ class SchedulerTest extends TestCase
 		$scheduler = new Scheduler($queue);
 		$job = new MockJob();
 		$job->setCallback($this->callbackFunction());
-		$scheduler->schedule($job );
-		$scheduler->schedule($job );
-		$scheduler->schedule($job );
+		$scheduler->schedule($job);
+		$scheduler->schedule($job);
+		$scheduler->schedule($job);
 		$numberOfJobs = 3;
-		$this->assertEquals($numberOfJobs, $scheduler->runJobs($numberOfJobs ) );
-		$this->assertEquals(0, $connection->getRemainingJobCount() );
+		$this->assertEquals($numberOfJobs, $scheduler->runJobs($numberOfJobs));
+		$this->assertEquals(0, $connection->getRemainingJobCount());
 	}
 
 
@@ -135,12 +139,12 @@ class SchedulerTest extends TestCase
 		$scheduler = new Scheduler($queue);
 		$job = new MockJob();
 		$job->setCallback($this->callbackFunction());
-		$scheduler->schedule($job );
-		$scheduler->schedule($job );
-		$scheduler->schedule($job );
+		$scheduler->schedule($job);
+		$scheduler->schedule($job);
+		$scheduler->schedule($job);
 		$numberOfJobs = 2;
-		$this->assertEquals($numberOfJobs,$scheduler->runJobs($numberOfJobs) );
-		$this->assertEquals(1, $connection->getRemainingJobCount() );
+		$this->assertEquals($numberOfJobs, $scheduler->runJobs($numberOfJobs));
+		$this->assertEquals(1, $connection->getRemainingJobCount());
 	}
 
 
@@ -156,12 +160,12 @@ class SchedulerTest extends TestCase
 		$scheduler = new Scheduler($queue);
 		$job = new MockJob();
 		$job->setCallback($this->callbackFunction());
-		$scheduler->schedule($job );
-		$scheduler->schedule($job );
-		$scheduler->schedule($job );
+		$scheduler->schedule($job);
+		$scheduler->schedule($job);
+		$scheduler->schedule($job);
 		$numberOfJobs = 5;
-		$this->assertEquals(3,$scheduler->runJobs($numberOfJobs) );
-		$this->assertEquals(0, $connection->getRemainingJobCount() );
+		$this->assertEquals(3, $scheduler->runJobs($numberOfJobs));
+		$this->assertEquals(0, $connection->getRemainingJobCount());
 	}
 
 	/**
@@ -176,15 +180,15 @@ class SchedulerTest extends TestCase
 		$scheduler = new Scheduler($queue);
 		$job = new MockJob();
 		$job->setCallback($this->callbackFunction());
-		$scheduler->schedule($job );
-		$scheduler->schedule($job );
-		$scheduler->schedule($job );
+		$scheduler->schedule($job);
+		$scheduler->schedule($job);
+		$scheduler->schedule($job);
 		$numberOfJobs = 2;
-		$this->assertEquals($numberOfJobs,$scheduler->runJobs($numberOfJobs) );
-		$this->assertEquals(1, $connection->getRemainingJobCount() );
+		$this->assertEquals($numberOfJobs, $scheduler->runJobs($numberOfJobs));
+		$this->assertEquals(1, $connection->getRemainingJobCount());
 
-		$this->assertEquals(1,$scheduler->runJobs($numberOfJobs) );
-		$this->assertEquals(0, $connection->getRemainingJobCount() );
+		$this->assertEquals(1, $scheduler->runJobs($numberOfJobs));
+		$this->assertEquals(0, $connection->getRemainingJobCount());
 
 	}
 

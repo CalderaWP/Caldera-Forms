@@ -10,7 +10,12 @@ class MockJob extends Job
 {
 
 	protected $callBackFunc;
+	protected $id;
 
+	public function __construct($id = null)
+	{
+		$this->id = $id;
+	}
 
 	public function setCallback($callBackFunc){
 		$this->callBackFunc = $callBackFunc;
