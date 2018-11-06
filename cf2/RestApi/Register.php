@@ -41,6 +41,7 @@ class Register implements CalderaRestApiContract
     public function initEndpoints()
     {
          (new CreateFile() )->add_routes($this->getNamespace());
+         (new RunQueue() )->add_routes($this->getNamespace());
          return $this;
     }
 
