@@ -4,7 +4,7 @@
  * @return \calderawp\calderaforms\cf2\CalderaFormsV2Contract
  */
 function caldera_forms_get_v2_container(){
-	var_dump(__FILE__);exit;
+
 	static $container;
 	if( ! $container ){
 		$container = new \calderawp\calderaforms\cf2\CalderaFormsV2();
