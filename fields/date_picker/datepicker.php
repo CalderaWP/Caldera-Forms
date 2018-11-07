@@ -10,7 +10,7 @@ $attrs = array(
 	'data-field' => $field_base_id,
 	'class' => $field_class . ' cfdatepicker is-cfdatepicker',
 	'data-date-format' => $field['config']['format'],
-
+    'data-cfdatepicker' => 'true'
 );
 
 $required = '';
