@@ -16,6 +16,7 @@ export const fileFieldConfigs  = {
 					multiple: 'false',
 					multiUploadText: 'false',
 					allowedTypes: 'false',
+          usePreviews: true,
 					previewHeight: 24,
 					previewWidth: 24,
 				}
@@ -57,6 +58,7 @@ export const fileFieldConfigs  = {
 					multiple: 'true',
 					multiUploadText: 'false',
 					allowedTypes: 'false',
+          usePreviews: true,
 					previewHeight: 24,
 					previewWidth: 24,
 				}
@@ -78,6 +80,7 @@ export const fileFieldConfigs  = {
 					multiple: 'true',
 					multiUploadText: 'The Default Text',
 					allowedTypes: 'false',
+					usePreviews: true,
 					previewHeight: 24,
 					previewWidth: 24,
 				}
@@ -99,6 +102,7 @@ export const fileFieldConfigs  = {
 					multiple: 'false',
 					multiUploadText: 'false',
 					allowedTypes: 'false',
+          usePreviews: true,
 					previewHeight: 24,
 					previewWidth: 24,
 				}
@@ -120,6 +124,7 @@ export const fileFieldConfigs  = {
 					multiple: 'true',
 					multiUploadText: 'false',
 					allowedTypes: 'false',
+          usePreviews: true,
 					previewHeight: 24,
 					previewWidth: 24,
 				}
@@ -141,6 +146,7 @@ export const fileFieldConfigs  = {
 					multiple: 'true',
 					multiUploadText: 'The Default Text',
 					allowedTypes: 'false',
+          usePreviews: true,
 					previewHeight: 24,
 					previewWidth: 24,
 				}
@@ -162,6 +168,7 @@ export const fileFieldConfigs  = {
 					multiple: 'true',
 					multiUploadText: 'The Default Text',
 					allowedTypes: 'false',
+          usePreviews: true,
 					previewHeight: 20,
 					previewWidth: 40,
 				}

@@ -203,10 +203,12 @@ class RenderFieldTest extends TestCase
 		$renderer = new RenderField($formIdAttr,$field );
 		$data = $renderer->data();
 
+        $this->assertArrayHasKey('usePreviews',$data['configOptions' ] );
 		$this->assertArrayHasKey('previewWidth',$data['configOptions' ] );
 		$this->assertArrayHasKey('previewHeight',$data['configOptions' ] );
-		$this->assertSame(100,$data['configOptions' ][ 'previewWidth'] );
-		$this->assertSame(50,$data['configOptions' ][ 'previewHeight'] );
+        $this->assertSame(true,$data[ 'configOptions' ][ 'usePreviews' ] );
+		$this->assertSame(100,$data[ 'configOptions' ][ 'previewWidth' ] );
+		$this->assertSame(50,$data[ 'configOptions' ][ 'previewHeight' ] );
 
 	}
 

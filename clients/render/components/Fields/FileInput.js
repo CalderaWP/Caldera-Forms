@@ -16,8 +16,8 @@ import Dropzone from 'react-dropzone';
  */
 export const FileInput = (props) => {
 
+	const { shouldDisable, accept, field, describedById, onChange, style, className, multiple, multiUploadText, inputProps, text, previewStyles } = props;
 
-	const {shouldDisable, accept, field, describedById, onChange, style, className, multiple, multiUploadText, inputProps, text, previewStyle} = props;
 	const {
 		outterIdAttr,
 		fieldId,
@@ -29,6 +29,8 @@ export const FileInput = (props) => {
 		fieldIdAttr,
 		isInvalid
 	} = field;
+
+	const { usePreviews, previewHeight, previewWidth } = previewStyles;
 
 	let {
 		fieldValue
@@ -85,71 +87,79 @@ export const FileInput = (props) => {
 	inputProps.id = fieldIdAttr;
 
 	return (
+
 		<div className="cf2-dropzone" data-field={fieldId}>
-			<Dropzone
-				onDrop={onDrop}
-				className={className}
-				accept={'string' === typeof  accept ? accept : ''}
-				style={style}
-				disabled={shouldDisable}
-				inputProps={inputProps}
-				disableClick={shouldDisable}
-				multiple={multiple}
-			>
-				<button
-					type="button"
-					className="btn btn-block"
-					aria-controls={buttonControls}
-					aria-expanded={ulExpanded}
+      {multiple === false &&
+      fieldValue.length > 0 ? (
+				<div>{text.multipleDisabled}</div>
+        ) : (
+				<Dropzone
+					onDrop={onDrop}
+					className={className}
+					accept={'string' === typeof  accept ? accept : ''}
+					style={style}
+					disabled={shouldDisable}
+					inputProps={inputProps}
+					disableClick={shouldDisable}
+					multiple={multiple}
 				>
-					{text.buttonText}
-				</button>
-			</Dropzone>
-			{fieldValue.length > 0 &&
-			<ul
-				id="cf2-list-files"
-				role="list"
-			>
-				{
-					fieldValue.map(
-						(file, index) =>
-							<li
-								id={removeFileID + index}
-								key={index}
-								className="cf2-file-listed"
-								role="listitem"
-								aria-posinset={index}
-							>
+					<button
+						type="button"
+						className="btn btn-block"
+						aria-controls={buttonControls}
+						aria-expanded={ulExpanded}
+					>
+						{text.buttonText}
+					</button>
+				</Dropzone>
+				)}
 
-								<button
-									type="button"
-									aria-controls={removeFileID + index}
-									data-file={removeFileID + index}
-									className="cf2-file-remove"
-									onClick={(e) => removeFile(e, file)}
+      {usePreviews === true &&
+				fieldValue.length > 0 &&
+				<ul
+					id="cf2-list-files"
+					role="list"
+				>
+					{
+						fieldValue.map(
+							(file, index) =>
+								<li
+									id={removeFileID + index}
+									key={index}
+									className="cf2-file-listed"
+									role="listitem"
+									aria-posinset={index}
 								>
-									<span className="screen-reader-text sr-text">{text.removeFile}</span>
-								</button>
 
-								<div>
-									{file.type.startsWith("image") === true
-										? <img
-											className="cf2-file-field-img-preview"
-											width={previewStyle.width}
-											height={previewStyle.height}
-											src={file.preview}
-											alt={file.name}
-										/>
-										: <span>{file.name}</span>
-									}
-									<br/>
-									<span className="cf2-file-data"> {file.type} - {file.size} bytes</span>
-								</div>
-							</li>
-					)
-				}
-			</ul>
-			}
+									<button
+										type="button"
+										aria-controls={removeFileID + index}
+										data-file={removeFileID + index}
+										className="cf2-file-remove"
+										onClick={(e) => removeFile(e, file)}
+									>
+										<span className="screen-reader-text sr-text">{text.removeFile}</span>
+									</button>
+
+									<div>
+										{file.type.startsWith("image") === true
+											? <img
+												className="cf2-file-field-img-preview"
+												width={previewWidth}
+												height={previewHeight}
+												src={file.preview}
+												alt={file.name}
+											/>
+											: <span>{file.name}</span>
+										}
+										<br/>
+										<span className="cf2-file-data"> {file.type} - {file.size} bytes</span>
+									</div>
+								</li>
+						)
+					}
+				</ul>
+      }
 		</div>
 
 	)
@@ -171,23 +181,21 @@ FileInput.propTypes = {
 	describedById: PropTypes.string,
 	multiple: PropTypes.oneOfType([
 		PropTypes.bool,
-		PropTypes.string
+		PropTypes.number
 	]),
 	text: PropTypes.object,
 	multiUploadText: PropTypes.string,
 	message: PropTypes.shape({
-		error: PropTypes.boolean,
+		error: PropTypes.bool,
 		message: PropTypes.string
 	}),
 	style: PropTypes.object,
-	previewStyle: PropTypes.object,
+  usePreviews:  PropTypes.bool,
+	previewWidth: PropTypes.number,
+  previewHeight: PropTypes.number,
 	inputProps: PropTypes.object,
 	className: PropTypes.string,
-	accept: PropTypes.oneOfType([
-		PropTypes.array,
-		PropTypes.string,
-		PropTypes.bool
-	]),
+	accept: 	PropTypes.string
 };
 
 /**
@@ -204,20 +212,15 @@ FileInput.defaultProps = {
 	},
 	text: {
 		buttonText: 'Try dropping some files here, or click to select files to upload.',
-		removeFile: 'Remove file'
+		removeFile: 'Remove file',
+		multipleDisabled: 'Only one file upload allowed'
 	},
 	multiUploadText: 'Try dropping some files here, or click to select files to upload.',
 	inputProps: {
 		type: 'file'
 	},
 	disableClick: false,
-	multiple: true,
 	className: 'cf2-file form-control',
-	previewStyle: {
-		height: '24',
-		width: '24'
-	},
-	accept: '',
 };
 
 /**
@@ -236,15 +239,16 @@ FileInput.fieldConfigToProps = (fieldConfig) => {
 	const configOptionProps = [
 		'multiple',
 		'multiUploadText',
-		'text',
-		'previewStyle'
+		'text'
 	];
 	if (fieldConfig.hasOwnProperty('configOptions')) {
-		const {configOptions} = fieldConfig;
-		configOptionProps.forEach(key => {
-			props[key] = configOptions[key];
 
-		});
+    const {configOptions} = fieldConfig;
+
+    configOptionProps.forEach(key => {
+        props[key] = configOptions[key];
+    });
+
 		if (configOptions.hasOwnProperty('allowedTypes')) {
 
 			props.inputProps = {
@@ -257,10 +261,28 @@ FileInput.fieldConfigToProps = (fieldConfig) => {
 			props.accept = '';
 		}
 
-		props.previewStyle = {
-			height: configOptions.previewHeight ? configOptions.previewHeight : 24,
-			width: configOptions.previewWidth ? configOptions.previewWidth : 24
-		};
+    if (fieldConfig.configOptions.hasOwnProperty('multiple')) {
+      if(fieldConfig.configOptions.multiple === 1 ) {
+        props.multiple = true;
+      }
+    } else {
+      props.multiple = false;
+    }
+
+    if (configOptions.hasOwnProperty('usePreviews')) {
+
+      if ( configOptions.usePreviews === 1 ) {
+        props.previewStyles = {
+          usePreviews: true,
+          previewWidth: configOptions.previewWidth,
+          previewHeight: configOptions.previewHeight
+        }
+      } else {
+        props.previewStyles = {
+          usePreviews: configOptions.usePreviews
+        }
+      }
+    }
 
 	}
 

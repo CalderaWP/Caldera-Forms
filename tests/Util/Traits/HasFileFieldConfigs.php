@@ -200,6 +200,7 @@ trait HasFileFieldConfigs
 							'multi_upload' => 1,
 							'multi_upload_text' => 'The Default Text',
 							'allowed' => 'png,jpg',
+							'use_image_previews'  =>  true,
 							'preview_height' => '50',
 							'preview_width' => '100'
 						),

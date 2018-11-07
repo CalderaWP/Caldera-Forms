@@ -49,7 +49,20 @@
     </div>
 </div>
 
-<div class="caldera-config-group" id="{{_id}}preview_height">
+
+<div class="caldera-config-group">
+    <label role="presentation"></label>
+    <div class="caldera-config-field">
+        <label for="{{_id}}_use_image_previews"><input id="{{_id}}_use_image_previews" type="checkbox" class="field-config"
+                                                  name="{{_name}}[use_image_previews]" value="1" {{#if
+                                                       use_image_previews}}checked="checked" {{/if}}>
+            <?php echo esc_html__('Use image previews', 'caldera-forms'); ?>
+        </label>
+    </div>
+</div>
+
+
+<div class="caldera-config-group" id="{{_id}}_previews_height_wrap">
     <label for="{{_id}}preview_height">
 		<?php echo esc_html__('Image Preview Height', 'caldera-forms'); ?>
     </label>
@@ -64,9 +77,11 @@
                 name="{{_name}}[preview_height]"
                 value="{{#if preview_height}}{{preview_height}}{{/if}}">
     </div>
+
 </div>
 
-<div class="caldera-config-group" id="{{_id}}preview_width">
+
+<div class="caldera-config-group" id="{{_id}}_previews_width_wrap">
     <label for="{{_id}}preview_width">
 		<?php echo esc_html__('Image Preview Width', 'caldera-forms'); ?>
     </label>
@@ -88,15 +103,26 @@
 {{#script}}
 jQuery(function($){
 
+//Multiple button text
 $('#{{_id}}_allow_multiple').change(function(){
-
-if( $(this).prop('checked') ){
-$('#{{_id}}_allow_multiple_text_wrap').show();
-}else{
-$('#{{_id}}_allow_multiple_text_wrap').hide();
-}
+    if( $(this).prop('checked') ){
+        $('#{{_id}}_allow_multiple_text_wrap').show();
+    }else{
+        $('#{{_id}}_allow_multiple_text_wrap').hide();
+    }
 });
-
 $('#{{_id}}_allow_multiple').trigger('change');
+
+//Image previews sizes
+$('#{{_id}}_use_image_previews').change(function(){
+    if( $(this).prop('checked') ){
+        $('#{{_id}}_previews_height_wrap, #{{_id}}_previews_width_wrap').show();
+    }else{
+        $('#{{_id}}_previews_height_wrap, #{{_id}}_previews_width_wrap').hide();
+    }
+});
+$('#{{_id}}_use_image_previews').trigger('change');
+
+
 });
 {{/script}}

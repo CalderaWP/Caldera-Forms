@@ -50,10 +50,11 @@ describe('File Field ', () => {
 	});
 
 	it('Prepares props and sets previewStyle', () => {
-		const prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_single_allow_png);
-		expect(prepared.previewStyle).toEqual({
-			height: 24,
-			width: 24
+		const prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_single);
+		expect(prepared.previewStyles).toEqual({
+			usePreviews: true,
+			previewHeight: 24,
+			previewWidth: 24
 		});
 	});
 
