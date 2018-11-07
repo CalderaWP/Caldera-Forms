@@ -114,8 +114,7 @@ export const FileInput = (props) => {
 				</Dropzone>
 				)}
 
-      {usePreviews === true &&
-				fieldValue.length > 0 &&
+      {fieldValue.length > 0  &&
 				<ul
 					id="cf2-list-files"
 					role="list"
@@ -142,15 +141,17 @@ export const FileInput = (props) => {
 									</button>
 
 									<div>
-										{file.type.startsWith("image") === true
-											? <img
+										{file.type.startsWith("image") === true &&
+                    	usePreviews === true ?
+											<img
 												className="cf2-file-field-img-preview"
 												width={previewWidth}
 												height={previewHeight}
 												src={file.preview}
 												alt={file.name}
 											/>
-											: <span>{file.name}</span>
+											:
+											<span>{file.name}</span>
 										}
 										<br/>
 										<span className="cf2-file-data"> {file.type} - {file.size} bytes</span>
