@@ -75,7 +75,7 @@
         "test:delete": "bash ./bin/delete-test-forms.sh",
         "wp:config": "docker-compose run --rm cli wp rewrite structure '/%postname%/'",
         "wp:start": "docker-compose up -d",
-        "wp:tests": "docker-compose run --rm wordpress_phpunit phpunit --configuration phpunit-integration.xml.dist",
+        "wp:tests": "docker-compose run --rm wordpress_phpunit phpunit --configuration phpunit-integration.xml.dist --group=now",
         "wp:destroy": "docker-compose rm --stop --force",
         "test:unit": "phpunit --configuration phpunit-unit.xml.dist"
     }

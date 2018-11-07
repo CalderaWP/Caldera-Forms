@@ -25,27 +25,34 @@ class Test_Caldera_Forms_API extends Caldera_Forms_Test_Case
 
 
     /**
-     * Make sure forms added on the caldera_forms_get_forms fitler work
+     * Make sure forms added on the caldera_forms_get_forms filter work
      *
      * @since 1.7.0
      *
-     * covers caldera_forms_get_forms filter
+	 * @group now
+     * @covers caldera_forms_get_forms filter
      * @covers Caldera_Forms_Forms::get_forms()
      */
     public function testFilterAddedForms(){
-        $this->assertCount(2, Caldera_Forms_Forms::get_forms(false, false ) );
+        $this->assertCount(0, Caldera_Forms_Forms::get_forms(false, true ) );
     }
 
     /**
      * Test forms list without details
      *
      * @since 1.7.0
+	 *
+	 * @group now
      *
      * @covers Caldera_Forms_Forms::get_forms()
      * @covers Caldera_Forms_Forms::get_stored_forms()
      */
     public function testGetFormsNoDetails()
     {
+		$forms = Caldera_Forms_Forms::get_forms(false,true );
+		$this->assertEmpty($forms);
+		$this->assertTrue( is_array($forms));
+
         $form_one_id = $this->import_autoresponder_form();
         $form_two_id = $this->import_contact_form();
         $forms = Caldera_Forms_Forms::get_forms(false,true );
@@ -68,6 +75,7 @@ class Test_Caldera_Forms_API extends Caldera_Forms_Test_Case
     /**
      * Test forms list with details
      *
+	 * @group now
      * @since 1.7.0
      *
      * @covers Caldera_Forms_Forms::get_forms()
@@ -75,6 +83,12 @@ class Test_Caldera_Forms_API extends Caldera_Forms_Test_Case
      */
     public function testGetFormsWithDetails()
     {
+
+		//https://github.com/CalderaWP/Caldera-Forms/issues/2736#issuecomment-436678659
+		$forms = Caldera_Forms_Forms::get_forms(true,true );
+		$this->assertEmpty($forms);
+		$this->assertTrue( is_array($forms));
+
         $form_one_id = $this->import_autoresponder_form();
         $form_two_id = $this->import_contact_form();
         $forms = Caldera_Forms_Forms::get_forms(true,true);
@@ -155,5 +169,8 @@ class Test_Caldera_Forms_API extends Caldera_Forms_Test_Case
         }
         $this->assertSame($looped, count($form['fields']));
     }
+
+
+
 
 }
