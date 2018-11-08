@@ -16,7 +16,7 @@ import Dropzone from 'react-dropzone';
  */
 export const FileInput = (props) => {
 
-	const { shouldDisable, accept, field, describedById, onChange, style, className, multiple, multiUploadText, inputProps, text, previewStyles } = props;
+	const { shouldDisable, onChange, accept, field, describedById, style, className, multiple, multiUploadText, inputProps, text, usePreviews, previewHeight, previewWidth } = props;
 
 	const {
 		outterIdAttr,
@@ -27,51 +27,9 @@ export const FileInput = (props) => {
 		fieldPlaceHolder,
 		fieldDefault,
 		fieldIdAttr,
-		isInvalid
-	} = field;
-
-	const { usePreviews, previewHeight, previewWidth } = previewStyles;
-
-	let {
+		isInvalid,
 		fieldValue
 	} = field;
-
-	if (Array.isArray(fieldValue) === false) {
-		fieldValue = [];
-	}
-
-	/**
-	 * Handle a file being added
-	 *
-	 * @since 1.8.0
-	 *
-	 * @param accepted
-	 */
-	const onDrop = (accepted) => {
-		accepted.forEach(file => {
-			fieldValue.push(file);
-		});
-
-		onChange(fieldValue);
-
-	};
-
-	/**
-	 * Handle a file being removed
-	 *
-	 * @since 1.8.0
-	 *
-	 * @param e
-	 * @param file
-	 */
-	const removeFile = (e, file) => {
-
-		const index = fieldValue.indexOf(file);
-		fieldValue.splice(index, 1);
-
-		onChange(fieldValue);
-
-	};
 
 	let ulExpanded = fieldValue.length > 0;
 	if (fieldValue.length > 0) {
@@ -94,7 +52,7 @@ export const FileInput = (props) => {
 				<div>{text.multipleDisabled}</div>
         ) : (
 				<Dropzone
-					onDrop={onDrop}
+					onDrop={onChange}
 					className={className}
 					accept={'string' === typeof  accept ? accept : ''}
 					style={style}
@@ -135,7 +93,7 @@ export const FileInput = (props) => {
 										aria-controls={removeFileID + index}
 										data-file={removeFileID + index}
 										className="cf2-file-remove"
-										onClick={(e) => removeFile(e, file)}
+										onClick={(e) => onChange(e, file)}
 									>
 										<span className="screen-reader-text sr-text">{text.removeFile}</span>
 									</button>
@@ -273,15 +231,15 @@ FileInput.fieldConfigToProps = (fieldConfig) => {
     if (configOptions.hasOwnProperty('usePreviews')) {
 
       if ( configOptions.usePreviews === 1 ) {
-        props.previewStyles = {
-          usePreviews: true,
-          previewWidth: configOptions.previewWidth,
-          previewHeight: configOptions.previewHeight
-        }
+
+				props.usePreviews=  true;
+				props.previewWidth = configOptions.previewWidth;
+				props.previewHeight = configOptions.previewHeight;
+
       } else {
-        props.previewStyles = {
-          usePreviews: configOptions.usePreviews
-        }
+
+				props.usePreviews = configOptions.usePreviews;
+
       }
     }
 

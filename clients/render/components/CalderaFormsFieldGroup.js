@@ -65,7 +65,9 @@ export const CalderaFormsFieldGroup = (props) => {
 					inputProps={fileProps.inputProps}
 					className={className}
 					accept={fileProps.accept}
-					previewStyles={fileProps.previewStyles}
+          usePreviews={fileProps.usePreviews}
+          previewHeight={fileProps.previewHeight}
+          previewWidth={fileProps.previewWidth}
 					multiple={fileProps.multiple}
 				/>
 			case'text':

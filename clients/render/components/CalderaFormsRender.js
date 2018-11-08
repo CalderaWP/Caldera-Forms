@@ -245,7 +245,42 @@ export class CalderaFormsRender extends Component {
 		if (!handlers.hasOwnProperty(fieldIdAttr)) {
 			switch (this.getFieldConfig(fieldIdAttr).type) {
 				case 'file':
-					handlers[fieldIdAttr] = (newValue) => this.setFieldValue(fieldIdAttr, newValue);
+					handlers[fieldIdAttr] = (accepted, rejected) => {
+
+            let fieldValue = this.getFieldValue(fieldIdAttr);
+
+						if( Array.isArray(accepted) === true && Array.isArray(rejected) === true ) { // Handle accepted and rejected files
+
+              if(Array.isArray(fieldValue) === false){
+                fieldValue = [];
+              }
+
+              if( accepted.length > 0 ) {
+                accepted.forEach(file => {
+                  fieldValue.push(file);
+                });
+                this.setFieldValue(fieldIdAttr, fieldValue );
+              }
+
+              if( rejected.length > 0 ) {
+                const rejectedTypes = [];
+                rejected.forEach( file => {
+                  rejectedTypes.push(file.type);
+                })
+                const messageText = 'These types of files are not allowed : ' + rejectedTypes;
+                this.addFieldMessage(fieldIdAttr, messageText, false )
+              }
+
+						} else if ( typeof(accepted) === 'object' && accepted.target.className === "cf2-file-remove" ) { //Remove a File form fieldValue
+
+							const index = fieldValue.indexOf(rejected);
+							fieldValue.splice(index, 1);
+
+              this.setFieldValue(fieldIdAttr, fieldValue );
+						}
+
+
+          }
 					break;
 				default:
 					handlers[fieldIdAttr] = (event) => this.setFieldValue(fieldIdAttr, event.target.value);
