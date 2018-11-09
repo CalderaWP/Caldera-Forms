@@ -31,14 +31,7 @@ export const FileInput = (props) => {
 		fieldValue
 	} = field;
 
-	let ulExpanded = fieldValue.length > 0;
-	if (fieldValue.length > 0) {
-		ulExpanded = true;
-	} else {
-		ulExpanded = false;
-	}
-
-
+	const valueSet = fieldValue.length > 0;
 	const removeFileID = fieldIdAttr + '_file_';
 	const buttonControls = fieldIdAttr + ', cf2-list-files';
 
@@ -65,14 +58,14 @@ export const FileInput = (props) => {
 						type="button"
 						className="btn btn-block"
 						aria-controls={buttonControls}
-						aria-expanded={ulExpanded}
+						aria-expanded={valueSet}
 					>
 						{text.buttonText}
 					</button>
 				</Dropzone>
 				)}
 
-      {fieldValue.length > 0  &&
+      {valueSet  &&
 				<ul
 					id="cf2-list-files"
 					role="list"
@@ -99,8 +92,8 @@ export const FileInput = (props) => {
 									</button>
 
 									<div>
-										{file.type.startsWith("image") === true &&
-                    	usePreviews === true ?
+										{file.type.startsWith("image") &&
+                    	usePreviews ?
 											<img
 												className="cf2-file-field-img-preview"
 												width={previewWidth}
@@ -154,7 +147,10 @@ FileInput.propTypes = {
   previewHeight: PropTypes.number,
 	inputProps: PropTypes.object,
 	className: PropTypes.string,
-	accept: 	PropTypes.string
+	accept: 	PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.string
+  ]),
 };
 
 /**
