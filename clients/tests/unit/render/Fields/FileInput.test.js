@@ -46,24 +46,23 @@ describe('File Field ', () => {
 
 	it('Prepares props and sets multiple prop to false when it should', () => {
 		const prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_single_allow_png);
-		expect(prepared.multiple).toEqual('false');
+		expect(prepared.multiple).toEqual(false);
 	});
 
-	it('Prepares props and sets previewStyle', () => {
+	it('Prepares props and sets Previews(false) props', () => {
 		const prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_single);
-		expect(prepared.previewStyles).toEqual({
-			usePreviews: true,
-			previewHeight: 24,
-			previewWidth: 24
-		});
+		expect(prepared.usePreviews).toEqual( false );
 	});
+
+  it('Prepares props and sets Previews(true) props', () => {
+    const prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_single_allow_png);
+    expect(prepared.usePreviews).toEqual( true );
+  });
 
 	it('Prepares props and sets previewStyle', () => {
 		const prepared = FileInput.fieldConfigToProps(fileFieldConfigs.width_40_height_20);
-		expect(prepared.previewStyle).toEqual({
-			height: 20,
-			width: 40
-		});
+    expect(prepared.previewHeight).toEqual( 20 );
+    expect(prepared.previewWidth).toEqual( 40 );
 	});
 
 	it.skip('Prepares props and sets the allowed types in inputProps when it should', () => {

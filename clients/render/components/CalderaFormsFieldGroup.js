@@ -69,6 +69,7 @@ export const CalderaFormsFieldGroup = (props) => {
           previewHeight={fileProps.previewHeight}
           previewWidth={fileProps.previewWidth}
 					multiple={fileProps.multiple}
+					multiUploadText={fileProps.multiUploadText}
 				/>
 			case'text':
 			default:

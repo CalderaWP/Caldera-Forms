@@ -26,14 +26,14 @@ exports[`File Field  Matches snapshot for not_required_multiple_has_button_text 
       className="btn btn-block"
       type="button"
     >
-      Try dropping some files here, or click to select files to upload.
+      The Default Text
     </button>
     <input
       accept=""
       autoComplete="off"
       disabled={false}
       id="not_required_multiple_has_button_text"
-      multiple="true"
+      multiple={true}
       onChange={[Function]}
       style={
         Object {
@@ -78,14 +78,14 @@ exports[`File Field  Matches snapshot for not_required_multiple_no_button_text 1
       className="btn btn-block"
       type="button"
     >
-      Try dropping some files here, or click to select files to upload.
+      The Default Text
     </button>
     <input
       accept=""
       autoComplete="off"
       disabled={false}
       id="not_required_multiple_no_button_text"
-      multiple="true"
+      multiple={true}
       onChange={[Function]}
       style={
         Object {
@@ -130,14 +130,14 @@ exports[`File Field  Matches snapshot for not_required_single 1`] = `
       className="btn btn-block"
       type="button"
     >
-      Try dropping some files here, or click to select files to upload.
+      The Default Text
     </button>
     <input
       accept=""
       autoComplete="off"
       disabled={false}
       id="not_required_single"
-      multiple="true"
+      multiple={true}
       onChange={[Function]}
       style={
         Object {
@@ -182,14 +182,14 @@ exports[`File Field  Matches snapshot for required_multiple_has_button_text 1`] 
       className="btn btn-block"
       type="button"
     >
-      Try dropping some files here, or click to select files to upload.
+      The Default Text
     </button>
     <input
       accept=""
       autoComplete="off"
       disabled={false}
       id="required_multiple_has_button_text"
-      multiple="true"
+      multiple={true}
       onChange={[Function]}
       style={
         Object {
@@ -234,14 +234,14 @@ exports[`File Field  Matches snapshot for required_multiple_no_button_text 1`] =
       className="btn btn-block"
       type="button"
     >
-      Try dropping some files here, or click to select files to upload.
+      The Default Text
     </button>
     <input
       accept=""
       autoComplete="off"
       disabled={false}
       id="required_multiple_no_button_text"
-      multiple="true"
+      multiple={true}
       onChange={[Function]}
       style={
         Object {
@@ -286,14 +286,14 @@ exports[`File Field  Matches snapshot for required_single 1`] = `
       className="btn btn-block"
       type="button"
     >
-      Try dropping some files here, or click to select files to upload.
+      The Default Text
     </button>
     <input
       accept=""
       autoComplete="off"
       disabled={false}
       id="required_single"
-      multiple="true"
+      multiple={true}
       onChange={[Function]}
       style={
         Object {
@@ -315,7 +315,7 @@ exports[`File Field  Matches snapshot for required_single 1`] = `
 exports[`File Field  Matches snapshot for required_single_allow_png 1`] = `
 <div
   className="cf2-dropzone"
-  data-field="required_single"
+  data-field="required_single_allow_png"
 >
   <div
     aria-disabled={false}
@@ -338,14 +338,14 @@ exports[`File Field  Matches snapshot for required_single_allow_png 1`] = `
       className="btn btn-block"
       type="button"
     >
-      Try dropping some files here, or click to select files to upload.
+      The Default Text
     </button>
     <input
       accept=""
       autoComplete="off"
       disabled={false}
       id="required_single"
-      multiple="true"
+      multiple={true}
       onChange={[Function]}
       style={
         Object {
@@ -390,66 +390,14 @@ exports[`File Field  Matches snapshot for width_40_height_20 1`] = `
       className="btn btn-block"
       type="button"
     >
-      Try dropping some files here, or click to select files to upload.
+      The Default Text
     </button>
     <input
       accept=""
       autoComplete="off"
       disabled={false}
       id="width_40_height_20"
-      multiple="true"
-      onChange={[Function]}
-      style={
-        Object {
-          "bottom": 0,
-          "left": 0,
-          "opacity": 0.00001,
-          "pointerEvents": "none",
-          "position": "absolute",
-          "right": 0,
-          "top": 0,
-        }
-      }
-      type="file"
-    />
-  </div>
-</div>
-`;
-
-exports[`File Field  Shows image preview with correct size 1`] = `
-<div
-  className="cf2-dropzone"
-  data-field="width_40_height_20"
->
-  <div
-    aria-disabled={false}
-    className="cf2-file form-control"
-    onClick={[Function]}
-    onDragEnter={[Function]}
-    onDragLeave={[Function]}
-    onDragOver={[Function]}
-    onDragStart={[Function]}
-    onDrop={[Function]}
-    style={
-      Object {
-        "position": "relative",
-      }
-    }
-  >
-    <button
-      aria-controls="width_40_height_20, cf2-list-files"
-      aria-expanded={false}
-      className="btn btn-block"
-      type="button"
-    >
-      Try dropping some files here, or click to select files to upload.
-    </button>
-    <input
-      accept=""
-      autoComplete="off"
-      disabled={false}
-      id="width_40_height_20"
-      multiple="true"
+      multiple={true}
       onChange={[Function]}
       style={
         Object {

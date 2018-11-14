@@ -9,14 +9,14 @@ export const fileFieldConfigs  = {
 			fieldPlaceHolder: '',
 			required: true,
 			fieldDefault: '',
-			fieldValue: '',
+			fieldValue: [],
 			fieldIdAttr: 'required_single',
 			configOptions:
 				{
 					multiple: 'false',
-					multiUploadText: 'false',
+					multiUploadText: 'My multi Upload Text',
 					allowedTypes: 'false',
-          usePreviews: true,
+          usePreviews: 'false',
 					previewHeight: 24,
 					previewWidth: 24,
 				}
@@ -24,21 +24,26 @@ export const fileFieldConfigs  = {
 	required_single_allow_png:
 		{
 			type: 'file',
-			outterIdAttr: 'cf2-required_single',
-			fieldId: 'required_single',
-			fieldLabel: 'Required Single',
+			outterIdAttr: 'required_single_allow_png',
+			fieldId: 'required_single_allow_png',
+			fieldLabel: 'Required Single Allow .png',
 			fieldCaption: '',
 			fieldPlaceHolder: '',
 			required: true,
+			isRequired: {
+				required: true
+      },
 			fieldDefault: '',
-			fieldValue: '',
+			fieldValue: [],
 			fieldIdAttr: 'required_single',
 			configOptions:
 				{
 					multiple: 'false',
-					multiUploadText: 'false',
-					allowedTypes: 'image/png',
-
+					multiUploadText: 'Cool text for required_single_allow_png',
+					allowedTypes: '.png',
+          usePreviews: 1,
+          previewHeight: 24,
+          previewWidth: 24,
 				}
 		},
 	required_multiple_no_button_text:
@@ -55,10 +60,10 @@ export const fileFieldConfigs  = {
 			fieldIdAttr: 'required_multiple_no_button_text',
 			configOptions:
 				{
-					multiple: 'true',
+					multiple: 1,
 					multiUploadText: 'false',
 					allowedTypes: 'false',
-          usePreviews: true,
+          usePreviews: 1,
 					previewHeight: 24,
 					previewWidth: 24,
 				}
@@ -77,10 +82,10 @@ export const fileFieldConfigs  = {
 			fieldIdAttr: 'required_multiple_has_button_text',
 			configOptions:
 				{
-					multiple: 'true',
+					multiple: 1,
 					multiUploadText: 'The Default Text',
 					allowedTypes: 'false',
-					usePreviews: true,
+					usePreviews: 1,
 					previewHeight: 24,
 					previewWidth: 24,
 				}
@@ -102,7 +107,7 @@ export const fileFieldConfigs  = {
 					multiple: 'false',
 					multiUploadText: 'false',
 					allowedTypes: 'false',
-          usePreviews: true,
+          usePreviews: 1,
 					previewHeight: 24,
 					previewWidth: 24,
 				}
@@ -121,10 +126,10 @@ export const fileFieldConfigs  = {
 			fieldIdAttr: 'not_required_multiple_no_button_text',
 			configOptions:
 				{
-					multiple: 'true',
+					multiple: 1,
 					multiUploadText: 'false',
 					allowedTypes: 'false',
-          usePreviews: true,
+          usePreviews: 1,
 					previewHeight: 24,
 					previewWidth: 24,
 				}
@@ -143,10 +148,10 @@ export const fileFieldConfigs  = {
 			fieldIdAttr: 'not_required_multiple_has_button_text',
 			configOptions:
 				{
-					multiple: 'true',
+					multiple: 1,
 					multiUploadText: 'The Default Text',
 					allowedTypes: 'false',
-          usePreviews: true,
+          usePreviews: 1,
 					previewHeight: 24,
 					previewWidth: 24,
 				}
@@ -161,14 +166,14 @@ export const fileFieldConfigs  = {
 			fieldPlaceHolder: '',
 			required: 'false',
 			fieldDefault: '',
-			fieldValue: '',
+			fieldValue: [],
 			fieldIdAttr: 'width_40_height_20',
 			configOptions:
 				{
-					multiple: 'true',
+					multiple: 1,
 					multiUploadText: 'The Default Text',
 					allowedTypes: 'false',
-          usePreviews: true,
+          usePreviews: 1,
 					previewHeight: 20,
 					previewWidth: 40,
 				}

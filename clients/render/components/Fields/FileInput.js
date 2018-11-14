@@ -24,6 +24,7 @@ export const FileInput = (props) => {
 		fieldLabel,
 		fieldCaption,
 		required,
+		isRequired,
 		fieldPlaceHolder,
 		fieldDefault,
 		fieldIdAttr,
@@ -40,10 +41,9 @@ export const FileInput = (props) => {
 	return (
 
 		<div className="cf2-dropzone" data-field={fieldId}>
-      {multiple === false &&
-      fieldValue.length > 0 ? (
-				<div>{text.multipleDisabled}</div>
-        ) : (
+      {valueSet && ! multiple ?
+				<div className="cf2-one-file-notice">{text.multipleDisabled}</div>
+         :
 				<Dropzone
 					onDrop={onChange}
 					className={className}
@@ -60,12 +60,12 @@ export const FileInput = (props) => {
 						aria-controls={buttonControls}
 						aria-expanded={valueSet}
 					>
-						{text.buttonText}
+						{multiUploadText}
 					</button>
 				</Dropzone>
-				)}
+			}
 
-      {valueSet  &&
+      {valueSet &&
 				<ul
 					id="cf2-list-files"
 					role="list"
@@ -92,8 +92,7 @@ export const FileInput = (props) => {
 									</button>
 
 									<div>
-										{file.type.startsWith("image") &&
-                    	usePreviews ?
+										{usePreviews ?
 											<img
 												className="cf2-file-field-img-preview"
 												width={previewWidth}
@@ -102,7 +101,7 @@ export const FileInput = (props) => {
 												alt={file.name}
 											/>
 											:
-											<span>{file.name}</span>
+											<span className="cf2-file-name">{file.name}</span>
 										}
 										<br/>
 										<span className="cf2-file-data"> {file.type} - {file.size} bytes</span>
@@ -127,7 +126,7 @@ export const FileInput = (props) => {
  */
 FileInput.propTypes = {
 	field: PropTypes.shape(CalderaFormsFieldPropType),
-	onChange: PropTypes.func.isRequired,
+	onChange: PropTypes.func,
 	shouldDisable: PropTypes.bool,
 	isInvalid: PropTypes.bool,
 	describedById: PropTypes.string,
@@ -142,7 +141,10 @@ FileInput.propTypes = {
 		message: PropTypes.string
 	}),
 	style: PropTypes.object,
-  usePreviews:  PropTypes.bool,
+  usePreviews:  PropTypes.oneOfType([
+  	PropTypes.bool,
+    PropTypes.string
+  ]),
 	previewWidth: PropTypes.number,
   previewHeight: PropTypes.number,
 	inputProps: PropTypes.object,
@@ -166,16 +168,14 @@ FileInput.defaultProps = {
 		message: ''
 	},
 	text: {
-		buttonText: 'Try dropping some files here, or click to select files to upload.',
 		removeFile: 'Remove file',
 		multipleDisabled: 'Only one file upload allowed'
 	},
-	multiUploadText: 'Try dropping some files here, or click to select files to upload.',
 	inputProps: {
 		type: 'file'
 	},
 	disableClick: false,
-	className: 'cf2-file form-control',
+	className: 'cf2-file form-control'
 };
 
 /**
@@ -219,6 +219,8 @@ FileInput.fieldConfigToProps = (fieldConfig) => {
     if (fieldConfig.configOptions.hasOwnProperty('multiple')) {
       if(fieldConfig.configOptions.multiple === 1 ) {
         props.multiple = true;
+      }else {
+        props.multiple = false;
       }
     } else {
       props.multiple = false;
@@ -227,15 +229,11 @@ FileInput.fieldConfigToProps = (fieldConfig) => {
     if (configOptions.hasOwnProperty('usePreviews')) {
 
       if ( configOptions.usePreviews === 1 ) {
-
-				props.usePreviews=  true;
+				props.usePreviews =  true;
 				props.previewWidth = configOptions.previewWidth;
 				props.previewHeight = configOptions.previewHeight;
-
       } else {
-
-				props.usePreviews = configOptions.usePreviews;
-
+				props.usePreviews = false;
       }
     }
 
