@@ -175,5 +175,21 @@ describe( 'DOM testing file components', () => {
     expect( component.find( '.cf2-file-field-img-preview' ).html() ).toBe("<img class=\"cf2-file-field-img-preview\" width=\"24\" height=\"24\" src=\"pic.png\" alt=\"pic.png\">");
 	});
 
+  it( 'Shows default and custom button text', () => {
+    let prepared = FileInput.fieldConfigToProps(fileFieldConfigs.not_required_multiple_no_button_text);
+    let field = prepared.field;
+    const component = mount(
+      <FileInput
+        field={field}
+      />
+    );
+    component.setProps(prepared);
+    expect( component.find( '.btn' ).text() ).toEqual("Drop files or click to select files to Upload");
+
+    prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_multiple_has_button_text);
+    component.setProps(prepared);
+    expect( component.find( '.btn' ).text() ).toEqual("The Custom Text");
+  });
+
 
 });

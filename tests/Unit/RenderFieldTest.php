@@ -227,6 +227,35 @@ class RenderFieldTest extends TestCase
 		$this->assertSame(24,$data['configOptions' ][ 'previewWidth'] );
 		$this->assertSame(24,$data['configOptions' ][ 'previewHeight'] );
 	}
+
+    /**
+     * @covers \calderawp\calderaforms\cf2\Fields\RenderField::data();
+     */
+    public function testButtonDefaultTextForFileFields(){
+        $field = $this->fieldForRenderFactory('required_multiple_no_button_text');
+        $field[ 'type' ] = 'cf2_file';
+        $formIdAttr = 'cf2_1';
+        $renderer = new RenderField($formIdAttr,$field );
+        $data = $renderer->data();
+
+        $this->assertArrayHasKey('multiUploadText',$data['configOptions' ] );
+        $this->assertSame('Try dropping some files here, or click to select file to upload.',$data[ 'configOptions' ][ 'multiUploadText' ] );
+    }
+
+    /**
+     * @covers \calderawp\calderaforms\cf2\Fields\RenderField::data();
+     */
+    public function testButtonSetTextForFileFields(){
+        $field = $this->fieldForRenderFactory('required_multiple_has_button_text');
+        $field[ 'type' ] = 'cf2_file';
+        $formIdAttr = 'cf2_1';
+        $renderer = new RenderField($formIdAttr,$field );
+        $data = $renderer->data();
+
+        $this->assertArrayHasKey('multiUploadText',$data['configOptions' ] );
+        $this->assertSame('The Default Text',$data[ 'configOptions' ][ 'multiUploadText' ] );
+    }
+
     /**
      * @return array
      */

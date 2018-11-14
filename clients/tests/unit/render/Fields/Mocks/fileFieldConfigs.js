@@ -61,7 +61,7 @@ export const fileFieldConfigs  = {
 			configOptions:
 				{
 					multiple: 1,
-					multiUploadText: 'false',
+					multiUploadText: false,
 					allowedTypes: 'false',
           usePreviews: 1,
 					previewHeight: 24,
@@ -83,7 +83,7 @@ export const fileFieldConfigs  = {
 			configOptions:
 				{
 					multiple: 1,
-					multiUploadText: 'The Default Text',
+					multiUploadText: 'The Custom Text',
 					allowedTypes: 'false',
 					usePreviews: 1,
 					previewHeight: 24,
@@ -105,7 +105,7 @@ export const fileFieldConfigs  = {
 			configOptions:
 				{
 					multiple: 'false',
-					multiUploadText: 'false',
+					multiUploadText: false,
 					allowedTypes: 'false',
           usePreviews: 1,
 					previewHeight: 24,
@@ -127,7 +127,7 @@ export const fileFieldConfigs  = {
 			configOptions:
 				{
 					multiple: 1,
-					multiUploadText: 'false',
+					multiUploadText: false,
 					allowedTypes: 'false',
           usePreviews: 1,
 					previewHeight: 24,

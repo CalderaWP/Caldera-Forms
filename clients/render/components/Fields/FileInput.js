@@ -237,6 +237,10 @@ FileInput.fieldConfigToProps = (fieldConfig) => {
       }
     }
 
+    if(configOptions.multiUploadText === false){
+			props.multiUploadText = 'Drop files or click to select files to Upload';
+		}
+
 	}
 
 	return props;

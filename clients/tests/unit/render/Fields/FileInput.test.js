@@ -65,6 +65,11 @@ describe('File Field ', () => {
     expect(prepared.previewWidth).toEqual( 40 );
 	});
 
+  it('Prepares props and sets multiUploadText', () => {
+    const prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_multiple_has_button_text);
+    expect(prepared.multiUploadText).toEqual( 'The Custom Text' );
+  });
+
 	it.skip('Prepares props and sets the allowed types in inputProps when it should', () => {
 		const prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_single);
 		//expect( fileFieldConfigs ).toEqual( 'image/png');

@@ -1,4 +1,14 @@
 <div class="caldera-config-group">
+    <label for="{{_id}}_allow_multiple_text">
+        <?php echo esc_html__('Button Text', 'caldera-forms'); ?>
+    </label>
+    <div class="caldera-config-field">
+        <input id="{{_id}}_allow_multiple_text" type="text" class="field-config" name="{{_name}}[multi_upload_text]"
+               value="{{#if multi_upload_text}}{{multi_upload_text}}{{/if}}">
+    </div>
+</div>
+
+<div class="caldera-config-group">
     <label role="presentation"></label>
     <div class="caldera-config-field">
         <label for="{{_id}}_attach"><input id="{{_id}}_attach" type="checkbox" class="field-config"
@@ -30,16 +40,6 @@
     </div>
 </div>
 
-
-<div class="caldera-config-group" id="{{_id}}_allow_multiple_text_wrap">
-    <label for="{{_id}}_allow_multiple_text">
-		<?php echo esc_html__('Button Text', 'caldera-forms'); ?>
-    </label>
-    <div class="caldera-config-field">
-        <input id="{{_id}}_allow_multiple_text" type="text" class="field-config" name="{{_name}}[multi_upload_text]"
-               value="{{#if multi_upload_text}}{{multi_upload_text}}{{/if}}">
-    </div>
-</div>
 
 <div class="caldera-config-group">
     <label for="{{_id}}_allowed"><?php echo esc_html__('Allowed Types', 'caldera-forms'); ?></label>
@@ -102,16 +102,6 @@
 
 {{#script}}
 jQuery(function($){
-
-//Multiple button text
-$('#{{_id}}_allow_multiple').change(function(){
-    if( $(this).prop('checked') ){
-        $('#{{_id}}_allow_multiple_text_wrap').show();
-    }else{
-        $('#{{_id}}_allow_multiple_text_wrap').hide();
-    }
-});
-$('#{{_id}}_allow_multiple').trigger('change');
 
 //Image previews sizes
 $('#{{_id}}_use_image_previews').change(function(){
