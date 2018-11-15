@@ -231,20 +231,6 @@ class RenderFieldTest extends TestCase
     /**
      * @covers \calderawp\calderaforms\cf2\Fields\RenderField::data();
      */
-    public function testButtonDefaultTextForFileFields(){
-        $field = $this->fieldForRenderFactory('required_multiple_no_button_text');
-        $field[ 'type' ] = 'cf2_file';
-        $formIdAttr = 'cf2_1';
-        $renderer = new RenderField($formIdAttr,$field );
-        $data = $renderer->data();
-
-        $this->assertArrayHasKey('multiUploadText',$data['configOptions' ] );
-        $this->assertSame('Drop files or click to select files to Upload.',$data[ 'configOptions' ][ 'multiUploadText' ] );
-    }
-
-    /**
-     * @covers \calderawp\calderaforms\cf2\Fields\RenderField::data();
-     */
     public function testButtonSetTextForFileFields(){
         $field = $this->fieldForRenderFactory('required_multiple_has_button_text');
         $field[ 'type' ] = 'cf2_file';
