@@ -60,7 +60,11 @@ class Caldera_Forms_Transient  {
 			$expires = absint( $expires );
 		}
 
-		wp_schedule_single_event( time() + $expires, self::CRON_ACTION, array(  $id  ) );
+		//schedule delete with job manager
+		caldera_forms_get_v2_container()
+			->getService(\calderawp\calderaforms\cf2\Services\QueueSchedulerService::class)
+			->schedule( new \calderawp\calderaforms\cf2\Jobs\DeleteTransientJob($id), $expires );
+
 		return update_option( self::prefix( $id ), $data, false );
 
 	}
@@ -75,7 +79,6 @@ class Caldera_Forms_Transient  {
 	 * @return bool
 	 */
 	public static function delete_transient( $id ){
-        wp_clear_scheduled_hook(self::CRON_ACTION, array(  $id  ) );
 		return delete_option( self::prefix( $id ) );
 	}
 

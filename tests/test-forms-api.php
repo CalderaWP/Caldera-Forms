@@ -3,16 +3,16 @@
 class Test_Caldera_Forms_API extends Caldera_Forms_Test_Case
 {
 
-    /**
-     * Compare the database abstraction to the froms API
+	/**
+     * Compare the database abstraction to the forms API
      *
      * @since 1.7.0
-     *
+     **
      * @covers Caldera_Forms_Forms::get_forms()
      * @covers Caldera_Forms_Forms::get_stored_forms()
      */
     public function testGetFormVsDbForm(){
-        $form_one_id = $this->import_autoresponder_form();
+		$form_one_id = $this->import_autoresponder_form();
         $form_two_id = $this->import_contact_form();
         $db_results = Caldera_Forms_DB_Form::get_instance()->get_all( true );
         $db_ids = wp_list_pluck( $db_results, 'form_id' );

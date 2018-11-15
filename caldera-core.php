@@ -121,7 +121,7 @@ if (!version_compare(PHP_VERSION, '5.6.0', '>=')) {
          */
         do_action('caldera_forms_includes_complete');
 
-
+		caldera_forms_get_v2_container();
     }
 
     add_action('plugins_loaded', array('Caldera_Forms', 'get_instance'));
@@ -170,22 +170,36 @@ add_filter('caldera_forms_render_get_field', function($field, $form){
 	return $field;
 },1,2);
 
+
+
 /**
- * Init Cf2 system
+ * Setup Cf2 con
  *
  * @since 1.8.0
  *
  * @TODO move this somewhere smarter
  */
-add_action( 'caldera_forms_core_init', function(){
-	$container = new \calderawp\calderaforms\cf2\CalderaFormsV2();
+add_action( 'caldera_forms_v2_init', function(\calderawp\calderaforms\cf2\CalderaFormsV2Contract $container){
 	$container->setCoreDir(CFCORE_PATH);
+
+	//Setup field types
 	$container->getFieldTypeFactory()
 		->add( new \calderawp\calderaforms\cf2\Fields\FieldTypes\FileFieldType() );
 
+	//Add hooks
 	$container->getHooks()->subscribe();
 
+	//Register other services
+	$container->registerService(new \calderawp\calderaforms\cf2\Services\QueueService(),true );
+	$container->registerService(new \calderawp\calderaforms\cf2\Services\QueueSchedulerService(),true );
+
+	//Run the scheduler with CRON
+    /** @var \calderawp\calderaforms\cf2\Jobs\Scheduler $scheduler */
+    $scheduler = $container->getService(\calderawp\calderaforms\cf2\Services\QueueSchedulerService::class);
+    $running = $scheduler->runWithCron();
+
 });
+
 
 
 

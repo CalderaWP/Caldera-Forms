@@ -5,7 +5,9 @@ namespace calderawp\calderaforms\Tests\Unit;
 use calderawp\calderaforms\cf2\CalderaFormsV2;
 use calderawp\calderaforms\cf2\Fields\FieldTypeFactory;
 use calderawp\calderaforms\cf2\Hooks;
+use calderawp\calderaforms\cf2\Services\QueueService;
 use calderawp\calderaforms\cf2\Transients\Cf1TransientsApi;
+use calderawp\calderaforms\Tests\Util\Mocks\MockService;
 
 class CalderaFormsV2Test extends TestCase
 {
@@ -78,5 +80,24 @@ class CalderaFormsV2Test extends TestCase
 		$containerReal = new CalderaFormsV2();
 		$containerReal->setCoreDir($coreDir);
 		$this->assertEquals( $coreDir, $containerReal->getCoreDir() );
+	}
+
+
+	/**
+	 * Test service registration
+	 *
+	 * @since 1.8.0
+	 *
+	 * @covers \calderawp\calderaforms\cf2\CalderaFormsV2::registerService();
+	 * @covers \calderawp\calderaforms\cf2\CalderaFormsV2::getService();
+	 */
+	public function testRegisterService(){
+		$coreDir = 'foo/bar';
+		$containerMock = $this->getContainer();
+		$containerMock->setCoreDir($coreDir);
+
+		$service = new MockService();
+		$containerMock->registerService($service,true );
+		$this->assertInstanceOf( \stdClass::class, $containerMock->getService(MockService::class) );
 	}
 }

@@ -16,8 +16,11 @@ return array(
     'calderawp\\CalderaFormsQuery\\' => array($vendorDir . '/calderawp/caldera-forms-query/src'),
     'calderawp\\CalderaContainers\\' => array($vendorDir . '/calderawp/caldera-containers/src'),
     'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
+    'WP_Queue\\' => array($vendorDir . '/a5hleyrich/wp-queue/src/WP_Queue'),
+    'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
     'Symfony\\Polyfill\\Ctype\\' => array($vendorDir . '/symfony/polyfill-ctype'),
     'Symfony\\Component\\Yaml\\' => array($vendorDir . '/symfony/yaml'),
+    'Symfony\\Component\\Translation\\' => array($vendorDir . '/symfony/translation'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
     'NilPortugues\\Sql\\QueryFormatter\\' => array($vendorDir . '/nilportugues/sql-query-formatter/src'),
@@ -28,4 +31,5 @@ return array(
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
     'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src/Composer/Installers'),
     'Brain\\Monkey\\' => array($vendorDir . '/brain/monkey/src'),
+    '' => array($vendorDir . '/nesbot/carbon/src'),
 );

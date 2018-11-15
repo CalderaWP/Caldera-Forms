@@ -8,10 +8,13 @@ class ComposerStaticInitb2d56b84f94cc35345b1871b7d51f461
 {
     public static $files = array (
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '051bafe20e2674435a162870efa2d2a7' => __DIR__ . '/..' . '/brain/monkey/inc/api.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
+        'edf8ef411b308ea9e315d190a754d91b' => __DIR__ . '/..' . '/a5hleyrich/wp-queue/src/functions.php',
         '653f15cae3415bbad33eff25628b45a8' => __DIR__ . '/..' . '/calderawp/caldera-forms-query/src/CalderaFormsQueries.php',
         '5e73ffc188f5a63fbd263c4490731358' => __DIR__ . '/..' . '/inpsyde/wonolog/inc/bootstrap.php',
+        '1788f000e5723cf54aa875ee1eec6c27' => __DIR__ . '/../..' . '/cf2/functions.php',
         'e3b369f785b64e46a24dc3ca6f0257a1' => __DIR__ . '/../..' . '/tests/testing-cli.php',
     );
 
@@ -34,11 +37,14 @@ class ComposerStaticInitb2d56b84f94cc35345b1871b7d51f461
         'W' => 
         array (
             'Webmozart\\Assert\\' => 17,
+            'WP_Queue\\' => 9,
         ),
         'S' => 
         array (
+            'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Polyfill\\Ctype\\' => 23,
             'Symfony\\Component\\Yaml\\' => 23,
+            'Symfony\\Component\\Translation\\' => 30,
         ),
         'P' => 
         array (
@@ -116,6 +122,14 @@ class ComposerStaticInitb2d56b84f94cc35345b1871b7d51f461
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
         ),
+        'WP_Queue\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/a5hleyrich/wp-queue/src/WP_Queue',
+        ),
+        'Symfony\\Polyfill\\Mbstring\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+        ),
         'Symfony\\Polyfill\\Ctype\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
@@ -123,6 +137,10 @@ class ComposerStaticInitb2d56b84f94cc35345b1871b7d51f461
         'Symfony\\Component\\Yaml\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/yaml',
+        ),
+        'Symfony\\Component\\Translation\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/translation',
         ),
         'Psr\\Log\\' => 
         array (
@@ -164,6 +182,10 @@ class ComposerStaticInitb2d56b84f94cc35345b1871b7d51f461
         array (
             0 => __DIR__ . '/..' . '/brain/monkey/src',
         ),
+    );
+
+    public static $fallbackDirsPsr4 = array (
+        0 => __DIR__ . '/..' . '/nesbot/carbon/src',
     );
 
     public static $prefixesPsr0 = array (
@@ -726,6 +748,7 @@ class ComposerStaticInitb2d56b84f94cc35345b1871b7d51f461
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitb2d56b84f94cc35345b1871b7d51f461::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitb2d56b84f94cc35345b1871b7d51f461::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInitb2d56b84f94cc35345b1871b7d51f461::$fallbackDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInitb2d56b84f94cc35345b1871b7d51f461::$prefixesPsr0;
             $loader->classMap = ComposerStaticInitb2d56b84f94cc35345b1871b7d51f461::$classMap;
 
