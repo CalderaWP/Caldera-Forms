@@ -239,7 +239,7 @@ class RenderFieldTest extends TestCase
         $data = $renderer->data();
 
         $this->assertArrayHasKey('multiUploadText',$data['configOptions' ] );
-        $this->assertSame('Try dropping some files here, or click to select file to upload.',$data[ 'configOptions' ][ 'multiUploadText' ] );
+        $this->assertSame('Drop files or click to select files to Upload.',$data[ 'configOptions' ][ 'multiUploadText' ] );
     }
 
     /**
