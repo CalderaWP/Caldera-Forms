@@ -9,8 +9,7 @@ $attrs = array(
 	'id' => Caldera_Forms_Field_Util::get_base_id( $field ),
 	'data-field' => $field_base_id,
 	'class' => $field_class . ' cfdatepicker is-cfdatepicker',
-	'data-date-format' => $field['config']['format'],
-    'data-cfdatepicker' => 'true'
+	'data-date-format' => $field['config']['format']
 );
 
 $required = '';
