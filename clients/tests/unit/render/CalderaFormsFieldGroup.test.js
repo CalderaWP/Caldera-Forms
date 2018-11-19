@@ -2,6 +2,10 @@ import {CalderaFormsFieldGroup} from "../../../render/components";
 import renderer from 'react-test-renderer';
 const handler = () => {
 };
+import {shallow, mount} from 'enzyme';
+import EnzymeAdapter from '../createEnzymeAdapter'
+
+
 describe('CalderaFormsFieldGroup component', () => {
 	const fieldIdAttr = 'fld_5843941_1';
 	const fieldConfig = {
@@ -186,4 +190,33 @@ describe('chooses inner field', () => {
 		expect(testInstance.findByType('div').props.className).toBe('form-group cf2-field-group');
 	});
 
-})
+});
+
+describe( 'DOM testing of CalderaFormsFieldGroup component', () => {
+	const textFieldConfig = {
+		fieldCaption: "",
+		fieldDefault: "new default",
+		fieldId: "cf2-fdl1",
+		fieldIdAttr: "fdl1_1",
+		fieldLabel: "Text 2 Field",
+		fieldPlaceHolder: "",
+		fieldValue: "",
+		outterIdAttr: "cf2-fdl1_1",
+		required: false,
+		type: "text",
+		isRequired: true
+	};
+
+	it('Shows required indicator when it should', () => {
+		const component = mount(<CalderaFormsFieldGroup
+			onChange={handler}
+			field={textFieldConfig}
+			shouldDisable={true}
+			getFieldConfig={() => {}}
+		/>);
+
+		expect(component.contains('*')).toBe(true);
+		expect(component.find('.field_required').length).toBe(1);
+
+	});
+});
