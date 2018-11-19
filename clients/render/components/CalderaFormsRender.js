@@ -356,7 +356,7 @@ export class CalderaFormsRender extends Component {
 	isFieldRequired(fieldIdAttr) {
 		const field = this.getFieldConfig(fieldIdAttr);
 
-		return !!field.required;
+		return !!field.isRequired;
 	}
 
 	/**
