@@ -15,7 +15,7 @@ import {FileInput} from "./Fields/FileInput";
  * @constructor
  */
 export const CalderaFormsFieldGroup = (props) => {
-	const {field, onChange, shouldDisable, shouldShow,hasMessage,isError,message,getFieldConfig} = props;
+	const {field, onChange, shouldDisable, shouldShow, hasMessage, isError, message, getFieldConfig} = props;
 	const {
 		type,
 		outterIdAttr,
@@ -35,7 +35,7 @@ export const CalderaFormsFieldGroup = (props) => {
 	}
 
 
-	const hasCaption = field.hasOwnProperty('caption' ) && field.caption.length;
+	const hasCaption = field.hasOwnProperty('caption') && field.caption.length;
 	const captionId = `${fieldIdAttr}Caption`;
 	const hasError = isError || hasMessage && message.error;
 
@@ -47,14 +47,14 @@ export const CalderaFormsFieldGroup = (props) => {
 	 * @return {*}
 	 * @constructor
 	 */
-	const Inside = () =>{
+	const Inside = () => {
 		let className = 'form-control cf2-field';
 		className = hasError ? className + ' parsley-error' : className;
-		className = className + ' cf2-' +  type;
+		className = className + ' cf2-' + type;
 		switch (type) {
 			case 'file':
 				const fileProps = FileInput.fieldConfigToProps(getFieldConfig(fieldIdAttr));
-				return<FileInput
+				return <FileInput
 					onChange={onChange}
 					field={field}
 					shouldDisable={shouldDisable}
@@ -65,15 +65,15 @@ export const CalderaFormsFieldGroup = (props) => {
 					inputProps={fileProps.inputProps}
 					className={className}
 					accept={fileProps.accept}
-          usePreviews={fileProps.usePreviews}
-          previewHeight={fileProps.previewHeight}
-          previewWidth={fileProps.previewWidth}
+					usePreviews={fileProps.usePreviews}
+					previewHeight={fileProps.previewHeight}
+					previewWidth={fileProps.previewWidth}
 					multiple={fileProps.multiple}
 					multiUploadText={fileProps.multiUploadText}
 				/>
 			case'text':
 			default:
-				return<Input
+				return <Input
 					field={field}
 					onChange={onChange}
 					shouldDisable={shouldDisable}
@@ -85,6 +85,15 @@ export const CalderaFormsFieldGroup = (props) => {
 		}
 	};
 
+	/**
+	 * Create error markup
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param {*} message Message object -- {message: String, error: Bool }
+	 * @return {*}
+	 * @constructor
+	 */
 	function Error(message) {
 		return <span
 			className="help-block caldera_ajax_error_block filled"
@@ -94,8 +103,17 @@ export const CalderaFormsFieldGroup = (props) => {
 		</span>;
 	};
 
-	function  ErrorOrNotice(message) {
-		if( message.error ){
+	/**
+	 * Create error or non-error markup
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param {*} message Message object -- {message: String, error: Bool }
+	 * @return {*}
+	 * @constructor
+	 */
+	function ErrorOrNotice(message) {
+		if (message.error) {
 			return Error(message);
 		}
 		return <span
@@ -108,40 +126,44 @@ export const CalderaFormsFieldGroup = (props) => {
 
 	let className = 'form-group cf2-field-group';
 	className = hasError ? className + ' has-error' : className;
+
+	/**
+	 * Render CalderaFormsFieldGroup component
+	 *
+	 * @since 1.8.0
+	 */
 	return (
+		<div className={className}>
+			<label
+				className={'control-label'}
+				htmlFor={fieldIdAttr}
+				id={`${fieldIdAttr}Label`}
+			>
+				{fieldLabel}
+			</label>
+			<Inside/>
 
-			<div className={className}>
-				<label
-					className={'control-label'}
-					htmlFor={fieldIdAttr}
-					id={`${fieldIdAttr}Label`}
+			{hasCaption &&
+				<span
+					id={captionId}
+					className={'help-block'}
 				>
-					{fieldLabel}
-				</label>
-				<Inside/>
+						{field.caption}
+					</span>
+			}
+			{isInvalid &&
+				Error(message)
+			}
 
-				{hasCaption &&
-					<span
-						id={captionId}
-						className={'help-block'}
-					>
-							{field.caption}
-						</span>
-				}
-				{isInvalid &&
-					Error(message)
-				}
+			{hasMessage &&
+				ErrorOrNotice(message)
+			}
 
-				{hasMessage &&
-					ErrorOrNotice(message)
-				}
-
-			</div>
+		</div>
 
 	);
 
 };
-
 
 
 /**
