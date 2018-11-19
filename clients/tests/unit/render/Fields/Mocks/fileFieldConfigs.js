@@ -1,4 +1,4 @@
-export const fileFieldConfigs  = {
+export const fileFieldConfigs = {
 	required_single:
 		{
 			type: 'file',
@@ -16,12 +16,12 @@ export const fileFieldConfigs  = {
 					multiple: 'false',
 					multiUploadText: 'My multi Upload Text',
 					allowedTypes: 'false',
-          usePreviews: 'false',
+					usePreviews: 'false',
 					previewHeight: 24,
 					previewWidth: 24,
 				}
 		},
-	required_single_allow_png:
+		required_single_allow_png:
 		{
 			type: 'file',
 			outterIdAttr: 'required_single_allow_png',
@@ -32,7 +32,7 @@ export const fileFieldConfigs  = {
 			required: true,
 			isRequired: {
 				required: true
-      },
+			},
 			fieldDefault: '',
 			fieldValue: [],
 			fieldIdAttr: 'required_single',
@@ -40,10 +40,10 @@ export const fileFieldConfigs  = {
 				{
 					multiple: 'false',
 					multiUploadText: 'Cool text for required_single_allow_png',
-					allowedTypes: '.png',
-          usePreviews: true,
-          previewHeight: 24,
-          previewWidth: 24,
+					allowedTypes: 'image/png',
+					usePreviews: true,
+					previewHeight: 24,
+					previewWidth: 24,
 				}
 		},
 	required_multiple_no_button_text:
@@ -63,7 +63,7 @@ export const fileFieldConfigs  = {
 					multiple: 1,
 					multiUploadText: false,
 					allowedTypes: 'false',
-          usePreviews: true,
+					usePreviews: true,
 					previewHeight: 24,
 					previewWidth: 24,
 				}
@@ -107,7 +107,7 @@ export const fileFieldConfigs  = {
 					multiple: 'false',
 					multiUploadText: false,
 					allowedTypes: 'false',
-          usePreviews: true,
+					usePreviews: true,
 					previewHeight: 24,
 					previewWidth: 24,
 				}
@@ -129,7 +129,7 @@ export const fileFieldConfigs  = {
 					multiple: 1,
 					multiUploadText: false,
 					allowedTypes: 'false',
-          usePreviews: true,
+					usePreviews: true,
 					previewHeight: 24,
 					previewWidth: 24,
 				}
@@ -151,7 +151,7 @@ export const fileFieldConfigs  = {
 					multiple: 1,
 					multiUploadText: 'The Default Text',
 					allowedTypes: 'false',
-          usePreviews: true,
+					usePreviews: true,
 					previewHeight: 24,
 					previewWidth: 24,
 				}
@@ -173,7 +173,7 @@ export const fileFieldConfigs  = {
 					multiple: 1,
 					multiUploadText: 'The Default Text',
 					allowedTypes: 'false',
-          usePreviews: true,
+					usePreviews: true,
 					previewHeight: 20,
 					previewWidth: 40,
 				}

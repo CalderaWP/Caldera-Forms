@@ -36,9 +36,9 @@ describe('File Field ', () => {
 	});
 
 
-	it.skip('Prepares props from field config that is required', () => {
+	it('Prepares props from field config that is required', () => {
 		const prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_multiple_has_button_text);
-		expect(prepared.multiple).toEqual('true');
+		expect(prepared.multiple).toEqual(true);
 		expect(prepared.field.hasOwnProperty('required')).toEqual(true);
 	});
 
@@ -68,12 +68,18 @@ describe('File Field ', () => {
 		expect(prepared.multiUploadText).toEqual('The Custom Text');
 	});
 
-	it.skip('Prepares props and sets the allowed types in inputProps when it should', () => {
-		const prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_single);
-		//expect( fileFieldConfigs ).toEqual( 'image/png');
+	it('Prepares props and sets the allowed types in inputProps when it should', () => {
+		const prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_single_allow_png);
 		expect(prepared.accept).toEqual('image/png');
 		expect(prepared.inputProps).toEqual({"accept": "image/png", "type": "file"}
 		);
+	});
+
+	it( 'Sets field.isRequired to false if not passed', () => {
+		let field = fileFieldConfigs.required_multiple_no_button_text;
+		delete field.isRequired;
+		const prepared = FileInput.fieldConfigToProps(field);
+		expect(prepared.isRequired).toEqual(true);
 	});
 
 	Object.keys(fileFieldConfigs).forEach(fieldId => {
