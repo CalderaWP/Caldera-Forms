@@ -99,10 +99,13 @@ The local server is [http://localhost:8228](http://localhost:8228)
 
 #### Commands
 ##### Composer
+* `composer test:php` - Run PHP tests -- isolated unit tests and the WordPress integration tests.
 * `composer dev:install` - Installs dependencies, Docker-based test environment and sets up test forms.
 * `composer dev:destroy` - Deletes dependencies and the Docker-based test environment.
 * `composer wp:install` - Installs Docker-based test environment.
-* `composer wp:start` - Starts Docker-based test environment.
+* `composer wp:start` - Starts Docker-based test environment and echos the server's url.
+* `composer wp:server-start` - Starts Docker-based test environment.
+* `composer wp:server-url` - Echos the Docker-based test environment's server url.
 * `composer wp:activate` - Activate plugins in Docker-based environment.
 * `composer wp:tests` - Runs the PHP integration tests using phpunit inside Docker-based environment .
 * `composer wp:stop` - Stops Docker-based test environment, without destroying containers.
@@ -123,6 +126,7 @@ Probably don't use these directly. They will change. Must be prefaced with `dock
 * `wp cf delete-test-forms` - Delete test forms
 * `wp cf create-test-pages` - Import test pages
 * `wp cf delete-test-pages` - Delete test pages
+
 ### Release To WordPress.org
 ##### Requires
 * [svn](https://subversion.apache.org/quick-start#installing-the-client)
@@ -132,7 +136,7 @@ Probably don't use these directly. They will change. Must be prefaced with `dock
 
 #### Steps
 * Build release file
-    - `npm package`
+    - `npm run package`
 * Push Tag to WordPress.org
     - `cd bin`
     - `bash deploy-wp-org-tag.sh 12345 christiechirinos`
@@ -145,13 +149,8 @@ Probably don't use these directly. They will change. Must be prefaced with `dock
 * The first argument is password, which is required. The second argument is username, which defaults to `Shelob9`, which is Josh's username.
 
 ## Contributing/ Using This Repo, Etc.
-* The default branch is "master" that should be the same as WordPress.org.
-* Development happens on the "develop" branch. [There may be an exception, see: https://github.com/CalderaWP/Caldera-Forms/blob/master/CONTRIBUTING.md#current-git-workflow--php-compatibility](https://github.com/CalderaWP/Caldera-Forms/blob/master/CONTRIBUTING.md#current-git-workflow--php-compatibility)
-* If you find a bug, or would like to make a feature request, [please open an issue](https://github.com/CalderaWP/Caldera-Forms/issues/).
-* If you fixed a bug, or made a new feature, please submit a pull request against the develop branch.
+[Contributing Guide](https://github.com/CalderaWP/Caldera-Forms/blob/master/CONTRIBUTING.md)
 
-
-## Contributing/ Using This Repo, Etc.
 * The default branch is "master" that should be the same as WordPress.org.
 * Development happens on the "develop" branch.
 * If you find a bug, or would like to make a feature request, [please open an issue](https://github.com/CalderaWP/Caldera-Forms/issues/).
