@@ -220,7 +220,7 @@ class Caldera_Forms_Field_Util {
 			'asin',
 			'atan',
 			'atan2',
-			'ciel',
+			'ceil',
 			'cos',
 			'exp',
 			'floor',

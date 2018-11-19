@@ -63,7 +63,6 @@ class Test_Caldera_Forms_Entry_Fields_Collection extends Caldera_Forms_Test_Case
      *
      * @since 1.7.0
      *
-     *
      * @covers Caldera_Forms_Entry_Fields::__construct()
      * @covers Caldera_Forms_Entry_Fields::set_fields_form_array()
      * @covers Caldera_Forms_Entry_Fields::count()
