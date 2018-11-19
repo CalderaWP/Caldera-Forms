@@ -7,3 +7,15 @@ npm-debug.log
 **/.DS_Store
 includes/freemius/assets/img/caldera-forms.png
 bin/caldera-forms
+
+wordpress/*
+wp-content/*
+cypress/screenshots/*
+cypress/videos/*
+
+
+wordpress
+wp-content
+cypress/screenshots
+cypress/videos
+build

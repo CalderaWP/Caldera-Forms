@@ -387,7 +387,7 @@ class Caldera_Forms_Render_Assets {
 				continue;
 			}
 			if( 'validator' == $script_key ){
-				wp_register_script( self::make_slug( $script_key ), $script_url, array(), CFCORE_VER, false );
+				wp_register_script( self::make_slug( $script_key ), $script_url, array( 'jquery'), CFCORE_VER, false );
 				continue;
 			}elseif ( 'validator-aria' == $script_key ){
 				wp_register_script( self::make_slug( $script_key ), $script_url, array( 'jquery', self::make_slug( 'validator' ) ), CFCORE_VER, false );

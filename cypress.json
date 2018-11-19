@@ -1,0 +1,10 @@
+{
+  "env": {
+    "wp_site": {
+      "url": "http://localhost:8228",
+      "user": "admin",
+      "pass": "password"
+    }
+  },
+  "projectId": "3jgs4a"
+}
