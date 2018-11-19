@@ -28,12 +28,18 @@ class FileFieldType extends FieldType
 	/** @inheritdoc */
 	public static function getDescription ()
 	{
-		return __( 'File Field With Super Powers', 'caldera-forms' );
+		return __( 'File upload field with more features than standard HTML5 input.', 'caldera-forms' );
 	}
 
 	/** @inheritdoc */
 	public static function getName ()
 	{
-		return __( 'File Field (CF2)', 'caldera-forms' );
+		return __( 'Advanced File Uploader (2.0)', 'caldera-forms' );
+	}
+
+	/** @inheritdoc */
+	public static function getIcon()
+	{
+		return caldera_forms_get_v2_container()->getCoreUrl() . 'assets/images/cloud-upload.svg';
 	}
 }

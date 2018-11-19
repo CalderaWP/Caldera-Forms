@@ -50,6 +50,27 @@ interface CalderaFormsV2Contract
 	 */
 	public function getCoreDir();
 
+
+	/**
+	 * Set URL to main plugin file
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param string $coreUrl
+	 *
+	 * @return $this
+	 */
+	public function setCoreUrl($coreUrl);
+
+	/**
+	 * Get URL path to main plugin file
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return string
+	 */
+	public function getCoreUrl();
+
 	/**
 	 * Get field type factory
 	 *
@@ -68,8 +89,6 @@ interface CalderaFormsV2Contract
 	 */
 	public function getWpdb();
 
-
-
 	/**
 	 * Register a service with container
 	 *
@@ -82,7 +101,6 @@ interface CalderaFormsV2Contract
 	 * @return $this
 	 */
 	public function registerService( ServiceContract $service, $isSingleton );
-
 
 	/**
 	 * Get service from container

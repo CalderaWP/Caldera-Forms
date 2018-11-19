@@ -76,4 +76,13 @@ class RegisterFieldsTest extends TestCase
 		$this->assertTrue(0 === strpos($setup[ 'template' ], $path));
 
 	}
+
+	/**
+	 * @since 1.8.0
+	 *
+	 * @covers \calderawp\calderaforms\cf2\Fields\FieldTypes\FileFieldType()
+	 */
+	public function testFileFieldIcon(){
+		$this->assertNotFalse( strpos( FileFieldType::getIcon(), 'cloud-upload.svg') );
+	}
 }

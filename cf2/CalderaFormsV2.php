@@ -19,6 +19,14 @@ class CalderaFormsV2 extends \calderawp\CalderaContainers\Service\Container impl
 	 */
 	protected $coreDirPath;
 
+	/**
+	 * URL for main plugin file
+	 *
+	 * @since 1.8.0
+	 *
+	 * @var string
+	 */
+	protected $coreUrl;
 
 	/**
 	 * CalderaFormsV2 constructor.
@@ -100,6 +108,27 @@ class CalderaFormsV2 extends \calderawp\CalderaContainers\Service\Container impl
 		}
 		if( defined( 'CFCORE_PATH' ) ){
 			return CFCORE_PATH;
+		}
+
+		return '';
+	}
+
+	/* @inheritdoc */
+	public function setCoreUrl($coreUrl)
+	{
+		$this->coreUrl = $coreUrl;
+		return $this;
+	}
+
+	/** @inheritdoc */
+	public function getCoreUrl()
+	{
+		if( $this->coreUrl ){
+			return $this->coreUrl;
+		}
+
+		if( defined( 'CFCORE_URL') ){
+			return CFCORE_URL;
 		}
 
 		return '';

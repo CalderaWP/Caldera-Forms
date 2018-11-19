@@ -180,18 +180,23 @@ add_filter('caldera_forms_render_get_field', function($field, $form){
  * @TODO move this somewhere smarter
  */
 add_action( 'caldera_forms_v2_init', function(\calderawp\calderaforms\cf2\CalderaFormsV2Contract $container){
-	$container->setCoreDir(CFCORE_PATH);
 
-	//Setup field types
-	$container->getFieldTypeFactory()
+    $container
+        //Set paths
+        ->setCoreDir(CFCORE_PATH)
+        ->setCoreUrl(CFCORE_URL )
+
+	    //Setup field types
+        ->getFieldTypeFactory()
 		->add( new \calderawp\calderaforms\cf2\Fields\FieldTypes\FileFieldType() );
 
-	//Add hooks
+    //Add hooks
 	$container->getHooks()->subscribe();
 
 	//Register other services
-	$container->registerService(new \calderawp\calderaforms\cf2\Services\QueueService(),true );
-	$container->registerService(new \calderawp\calderaforms\cf2\Services\QueueSchedulerService(),true );
+	$container
+        ->registerService(new \calderawp\calderaforms\cf2\Services\QueueService(),true )
+	    ->registerService(new \calderawp\calderaforms\cf2\Services\QueueSchedulerService(),true );
 
 	//Run the scheduler with CRON
     /** @var \calderawp\calderaforms\cf2\Jobs\Scheduler $scheduler */

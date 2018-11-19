@@ -52,6 +52,7 @@ class CalderaFormsV2Test extends TestCase
 		$this->assertInstanceOf(FieldTypeFactory::class, $containerReal->getFieldTypeFactory());
 
 	}
+
 	/**
 	 * @since 1.8.0
 	 *
@@ -71,6 +72,7 @@ class CalderaFormsV2Test extends TestCase
 	 * @since 1.8.0
 	 *
 	 * @covers \calderawp\calderaforms\cf2\CalderaFormsV2::getCoreDir();
+	 * @covers \calderawp\calderaforms\cf2\CalderaFormsV2::$coreDirPath;
 	 */
 	public function testGetCorDir(){
 		$coreDir = 'foo/bar';
@@ -80,6 +82,39 @@ class CalderaFormsV2Test extends TestCase
 		$containerReal = new CalderaFormsV2();
 		$containerReal->setCoreDir($coreDir);
 		$this->assertEquals( $coreDir, $containerReal->getCoreDir() );
+	}
+
+
+	/**
+	 * @since 1.8.0
+	 *
+	 * @covers \calderawp\calderaforms\cf2\CalderaFormsV2::setCoreUrl();
+	 * @covers \calderawp\calderaforms\cf2\CalderaFormsV2::$coreUrl
+	 */
+	public function testSetCorUrl(){
+		$coreUrl = 'https://example.com/wp-content/plugins/foo';
+		$containerMock = $this->getContainer();
+		$containerMock->setCoreUrl($coreUrl);
+		$this->assertAttributeEquals( $coreUrl, 'coreUrl', $containerMock );
+		$containerReal = new CalderaFormsV2();
+		$containerReal->setCoreUrl($coreUrl);
+		$this->assertAttributeEquals( $coreUrl, 'coreUrl', $containerReal );
+	}
+
+	/**
+	 * @since 1.8.0
+	 *
+	 * @covers \calderawp\calderaforms\cf2\CalderaFormsV2::setCoreUrl();
+	 * @covers \calderawp\calderaforms\cf2\CalderaFormsV2::$coreUrl
+	 */
+	public function testGetCorUrl(){
+		$coreUrl = 'https://example.com/wp-content/plugins/foo';
+		$containerMock = $this->getContainer();
+		$containerMock->setCoreUrl($coreUrl);
+		$this->assertEquals( $coreUrl, $containerMock->getCoreUrl() );
+		$containerReal = new CalderaFormsV2();
+		$containerReal->setCoreUrl($coreUrl);
+		$this->assertEquals( $coreUrl, $containerReal->getCoreUrl() );
 	}
 
 

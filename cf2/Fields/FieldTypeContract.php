@@ -68,4 +68,14 @@ interface FieldTypeContract
 	 * @return array
 	 */
     public static function toArray();
+
+
+	/**
+	 * Get field type icon
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return string
+	 */
+    public static function getIcon();
 }
