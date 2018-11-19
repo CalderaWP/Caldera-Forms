@@ -16,7 +16,7 @@ import Dropzone from 'react-dropzone';
  */
 export const FileInput = (props) => {
 
-	const { shouldDisable, onChange, accept, field, describedById, style, className, multiple, multiUploadText, inputProps, text, usePreviews, previewHeight, previewWidth } = props;
+	const {shouldDisable, onChange, accept, field, describedById, style, className, multiple, multiUploadText, inputProps, text, usePreviews, previewHeight, previewWidth} = props;
 
 	const {
 		outterIdAttr,
@@ -41,9 +41,9 @@ export const FileInput = (props) => {
 	return (
 
 		<div className="cf2-dropzone" data-field={fieldId}>
-      {valueSet && ! multiple ?
+			{valueSet && !multiple ?
 				<div className="cf2-one-file-notice">{text.multipleDisabled}</div>
-         :
+				:
 				<Dropzone
 					onDrop={onChange}
 					className={className}
@@ -65,52 +65,53 @@ export const FileInput = (props) => {
 				</Dropzone>
 			}
 
-      {valueSet &&
-				<ul
-					id="cf2-list-files"
-					role="list"
-				>
-					{
-						fieldValue.map(
-							(file, index) =>
-								<li
-									id={removeFileID + index}
-									key={index}
-									className="cf2-file-listed"
-									role="listitem"
-									aria-posinset={index}
+			{valueSet &&
+			<ul
+				id="cf2-list-files"
+				role="list"
+			>
+				{
+					fieldValue.map(
+						(file, index) =>
+							<li
+								id={removeFileID + index}
+								key={index}
+								className="cf2-file-listed"
+								role="listitem"
+								aria-posinset={index}
+							>
+
+								<button
+									type="button"
+									aria-controls={removeFileID + index}
+									data-file={removeFileID + index}
+									className="cf2-file-remove"
+									onClick={(e) => onChange(e, file)}
 								>
+									<span className="screen-reader-text sr-text">{text.removeFile}</span>
+								</button>
 
-									<button
-										type="button"
-										aria-controls={removeFileID + index}
-										data-file={removeFileID + index}
-										className="cf2-file-remove"
-										onClick={(e) => onChange(e, file)}
-									>
-										<span className="screen-reader-text sr-text">{text.removeFile}</span>
-									</button>
-
-									<div>
-										{usePreviews === true && file.type.startsWith("image") === true ?
-											<img
-												className="cf2-file-field-img-preview"
-												width={previewWidth}
-												height={previewHeight}
-												src={file.preview}
-												alt={file.name}
-											/>
-											:
-											<span className="cf2-file-name">{file.name}</span>
-										}
-										<br/>
-										<span className="cf2-file-data"> {file.type} - {file.size} bytes - {file.type.startsWith("image")}</span>
-									</div>
-								</li>
-						)
-					}
-				</ul>
-      }
+								<div>
+									{usePreviews === true && file.type.startsWith("image") === true ?
+										<img
+											className="cf2-file-field-img-preview"
+											width={previewWidth}
+											height={previewHeight}
+											src={file.preview}
+											alt={file.name}
+										/>
+										:
+										<span className="cf2-file-name">{file.name}</span>
+									}
+									<br/>
+									<span
+										className="cf2-file-data"> {file.type} - {file.size} bytes - {file.type.startsWith("image")}</span>
+								</div>
+							</li>
+					)
+				}
+			</ul>
+			}
 		</div>
 
 	)
@@ -141,18 +142,18 @@ FileInput.propTypes = {
 		message: PropTypes.string
 	}),
 	style: PropTypes.object,
-  usePreviews:  PropTypes.oneOfType([
-  	PropTypes.bool,
-    PropTypes.string
-  ]),
+	usePreviews: PropTypes.oneOfType([
+		PropTypes.bool,
+		PropTypes.string
+	]),
 	previewWidth: PropTypes.number,
-  previewHeight: PropTypes.number,
+	previewHeight: PropTypes.number,
 	inputProps: PropTypes.object,
 	className: PropTypes.string,
-	accept: 	PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.string
-  ]),
+	accept: PropTypes.oneOfType([
+		PropTypes.bool,
+		PropTypes.string
+	]),
 };
 
 /**
@@ -198,11 +199,11 @@ FileInput.fieldConfigToProps = (fieldConfig) => {
 	];
 	if (fieldConfig.hasOwnProperty('configOptions')) {
 
-    const {configOptions} = fieldConfig;
+		const {configOptions} = fieldConfig;
 
-    configOptionProps.forEach(key => {
-        props[key] = configOptions[key];
-    });
+		configOptionProps.forEach(key => {
+			props[key] = configOptions[key];
+		});
 
 		if (configOptions.hasOwnProperty('allowedTypes')) {
 
@@ -216,29 +217,29 @@ FileInput.fieldConfigToProps = (fieldConfig) => {
 			props.accept = '';
 		}
 
-    if (fieldConfig.configOptions.hasOwnProperty('multiple')) {
-      if(fieldConfig.configOptions.multiple === 1 ) {
-        props.multiple = true;
-      }else {
-        props.multiple = false;
-      }
-    } else {
-      props.multiple = false;
-    }
-
-    if (configOptions.hasOwnProperty('usePreviews')) {
-
-			if( configOptions.usePreviews === true ){
-        props.usePreviews = true;
-        props.previewWidth = configOptions.previewWidth;
-        props.previewHeight = configOptions.previewHeight;
+		if (fieldConfig.configOptions.hasOwnProperty('multiple')) {
+			if (fieldConfig.configOptions.multiple === 1) {
+				props.multiple = true;
 			} else {
-        props.usePreviews = false;
+				props.multiple = false;
+			}
+		} else {
+			props.multiple = false;
+		}
+
+		if (configOptions.hasOwnProperty('usePreviews')) {
+
+			if (configOptions.usePreviews === true) {
+				props.usePreviews = true;
+				props.previewWidth = configOptions.previewWidth;
+				props.previewHeight = configOptions.previewHeight;
+			} else {
+				props.usePreviews = false;
 			}
 
-    }
+		}
 
-    if(configOptions.multiUploadText === false){
+		if (configOptions.multiUploadText === false) {
 			props.multiUploadText = 'Drop files or click to select files to Upload';
 		}
 
