@@ -130,7 +130,7 @@ class RenderField implements RenderFieldContract
                 'multiUploadText' => ! empty($this->field[ 'config' ]['multi_upload_text' ]) ? $this->field[ 'config' ]['multi_upload_text' ] : false,
                 'allowedTypes' => $this->getAllowedTypes(),
                 'control' => uniqid($this->getOuterIdAttr() ),
-                'usePreviews' => ! empty($this->field[ 'config']['use_image_previews']) ? $this->field[ 'config']['use_image_previews'] : false,
+                'usePreviews' => ! empty($this->field[ 'config']['use_image_previews']) ? true : false,
 				'previewWidth' => ! empty( $this->field[ 'config']['preview_width'] ) ? intval( $this->field[ 'config']['preview_width'] ) : 24,
 				'previewHeight' => ! empty( $this->field[ 'config']['preview_height'] ) ? intval( $this->field[ 'config']['preview_height'] ) : 24,
             ];

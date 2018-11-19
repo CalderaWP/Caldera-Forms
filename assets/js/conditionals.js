@@ -397,7 +397,7 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 			return null;
 		}
 
-		function emitConditionalEvent(eventName,field,formId,){
+		function emitConditionalEvent(eventName,field,formId){
 			function createEventName(){
 				return 'cf.conditionals.' + eventName;
 			}
