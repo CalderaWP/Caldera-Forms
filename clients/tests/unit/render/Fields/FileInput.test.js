@@ -76,10 +76,10 @@ describe('File Field ', () => {
 	});
 
 	it( 'Sets field.isRequired to false if not passed', () => {
-		let field = fileFieldConfigs.required_multiple_no_button_text;
+		let field = fileFieldConfigs.not_required_single;
 		delete field.isRequired;
 		const prepared = FileInput.fieldConfigToProps(field);
-		expect(prepared.isRequired).toEqual(true);
+		expect(prepared.field.isRequired).toEqual(false);
 	});
 
 	Object.keys(fileFieldConfigs).forEach(fieldId => {

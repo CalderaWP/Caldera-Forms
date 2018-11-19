@@ -22,7 +22,7 @@ export const CalderaFormsFieldGroup = (props) => {
 		fieldId,
 		fieldLabel,
 		fieldCaption,
-		required,
+		isRequired,
 		fieldPlaceHolder,
 		fieldDefault,
 		fieldValue,
@@ -124,6 +124,21 @@ export const CalderaFormsFieldGroup = (props) => {
 		</span>;
 	}
 
+	/**
+	 * Displays field required indicator
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return {*}
+	 * @constructor
+	 */
+	function RequiredIndicator(){
+		const requiredStyle = {
+			color: '#ee0000'
+		};
+		return <span aria-hidden="true" role="presentation" className="field_required" style={requiredStyle}>*</span>;
+	}
+
 	let className = 'form-group cf2-field-group';
 	className = hasError ? className + ' has-error' : className;
 
@@ -140,6 +155,10 @@ export const CalderaFormsFieldGroup = (props) => {
 				id={`${fieldIdAttr}Label`}
 			>
 				{fieldLabel}
+				{isRequired &&
+					<RequiredIndicator/>
+
+				}
 			</label>
 			<Inside/>
 

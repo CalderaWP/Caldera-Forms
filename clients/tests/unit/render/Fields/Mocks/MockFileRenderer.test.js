@@ -193,25 +193,4 @@ describe('DOM testing file components', () => {
 		expect(component.find('.btn').text()).toEqual("The Custom Text");
 	});
 
-	it('Shows * inside .field_required span when field is required', () => {
-		let prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_single_allow_png);
-		let field = prepared.field;
-		const {multiple, multiUploadText, inputProps} = prepared;
-
-		const component = shallow(
-			<FileInput
-				field={field}
-				multiple={multiple}
-				multiUploadText={multiUploadText}
-				onChange={() => {}}
-				inputProps={inputProps}
-			/>
-		);
-
-		expect( component.find( '.field_required').length ).toBe( 1 );
-		expect( component.contains( '*' ) ).toBe( true );
-
-	});
-
-
 });

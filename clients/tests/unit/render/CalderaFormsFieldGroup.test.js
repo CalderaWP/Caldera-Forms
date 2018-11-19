@@ -62,7 +62,21 @@ describe('CalderaFormsFieldGroup component', () => {
 
 		expect(testInstance.findByType('label').props.htmlFor).toBe(fieldIdAttr);
 		expect(testInstance.findByType('label').props.className).toBe('control-label');
-		expect(testInstance.findByType('label').props.children).toBe(fieldConfig.fieldLabel);
+
+
+	});
+
+	it('Creates the label with the right text', () => {
+		const testRenderer = mount(<CalderaFormsFieldGroup
+			onChange={handler}
+			field={fieldConfig}
+			shouldDiable={true}
+			getFieldConfig={getFieldConfig}
+		/>);
+		const testInstance = testRenderer.root;
+
+
+		expect(testRenderer.contains(fieldConfig.fieldLabel) ).toBe( true );
 
 
 	});

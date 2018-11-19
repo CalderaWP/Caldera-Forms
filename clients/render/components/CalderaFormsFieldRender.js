@@ -55,7 +55,7 @@ export const CalderaFormsFieldPropType = PropTypes.shape({
 	fieldIdAttr: PropTypes.string.isRequired,
 	fieldLabel: PropTypes.string.isRequired,
 	fieldCaption: PropTypes.string.isRequired,
-	required: PropTypes.bool,
+	isRequired: PropTypes.boola,
 	fieldPlaceHolder: PropTypes.string.isRequired,
 	fieldDefault: PropTypes.string,
 	fieldValue: PropTypes.oneOfType(

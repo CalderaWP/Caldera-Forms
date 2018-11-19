@@ -197,6 +197,10 @@ FileInput.fieldConfigToProps = (fieldConfig) => {
 		'multiUploadText',
 		'text'
 	];
+
+	if( ! props.field.hasOwnProperty('isRequired' ) ){
+		props.field.isRequired = false;
+	}
 	if (fieldConfig.hasOwnProperty('configOptions')) {
 
 		const {configOptions} = fieldConfig;
