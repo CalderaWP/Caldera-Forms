@@ -92,7 +92,7 @@ export const FileInput = (props) => {
 									</button>
 
 									<div>
-										{usePreviews ?
+										{usePreviews === true && file.type.startsWith("image") === true ?
 											<img
 												className="cf2-file-field-img-preview"
 												width={previewWidth}
@@ -104,7 +104,7 @@ export const FileInput = (props) => {
 											<span className="cf2-file-name">{file.name}</span>
 										}
 										<br/>
-										<span className="cf2-file-data"> {file.type} - {file.size} bytes</span>
+										<span className="cf2-file-data"> {file.type} - {file.size} bytes - {file.type.startsWith("image")}</span>
 									</div>
 								</li>
 						)
@@ -228,13 +228,14 @@ FileInput.fieldConfigToProps = (fieldConfig) => {
 
     if (configOptions.hasOwnProperty('usePreviews')) {
 
-      if ( configOptions.usePreviews === 1 ) {
-				props.usePreviews =  true;
-				props.previewWidth = configOptions.previewWidth;
-				props.previewHeight = configOptions.previewHeight;
-      } else {
-				props.usePreviews = false;
-      }
+			if( configOptions.usePreviews === true ){
+        props.usePreviews = true;
+        props.previewWidth = configOptions.previewWidth;
+        props.previewHeight = configOptions.previewHeight;
+			} else {
+        props.usePreviews = false;
+			}
+
     }
 
     if(configOptions.multiUploadText === false){

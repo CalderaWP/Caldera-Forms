@@ -41,7 +41,7 @@ export const fileFieldConfigs  = {
 					multiple: 'false',
 					multiUploadText: 'Cool text for required_single_allow_png',
 					allowedTypes: '.png',
-          usePreviews: 1,
+          usePreviews: true,
           previewHeight: 24,
           previewWidth: 24,
 				}
@@ -63,7 +63,7 @@ export const fileFieldConfigs  = {
 					multiple: 1,
 					multiUploadText: false,
 					allowedTypes: 'false',
-          usePreviews: 1,
+          usePreviews: true,
 					previewHeight: 24,
 					previewWidth: 24,
 				}
@@ -85,7 +85,7 @@ export const fileFieldConfigs  = {
 					multiple: 1,
 					multiUploadText: 'The Custom Text',
 					allowedTypes: 'false',
-					usePreviews: 1,
+					usePreviews: true,
 					previewHeight: 24,
 					previewWidth: 24,
 				}
@@ -107,7 +107,7 @@ export const fileFieldConfigs  = {
 					multiple: 'false',
 					multiUploadText: false,
 					allowedTypes: 'false',
-          usePreviews: 1,
+          usePreviews: true,
 					previewHeight: 24,
 					previewWidth: 24,
 				}
@@ -129,7 +129,7 @@ export const fileFieldConfigs  = {
 					multiple: 1,
 					multiUploadText: false,
 					allowedTypes: 'false',
-          usePreviews: 1,
+          usePreviews: true,
 					previewHeight: 24,
 					previewWidth: 24,
 				}
@@ -151,7 +151,7 @@ export const fileFieldConfigs  = {
 					multiple: 1,
 					multiUploadText: 'The Default Text',
 					allowedTypes: 'false',
-          usePreviews: 1,
+          usePreviews: true,
 					previewHeight: 24,
 					previewWidth: 24,
 				}
@@ -173,7 +173,7 @@ export const fileFieldConfigs  = {
 					multiple: 1,
 					multiUploadText: 'The Default Text',
 					allowedTypes: 'false',
-          usePreviews: 1,
+          usePreviews: true,
 					previewHeight: 20,
 					previewWidth: 40,
 				}
