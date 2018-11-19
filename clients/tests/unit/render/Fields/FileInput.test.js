@@ -5,7 +5,6 @@ import {MockFileFieldRenderer} from "./Mocks/MockFileFieldRenderer";
 import {fileFieldConfigs} from "./Mocks/fileFieldConfigs";
 
 
-
 import React from 'react';
 import {MockRender} from "./Mocks/MockFileFieldRenderer";
 import {mount} from "enzyme/build";
@@ -14,9 +13,8 @@ const handler = () => {
 };
 
 
-
 describe('File Field ', () => {
-	
+
 
 	const handler = () => {
 	};
@@ -51,24 +49,24 @@ describe('File Field ', () => {
 
 	it('Prepares props and sets Previews(false) props', () => {
 		const prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_single);
-		expect(prepared.usePreviews).toEqual( false );
+		expect(prepared.usePreviews).toEqual(false);
 	});
 
-  it('Prepares props and sets Previews(true) props', () => {
-    const prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_single_allow_png);
-    expect(prepared.usePreviews).toEqual( true );
-  });
+	it('Prepares props and sets Previews(true) props', () => {
+		const prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_single_allow_png);
+		expect(prepared.usePreviews).toEqual(true);
+	});
 
 	it('Prepares props and sets previewStyle', () => {
 		const prepared = FileInput.fieldConfigToProps(fileFieldConfigs.width_40_height_20);
-    expect(prepared.previewHeight).toEqual( 20 );
-    expect(prepared.previewWidth).toEqual( 40 );
+		expect(prepared.previewHeight).toEqual(20);
+		expect(prepared.previewWidth).toEqual(40);
 	});
 
-  it('Prepares props and sets multiUploadText', () => {
-    const prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_multiple_has_button_text);
-    expect(prepared.multiUploadText).toEqual( 'The Custom Text' );
-  });
+	it('Prepares props and sets multiUploadText', () => {
+		const prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_multiple_has_button_text);
+		expect(prepared.multiUploadText).toEqual('The Custom Text');
+	});
 
 	it.skip('Prepares props and sets the allowed types in inputProps when it should', () => {
 		const prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_single);
