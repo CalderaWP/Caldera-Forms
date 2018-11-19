@@ -4,6 +4,7 @@ import {fileFieldConfigs} from "./fileFieldConfigs";
 import {MockFileFieldRenderer} from "./MockFileFieldRenderer";
 import React from 'react';
 import {FileInput} from '../../../../../render/components/Fields/FileInput'
+import renderer from "react-test-renderer";
 
 //https://gist.github.com/josephhanson/372b44f93472f9c5a2d025d40e7bb4cc
 function MockFile() {
@@ -190,6 +191,26 @@ describe('DOM testing file components', () => {
 		prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_multiple_has_button_text);
 		component.setProps(prepared);
 		expect(component.find('.btn').text()).toEqual("The Custom Text");
+	});
+
+	it('Shows * inside .field_required span when field is required', () => {
+		let prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_single_allow_png);
+		let field = prepared.field;
+		const {multiple, multiUploadText, inputProps} = prepared;
+
+		const component = shallow(
+			<FileInput
+				field={field}
+				multiple={multiple}
+				multiUploadText={multiUploadText}
+				onChange={() => {}}
+				inputProps={inputProps}
+			/>
+		);
+
+		expect( component.find( '.field_required').length ).toBe( 1 );
+		expect( component.contains( '*' ) ).toBe( true );
+
 	});
 
 
