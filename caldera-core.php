@@ -4,7 +4,7 @@
   Plugin URI: https://CalderaForms.com
   Description: Easy to use, grid based responsive form builder for creating simple to complex forms.
   Author: Caldera Labs
-  Version: 1.8.0-a.1
+  Version: 1.7.4
   Author URI: http://CalderaLabs.org
   Text Domain: caldera-forms
   GitHub Plugin URI: https://github.com/CalderaWP/caldera-forms
@@ -53,7 +53,7 @@ if (!version_compare(PHP_VERSION, '5.6.0', '>=')) {
 
     define('CFCORE_PATH', plugin_dir_path(__FILE__));
     define('CFCORE_URL', plugin_dir_url(__FILE__));
-    define( 'CFCORE_VER', '1.8.0-a.1' );
+    define( 'CFCORE_VER', '1.7.4' );
     define('CFCORE_EXTEND_URL', 'https://api.calderaforms.com/1.0/');
     define('CFCORE_BASENAME', plugin_basename(__FILE__));
 
@@ -119,14 +119,13 @@ if (!version_compare(PHP_VERSION, '5.6.0', '>=')) {
          * @since 1.3.5.3
          */
         do_action('caldera_forms_includes_complete');
-        caldera_forms_freemius()->add_filter('plugin_icon', 'caldera_forms_freemius_icon_path');
     }
 
     add_action('plugins_loaded', array('Caldera_Forms', 'get_instance'));
     add_action('plugins_loaded', array('Caldera_Forms_Tracking', 'get_instance'));
 
 
-// Admin & Admin Ajax stuff.
+	// Admin & Admin Ajax stuff.
     if (is_admin() || defined('DOING_AJAX')) {
         add_action('plugins_loaded', array('Caldera_Forms_Admin', 'get_instance'));
         add_action('plugins_loaded', array('Caldera_Forms_Support', 'get_instance'));
@@ -134,61 +133,6 @@ if (!version_compare(PHP_VERSION, '5.6.0', '>=')) {
     }
 
 
-    /**
-     * Get the Caldera Forms Freemius instance
-     *
-     * @since 1.6.0
-     *
-     * @return Freemius
-     * @throws Freemius_Exception
-     */
-    function caldera_forms_freemius()
-    {
-        global $caldera_forms_freemius;
-        if (!isset($caldera_forms_freemius)) {
-            // Include Freemius SDK.
-            require_once CFCORE_PATH . 'includes/freemius/start.php';
-            $caldera_forms_freemius = fs_dynamic_init(array(
-                'id' => '1767',
-                'slug' => 'caldera-forms',
-                'type' => 'plugin',
-                'public_key' => 'pk_d8e6325777a98c1b3e0d8cdbfad1e',
-                'is_premium' => false,
-                'has_addons' => false,
-                'has_paid_plans' => false,
-                'menu' => array(
-                    'slug' => 'caldera-forms',
-                    'account' => false,
-                    'support' => false,
-                    'contact' => false,
-                ),
-            ));
-            /**
-             * Runs after Freemius loads
-             *
-             * @since 1.6.0
-             *
-             * @param Freemius $caldera_forms_freemius
-             */
-            do_action('caldera_forms_freemius_init', $caldera_forms_freemius);
-        }
-        return $caldera_forms_freemius;
-    }
-
-    //Load freemius
-    caldera_forms_freemius();
-
-    /**
-     * Get the path for the icon used by Caldera Forms
-     *
-     * @since 1.6.0
-     *
-     * @return string
-     */
-    function caldera_forms_freemius_icon_path()
-    {
-        return CFCORE_PATH . 'assets/build/images/new-icon.png';
-    }
 
 }
 

@@ -164,7 +164,7 @@ class Caldera_Forms_Forms {
 	 * @param bool|false $with_details Optional. If false, the default, just form IDs are returned. If true, basic details of each are returned.
 	 * @param bool|false $internal_only Optional. If false, the default, all forms -- in DB and in files system -- are returned -- If true, only those in DB are returned.
 	 *
-	 * @return array|mixed|void
+	 * @return array
 	 */
 	public static function get_forms( $with_details = false, $internal_only = false, $orderby = false ){
 		if( isset( $_GET[ 'cf-cache-clear' ] ) ){
@@ -174,7 +174,6 @@ class Caldera_Forms_Forms {
 		if( empty( static::$index ) ){
 		    static::$index = static::get_stored_forms();
         }
-
 
         if ( false === $internal_only ) {
             /**
@@ -190,21 +189,20 @@ class Caldera_Forms_Forms {
                     $forms[$form_id] = $form_id;
                 }
             }
-            self::$index = $forms;
         }
 
 
 		if( $with_details ){
 			$forms = self::add_details( static::$index );
 		}else{
-		    return static::$index;
+			$forms = static::$index;
         }
 
 		if( $orderby && ! empty( $forms ) ){
-			return self::order_forms( $forms, $orderby );
+			$forms = self::order_forms( $forms, $orderby );
 		}
 
-		return $forms;
+		return is_array($forms) ? $forms : [];
 
 	}
 
@@ -256,7 +254,7 @@ class Caldera_Forms_Forms {
             }
 		}
 
-		return self::$stored_forms;
+		return is_array(self::$stored_forms ) ? self::$stored_forms : [];
 	}
 
 	/**
@@ -570,12 +568,13 @@ class Caldera_Forms_Forms {
 		// get form templates (PROBABLY NEED TO MOVE METHOD INTO THIS CLASS)
 		$form_templates = Caldera_Forms_Admin::internal_form_templates();
 
-        $original_function_args = $newform;
+        	$original_function_args = $newform;
 
 		$original_function_args = $newform;
 		if(!empty($newform['clone'])){
 			$clone = $newform['clone'];
 		}
+		
 		// load template if any
 		if( !empty( $newform['template'] ) ){
 			if( isset( $form_templates[ $newform['template'] ] ) && !empty( $form_templates[ $newform['template'] ]['template'] ) ){
@@ -619,7 +618,6 @@ class Caldera_Forms_Forms {
 		 */
 		$newform = apply_filters( 'caldera_forms_create_form', $newform);
 
-
 		self::update_registry( $id );
 
 		if(!empty($clone)){
@@ -627,6 +625,7 @@ class Caldera_Forms_Forms {
 			if(!empty($clone_form['ID']) && $clone == $clone_form['ID']){
 				$newform = array_merge($clone_form, $original_function_args);
 				unset( $newform[ 'db_id' ] );
+				$newform[ 'ID' ] = $id;
 			}
 		}
 
@@ -724,7 +723,7 @@ class Caldera_Forms_Forms {
 	 * @return bool
 	 */
 	public static function is_internal_form( $id_name ){
-		return in_array( $id_name, self::get_stored_forms() );
+		return ! empty(self::get_stored_forms() ) && in_array( $id_name, self::get_stored_forms() );
 	}
 
 	/**
@@ -1124,3 +1123,5 @@ class Caldera_Forms_Forms {
         return uniqid( 'CF' );
     }
 }
+
+

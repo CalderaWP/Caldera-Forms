@@ -1,8 +1,6 @@
 <?php
 /**
- * PHPUnit bootstrap file
- *
- * @package Caldera_Forms
+ * This is the bootstrap file for integration tests.
  */
 
 $_tests_dir = getenv( 'WP_TESTS_DIR' );
