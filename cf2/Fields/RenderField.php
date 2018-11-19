@@ -117,7 +117,7 @@ class RenderField implements RenderFieldContract
             'fieldLabel' => $this->field['label'],
             'fieldCaption' => $this->field['caption'],
             'fieldPlaceHolder' => '',
-            'required' => ! empty($this->field['required'])?true:false,
+            'isRequired' => ! empty($this->field['required'])?true:false,
             'fieldDefault' => isset($this->field['config']['default'])? $this->field['config']['default'] : '',
             'fieldValue' => '',
             'fieldIdAttr' => $this->field['fieldIdAttr'],

@@ -63,7 +63,7 @@ class RenderFieldTest extends TestCase
 			'fieldLabel' => 'Email',
 			'fieldCaption' => 'Make emails',
 			'fieldPlaceHolder' => '',
-			'required' => 1,
+			'isRequired' => 1,
 			'fieldDefault' => '',
 			'fieldValue' => '',
 			'fieldIdAttr' => 'fld_1',
