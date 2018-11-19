@@ -95,10 +95,10 @@ class Caldera_Forms_DB_Tables {
 	protected function find_missing_tables(){
 		$tables = $this->wpdb->get_results( "SHOW TABLES", ARRAY_A );
 		$alltables = array();
+
 		foreach ( $tables as $table ) {
 			$alltables[] = implode( $table );
 		}
-
 
 		$missing_tables = array();
 		foreach ( $this->get_tables_list()  as  $cf_table ){

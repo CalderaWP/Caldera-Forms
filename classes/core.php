@@ -475,6 +475,12 @@ class Caldera_Forms
 	 */
 	public static function activate_caldera_forms($force = false)
 	{
+
+		//if running on activation hook, load order is wrong.
+		if( ! did_action( 'caldera_forms_includes_complete' ) ){
+			caldera_forms_load();
+		}
+
 		include_once CFCORE_PATH . 'includes/updater.php';
 		$version = caldera_forms_get_last_update_version();
 
@@ -496,6 +502,7 @@ class Caldera_Forms
 		foreach ($columns as $column) {
 			$fields[] = $column['Field'];
 		}
+
 		if (!in_array('field_id', $fields)) {
 			$wpdb->query("ALTER TABLE `" . $wpdb->prefix . "cf_form_entry_values` ADD `field_id` varchar(20) NOT NULL AFTER `entry_id`;");
 			$wpdb->query("CREATE INDEX `field_id` ON `" . $wpdb->prefix . "cf_form_entry_values` (`field_id`); ");

@@ -136,7 +136,7 @@ Probably don't use these directly. They will change. Must be prefaced with `dock
 
 #### Steps
 * Build release file
-    - `npm package`
+    - `npm run package`
 * Push Tag to WordPress.org
     - `cd bin`
     - `bash deploy-wp-org-tag.sh 12345 christiechirinos`
@@ -149,13 +149,8 @@ Probably don't use these directly. They will change. Must be prefaced with `dock
 * The first argument is password, which is required. The second argument is username, which defaults to `Shelob9`, which is Josh's username.
 
 ## Contributing/ Using This Repo, Etc.
-* The default branch is "master" that should be the same as WordPress.org.
-* Development happens on the "develop" branch. [There may be an exception, see: https://github.com/CalderaWP/Caldera-Forms/blob/master/CONTRIBUTING.md#current-git-workflow--php-compatibility](https://github.com/CalderaWP/Caldera-Forms/blob/master/CONTRIBUTING.md#current-git-workflow--php-compatibility)
-* If you find a bug, or would like to make a feature request, [please open an issue](https://github.com/CalderaWP/Caldera-Forms/issues/).
-* If you fixed a bug, or made a new feature, please submit a pull request against the develop branch.
+[Contributing Guide](https://github.com/CalderaWP/Caldera-Forms/blob/master/CONTRIBUTING.md)
 
-
-## Contributing/ Using This Repo, Etc.
 * The default branch is "master" that should be the same as WordPress.org.
 * Development happens on the "develop" branch.
 * If you find a bug, or would like to make a feature request, [please open an issue](https://github.com/CalderaWP/Caldera-Forms/issues/).
