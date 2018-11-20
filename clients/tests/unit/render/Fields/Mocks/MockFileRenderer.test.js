@@ -1,6 +1,6 @@
 import {shallow, mount} from 'enzyme';
 import EnzymeAdapter from '../../../createEnzymeAdapter'
-import {fileFieldConfigs, fileStrings } from "./fileFieldConfigs";
+import {fileFieldConfigs, fileStrings} from "./fileFieldConfigs";
 import {MockFileFieldRenderer} from "./MockFileFieldRenderer";
 import React from 'react';
 import {FileInput} from '../../../../../render/components/Fields/FileInput'
@@ -103,9 +103,9 @@ describe('DOM testing file components', () => {
 			/>
 		);
 		component.setProps(prepared);
-    expect(component.find(".btn[disabled]").html()).toBe("<button type=\"button\" class=\"btn btn-block\" aria-controls=\"required_single, cf2-list-files\" aria-expanded=\"true\" disabled=\"\">My multi Upload Text</button>");
+		expect(component.find(".btn[disabled]").html()).toBe("<button type=\"button\" class=\"btn btn-block\" aria-controls=\"required_single, cf2-list-files\" aria-expanded=\"true\" disabled=\"\">My multi Upload Text</button>");
 
-  });
+	});
 
 	it('Shows image preview if is an image', () => {
 		const size = 1024 * 1024 * 2;
@@ -117,7 +117,7 @@ describe('DOM testing file components', () => {
 		const component = mount(
 			<MockFileFieldRenderer
 				field={field}
-        strings={fileStrings}
+				strings={fileStrings}
 			/>
 		);
 		component.setProps(prepared);
@@ -136,7 +136,7 @@ describe('DOM testing file components', () => {
 		const component = mount(
 			<MockFileFieldRenderer
 				field={field}
-        strings={fileStrings}
+				strings={fileStrings}
 			/>
 		);
 		component.setProps(prepared);
@@ -156,7 +156,7 @@ describe('DOM testing file components', () => {
 		const component = mount(
 			<FileInput
 				field={field}
-        strings={fileStrings}
+				strings={fileStrings}
 			/>
 		);
 		component.setProps(prepared);
@@ -174,7 +174,7 @@ describe('DOM testing file components', () => {
 		const component = mount(
 			<FileInput
 				field={field}
-        strings={fileStrings}
+				strings={fileStrings}
 			/>
 		);
 		component.setProps(prepared);
@@ -194,18 +194,18 @@ describe('DOM testing file components', () => {
 		expect(component.find('.btn').text()).toEqual("The Custom Text");
 	});
 
-  it('Shows default button text', () => {
-    let prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_multiple_no_button_text);
-    const field = prepared.field;
-    prepared.multiUploadText = fileStrings.defaultButtonText;
-    const component = mount(
-      <FileInput
-        field={field}
+	it('Shows default button text', () => {
+		let prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_multiple_no_button_text);
+		const field = prepared.field;
+		prepared.multiUploadText = fileStrings.defaultButtonText;
+		const component = mount(
+			<FileInput
+				field={field}
 				strings={fileStrings}
-      />
-    );
-    component.setProps(prepared);
-    expect(component.find('.btn').text()).toEqual("Drop files or click to select files to Upload");
-  });
+			/>
+		);
+		component.setProps(prepared);
+		expect(component.find('.btn').text()).toEqual("Drop files or click to select files to Upload");
+	});
 
 });

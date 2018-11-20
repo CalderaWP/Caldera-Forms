@@ -16,7 +16,7 @@ import Dropzone from 'react-dropzone';
  */
 export const FileInput = (props) => {
 
-	const {onChange, accept, field, describedById, style, className, multiUploadText, multiple, inputProps, usePreviews, previewHeight, previewWidth,strings} = props;
+	const {onChange, accept, field, describedById, style, className, multiUploadText, multiple, inputProps, usePreviews, previewHeight, previewWidth, strings} = props;
 	let {shouldDisable} = props;
 	const {
 		outterIdAttr,
@@ -38,7 +38,7 @@ export const FileInput = (props) => {
 
 	inputProps.id = fieldIdAttr;
 
-	if(valueSet && !multiple){
+	if (valueSet && !multiple) {
 		shouldDisable = true;
 		inputProps.disabled = true;
 	}
@@ -46,26 +46,26 @@ export const FileInput = (props) => {
 	return (
 
 		<div className="cf2-dropzone" data-field={fieldId}>
-				<Dropzone
-					onDrop={onChange}
-					className={className}
-					accept={'string' === typeof  accept ? accept : ''}
-					style={style}
+			<Dropzone
+				onDrop={onChange}
+				className={className}
+				accept={'string' === typeof  accept ? accept : ''}
+				style={style}
+				disabled={shouldDisable}
+				inputProps={inputProps}
+				disableClick={shouldDisable}
+				multiple={multiple}
+			>
+				<button
+					type="button"
+					className="btn btn-block"
+					aria-controls={buttonControls}
+					aria-expanded={valueSet}
 					disabled={shouldDisable}
-					inputProps={inputProps}
-					disableClick={shouldDisable}
-					multiple={multiple}
 				>
-					<button
-						type="button"
-						className="btn btn-block"
-						aria-controls={buttonControls}
-						aria-expanded={valueSet}
-            disabled={shouldDisable}
-					>
-						{multiUploadText}
-					</button>
-				</Dropzone>
+					{multiUploadText}
+				</button>
+			</Dropzone>
 
 			{valueSet &&
 			<ul
@@ -139,7 +139,7 @@ FileInput.propTypes = {
 	]),
 	text: PropTypes.object,
 	multiUploadText: PropTypes.oneOfType([
-    PropTypes.bool,
+		PropTypes.bool,
 		PropTypes.string
 	]),
 	message: PropTypes.shape({
@@ -159,10 +159,10 @@ FileInput.propTypes = {
 		PropTypes.bool,
 		PropTypes.string
 	]),
-  isRequired: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.object
-  ]),
+	isRequired: PropTypes.oneOfType([
+		PropTypes.bool,
+		PropTypes.object
+	]),
 };
 
 /**
@@ -203,7 +203,7 @@ FileInput.fieldConfigToProps = (fieldConfig) => {
 		'multiUploadText'
 	];
 
-	if( ! props.field.hasOwnProperty('isRequired' ) ){
+	if (!props.field.hasOwnProperty('isRequired')) {
 		props.field.isRequired = false;
 	}
 	if (fieldConfig.hasOwnProperty('configOptions')) {
