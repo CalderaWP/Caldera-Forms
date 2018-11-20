@@ -48,7 +48,8 @@ module.exports = function (grunt) {
     [
         'pro',
         'privacy',
-        'blocks'
+        'blocks',
+        'render'
     ].forEach( (client) => {
        files_list.push( `clients/${client}/build/index.min.js` );
        files_list.push( `clients/${client}/build/style.min.css` );
