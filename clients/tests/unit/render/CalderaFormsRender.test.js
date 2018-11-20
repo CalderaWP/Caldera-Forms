@@ -130,7 +130,13 @@ export const formRenderTestProps = {
 			"control": "cf2_file5bdb63e874357"
 		}
 	],
-	"shouldBeValidating": false
+	"shouldBeValidating": false,
+  "strings": {
+    "cf2FileField": {
+      "removeFile": "Remove file",
+      "defaultButtonText": "Drop files or click to select files to Upload"
+    }
+  }
 };
 
 describe('Form render methods', () => {
@@ -457,6 +463,17 @@ describe('Form render methods', () => {
 		component.instance().addFieldMessage( 'fld_5899467', 'Bad things!' );
 		expect( component.state( 'messages')).toEqual( {});
 	});
+
+  test( 'Get default file field translatable Strings', () => {
+    const props = {...formRenderTestProps};
+    const component = shallow(
+      <CalderaFormsRender
+        {...props}
+      />
+    );
+    expect(component.instance().getStrings()).toBeDefined();
+    expect(component.instance().getStrings()).toBeTruthy();
+  });
 
 });
 

@@ -1,6 +1,6 @@
 import {shallow, mount} from 'enzyme';
 import EnzymeAdapter from '../../../createEnzymeAdapter'
-import {fileFieldConfigs} from "./fileFieldConfigs";
+import {fileFieldConfigs, fileStrings } from "./fileFieldConfigs";
 import {MockFileFieldRenderer} from "./MockFileFieldRenderer";
 import React from 'react';
 import {FileInput} from '../../../../../render/components/Fields/FileInput'
@@ -89,7 +89,7 @@ describe('DOM testing file components', () => {
 	});
 
 
-	it('If multiple upload option is not enabled and a file/value is set, button to trigger file upload disappears', () => {
+	it('If multiple upload option is not enabled and a file/value is set, button is disabled', () => {
 		const size = 1024 * 1024 * 2;
 		const mock = new MockFile();
 		const file = mock.create("pic.png", size, "image/png");
@@ -99,13 +99,13 @@ describe('DOM testing file components', () => {
 		let component = mount(
 			<MockFileFieldRenderer
 				field={field}
+				strings={fileStrings}
 			/>
 		);
 		component.setProps(prepared);
-		expect(component.find('button.btn').length).toBe(0);
-		expect(component.find('.cf2-one-file-notice').length).toBe(1);
+    expect(component.find(".btn[disabled]").html()).toBe("<button type=\"button\" class=\"btn btn-block\" aria-controls=\"required_single, cf2-list-files\" aria-expanded=\"true\" disabled=\"\">My multi Upload Text</button>");
 
-	});
+  });
 
 	it('Shows image preview if is an image', () => {
 		const size = 1024 * 1024 * 2;
@@ -117,6 +117,7 @@ describe('DOM testing file components', () => {
 		const component = mount(
 			<MockFileFieldRenderer
 				field={field}
+        strings={fileStrings}
 			/>
 		);
 		component.setProps(prepared);
@@ -135,6 +136,7 @@ describe('DOM testing file components', () => {
 		const component = mount(
 			<MockFileFieldRenderer
 				field={field}
+        strings={fileStrings}
 			/>
 		);
 		component.setProps(prepared);
@@ -154,6 +156,7 @@ describe('DOM testing file components', () => {
 		const component = mount(
 			<FileInput
 				field={field}
+        strings={fileStrings}
 			/>
 		);
 		component.setProps(prepared);
@@ -171,26 +174,41 @@ describe('DOM testing file components', () => {
 		const component = mount(
 			<FileInput
 				field={field}
+        strings={fileStrings}
 			/>
 		);
 		component.setProps(prepared);
 		expect(component.find('.cf2-file-field-img-preview').html()).toBe("<img class=\"cf2-file-field-img-preview\" width=\"24\" height=\"24\" src=\"pic.png\" alt=\"pic.png\">");
 	});
 
-	it('Shows default and custom button text', () => {
-		let prepared = FileInput.fieldConfigToProps(fileFieldConfigs.not_required_multiple_no_button_text);
-		let field = prepared.field;
+	it('Shows custom button text', () => {
+		const prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_multiple_has_button_text);
+		const field = prepared.field;
 		const component = mount(
-			<FileInput
+			<MockFileFieldRenderer
 				field={field}
+				strings={fileStrings}
 			/>
 		);
 		component.setProps(prepared);
-		expect(component.find('.btn').text()).toEqual("Drop files or click to select files to Upload");
-
-		prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_multiple_has_button_text);
-		component.setProps(prepared);
+    console.log(component.find('.btn').debug());
 		expect(component.find('.btn').text()).toEqual("The Custom Text");
 	});
+
+  it('Shows default button text', () => {
+    let prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_multiple_no_button_text);
+    const field = prepared.field;
+    console.log(fileStrings);
+    prepared.multiUploadText = fileStrings.defaultButtonText;
+    const component = mount(
+      <FileInput
+        field={field}
+				strings={fileStrings}
+      />
+    );
+    component.setProps(prepared);
+    console.log(component.find('.btn').debug());
+    expect(component.find('.btn').text()).toEqual("Drop files or click to select files to Upload");
+  });
 
 });

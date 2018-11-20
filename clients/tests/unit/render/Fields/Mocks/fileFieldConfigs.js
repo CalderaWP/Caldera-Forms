@@ -8,6 +8,7 @@ export const fileFieldConfigs = {
 			fieldCaption: '',
 			fieldPlaceHolder: '',
 			required: true,
+			isRequired: true,
 			fieldDefault: '',
 			fieldValue: [],
 			fieldIdAttr: 'required_single',
@@ -55,6 +56,7 @@ export const fileFieldConfigs = {
 			fieldCaption: '',
 			fieldPlaceHolder: '',
 			required: true,
+			isRequired: true,
 			fieldDefault: '',
 			fieldValue: '',
 			fieldIdAttr: 'required_multiple_no_button_text',
@@ -178,4 +180,10 @@ export const fileFieldConfigs = {
 					previewWidth: 40,
 				}
 		}
+
 };
+
+export const fileStrings = {
+    removeFile: 'Remove file',
+    defaultButtonText: 'Drop files or click to select files to Upload'
+}

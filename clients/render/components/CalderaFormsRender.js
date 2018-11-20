@@ -171,7 +171,7 @@ export class CalderaFormsRender extends Component {
 	}
 
 	/**
-	 * Get the field config, by fieldIdAtte
+	 * Get the field config, by fieldIdAttr
 	 *
 	 * @since 1.8.0
 	 *
@@ -389,7 +389,18 @@ export class CalderaFormsRender extends Component {
 			}
 
 		})
-	};
+	}
+
+  /**
+   * Get translatable strings Set in Caldera_Forms_Render_Assets::enqueue_form_assets()
+   *
+   * @since 1.8.0
+   *
+   * @return {Object}
+   */
+  getStrings() {
+    return this.props.strings;
+  }
 
 
 	/** @inheritDoc */
@@ -424,6 +435,7 @@ export class CalderaFormsRender extends Component {
 					this.subscribe(fieldIdAttr);
 					const props = {
 						field,
+						strings: this.getStrings(),
 						onChange: this.getHandler(fieldIdAttr),
 						shouldShow: state[shouldShowKey(fieldIdAttr)],
 						shouldDisable: state[shouldDisableKey(fieldIdAttr)],
@@ -464,6 +476,7 @@ CalderaFormsRender.propTypes = {
 	),
 	formIdAttr: PropTypes.string.isRequired,
 	shouldBeValidating: PropTypes.bool.isRequired,
-	messages: PropTypes.object
+	messages: PropTypes.object,
+	strings: PropTypes.object
 };
 

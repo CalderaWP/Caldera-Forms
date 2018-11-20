@@ -11,7 +11,8 @@ export class MockFileFieldRenderer extends React.Component {
 			error: false,
 			isInvalid: false,
 			shouldDisable: false,
-			field: props.field
+			field: props.field,
+			strings: props.strings
 		};
 		this.onChange = this.onChange.bind(this);
     this.setField = this.setField.bind(this);
@@ -49,7 +50,7 @@ export class MockFileFieldRenderer extends React.Component {
 	}
 
 	render() {
-		const {value, message, error, isInvalid, shouldDisable, field} = this.state;
+		const {value, message, error, isInvalid, shouldDisable, field, strings} = this.state;
 		const messageProp = {error,message};
 
 		return (
@@ -64,6 +65,7 @@ export class MockFileFieldRenderer extends React.Component {
 					isInvalid={isInvalid}
 					message={messageProp}
 					usePreviews={this.props.usePreviews}
+					strings={strings}
 				/>
 			</div>
 		)

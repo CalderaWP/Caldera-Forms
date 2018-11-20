@@ -178,6 +178,13 @@ describe('chooses inner field', () => {
 		type: "text",
 	};
 
+  const strings = {
+    cf2FileField: {
+      removeFile: 'Remove file',
+      defaultButtonText: 'Drop files or click to select files to Upload'
+    }
+  }
+
 	const getFieldConfig = (fieldIdAttr) =>{
 		return textFieldConfig;
 	};
@@ -198,6 +205,7 @@ describe('chooses inner field', () => {
 			onChange={handler}
 			field={fileFieldConfig.field}
 			getFieldConfig={getFieldConfig}
+			strings={strings.cf2FileField}
 		/>);
 		const testInstance = testRenderer.root;
 		expect(testInstance.findByType('input').props.type).toBe('file');

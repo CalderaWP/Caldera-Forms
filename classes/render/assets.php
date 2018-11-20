@@ -621,6 +621,12 @@ class Caldera_Forms_Render_Assets {
 					),
 					'nonce' => wp_create_nonce('wp_rest')
 				),
+				'strings'   =>  array(
+				    'cf2FileField'  => array(
+                        'removeFile' => esc_attr__('Remove file', 'caldera-forms'),
+                        'defaultButtonText' =>  esc_attr__('Drop files or click to select files to Upload', 'caldera-forms')
+                    )
+                ),
 				'nonce' => array(
 					'field' => Caldera_Forms_Render_Nonce::nonce_field_name(),
 				),
