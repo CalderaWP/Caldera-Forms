@@ -16,8 +16,8 @@ import Dropzone from 'react-dropzone';
  */
 export const FileInput = (props) => {
 
-	const {shouldDisable, onChange, accept, field, describedById, style, className, multiple, multiUploadText, inputProps, text, usePreviews, previewHeight, previewWidth} = props;
-
+	const {onChange, accept, field, describedById, style, className, multiUploadText, multiple, inputProps, usePreviews, previewHeight, previewWidth,strings} = props;
+	let {shouldDisable} = props;
 	const {
 		outterIdAttr,
 		fieldId,
@@ -38,12 +38,14 @@ export const FileInput = (props) => {
 
 	inputProps.id = fieldIdAttr;
 
+	if(valueSet && !multiple){
+		shouldDisable = true;
+		inputProps.disabled = true;
+	}
+
 	return (
 
 		<div className="cf2-dropzone" data-field={fieldId}>
-			{valueSet && !multiple ?
-				<div className="cf2-one-file-notice">{text.multipleDisabled}</div>
-				:
 				<Dropzone
 					onDrop={onChange}
 					className={className}
@@ -59,11 +61,11 @@ export const FileInput = (props) => {
 						className="btn btn-block"
 						aria-controls={buttonControls}
 						aria-expanded={valueSet}
+            disabled={shouldDisable}
 					>
 						{multiUploadText}
 					</button>
 				</Dropzone>
-			}
 
 			{valueSet &&
 			<ul
@@ -88,7 +90,7 @@ export const FileInput = (props) => {
 									className="cf2-file-remove"
 									onClick={(e) => onChange(e, file)}
 								>
-									<span className="screen-reader-text sr-text">{text.removeFile}</span>
+									<span className="screen-reader-text sr-text">{strings.removeFile}</span>
 								</button>
 
 								<div>
@@ -136,7 +138,10 @@ FileInput.propTypes = {
 		PropTypes.number
 	]),
 	text: PropTypes.object,
-	multiUploadText: PropTypes.string,
+	multiUploadText: PropTypes.oneOfType([
+    PropTypes.bool,
+		PropTypes.string
+	]),
 	message: PropTypes.shape({
 		error: PropTypes.bool,
 		message: PropTypes.string
@@ -154,6 +159,10 @@ FileInput.propTypes = {
 		PropTypes.bool,
 		PropTypes.string
 	]),
+  isRequired: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.object
+  ]),
 };
 
 /**
@@ -168,12 +177,9 @@ FileInput.defaultProps = {
 		error: false,
 		message: ''
 	},
-	text: {
-		removeFile: 'Remove file',
-		multipleDisabled: 'Only one file upload allowed'
-	},
 	inputProps: {
-		type: 'file'
+		type: 'file',
+		disabled: 'false'
 	},
 	disableClick: false,
 	className: 'cf2-file form-control'
@@ -194,8 +200,7 @@ FileInput.fieldConfigToProps = (fieldConfig) => {
 	};
 	const configOptionProps = [
 		'multiple',
-		'multiUploadText',
-		'text'
+		'multiUploadText'
 	];
 
 	if( ! props.field.hasOwnProperty('isRequired' ) ){
@@ -243,9 +248,6 @@ FileInput.fieldConfigToProps = (fieldConfig) => {
 
 		}
 
-		if (configOptions.multiUploadText === false) {
-			props.multiUploadText = 'Drop files or click to select files to Upload';
-		}
 
 	}
 

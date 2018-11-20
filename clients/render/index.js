@@ -249,6 +249,7 @@ domReady(function () {
 					theComponent = component
 				}}
 				messages={messages}
+				strings={CF_API_DATA.strings}
 			/>,
 			document.getElementById(`cf2-${idAttr}`)
 		);

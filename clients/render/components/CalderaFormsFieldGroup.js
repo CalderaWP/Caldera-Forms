@@ -15,7 +15,7 @@ import {FileInput} from "./Fields/FileInput";
  * @constructor
  */
 export const CalderaFormsFieldGroup = (props) => {
-	const {field, onChange, shouldDisable, shouldShow, hasMessage, isError, message, getFieldConfig} = props;
+	const {field, onChange, shouldDisable, shouldShow, hasMessage, isError, message, getFieldConfig, strings} = props;
 	const {
 		type,
 		outterIdAttr,
@@ -54,7 +54,15 @@ export const CalderaFormsFieldGroup = (props) => {
 		switch (type) {
 			case 'file':
 				const fileProps = FileInput.fieldConfigToProps(getFieldConfig(fieldIdAttr));
-				return <FileInput
+
+        let multiUploadText = '';
+        if(fileProps.multiUploadText === false || fileProps.multiUploadText === null){
+          multiUploadText = strings.cf2FileField.defaultButtonText;
+        } else {
+          multiUploadText = fileProps.multiUploadText;
+				}
+
+        return <FileInput
 					onChange={onChange}
 					field={field}
 					shouldDisable={shouldDisable}
@@ -69,7 +77,8 @@ export const CalderaFormsFieldGroup = (props) => {
 					previewHeight={fileProps.previewHeight}
 					previewWidth={fileProps.previewWidth}
 					multiple={fileProps.multiple}
-					multiUploadText={fileProps.multiUploadText}
+					multiUploadText={multiUploadText}
+					strings={strings.cf2FileField}
 				/>
 			case'text':
 			default:
@@ -203,7 +212,8 @@ CalderaFormsFieldGroup.propTypes = {
 		error: PropTypes.bool,
 		message: PropTypes.string
 	}),
-	getFieldConfig: PropTypes.func.isRequired
+	getFieldConfig: PropTypes.func.isRequired,
+	strings: PropTypes.object
 };
 
 /**
