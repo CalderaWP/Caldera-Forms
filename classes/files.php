@@ -53,7 +53,7 @@ class Caldera_Forms_Files{
 
 	    self::add_upload_filter( $args[ 'field_id' ],  $args[ 'form_id' ], $private );
 
-        $upload = wp_handle_upload($file, array( 'test_form' => false ) );
+        $upload = wp_handle_upload($file, array( 'test_form' => false, 'foo' => 'bnar' ) );
 
         if( $private ){
             self::remove_upload_filter();
@@ -321,6 +321,7 @@ class Caldera_Forms_Files{
 	 * @return bool
 	 */
     public static function should_attach( array  $field, array $form ){
+
     	if( Caldera_Forms_Field_Util::is_file_field( $field, $form ) ){
 		    return ! empty( $field[ 'config' ][ 'attach'] );
 	    }
@@ -337,7 +338,12 @@ class Caldera_Forms_Files{
 	 * @return array
 	 */
     public static function types(){
-    	return array( 'advanced_file', 'file'  );
+    	return array(
+    	    'advanced_file',
+            'file',
+            \calderawp\calderaforms\cf2\Fields\FieldTypes\FileFieldType::getCf1Identifier(),
+            \calderawp\calderaforms\cf2\Fields\FieldTypes\FileFieldType::getType()
+        );
     }
 
 }

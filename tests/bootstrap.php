@@ -8,10 +8,6 @@ if ( ! $_tests_dir ) {
 	$_tests_dir = '/tmp/wordpress-tests-lib';
 }
 
-if( ! defined( 'NONCE_SALT' ) ){
-    define( 'NONCE_SALT', '12345apexsecurity' );
-}
-
 // Give access to tests_add_filter() function.
 require_once $_tests_dir . '/includes/functions.php';
 
@@ -31,6 +27,7 @@ require $_tests_dir . '/includes/bootstrap.php';
 //include test forms
 include_once( dirname( __FILE__ ) . '/includes/forms/contact-form-include.php' );
 include_once( dirname( __FILE__ ) . '/includes/forms/simple-form-with-just-a-text-field-include.php' );
+include_once( dirname( __FILE__ ) . '/includes/forms/cf2-file-include.php' );
 
 create_testing_db_tables();
 

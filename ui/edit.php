@@ -381,13 +381,15 @@ $field_type_list = array(
 // Build Field Types List
 foreach($field_types as $field_slug=>$config){
 
-	if(!file_exists($config['file'])){
-		if(!function_exists($config['file'])){
-			continue;
-		}
-	}
+    if ( ! empty( $field['cf2'])) {
+        if (!file_exists($config['file'])) {
+            if (!function_exists($config['file'])) {
+                continue;
+            }
+        }
+    }
 
-	$categories = array();
+    $categories = array();
 	if(!empty($config['category'])){
 		$categories = explode(',', $config['category']);
 	}

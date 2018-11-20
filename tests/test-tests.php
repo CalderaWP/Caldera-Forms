@@ -7,21 +7,20 @@ class TestsTest extends Caldera_Forms_Test_Case {
      *
      * @group test
      */
-	function testAsserts() {
-		// replace this with some actual testing code
-		$this->assertTrue( true );
+    function testAsserts() {
+        // replace this with some actual testing code
+        $this->assertTrue( true );
 
 
-	}
+    }
 
     /**
      * Make sure we can read/write the DB
      *
      * @group test
      */
-	public function testDB(){
+    public function testDB(){
         update_option( 'hi', 'roy' );
         $this->assertSame( 'roy', get_option( 'hi' ) );
     }
 }
-
