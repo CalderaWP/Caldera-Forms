@@ -43,4 +43,17 @@ class DeleteFileJobTest extends \PHPUnit_Framework_TestCase
 		//make sure it is deleted
 		$this->assertFalse(file_exists($file['tmp_name']));
 	}
+
+	/**
+	 * @since 1.8.0
+	 *
+	 * @covers \calderawp\calderaforms\cf2\Jobs\DeleteFileJob::handle()
+	 */
+	public function testHandleWithNonExistantFile()
+	{
+
+		$job = new DeleteFileJob('noms/foods' );
+		$job->handle(); // an exception being thrown here would be bad.
+		$this->assertTrue(true);//@see https://github.com/sebastianbergmann/phpunit/issues/2484
+	}
 }
