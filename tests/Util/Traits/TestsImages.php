@@ -29,8 +29,8 @@ class ImageTest extends TestCase
 trait TestsImages
 {
 
-    protected $tmpPath = '/tmp/small-cat.jpeg';
-    protected $tmpPathTiny = '/tmp/tiny-cat.jpeg';
+    protected $tmpPath = '/tmp/cats/small-cat.jpeg';
+    protected $tmpPathTiny = '/tmp/cats/tiny-cat.jpeg';
 
     /**
      * Gets a small cat
@@ -66,7 +66,8 @@ trait TestsImages
      */
     public function createSmallCat()
     {
-        copy($this->getSmallCatPath(), $this->tmpPath);
+		$this->makeCatsDir();
+		copy($this->getSmallCatPath(), $this->tmpPath);
         return [
             'file' => file_get_contents($this->tmpPath),
             'name' => 'small-cat.jpeg',
@@ -108,6 +109,7 @@ trait TestsImages
      */
     public function createTinyCat()
     {
+		$this->makeCatsDir();
         copy($this->getTinyCatPath(), $this->tmpPathTiny);
         return [
             'file' => file_get_contents($this->tmpPathTiny),
@@ -130,5 +132,18 @@ trait TestsImages
         if (file_exists($this->tmpPathTiny)) {
             unlink($this->tmpPathTiny);
         }
+        rmdir('/tmp/cats' );
     }
+
+	/**
+	 * Make directory for cats to be stored in
+	 *
+	 * @since 1.8.0
+	 */
+	protected function makeCatsDir()
+	{
+		if ( !file_exists('/tmp/cats') ) {
+			mkdir('/tmp/cats');
+		}
+	}
 }
