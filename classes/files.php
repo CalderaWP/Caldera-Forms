@@ -54,15 +54,7 @@ class Caldera_Forms_Files{
             self::remove_upload_filter();
         }
 
-		if( $private ){
-			$form = Caldera_Forms_Forms::get_form($args[ 'form_id' ]);
-			if (is_array( $form ) ) {
-				$field = Caldera_Forms_Field_Util::get_field($args[ 'field_id' ], $form);
-				if (! self::is_persistent($field)) {
-					caldera_forms_schedule_job(new \calderawp\calderaforms\cf2\Jobs\DeleteFileJob($upload['file']));
-				}
-			}
-		}
+		self::schedule_delete($args, $private, $upload);
 
 		return $upload;
 
@@ -374,5 +366,31 @@ class Caldera_Forms_Files{
             \calderawp\calderaforms\cf2\Fields\FieldTypes\FileFieldType::getType()
         );
     }
+
+	/**
+	 * Schedule file to be deleted as soon as possible
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param string $field_id ID of field
+	 * @param string $form_id ID of form
+	 * @param string $file Path to file to delete.
+	 *
+	 * @return bool
+	 */
+	public static function schedule_delete($field_id, $form_id, $file )
+	{
+		$form = Caldera_Forms_Forms::get_form($form_id);
+		if ( is_array($form) ) {
+			$field = Caldera_Forms_Field_Util::get_field($field_id, $form);
+			if ( is_array($field) && !self::is_persistent($field) ) {
+				caldera_forms_schedule_job(new \calderawp\calderaforms\cf2\Jobs\DeleteFileJob($file));
+				return true;
+			}
+		}
+
+		return false;
+
+	}
 
 }
