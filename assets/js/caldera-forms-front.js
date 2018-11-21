@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.7.4 - 2018-10-23 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.8.0-alpha.1 - 2018-11-20 *//**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -45,6 +45,16 @@ function CFEvents(state) {
 
 	};
 
+	this.emit = function (eventName, payload) {
+		if (!hasEvents(eventName)) {
+			return;
+		}
+
+		events[eventName].forEach(function (callback) {
+			callback(payload,eventName);
+		});
+
+	};
 	/**
 	 * Detach a bound event (remove_action)
 	 *
@@ -301,6 +311,12 @@ function CFState(formId, $ ){
 			 */
 			detach: function(id,callback){
 				events.detach(id,callback);
+			},
+			emit: function (eventName,payload) {
+				events.emit(eventName,payload);
+			},
+			attatchEvent: function(eventName,callback){
+				events.subscribe(eventName,callback);
 			}
 		}
 	};
@@ -4650,7 +4666,14 @@ jQuery( document ).ajaxComplete(function() {
             e.preventDefault();
             $this.cfdatepicker('show')
                 .on('show', function(){ $(this).trigger('blur'); })
-                .on('hide', function(){ $(this).attr("disabled", false); })
+                .on('hide', function(){
+                    $(this).attr("disabled", false);
+                  if($this.hasClass('parsley-error') && $this.val() !== ''){
+                    $this.removeClass('parsley-error');
+                    $this.addClass('parsley-success');
+                    $('#parsley-id-' + $this.data('parsley-id')).hide();
+                  }
+                })
         }
     );
 
@@ -6695,7 +6718,7 @@ var cf_jsfields_init, cf_presubmit;
 			validator = cf_validate_form( $form );
 		$( document ).trigger( 'cf.form.submit', {
 			e:e,
-			$form:$form
+			$form:$form,
 		} );
 
 
@@ -6806,10 +6829,12 @@ window.addEventListener("load", function(){
 					config_object = new Caldera_Forms_Field_Config( config, $(document.getElementById(form_id)), $, state );
 					config_object.init();
 					$( document ).trigger( 'cf.form.init',{
+						$form: $form,
 						idAttr:  form_id,
 						formId: formId,
 						state: state,
-						fieldIds: CFFIELD_CONFIG[instance].fields.hasOwnProperty( 'ids' ) ? CFFIELD_CONFIG[instance].fields.ids : []
+						fieldIds: CFFIELD_CONFIG[instance].fields.hasOwnProperty( 'ids' ) ? CFFIELD_CONFIG[instance].fields.ids : [],
+						nonce: jQuery( '#_cf_verify_' + formId ).val()
 					});
 
 

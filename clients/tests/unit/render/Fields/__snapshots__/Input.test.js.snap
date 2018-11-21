@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input field matches snapshot with basic args 1`] = `
+<input
+  className="cf2-text form-control"
+  data-field="fld_5843941"
+  data-type="cf2-text"
+  disabled={false}
+  id="fld_5843941_1"
+  name="fld_5843941"
+  onChange={[Function]}
+  placeholder=""
+  required={false}
+  type="text"
+  value=""
+/>
+`;
+
+exports[`Input field prints aria attribute 1`] = `
+<input
+  aria-describedby="foo"
+  className="cf2-text form-control"
+  data-field="fld_5843941"
+  data-type="cf2-text"
+  disabled={false}
+  id="fld_5843941_1"
+  name="fld_5843941"
+  onChange={[Function]}
+  placeholder=""
+  required={false}
+  type="text"
+  value=""
+/>
+`;

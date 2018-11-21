@@ -1,6 +1,7 @@
 <?php
 
 abstract class Caldera_Forms_Mailer_Test_Case extends Caldera_Forms_Test_Case {
+    use \calderawp\calderaforms\Tests\Util\Traits\TestsWpMail;
     /** @inheritdoc */
     public function tearDown(){
         $this->reset();

@@ -214,6 +214,12 @@ function CFState(formId, $ ){
 			 */
 			detach: function(id,callback){
 				events.detach(id,callback);
+			},
+			emit: function (eventName,payload) {
+				events.emit(eventName,payload);
+			},
+			attatchEvent: function(eventName,callback){
+				events.subscribe(eventName,callback);
 			}
 		}
 	};
