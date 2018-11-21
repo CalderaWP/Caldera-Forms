@@ -37,6 +37,7 @@ class Caldera_Forms_Files{
             'private' => false,
             'field_id' => null,
             'form_id' => null,
+			'transient_id' => null,
         ));
         if( true == $args[ 'private' ] && ! empty( $args[ 'field_id' ] ) && ! empty( $args[ 'form_id' ] )){
             $private = true;
@@ -44,14 +45,8 @@ class Caldera_Forms_Files{
             $private = false;
         }
 
-        if( $private ){
-            wp_schedule_single_event( time() + HOUR_IN_SECONDS, self::CRON_ACTION, array(
-                $args[ 'field_id' ],
-                $args[ 'form_id' ]
-            ) );
-        }
 
-	    self::add_upload_filter( $args[ 'field_id' ],  $args[ 'form_id' ], $private );
+	    self::add_upload_filter( $args[ 'field_id' ],  $args[ 'form_id' ], $private, $args[ 'transient_id' ] );
 
         $upload = wp_handle_upload($file, array( 'test_form' => false, 'foo' => 'bnar' ) );
 
@@ -59,7 +54,17 @@ class Caldera_Forms_Files{
             self::remove_upload_filter();
         }
 
-        return $upload;
+		if( $private ){
+			$form = Caldera_Forms_Forms::get_form($args[ 'form_id' ]);
+			if (is_array( $form ) ) {
+				$field = Caldera_Forms_Field_Util::get_field($args[ 'field_id' ], $form);
+				if (! self::is_persistent($field)) {
+					caldera_forms_schedule_job(new \calderawp\calderaforms\cf2\Jobs\DeleteFileJob($upload['file']));
+				}
+			}
+		}
+
+		return $upload;
 
     }
 
@@ -113,10 +118,12 @@ class Caldera_Forms_Files{
      *
      * @param string $field_id The field ID for file field
      * @param string $form_id The form ID
+	 * @param bool $private If is private
+	 * @param null|string $transient_id ID of transient for file. Optional.
      */
-    public static function add_upload_filter( $field_id , $form_id, $private = true ){
+    public static function add_upload_filter( $field_id , $form_id, $private = true, $transient_id = null ){
 	    if ( $private ) {
-		    self::$dir = self::secret_dir( $field_id, $form_id );
+		    self::$dir = self::secret_dir( $field_id, $form_id, $transient_id);
 	    }else{
 		    /**
 		     * Filter directory for uploaded files
@@ -128,7 +135,7 @@ class Caldera_Forms_Files{
 		     * @param string|null Directory
 		     * @param string $field_id Field ID
 		     * @param string $form_id Form ID
-		     */
+			 */
 	    	$dir = apply_filters( 'caldera_forms_upload_directory', null, $field_id, $form_id );
 		    if( null != $dir ){
 		    	self::$dir = $dir;
@@ -181,11 +188,12 @@ class Caldera_Forms_Files{
      *
      * @param string $field_id The field ID for file field
      * @param string $form_id The form ID
-     *
-     * @return string
+	 * @param null|string $transient_id ID of transient for file. Optional.
+	 *
+	 * @return string
      */
-    protected static function secret_dir( $field_id, $form_id ){
-        return md5( $field_id . $form_id . NONCE_SALT );
+    protected static function secret_dir( $field_id, $form_id, $transient_id = null ){
+        return md5( $field_id . $form_id . NONCE_SALT . (string) $transient_id );
 
     }
 

@@ -132,8 +132,10 @@ trait TestsImages
         if (file_exists($this->tmpPathTiny)) {
             unlink($this->tmpPathTiny);
         }
-        rmdir('/tmp/cats' );
-    }
+		if (file_exists('/tmp/cats')) {
+			rmdir('/tmp/cats');
+		}
+	}
 
 	/**
 	 * Make directory for cats to be stored in
