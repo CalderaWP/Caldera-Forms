@@ -4,6 +4,7 @@
 namespace calderawp\calderaforms\cf2\Jobs;
 
 
+
 /**
  * Class DeleteFileJob
  *
@@ -38,6 +39,9 @@ class DeleteFileJob extends Job
 	/** @inheritdoc */
 	public function handle()
 	{
-		unlink($this->path);
+		if( file_exists( $this->path) ){
+			unlink($this->path);
+		}
+
 	}
 }
