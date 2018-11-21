@@ -33,9 +33,14 @@ class DeleteFileJobTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testHandle()
 	{
+		//create file
 		$file = $this->createSmallCat();
+		//make sure file exists
+		$this->assertTrue(file_exists($file['tmp_name']));
+		//delete file
 		$job = new DeleteFileJob($file['tmp_name'] );
 		$job->handle();
+		//make sure it is deleted
 		$this->assertFalse(file_exists($file['tmp_name']));
 	}
 }

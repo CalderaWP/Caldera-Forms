@@ -38,6 +38,6 @@ class DeleteFileJob extends Job
 	/** @inheritdoc */
 	public function handle()
 	{
-
+		unlink($this->path);
 	}
 }
