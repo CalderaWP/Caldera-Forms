@@ -275,16 +275,7 @@ class Caldera_Forms_Files{
 	 */
     public static function is_private( array  $field ){
 
-    	if( Caldera_Forms_Field_Util::is_file_field( $field ) ) {
-		    if( isset( $field[ 'config']['media_lib'] ) && true == $field['config']['media_lib'] ){
-		    	return false;
-		    }else{
-		    	return true;
-		    }
-
-	    }
-
-	    return true;
+    	return Caldera_Forms_Field_Util::is_file_field( $field ) && ! self::should_add_to_media_library($field);
     }
 
 
@@ -300,7 +291,7 @@ class Caldera_Forms_Files{
 	 * @return bool
 	 */
 	public static function is_persistent(array $field ){
-
+		return self::should_add_to_media_library($field) || ! empty( $field['config']['persistent']);
 	}
 
 	/**
@@ -314,7 +305,7 @@ class Caldera_Forms_Files{
 	 * @return bool
 	 */
 	public static function should_add_to_media_library(array $field ){
-
+		return isset( $field[ 'config']['media_lib'] ) && true == $field['config']['media_lib'];
 	}
 
 	/**

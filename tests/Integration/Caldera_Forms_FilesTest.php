@@ -16,7 +16,6 @@ class Caldera_Forms_FilesTest extends TestCase
 	];
 
 	/**
-	 * @group now
 	 *
 	 * @since  1.8.0
 	 *
@@ -49,7 +48,6 @@ class Caldera_Forms_FilesTest extends TestCase
 	}
 
 	/**
-	 * @group now
 	 *
 	 * @since  1.8.0
 	 *
@@ -82,7 +80,6 @@ class Caldera_Forms_FilesTest extends TestCase
 	}
 
 	/**
-	 * @group now
 	 *
 	 * @since  1.8.0
 	 *
@@ -136,7 +133,6 @@ class Caldera_Forms_FilesTest extends TestCase
 	}
 
 	/**
-	 * @group now
 	 *
 	 * @since  1.8.0
 	 *
