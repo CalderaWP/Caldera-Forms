@@ -16,7 +16,7 @@ class ImportForms
     public function __construct($dirPath = '')
     {
         if (empty($dirPath)) {
-            $dirPath = dirname(__FILE__, 2) . '/cypress/forms';
+            $dirPath = dirname(__FILE__, 3) . '/cypress/forms';
         }
         $this->dirPath = $dirPath;
     }

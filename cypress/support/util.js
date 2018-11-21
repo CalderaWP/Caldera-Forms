@@ -43,6 +43,26 @@ export const visitPage = (pageSlug) => {
 };
 
 /**
+ * Get the selector for a Caldera Forms Form by ID
+ *
+ * @param {String} formId CF Form ID, not ID attribute
+ * @return {String}
+ */
+export const getCfFormSelector = (formId) => {
+	return `[data-cf-form-id="${formId}"]`;
+};
+
+/**
+ * Get a Caldera Forms forms by ID
+ *
+ * @param {String} formId CF Form ID, not ID attribute
+ * @return {Cypress.Chainable<JQuery<HTMLElement>>}
+ */
+export const getCfForm = (formId) => {
+	return cy.get(getCfFormSelector(formId));
+};
+
+/**
  * Get a Caldera Forms field by ID
  *
  * @param {String} fieldId CF Field ID, not ID attribute
@@ -82,6 +102,18 @@ export const clearCfField = (fieldId) => {
  */
 export const cfFieldIsVisible = (fieldId) => {
 	return getCfField(fieldId).should('be.visible');
+};
+
+/**
+ * Check if Caldera Forms form contains a type of field
+ *
+
+ * @param {String} formId CF FormID, not ID attribute
+ * @param {String} type Type of field we want to check
+ * @return {Cypress.Chainable<JQuery<HTMLElement>>}
+ */
+export const cfFormHasFieldType = (formId, type) => {
+	return getCfForm(formId).find( `[type=${type}]` );
 };
 
 /**
@@ -387,4 +419,49 @@ export const cfStarFieldValueIs = (fieldId, starValue,maxStars)=> {
 		const className = i <= starValue ? 'raty-star-on' : 'raty-star-off';
 		cfFieldGetWrapper(fieldId).find( `f.${className}[title="${i}"]` ).should( 'have.class',className );
 	};
-}
+};
+
+export const cfDropMultipleFiles = (fieldId, filesPaths, filesTypes)=> {
+
+	let dropEvent = [];
+	filesPaths.forEach( file => {
+
+		//Set File Type
+		const fileExt = file.substr(file.length - 3);
+		const fileType = '';
+		/*if( fileExt === 'jpg' ){
+			fileType = filesTypes.jpg;
+		} else if ( fileExt === 'png' ) {
+			fileType = filesTypes.png;
+		}*/
+		//Push to DropEvent array
+		cy.fixture(file).then((picture) => {
+			return Cypress.Blob.base64StringToBlob(picture, filesTypes.jpg).then((blob) => {
+				dropEvent.push(blob);
+			});
+		});
+
+	});
+
+
+	return cfGetFileDropzone(fieldId).trigger('drop', dropEvent);
+
+};
+
+export const cfDropSingleFile = (fieldId, filesPaths, filesTypes)=> {
+
+	const dropEvent = [];
+	cy.fixture(filesPaths[0]).then((picture) => {
+		return Cypress.Blob.base64StringToBlob(picture, filesTypes.jpg).then((blob) => {
+			dropEvent.push(blob);
+		});
+	});
+
+	//Cypress.$('div[data-field=' + fieldId + ']').find( '.cf2-field.cf2-file .cf2-dropzone' ).remove();
+	return cfGetFileDropzone(fieldId).trigger('drop', dropEvent);
+
+};
+
+export const cfGetFileDropzone = ( fieldId => {
+	return cy.get('div[data-field=' + fieldId + ']').find( '.cf2-dropzone button' );
+});

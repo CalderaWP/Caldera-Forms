@@ -1,0 +1,105 @@
+{
+  "_last_updated": "Wed, 07 Nov 2018 17:16:05 +0000",
+  "ID": "CF5be31da4beff7",
+  "cf_version": "1.7.4",
+  "name": "2727 DatePicker Validation Trigger",
+  "scroll_top": 0,
+  "success": "SUCCESS MESSAGE",
+  "db_support": 1,
+  "pinned": 0,
+  "hide_form": 1,
+  "avatar_field": "",
+  "form_ajax": 1,
+  "custom_callback": "",
+  "layout_grid": {
+    "fields": {
+      "fld_225467": "1:1",
+      "fld_8112155": "1:1",
+      "fld_2324958": "1:1"
+    },
+    "structure": "12"
+  },
+  "fields": {
+    "fld_225467": {
+      "ID": "fld_225467",
+      "type": "text",
+      "label": "Your Name",
+      "slug": "your_name",
+      "conditions": {
+        "type": ""
+      },
+      "required": 1,
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "placeholder": "",
+        "default": "",
+        "type_override": "text",
+        "mask": ""
+      }
+    },
+    "fld_8112155": {
+      "ID": "fld_8112155",
+      "type": "date_picker",
+      "label": "The Date",
+      "slug": "the_date",
+      "conditions": {
+        "type": ""
+      },
+      "required": 1,
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "default": "",
+        "format": "yyyy-mm-dd",
+        "start_view": "month",
+        "start_date": "",
+        "end_date": "",
+        "language": ""
+      }
+    },
+    "fld_2324958": {
+      "ID": "fld_2324958",
+      "type": "button",
+      "label": "Submit",
+      "slug": "submit",
+      "conditions": {
+        "type": ""
+      },
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "type": "submit",
+        "class": "btn btn-default",
+        "target": ""
+      }
+    }
+  },
+  "page_names": [
+    "Page 1"
+  ],
+  "mailer": {
+    "sender_name": "Caldera Forms Notification",
+    "sender_email": "test@test.com",
+    "reply_to": "",
+    "email_type": "html",
+    "recipients": "",
+    "bcc_to": "",
+    "email_subject": "2727 DatePicker Validation Trigger",
+    "email_message": "{summary}"
+  },
+  "check_honey": 1,
+  "antispam": {
+    "sender_name": "",
+    "sender_email": ""
+  },
+  "conditional_groups": [],
+  "settings": {
+    "responsive": {
+      "break_point": "sm"
+    }
+  },
+  "version": "1.7.4",
+  "db_id": "2",
+  "type": "primary"
+}

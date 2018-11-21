@@ -403,7 +403,7 @@ class Caldera_Forms_Fields {
 			//file
 			'file'             => array(
 				"field"       => __( 'File', 'caldera-forms' ),
-				"description" => __( 'File Uploader', 'caldera-forms' ),
+				"description" => __( 'Basic HTML5 File Uploader', 'caldera-forms' ),
 				"file"        => CFCORE_PATH . "fields/file/field.php",
 				'icon'          => CFCORE_URL . 'assets/build/images/cloud-upload.svg',
 				"viewer"      => array( Caldera_Forms::get_instance(), 'handle_file_view' ),
@@ -414,9 +414,9 @@ class Caldera_Forms_Fields {
 				)
 			),
 			'advanced_file'    => array(
-				"field"       => __( 'Advanced File Uploader', 'caldera-forms' ),
+				"field"       => __( 'Advanced File Uploader (1.0)', 'caldera-forms' ),
 				'icon'          => CFCORE_URL . 'assets/build/images/cloud-upload.svg',
-				"description" => __( 'Inline, multi file uploader', 'caldera-forms' ),
+				"description" => __( 'File upload field with more features than standard HTML5 input.', 'caldera-forms' ),
 				"file"        => CFCORE_PATH . "fields/advanced_file/field.php",
 				"viewer"      => array( Caldera_Forms::get_instance(), 'handle_file_view' ),
 				"category"    => __( 'File', 'caldera-forms' ),

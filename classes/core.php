@@ -24,6 +24,7 @@ class Caldera_Forms
 	const VERSION = CFCORE_VER;
 
 	/**
+	/**
 	 * @since 1.4.2
 	 */
 	const PLUGIN_SLUG = 'caldera-forms';
@@ -474,6 +475,12 @@ class Caldera_Forms
 	 */
 	public static function activate_caldera_forms($force = false)
 	{
+
+		//if running on activation hook, load order is wrong.
+		if( ! did_action( 'caldera_forms_includes_complete' ) ){
+			caldera_forms_load();
+		}
+
 		include_once CFCORE_PATH . 'includes/updater.php';
 		$version = caldera_forms_get_last_update_version();
 
@@ -495,6 +502,7 @@ class Caldera_Forms
 		foreach ($columns as $column) {
 			$fields[] = $column['Field'];
 		}
+
 		if (!in_array('field_id', $fields)) {
 			$wpdb->query("ALTER TABLE `" . $wpdb->prefix . "cf_form_entry_values` ADD `field_id` varchar(20) NOT NULL AFTER `entry_id`;");
 			$wpdb->query("CREATE INDEX `field_id` ON `" . $wpdb->prefix . "cf_form_entry_values` (`field_id`); ");
@@ -3927,12 +3935,31 @@ class Caldera_Forms
 	 * @param array|null $form Optional Form to load field from. Not necessary, but helps the filters out.
 	 * @param array $entry_data Optional. Entry data to populate field with. Null, the default, loads form for creating a new entry.
 	 *
-	 * @return void|string HTML for form, if it was able to be loaded,
+	 * @return string HTML for form, if it was able to be loaded,
 	 */
 	static public function render_field($field, $form = null, $entry_data = array(), $field_errors = array())
 	{
 		$current_form_count = Caldera_Forms_Render_Util::get_current_form_count();
+        $type = Caldera_Forms_Field_Util::get_type($field, $form);
+        $field_id_attr = Caldera_Forms_Field_Util::get_base_id($field, $current_form_count, $form);
+        if( Caldera_Forms_Field_Util::is_cf2_field_type($type)){
+            $form_id_attribute = $form['ID'] . '_' . $current_form_count;
+            $field['required'] = ! empty( $field['required'] ) ? true : false;
+            $field['caption'] = ! empty( $field['caption'] ) ? $field['caption'] : '';
+            $field['config']['default'] = isset($field['config']['default']) ? $field['config']['default'] : '';
+            $renderer = new \calderawp\calderaforms\cf2\Fields\RenderField($form_id_attribute,
+                array_merge( $field, [
+                    'fieldIdAttr' => $field_id_attr,
+                    'formIdAttr' => $form_id_attribute,
+                ]),
+                [
+                    'formId' => $form['ID'],
+                    'control' => uniqid( $type )
 
+                ]
+            );
+            return $renderer->render();
+        }
 		$field_classes = Caldera_Forms_Field_Util::prepare_field_classes($field, $form);
 
 		$field_wrapper_class = implode(' ', $field_classes['control_wrapper']);
@@ -3948,9 +3975,8 @@ class Caldera_Forms
 			$field_classes['field_label'][] = 'screen-reader-text sr-only';
 		}
 
-		$field_id_attr = Caldera_Forms_Field_Util::get_base_id($field, $current_form_count, $form);
 
-		$type = Caldera_Forms_Field_Util::get_type($field, $form);
+
 
 		$field_structure = array(
 			"field" => $field,
@@ -4205,11 +4231,11 @@ class Caldera_Forms
 
 		do_action('caldera_forms_render_start', $form);
 
-		//aria-label="<?php echo $form[ 'name' ] . '"
+		$form_id_attribute = $form['ID'] . '_' . $current_form_count;
 		$form_attributes = array(
 			'method' => 'POST',
 			'enctype' => 'multipart/form-data',
-			'id' => $form['ID'] . '_' . $current_form_count,
+			'id' => $form_id_attribute,
 			'data-form-id' => $form['ID'],
 			'aria-label' => $form['name']
 		);
@@ -4492,14 +4518,14 @@ class Caldera_Forms
 
 
 					if (empty($field) || !isset($field_types[$field['type']]['file']) || !file_exists($field_types[$field['type']]['file'])) {
-						continue;
-					}
+                        if (!Caldera_Forms_Field_Util::is_cf2_field_type($field['type'])) {
+                            continue;
+                        }
+                    }
 
 					$field['grid_location'] = $location;
-					//$field[ 'page' ] = $cr
 
 					Caldera_Forms_Render_Assets::enqueue_field_scripts($field_types, $field);
-
 
 					$field_base_id = $field['ID'] . '_' . $current_form_count;
 
@@ -4509,15 +4535,17 @@ class Caldera_Forms
 					}
 
 					$field_html = self::render_field($field, $form, $prev_data, $field_error);
+
 					// conditional wrapper
 					if (!empty($field['conditions']['group']) && !empty($field['conditions']['type'])) {
-
+                        $is_cf2_field = Caldera_Forms_Field_Util::is_cf2_field_type( Caldera_Forms_Field_Util::get_type( $field, $form ) );
 						$conditions_configs[$field_base_id] = $field['conditions'];
 
 						if ($field['conditions']['type'] !== 'disable') {
 							// wrap it up
-							$conditions_templates[$field_base_id] = "<script type=\"text/html\" id=\"conditional-" . $field_base_id . "-tmpl\">\r\n" . $field_html . "</script>\r\n";
-							// add in instance number
+                            $conditions_templates[$field_base_id] = "<script type=\"text/html\" id=\"conditional-" . $field_base_id . "-tmpl\">\r\n" . $field_html . "</script>\r\n";
+
+                            // add in instance number
 							if (!empty($field['conditions']['group'])) {
 								foreach ($field['conditions']['group'] as &$group_row) {
 									foreach ($group_row as &$group_line) {
@@ -4528,9 +4556,12 @@ class Caldera_Forms
 							}
 						}
 
-						if ($field['conditions']['type'] == 'show' || $field['conditions']['type'] == 'wdisable') {
+						if ($field['conditions']['type'] == 'show' || $field['conditions']['type'] == 'disable') {
 							// show if indicates hidden by default until condition is matched.
-							$field_html = null;
+                            if( ! $is_cf2_field ){
+                                $field_html = null;
+                            }
+
 						}
 						// wrapp it up
 						$field_html = '<span class="caldera-forms-conditional-field" role="region" aria-live="polite" id="conditional_' . $field_base_id . '" data-field-id="' . $field_base_id . '">' . $field_html . '</span>';
@@ -4639,6 +4670,7 @@ class Caldera_Forms
 			$out .= "<" . $form_element . " data-instance=\"" . $current_form_count . "\" class=\"" . implode(' ',
 					$form_classes) . "\" " . implode(" ", $attributes) . ">\r\n";
 			$out .= Caldera_Forms_Render_Nonce::nonce_field($form['ID']);
+			$out .= sprintf( '<div id="%s"></div>', esc_attr( "cf2-$form_id_attribute") );
 			$out .= "<input type=\"hidden\" name=\"_cf_frm_id\" value=\"" . $form['ID'] . "\">\r\n";
 			$out .= "<input type=\"hidden\" name=\"_cf_frm_ct\" value=\"" . $current_form_count . "\">\r\n";
 			if (!empty($form['form_ajax'])) {
@@ -4976,8 +5008,15 @@ class Caldera_Forms
 		 * Runs after Caldera Forms REST API is loaded
 		 *
 		 * @since 1.4.4
+         *
+         * @param Caldera_Forms_API_Load $api_v2 Caldera Forms REST API v2
+         * @param \calderawp\calderaforms\cf2\RestApi\Register $api_v3 Caldera Forms REST API v2
 		 */
-		do_action('caldera_forms_rest_api_init');
+		do_action('caldera_forms_rest_api_init',
+            self::$api,
+            (new \calderawp\calderaforms\cf2\RestApi\Register(Caldera_Forms_API_Util::api_namespace('v3' ) ) )
+                ->initEndpoints()
+        );
 
 	}
 
