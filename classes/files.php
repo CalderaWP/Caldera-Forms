@@ -287,6 +287,36 @@ class Caldera_Forms_Files{
 	    return true;
     }
 
+
+	/**
+	 * Check if a file field is "persistent"
+	 *
+	 * If true, file should be retained on server.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param array $field Field config
+	 *
+	 * @return bool
+	 */
+	public static function is_persistent(array $field ){
+
+	}
+
+	/**
+	 * Check if a file field should upload to media library.
+	 **
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param array $field Field config
+	 *
+	 * @return bool
+	 */
+	public static function should_add_to_media_library(array $field ){
+
+	}
+
 	/**
 	 * Get the callback function for file uploads
 	 *
