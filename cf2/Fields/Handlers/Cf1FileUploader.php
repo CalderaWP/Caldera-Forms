@@ -14,13 +14,20 @@ class Cf1FileUploader implements UploaderContract
        return \Caldera_Forms_Files::upload($file,$args);
     }
 
-    public function addFilter($fieldId, $formId, $private)
+	/** @inheritdoc */
+	public function addFilter($fieldId, $formId, $private,$transientId= null )
     {
-        \Caldera_Forms_Files::add_upload_filter($fieldId,$formId,$private);
+        \Caldera_Forms_Files::add_upload_filter($fieldId,$formId,$private,$transientId);
     }
-
+	/** @inheritdoc */
     public function removeFilter()
     {
        \Caldera_Forms_Files::remove_upload_filter();
     }
+
+	/** @inheritdoc */
+    public function scheduleFileDelete($fieldId,$formId,$file)
+	{
+		return \Caldera_Forms_Files::schedule_delete($fieldId,$formId,$file);
+	}
 }

@@ -17,8 +17,13 @@ class MockUploader implements UploaderContract
         // TODO: Implement removeFilter() method.
     }
 
-    public function addFilter($fieldId, $formId, $private)
+    public function addFilter($fieldId, $formId, $private,$controlCode = null)
     {
         // TODO: Implement addFilter() method.
     }
+
+    public function scheduleFileDelete($fieldId, $formId, $file)
+	{
+		// TODO: Implement scheduleFileDelete() method.
+	}
 }
