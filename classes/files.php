@@ -318,6 +318,8 @@ class Caldera_Forms_Files{
 	 *
 	 * @param array $field Field config
 	 * @param string $path_to_file Path to check against
+	 *
+	 * @return bool
 	 */
 	public static function is_file_too_large( array  $field, $path_to_file )
 	{
