@@ -294,6 +294,15 @@ class Caldera_Forms_Files{
 		return self::should_add_to_media_library($field) || ! empty( $field['config']['persistent']);
 	}
 
+	public static function get_max_upload_size( array $field)
+	{
+
+	}
+
+	public static function is_file_too_large( array  $field, $path )
+	{
+
+	}
 	/**
 	 * Check if a file field should upload to media library.
 	 **
