@@ -127,7 +127,7 @@ domReady(function () {
 			 *
 			 * @since 1.8.0
 			 *
-			 * @param {File} file File blob
+			 * @param {array} files array of File blob to be processed
 			 * @param {string} verify Nonce token
 			 * @param {object} field field config
 			 * @param {string} fieldId ID for field
