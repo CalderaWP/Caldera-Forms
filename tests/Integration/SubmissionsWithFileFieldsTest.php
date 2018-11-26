@@ -230,11 +230,13 @@ class SubmissionsWithFileFieldsTest extends TestCase
      * @group field
      * @group cf2_file
      */
-    public function testOneFileSubmissionToMultiFileFeild()
+    public function testOneFileSubmissionToMultiFileField()
     {
 
         $fileData = [
-            'http://example.org/wp-content/uploads/6ce32e892d96e3e1931f2001e52477de/screenshot-3.jpeg'
+            'http://example.org/wp-content/uploads/6ce32e892d96e3e1931f2001e52477de/screenshot-3.jpeg',
+			'http://example.org/wp-content/uploads/6ce32e892d96e3e1931f2001e52477de/screenshot-4.jpeg'
+
         ];
 
         $transientApi = new Cf1TransientsApi();
@@ -252,8 +254,7 @@ class SubmissionsWithFileFieldsTest extends TestCase
         SubmissionHelpers::fakeFormSubmit($this->formId,$data);
         $this->assertNotNull( $this->entryId );
 
-
-        $value= \Caldera_Forms::get_field_data('cf2_file_4', $this->form, $this->entryId );
+        $value = \Caldera_Forms::get_field_data('cf2_file_4', $this->form, $this->entryId );
         $this->assertEquals(
             $fileData,
             $value

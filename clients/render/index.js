@@ -132,51 +132,54 @@ domReady(function () {
 			 * @param {object} field field config
 			 * @param {string} fieldId ID for field
 			 */
-			function hashAndUpload(file, verify, field, fieldId) {
+			function hashAndUpload(files, verify, field, fieldId) {
 
-
-				if (file instanceof File) {
-					hashFile(file, (hash) => {
-						createMediaFromFile(file, {
-							hashes: [hash],
-							verify,
-							formId: field.formId,
-							fieldId: field.fieldId,
-							control: field.control,
-							_wp_nonce
-						}).then(
-							response => response.json()
-						).then(
-							response => {
-								if( 'object' !== typeof  response ){
-									removeFromUploadStarted(fieldId);
-									removeFromPending(fieldId);
-									throw response;
-								}
-								else if (response.hasOwnProperty('control')) {
-									removeFromPending(fieldId);
-									removeFromBlocking(fieldId);
-									cf2.uploadCompleted.push(fieldId);
-									$form.submit();
-								}else{
-									if( response.hasOwnProperty('message') ){
-										messages[field.fieldIdAttr] = {
-											error: true,
-											message: response.hasOwnProperty('message') ? response.message : 'Invalid'
-										};
+				files.forEach((file, index, array) => {
+					if (file instanceof File) {
+						hashFile(file, (hash) => {
+							createMediaFromFile(file, {
+								hashes: [hash],
+								verify,
+								formId: field.formId,
+								fieldId: field.fieldId,
+								control: field.control,
+								_wp_nonce
+							}).then(
+								response => response.json()
+							).then(
+								response => {
+									if ('object' !== typeof  response) {
+										removeFromUploadStarted(fieldId);
+										removeFromPending(fieldId);
+										throw response;
 									}
-									removeFromUploadStarted(fieldId);
-									removeFromPending(fieldId);
-									throw response;
+									else if (response.hasOwnProperty('control')) {
+										removeFromPending(fieldId);
+										removeFromBlocking(fieldId);
+										cf2.uploadCompleted.push(fieldId);
+										if (index === array.length - 1){
+											$form.submit()
+											return response;
+										}
+									} else {
+										if (response.hasOwnProperty('message')) {
+											messages[field.fieldIdAttr] = {
+												error: true,
+												message: response.hasOwnProperty('message') ? response.message : 'Invalid'
+											};
+										}
+										removeFromUploadStarted(fieldId);
+										removeFromPending(fieldId);
+										throw response;
+									}
+
 								}
-
-
-							}
-						).catch(
-							error => console.log(error)
-						);
-					})
-				}
+							).catch(
+								error => console.log(error)
+							);
+						})
+					}
+				})
 			}
 
 			if (Object.keys(values).length) {
@@ -209,14 +212,12 @@ domReady(function () {
 									return;
 								}
 								removeFromBlocking(fieldId);
-								const files = [values[fieldId]];
-								files.forEach(file => {
-										if( Array.isArray( file ) ){
-											file = file[0];
-										}
-										hashAndUpload(file, verify, field, fieldId);
-									}
-								);
+								const files = [values[fieldId]][0];
+								if(Array.isArray(files)){
+									hashAndUpload(files, verify, field, fieldId);
+								}
+
+
 							}
 
 
@@ -257,5 +258,3 @@ domReady(function () {
 	});
 
 });
-
-
