@@ -50,7 +50,10 @@ abstract class TestCase extends FrameworkTestCase
             'esc_html__',
             'esc_html_x',
             'esc_attr_x',
+            'esc_js',
+            'esc_attr',
         ));
+
     }
     //phpcs:enable
 }

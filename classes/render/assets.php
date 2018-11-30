@@ -235,6 +235,7 @@ class Caldera_Forms_Render_Assets {
 			'font'              => self::make_url( 'cfont', false ),
 			'table'             => self::make_url( 'caldera-table', false ),
 			'entry-viewer-2'    => self::make_url( 'entry-viewer-2', false ),
+            'render'            => self::make_url( 'render', false ),
 
 		);
 
@@ -292,10 +293,9 @@ class Caldera_Forms_Render_Assets {
 			'blocks' => self::make_url( 'blocks'),
 			'editor' => self::make_url( 'editor' ),
 			'pro' => self::make_url( 'pro' ),
-			'privacy' => self::make_url( 'privacy' )
+			'privacy' => self::make_url( 'privacy' ),
+            'render' => self::make_url( 'render' )
 		);
-
-		$script_urls[ 'fields' ] = $script_urls[ 'privacy' ];
 
 		return $script_urls;
 	}
@@ -526,7 +526,6 @@ class Caldera_Forms_Render_Assets {
 				return "{$root_url}clients/{$name}/build/index.min.js";
 			}else{
 				return "{$root_url}clients/{$name}/build/style.min.css";
-
 			}
 		}
 
@@ -555,7 +554,7 @@ class Caldera_Forms_Render_Assets {
 	 * @return bool
 	 */
 	public static function is_client_entry_point( $slug ){
-		return in_array( $slug, array( 'blocks', 'pro', 'privacy' ) );
+		return in_array( $slug, array( 'blocks', 'pro', 'privacy','render' ) );
 	}
 
 	/**
@@ -589,6 +588,7 @@ class Caldera_Forms_Render_Assets {
 		self::maybe_validator_i18n( false );
 		self::enqueue_script( 'validator' );
 		self::enqueue_script( 'init' );
+		self::enqueue_script( 'render' );
 
 		$should_minify = self::should_minify();
 		if( $should_minify  ){
@@ -614,11 +614,19 @@ class Caldera_Forms_Render_Assets {
 			wp_localize_script( $field_script_to_localize, 'CF_API_DATA', array(
 				'rest' => array(
 					'root' => esc_url_raw(Caldera_Forms_API_Util::url()),
+					'rootV3' => esc_url_raw(Caldera_Forms_API_Util::url('', false, 'v3') ),
+					'fileUpload' => esc_url_raw(Caldera_Forms_API_Util::url('file', false, 'v3') ),
 					'tokens' => array(
 						'nonce' => esc_url_raw(Caldera_Forms_API_Util::url('tokens/form'))
 					),
 					'nonce' => wp_create_nonce('wp_rest')
 				),
+				'strings'   =>  array(
+				    'cf2FileField'  => array(
+                        'removeFile' => esc_attr__('Remove file', 'caldera-forms'),
+                        'defaultButtonText' =>  esc_attr__('Drop files or click to select files to Upload', 'caldera-forms')
+                    )
+                ),
 				'nonce' => array(
 					'field' => Caldera_Forms_Render_Nonce::nonce_field_name(),
 				),

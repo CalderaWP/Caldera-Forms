@@ -19,3 +19,5 @@ wp-content
 cypress/screenshots
 cypress/videos
 build
+
+wp-test-case

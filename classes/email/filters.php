@@ -27,7 +27,8 @@ class Caldera_Forms_Email_Filters{
     public static function mail_attachment_check( $mail, $data, $form){
         foreach ( Caldera_Forms_Forms::get_fields( $form, false ) as $field_id => $field ) {
             if ( Caldera_Forms_Field_Util::is_file_field( $field, $form )  ) {
-                if( ! Caldera_Forms_Files::should_attach( $field, $form ) ){
+                //Filter field config before checking if should attach
+                if( ! Caldera_Forms_Files::should_attach( \Caldera_Forms_Field_Util::get_field($field_id,$form,true), $form ) ){
                     continue;
                 }
                 $dir = wp_upload_dir();

@@ -21,7 +21,7 @@ class CreatePages
     public function __construct( $filePath = '')
     {
         if (empty($filePath)) {
-            $filePath = dirname(__FILE__, 2) . '/cypress/tests.json';
+            $filePath = dirname(__FILE__, 3) . '/cypress/tests.json';
         }
         $this->filePath = $filePath;
     }
