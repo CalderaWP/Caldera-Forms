@@ -63,7 +63,7 @@ if( !empty( $form['fields'][ $field['config']['email'] ] ) ){
 				}, function(res){
 					if(res.length){
 						current_<?php echo $field['config']['email'] .'_'.$current_form_count; ?> = email;
-						var image = jQuery(res).load(function(){
+						var image = jQuery(res).on('load', function(){
 							var img = jQuery(this).css('opacity', .5);
 							container.find('img').animate({opacity: 0}, 200, function(){
 								container.html(img).find('img').animate({opacity: 1}, 200);
