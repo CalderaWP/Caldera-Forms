@@ -119,4 +119,24 @@ class Caldera_Forms_API_Settings implements  Caldera_Forms_API_Route{
         );
     }
 
+	/**
+	 * Check request permissions
+	 *
+	 * @return bool
+	 */
+	public function permissions_check(){
+
+		//Check if a user is already set
+		if( wp_get_current_user()->ID === 0 ) {
+			// short-circuit setting the current user to retrieve the User Id
+			$user_id = apply_filters( 'determine_current_user', false );
+			// Set current user
+			wp_set_current_user( $user_id );
+		}
+
+		//Check current user capabilities to access cf-api data
+		return current_user_can(Caldera_Forms::get_manage_cap('admin'));
+
+	}
+
 }
