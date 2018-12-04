@@ -263,11 +263,11 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
         if( ! empty( $forms ) && $request[ 'full' ] ){
             foreach( $forms as $id => $form ){
 	            try{
-		            $form = $this->form_object_factory( $id, $request );
+		            $this->form_object_factory( $id, $request );
 	            }catch ( Exception $e ){
 		           continue;
 	            }
-                $prepared[ $id ] = $this->prepare_form_for_response( $form, $request );
+                $prepared[ $id ] = $this->prepare_form_for_response( $this->form, $request );
             }
 
         }
