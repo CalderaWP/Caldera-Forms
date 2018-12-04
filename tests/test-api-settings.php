@@ -70,6 +70,32 @@ class TestApiSettings extends CF_Rest_Test_Case
 		$this->assertArrayHasKey('alert', $data['styleIncludes']);
 		$this->assertArrayHasKey('form', $data['styleIncludes']);
 
+		//Test updating all data to true with arguments
+		$request->set_param('cdnEnable', 'true');
+		$request->set_param('grid', 'true');
+		$request->set_param('alert', 'true');
+		$request->set_param('form', 'true');
+		//Resend request
+		$response = $this->server->dispatch( $request );
+		//Assert data
+		$data = $response->get_data();
+		$this->assertEquals(true, $data['styleIncludes']['grid']);
+		$this->assertEquals(true, $data['styleIncludes']['alert']);
+		$this->assertEquals(true, $data['styleIncludes']['form']);
+		$this->assertEquals(true, $data['cdnEnable']);
+
+		//Test updating two data to false
+		$request->set_param('cdnEnable', 'false');
+		$request->set_param('grid', 'false');
+		//Resend request
+		$response = $this->server->dispatch( $request );
+		//Assert data
+		$data = $response->get_data();
+		$this->assertEquals(false, $data['styleIncludes']['grid']);
+		$this->assertEquals(true, $data['styleIncludes']['alert']);
+		$this->assertEquals(true, $data['styleIncludes']['form']);
+		$this->assertEquals(false, $data['cdnEnable']);
+
 	}
 
 	/**
@@ -88,6 +114,14 @@ class TestApiSettings extends CF_Rest_Test_Case
 		$this->assertEquals( 200, $response->get_status() );
 		$data = $response->get_data();
 		$this->assertArrayHasKey('per_page', $data);
+		$this->assertEquals('0', $data['per_page']);
+
+		$request->set_param('per_page', '5');
+		//Resend request
+		$response = $this->server->dispatch( $request );
+		//Assert data
+		$data = $response->get_data();
+		$this->assertEquals('5', $data['per_page']);
 
 	}
 
