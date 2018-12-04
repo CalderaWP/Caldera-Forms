@@ -20,7 +20,7 @@ class Caldera_Forms_API_Settings implements  Caldera_Forms_API_Route{
 			array(
 				'methods'         => array( 'POST' ),
 				'callback'        => array( $this, 'update_entry_settings' ),
-				'permission_callback' => array( $this, 'permissions_check' ),
+				'permission_callback' => array( $this, 'create_item_permissions_check' ),
 				'args'            => array(
 					'per_page' => array(
 						'required'          => 'false',
@@ -33,7 +33,7 @@ class Caldera_Forms_API_Settings implements  Caldera_Forms_API_Route{
             array(
                 'methods'         => array( 'POST' ),
                 'callback'        => array( $this, 'update_settings' ),
-                'permission_callback' => array( $this, 'permissions_check' ),
+                'permission_callback' => array( $this, 'create_item_permissions_check' ),
                 'args'            => array(
                     'styleIncludes' => array(
                         'required'          => 'false',
@@ -50,7 +50,7 @@ class Caldera_Forms_API_Settings implements  Caldera_Forms_API_Route{
             array(
                 'methods'         => array( 'GET' ),
                 'callback'        => array( $this, 'get_settings' ),
-                'permission_callback' => array( $this, 'permissions_check' ),
+                'permission_callback' => array( $this, 'get_items_permissions_check' ),
             )
         );
 
@@ -120,12 +120,17 @@ class Caldera_Forms_API_Settings implements  Caldera_Forms_API_Route{
         );
     }
 
+
 	/**
-	 * Check request permissions
-	 *
-	 * @return bool
-	 */
-	public function permissions_check(){
+	* Permissions for settings read
+	*
+	* @since 1.8.0
+	*
+	* @param WP_REST_Request $request
+	*
+	* @return bool
+	*/
+	public function get_items_permissions_check( WP_REST_Request $request ){
 
 		//Check if a user is already set
 		if( wp_get_current_user()->ID === 0 ) {
@@ -135,8 +140,50 @@ class Caldera_Forms_API_Settings implements  Caldera_Forms_API_Route{
 			wp_set_current_user( $user_id );
 		}
 
-		//Check current user capabilities to access cf-api data
-		return current_user_can(Caldera_Forms::get_manage_cap('admin'));
+		$allowed = current_user_can( Caldera_Forms::get_manage_cap( 'entry-view' ) );
+
+		/**
+		 * Filter permissions for viewing settings config via Caldera Forms REST API
+		 *
+		 * @since 1.8.0
+		 *
+		 * @param bool $allowed Is request authorized?
+		 * @param WP_REST_Request $request The current request
+		 */
+		return apply_filters( 'caldera_forms_api_allow_settings_view', $allowed, $request );
+
+	}
+
+	/**
+	 * Permissions for settings create/update/delete
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param WP_REST_Request $request
+	 *
+	 * @return bool
+	 */
+	public function create_item_permissions_check( WP_REST_Request $request ){
+
+		//Check if a user is already set
+		if( wp_get_current_user()->ID === 0 ) {
+			// short-circuit setting the current user to retrieve the User Id
+			$user_id = apply_filters( 'determine_current_user', false );
+			// Set current user
+			wp_set_current_user( $user_id );
+		}
+
+		$allowed = current_user_can( Caldera_Forms::get_manage_cap( 'entry-edit' ) );
+
+		/**
+		 * Filter permissions for updating  settings via Caldera Forms REST API
+		 *
+		 * @since 1.8.0
+		 *
+		 * @param bool $allowed Is request authorized?
+		 * @param WP_REST_Request $request The current request
+		 */
+		return apply_filters( 'caldera_forms_api_allow_settings_edit', $allowed, $request );
 
 	}
 
