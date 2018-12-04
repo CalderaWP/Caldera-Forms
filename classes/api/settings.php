@@ -85,14 +85,15 @@ class Caldera_Forms_API_Settings implements  Caldera_Forms_API_Route{
         $style_includes = Caldera_Forms_Render_Assets::get_style_includes();
         $new_values = [];
         foreach ( $style_includes as $key => $saved ){
-            $new_values[ $key ] = isset($request[ 'styleIncludes' ][$key]) && $request[ 'styleIncludes' ][$key] ? true : false;
+			$request[$key] = !is_bool($request[$key]) && $request[$key] === "false" ? false : $request[$key];
+            $new_values[ $key ] = isset($request[$key]) ? boolval($request[$key]) : $saved;
         }
 
         update_option( '_caldera_forms_styleincludes', $new_values);
 
-        if( $request['cdnEnable' ] ){
+        if( $request['cdnEnable'] === true ){
             Caldera_Forms::settings()->get_cdn()->enable();
-        }else{
+        }else if( $request['cdnEnable'] === false ) {
             Caldera_Forms::settings()->get_cdn()->disable();
         }
 
