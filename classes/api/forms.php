@@ -56,7 +56,7 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
             )
         );
 
-        register_rest_route( $namespace, $this->id_endpoint_url() . '/togle-active',
+        register_rest_route( $namespace, $this->id_endpoint_url() . '/toggle-active',
             array(
                 'methods'             => \WP_REST_Server::EDITABLE,
                 'callback'            => array( $this, 'toggle_active' ),
