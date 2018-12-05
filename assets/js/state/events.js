@@ -45,6 +45,16 @@ function CFEvents(state) {
 
 	};
 
+	this.emit = function (eventName, payload) {
+		if (!hasEvents(eventName)) {
+			return;
+		}
+
+		events[eventName].forEach(function (callback) {
+			callback(payload,eventName);
+		});
+
+	};
 	/**
 	 * Detach a bound event (remove_action)
 	 *

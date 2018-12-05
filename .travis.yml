@@ -14,7 +14,10 @@ notifications:
     on_failure: change
 
 
-cache: false
+cache:
+  directories:
+  - node_modules
+  - vendor
 
 env:
   - WP_VERSION=latest
@@ -57,6 +60,7 @@ script:
   - |
     if [[ ! -z "$WP_VERSION" ]] ; then
       phpunit
+      composer test:unit
     fi
   - |
     if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
