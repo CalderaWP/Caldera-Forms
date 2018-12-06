@@ -27,13 +27,13 @@ class TestApiForms extends CF_Rest_Test_Case
 
 
 	/**
-	 * Test POST forms route response
+	 * Test POST forms route to clone a form
 	 *
 	 * @since 1.8.0
 	 *
-	 * @covers 'cf-api/v2/forms' API route
+	 * @covers 'cf-api/v2/forms?clone=form_id' API route
 	 */
-	public function test_post_forms_response() {
+	public function test_post_clone_forms_response() {
 		//Set form
 		$config = file_get_contents($this->get_path_for_form_draft_form_import());
 		$config = $this->recursive_cast_array(json_decode($config));
@@ -45,7 +45,30 @@ class TestApiForms extends CF_Rest_Test_Case
 		$response = $this->server->dispatch( $request );
 		$this->assertEquals( 200, $response->get_status() );
 		$data = $response->get_data();
+		$this->assertArrayHasKey( 'ID', $data );
 
+	}
+
+	/**
+	 * Test POST forms route to create a form based on a template
+	 *
+	 * @since 1.8.0
+	 *
+	 * @covers 'cf-api/v2/forms?template=starter_contact_form' API route
+	 */
+	public function test_post_template_forms_response() {
+		//Set form
+		$config = file_get_contents($this->get_path_for_form_draft_form_import());
+		$config = $this->recursive_cast_array(json_decode($config));
+		$form = Caldera_Forms_Forms::create_form($config);
+		// Set current user
+		wp_set_current_user( '1' );
+		$request  = new WP_REST_Request( 'POST', $this->namespaced_route );
+		$request->set_param('template', 'starter_contact_form');
+		$response = $this->server->dispatch( $request );
+		$this->assertEquals( 200, $response->get_status() );
+		$data = $response->get_data();
+		$this->assertArrayHasKey( 'ID', $data );
 
 	}
 
