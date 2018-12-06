@@ -668,18 +668,17 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
     public function toggle_active(\WP_REST_Request $request ){
         add_filter( 'caldera_forms_save_revision', '__return_false' );
         try{
-           $form = $this->form_object_factory( $request[ 'form_id' ], $request );
+			$form = Caldera_Forms_Forms::get_form( $request[ 'form_id' ] );
         }catch ( Exception $e ){
             return Caldera_Forms_API_Response_Factory::error_form_not_found();
         }
-        $form = $form->get_form();
+
         if ( ! empty( $form[ 'form_draft' ] ) ) {
             Caldera_Forms_Forms::form_state( $form );
         }else{
             Caldera_Forms_Forms::form_state( $form , false );
         }
 
-        $form = Caldera_Forms_Forms::get_form( $form['ID'] );
         add_filter( 'caldera_forms_save_revision', '__return_true' );
         return new Caldera_Forms_API_Response(
             ['active' => $form[ 'form_draft' ]]
