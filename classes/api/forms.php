@@ -474,6 +474,9 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
     protected function prepare_field_details( Caldera_Forms_API_Form $form, WP_REST_Request $request ){
 	    $order = $form->get_fields();
 	    $entry_list = $form->get_entry_list_fields();
+		if(is_null($order)) {
+			$order = [];
+		}
 
 	    $form = $form->toArray();
 

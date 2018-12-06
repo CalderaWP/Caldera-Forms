@@ -605,6 +605,7 @@ class Caldera_Forms_Forms {
 		// is template?
 		if( !empty( $form_template ) && is_array( $form_template ) ){
 			$newform = array_merge( $form_template, $newform );
+			$newform[ 'ID' ] = $id;
 		}
 
 		/**
