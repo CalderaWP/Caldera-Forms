@@ -37,16 +37,6 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
             )
         );
 
-
-        register_rest_route( $namespace, $this->id_endpoint_url() . '/preview',
-            array(
-                'methods'             => \WP_REST_Server::READABLE,
-                'callback'            => array( $this, 'get_preview' ),
-                'permission_callback' => array( $this, 'get_item_permissions_check' ),
-                'args'                => $this->get_item_args()
-            )
-        );
-
         register_rest_route( $namespace, $this->id_endpoint_url() . '/privacy',
             array(
                 'methods'             => \WP_REST_Server::EDITABLE,
@@ -61,15 +51,6 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
                 'methods'             => \WP_REST_Server::EDITABLE,
                 'callback'            => array( $this, 'toggle_active' ),
                 'permission_callback' => array( $this, 'update_item_permissions_check' ),
-            )
-        );
-
-        register_rest_route( $namespace, $this->id_endpoint_url() . '/privacy',
-            array(
-                'methods'             => \WP_REST_Server::EDITABLE,
-                'callback'            => array( $this, 'update_privacy_settings' ),
-                'permission_callback' => array( $this, 'update_item_permissions_check' ),
-                'args'                => $this->get_item_args()
             )
         );
 
