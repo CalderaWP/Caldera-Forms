@@ -48,7 +48,7 @@ class WpMailAttachTest extends TestCase
         $data = $this->getTestData($file);
 
         $mail = \Caldera_Forms_Email_Filters::mail_attachment_check( $mail, $data, $form );
-        $this->assertEquals( ['/tmp/small-cat.jpeg'],$mail['attachments'] );
+        $this->assertEquals( ['/tmp/cats/small-cat.jpeg'],$mail['attachments'] );
 
     }
 
@@ -76,7 +76,7 @@ class WpMailAttachTest extends TestCase
         ];
 
         $mail = \Caldera_Forms_Email_Filters::mail_attachment_check( $mail, $data, $form );
-        $this->assertEquals( ['/tmp/small-cat.jpeg', '/tmp/tiny-cat.jpeg'],$mail['attachments'] );
+        $this->assertEquals( ['/tmp/cats/small-cat.jpeg', '/tmp/cats/tiny-cat.jpeg'],$mail['attachments'] );
 
     }
 
