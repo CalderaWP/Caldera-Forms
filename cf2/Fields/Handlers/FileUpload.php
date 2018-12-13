@@ -69,37 +69,45 @@ class FileUpload
         $uploads = [];
         $i = 0;
         foreach ($files as $file) {
-            $isPrivate = \Caldera_Forms_Files::is_private($this->field);
+			if (!$this->isAllowedType($file)) {
+				throw new Exception(__('This file type is not allowed. Please try another.', 'caldera-forms'), 415);
+			}
 
-            $expected = $hashes[$i];
-            $actual = md5_file($file['tmp_name']);
+            $hashFromRequest = $hashes[$i];
+            $actualHash = md5_file($file['tmp_name']);
 
-            if ($expected !== $actual ) {
+            if (! hash_equals($actualHash, $hashFromRequest) ) {
                 throw new Exception(__( 'Content hash did not match expected.' ), 412 );
             }
 
-            $this->uploader
+			$isPrivate = \Caldera_Forms_Files::is_private($this->field);
+
+			$this->uploader
                 ->addFilter(
                     $this->field['ID'],
                     $this->form['ID'],
-                    $isPrivate
+                    $isPrivate,
+					$actualHash
                 );
-
-            if (!$this->isAllowedType($file)) {
-                throw new Exception(__('This file type is not allowed. Please try another.', 'caldera-forms'), 415);
-            }
 
             require_once(ABSPATH . 'wp-admin/includes/file.php');
             $upload = wp_handle_upload($file, array('test_form' => false, 'action' => 'foo'));
-
 
             $this->uploader->removeFilter();
             if (\Caldera_Forms_Files::should_attach($this->field, $this->form)) {
                 \Caldera_Forms_Files::add_to_media_library($upload, $this->field);
             }
 
+			if( $isPrivate ){
+				$this->uploader->scheduleFileDelete(
+					$this->field['ID'],
+					$this->form['ID'],
+					$upload['file']
+				);
+			}
 
-            $uploads[] = $upload['url'];
+
+			$uploads[] = $upload['url'];
             $i++;
 
         }
