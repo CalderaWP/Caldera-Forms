@@ -22,6 +22,9 @@ domReady(function () {
 			//$form, //Form jQuery object
 		} = obj;
 		const fieldsToControl = [];
+		if( 'object' !== typeof  window.cf2 ){
+			window.cf2 = {};
+		}
 
 
 		//Build configurations
