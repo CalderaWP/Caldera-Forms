@@ -28,4 +28,14 @@ class FunctionsTest extends TestCase
 
 		$this->assertInstanceOf(CalderaFormsV2::class,caldera_forms_get_v2_container() );
 	}
+
+	/**
+	 * @since  1.8.0
+	 *
+	 * @covers \caldera_forms_get_v2_container()
+	 */
+	public function testContainerGetsSetupOnFirstCall(){
+		$container = caldera_forms_get_v2_container();
+		$this->assertTrue( is_object( $container->getService(  \calderawp\calderaforms\cf2\Services\QueueService::class)));
+	}
 }
