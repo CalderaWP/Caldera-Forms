@@ -132,14 +132,6 @@ class Caldera_Forms_API_Settings implements  Caldera_Forms_API_Route{
 	*/
 	public function get_items_permissions_check( WP_REST_Request $request ){
 
-		//Check if a user is already set
-		if( wp_get_current_user()->ID === 0 ) {
-			// short-circuit setting the current user to retrieve the User Id
-			$user_id = apply_filters( 'determine_current_user', false );
-			// Set current user
-			wp_set_current_user( $user_id );
-		}
-
 		$allowed = current_user_can( Caldera_Forms::get_manage_cap( 'entry-view' ) );
 
 		/**
@@ -164,14 +156,6 @@ class Caldera_Forms_API_Settings implements  Caldera_Forms_API_Route{
 	 * @return bool
 	 */
 	public function create_item_permissions_check( WP_REST_Request $request ){
-
-		//Check if a user is already set
-		if( wp_get_current_user()->ID === 0 ) {
-			// short-circuit setting the current user to retrieve the User Id
-			$user_id = apply_filters( 'determine_current_user', false );
-			// Set current user
-			wp_set_current_user( $user_id );
-		}
 
 		$allowed = current_user_can( Caldera_Forms::get_manage_cap( 'entry-edit' ) );
 
