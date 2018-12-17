@@ -247,6 +247,16 @@ class Caldera_Forms_API_Entries extends Caldera_Forms_API_CRUD {
 
 		}
 
+		
+		/**
+		 * Modify response data for entry returned via REST API
+		 *
+		 * @since 1.8.0
+		 *
+		 * @param array $data Data to be returned for entry
+		 * @param Caldera_Forms_Entry $entry Entry data
+		 */
+		$response_data[ $id ] = apply_filters( 'caldera_forms_api_entry_data', $response_data[ $id ], $entry );
 		return $response_data;
 	}
 
