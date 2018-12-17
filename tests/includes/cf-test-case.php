@@ -361,6 +361,17 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
         return $file = dirname(__FILE__) . '/forms/contact-forms-no-auto-responder.json';
     }
 
+	/**
+	 * Get file path for JSON export we import for contact form with form_draft "1"
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return string
+	 */
+	protected function get_path_for_form_draft_form_import(){
+		return $file = dirname(__FILE__) . '/forms/contact-form-form-draft.json';
+	}
+
     /**
      * Get file path for JSON export we import for contact form auto-responder tests
      *

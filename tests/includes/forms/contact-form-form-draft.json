@@ -1,0 +1,109 @@
+{
+  "ID": "CF5bee3162ab0b2",
+  "cf_version": "1.7.4",
+  "success": "GOOD",
+  "db_support": 0,
+  "pinned": 0,
+  "hide_form": 1,
+  "check_honey": 1,
+  "avatar_field": "",
+  "form_ajax": 1,
+  "layout_grid": {
+    "fields": {
+      "fld_4562401": "1:1",
+      "fld_8886137": "1:1",
+      "fld_7332208": "1:1"
+    },
+    "structure": "12"
+  },
+  "fields": {
+    "fld_4562401": {
+      "ID": "fld_4562401",
+      "type": "cf2_file",
+      "label": "File Field 2",
+      "slug": "file_field_2",
+      "conditions": {
+        "type": ""
+      },
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "multi_upload_text": "",
+        "allowed": "",
+        "preview_height": "",
+        "preview_width": "",
+        "email_identifier": 0,
+        "personally_identifying": 0
+      }
+    },
+    "fld_8886137": {
+      "ID": "fld_8886137",
+      "type": "cf2_file",
+      "label": "File Field 1",
+      "slug": "file_field_1",
+      "conditions": {
+        "type": ""
+      },
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "multi_upload_text": "",
+        "allowed": "",
+        "preview_height": "",
+        "preview_width": "",
+        "email_identifier": 0,
+        "personally_identifying": 0
+      }
+    },
+    "fld_7332208": {
+      "ID": "fld_7332208",
+      "type": "button",
+      "label": "Button",
+      "slug": "button",
+      "conditions": {
+        "type": ""
+      },
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "type": "submit",
+        "class": "btn btn-default",
+        "target": ""
+      }
+    }
+  },
+  "conditional_groups": [],
+  "page_names": [
+    "Page 1"
+  ],
+  "settings": {
+    "responsive": {
+      "break_point": "sm"
+    }
+  },
+  "processors": [],
+  "name": "cf2 2 File Fields Not Required",
+  "mailer": {
+    "sender_name": "Caldera Forms Notification",
+    "sender_email": "test@test.com",
+    "reply_to": "",
+    "email_type": "html",
+    "recipients": "",
+    "bcc_to": "",
+    "email_subject": "cf2 2 File Fields Not Required",
+    "email_message": "{summary}"
+  },
+  "hidden": 0,
+  "form_draft": 1,
+  "_last_updated": "Thu, 06 Dec 2018 07:45:00 +0000",
+  "scroll_top": 0,
+  "custom_callback": "",
+  "antispam": {
+    "sender_name": "",
+    "sender_email": ""
+  },
+  "privacy_exporter_enabled": false,
+  "version": "1.8.0-alpha.1",
+  "db_id": "33",
+  "type": "primary"
+}
