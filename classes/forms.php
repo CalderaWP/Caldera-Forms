@@ -568,8 +568,7 @@ class Caldera_Forms_Forms {
 		// get form templates (PROBABLY NEED TO MOVE METHOD INTO THIS CLASS)
 		$form_templates = Caldera_Forms_Admin::internal_form_templates();
 
-        	$original_function_args = $newform;
-
+		$original_function_args = $newform;
 		if(!empty($newform['clone'])){
 			$clone = $newform['clone'];
 		}
@@ -606,6 +605,7 @@ class Caldera_Forms_Forms {
 		// is template?
 		if( !empty( $form_template ) && is_array( $form_template ) ){
 			$newform = array_merge( $form_template, $newform );
+			$newform[ 'ID' ] = $id;
 		}
 
 		/**

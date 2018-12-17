@@ -1933,10 +1933,6 @@ class Caldera_Forms
 		$url = apply_filters('caldera_forms_redirect_url', $url, $form, $processid);
 		$url = apply_filters('caldera_forms_redirect_url_' . $type, $url, $form, $processid);
 
-		if (headers_sent()) {
-			remove_action('caldera_forms_redirect', 'cf_ajax_redirect', 10);
-		}
-
 		do_action('caldera_forms_redirect', $type, $url, $form, $processid);
 		do_action('caldera_forms_redirect_' . $type, $url, $form, $processid);
 
@@ -3563,71 +3559,73 @@ class Caldera_Forms
 
 	public function api_handler()
 	{
+
 		global $wp_query;
+		if (isset($wp_query->query_vars['cf_api']) ||  isset( $_GET, $_GET[ 'cf-api'])) {
 
-		// check for API
-		// if this is not a request for json or a singular object then bail
-		if (!isset($wp_query->query_vars['cf_api'])) {
-			return;
-		}
 
-		// check if form exists
-		$form = Caldera_Forms_Forms::get_form($wp_query->query_vars['cf_api']);
-		$atts = array(
-			'id' => $wp_query->query_vars['cf_api'],
-			'ajax' => true
-		);
-		if (!empty($_REQUEST['cf_instance'])) {
-			$atts['instance'] = $_REQUEST['cf_instance'];
-		}
-		// push 200 status. in some cases plugins or permalink config may cause a 404 before going out
-		header("HTTP/1.1 200 OK", true);
-		if (!empty($form['ID'])) {
-			if ($form['ID'] === $wp_query->query_vars['cf_api']) {
-				// got it!
-				// need entry?
-				if (!empty($wp_query->query_vars['cf_entry'])) {
-					$atts['entry'] = (int)$wp_query->query_vars['cf_entry'];
-					//$entry = Caldera_Forms::get_entry($wp_query->query_vars['cf_entry'], $form);
-					//wp_send_json( $entry );
-				}
-				// is a post?
-				if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+			// check if form exists
+			$form_id = isset($wp_query->query_vars[ 'cf_api' ]) ? $wp_query->query_vars[ 'cf_api' ] :
+				isset($_GET, $_GET[ 'cf-api' ]) ? $_GET[ 'cf-api' ] : '';
+			if ( !$form_id ) {
+				return;
+			}
 
-					if (!empty($_POST['control'])) {
-						$transient_name = sanitize_key($_POST['control']);
-						$transdata = Caldera_Forms_Transient::get_transient($transient_name);
-						if (false === $transdata) {
-							$transdata = array();
-						}
-						if (!empty($_FILES) && !empty($_POST['field'])) {
-							$form = Caldera_Forms_Forms::get_form($wp_query->query_vars['cf_api']);
 
-							$field = Caldera_Forms_Field_Util::get_field($form['fields'][$_POST['field']], $form, true);
-							$data = cf_handle_file_upload(true, $field, $form);
-							if (is_wp_error($data)) {
-								wp_send_json_error($data->get_error_message());
-							}
+			$form = Caldera_Forms_Forms::get_form($form_id);
+			$atts = [
+				'id' => $form_id,
+				'ajax' => true
+			];
+			if ( !empty($_REQUEST[ 'cf_instance' ]) ) {
+				$atts[ 'instance' ] = $_REQUEST[ 'cf_instance' ];
+			}
 
-							$transdata[] = $data;
-							//set
-							Caldera_Forms_Transient::set_transient($transient_name, $transdata, DAY_IN_SECONDS);
-							// maybe put in some checks on file then can say yea or nei
-							wp_send_json_success(array());
-						}
+			//start buffering
+			caldera_forms_start_buffer();
+			// push 200 status. in some cases plugins or permalink config may cause a 404 before going out
+			header("HTTP/1.1 200 OK", true);
+			if ( !empty($form[ 'ID' ]) ) {
+
+				if ( $form[ 'ID' ] === $form_id ) {
+					$entry_id = !empty($wp_query->query_vars[ 'cf_entry' ]) ? $wp_query->query_vars[ 'cf_entry' ]
+						: isset($_GET, $_GET[ 'entry' ]) && absint($_GET[ 'entry' ]) ? $_GET[ 'entry' ] : null;
+					if ( $entry_id ) {
+						$atts[ 'entry' ] = (int) $entry_id;
 					}
+					if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' ) {
 
-					$_POST['_wp_http_referer_true'] = 'api';
-					$_POST['_cf_frm_id'] = $_POST['cfajax'] = $wp_query->query_vars['cf_api'];
+						if ( !empty($_POST[ 'control' ]) ) {
 
-					Caldera_Forms::process_form_via_post();
+							$transient_name = sanitize_key($_POST[ 'control' ]);
+							$transdata = Caldera_Forms_Transient::get_transient($transient_name);
+							if ( false === $transdata ) {
+								$transdata = [];
+							}
+							if ( !empty($_FILES) && !empty($_POST[ 'field' ]) ) {
+								$field = Caldera_Forms_Field_Util::get_field($form[ 'fields' ][ $_POST[ 'field' ] ],
+									$form, true);
+								$data = cf_handle_file_upload(true, $field, $form);
+								if ( is_wp_error($data) ) {
+									caldera_forms_send_json($data->get_error_message(), true);
+								}
+								$transdata[] = $data;
+								Caldera_Forms_Transient::set_transient($transient_name, $transdata, DAY_IN_SECONDS);
+								caldera_forms_send_json([]);
+							}
+						}
 
+						$_POST[ '_wp_http_referer_true' ] = 'api';
+						$_POST[ '_cf_frm_id' ] = $_POST[ 'cfajax' ] = $form_id;
+
+						Caldera_Forms::process_form_via_post();
+
+					}
 				}
 			}
+			echo self::render_form($atts);//use $atts not form in case of entry edit
+			exit;
 		}
-
-		echo self::render_form($atts);
-		exit;
 	}
 
 	/**
@@ -5063,10 +5061,11 @@ class Caldera_Forms
 	public static function process_form_via_post()
 	{
 		if (isset($_POST['_cf_frm_id'])) {
+			caldera_forms_start_buffer();
 			if (isset($_POST['_cf_verify']) && Caldera_Forms_Render_Nonce::verify_nonce($_POST['_cf_verify'],
 					$_POST['_cf_frm_id'])) {
 				$submission = Caldera_Forms::process_submission();
-				wp_send_json($submission);
+				caldera_forms_send_json($submission);
 				exit;
 			}
 
@@ -5086,7 +5085,7 @@ class Caldera_Forms
 			);
 
 
-			wp_send_json_error($out);
+			caldera_forms_send_json($out,true);
 			exit;
 
 		}
