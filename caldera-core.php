@@ -124,6 +124,8 @@ if (!version_compare(PHP_VERSION, '5.6.0', '>=')) {
     add_action('plugins_loaded', array('Caldera_Forms', 'get_instance'));
     add_action('plugins_loaded', array('Caldera_Forms_Tracking', 'get_instance'));
 
+	//@see https://github.com/CalderaWP/Caldera-Forms/issues/2855
+    add_filter( 'caldera_forms_pro_log_mode', '__return_false' );
 
     // Admin & Admin Ajax stuff.
     if (is_admin() || defined('DOING_AJAX')) {
