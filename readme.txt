@@ -2,7 +2,7 @@
 Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
 Tags: form, contact form, forms, form creator, form manager, mailchimp, paypal, stripe, login, payment, forms manager, forms creation
 Requires at least: 4.7
-Tested up to: 4.9.7
+Tested up to: 5.0.2
 Stable tag: 1.7.5.beta-1
 License: GPLv2
 Requires PHP: 5.6
@@ -793,6 +793,13 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 
 == Changelog ==
+= Caldera Forms 1.7.5 (December 18, 2018) Blocks Blocked. =
+See: [https://calderaforms.com/updates/caldera-forms-1-7-5](https://calderaforms.com/updates/caldera-forms-1-7-5?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-5)
+* FIXED: Unable to continue with Freemius optin after update to WordPress 5.0.
+* FIXED: Freemius optin in Gutenberg content WordPress 5.0.
+* FIXED: Form imports may not work after update to WordPress 5.0.1
+* FIXED: Logger may cause excessive usage, disabled for now. See: https://github.com/CalderaWP/Caldera-Forms/issues/2855
+
 = Caldera Forms 1.7.4 (October 23, 2018) import {clone} from form =
 See: [https://calderaforms.com/updates/caldera-forms-1-7-4](https://calderaforms.com/updates/caldera-forms-1-7-4?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-4)
 * FIXED: When cloning a form, the clone had the same ID of the original form, causing the original form to appear to have been lost.
@@ -847,7 +854,7 @@ See: [https://calderaforms.com/updates/caldera-forms-1-7-0](https://calderaforms
 [GPDR Privacy Tools Preview Release](https://calderaforms.com/updates/caldera-forms-1-7-0-beta-1-gdpr-compliance-tools-preview?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0): May 15, 2018
 
 * ADDED: #GDPR [Consent fields and privacy page magic tag ](https://calderaforms.com/doc/consent-field/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
-* ADDED: #GDPR [Option to delete all entries of a form](https://calderaforms.com/doc/delete-saved-entries-caldera-form/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0) 
+* ADDED: #GDPR [Option to delete all entries of a form](https://calderaforms.com/doc/delete-saved-entries-caldera-form/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
 * ADDED: #GDPR [Option to delete all entries of a from](https://calderaforms.com/doc/delete-saved-entries-caldera-form/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
 * ADDED: #GDPR [Integration with core exporters and erasers and a shiny new privacy page](https://calderaforms.com/doc/setting-caldera-forms-gdpr-data-requests/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
 * IMPROVED: #GDPR [Marking fields as containing personally identifiable information](https://calderaforms.com/gdpr#pii?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
