@@ -1,48 +1,44 @@
+Contributing to Caldera Forms!
 
 
-##Overview
-Caldera Forms, starting with 1.5.6.2 adpoted a new acceptance testing driven development approach. We record a baseline test, based on a protoype, or using last version that a bug was not present on. We then make a branch from develop, named for the github issue, for example feature/42 for issue 42, develop the fix or feature there and then once that branch passes the test, we run all the tests on that branch, if those pass, we merge to develop and then run the tests again on develop.
+## PHP Version
+Caldera Forms supports PHP 5.6 or later.
 
-If you work for Caldera Labs, you have access in drive to the folder "Acceptance Testing" (SA1+) and are expected to follow those steps.
+## Git Workflow
+* All commits should have a commit message that mentions an issue. (Include issue number in commit title #<issue-number>)
+* All commits should be made to a branch that is branched off of develop. There are two excpetions listed below.
+	* The branch sould be named for the issue, using the form `feature/<issue-number>` where `<issue-number>` is the issue number.
+* We sometimes use a project branch for large [projects](https://github.com/CalderaWP/Caldera-Forms/projects).
+	* The same branch naming rules apply. 
+	* Work for a feature or bug fix in a project is submitted as PR against the project branch.
+* When develop branch is being used for a major release, and a minor release must be developed, we use branch `develop-minor`.
+	* The same branch naming rules apply. 
+	* Work for a feature or bug fix in a minor release is submitted as PR against the develop-minor branch.
+	* After develop-minor is merged to master, then it will need to be merged to develop.
+* If a pull request is submitted against master branch, we will attempt to merge to develop.
+	* Please __do not submit pull requests against the master branch!__
 
-If you don't work for us, just put in a pull request against the develop branch, we appreicate it and will handle testing.
-
-## Current Git Workflow & PHP Compatibility
-The develop branch is currently being used for 1.7 and therefore PHP 5.6 is the minimum supported PHP version.
-
-If 1.6.3+ is developed, a 1.6.x branch (branced from master) will be used. That branch must support PHP 5.2.
-
-Work on the [GDPR compliance](https://github.com/CalderaWP/Caldera-Forms/projects/3) is happening in a branch called "focus3" and is tagged for 1.7, so it can be PHP 5.6+.
-
-## TL;DR
-* Open Github issue
-* Make a test (don't worry about this if you're a community contributor.)
+## Step by Step
+### Submitting A Pull Request
+* Open Github issue explaining the reason for the change, if a corresponding issue does not already exist.
+* Fork Caldera Forms if you do not have permission to create a branch in Caldera Forms.
 * Make a branch from develop, call it `feature/<issue-number>` where `<issue-number>` is the issue number.
-* Fix bug.
-* Submit pull request for your branch against develop branch.
-* Use tests to prove it is resolved
-	* If you are a community contributor, don't worry about this.
-	* If you are employed by Caldera Labs, follow testing procedures documented in Google Drive folder "Acceptance Testing" or discuss alternative testing methodology with Josh.
-	
+* Write tests to prove new feature works or bug is resolved (not required if you don't work here.)
+* Commit the failing tests - including the commit number.
+* Push the branch to Github.
+* Open a PR to merge your branch to develop.
+	- In the title, briefly summarize the change. Add a [WIP] prefix to title.
+	- In the PR description, mention the issue number and describe what has changed.
+* Fix bug
+	- Make incrimental commits.
+	- Include issue number in  each commit message
+* In the pull request, remove [WIP] from PR title.
+* Request a review from Josh (@Shelob9) or (@New0) of the PR.
+
+### PR Testing And Review
+* All PRs should be approved by Josh or Nico, which ever one didn't write the patch.
+	- Christie can also merge to develop or master or grant others access.
+* PRs should only be merged once review is approved and tests are passing.
 
 ## Release Flow
-Starting from completing dev.
-
-Please also review the Google Doc in our drive "How To Release Caldera Forms To WordPress.org" if you have access - SA2+.
-
-* Run tests on develop
-* Change version number in package.json to `<version>-rc-<n>` where `<version>` is the version we're making and `<n>` is 1, unless we already have an `rc1`.
-* Use `grunt version_number` (make sure to do `npm install` first) to set version number.
-	* This command overwrites version number in the 4 or so other places its set.
-* Merge develop to master.
-* Run tests on master.
-* If tests fail on master, revert merge to master.
-* If tests pass, in master, change version number in package.json to the final version number (no rc or beta or whatever)
-* Use `grunt version_number` to update version number in other places.
-* Use `grunt build` to build tag for WordPress.org and then follow steps in "How To Release Caldera Forms To WordPress.org" to get it to WordPress/ release post/ etc.
-* Tag release
-	* If you skip this CDN will not work with new release, which is bad.
-* Merge master to develop.
-* Use grunt to change version number to <next-version>-b-1.
-
-* Merge 
+[See internal documentation](http://handbook.calderawp.com/how-to-release-caldera-forms-to-wordpress-org/)
