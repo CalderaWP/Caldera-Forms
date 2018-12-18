@@ -6,6 +6,7 @@ import React from 'react';
 import ReactDOM from "react-dom";
 import domReady from '@wordpress/dom-ready';
 import {
+	hashFile,
 	setBlocking,
 	removeFromBlocking,
 	removeFromUploadStarted,
