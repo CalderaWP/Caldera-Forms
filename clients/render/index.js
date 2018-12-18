@@ -5,9 +5,13 @@ import {CalderaFormsRender} from "./components/CalderaFormsRender";
 import React from 'react';
 import ReactDOM from "react-dom";
 import domReady from '@wordpress/dom-ready';
-import {onRequest, createMediaFromFile, hashFile, hashAndUpload, setBlocking, removeFromBlocking, removeFromUploadStarted, removeFromPending} from "./util";
+import {
+	setBlocking,
+	removeFromBlocking,
+	removeFromUploadStarted,
+	removeFromPending
+} from "./util";
 
-const CryptoJS = require("crypto-js");
 Object.defineProperty(global.wp, 'element', {
 	get: () => React
 });
@@ -100,32 +104,7 @@ domReady(function () {
 			cf2.uploadStarted = cf2.uploadStarted || [];
 			cf2.uploadCompleted = cf2.uploadCompleted || [];
 			cf2.fieldsBlocking = cf2.fieldsBlocking || [];
-			function removeFromPending(fieldId) {
-				const index = cf2.pending.findIndex(item => item === fieldId);
-				if (-1 < index) {
-					cf2.pending.splice(index, 1);
-				}
-			}
 
-			function removeFromUploadStarted(fieldId) {
-				const index = cf2.uploadStarted.findIndex(item => item === fieldId);
-				if (-1 < index) {
-					cf2.uploadStarted.splice(index, 1);
-				}
-			}
-			function removeFromBlocking(fieldId) {
-				const index = cf2.fieldsBlocking.findIndex(item => item === fieldId);
-				if (-1 < index) {
-					cf2.fieldsBlocking.splice(index, 1);
-				}
-			}
-
-			function setBlocking(fieldId){
-				removeFromUploadStarted(fieldId);
-				removeFromPending(fieldId);
-				cf2.fieldsBlocking.push(fieldId);
-
-			}
 
 			/**
 			 * Hash a file then upload it
@@ -154,13 +133,13 @@ domReady(function () {
 						).then(
 							response => {
 								if( 'object' !== typeof  response ){
-									removeFromUploadStarted(fieldId);
-									removeFromPending(fieldId);
+									removeFromUploadStarted(fieldId,cf2);
+									removeFromPending(fieldId,cf2);
 									throw response;
 								}
 								else if (response.hasOwnProperty('control')) {
-									removeFromPending(fieldId);
-									removeFromBlocking(fieldId);
+									removeFromPending(fieldId,cf2);
+									removeFromBlocking(fieldId,cf2);
 									cf2.uploadCompleted.push(fieldId);
 									$form.submit();
 								}else{
@@ -170,8 +149,8 @@ domReady(function () {
 											message: response.hasOwnProperty('message') ? response.message : 'Invalid'
 										};
 									}
-									removeFromUploadStarted(fieldId);
-									removeFromPending(fieldId);
+									removeFromUploadStarted(fieldId,cf2);
+									removeFromPending(fieldId,cf2);
 									throw response;
 								}
 
@@ -192,8 +171,8 @@ domReady(function () {
 						if ('file' === field.type) {
 							//do not upload after complete
 							if ( cf2.uploadCompleted.includes(fieldId)) {
-								removeFromPending(fieldId);
-								removeFromBlocking(fieldId);
+								removeFromPending(fieldId,cf2);
+								removeFromBlocking(fieldId,cf2);
 								return;
 							}
 							//do not start upload if it has started uploading
@@ -208,12 +187,12 @@ domReady(function () {
 									if( theComponent.isFieldRequired(fieldIdAttr) ){
 										theComponent.addFieldMessage( fieldIdAttr, "Field is required" );
 										shouldBeValidating = true;
-										setBlocking(fieldId);
+										setBlocking(fieldId,cf2);
 									}
-									removeFromPending(fieldId);
+									removeFromPending(fieldId,cf2);
 									return;
 								}
-								removeFromBlocking(fieldId);
+								removeFromBlocking(fieldId,cf2);
 								const files = [values[fieldId]];
 								files.forEach(file => {
 										if( Array.isArray( file ) ){
