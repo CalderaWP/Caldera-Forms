@@ -5,7 +5,7 @@ import {CalderaFormsRender} from "./components/CalderaFormsRender";
 import React from 'react';
 import ReactDOM from "react-dom";
 import domReady from '@wordpress/dom-ready';
-import {onRequest} from "./util";
+import {onRequest, createMediaFromFile, hashFile, hashAndUpload, setBlocking, removeFromBlocking, removeFromUploadStarted, removeFromPending} from "./util";
 
 const CryptoJS = require("crypto-js");
 Object.defineProperty(global.wp, 'element', {
@@ -49,6 +49,8 @@ domReady(function () {
 			}
 		});
 
+
+
 		/**
 		 * Flag to indicate if validation is happening or not
 		 *
@@ -63,8 +65,13 @@ domReady(function () {
 
 		jQuery(document).on('cf.ajax.request', (event, obj) => {
 
+			const cf2 = window.cf2[obj.formIdAttr];
 			const values = theComponent.getFieldValues();
-			onRequest(obj, shouldBeValidating, messages, theComponent, values, fieldsToControl, CF_API_DATA);
+
+			onRequest(
+				obj, cf2, shouldBeValidating, messages, theComponent, values, fieldsToControl, CF_API_DATA,
+				createMediaFromFile, hashFile, hashAndUpload, setBlocking, removeFromBlocking, removeFromUploadStarted, removeFromPending
+			);
 
 		});
 

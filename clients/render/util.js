@@ -1,4 +1,4 @@
-const SparkMD5 = require('spark-md5');
+export const SparkMD5 = require('spark-md5');
 
 export const getFieldConfigBy = (fieldConfigs, findBy, findWhere) => {
 	return fieldConfigs.find(field => findWhere === field[findBy]);
@@ -59,15 +59,106 @@ export const createMediaFromFile = (file, additionalData, API_FOR_FILES_URL) => 
 
 }
 
-export const onRequest = (obj, shouldBeValidating, messages, theComponent, values, fieldsToControl, CF_API_DATA) => {
+export const removeFromPending = (fieldId, cf2) => {
+	const index = cf2.pending.findIndex(item => item === fieldId);
+	if (-1 < index) {
+		cf2.pending.splice(index, 1);
+	}
+}
+
+export const removeFromUploadStarted = (fieldId, cf2) => {
+	const index = cf2.uploadStarted.findIndex(item => item === fieldId);
+	if (-1 < index) {
+		cf2.uploadStarted.splice(index, 1);
+	}
+}
+
+export const removeFromBlocking = (fieldId, cf2) => {
+	const index = cf2.fieldsBlocking.findIndex(item => item === fieldId);
+	if (-1 < index) {
+		cf2.fieldsBlocking.splice(index, 1);
+	}
+
+}
+
+export const setBlocking = ( fieldId, cf2 ) => {
+	removeFromUploadStarted(fieldId, cf2);
+	removeFromPending(fieldId, cf2);
+	cf2.fieldsBlocking.push( fieldId );
+}
+
+/**
+ * Hash a file then upload it
+ *
+ * @since 1.8.0
+ *
+ * @param {File} file File blob
+ * @param {string} verify Nonce token
+ * @param {object} field field config
+ * @param {string} fieldId ID for field
+ */
+export const hashAndUpload = (files, verify, field, fieldId, cf2, API_FOR_FILES_URL, _wp_nonce, obj, createMediaFromFile, hashFile ) => {
+
+	files.forEach((file, index, array) => {
+		if (file instanceof File) {
+			hashFile(file, (hash) => {
+				createMediaFromFile(file, {
+						hashes: [hash],
+						verify,
+						formId: field.formId,
+						fieldId: field.fieldId,
+						control: field.control,
+						_wp_nonce
+					},
+					API_FOR_FILES_URL ).then(
+					response => response.json()
+				).then(
+					response => {
+						if ('object' !== typeof  response) {
+							removeFromUploadStarted(fieldId, cf2);
+							removeFromPending(fieldId, cf2);
+							throw response;
+						}
+						else if (response.hasOwnProperty('control')) {
+							removeFromPending(fieldId, cf2);
+							removeFromBlocking(fieldId, cf2);
+							cf2.uploadCompleted.push(fieldId);
+							if (index === array.length - 1){
+								obj.$form.submit()
+								return response;
+							}
+						} else {
+							if (response.hasOwnProperty('message')) {
+								messages[field.fieldIdAttr] = {
+									error: true,
+									message: response.hasOwnProperty('message') ? response.message : 'Invalid'
+								};
+							}
+							removeFromUploadStarted(fieldId, cf2);
+							removeFromPending(fieldId, cf2);
+							throw response;
+						}
+
+					}
+				).catch(
+					error => console.log(error)
+				);
+			})
+		}
+	})
+}
+
+export const onRequest = ( obj, cf2, shouldBeValidating, messages, theComponent, values, fieldsToControl, CF_API_DATA,
+					createMediaFromFile, hashFile, hashAndUpload, setBlocking, removeFromBlocking, removeFromUploadStarted, removeFromPending ) => {
 
 	const API_FOR_FILES_URL = CF_API_DATA.rest.fileUpload;
 	const _wp_nonce = CF_API_DATA.rest.nonce;
 
 	shouldBeValidating = true;
 
-	const cf2 = obj.formIdAttr;
+
 	const {displayFieldErrors,$notice,$form,fieldsBlocking} = obj;
+
 	if ('object' !== typeof cf2) {
 		return;
 	}
@@ -76,93 +167,6 @@ export const onRequest = (obj, shouldBeValidating, messages, theComponent, value
 	cf2.uploadStarted = cf2.uploadStarted || [];
 	cf2.uploadCompleted = cf2.uploadCompleted || [];
 	cf2.fieldsBlocking = cf2.fieldsBlocking || [];
-	function removeFromPending(fieldId) {
-		const index = cf2.pending.findIndex(item => item === fieldId);
-		if (-1 < index) {
-			cf2.pending.splice(index, 1);
-		}
-	}
-
-	function removeFromUploadStarted(fieldId) {
-		const index = cf2.uploadStarted.findIndex(item => item === fieldId);
-		if (-1 < index) {
-			cf2.uploadStarted.splice(index, 1);
-		}
-	}
-	function removeFromBlocking(fieldId) {
-		const index = cf2.fieldsBlocking.findIndex(item => item === fieldId);
-		if (-1 < index) {
-			cf2.fieldsBlocking.splice(index, 1);
-		}
-	}
-
-	function setBlocking(fieldId){
-		removeFromUploadStarted(fieldId);
-		removeFromPending(fieldId);
-		cf2.fieldsBlocking.push(fieldId);
-
-	}
-
-	/**
-	 * Hash a file then upload it
-	 *
-	 * @since 1.8.0
-	 *
-	 * @param {File} file File blob
-	 * @param {string} verify Nonce token
-	 * @param {object} field field config
-	 * @param {string} fieldId ID for field
-	 */
-	function hashAndUpload(files, verify, field, fieldId) {
-
-		files.forEach((file, index, array) => {
-			if (file instanceof File) {
-				hashFile(file, (hash) => {
-					createMediaFromFile(file, {
-						hashes: [hash],
-						verify,
-						formId: field.formId,
-						fieldId: field.fieldId,
-						control: field.control,
-						_wp_nonce
-					},
-						API_FOR_FILES_URL ).then(
-						response => response.json()
-					).then(
-						response => {
-							if ('object' !== typeof  response) {
-								removeFromUploadStarted(fieldId);
-								removeFromPending(fieldId);
-								throw response;
-							}
-							else if (response.hasOwnProperty('control')) {
-								removeFromPending(fieldId);
-								removeFromBlocking(fieldId);
-								cf2.uploadCompleted.push(fieldId);
-								if (index === array.length - 1){
-									$form.submit()
-									return response;
-								}
-							} else {
-								if (response.hasOwnProperty('message')) {
-									messages[field.fieldIdAttr] = {
-										error: true,
-										message: response.hasOwnProperty('message') ? response.message : 'Invalid'
-									};
-								}
-								removeFromUploadStarted(fieldId);
-								removeFromPending(fieldId);
-								throw response;
-							}
-
-						}
-					).catch(
-						//error => console.log(error)
-					);
-				})
-			}
-		})
-	}
 
 	if (Object.keys(values).length) {
 		Object.keys(values).forEach(fieldId => {
@@ -172,8 +176,8 @@ export const onRequest = (obj, shouldBeValidating, messages, theComponent, value
 				if ('file' === field.type) {
 					//do not upload after complete
 					if ( cf2.uploadCompleted.includes(fieldId)) {
-						removeFromPending(fieldId);
-						removeFromBlocking(fieldId);
+						removeFromPending(fieldId, cf2);
+						removeFromBlocking(fieldId, cf2);
 						return;
 					}
 					//do not start upload if it has started uploading
@@ -188,15 +192,15 @@ export const onRequest = (obj, shouldBeValidating, messages, theComponent, value
 							if( theComponent.isFieldRequired(fieldIdAttr) ){
 								theComponent.addFieldMessage( fieldIdAttr, "Field is required" );
 								shouldBeValidating = true;
-								setBlocking(fieldId);
+								setBlocking(fieldId, cf2);
 							}
-							removeFromPending(fieldId);
+							removeFromPending(fieldId, cf2);
 							return;
 						}
-						removeFromBlocking(fieldId);
+						removeFromBlocking(fieldId, cf2);
 						const files = [values[fieldId]][0];
 						if(Array.isArray(files)){
-							hashAndUpload(files, verify, field, fieldId);
+							hashAndUpload(files, verify, field, fieldId, cf2, API_FOR_FILES_URL, _wp_nonce, obj, createMediaFromFile, hashFile);
 						}
 
 
@@ -209,4 +213,5 @@ export const onRequest = (obj, shouldBeValidating, messages, theComponent, value
 	} else {
 		obj.$form.data(fieldId, values[fieldId]);
 	}
-}
+
+};
