@@ -16,7 +16,7 @@ describe(  'getFieldConfigBy', () => {
 
 });
 
-describe(  'Test files request', () => {
+describe.skip(  'Test files request', () => {
 
 	it( 'Calls to sub functions' , () => {
 
@@ -31,7 +31,7 @@ describe(  'Test files request', () => {
 
 	});
 
-	it( 'CTesting onRequest' , () => {
+	it( 'Testing onRequest' , () => {
 
 		const createMediaFromFile = jest.fn();
 		const hashFile = jest.fn();
@@ -52,3 +52,19 @@ describe(  'Test files request', () => {
 
 });
 
+describe( 'cf2 var', () => {
+
+	let  cf2;
+	beforeEach(() => {
+		cf2.pending = cf2.pending || [];
+		cf2.uploadStarted = cf2.uploadStarted || [];
+		cf2.uploadCompleted = cf2.uploadCompleted || [];
+		cf2.fieldsBlocking = cf2.fieldsBlocking || [];
+	});
+
+	afterEach(() => {
+		cf2 = {};
+	});
+
+
+})
