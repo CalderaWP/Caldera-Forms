@@ -1,4 +1,10 @@
-import { onRequest, createMediaFromFile, getFieldConfigBy, hashAndUpload } from '../../../render/util'
+import {
+	getFieldConfigBy,
+	removeFromBlocking,
+	removeFromPending,
+	removeFromUploadStarted,
+	setBlocking
+} from '../../../render/util'
 
 import * as data  from "./Mocks/mockUtils";
 import {formRenderTestProps} from "./CalderaFormsRender.test";
@@ -54,17 +60,119 @@ describe.skip(  'Test files request', () => {
 
 describe( 'cf2 var', () => {
 
-	let  cf2;
+	let cf2;
 	beforeEach(() => {
-		cf2.pending = cf2.pending || [];
-		cf2.uploadStarted = cf2.uploadStarted || [];
-		cf2.uploadCompleted = cf2.uploadCompleted || [];
-		cf2.fieldsBlocking = cf2.fieldsBlocking || [];
+		cf2 = {};
+		cf2.pending = [];
+		cf2.uploadStarted =  [];
+		cf2.uploadCompleted =  [];
+		cf2.fieldsBlocking = [];
 	});
 
 	afterEach(() => {
 		cf2 = {};
 	});
 
+	test( 'removeFromPending removes a valid entry when its the only fieldId', () => {
+		cf2.pending.push( 'fld123');
+		removeFromPending('fld123', cf2 );
+		expect(cf2.pending.length).toBe(0);
+	});
 
-})
+	test( 'removeFromPending removes a valid entry when its one of many fieldId', () => {
+		cf2.pending.push( 'fld456');
+		cf2.pending.push( 'fld123');
+		removeFromPending('fld123', cf2 );
+		expect(cf2.pending.length).toBe(1);
+		expect( cf2.pending.includes('fld456')).toBe(true);
+		expect( cf2.pending.includes('fld123')).toBe(false);
+
+	});
+
+	test( 'removeFromPending does nothing when given invalid fieldId', () => {
+		cf2.pending.push( 'fld456');
+		cf2.pending.push( 'fld678');
+		removeFromPending('fld123', cf2 );
+		expect(cf2.pending.length).toBe(2);
+		expect( cf2.pending.includes('fld456')).toBe(true);
+		expect( cf2.pending.includes('fld678')).toBe(true);
+	});
+
+
+
+
+	test( 'removeFromUploadStarted removes a valid entry when its the only fieldId', () => {
+		cf2.uploadStarted.push( 'fld123');
+		removeFromUploadStarted('fld123', cf2 );
+		expect(cf2.uploadStarted.length).toBe(0);
+	});
+
+	test( 'removeFromUploadStarted removes a valid entry when its one of many fieldId', () => {
+		cf2.uploadStarted.push( 'fld456');
+		cf2.uploadStarted.push( 'fld123');
+		removeFromUploadStarted('fld123', cf2 );
+		expect(cf2.uploadStarted.length).toBe(1);
+		expect( cf2.uploadStarted.includes('fld456')).toBe(true);
+		expect( cf2.uploadStarted.includes('fld123')).toBe(false);
+
+	});
+
+	test( 'removeFromUploadStarted does nothing when given invalid fieldId', () => {
+		cf2.uploadStarted.push( 'fld456');
+		cf2.uploadStarted.push( 'fld678');
+		removeFromUploadStarted('fld123', cf2 );
+		expect(cf2.uploadStarted.length).toBe(2);
+		expect( cf2.uploadStarted.includes('fld456')).toBe(true);
+		expect( cf2.uploadStarted.includes('fld678')).toBe(true);
+	});
+
+
+
+
+	test( 'removeFromBlocking removes a valid entry when its the only fieldId', () => {
+		cf2.fieldsBlocking.push( 'fld123');
+		removeFromBlocking('fld123', cf2 );
+		expect(cf2.fieldsBlocking.length).toBe(0);
+	});
+
+	test( 'removeFromBlocking removes a valid entry when its one of many fieldId', () => {
+		cf2.fieldsBlocking.push( 'fld456');
+		cf2.fieldsBlocking.push( 'fld123');
+		removeFromBlocking('fld123', cf2 );
+		expect(cf2.fieldsBlocking.length).toBe(1);
+		expect( cf2.fieldsBlocking.includes('fld456')).toBe(true);
+		expect( cf2.fieldsBlocking.includes('fld123')).toBe(false);
+
+	});
+
+	test( 'removeFromBlocking does nothing when given invalid fieldId', () => {
+		cf2.fieldsBlocking.push( 'fld456');
+		cf2.fieldsBlocking.push( 'fld678');
+		removeFromBlocking('fld123', cf2 );
+		expect(cf2.fieldsBlocking.length).toBe(2);
+		expect( cf2.fieldsBlocking.includes('fld456')).toBe(true);
+		expect( cf2.fieldsBlocking.includes('fld678')).toBe(true);
+	});
+
+
+	test( 'setBlocking adds to fieldsBlocking', () => {
+		setBlocking('cf123', cf2 );
+
+		expect(cf2.fieldsBlocking.includes('cf123') ).toBe(true);
+	});
+
+	test( 'setBlocking removes from uploadStarted', () => {
+		cf2.uploadStarted.push( 'cf123');
+		setBlocking('cf123', cf2 );
+		expect(cf2.uploadStarted.includes('cf123') ).toBe(false);
+
+	});
+
+	test( 'setBlocking removes from pending', () => {
+		cf2.pending.push( 'cf123');
+		setBlocking('cf123', cf2 );
+		expect(cf2.pending.includes('cf123') ).toBe(false);
+
+	});
+
+});
