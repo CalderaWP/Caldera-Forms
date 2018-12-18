@@ -8,7 +8,8 @@ namespace calderawp\calderaforms\pro\admin;
  * Class tab
  * @package calderawp\calderaforms\pro\admin
  */
-class tab {
+class tab
+{
 	/**
 	 * Path to index.html
 	 *
@@ -25,7 +26,8 @@ class tab {
 	 *
 	 * @param $template_path
 	 */
-	public function __construct( $template_path ){
+	public function __construct($template_path)
+	{
 		$this->template_path = $template_path;
 	}
 
@@ -40,15 +42,16 @@ class tab {
 	 *
 	 * @return array
 	 */
-	public function add_tab( array  $panels  = array() ){
-		$panels['form_layout']['tabs'][ 'cf-pro' ] = array(
-			'name' => __( 'Pro', 'caldera-forms' ),
-			'label' => __( 'Caldera Forms Pro Settings For This Form', 'caldera-forms' ),
+	public function add_tab(array $panels = [])
+	{
+		$panels[ 'form_layout' ][ 'tabs' ][ 'cf-pro' ] = [
+			'name' => __('Pro', 'caldera-forms'),
+			'label' => __('Caldera Forms Pro Settings For This Form', 'caldera-forms'),
 			'location' => 'lower',
-			'actions' => array(),
+			'actions' => [],
 			'side_panel' => null,
-			'canvas' => $this->template_path
-		);
+			'canvas' => $this->template_path,
+		];
 
 		return $panels;
 	}

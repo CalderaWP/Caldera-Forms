@@ -6,8 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    '320cde22f66dd4f5d3fd621d3e88b98f' => $vendorDir . '/symfony/polyfill-ctype/bootstrap.php',
-    '6124b4c8570aa390c21fafd04a26c69f' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
     '653f15cae3415bbad33eff25628b45a8' => $vendorDir . '/calderawp/caldera-forms-query/src/CalderaFormsQueries.php',
     '5e73ffc188f5a63fbd263c4490731358' => $vendorDir . '/inpsyde/wonolog/inc/bootstrap.php',
 );
