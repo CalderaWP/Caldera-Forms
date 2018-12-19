@@ -3206,7 +3206,7 @@ class Caldera_Forms
 			$new_entry = array(
 				'form_id' => $form['ID'],
 				'user_id' => 0,
-				'datestamp' => date_i18n('Y-m-d H:i:s', time(), 0),
+				'datestamp' => date_i18n('Y-m-d H:i:s', time(), 1), //request to change GMT being TRUE.
 				'status' => 'pending'
 			);
 			// if user logged in
