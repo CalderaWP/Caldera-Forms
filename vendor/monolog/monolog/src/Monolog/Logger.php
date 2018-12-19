@@ -25,7 +25,7 @@ use Exception;
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  */
-class Logger implements LoggerInterface, ResettableInterface
+class Logger implements LoggerInterface
 {
     /**
      * Detailed debug information
