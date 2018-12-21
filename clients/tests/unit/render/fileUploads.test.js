@@ -1,4 +1,4 @@
-import {handleFileUploadResponse} from "./fileUploads";
+import {handleFileUploadResponse} from "../../../render/fileUploads";
 import {cf2, obj} from  './Mocks/mockUtils';
 
 
