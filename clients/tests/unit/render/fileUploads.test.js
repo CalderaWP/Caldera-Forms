@@ -1,19 +1,15 @@
 import {handleFileUploadResponse} from "./fileUploads";
-import {cf2} from  './Mocks/mockUtils';
+import {cf2, obj} from  './Mocks/mockUtils';
+
+
 describe( 'Unit tests, ignoring cf2 var side effects for handleFileUploadResponse', () => {
-	let $form;
+	let $form = obj.$form;
 	let submit;
 	const field = cf2.fields.fld_9226671_1;
 
 	beforeEach(() => {
-	 	submit = jest.fn();
-		let $form = jest.fn(() => ({
-			submit
-		}));
-
+	 	$form.submit = jest.fn();
 	});
-
-
 
 
 	it( 'Throws an error if passed non-object & does not submit form', () => {
@@ -32,30 +28,39 @@ describe( 'Unit tests, ignoring cf2 var side effects for handleFileUploadRespons
 		}
 
 		expect( undefined === typeof  error ).toBe(false);
-		expect( submit.mock.calls.length ).toBe(0);
+		expect( $form.submit.mock.calls.length ).toBe(0);
 
 
 	});
 
 	it( 'Triggers submit, if passed object with control', () => {
-		const r = handleFileUploadResponse(
-			{control: 'nico'},
-			cf2,
-			$form,
-			{},
-			field
-		);
-		expect( submit.mock.calls.length ).toBe(1);
+
+		let error = undefined;
+
+		try{
+			const r = handleFileUploadResponse(
+				{control: 'nico'},
+				cf2,
+				$form,
+				{},
+				field
+			);
+		}catch (e) {
+			error = e;
+		}
+		expect($form.submit).toBeCalled();
+		expect($form.submit.mock.calls.length).toBe(1);
+		expect(error).toBe(undefined);
 
 
 	});
 
 	it( 'Puts error message from response in messages var if possible and throws error', () => {
-		const response = undefined;
-		let error = undefined;
+		let response = '';
+		let error = '';
 		const message = 'An Error Has Occured';
 		const messages = {};
-		const {fieldId} = field;
+		const ID = field.fieldIdAttr;
 		try{
 			const r = handleFileUploadResponse(
 				{
@@ -70,13 +75,39 @@ describe( 'Unit tests, ignoring cf2 var side effects for handleFileUploadRespons
 			error = e;
 		}
 
-		expect( messages[fieldId].error).toBe(true);
-		expect( messages[fieldId].message).toEquals(message);
+		expect(messages[ID].error).toBe(true);
+		expect(messages[ID].message).toEqual(message);
+		expect(error).toEqual({
+			"message": "An Error Has Occured"
+		});
 		expect( undefined === typeof error ).toBe(false);
-		expect( submit.mock.calls.length ).toBe(0);
+		expect( $form.submit.mock.calls.length ).toBe(0);
 	});
 
 	it( 'Throws error if response does not have control prop', () => {
+
+		let error = undefined;
+		const message = 'An Error Has Occured';
+		const messages = {};
+		const ID = field.fieldIdAttr;
+
+		try{
+			const r = handleFileUploadResponse(
+				{message},
+				cf2,
+				$form,
+				{},
+				field
+			);
+		}catch (e) {
+			error = e;
+		}
+		expect($form.submit).not.toBeCalled();
+		expect($form.submit.mock.calls.length).toBe(0);
+		expect(error).toEqual({
+			"message": "An Error Has Occured"
+		});
+		expect( undefined === typeof error ).toBe(false);
 
 	});
 
