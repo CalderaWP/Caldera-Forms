@@ -133,29 +133,7 @@ domReady(function () {
 							response => response.json()
 						).then(
 							response => {
-								if( 'object' !== typeof  response ){
-									removeFromUploadStarted(fieldId,cf2);
-									removeFromPending(fieldId,cf2);
-									throw response;
-								}
-								else if (response.hasOwnProperty('control')) {
-									removeFromPending(fieldId,cf2);
-									removeFromBlocking(fieldId,cf2);
-									cf2.uploadCompleted.push(fieldId);
-									$form.submit();
-								}else{
-									if( response.hasOwnProperty('message') ){
-										messages[field.fieldIdAttr] = {
-											error: true,
-											message: response.hasOwnProperty('message') ? response.message : 'Invalid'
-										};
-									}
-									removeFromUploadStarted(fieldId,cf2);
-									removeFromPending(fieldId,cf2);
-									throw response;
-								}
-
-
+								handleFileUploadResponse(response,cf2,$form,messages,field);
 							}
 						).catch(
 							error => console.log(error)
