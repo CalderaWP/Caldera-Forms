@@ -3,7 +3,8 @@ import {
 	removeFromBlocking,
 	removeFromPending,
 	removeFromUploadStarted,
-	setBlocking
+	setBlocking,
+	createMediaFromFile
 } from '../../../render/util'
 
 import * as data  from "./Mocks/mockUtils";
@@ -175,4 +176,54 @@ describe( 'cf2 var', () => {
 
 	});
 
+});
+
+
+describe( 'createMediaFromFile', () => {
+
+	beforeEach(() => {
+		fetch.resetMocks()
+	});
+
+	const API_FOR_FILES_URL = 'http://localhost:8228/wp-json/cf-api/v3/file';
+	const formId = 'cf1';
+	const nonce = '26bc3db86e';
+	const additionalData = {
+		hashes: ['09164c642f7ae975afe146e7a29d6913'],
+		verify: '2c6463e902',
+		formId: formId,
+		fieldId: 'fld_9226671',
+		control: 'cf2_file5c1cfbcaa426c',
+		_wp_nonce: nonce,
+		API_FOR_FILES_URL: API_FOR_FILES_URL
+	};
+
+
+	it( 'calls fetch with the right url', () => {
+		createMediaFromFile( data.file, additionalData, fetch );
+		expect(fetch.mock.calls[0][0]).toEqual('http://localhost:8228/wp-json/cf-api/v3/file');
+	});
+
+	it( 'calls fetch with the file in body', () => {
+		createMediaFromFile( data.file, additionalData, fetch );
+		const bodyData = fetch.mock.calls[0][1].body;
+		const fileData = bodyData.get('file');
+		expect(fileData).toBeDefined();
+		expect(fileData).toBeTruthy();
+	});
+
+	it( 'calls fetch with POST HTTP method', () => {
+		createMediaFromFile( data.file, additionalData, fetch );
+		expect(fetch.mock.calls[0][1].method).toEqual('POST');
+	});
+
+	it( 'calls fetch with headers', () => {
+		createMediaFromFile( data.file, additionalData, fetch );
+		expect(typeof fetch.mock.calls[0][1].headers).toEqual('object');
+	});
+
+	it( 'Token to fetch headers', () => {
+		createMediaFromFile( data.file, additionalData, fetch );
+		expect(fetch.mock.calls[0][1].headers['X-WP-Nonce']).toEqual(nonce);
+	});
 });

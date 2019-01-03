@@ -69,3 +69,28 @@ export const setBlocking = ( fieldId, cf2 ) => {
 	cf2.fieldsBlocking.push( fieldId );
 }
 
+/**
+ * Default process to convert a file to media
+ *
+ * @param file
+ * @param additionalData
+ * @param fetch
+ * @return {*}
+ */
+export const createMediaFromFile = (file, additionalData, fetch) => {
+
+	// Create upload payload
+	const data = new window.FormData();
+	data.append('file', file, file.name || file.type.replace('/', '.'));
+	data.append('title', file.name ? file.name.replace(/\.[^.]+$/, '') : file.type.replace('/', '.'));
+	Object.keys(additionalData)
+		.forEach(key => data.append(key, additionalData[key]));
+
+	return fetch(additionalData.API_FOR_FILES_URL, {
+		body: data,
+		method: 'POST',
+		headers: {
+			'X-WP-Nonce': additionalData._wp_nonce
+		}
+	});
+}

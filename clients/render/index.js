@@ -10,13 +10,14 @@ import {
 	setBlocking,
 	removeFromBlocking,
 	removeFromUploadStarted,
-	removeFromPending
+	removeFromPending,
+	createMediaFromFile
 } from "./util";
+import {handleFileUploadResponse} from './fileUploads';
 
 Object.defineProperty(global.wp, 'element', {
 	get: () => React
 });
-
 
 domReady(function () {
 	jQuery(document).on('cf.form.init', (e, obj) => {
@@ -71,26 +72,6 @@ domReady(function () {
 		const API_FOR_FILES_URL = CF_API_DATA.rest.fileUpload;
 		const _wp_nonce = CF_API_DATA.rest.nonce;
 
-		function createMediaFromFile(file, additionalData) {
-			// Create upload payload
-			const data = new window.FormData();
-			data.append('file', file, file.name || file.type.replace('/', '.'));
-			data.append('title', file.name ? file.name.replace(/\.[^.]+$/, '') : file.type.replace('/', '.'));
-			Object.keys(additionalData)
-				.forEach(key => data.append(key, additionalData[key]));
-
-			return fetch(API_FOR_FILES_URL, {
-				body: data,
-				method: 'POST',
-				headers: {
-					'X-WP-Nonce': _wp_nonce
-				}
-			});
-
-
-		}
-
-
 
 		jQuery(document).on('cf.ajax.request', (event, obj) => {
 			shouldBeValidating = true;
@@ -128,8 +109,9 @@ domReady(function () {
 							formId: field.formId,
 							fieldId: field.fieldId,
 							control: field.control,
-							_wp_nonce
-						}).then(
+							_wp_nonce,
+							API_FOR_FILES_URL
+						}, fetch ).then(
 							response => response.json()
 						).then(
 							response => {

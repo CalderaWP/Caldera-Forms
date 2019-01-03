@@ -29,8 +29,6 @@ describe( 'Unit tests, ignoring cf2 var side effects for handleFileUploadRespons
 
 		expect( undefined === typeof  error ).toBe(false);
 		expect( $form.submit.mock.calls.length ).toBe(0);
-
-
 	});
 
 	it( 'Triggers submit, if passed object with control', () => {
@@ -51,8 +49,6 @@ describe( 'Unit tests, ignoring cf2 var side effects for handleFileUploadRespons
 		expect($form.submit).toBeCalled();
 		expect($form.submit.mock.calls.length).toBe(1);
 		expect(error).toBe(undefined);
-
-
 	});
 
 	it( 'Puts error message from response in messages var if possible and throws error', () => {
@@ -85,7 +81,6 @@ describe( 'Unit tests, ignoring cf2 var side effects for handleFileUploadRespons
 	});
 
 	it( 'Throws error if response does not have control prop', () => {
-
 		let error = undefined;
 		const message = 'An Error Has Occured';
 		const messages = {};
@@ -108,7 +103,37 @@ describe( 'Unit tests, ignoring cf2 var side effects for handleFileUploadRespons
 			"message": "An Error Has Occured"
 		});
 		expect( undefined === typeof error ).toBe(false);
+	});
 
+});
+
+describe( 'Check responses with different values passed', () => {
+	let $form = obj.$form;
+	let submit;
+	const field = cf2.fields.fld_9226671_1;
+	const response = undefined;
+	let error = undefined;
+
+	beforeEach(() => {
+		$form.submit = jest.fn();
+	});
+
+	it( 'Throws error if response does not have control prop', () => {
+
+		try {
+			const r = handleFileUploadResponse(
+				response,
+				cf2,
+				$form,
+				{},
+				field
+			);
+		} catch (e) {
+			error = e;
+		}
+
+		expect(undefined === typeof  error).toBe(false);
+		expect($form.submit.mock.calls.length).toBe(0);
 	});
 
 });

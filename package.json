@@ -104,6 +104,7 @@
     "html-webpack-plugin": "^2.22.0",
     "jest": "^23.6.0",
     "jest-cli": "^23.6.0",
+    "jest-fetch-mock": "^2.1.0",
     "load-grunt-tasks": "^3.5.2",
     "locutus": "^2.0.10",
     "lodash.debounce": "^4.0.8",

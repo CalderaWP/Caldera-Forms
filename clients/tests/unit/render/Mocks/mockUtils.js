@@ -24,7 +24,7 @@ MockFile.prototype.create = function (name, size, mimeType) {
 
 const size = 1024 * 1024 * 2;
 const mock = new MockFile();
-const file = mock.create("pic.png", size, "image/png");
+export const file = mock.create("pic.png", size, "image/png");
 
 export const threeFiles = [file, file, file];
 
