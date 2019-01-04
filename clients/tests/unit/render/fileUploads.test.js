@@ -1,6 +1,7 @@
-import {handleFileUploadResponse} from "../../../render/fileUploads";
-import {cf2, obj} from  './Mocks/mockUtils';
-
+import {handleFileUploadResponse, hashAndUpload, handleFileUploadError, processFiles} from "../../../render/fileUploads";
+import {hashFile, createMediaFromFile} from "../../../render/util";
+import {cf2, obj, CF_API_DATA, messages} from  './Mocks/mockUtils';
+import * as data from './Mocks/mockUtils';
 
 describe( 'Unit tests, ignoring cf2 var side effects for handleFileUploadResponse', () => {
 	let $form = obj.$form;
@@ -134,6 +135,49 @@ describe( 'Check responses with different values passed', () => {
 
 		expect(undefined === typeof  error).toBe(false);
 		expect($form.submit.mock.calls.length).toBe(0);
+	});
+
+});
+
+
+describe( 'hashAndUpload', () => {
+
+	let processFunctions = {hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError};
+	const processData = {
+		verify: 'f42ea553cb',
+		field: data.cf2.fields.fld_9226671_1,
+		fieldId: data.cf2.fields.fld_9226671_1.fieldId,
+		cf2: cf2,
+		$form: obj.$form,
+		CF_API_DATA: CF_API_DATA,
+		messages: messages
+	}
+
+	it( 'Call to hashFile' , () => {
+		processFunctions.hashFile = jest.fn();
+		hashAndUpload(data.file, processData, processFunctions );
+		expect( processFunctions.hashFile ).toBeCalled();
+	});
+
+});
+
+describe( 'processFiles', () => {
+
+	let processFunctions = {hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError};
+	const processData = {
+		verify: 'f42ea553cb',
+		field: data.cf2.fields.fld_9226671_1,
+		fieldId: data.cf2.fields.fld_9226671_1.fieldId,
+		cf2: cf2,
+		$form: obj.$form,
+		CF_API_DATA: CF_API_DATA,
+		messages: messages
+	}
+
+	it( 'Call to hashAndUpload' , () => {
+		processFunctions.hashAndUpload = jest.fn();
+		processFiles(data.threeFiles, processData, processFunctions );
+		expect( processFunctions.hashAndUpload ).toBeCalled();
 	});
 
 });

@@ -158,7 +158,6 @@ describe( 'cf2 var', () => {
 
 	test( 'setBlocking adds to fieldsBlocking', () => {
 		setBlocking('cf123', cf2 );
-
 		expect(cf2.fieldsBlocking.includes('cf123') ).toBe(true);
 	});
 
@@ -166,14 +165,12 @@ describe( 'cf2 var', () => {
 		cf2.uploadStarted.push( 'cf123');
 		setBlocking('cf123', cf2 );
 		expect(cf2.uploadStarted.includes('cf123') ).toBe(false);
-
 	});
 
 	test( 'setBlocking removes from pending', () => {
 		cf2.pending.push( 'cf123');
 		setBlocking('cf123', cf2 );
 		expect(cf2.pending.includes('cf123') ).toBe(false);
-
 	});
 
 });

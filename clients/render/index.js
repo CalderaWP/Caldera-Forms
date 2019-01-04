@@ -13,7 +13,7 @@ import {
 	removeFromPending,
 	createMediaFromFile
 } from "./util";
-import {handleFileUploadResponse} from './fileUploads';
+import { handleFileUploadResponse, handleFileUploadError, hashAndUpload, processFiles } from './fileUploads'
 
 Object.defineProperty(global.wp, 'element', {
 	get: () => React
@@ -69,9 +69,6 @@ domReady(function () {
 		let shouldBeValidating = false;
 		let messages = {};
 
-		const API_FOR_FILES_URL = CF_API_DATA.rest.fileUpload;
-		const _wp_nonce = CF_API_DATA.rest.nonce;
-
 
 		jQuery(document).on('cf.ajax.request', (event, obj) => {
 			shouldBeValidating = true;
@@ -87,42 +84,6 @@ domReady(function () {
 			cf2.uploadCompleted = cf2.uploadCompleted || [];
 			cf2.fieldsBlocking = cf2.fieldsBlocking || [];
 
-
-			/**
-			 * Hash a file then upload it
-			 *
-			 * @since 1.8.0
-			 *
-			 * @param {File} file File blob
-			 * @param {string} verify Nonce token
-			 * @param {object} field field config
-			 * @param {string} fieldId ID for field
-			 */
-			function hashAndUpload(file, verify, field, fieldId) {
-
-
-				if (file instanceof File) {
-					hashFile(file, (hash) => {
-						createMediaFromFile(file, {
-							hashes: [hash],
-							verify,
-							formId: field.formId,
-							fieldId: field.fieldId,
-							control: field.control,
-							_wp_nonce,
-							API_FOR_FILES_URL
-						}, fetch ).then(
-							response => response.json()
-						).then(
-							response => {
-								handleFileUploadResponse(response,cf2,$form,messages,field);
-							}
-						).catch(
-							error => console.log(error)
-						);
-					})
-				}
-			}
 
 			if (Object.keys(values).length) {
 				Object.keys(values).forEach(fieldId => {
@@ -155,13 +116,10 @@ domReady(function () {
 								}
 								removeFromBlocking(fieldId,cf2);
 								const files = [values[fieldId]];
-								files.forEach(file => {
-										if( Array.isArray( file ) ){
-											file = file[0];
-										}
-										hashAndUpload(file, verify, field, fieldId);
-									}
-								);
+								const processFunctions = {hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError};
+								const processData = {verify, field, fieldId, cf2, $form, CF_API_DATA, messages};
+								processFiles(files, processData, processFunctions);
+
 							}
 
 
