@@ -9,7 +9,7 @@ import { createMediaFromFile, hashFile, removeFromBlocking, removeFromPending, r
  * @param {object} cf2 fields config with status set
  * @param {object} $form object
  * @param {object} messages to be passed for different responses
- * @param {object] field we are processing files for
+ * @param {object} field we are processing files for
  */
 export const handleFileUploadResponse = (response,cf2,$form,messages,field) => {
 
@@ -52,9 +52,8 @@ export const handleFileUploadError = (error, file) => {
  * @since 1.8.0
  *
  * @param {File} file File blob
- * @param {string} verify Nonce token
- * @param {object} field field config
- * @param {string} fieldId ID for field
+ * @param {object} processData object of data to process files {verify, field, fieldId, cf2, $form, CF_API_DATA, messages}
+ * @param {object} processFunctions object of function that will be called within processFiles then test the cases they are called {hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError}
  */
 export const hashAndUpload = (file, processData, processFunctions ) => {
 
@@ -101,9 +100,8 @@ export const hashAndUpload = (file, processData, processFunctions ) => {
  * @since 1.8.0
  *
  * @param {array} files array of Files
- * @param {string} verify Nonce token
- * @param {object} field field config
- * @param {string} fieldId ID for field
+ * @param {object} processData object of data to process files {verify, field, fieldId, cf2, $form, CF_API_DATA, messages}
+ * @param {object} processFunctions object of function that will be called within processFiles then test the cases they are called {hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError}
  */
 export const processFiles = (files, processData, processFunctions) => {
 
