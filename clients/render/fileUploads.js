@@ -132,7 +132,7 @@ export const processFiles = (files, processData, processFunctions) => {
  *
  * @since 1.8.0
  *
- * @param {object} processData object of data to process files {verify, field, fieldId, cf2, $form, CF_API_DATA, messages}
+ * @param {object} processData object of data to process files {obj, values, field, fieldId, cf2, $form, CF_API_DATA, messages}
  * @param {object} processFunctions object of functions that will be called within processFiles then test the cases they are called {hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError}
  */
 export const processFileField = (processData, processFunctions) => {
