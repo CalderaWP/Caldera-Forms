@@ -18,19 +18,20 @@ import {
  * @param {object} messages to be passed for different responses
  * @param {object} field we are processing files for
  */
-export const handleFileUploadResponse = (response,cf2,$form,messages,field) => {
+export const handleFileUploadResponse = (response,cf2,$form,messages,field,lastFile) => {
 
 	const {fieldId} = field;
-	if( 'object' !== typeof  response ){
+	if( 'object' !== typeof response ){
 		removeFromUploadStarted(fieldId,cf2);
 		removeFromPending(fieldId,cf2);
 		throw 'Upload Error';
-	}
-	else if (response.hasOwnProperty('control')) {
+	}else if (response.hasOwnProperty('control')) {
 		removeFromPending(fieldId,cf2);
 		removeFromBlocking(fieldId,cf2);
 		cf2.uploadCompleted.push(fieldId);
-		$form.submit();
+		if(lastFile){
+			$form.submit();
+		}
 	}else{
 		if( response.hasOwnProperty('message') ){
 			messages[field.fieldIdAttr] = {
@@ -64,7 +65,7 @@ export const handleFileUploadError = (error, file) => {
  */
 export const hashAndUpload = (file, processData, processFunctions ) => {
 
-	const {verify, field, cf2, $form, CF_API_DATA, messages} = processData;
+	const {verify, field, cf2, $form, CF_API_DATA, messages, lastFile} = processData;
 	const {hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError} = processFunctions;
 
 	const API_FOR_FILES_URL = CF_API_DATA.rest.fileUpload;
@@ -87,7 +88,7 @@ export const hashAndUpload = (file, processData, processFunctions ) => {
 				response => response.json()
 			)
 			.then(
-				response => handleFileUploadResponse(response,cf2,$form,messages,field)
+				response => handleFileUploadResponse(response,cf2,$form,messages,field,lastFile)
 			)
 			.catch(
 				error => {
@@ -112,9 +113,15 @@ export const processFiles = (files, processData, processFunctions) => {
 
 	const {hashAndUpload, handleFileUploadError} = processFunctions;
 
-	files.forEach(file => {
+	files.forEach(( file, index, array) => {
 			if( Array.isArray( file ) ){
 				file = file[0];
+			}
+
+			if( index === array.length - 1){
+				processData.lastFile = true;
+			}else{
+				processData.lastFile = false;
 			}
 
 			try{
@@ -164,7 +171,7 @@ export const processFileField = (processData, processFunctions) => {
 			return;
 		}
 		removeFromBlocking(fieldId,cf2);
-		const files = [values[fieldId]];
+		const files = values[fieldId];
 		processFiles(files, processData, processFunctions);
 	}
 }
