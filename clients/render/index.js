@@ -13,7 +13,7 @@ import {
 	removeFromPending,
 	createMediaFromFile
 } from "./util";
-import { handleFileUploadResponse, handleFileUploadError, hashAndUpload, processFiles } from './fileUploads'
+import { handleFileUploadResponse, handleFileUploadError, hashAndUpload, processFiles, processFileField } from './fileUploads'
 
 Object.defineProperty(global.wp, 'element', {
 	get: () => React
@@ -89,40 +89,10 @@ domReady(function () {
 				Object.keys(values).forEach(fieldId => {
 					const field = fieldsToControl.find(field => fieldId === field.fieldId);
 					if (field) {
-						const {fieldIdAttr} = field;
 						if ('file' === field.type) {
-							//do not upload after complete
-							if ( cf2.uploadCompleted.includes(fieldId)) {
-								removeFromPending(fieldId,cf2);
-								removeFromBlocking(fieldId,cf2);
-								return;
-							}
-							//do not start upload if it has started uploading
-							if (-1 <= cf2.uploadStarted.indexOf(_fieldId => _fieldId === fieldId )
-								&& -1 <= cf2.pending.indexOf(_fieldId => _fieldId === fieldId)
-							) {
-								cf2.uploadStarted.push(fieldId);
-								obj.$form.data(fieldId, field.control);
-								cf2.pending.push(fieldId);
-								const verify = jQuery(`#_cf_verify_${field.formId}`).val();
-								if( '' === values[fieldId] ){
-									if( theComponent.isFieldRequired(fieldIdAttr) ){
-										theComponent.addFieldMessage( fieldIdAttr, "Field is required" );
-										shouldBeValidating = true;
-										setBlocking(fieldId,cf2);
-									}
-									removeFromPending(fieldId,cf2);
-									return;
-								}
-								removeFromBlocking(fieldId,cf2);
-								const files = [values[fieldId]];
-								const processFunctions = {hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError};
-								const processData = {verify, field, fieldId, cf2, $form, CF_API_DATA, messages};
-								processFiles(files, processData, processFunctions);
-
-							}
-
-
+							const processFunctions = {processFiles, hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError};
+							const processData = {obj, values, field, fieldId, cf2, $form, CF_API_DATA, messages};
+							processFileField(processData, processFunctions);
 						}
 					}
 				});

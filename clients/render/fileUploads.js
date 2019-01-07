@@ -1,4 +1,11 @@
-import { createMediaFromFile, hashFile, removeFromBlocking, removeFromPending, removeFromUploadStarted } from './util'
+import {
+	createMediaFromFile,
+	hashFile,
+	removeFromBlocking,
+	removeFromPending,
+	removeFromUploadStarted,
+	setBlocking
+} from './util'
 
 /**
  * Manage response of file upload requests
@@ -118,4 +125,46 @@ export const processFiles = (files, processData, processFunctions) => {
 
 		}
 	);
+}
+
+/**
+ * Pre-process Files by File field
+ *
+ * @since 1.8.0
+ *
+ * @param {object} processData object of data to process files {verify, field, fieldId, cf2, $form, CF_API_DATA, messages}
+ * @param {object} processFunctions object of functions that will be called within processFiles then test the cases they are called {hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError}
+ */
+export const processFileField = (processData, processFunctions) => {
+
+	const {processFiles} = processFunctions;
+	const {obj, values, cf2, field, fieldId} = processData;
+	const {fieldIdAttr} = field;
+	//do not upload after complete
+	if ( cf2.uploadCompleted.includes(fieldId)) {
+		removeFromPending(fieldId,cf2);
+		removeFromBlocking(fieldId,cf2);
+		return;
+	}
+	//do not start upload if it has started uploading
+	if (-1 <= cf2.uploadStarted.indexOf(_fieldId => _fieldId === fieldId )
+		&& -1 <= cf2.pending.indexOf(_fieldId => _fieldId === fieldId)
+	) {
+		cf2.uploadStarted.push(fieldId);
+		obj.$form.data(fieldId, field.control);
+		cf2.pending.push(fieldId);
+		processData.verify = jQuery(`#_cf_verify_${field.formId}`).val();
+		if( '' === values[fieldId] ){
+			if( theComponent.isFieldRequired(fieldIdAttr) ){
+				theComponent.addFieldMessage( fieldIdAttr, "Field is required" );
+				shouldBeValidating = true;
+				setBlocking(fieldId,cf2);
+			}
+			removeFromPending(fieldId,cf2);
+			return;
+		}
+		removeFromBlocking(fieldId,cf2);
+		const files = [values[fieldId]];
+		processFiles(files, processData, processFunctions);
+	}
 }
