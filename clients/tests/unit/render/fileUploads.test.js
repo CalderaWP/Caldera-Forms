@@ -1,4 +1,4 @@
-import {handleFileUploadResponse, hashAndUpload, handleFileUploadError, processFiles} from "../../../render/fileUploads";
+import {handleFileUploadResponse, hashAndUpload, handleFileUploadError, processFiles, processFileField} from "../../../render/fileUploads";
 import {hashFile, createMediaFromFile} from "../../../render/util";
 import {cf2, obj, CF_API_DATA, messages} from  './Mocks/mockUtils';
 import * as data from './Mocks/mockUtils';
@@ -187,5 +187,33 @@ describe( 'Calls to hashAndUpload based on number of files passed to processFile
 		expect(processFunctions.hashAndUpload).toBeCalled();
 		expect(processFunctions.hashAndUpload.mock.calls.length).toBe(1);
 	});
+
+});
+
+describe( 'Test the files const passed to processFiles', () => {
+
+	let processFunctions = {processFiles, hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError};
+	const processData = {
+		values: data.values,
+		obj: data.obj,
+		field: data.cf2.fields.fld_9226671_1,
+		fieldId: data.cf2.fields.fld_9226671_1.fieldId,
+		cf2: cf2,
+		$form: data.obj.$form,
+		CF_API_DATA: data.CF_API_DATA,
+		messages: messages
+	}
+
+	it( 'Values set to three files' , () => {
+
+		processData.obj.$form.data = jest.fn();
+		processFunctions.processFiles = jest.fn();
+
+		processFileField(processData, processFunctions);
+
+		expect(processFunctions.processFiles).toBeCalled();
+		expect(processFunctions.processFiles.mock.calls[0][0].length).toBe(3)
+	});
+
 
 });

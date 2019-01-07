@@ -52,47 +52,27 @@ export const CF_API_DATA = {
 export const CFFIELD_CONFIG = {"1":{"configs":{"fld_4065869":{"type":"summary","id":"fld_4065869_1","default":"","form_id":"CF5bc8e4db50622","form_id_attr":"caldera_form_1","sync":true,"tmplId":"html-content-fld_4065869_1-tmpl","contentId":"html-content-fld_4065869_1","bindFields":[{"tag":"{{fld_5843941}}","to":"fld_5843941_1"},{"tag":"{{fld_6540633}}","to":"fld_6540633_1"},{"tag":"{{fld_9226671}}","to":"fld_9226671_1"},{"tag":"{{fld_990986}}","to":"fld_990986_1"},{"tag":"{{fld_7276122}}","to":"fld_7276122_1"}]},"fld_6660137":{"type":"button","id":"fld_6660137_1","default":"","form_id":"CF5bc8e4db50622","form_id_attr":"caldera_form_1"}},"fields":{"ids":["fld_5843941_1","fld_6540633_1","fld_4065869_1","fld_9226671_1","fld_990986_1","fld_6660137_1","fld_7276122_1"],"inputs":[{"type":"text","fieldId":"fld_5843941","id":"fld_5843941_1","options":[],"default":""},{"type":"text","fieldId":"fld_6540633","id":"fld_6540633_1","options":[],"default":"old default"},{"type":"summary","fieldId":"fld_4065869","id":"fld_4065869_1","options":[],"default":""},{"type":"cf2_file","fieldId":"fld_9226671","id":"fld_9226671_1","options":[],"default":""},{"type":"dropdown","fieldId":"fld_990986","id":"fld_990986_1","options":[],"default":"No"},{"type":"button","fieldId":"fld_6660137","id":"fld_6660137_1","options":[],"default":""},{"type":"text","fieldId":"fld_7276122","id":"fld_7276122_1","options":[],"default":""}],"groups":[],"defaults":{"fld_5843941_1":"","fld_6540633_1":"old default","fld_4065869_1":"","fld_9226671_1":"","fld_990986_1":"No","fld_6660137_1":"","fld_7276122_1":""},"calcDefaults":{"fld_5843941_1":0,"fld_6540633_1":0,"fld_4065869_1":0,"fld_9226671_1":0,"fld_990986_1":0,"fld_6660137_1":0,"fld_7276122_1":0}},"error_strings":{"mixed_protocol":"Submission URL and current URL protocols do not match. Form may not function properly.","jquery_old":"An out of date version of jQuery is loaded on the page. Form may not function properly."}}};
 export const obj = {
 	"$form": {
-		"0": {
-			"0": {},
-			"1": {},
-			"2": {},
-			"3": {},
-			"4": {},
-			"5": {},
-			"6": {}
-		},
-		"context": {
-			"0": {},
-			"1": {},
-			"2": {},
-			"3": {},
-			"4": {},
-			"5": {},
-			"6": {}
-		},
-		"length": 1,
-		"selector": ""
+		"id": "CF5bc8e4db50622_1",
+		"class": "CF5bc8e4db50622 caldera_forms_form cfajax-trigger _tisBound active",
+		"data-instance": "1",
+		"method": "POST",
+		"enctype": "multipart/form-data",
+		"data-form-id": "CF5bc8e4db50622",
+		"aria-label": "CF2 Fields + Conditionals #2766",
+		"data-target": "#caldera_notices_1",
+		"data-template": "#cfajax_CF5bc8e4db50622-tmpl",
+		"data-cfajax": "CF5bc8e4db50622",
+		"data-load-element": "_parent",
+		"data-load-class": "cf_processing",
+		"data-post-disable": "0",
+		"data-action": "cf_process_ajax_submit",
+		"data-request": "http://localhost:8228/cf-api/CF5bc8e4db50622",
+		"data-hiderows": "true",
+		"novalidate": "",
 	},
 	"formIdAttr": "CF5bc8e4db50622_1",
 	"fieldsBlocking": [],
-	"$notice": {
-		"0": {},
-		"length": 1,
-		"context": {
-			"location": {
-				"href": "http://localhost:8228/cf/",
-				"origin": "http://localhost:8228",
-				"protocol": "http:",
-				"host": "localhost:8228",
-				"hostname": "localhost",
-				"port": "8228",
-				"pathname": "/cf/",
-				"search": "",
-				"hash": ""
-			}
-		},
-		"selector": "#caldera_notices_1"
-	}
+	"$notice": {}
 };
 
 export const shouldBeValidating = false;
@@ -199,10 +179,9 @@ export const cf2 = {
 	"uploadStarted": [
 		"fld_9226671"
 	],
-	"uploadCompleted": [
-		"fld_9226671",
-		"fld_9226671",
-		"fld_9226671"
-	],
+	"uploadCompleted": [],
 	"fieldsBlocking": []
 }
+
+
+export const mockForm = '>​context: <form id="CF5bc8e4db50622_1" class="CF5bc8e4db50622 caldera_forms_form cfajax-trigger _tisBound active" data-instance="1" method="POST" enctype="multipart/form-data" data-form-id="CF5bc8e4db50622" aria-label="CF2 Fields + Conditionals #2766" data-target="#caldera_notices_1" data-template="#cfajax_CF5bc8e4db50622-tmpl" data-cfajax="CF5bc8e4db50622" data-load-element="_parent" data-load-class="cf_processing" data-post-disable="0" data-action="cf_process_ajax_submit" data-request="http://localhost:8228/cf-api/CF5bc8e4db50622" data-hiderows="true" novalidate="">';
