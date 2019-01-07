@@ -1,4 +1,5 @@
 import React from 'react';
+import jquery from 'jquery';
 
 global.wp = {
 	shortcode: {
@@ -18,3 +19,8 @@ Object.defineProperty( global.wp, 'element', {
  * @link https://www.npmjs.com/package/jest-fetch-mock#usage
  */
 global.fetch = require('jest-fetch-mock');
+
+/**
+ * Setup jQuery
+ */
+global.$ = global.jQuery = jquery;
