@@ -53,7 +53,7 @@ export const handleFileUploadError = (error, file) => {
  *
  * @param {File} file File blob
  * @param {object} processData object of data to process files {verify, field, fieldId, cf2, $form, CF_API_DATA, messages}
- * @param {object} processFunctions object of function that will be called within processFiles then test the cases they are called {hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError}
+ * @param {object} processFunctions object of functions that will be called within processFiles then test the cases they are called {hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError}
  */
 export const hashAndUpload = (file, processData, processFunctions ) => {
 
@@ -80,9 +80,7 @@ export const hashAndUpload = (file, processData, processFunctions ) => {
 				response => response.json()
 			)
 			.then(
-				response => {
-					handleFileUploadResponse(response,cf2,$form,messages,field);
-				}
+				response => handleFileUploadResponse(response,cf2,$form,messages,field)
 			)
 			.catch(
 				error => {
@@ -101,7 +99,7 @@ export const hashAndUpload = (file, processData, processFunctions ) => {
  *
  * @param {array} files array of Files
  * @param {object} processData object of data to process files {verify, field, fieldId, cf2, $form, CF_API_DATA, messages}
- * @param {object} processFunctions object of function that will be called within processFiles then test the cases they are called {hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError}
+ * @param {object} processFunctions object of functions that will be called within processFiles then test the cases they are called {hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError}
  */
 export const processFiles = (files, processData, processFunctions) => {
 

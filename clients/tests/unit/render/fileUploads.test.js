@@ -161,7 +161,7 @@ describe( 'hashAndUpload', () => {
 
 });
 
-describe( 'processFiles', () => {
+describe( 'Calls to hashAndUpload based on number of files passed to processFiles', () => {
 
 	let processFunctions = {hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError};
 	const processData = {
@@ -169,15 +169,23 @@ describe( 'processFiles', () => {
 		field: data.cf2.fields.fld_9226671_1,
 		fieldId: data.cf2.fields.fld_9226671_1.fieldId,
 		cf2: cf2,
-		$form: obj.$form,
-		CF_API_DATA: CF_API_DATA,
+		$form: data.obj.$form,
+		CF_API_DATA: data.CF_API_DATA,
 		messages: messages
 	}
 
-	it( 'Call to hashAndUpload' , () => {
+	it( 'Call to hashAndUpload three times because three files' , () => {
 		processFunctions.hashAndUpload = jest.fn();
-		processFiles(data.threeFiles, processData, processFunctions );
-		expect( processFunctions.hashAndUpload ).toBeCalled();
+		processFiles(data.threeFiles, processData, processFunctions);
+		expect(processFunctions.hashAndUpload).toBeCalled();
+		expect(processFunctions.hashAndUpload.mock.calls.length).toBe(3);
+	});
+
+	it( 'Call to hashAndUpload once because one file' , () => {
+		processFunctions.hashAndUpload = jest.fn();
+		processFiles([data.file], processData, processFunctions);
+		expect(processFunctions.hashAndUpload).toBeCalled();
+		expect(processFunctions.hashAndUpload.mock.calls.length).toBe(1);
 	});
 
 });
