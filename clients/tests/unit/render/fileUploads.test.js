@@ -32,7 +32,7 @@ describe( 'Unit tests, ignoring cf2 var side effects for handleFileUploadRespons
 		expect( $form.submit.mock.calls.length ).toBe(0);
 	});
 
-	it( 'Triggers submit, if passed object with control', () => {
+	it( 'Triggers submit, if passed object with control and lastFile = true', () => {
 
 		let error = undefined;
 
@@ -42,7 +42,8 @@ describe( 'Unit tests, ignoring cf2 var side effects for handleFileUploadRespons
 				cf2,
 				$form,
 				{},
-				field
+				field,
+				true
 			);
 		}catch (e) {
 			error = e;
