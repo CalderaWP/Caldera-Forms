@@ -17,6 +17,7 @@ import {
  * @param {object} $form object
  * @param {object} messages to be passed for different responses
  * @param {object} field we are processing files for
+ * @param {boolean} lastFile true if last file to be processed
  */
 export const handleFileUploadResponse = (response,cf2,$form,messages,field,lastFile) => {
 
