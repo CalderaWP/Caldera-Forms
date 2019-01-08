@@ -188,11 +188,11 @@ describe( 'createMediaFromFile', () => {
 	const additionalData = {
 		hashes: ['09164c642f7ae975afe146e7a29d6913'],
 		verify: '2c6463e902',
-		formId: formId,
+		formId,
 		fieldId: 'fld_9226671',
 		control: 'cf2_file5c1cfbcaa426c',
 		_wp_nonce: nonce,
-		API_FOR_FILES_URL: API_FOR_FILES_URL
+		API_FOR_FILES_URL
 	};
 
 
