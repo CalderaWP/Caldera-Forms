@@ -192,7 +192,7 @@ describe( 'Calls to hashAndUpload based on number of files passed to processFile
 
 });
 
-describe.skip( 'Test the files const passed to processFiles', () => {
+describe( 'Test the files const passed to processFiles', () => {
 
 	let processFunctions = {processFiles, hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError};
 	let processData = {
