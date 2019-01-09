@@ -23,42 +23,6 @@ describe(  'getFieldConfigBy', () => {
 
 });
 
-describe.skip(  'Test files request', () => {
-
-	it( 'Calls to sub functions' , () => {
-
-		const createMediaFromFile = jest.fn();
-		const hashFile = jest.fn();
-
-		hashAndUpload(data.threeFiles, data.verify, data.field, data.fieldId, data.cf2, data.API_FOR_FILES_URL, data._wp_nonce, data.obj, createMediaFromFile, hashFile );
-
-		expect( createMediaFromFile ).toBeCalled();
-		expect( hashFile ).toBeCalled();
-
-
-	});
-
-	it( 'Testing onRequest' , () => {
-
-		const createMediaFromFile = jest.fn();
-		const hashFile = jest.fn();
-		const hashAndUpload = jest.fn();
-		const setBlocking = jest.fn();
-		const removeFromBlocking = jest.fn();
-		const removeFromUploadStarted = jest.fn();
-		const removeFromPending = jest.fn();
-
-		onRequest( data.obj, data.cf2, data.shouldBeValidating, data.messages, data.theComponent, data.values, data.fieldsToControl, data.CF_API_DATA,
-			createMediaFromFile, hashFile, hashAndUpload, setBlocking, removeFromBlocking, removeFromUploadStarted, removeFromPending );
-
-		expect( removeFromBlocking ).toBeCalled();
-		expect( hashAndUpload).toBeCalled();
-
-	});
-
-
-});
-
 describe( 'cf2 var', () => {
 
 	let cf2;
