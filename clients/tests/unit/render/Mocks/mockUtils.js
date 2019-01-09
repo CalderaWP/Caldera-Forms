@@ -42,7 +42,11 @@ export const CF_API_DATA = {
 	"strings": {
 		"cf2FileField": {
 			"removeFile":"Remove file",
-			"defaultButtonText":"Drop files or click to select files to Upload"
+			"defaultButtonText":"Drop files or click to select files to Upload",
+			"fileUploadError1": "Error: ",
+			"fileUploadError2": " could not be processed",
+			"invalidFileResponse": "Invalid",
+			"fieldIsRequired": "Field is required"
 		}
 	},
 	"nonce":{
@@ -194,6 +198,3 @@ export const cf2 = {
 	"uploadCompleted": [],
 	"fieldsBlocking": []
 }
-
-
-export const mockForm = '>​context: <form id="CF5bc8e4db50622_1" class="CF5bc8e4db50622 caldera_forms_form cfajax-trigger _tisBound active" data-instance="1" method="POST" enctype="multipart/form-data" data-form-id="CF5bc8e4db50622" aria-label="CF2 Fields + Conditionals #2766" data-target="#caldera_notices_1" data-template="#cfajax_CF5bc8e4db50622-tmpl" data-cfajax="CF5bc8e4db50622" data-load-element="_parent" data-load-class="cf_processing" data-post-disable="0" data-action="cf_process_ajax_submit" data-request="http://localhost:8228/cf-api/CF5bc8e4db50622" data-hiderows="true" novalidate="">';

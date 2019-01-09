@@ -202,14 +202,15 @@ describe( 'Test the files const passed to processFiles', () => {
 		cf2: cf2,
 		$form: data.obj.$form,
 		CF_API_DATA: data.CF_API_DATA,
-		messages: messages
+		messages: messages,
+		theComponent: data.theComponent
 	}
 
 	beforeEach(() => {
 		processData.obj.$form.data = jest.fn();
 		processFunctions.processFiles = jest.fn();
 	});
-	
+
 	it( 'Values set to one file' , () => {
 		processData.values = data.oneValue;
 		processFileField(processData, processFunctions);
