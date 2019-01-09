@@ -624,7 +624,11 @@ class Caldera_Forms_Render_Assets {
 				'strings'   =>  array(
 				    'cf2FileField'  => array(
                         'removeFile' => esc_attr__('Remove file', 'caldera-forms'),
-                        'defaultButtonText' =>  esc_attr__('Drop files or click to select files to Upload', 'caldera-forms')
+                        'defaultButtonText' 	=>  esc_attr__('Drop files or click to select files to Upload', 'caldera-forms'),
+						'fileUploadError1'		=>	esc_attr__('Error: ', 'caldera-forms'),
+						'fileUploadError2'		=>	esc_attr__(' could not be processed', 'caldera-forms'),
+						'invalidFileResponse'	=>	esc_attr__('Invalid', 'caldera-forms'),
+						'fieldIsRequired'		=>	esc_attr__( 'Field is required','caldera-forms'),
                     )
                 ),
 				'nonce' => array(
