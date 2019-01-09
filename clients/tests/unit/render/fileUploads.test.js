@@ -194,7 +194,7 @@ describe( 'Calls to hashAndUpload based on number of files passed to processFile
 describe( 'Test the files const passed to processFiles', () => {
 
 	let processFunctions = {processFiles, hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError};
-	const processData = {
+	let processData = {
 		values: data.values,
 		obj: data.obj,
 		field: data.cf2.fields.fld_9226671_1,
@@ -205,15 +205,37 @@ describe( 'Test the files const passed to processFiles', () => {
 		messages: messages
 	}
 
-	it( 'Values set to three files' , () => {
-
+	beforeEach(() => {
 		processData.obj.$form.data = jest.fn();
 		processFunctions.processFiles = jest.fn();
-
+	});
+	
+	it( 'Values set to one file' , () => {
+		processData.values = data.oneValue;
 		processFileField(processData, processFunctions);
+		expect(processFunctions.processFiles).toBeCalled();
+		expect(processFunctions.processFiles.mock.calls[0][0].length).toBe(1)
+	});
 
+	it( 'Values set to two files' , () => {
+		processData.values = data.twoValues;
+		processFileField(processData, processFunctions);
+		expect(processFunctions.processFiles).toBeCalled();
+		expect(processFunctions.processFiles.mock.calls[0][0].length).toBe(2)
+	});
+
+	it( 'Values set to three files' , () => {
+		processData.values = data.threeValues;
+		processFileField(processData, processFunctions);
 		expect(processFunctions.processFiles).toBeCalled();
 		expect(processFunctions.processFiles.mock.calls[0][0].length).toBe(3)
+	});
+
+	it( 'Values set to five files' , () => {
+		processData.values = data.fiveValues;
+		processFileField(processData, processFunctions);
+		expect(processFunctions.processFiles).toBeCalled();
+		expect(processFunctions.processFiles.mock.calls[0][0].length).toBe(5)
 	});
 
 

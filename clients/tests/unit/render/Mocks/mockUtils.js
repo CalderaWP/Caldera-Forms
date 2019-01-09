@@ -148,6 +148,18 @@ export const fieldsToControl = [
 export const values = {
 	"fld_9226671": threeFiles
 }
+export const oneValue = {
+	"fld_9226671": [file]
+}
+export const twoValues = {
+	"fld_9226671": [file, file]
+}
+export const threeValues = {
+	"fld_9226671": threeFiles
+}
+export const fiveValues = {
+	"fld_9226671": [file, file, file, file, file]
+}
 
 export const cf2 = {
 	"fields": {
