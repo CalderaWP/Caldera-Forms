@@ -154,7 +154,7 @@ export const processFiles = (files, processData, processFunctions) => {
 export const processFileField = (processData, processFunctions) => {
 
 	const {processFiles} = processFunctions;
-	const {obj, values, cf2, field, fieldId} = processData;
+	const {obj, values, cf2, field, fieldId, theComponent} = processData;
 	const {fieldIdAttr} = field;
 	//do not upload after complete
 	if ( cf2.uploadCompleted.includes(fieldId)) {

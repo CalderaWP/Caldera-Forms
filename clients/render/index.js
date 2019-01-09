@@ -91,7 +91,7 @@ domReady(function () {
 					if (field) {
 						if ('file' === field.type) {
 							const processFunctions = {processFiles, hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError};
-							const processData = {obj, values, field, fieldId, cf2, $form, CF_API_DATA, messages};
+							const processData = {obj, values, field, fieldId, cf2, $form, CF_API_DATA, theComponent, messages};
 							processFileField(processData, processFunctions);
 						}
 					}
