@@ -295,8 +295,6 @@ class Caldera_Forms_Render_Assets {
 			'privacy' => self::make_url( 'privacy' )
 		);
 
-		$script_urls[ 'fields' ] = $script_urls[ 'privacy' ];
-
 		return $script_urls;
 	}
 

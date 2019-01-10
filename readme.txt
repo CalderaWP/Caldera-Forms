@@ -2,8 +2,13 @@
 Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
 Tags: form, contact form, forms, form creator, form manager, mailchimp, paypal, stripe, login, payment, forms manager, forms creation
 Requires at least: 4.7
+<<<<<<< HEAD
 Tested up to: 5.0.2
 Stable tag: 1.7.5.1
+=======
+Tested up to: 5.1.0
+Stable tag: 1.7.6
+>>>>>>> develop-minor
 License: GPLv2
 Requires PHP: 5.6
 
@@ -793,6 +798,11 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 
 == Changelog ==
+= Caldera Forms 1.7.6 (January 10, 2019) Blocks. =
+See: [https://calderaforms.com/updates/caldera-forms-1-7-6](https://calderaforms.com/updates/caldera-forms-1-7-6?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-6)
+* FIXED: Block was not showing in the editor if Gutenberg was not active and WordPress 5.0.1+.
+* FIXED: JavaScript error- target container is not a DOM element, due to privacy settings client.
+
 = Caldera Forms 1.7.5 (December 18, 2018) Blocks Blocked. =
 See: [https://calderaforms.com/updates/caldera-forms-1-7-5](https://calderaforms.com/updates/caldera-forms-1-7-5?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-5)
 * FIXED: Unable to continue with Freemius optin after update to WordPress 5.0.
@@ -821,7 +831,6 @@ See: [https://calderaforms.com/updates/caldera-forms-1-7-3](https://calderaforms
 * FIXED: Could not select form in Gutenberg block if there was only one block.
 * FIXED: Dead code from older location of CF Pro API client.
 * FIXED: Conditionals from processors not saving if variables in use.
-
 
 = Caldera Forms 1.7.2 (June 27, 2018) Infinite Jest =
 See: [https://calderaforms.com/updates/caldera-forms-1-7-2](https://calderaforms.com/updates/caldera-forms-1-7-2?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-2)
