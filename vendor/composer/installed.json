@@ -228,17 +228,17 @@
     },
     {
         "name": "monolog/monolog",
-        "version": "1.23.0",
-        "version_normalized": "1.23.0.0",
+        "version": "1.24.0",
+        "version_normalized": "1.24.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/Seldaek/monolog.git",
-            "reference": "fd8c787753b3a2ad11bc60c063cff1358a32a3b4"
+            "reference": "bfc9ebb28f97e7a24c45bdc3f0ff482e47bb0266"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/Seldaek/monolog/zipball/fd8c787753b3a2ad11bc60c063cff1358a32a3b4",
-            "reference": "fd8c787753b3a2ad11bc60c063cff1358a32a3b4",
+            "url": "https://api.github.com/repos/Seldaek/monolog/zipball/bfc9ebb28f97e7a24c45bdc3f0ff482e47bb0266",
+            "reference": "bfc9ebb28f97e7a24c45bdc3f0ff482e47bb0266",
             "shasum": ""
         },
         "require": {
@@ -274,7 +274,7 @@
             "ruflin/elastica": "Allow sending log messages to an Elastic Search server",
             "sentry/sentry": "Allow sending log messages to a Sentry server"
         },
-        "time": "2017-06-19T01:22:40+00:00",
+        "time": "2018-11-05T09:00:11+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1212,23 +1212,23 @@
     },
     {
         "name": "psr/log",
-        "version": "1.0.2",
-        "version_normalized": "1.0.2.0",
+        "version": "1.1.0",
+        "version_normalized": "1.1.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/php-fig/log.git",
-            "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d"
+            "reference": "6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/php-fig/log/zipball/4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
-            "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
+            "url": "https://api.github.com/repos/php-fig/log/zipball/6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd",
+            "reference": "6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3.0"
         },
-        "time": "2016-10-10T12:19:37+00:00",
+        "time": "2018-11-20T15:27:04+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1794,8 +1794,8 @@
     },
     {
         "name": "symfony/polyfill-ctype",
-        "version": "v1.9.0",
-        "version_normalized": "1.9.0.0",
+        "version": "v1.10.0",
+        "version_normalized": "1.10.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/polyfill-ctype.git",
@@ -1854,17 +1854,17 @@
     },
     {
         "name": "symfony/yaml",
-        "version": "v3.4.17",
-        "version_normalized": "3.4.17.0",
+        "version": "v3.4.21",
+        "version_normalized": "3.4.21.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/yaml.git",
-            "reference": "640b6c27fed4066d64b64d5903a86043f4a4de7f"
+            "reference": "554a59a1ccbaac238a89b19c8e551a556fd0e2ea"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/yaml/zipball/640b6c27fed4066d64b64d5903a86043f4a4de7f",
-            "reference": "640b6c27fed4066d64b64d5903a86043f4a4de7f",
+            "url": "https://api.github.com/repos/symfony/yaml/zipball/554a59a1ccbaac238a89b19c8e551a556fd0e2ea",
+            "reference": "554a59a1ccbaac238a89b19c8e551a556fd0e2ea",
             "shasum": ""
         },
         "require": {
@@ -1880,7 +1880,7 @@
         "suggest": {
             "symfony/console": "For validating YAML files using the lint command"
         },
-        "time": "2018-10-02T16:33:53+00:00",
+        "time": "2019-01-01T13:45:19+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1915,27 +1915,28 @@
     },
     {
         "name": "webmozart/assert",
-        "version": "1.3.0",
-        "version_normalized": "1.3.0.0",
+        "version": "1.4.0",
+        "version_normalized": "1.4.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/webmozart/assert.git",
-            "reference": "0df1908962e7a3071564e857d86874dad1ef204a"
+            "reference": "83e253c8e0be5b0257b881e1827274667c5c17a9"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/webmozart/assert/zipball/0df1908962e7a3071564e857d86874dad1ef204a",
-            "reference": "0df1908962e7a3071564e857d86874dad1ef204a",
+            "url": "https://api.github.com/repos/webmozart/assert/zipball/83e253c8e0be5b0257b881e1827274667c5c17a9",
+            "reference": "83e253c8e0be5b0257b881e1827274667c5c17a9",
             "shasum": ""
         },
         "require": {
-            "php": "^5.3.3 || ^7.0"
+            "php": "^5.3.3 || ^7.0",
+            "symfony/polyfill-ctype": "^1.8"
         },
         "require-dev": {
             "phpunit/phpunit": "^4.6",
             "sebastian/version": "^1.0.1"
         },
-        "time": "2018-01-29T19:49:41+00:00",
+        "time": "2018-12-25T11:19:39+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
