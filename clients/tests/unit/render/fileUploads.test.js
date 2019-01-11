@@ -1,15 +1,78 @@
 import {handleFileUploadResponse, hashAndUpload, handleFileUploadError, processFiles, processFileField} from "../../../render/fileUploads";
 import {hashFile, createMediaFromFile} from "../../../render/util";
-import {cf2, obj, CF_API_DATA, messages} from  './Mocks/mockUtils';
 import * as data from './Mocks/mockUtils';
 
-describe( 'Unit tests, ignoring cf2 var side effects for handleFileUploadResponse', () => {
-	let $form = obj.$form;
-	let submit;
-	const field = cf2.fields.fld_9226671_1;
+describe( 'Test the files const passed to processFiles', () => {
+
+	let processFunctions = {};
+	let processData = {}
 
 	beforeEach(() => {
+		processFunctions = {processFiles, hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError};
+		processData = {
+			values: {},
+			obj: data.obj,
+			field: data.cf2.fields.fld_9226671_1,
+			fieldId: data.cf2.fields.fld_9226671_1.fieldId,
+			cf2: data.cf2,
+			$form: data.obj.$form,
+			CF_API_DATA: data.CF_API_DATA,
+			messages: data.messages,
+			theComponent: data.theComponent
+		}
+		processData.obj.$form.data = jest.fn();
+		processFunctions.processFiles = jest.fn();
+	});
+
+	afterEach(() => {
+		processFunctions.processFiles.mockReset();
+	});
+
+	it( 'Values set to one file' , () => {
+		processData.values = data.oneValue;
+		processFileField(processData, processFunctions);
+		expect(processFunctions.processFiles).toBeCalled();
+		expect(processFunctions.processFiles.mock.calls[0][0].length).toBe(1);
+	});
+
+	it( 'Values set to two files' , () => {
+		processData.values = data.twoValues;
+		processFileField(processData, processFunctions);
+		expect(processFunctions.processFiles).toBeCalled();
+		expect(processFunctions.processFiles.mock.calls[0][0].length).toBe(2);
+	});
+
+	it( 'Values set to three files' , () => {
+		processData.values = data.threeValues;
+		processFileField(processData, processFunctions);
+		expect(processFunctions.processFiles).toBeCalled();
+		expect(processFunctions.processFiles.mock.calls[0][0].length).toBe(3);
+	});
+
+	it( 'Values set to five files' , () => {
+		processData.values = data.fiveValues;
+		processFileField(processData, processFunctions);
+		expect(processFunctions.processFiles).toBeCalled();
+		expect(processFunctions.processFiles.mock.calls[0][0].length).toBe(5);
+	});
+
+
+});
+
+describe( 'Unit tests, ignoring cf2 var side effects for handleFileUploadResponse', () => {
+
+	let $form = {};
+	let submit;
+	let field = {};
+
+	beforeEach(() => {
+		$form = data.obj.$form;
+		field = data.cf2.fields.fld_9226671_1;
 	 	$form.submit = jest.fn();
+	});
+
+	afterEach(() => {
+		$form.submit.mockClear();
 	});
 
 	it( 'Throws an error if passed non-object & does not submit form', () => {
@@ -18,7 +81,7 @@ describe( 'Unit tests, ignoring cf2 var side effects for handleFileUploadRespons
 		try{
 			const r = handleFileUploadResponse(
 				response,
-				cf2,
+				data.cf2,
 				$form,
 				{},
 				field
@@ -38,7 +101,7 @@ describe( 'Unit tests, ignoring cf2 var side effects for handleFileUploadRespons
 		try{
 			const r = handleFileUploadResponse(
 				{control: 'nico'},
-				cf2,
+				data.cf2,
 				$form,
 				{},
 				field,
@@ -63,7 +126,7 @@ describe( 'Unit tests, ignoring cf2 var side effects for handleFileUploadRespons
 				{
 					message
 				},
-				cf2,
+				data.cf2,
 				$form,
 				messages,
 				field
@@ -90,7 +153,7 @@ describe( 'Unit tests, ignoring cf2 var side effects for handleFileUploadRespons
 		try{
 			const r = handleFileUploadResponse(
 				{message},
-				cf2,
+				data.cf2,
 				$form,
 				{},
 				field
@@ -109,25 +172,34 @@ describe( 'Unit tests, ignoring cf2 var side effects for handleFileUploadRespons
 });
 
 describe( 'Check responses with different values passed', () => {
-	let $form = obj.$form;
+
+	let $form = {};
 	let submit;
-	const field = cf2.fields.fld_9226671_1;
-	const response = undefined;
-	let error = undefined;
+	let field = {};
+	let response = '';
+	let error = '';
 
 	beforeEach(() => {
+		$form = data.obj.$form;
+		field = data.cf2.fields.fld_9226671_1;
+		response = undefined;
+		error = undefined;
 		$form.submit = jest.fn();
 	});
+
+	afterEach(() => {
+		$form.submit.mockReset();
+	})
 
 	it( 'Throws error if response does not have control prop', () => {
 
 		try {
 			const r = handleFileUploadResponse(
 				response,
-				cf2,
+				data.cf2,
 				$form,
 				{},
-				field
+				data.field
 			);
 		} catch (e) {
 			error = e;
@@ -139,23 +211,31 @@ describe( 'Check responses with different values passed', () => {
 
 });
 
-
 describe( 'hashAndUpload', () => {
 
-	let processFunctions = {hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError};
-	const processData = {
-		verify: 'f42ea553cb',
-		field: data.cf2.fields.fld_9226671_1,
-		fieldId: data.cf2.fields.fld_9226671_1.fieldId,
-		cf2,
-		$form: obj.$form,
-		CF_API_DATA,
-		messages,
-		theComponent: data.theComponent
-	}
+	let processFunctions = {};
+	let processData = {};
+
+	beforeEach(() => {
+		processFunctions = {hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError};
+		processData = {
+			verify: 'f42ea553cb',
+			field: data.cf2.fields.fld_9226671_1,
+			fieldId: data.cf2.fields.fld_9226671_1.fieldId,
+			cf2: data.cf2,
+			$form: data.obj.$form,
+			CF_API_DATA: data.CF_API_DATA,
+			messages: data.messages,
+			theComponent: data.theComponent
+		}
+		processFunctions.hashFile = jest.fn();
+	})
+
+	afterEach(() => {
+		processFunctions.hashFile.mockClear();
+	})
 
 	it( 'Call to hashFile' , () => {
-		processFunctions.hashFile = jest.fn();
 		hashAndUpload(data.file, processData, processFunctions );
 		expect( processFunctions.hashFile ).toBeCalled();
 	});
@@ -164,85 +244,37 @@ describe( 'hashAndUpload', () => {
 
 describe( 'Calls to hashAndUpload based on number of files passed to processFiles', () => {
 
-	let processFunctions = {hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError};
-	const processData = {
-		verify: 'f42ea553cb',
-		field: data.cf2.fields.fld_9226671_1,
-		fieldId: data.cf2.fields.fld_9226671_1.fieldId,
-		cf2,
-		$form: data.obj.$form,
-		CF_API_DATA: data.CF_API_DATA,
-		messages,
-		theComponent: data.theComponent
-	}
+	let processFunctions = {};
+	let processData = {}
+	beforeEach(() => {
+		processFunctions = {hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError};
+		processData = {
+			verify: 'f42ea553cb',
+			field: data.cf2.fields.fld_9226671_1,
+			fieldId: data.cf2.fields.fld_9226671_1.fieldId,
+			cf2: data.cf2,
+			$form: data.obj.$form,
+			CF_API_DATA: data.CF_API_DATA,
+			messages: data.messages,
+			theComponent: data.theComponent
+		}
+		processFunctions.hashAndUpload = jest.fn();
+	})
+
+	afterEach(() => {
+		processFunctions.hashAndUpload.mockClear();
+	})
 
 	it( 'Call to hashAndUpload three times because three files' , () => {
-		processFunctions.hashAndUpload = jest.fn();
 		processFiles(data.threeFiles, processData, processFunctions);
 		expect(processFunctions.hashAndUpload).toBeCalled();
 		expect(processFunctions.hashAndUpload.mock.calls.length).toBe(3);
 	});
 
 	it( 'Call to hashAndUpload once because one file' , () => {
-		processFunctions.hashAndUpload = jest.fn();
 		processFiles([data.file], processData, processFunctions);
 		expect(processFunctions.hashAndUpload).toBeCalled();
 		expect(processFunctions.hashAndUpload.mock.calls.length).toBe(1);
 	});
 
 });
-
-describe( 'Test the files const passed to processFiles', () => {
-
-	let processFunctions = {processFiles, hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError};
-	let processData = {
-		values: {},
-		obj: data.obj,
-		field: data.cf2.fields.fld_9226671_1,
-		fieldId: data.cf2.fields.fld_9226671_1.fieldId,
-		cf2,
-		$form: data.obj.$form,
-		CF_API_DATA: data.CF_API_DATA,
-		messages,
-		theComponent: data.theComponent
-	}
-
-	processData.obj.$form.data = jest.fn();
-	processFunctions.processFiles = jest.fn();
-
-	beforeEach(() => {
-		processData.obj.$form.data.mockClear();
-		processFunctions.processFiles.mockClear();
-	});
-
-	it( 'Values set to one file' , () => {
-		processData.values = data.oneValue;
-		processFileField(processData, processFunctions);
-		expect(processFunctions.processFiles).toHaveBeenCalled();
-		expect(processFunctions.processFiles.mock.calls[0][0].length).toBe(1);
-	});
-
-	it( 'Values set to two files' , () => {
-		processData.values = data.twoValues;
-		processFileField(processData, processFunctions);
-		expect(processFunctions.processFiles).toHaveBeenCalled();
-		expect(processFunctions.processFiles.mock.calls[0][0].length).toBe(2);
-	});
-
-	it( 'Values set to three files' , () => {
-		processData.values = data.threeValues;
-		processFileField(processData, processFunctions);
-		expect(processFunctions.processFiles).toHaveBeenCalled();
-		expect(processFunctions.processFiles.mock.calls[0][0].length).toBe(3);
-	});
-
-	it( 'Values set to five files' , () => {
-		processData.values = data.fiveValues;
-		processFileField(processData, processFunctions);
-		expect(processFunctions.processFiles).toHaveBeenCalled();
-		expect(processFunctions.processFiles.mock.calls[0][0].length).toBe(5);
-	});
-
-
-});
-
