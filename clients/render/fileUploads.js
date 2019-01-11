@@ -161,6 +161,7 @@ export const processFileField = (processData, processFunctions) => {
 	const {obj, values, cf2, field, fieldId, theComponent, CF_API_DATA} = processData;
 	const {fieldIdAttr} = field;
 	const strings = CF_API_DATA.strings.cf2FileField;
+	let shouldBeValidating = false;
 	//do not upload after complete
 	if ( cf2.uploadCompleted.includes(fieldId)) {
 		removeFromPending(fieldId,cf2);
