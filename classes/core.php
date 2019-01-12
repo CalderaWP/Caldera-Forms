@@ -1434,7 +1434,9 @@ class Caldera_Forms
 				__('Calculation is invalid (division by zero)', 'caldera-forms'));
 		}
 
-		$total_function = create_function(null, 'return ' . $formula . ';');
+		$total_function = function() use ($formula) {
+			return $formula;
+		};
 		$total = $total_function();
 
 		if (is_infinite($total) || !is_numeric($total)) {
