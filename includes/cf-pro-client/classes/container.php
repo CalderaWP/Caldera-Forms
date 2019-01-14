@@ -2,6 +2,7 @@
 
 
 namespace calderawp\calderaforms\pro;
+
 use calderawp\calderaforms\pro\api\client;
 use calderawp\calderaforms\pro\api\log;
 
@@ -13,7 +14,8 @@ use calderawp\calderaforms\pro\api\log;
  *
  * @package calderawp\calderaforms\pro
  */
-class container extends repository{
+class container extends repository
+{
 
 
 	/**
@@ -24,7 +26,7 @@ class container extends repository{
 	 * @var container
 	 */
 	protected static $instance;
-	
+
 
 	/**
 	 * Holds main instance
@@ -33,8 +35,9 @@ class container extends repository{
 	 *
 	 * @return container
 	 */
-	public static function get_instance(){
-		if( ! self::$instance ){
+	public static function get_instance()
+	{
+		if ( !self::$instance ) {
 			self::$instance = new self();
 
 		}
@@ -49,16 +52,17 @@ class container extends repository{
 	 *
 	 * @return messages
 	 */
-	public function get_messages_db(){
-		if( ! $this->has( 'db' ) ){
-			global  $wpdb;
+	public function get_messages_db()
+	{
+		if ( !$this->has('db') ) {
+			global $wpdb;
 			$table_name = $wpdb->prefix . 'cf_pro_messages';
 			$this->set(
 				'db',
-				new messages( $wpdb, $table_name )
+				new messages($wpdb, $table_name)
 			);
 		}
-		return $this->get( 'db' );
+		return $this->get('db');
 	}
 
 	/**
@@ -68,8 +72,9 @@ class container extends repository{
 	 *
 	 * @return settings
 	 */
-	public function get_settings(){
-		if( ! $this->has( 'settings' ) ){
+	public function get_settings()
+	{
+		if ( !$this->has('settings') ) {
 
 			$this->set(
 
@@ -77,7 +82,7 @@ class container extends repository{
 				settings::from_saved()
 			);
 		}
-		return $this->get( 'settings' );
+		return $this->get('settings');
 	}
 
 	/**
@@ -87,15 +92,16 @@ class container extends repository{
 	 *
 	 * @return hooks
 	 */
-	public function get_hooks(){
-		if( ! $this->get( 'hooks' ) ){
+	public function get_hooks()
+	{
+		if ( !$this->get('hooks') ) {
 			$this->set(
 				'hooks',
 				new hooks()
 			);
 		}
 
-		return $this->get( 'hooks' );
+		return $this->get('hooks');
 	}
 
 	/**
@@ -105,15 +111,16 @@ class container extends repository{
 	 *
 	 * @return log
 	 */
-	public function get_logger(){
-		if( ! $this->get( 'logger' ) ){
+	public function get_logger()
+	{
+		if ( !$this->get('logger') ) {
 			$this->set(
 				'logger',
-				new log( $this->get_settings()->get_api_keys() )
+				new log($this->get_settings()->get_api_keys())
 			);
 		}
 
-		return $this->get( 'logger' );
+		return $this->get('logger');
 
 	}
 
@@ -124,15 +131,16 @@ class container extends repository{
 	 *
 	 * @return client
 	 */
-	public function get_api_client(){
-		if( ! $this->get( 'api_client' ) ){
+	public function get_api_client()
+	{
+		if ( !$this->get('api_client') ) {
 			$this->set(
 				'api_client',
-				new client( container::get_instance()->get_settings()->get_api_keys() )
+				new client(container::get_instance()->get_settings()->get_api_keys())
 			);
 		}
 
-		return $this->get( 'api_client' );
+		return $this->get('api_client');
 
 	}
 
@@ -143,11 +151,12 @@ class container extends repository{
 	 *
 	 * @return string
 	 */
-	public function get_tab_html(){
-		if( ! $this->has( 'tab_html' ) ){
+	public function get_tab_html()
+	{
+		if ( !$this->has('tab_html') ) {
 			return '';
 		}
-		return $this->get( 'tab_html' );
+		return $this->get('tab_html');
 	}
 
 	/**
@@ -157,8 +166,9 @@ class container extends repository{
 	 *
 	 * @param $html
 	 */
-	public function set_tab_html($html){
-		$this->set( 'tab_html', $html );
+	public function set_tab_html($html)
+	{
+		$this->set('tab_html', $html);
 	}
 
 	/**
@@ -168,8 +178,9 @@ class container extends repository{
 	 *
 	 * @param \Caldera_Forms_DB_Tables $DB_Tables
 	 */
-	public function set_tables( \Caldera_Forms_DB_Tables $DB_Tables ){
-		$this->set( 'tables' , $DB_Tables );
+	public function set_tables(\Caldera_Forms_DB_Tables $DB_Tables)
+	{
+		$this->set('tables', $DB_Tables);
 	}
 
 	/**
@@ -179,31 +190,34 @@ class container extends repository{
 	 *
 	 * @return \Caldera_Forms_DB_Tables
 	 */
-	public function get_tables(){
-		return $this->get( 'tables' );
+	public function get_tables()
+	{
+		return $this->get('tables');
 	}
 
-    /**
-     * Set anti-spam helper object in container
-     *
-     * @since 1.6.0
-     *
-     * @param array $args
-     */
-	public function set_anti_spam_args( array $args ){
-	    $this->set( 'anti_spam_args', $args );
-    }
+	/**
+	 * Set anti-spam helper object in container
+	 *
+	 * @since 1.6.0
+	 *
+	 * @param array $args
+	 */
+	public function set_anti_spam_args(array $args)
+	{
+		$this->set('anti_spam_args', $args);
+	}
 
-    /**
-     * Get anti-spam args from container
-     *
-     * @since 1.6.0
-     *
-     * @return array
-     */
-    public function get_anti_spam_args(){
-	    return is_array( $this->get( 'anti_spam_args' ) ) ? $this->get( 'anti_spam_args' ) : array();
-    }
+	/**
+	 * Get anti-spam args from container
+	 *
+	 * @since 1.6.0
+	 *
+	 * @return array
+	 */
+	public function get_anti_spam_args()
+	{
+		return is_array($this->get('anti_spam_args')) ? $this->get('anti_spam_args') : [];
+	}
 
 
 }

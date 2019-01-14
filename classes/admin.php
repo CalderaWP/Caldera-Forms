@@ -1301,9 +1301,25 @@ class Caldera_Forms_Admin {
 			if ( check_admin_referer( 'cf-import', 'cfimporter' ) ) {
 				if ( isset( $_FILES[ 'import_file' ] ) && ! empty( $_FILES[ 'import_file' ][ 'size' ] ) ) {
 					$loc = wp_upload_dir();
+                    $temp_name = $_FILES[ 'import_file' ][ 'tmp_name' ];
+                    $name = $_FILES[ 'import_file' ][ 'name' ];
+					$type_check = wp_check_filetype_and_ext($temp_name,$name, [
+					        'json' => 'application/json',
+                    ]);
+					if( ! $type_check['type'] ){
+						$type_check = wp_check_filetype_and_ext($temp_name,$name, [
+							'json' => 'text/plain',
+						]);
+                    }
 
-					if ( move_uploaded_file( $_FILES[ 'import_file' ][ 'tmp_name' ], $loc[ 'path' ] . '/cf-form-import.json' ) ) {
-						$data = json_decode( file_get_contents( $loc[ 'path' ] . '/cf-form-import.json' ), true );
+					if( ! 'json' === $type_check[ 'ext'] ){
+						wp_die( esc_html__( 'Form could not be imported. File type must be JSON.', 'caldera-forms' ) );
+					}
+
+					$location = $loc[ 'path' ] . '/cf-form-import.json';
+					if ( move_uploaded_file( $temp_name, $location ) ) {
+						$data = json_decode( file_get_contents($location ), true  );
+						unlink($location);
 						if( ! is_array( $data ) ){
 							wp_die( esc_html__( 'File is not a valid Caldera Form Import', 'caldera-forms' ) );
 						}
@@ -2109,7 +2125,7 @@ class Caldera_Forms_Admin {
                 'editor-grid'
             ]
         ]);
-        
+
     }
 
 
