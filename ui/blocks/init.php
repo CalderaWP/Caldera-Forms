@@ -37,25 +37,30 @@ function caldera_forms_enqueue_block_assets() {
  * @param string $script_handle Handle of script to use with wp_localize_script()
  */
 function caldera_forms_print_cf_forms_var($script_handle){
-    $form_options = array();
-    $forms = Caldera_Forms_Forms::get_forms(true);
-    $forms = array_reverse($forms);
-    foreach ($forms as $form) {
-        $form_options[] = array(
-            'name' => esc_html($form['name']),
-            'formId' => esc_attr($form['ID']),
-            'ID' => esc_attr($form['ID'])
-        );
-    }
+	$form_options = array();
+	$forms = Caldera_Forms_Forms::get_forms(true);
+	$forms = array_reverse($forms);
+	foreach ($forms as $form) {
+		if( !empty( $form['form_draft'] ) ) {
+			continue;
+		}
+		$form_options[] = array(
+			'name' => esc_html($form['name']),
+			'formId' => esc_attr($form['ID']),
+			'ID' => esc_attr($form['ID'])
+		);
 
-    wp_localize_script(
-        Caldera_Forms_Render_Assets::make_slug($script_handle),
-        'CF_FORMS',
-        array(
-            'forms' => $form_options
-        )
-    );
+	}
+
+	wp_localize_script(
+		Caldera_Forms_Render_Assets::make_slug($script_handle),
+		'CF_FORMS',
+		array(
+			'forms' => $form_options
+		)
+	);
 }
+
 
 
 /**

@@ -1,0 +1,345 @@
+{
+  "_last_updated": "Sun, 08 Oct 2017 06:17:43 +0000",
+  "ID": "CF59d957b7acff7",
+  "cf_version": "1.5.6.2-b-2",
+  "name": "1962 Calculations created@1.5.5 dev@1.5.6.2",
+  "scroll_top": 0,
+  "success": "Form has been successfully submitted. Thank you.\t\t\t\t\t\t\t\t\t\t\t\t",
+  "db_support": 1,
+  "pinned": 0,
+  "hide_form": 1,
+  "check_honey": 1,
+  "avatar_field": "",
+  "form_ajax": 1,
+  "custom_callback": "",
+  "layout_grid": {
+    "fields": {
+      "fld_3296542": "1:1",
+      "fld_1740075": "1:1",
+      "fld_105161": "1:1",
+      "fld_5181257": "1:2",
+      "fld_693890": "1:2",
+      "fld_7680820": "1:2",
+      "fld_5656420": "2:1",
+      "fld_578758": "2:2",
+      "fld_5522707": "3:1"
+    },
+    "structure": "6:6|6:6|12"
+  },
+  "fields": {
+    "fld_3296542": {
+      "ID": "fld_3296542",
+      "type": "dropdown",
+      "label": "Dropdown",
+      "slug": "dropdown",
+      "conditions": {
+        "type": ""
+      },
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "placeholder": "",
+        "default_option": "",
+        "auto_type": "",
+        "taxonomy": "category",
+        "post_type": "post",
+        "value_field": "name",
+        "orderby_tax": "name",
+        "orderby_post": "name",
+        "order": "ASC",
+        "show_values": 1,
+        "option": {
+          "opt1858354": {
+            "calc_value": 100,
+            "value": 10,
+            "label": "Calc 100 Value 10"
+          },
+          "opt1112077": {
+            "calc_value": 200,
+            "value": 20,
+            "label": "Calc 200 Value 20"
+          }
+        },
+        "default": "opt1112077"
+      }
+    },
+    "fld_1740075": {
+      "ID": "fld_1740075",
+      "type": "checkbox",
+      "label": "Checkbox",
+      "slug": "checkbox",
+      "conditions": {
+        "type": ""
+      },
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "default_option": "",
+        "auto_type": "",
+        "taxonomy": "category",
+        "post_type": "post",
+        "value_field": "name",
+        "orderby_tax": "name",
+        "orderby_post": "name",
+        "order": "ASC",
+        "show_values": 1,
+        "default": "opt1818955",
+        "option": {
+          "opt1818955": {
+            "calc_value": 100,
+            "value": 10,
+            "label": "Calc 100 Value 10"
+          },
+          "opt2025041": {
+            "calc_value": 200,
+            "value": 20,
+            "label": "Calc 200 Value 20"
+          }
+        }
+      }
+    },
+    "fld_105161": {
+      "ID": "fld_105161",
+      "type": "radio",
+      "label": "Radio",
+      "slug": "radio",
+      "conditions": {
+        "type": ""
+      },
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "default_option": "",
+        "auto_type": "",
+        "taxonomy": "category",
+        "post_type": "post",
+        "value_field": "name",
+        "orderby_tax": "name",
+        "orderby_post": "name",
+        "order": "ASC",
+        "show_values": 1,
+        "default": "opt1358559",
+        "option": {
+          "opt1358559": {
+            "calc_value": 100,
+            "value": 10,
+            "label": "Calc 100 Value 10"
+          },
+          "opt1311714": {
+            "calc_value": 200,
+            "value": 20,
+            "label": "Calc 200 Value 20"
+          }
+        }
+      }
+    },
+    "fld_5181257": {
+      "ID": "fld_5181257",
+      "type": "calculation",
+      "label": "DropDown Calc",
+      "slug": "dropdown_calc",
+      "conditions": {
+        "type": ""
+      },
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "element": "h3",
+        "classes": "total-line",
+        "before": "Total:",
+        "after": "",
+        "thousand_separator": ",",
+        "decimal_separator": ".",
+        "formular": "fld_3296542",
+        "config": {
+          "group": [
+            {
+              "lines": [
+                {
+                  "operator": "+",
+                  "field": "fld_3296542"
+                }
+              ]
+            }
+          ]
+        },
+        "manual_formula": ""
+      }
+    },
+    "fld_693890": {
+      "ID": "fld_693890",
+      "type": "calculation",
+      "label": "Checkbox Calc",
+      "slug": "checkbox_calc",
+      "conditions": {
+        "type": ""
+      },
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "element": "h3",
+        "classes": "total-line",
+        "before": "Total:",
+        "after": "",
+        "thousand_separator": ",",
+        "decimal_separator": ".",
+        "formular": "fld_1740075",
+        "config": {
+          "group": [
+            {
+              "lines": [
+                {
+                  "operator": "+",
+                  "field": "fld_1740075"
+                }
+              ]
+            }
+          ]
+        },
+        "manual_formula": ""
+      }
+    },
+    "fld_7680820": {
+      "ID": "fld_7680820",
+      "type": "calculation",
+      "label": "Radio Calc",
+      "slug": "radio_calc",
+      "conditions": {
+        "type": ""
+      },
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "element": "h3",
+        "classes": "total-line",
+        "before": "Total:",
+        "after": "",
+        "thousand_separator": ",",
+        "decimal_separator": ".",
+        "formular": "fld_105161",
+        "config": {
+          "group": [
+            {
+              "lines": [
+                {
+                  "operator": "+",
+                  "field": "fld_105161"
+                }
+              ]
+            }
+          ]
+        },
+        "manual_formula": ""
+      }
+    },
+    "fld_5656420": {
+      "ID": "fld_5656420",
+      "type": "number",
+      "label": "Number Field",
+      "slug": "number_field",
+      "conditions": {
+        "type": ""
+      },
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "placeholder": "",
+        "default": 1,
+        "min": "",
+        "max": "",
+        "step": 9
+      }
+    },
+    "fld_578758": {
+      "ID": "fld_578758",
+      "type": "calculation",
+      "label": "Selects Divided By Number",
+      "slug": "selects_divided_by_number",
+      "conditions": {
+        "type": ""
+      },
+      "caption": "All other calculation fields divided by number field.",
+      "config": {
+        "custom_class": "",
+        "element": "h3",
+        "classes": "total-line",
+        "before": "Total:",
+        "after": "",
+        "thousand_separator": ",",
+        "decimal_separator": ".",
+        "formular": " ( fld_5181257+fld_693890+fld_7680820 ) \/fld_5656420",
+        "config": {
+          "group": [
+            {
+              "lines": [
+                {
+                  "operator": "+",
+                  "field": "fld_5181257"
+                },
+                {
+                  "operator": "+",
+                  "field": "fld_693890"
+                },
+                {
+                  "operator": "+",
+                  "field": "fld_7680820"
+                }
+              ]
+            },
+            {
+              "operator": "\/"
+            },
+            {
+              "lines": [
+                {
+                  "operator": "+",
+                  "field": "fld_5656420"
+                }
+              ]
+            }
+          ]
+        },
+        "manual_formula": ""
+      }
+    },
+    "fld_5522707": {
+      "ID": "fld_5522707",
+      "type": "button",
+      "label": "Submit Button",
+      "slug": "submit_button",
+      "conditions": {
+        "type": ""
+      },
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "type": "submit",
+        "class": "btn btn-default",
+        "target": ""
+      }
+    }
+  },
+  "page_names": [
+    "Page 1"
+  ],
+  "mailer": {
+    "on_insert": 1,
+    "sender_name": "Caldera Forms Notification",
+    "sender_email": "josh@calderawp.com",
+    "reply_to": "",
+    "email_type": "html",
+    "recipients": "",
+    "bcc_to": "",
+    "email_subject": "1962 Calculations created@1.5.5 dev@1.5.6.2",
+    "email_message": "{summary}"
+  },
+  "conditional_groups": [],
+  "settings": {
+    "responsive": {
+      "break_point": "sm"
+    }
+  },
+  "version": "1.5.6.2-b-2",
+  "type": "primary",
+  "db_id": "2"
+}

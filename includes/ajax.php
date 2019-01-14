@@ -213,8 +213,7 @@ function cf_ajax_redirect($type, $url, $form){
 	}
 
 	$out = apply_filters( 'caldera_forms_ajax_return', $out, $form);
-
-	wp_send_json( $out );
+	caldera_forms_send_json( $out );
 	exit;
 
 }
