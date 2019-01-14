@@ -2,6 +2,7 @@
 
 
 namespace calderawp\calderaforms\pro;
+
 use calderawp\calderaforms\pro\interfaces\arrayable;
 
 
@@ -13,7 +14,8 @@ use calderawp\calderaforms\pro\interfaces\arrayable;
  *
  * @package calderawp\calderaforms\pro
  */
-abstract class json_arrayable implements \JsonSerializable, arrayable {
+abstract class json_arrayable implements \JsonSerializable, arrayable
+{
 
 	/**
 	 * @inheritdoc
