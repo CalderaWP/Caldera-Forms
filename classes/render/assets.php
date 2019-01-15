@@ -192,11 +192,11 @@ class Caldera_Forms_Render_Assets {
 	/**
 	 * Get which of the optional styles are to be used
 	 *
-	 * @since 1.4.4.
+	 * @since 1.4.4
 	 *
 	 * @return array
 	 */
-	protected static function get_style_includes() {
+	public static function get_style_includes() {
 		$style_includes = get_option( '_caldera_forms_styleincludes' );
 
 		/**

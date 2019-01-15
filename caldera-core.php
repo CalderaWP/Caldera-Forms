@@ -122,6 +122,13 @@ if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
 		 */
 		do_action('caldera_forms_includes_complete');
 
+		/**
+		 * Start cf2 system
+         *
+         * @since 1.8.0
+		 */
+		add_filter('caldera_forms_render_get_field', 'caldera_forms_v2_field_upgrades', 1, 2);
+		add_action('caldera_forms_v2_init', 'caldera_forms_v2_container_setup' );
 		caldera_forms_get_v2_container();
 	}
 
@@ -134,6 +141,11 @@ if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
 		add_action('plugins_loaded', [ 'Caldera_Forms_Support', 'get_instance' ]);
 		include_once CFCORE_PATH . 'includes/plugin-page-banner.php';
 	}
+
+
+	//@see https://github.com/CalderaWP/Caldera-Forms/issues/2855
+    add_filter( 'caldera_forms_pro_log_mode', '__return_false' );
+    add_filter( 'caldera_forms_pro_mail_debug', '__return_false' );
 
 
 }
@@ -154,53 +166,3 @@ function caldera_forms_fallback_shortcode()
 	return esc_html__('Form could not be loaded. Contact the site administrator.', 'caldera-forms');
 
 }
-
-/**
- * Switch advanced file fields to new type
- *
- * @since 1.8.0
- *
- */
-add_filter('caldera_forms_render_get_field', function ($field, $form) {
-	if ( 'advanced_file' === Caldera_Forms_Field_Util::get_type($field, $form) ) {
-		$field[ 'type' ] = \calderawp\calderaforms\cf2\Fields\FieldTypes\FileFieldType::getCf1Identifier();
-	}
-	return $field;
-}, 1, 2);
-
-
-/**
- * Setup Cf2 con
- *
- * @since 1.8.0
- *
- */
-add_action('caldera_forms_v2_init', function (\calderawp\calderaforms\cf2\CalderaFormsV2Contract $container) {
-
-	$container
-		//Set paths
-		->setCoreDir(CFCORE_PATH)
-		->setCoreUrl(CFCORE_URL)
-		//Setup field types
-		->getFieldTypeFactory()
-		->add(new \calderawp\calderaforms\cf2\Fields\FieldTypes\FileFieldType());
-
-	//Add hooks
-	$container->getHooks()->subscribe();
-
-	//Register other services
-	$container
-		->registerService(new \calderawp\calderaforms\cf2\Services\QueueService(), true)
-		->registerService(new \calderawp\calderaforms\cf2\Services\QueueSchedulerService(), true);
-
-	//Run the scheduler with CRON
-	/** @var \calderawp\calderaforms\cf2\Jobs\Scheduler $scheduler */
-	$scheduler = $container->getService(\calderawp\calderaforms\cf2\Services\QueueSchedulerService::class);
-	$running = $scheduler->runWithCron();
-
-});
-
-
-
-
-

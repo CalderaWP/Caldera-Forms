@@ -11,7 +11,8 @@ namespace calderawp\calderaforms\pro\interfaces;
  *
  * @package calderawp\calderaforms\pro
  */
-interface arrayable {
+interface arrayable
+{
 
 	/**
 	 * Convert object to array

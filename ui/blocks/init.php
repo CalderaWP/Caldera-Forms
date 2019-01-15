@@ -94,15 +94,21 @@ function caldera_forms_register_block(){
     if( ! function_exists( 'register_block_type' ) ){
         return;
     }
-    register_block_type( 'calderaforms/cform', array(
-        'render_callback' => 'caldera_forms_render_cform_block',
-        'attributes' => array(
-            'formId' => array(
-                'type' => 'string',
-                'default' => ''
-            )
-        )
-    ) );
+	$script = Caldera_Forms_Render_Assets::make_slug('blocks');
+	wp_register_script($script, Caldera_Forms_Render_Assets::make_url('blocks'), [
+		'wp-components',
+		'wp-blocks',
+		'wp-editor',
+	], CFCORE_VER);
+	register_block_type('calderaforms/cform', [
+		'render_callback' => 'caldera_forms_render_cform_block',
+		'attributes' => [
+			'formId' => [
+				'type' => 'string',
+				'default' => '',
+			],
+		],
+	]);
 }
 
 
