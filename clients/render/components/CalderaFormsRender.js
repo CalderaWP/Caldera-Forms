@@ -299,11 +299,6 @@ export class CalderaFormsRender extends Component {
 	 */
 	subscribe(fieldIdAttr) {
 		const {state, props} = this;
-		if (!stateChangeSubscriptions.hasOwnProperty(fieldIdAttr)) {
-			stateChangeSubscriptions[fieldIdAttr] = this.getCfState()
-				.events()
-				.subscribe(fieldIdAttr, (newValue, fieldIdAttr) => this.setFieldValue(fieldIdAttr, newValue, false))
-		}
 
 		const conditionalEvents = [
 			'show',
