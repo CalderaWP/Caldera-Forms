@@ -8,6 +8,7 @@ const { registerStore,  } = wp.data;
 const InspectorControls = wp.editor.InspectorControls;
 const {Placeholder} = wp.components;
 const formStore = registerStore(CALDERA_FORMS_STORE_NAME,STORE);
+import { ServerSideRender } from '@wordpress/components';
 
 //Import CF components
 import {FormChooserWithSelect} from "./components/formChooser";
@@ -35,10 +36,6 @@ registerBlockType( 'calderaforms/cform', {
             setAttributes({formId:newFormId});
         };
 
-        //Preload preview
-        if( 'false' !== attributes.formId ){
-            loadPreview(attributes.formId);
-        }
 
         return (
 			<div>
@@ -62,7 +59,12 @@ registerBlockType( 'calderaforms/cform', {
                 }
 
                 {'false' !== attributes.formId &&
-                <div>Form Preview</div>
+					<ServerSideRender
+						block="calderaforms/cform"
+						attributes={ {
+							formId:attributes.formId
+						} }
+					/>
                 }
             </div>
         );
