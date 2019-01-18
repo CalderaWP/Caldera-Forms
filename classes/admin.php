@@ -1543,6 +1543,9 @@ class Caldera_Forms_Admin {
 								if( is_array( $row_part ) && isset( $row_part['label'] ) ){
 									$subs[] = $row_part['value'];
 								}else{
+									if( is_string( $row_part ) && '{"opt' == substr( $row_part, 0, 5 ) ){
+									    continue;
+									}
 									$subs[] = $row_part;
 								}
 							}
