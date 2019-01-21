@@ -13,7 +13,8 @@ namespace calderawp\calderaforms\pro;
  * Class Repository
  * @package calderawp\repository
  */
-abstract class repository {
+abstract class repository
+{
 
 	/**
 	 * Stores instances
@@ -22,7 +23,7 @@ abstract class repository {
 	 *
 	 * @var array
 	 */
-	protected  $items;
+	protected $items;
 
 	/**
 	 * Repository constructor.
@@ -31,7 +32,8 @@ abstract class repository {
 	 *
 	 * @param array $items Array of instances to add when insantiating
 	 */
-	public function __construct( array  $items = [] ){
+	public function __construct(array $items = [])
+	{
 		$this->items = $items;
 	}
 
@@ -44,8 +46,9 @@ abstract class repository {
 	 *
 	 * @return bool
 	 */
-	protected function has( $key ){
-		return array_key_exists( $key, $this->items );
+	protected function has($key)
+	{
+		return array_key_exists($key, $this->items);
 	}
 
 	/**
@@ -58,8 +61,9 @@ abstract class repository {
 	 *
 	 * @return mixed
 	 */
-	protected function get( $key, $default = null ){
-		if( $this->has( $key ) ){
+	protected function get($key, $default = null)
+	{
+		if ( $this->has($key) ) {
 			return $this->items[ $key ];
 		}
 
@@ -76,7 +80,8 @@ abstract class repository {
 	 *
 	 * @return repository
 	 */
-	protected function set( $key, $value ){
+	protected function set($key, $value)
+	{
 		$this->items[ $key ] = $value;
 		return $this;
 	}

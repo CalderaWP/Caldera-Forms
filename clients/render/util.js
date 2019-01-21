@@ -39,3 +39,58 @@ export const hashFile = (file, callback) => {
 	loadNext();
 }
 
+
+
+export const removeFromPending = (fieldId, cf2) => {
+	const index = cf2.pending.findIndex(item => item === fieldId);
+	if (-1 < index) {
+		cf2.pending.splice(index, 1);
+	}
+}
+
+export const removeFromUploadStarted = (fieldId, cf2) => {
+	const index = cf2.uploadStarted.findIndex(item => item === fieldId);
+	if (-1 < index) {
+		cf2.uploadStarted.splice(index, 1);
+	}
+}
+
+export const removeFromBlocking = (fieldId, cf2) => {
+	const index = cf2.fieldsBlocking.findIndex(item => item === fieldId);
+	if (-1 < index) {
+		cf2.fieldsBlocking.splice(index, 1);
+	}
+
+}
+
+export const setBlocking = ( fieldId, cf2 ) => {
+	removeFromUploadStarted(fieldId, cf2);
+	removeFromPending(fieldId, cf2);
+	cf2.fieldsBlocking.push( fieldId );
+}
+
+/**
+ * Default process to convert a file to media
+ *
+ * @param file
+ * @param additionalData
+ * @param fetch
+ * @return {*}
+ */
+export const createMediaFromFile = (file, additionalData, fetch) => {
+
+	// Create upload payload
+	const data = new window.FormData();
+	data.append('file', file, file.name || file.type.replace('/', '.'));
+	data.append('title', file.name ? file.name.replace(/\.[^.]+$/, '') : file.type.replace('/', '.'));
+	Object.keys(additionalData)
+		.forEach(key => data.append(key, additionalData[key]));
+
+	return fetch(additionalData.API_FOR_FILES_URL, {
+		body: data,
+		method: 'POST',
+		headers: {
+			'X-WP-Nonce': additionalData._wp_nonce
+		}
+	});
+}

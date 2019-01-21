@@ -192,11 +192,11 @@ class Caldera_Forms_Render_Assets {
 	/**
 	 * Get which of the optional styles are to be used
 	 *
-	 * @since 1.4.4.
+	 * @since 1.4.4
 	 *
 	 * @return array
 	 */
-	protected static function get_style_includes() {
+	public static function get_style_includes() {
 		$style_includes = get_option( '_caldera_forms_styleincludes' );
 
 		/**
@@ -624,7 +624,11 @@ class Caldera_Forms_Render_Assets {
 				'strings'   =>  array(
 				    'cf2FileField'  => array(
                         'removeFile' => esc_attr__('Remove file', 'caldera-forms'),
-                        'defaultButtonText' =>  esc_attr__('Drop files or click to select files to Upload', 'caldera-forms')
+                        'defaultButtonText' 	=>  esc_attr__('Drop files or click to select files to Upload', 'caldera-forms'),
+						'fileUploadError1'		=>	esc_attr__('Error: ', 'caldera-forms'),
+						'fileUploadError2'		=>	esc_attr__(' could not be processed', 'caldera-forms'),
+						'invalidFileResponse'	=>	esc_attr__('Invalid', 'caldera-forms'),
+						'fieldIsRequired'		=>	esc_attr__( 'Field is required','caldera-forms'),
                     )
                 ),
 				'nonce' => array(
