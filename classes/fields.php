@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Access to field definitions
  *
