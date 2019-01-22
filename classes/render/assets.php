@@ -289,7 +289,6 @@ class Caldera_Forms_Render_Assets {
 			'api-client' => self::make_url( 'api/client' ),
 			'api-stores' => self::make_url( 'api/stores' ),
 			'state-events' => self::make_url( 'state/events' ),
-			'state-state' => self::make_url( 'state/state' ),
 			'blocks' => self::make_url( 'blocks'),
 			'editor' => self::make_url( 'editor' ),
 			'pro' => self::make_url( 'pro' ),
@@ -342,6 +341,8 @@ class Caldera_Forms_Render_Assets {
 			unset( $script_urls[ 'vue' ] );
 			unset( $script_urls[ 'vue-filters' ] );
 			unset( $script_urls[ 'vue-status' ] );
+			unset( $script_urls[ 'ajax' ] );
+			unset( $script_urls[ 'conditionals' ] );
 			$slug = self::make_slug( 'vue' );
 			self::$registered[ 'scripts' ][] = $slug;
 			wp_register_script( $slug, self::make_url( 'vue' ), array( 'jquery' ), CFCORE_VER, true );
