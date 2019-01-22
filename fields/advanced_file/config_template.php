@@ -1,6 +1,6 @@
 <?php
 printf( '<div class="error"><p>%1s</p></div>',
-	__( 'This file type is discontinued and no longer supported. Please switch to the new advanced file field', 'caldera-forms' )
+	__( 'This file type is discontinued and no longer supported. Please switch to the new advanced file field.', 'caldera-forms' )
 );
 ?>
 <div class="caldera-config-group">
