@@ -152,7 +152,7 @@ var cf_jsfields_init, cf_presubmit;
 					for (var f = 0; f < fields.length; f++) {
 						$this_field = $(fields[f]);
 						$this_field.parsley().validate();
-						valid = $this_field.parsley().isValid({force: true});
+						valid = $this_field.parsley().isValid();
 						if (true === valid) {
 							continue;
 						}
