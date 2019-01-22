@@ -182,6 +182,8 @@ module.exports = function (grunt) {
             },
             form: {
                 src: [
+                    'assets/js/ajax-core.js',
+                    'assets/js/conditionals.js',
                     'assets/js/state/events.js',
                     'assets/js/state/state.js',
                     'assets/js/inputmask.js',
@@ -203,6 +205,7 @@ module.exports = function (grunt) {
             scripts: {
                 files: [
                     'assets/js/*.js',
+					'assets/js/state/*.js',
                     'assets/css/*.css'
                 ],
                 tasks: ['default'],
@@ -288,15 +291,14 @@ module.exports = function (grunt) {
     grunt.registerTask( 'buildCopy', [ 'copy:i18n', 'copy:fonts', 'copy:images'] );
     //register default task
     grunt.registerTask( 'default',  [
-        'concat',
-        'uglify',
+        'js',
         'cssmin',
         'buildCopy'
     ] );
 
     grunt.registerTask( 'js',  [
-        'uglify',
-        'concat'
+		'concat',
+        'uglify'
     ] );
 
     grunt.registerTask( 'version_number', [ 'replace' ] );

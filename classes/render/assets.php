@@ -342,6 +342,8 @@ class Caldera_Forms_Render_Assets {
 			unset( $script_urls[ 'vue' ] );
 			unset( $script_urls[ 'vue-filters' ] );
 			unset( $script_urls[ 'vue-status' ] );
+			unset( $script_urls[ 'ajax' ] );
+			unset( $script_urls[ 'conditionals' ] );
 			$slug = self::make_slug( 'vue' );
 			self::$registered[ 'scripts' ][] = $slug;
 			wp_register_script( $slug, self::make_url( 'vue' ), array( 'jquery' ), CFCORE_VER, true );
