@@ -127,7 +127,6 @@ if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
          *
          * @since 1.8.0
 		 */
-		add_filter('caldera_forms_render_get_field', 'caldera_forms_v2_field_upgrades', 1, 2);
 		add_action('caldera_forms_v2_init', 'caldera_forms_v2_container_setup' );
 		caldera_forms_get_v2_container();
 	}
