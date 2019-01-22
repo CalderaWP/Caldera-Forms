@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Access to field definitions
  *
@@ -99,6 +98,7 @@ class Caldera_Forms_Fields {
 	 * @return array
 	 */
 	public static function internal_types() {
+		$deprecated = __( 'Discontinued', 'caldera-forms' );
 		$internal_fields = array(
 			//basic
 			'text'             => array(
@@ -419,7 +419,7 @@ class Caldera_Forms_Fields {
 				"description" => __( 'File upload field with more features than standard HTML5 input.', 'caldera-forms' ),
 				"file"        => CFCORE_PATH . "fields/advanced_file/field.php",
 				"viewer"      => array( Caldera_Forms::get_instance(), 'handle_file_view' ),
-				"category"    => __( 'File', 'caldera-forms' ),
+				"category"    => $deprecated,
 				"setup"       => array(
 					"preview"  => CFCORE_PATH . "fields/advanced_file/preview.php",
 					"template" => CFCORE_PATH . "fields/advanced_file/config_template.php"
@@ -620,7 +620,7 @@ class Caldera_Forms_Fields {
 				"field"       => __( 'reCAPTCHA', 'caldera-forms' ),
 				"description" => __( 'reCAPTCHA anti-spam field', 'caldera-forms' ),
 				"file"        => CFCORE_PATH . "fields/recaptcha/field.php",
-				"category"    => __( 'Discontinued', 'caldera-forms' ),
+				"category"    => $deprecated,
 				"handler"     => array( Caldera_Forms::get_instance(), 'captcha_check' ),
 				"capture"     => false,
 				"setup"       => array(
