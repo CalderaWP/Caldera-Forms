@@ -17,11 +17,11 @@ registerBlockType( 'calderaforms/cform', {
 	title: __( 'Caldera Form' ),
 	icon: 'feedback',
 	category: 'common',
-    attributes: {
-        formId: {
-            formId: 'string',
-            default: 'false',
-        }
+    	attributes: {
+		formId: {
+		    formId: 'string',
+		    default: 'false',
+		}
     },
     edit({ attributes, setAttributes, className, isSelected, id } ) {
 
@@ -38,34 +38,34 @@ registerBlockType( 'calderaforms/cform', {
 
 
         return (
-			<div>
-                <InspectorControls>
-                    <FormChooserWithSelect
-                        onChange={setCurrentForm}
-                        formId={attributes.formId}
-                    />
-                </InspectorControls>
+		<div>
+			<InspectorControls>
+			    <FormChooserWithSelect
+				onChange={setCurrentForm}
+				formId={attributes.formId}
+			    />
+			</InspectorControls>
 
-                {'false' === attributes.formId &&
-                    <Placeholder
-                        className={ 'caldera-forms-form-chooser-placeholder' }
-                        label={ 'Caldera Form' } >
-                        <FormChooserWithSelect
-                            onChange={setCurrentForm}
-                            formId={attributes.formId}
-                        />
+			{'false' === attributes.formId &&
+			    <Placeholder
+				className={ 'caldera-forms-form-chooser-placeholder' }
+				label={ 'Caldera Form' } >
+				<FormChooserWithSelect
+				    onChange={setCurrentForm}
+				    formId={attributes.formId}
+				/>
 
-                    </Placeholder>
-                }
+			    </Placeholder>
+			}
 
-                {'false' !== attributes.formId &&
-					<ServerSideRender
-						block="calderaforms/cform"
-						attributes={ {
-							formId:attributes.formId
-						} }
-					/>
-                }
+			{'false' !== attributes.formId &&
+				<ServerSideRender
+					block="calderaforms/cform"
+					attributes={ {
+						formId:attributes.formId
+					} }
+				/>
+			}
             </div>
         );
     },
