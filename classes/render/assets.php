@@ -289,6 +289,7 @@ class Caldera_Forms_Render_Assets {
 			'api-client' => self::make_url( 'api/client' ),
 			'api-stores' => self::make_url( 'api/stores' ),
 			'state-events' => self::make_url( 'state/events' ),
+			'state-state' => self::make_url( 'state/state' ),
 			'blocks' => self::make_url( 'blocks'),
 			'editor' => self::make_url( 'editor' ),
 			'pro' => self::make_url( 'pro' ),
