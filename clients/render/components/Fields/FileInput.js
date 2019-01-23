@@ -32,7 +32,10 @@ export const FileInput = (props) => {
 		fieldValue
 	} = field;
 
-	const valueSet = fieldValue.length > 0;
+	let valueSet;
+	if(typeof fieldValue !== "undefined"){
+		valueSet = fieldValue.length > 0;
+	}
 	const removeFileID = fieldIdAttr + '_file_';
 	const buttonControls = fieldIdAttr + ', cf2-list-files';
 
