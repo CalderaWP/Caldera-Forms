@@ -29,7 +29,22 @@
 						data-status="active"
 					    data-perpage="<?php echo esc_attr( Caldera_Forms_Entry_Viewer::entries_per_page() ); ?>"
 					><?php esc_html_e('Active', 'caldera-forms'); ?> <span class="current-status-count"></span></button>
-					<button type="button" class="status_toggles button ajax-trigger" style="margin-top: 1px; margin-right: 10px;"
+					<button type="button" class="status_toggles button button-primary ajax-trigger" style="margin-top: 1px;"
+                        data-before="cf_set_limits"
+                        data-action="browse_entries"
+                        data-target="#form-entries-viewer"
+                        data-form=""
+                        data-template="#forms-list-alt-tmpl"
+                        data-load-class="spinner"
+                        data-active-class="button-primary"
+                        data-group="status_nav"
+                        data-callback="setup_pagination"
+                        data-page="1"
+                        data-nonce="<?php echo esc_attr( wp_create_nonce( 'view_entries' ) ); ?>"
+                        data-status="spam"
+                        data-perpage="<?php echo esc_attr( Caldera_Forms_Entry_Viewer::entries_per_page() ); ?>"
+                    ><?php echo esc_html_x('Spam','Status: In spam','caldera-forms'); ?> <span class="current-status-count"></span></button>
+                    <button type="button" class="status_toggles button ajax-trigger" style="margin-top: 1px; margin-right: 10px;"
 						data-before="cf_set_limits"
 						data-action="browse_entries"
 						data-target="#form-entries-viewer"
@@ -44,7 +59,8 @@
 						data-nonce="<?php echo esc_attr( wp_create_nonce( 'view_entries' ) ); ?>"
 				        data-status="trash"
 					><?php echo esc_html_x( 'Trash', 'Status: In trash', 'caldera-forms' ); ?> <span class="current-status-count"></span></button>
-				</span>
+
+                </span>
 				<a href="" class="button caldera-forms-entry-exporter">
 					<?php esc_html_e( 'Export All', 'caldera-forms' ); ?>
 				</a>

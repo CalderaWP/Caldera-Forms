@@ -47,9 +47,10 @@ class Caldera_Forms_Entry_Entries {
 	 * @var array
 	 */
 	protected $statuses = array(
-		'active',
-		'pending',
-		'trash'
+	      'active',
+        'pending',
+        'trash',
+        'spam'
 	);
 
 	/**

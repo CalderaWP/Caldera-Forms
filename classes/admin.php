@@ -890,8 +890,9 @@ class Caldera_Forms_Admin {
 
 		$filter = null;
 
-		$data[ 'trash' ]  = $entries->get_total( 'trash' );
-		$data[ 'active' ] = $entries->get_total( 'active' );
+		$data[ 'trash' ]    = $entries->get_total( 'trash' );
+		$data[ 'active' ]   = $entries->get_total( 'active' );
+		$data[ 'spam' ]     = $entries->get_total( 'spam' );
 
 		// set current total
 		if ( ! empty( $status ) && isset( $data[ $status ] ) ) {
