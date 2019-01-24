@@ -54,25 +54,6 @@ function caldera_forms_v2_container_setup(\calderawp\calderaforms\cf2\CalderaFor
 }
 
 /**
- * Convert Advanced File v1 fields to v2
- *
- * @since 1.8.0
- *
- * @uses "caldera_forms_render_get_field" filter
- *
- * @param array $field
- * @param array $form
- *
- * @return array
- */
-function caldera_forms_v2_field_upgrades($field, $form){
-	if ( 'advanced_file' === Caldera_Forms_Field_Util::get_type($field, $form) ) {
-		$field[ 'type' ] = \calderawp\calderaforms\cf2\Fields\FieldTypes\FileFieldType::getCf1Identifier();
-	}
-	return $field;
-}
-
-/**
  * Schedule delete with job manager
  *
  * @since 1.8.0
