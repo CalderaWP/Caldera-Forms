@@ -321,7 +321,11 @@ export class CalderaFormsRender extends Component {
 					.events().attatchEvent(`cf.conditionals.${conditionalEvent}`,
 						(eventData, eventName) => {
 							if (formIdAttr === eventData.formIdAttr) {
-								const {eventType, fieldIdAttr, fieldValue} = eventData;
+								const {eventType, fieldIdAttr} = eventData;
+								let {fieldValue} = eventData;
+								if(typeof fieldValue === 'undefined'){
+									fieldValue = this.getFieldValues()
+								}
 								switch (eventType) {
 									case 'hide':
 										this.setFieldShouldShow(fieldIdAttr, false, fieldValue);
