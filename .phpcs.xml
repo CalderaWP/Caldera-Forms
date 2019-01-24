@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<ruleset name="Custom Standard">
+    <description>Just Spacing</description>
+    <!-- Indent using tabs. -->
+    <rule ref="Generic.WhiteSpace.ScopeIndent">
+        <properties>
+            <!-- Use Tabs -->
+            <property name="tabIndent" value="true" />
+            <!-- 4 Spaces-wide -->
+            <property name="indent" value="4" />
+            <!-- Be Exact -->
+            <property name="exact" value="true" />
+        </properties>
+    </rule>
+    <!-- No Space Indent -->
+    <rule ref="Generic.WhiteSpace.DisallowSpaceIndent"/>
+</ruleset>
