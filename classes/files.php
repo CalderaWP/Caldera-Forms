@@ -323,7 +323,9 @@ class Caldera_Forms_Files{
 	 */
 	public static function is_file_too_large( array  $field, $path_to_file )
 	{
-		return 0 !== self::get_max_upload_size($field) && self::get_max_upload_size($field) < filesize($path_to_file );
+
+		return 0 !== self::get_max_upload_size($field) && self::get_max_upload_size($field) < $path_to_file['size'];
+
 	}
 	/**
 	 * Check if a file field should upload to media library.
