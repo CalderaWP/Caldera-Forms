@@ -550,6 +550,9 @@ class Caldera_Forms_Magic_Doer {
 				$value = implode( ', ', (array) $_value );
 			}
 
+		} else if( is_array( $value )  ){
+
+			$value = implode( ', ', $value );
 		}
 
 		return $value;
