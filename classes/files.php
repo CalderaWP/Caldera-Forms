@@ -317,14 +317,14 @@ class Caldera_Forms_Files{
 	 * Returns true if max upload size option is set and file is larger than limit
 	 *
 	 * @param array $field Field config
-	 * @param string $path_to_file Path to check against
+	 * @param string $file File to check size against
 	 *
 	 * @return bool
 	 */
-	public static function is_file_too_large( array  $field, $path_to_file )
+	public static function is_file_too_large( array  $field, $file )
 	{
 
-		return 0 !== self::get_max_upload_size($field) && self::get_max_upload_size($field) < $path_to_file['size'];
+		return 0 !== self::get_max_upload_size($field) && self::get_max_upload_size($field) < $file['size'];
 
 	}
 	/**
