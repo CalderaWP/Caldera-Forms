@@ -209,9 +209,14 @@ describe('DOM testing file components', () => {
 	});
 
 	it('Show error if file size exceeds max upload size value', () => {
+		const size = 1024 * 1024 * 2;
+		const mock = new MockFile();
+		let file = mock.create("pic.png", size, "image/png");
+		file.preview = file.name;
 		let prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_multiple_no_button_text);
 		const field = prepared.field;
 		prepared.multiUploadText = fileStrings.defaultButtonText;
+		prepared.field.fieldValue = [file];
 		const component = mount(
 			<FileInput
 				field={field}
@@ -219,8 +224,8 @@ describe('DOM testing file components', () => {
 			/>
 		);
 		component.setProps(prepared);
-		console.log(component.html())
-		//expect(component.find('.cf2-file-error').length).toBe(1);
+		expect(component.find('.cf2-file-error').length).toBe(1);
+		expect(component.find('.cf2-file-size-instruction').length).toBe(1);
 	});
 
 });
