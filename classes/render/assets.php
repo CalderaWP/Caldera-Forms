@@ -342,6 +342,10 @@ class Caldera_Forms_Render_Assets {
 			unset( $script_urls[ 'vue' ] );
 			unset( $script_urls[ 'vue-filters' ] );
 			unset( $script_urls[ 'vue-status' ] );
+			if ( ! is_admin() ) {
+				unset($script_urls['ajax']);
+				unset($script_urls['conditionals']);
+			}
 			$slug = self::make_slug( 'vue' );
 			self::$registered[ 'scripts' ][] = $slug;
 			wp_register_script( $slug, self::make_url( 'vue' ), array( 'jquery' ), CFCORE_VER, true );
@@ -624,7 +628,11 @@ class Caldera_Forms_Render_Assets {
 				'strings'   =>  array(
 				    'cf2FileField'  => array(
                         'removeFile' => esc_attr__('Remove file', 'caldera-forms'),
-                        'defaultButtonText' =>  esc_attr__('Drop files or click to select files to Upload', 'caldera-forms')
+                        'defaultButtonText' 	=>  esc_attr__('Drop files or click to select files to Upload', 'caldera-forms'),
+						'fileUploadError1'		=>	esc_attr__('Error: ', 'caldera-forms'),
+						'fileUploadError2'		=>	esc_attr__(' could not be processed', 'caldera-forms'),
+						'invalidFileResponse'	=>	esc_attr__('Invalid', 'caldera-forms'),
+						'fieldIsRequired'		=>	esc_attr__( 'Field is required','caldera-forms'),
                     )
                 ),
 				'nonce' => array(

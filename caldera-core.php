@@ -127,7 +127,6 @@ if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
          *
          * @since 1.8.0
 		 */
-		add_filter('caldera_forms_render_get_field', 'caldera_forms_v2_field_upgrades', 1, 2);
 		add_action('caldera_forms_v2_init', 'caldera_forms_v2_container_setup' );
 		caldera_forms_get_v2_container();
 	}
@@ -141,6 +140,11 @@ if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
 		add_action('plugins_loaded', [ 'Caldera_Forms_Support', 'get_instance' ]);
 		include_once CFCORE_PATH . 'includes/plugin-page-banner.php';
 	}
+
+
+	//@see https://github.com/CalderaWP/Caldera-Forms/issues/2855
+    add_filter( 'caldera_forms_pro_log_mode', '__return_false' );
+    add_filter( 'caldera_forms_pro_mail_debug', '__return_false' );
 
 
 }
@@ -161,10 +165,3 @@ function caldera_forms_fallback_shortcode()
 	return esc_html__('Form could not be loaded. Contact the site administrator.', 'caldera-forms');
 
 }
-
-
-
-
-
-
-
