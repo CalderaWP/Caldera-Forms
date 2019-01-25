@@ -16,7 +16,7 @@ import Dropzone from 'react-dropzone';
  */
 export const FileInput = (props) => {
 
-	const {onChange, accept, field, describedById, style, className, multiUploadText, multiple, inputProps, usePreviews, previewHeight, previewWidth, strings} = props;
+	const {maxFileUploadSize, onChange, accept, field, describedById, style, className, multiUploadText, multiple, inputProps, usePreviews, previewHeight, previewWidth, strings} = props;
 	let {shouldDisable} = props;
 	const {
 		outterIdAttr,
@@ -106,11 +106,17 @@ export const FileInput = (props) => {
 											alt={file.name}
 										/>
 										:
-										<span className="cf2-file-name">{file.name}</span>
+										<span className="cf2-file-name file-name">{file.name}</span>
 									}
 									<br/>
-									<span
-										className="cf2-file-data"> {file.type} - {file.size} bytes - {file.type.startsWith("image")}</span>
+									<small className="cf2-file-data file-type"> {file.type}</small>
+									<small className="cf2-file-data file-size"> - {file.size} {strings.filesUnit}</small>
+									{maxFileUploadSize > 0 && maxFileUploadSize < file.size &&
+										<small className={"cf2-file-error file-error"}> - {strings.maxUploadSizeError}</small>
+									}
+									{maxFileUploadSize > 0 && maxFileUploadSize < file.size &&
+										<small className={"cf2-file-size-instruction file-error"}> - {strings.maxUploadSizeInstruction} {maxFileUploadSize} {strings.filesUnit}</small>
+									}
 								</div>
 							</li>
 					)
@@ -203,7 +209,8 @@ FileInput.fieldConfigToProps = (fieldConfig) => {
 	};
 	const configOptionProps = [
 		'multiple',
-		'multiUploadText'
+		'multiUploadText',
+		'maxFileUploadSize'
 	];
 
 	if (!props.field.hasOwnProperty('isRequired')) {
@@ -251,6 +258,9 @@ FileInput.fieldConfigToProps = (fieldConfig) => {
 
 		}
 
+		if (configOptions.hasOwnProperty('maxFileUploadSize')) {
+			props.maxFileUploadSize = configOptions.maxFileUploadSize;
+		}
 
 	}
 

@@ -79,6 +79,7 @@ export const CalderaFormsFieldGroup = (props) => {
 					multiple={fileProps.multiple}
 					multiUploadText={multiUploadText}
 					strings={strings.cf2FileField}
+					maxFileUploadSize={fileProps.maxFileUploadSize}
 				/>
 			case'text':
 			default:

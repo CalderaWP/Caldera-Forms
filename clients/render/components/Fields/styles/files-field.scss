@@ -24,11 +24,15 @@
       padding: 0;
 
       &:after {
-        content: 'X ';
+        content: " \2716";
         color: #000;
         cursor: pointer;
       }
     }
+  }
+
+  .cf2-file-error, .cf2-file-size-instruction  {
+    color: rgb(238, 0, 0);
   }
 
 }
