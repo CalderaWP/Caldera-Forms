@@ -82,6 +82,12 @@ describe('File Field ', () => {
 		expect(prepared.field.isRequired).toEqual(false);
 	});
 
+	it('Prepares maxFileUploadSize prop', () => {
+		const prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_single);
+		expect(prepared.maxFileUploadSize).toEqual(100000);
+	});
+
+
 	Object.keys(fileFieldConfigs).forEach(fieldId => {
 		it(`Matches snapshot for ${fieldId}`, () => {
 			const field = fileFieldConfigs[fieldId];
@@ -98,9 +104,6 @@ describe('File Field ', () => {
 			).toMatchSnapshot();
 		});
 	});
-
-
-
 
 });
 
