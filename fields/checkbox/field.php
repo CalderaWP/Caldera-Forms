@@ -43,7 +43,7 @@
                                 <?php if (Caldera_Forms_Field_Util::is_checked_option($option['value'], (array)$field_value)){ ?>checked="checked"<?php } ?>
                                 data-type="checkbox"
                                 data-checkbox-field="<?php echo esc_attr($field_id); ?>"
-                                <?php if ( $disabled ) { ?>disabled<?php } ?>
+                                <?php if ( isset( $disabled ) ) { ?>disabled<?php } ?>
                                 data-calc-value="<?php echo esc_attr(Caldera_Forms_Field_Util::get_option_calculation_value($option, $field, $form)); ?>"
                             >
                     <?php echo $option['label']; ?>
