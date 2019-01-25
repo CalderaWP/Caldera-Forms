@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Utility functions for rendering assets
  *
