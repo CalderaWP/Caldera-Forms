@@ -7,6 +7,7 @@ use calderawp\calderaforms\cf2\Fields\Handlers\UploaderContract;
 class MockUploader implements UploaderContract
 {
 
+
     public function upload($file, array $args = array())
     {
         // TODO: Implement upload() method.
@@ -25,5 +26,12 @@ class MockUploader implements UploaderContract
     public function scheduleFileDelete($fieldId, $formId, $file)
 	{
 		// TODO: Implement scheduleFileDelete() method.
+	}
+
+
+
+	public function isFileTooLarge(array $field, $filePath)
+	{
+		// TODO: Implement isFileTooLarge() method.
 	}
 }

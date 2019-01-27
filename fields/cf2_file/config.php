@@ -44,8 +44,37 @@
 <div class="caldera-config-group">
     <label for="{{_id}}_allowed"><?php echo esc_html__('Allowed Types', 'caldera-forms'); ?></label>
     <div class="caldera-config-field">
-        <input id="{{_id}}_allowed" type="text" class="field-config" name="{{_name}}[allowed]" value="{{allowed}}">
-        <p class="description"><?php echo esc_html__('Comma separated eg. jpg,pdf,txt', 'caldera-forms'); ?></p>
+        <input
+            id="{{_id}}_allowed"
+            type="text"
+            class="field-config"
+            name="{{_name}}[allowed]"
+            value="{{allowed}}"
+            aria-describedby="{{_id}}_allowed-desc"
+        >
+        <p class="description" id="{{_id}}_allowed-desc">
+            <?php echo esc_html__('Comma separated eg. jpg,pdf,txt', 'caldera-forms'); ?>
+        </p>
+    </div>
+</div>
+
+<div class="caldera-config-group">
+    <label for="{{_id}}_max_upload"><?php echo esc_html__('Max Upload Size', 'caldera-forms'); ?></label>
+    <div class="caldera-config-field">
+        <input
+                id="{{_id}}_max_upload"
+                type="number"
+                min="0"
+                step="8"
+                class="field-config"
+                name="{{_name}}[max_upload]"
+                value="{{max_upload}}"
+                aria-describedby="{{_id}}_max_upload-desc"
+
+        >
+        <p class="description" id="{{_id}}_max_upload-desc" >
+            <?php echo esc_html__('Max file size in bytes. If 0, any file size is allowed.', 'caldera-forms'); ?>
+        </p>
     </div>
 </div>
 
