@@ -16,7 +16,7 @@ import Dropzone from 'react-dropzone';
  */
 export const FileInput = (props) => {
 
-	const {onChange, accept, field, describedById, style, className, multiUploadText, multiple, inputProps, usePreviews, previewHeight, previewWidth, strings} = props;
+	const {buttonColor, onChange, accept, field, describedById, style, className, multiUploadText, multiple, inputProps, usePreviews, previewHeight, previewWidth, strings} = props;
 	let {shouldDisable} = props;
 	const {
 		outterIdAttr,
@@ -205,7 +205,8 @@ FileInput.fieldConfigToProps = (fieldConfig) => {
 	};
 	const configOptionProps = [
 		'multiple',
-		'multiUploadText'
+		'multiUploadText',
+		'cf2FileButtonColor'
 	];
 
 	if (!props.field.hasOwnProperty('isRequired')) {

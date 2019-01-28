@@ -79,6 +79,7 @@ export const CalderaFormsFieldGroup = (props) => {
 					multiple={fileProps.multiple}
 					multiUploadText={multiUploadText}
 					strings={strings.cf2FileField}
+					buttonColor={fileProps.cf2FileButtonColor}
 				/>
 			case'text':
 			default:
