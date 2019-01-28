@@ -239,7 +239,7 @@ class RenderFieldTest extends TestCase
 		$renderer                       = new RenderField($formIdAttr, $field);
 		$data                           = $renderer->data();
 
-		$this->assertSame("#333", $data['configOptions']['cf2FileButtonColor']);
+		$this->assertSame("", $data['configOptions']['cf2FileButtonColor']);
 	}
 
 	/**
