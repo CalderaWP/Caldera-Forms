@@ -211,8 +211,8 @@ class RenderFieldTest extends TestCase
 	}
 
 	/**
-	 * @covers \calderawp\calderaforms\cf2\Fields\RenderField::data();
-	 */
+ * @covers \calderawp\calderaforms\cf2\Fields\RenderField::data();
+ */
 	public function testPreviewSizeForFileFieldsDefaults()
 	{
 		$fieldId = 'allows_png_only';
@@ -225,6 +225,35 @@ class RenderFieldTest extends TestCase
 
 		$this->assertSame(24, $data[ 'configOptions' ][ 'previewWidth' ]);
 		$this->assertSame(24, $data[ 'configOptions' ][ 'previewHeight' ]);
+	}
+
+	/**
+	 * @covers \calderawp\calderaforms\cf2\Fields\RenderField::data();
+	 */
+	public function testFileFieldButtonColorDefault()
+	{
+		$fieldId = 'allows_png_only';
+		$field = $this->fieldForRenderFactory($fieldId);
+		$field[ 'type' ] = 'cf2_file';
+		$formIdAttr = 'cf1_1';
+		$renderer                       = new RenderField($formIdAttr, $field);
+		$data                           = $renderer->data();
+
+		$this->assertSame("#333", $data['configOptions']['cf2FileButtonColor']);
+	}
+
+	/**
+	 * @covers \calderawp\calderaforms\cf2\Fields\RenderField::data();
+	 */
+	public function testFileFieldButtonColorSet()
+	{
+		$fieldId                        = 'color_set';
+		$field                          = $this->fieldForRenderFactory($fieldId);
+		$formIdAttr                     = 'cf1_1';
+		$renderer                       = new RenderField($formIdAttr, $field);
+		$data                           = $renderer->data();
+
+		$this->assertSame("#dd3333", $data['configOptions']['cf2FileButtonColor']);
 	}
 
 	/**

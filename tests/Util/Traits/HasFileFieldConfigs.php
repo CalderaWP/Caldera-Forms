@@ -205,6 +205,29 @@ trait HasFileFieldConfigs
 							'preview_width' => '100'
 						),
 				),
+			'color_set' =>
+				array (
+					'ID' => 'color_set',
+					'type' => 'cf2_file',
+					'label' => 'Set color of file field button',
+					'slug' => 'set_color_of_file_field_button',
+					'conditions' =>
+						array (
+							'type' => '',
+						),
+					'caption' => '',
+					'config' =>
+						array (
+							'custom_class' => '',
+							'multi_upload' => 1,
+							'multi_upload_text' => 'The Default Text',
+							'allowed' => 'png,jpg',
+							'use_image_previews'  =>  true,
+							'preview_height' => '50',
+							'preview_width' => '100',
+							'cf2_file_button_color'	=> '#dd3333'
+						),
+				),
         );
     }
 
