@@ -55,32 +55,31 @@ export const CalderaFormsFieldGroup = (props) => {
 			case 'file':
 				const fileProps = FileInput.fieldConfigToProps(getFieldConfig(fieldIdAttr));
 
-        		let multiUploadText = '';
-				if(fileProps.multiUploadText === false || fileProps.multiUploadText === null){
-				  multiUploadText = strings.cf2FileField.defaultButtonText;
-				} else {
-				  multiUploadText = fileProps.multiUploadText;
+        let multiUploadText = '';
+        if(fileProps.multiUploadText === false || fileProps.multiUploadText === null){
+          multiUploadText = strings.cf2FileField.defaultButtonText;
+        } else {
+          multiUploadText = fileProps.multiUploadText;
 				}
 
-        		return <FileInput
-							onChange={onChange}
-							field={field}
-							shouldDisable={shouldDisable}
-							isInvalid={isInvalid}
-							describedById={captionId}
-							message={fileProps.message}
-							style={fileProps.style}
-							inputProps={fileProps.inputProps}
-							className={className}
-							accept={fileProps.accept}
-							usePreviews={fileProps.usePreviews}
-							previewHeight={fileProps.previewHeight}
-							previewWidth={fileProps.previewWidth}
-							multiple={fileProps.multiple}
-							multiUploadText={multiUploadText}
-							strings={strings.cf2FileField}
-							buttonColor={fileProps.cf2FileButtonColor}
-						/>
+        return <FileInput
+					onChange={onChange}
+					field={field}
+					shouldDisable={shouldDisable}
+					isInvalid={isInvalid}
+					describedById={captionId}
+					message={fileProps.message}
+					style={fileProps.style}
+					inputProps={fileProps.inputProps}
+					className={className}
+					accept={fileProps.accept}
+					usePreviews={fileProps.usePreviews}
+					previewHeight={fileProps.previewHeight}
+					previewWidth={fileProps.previewWidth}
+					multiple={fileProps.multiple}
+					multiUploadText={multiUploadText}
+					strings={strings.cf2FileField}
+				/>
 			case'text':
 			default:
 				return <Input
