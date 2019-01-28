@@ -247,40 +247,53 @@ export class CalderaFormsRender extends Component {
 				case 'file':
 					handlers[fieldIdAttr] = (accepted, rejected) => {
 
-            let fieldValue = this.getFieldValue(fieldIdAttr);
+            			let fieldValue = this.getFieldValue(fieldIdAttr);
 
 						if( Array.isArray(accepted) === true && Array.isArray(rejected) === true ) { // Handle accepted and rejected files
 
-              if(Array.isArray(fieldValue) === false){
-                fieldValue = [];
-              }
+							  if(Array.isArray(fieldValue) === false){
+								fieldValue = [];
+							  }
 
-              if( accepted.length > 0 ) {
-                accepted.forEach(file => {
-                  fieldValue.push(file);
-                });
-                this.setFieldValue(fieldIdAttr, fieldValue );
-              }
+							  if( accepted.length > 0 ) {
+								accepted.forEach(file => {
+								  fieldValue.push(file);
+								});
+								this.setFieldValue(fieldIdAttr, fieldValue );
+							  }
 
-              if( rejected.length > 0 ) {
-                const rejectedTypes = [];
-                rejected.forEach( file => {
-                  rejectedTypes.push(file.type);
-                })
-                const messageText = 'These types of files are not allowed : ' + rejectedTypes;
-                this.addFieldMessage(fieldIdAttr, messageText, false )
-              }
+							  if( rejected.length > 0 ) {
+
+									let rejectedFiles = [];
+									rejected.forEach( file => {
+										rejectedFiles.push( "< " + file.name + " / " + file.size + this.getStrings().cf2FileField.filesUnit +" >");
+									})
+								  	const filesList = rejectedFiles.toString();
+
+									const fieldConfig = this.getFieldConfig(fieldIdAttr);
+									let messagePrepared;
+									if( fieldConfig.configOptions.allowedTypes !== false && fieldConfig.configOptions.maxFileUploadSize !== 0 ) {
+										messagePrepared = this.getStrings().cf2FileField.invalidFiles + '( ' +  this.getStrings().cf2FileField.allowedTypes + fieldConfig.configOptions.allowedTypes + ' / ' + this.getStrings().cf2FileField.maxSize + fieldConfig.configOptions.maxFileUploadSize + this.getStrings().cf2FileField.filesUnit + ') : ';
+									} else if( fieldConfig.configOptions.allowedTypes !== false && fieldConfig.configOptions.maxFileUploadSize === 0 ) {
+									  messagePrepared = this.getStrings().cf2FileField.invalidFiles + '( ' + this.getStrings().cf2FileField.allowedTypes + fieldConfig.configOptions.allowedTypes + ') : ';
+								  	} else if( fieldConfig.configOptions.allowedTypes === false && fieldConfig.configOptions.maxFileUploadSize !== 0 ) {
+										messagePrepared = this.getStrings().cf2FileField.invalidFiles + '( ' + this.getStrings().cf2FileField.maxSize + fieldConfig.configOptions.maxFileUploadSize + this.getStrings().cf2FileField.filesUnit + ') : ';
+									}
+									const messageText = messagePrepared  + filesList;
+
+									this.addFieldMessage(fieldIdAttr, messageText, true );
+							  }
 
 						} else if ( typeof(accepted) === 'object' && accepted.target.className === "cf2-file-remove" ) { //Remove a File form fieldValue
 
 							const index = fieldValue.indexOf(rejected);
 							fieldValue.splice(index, 1);
 
-              this.setFieldValue(fieldIdAttr, fieldValue );
+              				this.setFieldValue(fieldIdAttr, fieldValue );
 						}
 
 
-          }
+          			}
 					break;
 				default:
 					handlers[fieldIdAttr] = (event) => this.setFieldValue(fieldIdAttr, event.target.value);
@@ -379,7 +392,19 @@ export class CalderaFormsRender extends Component {
 		return !isEmpty(this.state[fieldIdAttr]);
 	}
 
-	addFieldMessage(fieldIdAttr, messageText, isError = true) {
+	/**
+	 * Set messages using state for error
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param {string} fieldIdAttr
+	 * @param {string} messageText text of the message
+	 * @param {boolean} isError status of message is error or not
+	 * @param {string} context for the current message to happen / be displayed
+	 *
+	 * @return {Object}
+	 */
+	addFieldMessage(fieldIdAttr, messageText, isError = true, context = 'unknown') {
 		if (!this.getFieldConfig(fieldIdAttr)) {
 			return;
 		}
@@ -388,12 +413,14 @@ export class CalderaFormsRender extends Component {
 				...this.state.messages,
 				[fieldIdAttr]: {
 					message: messageText,
-					error: isError
+					error: isError,
+					context
 				}
 			}
 
 		})
 	}
+
 
   /**
    * Get translatable strings Set in Caldera_Forms_Render_Assets::enqueue_form_assets()

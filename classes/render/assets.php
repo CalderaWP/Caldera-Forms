@@ -631,11 +631,14 @@ class Caldera_Forms_Render_Assets {
                         'defaultButtonText' 		=>  esc_attr__('Drop files or click to select files to Upload', 'caldera-forms'),
 						'fileUploadError1'			=>	esc_attr__('Error: ', 'caldera-forms'),
 						'fileUploadError2'			=>	esc_attr__(' could not be processed', 'caldera-forms'),
+						'invalidFiles'				=>	esc_attr__( 'These Files have been rejected, please check type and size ', 'caldera-forms'),
 						'invalidFileResponse'		=>	esc_attr__('Invalid', 'caldera-forms'),
 						'fieldIsRequired'			=>	esc_attr__( 'Field is required','caldera-forms'),
-						'filesUnit'					=>	esc_attr__('bytes', 'calder-forms'),
-						'maxUploadSizeError'		=>	esc_attr__('File size exceeded, the form will not submit'),
-						'maxUploadSizeInstruction'	=>	esc_attr__('Remove this file and upload a file of less than '),
+						'filesUnit'					=>	esc_attr__('bytes', 'caldera-forms'),
+						'maxUploadSizeError'		=>	esc_attr__('File size exceeded, the form will not submit', 'caldera-forms'),
+						'maxUploadSizeInstruction'	=>	esc_attr__('Remove this file and upload a file of less than ', 'caldera-forms'),
+						'allowedTypes'				=>	esc_attr__('Types allowed : ', 'caldera-forms'),
+						'maxSize'					=>	esc_attr__('Max. File Size : ', 'caldera-forms'),
                     )
                 ),
 				'nonce' => array(
