@@ -38,6 +38,7 @@ export const FileInput = (props) => {
 	}
 	const removeFileID = fieldIdAttr + '_file_';
 	const buttonControls = fieldIdAttr + ', cf2-list-files';
+	const cf2ListFilesID = 'cf2-list-files-' + fieldIdAttr;
 
 	inputProps.id = fieldIdAttr;
 
@@ -72,7 +73,8 @@ export const FileInput = (props) => {
 
 			{valueSet &&
 			<ul
-				id="cf2-list-files"
+				id={cf2ListFilesID}
+				className="cf2-list-files"
 				role="list"
 			>
 				{
