@@ -4,6 +4,19 @@
     &.cf2-file {
       border: none;
       padding: 0px;
+
+      .btn {
+        color: #fff;
+        background-color: #333;
+        border: thin solid #333;
+        transition: 500ms all;
+
+        &:hover {
+          color: #333;
+          background-color: #fff;
+        }
+      }
+
     }
   }
 
