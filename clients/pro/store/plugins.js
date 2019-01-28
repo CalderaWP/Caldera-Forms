@@ -6,13 +6,14 @@ export const accountSaver = store => {
 			case 'apiKeys' :
 			case 'secretKey':
 			case 'publicKey':
-				console.log(state.connected, state.account.apiKeys.secret, state.account.apiKeys.public);
+				if (state.connected && state.account.apiKeys.secret && state.account.apiKeys.public ) {
+					store.commit('connected', 1);
+				}else if (!state.connected && state.account.apiKeys.secret && state.account.apiKeys.public) {
+					if ('string' === typeof state.account.apiKeys.public
+						&& 'string' === typeof state.account.apiKeys.secret) {
+						store.dispatch('testConnection' );
+					}
 
-				if (!state.connected && state.account.apiKeys.secret && state.account.apiKeys.public) {
-                    console.log(state.connected, state.account.apiKeys.secret, state.account.apiKeys.public);
-
-                    store.dispatch('testConnection');
-					store.dispatch('getLayouts');
 				} else if (!state.account.apiKeys.public || !state.account.apiKeys.secret) {
 					store.commit('connected', 0);
 				} else {
@@ -21,7 +22,18 @@ export const accountSaver = store => {
 				break;
 			case  'connected' :
 				if (state.connected) {
-					store.dispatch('getLayouts')
+					if( ! Array.isArray( state.layouts ) || ! state.layouts.length ){
+						store.dispatch('getLayouts');
+
+					}
+
+					if( ! Array.isArray( state.forms ) || ! state.forms.length ){
+						store.dispatch('getAccount');
+
+					}
+
+
+
 				}
 				break;
 		}

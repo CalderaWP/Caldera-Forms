@@ -227,26 +227,33 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
      * Create a mock entry to test
      *
      * @since 1.4.0
+     *
+     * @param array|null $form
+     * @param array|null $data
+     * @return array
      */
-    protected function create_entry( array $form = null ){
+    protected function create_entry( array $form = null, array $data = [] ){
         if ( ! $form ) {
             $form = $this->mock_form;
         }
-        $data = array();
-        $i = 0;
-        foreach( $form[ 'fields' ] as $field_id => $field_config ){
-            if ( 1 == $i ) {
-                $data[ $field_id ] = $field_id . '_' . rand();
-            } else {
-                $data[ $field_id ] = array(
-                    rand(),
-                    5 => rand(), rand(), 'batman'
-                );
-            }
-            if( 0 == $i ){
-                $i = 1;
-            }else{
-                $i = 0;
+        $x= 0;
+        if (empty( $data )) {
+            $data = array();
+            $i = 0;
+            foreach ($form['fields'] as $field_id => $field_config) {
+                if (1 == $i) {
+                    $data[$field_id] = $field_id . '_' . rand();
+                } else {
+                    $data[$field_id] = array(
+                        rand(),
+                        5 => rand(), rand(), 'batman'
+                    );
+                }
+                if (0 == $i) {
+                    $i = 1;
+                } else {
+                    $i = 0;
+                }
             }
         }
 
@@ -314,29 +321,7 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
             $form_id = self::MOCK_FORM_ID;
         }
 
-        $nonce = Caldera_Forms_Render_Nonce::create_verify_nonce( $form_id );
-
-        $data = wp_parse_args( $data, array (
-            '_cf_verify' => $nonce,
-            '_wp_http_referer' => '/?page_id=4&preview=1&cf_preview=' . $form_id,
-            '_cf_frm_id' => $form_id,
-            '_cf_frm_ct' => '1',
-            'cfajax' => $form_id,
-            '_cf_cr_pst' => '4',
-            'email' => '',
-            'formId' => $form_id,
-            'instance' => '1',
-            'request' => site_url("/cf-api/$form_id"),
-            'postDisable' => '0',
-            'target' => '#caldera_notices_1',
-            'loadClass' => 'cf_processing',
-            'loadElement' => '_parent',
-            'hiderows' => 'true',
-            'action' => 'cf_process_ajax_submit',
-            'template' => "#cfajax_$form_id-tmpl",
-        ) );
-
-        return $data;
+        return \calderawp\calderaforms\Tests\Util\SubmissionHelpers::submission_data($form_id,$data);
     }
 
     /**
@@ -355,6 +340,17 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
     }
 
     /**
+     * Import form for autoresponder tests to file system
+     *
+     * @since 1.7.0
+     *
+     * @return string
+     */
+    protected function import_autoresponder_form(){
+        return $this->import_form($this->get_path_for_auto_responder_contact_form_import());
+    }
+
+    /**
      * Get file path for JSON export we import for contact form main mailer tests
      *
      * @since 1.6.0
@@ -364,6 +360,17 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
     protected function get_path_for_main_mailer_form_import(){
         return $file = dirname(__FILE__) . '/forms/contact-forms-no-auto-responder.json';
     }
+
+	/**
+	 * Get file path for JSON export we import for contact form with form_draft "1"
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return string
+	 */
+	protected function get_path_for_form_draft_form_import(){
+		return $file = dirname(__FILE__) . '/forms/contact-form-form-draft.json';
+	}
 
     /**
      * Get file path for JSON export we import for contact form auto-responder tests
@@ -385,6 +392,74 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
      */
     protected function assertIsNumeric( $maybeNumeric, $message = '' ){
         $this->assertTrue( is_numeric( $maybeNumeric ), $message );
+    }
+
+    /**
+     * Save an entry, with email and name fields we can identify a person by.
+     *
+     * @since 1.7.0
+     *
+     * @param array $form
+     * @param string $email
+     * @param string$name
+     * @param string $email_slug
+     * @param string $name_slug
+     * @return int Entry ID
+     */
+    protected function save_identifiable_entry( array  $form, $email, $name, $email_slug = 'email_address', $name_slug = 'first_name' )
+    {
+        $data = [];
+        foreach( $form[ 'fields'] as $field_id => $field ){
+            switch( $field[ 'slug' ] ){
+                case $email_slug:
+                    $data[$field_id] = $email;
+                    break;
+                case $name_slug:
+                    $data[$field_id] = $name;
+                    break;
+                default:
+                    $data[$field_id] = $field[ 'slug' ] .  md5( $field[ 'slug' ] );
+                    break;
+            }
+        }
+
+        $entry = $this->create_entry( $form, $data );
+        return intval($entry[ 'id' ]);
+    }
+
+    /**
+     * Saves entries that are personally identifiable, for two forms.
+     *
+     * Creates 2 in each form, 4 total.
+     *
+     * @since 1.7.0
+     *
+     * @param string $form_id
+     * @param string $form_id_two
+     * @param string $email
+     * @param string $email_field
+     *
+     * @return array
+     */
+    protected function save_identifiable_entries_for_two_forms($form_id, $form_id_two, $email, $email_field )
+    {
+        $form = Caldera_Forms_Forms::get_form($form_id);
+        $form_two = Caldera_Forms_Forms::get_form($form_id_two);
+        if ( $form_id !== $form_id_two) {
+            $this->assertNotEquals($form, $form_two);
+        } else {
+            $this->assertEquals( $form, $form_two );
+        }
+
+        $entry_ids = [
+            'form_1' => [],
+            'form_2' => [],
+        ];
+        for ($i = 0; $i <= 2; $i++) {
+            $entry_ids['form_1'][] = $this->save_identifiable_entry($form, $email, 'Roy', $email_field);
+            $entry_ids['form_2'][] = $this->save_identifiable_entry($form_two, $email, 'Roy', $email_field);
+        }
+        return $entry_ids;
     }
 
 }

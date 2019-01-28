@@ -1,7 +1,31 @@
 var resBaldrickTriggers;
 
 jQuery(function($){
+	function fieldErrors(fields, $form, $notice) {
+		for (var i in fields) {
+			var field = $form.find('[data-field="' + i + '"]'),
+				wrap = field.parent();
+			if (!field.length) {
+				$notice.html('<p class="alert alert-danger ">' + fields[i] + '</p>');
 
+			} else {
+				if (wrap.is('label')) {
+					wrap = wrap.parent();
+					if (wrap.hasClass('checkbox') || wrap.hasClass('radio')) {
+						wrap = wrap.parent();
+					}
+				}
+				var has_block = wrap.find('.help-block').not('.caldera_ajax_error_block');
+
+				wrap.addClass('has-error').addClass('caldera_ajax_error_wrap');
+				if (has_block.length) {
+					has_block.hide();
+				}
+				wrap.append('<span class="help-block caldera_ajax_error_block">' + fields[i] + '</span>');
+			}
+
+		}
+	}
     var cf_upload_queue = [];
     // admin stuff!
     var cf_push_file_upload = function( form, file_number, data ){
@@ -129,22 +153,51 @@ jQuery(function($){
 
                 ev.preventDefault();
 
-                var form	=	$(el),
-                    buttons = 	form.find(':submit');
+                var $form	=	$(el),
+                    buttons = 	$form.find(':submit');
+                var pending = [];
+                var fieldsBlocking = [];
 
-                if( form.data('_cf_manual') ){
-                    form.find('[name="cfajax"]').remove();
+				/**
+                 * This event is triggered directly before the request for form submission is made
+                 *
+                 * Runs after cf.form.submit
+                 *
+                 * @since 1.8.0
+				 */
+				$( document ).trigger( 'cf.ajax.request', {
+                    $form: $form,
+                    formIdAttr: $form.attr( 'id' ),
+                    displayFieldErrors:fieldErrors,
+					fieldsBlocking: fieldsBlocking,
+                    $notice: $( '#caldera_notices_' + $form.data( 'instance' ) )
+                });
+
+				//Check if any cf2 fields are blocking submit
+				var cf2 = window.cf2[ $form.attr( 'id' ) ];
+				if( 'object' === typeof cf2 ){
+					if( cf2.hasOwnProperty( 'pending' ) && 0 !== cf2.pending.length ){
+						return false;
+					}
+
+					if( cf2.hasOwnProperty( 'fieldsBlocking' ) && 0 !== cf2.fieldsBlocking.length ){
+						return false;
+					}
+				}
+
+                if( $form.data('_cf_manual') ){
+                    $form.find('[name="cfajax"]').remove();
                     return false;
                 }
 
-                if( !form.data( 'postDisable' ) ){
+                if( !$form.data( 'postDisable' ) ){
                     buttons.prop('disabled',true);
                 }
 
 
                 if( typeof cf_uploader_filelist === 'object'  ){
                     // verify required
-                    form.find('.cf-uploader-trigger').slideUp();
+                    $form.find('.cf-uploader-trigger').slideUp();
                     // setup file uploader
                     var has_files = false;
                     var count = cf_upload_queue.length;
@@ -161,9 +214,10 @@ jQuery(function($){
                         data.append( field.data('field'), cf_uploader_filelist[ file ].file );
                         data.append( 'field', field.data('field') );
                         data.append( 'control', field.data('controlid') );
-
-
-                        cf_push_file_upload( form, file_number, data );
+                        cf_push_file_upload( $form, file_number, data );
+                        field.val('');//@see https://github.com/CalderaWP/Caldera-Forms/issues/2514#issuecomment-395213433
+                        field.attr('type','hidden');
+                        field.val(field.data('controlid'));
                         count++;
                         if( count === 1 ){
                             break;
@@ -174,6 +228,8 @@ jQuery(function($){
                         return false;
                     }
                 }
+
+
 
             },
             error : function( obj ){
@@ -239,30 +295,9 @@ jQuery(function($){
                 // show trigger
                 obj.params.trigger.find('.cf-uploader-trigger').slideDown();
                 if(obj.data.fields){
-
-                    for(var i in obj.data.fields){
-                        var field = obj.params.trigger.find('[data-field="' + i + '"]'),
-                            wrap = field.parent();
-                        if( ! field.length ){
-                            $notice.html ( '<p class="alert alert-danger ">' + obj.data.fields[i] + '</p>' );
-
-                        }else{
-                            if (wrap.is('label')) {
-                                wrap = wrap.parent();
-                                if (wrap.hasClass('checkbox') || wrap.hasClass('radio')) {
-                                    wrap = wrap.parent();
-                                }
-                            }
-                            var has_block = wrap.find('.help-block').not('.caldera_ajax_error_block');
-
-                            wrap.addClass('has-error').addClass('caldera_ajax_error_wrap');
-                            if (has_block.length) {
-                                has_block.hide();
-                            }
-                            wrap.append('<span class="help-block caldera_ajax_error_block">' + obj.data.fields[i] + '</span>');
-                        }
-
-                    }
+                    var $form = obj.params.trigger;
+                    var fields = obj.data.fields;
+                    fieldErrors(fields, $form, $notice);
                 }
 
                 if ( 'undefined' != obj.data.scroll ) {

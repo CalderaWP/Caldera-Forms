@@ -1,0 +1,175 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Caldera Header Can have menu a option 1`] = `
+<div
+  className="caldera-editor-header"
+>
+  <ul
+    className="caldera-editor-header-nav"
+  >
+    <li
+      className="caldera-editor-logo"
+    >
+      <span
+        className="caldera-forms-name"
+      >
+        Caldera Forms: 
+        Caldera Forms
+      </span>
+    </li>
+    <li>
+      Item
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`Caldera Header Can have menu options 1`] = `
+<div
+  className="caldera-editor-header"
+>
+  <ul
+    className="caldera-editor-header-nav"
+  >
+    <li
+      className="caldera-editor-logo"
+    >
+      <span
+        className="caldera-forms-name"
+      >
+        Caldera Forms: 
+        Caldera Forms
+      </span>
+    </li>
+    <li>
+      Item 1
+    </li>
+    <li>
+      Item 2
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`Caldera Header Works with no name prop 1`] = `
+<div
+  className="caldera-editor-header"
+>
+  <ul
+    className="caldera-editor-header-nav"
+  >
+    <li
+      className="caldera-editor-logo"
+    >
+      <span
+        className="caldera-forms-name"
+      >
+        Caldera Forms: 
+        Settings
+      </span>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`Caldera Header Works with no props 1`] = `
+<div
+  className="caldera-editor-header"
+>
+  <ul
+    className="caldera-editor-header-nav"
+  >
+    <li
+      className="caldera-editor-logo"
+    >
+      <span
+        className="caldera-forms-name"
+      >
+        Caldera Forms: 
+        Caldera Forms
+      </span>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`Form selector without Gutenberg dependency Has form selection 1`] = `
+<div
+  className="form-group"
+>
+  <label
+    htmlFor="reality-selector"
+  >
+    Choose Form
+  </label>
+  <select
+    className="select"
+    id="reality-selector"
+    onChange={[Function]}
+    value="CFunreal"
+  >
+    <option
+      value=""
+    />
+    <option
+      value="CFreal"
+    >
+      Become Real
+    </option>
+    <option
+      value="CFunreal"
+    >
+      Become Unreal
+    </option>
+  </select>
+  <span
+    className="help-block"
+  >
+    Choose a form to edit privacy settings for.
+  </span>
+</div>
+`;
+
+exports[`Page body Can have children 1`] = `
+<div
+  className="caldera-forms-admin-page-wrap"
+  style={
+    Object {
+      "marginTop": "75px",
+    }
+  }
+>
+  <div>
+    Item 1
+  </div>
+  <div>
+    Item 2
+  </div>
+</div>
+`;
+
+exports[`Status indicator Shows failure 1`] = `
+<div
+  className="cf-alert-wrap"
+>
+  <p
+    className="cf-alert cf-alert-error"
+  >
+    It did not work
+  </p>
+</div>
+`;
+
+exports[`Status indicator Shows nothing 1`] = `null`;
+
+exports[`Status indicator Shows success 1`] = `
+<div
+  className="cf-alert-wrap"
+>
+  <p
+    className="cf-alert cf-alert-success"
+  >
+    It worked
+  </p>
+</div>
+`;

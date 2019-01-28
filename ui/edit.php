@@ -381,13 +381,15 @@ $field_type_list = array(
 // Build Field Types List
 foreach($field_types as $field_slug=>$config){
 
-	if(!file_exists($config['file'])){
-		if(!function_exists($config['file'])){
-			continue;
-		}
-	}
+    if ( ! empty( $field['cf2'])) {
+        if (!file_exists($config['file'])) {
+            if (!function_exists($config['file'])) {
+                continue;
+            }
+        }
+    }
 
-	$categories = array();
+    $categories = array();
 	if(!empty($config['category'])){
 		$categories = explode(',', $config['category']);
 	}
@@ -648,7 +650,7 @@ function caldera_forms_field_wrapper_template($field_id = '{{field_id}}', $label
 			/**
 			 * Runs in field wrapper template before delete field button
 			 *
-			 * @since 1.6.1
+			 * @since 1.6.2
 			 *
 			 * @param array $config Field config
 			 * @param string $type Field type
@@ -663,13 +665,13 @@ function caldera_forms_field_wrapper_template($field_id = '{{field_id}}', $label
 			/**
 			 * Runs in field wrapper template after delete field button
 			 *
-			 * @since 1.6.1
+			 * @since 1.6.2
 			 *
 			 * @param array $config Field config
 			 * @param string $type Field type
 			 * @param string $field_id Template representation of Field ID. Probably {{ID}}
 			 */
-			do_action( 'caldera_forms_field_wrapper_aftere_delete', $config, $type, $field_id );
+			do_action( 'caldera_forms_field_wrapper_after_delete', $config, $type, $field_id );
 			?>
         </div>
 
@@ -901,7 +903,7 @@ foreach($panel_extensions as $panel){
 				if(isset($element['settings'][$panel_slug])){
 					// find max depth
 					foreach($element['settings'][$panel_slug] as &$field_vars){
-						if(count($field_vars) > $depth){
+						if(is_countable($field_vars) && count($field_vars) > $depth){
 							$depth = count($field_vars);
 						}
 					}
@@ -1093,7 +1095,7 @@ do_action('caldera_forms_edit_end', $element);
 </script>
 <script type="text/html" id="caldera_field_config_wrapper_templ">
 <?php
-    caldera_forms_field_wrapper_template();
+    caldera_forms_field_wrapper_template('{{id}}' );
 ?>
 </script>
 <script type="text/html" id="field-option-row-tmpl">
@@ -1257,10 +1259,10 @@ foreach($magic_tags as $magic_set_key=>$magic_tags_set){
 <?php
 // output fieldtype defaults
 echo implode("\r\n", $field_type_defaults);
-
 ?>
 var system_values = <?php echo json_encode( $magic_script ); ?>;
-var preset_options = <?php echo json_encode( $option_presets ); ?>
+var preset_options = <?php echo json_encode( $option_presets ); ?>;
+
 </script>
 
 <script type="text/javascript">

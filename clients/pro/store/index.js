@@ -6,25 +6,26 @@ Vue.use(Vuex);
 import CFProConfig from './util/wpConfig'
 
 const STATE = {
-	loading: false,
+	loading: false == CFProConfig.token ? false : true,
 	connected: false,
 	forms: [
 	],
+	formScreen: '',
 	settings : {
 		enhancedDelivery: false,
 		generatePDFs: false,
 		logLevel: 250
 	},
 	layouts : [
-		{name:''}
+
 	],
 	account: {
 		plan: String,
 		id: Number,
 		apiKeys: {
-			public: String,
-			secret: String,
-			token: String
+			public: CFProConfig.public,
+			secret: CFProConfig.secret,
+			token: CFProConfig.token
 		}
 	},
 	strings: CFProConfig.strings,

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Access to field definitions
  *
@@ -99,6 +98,7 @@ class Caldera_Forms_Fields {
 	 * @return array
 	 */
 	public static function internal_types() {
+		$deprecated = __( 'Discontinued', 'caldera-forms' );
 		$internal_fields = array(
 			//basic
 			'text'             => array(
@@ -385,11 +385,25 @@ class Caldera_Forms_Fields {
 				),
 				'handler'     => array( 'Caldera_Forms_Field_Utm', 'handler' )
 			),
+            'gdpr' => array(
+                "field"       => __( 'Consent Field', 'caldera-forms' ),
+                "description" => __( 'Record consent to collect personally identifying information (PII).', 'caldera-forms' ),
+                "file"        => CFCORE_PATH . "fields/gdpr/field.php",
+                "category"    => __( 'Special', 'caldera-forms' ),
+                "setup"       => array(
+                    "template" => CFCORE_PATH . "fields/gdpr/config_template.php",
+                    "preview"  => CFCORE_PATH . "fields/gdpr/preview.php",
+                    "not_supported" => array(
+                        'caption',
+                        'required',
+                    )
+                ),
 
+            ),
 			//file
 			'file'             => array(
 				"field"       => __( 'File', 'caldera-forms' ),
-				"description" => __( 'File Uploader', 'caldera-forms' ),
+				"description" => __( 'Basic HTML5 File Uploader', 'caldera-forms' ),
 				"file"        => CFCORE_PATH . "fields/file/field.php",
 				'icon'          => CFCORE_URL . 'assets/build/images/cloud-upload.svg',
 				"viewer"      => array( Caldera_Forms::get_instance(), 'handle_file_view' ),
@@ -400,12 +414,12 @@ class Caldera_Forms_Fields {
 				)
 			),
 			'advanced_file'    => array(
-				"field"       => __( 'Advanced File Uploader', 'caldera-forms' ),
+				"field"       => __( 'Advanced File Uploader (1.0)', 'caldera-forms' ),
 				'icon'          => CFCORE_URL . 'assets/build/images/cloud-upload.svg',
-				"description" => __( 'Inline, multi file uploader', 'caldera-forms' ),
+				"description" => __( 'File upload field with more features than standard HTML5 input.', 'caldera-forms' ),
 				"file"        => CFCORE_PATH . "fields/advanced_file/field.php",
 				"viewer"      => array( Caldera_Forms::get_instance(), 'handle_file_view' ),
-				"category"    => __( 'File', 'caldera-forms' ),
+				"category"    => $deprecated,
 				"setup"       => array(
 					"preview"  => CFCORE_PATH . "fields/advanced_file/preview.php",
 					"template" => CFCORE_PATH . "fields/advanced_file/config_template.php"
@@ -606,7 +620,7 @@ class Caldera_Forms_Fields {
 				"field"       => __( 'reCAPTCHA', 'caldera-forms' ),
 				"description" => __( 'reCAPTCHA anti-spam field', 'caldera-forms' ),
 				"file"        => CFCORE_PATH . "fields/recaptcha/field.php",
-				"category"    => __( 'Discontinued', 'caldera-forms' ),
+				"category"    => $deprecated,
 				"handler"     => array( Caldera_Forms::get_instance(), 'captcha_check' ),
 				"capture"     => false,
 				"setup"       => array(

@@ -15,7 +15,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 // Main CSS loader for everything but blocks..
 const cssExtractTextPlugin = new ExtractTextPlugin({
     // Extracts CSS into a build folder inside the directory current directory
-    filename: './scripts/[name]/build/style.min.css'
+    filename: './clients/[name]/build/style.min.css'
 });
 
 // Configuration for the ExtractTextPlugin.
@@ -42,9 +42,10 @@ const extractConfig = {
 
 // Define JavaScript entry points
 const entryPointNames = [
-    'admin',
+    'privacy',
     'blocks',
-    'pro'
+    'pro',
+    'render'
 ];
 
 // Setup externals
@@ -59,7 +60,7 @@ entryPointNames.forEach( entryPointName => {
 } );
 
 // Define WordPress dependencies
-const wpDependencies = [ 'components', 'element', 'blocks', 'utils', 'date' ];
+const wpDependencies = [ 'components', 'element', 'blocks', 'utils', 'date', 'data', 'editor' ];
 // Setup externals for all WordPress dependencies
 wpDependencies.forEach( wpDependency => {
     externals[ '@wordpress/' + wpDependency ] = {
@@ -70,7 +71,7 @@ wpDependencies.forEach( wpDependency => {
 
 // Start of main webpack config
 const config = {
-    // Go through each entry point and prepare for use with extenrals
+    // Go through each entry point and prepare for use with externals
     entry: entryPointNames.reduce( ( memo, entryPointName ) => {
         memo[ entryPointName ] = './clients/' + entryPointName + '/index.js';
         return memo;

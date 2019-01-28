@@ -17,10 +17,12 @@ class Caldera_Forms_API_Util {
 	 *
 	 * @since 1.4.4
 	 *
+     * @param string $version Optional. API version. Default is v2. Can be v3 or v2 only
 	 * @return string
 	 */
-	public static function api_namespace(){
-		return 'cf-api/v2';
+	public static function api_namespace($version = 'v2'){
+        $version = in_array( $version, ['v2', 'v3' ] ) ? $version : 'v2';
+		return "cf-api/$version";
 	}
 
 	/**
@@ -30,14 +32,15 @@ class Caldera_Forms_API_Util {
 	 *
 	 * @param string $endpoint Optional. Endpoint.
 	 * @param bool $add_nonce Optional. If true, _wp_nonce is set with WP REST API nonce. Default is false
+	 * @param string $version Optional. @since 1.8.0
 	 * @return string
 	 */
-	public static function url( $endpoint = '', $add_nonce = false ){
+	public static function url( $endpoint = '', $add_nonce = false, $version = 'v2' ){
 		if( ! function_exists( 'rest_url' ) ){
 			return '';
 		}
 
-		$url =  rest_url( self::api_namespace() . '/' . $endpoint );
+		$url =  rest_url( self::api_namespace($version) . '/' . $endpoint );
 		if( $add_nonce ){
 			$url = add_query_arg( '_wpnonce', self::get_core_nonce(), $url );
 		}
@@ -64,5 +67,31 @@ class Caldera_Forms_API_Util {
 	public static function get_core_nonce(){
 		return wp_create_nonce( 'wp_rest' );
 	}
+
+    /**
+     * Given an array of field IDs and form config, reduce field IDs array to fields that form has
+     *
+     * @since 1.7.0
+     *
+     * @param array $field_ids
+     * @param array $form
+     * @return array
+     */
+	public static function validate_array_of_field_ids(array $field_ids, array $form )
+    {
+        $valid_fields = [];
+        $form_fields = array_keys(Caldera_Forms_Forms::get_fields( $form, false ));
+        if (! empty( $field_ids )) {
+            foreach ($field_ids as $field_id) {
+                $field_id = trim( $field_id );
+                if( in_array( $field_id, $form_fields ) ){
+                    $valid_fields[] = $field_id;
+                }
+
+            }
+        }
+
+        return $valid_fields;
+    }
 
 }

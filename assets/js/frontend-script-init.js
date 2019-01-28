@@ -152,7 +152,7 @@ var cf_jsfields_init, cf_presubmit;
 					for (var f = 0; f < fields.length; f++) {
 						$this_field = $(fields[f]);
 						$this_field.parsley().validate();
-						valid = $this_field.parsley().isValid({force: true});
+						valid = $this_field.parsley().isValid();
 						if (true === valid) {
 							continue;
 						}
@@ -254,7 +254,7 @@ var cf_jsfields_init, cf_presubmit;
 			validator = cf_validate_form( $form );
 		$( document ).trigger( 'cf.form.submit', {
 			e:e,
-			$form:$form
+			$form:$form,
 		} );
 
 
@@ -310,21 +310,9 @@ window.addEventListener("load", function(){
 
 		window.CALDERA_FORMS = {};
 
-		/** Check nonce **/
-		if( 'object' === typeof CF_API_DATA ) {
-			var nonceCheckers = {},
-				$el, formId;
-			$('.caldera_forms_form').each(function (i, el) {
-				$el = $(el);
-				formId = $el.data( 'form-id' );
-				nonceCheckers[ formId ] = new CalderaFormsResetNonce( formId, CF_API_DATA, $ );
-				nonceCheckers[ formId ].init();
-			});
-		}
-
 		/** Setup forms */
 		if( 'object' === typeof CFFIELD_CONFIG ) {
-			var form_id, config_object, config, instance, $el, state, protocolCheck, jQueryCheck, $form,
+			var form_id, formId, config_object, config, instance, $el, state, protocolCheck, jQueryCheck, $form,
 				jQueryChecked = false,
 				protocolChecked = false;
 			$('.caldera_forms_form').each(function (i, el) {
@@ -373,14 +361,16 @@ window.addEventListener("load", function(){
                         }
 					});
 
-					
+
 					config_object = new Caldera_Forms_Field_Config( config, $(document.getElementById(form_id)), $, state );
 					config_object.init();
 					$( document ).trigger( 'cf.form.init',{
+						$form: $form,
 						idAttr:  form_id,
 						formId: formId,
 						state: state,
-						fieldIds: CFFIELD_CONFIG[instance].fields.hasOwnProperty( 'ids' ) ? CFFIELD_CONFIG[instance].fields.ids : []
+						fieldIds: CFFIELD_CONFIG[instance].fields.hasOwnProperty( 'ids' ) ? CFFIELD_CONFIG[instance].fields.ids : [],
+						nonce: jQuery( '#_cf_verify_' + formId ).val()
 					});
 
 
@@ -513,7 +503,7 @@ function CalderaFormsResetNonce( formId, config, $ ){
 			},data:{
 				form_id: formId
 			}
-		}).success( function( r){
+		}).done( function( r){
 			$nonceField.val( r.nonce );
 			$nonceField.data( 'nonce-time', new Date().getTime() );
 		});
@@ -638,3 +628,29 @@ function CalderaFormsJQueryWarning( $form, $, errorStrings ){
 
 	}
 }
+
+/*
+ * Add Validation for phone_better field before a submit or next page button is clicked
+ *
+
+(function( $ ) {
+
+	$('.caldera-grid input[type="submit"], .caldera-grid input[data-page="next"]').click( function( e ) {
+
+		var phone_fields = $('.caldera-grid input[data-type="phone_better"]');
+		if( phone_fields.length > 0 ) {
+
+      phone_fields.each( function( i ){
+
+        if( $.isNumeric( this.value ) === true ){
+        	alert('cool');
+				}
+
+			});
+		}
+
+	});
+
+})( jQuery );
+
+ */

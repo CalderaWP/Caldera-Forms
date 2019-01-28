@@ -9,10 +9,10 @@
 						</span>
 					</li>
 					<li class="status good" v-if="connected">
-						Connected
+						{{strings.connected}}
 					</li>
 					<li class="status bad" v-if="!connected">
-						Not Connected
+						{{strings.notConnected}}
 					</li>
 					<li class="cf-pro-save">
 						<input type="submit" class="button button-primary" value="Save" @click="save"/>
@@ -33,17 +33,18 @@
 						<tab name="Account">
 							<account-edit></account-edit>
 						</tab>
-						<tab name="Form Settings">
-							<div v-if="connected">
-								<forms-settings></forms-settings>
-							</div>
-							<div v-else>
-								You must connected to Caldera Forms Pro First
-							</div>
+						<tab name="Form Settings" v-if="connected">
+							<forms-settings></forms-settings>
 						</tab>
-						<tab name="Settings">
+						<tab name="Settings" v-if="connected">
 							<delivery></delivery>
 							<logs></logs>
+						</tab>
+						<tab name="What Is Caldera Forms Pro ?" v-if="! connected">
+							<what-is-caldera-forms-pro></what-is-caldera-forms-pro>
+						</tab>
+						<tab name="Free Trial" v-if="! connected">
+							<free-trial></free-trial>
 						</tab>
 					</tabs>
 				</div>
@@ -58,7 +59,10 @@
 	import FormsSettings from '../components/FormSettings/Forms';
 	import enhancedDelivery from '../components/GeneralSettings/enhancedDelivery';
     import logLevel from '../components/GeneralSettings/logLevel';
+    import whatIsCalderaFormsPro from '../components/NotConnected/whatIsCalderaFormsPro';
+    import freeTrial from '../components/NotConnected/freeTrial';
 	import Status from '../components/Elements/Status/Status.vue'
+
 	export default{
 		components :{
 			'account-display': AccountDisplay,
@@ -66,7 +70,9 @@
 			'forms-settings' : FormsSettings,
 			'delivery' : enhancedDelivery,
             'logs' : logLevel,
-			'status' : Status
+			'status' : Status,
+            'what-is-caldera-forms-pro' : whatIsCalderaFormsPro,
+            'free-trial' : freeTrial
 		},
 		computed: mapState({
 			loading: state => state.loading,
@@ -74,14 +80,17 @@
 			publicKey: state => state.account.apiKeys.public,
 			enhancedDelivery: state => state.settings.enhancedDelivery,
             logLevel: state => state.settings.logLevel,
-			mainAlert: state => state.mainAlert
+			mainAlert: state => state.mainAlert,
+			strings: state => state.strings,
 		}),
 		beforeMount(){
 			[].forEach.call(document.querySelectorAll('.update-nag'),function(e){
 				e.parentNode.removeChild(e);
 			});
 
-			this.$store.dispatch( 'getAccount' );
+			this.$store.dispatch( 'testConnection' );
+			
+			
 		},
 		methods:{
 			save(){
@@ -124,12 +133,13 @@
 	}
 
 	.tabs-component-panels{
-		padding: 1rem;
+		padding: 1rem 2rem;
 		font-size: 1rem;
+        max-width: 80%;
 	}
 	ul.tabs-component-tabs{
 		background: #0b7a6f;
-
+        max-width: 15%;
 	}
 	li.tabs-component-tab {
 		margin-bottom: 0;
@@ -141,7 +151,7 @@
 	 }
 	li.tabs-component-tab a{
 		display: block;
-		width: 69%;
+
 		color: white;
 		font-size: 1rem;
 		padding: 1rem 1.4rem;

@@ -2,6 +2,7 @@
 
 
 namespace calderawp\calderaforms\pro\api;
+
 use calderawp\calderaforms\pro\attachments\attachments;
 use calderawp\calderaforms\pro\container;
 use calderawp\calderaforms\pro\exceptions\Exception;
@@ -15,7 +16,8 @@ use calderawp\calderaforms\pro\repository;
  *
  * @package calderawp\calderaforms\pro\api
  */
-class message extends repository {
+class message extends repository
+{
 
 
 	/**
@@ -47,7 +49,7 @@ class message extends repository {
 		'entry_data',
 		'entry_id',
 		'files',
-		'attachments'
+		'attachments',
 	];
 
 	/**
@@ -58,11 +60,11 @@ class message extends repository {
 	 * @param string $name Property name
 	 * @param mixed $value Value to set
 	 */
-	public function __set( $name, $value )
+	public function __set($name, $value)
 	{
 
-		if( $this->allowed_key( $name )){
-			$this->set( $name, $value );
+		if ( $this->allowed_key($name) ) {
+			$this->set($name, $value);
 		}
 	}
 
@@ -76,13 +78,14 @@ class message extends repository {
 	 *
 	 * @return array|\WP_Error
 	 */
-	public function create( $send, $entry_id ){
-		if( ! $this->client ){
-			$this->client = new client( container::get_instance()->get_settings()->get_api_keys() );
+	public function create($send, $entry_id)
+	{
+		if ( !$this->client ) {
+			$this->client = new client(container::get_instance()->get_settings()->get_api_keys());
 		}
 
 
-		return $this->client->create_message( $this, $send, $entry_id );
+		return $this->client->create_message($this, $send, $entry_id);
 
 	}
 
@@ -91,21 +94,22 @@ class message extends repository {
 	 * @return message
 	 * @throws Exception
 	 */
-	public function set( $key, $value ){
-		if( $this->allowed_key( $key ) ){
-			if( in_array( $key, array(
+	public function set($key, $value)
+	{
+		if ( $this->allowed_key($key) ) {
+			if ( in_array($key, [
 				'to',
 				'reply',
 				'cc',
-				'bcc'
-			)) ){
-				throw new Exception( 'Must use add_recpient for to/reply/cc/bcc');
+				'bcc',
+			]) ) {
+				throw new Exception('Must use add_recpient for to/reply/cc/bcc');
 
- 			}
+			}
 
- 			if( in_array( $key, [ 'attachments' ] ) ){
-			    throw new Exception( 'Must use add__attachment for attachments');
-		    }
+			if ( in_array($key, [ 'attachments' ]) ) {
+				throw new Exception('Must use add__attachment for attachments');
+			}
 
 			$this->items[ $key ] = $value;
 		}
@@ -125,23 +129,24 @@ class message extends repository {
 	 *
 	 * @return $this
 	 */
-	public function add_recipient( $type, $email, $name = '' ){
-		if(  ! $this->allowed_key( $type ) ){
+	public function add_recipient($type, $email, $name = '')
+	{
+		if ( !$this->allowed_key($type) ) {
 			return $this;
 		}
 
-		if( 'reply' == $type ){
+		if ( 'reply' == $type ) {
 			$this->items[ $type ] = [
-				'email' => sanitize_email( $email ),
-				'name' => $name
+				'email' => sanitize_email($email),
+				'name' => $name,
 			];
-		}else{
-			if( empty( $this->items[ $type ] ) ){
+		} else {
+			if ( empty($this->items[ $type ]) ) {
 				$this->items[ $type ] = [];
 			}
 			$this->items[ $type ][] = [
-				'email' => sanitize_email( $email ),
-				'name' => $name
+				'email' => sanitize_email($email),
+				'name' => $name,
 			];
 		}
 
@@ -158,17 +163,19 @@ class message extends repository {
 	 *
 	 * @return bool
 	 */
-	protected function allowed_key( $key ){
-		return in_array( $key, $this->properites );
+	protected function allowed_key($key)
+	{
+		return in_array($key, $this->properites);
 	}
 
 	/** @inheritdoc */
-	public function to_array(){
-		$array = array();
-		foreach ( $this->properites as $prop  ){
-			if ( $this->has( $prop ) ) {
-				$array[ $prop ] = $this->get( $prop );
-			}else{
+	public function to_array()
+	{
+		$array = [];
+		foreach ( $this->properites as $prop ) {
+			if ( $this->has($prop) ) {
+				$array[ $prop ] = $this->get($prop);
+			} else {
 				$array[ $prop ] = false;
 			}
 		}
@@ -177,16 +184,17 @@ class message extends repository {
 		return $array;
 	}
 
-    /**
-     * Get message content
-     *
-     * @since 1.6.0
-     *
-     * @return string
-     */
-	public function get_content(){
-	    return $this->get( 'content' );
-    }
+	/**
+	 * Get message content
+	 *
+	 * @since 1.6.0
+	 *
+	 * @return string
+	 */
+	public function get_content()
+	{
+		return $this->get('content');
+	}
 
 
 	/**
@@ -197,16 +205,17 @@ class message extends repository {
 	 * @param int $entry_id ID of entry
 	 * @param array $form Form Config
 	 */
-	public function add_entry_data( $entry_id, $form ){
-		$e = new \Caldera_Forms_Entry( $form, $entry_id );
-		$data = $e->get_entry()->to_array( false );
+	public function add_entry_data($entry_id, $form)
+	{
+		$e = new \Caldera_Forms_Entry($form, $entry_id);
+		$data = $e->get_entry()->to_array(false);
 		$data[ 'fields' ] = [];
 
 		$fields = $e->get_fields();
-		if( ! empty( $fields ) ){
+		if ( !empty($fields) ) {
 			/** @var \Caldera_Forms_Entry_Field $field */
-			foreach ( $fields as $field ){
-				$data[ 'fields' ][ $field->field_id ] = $field->to_array( false );
+			foreach ( $fields as $field ) {
+				$data[ 'fields' ][ $field->field_id ] = $field->to_array(false);
 			}
 		}
 		$data[ 'form' ] = $form[ 'ID' ];
@@ -223,12 +232,12 @@ class message extends repository {
 	 *
 	 * @return message;
 	 */
-	public function add_attachment( $path )
+	public function add_attachment($path)
 	{
-		if( ! file_exists( $path ) ){
+		if ( !file_exists($path) ) {
 
-		}else{
-			$this->items[ 'attachments' ][] = esc_url_raw( caldera_forms_pro_file_request_url( $path ) );
+		} else {
+			$this->items[ 'attachments' ][] = esc_url_raw(caldera_forms_pro_file_request_url($path));
 		}
 
 		return $this;
