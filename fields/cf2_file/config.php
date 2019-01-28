@@ -1,4 +1,16 @@
 <div class="caldera-config-group">
+    <label for="{{_id}}_default_color">
+		<?php esc_html_e('Main Color', 'caldera-forms' ); ?>
+    </label>
+    <div class="caldera-config-field">
+        <input id="{{_id}}_cf2_file_button_color" type="text" class="color-field field-config" name="{{_name}}[cf2_file_button_color]" value="{{#if cf2_file_button_color}}{{cf2_file_button_color}}{{/if}}" aria-describedby="{{_id}}_cf2_file_button_color-desc">
+        <p class="description" id="{{_id}}_cf2_file_button_color-desc" >
+			<?php echo esc_html__('This sets the background color of the button, default text color is white. This main color will become button text and border color on hover.', 'caldera-forms'); ?>
+        </p>
+    </div>
+</div>
+
+<div class="caldera-config-group">
     <label for="{{_id}}_allow_multiple_text">
         <?php echo esc_html__('Button Text', 'caldera-forms'); ?>
     </label>
@@ -39,7 +51,6 @@
         </label>
     </div>
 </div>
-
 
 <div class="caldera-config-group">
     <label for="{{_id}}_allowed"><?php echo esc_html__('Allowed Types', 'caldera-forms'); ?></label>
