@@ -1,5 +1,5 @@
 <div class="caldera-config-group">
-    <label for="{{_id}}_default_color">
+    <label for="{{_id}}_cf2_file_button_color">
 		<?php esc_html_e('Main Color', 'caldera-forms' ); ?>
     </label>
     <div class="caldera-config-field">
