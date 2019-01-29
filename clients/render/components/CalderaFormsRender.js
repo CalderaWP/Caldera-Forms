@@ -266,20 +266,21 @@ export class CalderaFormsRender extends Component {
 
 									let rejectedFiles = [];
 									rejected.forEach( file => {
-										rejectedFiles.push( "< " + file.name + " / " + file.size + this.getStrings().cf2FileField.filesUnit +" >");
+										rejectedFiles.push( "  - " + file.name + " / " + file.size + this.getStrings().cf2FileField.filesUnit );
 									})
 								  	const filesList = rejectedFiles.toString();
 
 									const fieldConfig = this.getFieldConfig(fieldIdAttr);
 									let messagePrepared;
 									if( fieldConfig.configOptions.allowedTypes !== false && fieldConfig.configOptions.maxFileUploadSize !== 0 ) {
-										messagePrepared = this.getStrings().cf2FileField.invalidFiles + '( ' +  this.getStrings().cf2FileField.allowedTypes + fieldConfig.configOptions.allowedTypes + ' / ' + this.getStrings().cf2FileField.maxSize + fieldConfig.configOptions.maxFileUploadSize + this.getStrings().cf2FileField.filesUnit + ') : ';
+										messagePrepared = this.getStrings().cf2FileField.checkMessage + "( " +  this.getStrings().cf2FileField.allowedTypes + fieldConfig.configOptions.allowedTypes + " / " + this.getStrings().cf2FileField.maxSize + fieldConfig.configOptions.maxFileUploadSize + this.getStrings().cf2FileField.filesUnit + "). ";
 									} else if( fieldConfig.configOptions.allowedTypes !== false && fieldConfig.configOptions.maxFileUploadSize === 0 ) {
-									  messagePrepared = this.getStrings().cf2FileField.invalidFiles + '( ' + this.getStrings().cf2FileField.allowedTypes + fieldConfig.configOptions.allowedTypes + ') : ';
-								  	} else if( fieldConfig.configOptions.allowedTypes === false && fieldConfig.configOptions.maxFileUploadSize !== 0 ) {
-										messagePrepared = this.getStrings().cf2FileField.invalidFiles + '( ' + this.getStrings().cf2FileField.maxSize + fieldConfig.configOptions.maxFileUploadSize + this.getStrings().cf2FileField.filesUnit + ') : ';
+										messagePrepared = this.getStrings().cf2FileField.checkMessage + "( " + this.getStrings().cf2FileField.allowedTypes + fieldConfig.configOptions.allowedTypes + "). ";
+									} else if( fieldConfig.configOptions.allowedTypes === false && fieldConfig.configOptions.maxFileUploadSize !== 0 ) {
+										messagePrepared = this.getStrings().cf2FileField.checkMessage + "( " + this.getStrings().cf2FileField.maxSize + fieldConfig.configOptions.maxFileUploadSize + this.getStrings().cf2FileField.filesUnit + "). ";
 									}
-									const messageText = messagePrepared  + filesList;
+
+									const messageText = messagePrepared + this.getStrings().cf2FileField.invalidFiles + filesList;
 
 									this.addFieldMessage(fieldIdAttr, messageText, true );
 							  }
@@ -291,7 +292,6 @@ export class CalderaFormsRender extends Component {
 
               				this.setFieldValue(fieldIdAttr, fieldValue );
 						}
-
 
           			}
 					break;
