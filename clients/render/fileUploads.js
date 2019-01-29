@@ -59,10 +59,13 @@ export const handleFileUploadError = (error, file, strings, fieldIdAttr, theComp
 	if( error.hasOwnProperty('message') ){
 		theComponent.addFieldMessage( fieldIdAttr, error.message , true );
 	}else{
-		const messageText = strings.fileUploadError1 + file.name + strings.fileUploadError2;
-		theComponent.addFieldMessage( fieldIdAttr, messageText , true, 'fileUnknownError');
+		if(file.name) {
+			const messageText = strings.fileUploadError1 + file.name + strings.fileUploadError2;
+			theComponent.addFieldMessage(fieldIdAttr, messageText, true, 'fileNoErrorMessage');
+		} else {
+			theComponent.addFieldMessage(fieldIdAttr, 'unKnown Error', true, 'noFileUnknownError');
+		}
 	}
-
 };
 
 /**

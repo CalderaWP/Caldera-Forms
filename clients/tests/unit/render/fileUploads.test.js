@@ -65,7 +65,8 @@ describe( 'Unit tests, ignoring cf2 var side effects for handleFileUploadRespons
 	let submit;
 	let field = {};
 	let processFunctions = {};
-	let processData = {}
+	let processData = {};
+	let theComponent = {};
 
 	beforeEach(() => {
 		processFunctions = {processFiles, hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError};
@@ -79,26 +80,22 @@ describe( 'Unit tests, ignoring cf2 var side effects for handleFileUploadRespons
 			CF_API_DATA: data.CF_API_DATA,
 			messages: data.messages,
 			theComponent: data.theComponent,
-			strings: data.theComponent.props.strings.cf2FileField
+			strings: data.CF_API_DATA.strings.cf2FileField
 		}
 		processData.obj.$form.data = jest.fn();
-		processData.theComponent.addFieldMessage = jest.fn();
 
-		processFunctions.processFiles = jest.fn();
-		processFunctions.hashAndUpload = jest.fn();
-		processFunctions.hashFile = jest.fn();
-		processFunctions.createMediaFromFile = jest.fn();
-		processFunctions.handleFileUploadResponse = jest.fn();
 		processFunctions.handleFileUploadError = jest.fn();
 
 		$form = data.obj.$form;
 		field = data.cf2.fields.fld_9226671_1;
 	 	$form.submit = jest.fn();
+		theComponent.addFieldMessage = jest.fn();
 	});
 
 	afterEach(() => {
 		$form.submit.mockClear();
-		processFunctions.createMediaFromFile.mockReset();
+		processFunctions.handleFileUploadError.mockReset();
+		theComponent.addFieldMessage.mockReset();
 	});
 
 	it( 'Throws an error if passed non-object & does not submit form', () => {
@@ -150,7 +147,21 @@ describe( 'Unit tests, ignoring cf2 var side effects for handleFileUploadRespons
 		expect( processFunctions.handleFileUploadError.mock.calls.length ).toBe(1)
 	});
 
+	it( 'Unit Test handleFileUploadError with error object that has a message property', () => {
+		let error = { 'message': 'An Error Has Occured' };
+		handleFileUploadError(
+			error,
+			data.file,
+			data.CF_API_DATA.strings.cf2FileField,
+			data.cf2.fields.fld_9226671_1.fieldIdAttr,
+			theComponent
+		);
+		expect( theComponent.addFieldMessage ).toBeCalled();
+		expect( theComponent.addFieldMessage.mock.calls.length ).toBe(1);
+	});
+
 });
+
 
 describe( 'Check responses with different values passed', () => {
 
