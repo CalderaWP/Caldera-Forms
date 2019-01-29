@@ -635,10 +635,8 @@ class Caldera_Forms_Render_Assets {
 						'invalidFileResponse'		=>	esc_attr__('Unknown File Process Error', 'caldera-forms'),
 						'fieldIsRequired'			=>	esc_attr__( 'Field is required','caldera-forms'),
 						'filesUnit'					=>	esc_attr__('bytes', 'caldera-forms'),
-						'maxUploadSizeError'		=>	esc_attr__('File size exceeded, the form will not submit', 'caldera-forms'),
-						'maxUploadSizeInstruction'	=>	esc_attr__('Remove this file and upload a file of less than ', 'caldera-forms'),
-						'allowedTypes'				=>	esc_attr__('Types allowed : ', 'caldera-forms'),
-						'maxSize'					=>	esc_attr__('Max. File Size : ', 'caldera-forms'),
+						'maxSizeAlert'				=>  esc_attr__( 'This file is too large. Maxium size is ', 'caldera-forms'),
+						'wrongTypeAlert'			=>  esc_attr__( 'This file type is not allowed. Allowed types are ', 'caldera-forms'),
                     )
                 ),
 				'nonce' => array(

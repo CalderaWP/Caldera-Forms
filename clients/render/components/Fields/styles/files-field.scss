@@ -15,7 +15,7 @@
     justify-content: start;
     align-items: center;
     margin: 10px 0 0;
-    border-bottom: thin solid #000;
+    border-bottom: medium solid #ececec;
     padding: 0 5px 10px;
 
     button.cf2-file-remove {
@@ -29,10 +29,6 @@
         cursor: pointer;
       }
     }
-  }
-
-  .cf2-file-error, .cf2-file-size-instruction  {
-    color: rgb(238, 0, 0);
   }
 
 }

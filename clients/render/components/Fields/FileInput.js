@@ -19,6 +19,7 @@ export const FileInput = (props) => {
 	const {maxFileUploadSize, onChange, accept, field, describedById, style, className, multiUploadText, multiple, inputProps, usePreviews, previewHeight, previewWidth, strings} = props;
 	let {shouldDisable} = props;
 	const {
+		allowedTypes,
 		outterIdAttr,
 		fieldId,
 		fieldLabel,
@@ -47,6 +48,11 @@ export const FileInput = (props) => {
 		inputProps.disabled = true;
 	}
 
+	let acceptedTypes = [];
+	if(typeof accept === "string"){
+		acceptedTypes = accept.split(',');
+	}
+
 	return (
 
 		<div className="cf2-dropzone" data-field={fieldId}>
@@ -54,7 +60,7 @@ export const FileInput = (props) => {
 			<Dropzone
 				onDrop={onChange}
 				className={className}
-				accept={'string' === typeof  accept ? accept : ''}
+				accept={'string' === typeof accept ? accept : ''}
 				maxSize={'number' === typeof maxFileUploadSize && maxFileUploadSize > 0 ? maxFileUploadSize : Infinity}
 				style={style}
 				disabled={shouldDisable}
@@ -113,19 +119,16 @@ export const FileInput = (props) => {
 										<span className="cf2-file-name file-name">{file.name}</span>
 									}
 									<br/>
-									{file.size > 0 && maxFileUploadSize > file.size || maxFileUploadSize === 0  &&
-										<div>
-											<small className="cf2-file-data file-type"> {file.type}</small>
-											<small className="cf2-file-data file-size"> - {file.size} {strings.filesUnit}</small>
-										</div>
-									}
+									<small className="cf2-file-data file-type"> {file.type}</small>
+									<small className="cf2-file-data file-size"> - {file.size} {strings.filesUnit}</small>
+
 									{maxFileUploadSize > 0 && maxFileUploadSize < file.size &&
-										<div>
-											<small className={"cf2-file-error file-error file-size-error"}> - {strings.maxUploadSizeError}</small>
-											<small className={"cf2-file-size-instruction file-error"}> - {strings.maxUploadSizeInstruction} {maxFileUploadSize} {strings.filesUnit}</small>
-										</div>
+										<small className={"cf2-file-error file-error file-size-error help-block"}> {strings.maxSizeAlert + maxFileUploadSize + strings.filesUnit } </small>
 									}
-									
+
+									{acceptedTypes.indexOf(file.type) <= -1 &&
+										<small className={"cf2-file-error file-error file-type-error help-block"}> {strings.wrongTypeAlert + accept } </small>
+									}
 
 								</div>
 							</li>
