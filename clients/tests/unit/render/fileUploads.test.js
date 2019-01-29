@@ -64,8 +64,33 @@ describe( 'Unit tests, ignoring cf2 var side effects for handleFileUploadRespons
 	let $form = {};
 	let submit;
 	let field = {};
+	let processFunctions = {};
+	let processData = {}
 
 	beforeEach(() => {
+		processFunctions = {processFiles, hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError};
+		processData = {
+			values: {},
+			obj: data.obj,
+			field: data.cf2.fields.fld_9226671_1,
+			fieldId: data.cf2.fields.fld_9226671_1.fieldId,
+			cf2: data.cf2,
+			$form: data.obj.$form,
+			CF_API_DATA: data.CF_API_DATA,
+			messages: data.messages,
+			theComponent: data.theComponent,
+			strings: data.theComponent.props.strings.cf2FileField
+		}
+		processData.obj.$form.data = jest.fn();
+		processData.theComponent.addFieldMessage = jest.fn();
+
+		processFunctions.processFiles = jest.fn();
+		processFunctions.hashAndUpload = jest.fn();
+		processFunctions.hashFile = jest.fn();
+		processFunctions.createMediaFromFile = jest.fn();
+		processFunctions.handleFileUploadResponse = jest.fn();
+		processFunctions.handleFileUploadError = jest.fn();
+
 		$form = data.obj.$form;
 		field = data.cf2.fields.fld_9226671_1;
 	 	$form.submit = jest.fn();
@@ -73,75 +98,35 @@ describe( 'Unit tests, ignoring cf2 var side effects for handleFileUploadRespons
 
 	afterEach(() => {
 		$form.submit.mockClear();
+		processFunctions.createMediaFromFile.mockReset();
 	});
 
 	it( 'Throws an error if passed non-object & does not submit form', () => {
-		const response = undefined;
-		let error = undefined;
-		try{
-			const r = handleFileUploadResponse(
-				response,
-				data.cf2,
-				$form,
-				{},
-				field
-			);
-		}catch (e) {
-			 error = e;
-		}
 
-		expect( undefined === typeof  error ).toBe(false);
+		handleFileUploadResponse(
+			undefined,
+			data.file,
+			processData,
+			processFunctions,
+			true
+		);
+
 		expect( $form.submit.mock.calls.length ).toBe(0);
+		expect( processFunctions.handleFileUploadError ).toBeCalled()
+		expect( processFunctions.handleFileUploadError.mock.calls.length ).toBe(1)
 	});
 
 	it( 'Triggers submit, if passed object with control and lastFile = true', () => {
 
-		let error = undefined;
-
-		try{
-			const r = handleFileUploadResponse(
-				{control: 'nico'},
-				data.cf2,
-				$form,
-				{},
-				field,
-				true
-			);
-		}catch (e) {
-			error = e;
-		}
+		handleFileUploadResponse(
+			{control: 'nico'},
+			data.file,
+			processData,
+			processFunctions,
+			true
+		);
 		expect($form.submit).toBeCalled();
 		expect($form.submit.mock.calls.length).toBe(1);
-		expect(error).toBe(undefined);
-	});
-
-	it( 'Puts error message from response in messages var if possible and throws error', () => {
-		let response = '';
-		let error = '';
-		const message = 'An Error Has Occured';
-		const messages = {};
-		const ID = field.fieldIdAttr;
-		try{
-			const r = handleFileUploadResponse(
-				{
-					message
-				},
-				data.cf2,
-				$form,
-				messages,
-				field
-			);
-		}catch (e) {
-			error = e;
-		}
-
-		expect(messages[ID].error).toBe(true);
-		expect(messages[ID].message).toEqual(message);
-		expect(error).toEqual({
-			"message": "An Error Has Occured"
-		});
-		expect( undefined === typeof error ).toBe(false);
-		expect( $form.submit.mock.calls.length ).toBe(0);
 	});
 
 	it( 'Throws error if response does not have control prop', () => {
@@ -149,24 +134,20 @@ describe( 'Unit tests, ignoring cf2 var side effects for handleFileUploadRespons
 		const message = 'An Error Has Occured';
 		const messages = {};
 		const ID = field.fieldIdAttr;
+		const file = data.file;
+		const lastFile = true;
 
-		try{
-			const r = handleFileUploadResponse(
-				{message},
-				data.cf2,
-				$form,
-				{},
-				field
-			);
-		}catch (e) {
-			error = e;
-		}
+		handleFileUploadResponse(
+			{message},
+			data.file,
+			processData,
+			processFunctions,
+			true
+		);
 		expect($form.submit).not.toBeCalled();
 		expect($form.submit.mock.calls.length).toBe(0);
-		expect(error).toEqual({
-			"message": "An Error Has Occured"
-		});
-		expect( undefined === typeof error ).toBe(false);
+		expect( processFunctions.handleFileUploadError ).toBeCalled()
+		expect( processFunctions.handleFileUploadError.mock.calls.length ).toBe(1)
 	});
 
 });

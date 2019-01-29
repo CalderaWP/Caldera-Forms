@@ -16,7 +16,7 @@ import Dropzone from 'react-dropzone';
  */
 export const FileInput = (props) => {
 
-	const {message, maxFileUploadSize, onChange, accept, field, describedById, style, className, multiUploadText, multiple, inputProps, usePreviews, previewHeight, previewWidth, strings} = props;
+	const {maxFileUploadSize, onChange, accept, field, describedById, style, className, multiUploadText, multiple, inputProps, usePreviews, previewHeight, previewWidth, strings} = props;
 	let {shouldDisable} = props;
 	const {
 		outterIdAttr,
@@ -50,9 +50,6 @@ export const FileInput = (props) => {
 	return (
 
 		<div className="cf2-dropzone" data-field={fieldId}>
-			{message && message.error === true &&
-				<div className="cf-error">{message.fieldIdAttr.message}</div>
-			}
 
 			<Dropzone
 				onDrop={onChange}
