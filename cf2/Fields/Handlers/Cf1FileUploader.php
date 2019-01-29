@@ -30,4 +30,10 @@ class Cf1FileUploader implements UploaderContract
 	{
 		return \Caldera_Forms_Files::schedule_delete($fieldId,$formId,$file);
 	}
+
+	/** @inheritdoc */
+	public function isFileTooLarge(array $field, $filePath)
+	{
+		return \Caldera_Forms_Files::is_file_too_large($field,$filePath);
+	}
 }
