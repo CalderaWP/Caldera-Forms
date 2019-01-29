@@ -12,8 +12,8 @@ class ComposerStaticInitc8d223f893a92e34d8983d4607cce57b
         '051bafe20e2674435a162870efa2d2a7' => __DIR__ . '/..' . '/brain/monkey/inc/api.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         'edf8ef411b308ea9e315d190a754d91b' => __DIR__ . '/..' . '/a5hleyrich/wp-queue/src/functions.php',
-        '653f15cae3415bbad33eff25628b45a8' => __DIR__ . '/..' . '/calderawp/caldera-forms-query/src/CalderaFormsQueries.php',
         '5e73ffc188f5a63fbd263c4490731358' => __DIR__ . '/..' . '/inpsyde/wonolog/inc/bootstrap.php',
+        '653f15cae3415bbad33eff25628b45a8' => __DIR__ . '/..' . '/calderawp/caldera-forms-query/src/CalderaFormsQueries.php',
         '1788f000e5723cf54aa875ee1eec6c27' => __DIR__ . '/../..' . '/cf2/functions.php',
         'e3b369f785b64e46a24dc3ca6f0257a1' => __DIR__ . '/../..' . '/tests/testing-cli.php',
     );
