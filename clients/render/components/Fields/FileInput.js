@@ -109,18 +109,24 @@ export const FileInput = (props) => {
 											src={file.preview}
 											alt={file.name}
 										/>
-										:
+									:
 										<span className="cf2-file-name file-name">{file.name}</span>
 									}
 									<br/>
-									<small className="cf2-file-data file-type"> {file.type}</small>
-									<small className="cf2-file-data file-size"> - {file.size} {strings.filesUnit}</small>
-									{maxFileUploadSize > 0 && maxFileUploadSize < file.size &&
-										<small className={"cf2-file-error file-error"}> - {strings.maxUploadSizeError}</small>
+									{file.size > 0 && maxFileUploadSize > file.size || maxFileUploadSize === 0  &&
+										<div>
+											<small className="cf2-file-data file-type"> {file.type}</small>
+											<small className="cf2-file-data file-size"> - {file.size} {strings.filesUnit}</small>
+										</div>
 									}
 									{maxFileUploadSize > 0 && maxFileUploadSize < file.size &&
-										<small className={"cf2-file-size-instruction file-error"}> - {strings.maxUploadSizeInstruction} {maxFileUploadSize} {strings.filesUnit}</small>
+										<div>
+											<small className={"cf2-file-error file-error file-size-error"}> - {strings.maxUploadSizeError}</small>
+											<small className={"cf2-file-size-instruction file-error"}> - {strings.maxUploadSizeInstruction} {maxFileUploadSize} {strings.filesUnit}</small>
+										</div>
 									}
+									
+
 								</div>
 							</li>
 					)
@@ -241,11 +247,7 @@ FileInput.fieldConfigToProps = (fieldConfig) => {
 		}
 
 		if (fieldConfig.configOptions.hasOwnProperty('multiple')) {
-			if (fieldConfig.configOptions.multiple === 1) {
-				props.multiple = true;
-			} else {
-				props.multiple = false;
-			}
+			props.multiple = fieldConfig.configOptions.multiple === 1;
 		} else {
 			props.multiple = false;
 		}

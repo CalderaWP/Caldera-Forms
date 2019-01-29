@@ -251,46 +251,33 @@ export class CalderaFormsRender extends Component {
 
 						if( Array.isArray(accepted) === true && Array.isArray(rejected) === true ) { // Handle accepted and rejected files
 
-							  if(Array.isArray(fieldValue) === false){
+							if(Array.isArray(fieldValue) === false){
 								fieldValue = [];
-							  }
+							}
 
-							  if( accepted.length > 0 ) {
+							if( accepted.length > 0 ) {
 								accepted.forEach(file => {
-								  fieldValue.push(file);
+							  		fieldValue.push(file);
 								});
 								this.setFieldValue(fieldIdAttr, fieldValue );
-							  }
+							}
 
-							  if( rejected.length > 0 ) {
+							if( rejected.length > 0 ) {
 
-									let rejectedFiles = [];
-									rejected.forEach( file => {
-										rejectedFiles.push( "  - " + file.name + " / " + file.size + this.getStrings().cf2FileField.filesUnit );
-									})
-								  	const filesList = rejectedFiles.toString();
+								rejected.forEach( file => {
+									fieldValue.push(file);
+								})
+								this.setFieldValue(fieldIdAttr, fieldValue );
 
-									const fieldConfig = this.getFieldConfig(fieldIdAttr);
-									let messagePrepared;
-									if( fieldConfig.configOptions.allowedTypes !== false && fieldConfig.configOptions.maxFileUploadSize !== 0 ) {
-										messagePrepared = this.getStrings().cf2FileField.checkMessage + "( " +  this.getStrings().cf2FileField.allowedTypes + fieldConfig.configOptions.allowedTypes + " / " + this.getStrings().cf2FileField.maxSize + fieldConfig.configOptions.maxFileUploadSize + this.getStrings().cf2FileField.filesUnit + "). ";
-									} else if( fieldConfig.configOptions.allowedTypes !== false && fieldConfig.configOptions.maxFileUploadSize === 0 ) {
-										messagePrepared = this.getStrings().cf2FileField.checkMessage + "( " + this.getStrings().cf2FileField.allowedTypes + fieldConfig.configOptions.allowedTypes + "). ";
-									} else if( fieldConfig.configOptions.allowedTypes === false && fieldConfig.configOptions.maxFileUploadSize !== 0 ) {
-										messagePrepared = this.getStrings().cf2FileField.checkMessage + "( " + this.getStrings().cf2FileField.maxSize + fieldConfig.configOptions.maxFileUploadSize + this.getStrings().cf2FileField.filesUnit + "). ";
-									}
-
-									const messageText = messagePrepared + this.getStrings().cf2FileField.invalidFiles + filesList;
-
-									this.addFieldMessage(fieldIdAttr, messageText, true );
-							  }
+								this.addFieldMessage(fieldIdAttr, this.getStrings().cf2FileField.checkMessage, true );
+							}
 
 						} else if ( typeof(accepted) === 'object' && accepted.target.className === "cf2-file-remove" ) { //Remove a File form fieldValue
 
 							const index = fieldValue.indexOf(rejected);
 							fieldValue.splice(index, 1);
 
-              				this.setFieldValue(fieldIdAttr, fieldValue );
+							this.setFieldValue(fieldIdAttr, fieldValue );
 						}
 
           			}
