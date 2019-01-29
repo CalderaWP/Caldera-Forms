@@ -1,5 +1,5 @@
 
-import {DEFAULT_STATE,} from "../../state/actions/form";
+import {DEFAULT_STATE} from "../../state/actions/form";
 export const START_SPIN = 'START_SPIN';
 export const STOP_SPIN = 'STOP_SPIN';
 export const CLOSE_STATUS_INDICATOR = 'CLOSE_STATUS_INDICATOR';

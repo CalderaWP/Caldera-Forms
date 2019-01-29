@@ -152,7 +152,7 @@ var cf_jsfields_init, cf_presubmit;
 					for (var f = 0; f < fields.length; f++) {
 						$this_field = $(fields[f]);
 						$this_field.parsley().validate();
-						valid = $this_field.parsley().isValid({force: true});
+						valid = $this_field.parsley().isValid();
 						if (true === valid) {
 							continue;
 						}
@@ -254,7 +254,7 @@ var cf_jsfields_init, cf_presubmit;
 			validator = cf_validate_form( $form );
 		$( document ).trigger( 'cf.form.submit', {
 			e:e,
-			$form:$form
+			$form:$form,
 		} );
 
 
@@ -365,10 +365,12 @@ window.addEventListener("load", function(){
 					config_object = new Caldera_Forms_Field_Config( config, $(document.getElementById(form_id)), $, state );
 					config_object.init();
 					$( document ).trigger( 'cf.form.init',{
+						$form: $form,
 						idAttr:  form_id,
 						formId: formId,
 						state: state,
-						fieldIds: CFFIELD_CONFIG[instance].fields.hasOwnProperty( 'ids' ) ? CFFIELD_CONFIG[instance].fields.ids : []
+						fieldIds: CFFIELD_CONFIG[instance].fields.hasOwnProperty( 'ids' ) ? CFFIELD_CONFIG[instance].fields.ids : [],
+						nonce: jQuery( '#_cf_verify_' + formId ).val()
 					});
 
 

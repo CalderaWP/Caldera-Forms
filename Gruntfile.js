@@ -48,7 +48,8 @@ module.exports = function (grunt) {
     [
         'pro',
         'privacy',
-        'blocks'
+        'blocks',
+        'render'
     ].forEach( (client) => {
        files_list.push( `clients/${client}/build/index.min.js` );
        files_list.push( `clients/${client}/build/style.min.css` );
@@ -157,7 +158,8 @@ module.exports = function (grunt) {
                     'assets/build/css/caldera-grid.min.css',
                     'assets/build/css/caldera-alert.min.css',
                     'assets/build/css/caldera-form.min.css',
-                    'assets/build/css/fields.min.css'
+                    'assets/build/css/fields.min.css',
+                    'clients/render/build/style.min.css'
                  ],
                 dest: 'assets/css/caldera-forms-front.css'
             },
@@ -180,6 +182,8 @@ module.exports = function (grunt) {
             },
             form: {
                 src: [
+                    'assets/js/ajax-core.js',
+                    'assets/js/conditionals.js',
                     'assets/js/state/events.js',
                     'assets/js/state/state.js',
                     'assets/js/inputmask.js',
@@ -201,6 +205,7 @@ module.exports = function (grunt) {
             scripts: {
                 files: [
                     'assets/js/*.js',
+					'assets/js/state/*.js',
                     'assets/css/*.css'
                 ],
                 tasks: ['default'],
@@ -286,15 +291,14 @@ module.exports = function (grunt) {
     grunt.registerTask( 'buildCopy', [ 'copy:i18n', 'copy:fonts', 'copy:images'] );
     //register default task
     grunt.registerTask( 'default',  [
-        'concat',
-        'uglify',
+        'js',
         'cssmin',
         'buildCopy'
     ] );
 
     grunt.registerTask( 'js',  [
-        'uglify',
-        'concat'
+		'concat',
+        'uglify'
     ] );
 
     grunt.registerTask( 'version_number', [ 'replace' ] );

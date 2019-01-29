@@ -10,8 +10,8 @@ use calderawp\calderaforms\pro\container;
  * Class files
  * @package calderawp\calderaforms\pro\api\local
  */
-class files implements \Caldera_Forms_API_Route
-{
+class files implements \Caldera_Forms_API_Route {
+
 	/**
 	 * @inheritdoc
 	 */

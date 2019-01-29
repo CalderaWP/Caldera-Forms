@@ -220,7 +220,7 @@ class Caldera_Forms_Field_Util {
 			'asin',
 			'atan',
 			'atan2',
-			'ciel',
+			'ceil',
 			'cos',
 			'exp',
 			'floor',
@@ -670,4 +670,44 @@ class Caldera_Forms_Field_Util {
 
         return isset( $field[ 'config' ][ self::CONFIG_EMAIL_IDENTIFIER ] ) && rest_sanitize_boolean($field[ 'config' ][ self::CONFIG_EMAIL_IDENTIFIER ] );
     }
+
+    /**
+     * Is this field a cf2 field type?
+	 *
+     * @since 1.8.0
+     *
+     * @param string $field_type
+     * @return bool
+     */
+    public static function is_cf2_field_type($field_type){
+	    //This array should be created dynamically
+	    return in_array( $field_type, ['cf2_file', 'cf2_text'] );
+    }
+
+    /**
+     * Generate a field control ID for file fields
+	 *
+     * @since 1.8.0
+     *
+	 * @param array $field Field config
+	 * @param array $form Form config
+     *
+     * @return string
+     */
+    public static function generate_file_field_unique_id(array $field,array $form){
+        $uniqu_code = uniqid('trupl');
+        /**
+         * Runs when a unique code for an field field is generated
+         *
+         * @since 1.5.9
+         *
+         * @param string $uniqid Unqiue Code for field
+         * @param array $field Field config
+         * @param array $form Form config
+         */
+        do_action( 'caldera_forms_file_uniqid', $uniqu_code, $field, $form );
+        return $uniqu_code;
+    }
+
+
 }

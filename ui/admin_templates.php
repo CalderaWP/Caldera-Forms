@@ -182,7 +182,7 @@
 <script type="text/html" id="front-settings-tmpl">
 	<?php
 
-	$style_includes = get_option( '_caldera_forms_styleincludes' );
+	$style_includes = Caldera_Forms_Render_Assets::get_style_includes();
 	if(empty($style_includes)){
 		$style_includes = array(
 			'alert'	=>	true,
