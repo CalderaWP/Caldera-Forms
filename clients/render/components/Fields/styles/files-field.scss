@@ -4,31 +4,61 @@
     &.cf2-file {
       border: none;
       padding: 0px;
-    }
-  }
 
-  .cf2-file-listed {
-    display: grid;
-    grid-gap: 10px;
-    list-style-type: none;
-    grid-template-columns: auto auto auto;
-    justify-content: start;
-    align-items: center;
-    margin: 10px 0 0;
-    border-bottom: medium solid #ececec;
-    padding: 0 5px 10px;
-
-    button.cf2-file-remove {
-      background-color: transparent;
-      border: none;
-      padding: 0;
-
-      &:after {
-        content: " \2716";
-        color: #000;
-        cursor: pointer;
+      .btn {
+        &:hover {
+          color: initial;
+        }
       }
     }
   }
+
+  ul.cf2-list-files {
+
+    .cf2-file-listed {
+
+      .cf2-file-control {
+        display: inline-block;
+        width: 100%;
+        vertical-align: top;
+        border-bottom: 2px solid #ececec;
+
+        .cf2-file-field-img-preview {
+          margin-bottom: 5px;
+        }
+
+        button.cf2-file-remove {
+          background-color: transparent;
+          border: none;
+          padding: 0;
+          vertical-align: top;
+
+          &:after {
+            content: " \2716";
+            font-size: 90%;
+            color: #333;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-right: 10px;
+
+          }
+          &:hover {
+            &:after {
+              text-decoration: none;
+            }
+          }
+        }
+      }
+
+      .cf2-file-extra-data {
+
+      }
+
+
+    }
+
+  }
+
+
 
 }

@@ -57,6 +57,65 @@ export const FileInput = (props) => {
 
 		<div className="cf2-dropzone" data-field={fieldId}>
 
+			{valueSet &&
+			<ul
+				id={cf2ListFilesID}
+				className="cf2-list-files"
+				role="list"
+			>
+				{
+					fieldValue.map(
+						(file, index) =>
+							<li
+								id={removeFileID + index}
+								key={index}
+								className="cf2-file-listed"
+								role="listitem"
+								aria-posinset={index}
+							>
+								<div className="cf2-file-control">
+									<button
+										type="button"
+										aria-controls={removeFileID + index}
+										data-file={removeFileID + index}
+										className="cf2-file-remove"
+										onClick={(e) => onChange(e, file)}
+									>
+										<span className="screen-reader-text sr-text">{strings.removeFile}</span>
+									</button>
+
+									{usePreviews === true && file.type.startsWith("image") === true ?
+										<img
+											className="cf2-file-field-img-preview"
+											width={previewWidth}
+											height={previewHeight}
+											src={file.preview}
+											alt={file.name}
+										/>
+										:
+										<span className="cf2-file-name file-name">{file.name}</span>
+									}
+								</div>
+								<div className="cf2-file-extra-data">
+
+									<small className="cf2-file-data file-type"> {file.type}</small>
+									<small className="cf2-file-data file-size"> - {file.size} {strings.filesUnit}</small>
+
+									{maxFileUploadSize > 0 && maxFileUploadSize < file.size &&
+									<small className={"cf2-file-error file-error file-size-error help-block"}> {strings.maxSizeAlert + maxFileUploadSize + strings.filesUnit } </small>
+									}
+
+									{acceptedTypes.indexOf(file.type) <= -1 && accept !== false &&
+									<small className={"cf2-file-error file-error file-type-error help-block"}> {strings.wrongTypeAlert + accept } </small>
+									}
+
+								</div>
+							</li>
+					)
+				}
+			</ul>
+			}
+
 			<Dropzone
 				onDrop={onChange}
 				className={className}
@@ -79,63 +138,6 @@ export const FileInput = (props) => {
 				</button>
 			</Dropzone>
 
-			{valueSet &&
-			<ul
-				id={cf2ListFilesID}
-				className="cf2-list-files"
-				role="list"
-			>
-				{
-					fieldValue.map(
-						(file, index) =>
-							<li
-								id={removeFileID + index}
-								key={index}
-								className="cf2-file-listed"
-								role="listitem"
-								aria-posinset={index}
-							>
-
-								<button
-									type="button"
-									aria-controls={removeFileID + index}
-									data-file={removeFileID + index}
-									className="cf2-file-remove"
-									onClick={(e) => onChange(e, file)}
-								>
-									<span className="screen-reader-text sr-text">{strings.removeFile}</span>
-								</button>
-
-								<div>
-									{usePreviews === true && file.type.startsWith("image") === true ?
-										<img
-											className="cf2-file-field-img-preview"
-											width={previewWidth}
-											height={previewHeight}
-											src={file.preview}
-											alt={file.name}
-										/>
-									:
-										<span className="cf2-file-name file-name">{file.name}</span>
-									}
-									<br/>
-									<small className="cf2-file-data file-type"> {file.type}</small>
-									<small className="cf2-file-data file-size"> - {file.size} {strings.filesUnit}</small>
-
-									{maxFileUploadSize > 0 && maxFileUploadSize < file.size &&
-										<small className={"cf2-file-error file-error file-size-error help-block"}> {strings.maxSizeAlert + maxFileUploadSize + strings.filesUnit } </small>
-									}
-
-									{acceptedTypes.indexOf(file.type) <= -1 &&
-										<small className={"cf2-file-error file-error file-type-error help-block"}> {strings.wrongTypeAlert + accept } </small>
-									}
-
-								</div>
-							</li>
-					)
-				}
-			</ul>
-			}
 		</div>
 
 	)
