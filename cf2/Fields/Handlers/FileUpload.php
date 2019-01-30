@@ -99,7 +99,7 @@ class FileUpload
 			$upload = wp_handle_upload($file, [ 'test_form' => false, 'action' => 'foo' ]);
 
 			$this->uploader->removeFilter();
-			if ( \Caldera_Forms_Files::should_attach($this->field, $this->form) ) {
+			if ( \Caldera_Forms_Files::should_add_to_media_library($this->field) ) {
 				\Caldera_Forms_Files::add_to_media_library($upload, $this->field);
 			}
 
