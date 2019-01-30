@@ -1,5 +1,6 @@
 import {CalderaFormsFieldGroup, Fragment} from "../CalderaFormsFieldGroup";
 import {CalderaFormsFieldPropType} from "../CalderaFormsFieldRender";
+import {sizeFormat} from "../../util";
 import React from 'react';
 
 import PropTypes from 'prop-types';
@@ -99,10 +100,10 @@ export const FileInput = (props) => {
 								<div className="cf2-file-extra-data">
 
 									<small className="cf2-file-data file-type"> {file.type}</small>
-									<small className="cf2-file-data file-size"> - {file.size} {strings.filesUnit}</small>
+									<small className="cf2-file-data file-size"> - {sizeFormat(file.size)} </small>
 
 									{maxFileUploadSize > 0 && maxFileUploadSize < file.size &&
-									<small className={"cf2-file-error file-error file-size-error help-block"}> {strings.maxSizeAlert + maxFileUploadSize + strings.filesUnit } </small>
+									<small className={"cf2-file-error file-error file-size-error help-block"}> {strings.maxSizeAlert + sizeFormat(maxFileUploadSize) } </small>
 									}
 
 									{acceptedTypes.indexOf(file.type) <= -1 && accept !== false &&

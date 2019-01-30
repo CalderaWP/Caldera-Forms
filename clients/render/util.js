@@ -94,3 +94,51 @@ export const createMediaFromFile = (file, additionalData, fetch) => {
 		}
 	});
 }
+
+/**
+ * Converts the bytes values to smaller value in corresponding unit
+ *
+ * @param bytes value to be converted
+ * @return {*}
+ */
+export const sizeFormat = (bytes) => {
+	let converted = false;
+	const quant = [
+		{
+			unit: 'TB',
+			mag: 1099511627776
+		},
+
+		{
+			unit: 'GB',
+			mag: 1073741824
+		},
+
+		{
+			unit: 'MB',
+			mag: 1048576
+		},
+
+		{
+			unit: 'kB',
+			mag: 1024
+		},
+
+		{
+			unit: 'B ',
+			mag: 1
+		}
+	];
+	quant.forEach(function(v){
+		if (parseFloat(bytes) >= v.mag && converted == false){
+			converted = bytes/v.mag;
+			if( bytes > 1048576 ){
+				converted = converted.toFixed(2);
+			}else{
+				converted = Math.round( converted );
+			}
+			converted = converted +' '+v.unit;
+		}
+	});
+	return converted;
+}
