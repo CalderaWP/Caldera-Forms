@@ -224,8 +224,7 @@ describe('DOM testing file components', () => {
 			/>
 		);
 		component.setProps(prepared);
-		expect(component.find('.cf2-file-error').length).toBe(1);
-		expect(component.find('.cf2-file-size-instruction').length).toBe(1);
+		expect(component.find('.cf2-file-data.file-size').length).toBe(1);
 	});
 
 });
