@@ -1,8 +1,8 @@
-import {Component, Fragment, createContext} from 'react';
+import {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
 import {CalderaFormsFieldPropType, CalderaFormsFieldRender} from "./CalderaFormsFieldRender";
 import isEmpty from 'validator/lib/isEmpty';
-import {getFieldConfigBy, hashFile} from "../util";
+import {getFieldConfigBy, setBlocking, removeFromBlocking} from "../util";
 
 //Collection of change handlers to prevent re-creating
 const handlers = {};
@@ -248,6 +248,15 @@ export class CalderaFormsRender extends Component {
 					handlers[fieldIdAttr] = (accepted, rejected) => {
 
             			let fieldValue = this.getFieldValue(fieldIdAttr);
+						const fieldConfig = this.getFieldConfig(fieldIdAttr);
+						const {fieldId} = fieldConfig;
+
+						const cf2ProcessElements = [ "uploadStarted", "pending", "fieldsBlocking" ];
+						cf2ProcessElements.forEach( element => {
+							if (! cf2.hasOwnProperty(element)) {
+								cf2[element] = [];
+							}
+						});
 
 						if( Array.isArray(accepted) === true && Array.isArray(rejected) === true ) { // Handle accepted and rejected files
 
@@ -264,12 +273,16 @@ export class CalderaFormsRender extends Component {
 
 							if( rejected.length > 0 ) {
 
+								setBlocking(fieldId,cf2);
+
 								rejected.forEach( file => {
 									fieldValue.push(file);
 								})
 								this.setFieldValue(fieldIdAttr, fieldValue );
 
 								this.addFieldMessage(fieldIdAttr, this.getStrings().cf2FileField.checkMessage, true );
+							} else {
+								removeFromBlocking(fieldId,cf2);
 							}
 
 						} else if ( typeof(accepted) === 'object' && accepted.target.className === "cf2-file-remove" ) { //Remove a File form fieldValue
