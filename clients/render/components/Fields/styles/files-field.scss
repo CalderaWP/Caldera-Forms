@@ -18,12 +18,20 @@
     .cf2-file-listed {
 
       .cf2-file-control {
+        display: inline-block;
+        width: 100%;
+        vertical-align: top;
         border-bottom: 2px solid #ececec;
+
+        .cf2-file-field-img-preview {
+          margin-bottom: 5px;
+        }
 
         button.cf2-file-remove {
           background-color: transparent;
           border: none;
           padding: 0;
+          vertical-align: top;
 
           &:after {
             content: " \2716";
