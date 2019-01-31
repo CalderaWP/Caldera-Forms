@@ -113,17 +113,15 @@ export const setSubmitButtonState = (cf2, fieldConfig, state) => {
 	const form =  jQuery("#" + formIdAttr);
 	//If no state param was send in the function define the state based on elements inside the fieldsBlocking Array
 	if(typeof state === "undefined") {
-		console.log('undefined');
 		state = cf2.fieldsBlocking.length <= 0;
 	}
 
-	//If state === true enable submission else disable submission
+	//If state === true enable submit button else disable submit button
 	if(state) {
 		form.find(':submit').prop('disabled',false);
 	} else {
 		form.find(':submit').prop('disabled',true);
 	}
-
 
 }
 
