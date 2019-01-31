@@ -33,7 +33,7 @@ It may seem like beacuse this is a formal process you are reading here, that you
 It could take hours, or days to complete the task. You might get distracted. if you have relevant information about a ticket, even if it’s not confirmed, leave a comment before you forget it. For example, `I am not done testing, I see an error in my console (unexpected token line 27) when I click the button, but I'm not sure if that is a conflict with WooCommerce or that actual error.` This could help someone else find the issue, and they would not know this unless you left the comment. Or you could be wrong, that’s fine, you’ll help others. Keeping the information in your head doesn’t help.
 
 ## Setup Test Environment
-
+![](http://handbook.calderawp.com/wp-content/uploads/2018/10/Screen-Shot-2018-10-24-at-10.42.27-AM.png)
 
 In the Github issue, the person who reported the issue who reported the issue should have included the PHP, WordPress and Caldera Forms version that they are using. Make sure your WordPress site you are testing with has the same versions.
 
@@ -52,9 +52,9 @@ PHP version does not need to be the same. If the user is using PHP 5.6, test wit
 
 Whenever you leave a comment on the ticket, include the short debug information from the Caldera Forms support submenu, under the “Debug” tab.
 
-*   <figure>![](http://handbook.calderawp.com/wp-content/uploads/2018/10/Screen-Shot-2018-10-24-at-11.23.23-AM.png)</figure>
+![](http://handbook.calderawp.com/wp-content/uploads/2018/10/Screen-Shot-2018-10-24-at-11.23.23-AM.png)
 
-*   <figure>![](http://handbook.calderawp.com/wp-content/uploads/2018/10/Screen-Shot-2018-10-24-at-11.22.25-AM-1.png)</figure>
+![](http://handbook.calderawp.com/wp-content/uploads/2018/10/Screen-Shot-2018-10-24-at-11.22.25-AM-1.png)
 
 ### Have Error Logging On When You Test The Issue
 
@@ -71,17 +71,18 @@ After every UI interaction — page load, click, change of a setting — make su
 
 After every page load, every time you save a form, or save settings, or submit a form, check for PHP errors in your PHP error log. If you find an error, mention it in the ticket and explain what you did to trigger the bug.
 
-<figure class="wp-block-image">![](http://handbook.calderawp.com/wp-content/uploads/2018/10/Screen-Shot-2018-10-24-at-11.32.06-AM.png)
+![](http://handbook.calderawp.com/wp-content/uploads/2018/10/Screen-Shot-2018-10-24-at-11.32.06-AM.png)
 
-<figcaption>https://github.com/CalderaWP/Caldera-Forms/issues/2788#issuecomment-432707743</figcaption>
+* https://github.com/CalderaWP/Caldera-Forms/issues/2788#issuecomment-432707743</figcaption>
 
-</figure>
 
-### Can’t Reproduce The Bug?
+### Can't Reproduce The Bug?
 
 Sometimes you’re not going to be able to reproduce the bug. When this happens you need to explain in detail what you did. Your goal isn’t to prove the user wrong. Something is probably wrong with their site. Your goal, by explaining how you tested the bug is to invite one of two things from the user:
 
 *   How to better communicate how the issue can be reproduced.
     *   We need to learn more.
+    * By listing every step you took, it invites the user to show you why you are testing differently.
 *   Teach the user the correct way to use Caldera Forms
-    *   Sometimes it’s not a bug, someone is using the plugin wrong.
+    *   Sometimes it's not a bug, someone is using the plugin wrong.
+    *   Sometimes it's not a bug, we are the wrong plugin for the job.
