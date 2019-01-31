@@ -273,7 +273,7 @@ export class CalderaFormsRender extends Component {
 
 							if( rejected.length > 0 ) {
 
-								setBlocking(fieldId,cf2);
+								setBlocking( fieldId, cf2, fieldConfig );
 
 								rejected.forEach( file => {
 									fieldValue.push(file);
@@ -281,16 +281,21 @@ export class CalderaFormsRender extends Component {
 								this.setFieldValue(fieldIdAttr, fieldValue );
 
 								this.addFieldMessage(fieldIdAttr, this.getStrings().cf2FileField.checkMessage, true );
-							} else {
-								removeFromBlocking(fieldId,cf2);
 							}
 
 						} else if ( typeof(accepted) === 'object' && accepted.target.className === "cf2-file-remove" ) { //Remove a File form fieldValue
 
+							//accepted is event and rejected is the file
 							const index = fieldValue.indexOf(rejected);
 							fieldValue.splice(index, 1);
 
-							this.setFieldValue(fieldIdAttr, fieldValue );
+							this.setFieldValue(fieldIdAttr, fieldValue);
+
+							/*const fieldReady = this.isFieldValid(fieldIdAttr);
+
+							if( fieldReady ) {
+								removeFromBlocking(fieldId,cf2,fieldConfig);
+							}*/
 						}
 
           			}
