@@ -122,7 +122,7 @@ export const setSubmitButtonState = (cf2, fieldConfig, state) => {
 	} else {
 		form.find(':submit').prop('disabled',true);
 	}
-
+	return state;
 }
 
 /**
@@ -132,7 +132,7 @@ export const setSubmitButtonState = (cf2, fieldConfig, state) => {
  * @param {string} fieldIdAttr
  * @return {string} formIdAttr
  */
-const getFormIdAttrByFieldIdAttr = (cf2, fieldIdAttr) => {
+export const getFormIdAttrByFieldIdAttr = (cf2, fieldIdAttr) => {
 	const entries = Object.entries(cf2);
 	const formEntries = [];
 	let formIdAttr;
