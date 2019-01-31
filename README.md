@@ -4,14 +4,17 @@ Caldera-Forms
 Drag & Drop WordPress Responsive Form Builder
 
 
-## Docs, Add-ons & More Information:
+## 🌋👀 Docs, Add-ons & More Information:
 * [Getting Started](https://calderaforms.com/getting-started)
 * [Documentation](https://calderaforms.com/documentation/caldera-forms-documentation/)
 * [Caldera Forms Pro](https://calderaforms.com/pro)
 
-## Development
-[Contributor Guidleines](https://github.com/CalderaWP/Caldera-Forms/blob/master/CONTRIBUTING.md)
-
+## 🌋👀 Development
+* [Contributor Guidelines](https://github.com/CalderaWP/Caldera-Forms/blob/master/CONTRIBUTING.md)
+    * [Setup Test Environment](./contributing/local-dev.md)
+    * [Testing A Bug](./contributing/test-bug.md)
+    * [Automated Testing](./contributing/testing.md)
+    * [Making Changes To Codebase - Pull Request Workflow](./contributing/pull-request-workflow.md)
 
 ### Install for development
 Requires: git, npm, Grunt.
@@ -21,9 +24,8 @@ Requires: git, npm, Grunt.
     - `cd Caldera-Forms.git`
 - If you are using your own local development environment:
     - `npm i && composer install`
-- If you are wish to use the provided local development environment
+- If you are wish to use [the provided local development environment](./contributing/local-dev.md)
     - `composer dev:install`
-    
     
 ### Build For Release
 To create a build to ship to WordPress.org:
@@ -34,6 +36,7 @@ This creates `/build/<version>` where `<version>` is the current version set in 
 See "Release To WordPress.org" section below for more details on pushing this build to WordPress.org. 
 
 ### JavaScript Development
+[See automated testing docs for more information on directory structure, in regards to JavaScript test files]()
 
 Run watcher for development to auto-compile JavaScript and CSS.
 
@@ -55,49 +58,12 @@ This is the new stuff, built with webpack. Eventually everything UI will be here
 #### `/assets/`
 This is the old stuff, built with grunt.
 
-
 * Build for development and start watcher.
     - `npm run dev:grunt`
 * Build for production
-    -  `npm run build:grunt`
-    
-### Test Environment
-All PHP tests are based off of the WordPress "unit" test suite, and therefore need a full WordPress test environment. The install script in '/bin' is pretty standard and should work with VVV or whatever.
+    -  `npm run build:grunt`    
 
-We provide a docker-based development environment. It is recommended that you use this environment because the setup is scripted and all of the tests can be run with it.
-
-The local server is [http://localhost:8228](http://localhost:8228)
-
-
-#### Requirements
-* Docker
-    - [Installation documentation](https://docs.docker.com/install/)
-* Composer
-    - [Installation documentation](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx)
-* npm
-    - [Installation documentation](https://www.npmjs.com/get-npm)
-    
-    
-#### Install Test Environment
-* Install local development environment, dependencies and setup test forms
-    - `composer dev:install`
-        -  May take awhile.
-* Go to [http://localhost:8228](http://localhost:8228) and make sure you have a WordPress site and can login.
-    - Username: admin
-    - password: password
-
-### Test Structures
-* PHP tests go in /tests and are run using phpunit
-    - Integration tests, which require WordPress, are in tests. These used to be all the tests we have.
-    - Unit tests -- isolated tests that do NOT require WordPress -- go in `tests/Unit`.
-    - The trait `calderawp\calderaforms\Util\Traits` should have all of the factories used for integration and unit tests (aspirational.)
-* JavaScript UNIT tests go in clients/tests
-    - Unit tests go in clients/tests/unit and are run using [Jest](https://facebook.github.io/jest/docs/en/getting-started.html)
-    - Unit tests must have the word test in file name. For example, `formConfig.test.js`
-* End to end tests go in `cypress/integration` amd are written using [Cypress](https://cypress.io)
-    - See our [Cypress README for testing](./cypress/README.md)
-
-#### Commands
+#### CLI Commands
 ##### Composer
 * `composer test:php` - Run PHP tests -- isolated unit tests and the WordPress integration tests.
 * `composer dev:install` - Installs dependencies, Docker-based test environment and sets up test forms.
@@ -107,14 +73,15 @@ The local server is [http://localhost:8228](http://localhost:8228)
 * `composer wp:server-start` - Starts Docker-based test environment.
 * `composer wp:server-url` - Echos the Docker-based test environment's server url.
 * `composer wp:activate` - Activate plugins in Docker-based environment.
-* `composer wp:tests` - Runs the PHP integration tests using phpunit inside Docker-based environment .
+* `composer wp:tests` - Runs the PHP integration tests using phpunit inside Docker-based environment.
 * `composer wp:stop` - Stops Docker-based test environment, without destroying containers.
 * `composer wp:destroy` - Removes (including the database) the test environment and destroys containers.
+* `composer test:unit` - Run php unit tests.
 * `composer test:setup` - Adds test forms and puts them on pages.
 * `composer test:delete` - Delete test forms and pages the are on.
 * `composer nuke` - Deletes dependencies, including lock files -- NPM and Composer.
 
-##### Composer
+##### npm
 * `npm test` - Run JavaScript test watcher
 * `npm run test:once` - Run JavaScript unit tests once
 * `npm run test:e2e` - Start Cypress e2e test runner.
@@ -147,11 +114,3 @@ Probably don't use these directly. They will change. Must be prefaced with `dock
 #### Notes
 * This assumes your WordPress.org username is `christiechirinos`, and your password is `12345`.
 * The first argument is password, which is required. The second argument is username, which defaults to `Shelob9`, which is Josh's username.
-
-## Contributing/ Using This Repo, Etc.
-[Contributing Guide](https://github.com/CalderaWP/Caldera-Forms/blob/master/CONTRIBUTING.md)
-
-* The default branch is "master" that should be the same as WordPress.org.
-* Development happens on the "develop" branch.
-* If you find a bug, or would like to make a feature request, [please open an issue](https://github.com/CalderaWP/Caldera-Forms/issues/).
-* If you fixed a bug, or made a new feature, please submit a pull request against the develop branch.
