@@ -83,7 +83,8 @@ export class CalderaFormsRender extends Component {
 		});
 		this.state = {
 			...fieldValues,
-			messages: props.messages || {}
+			messages: props.messages || {},
+			fieldsValuesState: props.fieldsValuesState || {}
 		};
 		this.setFieldValue = this.setFieldValue.bind(this);
 		this.setFieldShouldShow = this.setFieldShouldShow.bind(this);
@@ -91,6 +92,7 @@ export class CalderaFormsRender extends Component {
 		this.subscribe = this.subscribe.bind(this);
 		this.getFieldConfig = this.getFieldConfig.bind(this);
 		this.addFieldMessage = this.addFieldMessage.bind(this);
+		this.checkFieldValues= this.checkFieldValues.bind(this);
 	}
 
 	/**
@@ -266,10 +268,9 @@ export class CalderaFormsRender extends Component {
 								accepted.forEach(file => {
 							  		fieldValue.push(file);
 								});
-								if(this.checkFieldValues(fieldIdAttr, fieldValue).valid){
+
+								if(this.checkFieldValues(fieldIdAttr, fieldValue).valid === true){
 									removeFromBlocking(fieldId,cf2,fieldConfig);
-								} else {
-									this.addFieldMessage(fieldIdAttr, this.getStrings().cf2FileField.checkMessage, true );
 								}
 								this.setFieldValue(fieldIdAttr, fieldValue );
 							}
@@ -278,7 +279,7 @@ export class CalderaFormsRender extends Component {
 								rejected.forEach( file => {
 									fieldValue.push(file);
 								})
-								this.setFieldValue(fieldIdAttr, fieldValue );
+								this.setFieldValue(fieldIdAttr, fieldValue);
 								setBlocking( fieldId, cf2, fieldConfig );
 								this.addFieldMessage(fieldIdAttr, this.getStrings().cf2FileField.checkMessage, true );
 							}
@@ -291,10 +292,9 @@ export class CalderaFormsRender extends Component {
 							if (-1 < index) {
 								fieldValue.splice(index, 1);
 							}
-							if(this.checkFieldValues(fieldIdAttr, fieldValue).valid){
+
+							if(this.checkFieldValues(fieldIdAttr, fieldValue).valid === true){
 								removeFromBlocking(fieldId,cf2,fieldConfig);
-							} else {
-								this.addFieldMessage(fieldIdAttr, this.getStrings().cf2FileField.checkMessage, true );
 							}
 							this.setFieldValue(fieldIdAttr, fieldValue);
 						}
@@ -497,6 +497,14 @@ export class CalderaFormsRender extends Component {
 			fieldValuesState.valid = fieldValuesState.invalidValues.length <= 0;
 		}
 
+		this.setState({
+			fieldsValuesState: {
+				...this.state.fieldsValuesState,
+				[fieldIdAttr]: fieldValuesState
+			}
+
+		})
+
 		return fieldValuesState;
 	}
 
@@ -504,7 +512,7 @@ export class CalderaFormsRender extends Component {
 	/** @inheritDoc */
 	render() {
 		const {state, props} = this;
-		const {messages} = state;
+		const {messages, fieldsValuesState} = state;
 		const {fieldsToControl, shouldBeValidating} = props;
 
 		return (
