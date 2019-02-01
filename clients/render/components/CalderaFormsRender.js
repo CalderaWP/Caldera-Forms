@@ -268,6 +268,8 @@ export class CalderaFormsRender extends Component {
 								});
 								if(this.checkFieldValues(fieldIdAttr, fieldValue).valid){
 									removeFromBlocking(fieldId,cf2,fieldConfig);
+								} else {
+									this.addFieldMessage(fieldIdAttr, this.getStrings().cf2FileField.checkMessage, true );
 								}
 								this.setFieldValue(fieldIdAttr, fieldValue );
 							}
@@ -291,6 +293,8 @@ export class CalderaFormsRender extends Component {
 							}
 							if(this.checkFieldValues(fieldIdAttr, fieldValue).valid){
 								removeFromBlocking(fieldId,cf2,fieldConfig);
+							} else {
+								this.addFieldMessage(fieldIdAttr, this.getStrings().cf2FileField.checkMessage, true );
 							}
 							this.setFieldValue(fieldIdAttr, fieldValue);
 						}
@@ -447,6 +451,9 @@ export class CalderaFormsRender extends Component {
 	 * @return {object} with this object.valid being a boolean indicating validity of all values
 	 */
 	checkFieldValues(fieldIdAttr, fieldValue) {
+		if (!this.getFieldConfig(fieldIdAttr)) {
+			return {"valid": false};
+		}
 		//Get Field Config and values
 		const fieldConfig = this.getFieldConfig(fieldIdAttr);
 
