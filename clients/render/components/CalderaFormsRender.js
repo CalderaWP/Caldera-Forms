@@ -115,9 +115,7 @@ export class CalderaFormsRender extends Component {
 	 * @return {*}
 	 */
 	getFieldValue(fieldIdAttr) {
-		if ('file' === this.getFieldConfig(fieldIdAttr).type) {
-			return this.state[fieldIdAttr];
-		}
+
 		return this.getCfState().getState(fieldIdAttr);
 	}
 
@@ -451,6 +449,7 @@ export class CalderaFormsRender extends Component {
 	checkFieldValues(fieldIdAttr, fieldValue) {
 		//Get Field Config and values
 		const fieldConfig = this.getFieldConfig(fieldIdAttr);
+
 		if(typeof fieldValue === "undefined"){
 			fieldValue = this.getFieldValue(fieldIdAttr);
 		}
@@ -459,7 +458,7 @@ export class CalderaFormsRender extends Component {
 		let fieldValuesState = { "valid": true, "validValues": [], "invalidValues": [] };
 
 		//Only check validity of values if at least a value is set
-		if(fieldValue.length > 0) {
+		if(fieldValue !== null && fieldValue.length > 0) {
 
 			//Check validity of the field depending on the type of field
 			switch (this.getFieldConfig(fieldIdAttr).type) {
