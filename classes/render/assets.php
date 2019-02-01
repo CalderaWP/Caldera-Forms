@@ -631,7 +631,7 @@ class Caldera_Forms_Render_Assets {
 						'fileUploadError1'			=>	esc_attr__('Error: ', 'caldera-forms'),
 						'fileUploadError2'			=>	esc_attr__(' could not be processed', 'caldera-forms'),
 						'invalidFiles'				=>	esc_attr__( 'These Files have been rejected : ', 'caldera-forms'),
-						'checkMessage'				=>	esc_attr__( 'Please check file type and size ', 'caldera-forms'),
+						'checkMessage'				=>	esc_attr__( 'Please check files type and size', 'caldera-forms'),
 						'invalidFileResponse'		=>	esc_attr__('Unknown File Process Error', 'caldera-forms'),
 						'fieldIsRequired'			=>	esc_attr__( 'Field is required','caldera-forms'),
 						'filesUnit'					=>	esc_attr__('bytes', 'caldera-forms'),
