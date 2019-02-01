@@ -263,39 +263,38 @@ export class CalderaFormsRender extends Component {
 							if(Array.isArray(fieldValue) === false){
 								fieldValue = [];
 							}
-
+							//Set all accepted files in fieldValue and check if all field values are valid to removeFieldFromBlocking
 							if( accepted.length > 0 ) {
 								accepted.forEach(file => {
 							  		fieldValue.push(file);
 								});
+								if(this.checkFieldValues(fieldIdAttr, fieldValue).valid){
+									removeFromBlocking(fieldId,cf2,fieldConfig);
+								}
 								this.setFieldValue(fieldIdAttr, fieldValue );
 							}
-
+							//Set all rejected files in fieldValue and setBlocking
 							if( rejected.length > 0 ) {
-
-								setBlocking( fieldId, cf2, fieldConfig );
-
 								rejected.forEach( file => {
 									fieldValue.push(file);
 								})
 								this.setFieldValue(fieldIdAttr, fieldValue );
-
+								setBlocking( fieldId, cf2, fieldConfig );
 								this.addFieldMessage(fieldIdAttr, this.getStrings().cf2FileField.checkMessage, true );
 							}
 
 						} else if ( typeof(accepted) === 'object' && accepted.target.className === "cf2-file-remove" ) { //Remove a File form fieldValue
 
+							//Remove file from fieldValue and check if all field values are valid to removeFieldFromBlocking
 							//accepted is event and rejected is the file
 							const index = fieldValue.indexOf(rejected);
-							fieldValue.splice(index, 1);
-
-							this.setFieldValue(fieldIdAttr, fieldValue);
-
-							/*const fieldReady = this.isFieldValid(fieldIdAttr);
-
-							if( fieldReady ) {
+							if (-1 < index) {
+								fieldValue.splice(index, 1);
+							}
+							if(this.checkFieldValues(fieldIdAttr, fieldValue).valid){
 								removeFromBlocking(fieldId,cf2,fieldConfig);
-							}*/
+							}
+							this.setFieldValue(fieldIdAttr, fieldValue);
 						}
 
           			}
@@ -394,6 +393,7 @@ export class CalderaFormsRender extends Component {
 		if (!this.isFieldRequired(fieldIdAttr)) {
 			return true;
 		}
+
 		return !isEmpty(this.state[fieldIdAttr]);
 	}
 
@@ -427,16 +427,72 @@ export class CalderaFormsRender extends Component {
 	}
 
 
-  /**
-   * Get translatable strings Set in Caldera_Forms_Render_Assets::enqueue_form_assets()
-   *
-   * @since 1.8.0
-   *
-   * @return {Object}
-   */
-  getStrings() {
-    return this.props.strings;
-  }
+	/**
+	* Get translatable strings Set in Caldera_Forms_Render_Assets::enqueue_form_assets()
+	*
+	* @since 1.8.0
+	*
+	* @return {Object}
+	*/
+	getStrings() {
+		return this.props.strings;
+	}
+
+	/**
+	 * //Check validity of all values set on a field depending on the field type
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param {string} fieldIdAttr
+	 * @param {array} fieldValue
+	 *
+	 * @return {object} with this object.valid being a boolean indicating validity of all values
+	 */
+	checkFieldValues(fieldIdAttr, fieldValue) {
+		//Get Field Config and values
+		const fieldConfig = this.getFieldConfig(fieldIdAttr);
+		if(typeof fieldValue === "undefined"){
+			fieldValue = this.getFieldValue(fieldIdAttr);
+		}
+
+		//Declare a default fieldValuesState variable
+		let fieldValuesState = { "valid": true, "validValues": [], "invalidValues": [] };
+
+		//Only check validity of values if at least a value is set
+		if(fieldValue.length > 0) {
+
+			//Check validity of the field depending on the type of field
+			switch (this.getFieldConfig(fieldIdAttr).type) {
+				case 'file':
+					const maxSize = fieldConfig.configOptions.maxFileUploadSize;
+					let allowedTypes = [];
+					if (typeof fieldConfig.configOptions.allowedTypes === "string") {
+						allowedTypes = fieldConfig.configOptions.allowedTypes.split(',');
+					}
+					fieldValue.forEach(file => {
+						//Check that each values respect field settings
+						const invalidSize = file.size > maxSize && maxSize > 0;
+						const invalidType = allowedTypes.indexOf(file.type) < 0;
+						if ( invalidSize || invalidType) {
+							fieldValuesState.invalidValues.push([file]);
+						} else {
+							fieldValuesState.validValues.push([file]);
+						}
+					})
+					break;
+				default:
+					fieldValue.forEach(value => {
+						fieldValuesState.validValues.push([value]);
+					})
+					break;
+			}
+
+			//Set the valid parameter inside fieldValuesState depending on fieldValuesState.invalidValues length
+			fieldValuesState.valid = fieldValuesState.invalidValues.length <= 0;
+		}
+
+		return fieldValuesState;
+	}
 
 
 	/** @inheritDoc */
