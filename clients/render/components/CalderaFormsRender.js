@@ -84,7 +84,7 @@ export class CalderaFormsRender extends Component {
 		this.state = {
 			...fieldValues,
 			messages: props.messages || {},
-			fieldsValuesState: props.fieldsValuesState || {}
+			valuesValidity: props.valuesValidity || {}
 		};
 		this.setFieldValue = this.setFieldValue.bind(this);
 		this.setFieldShouldShow = this.setFieldShouldShow.bind(this);
@@ -92,7 +92,7 @@ export class CalderaFormsRender extends Component {
 		this.subscribe = this.subscribe.bind(this);
 		this.getFieldConfig = this.getFieldConfig.bind(this);
 		this.addFieldMessage = this.addFieldMessage.bind(this);
-		this.checkFieldValues= this.checkFieldValues.bind(this);
+		this.checkFieldValues = this.checkFieldValues.bind(this);
 	}
 
 	/**
@@ -104,9 +104,7 @@ export class CalderaFormsRender extends Component {
 	 */
 	getCfState() {
 		return this.props.cfState;
-
 	}
-
 
 	/**
 	 * Get the current value of a field from CF State
@@ -117,7 +115,6 @@ export class CalderaFormsRender extends Component {
 	 * @return {*}
 	 */
 	getFieldValue(fieldIdAttr) {
-
 		return this.getCfState().getState(fieldIdAttr);
 	}
 
@@ -229,8 +226,9 @@ export class CalderaFormsRender extends Component {
 		}
 		if (bubbleUp) {
 			this.getCfState().mutateState(fieldIdAttr, newValue);
-
 		}
+		//Update valuesValidity state
+		this.checkFieldValues(fieldIdAttr, newValue);
 	}
 
 	/**
@@ -258,9 +256,9 @@ export class CalderaFormsRender extends Component {
 							}
 						});
 
-						if( Array.isArray(accepted) === true && Array.isArray(rejected) === true ) { // Handle accepted and rejected files
+						if( Array.isArray(accepted) && Array.isArray(rejected) ) { // Handle accepted and rejected files
 
-							if(Array.isArray(fieldValue) === false){
+							if(!Array.isArray(fieldValue)){
 								fieldValue = [];
 							}
 							//Set all accepted files in fieldValue and check if all field values are valid to removeFieldFromBlocking
@@ -268,11 +266,11 @@ export class CalderaFormsRender extends Component {
 								accepted.forEach(file => {
 							  		fieldValue.push(file);
 								});
+								this.setFieldValue(fieldIdAttr, fieldValue );
 
-								if(this.checkFieldValues(fieldIdAttr, fieldValue).valid === true){
+								if(this.checkFieldValues(fieldIdAttr, fieldValue).valid){
 									removeFromBlocking(fieldId,cf2,fieldConfig);
 								}
-								this.setFieldValue(fieldIdAttr, fieldValue );
 							}
 							//Set all rejected files in fieldValue and setBlocking
 							if( rejected.length > 0 ) {
@@ -281,7 +279,6 @@ export class CalderaFormsRender extends Component {
 								})
 								this.setFieldValue(fieldIdAttr, fieldValue);
 								setBlocking( fieldId, cf2, fieldConfig );
-								this.addFieldMessage(fieldIdAttr, this.getStrings().cf2FileField.checkMessage, true );
 							}
 
 						} else if ( typeof(accepted) === 'object' && accepted.target.className === "cf2-file-remove" ) { //Remove a File form fieldValue
@@ -292,8 +289,7 @@ export class CalderaFormsRender extends Component {
 							if (-1 < index) {
 								fieldValue.splice(index, 1);
 							}
-
-							if(this.checkFieldValues(fieldIdAttr, fieldValue).valid === true){
+							if(this.checkFieldValues(fieldIdAttr, fieldValue).valid){
 								removeFromBlocking(fieldId,cf2,fieldConfig);
 							}
 							this.setFieldValue(fieldIdAttr, fieldValue);
@@ -478,8 +474,8 @@ export class CalderaFormsRender extends Component {
 					fieldValue.forEach(file => {
 						//Check that each values respect field settings
 						const invalidSize = file.size > maxSize && maxSize > 0;
-						const invalidType = allowedTypes.indexOf(file.type) < 0;
-						if ( invalidSize || invalidType) {
+						const invalidType = allowedTypes.length > 0 && allowedTypes.indexOf(file.type) < 0;
+						if (invalidSize || invalidType) {
 							fieldValuesState.invalidValues.push([file]);
 						} else {
 							fieldValuesState.validValues.push([file]);
@@ -498,8 +494,8 @@ export class CalderaFormsRender extends Component {
 		}
 
 		this.setState({
-			fieldsValuesState: {
-				...this.state.fieldsValuesState,
+			valuesValidity: {
+				...this.state.valuesValidity,
 				[fieldIdAttr]: fieldValuesState
 			}
 
@@ -512,7 +508,7 @@ export class CalderaFormsRender extends Component {
 	/** @inheritDoc */
 	render() {
 		const {state, props} = this;
-		const {messages, fieldsValuesState} = state;
+		const {messages, valuesValidity} = state;
 		const {fieldsToControl, shouldBeValidating} = props;
 
 		return (
@@ -529,11 +525,13 @@ export class CalderaFormsRender extends Component {
 						fieldDefault,
 						fieldIdAttr
 					} = field;
-
+					const isValuesValiditySet = 'object' === typeof valuesValidity && valuesValidity.hasOwnProperty(fieldIdAttr);
+					const areValuesValid = isValuesValiditySet ? valuesValidity[fieldIdAttr].valid : {valid: true};
 
 					field = {
 						...field,
-						fieldValue: this.getFieldValue(fieldIdAttr)
+						fieldValue: this.getFieldValue(fieldIdAttr),
+						areValuesValid
 					};
 
 					const isInvalid = shouldBeValidating && !this.isFieldValid(fieldIdAttr);
@@ -548,6 +546,7 @@ export class CalderaFormsRender extends Component {
 					};
 
 					const hasMessage = 'object' === typeof messages && messages.hasOwnProperty(fieldIdAttr);
+
 					return (
 						<CalderaFormsFieldRender
 							{...props}
