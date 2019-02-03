@@ -158,7 +158,8 @@ describe('chooses inner field', () => {
 				required: 'false',
 				fieldDefault: '',
 				fieldValue: '',
-				fieldIdAttr: 'not_required_multiple_has_button_text'
+				fieldIdAttr: 'not_required_multiple_has_button_text',
+				areValuesValid: true
 			},
 		accept: '',
 		multiple: 'false',
