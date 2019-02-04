@@ -324,7 +324,7 @@ export class CalderaFormsRender extends Component {
 								const {eventType, fieldIdAttr} = eventData;
 								let {fieldValue} = eventData;
 								if(typeof fieldValue === 'undefined'){
-									fieldValue = this.getFieldValues()
+									fieldValue = this.state[fieldIdAttr];
 								}
 								switch (eventType) {
 									case 'hide':
