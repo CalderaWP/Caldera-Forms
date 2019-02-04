@@ -121,6 +121,13 @@ export class CalderaFormsRender extends Component {
 		return this.getCfState().getState(fieldIdAttr);
 	}
 
+	/**
+	 * Get all fields values
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return {*}
+	 */
 	getFieldValues() {
 		const {fieldsToControl} = this.props;
 		const pickArray = (array, key) => {
