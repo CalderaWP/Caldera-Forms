@@ -66,7 +66,9 @@ export const removeFromBlocking = (fieldId, cf2, fieldConfig = {}) => {
 export const setBlocking = ( fieldId, cf2, fieldConfig = {}) => {
 	removeFromUploadStarted(fieldId, cf2);
 	removeFromPending(fieldId, cf2);
-	cf2.fieldsBlocking.push( fieldId );
+	if(cf2.fieldsBlocking.indexOf(fieldId) < 0){
+		cf2.fieldsBlocking.push( fieldId );
+	}
 	setSubmitButtonState(cf2, fieldConfig, false);
 }
 
