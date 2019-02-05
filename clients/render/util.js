@@ -110,7 +110,7 @@ export const setSubmitButtonState = (cf2, fieldConfig, state) => {
 
 	const fieldIdAttr = fieldConfig.fieldIdAttr;
 
-	const formIdAttr = getFormIdAttrByFieldIdAttr(cf2, fieldIdAttr);
+	const formIdAttr = getFormIdAttr(cf2, fieldIdAttr);
 
 	const form =  jQuery("#" + formIdAttr);
 	//If no state param was send in the function define the state based on elements inside the fieldsBlocking Array
@@ -134,19 +134,25 @@ export const setSubmitButtonState = (cf2, fieldConfig, state) => {
  * @param {string} fieldIdAttr
  * @return {string} formIdAttr
  */
-export const getFormIdAttrByFieldIdAttr = (cf2, fieldIdAttr) => {
-	const entries = Object.entries(cf2);
-	const formEntries = [];
-	let formIdAttr;
-	entries.forEach( (entry) => {
-		if(entry[1].hasOwnProperty("fields") ) {
-			formEntries.push(entry);
-		}
-	})
-	formEntries.forEach( formEntry => {
-		if(formEntry[1].fields.hasOwnProperty(fieldIdAttr ) ) {
-			formIdAttr = formEntry[0];
-		}
-	})
+export const getFormIdAttr = (cf2, fieldIdAttr) => {
+
+	let formIdAttr = cf2.formIdAttr;
+
+	if( typeof formIdAttr === "undefined" ){
+
+		const entries = Object.entries(cf2);
+		const formEntries = [];
+		entries.forEach( entry => {
+			if(entry[1].hasOwnProperty("fields") ) {
+				formEntries.push(entry);
+			}
+		})
+		formEntries.forEach( formEntry => {
+			if(formEntry[1].fields.hasOwnProperty(fieldIdAttr ) ) {
+				formIdAttr = formEntry[0];
+			}
+		})
+	}
+
 	return formIdAttr;
 }

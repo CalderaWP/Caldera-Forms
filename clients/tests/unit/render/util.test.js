@@ -6,7 +6,7 @@ import {
 	setBlocking,
 	createMediaFromFile,
 	setSubmitButtonState,
-	getFormIdAttrByFieldIdAttr
+	getFormIdAttr
 } from '../../../render/util'
 
 import * as data  from "./Mocks/mockUtils";
@@ -232,7 +232,7 @@ describe('setSubmitButtonState', () => {
 	};
 
 	it( 'Get form ID Attr', () => {
-		const result = getFormIdAttrByFieldIdAttr( cf2,  "fld_6214010_1" );
+		const result = getFormIdAttr( cf2,  "fld_6214010_1" );
 		expect(result).toBe("CF5bed436999460_1");
 	});
 

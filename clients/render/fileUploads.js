@@ -30,7 +30,7 @@ export const handleFileUploadResponse = (response, file, processData, processFun
 		handleFileUploadError(strings.invalidFileResponse, file, strings, field.fieldIdAttr, theComponent, 'UnknownUploadError');
 	}else if (response.hasOwnProperty('control')) {
 		removeFromPending(fieldId,cf2);
-		removeFromBlocking(fieldId,cf2);
+		removeFromBlocking(fieldId,cf2,field);
 		cf2.uploadCompleted.push(fieldId);
 		if(lastFile){
 			$form.submit();
@@ -169,7 +169,7 @@ export const processFileField = (processData, processFunctions) => {
 	//do not upload after complete
 	if ( cf2.uploadCompleted.includes(fieldId)) {
 		removeFromPending(fieldId,cf2);
-		removeFromBlocking(fieldId,cf2);
+		removeFromBlocking(fieldId,cf2,field);
 		return;
 	}
 	//do not start upload if it has started uploading
@@ -184,12 +184,12 @@ export const processFileField = (processData, processFunctions) => {
 			if( theComponent.isFieldRequired(fieldIdAttr) ){
 				theComponent.addFieldMessage( fieldIdAttr, strings.fieldIsRequired);
 				shouldBeValidating = true;
-				setBlocking(fieldId,cf2);
+				setBlocking(fieldId,cf2,field);
 			}
 			removeFromPending(fieldId,cf2);
 			return;
 		}
-		removeFromBlocking(fieldId,cf2);
+		removeFromBlocking(fieldId,cf2,field);
 		const files = values[fieldId];
 		processFiles(files, processData, processFunctions);
 	}
