@@ -128,7 +128,7 @@ export class CalderaFormsRender extends Component {
 	 *
 	 * @return {*}
 	 */
-	getFieldValues() {
+	getAllFieldValues() {
 		const {fieldsToControl} = this.props;
 		const pickArray = (array, key) => {
 			return array.reduce(
