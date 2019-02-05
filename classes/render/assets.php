@@ -8,6 +8,7 @@
  * @link
  * @copyright 2016 CalderaWP LLC
  */
+
 class Caldera_Forms_Render_Assets {
 
 	/**
