@@ -179,7 +179,7 @@ describe('Form render methods', () => {
 			/>
 		);
 
-		expect(typeof component.instance().getFieldValues()).toBe('object');
+		expect(typeof component.instance().getAllFieldValues()).toBe('object');
 
 	});
 
@@ -213,8 +213,8 @@ describe('Form render methods', () => {
 			}
 		];
 		component.instance().getCfState().mutateState( 'fld_12_1', 'foot' );
-		expect(component.instance().getFieldValues().fld_12_1).toBe('foot');
-		expect(component.instance().getFieldValues().fld_7480239_1).toBe(value);
+		expect(component.instance().getAllFieldValues().fld_12_1).toBe('foot');
+		expect(component.instance().getAllFieldValues().fld_7480239_1).toBe(value);
 
 	});
 
