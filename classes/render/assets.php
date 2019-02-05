@@ -592,6 +592,7 @@ class Caldera_Forms_Render_Assets {
 		self::enqueue_script( 'validator' );
 		self::enqueue_script( 'init' );
 		self::enqueue_script( 'render' );
+		self::enqueue_style( 'render' );
 
 		$should_minify = self::should_minify();
 		if( $should_minify  ){

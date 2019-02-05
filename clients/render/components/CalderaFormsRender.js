@@ -118,7 +118,14 @@ export class CalderaFormsRender extends Component {
 		return this.getCfState().getState(fieldIdAttr);
 	}
 
-	getFieldValues() {
+	/**
+	 * Get all fields values
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return {*}
+	 */
+	getAllFieldValues() {
 		const {fieldsToControl} = this.props;
 		const pickArray = (array, key) => {
 			return array.reduce(
@@ -339,7 +346,8 @@ export class CalderaFormsRender extends Component {
 								const {eventType, fieldIdAttr} = eventData;
 								let {fieldValue} = eventData;
 								if(typeof fieldValue === 'undefined'){
-									fieldValue = this.getFieldValues()
+									const values = this.getAllFieldValues();
+									fieldValue = values[fieldIdAttr];
 								}
 								switch (eventType) {
 									case 'hide':
