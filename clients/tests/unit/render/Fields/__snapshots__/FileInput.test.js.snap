@@ -364,6 +364,58 @@ exports[`File Field  Matches snapshot for required_single_allow_png 1`] = `
 </div>
 `;
 
+exports[`File Field  Matches snapshot for value_set_max_upload_size 1`] = `
+<div
+  className="cf2-dropzone"
+  data-field="required_multiple_no_button_text"
+>
+  <div
+    aria-disabled={false}
+    className="cf2-file form-control"
+    onClick={[Function]}
+    onDragEnter={[Function]}
+    onDragLeave={[Function]}
+    onDragOver={[Function]}
+    onDragStart={[Function]}
+    onDrop={[Function]}
+    style={
+      Object {
+        "position": "relative",
+      }
+    }
+  >
+    <button
+      aria-controls="required_multiple_no_button_text, cf2-list-files"
+      aria-expanded={false}
+      className="btn btn-block"
+      type="button"
+    >
+      The Default Text
+    </button>
+    <input
+      accept=""
+      autoComplete="off"
+      disabled={false}
+      id="required_multiple_no_button_text"
+      multiple={true}
+      onChange={[Function]}
+      style={
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "opacity": 0.00001,
+          "pointerEvents": "none",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+      type="file"
+    />
+  </div>
+</div>
+`;
+
 exports[`File Field  Matches snapshot for width_40_height_20 1`] = `
 <div
   className="cf2-dropzone"

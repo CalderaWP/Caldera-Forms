@@ -214,7 +214,7 @@ class Caldera_Forms_FilesTest extends TestCase
 
 		//This file is larger than 42 bytes
 		$this->assertTrue(
-			Caldera_Forms_Files::is_file_too_large($field, $this->getSmallCatPath() )
+			Caldera_Forms_Files::is_file_too_large($field, $this->createSmallCat() )
 		);
 
 
@@ -224,13 +224,13 @@ class Caldera_Forms_FilesTest extends TestCase
 
 		//This file is smaller than 42000000 bytes
 		$this->assertFalse(
-			Caldera_Forms_Files::is_file_too_large($field, $this->getSmallCatPath() )
+			Caldera_Forms_Files::is_file_too_large($field, $this->createSmallCat() )
 		);
 
 
 		//No limits, all files are the right size.
 		$this->assertFalse(
-			Caldera_Forms_Files::is_file_too_large($this->field, $this->getSmallCatPath() )
+			Caldera_Forms_Files::is_file_too_large($this->field, $this->createSmallCat() )
 		);
 	}
 }

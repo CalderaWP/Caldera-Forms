@@ -232,7 +232,7 @@ describe('Form render methods', () => {
 				"preview": "blob:http://localhost:8228/eb12ce64-102f-4ba9-b87f-a2ec3f77756f"
 			}
 		];
-		component.setState({fld_7480239_1: value});
+		component.instance().setFieldValue("fld_7480239_1", value);
 		expect(component.instance().getFieldValue('fld_7480239_1')).toEqual(value);
 
 	});
@@ -464,16 +464,27 @@ describe('Form render methods', () => {
 		expect( component.state( 'messages')).toEqual( {});
 	});
 
-  test( 'Get default file field translatable Strings', () => {
-    const props = {...formRenderTestProps};
-    const component = shallow(
-      <CalderaFormsRender
-        {...props}
-      />
-    );
-    expect(component.instance().getStrings()).toBeDefined();
-    expect(component.instance().getStrings()).toBeTruthy();
-  });
+	test( 'Get default file field translatable Strings', () => {
+		const props = {...formRenderTestProps};
+		const component = shallow(
+		  <CalderaFormsRender
+			{...props}
+		  />
+		);
+		expect(component.instance().getStrings()).toBeDefined();
+		expect(component.instance().getStrings()).toBeTruthy();
+	});
+
+	test( 'Get checkFieldValues function', () => {
+		const props = {...formRenderTestProps};
+		const component = shallow(
+			<CalderaFormsRender
+				{...props}
+			/>
+		);
+		expect(component.instance().checkFieldValues()).toBeDefined();
+		expect(component.instance().checkFieldValues()).toBeTruthy();
+	});
 
 });
 

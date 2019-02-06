@@ -122,7 +122,7 @@ describe('DOM testing file components', () => {
 		);
 		component.setProps(prepared);
 		expect(component.find('img.cf2-file-field-img-preview').length).toBe(1);
-		expect(component.find('.cf2-file-data').length).toBe(1);
+		expect(component.find('.cf2-file-data').length).toBe(2);
 
 	});
 
@@ -141,7 +141,7 @@ describe('DOM testing file components', () => {
 		);
 		component.setProps(prepared);
 		expect(component.find('.cf2-file-field-img-preview').length).toBe(0);
-		expect(component.find('.cf2-file-data').length).toBe(1);
+		expect(component.find('.cf2-file-data').length).toBe(2);
 	});
 
 
@@ -206,6 +206,25 @@ describe('DOM testing file components', () => {
 		);
 		component.setProps(prepared);
 		expect(component.find('.btn').text()).toEqual("Drop files or click to select files to Upload");
+	});
+
+	it('Show error if file size exceeds max upload size value', () => {
+		const size = 1024 * 1024 * 2;
+		const mock = new MockFile();
+		let file = mock.create("pic.png", size, "image/png");
+		file.preview = file.name;
+		let prepared = FileInput.fieldConfigToProps(fileFieldConfigs.required_multiple_no_button_text);
+		const field = prepared.field;
+		prepared.multiUploadText = fileStrings.defaultButtonText;
+		prepared.field.fieldValue = [file];
+		const component = mount(
+			<FileInput
+				field={field}
+				strings={fileStrings}
+			/>
+		);
+		component.setProps(prepared);
+		expect(component.find('.cf2-file-data.file-size').length).toBe(1);
 	});
 
 });
