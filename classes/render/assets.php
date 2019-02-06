@@ -629,11 +629,16 @@ class Caldera_Forms_Render_Assets {
 				'strings'   =>  array(
 				    'cf2FileField'  => array(
                         'removeFile' => esc_attr__('Remove file', 'caldera-forms'),
-                        'defaultButtonText' 	=>  esc_attr__('Drop files or click to select files to Upload', 'caldera-forms'),
-						'fileUploadError1'		=>	esc_attr__('Error: ', 'caldera-forms'),
-						'fileUploadError2'		=>	esc_attr__(' could not be processed', 'caldera-forms'),
-						'invalidFileResponse'	=>	esc_attr__('Invalid', 'caldera-forms'),
-						'fieldIsRequired'		=>	esc_attr__( 'Field is required','caldera-forms'),
+                        'defaultButtonText' 		=>  esc_attr__('Drop files or click to select files to Upload', 'caldera-forms'),
+						'fileUploadError1'			=>	esc_attr__('Error: ', 'caldera-forms'),
+						'fileUploadError2'			=>	esc_attr__(' could not be processed', 'caldera-forms'),
+						'invalidFiles'				=>	esc_attr__( 'These Files have been rejected : ', 'caldera-forms'),
+						'checkMessage'				=>	esc_attr__( 'Please check files type and size', 'caldera-forms'),
+						'invalidFileResponse'		=>	esc_attr__('Unknown File Process Error', 'caldera-forms'),
+						'fieldIsRequired'			=>	esc_attr__( 'Field is required','caldera-forms'),
+						'filesUnit'					=>	esc_attr__('bytes', 'caldera-forms'),
+						'maxSizeAlert'				=>  esc_attr__( 'This file is too large. Maxium size is ', 'caldera-forms'),
+						'wrongTypeAlert'			=>  esc_attr__( 'This file type is not allowed. Allowed types are ', 'caldera-forms'),
                     )
                 ),
 				'nonce' => array(

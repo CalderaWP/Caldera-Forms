@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.8.0-alpha.1 - 2019-01-23 */var resBaldrickTriggers;
+/*! GENERATED SOURCE FILE caldera-forms - v1.8.0-alpha.1 - 2019-02-05 */var resBaldrickTriggers;
 
 jQuery(function($){
 	function fieldErrors(fields, $form, $notice) {
@@ -7374,7 +7374,7 @@ var cf_jsfields_init, cf_presubmit;
 					for (var f = 0; f < fields.length; f++) {
 						$this_field = $(fields[f]);
 						$this_field.parsley().validate();
-						valid = $this_field.parsley().isValid({force: true});
+						valid = $this_field.parsley().isValid();
 						if (true === valid) {
 							continue;
 						}
