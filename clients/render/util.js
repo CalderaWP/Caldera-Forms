@@ -220,9 +220,13 @@ export const processAnimation = (formIdAttr, trigger) => {
 
 	if(cfElement !== false) {
 		if(trigger === false){
-			jQuery(cfElement).removeClass("cf_processing");
+			if(jQuery(cfElement).hasClass("cf_processing")){
+				jQuery(cfElement).removeClass("cf_processing");
+			}
 		}else if(trigger === true){
-			jQuery(cfElement).addClass("cf_processing");
+			if(!jQuery(cfElement).hasClass("cf_processing")){
+				jQuery(cfElement).addClass("cf_processing");
+			}
 		}
 	}
 
