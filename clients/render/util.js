@@ -147,7 +147,7 @@ export const sizeFormat = (bytes) => {
 	return converted;
 }
 
- /* Set Submit button state
+/* Set Submit button state
  *
  * @param {object} cf2
  * @param {object} fieldConfig
