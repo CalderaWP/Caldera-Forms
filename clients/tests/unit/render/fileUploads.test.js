@@ -66,7 +66,7 @@ describe( 'Unit tests, ignoring cf2 var side effects for handleFileUploadRespons
 	let field = {};
 	let processFunctions = {};
 	let processData = {};
-	let theComponent = {};
+	let theComponent = data.theComponent;
 
 	beforeEach(() => {
 		processFunctions = {processFiles, hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError};
@@ -149,6 +149,7 @@ describe( 'Unit tests, ignoring cf2 var side effects for handleFileUploadRespons
 
 	it( 'Unit Test handleFileUploadError with error object that has a message property', () => {
 		let error = { 'message': 'An Error Has Occured' };
+
 		handleFileUploadError(
 			error,
 			data.file,
