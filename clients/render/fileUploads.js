@@ -4,7 +4,8 @@ import {
 	removeFromBlocking,
 	removeFromPending,
 	removeFromUploadStarted,
-	setBlocking
+	setBlocking,
+	processAnimation
 } from './util'
 
 /**
@@ -56,6 +57,12 @@ export const handleFileUploadResponse = (response, file, processData, processFun
  *
  */
 export const handleFileUploadError = (error, file, strings, fieldIdAttr, theComponent ) => {
+	//Stop spinner animation
+	const formIdAttr = theComponent.props.formIdAttr;
+	if(formIdAttr.length > 0){
+		processAnimation(formIdAttr, false);
+	}
+	//Display error message
 	if( error.hasOwnProperty('message') ){
 		theComponent.addFieldMessage( fieldIdAttr, error.message , true );
 	}else{
@@ -160,7 +167,9 @@ export const processFiles = (files, processData, processFunctions) => {
  * @param {object} processFunctions object of functions that will be called within processFiles then test the cases they are called {hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError}
  */
 export const processFileField = (processData, processFunctions) => {
-
+	//Start spinner animation
+	processAnimation(processData.obj.formIdAttr, true);
+	//Process files
 	const {processFiles} = processFunctions;
 	const {obj, values, cf2, field, fieldId, theComponent, CF_API_DATA} = processData;
 	const {fieldIdAttr} = field;

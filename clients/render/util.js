@@ -205,3 +205,25 @@ export const getFormIdAttr = (cf2, fieldIdAttr) => {
 	return formIdAttr;
 
 }
+
+/**
+ * Start or Stop spinner animation to indicate process is happening
+ *
+ * @since 1.8.0
+ *
+ * @param {string} formIdAttr Id Attribute of the <form> tag
+ * @param {boolean} trigger if true force addClass if false force removeClass
+ */
+export const processAnimation = (formIdAttr, trigger) => {
+
+	const cfElement = formIdAttr.length > 0 ? jQuery("#" + formIdAttr).parent(".caldera-grid") : false;
+
+	if(cfElement !== false) {
+		if(trigger === false){
+			jQuery(cfElement).removeClass("cf_processing");
+		}else if(trigger === true){
+			jQuery(cfElement).addClass("cf_processing");
+		}
+	}
+
+}
