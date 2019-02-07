@@ -4,7 +4,9 @@ import {
 	removeFromPending,
 	removeFromUploadStarted,
 	setBlocking,
-	createMediaFromFile
+	createMediaFromFile,
+	setSubmitButtonState,
+	getFormIdAttr
 } from '../../../render/util'
 
 import * as data  from "./Mocks/mockUtils";
@@ -186,5 +188,66 @@ describe( 'createMediaFromFile', () => {
 	it( 'Token to fetch headers', () => {
 		createMediaFromFile( data.file, additionalData, fetch );
 		expect(fetch.mock.calls[0][1].headers['X-WP-Nonce']).toEqual(nonce);
+	});
+});
+
+
+describe('setSubmitButtonState', () => {
+
+	let cf2 = {
+		"CF5bed436999460_1": {
+			"fields": {
+				"fld_9226671_1": {},
+				"fld_6214010_1": {}
+			},
+		},
+		"pending": [],
+		"uploadStarted": [],
+		"uploadCompleted": [],
+		"fieldsBlocking": []
+	};
+	const fieldConfig = {
+		"type": "file",
+		"outterIdAttr": "cf2-fld_6214010_1",
+		"fieldId": "fld_6214010",
+		"fieldLabel": "File2",
+		"fieldCaption": "",
+		"fieldPlaceHolder": "",
+		"isRequired": true,
+		"fieldDefault": "",
+		"fieldValue": "",
+		"fieldIdAttr": "fld_6214010_1",
+		"configOptions": {
+			"multiple": 1,
+			"multiUploadText": false,
+			"allowedTypes": "image/jpeg,image/pjpeg",
+			"control": "cf2-fld_6214010_15c52e619cc068",
+			"usePreviews": true,
+			"previewWidth": 100,
+			"previewHeight": 100,
+			"maxFileUploadSize": 0
+		},
+		"formId": "CF5bed436999460",
+		"control": "cf2_file5c52e619cbeda"
+	};
+
+	it( 'Get form ID Attr', () => {
+		const result = getFormIdAttr( cf2,  "fld_6214010_1" );
+		expect(result).toBe("CF5bed436999460_1");
+	});
+
+	it( 'Test submit button state when cf2.fieldBlocking is empty', () => {
+		const result = setSubmitButtonState( cf2, fieldConfig );
+		expect( result ).toBe(true);
+	});
+
+	it( 'Test submit button state when cf2.fieldBlocking is empty and State = false', () => {
+		const result = setSubmitButtonState( cf2, fieldConfig, false );
+		expect( result ).toBe(false);
+	});
+	it( 'Test submit button state when cf2.fieldBlocking is not empty', () => {
+		cf2.fieldsBlocking = ["fld_6214010_1"];
+		const result = setSubmitButtonState( cf2, fieldConfig );
+		expect( result ).toBe(false);
 	});
 });

@@ -55,18 +55,21 @@ export const removeFromUploadStarted = (fieldId, cf2) => {
 	}
 }
 
-export const removeFromBlocking = (fieldId, cf2) => {
+export const removeFromBlocking = (fieldId, cf2, fieldConfig = {}) => {
 	const index = cf2.fieldsBlocking.findIndex(item => item === fieldId);
 	if (-1 < index) {
 		cf2.fieldsBlocking.splice(index, 1);
 	}
-
+	setSubmitButtonState(cf2, fieldConfig);
 }
 
-export const setBlocking = ( fieldId, cf2 ) => {
+export const setBlocking = ( fieldId, cf2, fieldConfig = {}) => {
 	removeFromUploadStarted(fieldId, cf2);
 	removeFromPending(fieldId, cf2);
-	cf2.fieldsBlocking.push( fieldId );
+	if(cf2.fieldsBlocking.indexOf(fieldId) < 0){
+		cf2.fieldsBlocking.push( fieldId );
+	}
+	setSubmitButtonState(cf2, fieldConfig, false);
 }
 
 /**
@@ -93,4 +96,63 @@ export const createMediaFromFile = (file, additionalData, fetch) => {
 			'X-WP-Nonce': additionalData._wp_nonce
 		}
 	});
+}
+
+/**
+ * Set Submit button state
+ *
+ * @param {object} cf2
+ * @param {object} fieldConfig
+ * @param {boolean} state
+ * @return {*}
+ */
+export const setSubmitButtonState = (cf2, fieldConfig, state) => {
+
+	const fieldIdAttr = fieldConfig.fieldIdAttr;
+
+	const formIdAttr = getFormIdAttr(cf2, fieldIdAttr);
+
+	const form =  jQuery("#" + formIdAttr);
+	//If no state param was send in the function define the state based on elements inside the fieldsBlocking Array
+	if(typeof state === "undefined") {
+		state = cf2.fieldsBlocking.length <= 0;
+	}
+
+	//If state === true enable submit button else disable submit button
+	if(state) {
+		form.find(':submit').prop('disabled',false);
+	} else {
+		form.find(':submit').prop('disabled',true);
+	}
+	return state;
+}
+
+/**
+ * Find the formIdAttr corresponding to a fieldIdAttr in the cf2 object
+ *
+ * @param {object} cf2
+ * @param {string} fieldIdAttr
+ * @return {string} formIdAttr
+ */
+export const getFormIdAttr = (cf2, fieldIdAttr) => {
+
+	let formIdAttr = cf2.formIdAttr;
+
+	if( typeof formIdAttr === "undefined" ){
+
+		const entries = Object.entries(cf2);
+		const formEntries = [];
+		entries.forEach( entry => {
+			if(entry[1].hasOwnProperty("fields") ) {
+				formEntries.push(entry);
+			}
+		})
+		formEntries.forEach( formEntry => {
+			if(formEntry[1].fields.hasOwnProperty(fieldIdAttr ) ) {
+				formIdAttr = formEntry[0];
+			}
+		})
+	}
+
+	return formIdAttr;
 }

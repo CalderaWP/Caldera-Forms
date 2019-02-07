@@ -72,8 +72,9 @@ domReady(function () {
 
 		jQuery(document).on('cf.ajax.request', (event, obj) => {
 			shouldBeValidating = true;
-			const values = theComponent.getFieldValues();
+			const values = theComponent.getAllFieldValues();
 			const cf2 = window.cf2[obj.formIdAttr];
+			cf2.formIdAttr = obj.formIdAttr;
 			const {displayFieldErrors,$notice,$form,fieldsBlocking} = obj;
 			if ('object' !== typeof cf2) {
 				return;

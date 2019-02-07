@@ -71,11 +71,11 @@ class FileUpload
 		$i = 0;
 		foreach ( $files as $file ) {
 			if ( !$this->isAllowedType($file) ) {
-				throw new Exception(__('This file type is not allowed. Please try another.', 'caldera-forms'), 415);
+				throw new Exception(__('A file type is not allowed. Please try another.', 'caldera-forms'), 415);
 			}
 
 			if( $this->isFileTooLarge($file)){
-				throw new Exception(__('This file is too large. Please try another.', 'caldera-forms'), 415);
+				throw new Exception(__('A file is too large. Please try another.', 'caldera-forms'), 415);
 			}
 
 			$hashFromRequest = $hashes[ $i ];
@@ -99,7 +99,7 @@ class FileUpload
 			$upload = wp_handle_upload($file, [ 'test_form' => false, 'action' => 'foo' ]);
 
 			$this->uploader->removeFilter();
-			if ( \Caldera_Forms_Files::should_attach($this->field, $this->form) ) {
+			if ( \Caldera_Forms_Files::should_add_to_media_library($this->field) ) {
 				\Caldera_Forms_Files::add_to_media_library($upload, $this->field);
 			}
 
