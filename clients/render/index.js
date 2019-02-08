@@ -13,7 +13,7 @@ import {
 	removeFromPending,
 	createMediaFromFile
 } from "./util";
-import { handleFileUploadResponse, handleFileUploadError, hashAndUpload, processFiles, processFileField } from './fileUploads'
+import { handleFileUploadResponse, handleFileUploadError, hashAndUpload, processFiles, processFileField, processFormSubmit } from './fileUploads'
 
 Object.defineProperty(global.wp, 'element', {
 	get: () => React
@@ -71,6 +71,10 @@ domReady(function () {
 
 
 		jQuery(document).on('cf.ajax.request', (event, obj) => {
+			//Compare the event form id with the component form id
+			if(event.currentTarget.activeElement.form.id !== idAttr){
+				return;
+			}
 			shouldBeValidating = true;
 			const values = theComponent.getAllFieldValues();
 			const cf2 = window.cf2[obj.formIdAttr];
@@ -93,7 +97,7 @@ domReady(function () {
 					const field = fieldsToControl.find(field => fieldId === field.fieldId);
 					if (field) {
 						if ('file' === field.type) {
-							const processFunctions = {processFiles, hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError};
+							const processFunctions = {processFiles, hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError, processFormSubmit};
 							const processData = {obj, values, field, fieldId, cf2, $form, CF_API_DATA, theComponent, messages};
 							processFileField(processData, processFunctions);
 						}
