@@ -401,7 +401,7 @@ export class CalderaFormsRender extends Component {
 		}
 		const value = this.state[fieldIdAttr];
 		if( Array.isArray(value) ){
-			return 0 >= value.length;
+			return 0 < value.length;
 		}
 		return !isEmpty(value);
 	}
