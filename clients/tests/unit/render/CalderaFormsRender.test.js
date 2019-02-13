@@ -374,6 +374,20 @@ describe('Form render methods', () => {
 
 	});
 
+
+	test( 'isFieldValid considers required field valid when has array of values', () => {
+		const fakeState = new FakeOldState(formId, {});
+		const props = {...formRenderTestProps, state: fakeState};
+		const component = shallow(
+			<CalderaFormsRender
+				{...props}
+			/>
+		);
+		component.setState({fld_7480239: ['Hi Roy'] });
+		expect( component.instance().isFieldValid('fld_text_req_1') ).toBe( true );
+
+	});
+
 	test( 'isFieldValid considers a non-required field valid when  empty', () => {
 		const fakeState = new FakeOldState(formId, {});
 		const props = {...formRenderTestProps, state: fakeState};
