@@ -383,8 +383,8 @@ describe('Form render methods', () => {
 				{...props}
 			/>
 		);
-		component.setState({fld_7480239: ['Hi Roy'] });
-		expect( component.instance().isFieldValid('fld_text_req_1') ).toBe( true );
+		component.setState({fld_7480239_1: ['Hi Roy'] });
+		expect( component.instance().isFieldValid('fld_7480239_1') ).toBe( true );
 
 	});
 
@@ -396,7 +396,7 @@ describe('Form render methods', () => {
 				{...props}
 			/>
 		);
-		expect( component.instance().isFieldValid('fld_12_1') ).toBe( true );
+		expect( component.instance().isFieldValid('fld_7480239_1') ).toBe( true );
 
 	});
 

@@ -399,8 +399,11 @@ export class CalderaFormsRender extends Component {
 		if (!this.isFieldRequired(fieldIdAttr)) {
 			return true;
 		}
-
-		return !isEmpty(this.state[fieldIdAttr]);
+		const value = this.state[fieldIdAttr];
+		if( Array.isArray(value) ){
+			return 0 >= value.length;
+		}
+		return !isEmpty(value);
 	}
 
 	/**
