@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitc8d223f893a92e34d8983d4607cce57b
+class ComposerStaticInit37000b2218cdce589515d0a8aad00806
 {
     public static $files = array (
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
@@ -12,8 +12,8 @@ class ComposerStaticInitc8d223f893a92e34d8983d4607cce57b
         '051bafe20e2674435a162870efa2d2a7' => __DIR__ . '/..' . '/brain/monkey/inc/api.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         'edf8ef411b308ea9e315d190a754d91b' => __DIR__ . '/..' . '/a5hleyrich/wp-queue/src/functions.php',
-        '5e73ffc188f5a63fbd263c4490731358' => __DIR__ . '/..' . '/inpsyde/wonolog/inc/bootstrap.php',
         '653f15cae3415bbad33eff25628b45a8' => __DIR__ . '/..' . '/calderawp/caldera-forms-query/src/CalderaFormsQueries.php',
+        '5e73ffc188f5a63fbd263c4490731358' => __DIR__ . '/..' . '/inpsyde/wonolog/inc/bootstrap.php',
         '1788f000e5723cf54aa875ee1eec6c27' => __DIR__ . '/../..' . '/cf2/functions.php',
         'e3b369f785b64e46a24dc3ca6f0257a1' => __DIR__ . '/../..' . '/tests/testing-cli.php',
     );
@@ -751,11 +751,11 @@ class ComposerStaticInitc8d223f893a92e34d8983d4607cce57b
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitc8d223f893a92e34d8983d4607cce57b::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitc8d223f893a92e34d8983d4607cce57b::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInitc8d223f893a92e34d8983d4607cce57b::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitc8d223f893a92e34d8983d4607cce57b::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitc8d223f893a92e34d8983d4607cce57b::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit37000b2218cdce589515d0a8aad00806::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit37000b2218cdce589515d0a8aad00806::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInit37000b2218cdce589515d0a8aad00806::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit37000b2218cdce589515d0a8aad00806::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit37000b2218cdce589515d0a8aad00806::$classMap;
 
         }, null, ClassLoader::class);
     }
