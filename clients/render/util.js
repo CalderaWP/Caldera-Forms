@@ -230,4 +230,21 @@ export const processAnimation = (formIdAttr, trigger) => {
 		}
 	}
 
-}
+};
+
+/**
+ * Add a component -- CalderaFormsRender -- to window.cf2 correctly
+ *
+ * @since 1.8.0
+ *
+ * @param {function} component
+ * @param {string}idAttr
+ * @param {object|null}window
+ */
+export const captureRenderComponentRef = (component,idAttr,window = null) => {
+	window.cf2 = window.cf2 || {};
+	window.cf2[idAttr] = {
+		...window.cf2[idAttr] || {},
+		component
+	};
+};
