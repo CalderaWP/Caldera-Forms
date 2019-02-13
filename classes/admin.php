@@ -1481,7 +1481,8 @@ class Caldera_Forms_Admin {
 			WHERE `entry`.`form_id` = %s
 			" . $filter . "
 			AND `entry`.`status` = 'active'
-			ORDER BY `entry`.`datestamp` DESC;", $_GET['export']));
+			ORDER BY `entry`.`datestamp` DESC;", Caldera_Forms_Sanitize::sanitize($_GET['export'])));
+
 
 			$data = array();
 
@@ -1495,7 +1496,10 @@ class Caldera_Forms_Admin {
 				}
 
 				foreach ($structure as $slug => $field_id) {
-					$data[$entry->_entryid][$slug] = ( isset( $submission['data'][$field_id]['value'] ) ? $submission['data'][$field_id]['value'] : null );
+					$data[$entry->_entryid][$slug] = (
+					        isset( $submission['data'][$field_id]['view'] ) ? $submission['data'][$field_id]['view']
+                                : ( isset( $submission['data'][$field_id]['value'] ) ? $submission['data'][$field_id]['value'] : null )
+                    );
 				}
 
 			}
