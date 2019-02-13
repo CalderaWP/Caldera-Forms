@@ -1,4 +1,4 @@
-import {handleFileUploadResponse, hashAndUpload, handleFileUploadError, processFiles, processFileField} from "../../../render/fileUploads";
+import {handleFileUploadResponse, hashAndUpload, handleFileUploadError, processFiles, processFileField, processFormSubmit} from "../../../render/fileUploads";
 import {hashFile, createMediaFromFile} from "../../../render/util";
 import * as data from './Mocks/mockUtils';
 
@@ -69,7 +69,7 @@ describe( 'Unit tests, ignoring cf2 var side effects for handleFileUploadRespons
 	let theComponent = data.theComponent;
 
 	beforeEach(() => {
-		processFunctions = {processFiles, hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError};
+		processFunctions = {processFiles, hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError, processFormSubmit};
 		processData = {
 			values: {},
 			obj: data.obj,
@@ -85,6 +85,7 @@ describe( 'Unit tests, ignoring cf2 var side effects for handleFileUploadRespons
 		processData.obj.$form.data = jest.fn();
 
 		processFunctions.handleFileUploadError = jest.fn();
+		processFunctions.processFormSubmit = jest.fn();
 
 		$form = data.obj.$form;
 		field = data.cf2.fields.fld_9226671_1;
@@ -115,15 +116,16 @@ describe( 'Unit tests, ignoring cf2 var side effects for handleFileUploadRespons
 
 	it( 'Triggers submit, if passed object with control and lastFile = true', () => {
 
+		processData.lastFile = true;
+
 		handleFileUploadResponse(
 			{control: 'nico'},
 			data.file,
 			processData,
 			processFunctions,
-			true
 		);
-		expect($form.submit).toBeCalled();
-		expect($form.submit.mock.calls.length).toBe(1);
+		expect(processFunctions.processFormSubmit).toBeCalled();
+		expect(processFunctions.processFormSubmit.mock.calls.length).toBe(1);
 	});
 
 	it( 'Throws error if response does not have control prop', () => {
@@ -141,8 +143,8 @@ describe( 'Unit tests, ignoring cf2 var side effects for handleFileUploadRespons
 			processFunctions,
 			true
 		);
-		expect($form.submit).not.toBeCalled();
-		expect($form.submit.mock.calls.length).toBe(0);
+		expect(processFunctions.processFormSubmit).not.toBeCalled();
+		expect(processFunctions.processFormSubmit.mock.calls.length).toBe(0);
 		expect( processFunctions.handleFileUploadError ).toBeCalled()
 		expect( processFunctions.handleFileUploadError.mock.calls.length ).toBe(1)
 	});
@@ -171,17 +173,22 @@ describe( 'Check responses with different values passed', () => {
 	let field = {};
 	let response = '';
 	let error = '';
+	let processFunctions = {};
 
 	beforeEach(() => {
+		processFunctions = {processFormSubmit};
+
 		$form = data.obj.$form;
 		field = data.cf2.fields.fld_9226671_1;
 		response = undefined;
 		error = undefined;
 		$form.submit = jest.fn();
+		processFunctions.processFormSubmit = jest.fn();
 	});
 
 	afterEach(() => {
 		$form.submit.mockReset();
+		processFunctions.processFormSubmit.mockReset();
 	})
 
 	it( 'Throws error if response does not have control prop', () => {
@@ -199,7 +206,7 @@ describe( 'Check responses with different values passed', () => {
 		}
 
 		expect(undefined === typeof  error).toBe(false);
-		expect($form.submit.mock.calls.length).toBe(0);
+		expect(processFunctions.processFormSubmit.mock.calls.length).toBe(0);
 	});
 
 });
@@ -268,6 +275,56 @@ describe( 'Calls to hashAndUpload based on number of files passed to processFile
 		processFiles([data.file], processData, processFunctions);
 		expect(processFunctions.hashAndUpload).toBeCalled();
 		expect(processFunctions.hashAndUpload.mock.calls.length).toBe(1);
+	});
+
+});
+
+describe( 'Calls $form.submit based on values', () => {
+	let $form = {};
+	let processData = {};
+	beforeEach(() => {
+		processData = {
+			verify: 'f42ea553cb',
+			field: data.cf2.fields.fld_9226671_1,
+			fieldId: data.cf2.fields.fld_9226671_1.fieldId,
+			cf2: data.cf2,
+			$form: data.obj.$form,
+			CF_API_DATA: data.CF_API_DATA,
+			messages: data.messages,
+			theComponent: data.theComponent,
+			lastFile: true
+		}
+		$form = processData.$form;
+		$form.submit = jest.fn();
+	})
+
+	afterEach(() => {
+		$form.submit.mockClear();
+	})
+
+	it( 'Calls $form.submit when completed length is equal to all fields values length' , () => {
+		const completed = ['1', '2', '3', '4', '5'];
+
+		processFormSubmit(completed, processData);
+		expect($form.submit).toBeCalled();
+		expect($form.submit.mock.calls.length).toBe(1);
+	});
+
+	it( 'Don\'t call $form.submit when completed length is inferior of all fields values length' , () => {
+		const completed = ['1', '2', '3', '4'];
+
+		processFormSubmit(completed, processData);
+		expect($form.submit).not.toBeCalled();
+		expect($form.submit.mock.calls.length).toBe(0);
+	});
+
+
+	it( 'Don\'t call $form.submit when completed length is superior of all fields values length' , () => {
+		const completed = ['1', '2', '3', '4', '5', '6'];
+
+		processFormSubmit(completed, processData);
+		expect($form.submit).not.toBeCalled();
+		expect($form.submit.mock.calls.length).toBe(0);
 	});
 
 });

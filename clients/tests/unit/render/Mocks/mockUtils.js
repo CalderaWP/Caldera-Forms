@@ -138,6 +138,37 @@ export const theComponent = {
 				'maxSize': 'Max. File Size : ',
 			}
 		}
+	},
+	"state": {
+		"valuesValidity": {
+			"fld_6214010_1": {
+				"valid": true,
+				"validValues": [
+					[
+						{}
+					],
+					[
+						{}
+					],
+					[
+						{}
+					]
+				],
+				"invalidValues": []
+			},
+			"fld_4522958_1": {
+				"valid": true,
+				"validValues": [
+					[
+						{}
+					],
+					[
+						{}
+					]
+				],
+				"invalidValues": []
+			}
+		}
 	}
 };
 

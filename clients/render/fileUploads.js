@@ -9,6 +9,31 @@ import {
 } from './util'
 
 /**
+ * Trigger $form.submit when uploadCompleted length === all fields values length
+ *
+ * @since 1.8.0
+ *
+ * @param {integer} completed length of cf2.uploadCompleted
+ * @param {object} processData holding {theComponent, $form, lastFile}
+ *
+ */
+export const processFormSubmit = (completed, processData) => {
+
+	const {theComponent, $form, lastFile} = processData;
+
+	//Deduct the length of all fields values
+	let valuesLength = 0;
+	for( const field in theComponent.state.valuesValidity){
+		valuesLength += theComponent.state.valuesValidity[field].validValues.length;
+	}
+	//Check if it matched the length of uploadCompleted
+	const lastField = completed.length === valuesLength;
+
+	if(lastFile && lastField){
+		$form.submit();
+	}
+}
+/**
  * Manage response of file upload requests
  *
  * @since 1.8.0
@@ -17,24 +42,24 @@ import {
  * @param {File} file being responded to
  * @param {object} processData holding {cf2,$form,field,strings,theComponent}
  * @param {object} processFunctions holds {handleFileUploadError}
- * @param {boolean} lastFile true if last file to be processed
  *
  */
-export const handleFileUploadResponse = (response, file, processData, processFunctions, lastFile) => {
+export const handleFileUploadResponse = (response, file, processData, processFunctions) => {
 
-	const {cf2,$form,field,strings,theComponent} = processData;
-	const {handleFileUploadError} = processFunctions;
+	const {cf2,field,strings,theComponent,lastFile} = processData;
+	const {handleFileUploadError,processFormSubmit} = processFunctions;
 	const {fieldId} = field;
 	if( 'object' !== typeof response ){
 		removeFromUploadStarted(fieldId,cf2);
 		removeFromPending(fieldId,cf2);
 		handleFileUploadError(strings.invalidFileResponse, file, strings, field.fieldIdAttr, theComponent, 'UnknownUploadError');
 	}else if (response.hasOwnProperty('control')) {
+		removeFromUploadStarted(fieldId,cf2);
 		removeFromPending(fieldId,cf2);
 		removeFromBlocking(fieldId,cf2,field);
 		cf2.uploadCompleted.push(fieldId);
 		if(lastFile){
-			$form.submit();
+			processFormSubmit(cf2.uploadCompleted, processData, processFunctions);
 		}
 	}else{
 		removeFromUploadStarted(fieldId,cf2);
@@ -86,7 +111,7 @@ export const handleFileUploadError = (error, file, strings, fieldIdAttr, theComp
  */
 export const hashAndUpload = (file, processData, processFunctions ) => {
 
-	const {verify, field, CF_API_DATA, lastFile, theComponent} = processData;
+	const {verify, field, CF_API_DATA, theComponent} = processData;
 	const {hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError} = processFunctions;
 
 	const API_FOR_FILES_URL = CF_API_DATA.rest.fileUpload;
@@ -110,7 +135,7 @@ export const hashAndUpload = (file, processData, processFunctions ) => {
 				response => response.json()
 			)
 			.then(
-				response => handleFileUploadResponse(response, file, processData, processFunctions, lastFile)
+				response => handleFileUploadResponse(response, file, processData, processFunctions)
 			)
 			.catch(
 				error => {
