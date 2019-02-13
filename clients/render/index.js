@@ -123,7 +123,7 @@ domReady(function () {
 				fieldsToControl={fieldsToControl}
 				shouldBeValidating={shouldBeValidating}
 				ref={(component) => {
-					captureRenderComponentRef(component,idAttr);
+					captureRenderComponentRef(component,idAttr,window);
 					theComponent = component
 				}}
 				messages={messages}

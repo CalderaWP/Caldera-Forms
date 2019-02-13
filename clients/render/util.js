@@ -239,9 +239,9 @@ export const processAnimation = (formIdAttr, trigger) => {
  *
  * @param {function} component
  * @param {string}idAttr
- * @param {object|null}window
+ * @param {object}window
  */
-export const captureRenderComponentRef = (component,idAttr,window = null) => {
+export const captureRenderComponentRef = (component,idAttr,window = {}) => {
 	window.cf2 = window.cf2 || {};
 	window.cf2[idAttr] = {
 		...window.cf2[idAttr] || {},
