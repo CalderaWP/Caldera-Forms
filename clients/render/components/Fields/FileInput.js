@@ -55,7 +55,7 @@ export const FileInput = (props) => {
 
 	return (
 
-		<div className="cf2-dropzone" data-field={fieldId}>
+		<div className="cf2-dropzone">
 
 			{valueSet &&
 			<ul
@@ -124,7 +124,10 @@ export const FileInput = (props) => {
 				maxSize={'number' === typeof maxFileUploadSize && maxFileUploadSize > 0 ? maxFileUploadSize : Infinity}
 				style={style}
 				disabled={shouldDisable}
-				inputProps={inputProps}
+				inputProps={{
+					...inputProps,
+					'data-field': fieldId
+				}}
 				disableClick={shouldDisable}
 				multiple={multiple}
 			>
