@@ -1,5 +1,6 @@
 import {CalderaFormsFieldGroup, Fragment} from "../CalderaFormsFieldGroup";
 import {CalderaFormsFieldPropType} from "../CalderaFormsFieldRender";
+import {sizeFormat} from "../../util";
 import React from 'react';
 
 import PropTypes from 'prop-types';
@@ -50,6 +51,8 @@ export const FileInput = (props) => {
 		acceptedTypes = accept.split(',');
 	}
 
+	const progressId = "file-progress" + fieldIdAttr;
+
 	return (
 
 		<div className="cf2-dropzone" data-field={fieldId}>
@@ -92,18 +95,19 @@ export const FileInput = (props) => {
 										:
 										<span className="cf2-file-name file-name">{file.name}</span>
 									}
+									<progress id={progressId} className={"cf2-file-progress-bar"} value="0" max="100"></progress>
 								</div>
 								<div className="cf2-file-extra-data">
 
 									<small className="cf2-file-data file-type"> {file.type}</small>
-									<small className="cf2-file-data file-size"> - {file.size} {strings.filesUnit}</small>
+									<small className="cf2-file-data file-size"> - {sizeFormat(file.size)} </small>
 
 									{maxFileUploadSize > 0 && maxFileUploadSize < file.size &&
-									<small className={"cf2-file-error file-error file-size-error help-block"}> {strings.maxSizeAlert + maxFileUploadSize + strings.filesUnit } </small>
+										<small className={"cf2-file-error file-error file-size-error help-block"}> {strings.maxSizeAlert + sizeFormat(maxFileUploadSize) } </small>
 									}
 
 									{acceptedTypes.indexOf(file.type) <= -1 && accept !== false &&
-									<small className={"cf2-file-error file-error file-type-error help-block"}> {strings.wrongTypeAlert + accept } </small>
+										<small className={"cf2-file-error file-error file-type-error help-block"}> {strings.wrongTypeAlert + accept } </small>
 									}
 
 								</div>

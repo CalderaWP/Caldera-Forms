@@ -99,7 +99,55 @@ export const createMediaFromFile = (file, additionalData, fetch) => {
 }
 
 /**
- * Set Submit button state
+
+ * Converts the bytes values to smaller value in corresponding unit
+ *
+ * @param bytes value to be converted
+ * @return {*}
+ */
+export const sizeFormat = (bytes) => {
+	let converted = false;
+	const quant = [
+		{
+			unit: 'TB',
+			mag: 1099511627776
+		},
+
+		{
+			unit: 'GB',
+			mag: 1073741824
+		},
+
+		{
+			unit: 'MB',
+			mag: 1048576
+		},
+
+		{
+			unit: 'kB',
+			mag: 1024
+		},
+
+		{
+			unit: 'B ',
+			mag: 1
+		}
+	];
+	quant.forEach(function(v){
+		if (parseFloat(bytes) >= v.mag && converted == false){
+			converted = bytes/v.mag;
+			if( bytes > 1048576 ){
+				converted = converted.toFixed(2);
+			}else{
+				converted = Math.round( converted );
+			}
+			converted = converted +' '+v.unit;
+		}
+	});
+	return converted;
+}
+
+/* Set Submit button state
  *
  * @param {object} cf2
  * @param {object} fieldConfig
@@ -155,4 +203,31 @@ export const getFormIdAttr = (cf2, fieldIdAttr) => {
 	}
 
 	return formIdAttr;
+
+}
+
+/**
+ * Start or Stop spinner animation to indicate process is happening
+ *
+ * @since 1.8.0
+ *
+ * @param {string} formIdAttr Id Attribute of the <form> tag
+ * @param {boolean} trigger if true force addClass if false force removeClass
+ */
+export const processAnimation = (formIdAttr, trigger) => {
+
+	const cfElement = formIdAttr.length > 0 ? jQuery("#" + formIdAttr).parent(".caldera-grid") : false;
+
+	if(cfElement !== false) {
+		if(trigger === false){
+			if(jQuery(cfElement).hasClass("cf_processing")){
+				jQuery(cfElement).removeClass("cf_processing");
+			}
+		}else if(trigger === true){
+			if(!jQuery(cfElement).hasClass("cf_processing")){
+				jQuery(cfElement).addClass("cf_processing");
+			}
+		}
+	}
+
 }
