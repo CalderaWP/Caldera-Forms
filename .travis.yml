@@ -59,8 +59,7 @@ before_script:
 script:
   - |
     if [[ ! -z "$WP_VERSION" ]] ; then
-      phpunit
-      composer test:unit
+      composer test:php
     fi
   - |
     if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
