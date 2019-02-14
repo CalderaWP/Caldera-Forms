@@ -59,6 +59,7 @@ before_script:
 script:
   - |
     if [[ ! -z "$WP_VERSION" ]] ; then
+      php -i | grep error
       phpunit
       composer test:unit
     fi
