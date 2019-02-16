@@ -8,7 +8,6 @@
  * @link
  * @copyright 2014 David Cramer
  */
-
 /**
  * Caldera_Forms Plugin class.
  * @package Caldera_Forms

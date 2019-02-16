@@ -16,7 +16,6 @@ if ( !defined('WPINC') ) {
 	die;
 }
 
-
 global $wp_version;
 if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
 	function caldera_forms_php_version_nag()
