@@ -1698,7 +1698,8 @@
         "keywords": [
             "mock",
             "xunit"
-        ]
+        ],
+        "abandoned": true
     },
     {
         "name": "pimple/pimple",
@@ -2776,9 +2777,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://downloads.wordpress.org/plugin/gutenberg.5.0.0.zip",
-            "reference": null,
-            "shasum": null
+            "url": "https://downloads.wordpress.org/plugin/gutenberg.5.0.0.zip"
         },
         "require": {
             "composer/installers": "~1.0"
