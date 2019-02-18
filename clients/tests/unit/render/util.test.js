@@ -253,10 +253,10 @@ describe('setSubmitButtonState', () => {
 		expect( result ).toBe(false);
 	});
 
-	it( 'Puts component on global when window is not passed ', () => {
+	it( 'Puts component on global when window is not defined ', () => {
 		const id = 'cf1_1';
 		const component = jest.fn();
-		captureRenderComponentRef( component,id);
+		captureRenderComponentRef( component,id, window);
 		expect( typeof window.cf2[id] ).toBe( 'object' );
 		expect(  window.cf2[id].component ).toBe( component );
 	});
