@@ -321,6 +321,8 @@ export class CalderaFormsRender extends Component {
 	 */
 	subscribe(fieldIdAttr) {
 		const {state, props} = this;
+		const fieldConfig = this.getFieldConfig(fieldIdAttr);
+		const {fieldId} = fieldConfig;
 		if (!stateChangeSubscriptions.hasOwnProperty(fieldIdAttr)) {
 			stateChangeSubscriptions[fieldIdAttr] = this.getCfState()
 				.events()
@@ -347,8 +349,9 @@ export class CalderaFormsRender extends Component {
 								let {fieldValue} = eventData;
 								if(typeof fieldValue === 'undefined'){
 									const values = this.getAllFieldValues();
-									fieldValue = values[fieldIdAttr];
+									fieldValue = values[fieldId];
 								}
+
 								switch (eventType) {
 									case 'hide':
 										this.setFieldShouldShow(fieldIdAttr, false, fieldValue);
