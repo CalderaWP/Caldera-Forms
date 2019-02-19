@@ -88,5 +88,11 @@
         "wp:tests-now": "docker-compose run --rm wordpress_phpunit phpunit --configuration phpunit-integration.xml.dist --group now",
         "wp:destroy": "docker-compose rm --stop --force",
         "test:unit": "phpunit --configuration phpunit-unit.xml.dist"
+    },
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        }
     }
+
 }
