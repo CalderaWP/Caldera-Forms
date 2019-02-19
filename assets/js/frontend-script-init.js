@@ -139,7 +139,7 @@ var cf_jsfields_init, cf_presubmit;
 			window = window || {};
 			var cf2 = 'object' === typeof window.cf2 && 'object' === typeof window.cf2[form_id] ? window.cf2[form_id] : null;
 			function getCf2Field(fieldIdAttr,formIdAttr){
-				if( ! cf2 ){
+				if( ! cf2 || ! cf2.fields ){
 					return false;
 				}
 
@@ -173,7 +173,7 @@ var cf_jsfields_init, cf_presubmit;
 					continue;
 				}
 
-				valid =  validateField($this_field,form_id,valid);
+				valid = validateField($this_field,form_id,valid);
 
 				if (true === valid) {
 					continue;
