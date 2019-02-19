@@ -205,8 +205,8 @@
     },
     {
         "name": "calderawp/caldera-forms-query",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
+        "version": "0.3.2",
+        "version_normalized": "0.3.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/CalderaWP/caldera-forms-query.git",
@@ -240,7 +240,7 @@
                 ]
             }
         },
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "psr-4": {
                 "calderawp\\CalderaFormsQuery\\": "src"
@@ -1698,7 +1698,8 @@
         "keywords": [
             "mock",
             "xunit"
-        ]
+        ],
+        "abandoned": true
     },
     {
         "name": "pimple/pimple",

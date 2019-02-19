@@ -6,7 +6,8 @@ import {
 	setBlocking,
 	createMediaFromFile,
 	setSubmitButtonState,
-	getFormIdAttr
+	getFormIdAttr,
+	captureRenderComponentRef
 } from '../../../render/util'
 
 import * as data  from "./Mocks/mockUtils";
@@ -231,6 +232,7 @@ describe('setSubmitButtonState', () => {
 		"control": "cf2_file5c52e619cbeda"
 	};
 
+
 	it( 'Get form ID Attr', () => {
 		const result = getFormIdAttr( cf2,  "fld_6214010_1" );
 		expect(result).toBe("CF5bed436999460_1");
@@ -250,4 +252,26 @@ describe('setSubmitButtonState', () => {
 		const result = setSubmitButtonState( cf2, fieldConfig );
 		expect( result ).toBe(false);
 	});
+
+	it( 'Puts component on global when window is not defined ', () => {
+		const id = 'cf1_1';
+		const component = jest.fn();
+		captureRenderComponentRef( component,id, window);
+		expect( typeof window.cf2[id] ).toBe( 'object' );
+		expect(  window.cf2[id].component ).toBe( component );
+	});
+
+	it( 'Puts component on global when window is passed with cf2 on it ', () => {
+		const id = 'cf1_1';
+		const component = jest.fn();
+		let window = {cf2:{
+				[id]: {
+					fields: {}
+				}
+			}};
+		captureRenderComponentRef( component,id,window);
+		expect( typeof window.cf2[id] ).toBe( 'object' );
+		expect( typeof window.cf2[id].fields ).toBe( 'object' );
+		expect(  window.cf2[id].component ).toBe( component );
+	})
 });

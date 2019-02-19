@@ -78,10 +78,9 @@ class RenderField implements RenderFieldContract
             );
         }
 
-        return sprintf('<div id="%s" class="cf2-field-wrapper" data-field-id="%s" data-field="%s"></div>',
+        return sprintf('<div id="%s" class="cf2-field-wrapper" data-field-id="%s"></div>',
             esc_attr($this->getOuterIdAttr()),
-            esc_attr($this->getFieldIdAttr()),
-			esc_attr($this->field['ID'])
+            esc_attr($this->getFieldIdAttr())
         );
 
     }

@@ -16,7 +16,6 @@ notifications:
 cache:
   directories:
   - node_modules
-  - vendor
 
 env:
   - WP_VERSION=latest

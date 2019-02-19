@@ -7,11 +7,8 @@ import ReactDOM from "react-dom";
 import domReady from '@wordpress/dom-ready';
 import {
 	hashFile,
-	setBlocking,
-	removeFromBlocking,
-	removeFromUploadStarted,
-	removeFromPending,
-	createMediaFromFile
+	createMediaFromFile,
+	captureRenderComponentRef
 } from "./util";
 import { handleFileUploadResponse, handleFileUploadError, hashAndUpload, processFiles, processFileField, processFormSubmit } from './fileUploads';
 
@@ -126,6 +123,7 @@ domReady(function () {
 				fieldsToControl={fieldsToControl}
 				shouldBeValidating={shouldBeValidating}
 				ref={(component) => {
+					captureRenderComponentRef(component,idAttr,window);
 					theComponent = component
 				}}
 				messages={messages}
