@@ -101,7 +101,9 @@ domReady(function () {
 					}
 				});
 			} else {
-				obj.$form.data(fieldId, values[fieldId]);
+				if(typeof field !== "undefined"){
+					obj.$form.data(field.fieldId, values[field.fieldId]);
+				}
 			}
 
 		});
