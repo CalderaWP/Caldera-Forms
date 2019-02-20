@@ -77,4 +77,6 @@ class Cf1FileUploaderTest extends TestCase
         $uploader->removeFilter();
         $this->assertFalse( has_filter( 'upload_dir'),  array( \Caldera_Forms_Files::class, 'uploads_filter' ));
     }
+
+
 }

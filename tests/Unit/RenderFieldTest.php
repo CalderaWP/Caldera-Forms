@@ -181,7 +181,6 @@ class RenderFieldTest extends TestCase
 	}
 
 	/**
-	 * @group now
 	 *
 	 * @covers \calderawp\calderaforms\cf2\Fields\RenderField::data();
 	 */
