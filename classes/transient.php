@@ -138,4 +138,27 @@ class Caldera_Forms_Transient  {
 	}
 
 
+	/**
+	 * Clear all schedule cron jobs
+	 */
+	public static function clear_wpcron(){
+
+
+	}
+
+	/**
+	 * Get the names of all transients
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return array
+	 */
+	public static function get_all(){
+
+		$return = [];
+
+		return $return;
+	}
+
+
 }

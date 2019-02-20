@@ -90,6 +90,42 @@ class Caldera_Forms_TransientTest extends TestCase
 		$this->assertFalse( Caldera_Forms_Transient::get_transient($id2) );
 	}
 
+	/**
+	 * @since 1.8.0
+	 *
+	 * @covers Caldera_Forms_Transient::get_all()
+	 */
+	public function testGetAllWhenThereAreNone()
+	{
+		$id = 'r2345';
+		$value = [9,0, new \stdClass() ];
+		$this->assertSame( 0, count( Caldera_Forms_Transient::get_all() ) );
+		\Caldera_Forms_Transient::set_transient($id,$value,1500 );
+		$this->assertSame( 0, count( Caldera_Forms_Transient::get_all() ) );
+
+
+	}
+
+	/**
+	 * @since 1.8.0
+	 *
+	 * @covers Caldera_Forms_Transient::get_all()
+	 */
+	public function testGetAllWhenThereAreSomeToGet()
+	{
+		$id = 'r2345';
+		$value = [9,0, new \stdClass() ];
+		$this->assertSame( 0, count( Caldera_Forms_Transient::get_all() ) );
+		\Caldera_Forms_Transient::set_transient($id,$value,1500 );
+		$transients = Caldera_Forms_Transient::get_all();
+
+		$this->assertSame( 1, count( $transients ) );
+		$this->assertSame( $transients[0], 'cftransdata_' . $id );
+		\Caldera_Forms_Transient::set_transient('cf222',[87],1500 );
+		$this->assertSame( 2, count( Caldera_Forms_Transient::get_all() ) );
+
+	}
+
 }
 
 
