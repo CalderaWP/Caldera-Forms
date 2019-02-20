@@ -97,11 +97,9 @@ class Caldera_Forms_TransientTest extends TestCase
 	 */
 	public function testGetAllWhenThereAreNone()
 	{
-		$id = 'r2345';
-		$value = [9,0, new \stdClass() ];
+
 		$this->assertSame( 0, count( Caldera_Forms_Transient::get_all() ) );
-		\Caldera_Forms_Transient::set_transient($id,$value,1500 );
-		$this->assertSame( 0, count( Caldera_Forms_Transient::get_all() ) );
+
 
 
 	}
@@ -115,10 +113,8 @@ class Caldera_Forms_TransientTest extends TestCase
 	{
 		$id = 'r2345';
 		$value = [9,0, new \stdClass() ];
-		$this->assertSame( 0, count( Caldera_Forms_Transient::get_all() ) );
 		\Caldera_Forms_Transient::set_transient($id,$value,1500 );
 		$transients = Caldera_Forms_Transient::get_all();
-
 		$this->assertSame( 1, count( $transients ) );
 		$this->assertSame( $transients[0], 'cftransdata_' . $id );
 		\Caldera_Forms_Transient::set_transient('cf222',[87],1500 );
