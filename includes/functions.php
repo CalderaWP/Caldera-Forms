@@ -310,6 +310,7 @@ function caldera_forms_send_json(array $data, $is_error = false, $status = null 
 	$data[ 'headers_sent'] = headers_sent();
 	if( ! $is_error ){
 		status_header(200);
+		$data[ 'success' ] = true;
 		wp_send_json( $data );
 	}else{
 		wp_send_json_error( $data );
