@@ -46,9 +46,15 @@ module.exports = function (grunt) {
 
     //Include webpacked clients
     [
+        'admin',
+		'blocks',
+        'components',
+        'functions',
+		'privacy',
         'pro',
-        'privacy',
-        'blocks'
+        'render',
+        'state',
+        'viewer'
     ].forEach( (client) => {
        files_list.push( `clients/${client}/build/index.min.js` );
        files_list.push( `clients/${client}/build/style.min.css` );
