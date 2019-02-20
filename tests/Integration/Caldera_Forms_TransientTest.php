@@ -97,11 +97,7 @@ class Caldera_Forms_TransientTest extends TestCase
 	 */
 	public function testGetAllWhenThereAreNone()
 	{
-
 		$this->assertSame( 0, count( Caldera_Forms_Transient::get_all() ) );
-
-
-
 	}
 
 	/**

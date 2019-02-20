@@ -140,6 +140,8 @@ class Caldera_Forms_Transient  {
 
 	/**
 	 * Clear all schedule cron jobs
+	 *
+	 * @since 1.8.0
 	 */
 	public static function clear_wpcron(){
 		$transients = self::get_all();
