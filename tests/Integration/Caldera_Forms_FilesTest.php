@@ -138,7 +138,6 @@ class Caldera_Forms_FilesTest extends TestCase
 			Caldera_Forms_Files::is_persistent($this->field)
 		);
 
-
 	}
 
 	/**
@@ -229,5 +228,5 @@ class Caldera_Forms_FilesTest extends TestCase
 			Caldera_Forms_Files::is_file_too_large($this->field, $this->createSmallCat() )
 		);
 	}
-	
+
 }

@@ -352,4 +352,44 @@ class SubmissionsWithFileFieldsTest extends TestCase
 
 	}
 
+	/**
+	 *
+	 * @since 1.8.0
+	 *
+	 * @covers \calderawp\calderaforms\cf2\Fields\Handlers\Cf1FileUploader::scheduleFileDelete()
+	 *
+	 */
+	public function testDeleteScheduled(){
+
+		$file = $this->createSmallCat();
+		$this->assertTrue(file_exists($file['tmp_name']));
+		$fieldId = 'testScheduleDelete';
+
+		$uploadArgs = [
+			'private' => true,
+			'field_id' =>$fieldId,
+			'form_id' =>  $this->formId
+		];
+		$field = \Caldera_Forms_Field_Util::get_field($fieldId,$this->form);
+		$this->assertTrue( is_array($field));
+		$this->assertFalse( \Caldera_Forms_Files::should_add_to_media_library($field));
+		$this->assertFalse( \Caldera_Forms_Files::is_persistent($field));
+
+		$uploader = new Cf1FileUploader();
+		$this->assertTrue ( file_exists( $file[ 'tmp_name']) );
+
+
+		/** @var \calderawp\calderaforms\cf2\Jobs\Scheduler $scheduler */
+		$scheduler = caldera_forms_get_v2_container()->getService(\calderawp\calderaforms\cf2\Services\QueueSchedulerService::class);
+		$this->assertTrue( $uploader->scheduleFileDelete($uploadArgs['field_id'], $uploadArgs[ 'form_id'], $file['tmp_name'] ) );
+		$this->assertTrue ( file_exists( $file[ 'tmp_name']) );
+
+		$scheduler->runJobs(99);
+		$this->assertFalse( file_exists( $file[ 'tmp_name']) );
+
+
+	}
+
+
+
 }
