@@ -453,6 +453,10 @@ class Caldera_Forms
                     caldera_forms_db_v7_update();
                 }
 
+				if (($db_version < 8 || $force_update) ) {
+					Caldera_Forms_Transient::clear_wpcron();
+				}
+
 				caldera_forms_write_db_flag(CF_DB );
 
 			} else {
