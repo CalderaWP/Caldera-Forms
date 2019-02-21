@@ -163,7 +163,7 @@ class Caldera_Forms_Transient  {
 	public static function get_all(){
 		global $wpdb;
 		$like = '%' . $wpdb->esc_like( 'cftransdata' ) . '%';
-		$query = $wpdb->prepare( "SELECT option_name FROM wp_options WHERE option_name LIKE %s ", $like );
+		$query = $wpdb->prepare( "SELECT option_name FROM {$wpdb->options} WHERE option_name LIKE %s ", $like );
 		$return = [];
 		$results = $wpdb->get_results($query,ARRAY_A);
 		if( ! empty( $results) ){
