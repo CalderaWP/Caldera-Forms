@@ -2768,16 +2768,16 @@
     },
     {
         "name": "wpackagist-plugin/gutenberg",
-        "version": "5.0.0",
-        "version_normalized": "5.0.0.0",
+        "version": "5.1.0",
+        "version_normalized": "5.1.0.0",
         "source": {
             "type": "svn",
             "url": "https://plugins.svn.wordpress.org/gutenberg/",
-            "reference": "tags/5.0.0"
+            "reference": "tags/5.1.0"
         },
         "dist": {
             "type": "zip",
-            "url": "https://downloads.wordpress.org/plugin/gutenberg.5.0.0.zip",
+            "url": "https://downloads.wordpress.org/plugin/gutenberg.5.1.0.zip",
             "reference": null,
             "shasum": null
         },

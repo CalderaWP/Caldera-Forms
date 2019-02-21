@@ -65,7 +65,7 @@ if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
 	 *
 	 * PLEASE keep this an integer
 	 */
-	define('CF_DB', 7);
+	define('CF_DB', 8);
 
 	// init internals of CF
 	include_once CFCORE_PATH . 'classes/core.php';
