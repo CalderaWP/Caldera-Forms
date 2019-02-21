@@ -138,7 +138,6 @@ class Caldera_Forms_FilesTest extends TestCase
 			Caldera_Forms_Files::is_persistent($this->field)
 		);
 
-
 	}
 
 	/**
@@ -174,8 +173,6 @@ class Caldera_Forms_FilesTest extends TestCase
 
 	/**
 	 *
-	 * @group now
-	 *
 	 * @since 1.8.0
 	 *
 	 * @covers Caldera_Forms_Files::get_max_upload_size()
@@ -199,9 +196,7 @@ class Caldera_Forms_FilesTest extends TestCase
 	}
 
 	/**
-	 *
-	 * @group now
-	 *
+	 **
 	 * @since 1.8.0
 	 *
 	 * @covers Caldera_Forms_Files::is_file_too_large()
@@ -233,4 +228,5 @@ class Caldera_Forms_FilesTest extends TestCase
 			Caldera_Forms_Files::is_file_too_large($this->field, $this->createSmallCat() )
 		);
 	}
+
 }
