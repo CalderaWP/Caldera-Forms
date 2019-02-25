@@ -295,6 +295,39 @@ class Caldera_Forms_Files{
 	}
 
 	/**
+	 * Get max size for file field
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param array $field Field config
+	 *
+	 * @return int
+	 */
+	public static function get_max_upload_size( array $field)
+	{
+		return ! empty( $field[ 'config']['max_upload'] ) ? absint( $field[ 'config']['max_upload']) : 0;
+	}
+
+	/**
+	 * Check if a file is too large to upload
+	 *
+	 * @since 1.8.0
+	 *
+	 * Returns false if no max upload size set.
+	 * Returns true if max upload size option is set and file is larger than limit
+	 *
+	 * @param array $field Field config
+	 * @param string $file File to check size against
+	 *
+	 * @return bool
+	 */
+	public static function is_file_too_large( array  $field, $file )
+	{
+
+		return 0 !== self::get_max_upload_size($field) && self::get_max_upload_size($field) < $file['size'];
+
+	}
+	/**
 	 * Check if a file field should upload to media library.
 	 **
 	 *

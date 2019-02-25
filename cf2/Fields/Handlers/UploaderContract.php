@@ -51,4 +51,16 @@ interface UploaderContract
 	 * @return bool
 	 */
 	public function scheduleFileDelete($fieldId,$formId,$file);
+
+	/**
+	 * Check if file is too large to upload
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param array $field Field config
+	 * @param string $filePath Path to file to check
+	 *
+	 * @return bool
+	 */
+	public function isFileTooLarge(array $field,$filePath);
 }

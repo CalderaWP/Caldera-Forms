@@ -20,6 +20,7 @@ export const fileFieldConfigs = {
 					usePreviews: 'false',
 					previewHeight: 24,
 					previewWidth: 24,
+					maxFileUploadSize: 100000
 				}
 		},
 		required_single_allow_png:
@@ -68,6 +69,7 @@ export const fileFieldConfigs = {
 					usePreviews: true,
 					previewHeight: 24,
 					previewWidth: 24,
+					maxFileUploadSize: 100
 				}
 		},
 	required_multiple_has_button_text:
@@ -179,7 +181,31 @@ export const fileFieldConfigs = {
 					previewHeight: 20,
 					previewWidth: 40,
 				}
-		}
+		},
+	value_set_max_upload_size:
+		{
+			type: 'file',
+			outterIdAttr: 'cf2-required_multiple_no_button_text',
+			fieldId: 'required_multiple_no_button_text',
+			fieldLabel: 'Required Multiple No Button Text',
+			fieldCaption: '',
+			fieldPlaceHolder: '',
+			required: true,
+			isRequired: true,
+			fieldDefault: '',
+			fieldValue: [],
+			fieldIdAttr: 'required_multiple_no_button_text',
+			configOptions:
+				{
+					multiple: 1,
+					multiUploadText: false,
+					allowedTypes: 'false',
+					usePreviews: true,
+					previewHeight: 24,
+					previewWidth: 24,
+					maxFileUploadSize: 100
+				}
+		},
 
 };
 

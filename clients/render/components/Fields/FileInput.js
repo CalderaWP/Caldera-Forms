@@ -1,5 +1,6 @@
 import {CalderaFormsFieldGroup, Fragment} from "../CalderaFormsFieldGroup";
 import {CalderaFormsFieldPropType} from "../CalderaFormsFieldRender";
+import {sizeFormat} from "../../util";
 import React from 'react';
 
 import PropTypes from 'prop-types';
@@ -16,9 +17,10 @@ import Dropzone from 'react-dropzone';
  */
 export const FileInput = (props) => {
 
-	const {onChange, accept, field, describedById, style, className, multiUploadText, multiple, inputProps, usePreviews, previewHeight, previewWidth, strings} = props;
+	const {maxFileUploadSize, onChange, accept, field, describedById, style, className, multiUploadText, multiple, inputProps, usePreviews, previewHeight, previewWidth, strings} = props;
 	let {shouldDisable} = props;
 	const {
+		allowedTypes,
 		outterIdAttr,
 		fieldId,
 		fieldLabel,
@@ -32,9 +34,10 @@ export const FileInput = (props) => {
 		fieldValue
 	} = field;
 
-	const valueSet = fieldValue.length > 0;
+	const valueSet = typeof fieldValue !== "undefined" && fieldValue.length > 0;
 	const removeFileID = fieldIdAttr + '_file_';
 	const buttonControls = fieldIdAttr + ', cf2-list-files';
+	const cf2ListFilesID = 'cf2-list-files-' + fieldIdAttr;
 
 	inputProps.id = fieldIdAttr;
 
@@ -43,16 +46,88 @@ export const FileInput = (props) => {
 		inputProps.disabled = true;
 	}
 
+	let acceptedTypes = [];
+	if(typeof accept === "string"){
+		acceptedTypes = accept.split(',');
+	}
+
+	const progressId = "file-progress" + fieldIdAttr;
+
 	return (
 
-		<div className="cf2-dropzone" data-field={fieldId}>
+		<div className="cf2-dropzone">
+
+			{valueSet &&
+			<ul
+				id={cf2ListFilesID}
+				className="cf2-list-files"
+				role="list"
+			>
+				{
+					fieldValue.map(
+						(file, index) =>
+							<li
+								id={removeFileID + index}
+								key={index}
+								className="cf2-file-listed"
+								role="listitem"
+								aria-posinset={index}
+							>
+								<div className="cf2-file-control">
+									<button
+										type="button"
+										aria-controls={removeFileID + index}
+										data-file={removeFileID + index}
+										className="cf2-file-remove"
+										onClick={(e) => onChange(e, file)}
+									>
+										<span className="screen-reader-text sr-text">{strings.removeFile}</span>
+									</button>
+
+									{usePreviews === true && file.type.startsWith("image") === true ?
+										<img
+											className="cf2-file-field-img-preview"
+											width={previewWidth}
+											height={previewHeight}
+											src={file.preview}
+											alt={file.name}
+										/>
+										:
+										<span className="cf2-file-name file-name">{file.name}</span>
+									}
+									<progress id={progressId} className={"cf2-file-progress-bar"} value="0" max="100"></progress>
+								</div>
+								<div className="cf2-file-extra-data">
+
+									<small className="cf2-file-data file-type"> {file.type}</small>
+									<small className="cf2-file-data file-size"> - {sizeFormat(file.size)} </small>
+
+									{maxFileUploadSize > 0 && maxFileUploadSize < file.size &&
+										<small className={"cf2-file-error file-error file-size-error help-block"}> {strings.maxSizeAlert + sizeFormat(maxFileUploadSize) } </small>
+									}
+
+									{acceptedTypes.indexOf(file.type) <= -1 && accept !== false &&
+										<small className={"cf2-file-error file-error file-type-error help-block"}> {strings.wrongTypeAlert + accept } </small>
+									}
+
+								</div>
+							</li>
+					)
+				}
+			</ul>
+			}
+
 			<Dropzone
 				onDrop={onChange}
 				className={className}
-				accept={'string' === typeof  accept ? accept : ''}
+				accept={'string' === typeof accept ? accept : ''}
+				maxSize={'number' === typeof maxFileUploadSize && maxFileUploadSize > 0 ? maxFileUploadSize : Infinity}
 				style={style}
 				disabled={shouldDisable}
-				inputProps={inputProps}
+				inputProps={{
+					...inputProps,
+					'data-field': fieldId
+				}}
 				disableClick={shouldDisable}
 				multiple={multiple}
 			>
@@ -67,53 +142,6 @@ export const FileInput = (props) => {
 				</button>
 			</Dropzone>
 
-			{valueSet &&
-			<ul
-				id="cf2-list-files"
-				role="list"
-			>
-				{
-					fieldValue.map(
-						(file, index) =>
-							<li
-								id={removeFileID + index}
-								key={index}
-								className="cf2-file-listed"
-								role="listitem"
-								aria-posinset={index}
-							>
-
-								<button
-									type="button"
-									aria-controls={removeFileID + index}
-									data-file={removeFileID + index}
-									className="cf2-file-remove"
-									onClick={(e) => onChange(e, file)}
-								>
-									<span className="screen-reader-text sr-text">{strings.removeFile}</span>
-								</button>
-
-								<div>
-									{usePreviews === true && file.type.startsWith("image") === true ?
-										<img
-											className="cf2-file-field-img-preview"
-											width={previewWidth}
-											height={previewHeight}
-											src={file.preview}
-											alt={file.name}
-										/>
-										:
-										<span className="cf2-file-name">{file.name}</span>
-									}
-									<br/>
-									<span
-										className="cf2-file-data"> {file.type} - {file.size} bytes - {file.type.startsWith("image")}</span>
-								</div>
-							</li>
-					)
-				}
-			</ul>
-			}
 		</div>
 
 	)
@@ -200,7 +228,8 @@ FileInput.fieldConfigToProps = (fieldConfig) => {
 	};
 	const configOptionProps = [
 		'multiple',
-		'multiUploadText'
+		'multiUploadText',
+		'maxFileUploadSize'
 	];
 
 	if (!props.field.hasOwnProperty('isRequired')) {
@@ -227,11 +256,7 @@ FileInput.fieldConfigToProps = (fieldConfig) => {
 		}
 
 		if (fieldConfig.configOptions.hasOwnProperty('multiple')) {
-			if (fieldConfig.configOptions.multiple === 1) {
-				props.multiple = true;
-			} else {
-				props.multiple = false;
-			}
+			props.multiple = fieldConfig.configOptions.multiple === 1;
 		} else {
 			props.multiple = false;
 		}
@@ -248,6 +273,9 @@ FileInput.fieldConfigToProps = (fieldConfig) => {
 
 		}
 
+		if (configOptions.hasOwnProperty('maxFileUploadSize')) {
+			props.maxFileUploadSize = configOptions.maxFileUploadSize;
+		}
 
 	}
 
