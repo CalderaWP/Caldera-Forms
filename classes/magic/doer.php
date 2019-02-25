@@ -503,7 +503,7 @@ class Caldera_Forms_Magic_Doer {
 	 * @return array
 	 */
 	public static function magic_tag_meta_prepare( $entry_id ){
-		global $processed_meta;		
+		global $processed_meta;
 		if( ! is_array( self::$entry_details ) )  {
 			self::$entry_details = array();
 		}
@@ -552,8 +552,10 @@ class Caldera_Forms_Magic_Doer {
 			if( is_object( $_value ) ){
 				$value = implode( ', ', (array) $_value );
 			}
-
+		} else if( is_array( $value )  ){
+			$value = implode( ', ', $value );
 		}
+
 
 		return $value;
 

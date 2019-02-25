@@ -138,4 +138,41 @@ class Caldera_Forms_Transient  {
 	}
 
 
+	/**
+	 * Clear all schedule cron jobs
+	 *
+	 * @since 1.8.0
+	 */
+	public static function clear_wpcron(){
+		$transients = self::get_all();
+		if( ! empty($transients)){
+			foreach ($transients as $transient_id ){
+				wp_clear_scheduled_hook(self::CRON_ACTION, [$transient_id]);
+			}
+		}
+
+	}
+
+	/**
+	 * Get the names of all transients
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return array
+	 */
+	public static function get_all(){
+		global $wpdb;
+		$like = '%' . $wpdb->esc_like( 'cftransdata' ) . '%';
+		$query = $wpdb->prepare( "SELECT option_name FROM {$wpdb->options} WHERE option_name LIKE %s ", $like );
+		$return = [];
+		$results = $wpdb->get_results($query,ARRAY_A);
+		if( ! empty( $results) ){
+			foreach ($results as $result ){
+				$return[] = $result[ 'option_name' ];
+			}
+		}
+		return $return;
+	}
+
+
 }

@@ -264,25 +264,24 @@ function CFState(formId, $ ){
 		} else {
 			$field = $('.' + id);
 			if ($field.length) {
+				//Rebind checkbox options when the checkbow field is unhidden
+				if( 'object' == typeof  $field  ){
+					var val = [];
+					var allSums = 0;
+					$field.each(function ( i, el ) {
+						var $this = $(el);
+						var sum = 0;
+						if ($this.prop('checked')) {
+							sum += parseFloat(findCalcVal($this));
+							allSums += sum;
+							val.push($this.val());
+						}
+						calcVals[id] = allSums;
+					});
+				}
 
-                                //Rebind checkbox options when the checkbow field is unhidden
-                                    if( 'object' == typeof  $field  ){
-                                        var val = [];
-                                        var allSums = 0;
-                                        $field.each(function ( i, el ) {
-                                            var $this = $(el);
-                                            var sum = 0;
-                                            if ($this.prop('checked')) {
-                                                sum += parseFloat(findCalcVal($this));
-                                                allSums += sum;
-                                                val.push($this.val());
-                                            }
-                                            calcVals[id] = allSums;
-                                        });
-                                    }
 
-
-                                    $field.on('change', function () {
+				$field.on('change', function () {
 					var val = [];
 					var $el = $(this),
 					 	id,
@@ -371,7 +370,7 @@ function CFState(formId, $ ){
 	function bindCalcField(id,config) {
 		fieldVals[id] = 0;
 		calcVals[id] = 0;
-		self.events().subscribe(id,function (value,id) {
+		self.events().subscribe(id,function (id,value) {
 			calcVals[id] = value;
 		});
 	}

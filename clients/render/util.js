@@ -55,18 +55,21 @@ export const removeFromUploadStarted = (fieldId, cf2) => {
 	}
 }
 
-export const removeFromBlocking = (fieldId, cf2) => {
+export const removeFromBlocking = (fieldId, cf2, fieldConfig = {}) => {
 	const index = cf2.fieldsBlocking.findIndex(item => item === fieldId);
 	if (-1 < index) {
 		cf2.fieldsBlocking.splice(index, 1);
 	}
-
+	setSubmitButtonState(cf2, fieldConfig);
 }
 
-export const setBlocking = ( fieldId, cf2 ) => {
+export const setBlocking = ( fieldId, cf2, fieldConfig = {}) => {
 	removeFromUploadStarted(fieldId, cf2);
 	removeFromPending(fieldId, cf2);
-	cf2.fieldsBlocking.push( fieldId );
+	if(cf2.fieldsBlocking.indexOf(fieldId) < 0){
+		cf2.fieldsBlocking.push( fieldId );
+	}
+	setSubmitButtonState(cf2, fieldConfig, false);
 }
 
 /**
@@ -94,3 +97,154 @@ export const createMediaFromFile = (file, additionalData, fetch) => {
 		}
 	});
 }
+
+/**
+
+ * Converts the bytes values to smaller value in corresponding unit
+ *
+ * @param bytes value to be converted
+ * @return {*}
+ */
+export const sizeFormat = (bytes) => {
+	let converted = false;
+	const quant = [
+		{
+			unit: 'TB',
+			mag: 1099511627776
+		},
+
+		{
+			unit: 'GB',
+			mag: 1073741824
+		},
+
+		{
+			unit: 'MB',
+			mag: 1048576
+		},
+
+		{
+			unit: 'kB',
+			mag: 1024
+		},
+
+		{
+			unit: 'B ',
+			mag: 1
+		}
+	];
+	quant.forEach(function(v){
+		if (parseFloat(bytes) >= v.mag && converted == false){
+			converted = bytes/v.mag;
+			if( bytes > 1048576 ){
+				converted = converted.toFixed(2);
+			}else{
+				converted = Math.round( converted );
+			}
+			converted = converted +' '+v.unit;
+		}
+	});
+	return converted;
+}
+
+/* Set Submit button state
+ *
+ * @param {object} cf2
+ * @param {object} fieldConfig
+ * @param {boolean} state
+ * @return {*}
+ */
+export const setSubmitButtonState = (cf2, fieldConfig, state) => {
+
+	const fieldIdAttr = fieldConfig.fieldIdAttr;
+
+	const formIdAttr = getFormIdAttr(cf2, fieldIdAttr);
+
+	const form =  jQuery("#" + formIdAttr);
+	//If no state param was send in the function define the state based on elements inside the fieldsBlocking Array
+	if(typeof state === "undefined") {
+		state = cf2.fieldsBlocking.length <= 0;
+	}
+
+	//If state === true enable submit button else disable submit button
+	if(state) {
+		form.find(':submit').prop('disabled',false);
+	} else {
+		form.find(':submit').prop('disabled',true);
+	}
+	return state;
+}
+
+/**
+ * Find the formIdAttr corresponding to a fieldIdAttr in the cf2 object
+ *
+ * @param {object} cf2
+ * @param {string} fieldIdAttr
+ * @return {string} formIdAttr
+ */
+export const getFormIdAttr = (cf2, fieldIdAttr) => {
+
+	let formIdAttr = cf2.formIdAttr;
+
+	if( typeof formIdAttr === "undefined" ){
+
+		const entries = Object.entries(cf2);
+		const formEntries = [];
+		entries.forEach( entry => {
+			if(entry[1].hasOwnProperty("fields") ) {
+				formEntries.push(entry);
+			}
+		})
+		formEntries.forEach( formEntry => {
+			if(formEntry[1].fields.hasOwnProperty(fieldIdAttr ) ) {
+				formIdAttr = formEntry[0];
+			}
+		})
+	}
+
+	return formIdAttr;
+
+}
+
+/**
+ * Start or Stop spinner animation to indicate process is happening
+ *
+ * @since 1.8.0
+ *
+ * @param {string} formIdAttr Id Attribute of the <form> tag
+ * @param {boolean} trigger if true force addClass if false force removeClass
+ */
+export const processAnimation = (formIdAttr, trigger) => {
+
+	const cfElement = formIdAttr.length > 0 ? jQuery("#" + formIdAttr).parent(".caldera-grid") : false;
+
+	if(cfElement !== false) {
+		if(trigger === false){
+			if(jQuery(cfElement).hasClass("cf_processing")){
+				jQuery(cfElement).removeClass("cf_processing");
+			}
+		}else if(trigger === true){
+			if(!jQuery(cfElement).hasClass("cf_processing")){
+				jQuery(cfElement).addClass("cf_processing");
+			}
+		}
+	}
+
+};
+
+/**
+ * Add a component -- CalderaFormsRender -- to window.cf2 correctly
+ *
+ * @since 1.8.0
+ *
+ * @param {function} component
+ * @param {string}idAttr
+ * @param {object}window
+ */
+export const captureRenderComponentRef = (component,idAttr,window = {}) => {
+	window.cf2 = window.cf2 || {};
+	window.cf2[idAttr] = {
+		...window.cf2[idAttr] || {},
+		component
+	};
+};

@@ -41,12 +41,19 @@ export const CF_API_DATA = {
 	},
 	"strings": {
 		"cf2FileField": {
-			"removeFile":"Remove file",
-			"defaultButtonText":"Drop files or click to select files to Upload",
-			"fileUploadError1": "Error: ",
-			"fileUploadError2": " could not be processed",
-			"invalidFileResponse": "Invalid",
-			"fieldIsRequired": "Field is required"
+			'removeFile': 'Remove file',
+			'defaultButtonText': 'Drop files or click to select files to Upload',
+			'fileUploadError1': 'Error: ',
+			'fileUploadError2': ' could not be processed',
+			'invalidFiles': 'These Files have been rejected : ',
+			'checkMessage': 'Please check file type and size ',
+			'invalidFileResponse': 'Unknown File Process Error',
+			'fieldIsRequired': 'Field is required',
+			'filesUnit': 'bytes',
+			'maxUploadSizeError': 'File size exceeded, the form will not submit',
+			'maxUploadSizeInstruction': 'Remove this file and upload a file of less than ',
+			'allowedTypes': 'Types allowed : ',
+			'maxSize': 'Max. File Size : ',
 		}
 	},
 	"nonce":{
@@ -116,8 +123,50 @@ export const theComponent = {
 		"messages": {},
 		"strings": {
 			"cf2FileField": {
-				"removeFile": "Remove file",
-				"defaultButtonText": "Drop files or click to select files to Upload"
+				'removeFile': 'Remove file',
+				'defaultButtonText': 'Drop files or click to select files to Upload',
+				'fileUploadError1': 'Error: ',
+				'fileUploadError2': ' could not be processed',
+				'invalidFiles': 'These Files have been rejected : ',
+				'checkMessage': 'Please check file type and size ',
+				'invalidFileResponse': 'Unknown File Process Error',
+				'fieldIsRequired': 'Field is required',
+				'filesUnit': 'bytes',
+				'maxUploadSizeError': 'File size exceeded, the form will not submit',
+				'maxUploadSizeInstruction': 'Remove this file and upload a file of less than ',
+				'allowedTypes': 'Types allowed : ',
+				'maxSize': 'Max. File Size : ',
+			}
+		}
+	},
+	"state": {
+		"valuesValidity": {
+			"fld_6214010_1": {
+				"valid": true,
+				"validValues": [
+					[
+						{}
+					],
+					[
+						{}
+					],
+					[
+						{}
+					]
+				],
+				"invalidValues": []
+			},
+			"fld_4522958_1": {
+				"valid": true,
+				"validValues": [
+					[
+						{}
+					],
+					[
+						{}
+					]
+				],
+				"invalidValues": []
 			}
 		}
 	}
