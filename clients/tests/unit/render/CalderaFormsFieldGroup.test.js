@@ -19,6 +19,7 @@ describe('CalderaFormsFieldGroup component', () => {
 		outterIdAttr: "cf2-fld_5843941_1",
 		required: false,
 		type: "text",
+		areValuesValid: true
 	};
 
 	const getFieldConfig = (fieldIdAttr) =>{
@@ -158,7 +159,8 @@ describe('chooses inner field', () => {
 				required: 'false',
 				fieldDefault: '',
 				fieldValue: '',
-				fieldIdAttr: 'not_required_multiple_has_button_text'
+				fieldIdAttr: 'not_required_multiple_has_button_text',
+				areValuesValid: true
 			},
 		accept: '',
 		multiple: 'false',

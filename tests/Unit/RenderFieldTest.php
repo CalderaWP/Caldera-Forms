@@ -88,12 +88,16 @@ class RenderFieldTest extends TestCase
 			$this->assertArrayHasKey('multiple', $configOptions);
 			$this->assertArrayHasKey('multiUploadText', $configOptions);
 			$this->assertArrayHasKey('allowedTypes', $configOptions);
+			$this->assertArrayHasKey('maxFileUploadSize', $configOptions);
 
 			if ( isset($fieldConfig[ 'multi_upload' ]) ) {
 				$this->assertEquals($fieldConfig[ 'multi_upload' ], $configOptions[ 'multiple' ]);
 			}
 			if ( isset($fieldConfig[ 'multi_upload_text' ]) ) {
 				$this->assertEquals($fieldConfig[ 'multi_upload_text' ], $configOptions[ 'multiUploadText' ]);
+			}
+			if ( isset($fieldConfig[ 'max_upload' ]) ) {
+				$this->assertEquals($fieldConfig[ 'max_upload' ], $configOptions[ 'maxFileUploadSize' ]);
 			}
 
 		}
@@ -177,7 +181,6 @@ class RenderFieldTest extends TestCase
 	}
 
 	/**
-	 * @group now
 	 *
 	 * @covers \calderawp\calderaforms\cf2\Fields\RenderField::data();
 	 */
@@ -225,6 +228,39 @@ class RenderFieldTest extends TestCase
 
 		$this->assertSame(24, $data[ 'configOptions' ][ 'previewWidth' ]);
 		$this->assertSame(24, $data[ 'configOptions' ][ 'previewHeight' ]);
+	}
+
+	/**
+	 * @covers \calderawp\calderaforms\cf2\Fields\RenderField::data();
+	 * Test max_upload default value is set
+	 */
+	public function testMaxUploadSizeDefaults()
+	{
+		$fieldId = 'allows_png_only';
+		$field = $this->fieldForRenderFactory($fieldId);
+		$field[ 'type' ] = 'cf2_file';
+		$formIdAttr = 'cf1_1';
+		$renderer = new RenderField($formIdAttr, $field);
+		$data = $renderer->data();
+
+		$this->assertSame(0, $data[ 'configOptions' ][ 'maxFileUploadSize' ]);
+	}
+
+	/**
+	 * @covers \calderawp\calderaforms\cf2\Fields\RenderField::data();
+	 * Test max_upload value set by user
+	 */
+	public function testMaxUploadSizeCustom()
+	{
+		$fieldId = 'allows_png_only';
+		$field = $this->fieldForRenderFactory($fieldId);
+		$field[ 'type' ] = 'cf2_file';
+		$formIdAttr = 'cf1_1';
+		$field['config']['max_upload'] = 1000000;
+		$renderer = new RenderField($formIdAttr, $field);
+		$data = $renderer->data();
+
+		$this->assertSame(1000000, $data[ 'configOptions' ][ 'maxFileUploadSize' ]);
 	}
 
 	/**
