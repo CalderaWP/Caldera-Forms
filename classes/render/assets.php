@@ -69,6 +69,12 @@ class Caldera_Forms_Render_Assets {
 		self::maybe_register();
 
 		$type = Caldera_Forms_Field_Util::get_type( $field );
+
+		if( Caldera_Forms_Field_Util::is_cf2_field_type($type)){
+			self::enqueue_cf2();
+			return;
+		}
+
 		if( in_array( $type , array( 'credit_card_number' ) ) ){
 			self::enqueue_style( 'font' );
 		}
@@ -592,8 +598,6 @@ class Caldera_Forms_Render_Assets {
 		self::maybe_validator_i18n( false );
 		self::enqueue_script( 'validator' );
 		self::enqueue_script( 'init' );
-		self::enqueue_script( 'render' );
-		self::enqueue_style( 'render' );
 
 		$should_minify = self::should_minify();
 		if( $should_minify  ){
@@ -883,6 +887,16 @@ class Caldera_Forms_Render_Assets {
 		}
 
 		return $depts;
+	}
+
+	/**
+	 * Enqueue cf2 assets
+	 *
+	 * @since 1.8.0
+	 */
+	public function enqueue_cf2(){
+		self::enqueue_script( 'render' );
+		self::enqueue_style( 'render' );
 	}
 
 
