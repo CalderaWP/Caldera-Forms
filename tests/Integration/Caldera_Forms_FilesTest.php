@@ -3,10 +3,12 @@
 namespace calderawp\calderaforms\Tests\Integration;
 
 use Caldera_Forms_Files;
+use calderawp\calderaforms\Tests\Util\Traits\TestsImages;
 
 class Caldera_Forms_FilesTest extends TestCase
 {
 
+	use TestsImages;
 	protected $field = [
 		'ID' => 'fld123',
 		'type' => 'file',
@@ -14,6 +16,13 @@ class Caldera_Forms_FilesTest extends TestCase
 
 		],
 	];
+
+	/** @inheritdoc */
+	public function tearDown()
+	{
+		$this->deleteTestCatFile();
+		parent::tearDown();
+	}
 
 	/**
 	 *
@@ -129,7 +138,6 @@ class Caldera_Forms_FilesTest extends TestCase
 			Caldera_Forms_Files::is_persistent($this->field)
 		);
 
-
 	}
 
 	/**
@@ -162,4 +170,63 @@ class Caldera_Forms_FilesTest extends TestCase
 			Caldera_Forms_Files::should_add_to_media_library($field)
 		);
 	}
+
+	/**
+	 *
+	 * @since 1.8.0
+	 *
+	 * @covers Caldera_Forms_Files::get_max_upload_size()
+	 */
+	public function testGetMaxUploadSize()
+	{
+		$field = array_merge($this->field, [
+			'config' => [ 'max_upload' => 42 ],
+		]);
+		//returns saved value
+		$this->assertEquals( 42, Caldera_Forms_Files::get_max_upload_size($field ) );
+
+		$field = array_merge($this->field, [
+			'config' => [ 'max_upload' => '42' ],
+		]);
+		//always a string
+		$this->assertEquals( 42, Caldera_Forms_Files::get_max_upload_size($field ) );
+
+		//0 by default
+		$this->assertEquals( 0, Caldera_Forms_Files::get_max_upload_size($this->field ) );
+	}
+
+	/**
+	 **
+	 * @since 1.8.0
+	 *
+	 * @covers Caldera_Forms_Files::is_file_too_large()
+	 * @covers Caldera_Forms_Files::get_max_upload_size()
+	 */
+	public function testIfFileIsTooLarge(){
+		$field = array_merge($this->field, [
+			'config' => [ 'max_upload' => 42 ],
+		]);
+
+		//This file is larger than 42 bytes
+		$this->assertTrue(
+			Caldera_Forms_Files::is_file_too_large($field, $this->createSmallCat() )
+		);
+
+
+		$field = array_merge($this->field, [
+			'config' => [ 'max_upload' => 42000000 ],
+		]);
+
+		//This file is smaller than 42000000 bytes
+		$this->assertFalse(
+			Caldera_Forms_Files::is_file_too_large($field, $this->createSmallCat() )
+		);
+
+
+		//No limits, all files are the right size.
+		$this->assertFalse(
+			Caldera_Forms_Files::is_file_too_large($this->field, $this->createSmallCat() )
+		);
+	}
+
 }

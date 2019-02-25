@@ -2,11 +2,18 @@
 
 namespace calderawp\calderaforms\Tests\Integration\Handlers;
 
+use calderawp\calderaforms\cf2\Exception;
+use calderawp\calderaforms\cf2\Fields\Handlers\Cf1FileUploader;
 use calderawp\calderaforms\cf2\Fields\Handlers\FileFieldHandler;
+use calderawp\calderaforms\cf2\Fields\Handlers\FileUpload;
 use calderawp\calderaforms\Tests\Integration\TestCase;
+use calderawp\calderaforms\Tests\Util\Traits\TestsImages;
 
 class FileFieldHandlerTest extends TestCase
 {
+
+	use TestsImages;
+
 
     /**
      * @covers \calderawp\calderaforms\cf2\Fields\Handlers\FileFieldHandler::processField()
@@ -41,6 +48,7 @@ class FileFieldHandlerTest extends TestCase
         $handler = new FileFieldHandler($container);
         $this->assertTrue( empty($handler->processField([], ['ID' => 'cf1'], ['ID' => 'fld1'] ) ) );
     }
+
 
     /**
      * Test that transient is deleted when field is saved
@@ -84,4 +92,62 @@ class FileFieldHandlerTest extends TestCase
         );
 
     }
+
+
+	/**
+	 * @since 1.8.0
+	 *
+	 * @cover \calderawp\calderaforms\cf2\Fields\Handlers\FileUpload::getAllowedTypes()
+	 */
+	public function testKnowsFileIsTooLarge()
+	{
+		$field = [ 'ID' => 'fld1', 'config' => [ 'max_upload' => 42 ] ];
+		$form = [ 'ID' => 'cd1' ];
+		$uploader = new Cf1FileUploader();
+		$handler = new FileUpload($field, $form, $uploader);
+		$this->assertTrue( $handler->isFileTooLarge( $this->createSmallCat() ) );
+
+	}
+
+	/**
+	 * @since 1.8.0
+	 *
+	 * @cover \calderawp\calderaforms\cf2\Fields\Handlers\FileUpload::processFiles()
+	 * @cover \calderawp\calderaforms\cf2\Fields\Handlers\FileUpload::isFileTooLarge()
+	 */
+	public function testExceptionWhenFileIsTooLarge()
+	{
+		$this->expectException(Exception::class);
+		$field = [ 'ID' => 'fld1', 'config' => [ 'max_upload' => 42 ] ];
+		$form = [ 'ID' => 'cd1' ];
+		$uploader = new Cf1FileUploader();
+		$handler = new FileUpload($field, $form, $uploader);
+		$handler->processFiles([ $this->createSmallCat() ], []);
+
+	}
+
+	/**
+ 	 *
+	 * @since 1.8.0
+	 *
+	 * @cover \calderawp\calderaforms\cf2\Fields\Handlers\FileUpload::getAllowedTypes()
+	 */
+	public function testAllowsFileSize()
+	{
+		$field = [ 'ID' => 'fld1', 'config' => [ 'max_upload' => 0 ] ];
+		$form = [ 'ID' => 'cd1' ];
+		$uploader = new Cf1FileUploader();
+		$handler = new FileUpload($field, $form, $uploader);
+		$file = $this->createSmallCat();
+		$this->assertFalse( $handler->isFileTooLarge( $file ) );
+
+
+		$field = [ 'ID' => 'fld1', 'config' => [ 'max_upload' => 1000 ] ];
+		$form = [ 'ID' => 'cd1' ];
+		$uploader = new Cf1FileUploader();
+		$handler = new FileUpload($field, $form, $uploader);
+		$image = $this->createSmallCat();
+		$this->assertTrue( $handler->isFileTooLarge( $image ) );
+
+	}
 }

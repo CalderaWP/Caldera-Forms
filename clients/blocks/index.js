@@ -8,77 +8,64 @@ const { registerStore,  } = wp.data;
 const InspectorControls = wp.editor.InspectorControls;
 const {Placeholder} = wp.components;
 const formStore = registerStore(CALDERA_FORMS_STORE_NAME,STORE);
+import { ServerSideRender } from '@wordpress/components';
+
 //Import CF components
 import {FormChooserWithSelect} from "./components/formChooser";
-import {FormPreviewWithSelect} from "./components/FormPreview";
 //Create block
 registerBlockType( 'calderaforms/cform', {
 	title: __( 'Caldera Form' ),
 	icon: 'feedback',
 	category: 'common',
-    attributes: {
-        formId: {
-            formId: 'string',
-            default: 'false',
-        }
+    	attributes: {
+		formId: {
+		    formId: 'string',
+		    default: 'false',
+		}
     },
     edit({ attributes, setAttributes, className, isSelected, id } ) {
-        /**
-         * Utility function to load preview inside block
-         *
-         * @since 1.6.2
-         *
-         * @param {String} formId
-         */
-        const loadPreview = function (formId) {
-            if ('false' !== formId && !formStore.getState().formPreviews.hasOwnProperty(formId)) {
-                requestFormPreview(formStore.getState(), formId);
-            }
-        };
 
         /**
          * Change handler for when form in block changes
-         * 
+         *
          * @since 1.6.2
          *
          * @param {String} newFormId
          */
         const setCurrentForm = (newFormId) => {
             setAttributes({formId:newFormId});
-            loadPreview(newFormId);
         };
 
-        //Preload preview
-        if( 'false' !== attributes.formId ){
-            loadPreview(attributes.formId);
-        }
 
         return (
-			<div>
-                <InspectorControls>
-                    <FormChooserWithSelect
-                        onChange={setCurrentForm}
-                        formId={attributes.formId}
-                    />
-                </InspectorControls>
+		<div>
+			<InspectorControls>
+			    <FormChooserWithSelect
+				onChange={setCurrentForm}
+				formId={attributes.formId}
+			    />
+			</InspectorControls>
 
-                {'false' === attributes.formId &&
-                    <Placeholder
-                        className={ 'caldera-forms-form-chooser-placeholder' }
-                        label={ 'Caldera Form' } >
-                        <FormChooserWithSelect
-                            onChange={setCurrentForm}
-                            formId={attributes.formId}
-                        />
+			{'false' === attributes.formId &&
+			    <Placeholder
+				className={ 'caldera-forms-form-chooser-placeholder' }
+				label={ 'Caldera Form' } >
+				<FormChooserWithSelect
+				    onChange={setCurrentForm}
+				    formId={attributes.formId}
+				/>
 
-                    </Placeholder>
-                }
+			    </Placeholder>
+			}
 
-                {'false' !== attributes.formId &&
-                    <FormPreviewWithSelect
-                        formId={attributes.formId}
-                    />
-                }
+			{'false' !== attributes.formId &&
+				<ServerSideRender
+					block="calderaforms/cform"
+					attributes={ {
+						formId:attributes.formId
+					} }
+				/>
+			}
             </div>
         );
     },

@@ -3,7 +3,6 @@
 exports[`File Field  Matches snapshot for not_required_multiple_has_button_text 1`] = `
 <div
   className="cf2-dropzone"
-  data-field="not_required_multiple_has_button_text"
 >
   <div
     aria-disabled={false}
@@ -31,6 +30,7 @@ exports[`File Field  Matches snapshot for not_required_multiple_has_button_text 
     <input
       accept=""
       autoComplete="off"
+      data-field="not_required_multiple_has_button_text"
       disabled={false}
       id="not_required_multiple_has_button_text"
       multiple={true}
@@ -55,7 +55,6 @@ exports[`File Field  Matches snapshot for not_required_multiple_has_button_text 
 exports[`File Field  Matches snapshot for not_required_multiple_no_button_text 1`] = `
 <div
   className="cf2-dropzone"
-  data-field="not_required_multiple_no_button_text"
 >
   <div
     aria-disabled={false}
@@ -83,6 +82,7 @@ exports[`File Field  Matches snapshot for not_required_multiple_no_button_text 1
     <input
       accept=""
       autoComplete="off"
+      data-field="not_required_multiple_no_button_text"
       disabled={false}
       id="not_required_multiple_no_button_text"
       multiple={true}
@@ -107,7 +107,6 @@ exports[`File Field  Matches snapshot for not_required_multiple_no_button_text 1
 exports[`File Field  Matches snapshot for not_required_single 1`] = `
 <div
   className="cf2-dropzone"
-  data-field="not_required_single"
 >
   <div
     aria-disabled={false}
@@ -135,6 +134,7 @@ exports[`File Field  Matches snapshot for not_required_single 1`] = `
     <input
       accept=""
       autoComplete="off"
+      data-field="not_required_single"
       disabled={false}
       id="not_required_single"
       multiple={true}
@@ -159,7 +159,6 @@ exports[`File Field  Matches snapshot for not_required_single 1`] = `
 exports[`File Field  Matches snapshot for required_multiple_has_button_text 1`] = `
 <div
   className="cf2-dropzone"
-  data-field="required_multiple_has_button_text"
 >
   <div
     aria-disabled={false}
@@ -187,6 +186,7 @@ exports[`File Field  Matches snapshot for required_multiple_has_button_text 1`] 
     <input
       accept=""
       autoComplete="off"
+      data-field="required_multiple_has_button_text"
       disabled={false}
       id="required_multiple_has_button_text"
       multiple={true}
@@ -211,7 +211,6 @@ exports[`File Field  Matches snapshot for required_multiple_has_button_text 1`] 
 exports[`File Field  Matches snapshot for required_multiple_no_button_text 1`] = `
 <div
   className="cf2-dropzone"
-  data-field="required_multiple_no_button_text"
 >
   <div
     aria-disabled={false}
@@ -239,6 +238,7 @@ exports[`File Field  Matches snapshot for required_multiple_no_button_text 1`] =
     <input
       accept=""
       autoComplete="off"
+      data-field="required_multiple_no_button_text"
       disabled={false}
       id="required_multiple_no_button_text"
       multiple={true}
@@ -263,7 +263,6 @@ exports[`File Field  Matches snapshot for required_multiple_no_button_text 1`] =
 exports[`File Field  Matches snapshot for required_single 1`] = `
 <div
   className="cf2-dropzone"
-  data-field="required_single"
 >
   <div
     aria-disabled={false}
@@ -291,6 +290,7 @@ exports[`File Field  Matches snapshot for required_single 1`] = `
     <input
       accept=""
       autoComplete="off"
+      data-field="required_single"
       disabled={false}
       id="required_single"
       multiple={true}
@@ -315,7 +315,6 @@ exports[`File Field  Matches snapshot for required_single 1`] = `
 exports[`File Field  Matches snapshot for required_single_allow_png 1`] = `
 <div
   className="cf2-dropzone"
-  data-field="required_single_allow_png"
 >
   <div
     aria-disabled={false}
@@ -343,8 +342,61 @@ exports[`File Field  Matches snapshot for required_single_allow_png 1`] = `
     <input
       accept=""
       autoComplete="off"
+      data-field="required_single_allow_png"
       disabled={false}
       id="required_single"
+      multiple={true}
+      onChange={[Function]}
+      style={
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "opacity": 0.00001,
+          "pointerEvents": "none",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+      type="file"
+    />
+  </div>
+</div>
+`;
+
+exports[`File Field  Matches snapshot for value_set_max_upload_size 1`] = `
+<div
+  className="cf2-dropzone"
+>
+  <div
+    aria-disabled={false}
+    className="cf2-file form-control"
+    onClick={[Function]}
+    onDragEnter={[Function]}
+    onDragLeave={[Function]}
+    onDragOver={[Function]}
+    onDragStart={[Function]}
+    onDrop={[Function]}
+    style={
+      Object {
+        "position": "relative",
+      }
+    }
+  >
+    <button
+      aria-controls="required_multiple_no_button_text, cf2-list-files"
+      aria-expanded={false}
+      className="btn btn-block"
+      type="button"
+    >
+      The Default Text
+    </button>
+    <input
+      accept=""
+      autoComplete="off"
+      data-field="required_multiple_no_button_text"
+      disabled={false}
+      id="required_multiple_no_button_text"
       multiple={true}
       onChange={[Function]}
       style={
@@ -367,7 +419,6 @@ exports[`File Field  Matches snapshot for required_single_allow_png 1`] = `
 exports[`File Field  Matches snapshot for width_40_height_20 1`] = `
 <div
   className="cf2-dropzone"
-  data-field="width_40_height_20"
 >
   <div
     aria-disabled={false}
@@ -395,6 +446,7 @@ exports[`File Field  Matches snapshot for width_40_height_20 1`] = `
     <input
       accept=""
       autoComplete="off"
+      data-field="width_40_height_20"
       disabled={false}
       id="width_40_height_20"
       multiple={true}
