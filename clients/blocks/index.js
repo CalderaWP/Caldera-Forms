@@ -12,6 +12,7 @@ import { ServerSideRender } from '@wordpress/components';
 
 //Import CF components
 import {FormChooserWithSelect} from "./components/formChooser";
+import {LinkToFormEditor} from "./components/linkToFormEditor";
 //Create block
 registerBlockType( 'calderaforms/cform', {
 	title: __( 'Caldera Form' ),
@@ -44,6 +45,9 @@ registerBlockType( 'calderaforms/cform', {
 				onChange={setCurrentForm}
 				formId={attributes.formId}
 			    />
+				<LinkToFormEditor
+					formId={attributes.formId}
+				/>
 			</InspectorControls>
 
 			{'false' === attributes.formId &&
