@@ -72,6 +72,13 @@ class Caldera_Forms_Magic_Doer {
 					$field = Caldera_Forms_Field_Util::get_field_by_slug( $tag, $form );
 				}
 
+				if( 'html' === Caldera_Forms_Field_Util::get_type( $tag, $form ) ){
+					$field = Caldera_Forms_Field_Util::get_field($tag,$form );
+					if( ! empty( $field[ 'config' ][ 'show_in_summary' ] ) ){
+						$value = Caldera_Forms::do_magic_tags( Caldera_Forms_Field_Util::get_default( $field, $form ) );
+					}
+				}
+
 				if( Caldera_Forms_Field_Util::is_file_field( $field, $form ) ){
 					$_value = self::magic_image( $field, $entry, $form );
 					if( false !== $_value ){
@@ -315,6 +322,7 @@ class Caldera_Forms_Magic_Doer {
 						case 'query_var' :
 							$magic_tag = get_query_var($magic[ 1 ]);
 							break;
+
 					}
 				} else {
 					switch ( $magic_tag ) {
@@ -378,6 +386,9 @@ class Caldera_Forms_Magic_Doer {
 						case 'current_url' :
 							$magic_tag = urldecode( caldera_forms_get_current_url() );
 							break;
+                        case 'privacy_page':
+                            $magic_tag = esc_url_raw(caldera_forms_privacy_policy_page_url());
+                            break;
 					}
 
 				}
@@ -503,6 +514,9 @@ class Caldera_Forms_Magic_Doer {
 			self::$entry_details = array();
 		}
 
+                if( is_array( $entry_id ) || is_object( $entry_id ) ) {
+                    return;
+                }
 
 		if( ! isset( self::$entry_details[ $entry_id ] ) ) {
 			$entry_details = Caldera_Forms::get_entry_detail( $entry_id );
@@ -544,8 +558,10 @@ class Caldera_Forms_Magic_Doer {
 			if( is_object( $_value ) ){
 				$value = implode( ', ', (array) $_value );
 			}
-
+		} else if( is_array( $value )  ){
+			$value = implode( ', ', $value );
 		}
+
 
 		return $value;
 

@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.8.1 - 2017-12-21 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.8.0-alpha.1 - 2019-02-18 *//**
  * API Client for Caldera Forms API for a single form
  *
  * @since 1.5.0
@@ -36,9 +36,9 @@ function CFAPI( routes, perPage, formId, tokens,  $ ) {
                 beforeSend: function ( xhr ) {
                     addHeaders( xhr );
                 }
-            }).success(function (r) {
+            }).done(function (r) {
                 return r;
-            }).error(function (r) {
+            }).fail(function (r) {
                 console.log(r);
             });
         },
@@ -49,9 +49,9 @@ function CFAPI( routes, perPage, formId, tokens,  $ ) {
                 beforeSend: function ( xhr ) {
                     addHeaders( xhr );
                 }
-            } ).success(function (r) {
+            } ).done(function (r) {
                 return r;
-            }).error(function (r) {
+            }).fail(function (r) {
                 console.log(r);
             });
         },
@@ -80,9 +80,9 @@ function CFAPI( routes, perPage, formId, tokens,  $ ) {
                 data:{
                     per_page: perPage
                 }
-            }).success( function( r ){
+            }).done( function( r ){
                 return r.per_page;
-            }).error( function( r ){
+            }).fail( function( r ){
                 console.log(r);
             })
 

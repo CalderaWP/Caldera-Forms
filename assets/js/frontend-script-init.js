@@ -12,15 +12,6 @@ var cf_jsfields_init, cf_presubmit;
 			}
 		}).on('field:error', function( fieldInstance ) {
 
-            if ( 'number' == this.$element.attr( 'type' ) && 0 == this.$element.attr( 'min' )  ) {
-                var val = this.$element.val();
-                if( 0 <= val && ( undefined == this.$element.attr( 'max' ) || val <= this.$element.attr( 'max' )  ) ){
-                    fieldInstance.validationResult = true;
-                }
-
-                return;
-            }
-
             this.$element.closest('.form-group').addClass('has-error');
 			$( document ).trigger( 'cf.validate.fieldError', {
 				inst: fieldInstance,
@@ -52,10 +43,6 @@ var cf_jsfields_init, cf_presubmit;
 			} );
 		})
 	};
-
-	$( document ).on('change keypress', "[data-sync]", function(){
-		$(this).data( 'unsync', true );
-	});
 
 	// make init function
 	cf_jsfields_init = function(){
@@ -134,30 +121,59 @@ var cf_jsfields_init, cf_presubmit;
 
 		cf_validate_form( form ).destroy();
 
+
 		fields = form.find('[data-field]');
 		form.find('.has-error').removeClass('has-error');
+
+		/**
+		 * Validate a field, possibly using cf2 system
+		 *
+		 * @since 1.8.0
+		 *
+		 * @param $this_field
+		 * @param form_id
+		 * @param valid
+		 * @return {*}
+		 */
+		function validateField($this_field,form_id,valid) {
+			window = window || {};
+			var cf2 = 'object' === typeof window.cf2 && 'object' === typeof window.cf2[form_id] ? window.cf2[form_id] : null;
+			function getCf2Field(fieldIdAttr,formIdAttr){
+				if( ! cf2 || ! cf2.fields ){
+					return false;
+				}
+
+				if( cf2.fields.hasOwnProperty(fieldIdAttr)){
+					return cf2.fields[fieldIdAttr];
+				}
+				return false;
+			}
+
+			var fieldIdAttr = $this_field.attr('id');
+			var cf2Field = getCf2Field(fieldIdAttr, form_id);
+			if (cf2Field) {
+				valid = cf2.component.isFieldValid(fieldIdAttr);
+				if (!valid) {
+					cf2.component.addFieldMessage(fieldIdAttr, ParsleyValidator.getErrorMessage('required'),true);
+				}
+			} else {
+				valid = $this_field.parsley().isValid();
+			}
+			return valid;
+		}
 
 		if( clicked.data('page') !== 'prev' && page >= current_page ){
 			fields =  $('#caldera_form_' + instance + ' [data-formpage="' + current_page + '"] [data-field]'  );
 
 			var $this_field,
-				valid,
-				_valid;
+				valid;
 			for (var f = 0; f < fields.length; f++) {
 				$this_field = $(fields[f]);
 				if( $this_field.hasClass( 'cf-multi-uploader' ) || $this_field.hasClass( 'cf-multi-uploader-list') ){
 					continue;
 				}
 
-				_valid = $this_field.parsley().validate();
-				valid = $this_field.parsley().isValid({force: true});
-
-
-
-				//@see https://github.com/CalderaWP/Caldera-Forms/issues/1765
-				if( ! valid && true === _valid && 'email' === $this_field.attr( 'type' ) ){
-					continue;
-				}
+				valid = validateField($this_field,form_id,valid);
 
 				if (true === valid) {
 					continue;
@@ -174,8 +190,7 @@ var cf_jsfields_init, cf_presubmit;
 
 					for (var f = 0; f < fields.length; f++) {
 						$this_field = $(fields[f]);
-						$this_field.parsley().validate();
-						valid = $this_field.parsley().isValid({force: true});
+						valid = validateField($this_field,form_id,valid);
 						if (true === valid) {
 							continue;
 						}
@@ -277,7 +292,7 @@ var cf_jsfields_init, cf_presubmit;
 			validator = cf_validate_form( $form );
 		$( document ).trigger( 'cf.form.submit', {
 			e:e,
-			$form:$form
+			$form:$form,
 		} );
 
 
@@ -324,13 +339,6 @@ var cf_jsfields_init, cf_presubmit;
 		}
 	});
 
-    $( document ).on( "cf.form.submit", function(e,obj) {
-		var $form = obj.$form;
-        var $breadBreadcrumbs = $form.find( '.breadcrumb' );
-        $breadBreadcrumbs.hide().attr( 'aria-hidden', true ).css( 'visibility', 'hidden' );
-    });
-
-
 })(jQuery);
 
 /** Setup Form Front-end **/
@@ -340,21 +348,9 @@ window.addEventListener("load", function(){
 
 		window.CALDERA_FORMS = {};
 
-		/** Check nonce **/
-		if( 'object' === typeof CF_API_DATA ) {
-			var nonceCheckers = {},
-				$el, formId;
-			$('.caldera_forms_form').each(function (i, el) {
-				$el = $(el);
-				formId = $el.data( 'form-id' );
-				nonceCheckers[ formId ] = new CalderaFormsResetNonce( formId, CF_API_DATA, $ );
-				nonceCheckers[ formId ].init();
-			});
-		}
-
 		/** Setup forms */
 		if( 'object' === typeof CFFIELD_CONFIG ) {
-			var form_id, config_object, config, instance, $el, state, protocolCheck, jQueryCheck, $form,
+			var form_id, formId, config_object, config, instance, $el, state, protocolCheck, jQueryCheck, $form,
 				jQueryChecked = false,
 				protocolChecked = false;
 			$('.caldera_forms_form').each(function (i, el) {
@@ -398,19 +394,22 @@ window.addEventListener("load", function(){
 
 					$form.find( '[data-sync]' ).each( function(){
 						var $field = $( this );
-						new CalderaFormsFieldSync( $field, $field.data('binds'), $form, $ , state);
+                        if ( ! $field.data( 'unsync' ) ) {
+                            new CalderaFormsFieldSync($field, $field.data('binds'), $form, $, state);
+                        }
 					});
 
-					
+
 					config_object = new Caldera_Forms_Field_Config( config, $(document.getElementById(form_id)), $, state );
 					config_object.init();
 					$( document ).trigger( 'cf.form.init',{
+						$form: $form,
 						idAttr:  form_id,
 						formId: formId,
 						state: state,
-						fieldIds: CFFIELD_CONFIG[instance].fields.hasOwnProperty( 'ids' ) ? CFFIELD_CONFIG[instance].fields.ids : []
+						fieldIds: CFFIELD_CONFIG[instance].fields.hasOwnProperty( 'ids' ) ? CFFIELD_CONFIG[instance].fields.ids : [],
+						nonce: jQuery( '#_cf_verify_' + formId ).val()
 					});
-
 
 
 				}
@@ -444,6 +443,9 @@ function CalderaFormsFieldSync( $field, binds, $form, $, state  ){
 	for( var i = 0; i < binds.length; i++ ){
 
 		$( document ).on('keyup change blur mouseover', "[data-field='" + binds[ i ] + "']", function(){
+			if( ! $field.data('sync') ){
+				return;
+			}
 			var str = $field.data('sync')
 			id = $field.data('field'),
 				reg = new RegExp( "\{\{([^\}]*?)\}\}", "g" ),
@@ -472,6 +474,11 @@ function CalderaFormsFieldSync( $field, binds, $form, $, state  ){
 			$field.val( str );
 		} );
 		$("[data-field='" + binds[ i ] + "']").trigger('change');
+        $field.on('keyup change', function(){
+        	$field.attr( 'data-unsync', '1' );
+            $field.removeAttr( 'data-sync' );
+            $field.removeAttr( 'data-binds' );
+        });
 
 	}
 }
@@ -534,7 +541,7 @@ function CalderaFormsResetNonce( formId, config, $ ){
 			},data:{
 				form_id: formId
 			}
-		}).success( function( r){
+		}).done( function( r){
 			$nonceField.val( r.nonce );
 			$nonceField.data( 'nonce-time', new Date().getTime() );
 		});
@@ -659,3 +666,29 @@ function CalderaFormsJQueryWarning( $form, $, errorStrings ){
 
 	}
 }
+
+/*
+ * Add Validation for phone_better field before a submit or next page button is clicked
+ *
+
+(function( $ ) {
+
+	$('.caldera-grid input[type="submit"], .caldera-grid input[data-page="next"]').click( function( e ) {
+
+		var phone_fields = $('.caldera-grid input[data-type="phone_better"]');
+		if( phone_fields.length > 0 ) {
+
+      phone_fields.each( function( i ){
+
+        if( $.isNumeric( this.value ) === true ){
+        	alert('cool');
+				}
+
+			});
+		}
+
+	});
+
+})( jQuery );
+
+ */

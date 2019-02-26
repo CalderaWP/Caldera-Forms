@@ -1,10 +1,11 @@
 === Caldera Forms - More Than Contact Forms ===
 Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
-Tags: free wordpress form builder, formbuilder, form builder, contact form,  contact me, custom form, forms, form, custom forms, forms creator, caldera forms, calderawp, wp form, wp form builder, form, drag and drop, email, awesome, wordpress free form builder, echecks, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, eCheck,dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, gravity forms, ninja forms, contact, email, auto-responder, aweber, convertkit, builder, contact forms, search, ab testing, a/b testing, split testing, shortcode, wordpress, awesome plugin, plugin, easy, braintree form, dwolla form, authorize.net form, mailchimp form, mailchimp popup, aweber form, convertkit form, stripe form, stripe popup, eCheck form, responsive,
+Tags: form, contact form, forms, form creator, form manager, mailchimp, paypal, stripe, login, payment, forms manager, forms creation
 Requires at least: 4.7
-Tested up to: 4.9.2
-Stable tag: 1.5.9.1
+Tested up to: 5.1
+Stable tag: 1.8.0-rc.1
 License: GPLv2
+Requires PHP: 5.6
 
 Responsive form builder for contact forms, user registration and login forms, Mailchimp, PayPal Express and more.
 
@@ -18,6 +19,9 @@ Caldera Forms is a free WordPress plugin by <a href="http://CalderaLabs.org?utm_
 > 5 Stars! "Exceptionally well thought out and executed."
 >
 > -Pippin Williamson: Developer of Easy Digital Downloads, Restrict Content Pro and AffiliateWP.
+
+[youtube https://www.youtube.com/watch?v=O1pY_ZMMWUw]
+
 
 == Top Features ==
 * Intuitive user interface !
@@ -34,9 +38,7 @@ Caldera Forms is a free WordPress plugin by <a href="http://CalderaLabs.org?utm_
 * [Caldera Forms Pro makes your emails reliable and beautiful](https://calderaforms.com/pro?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=features-list)
 * [Free CDN to improve site speed](https://calderaforms.com/doc/improving-caldera-performance-free-cdn?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=features-list)
 
-
-[youtube https://www.youtube.com/watch?v=KmKj02aE0nc&index=1&list=PLgeaHmX3MoiuXOhRlDdYn7k0RcL4afLzQ]
-
+[youtube https://www.youtube.com/watch?v=JmaWZ79mUO0]
 
 = Responsive By Design =
 
@@ -57,7 +59,23 @@ Quickly configure the [email notification](https://calderaforms.com/doc/setting-
 >
 > - Matt Cromwell: Head of support for WordImpress
 
-https://youtu.be/O1pY_ZMMWUw
+[youtube https://www.youtube.com/watch?v=KmKj02aE0nc&index=1&list=PLgeaHmX3MoiuXOhRlDdYn7k0RcL4afLzQ]
+
+= Go Pro =
+As makers of the most powerful free form plugin for WordPress, we know what makes form builders tick. Caldera Forms Pro makes form creation beautiful: with drag-and-drop builders for form & form notification, enhanced email delivery, and 27+ integrations, it just works.
+
+> Emails Send Every Time, Best In Class Support, Easy Form & Form Notification Design, Connect To The All The Apps You Love
+
+[youtube https://www.youtube.com/watch?v=jY6s-BG66R4&feature=youtu.be]
+
+Top Pro features:
+* Enhanced Email Delivery: It's getting harder to convince Gmail or Exchange emails from WordPress are legit, we make it simple.
+* Priority Support For Caldera Forms: Need help with a form or connecting Caldera Forms to another service or plugin? We can help.
+* HTML layout builder: Make your emails on brand and looking great.
+* 27+ Add-ons: Accept payments, build your mailing list, integrate with Google Analytics and create more powerful forms.
+* Form entries as PDFs: Create an easy to print record of all submissions.
+
+
 
 = Anti-Spam By Default =
 Spam is annoying. No form builder is complete without a robust anti-spam system.
@@ -775,10 +793,172 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 
 == Changelog ==
-= Caldera Forms 1.5.9 (January, 24, 2018) Happy 2018! =
-See: [https://calderaforms.com/updates/caldera-forms-1-5-9](https://calderaforms.com/updates/caldera-forms-1-5-9?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-5-8)
+= Caldera Forms 1.8.0 (February 27, 2019) cf2 taste. =
+See: [https://calderaforms.com/updates/caldera-forms-1-8-0](https://calderaforms.com/updates/caldera-forms-1-8-0?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-0)
+* ADDED: Filter for forms rturned by Rest API ( 'caldera_forms_api_prepare_form', $form, $request ) Doc =>
+* ADDED: New Advanced File Field ( Added support for drag-and-drop, image previews, Max File Upload size )
+* ADDED: job manager for the Transients API ( delete transients via job manager )
+* FIXED: Uncaught ReferenceError: ceil is not defined, allows ceil and tan to be used in manual formulas of calculations field
+* FIXED: Warning: in_array() expects parameter 2 to be array, null given , fixed and added a test
+* FIXED: Date Picker Validation not updating on selecting date
+* FIXED: Fatal error when requesting forms via API with ?full=true&details=true
+* FIXED: When advancing pages via breadcrumbs - empty fields are validated, preventing advancing
+* FIXED: CSV exported from entry viewer has JSON encoded options for checkbox fields
+* IMPROVED: Structure of API responses for form routes
+* IMPROVED: Handling for deleting the files of private files field
+* IMPROVED: Use output buffering to prevent PHP warnings/notices from returning bad JSON ( Fixes: Uncaught TypeError: Cannot read property 'data' of undefined )
+* IMPROVED: Added jQuery as a dependency for validator script
+* IMPROVED: Don't include disabled forms in the list of forms available in Gutenberg block
+* IMPROVED: Local testing environment includes phpunit tests
+* IMPROVED: Added js unit tests in Travis CI
+* DEPRECATED: Advanced File Uploader 1.0
 
-Caldera Forms 1.5.9-rc.1 - January 18, 2018.
+= Caldera Forms 1.7.6 (January 10, 2019) Blocks. =
+See: [https://calderaforms.com/updates/caldera-forms-1-7-6](https://calderaforms.com/updates/caldera-forms-1-7-6?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-6)
+* FIXED: Block was not showing in the editor if Gutenberg was not active and WordPress 5.0.1+.
+* FIXED: JavaScript error- target container is not a DOM element, due to privacy settings client.
+
+= Caldera Forms 1.7.5 (December 18, 2018) Blocks Blocked. =
+See: [https://calderaforms.com/updates/caldera-forms-1-7-5](https://calderaforms.com/updates/caldera-forms-1-7-5?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-5)
+* FIXED: Unable to continue with Freemius optin after update to WordPress 5.0.
+* FIXED: Freemius optin in Gutenberg content WordPress 5.0.
+* FIXED: Form imports may not work after update to WordPress 5.0.1
+* FIXED: Logger may cause excessive usage, disabled for now. See: https://github.com/CalderaWP/Caldera-Forms/issues/2855
+
+= Caldera Forms 1.7.4 (October 23, 2018) import {clone} from form =
+See: [https://calderaforms.com/updates/caldera-forms-1-7-4](https://calderaforms.com/updates/caldera-forms-1-7-4?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-4)
+* FIXED: When cloning a form, the clone had the same ID of the original form, causing the original form to appear to have been lost.
+* FIXED: When importing a form, the calculation values of select options were reset to 1.
+
+= Caldera Forms 1.7.3 (October 17, 2018) We're Working On Big Things, Sorry About The Wait, We Wanted You To Have Some Bug Fixes =
+See: [https://calderaforms.com/updates/caldera-forms-1-7-3](https://calderaforms.com/updates/caldera-forms-1-7-3?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-3)
+* FIXED: Settings for disabling enhanced delivery via Caldera Forms Pro not saving.
+* FIXED: Improper validation for better phone fields.
+* FIXED: Non admin users were not able to edit their entries in the front-end.
+* FIXED: When resending emails, magic tag not parsed in recipients, causing fallback email to be used.
+* FIXED: Major performance issue with select2 fields.
+* FIXED: Email settings not copied when cloning forms.
+* ADDED: Support for calculation value using caldera_forms_field_option_presets filter for field presets.
+* ADDED: Translator comments for PII fields.
+* ADDED: New action caldera_forms_admin_pre_enqueue - runs before admin assets are enqueued, after they are registered.
+* IMPROVED: Markup for consent field link to privacy page.
+* FIXED: Dollar sign was not localized in CF Pro marketing.
+* FIXED: Could not select form in Gutenberg block if there was only one block.
+* FIXED: Dead code from older location of CF Pro API client.
+* FIXED: Conditionals from processors not saving if variables in use.
+
+= Caldera Forms 1.7.2 (June 27, 2018) Infinite Jest =
+See: [https://calderaforms.com/updates/caldera-forms-1-7-2](https://calderaforms.com/updates/caldera-forms-1-7-2?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-2)
+* FIXED: [Incorrect usage of Gutenberg InspectorControls](https://github.com/CalderaWP/Caldera-Forms/issues/2612)
+* FIXED: [Input masks not initialized if conditional logic is used on a field.](https://github.com/CalderaWP/Caldera-Forms/issues/2612)
+* FIXED: [HTML fields not applying wpautop formatting](https://github.com/CalderaWP/Caldera-Forms/issues/2619)
+* FIXED: [Caldera Forms Pro API keys did not appear to save](https://github.com/CalderaWP/Caldera-Forms/issues/2608)
+* FIXED: [Anti-spam Honey Pot Settings Not Saving](https://github.com/CalderaWP/Caldera-Forms/issues/2489)
+* ADDED: [JavaScript Unit Tests With Jest](https://github.com/CalderaWP/Caldera-Forms/issues/2596)
+* ADDED: [Documentation links in Privacy Screen Before Choosing Form](https://github.com/CalderaWP/Caldera-Forms/issues/2598)
+* ADDED: [API Client and State Modules](https://github.com/CalderaWP/Caldera-Forms/issues/2564)
+* ADDED: [Additional Server-side Validation for email and number fields](https://github.com/CalderaWP/Caldera-Forms/issues/2638)
+
+= Caldera Forms 1.7.1 (June 7, 2018) Flushing Meadows =
+See: [https://calderaforms.com/updates/caldera-forms-1-7-1](https://calderaforms.com/updates/caldera-forms-1-7-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-1)
+
+* FIXED: Rewrite rules could be flushed during activation in a way that causes an error.
+* FIXED: Forms with advanced file fields not submitting properly on Safari and Edge.
+* FIXED: Privacy settings being lost on form update.
+* FIXED: PHP Warning when there are no internal forms.
+* 1.7.1.1: Remove all flush rewrites
+* 1.7.1.2: https://github.com/CalderaWP/Caldera-Forms/issues/2595
+* 1.7.1.3: https://github.com/CalderaWP/Caldera-Forms/issues/2597
+* 1.7.1.4: https://github.com/CalderaWP/Caldera-Forms/issues/2574#issuecomment-395792791
+
+= Caldera Forms 1.7.0 (May 31, 2018) GDPR, PHP, Onward =
+
+See: [https://calderaforms.com/updates/caldera-forms-1-7-0](https://calderaforms.com/updates/caldera-forms-1-7-0?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
+
+[GPDR Privacy Tools Preview Release](https://calderaforms.com/updates/caldera-forms-1-7-0-beta-1-gdpr-compliance-tools-preview?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0): May 15, 2018
+
+* ADDED: #GDPR [Consent fields and privacy page magic tag ](https://calderaforms.com/doc/consent-field/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
+* ADDED: #GDPR [Option to delete all entries of a form](https://calderaforms.com/doc/delete-saved-entries-caldera-form/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
+* ADDED: #GDPR [Option to delete all entries of a from](https://calderaforms.com/doc/delete-saved-entries-caldera-form/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
+* ADDED: #GDPR [Integration with core exporters and erasers and a shiny new privacy page](https://calderaforms.com/doc/setting-caldera-forms-gdpr-data-requests/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
+* IMPROVED: #GDPR [Marking fields as containing personally identifiable information](https://calderaforms.com/gdpr#pii?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-7-0)
+* ADDED: #GDPR [Developer-facing APIs](https://calderaforms.com/doc/gdpr-api/) for getting fields used for personally identifiable data, modifying the data supplied to WordPress' exporters and erasers by Caldera Forms and more.
+* ADDED: #GDPR [caldera_forms_gdpr_callback filter](https://calderaforms.com/doc/caldera_forms_gdpr_callback/) For creating custom GDPR exporters and erasers in plugins or custom site development.
+* ADDED: #GPDR [caldera_forms_privacy_policy_page_url filter](https://calderaforms.com/doc/caldera_forms_privacy_policy_page_url/)  To chane the privacy page link used by consent field and privacy page magic tag from its default -- WordPress' saved option for privacy page.
+* REMOVED: [SUPPORT FOR PHP 5.4 OR LOWER](http://calderaforms.com/php)
+* ADDED: [Helpful messages in place of forms when PHP or WordPress version requirements are not met](https://calderaforms.com/doc/php-wordpress-not-met-warning/)
+* ADDED: [Developer-facing tool for making selecting and deleting saved Caldera Forms entry data easier](https://calderaforms.com/doc/using-caldera-forms-queries/)
+* ADDED: [Developer-facing tool for custom, paginated queries of entry data](https://calderaforms.com/doc/using-caldera-forms-paginated-queries/)
+* FIXED: Warning in PHP 7.2 related to count() function
+* FIXED: JavaScript conflicts with WooCommerce pages, resolved by removing the Caldera Forms button from all WooCommerce post editors.
+* ADDED: Summary and HTML fields automatically set slug
+* IMPROVED: automated testing and better documentation for contributing to Caldera Forms. Please see the Github readme.
+
+= Caldera Forms 1.6.3 (May 15, 2018) The Mask =
+See: [https://calderaforms.com/updates/caldera-forms-1-6-3](https://calderaforms.com/updates/caldera-forms-1-6-3?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-6-3)
+
+* FIXED: Could not edit new fields, without saving and reloading first.
+* FIXED: Input field masking was not working.
+
+= Caldera Forms 1.6.2 (May 14, 2018) GDPR Part 1 =
+See: [(https://calderaforms.com/updates/caldera-forms-1-6-2?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-6-2)
+
+* FIXED: Fixed deprecated jQuery XHR syntax in some places. Was causing jQuery errors in some browsers.
+* FIXED: mp3s were not allowed by some browsers when they should have been for file fields.
+* FIXED: If spam was detected by CF Pro entry was still shown in entry viewer.
+* FIXED: Nonce refresh was being abused by spammers and not helping with cache issues.
+* IMPROVED: One webback build file for Pro and Blocks
+* IMPROVED: Gutenberg block now has better previews and more sensible controls.
+* ADDED: Ability to show HTML "field" content in emails.
+* ADDED: Link to Caldera Forms Pro app from Caldera Forms Pro page.
+* ADDED: Option to mark fields as containing personally identifying information.
+* ADDED: caldera_forms_field_wrapper_after_delete action
+* ADDED: caldera_forms_field_wrapper_before_delete action
+* ADDED: Automatic repair of pro tables if not present.
+
+[Caldera Forms 1.6.2 Release Candidate 1](https://calderaforms.com/updates/caldera-forms-1-6-2-rc.1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-6-2-beta-1) May 10, 2018
+
+= Caldera Forms 1.6.1.1 (April 12, 2018)  =
+See: [https://calderaforms.com/updates/caldera-forms-1-6-1-1](https://calderaforms.com/updates/caldera-forms-1-6-1-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-6-1)
+* Additional SECURITY fix for CVE-2018-7747
+
+
+= Caldera Forms 1.6.1 (April 12, 2018) Full Globe  =
+See: [https://calderaforms.com/updates/caldera-forms-1-6-1](https://calderaforms.com/updates/caldera-forms-1-6-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-6-1)
+
+[Caldera Forms 1.6.1 Release Candidate 1](https://calderaforms.com/updates/caldera-forms-1-6-1-rc-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-6-1-rc-1) April 11, 2018
+[Caldera Forms 1.6.1 Beta 1](https://calderaforms.com/updates/caldera-forms-1-6-1-beta-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-6-1-beta-1) April 5, 2018
+* FIXED: Logo looked bad on main admin page.
+* FIXED: Some sites had an error on update due to PHP 5.3 syntax.
+* FIXED: PHP warning when getting entries via REST API for a form with no saved entries.
+* FIXED: We did not have the new videos Christie made in the readme.
+
+= Caldera Forms 1.6.0 (March 26, 2018) Anti-Spam: Enhanced  =
+See: [https://calderaforms.com/updates/caldera-forms-1-6-0](https://calderaforms.com/updates/caldera-forms-1-6-0?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-6-0)
+
+= Caldera Forms 1.6.0-rc.1 - March, 14, 2018 =
+* SECURITY: CVE-2018-7747
+* ADDED: Multiple BCCs and CCs on auto-responders.
+* ADDED: Support for multiple checkboxes to be selected by default, using a filter.
+* ADDED: Caldera Forms Pro advanced anti-spam.
+* ADDED: Freemius insights integration.
+* ADDED: Warnings if your PHP version is not supported.
+* DEPRECATED: Support for out of date PHP versions. [See this page for more information](https://calderaforms.com/php?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-6-0)
+* UPDATED: Parsely validation library to 2.8.1
+* IMPROVED: Made reply-to/from labels in main mailer more accurately reflect how Caldera Forms Pro works, when Caldera Forms Pro is being used.
+* FIXED: Work around that was previously in place for WooCommerce nonce validation when items are in cart is now updated to work again.
+* FIXED: Breadcrumbs on multi-page forms disappeared when form was submitted, but did not complete the submission.
+* FIXED: Multi-page forms not advancing with empty, non-required number fields.
+* FIXED: Field sync was not recovering when fields were hidden by conditional logic.
+* FIXED: CC and BCC fields not passing to Caldera Forms Pro properly.
+* FIXED: Some cases where file fields caused errors during submissions.
+* FIXED: Wrong country code was used for Arkansas. Sorry Arkansas.
+
+
+= Caldera Forms 1.5.9 (January 24, 2018) Happy 2018! =
+See: [https://calderaforms.com/updates/caldera-forms-1-5-9](https://calderaforms.com/updates/caldera-forms-1-5-9?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-5-9)
+
+Caldera Forms 1.5.9-rc.1 - January 18 2018.
 
 * ADDED: Ability to remove wpautop formatting to auto-responder message, by removing a hook. `remove_filter(  'caldera_forms_autoresponse_mail', array( 'Caldera_Forms_Email_Filters', 'format_autoresponse_message' ) );`
 * IMPROVED: Caldera Forms Pro API key settings - made inputs wider and setting validate without a page refresh.
@@ -1944,3 +2124,9 @@ See: https://calderaforms.com/updates/caldera-forms-1-5-1
 
 = 1.5.2 =
 See: https://calderaforms.com/updates/caldera-forms-1-5-2
+
+= 1.6.1.1 =
+Security release related to CVE-2018-7747
+
+= 1.6.2 =
+See: https://calderaforms.com/updates/caldera-forms-1-6.2

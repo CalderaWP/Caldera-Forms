@@ -2,6 +2,7 @@
 
 
 namespace calderawp\calderaforms\pro\api;
+
 use calderawp\calderaforms\pro\container;
 use calderawp\calderaforms\pro\exceptions\Exception;
 
@@ -15,9 +16,8 @@ use calderawp\calderaforms\pro\exceptions\Exception;
  *
  * @package calderawp\calderaforms\pro
  */
-class client extends api {
-
-
+class client extends api
+{
 
 
 	/**
@@ -29,33 +29,53 @@ class client extends api {
 	 * @param bool $send Should message be sent immediately?
 	 * @param int $entry_id Local entry ID
 	 * @param string $type Optional. The message type. Default is "main" Options: main|auto
+	 *
 	 * @return \calderawp\calderaforms\pro\message|\WP_Error|null
 	 */
-	public function create_message( \calderawp\calderaforms\pro\api\message $message, $send, $entry_id, $type = 'main'  ){
+	public function create_message(
+		\calderawp\calderaforms\pro\api\message $message,
+		$send,
+		$entry_id,
+		$type = 'main',
+		array $anti_spam_args = null
+	) {
 		$data = $message->to_array();
-		if( $send ){
+		if ( $send ) {
 			$data[ 'send' ] = true;
 		}
 
-		$response = $this->request( '/message', $data, 'POST' );
-		if( ! is_wp_error( $response ) && 201 == wp_remote_retrieve_response_code( $response ) ){
-			$body = (array) json_decode( wp_remote_retrieve_body( $response ) );
-			if( isset( $body[ 'hash' ] ) && isset( $body[ 'id' ] ) ){
+		$anti_spam_args = container::get_instance()->get_anti_spam_args();
+		if ( !empty($anti_spam_args) ) {
+			$data[ 'antispam' ] = $anti_spam_args;
+		} else {
+			$data[ 'antispam' ] = false;
+		}
+		$response = $this->request('/message', $data, 'POST');
+		if ( !is_wp_error($response) && 201 == wp_remote_retrieve_response_code($response) ) {
+			$body = (array) json_decode(wp_remote_retrieve_body($response));
+			if ( isset($body[ 'hash' ]) && isset($body[ 'id' ]) ) {
 				try {
-					$saved_message = container::get_instance()->get_messages_db()->create( $body[ 'id' ], $body[ 'hash' ], $entry_id, $type );
+					$saved_message = container::get_instance()
+						->get_messages_db()->create($body[ 'id' ], $body[ 'hash' ], $entry_id, $type);
+
+					if ( !empty($anti_spam_args) && !empty($body[ 'spam_detected' ]) && true === rest_sanitize_boolean($body[ 'spam_detected' ]) ) {
+						\Caldera_Forms_Entry_Update::update_entry_status($entry_id, 'spam');
+					}
+
 					return $saved_message;
 				} catch ( Exception $e ) {
-					return $e->log( [
+					return $e->log([
 						'type' => $type,
 						'entry_id' => $entry_id,
 						'send' => $send,
 						'method' => __METHOD__,
-						'pdf' => $message->pdf
-					] )->to_wp_error();
+						'pdf' => $message->pdf,
+					])->to_wp_error();
 				}
 
 			}
-		}elseif ( is_wp_error( $response ) ){
+
+		} elseif ( is_wp_error($response) ) {
 			return $response;
 		}
 
@@ -71,8 +91,9 @@ class client extends api {
 	 *
 	 * @return bool
 	 */
-	public function delete_message( \calderawp\calderaforms\pro\api\message $message ){
-		return $this->_delete_message( $message->get_cfp_id() );
+	public function delete_message(\calderawp\calderaforms\pro\api\message $message)
+	{
+		return $this->_delete_message($message->get_cfp_id());
 	}
 
 	/**
@@ -84,11 +105,12 @@ class client extends api {
 	 *
 	 * @return bool
 	 */
-	public function delete_by_app_id( $cfp_id ){
+	public function delete_by_app_id($cfp_id)
+	{
 		try {
-			$message = container::get_instance()->get_messages_db()->get_by_remote_id( $cfp_id );
-			return $this->delete_message( $message );
-		}catch ( Exception $e ) {
+			$message = container::get_instance()->get_messages_db()->get_by_remote_id($cfp_id);
+			return $this->delete_message($message);
+		} catch ( Exception $e ) {
 			return false;
 		}
 
@@ -104,11 +126,12 @@ class client extends api {
 	 *
 	 * @return bool
 	 */
-	public function delete_by_local_id( $entry_id ){
-		try{
-			$message = container::get_instance()->get_messages_db()->get_by_entry_id( $entry_id );
-			return $this->delete_message( $message );
-		}catch ( Exception $e ){
+	public function delete_by_local_id($entry_id)
+	{
+		try {
+			$message = container::get_instance()->get_messages_db()->get_by_entry_id($entry_id);
+			return $this->delete_message($message);
+		} catch ( Exception $e ) {
 			return false;
 		}
 
@@ -121,7 +144,8 @@ class client extends api {
 	 *
 	 * @return keys
 	 */
-	public function get_keys(){
+	public function get_keys()
+	{
 		return $this->keys;
 	}
 
@@ -134,8 +158,9 @@ class client extends api {
 	 *
 	 * @return array|\WP_Error
 	 */
-	public function send_saved( $message_id ){
-		return $this->request( '/message/' . $message_id, array(), 'POST' );
+	public function send_saved($message_id)
+	{
+		return $this->request('/message/' . $message_id, [], 'POST');
 
 	}
 
@@ -148,8 +173,9 @@ class client extends api {
 	 *
 	 * @return array|\WP_Error
 	 */
-	public function get_pdf( $hash ){
-		return $this->request( '/pdf/'. $hash, array() );
+	public function get_pdf($hash)
+	{
+		return $this->request('/pdf/' . $hash, []);
 
 	}
 
@@ -162,10 +188,11 @@ class client extends api {
 	 *
 	 * @return string
 	 */
-	public function get_html( $message_id ){
-		$r = $this->request( '/message/view/' . $message_id, array(), 'GET' );
-		if( ! is_wp_error( $r ) && 200 == wp_remote_retrieve_response_code( $r ) ){
-			return wp_remote_retrieve_body( $r );
+	public function get_html($message_id)
+	{
+		$r = $this->request('/message/view/' . $message_id, [], 'GET');
+		if ( !is_wp_error($r) && 200 == wp_remote_retrieve_response_code($r) ) {
+			return wp_remote_retrieve_body($r);
 		}
 
 	}
@@ -173,7 +200,8 @@ class client extends api {
 	/**
 	 * @inheritdoc
 	 */
-	protected function get_url_root(){
+	protected function get_url_root()
+	{
 		return caldera_forms_pro_app_url();
 	}
 
@@ -186,14 +214,16 @@ class client extends api {
 	 *
 	 * @return bool
 	 */
-	protected function _delete_message(  $cfp_id ){
-		$response = $this->request( sprintf( '/message/%d', $cfp_id ), [ ], 'DELETE' );
-		if ( ! is_wp_error( $response ) && 201 == wp_remote_retrieve_response_code( $response ) ) {
+	protected function _delete_message($cfp_id)
+	{
+		$response = $this->request(sprintf('/message/%d', $cfp_id), [], 'DELETE');
+		if ( !is_wp_error($response) && 201 == wp_remote_retrieve_response_code($response) ) {
 			return true;
 
 		}
 
 		return false;
 	}
+
 
 }
