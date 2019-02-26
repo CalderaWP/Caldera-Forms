@@ -321,29 +321,7 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
             $form_id = self::MOCK_FORM_ID;
         }
 
-        $nonce = Caldera_Forms_Render_Nonce::create_verify_nonce( $form_id );
-
-        $data = wp_parse_args( $data, array (
-            '_cf_verify' => $nonce,
-            '_wp_http_referer' => '/?page_id=4&preview=1&cf_preview=' . $form_id,
-            '_cf_frm_id' => $form_id,
-            '_cf_frm_ct' => '1',
-            'cfajax' => $form_id,
-            '_cf_cr_pst' => '4',
-            'email' => '',
-            'formId' => $form_id,
-            'instance' => '1',
-            'request' => site_url("/cf-api/$form_id"),
-            'postDisable' => '0',
-            'target' => '#caldera_notices_1',
-            'loadClass' => 'cf_processing',
-            'loadElement' => '_parent',
-            'hiderows' => 'true',
-            'action' => 'cf_process_ajax_submit',
-            'template' => "#cfajax_$form_id-tmpl",
-        ) );
-
-        return $data;
+        return \calderawp\calderaforms\Tests\Util\SubmissionHelpers::submission_data($form_id,$data);
     }
 
     /**
@@ -382,6 +360,17 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
     protected function get_path_for_main_mailer_form_import(){
         return $file = dirname(__FILE__) . '/forms/contact-forms-no-auto-responder.json';
     }
+
+	/**
+	 * Get file path for JSON export we import for contact form with form_draft "1"
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return string
+	 */
+	protected function get_path_for_form_draft_form_import(){
+		return $file = dirname(__FILE__) . '/forms/contact-form-form-draft.json';
+	}
 
     /**
      * Get file path for JSON export we import for contact form auto-responder tests

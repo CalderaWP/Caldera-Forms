@@ -4,40 +4,24 @@ function slug_send_email( $to, $subject, $message, $headers = '' ){
 }
 
 /**
- * Test case -- step 2
+ * Test case for emails
  */
-abstract  class Email_Test_Case extends WP_UnitTestCase{
+abstract class Email_Test_Case extends WP_UnitTestCase{
+
+
+    use \calderawp\calderaforms\Tests\Util\Traits\TestsWpMail;
 
     /** @inheritdoc */
     public function setUp(){
         parent::setUp();
-        $this->reset_mailer();
+        $this->reset();
     }
 
     /** @inheritdoc */
     public function tearDown(){
         parent::tearDown();
-        $this->reset_mailer();
+        $this->reset();
     }
 
 
-    /**
-     * Reset mailer
-     *
-     * @return bool
-     */
-    protected function reset_mailer(){
-        return reset_phpmailer_instance();
-    }
-
-    /**
-     * Get mock mailer
-     *
-     * Wraps tests_retrieve_phpmailer_instance()
-     *
-     * @return MockPHPMailer
-     */
-    protected function get_mock_mailer(){
-        return tests_retrieve_phpmailer_instance();
-    }
 }

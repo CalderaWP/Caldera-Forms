@@ -1,4 +1,756 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.7.6 - 2019-01-10 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.8.0 - 2019-02-26 */var resBaldrickTriggers;
+
+jQuery(function($){
+	function fieldErrors(fields, $form, $notice) {
+		for (var i in fields) {
+			var field = $form.find('[data-field="' + i + '"]'),
+				wrap = field.parent();
+			if (!field.length) {
+				$notice.html('<p class="alert alert-danger ">' + fields[i] + '</p>');
+
+			} else {
+				if (wrap.is('label')) {
+					wrap = wrap.parent();
+					if (wrap.hasClass('checkbox') || wrap.hasClass('radio')) {
+						wrap = wrap.parent();
+					}
+				}
+				var has_block = wrap.find('.help-block').not('.caldera_ajax_error_block');
+
+				wrap.addClass('has-error').addClass('caldera_ajax_error_wrap');
+				if (has_block.length) {
+					has_block.hide();
+				}
+				wrap.append('<span class="help-block caldera_ajax_error_block">' + fields[i] + '</span>');
+			}
+
+		}
+	}
+    var cf_upload_queue = [];
+    // admin stuff!
+    var cf_push_file_upload = function( form, file_number, data ){
+        var progress = $('#progress-file-' + file_number ),
+            filesize = $('.' + file_number + ' .file-size');
+        cf_upload_queue.push(1);
+        cf_uploader_filelist[ file_number ].state = 2;
+        $.ajax({
+            xhr: function(){
+                var xhr = new window.XMLHttpRequest();
+                //Upload progress
+                xhr.upload.addEventListener("progress", function(evt){
+                    if (evt.lengthComputable) {
+                        var percentComplete = ( evt.loaded / evt.total ) * 100;
+                        progress.width( percentComplete + '%' );
+                        filesize.html( size_format(evt.loaded) + ' / ' + size_format( evt.total ) );
+                    }
+                }, false);
+                //Download progress
+                xhr.addEventListener("progress", function(evt){
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        //Do something with download progress
+
+                    }
+                }, false);
+                return xhr;
+            },
+            url : form.data('request') + "/upload/",
+            type: "POST",
+            data : data,
+            processData: false,
+            contentType: false,
+            success:function(data, textStatus, jqXHR){
+
+                if( data.success && data.success === true ){
+
+                    cf_upload_queue.pop();
+                    var file_remover = $('[data-file="' + file_number + '"]');
+                    file_remover.next().addClass('file-uploaded');
+                    file_remover.remove();
+
+                    cf_uploader_filelist[ file_number ].state = 3;
+
+                    form.submit();
+
+
+                }else if( data.data && !data.success ){
+                    //show error
+                    $('.' + file_number ).addClass('has-error');
+                    form.find(':submit').prop('disabled',false);
+                    form.find('.cf-uploader-trigger').slideDown();
+                    $('.' + file_number +' .file-error' ).html( data.data );
+
+                    return;
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                //if fails  - push error
+                if( !form.data( 'postDisable' ) ){
+                    buttons.prop('disabled',false);
+                }
+            }
+        });
+    }
+    // Baldrick Bindings
+    resBaldrickTriggers = function(){
+        var trackedElements = {};
+        /**
+         * Get Element for notices
+         *
+         * @since 1.5.x
+         *
+         * @param obj
+         * @returns {*|jQuery|HTMLElement}
+         */
+        var getNoticeEl = function(obj) {
+            return $('#caldera_notices_' + obj.params.trigger.data('instance'));
+        };
+
+        /**
+         * Get breadcrumbs Element
+         *
+         * @since 1.6.0
+         *
+         * @param obj
+         * @returns {*|jQuery|HTMLElement}
+         */
+        var getBreadCrumbsEl = function (obj) {
+            return $('#caldera-forms-breadcrumb_' + obj.params.trigger.data('instance'));
+        };
+
+        /**
+         * Show breadcrumbs if possible
+         *
+         * @since 1.6.0
+         *
+         * @param obj
+         */
+        var maybeShowBreadCrumbs = function (obj) {
+            var $breadcrumbs = getBreadCrumbsEl(obj);
+            if ($breadcrumbs.length) {
+                $breadcrumbs.show().attr('aria-hidden', false).css('visibility', 'visible');
+            }
+        };
+
+        /**
+         * Show breadcrumbs if possible
+         *
+         * @since 1.6.0
+         *
+         * @param obj
+         */
+        var maybeHideBreadCrumbs = function (obj) {
+            var $breadcrumbs = getBreadCrumbsEl(obj);
+            if ($breadcrumbs.length) {
+                $breadcrumbs.show().attr('aria-hidden', true ).css('visibility', 'hidden');
+            }
+        };
+
+        $('.cfajax-trigger').baldrick({
+            request			:	'./',
+            method			:	'POST',
+            init			: function(el, ev){
+
+                ev.preventDefault();
+
+                var $form	=	$(el),
+                    buttons = 	$form.find(':submit');
+                var pending = [];
+                var fieldsBlocking = [];
+
+				/**
+                 * This event is triggered directly before the request for form submission is made
+                 *
+                 * Runs after cf.form.submit
+                 *
+                 * @since 1.8.0
+				 */
+				$( document ).trigger( 'cf.ajax.request', {
+                    $form: $form,
+                    formIdAttr: $form.attr( 'id' ),
+                    displayFieldErrors:fieldErrors,
+					fieldsBlocking: fieldsBlocking,
+                    $notice: $( '#caldera_notices_' + $form.data( 'instance' ) )
+                });
+
+				//Check if any cf2 fields are blocking submit
+				var cf2 = window.cf2[ $form.attr( 'id' ) ];
+				if( 'object' === typeof cf2 ){
+					if( cf2.hasOwnProperty( 'pending' ) && 0 !== cf2.pending.length ){
+						return false;
+					}
+
+					if( cf2.hasOwnProperty( 'fieldsBlocking' ) && 0 !== cf2.fieldsBlocking.length ){
+						return false;
+					}
+				}
+
+                if( $form.data('_cf_manual') ){
+                    $form.find('[name="cfajax"]').remove();
+                    return false;
+                }
+
+                if( !$form.data( 'postDisable' ) ){
+                    buttons.prop('disabled',true);
+                }
+
+
+                if( typeof cf_uploader_filelist === 'object'  ){
+                    // verify required
+                    $form.find('.cf-uploader-trigger').slideUp();
+                    // setup file uploader
+                    var has_files = false;
+                    var count = cf_upload_queue.length;
+                    for( var file in cf_uploader_filelist ){
+                        if( cf_uploader_filelist[ file ].state > 1 || cf_uploader_filelist[ file ].state === 0 ){
+                            // state 2 and 3 is transferring and complete, state 0 is error and dont upload
+                            continue;
+                        }
+
+                        has_files = true;
+                        var data = new FormData(),
+                            file_number = file,
+                            field = $('#' + file_number.split('_file_')[0] );
+                        data.append( field.data('field'), cf_uploader_filelist[ file ].file );
+                        data.append( 'field', field.data('field') );
+                        data.append( 'control', field.data('controlid') );
+                        cf_push_file_upload( $form, file_number, data );
+                        field.val('');//@see https://github.com/CalderaWP/Caldera-Forms/issues/2514#issuecomment-395213433
+                        field.attr('type','hidden');
+                        field.val(field.data('controlid'));
+                        count++;
+                        if( count === 1 ){
+                            break;
+                        }
+
+                    }
+                    if( true === has_files || cf_upload_queue.length ){
+                        return false;
+                    }
+                }
+
+
+
+            },
+            error : function( obj ){
+                if( obj.jqxhr.status === 404){
+                    this.trigger.data('_cf_manual', true ).trigger('submit');
+                }else{
+                    var $notice = getNoticeEl(obj);
+                    if( obj.jqxhr.responseJSON.data.html ){
+                        $notice.html (obj.jqxhr.responseJSON.data.html );
+                        $('html,body').animate({
+                            scrollTop: $notice.offset().top - $notice.outerHeight()
+                        }, 300 );
+
+                    }
+                }
+
+            },
+            callback		: function(obj){
+                obj.params.trigger.find(':submit').prop('disabled',false);
+
+                var $notice = getNoticeEl( obj );
+
+                // run callback if set.
+                if( obj.params.trigger.data('customCallback') && typeof window[obj.params.trigger.data('customCallback')] === 'function' ){
+
+                    window[obj.params.trigger.data('customCallback')](obj.data);
+
+                }
+
+
+                if( !obj.params.trigger.data('inhibitnotice') ){
+
+                    $('.caldera_ajax_error_wrap').removeClass('caldera_ajax_error_wrap').removeClass('has-error');
+                    $('.caldera_ajax_error_block').remove();
+
+                    if(obj.data.status === 'complete' || obj.data.type === 'success'){
+                        maybeHideBreadCrumbs(obj);
+                        if(obj.data.html){
+                            obj.params.target.html(obj.data.html);
+                        }
+                        if(obj.params.trigger.data('hiderows')){
+                            obj.params.trigger.find('div.row').remove();
+                        }
+                    }else if(obj.data.status === 'preprocess'){
+                        maybeShowBreadCrumbs(obj);
+                        obj.params.target.html(obj.data.html);
+                    }else if(obj.data.status === 'error'){
+                        maybeShowBreadCrumbs(obj);
+                        obj.params.target.html(obj.data.html);
+                    }
+
+                }
+                // hit reset
+                if( ( obj.data.status === 'complete' || obj.data.type === 'success' ) && !obj.data.entry ){
+                    obj.params.trigger[0].reset();
+                }
+
+                // do a redirect if set
+                if(obj.data.url){
+                    obj.params.trigger.hide();
+                    window.location = obj.data.url;
+                }
+                // show trigger
+                obj.params.trigger.find('.cf-uploader-trigger').slideDown();
+                if(obj.data.fields){
+                    var $form = obj.params.trigger;
+                    var fields = obj.data.fields;
+                    fieldErrors(fields, $form, $notice);
+                }
+
+                if ( 'undefined' != obj.data.scroll ) {
+                    var el = document.getElementById( obj.data.scroll );
+                    if ( null != el ) {
+                        var $scrollToEl = $( el );
+                        $('html,body').animate({
+                            scrollTop: $scrollToEl.offset().top - $scrollToEl.outerHeight() - 12
+                        }, 300);
+                    }
+                }
+
+
+                // trigger global event
+                $( document ).trigger( 'cf.submission', obj );
+                $( document ).trigger( 'cf.' + obj.data.type );
+
+            }
+        });
+    };
+
+    resBaldrickTriggers();
+});
+
+var calders_forms_check_conditions, calders_forms_init_conditions;
+(function($){
+
+	/**
+	 * Stores field values before hiding with conditional logic
+	 *
+	 * @since 1.5.0.7
+	 *
+	 * @type {{}}
+     */
+	var fieldVals = {};
+
+    /**
+	 * Tracks fields that are set to "unsync" and have been hidden
+	 *
+	 * @since 1.6.0
+	 *
+     * @type {{}}
+     */
+	var unsynced = {};
+
+	// IE8 compatibility
+	if (!Array.prototype.indexOf){
+		Array.prototype.indexOf = function(elt /*, from*/){
+			var len = this.length >>> 0;
+
+			var from = Number(arguments[1]) || 0;
+			from = (from < 0)
+			? Math.ceil(from)
+			: Math.floor(from);
+			if (from < 0)
+				from += len;
+
+			for (; from < len; from++){
+				if (from in this &&
+					this[from] === elt)
+					return from;
+			}
+			return -1;
+		};
+	}
+	cf_debounce = function(func, wait, immediate) {
+		var timeout;		
+		return function() {
+			var context = this, args = arguments;
+			var later = function() {
+				timeout = null;
+				if (!immediate) func.apply(context, args);
+			};
+			var callNow = immediate && !timeout;
+			clearTimeout(timeout);
+			timeout = setTimeout(later, wait);
+			if (callNow) func.apply(context, args);
+		};
+	};
+
+	calders_forms_check_conditions = function( inst_id ){
+
+		if( typeof caldera_conditionals === "undefined" || typeof caldera_conditionals[inst_id] === "undefined"){
+			return;
+		}
+
+
+		var $form = $( document.getElementById( inst_id ) );
+		var state = getStateObj( inst_id );
+
+		/**
+		 * Reset field value after its unhidden
+		 *
+		 * @since 1.5.0.7
+		 *
+		 * @param field Field ID
+		 * @param state {CFState} @since 1.5.3
+		 */
+		function resetValue( field, state ){
+			var val = getSavedFieldValue( field );
+			var $field;
+			if( undefined != val ){
+				if( 'object' == typeof  val  ){
+					for( var id in val ){
+						if( true === val[id] ){
+							$field = $( document.getElementById( id ) );
+							$field.prop( 'checked', true );
+						}
+					}
+				}else{
+					$field = $( '#' + field );
+					$field.val( val );
+				}
+			}
+
+			if( null !== state ){
+				state.rebind(field);
+				if( undefined === $field ){
+                    $field = $( '#' + field );
+				}
+
+				if( unsynced.hasOwnProperty( field ) ){
+                    $field.attr( 'data-unsync', '1' );
+                    $field.removeAttr( 'data-sync' );
+                    $field.removeAttr( 'data-binds' );
+				}
+
+                if ( undefined !== $field && $field.data( 'sync' ) ) {
+                    new CalderaFormsFieldSync($field, $field.data('binds'), $form, $, state);
+                }
+			}
+
+		}
+
+
+		/**
+		 * Reset field value before its unhidden
+		 *
+		 * @since 1.5.0.7
+		 *
+		 * @param field Field ID
+		 * @param state {CFState} @since 1.5.3
+		 *
+		 * @return mixed saved value @since 1.8.0
+		 */
+		function saveFieldValue(field,state) {
+			var $field = $( document.getElementById( field ) );
+			if( $field.length ){
+				var val = $field.val();
+				if( val ){
+					fieldVals[ field ] = val;
+
+				}
+
+			}else{
+				var $el;
+				$field = $( '.' + field );
+				fieldVals[ field ] = {};
+				$field.each( function( i, el ){
+					$el = $( el );
+					if( $el.prop( 'checked' ) ){
+						fieldVals[ field ][ $el.attr( 'id' ) ] = true;
+					}else{
+						fieldVals[ field ][ $el.attr( 'id' ) ] = false;
+					}
+
+				});
+			}
+
+			if( $field.data( 'unsync' ) ){
+				unsynced[ field ] = true;
+			}
+
+			//remove from state
+			if ( null !== state ) {
+				state.unbind(field);
+			}
+
+			return fieldVals[ field ];
+
+		}
+
+		/**
+		 * Get saved field value
+		 *
+		 * @since 1.5.0.7
+		 *
+		 * @param field Field ID
+		 *
+         * @returns {*}
+         */
+		function getSavedFieldValue( field ){
+			if(fieldVals[ field ]  ){
+				return fieldVals[ field ];
+			}
+		}
+
+		for( var field in caldera_conditionals[ inst_id ] ){
+			// each conditional
+			var fieldwrapper = jQuery('#conditional_' + field);
+			if(!fieldwrapper.length){
+				continue;
+			}
+			var type	=	caldera_conditionals[ inst_id ][field].type,
+			groups	=	caldera_conditionals[ inst_id ][field].group,
+			trues	=	[];
+			
+			// has a wrapper - bind conditions
+			for(var id in groups){
+				
+				var truelines	= {},
+				lines		= groups[id];						
+				// go over each line in a group to find a false
+				for(var lid in lines){					
+					/// get field 
+
+					var compareelement 	= $form.find('[data-field="' + lines[lid].field + '"]'),
+					comparefield 	= [],
+					comparevalue	= (typeof lines[lid].value === 'function' ? lines[lid].value() : lines[lid].value);
+					
+					if( typeof lines[lid].selectors !== 'undefined' ){
+						for( var selector in lines[lid].selectors ){
+							var re = new RegExp( selector ,"g");
+							comparevalue = comparevalue.replace( re, $( lines[lid].selectors[ selector ] ).val() );
+						}
+					}
+
+					truelines[lid] 	= false;
+					if( compareelement.is(':radio,:checkbox') ){
+						compareelement = compareelement.filter(':checked');
+					}else if( compareelement.is('div')){
+						compareelement = jQuery('<input>').val( compareelement.html() );
+					}else if ( ! compareelement.length ){
+						var _calc = $form.find('[data-calc-field="' + lines[lid].field + '"]');
+						if( _calc.length ){
+							compareelement 	= $form.find('[data-calc-field="' + lines[lid].field + '"]');
+						}
+					}
+					
+					if(!compareelement.length){
+						comparefield.push(lines[lid].field);
+					}else{
+						for( var i = 0; i<compareelement.length; i++){							
+							comparefield.push(compareelement[i].value);
+						}
+					}
+					switch(lines[lid].compare) {
+						case 'is':
+						if(comparefield.length){
+							if(comparefield.indexOf(comparevalue.toString()) >= 0){
+								truelines[lid] = true;
+							}
+						}
+						break;
+						case 'isnot':
+						if(comparefield.length){
+							if(comparefield.indexOf(comparevalue) < 0){
+								truelines[lid] = true;
+							}
+						}
+						break;
+						case '>':
+						case 'greater':
+
+							truelines[lid] = parseFloat( comparefield.reduce(function(a, b) {return a + b;}) ) > parseFloat( comparevalue );
+
+						break;
+						case '<':
+						case 'smaller':
+
+							truelines[lid] = parseFloat( comparefield.reduce(function(a, b) {return a + b;}) ) < parseFloat( comparevalue );
+
+						break;
+						case 'startswith':
+						for( var i = 0; i<comparefield.length; i++){
+							if( comparefield[i].toLowerCase().substr(0, comparevalue.toLowerCase().length ) === comparevalue.toLowerCase()){
+								truelines[lid] = true;
+							}
+						}
+						break;
+						case 'endswith':
+						for( var i = 0; i<comparefield.length; i++){
+							if( comparefield[i].toLowerCase().substr(comparefield[i].toLowerCase().length - comparevalue.toLowerCase().length ) === comparevalue.toLowerCase()){
+								truelines[lid] = true;
+							}
+						}
+						break;
+						case 'contains':
+						for( var i = 0; i<comparefield.length; i++){
+							if( comparefield[i].toLowerCase().indexOf( comparevalue ) >= 0 ){
+								truelines[lid] = true;
+							}
+						}
+						break;
+					}
+				}				
+				// add result in
+				istrue = true;
+				for( var prop in truelines ){
+					if(truelines[prop] === false){
+						istrue = false;
+						break;
+					}
+				}
+				trues.push(istrue);
+
+			}
+
+
+			var template	=	jQuery('#conditional-' + field + '-tmpl').html(),
+			target		=	jQuery('#conditional_' + field),
+			target_field=	jQuery('[data-field="' + field + '"]'),
+			action;
+			if(trues.length && trues.indexOf(true) >= 0){					
+				if(type === 'show'){
+					action = 'show';
+				}else if (type === 'hide'){
+					action = 'hide';
+				}else if (type === 'disable'){
+					action = 'disable';
+				}
+			}else{
+				if(type === 'show'){
+					action = 'hide';
+				}else if (type === 'disable'){
+					action = 'enable';
+				}else{
+					action = 'show';
+				}
+			}
+
+
+			if(action === 'show'){
+				// show - get template and place it in.
+				if(!target.html().length){
+
+					target.html(template).trigger('cf.add', {
+						field: field,
+					});
+					jQuery(document).trigger('cf.add',{
+						field: field,
+					});
+					resetValue( field, state );
+
+				}
+
+				emitConditionalEvent('show', field, inst_id );
+
+			}else if (action === 'hide'){
+				if(target.html().length){
+					saveFieldValue(  field, state  );
+					target_field.val('').empty().prop('checked', false);
+					target.empty().trigger('cf.remove',{
+						field: field,
+					});
+						jQuery(document).trigger('cf.remove',{
+						field: field,
+					});
+				}
+
+				emitConditionalEvent('hide', field, inst_id );
+
+			}else if ('enable' === action || 'disable' === action ){
+				var dField = jQuery( '#' + field );
+				if( 'enable' == action ){
+					if(!target.html().length){
+						target.html(template).trigger('cf.add',{
+							field: field,
+						});
+						jQuery(document).trigger('cf.add').trigger('cf.enable', {
+							field: field,
+						});
+						dField.prop('disabled', false);
+					}else{
+						dField.prop('disabled', false);
+					}
+
+
+					emitConditionalEvent('enable', field, inst_id );
+
+
+				}else {
+					if (!target.html().length) {
+						target.html(template).trigger('cf.remove');
+						jQuery(document).trigger('cf.remove',{
+							field: field,
+						})
+						.trigger('cf.disable', {
+							field: field,
+						});
+						dField.prop('disabled', 'disabled', {
+							field: field,
+						});
+					} else {
+						dField.prop('disabled', 'disabled',{
+							field: field,
+						});
+					}
+					emitConditionalEvent('disable', field, inst_id );
+
+
+				}
+
+			}
+
+		}
+
+		/**
+		 * Get the CFState object by form ID
+		 *
+		 * @since 1.5.3
+		 *
+		 * @param {String} formId Form ID
+		 * @returns {CFState|null}
+		 */
+		function getStateObj( formId ) {
+			if( 'object' === typeof  window.cfstate && window.cfstate.hasOwnProperty(formId) ){
+				return  window.cfstate[formId];
+			}
+
+			return null;
+		}
+
+		function emitConditionalEvent(eventName,field,formId){
+			function createEventName(){
+				return 'cf.conditionals.' + eventName;
+			}
+			var state = getStateObj(formId);
+			if( state ){
+				state.events().emit(createEventName(), {
+					fieldIdAttr: field,
+					formIdAttr: formId,
+					eventType: eventName,
+					fieldValue: getSavedFieldValue(field)
+				} );
+			}
+		}
+
+	};
+
+	calders_forms_init_conditions = function(){
+		jQuery('.caldera_forms_form').on('change keyup', '[data-field]', cf_debounce( function(e){
+			var form 			= $(this).closest('.caldera_forms_form').prop('id');
+			calders_forms_check_conditions( form );
+		}, 10 ) );	
+	};
+
+	if(typeof caldera_conditionals !== 'undefined'){
+		calders_forms_init_conditions();
+		jQuery('.caldera_forms_form').find('[data-field]').first().trigger('change');
+	};
+})(jQuery);
+/**
  * Simple event bindings for form state
  *
  * In general, access through CFState.events() not directly.
@@ -20,6 +772,7 @@ function CFEvents(state) {
 	 * @param callback {Function} The callback function
 	 */
 	this.subscribe = function (id, callback) {
+
 		if (!hasEvents(id)) {
 			events[id] = [];
 		}
@@ -40,11 +793,26 @@ function CFEvents(state) {
 		}
 
 		events[id].forEach(function (callback) {
-			callback(state.getState(id),id);
+
+			if(typeof value === 'undefined'){
+				value = state.getState(id);
+			}
+
+			callback(id, value);
 		});
 
 	};
 
+	this.emit = function (eventName, payload) {
+		if (!hasEvents(eventName)) {
+			return;
+		}
+
+		events[eventName].forEach(function (callback) {
+			callback(payload,eventName);
+		});
+
+	};
 	/**
 	 * Detach a bound event (remove_action)
 	 *
@@ -301,6 +1069,12 @@ function CFState(formId, $ ){
 			 */
 			detach: function(id,callback){
 				events.detach(id,callback);
+			},
+			emit: function (eventName,payload) {
+				events.emit(eventName,payload);
+			},
+			attatchEvent: function(eventName,callback){
+				events.subscribe(eventName,callback);
 			}
 		}
 	};
@@ -345,25 +1119,24 @@ function CFState(formId, $ ){
 		} else {
 			$field = $('.' + id);
 			if ($field.length) {
+				//Rebind checkbox options when the checkbow field is unhidden
+				if( 'object' == typeof  $field  ){
+					var val = [];
+					var allSums = 0;
+					$field.each(function ( i, el ) {
+						var $this = $(el);
+						var sum = 0;
+						if ($this.prop('checked')) {
+							sum += parseFloat(findCalcVal($this));
+							allSums += sum;
+							val.push($this.val());
+						}
+						calcVals[id] = allSums;
+					});
+				}
 
-                                //Rebind checkbox options when the checkbow field is unhidden
-                                    if( 'object' == typeof  $field  ){
-                                        var val = [];
-                                        var allSums = 0;
-                                        $field.each(function ( i, el ) {
-                                            var $this = $(el);
-                                            var sum = 0;
-                                            if ($this.prop('checked')) {
-                                                sum += parseFloat(findCalcVal($this));
-                                                allSums += sum;
-                                                val.push($this.val());
-                                            }
-                                            calcVals[id] = allSums;
-                                        });
-                                    }
 
-
-                                    $field.on('change', function () {
+				$field.on('change', function () {
 					var val = [];
 					var $el = $(this),
 					 	id,
@@ -452,7 +1225,7 @@ function CFState(formId, $ ){
 	function bindCalcField(id,config) {
 		fieldVals[id] = 0;
 		calcVals[id] = 0;
-		self.events().subscribe(id,function (value,id) {
+		self.events().subscribe(id,function (id,value) {
 			calcVals[id] = value;
 		});
 	}
@@ -4650,7 +5423,14 @@ jQuery( document ).ajaxComplete(function() {
             e.preventDefault();
             $this.cfdatepicker('show')
                 .on('show', function(){ $(this).trigger('blur'); })
-                .on('hide', function(){ $(this).attr("disabled", false); })
+                .on('hide', function(){
+                    $(this).attr("disabled", false);
+                  if($this.hasClass('parsley-error') && $this.val() !== ''){
+                    $this.removeClass('parsley-error');
+                    $this.addClass('parsley-success');
+                    $('#parsley-id-' + $this.data('parsley-id')).hide();
+                  }
+                })
         }
     );
 
@@ -6562,8 +7342,46 @@ var cf_jsfields_init, cf_presubmit;
 
 		cf_validate_form( form ).destroy();
 
+
 		fields = form.find('[data-field]');
 		form.find('.has-error').removeClass('has-error');
+
+		/**
+		 * Validate a field, possibly using cf2 system
+		 *
+		 * @since 1.8.0
+		 *
+		 * @param $this_field
+		 * @param form_id
+		 * @param valid
+		 * @return {*}
+		 */
+		function validateField($this_field,form_id,valid) {
+			window = window || {};
+			var cf2 = 'object' === typeof window.cf2 && 'object' === typeof window.cf2[form_id] ? window.cf2[form_id] : null;
+			function getCf2Field(fieldIdAttr,formIdAttr){
+				if( ! cf2 || ! cf2.fields ){
+					return false;
+				}
+
+				if( cf2.fields.hasOwnProperty(fieldIdAttr)){
+					return cf2.fields[fieldIdAttr];
+				}
+				return false;
+			}
+
+			var fieldIdAttr = $this_field.attr('id');
+			var cf2Field = getCf2Field(fieldIdAttr, form_id);
+			if (cf2Field) {
+				valid = cf2.component.isFieldValid(fieldIdAttr);
+				if (!valid) {
+					cf2.component.addFieldMessage(fieldIdAttr, ParsleyValidator.getErrorMessage('required'),true);
+				}
+			} else {
+				valid = $this_field.parsley().isValid();
+			}
+			return valid;
+		}
 
 		if( clicked.data('page') !== 'prev' && page >= current_page ){
 			fields =  $('#caldera_form_' + instance + ' [data-formpage="' + current_page + '"] [data-field]'  );
@@ -6576,7 +7394,8 @@ var cf_jsfields_init, cf_presubmit;
 					continue;
 				}
 
-				valid = $this_field.parsley().isValid();
+				valid = validateField($this_field,form_id,valid);
+
 				if (true === valid) {
 					continue;
 				}
@@ -6592,8 +7411,7 @@ var cf_jsfields_init, cf_presubmit;
 
 					for (var f = 0; f < fields.length; f++) {
 						$this_field = $(fields[f]);
-						$this_field.parsley().validate();
-						valid = $this_field.parsley().isValid({force: true});
+						valid = validateField($this_field,form_id,valid);
 						if (true === valid) {
 							continue;
 						}
@@ -6695,7 +7513,7 @@ var cf_jsfields_init, cf_presubmit;
 			validator = cf_validate_form( $form );
 		$( document ).trigger( 'cf.form.submit', {
 			e:e,
-			$form:$form
+			$form:$form,
 		} );
 
 
@@ -6806,10 +7624,12 @@ window.addEventListener("load", function(){
 					config_object = new Caldera_Forms_Field_Config( config, $(document.getElementById(form_id)), $, state );
 					config_object.init();
 					$( document ).trigger( 'cf.form.init',{
+						$form: $form,
 						idAttr:  form_id,
 						formId: formId,
 						state: state,
-						fieldIds: CFFIELD_CONFIG[instance].fields.hasOwnProperty( 'ids' ) ? CFFIELD_CONFIG[instance].fields.ids : []
+						fieldIds: CFFIELD_CONFIG[instance].fields.hasOwnProperty( 'ids' ) ? CFFIELD_CONFIG[instance].fields.ids : [],
+						nonce: jQuery( '#_cf_verify_' + formId ).val()
 					});
 
 
