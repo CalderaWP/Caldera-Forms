@@ -133,6 +133,11 @@ class Caldera_Forms_Magic_Doer {
 					}
 				}
 
+                $magics = Caldera_Forms_Magic_Util::explode_bracket_magic( $entry );
+                if ( ! empty( $magics[ 1 ])) {
+                    $entry = "";
+                }
+
 				$value = str_replace( $matches[ 0 ][ $key ], $entry, $value );
 			}
 
@@ -173,6 +178,10 @@ class Caldera_Forms_Magic_Doer {
 	public static function do_bracket_magic( $value, $form, $entry_id, $magic_caller, $referrer ){
 		global $processed_meta;
 
+		/**
+		 *
+		 *
+		 */
 		$form   = self::filter_form( $form, $entry_id );
 		$magics = Caldera_Forms_Magic_Util::explode_bracket_magic( $value );
 		if ( ! empty( $magics[ 1 ] ) ) {
@@ -194,7 +203,7 @@ class Caldera_Forms_Magic_Doer {
 			if( ! is_null( $_value ) ){
 				return $_value;
 			}
-
+			
 			foreach ( $magics[ 1 ] as $magic_key => $magic_tag ) {
 
 				$magic = explode( ':', $magic_tag, 2 );
@@ -500,7 +509,7 @@ class Caldera_Forms_Magic_Doer {
 	 * @return array
 	 */
 	public static function magic_tag_meta_prepare( $entry_id ){
-		global $processed_meta;		
+		global $processed_meta;
 		if( ! is_array( self::$entry_details ) )  {
 			self::$entry_details = array();
 		}
@@ -549,8 +558,10 @@ class Caldera_Forms_Magic_Doer {
 			if( is_object( $_value ) ){
 				$value = implode( ', ', (array) $_value );
 			}
-
+		} else if( is_array( $value )  ){
+			$value = implode( ', ', $value );
 		}
+
 
 		return $value;
 

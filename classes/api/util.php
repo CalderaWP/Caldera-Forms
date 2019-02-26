@@ -17,10 +17,12 @@ class Caldera_Forms_API_Util {
 	 *
 	 * @since 1.4.4
 	 *
+     * @param string $version Optional. API version. Default is v2. Can be v3 or v2 only
 	 * @return string
 	 */
-	public static function api_namespace(){
-		return 'cf-api/v2';
+	public static function api_namespace($version = 'v2'){
+        $version = in_array( $version, ['v2', 'v3' ] ) ? $version : 'v2';
+		return "cf-api/$version";
 	}
 
 	/**
@@ -30,14 +32,15 @@ class Caldera_Forms_API_Util {
 	 *
 	 * @param string $endpoint Optional. Endpoint.
 	 * @param bool $add_nonce Optional. If true, _wp_nonce is set with WP REST API nonce. Default is false
+	 * @param string $version Optional. @since 1.8.0
 	 * @return string
 	 */
-	public static function url( $endpoint = '', $add_nonce = false ){
+	public static function url( $endpoint = '', $add_nonce = false, $version = 'v2' ){
 		if( ! function_exists( 'rest_url' ) ){
 			return '';
 		}
 
-		$url =  rest_url( self::api_namespace() . '/' . $endpoint );
+		$url =  rest_url( self::api_namespace($version) . '/' . $endpoint );
 		if( $add_nonce ){
 			$url = add_query_arg( '_wpnonce', self::get_core_nonce(), $url );
 		}

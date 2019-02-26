@@ -287,3 +287,54 @@ if ( ! function_exists( 'is_countable' ) ) {
         );
     }
 }
+
+/**
+ * Wrapper for wp_send_json() with output buffering
+ *
+ * @since 1.8.0
+ *
+ * @param array $data Data to return
+ * @param bool $is_error Optional. Is this an error. Default false.
+ */
+function caldera_forms_send_json(array $data, $is_error = false, $status = null ){
+	$buffer = ob_get_clean();
+	/**
+	 * Runs before Caldera Forms returns json via wp_send_json() exposes output buffer
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param string|null $buffer Buffer contents
+	 * @param bool $is_error If we think this is an error response or not.
+	 */
+	do_action('caldera_forms_buffer_flushed', $buffer, $is_error );
+	$data[ 'headers_sent'] = headers_sent();
+	if( ! $is_error ){
+		status_header(200);
+		$data[ 'success' ] = true;
+		wp_send_json( $data );
+	}else{
+		wp_send_json_error( $data );
+	}
+}
+
+/**
+ * Starts a flushable buffer
+ *
+ * @since 1.8.0
+ */
+function caldera_forms_start_buffer(){
+	if( ! did_action( 'caldera_forms_buffer_started' ) ){
+
+		ob_start();
+
+		/**
+		 * Runs when buffer is started
+		 *
+		 * Used to prevent starting buffer twice
+		 *
+		 * @since 1.8.0
+		 */
+		do_action( 'caldera_forms_buffer_started' );
+	}
+}
+

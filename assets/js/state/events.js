@@ -20,6 +20,7 @@ function CFEvents(state) {
 	 * @param callback {Function} The callback function
 	 */
 	this.subscribe = function (id, callback) {
+
 		if (!hasEvents(id)) {
 			events[id] = [];
 		}
@@ -40,11 +41,26 @@ function CFEvents(state) {
 		}
 
 		events[id].forEach(function (callback) {
-			callback(state.getState(id),id);
+
+			if(typeof value === 'undefined'){
+				value = state.getState(id);
+			}
+
+			callback(id, value);
 		});
 
 	};
 
+	this.emit = function (eventName, payload) {
+		if (!hasEvents(eventName)) {
+			return;
+		}
+
+		events[eventName].forEach(function (callback) {
+			callback(payload,eventName);
+		});
+
+	};
 	/**
 	 * Detach a bound event (remove_action)
 	 *

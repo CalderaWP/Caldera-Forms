@@ -16,8 +16,11 @@ class Test_Caldera_Forms_Save extends Caldera_Forms_Test_Case {
 	 *
 	 * @since 1.4.0
 	 *
-     * @group now
+<<<<<<< HEAD
 	 * @group db
+=======
+=	 * @group db
+>>>>>>> 1eed496cac83b22be03e5ba996c76afee19ed4a2
 	 * @group save
 	 * @group entry
 	 *
