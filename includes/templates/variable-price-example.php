@@ -45,7 +45,7 @@ return array (
 				array(
 					'ID' => 'fld_4338248',
 					'type' => 'hidden',
-					'label' => 'One',
+					'label' => __( 'One', 'caldera-forms' ),
 					'slug' => 'one',
 					'conditions' =>
 						array(
@@ -64,7 +64,7 @@ return array (
 				array(
 					'ID' => 'fld_1316929',
 					'type' => 'hidden',
-					'label' => 'Value Big',
+					'label' => __( 'Value Big', 'caldera-forms' ),
 					'slug' => 'value_big',
 					'conditions' =>
 						array(
@@ -83,7 +83,7 @@ return array (
 				array(
 					'ID' => 'fld_6796077',
 					'type' => 'hidden',
-					'label' => 'Value Small',
+					'label' => __( 'Value Small', 'caldera-forms' ),
 					'slug' => 'value_small',
 					'conditions' =>
 						array(
@@ -102,7 +102,7 @@ return array (
 				array(
 					'ID' => 'fld_5987102',
 					'type' => 'hidden',
-					'label' => 'Base',
+					'label' => __( 'Base', 'caldera-forms' ),
 					'slug' => 'base',
 					'conditions' =>
 						array(
@@ -121,7 +121,7 @@ return array (
 				array(
 					'ID' => 'fld_3993413',
 					'type' => 'checkbox',
-					'label' => 'Want Option 1?',
+					'label' => __( 'Want Option 1?', 'caldera-forms' ),
 					'slug' => 'option_1',
 					'conditions' =>
 						array(
@@ -147,7 +147,7 @@ return array (
 										array(
 											'calc_value' => 'Yes',
 											'value' => 'Yes',
-											'label' => 'Yes',
+											'label' => __( 'Yes', 'caldera-forms' ),
 										),
 								),
 							'email_identifier' => 0,
@@ -158,7 +158,7 @@ return array (
 				array(
 					'ID' => 'fld_5161425',
 					'type' => 'dropdown',
-					'label' => 'Option 2 Type',
+					'label' => __('Option 2 Type', 'caldera-forms' ),
 					'slug' => 'option_2',
 					'conditions' =>
 						array(
