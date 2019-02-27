@@ -128,6 +128,26 @@ export const formRenderTestProps = {
 			},
 			"formId": "CF5bdb2f3d8f7bd",
 			"control": "cf2_file5bdb63e874357"
+		},
+		{
+			"type": "file",
+			"outterIdAttr": "cf2-fld_file_req_1",
+			"fieldId": "fld_file-req",
+			"fieldLabel": "Two Files PNG or JPG",
+			"fieldCaption": "",
+			"fieldPlaceHolder": "",
+			"isRequired": true,
+			"fieldDefault": "",
+			"fieldValue": "",
+			"fieldIdAttr": "fld_file_req_1",
+			"configOptions": {
+				"multiple": 1,
+				"multiUploadText": false,
+				"allowedTypes": false,
+				"control": "cf2-fld_7480239_15bdb63e87436a"
+			},
+			"formId": "CF5bdb2f3d8f7bd",
+			"control": "cf2_file5bdb63e874357"
 		}
 	],
 	"shouldBeValidating": false,
@@ -179,7 +199,7 @@ describe('Form render methods', () => {
 			/>
 		);
 
-		expect(typeof component.instance().getFieldValues()).toBe('object');
+		expect(typeof component.instance().getAllFieldValues()).toBe('object');
 
 	});
 
@@ -213,8 +233,8 @@ describe('Form render methods', () => {
 			}
 		];
 		component.instance().getCfState().mutateState( 'fld_12_1', 'foot' );
-		expect(component.instance().getFieldValues().fld_12_1).toBe('foot');
-		expect(component.instance().getFieldValues().fld_7480239_1).toBe(value);
+		expect(component.instance().getAllFieldValues().fld_12_1).toBe('foot');
+		expect(component.instance().getAllFieldValues().fld_7480239_1).toBe(value);
 
 	});
 
@@ -232,7 +252,7 @@ describe('Form render methods', () => {
 				"preview": "blob:http://localhost:8228/eb12ce64-102f-4ba9-b87f-a2ec3f77756f"
 			}
 		];
-		component.setState({fld_7480239_1: value});
+		component.instance().setFieldValue("fld_7480239_1", value);
 		expect(component.instance().getFieldValue('fld_7480239_1')).toEqual(value);
 
 	});
@@ -374,6 +394,36 @@ describe('Form render methods', () => {
 
 	});
 
+
+	test( 'isFieldValid considers required field valid when has array of values', () => {
+		const fakeState = new FakeOldState(formId, {});
+		const props = {...formRenderTestProps, state: fakeState};
+		const component = shallow(
+			<CalderaFormsRender
+				{...props}
+			/>
+		);
+		component.setState({fld_file_req_1: ['Hi Roy'] });
+		expect( component.instance().isFieldRequired('fld_file_req_1') ).toBe( true );
+		expect( component.instance().isFieldValid('fld_file_req_1') ).toBe( true );
+
+	});
+
+	test( 'isFieldValid considers required field invalid when has array with no values', () => {
+		const fakeState = new FakeOldState(formId, {});
+		const props = {...formRenderTestProps, state: fakeState};
+		const component = shallow(
+			<CalderaFormsRender
+				{...props}
+			/>
+		);
+		component.setState({fld_file_req_1: [] });
+		expect( component.instance().isFieldRequired('fld_file_req_1') ).toBe( true );
+		expect( component.instance().isFieldValid('fld_file_req_1') ).toBe( false );
+
+	});
+
+
 	test( 'isFieldValid considers a non-required field valid when  empty', () => {
 		const fakeState = new FakeOldState(formId, {});
 		const props = {...formRenderTestProps, state: fakeState};
@@ -382,7 +432,7 @@ describe('Form render methods', () => {
 				{...props}
 			/>
 		);
-		expect( component.instance().isFieldValid('fld_12_1') ).toBe( true );
+		expect( component.instance().isFieldValid('fld_7480239_1') ).toBe( true );
 
 	});
 
@@ -464,16 +514,27 @@ describe('Form render methods', () => {
 		expect( component.state( 'messages')).toEqual( {});
 	});
 
-  test( 'Get default file field translatable Strings', () => {
-    const props = {...formRenderTestProps};
-    const component = shallow(
-      <CalderaFormsRender
-        {...props}
-      />
-    );
-    expect(component.instance().getStrings()).toBeDefined();
-    expect(component.instance().getStrings()).toBeTruthy();
-  });
+	test( 'Get default file field translatable Strings', () => {
+		const props = {...formRenderTestProps};
+		const component = shallow(
+		  <CalderaFormsRender
+			{...props}
+		  />
+		);
+		expect(component.instance().getStrings()).toBeDefined();
+		expect(component.instance().getStrings()).toBeTruthy();
+	});
+
+	test( 'Get checkFieldValues function', () => {
+		const props = {...formRenderTestProps};
+		const component = shallow(
+			<CalderaFormsRender
+				{...props}
+			/>
+		);
+		expect(component.instance().checkFieldValues()).toBeDefined();
+		expect(component.instance().checkFieldValues()).toBeTruthy();
+	});
 
 });
 

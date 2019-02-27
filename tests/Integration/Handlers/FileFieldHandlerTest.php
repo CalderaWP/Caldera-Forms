@@ -105,7 +105,7 @@ class FileFieldHandlerTest extends TestCase
 		$form = [ 'ID' => 'cd1' ];
 		$uploader = new Cf1FileUploader();
 		$handler = new FileUpload($field, $form, $uploader);
-		$this->assertTrue( $handler->isFileTooLarge($this->getSmallCatPath() ) );
+		$this->assertTrue( $handler->isFileTooLarge( $this->createSmallCat() ) );
 
 	}
 
@@ -122,7 +122,7 @@ class FileFieldHandlerTest extends TestCase
 		$form = [ 'ID' => 'cd1' ];
 		$uploader = new Cf1FileUploader();
 		$handler = new FileUpload($field, $form, $uploader);
-		$handler->processFiles([ $this->getSmallCatPath() ], []);
+		$handler->processFiles([ $this->createSmallCat() ], []);
 
 	}
 
@@ -138,14 +138,16 @@ class FileFieldHandlerTest extends TestCase
 		$form = [ 'ID' => 'cd1' ];
 		$uploader = new Cf1FileUploader();
 		$handler = new FileUpload($field, $form, $uploader);
-		$this->assertFalse( $handler->isFileTooLarge($this->getSmallCatPath() ) );
+		$file = $this->createSmallCat();
+		$this->assertFalse( $handler->isFileTooLarge( $file ) );
 
 
-		$field = [ 'ID' => 'fld1', 'config' => [ 'max_upload' => 70000000 ] ];
+		$field = [ 'ID' => 'fld1', 'config' => [ 'max_upload' => 1000 ] ];
 		$form = [ 'ID' => 'cd1' ];
 		$uploader = new Cf1FileUploader();
 		$handler = new FileUpload($field, $form, $uploader);
-		$this->assertFalse( $handler->isFileTooLarge($this->getSmallCatPath() ) );
+		$image = $this->createSmallCat();
+		$this->assertTrue( $handler->isFileTooLarge( $image ) );
 
 	}
 }

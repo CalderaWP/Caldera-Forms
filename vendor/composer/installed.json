@@ -205,8 +205,8 @@
     },
     {
         "name": "calderawp/caldera-forms-query",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
+        "version": "0.3.2",
+        "version_normalized": "0.3.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/CalderaWP/caldera-forms-query.git",
@@ -240,7 +240,7 @@
                 ]
             }
         },
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "psr-4": {
                 "calderawp\\CalderaFormsQuery\\": "src"
@@ -560,25 +560,25 @@
     },
     {
         "name": "johnpbloch/wordpress",
-        "version": "5.0.3",
-        "version_normalized": "5.0.3.0",
+        "version": "5.1.0",
+        "version_normalized": "5.1.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/johnpbloch/wordpress.git",
-            "reference": "516609b5bc19b1dd7cff9f9b4e9d1026363049ce"
+            "reference": "bdb6632aea9872b7c71322c724a8acfc0ec9ee7f"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/johnpbloch/wordpress/zipball/516609b5bc19b1dd7cff9f9b4e9d1026363049ce",
-            "reference": "516609b5bc19b1dd7cff9f9b4e9d1026363049ce",
+            "url": "https://api.github.com/repos/johnpbloch/wordpress/zipball/bdb6632aea9872b7c71322c724a8acfc0ec9ee7f",
+            "reference": "bdb6632aea9872b7c71322c724a8acfc0ec9ee7f",
             "shasum": ""
         },
         "require": {
-            "johnpbloch/wordpress-core": "5.0.3",
+            "johnpbloch/wordpress-core": "5.1.0",
             "johnpbloch/wordpress-core-installer": "^1.0",
             "php": ">=5.3.2"
         },
-        "time": "2019-01-09T18:42:21+00:00",
+        "time": "2019-02-22T18:16:29+00:00",
         "type": "package",
         "installation-source": "dist",
         "notification-url": "https://packagist.org/downloads/",
@@ -601,26 +601,26 @@
     },
     {
         "name": "johnpbloch/wordpress-core",
-        "version": "5.0.3",
-        "version_normalized": "5.0.3.0",
+        "version": "5.1.0",
+        "version_normalized": "5.1.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/johnpbloch/wordpress-core.git",
-            "reference": "76c8acab20262adc0eb70d20aace3d36c2f3a16f"
+            "reference": "07c57b738c9967e5643641a44e659b5851c066af"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/johnpbloch/wordpress-core/zipball/76c8acab20262adc0eb70d20aace3d36c2f3a16f",
-            "reference": "76c8acab20262adc0eb70d20aace3d36c2f3a16f",
+            "url": "https://api.github.com/repos/johnpbloch/wordpress-core/zipball/07c57b738c9967e5643641a44e659b5851c066af",
+            "reference": "07c57b738c9967e5643641a44e659b5851c066af",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3.2"
         },
         "provide": {
-            "wordpress/core-implementation": "5.0.3"
+            "wordpress/core-implementation": "5.1.0"
         },
-        "time": "2019-01-09T18:42:15+00:00",
+        "time": "2019-02-22T18:16:24+00:00",
         "type": "wordpress-core",
         "installation-source": "dist",
         "notification-url": "https://packagist.org/downloads/",
@@ -694,17 +694,17 @@
     },
     {
         "name": "mockery/mockery",
-        "version": "1.2.0",
-        "version_normalized": "1.2.0.0",
+        "version": "1.2.2",
+        "version_normalized": "1.2.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/mockery/mockery.git",
-            "reference": "100633629bf76d57430b86b7098cd6beb996a35a"
+            "reference": "0eb0b48c3f07b3b89f5169ce005b7d05b18cf1d2"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/mockery/mockery/zipball/100633629bf76d57430b86b7098cd6beb996a35a",
-            "reference": "100633629bf76d57430b86b7098cd6beb996a35a",
+            "url": "https://api.github.com/repos/mockery/mockery/zipball/0eb0b48c3f07b3b89f5169ce005b7d05b18cf1d2",
+            "reference": "0eb0b48c3f07b3b89f5169ce005b7d05b18cf1d2",
             "shasum": ""
         },
         "require": {
@@ -713,9 +713,9 @@
             "php": ">=5.6.0"
         },
         "require-dev": {
-            "phpunit/phpunit": "~5.7.10|~6.5|~7.0"
+            "phpunit/phpunit": "~5.7.10|~6.5|~7.0|~8.0"
         },
-        "time": "2018-10-02T21:52:37+00:00",
+        "time": "2019-02-13T09:37:52+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -951,17 +951,17 @@
     },
     {
         "name": "nilportugues/sql-query-builder",
-        "version": "1.6.0",
-        "version_normalized": "1.6.0.0",
+        "version": "1.7.0",
+        "version_normalized": "1.7.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/nilportugues/php-sql-query-builder.git",
-            "reference": "277e87a8bca2ab833b18baad751eba64d0ddddd2"
+            "reference": "89918711eb1e3e982309aa202b9987c08c6f495b"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/nilportugues/php-sql-query-builder/zipball/277e87a8bca2ab833b18baad751eba64d0ddddd2",
-            "reference": "277e87a8bca2ab833b18baad751eba64d0ddddd2",
+            "url": "https://api.github.com/repos/nilportugues/php-sql-query-builder/zipball/89918711eb1e3e982309aa202b9987c08c6f495b",
+            "reference": "89918711eb1e3e982309aa202b9987c08c6f495b",
             "shasum": ""
         },
         "require": {
@@ -973,7 +973,7 @@
             "nilportugues/php_backslasher": "~0.2",
             "phpunit/phpunit": "4.*"
         },
-        "time": "2018-08-20T16:15:21+00:00",
+        "time": "2019-02-05T13:28:29+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1698,7 +1698,8 @@
         "keywords": [
             "mock",
             "xunit"
-        ]
+        ],
+        "abandoned": true
     },
     {
         "name": "pimple/pimple",
@@ -2578,17 +2579,17 @@
     },
     {
         "name": "symfony/translation",
-        "version": "v4.2.2",
-        "version_normalized": "4.2.2.0",
+        "version": "v4.2.3",
+        "version_normalized": "4.2.3.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/translation.git",
-            "reference": "939fb792d73f2ce80e6ae9019d205fc480f1c9a0"
+            "reference": "23fd7aac70d99a17a8e6473a41fec8fab3331050"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/translation/zipball/939fb792d73f2ce80e6ae9019d205fc480f1c9a0",
-            "reference": "939fb792d73f2ce80e6ae9019d205fc480f1c9a0",
+            "url": "https://api.github.com/repos/symfony/translation/zipball/23fd7aac70d99a17a8e6473a41fec8fab3331050",
+            "reference": "23fd7aac70d99a17a8e6473a41fec8fab3331050",
             "shasum": ""
         },
         "require": {
@@ -2618,7 +2619,7 @@
             "symfony/config": "",
             "symfony/yaml": ""
         },
-        "time": "2019-01-03T09:07:35+00:00",
+        "time": "2019-01-27T23:11:39+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2653,17 +2654,17 @@
     },
     {
         "name": "symfony/yaml",
-        "version": "v3.4.21",
-        "version_normalized": "3.4.21.0",
+        "version": "v3.4.22",
+        "version_normalized": "3.4.22.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/yaml.git",
-            "reference": "554a59a1ccbaac238a89b19c8e551a556fd0e2ea"
+            "reference": "ba11776e9e6c15ad5759a07bffb15899bac75c2d"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/yaml/zipball/554a59a1ccbaac238a89b19c8e551a556fd0e2ea",
-            "reference": "554a59a1ccbaac238a89b19c8e551a556fd0e2ea",
+            "url": "https://api.github.com/repos/symfony/yaml/zipball/ba11776e9e6c15ad5759a07bffb15899bac75c2d",
+            "reference": "ba11776e9e6c15ad5759a07bffb15899bac75c2d",
             "shasum": ""
         },
         "require": {
@@ -2679,7 +2680,7 @@
         "suggest": {
             "symfony/console": "For validating YAML files using the lint command"
         },
-        "time": "2019-01-01T13:45:19+00:00",
+        "time": "2019-01-16T10:59:17+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2767,16 +2768,16 @@
     },
     {
         "name": "wpackagist-plugin/gutenberg",
-        "version": "4.8.0",
-        "version_normalized": "4.8.0.0",
+        "version": "5.1.1",
+        "version_normalized": "5.1.1.0",
         "source": {
             "type": "svn",
             "url": "https://plugins.svn.wordpress.org/gutenberg/",
-            "reference": "tags/4.8.0"
+            "reference": "tags/5.1.1"
         },
         "dist": {
             "type": "zip",
-            "url": "https://downloads.wordpress.org/plugin/gutenberg.4.8.0.zip",
+            "url": "https://downloads.wordpress.org/plugin/gutenberg.5.1.1.zip",
             "reference": null,
             "shasum": null
         },

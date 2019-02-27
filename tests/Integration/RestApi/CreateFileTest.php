@@ -247,6 +247,45 @@ class CreateFileTest extends RestApiTestCase
 
     }
 
+	/**
+	 * Test that the transient with file data is set for next request.
+	 *
+	 * @covers \calderawp\calderaforms\cf2\RestApi\File\CreateFile::createItem()
+	 * @covers \calderawp\calderaforms\cf2\Fields\Handlers\Cf1FileUploader::scheduleFileDelete()
+	 *
+	 * @since 1.8.0
+	 * @group cf2
+	 * @group file
+	 * @group field
+	 * @group cf2_file
+	 */
+	public function testDeleteFile(){
+		$data = new \stdClass();
+		wp_set_current_user(1 );
+		$formId = 'cf2_file';
+		$fieldId = 'testScheduleDelete';
+		$form = \Caldera_Forms_Forms::get_form( $formId );
+		$control = \Caldera_Forms_Field_Util::generate_file_field_unique_id(
+			\Caldera_Forms_Field_Util::get_field($fieldId,$form),
+			$form
+		);
+		$nonce = \Caldera_Forms_Render_Nonce::create_verify_nonce($formId);
+		add_filter( 'wp_handle_upload', function ($file) use ($data){
+			$data->path = $file['file'];
+			return $file;
+		});
+		$request = $this->createFileRequest($nonce, $formId, $control, $fieldId);
+		rest_get_server()->dispatch($request);
+		$this->assertTrue( file_exists($data->path ));
+
+		/** @var \calderawp\calderaforms\cf2\Jobs\Scheduler $scheduler */
+		$scheduler = caldera_forms_get_v2_container()->getService(\calderawp\calderaforms\cf2\Services\QueueSchedulerService::class);
+
+		$scheduler->runJobs(99);
+		$this->assertFalse( file_exists($data->path ) );
+
+	}
+
     /**
      * @param $nonce
      * @param $formId
