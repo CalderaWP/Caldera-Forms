@@ -5,13 +5,16 @@ import {CalderaFormsRender} from "./components/CalderaFormsRender";
 import React from 'react';
 import ReactDOM from "react-dom";
 import domReady from '@wordpress/dom-ready';
-import {getFieldConfigBy, hashFile} from "./util";
+import {
+	hashFile,
+	createMediaFromFile,
+	captureRenderComponentRef
+} from "./util";
+import { handleFileUploadResponse, handleFileUploadError, hashAndUpload, processFiles, processFileField, processFormSubmit } from './fileUploads';
 
-const CryptoJS = require("crypto-js");
 Object.defineProperty(global.wp, 'element', {
 	get: () => React
 });
-
 
 domReady(function () {
 	jQuery(document).on('cf.form.init', (e, obj) => {
@@ -22,6 +25,9 @@ domReady(function () {
 			//$form, //Form jQuery object
 		} = obj;
 		const fieldsToControl = [];
+		if( 'object' !== typeof  window.cf2 ){
+			window.cf2 = {};
+		}
 
 
 		//Build configurations
@@ -46,6 +52,8 @@ domReady(function () {
 			}
 		});
 
+
+
 		/**
 		 * Flag to indicate if validation is happening or not
 		 *
@@ -58,34 +66,18 @@ domReady(function () {
 		let shouldBeValidating = false;
 		let messages = {};
 
-		const API_FOR_FILES_URL = CF_API_DATA.rest.fileUpload;
-		const _wp_nonce = CF_API_DATA.rest.nonce;
-
-		function createMediaFromFile(file, additionalData) {
-			// Create upload payload
-			const data = new window.FormData();
-			data.append('file', file, file.name || file.type.replace('/', '.'));
-			data.append('title', file.name ? file.name.replace(/\.[^.]+$/, '') : file.type.replace('/', '.'));
-			Object.keys(additionalData)
-				.forEach(key => data.append(key, additionalData[key]));
-
-			return fetch(API_FOR_FILES_URL, {
-				body: data,
-				method: 'POST',
-				headers: {
-					'X-WP-Nonce': _wp_nonce
-				}
-			});
-
-
-		}
-
-
 
 		jQuery(document).on('cf.ajax.request', (event, obj) => {
+			//Compare the event form id with the component form id
+			if(event.currentTarget.activeElement.form.id !== idAttr){
+				return;
+			}
 			shouldBeValidating = true;
-			const values = theComponent.getFieldValues();
+			const values = theComponent.getAllFieldValues();
 			const cf2 = window.cf2[obj.formIdAttr];
+			if(typeof cf2 !== "undefined" && cf2.length > 0){
+				cf2.formIdAttr = obj.formIdAttr;
+			}
 			const {displayFieldErrors,$notice,$form,fieldsBlocking} = obj;
 			if ('object' !== typeof cf2) {
 				return;
@@ -95,136 +87,23 @@ domReady(function () {
 			cf2.uploadStarted = cf2.uploadStarted || [];
 			cf2.uploadCompleted = cf2.uploadCompleted || [];
 			cf2.fieldsBlocking = cf2.fieldsBlocking || [];
-			function removeFromPending(fieldId) {
-				const index = cf2.pending.findIndex(item => item === fieldId);
-				if (-1 < index) {
-					cf2.pending.splice(index, 1);
-				}
-			}
 
-			function removeFromUploadStarted(fieldId) {
-				const index = cf2.uploadStarted.findIndex(item => item === fieldId);
-				if (-1 < index) {
-					cf2.uploadStarted.splice(index, 1);
-				}
-			}
-			function removeFromBlocking(fieldId) {
-				const index = cf2.fieldsBlocking.findIndex(item => item === fieldId);
-				if (-1 < index) {
-					cf2.fieldsBlocking.splice(index, 1);
-				}
-			}
-
-			function setBlocking(fieldId){
-				removeFromUploadStarted(fieldId);
-				removeFromPending(fieldId);
-				cf2.fieldsBlocking.push(fieldId);
-
-			}
-
-			/**
-			 * Hash a file then upload it
-			 *
-			 * @since 1.8.0
-			 *
-			 * @param {File} file File blob
-			 * @param {string} verify Nonce token
-			 * @param {object} field field config
-			 * @param {string} fieldId ID for field
-			 */
-			function hashAndUpload(file, verify, field, fieldId) {
-
-
-				if (file instanceof File) {
-					hashFile(file, (hash) => {
-						createMediaFromFile(file, {
-							hashes: [hash],
-							verify,
-							formId: field.formId,
-							fieldId: field.fieldId,
-							control: field.control,
-							_wp_nonce
-						}).then(
-							response => response.json()
-						).then(
-							response => {
-								if( 'object' !== typeof  response ){
-									removeFromUploadStarted(fieldId);
-									removeFromPending(fieldId);
-									throw response;
-								}
-								else if (response.hasOwnProperty('control')) {
-									removeFromPending(fieldId);
-									removeFromBlocking(fieldId);
-									cf2.uploadCompleted.push(fieldId);
-									$form.submit();
-								}else{
-									if( response.hasOwnProperty('message') ){
-										messages[field.fieldIdAttr] = {
-											error: true,
-											message: response.hasOwnProperty('message') ? response.message : 'Invalid'
-										};
-									}
-									removeFromUploadStarted(fieldId);
-									removeFromPending(fieldId);
-									throw response;
-								}
-
-
-							}
-						).catch(
-							error => console.log(error)
-						);
-					})
-				}
-			}
 
 			if (Object.keys(values).length) {
 				Object.keys(values).forEach(fieldId => {
 					const field = fieldsToControl.find(field => fieldId === field.fieldId);
 					if (field) {
-						const {fieldIdAttr} = field;
 						if ('file' === field.type) {
-							//do not upload after complete
-							if ( cf2.uploadCompleted.includes(fieldId)) {
-								removeFromPending(fieldId);
-								removeFromBlocking(fieldId);
-								return;
-							}
-							//do not start upload if it has started uploading
-							if (-1 <= cf2.uploadStarted.indexOf(_fieldId => _fieldId === fieldId )
-								&& -1 <= cf2.pending.indexOf(_fieldId => _fieldId === fieldId)
-							) {
-								cf2.uploadStarted.push(fieldId);
-								obj.$form.data(fieldId, field.control);
-								cf2.pending.push(fieldId);
-								const verify = jQuery(`#_cf_verify_${field.formId}`).val();
-								if( '' === values[fieldId] ){
-									if( theComponent.isFieldRequired(fieldIdAttr) ){
-										theComponent.addFieldMessage( fieldIdAttr, "Field is required" );
-										shouldBeValidating = true;
-										setBlocking(fieldId);
-									}
-									removeFromPending(fieldId);
-									return;
-								}
-								removeFromBlocking(fieldId);
-								const files = [values[fieldId]];
-								files.forEach(file => {
-										if( Array.isArray( file ) ){
-											file = file[0];
-										}
-										hashAndUpload(file, verify, field, fieldId);
-									}
-								);
-							}
-
-
+							const processFunctions = {processFiles, hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError, processFormSubmit};
+							const processData = {obj, values, field, fieldId, cf2, $form, CF_API_DATA, theComponent, messages};
+							processFileField(processData, processFunctions);
 						}
 					}
 				});
 			} else {
-				obj.$form.data(fieldId, values[fieldId]);
+				if(typeof field !== "undefined"){
+					obj.$form.data(field.fieldId, values[field.fieldId]);
+				}
 			}
 
 		});
@@ -246,6 +125,7 @@ domReady(function () {
 				fieldsToControl={fieldsToControl}
 				shouldBeValidating={shouldBeValidating}
 				ref={(component) => {
+					captureRenderComponentRef(component,idAttr,window);
 					theComponent = component
 				}}
 				messages={messages}

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Utility functions for rendering assets
  *
@@ -9,6 +8,7 @@
  * @link
  * @copyright 2016 CalderaWP LLC
  */
+
 class Caldera_Forms_Render_Assets {
 
 	/**
@@ -192,11 +192,11 @@ class Caldera_Forms_Render_Assets {
 	/**
 	 * Get which of the optional styles are to be used
 	 *
-	 * @since 1.4.4.
+	 * @since 1.4.4
 	 *
 	 * @return array
 	 */
-	protected static function get_style_includes() {
+	public static function get_style_includes() {
 		$style_includes = get_option( '_caldera_forms_styleincludes' );
 
 		/**
@@ -342,6 +342,10 @@ class Caldera_Forms_Render_Assets {
 			unset( $script_urls[ 'vue' ] );
 			unset( $script_urls[ 'vue-filters' ] );
 			unset( $script_urls[ 'vue-status' ] );
+			if ( ! is_admin() ) {
+				unset($script_urls['ajax']);
+				unset($script_urls['conditionals']);
+			}
 			$slug = self::make_slug( 'vue' );
 			self::$registered[ 'scripts' ][] = $slug;
 			wp_register_script( $slug, self::make_url( 'vue' ), array( 'jquery' ), CFCORE_VER, true );
@@ -589,6 +593,7 @@ class Caldera_Forms_Render_Assets {
 		self::enqueue_script( 'validator' );
 		self::enqueue_script( 'init' );
 		self::enqueue_script( 'render' );
+		self::enqueue_style( 'render' );
 
 		$should_minify = self::should_minify();
 		if( $should_minify  ){
@@ -624,7 +629,16 @@ class Caldera_Forms_Render_Assets {
 				'strings'   =>  array(
 				    'cf2FileField'  => array(
                         'removeFile' => esc_attr__('Remove file', 'caldera-forms'),
-                        'defaultButtonText' =>  esc_attr__('Drop files or click to select files to Upload', 'caldera-forms')
+                        'defaultButtonText' 		=>  esc_attr__('Drop files or click to select files to Upload', 'caldera-forms'),
+						'fileUploadError1'			=>	esc_attr__('Error: ', 'caldera-forms'),
+						'fileUploadError2'			=>	esc_attr__(' could not be processed', 'caldera-forms'),
+						'invalidFiles'				=>	esc_attr__( 'These Files have been rejected : ', 'caldera-forms'),
+						'checkMessage'				=>	esc_attr__( 'Please check files type and size', 'caldera-forms'),
+						'invalidFileResponse'		=>	esc_attr__('Unknown File Process Error', 'caldera-forms'),
+						'fieldIsRequired'			=>	esc_attr__( 'Field is required','caldera-forms'),
+						'filesUnit'					=>	esc_attr__('bytes', 'caldera-forms'),
+						'maxSizeAlert'				=>  esc_attr__( 'This file is too large. Maxium size is ', 'caldera-forms'),
+						'wrongTypeAlert'			=>  esc_attr__( 'This file type is not allowed. Allowed types are ', 'caldera-forms'),
                     )
                 ),
 				'nonce' => array(

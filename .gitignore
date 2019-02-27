@@ -21,3 +21,6 @@ cypress/videos
 build
 
 wp-test-case
+
+#https://getcomposer.org/doc/faqs/should-i-commit-the-dependencies-in-my-vendor-directory.md
+/vendor/**/.git

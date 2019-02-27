@@ -6,9 +6,15 @@ Caldera Forms supports PHP 5.6 or later.
 
 ## Git Workflow
 * All commits should have a commit message that mentions an issue. (Include issue number in commit title #<issue-number>)
-* All commits should be made to a branch that is branched off of develop.
-** Name branch `feature/<issue-number>` where `<issue-number>` is the issue number.
-* We sometimes use a project branch for large [projects](https://github.com/CalderaWP/Caldera-Forms/projects)
+* All commits should be made to a branch that is branched off of develop. There are two excpetions listed below.
+	* The branch sould be named for the issue, using the form `feature/<issue-number>` where `<issue-number>` is the issue number.
+* We sometimes use a project branch for large [projects](https://github.com/CalderaWP/Caldera-Forms/projects).
+	* The same branch naming rules apply. 
+	* Work for a feature or bug fix in a project is submitted as PR against the project branch.
+* When develop branch is being used for a major release, and a minor release must be developed, we use branch `develop-minor`.
+	* The same branch naming rules apply. 
+	* Work for a feature or bug fix in a minor release is submitted as PR against the develop-minor branch.
+	* After develop-minor is merged to master, then it will need to be merged to develop.
 * If a pull request is submitted against master branch, we will attempt to merge to develop.
 	* Please __do not submit pull requests against the master branch!__
 

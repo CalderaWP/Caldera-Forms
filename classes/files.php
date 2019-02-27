@@ -37,6 +37,7 @@ class Caldera_Forms_Files{
             'private' => false,
             'field_id' => null,
             'form_id' => null,
+			'transient_id' => null,
         ));
         if( true == $args[ 'private' ] && ! empty( $args[ 'field_id' ] ) && ! empty( $args[ 'form_id' ] )){
             $private = true;
@@ -44,14 +45,8 @@ class Caldera_Forms_Files{
             $private = false;
         }
 
-        if( $private ){
-            wp_schedule_single_event( time() + HOUR_IN_SECONDS, self::CRON_ACTION, array(
-                $args[ 'field_id' ],
-                $args[ 'form_id' ]
-            ) );
-        }
 
-	    self::add_upload_filter( $args[ 'field_id' ],  $args[ 'form_id' ], $private );
+	    self::add_upload_filter( $args[ 'field_id' ],  $args[ 'form_id' ], $private, $args[ 'transient_id' ] );
 
         $upload = wp_handle_upload($file, array( 'test_form' => false, 'foo' => 'bnar' ) );
 
@@ -59,7 +54,9 @@ class Caldera_Forms_Files{
             self::remove_upload_filter();
         }
 
-        return $upload;
+		self::schedule_delete($args, $private, $upload);
+
+		return $upload;
 
     }
 
@@ -113,10 +110,12 @@ class Caldera_Forms_Files{
      *
      * @param string $field_id The field ID for file field
      * @param string $form_id The form ID
+	 * @param bool $private If is private
+	 * @param null|string $transient_id ID of transient for file. Optional.
      */
-    public static function add_upload_filter( $field_id , $form_id, $private = true ){
+    public static function add_upload_filter( $field_id , $form_id, $private = true, $transient_id = null ){
 	    if ( $private ) {
-		    self::$dir = self::secret_dir( $field_id, $form_id );
+		    self::$dir = self::secret_dir( $field_id, $form_id, $transient_id);
 	    }else{
 		    /**
 		     * Filter directory for uploaded files
@@ -128,7 +127,7 @@ class Caldera_Forms_Files{
 		     * @param string|null Directory
 		     * @param string $field_id Field ID
 		     * @param string $form_id Form ID
-		     */
+			 */
 	    	$dir = apply_filters( 'caldera_forms_upload_directory', null, $field_id, $form_id );
 		    if( null != $dir ){
 		    	self::$dir = $dir;
@@ -181,11 +180,12 @@ class Caldera_Forms_Files{
      *
      * @param string $field_id The field ID for file field
      * @param string $form_id The form ID
-     *
-     * @return string
+	 * @param null|string $transient_id ID of transient for file. Optional.
+	 *
+	 * @return string
      */
-    protected static function secret_dir( $field_id, $form_id ){
-        return md5( $field_id . $form_id . NONCE_SALT );
+    protected static function secret_dir( $field_id, $form_id, $transient_id = null ){
+        return md5( $field_id . $form_id . NONCE_SALT . (string) $transient_id );
 
     }
 
@@ -275,17 +275,71 @@ class Caldera_Forms_Files{
 	 */
     public static function is_private( array  $field ){
 
-    	if( Caldera_Forms_Field_Util::is_file_field( $field ) ) {
-		    if( isset( $field[ 'config']['media_lib'] ) && true == $field['config']['media_lib'] ){
-		    	return false;
-		    }else{
-		    	return true;
-		    }
-
-	    }
-
-	    return true;
+    	return Caldera_Forms_Field_Util::is_file_field( $field ) && ! self::should_add_to_media_library($field);
     }
+
+
+	/**
+	 * Check if a file field is "persistent"
+	 *
+	 * If true, file should be retained on server.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param array $field Field config
+	 *
+	 * @return bool
+	 */
+	public static function is_persistent(array $field ){
+		return self::should_add_to_media_library($field) || ! empty( $field['config']['persistent']);
+	}
+
+	/**
+	 * Get max size for file field
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param array $field Field config
+	 *
+	 * @return int
+	 */
+	public static function get_max_upload_size( array $field)
+	{
+		return ! empty( $field[ 'config']['max_upload'] ) ? absint( $field[ 'config']['max_upload']) : 0;
+	}
+
+	/**
+	 * Check if a file is too large to upload
+	 *
+	 * @since 1.8.0
+	 *
+	 * Returns false if no max upload size set.
+	 * Returns true if max upload size option is set and file is larger than limit
+	 *
+	 * @param array $field Field config
+	 * @param string $file File to check size against
+	 *
+	 * @return bool
+	 */
+	public static function is_file_too_large( array  $field, $file )
+	{
+
+		return 0 !== self::get_max_upload_size($field) && self::get_max_upload_size($field) < $file['size'];
+
+	}
+	/**
+	 * Check if a file field should upload to media library.
+	 **
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param array $field Field config
+	 *
+	 * @return bool
+	 */
+	public static function should_add_to_media_library(array $field ){
+		return isset( $field[ 'config']['media_lib'] ) && true == $field['config']['media_lib'];
+	}
 
 	/**
 	 * Get the callback function for file uploads
@@ -345,5 +399,31 @@ class Caldera_Forms_Files{
             \calderawp\calderaforms\cf2\Fields\FieldTypes\FileFieldType::getType()
         );
     }
+
+	/**
+	 * Schedule file to be deleted as soon as possible
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param string $field_id ID of field
+	 * @param string $form_id ID of form
+	 * @param string $file Path to file to delete.
+	 *
+	 * @return bool
+	 */
+	public static function schedule_delete($field_id, $form_id, $file )
+	{
+		$form = Caldera_Forms_Forms::get_form($form_id);
+		if ( is_array($form) ) {
+			$field = Caldera_Forms_Field_Util::get_field($field_id, $form);
+			if ( is_array($field) && !self::is_persistent($field) ) {
+				caldera_forms_schedule_job(new \calderawp\calderaforms\cf2\Jobs\DeleteFileJob($file));
+				return true;
+			}
+		}
+
+		return false;
+
+	}
 
 }

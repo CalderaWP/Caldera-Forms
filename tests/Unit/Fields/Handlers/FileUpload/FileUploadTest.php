@@ -79,4 +79,6 @@ class FileUploadTest extends TestCase
 		$this->assertTrue(in_array('jpeg', $handler->getAllowedTypes()));
 
 	}
+
+
 }

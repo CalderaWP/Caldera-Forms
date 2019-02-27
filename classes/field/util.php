@@ -672,7 +672,8 @@ class Caldera_Forms_Field_Util {
     }
 
     /**
-     *
+     * Is this field a cf2 field type?
+	 *
      * @since 1.8.0
      *
      * @param string $field_type
@@ -684,11 +685,12 @@ class Caldera_Forms_Field_Util {
     }
 
     /**
-     *
+     * Generate a field control ID for file fields
+	 *
      * @since 1.8.0
      *
-     * @param array $field
-     * @param array $form
+	 * @param array $field Field config
+	 * @param array $form Form config
      *
      * @return string
      */
@@ -706,4 +708,6 @@ class Caldera_Forms_Field_Util {
         do_action( 'caldera_forms_file_uniqid', $uniqu_code, $field, $form );
         return $uniqu_code;
     }
+
+
 }
