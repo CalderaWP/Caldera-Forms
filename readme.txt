@@ -791,8 +791,8 @@ This could also be a sign of a more serious issue on your server, but is probabl
 4. **Powerful Conditional Logic** - Hide, show and disable fields based on user input!  Don't pay for conditional logic!
 5. **Go Further With Form Processors** - Auto-responders, conditional recipients, redirects are included! Go further with our add-ons!
 
-
 == Changelog ==
+
 = Caldera Forms 1.8.0 (February 27, 2019) cf2 taste. =
 See: [https://calderaforms.com/updates/caldera-forms-1-8-0](https://calderaforms.com/updates/caldera-forms-1-8-0?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-0)
 * ADDED: Filter for forms rturned by Rest API ( 'caldera_forms_api_prepare_form', $form, $request ) Doc =>
