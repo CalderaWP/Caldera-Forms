@@ -3,7 +3,7 @@ Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
 Tags: form, contact form, forms, form creator, form manager, mailchimp, paypal, stripe, login, payment, forms manager, forms creation
 Requires at least: 4.7
 Tested up to: 5.1
-Stable tag: 1.8.1-alpha.1
+Stable tag: 1.8.1
 License: GPLv2
 Requires PHP: 5.6
 
@@ -792,6 +792,13 @@ This could also be a sign of a more serious issue on your server, but is probabl
 5. **Go Further With Form Processors** - Auto-responders, conditional recipients, redirects are included! Go further with our add-ons!
 
 == Changelog ==
+
+= Caldera Forms 1.8.1 (February 28, 2019) Improved options in fields and fixed js conflicts =
+See: [https://calderaforms.com/updates/caldera-forms-1-8-1](https://calderaforms.com/updates/caldera-forms-1-8-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-1)
+* FIXED: JavaScript error on form submission in Firefox, and possibly other browsers.
+* FIXED: Regenerated translation pot file.
+* FIXED: Remove forced 'checked' attribute value for radio field types.
+* FIXED: Checkbox, dropdown, and autocomplete field types could not have disabled options.
 
 = Caldera Forms 1.8.0 (February 27, 2019) cf2 taste. =
 See: [https://calderaforms.com/updates/caldera-forms-1-8-0](https://calderaforms.com/updates/caldera-forms-1-8-0?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-0)
