@@ -136,11 +136,9 @@
     {
       "formId" : "CF5bcb71a2d27bf",
       "pageSlug": "conditionals-fancy-multi-page"
-<<<<<<< HEAD
     }, {
       "formId" : "CF5be31da4beff7",
       "pageSlug": "date-validation-2747"
-=======
     },
     {
       "formId" : "CF5bc8e4db50622",
@@ -151,7 +149,6 @@
     },{
       "formId" : "CF5bee3162ab0b2",
       "pageSlug": "cf2-file-2-not-required"
->>>>>>> feature/2766
     }
   ]
 }
