@@ -42,9 +42,12 @@ $attr_string =  caldera_forms_field_attributes( $attrs, $field, $form );
 					if ( ! isset( $option[ 'value' ] ) ) {
 						$option[ 'value' ] = $option[ 'label' ];
 					}
+					if ( ! empty( $option['disabled'] ) ) {
+						$disabled[$option_key] = true;
+					}
 
 					?>
-					<option value="<?php echo esc_attr( $option[ 'value' ] ); ?>" <?php if ( $field_value == $option[ 'value' ] ){ ?>selected="selected"<?php } ?> data-calc-value="<?php echo esc_attr( Caldera_Forms_Field_Util::get_option_calculation_value( $option, $field, $form ) ); ?>" >
+					<option value="<?php echo esc_attr( $option[ 'value' ] ); ?>" <?php if ( $field_value == $option[ 'value' ] ){ ?>selected="selected"<?php } ?> data-calc-value="<?php echo esc_attr( Caldera_Forms_Field_Util::get_option_calculation_value( $option, $field, $form ) ); ?>" <?php if ( isset( $disabled[$option_key] ) &&  $disabled[$option_key] === true ) { ?>disabled<?php } ?>>
 						<?php echo esc_html( $option[ 'label' ] ); ?>
 					</option>
 					<?php

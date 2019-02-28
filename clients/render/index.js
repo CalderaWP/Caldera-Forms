@@ -69,7 +69,7 @@ domReady(function () {
 
 		jQuery(document).on('cf.ajax.request', (event, obj) => {
 			//Compare the event form id with the component form id
-			if(event.currentTarget.activeElement.form.id !== idAttr){
+			if(!obj.hasOwnProperty('formIdAttr') || obj.formIdAttr !== idAttr){
 				return;
 			}
 			shouldBeValidating = true;
