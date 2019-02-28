@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.8.0-alpha.1 - 2019-02-18 */var resBaldrickTriggers;
+/*! GENERATED SOURCE FILE caldera-forms - v1.8.0 - 2019-02-26 */var resBaldrickTriggers;
 
 jQuery(function($){
 	function fieldErrors(fields, $form, $notice) {
@@ -1119,25 +1119,24 @@ function CFState(formId, $ ){
 		} else {
 			$field = $('.' + id);
 			if ($field.length) {
+				//Rebind checkbox options when the checkbow field is unhidden
+				if( 'object' == typeof  $field  ){
+					var val = [];
+					var allSums = 0;
+					$field.each(function ( i, el ) {
+						var $this = $(el);
+						var sum = 0;
+						if ($this.prop('checked')) {
+							sum += parseFloat(findCalcVal($this));
+							allSums += sum;
+							val.push($this.val());
+						}
+						calcVals[id] = allSums;
+					});
+				}
 
-                                //Rebind checkbox options when the checkbow field is unhidden
-                                    if( 'object' == typeof  $field  ){
-                                        var val = [];
-                                        var allSums = 0;
-                                        $field.each(function ( i, el ) {
-                                            var $this = $(el);
-                                            var sum = 0;
-                                            if ($this.prop('checked')) {
-                                                sum += parseFloat(findCalcVal($this));
-                                                allSums += sum;
-                                                val.push($this.val());
-                                            }
-                                            calcVals[id] = allSums;
-                                        });
-                                    }
 
-
-                                    $field.on('change', function () {
+				$field.on('change', function () {
 					var val = [];
 					var $el = $(this),
 					 	id,
@@ -1226,7 +1225,7 @@ function CFState(formId, $ ){
 	function bindCalcField(id,config) {
 		fieldVals[id] = 0;
 		calcVals[id] = 0;
-		self.events().subscribe(id,function (value,id) {
+		self.events().subscribe(id,function (id,value) {
 			calcVals[id] = value;
 		});
 	}
@@ -7361,7 +7360,7 @@ var cf_jsfields_init, cf_presubmit;
 			window = window || {};
 			var cf2 = 'object' === typeof window.cf2 && 'object' === typeof window.cf2[form_id] ? window.cf2[form_id] : null;
 			function getCf2Field(fieldIdAttr,formIdAttr){
-				if( ! cf2 ){
+				if( ! cf2 || ! cf2.fields ){
 					return false;
 				}
 
@@ -7395,7 +7394,7 @@ var cf_jsfields_init, cf_presubmit;
 					continue;
 				}
 
-				valid =  validateField($this_field,form_id,valid);
+				valid = validateField($this_field,form_id,valid);
 
 				if (true === valid) {
 					continue;
