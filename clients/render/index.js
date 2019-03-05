@@ -2,8 +2,6 @@
 import './index.scss';
 import {CalderaFormsRender} from "./components/CalderaFormsRender";
 
-import React from 'react';
-import ReactDOM from "react-dom";
 import domReady from '@wordpress/dom-ready';
 import {
 	hashFile,
@@ -11,10 +9,6 @@ import {
 	captureRenderComponentRef
 } from "./util";
 import { handleFileUploadResponse, handleFileUploadError, hashAndUpload, processFiles, processFileField, processFormSubmit } from './fileUploads';
-
-Object.defineProperty(global.wp, 'element', {
-	get: () => React
-});
 
 domReady(function () {
 	jQuery(document).on('cf.form.init', (e, obj) => {
@@ -117,7 +111,7 @@ domReady(function () {
 		 * @type {*}
 		 */
 		let theComponent = '';
-		ReactDOM.render(
+		wp.element.render(
 			<CalderaFormsRender
 				cfState={state}
 				formId={formId}
