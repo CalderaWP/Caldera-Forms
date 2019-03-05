@@ -8,7 +8,7 @@ $parsley_req = 'data-parsley-required="true" data-parsley-group="' . esc_attr( $
 
 $privacy_page_url = caldera_forms_privacy_policy_page_url();
 
-if( $field['config']['title_attr'] ) {
+if( !empty( $field['config']['title_attr'] ) ) {
     $title_attribute = $field['config']['title_attr'];
 }else{
     $title_attribute = __('Privacy Policy Page', 'caldera-forms');
