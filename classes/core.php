@@ -4148,7 +4148,11 @@ class Caldera_Forms
 			return;
 		}
 
-
+		$forms = Caldera_Forms_Forms::get_forms();
+		if( !empty( $forms ) && !array_key_exists( $form['ID'], $forms)){
+			return;
+		}
+		
 		// is this form allowed to render ( check state )
 		if (!empty($form['form_draft'])) {
 			if (!isset($_GET['cf_preview']) || $_GET['cf_preview'] != $form['ID']) {
