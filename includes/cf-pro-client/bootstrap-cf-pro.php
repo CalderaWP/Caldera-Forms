@@ -259,8 +259,7 @@ if ( !function_exists('caldera_forms_safe_explode') ) {
 function caldera_forms_pro_compare_to_saved_keys($public, $token)
 {
 	$settings = container::get_instance()->get_settings();
-	return hash_equals($public,
-			$settings->get_api_keys()->get_public()) && hash_equals($settings->get_api_keys()->get_token(), $token);
+	return hash_equals($public, $settings->get_api_keys()->get_public()) && hash_equals($settings->get_api_keys()->get_token(), $token);
 }
 
 /**

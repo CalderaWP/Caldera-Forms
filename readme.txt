@@ -3,7 +3,7 @@ Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
 Tags: form, contact form, forms, form creator, form manager, mailchimp, paypal, stripe, login, payment, forms manager, forms creation
 Requires at least: 4.7
 Tested up to: 5.1
-Stable tag: 1.8.2-rc.3
+Stable tag: 1.8.2
 License: GPLv2
 Requires PHP: 5.6
 
@@ -794,6 +794,7 @@ This could also be a sign of a more serious issue on your server, but is probabl
 == Changelog ==
 = Caldera Forms 1.8.2 (March 7, 2019) It's Snowing In Pittsburgh =
 See: [https://calderaforms.com/updates/caldera-forms-1-8-2](https://calderaforms.com/updates/caldera-forms-1-8-2?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-2)
+* SECURITY: Patch for issue affecting CF Pro API. Does not affect most users, [see post for details](https://calderaforms.com/updates/caldera-forms-1-8-2?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-2)see post for details.
 * FIXED: Javascript error when Caldera Forms and WordPress SEO by Yoast or Jetpack's map module were used toghether.
 * FIXED: Conditionals were missing when variable pricing form template was used.
 * FIXED: Prevent form from attempting to render if it doesn't exist, before that triggers a PHP notice.
@@ -2145,3 +2146,8 @@ Security release related to CVE-2018-7747
 
 = 1.6.2 =
 See: https://calderaforms.com/updates/caldera-forms-1-6.2
+
+= 1.8.2 =
+Includes SECURITY fix.
+
+See: https://calderaforms.com/updates/caldera-forms-1-8-2
