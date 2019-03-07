@@ -4,7 +4,7 @@
   Plugin URI: https://CalderaForms.com
   Description: Easy to use, grid based responsive form builder for creating simple to complex forms.
   Author: Caldera Labs
-  Version: 1.8.2-rc.3
+  Version: 1.8.2
   Author URI: http://CalderaLabs.org
   Text Domain: caldera-forms
   GitHub Plugin URI: https://github.com/CalderaWP/caldera-forms
@@ -54,7 +54,7 @@ if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
 } else {
 	define('CFCORE_PATH', plugin_dir_path(__FILE__));
 	define('CFCORE_URL', plugin_dir_url(__FILE__));
-	define( 'CFCORE_VER', '1.8.2-rc.3' );
+	define( 'CFCORE_VER', '1.8.2' );
 	define('CFCORE_EXTEND_URL', 'https://api.calderaforms.com/1.0/');
 	define('CFCORE_BASENAME', plugin_basename(__FILE__));
 
@@ -123,8 +123,8 @@ if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
 
 		/**
 		 * Start cf2 system
-         *
-         * @since 1.8.0
+		 *
+		 * @since 1.8.0
 		 */
 		add_action('caldera_forms_v2_init', 'caldera_forms_v2_container_setup' );
 		caldera_forms_get_v2_container();
@@ -142,8 +142,8 @@ if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
 
 
 	//@see https://github.com/CalderaWP/Caldera-Forms/issues/2855
-    add_filter( 'caldera_forms_pro_log_mode', '__return_false' );
-    add_filter( 'caldera_forms_pro_mail_debug', '__return_false' );
+	add_filter( 'caldera_forms_pro_log_mode', '__return_false' );
+	add_filter( 'caldera_forms_pro_mail_debug', '__return_false' );
 
 
 }
