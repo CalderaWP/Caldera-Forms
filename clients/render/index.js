@@ -62,10 +62,16 @@ domReady(function () {
 
 
 		jQuery(document).on('cf.ajax.request', (event, obj) => {
+			//do not run if component is empty
+			if( ! theComponent ){
+				return;
+			}
+
 			//Compare the event form id with the component form id
 			if(!obj.hasOwnProperty('formIdAttr') || obj.formIdAttr !== idAttr){
 				return;
 			}
+
 			shouldBeValidating = true;
 			const values = theComponent.getAllFieldValues();
 			const cf2 = window.cf2[obj.formIdAttr];
