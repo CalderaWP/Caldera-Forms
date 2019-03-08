@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.8.1-beta.1 - 2019-02-28 */var resBaldrickTriggers;
+/*! GENERATED SOURCE FILE caldera-forms - v1.8.2 - 2019-03-08 */var resBaldrickTriggers;
 
 jQuery(function($){
 	function fieldErrors(fields, $form, $notice) {
@@ -6714,8 +6714,12 @@ function toggle_button_init(id, el){
              };
 
              rangeSliders[field.id].init = init;
-             state.events().subscribe(field.id, function (value) {
-                 $('#' + field.id + '_value').html(value);
+             state.events().subscribe(field.id, function ( eventFieldIdArray, value ) {
+                 if( value.length <= 0 ){
+					 value = field.default;
+                 }
+				 $('#' + field.id + '_value').html( value );
+
              });
 
              if( ! $el.is( ':visible') ){
