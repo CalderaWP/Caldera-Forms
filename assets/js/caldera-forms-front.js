@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.8.2 - 2019-03-11 */var resBaldrickTriggers;
+/*! GENERATED SOURCE FILE caldera-forms - v1.8.1-beta.1 - 2019-02-28 */var resBaldrickTriggers;
 
 jQuery(function($){
 	function fieldErrors(fields, $form, $notice) {
@@ -6421,7 +6421,6 @@ jQuery( document ).ajaxComplete(function() {
 
 
 jQuery(function($){
-
     $('body').on('click', '.cf-toggle-group-buttons a', function(){
 
         var clicked = $(this),
@@ -6445,11 +6444,6 @@ function toggle_button_init(id, el){
     }
 
 }
-
-jQuery(document).on( 'cf.init', function(){
-	toggle_button_init();
-});
-
 /**
  * Dynamic Field Configuration
  *
@@ -6720,12 +6714,8 @@ jQuery(document).on( 'cf.init', function(){
              };
 
              rangeSliders[field.id].init = init;
-             state.events().subscribe(field.id, function ( eventFieldIdArray, value ) {
-                 if( value.length <= 0 ){
-					 value = field.default;
-                 }
-				 $('#' + field.id + '_value').html( value );
-
+             state.events().subscribe(field.id, function (value) {
+                 $('#' + field.id + '_value').html(value);
              });
 
              if( ! $el.is( ':visible') ){
@@ -7897,3 +7887,29 @@ function CalderaFormsJQueryWarning( $form, $, errorStrings ){
 
 	}
 }
+
+/*
+ * Add Validation for phone_better field before a submit or next page button is clicked
+ *
+
+(function( $ ) {
+
+	$('.caldera-grid input[type="submit"], .caldera-grid input[data-page="next"]').click( function( e ) {
+
+		var phone_fields = $('.caldera-grid input[data-type="phone_better"]');
+		if( phone_fields.length > 0 ) {
+
+      phone_fields.each( function( i ){
+
+        if( $.isNumeric( this.value ) === true ){
+        	alert('cool');
+				}
+
+			});
+		}
+
+	});
+
+})( jQuery );
+
+ */

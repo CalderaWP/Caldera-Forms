@@ -2691,7 +2691,6 @@ jQuery( document ).ajaxComplete(function() {
 
 
 jQuery(function($){
-
     $('body').on('click', '.cf-toggle-group-buttons a', function(){
 
         var clicked = $(this),
@@ -2715,7 +2714,3 @@ function toggle_button_init(id, el){
     }
 
 }
-
-jQuery(document).on( 'cf.init', function(){
-	toggle_button_init();
-});
