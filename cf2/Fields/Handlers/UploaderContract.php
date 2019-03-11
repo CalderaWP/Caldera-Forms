@@ -28,7 +28,7 @@ interface UploaderContract
      * @param boolean $private
      * @return void
      */
-    public function addFilter($fieldId, $formId, $private );
+    public function addFilter($fieldId, $formId, $private, $transientId);
 
     /**
      * Remove upload related filters
@@ -38,4 +38,29 @@ interface UploaderContract
      * @return void
      */
     public function removeFilter();
+
+	/**
+	 * Schedule file to be deleted as soon as possible
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param string $fieldId ID of field
+	 * @param string $formId ID of form
+	 * @param string $file Path to file to delete.
+	 *
+	 * @return bool
+	 */
+	public function scheduleFileDelete($fieldId,$formId,$file);
+
+	/**
+	 * Check if file is too large to upload
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param array $field Field config
+	 * @param string $filePath Path to file to check
+	 *
+	 * @return bool
+	 */
+	public function isFileTooLarge(array $field,$filePath);
 }

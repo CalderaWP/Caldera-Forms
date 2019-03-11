@@ -520,7 +520,7 @@ class Caldera_Forms_Field_Util {
 	 */
 	public static function get_option_calculation_value( $option, array $field, array  $form ){
 		$calc_val = 0;
-		if( is_string( $option ) ){
+		if( is_string( $option ) || is_int( $option ) ){
 			if( ! empty( $field[ 'config' ][ 'option' ] ) && array_key_exists( $option, $field[ 'config' ][ 'option' ]  ) ){
 				$option = $field[ 'config' ][ 'option' ][ $option ];
 			}
@@ -672,7 +672,8 @@ class Caldera_Forms_Field_Util {
     }
 
     /**
-     *
+     * Is this field a cf2 field type?
+	 *
      * @since 1.8.0
      *
      * @param string $field_type
@@ -684,11 +685,12 @@ class Caldera_Forms_Field_Util {
     }
 
     /**
-     *
+     * Generate a field control ID for file fields
+	 *
      * @since 1.8.0
      *
-     * @param array $field
-     * @param array $form
+	 * @param array $field Field config
+	 * @param array $form Form config
      *
      * @return string
      */
@@ -706,4 +708,6 @@ class Caldera_Forms_Field_Util {
         do_action( 'caldera_forms_file_uniqid', $uniqu_code, $field, $form );
         return $uniqu_code;
     }
+
+
 }

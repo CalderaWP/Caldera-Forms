@@ -73,6 +73,25 @@ add_filter('caldera_forms_get_form-cf2_file', function ($form) {
                                 'email_identifier' => 0,
                                 'personally_identifying' => 0,
                             ),
+                    ),'testScheduleDelete' =>
+                    array(
+                        'ID' => 'testScheduleDelete',
+                        'type' => 'cf2_file',
+                        'label' => 'testScheduleDelete',
+                        'slug' => 'testScheduleDelete',
+                        'conditions' =>
+                            array(
+                                'type' => '',
+                            ),
+                        'caption' => '',
+                        'config' =>
+                            array(
+                                'custom_class' => '',
+                                'multi_upload_text' => '',
+                                'allowed' => '',
+                                'email_identifier' => 0,
+                                'personally_identifying' => 0,
+                            ),
                     ),
                 'cf2_file_2' =>
                     array(

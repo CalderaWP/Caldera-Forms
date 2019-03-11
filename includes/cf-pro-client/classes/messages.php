@@ -2,6 +2,7 @@
 
 
 namespace calderawp\calderaforms\pro;
+
 use calderawp\calderaforms\pro\exceptions\Exception;
 use calderawp\calderaforms\pro\exceptions\factory;
 
@@ -13,7 +14,8 @@ use calderawp\calderaforms\pro\exceptions\factory;
  *
  * @package calderawp\calderaforms\pro
  */
-class messages {
+class messages
+{
 
 	/***
 	 * @var \wpdb
@@ -34,7 +36,7 @@ class messages {
 	 */
 	protected $types = [
 		'main',
-		'auto'
+		'auto',
 	];
 
 	/**
@@ -42,9 +44,9 @@ class messages {
 	 *
 	 * @param \wpdb $wpdb WPDB object
 	 * @param string $table_name The name of table we are using to store -- SHOULD BE PREFIXED
-
 	 */
-	public function __construct( \wpdb $wpdb, $table_name  ){
+	public function __construct(\wpdb $wpdb, $table_name)
+	{
 		$this->wpdb = $wpdb;
 		$this->table_name = $table_name;
 	}
@@ -63,27 +65,28 @@ class messages {
 	 * @return message
 	 * @throws Exception
 	 */
-	public function create( $cfp_id, $hash, $entry_id = 0, $type = 'main' ){
-		$type = $this->validate_type( $type );
-		$data = array(
-			'cfp_id'   => $cfp_id,
-			'hash'     => $hash,
+	public function create($cfp_id, $hash, $entry_id = 0, $type = 'main')
+	{
+		$type = $this->validate_type($type);
+		$data = [
+			'cfp_id' => $cfp_id,
+			'hash' => $hash,
 			'entry_id' => $entry_id,
-			'type'     => $type
-		);
-		$this->wpdb->insert( $this->table_name, $data, array(
-				'%d',
-				'%s',
-				'%d',
-				'%s'
-			) );
+			'type' => $type,
+		];
+		$this->wpdb->insert($this->table_name, $data, [
+			'%d',
+			'%s',
+			'%d',
+			'%s',
+		]);
 
-		if( is_numeric( $this->wpdb->insert_id ) ){
+		if ( is_numeric($this->wpdb->insert_id) ) {
 			$data[ 'local_id' ] = $this->wpdb->insert_id;
-			return message::from_array( $data );
+			return message::from_array($data);
 		}
 
-		throw New Exception( __( 'Could not store message', 'caldera-forms' ) );
+		throw New Exception(__('Could not store message', 'caldera-forms'));
 
 	}
 
@@ -96,8 +99,9 @@ class messages {
 	 *
 	 * @return string
 	 */
-	protected function validate_type( $type ){
-		if( ! in_array( $type, $this->types ) ){
+	protected function validate_type($type)
+	{
+		if ( !in_array($type, $this->types) ) {
 			return 'main';
 		}
 
@@ -114,15 +118,16 @@ class messages {
 	 *
 	 * @return message|\WP_Error
 	 */
-	public function get_by_remote_id( $id ){
-		try{
-			$message = $this->get_by( 'cfp_id', $id );
+	public function get_by_remote_id($id)
+	{
+		try {
+			$message = $this->get_by('cfp_id', $id);
 			return $message;
-		}catch ( Exception $e ){
-			return $e->log( [
+		} catch ( Exception $e ) {
+			return $e->log([
 				'id' => $id,
-				'method' => __METHOD__
-			] )->to_wp_error();
+				'method' => __METHOD__,
+			])->to_wp_error();
 		}
 	}
 
@@ -135,15 +140,16 @@ class messages {
 	 *
 	 * @return message|\WP_Error
 	 */
-	public function get_by_local_id( $id ){
-		try{
-			$message = $this->get_by( 'ID', $id );
+	public function get_by_local_id($id)
+	{
+		try {
+			$message = $this->get_by('ID', $id);
 			return $message;
-		}catch ( Exception $e ){
-			return $e->log( [
+		} catch ( Exception $e ) {
+			return $e->log([
 				'id' => $id,
-				'method' => __METHOD__
-			] )->to_wp_error();
+				'method' => __METHOD__,
+			])->to_wp_error();
 		}
 	}
 
@@ -154,19 +160,20 @@ class messages {
 	 *
 	 * @param int $id
 	 * @param string $type Optional The message type. Default is 'main'
- 	 *
+	 *
 	 * @return message|\WP_Error
 	 */
-	public function get_by_entry_id( $id, $type = 'main' ){
-		try{
-			$message = $this->get_by( 'entry_id', $id, $type  );
+	public function get_by_entry_id($id, $type = 'main')
+	{
+		try {
+			$message = $this->get_by('entry_id', $id, $type);
 			return $message;
-		}catch ( Exception $e ){
-			return $e->log( [
+		} catch ( Exception $e ) {
+			return $e->log([
 				'id' => $id,
 				'type' => $type,
-				'method' => __METHOD__
-			] )->to_wp_error();
+				'method' => __METHOD__,
+			])->to_wp_error();
 		}
 	}
 
@@ -183,18 +190,19 @@ class messages {
 	 * @return message
 	 * @throws Exception
 	 */
-	protected function get_by( $field, $value, $type = null ){
+	protected function get_by($field, $value, $type = null)
+	{
 		$table = $this->table_name;
-		$sql = sprintf( "SELECT * FROM $table WHERE `%s` = %d", $field, absint( $value ) );
-		if( $type ){
-			$sql .= sprintf( " AND `type` = '%s'", $this->validate_type( $type ) );
+		$sql = sprintf("SELECT * FROM $table WHERE `%s` = %d", $field, absint($value));
+		if ( $type ) {
+			$sql .= sprintf(" AND `type` = '%s'", $this->validate_type($type));
 		}
-		$results = $this->wpdb->get_results(  $sql , ARRAY_A );
-		if( $results ){
-			return message::from_array( $results );
+		$results = $this->wpdb->get_results($sql, ARRAY_A);
+		if ( $results ) {
+			return message::from_array($results);
 		}
 
-		throw new Exception( __( 'Could not find message.', 'caldera-forms' ) );
+		throw new Exception(__('Could not find message.', 'caldera-forms'));
 
 	}
 
@@ -208,10 +216,11 @@ class messages {
 	 *
 	 * @return false|int
 	 */
-	public function delete( $field, $value ){
-		return $this->wpdb->delete( $this->table_name, array(
-			$field => $value
-		));
+	public function delete($field, $value)
+	{
+		return $this->wpdb->delete($this->table_name, [
+			$field => $value,
+		]);
 
 	}
 

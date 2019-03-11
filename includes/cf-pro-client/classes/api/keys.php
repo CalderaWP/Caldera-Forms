@@ -2,6 +2,7 @@
 
 
 namespace calderawp\calderaforms\pro\api;
+
 use calderawp\calderaforms\pro\interfaces\arrayable;
 
 
@@ -9,7 +10,8 @@ use calderawp\calderaforms\pro\interfaces\arrayable;
  * Class keys
  * @package calderawp\calderaforms\pro
  */
-class keys implements arrayable {
+class keys implements arrayable
+{
 
 	/**
 	 * API secret key
@@ -38,9 +40,10 @@ class keys implements arrayable {
 	 * @param string|null $public Optional. Public key
 	 * @param string|null $secret Optional. Secret Key
 	 */
-	public function __construct( $public = null, $secret = null ){
-		$this->set_public( $public );
-		$this->set_secret( $secret );
+	public function __construct($public = null, $secret = null)
+	{
+		$this->set_public($public);
+		$this->set_secret($secret);
 
 	}
 
@@ -51,12 +54,13 @@ class keys implements arrayable {
 	 *
 	 * @return array
 	 */
-	public function toArray(){
-		return array(
+	public function toArray()
+	{
+		return [
 			'token' => $this->get_token(),
 			'public' => $this->get_public(),
 			'secret' => $this->get_secret(),
-		);
+		];
 
 	}
 
@@ -69,13 +73,14 @@ class keys implements arrayable {
 	 *
 	 * @return keys
 	 */
-	public static function fromArray( array  $data = [] ){
+	public static function fromArray(array $data = [])
+	{
 		$keys = new keys();
-		if( ! empty( $data[ 'public' ] ) ){
-			$keys->set_public( $data[ 'public' ] );
+		if ( !empty($data[ 'public' ]) ) {
+			$keys->set_public($data[ 'public' ]);
 		}
-		if( ! empty( $data[ 'secret' ] ) ){
-			$keys->set_secret( $data[ 'secret' ] );
+		if ( !empty($data[ 'secret' ]) ) {
+			$keys->set_secret($data[ 'secret' ]);
 		}
 
 		return $keys;
@@ -88,10 +93,11 @@ class keys implements arrayable {
 	 *
 	 * @return string
 	 */
-	public function get_token(){
-	    return $this->get_public() && $this->get_secret() ?
-		    sha1( $this->get_public() . $this->get_secret() )
-            : false;
+	public function get_token()
+	{
+		return $this->get_public() && $this->get_secret() ?
+			sha1($this->get_public() . $this->get_secret())
+			: false;
 
 	}
 
@@ -102,8 +108,9 @@ class keys implements arrayable {
 	 *
 	 * @return string
 	 */
-	public function get_public(){
-		return apply_filters( 'caldera_forms_pro_get_public_key', $this->public );
+	public function get_public()
+	{
+		return apply_filters('caldera_forms_pro_get_public_key', $this->public);
 
 	}
 
@@ -114,7 +121,8 @@ class keys implements arrayable {
 	 *
 	 * @return keys
 	 */
-	public function set_public( $key ){
+	public function set_public($key)
+	{
 		$this->public = $key;
 		return $this;
 
@@ -127,7 +135,8 @@ class keys implements arrayable {
 	 *
 	 * @return keys
 	 */
-	public function set_secret( $key ){
+	public function set_secret($key)
+	{
 		$this->secret = $key;
 		return $this;
 
@@ -140,8 +149,9 @@ class keys implements arrayable {
 	 *
 	 * @return string
 	 */
-	public function get_secret(){
-		return apply_filters( 'caldera_forms_pro_get_secret_key', $this->secret );
+	public function get_secret()
+	{
+		return apply_filters('caldera_forms_pro_get_secret_key', $this->secret);
 
 	}
 

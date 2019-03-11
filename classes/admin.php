@@ -8,7 +8,6 @@
  * @link
  * @copyright 2014 David Cramer
  */
-
 /**
  * Caldera_Forms Plugin class.
  * @package Caldera_Forms
@@ -1301,9 +1300,25 @@ class Caldera_Forms_Admin {
 			if ( check_admin_referer( 'cf-import', 'cfimporter' ) ) {
 				if ( isset( $_FILES[ 'import_file' ] ) && ! empty( $_FILES[ 'import_file' ][ 'size' ] ) ) {
 					$loc = wp_upload_dir();
+                    $temp_name = $_FILES[ 'import_file' ][ 'tmp_name' ];
+                    $name = $_FILES[ 'import_file' ][ 'name' ];
+					$type_check = wp_check_filetype_and_ext($temp_name,$name, [
+					        'json' => 'application/json',
+                    ]);
+					if( ! $type_check['type'] ){
+						$type_check = wp_check_filetype_and_ext($temp_name,$name, [
+							'json' => 'text/plain',
+						]);
+                    }
 
-					if ( move_uploaded_file( $_FILES[ 'import_file' ][ 'tmp_name' ], $loc[ 'path' ] . '/cf-form-import.json' ) ) {
-						$data = json_decode( file_get_contents( $loc[ 'path' ] . '/cf-form-import.json' ), true );
+					if( ! 'json' === $type_check[ 'ext'] ){
+						wp_die( esc_html__( 'Form could not be imported. File type must be JSON.', 'caldera-forms' ) );
+					}
+
+					$location = $loc[ 'path' ] . '/cf-form-import.json';
+					if ( move_uploaded_file( $temp_name, $location ) ) {
+						$data = json_decode( file_get_contents($location ), true  );
+						unlink($location);
 						if( ! is_array( $data ) ){
 							wp_die( esc_html__( 'File is not a valid Caldera Form Import', 'caldera-forms' ) );
 						}
@@ -1465,7 +1480,8 @@ class Caldera_Forms_Admin {
 			WHERE `entry`.`form_id` = %s
 			" . $filter . "
 			AND `entry`.`status` = 'active'
-			ORDER BY `entry`.`datestamp` DESC;", $_GET['export']));
+			ORDER BY `entry`.`datestamp` DESC;", Caldera_Forms_Sanitize::sanitize($_GET['export'])));
+
 
 			$data = array();
 
@@ -1479,7 +1495,10 @@ class Caldera_Forms_Admin {
 				}
 
 				foreach ($structure as $slug => $field_id) {
-					$data[$entry->_entryid][$slug] = ( isset( $submission['data'][$field_id]['value'] ) ? $submission['data'][$field_id]['value'] : null );
+					$data[$entry->_entryid][$slug] = (
+					        isset( $submission['data'][$field_id]['view'] ) ? $submission['data'][$field_id]['view']
+                                : ( isset( $submission['data'][$field_id]['value'] ) ? $submission['data'][$field_id]['value'] : null )
+                    );
 				}
 
 			}
@@ -1527,6 +1546,9 @@ class Caldera_Forms_Admin {
 								if( is_array( $row_part ) && isset( $row_part['label'] ) ){
 									$subs[] = $row_part['value'];
 								}else{
+									if( is_string( $row_part ) && '{"opt' == substr( $row_part, 0, 5 ) ){
+									    continue;
+									}
 									$subs[] = $row_part;
 								}
 							}
@@ -2109,7 +2131,7 @@ class Caldera_Forms_Admin {
                 'editor-grid'
             ]
         ]);
-        
+
     }
 
 
