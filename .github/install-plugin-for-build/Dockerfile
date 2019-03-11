@@ -1,5 +1,15 @@
-# Should find a smaller image
-FROM awhalen/docker-php-composer-node:latest
+FROM thecodingmachine/php:7.3-v2-fpm
+
+#add npm
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends gnupg && \
+    curl -sL https://deb.nodesource.com/setup_10.x | bash - && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends nodejs && \
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends yarn
 
 # Labels for GitHub to read your action
 LABEL "com.github.actions.name"="Install plugins for build"
