@@ -62,8 +62,9 @@ domReady(function () {
 
 
 		jQuery(document).on('cf.ajax.request', (event, obj) => {
+
 			//do not run if component is empty
-			if( ! theComponent ){
+			if( theComponent.props.fieldsToControl.length <= 0 ){
 				return;
 			}
 
