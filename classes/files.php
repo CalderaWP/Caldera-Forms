@@ -226,6 +226,10 @@ class Caldera_Forms_Files{
         $fields = Caldera_Forms_Forms::get_fields( $form, false );
         foreach( $fields as $id => $field ){
             if( Caldera_Forms_Field_Util::is_file_field( $field, $form ) ){
+                if ((bool)$field['config']['persistent']) {
+                    return;
+                };
+
                 self::delete_uploaded_files( $field[ 'ID' ], $form_id );
             }
 

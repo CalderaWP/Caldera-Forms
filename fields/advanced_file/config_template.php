@@ -22,6 +22,15 @@ printf( '<div class="error"><p>%1s</p></div>',
 </div>
 
 <div class="caldera-config-group">
+    <label role="presentation"></label>
+    <div class="caldera-config-field">
+        <label for="{{_id}}_persistent"><input id="{{_id}}_persistent" type="checkbox" class="field-config" name="{{_name}}[persistent]" value="1" {{#if persistent}}checked="checked"{{/if}}>
+			<?php echo esc_html__('Store file on server', 'caldera-forms'); ?>
+        </label>
+    </div>
+</div>
+
+<div class="caldera-config-group">
 	<label role="presentation"></label>
 	<div class="caldera-config-field">
 		<label for="{{_id}}_media_library"><input id="{{_id}}_media_library" type="checkbox" class="field-config" name="{{_name}}[media_lib]" value="1" {{#if media_lib}}checked="checked"{{/if}}>
