@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 docker-compose run --rm cli wp plugin activate caldera-forms
-docker-compose run --rm cli wp plugin activate gutenberg
 exit 0;
 # Install test form importer/Ghost Inspector runner
 docker-compose run --rm cli wp plugin activate ghost-runner/plugin

@@ -3,7 +3,7 @@ Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
 Tags: form, contact form, forms, form creator, form manager, mailchimp, paypal, stripe, login, payment, forms manager, forms creation
 Requires at least: 4.7
 Tested up to: 5.1
-Stable tag: 1.8.0-rc.1
+Stable tag: 1.8.2
 License: GPLv2
 Requires PHP: 5.6
 
@@ -791,11 +791,27 @@ This could also be a sign of a more serious issue on your server, but is probabl
 4. **Powerful Conditional Logic** - Hide, show and disable fields based on user input!  Don't pay for conditional logic!
 5. **Go Further With Form Processors** - Auto-responders, conditional recipients, redirects are included! Go further with our add-ons!
 
-
 == Changelog ==
+= Caldera Forms 1.8.2 (March 7, 2019) It's Snowing In Pittsburgh =
+See: [https://calderaforms.com/updates/caldera-forms-1-8-2](https://calderaforms.com/updates/caldera-forms-1-8-2?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-2)
+* SECURITY: Patch for issue affecting CF Pro API. Does not affect most users, [see post for details](https://calderaforms.com/updates/caldera-forms-1-8-2?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-2)see post for details.
+* FIXED: Javascript error when Caldera Forms and WordPress SEO by Yoast or Jetpack's map module were used toghether.
+* FIXED: Conditionals were missing when variable pricing form template was used.
+* FIXED: Prevent form from attempting to render if it doesn't exist, before that triggers a PHP notice.
+* FIXED: Consent field, with some settings, created a PHP notice.
+* FIXED: Datepicker did not look functional on some devices.
+* FIXED: Rangeslider fields, when used in calculations, caused UI lags.
+
+= Caldera Forms 1.8.1 (February 28, 2019) Improved options in fields and fixed js conflicts =
+See: [https://calderaforms.com/updates/caldera-forms-1-8-1](https://calderaforms.com/updates/caldera-forms-1-8-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-1)
+* FIXED: JavaScript error on form submission in Firefox, and possibly other browsers.
+* FIXED: Regenerated translation pot file.
+* FIXED: Remove forced 'checked' attribute value for radio field types.
+* FIXED: Checkbox, dropdown, and autocomplete field types could not have disabled options.
+
 = Caldera Forms 1.8.0 (February 27, 2019) cf2 taste. =
 See: [https://calderaforms.com/updates/caldera-forms-1-8-0](https://calderaforms.com/updates/caldera-forms-1-8-0?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-0)
-* ADDED: Filter for forms rturned by Rest API ( 'caldera_forms_api_prepare_form', $form, $request ) Doc =>
+* ADDED: Filter for forms returned by Rest API ( 'caldera_forms_api_prepare_form', $form, $request )
 * ADDED: New Advanced File Field ( Added support for drag-and-drop, image previews, Max File Upload size )
 * ADDED: job manager for the Transients API ( delete transients via job manager )
 * FIXED: Uncaught ReferenceError: ceil is not defined, allows ceil and tan to be used in manual formulas of calculations field
@@ -2130,3 +2146,8 @@ Security release related to CVE-2018-7747
 
 = 1.6.2 =
 See: https://calderaforms.com/updates/caldera-forms-1-6.2
+
+= 1.8.2 =
+Includes SECURITY fix.
+
+See: https://calderaforms.com/updates/caldera-forms-1-8-2
