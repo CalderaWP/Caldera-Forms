@@ -275,6 +275,7 @@ class Caldera_Forms_Render_Assets {
 			'ajax'           => self::make_url( 'ajax-core' ),
 			'field-config'   => self::make_url( 'field-config' ),
 			'field'          => self::make_url( 'fields' ),
+			'fields'          => self::make_url( 'fields' ),
 			'conditionals'   => self::make_url( 'conditionals' ),
 			'validator-i18n' => null,
 			'validator'      => self::make_url( 'parsley' ),
