@@ -63,11 +63,15 @@ domReady(function () {
 
 		jQuery(document).on('cf.ajax.request', (event, obj) => {
 
-			//do not run if component is empty
-			if( theComponent.props.fieldsToControl.length <= 0 ){
+			//do not run if component don't have fieldsToControl
+			if( ! theComponent ){
 				return;
+			} else if( typeof theComponent === "object" ){
+				if(theComponent.props.fieldsToControl.length <= 0){
+					return;
+				}
 			}
-
+			
 			//Compare the event form id with the component form id
 			if(!obj.hasOwnProperty('formIdAttr') || obj.formIdAttr !== idAttr){
 				return;
