@@ -1,4 +1,4 @@
-FROM thecodingmachine/php:7.3-v2-fpm
+FROM composer:latest
 
 #add npm
 RUN apt-get update && \
