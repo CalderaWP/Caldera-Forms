@@ -1991,7 +1991,7 @@ class Caldera_Forms
 			'logout_url',
 			'register_url',
 			'lostpassword_url',
-			'referrer_url'
+			'referer_url'
 
 		);
 
