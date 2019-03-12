@@ -63,13 +63,13 @@ domReady(function () {
 
 		jQuery(document).on('cf.ajax.request', (event, obj) => {
 
-			//do not run if component don't have fieldsToControl
-			if( ! theComponent ){
+			//do not run if component don't have values
+			if( ! theComponent ||
+				'object' === typeof theComponent &&
+				'object' === typeof theComponent.getAllFieldValues() &&
+				Object.keys(theComponent.getAllFieldValues()).length <= 0
+			){
 				return;
-			} else if( typeof theComponent === "object" ){
-				if(theComponent.props.fieldsToControl.length <= 0){
-					return;
-				}
 			}
 			
 			//Compare the event form id with the component form id
