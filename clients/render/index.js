@@ -23,7 +23,6 @@ domReady(function () {
 			window.cf2 = {};
 		}
 
-
 		//Build configurations
 		document.querySelectorAll('.cf2-field-wrapper').forEach(function (fieldElement) {
 			const fieldIdAttr = fieldElement.getAttribute('data-field-id');
