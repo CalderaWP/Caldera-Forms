@@ -16,5 +16,5 @@ action "Composer install" {
 
 action "ZIP" {
   needs = ["Composer install"]
-  uses = "./generate-zip
+  uses = "./generate-zip"
 }
