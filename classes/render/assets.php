@@ -849,11 +849,35 @@ class Caldera_Forms_Render_Assets
 			 *
 			 * @since 1.8.3
 			 *
-			 * @param bool $use_footer Print strings in footer. Defautls to false
+			 * @param bool $use_footer Print strings in footer. Defaults to false
 			 * @param string $locale Current local
 			 */
-			if (apply_filters('caldera_forms_print_translation_strings_in_footer', false,$locale)) {
-				$script .= '<script>' . file_get_contents(self::get_validator_locale_url($locale)) . '</script>';
+			if (apply_filters('caldera_forms_print_translation_strings_in_footer', true,$locale)) {
+				wp_localize_script(self::make_slug('validator'), 'CF_VALIDATOR_STRINGS', [
+					'defaultMessage' => __( "This value seems to be invalid.", 'caldera-forms' ),
+					'type' => [
+						'email' => __("This value should be a valid email.", 'caldera-forms' ),
+						'url' => __("This value should be a valid url.", 'caldera-forms' ),
+						'number' => __("This value should be a valid number.", 'caldera-forms' ),
+						'integer' => __("This value should be a valid integer.", 'caldera-forms' ),
+						'digits' => __("This value should be digits.", 'caldera-forms' ),
+						'alphanum' => __("This value should be alphanumeric.", 'caldera-forms' ),
+					],
+					'notblank' => __("This value should not be blank.", 'caldera-forms' ),
+					'required' => __("This value is required.", 'caldera-forms' ),
+					'pattern' => __("This value seems to be invalid.", 'caldera-forms' ),
+					'min' =>__( "This value should be greater than or equal to %s.", 'caldera-forms' ),
+					'max' => __("This value should be lower than or equal to %s.", 'caldera-forms' ),
+					'range' =>__( "This value should be between %s and %s.", 'caldera-forms' ),
+					'minlength' => __("This value is too short. It should have %s characters or more.", 'caldera-forms' ),
+					'maxlength' => __("This value is too long. It should have %s characters or fewer.", 'caldera-forms' ),
+					'length' => __("This value length is invalid. It should be between %s and %s characters long.", 'caldera-forms' ),
+					'mincheck' => __("You must select at least %s choices.", 'caldera-forms' ),
+					'maxcheck' => __("You must select %s choices or fewer.", 'caldera-forms' ),
+					'check' => __("You must select between %s and %s choices.", 'caldera-forms' ),
+					'equalto' => __("This value should be the same.", 'caldera-forms' ),
+				]);
+
 				wp_dequeue_script( self::make_slug( 'validator-i18n' ) );
 			}
 			$script .= "<script> setTimeout(function(){window.Parsley.setLocale('$code'); }, 2000 );</script>";
