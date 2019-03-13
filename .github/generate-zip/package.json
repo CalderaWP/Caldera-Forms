@@ -1,0 +1,16 @@
+{
+  "name": "generate-zip",
+  "private": true,
+  "main": "entrypoint.js",
+  "dependencies": {
+    "actions-toolkit": "^1.5.0",
+    "fs-extra": "^7.0.1",
+    "ncp": "^2.0.0",
+    "path": "^0.12.7",
+    "rimraf": "^2.6.3",
+    "zip-folder": "^1.0.0"
+  },
+  "scripts": {
+    "zip": "node entrypoint.js"
+  }
+}

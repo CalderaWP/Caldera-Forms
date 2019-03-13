@@ -24,3 +24,8 @@ wp-test-case
 
 #https://getcomposer.org/doc/faqs/should-i-commit-the-dependencies-in-my-vendor-directory.md
 /vendor/**/.git
+.github/generate-zip/node_modules
+.github/generate-zip/node_modules/
+.github/generate-zip/build
+.github/generate-zip/build/
+.github/generate-zip/caldera-forms.zip
