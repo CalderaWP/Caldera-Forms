@@ -23,7 +23,6 @@ domReady(function () {
 			window.cf2 = {};
 		}
 
-
 		//Build configurations
 		document.querySelectorAll('.cf2-field-wrapper').forEach(function (fieldElement) {
 			const fieldIdAttr = fieldElement.getAttribute('data-field-id');
@@ -62,10 +61,21 @@ domReady(function () {
 
 
 		jQuery(document).on('cf.ajax.request', (event, obj) => {
+
+			//do not run if component don't have values
+			if( ! theComponent ||
+				'object' === typeof theComponent &&
+				'object' === typeof theComponent.getAllFieldValues() &&
+				Object.keys(theComponent.getAllFieldValues()).length <= 0
+			){
+				return;
+			}
+			
 			//Compare the event form id with the component form id
 			if(!obj.hasOwnProperty('formIdAttr') || obj.formIdAttr !== idAttr){
 				return;
 			}
+
 			shouldBeValidating = true;
 			const values = theComponent.getAllFieldValues();
 			const cf2 = window.cf2[obj.formIdAttr];
