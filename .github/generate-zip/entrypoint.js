@@ -12,16 +12,7 @@ const zipFolder = require('zip-folder');
 const fs = require( 'fs-extra' );
 
 
-const clientFiles = [
-	'clients/pro/build/index.min.js',
-	'clients/pro/build/style.min.css',
-	'clients/privacy/build/index.min.js',
-	'clients/privacy/build/style.min.css',
-	'clients/blocks/build/index.min.js',
-	'clients/blocks/build/style.min.css',
-	'clients/render/build/index.min.js',
-	'clients/render/build/style.min.css',
-];
+
 
 const clients = [
 	'pro',
@@ -53,9 +44,6 @@ rimraf(resultPath, () => {
 		filter: (filePath) => {
 
 			const fileName = filePath.substring(sourcePath.length).substring(1);
-			if( -1 < clientFiles.indexOf(fileName) ){
-				return true;
-			}
 			const dirName = fileName.split('/')[0];
 			i++;
 			//console.log(i, `processing ${fileName}`)
@@ -66,7 +54,20 @@ rimraf(resultPath, () => {
 		if (err) {
 			return console.error('ERROR!');
 		}
-		console.log('Directory created!');
+		console.log('Directory created! Copying clients');
+		clients.forEach( client => {
+			[
+				`/clients/${client}/build/index.min.js`,
+				`/clients/${client}/build/style.min.css`
+			].forEach( dir => {
+				console.log( path.join(sourcePath,dir) );
+				if (fs.existsSync(path.join(sourcePath,dir))){
+					fs.copySync(path.join(sourcePath,dir),path.join(resultPath,dir));
+				}
+			});
+
+		});
+		console.log( 'Clients created'  );
 		rimraf(zipPath, () => {
 			zipFolder(resultPath, zipPath, function(err) {
 				if(err) {
