@@ -1,6 +1,6 @@
 workflow "Install and zip" {
   on = "push"
-  resolves = ["ZIP"]
+  resolves = ["UPLOAD_ZIP"]
 }
 
 action "GitHub Action for npm" {
@@ -17,4 +17,9 @@ action "Composer install" {
 action "ZIP" {
   needs = ["Composer install"]
   uses = "./generate-zip"
+}
+
+action "UPLOAD_ZIP" {
+  needs = ["ZIP"]
+  uses = "docker://debian:7-slim"
 }
