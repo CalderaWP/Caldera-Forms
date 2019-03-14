@@ -63,7 +63,8 @@ class RenderFieldTest extends TestCase
 			'fieldLabel' => 'Email',
 			'fieldCaption' => 'Make emails',
 			'fieldPlaceHolder' => '',
-			'isRequired' => 1,
+			'isRequired' => true,
+			'hideLabel'	=> false,
 			'fieldDefault' => '',
 			'fieldValue' => '',
 			'fieldIdAttr' => 'fld_1',
@@ -312,6 +313,23 @@ class RenderFieldTest extends TestCase
 		$this->assertSame(false, $data[ 'isRequired' ]);
 	}
 
+	/**
+	 * @since 1.8.3
+	 *
+	 * @covers \calderawp\calderaforms\cf2\Fields\RenderField::data();
+	 */
+	public function testTrueHideLabel()
+	{
+		$field = $this->fieldForRenderFactory('true_hide_label');
+		$field[ 'type' ] = 'cf2_file';
+		$field[ 'hide_label' ] = true;
+		$formIdAttr = 'cf2_hide_label';
+		$renderer = new RenderField($formIdAttr, $field);
+		$data = $renderer->data();
+
+		$this->assertArrayHasKey('hideLabel', $data);
+		$this->assertSame(true, $data[ 'hideLabel' ]);
+	}
 
 	/**
 	 * @return array
