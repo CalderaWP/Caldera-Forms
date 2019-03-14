@@ -843,7 +843,6 @@ class Caldera_Forms_Render_Assets
 			} else {
 				$code = $locale;
 			}
-			$script = '';
 			/**
 			 * Instead of loading Parsely validator strings via HTTP, print in footer
 			 *
@@ -877,10 +876,12 @@ class Caldera_Forms_Render_Assets
 					'check' => __("You must select between %s and %s choices.", 'caldera-forms' ),
 					'equalto' => __("This value should be the same.", 'caldera-forms' ),
 				]);
-
+				$script = "<script>window.Parsely.addMessages( $code, CF_VALIDATOR_STRINGS ); window.Parsley.setLocale($locale);</script>";
 				wp_dequeue_script( self::make_slug( 'validator-i18n' ) );
+			}else{
+				$script = "<script> setTimeout(function(){window.Parsley.setLocale('$code'); }, 2000 );</script>";
+
 			}
-			$script .= "<script> setTimeout(function(){window.Parsley.setLocale('$code'); }, 2000 );</script>";
 			Caldera_Forms_Render_Util::add_inline_data($script, ['ID' => rand()]);
 			self::enqueue_validator_i18n();
 		}
