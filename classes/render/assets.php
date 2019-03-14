@@ -830,8 +830,18 @@ class Caldera_Forms_Render_Assets
 	 */
 	public static function maybe_validator_i18n($register = true)
 	{
+
 		$locale = get_locale();
-		if ($locale == 'en_US') {
+		/**
+		 * Instead of loading Parsely validator strings via HTTP, print in footer
+		 *
+		 * @since 1.8.3
+		 *
+		 * @param bool $use_footer Print strings in footer. Defaults to false
+		 * @param string $locale Current local
+		 */
+		$print_strings = apply_filters('caldera_forms_print_translation_strings_in_footer', false, $locale);
+		if ($locale == 'en_US'&& ! $print_strings) {
 			return;
 		}
 
@@ -843,15 +853,7 @@ class Caldera_Forms_Render_Assets
 			} else {
 				$code = $locale;
 			}
-			/**
-			 * Instead of loading Parsely validator strings via HTTP, print in footer
-			 *
-			 * @since 1.8.3
-			 *
-			 * @param bool $use_footer Print strings in footer. Defaults to false
-			 * @param string $locale Current local
-			 */
-			if (apply_filters('caldera_forms_print_translation_strings_in_footer', true,$locale)) {
+			if ($print_strings) {
 				wp_localize_script(self::make_slug('validator'), 'CF_VALIDATOR_STRINGS', [
 					'defaultMessage' => __( "This value seems to be invalid.", 'caldera-forms' ),
 					'type' => [
@@ -863,7 +865,7 @@ class Caldera_Forms_Render_Assets
 						'alphanum' => __("This value should be alphanumeric.", 'caldera-forms' ),
 					],
 					'notblank' => __("This value should not be blank.", 'caldera-forms' ),
-					'required' => __("This value is required.", 'caldera-forms' ),
+					'required' => __("This value is required", 'caldera-forms' ),
 					'pattern' => __("This value seems to be invalid.", 'caldera-forms' ),
 					'min' =>__( "This value should be greater than or equal to %s.", 'caldera-forms' ),
 					'max' => __("This value should be lower than or equal to %s.", 'caldera-forms' ),
