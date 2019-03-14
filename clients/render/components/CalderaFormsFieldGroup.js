@@ -22,22 +22,23 @@ export const CalderaFormsFieldGroup = (props) => {
 		fieldId,
 		fieldLabel,
 		fieldCaption,
+		hideLabel,
 		isRequired,
 		fieldPlaceHolder,
 		fieldDefault,
 		fieldValue,
 		fieldIdAttr,
-		isInvalid
+		isInvalid,
+		areValuesValid
 	} = field;
 
 	if (!shouldShow) {
 		return <Fragment/>;
 	}
 
-
 	const hasCaption = field.hasOwnProperty('caption') && field.caption.length;
 	const captionId = `${fieldIdAttr}Caption`;
-	const hasError = isError || hasMessage && message.error;
+	const hasError = isError || hasMessage && message.error || !areValuesValid;
 
 	/**
 	 * Create the inside -- ie the input/select/etc -- of a field.
@@ -55,41 +56,42 @@ export const CalderaFormsFieldGroup = (props) => {
 			case 'file':
 				const fileProps = FileInput.fieldConfigToProps(getFieldConfig(fieldIdAttr));
 
-        let multiUploadText = '';
-        if(fileProps.multiUploadText === false || fileProps.multiUploadText === null){
-          multiUploadText = strings.cf2FileField.defaultButtonText;
-        } else {
-          multiUploadText = fileProps.multiUploadText;
+        		let multiUploadText = '';
+				if(fileProps.multiUploadText === false || fileProps.multiUploadText === null){
+					multiUploadText = strings.cf2FileField.defaultButtonText;
+				} else {
+					multiUploadText = fileProps.multiUploadText;
 				}
 
-        return <FileInput
-					onChange={onChange}
-					field={field}
-					shouldDisable={shouldDisable}
-					isInvalid={isInvalid}
-					describedById={captionId}
-					message={fileProps.message}
-					style={fileProps.style}
-					inputProps={fileProps.inputProps}
-					className={className}
-					accept={fileProps.accept}
-					usePreviews={fileProps.usePreviews}
-					previewHeight={fileProps.previewHeight}
-					previewWidth={fileProps.previewWidth}
-					multiple={fileProps.multiple}
-					multiUploadText={multiUploadText}
-					strings={strings.cf2FileField}
-				/>
+				return <FileInput
+						onChange={onChange}
+						field={field}
+						shouldDisable={shouldDisable}
+						isInvalid={isInvalid}
+						describedById={captionId}
+						message={fileProps.message}
+						style={fileProps.style}
+						inputProps={fileProps.inputProps}
+						className={className}
+						accept={fileProps.accept}
+						usePreviews={fileProps.usePreviews}
+						previewHeight={fileProps.previewHeight}
+						previewWidth={fileProps.previewWidth}
+						multiple={fileProps.multiple}
+						multiUploadText={multiUploadText}
+						strings={strings.cf2FileField}
+						maxFileUploadSize={fileProps.maxFileUploadSize}
+					/>
 			case'text':
 			default:
 				return <Input
-					field={field}
-					onChange={onChange}
-					shouldDisable={shouldDisable}
-					isInvalid={isInvalid}
-					describedById={captionId}
-					className={className}
-				/>
+						field={field}
+						onChange={onChange}
+						shouldDisable={shouldDisable}
+						isInvalid={isInvalid}
+						describedById={captionId}
+						className={className}
+					/>
 
 		}
 	};
@@ -158,17 +160,20 @@ export const CalderaFormsFieldGroup = (props) => {
 	 */
 	return (
 		<div className={className}>
-			<label
-				className={'control-label'}
-				htmlFor={fieldIdAttr}
-				id={`${fieldIdAttr}Label`}
-			>
-				{fieldLabel}
-				{isRequired &&
-					<RequiredIndicator/>
+			{!hideLabel &&
+				<label
+					className={'control-label'}
+					htmlFor={fieldIdAttr}
+					id={`${fieldIdAttr}Label`}
+				>
+					{fieldLabel}
+					{isRequired &&
+						<RequiredIndicator/>
 
-				}
-			</label>
+					}
+				</label>
+			}
+
 			<Inside/>
 
 			{hasCaption &&
@@ -205,6 +210,7 @@ CalderaFormsFieldGroup.propTypes = {
 	field: PropTypes.shape(CalderaFormsFieldPropType),
 	onChange: PropTypes.func.isRequired,
 	shouldShow: PropTypes.bool,
+	hideLabel: PropTypes.bool,
 	shouldDisable: PropTypes.bool,
 	hasMessage: PropTypes.bool,
 	isInvalid: PropTypes.bool,
@@ -226,6 +232,7 @@ CalderaFormsFieldGroup.propTypes = {
 CalderaFormsFieldGroup.defaultProps = {
 	shouldShow: true,
 	shouldDisable: false,
+	hideLabel: false,
 	fieldValue: '',
 	isInvalid: false,
 	message: {

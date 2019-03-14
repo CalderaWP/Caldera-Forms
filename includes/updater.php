@@ -40,7 +40,7 @@ function caldera_forms_db_v2_update(){
 		add_option( '_caldera_forms_forms', $new_registry, false );
 
 		caldera_forms_write_db_flag( 2 );
-		
+
 	}
 
 	//BTW old registry option didn't get deleted because maybe some one reverts...
@@ -90,6 +90,9 @@ function caldera_forms_db_v7_update(){
     }
     delete_option( '_caldera_forms_forms' );
 }
+
+
+
 
 
 /**

@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.8.0-alpha.1 - 2019-01-23 */var resBaldrickTriggers;
+/*! GENERATED SOURCE FILE caldera-forms - v1.8.2 - 2019-03-11 */var resBaldrickTriggers;
 
 jQuery(function($){
 	function fieldErrors(fields, $form, $notice) {
@@ -1119,25 +1119,24 @@ function CFState(formId, $ ){
 		} else {
 			$field = $('.' + id);
 			if ($field.length) {
+				//Rebind checkbox options when the checkbow field is unhidden
+				if( 'object' == typeof  $field  ){
+					var val = [];
+					var allSums = 0;
+					$field.each(function ( i, el ) {
+						var $this = $(el);
+						var sum = 0;
+						if ($this.prop('checked')) {
+							sum += parseFloat(findCalcVal($this));
+							allSums += sum;
+							val.push($this.val());
+						}
+						calcVals[id] = allSums;
+					});
+				}
 
-                                //Rebind checkbox options when the checkbow field is unhidden
-                                    if( 'object' == typeof  $field  ){
-                                        var val = [];
-                                        var allSums = 0;
-                                        $field.each(function ( i, el ) {
-                                            var $this = $(el);
-                                            var sum = 0;
-                                            if ($this.prop('checked')) {
-                                                sum += parseFloat(findCalcVal($this));
-                                                allSums += sum;
-                                                val.push($this.val());
-                                            }
-                                            calcVals[id] = allSums;
-                                        });
-                                    }
 
-
-                                    $field.on('change', function () {
+				$field.on('change', function () {
 					var val = [];
 					var $el = $(this),
 					 	id,
@@ -1226,7 +1225,7 @@ function CFState(formId, $ ){
 	function bindCalcField(id,config) {
 		fieldVals[id] = 0;
 		calcVals[id] = 0;
-		self.events().subscribe(id,function (value,id) {
+		self.events().subscribe(id,function (id,value) {
 			calcVals[id] = value;
 		});
 	}
@@ -6445,6 +6444,12 @@ function toggle_button_init(id, el){
     }
 
 }
+
+jQuery(document).on( 'cf.init', function(){
+	toggle_button_init();
+});
+
+
 /**
  * Dynamic Field Configuration
  *
@@ -6715,8 +6720,12 @@ function toggle_button_init(id, el){
              };
 
              rangeSliders[field.id].init = init;
-             state.events().subscribe(field.id, function (value) {
-                 $('#' + field.id + '_value').html(value);
+             state.events().subscribe(field.id, function ( eventFieldIdArray, value ) {
+                 if( value.length <= 0 ){
+					 value = field.default;
+                 }
+				 $('#' + field.id + '_value').html( value );
+
              });
 
              if( ! $el.is( ':visible') ){
@@ -7343,8 +7352,46 @@ var cf_jsfields_init, cf_presubmit;
 
 		cf_validate_form( form ).destroy();
 
+
 		fields = form.find('[data-field]');
 		form.find('.has-error').removeClass('has-error');
+
+		/**
+		 * Validate a field, possibly using cf2 system
+		 *
+		 * @since 1.8.0
+		 *
+		 * @param $this_field
+		 * @param form_id
+		 * @param valid
+		 * @return {*}
+		 */
+		function validateField($this_field,form_id,valid) {
+			window = window || {};
+			var cf2 = 'object' === typeof window.cf2 && 'object' === typeof window.cf2[form_id] ? window.cf2[form_id] : null;
+			function getCf2Field(fieldIdAttr,formIdAttr){
+				if( ! cf2 || ! cf2.fields ){
+					return false;
+				}
+
+				if( cf2.fields.hasOwnProperty(fieldIdAttr)){
+					return cf2.fields[fieldIdAttr];
+				}
+				return false;
+			}
+
+			var fieldIdAttr = $this_field.attr('id');
+			var cf2Field = getCf2Field(fieldIdAttr, form_id);
+			if (cf2Field) {
+				valid = cf2.component.isFieldValid(fieldIdAttr);
+				if (!valid) {
+					cf2.component.addFieldMessage(fieldIdAttr, ParsleyValidator.getErrorMessage('required'),true);
+				}
+			} else {
+				valid = $this_field.parsley().isValid();
+			}
+			return valid;
+		}
 
 		if( clicked.data('page') !== 'prev' && page >= current_page ){
 			fields =  $('#caldera_form_' + instance + ' [data-formpage="' + current_page + '"] [data-field]'  );
@@ -7357,7 +7404,8 @@ var cf_jsfields_init, cf_presubmit;
 					continue;
 				}
 
-				valid = $this_field.parsley().isValid();
+				valid = validateField($this_field,form_id,valid);
+
 				if (true === valid) {
 					continue;
 				}
@@ -7373,8 +7421,7 @@ var cf_jsfields_init, cf_presubmit;
 
 					for (var f = 0; f < fields.length; f++) {
 						$this_field = $(fields[f]);
-						$this_field.parsley().validate();
-						valid = $this_field.parsley().isValid({force: true});
+						valid = validateField($this_field,form_id,valid);
 						if (true === valid) {
 							continue;
 						}
@@ -7851,28 +7898,3 @@ function CalderaFormsJQueryWarning( $form, $, errorStrings ){
 	}
 }
 
-/*
- * Add Validation for phone_better field before a submit or next page button is clicked
- *
-
-(function( $ ) {
-
-	$('.caldera-grid input[type="submit"], .caldera-grid input[data-page="next"]').click( function( e ) {
-
-		var phone_fields = $('.caldera-grid input[data-type="phone_better"]');
-		if( phone_fields.length > 0 ) {
-
-      phone_fields.each( function( i ){
-
-        if( $.isNumeric( this.value ) === true ){
-        	alert('cool');
-				}
-
-			});
-		}
-
-	});
-
-})( jQuery );
-
- */

@@ -78,10 +78,9 @@ class RenderField implements RenderFieldContract
             );
         }
 
-        return sprintf('<div id="%s" class="cf2-field-wrapper" data-field-id="%s" data-field="%s"></div>',
+        return sprintf('<div id="%s" class="cf2-field-wrapper" data-field-id="%s"></div>',
             esc_attr($this->getOuterIdAttr()),
-            esc_attr($this->getFieldIdAttr()),
-			esc_attr($this->field['ID'])
+            esc_attr($this->getFieldIdAttr())
         );
 
     }
@@ -115,6 +114,7 @@ class RenderField implements RenderFieldContract
             'outterIdAttr' => $this->getOuterIdAttr(),
             'fieldId' => $this->field['ID'],
             'fieldLabel' => $this->field['label'],
+			'hideLabel'	=>	! empty($this->field['hide_label'])?true:false,
             'fieldCaption' => $this->field['caption'],
             'fieldPlaceHolder' => '',
             'isRequired' => ! empty($this->field['required'])?true:false,
@@ -133,6 +133,7 @@ class RenderField implements RenderFieldContract
                 'usePreviews' => ! empty($this->field[ 'config']['use_image_previews']) ? true : false,
 				'previewWidth' => ! empty( $this->field[ 'config']['preview_width'] ) ? intval( $this->field[ 'config']['preview_width'] ) : 24,
 				'previewHeight' => ! empty( $this->field[ 'config']['preview_height'] ) ? intval( $this->field[ 'config']['preview_height'] ) : 24,
+				'maxFileUploadSize' => ! empty( $this->field[ 'config']['max_upload'] ) ? intval( $this->field[ 'config']['max_upload'] ) : 0,
             ];
         }
 
