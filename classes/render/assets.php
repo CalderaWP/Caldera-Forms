@@ -876,7 +876,7 @@ class Caldera_Forms_Render_Assets
 					'check' => __("You must select between %s and %s choices.", 'caldera-forms' ),
 					'equalto' => __("This value should be the same.", 'caldera-forms' ),
 				]);
-				$script = "<script>window.Parsely.addMessages( $code, CF_VALIDATOR_STRINGS ); window.Parsley.setLocale($locale);</script>";
+				$script = "<script>window.Parsley.addMessages( '$code', CF_VALIDATOR_STRINGS ); window.Parsley.setLocale( '$locale' );</script>";
 				wp_dequeue_script( self::make_slug( 'validator-i18n' ) );
 			}else{
 				$script = "<script> setTimeout(function(){window.Parsley.setLocale('$code'); }, 2000 );</script>";
