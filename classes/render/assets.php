@@ -611,6 +611,9 @@ class Caldera_Forms_Render_Assets
 		global $wp_version;
 		$tags = [];
 		if( $wp_version < "5.0" ){
+			if(!wp_script_is( 'legacy-bundle', 'enqueued')){
+				self::enqueue_script('legacy-bundle');
+			}
 			$tags = ["legacy-bundle"];
 		}else {
 			if ($tag === "blocks") {
