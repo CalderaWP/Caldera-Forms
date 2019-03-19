@@ -518,6 +518,22 @@ export class CalderaFormsRender extends Component {
 		return fieldValuesState;
 	}
 
+	/**
+	 * Check field's hideLabel option
+	 *
+	 * @since 1.8.3
+	 *
+	 * @param {string} fieldIdAttr
+	 *
+	 * @return {boolean}
+	 */
+	isFieldHideLabel(fieldIdAttr) {
+		const field = this.getFieldConfig(fieldIdAttr);
+		if ("undefined" !== typeof field.hideLabel) {
+			return field.hideLabel;
+		}
+	}
+
 
 	/** @inheritDoc */
 	render() {
@@ -545,6 +561,7 @@ export class CalderaFormsRender extends Component {
 					field = {
 						...field,
 						fieldValue: this.getFieldValue(fieldIdAttr),
+						hideLabel: this.isFieldHideLabel(fieldIdAttr),
 						areValuesValid
 					};
 

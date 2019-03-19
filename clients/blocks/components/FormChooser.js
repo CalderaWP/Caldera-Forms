@@ -4,7 +4,6 @@ import { __ } from '@wordpress/i18n';
 //Import wp.data's HOC
 import { withSelect } from "@wordpress/data";
 
-
 /**
  * Get ID of form
  *
