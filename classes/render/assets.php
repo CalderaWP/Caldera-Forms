@@ -611,7 +611,7 @@ class Caldera_Forms_Render_Assets
 		global $wp_version;
 		$tags = [];
 		if( !version_compare($wp_version, '5.0.0', '>=') ){
-			if(!wp_script_is( 'legacy-bundle', 'enqueued')){
+			if(!wp_script_is( self::make_slug( 'legacy-bundle' ), 'enqueued')){
 				self::enqueue_script('legacy-bundle');
 			}
 			$tags = ["legacy-bundle"];
