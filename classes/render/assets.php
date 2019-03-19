@@ -866,7 +866,7 @@ class Caldera_Forms_Render_Assets
 		 * @param string $locale Current local
 		 */
 		$print_strings = apply_filters('caldera_forms_print_translation_strings_in_footer', false, $locale);
-		if ($locale == 'en_US'&& ! $print_strings) {
+		if ($locale == 'en_US' && ! $print_strings) {
 			return;
 		}
 
