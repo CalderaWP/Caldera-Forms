@@ -793,7 +793,7 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 == Changelog ==
 = Caldera Forms 1.8.3 (March 19, 2019) WeGlot support, React + legacy-bundle for WP < 5  =
-See: [https://calderaforms.com/updates/caldera-forms-1-8-2](https://calderaforms.com/updates/caldera-forms-1-8-2?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-2)
+See: [https://calderaforms.com/updates/caldera-forms-1-8-3](https://calderaforms.com/updates/caldera-forms-1-8-3?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-3)
 * ADDED: Weglot Support https://calderaforms.com/2019/03/translate-wordpress-site-weglot/
 * ADDED: Link from edition page/post Gutenberg block to Form editor page 
 * FIXED: CF2 File field multiple files attachments
