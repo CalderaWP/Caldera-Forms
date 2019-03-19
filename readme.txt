@@ -797,7 +797,7 @@ See: [https://calderaforms.com/updates/caldera-forms-1-8-3](https://calderaforms
 * ADDED: Weglot Support https://calderaforms.com/2019/03/translate-wordpress-site-weglot/
 * ADDED: Link from edition page/post Gutenberg block to Form editor page 
 * FIXED: CF2 File field multiple files attachments
-* FIXED: CF2 File field for WordPRess versions older than 5.0
+* FIXED: CF2 File field for WordPress versions older than 5.0
 * FIXED: Prevent js errors when no cf2 field is in the form during submission event 
 * FIXED: Conditional disabled
 * FIXED: Toggle switch field not initialized properly
