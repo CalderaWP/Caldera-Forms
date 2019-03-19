@@ -242,8 +242,7 @@ class Caldera_Forms_Render_Assets
 			'font' => self::make_url('cfont', false),
 			'table' => self::make_url('caldera-table', false),
 			'entry-viewer-2' => self::make_url('entry-viewer-2', false),
-			'render' => self::make_url('render', false),
-
+			'render' => self::make_url('render', false)
 		];
 
 		$style_urls[ 'fields' ] = $style_urls[ 'field' ];
@@ -614,7 +613,7 @@ class Caldera_Forms_Render_Assets
 			if(!wp_script_is( self::make_slug( 'legacy-bundle' ), 'enqueued')){
 				self::enqueue_script('legacy-bundle');
 			}
-			$tags = ["legacy-bundle"];
+			$tags = [self::make_slug( 'legacy-bundle' )];
 		}else {
 			if ($tag === "blocks") {
 				$tags = ["wp-blocks"];

@@ -1,7 +1,8 @@
 /** globals CF_API_DATA **/
 import './index.scss';
 import {CalderaFormsRender} from "./components/CalderaFormsRender";
-import element from '@wordpress/element';
+import React from 'react';
+import ReactDOM from "react-dom";
 import domReady from '@wordpress/dom-ready';
 import {
 	hashFile,
@@ -10,8 +11,15 @@ import {
 } from "./util";
 import { handleFileUploadResponse, handleFileUploadError, hashAndUpload, processFiles, processFileField, processFormSubmit } from './fileUploads';
 
+//Expect compatibility with wp versions older than 5.0.0
+let domElement;
 if("undefined" === typeof wp.element){
-	wp.element = element;
+	Object.defineProperty(global.wp, 'element', {
+		get: () => React
+	});
+	domElement = ReactDOM;
+} else {
+	domElement = wp.element;
 }
 
 domReady(function () {
@@ -121,7 +129,7 @@ domReady(function () {
 		 * @type {*}
 		 */
 		let theComponent = '';
-		wp.element.render(
+		domElement.render(
 			<CalderaFormsRender
 				cfState={state}
 				formId={formId}
