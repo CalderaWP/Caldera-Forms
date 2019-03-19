@@ -53,20 +53,6 @@ class TargetOperationTest extends AbstractOperationTest
         );
     }
 
-    public function testGetResultFromIntlDomain()
-    {
-        $this->assertEquals(
-            new MessageCatalogue('en', [
-                'messages' => ['a' => 'old_a'],
-                'messages+intl-icu' => ['c' => 'new_c'],
-            ]),
-            $this->createOperation(
-                new MessageCatalogue('en', ['messages' => ['a' => 'old_a'], 'messages+intl-icu' => ['b' => 'old_b']]),
-                new MessageCatalogue('en', ['messages' => ['a' => 'new_a'], 'messages+intl-icu' => ['c' => 'new_c']])
-            )->getResult()
-        );
-    }
-
     public function testGetResultWithMetadata()
     {
         $leftCatalogue = new MessageCatalogue('en', ['messages' => ['a' => 'old_a', 'b' => 'old_b']]);

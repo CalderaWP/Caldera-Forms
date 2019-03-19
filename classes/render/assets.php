@@ -242,8 +242,7 @@ class Caldera_Forms_Render_Assets
 			'font' => self::make_url('cfont', false),
 			'table' => self::make_url('caldera-table', false),
 			'entry-viewer-2' => self::make_url('entry-viewer-2', false),
-			'render' => self::make_url('render', false),
-
+			'render' => self::make_url('render', false)
 		];
 
 		$style_urls[ 'fields' ] = $style_urls[ 'field' ];
@@ -304,6 +303,7 @@ class Caldera_Forms_Render_Assets
 			'pro' => self::make_url('pro'),
 			'privacy' => self::make_url('privacy'),
 			'render' => self::make_url('render'),
+			'legacy-bundle' => self::make_url('legacy-bundle'),
 		];
 
 		return $script_urls;
@@ -575,7 +575,7 @@ class Caldera_Forms_Render_Assets
 	 */
 	public static function is_client_entry_point($slug)
 	{
-		return in_array($slug, ['blocks', 'pro', 'privacy', 'render']);
+		return in_array($slug, ['blocks', 'pro', 'privacy', 'render', 'legacy-bundle']);
 	}
 
 	/**
@@ -601,18 +601,44 @@ class Caldera_Forms_Render_Assets
 	}
 
 	/**
+	 * Find dependencies tags or enqueue them
+	 *
+	 * @since 1.8.4
+	 */
+	public static function cf_dependencies($tag){
+
+		global $wp_version;
+		$tags = [];
+		if( !version_compare($wp_version, '5.0.0', '>=') ){
+			if(!wp_script_is( self::make_slug( 'legacy-bundle' ), 'enqueued')){
+				self::enqueue_script('legacy-bundle');
+			}
+			$tags = [self::make_slug( 'legacy-bundle' )];
+		}else {
+			if ($tag === "blocks") {
+				$tags = ["wp-blocks"];
+			} else if($tag === "render") {
+				$tags = ["wp-element","wp-data"];
+			}
+		}
+
+		return $tags;
+	}
+
+	/**
 	 * Load form JS
 	 *
 	 * @since 1.5.0
 	 */
 	public static function enqueue_form_assets()
 	{
+
 		self::enqueue_style('field-styles');
 		self::maybe_validator_i18n(false);
 		self::enqueue_script('validator');
 		self::enqueue_script('init');
-		self::enqueue_script('blocks', ['wp-blocks']);
-		self::enqueue_script('render', ['wp-element', 'wp-data']);
+		self::enqueue_script('blocks', self::cf_dependencies('blocks') );
+		self::enqueue_script('render', self::cf_dependencies('render') );
 		self::enqueue_style('render');
 
 		$should_minify = self::should_minify();
@@ -840,7 +866,7 @@ class Caldera_Forms_Render_Assets
 		 * @param string $locale Current local
 		 */
 		$print_strings = apply_filters('caldera_forms_print_translation_strings_in_footer', false, $locale);
-		if ($locale == 'en_US'&& ! $print_strings) {
+		if ($locale == 'en_US' && ! $print_strings) {
 			return;
 		}
 

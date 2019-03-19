@@ -15,8 +15,6 @@ namespace Symfony\Component\Translation;
  * Returns the plural rules for a given locale.
  *
  * @author Fabien Potencier <fabien@symfony.com>
- *
- * @deprecated since Symfony 4.2, use IdentityTranslator instead
  */
 class PluralizationRules
 {
@@ -30,12 +28,8 @@ class PluralizationRules
      *
      * @return int The plural position
      */
-    public static function get($number, $locale/*, bool $triggerDeprecation = true*/)
+    public static function get($number, $locale)
     {
-        if (3 > \func_num_args() || \func_get_arg(2)) {
-            @trigger_error(sprintf('The "%s" class is deprecated since Symfony 4.2.', __CLASS__), E_USER_DEPRECATED);
-        }
-
         if ('pt_BR' === $locale) {
             // temporary set a locale for brazilian
             $locale = 'xbr';
@@ -46,7 +40,7 @@ class PluralizationRules
         }
 
         if (isset(self::$rules[$locale])) {
-            $return = self::$rules[$locale]($number);
+            $return = \call_user_func(self::$rules[$locale], $number);
 
             if (!\is_int($return) || $return < 0) {
                 return 0;
@@ -202,8 +196,6 @@ class PluralizationRules
      */
     public static function set(callable $rule, $locale)
     {
-        @trigger_error(sprintf('The "%s" class is deprecated since Symfony 4.2.', __CLASS__), E_USER_DEPRECATED);
-
         if ('pt_BR' === $locale) {
             // temporary set a locale for brazilian
             $locale = 'xbr';

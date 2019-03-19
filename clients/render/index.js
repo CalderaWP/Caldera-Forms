@@ -1,7 +1,8 @@
 /** globals CF_API_DATA **/
 import './index.scss';
 import {CalderaFormsRender} from "./components/CalderaFormsRender";
-
+import React from 'react';
+import ReactDOM from "react-dom";
 import domReady from '@wordpress/dom-ready';
 import {
 	hashFile,
@@ -9,6 +10,17 @@ import {
 	captureRenderComponentRef
 } from "./util";
 import { handleFileUploadResponse, handleFileUploadError, hashAndUpload, processFiles, processFileField, processFormSubmit } from './fileUploads';
+
+//Expect compatibility with wp versions older than 5.0.0
+let domElement;
+if("undefined" === typeof wp.element){
+	Object.defineProperty(global.wp, 'element', {
+		get: () => React
+	});
+	domElement = ReactDOM;
+} else {
+	domElement = wp.element;
+}
 
 domReady(function () {
 	jQuery(document).on('cf.form.init', (e, obj) => {
@@ -45,8 +57,6 @@ domReady(function () {
 			}
 		});
 
-
-
 		/**
 		 * Flag to indicate if validation is happening or not
 		 *
@@ -58,7 +68,6 @@ domReady(function () {
 		 */
 		let shouldBeValidating = false;
 		let messages = {};
-
 
 		jQuery(document).on('cf.ajax.request', (event, obj) => {
 
@@ -92,7 +101,6 @@ domReady(function () {
 			cf2.uploadCompleted = cf2.uploadCompleted || [];
 			cf2.fieldsBlocking = cf2.fieldsBlocking || [];
 
-
 			if (Object.keys(values).length) {
 				Object.keys(values).forEach(fieldId => {
 					const field = fieldsToControl.find(field => fieldId === field.fieldId);
@@ -121,7 +129,7 @@ domReady(function () {
 		 * @type {*}
 		 */
 		let theComponent = '';
-		wp.element.render(
+		domElement.render(
 			<CalderaFormsRender
 				cfState={state}
 				formId={formId}

@@ -24,7 +24,7 @@ class TranslatorCacheTest extends TestCase
 
     protected function setUp()
     {
-        $this->tmpDir = sys_get_temp_dir().'/sf_translation';
+        $this->tmpDir = sys_get_temp_dir().'/sf2_translation';
         $this->deleteTmpDir();
     }
 
@@ -66,17 +66,13 @@ class TranslatorCacheTest extends TestCase
         $translator = new Translator($locale, null, $this->tmpDir, $debug);
         $translator->addLoader($format, new ArrayLoader());
         $translator->addResource($format, [$msgid => 'OK'], $locale);
-        $translator->addResource($format, [$msgid.'+intl' => 'OK'], $locale, 'messages+intl-icu');
         $translator->trans($msgid);
-        $translator->trans($msgid.'+intl', [], 'messages+intl-icu');
 
         // Try again and see we get a valid result whilst no loader can be used
         $translator = new Translator($locale, null, $this->tmpDir, $debug);
         $translator->addLoader($format, $this->createFailingLoader());
         $translator->addResource($format, [$msgid => 'OK'], $locale);
-        $translator->addResource($format, [$msgid.'+intl' => 'OK'], $locale, 'messages+intl-icu');
         $this->assertEquals('OK', $translator->trans($msgid), '-> caching does not work in '.($debug ? 'debug' : 'production'));
-        $this->assertEquals('OK', $translator->trans($msgid.'+intl', [], 'messages+intl-icu'));
     }
 
     public function testCatalogueIsReloadedWhenResourcesAreNoLongerFresh()
@@ -216,7 +212,6 @@ class TranslatorCacheTest extends TestCase
         $translator->addResource('array', ['foo' => 'foo (a)'], 'a');
         $translator->addResource('array', ['foo' => 'foo (b)'], 'b');
         $translator->addResource('array', ['bar' => 'bar (b)'], 'b');
-        $translator->addResource('array', ['baz' => 'baz (b)'], 'b', 'messages+intl-icu');
 
         $catalogue = $translator->getCatalogue('a');
         $this->assertFalse($catalogue->defines('bar')); // Sure, the "a" catalogue does not contain that message.
@@ -235,14 +230,12 @@ class TranslatorCacheTest extends TestCase
         $translator->addResource('array', ['foo' => 'foo (a)'], 'a');
         $translator->addResource('array', ['foo' => 'foo (b)'], 'b');
         $translator->addResource('array', ['bar' => 'bar (b)'], 'b');
-        $translator->addResource('array', ['baz' => 'baz (b)'], 'b', 'messages+intl-icu');
 
         $catalogue = $translator->getCatalogue('a');
         $this->assertFalse($catalogue->defines('bar'));
 
         $fallback = $catalogue->getFallbackCatalogue();
         $this->assertTrue($fallback->defines('foo'));
-        $this->assertTrue($fallback->defines('baz', 'messages+intl-icu'));
     }
 
     public function testRefreshCacheWhenResourcesAreNoLongerFresh()
