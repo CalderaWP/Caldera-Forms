@@ -603,14 +603,14 @@ class Caldera_Forms_Render_Assets
 
 	/**
 	 * Find dependencies tags or enqueue them
-	 * 
+	 *
 	 * @since 1.8.4
 	 */
 	public static function cf_dependencies($tag){
 
 		global $wp_version;
 		$tags = [];
-		if( $wp_version < "5.0" ){
+		if( !version_compare($wp_version, '5.0.0', '>=') ){
 			if(!wp_script_is( 'legacy-bundle', 'enqueued')){
 				self::enqueue_script('legacy-bundle');
 			}
@@ -622,7 +622,7 @@ class Caldera_Forms_Render_Assets
 				$tags = ["wp-element","wp-data"];
 			}
 		}
-		
+
 		return $tags;
 	}
 
