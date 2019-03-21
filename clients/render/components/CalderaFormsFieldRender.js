@@ -1,4 +1,4 @@
-import {Component, Fragment} from 'react';
+import {Fragment} from '@wordpress/element';
 import PropTypes from 'prop-types';
 import {RenderComponentViaPortal} from "./RenderComponentViaPortal";
 import {CalderaFormsFieldGroup} from "./CalderaFormsFieldGroup";

@@ -1,4 +1,5 @@
-import ReactDOM from "react-dom";
+import {createPortal} from '@wordpress/element';
+
 import PropTypes from 'prop-types';
 
 /**
@@ -14,7 +15,7 @@ import PropTypes from 'prop-types';
  */
 export const RenderComponentViaPortal = (props) => {
 	const {children,domNode} = props;
-	return ReactDOM.createPortal(
+	return createPortal(
 		children,
 		domNode
 	);
