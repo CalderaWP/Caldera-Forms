@@ -874,7 +874,7 @@ class Caldera_Forms_Render_Assets
 			self::register_validator_i18n($locale);
 		} else {
 			if (self::$locale) {
-				$code = self::$locale;
+				$code = self::set_locale_code($locale);
 			} else {
 				$code = $locale;
 			}
@@ -988,6 +988,25 @@ class Caldera_Forms_Render_Assets
 	 */
 	protected static function get_validator_locale_url($locale)
 	{
+		if(!empty($locale)){
+			$locale = self::set_locale_code($locale);
+		}
+
+		$validator_url = CFCORE_URL . 'assets/js/i18n/' . $locale . '.js';
+		return $validator_url;
+	}
+
+	/**
+	 * Get the Locale Code used by translation files
+	 *
+	 * @since 1.8.4
+	 *
+	 * @param string $locale
+	 *
+	 * @return string
+	 */
+	protected static function set_locale_code($locale)
+	{
 		if (file_exists(CFCORE_PATH . 'assets/js/i18n/' . $locale . '.js')) {
 			// no need to check other possibilities- break if/else early
 
@@ -1001,8 +1020,7 @@ class Caldera_Forms_Render_Assets
 			$locale = strtolower(substr($locale, 3));
 		}
 
-		$validator_url = CFCORE_URL . 'assets/js/i18n/' . $locale . '.js';
-		return $validator_url;
+		return $locale;
 	}
 
 
