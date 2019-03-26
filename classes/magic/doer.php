@@ -382,7 +382,7 @@ class Caldera_Forms_Magic_Doer {
 							break;
 						case 'referer_url' :
 						case 'referrer_url' :
-							$magic_tag = wp_get_raw_referer();
+							$magic_tag = esc_url_raw( wp_get_raw_referer() );
 					}
 
 				}
