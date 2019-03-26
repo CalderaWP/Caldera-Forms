@@ -465,7 +465,6 @@ class Caldera_Forms_Render_Assets
 			}
 		}
 
-
 	}
 
 	/**
@@ -478,6 +477,17 @@ class Caldera_Forms_Render_Assets
 	 */
 	public static function enqueue_script($script, $depts = ['jquery'])
 	{
+		if( 'render' === $script ||$script === self::make_slug($script)  ){
+			if (is_admin() ) {
+				return;
+			}
+			if( isset($_GET, $_GET[ 'action'] ) && 'elementor' === $_GET['action' ] ){
+				return;
+			}
+			if( isset($_GET, $_GET[ 'fl_builder'] ) ){
+				return;
+			}
+		}
 		if ('editor-grid' === $script) {
 			return Caldera_Forms_Admin_Assets::enqueue_script($script);
 		}
