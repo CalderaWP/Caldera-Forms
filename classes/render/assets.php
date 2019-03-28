@@ -632,7 +632,6 @@ class Caldera_Forms_Render_Assets
 	 */
 	public static function enqueue_form_assets()
 	{
-
 		self::enqueue_style('field-styles');
 		self::maybe_validator_i18n(false);
 		self::enqueue_script('validator');
