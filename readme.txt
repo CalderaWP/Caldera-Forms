@@ -3,7 +3,7 @@ Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
 Tags: form, contact form, forms, form creator, form manager, mailchimp, paypal, stripe, login, payment, forms manager, forms creation
 Requires at least: 4.7
 Tested up to: 5.1.1
-Stable tag: 1.8.3
+Stable tag: 1.8.4-b.1
 License: GPLv2
 Requires PHP: 5.6
 
