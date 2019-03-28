@@ -465,7 +465,6 @@ class Caldera_Forms_Render_Assets
 			}
 		}
 
-
 	}
 
 	/**
@@ -478,9 +477,36 @@ class Caldera_Forms_Render_Assets
 	 */
 	public static function enqueue_script($script, $depts = ['jquery'])
 	{
+		if( 'render' === $script ||$script === self::make_slug('render')  ){
+			if (is_admin() ) {
+				$load_render = false;
+			}elseif (
+				self::is_elementor_editor()
+			){
+				$load_render = false;
+			}
+			elseif( self::is_beaver_builder_editor()  ){
+				$load_render = false;
+			}else{
+				$load_render = true;
+			}
+			if( ! $load_render  ){
+				return;
+			}
+		}
+
+		if( 'blocks' === $script ||$script === self::make_slug('blocks')  ){
+			if (self::is_elementor_editor()){
+				return;
+			}
+
+		}
+
 		if ('editor-grid' === $script) {
 			return Caldera_Forms_Admin_Assets::enqueue_script($script);
 		}
+
+
 		if (in_array($script, ['validator', self::make_slug('validator')])) {
 			$scripts = self::get_core_scripts();
 			wp_enqueue_script(self::make_slug('validator'), $scripts[ 'validator' ], [], CFCORE_VER, false);
@@ -1021,5 +1047,30 @@ class Caldera_Forms_Render_Assets
 		return $locale;
 	}
 
+	/**
+	 * Check if Elementor is being used to edit current post
+	 *
+	 * @since 1.8.4
+	 *
+	 * @return bool
+	 */
+	protected static function is_elementor_editor()
+	{
+		return isset($_GET) && (
+			isset($_GET[ 'action' ]) && 'elementor' === $_GET[ 'action' ]
+			|| isset($_GET[ 'elementor-preview' ])
+		);
+	}
+
+	/**
+	 * Check if Beaver Builder is being used to edit current post
+	 *
+	 * @since 1.8.4
+	 *
+	 * @return bool
+	 */
+	protected static function is_beaver_builder_editor(){
+		return isset($_GET, $_GET[ 'fl_builder']);
+	}
 
 }
