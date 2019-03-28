@@ -2,8 +2,8 @@
 Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
 Tags: form, contact form, forms, form creator, form manager, mailchimp, paypal, stripe, login, payment, forms manager, forms creation
 Requires at least: 4.7
-Tested up to: 5.1
-Stable tag: 1.8.2
+Tested up to: 5.1.1
+Stable tag: 1.8.3
 License: GPLv2
 Requires PHP: 5.6
 
@@ -792,6 +792,17 @@ This could also be a sign of a more serious issue on your server, but is probabl
 5. **Go Further With Form Processors** - Auto-responders, conditional recipients, redirects are included! Go further with our add-ons!
 
 == Changelog ==
+= Caldera Forms 1.8.3 (March 19, 2019) WeGlot support, React + legacy-bundle for WP < 5  =
+See: [https://calderaforms.com/updates/caldera-forms-1-8-3](https://calderaforms.com/updates/caldera-forms-1-8-3?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-3)
+* ADDED: Weglot Support https://calderaforms.com/2019/03/translate-wordpress-site-weglot/
+* ADDED: Link from edition page/post Gutenberg block to Form editor page 
+* FIXED: CF2 File field multiple files attachments
+* FIXED: CF2 File field for WordPress versions older than 5.0
+* FIXED: Prevent js errors when no cf2 field is in the form during submission event 
+* FIXED: Conditional disabled
+* FIXED: Toggle switch field not initialized properly
+
+
 = Caldera Forms 1.8.2 (March 7, 2019) It's Snowing In Pittsburgh =
 See: [https://calderaforms.com/updates/caldera-forms-1-8-2](https://calderaforms.com/updates/caldera-forms-1-8-2?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-2)
 * SECURITY: Patch for issue affecting CF Pro API. Does not affect most users, [see post for details](https://calderaforms.com/updates/caldera-forms-1-8-2?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-2)see post for details.

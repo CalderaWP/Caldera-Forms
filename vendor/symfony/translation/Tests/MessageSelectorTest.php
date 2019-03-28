@@ -14,9 +14,6 @@ namespace Symfony\Component\Translation\Tests;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Translation\MessageSelector;
 
-/**
- * @group legacy
- */
 class MessageSelectorTest extends TestCase
 {
     /**
