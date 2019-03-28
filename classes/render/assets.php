@@ -637,7 +637,6 @@ class Caldera_Forms_Render_Assets
 		self::maybe_validator_i18n(false);
 		self::enqueue_script('validator');
 		self::enqueue_script('init');
-		self::enqueue_script('blocks', self::cf_dependencies('blocks') );
 		self::enqueue_script('render', self::cf_dependencies('render') );
 		self::enqueue_style('render');
 
