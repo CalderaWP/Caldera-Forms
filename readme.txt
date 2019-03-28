@@ -794,13 +794,11 @@ This could also be a sign of a more serious issue on your server, but is probabl
 == Changelog ==
 = Caldera Forms 1.8.4 (March 28, 2019) CF-1.8.4 =
 See: [https://calderaforms.com/updates/caldera-forms-1-8-4](https://calderaforms.com/updates/caldera-forms-1-8-4?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-4)
-* ADDED: Weglot Support https://calderaforms.com/2019/03/translate-wordpress-site-weglot/
-* ADDED: Link from edition page/post Gutenberg block to Form editor page 
-* FIXED: CF2 File field multiple files attachments
-* FIXED: CF2 File field for WordPress versions older than 5.0
-* FIXED: Prevent js errors when no cf2 field is in the form during submission event 
-* FIXED: Conditional disabled
-* FIXED: Toggle switch field not initialized properly
+* FIXED: Elementor/Beaver builder conflicts withe render client
+* FIXED: Translation code reset to translation files
+* FIXED: Markup for the Resend button in entries list
+* FIXED: Console errors due to Blocks client enqueued on frontend
+* ADDED: Value of additional CSS class name in Caldera Forms block added to rendering
 
 = Caldera Forms 1.8.3 (March 19, 2019) WeGlot support, React + legacy-bundle for WP < 5  =
 See: [https://calderaforms.com/updates/caldera-forms-1-8-3](https://calderaforms.com/updates/caldera-forms-1-8-3?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-3)
