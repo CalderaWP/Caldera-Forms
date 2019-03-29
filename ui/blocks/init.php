@@ -73,6 +73,12 @@ function caldera_forms_print_cf_forms_var($script_handle){
  */
 function caldera_forms_render_cform_block($atts ) {
     if( ! empty( $atts[ 'formId' ] ) ){
+		if ( ! empty( $atts[ 'className' ] ) ){
+			add_filter( 'caldera_forms_render_form_wrapper_classes', function( $wrapper_classes ) use ( $atts ){
+				$wrapper_classes[] = $atts[ 'className' ];
+				return $wrapper_classes;
+			} );
+		}
         return Caldera_Forms::render_form(
             array(
                 'ID' => caldera_forms_very_safe_string( $atts[ 'formId' ] )

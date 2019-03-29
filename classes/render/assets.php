@@ -465,7 +465,6 @@ class Caldera_Forms_Render_Assets
 			}
 		}
 
-
 	}
 
 	/**
@@ -478,9 +477,36 @@ class Caldera_Forms_Render_Assets
 	 */
 	public static function enqueue_script($script, $depts = ['jquery'])
 	{
+		if( 'render' === $script ||$script === self::make_slug('render')  ){
+			if (is_admin() ) {
+				$load_render = false;
+			}elseif (
+				self::is_elementor_editor()
+			){
+				$load_render = false;
+			}
+			elseif( self::is_beaver_builder_editor()  ){
+				$load_render = false;
+			}else{
+				$load_render = true;
+			}
+			if( ! $load_render  ){
+				return;
+			}
+		}
+
+		if( 'blocks' === $script ||$script === self::make_slug('blocks')  ){
+			if (self::is_elementor_editor()){
+				return;
+			}
+
+		}
+
 		if ('editor-grid' === $script) {
 			return Caldera_Forms_Admin_Assets::enqueue_script($script);
 		}
+
+
 		if (in_array($script, ['validator', self::make_slug('validator')])) {
 			$scripts = self::get_core_scripts();
 			wp_enqueue_script(self::make_slug('validator'), $scripts[ 'validator' ], [], CFCORE_VER, false);
@@ -632,12 +658,10 @@ class Caldera_Forms_Render_Assets
 	 */
 	public static function enqueue_form_assets()
 	{
-
 		self::enqueue_style('field-styles');
 		self::maybe_validator_i18n(false);
 		self::enqueue_script('validator');
 		self::enqueue_script('init');
-		self::enqueue_script('blocks', self::cf_dependencies('blocks') );
 		self::enqueue_script('render', self::cf_dependencies('render') );
 		self::enqueue_style('render');
 
@@ -874,7 +898,7 @@ class Caldera_Forms_Render_Assets
 			self::register_validator_i18n($locale);
 		} else {
 			if (self::$locale) {
-				$code = self::$locale;
+				$code = self::set_locale_code($locale);
 			} else {
 				$code = $locale;
 			}
@@ -988,6 +1012,25 @@ class Caldera_Forms_Render_Assets
 	 */
 	protected static function get_validator_locale_url($locale)
 	{
+		if(!empty($locale)){
+			$locale = self::set_locale_code($locale);
+		}
+
+		$validator_url = CFCORE_URL . 'assets/js/i18n/' . $locale . '.js';
+		return $validator_url;
+	}
+
+	/**
+	 * Get the Locale Code used by translation files
+	 *
+	 * @since 1.8.4
+	 *
+	 * @param string $locale
+	 *
+	 * @return string
+	 */
+	protected static function set_locale_code($locale)
+	{
 		if (file_exists(CFCORE_PATH . 'assets/js/i18n/' . $locale . '.js')) {
 			// no need to check other possibilities- break if/else early
 
@@ -1001,9 +1044,33 @@ class Caldera_Forms_Render_Assets
 			$locale = strtolower(substr($locale, 3));
 		}
 
-		$validator_url = CFCORE_URL . 'assets/js/i18n/' . $locale . '.js';
-		return $validator_url;
+		return $locale;
 	}
 
+	/**
+	 * Check if Elementor is being used to edit current post
+	 *
+	 * @since 1.8.4
+	 *
+	 * @return bool
+	 */
+	protected static function is_elementor_editor()
+	{
+		return isset($_GET) && (
+			isset($_GET[ 'action' ]) && 'elementor' === $_GET[ 'action' ]
+			|| isset($_GET[ 'elementor-preview' ])
+		);
+	}
+
+	/**
+	 * Check if Beaver Builder is being used to edit current post
+	 *
+	 * @since 1.8.4
+	 *
+	 * @return bool
+	 */
+	protected static function is_beaver_builder_editor(){
+		return isset($_GET, $_GET[ 'fl_builder']);
+	}
 
 }
