@@ -76,10 +76,31 @@ class Submission extends Endpoint
 	public function createItem(\WP_REST_Request $request)
 	{
 
+		$formId = $request->get_param('formId');
+		$this->setFormById($formId);
 
-		$entryId = 0;
+		$entryData = $request->get_param( 'entryData' );
+		$entryId = null;
+		$fields = \Caldera_Forms_Forms::get_fields($this->getForm() );
+		$entry = new \Caldera_Forms_Entry( $this->getForm(), $entryId, null );
+
+		foreach ($fields as $fieldId => $field ){
+			$fieldId = $field[ 'ID' ];
+
+			$value = isset( $entryData[ $fieldId]) ? \Caldera_Forms_Sanitize::sanitize($entryData[ $fieldId] ) : null;
+			if( ! is_null($value) ){
+				$entryField = new \Caldera_Forms_Entry_Field();
+				$entry->slug = $field[ 'slug' ];
+				$entry->field_id = $fieldId;
+				$entry->value =  $value;
+				$entry->add_field($entryField);
+			}
+
+
+		}
+		$entryId = $entry->save();
 		if( is_numeric($entryId ) ){
-			$response = rest_ensure_response( ['entryId' => $entryId ] );
+			$response = rest_ensure_response( ['entryId' => $entryId, ] );
 			$response->set_status(201);
 		}else{
 			$response = rest_ensure_response( new \WP_Error() );
