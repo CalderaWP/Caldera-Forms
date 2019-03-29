@@ -24,12 +24,10 @@ class ContainerServicesAreLoadedTest extends TestCase
 		$this->assertEquals( 1, did_action( 'caldera_forms_core_init'));
 		$this->assertEquals( 1,did_action( 'caldera_forms_v2_init'));
 	}
-	/** @group now */
 	public function testHasQueueService(){
 		$this->assertInstanceOf( Queue::class, caldera_forms_get_v2_container()->getService(QueueService::class) );
 	}
 
-	/** @group now */
 	public function testHasQueueSchedulerService(){
 		$this->assertInstanceOf( Scheduler::class, caldera_forms_get_v2_container()->getService(QueueSchedulerService::class) );
 	}
