@@ -1,10 +1,10 @@
 <?php
 /**
- * Caldera Forms - PHP Export 
- * Simple Form With Just A Text Field 
+ * Caldera Forms - PHP Export
+ * Simple Form With Just A Text Field
  * @version    1.3.4-b1
  * @license   GPL-2.0+
- * 
+ *
  */
 
 
@@ -23,6 +23,10 @@ add_filter( "caldera_forms_get_forms", function( $forms ){
 
 add_filter( 'caldera_forms_get_form-simple-form-with-just-a-text-field', 'caldera_forms_tests_get_simple_form_with_just_a_text_field' );
 
+
+function caldera_forms_tests_get_simple_form_with_just_a_text_field_form_id(){
+	return caldera_forms_tests_get_simple_form_with_just_a_text_field()[ 'ID' ];
+}
 /**
  * Filter form request to include form structure to be rendered
  *
@@ -32,7 +36,7 @@ add_filter( 'caldera_forms_get_form-simple-form-with-just-a-text-field', 'calder
  *
  * @return array
  */
-function caldera_forms_tests_get_simple_form_with_just_a_text_field( $form ) {
+function caldera_forms_tests_get_simple_form_with_just_a_text_field( $form = [] ) {
 
 	return array(
 		'_last_updated'      => 'Tue, 15 Mar 2016 22:06:15 +0000',

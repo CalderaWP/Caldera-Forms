@@ -37,7 +37,7 @@ abstract class Endpoint implements \Caldera_Forms_API_Route
      *
      * @since 1.8.0
      *
-     * @return string
+     * @return array
      */
     abstract protected function getArgs();
 
