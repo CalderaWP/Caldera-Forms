@@ -4,6 +4,7 @@
 namespace calderawp\calderaforms\cf2\RestApi\Process;
 
 
+use calderawp\calderaforms\cf2\Exception;
 use calderawp\calderaforms\cf2\RestApi\Endpoint;
 
 class Submission extends Endpoint
@@ -76,26 +77,40 @@ class Submission extends Endpoint
 	public function createItem(\WP_REST_Request $request)
 	{
 
-		$formId = $request->get_param('formId');
-		$this->setFormById($formId);
 
+		$this->setFormById( $request->get_param('formId'));
+		$formId = $this->getForm()[ 'ID' ];
 		$entryData = $request->get_param( 'entryData' );
 		$entryId = null;
 		$fields = \Caldera_Forms_Forms::get_fields($this->getForm() );
-		$entry = new \Caldera_Forms_Entry( $this->getForm(), $entryId, null );
+		if( empty( $fields ) ){
+			return rest_ensure_response( new \WP_Error( 500, __( 'Invalid form', 'caldera-forms')  ) );
+		}
+		$entryObject = new \Caldera_Forms_Entry_Entry();
+		$entryObject->status = 'pending';
+		$entryObject->form_id = $formId;
+		$entryObject->user_id = get_current_user_id();
+		$entryObject->datestamp = date_i18n('Y-m-d H:i:s', time(), 0);
 
+		$entry = new \Caldera_Forms_Entry( $this->getForm(), $entryId, $entryObject );
 		foreach ($fields as $fieldId => $field ){
 			$fieldId = $field[ 'ID' ];
+			if( in_array( \Caldera_Forms_Field_Util::get_type($field, $this->getForm() ) ,
+				[
+					'html'
+				])
+			){
+				continue;
+			}
 
 			$value = isset( $entryData[ $fieldId]) ? \Caldera_Forms_Sanitize::sanitize($entryData[ $fieldId] ) : null;
 			if( ! is_null($value) ){
 				$entryField = new \Caldera_Forms_Entry_Field();
-				$entry->slug = $field[ 'slug' ];
-				$entry->field_id = $fieldId;
-				$entry->value =  $value;
+				$entryField->slug = $field[ 'slug' ];
+				$entryField->field_id = $fieldId;
+				$entryField->value =  $value;
 				$entry->add_field($entryField);
 			}
-
 
 		}
 		$entryId = $entry->save();
@@ -103,7 +118,7 @@ class Submission extends Endpoint
 			$response = rest_ensure_response( ['entryId' => $entryId, ] );
 			$response->set_status(201);
 		}else{
-			$response = rest_ensure_response( new \WP_Error() );
+			$response = rest_ensure_response( new \WP_Error( 500, __( 'Could not submit entry','caldera-forms')) );
 		}
 		return $response;
 	}

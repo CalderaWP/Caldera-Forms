@@ -21,6 +21,7 @@ class TestCase extends \WP_UnitTestCase
         parent::tearDown();
     }
 
+
     /**
      * Rest all of the globals that Caldera Forms v1 sets
      *
@@ -37,4 +38,5 @@ class TestCase extends \WP_UnitTestCase
         $form = null;
         unset($GLOBALS['form']);
     }
+
 }

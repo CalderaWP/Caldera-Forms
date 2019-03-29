@@ -34,6 +34,7 @@ class CreateFileTest extends RestApiTestCase
      * @group file
      * @group field
      * @group cf2_file
+	 * @group now
      */
     public function testRouteCanBeRequest()
     {
