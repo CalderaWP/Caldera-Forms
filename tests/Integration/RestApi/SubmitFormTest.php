@@ -29,16 +29,18 @@ class SubmitFormTest extends RestApiTestCase
 	 * @since 1.9.0
 	 *
 	 * @group cf2
+	 * @group now
 	 */
 	public function testRouteCanBeRequest()
 	{
 		$request = new \WP_REST_Request('GET', '/cf-api/v3');
 		$response = rest_get_server()->dispatch($request);
+		$endpoint = '/cf-api/v3/' . Submission::URI;
 		$this->assertTrue(
-			array_key_exists('/cf-api/v3' . Submission::URI, $response->get_data()[ 'routes' ])
+			array_key_exists($endpoint, $response->get_data()[ 'routes' ])
 		);
 		$this->assertTrue(
-			in_array('POST', $response->get_data()[ 'routes' ][ '/cf-api/v3/file' ][ 'methods' ])
+			in_array('POST', $response->get_data()[ 'routes' ][ $endpoint ][ 'methods' ])
 		);
 
 	}
@@ -51,9 +53,7 @@ class SubmitFormTest extends RestApiTestCase
 	 * @since 1.8.0
 	 *
 	 * @group cf2
-	 * @group file
-	 * @group field
-	 * @group cf2_file
+	 * @group now
 	 */
 	public function testCreateItem()
 	{
