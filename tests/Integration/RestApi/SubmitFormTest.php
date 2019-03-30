@@ -31,12 +31,13 @@ class SubmitFormTest extends RestApiTestCase
 	 * @since 1.9.0
 	 *
 	 * @group cf2
+	 * @group now
 	 */
 	public function testRouteCanBeRequest()
 	{
 		$request = new \WP_REST_Request('GET', '/cf-api/v3');
 		$response = rest_get_server()->dispatch($request);
-		$endpoint = '/cf-api/v3/' . Submission::URI;
+		$endpoint = '/cf-api/v3/' . Submission::URI . '/(?P<formId>[\w-]+)';
 		$this->assertTrue(
 			array_key_exists($endpoint, $response->get_data()[ 'routes' ])
 		);

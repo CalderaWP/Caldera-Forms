@@ -47,7 +47,7 @@ trait ImportTestFormsFromIncludes
 		$arrayOrObject = (array)$arrayOrObject;
 		foreach ($arrayOrObject as $key => $value ){
 			if( is_array( $value ) || is_object( $value ) ){
-				$arrayOrObject[ $key ] = $this->recursive_cast_array( $value );
+				$arrayOrObject[ $key ] = $this->recursiveCastArray( $value );
 			}
 
 		}
@@ -65,7 +65,7 @@ trait ImportTestFormsFromIncludes
 	 */
 	protected function importForm($file) {
 		$json = file_get_contents($file);
-		$config = $this->recursive_cast_array(json_decode($json));
+		$config = $this->recursiveCastArray(json_decode($json));
 		$form_id = \Caldera_Forms_Forms::import_form($config);
 		return $form_id;
 	}
