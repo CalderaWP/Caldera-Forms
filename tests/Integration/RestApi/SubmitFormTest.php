@@ -71,7 +71,7 @@ class SubmitFormTest extends RestApiTestCase
 			'fld_7683514' => 'Hi Roy',
 		];
 		$request = new \WP_REST_Request();
-		$request->set_param('formId', $formId);
+		$request->set_url_params(['formId' => $formId]);
 		$request->set_param(\calderawp\calderaforms\cf2\RestApi\Process\Submission::VERIFY_FIELD, \Caldera_Forms_Render_Nonce::create_verify_nonce($formId));
 		$request->set_param('entryData', $entryData);
 
