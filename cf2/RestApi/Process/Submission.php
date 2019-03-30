@@ -31,7 +31,7 @@ class Submission extends Endpoint implements UsesFormJwtContract
 	 *
 	 * @since 1.9.0
 	 */
-	const SESSION_ID_FIELD = '_sessionPublicKeu';
+	const SESSION_ID_FIELD = '_sessionPublicKey';
 
 	/**
 	 * @since 1.9.0
@@ -64,7 +64,7 @@ class Submission extends Endpoint implements UsesFormJwtContract
 					'required' => true,
 				],
 				'entryData' => [
-					'type' => 'array',
+					'type' => 'object',
 					'description' => __('Entry Data', 'caldera-forms'),
 
 				],
@@ -126,6 +126,13 @@ class Submission extends Endpoint implements UsesFormJwtContract
 			}
 
 		}
+
+		$entryField = new \Caldera_Forms_Entry_Field();
+		$entryField->slug = self::SESSION_ID_FIELD;
+		$entryField->field_id = self::SESSION_ID_FIELD;
+		$entryField->value =  $this->getSessionIdFromRequest($request);
+		$entry->add_field($entryField);
+
 		$entryId = $entry->save();
 		if( is_numeric($entryId ) ){
 			$response = rest_ensure_response( ['entryId' => $entryId, ] );

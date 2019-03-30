@@ -6,6 +6,7 @@ namespace calderawp\calderaforms\cf2\RestApi\Process;
 use calderawp\calderaforms\cf2\RestApi\Endpoint;
 use calderawp\calderaforms\cf2\RestApi\Token\VerifiesFormToken;
 use calderawp\calderaforms\cf2\RestApi\Token\UsesFormJwtContract;
+
 class CreateToken extends Submission implements UsesFormJwtContract
 {
 	use VerifiesFormToken;
@@ -25,20 +26,15 @@ class CreateToken extends Submission implements UsesFormJwtContract
 	{
 		return [
 
-			'methods' => 'POST',
+			'methods' => 'PUT',
 			'callback' => [$this, 'createItem'],
 			'args' => [
-				self::VERIFY_FIELD => [
-					'type' => 'string',
-					'description' => __('Verification token (nonce) for form', 'caldera-forms'),
-					'required' => true,
-				],
 				'formId' => [
 					'type' => 'string',
 					'description' => __('ID for form field belongs to', 'caldera-forms'),
 					'required' => true,
-				]
-			]
+				],
+			],
 		];
 	}
 
@@ -51,16 +47,20 @@ class CreateToken extends Submission implements UsesFormJwtContract
 	 *
 	 * @return \WP_REST_Response
 	 */
-	public function createItem(\WP_REST_Request $request )
+	public function createItem(\WP_REST_Request $request)
 	{
 		$formId = $this->getFormIdFromRequest($request);
+		$sessionId = hash_hmac( 'sha256', $formId, $this->getJwt()->getSecret()  );
 
 		$response = rest_ensure_response([
-			'token' => $this
+			Submission::SESSION_ID_FIELD => $sessionId,
+			Submission::VERIFY_FIELD => $this
 				->getJwt()
 				->encode(
 					$formId,
-					uniqid(wp_unique_id('cfToken')))
+					$sessionId
+				),
+
 		]);
 		$response->set_status(201);
 		return $response;

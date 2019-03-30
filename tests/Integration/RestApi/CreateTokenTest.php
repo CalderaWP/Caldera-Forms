@@ -27,10 +27,12 @@ class CreateTokenTest extends  RestApiTestCase
 		$response = $route->createItem($request);
 		$responseData = $response->get_data();
 		$this->assertSame(201, $response->get_status());
-		$this->assertArrayHasKey( 'token', $responseData );
-		$this->assertNotEmpty( $responseData[ 'token']  );
-
-		$this->assertTrue( is_string($responseData[ 'token'] ) );
+		$this->assertArrayHasKey( Submission::VERIFY_FIELD, $responseData );
+		$this->assertNotEmpty( $responseData[  Submission::VERIFY_FIELD]  );
+		$this->assertTrue( is_string($responseData[  Submission::VERIFY_FIELD ] ) );
+		$this->assertArrayHasKey( Submission::SESSION_ID_FIELD, $responseData );
+		$this->assertNotEmpty( $responseData[  Submission::SESSION_ID_FIELD]  );
+		$this->assertTrue( is_string($responseData[  Submission::SESSION_ID_FIELD ] ) );
 
 	}
 
@@ -52,7 +54,7 @@ class CreateTokenTest extends  RestApiTestCase
 			array_key_exists($endpoint, $response->get_data()[ 'routes' ])
 		);
 		$this->assertTrue(
-			in_array('POST', $response->get_data()[ 'routes' ][ $endpoint ][ 'methods' ])
+			in_array('PUT', $response->get_data()[ 'routes' ][ $endpoint ][ 'methods' ])
 		);
 
 	}

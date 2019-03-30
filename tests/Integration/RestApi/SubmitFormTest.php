@@ -54,6 +54,7 @@ class SubmitFormTest extends RestApiTestCase
 	 * @since 1.9.0
 	 *
 	 * @group cf2
+	 * @group now
 	 */
 	public function testCreateItem()
 	{
@@ -70,8 +71,9 @@ class SubmitFormTest extends RestApiTestCase
 		];
 		$request = new \WP_REST_Request();
 		$request->set_url_params(['formId' => $formId]);
-		$request->set_param(\calderawp\calderaforms\cf2\RestApi\Process\Submission::VERIFY_FIELD,
-			\Caldera_Forms_Render_Nonce::create_verify_nonce($formId));
+		$request->set_param(Submission::VERIFY_FIELD, 'sdadgfhjkl;kgfdsa123456ytrfdas');
+		$sessionId = '111ads132456432lk';
+		$request->set_param(Submission::SESSION_ID_FIELD,$sessionId);
 		$request->set_param('entryData', $entryData);
 
 		wp_set_current_user(1);
@@ -111,6 +113,7 @@ class SubmitFormTest extends RestApiTestCase
 			$i++;
 		}
 		$this->assertEquals(count($entryData), $i);
+		$this->assertTrue(is_object($savedEntry->get_field(Submission::SESSION_ID_FIELD)));
 
 	}
 
