@@ -4,7 +4,6 @@
 namespace calderawp\calderaforms\Tests\Integration\RestApi;
 
 
-
 use calderawp\calderaforms\cf2\Exception;
 use calderawp\calderaforms\cf2\RestApi\Process\Submission;
 
@@ -52,7 +51,7 @@ class SubmitFormTest extends RestApiTestCase
 	 *
 	 * @covers \calderawp\calderaforms\cf2\RestApi\File\CreateFile::createItem()
 	 *
-	 * @since 1.8.0
+	 * @since 1.9.0
 	 *
 	 * @group cf2
 	 * @group now
@@ -61,7 +60,7 @@ class SubmitFormTest extends RestApiTestCase
 	{
 		$formId = $this->importAutoresponderForm();
 		$form = \Caldera_Forms_Forms::get_form($formId);
-		$this->assertFalse( empty( $form[ 'fields']));
+		$this->assertFalse(empty($form[ 'fields' ]));
 		$route = new Submission();
 		$valueOfTextField = 'Value of text field';
 		$entryData = [
@@ -72,7 +71,8 @@ class SubmitFormTest extends RestApiTestCase
 		];
 		$request = new \WP_REST_Request();
 		$request->set_url_params(['formId' => $formId]);
-		$request->set_param(\calderawp\calderaforms\cf2\RestApi\Process\Submission::VERIFY_FIELD, \Caldera_Forms_Render_Nonce::create_verify_nonce($formId));
+		$request->set_param(\calderawp\calderaforms\cf2\RestApi\Process\Submission::VERIFY_FIELD,
+			\Caldera_Forms_Render_Nonce::create_verify_nonce($formId));
 		$request->set_param('entryData', $entryData);
 
 		wp_set_current_user(1);
@@ -83,12 +83,13 @@ class SubmitFormTest extends RestApiTestCase
 		$entryObject->form_id = $formId;
 		$entryObject->user_id = get_current_user_id();
 		$entryObject->datestamp = date_i18n('Y-m-d H:i:s', time(), 0);
-		$entry = new \Caldera_Forms_Entry( $form, false, $entryObject );
+		$entry = new \Caldera_Forms_Entry($form, false, $entryObject);
 
 		try {
 			$response = $route->createItem($request);
 		} catch (\Exception $e) {
-			var_dump($e);exit;
+			var_dump($e);
+			exit;
 		}
 
 
@@ -96,21 +97,73 @@ class SubmitFormTest extends RestApiTestCase
 		$responseData = $response->get_data();
 		$entryId = $responseData[ 'entryId' ];
 		$this->assertTrue(is_numeric($entryId));
-		$this->assertNotEquals(0, $entryId );
+		$this->assertNotEquals(0, $entryId);
 		$form = \Caldera_Forms_Forms::get_form($formId);
-		$savedEntry = new \Caldera_Forms_Entry($form, $entryId );
-		$this->assertSame( $savedEntry->get_entry_id(), $entryId );
+		$savedEntry = new \Caldera_Forms_Entry($form, $entryId);
+		$this->assertSame($savedEntry->get_entry_id(), $entryId);
 		$i = 0;
-		foreach ( $entryData as $fieldId => $expectedValue ) {
+		foreach ($entryData as $fieldId => $expectedValue) {
 			$field = $savedEntry->get_field($fieldId);
-			if( is_null($field ) ){
-				var_dump($fieldId );exit;
+			if (is_null($field)) {
+				var_dump($fieldId);
+				exit;
 			}
 			$this->assertEquals($entryData[ $fieldId ], $field->get_value());
 			$i++;
 		}
-		$this->assertEquals(count($entryData), $i );
+		$this->assertEquals(count($entryData), $i);
 
 	}
 
+	/**
+	 * Test permissions callback when valid
+	 *
+	 * @covers \calderawp\calderaforms\cf2\RestApi\File\CreateFile::permissionsCallback()
+	 *
+	 * @since 1.9.0
+	 *
+	 * @group cf2
+	 * @group now
+	 */
+	public function testPermissionsCallback()
+	{
+		$formId = $this->importAutoresponderForm();
+
+		$request = new \WP_REST_Request();
+		$request->set_url_params(['formId' => $formId]);
+		$request->set_param(\calderawp\calderaforms\cf2\RestApi\Process\Submission::VERIFY_FIELD,
+			\Caldera_Forms_Render_Nonce::create_verify_nonce($formId));
+
+		$route = new Submission();
+		$this->assertTrue($route->permissionsCallback($request));
+
+
+	}
+
+	/**
+	 * Test permissions callback when now valid
+	 *
+	 * @covers \calderawp\calderaforms\cf2\RestApi\File\CreateFile::permissionsCallback()
+	 *
+	 * @since 1.9.0
+	 *
+	 * @group cf2
+	 * @group now
+	 */
+	public function testPermissionsCallbackNotValid()
+	{
+		$formId = $this->importAutoresponderForm();
+
+		$request = new \WP_REST_Request();
+		$request->set_url_params(['formId' => $formId]);
+		$request->set_param(
+			\calderawp\calderaforms\cf2\RestApi\Process\Submission::VERIFY_FIELD,
+			''
+		);
+
+		$route = new Submission();
+		$this->assertFalse($route->permissionsCallback($request));
+
+
+	}
 }
