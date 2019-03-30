@@ -23,6 +23,8 @@ class Hooks
 
     /**
      * Subscribe to all events
+	 *
+	 * @since 1.8.0
      */
     public function subscribe()
     {
@@ -32,8 +34,26 @@ class Hooks
 			$this->container->getCoreDir()
 		);
         add_filter('caldera_forms_get_field_types', [$register, 'filter' ], 2 );
+        add_action( 'caldera_forms_rest_api_init', [$this, 'addJwtToApi' ], 10, 2 );
     }
 
+	/**
+	 * Attach Form JWT to endpoints
+	 *
+	 * @since 1.9.0
+	 *
+	 * @uses "caldera_forms_rest_api_init" filter
+	 *
+	 * @param \Caldera_Forms_API_Load $v1
+	 * @param RestApi\Register $v2
+	 */
+    public function addJwtToApi(\Caldera_Forms_API_Load $v1, \calderawp\calderaforms\cf2\RestApi\Register $v2 )
+	{
+		$v2->setJwt(
+			$this->container->getFormJwt()
+		);
+
+	}
 
     /**
      * @return FileFieldHandler

@@ -15,3 +15,7 @@ require_once $_plugin_root_dir . '/vendor/autoload.php';
  * Interfaces from `/classes` needed in cf2
  */
 require_once $_plugin_root_dir . '/classes/api/route.php';
+
+if( ! defined( 'NONCE_SALT' ) ){
+	define( 'NONCE_SALT', 'NONCE_SALTy' );
+}

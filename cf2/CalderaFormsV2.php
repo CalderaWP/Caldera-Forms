@@ -8,6 +8,8 @@ use calderawp\calderaforms\cf2\Fields\FieldTypeFactory;
 use calderawp\calderaforms\cf2\RestApi\Token\FormJwt;
 use calderawp\calderaforms\cf2\Transients\Cf1TransientsApi;
 use calderawp\calderaforms\cf2\Services\ServiceContract;
+use calderawp\calderaforms\cf2\RestApi\Token\FormTokenContract;
+
 class CalderaFormsV2 extends \calderawp\CalderaContainers\Service\Container implements CalderaFormsV2Contract
 {
 
@@ -44,6 +46,13 @@ class CalderaFormsV2 extends \calderawp\CalderaContainers\Service\Container impl
         });
 		$this->singleton(FieldTypeFactory::class, function(){
 			return new FieldTypeFactory();
+		});
+		$this->singleton(FormTokenContract::class, function(){
+			$siteUrl =  '';
+			if( function_exists( 'site_url' ) ){
+				$siteUrl = site_url();
+			}
+			return new FormJwt(NONCE_SALT,  $siteUrl );
 		});
     }
 
@@ -168,7 +177,7 @@ class CalderaFormsV2 extends \calderawp\CalderaContainers\Service\Container impl
 	 */
     public function getFormJwt()
 	{
-		return $this->make(FormJwt::class );
+		return $this->make(FormTokenContract::class );
 	}
 
 	/**

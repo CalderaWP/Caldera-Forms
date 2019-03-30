@@ -39,4 +39,32 @@ class FunctionsTest extends TestCase
 		$this->assertTrue( is_object( $container->getService(  \calderawp\calderaforms\cf2\Services\QueueService::class)));
 	}
 
+	/**
+	 * @since  1.9.0
+	 *
+	 * @group now
+	 *
+	 * @covers \caldera_forms_get_v2_container()
+	 */
+	public function testJwtSet()
+	{
+		$container = caldera_forms_get_v2_container();
+		$this->assertTrue( is_object( $container->getFormJwt() ) );
+	}
+
+	/**
+	 * @since  1.9.0
+	 *
+	 * @group now
+	 *
+	 * @covers \caldera_forms_get_v2_container()
+	 * @covers \calderawp\calderaforms\cf2\CalderaFormsV2::getFormJwt()
+	 */
+	public function testFormJwtEncodeDecodeViaContainer()
+	{
+		$container = caldera_forms_get_v2_container();
+		$encoded = $container->getFormJwt()->encode('f1', '111' );
+		$this->assertNotFalse($container->getFormJwt()->decode($encoded));
+	}
+
 }

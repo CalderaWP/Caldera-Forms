@@ -24,7 +24,7 @@ class Caldera_Forms
 	const VERSION = CFCORE_VER;
 
 	/**
-	/**
+	 * /**
 	 * @since 1.4.2
 	 */
 	const PLUGIN_SLUG = 'caldera-forms';
@@ -101,51 +101,51 @@ class Caldera_Forms
 	{
 
 		// Load plugin text domain
-		add_action('init', array($this, 'load_plugin_textdomain'));
+		add_action('init', [$this, 'load_plugin_textdomain']);
 
-		add_action('template_redirect', array($this, 'api_handler'));
+		add_action('template_redirect', [$this, 'api_handler']);
 
 		// add element & fields filters
-		add_filter('caldera_forms_get_form_processors', array($this, 'get_form_processors'));
-		add_filter('caldera_forms_submit_redirect_complete', array($this, 'do_redirect'), 10, 4);
-		add_action('caldera_forms_edit_end', array($this, 'calculations_templates'));
-		add_filter('caldera_forms_render_get_field', array($this, 'auto_populate_options_field'), 10, 2);
-		add_filter('caldera_forms_render_get_field', array($this, 'apply_conditional_groups'), 10, 2);
+		add_filter('caldera_forms_get_form_processors', [$this, 'get_form_processors']);
+		add_filter('caldera_forms_submit_redirect_complete', [$this, 'do_redirect'], 10, 4);
+		add_action('caldera_forms_edit_end', [$this, 'calculations_templates']);
+		add_filter('caldera_forms_render_get_field', [$this, 'auto_populate_options_field'], 10, 2);
+		add_filter('caldera_forms_render_get_field', [$this, 'apply_conditional_groups'], 10, 2);
 		add_filter('caldera_forms_view_field_paragraph', 'wpautop');
 
 		//mailer magic
-		add_filter('caldera_forms_get_magic_tags', array($this, 'set_magic_tags'), 1);
+		add_filter('caldera_forms_get_magic_tags', [$this, 'set_magic_tags'], 1);
 
 		// action
-		add_action('caldera_forms_submit_complete', array($this, 'save_final_form'), 50);
+		add_action('caldera_forms_submit_complete', [$this, 'save_final_form'], 50);
 
 		// find if profile is loaded
-		add_action('wp_loaded', array($this, 'cf_init_system'), 25);
-		add_action('wp', array($this, 'cf_init_preview'));
+		add_action('wp_loaded', [$this, 'cf_init_system'], 25);
+		add_action('wp', [$this, 'cf_init_preview']);
 
 		// render shortcode
-		add_shortcode('caldera_form', array($this, 'shortcode_handler'));
+		add_shortcode('caldera_form', [$this, 'shortcode_handler']);
 		// modal shortcode
-		add_shortcode('caldera_form_modal', array($this, 'shortcode_handler'));
-		add_action('wp_footer', array('Caldera_Forms_Render_Modals', 'render_footer_modals'));
+		add_shortcode('caldera_form_modal', [$this, 'shortcode_handler']);
+		add_action('wp_footer', ['Caldera_Forms_Render_Modals', 'render_footer_modals']);
 
 		//filter shortcode atts for defaults
-		add_filter('shortcode_atts_caldera_form', array('Caldera_Forms_Shortcode_Atts', 'allow_default_set'), 5, 4);
-		add_filter('shortcode_atts_caldera_form_modal', array('Caldera_Forms_Shortcode_Atts', 'allow_default_set'), 5,
+		add_filter('shortcode_atts_caldera_form', ['Caldera_Forms_Shortcode_Atts', 'allow_default_set'], 5, 4);
+		add_filter('shortcode_atts_caldera_form_modal', ['Caldera_Forms_Shortcode_Atts', 'allow_default_set'], 5,
 			4);
-		add_filter('shortcode_atts_caldera_form', array('Caldera_Forms_Shortcode_Atts', 'maybe_allow_revision'), 5, 4);
-		add_filter('shortcode_atts_caldera_form_modal', array('Caldera_Forms_Shortcode_Atts', 'maybe_allow_revision'),
+		add_filter('shortcode_atts_caldera_form', ['Caldera_Forms_Shortcode_Atts', 'maybe_allow_revision'], 5, 4);
+		add_filter('shortcode_atts_caldera_form_modal', ['Caldera_Forms_Shortcode_Atts', 'maybe_allow_revision'],
 			5, 4);
 
 		//email settings
-		add_action('caldera_forms_core_init', array('Caldera_Forms_Email_Settings', 'maybe_add_hooks'));
-		add_filter('pre_update_option__caldera_forms_email_api_settings', array(
+		add_action('caldera_forms_core_init', ['Caldera_Forms_Email_Settings', 'maybe_add_hooks']);
+		add_filter('pre_update_option__caldera_forms_email_api_settings', [
 			'Caldera_Forms_Email_Settings',
-			'sanitize_save'
-		));
+			'sanitize_save',
+		]);
 
 		if (current_user_can(Caldera_Forms::get_manage_cap('admin'))) {
-			add_action('wp_ajax_cf_email_save', array('Caldera_Forms_Email_Settings', 'save'));
+			add_action('wp_ajax_cf_email_save', ['Caldera_Forms_Email_Settings', 'save']);
 		}
 
 		// Add cache plugin support
@@ -154,24 +154,24 @@ class Caldera_Forms
 		}
 
 		//auto-population via Easy Pods/ Easy Queries
-		add_action('caldera_forms_render_start', array(__CLASS__, 'easy_pods_queries_setup'));
+		add_action('caldera_forms_render_start', [__CLASS__, 'easy_pods_queries_setup']);
 
 		//delete file uploads that are not going in media library
-		add_action('caldera_forms_submit_complete', array('Caldera_Forms_Files', 'cleanup'));
-		add_action(Caldera_Forms_Files::CRON_ACTION, array('Caldera_Forms_Files', 'cleanup_via_cron'));
+		add_action('caldera_forms_submit_complete', ['Caldera_Forms_Files', 'cleanup']);
+		add_action(Caldera_Forms_Files::CRON_ACTION, ['Caldera_Forms_Files', 'cleanup_via_cron']);
 
 		//entry permission
-		add_filter('caldera_forms_manage_cap', array('Caldera_Forms_Entry_UI', 'permissions_filter'), 9, 3);
+		add_filter('caldera_forms_manage_cap', ['Caldera_Forms_Entry_UI', 'permissions_filter'], 9, 3);
 
-		add_filter('caldera_forms_send_email', array(Caldera_Forms_Admin::get_instance(), 'block_email_on_edit'), 9);
+		add_filter('caldera_forms_send_email', [Caldera_Forms_Admin::get_instance(), 'block_email_on_edit'], 9);
 
 		if (current_user_can(Caldera_Forms::get_manage_cap('admin'))) {
 			$id = null;
 
 			$view = false;
-			if (isset($_GET['cf-email-preview'], $_GET['cf-email-preview-form'])) {
-				if (wp_verify_nonce($_GET['cf-email-preview'], $_GET['cf-email-preview-form'])) {
-					$id = $_GET['cf-email-preview-form'];
+			if (isset($_GET[ 'cf-email-preview' ], $_GET[ 'cf-email-preview-form' ])) {
+				if (wp_verify_nonce($_GET[ 'cf-email-preview' ], $_GET[ 'cf-email-preview-form' ])) {
+					$id = $_GET[ 'cf-email-preview-form' ];
 					$view = true;
 				}
 			}
@@ -181,30 +181,30 @@ class Caldera_Forms
 		}
 
 		//check for forms on page
-		add_action('template_redirect', array($this, 'maybe_load_styles'));
+		add_action('template_redirect', [$this, 'maybe_load_styles']);
 
 		/** Email Filtering */
 		//Check email attachments
-		add_filter('caldera_forms_mailer', array('Caldera_Forms_Email_Filters', 'mail_attachment_check'), 10, 3);
+		add_filter('caldera_forms_mailer', ['Caldera_Forms_Email_Filters', 'mail_attachment_check'], 10, 3);
 		//format email - using old method in case anyone removed the hook
-		add_filter('caldera_forms_mailer', array($this, 'format_message'));
+		add_filter('caldera_forms_mailer', [$this, 'format_message']);
 		//format autoresponder email
 		add_filter('caldera_forms_autoresponse_mail',
-			array('Caldera_Forms_Email_Filters', 'format_autoresponse_message'));
-		add_filter('caldera_forms_mailer', array('Caldera_Forms_Email_Filters', 'prepare_headers'));
-		add_filter('caldera_forms_autoresponse_mail', array('Caldera_Forms_Email_Filters', 'prepare_headers'));
+			['Caldera_Forms_Email_Filters', 'format_autoresponse_message']);
+		add_filter('caldera_forms_mailer', ['Caldera_Forms_Email_Filters', 'prepare_headers']);
+		add_filter('caldera_forms_autoresponse_mail', ['Caldera_Forms_Email_Filters', 'prepare_headers']);
 
 		/** Entry Viewer v1 */
-		add_action('wp_ajax_browse_entries', array(Caldera_Forms_Entry_UI::get_instance(), 'view_entries'));
-		add_action('wp_ajax_get_entry', array(Caldera_Forms_Entry_UI::get_instance(), 'view_entry'));
-		add_action('caldera_forms_entry_actions', array(Caldera_Forms_Entry_UI::get_instance(), 'get_entry_actions'),
+		add_action('wp_ajax_browse_entries', [Caldera_Forms_Entry_UI::get_instance(), 'view_entries']);
+		add_action('wp_ajax_get_entry', [Caldera_Forms_Entry_UI::get_instance(), 'view_entry']);
+		add_action('caldera_forms_entry_actions', [Caldera_Forms_Entry_UI::get_instance(), 'get_entry_actions'],
 			1);
 
-		add_action('rest_api_init', array(__CLASS__, 'init_rest_api'));
+		add_action('rest_api_init', [__CLASS__, 'init_rest_api']);
 
 		//entry viewer shortcode
 		add_shortcode(Caldera_Forms_Entry_Shortcode::get_shortcode_name(),
-			array('Caldera_Forms_Entry_Shortcode', 'shortcode_callback'));
+			['Caldera_Forms_Entry_Shortcode', 'shortcode_callback']);
 
 		//init Credit card # hash class here, not on hook, so it can't be unhooked
 		new Caldera_Forms_Field_Credit;
@@ -217,17 +217,17 @@ class Caldera_Forms
 		$utm->add_hooks();
 
 		//clear syncer cache on form update
-		add_action('caldera_forms_save_form', array('Caldera_Forms_Sync_Factory', 'clear_cache'));
+		add_action('caldera_forms_save_form', ['Caldera_Forms_Sync_Factory', 'clear_cache']);
 
 		//initialize settings
 		Caldera_Forms_Settings_Init::load();
 
 		//CRON callback for deleting our fake transients
-		add_action(Caldera_Forms_Transient::CRON_ACTION, array('Caldera_Forms_Transient', 'cron_callback'));
-		add_action('caldera_forms_submit_complete', array('Caldera_Forms_Transient', 'cron_callback'));
+		add_action(Caldera_Forms_Transient::CRON_ACTION, ['Caldera_Forms_Transient', 'cron_callback']);
+		add_action('caldera_forms_submit_complete', ['Caldera_Forms_Transient', 'cron_callback']);
 
 		//Init GDPR exporters/erasers
-        add_action( 'init', [ Caldera_Forms_GDPR::class, 'register_gdpr' ] );
+		add_action('init', [Caldera_Forms_GDPR::class, 'register_gdpr']);
 
 		/**
 		 * Runs after Caldera Forms core is initialized
@@ -284,7 +284,7 @@ class Caldera_Forms
 		$use = apply_filters('caldera_forms_force_enqueue_styles_early', false);
 		$on_page = self::check_for_forms_on_page();
 		if ($use || $on_page) {
-			add_action('wp_enqueue_scripts', array('Caldera_Forms_Render_Assets', 'optional_style_includes'));
+			add_action('wp_enqueue_scripts', ['Caldera_Forms_Render_Assets', 'optional_style_includes']);
 
 		}
 
@@ -324,13 +324,13 @@ class Caldera_Forms
 		$sidebars = get_option('sidebars_widgets');
 		if (is_array($sidebars) && !empty($sidebars)) {
 			$form_widgets = get_option('widget_caldera_forms_widget');
-			unset($sidebars['wp_inactive_widgets']);
+			unset($sidebars[ 'wp_inactive_widgets' ]);
 			foreach ($sidebars as $sidebar => $set) {
 				if (is_active_sidebar($sidebar)) {
 					foreach ($set as $setup) {
 						if (false !== strpos($setup, 'caldera_forms_widget-')) {
 							$widget_instance = str_replace('caldera_forms_widget-', '', $setup);
-							if (!empty($form_widgets[$widget_instance]['form'])) {
+							if (!empty($form_widgets[ $widget_instance ][ 'form' ])) {
 								return true;
 							}
 						}
@@ -374,11 +374,11 @@ class Caldera_Forms
 	 */
 	public static function load_field($form, $field_base_id)
 	{
-		if (!empty($form['fields'][$field_base_id])) {
-			$field = $form['fields'][$field_base_id];
+		if (!empty($form[ 'fields' ][ $field_base_id ])) {
+			$field = $form[ 'fields' ][ $field_base_id ];
 		} else {
 			//probably bad, but opportunity to defined using "caldera_forms_render_setup_field"
-			$field = array();
+			$field = [];
 		}
 		/**
 		 * Filter the field setup before render
@@ -424,23 +424,23 @@ class Caldera_Forms
 
 			// check update version
 			$db_version = get_option('CF_DB', 0);
-			update_option( 'CF_DB', 7 );
+			update_option('CF_DB', 7);
 			$force_update = false;
 
 			// ensure that admin can only force update
-			if (Caldera_Forms::get_manage_cap('admin') && isset($_GET['cal_db_update'])) {
-				$force_update = (bool)wp_verify_nonce($_GET['cal_db_update']);
+			if (Caldera_Forms::get_manage_cap('admin') && isset($_GET[ 'cal_db_update' ])) {
+				$force_update = (bool)wp_verify_nonce($_GET[ 'cal_db_update' ]);
 			}
 
 			include_once CFCORE_PATH . 'includes/updater.php';
 
-			if ( CF_DB > $db_version || $force_update) {
+			if (CF_DB > $db_version || $force_update) {
 				self::check_tables();
 				if ($db_version < 2 || $force_update) {
 					caldera_forms_db_v2_update();
 				}
 
-				if ( $db_version < 4 || $force_update) {
+				if ($db_version < 4 || $force_update) {
 					self::activate_caldera_forms(true);
 					caldera_forms_write_db_flag(4);
 				}
@@ -449,15 +449,15 @@ class Caldera_Forms
 					caldera_forms_db_v6_update();
 				}
 
-                if (($db_version < 7 || $force_update) ) {
-                    caldera_forms_db_v7_update();
-                }
+				if (($db_version < 7 || $force_update)) {
+					caldera_forms_db_v7_update();
+				}
 
-				if (($db_version < 8 || $force_update) ) {
+				if (($db_version < 8 || $force_update)) {
 					Caldera_Forms_Transient::clear_wpcron();
 				}
 
-				caldera_forms_write_db_flag(CF_DB );
+				caldera_forms_write_db_flag(CF_DB);
 
 			} else {
 				$version = caldera_forms_get_last_update_version();
@@ -481,7 +481,7 @@ class Caldera_Forms
 	{
 
 		//if running on activation hook, load order is wrong.
-		if( ! did_action( 'caldera_forms_includes_complete' ) ){
+		if (!did_action('caldera_forms_includes_complete')) {
 			caldera_forms_load();
 		}
 
@@ -493,8 +493,8 @@ class Caldera_Forms
 		// ensure urls are there
 		self::init_cf_internal();
 
-        //make sure we have all tables
-        self::check_tables();
+		//make sure we have all tables
+		self::check_tables();
 
 		if ($version >= '1.1.5') {
 			return; // only if 1.1.4 or lower
@@ -502,9 +502,9 @@ class Caldera_Forms
 
 		// check for field_id from 1.0.4
 		$columns = $wpdb->get_results("SHOW COLUMNS FROM `" . $wpdb->prefix . "cf_form_entry_values`", ARRAY_A);
-		$fields = array();
+		$fields = [];
 		foreach ($columns as $column) {
-			$fields[] = $column['Field'];
+			$fields[] = $column[ 'Field' ];
 		}
 
 		if (!in_array('field_id', $fields)) {
@@ -512,24 +512,24 @@ class Caldera_Forms
 			$wpdb->query("CREATE INDEX `field_id` ON `" . $wpdb->prefix . "cf_form_entry_values` (`field_id`); ");
 			// update all entries
 			$forms = $wpdb->get_results("SELECT `id`,`form_id` FROM `" . $wpdb->prefix . "cf_form_entries`", ARRAY_A);
-			$known = array();
+			$known = [];
 			if (!empty($forms)) {
 				foreach ($forms as $form) {
-					if (!isset($known[$form['form_id']])) {
-						$config = Caldera_Forms_Forms::get_form($form['form_id']);
+					if (!isset($known[ $form[ 'form_id' ] ])) {
+						$config = Caldera_Forms_Forms::get_form($form[ 'form_id' ]);
 						if (empty($config)) {
 							continue;
 						}
-						$known[$form['form_id']] = $config;
+						$known[ $form[ 'form_id' ] ] = $config;
 					} else {
-						$config = $known[$form['form_id']];
+						$config = $known[ $form[ 'form_id' ] ];
 					}
 
-					foreach ($config['fields'] as $field_id => $field) {
-						$wpdb->update($wpdb->prefix . "cf_form_entry_values", array('field_id' => $field_id), array(
-							'entry_id' => $form['id'],
-							'slug' => $field['slug']
-						));
+					foreach ($config[ 'fields' ] as $field_id => $field) {
+						$wpdb->update($wpdb->prefix . "cf_form_entry_values", ['field_id' => $field_id], [
+							'entry_id' => $form[ 'id' ],
+							'slug' => $field[ 'slug' ],
+						]);
 					}
 
 				}
@@ -537,10 +537,10 @@ class Caldera_Forms
 		}
 		// add status
 		$columns = $wpdb->get_results("SHOW COLUMNS FROM `" . $wpdb->prefix . "cf_form_entries`", ARRAY_A);
-		$fields = array();
+		$fields = [];
 
 		foreach ($columns as $column) {
-			$fields[] = $column['Field'];
+			$fields[] = $column[ 'Field' ];
 		}
 
 		if (!in_array('status', $fields) && $version < '1.2.0') {
@@ -594,12 +594,12 @@ class Caldera_Forms
 	public static function star_rating_viewer($value, $field, $form)
 	{
 
-		$out = "<div style=\"color: " . $field['config']['color'] . "; font-size: 10px;display: inline;\" >";
-		if (!empty($field['config']['number'])) {
-			for ($i = 1; $i <= $field['config']['number']; $i++) {
-				$star = 'raty-' . $field['config']['type'] . '-off';
+		$out = "<div style=\"color: " . $field[ 'config' ][ 'color' ] . "; font-size: 10px;display: inline;\" >";
+		if (!empty($field[ 'config' ][ 'number' ])) {
+			for ($i = 1; $i <= $field[ 'config' ][ 'number' ]; $i++) {
+				$star = 'raty-' . $field[ 'config' ][ 'type' ] . '-off';
 				if ($i <= $value) {
-					$star = 'raty-' . $field['config']['type'] . '-on';
+					$star = 'raty-' . $field[ 'config' ][ 'type' ] . '-on';
 				}
 				$out .= '<span data-alt="' . $i . '" class="' . $star . '" title="' . $i . '" style="margin-right: -2px;"></span> ';
 			}
@@ -620,7 +620,7 @@ class Caldera_Forms
 	 */
 	public static function handle_file_view($value, $field, $form)
 	{
-		$out = array();
+		$out = [];
 		foreach ((array)$value as $file_url) {
 			$out[] = '<a href="' . $file_url . '" target="_blank">' . basename($file_url) . '</a>';
 		}
@@ -659,20 +659,20 @@ class Caldera_Forms
 	{
 		return true;
 
-		if (!isset($_POST['g-recaptcha-response']) || empty($_POST['g-recaptcha-response'])) {
+		if (!isset($_POST[ 'g-recaptcha-response' ]) || empty($_POST[ 'g-recaptcha-response' ])) {
 			return new WP_Error('error');
 		}
 
-		$args = array(
-			'secret' => $field['config']['private_key'],
-			'response' => sanitize_text_field($_POST['g-recaptcha-response'])
-		);
+		$args = [
+			'secret' => $field[ 'config' ][ 'private_key' ],
+			'response' => sanitize_text_field($_POST[ 'g-recaptcha-response' ]),
+		];
 
 		$request = wp_remote_get('https://www.google.com/recaptcha/api/siteverify?' . build_query($args));
 		$result = json_decode(wp_remote_retrieve_body($request));
 		if (empty($result->success)) {
 			return new WP_Error('error', __("The captcha wasn't entered correctly.",
-					'caldera-forms') . ' <a href="#" class="reset_' . sanitize_text_field($_POST[$field['ID']]) . '">' . __('Reset',
+					'caldera-forms') . ' <a href="#" class="reset_' . sanitize_text_field($_POST[ $field[ 'ID' ] ]) . '">' . __('Reset',
 					'caldera-forms') . '<a>.');
 		}
 
@@ -697,8 +697,8 @@ class Caldera_Forms
 			return;
 		}
 
-		$new_data = self::get_field_data($field['ID'], $form);
-		$original_data = self::get_field_data($field['ID'], $form, $entry_id);
+		$new_data = self::get_field_data($field[ 'ID' ], $form);
+		$original_data = self::get_field_data($field[ 'ID' ], $form, $entry_id);
 
 		if ($original_data === $new_data) {
 			// no change
@@ -709,25 +709,25 @@ class Caldera_Forms
 			$new_data = apply_filters('caldera_forms_update_field', $new_data, $field, $form);
 		}
 
-		if (has_filter('caldera_forms_update_field_' . $field['type'])) {
-			$new_data = apply_filters('caldera_forms_update_field_' . $field['type'], $new_data, $field, $form);
+		if (has_filter('caldera_forms_update_field_' . $field[ 'type' ])) {
+			$new_data = apply_filters('caldera_forms_update_field_' . $field[ 'type' ], $new_data, $field, $form);
 		}
 
 		if ($original_data !== null) {
-			$wpdb->delete($wpdb->prefix . 'cf_form_entry_values', array(
+			$wpdb->delete($wpdb->prefix . 'cf_form_entry_values', [
 				'entry_id' => $entry_id,
-				'field_id' => $field['ID']
-			));
+				'field_id' => $field[ 'ID' ],
+			]);
 		}
 
 		foreach ((array)$new_data as $entry_data) {
 			// no entry - add first
-			$new_entry = array(
+			$new_entry = [
 				'entry_id' => $entry_id,
-				'field_id' => $field['ID'],
-				'slug' => $field['slug'],
+				'field_id' => $field[ 'ID' ],
+				'slug' => $field[ 'slug' ],
 				'value' => $entry_data,
-			);
+			];
 			Caldera_Forms_Entry_Field::insert($new_entry);
 		}
 
@@ -744,17 +744,17 @@ class Caldera_Forms
 	{
 		global $wpdb, $form;
 
-		if (!empty($field['conditions']['type'])) {
-			if (!self::check_condition($field['conditions'], $form)) {
+		if (!empty($field[ 'conditions' ][ 'type' ])) {
+			if (!self::check_condition($field[ 'conditions' ], $form)) {
 				return;
 			}
 		}
 
-		if (!isset($field['ID'], $field['slug'])) {
+		if (!isset($field[ 'ID' ], $field[ 'slug' ])) {
 			return;
 		}
 
-		$data = self::get_field_data($field['ID'], $form);
+		$data = self::get_field_data($field[ 'ID' ], $form);
 
 		if (empty($data) && 0 != $data) {
 			return;
@@ -778,7 +778,7 @@ class Caldera_Forms
 				$entry = apply_filters('caldera_forms_save_field', $entry, $field, $form, $entry_id);
 			}
 
-			if (has_filter('caldera_forms_save_field_' . $field['type'])) {
+			if (has_filter('caldera_forms_save_field_' . $field[ 'type' ])) {
 				/**
 				 * Filter field data before saving for a specific field type
 				 *
@@ -789,21 +789,22 @@ class Caldera_Forms
 				 * @param array $form Form config @since 1.5.2
 				 * @param int $entry_id ID of entry to save for  @since 1.5.2
 				 */
-				$entry = apply_filters('caldera_forms_save_field_' . $field['type'], $entry, $field, $form, $entry_id);
+				$entry = apply_filters('caldera_forms_save_field_' . $field[ 'type' ], $entry, $field, $form,
+					$entry_id);
 			}
 
-			$field_item = array(
+			$field_item = [
 				'entry_id' => $entry_id,
-				'field_id' => $field['ID'],
-				'slug' => $field['slug'],
-				'value' => self::do_magic_tags($entry)
-			);
+				'field_id' => $field[ 'ID' ],
+				'slug' => $field[ 'slug' ],
+				'value' => self::do_magic_tags($entry),
+			];
 
 			// named key kets .key to slug
 			if (!is_int($key)) {
 				// Keyed
 				$keyed = true;
-				$field_item['slug'] .= '.' . $key;
+				$field_item[ 'slug' ] .= '.' . $key;
 			}
 			// Save
 			Caldera_Forms_Entry_Field::insert($field_item);
@@ -811,16 +812,16 @@ class Caldera_Forms
 
 		if (!empty($keyed)) {
 
-			if (has_filter('caldera_forms_save_field_combined' . $field['type'])) {
-				$data = apply_filters('caldera_forms_save_field_combined' . $field['type'], $entry, $field);
+			if (has_filter('caldera_forms_save_field_combined' . $field[ 'type' ])) {
+				$data = apply_filters('caldera_forms_save_field_combined' . $field[ 'type' ], $entry, $field);
 			}
 
-			$field_item = array(
+			$field_item = [
 				'entry_id' => $entry_id,
-				'field_id' => $field['ID'],
-				'slug' => $field['slug'],
-				'value' => json_encode($data)
-			);
+				'field_id' => $field[ 'ID' ],
+				'slug' => $field[ 'slug' ],
+				'value' => json_encode($data),
+			];
 			Caldera_Forms_Entry_Field::insert($field_item);
 		}
 
@@ -839,21 +840,21 @@ class Caldera_Forms
 
 		$entryid = null;
 		// check submit type (new or update)
-		if (isset($_POST['_cf_frm_edt'])) {
+		if (isset($_POST[ '_cf_frm_edt' ])) {
 			// is edit
 			//check user can edit this item.
 			$user_id = get_current_user_id();
-			$details = Caldera_Forms::get_entry_detail($_POST['_cf_frm_edt'], $form);
+			$details = Caldera_Forms::get_entry_detail($_POST[ '_cf_frm_edt' ], $form);
 
 			// check token
-			if (is_array($details) && isset($_POST['_cf_frm_edt_tkn'])) {
+			if (is_array($details) && isset($_POST[ '_cf_frm_edt_tkn' ])) {
 
-				$validated = Caldera_Forms_Entry_Token::verify_token($_POST['_cf_frm_edt_tkn'], $details['id'],
-					$form['ID']);
+				$validated = Caldera_Forms_Entry_Token::verify_token($_POST[ '_cf_frm_edt_tkn' ], $details[ 'id' ],
+					$form[ 'ID' ]);
 				if (is_wp_error($validated)) {
 					return $validated;
 				} else {
-					$entry_id = $details['id'];
+					$entry_id = $details[ 'id' ];
 					$edit_token = Caldera_Forms_Entry_Token::create_entry_token($entry_id, $form);
 				}
 
@@ -863,8 +864,8 @@ class Caldera_Forms
 				if (!empty($user_id)) {
 					if (!empty($details)) {
 						// check user can edit
-						if (current_user_can('edit_posts') || absint($details['user_id'] ) === $user_id) {
-							$entryid = $_POST['_cf_frm_edt'];
+						if (current_user_can('edit_posts') || absint($details[ 'user_id' ]) === $user_id) {
+							$entryid = $_POST[ '_cf_frm_edt' ];
 						} else {
 							return new WP_Error('error', __("Permission denied.", 'caldera-forms'));
 						}
@@ -875,7 +876,7 @@ class Caldera_Forms
 
 		}
 
-		if (!empty($form['db_support'])) {
+		if (!empty($form[ 'db_support' ])) {
 			Caldera_Forms_Save_Final::save_in_db($form, $entryid);
 		}
 
@@ -909,12 +910,12 @@ class Caldera_Forms
 		$phpmailer->SMTPDebug = 0;
 		$result = ob_get_clean();
 
-		$meta_entry = array(
-			'entry_id' => $transdata['entry_id'],
+		$meta_entry = [
+			'entry_id' => $transdata[ 'entry_id' ],
 			'process_id' => '_debug_log',
 			'meta_key' => 'debug_log',
-			'meta_value' => $result
-		);
+			'meta_value' => $result,
+		];
 
 		$wpdb->insert($wpdb->prefix . 'cf_form_entry_meta', $meta_entry);
 
@@ -949,17 +950,17 @@ class Caldera_Forms
 	public static function override_redirect_notice($notices, $form)
 	{
 
-		if (isset($form['processors'])) {
-			foreach ($form['processors'] as $processor) {
-				if ($processor['type'] == 'form_redirect') {
+		if (isset($form[ 'processors' ])) {
+			foreach ($form[ 'processors' ] as $processor) {
+				if ($processor[ 'type' ] == 'form_redirect') {
 
-					if (isset($processor['conditions']) && !empty($processor['conditions']['type'])) {
-						if (!self::check_condition($processor['conditions'], $form)) {
+					if (isset($processor[ 'conditions' ]) && !empty($processor[ 'conditions' ][ 'type' ])) {
+						if (!self::check_condition($processor[ 'conditions' ], $form)) {
 							continue;
 						}
 					}
 
-					$notices['success']['note'] = self::do_magic_tags($processor['config']['message']);
+					$notices[ 'success' ][ 'note' ] = self::do_magic_tags($processor[ 'config' ][ 'message' ]);
 				}
 			}
 		}
@@ -978,42 +979,42 @@ class Caldera_Forms
 	 */
 	public static function do_redirect($referrer, $form, $processid)
 	{
-		if (isset($form['processors'])) {
-			foreach ($form['processors'] as $processor) {
-				if ($processor['type'] == 'form_redirect') {
+		if (isset($form[ 'processors' ])) {
+			foreach ($form[ 'processors' ] as $processor) {
+				if ($processor[ 'type' ] == 'form_redirect') {
 
-					if (isset($processor['conditions']) && !empty($processor['conditions']['type'])) {
-						if (!self::check_condition($processor['conditions'], $form)) {
+					if (isset($processor[ 'conditions' ]) && !empty($processor[ 'conditions' ][ 'type' ])) {
+						if (!self::check_condition($processor[ 'conditions' ], $form)) {
 							continue;
 						}
 					}
-					if (!empty($processor['config']['url'])) {
+					if (!empty($processor[ 'config' ][ 'url' ])) {
 
 						// set message
-						add_filter('caldera_forms_render_notices', array(
+						add_filter('caldera_forms_render_notices', [
 							'Caldera_Forms',
-							'override_redirect_notice'
-						), 10, 2);
+							'override_redirect_notice',
+						], 10, 2);
 
 						//passback urls
 						$referrer = parse_url($referrer);
-						$query_vars = array();
-						if (!empty($referrer['query'])) {
-							parse_str($referrer['query'], $referrer['query']);
-							if (isset($referrer['query']['cf_su'])) {
-								unset($referrer['query']['cf_su']);
+						$query_vars = [];
+						if (!empty($referrer[ 'query' ])) {
+							parse_str($referrer[ 'query' ], $referrer[ 'query' ]);
+							if (isset($referrer[ 'query' ][ 'cf_su' ])) {
+								unset($referrer[ 'query' ][ 'cf_su' ]);
 							}
-							$query_vars = array_merge($query_vars, $referrer['query']);
+							$query_vars = array_merge($query_vars, $referrer[ 'query' ]);
 						}
 						// get vars in url
-						$base_redirect = self::do_magic_tags($processor['config']['url']);
+						$base_redirect = self::do_magic_tags($processor[ 'config' ][ 'url' ]);
 						$redirect = parse_url($base_redirect);
 
-						if (!empty($redirect['query'])) {
-							parse_str($redirect['query'], $redirect['query']);
+						if (!empty($redirect[ 'query' ])) {
+							parse_str($redirect[ 'query' ], $redirect[ 'query' ]);
 							$base_redirect = explode('?', $base_redirect, 2);
-							$query_vars = array_merge($redirect['query'], $query_vars);
-							$redirect = add_query_arg($query_vars, $base_redirect[0]);
+							$query_vars = array_merge($redirect[ 'query' ], $query_vars);
+							$redirect = add_query_arg($query_vars, $base_redirect[ 0 ]);
 						} else {
 							$redirect = add_query_arg($query_vars, $base_redirect);
 						}
@@ -1043,9 +1044,9 @@ class Caldera_Forms
 		// new filter to alter the config.
 		$config = apply_filters('caldera_forms_autoresponse_config', $config, $form);
 		// remove required bounds.
-		unset($config['_required_bounds']);
+		unset($config[ '_required_bounds' ]);
 
-		$message = $config['message'];
+		$message = $config[ 'message' ];
 		foreach ($config as $tag => &$value) {
 			if ($tag !== 'message') {
 				$message = str_replace('%' . $tag . '%', $value, $message);
@@ -1053,14 +1054,14 @@ class Caldera_Forms
 			}
 		}
 		// set header
-		$headers[] = 'From: ' . $config['sender_name'] . ' <' . $config['sender_email'] . '>';
+		$headers[] = 'From: ' . $config[ 'sender_name' ] . ' <' . $config[ 'sender_email' ] . '>';
 
 		if (empty($message)) {
 			$message = '  ';
 		}
 
 		$html = false;
-		if (!isset($config['html']) || true == $config['html']) {
+		if (!isset($config[ 'html' ]) || true == $config[ 'html' ]) {
 			$headers[] = "Content-type: text/html";
 			$message = self::do_magic_tags($message);
 			$html = true;
@@ -1073,65 +1074,65 @@ class Caldera_Forms
 		}
 
 		// setup mailer
-		$subject = $config['subject'];
+		$subject = $config[ 'subject' ];
 
-		if (Caldera_Forms_Email_Prepare::is_list($config['recipient_email'])) {
-			$recipients = Caldera_Forms_Email_Prepare::prepare_email_array(explode(',', $config['recipient_email']));
+		if (Caldera_Forms_Email_Prepare::is_list($config[ 'recipient_email' ])) {
+			$recipients = Caldera_Forms_Email_Prepare::prepare_email_array(explode(',', $config[ 'recipient_email' ]));
 			if (!caldera_forms_pro_is_active()) {
 				$send_local = true;
 			} else {
-				$send_local = \calderawp\calderaforms\pro\container::get_instance()->get_settings()->get_form($form['ID'])->should_send_local();
+				$send_local = \calderawp\calderaforms\pro\container::get_instance()->get_settings()->get_form($form[ 'ID' ])->should_send_local();
 			}
 			if ($send_local) {
-				$array_recipients = array();
+				$array_recipients = [];
 				foreach ($recipients as $recipient) {
-					$array_recipients[] = $recipient['name'] . ' <' . $recipient['email'] . '>';
+					$array_recipients[] = $recipient[ 'name' ] . ' <' . $recipient[ 'email' ] . '>';
 				}
 				$recipients = $array_recipients;
 			}
 		} else {
-			$recipients = $config['recipient_name'] . ' <' . $config['recipient_email'] . '>';
+			$recipients = $config[ 'recipient_name' ] . ' <' . $config[ 'recipient_email' ] . '>';
 		}
 
 
-		$email_message = array(
+		$email_message = [
 			'recipients' => $recipients,
 			'subject' => $subject,
 			'message' => $message,
 			'headers' => $headers,
-			'attachments' => array()
-		);
+			'attachments' => [],
+		];
 
-		if (!is_email($config['sender_email'])) {
-			$config['sender_email'] = Caldera_Forms_Email_Fallback::get_fallback($form);
+		if (!is_email($config[ 'sender_email' ])) {
+			$config[ 'sender_email' ] = Caldera_Forms_Email_Fallback::get_fallback($form);
 		}
 
-		if (!empty($config['reply_to'])) {
-			$email_message['replyto'] = Caldera_Forms::do_magic_tags($config['reply_to']);
-			$email_message['headers'][] = 'Reply-To: ' . $email_message['replyto'];
+		if (!empty($config[ 'reply_to' ])) {
+			$email_message[ 'replyto' ] = Caldera_Forms::do_magic_tags($config[ 'reply_to' ]);
+			$email_message[ 'headers' ][] = 'Reply-To: ' . $email_message[ 'replyto' ];
 		}
 
 
-		$email_message['cc'] = false;
-		if (!empty($config['cc'])) {
-			$email_message['cc'] = Caldera_Forms::do_magic_tags($config['cc']);
+		$email_message[ 'cc' ] = false;
+		if (!empty($config[ 'cc' ])) {
+			$email_message[ 'cc' ] = Caldera_Forms::do_magic_tags($config[ 'cc' ]);
 
-			$cc_array = array_map('trim', preg_split('/[;,]/', Caldera_Forms::do_magic_tags($config['cc'])));
+			$cc_array = array_map('trim', preg_split('/[;,]/', Caldera_Forms::do_magic_tags($config[ 'cc' ])));
 			foreach ($cc_array as $cc_to) {
 				if (is_email($cc_to)) {
-					$email_message['headers'][] = 'Cc: ' . $cc_to;
+					$email_message[ 'headers' ][] = 'Cc: ' . $cc_to;
 				}
 			}
 		}
 
-		$email_message['bcc'] = false;
-		if (!empty($config['bcc'])) {
-			$email_message['bcc'] = Caldera_Forms::do_magic_tags($config['bcc']);
+		$email_message[ 'bcc' ] = false;
+		if (!empty($config[ 'bcc' ])) {
+			$email_message[ 'bcc' ] = Caldera_Forms::do_magic_tags($config[ 'bcc' ]);
 
-			$bcc_array = array_map('trim', preg_split('/[;,]/', Caldera_Forms::do_magic_tags($config['bcc'])));
+			$bcc_array = array_map('trim', preg_split('/[;,]/', Caldera_Forms::do_magic_tags($config[ 'bcc' ])));
 			foreach ($bcc_array as $bcc_to) {
 				if (is_email($bcc_to)) {
-					$email_message['headers'][] = 'Bcc: ' . $bcc_to;
+					$email_message[ 'headers' ][] = 'Bcc: ' . $bcc_to;
 				}
 			}
 		}
@@ -1155,9 +1156,9 @@ class Caldera_Forms
 		}
 
 		if ('wp' !== Caldera_Forms_Email_Settings::get_method()) {
-			$email_message['from'] = $email_message['replyto'] = $config['sender_email'];
-			$email_message['from_name'] = $config['sender_name'];
-			$email_message['bcc'] = $email_message['csv'] = false;
+			$email_message[ 'from' ] = $email_message[ 'replyto' ] = $config[ 'sender_email' ];
+			$email_message[ 'from_name' ] = $config[ 'sender_name' ];
+			$email_message[ 'bcc' ] = $email_message[ 'csv' ] = false;
 
 			Caldera_Forms_Save_Final::do_mailer($form, null, null, $email_message);
 
@@ -1167,9 +1168,9 @@ class Caldera_Forms
 		do_action('caldera_forms_do_autoresponse', $config, $form);
 
 		// send mail
-		$sent = wp_mail($email_message['recipients'], $email_message['subject'],
-			implode("\r\n", (array)$email_message['message']), implode("\r\n", (array)$email_message['headers']),
-			$email_message['attachments']);
+		$sent = wp_mail($email_message[ 'recipients' ], $email_message[ 'subject' ],
+			implode("\r\n", (array)$email_message[ 'message' ]), implode("\r\n", (array)$email_message[ 'headers' ]),
+			$email_message[ 'attachments' ]);
 
 		if (!$sent) {
 			/**
@@ -1196,51 +1197,51 @@ class Caldera_Forms
 	 */
 	public function get_form_processors($processors)
 	{
-		$internal_processors = array(
-			'auto_responder' => array(
+		$internal_processors = [
+			'auto_responder' => [
 				"name" => __('Auto Responder', 'caldera-forms'),
 				"description" => __('Sends out an auto response e-mail', 'caldera-forms'),
-				"post_processor" => array($this, 'send_auto_response'),
+				"post_processor" => [$this, 'send_auto_response'],
 				"template" => CFCORE_PATH . "processors/auto_responder/config.php",
-				"default" => array(
-					'subject' => __('Thank you for contacting us', 'caldera-forms')
-				),
-			),
-			'form_redirect' => array(
+				"default" => [
+					'subject' => __('Thank you for contacting us', 'caldera-forms'),
+				],
+			],
+			'form_redirect' => [
 				"name" => __('Redirect', 'caldera-forms'),
 				"description" => __('Redirects user to URL on successful submit', 'caldera-forms'),
 				"template" => CFCORE_PATH . "processors/redirect/config.php",
-				"single" => false
-			),
-			'conditional_recipient' => array(
+				"single" => false,
+			],
+			'conditional_recipient' => [
 				"name" => __('Conditional Recipient', 'caldera-forms'),
 				"description" => __('Send email to different recipients depending on conditions', 'caldera-forms'),
 				"template" => CFCORE_PATH . "processors/conditional_recipient/config.php",
-				'post_processor' => array('Caldera_Forms_Processor_Conditional_Recipient', 'post_processor'),
-				"single" => false
-			),
-			'increment_capture' => array(
+				'post_processor' => ['Caldera_Forms_Processor_Conditional_Recipient', 'post_processor'],
+				"single" => false,
+			],
+			'increment_capture' => [
 				"name" => __('Increment Value', 'caldera-forms'),
 				"description" => __('Increment a value per entry.', 'caldera-forms'),
-				"processor" => array($this, 'increment_value'),
+				"processor" => [$this, 'increment_value'],
 				"template" => CFCORE_PATH . "processors/increment/config.php",
 				"single" => true,
 				"conditionals" => false,
-				"magic_tags" => array(
-					'increment_value'
-				)
-			)
-		);
+				"magic_tags" => [
+					'increment_value',
+				],
+			],
+		];
 		// akismet
 		$wp_api_key = get_option('wordpress_api_key');
 		if (!empty($wp_api_key)) {
-			$internal_processors['akismet'] = array(
+			$internal_processors[ 'akismet' ] = [
 				"name" => __('Akismet', 'caldera-forms'),
 				"description" => __('Anti-spam filtering', 'caldera-forms'),
-				"pre_processor" => array($this, 'akismet_scanner'),
+				"pre_processor" => [$this, 'akismet_scanner'],
 				"template" => CFCORE_PATH . "processors/akismet/config.php",
 				"single" => false,
-			);
+			];
 		}
 
 		if (!is_array($processors) || empty($processors)) {
@@ -1263,15 +1264,15 @@ class Caldera_Forms
 	 */
 	public function increment_value($config, $form)
 	{
-		$option = '_increment_' . $config['processor_id'];
+		$option = '_increment_' . $config[ 'processor_id' ];
 		$field_id = $field_value = false;
 
-		if (!empty($config['field'])) {
-			$field_id = $config['field'];
+		if (!empty($config[ 'field' ])) {
+			$field_id = $config[ 'field' ];
 			$field_value = Caldera_Forms::get_field_data($field_id, $form);
 		}
 
-		$saved_value = get_option($option, $config['start']);
+		$saved_value = get_option($option, $config[ 'start' ]);
 
 		if (is_numeric($field_value)) {
 			$increment_value = $saved_value + $field_value;
@@ -1299,9 +1300,9 @@ class Caldera_Forms
 			self::set_field_data($field_id, $increment_value, $form);
 		}
 
-		return array(
-			'increment_value' => $increment_value
-		);
+		return [
+			'increment_value' => $increment_value,
+		];
 
 	}
 
@@ -1320,7 +1321,7 @@ class Caldera_Forms
 
 		$wp_api_key = get_option('wordpress_api_key');
 		if (empty($wp_api_key)) {
-			return array('type' => 'error', 'note' => __('Akismet not setup.'));
+			return ['type' => 'error', 'note' => __('Akismet not setup.')];
 		}
 		// set permalink
 		if ($post->ID) {
@@ -1336,22 +1337,22 @@ class Caldera_Forms
 			$type = 'contact-form';
 		}
 		// Call to comment check
-		$data = array(
+		$data = [
 			'blog' => get_home_url(),
-			'user_ip' => $_SERVER['REMOTE_ADDR'],
-			'user_agent' => $_SERVER['HTTP_USER_AGENT'],
-			'referrer' => $_SERVER['HTTP_REFERER'],
+			'user_ip' => $_SERVER[ 'REMOTE_ADDR' ],
+			'user_agent' => $_SERVER[ 'HTTP_USER_AGENT' ],
+			'referrer' => $_SERVER[ 'HTTP_REFERER' ],
 			'permalink' => $permalink,
 			'comment_type' => $type,
-			'comment_author' => self::do_magic_tags($config['sender_name']),
-			'comment_author_email' => self::do_magic_tags($config['sender_email'])
-		);
+			'comment_author' => self::do_magic_tags($config[ 'sender_name' ]),
+			'comment_author_email' => self::do_magic_tags($config[ 'sender_email' ]),
+		];
 
-		if (!empty($config['url'])) {
-			$data['comment_author_url'] = self::do_magic_tags($config['url']);
+		if (!empty($config[ 'url' ])) {
+			$data[ 'comment_author_url' ] = self::do_magic_tags($config[ 'url' ]);
 		};
-		if (!empty($config['content'])) {
-			$data['comment_content'] = self::do_magic_tags($config['content']);
+		if (!empty($config[ 'content' ])) {
+			$data[ 'comment_content' ] = self::do_magic_tags($config[ 'content' ]);
 		};
 
 		$request = http_build_query($data);
@@ -1382,8 +1383,8 @@ class Caldera_Forms
 
 		}
 
-		if ('true' == $response[1]) {
-			return array('type' => 'error', 'note' => self::do_magic_tags($config['error']));
+		if ('true' == $response[ 1 ]) {
+			return ['type' => 'error', 'note' => self::do_magic_tags($config[ 'error' ])];
 		}
 
 	}
@@ -1403,22 +1404,22 @@ class Caldera_Forms
 			return;
 		}
 
-		$formula = $field['config']['formular'];
+		$formula = $field[ 'config' ][ 'formular' ];
 
 		// get manual
-		if (!empty($field['config']['manual'])) {
-			$formula = $field['config']['manual_formula'];
+		if (!empty($field[ 'config' ][ 'manual' ])) {
+			$formula = $field[ 'config' ][ 'manual_formula' ];
 			preg_match_all("/%(.+?)%/", $formula, $hastags);
-			if (!empty($hastags[1])) {
-				$binds = array();
+			if (!empty($hastags[ 1 ])) {
+				$binds = [];
 
-				foreach ($hastags[1] as $tag_key => $tag) {
+				foreach ($hastags[ 1 ] as $tag_key => $tag) {
 
 					foreach (Caldera_Forms_Forms::get_fields($form, false) as $key_id => $fcfg) {
-						if ($fcfg['slug'] === $tag) {
+						if ($fcfg[ 'slug' ] === $tag) {
 							$binds[] = '#' . $key_id;
 							$bindfields[] = '"' . $key_id . '"';
-							$formula = str_replace($hastags[0][$tag_key], $key_id, $formula);
+							$formula = str_replace($hastags[ 0 ][ $tag_key ], $key_id, $formula);
 						}
 					}
 				}
@@ -1442,7 +1443,7 @@ class Caldera_Forms
 		}
 
 		if (false !== strpos($formula, '/0')) {
-			return new WP_Error($field['ID'] . '-calculation',
+			return new WP_Error($field[ 'ID' ] . '-calculation',
 				__('Calculation is invalid (division by zero)', 'caldera-forms'));
 		}
 
@@ -1450,7 +1451,7 @@ class Caldera_Forms
 		$total = $total_function();
 
 		if (is_infinite($total) || !is_numeric($total)) {
-			return new WP_Error($field['ID'] . '-calculation', __('Calculation is invalid', 'caldera-forms'));
+			return new WP_Error($field[ 'ID' ] . '-calculation', __('Calculation is invalid', 'caldera-forms'));
 		}
 
 		$total = Caldera_Forms_Field_Util::format_calc_field($field, $total);
@@ -1482,24 +1483,25 @@ class Caldera_Forms
 	{
 		//
 		if (!empty($form)) {
-			foreach ($form['fields'] as $field_id => $field_conf) {
-				if ($field_conf['type'] !== 'calculation') {
+			foreach ($form[ 'fields' ] as $field_id => $field_conf) {
+				if ($field_conf[ 'type' ] !== 'calculation') {
 					continue;
 				}
 				// auto
-				if (!empty($field_conf['config'])) {
-					$binddown = json_encode($field_conf['config']['config']);
+				if (!empty($field_conf[ 'config' ])) {
+					$binddown = json_encode($field_conf[ 'config' ][ 'config' ]);
 					if (false !== strpos($binddown,
-							$field['ID']) || false !== strpos($field_conf['config']['manual_formula'], $field['ID'])) {
-						foreach ($field['config']['option'] as $option_id => $option) {
+							$field[ 'ID' ]) || false !== strpos($field_conf[ 'config' ][ 'manual_formula' ],
+							$field[ 'ID' ])) {
+						foreach ($field[ 'config' ][ 'option' ] as $option_id => $option) {
 							if (is_array($value)) {
-								if (in_array($option['value'], $value)) {
-									$key = array_search($option['value'], $value);
-									$value[$key] = $option['label'] . '&nbsp;<small class="view_option_value">(' . $value[$key] . ')</small>';
+								if (in_array($option[ 'value' ], $value)) {
+									$key = array_search($option[ 'value' ], $value);
+									$value[ $key ] = $option[ 'label' ] . '&nbsp;<small class="view_option_value">(' . $value[ $key ] . ')</small>';
 								}
 							} else {
-								if ($option['value'] == $value) {
-									return $option['label'] . '&nbsp;<small class="view_option_value">(' . $value . ')</small>';
+								if ($option[ 'value' ] == $value) {
+									return $option[ 'label' ] . '&nbsp;<small class="view_option_value">(' . $value . ')</small>';
 								}
 							}
 						}
@@ -1526,18 +1528,18 @@ class Caldera_Forms
 	public function apply_conditional_groups($field, $form)
 	{
 
-		if (!empty($form['conditional_groups']['conditions'][$field['conditions']['type']])) {
-			$group = $form['conditional_groups']['conditions'][$field['conditions']['type']];
-			if (!isset($field['conditions']['group'])) {
-				$field['conditions']['group'] = array();
+		if (!empty($form[ 'conditional_groups' ][ 'conditions' ][ $field[ 'conditions' ][ 'type' ] ])) {
+			$group = $form[ 'conditional_groups' ][ 'conditions' ][ $field[ 'conditions' ][ 'type' ] ];
+			if (!isset($field[ 'conditions' ][ 'group' ])) {
+				$field[ 'conditions' ][ 'group' ] = [];
 			}
 
-			if (!isset($group['group'])) {
-				$group['group'] = array();
+			if (!isset($group[ 'group' ])) {
+				$group[ 'group' ] = [];
 			}
 
-			$field['conditions']['type'] = $group['type'];
-			$field['conditions']['group'] = $group['group'];
+			$field[ 'conditions' ][ 'type' ] = $group[ 'type' ];
+			$field[ 'conditions' ][ 'group' ] = $group[ 'group' ];
 		}
 
 		return $field;
@@ -1554,27 +1556,27 @@ class Caldera_Forms
 	public function auto_populate_options_field($field, $form)
 	{
 
-		if (!empty($field['config']['auto'])) {
-			$field['config']['option'] = array();
-			switch ($field['config']['auto_type']) {
+		if (!empty($field[ 'config' ][ 'auto' ])) {
+			$field[ 'config' ][ 'option' ] = [];
+			switch ($field[ 'config' ][ 'auto_type' ]) {
 				case 'post_type':
 				case 'easy-query' :
 
-					if (!isset($field['config']['orderby_post'])) {
-						$field['config']['orderby_post'] = 'date';
+					if (!isset($field[ 'config' ][ 'orderby_post' ])) {
+						$field[ 'config' ][ 'orderby_post' ] = 'date';
 					}
 
-					if (!isset($field['config']['order'])) {
-						$field['config']['order'] = 'ASC';
+					if (!isset($field[ 'config' ][ 'order' ])) {
+						$field[ 'config' ][ 'order' ] = 'ASC';
 					}
 
-					$args = array(
-						'post_type' => $field['config']['post_type'],
+					$args = [
+						'post_type' => $field[ 'config' ][ 'post_type' ],
 						'post_status' => 'publish',
 						'posts_per_page' => -1,
-						'order' => $field['config']['order'],
-						'orderby' => $field['config']['orderby_post']
-					);
+						'order' => $field[ 'config' ][ 'order' ],
+						'orderby' => $field[ 'config' ][ 'orderby_post' ],
+					];
 
 					/**
 					 * Modify arguments for WP_Query used to auto-populate post type fields
@@ -1588,10 +1590,10 @@ class Caldera_Forms
 
 					$posts = get_posts($args);
 
-					if ($field['config']['value_field'] === 'id') {
-						$field['config']['value_field'] = 'ID';
-					} elseif ($field['config']['value_field'] === 'name') {
-						$field['config']['value_field'] = 'post_name';
+					if ($field[ 'config' ][ 'value_field' ] === 'id') {
+						$field[ 'config' ][ 'value_field' ] = 'ID';
+					} elseif ($field[ 'config' ][ 'value_field' ] === 'name') {
+						$field[ 'config' ][ 'value_field' ] = 'post_name';
 					}
 
 					/**
@@ -1607,8 +1609,8 @@ class Caldera_Forms
 					 * @param array $posts Current post collection.
 					 */
 					$field_for_value = apply_filters('caldera_forms_autopopulate_options_post_value_field',
-						$field['config']['value_field'], $field, $form, $posts);
-					$field['config']['value_field'] = $field_for_value;
+						$field[ 'config' ][ 'value_field' ], $field, $form, $posts);
+					$field[ 'config' ][ 'value_field' ] = $field_for_value;
 
 					/**
 					 * Filter which field is used for the LABEL when getting autopopulate option values when autopopulating options from post types
@@ -1625,31 +1627,31 @@ class Caldera_Forms
 					$field_for_label = apply_filters('caldera_forms_autopopulate_options_post_label_field',
 						'post_title', $field, $form, $posts);
 					foreach ($posts as $post_item) {
-						$field['config']['option'][$post_item->ID] = array(
+						$field[ 'config' ][ 'option' ][ $post_item->ID ] = [
 							'value' => $post_item->{$field_for_value},
-							'label' => $post_item->{$field_for_label}
-						);
+							'label' => $post_item->{$field_for_label},
+						];
 					}
 
 					break;
 				case 'taxonomy':
-					if ($field['config']['value_field'] === 'id') {
-						$field['config']['value_field'] = 'term_id';
+					if ($field[ 'config' ][ 'value_field' ] === 'id') {
+						$field[ 'config' ][ 'value_field' ] = 'term_id';
 					}
 
-					if (!isset($field['config']['orderby_tax'])) {
-						$field['config']['orderby_tax'] = 'count';
+					if (!isset($field[ 'config' ][ 'orderby_tax' ])) {
+						$field[ 'config' ][ 'orderby_tax' ] = 'count';
 					}
 
-					if (!isset($field['config']['order'])) {
-						$field['config']['order'] = 'ASC';
+					if (!isset($field[ 'config' ][ 'order' ])) {
+						$field[ 'config' ][ 'order' ] = 'ASC';
 					}
 
-					$args = array(
-						'orderby' => $field['config']['orderby_tax'],
-						'order' => $field['config']['order'],
-						'hide_empty' => 0
-					);
+					$args = [
+						'orderby' => $field[ 'config' ][ 'orderby_tax' ],
+						'order' => $field[ 'config' ][ 'order' ],
+						'hide_empty' => 0,
+					];
 
 
 					/**
@@ -1662,7 +1664,7 @@ class Caldera_Forms
 					 */
 					$args = apply_filters('caldera_forms_autopopulate_taxonomy_args', $args);
 
-					$terms = get_terms($field['config']['taxonomy'], $args);
+					$terms = get_terms($field[ 'config' ][ 'taxonomy' ], $args);
 
 					/**
 					 * Filter which field is used for the VALUE when getting autopopulate option values when autopopulating options from post types
@@ -1677,8 +1679,8 @@ class Caldera_Forms
 					 * @param array $posts Current term collection.
 					 */
 					$field_for_value = apply_filters('caldera_forms_autopopulate_options_taxonomy_value_field',
-						$field['config']['value_field'], $field, $form, $terms);
-					$field['config']['value_field'] = $field_for_value;
+						$field[ 'config' ][ 'value_field' ], $field, $form, $terms);
+					$field[ 'config' ][ 'value_field' ] = $field_for_value;
 
 					/**
 					 * Filter which field is used for the LABEL when getting autopopulate option values when autopopulating options from post types
@@ -1696,10 +1698,10 @@ class Caldera_Forms
 						$field, $form, $terms);
 
 					foreach ($terms as $term) {
-						$field['config']['option'][$term->term_id] = array(
+						$field[ 'config' ][ 'option' ][ $term->term_id ] = [
 							'value' => $term->{$field_for_value},
-							'label' => $term->{$field_for_label}
-						);
+							'label' => $term->{$field_for_label},
+						];
 					}
 					break;
 
@@ -1727,13 +1729,13 @@ class Caldera_Forms
 	{
 
 
-		if (!empty($field['config']['option'])) {
-			foreach ($field['config']['option'] as &$option) {
-				if (strlen($option['value']) === 0) {
-					$option['value'] = $option['label'] = self::do_magic_tags($option['label']);
+		if (!empty($field[ 'config' ][ 'option' ])) {
+			foreach ($field[ 'config' ][ 'option' ] as &$option) {
+				if (strlen($option[ 'value' ]) === 0) {
+					$option[ 'value' ] = $option[ 'label' ] = self::do_magic_tags($option[ 'label' ]);
 				} else {
-					$option['value'] = self::do_magic_tags($option['value']);
-					$option['label'] = self::do_magic_tags($option['label']);
+					$option[ 'value' ] = self::do_magic_tags($option[ 'value' ]);
+					$option[ 'label' ] = self::do_magic_tags($option[ 'label' ]);
 				}
 			}
 		}
@@ -1756,7 +1758,7 @@ class Caldera_Forms
 	{
 
 
-		if (empty($conditions['group'])) {
+		if (empty($conditions[ 'group' ])) {
 			return true;
 		}
 
@@ -1776,116 +1778,116 @@ class Caldera_Forms
 			return $result;
 		}
 
-		$trues = array();
+		$trues = [];
 
 
-		foreach ($conditions['group'] as $groupid => $lines) {
-			$truelines = array();
+		foreach ($conditions[ 'group' ] as $groupid => $lines) {
+			$truelines = [];
 
 			foreach ($lines as $lineid => $line) {
 
-				if (isset($form['fields'][$line['field']]['config']['option'][$line['value']])) {
-					$line['value'] = $form['fields'][$line['field']]['config']['option'][$line['value']]['value'];
+				if (isset($form[ 'fields' ][ $line[ 'field' ] ][ 'config' ][ 'option' ][ $line[ 'value' ] ])) {
+					$line[ 'value' ] = $form[ 'fields' ][ $line[ 'field' ] ][ 'config' ][ 'option' ][ $line[ 'value' ] ][ 'value' ];
 				}
 
-				$line['value'] = self::do_magic_tags($line['value']);
+				$line[ 'value' ] = self::do_magic_tags($line[ 'value' ]);
 
-				$value = (array)self::get_field_data($line['field'], $form, $entry_id);
+				$value = (array)self::get_field_data($line[ 'field' ], $form, $entry_id);
 				if (empty($value)) {
-					$value = array('');
+					$value = [''];
 				}
 				// do field value replaces
-				if (false !== strpos($line['value'], '%')) {
-					$isslug = self::get_slug_data(trim($line['value'], '%'), $form, $entry_id);
+				if (false !== strpos($line[ 'value' ], '%')) {
+					$isslug = self::get_slug_data(trim($line[ 'value' ], '%'), $form, $entry_id);
 					if ($isslug !== null) {
-						$line['value'] = $isslug;
+						$line[ 'value' ] = $isslug;
 					}
 				}
 
 
-				$truelines[$lineid] = false;
+				$truelines[ $lineid ] = false;
 
-				switch ($line['compare']) {
+				switch ($line[ 'compare' ]) {
 					case 'is':
 						if (is_array($value)) {
-							if (in_array($line['value'], $value)) {
-								$truelines[$lineid] = true;
+							if (in_array($line[ 'value' ], $value)) {
+								$truelines[ $lineid ] = true;
 							}
 						} else {
-							if ($value == $line['value']) {
-								$truelines[$lineid] = true;
+							if ($value == $line[ 'value' ]) {
+								$truelines[ $lineid ] = true;
 							}
 						}
 						break;
 					case 'isnot':
 						if (is_array($value)) {
-							if (!in_array($line['value'], $value)) {
-								$truelines[$lineid] = true;
+							if (!in_array($line[ 'value' ], $value)) {
+								$truelines[ $lineid ] = true;
 							}
 						} else {
-							if ($value != $line['value']) {
-								$truelines[$lineid] = true;
+							if ($value != $line[ 'value' ]) {
+								$truelines[ $lineid ] = true;
 							}
 						}
 						break;
 					case '>':
 					case 'greater':
 						if (is_array($value)) {
-							if (array_sum($value) > $line['value']) {
-								$truelines[$lineid] = true;
+							if (array_sum($value) > $line[ 'value' ]) {
+								$truelines[ $lineid ] = true;
 							}
 						} else {
-							if ($value > $line['value']) {
-								$truelines[$lineid] = true;
+							if ($value > $line[ 'value' ]) {
+								$truelines[ $lineid ] = true;
 							}
 						}
 						break;
 					case '<':
 					case 'smaller':
 						if (is_array($value)) {
-							if (array_sum($value) < $line['value']) {
-								$truelines[$lineid] = true;
+							if (array_sum($value) < $line[ 'value' ]) {
+								$truelines[ $lineid ] = true;
 							}
 						} else {
-							if ($value < $line['value']) {
-								$truelines[$lineid] = true;
+							if ($value < $line[ 'value' ]) {
+								$truelines[ $lineid ] = true;
 							}
 						}
 						break;
 					case 'startswith':
 						if (is_array($value)) {
 							foreach ($value as $part) {
-								if (0 === strpos($part, $line['value'])) {
-									$truelines[$lineid] = true;
+								if (0 === strpos($part, $line[ 'value' ])) {
+									$truelines[ $lineid ] = true;
 								}
 							}
 						} else {
-							if (substr($value, 0, strlen($line['value'])) == $line['value']) {
-								$truelines[$lineid] = true;
+							if (substr($value, 0, strlen($line[ 'value' ])) == $line[ 'value' ]) {
+								$truelines[ $lineid ] = true;
 							}
 						}
 						break;
 					case 'endswith':
 						if (is_array($value)) {
 							foreach ($value as $part) {
-								if (substr($part, strlen($part) - strlen($line['value'])) == $line['value']) {
-									$truelines[$lineid] = true;
+								if (substr($part, strlen($part) - strlen($line[ 'value' ])) == $line[ 'value' ]) {
+									$truelines[ $lineid ] = true;
 								}
 							}
 						} else {
-							if (substr($value, strlen($value) - strlen($line['value'])) == $line['value']) {
-								$truelines[$lineid] = true;
+							if (substr($value, strlen($value) - strlen($line[ 'value' ])) == $line[ 'value' ]) {
+								$truelines[ $lineid ] = true;
 							}
 						}
 						break;
 					case 'contains':
 						if (is_array($value)) {
-							if (false !== strpos(implode('', $value), $line['value'])) {
-								$truelines[$lineid] = true;
+							if (false !== strpos(implode('', $value), $line[ 'value' ])) {
+								$truelines[ $lineid ] = true;
 							}
 						} else {
-							if (false !== strpos($value, $line['value'])) {
-								$truelines[$lineid] = true;
+							if (false !== strpos($value, $line[ 'value' ])) {
+								$truelines[ $lineid ] = true;
 							}
 						}
 						break;
@@ -1893,16 +1895,16 @@ class Caldera_Forms
 
 			}
 
-			$trues[$groupid] = in_array(false, $truelines) ? false : true;
+			$trues[ $groupid ] = in_array(false, $truelines) ? false : true;
 		}
 
 		$result = false;
 
-		if ($conditions['type'] == 'use' || $conditions['type'] == 'show') {
+		if ($conditions[ 'type' ] == 'use' || $conditions[ 'type' ] == 'show') {
 			if (in_array(true, $trues)) {
 				$result = true;
 			}
-		} elseif ($conditions['type'] == 'not' || $conditions['type'] == 'hide' || $conditions['type'] == 'disable') {
+		} elseif ($conditions[ 'type' ] == 'not' || $conditions[ 'type' ] == 'hide' || $conditions[ 'type' ] == 'disable') {
 			if (!in_array(true, $trues)) {
 				$result = true;
 			}
@@ -1958,7 +1960,7 @@ class Caldera_Forms
 	{
 
 		// get internal tags
-		$system_tags = array(
+		$system_tags = [
 			'entry_id',
 			'entry_token',
 			'ip',
@@ -1966,10 +1968,10 @@ class Caldera_Forms
 			'user:user_login',
 			'user:first_name',
 			'user:last_name',
-			'user:user_email' => array(
+			'user:user_email' => [
 				'text',
-				'email'
-			),
+				'email',
+			],
 			'get:*',
 			'post:*',
 			'request:*',
@@ -1977,58 +1979,58 @@ class Caldera_Forms
 			'embed_post:ID',
 			'embed_post:post_title',
 			'embed_post:permalink',
-			'embed_post:post_date' => array(
+			'embed_post:post_date' => [
 				'text',
-				'date_picker'
-			),
-			'date:Y-m-d H:i:s' => array(
+				'date_picker',
+			],
+			'date:Y-m-d H:i:s' => [
 				'text',
-				'date_picker'
-			),
+				'date_picker',
+			],
 			'date:Y/m/d',
 			'date:Y/d/m',
 			'login_url',
 			'logout_url',
 			'register_url',
-			'lostpassword_url'
+			'lostpassword_url',
 
-		);
+		];
 
-		$tags['system'] = array(
+		$tags[ 'system' ] = [
 			'type' => __('System Tags', 'caldera-forms'),
 			'tags' => $system_tags,
-			'wrap' => array('{', '}')
-		);
+			'wrap' => ['{', '}'],
+		];
 
 		// get processor tags
 		$processors = Caldera_Forms_Processor_Load::get_instance()->get_processors();
 		if (!empty($processors)) {
 			foreach ($processors as $processor_key => $processor) {
-				if (isset($processor['magic_tags'])) {
-					foreach ($processor['magic_tags'] as $key_tag => $value_tag) {
+				if (isset($processor[ 'magic_tags' ])) {
+					foreach ($processor[ 'magic_tags' ] as $key_tag => $value_tag) {
 
-						if (!isset($tags[$processor_key])) {
-							$tags[$processor_key] = array(
-								'type' => $processor['name'],
-								'tags' => array(),
-								'wrap' => array('{', '}')
-							);
+						if (!isset($tags[ $processor_key ])) {
+							$tags[ $processor_key ] = [
+								'type' => $processor[ 'name' ],
+								'tags' => [],
+								'wrap' => ['{', '}'],
+							];
 						}
 						if (is_array($value_tag)) {
 
 							// compatibility specific
 							$tag = $processor_key . ':' . $key_tag;
-							if (!isset($tags[$processor_key]['tags'][$tag])) {
+							if (!isset($tags[ $processor_key ][ 'tags' ][ $tag ])) {
 								if (!in_array('text', $value_tag)) {
 									$value_tag[] = 'text';
 								}
-								$tags[$processor_key]['tags'][$tag] = $value_tag;
+								$tags[ $processor_key ][ 'tags' ][ $tag ] = $value_tag;
 							}
 						} else {
 							// compatibility text
 							$tag = $processor_key . ':' . $value_tag;
 							if (!in_array($tag, $tags)) {
-								$tags[$processor_key]['tags'][] = $tag;
+								$tags[ $processor_key ][ 'tags' ][] = $tag;
 							}
 
 						}
@@ -2049,12 +2051,12 @@ class Caldera_Forms
 	 *
 	 * @return mixed
 	 */
-	static public function do_magic_tags($value, $entry_id = null, $magic_caller = array())
+	static public function do_magic_tags($value, $entry_id = null, $magic_caller = [])
 	{
 
 		global $form, $referrer;
 
-		$entry_details = array();
+		$entry_details = [];
 		$input_value = $value;
 		$this_form = $form;
 		// pull in the metadata for entry ID
@@ -2106,20 +2108,20 @@ class Caldera_Forms
 	{
 		if (is_string($form)) {
 			$form_cfg = Caldera_Forms_Forms::get_form($form);
-			if (!empty($form_cfg['ID'])) {
-				if ($form_cfg['ID'] !== $form || empty($form_cfg['processors'])) {
+			if (!empty($form_cfg[ 'ID' ])) {
+				if ($form_cfg[ 'ID' ] !== $form || empty($form_cfg[ 'processors' ])) {
 					return false;
 				}
 			}
 			$form = $form_cfg;
 		}
 
-		if (!empty($form['processors'])) {
-			$processors = array();
-			foreach ($form['processors'] as $processor) {
-				if ($processor['type'] == $type) {
+		if (!empty($form[ 'processors' ])) {
+			$processors = [];
+			foreach ($form[ 'processors' ] as $processor) {
+				if ($processor[ 'type' ] == $type) {
 					$processors[] = $processor;
-					$processors[$processor['ID']] = $processor;
+					$processors[ $processor[ 'ID' ] ] = $processor;
 				}
 			}
 			if (empty($processors)) {
@@ -2147,17 +2149,17 @@ class Caldera_Forms
 		global $processed_meta;
 
 		if (is_string($form)) {
-			$form['ID'] = $form;
+			$form[ 'ID' ] = $form;
 		}
 
 		// set value
-		if (isset($form['ID'])) {
-			if (isset($processed_meta[$form['ID']][$processor_id][$key])) {
-				if (in_array($value, $processed_meta[$form['ID']][$processor_id][$key])) {
+		if (isset($form[ 'ID' ])) {
+			if (isset($processed_meta[ $form[ 'ID' ] ][ $processor_id ][ $key ])) {
+				if (in_array($value, $processed_meta[ $form[ 'ID' ] ][ $processor_id ][ $key ])) {
 					return true;
 				}
 			}
-			$processed_meta[$form['ID']][$processor_id][$key][] = $value;
+			$processed_meta[ $form[ 'ID' ] ][ $processor_id ][ $key ][] = $value;
 
 			return true;
 		}
@@ -2198,16 +2200,16 @@ class Caldera_Forms
 
 
 		// form object
-		if (isset($form['ID'])) {
-			if (isset($form['fields'][$field_id])) {
-				$processed_data[$form['ID']][$field_id] = $data;
+		if (isset($form[ 'ID' ])) {
+			if (isset($form[ 'fields' ][ $field_id ])) {
+				$processed_data[ $form[ 'ID' ] ][ $field_id ] = $data;
 
 				return true;
 			} else {
 				// is field_id a slug perhaps?
-				foreach ($form['fields'] as $field) {
-					if ($field['slug'] == $field_id) {
-						$processed_data[$form['ID']][$field['ID']] = $data;
+				foreach ($form[ 'fields' ] as $field) {
+					if ($field[ 'slug' ] == $field_id) {
+						$processed_data[ $form[ 'ID' ] ][ $field[ 'ID' ] ] = $data;
 
 						return true;
 					}
@@ -2216,7 +2218,7 @@ class Caldera_Forms
 		}
 
 		// generic field data
-		$processed_data[$form['ID']][$field_id] = $data;
+		$processed_data[ $form[ 'ID' ] ][ $field_id ] = $data;
 
 		return true;
 	}
@@ -2239,7 +2241,7 @@ class Caldera_Forms
 
 		if (is_string($form)) {
 			$form = Caldera_Forms_Forms::get_form($form);
-			if (!isset($form['ID']) || $form['ID'] !== $form) {
+			if (!isset($form[ 'ID' ]) || $form[ 'ID' ] !== $form) {
 				return null;
 			}
 		}
@@ -2258,37 +2260,37 @@ class Caldera_Forms
 			return;
 		}
 
-		$indexkey = $form['ID'];
+		$indexkey = $form[ 'ID' ];
 		if (!empty($entry_id)) {
-			$indexkey = $form['ID'] . '_' . $entry_id;
+			$indexkey = $form[ 'ID' ] . '_' . $entry_id;
 		}
 		// is ID or slug?
-		if (!isset($form['fields'][$field_id])) {
-			foreach ($form['fields'] as $field) {
-				if ($field['slug'] == $field_id) {
-					$field_id = $field['ID'];
+		if (!isset($form[ 'fields' ][ $field_id ])) {
+			foreach ($form[ 'fields' ] as $field) {
+				if ($field[ 'slug' ] == $field_id) {
+					$field_id = $field[ 'ID' ];
 					break;
 				}
 			}
 		}
 
 		// get processed cached item
-		if (isset($processed_data[$indexkey][$field_id])) {
-			return $processed_data[$indexkey][$field_id];
+		if (isset($processed_data[ $indexkey ][ $field_id ])) {
+			return $processed_data[ $indexkey ][ $field_id ];
 		}
 
 		// entry fetch
-		if (!empty($entry_id) && isset($form['fields'][$field_id])) {
+		if (!empty($entry_id) && isset($form[ 'fields' ][ $field_id ])) {
 
 
-			if (!empty($processed_data[$indexkey][$field_id])) {
-				$entry = $processed_data[$indexkey][$field_id];
-			} elseif (!empty($processed_data[$form['ID']]) && !empty($processed_data[$form['ID']]['_entry_id'])) {
+			if (!empty($processed_data[ $indexkey ][ $field_id ])) {
+				$entry = $processed_data[ $indexkey ][ $field_id ];
+			} elseif (!empty($processed_data[ $form[ 'ID' ] ]) && !empty($processed_data[ $form[ 'ID' ] ][ '_entry_id' ])) {
 				$entry = null;
-				if ($processed_data[$form['ID']]['_entry_id'] === $entry_id) {
-					$processed_data[$indexkey] = $processed_data[$form['ID']];
-					if (!empty($processed_data[$indexkey][$field_id])) {
-						$entry = $processed_data[$indexkey][$field_id];
+				if ($processed_data[ $form[ 'ID' ] ][ '_entry_id' ] === $entry_id) {
+					$processed_data[ $indexkey ] = $processed_data[ $form[ 'ID' ] ];
+					if (!empty($processed_data[ $indexkey ][ $field_id ])) {
+						$entry = $processed_data[ $indexkey ][ $field_id ];
 					}
 				}
 			} else {
@@ -2306,52 +2308,52 @@ class Caldera_Forms
 
 				//allow plugins to alter the value
 				$entry = apply_filters('caldera_forms_get_field_entry', $entry, $field_id, $form, $entry_id);
-				$processed_data[$indexkey][$field_id] = $entry;
+				$processed_data[ $indexkey ][ $field_id ] = $entry;
 
 				if (!empty($entry)) {
 					if (count($entry) > 1) {
-						$out = array();
+						$out = [];
 						foreach ($entry as $item) {
-							$out[] = $item['value'];
+							$out[] = $item[ 'value' ];
 						}
-						$processed_data[$indexkey][$field_id] = $out;
+						$processed_data[ $indexkey ][ $field_id ] = $out;
 					} else {
-						$processed_data[$indexkey][$field_id] = $entry[0]['value'];
-						if (isset($processed_data[$indexkey][$field_id]['value'])) {
-							$processed_data[$indexkey][$field_id] = $processed_data[$indexkey][$field_id]['value'];
+						$processed_data[ $indexkey ][ $field_id ] = $entry[ 0 ][ 'value' ];
+						if (isset($processed_data[ $indexkey ][ $field_id ][ 'value' ])) {
+							$processed_data[ $indexkey ][ $field_id ] = $processed_data[ $indexkey ][ $field_id ][ 'value' ];
 						}
 
 					}
 				} else {
-					$processed_data[$indexkey][$field_id] = null;
+					$processed_data[ $indexkey ][ $field_id ] = null;
 				}
 			}
 
 
-			return $processed_data[$indexkey][$field_id];
+			return $processed_data[ $indexkey ][ $field_id ];
 
 		}
 
-		if (isset($form['fields'][$field_id])) {
+		if (isset($form[ 'fields' ][ $field_id ])) {
 
 			// get field
-			$field = apply_filters('caldera_forms_render_setup_field', $form['fields'][$field_id], $form);
+			$field = apply_filters('caldera_forms_render_setup_field', $form[ 'fields' ][ $field_id ], $form);
 
-			if (empty($field) || !isset($field['ID'])) {
+			if (empty($field) || !isset($field[ 'ID' ])) {
 				return null;
 			}
 			// get field types
 			$field_types = Caldera_Forms_Fields::get_all();
 
-			if (!isset($field_types[$field['type']])) {
+			if (!isset($field_types[ $field[ 'type' ] ])) {
 				return null;
 			}
 			$entry = null;
 			// dont bother if conditions say it shouldnt be here.
 
-			if (!empty($field['conditions']['type'])) {
-				if (!self::check_condition($field['conditions'], $form, $entry_id)) {
-					$processed_data[$indexkey][$field_id] = $entry;
+			if (!empty($field[ 'conditions' ][ 'type' ])) {
+				if (!self::check_condition($field[ 'conditions' ], $form, $entry_id)) {
+					$processed_data[ $indexkey ][ $field_id ] = $entry;
 
 					return $entry;
 				}
@@ -2360,18 +2362,18 @@ class Caldera_Forms
 
 			// check condition to see if field should be there first.
 			// check if conditions match first. ignore vailators if not part of condition
-			if (isset($_POST[$field_id])) {
-				$entry = stripslashes_deep($_POST[$field_id]);
+			if (isset($_POST[ $field_id ])) {
+				$entry = stripslashes_deep($_POST[ $field_id ]);
 
-			} elseif (isset($_POST[$field['slug']])) {
+			} elseif (isset($_POST[ $field[ 'slug' ] ])) {
 				// is slug maybe?
-				$entry = stripslashes_deep($_POST[$field['slug']]);
+				$entry = stripslashes_deep($_POST[ $field[ 'slug' ] ]);
 			}
 			// apply field filter
-			if (has_filter('caldera_forms_process_field_' . $field['type'])) {
-				$entry = apply_filters('caldera_forms_process_field_' . $field['type'], $entry, $field, $form);
+			if (has_filter('caldera_forms_process_field_' . $field[ 'type' ])) {
+				$entry = apply_filters('caldera_forms_process_field_' . $field[ 'type' ], $entry, $field, $form);
 				if (is_wp_error($entry)) {
-					$processed_data[$indexkey][$field_id] = $entry;
+					$processed_data[ $indexkey ][ $field_id ] = $entry;
 					return $entry;
 				}
 			}
@@ -2380,42 +2382,42 @@ class Caldera_Forms
 				$entry = null;
 			}
 			// is static
-			if (!empty($field_types[$field['type']]['static'])) {
+			if (!empty($field_types[ $field[ 'type' ] ][ 'static' ])) {
 				// is options or not
-				if (!empty($field_types[$field['type']]['options'])) {
+				if (!empty($field_types[ $field[ 'type' ] ][ 'options' ])) {
 					if (is_array($entry)) {
-						$out = array();
+						$out = [];
 						foreach ($entry as $option_id => $option) {
-							if (isset($field['config']['option'][$option_id])) {
-								if (!isset($field['config']['option'][$option_id]['value'])) {
-									$field['config']['option'][$option_id]['value'] = $field['config']['option'][$option_id]['label'];
+							if (isset($field[ 'config' ][ 'option' ][ $option_id ])) {
+								if (!isset($field[ 'config' ][ 'option' ][ $option_id ][ 'value' ])) {
+									$field[ 'config' ][ 'option' ][ $option_id ][ 'value' ] = $field[ 'config' ][ 'option' ][ $option_id ][ 'label' ];
 								}
-								if (empty($field['config']['option'][$option_id]['value'])) {
-									$field['config']['option'][$option_id]['value'] = $field['config']['option'][$option_id]['label'];
+								if (empty($field[ 'config' ][ 'option' ][ $option_id ][ 'value' ])) {
+									$field[ 'config' ][ 'option' ][ $option_id ][ 'value' ] = $field[ 'config' ][ 'option' ][ $option_id ][ 'label' ];
 								}
-								$out[$option_id] = self::do_magic_tags($field['config']['option'][$option_id]['value']);
-							} elseif (isset($field['config']['option'][$option])) {
-								if (!isset($field['config']['option'][$option]['value'])) {
-									$field['config']['option'][$option]['value'] = $field['config']['option'][$option]['label'];
+								$out[ $option_id ] = self::do_magic_tags($field[ 'config' ][ 'option' ][ $option_id ][ 'value' ]);
+							} elseif (isset($field[ 'config' ][ 'option' ][ $option ])) {
+								if (!isset($field[ 'config' ][ 'option' ][ $option ][ 'value' ])) {
+									$field[ 'config' ][ 'option' ][ $option ][ 'value' ] = $field[ 'config' ][ 'option' ][ $option ][ 'label' ];
 								}
-								$out[$option_id] = self::do_magic_tags($field['config']['option'][$option]['value']);
+								$out[ $option_id ] = self::do_magic_tags($field[ 'config' ][ 'option' ][ $option ][ 'value' ]);
 							} else {
 								// array based / check value agains submitted array.
-								foreach ($field['config']['option'] as $option_id => $set_option) {
-									if ($set_option['value'] === $option) {
-										$out[] = self::do_magic_tags($set_option['value']);
+								foreach ($field[ 'config' ][ 'option' ] as $option_id => $set_option) {
+									if ($set_option[ 'value' ] === $option) {
+										$out[] = self::do_magic_tags($set_option[ 'value' ]);
 									}
 								}
 
 							}
 
 						}
-						$processed_data[$indexkey][$field_id] = $out;
+						$processed_data[ $indexkey ][ $field_id ] = $out;
 					} else {
-						if (!empty($field['config']['option'])) {
-							foreach ($field['config']['option'] as $option) {
-								if ($option['value'] == $entry) {
-									$processed_data[$indexkey][$field_id] = self::do_magic_tags($entry);
+						if (!empty($field[ 'config' ][ 'option' ])) {
+							foreach ($field[ 'config' ][ 'option' ] as $option) {
+								if ($option[ 'value' ] == $entry) {
+									$processed_data[ $indexkey ][ $field_id ] = self::do_magic_tags($entry);
 									break;
 								}
 							}
@@ -2423,31 +2425,31 @@ class Caldera_Forms
 					}
 				} else {
 					if ('0' === $entry || 0 === $entry) {
-						$processed_data[$indexkey][$field_id] = $entry;
+						$processed_data[ $indexkey ][ $field_id ] = $entry;
 					} elseif (!empty($entry)) {
-						$processed_data[$indexkey][$field_id] = $entry;
-					} elseif (isset($field['config']['default'])) {
-						$processed_data[$indexkey][$field_id] = self::do_magic_tags($field['config']['default']);
+						$processed_data[ $indexkey ][ $field_id ] = $entry;
+					} elseif (isset($field[ 'config' ][ 'default' ])) {
+						$processed_data[ $indexkey ][ $field_id ] = self::do_magic_tags($field[ 'config' ][ 'default' ]);
 					} else {
-						$processed_data[$indexkey][$field_id] = '';
+						$processed_data[ $indexkey ][ $field_id ] = '';
 					}
 				}
 			} else {
 				// dynamic
-				$processed_data[$indexkey][$field_id] = $entry;
+				$processed_data[ $indexkey ][ $field_id ] = $entry;
 			}
 		} else {
 
 			$is_tag = self::do_magic_tags($field_id);
 			if ($is_tag !== $field_id) {
-				$processed_data[$indexkey][$field_id] = $is_tag;
+				$processed_data[ $indexkey ][ $field_id ] = $is_tag;
 			}
 		}
 
-		if (isset($processed_data[$indexkey][$field_id])) {
-			return $processed_data[$indexkey][$field_id];
+		if (isset($processed_data[ $indexkey ][ $field_id ])) {
+			return $processed_data[ $indexkey ][ $field_id ];
 		} elseif (!empty($entry)) {
-			$processed_data[$indexkey][$field_id] = $entry;
+			$processed_data[ $indexkey ][ $field_id ] = $entry;
 			return $entry;
 		}
 
@@ -2485,16 +2487,16 @@ class Caldera_Forms
 	{
 
 
-		$out = array();
+		$out = [];
 		if (false !== strpos($slug, '.')) {
 			$slug_parts = explode('.', $slug);
 			$slug = array_shift($slug_parts);
 		}
 
 		$field_types = Caldera_Forms_Fields::get_all();
-		foreach ($form['fields'] as $field_id => $field) {
+		foreach ($form[ 'fields' ] as $field_id => $field) {
 
-			if ($field['slug'] == $slug) {
+			if ($field[ 'slug' ] == $slug) {
 
 				return self::get_field_data($field_id, $form, $entry_id);
 
@@ -2519,7 +2521,7 @@ class Caldera_Forms
 			$entry_id), ARRAY_A);
 		if (!empty($entry)) {
 			if (null === $form) {
-				$form = Caldera_Forms_Forms::get_form($entry['form_id']);
+				$form = Caldera_Forms_Forms::get_form($entry[ 'form_id' ]);
 				if (empty($form)) {
 					return null;
 				}
@@ -2527,7 +2529,7 @@ class Caldera_Forms
 			// get meta if any
 			$meta = self::get_entry_meta($entry_id, $form);
 			if (!empty($meta)) {
-				$entry['meta'] = $meta;
+				$entry[ 'meta' ] = $meta;
 			}
 		}
 		$entry = apply_filters('caldera_forms_get_entry_detail', $entry, $entry_id, $form);
@@ -2548,7 +2550,7 @@ class Caldera_Forms
 	{
 		global $wpdb;
 
-		$entry_meta = array();
+		$entry_meta = [];
 
 		$entry_meta_data = $wpdb->get_results($wpdb->prepare("SELECT * FROM `" . $wpdb->prefix . "cf_form_entry_meta` WHERE `entry_id` = %d",
 			$entry_id), ARRAY_A);
@@ -2558,67 +2560,67 @@ class Caldera_Forms
 			foreach ($entry_meta_data as $meta_index => $meta) {
 
 				// is json?
-				$is_json = @json_decode($meta['meta_value'], ARRAY_A);
+				$is_json = @json_decode($meta[ 'meta_value' ], ARRAY_A);
 				if (!empty($is_json)) {
-					$meta['meta_value'] = $is_json;
+					$meta[ 'meta_value' ] = $is_json;
 				}
 
 				$group = 'meta';
 				$meta = apply_filters('caldera_forms_get_entry_meta', $meta, $form);
 
-				if (isset($form['processors'][$meta['process_id']]) || $meta['process_id'] == '_debug_log') {
+				if (isset($form[ 'processors' ][ $meta[ 'process_id' ] ]) || $meta[ 'process_id' ] == '_debug_log') {
 
-					if ($meta['process_id'] == '_debug_log') {
-						$meta['meta_value'] = '<pre>' . $meta['meta_value'] . '</pre>';
-						$entry_meta['debug'] = array(
+					if ($meta[ 'process_id' ] == '_debug_log') {
+						$meta[ 'meta_value' ] = '<pre>' . $meta[ 'meta_value' ] . '</pre>';
+						$entry_meta[ 'debug' ] = [
 							'name' => __('Mailer Debug', 'caldera-forms'),
-							'data' => array(
-								'_debug_log' => array(
-									'entry' => array(
-										'log' => Caldera_Forms_Sanitize::remove_scripts($meta)
-									)
-								)
-							)
-						);
+							'data' => [
+								'_debug_log' => [
+									'entry' => [
+										'log' => Caldera_Forms_Sanitize::remove_scripts($meta),
+									],
+								],
+							],
+						];
 						continue;
 					}
 
-					$process_config = array();
-					if (isset($form['processors'][$meta['process_id']]['config'])) {
-						$process_config = $form['processors'][$meta['process_id']]['config'];
+					$process_config = [];
+					if (isset($form[ 'processors' ][ $meta[ 'process_id' ] ][ 'config' ])) {
+						$process_config = $form[ 'processors' ][ $meta[ 'process_id' ] ][ 'config' ];
 					}
 
-					$group = $form['processors'][$meta['process_id']]['type'];
+					$group = $form[ 'processors' ][ $meta[ 'process_id' ] ][ 'type' ];
 					if (!empty($type)) {
 						if ($group != $type) {
 							continue;
 						}
 					}
-					$meta = apply_filters('caldera_forms_get_entry_meta_' . $form['processors'][$meta['process_id']]['type'],
+					$meta = apply_filters('caldera_forms_get_entry_meta_' . $form[ 'processors' ][ $meta[ 'process_id' ] ][ 'type' ],
 						$meta, $process_config, $form);
 
 
 					// allows plugins to remove it.
 					if (!empty($meta)) {
-						if (!isset($entry_meta[$group])) {
+						if (!isset($entry_meta[ $group ])) {
 							// is processor
-							if (isset($form['processors'][$meta['process_id']]['type']) && isset($processors[$form['processors'][$meta['process_id']]['type']])) {
-								$meta_name = $processors[$form['processors'][$meta['process_id']]['type']]['name'];
+							if (isset($form[ 'processors' ][ $meta[ 'process_id' ] ][ 'type' ]) && isset($processors[ $form[ 'processors' ][ $meta[ 'process_id' ] ][ 'type' ] ])) {
+								$meta_name = $processors[ $form[ 'processors' ][ $meta[ 'process_id' ] ][ 'type' ] ][ 'name' ];
 							} else {
-								if ($meta['process_id'] == '_debug_log') {
+								if ($meta[ 'process_id' ] == '_debug_log') {
 									$meta_name = __('Mailer Debug', 'caldera-forms');
 								} else {
-									$meta_name = $meta['process_id'];
+									$meta_name = $meta[ 'process_id' ];
 								}
 
 							}
-							$entry_meta[$group] = array(
+							$entry_meta[ $group ] = [
 								'name' => $meta_name,
-								'data' => array()
-							);
+								'data' => [],
+							];
 							// custom template
-							if (isset($processors[$form['processors'][$meta['process_id']]['type']]['meta_template']) && file_exists($processors[$form['processors'][$meta['process_id']]['type']]['meta_template'])) {
-								$entry_meta[$group][$group . '_template'] = $entry_meta[$group]['template'] = true;
+							if (isset($processors[ $form[ 'processors' ][ $meta[ 'process_id' ] ][ 'type' ] ][ 'meta_template' ]) && file_exists($processors[ $form[ 'processors' ][ $meta[ 'process_id' ] ][ 'type' ] ][ 'meta_template' ])) {
+								$entry_meta[ $group ][ $group . '_template' ] = $entry_meta[ $group ][ 'template' ] = true;
 							}
 						}
 
@@ -2626,7 +2628,7 @@ class Caldera_Forms
 						//	$entry_meta[$group]['data'][$meta['process_id']]['title'] = $meta['meta_title'];
 						//}
 
-						$entry_meta[$group]['data'][$meta['process_id']]['entry'][$meta['meta_key']] = $meta;
+						$entry_meta[ $group ][ 'data' ][ $meta[ 'process_id' ] ][ 'entry' ][ $meta[ 'meta_key' ] ] = $meta;
 
 
 						/*if(is_array($meta['meta_value'])){
@@ -2651,8 +2653,8 @@ class Caldera_Forms
 		// if type
 		if (!empty($type)) {
 			//return only type
-			if (!empty($entry_meta[$type]['data'])) {
-				return $entry_meta[$type]['data'];
+			if (!empty($entry_meta[ $type ][ 'data' ])) {
+				return $entry_meta[ $type ][ 'data' ];
 			}
 		}
 
@@ -2677,28 +2679,28 @@ class Caldera_Forms
 		if (is_string($form)) {
 			$form_id = $form;
 			$form = Caldera_Forms_Forms::get_form($form);
-			if (!isset($form['ID']) || $form['ID'] !== $form_id) {
+			if (!isset($form[ 'ID' ]) || $form[ 'ID' ] !== $form_id) {
 				return new WP_Error('fail', __('Invalid form ID', 'caldera-forms'));
 			}
 		}
 
-		$indexkey = $form['ID'];
+		$indexkey = $form[ 'ID' ];
 		if (!empty($entry_id)) {
-			$indexkey = $form['ID'] . '_' . $entry_id;
+			$indexkey = $form[ 'ID' ] . '_' . $entry_id;
 		}
 
 		// get processed cached item using the form id
-		if (isset($processed_data[$indexkey])) {
-			return $processed_data[$indexkey];
+		if (isset($processed_data[ $indexkey ])) {
+			return $processed_data[ $indexkey ];
 		}
 		// prep data array
-		$processed_data[$indexkey] = array();
+		$processed_data[ $indexkey ] = [];
 
 		// initialize process data
-		foreach ($form['fields'] as $field_id => $field) {
+		foreach ($form[ 'fields' ] as $field_id => $field) {
 			// get data
-			if (!empty($field['conditions']['type'])) {
-				if ($check_conditionals && !self::check_condition($field['conditions'], $form, $entry_id)) {
+			if (!empty($field[ 'conditions' ][ 'type' ])) {
+				if ($check_conditionals && !self::check_condition($field[ 'conditions' ], $form, $entry_id)) {
 					continue;
 				}
 			}
@@ -2706,7 +2708,7 @@ class Caldera_Forms
 			self::get_field_data($field_id, $form, $entry_id, $check_conditionals);
 		}
 
-		return $processed_data[$indexkey];
+		return $processed_data[ $indexkey ];
 
 	}
 
@@ -2735,33 +2737,33 @@ class Caldera_Forms
 		global $referrer;
 
 		// clean out referrer
-		if (empty($_POST['_wp_http_referer_true'])) {
-			$_POST['_wp_http_referer_true'] = $_SERVER['HTTP_REFERER'];
+		if (empty($_POST[ '_wp_http_referer_true' ])) {
+			$_POST[ '_wp_http_referer_true' ] = $_SERVER[ 'HTTP_REFERER' ];
 		}
 
-		$referrer = parse_url($_POST['_wp_http_referer_true']);
-		if (!empty($referrer['query'])) {
-			parse_str($referrer['query'], $referrer['query']);
-			if (isset($referrer['query']['cf_er'])) {
-				unset($referrer['query']['cf_er']);
+		$referrer = parse_url($_POST[ '_wp_http_referer_true' ]);
+		if (!empty($referrer[ 'query' ])) {
+			parse_str($referrer[ 'query' ], $referrer[ 'query' ]);
+			if (isset($referrer[ 'query' ][ 'cf_er' ])) {
+				unset($referrer[ 'query' ][ 'cf_er' ]);
 			}
-			if (isset($referrer['query']['cf_su'])) {
-				unset($referrer['query']['cf_su']);
+			if (isset($referrer[ 'query' ][ 'cf_su' ])) {
+				unset($referrer[ 'query' ][ 'cf_su' ]);
 			}
 		}
-		if ((isset($_POST['_cf_cr_pst']) && !is_object($post)) || (isset($_POST['_cf_cr_pst']) && $post->ID !== (int)$_POST['_cf_cr_pst'])) {
-			$post = get_post((int)$_POST['_cf_cr_pst']);
+		if ((isset($_POST[ '_cf_cr_pst' ]) && !is_object($post)) || (isset($_POST[ '_cf_cr_pst' ]) && $post->ID !== (int)$_POST[ '_cf_cr_pst' ])) {
+			$post = get_post((int)$_POST[ '_cf_cr_pst' ]);
 		}
 		// get form and check
-		$form = Caldera_Forms_Forms::get_form($_POST['_cf_frm_id']);
-		if (empty($form['ID']) || $form['ID'] != $_POST['_cf_frm_id']) {
+		$form = Caldera_Forms_Forms::get_form($_POST[ '_cf_frm_id' ]);
+		if (empty($form[ 'ID' ]) || $form[ 'ID' ] != $_POST[ '_cf_frm_id' ]) {
 			return;
 		}
 
 		// instance number
 		$form_instance_number = 1;
-		if (isset($_POST['_cf_frm_ct'])) {
-			$form_instance_number = $_POST['_cf_frm_ct'];
+		if (isset($_POST[ '_cf_frm_ct' ])) {
+			$form_instance_number = $_POST[ '_cf_frm_ct' ];
 		}
 
 		// check honeypot
@@ -2791,21 +2793,21 @@ class Caldera_Forms
 		do_action('caldera_forms_submit_start', $form, $process_id);
 
 
-		if (!empty($form['fields'])) {
-			foreach ($form['fields'] as $field_id => $field) {
+		if (!empty($form[ 'fields' ])) {
+			foreach ($form[ 'fields' ] as $field_id => $field) {
 				$field = Caldera_Forms_Field_Util::get_field($field, $form, true);
 				if (!is_array($field) || empty($field)) {
-					unset($form['fields'][$field_id]);
+					unset($form[ 'fields' ][ $field_id ]);
 				} else {
-					$form['fields'][$field_id] = $field;
+					$form[ 'fields' ][ $field_id ] = $field;
 				}
 
 			}
 		}
 
 		// check source is ajax to overide
-		if (!empty($_POST['cfajax']) && $_POST['cfajax'] == $form['ID']) {
-			$form['form_ajax'] = 1;
+		if (!empty($_POST[ 'cfajax' ]) && $_POST[ 'cfajax' ] == $form[ 'ID' ]) {
+			$form[ 'form_ajax' ] = 1;
 		}
 
 		// get all fieldtype
@@ -2815,43 +2817,43 @@ class Caldera_Forms
 		if (!empty($field_types)) {
 			foreach ($field_types as $fieldType => $fieldConfig) {
 				// check for a handler
-				if (isset($fieldConfig['handler'])) {
-					add_filter('caldera_forms_process_field_' . $fieldType, $fieldConfig['handler'], 10, 3);
+				if (isset($fieldConfig[ 'handler' ])) {
+					add_filter('caldera_forms_process_field_' . $fieldType, $fieldConfig[ 'handler' ], 10, 3);
 				}
 				// check for a hash
-				if (isset($fieldConfig['save'])) {
-					add_filter('caldera_forms_save_field_' . $fieldType, $fieldConfig['save'], 10, 4);
+				if (isset($fieldConfig[ 'save' ])) {
+					add_filter('caldera_forms_save_field_' . $fieldType, $fieldConfig[ 'save' ], 10, 4);
 				}
 				// check for a hash
-				if (isset($fieldConfig['validate'])) {
-					add_filter('caldera_forms_validate_field_' . $fieldType, $fieldConfig['validate'], 10, 3);
+				if (isset($fieldConfig[ 'validate' ])) {
+					add_filter('caldera_forms_validate_field_' . $fieldType, $fieldConfig[ 'validate' ], 10, 3);
 				}
 			}
 		}
 
 		// SET process ID
-		if (isset($_GET['cf_er'])) {
-			$_POST['_cf_frm_tr'] = $_GET['cf_er'];
+		if (isset($_GET[ 'cf_er' ])) {
+			$_POST[ '_cf_frm_tr' ] = $_GET[ 'cf_er' ];
 		}
 
-		if (isset($_POST['_cf_frm_tr'])) {
-			$pretransient = Caldera_Forms_Transient::get_transient($_POST['_cf_frm_tr']);
-			if (!empty($pretransient['transient']) && $pretransient['transient'] === $_POST['_cf_frm_tr']) {
+		if (isset($_POST[ '_cf_frm_tr' ])) {
+			$pretransient = Caldera_Forms_Transient::get_transient($_POST[ '_cf_frm_tr' ]);
+			if (!empty($pretransient[ 'transient' ]) && $pretransient[ 'transient' ] === $_POST[ '_cf_frm_tr' ]) {
 				$transdata = $pretransient;
-				$process_id = $transdata['transient'];
+				$process_id = $transdata[ 'transient' ];
 
 				// unset error details
-				if (isset($transdata['type'])) {
-					unset($transdata['type']);
+				if (isset($transdata[ 'type' ])) {
+					unset($transdata[ 'type' ]);
 				}
-				if (isset($transdata['note'])) {
-					unset($transdata['note']);
+				if (isset($transdata[ 'note' ])) {
+					unset($transdata[ 'note' ]);
 				}
-				if (isset($transdata['error'])) {
-					unset($transdata['error']);
+				if (isset($transdata[ 'error' ])) {
+					unset($transdata[ 'error' ]);
 				}
-				if (isset($transdata['fields'])) {
-					unset($transdata['fields']);
+				if (isset($transdata[ 'fields' ])) {
+					unset($transdata[ 'fields' ]);
 				}
 
 			}
@@ -2862,44 +2864,44 @@ class Caldera_Forms
 
 		// initialize data
 		$entry_id = false;
-		if (isset($_POST['_cf_frm_edt'])) {
-			$entry_id = (int)$_POST['_cf_frm_edt'];
+		if (isset($_POST[ '_cf_frm_edt' ])) {
+			$entry_id = (int)$_POST[ '_cf_frm_edt' ];
 		}
 
 		$data = self::get_submission_data($form);
 
 		// set transient for returns submissions
 		if (empty($transdata)) {
-			$transdata = array(
+			$transdata = [
 				'transient' => $process_id,
 				'form_instance' => $form_instance_number,
 				'expire' => 600,
 				'data' => array_merge($_POST, $data),
-			);
+			];
 		}
 
 		// remove AJAX value for tp_
-		if (isset($transdata['data']['cfajax'])) {
-			unset($transdata['data']['cfajax']);
+		if (isset($transdata[ 'data' ][ 'cfajax' ])) {
+			unset($transdata[ 'data' ][ 'cfajax' ]);
 		}
 		// setup transient data
 		$transdata = apply_filters('caldera_forms_submit_transient_setup', $transdata);
 
 		// setup processor bound requieds
-		if (!empty($form['processors'])) {
-			$bound_fields = array();
-			foreach ($form['processors'] as $processor_id => $processor) {
+		if (!empty($form[ 'processors' ])) {
+			$bound_fields = [];
+			foreach ($form[ 'processors' ] as $processor_id => $processor) {
 
-				if (!empty($processor['config']['_required_bounds'])) {
-					foreach ($processor['config'] as $slug => &$value) {
+				if (!empty($processor[ 'config' ][ '_required_bounds' ])) {
+					foreach ($processor[ 'config' ] as $slug => &$value) {
 						if ($slug == '_required_bounds') {
 							continue;
 						}
 
-						if (in_array($slug, $processor['config']['_required_bounds'])) {
-							if (isset($form['fields'][$value])) {
-								if (!isset($process_data[$value])) {
-									$form['fields'][$value]['required'] = 1;
+						if (in_array($slug, $processor[ 'config' ][ '_required_bounds' ])) {
+							if (isset($form[ 'fields' ][ $value ])) {
+								if (!isset($process_data[ $value ])) {
+									$form[ 'fields' ][ $value ][ 'required' ] = 1;
 								}
 							}
 						}
@@ -2909,19 +2911,20 @@ class Caldera_Forms
 		}
 
 		// check submit type (new or update)
-		if (isset($_POST['_cf_frm_edt'])) {
+		if (isset($_POST[ '_cf_frm_edt' ])) {
 			// is edit
 			//check user can edit this item.
-			$transdata['edit'] = (int)$_POST['_cf_frm_edt'];
+			$transdata[ 'edit' ] = (int)$_POST[ '_cf_frm_edt' ];
 			// set entry_id
-			self::set_field_data('_entry_id', $transdata['edit'], $form);
-			$details = self::get_entry_detail($_POST['_cf_frm_edt'], $form);
+			self::set_field_data('_entry_id', $transdata[ 'edit' ], $form);
+			$details = self::get_entry_detail($_POST[ '_cf_frm_edt' ], $form);
 			$user_id = get_current_user_id();
 
 			// check token
-			if (isset($_POST['_cf_frm_edt_tkn'])) {
+			if (isset($_POST[ '_cf_frm_edt_tkn' ])) {
 
-				$validated = Caldera_Forms_Entry_Token::verify_token($_POST['_cf_frm_edt_tkn'], $entry_id, $form['ID']);
+				$validated = Caldera_Forms_Entry_Token::verify_token($_POST[ '_cf_frm_edt_tkn' ], $entry_id,
+					$form[ 'ID' ]);
 				if (is_wp_error($validated)) {
 					return $validated;
 				} else {
@@ -2931,20 +2934,20 @@ class Caldera_Forms
 			} else {
 
 				if (empty($user_id)) {
-					$transdata['error'] = true;
-					$transdata['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');
+					$transdata[ 'error' ] = true;
+					$transdata[ 'note' ] = __('Permission denied or entry does not exist.', 'caldera-forms');
 				} else {
 
 					if (empty($details)) {
-						$transdata['error'] = true;
-						$transdata['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');
+						$transdata[ 'error' ] = true;
+						$transdata[ 'note' ] = __('Permission denied or entry does not exist.', 'caldera-forms');
 					} else {
 						// check user can edit
-						if (current_user_can('edit_posts') || absint($details['user_id'] ) === $user_id) {
+						if (current_user_can('edit_posts') || absint($details[ 'user_id' ]) === $user_id) {
 							// can edit.
 						} else {
-							$transdata['error'] = true;
-							$transdata['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');
+							$transdata[ 'error' ] = true;
+							$transdata[ 'note' ] = __('Permission denied or entry does not exist.', 'caldera-forms');
 						}
 					}
 
@@ -2955,25 +2958,25 @@ class Caldera_Forms
 
 		//check if we added the field to indicate fields from pages not needed
 		//@see https://github.com/CalderaWP/Caldera-Forms/issues/1579
-		if (empty($_POST['_cf_future'])) {
+		if (empty($_POST[ '_cf_future' ])) {
 			$future_fields = '';
 		} else {
-			$future_fields = $_POST['_cf_future'];
+			$future_fields = $_POST[ '_cf_future' ];
 		}
 
 
 		// start brining in entries
-		foreach ($form['fields'] as $field_id => $field) {
+		foreach ($form[ 'fields' ] as $field_id => $field) {
 
 			$entry = self::get_field_data($field_id, $form);
 
 			if (is_wp_error($entry)) {
-				$transdata['fields'][$field_id] = $entry->get_error_message();
+				$transdata[ 'fields' ][ $field_id ] = $entry->get_error_message();
 			} else {
 				// required check
 				$failed = false;
 				// run validators
-				if (has_filter('caldera_forms_validate_field_' . $field['type'])) {
+				if (has_filter('caldera_forms_validate_field_' . $field[ 'type' ])) {
 					/**
 					 * Add custom validation by field type or change field value.
 					 *
@@ -2985,7 +2988,7 @@ class Caldera_Forms
 					 * @param array $field Field config
 					 * @param array $form Form config
 					 */
-					$entry = apply_filters('caldera_forms_validate_field_' . $field['type'], $entry, $field, $form);
+					$entry = apply_filters('caldera_forms_validate_field_' . $field[ 'type' ], $entry, $field, $form);
 				}
 
 				/**
@@ -2999,19 +3002,19 @@ class Caldera_Forms
 				 * @param array $field Field config
 				 * @param array $form Form config
 				 */
-				$entry = apply_filters('caldera_forms_validate_field_' . $field['ID'], $entry, $field, $form);
+				$entry = apply_filters('caldera_forms_validate_field_' . $field[ 'ID' ], $entry, $field, $form);
 
 				// if required, check the validators returned errors or not.
-				if (!empty($field['required'])) {
+				if (!empty($field[ 'required' ])) {
 					// check is supported
-					if (isset($field_types[$field['type']]['setup']['not_supported']) && in_array('required',
-							(array)$field_types[$field['type']]['setup']['not_supported'])) {
+					if (isset($field_types[ $field[ 'type' ] ][ 'setup' ][ 'not_supported' ]) && in_array('required',
+							(array)$field_types[ $field[ 'type' ] ][ 'setup' ][ 'not_supported' ])) {
 						continue;
 					}
 
 					//check if field is on a page after submit button
 					//@see https://github.com/CalderaWP/Caldera-Forms/issues/1579
-					if (false !== strpos($future_fields, $field['ID'])) {
+					if (false !== strpos($future_fields, $field[ 'ID' ])) {
 						continue;
 					}
 
@@ -3022,9 +3025,10 @@ class Caldera_Forms
 
 					// if error - return so
 					if (is_wp_error($entry)) {
-						$transdata['fields'][$field_id] = $entry->get_error_message();
+						$transdata[ 'fields' ][ $field_id ] = $entry->get_error_message();
 					} elseif ($entry === null) {
-						$transdata['fields'][$field_id] = $field['label'] . ' ' . __('is required', 'caldera-forms');
+						$transdata[ 'fields' ][ $field_id ] = $field[ 'label' ] . ' ' . __('is required',
+								'caldera-forms');
 					}
 				}
 			}
@@ -3032,8 +3036,8 @@ class Caldera_Forms
 		}
 
 		// check requireds
-		if (!empty($transdata['fields']) || !empty($transdata['error'])) {
-			$transdata['type'] = 'error';
+		if (!empty($transdata[ 'fields' ]) || !empty($transdata[ 'error' ])) {
+			$transdata[ 'type' ] = 'error';
 			// set error transient
 			$transdata = apply_filters('caldera_forms_submit_return_transient', $transdata, $form, $referrer,
 				$process_id);
@@ -3041,17 +3045,17 @@ class Caldera_Forms
 				$process_id);
 
 			// back to form
-			$query_str = array(
-				'cf_er' => $process_id
-			);
-			if (!empty($referrer['query'])) {
-				$query_str = array_merge($referrer['query'], $query_str);
+			$query_str = [
+				'cf_er' => $process_id,
+			];
+			if (!empty($referrer[ 'query' ])) {
+				$query_str = array_merge($referrer[ 'query' ], $query_str);
 			}
-			$referrer = $referrer['path'] . '?' . http_build_query($query_str);
+			$referrer = $referrer[ 'path' ] . '?' . http_build_query($query_str);
 			$referrer = apply_filters('caldera_forms_submit_return_redirect', $referrer, $form, $process_id);
 			$referrer = apply_filters('caldera_forms_submit_return_redirect_required', $referrer, $form, $process_id);
 
-			Caldera_Forms_Transient::set_transient($process_id, $transdata, $transdata['expire']);
+			Caldera_Forms_Transient::set_transient($process_id, $transdata, $transdata[ 'expire' ]);
 
 			return self::form_redirect('error', $referrer, $form, $process_id);
 
@@ -3060,8 +3064,8 @@ class Caldera_Forms
 
 		// has processors
 		do_action('caldera_forms_submit_start_processors', $form, $referrer, $process_id);
-		if (!isset($form['processors'])) {
-			$form['processors'] = array();
+		if (!isset($form[ 'processors' ])) {
+			$form[ 'processors' ] = [];
 		}
 
 		// get all form processors
@@ -3084,71 +3088,71 @@ class Caldera_Forms
 		 * @since 1.3.2
 		 *
 		 */
-		foreach ($form['processors'] as $processor_id => $processor) {
+		foreach ($form[ 'processors' ] as $processor_id => $processor) {
 			// the cf_version value in the form was introduced in 1.3.2
 			// so if its set, its safe to asume the runtimes are set.
-			if (!isset($form['cf_version'])) {
+			if (!isset($form[ 'cf_version' ])) {
 				// nope
-				if (!empty($transdata['edit'])) {
-					unset($form['processors'][$processor_id]);
+				if (!empty($transdata[ 'edit' ])) {
+					unset($form[ 'processors' ][ $processor_id ]);
 				}
 
 				continue;
 			}
 			// normal check within version
 			// chec if editing and is allowed
-			if (!empty($transdata['edit']) && empty($processor['runtimes']['update'])) {
+			if (!empty($transdata[ 'edit' ]) && empty($processor[ 'runtimes' ][ 'update' ])) {
 				// is editing and is set to not allow it so remove processor
-				unset($form['processors'][$processor_id]);
+				unset($form[ 'processors' ][ $processor_id ]);
 				continue;
 			}
-			if (empty($transdata['edit']) && empty($processor['runtimes']['insert'])) {
+			if (empty($transdata[ 'edit' ]) && empty($processor[ 'runtimes' ][ 'insert' ])) {
 				// is editing and is set to not allow it
-				unset($form['processors'][$processor_id]);
+				unset($form[ 'processors' ][ $processor_id ]);
 				continue;
 			}
 
 		}
 
 		// PRE PROCESS
-		foreach ($form['processors'] as $processor_id => $processor) {
+		foreach ($form[ 'processors' ] as $processor_id => $processor) {
 
-			if (isset($form_processors[$processor['type']])) {
+			if (isset($form_processors[ $processor[ 'type' ] ])) {
 
 				// Do Conditional
-				if (isset($processor['conditions']) && !empty($processor['conditions']['type'])) {
-					if (!self::check_condition($processor['conditions'], $form)) {
+				if (isset($processor[ 'conditions' ]) && !empty($processor[ 'conditions' ][ 'type' ])) {
+					if (!self::check_condition($processor[ 'conditions' ], $form)) {
 						continue;
 					}
 				}
 
 				// has processor
-				$process = $form_processors[$processor['type']];
-				if (!isset($process['pre_processor'])) {
+				$process = $form_processors[ $processor[ 'type' ] ];
+				if (!isset($process[ 'pre_processor' ])) {
 					continue;
 				}
 
 
 				// set default config
-				$config = array();
-				$config['processor_id'] = $processor_id;
+				$config = [];
+				$config[ 'processor_id' ] = $processor_id;
 
-				if (isset($process['default'])) {
-					$config = $process['default'];
+				if (isset($process[ 'default' ])) {
+					$config = $process[ 'default' ];
 				}
-				if (!empty($processor['config'])) {
+				if (!empty($processor[ 'config' ])) {
 
-					$config = array_merge($config, $processor['config']);
+					$config = array_merge($config, $processor[ 'config' ]);
 				}
-				if (is_array($process['pre_processor'])) {
-					$process_line_data = call_user_func_array($process['pre_processor'], array(
+				if (is_array($process[ 'pre_processor' ])) {
+					$process_line_data = call_user_func_array($process[ 'pre_processor' ], [
 						$config,
 						$form,
-						$process_id
-					));
+						$process_id,
+					]);
 				} else {
-					if (function_exists($process['pre_processor'])) {
-						$func = $process['pre_processor'];
+					if (function_exists($process[ 'pre_processor' ])) {
+						$func = $process[ 'pre_processor' ];
 						$process_line_data = $func($config, $form, $process_id);
 					}
 				}
@@ -3157,17 +3161,17 @@ class Caldera_Forms
 				if (!empty($process_line_data)) {
 					if (is_array($process_line_data)) {
 						//type
-						if (!empty($process_line_data['type'])) {
-							$transdata['type'] = $process_line_data['type'];
+						if (!empty($process_line_data[ 'type' ])) {
+							$transdata[ 'type' ] = $process_line_data[ 'type' ];
 							// has note?
-							if (!empty($process_line_data['note'])) {
-								$transdata['note'] = $process_line_data['note'];
+							if (!empty($process_line_data[ 'note' ])) {
+								$transdata[ 'note' ] = $process_line_data[ 'note' ];
 							}
 						}
 
 						// fields involved?
-						if (!empty($process_line_data['fields'])) {
-							$transdata['fields'] = $process_line_data['fields'];
+						if (!empty($process_line_data[ 'fields' ])) {
+							$transdata[ 'fields' ] = $process_line_data[ 'fields' ];
 						}
 
 						// set error transient
@@ -3177,20 +3181,20 @@ class Caldera_Forms
 							$form, $referrer, $process_id);
 
 						// back to form
-						$query_str = array(
-							'cf_er' => $process_id
-						);
-						if (!empty($referrer['query'])) {
-							$query_str = array_merge($referrer['query'], $query_str);
+						$query_str = [
+							'cf_er' => $process_id,
+						];
+						if (!empty($referrer[ 'query' ])) {
+							$query_str = array_merge($referrer[ 'query' ], $query_str);
 						}
-						$referrer = $referrer['path'] . '?' . http_build_query($query_str);
+						$referrer = $referrer[ 'path' ] . '?' . http_build_query($query_str);
 						$referrer = apply_filters('caldera_forms_submit_return_redirect', $referrer, $form,
 							$process_id);
-						$referrer = apply_filters('caldera_forms_submit_return_redirect-' . $processor['type'],
+						$referrer = apply_filters('caldera_forms_submit_return_redirect-' . $processor[ 'type' ],
 							$referrer, $config, $form, $process_id);
 
 						// set transient data
-						Caldera_Forms_Transient::set_transient($process_id, $transdata, $transdata['expire']);
+						Caldera_Forms_Transient::set_transient($process_id, $transdata, $transdata[ 'expire' ]);
 
 						return self::form_redirect('preprocess', $referrer, $form, $process_id);
 					}
@@ -3209,20 +3213,20 @@ class Caldera_Forms
 		 */
 		do_action('caldera_forms_submit_pre_process_end', $form, $referrer, $process_id);
 		/// AFTER PRE-PROCESS - check for errors etc to return else continue to process.
-		if (empty($transdata['edit']) && !empty($form['db_support'])) {
+		if (empty($transdata[ 'edit' ]) && !empty($form[ 'db_support' ])) {
 			// CREATE ENTRY
-			$new_entry = array(
-				'form_id' => $form['ID'],
+			$new_entry = [
+				'form_id' => $form[ 'ID' ],
 				'user_id' => 0,
 				'datestamp' => date_i18n('Y-m-d H:i:s', time(), 0),
-				'status' => 'pending'
-			);
+				'status' => 'pending',
+			];
 			// if user logged in
 			if (is_user_logged_in()) {
-				$new_entry['user_id'] = get_current_user_id();
+				$new_entry[ 'user_id' ] = get_current_user_id();
 			} else {
-				if (isset($data['_user_id'])) {
-					$new_entry['user_id'] = $data['_user_id'];
+				if (isset($data[ '_user_id' ])) {
+					$new_entry[ 'user_id' ] = $data[ '_user_id' ];
 				}
 			}
 
@@ -3243,18 +3247,18 @@ class Caldera_Forms
 			// save entry_id
 			self::set_field_data('_entry_id', $entryid, $form);
 			$token = Caldera_Forms_Entry_Token::create_entry_token($entryid, $form);
-			$transdata['entry_id'] = $entryid;
+			$transdata[ 'entry_id' ] = $entryid;
 			// set edit token
 			self::set_field_data('_entry_token', $token, $form);
 
-		} elseif (!empty($transdata['edit'])) {
-			$entryid = $transdata['edit'];
+		} elseif (!empty($transdata[ 'edit' ])) {
+			$entryid = $transdata[ 'edit' ];
 		} else {
 			$entryid = false;
 		}
 
-		if (empty($entryid) && !empty($transdata['entry_id'])) {
-			$entryid = $transdata['entry_id'];
+		if (empty($entryid) && !empty($transdata[ 'entry_id' ])) {
+			$entryid = $transdata[ 'entry_id' ];
 			self::set_field_data('_entry_id', $entryid, $form);
 		}
 
@@ -3270,36 +3274,36 @@ class Caldera_Forms
 		 */
 		do_action('caldera_forms_submit_process_start', $form, $referrer, $process_id, $entryid);
 		/// PROCESS
-		foreach ($form['processors'] as $processor_id => $processor) {
-			if (isset($form_processors[$processor['type']])) {
+		foreach ($form[ 'processors' ] as $processor_id => $processor) {
+			if (isset($form_processors[ $processor[ 'type' ] ])) {
 				// has processor
 				// Do Conditional
-				if (isset($processor['conditions']) && !empty($processor['conditions']['type'])) {
-					if (!self::check_condition($processor['conditions'], $form)) {
+				if (isset($processor[ 'conditions' ]) && !empty($processor[ 'conditions' ][ 'type' ])) {
+					if (!self::check_condition($processor[ 'conditions' ], $form)) {
 						continue;
 					}
 				}
 
-				$process = $form_processors[$processor['type']];
-				if (!isset($process['processor'])) {
+				$process = $form_processors[ $processor[ 'type' ] ];
+				if (!isset($process[ 'processor' ])) {
 					continue;
 				}
 				$hasmeta = null;
 				// set default config
-				$config = array();
-				$config['processor_id'] = $processor_id;
-				if (isset($process['default'])) {
-					$config = $process['default'];
+				$config = [];
+				$config[ 'processor_id' ] = $processor_id;
+				if (isset($process[ 'default' ])) {
+					$config = $process[ 'default' ];
 				}
-				if (!empty($processor['config'])) {
+				if (!empty($processor[ 'config' ])) {
 
-					$config = array_merge($config, $processor['config']);
+					$config = array_merge($config, $processor[ 'config' ]);
 				}
-				if (is_array($process['processor'])) {
-					$hasmeta = call_user_func_array($process['processor'], array($config, $form, $process_id));
+				if (is_array($process[ 'processor' ])) {
+					$hasmeta = call_user_func_array($process[ 'processor' ], [$config, $form, $process_id]);
 				} else {
-					if (function_exists($process['processor'])) {
-						$func = $process['processor'];
+					if (function_exists($process[ 'processor' ])) {
+						$func = $process[ 'processor' ];
 						$hasmeta = $func($config, $form, $process_id);
 					}
 				}
@@ -3307,18 +3311,18 @@ class Caldera_Forms
 					foreach ((array)$hasmeta as $metakey => $metavalue) {
 						$meta_process_id = $processor_id;
 						// single processors are generallay used so not processor id is needed
-						if (!empty($form_processors[$processor['type']]['single'])) {
-							$meta_process_id = $processor['type'];
+						if (!empty($form_processors[ $processor[ 'type' ] ][ 'single' ])) {
+							$meta_process_id = $processor[ 'type' ];
 						}
 						self::set_submission_meta($metakey, $metavalue, $form, $processor_id);
 					}
 				} // check for transdata errors
 
-				if (!empty($transdata['error'])) {
+				if (!empty($transdata[ 'error' ])) {
 					// remove pending entry
-					if (!empty($entryid) && !empty($new_entry) && $new_entry['status'] == 'pending') {
+					if (!empty($entryid) && !empty($new_entry) && $new_entry[ 'status' ] == 'pending') {
 						// kill it with fire
-						$wpdb->delete($wpdb->prefix . 'cf_form_entries', array('id' => $entryid));
+						$wpdb->delete($wpdb->prefix . 'cf_form_entries', ['id' => $entryid]);
 					}
 					// set error transient
 					$transdata = apply_filters('caldera_forms_submit_error_transient', $transdata, $form, $referrer,
@@ -3327,19 +3331,19 @@ class Caldera_Forms
 						$referrer, $process_id);
 
 					// back to form
-					$query_str = array(
-						'cf_er' => $process_id
-					);
-					if (!empty($referrer['query'])) {
-						$query_str = array_merge($referrer['query'], $query_str);
+					$query_str = [
+						'cf_er' => $process_id,
+					];
+					if (!empty($referrer[ 'query' ])) {
+						$query_str = array_merge($referrer[ 'query' ], $query_str);
 					}
-					$referrer = $referrer['path'] . '?' . http_build_query($query_str);
+					$referrer = $referrer[ 'path' ] . '?' . http_build_query($query_str);
 					$referrer = apply_filters('caldera_forms_submit_error_redirect', $referrer, $form, $process_id);
 					$referrer = apply_filters('caldera_forms_submit_error_redirect_pre_process', $referrer, $form,
 						$process_id);
 
 					// set transient data
-					Caldera_Forms_Transient::set_transient($process_id, $transdata, $transdata['expire']);
+					Caldera_Forms_Transient::set_transient($process_id, $transdata, $transdata[ 'expire' ]);
 
 					return self::form_redirect('error', $referrer, $form, $process_id);
 
@@ -3373,39 +3377,39 @@ class Caldera_Forms
 		 */
 		do_action('caldera_forms_submit_post_process', $form, $referrer, $process_id, $entryid);
 		// POST PROCESS
-		foreach ($form['processors'] as $processor_id => $processor) {
-			if (isset($form_processors[$processor['type']])) {
+		foreach ($form[ 'processors' ] as $processor_id => $processor) {
+			if (isset($form_processors[ $processor[ 'type' ] ])) {
 				// has processor
 				// Do Conditional
-				if (isset($processor['conditions']) && !empty($processor['conditions']['type'])) {
-					if (!self::check_condition($processor['conditions'], $form)) {
+				if (isset($processor[ 'conditions' ]) && !empty($processor[ 'conditions' ][ 'type' ])) {
+					if (!self::check_condition($processor[ 'conditions' ], $form)) {
 						continue;
 					}
 				}
 
-				$process = $form_processors[$processor['type']];
-				if (!isset($process['post_processor'])) {
+				$process = $form_processors[ $processor[ 'type' ] ];
+				if (!isset($process[ 'post_processor' ])) {
 					continue;
 				}
 				// set default config
-				$config = array();
-				$config['processor_id'] = $processor_id;
-				if (isset($process['default'])) {
-					$config = $process['default'];
+				$config = [];
+				$config[ 'processor_id' ] = $processor_id;
+				if (isset($process[ 'default' ])) {
+					$config = $process[ 'default' ];
 				}
-				if (!empty($processor['config'])) {
+				if (!empty($processor[ 'config' ])) {
 
-					$config = array_merge($config, $processor['config']);
+					$config = array_merge($config, $processor[ 'config' ]);
 				}
-				if (is_array($process['post_processor'])) {
-					$hasmeta = call_user_func_array($process['post_processor'], array(
+				if (is_array($process[ 'post_processor' ])) {
+					$hasmeta = call_user_func_array($process[ 'post_processor' ], [
 						$config,
 						$form,
-						$process_id
-					));
+						$process_id,
+					]);
 				} else {
-					if (function_exists($process['post_processor'])) {
-						$func = $process['post_processor'];
+					if (function_exists($process[ 'post_processor' ])) {
+						$func = $process[ 'post_processor' ];
 						$hasmeta = $func($config, $form, $process_id);
 					}
 				}
@@ -3443,25 +3447,25 @@ class Caldera_Forms
 		do_action('caldera_forms_submit_complete', $form, $referrer, $process_id, $entryid);
 
 		// redirect back or to result page
-		$referrer['query']['cf_su'] = $form_instance_number;
+		$referrer[ 'query' ][ 'cf_su' ] = $form_instance_number;
 
 		// last entry id - new only
-		if (empty($transdata['edit'])) {
+		if (empty($transdata[ 'edit' ])) {
 			$cf_id = self::do_magic_tags('{entry_id}');
 			if (!empty($cf_id)) {
-				$referrer['query']['cf_id'] = self::do_magic_tags('{entry_id}');
+				$referrer[ 'query' ][ 'cf_id' ] = self::do_magic_tags('{entry_id}');
 			}
 		}
 
 		// passback values
-		if (!empty($form['variables']['types'])) {
-			foreach ($form['variables']['types'] as $variable_index => $behavior_type) {
+		if (!empty($form[ 'variables' ][ 'types' ])) {
+			foreach ($form[ 'variables' ][ 'types' ] as $variable_index => $behavior_type) {
 				if ($behavior_type == 'passback') {
-					$referrer['query'][$form['variables']['keys'][$variable_index]] = self::do_magic_tags($form['variables']['values'][$variable_index]);
+					$referrer[ 'query' ][ $form[ 'variables' ][ 'keys' ][ $variable_index ] ] = self::do_magic_tags($form[ 'variables' ][ 'values' ][ $variable_index ]);
 				}
 			}
 		}
-		$referrer = $referrer['path'] . '?' . http_build_query($referrer['query']);
+		$referrer = $referrer[ 'path' ] . '?' . http_build_query($referrer[ 'query' ]);
 
 		// filter refer
 		$referrer = apply_filters('caldera_forms_submit_redirect', $referrer, $form, $process_id);
@@ -3479,21 +3483,21 @@ class Caldera_Forms
 	 */
 	static public function cf_init_preview()
 	{
-		if (!isset($_GET, $_GET[Caldera_Forms_Admin::PREVIEW_KEY])) {
+		if (!isset($_GET, $_GET[ Caldera_Forms_Admin::PREVIEW_KEY ])) {
 			return;
 		}
 
 		global $post, $form;
 
 
-		$preview_id = trim($_GET[Caldera_Forms_Admin::PREVIEW_KEY]);
+		$preview_id = trim($_GET[ Caldera_Forms_Admin::PREVIEW_KEY ]);
 		if (!empty($preview_id)) {
 			$form = Caldera_Forms_Forms::get_form($preview_id);
 
 			$userid = get_current_user_id();
 			if (!empty($userid)) {
 
-				if (empty($form['ID']) || $form['ID'] !== trim($preview_id)) {
+				if (empty($form[ 'ID' ]) || $form[ 'ID' ] !== trim($preview_id)) {
 					return;
 				}
 
@@ -3501,26 +3505,26 @@ class Caldera_Forms
 					$temp_page = get_page_by_title('Caldera Forms Preview');
 					if (empty($temp_page)) {
 						// create page
-						$post = array(
+						$post = [
 							'post_content' => '',
 							'post_name' => 'caldera_forms_preview',
 							'post_title' => 'Caldera Forms Preview',
 							'post_status' => 'draft',
 							'post_type' => 'page',
 							'ping_status' => 'closed',
-							'comment_status' => 'closed'
-						);
+							'comment_status' => 'closed',
+						];
 						$page_id = wp_insert_post($post);
-						$url = add_query_arg(array(
+						$url = add_query_arg([
 							'page_id' => $page_id,
 							'preview' => true,
-							Caldera_Forms_Admin::PREVIEW_KEY => $preview_id
+							Caldera_Forms_Admin::PREVIEW_KEY => $preview_id,
 
-						), home_url());
+						], home_url());
 
-						if (isset($_GET[Caldera_Forms_Admin::REVISION_KEY])) {
+						if (isset($_GET[ Caldera_Forms_Admin::REVISION_KEY ])) {
 							$url = add_query_arg(Caldera_Forms_Admin::REVISION_KEY,
-								absint($_GET[Caldera_Forms_Admin::REVISION_KEY]), $url);
+								absint($_GET[ Caldera_Forms_Admin::REVISION_KEY ]), $url);
 						}
 
 						wp_redirect($url);
@@ -3528,30 +3532,30 @@ class Caldera_Forms
 					}
 
 					if ($temp_page->post_status !== 'draft') {
-						wp_update_post(array('ID' => $temp_page->ID, 'post_status' => 'draft'));
+						wp_update_post(['ID' => $temp_page->ID, 'post_status' => 'draft']);
 					}
 
-					$url = add_query_arg(array(
+					$url = add_query_arg([
 						'page_id' => $temp_page->ID,
 						'preview' => true,
-						Caldera_Forms_Admin::PREVIEW_KEY => $preview_id
+						Caldera_Forms_Admin::PREVIEW_KEY => $preview_id,
 
-					), home_url());
+					], home_url());
 
-					if (isset($_GET[Caldera_Forms_Admin::REVISION_KEY])) {
+					if (isset($_GET[ Caldera_Forms_Admin::REVISION_KEY ])) {
 						$url = add_query_arg(Caldera_Forms_Admin::REVISION_KEY,
-							absint($_GET[Caldera_Forms_Admin::REVISION_KEY]), $url);
+							absint($_GET[ Caldera_Forms_Admin::REVISION_KEY ]), $url);
 					}
 
 					wp_redirect($url);
 					exit;
 				}
 
-				$post->post_title = $form['name'];
-				if (isset($_GET[Caldera_Forms_Admin::REVISION_KEY])) {
-					$post->post_content = '[caldera_form id="' . $_GET[Caldera_Forms_Admin::PREVIEW_KEY] . ' revision="' . absint($_GET[Caldera_Forms_Admin::REVISION_KEY]) . '"]';
+				$post->post_title = $form[ 'name' ];
+				if (isset($_GET[ Caldera_Forms_Admin::REVISION_KEY ])) {
+					$post->post_content = '[caldera_form id="' . $_GET[ Caldera_Forms_Admin::PREVIEW_KEY ] . ' revision="' . absint($_GET[ Caldera_Forms_Admin::REVISION_KEY ]) . '"]';
 				} else {
-					$post->post_content = '[caldera_form id="' . $_GET[Caldera_Forms_Admin::PREVIEW_KEY] . '"]';
+					$post->post_content = '[caldera_form id="' . $_GET[ Caldera_Forms_Admin::PREVIEW_KEY ] . '"]';
 				}
 			}
 		}
@@ -3656,7 +3660,7 @@ class Caldera_Forms
 			$url = add_query_arg('cf_api', $form_id, $url);
 		}
 		if (is_ssl()) {
-			if ($_SERVER['SERVER_NAME'] === parse_url(get_home_url(), PHP_URL_HOST)) {
+			if ($_SERVER[ 'SERVER_NAME' ] === parse_url(get_home_url(), PHP_URL_HOST)) {
 				$url = set_url_scheme($url, 'https');
 			}
 		}
@@ -3679,15 +3683,15 @@ class Caldera_Forms
 	static public function cf_init_system()
 	{
 
-		if (!empty($_GET['cf_tp'])) {
+		if (!empty($_GET[ 'cf_tp' ])) {
 
 			// process a transient stored entry
-			$data = Caldera_Forms_Transient::get_transient($_GET['cf_tp']);
-			if (!empty($data) && $data['transient'] === $_GET['cf_tp'] && isset($data['data'])) {
+			$data = Caldera_Forms_Transient::get_transient($_GET[ 'cf_tp' ]);
+			if (!empty($data) && $data[ 'transient' ] === $_GET[ 'cf_tp' ] && isset($data[ 'data' ])) {
 				// create post values
-				$_POST = array_merge($_POST, $data['data']);
+				$_POST = array_merge($_POST, $data[ 'data' ]);
 				// set transient id
-				$_POST['_cf_frm_tr'] = $data['transient'];
+				$_POST[ '_cf_frm_tr' ] = $data[ 'transient' ];
 			}
 		}
 
@@ -3706,7 +3710,7 @@ class Caldera_Forms
 	 *
 	 * @return array Array of found needles.
 	 */
-	static function search_array_fields($needle, $haystack, $found = array())
+	static function search_array_fields($needle, $haystack, $found = [])
 	{
 
 		if (is_array($needle)) {
@@ -3737,7 +3741,7 @@ class Caldera_Forms
 		if (is_string($form)) {
 			$form_id = $form;
 			$form = Caldera_Forms_Forms::get_form($form);
-			if (!is_array($form) || !isset($form['ID']) || $form['ID'] !== $form_id) {
+			if (!is_array($form) || !isset($form[ 'ID' ]) || $form[ 'ID' ] !== $form_id) {
 				return new WP_Error('fail', esc_html__('Invalid form ID', 'caldera-forms'));
 			}
 		}
@@ -3753,13 +3757,13 @@ class Caldera_Forms
 		//False for third arg added in 1.5.0.8 to prevent conditions from being shown
 		//See: https://github.com/CalderaWP/Caldera-Forms/issues/1494
 		$entry = self::get_submission_data($form, $entry_id, false);
-		$data = array(
-			'data' => array()
-		);
+		$data = [
+			'data' => [],
+		];
 
 		foreach ($entry as $field_id => $field_value) {
 
-			if (!isset($form['fields'][$field_id]) || !isset($field_types[$form['fields'][$field_id]['type']])) {
+			if (!isset($form[ 'fields' ][ $field_id ]) || !isset($field_types[ $form[ 'fields' ][ $field_id ][ 'type' ] ])) {
 				continue;
 			}
 
@@ -3770,7 +3774,7 @@ class Caldera_Forms
 			}
 
 
-			$field = $form['fields'][$field_id];
+			$field = $form[ 'fields' ][ $field_id ];
 
 			$field = Caldera_Forms_Field_Util::get_field($field, $form, true);
 
@@ -3785,30 +3789,30 @@ class Caldera_Forms
 
 			}
 			// set view
-			$field_view = apply_filters('caldera_forms_view_field_' . $field['type'], $field_value, $field, $form);
+			$field_view = apply_filters('caldera_forms_view_field_' . $field[ 'type' ], $field_value, $field, $form);
 
 			// has options?
-			if (!empty($field['config']['option'])) {
+			if (!empty($field[ 'config' ][ 'option' ])) {
 				$i = 0;
-				foreach ($field['config']['option'] as $opt => $option) {
-					if ($option['value'] == $field_view) {
-						$field_view = $option['label'];
+				foreach ($field[ 'config' ][ 'option' ] as $opt => $option) {
+					if ($option[ 'value' ] == $field_view) {
+						$field_view = $option[ 'label' ];
 
 						if (is_array($field_value)) {
-							if (isset($field_value[$opt])) {
-								$field_value = $field_value[$opt];
+							if (isset($field_value[ $opt ])) {
+								$field_value = $field_value[ $opt ];
 							} else {
 								$field_value = '';
 							}
 
 						}
 
-						if (empty($field_types[$field['type']]['options'])) {
-							$data['data'][$field_id . '_' . $i] = array(
-								'label' => $field['label'],
+						if (empty($field_types[ $field[ 'type' ] ][ 'options' ])) {
+							$data[ 'data' ][ $field_id . '_' . $i ] = [
+								'label' => $field[ 'label' ],
 								'view' => $field_view,
-								'value' => $field_value
-							);
+								'value' => $field_value,
+							];
 							$i++;
 						}
 					}
@@ -3816,59 +3820,59 @@ class Caldera_Forms
 
 			}
 
-			$data['data'][$field_id] = array(
-				'label' => $field['label'],
+			$data[ 'data' ][ $field_id ] = [
+				'label' => $field[ 'label' ],
 				'view' => $field_view,
-				'value' => $field_value
-			);
+				'value' => $field_value,
+			];
 
 
 		}
 
 		// get meta
 		$entry_detail = self::get_entry_detail($entry_id, $form);
-		$data['date'] = self::localize_time($entry_detail['datestamp']);
+		$data[ 'date' ] = self::localize_time($entry_detail[ 'datestamp' ]);
 
-		if (!empty($entry_detail['meta'])) {
-			$data['meta'] = $entry_detail['meta'];
+		if (!empty($entry_detail[ 'meta' ])) {
+			$data[ 'meta' ] = $entry_detail[ 'meta' ];
 		}
 
 
-		if (!empty($entry_detail['user_id'])) {
-			$user = get_userdata($entry_detail['user_id']);
+		if (!empty($entry_detail[ 'user_id' ])) {
+			$user = get_userdata($entry_detail[ 'user_id' ]);
 			if (!empty($user)) {
-				$data['user'] = array(
+				$data[ 'user' ] = [
 					'ID' => $user->ID,
 					'name' => $user->data->display_name,
 					'email' => $user->data->user_email,
 					'avatar' => get_avatar($user->ID, 150, 'identicon'),
-				);
+				];
 			}
 		} else {
 			$avatar_field = null;
-			if (!empty($form['avatar_field'])) {
-				$avatar_field = self::get_field_data($form['avatar_field'], $form, $entry_id);
+			if (!empty($form[ 'avatar_field' ])) {
+				$avatar_field = self::get_field_data($form[ 'avatar_field' ], $form, $entry_id);
 			}
-			$data['user'] = array(
+			$data[ 'user' ] = [
 				'avatar' => get_avatar($avatar_field, 150),
-			);
+			];
 		}
 
-		if (!empty($form['variables']['types'])) {
-			foreach ($form['variables']['types'] as $var_key => $var_type) {
+		if (!empty($form[ 'variables' ][ 'types' ])) {
+			foreach ($form[ 'variables' ][ 'types' ] as $var_key => $var_type) {
 				if ($var_type == 'entryitem') {
-					$var_val = Caldera_Forms::do_magic_tags($form['variables']['values'][$var_key], $entry_id);
-					$data['data']['_var_' . $form['variables']['keys'][$var_key]] = array(
-						'label' => ucwords(str_replace('_', ' ', $form['variables']['keys'][$var_key])),
+					$var_val = Caldera_Forms::do_magic_tags($form[ 'variables' ][ 'values' ][ $var_key ], $entry_id);
+					$data[ 'data' ][ '_var_' . $form[ 'variables' ][ 'keys' ][ $var_key ] ] = [
+						'label' => ucwords(str_replace('_', ' ', $form[ 'variables' ][ 'keys' ][ $var_key ])),
 						'view' => $var_val,
-						'value' => sanitize_text_field($var_val)
-					);
+						'value' => sanitize_text_field($var_val),
+					];
 				}
 			}
 		}
 
-		if (!isset($data['user'])) {
-			$data['user'] = array();
+		if (!isset($data[ 'user' ])) {
+			$data[ 'user' ] = [];
 		}
 
 		/**
@@ -3880,10 +3884,10 @@ class Caldera_Forms
 		 * @param int $entry_id ID of entry being returned
 		 * @param array $form Form config
 		 */
-		$data['user'] = apply_filters('caldera_forms_get_entry_user', $data['user'], $entry_id, $form);
+		$data[ 'user' ] = apply_filters('caldera_forms_get_entry_user', $data[ 'user' ], $entry_id, $form);
 
 		// set the entry status
-		$data['status'] = $entry_detail['status'];
+		$data[ 'status' ] = $entry_detail[ 'status' ];
 
 		/**
 		 * Changes entry being returned.
@@ -3941,148 +3945,146 @@ class Caldera_Forms
 	 *
 	 * @return string HTML for form, if it was able to be loaded,
 	 */
-	static public function render_field($field, $form = null, $entry_data = array(), $field_errors = array())
+	static public function render_field($field, $form = null, $entry_data = [], $field_errors = [])
 	{
 		$current_form_count = Caldera_Forms_Render_Util::get_current_form_count();
-        $type = Caldera_Forms_Field_Util::get_type($field, $form);
-        $field_id_attr = Caldera_Forms_Field_Util::get_base_id($field, $current_form_count, $form);
-        if( Caldera_Forms_Field_Util::is_cf2_field_type($type)){
-            $form_id_attribute = $form['ID'] . '_' . $current_form_count;
-            $field['required'] = ! empty( $field['required'] ) ? true : false;
-            $field['caption'] = ! empty( $field['caption'] ) ? $field['caption'] : '';
-            $field['config']['default'] = isset($field['config']['default']) ? $field['config']['default'] : '';
-            $renderer = new \calderawp\calderaforms\cf2\Fields\RenderField($form_id_attribute,
-                array_merge( $field, [
-                    'fieldIdAttr' => $field_id_attr,
-                    'formIdAttr' => $form_id_attribute,
-                ]),
-                [
-                    'formId' => $form['ID'],
-                    'control' => uniqid( $type )
+		$type = Caldera_Forms_Field_Util::get_type($field, $form);
+		$field_id_attr = Caldera_Forms_Field_Util::get_base_id($field, $current_form_count, $form);
+		if (Caldera_Forms_Field_Util::is_cf2_field_type($type)) {
+			$form_id_attribute = $form[ 'ID' ] . '_' . $current_form_count;
+			$field[ 'required' ] = !empty($field[ 'required' ]) ? true : false;
+			$field[ 'caption' ] = !empty($field[ 'caption' ]) ? $field[ 'caption' ] : '';
+			$field[ 'config' ][ 'default' ] = isset($field[ 'config' ][ 'default' ]) ? $field[ 'config' ][ 'default' ] : '';
+			$renderer = new \calderawp\calderaforms\cf2\Fields\RenderField($form_id_attribute,
+				array_merge($field, [
+					'fieldIdAttr' => $field_id_attr,
+					'formIdAttr' => $form_id_attribute,
+				]),
+				[
+					'formId' => $form[ 'ID' ],
+					'control' => uniqid($type),
 
-                ]
-            );
-            return $renderer->render();
-        }
+				]
+			);
+			return $renderer->render();
+		}
 		$field_classes = Caldera_Forms_Field_Util::prepare_field_classes($field, $form);
 
-		$field_wrapper_class = implode(' ', $field_classes['control_wrapper']);
-		$field_input_class = implode(' ', $field_classes['field_wrapper']);
-		$field_class = implode(' ', $field_classes['field']);
+		$field_wrapper_class = implode(' ', $field_classes[ 'control_wrapper' ]);
+		$field_input_class = implode(' ', $field_classes[ 'field_wrapper' ]);
+		$field_class = implode(' ', $field_classes[ 'field' ]);
 
 		// add error class
 		if (!empty($field_errors)) {
-			$field_wrapper_class .= " " . implode(' ', $field_classes['field_error']);
+			$field_wrapper_class .= " " . implode(' ', $field_classes[ 'field_error' ]);
 		}
 
-		if (!empty($field['hide_label'])) {
-			$field_classes['field_label'][] = 'screen-reader-text sr-only';
+		if (!empty($field[ 'hide_label' ])) {
+			$field_classes[ 'field_label' ][] = 'screen-reader-text sr-only';
 		}
 
 
-
-
-		$field_structure = array(
+		$field_structure = [
 			"field" => $field,
-			"id" => $field['ID'],//'fld_' . $field['slug'],
-			"name" => $field['ID'],//$field['slug'],
-			"wrapper_before" => "<div data-field-wrapper=\"" . $field['ID'] . "\" class=\"" . $field_wrapper_class . "\" id=\"" . $field_id_attr . "-wrap\">\r\n",
+			"id" => $field[ 'ID' ],//'fld_' . $field['slug'],
+			"name" => $field[ 'ID' ],//$field['slug'],
+			"wrapper_before" => "<div data-field-wrapper=\"" . $field[ 'ID' ] . "\" class=\"" . $field_wrapper_class . "\" id=\"" . $field_id_attr . "-wrap\">\r\n",
 			"field_before" => "<div class=\"" . $field_input_class . "\">\r\n",
-			"label_before" => "<label id=\"" . $field['ID'] . "Label\" for=\"" . $field_id_attr . "\" class=\"" . implode(' ',
-					$field_classes['field_label']) . "\">",
-			"label" => $field['label'],
-			"label_required" => (empty($field['hide_label']) ? (!empty($field['required']) ? " <span aria-hidden=\"true\" role=\"presentation\" class=\"" . implode(' ',
-					$field_classes['field_required_tag']) . "\" style=\"color:#ee0000;\">*</span>" : "") : null),
+			"label_before" => "<label id=\"" . $field[ 'ID' ] . "Label\" for=\"" . $field_id_attr . "\" class=\"" . implode(' ',
+					$field_classes[ 'field_label' ]) . "\">",
+			"label" => $field[ 'label' ],
+			"label_required" => (empty($field[ 'hide_label' ]) ? (!empty($field[ 'required' ]) ? " <span aria-hidden=\"true\" role=\"presentation\" class=\"" . implode(' ',
+					$field_classes[ 'field_required_tag' ]) . "\" style=\"color:#ee0000;\">*</span>" : "") : null),
 			"label_after" => "</label>",
-			"field_placeholder" => (!empty($field['hide_label']) ? 'placeholder="' . htmlentities($field['label']) . '"' : null),
-			"field_required" => (!empty($field['required']) ? 'required="required"' : null),
+			"field_placeholder" => (!empty($field[ 'hide_label' ]) ? 'placeholder="' . htmlentities($field[ 'label' ]) . '"' : null),
+			"field_required" => (!empty($field[ 'required' ]) ? 'required="required"' : null),
 			"field_value" => null,
-			"field_caption" => (!empty($field['caption']) ? "<span id=\"" . $field['ID'] . "Caption\" class=\"" . implode(' ',
-					$field_classes['field_caption']) . "\">" . $field['caption'] . "</span>\r\n" : ""),
+			"field_caption" => (!empty($field[ 'caption' ]) ? "<span id=\"" . $field[ 'ID' ] . "Caption\" class=\"" . implode(' ',
+					$field_classes[ 'field_caption' ]) . "\">" . $field[ 'caption' ] . "</span>\r\n" : ""),
 			"field_after" => "</div>\r\n",
 			"wrapper_after" => "</div>\r\n",
-			"aria" => array()
-		);
+			"aria" => [],
+		];
 
-		if (!in_array($type, array(
+		if (!in_array($type, [
 			'button',
-			'hidden'
-		))) {
-			$field_structure['aria']['labelledby'] = $field['ID'] . 'Label';
+			'hidden',
+		])) {
+			$field_structure[ 'aria' ][ 'labelledby' ] = $field[ 'ID' ] . 'Label';
 		}
 
 		// if has caption
-		if (!empty($field['caption'])) {
-			$field_structure['aria']['describedby'] = $field['ID'] . 'Caption';
+		if (!empty($field[ 'caption' ])) {
+			$field_structure[ 'aria' ][ 'describedby' ] = $field[ 'ID' ] . 'Caption';
 		}
 
 		// add error
 		if (!empty($field_errors)) {
 			if (is_string($field_errors)) {
-				$field_errors = array($field_errors);
+				$field_errors = [$field_errors];
 			}
 
 			foreach ($field_errors as $error) {
-				$field_structure['field_caption'] = "<span class=\"" . implode(' ',
-						$field_classes['field_caption']) . "\">" . $error . "</span>\r\n";
+				$field_structure[ 'field_caption' ] = "<span class=\"" . implode(' ',
+						$field_classes[ 'field_caption' ]) . "\">" . $error . "</span>\r\n";
 			}
 
 		}
 
 		// value
-		if (isset($field['config']['default'])) {
+		if (isset($field[ 'config' ][ 'default' ])) {
 
-			$field_structure['field_value'] = self::do_magic_tags($field['config']['default']);
+			$field_structure[ 'field_value' ] = self::do_magic_tags($field[ 'config' ][ 'default' ]);
 		}
 
 		// transient data
-		if (isset($entry_data[$field['ID']])) {
-			$field_structure['field_value'] = $entry_data[$field['ID']];
+		if (isset($entry_data[ $field[ 'ID' ] ])) {
+			$field_structure[ 'field_value' ] = $entry_data[ $field[ 'ID' ] ];
 		}
 
 		$field_structure = apply_filters('caldera_forms_render_field_structure', $field_structure, $form);
-		$field_structure = apply_filters('caldera_forms_render_field_structure_type-' . $field['type'],
+		$field_structure = apply_filters('caldera_forms_render_field_structure_type-' . $field[ 'type' ],
 			$field_structure, $form);
-		$field_structure = apply_filters('caldera_forms_render_field_structure_slug-' . $field['slug'],
+		$field_structure = apply_filters('caldera_forms_render_field_structure_slug-' . $field[ 'slug' ],
 			$field_structure, $form);
 
 		// compile aria tags
-		if (!empty($field_structure['aria'])) {
+		if (!empty($field_structure[ 'aria' ])) {
 			$aria_atts = null;
-			foreach ($field_structure['aria'] as $att => $att_val) {
+			foreach ($field_structure[ 'aria' ] as $att => $att_val) {
 				$aria_atts .= ' aria-' . $att . '="' . esc_attr($att_val) . '"';
 			}
-			$field_structure['aria'] = $aria_atts;
+			$field_structure[ 'aria' ] = $aria_atts;
 		} else {
-			$field_structure['aria'] = '';
+			$field_structure[ 'aria' ] = '';
 		}
 
-		$field_name = $field_structure['name'];
-		$field_id = $field_structure['id'] . '_' . $current_form_count;
-		$wrapper_before = $field_structure['wrapper_before'];
-		$field_before = $field_structure['field_before'];
-		$field_label = $field_structure['label_before'] . $field_structure['label'] . $field_structure['label_required'] . $field_structure['label_after'] . "\r\n";
-		$field_placeholder = $field_structure['field_placeholder'];
-		$field_required = $field_structure['field_required'];
-		$field_caption = $field_structure['field_caption'];
-		$field_after = $field_structure['field_after'];
-		$wrapper_after = $field_structure['wrapper_after'];
+		$field_name = $field_structure[ 'name' ];
+		$field_id = $field_structure[ 'id' ] . '_' . $current_form_count;
+		$wrapper_before = $field_structure[ 'wrapper_before' ];
+		$field_before = $field_structure[ 'field_before' ];
+		$field_label = $field_structure[ 'label_before' ] . $field_structure[ 'label' ] . $field_structure[ 'label_required' ] . $field_structure[ 'label_after' ] . "\r\n";
+		$field_placeholder = $field_structure[ 'field_placeholder' ];
+		$field_required = $field_structure[ 'field_required' ];
+		$field_caption = $field_structure[ 'field_caption' ];
+		$field_after = $field_structure[ 'field_after' ];
+		$wrapper_after = $field_structure[ 'wrapper_after' ];
 		// blank default
-		$field_value = $field_structure['field_value'];
+		$field_value = $field_structure[ 'field_value' ];
 		// setup base instance ID
-		$field_base_id = $field['ID'];
+		$field_base_id = $field[ 'ID' ];
 
 		// register strings
-		$form_field_strings[$field_structure['id']] = array(
-			'id' => $field_structure['id'],
+		$form_field_strings[ $field_structure[ 'id' ] ] = [
+			'id' => $field_structure[ 'id' ],
 			'instance' => $current_form_count,
-			'slug' => $field['slug'],
-			'label' => $field['label']
-		);
+			'slug' => $field[ 'slug' ],
+			'label' => $field[ 'label' ],
+		];
 
 		$field_types = Caldera_Forms_Fields::get_all();
 
-		$field_file = $field_types[$field['type']]['file'];
+		$field_file = $field_types[ $field[ 'type' ] ][ 'file' ];
 		/**
 		 * Filter the file path to be used for a field's HTML in front-end
 		 *
@@ -4094,14 +4096,14 @@ class Caldera_Forms
 		 * @param string $field_structure Data to be used in field
 		 * @param array $form Current form (NOTE: May be null)
 		 */
-		$field_file = apply_filters('caldera_forms_render_field_file', $field_file, $field['type'], $field['ID'],
+		$field_file = apply_filters('caldera_forms_render_field_file', $field_file, $field[ 'type' ], $field[ 'ID' ],
 			$field_file, $field_structure, $form);
 
 		ob_start();
 		include $field_file;
 		$field_html = apply_filters('caldera_forms_render_field', ob_get_clean(), $form);
-		$field_html = apply_filters('caldera_forms_render_field_type-' . $field['type'], $field_html, $form);
-		$field_html = apply_filters('caldera_forms_render_field_slug-' . $field['slug'], $field_html, $form);
+		$field_html = apply_filters('caldera_forms_render_field_type-' . $field[ 'type' ], $field_html, $form);
+		$field_html = apply_filters('caldera_forms_render_field_slug-' . $field[ 'slug' ], $field_html, $form);
 
 		return $field_html;
 	}
@@ -4127,20 +4129,20 @@ class Caldera_Forms
 		if (is_string($atts)) {
 
 			$form = Caldera_Forms_Forms::get_form($atts);
-			$atts = array();
+			$atts = [];
 
 		} elseif (is_array($atts) && Caldera_Forms_Forms::is_revision($atts)) {
 			$form = $atts;
-		} elseif (is_array($atts) && isset($atts['ID'])) {
-			$form = Caldera_Forms_Forms::get_form($atts['ID']);
+		} elseif (is_array($atts) && isset($atts[ 'ID' ])) {
+			$form = Caldera_Forms_Forms::get_form($atts[ 'ID' ]);
 		} else {
 
-			if (empty($atts['id'])) {
-				if (!empty($atts['name'])) {
-					$form = Caldera_Forms_Forms::get_form($atts['name']);
+			if (empty($atts[ 'id' ])) {
+				if (!empty($atts[ 'name' ])) {
+					$form = Caldera_Forms_Forms::get_form($atts[ 'name' ]);
 				}
-			} elseif (!empty($atts['id'])) {
-				$form = Caldera_Forms_Forms::get_form($atts['id']);
+			} elseif (!empty($atts[ 'id' ])) {
+				$form = Caldera_Forms_Forms::get_form($atts[ 'id' ]);
 			}
 		}
 
@@ -4149,14 +4151,14 @@ class Caldera_Forms
 		}
 
 		$forms = Caldera_Forms_Forms::get_forms();
-		if( !empty( $forms ) && !array_key_exists( $form['ID'], $forms)){
+		if (!empty($forms) && !array_key_exists($form[ 'ID' ], $forms)) {
 			return;
 		}
 
 		// is this form allowed to render ( check state )
-		if (!empty($form['form_draft'])) {
-			if (!isset($_GET['cf_preview']) || $_GET['cf_preview'] != $form['ID']) {
-				if (isset($_POST['action']) && $_POST['action'] == 'cf_get_form_preview') {
+		if (!empty($form[ 'form_draft' ])) {
+			if (!isset($_GET[ 'cf_preview' ]) || $_GET[ 'cf_preview' ] != $form[ 'ID' ]) {
+				if (isset($_POST[ 'action' ]) && $_POST[ 'action' ] == 'cf_get_form_preview') {
 					echo '<p style="color: #cf0000;">' . __('Form is currently not active.', 'caldera-forms') . '</p>';
 				} else {
 					return;
@@ -4170,16 +4172,16 @@ class Caldera_Forms
 
 		Caldera_Forms_Render_Assets::optional_style_includes();
 
-		if (isset($atts['ajax'])) {
-			if (!empty($atts['ajax'])) {
-				$form['form_ajax'] = 1;
+		if (isset($atts[ 'ajax' ])) {
+			if (!empty($atts[ 'ajax' ])) {
+				$form[ 'form_ajax' ] = 1;
 			} else {
-				$form['form_ajax'] = 0;
+				$form[ 'form_ajax' ] = 0;
 			}
 		}
 		// set entry edit
-		if (!empty($atts['entry'])) {
-			$entry_id = self::do_magic_tags($atts['entry']);
+		if (!empty($atts[ 'entry' ])) {
+			$entry_id = self::do_magic_tags($atts[ 'entry' ]);
 		}
 
 		/**
@@ -4231,25 +4233,25 @@ class Caldera_Forms
 		$current_form_count += 1;
 
 		// set instance
-		if (!empty($atts['instance'])) {
-			$current_form_count = absint($atts['instance']);
+		if (!empty($atts[ 'instance' ])) {
+			$current_form_count = absint($atts[ 'instance' ]);
 		}
 
 		$field_types = Caldera_Forms_Fields::get_all();
 
 		do_action('caldera_forms_render_start', $form);
 
-		$form_id_attribute = $form['ID'] . '_' . $current_form_count;
-		$form_attributes = array(
+		$form_id_attribute = $form[ 'ID' ] . '_' . $current_form_count;
+		$form_attributes = [
 			'method' => 'POST',
 			'enctype' => 'multipart/form-data',
 			'id' => $form_id_attribute,
-			'data-form-id' => $form['ID'],
-			'aria-label' => $form['name']
-		);
+			'data-form-id' => $form[ 'ID' ],
+			'aria-label' => $form[ 'name' ],
+		];
 
 		//add extra attributes to make AJAX submissions JS do its thing
-		if (!empty($form['form_ajax'])) {
+		if (!empty($form[ 'form_ajax' ])) {
 			add_filter('caldera_forms_render_form_attributes', 'cf_ajax_setatts', 10, 2);
 
 		}
@@ -4268,8 +4270,8 @@ class Caldera_Forms
 		include_once CFCORE_PATH . "classes/caldera-grid.php";
 
 		$gridsize = 'sm';
-		if (!empty($form['settings']['responsive']['break_point'])) {
-			$gridsize = $form['settings']['responsive']['break_point'];
+		if (!empty($form[ 'settings' ][ 'responsive' ][ 'break_point' ])) {
+			$gridsize = $form[ 'settings' ][ 'responsive' ][ 'break_point' ];
 		}
 
 		/**
@@ -4280,7 +4282,7 @@ class Caldera_Forms
 		$gridsize = apply_filters('caldera_forms_render_set_grid_size', $gridsize);
 
 		// set grid render engine
-		$grid_settings = array(
+		$grid_settings = [
 			"first" => 'first_row',
 			"last" => 'last_row',
 			"single" => 'single',
@@ -4291,61 +4293,61 @@ class Caldera_Forms
 			"column_single" => 'single',
 			"column_before" => '<div %1$s class="col-' . $gridsize . '-%2$d %3$s">',
 			"column_after" => '</div>',
-			'form_id' => $form['ID'],
-			'form_id_attr' => $form_attributes['id']
+			'form_id' => $form[ 'ID' ],
+			'form_id_attr' => $form_attributes[ 'id' ],
 
-		);
+		];
 
 		// filter settings
 		$grid_settings = apply_filters('caldera_forms_render_grid_settings', $grid_settings, $form);
 
-		$form['grid_object'] = new Caldera_Form_Grid($grid_settings);
-		if (empty($form['layout_grid'])) {
-			$form['layout_grid'] = array('structure' => '');
+		$form[ 'grid_object' ] = new Caldera_Form_Grid($grid_settings);
+		if (empty($form[ 'layout_grid' ])) {
+			$form[ 'layout_grid' ] = ['structure' => ''];
 		}
 
 		// Build Pages Breaks
-		if (false !== strpos($form['layout_grid']['structure'], '#')) {
+		if (false !== strpos($form[ 'layout_grid' ][ 'structure' ], '#')) {
 			// setup pages
-			$pages = explode('#', $form['layout_grid']['structure']);
-			$page_breaks = array();
+			$pages = explode('#', $form[ 'layout_grid' ][ 'structure' ]);
+			$page_breaks = [];
 			foreach ($pages as $page_no => $page) {
 				$point = substr_count($page, '|') + 1;
-				if (isset($page_breaks[$page_no - 1])) {
-					$point += $page_breaks[$page_no - 1];
+				if (isset($page_breaks[ $page_no - 1 ])) {
+					$point += $page_breaks[ $page_no - 1 ];
 				}
-				$page_breaks[$page_no] = $point;
+				$page_breaks[ $page_no ] = $point;
 			}
-			$form['layout_grid']['structure'] = str_replace('#', '|', $form['layout_grid']['structure']);
+			$form[ 'layout_grid' ][ 'structure' ] = str_replace('#', '|', $form[ 'layout_grid' ][ 'structure' ]);
 		}
 
 		// setup notcies
-		$notices = array();
+		$notices = [];
 
 		$note_general_classes = Caldera_Forms_Render_Notices::get_note_general_classes($form);
 
 		$note_classes = Caldera_Forms_Render_Notices::get_note_classes($note_general_classes, $form);
-		$field_errors = array();
+		$field_errors = [];
 
 		// edit entry from url
-		if (!empty($_GET['cf_ee'])) {
-			$entry_id = $_GET['cf_ee'];
+		if (!empty($_GET[ 'cf_ee' ])) {
+			$entry_id = $_GET[ 'cf_ee' ];
 		}
 
 		// attr entry id
-		if (!empty($atts['entry'])) {
-			$entry_id = $atts['entry'];
+		if (!empty($atts[ 'entry' ])) {
+			$entry_id = $atts[ 'entry' ];
 		}
 
 		if (!empty($entry_id)) {
 			//check user can edit this item.
 			$user_id = get_current_user_id();
 			$details = self::get_entry_detail($entry_id, $form);
-			if (!empty($_GET['cf_et'])) {
+			if (!empty($_GET[ 'cf_et' ])) {
 				// build token
-				$validated = Caldera_Forms_Entry_Token::verify_token(trim($_GET['cf_et']), $entry_id, $form['ID']);
+				$validated = Caldera_Forms_Entry_Token::verify_token(trim($_GET[ 'cf_et' ]), $entry_id, $form[ 'ID' ]);
 				if (is_wp_error($validated)) {
-					$notices['error']['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');
+					$notices[ 'error' ][ 'note' ] = __('Permission denied or entry does not exist.', 'caldera-forms');
 				} else {
 					$edit_token = Caldera_Forms_Entry_Token::create_entry_token($entry_id, $form);
 				}
@@ -4356,73 +4358,74 @@ class Caldera_Forms
 
 					if (!empty($details)) {
 						// check user can edit
-						if (current_user_can('edit_posts') || (is_array($details) && absint($details['user_id'] ) === $user_id)) {
+						if (current_user_can('edit_posts') || (is_array($details) && absint($details[ 'user_id' ]) === $user_id)) {
 							// can edit.
-							$entry_id = (int)$details['id'];
+							$entry_id = (int)$details[ 'id' ];
 						} else {
-							$notices['error']['note'] = __('Permission denied or entry does not exist.',
+							$notices[ 'error' ][ 'note' ] = __('Permission denied or entry does not exist.',
 								'caldera-forms');
 						}
 					} else {
-						$notices['error']['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');
+						$notices[ 'error' ][ 'note' ] = __('Permission denied or entry does not exist.',
+							'caldera-forms');
 					}
 
 				} else {
-					$notices['error']['note'] = __('Permission denied or entry does not exist.', 'caldera-forms');
+					$notices[ 'error' ][ 'note' ] = __('Permission denied or entry does not exist.', 'caldera-forms');
 				}
 			}
 
-			if (!empty($notices['error']['note'])) {
+			if (!empty($notices[ 'error' ][ 'note' ])) {
 				$halt_render = true;
 				$entry_id = false;
 			}
 		}
 
 		// check for prev post
-		$prev_data = apply_filters('caldera_forms_render_pre_get_entry', array(), $form, $entry_id);
+		$prev_data = apply_filters('caldera_forms_render_pre_get_entry', [], $form, $entry_id);
 
 		// load requested data
 		if (!empty($entry_id)) {
 			$prev_entry = self::get_entry($entry_id, $form);
-			$prev_data = array();
+			$prev_data = [];
 			self::set_field_data('_entry_id', $entry_id, $form);
-			foreach ($prev_entry['data'] as $field_id => $entry_data) {
-				$prev_data[$field_id] = $entry_data['value'];
+			foreach ($prev_entry[ 'data' ] as $field_id => $entry_data) {
+				$prev_data[ $field_id ] = $entry_data[ 'value' ];
 			}
 			$prev_data = apply_filters('caldera_forms_render_get_entry', $prev_data, $form, $entry_id);
 		}
 
 
-		if (!empty($_GET['cf_er'])) {
-			$prev_post = Caldera_Forms_Transient::get_transient($_GET['cf_er']);
-			if (!empty($prev_post['transient'])) {
+		if (!empty($_GET[ 'cf_er' ])) {
+			$prev_post = Caldera_Forms_Transient::get_transient($_GET[ 'cf_er' ]);
+			if (!empty($prev_post[ 'transient' ])) {
 
-				if ($prev_post['transient'] === $_GET['cf_er']) {
-					foreach ($prev_post['data'] as $field_id => $field_entry) {
+				if ($prev_post[ 'transient' ] === $_GET[ 'cf_er' ]) {
+					foreach ($prev_post[ 'data' ] as $field_id => $field_entry) {
 
-						if (!isset($form['fields'][$field_id])) {
+						if (!isset($form[ 'fields' ][ $field_id ])) {
 							continue; // ignore non field data
 						}
 
 						if (!is_wp_error($field_entry)) {
-							$prev_data[$field_id] = $field_entry;
+							$prev_data[ $field_id ] = $field_entry;
 						}
 					}
 				}
-				if (!empty($prev_post['type']) && !empty($prev_post['note'])) {
-					$notices[$prev_post['type']]['note'] = $prev_post['note'];
+				if (!empty($prev_post[ 'type' ]) && !empty($prev_post[ 'note' ])) {
+					$notices[ $prev_post[ 'type' ] ][ 'note' ] = $prev_post[ 'note' ];
 				}
-				if (!empty($prev_post['error']) && !empty($prev_post['note'])) {
-					$notices['error']['note'] = $prev_post['note'];
+				if (!empty($prev_post[ 'error' ]) && !empty($prev_post[ 'note' ])) {
+					$notices[ 'error' ][ 'note' ] = $prev_post[ 'note' ];
 				}
-				if (!empty($prev_post['fields'])) {
-					$field_errors = array();
-					foreach ($prev_post['fields'] as $field_id => $field_error) {
+				if (!empty($prev_post[ 'fields' ])) {
+					$field_errors = [];
+					foreach ($prev_post[ 'fields' ] as $field_id => $field_error) {
 
 						if (is_wp_error($field_error)) {
-							$field_errors[$field_id] = $field_error->get_error_message();
+							$field_errors[ $field_id ] = $field_error->get_error_message();
 						} else {
-							$field_errors[$field_id] = $field_error;
+							$field_errors[ $field_id ] = $field_error;
 						}
 					}
 				}
@@ -4431,23 +4434,23 @@ class Caldera_Forms
 			$prev_post = apply_filters('caldera_forms_render_get_transient', $prev_post, $form);
 
 		}
-		if (!empty($_GET['cf_su']) && $current_form_count == $_GET['cf_su']) {
-			if (empty($notices['success']['note'])) {
-				$notices['success']['note'] = $form['success'];
+		if (!empty($_GET[ 'cf_su' ]) && $current_form_count == $_GET[ 'cf_su' ]) {
+			if (empty($notices[ 'success' ][ 'note' ])) {
+				$notices[ 'success' ][ 'note' ] = $form[ 'success' ];
 			}
 		}
 
 
 		// build grid & pages
-		$form['grid_object']->setLayout($form['layout_grid']['structure']);
+		$form[ 'grid_object' ]->setLayout($form[ 'layout_grid' ][ 'structure' ]);
 
 		// insert page breaks
 		if (!empty($page_breaks)) {
 			$currentpage = 1;
-			if (isset($_GET['cf_pg']) && !isset($prev_post['page'])) {
-				$currentpage = (int)$_GET['cf_pg'];
-			} elseif (isset($prev_post['page'])) {
-				$currentpage = (int)$prev_post['page'];
+			if (isset($_GET[ 'cf_pg' ]) && !isset($prev_post[ 'page' ])) {
+				$currentpage = (int)$_GET[ 'cf_pg' ];
+			} elseif (isset($prev_post[ 'page' ])) {
+				$currentpage = (int)$prev_post[ 'page' ];
 			}
 			$display = 'none';
 			$hidden = 'true';
@@ -4456,13 +4459,13 @@ class Caldera_Forms
 				$hidden = 'false';
 			}
 
-			$total_rows = substr_count($form['layout_grid']['structure'], '|') + 1;
-			$form['grid_object']->before('<div id="form_page_' . $current_form_count . '_pg_1" data-formpage="1" class="caldera-form-page" style="display:' . $display . ';" role="region" aria-labelledby="breadcrumb_' . $current_form_count . '_pg_1" aria-hidden="' . $hidden . '">',
+			$total_rows = substr_count($form[ 'layout_grid' ][ 'structure' ], '|') + 1;
+			$form[ 'grid_object' ]->before('<div id="form_page_' . $current_form_count . '_pg_1" data-formpage="1" class="caldera-form-page" style="display:' . $display . ';" role="region" aria-labelledby="breadcrumb_' . $current_form_count . '_pg_1" aria-hidden="' . $hidden . '">',
 				1);
-			$form['grid_object']->after('</div>', $total_rows);
+			$form[ 'grid_object' ]->after('</div>', $total_rows);
 			foreach ($page_breaks as $page => $break) {
 
-				$form['grid_object']->after('</div>', $break);
+				$form[ 'grid_object' ]->after('</div>', $break);
 
 				if ($break + 1 <= $total_rows) {
 					$display = 'none';
@@ -4472,7 +4475,7 @@ class Caldera_Forms
 						$hidden = 'false';
 					}
 
-					$form['grid_object']->before('<div id="form_page_' . $current_form_count . '_pg_' . ($page + 2) . '" data-formpage="' . ($page + 2) . '" role="region" aria-labelledby="breadcrumb_' . $current_form_count . '_pg_' . ($page + 2) . '" aria-hidden="' . $hidden . '" class="caldera-form-page" style="display:' . $display . ';">',
+					$form[ 'grid_object' ]->before('<div id="form_page_' . $current_form_count . '_pg_' . ($page + 2) . '" data-formpage="' . ($page + 2) . '" role="region" aria-labelledby="breadcrumb_' . $current_form_count . '_pg_' . ($page + 2) . '" aria-hidden="' . $hidden . '" class="caldera-form-page" style="display:' . $display . ';">',
 						$break + 1);
 				}
 			}
@@ -4481,101 +4484,102 @@ class Caldera_Forms
 
 
 		// setup processor bound requieds
-		if (!empty($form['processors'])) {
-			$bound_fields = array();
-			foreach ($form['processors'] as $processor_id => $processor) {
-				if (!empty($processor['config']['_required_bounds'])) {
-					foreach ($processor['config'] as $slug => &$value) {
+		if (!empty($form[ 'processors' ])) {
+			$bound_fields = [];
+			foreach ($form[ 'processors' ] as $processor_id => $processor) {
+				if (!empty($processor[ 'config' ][ '_required_bounds' ])) {
+					foreach ($processor[ 'config' ] as $slug => &$value) {
 						if ($slug == '_required_bounds') {
 							continue;
 						}
-						if (in_array($slug, $processor['config']['_required_bounds'])) {
+						if (in_array($slug, $processor[ 'config' ][ '_required_bounds' ])) {
 							$bound_fields = array_merge($bound_fields,
-								self::search_array_fields($value, array_keys($form['fields'])));
+								self::search_array_fields($value, array_keys($form[ 'fields' ])));
 						}
 					}
 				}
 			}
 			foreach ($bound_fields as $bound) {
-				$form['fields'][$bound]['required'] = 1;
+				$form[ 'fields' ][ $bound ][ 'required' ] = 1;
 			}
 		}
 
-		$conditions_templates = array();
-		$conditions_configs = array();
-		$used_slugs = array();
-		$form_field_strings = array();
+		$conditions_templates = [];
+		$conditions_configs = [];
+		$used_slugs = [];
+		$form_field_strings = [];
 
-		if (!empty($form['fields'])) {
+		if (!empty($form[ 'fields' ])) {
 			// prepare fields
-			foreach ($form['fields'] as $field_id => $field) {
+			foreach ($form[ 'fields' ] as $field_id => $field) {
 				$field = apply_filters('caldera_forms_render_get_field', $field, $form);
-				$field = apply_filters('caldera_forms_render_get_field_type-' . $field['type'], $field, $form);
-				$field = apply_filters('caldera_forms_render_get_field_slug-' . $field['slug'], $field, $form);
-				$form['fields'][$field_id] = $field;
+				$field = apply_filters('caldera_forms_render_get_field_type-' . $field[ 'type' ], $field, $form);
+				$field = apply_filters('caldera_forms_render_get_field_slug-' . $field[ 'slug' ], $field, $form);
+				$form[ 'fields' ][ $field_id ] = $field;
 			}
 		}
 
 
-		if (!empty($form['layout_grid']['fields'])) {
+		if (!empty($form[ 'layout_grid' ][ 'fields' ])) {
 
-			foreach ($form['layout_grid']['fields'] as $field_base_id => $location) {
+			foreach ($form[ 'layout_grid' ][ 'fields' ] as $field_base_id => $location) {
 
-				if (isset($form['fields'][$field_base_id])) {
+				if (isset($form[ 'fields' ][ $field_base_id ])) {
 					$field = self::load_field($form, $field_base_id);
 
 
-					if (empty($field) || !isset($field_types[$field['type']]['file']) || !file_exists($field_types[$field['type']]['file'])) {
-                        if (!Caldera_Forms_Field_Util::is_cf2_field_type($field['type'])) {
-                            continue;
-                        }
-                    }
+					if (empty($field) || !isset($field_types[ $field[ 'type' ] ][ 'file' ]) || !file_exists($field_types[ $field[ 'type' ] ][ 'file' ])) {
+						if (!Caldera_Forms_Field_Util::is_cf2_field_type($field[ 'type' ])) {
+							continue;
+						}
+					}
 
-					$field['grid_location'] = $location;
+					$field[ 'grid_location' ] = $location;
 
 					Caldera_Forms_Render_Assets::enqueue_field_scripts($field_types, $field);
 
-					$field_base_id = $field['ID'] . '_' . $current_form_count;
+					$field_base_id = $field[ 'ID' ] . '_' . $current_form_count;
 
-					$field_error = array();
-					if (isset($field_errors[$field['ID']])) {
-						$field_error = $field_errors[$field['ID']];
+					$field_error = [];
+					if (isset($field_errors[ $field[ 'ID' ] ])) {
+						$field_error = $field_errors[ $field[ 'ID' ] ];
 					}
 
 					$field_html = self::render_field($field, $form, $prev_data, $field_error);
 
 					// conditional wrapper
-					if (!empty($field['conditions']['group']) && !empty($field['conditions']['type'])) {
-                        $is_cf2_field = Caldera_Forms_Field_Util::is_cf2_field_type( Caldera_Forms_Field_Util::get_type( $field, $form ) );
-						$conditions_configs[$field_base_id] = $field['conditions'];
+					if (!empty($field[ 'conditions' ][ 'group' ]) && !empty($field[ 'conditions' ][ 'type' ])) {
+						$is_cf2_field = Caldera_Forms_Field_Util::is_cf2_field_type(Caldera_Forms_Field_Util::get_type($field,
+							$form));
+						$conditions_configs[ $field_base_id ] = $field[ 'conditions' ];
 
-						if ($field['conditions']['type'] !== 'disable') {
+						if ($field[ 'conditions' ][ 'type' ] !== 'disable') {
 							// wrap it up
-                            $conditions_templates[$field_base_id] = "<script type=\"text/html\" id=\"conditional-" . $field_base_id . "-tmpl\">\r\n" . $field_html . "</script>\r\n";
+							$conditions_templates[ $field_base_id ] = "<script type=\"text/html\" id=\"conditional-" . $field_base_id . "-tmpl\">\r\n" . $field_html . "</script>\r\n";
 
-                            // add in instance number
-							if (!empty($field['conditions']['group'])) {
-								foreach ($field['conditions']['group'] as &$group_row) {
+							// add in instance number
+							if (!empty($field[ 'conditions' ][ 'group' ])) {
+								foreach ($field[ 'conditions' ][ 'group' ] as &$group_row) {
 									foreach ($group_row as &$group_line) {
 										// add instance value
-										$group_line['instance'] = $current_form_count;
+										$group_line[ 'instance' ] = $current_form_count;
 									}
 								}
 							}
 						}
 
-						if ($field['conditions']['type'] == 'show' ) {
+						if ($field[ 'conditions' ][ 'type' ] == 'show') {
 							// show if indicates hidden by default until condition is matched.
-                            if( ! $is_cf2_field ){
-                                $field_html = null;
-                            }
+							if (!$is_cf2_field) {
+								$field_html = null;
+							}
 
 						}
 						// wrapp it up
 						$field_html = '<span class="caldera-forms-conditional-field" role="region" aria-live="polite" id="conditional_' . $field_base_id . '" data-field-id="' . $field_base_id . '">' . $field_html . '</span>';
 					}
 
-					$form['grid_object']->append($field_html, $field['grid_location']);
+					$form[ 'grid_object' ]->append($field_html, $field[ 'grid_location' ]);
 
 				}
 			}
@@ -4583,14 +4587,14 @@ class Caldera_Forms
 		}
 
 		// form object strings
-		wp_localize_script('cf-dynamic', $form['ID'] . '_' . $current_form_count, $form_field_strings);
+		wp_localize_script('cf-dynamic', $form[ 'ID' ] . '_' . $current_form_count, $form_field_strings);
 
 		// do grid
-		$form['grid_object'] = apply_filters('caldera_forms_render_grid_structure', $form['grid_object'], $form);
+		$form[ 'grid_object' ] = apply_filters('caldera_forms_render_grid_structure', $form[ 'grid_object' ], $form);
 		// wrapper classes
-		$form_wrapper_classes = array(
-			"caldera-grid"
-		);
+		$form_wrapper_classes = [
+			"caldera-grid",
+		];
 
 		/**
 		 * Change classes of elements wrapping the grid
@@ -4606,23 +4610,23 @@ class Caldera_Forms
 		$form_wrap_id = Caldera_Forms_Render_Util::form_id_attr($current_form_count);
 		$out = sprintf('<div class="%s" id="%s" data-cf-ver="%s" data-cf-form-id="%s">',
 			esc_attr(implode(' ', $form_wrapper_classes)), esc_attr($form_wrap_id), esc_attr(CFCORE_VER),
-			esc_attr($form['ID']));
+			esc_attr($form[ 'ID' ]));
 
 		$notices = Caldera_Forms_Render_Notices::prepare_notices($notices, $form);
 
 		// set debug notice
-		if (!empty($form['mailer']['enable_mailer']) && !empty($form['debug_mailer'])) {
-			$notices['error'] = array(
-				'note' => __('WARNING: Form is in Mailer Debug mode. Disable before going live.', 'caldera-forms')
-			);
+		if (!empty($form[ 'mailer' ][ 'enable_mailer' ]) && !empty($form[ 'debug_mailer' ])) {
+			$notices[ 'error' ] = [
+				'note' => __('WARNING: Form is in Mailer Debug mode. Disable before going live.', 'caldera-forms'),
+			];
 		}
 
 		$out .= '<div id="caldera_notices_' . $current_form_count . '" data-spinner="' . admin_url('images/spinner.gif') . '">';
 		if (!empty($notices)) {
 			// do notices
 			// entry id
-			if (isset($_GET['cf_id'])) {
-				$notice_entry_id = (int)$_GET['cf_id'];
+			if (isset($_GET[ 'cf_id' ])) {
+				$notice_entry_id = (int)$_GET[ 'cf_id' ];
 			} elseif (!empty($entry_id)) {
 				$notice_entry_id = $entry_id;
 			} else {
@@ -4630,21 +4634,23 @@ class Caldera_Forms
 			}
 
 			foreach ($notices as $note_type => $notice) {
-				if (!empty($notice['note'])) {
-					$out .= '<div class=" ' . implode(' ', $note_classes[$note_type]) . '">' . Caldera_Forms_Sanitize::remove_scripts(self::do_magic_tags($notice['note'], $notice_entry_id) ) . '</div>';
+				if (!empty($notice[ 'note' ])) {
+					$out .= '<div class=" ' . implode(' ',
+							$note_classes[ $note_type ]) . '">' . Caldera_Forms_Sanitize::remove_scripts(self::do_magic_tags($notice[ 'note' ],
+							$notice_entry_id)) . '</div>';
 				}
 			}
 
 		}
 		$out .= '</div>';
-		if ((empty($notices['success']) || empty($form['hide_form'])) && empty($halt_render)) {
+		if ((empty($notices[ 'success' ]) || empty($form[ 'hide_form' ])) && empty($halt_render)) {
 
 			$form_element = 'form';
 
-			$form_classes = array(
-				$form['ID'],
+			$form_classes = [
+				$form[ 'ID' ],
 				'caldera_forms_form',
-			);
+			];
 
 			/**
 			 * Change what type of element form is in.
@@ -4669,7 +4675,7 @@ class Caldera_Forms
 			$form_classes = apply_filters('caldera_forms_render_form_classes', $form_classes, $form);
 
 
-			$attributes = array();
+			$attributes = [];
 			foreach ($form_attributes as $attribute => $value) {
 				$attributes[] = $attribute . '="' . htmlentities($value) . '"';
 			}
@@ -4677,20 +4683,20 @@ class Caldera_Forms
 			// render only non success
 			$out .= "<" . $form_element . " data-instance=\"" . $current_form_count . "\" class=\"" . implode(' ',
 					$form_classes) . "\" " . implode(" ", $attributes) . ">\r\n";
-			$out .= Caldera_Forms_Render_Nonce::nonce_field($form['ID']);
-			$out .= sprintf( '<div id="%s"></div>', esc_attr( "cf2-$form_id_attribute") );
-			$out .= "<input type=\"hidden\" name=\"_cf_frm_id\" value=\"" . $form['ID'] . "\">\r\n";
+			$out .= Caldera_Forms_Render_Nonce::nonce_field($form[ 'ID' ]);
+			$out .= sprintf('<div id="%s"></div>', esc_attr("cf2-$form_id_attribute"));
+			$out .= "<input type=\"hidden\" name=\"_cf_frm_id\" value=\"" . $form[ 'ID' ] . "\">\r\n";
 			$out .= "<input type=\"hidden\" name=\"_cf_frm_ct\" value=\"" . $current_form_count . "\">\r\n";
-			if (!empty($form['form_ajax'])) {
-				$out .= "<input type=\"hidden\" name=\"cfajax\" value=\"" . $form['ID'] . "\">\r\n";
+			if (!empty($form[ 'form_ajax' ])) {
+				$out .= "<input type=\"hidden\" name=\"cfajax\" value=\"" . $form[ 'ID' ] . "\">\r\n";
 			}
 			if (is_object($post)) {
 				$out .= "<input type=\"hidden\" name=\"_cf_cr_pst\" value=\"" . $post->ID . "\">\r\n";
 			}
 
 			// user transient for continuation
-			if (!empty($prev_post['transient'])) {
-				$out .= "<input type=\"hidden\" name=\"_cf_frm_tr\" value=\"" . $prev_post['transient'] . "\">\r\n";
+			if (!empty($prev_post[ 'transient' ])) {
+				$out .= "<input type=\"hidden\" name=\"_cf_frm_tr\" value=\"" . $prev_post[ 'transient' ] . "\">\r\n";
 			}
 			// is edit?
 			if (!empty($entry_id)) {
@@ -4707,17 +4713,17 @@ class Caldera_Forms
 
 
 			// auto pagination
-			if (!empty($form['auto_progress']) && count($form['page_names']) > 1) {
+			if (!empty($form[ 'auto_progress' ]) && count($form[ 'page_names' ]) > 1) {
 
 				// retain query string
-				$qurystr = array();
-				parse_str($_SERVER['QUERY_STRING'], $qurystr);
+				$qurystr = [];
+				parse_str($_SERVER[ 'QUERY_STRING' ], $qurystr);
 				$out .= "<span class=\"caldera-grid\"><ol class=\"breadcrumb\" data-form=\"caldera_form_" . $current_form_count . "\" id=\"caldera-forms-breadcrumb_" . $current_form_count . "\">\r\n";
 				$current_page = 1;
-				if (!empty($_GET['cf_pg'])) {
-					$current_page = $_GET['cf_pg'];
+				if (!empty($_GET[ 'cf_pg' ])) {
+					$current_page = $_GET[ 'cf_pg' ];
 				}
-				foreach ($form['page_names'] as $page_key => $page_name) {
+				foreach ($form[ 'page_names' ] as $page_key => $page_name) {
 					$tabclass = null;
 					$expanded = 'false';
 					if ($current_page == $page_key + 1) {
@@ -4725,7 +4731,7 @@ class Caldera_Forms
 						$expanded = 'true';
 					}
 
-					$qurystr['cf_pg'] = $page_key + 1;
+					$qurystr[ 'cf_pg' ] = $page_key + 1;
 					$out .= "<li" . $tabclass . "><a aria-controls=\"form_page_" . $current_form_count . "_pg_" . ($page_key + 1) . "\" aria-expanded=\"" . $expanded . "\" id=\"breadcrumb_" . $current_form_count . "_pg_" . ($page_key + 1) . "\" href=\"?" . http_build_query($qurystr) . "\" data-page=\"" . ($page_key + 1) . "\" data-pagenav=\"caldera_form_" . $current_form_count . "\" title=\"" . sprintf(__('Navigate to %s',
 							'caldera-forms'), $page_name) . "\">" . $page_name . "</a></li>\r\n";
 				}
@@ -4738,7 +4744,7 @@ class Caldera_Forms
 			}
 
 
-			$out .= $form['grid_object']->renderLayout();
+			$out .= $form[ 'grid_object' ]->renderLayout();
 
 			$out .= "</" . $form_element . ">\r\n";
 		}
@@ -4749,34 +4755,34 @@ class Caldera_Forms
 		if (!empty($conditions_configs)) {
 			// sortout magics
 			foreach ($conditions_configs as &$condition_field_conf) {
-				if (!empty($condition_field_conf['group'])) {
-					foreach ($condition_field_conf['group'] as &$condition_group) {
+				if (!empty($condition_field_conf[ 'group' ])) {
+					foreach ($condition_field_conf[ 'group' ] as &$condition_group) {
 						if (!empty($condition_group)) {
 							foreach ($condition_group as &$condition_line) {
 
-								if (isset($form['fields'][$condition_line['field']]['config']['option'][$condition_line['value']])) {
-									$condition_line['label'] = $form['fields'][$condition_line['field']]['config']['option'][$condition_line['value']]['label'];
-									$condition_line['value'] = $form['fields'][$condition_line['field']]['config']['option'][$condition_line['value']]['value'];
+								if (isset($form[ 'fields' ][ $condition_line[ 'field' ] ][ 'config' ][ 'option' ][ $condition_line[ 'value' ] ])) {
+									$condition_line[ 'label' ] = $form[ 'fields' ][ $condition_line[ 'field' ] ][ 'config' ][ 'option' ][ $condition_line[ 'value' ] ][ 'label' ];
+									$condition_line[ 'value' ] = $form[ 'fields' ][ $condition_line[ 'field' ] ][ 'config' ][ 'option' ][ $condition_line[ 'value' ] ][ 'value' ];
 								} else {
 
-									if (false !== strpos($condition_line['field'],
-											'{') && false !== strpos($condition_line['field'], '}')) {
-										$condition_line['field'] = self::do_magic_tags($condition_line['field']);
+									if (false !== strpos($condition_line[ 'field' ],
+											'{') && false !== strpos($condition_line[ 'field' ], '}')) {
+										$condition_line[ 'field' ] = self::do_magic_tags($condition_line[ 'field' ]);
 									}
 								}
 
 								//strip out fields
 								$regex = "/%([a-zA-Z0-9_:]*)%/";
-								preg_match_all($regex, $condition_line['value'], $matches);
-								if (!empty($matches[1])) {
-									foreach ($matches[1] as $field_slug) {
+								preg_match_all($regex, $condition_line[ 'value' ], $matches);
+								if (!empty($matches[ 1 ])) {
+									foreach ($matches[ 1 ] as $field_slug) {
 										$value_field = self::get_field_by_slug($field_slug, $form);
-										$condition_line['selectors'][$value_field['ID']] = '[data-field="' . $value_field['ID'] . '"]';
-										$condition_line['value'] = str_replace('%' . $field_slug . '%',
-											$value_field['ID'], $condition_line['value']);
+										$condition_line[ 'selectors' ][ $value_field[ 'ID' ] ] = '[data-field="' . $value_field[ 'ID' ] . '"]';
+										$condition_line[ 'value' ] = str_replace('%' . $field_slug . '%',
+											$value_field[ 'ID' ], $condition_line[ 'value' ]);
 									}
 								} else {
-									$condition_line['value'] = self::do_magic_tags($condition_line['value']);
+									$condition_line[ 'value' ] = self::do_magic_tags($condition_line[ 'value' ]);
 								}
 							}
 						}
@@ -4787,14 +4793,14 @@ class Caldera_Forms
 			$conditions_str = wp_json_encode($conditions_configs);
 
 			$hastags = Caldera_Forms_Magic_Util::explode_field_magic($conditions_str);
-			if (!empty($hastags[1])) {
+			if (!empty($hastags[ 1 ])) {
 
-				foreach ($hastags[1] as $tag_key => $tag) {
+				foreach ($hastags[ 1 ] as $tag_key => $tag) {
 
-					foreach ($form['fields'] as $field_id => $field) {
-						if ($field['slug'] === $tag) {
-							$conditions_str = str_replace('"' . $hastags[0][$tag_key] . '"',
-								"function(){ return jQuery('#" . $field['ID'] . '_' . $current_form_count . "').val(); }",
+					foreach ($form[ 'fields' ] as $field_id => $field) {
+						if ($field[ 'slug' ] === $tag) {
+							$conditions_str = str_replace('"' . $hastags[ 0 ][ $tag_key ] . '"',
+								"function(){ return jQuery('#" . $field[ 'ID' ] . '_' . $current_form_count . "').val(); }",
 								$conditions_str);
 						}
 					}
@@ -4803,7 +4809,7 @@ class Caldera_Forms
 
 			$out .= "<script type=\"text/javascript\">\r\n";
 			$out .= 'if( typeof caldera_conditionals === "undefined" ){ var caldera_conditionals = {}; }';
-			$out .= "caldera_conditionals." . $form['ID'] . '_' . $current_form_count . " = " . $conditions_str . ";\r\n";
+			$out .= "caldera_conditionals." . $form[ 'ID' ] . '_' . $current_form_count . " = " . $conditions_str . ";\r\n";
 			$out .= "</script>\r\n";
 			if (!empty($conditions_templates)) {
 				$out .= implode("\r\n", $conditions_templates);
@@ -4879,41 +4885,41 @@ class Caldera_Forms
 	 */
 	public static function shortcode_handler($atts, $content, $shortcode)
 	{
-		if (!in_array($shortcode, array(
+		if (!in_array($shortcode, [
 			'caldera_form',
-			'caldera_form_modal'
+			'caldera_form_modal',
 
-		))) {
+		])) {
 			return;
 		}
 
-		$atts = shortcode_atts(array(
+		$atts = shortcode_atts([
 			'id' => null,
 			'width' => null,
 			'height' => null,
 			'type' => 'link',
 			'entry' => null,
 			'ID' => null,
-		), $atts, $shortcode);
+		], $atts, $shortcode);
 
-		if (!empty($atts['ID']) && empty($atts['id'])) {
-			$atts['id'] = $atts['ID'];
+		if (!empty($atts[ 'ID' ]) && empty($atts[ 'id' ])) {
+			$atts[ 'id' ] = $atts[ 'ID' ];
 		}
 
-		if (!empty($atts['revision'])) {
-			$revision = Caldera_Forms_Forms::get_revision($atts['revision']);
+		if (!empty($atts[ 'revision' ])) {
+			$revision = Caldera_Forms_Forms::get_revision($atts[ 'revision' ]);
 			if (is_array($revision)) {
 				$atts = $revision;
-				$atts['id'] = $revision['ID'];
+				$atts[ 'id' ] = $revision[ 'ID' ];
 			}
 		}
 
-		if (!isset($atts['id'])) {
+		if (!isset($atts[ 'id' ])) {
 			return;
 		}
 
 
-		if ($shortcode === 'caldera_form_modal' || (!empty($atts['modal']) && $atts['modal'])) {
+		if ($shortcode === 'caldera_form_modal' || (!empty($atts[ 'modal' ]) && $atts[ 'modal' ])) {
 			return Caldera_Forms_Render_Modals::modal_form($atts, $content);
 		}
 
@@ -5016,9 +5022,9 @@ class Caldera_Forms
 		 * Runs after Caldera Forms REST API is loaded
 		 *
 		 * @since 1.4.4
-         *
-         * @param Caldera_Forms_API_Load $api_v2 Caldera Forms REST API v2
-         * @param \calderawp\calderaforms\cf2\RestApi\Register $api_v3 Caldera Forms REST API v2
+		 *
+		 * @param Caldera_Forms_API_Load $api_v2 Caldera Forms REST API v2
+		 * @param \calderawp\calderaforms\cf2\RestApi\Register $api_v3 Caldera Forms REST API v2
 		 */
 		do_action('caldera_forms_rest_api_init',
             self::$api,
@@ -5028,21 +5034,21 @@ class Caldera_Forms
 
 	}
 
-	public static function should_send_mail($form, $transadata = array())
+	public static function should_send_mail($form, $transadata = [])
 	{
 		$send = true;
 		if (empty($transadata)) {
 			global $transadata;
 		}
 
-		if (!empty($transdata['edit'])) {
+		if (!empty($transdata[ 'edit' ])) {
 			// update
-			if (empty($form['mailer']['on_update'])) {
+			if (empty($form[ 'mailer' ][ 'on_update' ])) {
 				$send = false;
 			}
 		} else {
 			// insert
-			if (empty($form['mailer']['enable_mailer']) && empty($form['mailer']['on_insert'])) {
+			if (empty($form[ 'mailer' ][ 'enable_mailer' ]) && empty($form[ 'mailer' ][ 'on_insert' ])) {
 				$send = false;
 			}
 		}
@@ -5070,10 +5076,10 @@ class Caldera_Forms
 	 */
 	public static function process_form_via_post()
 	{
-		if (isset($_POST['_cf_frm_id'])) {
+		if (isset($_POST[ '_cf_frm_id' ])) {
 			caldera_forms_start_buffer();
-			if (isset($_POST['_cf_verify']) && Caldera_Forms_Render_Nonce::verify_nonce($_POST['_cf_verify'],
-					$_POST['_cf_frm_id'])) {
+			if (isset($_POST[ '_cf_verify' ]) && Caldera_Forms_Render_Nonce::verify_nonce($_POST[ '_cf_verify' ],
+					$_POST[ '_cf_frm_id' ])) {
 				$submission = Caldera_Forms::process_submission();
 				caldera_forms_send_json($submission);
 				exit;
@@ -5081,21 +5087,21 @@ class Caldera_Forms
 
 
 			status_header(400);
-			$form = Caldera_Forms_Forms::get_form($_POST['_cf_frm_id']);
-			$notices = array();
-			$notices['error']['note'] = __('Submission rejected, token invalid', 'caldera-forms');
+			$form = Caldera_Forms_Forms::get_form($_POST[ '_cf_frm_id' ]);
+			$notices = [];
+			$notices[ 'error' ][ 'note' ] = __('Submission rejected, token invalid', 'caldera-forms');
 
 			$note_general_classes = Caldera_Forms_Render_Notices::get_note_general_classes($form);
 
 			$note_classes = Caldera_Forms_Render_Notices::get_note_classes($note_general_classes, $form);
 
-			$out = array(
+			$out = [
 				'html' => Caldera_Forms_Render_Notices::html_from_notices($notices, $note_classes),
 
-			);
+			];
 
 
-			caldera_forms_send_json($out,true);
+			caldera_forms_send_json($out, true);
 			exit;
 
 		}
