@@ -20,8 +20,10 @@ abstract class Endpoint implements \Caldera_Forms_API_Route
     final public function add_routes($namespace)
     // @phpcs:enable
     {
-        register_rest_route( $namespace, $this->getUri(), $this->getArgs() );
-    }
+		if (function_exists( 'register_rest_route')) {
+			register_rest_route($namespace, $this->getUri(), $this->getArgs());
+		}
+	}
 
     /**
      * Get route URI

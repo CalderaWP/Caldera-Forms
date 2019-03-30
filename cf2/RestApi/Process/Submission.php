@@ -7,8 +7,8 @@ namespace calderawp\calderaforms\cf2\RestApi\Process;
 use calderawp\calderaforms\cf2\Exception;
 use calderawp\calderaforms\cf2\RestApi\Endpoint;
 use calderawp\calderaforms\cf2\RestApi\Token\VerifiesFormToken;
-
-class Submission extends Endpoint
+use calderawp\calderaforms\cf2\RestApi\Token\UsesFormJwtContract;
+class Submission extends Endpoint implements UsesFormJwtContract
 {
 
 	use VerifiesFormToken;
