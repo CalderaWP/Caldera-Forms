@@ -6,15 +6,37 @@ namespace calderawp\calderaforms\cf2\RestApi\Process;
 
 use calderawp\calderaforms\cf2\Exception;
 use calderawp\calderaforms\cf2\RestApi\Endpoint;
+use calderawp\calderaforms\cf2\RestApi\Token\VerifiesFormToken;
 
 class Submission extends Endpoint
 {
 
+	use VerifiesFormToken;
+
+	/**
+	 * @var string
+	 *
+	 * @since 1.9.0
+	 */
 	const URI = 'process/submission';
 
+	/**
+	 * @var string
+	 *
+	 * @since 1.9.0
+	 */
 	const VERIFY_FIELD = '_cf_verify';
 
 	/**
+	 * @var string
+	 *
+	 * @since 1.9.0
+	 */
+	const SESSION_ID_FIELD = '_sessionPublicKeu';
+
+	/**
+	 * @since 1.9.0
+	 *
 	 * @return string
 	 */
 	protected function getUri()
@@ -46,27 +68,23 @@ class Submission extends Endpoint
 					'type' => 'array',
 					'description' => __('Entry Data', 'caldera-forms'),
 
-				]
+				],
+				self::SESSION_ID_FIELD => [
+					'type' => 'string',
+					'description' => __('Unique session ID used to create token', 'caldera-forms'),
+					'required' => true,
+				],
 			]
 		];
 	}
 
-	/**
-	 * Permissions check for file field uploads
-	 *
-	 * @since 1.8.0
-	 *
-	 * @param \WP_REST_Request $request Request object
-	 *
-	 * @return bool
-	 */
-	public function permissionsCallback(\WP_REST_Request $request ){
-		return ! empty($request->get_param( self::VERIFY_FIELD ) );
-	}
-
 
 
 	/**
+	 * Create an entry
+	 *
+	 * @since 1.9.0
+	 *
 	 * @param \WP_REST_Request $request
 	 * @return \WP_REST_Response
 	 * @throws \Exception
@@ -74,8 +92,7 @@ class Submission extends Endpoint
 	public function createItem(\WP_REST_Request $request)
 	{
 
-
-		$this->setFormById( $request->get_param('formId'));
+		$this->setFormById($this->getFormIdFromRequest($request));
 		$formId = $this->getForm()[ 'ID' ];
 		$entryData = $request->get_param( 'entryData' );
 		$entryId = null;
@@ -119,4 +136,33 @@ class Submission extends Endpoint
 		}
 		return $response;
 	}
+
+	/**
+	 * Get form ID from request
+	 *
+	 * @since 1.9.0
+	 *
+	 * @return string
+	 */
+	protected function getFormIdFromRequest(\WP_REST_Request $request)
+	{
+		return $request->get_param('formId');
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	protected function getTokenFromRequest(\WP_REST_Request $request )
+	{
+		return $request->get_param( self::VERIFY_FIELD );
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	protected function getSessionIdFromRequest(\WP_REST_Request $request )
+	{
+		return $request->get_param( self::SESSION_ID_FIELD );
+	}
+
 }

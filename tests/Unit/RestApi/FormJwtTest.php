@@ -8,20 +8,75 @@ use calderawp\calderaforms\Tests\Unit\TestCase;
 class FormJwtTest extends TestCase
 {
 
+
 	/**
- *
- * @since 1.9.0
- *
- * @covers \calderawp\calderaforms\cf2\RestApi\Token\FormJwt::decode()
- */
+	 *
+	 * @since 1.9.0
+	 *
+	 * @covers \calderawp\calderaforms\cf2\RestApi\Token\FormJwt::decode()
+	 * @covers \calderawp\calderaforms\cf2\RestApi\Token\FormJwt::decodeAndCheckPublic()
+	 */
+	public function testDecodeAndCheckPublic()
+	{
+		$siteUrl = 'https://calderaForms.com';
+		$secret = 'secret-sauce';
+		$jwt = new FormJwt($secret, $siteUrl);
+		$formId = 'cf11';
+		$unique = uniqid('cf');
+		$token = $jwt->encode($formId, $unique);
+		$this->assertNotFalse( $jwt->decodeAndCheckPublic( $token, $formId, $unique ));
+	}
+
+	/**
+	 *
+	 * @since 1.9.0
+	 *
+	 * @covers \calderawp\calderaforms\cf2\RestApi\Token\FormJwt::decode()
+	 * @covers \calderawp\calderaforms\cf2\RestApi\Token\FormJwt::decodeAndCheckPublic()
+	 */
+	public function testDecodeAndCheckPublicDifferentCode()
+	{
+		$siteUrl = 'https://calderaForms.com';
+		$secret = 'secret-sauce';
+		$jwt = new FormJwt($secret, $siteUrl);
+		$formId = 'cf11';
+		$unique = uniqid('cf');
+		$token = $jwt->encode($formId, $unique);
+		$this->assertFalse( $jwt->decodeAndCheckPublic( $token, $formId, uniqid('cf7') ));
+	}
+
+	/**
+	 *
+	 * @since 1.9.0
+	 *
+	 * @covers \calderawp\calderaforms\cf2\RestApi\Token\FormJwt::decode()
+	 * @covers \calderawp\calderaforms\cf2\RestApi\Token\FormJwt::decodeAndCheckPublic()
+	 */
+	public function testDecodeAndCheckPublicDifferentFormId()
+	{
+		$siteUrl = 'https://calderaForms.com';
+		$secret = 'secret-sauce';
+		$jwt = new FormJwt($secret, $siteUrl);
+		$formId = 'cf11';
+		$unique = uniqid('cf');
+		$token = $jwt->encode($formId, $unique);
+		$this->assertFalse( $jwt->decodeAndCheckPublic( $token, 'cf1111111114', $unique ));
+	}
+
+	/**
+	 *
+	 * @since 1.9.0
+	 *
+	 * @covers \calderawp\calderaforms\cf2\RestApi\Token\FormJwt::decode()
+	 */
 	public function testDecode()
 	{
 		$siteUrl = 'https://calderaForms.com';
 		$secret = 'secret-sauce';
-		$jwt = new FormJwt( $secret, $siteUrl);
+		$jwt = new FormJwt($secret, $siteUrl);
 		$formId = 'cf11';
 		$unique = uniqid('cf');
-		$token =  $jwt->encode( $formId, $unique );
+		$token = $jwt->encode($formId, $unique);
 		$decoded = $jwt->decode($token);
 		$this->assertNotEmpty($decoded);
 
@@ -38,11 +93,11 @@ class FormJwtTest extends TestCase
 	{
 		$siteUrl = 'https://calderaForms.com';
 		$secret = 'secret-sauce';
-		$jwt = new FormJwt( $secret, $siteUrl);
-		$jwt2 = new FormJwt( 'HIROY', $siteUrl);
+		$jwt = new FormJwt($secret, $siteUrl);
+		$jwt2 = new FormJwt('HIROY', $siteUrl);
 		$formId = 'cf11';
 		$unique = uniqid('cf');
-		$token =  $jwt->encode( $formId, $unique );
+		$token = $jwt->encode($formId, $unique);
 		$decoded = $jwt2->decode($token);
 		$this->assertFalse($decoded);
 
@@ -59,10 +114,10 @@ class FormJwtTest extends TestCase
 	{
 		$siteUrl = 'https://calderaForms.com';
 		$secret = 'secret-sauce';
-		$jwt = new FormJwt( $secret, $siteUrl);
+		$jwt = new FormJwt($secret, $siteUrl);
 		$formId = 'cf11';
 		$unique = uniqid('cf');
-		$token =  $jwt->encode( $formId, $unique );
+		$token = $jwt->encode($formId, $unique);
 		$decoded = $jwt->decode($token);
 		$this->assertNotEmpty($decoded);
 		$cfData = $decoded->cf;
@@ -89,10 +144,10 @@ class FormJwtTest extends TestCase
 	{
 		$siteUrl = 'https://calderaForms.com';
 		$secret = 'secret-sauce';
-		$jwt = new FormJwt( $secret, $siteUrl);
+		$jwt = new FormJwt($secret, $siteUrl);
 		$formId = 'cf11';
 		$unique = uniqid('cf');
-		$token =  $jwt->encode( $formId, $unique );
+		$token = $jwt->encode($formId, $unique);
 		$decoded = $jwt->decode($token);
 		$this->assertNotEmpty($decoded);
 		$this->assertAttributeEquals(
@@ -115,10 +170,10 @@ class FormJwtTest extends TestCase
 		$siteUrl = 'https://calderaForms.com';
 		$secret = 'secret-sauce';
 		$exp = time() + 10000000;
-		$jwt = new FormJwt( $secret, $siteUrl);
+		$jwt = new FormJwt($secret, $siteUrl);
 		$formId = 'cf11';
 		$unique = uniqid('cf');
-		$token =  $jwt->encode( $formId, $unique,$exp );
+		$token = $jwt->encode($formId, $unique, $exp);
 		$decoded = $jwt->decode($token);
 		$this->assertAttributeEquals(
 			$exp,
@@ -140,14 +195,13 @@ class FormJwtTest extends TestCase
 		$siteUrl = 'https://calderaForms.com';
 		$secret = 'secret-sauce';
 		$exp = time() - 5;
-		$jwt = new FormJwt( $secret, $siteUrl);
+		$jwt = new FormJwt($secret, $siteUrl);
 		$formId = 'cf11';
 		$unique = uniqid('cf');
-		$token =  $jwt->encode( $formId, $unique,$exp );
+		$token = $jwt->encode($formId, $unique, $exp);
 		$decoded = $jwt->decode($token);
 		$this->assertFalse($decoded);
 	}
-
 
 
 	/**
@@ -160,11 +214,11 @@ class FormJwtTest extends TestCase
 	{
 		$siteUrl = 'https://calderaForms.com';
 		$secret = 'secret-sauce';
-		$jwt = new FormJwt( $secret, $siteUrl);
+		$jwt = new FormJwt($secret, $siteUrl);
 		$formId = 'cf11';
 		$unique = uniqid('cf');
-		$this->assertTrue( is_string($jwt->encode($formId,$unique)));
-		$this->assertNotEmpty($jwt->encode($formId,$unique));
+		$this->assertTrue(is_string($jwt->encode($formId, $unique)));
+		$this->assertNotEmpty($jwt->encode($formId, $unique));
 
 	}
 
@@ -180,7 +234,7 @@ class FormJwtTest extends TestCase
 	{
 		$siteUrl = 'https://calderaForms.com';
 		$secret = 'secret-sauce';
-		$jwt = new FormJwt( $secret, $siteUrl);
+		$jwt = new FormJwt($secret, $siteUrl);
 
 		$this->assertAttributeEquals(
 
@@ -207,8 +261,8 @@ class FormJwtTest extends TestCase
 	{
 		$siteUrl = 'https://calderaForms.com';
 		$secret = 'secret-sauce';
-		$jwt = new FormJwt( $secret, $siteUrl);
-		$this->assertEquals($secret, $jwt->getSecret() );
+		$jwt = new FormJwt($secret, $siteUrl);
+		$this->assertEquals($secret, $jwt->getSecret());
 
 
 	}
@@ -223,7 +277,7 @@ class FormJwtTest extends TestCase
 	{
 		$siteUrl = 'https://calderaForms.com';
 		$secret = 'secret-sauce';
-		$jwt = new FormJwt( $secret, $siteUrl);
-		$this->assertEquals($siteUrl, $jwt->getSiteUrl() );
+		$jwt = new FormJwt($secret, $siteUrl);
+		$this->assertEquals($siteUrl, $jwt->getSiteUrl());
 	}
 }

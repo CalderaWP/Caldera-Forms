@@ -4,7 +4,7 @@
 namespace calderawp\calderaforms\cf2\RestApi\Token;
 
 
-interface UsesJWT
+interface JwtContract
 {
 	/**
 	 * Get site secret key
@@ -23,4 +23,5 @@ interface UsesJWT
 	 * @return string
 	 */
 	public function getSiteUrl();
+
 }

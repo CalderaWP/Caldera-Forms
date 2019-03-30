@@ -4,9 +4,18 @@
 namespace calderawp\calderaforms\cf2\RestApi\Token;
 
 
+use calderawp\calderaforms\cf2\Exception;
 use Firebase\JWT\JWT;
 
-class FormJwt implements UsesJWT
+/**
+ * Class FormJwt
+ *
+ * This is used to verify a session ID, bound to a form for when WordPress nonces can not be used.
+ *
+ * Do NOT use for authentication.
+ * Do NOT transmit sensitive data in token.
+ */
+class FormJwt implements FormTokenContract
 {
 	/**
 	 * @var string
@@ -22,10 +31,12 @@ class FormJwt implements UsesJWT
 	private $secret;
 
 	/**
-	 * Create constructor.
+	 * Create FormJWT instance
 	 *
-	 * @param string $secret
-	 * @param string $siteUrl
+	 * @since  1.9.0
+	 *
+	 * @param string $secret JWT Secret key
+	 * @param string $siteUrl Site URL - used for iss
 	 */
 	public function __construct($secret,$siteUrl)
 	{
@@ -34,11 +45,7 @@ class FormJwt implements UsesJWT
 	}
 
 	/**
-	 * Get site secret key
-	 *
-	 * @since 1.9.0
-	 *
-	 * @return string
+	 * @inheritdoc
 	 */
 	public function getSecret()
 	{
@@ -46,11 +53,7 @@ class FormJwt implements UsesJWT
 	}
 
 	/**
-	 * Get site url, used for iss
-	 *
-	 * @since 1.9.0
-	 *
-	 * @return string
+	 * @inheritdoc
 	 */
 	public function getSiteUrl()
 	{
@@ -58,13 +61,7 @@ class FormJwt implements UsesJWT
 	}
 
 	/**
-	 * Encode data for a form
-	 *
-	 * @param string$formId
-	 * @param string $uniqueId
-	 * @param integer|null $expires
-	 *
-	 * @return string
+	 * @inheritdoc
 	 */
 	public function encode( $formId, $uniqueId, $expires = null ){
 		$payload = [
@@ -82,12 +79,40 @@ class FormJwt implements UsesJWT
 		return JWT::encode($payload,$this->getSecret(), 'HS256');
 	}
 
+	/**
+	 * @inheritdoc
+	 */
 	public function decode( $encoded ){
 		try{
 			return JWT::decode( $encoded, $this->getSecret(), ['HS256'] );
 		}catch (\Exception $e ){
 			return false;
 		}
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function decodeAndCheckPublic($encoded, $formId, $sessionPublicKey)
+	{
+		$decoded = $this->decode($encoded);
+		if( ! $decoded ){
+			return false;
+		}
+
+		if( ! isset( $decoded->cf ) || ! isset( $decoded->cf->fI ) || ! isset( $decoded->cf->sI ) ){
+			return false;
+		}
+
+		if( ! hash_equals( $formId, $decoded->cf->fI ) ){
+			return false;
+		}
+
+		if( ! hash_equals( $sessionPublicKey, $decoded->cf->sI ) ){
+			return false;
+		}
+
+		return true;
 	}
 
 }

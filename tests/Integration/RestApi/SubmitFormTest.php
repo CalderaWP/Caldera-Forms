@@ -6,6 +6,7 @@ namespace calderawp\calderaforms\Tests\Integration\RestApi;
 
 use calderawp\calderaforms\cf2\Exception;
 use calderawp\calderaforms\cf2\RestApi\Process\Submission;
+use calderawp\calderaforms\cf2\RestApi\Token\FormJwt;
 
 class SubmitFormTest extends RestApiTestCase
 {
@@ -30,7 +31,6 @@ class SubmitFormTest extends RestApiTestCase
 	 * @since 1.9.0
 	 *
 	 * @group cf2
-	 * @group now
 	 */
 	public function testRouteCanBeRequest()
 	{
@@ -54,7 +54,6 @@ class SubmitFormTest extends RestApiTestCase
 	 * @since 1.9.0
 	 *
 	 * @group cf2
-	 * @group now
 	 */
 	public function testCreateItem()
 	{
@@ -128,13 +127,22 @@ class SubmitFormTest extends RestApiTestCase
 	public function testPermissionsCallback()
 	{
 		$formId = $this->importAutoresponderForm();
-
+		$jwt = new FormJwt( 'xljksf', site_url() );
 		$request = new \WP_REST_Request();
 		$request->set_url_params(['formId' => $formId]);
-		$request->set_param(\calderawp\calderaforms\cf2\RestApi\Process\Submission::VERIFY_FIELD,
-			\Caldera_Forms_Render_Nonce::create_verify_nonce($formId));
+		$sessionId = uniqid(rand());
+		$request->set_param(
+			Submission::VERIFY_FIELD,
+			$jwt->encode($formId, $sessionId )
+		);
 
+		$request->set_param(
+			Submission::SESSION_ID_FIELD,
+			$sessionId
+		);
 		$route = new Submission();
+
+		$route->setJwt($jwt);
 		$this->assertTrue($route->permissionsCallback($request));
 
 
@@ -153,15 +161,23 @@ class SubmitFormTest extends RestApiTestCase
 	public function testPermissionsCallbackNotValid()
 	{
 		$formId = $this->importAutoresponderForm();
+		$jwt = new FormJwt( 'xljksf', site_url() );
 
 		$request = new \WP_REST_Request();
 		$request->set_url_params(['formId' => $formId]);
+		$sessionId = uniqid(rand());
 		$request->set_param(
-			\calderawp\calderaforms\cf2\RestApi\Process\Submission::VERIFY_FIELD,
-			''
+			Submission::VERIFY_FIELD,
+			'infinite-beings-of-light'
+		);
+
+		$request->set_param(
+			Submission::SESSION_ID_FIELD,
+			$sessionId
 		);
 
 		$route = new Submission();
+		$route->setJwt($jwt);
 		$this->assertFalse($route->permissionsCallback($request));
 
 
