@@ -51,22 +51,37 @@ class Register implements CalderaRestApiContract, UsesFormJwtContract
 		return $this->namespace;
 	}
 
+	/**
+	 *
+	 *
+	 * @return array
+	 */
+	private function cf2EndpointArgs()
+	{
+		return [
+			CreateFile::class => [
+				'jwt' => false,
+			],
+			RunQueue::class => [
+				'jwt' => false,
+			],
+			Submission::class => [
+				'jwt' => 'form',
+			],
+			CreateToken::class => [
+				'jwt' => 'form',
+			],
+
+		];
+	}
+
 	/** @inheritdoc */
 	public function initEndpoints()
 	{
-		$this->endpoints[ CreateFile::class ] = new CreateFile();
-		$this->endpoints[ CreateFile::class ]->add_routes($this->getNamespace());
-
-		$this->endpoints[ RunQueue::class ] = new RunQueue();
-		$this->endpoints[ RunQueue::class ]->add_routes($this->getNamespace());
-
-		$this->endpoints[ Submission::class ] = new Submission();
-		$this->endpoints[ Submission::class ]->add_routes($this->getNamespace());
-
-		$this->endpoints[ CreateToken::class ] = new CreateToken();
-		$this->endpoints[ CreateToken::class ]->add_routes($this->getNamespace());
-
-
+		foreach ($this->cf2EndpointArgs() as $endpoint => $args ){
+			$this->endpoints[ $endpoint ] = new $endpoint();
+			$this->endpoints[ $endpoint ]->add_routes($this->getNamespace());
+		}
 		return $this;
 	}
 
@@ -86,13 +101,15 @@ class Register implements CalderaRestApiContract, UsesFormJwtContract
 	public function setJwt(FormTokenContract $jwt)
 	{
 		$this->jwt = $jwt;
-		foreach (
-			[CreateToken::class,Submission::class] as $endpoint
-		){
-			$this->endpoints[ $endpoint ]->setJwt($this->getJwt($jwt));
+		foreach ($this->cf2EndpointArgs() as $endpoint => $args ){
+			if( 'form' === $args['jwt']){
+				$this->endpoints[ $endpoint ]->setJwt($this->getJwt($jwt));
 
+			}
 		}
 		return $this;
+
+
 
 	}
 
