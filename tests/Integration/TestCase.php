@@ -5,12 +5,13 @@ namespace calderawp\calderaforms\Tests\Integration;
 
 
 use calderawp\calderaforms\Tests\Util\ImportForms;
+use calderawp\calderaforms\Tests\Util\ImportTestFormsFromIncludes;
 use calderawp\calderaforms\Tests\Util\Traits\SharedFactories;
 
 class TestCase extends \WP_UnitTestCase
 {
 
-    use SharedFactories;
+    use SharedFactories, ImportTestFormsFromIncludes;
     public function setUp()
     {
         parent::setUp();
