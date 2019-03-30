@@ -61,11 +61,7 @@ class Submission extends Endpoint
 	 * @return bool
 	 */
 	public function permissionsCallback(\WP_REST_Request $request ){
-		return ! empty($request->get_param( 'verify') );
-		return \Caldera_Forms_Render_Nonce::verify_nonce(
-			$request->get_param( 'verify'),
-			$request->get_param( 'formId' )
-		);
+		return ! empty($request->get_param( self::VERIFY_FIELD ) );
 	}
 
 
