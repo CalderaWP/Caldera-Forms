@@ -102,7 +102,6 @@ class RegisterTest extends TestCase
 		$register->initEndpoints();
 		$jwt = new FormJwt( 'ff', 'https://nom.com' );
 		$register->setJwt($jwt);
-		$this->assertEquals($jwt, $register->getEndpoints()[ Submission::class]->getJwt() );
-
+		$this->assertEquals($jwt, $register->getEndpoints()[ Submission::class ]->getJwt() );
 	}
 }

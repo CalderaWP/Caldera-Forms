@@ -38,8 +38,21 @@ trait ContainsFormJwt
 	 */
 	public function setJwt(FormTokenContract $jwt)
 	{
-		$this->jwt = $jwt;
+		$this->setJwtProp($jwt);
 		return $this;
 	}
 
+	/**
+	 * Sets prop for jwt
+	 *
+	 * Hack to make work in Register class
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param FormTokenContract $jwt
+	 */
+	protected function setJwtProp(FormTokenContract $jwt)
+	{
+		$this->jwt = $jwt;
+	}
 }

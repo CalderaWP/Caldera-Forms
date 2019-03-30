@@ -8,6 +8,7 @@ use calderawp\calderaforms\cf2\RestApi\File\CreateFile;
 use calderawp\calderaforms\cf2\RestApi\Process\Submission;
 use calderawp\calderaforms\cf2\RestApi\Queue\RunQueue;
 use calderawp\calderaforms\cf2\RestApi\Token\ContainsFormJwt;
+use calderawp\calderaforms\cf2\RestApi\Token\FormTokenContract;
 use calderawp\calderaforms\cf2\RestApi\Token\UsesFormJwtContract;
 
 class Register implements CalderaRestApiContract, UsesFormJwtContract
@@ -66,6 +67,10 @@ class Register implements CalderaRestApiContract, UsesFormJwtContract
 	}
 
 	/**
+	 * Get the collection of endpoints
+	 *
+	 * @since 1.9.0
+	 *
 	 * @return array
 	 */
 	public function getEndpoints()
@@ -73,6 +78,14 @@ class Register implements CalderaRestApiContract, UsesFormJwtContract
 		return $this->endpoints;
 	}
 
+	/** @inheritdoc */
+	public function setJwt(FormTokenContract $jwt)
+	{
+		$this->jwt = $jwt;
+		$this->endpoints[ Submission::class ]->setJwt($this->getJwt($jwt));
+		return $this;
+
+	}
 
 
 }

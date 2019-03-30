@@ -8,6 +8,7 @@ use calderawp\calderaforms\cf2\Hooks;
 use calderawp\calderaforms\cf2\Services\QueueService;
 use calderawp\calderaforms\cf2\Transients\Cf1TransientsApi;
 use calderawp\calderaforms\Tests\Util\Mocks\MockService;
+use calderawp\calderaforms\cf2\RestApi\Token\FormTokenContract;
 
 class CalderaFormsV2Test extends TestCase
 {
@@ -134,5 +135,20 @@ class CalderaFormsV2Test extends TestCase
 		$service = new MockService();
 		$containerMock->registerService($service,true );
 		$this->assertInstanceOf( \stdClass::class, $containerMock->getService(MockService::class) );
+	}
+
+	/**
+	 * Test setup of Form JWT
+	 *
+	 * @since 1.9.0
+	 *
+	 * @covers \calderawp\calderaforms\cf2\CalderaFormsV2::getFormJwt();
+	 */
+	public function testGetFormJwt()
+	{
+		$containerMock = $this->getContainer();
+		$this->assertInstanceOf( FormTokenContract::class, $containerMock->getFormJwt()  );
+		$encoded = $containerMock->getFormJwt()->encode('cf1', 'foo' );
+		$this->assertNotFalse( $containerMock->getFormJwt()->decode($encoded ) );
 	}
 }

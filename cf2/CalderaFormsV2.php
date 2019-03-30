@@ -5,6 +5,7 @@ namespace calderawp\calderaforms\cf2;
 
 
 use calderawp\calderaforms\cf2\Fields\FieldTypeFactory;
+use calderawp\calderaforms\cf2\RestApi\Token\FormJwt;
 use calderawp\calderaforms\cf2\Transients\Cf1TransientsApi;
 use calderawp\calderaforms\cf2\Services\ServiceContract;
 class CalderaFormsV2 extends \calderawp\CalderaContainers\Service\Container implements CalderaFormsV2Contract
@@ -156,6 +157,19 @@ class CalderaFormsV2 extends \calderawp\CalderaContainers\Service\Container impl
     {
        return $this->make(Cf1TransientsApi::class );
     }
+
+
+	/**
+	 * Get the Form session token encoder/decoder
+	 *
+	 * @since 1.9.0
+	 *
+	 * @return FormJwt
+	 */
+    public function getFormJwt()
+	{
+		return $this->make(FormJwt::class );
+	}
 
 	/**
 	 * Get field type factory
