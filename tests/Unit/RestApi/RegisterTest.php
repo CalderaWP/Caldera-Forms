@@ -43,27 +43,18 @@ class RegisterTest extends TestCase
 
     }
 
-	/**
-	 *
-	 * @since 1.9.0
-	 *
-	 * @covers \calderawp\calderaforms\cf2\RestApi\Register::initEndpoints()
-	 * @covers \calderawp\calderaforms\cf2\RestApi\Register::$endpoints
-	 */
-    public function testInitEndpoints()
-	{
-		$register = new Register( 'namespace' );
-		$register->initEndpoints();
-		$this->assertAttributeCount(3, 'endpoints', $register );
-	}
+
 
 	/**
 	 *
 	 * @since 1.9.0
 	 *
+	 * @covers \calderawp\calderaforms\cf2\RestApi\Register::getEndpoints()
 	 * @covers \calderawp\calderaforms\cf2\RestApi\Register::initEndpoints()
+	 * @covers \calderawp\calderaforms\cf2\RestApi\Register::$endpoints
+ 		*
 	 */
-	public function testGetEndpoints()
+	public function testInitAndGetEndpoints()
 	{
 		$register = new Register( 'namespace' );
 		$register->initEndpoints();

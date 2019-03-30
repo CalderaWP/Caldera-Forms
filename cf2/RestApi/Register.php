@@ -5,6 +5,7 @@ namespace calderawp\calderaforms\cf2\RestApi;
 
 
 use calderawp\calderaforms\cf2\RestApi\File\CreateFile;
+use calderawp\calderaforms\cf2\RestApi\Process\CreateToken;
 use calderawp\calderaforms\cf2\RestApi\Process\Submission;
 use calderawp\calderaforms\cf2\RestApi\Queue\RunQueue;
 use calderawp\calderaforms\cf2\RestApi\Token\ContainsFormJwt;
@@ -62,6 +63,9 @@ class Register implements CalderaRestApiContract, UsesFormJwtContract
 		$this->endpoints[ Submission::class ] = new Submission();
 		$this->endpoints[ Submission::class ]->add_routes($this->getNamespace());
 
+		$this->endpoints[ CreateToken::class ] = new CreateToken();
+		$this->endpoints[ CreateToken::class ]->add_routes($this->getNamespace());
+
 
 		return $this;
 	}
@@ -82,7 +86,12 @@ class Register implements CalderaRestApiContract, UsesFormJwtContract
 	public function setJwt(FormTokenContract $jwt)
 	{
 		$this->jwt = $jwt;
-		$this->endpoints[ Submission::class ]->setJwt($this->getJwt($jwt));
+		foreach (
+			[CreateToken::class,Submission::class] as $endpoint
+		){
+			$this->endpoints[ $endpoint ]->setJwt($this->getJwt($jwt));
+
+		}
 		return $this;
 
 	}
