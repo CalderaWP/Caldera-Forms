@@ -19,8 +19,9 @@ class Submission extends Endpoint
 	 */
 	protected function getUri()
 	{
-		return self::URI;
+		return self::URI . '/(?P<formId>[\w-]+)';
 	}
+
 
 	/** @inheritdoc */
 	protected function getArgs()
