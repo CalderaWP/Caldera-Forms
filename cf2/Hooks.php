@@ -35,6 +35,13 @@ class Hooks
 		);
         add_filter('caldera_forms_get_field_types', [$register, 'filter' ], 2 );
         add_action( 'caldera_forms_rest_api_init', [$this, 'addJwtToApi' ], 10, 2 );
+        add_filter( 'calderaForms/restApi/createEntry/addField',
+			function( \Caldera_Forms_Entry_Field $entryField, \Caldera_Forms_Entry $entry, array  $fieldConfig){
+				$entryField->value = \Caldera_Forms::validate_field_with_filters($fieldConfig,$entryField->get_value(),$entry->get_form());
+				return $entryField;
+			},
+			10, 3
+		);
     }
 
 	/**

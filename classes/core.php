@@ -345,6 +345,48 @@ class Caldera_Forms
 	}
 
 	/**
+	 * Applies validation filters to fields
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param mixed $entry Field value
+	 * @param array $field Field config
+	 * @param array $form Form config
+	 *
+	 * @return mixed|null|void
+	 */
+	public static function validate_field_with_filters($field, $entry, $form)
+	{
+		if (has_filter('caldera_forms_validate_field_' . $field[ 'type' ])) {
+			/**
+			 * Add custom validation by field type or change field value.
+			 *
+			 * Return WP_Error to trigger validation error
+			 *
+			 * @since unknown
+			 *
+			 * @param mixed $entry Field value
+			 * @param array $field Field config
+			 * @param array $form Form config
+			 */
+			$entry = apply_filters('caldera_forms_validate_field_' . $field[ 'type' ], $entry, $field, $form);
+		}
+
+		/**
+		 * Add custom validation by field ID or change field value.
+		 *
+		 * Return WP_Error to trigger validation error
+		 *
+		 * @since 1.5.0
+		 *
+		 * @param mixed $entry Field value
+		 * @param array $field Field config
+		 * @param array $form Form config
+		 */
+		return apply_filters('caldera_forms_validate_field_' . $field[ 'ID' ], $entry, $field, $form);
+	}
+
+	/**
 	 * Create a modal button's HTML
 	 *
 	 * @since 1.5.0.4
@@ -2975,34 +3017,7 @@ class Caldera_Forms
 			} else {
 				// required check
 				$failed = false;
-				// run validators
-				if (has_filter('caldera_forms_validate_field_' . $field[ 'type' ])) {
-					/**
-					 * Add custom validation by field type or change field value.
-					 *
-					 * Return WP_Error to trigger validation error
-					 *
-					 * @since unknown
-					 *
-					 * @param mixed $entry Field value
-					 * @param array $field Field config
-					 * @param array $form Form config
-					 */
-					$entry = apply_filters('caldera_forms_validate_field_' . $field[ 'type' ], $entry, $field, $form);
-				}
-
-				/**
-				 * Add custom validation by field ID or change field value.
-				 *
-				 * Return WP_Error to trigger validation error
-				 *
-				 * @since 1.5.0
-				 *
-				 * @param mixed $entry Field value
-				 * @param array $field Field config
-				 * @param array $form Form config
-				 */
-				$entry = apply_filters('caldera_forms_validate_field_' . $field[ 'ID' ], $entry, $field, $form);
+				$entry = self::validate_field_with_filters($field, $entry, $form);
 
 				// if required, check the validators returned errors or not.
 				if (!empty($field[ 'required' ])) {

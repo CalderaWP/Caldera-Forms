@@ -4,6 +4,7 @@
 namespace calderawp\calderaforms\cf2\RestApi\Process;
 
 
+use calderawp\calderaforms\cf2\Exception;
 use calderawp\calderaforms\cf2\RestApi\Endpoint;
 use calderawp\calderaforms\cf2\RestApi\Token\VerifiesFormToken;
 use calderawp\calderaforms\cf2\RestApi\Token\UsesFormJwtContract;
@@ -134,7 +135,11 @@ class Submission extends Endpoint implements UsesFormJwtContract
 		$entryField->slug = self::SESSION_ID_FIELD;
 		$entryField->field_id = self::SESSION_ID_FIELD;
 		$entryField->value = $sessionId;
-		$entry = $this->addEntryFieldToEntryWithFilter($entryField,$entry);
+		$entry = $this->addEntryFieldToEntryWithFilter($entryField,$entry,[
+			'slug' => self::SESSION_ID_FIELD,
+			'ID' => self::SESSION_ID_FIELD,
+			'type' => self::SESSION_ID_FIELD
+		]);
 
 		$entryId = $entry->save();
 		if (is_numeric($entryId)) {
@@ -184,9 +189,9 @@ class Submission extends Endpoint implements UsesFormJwtContract
 	 * @param array $fieldConfig Config for field being saved
 	 *
 	 * @return \Caldera_Forms_Entry
+	 * @throws Exception
 	 */
-
-	protected function addEntryFieldToEntryWithFilter(\Caldera_Forms_Entry_Field $entryField, \Caldera_Forms_Entry $entry,$fieldConfig)
+	protected function addEntryFieldToEntryWithFilter(\Caldera_Forms_Entry_Field $entryField, \Caldera_Forms_Entry $entry,array $fieldConfig)
 	{
 		/**
 		 * Runs before an entry field is added to entry when creating via REST API
@@ -197,7 +202,10 @@ class Submission extends Endpoint implements UsesFormJwtContract
 		 * @param \Caldera_Forms_Entry $entry Entry it is being added to
 		 * @param array $fieldConfig Config for field being saved
 		 */
-		$entryField = apply_filters('calderaForms/restApi/createEntry/addField', $entryField, $entry,$fieldConfig);
+		$entryField = apply_filters('calderaForms/restApi/createEntry/addField', $entryField, $entry, $fieldConfig);
+		if( is_wp_error( $entryField->value ) ){
+			throw  Exception::fromWpError($entryField->value );
+		}
 		$entry->add_field($entryField);
 		return $entry;
 	}
