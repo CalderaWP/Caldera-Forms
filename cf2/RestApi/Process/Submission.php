@@ -125,7 +125,11 @@ class Submission extends Endpoint implements UsesFormJwtContract
 				$entryField->slug = $field[ 'slug' ];
 				$entryField->field_id = $fieldId;
 				$entryField->value = $value;
-				$entry = $this->addEntryFieldToEntryWithFilter($entryField, $entry,$field);
+				try {
+					$entry = $this->addEntryFieldToEntryWithFilter($entryField, $entry, $field);
+				} catch (Exception $e) {
+					return rest_ensure_response($e->toWpError());
+				}
 
 			}
 
@@ -135,23 +139,38 @@ class Submission extends Endpoint implements UsesFormJwtContract
 		$entryField->slug = self::SESSION_ID_FIELD;
 		$entryField->field_id = self::SESSION_ID_FIELD;
 		$entryField->value = $sessionId;
-		$entry = $this->addEntryFieldToEntryWithFilter($entryField,$entry,[
-			'slug' => self::SESSION_ID_FIELD,
-			'ID' => self::SESSION_ID_FIELD,
-			'type' => self::SESSION_ID_FIELD
-		]);
+		try {
+			$entry = $this->addEntryFieldToEntryWithFilter($entryField, $entry, [
+				'slug' => self::SESSION_ID_FIELD,
+				'ID' => self::SESSION_ID_FIELD,
+				'type' => self::SESSION_ID_FIELD,
+			]);
+		} catch (Exception $e) {
+			return rest_ensure_response($e->toWpError());
+		}
 
 		/**
 		 * Runs before an entry is saved when creating via REST API
 		 *
 		 * @since 1.9.0
 		 *
-		 * @param \Caldera_Forms_Entry $entry Entry it is being added to
+		 * @param \Caldera_Forms_Entry $entry Entry being saved
+		 * @param \Caldera_Forms_Entry $sessionId ID of session
 		 */
-		$entry = apply_filters('calderaForms/restApi/createEntry/preSave', $entry);
+		$entry = apply_filters('calderaForms/restApi/createEntry/preSave', $entry,$sessionId);
 		$entryId = $entry->save();
 		if (is_numeric($entryId)) {
-			$response = rest_ensure_response(['entryId' => $entryId,]);
+			/**
+			 * Runs before an entry is saved when creating via REST API
+			 *
+			 * @since 1.9.0
+			 *
+			 * @param array $responseData Data to return
+			 * @param \Caldera_Forms_Entry $entry Entry that has been saved
+			 * @param \Caldera_Forms_Entry $sessionId ID of session
+			 */
+			$responseData = apply_filters('calderaForms/restApi/createEntry/responseData', ['entryId' => $entryId], $entry,$sessionId);
+			$response = rest_ensure_response($responseData);
 			$response->set_status(201);
 		} else {
 			$response = rest_ensure_response(new \WP_Error(500, __('Could not submit entry', 'caldera-forms')));

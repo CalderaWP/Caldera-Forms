@@ -164,6 +164,14 @@ class SubmitFormTest extends RestApiTestCase
 			return $entry;
 		});
 
+		/**
+		 * Add data to output
+		 */
+		add_filter( 'calderaForms/restApi/createEntry/responseData', function (array $responseData,\Caldera_Forms_Entry $entry ){
+			$responseData[ 'extra' ] = 'extra';
+			$responseData[ 'entryToken' ] = \Caldera_Forms_Entry_Token::create_entry_token($entry->get_entry_id(),$entry->get_form());
+			return $responseData;
+		},10,2);
 
 		$request = new \WP_REST_Request();
 		$request->set_url_params(['formId' => $formId]);
@@ -184,6 +192,8 @@ class SubmitFormTest extends RestApiTestCase
 		$this->assertEquals(201, $response->get_status());
 		$responseData = $response->get_data();
 		$entryId = $responseData[ 'entryId' ];
+		$this->assertArrayHasKey( 'extra', $responseData );
+		$this->assertArrayHasKey( 'entryToken', $responseData );
 		$form = \Caldera_Forms_Forms::get_form($formId);
 		$savedEntry = new \Caldera_Forms_Entry($form, $entryId);
 		$this->assertSame( 'active', $savedEntry->get_entry()->status );
