@@ -142,11 +142,29 @@ class SubmitFormTest extends RestApiTestCase
 			'fld_7683514' => 'Hi Roy',
 		];
 
+		/**
+		 * Field type filters
+		 */
 		add_filter( 'caldera_forms_validate_field_email', function(){
 			return 'infinite@hats.com';
-		});add_filter( 'caldera_forms_validate_field_fld_9970286', function(){
+		});
+
+		/**
+		 * Field specific filters
+		 */
+		add_filter( 'caldera_forms_validate_field_fld_9970286', function(){
 			return 'National Sandwich';
 		});
+
+		/**
+		 * We can change the status too
+		 */
+		add_filter( 'calderaForms/restApi/createEntry/preSave', function (\Caldera_Forms_Entry $entry ){
+			$entry->get_entry()->status = 'active';
+			return $entry;
+		});
+
+
 		$request = new \WP_REST_Request();
 		$request->set_url_params(['formId' => $formId]);
 		$request->set_param(Submission::VERIFY_FIELD, 'sdadgfhjkl;kgfdsa123456ytrfdas');
@@ -168,6 +186,7 @@ class SubmitFormTest extends RestApiTestCase
 		$entryId = $responseData[ 'entryId' ];
 		$form = \Caldera_Forms_Forms::get_form($formId);
 		$savedEntry = new \Caldera_Forms_Entry($form, $entryId);
+		$this->assertSame( 'active', $savedEntry->get_entry()->status );
 		$this->assertTrue(is_object($savedEntry->get_field('fld_6009157')));
 		$this->assertSame( 'infinite@hats.com',$savedEntry->get_field('fld_6009157')->get_value());
 		$this->assertTrue(is_object($savedEntry->get_field('fld_9970286')));
