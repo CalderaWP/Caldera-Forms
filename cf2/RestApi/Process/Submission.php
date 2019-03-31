@@ -7,6 +7,7 @@ namespace calderawp\calderaforms\cf2\RestApi\Process;
 use calderawp\calderaforms\cf2\RestApi\Endpoint;
 use calderawp\calderaforms\cf2\RestApi\Token\VerifiesFormToken;
 use calderawp\calderaforms\cf2\RestApi\Token\UsesFormJwtContract;
+
 class Submission extends Endpoint implements UsesFormJwtContract
 {
 
@@ -51,7 +52,7 @@ class Submission extends Endpoint implements UsesFormJwtContract
 
 			'methods' => 'POST',
 			'callback' => [$this, 'createItem'],
-			'permission_callback' => [$this, 'permissionsCallback' ],
+			'permission_callback' => [$this, 'permissionsCallback'],
 			'args' => [
 				self::VERIFY_FIELD => [
 					'type' => 'string',
@@ -73,10 +74,9 @@ class Submission extends Endpoint implements UsesFormJwtContract
 					'description' => __('Unique session ID used to create token', 'caldera-forms'),
 					'required' => true,
 				],
-			]
+			],
 		];
 	}
-
 
 
 	/**
@@ -85,6 +85,7 @@ class Submission extends Endpoint implements UsesFormJwtContract
 	 * @since 1.9.0
 	 *
 	 * @param \WP_REST_Request $request
+	 *
 	 * @return \WP_REST_Response
 	 * @throws \Exception
 	 */
@@ -93,36 +94,38 @@ class Submission extends Endpoint implements UsesFormJwtContract
 
 		$this->setFormById($this->getFormIdFromRequest($request));
 		$formId = $this->getForm()[ 'ID' ];
-		$entryData = $request->get_param( 'entryData' );
+		$entryData = $request->get_param('entryData');
 		$entryId = null;
-		$fields = \Caldera_Forms_Forms::get_fields($this->getForm() );
-		if( empty( $fields ) ){
-			return rest_ensure_response( new \WP_Error( 500, __( 'Invalid form', 'caldera-forms')  ) );
+		$fields = \Caldera_Forms_Forms::get_fields($this->getForm());
+		if (empty($fields)) {
+			return rest_ensure_response(new \WP_Error(500, __('Invalid form', 'caldera-forms')));
 		}
+		$sessionId = $this->getSessionIdFromRequest($request);
 		$entryObject = new \Caldera_Forms_Entry_Entry();
 		$entryObject->status = 'pending';
 		$entryObject->form_id = $formId;
 		$entryObject->user_id = get_current_user_id();
 		$entryObject->datestamp = date_i18n('Y-m-d H:i:s', time(), 0);
 
-		$entry = new \Caldera_Forms_Entry( $this->getForm(), $entryId, $entryObject );
-		foreach ($fields as $fieldId => $field ){
+		$entry = new \Caldera_Forms_Entry($this->getForm(), $entryId, $entryObject);
+		foreach ($fields as $fieldId => $field) {
 			$fieldId = $field[ 'ID' ];
-			if( in_array( \Caldera_Forms_Field_Util::get_type($field, $this->getForm() ) ,
+			if (in_array(\Caldera_Forms_Field_Util::get_type($field, $this->getForm()),
 				[
-					'html'
+					'html',
 				])
-			){
+			) {
 				continue;
 			}
 
-			$value = isset( $entryData[ $fieldId]) ? \Caldera_Forms_Sanitize::sanitize($entryData[ $fieldId] ) : null;
-			if( ! is_null($value) ){
+			$value = isset($entryData[ $fieldId ]) ? \Caldera_Forms_Sanitize::sanitize($entryData[ $fieldId ]) : null;
+			if (!is_null($value)) {
 				$entryField = new \Caldera_Forms_Entry_Field();
 				$entryField->slug = $field[ 'slug' ];
 				$entryField->field_id = $fieldId;
-				$entryField->value =  $value;
-				$entry->add_field($entryField);
+				$entryField->value = $value;
+				$entry = $this->addEntryFieldToEntryWithFilter($entryField, $entry,$field);
+
 			}
 
 		}
@@ -130,15 +133,15 @@ class Submission extends Endpoint implements UsesFormJwtContract
 		$entryField = new \Caldera_Forms_Entry_Field();
 		$entryField->slug = self::SESSION_ID_FIELD;
 		$entryField->field_id = self::SESSION_ID_FIELD;
-		$entryField->value =  $this->getSessionIdFromRequest($request);
-		$entry->add_field($entryField);
+		$entryField->value = $sessionId;
+		$entry = $this->addEntryFieldToEntryWithFilter($entryField,$entry);
 
 		$entryId = $entry->save();
-		if( is_numeric($entryId ) ){
-			$response = rest_ensure_response( ['entryId' => $entryId, ] );
+		if (is_numeric($entryId)) {
+			$response = rest_ensure_response(['entryId' => $entryId,]);
 			$response->set_status(201);
-		}else{
-			$response = rest_ensure_response( new \WP_Error( 500, __( 'Could not submit entry','caldera-forms')) );
+		} else {
+			$response = rest_ensure_response(new \WP_Error(500, __('Could not submit entry', 'caldera-forms')));
 		}
 		return $response;
 	}
@@ -158,17 +161,46 @@ class Submission extends Endpoint implements UsesFormJwtContract
 	/**
 	 * @inheritdoc
 	 */
-	protected function getTokenFromRequest(\WP_REST_Request $request )
+	protected function getTokenFromRequest(\WP_REST_Request $request)
 	{
-		return $request->get_param( self::VERIFY_FIELD );
+		return $request->get_param(self::VERIFY_FIELD);
 	}
 
 	/**
 	 * @inheritdoc
 	 */
-	protected function getSessionIdFromRequest(\WP_REST_Request $request )
+	protected function getSessionIdFromRequest(\WP_REST_Request $request)
 	{
-		return $request->get_param( self::SESSION_ID_FIELD );
+		return $request->get_param(self::SESSION_ID_FIELD);
 	}
+
+	/**
+	 * Add entry field to entry, with a filter
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param \Caldera_Forms_Entry_Field $entryField Entry field to be added
+	 * @param \Caldera_Forms_Entry $entry Entry it is being added to
+	 * @param array $fieldConfig Config for field being saved
+	 *
+	 * @return \Caldera_Forms_Entry
+	 */
+
+	protected function addEntryFieldToEntryWithFilter(\Caldera_Forms_Entry_Field $entryField, \Caldera_Forms_Entry $entry,$fieldConfig)
+	{
+		/**
+		 * Runs before an entry field is added to entry when creating via REST API
+		 *
+		 * @since 1.9.0
+		 *
+		 * @param \Caldera_Forms_Entry_Field $entryField Entry field to be added
+		 * @param \Caldera_Forms_Entry $entry Entry it is being added to
+		 * @param array $fieldConfig Config for field being saved
+		 */
+		$entryField = apply_filters('calderaForms/restApi/createEntry/addField', $entryField, $entry,$fieldConfig);
+		$entry->add_field($entryField);
+		return $entry;
+	}
+
 
 }
