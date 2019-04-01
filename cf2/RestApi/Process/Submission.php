@@ -155,7 +155,7 @@ class Submission extends Endpoint implements UsesFormJwtContract
 		 * @since 1.9.0
 		 *
 		 * @param \Caldera_Forms_Entry $entry Entry being saved. No entry ID is set yet.
-		 * @param \Caldera_Forms_Entry $sessionId ID of session
+		 * @param string $sessionId ID of session
 		 */
 		$entry = apply_filters('calderaForms/restApi/createEntry/preSave', $entry,$sessionId);
 		$entryId = $entry->save();
@@ -165,7 +165,7 @@ class Submission extends Endpoint implements UsesFormJwtContract
 		 * @since 1.9.0
 		 *
 		 * @param \Caldera_Forms_Entry $entry Entry being saved. $entryId = $entry->get_entry_id();
-		 * @param \Caldera_Forms_Entry $sessionId ID of session
+		 * @param string $sessionId ID of session
 		 */
 		$entry = apply_filters('calderaForms/restApi/createEntry/postSave', $entry,$sessionId);
 		if (is_numeric($entryId)) {
@@ -176,7 +176,7 @@ class Submission extends Endpoint implements UsesFormJwtContract
 			 *
 			 * @param array $responseData Data to return
 			 * @param \Caldera_Forms_Entry $entry Entry that has been saved
-			 * @param \Caldera_Forms_Entry $sessionId ID of session
+			 * @param string $sessionId ID of session
 			 */
 			$responseData = apply_filters('calderaForms/restApi/createEntry/responseData', ['entryId' => $entryId], $entry,$sessionId);
 			$response = rest_ensure_response($responseData);
