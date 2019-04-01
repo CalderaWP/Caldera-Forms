@@ -157,10 +157,18 @@ class SubmitFormTest extends RestApiTestCase
 		});
 
 		/**
-		 * We can change the status too
+		 * We can change field value at pre-save
 		 */
 		add_filter( 'calderaForms/restApi/createEntry/preSave', function (\Caldera_Forms_Entry $entry ){
-			$entry->get_entry()->status = 'active';
+			$entry->get_field('fld_7683514')->set_value( 'Action Hat' );
+			return $entry;
+		});
+
+		/**
+		 * We can change the status after it is saved
+		 */
+		add_filter( 'calderaForms/restApi/createEntry/postSave', function (\Caldera_Forms_Entry $entry ){
+			$entry->update_status( 'active' );
 			return $entry;
 		});
 
@@ -201,6 +209,8 @@ class SubmitFormTest extends RestApiTestCase
 		$this->assertSame( 'infinite@hats.com',$savedEntry->get_field('fld_6009157')->get_value());
 		$this->assertTrue(is_object($savedEntry->get_field('fld_9970286')));
 		$this->assertSame( 'National Sandwich',$savedEntry->get_field('fld_9970286')->get_value());
+		$this->assertTrue(is_object($savedEntry->get_field('fld_7683514')));
+		$this->assertSame( 'Action Hat',$savedEntry->get_field('fld_7683514')->get_value());
 
 	}
 

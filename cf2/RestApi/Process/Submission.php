@@ -150,15 +150,24 @@ class Submission extends Endpoint implements UsesFormJwtContract
 		}
 
 		/**
-		 * Runs before an entry is saved when creating via REST API
+		 * Runs BEFORE an entry is saved when creating via REST API
 		 *
 		 * @since 1.9.0
 		 *
-		 * @param \Caldera_Forms_Entry $entry Entry being saved
+		 * @param \Caldera_Forms_Entry $entry Entry being saved. No entry ID is set yet.
 		 * @param \Caldera_Forms_Entry $sessionId ID of session
 		 */
 		$entry = apply_filters('calderaForms/restApi/createEntry/preSave', $entry,$sessionId);
 		$entryId = $entry->save();
+		/**
+		 * Runs AFTER an entry is saved when creating via REST API
+		 *
+		 * @since 1.9.0
+		 *
+		 * @param \Caldera_Forms_Entry $entry Entry being saved. $entryId = $entry->get_entry_id();
+		 * @param \Caldera_Forms_Entry $sessionId ID of session
+		 */
+		$entry = apply_filters('calderaForms/restApi/createEntry/postSave', $entry,$sessionId);
 		if (is_numeric($entryId)) {
 			/**
 			 * Runs before an entry is saved when creating via REST API
