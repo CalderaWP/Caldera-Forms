@@ -3,7 +3,7 @@ Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
 Tags: form, contact form, forms, form creator, form manager, mailchimp, paypal, stripe, login, payment, forms manager, forms creation
 Requires at least: 4.7
 Tested up to: 5.1.1
-Stable tag: 1.8.4-b.1
+Stable tag: 1.8.4
 License: GPLv2
 Requires PHP: 5.6
 
@@ -792,6 +792,14 @@ This could also be a sign of a more serious issue on your server, but is probabl
 5. **Go Further With Form Processors** - Auto-responders, conditional recipients, redirects are included! Go further with our add-ons!
 
 == Changelog ==
+= Caldera Forms 1.8.4 (March 28, 2019) CF-1.8.4 =
+See: [https://calderaforms.com/updates/caldera-forms-1-8-4](https://calderaforms.com/updates/caldera-forms-1-8-4?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-4)
+* FIXED: Elementor/Beaver builder conflicts withe render client
+* FIXED: Translation code reset to translation files
+* FIXED: Markup for the Resend button in entries list
+* FIXED: Console errors due to Blocks client enqueued on frontend
+* ADDED: Value of additional CSS class name in Caldera Forms block added to rendering
+
 = Caldera Forms 1.8.3 (March 19, 2019) WeGlot support, React + legacy-bundle for WP < 5  =
 See: [https://calderaforms.com/updates/caldera-forms-1-8-3](https://calderaforms.com/updates/caldera-forms-1-8-3?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-3)
 * ADDED: Weglot Support https://calderaforms.com/2019/03/translate-wordpress-site-weglot/
