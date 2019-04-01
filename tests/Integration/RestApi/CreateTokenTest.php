@@ -4,13 +4,13 @@ namespace calderawp\calderaforms\Tests\Integration\RestApi;
 
 use calderawp\calderaforms\cf2\RestApi\Process\CreateToken;
 use calderawp\calderaforms\cf2\RestApi\Process\Submission;
+use calderawp\calderaforms\cf2\RestApi\Token\FormJwt;
 
 class CreateTokenTest extends  RestApiTestCase
 {
 
 	/**
 	 * @throws \Exception
-	 * @group now
 	 *
 	 * @since 1.9.0
 	 *
@@ -37,13 +37,44 @@ class CreateTokenTest extends  RestApiTestCase
 	}
 
 	/**
+	 * @throws \Exception
+	 * @group now
+	 *
+	 * @since 1.9.0
+	 *
+	 * @covers \calderawp\calderaforms\cf2\RestApi\Process\CreateToken::createItem()
+	 */
+	public function testTokenCanBeDecoded()
+	{
+		$route = new CreateToken();
+		$jwt = new FormJwt( 'secrets', 'https://calderaforms.com' );
+		$route->setJwt( $jwt );
+		$formId = 'cf1';
+		$s = 'fss';
+		$testToken = $route->getJwt()->encode($formId,$s);
+		$this->assertNotFalse( $route->getJwt()->decode($testToken));
+
+		$request = new \WP_REST_Request( 'PUT',
+			'/cf-api/v3/' . Submission::URI ."/$formId/token");
+		$request->set_url_params([
+			'formId' => $formId
+		]);
+		$response = $route->createItem($request);
+		$token = $response->get_data()[  Submission::VERIFY_FIELD ];
+		$this->assertTrue( is_string($token));
+		$decoded = $route->getJwt()->decode($token);
+
+		$this->assertTrue(is_object($decoded) );
+
+	}
+
+	/**
 	 * @covers \calderawp\calderaforms\cf2\RestApi\CreateToken::add_routes()
 	 * @covers \calderawp\calderaforms\cf2\RestApi\Register::initEndpoints()
 	 *
 	 * @since 1.9.0
 	 *
 	 * @group cf2
-	 * @group now
 	 */
 	public function testRouteCanBeRequest()
 	{

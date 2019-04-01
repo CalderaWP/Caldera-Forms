@@ -179,15 +179,12 @@ class Submission extends Endpoint implements UsesFormJwtContract
 	}
 
 	/**
-	 * Get form ID from request
-	 *
-	 * @since 1.9.0
-	 *
-	 * @return string
+	 * @inheritdoc
 	 */
 	protected function getFormIdFromRequest(\WP_REST_Request $request)
 	{
-		return $request->get_param('formId');
+		$urlParams=  $request->get_url_params();
+		return ! empty($urlParams['formId']) ? $urlParams['formId'] : $request->get_param('formId');
 	}
 
 	/**

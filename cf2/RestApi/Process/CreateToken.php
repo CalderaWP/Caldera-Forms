@@ -51,14 +51,15 @@ class CreateToken extends Submission implements UsesFormJwtContract
 	{
 		$formId = $this->getFormIdFromRequest($request);
 		$sessionId = hash_hmac( 'sha256', $formId, $this->getJwt()->getSecret()  );
-
 		$response = rest_ensure_response([
-			Submission::SESSION_ID_FIELD => $sessionId,
-			Submission::VERIFY_FIELD => $this
+			Submission::SESSION_ID_FIELD => $sessionId, //unique session ID. Can this be a WordPress nonce?
+			Submission::VERIFY_FIELD => //JWT token for verifying session. Do NOT transmit sensitive data.
+				$this
 				->getJwt()
 				->encode(
 					$formId,
-					$sessionId
+					$sessionId,
+					43200//12 hours- same as WordPress nonce
 				),
 
 		]);

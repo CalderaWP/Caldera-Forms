@@ -41,8 +41,7 @@ class FunctionsTest extends TestCase
 
 	/**
 	 * @since  1.9.0
-	 *
-	 * @group now
+
 	 *
 	 * @covers \caldera_forms_get_v2_container()
 	 */
@@ -54,8 +53,6 @@ class FunctionsTest extends TestCase
 
 	/**
 	 * @since  1.9.0
-	 *
-	 * @group now
 	 *
 	 * @covers \caldera_forms_get_v2_container()
 	 * @covers \calderawp\calderaforms\cf2\CalderaFormsV2::getFormJwt()
