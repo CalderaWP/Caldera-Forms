@@ -69,6 +69,34 @@ class CreateTokenTest extends  RestApiTestCase
 	}
 
 	/**
+	 * @throws \Exception
+	 * @group now
+	 *
+	 * @since 1.9.0
+	 *
+	 * @covers \calderawp\calderaforms\cf2\RestApi\Process\CreateToken::createItem()
+	 */
+	public function testTokenHasExpiresTime()
+	{
+		$route = new CreateToken();
+		$jwt = new FormJwt( 'secrets', 'https://calderaforms.com' );
+		$route->setJwt( $jwt );
+		$formId = 'cf1';
+		$request = new \WP_REST_Request( 'PUT',
+			'/cf-api/v3/' . Submission::URI ."/$formId/token");
+		$request->set_url_params([
+			'formId' => $formId
+		]);
+		$response = $route->createItem($request);
+		$token = $response->get_data()[  Submission::VERIFY_FIELD ];
+		$this->assertTrue( is_string($token));
+		$decoded = $route->getJwt()->decode($token);
+
+		$this->assertTrue( isset( $decoded->exp ) );
+
+	}
+
+	/**
 	 * @covers \calderawp\calderaforms\cf2\RestApi\CreateToken::add_routes()
 	 * @covers \calderawp\calderaforms\cf2\RestApi\Register::initEndpoints()
 	 *
