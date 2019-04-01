@@ -59,7 +59,7 @@ class CreateToken extends Submission implements UsesFormJwtContract
 				->encode(
 					$formId,
 					$sessionId,
-					43200//12 hours- same as WordPress nonce
+					time() + 43200//12 hours- same as WordPress nonce
 				),
 
 		]);

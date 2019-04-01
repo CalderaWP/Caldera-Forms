@@ -73,7 +73,7 @@ class FormJwt implements FormTokenContract
 		];
 
 		if( is_integer( $expires ) ){
-			//$payload['exp'] = $expires;
+			$payload['exp'] = $expires;
 		}
 
 		return JWT::encode($payload,$this->getSecret(), 'HS256');
