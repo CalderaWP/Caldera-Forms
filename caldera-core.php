@@ -132,7 +132,6 @@ if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
 
 	add_action('plugins_loaded', [ 'Caldera_Forms', 'get_instance' ]);
 
-
 	// Admin & Admin Ajax stuff.
 	if ( is_admin() || defined('DOING_AJAX') ) {
 		add_action('plugins_loaded', [ 'Caldera_Forms_Admin', 'get_instance' ]);
@@ -164,3 +163,8 @@ function caldera_forms_fallback_shortcode()
 	return esc_html__('Form could not be loaded. Contact the site administrator.', 'caldera-forms');
 
 }
+
+
+
+
+

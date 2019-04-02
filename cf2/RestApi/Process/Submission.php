@@ -99,7 +99,10 @@ class Submission extends Endpoint implements UsesFormJwtContract
 		$entryId = null;
 		$fields = \Caldera_Forms_Forms::get_fields($this->getForm());
 		if (empty($fields)) {
-			return rest_ensure_response(new \WP_Error(500, __('Invalid form', 'caldera-forms')));
+			return rest_ensure_response(new \WP_Error(500, __('Invalid form', 'caldera-forms'), [
+				'formID' => $formId,
+				'external' => $this->getForm()['_external_form'],
+			] ));
 		}
 		$sessionId = $this->getSessionIdFromRequest($request);
 		$entryObject = new \Caldera_Forms_Entry_Entry();
@@ -178,7 +181,10 @@ class Submission extends Endpoint implements UsesFormJwtContract
 			 * @param \Caldera_Forms_Entry $entry Entry that has been saved
 			 * @param string $sessionId ID of session
 			 */
-			$responseData = apply_filters('calderaForms/restApi/createEntry/responseData', ['entryId' => $entryId], $entry,$sessionId);
+			$responseData = apply_filters('calderaForms/restApi/createEntry/responseData', [
+				'entryId' => $entryId,
+				'message' => $this->getForm()['success']
+			], $entry,$sessionId);
 			$response = rest_ensure_response($responseData);
 			$response->set_status(201);
 		} else {
