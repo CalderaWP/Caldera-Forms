@@ -26,7 +26,7 @@ class CreateToken extends Submission implements UsesFormJwtContract
 	{
 		return [
 
-			'methods' => 'PUT',
+			'methods' => 'POST',
 			'callback' => [$this, 'createItem'],
 			'args' => [
 				'formId' => [

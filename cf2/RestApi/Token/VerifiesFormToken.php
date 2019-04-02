@@ -3,6 +3,8 @@
 
 namespace calderawp\calderaforms\cf2\RestApi\Token;
 
+use calderawp\calderaforms\cf2\Exception;
+
 /**
  * Trait VerifiesFormToken
  *
