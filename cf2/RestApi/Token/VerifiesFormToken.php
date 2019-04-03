@@ -28,7 +28,11 @@ trait VerifiesFormToken
 	 * @return bool
 	 */
 	public function permissionsCallback(\WP_REST_Request $request ){
-		return true;
+		$token = $this->getTokenFromRequest($request);
+		if( empty($token) ){
+			return false;
+		}
+
 		return $this
 			->getJwt()
 			->decodeAndCheckPublic(
