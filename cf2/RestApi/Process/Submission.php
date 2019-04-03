@@ -91,10 +91,18 @@ class Submission extends Endpoint implements UsesFormJwtContract
 	 * @throws \Exception
 	 */
 	public function createItem(\WP_REST_Request $request)
-	{
-
-		$this->setFormById($this->getFormIdFromRequest($request));
+	{$this->setFormById($this->getFormIdFromRequest($request));
 		$formId = $this->getForm()[ 'ID' ];
+
+		$token = $this->getTokenFromRequest($request);
+		if( empty($token) ){
+			return false;
+		}
+
+		if( wp_verify_nonce($token, $this->getFormIdFromRequest($request) )){
+			return rest_ensure_response(new \WP_Error('101', 'token', [$token,$formId]));
+		}
+
 		$entryData = $request->get_param('entryData');
 		$entryId = null;
 		$fields = \Caldera_Forms_Forms::get_fields($this->getForm());

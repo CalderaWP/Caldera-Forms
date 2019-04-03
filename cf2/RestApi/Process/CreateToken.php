@@ -53,14 +53,7 @@ class CreateToken extends Submission implements UsesFormJwtContract
 		$sessionId = hash_hmac( 'sha256', $formId, $this->getJwt()->getSecret()  );
 		$response = rest_ensure_response([
 			Submission::SESSION_ID_FIELD => $sessionId, //unique session ID. Can this be a WordPress nonce?
-			Submission::VERIFY_FIELD => //JWT token for verifying session. Do NOT transmit sensitive data.
-				$this
-				->getJwt()
-				->encode(
-					$formId,
-					$sessionId,
-					time() + 43200//12 hours- same as WordPress nonce
-				),
+			Submission::VERIFY_FIELD => \Caldera_Forms_Render_Nonce::create_verify_nonce($formId)
 
 		]);
 		$response->set_status(201);
