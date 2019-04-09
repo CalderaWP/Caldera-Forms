@@ -268,8 +268,12 @@
              };
 
              rangeSliders[field.id].init = init;
-             state.events().subscribe(field.id, function (value) {
-                 $('#' + field.id + '_value').html(value);
+             state.events().subscribe(field.id, function ( eventFieldIdArray, value ) {
+                 if( value.length <= 0 ){
+					 value = field.default;
+                 }
+				 $('#' + field.id + '_value').html( value );
+
              });
 
              if( ! $el.is( ':visible') ){

@@ -45,7 +45,8 @@ const entryPointNames = [
     'privacy',
     'blocks',
     'pro',
-    'render'
+    'render',
+    'legacy-bundle'
 ];
 
 // Setup externals

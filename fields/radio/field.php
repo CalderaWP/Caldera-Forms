@@ -30,7 +30,6 @@ if(empty($field['config']['option'])){
 		}
 
 		if( ! empty( $option['disabled' ] ) ){
-			$checked = false;
 			$disabled = true;
 		}
 

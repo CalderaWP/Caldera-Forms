@@ -2714,3 +2714,8 @@ function toggle_button_init(id, el){
     }
 
 }
+
+jQuery(document).on( 'cf.init', function(){
+	toggle_button_init();
+});
+
