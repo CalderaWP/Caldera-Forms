@@ -65,9 +65,9 @@ class Submission extends Endpoint implements UsesFormJwtContract
 					'description' => __('ID for form field belongs to', 'caldera-forms'),
 					'required' => true,
 				],
-				'entryData' => [
+				'entryValues' => [
 					'type' => 'object',
-					'description' => __('Entry Data', 'caldera-forms'),
+					'description' => __('Entry values', 'caldera-forms'),
 
 				],
 				self::SESSION_ID_FIELD => [
@@ -95,7 +95,7 @@ class Submission extends Endpoint implements UsesFormJwtContract
 
 		$this->setFormById($this->getFormIdFromRequest($request));
 		$formId = $this->getForm()[ 'ID' ];
-		$entryData = $request->get_param('entryData');
+		$entryValues = $request->get_param('entryValues');
 		$entryId = null;
 		$fields = \Caldera_Forms_Forms::get_fields($this->getForm());
 		if (empty($fields)) {
@@ -122,7 +122,7 @@ class Submission extends Endpoint implements UsesFormJwtContract
 				continue;
 			}
 
-			$value = isset($entryData[ $fieldId ]) ? \Caldera_Forms_Sanitize::sanitize($entryData[ $fieldId ]) : null;
+			$value = isset($entryValues[ $fieldId ]) ? \Caldera_Forms_Sanitize::sanitize($entryValues[ $fieldId ]) : null;
 			if (!is_null($value)) {
 				$entryField = new \Caldera_Forms_Entry_Field();
 				$entryField->slug = $field[ 'slug' ];
@@ -171,7 +171,7 @@ class Submission extends Endpoint implements UsesFormJwtContract
 		 * @param string $sessionId ID of session
 		 */
 		$entry = apply_filters('calderaForms/restApi/createEntry/postSave', $entry,$sessionId);
-		if (is_numeric($entryId)) {
+		if (is_numeric($entryId)&&$entryId) {
 			/**
 			 * Runs before an entry is saved when creating via REST API
 			 *
