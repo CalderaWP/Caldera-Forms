@@ -24,7 +24,6 @@ class Caldera_Forms
 	const VERSION = CFCORE_VER;
 
 	/**
-	/**
 	 * @since 1.4.2
 	 */
 	const PLUGIN_SLUG = 'caldera-forms';
@@ -1730,10 +1729,7 @@ class Caldera_Forms
 		if (!empty($field['config']['option'])) {
 			foreach ($field['config']['option'] as &$option) {
 				if (strlen($option['value']) === 0) {
-					$option['value'] = $option['label'] = self::do_magic_tags($option['label']);
-				} else {
-					$option['value'] = self::do_magic_tags($option['value']);
-					$option['label'] = self::do_magic_tags($option['label']);
+					$option['value'] = $option['label'];
 				}
 			}
 		}
