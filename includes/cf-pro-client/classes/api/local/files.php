@@ -4,6 +4,7 @@
 namespace calderawp\calderaforms\pro\api\local;
 
 use calderawp\calderaforms\pro\container;
+use calderawp\calderaforms\pro\exceptions\Exception;
 
 
 /**
@@ -19,7 +20,7 @@ class files implements \Caldera_Forms_API_Route {
 	{
 		register_rest_route($namespace, '/pro/file', [
 				'methods' => 'GET',
-				'permissions' => [ $this, 'key_check' ],
+				'permission_callback' => [ $this, 'key_check' ],
 				'callback' => [ $this, 'get_file' ],
 				'args' => [
 					'file' => [
@@ -57,12 +58,16 @@ class files implements \Caldera_Forms_API_Route {
 	 *
 	 * @param \WP_REST_Request $request
 	 *
-	 * @return \WP_Error
+	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function get_file(\WP_REST_Request $request)
 	{
-		$file = $request[ 'file' ];
-		if ( file_exists($file) ) {
+		$file = $this->get_file_from_request($request);
+		if ( $file && file_exists($file) ) {
+			$hash  = !empty($request[ 'hash' ]) ? $request[ 'hash' ] : '';
+			if( ! $this->verify_file($file,$hash ) ){
+				return new \WP_Error( 412, 'Hash is not valid', 'caldera-forms' );
+			}
 			return rest_ensure_response([
 				'name' => basename($file),
 				'mime' => mime_content_type($file),
@@ -74,6 +79,44 @@ class files implements \Caldera_Forms_API_Route {
 		]);
 
 		return new \WP_Error('404', __('File not found', 'caldera-forms'));
+	}
+
+	/**
+	 * Verify file hash
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param string $file File path
+	 * @param string $hash File hash
+	 *
+	 * @return bool
+	 */
+	public function verify_file( $file, $hash )
+	{
+
+		if ( $file && file_exists($file) ) {
+			$secret  = container::get_instance()->get_settings()->get_api_keys()->get_secret();
+			if( $secret && hash_equals( hash_hmac( 'sha256', $file, $secret  ), $hash ) ){
+				return true;
+			}
+			return null;
+		}
+		return false;
+
+	}
+
+	/**
+	 * Get the file from request object
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param \WP_REST_Request $request
+	 *
+	 * @return string
+	 */
+	protected function get_file_from_request(\WP_REST_Request $request)
+	{
+		return !empty($request[ 'file' ]) ? $request[ 'file' ] : '';
 	}
 
 }

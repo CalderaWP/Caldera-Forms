@@ -56,8 +56,16 @@ class Caldera_Forms_Email_Filters{
                     continue;
                 } else {
                     $file = str_replace( $dir[ 'baseurl' ], $dir[ 'basedir' ], $file );
-                    if ( is_string( $file ) && file_exists( $file ) ) {
-                        $mail[ 'attachments' ][] = $file;
+                    if ( is_string( $file ) ) {
+						$files = explode(',', $file);
+						foreach($files as $attachment){
+							$attachment = ltrim( $attachment, " ");
+							if( file_exists($attachment) ){
+								$mail[ 'attachments' ][] = $attachment;
+							}
+						}
+
+
                     } else {
                         if ( isset( $data[ $field_id ] ) && filter_var( $data[ $field_id ], FILTER_VALIDATE_URL ) ) {
                             $mail[ 'attachments' ][] = $data[ $field_id ];

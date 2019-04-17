@@ -192,12 +192,21 @@ export const processFiles = (files, processData, processFunctions) => {
  * @param {object} processFunctions object of functions that will be called within processFiles then test the cases they are called {hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError}
  */
 export const processFileField = (processData, processFunctions) => {
-	//Start spinner animation
-	processAnimation(processData.obj.formIdAttr, true);
+
 	//Process files
 	const {processFiles} = processFunctions;
 	const {obj, values, cf2, field, fieldId, theComponent, CF_API_DATA} = processData;
-	const {fieldIdAttr} = field;
+	const {fieldIdAttr, isRequired} = field;
+
+	//Start spinner animation
+	if( isRequired ){
+		if(!jQuery.isEmptyObject(theComponent.state.valuesValidity) && theComponent.state.valuesValidity[fieldIdAttr].valid){
+			processAnimation(obj.formIdAttr, true);
+		}
+	} else {
+		processAnimation(obj.formIdAttr, true);
+	}
+
 	const strings = CF_API_DATA.strings.cf2FileField;
 	let shouldBeValidating = false;
 	//do not upload after complete

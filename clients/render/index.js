@@ -1,7 +1,6 @@
 /** globals CF_API_DATA **/
 import './index.scss';
 import {CalderaFormsRender} from "./components/CalderaFormsRender";
-
 import React from 'react';
 import ReactDOM from "react-dom";
 import domReady from '@wordpress/dom-ready';
@@ -12,9 +11,16 @@ import {
 } from "./util";
 import { handleFileUploadResponse, handleFileUploadError, hashAndUpload, processFiles, processFileField, processFormSubmit } from './fileUploads';
 
-Object.defineProperty(global.wp, 'element', {
-	get: () => React
-});
+//Expect compatibility with wp versions older than 5.0.0
+let domElement;
+if("undefined" === typeof wp.element){
+	Object.defineProperty(global.wp, 'element', {
+		get: () => React
+	});
+	domElement = ReactDOM;
+} else {
+	domElement = wp.element;
+}
 
 domReady(function () {
 	jQuery(document).on('cf.form.init', (e, obj) => {
@@ -28,7 +34,6 @@ domReady(function () {
 		if( 'object' !== typeof  window.cf2 ){
 			window.cf2 = {};
 		}
-
 
 		//Build configurations
 		document.querySelectorAll('.cf2-field-wrapper').forEach(function (fieldElement) {
@@ -52,8 +57,6 @@ domReady(function () {
 			}
 		});
 
-
-
 		/**
 		 * Flag to indicate if validation is happening or not
 		 *
@@ -66,12 +69,22 @@ domReady(function () {
 		let shouldBeValidating = false;
 		let messages = {};
 
-
 		jQuery(document).on('cf.ajax.request', (event, obj) => {
-			//Compare the event form id with the component form id
-			if(event.currentTarget.activeElement.form.id !== idAttr){
+
+			//do not run if component don't have values
+			if( ! theComponent ||
+				'object' === typeof theComponent &&
+				'object' === typeof theComponent.getAllFieldValues() &&
+				Object.keys(theComponent.getAllFieldValues()).length <= 0
+			){
 				return;
 			}
+			
+			//Compare the event form id with the component form id
+			if(!obj.hasOwnProperty('formIdAttr') || obj.formIdAttr !== idAttr){
+				return;
+			}
+
 			shouldBeValidating = true;
 			const values = theComponent.getAllFieldValues();
 			const cf2 = window.cf2[obj.formIdAttr];
@@ -87,7 +100,6 @@ domReady(function () {
 			cf2.uploadStarted = cf2.uploadStarted || [];
 			cf2.uploadCompleted = cf2.uploadCompleted || [];
 			cf2.fieldsBlocking = cf2.fieldsBlocking || [];
-
 
 			if (Object.keys(values).length) {
 				Object.keys(values).forEach(fieldId => {
@@ -117,7 +129,7 @@ domReady(function () {
 		 * @type {*}
 		 */
 		let theComponent = '';
-		ReactDOM.render(
+		domElement.render(
 			<CalderaFormsRender
 				cfState={state}
 				formId={formId}

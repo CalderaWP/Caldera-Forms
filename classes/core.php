@@ -4148,6 +4148,10 @@ class Caldera_Forms
 			return;
 		}
 
+		$forms = Caldera_Forms_Forms::get_forms();
+		if( !empty( $forms ) && !array_key_exists( $form['ID'], $forms)){
+			return;
+		}
 
 		// is this form allowed to render ( check state )
 		if (!empty($form['form_draft'])) {
@@ -4560,7 +4564,7 @@ class Caldera_Forms
 							}
 						}
 
-						if ($field['conditions']['type'] == 'show' || $field['conditions']['type'] == 'disable') {
+						if ($field['conditions']['type'] == 'show' ) {
 							// show if indicates hidden by default until condition is matched.
                             if( ! $is_cf2_field ){
                                 $field_html = null;

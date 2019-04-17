@@ -11,8 +11,6 @@
 
 namespace Symfony\Component\Translation;
 
-@trigger_error(sprintf('The "%s" class is deprecated since Symfony 4.2, use IdentityTranslator instead.', MessageSelector::class), E_USER_DEPRECATED);
-
 use Symfony\Component\Translation\Exception\InvalidArgumentException;
 
 /**
@@ -20,8 +18,6 @@ use Symfony\Component\Translation\Exception\InvalidArgumentException;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  * @author Bernhard Schussek <bschussek@gmail.com>
- *
- * @deprecated since Symfony 4.2, use IdentityTranslator instead.
  */
 class MessageSelector
 {
@@ -43,9 +39,9 @@ class MessageSelector
      * The two methods can also be mixed:
      *     {0} There are no apples|one: There is one apple|more: There are %count% apples
      *
-     * @param string    $message The message being translated
-     * @param int|float $number  The number of items represented for the message
-     * @param string    $locale  The locale to use for choosing
+     * @param string $message The message being translated
+     * @param int    $number  The number of items represented for the message
+     * @param string $locale  The locale to use for choosing
      *
      * @return string
      *

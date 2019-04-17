@@ -22,6 +22,7 @@ export const CalderaFormsFieldGroup = (props) => {
 		fieldId,
 		fieldLabel,
 		fieldCaption,
+		hideLabel,
 		isRequired,
 		fieldPlaceHolder,
 		fieldDefault,
@@ -159,17 +160,20 @@ export const CalderaFormsFieldGroup = (props) => {
 	 */
 	return (
 		<div className={className}>
-			<label
-				className={'control-label'}
-				htmlFor={fieldIdAttr}
-				id={`${fieldIdAttr}Label`}
-			>
-				{fieldLabel}
-				{isRequired &&
-					<RequiredIndicator/>
+			{!hideLabel &&
+				<label
+					className={'control-label'}
+					htmlFor={fieldIdAttr}
+					id={`${fieldIdAttr}Label`}
+				>
+					{fieldLabel}
+					{isRequired &&
+						<RequiredIndicator/>
 
-				}
-			</label>
+					}
+				</label>
+			}
+
 			<Inside/>
 
 			{hasCaption &&
@@ -206,6 +210,7 @@ CalderaFormsFieldGroup.propTypes = {
 	field: PropTypes.shape(CalderaFormsFieldPropType),
 	onChange: PropTypes.func.isRequired,
 	shouldShow: PropTypes.bool,
+	hideLabel: PropTypes.bool,
 	shouldDisable: PropTypes.bool,
 	hasMessage: PropTypes.bool,
 	isInvalid: PropTypes.bool,
@@ -227,6 +232,7 @@ CalderaFormsFieldGroup.propTypes = {
 CalderaFormsFieldGroup.defaultProps = {
 	shouldShow: true,
 	shouldDisable: false,
+	hideLabel: false,
 	fieldValue: '',
 	isInvalid: false,
 	message: {
