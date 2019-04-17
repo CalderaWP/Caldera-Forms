@@ -212,7 +212,7 @@ msgstr "reCAPTCHA が間違っています。"
 
 #: ../classes/core.php:434 ../fields/button/config_template.php:9
 msgid "Reset"
-msgstr ""
+msgstr "リセット"
 
 #: ../classes/core.php:583 ../classes/core.php:597 ../classes/core.php:3048
 msgid "Permission denied."
@@ -330,7 +330,7 @@ msgstr "ベーシック"
 
 #: ../classes/core.php:1193 ../classes/core.php:1197
 msgid "File"
-msgstr ""
+msgstr "ファイル"
 
 #: ../classes/core.php:1194
 msgid "File Uploader"
@@ -363,7 +363,7 @@ msgstr "非表示"
 
 #: ../classes/core.php:1263 ../fields/button/config_template.php:6
 msgid "Button"
-msgstr ""
+msgstr "ボタン"
 
 #: ../classes/core.php:1264
 msgid "Button, Submit and Reset types"
@@ -371,7 +371,7 @@ msgstr "ボタン、送信、リセット"
 
 #: ../classes/core.php:1266
 msgid "Buttons"
-msgstr ""
+msgstr "ボタン"
 
 #: ../classes/core.php:1284 ../classes/core.php:1285
 msgid "Email Address"
@@ -1310,7 +1310,7 @@ msgstr ""
 
 #: ../ui/admin_templates.php:168
 msgid "No entries yet."
-msgstr "えんとりーはありません。"
+msgstr "エントリーはありません。"
 
 #: ../ui/edit.php:13
 #, fuzzy
@@ -1411,7 +1411,7 @@ msgstr "構成要素を削除"
 
 #: ../ui/edit.php:493 ../ui/edit.php:505
 msgid "General Settings"
-msgstr "イパン設定"
+msgstr "一般設定"
 
 #: ../ui/edit.php:498
 msgid "Updated Successfully"
@@ -1460,7 +1460,7 @@ msgstr ""
 
 #: ../ui/edit.php:571
 msgid "Hide form after successful submission"
-msgstr "送信の性交後フォームを非表示にする"
+msgstr "送信の成功後フォームを非表示にする"
 
 #: ../ui/edit.php:576
 msgid "Honeypot"
@@ -1504,7 +1504,7 @@ msgstr "あるいは"
 
 #: ../ui/edit.php:899 ../ui/edit.php:922 ../ui/panels/conditions.php:102
 msgid "is"
-msgstr "が"
+msgstr "一致する"
 
 #: ../ui/edit.php:900 ../ui/edit.php:923 ../ui/panels/conditions.php:103
 msgid "is not"
@@ -1512,7 +1512,7 @@ msgstr "一致しない"
 
 #: ../ui/edit.php:901 ../ui/edit.php:924 ../ui/panels/conditions.php:104
 msgid "is greater than"
-msgstr "より大きいい"
+msgstr "より大きい"
 
 #: ../ui/edit.php:902 ../ui/edit.php:925 ../ui/panels/conditions.php:105
 msgid "is less than"
@@ -1741,7 +1741,7 @@ msgstr "ページ"
 
 #: ../ui/panels/layout_toolbar.php:11
 msgid "Add Page"
-msgstr ""
+msgstr "ページを追加"
 
 #: ../ui/panels/layout_toolbar.php:12
 msgid "Drag onto the form grid below"
