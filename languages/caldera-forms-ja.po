@@ -1460,7 +1460,7 @@ msgstr ""
 
 #: ../ui/edit.php:571
 msgid "Hide form after successful submission"
-msgstr "送信の性交後フォームを非表示にする"
+msgstr "送信の成功後フォームを非表示にする"
 
 #: ../ui/edit.php:576
 msgid "Honeypot"
