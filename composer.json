@@ -21,20 +21,6 @@
             "role": "Contributing Developer"
         }
     ],
-    "repositories": [
-        {
-            "type": "git",
-            "url": "https://github.com/CalderaWP/caldera-interop"
-        },
-        {
-            "type": "git",
-            "url": "https://github.com/CalderaWP/caldera-ghost-runner"
-        },
-        {
-            "type":"composer",
-            "url":"https://wpackagist.org"
-        }
-    ],
     "homepage": "http://calderaforms.com",
     "require": {
         "php": ">=5.6.0",
@@ -94,5 +80,4 @@
             "*": "dist"
         }
     }
-
 }
