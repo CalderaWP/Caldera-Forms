@@ -282,7 +282,7 @@ class Caldera_Forms_Forms {
 
         $data[ 'ID' ] = trim( $id );
         unset( $data[ 'db_id' ] );
-		
+
         $importer = new Caldera_Forms_Import_Form($data, $trusted );
         $data = $importer->get_prepared_form();
         $new_form = self::save_form( $data );
@@ -419,7 +419,7 @@ class Caldera_Forms_Forms {
         }else{
             $valid_forms = [];
         }
-		
+
 		foreach( $forms as $id => $form  ){
 			$_form = self::get_form( $id );
 			if( empty( $_form ) ){
@@ -513,7 +513,7 @@ class Caldera_Forms_Forms {
 				if( !empty( $condition['group'] ) ){
 					$condition['name'] = htmlentities( $condition['name'] );
 					foreach ($condition['group'] as $group_id => &$group) {
-						foreach( $group as $case_id=>&$case ){							
+						foreach( $group as $case_id=>&$case ){
 							$case['value'] = htmlentities( $case['value'] );
 						}
 					}
@@ -572,7 +572,7 @@ class Caldera_Forms_Forms {
 		if(!empty($newform['clone'])){
 			$clone = $newform['clone'];
 		}
-		
+
 		// load template if any
 		if( !empty( $newform['template'] ) ){
 			if( isset( $form_templates[ $newform['template'] ] ) && !empty( $form_templates[ $newform['template'] ]['template'] ) ){

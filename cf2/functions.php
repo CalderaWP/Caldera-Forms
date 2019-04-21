@@ -20,7 +20,6 @@ function caldera_forms_get_v2_container()
 }
 
 /**
-<<<<<<< HEAD
  * Setup Cf2 container
  *
  * @since 1.8.0

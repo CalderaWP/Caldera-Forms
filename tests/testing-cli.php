@@ -56,23 +56,20 @@ if( class_exists( 'WP_CLI' ) ){
      *
      * @param $args
      */
-    function calderaFormsDeleteTestPagesCommand( $args ) {
-        $filePath = file_exists($args[0]) ? $args[0]: dirname(__FILE__, 2) . '/cypress/tests.json';
-        $deleted = [];
-        foreach (\calderawp\calderaforms\Tests\Util\TestForms::getTestPages($filePath) as $formId => $pageSlug) {
-            $page = get_page_by_path($pageSlug, OBJECT);
-            if( ! isset( $page ) ){
-                continue;
-            }
-            $deleted[]  = wp_delete_post( $page->ID, true );
+    function calderaFormsDeleteTestPagesCommand( $args )
+	{
+		$filePath = file_exists($args[ 0 ]) ? $args[ 0 ] : dirname(__FILE__, 2) . '/cypress/tests.json';
+		$deleted = [];
+		foreach (\calderawp\calderaforms\Tests\Util\TestForms::getTestPages($filePath) as $formId => $pageSlug) {
+			$page = get_page_by_path($pageSlug, OBJECT);
+			if (!isset($page)) {
+				continue;
+			}
+			$deleted[] = wp_delete_post($page->ID, true);
 
-        }
+		}
 
-        WP_CLI::success( sprintf( 'Pages deleted: %d', count($deleted) ) );
-    }
-
-
-
-
-    WP_CLI::add_command( 'cf delete-test-pages', 'calderaFormsDeleteTestPagesCommand' );
+		WP_CLI::success(sprintf('Pages deleted: %d', count($deleted)));
+	}
+	WP_CLI::add_command( 'cf delete-test-pages', 'calderaFormsDeleteTestPagesCommand' );
 }

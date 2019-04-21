@@ -15,7 +15,6 @@ class Test_Forms_Rest_Api extends CF_Rest_Test_Case
 	 *
 	 * @since 1.8.0
 	 *
-	 * @group now
 	 * @covers 'cf-api/v2/settings' API route
 	 */
 	public function test_get_forms_full_with_details()

@@ -5,12 +5,13 @@ namespace calderawp\calderaforms\Tests\Integration;
 
 
 use calderawp\calderaforms\Tests\Util\ImportForms;
+use calderawp\calderaforms\Tests\Util\ImportTestFormsFromIncludes;
 use calderawp\calderaforms\Tests\Util\Traits\SharedFactories;
 
 class TestCase extends \WP_UnitTestCase
 {
 
-    use SharedFactories;
+    use SharedFactories, ImportTestFormsFromIncludes;
     public function setUp()
     {
         parent::setUp();
@@ -20,6 +21,7 @@ class TestCase extends \WP_UnitTestCase
         $this->resetCfGlobals();
         parent::tearDown();
     }
+
 
     /**
      * Rest all of the globals that Caldera Forms v1 sets
@@ -37,4 +39,5 @@ class TestCase extends \WP_UnitTestCase
         $form = null;
         unset($GLOBALS['form']);
     }
+
 }

@@ -5,6 +5,7 @@ namespace calderawp\calderaforms\cf2;
 
 
 use calderawp\calderaforms\cf2\Fields\FieldTypeFactory;
+use calderawp\calderaforms\cf2\RestApi\Token\FormTokenContract;
 use calderawp\calderaforms\cf2\Transients\Cf1TransientsApi;
 use calderawp\calderaforms\cf2\Services\ServiceContract;
 
@@ -112,4 +113,13 @@ interface CalderaFormsV2Contract
 	 * @return mixed
 	 */
 	public function getService($identifier);
+
+	/**
+	 * Get the Form session token encoder/decoder
+	 *
+	 * @since 1.9.0
+	 *
+	 * @return FormTokenContract
+	 */
+	public function getFormJwt();
 }

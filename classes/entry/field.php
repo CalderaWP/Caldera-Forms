@@ -10,19 +10,19 @@
  * @copyright 2016 CalderaWP LLC
  */
 class Caldera_Forms_Entry_Field  extends Caldera_Forms_Entry_Object {
-	
+
 	/** @var  string */
 	protected $id;
-	
+
 	/** @var  string */
 	protected $entry_id;
-	
+
 	/** @var  string */
 	protected $field_id;
-	
+
 	/** @var  string */
 	protected $slug;
-	
+
 	/** @var  string|array */
 	protected $value;
 
@@ -53,6 +53,10 @@ class Caldera_Forms_Entry_Field  extends Caldera_Forms_Entry_Object {
 	 */
 	public function get_value(){
 		return $this->value_get();
+	}
+
+	public function fromArray(array  $data ){
+
 	}
 
 	/**
@@ -125,7 +129,7 @@ class Caldera_Forms_Entry_Field  extends Caldera_Forms_Entry_Object {
 	 * @return array|string|int
 	 */
 	protected function value_get(){
-		
+
 		if ( is_serialized( $this->value ) ) {
 			$this->value = unserialize( $this->value );
 		} elseif ( is_string( $this->value ) && 0 === strpos( $this->value, '{' ) && is_object( $_value = json_decode( $this->value ) ) ) {
@@ -133,7 +137,7 @@ class Caldera_Forms_Entry_Field  extends Caldera_Forms_Entry_Object {
 		}
 
 		return $this->value;
-		
+
 	}
 
 
