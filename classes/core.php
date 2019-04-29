@@ -24,7 +24,6 @@ class Caldera_Forms
 	const VERSION = CFCORE_VER;
 
 	/**
-	/**
 	 * @since 1.4.2
 	 */
 	const PLUGIN_SLUG = 'caldera-forms';
