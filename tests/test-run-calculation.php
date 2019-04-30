@@ -266,7 +266,7 @@ class RunCalculationTest extends Caldera_Forms_Test_Case
 
       //Test Calculation by fields
       $expectedResult = Caldera_Forms::run_calculation( null, $this->calculationField, $this->form ); 
-      $this->assertSame( $result , $expectedResult );
+      $this->assertSame( floatval($result) , $expectedResult );
   }
 
   /**
@@ -276,8 +276,6 @@ class RunCalculationTest extends Caldera_Forms_Test_Case
    */
   public function testRunCalculationManualFormula()
   {
-      $form = $this->form;
-
       Caldera_Forms::set_field_data( $this->fieldOne['ID'], $this->fieldOneValue, $this->form );
       Caldera_Forms::set_field_data( $this->fieldTwo['ID'], $this->fieldTwoValue, $this->form );
       Caldera_Forms::set_field_data( $this->fieldThree['ID'], $this->fieldThreeValue, $this->form );
@@ -285,9 +283,10 @@ class RunCalculationTest extends Caldera_Forms_Test_Case
       $result = ($this->fieldOneValue + $this->fieldTwoValue) / $this->fieldThreeValue;
       
       //Test manual formula
+      $form = $this->form;
       $form['fields']['fld_8568604']['config']['manual'] = true;
       $expectedResult = Caldera_Forms::run_calculation( null, $this->calculationField, $form );
-      $this->assertSame( $result , $expectedResult );
+      $this->assertSame( floatval($result) , $expectedResult );
   }
 
 }
