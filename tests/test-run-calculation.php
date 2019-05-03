@@ -5,7 +5,7 @@ class RunCalculationTest extends Caldera_Forms_Test_Case
 
   /**
    * Declare protected names for data and the base data in the $form variable
-   * 
+   *
    * @since 1.8.5
    */
   protected $fieldOne;
@@ -29,9 +29,9 @@ class RunCalculationTest extends Caldera_Forms_Test_Case
       'avatar_field' => '',
       'form_ajax' => 1,
       'custom_callback' => '',
-      'layout_grid' => 
+      'layout_grid' =>
       array(
-        'fields' => 
+        'fields' =>
         array(
           'fld_1892141' => '1:1',
           'fld_93143' => '1:1',
@@ -41,20 +41,20 @@ class RunCalculationTest extends Caldera_Forms_Test_Case
         ),
         'structure' => '12',
       ),
-      'fields' => 
+      'fields' =>
       array(
-        'fld_1892141' => 
+        'fld_1892141' =>
         array(
           'ID' => 'fld_1892141',
           'type' => 'number',
           'label' => 'field1',
           'slug' => 'field1',
-          'conditions' => 
+          'conditions' =>
           array(
             'type' => '',
           ),
           'caption' => '',
-          'config' => 
+          'config' =>
           array(
             'custom_class' => '',
             'placeholder' => '',
@@ -66,18 +66,18 @@ class RunCalculationTest extends Caldera_Forms_Test_Case
             'personally_identifying' => 0,
           ),
         ),
-        'fld_93143' => 
+        'fld_93143' =>
         array(
           'ID' => 'fld_93143',
           'type' => 'number',
           'label' => 'field2',
           'slug' => 'field2',
-          'conditions' => 
+          'conditions' =>
           array(
             'type' => '',
           ),
           'caption' => '',
-          'config' => 
+          'config' =>
           array(
             'custom_class' => '',
             'placeholder' => '',
@@ -89,18 +89,18 @@ class RunCalculationTest extends Caldera_Forms_Test_Case
             'personally_identifying' => 0,
           ),
         ),
-        'fld_7465068' => 
+        'fld_7465068' =>
         array(
           'ID' => 'fld_7465068',
           'type' => 'number',
           'label' => 'field3',
           'slug' => 'field3',
-          'conditions' => 
+          'conditions' =>
           array(
             'type' => '',
           ),
           'caption' => '',
-          'config' => 
+          'config' =>
           array(
             'custom_class' => '',
             'placeholder' => '',
@@ -131,33 +131,33 @@ class RunCalculationTest extends Caldera_Forms_Test_Case
                   'decimal_separator' => '.',
                   'formular' => ' ( fld_1892141+fld_93143 ) /fld_7465068',
                   'config' =>  array(
-                      'group' => 
+                      'group' =>
                           array(
-                          0 => 
+                          0 =>
                           array(
-                              'lines' => 
+                              'lines' =>
                               array(
-                              0 => 
+                              0 =>
                               array(
                                   'operator' => '+',
                                   'field' => 'fld_1892141',
                               ),
-                              1 => 
+                              1 =>
                               array(
                                   'operator' => '+',
                                   'field' => 'fld_93143',
                               ),
                               ),
                           ),
-                          1 => 
+                          1 =>
                           array(
                               'operator' => '/',
                           ),
-                          2 => 
+                          2 =>
                           array(
-                              'lines' => 
+                              'lines' =>
                               array(
-                              0 => 
+                              0 =>
                                   array(
                                       'operator' => '+',
                                       'field' => 'fld_7465068',
@@ -171,18 +171,18 @@ class RunCalculationTest extends Caldera_Forms_Test_Case
                   'personally_identifying' => 0,
               ),
           ),
-        'fld_3665187' => 
+        'fld_3665187' =>
         array(
           'ID' => 'fld_3665187',
           'type' => 'button',
           'label' => 'Save',
           'slug' => 'save',
-          'conditions' => 
+          'conditions' =>
           array(
             'type' => '',
           ),
           'caption' => '',
-          'config' => 
+          'config' =>
           array(
             'custom_class' => '',
             'type' => 'submit',
@@ -191,11 +191,11 @@ class RunCalculationTest extends Caldera_Forms_Test_Case
           ),
         ),
       ),
-      'page_names' => 
+      'page_names' =>
       array(
         0 => 'Page 1',
       ),
-      'mailer' => 
+      'mailer' =>
       array(
         'on_insert' => 1,
         'sender_name' => 'Caldera Forms Notification',
@@ -211,18 +211,18 @@ class RunCalculationTest extends Caldera_Forms_Test_Case
     <div style="display: none;"></div>',
       ),
       'check_honey' => 1,
-      'antispam' => 
+      'antispam' =>
       array(
         'sender_name' => '',
         'sender_email' => '',
       ),
-      'conditional_groups' => 
+      'conditional_groups' =>
       array(
         '_open_condition' => '',
       ),
-      'settings' => 
+      'settings' =>
       array(
-        'responsive' => 
+        'responsive' =>
         array(
           'break_point' => 'sm',
         ),
@@ -235,8 +235,8 @@ class RunCalculationTest extends Caldera_Forms_Test_Case
   );
 
   /**
-   * Set values 
-   * 
+   * Set values
+   *
    * @since 1.8.5
    */
   public function __construct()
@@ -250,43 +250,43 @@ class RunCalculationTest extends Caldera_Forms_Test_Case
     $this->fieldThreeValue = 2;
   }
 
-   
+
   /**
    * @since 1.8.5
    *
-   * @covers \calderawp\calderaforms::run_calculation()
+   * @covers \Caldera_Forms::run_calculation()
    */
   public function testRunCalculation()
   {
       Caldera_Forms::set_field_data( $this->fieldOne['ID'], $this->fieldOneValue, $this->form );
       Caldera_Forms::set_field_data( $this->fieldTwo['ID'], $this->fieldTwoValue, $this->form );
       Caldera_Forms::set_field_data( $this->fieldThree['ID'], $this->fieldThreeValue, $this->form );
-      
-      $result = ($this->fieldOneValue + $this->fieldTwoValue) / $this->fieldThreeValue;
+
+	  $expectedResult = ($this->fieldOneValue + $this->fieldTwoValue) / $this->fieldThreeValue;
 
       //Test Calculation by fields
-      $expectedResult = Caldera_Forms::run_calculation( null, $this->calculationField, $this->form ); 
-      $this->assertSame( floatval($result) , $expectedResult );
+      $actualResult = Caldera_Forms::run_calculation( null, $this->calculationField, $this->form );
+      $this->assertSame( floatval($expectedResult ), $actualResult );
   }
 
   /**
    * @since 1.8.5
    *
-   * @covers \calderawp\calderaforms::run_calculation()
+   * @covers \Caldera_Forms::run_calculation()
    */
   public function testRunCalculationManualFormula()
   {
       Caldera_Forms::set_field_data( $this->fieldOne['ID'], $this->fieldOneValue, $this->form );
       Caldera_Forms::set_field_data( $this->fieldTwo['ID'], $this->fieldTwoValue, $this->form );
       Caldera_Forms::set_field_data( $this->fieldThree['ID'], $this->fieldThreeValue, $this->form );
-      
-      $result = ($this->fieldOneValue + $this->fieldTwoValue) / $this->fieldThreeValue;
-      
+
+	  $expectedResult = ($this->fieldOneValue + $this->fieldTwoValue) / $this->fieldThreeValue;
+
       //Test manual formula
       $form = $this->form;
       $form['fields']['fld_8568604']['config']['manual'] = true;
-      $expectedResult = Caldera_Forms::run_calculation( null, $this->calculationField, $form );
-      $this->assertSame( floatval($result) , $expectedResult );
+      $actualResult = Caldera_Forms::run_calculation( null, $this->calculationField, $form );
+      $this->assertSame( floatval($expectedResult) , $actualResult );
   }
 
 }
