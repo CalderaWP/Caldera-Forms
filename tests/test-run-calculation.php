@@ -398,4 +398,26 @@ class RunCalculationTest extends Caldera_Forms_Test_Case
     $this->assertSame( floatval($expectedResult), floatval($actualResult) );
   }
 
+  /**
+   * @since 1.8.5
+   *
+   * @covers \Caldera_Forms::run_calculation()
+   */
+  public function testRunCalculationCosSinTanTrigFunctions()
+  {
+    Caldera_Forms::set_field_data( $this->fieldOne['ID'], 6, $this->form );
+    Caldera_Forms::set_field_data( $this->fieldTwo['ID'], 4, $this->form );
+    Caldera_Forms::set_field_data( $this->fieldThree['ID'], 20, $this->form );
+
+    $expectedResult = cos( 6 ) + sin( 4 ) + tan( 20 );
+
+    //Test manual formula
+    $form = $this->form;
+    $form['fields']['fld_8568604']['config']['manual'] = true;
+    $form['fields']['fld_8568604']['config']['manual_formula'] = 'cos(%field1%)+sin(%field2%)+tan(%field3%)';
+    $calculationField = $form['fields']['fld_8568604'];
+    $actualResult = Caldera_Forms::run_calculation( null, $calculationField, $form );
+    $this->assertSame( floatval($expectedResult), floatval($actualResult) );
+  }
+
 }
