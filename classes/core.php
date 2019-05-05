@@ -1450,17 +1450,8 @@ class Caldera_Forms
 				__('Calculation is invalid (division by zero)', 'caldera-forms'));
 		}
 
-		/**
-		 *  Set result out of formula Parser 
-		 *
-		 * @since 1.8.5
-		 * 
-		 * @param $formula 
-		 * @param $precision non required, Number of digits after the decimal point
-		 */
-		$parser = new FormulaParser($formula);
-		$result = $parser->getResult();
-		$total = $result[1];
+		$total_function = create_function(null, 'return ' . $formula . ';');
+		$total = $total_function();
 
 		if (is_infinite($total) || !is_numeric($total)) {
 			return new WP_Error($field['ID'] . '-calculation', __('Calculation is invalid', 'caldera-forms'));
