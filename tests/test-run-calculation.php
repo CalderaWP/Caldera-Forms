@@ -245,9 +245,9 @@ class RunCalculationTest extends Caldera_Forms_Test_Case
     $this->fieldTwo = $this->form['fields']['fld_93143'];
     $this->fieldThree = $this->form['fields']['fld_7465068'];
     $this->calculationField = $this->form['fields']['fld_8568604'];
-    $this->fieldOneValue = 6;
-    $this->fieldTwoValue = 4;
-    $this->fieldThreeValue = 2;
+    $this->fieldOneValue = 6.55;
+    $this->fieldTwoValue = 4.2;
+    $this->fieldThreeValue = 22.7;
   }
 
 
@@ -258,15 +258,15 @@ class RunCalculationTest extends Caldera_Forms_Test_Case
    */
   public function testRunCalculation()
   {
-      Caldera_Forms::set_field_data( $this->fieldOne['ID'], $this->fieldOneValue, $this->form );
-      Caldera_Forms::set_field_data( $this->fieldTwo['ID'], $this->fieldTwoValue, $this->form );
-      Caldera_Forms::set_field_data( $this->fieldThree['ID'], $this->fieldThreeValue, $this->form );
+    Caldera_Forms::set_field_data( $this->fieldOne['ID'], $this->fieldOneValue, $this->form );
+    Caldera_Forms::set_field_data( $this->fieldTwo['ID'], $this->fieldTwoValue, $this->form );
+    Caldera_Forms::set_field_data( $this->fieldThree['ID'], $this->fieldThreeValue, $this->form );
 
-	  $expectedResult = ($this->fieldOneValue + $this->fieldTwoValue) / $this->fieldThreeValue;
+    $expectedResult = ($this->fieldOneValue + $this->fieldTwoValue) / $this->fieldThreeValue;
 
-      //Test Calculation by fields
-      $actualResult = Caldera_Forms::run_calculation( null, $this->calculationField, $this->form );
-      $this->assertSame( floatval($expectedResult ), $actualResult );
+    //Test Calculation by fields
+    $actualResult = Caldera_Forms::run_calculation( null, $this->calculationField, $this->form );
+    $this->assertSame( floatval($expectedResult ), floatval($actualResult) );
   }
 
   /**
@@ -276,17 +276,126 @@ class RunCalculationTest extends Caldera_Forms_Test_Case
    */
   public function testRunCalculationManualFormula()
   {
-      Caldera_Forms::set_field_data( $this->fieldOne['ID'], $this->fieldOneValue, $this->form );
-      Caldera_Forms::set_field_data( $this->fieldTwo['ID'], $this->fieldTwoValue, $this->form );
-      Caldera_Forms::set_field_data( $this->fieldThree['ID'], $this->fieldThreeValue, $this->form );
+    Caldera_Forms::set_field_data( $this->fieldOne['ID'], $this->fieldOneValue, $this->form );
+    Caldera_Forms::set_field_data( $this->fieldTwo['ID'], $this->fieldTwoValue, $this->form );
+    Caldera_Forms::set_field_data( $this->fieldThree['ID'], $this->fieldThreeValue, $this->form );
 
-	  $expectedResult = ($this->fieldOneValue + $this->fieldTwoValue) / $this->fieldThreeValue;
+    $expectedResult = ($this->fieldOneValue + $this->fieldTwoValue) / $this->fieldThreeValue;
 
-      //Test manual formula
-      $form = $this->form;
-      $form['fields']['fld_8568604']['config']['manual'] = true;
-      $actualResult = Caldera_Forms::run_calculation( null, $this->calculationField, $form );
-      $this->assertSame( floatval($expectedResult) , $actualResult );
+    //Test manual formula
+    $form = $this->form;
+    $form['fields']['fld_8568604']['config']['manual'] = true;
+    $calculationField = $form['fields']['fld_8568604'];
+    $actualResult = Caldera_Forms::run_calculation( null, $calculationField, $form );
+    $this->assertSame( floatval($expectedResult), floatval($actualResult) );
+  }
+
+  /**
+   * @since 1.8.5
+   *
+   * @covers \Caldera_Forms::run_calculation()
+   */
+  public function testRunCalculationPowMathFunction()
+  {
+    Caldera_Forms::set_field_data( $this->fieldOne['ID'], $this->fieldOneValue, $this->form );
+    Caldera_Forms::set_field_data( $this->fieldTwo['ID'], $this->fieldTwoValue, $this->form );
+    Caldera_Forms::set_field_data( $this->fieldThree['ID'], $this->fieldThreeValue, $this->form );
+
+    $expectedResult = pow($this->fieldOneValue , $this->fieldTwoValue) + $this->fieldThreeValue;
+
+    //Test manual formula
+    $form = $this->form;
+    $form['fields']['fld_8568604']['config']['manual'] = true;
+    $form['fields']['fld_8568604']['config']['manual_formula'] = 'pow(%field1%,%field2%)+%field3%';
+    $calculationField = $form['fields']['fld_8568604'];
+    $actualResult = Caldera_Forms::run_calculation( null, $calculationField, $form );
+    $this->assertSame( floatval($expectedResult), floatval($actualResult) );
+  }
+
+  /**
+   * @since 1.8.5
+   *
+   * @covers \Caldera_Forms::run_calculation()
+   */
+  public function testRunCalculationExpMathFunction()
+  {
+    Caldera_Forms::set_field_data( $this->fieldOne['ID'], $this->fieldOneValue, $this->form );
+    Caldera_Forms::set_field_data( $this->fieldTwo['ID'], $this->fieldTwoValue, $this->form );
+    Caldera_Forms::set_field_data( $this->fieldThree['ID'], $this->fieldThreeValue, $this->form );
+
+    $expectedResult = exp($this->fieldOneValue) + $this->fieldThreeValue * $this->fieldTwoValue;
+
+    //Test manual formula
+    $form = $this->form;
+    $form['fields']['fld_8568604']['config']['manual'] = true;
+    $form['fields']['fld_8568604']['config']['manual_formula'] = 'exp(%field1%)+%field3%*%field2%';
+    $calculationField = $form['fields']['fld_8568604'];
+    $actualResult = Caldera_Forms::run_calculation( null, $calculationField, $form );
+    $this->assertSame( floatval($expectedResult), floatval($actualResult) );
+  }
+
+  /**
+   * @since 1.8.5
+   *
+   * @covers \Caldera_Forms::run_calculation()
+   */
+  public function testRunCalculationCeilMathFunction()
+  {
+    Caldera_Forms::set_field_data( $this->fieldOne['ID'], $this->fieldOneValue, $this->form );
+    Caldera_Forms::set_field_data( $this->fieldTwo['ID'], $this->fieldTwoValue, $this->form );
+    Caldera_Forms::set_field_data( $this->fieldThree['ID'], $this->fieldThreeValue, $this->form );
+
+    $expectedResult = ceil($this->fieldOneValue) * $this->fieldThreeValue / $this->fieldTwoValue;
+
+    //Test manual formula
+    $form = $this->form;
+    $form['fields']['fld_8568604']['config']['manual'] = true;
+    $form['fields']['fld_8568604']['config']['manual_formula'] = 'ceil(%field1%)*%field3%/%field2%';
+    $calculationField = $form['fields']['fld_8568604'];
+    $actualResult = Caldera_Forms::run_calculation( null, $calculationField, $form );
+    $this->assertSame( floatval($expectedResult), floatval($actualResult) );
+  }
+
+  /**
+   * @since 1.8.5
+   *
+   * @covers \Caldera_Forms::run_calculation()
+   */
+  public function testRunCalculationFloorLogMathFunctions()
+  {
+    Caldera_Forms::set_field_data( $this->fieldOne['ID'], $this->fieldOneValue, $this->form );
+    Caldera_Forms::set_field_data( $this->fieldTwo['ID'], $this->fieldTwoValue, $this->form );
+
+    $expectedResult = floor( log( $this->fieldOneValue, $this->fieldTwoValue ) );
+
+    //Test manual formula
+    $form = $this->form;
+    $form['fields']['fld_8568604']['config']['manual'] = true;
+    $form['fields']['fld_8568604']['config']['manual_formula'] = 'floor(log(%field1%,%field2%))';
+    $calculationField = $form['fields']['fld_8568604'];
+    $actualResult = Caldera_Forms::run_calculation( null, $calculationField, $form );
+    $this->assertSame( floatval($expectedResult), floatval($actualResult) );
+  }
+
+  /**
+   * @since 1.8.5
+   *
+   * @covers \Caldera_Forms::run_calculation()
+   */
+  public function testRunCalculationRoundSqrtMathFunctions()
+  {
+    Caldera_Forms::set_field_data( $this->fieldOne['ID'], $this->fieldOneValue, $this->form );
+    Caldera_Forms::set_field_data( $this->fieldTwo['ID'], $this->fieldTwoValue, $this->form );
+
+    $expectedResult = round( sqrt( $this->fieldOneValue ) + sqrt( $this->fieldTwoValue ) );
+
+    //Test manual formula
+    $form = $this->form;
+    $form['fields']['fld_8568604']['config']['manual'] = true;
+    $form['fields']['fld_8568604']['config']['manual_formula'] = 'round(sqrt(%field1%)+sqrt(%field2%))';
+    $calculationField = $form['fields']['fld_8568604'];
+    $actualResult = Caldera_Forms::run_calculation( null, $calculationField, $form );
+    $this->assertSame( floatval($expectedResult), floatval($actualResult) );
   }
 
 }
