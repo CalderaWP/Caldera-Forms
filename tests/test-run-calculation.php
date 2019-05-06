@@ -420,4 +420,26 @@ class RunCalculationTest extends Caldera_Forms_Test_Case
     $this->assertSame( floatval($expectedResult), floatval($actualResult) );
   }
 
+   /**
+   * @since 1.8.5
+   *
+   * @covers \Caldera_Forms::run_calculation()
+   */
+  public function testRunCalculationAntiTrigFunctions()
+  {
+    Caldera_Forms::set_field_data( $this->fieldOne['ID'], -0.5, $this->form );
+    Caldera_Forms::set_field_data( $this->fieldTwo['ID'], 0.2, $this->form );
+    Caldera_Forms::set_field_data( $this->fieldThree['ID'], -0.045, $this->form );
+
+    $expectedResult = acos( -0.5 ) + asin( 0.2 ) + atan( -0.045 );
+
+    //Test manual formula
+    $form = $this->form;
+    $form['fields']['fld_8568604']['config']['manual'] = true;
+    $form['fields']['fld_8568604']['config']['manual_formula'] = 'acos(%field1%)+asin(%field2%)+atan(%field3%)';
+    $calculationField = $form['fields']['fld_8568604'];
+    $actualResult = Caldera_Forms::run_calculation( null, $calculationField, $form );
+    $this->assertSame( floatval($expectedResult), floatval($actualResult) );
+  }
+
 }
