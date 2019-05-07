@@ -317,6 +317,28 @@ class RunCalculationTest extends Caldera_Forms_Test_Case
    *
    * @covers \Caldera_Forms::run_calculation()
    */
+  public function testRunCalculationPowMathSignFunction()
+  {
+    Caldera_Forms::set_field_data( $this->fieldOne['ID'], $this->fieldOneValue, $this->form );
+    Caldera_Forms::set_field_data( $this->fieldTwo['ID'], $this->fieldTwoValue, $this->form );
+    Caldera_Forms::set_field_data( $this->fieldThree['ID'], $this->fieldThreeValue, $this->form );
+
+    $expectedResult = $this->fieldOneValue ** $this->fieldTwoValue + $this->fieldThreeValue;
+
+    //Test manual formula
+    $form = $this->form;
+    $form['fields']['fld_8568604']['config']['manual'] = true;
+    $form['fields']['fld_8568604']['config']['manual_formula'] = '%field1%**%field2%+%field3%';
+    $calculationField = $form['fields']['fld_8568604'];
+    $actualResult = Caldera_Forms::run_calculation( null, $calculationField, $form );
+    $this->assertSame( floatval($expectedResult), floatval($actualResult) );
+  }
+
+  /**
+   * @since 1.8.5
+   *
+   * @covers \Caldera_Forms::run_calculation()
+   */
   public function testRunCalculationExpMathFunction()
   {
     Caldera_Forms::set_field_data( $this->fieldOne['ID'], $this->fieldOneValue, $this->form );
