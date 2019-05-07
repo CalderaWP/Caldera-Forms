@@ -1450,8 +1450,9 @@ class Caldera_Forms
 				__('Calculation is invalid (division by zero)', 'caldera-forms'));
 		}
 
-		eval('$total = ' . $formula . ';');
-			
+		$total_function = create_function(null, 'return ' . $formula . ';');
+		$total = $total_function();
+
 		if (is_infinite($total) || !is_numeric($total)) {
 			return new WP_Error($field['ID'] . '-calculation', __('Calculation is invalid', 'caldera-forms'));
 		}
