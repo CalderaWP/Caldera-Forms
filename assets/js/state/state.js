@@ -102,7 +102,7 @@ function CFState(formId, $ ){
 		}
 
 		if (calcVals.hasOwnProperty(id) ) {
-			if( false === calcVals[id] || null === calcVals[id] ){
+			if( false === calcVals[id] || null === calcVals[id] || 0 === calcVals[id] ){
 				//@TODO use let here, when ES6.
 				var _val = findCalcVal( $( document.getElementById( id ) ) );
 				if( isString( _val )  ) {
