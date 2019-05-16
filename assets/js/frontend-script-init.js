@@ -345,7 +345,6 @@ var cf_jsfields_init, cf_presubmit;
 window.addEventListener("load", function(){
 	(function( $ ) {
 		'use strict';
-		window.wp = undefined;
 		var wpDefined = undefined === typeof window.wp;
 
 
