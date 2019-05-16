@@ -98,14 +98,12 @@ class Caldera_Forms_Admin_Assets
 
         $admin_client_dependencies = [
             'wp-element',
-            'wp-render',
-
+            'wp-components'
         ];
         global $wp_version;
         if (!version_compare($wp_version, '5.0.0', '>=')) {
             $admin_client_dependencies[] = Caldera_Forms_Render_Assets::make_slug('legacy-bundle');
         }
-        $admin_client_dependencies = [];
         wp_register_script(Caldera_Forms_Render_Assets::make_slug('admin-client'), Caldera_Forms_Render_Assets::make_url('admin-client'), $admin_client_dependencies, $version);
 
         wp_register_script(self::slug('admin'), Caldera_Forms_Render_Assets::make_url('admin'), array(
@@ -161,7 +159,7 @@ class Caldera_Forms_Admin_Assets
     {
         $version = Caldera_Forms::VERSION;
         wp_register_style(self::slug('modals', false), Caldera_Forms_Render_Assets::make_url('modals', false), array('wp-color-picker'), $version);
-        wp_register_style(Caldera_Forms_Render_Assets::make_slug('admin-client'), Caldera_Forms_Render_Assets::make_url('admin-client',false), [], $version);
+        wp_register_style(Caldera_Forms_Render_Assets::make_slug('admin-client'), Caldera_Forms_Render_Assets::make_url('admin-client',false), ['wp-components'], $version);
 
         wp_register_style(self::slug('admin', false), Caldera_Forms_Render_Assets::make_url('admin', false), array(
             self::slug('modals', false),

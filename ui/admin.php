@@ -267,47 +267,30 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 	</div>
 	</div>
 	<div id="caldera-forms-admin-page-right">
+        <?php if ( 1===7 && ! is_ssl() ): ?>
+            <div class="caldera-forms-clippy-zone warn-clippy">
+                <div class="caldera-forms-clippy-zone-inner-wrap" style="background: white">
+                    <div class="caldera-forms-clippy"
+                         style="background-color:white;border-left: 4px solid #dc3232;">
+                        <h2>
+                            <?php esc_html_e( 'Your Forms Might Be Marked Insecure', 'caldera-forms' ); ?>
+                        </h2>
+                        <p>
+                            <?php esc_html_e( 'WordPress reports that you are not using SSL. Your forms may be marked insecure by browsers if not loaded using HTTPS.', 'caldera-forms' ); ?>
+                        </p>
+                        <a href="https://calderaforms.com/docs/ssl?utm-source=wp-admin&utm_campaign=clippy&utm_term=support"
+                           target="_blank" class="bt-btn btn btn-green" style="width: 80%;margin-left:5%;">
+                            <?php esc_html_e( 'Learn More', 'caldera-forms' ); ?>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        <?php endif ?>
+
+        <?php //id is "clippy for historical reason
+        ///do not change without accounting for other JS and CSS that assumes this id ?>
 		<div id="caldera-forms-clippy">
-			<?php if ( ! is_ssl() ): ?>
-				<div class="caldera-forms-clippy-zone warn-clippy">
-					<div class="caldera-forms-clippy-zone-inner-wrap" style="background: white">
-						<div class="caldera-forms-clippy"
-						     style="background-color:white;border-left: 4px solid #dc3232;">
-							<h2>
-								<?php esc_html_e( 'Your Forms Might Be Marked Insecure', 'caldera-forms' ); ?>
-							</h2>
-							<p>
-								<?php esc_html_e( 'WordPress reports that you are not using SSL. Your forms may be marked insecure by browsers if not loaded using HTTPS.', 'caldera-forms' ); ?>
-							</p>
-							<a href="https://calderaforms.com/docs/ssl?utm-source=wp-admin&utm_campaign=clippy&utm_term=support"
-							   target="_blank" class="bt-btn btn btn-green" style="width: 80%;margin-left:5%;">
-								<?php esc_html_e( 'Learn More', 'caldera-forms' ); ?>
-							</a>
-						</div>
-					</div>
-				</div>
-			<?php endif ?>
 
-			<div class="caldera-forms-clippy-zone" style="background-image: url( '<?php echo esc_url( CFCORE_URL . 'assets/images/caldera-globe-logo-sm.png' ); ?>' );">
-				<div class="caldera-forms-clippy-zone-inner-wrap">
-					<div class="caldera-forms-clippy">
-						<h2>
-							<?php esc_html_e( 'Need Support? Or Found A Bug?', 'caldera-forms' ); ?>
-						</h2>
-						<p>
-							<?php esc_html_e( 'In addition to our documentation, we have support licenses to get you extra help.', 'caldera-forms' ); ?>
-						</p>
-						<a href="https://calderaforms.com/support?utm-source=wp-admin&utm_campaign=clippy&utm_term=support" target="_blank" class="bt-btn btn btn-green">
-							<?php esc_html_e( 'Learn About Our Support Options', 'caldera-forms' ); ?>
-						</a>
-
-
-						<a href="https://github.com/calderawp/caldera-forms/issues" target="_blank" class="bt-btn btn btn-green">
-							<?php esc_html_e( 'Report A Bug', 'caldera-forms' ); ?>
-						</a>
-					</div>
-				</div>
-			</div>
 		</div>
 		<?php echo Caldera_Forms_Entry_Viewer::full_viewer(); ?>
 
