@@ -345,6 +345,8 @@ var cf_jsfields_init, cf_presubmit;
 window.addEventListener("load", function(){
 	(function( $ ) {
 		'use strict';
+		var wpDefined = false;
+
 
 		window.CALDERA_FORMS = {};
 
@@ -359,7 +361,9 @@ window.addEventListener("load", function(){
 				form_id = $el.attr('id');
 				instance = $el.data('instance');
 
-				if ('object' === typeof CFFIELD_CONFIG[instance] ) {
+				if( ! wpDefined ){
+					$el.html( '<div class="alert alert-warning">' + CFFIELD_CONFIG[instance].error_strings.wp_not_defined + '</div>' );
+				} else if ('object' === typeof CFFIELD_CONFIG[instance] ) {
 					$form = $( document.getElementById( form_id ));
 
 					if ( ! protocolChecked ) {

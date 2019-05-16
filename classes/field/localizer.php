@@ -105,6 +105,7 @@ class Caldera_Forms_Field_Localizer {
 	 */
 	protected static function error_strings(){
 		$strings = array(
+			'wp_not_defined' => __( 'You shall not pass.', 'caldera-forms' ),
 			'mixed_protocol' => __( 'Submission URL and current URL protocols do not match. Form may not function properly.', 'caldera-forms' ),
 			'jquery_old'     => __( 'An out of date version of jQuery is loaded on the page. Form may not function properly.', 'caldera-forms' )
 		);
