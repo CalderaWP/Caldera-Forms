@@ -567,6 +567,10 @@ class Caldera_Forms_Render_Assets
 		}
 
 		if (self::is_client_entry_point($name)) {
+		    if( 'admin-client' === $name ){
+                $name = 'admin';
+            }
+
 			if ($script) {
 				return "{$root_url}clients/{$name}/build/index.min.js";
 			} else {
@@ -601,7 +605,14 @@ class Caldera_Forms_Render_Assets
 	 */
 	public static function is_client_entry_point($slug)
 	{
-		return in_array($slug, ['blocks', 'pro', 'privacy', 'render', 'legacy-bundle']);
+		return in_array($slug, [
+		    'admin-client',
+		    'blocks',
+            'pro',
+            'privacy',
+            'render',
+            'legacy-bundle'
+        ]);
 	}
 
 	/**
