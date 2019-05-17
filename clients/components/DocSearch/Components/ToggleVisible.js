@@ -47,14 +47,11 @@ export class ToggleVisible extends React.Component {
                 title={this.title()}
                 onClick={this.props.toggleOpen}
             >
-                <Glyphicon
-                    glyph={this.icon()}
-                />
                 <span
                     className={'description'}
                 >
-                                {this.text()}
-                            </span>
+                    {this.text()}
+                </span>
             </button>
             );
 

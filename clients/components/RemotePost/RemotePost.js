@@ -1,19 +1,12 @@
 import React from 'react';
 import {FeaturedImage} from "./FeaturedImage";
-import {Grid, Row, Col} from 'react-bootstrap';
+import {Container, Row, Col} from 'react-bootstrap';
 import url from '../functions/url';
 import PostExcerpt from './PostExcerpt';
 import PostTitle from './PostTitle';
-export class RemotePost extends React.Component {
-
-
-
-
-
-    render() {
-        const {post,lastParams,apiRoot} = this.props;
-        return (
-            <Grid>
+export function RemotePost ({post,lastParams,apiRoot}){
+    return   (
+            <Container>
                 <article
                     id={`post-${post.id}`}
                     className={`post-${post.id} row not-box hentry`}
@@ -22,7 +15,7 @@ export class RemotePost extends React.Component {
                         <Col
                             xs={12}
                         >
-
+                            <PostTile post={post} />
                         </Col>
                     </Row>
 
@@ -65,10 +58,10 @@ export class RemotePost extends React.Component {
 
 
                 </article>
-            </Grid>
+            </Container>
 
 
-        )
-    }
+        );
+
 
 }

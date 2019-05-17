@@ -1,14 +1,14 @@
-import {RemoteImage,FeaturedImage, PostExcerpt, PostTitle} from "../../../../components/RemotePost";
+import {RemoteImage,PostCard, PostExcerpt, PostTitle} from "../../../../components/RemotePost";
 import {Component} from "@wordpress/element";
 import url from "../../../../components/functions/url";
-import {Grid, Col, Row} from "react-bootstrap";
+import {Container, Col, Row} from "react-bootstrap";
 import axios from "axios";
 import {cacheAdapterEnhancer} from "axios-extensions";
 import {Fragment} from "react";
 
-function PostRow({post, lastParams = {}, apiRoot}) {
+function PostRow({post, link, apiRoot, imageId}) {
     return <Fragment>
-        <FeaturedImage post={post} apiRoot={apiRoot} lastParams={lastParams}/>
+        <RemoteImage imageId={imageId} link={link} apiRoot={apiRoot}/>
         <PostTitle post={post}/>
         <PostExcerpt post={post}/>
     </Fragment>;
@@ -101,7 +101,7 @@ export default class Translate extends Component {
 
 
         return (
-            <Grid style={
+            <Container style={
                 {'max-width': '100%'}
             }>
                 <Row>
@@ -113,7 +113,7 @@ export default class Translate extends Component {
                 <Row>
                     {post1Loaded &&
                     <Col xs={12} md={4}>
-                        <PostRow
+                        <PostCard
                             post={post1}
                             link={url({}, post1.link)}
                             apiRoot={weglotApiRoot}
@@ -125,7 +125,7 @@ export default class Translate extends Component {
 
                     {post2Loaded &&
                     <Col xs={12} md={4}>
-                        <PostRow
+                        <PostCard
                             link={url({}, post2.link)}
 
                             post={post2} link={link} apiRoot={apiRoot} imageId={post2.featured_media}/>
@@ -135,7 +135,7 @@ export default class Translate extends Component {
 
                     {post3Loaded &&
                     <Col xs={12} md={4}>
-                        <PostRow
+                        <PostCard
                             link={url({}, post3.link)}
 
                             post={post3} link={link} apiRoot={weglotApiRoot} imageId={post3.featured_media}/>
@@ -146,7 +146,7 @@ export default class Translate extends Component {
                 </Row>
 
 
-            </Grid>
+            </Container>
         )
     }
 

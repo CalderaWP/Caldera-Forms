@@ -1,6 +1,7 @@
-import React from  'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { FormGroup,FormControl,ControlLabel,HelpBlock,Panel,PanelGroup,Checkbox } from 'react-bootstrap';
+import {FormGroup, FormLabel, FormCheck, Form} from 'react-bootstrap';
+import {HelpBlock} from "./HelpBlock";
 
 /**
  * Determine if field is a email identifying field
@@ -11,7 +12,7 @@ import { FormGroup,FormControl,ControlLabel,HelpBlock,Panel,PanelGroup,Checkbox 
  * @param {Object} privacySettings
  * @returns {*}
  */
-function fieldIsEmailIdentifying(field,privacySettings ){
+function fieldIsEmailIdentifying(field, privacySettings) {
     return privacySettings.emailIdentifyingFields.length && privacySettings.emailIdentifyingFields.includes(field.ID);
 }
 
@@ -24,30 +25,25 @@ function fieldIsEmailIdentifying(field,privacySettings ){
  * @returns {*}
  * @constructor
  */
-export const IsEmailIdentifyingField = (props)  => {
-    const idAttr  = `caldera-forms-privacy-gdpr-is-email-identifiying-${props.field.ID}`;
-    if( 'email' === props.field.type || 'text' === props.field.text ){
+export const IsEmailIdentifyingField = (props) => {
+    const idAttr = `caldera-forms-privacy-gdpr-is-email-identifiying-${props.field.ID}`;
+    if ('email' === props.field.type || 'text' === props.field.text) {
         return (
             <FormGroup>
-                <ControlLabel
+                <FormLabel
                     htmlFor={idAttr}
                 >
                     Email Identifying Field?
-                </ControlLabel>
-                <Checkbox
-                    id={idAttr}
+                </FormLabel>
+                <Form.Check
+                    type={'checkbox'}
+                    label={'Yes'}
                     onChange={() => {
-                            props.onCheck(props.field.ID)
-                        }
-                    }
-                    checked={fieldIsEmailIdentifying(props.field,props.privacySettings)}
-                >
-                    <span style={{
-                        marginLeft: '12px'
-                    }}>
-                        Yes
-                    </span>
-                </Checkbox>
+                        props.onCheck(props.field.ID)
+                    }}
+                    checked={fieldIsEmailIdentifying(props.field, props.privacySettings)}
+                />
+
                 <HelpBlock
                     className={'screen-reader-text'}
                 >
@@ -66,7 +62,7 @@ export const IsEmailIdentifyingField = (props)  => {
 
 };
 
-IsEmailIdentifyingField.propTypes=  {
+IsEmailIdentifyingField.propTypes = {
     field: PropTypes.object.isRequired,
     privacySettings: PropTypes.object.isRequired,
     onCheck: PropTypes.func.isRequired,

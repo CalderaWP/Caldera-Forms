@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { FormGroup,HelpBlock } from 'react-bootstrap';
+import { FormGroup } from 'react-bootstrap';
+import {HelpBox} from "../privacy/components/HelpBox";
+import {HelpBlock} from "../privacy/components/HelpBlock";
 
 /**
  * Form selector with no dependency on Gutenberg

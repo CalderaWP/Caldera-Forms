@@ -6,7 +6,7 @@ import {Catdera} from "../Catdera/Catdera";
 import {AddonCategory} from './Components/AddonCategory';
 import {Keyword} from "./Components/Keyword";
 import {Results} from "./Components/Results";
-import {Pagination} from "./Components/Pagination";
+import {PostPagination} from "./Components/PostPagination";
 import {ToggleVisible} from "./Components/ToggleVisible";
 import ReactGA from 'react-ga';
 import {cacheAdapterEnhancer} from 'axios-extensions';
@@ -880,7 +880,7 @@ class DocSearch extends React.Component {
                                 lastParams={this.state.lastParams}
                             />
 
-                            <Pagination
+                            <PostPagination
                                 page={this.state.page}
                                 pages={this.state.totalPages}
                                 prevHandler={this.handlePrevPage}

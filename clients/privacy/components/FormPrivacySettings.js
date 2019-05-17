@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {FormGroup, ControlLabel, Checkbox, HelpBlock, Button } from 'react-bootstrap';
+import {FormGroup, FormLabel, FormCheck,Form } from 'react-bootstrap';
 import {FieldsPrivacySettings} from "./FieldsPrivacySettings";
 import remove from 'lodash.remove';
 import {HelpBox} from "./HelpBox";
+import {HelpBlock} from "./HelpBlock";
 
 /**
  * All privacy settings for a form
@@ -84,7 +85,7 @@ export const FormPrivacySettings = (props) => {
 
     return (
         <section
-            className={'layout-grid'}
+            className={'caldera-grid'}
         >
             <h2>{props.form.name}</h2>
 
@@ -95,16 +96,20 @@ export const FormPrivacySettings = (props) => {
                     className={'col-xs-8'}
                 >
                     <FormGroup controlId={`caldera-forms-privacy-gdpr-enable-${props.form.ID}`}>
-                        <ControlLabel>
+                        <FormLabel>
                             Enable GDPR Exporter For Form
-                        </ControlLabel>
-                        <Checkbox
+                        </FormLabel>
+                        <Form.Check
+                            type={'checkbox'}
+                            id={`default`}
+                            label={'Enable'}
                             onChange={toggleEnable}
                             checked={props.privacySettings.privacyExporterEnabled}
-                        >
-                            Enable
-                        </Checkbox>
+                        />
+
                         <HelpBlock>If checked data for this form will be added to GDPR personal data requests, and deletes.</HelpBlock>
+
+
                     </FormGroup>
 
                     {props.privacySettings.privacyExporterEnabled &&

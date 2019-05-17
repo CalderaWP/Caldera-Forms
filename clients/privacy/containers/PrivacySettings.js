@@ -203,7 +203,7 @@ export const PrivacySettings = (props) => {
     }
 
     return (
-        <div>
+        <div >
             <CalderaHeader
                 name={headerText}
             >

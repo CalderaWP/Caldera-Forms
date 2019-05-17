@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {FormGroup, FormControl, ControlLabel, HelpBlock, Panel, PanelGroup, Checkbox} from 'react-bootstrap';
+import {Col,Row} from 'react-bootstrap';
 import {IsEmailIdentifyingField} from "./IsEmailIdentifyingField";
 import {IsPiiField} from "./IsPiiField";
 
@@ -15,12 +15,11 @@ import {IsPiiField} from "./IsPiiField";
  */
 export const FieldPrivacySettings = (props) => {
     return (
-        <section
+        <Row
             style={{
                 backgroundColor: '#fff',
                 margin: '1em',
             }}
-            className={'row'}
         >
             <h4
                 style={{
@@ -31,8 +30,8 @@ export const FieldPrivacySettings = (props) => {
             >
                 {props.field.name}
             </h4>
-            <div
-                className={'col-xs-6'}
+            <Row
+                xs={6}
                 style={{
                     padding: '12px'
                 }}
@@ -42,10 +41,10 @@ export const FieldPrivacySettings = (props) => {
                     privacySettings={props.privacySettings}
                     onCheck={props.onCheckIsPii}
                 />
-            </div>
+            </Row>
 
-            <div
-                className={'col-xs-6'}
+            <Row
+                xs={6}
                 style={{
                     padding: '12px'
                 }}
@@ -56,10 +55,10 @@ export const FieldPrivacySettings = (props) => {
                     privacySettings={props.privacySettings}
                     onCheck={props.onCheckIsEmail}
                 />
-            </div>
+            </Row>
 
 
-        </section>
+        </Row>
     );
 };
 

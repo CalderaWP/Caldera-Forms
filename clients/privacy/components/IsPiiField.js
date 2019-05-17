@@ -1,7 +1,7 @@
 import React from  'react';
 import PropTypes from 'prop-types';
-import { FormGroup,ControlLabel,HelpBlock,Checkbox } from 'react-bootstrap';
-
+import { FormGroup,FormLabel,Form,FormCheck } from 'react-bootstrap';
+const{Text} = Form;
 /**
  * Determine if field is a PII field
  *
@@ -28,30 +28,26 @@ export const IsPiiField = (props) => {
     const idAttr  = `caldera-forms-privacy-gdpr-is-pii-field-${props.field.ID}`;
     return (
         <FormGroup>
-            <ControlLabel
+            <FormLabel
                htmlFor={idAttr}
             >
                Personally Identifying Field?
-            </ControlLabel>
-            <Checkbox
-                id={idAttr}
+            </FormLabel>
+
+            <Form.Check
+                type={'checkbox'}
+                label={'Yes'}
                 onChange={() => {
-                        props.onCheck(props.field.ID)
-                    }
-                }
-                checked={fieldIsPii(props.field,props.privacySettings)}
-            >
-                <span style={{
-                    marginLeft: '12px'
-                }}>
-                    Yes
-                </span>
-            </Checkbox>
-            <HelpBlock
+                    props.onCheck(props.field.ID)
+                }}
+                checked={fieldIsPii(props.field, props.privacySettings)}
+            />
+
+            <Text
                 className={'screen-reader-text'}
             >
                 Does field contain personally identifying data?
-            </HelpBlock>
+            </Text>
         </FormGroup>
     );
 

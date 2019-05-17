@@ -1,7 +1,7 @@
 import React from 'react';
-import { Pager } from 'react-bootstrap';
+import { Pagination } from 'react-bootstrap';
 
-export class Pagination extends React.Component {
+export class PostPagination extends React.Component {
 
     constructor(props){
         super(props);
@@ -23,24 +23,24 @@ export class Pagination extends React.Component {
     render() {
         return (
             <div>
-                <Pager>
-                    <Pager.Item
+
+                    <Pagination.Item
                         disabled={this.disablePrev()}
                         previous
                         href="#"
                         onClick={this.props.prevHandler}
                     >
                         Previous Page
-                    </Pager.Item>
-                    <Pager.Item
+                    </Pagination.Item>
+                    <Pagination.Item
                         disabled={this.disableNext()}
                         next
                         href="#"
                         onClick={this.props.nextHandler}
                     >
                         Next Page
-                    </Pager.Item>
-                </Pager>
+                    </Pagination.Item>
+
 
                 <ul className="list-inline text-center">
                     <li className="sr-only">Page: {this.props.page}</li>

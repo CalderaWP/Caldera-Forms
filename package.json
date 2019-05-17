@@ -124,7 +124,7 @@
     "promise-polyfill": "^6.0.2",
     "raw-loader": "^0.5.1",
     "react": "^16.6.3",
-    "react-bootstrap": "^0.32.4",
+    "react-bootstrap": "1.0.0-beta.8",
     "react-dom": "^16.6.3",
     "react-redux": "^5.1.1",
     "react-test-renderer": "^16.6.3",
