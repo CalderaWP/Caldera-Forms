@@ -1,7 +1,11 @@
+
 import './index.scss';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import {createElement, render, unmountComponentAtNode} from '@wordpress/element';
 import domReady from '@wordpress/dom-ready';
 import {Panel, PanelBody, PanelRow} from '@wordpress/components';
+import {DocSearchApp} from '../components/DocSearch';
 
 const MyPanel = () => (
     <Panel header="Using Caldera Forms">
@@ -11,7 +15,9 @@ const MyPanel = () => (
             initialOpen={true}
         >
             <PanelRow>
-                My Panel Inputs and Labels
+                <div className={'.-caldera-grid'} >
+                    <DocSearchApp apiRoot={'https://calderaforms.com/wp-json'}/>
+                </div>
             </PanelRow>
         </PanelBody>
 

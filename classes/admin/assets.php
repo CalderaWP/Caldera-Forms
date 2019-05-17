@@ -159,7 +159,16 @@ class Caldera_Forms_Admin_Assets
     {
         $version = Caldera_Forms::VERSION;
         wp_register_style(self::slug('modals', false), Caldera_Forms_Render_Assets::make_url('modals', false), array('wp-color-picker'), $version);
-        wp_register_style(Caldera_Forms_Render_Assets::make_slug('admin-client'), Caldera_Forms_Render_Assets::make_url('admin-client',false), ['wp-components'], $version);
+        self::enqueue_style('editor-grid');
+        wp_register_style(
+            Caldera_Forms_Render_Assets::make_slug('admin-client'),
+            Caldera_Forms_Render_Assets::make_url('admin-client',
+                false),
+            [
+                'wp-components',
+                self::slug('editor-grid',false )
+            ],
+            $version);
 
         wp_register_style(self::slug('admin', false), Caldera_Forms_Render_Assets::make_url('admin', false), array(
             self::slug('modals', false),

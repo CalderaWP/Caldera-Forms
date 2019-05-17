@@ -127,7 +127,7 @@ function caldera_forms_pro_db_delta_2()
 }
 
 /**
- * Get the URL for the Caldera Forms Pro App
+ * Get the URL for the Caldera Forms Pro DocSearchApp
  *
  * @since 0.0.1
  *
@@ -138,7 +138,7 @@ function caldera_forms_pro_app_url()
 
 	if ( !defined('CF_PRO_APP_URL') ) {
 		/**
-		 * Default URL for CF Pro App
+		 * Default URL for CF Pro DocSearchApp
 		 */
 		define('CF_PRO_APP_URL', 'https://app.calderaformspro.com');
 
