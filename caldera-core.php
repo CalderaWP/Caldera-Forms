@@ -15,6 +15,13 @@
 if ( !defined('WPINC') ) {
 	die;
 }
+add_action( 'init', function(){
+    //hack to make code splitting work.
+    if( false !== strpos( $_SERVER['REQUEST_URI'], 'wp-admin/clients/') ){
+        cf_redirect(plugin_dir_url(__FILE__).str_replace( '/wp-admin/', '',$_SERVER['REQUEST_URI']));exit;
+    }
+
+});
 
 global $wp_version;
 if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
@@ -144,6 +151,8 @@ if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
 	//@see https://github.com/CalderaWP/Caldera-Forms/issues/2855
 	add_filter( 'caldera_forms_pro_log_mode', '__return_false' );
 	add_filter( 'caldera_forms_pro_mail_debug', '__return_false' );
+
+
 
 
 }

@@ -84,6 +84,7 @@ const config = {
     output: {
         // Place all bundles JS into build folder in current directory
         filename: 'clients/[name]/build/index.min.js',
+        chunkFilename: 'clients/[name]/build/[name].bundle.js',
         path: __dirname,
         library: [ 'calderaForms', '[name]' ],
         libraryTarget: 'this'

@@ -1,0 +1,293 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProFormSettings component Matches snapshot with layouts 1`] = `
+<div
+  className="caldera-forms-pro-form-settings"
+>
+  <div
+    className="caldera-config-field-setup"
+  >
+    <div
+      className="caldera-config-group"
+    >
+      <div
+        className="caldera-config-field"
+      >
+        <label
+          htmlFor="SETTINGS/PRO/FORM/SEND_LOCAL"
+        >
+          Disable enhanced delivery for this form
+        </label>
+        <input
+          aria-describedby={null}
+          className="field-config field-config"
+          disabled={false}
+          id="SETTINGS/PRO/FORM/SEND_LOCAL"
+          onBlur={undefined}
+          onChange={[Function]}
+          onFocus={undefined}
+          required={false}
+          type="text"
+          value={undefined}
+        />
+      </div>
+    </div>
+    <div
+      className="caldera-config-group"
+    >
+      <div
+        className="caldera-config-field"
+      >
+        <label
+          htmlFor="SETTINGS/PRO/FORM/EMAIL_LAYOUT"
+        >
+          Email Layout
+        </label>
+        <select
+          className="field-config field-config"
+          disabled={false}
+          id="SETTINGS/PRO/FORM/EMAIL_LAYOUT"
+          onChange={[Function]}
+          value={undefined}
+        >
+          <option
+            className="caldera-config-option"
+            value={1}
+          >
+            one
+          </option>
+          <option
+            className="caldera-config-option"
+            value={2}
+          >
+            two
+          </option>
+        </select>
+      </div>
+    </div>
+    <div
+      className="caldera-config-group"
+    >
+      <div
+        className="caldera-config-field"
+      >
+        <label
+          htmlFor="SETTINGS/PRO/FORM/PDF_LAYOUT"
+        >
+          PDF Layout
+        </label>
+        <select
+          className="field-config field-config"
+          disabled={false}
+          id="SETTINGS/PRO/FORM/PDF_LAYOUT"
+          onChange={[Function]}
+          value={undefined}
+        >
+          <option
+            className="caldera-config-option"
+            value={1}
+          >
+            one
+          </option>
+          <option
+            className="caldera-config-option"
+            value={2}
+          >
+            two
+          </option>
+        </select>
+      </div>
+    </div>
+    <div
+      className="caldera-config-group"
+    >
+      <div
+        className="caldera-config-field"
+      >
+        <label
+          htmlFor="SETTINGS/PRO/FORM/PDF_ATTACH "
+        >
+          Attach PDF To Main Mailer
+        </label>
+        <input
+          aria-describedby={null}
+          className="field-config field-config"
+          disabled={false}
+          id="SETTINGS/PRO/FORM/PDF_ATTACH "
+          onBlur={undefined}
+          onChange={[Function]}
+          onFocus={undefined}
+          required={false}
+          type="text"
+          value={undefined}
+        />
+      </div>
+    </div>
+    <div
+      className="caldera-config-group"
+    >
+      <div
+        className="caldera-config-field"
+      >
+        <label
+          htmlFor="SETTINGS/PRO/FORM/PDF__LINK"
+        >
+          Add PDF Link
+        </label>
+        <input
+          aria-describedby={null}
+          className="field-config field-config"
+          disabled={false}
+          id="SETTINGS/PRO/FORM/PDF__LINK"
+          onBlur={undefined}
+          onChange={[Function]}
+          onFocus={undefined}
+          required={false}
+          type="text"
+          value={undefined}
+        />
+      </div>
+    </div>
+  </div>
+  <button
+    autoFocus={undefined}
+    className="components-button"
+    disabled={undefined}
+    onClick={undefined}
+    type="button"
+  />
+</div>
+`;
+
+exports[`ProFormSettings component Matches snapshot with minimal props 1`] = `
+<div
+  className="caldera-forms-pro-form-settings"
+>
+  <div
+    className="caldera-config-field-setup"
+  >
+    <div
+      className="caldera-config-group"
+    >
+      <div
+        className="caldera-config-field"
+      >
+        <label
+          htmlFor="SETTINGS/PRO/FORM/SEND_LOCAL"
+        >
+          Disable enhanced delivery for this form
+        </label>
+        <input
+          aria-describedby={null}
+          className="field-config field-config"
+          defaultChecked={undefined}
+          disabled={false}
+          id="SETTINGS/PRO/FORM/SEND_LOCAL"
+          onBlur={undefined}
+          onChange={[Function]}
+          onFocus={undefined}
+          required={false}
+          type="checkbox"
+        />
+      </div>
+    </div>
+    <div
+      className="caldera-config-group"
+    >
+      <div
+        className="caldera-config-field"
+      >
+        <label
+          htmlFor="SETTINGS/PRO/FORM/EMAIL_LAYOUT"
+        >
+          Email Layout
+        </label>
+        <select
+          className="field-config field-config"
+          disabled={false}
+          id="SETTINGS/PRO/FORM/EMAIL_LAYOUT"
+          onChange={[Function]}
+          value={undefined}
+        />
+      </div>
+    </div>
+    <div
+      className="caldera-config-group"
+    >
+      <div
+        className="caldera-config-field"
+      >
+        <label
+          htmlFor="SETTINGS/PRO/FORM/PDF_LAYOUT"
+        >
+          PDF Layout
+        </label>
+        <select
+          className="field-config field-config"
+          disabled={false}
+          id="SETTINGS/PRO/FORM/PDF_LAYOUT"
+          onChange={[Function]}
+          value={undefined}
+        />
+      </div>
+    </div>
+    <div
+      className="caldera-config-group"
+    >
+      <div
+        className="caldera-config-field"
+      >
+        <label
+          htmlFor="SETTINGS/PRO/FORM/PDF_ATTACH "
+        >
+          Attach PDF To Main Mailer
+        </label>
+        <input
+          aria-describedby={null}
+          className="field-config field-config"
+          defaultChecked={undefined}
+          disabled={false}
+          id="SETTINGS/PRO/FORM/PDF_ATTACH "
+          onBlur={undefined}
+          onChange={[Function]}
+          onFocus={undefined}
+          required={false}
+          type="checkbox"
+        />
+      </div>
+    </div>
+    <div
+      className="caldera-config-group"
+    >
+      <div
+        className="caldera-config-field"
+      >
+        <label
+          htmlFor="SETTINGS/PRO/FORM/PDF__LINK"
+        >
+          Add PDF Link
+        </label>
+        <input
+          aria-describedby={null}
+          className="field-config field-config"
+          defaultChecked={undefined}
+          disabled={false}
+          id="SETTINGS/PRO/FORM/PDF__LINK"
+          onBlur={undefined}
+          onChange={[Function]}
+          onFocus={undefined}
+          required={false}
+          type="checkbox"
+        />
+      </div>
+    </div>
+  </div>
+  <button
+    autoFocus={undefined}
+    className="components-button"
+    disabled={undefined}
+    onClick={undefined}
+    type="button"
+  />
+</div>
+`;

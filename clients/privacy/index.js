@@ -12,11 +12,7 @@ const ID = 'caldera-forms-privacy-settings';
 const element =     document.getElementById(ID);
 
 if( null !== element  ){
-	global.wp = global.wp || {};
 
-	Object.defineProperty( global.wp, 'element', {
-		get: () => React
-	} );
 
 	/**
 	 *

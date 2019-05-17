@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {FormGroup, FormLabel, FormCheck,Form } from 'react-bootstrap';
+import {FormGroup, FormLabel,Form } from 'react-bootstrap';
 import {FieldsPrivacySettings} from "./FieldsPrivacySettings";
 import remove from 'lodash.remove';
 import {HelpBox} from "./HelpBox";

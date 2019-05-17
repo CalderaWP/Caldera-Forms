@@ -11,7 +11,7 @@ const url =function (lastParams = {},link) {
         return  link;
     }
     let query = {
-        utm_source: 'cf-admin-search'
+        utm_source:lastParams.source ? lastParams.source : 'cf-admin-search'
     };
 
     if( lastParams.categories){
