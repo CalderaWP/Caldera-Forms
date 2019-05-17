@@ -11,7 +11,8 @@
 						<?php esc_html_e( 'Close', 'caldera-forms' ); ?>
 					</span>
 				</button>
-				<?php } ?>				
+				<?php } ?>
+
 				<span class="toggle_option_preview">
 
 					<button type="button" class="status_toggles button button-primary ajax-trigger" style="margin-top: 1px;"
@@ -69,6 +70,18 @@
 					<?php esc_html_e( 'Apply', 'caldera-forms' ); ?>
 				</button>
 			</span>
+
+            <button
+                    id="cf-close-entry-viewer"
+                    type="button"
+                    class="button"
+                    title="<?php esc_attr_e( 'Click to close entry viewer', 'caldera-forms' ); ?>"
+                    style="padding: 3px; margin-top: 1px; margin-right: 18px; color: rgb(143, 143, 143);"
+            >
+                <span class="dashicons dashicons-dismiss"></span>
+                <?php esc_html_e( 'Close', 'caldera-forms' ); ?>
+
+            </button>
 
 		</div>
 
