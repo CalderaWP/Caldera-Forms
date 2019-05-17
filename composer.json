@@ -33,10 +33,6 @@
         {
             "type":"composer",
             "url":"https://wpackagist.org"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/CalderaWP/math-parser"
         }
     ],
     "homepage": "http://calderaforms.com",
@@ -47,8 +43,7 @@
         "calderawp/caldera-containers": "^0.2.0",
         "composer/installers": "^1.6",
         "a5hleyrich/wp-queue": "^1.3",
-        "symfony/translation": "~3.0",
-        "mossadal/math-parser": "dev-cf"
+        "symfony/translation": "~3.0"
     },
     "autoload": {
         "psr-4": {

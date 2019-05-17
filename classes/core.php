@@ -18,8 +18,6 @@
  * 
  */
 
-use FormulaParser\FormulaParser;
-
 class Caldera_Forms
 {
 
