@@ -6,9 +6,12 @@ import querystring from 'querystring';
  * @param link
  * @returns {string}
  */
-const url =function (lastParams,link) {
+const url =function (lastParams = {},link) {
+    if( ! lastParams ){
+        return  link;
+    }
     let query = {
-        utm_source: 'search'
+        utm_source: 'cf-admin-search'
     };
 
     if( lastParams.categories){

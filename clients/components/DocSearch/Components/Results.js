@@ -1,5 +1,5 @@
 import React from 'react';
-import {Post} from "./Post";
+import {RemotePost} from "../../RemotePost/";
 
 export class Results extends React.Component {
     render() {
@@ -9,7 +9,7 @@ export class Results extends React.Component {
                     this.props.posts.map((post) => {
                         return (
                             <div key={post.id}>
-                                <Post
+                                <RemotePost
                                     key={post.id}
                                     apiRoot={this.props.apiRoot}
                                     post={post}

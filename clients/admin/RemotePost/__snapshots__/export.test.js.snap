@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`RemotePost export index has the right types and keys 1`] = `"{\\"RemotePost\\":\\"function\\",\\"postPropTypes\\":\\"undefined\\"}"`;

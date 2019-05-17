@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from './Image';
+import Image from '../RemotePost/Image';
 export class Catdera extends React.Component {
     constructor(props){
         super(props);
@@ -8,8 +8,6 @@ export class Catdera extends React.Component {
             height: props.hasOwnProperty('height' ) ? props.height : 'auto',
             className: props.spin  ? 'catdera-logo spin-loader' : 'catdera-logo'
         };
-
-
 
     }
 

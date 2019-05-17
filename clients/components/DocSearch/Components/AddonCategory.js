@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import { FormGroup } from 'react-bootstrap';
-import { Catdera } from './Catdera';
+import { Catdera } from '../../Catdera/Catdera';
 import { Category } from "./Category";
 import { cacheAdapterEnhancer } from 'axios-extensions';
 

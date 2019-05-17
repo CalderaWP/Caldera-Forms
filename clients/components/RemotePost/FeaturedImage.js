@@ -13,7 +13,8 @@ export class FeaturedImage extends React.Component {
             width: 1484,
             height: 592,
             source_url: 'https://calderaforms.com/wp-content/uploads/2017/12/forms_copy.jpg',
-            style: props.style ? props.style : {},
+
+            markup: '',
         };
 
     }
@@ -34,11 +35,14 @@ export class FeaturedImage extends React.Component {
                     source_url: newImage.source_url,
                     width: newImage.media_details.width,
                     height: newImage.media_details.height,
+                    markup: newImage.hasOwnProperty('description') ? newImage.description.rendered : ''
                 });
             }
 
         })
     }
+
+
 
     render() {
         return (
@@ -47,12 +51,11 @@ export class FeaturedImage extends React.Component {
                     href={url(this.props.lastParams, this.props.post.link)}
                 >
                     <Image
-                        className="large img-responsive"
+                        className=""
                         alt={this.state.alt_text}
                         width={this.state.width}
                         height={this.state.height}
                         src={this.state.source_url}
-                        style={this.state.style}
                     />
                 </a>
 
