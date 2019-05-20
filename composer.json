@@ -43,7 +43,8 @@
         "calderawp/caldera-containers": "^0.2.0",
         "composer/installers": "^1.6",
         "a5hleyrich/wp-queue": "^1.3",
-        "symfony/translation": "~3.0"
+        "symfony/translation": "~3.0",
+        "denissimon/formula-parser": "^2.5"
     },
     "autoload": {
         "psr-4": {
