@@ -43,7 +43,12 @@ class Caldera_Forms_Magic {
 
 		if( ! empty( $matches ) && ! empty( $matches[1] ) && ! empty( $matches[1][0]) ){
 
-			if ( Caldera_Forms_Field_Util::has_field_type(  'credit_card_exp', $form ) ) {
+			//Set default $form value to be an empty array (prevents option labels that use magic tags to break entry viewer)
+			if ( $form === null ){
+				$form = array();
+			}
+
+			if ( Caldera_Forms_Field_Util::has_field_type( 'credit_card_exp', $form ) ) {
 				$split = Caldera_Forms_Magic_Util::split_tags( $matches[1][0] );
 				if( is_array( $split ) && ! empty( $split[1] ) && in_array( $split[1], array( 'month', 'year' ) ) ){
 					$field = Caldera_Forms_Field_Util::get_field_by_slug( $split[0], $form );
