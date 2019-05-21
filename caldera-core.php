@@ -16,6 +16,14 @@ if ( !defined('WPINC') ) {
 	die;
 }
 
+add_action( 'init', function(){
+    //hack to make code splitting work.
+    if( false !== strpos( $_SERVER['REQUEST_URI'], 'wp-admin/clients/') ){
+        cf_redirect(plugin_dir_url(__FILE__).str_replace( '/wp-admin/', '',$_SERVER['REQUEST_URI']));exit;
+    }
+
+});
+
 global $wp_version;
 if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
 	function caldera_forms_php_version_nag()

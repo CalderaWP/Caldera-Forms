@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.8.4 - 2019-05-16 */var resBaldrickTriggers;
+/*! GENERATED SOURCE FILE caldera-forms - v1.8.4 - 2019-05-20 */var resBaldrickTriggers;
 
 jQuery(function($){
 	function fieldErrors(fields, $form, $notice) {
@@ -957,7 +957,7 @@ function CFState(formId, $ ){
 		}
 
 		if (calcVals.hasOwnProperty(id) ) {
-			if( false === calcVals[id] || null === calcVals[id] ){
+			if( false === calcVals[id] || null === calcVals[id] || 0 === calcVals[id] ){
 				//@TODO use let here, when ES6.
 				var _val = findCalcVal( $( document.getElementById( id ) ) );
 				if( isString( _val )  ) {

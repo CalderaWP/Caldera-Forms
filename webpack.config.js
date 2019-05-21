@@ -52,8 +52,11 @@ const entryPointNames = [
 
 // Setup externals
 const externals = {
-    jquery: 'jQuery'
+    jquery: 'jQuery',
+    'react': 'React',
+    'react-dom': 'ReactDOM'
 };
+
 // Setup external for each entry point
 entryPointNames.forEach( entryPointName => {
     externals[ '@/calderaForms' + entryPointName ] = {
