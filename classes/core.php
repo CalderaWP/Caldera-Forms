@@ -14,7 +14,10 @@
  * Caldera_Forms Plugin class.
  * @package Caldera_Forms
  * @author  David Cramer <david@digilab.co.za>
+ * 
+ * 
  */
+
 class Caldera_Forms
 {
 
@@ -23,7 +26,6 @@ class Caldera_Forms
 	 */
 	const VERSION = CFCORE_VER;
 
-	/**
 	/**
 	 * @since 1.4.2
 	 */
