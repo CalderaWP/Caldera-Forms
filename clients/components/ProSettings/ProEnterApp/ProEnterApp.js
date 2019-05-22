@@ -12,7 +12,7 @@ export const ProEnterApp = (props) => {
 		<div
 			className={classNames(props.className,ProEnterApp.classNames.wrapper)}
 		>
-			ProEnterApp
+			<a href={'/wp-admin/admin.php?page=cf-pro'} >Settings</a>
 		</div>
 	)
 };

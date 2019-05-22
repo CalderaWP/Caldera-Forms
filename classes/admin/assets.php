@@ -347,7 +347,8 @@ class Caldera_Forms_Admin_Assets
             'rest' => array(
                 'root' => esc_url_raw(untrailingslashit(Caldera_Forms_API_Util::url())),
                 'nonce' => Caldera_Forms_API_Util::get_core_nonce()
-            )
+            ),
+            'isProConnected' => (bool) caldera_forms_pro_is_active(),
         );
         $api_config = new Caldera_Forms_API_JsConfig;
         $data = array_merge($data, $api_config->toArray());

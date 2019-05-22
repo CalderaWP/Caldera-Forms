@@ -149,7 +149,7 @@ export class Addons extends Component {
 
         }
 
-        const {show} = this.props;
+        const {show,isProConnected} = this.props;
         switch (show) {
             case 'email':
                 if (emailAddonsLoaded) {
@@ -172,7 +172,7 @@ export class Addons extends Component {
 
             case 'pro':
             default:
-                if( proConnected ){
+                if( isProConnected ){
                     return  <ProEnterApp/>
                 }
                 return  <ProFreeTrial />
@@ -185,5 +185,5 @@ export class Addons extends Component {
 Addons.defaultProps = {
     apiRoot: 'https://calderaforms.com/wp-json',
     show: 'email',
-    proConnected: false
+    isProConnected: false
 };

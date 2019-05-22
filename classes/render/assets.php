@@ -579,7 +579,7 @@ class Caldera_Forms_Render_Assets
                 $name = 'admin';
             }
 
-            $version = self::get_client_modified_time();
+            $version = absint(self::get_client_modified_time());
 			if ($script) {
 				return "{$root_url}clients/{$name}/build/index.min.js?h={$version}";
 			} else {
@@ -614,6 +614,7 @@ class Caldera_Forms_Render_Assets
      * @return int
      */
 	protected static function get_client_modified_time(){
+	    return rand();
         if( ! self::$client_modified_time ){
             $dir = dirname(__FILE__,3). '/clients/admin/build/index.min.js' ;
             self::$client_modified_time = filemtime($dir);

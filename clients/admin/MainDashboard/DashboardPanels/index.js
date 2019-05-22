@@ -38,11 +38,11 @@ export default class DashboardPanels extends Component {
     }
 
     render() {
-        const {apiRoot} = this.props;
+        const {apiRoot,isProConnected} = this.props;
         const {translatePageData,translatePageLoaded} = this.state;
         return (
             <div className={'caldera-grid'}>
-                <Panel header="Caldera Forms">
+                <Panel header="Welcome To Caldera Forms">
                     <PanelBody
                         title="Documentation"
                         icon="welcome-widgets-menus"
@@ -59,7 +59,7 @@ export default class DashboardPanels extends Component {
                         icon="thumbs-up"
                         initialOpen={true}
                     >
-                        <ProDashboard/>
+                        <ProDashboard isProConnected={isProConnected}/>
                     </PanelBody>
                     <PanelBody
                         title="Translate Your Forms"
@@ -86,5 +86,6 @@ export default class DashboardPanels extends Component {
 }
 
 DashboardPanels.defaultProps = {
-    apiRoot: 'https://calderaforms.com/wp-json'
+    apiRoot: 'https://calderaforms.com/wp-json',
+    isProConnected: false,
 }

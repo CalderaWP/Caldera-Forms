@@ -6,9 +6,10 @@ import DashboardPanels from './DashboardPanels';
 /**
  *
  */
-export default function MainDashboard() {
+export default function MainDashboard({isProConnected}) {
     return (
         <DashboardPanels
+            isProConnected={isProConnected}
             apiRoot={'https://calderaforms.com/wp-json'}
         />
     );

@@ -6,7 +6,7 @@ const onSelect = () => {
 import {Addons} from "../components/AddOns/Addons";
 import {Fragment} from "react";
 
-export default function ProDashboard() {
+export default function ProDashboard({isProConnected,apiRoot}) {
     return (
         <Fragment>
             <ProWhatIs />
@@ -17,7 +17,7 @@ export default function ProDashboard() {
                       tabs={[
                           {
                               name: 'pro',
-                              title: 'Caldera Forms Pro',
+                              title: 'Pro: Email Delivery & Anti-Spam',
                               className: 'pro-pro',
                           },
                           {
@@ -39,6 +39,8 @@ export default function ProDashboard() {
                 {
                     (tab) => (
                         <Addons
+                            isProConnected={isProConnected}
+                            apiRoot={apiRoot}
                             show={tab.name}
                         />
                     )
@@ -47,3 +49,8 @@ export default function ProDashboard() {
         </Fragment>
     );
 }
+
+ProDashboard.defaultProps =  {
+    apiRoot: 'https://calderaforms.com/wp-json',
+    isProConnected: false,
+};

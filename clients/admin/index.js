@@ -11,7 +11,13 @@ import MainDashboard from './MainDashboard/MainDashboard';
  * @since 1.8.6
  */
 domReady(function () {
-    render(<MainDashboard/>, document.getElementById('caldera-forms-clippy'));
+    const isProConnected = 'object' === typeof CF_ADMIN && CF_ADMIN.isProConnected;
+
+    const props = {
+        isProConnected,
+    };
+
+    render(<MainDashboard { ...props } />, document.getElementById('caldera-forms-clippy'));
     jQuery('.cf-entry-viewer-link').on('click', function () {
         unmountComponentAtNode(document.getElementById('caldera-forms-clippy'));
     })
