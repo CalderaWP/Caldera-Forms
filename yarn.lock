@@ -34,6 +34,13 @@
     core-js "^2.6.5"
     regenerator-runtime "^0.13.2"
 
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.4.4":
+  version "7.4.5"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.4.5.tgz#582bb531f5f9dc67d2fcb682979894f75e253f12"
+  integrity sha512-TuI4qpWZP6lGOGIuGWtp9sPluqYICmbk8T/1vpSysqJxRPkudh/ofFWyqdcMsDf2s7KvDL4/YHgKyvcS3g9CJQ==
+  dependencies:
+    regenerator-runtime "^0.13.2"
+
 "@babel/runtime@^7.1.2", "@babel/runtime@^7.3.1":
   version "7.4.4"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.4.4.tgz#dc2e34982eb236803aa27a07fea6857af1b9171d"
@@ -263,7 +270,18 @@
     "@babel/runtime" "^7.3.1"
     lodash "^4.17.11"
 
-"@wordpress/element@^2.1.9", "@wordpress/element@^2.3.0":
+"@wordpress/element@2.1.9":
+  version "2.1.9"
+  resolved "https://registry.yarnpkg.com/@wordpress/element/-/element-2.1.9.tgz#3c413ff9b60398a6139811b34255aac7c2331672"
+  integrity sha512-qKluF0oIajTYllZPG4XlopWHWs3VADT0sUW1oPprCCMMj2URkq4RQ9q2DvUwLr/UYZKUfyLtzyb3oD44SFgNsQ==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    "@wordpress/escape-html" "^1.0.1"
+    lodash "^4.17.10"
+    react "^16.6.3"
+    react-dom "^16.6.3"
+
+"@wordpress/element@^2.3.0":
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/@wordpress/element/-/element-2.3.0.tgz#8173dd71770081c8987fb3800d366727f790632c"
   integrity sha512-L/s1n6pqVUlo09uMdhnlarW7ZzTWlvKo6zQzoxZSLEMne/6Hr3sw2DbxE2AuijcJv/n9VzmV7/MNBQMEIPL7OA==
@@ -273,6 +291,13 @@
     lodash "^4.17.11"
     react "^16.8.4"
     react-dom "^16.8.4"
+
+"@wordpress/escape-html@^1.0.1":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@wordpress/escape-html/-/escape-html-1.3.0.tgz#fcc0a6a6b4a38bad5dc3017c295dade904449ded"
+  integrity sha512-4iYVMAwREg9/jXJE80wJAreamwljLmLlA5stXMQ6UIoaW5tPPdyjyjjhCgw7jhEzJAKc+re3UXKf6Up4RXwQ8A==
+  dependencies:
+    "@babel/runtime" "^7.4.4"
 
 "@wordpress/escape-html@^1.2.0":
   version "1.2.0"

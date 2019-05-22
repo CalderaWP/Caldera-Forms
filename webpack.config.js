@@ -52,9 +52,7 @@ const entryPointNames = [
 
 // Setup externals
 const externals = {
-    jquery: 'jQuery',
-    'react': 'React',
-    'react-dom': 'ReactDOM'
+    jquery: 'jQuery'
 };
 
 // Setup external for each entry point
