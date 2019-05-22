@@ -1,3 +1,63 @@
-.p {
-  color: inherit;
+#cf-addons {
+  .caldera-editor-header-nav {
+    height: 48px;
+  }
+
+  li.caldera-forms-toolbar-item {
+    padding: 0;
+  }
+
+  .panel-footer {
+    position: absolute;
+    bottom: 0px;
+    padding: 6px;
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.03);
+    left: 0px;
+    right: 0px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  a.button {
+    text-align: center;
+    width: 100%;
+    background-color: #ff7e30 !important;
+    color: #fff !important;
+
+  }
+  a.button:hover {
+    background-color: #a3bf61 !important;
+    color: #fff !important;
+
+  }
+
+  .addon-panel {
+    margin: 10px;
+    width: 220px;
+    float: left;
+    height: 250px;
+    position: relative;
+    padding: 0;
+    border: 1px solid #a3bf61;
+    border-radius: 2px;
+    background: #fff;
+  }
 }
+.cf-pro-dashboard-panels {
+  .components-tab-panel__tabs {
+    .active-tab{
+      color: #ffffff;
+      background: #839e3f;
+    }
+
+    button {
+      display: inline-block;
+      padding: 12px;
+      text-decoration: none;
+      color: #839e3f;
+      background-color: #ffffff;
+      background-blend-mode: darken;
+    }
+
+
+  }
+}
+
