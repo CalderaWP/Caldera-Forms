@@ -4,7 +4,8 @@ import url from "../../../../components/functions/url";
 import {Grid, Col, Row} from "react-bootstrap";
 import axios from "axios";
 import {cacheAdapterEnhancer} from "axios-extensions";
-import {Fragment} from "react";
+import React, {Fragment} from "react";
+import {Twemoji} from "react-emoji-render";
 
 function PostRow({post, lastParams = {}, apiRoot}) {
     return <Fragment>
@@ -98,7 +99,9 @@ export default class Translate extends Component {
 
 
         return (
-            <Grid style={
+            <Grid
+                className={'cf-translate-panel'}
+                style={
                 {'max-width': '100%'}
             }>
                 <Row>
@@ -139,6 +142,21 @@ export default class Translate extends Component {
                     </Col>
 
                     }
+
+                </Row>
+
+                <Row>
+                    <div>
+                        <h3><Twemoji text=":volcano:"/> Reach A Global Audience <Twemoji text=":volcano:"/></h3>
+                        <p>Caldera Forms + Weglot gives your site magic super powers. Weglot automatically translates your whole site in minutes, including your forms. It supports more than 100 languages, and it’s compatible with any WordPress themes and plugins.</p>
+                        <p>Surprise: your whole site is translated automatically, forms, post content, menus, everything. Magic.</p>
+                    </div>
+                    <a
+                        href={url({source: 'caldera-forms-admin-translate-tab'}, 'https://calderaforms.com/translate' ) }
+                        className={'button button-primary cf-translate-cta' }
+                        >
+                        Get Started
+                    </a>
 
                 </Row>
 
