@@ -106,7 +106,7 @@ class Caldera_Forms_Field_Localizer {
 	protected static function error_strings(){
         if( current_user_can( Caldera_Forms::get_manage_cap('admin') ) ) {
             $strings = array(
-                'wp_not_defined' => __( 'The variable wp is not defined, your forms will not work.', 'caldera-forms' ),
+                'wp_not_defined' => __( 'The variable wp is not defined, your forms can not function as expected.', 'caldera-forms' ),
                 'mixed_protocol' => __( 'Submission URL and current URL protocols do not match. Form may not function properly.', 'caldera-forms' ),
                 'jquery_old'     => __( 'An out of date version of jQuery is loaded on the page. Form may not function properly.', 'caldera-forms' )
             );
