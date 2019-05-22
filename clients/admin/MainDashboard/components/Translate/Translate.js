@@ -43,7 +43,6 @@ export default class Translate extends Component {
                 url: `${stripTrailingSlash(weglotApiRoot)}/wp/v2/posts/1021`,
                 adapter: cacheAdapterEnhancer(axios.defaults.adapter, true)
             }).then((response) => {
-                console.log(response);
                 this.setState({
                     post1: response.data,
                     post1Loaded: true
@@ -58,7 +57,6 @@ export default class Translate extends Component {
                 url: `${stripTrailingSlash(apiRoot)}/wp/v2/posts/133132`,
                 adapter: cacheAdapterEnhancer(axios.defaults.adapter, true)
             }).then((response) => {
-                console.log(response);
                 this.setState({
                     post2: response.data,
                     post2Loaded: true
@@ -74,7 +72,6 @@ export default class Translate extends Component {
                 url: `${stripTrailingSlash(weglotApiRoot)}/wp/v2/posts/1297`,
                 adapter: cacheAdapterEnhancer(axios.defaults.adapter, true)
             }).then((response) => {
-                console.log(response);
                 this.setState({
                     post3: response.data,
                     post3Loaded: true

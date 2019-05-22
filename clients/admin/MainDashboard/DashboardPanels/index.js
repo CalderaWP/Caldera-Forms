@@ -55,7 +55,7 @@ export default class DashboardPanels extends Component {
                         </PanelRow>
                     </PanelBody>
                     <PanelBody
-                        title="Go Pro"
+                        title="Go Pro!"
                         icon="thumbs-up"
                         initialOpen={true}
                     >
