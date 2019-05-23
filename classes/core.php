@@ -1530,7 +1530,7 @@ class Caldera_Forms
 		}
 	
 		//If PHP version is less than 7.2.0, continue using old function
-		if(phpversion() < '7.2.0'){
+		if(version_compare(PHP_VERSION, '7.2.0', '<')){
 
 			$total = self::original_calculation_job($formula);
 
