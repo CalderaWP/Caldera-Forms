@@ -308,7 +308,7 @@ module.exports = function (grunt) {
     ] );
 
     grunt.registerTask( 'version_number', [ 'replace' ] );
-    grunt.registerTask( 'build', [  'version_number', 'default',  'make' ] );
+    grunt.registerTask( 'build', [ 'version_number', 'default',  'make' ] );
     grunt.registerTask( 'make', [
        // 'exec:composerDist',
         'mkdir:build',
