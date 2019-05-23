@@ -104,14 +104,21 @@ class Caldera_Forms_Field_Localizer {
 	 * @return array
 	 */
 	protected static function error_strings(){
-		$strings = array(
-			'mixed_protocol' => __( 'Submission URL and current URL protocols do not match. Form may not function properly.', 'caldera-forms' ),
-			'jquery_old'     => __( 'An out of date version of jQuery is loaded on the page. Form may not function properly.', 'caldera-forms' )
-		);
+        if( current_user_can( Caldera_Forms::get_manage_cap('admin') ) ) {
+            $strings = array(
+                'wp_not_defined' => __( 'The variable wp is not defined, your forms can not function as expected.', 'caldera-forms' ),
+                'mixed_protocol' => __( 'Submission URL and current URL protocols do not match. Form may not function properly.', 'caldera-forms' ),
+                'jquery_old'     => __( 'An out of date version of jQuery is loaded on the page. Form may not function properly.', 'caldera-forms' )
+            );
+        }else{
+            $message =  __( 'Form may not function properly. Contact site administrator.', 'caldera-forms' );
+            $strings = array(
+                'wp_not_defined' => $message,
+                'mixed_protocol' => $message,
+                //jquery_old is intentionally omitted. See assets/js/front-end-script-init.js ~L378.
+            );
 
-		if( ! current_user_can( Caldera_Forms::get_manage_cap( 'admin' )) ){
-			unset( $strings[ 'jquery_old' ] );
-		}
+        }
 
 		return $strings;
 
