@@ -345,8 +345,8 @@ var cf_jsfields_init, cf_presubmit;
 window.addEventListener("load", function(){
 	(function( $ ) {
 		'use strict';
-		var wpDefined = undefined === typeof window.wp;
-
+    //Catch if window.wp is undefined
+		var wpUndefined = undefined === typeof window.wp;
 
 		window.CALDERA_FORMS = {};
 
@@ -361,9 +361,10 @@ window.addEventListener("load", function(){
 				form_id = $el.attr('id');
 				instance = $el.data('instance');
 
-				 if ('object' === typeof CFFIELD_CONFIG[instance] ) {
+				if ('object' === typeof CFFIELD_CONFIG[instance] ) {
 					$form = $( document.getElementById( form_id ));
-					 if( ! wpDefined ){
+
+					 if( wpUndefined ){
 						 $(  $form.data( 'target' ) ).append( '<div class="alert alert-warning">' + CFFIELD_CONFIG[instance].error_strings.wp_not_defined + '</div>' );
 					 }else{
                          if ( ! protocolChecked ) {
@@ -415,8 +416,6 @@ window.addEventListener("load", function(){
                              nonce: jQuery( '#_cf_verify_' + formId ).val()
                          });
 					 }
-
-
 
 				}
 			});
