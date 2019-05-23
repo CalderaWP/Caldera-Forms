@@ -1453,19 +1453,26 @@ class Caldera_Forms
 	{
 		if( current_user_can( Caldera_Forms::get_manage_cap('admin') ) ) {
 			
-			add_filter('caldera_forms_render_notices', function( $out ) use ($deprecated){
+			$message = sprintf(
+				'"%s" %s',
+				$deprecated,
+				__('has been deprecated in calculation fields for compatibility with PHP 7.2 or later', 'caldera-forms')
+			);
 
-				$message = sprintf(
-					'"%s" %s',
-					$deprecated,
-					__('has been deprecated in calculation fields for compatibility with PHP 7.2 or later', 'caldera-forms')
-				);
-
-				$out['error']['note'] = $message;
+			/**
+			 * The notice currentl only works whe ajax is enabled
+			 * 
+			 * TODO Add notice for non ajax submissions
+			 */
+			add_filter('caldera_forms_render_notices', function( $out ) use ( $message ){
+				
+				//Add an error notice holding the $message
+				$out[ 'error' ][ 'note' ] = $message;
 
 				return $out;
 
-			}, 10);
+			}, 25);
+
 		}
 
 		return self::original_calculation_job($formula);
