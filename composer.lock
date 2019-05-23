@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0ff93cc09453663b555fc6e87714f122",
+    "content-hash": "50344505d8a9f8d074ad26c467be6635",
     "packages": [
         {
             "name": "a5hleyrich/wp-queue",
@@ -272,6 +272,50 @@
                 "zikula"
             ],
             "time": "2018-08-27T06:10:37+00:00"
+        },
+        {
+            "name": "denissimon/formula-parser",
+            "version": "v2.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/denissimon/formula-parser.git",
+                "reference": "12ea2490d2bd0cd5feabdf03ee29dcba419c08d6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/denissimon/formula-parser/zipball/12ea2490d2bd0cd5feabdf03ee29dcba419c08d6",
+                "reference": "12ea2490d2bd0cd5feabdf03ee29dcba419c08d6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FormulaParser\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Denis Simon",
+                    "email": "denis.v.simon@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Parsing and evaluating mathematical formulas given as strings.",
+            "keywords": [
+                "expression",
+                "formula",
+                "math",
+                "parser",
+                "parsing"
+            ],
+            "time": "2016-12-28T19:36:53+00:00"
         },
         {
             "name": "inpsyde/wonolog",
