@@ -30,7 +30,7 @@
         "composer/installers": "^1.6",
         "a5hleyrich/wp-queue": "^1.3",
         "symfony/translation": "~3.0",
-        "denissimon/formula-parser": "^2.5"
+        "mossadal/math-parser": "^1.3"
     },
     "autoload": {
         "psr-4": {

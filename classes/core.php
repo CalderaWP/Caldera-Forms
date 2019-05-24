@@ -18,7 +18,8 @@
  * 
  */
 
-use FormulaParser\FormulaParser;
+use MathParser\StdMathParser;
+use MathParser\Interpreting\Evaluator;
 
 class Caldera_Forms
 {
@@ -1404,7 +1405,7 @@ class Caldera_Forms
 	static public function check_deprecated_math_functions($formula)
 	{	
 		//List known depracated functions
-		$deprecated = array( ',', '**', 'pow', 'acos', 'asin', 'atan', 'atan2', 'ceil', 'floor', 'max', 'min', 'random', 'round');
+		$deprecated = array( ',', '**', 'pow', 'acos', 'asin', 'atan', 'atan2', 'max', 'min', 'random');
 		//Look for matching known symbol in formula and push it in a symbols array
 		foreach ($deprecated as $symbol) {
 			if (strpos($formula, $symbol) !== FALSE) { 
@@ -1527,6 +1528,8 @@ class Caldera_Forms
 			if (false !== strpos($formula, $fid)) {
 				$number = Caldera_Forms_Field_Calculation::get_value($form_field, $form);
 
+				$number = '(' . $number . ')';
+
 				$formula = str_replace($fid, $number, $formula);
 			}
 		}
@@ -1549,19 +1552,24 @@ class Caldera_Forms
 
 			//Use parser if no deprecated caught
 			if( $deprecated === false ){ 
-				//Initiate parser
-				$parser = new FormulaParser($formula);
-				$result = $parser->getResult();
-				//Get result if parser returns a correct status
-				if($result[0] === "done"){ 
-					$total = $result['1'];
-				} else if($result[0] === "error") {  
-					//else change notice for admins and run original process
-					$total = self::calculation_deprecated_caught_process( $formula, __('This formula', 'caldera_forms') );
+
+				try {
+					//Initiate parser
+					$parser = new StdMathParser();
+					// Generate an abstract syntax tree
+					$AST = $parser->parse($formula);
+					// Do something with the AST, e.g. evaluate the expression:
+					$evaluator = new Evaluator();
+					//Get result
+					$total = $AST->accept($evaluator);
+
+				} catch( Exception $e) {
+					//Return to old process if an Exception was returned and display a warning for admins
+					$total = self::calculation_deprecated_caught_process( $formula, __('A symbol in the formula', 'caldera_forms') );
 				}
 				
 			} else {
-				//else change notice for admins and run original process
+				//else add warning for admins and run original process
 				$total = self::calculation_deprecated_caught_process( $formula, $deprecated );
 			}	
 
