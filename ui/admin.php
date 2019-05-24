@@ -104,6 +104,15 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
                     );
                     ?>
                 </li>
+                <li class="caldera-forms-toolbar-item separator caldera-forms-hide-when-entry-viewer-closed">&nbsp;&nbsp;</li>
+                <li class="caldera-forms-toolbar-item caldera-forms-hide-when-entry-viewer-closed" id="caldera-forms-close-entry-viewer-wrap" style="display: none;visibility: hidden" aria-hidden="true">
+                    <?php
+                    printf('<button title="%s" class="button" id="caldera-forms-close-entry-viewer">%s</button>',
+                        esc_attr__('Click to close entry Viewer', 'caldera-forms'),
+                        esc_html__('Close Entry Viewer', 'caldera-forms')
+                    );
+                    ?>
+                </li>
                 <?php if (isset($_GET['message_resent'])) { ?>
                     <li class="caldera-forms-toolbar-item separator">&nbsp;&nbsp;</li>
                     <li class="caldera-forms-toolbar-item success">
