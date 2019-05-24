@@ -1,5 +1,4 @@
 /*! GENERATED SOURCE FILE caldera-forms - v1.8.4 - 2019-05-24 */var resBaldrickTriggers;
-
 jQuery(function($){
 	function fieldErrors(fields, $form, $notice) {
 		for (var i in fields) {
