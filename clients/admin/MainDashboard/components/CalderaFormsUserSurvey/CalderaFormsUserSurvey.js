@@ -4,24 +4,26 @@ import {CalderaMailChimpSurveyForm} from '@calderajs/forms';
 export class CalderaFormsUserSurvey extends Component {
 
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-          token: '',
+            token: '',
         };
     }
 
-    componentDidMount(){
+
+    componentDidMount() {
         const {apiRoot} = this.props;
         fetch(`${apiRoot}/token`, {
             method: 'POST'
         })
-            .then(r => r.json())
-            .then(r => {
-                this.setState({token:r.token});
-            })
-            .catch(e => console.log(e));
+        .then(r => r.json())
+        .then(r => {
+            this.setState({token: r.token});
+        })
+        .catch(e => console.log(e));
     }
+
     render() {
         const {listId, apiRoot, onSubmit, Loading} = this.props;
         const {token} = this.state;
