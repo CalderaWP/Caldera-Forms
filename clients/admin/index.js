@@ -92,7 +92,7 @@ class FormsAdminApp extends Component {
         if( hide ){
             return <Fragment />
         }
-        return <div ref={this.setWrapperRef}><MainDashboard { ...props } />,</div>;
+        return <div ref={this.setWrapperRef}><MainDashboard { ...props } /></div>;
     }
 
 }
@@ -108,10 +108,8 @@ domReady(function () {
         isProConnected,
     };
 
-    render( <FormsAdminApp {...props} />,document.getElementById('caldera-forms-clippy'));
-    jQuery('.cf-entry-viewer-link').on('click', function () {
-        //unmountComponentAtNode(document.getElementById('caldera-forms-clippy'));
-    })
+    render( <FormsAdminApp {...props} />, document.getElementById('caldera-forms-clippy') );
+
 });
 
 
