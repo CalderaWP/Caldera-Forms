@@ -125,6 +125,9 @@
       padding: 6px;
       margin: 0 2px;
       color: inherit;
+      border-top: solid thin #ddd;
+      border-right: solid thin #ddd;
+      border-left: solid thin #ddd;
     }
 
     &.active {
