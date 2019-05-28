@@ -155,6 +155,16 @@
     padding: 20px
   }
 
+  .cf-doc-filter-form {
+    .tab-pane {
+      display: none;
+      
+      &.active {
+        display: block;
+      }
+    }
+  }
+
   @media screen and (min-width: 768px) {
     .cf-doc-search-results-outer .col-xs-12 img {
       margin-bottom: 0

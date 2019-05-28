@@ -27,7 +27,7 @@ class DocSearch extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeTabKey: 1,
+            activeTabKey: "categories",
             isPanelVisible: true,
             panelPosition: 'left',
             panelSize: 0.33,
@@ -507,7 +507,7 @@ class DocSearch extends React.Component {
         //1 = categories
         //2 = keyword
         //3 = add-ons
-        if (2 !== key) {
+        if ("keywords" !== key) {
             this.setState({searchKeyword: ''});
         } else {
             if (this.state.lastParams.search) {
@@ -522,7 +522,7 @@ class DocSearch extends React.Component {
             boxesChecked[addOn] = false;
         });
 
-        if (1 === key) {
+        if ("categories" === key) {
             boxesChecked.gettingStarted = true;
         }
 
@@ -531,6 +531,7 @@ class DocSearch extends React.Component {
         this.setState({activeTabKey: key});
         this.setPageOne();
         this.search();
+
     }
 
     componentDidUpdate() {
@@ -569,18 +570,20 @@ class DocSearch extends React.Component {
                             role="search"
                             className="cf-doc-filter-form"
                         >
+                            <h3>Search By </h3>
                             <Tabs
-                                defaultActiveKey={1}
+                                defaultActiveKey="categories"
                                 id="cf-doc-filters"
                                 activeKey={this.state.activeTabKey}
                                 onSelect={this.handleTabSelect}
                             >
                                 <Tab
-                                    eventKey={1}
-                                    title="Category">
+                                    eventKey="categories"
+                                    title="Categories"
+                                    className="categories-tab"
+                                >
                                     <FormGroup>
-                                        <h3>Search By Category</h3>
-
+                                    <h3>Categories</h3>
                                         <Category
                                             checked={this.state.boxesChecked['gettingStarted']}
                                             onChange={this.toggleGettingStarted}
@@ -617,33 +620,33 @@ class DocSearch extends React.Component {
                                             label="Entries"
                                         />
 
-                                        <FormGroup>
-                                            <Category
-                                                checked={this.state.boxesChecked['developerAPI']}
-                                                onChange={this.toggleDeveloperAPI}
-                                                category={this.state.categories['developerAPI']}
-                                                label="Developer API"
-                                            />
-                                            <Category
-                                                checked={this.state.boxesChecked['actions']}
-                                                onChange={this.toggleAction}
-                                                category={this.state.categories['actions']}
-                                                label="Actions"
-                                            />
+                                        <Category
+                                            checked={this.state.boxesChecked['developerAPI']}
+                                            onChange={this.toggleDeveloperAPI}
+                                            category={this.state.categories['developerAPI']}
+                                            label="Developer API"
+                                        />
+                                        <Category
+                                            checked={this.state.boxesChecked['actions']}
+                                            onChange={this.toggleAction}
+                                            category={this.state.categories['actions']}
+                                            label="Actions"
+                                        />
 
-                                            <Category
-                                                checked={this.state.boxesChecked['filters']}
-                                                onChange={this.toggleFilters}
-                                                category={this.state.categories['filters']}
-                                                label="Filters"
-                                            />
+                                        <Category
+                                            checked={this.state.boxesChecked['filters']}
+                                            onChange={this.toggleFilters}
+                                            category={this.state.categories['filters']}
+                                            label="Filters"
+                                        />
 
-                                        </FormGroup>
+                                        
                                     </FormGroup>
                                 </Tab>
                                 <Tab
-                                    eventKey={2}
-                                    title="Keyword"
+                                    eventKey="keywords"
+                                    title="Keywords"
+                                    className="keywords-tab"
                                 >
                                     <Keyword
                                         change={this.handleChangeKeyword}
@@ -651,11 +654,12 @@ class DocSearch extends React.Component {
                                     />
                                 </Tab>
                                 <Tab
-                                    eventKey={3}
+                                    eventKey="add-ons"
                                     title="Add-ons"
+                                    className="add-on-tab"
                                 >
                                     <FormGroup controlId="add-on-search">
-                                        <h3>Add-on Documentation</h3>
+                                        <h3>Add-ons</h3>
                                         <FormGroup>
                                             <AddonCategory
                                                 apiRoot={this.state.apiRoot}

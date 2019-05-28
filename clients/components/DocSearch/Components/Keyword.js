@@ -6,7 +6,7 @@ export  class  Keyword extends React.Component {
         return (
             <FormGroup controlId="keyword-search">
 
-                <h3>Keyword Search</h3>
+                <h3>Keyword</h3>
                 <FormControl
                     type="text"
                     value={this.props.value}
