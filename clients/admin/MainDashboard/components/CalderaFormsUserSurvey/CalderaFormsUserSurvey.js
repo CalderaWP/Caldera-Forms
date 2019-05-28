@@ -18,7 +18,7 @@ export class CalderaFormsUserSurvey extends Component {
         })
             .then(r => r.json())
             .then(r => {
-                setState({token:r.token});
+                this.setState({token:r.token});
             })
             .catch(e => console.log(e));
     }
