@@ -77,6 +77,10 @@
       border: 1px solid #a3bf61;
       border-radius: 2px;
       background: #fff;
+
+      h2 {
+        padding: 6px 7px;
+      }
     }
   }
 
@@ -101,7 +105,7 @@
 
     .components-tab-panel__tabs {
       margin-bottom: 1.5em;
-      
+
       .active-tab {
         color: #ffffff;
         background: #839e3f;
