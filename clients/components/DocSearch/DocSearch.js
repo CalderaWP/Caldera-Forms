@@ -577,6 +577,7 @@ class DocSearch extends React.Component {
                                 activeKey={this.state.activeTabKey}
                                 onSelect={this.handleTabSelect}
                             >
+                            <hr />
                                 <Tab
                                     eventKey="categories"
                                     title="Categories"

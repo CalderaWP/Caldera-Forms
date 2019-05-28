@@ -99,7 +99,13 @@
 
   .cf-doc-main-row .form-group input[type=checkbox]:checked {
     background: #a3bf61;
-    border-color: rgba(34, 34, 34, .1)
+    border-color: rgba(34, 34, 34, .1);
+
+    &:before {
+      content: "\f147";
+      margin: -2px 0 0 -2px;
+      color: #1e8cbe;
+    }
   }
 
   .cf-doc-main-row .col-md-12 {
@@ -139,7 +145,18 @@
 
   .cf-doc-search-results-outer article {
     border: 1px solid #ddd;
-    padding: 30px
+    padding: 30px;
+
+    img {
+      margin-top: 5px;
+    }
+    
+    .entry-content {
+       p {
+          margin-top: 0px;
+        }
+    }
+  
   }
 
   .cf-doc-search-results-outer .container {
@@ -153,9 +170,9 @@
   }
 
   .cf-doc-search-results-outer article .btn {
-    float: left;
+    float: right;
     display: block;
-    margin-top: 20px;
+    margin-top: 10px;
     width: auto
   }
 
@@ -176,6 +193,13 @@
 
       &.active {
         display: block;
+      }
+    }
+
+    .checkbox {
+      label {
+        padding-left: 0px;
+        margin-bottom: inherit;
       }
     }
   }

@@ -11,7 +11,7 @@ export class Category extends React.Component {
     render() {
         return (
             <div className="checkbox">
-                <label title="">
+                
                     <label
                         htmlFor={this.state.idAttr}
                         className="control-label"
@@ -25,7 +25,7 @@ export class Category extends React.Component {
                         onChange={this.props.onChange}
                         id={this.state.idAttr}
                     />
-                </label>
+                
             </div>
         )
 
