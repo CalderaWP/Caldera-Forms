@@ -111,9 +111,23 @@
     margin-bottom: 15px
   }
 
-  .cf-doc-filter-col .nav-tabs > li > a {
-    font-size: 14px;
-    margin-right: 0
+  .cf-doc-filter-col .nav-tabs > li {
+
+    display: inline;
+
+    a {
+      font-size: 14px;
+      padding: 6px;
+      margin: 0 2px;
+      color: inherit;
+    }
+
+    &.active {
+      a {
+        color: #ffffff;
+        background: #839e3f;   
+      }
+    }
   }
 
   .cf-doc-search-results-outer > div > div {
@@ -156,9 +170,11 @@
   }
 
   .cf-doc-filter-form {
+    margin-top: 1em;
+    
     .tab-pane {
       display: none;
-      
+
       &.active {
         display: block;
       }
