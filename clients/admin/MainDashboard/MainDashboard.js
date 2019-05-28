@@ -9,6 +9,7 @@ import DashboardPanels from './DashboardPanels';
 export default function MainDashboard({isProConnected}) {
     return (
         <DashboardPanels
+            showSurveyFirst={true}
             isProConnected={isProConnected}
             apiRoot={'https://calderaforms.com/wp-json'}
         />

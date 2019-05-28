@@ -4,6 +4,7 @@ import {RemotePost} from "../../../components";
 import ProDashboard from "./ProDashboard";
 import {Component} from "@wordpress/element";
 import Translate from "../components/Translate/Translate";
+import {CalderaFormsUserSurvey} from "../components/CalderaFormsUserSurvey/CalderaFormsUserSurvey";
 
 export default class DashboardPanels extends Component {
 
@@ -13,8 +14,10 @@ export default class DashboardPanels extends Component {
             translateClicked: false,
             translatePageLoaded: false,
             translatePageData:{},
+            surveyCompleted: false,
         };
         this.onOpenTranslate = this.onOpenTranslate.bind(this);
+        this.onSurveyCompleted = this.onSurveyCompleted.bind(this);
     }
 
     onOpenTranslate(){
@@ -37,9 +40,14 @@ export default class DashboardPanels extends Component {
         }
     }
 
+    onSurveyCompleted(){
+        this.setState({surveyCompleted:true});
+    }
+
     render() {
-        const {apiRoot,isProConnected} = this.props;
-        const {translatePageData,translatePageLoaded} = this.state;
+        const {apiRoot,isProConnected,showSurveyFirst} = this.props;
+        const {translatePageData,translatePageLoaded,surveyCompleted} = this.state;
+
         return (
             <div className={'caldera-grid'}>
                 <Panel header="Welcome To Caldera Forms">
@@ -54,10 +62,27 @@ export default class DashboardPanels extends Component {
                             </div>
                         </PanelRow>
                     </PanelBody>
+                    { showSurveyFirst  &&
+                        <PanelBody
+                            title="Caldera Forms User Survey"
+                            icon="welcome-widgets-menus"
+                            initialOpen={false === surveyCompleted}
+                        >
+                            <PanelRow>
+                                <div className={'caldera-grid'}>
+                                    <CalderaFormsUserSurvey
+                                        apiRoot={'https://dev-futurecapable.pantheonsite.io/wp-json/caldera-api/v1/messages/mailchimp/v1'}
+                                        listId={'f402a6993d'}
+                                        onSubmit={this.onSurveyCompleted}
+                                    />
+                                </div>
+                            </PanelRow>
+                        </PanelBody>
+                    }
                     <PanelBody
                         title="Go Pro!"
                         icon="thumbs-up"
-                        initialOpen={true}
+                        initialOpen={showSurveyFirst}
                     >
                         <ProDashboard isProConnected={isProConnected}/>
                     </PanelBody>
@@ -88,4 +113,5 @@ export default class DashboardPanels extends Component {
 DashboardPanels.defaultProps = {
     apiRoot: 'https://calderaforms.com/wp-json',
     isProConnected: false,
+    showSurveyFirst: true,
 }
