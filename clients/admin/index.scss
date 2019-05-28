@@ -9,6 +9,17 @@
     width: 100%
   }
 
+  .components-panel {
+    &__header {
+      text-align: center;
+      
+      h2 {
+        font-size: 115%;
+        margin: 0 auto;
+      }
+    }
+  }
+
   a.button {
     background-color: #a3bf61;
     color: #fff;

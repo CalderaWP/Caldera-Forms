@@ -57,8 +57,7 @@
   }
 
   .cf-doc-filter-col {
-    overflow-y: scroll;
-    overflow-x: hidden
+    overflow: auto;
   }
 
   .cf-doc-main-row .form-group {
@@ -171,7 +170,7 @@
 
   .cf-doc-filter-form {
     margin-top: 1em;
-    
+
     .tab-pane {
       display: none;
 

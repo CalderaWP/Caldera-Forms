@@ -6,11 +6,11 @@ export  class  Keyword extends React.Component {
         return (
             <FormGroup controlId="keyword-search">
 
-                <h3>Keyword</h3>
+                <h4>Keywords</h4>
                 <FormControl
                     type="text"
                     value={this.props.value}
-                    placeholder="Enter text"
+                    placeholder="Enter keyword"
                     onChange={this.props.change}
                 />
             </FormGroup>
