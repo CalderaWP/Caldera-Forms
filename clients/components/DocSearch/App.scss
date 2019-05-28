@@ -150,7 +150,7 @@
     img {
       margin-top: 5px;
     }
-    
+
     .entry-content {
        p {
           margin-top: 0px;
@@ -182,7 +182,20 @@
 
   .cf-doc-search-results-outer .pager {
     clear: both;
-    padding: 20px
+    padding: 20px;
+    margin-right: 10px;
+
+    li {
+      display: inline;
+
+      &.next {
+        float: right;
+      }
+      &.previous {
+        float: left;
+      }
+    }
+
   }
 
   .cf-doc-filter-form {
