@@ -1,7 +1,6 @@
 import {CalderaFormsFieldGroup, Fragment} from "../CalderaFormsFieldGroup";
 import {CalderaFormsFieldPropType} from "../CalderaFormsFieldRender";
 import {sizeFormat} from "../../util";
-import React from 'react';
 
 import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
