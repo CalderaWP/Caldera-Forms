@@ -4,7 +4,7 @@ import { shallow } from 'enzyme/build';
 import Enzyme from 'enzyme/build';
 import Adapter from 'enzyme-adapter-react-16/build';
 import {ProFormSettings} from "./ProFormSettings";
-import {optionFactory} from "../../../../../../Desktop/components/util/optionFactory";
+import {optionFactory} from "../../functions/optionFactory";
 
 Enzyme.configure({ adapter: new Adapter() });
 

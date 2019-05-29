@@ -1,4 +1,4 @@
-import {optionFactory} from "../../../../../../Desktop/components/util/optionFactory";
+import {optionFactory} from "../../functions/optionFactory";
 
 export const PRO_FORM_SEND_LOCAL = 'SETTINGS/PRO/FORM/SEND_LOCAL';
 export const PRO_FORM_EMAIL_LAYOUT = 'SETTINGS/PRO/FORM/EMAIL_LAYOUT';
