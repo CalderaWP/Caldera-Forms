@@ -793,8 +793,8 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 == Changelog ==
 
-= Caldera Forms 1.8.5 (May ?, 2019) tan(Caldera) =
-See: [https://calderaforms.com/updates/caldera-forms-1-8-5](https://calderaforms.com/updates/caldera-forms-1-8-4?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-5)
+= Caldera Forms 1.8.5 (May 29, 2019) tan(Caldera) =
+See: [https://calderaforms.com/updates/caldera-forms-1-8-5](https://calderaforms.com/updates/caldera-forms-1-8-5?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-5)
 *   [Caldera Forms calculation fields triggered deprecated function warnings in PHP 7.2. ](https://github.com/CalderaWP/Caldera-Forms/issues/2335)
 *   [Add a warning if the variable wp is not defined in the front-end](https://github.com/CalderaWP/Caldera-Forms/pull/3202). This alerts users to conflicts like the one that has been fixed with [WP Rocket.](https://wp-rocket.me/blog/wp-rocket-3-3/)
 *   [Bug causing a PHP error when viewing entries of a form that has magic tags used for select field labels.](https://github.com/CalderaWP/Caldera-Forms/issues/3167)
@@ -2180,3 +2180,7 @@ See: https://calderaforms.com/updates/caldera-forms-1-6.2
 Includes SECURITY fix.
 
 See: https://calderaforms.com/updates/caldera-forms-1-8-2
+
+= 1.8.5 =
+See: https://calderaforms.com/updates/caldera-forms-1-8-5
+
