@@ -85,7 +85,6 @@ class FormsAdminApp extends Component {
         }
 
     }
-
     render() {
         const {props} = this;
         const {hide} = this.state;

@@ -18,10 +18,10 @@
   "homepage": "https://github.com/CalderaWP/Caldera-Forms#readme",
   "scripts": {
     "build": "grunt && cross-env BABEL_ENV=default NODE_ENV=production webpack",
-    "start": "webpack-dev-server --config config/webpack.clients.js",
-    "build:clients": "yarn build:clients:pre && webpack --config config/webpack.clients.js",
+    "start": "webpack-dev-server --config webpack.clients.js",
+    "build:clients": "yarn build:clients:pre && webpack --config webpack.clients.js",
     "build:clients:pre" : "node clients/deleteBuilds.js",
-    "build:webpack": "cross-env BABEL_ENV=default NODE_ENV=production webpack",
+    "build:webpack": "cross-env BABEL_ENV=default NODE_ENV=production webpack  --config webpack.clients.js",
     "build:grunt": "grunt",
     "dev": "cross-env BABEL_ENV=default webpack --watch",
     "dev:webpack": "cross-env BABEL_ENV=default webpack --watch",

@@ -8,8 +8,18 @@ const {join} = path;
 const onExit = require( 'signal-exit' );
 const webpack = require( 'webpack' );
 const ManifestPlugin = require( 'webpack-manifest-plugin' );
-const entry = require( './clientEntryPoints');
-const output = require( './clientOutput');
+
+const entry = [
+	'admin',
+	'privacy',
+	'render',
+	//'legacy-bundle'
+].reduce( ( memo, entryPointName ) => {
+	memo[ entryPointName ] = './clients/' + entryPointName + '/index.js';
+	return memo;
+}, {} );
+
+
 // For extracting CSS (and SASS) into separate files
 const MiniCssExtractPlugin  = require( 'mini-css-extract-plugin' );
 
@@ -27,16 +37,17 @@ onExit( () => {
 const port = parseInt( process.env.PORT, 10 ) || 3030;
 const publicPath = `https://localhost:${ port }/`;
 
+const output = {
+	filename: '../clients/[name]/build/index.min.js',
+	//filename: isProduction ? '../clients/[name]/build/index.min.js' : '../clients/[name]/build/index.[hash].js',
+	library: [ 'calderaForms', '[name]' ],
+	libraryTarget: 'this'
+};
 
-/**
- * Theme development build configuration.
- */
 module.exports = {
-	mode: 'development',
+	mode: isProduction ? 'production' : 'development',
 	devtool: 'cheap-module-source-map',
 	context: process.cwd(),
-
-	// Allow config to override shared devServer properties.
 	devServer: {
 		https: true,
 		headers: {
@@ -115,7 +126,7 @@ module.exports = {
 				: '../clients/[name]/build/style.[hash].css',
 			chunkFilename: isProduction
 				? '../clients/[name]/build/[id].css'
-				: '../clients/[name]/build/[id].[hash].css'
+				: '../[name]/build/[id].[hash].css'
 		})
 	],
 };

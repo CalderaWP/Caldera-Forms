@@ -1133,10 +1133,17 @@ class Caldera_Forms_Render_Assets
 	}
 
 
+    /**
+     * Get the generated asset-mainfiest.json
+     *
+     * @since 1.8.6
+     *
+     * @return array
+     */
     protected static function get_webpack_manifest()
     {
         if( ! self::$webpack_asset_manifest ){
-            $path =  CFCORE_PATH .'/config/asset-manifest.json';
+            $path =  CFCORE_PATH .'/dist/asset-manifest.json';
             if (!file_exists($path)) {
                 return [];
             }
