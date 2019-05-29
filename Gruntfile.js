@@ -289,7 +289,7 @@ module.exports = function (grunt) {
 
 
         exec: {
-            deleteVendor: 'rm -rf vendor'
+            deleteVendor: 'rm -rf vendor',
             composerDist: 'composer clearcache && rm -rf vendor && composer update --prefer-dist --no-dev --optimize-autoloader --ignore-platform-reqs'
         }
 
