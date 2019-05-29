@@ -51,7 +51,8 @@ This is the new stuff, built with webpack. Eventually everything UI will be here
     * editor - Theoretical.
 
 * Build for development and start watcher.
-    - `npm run dev`
+    - `npm run start`
+    - NOTE: You need to go to the webpack dev server in the browser and tell Chrome to trust the certificate.
 * Build for production
     -  `npm run build:webpack`
     
