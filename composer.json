@@ -21,20 +21,6 @@
             "role": "Contributing Developer"
         }
     ],
-    "repositories": [
-        {
-            "type": "git",
-            "url": "https://github.com/CalderaWP/caldera-interop"
-        },
-        {
-            "type": "git",
-            "url": "https://github.com/CalderaWP/caldera-ghost-runner"
-        },
-        {
-            "type":"composer",
-            "url":"https://wpackagist.org"
-        }
-    ],
     "homepage": "http://calderaforms.com",
     "require": {
         "php": ">=5.6.0",
@@ -43,7 +29,8 @@
         "calderawp/caldera-containers": "^0.2.0",
         "composer/installers": "^1.6",
         "a5hleyrich/wp-queue": "^1.3",
-        "symfony/translation": "~3.0"
+        "symfony/translation": "~3.0",
+        "mossadal/math-parser": "^1.3"
     },
     "autoload": {
         "psr-4": {
@@ -94,5 +81,4 @@
             "*": "dist"
         }
     }
-
 }
