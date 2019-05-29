@@ -56,6 +56,14 @@ class Caldera_Forms_Render_Assets
 	 */
 	protected static $api_data_localized;
 
+    /**
+     * Stores modified-time for generated assets
+     *
+     * @since 1.8.5
+     *
+     * @var int
+     */
+	protected static $client_modified_time;
 
 	/**
 	 * Enqueue styles for field type
@@ -567,10 +575,15 @@ class Caldera_Forms_Render_Assets
 		}
 
 		if (self::is_client_entry_point($name)) {
+		    if( 'admin-client' === $name ){
+                $name = 'admin';
+            }
+
+            $version = absint(self::get_client_modified_time());
 			if ($script) {
-				return "{$root_url}clients/{$name}/build/index.min.js";
+				return "{$root_url}clients/{$name}/build/index.min.js?h={$version}";
 			} else {
-				return "{$root_url}clients/{$name}/build/style.min.css";
+				return "{$root_url}clients/{$name}/build/style.min.css?h={$version}";
 			}
 		}
 
@@ -590,6 +603,25 @@ class Caldera_Forms_Render_Assets
 
 	}
 
+    /**
+     * Get the time the clients directory was modified at.
+     *
+     * - Used to hash the file URLs for client entry points.
+     * - This avoids running filetime or md5 hash on all 10 files.
+     *
+     * @since 1.8.6
+     *
+     * @return int
+     */
+	protected static function get_client_modified_time(){
+	    return rand();
+        if( ! self::$client_modified_time ){
+            $dir = dirname(__FILE__,3). '/clients/admin/build/index.min.js' ;
+            self::$client_modified_time = filemtime($dir);
+        }
+        return self::$client_modified_time;
+    }
+
 	/**
 	 * Is this the slug of a webpack entry point
 	 *
@@ -601,7 +633,14 @@ class Caldera_Forms_Render_Assets
 	 */
 	public static function is_client_entry_point($slug)
 	{
-		return in_array($slug, ['blocks', 'pro', 'privacy', 'render', 'legacy-bundle']);
+		return in_array($slug, [
+		    'admin-client',
+		    'blocks',
+            'pro',
+            'privacy',
+            'render',
+            'legacy-bundle'
+        ]);
 	}
 
 	/**

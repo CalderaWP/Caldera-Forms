@@ -42,6 +42,7 @@ const extractConfig = {
 
 // Define JavaScript entry points
 const entryPointNames = [
+    'admin',
     'privacy',
     'blocks',
     'pro',
@@ -53,6 +54,7 @@ const entryPointNames = [
 const externals = {
     jquery: 'jQuery'
 };
+
 // Setup external for each entry point
 entryPointNames.forEach( entryPointName => {
     externals[ '@/calderaForms' + entryPointName ] = {

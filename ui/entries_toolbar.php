@@ -43,9 +43,9 @@
 				        data-status="trash"
 					><?php esc_html_e( 'Trash', 'caldera-forms' ); ?> <span class="current-status-count"></span></button>
 				</span>
-				<a href="" class="button caldera-forms-entry-exporter">
+				<button href="#" class="button caldera-forms-entry-exporter">
 					<?php esc_html_e( 'Export All', 'caldera-forms' ); ?>
-				</a>
+				</button>
 				
 			</span>
 			<span class="cf-tools-row cf-tools-row-second">
