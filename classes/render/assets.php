@@ -65,6 +65,16 @@ class Caldera_Forms_Render_Assets
      */
 	protected static $client_modified_time;
 
+
+    /**
+     * The array from webpack manifest
+     *
+     * @sicne 1.8.6
+     *
+     * @var array
+     */
+	protected static $webpack_asset_manifest;
+
 	/**
 	 * Enqueue styles for field type
 	 *
@@ -579,11 +589,39 @@ class Caldera_Forms_Render_Assets
                 $name = 'admin';
             }
 
-            $version = absint(self::get_client_modified_time());
+		    $manifest = self::get_webpack_manifest();
+
 			if ($script) {
-				return "{$root_url}clients/{$name}/build/index.min.js?h={$version}";
-			} else {
-				return "{$root_url}clients/{$name}/build/style.min.css?h={$version}";
+                if (
+                    in_array($name, [
+                        'blocks',
+                        'pro',
+                        'privacy',
+                        'legacy-bundle'
+                    ])
+                    || empty($manifest)
+                    || ! array_key_exists("{$name}.js",$manifest)
+                ) {
+                    return "{$root_url}clients/{$name}/build/index.min.js";
+                } else {
+                    return $manifest["{$name}.js"];
+                }
+            } else {
+                if (
+                    in_array($name, [
+                        'blocks',
+                        'pro',
+                        'privacy',
+                        'legacy-bundle'
+                    ])
+                    || empty($manifest)
+                    || ! array_key_exists("{$name}.css",$manifest)
+                ) {
+                    return "{$root_url}clients/{$name}/build/style.min.css";
+
+                }else{
+                    return $manifest["{$name}.css"];
+                }
 			}
 		}
 
@@ -603,24 +641,6 @@ class Caldera_Forms_Render_Assets
 
 	}
 
-    /**
-     * Get the time the clients directory was modified at.
-     *
-     * - Used to hash the file URLs for client entry points.
-     * - This avoids running filetime or md5 hash on all 10 files.
-     *
-     * @since 1.8.6
-     *
-     * @return int
-     */
-	protected static function get_client_modified_time(){
-	    return rand();
-        if( ! self::$client_modified_time ){
-            $dir = dirname(__FILE__,3). '/clients/admin/build/index.min.js' ;
-            self::$client_modified_time = filemtime($dir);
-        }
-        return self::$client_modified_time;
-    }
 
 	/**
 	 * Is this the slug of a webpack entry point
@@ -1111,5 +1131,35 @@ class Caldera_Forms_Render_Assets
 	protected static function is_beaver_builder_editor(){
 		return isset($_GET, $_GET[ 'fl_builder']);
 	}
+
+
+    protected static function get_webpack_manifest()
+    {
+        if( ! self::$webpack_asset_manifest ){
+            $path =  CFCORE_PATH .'/config/asset-manifest.json';
+            if (!file_exists($path)) {
+                return [];
+            }
+            $contents = file_get_contents($path);
+            if (empty($contents)) {
+                return [];
+            }
+            $assets = json_decode($contents, true);
+            $prepared = [];
+            if( $assets ){
+                foreach ($assets as $asset => $url ){
+                    if( false === strpos($asset,'.map' ) ) {
+                        $prepared[$asset] = $url;
+
+                    }
+                }
+            }
+            self::$webpack_asset_manifest = $prepared;
+
+        }
+        return self::$webpack_asset_manifest;
+
+    }
+
 
 }

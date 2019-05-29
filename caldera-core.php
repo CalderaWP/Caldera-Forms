@@ -152,8 +152,6 @@ if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
 	//@see https://github.com/CalderaWP/Caldera-Forms/issues/2855
 	add_filter( 'caldera_forms_pro_log_mode', '__return_false' );
 	add_filter( 'caldera_forms_pro_mail_debug', '__return_false' );
-
-
 }
 
 /**
