@@ -6,16 +6,17 @@ We provide a docker-based development environment. It is recommended that you us
 The local server is [http://localhost:8228](http://localhost:8228)
 
 
-#### Requirements
-* Docker
+## Requirements
+* [Docker](https://docs.docker.com/)
     - [Installation documentation](https://docs.docker.com/install/)
-* Composer
+* [Composer](https://getcomposer.org/)
     - [Installation documentation](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx)
-* npm
-    - [Installation documentation](https://www.npmjs.com/get-npm)
+* [Yarn](https://yarnpkg.com)
+    - [Installation documentation](https://yarnpkg.com/en/docs/install)
+    - Please use Yarn instead of npm.
     
     
-#### Install Test Environment
+## Install Test Environment
 * Install local development environment, dependencies and setup test forms
     - `composer dev:install`
         -  May take awhile.
@@ -23,3 +24,13 @@ The local server is [http://localhost:8228](http://localhost:8228)
     - Username: admin
     - password: password
 * [See Commands](https://github.com/CalderaWP/Caldera-Forms/tree/develop#composer)
+
+## JavaScript Development
+* Install
+    - `yarn`
+* Develop JavaScript that is not blocks or the old stuff in /assets
+    - `yarn start`
+* Develop blocks
+    - `yarn start:blocks`
+* Build all JavaScript and CSS
+    - `yarn build`
