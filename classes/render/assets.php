@@ -1142,7 +1142,7 @@ class Caldera_Forms_Render_Assets
      */
     protected static function get_webpack_manifest()
     {
-        if( ! self::$webpack_asset_manifest ){
+        if( ! is_array( self::$webpack_asset_manifest ) ){
             $path =  CFCORE_PATH .'/dist/asset-manifest.json';
             if (!file_exists($path)) {
                 return [];
@@ -1152,17 +1152,23 @@ class Caldera_Forms_Render_Assets
                 return [];
             }
             $assets = json_decode($contents, true);
-            $prepared = [];
-            if( $assets ){
-                foreach ($assets as $asset => $url ){
-                    if( false === strpos($asset,'.map' ) ) {
-                        $prepared[$asset] = $url;
-
+            if( ! empty($assets) ){
+                $first = array_values($assets)[0];
+                $r = wp_remote_get($first);
+                if(!200 === wp_remote_retrieve_response_code($r)) {
+                    self::$webpack_asset_manifest = [];
+                }
+                else {
+                    self::$webpack_asset_manifest = [];
+                    foreach ($assets as $asset => $url) {
+                        if (false === strpos($asset, '.map')) {
+                            self::$webpack_asset_manifest[$asset] = $url;
+                        }
                     }
                 }
+            }else{
+                self::$webpack_asset_manifest = [];
             }
-            self::$webpack_asset_manifest = $prepared;
-
         }
         return self::$webpack_asset_manifest;
 

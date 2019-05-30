@@ -1,12 +1,12 @@
 {
-  "admin.css": "https://localhost:3030/clients/admin/build/style.fc97f969993dd532a2c3.css",
-  "admin.js": "https://localhost:3030/clients/admin/build/index.fc97f969993dd532a2c3.js",
-  "admin.css.map": "https://localhost:3030/clients/admin/build/style.fc97f969993dd532a2c3.css.map",
-  "admin.js.map": "https://localhost:3030/clients/admin/build/index.fc97f969993dd532a2c3.js.map",
-  "privacy.js": "https://localhost:3030/clients/privacy/build/index.fc97f969993dd532a2c3.js",
-  "privacy.js.map": "https://localhost:3030/clients/privacy/build/index.fc97f969993dd532a2c3.js.map",
-  "render.css": "https://localhost:3030/clients/render/build/style.fc97f969993dd532a2c3.css",
-  "render.js": "https://localhost:3030/clients/render/build/index.fc97f969993dd532a2c3.js",
-  "render.css.map": "https://localhost:3030/clients/render/build/style.fc97f969993dd532a2c3.css.map",
-  "render.js.map": "https://localhost:3030/clients/render/build/index.fc97f969993dd532a2c3.js.map"
+  "admin.css": "https://localhost:3030/clients/admin/build/style.2116383a882f957f4a67.css",
+  "admin.js": "https://localhost:3030/clients/admin/build/index.2116383a882f957f4a67.js",
+  "admin.css.map": "https://localhost:3030/clients/admin/build/style.2116383a882f957f4a67.css.map",
+  "admin.js.map": "https://localhost:3030/clients/admin/build/index.2116383a882f957f4a67.js.map",
+  "privacy.js": "https://localhost:3030/clients/privacy/build/index.2116383a882f957f4a67.js",
+  "privacy.js.map": "https://localhost:3030/clients/privacy/build/index.2116383a882f957f4a67.js.map",
+  "render.css": "https://localhost:3030/clients/render/build/style.2116383a882f957f4a67.css",
+  "render.js": "https://localhost:3030/clients/render/build/index.2116383a882f957f4a67.js",
+  "render.css.map": "https://localhost:3030/clients/render/build/style.2116383a882f957f4a67.css.map",
+  "render.js.map": "https://localhost:3030/clients/render/build/index.2116383a882f957f4a67.js.map"
 }
