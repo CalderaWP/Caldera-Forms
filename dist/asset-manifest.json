@@ -1,7 +1,12 @@
 {
-  "admin.css": "https://localhost:3030/clients/admin/build/style.min.css",
-  "admin.js": "https://localhost:3030/clients/admin/build/index.min.js",
-  "privacy.js": "https://localhost:3030/clients/privacy/build/index.min.js",
-  "render.css": "https://localhost:3030/clients/render/build/style.min.css",
-  "render.js": "https://localhost:3030/clients/render/build/index.min.js"
+  "admin.css": "https://localhost:3030/clients/admin/build/style.fc97f969993dd532a2c3.css",
+  "admin.js": "https://localhost:3030/clients/admin/build/index.fc97f969993dd532a2c3.js",
+  "admin.css.map": "https://localhost:3030/clients/admin/build/style.fc97f969993dd532a2c3.css.map",
+  "admin.js.map": "https://localhost:3030/clients/admin/build/index.fc97f969993dd532a2c3.js.map",
+  "privacy.js": "https://localhost:3030/clients/privacy/build/index.fc97f969993dd532a2c3.js",
+  "privacy.js.map": "https://localhost:3030/clients/privacy/build/index.fc97f969993dd532a2c3.js.map",
+  "render.css": "https://localhost:3030/clients/render/build/style.fc97f969993dd532a2c3.css",
+  "render.js": "https://localhost:3030/clients/render/build/index.fc97f969993dd532a2c3.js",
+  "render.css.map": "https://localhost:3030/clients/render/build/style.fc97f969993dd532a2c3.css.map",
+  "render.js.map": "https://localhost:3030/clients/render/build/index.fc97f969993dd532a2c3.js.map"
 }
