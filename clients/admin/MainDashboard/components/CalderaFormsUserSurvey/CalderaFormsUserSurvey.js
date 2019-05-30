@@ -1,4 +1,4 @@
-import {Component, Fragment} from "@wordpress/element";
+import React,{Component, Fragment} from "react";
 import {CalderaMailChimpSurveyForm} from '@calderajs/forms';
 
 export class CalderaFormsUserSurvey extends Component {

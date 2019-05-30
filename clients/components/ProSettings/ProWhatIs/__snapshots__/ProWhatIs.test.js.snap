@@ -4,23 +4,105 @@ exports[`ProWhatIs component Matches snapshot with minimal props 1`] = `
 <div
   className="caldera-forms-pro-what-is"
 >
-  <p>
-    Caldera Forms Pro is an app + plugin that makes forms easy.
+  <p
+    className="pro-title"
+  >
+    Caldera Forms Pro is an app + plugins that makes forms easy.
   </p>
   <h3>
+    <span
+      className="emoji undefined"
+    >
+      <img
+        alt="🌋"
+        src="http://twemoji.maxcdn.com/2/72x72/1f30b.png"
+        style={
+          Object {
+            "height": "1em",
+            "margin": "0 .05em 0 .1em",
+            "verticalAlign": "-0.1em",
+            "width": "1em",
+          }
+        }
+      />
+    </span>
     Benefits
   </h3>
   <ul>
     <li>
+      <span
+        className="emoji undefined"
+      >
+        <img
+          alt="✉️"
+          src="http://twemoji.maxcdn.com/2/72x72/2709.png"
+          style={
+            Object {
+              "height": "1em",
+              "margin": "0 .05em 0 .1em",
+              "verticalAlign": "-0.1em",
+              "width": "1em",
+            }
+          }
+        />
+      </span>
       Enhanced Email Delivery
     </li>
     <li>
+      <span
+        className="emoji undefined"
+      >
+        <img
+          alt="👀"
+          src="http://twemoji.maxcdn.com/2/72x72/1f440.png"
+          style={
+            Object {
+              "height": "1em",
+              "margin": "0 .05em 0 .1em",
+              "verticalAlign": "-0.1em",
+              "width": "1em",
+            }
+          }
+        />
+      </span>
       Form To PDF
     </li>
     <li>
+      <span
+        className="emoji undefined"
+      >
+        <img
+          alt="🌋"
+          src="http://twemoji.maxcdn.com/2/72x72/1f30b.png"
+          style={
+            Object {
+              "height": "1em",
+              "margin": "0 .05em 0 .1em",
+              "verticalAlign": "-0.1em",
+              "width": "1em",
+            }
+          }
+        />
+      </span>
       Priority Support
     </li>
     <li>
+      <span
+        className="emoji undefined"
+      >
+        <img
+          alt="😛"
+          src="http://twemoji.maxcdn.com/2/72x72/1f61b.png"
+          style={
+            Object {
+              "height": "1em",
+              "margin": "0 .05em 0 .1em",
+              "verticalAlign": "-0.1em",
+              "width": "1em",
+            }
+          }
+        />
+      </span>
       Add-ons Included in Yearly Plans
     </li>
   </ul>

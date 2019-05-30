@@ -1,8 +1,7 @@
+import React, {Component} from 'react'
 import {Panel, PanelBody, PanelRow} from "@wordpress/components";
 import {DocSearchApp} from '../../../components';
-import {RemotePost} from "../../../components";
 import ProDashboard from "./ProDashboard";
-import {Component} from "@wordpress/element";
 import Translate from "../components/Translate/Translate";
 import {CalderaFormsUserSurvey} from "../components/CalderaFormsUserSurvey/CalderaFormsUserSurvey";
 
@@ -114,4 +113,4 @@ DashboardPanels.defaultProps = {
     apiRoot: 'https://calderaforms.com/wp-json',
     isProConnected: false,
     showSurveyFirst: true,
-}
+};

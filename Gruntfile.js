@@ -41,7 +41,9 @@ module.exports = function (grunt) {
         '!.env',
         '!db-error.php',
         '!webpack.config.js',
-        '!docker-compose.yml'
+        '!docker-compose.yml',
+        '!wp-content/**',
+        '!wordpress/**'
     ];
 
     //Include webpacked clients
@@ -287,7 +289,8 @@ module.exports = function (grunt) {
 
 
         exec: {
-            composerDist: 'composer clearcache && composer update --prefer-dist --no-dev --optimize-autoloader --ignore-platform-reqs'
+            deleteVendor: 'rm -rf vendor',
+            composerDist: 'composer clearcache && rm -rf vendor && composer update --prefer-dist --no-dev --optimize-autoloader --ignore-platform-reqs'
         }
 
     });
@@ -307,7 +310,12 @@ module.exports = function (grunt) {
 
     grunt.registerTask( 'version_number', [ 'replace' ] );
     grunt.registerTask( 'build', [  'version_number', 'default',  'make' ] );
-    grunt.registerTask( 'make', [   'exec:composerDist', 'mkdir:build', 'copy:build' ] );
+    grunt.registerTask( 'make', [
+        'exec:deleteVendor',
+        'exec:composerDist',
+        'mkdir:build',
+        'copy:build'
+    ] );
 
 
 

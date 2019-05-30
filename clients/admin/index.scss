@@ -9,6 +9,17 @@
     width: 100%
   }
 
+  .components-panel {
+    &__header {
+      text-align: center;
+
+      h2 {
+        font-size: 115%;
+        margin: 0 auto;
+      }
+    }
+  }
+
   a.button {
     background-color: #a3bf61;
     color: #fff;
@@ -66,11 +77,35 @@
       border: 1px solid #a3bf61;
       border-radius: 2px;
       background: #fff;
+
+      h2 {
+        padding: 6px 7px;
+      }
+    }
+  }
+
+  .caldera-forms-pro-what-is {
+    font-size: 110%;
+
+    p {
+      &.pro-title {
+        color: #839e3f;
+        text-align: center;
+        font-size: 115%;
+      }
+    }
+
+    img {
+      margin-right: 0.5em !important;
     }
   }
 
   .cf-pro-dashboard-panels {
+    margin-top: 2.5em;
+
     .components-tab-panel__tabs {
+      margin-bottom: 1.5em;
+
       .active-tab {
         color: #ffffff;
         background: #839e3f;
@@ -85,9 +120,7 @@
         background-blend-mode: darken;
       }
 
-
     }
-
 
   }
 

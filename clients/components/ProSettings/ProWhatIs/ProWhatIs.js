@@ -14,23 +14,23 @@ export const ProWhatIs = (props) => {
 		<div
 			className={classNames(props.className,ProWhatIs.classNames.wrapper)}
 		>
-			<p>Caldera Forms Pro is an app + plugin that makes forms easy.</p>
-			<h3><Twemoji text=":volcano:"/>Benefits</h3>
+			<p className="pro-title">Caldera Forms Pro is an app + plugins that makes forms easy.</p>
+			<h3><Twemoji className="emoji" text=":volcano:"/>Benefits</h3>
 			<ul>
 				<li>
-					<Twemoji text=":email:"/>
+					<Twemoji className="emoji" text=":email:"/>
 					Enhanced Email Delivery
 				</li>
 				<li>
-					<Twemoji text=":eyes:"/>
+					<Twemoji className="emoji" text=":eyes:"/>
 					Form To PDF
 				</li>
 				<li>
-					<Twemoji text=":volcano:"/>
+					<Twemoji className="emoji" text=":volcano:"/>
 					Priority Support
 				</li>
 				<li>
-					<Twemoji text=":plug:"/>
+					<Twemoji className="emoji" text=":plug:"/>
 					Add-ons Included in Yearly Plans
 				</li>
 			</ul>
