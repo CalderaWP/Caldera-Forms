@@ -26,3 +26,8 @@ wp-test-case
 /vendor/**/.git
 
 !assets/build/
+
+# Avoid committing webpack dev client assets
+dist/*
+!dist/asset-manifest.json
+!dist/README.json

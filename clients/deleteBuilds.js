@@ -17,10 +17,14 @@ const path = require( 'path' );
     fs.readdir(directory, (err, files) => {
         if (err) throw err;
         for (const file of files) {
-            console.log(`Deleting ${path.join(directory, file)}`);
-            fs.unlink(path.join(directory, file), err => {
-                if (err) throw err;
-            });
+            if (! ['style.min.css','index.min.js'].includes(path.basename(file))) {
+                console.log(`Deleting ${path.join(directory, file)}`);
+                fs.unlink(path.join(directory, file), err => {
+                    if (err) throw err;
+                });
+            }else{
+                console.log(`NOT deleting ${path.join(directory, file)}`);
+            }
         }
     });
 });

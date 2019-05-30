@@ -98,6 +98,37 @@ const port = parseInt(process.env.PORT, 10) || 3030;
 const publicPath = `https://localhost:${port}/`;
 
 /**
+ * The dev server
+ *
+ * @see https://webpack.js.org/configuration/dev-server/
+ *
+ * @since 1.8.6
+ *
+ */
+const devServer = {
+	https: true,
+	headers: {
+		'Access-Control-Allow-Origin': '*',
+	},
+	hotOnly: true,
+	watchOptions: {
+		aggregateTimeout: 300,
+	},
+	writeToDisk: true,//False by default, so 404 on intial load
+	disableHostCheck: true,
+	stats: {
+		all: false,
+		assets: true,
+		colors: true,
+		errors: true,
+		performance: true,
+		timings: true,
+		warnings: true,
+	},
+	port,
+};
+
+/**
  * The webpack configuration for "output"
  *
  * @since 1.8.6
@@ -107,8 +138,8 @@ const publicPath = `https://localhost:${port}/`;
  * @type {{libraryTarget: string, filename: string, library: string[]}}
  */
 const output = {
-	filename: '../clients/[name]/build/index.min.js',
-	//filename: isProduction ? '../clients/[name]/build/index.min.js' : '../clients/[name]/build/index.[hash].js',
+	//filename: '../clients/[name]/build/index.min.js',
+	filename: isProduction ? '../clients/[name]/build/index.min.js' : '../clients/[name]/build/index.[hash].js',
 	library: ['calderaForms', '[name]'],
 	libraryTarget: 'this'
 };
@@ -148,27 +179,7 @@ module.exports = {
 	optimization,
 	devtool: 'cheap-module-source-map',
 	context: process.cwd(),
-	devServer: {
-		https: true,
-		headers: {
-			'Access-Control-Allow-Origin': '*',
-		},
-		hotOnly: true,
-		watchOptions: {
-			aggregateTimeout: 300,
-		},
-		disableHostCheck: true,
-		stats: {
-			all: false,
-			assets: true,
-			colors: true,
-			errors: true,
-			performance: true,
-			timings: true,
-			warnings: true,
-		},
-		port,
-	},
+	devServer,
 	module: {
 		strictExportPresence: true,
 		rules: [
