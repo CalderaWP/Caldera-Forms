@@ -21,6 +21,20 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
  */
 const isProduction = 'production' === process.env.NODE_ENV;
 console.log( `Building for ${isProduction ? 'Production' : "Development"}`);
+
+/**
+ * The names of each entry point
+ *
+ * @since 1.8.6
+ *
+ * @type {string[]}
+ */
+const entryPointNames = [
+	'admin',
+	'privacy',
+	'render',
+];
+
 /**
  * The webpack configuration for "entry"
  *
@@ -28,12 +42,7 @@ console.log( `Building for ${isProduction ? 'Production' : "Development"}`);
  *
  * @see https://webpack.js.org/configuration/entry-context#entry
  */
-const entry = [
-	'admin',
-	'privacy',
-	'render',
-	//'legacy-bundle'
-].reduce((memo, entryPointName) => {
+const entry = entryPointNames.reduce((memo, entryPointName) => {
 	memo[entryPointName] = './clients/' + entryPointName + '/index.js';
 	return memo;
 }, {});
@@ -159,6 +168,29 @@ const optimization = isProduction ? {
 	minimize: false
 };
 
+/**
+ * The webpack configuration for "externals"
+ *
+ * @since 1.8.6
+ *
+ * @see https://webpack.js.org/configuration/externals/
+ *
+ * @type {{}}
+ */
+const externals = {
+	jquery: 'jQuery',
+};
+
+// Setup external for each entry point
+entryPointNames.forEach( entryPointName => {
+	externals[ '@/calderaForms' + entryPointName ] = {
+		this: [ 'calderaForms', entryPointName ]
+	}
+} );
+
+
+
+
 // Clean up manifest on exit.
 onExit(() => {
 	try {
@@ -177,6 +209,7 @@ module.exports = {
 	entry,
 	output,
 	optimization,
+	externals,
 	devtool: 'cheap-module-source-map',
 	context: process.cwd(),
 	devServer,
@@ -212,14 +245,6 @@ module.exports = {
 		}),
 		// Enable HMR.
 		new webpack.HotModuleReplacementPlugin(),
-		//Provide lodash global
-		new webpack.ProvidePlugin({
-			'lodash': '_',
-		}),
-		//Provide jQuery global
-		new webpack.ProvidePlugin({
-			jQuery: 'jquery',
-		}),
 		//CSS/SASS
 		cssPlugin
 	],

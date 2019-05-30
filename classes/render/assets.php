@@ -703,9 +703,36 @@ class Caldera_Forms_Render_Assets
 			if ($tag === "blocks") {
 				$tags = ["wp-blocks"];
 			} else if($tag === "render") {
-				$tags = ["wp-element","wp-data"];
-			}
+				$tags = [
+                    'wp-data',
+                    'wp-dom',
+                    'wp-element',
+                    'react'
+                ];
+                //this should not be needed, but it seams to be only way to get react on the page
+				foreach ($tags as $t ){
+				    wp_enqueue_script($t);
+                }
+			}elseif( 'admin-client' === $tag ){
+			    $tags = [
+                    'wp-data',
+                    'wp-dom',
+                    'wp-element',
+                    'lodash'
+                ];
+            }
+
 		}
+
+		foreach ( $tags as $_tag ){
+            if( ! wp_script_is($_tag, 'registered')){
+                var_dump($_tag);
+                global $wp_scripts;
+                wp_default_packages_vendor( $wp_scripts );
+                wp_default_packages_scripts( $wp_scripts );
+                break;
+            }
+        }
 
 		return $tags;
 	}
@@ -1155,7 +1182,7 @@ class Caldera_Forms_Render_Assets
             if( ! empty($assets) ){
                 $first = array_values($assets)[0];
                 $r = wp_remote_get($first);
-                if(!200 === wp_remote_retrieve_response_code($r)) {
+                if(is_wp_error($r) || !200 === wp_remote_retrieve_response_code($r)) {
                     self::$webpack_asset_manifest = [];
                 }
                 else {
