@@ -50,12 +50,8 @@ This is the new stuff, built with webpack. Eventually everything UI will be here
     * viewer - The entry viewer. Work not in progress, not used in plugin.
     * editor - Theoretical.
 
-* Build for development and start watcher.
-    - `npm run start`
-    - NOTE: You need to go to the webpack dev server in the browser and tell Chrome to trust the certificate.
-* Build for production
-    -  `npm run build:webpack`
-    
+
+
 #### `/assets/`
 This is the old stuff, built with grunt.
 
@@ -82,11 +78,16 @@ This is the old stuff, built with grunt.
 * `composer test:delete` - Delete test forms and pages the are on.
 * `composer nuke` - Deletes dependencies, including lock files -- NPM and Composer.
 
-##### npm
-* `npm test` - Run JavaScript test watcher
-* `npm run test:once` - Run JavaScript unit tests once
-* `npm run test:e2e` - Start Cypress e2e test runner.
-* `npm run test:e2e:ci` - Trigger Cypress.io test record.
+##### yarn
+* `yarn test` - Run JavaScript test watcher
+* `yarn build` - Build all JavaScript and CSS for production
+* `yarn build:blocks` - Build blocks JavaScript and CSS for production
+* `yarn build:clients` - Build other JavaScript and CSS for production.
+* `yarn start` - Start dev server for clients that are not blocks and run watcher.
+* `yarn start:blocks` - Start dev server for blocks and run watcher.
+* `yarn test:once` - Run JavaScript unit tests once
+* `yarn test:e2e` - Start Cypress e2e test runner.
+* `yarn test:e2e:ci` - Trigger Cypress.io test record.
 
 ##### wp-cli
 Probably don't use these directly. They will change. Must be prefaced with `docker-compose run --rm cli`
