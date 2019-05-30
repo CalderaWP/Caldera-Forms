@@ -9,6 +9,16 @@ const onExit = require( 'signal-exit' );
 const webpack = require( 'webpack' );
 const ManifestPlugin = require( 'webpack-manifest-plugin' );
 
+/**
+ * Is build production or dev?
+ *
+ * @type {boolean}
+ */
+const isProduction =  'production' === process.env.NODE_ENV;
+
+/**
+ * Entry points managed with this configuration
+ */
 const entry = [
 	'admin',
 	'privacy',
@@ -20,10 +30,30 @@ const entry = [
 }, {} );
 
 
-// For extracting CSS (and SASS) into separate files
+// Extract CSS (and SASS) into compliled CSS files
 const MiniCssExtractPlugin  = require( 'mini-css-extract-plugin' );
+const cssPlugin = new MiniCssExtractPlugin({
+	filename:  isProduction
+		? '../clients/[name]/build/style.min.css'
+		: '../clients/[name]/build/style.[hash].css',
+	chunkFilename: isProduction
+		? '../clients/[name]/build/[id].css'
+		: '../clients/[name]/build/[id].[hash].css'
+});
+const cssRule = {
+	test: /\.(sa|sc|c)ss$/,
+	use: [
+		{
+			loader: MiniCssExtractPlugin.loader,
+			options: {
+				hmr: process.env.NODE_ENV === 'development',
+			},
+		},
+		'css-loader',
+		'sass-loader',
+	],
+};
 
-const isProduction =  'production' === process.env.NODE_ENV;
 
 // Clean up manifest on exit.
 onExit( () => {
@@ -92,16 +122,7 @@ module.exports = {
 
 				},
 			},
-			{
-				test: /\.s?css$/,
-				use: [
-					MiniCssExtractPlugin.loader,
-					{
-						loader: "css-loader"
-					},
-					"sass-loader"
-				]
-			},
+			cssRule
 		],
 	},
 
@@ -126,13 +147,7 @@ module.exports = {
 		new webpack.ProvidePlugin({
 			jQuery: 'jquery',
 		}),
-		new MiniCssExtractPlugin({
-			filename:  isProduction
-				? '../clients/[name]/build/style.min.css'
-				: '../clients/[name]/build/style.[hash].css',
-			chunkFilename: isProduction
-				? '../clients/[name]/build/[id].css'
-				: '../[name]/build/[id].[hash].css'
-		})
+		//CSS/SASS
+		cssPlugin
 	],
 };
