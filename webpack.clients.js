@@ -179,6 +179,9 @@ const optimization = isProduction ? {
  */
 const externals = {
 	jquery: 'jQuery',
+	'react': 'React',
+	'react-dom': 'ReactDOM',
+
 };
 
 // Setup external for each entry point
@@ -246,6 +249,6 @@ module.exports = {
 		// Enable HMR.
 		new webpack.HotModuleReplacementPlugin(),
 		//CSS/SASS
-		cssPlugin
+		cssPlugin,
 	],
 };

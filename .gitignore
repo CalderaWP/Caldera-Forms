@@ -31,3 +31,5 @@ wp-test-case
 dist/*
 !dist/asset-manifest.json
 !dist/README.json
+!dist/react.min.js
+!dist/react-dom.min.js

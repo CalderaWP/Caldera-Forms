@@ -1,8 +1,8 @@
+import React, {Component} from 'react'
 import {Panel, PanelBody, PanelRow} from "@wordpress/components";
 import {DocSearchApp} from '../../../components';
 import {RemotePost} from "../../../components";
 import ProDashboard from "./ProDashboard";
-import {Component} from "@wordpress/element";
 import Translate from "../components/Translate/Translate";
 
 export default class DashboardPanels extends Component {

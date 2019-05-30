@@ -322,6 +322,8 @@ class Caldera_Forms_Render_Assets
 			'privacy' => self::make_url('privacy'),
 			'render' => self::make_url('render'),
 			'legacy-bundle' => self::make_url('legacy-bundle'),
+            'cf-react' => trailingslashit( CFCORE_URL ) . 'dist/react.min.js',
+            'cf-react-dom' => trailingslashit( CFCORE_URL ) . 'dist/react-dom.min.js',
 		];
 
 		return $script_urls;
@@ -495,6 +497,11 @@ class Caldera_Forms_Render_Assets
 	 */
 	public static function enqueue_script($script, $depts = ['jquery'])
 	{
+
+	    if( 'cf-react' === $script ){
+	        wp_enqueue_script($script);
+	        return;
+        }
 		if( 'render' === $script ||$script === self::make_slug('render')  ){
 			if (is_admin() ) {
 				$load_render = false;
@@ -590,7 +597,6 @@ class Caldera_Forms_Render_Assets
             }
 
 		    $manifest = self::get_webpack_manifest();
-
 			if ($script) {
                 if (
                     in_array($name, [
@@ -703,30 +709,34 @@ class Caldera_Forms_Render_Assets
 			if ($tag === "blocks") {
 				$tags = ["wp-blocks"];
 			} else if($tag === "render") {
-				$tags = [
-                    'wp-data',
-                    'wp-dom',
-                    'wp-element',
-                    'react'
-                ];
+                if (! Caldera_Forms_Admin::is_main_page()) {
+                    $tags = [
+                        'wp-data',
+                        'wp-dom',
+                        'wp-element',
+                        'react',
+
+                    ];
+                }
                 //this should not be needed, but it seams to be only way to get react on the page
 				foreach ($tags as $t ){
 				    wp_enqueue_script($t);
                 }
 			}elseif( 'admin-client' === $tag ){
 			    $tags = [
-                    'wp-data',
-                    'wp-dom',
-                    'wp-element',
-                    'lodash'
+                    'lodash',
+                    'cf-react',
+                    'cf-react-dom',
+                    'wp-polyfill',
+                    'wp-keycodes'
                 ];
+			    wp_enqueue_script('lodash' );
             }
 
 		}
 
 		foreach ( $tags as $_tag ){
             if( ! wp_script_is($_tag, 'registered')){
-                var_dump($_tag);
                 global $wp_scripts;
                 wp_default_packages_vendor( $wp_scripts );
                 wp_default_packages_scripts( $wp_scripts );
@@ -874,6 +884,8 @@ class Caldera_Forms_Render_Assets
 			return;
 		} elseif ('editor' == $script_key) {
 			$depts = ['jquery', 'wp-color-picker'];
+		} elseif( 'privacy' === $script_key ) {
+            $depts = ['cf-react','cf-react-dom'];
 		} else {
 			//no needd...
 		}
@@ -1180,19 +1192,14 @@ class Caldera_Forms_Render_Assets
             }
             $assets = json_decode($contents, true);
             if( ! empty($assets) ){
-                $first = array_values($assets)[0];
-                $r = wp_remote_get($first);
-                if(is_wp_error($r) || !200 === wp_remote_retrieve_response_code($r)) {
-                    self::$webpack_asset_manifest = [];
-                }
-                else {
-                    self::$webpack_asset_manifest = [];
-                    foreach ($assets as $asset => $url) {
-                        if (false === strpos($asset, '.map')) {
-                            self::$webpack_asset_manifest[$asset] = $url;
-                        }
+
+                self::$webpack_asset_manifest = [];
+                foreach ($assets as $asset => $url) {
+                    if (false === strpos($asset, '.map')) {
+                        self::$webpack_asset_manifest[$asset] = $url;
                     }
                 }
+
             }else{
                 self::$webpack_asset_manifest = [];
             }

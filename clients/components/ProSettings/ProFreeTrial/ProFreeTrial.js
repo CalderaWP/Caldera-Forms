@@ -1,7 +1,7 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import classNames from 'classnames';
-import {Button} from '@wordpress/components';
+import {Button} from 'react';
 
 /**
  * Create the ProFreeTrial UI
