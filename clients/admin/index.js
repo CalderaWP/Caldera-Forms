@@ -1,10 +1,13 @@
 import './index.scss';
 import React, {Suspense} from 'React';
 import {render} from 'react-dom';
+import globe from './globe.svg';
+
 const FormsAdminApp = React.lazy(() => import('./MainDashboard/components/FormsAdminApp'));
+
 function LazyApp(props){
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<globe />}>
             <FormsAdminApp {...props} />
         </Suspense>
     )

@@ -985,10 +985,10 @@
     "@babel/preset-env" "^7.3.1"
     "@babel/preset-react" "^7.0.0"
 
-"@calderajs/components@^0.9.6":
-  version "0.9.6"
-  resolved "https://registry.yarnpkg.com/@calderajs/components/-/components-0.9.6.tgz#c0847dff6e970646b10ce211ed35d92fb1fd2115"
-  integrity sha512-2PBILX0xIp5SqDon6MQqwuYFLecwhvMAqs5GRcpFTdB2s8ftdlNuynCMK+UZNguZS0hCWOu7z5ujiE0EW1Rs5A==
+"@calderajs/components@^0.9.8":
+  version "0.9.8"
+  resolved "https://registry.yarnpkg.com/@calderajs/components/-/components-0.9.8.tgz#48062b12e497e68cb3359f1ebcf9cc715ad153e9"
+  integrity sha512-+0GhKaQFrxgX1JPJ4k9FAqf+eE6AXEVHf2V084AJ9BBc/7g1t2HX96m22L6/rczfIdD7d2VOATSDcJ9hjuCOZQ==
   dependencies:
     "@babel/plugin-proposal-class-properties" "^7.4.0"
     "@rebass/grid" "^6.0.0"
@@ -1017,12 +1017,12 @@
     uuid "^3.3.2"
     yup "^0.26.10"
 
-"@calderajs/forms@0.9.6":
-  version "0.9.6"
-  resolved "https://registry.yarnpkg.com/@calderajs/forms/-/forms-0.9.6.tgz#f84c188bddd73a362675836f4f7a71ace9167376"
-  integrity sha512-VPwgP8BF0mXarsHys9OYZjVcSzKTYhbZR5YCqFfIlHiOkThIPWbauLqmnAkiLDyKYvo0LXqTz5VOn/tcMMkM8A==
+"@calderajs/forms@0.9.8":
+  version "0.9.8"
+  resolved "https://registry.yarnpkg.com/@calderajs/forms/-/forms-0.9.8.tgz#a859433705816d554f757ba63ae1d7ef4e53bcea"
+  integrity sha512-5W8EL8aLMjD88feHBH5Xdp+8ofI2OJhDRinEmC8f6Z9UqvH7icMMju9yQ/S0/+kDZTcDxDXUJ9DsU2E8Gu58iA==
   dependencies:
-    "@calderajs/components" "^0.9.6"
+    "@calderajs/components" "^0.9.8"
     axios "^0.18.0"
     cross-env "^5.2.0"
     generact "^0.4.0"
@@ -3221,6 +3221,11 @@ babel-plugin-macros@^2.0.0:
     "@babel/runtime" "^7.4.2"
     cosmiconfig "^5.2.0"
     resolve "^1.10.0"
+
+babel-plugin-react-svg@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/babel-plugin-react-svg/-/babel-plugin-react-svg-3.0.1.tgz#baa804fcd851ed928035975c2a31725b16581395"
+  integrity sha512-BHJoNHMk03GunN2C9Z7zivhtY39h93yRagOOObGulSlTVUsUL40iAa4GlpGFkclGqGBkgtW06VUtENvfwCUGNA==
 
 "babel-plugin-styled-components@>= 1":
   version "1.10.0"
@@ -9419,6 +9424,11 @@ lodash-es@^4.17.11:
   resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.11.tgz#145ab4a7ac5c5e52a3531fb4f310255a152b4be0"
   integrity sha512-DHb1ub+rMjjrxqlB3H56/6MXtm1lSksDp2rA2cNWjG8mlDUYFhUj3Di2Zn5IwSU87xLv8tNIQ7sSwE/YOX/D/Q==
 
+lodash.clonedeep@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
+  integrity sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=
+
 lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
@@ -9453,6 +9463,11 @@ lodash.isequal@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
   integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=
+
+lodash.isplainobject@^4.0.6:
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz#7c526a52d89b45c45cc690b88163be0497f550cb"
+  integrity sha1-fFJqUtibRcRcxpC4gWO+BJf1UMs=
 
 lodash.isstring@^4.0.1:
   version "4.0.1"
@@ -12261,6 +12276,27 @@ react-spinners@^0.5.4:
     prop-types "^15.5.10"
     recompose "0.27.1 - 0.30.0"
 
+react-svg-core@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/react-svg-core/-/react-svg-core-3.0.1.tgz#bd2fc8fdef7f4786d985119c3324e6e6db5d52fd"
+  integrity sha512-4V1cXprbZePERYfQY6nkIso+rUaDp5oeMKI2X87bWHTekoMzom8YUKAoXC+TJ67TG4lPwL7N+UXc4IWGu9N1Dg==
+  dependencies:
+    "@babel/core" "^7.4.4"
+    "@babel/plugin-syntax-jsx" "^7.2.0"
+    "@babel/preset-react" "^7.0.0"
+    babel-plugin-react-svg "^3.0.1"
+    lodash.clonedeep "^4.5.0"
+    lodash.isplainobject "^4.0.6"
+    svgo "^1.2.2"
+
+react-svg-loader@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/react-svg-loader/-/react-svg-loader-3.0.1.tgz#65b0359ad6f5af578497afaaeac686e7dc7c0f9c"
+  integrity sha512-43VG2S+aKwu7MIagxhzHyN9nPTJBatHL7RfIxyqQ2/voKXi0xkIOxvyfIt04G2HcVlDdxeq6CxyR1sZx+iL3Cw==
+  dependencies:
+    loader-utils "^1.2.3"
+    react-svg-core "^3.0.1"
+
 react-test-renderer@^16.0.0-0, react-test-renderer@^16.6.3:
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.8.6.tgz#188d8029b8c39c786f998aa3efd3ffe7642d5ba1"
@@ -13979,7 +14015,7 @@ svg-tags@^1.0.0:
   resolved "https://registry.yarnpkg.com/svg-tags/-/svg-tags-1.0.0.tgz#58f71cee3bd519b59d4b2a843b6c7de64ac04764"
   integrity sha1-WPcc7jvVGbWdSyqEO2x95krAR2Q=
 
-svgo@^1.0.0:
+svgo@^1.0.0, svgo@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/svgo/-/svgo-1.2.2.tgz#0253d34eccf2aed4ad4f283e11ee75198f9d7316"
   integrity sha512-rAfulcwp2D9jjdGu+0CuqlrAUin6bBWrpoqXWwKDZZZJfXcUXQSxLJOFJCQCSA0x0pP2U0TxSlJu2ROq5Bq6qA==
