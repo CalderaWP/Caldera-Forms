@@ -113,7 +113,20 @@ const output = {
 	libraryTarget: 'this'
 };
 
-
+/**
+ * The webpack configuration for "optimization"
+ *
+ * @since 1.8.6
+ *
+ * @see https://webpack.js.org/configuration/optimization/
+ *
+ * @type {{}}
+ */
+const optimization = isProduction ? {
+	minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})]
+} : {
+	minimize: false
+};
 
 // Clean up manifest on exit.
 onExit(() => {
@@ -132,6 +145,7 @@ module.exports = {
 	mode: isProduction ? 'production' : 'development',
 	entry,
 	output,
+	optimization,
 	devtool: 'cheap-module-source-map',
 	context: process.cwd(),
 	devServer: {
