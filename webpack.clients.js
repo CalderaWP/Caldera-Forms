@@ -1,45 +1,70 @@
 /**
  * This file defines the configuration for development and dev-server builds.
  */
-const fs = require( 'fs' );
-const { unlinkSync } = fs;
-const path = require( 'path' );
+const fs = require('fs');
+const {unlinkSync} = fs;
+const path = require('path');
 const {join} = path;
-const onExit = require( 'signal-exit' );
-const webpack = require( 'webpack' );
-const ManifestPlugin = require( 'webpack-manifest-plugin' );
+const onExit = require('signal-exit');
+const webpack = require('webpack');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const TerserJSPlugin = require('terser-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 /**
  * Is build production or dev?
  *
+ * @since 1.8.6
+ *
  * @type {boolean}
  */
-const isProduction =  'production' === process.env.NODE_ENV;
-
+const isProduction = 'production' === process.env.NODE_ENV;
+console.log( `Building for ${isProduction ? 'Production' : "Development"}`);
 /**
- * Entry points managed with this configuration
+ * The webpack configuration for "entry"
+ *
+ * @since 1.8.6
+ *
+ * @see https://webpack.js.org/configuration/entry-context#entry
  */
 const entry = [
 	'admin',
 	'privacy',
 	'render',
 	//'legacy-bundle'
-].reduce( ( memo, entryPointName ) => {
-	memo[ entryPointName ] = './clients/' + entryPointName + '/index.js';
+].reduce((memo, entryPointName) => {
+	memo[entryPointName] = './clients/' + entryPointName + '/index.js';
 	return memo;
-}, {} );
+}, {});
 
-
-// Extract CSS (and SASS) into compliled CSS files
-const MiniCssExtractPlugin  = require( 'mini-css-extract-plugin' );
+/**
+ * Compiler plugin for (S)CSS
+ *
+ * @since 1.8.6
+ *
+ * @see https://github.com/webpack-contrib/mini-css-extract-plugin
+ *
+ * @type {MiniCssExtractPlugin}
+ */
 const cssPlugin = new MiniCssExtractPlugin({
-	filename:  isProduction
+	filename: isProduction
 		? '../clients/[name]/build/style.min.css'
 		: '../clients/[name]/build/style.[hash].css',
 	chunkFilename: isProduction
 		? '../clients/[name]/build/[id].css'
 		: '../clients/[name]/build/[id].[hash].css'
 });
+
+/**
+ * Babel loader rule for (S)CSS
+ *
+ * @since 1.8.6
+ *
+ * @see https://github.com/webpack-contrib/mini-css-extract-plugin
+ *
+ * @type {{test: RegExp, use: *[]}}
+ */
 const cssRule = {
 	test: /\.(sa|sc|c)ss$/,
 	use: [
@@ -54,27 +79,50 @@ const cssRule = {
 	],
 };
 
+/**
+ * The port that webpack dev server uses
+ *
+ * @since 1.8.6
+ *
+ * @type {number}
+ */
+const port = parseInt(process.env.PORT, 10) || 3030;
 
-// Clean up manifest on exit.
-onExit( () => {
-	try {
-		unlinkSync( 'build/asset-manifest.json' );
-	} catch ( e ) {
-		// Silently ignore unlinking errors: so long as the file is gone, that is good.
-	}
-} );
+/**
+ * The URL that webpack dev server uses
+ *
+ * @since 1.8.6
+ *
+ * @type {string}
+ */
+const publicPath = `https://localhost:${port}/`;
 
-const port = parseInt( process.env.PORT, 10 ) || 3030;
-const publicPath = `https://localhost:${ port }/`;
-
+/**
+ * The webpack configuration for "output"
+ *
+ * @since 1.8.6
+ *
+ * @see https://webpack.js.org/configuration/output/
+ *
+ * @type {{libraryTarget: string, filename: string, library: string[]}}
+ */
 const output = {
 	filename: '../clients/[name]/build/index.min.js',
 	//filename: isProduction ? '../clients/[name]/build/index.min.js' : '../clients/[name]/build/index.[hash].js',
-	library: [ 'calderaForms', '[name]' ],
+	library: ['calderaForms', '[name]'],
 	libraryTarget: 'this'
 };
 
 
+
+// Clean up manifest on exit.
+onExit(() => {
+	try {
+		unlinkSync('./build/asset-manifest.json');
+	} catch (e) {
+		// Silently ignore unlinking errors: so long as the file is gone, that is good.
+	}
+});
 /**
  * webpack config used for compiling clients that are not the blocks
  *
@@ -82,6 +130,8 @@ const output = {
  */
 module.exports = {
 	mode: isProduction ? 'production' : 'development',
+	entry,
+	output,
 	devtool: 'cheap-module-source-map',
 	context: process.cwd(),
 	devServer: {
@@ -105,8 +155,6 @@ module.exports = {
 		},
 		port,
 	},
-	entry,
-	output,
 	module: {
 		strictExportPresence: true,
 		rules: [
@@ -114,7 +162,7 @@ module.exports = {
 				// Process JS with Babel.
 				test: /\.js$/,
 				exclude: /(node_modules|clients\/editor)/,
-				loader: require.resolve( 'babel-loader' ),
+				loader: require.resolve('babel-loader'),
 				options: {
 					// Cache compilation results in ./node_modules/.cache/babel-loader/
 					cacheDirectory: true,
@@ -134,7 +182,7 @@ module.exports = {
 			writeToFileEmit: true,
 			publicPath,
 			generate: (seed, files) => files.reduce((manifest, {name, path}) => {
-				return ({...manifest, [name]: path.replace( '/../clients/', '/clients/' )})
+				return ({...manifest, [name]: path.replace('/../clients/', '/clients/')})
 			}, seed)
 		}),
 		// Enable HMR.
