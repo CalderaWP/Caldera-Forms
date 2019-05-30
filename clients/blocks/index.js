@@ -24,7 +24,6 @@ registerBlockType( 'calderaforms/cform', {
 		}
     },
     edit({ attributes, setAttributes, className, isSelected, id } ) {
-
         /**
          * Change handler for when form in block changes
          *
@@ -34,9 +33,7 @@ registerBlockType( 'calderaforms/cform', {
          */
         const setCurrentForm = (newFormId) => {
             setAttributes({formId:newFormId});
-        };
-
-
+        }
         return (
 		<div>
 			<InspectorControls>
@@ -72,7 +69,7 @@ registerBlockType( 'calderaforms/cform', {
             </div>
         );
     },
-    save: function(  ) {
+    save() {
        return null;
     },
 } );

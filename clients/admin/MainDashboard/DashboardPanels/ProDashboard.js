@@ -1,12 +1,13 @@
+import React,{Fragment,useEffect,useState} from 'react';
 import {TabPanel} from "@wordpress/components";
 import {ProWhatIs} from "../../../components/ProSettings";
+import {Addons} from "../components/AddOns/Addons";
 
 const onSelect = () => {
 };
-import {Addons} from "../components/AddOns/Addons";
-import {Fragment} from "react";
 
 export default function ProDashboard({isProConnected,apiRoot}) {
+
     return (
         <Fragment>
             <ProWhatIs />

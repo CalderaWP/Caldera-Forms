@@ -95,16 +95,7 @@ class Caldera_Forms_Admin_Assets
 
         wp_register_script(self::slug('baldrick'), Caldera_Forms_Render_Assets::make_url('wp-baldrick-full'), array('jquery'), $version);
 
-
-        $admin_client_dependencies = [
-            'wp-element',
-            'wp-components'
-        ];
-        global $wp_version;
-        if (!version_compare($wp_version, '5.0.0', '>=')) {
-            $admin_client_dependencies[] = Caldera_Forms_Render_Assets::make_slug('legacy-bundle');
-        }
-        wp_register_script(Caldera_Forms_Render_Assets::make_slug('admin-client'), Caldera_Forms_Render_Assets::make_url('admin-client'), $admin_client_dependencies, $version);
+        wp_register_script(Caldera_Forms_Render_Assets::make_slug('admin-client'), Caldera_Forms_Render_Assets::make_url('admin-client'), Caldera_Forms_Render_Assets::cf_dependencies('admin-client' ), $version);
 
         wp_register_script(self::slug('admin'), Caldera_Forms_Render_Assets::make_url('admin'), array(
             self::slug('baldrick'),
@@ -349,6 +340,7 @@ class Caldera_Forms_Admin_Assets
                 'nonce' => Caldera_Forms_API_Util::get_core_nonce()
             ),
             'isProConnected' => (bool) caldera_forms_pro_is_active(),
+            'showSurveyFirst' => true,
         );
         $api_config = new Caldera_Forms_API_JsConfig;
         $data = array_merge($data, $api_config->toArray());

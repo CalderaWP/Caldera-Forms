@@ -20,7 +20,6 @@ function caldera_forms_get_v2_container()
 }
 
 /**
-<<<<<<< HEAD
  * Setup Cf2 container
  *
  * @since 1.8.0
@@ -68,4 +67,3 @@ function caldera_forms_schedule_job(\calderawp\calderaforms\cf2\Jobs\Job $job, $
 		->getService(\calderawp\calderaforms\cf2\Services\QueueSchedulerService::class)
 		->schedule($job, $delay);
 }
-
