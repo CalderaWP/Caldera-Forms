@@ -19,8 +19,10 @@
   "scripts": {
     "build": "grunt && cross-env BABEL_ENV=default NODE_ENV=production webpack",
     "start": "webpack-dev-server --config webpack.clients.js",
+    "start:blocks": "wp-scripts start  --config webpack.blocks.js ",
+    "build:blocks": "wp-scripts build  --config webpack.blocks.js ",
     "build:clients": "yarn build:clients:pre && webpack --config webpack.clients.js",
-    "build:clients:pre" : "node clients/deleteBuilds.js",
+    "build:clients:pre": "node clients/deleteBuilds.js",
     "build:webpack": "cross-env BABEL_ENV=default NODE_ENV=production webpack  --config webpack.clients.js",
     "build:grunt": "grunt",
     "dev": "cross-env BABEL_ENV=default webpack --watch",

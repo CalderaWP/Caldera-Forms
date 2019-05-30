@@ -44,6 +44,12 @@ const output = {
 	libraryTarget: 'this'
 };
 
+
+/**
+ * webpack config used for compiling clients that are not the blocks
+ *
+ * @since 1.8.6
+ */
 module.exports = {
 	mode: isProduction ? 'production' : 'development',
 	devtool: 'cheap-module-source-map',
