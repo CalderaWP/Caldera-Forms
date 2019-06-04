@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import {CalderaFormsFieldPropType, CalderaFormsFieldRender} from "./CalderaFormsFieldRender";
 import isEmpty from 'validator/lib/isEmpty';
 import {getFieldConfigBy, setBlocking, removeFromBlocking} from "../util";
+import find from 'array-find';
+import includes from 'array-includes';
 
 //Collection of change handlers to prevent re-creating
 const handlers = {};
@@ -138,8 +140,8 @@ export class CalderaFormsRender extends Component {
 		const fieldIds = pickArray(fieldsToControl, 'fieldIdAttr');
 		const values = {};
 		Object.keys(this.state).map(key => {
-			if (fieldIds.includes(key)) {
-				const fieldId = fieldsToControl.find(field => key === field.fieldIdAttr).fieldId;
+			if (includes(fieldIds, key)) {
+				const fieldId = find(fieldsToControl, (field => key === field.fieldIdAttr) ).fieldId;
 				values[fieldId] = this.state[key];
 			}
 		});

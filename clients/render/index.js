@@ -4,6 +4,7 @@ import {CalderaFormsRender} from "./components/CalderaFormsRender";
 import React from 'react';
 import ReactDOM from "react-dom";
 import domReady from '@wordpress/dom-ready';
+import find from 'array-find';
 import {
 	hashFile,
 	createMediaFromFile,
@@ -103,7 +104,7 @@ domReady(function () {
 
 			if (Object.keys(values).length) {
 				Object.keys(values).forEach(fieldId => {
-					const field = fieldsToControl.find(field => fieldId === field.fieldId);
+					const field = find(fieldsToControl, (field => fieldId === field.fieldId) );
 					if (field) {
 						if ('file' === field.type) {
 							const processFunctions = {processFiles, hashAndUpload, hashFile, createMediaFromFile, handleFileUploadResponse, handleFileUploadError, processFormSubmit};

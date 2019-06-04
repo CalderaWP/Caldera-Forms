@@ -6,7 +6,8 @@ import {
 	removeFromUploadStarted,
 	setBlocking,
 	processAnimation
-} from './util'
+} from './util';
+import includes from 'array-includes';
 
 /**
  * Trigger $form.submit when uploadCompleted length === all fields values length
@@ -210,7 +211,7 @@ export const processFileField = (processData, processFunctions) => {
 	const strings = CF_API_DATA.strings.cf2FileField;
 	let shouldBeValidating = false;
 	//do not upload after complete
-	if ( cf2.uploadCompleted.includes(fieldId)) {
+	if ( includes(cf2.uploadCompleted, fieldId)) {
 		removeFromPending(fieldId,cf2);
 		removeFromBlocking(fieldId,cf2,field);
 		return;

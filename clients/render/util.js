@@ -1,7 +1,8 @@
 const SparkMD5 = require('spark-md5');
+import find from 'array-find';
 
 export const getFieldConfigBy = (fieldConfigs, findBy, findWhere) => {
-	return fieldConfigs.find(field => findWhere === field[findBy]);
+	return find(fieldConfigs, (field => findWhere === field[findBy]) );
 
 };
 
@@ -168,9 +169,9 @@ export const setSubmitButtonState = (cf2, fieldConfig, state) => {
 
 	//If state === true enable submit button else disable submit button
 	if(state) {
-		form.find(':submit').prop('disabled',false);
+		find(form, ':submit').prop('disabled',false);
 	} else {
-		form.find(':submit').prop('disabled',true);
+		find(form, ':submit').prop('disabled',true);
 	}
 	return state;
 }
