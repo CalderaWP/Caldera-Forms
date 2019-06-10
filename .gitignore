@@ -29,7 +29,8 @@ wp-test-case
 
 # Avoid committing webpack dev client assets
 dist/*
-!dist/asset-manifest.json
-!dist/README.json
+dist/caldera-hot-load/*
+!dist/caldera-hot-load/.gitkeep
+!dist/README.md
 !dist/react.min.js
 !dist/react-dom.min.js
