@@ -135,6 +135,8 @@ if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
 		add_filter( 'style_loader_src',
 		 [Caldera_Forms_Render_Assets::class,'maybe_remove_version_query_arg'],
 		15, 2 );
+
+		add_action( 'init', [Caldera_Forms_Render_Assets::class,'maybe_redirect_to_dist']);
 		/**
 		 * Start cf2 system
 		 *

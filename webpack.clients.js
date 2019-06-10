@@ -134,7 +134,7 @@ const devServer = {
 		timings: true,
 		warnings: true,
 	},
-	port,
+	port
 };
 
 /**
@@ -150,7 +150,9 @@ const output = {
 	//filename: '../clients/[name]/build/index.min.js',
 	filename: isProduction ? '../clients/[name]/build/index.min.js' : '../clients/[name]/build/index.[hash].js',
 	library: ['calderaForms', '[name]'],
-	libraryTarget: 'this'
+	libraryTarget: 'this',
+	hotUpdateChunkFilename: '../dist/caldera-hot-load/[name].[hash].js',
+    hotUpdateMainFilename: '../dist/caldera-hot-load/hot-update.json' 
 };
 
 /**
@@ -243,7 +245,9 @@ module.exports = {
 			}, seed)
 		}),
 		// Enable HMR.
-		new webpack.HotModuleReplacementPlugin(),
+		new webpack.HotModuleReplacementPlugin({
+			multiStep: true,
+		}),
 		//CSS/SASS
 		cssPlugin,
 	],
