@@ -181,7 +181,6 @@ const externals = {
 	jquery: 'jQuery',
 	'react': 'React',
 	'react-dom': 'ReactDOM',
-
 };
 
 // Setup external for each entry point
@@ -190,9 +189,6 @@ entryPointNames.forEach( entryPointName => {
 		this: [ 'calderaForms', entryPointName ]
 	}
 } );
-
-
-
 
 // Clean up manifest on exit.
 onExit(() => {
