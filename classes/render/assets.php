@@ -1208,6 +1208,16 @@ class Caldera_Forms_Render_Assets
 
     }
 
+	/**
+	 * If neccasary, remove 'ver' query arg from CSS/ JS URL
+	 * 
+	 * This is neccasary when webpack is serving the asset for HMR to work.
+	 * 
+	 * @since 1.8.6
+	 * 
+	 * @uses "script_loader_src" filter
+	 * @uses "style_loader_src" filter
+	 */
 	public static function maybe_remove_version_query_arg( $src,$handle){
 		$manifest = self::get_webpack_manifest();
 		if( empty( $manifest)){
@@ -1221,9 +1231,25 @@ class Caldera_Forms_Render_Assets
 		])){
 			$src = remove_query_arg('ver',$src );
 		}
-
-
 		return $src;
+
+	}
+
+	public static function maybe_redirect_to_dist(){
+		$manifest = self::get_webpack_manifest();
+		if( empty($manifest)){
+			return;
+		}
+		$uri = isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI']  : '';
+		if( $uri && 0 === strpos( $uri,'/dist/caldera-hot-load' ) ){
+	
+			$path =  CFCORE_PATH  . $_SERVER['REQUEST_URI'];
+			if( file_exists($path)){
+				cf_redirect(untrailingslashit(CFCORE_URL) . $uri);exit;
+			}
+			var_dump($path);
+		}
+	
 
 	}
 }
