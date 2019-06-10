@@ -17,19 +17,19 @@ Drag & Drop WordPress Responsive Form Builder
     * [Making Changes To Codebase - Pull Request Workflow](./contributing/pull-request-workflow.md)
 
 ### Install for development
-Requires: git, npm, Grunt.
+Requires: git, yarn, Grunt.
 - Clone repo to plugin directory
     - `git clone git@github.com:CalderaWP/Caldera-Forms.git`
 - Switch directory
     - `cd Caldera-Forms.git`
 - If you are using your own local development environment:
-    - `npm i && composer install`
+    - `yarn i && composer install`
 - If you are wish to use [the provided local development environment](./contributing/local-dev.md)
     - `composer dev:install`
     
 ### Build For Release
 To create a build to ship to WordPress.org:
-`npm run package`
+`yarn package`
 
 This creates `/build/<version>` where `<version>` is the current version set in `package.json`. This creates a directory you can ZIP up for testing or whatever.
 
@@ -56,9 +56,9 @@ This is the new stuff, built with webpack. Eventually everything UI will be here
 This is the old stuff, built with grunt.
 
 * Build for development and start watcher.
-    - `npm run dev:grunt`
+    - `yarn dev:grunt`
 * Build for production
-    -  `npm run build:grunt`    
+    -  `yarn build:legacy`    
 
 #### CLI Commands
 ##### Composer
@@ -76,7 +76,7 @@ This is the old stuff, built with grunt.
 * `composer test:unit` - Run php unit tests.
 * `composer test:setup` - Adds test forms and puts them on pages.
 * `composer test:delete` - Delete test forms and pages the are on.
-* `composer nuke` - Deletes dependencies, including lock files -- NPM and Composer.
+* `composer nuke` - Deletes dependencies, including lock files --yarn and Composer.
 
 ##### yarn
 * `yarn test` - Run JavaScript test watcher
@@ -99,13 +99,13 @@ Probably don't use these directly. They will change. Must be prefaced with `dock
 ### Release To WordPress.org
 ##### Requires
 * [svn](https://subversion.apache.org/quick-start#installing-the-client)
-* [npm](https://www.npmjs.com/get-npm)
+* [yarn](https://yarnpkg.com/en/) - Please use Yarn, not npm.
 * Grunt `npm install -g grunt-cli`
 * [Have commit access to Caldera Forms svn](https://wordpress.org/plugins/caldera-forms/advanced/#committer-list)
 
 #### Steps
 * Build release file
-    - `npm run package`
+    - `yarn package`
 * Push Tag to WordPress.org
     - `cd bin`
     - `bash deploy-wp-org-tag.sh 12345 christiechirinos`

@@ -192,6 +192,37 @@ entryPointNames.forEach( entryPointName => {
 	}
 } );
 
+/**
+ * The webpack configuration for "plugins"
+ * 
+ * @since 1.8.6
+ * 
+ * @seehttps://webpack.js.org/configuration/plugins 
+ */
+let plugins = [
+	//CSS/SASS
+	cssPlugin,
+];
+//Add more plugins in development
+if( ! isProduction ){
+	plugins = [...plugins, 
+		// Generate a manifest file which contains a mapping of all asset filenames
+		// to their corresponding output file so that PHP can pick up their paths.
+		new ManifestPlugin({
+			fileName: 'asset-manifest.json',
+			writeToFileEmit: true,
+			publicPath,
+			generate: (seed, files) => files.reduce((manifest, {name, path}) => {
+				//remove ".." in paths written to asset manifest
+				return ({...manifest, [name]: path.replace('/../clients/', '/clients/')})
+			}, seed)
+		}),
+		// Enable HMR.
+		new webpack.HotModuleReplacementPlugin({
+			multiStep: true,
+		}),] 
+}
+
 // Clean up manifest on exit.
 onExit(() => {
 	try {
@@ -233,22 +264,5 @@ module.exports = {
 		],
 	},
 
-	plugins: [
-		// Generate a manifest file which contains a mapping of all asset filenames
-		// to their corresponding output file so that PHP can pick up their paths.
-		new ManifestPlugin({
-			fileName: 'asset-manifest.json',
-			writeToFileEmit: true,
-			publicPath,
-			generate: (seed, files) => files.reduce((manifest, {name, path}) => {
-				return ({...manifest, [name]: path.replace('/../clients/', '/clients/')})
-			}, seed)
-		}),
-		// Enable HMR.
-		new webpack.HotModuleReplacementPlugin({
-			multiStep: true,
-		}),
-		//CSS/SASS
-		cssPlugin,
-	],
+	plugins,
 };
