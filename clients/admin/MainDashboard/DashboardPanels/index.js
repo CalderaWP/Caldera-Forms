@@ -44,7 +44,7 @@ export default class DashboardPanels extends Component {
             <div className={'caldera-grid'}>
                 <Panel header="Welcome To Caldera Forms">
                     <PanelBody
-                        title="Documentation"
+                        title="Documentaton"
                         icon="welcome-widgets-menus"
                         initialOpen={false}
                     >

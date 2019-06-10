@@ -12,7 +12,7 @@ module.exports = {
         index: path.resolve( process.cwd(), 'clients/blocks', 'index.js' ),
     },
     output: {
-        filename: '[name].js',
+        filename: 'index.min.js',
         path: path.resolve( process.cwd(), 'clients/blocks/build' ),
     }
 };
