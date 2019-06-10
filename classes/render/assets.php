@@ -1208,5 +1208,22 @@ class Caldera_Forms_Render_Assets
 
     }
 
+	public static function maybe_remove_version_query_arg( $src,$handle){
+		$manifest = self::get_webpack_manifest();
+		if( empty( $manifest)){
+			return $src;
+		}
+		if( in_array($handle,[
+			'cf-admin-client',
+			'cf-render',
+			'cf-privacy',
+			'cf-block'
+		])){
+			$src = remove_query_arg('ver',$src );
+		}
 
+
+		return $src;
+
+	}
 }

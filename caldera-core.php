@@ -129,6 +129,12 @@ if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
 		 */
 		do_action('caldera_forms_includes_complete');
 
+		add_filter( 'script_loader_src',
+		 [Caldera_Forms_Render_Assets::class,'maybe_remove_version_query_arg'],
+		15, 2 );
+		add_filter( 'style_loader_src',
+		 [Caldera_Forms_Render_Assets::class,'maybe_remove_version_query_arg'],
+		15, 2 );
 		/**
 		 * Start cf2 system
 		 *
