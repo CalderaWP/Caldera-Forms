@@ -20,6 +20,8 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
  * @type {boolean}
  */
 const isProduction = 'production' === process.env.NODE_ENV;
+const isTest = 'testing' === process.env.NODE_ENV
+console.log( `${isTest ? 'isTest' : "Is Not Test"}`);
 console.log( `Building for ${isProduction ? 'Production' : "Development"}`);
 
 /**
@@ -179,7 +181,7 @@ const optimization = isProduction ? {
  *
  * @type {{}}
  */
-const externals = {
+const externals = isTest ? {} : {
 	jquery: 'jQuery',
 	'react': 'React',
 	'react-dom': 'ReactDOM',

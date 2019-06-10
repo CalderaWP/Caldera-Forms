@@ -1,4 +1,4 @@
-import {CalderaFormsFieldGroup, Fragment} from "../CalderaFormsFieldGroup";
+import {CalderaFormsFieldGroup} from "../CalderaFormsFieldGroup";
 import {CalderaFormsFieldPropType} from "../CalderaFormsFieldRender";
 import {sizeFormat} from "../../util";
 import React from 'react';

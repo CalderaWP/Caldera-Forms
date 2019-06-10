@@ -1,3 +1,5 @@
+import React from 'react';
+
 import renderer from 'react-test-renderer';
 import {FieldGroup} from "../../../privacy/components/FieldGroup";
 import {HelpBox} from "../../../privacy/components/HelpBox";
