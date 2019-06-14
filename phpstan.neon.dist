@@ -1,0 +1,41 @@
+# Start command: composer update --classmap-authoritative && vendor/bin/phpstan analyze
+
+includes:
+    - phar://phpstan.phar/conf/bleedingEdge.neon
+    - vendor/szepeviktor/phpstan-wordpress/extension.neon
+parameters:
+    # TODO level: max
+    level: 2
+    paths:
+# function declaration+side-effect:       - %currentWorkingDirectory%/caldera-core.php
+        - %currentWorkingDirectory%/classes/
+        - %currentWorkingDirectory%/cf2/
+        - %currentWorkingDirectory%/includes/
+        - %currentWorkingDirectory%/processors/functions.php
+    autoload_files:
+        - %currentWorkingDirectory%/tests/phpstan/bootstrap.php
+        # Procedural code
+        - %currentWorkingDirectory%/includes/functions.php
+        - %currentWorkingDirectory%/includes/updater.php
+        - %currentWorkingDirectory%/includes/plugin-page-banner.php
+        - %currentWorkingDirectory%/includes/field_processors.php
+        - %currentWorkingDirectory%/includes/custom_field_class.php
+        - %currentWorkingDirectory%/includes/filter_addon_plugins.php
+        - %currentWorkingDirectory%/includes/ajax.php
+        - %currentWorkingDirectory%/includes/compat.php
+        - %currentWorkingDirectory%/cf2/functions.php
+        - %currentWorkingDirectory%/processors/functions.php
+        - %currentWorkingDirectory%/includes/cf-pro-client/bootstrap-cf-pro.php
+        - %currentWorkingDirectory%/includes/cf-pro-client/cf-pro-init.php
+        - %currentWorkingDirectory%/ui/blocks/init.php
+        # Conditional loading
+        - %currentWorkingDirectory%/classes/caldera-grid.php
+    autoload_directories:
+        - %currentWorkingDirectory%/classes/
+        - %currentWorkingDirectory%/processors/classes/
+    ignoreErrors:
+        # Uses func_get_args()
+        - '#^Function apply_filters invoked with [34567] parameters, 2 required\.$#'
+        - '#^Function do_action invoked with [3456] parameters, 1-2 required\.$#'
+        - '#^Function add_query_arg invoked with [123] parameters?, 0 required\.$#'
+        - '#^Function current_user_can invoked with 2 parameters, 1 required\.$#'

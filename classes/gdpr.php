@@ -248,7 +248,7 @@ class Caldera_Forms_GDPR
 
                 $export_items[] =[
                     'group_id' => static::group_id($form),
-                    'group_label' => static::group_label($form, $field_value),
+                    'group_label' => static::group_label($form),
                     'item_id' => self::get_entry_id_from_result($field_value),
                     'data' => $data
                 ];

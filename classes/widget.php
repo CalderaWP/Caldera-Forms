@@ -32,6 +32,7 @@ class Caldera_Forms_Widget extends WP_Widget {
 
 		if(!empty($instance['form'])){
 
+			// FIXME Consider moving to wp_parse_args()
 			extract($args, EXTR_SKIP);
 
 

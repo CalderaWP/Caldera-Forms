@@ -26,3 +26,5 @@ wp-test-case
 /vendor/**/.git
 
 !assets/build/
+
+/vendor/

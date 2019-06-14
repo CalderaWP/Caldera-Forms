@@ -14,7 +14,7 @@
  *
  * See: http://php.net/manual/en/function.http-build-query.php
  *
- * @param $url
+ * @param string $url
  * @param array $parts
  * @param int $flags
  * @param bool|false $new_url
