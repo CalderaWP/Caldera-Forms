@@ -115,7 +115,7 @@ class Caldera_Forms_Files{
      */
     public static function add_upload_filter( $field_id , $form_id, $private = true, $transient_id = null ){
 	    if ( $private ) {
-		    self::$dir = apply_filters( 'caldera_forms_upload_directory', self::secret_dir( $field_id, $form_id, $transient_id), $field_id, $form_id );
+		    self::$dir = apply_filters( 'caldera_forms_private_upload_directory', self::secret_dir( $field_id, $form_id, $transient_id), $field_id, $form_id, $transient_id );
 	    }else{
 		    /**
 		     * Filter directory for uploaded files
