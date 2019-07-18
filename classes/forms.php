@@ -481,7 +481,7 @@ class Caldera_Forms_Forms {
 	 * @return string|bool Form ID if updated, false if not
 	 */
 	public static function save_form( $data, $type = 'primary' ){
-
+		
 		
 		if(!empty($data['fields'])){
 			foreach($data['fields'] as &$field){
@@ -494,7 +494,7 @@ class Caldera_Forms_Forms {
 					}
 				// trim manual calculations
 				} else if(!empty($field["config"]["manual_formula"]) && is_string($field["config"]["manual_formula"])){
-					$field["config"]["manual_formula"] = str_replace( "\r", '', str_replace( "\n", '', str_replace( ' ', '', trim( $field["config"]["manual_formula"] ) ) ) );
+					$field["config"]["manual_formula"] = Caldera_Forms_Sanitize::finish_trim( Caldera_Forms_Sanitize::sanitize_header( $field["config"]["manual_formula"] ) );
 				}
 			}
 		}
