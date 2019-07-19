@@ -82,7 +82,6 @@ if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
 	// table builder
 	register_activation_hook(__FILE__, [ 'Caldera_Forms', 'activate_caldera_forms' ]);
 
-
 	// load system
 	add_action('plugins_loaded', 'caldera_forms_load', 0);
 	function caldera_forms_load()
