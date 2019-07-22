@@ -1557,7 +1557,7 @@ class Caldera_Forms
 					//Initiate parser
 					$parser = new StdMathParser();
 					// Generate an abstract syntax tree
-					$AST = $parser->parse($formula);
+					$AST = $parser->parse( trim($formula) );
 					// Do something with the AST, e.g. evaluate the expression:
 					$evaluator = new Evaluator();
 					//Get result
