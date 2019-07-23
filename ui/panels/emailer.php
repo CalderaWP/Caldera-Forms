@@ -217,17 +217,15 @@ if ( ! empty( $element['mailer']['enable_mailer'] ) ) {
             <script type="text/javascript">
               var cfId = "<?php echo $element['ID'] ?>";
               var $check = jQuery("<input id='cf-pro-send-local-" + cfId + "' type='checkbox'/>" );
-              var $proSet = jQuery(".pro-enhanced" );
-              var $regularSet = jQuery(".no-pro-enhanced" );
             </script>
             <?php
              if( $send_local === false ) { ?>
                 <script type="text/javascript">
-                    jQuery($check).prop('checked', true)
+                    jQuery($check).prop('checked', false)
                 </script>
             <?php } else if ( $send_local === true ) { ?>
                 <script type="text/javascript">
-                    jQuery($check).prop('checked', false);
+                    jQuery($check).prop('checked', true);
                 </script>
             <?php } ?>
 
@@ -235,20 +233,12 @@ if ( ! empty( $element['mailer']['enable_mailer'] ) ) {
 
                 jQuery(function ($) {
                   var checkProStatus = function () {
-                    if ( $check.prop('checked') === true ) {
-                      $proSet
-                        .hide()
-                        .attr('aria-hidden', true);
-                      $regularSet
-                        .show()
-                        .attr('aria-hidden', false);
-                    } else if ( $check.prop('checked') === false ) {
-                      $proSet
-                        .show()
-                        .attr('aria-hidden', false);
-                      $regularSet
-                        .hide()
-                        .attr('aria-hidden', true);
+                    if ( $check.prop("checked") === true) {
+						$(".pro-enhanced").show().attr('aria-hidden', false);
+						$(".no-pro-enhanced").hide().attr('aria-hidden', true);
+                    } else {
+						$(".pro-enhanced").hide().attr('aria-hidden', true);
+						$(".no-pro-enhanced").show().attr('aria-hidden', false);
                     }
                   };
 
@@ -256,10 +246,11 @@ if ( ! empty( $element['mailer']['enable_mailer'] ) ) {
                       $( 'body' ).on( 'change', $check, function(e) {
                         e.preventDefault();
                         if( $( $check ).prop('checked') !== true ){
-                          jQuery($check).prop('checked', true);
+                          $($check).prop('checked', true);
                         } else if( $( $check ).prop('checked') !== false ) {
-                          jQuery($check).prop('checked', false);
+                          $($check).prop('checked', false);
                         }
+						checkProStatus();
                       });
                   });
 
