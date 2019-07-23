@@ -8,6 +8,7 @@ services:
       - 8228:80
     environment:
       WORDPRESS_DB_PASSWORD: example
+      WORDPRESS_DEBUG: 1
       ABSPATH: /usr/src/wordpress/
     volumes:
       - wordpress:/var/www/html

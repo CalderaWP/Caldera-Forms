@@ -14,7 +14,13 @@
  * Caldera_Forms Plugin class.
  * @package Caldera_Forms
  * @author  David Cramer <david@digilab.co.za>
+ * 
+ * 
  */
+
+use MathParser\StdMathParser;
+use MathParser\Interpreting\Evaluator;
+
 class Caldera_Forms
 {
 
@@ -23,7 +29,6 @@ class Caldera_Forms
 	 */
 	const VERSION = CFCORE_VER;
 
-	/**
 	/**
 	 * @since 1.4.2
 	 */
@@ -1389,6 +1394,92 @@ class Caldera_Forms
 	}
 
 	/**
+	 * Catch known functions that were supported at https://calderaforms.com/doc/calculation-fields/ and are not sipported by parser https://github.com/denissimon/formula-parser
+	 *
+	 * @since 1.8.5
+	 * 
+	 * @param string $formula The string used to evaluate the math formula
+	 *
+	 * @return bool||string of coma seperated deprecated symbol
+	 */
+	static public function check_deprecated_math_functions($formula)
+	{	
+		//List known depracated functions
+		$deprecated = array( ',', '**', 'pow', 'acos', 'asin', 'atan', 'atan2', 'max', 'min', 'random');
+		//Look for matching known symbol in formula and push it in a symbols array
+		foreach ($deprecated as $symbol) {
+			if (strpos($formula, $symbol) !== FALSE) { 
+				$symbols[] = $symbol;
+			}
+		}
+		//If symbols array is not empty convert it to a string and return the string
+		if(is_array($symbols) && !empty($symbols)){
+			$symbols = implode( ',', $symbols);
+			return $symbols;
+		} else {
+			//Else return false
+			return false;
+		}
+		
+	}
+
+	/**
+	 * Calculation based on create_function() ( deprecated since PHP 7.2.0 )
+	 * 
+	 * @since 1.8.5
+	 * 
+	 * @param string $formula that needs to be parsed and processed as a calculation
+	 * 
+	 * @return result of calculation
+	 */
+	static public function original_calculation_job( $formula )
+	{
+		$total_function = create_function(null, 'return ' . $formula . ';');
+		$total = $total_function();
+
+		return $total;
+	}
+
+	/**
+	 * Process when php >= 7.2.0 and deprecated is caught
+	 * 
+	 * @since 1.8.5
+	 * 
+	 * @param string $formula to be sent to original calculation job
+	 * @param string $deprecated function or symbol caught
+	 * 
+	 * @return original process and notice for admin users
+	 */
+	static public function calculation_deprecated_caught_process( $formula, $deprecated )
+	{
+		if( current_user_can( Caldera_Forms::get_manage_cap('admin') ) ) {
+			
+			$message = sprintf(
+				'"%s" %s',
+				$deprecated,
+				__('has been deprecated in calculation fields for compatibility with PHP 7.2 or later', 'caldera-forms')
+			);
+
+			/**
+			 * The notice currentl only works whe ajax is enabled
+			 * 
+			 * TODO Add notice for non ajax submissions
+			 */
+			add_filter('caldera_forms_render_notices', function( $out ) use ( $message ){
+				
+				//Add an error notice holding the $message
+				$out[ 'error' ][ 'note' ] = $message;
+
+				return $out;
+
+			}, 25);
+
+		}
+
+		return self::original_calculation_job($formula);
+	}
+
+	/**
 	 * Process a calculation field.
 	 *
 	 * @param string $value The calculation to run
@@ -1437,6 +1528,8 @@ class Caldera_Forms
 			if (false !== strpos($formula, $fid)) {
 				$number = Caldera_Forms_Field_Calculation::get_value($form_field, $form);
 
+				$number = '(' . $number . ')';
+
 				$formula = str_replace($fid, $number, $formula);
 			}
 		}
@@ -1445,9 +1538,42 @@ class Caldera_Forms
 			return new WP_Error($field['ID'] . '-calculation',
 				__('Calculation is invalid (division by zero)', 'caldera-forms'));
 		}
+	
+		//If PHP version is less than 7.2.0, continue using old function
+		if(version_compare(PHP_VERSION, '7.2.0', '<')){
 
-		$total_function = create_function(null, 'return ' . $formula . ';');
-		$total = $total_function();
+			$total = self::original_calculation_job($formula);
+
+		} else { 
+			//else avoid using create_function() when using PHP version >= 7.2.0
+
+			//Check if the formula use a symbol or function not supported by the parser but declared as supported at https://calderaforms.com/doc/calculation-fields/
+			$deprecated = self::check_deprecated_math_functions( $formula );
+
+			//Use parser if no deprecated caught
+			if( $deprecated === false ){ 
+
+				try {
+					//Initiate parser
+					$parser = new StdMathParser();
+					// Generate an abstract syntax tree
+					$AST = $parser->parse($formula);
+					// Do something with the AST, e.g. evaluate the expression:
+					$evaluator = new Evaluator();
+					//Get result
+					$total = $AST->accept($evaluator);
+
+				} catch( Exception $e) {
+					//Return to old process if an Exception was returned and display a warning for admins
+					$total = self::calculation_deprecated_caught_process( $formula, __('A symbol in the formula', 'caldera_forms') );
+				}
+				
+			} else {
+				//else add warning for admins and run original process
+				$total = self::calculation_deprecated_caught_process( $formula, $deprecated );
+			}	
+
+		}
 
 		if (is_infinite($total) || !is_numeric($total)) {
 			return new WP_Error($field['ID'] . '-calculation', __('Calculation is invalid', 'caldera-forms'));

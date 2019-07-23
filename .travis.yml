@@ -3,6 +3,8 @@ sudo: false
 language: php
 
 php:
+  - '7.3'
+  - '7.2'
   - '7.1'
   - '7.0'
   - '5.6'
@@ -22,14 +24,16 @@ env:
 
 matrix:
   include:
-    - php: 7.1
-      env: WP_VERSION=trunk TEST_JS=yes
-    - php: 7.1
+    - php: 7.2
+      env: WP_VERSION=latest TEST_JS=yes
+    - php: 7.2
       env: WP_VERSION=latest WP_MULTISITE=1
-    - php: 7.1
-      env: WP_VERSION=4.8
-    - php: 7.1
-      env: WP_VERSION=4.7.11
+    - php: 7.2
+      env: WP_VERSION=5.1
+    - php: 7.2
+      env: WP_VERSION=5.0
+    - php: 7.2
+      env: WP_VERSION=4.9
 
 before_script:
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
@@ -43,7 +47,26 @@ before_script:
   - |
     if [[ ! -z "$WP_VERSION" ]] ; then
       bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
-      composer global require "phpunit/phpunit=4.8.*|5.7.*"
+      if [[ "$WP_TRAVISCI" == "travis:phpunit" ]]; then
+        case "$TRAVIS_PHP_VERSION" in
+          7.4snapshot|7.3|7.2|7.1|nightly)
+            echo "Using PHPUnit 7.x"
+            travis_retry composer global require "phpunit/phpunit:^7"
+            ;;
+          7.0)
+            echo "Using PHPUnit 6.x"
+            travis_retry composer global require "phpunit/phpunit:^6"
+            ;;
+          5.6)
+            echo "Using PHPUnit 4.x"
+            travis_retry composer global require "phpunit/phpunit:^4"
+            ;;
+          *)
+            echo "No PHPUnit version handling for PHP version $TRAVIS_PHP_VERSION"
+            exit 1
+            ;;
+        esac
+      fi
     fi
   - |
     if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then

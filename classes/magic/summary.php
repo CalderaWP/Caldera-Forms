@@ -119,7 +119,7 @@ class Caldera_Forms_Magic_Summary extends Caldera_Forms_Magic_Parser {
 							$field_values = (array) Caldera_Forms::get_field_data( $field_id, $this->form );
 						}else{
 							if( ! isset( $this->data[ $field_id ] ) ){
-								continue;
+								break;
 							}
 							$field_values = (array) $this->get_field_value( $field_id );
 						}
