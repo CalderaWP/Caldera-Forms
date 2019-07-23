@@ -481,16 +481,20 @@ class Caldera_Forms_Forms {
 	 * @return string|bool Form ID if updated, false if not
 	 */
 	public static function save_form( $data, $type = 'primary' ){
-
-		// option value labels
+		
+		
 		if(!empty($data['fields'])){
 			foreach($data['fields'] as &$field){
+				// option value labels
 				if(!empty($field['config']['option']) && is_array($field['config']['option'])){
 					foreach($field['config']['option'] as &$option){
 						if(!isset($option['value'])){
 							$option['value'] = $option['label'];
 						}
 					}
+				// trim manual calculations
+				} else if(!empty($field["config"]["manual_formula"]) && is_string($field["config"]["manual_formula"])){
+					$field["config"]["manual_formula"] = Caldera_Forms_Sanitize::finish_trim( Caldera_Forms_Sanitize::sanitize_header( $field["config"]["manual_formula"] ) );
 				}
 			}
 		}

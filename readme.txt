@@ -3,7 +3,7 @@ Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
 Tags: form, contact form, forms, form creator, form manager, mailchimp, paypal, stripe, login, payment, forms manager, forms creation
 Requires at least: 4.7
 Tested up to: 5.3
-Stable tag: 1.8.5
+Stable tag: 1.8.6
 License: GPLv2
 Requires PHP: 5.6
 
@@ -792,6 +792,18 @@ This could also be a sign of a more serious issue on your server, but is probabl
 5. **Go Further With Form Processors** - Auto-responders, conditional recipients, redirects are included! Go further with our add-ons!
 
 == Changelog ==
+
+= Caldera Forms 1.8.6 (July 23, 2019) trim( CF\n) =
+See: [https://calderaforms.com/updates/caldera-forms-1-8-6](https://calderaforms.com/updates/caldera-forms-1-8-6?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-6)
+*   [New filter Hook "caldera_forms_private_upload_directory"](https://calderaforms.com/doc/caldera_forms_private_upload_directory/)
+*   [Checkbox options were showed in json format in entry viewer](https://github.com/CalderaWP/Caldera-Forms/issues/3280)
+*   [trim manual formulas when line breaks are mistakenly pasted](https://github.com/CalderaWP/Caldera-Forms/issues/3270)
+*   [Fixed cf2 is undefined error logged in ajax queries](https://github.com/CalderaWP/Caldera-Forms/issues/3262)
+*   [Fixed options for emails on the form edition view when Pro enhanced delivery is enabled](https://github.com/CalderaWP/Caldera-Forms/issues/3288)
+
+*   [Fixed an issue intalling CF, trunk folder was interfering in tags/1.8.5 folder]
+*   [Fixed A pro issue that broke enhanced delivery ( so PDF link and attachment) when multiple files were attached to the email ]
+
 
 = Caldera Forms 1.8.5 (May 29, 2019) tan(Caldera) =
 See: [https://calderaforms.com/updates/caldera-forms-1-8-5](https://calderaforms.com/updates/caldera-forms-1-8-5?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-5)

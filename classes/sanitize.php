@@ -269,6 +269,18 @@ class Caldera_Forms_Sanitize {
 	public static function sanitize_header($header){
         return preg_replace( '=((<CR>|<LF>|0x0A/%0A|0x0D/%0D|\\n|\\r)\S).*=i', null, $header );
 
+	}
+	
+	/**
+     * Remove partially removed line breaks (backslash removed but not r or n)
+     *
+     * @since 1.8.6
+     *
+     * @param string $string
+     * @return string
+     */
+	public static function finish_trim($string){
+		return trim( $string, " rn" );
     }
 
 }
