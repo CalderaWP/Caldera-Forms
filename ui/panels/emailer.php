@@ -223,11 +223,11 @@ if ( ! empty( $element['mailer']['enable_mailer'] ) ) {
             <?php
              if( $send_local === false ) { ?>
                 <script type="text/javascript">
-                    jQuery($check).prop('checked', false)
+                    jQuery($check).prop('checked', true)
                 </script>
             <?php } else if ( $send_local === true ) { ?>
                 <script type="text/javascript">
-                    jQuery($check).prop('checked', true);
+                    jQuery($check).prop('checked', false);
                 </script>
             <?php } ?>
 
