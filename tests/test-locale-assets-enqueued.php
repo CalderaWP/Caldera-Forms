@@ -24,7 +24,7 @@ class TestLocaleRenderAssets extends Caldera_Forms_Test_Case
         $validator_url = Caldera_Forms_Render_Assets::get_validator_locale_url($locale);
 
         $this->assertSame( $code, "fr" );
-        $this->assertSame( $validator_url, "http://example.org/wp-content/plugins/app/assets/js/i18n/en.js" );
+        $this->assertSame( $validator_url, "http://example.org/wp-content/plugins/app/assets/js/i18n/fr.js" );
  
     }
 
