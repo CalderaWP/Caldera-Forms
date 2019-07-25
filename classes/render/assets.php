@@ -1049,7 +1049,7 @@ class Caldera_Forms_Render_Assets
 	 *
 	 * @return string
 	 */
-	protected static function get_validator_locale_url($locale)
+	public static function get_validator_locale_url($locale)
 	{
 		//Use correct formatted locale for file to be matched
 		$locale = self::set_locale_code($locale);
@@ -1068,7 +1068,7 @@ class Caldera_Forms_Render_Assets
 	 *
 	 * @return string
 	 */
-	protected static function set_locale_code($locale)
+	public static function set_locale_code($locale)
 	{
 		if (file_exists(CFCORE_PATH . 'assets/js/i18n/' . $locale . '.js')) {
 			// no need to check other possibilities- break if/else early
