@@ -38,23 +38,27 @@ domReady(function () {
 		//Build configurations
 		document.querySelectorAll('.cf2-field-wrapper').forEach(function (fieldElement) {
 			const fieldIdAttr = fieldElement.getAttribute('data-field-id');
+			if( 'undefined' !== typeof idAttr ){
+				const formConfig = window.cf2[idAttr];
+				
+				if( 'undefined' !== typeof formConfig ){
+					let fieldConfig = formConfig.fields.hasOwnProperty(fieldIdAttr) ?
+						formConfig.fields[fieldIdAttr]
+						: null;
 
-			const formConfig = window.cf2[idAttr];
+					if ('string' === typeof  fieldConfig) {
+						fieldConfig = JSON.parse(fieldConfig);
+					}
+					if (fieldConfig) {
+						fieldsToControl.push(fieldConfig);
+						if (fieldConfig.hasOwnProperty('fieldDefault')) {
+							state.mutateState(fieldIdAttr, fieldConfig.fieldDefault);
 
-			let fieldConfig = formConfig.fields.hasOwnProperty(fieldIdAttr) ?
-				formConfig.fields[fieldIdAttr]
-				: null;
-
-			if ('string' === typeof  fieldConfig) {
-				fieldConfig = JSON.parse(fieldConfig);
-			}
-			if (fieldConfig) {
-				fieldsToControl.push(fieldConfig);
-				if (fieldConfig.hasOwnProperty('fieldDefault')) {
-					state.mutateState(fieldIdAttr, fieldConfig.fieldDefault);
-
+						}
+					}
 				}
 			}
+			
 		});
 
 		/**
