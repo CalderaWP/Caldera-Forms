@@ -24,7 +24,7 @@ class TestLocaleRenderAssets extends Caldera_Forms_Test_Case
         $validator_url = Caldera_Forms_Render_Assets::get_validator_locale_url($locale);
 
         $this->assertSame( $code, "fr" );
-        $this->assertSame( $validator_url, "http://example.org/wp-content/plugins/app/assets/js/i18n/fr.js" );
+        $this->assertSame( substr($validator_url, -10), "i18n/fr.js" );
  
     }
 
@@ -36,7 +36,7 @@ class TestLocaleRenderAssets extends Caldera_Forms_Test_Case
       * @covers  \Caldera_Forms_Render_Assets::set_locale_code($locale)
       * @covers  \Caldera_Forms_Render_Assets::get_validator_locale_url($locale)
      */
-    public function testUnkKnownLocale()
+    public function testUnknownLocale()
     {
         
         $locale = "bo";
@@ -44,7 +44,7 @@ class TestLocaleRenderAssets extends Caldera_Forms_Test_Case
         $validator_url = Caldera_Forms_Render_Assets::get_validator_locale_url($locale);
 
         $this->assertSame( $code, "en" );
-        $this->assertSame( $validator_url, "http://example.org/wp-content/plugins/app/assets/js/i18n/en.js" );
+        $this->assertSame( substr($validator_url, -10), "i18n/en.js" );
     }
 
 }
