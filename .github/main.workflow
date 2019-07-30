@@ -31,3 +31,15 @@ action "JsTest" {
   uses = "nuxt/actions-yarn@master"
   args = "test:once"
 }
+
+# Integration Tests
+workflow "Integration" {
+  on = "push"
+  resolves = ["StartEnv"]
+}
+
+action "StartEnv" {
+  uses = "./integration"
+  args = "up -d"
+}
+
