@@ -1,5 +1,4 @@
 #https://github.com/blackrobot/docker-compose-action/blob/master/Dockerfile
-
 ARG DOCKER_VERSION=latest
 FROM docker:${DOCKER_VERSION}
 
@@ -16,5 +15,4 @@ LABEL com.github.actions.name="GitHub Action for docker-compose" \
     com.github.actions.icon="package" \
     com.github.actions.color="blue"
 
-ENTRYPOINT [ "sh", "-c", "echo pwd" ]
-
+ENTRYPOINT ["/entrypoint.sh"]

@@ -3,4 +3,4 @@
     
 #!/bin/sh -l
 
-sh -c "docker-compose $*"
+sh -c "./bin/install-docker.sh"
