@@ -2,8 +2,8 @@
 Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
 Tags: form, contact form, forms, form creator, form manager, mailchimp, paypal, stripe, login, payment, forms manager, forms creation
 Requires at least: 4.7
-Tested up to: 5.1
-Stable tag: 1.8.2
+Tested up to: 5.3
+Stable tag: 1.8.6
 License: GPLv2
 Requires PHP: 5.6
 
@@ -792,6 +792,47 @@ This could also be a sign of a more serious issue on your server, but is probabl
 5. **Go Further With Form Processors** - Auto-responders, conditional recipients, redirects are included! Go further with our add-ons!
 
 == Changelog ==
+
+= Caldera Forms 1.8.6 (July 23, 2019) trim( CF\n) =
+See: [https://calderaforms.com/updates/caldera-forms-1-8-6](https://calderaforms.com/updates/caldera-forms-1-8-6?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-6)
+*   [New filter Hook "caldera_forms_private_upload_directory"](https://calderaforms.com/doc/caldera_forms_private_upload_directory/)
+*   [Checkbox options were showed in json format in entry viewer](https://github.com/CalderaWP/Caldera-Forms/issues/3280)
+*   [trim manual formulas when line breaks are mistakenly pasted](https://github.com/CalderaWP/Caldera-Forms/issues/3270)
+*   [Fixed cf2 is undefined error logged in ajax queries](https://github.com/CalderaWP/Caldera-Forms/issues/3262)
+*   [Fixed options for emails on the form edition view when Pro enhanced delivery is enabled](https://github.com/CalderaWP/Caldera-Forms/issues/3288)
+
+*   [Fixed an issue intalling CF, trunk folder was interfering in tags/1.8.5 folder]
+*   [Fixed A pro issue that broke enhanced delivery ( so PDF link and attachment) when multiple files were attached to the email ]
+
+
+= Caldera Forms 1.8.5 (May 29, 2019) tan(Caldera) =
+See: [https://calderaforms.com/updates/caldera-forms-1-8-5](https://calderaforms.com/updates/caldera-forms-1-8-5?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-5)
+*   [Caldera Forms calculation fields triggered deprecated function warnings in PHP 7.2. ](https://github.com/CalderaWP/Caldera-Forms/issues/2335)
+*   [Add a warning if the variable wp is not defined in the front-end](https://github.com/CalderaWP/Caldera-Forms/pull/3202). This alerts users to conflicts like the one that has been fixed with [WP Rocket.](https://wp-rocket.me/blog/wp-rocket-3-3/)
+*   [Bug causing a PHP error when viewing entries of a form that has magic tags used for select field labels.](https://github.com/CalderaWP/Caldera-Forms/issues/3167)
+*   [Missing CSS for some field types.](https://github.com/CalderaWP/Caldera-Forms/issues/3174)
+*   [When an existing form that was previously submitted and was edited, calculation field values returned to zero](https://github.com/CalderaWP/Caldera-Forms/issues/3146).
+*   [Advanced file fields v2 were only attaching one file.](https://github.com/CalderaWP/Caldera-Forms/issues/3116)
+
+= Caldera Forms 1.8.4 (March 28, 2019) CF-1.8.4 =
+See: [https://calderaforms.com/updates/caldera-forms-1-8-4](https://calderaforms.com/updates/caldera-forms-1-8-4?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-4)
+* FIXED: Elementor/Beaver builder conflicts withe render client
+* FIXED: Translation code reset to translation files
+* FIXED: Markup for the Resend button in entries list
+* FIXED: Console errors due to Blocks client enqueued on frontend
+* ADDED: Value of additional CSS class name in Caldera Forms block added to rendering
+
+= Caldera Forms 1.8.3 (March 19, 2019) WeGlot support, React + legacy-bundle for WP < 5  =
+See: [https://calderaforms.com/updates/caldera-forms-1-8-3](https://calderaforms.com/updates/caldera-forms-1-8-3?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-3)
+* ADDED: Weglot Support https://calderaforms.com/2019/03/translate-wordpress-site-weglot/
+* ADDED: Link from edition page/post Gutenberg block to Form editor page 
+* FIXED: CF2 File field multiple files attachments
+* FIXED: CF2 File field for WordPress versions older than 5.0
+* FIXED: Prevent js errors when no cf2 field is in the form during submission event 
+* FIXED: Conditional disabled
+* FIXED: Toggle switch field not initialized properly
+
+
 = Caldera Forms 1.8.2 (March 7, 2019) It's Snowing In Pittsburgh =
 See: [https://calderaforms.com/updates/caldera-forms-1-8-2](https://calderaforms.com/updates/caldera-forms-1-8-2?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-2)
 * SECURITY: Patch for issue affecting CF Pro API. Does not affect most users, [see post for details](https://calderaforms.com/updates/caldera-forms-1-8-2?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-2)see post for details.
@@ -2151,3 +2192,7 @@ See: https://calderaforms.com/updates/caldera-forms-1-6.2
 Includes SECURITY fix.
 
 See: https://calderaforms.com/updates/caldera-forms-1-8-2
+
+= 1.8.5 =
+See: https://calderaforms.com/updates/caldera-forms-1-8-5
+

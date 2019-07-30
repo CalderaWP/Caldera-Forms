@@ -114,6 +114,7 @@ class RenderField implements RenderFieldContract
             'outterIdAttr' => $this->getOuterIdAttr(),
             'fieldId' => $this->field['ID'],
             'fieldLabel' => $this->field['label'],
+			'hideLabel'	=>	! empty($this->field['hide_label'])?true:false,
             'fieldCaption' => $this->field['caption'],
             'fieldPlaceHolder' => '',
             'isRequired' => ! empty($this->field['required'])?true:false,
