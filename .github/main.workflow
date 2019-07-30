@@ -39,7 +39,7 @@ workflow "Integration" {
 }
 
 action "WordPress Tests" {
-  uses = "docker://epcallan/php7-testing-phpunit:7.1-phpunit5"
+  uses = "./integration"
   args = ["composer install", "phpunit --configuration phpunit-integration.xml.dist" ]
 }
 

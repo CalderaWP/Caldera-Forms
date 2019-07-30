@@ -1,14 +1,20 @@
-#Based on: https://github.com/blackrobot/docker-compose-action/blob/master/Dockerfile
+FROM php:7.0-cli
+ENV DEBIAN_FRONTEND noninteractive
 
-ARG DOCKER_VERSION=latest
-FROM docker:${DOCKER_VERSION}
+RUN apt-get update -yqq \
+    && apt-get install git zlib1g-dev libsqlite3-dev -y \
+    && docker-php-ext-install zip \
+    && docker-php-ext-install pdo_mysql \
+    && docker-php-ext-install pdo_sqlite
 
-ARG COMPOSE_VERSION=
-ARG DOCKER_VERSION
+RUN curl -fsSL https://getcomposer.org/installer | php \
+    && mv composer.phar /usr/local/bin/composer \
+    && composer global require phpunit/phpunit ^5.7 --no-progress --no-scripts --no-interaction
 
-RUN apk add --no-cache py-pip
-RUN pip install --no-cache-dir "docker-compose${COMPOSE_VERSION:+==}${COMPOSE_VERSION}"
+RUN pecl install xdebug \
+    && echo 'zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20151012/xdebug.so' > \
+    /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && php -m | grep xdebug
 
-RUN ./bin/install-wp-tests.sh
-
-ENTRYPOINT ["/entrypoint.sh"]
+ENV PATH /root/.composer/vendor/bin:$PATH
+CMD ["phpunit"]
