@@ -35,11 +35,17 @@ action "JsTest" {
 # Integration Tests
 workflow "Integration" {
   on = "push"
-  resolves = ["StartEnv"]
+  resolves = ["WordPress Tests"]
 }
 
-action "StartEnv" {
+action "StartWordPress" {
   uses = "./integration"
   args = "up -d"
+}
+
+action "WordPress Tests" {
+  uses = "./integration"
+  needs = "StartWordPress"
+  args = "run --rm wordpress_phpunit phpunit --configuration phpunit-integration.xml.dist"
 }
 
