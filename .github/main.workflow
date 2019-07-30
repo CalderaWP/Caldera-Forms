@@ -38,14 +38,8 @@ workflow "Integration" {
   resolves = ["WordPress Tests"]
 }
 
-action "StartWordPress" {
-  uses = "./integration"
-  args = "up -d"
-}
-
 action "WordPress Tests" {
-  uses = "./integration"
-  needs = "StartWordPress"
-  args = "run --rm wordpress_phpunit phpunit --configuration phpunit-integration.xml.dist"
+  uses = "actions/bin/sh@master"
+  args = ["./bin/install-wp-tests.p"]
 }
 
