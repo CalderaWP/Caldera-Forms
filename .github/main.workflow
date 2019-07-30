@@ -40,6 +40,6 @@ workflow "Integration" {
 
 action "WordPress Tests" {
   uses = "actions/bin/sh@master"
-  args = ["./bin/install-wp-tests.p"]
+  args = ["./bin/install-wp-tests.sh"]
 }
 
