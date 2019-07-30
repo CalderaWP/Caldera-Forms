@@ -1,15 +1,33 @@
-workflow "PHP Unit Tests" {
+# Run PHP Unit Tests
+workflow "PHP Tests" {
   on = "push"
-  resolves = ["TestUnit"]
+  resolves = ["PHPTestUnit"]
 }
 
-action "Upate" {
+action "PHPInstall" {
   uses = "MilesChou/composer-action@master"
   args = "install"
 }
 
-action "TestUnit" {
+action "PHPTestUnit" {
   uses = "MilesChou/composer-action@master"
-  needs = "Upate"
+  needs = "PHPInstall"
   args = "test:unit"
+}
+
+# Run JavaScript Unit Tests
+workflow "JS Tests" {
+  on = "push"
+  resolves = ["JsTest"]
+}
+
+action "JsInstall" {
+  uses = "nuxt/actions-yarn@master"
+  args = "install"
+}
+
+action "JsTest" {
+  needs = "JsInstall"
+  uses = "nuxt/actions-yarn@master"
+  args = "test:once"
 }
