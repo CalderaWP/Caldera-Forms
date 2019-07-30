@@ -345,6 +345,8 @@ var cf_jsfields_init, cf_presubmit;
 window.addEventListener("load", function(){
 	(function( $ ) {
 		'use strict';
+    //Catch if window.wp is undefined
+		var wpUndefined = undefined === typeof window.wp;
 
 		window.CALDERA_FORMS = {};
 
@@ -362,55 +364,58 @@ window.addEventListener("load", function(){
 				if ('object' === typeof CFFIELD_CONFIG[instance] ) {
 					$form = $( document.getElementById( form_id ));
 
-					if ( ! protocolChecked ) {
-						//check for protocol mis-match on submit url
-						protocolCheck = new CalderaFormsCrossOriginWarning($el, $, CFFIELD_CONFIG[instance].error_strings);
-						protocolCheck.maybeWarn();
+					 if( wpUndefined ){
+						 $(  $form.data( 'target' ) ).append( '<div class="alert alert-warning">' + CFFIELD_CONFIG[instance].error_strings.wp_not_defined + '</div>' );
+					 }else{
+                         if ( ! protocolChecked ) {
+                             //check for protocol mis-match on submit url
+                             protocolCheck = new CalderaFormsCrossOriginWarning($el, $, CFFIELD_CONFIG[instance].error_strings);
+                             protocolCheck.maybeWarn();
 
-						//don't check twice
-						protocolChecked = true;
-					}
+                             //don't check twice
+                             protocolChecked = true;
+                         }
 
-					if ( ! jQueryChecked &&  CFFIELD_CONFIG[instance].error_strings.hasOwnProperty( 'jquery_old' ) ) {
-						//check for old jQuery
-						jQueryCheck = new CalderaFormsJQueryWarning($el, $, CFFIELD_CONFIG[instance].error_strings);
-						jQueryCheck.maybeWarn();
+                         if ( ! jQueryChecked &&  CFFIELD_CONFIG[instance].error_strings.hasOwnProperty( 'jquery_old' ) ) {
+                             //check for old jQuery
+                             jQueryCheck = new CalderaFormsJQueryWarning($el, $, CFFIELD_CONFIG[instance].error_strings);
+                             jQueryCheck.maybeWarn();
 
-						//don't check twice
-						jQueryChecked = true;
-					}
+                             //don't check twice
+                             jQueryChecked = true;
+                         }
 
-					formId = $el.data( 'form-id' );
-					config = CFFIELD_CONFIG[instance].configs;
+                         formId = $el.data( 'form-id' );
+                         config = CFFIELD_CONFIG[instance].configs;
 
-					var state = new CFState(formId, $ );
-					state.init( CFFIELD_CONFIG[instance].fields.defaults,CFFIELD_CONFIG[instance].fields.calcDefaults );
+                         var state = new CFState(formId, $ );
+                         state.init( CFFIELD_CONFIG[instance].fields.defaults,CFFIELD_CONFIG[instance].fields.calcDefaults );
 
-					if( 'object' !== typeof window.cfstate ){
-						window.cfstate = {};
-					}
+                         if( 'object' !== typeof window.cfstate ){
+                             window.cfstate = {};
+                         }
 
-					window.cfstate[ form_id ] = state;
+                         window.cfstate[ form_id ] = state;
 
-					$form.find( '[data-sync]' ).each( function(){
-						var $field = $( this );
-                        if ( ! $field.data( 'unsync' ) ) {
-                            new CalderaFormsFieldSync($field, $field.data('binds'), $form, $, state);
-                        }
-					});
+                         $form.find( '[data-sync]' ).each( function(){
+                             var $field = $( this );
+                             if ( ! $field.data( 'unsync' ) ) {
+                                 new CalderaFormsFieldSync($field, $field.data('binds'), $form, $, state);
+                             }
+                         });
 
 
-					config_object = new Caldera_Forms_Field_Config( config, $(document.getElementById(form_id)), $, state );
-					config_object.init();
-					$( document ).trigger( 'cf.form.init',{
-						$form: $form,
-						idAttr:  form_id,
-						formId: formId,
-						state: state,
-						fieldIds: CFFIELD_CONFIG[instance].fields.hasOwnProperty( 'ids' ) ? CFFIELD_CONFIG[instance].fields.ids : [],
-						nonce: jQuery( '#_cf_verify_' + formId ).val()
-					});
-
+                         config_object = new Caldera_Forms_Field_Config( config, $(document.getElementById(form_id)), $, state );
+                         config_object.init();
+                         $( document ).trigger( 'cf.form.init',{
+                             $form: $form,
+                             idAttr:  form_id,
+                             formId: formId,
+                             state: state,
+                             fieldIds: CFFIELD_CONFIG[instance].fields.hasOwnProperty( 'ids' ) ? CFFIELD_CONFIG[instance].fields.ids : [],
+                             nonce: jQuery( '#_cf_verify_' + formId ).val()
+                         });
+					 }
 
 				}
 			});
@@ -667,28 +672,3 @@ function CalderaFormsJQueryWarning( $form, $, errorStrings ){
 	}
 }
 
-/*
- * Add Validation for phone_better field before a submit or next page button is clicked
- *
-
-(function( $ ) {
-
-	$('.caldera-grid input[type="submit"], .caldera-grid input[data-page="next"]').click( function( e ) {
-
-		var phone_fields = $('.caldera-grid input[data-type="phone_better"]');
-		if( phone_fields.length > 0 ) {
-
-      phone_fields.each( function( i ){
-
-        if( $.isNumeric( this.value ) === true ){
-        	alert('cool');
-				}
-
-			});
-		}
-
-	});
-
-})( jQuery );
-
- */

@@ -1220,15 +1220,9 @@ class Caldera_Forms_Admin {
             do_action( 'caldera_forms_admin_enqueue_form_editor' );
 
 		} else {
-
 			Caldera_Forms_Render_Assets::enqueue_all_fields();
-
-
 			if ( ! empty( $_GET[ 'edit-entry' ] ) ) {
-				Caldera_Forms_Render_Assets::enqueue_style( 'grid' );
-			}else{
-                $clippy = new Caldera_Forms_Admin_Clippy( $this->plugin_slug, site_url() );
-                $clippy->assets();
+                Caldera_Forms_Render_Assets::enqueue_style('grid');
             }
 		}
 
