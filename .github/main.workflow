@@ -39,7 +39,7 @@ workflow "Integration" {
 }
 
 action "WordPress Tests" {
-  uses = chriszarate/wordpress-phpunit@master"
+  uses = "chriszarate/wordpress-phpunit@master"
   args = ["./bin/install-docker.sh", "phpunit --configuration phpunit-integration.xml.dist" ]
 }
 
