@@ -16,4 +16,5 @@ LABEL com.github.actions.name="GitHub Action for docker-compose" \
     com.github.actions.icon="package" \
     com.github.actions.color="blue"
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT [ "sh", "-c", "echo pwd" ]
+
