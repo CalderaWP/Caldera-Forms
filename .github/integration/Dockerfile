@@ -11,7 +11,4 @@ RUN pip install --no-cache-dir "docker-compose${COMPOSE_VERSION:+==}${COMPOSE_VE
 
 RUN ./bin/install-wp-tests.sh
 
-COPY readme.md entrypoint.sh 
-
-
 ENTRYPOINT ["/entrypoint.sh"]
