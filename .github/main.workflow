@@ -32,14 +32,3 @@ action "JsTest" {
   args = "test:once"
 }
 
-# Integration Tests
-workflow "Integration" {
-  on = "push"
-  resolves = ["WordPress Tests"]
-}
-
-action "WordPress Tests" {
-  uses = "./integration"
-  args = ["composer install", "phpunit --configuration phpunit-integration.xml.dist" ]
-}
-
