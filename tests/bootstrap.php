@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This is the bootstrap file for integration tests.
  */
@@ -77,6 +76,7 @@ include_once(dirname(__FILE__) . '/includes/forms/contact-form-include.php');
 include_once(dirname(__FILE__) . '/includes/forms/simple-form-with-just-a-text-field-include.php');
 include_once(dirname(__FILE__) . '/includes/forms/cf2-file-include.php');
 
+//add test tables
 create_testing_db_tables();
 
 //include test case
