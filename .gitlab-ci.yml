@@ -24,8 +24,7 @@ before_script:
   - php composer.phar install --no-dev
   - php composer.phar global require "phpunit/phpunit:^6"
 
-
-PHPunit:PHP7.1:MySQL:
+WP-Integration:
   image: tetraweb/php:7.1
   services:
     - mysql:5.6
