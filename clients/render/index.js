@@ -4,6 +4,7 @@ import {CalderaFormsRender} from "./components/CalderaFormsRender";
 import React from 'react';
 import ReactDOM from "react-dom";
 import domReady from '@wordpress/dom-ready';
+const jQuery = window.jQuery;
 import {
 	hashFile,
 	createMediaFromFile,

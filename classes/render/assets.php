@@ -710,14 +710,12 @@ class Caldera_Forms_Render_Assets
 				$tags = ["wp-blocks"];
 			} else if($tag === "render") {
                 if (! Caldera_Forms_Admin::is_main_page()) {
-                    $tags = [
-                        'wp-data',
-                        'wp-dom',
-                        'wp-element',
-                        'react',
+					$root_path = CFCORE_PATH;
+					$name = 'render';
+					$deps_path = "{$root_path}clients/{$name}/build/index.min.deps.json";
+                	$tags = (array)json_decode(file_get_contents( $deps_path) );
 
-                    ];
-                }
+				}
                 //this should not be needed, but it seams to be only way to get react on the page
 				foreach ($tags as $t ){
 				    wp_enqueue_script($t);

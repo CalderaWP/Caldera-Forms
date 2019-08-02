@@ -1914,7 +1914,7 @@
 
 "@wordpress/dependency-extraction-webpack-plugin@^1.0.1":
   version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@wordpress/dependency-extraction-webpack-plugin/-/dependency-extraction-webpack-plugin-1.0.1.tgz#3a4328370040202a5b147902deba0b79ad6884d0"
+  resolved "http://localhost:4873/@wordpress%2fdependency-extraction-webpack-plugin/-/dependency-extraction-webpack-plugin-1.0.1.tgz#3a4328370040202a5b147902deba0b79ad6884d0"
   integrity sha512-Ov4IljSGSPDjQPKV79tXKk7Ljndo+f84aImKIH8mzTMRbZS+7wPzz6jHAa/FpGmf7R99QqaN4CNRpvBihu3o9Q==
   dependencies:
     webpack "^4.8.3"

@@ -11,6 +11,7 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extraction-webpack-plugin' );
 
 /**
  * Is build production or dev?
@@ -221,7 +222,7 @@ if( ! isProduction ){
 		}),
 		// Enable HMR.
 		new webpack.HotModuleReplacementPlugin({
-			multiStep: true,
+			multiStep: false,
 		}),] 
 }
 
@@ -243,7 +244,7 @@ module.exports = {
 	entry,
 	output,
 	optimization,
-	externals,
+	//externals,
 	devtool: 'cheap-module-source-map',
 	context: process.cwd(),
 	devServer,
