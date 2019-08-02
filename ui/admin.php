@@ -268,7 +268,7 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 
 				<a href="https://calderaforms.com/getting-started?utm-source=wp-admin&utm_campaign=clippy&utm_term=no-forms" target="_blank" class="bt-btn btn btn-orange">
 					<?php esc_html_e( 'Read Now', 'caldera-forms' ); ?>
-				</a
+				</a>
 			</div>
 		</div>
 

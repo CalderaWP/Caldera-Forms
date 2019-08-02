@@ -135,7 +135,7 @@ function CFEntryViewer2( formId, formStore, entryStore, api, config ){
                             if ('string' == typeof  entry[fieldId]) {
                                 return entry[fieldId];
                             } else if ('object' == typeof entry['fields'][fieldId]) {
-                                return entry['fields'][fieldId].value;
+                                return this.checkResult( entry['fields'][fieldId].value );
                             } else {
                                 return '';
                             }
@@ -143,6 +143,14 @@ function CFEntryViewer2( formId, formStore, entryStore, api, config ){
                         close: function () {
                             $singleEntryZone.empty();
                             $modal.destroy();
+                        },
+                        checkResult: function ( value ) {
+                            //Check if value is an object and return the values only ( this is useful for checkboxes values )
+                            if(typeof value === "object"){
+                                value = Object.values(value);
+                            }
+
+                            return value
                         }
                     },
                 });
