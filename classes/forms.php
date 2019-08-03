@@ -175,21 +175,21 @@ class Caldera_Forms_Forms {
 		    static::$index = static::get_stored_forms();
         }
 
-        if ( false === $internal_only ) {
-            /**
-             * Runs after getting internal forms, use to add forms defined in file system
-             *
-             * @since unknown
-             *
-             * @param array $base_forms Forms saved in DB
-             */
-            $forms = apply_filters('caldera_forms_get_forms', static::$index);
-            if (!empty($forms) && is_array($forms)) {
-                foreach ($forms as $form_id => $form) {
-                    $forms[$form_id] = $form_id;
-                }
-            }
-        }
+		if ( false === $internal_only ) {
+			/**
+			 * Runs after getting internal forms, use to add forms defined in file system
+			 *
+			 * @since unknown
+			 *
+			 * @param array $base_forms Forms saved in DB
+			 */
+			$external_forms = apply_filters( 'caldera_forms_get_forms', array() );
+			if ( ! empty( $external_forms) && is_array( $external_forms ) ) {
+				foreach ( array_keys( $external_forms ) as $form_id ) {
+					static::$index[$form_id] = $form_id;
+				}
+			}
+		}
 
 
 		if( $with_details ){
