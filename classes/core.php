@@ -429,7 +429,6 @@ class Caldera_Forms
 
 			// check update version
 			$db_version = get_option('CF_DB', 0);
-			update_option( 'CF_DB', 7 );
 			$force_update = false;
 
 			// ensure that admin can only force update
