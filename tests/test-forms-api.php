@@ -225,7 +225,7 @@ class Test_Caldera_Forms_API extends Caldera_Forms_Test_Case
       		'conditions' 	=>	[],
       		'required' 		=>	1,
 			'config'		=>	[
-				'manual_formula'	=> ' 2 + 2\n'
+				'manual_formula'	=> '2 + 2\n'
 			]
 		];
 		Caldera_Forms_Forms::save_form($form);
@@ -233,6 +233,36 @@ class Test_Caldera_Forms_API extends Caldera_Forms_Test_Case
 		$form = Caldera_Forms_Forms::get_form($form_id);
 
 		$this->assertSame( '2 + 2', $form['fields']['fld_60011111']['config']['manual_formula'] );
+	}
+
+	/**
+	 * Test manual Formulas trimming during forms saving
+	 *
+	 * @since 1.8.6
+	 *
+	 * @covers Caldera_Forms_Forms::save_form()
+	 */
+	public function testManualFormulasTrimDuringSaveWithRound ()
+	{
+		$form_id = $this->import_contact_form();
+		$form = Caldera_Forms_Forms::get_form($form_id);
+
+		$form['fields']['fld_60011111'] = [
+      		'ID' 			=> 'fld_60011111',
+      		'type' 			=>	'calculation',
+      		'label' 		=>	'Calculation',
+      		'slug' 			=>	'calculation',
+      		'conditions' 	=>	[],
+      		'required' 		=>	1,
+			'config'		=>	[
+				'manual_formula'	=> 'round(2 * 2.3333)\r\n'
+			]
+		];
+		Caldera_Forms_Forms::save_form($form);
+
+		$form = Caldera_Forms_Forms::get_form($form_id);
+
+		$this->assertSame( 'round(2 * 2.3333)', $form['fields']['fld_60011111']['config']['manual_formula'] );
 	}
 
 
