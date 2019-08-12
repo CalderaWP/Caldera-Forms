@@ -265,5 +265,4 @@ class Test_Caldera_Forms_API extends Caldera_Forms_Test_Case
 		$this->assertSame( 'round(2 * 2.3333)', $form['fields']['fld_60011111']['config']['manual_formula'] );
 	}
 
-
 }
