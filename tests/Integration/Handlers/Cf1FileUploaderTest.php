@@ -9,7 +9,6 @@ class Cf1FileUploaderTest extends TestCase
 {
 	protected $test_file;
 
-
 	public function setUp()
 	{
 		$orig_file = __DIR__ . '/screenshot.jpeg';
@@ -17,7 +16,6 @@ class Cf1FileUploaderTest extends TestCase
 		copy($orig_file, $this->test_file);
 		parent::setUp();
 	}
-
 
 	/**
 	 *
