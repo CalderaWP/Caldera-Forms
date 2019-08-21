@@ -280,7 +280,7 @@ class Caldera_Forms_Sanitize {
      * @return string
      */
 	public static function finish_trim($string){
-		return trim( $string, " rn" );
+		return rtrim( $string, " \\r\\n" );
     }
 
 }
