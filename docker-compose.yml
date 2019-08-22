@@ -1,7 +1,6 @@
-version: '3.1'
+version: "3.1"
 
 services:
-
   wordpress:
     image: wordpress
     ports:
@@ -13,13 +12,15 @@ services:
     volumes:
       - wordpress:/var/www/html
       - .:/var/www/html/wp-content/plugins/caldera-forms
-      - ./wp-content/plugins/gutenberg:/var/www/html/wp-content/plugins/gutenberg
+      - ./wp-content/plugins:/var/www/html/wp-content/plugins
+      - ./wp-content/uploads:/var/www/html/wp-content/uploads
   cli:
     image: wordpress:cli
     volumes:
-    - wordpress:/var/www/html
-    - .:/var/www/html/wp-content/plugins/caldera-forms
-    - ./wp-content/plugins/gutenberg:/var/www/html/wp-content/plugins/gutenberg
+      - wordpress:/var/www/html
+      - .:/var/www/html/wp-content/plugins/caldera-forms
+      - ./wp-content/plugins:/var/www/html/wp-content/plugins
+      - ./wp-content/uploads:/var/www/html/wp-content/uploads
     environment:
       WORDPRESS_DB_PASSWORD: example
       ABSPATH: /usr/src/wordpress/
