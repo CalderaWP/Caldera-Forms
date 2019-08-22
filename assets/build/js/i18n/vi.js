@@ -28,3 +28,4 @@ Parsley.addMessages('vi', {
   });
   
   Parsley.setLocale('vi');
+  
