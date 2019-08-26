@@ -1049,14 +1049,14 @@ class Caldera_Forms_Render_Assets
 	 *
 	 * @return string
 	 */
-	protected static function get_validator_locale_url($locale)
+	public static function get_validator_locale_url($locale)
 	{
-		if(!empty($locale)){
-			$locale = self::set_locale_code($locale);
-		}
+		//Use correct formatted locale for file to be matched
+		$locale = self::set_locale_code($locale);
 
 		$validator_url = CFCORE_URL . 'assets/js/i18n/' . $locale . '.js';
 		return $validator_url;
+
 	}
 
 	/**
@@ -1068,11 +1068,10 @@ class Caldera_Forms_Render_Assets
 	 *
 	 * @return string
 	 */
-	protected static function set_locale_code($locale)
+	public static function set_locale_code($locale)
 	{
 		if (file_exists(CFCORE_PATH . 'assets/js/i18n/' . $locale . '.js')) {
 			// no need to check other possibilities- break if/else early
-
 		} elseif (file_exists(CFCORE_PATH . 'assets/js/i18n/' . strtolower($locale) . '.js')) {
 			$locale = strtolower($locale);
 		} elseif (file_exists(CFCORE_PATH . 'assets/js/i18n/' . strtolower(str_replace('_', '-', $locale)) . '.js')) {
@@ -1081,6 +1080,10 @@ class Caldera_Forms_Render_Assets
 			$locale = strtolower(substr($locale, 0, 2));
 		} elseif (file_exists(CFCORE_PATH . 'assets/js/i18n/' . strtolower(substr($locale, 3)) . '.js')) {
 			$locale = strtolower(substr($locale, 3));
+		} else {
+			//No file is matching the locale in validation folder, 
+			//Fallback to english instead of not enqueueing for Parsley to be set a locale and not return an error
+			$locale = "en";
 		}
 
 		return $locale;
