@@ -31,30 +31,34 @@ domReady(function () {
 			//$form, //Form jQuery object
 		} = obj;
 		const fieldsToControl = [];
-		if( 'object' !== typeof  window.cf2 ){
+		if('object' !== typeof  window.cf2){
 			window.cf2 = {};
 		}
 
 		//Build configurations
 		document.querySelectorAll('.cf2-field-wrapper').forEach(function (fieldElement) {
 			const fieldIdAttr = fieldElement.getAttribute('data-field-id');
+			if('undefined' !== typeof idAttr){
+				const formConfig = window.cf2[idAttr];
+				
+				if('undefined' !== typeof formConfig){
+					let fieldConfig = formConfig.fields.hasOwnProperty(fieldIdAttr) ?
+						formConfig.fields[fieldIdAttr]
+						: null;
 
-			const formConfig = window.cf2[idAttr];
+					if('string' === typeof  fieldConfig) {
+						fieldConfig = JSON.parse(fieldConfig);
+					}
+					if(fieldConfig) {
+						fieldsToControl.push(fieldConfig);
+						if (fieldConfig.hasOwnProperty('fieldDefault')) {
+							state.mutateState(fieldIdAttr, fieldConfig.fieldDefault);
 
-			let fieldConfig = formConfig.fields.hasOwnProperty(fieldIdAttr) ?
-				formConfig.fields[fieldIdAttr]
-				: null;
-
-			if ('string' === typeof  fieldConfig) {
-				fieldConfig = JSON.parse(fieldConfig);
-			}
-			if (fieldConfig) {
-				fieldsToControl.push(fieldConfig);
-				if (fieldConfig.hasOwnProperty('fieldDefault')) {
-					state.mutateState(fieldIdAttr, fieldConfig.fieldDefault);
-
+						}
+					}
 				}
 			}
+			
 		});
 
 		/**
@@ -92,7 +96,7 @@ domReady(function () {
 				cf2.formIdAttr = obj.formIdAttr;
 			}
 			const {displayFieldErrors,$notice,$form,fieldsBlocking} = obj;
-			if ('object' !== typeof cf2) {
+			if('object' !== typeof cf2) {
 				return;
 			}
 
@@ -101,7 +105,7 @@ domReady(function () {
 			cf2.uploadCompleted = cf2.uploadCompleted || [];
 			cf2.fieldsBlocking = cf2.fieldsBlocking || [];
 
-			if (Object.keys(values).length) {
+			if(Object.keys(values).length) {
 				Object.keys(values).forEach(fieldId => {
 					const field = fieldsToControl.find(field => fieldId === field.fieldId);
 					if (field) {
