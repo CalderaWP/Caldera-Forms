@@ -3,7 +3,7 @@ Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
 Tags: form, contact form, forms, form creator, form manager, mailchimp, paypal, stripe, login, payment, forms manager, forms creation
 Requires at least: 4.7
 Tested up to: 5.3
-Stable tag: 1.8.6
+Stable tag: 1.8.7
 License: GPLv2
 Requires PHP: 5.6
 
@@ -782,6 +782,15 @@ This could also be a sign of a more serious issue on your server, but is probabl
 5. **Go Further With Form Processors** - Auto-responders, conditional recipients, redirects are included! Go further with our add-ons!
 
 == Changelog ==
+
+= Caldera Forms 1.8.7 (August 27, 2019) rtrim( CF\r ) =
+See: [https://calderaforms.com/updates/caldera-forms-1-8-7](https://calderaforms.com/updates/caldera-forms-1-8-7?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-7)
+*   [r of round() function in manual calculations was trimmed](https://github.com/CalderaWP/Caldera-Forms/issues/3316)
+*   [an error was logged when two forms were inserted in same page and one of them was set a File field](https://github.com/CalderaWP/Caldera-Forms/issues/3299)
+*   [if no file corresponding to locale was found, Parsley logged an error](https://github.com/CalderaWP/Caldera-Forms/issues/3295)
+*   [Vietnamese translation for Parsley](https://github.com/CalderaWP/Caldera-Forms/issues/3303)
+*   [PHP coding standards for Caldera Forms](https://github.com/CalderaWP/Caldera-Forms/issues/3314)
+*   [switched to Github actions and Gitlab CI](https://github.com/CalderaWP/Caldera-Forms/pull/3306)
 
 = Caldera Forms 1.8.6 (July 23, 2019) trim( CF\n) =
 See: [https://calderaforms.com/updates/caldera-forms-1-8-6](https://calderaforms.com/updates/caldera-forms-1-8-6?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-6)
