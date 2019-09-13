@@ -175,6 +175,8 @@ class Caldera_Forms_Forms {
 		    static::$index = static::get_stored_forms();
         }
 
+        $forms = static::$index;
+
         if ( false === $internal_only ) {
             /**
              * Runs after getting internal forms, use to add forms defined in file system
@@ -183,7 +185,7 @@ class Caldera_Forms_Forms {
              *
              * @param array $base_forms Forms saved in DB
              */
-            $forms = apply_filters('caldera_forms_get_forms', static::$index);
+            $forms = apply_filters('caldera_forms_get_forms', $forms);
             if (!empty($forms) && is_array($forms)) {
                 foreach ($forms as $form_id => $form) {
                     $forms[$form_id] = $form_id;
@@ -193,10 +195,8 @@ class Caldera_Forms_Forms {
 
 
 		if( $with_details ){
-			$forms = self::add_details( static::$index );
-		}else{
-			$forms = static::$index;
-        }
+			$forms = self::add_details( $forms );
+		}
 
 		if( $orderby && ! empty( $forms ) ){
 			$forms = self::order_forms( $forms, $orderby );
