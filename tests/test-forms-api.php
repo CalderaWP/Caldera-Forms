@@ -70,22 +70,27 @@ class Test_Caldera_Forms_API extends Caldera_Forms_Test_Case
 	 * @covers caldera_forms_get_forms filter
 	 * @covers Caldera_Forms_Forms::get_forms()
 	 *
-	 * @group now
 	 */
 	public function testFilterAddedForms()
 	{
-		//No forms beacuse second argument is true
+
+		//No forms because second argument is true, ignoring forms added on filter is expected.
 		$this->assertCount(0, Caldera_Forms_Forms::get_forms(FALSE, TRUE));
+		//Same number of forms if $with_details is true, was false in previous assertion
 		$this->assertCount(0, Caldera_Forms_Forms::get_forms(true,true));
 
-		//Three forms added on filter caldera_forms_get_forms in bootstrap.php
-		$this->assertCount(3, Caldera_Forms_Forms::get_forms(FALSE));
-		$this->assertCount(3, Caldera_Forms_Forms::get_forms(true,true));
+		//Four forms added on filter caldera_forms_get_forms in bootstrap.php
+		$this->assertCount(4, Caldera_Forms_Forms::get_forms(FALSE));
+		//Same number of forms if $with_details is true, was false in previous assertion
+		$this->assertCount(4, Caldera_Forms_Forms::get_forms(true,false));
 
 		//add one more form and check again
 		$this->import_contact_form();
-		$this->assertCount(4, Caldera_Forms_Forms::get_forms(FALSE));
-		
+		$this->assertCount(5, Caldera_Forms_Forms::get_forms(FALSE));
+		//Same number of forms if $with_details is true, was false in previous assertion
+		$this->assertCount(5, Caldera_Forms_Forms::get_forms(true ));
+
+
 	}
 
 

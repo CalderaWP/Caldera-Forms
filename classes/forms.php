@@ -189,14 +189,14 @@ class Caldera_Forms_Forms {
                     $forms[$form_id] = $form_id;
                 }
             }
+
         }
 
+		$forms = isset($forms) && false === $internal_only ? $forms : static::$index;
 
 		if( $with_details ){
-			$forms = self::add_details( static::$index );
-		}else{
-			$forms = static::$index;
-        }
+			$forms = self::add_details( $forms );
+		}
 
 		if( $orderby && ! empty( $forms ) ){
 			$forms = self::order_forms( $forms, $orderby );
@@ -411,15 +411,11 @@ class Caldera_Forms_Forms {
 	 */
 	protected static function add_details( $forms ){
 	    if( empty( $forms ) ){
-	        return [];
+			return [];
         }
 
-        if( ! empty( $valid_forms = get_transient( self::$registry_cache_key ) ) ) {
-            return $valid_forms;
-        }else{
-            $valid_forms = [];
-        }
-		
+		$valid_forms = [];
+
 		foreach( $forms as $id => $form  ){
 			$_form = self::get_form( $id );
 			if( empty( $_form ) ){
@@ -442,9 +438,6 @@ class Caldera_Forms_Forms {
 				}else {
 					$valid_forms[ $id ][ $key ] = '';
 				}
-
-
-
 			}
 		}
 
@@ -460,13 +453,8 @@ class Caldera_Forms_Forms {
 			}
 		}
 
-		if ( ! empty( $valid_forms ) ) {
-			set_transient( self::$registry_cache_key, $valid_forms, HOUR_IN_SECONDS );
-		}
-
-		self::$registry_cache = $valid_forms;
-		return self::$registry_cache;
-
+		set_transient( self::$registry_cache_key, $valid_forms, HOUR_IN_SECONDS );
+		return $valid_forms;
 	}
 
 	/**
