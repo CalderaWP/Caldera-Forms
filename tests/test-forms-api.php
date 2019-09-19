@@ -76,14 +76,18 @@ class Test_Caldera_Forms_API extends Caldera_Forms_Test_Case
 	{
 		//No forms beacuse second argument is true
 		$this->assertCount(0, Caldera_Forms_Forms::get_forms(FALSE, TRUE));
+		$this->assertCount(0, Caldera_Forms_Forms::get_forms(true,true));
+
 		//Three forms added on filter caldera_forms_get_forms in bootstrap.php
 		$this->assertCount(3, Caldera_Forms_Forms::get_forms(FALSE));
+		$this->assertCount(3, Caldera_Forms_Forms::get_forms(true,true));
+
 		//add one more form and check again
 		$this->import_contact_form();
 		$this->assertCount(4, Caldera_Forms_Forms::get_forms(FALSE));
-
-
+		
 	}
+
 
 	/**
 	 * Test forms list without details
