@@ -585,7 +585,7 @@ class Caldera_Forms_Fields {
 				"description" => __( 'Color Picker', 'caldera-forms' ),
 				'icon'          => CFCORE_URL . 'assets/build/images/paint-brush.svg',
 				"category"    => __( 'Select', 'caldera-forms' ),
-				"file"        => CFCORE_PATH . "fields/generic-input.php",
+				"file"        => CFCORE_PATH . "fields/color_picker/field.php",
 				"setup"       => array(
 					"preview"  => CFCORE_PATH . "fields/color_picker/preview.php",
 					"template" => CFCORE_PATH . "fields/color_picker/setup.php",
