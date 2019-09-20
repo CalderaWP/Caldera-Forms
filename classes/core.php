@@ -1413,7 +1413,7 @@ class Caldera_Forms
 			}
 		}
 		//If symbols array is not empty convert it to a string and return the string
-		if(is_array($symbols) && !empty($symbols)){
+		if(!empty($symbols) && is_array($symbols)){
 			$symbols = implode( ',', $symbols);
 			return $symbols;
 		} else {
