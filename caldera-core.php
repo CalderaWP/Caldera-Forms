@@ -8,6 +8,7 @@
   Author URI: http://CalderaLabs.org
   Text Domain: caldera-forms
   GitHub Plugin URI: https://github.com/CalderaWP/caldera-forms
+  Release Asset: true
 */
 
 
