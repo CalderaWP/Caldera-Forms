@@ -197,8 +197,9 @@ if ( ! empty( $element['mailer']['enable_mailer'] ) ) {
 				<label><input type="checkbox" value="1" name="config[debug_mailer]" class="field-config"<?php if(isset($element['debug_mailer'])){ echo ' checked="checked"'; } ?>> <?php esc_html_e('Enable email send transaction log', 'caldera-forms'); ?></label>
 				<p class="description"><?php esc_html_e('If set, entries will have a "Mailer Debug" meta tab to see the transaction log. Do not keep this enabled on production as it sends two emails for tracking.', 'caldera-forms'); ?></p>
 				<p class="description">
-					<?php esc_html_e( 'If you are having email issues, we strongly recommend configuring a third-party mailer service, which is easy to do.', 'caldera-forms' ); ?> <a href="https://calderaforms.com/doc/improving-the-reliability-of-emails-sent-through-caldera-forms/" target="_blank" rel="nofollow"><?php esc_html_e( 'Learn More', 'caldera-forms' ); ?></a>
+					<?php echo sprintf( esc_html( 'If you are having email issues, we strongly recommend %sSendWP%s.', 'caldera-forms' ), '<a href="https://sendwp.com" target="_blank" rel="nofollow">', '</a>' ); ?>
 				</p>
+
 			</div>
 		</div>
 
