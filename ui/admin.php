@@ -540,12 +540,13 @@ jQuery( function( $ ){
 	})
 
 	$(document).ready(function() {
-		setTimeout(function(){
+		var emailSettingsNotificationNudgeTimeout = setTimeout(function(){
 			$('#cf-email-settings').addClass('cf-email-settings-notification-nudge');
-			$('#cf-email-settings').on('click', function() {
-				$('#cf-email-settings').removeClass('cf-email-settings-notification-nudge');
-			});
 		}, 3000);
+		$('#cf-email-settings').on('click', function() {
+			clearTimeout(emailSettingsNotificationNudgeTimeout);
+			$('#cf-email-settings').removeClass('cf-email-settings-notification-nudge');
+		});
 	});
 
 });
