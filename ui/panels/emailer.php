@@ -200,6 +200,14 @@ if ( ! empty( $element['mailer']['enable_mailer'] ) ) {
 					<?php echo sprintf( esc_html( 'If you are having email issues, we strongly recommend %sSendWP%s.', 'caldera-forms' ), '<a href="https://sendwp.com" target="_blank" rel="nofollow">', '</a>' ); ?>
 				</p>
 
+				<a href="https://sendwp.com" target="_blank" rel="nofollow" style="text-decoration:none;">
+					<div class="mailer_config_panel caldera-config-processor-notice" style="clear: both; padding: 20px 0px 0px;width:550px;">
+						<p style="padding:12px;text-align:center;color:white;background:#21394a;" class="description">
+							<?php echo sprintf(__('%sSendWP%s - Fix Your WordPress Email%sThe easy solution to transactional email in WordPress', 'caldera-forms'), '<strong>', '</strong>', '<br />' ); ?>
+						</p>
+					</div>
+				</a>
+
 			</div>
 		</div>
 
