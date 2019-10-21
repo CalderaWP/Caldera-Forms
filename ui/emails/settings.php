@@ -15,17 +15,17 @@
 			<div class="caldera-forms-clippy"
 			     style="text-align:center;background-color:white;padding:20px;">
 				<h2>
-					<?php esc_html_e( 'Missing Email Notifications?', 'caldera-forms' ); ?>
+					<?php esc_html_e( 'Getting WordPress email into an inbox just got a lot easier!', 'caldera-forms' ); ?>
 				</h2>
 				<p>
 					<?php
 					esc_html_e(
-						'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae ipsum interdum lectus hendrerit sagittis at sollicitudin est. Mauris laoreet leo ac pulvinar sollicitudin. Quisque tristique et libero vitae vulputate. Sed sit amet pharetra ipsum. Suspendisse a dui tortor. Mauris non lacinia nisi. Nunc nisl nisi, sollicitudin et lacus sit amet, sagittis molestie lacus. Ut convallis ligula a dui luctus convallis ut vel nulla. Ut at facilisis neque. Integer egestas massa gravida, rhoncus ipsum eget, luctus enim. Ut laoreet convallis semper.',
+						'SendWP makes getting emails delivered as simple as a few clicks. So you can relax, knowing those important emails are being delivered on time.',
 						'caldera-forms'
 					);
 					?>
 				</p>
-				<a href="https://calderaforms.com/pro?utm-source=wp-admin&utm_campaign=email-settings&utm_term=email-setting"
+				<a href="https://sendwp.com?utm-source=cf-wp-admin&utm_campaign=cf-email-settings&utm_term=cf-email-setting"
 				   target="_blank" class="bt-btn btn btn-green" style="width: 80%;margin: auto;">
 					<?php esc_html_e( 'Learn More', 'caldera-forms' ); ?>
 				</a>
