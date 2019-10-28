@@ -25,8 +25,12 @@
 					);
 					?>
 				</p>
-				<button onClick="caldera_forms_sendwp_remote_install()">
-					Install
+				<button
+					class="button button-primary"
+					style="display:block;margin:20px auto;"
+					onClick="caldera_forms_sendwp_remote_install()"
+					>
+					Signup for SendWP
 				</button>
 				<a href="https://sendwp.com?utm_source=Caldera+Forms+Plugin&utm_medium=Forms_Email+Settings&utm_campaign=SendWP+banner+ad"
 				   target="_blank" class="bt-btn btn btn-green" style="width: 80%;margin: auto;">
