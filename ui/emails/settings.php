@@ -25,7 +25,7 @@
 					);
 					?>
 				</p>
-				<a href="https://sendwp.com?utm-source=cf-wp-admin&utm_campaign=cf-email-settings&utm_term=cf-email-setting"
+				<a href="https://sendwp.com?utm_source=Caldera+Forms+Plugin&utm_medium=Forms_Email+Settings&utm_campaign=SendWP+banner+ad"
 				   target="_blank" class="bt-btn btn btn-green" style="width: 80%;margin: auto;">
 					<?php esc_html_e( 'Learn More', 'caldera-forms' ); ?>
 				</a>
