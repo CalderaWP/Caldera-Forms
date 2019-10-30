@@ -2,8 +2,6 @@ import {Component} from '@wordpress/element';
 import { __ } from "@wordpress/i18n";
 import axios from "axios";
 import {cacheAdapterEnhancer} from "axios-extensions";
-import {ProEnterApp} from "../../../../components/ProSettings";
-import {ProFreeTrial} from "../../../../components/ProSettings";
 import {GetSendWP} from "../../../../components/SendWP";
 import url from "../../../../components/functions/url";
 
