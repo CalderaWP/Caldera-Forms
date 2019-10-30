@@ -1,5 +1,4 @@
 import {TabPanel} from "@wordpress/components";
-import {ProWhatIs} from "../../../components/ProSettings";
 
 const onSelect = () => {
 };
@@ -9,16 +8,15 @@ import {Fragment} from "react";
 export default function ProDashboard({isProConnected,apiRoot}) {
     return (
         <Fragment>
-            <ProWhatIs />
 
             <TabPanel className="cf-pro-dashboard-panels"
                       activeClass="active-tab"
                       onSelect={onSelect}
                       tabs={[
                           {
-                              name: 'pro',
-                              title: 'Pro: Email Delivery & Anti-Spam',
-                              className: 'pro-pro',
+                              name: 'sendwp',
+                              title: 'SendWP: Dependable Email Delivery',
+                              className: 'sendwp',
                           },
                           {
                               name: 'email',
