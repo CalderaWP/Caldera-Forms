@@ -2,6 +2,9 @@
 
 include_once CFCORE_PATH . 'sendwp/handler.php';
 
+/**
+ * Enqueue the SendWP JS SDK.
+ */
 function caldera_forms_admin_enqueue_sendwp_installer() {
     wp_enqueue_script('caldera_forms_sendwp_installer', plugins_url('installer.js', __FILE__));
 }
