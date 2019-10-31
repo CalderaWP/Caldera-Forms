@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import { __ } from "@wordpress/i18n";
 
 /**
@@ -11,7 +12,7 @@ export const GetSendWP = (props) => {
 
 
 	return(
-		<div style={{margin:'20px'}}>
+		<div className={classNames(props.className,GetSendWP.classNames.wrapper)} style={{margin:'20px'}}>
 			<div className="caldera-forms-clippy-zone-inner-wrap" style={{background: 'white'}}>
 				<div className="caldera-forms-clippy"
 					style={{textAlign:'center',backgroundColor:'white',padding:'20px'}}>
