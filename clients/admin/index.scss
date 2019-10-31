@@ -150,5 +150,27 @@
     }
   }
 
+  .caldera-forms-global-getsendwp-wrapper {
+    margin: 20px;
+
+    .caldera-forms-clippy-zone-inner-wrap {
+      background: #fff;
+
+      .caldera-forms-clippy {
+        text-align: center;
+        background-color: #fff;
+        padding: 20px;
+
+        a {
+          &.btn {
+            width: 80%;
+            margin: auto;
+            padding-top: 12px;
+          }
+        }
+      }
+    }
+  }
+
 }
 
