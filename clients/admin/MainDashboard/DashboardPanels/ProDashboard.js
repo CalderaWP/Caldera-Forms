@@ -14,11 +14,6 @@ export default function ProDashboard({isProConnected,apiRoot}) {
                       onSelect={onSelect}
                       tabs={[
                           {
-                              name: 'sendwp',
-                              title: 'SendWP: Dependable Email Delivery',
-                              className: 'sendwp',
-                          },
-                          {
                               name: 'email',
                               title: 'Email Marketing & CRMs',
                               className: 'pro-email',

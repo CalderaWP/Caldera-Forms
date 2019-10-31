@@ -10,10 +10,23 @@
  */
 ?>
 <div id="cf-email-settings-ui" aria-hidden="true" style="visibility: hidden;">
-
-	<!-- React component for SendWP action -->
-	<div id="caldera-forms-email-sendwp"></div>
-
+	<div style="margin:20px;">
+		<div class="caldera-forms-clippy-zone-inner-wrap" style="background: white">
+			<div class="caldera-forms-clippy"
+			     style="background-color:white;border-left: 4px solid #dc3232;">
+				<h2 style="margin-left: 12px">
+					<?php esc_html_e( 'Deprecated Functionality', 'caldera-forms' ); ?>
+				</h2>
+				<p style="margin-left: 12px">
+					<?php esc_html_e( 'SendGrid integration was our first attempt to improve email in Caldera Forms. But we decided to create something easier and provides more value to you -- our users. We call it Caldera Forms Pro.', 'caldera-forms' ); ?>
+				</p>
+				<a href="https://calderaforms.com/pro?utm-source=wp-admin&utm_campaign=email-settings&utm_term=email-setting"
+				   target="_blank" class="bt-btn btn btn-green" style="width: 80%;margin-left:5%;">
+					<?php esc_html_e( 'Learn More', 'caldera-forms' ); ?>
+				</a>
+			</div>
+		</div>
+	</div>
 	<div class="cf-emails-field-group caldera-config-group" id="cf-emails-api-wrap">
 		<label for="cf-emails-api" id="cf-emails-api-label">
 			<?php esc_html_e( 'Email System', 'caldera-forms' ); ?>

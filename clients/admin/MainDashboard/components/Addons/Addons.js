@@ -2,7 +2,6 @@ import {Component} from '@wordpress/element';
 import { __ } from "@wordpress/i18n";
 import axios from "axios";
 import {cacheAdapterEnhancer} from "axios-extensions";
-import {GetSendWP} from "../../../../components/SendWP";
 import url from "../../../../components/functions/url";
 
 export class Addons extends Component {
@@ -151,12 +150,7 @@ export class Addons extends Component {
 
         const {show,isProConnected} = this.props;
         switch (show) {
-            case 'email':
-                if (emailAddonsLoaded) {
-                    return <AddonsPanel addons={Object.values(emailAddons)} category={'email'}/>
-                } else {
-                    return <Loading/>
-                }
+            
             case 'payment':
                 if (paymentAddonsLoaded) {
                     return <AddonsPanel addons={Object.values(paymentAddons)} category={'paymen'}/>
@@ -170,9 +164,13 @@ export class Addons extends Component {
                     return <Loading/>
                 }
 
-            case 'sendwp':
+            case 'email':
             default:
-               return <GetSendWP/>
+               if (emailAddonsLoaded) {
+                return <AddonsPanel addons={Object.values(emailAddons)} category={'email'}/>
+            } else {
+                return <Loading/>
+            }
 
         }
     }

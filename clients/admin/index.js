@@ -3,7 +3,6 @@ import jQuery from 'jquery'
 import {Component, render, unmountComponentAtNode,Fragment} from '@wordpress/element';
 import domReady from '@wordpress/dom-ready';
 import MainDashboard from './MainDashboard/MainDashboard';
-import EmailTabSendWP from './EmailTabSendWP/EmailTabSendWP';
 
 class FormsAdminApp extends Component {
 
@@ -109,8 +108,6 @@ domReady(function () {
     };
 
     render( <FormsAdminApp {...props} />, document.getElementById('caldera-forms-clippy') );
-
-    render( <EmailTabSendWP />, document.getElementById('caldera-forms-email-sendwp'));
 
 });
 
