@@ -53,11 +53,6 @@
 				<?php esc_html_e( 'Add-ons', 'caldera-forms' ); ?>
 			</a>
 		</li>
-		<li class="caldera-forms-toolbar-item">
-			<a href="https://calderaforms.com/pro?utm_source=dashboard&utm_medium=extend-submenu&utm_campaign=caldera-forms" title="<?php esc_attr_e( 'View Caldera Forms Bundles', 'caldera-forms' ); ?>" target="_blank">
-				<?php esc_html_e( 'Save With Pro', 'caldera-forms' ); ?>
-			</a>
-		</li>
 	</ul>
 </div>
 
