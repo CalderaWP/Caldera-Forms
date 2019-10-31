@@ -161,6 +161,11 @@
         background-color: #fff;
         padding: 20px;
 
+        .sendwp-action-button {
+          display:block;
+          margin:20px auto;
+        }
+
         a {
           &.btn {
             width: 80%;

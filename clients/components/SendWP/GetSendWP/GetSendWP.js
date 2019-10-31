@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import { __ } from "@wordpress/i18n";
+import ActionButton from './ActionButton';
 
 /**
  * Create the UI for SendWP information and, link and Remote install
@@ -24,6 +25,7 @@ export const GetSendWP = (props) => {
 							'caldera-forms'
 						)}
 					</p>
+					<div><ActionButton /></div>
 					<a href="https://sendwp.com?utm_source=Caldera+Forms+Plugin&utm_medium=Forms_Email+Settings&utm_campaign=SendWP+banner+ad"
 						target="_blank" className="bt-btn btn btn-green" >
 						{__( 'Learn More', 'caldera-forms' )}
