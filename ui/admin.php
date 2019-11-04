@@ -539,10 +539,36 @@ jQuery( function( $ ){
 		name.show();
 	})
 
+	$(document).ready(function() {
+		var emailSettingsNotificationNudgeTimeout = setTimeout(function(){
+			$('#cf-email-settings').addClass('cf-email-settings-notification-nudge');
+		}, 3000);
+		$('#cf-email-settings').on('click', function() {
+			clearTimeout(emailSettingsNotificationNudgeTimeout);
+			$('#cf-email-settings').removeClass('cf-email-settings-notification-nudge');
+		});
+	});
+
 });
 </script>
-<?php
 
+<style>
+.cf-email-settings-notification-nudge {
+	position: relative;
+}
+.cf-email-settings-notification-nudge::after {
+	content: " ";
+	background-color: #ca4a1f;
+	width: 10px;
+	height: 10px;
+	position: absolute;
+	top: -5px;
+	right: -5px;
+	border-radius: 50%;
+}
+</style>
+
+<?php
 
 /**
  * Runs at the bottom of the main Caldera Forms admin page

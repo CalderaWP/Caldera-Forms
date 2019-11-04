@@ -121,6 +121,7 @@ if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
 		include_once CFCORE_PATH . 'ui/blocks/init.php';
 		include_once CFCORE_PATH . 'vendor/autoload.php';
 		include_once CFCORE_PATH . 'includes/cf-pro-client/cf-pro-init.php';
+		include_once CFCORE_PATH . 'sendwp/init.php';
 
 		/**
 		 * Runs after all of the includes and autoload setup is done in Caldera Forms core
