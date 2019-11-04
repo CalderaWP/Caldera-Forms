@@ -203,7 +203,7 @@ if ( ! empty( $element['mailer']['enable_mailer'] ) ) {
 				<a href="https://sendwp.com?utm_source=Caldera+Forms+Plugin&utm_medium=Forms_Edit+Forms_Email&utm_campaign=SendWP+banner+ad" target="_blank" rel="nofollow" style="text-decoration:none;">
 					<div class="mailer_config_panel caldera-config-processor-notice" style="clear: both; padding: 20px 0px 0px;width:550px;">
 						<p style="padding:12px;text-align:center;color:white;background:#21394a;" class="description">
-							<?php echo sprintf(__('%sSendWP%s - Fix Your WordPress Email%sThe easy solution to transactional email in WordPress', 'caldera-forms'), '<strong>', '</strong>', '<br />' ); ?>
+							<?php echo sprintf( esc_html__('%sSendWP%s - Fix Your WordPress Email%sThe easy solution to transactional email in WordPress', 'caldera-forms'), '<strong>', '</strong>', '<br />' ); ?>
 						</p>
 					</div>
 				</a>

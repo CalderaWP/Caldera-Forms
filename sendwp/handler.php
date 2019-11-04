@@ -40,7 +40,7 @@ function wp_ajax_caldera_forms_sendwp_remote_install_handler () {
         ) );
         if ( is_wp_error( $api ) ) {
             ob_end_clean();
-            echo json_encode( array( 'error' => $api->get_error_message(), 'debug' => $api ) );
+            echo json_encode( array( 'error' => esc_html( $api->get_error_message() ), 'debug' => $api ) );
             exit;
         }
         
@@ -51,7 +51,7 @@ function wp_ajax_caldera_forms_sendwp_remote_install_handler () {
         $install = $upgrader->install( $api->download_link );
         if ( is_wp_error( $install ) ) {
             ob_end_clean();
-            echo json_encode( array( 'error' => $install->get_error_message(), 'debug' => $api ) );
+            echo json_encode( array( 'error' => esc_html( $install->get_error_message() ), 'debug' => $api ) );
             exit;
         }
         
@@ -69,7 +69,7 @@ function wp_ajax_caldera_forms_sendwp_remote_install_handler () {
     if( ! function_exists('sendwp_get_server_url') ) {
         ob_end_clean();
         echo json_encode( array(
-            'error' => __( 'Something went wrong. SendWP was not installed correctly.' ),
+            'error' => esc_html__( 'Something went wrong. SendWP was not installed correctly.' ),
             'install' => $install,
             ) );
         exit;
@@ -77,10 +77,10 @@ function wp_ajax_caldera_forms_sendwp_remote_install_handler () {
     
     echo json_encode( array(
         'partner_id' => 2400,
-        'register_url' => sendwp_get_server_url() . '_/signup',
-        'client_name' => sendwp_get_client_name(),
-        'client_secret' => sendwp_get_client_secret(),
-        'client_redirect' => sendwp_get_client_redirect(),
+        'register_url' => esc_url( sendwp_get_server_url() . '_/signup' ),
+        'client_name' => esc_url( sendwp_get_client_name() ),
+        'client_secret' => esc_attr( sendwp_get_client_secret() ),
+        'client_redirect' => esc_url( sendwp_get_client_redirect() ),
     ) );
     exit;
 }
