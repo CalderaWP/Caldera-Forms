@@ -1,12 +1,22 @@
 function caldera_forms_sendwp_remote_install() {
     var data = {
         'action': 'caldera_forms_sendwp_remote_install',
+        'sendwp_nonce': sendwp_vars.nonce
     };
-    
     // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
     jQuery.post(ajaxurl, data, function(response) {
         var data = JSON.parse(response);
-        caldera_forms_sendwp_register_client(data.register_url, data.client_name, data.client_secret, data.client_redirect, data.partner_id);
+        //Check for errors before calling caldera_forms_sendwp_register_client()
+        if(data.error === true ){
+            if( data.debug === '!security'){
+                jQuery("#cf-email-settings-ui").prepend('<div class="notice error"><p>' + sendwp_vars.security_failed_message + '</p></div>');
+            } else if( data.debug === '!user_capablity'){
+                jQuery("#cf-email-settings-ui").prepend('<div class="notice error"><p>' + sendwp_vars.user_capability_message + '</p></div>');
+            }
+        } else {
+            caldera_forms_sendwp_register_client(data.register_url, data.client_name, data.client_secret, data.client_redirect, data.partner_id);
+        }
+        
     });
 }
 
