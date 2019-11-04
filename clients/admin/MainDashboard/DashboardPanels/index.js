@@ -1,4 +1,5 @@
 import {Panel, PanelBody, PanelRow} from "@wordpress/components";
+import { __ } from "@wordpress/i18n";
 import {DocSearchApp} from '../../../components';
 import {RemotePost} from "../../../components";
 import ProDashboard from "./ProDashboard";
@@ -42,9 +43,9 @@ export default class DashboardPanels extends Component {
         const {translatePageData,translatePageLoaded} = this.state;
         return (
             <div className={'caldera-grid'}>
-                <Panel header="Welcome To Caldera Forms">
+                <Panel header={__('Welcome To Caldera Forms', 'caldera-forms')}>
                     <PanelBody
-                        title="Documentation"
+                        title={__('Documentation', 'caldera-forms')}
                         icon="welcome-widgets-menus"
                         initialOpen={false}
                     >
@@ -55,14 +56,14 @@ export default class DashboardPanels extends Component {
                         </PanelRow>
                     </PanelBody>
                     <PanelBody
-                        title="Go Pro!"
+                        title={__('Get more!', 'caldera-forms')}
                         icon="thumbs-up"
                         initialOpen={true}
                     >
                         <ProDashboard isProConnected={isProConnected}/>
                     </PanelBody>
                     <PanelBody
-                        title="Translate Your Forms"
+                        title={__('Translate Your Forms', 'caldera-forms')}
                         icon="translation"
                         initialOpen={false}
                         onToggle={this.onOpenTranslate}

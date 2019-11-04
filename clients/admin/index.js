@@ -4,7 +4,6 @@ import {Component, render, unmountComponentAtNode,Fragment} from '@wordpress/ele
 import domReady from '@wordpress/dom-ready';
 import MainDashboard from './MainDashboard/MainDashboard';
 
-
 class FormsAdminApp extends Component {
 
     constructor(props) {

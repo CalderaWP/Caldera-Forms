@@ -1,11 +1,10 @@
 import {Component} from '@wordpress/element';
+import { __ } from "@wordpress/i18n";
 import axios from "axios";
 import {cacheAdapterEnhancer} from "axios-extensions";
-import {ProEnterApp} from "../../../../components/ProSettings";
-import {ProFreeTrial} from "../../../../components/ProSettings";
 import url from "../../../../components/functions/url";
-export class Addons extends Component {
 
+export class Addons extends Component {
 
     constructor(props) {
         super(props);
@@ -97,7 +96,7 @@ export class Addons extends Component {
         } = this.state;
 
         function Loading() {
-            return <div>Loading</div>
+            return <div>{ __('Loading','caldera-forms') }</div>
         }
 
         function AddonPanel({addon,category}) {
@@ -122,12 +121,12 @@ export class Addons extends Component {
                         {tagline}
                     </div>
 
-                    <div class="panel-footer">
+                    <div className="panel-footer">
 
                         <a class="button" href={url({source: 'cf-admin-app',categories:category}, link)} target="_blank" rel="nofollow" style={{
                             width: '100%'
                         }}>
-                            Learn More
+                            { __('Learn More', 'caldera-forms') }
                         </a>
                     </div>
                 </div>
@@ -151,12 +150,7 @@ export class Addons extends Component {
 
         const {show,isProConnected} = this.props;
         switch (show) {
-            case 'email':
-                if (emailAddonsLoaded) {
-                    return <AddonsPanel addons={Object.values(emailAddons)} category={'email'}/>
-                } else {
-                    return <Loading/>
-                }
+            
             case 'payment':
                 if (paymentAddonsLoaded) {
                     return <AddonsPanel addons={Object.values(paymentAddons)} category={'paymen'}/>
@@ -170,12 +164,13 @@ export class Addons extends Component {
                     return <Loading/>
                 }
 
-            case 'pro':
+            case 'email':
             default:
-                if( isProConnected ){
-                    return  <ProEnterApp/>
-                }
-                return  <ProFreeTrial />
+               if (emailAddonsLoaded) {
+                return <AddonsPanel addons={Object.values(emailAddons)} category={'email'}/>
+            } else {
+                return <Loading/>
+            }
 
         }
     }
