@@ -35,7 +35,6 @@ Caldera Forms is a free WordPress plugin by <a href="http://CalderaLabs.org?utm_
 * Export entries to CSV!
 * Responsive and accessible by default!
 * [A ton of add-ons to take your forms farther!](https://calderaforms.com/caldera-forms-add-ons?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=features-list)
-* [Caldera Forms Pro makes your emails reliable and beautiful](https://calderaforms.com/pro?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=features-list)
 * [Free CDN to improve site speed](https://calderaforms.com/doc/improving-caldera-performance-free-cdn?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=features-list)
 
 
@@ -58,24 +57,12 @@ Quickly configure the [email notification](https://calderaforms.com/doc/setting-
 >
 > - Matt Cromwell: Head of support for WordImpress
 
-= Go Pro =
-As makers of the most powerful free form plugin for WordPress, we know what makes form builders tick. Caldera Forms Pro makes form creation beautiful: with drag-and-drop builders for form & form notification, enhanced email delivery, and 27+ integrations, it just works.
-
-> Emails Send Every Time, Best In Class Support, Easy Form & Form Notification Design, Connect To The All The Apps You Love
-
-Top Pro features:
-* Enhanced Email Delivery: It's getting harder to convince Gmail or Exchange emails from WordPress are legit, we make it simple.
-* Priority Support For Caldera Forms: Need help with a form or connecting Caldera Forms to another service or plugin? We can help.
-* HTML layout builder: Make your emails on brand and looking great.
-* 27+ Add-ons: Accept payments, build your mailing list, integrate with Google Analytics and create more powerful forms.
-* Form entries as PDFs: Create an easy to print record of all submissions.
-
 = Anti-Spam By Default =
 Spam is annoying. No form builder is complete without a robust anti-spam system.
 
  Anti-spam is not an add-on with Caldera Forms, your forms will repel spam using a highly-effective honey pot. Anti-spam does not require configuration or adding a Captcha that will hurt your conversions.
 
- > "A drag-and-drop builder thatâ€™s both easy and fun to use, we reckon Caldera Forms is possibly one of the best, most advanced free form builders available, and we highly recommend it."
+ > "A drag-and-drop builder that is both easy and fun to use, we reckon Caldera Forms is possibly one of the best, most advanced free form builders available, and we highly recommend it."
  >
  > - Lisa-Robyn Keown - Aspen Grove Studios
 
@@ -187,11 +174,11 @@ Entry editing is a core feature of Caldera Forms. When editing entries, click th
 Third-party add-ons and integrations:
 * [Caldera Forms Google Sheets](https://wordpress.org/plugins/cf-google-sheets/) Create spreadsheats in Google Drive with form submissions.
 * [Testify](http://testimonialplugin.com/) - Testimonials plugin with front-end submissions powered by Caldera Forms.
-* [AffiliateWP](https://affiliatewp.com/integrations/caldera-forms/)Â - Register affiliate referral commissions when a Caldera Form is submitted.
+* [AffiliateWP](https://affiliatewp.com/integrations/caldera-forms/) - Register affiliate referral commissions when a Caldera Form is submitted.
 * [PowerPack Beaver Builder Addon](http://wpbeaveraddons.com/demo/forms/) - Style Caldera Forms in the Beaver Builder layout
 * [FileTrip](https://codecanyon.net/item/filetrip-easily-upload-to-dropbox-google-drive-ftp-wordpress/11267642?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) Upload fields to Dropbox or Google Drive from Caldera Forms.
 * [WP HTML Email](https://wordpress.org/plugins/wp-html-mail/) Design fancy, responsive emails for Caldera Forms email notifications.
-* [CleanTalk Anti-Spam](https://wordpress.org/plugins/cleantalk-spam-protect/)Â - Additional anti-spam protection for your forms.
+* [CleanTalk Anti-Spam](https://wordpress.org/plugins/cleantalk-spam-protect/) - Additional anti-spam protection for your forms.
 * [UpiCrm](http://www.upicrm.com/caldera-forms-support-upicrm) - Use Caldera Forms to add content to the UpiCRM database.
 
 
