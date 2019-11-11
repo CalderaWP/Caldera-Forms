@@ -3,7 +3,7 @@ Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
 Tags: form, contact form, forms, form creator, form manager, mailchimp, paypal, stripe, login, payment, forms manager, forms creation
 Requires at least: 4.7
 Tested up to: 5.3
-Stable tag: 1.8.7
+Stable tag: 1.8.8
 License: GPLv2
 Requires PHP: 5.6
 
@@ -769,6 +769,11 @@ This could also be a sign of a more serious issue on your server, but is probabl
 5. **Go Further With Form Processors** - Auto-responders, conditional recipients, redirects are included! Go further with our add-ons!
 
 == Changelog ==
+
+= Caldera Forms 1.8.8 (Novenmber 11, 2019) SendWP Init =
+* Remove Pro mention information panels next to forms lists (Caldera Forms -> Forms)
+* Add mention to SendWP under Email settings
+* Add mention to SendWP in the Mailer tab of Form edition page
 
 = Caldera Forms 1.8.7 (August 27, 2019) rtrim( CF\r ) =
 See: [https://calderaforms.com/updates/caldera-forms-1-8-7](https://calderaforms.com/updates/caldera-forms-1-8-7?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-7)
