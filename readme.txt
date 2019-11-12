@@ -134,42 +134,42 @@ Entry editing is a core feature of Caldera Forms. When editing entries, click th
 
 
 = Addons =
-[All Caldera Forms Add-ons](https://calderaforms.com/caldera-forms-add-ons?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms)
+[All Caldera Forms Add-ons](https://calderaforms.com/features?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms)
 
 **Grow Your Email List**
-* [MailChimp](https://calderaforms.com/downloads/caldera-forms-mailchimp-add-on?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Seamlessly integrate MailChimp optins into your forms.
-* [Aweber](https://calderaforms.com/downloads/aweber-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Aweber marketting automation meets Caldera Forms.
-* [ConvertKit](https://calderaforms.com/downloads/convertkit-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Convert leads to customers the ConvertKit way.
+* [MailChimp](https://calderaforms.com/downloads/mailchimp?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Seamlessly integrate MailChimp optins into your forms.
+* [Aweber](https://calderaforms.com/downloads/aweber?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Aweber marketting automation meets Caldera Forms.
+* [ConvertKit](https://calderaforms.com/downloads/convertkit?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Convert leads to customers the ConvertKit way.
 
 **Accept Payments**
-* [Stripe](https://calderaforms.com/downloads/caldera-forms-stripe-add-on?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Accept credit card payments via Stripe.
-* [PayPal Express](https://calderaforms.com/downloads/caldera-forms-paypal-express-add-on?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Accept payments via Paypal Express.
-* [Dwolla](https://calderaforms.com/downloads/dwolla-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Accept payments with low fees using Dwolla.
-* [Authorize.net](https://calderaforms.com/downloads/authorize-net-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) Accept all major credit cards by integrating Caldera Forms with Authorize.net.
-* [BrainTree](https://calderaforms.com/downloads/braintree-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) Accept credit card payments in your form through BrainTree.
+* [Stripe](https://calderaforms.com/downloads/stripe?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Accept credit card payments via Stripe.
+* [PayPal Express](https://calderaforms.com/downloads/paypal-express?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Accept payments via Paypal Express.
+* [Dwolla](https://calderaforms.com/downloads/dwolla?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Accept payments with low fees using Dwolla.
+* [Authorize.net](https://calderaforms.com/downloads/authorize-net?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) Accept all major credit cards by integrating Caldera Forms with Authorize.net.
+* [BrainTree](https://calderaforms.com/downloads/braintree?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) Accept credit card payments in your form through BrainTree.
 
 **Increase And Measure Conversions**
-* [Google Analytics](https://calderaforms.com/downloads/caldera-forms-google-analytics-tracking/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Track custom events and eCommerce conversions.
-* [Connected Forms](https://calderaforms.com/downloads/caldera-forms-connector?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Create sequences of forms with conditional logic. Split your forms into smaller pieces, with total control over what comes next.
+* [Google Analytics](https://calderaforms.com/downloads/google-analytics?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Track custom events and eCommerce conversions.
+* [Connected Forms](https://calderaforms.com/downloads/connected-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Create sequences of forms with conditional logic. Split your forms into smaller pieces, with total control over what comes next.
 * [A/B Testing](https://calderaforms.com/downloads/ingot-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - A/B testing for your forms. Powered by [Ingot](https://IngotHQ.com?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms)
 
 **Front-End Post and User Profile Editing**
-* [Users](https://calderaforms.com/downloads/caldera-forms-users-add?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Register or login users from your form.
-* [Caldera Custom Fields](https://calderaforms.com/downloads/caldera-form-metabox?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Save form submissions as post and post meta.
+* [Users](https://calderaforms.com/downloads/users?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Register or login users from your form.
+* [Caldera Custom Fields](https://calderaforms.com/downloads/custom-fields?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Save form submissions as post and post meta.
 
 **Cool Tools!**
-* [Connected Forms](https://calderaforms.com/downloads/caldera-forms-connector?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Create sequences of forms with conditional logic. Split your forms into smaller pieces, with total control over what comes next.
-* [Geolocation](https://calderaforms.com/downloads/geolocation-field-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Make a text field a geolocation auto-complete field and recorded geocoded data.
-* [Mark Viewed](https://calderaforms.com/downloads/caldera-forms-mark-viewed?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Let users track what content they have viewed using a Caldera Forms.
-* [Mail Templates](https://calderaforms.com/downloads/mail-templates-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Add your logo, and your brand's color scheme to your emails sent from Caldera Forms.
-* [Nexmo](https://calderaforms.com/downloads/nexmo-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) Get SMS notifications of form submissions.
+* [Connected Forms](https://calderaforms.com/downloads/connected-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Create sequences of forms with conditional logic. Split your forms into smaller pieces, with total control over what comes next.
+* [Geolocation](https://calderaforms.com/downloads/geolocation?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Make a text field a geolocation auto-complete field and recorded geocoded data.
+* [Mark Viewed](https://calderaforms.com/downloads/mark-viewed?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Let users track what content they have viewed using a Caldera Forms.
+* [Mail Templates](https://calderaforms.com/downloads/mail-templates?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Add your logo, and your brand's color scheme to your emails sent from Caldera Forms.
+* [Nexmo](https://calderaforms.com/downloads/nexmo?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) Get SMS notifications of form submissions.
 * [Translations](https://wordpress.org/plugins/caldera-forms-translation) - Multi-lingual WordPress forms. Translate all form fields. One form, all the languages!
-* [Verify Email for Caldera Forms](https://calderaforms.com/downloads/verify-email-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Send an email with a validate link to verify the email address before completing the form submission.
-* [Form as Metabox - Custom Fields](https://calderaforms.com/downloads/caldera-form-metabox?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Use a Caldera Form as a metabox in the post editor to save custom field values.
-* [Slack Integration for Caldera Forms](https://calderaforms.com/downloads/caldera-forms-slack-integration?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Get notifications in Slack whenever a Caldera Form is submitted.
+* [Verify Email for Caldera Forms](https://calderaforms.com/downloads/verify-email?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Send an email with a validate link to verify the email address before completing the form submission.
+* [Form as Metabox - Custom Fields](https://calderaforms.com/downloads/custom-fields?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Use a Caldera Form as a metabox in the post editor to save custom field values.
+* [Slack Integration for Caldera Forms](https://calderaforms.com/downloads/slack?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Get notifications in Slack whenever a Caldera Form is submitted.
 * [Run Action](https://calderaforms.com/downloads/caldera-forms-run-action?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Trigger a WordPress action with your form submission.
-* [Conditional Fail](https://wordpress.org/plugins/conditional-fail-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Set conditions to cause that if met will allow or prevent form submission.
-* [Postmatic](https://calderaforms.com/downloads/postmatic-for-caldera-forms?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Subscribe users to your posts and comments using Postmatic.
+* [Conditional Fail](https://calderaforms.com/downloads/conditional-fail?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Set conditions to cause that if met will allow or prevent form submission.
+* [Postmatic](https://calderaforms.com/downloads/postmatic?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) - Subscribe users to your posts and comments using Postmatic.
 
 Third-party add-ons and integrations:
 * [Caldera Forms Google Sheets](https://wordpress.org/plugins/cf-google-sheets/) Create spreadsheats in Google Drive with form submissions.
