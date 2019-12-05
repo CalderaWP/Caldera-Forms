@@ -2180,6 +2180,26 @@ class Caldera_Forms_Admin {
         }
     }
 
+    /**
+     * Check if we should show the Caldera Forms Pro UI
+     *
+     * If Caldera Forms Pro is activated, UI should show.
+     * If Caldera Forms Pro is not activated, UI should not show.
+     * Use caldera_forms_show_pro_ui filter to override.
+     *
+     * @return bool
+     */
+    public static function show_pro_ui(){
+        /**
+         * Should we add Caldera Forms Pro sub-menu page and UI
+         *
+         * @since 1.8.9
+         * @see https://github.com/CalderaWP/Caldera-Forms/issues/3413
+         *
+         * @param bool $show_pro Whether to show or not
+         */
+        return (bool) apply_filters( 'caldera_forms_show_pro_ui', caldera_forms_pro_is_active() );
+    }
 
 
 }
