@@ -35,7 +35,10 @@ class Caldera_Forms_Admin_Pro {
 	 * @since 1.5.1
 	 */
 	public function add_hooks(){
-		add_action( 'admin_menu', array( $this, 'maybe_add_menu_page' ) );
+	    //@see https://github.com/CalderaWP/Caldera-Forms/issues/3413
+	    if( Caldera_Forms_Admin::show_pro_ui() ){
+            add_action( 'admin_menu', array( $this, 'maybe_add_menu_page' ) );
+        }
 	}
 
 	/**
