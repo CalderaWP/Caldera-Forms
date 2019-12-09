@@ -31,20 +31,18 @@ add_action('caldera_forms_includes_complete', function () {
 		$view_dir = __DIR__ . '/dist';
 		$scripts = new scripts($assets_url, $slug, CF_PRO_VER);
 		if ( Caldera_Forms_Admin::is_edit() ) {
-		    // @see https://github.com/CalderaWP/Caldera-Forms/issues/3413
-		    if( Caldera_Forms_Admin::show_pro_ui() ){
-                add_action('admin_init', function () use ($scripts, $view_dir) {
-                    $tab = new \calderawp\calderaforms\pro\admin\tab(__DIR__ . '/dist/tab.php');
-                    add_action('caldera_forms_get_panel_extensions', [ $tab, 'add_tab' ]);
-                    container::get_instance()->set_tab_html($scripts->webpack($view_dir, 'tab', false));
+			add_action('admin_init', function () use ($scripts, $view_dir) {
+				$tab = new \calderawp\calderaforms\pro\admin\tab(__DIR__ . '/dist/tab.php');
+				add_action('caldera_forms_get_panel_extensions', [ $tab, 'add_tab' ]);
+				container::get_instance()->set_tab_html($scripts->webpack($view_dir, 'tab', false));
 
-                });
-            }
-
+			});
 		}
-
-		$menu = new menu($view_dir, $slug, $scripts);
-		add_action('admin_menu', [ $menu, 'display' ]);
+		// @see https://github.com/CalderaWP/Caldera-Forms/issues/3413
+		if( Caldera_Forms_Admin::show_pro_ui() ){
+			$menu = new menu($view_dir, $slug, $scripts);
+			add_action('admin_menu', [ $menu, 'display' ]);
+		}
 	}
 
 	//add hooks
