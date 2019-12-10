@@ -2364,10 +2364,11 @@ class Caldera_Forms
 		global $processed_data;
 
 		if (is_string($form)) {
-			$form = Caldera_Forms_Forms::get_form($form);
-			if (!isset($form['ID']) || $form['ID'] !== $form) {
+			$form_obj = Caldera_Forms_Forms::get_form($form);
+			if (!isset($form_obj['ID']) || $form_obj['ID'] !== $form) {
 				return null;
 			}
+			$form = $form_obj;
 		}
 
 		if (!is_array($form)) {
