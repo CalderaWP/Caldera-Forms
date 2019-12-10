@@ -2116,7 +2116,8 @@ class Caldera_Forms
 			'login_url',
 			'logout_url',
 			'register_url',
-			'lostpassword_url'
+			'lostpassword_url',
+			'referer_url'
 
 		);
 
