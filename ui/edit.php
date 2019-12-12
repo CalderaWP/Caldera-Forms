@@ -359,7 +359,7 @@ $field_options_template = "
 
 $default_template = "
 <div class=\"caldera-config-group\">
-	<label>Default</label>
+	<label>" . esc_html__( 'Default', 'caldera-forms' ) . "</label>
 	<div class=\"caldera-config-field\">
 		<input type=\"text\" class=\"block-input field-config\" name=\"{{_name}}[default]\" value=\"{{default}}\">
 	</div>
@@ -1162,7 +1162,7 @@ do_action('caldera_forms_edit_end', $element);
 </script>
 <script type="text/html" id="noconfig_field_templ" class="cf-editor-template">
 <div class="caldera-config-group">
-	<label>Default</label>
+	<label><?php _e( 'Default', 'caldera-forms' ); ?></label>
 	<div class="caldera-config-field">
 		<input type="text" class="block-input field-config" name="{{_name}}[default]" value="{{default}}">
 	</div>
@@ -1175,7 +1175,7 @@ do_action('caldera_forms_edit_end', $element);
 			<div class="caldera-condition-lines" id="{{id}}_conditions_lines">
 				{{#each lines}}
 				<div class="caldera-condition-line">
-					if 
+					<?php _e( 'if', 'caldera-forms' ); ?>
 					<select name="config[{{../type}}][{{../../id}}][conditions][group][{{../id}}][{{id}}][field]" data-condition="{{../type}}" class="caldera-field-bind caldera-conditional-field-set" data-id="{{../../id}}" {{#if field}}data-default="{{field}}"{{/if}} data-line="{{id}}" data-row="{{../id}}" data-all="true" style="max-width:120px;">
 						{{#if field}}<option value="{{field}}" class="bound-field" selected="selected"></option>{{else}}<option value="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>{{/if}}
 					</select>
@@ -1200,7 +1200,7 @@ do_action('caldera_forms_edit_end', $element);
 <script type="text/html" id="conditional-line-tmpl">
 	<div class="caldera-condition-line">
 		<div class="caldera-condition-line-label"><?php echo esc_html__( 'and', 'caldera-forms' ); ?></div>
-		if 
+		<?php _e( 'if', 'caldera-forms' ); ?>
 		<select name="{{name}}[field]" class="caldera-field-bind caldera-conditional-field-set" data-condition="{{type}}" data-id="{{id}}" data-line="{{lineid}}" data-row="{{rowid}}" data-all="true" style="max-width:120px;"></select>
 		<select name="{{name}}[compare]" style="max-width:110px;">
 			<option value="is"><?php echo esc_html__( 'is', 'caldera-forms' ); ?></option>
