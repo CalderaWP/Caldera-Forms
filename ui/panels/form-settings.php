@@ -244,7 +244,19 @@
 				<?php esc_html_e( 'Honeypot', 'caldera-forms' ); ?>
 			</legend>
 			<div class="caldera-config-field">
-			    <?php esc_html_e('This setting has moved to Anti-Spam tab', 'caldera-forms' ); ?>
+				<label for="cf-honey">
+					<input
+							id="cf-honey"
+							type="checkbox"
+							class="field-config"
+							name="config[check_honey]"
+							value="1" <?php if (!empty($element['check_honey'])){ ?>checked="checked"<?php } ?>
+							aria-describedby="cf-honey-desc"
+					/>
+				
+					<?php esc_html_e('Enable', 'caldera-forms'); ?>
+					: <?php esc_html_e('Uses an anti-spam honeypot', 'caldera-forms'); ?>
+                </label>
 			</div>
 		</fieldset>
 	</div>
