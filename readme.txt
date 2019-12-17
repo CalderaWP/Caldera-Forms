@@ -3,7 +3,7 @@ Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
 Tags: form, contact form, forms, form creator, form manager, mailchimp, paypal, stripe, login, payment, forms manager, forms creation
 Requires at least: 4.7
 Tested up to: 5.3
-Stable tag: 1.8.8
+Stable tag: 1.8.9
 License: GPLv2
 Requires PHP: 5.6
 
@@ -769,6 +769,16 @@ This could also be a sign of a more serious issue on your server, but is probabl
 5. **Go Further With Form Processors** - Auto-responders, conditional recipients, redirects are included! Go further with our add-ons!
 
 == Changelog ==
+
+= Caldera Forms 1.8.9 (December 17, 2019) Last '19 update  =
+See: [https://calderaforms.com/updates/caldera-forms-1-8-9](https://calderaforms.com/updates/caldera-forms-1-8-9?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-9)
+* [Hide Pro settings by default and introduced 'caldera_forms_show_pro_ui' filter hook](https://github.com/CalderaWP/Caldera-Forms/issues/3413) - https://calderaforms.com/doc/caldera-forms-show-pro-ui/ -
+* [Fixed a PHP notice](https://github.com/CalderaWP/Caldera-Forms/issues/3356)
+* [completed strings that were missing from translations](https://github.com/CalderaWP/Caldera-Forms/pull/1803)
+* [Corrected the list of preset options for US states](https://github.com/CalderaWP/Caldera-Forms/issues/3389)
+* [A {referer_url} magic tag was added](https://github.com/CalderaWP/Caldera-Forms/issues/2894) - https://calderaforms.com/doc/using-magic-tags-caldera-forms/ -
+* [The color picker field was fixed](https://github.com/CalderaWP/Caldera-Forms/issues/1683)
+* [Plugins management within our testing local environment](https://github.com/CalderaWP/Caldera-Forms/issues/3358)
 
 = Caldera Forms 1.8.8 (Novenmber 11, 2019) SendWP Init =
 * Remove Pro mention information panels next to forms lists (Caldera Forms -> Forms)
