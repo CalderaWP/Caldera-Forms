@@ -30,4 +30,5 @@ The primary WordPress site uses the latest version of PHP.
 
 There are also sites for testing older versions of PHP:
 
-* PHP 5.6 [http://localhost::8256](http://localhost:8256)
+* PHP 5.6 [http://localhost:8256](http://localhost:8256)
+* PHP 7.0 [http://localhost:8270](http://localhost:8270)
