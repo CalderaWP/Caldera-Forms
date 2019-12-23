@@ -2,11 +2,27 @@ version: '3.1'
 
 services:
 
+  # WordPress site running latest PHP
   wordpress:
     image: wordpress
     ports:
       - 8228:80
     environment:
+      WORDPRESS_DB_PASSWORD: example
+      WORDPRESS_DEBUG: 1
+      ABSPATH: /usr/src/wordpress/
+    volumes:
+      - wordpress:/var/www/html
+      - .:/var/www/html/wp-content/plugins/caldera-forms
+      - ./wp-content/plugins:/var/www/html/wp-content/plugins
+
+  # WordPress site running PHP 5.6
+  wordpress_5:
+    image: wordpress:php5.6
+    ports:
+      - 8256:80
+    environment:
+      WORDPRESS_DB_HOST: mysql_5
       WORDPRESS_DB_PASSWORD: example
       WORDPRESS_DEBUG: 1
       ABSPATH: /usr/src/wordpress/
@@ -23,12 +39,20 @@ services:
     environment:
       WORDPRESS_DB_PASSWORD: example
       ABSPATH: /usr/src/wordpress/
+
+  # Database for primary WordPress site
   mysql:
     image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: example
       MYSQL_DATABASE: wordpress_test
 
+  # Database for WordPress site running PHP 5.6
+  mysql_5:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: wordpress_test_5
   wordpress_phpunit:
     image: chriszarate/wordpress-phpunit
     environment:

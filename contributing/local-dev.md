@@ -6,7 +6,7 @@ We provide a docker-based development environment. It is recommended that you us
 The local server is [http://localhost:8228](http://localhost:8228)
 
 
-#### Requirements
+## Requirements
 * Docker
     - [Installation documentation](https://docs.docker.com/install/)
 * Composer
@@ -15,7 +15,7 @@ The local server is [http://localhost:8228](http://localhost:8228)
     - [Installation documentation](https://www.npmjs.com/get-npm)
     
     
-#### Install Test Environment
+## Install Test Environment
 * Install local development environment, dependencies and setup test forms
     - `composer dev:install`
         -  May take awhile.
@@ -23,3 +23,11 @@ The local server is [http://localhost:8228](http://localhost:8228)
     - Username: admin
     - password: password
 * [See Commands](https://github.com/CalderaWP/Caldera-Forms/tree/develop#composer)
+
+## Testing Older Versions of PHP
+
+The primary WordPress site uses the latest version of PHP.
+
+There are also sites for testing older versions of PHP:
+
+* PHP 5.6 [http://localhost::8256](http://localhost:8256)
