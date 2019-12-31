@@ -12,7 +12,7 @@ HI|Hawaii
 ID|Idaho
 IL|Illinois
 IN|Indiana
-IAIowa
+IA|Iowa
 KS|Kansas
 KY|Kentucky
 LA|Louisiana

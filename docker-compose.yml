@@ -13,13 +13,13 @@ services:
     volumes:
       - wordpress:/var/www/html
       - .:/var/www/html/wp-content/plugins/caldera-forms
-      - ./wp-content/plugins/gutenberg:/var/www/html/wp-content/plugins/gutenberg
+      - ./wp-content/plugins:/var/www/html/wp-content/plugins
   cli:
     image: wordpress:cli
     volumes:
     - wordpress:/var/www/html
     - .:/var/www/html/wp-content/plugins/caldera-forms
-    - ./wp-content/plugins/gutenberg:/var/www/html/wp-content/plugins/gutenberg
+    - ./wp-content/plugins:/var/www/html/wp-content/plugins
     environment:
       WORDPRESS_DB_PASSWORD: example
       ABSPATH: /usr/src/wordpress/

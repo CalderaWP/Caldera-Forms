@@ -9,13 +9,13 @@
 
 <?php
 $avatar_defaults = array(
-	'mystery' => __('Mystery Man'),
-	'blank' => __('Blank'),
-	'gravatar_default' => __('Gravatar Logo'),
-	'identicon' => __('Identicon (Generated)'),
-	'wavatar' => __('Wavatar (Generated)'),
-	'monsterid' => __('MonsterID (Generated)'),
-	'retro' => __('Retro (Generated)')
+	'mystery' => __('Mystery Person', 'caldera-forms'),
+	'blank' => __('Blank', 'caldera-forms'),
+	'gravatar_default' => __('Gravatar Logo', 'caldera-forms'),
+	'identicon' => __('Identicon (Generated)', 'caldera-forms'),
+	'wavatar' => __('Wavatar (Generated)', 'caldera-forms'),
+	'monsterid' => __('MonsterID (Generated)', 'caldera-forms'),
+	'retro' => __('Retro (Generated)', 'caldera-forms')
 );
 
 ?>

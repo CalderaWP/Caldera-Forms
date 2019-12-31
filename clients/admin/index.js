@@ -7,7 +7,6 @@ import MainDashboard from './MainDashboard/MainDashboard';
 window._lodash = window._;
 window.lodash = window._;
 
-
 class FormsAdminApp extends Component {
     constructor(props) {
         super(props);

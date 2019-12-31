@@ -62,7 +62,11 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 			$place_holder  = self::place_holder_string( $field, $field[ 'label' ] );
 		}
 
-		if( 'number' === $type ){
+		if('color_picker' === $type ){
+			$attrs[ 'class' ] = 'form-control minicolor-picker init_field_type miniColors';
+			$attrs[ 'type' ] = 'text';
+			$attrs[ 'data-type' ] = 'color_picker';
+		}elseif( 'number' === $type ){
 			foreach( array(
 				'min',
 				'max',

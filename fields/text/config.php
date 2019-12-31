@@ -7,7 +7,7 @@
 </div>
 <div class="caldera-config-group">
 	<label for="{{_id}}_default">
-		<?php esc_html_e('Default'); ?>
+		<?php esc_html_e('Default', 'caldera-forms'); ?>
 	</label>
 	<div class="caldera-config-field">
 		<input type="text" id="{{_id}}_default" class="block-input field-config magic-tag-enabled" name="{{_name}}[default]" value="{{default}}">
@@ -50,7 +50,7 @@
 		</div>
 	</div>
 	<div class="caldera-config-group">
-		<p class="description">e.g (aaa-99-999-a9-9*)</p>
+		<p class="description"><?php _e('e.g.', 'caldera-forms' ); ?>: aaa-99-999-a9-9*</p>
 		<ul>
 			<li>9 : <?php _e('numeric', 'caldera-forms'); ?></li>
 			<li>a : <?php _e('alphabetical', 'caldera-forms'); ?></li>
