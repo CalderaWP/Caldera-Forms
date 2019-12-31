@@ -43,7 +43,7 @@ export default class DashboardPanels extends Component {
 			<div className={"caldera-grid"}>
 				<Panel header={__("Welcome To Caldera Forms", "caldera-forms")}>
 					<PanelBody
-						title={__("Documentation", "caldera-forms")}
+						title={__("aaaaaDocumentation", "caldera-forms")}
 						icon="welcome-widgets-menus"
 						initialOpen={false}
 					>
@@ -54,7 +54,7 @@ export default class DashboardPanels extends Component {
 						</PanelRow>
 					</PanelBody>
 					<PanelBody
-						title={__("Get more!", "caldera-forms")}
+						title={__("G@et more!", "caldera-forms")}
 						icon="thumbs-up"
 						initialOpen={true}
 					>

@@ -1,5 +1,15 @@
 <?php
-class RequirementsTest extends PHPUnit_Framework_TestCase
+/*
+ * This file is part of PHPUnit.
+ *
+ * (c) Sebastian Bergmann <sebastian@phpunit.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+use PHPUnit\Framework\TestCase;
+
+class RequirementsTest extends TestCase
 {
     public function testOne()
     {
@@ -70,7 +80,16 @@ class RequirementsTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @requires OS Linux
+     * @requires function testFunc2
+     * @see https://github.com/sebastianbergmann/phpunit/issues/3459
+     */
+    public function testRequiresFunctionWithDigit()
+    {
+    }
+
+    /**
+     * @requires OS SunOS
+     * @requires OSFAMILY Solaris
      */
     public function testEleven()
     {
@@ -81,9 +100,9 @@ class RequirementsTest extends PHPUnit_Framework_TestCase
      * @requires PHPUnit 9-dev
      * @requires OS DOESNOTEXIST
      * @requires function testFuncOne
-     * @requires function testFuncTwo
+     * @requires function testFunc2
      * @requires extension testExtOne
-     * @requires extension testExtTwo
+     * @requires extension testExt2
      * @requires extension testExtThree 2.0
      */
     public function testAllPossibleRequirements()
@@ -140,8 +159,15 @@ class RequirementsTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @requires	  extension	  spl
-     * @requires	  OS	  .*
+     * @requires OSFAMILY DOESNOTEXIST
+     */
+    public function testAlwaysSkip4()
+    {
+    }
+
+    /**
+     * @requires extension spl
+     * @requires OS .*
      */
     public function testSpace()
     {
@@ -340,6 +366,90 @@ class RequirementsTest extends PHPUnit_Framework_TestCase
      * @requires extension testExtOne >=99
      */
     public function testExtensionVersionOperatorNoSpace()
+    {
+    }
+
+    /**
+     * @requires PHP ~1.0
+     * @requires PHPUnit ~2.0
+     */
+    public function testVersionConstraintTildeMajor()
+    {
+    }
+
+    /**
+     * @requires PHP ^1.0
+     * @requires PHPUnit ^2.0
+     */
+    public function testVersionConstraintCaretMajor()
+    {
+    }
+
+    /**
+     * @requires PHP ~3.4.7
+     * @requires PHPUnit ~4.7.1
+     */
+    public function testVersionConstraintTildeMinor()
+    {
+    }
+
+    /**
+     * @requires PHP ^7.0.17
+     * @requires PHPUnit ^4.7.1
+     */
+    public function testVersionConstraintCaretMinor()
+    {
+    }
+
+    /**
+     * @requires PHP ^5.6 || ^7.0
+     * @requires PHPUnit ^5.0 || ^6.0
+     */
+    public function testVersionConstraintCaretOr()
+    {
+    }
+
+    /**
+     * @requires PHP ~5.6.22 || ~7.0.17
+     * @requires PHPUnit ^5.0.5 || ^6.0.6
+     */
+    public function testVersionConstraintTildeOr()
+    {
+    }
+
+    /**
+     * @requires PHP ~5.6.22 || ^7.0
+     * @requires PHPUnit ~5.6.22 || ^7.0
+     */
+    public function testVersionConstraintTildeOrCaret()
+    {
+    }
+    /**
+     * @requires PHP ^5.6 || ~7.0.17
+     * @requires PHPUnit ^5.6 || ~7.0.17
+     */
+    public function testVersionConstraintCaretOrTilde()
+    {
+    }
+
+    /**
+     * @requires   PHP        ~5.6.22 || ~7.0.17
+     * @requires   PHPUnit    ~5.6.22 || ~7.0.17
+     */
+    public function testVersionConstraintRegexpIgnoresWhitespace()
+    {
+    }
+
+    /**
+     * @requires   PHP ~^12345
+     */
+    public function testVersionConstraintInvalidPhpConstraint()
+    {
+    }
+    /**
+     * @requires   PHPUnit ~^12345
+     */
+    public function testVersionConstraintInvalidPhpUnitConstraint()
     {
     }
 }

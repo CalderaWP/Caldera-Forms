@@ -14,7 +14,7 @@ import {FormChooserWithSelect} from "./components/formChooser";
 import {LinkToFormEditor} from "./components/linkToFormEditor";
 //Create block
 registerBlockType( 'calderaforms/cform', {
-	title: __( 'Caldera Form' ),
+	title: __( 'Caldera Form !' ),
 	icon: 'feedback',
 	category: 'common',
     	attributes: {

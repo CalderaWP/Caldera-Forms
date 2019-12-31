@@ -222,7 +222,7 @@ if( ! isProduction ){
 		}),
 		// Enable HMR.
 		new webpack.HotModuleReplacementPlugin({
-			multiStep: false,
+			multiStep: true,
 		}),] 
 }
 
