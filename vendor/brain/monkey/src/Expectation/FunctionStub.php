@@ -112,7 +112,6 @@ PHP;
      * Redefine target function making it echo an arbitrary value.
      *
      * @param mixed $value
-     * @throws \Brain\Monkey\Expectation\Exception\InvalidArgumentForStub
      */
     public function justEcho($value = null)
     {
@@ -137,7 +136,7 @@ PHP;
      */
     public function returnArg($arg_num = 1)
     {
-        $arg_num = $this->assertValidArgNum($arg_num);
+        $arg_num = $this->assertValidArgNum($arg_num, 'returnArg');
 
         $fqn = $this->function_name->fullyQualifiedName();
 
@@ -159,11 +158,10 @@ PHP;
      * Redefined function will throw an exception if the function does not receive desired argument.
      *
      * @param int $arg_num The position (1-based) of the argument to echo
-     * @throws \Brain\Monkey\Expectation\Exception\InvalidArgumentForStub
      */
     public function echoArg($arg_num = 1)
     {
-        $arg_num = $this->assertValidArgNum($arg_num);
+        $arg_num = $this->assertValidArgNum($arg_num, 'echoArg');
 
         $fqn = $this->function_name->fullyQualifiedName();
 
@@ -187,15 +185,15 @@ PHP;
     }
 
     /**
-     * @param  int $arg_num
+     * @param  mixed  $arg_num
+     * @param  string $method
      * @return bool
-     * @throws \Brain\Monkey\Expectation\Exception\InvalidArgumentForStub
      */
-    private function assertValidArgNum($arg_num)
+    private function assertValidArgNum($arg_num, $method)
     {
         if ( ! is_int($arg_num) || $arg_num <= 0) {
             throw new Exception\InvalidArgumentForStub(
-                sprintf('`%s::returnArg()` first parameter must be a positiver integer.', __CLASS__)
+                sprintf('`%s::%s()` first parameter must be a positiver integer.', __CLASS__, $method)
             );
         }
 
@@ -204,7 +202,6 @@ PHP;
 
     /**
      * @param string $function_name
-     * @throws \Brain\Monkey\Expectation\Exception\MissedPatchworkReplace
      */
     private function assertRedefined($function_name)
     {
@@ -216,7 +213,6 @@ PHP;
     /**
      * @param        $value
      * @param string $coming
-     * @throws \Brain\Monkey\Expectation\Exception\InvalidArgumentForStub
      */
     private function assertPrintable($value, $coming = '')
     {

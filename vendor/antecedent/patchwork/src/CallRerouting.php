@@ -373,7 +373,7 @@ function connectOnHHVM($function, Handle $handle)
         } elseif (is_object($obj)) {
             $calledClass = get_class($obj);
         }
-        $frame = count(debug_backtrace(false)) - 1;
+        $frame = count(debug_backtrace(0)) - 1;
         $result = null;
         $done = dispatch($class, $calledClass, $method, $frame, $result, $args);
         return $result;
@@ -477,7 +477,7 @@ function connectDefaultInternals()
                 $offsets[] = $offset;
             }
         }
-        connect($function, function() use ($offsets) {
+        connect($function, function() use ($function, $offsets) {
             # This is the argument-inspecting patch.
             $args = Stack\top('args');
             $caller = Stack\all()[1];
@@ -514,9 +514,12 @@ function connectDefaultInternals()
                         }
                         $class = $actualClass;
                     }
+
                     # When calling a parent constructor, the reference to the object being
-                    # constructed needs to be extracted from the stack info
-                    if (is_null($instance) && $method === '__construct') {
+                    # constructed needs to be extracted from the stack info.
+                    # Also turned out to be necessary to solve this, without any parent
+                    # constructors involved: https://github.com/antecedent/patchwork/issues/99
+                    if (is_null($instance) && isset($caller['object'])) {
                         $instance = $caller['object'];
                     }
                     try {
@@ -531,8 +534,10 @@ function connectDefaultInternals()
                     }
                 }
             }
-            # Give the inspected arguments back to the callback-taking function
-            return relay($args);
+            # Give the inspected arguments back to the *original* definition of the
+            # callback-taking function, e.g. \array_map(). This works given that the
+            # present patch is the innermost.
+            return call_user_func_array($function, $args);
         });
     }
 }

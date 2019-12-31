@@ -50,6 +50,7 @@ class ComposerStaticInit3a560a503273bdf7123886d9f6698735
         array (
             'Psr\\Log\\' => 8,
             'Psr\\Container\\' => 14,
+            'Prophecy\\' => 9,
         ),
         'N' => 
         array (
@@ -84,8 +85,8 @@ class ComposerStaticInit3a560a503273bdf7123886d9f6698735
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
         ),
         'calderawp\\calderaforms\\pro\\' => 
         array (
@@ -151,6 +152,10 @@ class ComposerStaticInit3a560a503273bdf7123886d9f6698735
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
         ),
+        'Prophecy\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy',
+        ),
         'NilPortugues\\Sql\\QueryFormatter\\' => 
         array (
             0 => __DIR__ . '/..' . '/nilportugues/sql-query-formatter/src',
@@ -201,12 +206,15 @@ class ComposerStaticInit3a560a503273bdf7123886d9f6698735
                 0 => __DIR__ . '/..' . '/johnpbloch/wordpress-core-installer/src',
             ),
         ),
+        'U' => 
+        array (
+            'UpdateHelper\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/kylekatarnls/update-helper/src',
+            ),
+        ),
         'P' => 
         array (
-            'Prophecy\\' => 
-            array (
-                0 => __DIR__ . '/..' . '/phpspec/prophecy/src',
-            ),
             'Pimple' => 
             array (
                 0 => __DIR__ . '/..' . '/pimple/pimple/src',

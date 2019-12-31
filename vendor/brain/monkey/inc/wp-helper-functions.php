@@ -10,6 +10,11 @@
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
  * @license http://opensource.org/licenses/MIT MIT
  * @package BrainMonkey
+ *
+ * As the functions in this file are a compatibility layer for WordPress, the same
+ * function names should be used as are currently used by WordPress.
+ * This cannot be changed at this time.
+ * @phpcs:disable PHPCompatibility.FunctionNameRestrictions.ReservedFunctionNames.FunctionDoubleUnderscore
  */
 
 if ( ! function_exists('__return_true')) {
@@ -65,5 +70,19 @@ if ( ! function_exists('trailingslashit')) {
     function trailingslashit($string)
     {
         return rtrim($string, '/\\').'/';
+    }
+}
+
+if ( ! function_exists('absint')) {
+    function absint($number)
+    {
+        return abs((int)$number);
+    }
+}
+
+if ( ! function_exists('is_wp_error')) {
+    function is_wp_error($thing)
+    {
+        return $thing instanceof \WP_Error;
     }
 }

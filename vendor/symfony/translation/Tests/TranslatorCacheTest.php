@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\Translation\Tests;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Resource\SelfCheckingResourceInterface;
 use Symfony\Component\Translation\Loader\ArrayLoader;
@@ -95,12 +96,12 @@ class TranslatorCacheTest extends TestCase
         $catalogue = new MessageCatalogue($locale, []);
         $catalogue->addResource(new StaleResource()); // better use a helper class than a mock, because it gets serialized in the cache and re-loaded
 
-        /** @var LoaderInterface|\PHPUnit_Framework_MockObject_MockObject $loader */
+        /** @var LoaderInterface|MockObject $loader */
         $loader = $this->getMockBuilder('Symfony\Component\Translation\Loader\LoaderInterface')->getMock();
         $loader
             ->expects($this->exactly(2))
             ->method('load')
-            ->will($this->returnValue($catalogue))
+            ->willReturn($catalogue)
         ;
 
         // 1st pass
@@ -242,11 +243,11 @@ class TranslatorCacheTest extends TestCase
     {
         $resource = $this->getMockBuilder('Symfony\Component\Config\Resource\SelfCheckingResourceInterface')->getMock();
         $loader = $this->getMockBuilder('Symfony\Component\Translation\Loader\LoaderInterface')->getMock();
-        $resource->method('isFresh')->will($this->returnValue(false));
+        $resource->method('isFresh')->willReturn(false);
         $loader
             ->expects($this->exactly(2))
             ->method('load')
-            ->will($this->returnValue($this->getCatalogue('fr', [], [$resource])));
+            ->willReturn($this->getCatalogue('fr', [], [$resource]));
 
         // prime the cache
         $translator = new Translator('fr', null, $this->tmpDir, true);

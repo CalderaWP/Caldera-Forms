@@ -6,7 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/type-resolver/src', $vendorDir . '/phpdocumentor/reflection-docblock/src'),
+    'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/reflection-docblock/src', $vendorDir . '/phpdocumentor/type-resolver/src'),
     'calderawp\\calderaforms\\pro\\' => array($baseDir . '/includes/cf-pro-client/classes'),
     'calderawp\\calderaforms\\cf2\\' => array($baseDir . '/cf2'),
     'calderawp\\calderaforms\\Tests\\Util\\Traits\\' => array($baseDir . '/tests/Util/Traits'),
@@ -23,6 +23,7 @@ return array(
     'Symfony\\Component\\Translation\\' => array($vendorDir . '/symfony/translation'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
+    'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src/Prophecy'),
     'NilPortugues\\Sql\\QueryFormatter\\' => array($vendorDir . '/nilportugues/sql-query-formatter/src'),
     'NilPortugues\\Sql\\QueryBuilder\\' => array($vendorDir . '/nilportugues/sql-query-builder/src'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),

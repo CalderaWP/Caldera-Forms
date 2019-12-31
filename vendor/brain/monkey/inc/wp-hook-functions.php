@@ -15,8 +15,9 @@
 use Brain\Monkey;
 
 if ( ! function_exists('add_action')) {
-    function add_action($action, ...$args)
+    function add_action($action, $function, $priority = 10, $accepted_args = 1)
     {
+        $args = [$function, $priority, $accepted_args];
         $container = Monkey\Container::instance();
         $container->hookStorage()->pushToAdded(Monkey\Hook\HookStorage::ACTIONS, $action, $args);
         $container->hookExpectationExecutor()->executeAddAction($action, $args);
@@ -26,8 +27,9 @@ if ( ! function_exists('add_action')) {
 }
 
 if ( ! function_exists('add_filter')) {
-    function add_filter($filter, ...$args)
+    function add_filter($filter, $function, $priority = 10, $accepted_args = 1)
     {
+        $args = [$function, $priority, $accepted_args];
         $container = Monkey\Container::instance();
         $container->hookStorage()->pushToAdded(Monkey\Hook\HookStorage::FILTERS, $filter, $args);
         $container->hookExpectationExecutor()->executeAddFilter($filter, $args);
@@ -54,6 +56,15 @@ if ( ! function_exists('do_action_ref_array')) {
     }
 }
 
+if ( ! function_exists('do_action_deprecated')) {
+    function do_action_deprecated($action, array $args, $version, $replacement, $message = null)
+    {
+        $container = Monkey\Container::instance();
+        $container->hookStorage()->pushToDone(Monkey\Hook\HookStorage::ACTIONS, $action, $args);
+        $container->hookExpectationExecutor()->executeDoAction($action, $args);
+    }
+}
+
 if ( ! function_exists('apply_filters')) {
     function apply_filters($filter, ...$args)
     {
@@ -66,6 +77,16 @@ if ( ! function_exists('apply_filters')) {
 
 if ( ! function_exists('apply_filters_ref_array')) {
     function apply_filters_ref_array($filter, array $args)
+    {
+        $container = Monkey\Container::instance();
+        $container->hookStorage()->pushToDone(Monkey\Hook\HookStorage::FILTERS, $filter, $args);
+
+        return $container->hookExpectationExecutor()->executeApplyFilters($filter, $args);
+    }
+}
+
+if ( ! function_exists('apply_filters_deprecated')) {
+    function apply_filters_deprecated($filter, array $args, $version, $replacement, $message = null)
     {
         $container = Monkey\Container::instance();
         $container->hookStorage()->pushToDone(Monkey\Hook\HookStorage::FILTERS, $filter, $args);
@@ -96,20 +117,28 @@ if ( ! function_exists('did_action')) {
 }
 
 if ( ! function_exists('remove_action')) {
-    function remove_action($action, ...$args)
+    function remove_action($action, $function, $priority = 10)
     {
-        return Monkey\Container::instance()
-                               ->hookStorage()
-                               ->removeFromAdded(Monkey\Hook\HookStorage::ACTIONS, $action, $args);
+        $container = Monkey\Container::instance();
+        $storage = $container->hookStorage();
+        $args = [$function, $priority];
+
+        $container->hookExpectationExecutor()->executeRemoveAction($action, $args);
+
+        return $storage->removeFromAdded(Monkey\Hook\HookStorage::ACTIONS, $action, $args);
     }
 }
 
 if ( ! function_exists('remove_filter')) {
-    function remove_filter($filter, ...$args)
+    function remove_filter($filter, $function, $priority = 10)
     {
-        return Monkey\Container::instance()
-                               ->hookStorage()
-                               ->removeFromAdded(Monkey\Hook\HookStorage::FILTERS, $filter, $args);
+        $container = Monkey\Container::instance();
+        $storage = $container->hookStorage();
+        $args = [$function, $priority];
+
+        $container->hookExpectationExecutor()->executeRemoveFilter($filter, $args);
+
+        return $storage->removeFromAdded(Monkey\Hook\HookStorage::FILTERS, $filter, $args);
     }
 }
 

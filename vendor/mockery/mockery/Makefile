@@ -12,18 +12,22 @@ test: deps
 apidocs: docs/api/index.html
 
 phpDocumentor.phar: 
-	wget https://github.com/phpDocumentor/phpDocumentor2/releases/download/v3.0.0-alpha.2-nightly-gdff5545/phpDocumentor.phar
-	wget https://github.com/phpDocumentor/phpDocumentor2/releases/download/v3.0.0-alpha.2-nightly-gdff5545/phpDocumentor.phar.pubkey
+	wget https://github.com/phpDocumentor/phpDocumentor2/releases/download/v3.0.0-alpha.3/phpDocumentor.phar
+	wget https://github.com/phpDocumentor/phpDocumentor2/releases/download/v3.0.0-alpha.3/phpDocumentor.phar.pubkey
 
 library_files=$(shell find library -name '*.php')
 docs/api/index.html: vendor/composer/installed.json $(library_files) phpDocumentor.phar
 	php phpDocumentor.phar run -d library -t docs/api
 
 .PHONY: test-all
-test-all: test-72 test-71 test-70 test-56
+test-all: test-73 test-72 test-71 test-70 test-56
 
 .PHONY: test-all-7
-test-all-7: test-72 test-71 test-70
+test-all-7: test-73 test-72 test-71 test-70
+
+.PHONY: test-73
+test-73: deps
+	docker run -it --rm -v "$$PWD":/opt/mockery -w /opt/mockery php:7.3-cli php vendor/bin/phpunit
 
 .PHONY: test-72
 test-72: deps

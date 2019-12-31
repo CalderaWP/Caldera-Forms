@@ -122,8 +122,8 @@ final class HookStorage
     }
 
     /**
-     * @param $type
-     * @param $hook
+     * @param string $type
+     * @param string $hook
      * @return int
      */
     public function isHookDone($type, $hook)
@@ -137,7 +137,6 @@ final class HookStorage
      * @param string $hook
      * @param array  $args
      * @return static
-     * @throws \Brain\Monkey\Hook\Exception\InvalidHookArgument
      */
     private function pushToStorage($key, $type, $hook, array $args)
     {
@@ -174,7 +173,6 @@ final class HookStorage
      * @param string        $hook
      * @param callable|null $function
      * @return int|bool
-     * @throws \Brain\Monkey\Hook\Exception\InvalidHookArgument
      */
     private function isInStorage($key, $type, $hook, $function = null)
     {
@@ -206,7 +204,6 @@ final class HookStorage
      * @param string $key
      * @param string $type
      * @return array
-     * @throws \Brain\Monkey\Hook\Exception\InvalidHookArgument
      */
     private function parseArgsToAdd(array $args, $key, $type)
     {
@@ -214,7 +211,7 @@ final class HookStorage
             throw Exception\InvalidHookArgument::forEmptyArguments($key, $type);
         }
 
-        if ( ! count($args) > 3) {
+        if (count($args) > 3) {
             throw Exception\InvalidAddedHookArgument::forWrongArgumentsCount($type);
         }
 

@@ -61,7 +61,7 @@ It's easily possible to develop plugins and themes compatible with Wonolog loggi
 A couple of noteworthy things:
 
 - all Wonolog configurations have to be done in a MU plugin;
-- in a WordPress mutlisite installation, all Wonolog configurations are _naturally_ site-wide.
+- in a WordPress multisite installation, all Wonolog configurations are _naturally_ site-wide.
 
 On the bright side, Wonolog comes with a super easy bootstrap routine and some out-of-the-box configurations that make it possible to have a working and effective logging system with zero effort.
 

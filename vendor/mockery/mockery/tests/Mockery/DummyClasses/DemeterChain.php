@@ -35,6 +35,11 @@ class B
     {
         return new C();
     }
+
+    public function qux(): C
+    {
+        return new C();
+    }
 }
 
 class A

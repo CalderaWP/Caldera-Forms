@@ -149,9 +149,15 @@ class Container
                 }
                 $class = $parts[0];
                 $parts[1] = str_replace(' ', '', $parts[1]);
-                $partialMethods = explode(',', strtolower(rtrim($parts[1], ']')));
+                $partialMethods = array_filter(explode(',', strtolower(rtrim($parts[1], ']'))));
                 $builder->addTarget($class);
-                $builder->setWhiteListedMethods($partialMethods);
+                foreach ($partialMethods as $partialMethod) {
+                    if ($partialMethod[0] === '!') {
+                        $builder->addBlackListedMethod(substr($partialMethod, 1));
+                        continue;
+                    }
+                    $builder->addWhiteListedMethod($partialMethod);
+                }
                 array_shift($args);
                 continue;
             } elseif (is_string($arg) && (class_exists($arg, true) || interface_exists($arg, true) || trait_exists($arg, true))) {
@@ -216,7 +222,7 @@ class Container
 
         if (class_exists($def->getClassName(), $attemptAutoload = false)) {
             $rfc = new \ReflectionClass($def->getClassName());
-            if (!$rfc->implementsInterface("Mockery\MockInterface")) {
+            if (!$rfc->implementsInterface("Mockery\LegacyMockInterface")) {
                 throw new \Mockery\Exception\RuntimeException("Could not load mock {$def->getClassName()}, class already exists");
             }
         }
@@ -224,7 +230,7 @@ class Container
         $this->getLoader()->load($def);
 
         $mock = $this->_getInstance($def->getClassName(), $constructorArgs);
-        $mock->mockery_init($this, $config->getTargetObject());
+        $mock->mockery_init($this, $config->getTargetObject(), $config->isInstanceMock());
 
         if (!empty($quickdefs)) {
             $mock->shouldReceive($quickdefs)->byDefault();
@@ -395,7 +401,7 @@ class Container
      * @throws \Mockery\Exception
      * @return void
      */
-    public function mockery_validateOrder($method, $order, \Mockery\MockInterface $mock)
+    public function mockery_validateOrder($method, $order, \Mockery\LegacyMockInterface $mock)
     {
         if ($order < $this->_currentOrder) {
             $exception = new \Mockery\Exception\InvalidOrderException(
@@ -429,9 +435,9 @@ class Container
      * Store a mock and set its container reference
      *
      * @param \Mockery\Mock $mock
-     * @return \Mockery\MockInterface
+     * @return \Mockery\LegacyMockInterface|\Mockery\MockInterface
      */
-    public function rememberMock(\Mockery\MockInterface $mock)
+    public function rememberMock(\Mockery\LegacyMockInterface $mock)
     {
         if (!isset($this->_mocks[get_class($mock)])) {
             $this->_mocks[get_class($mock)] = $mock;

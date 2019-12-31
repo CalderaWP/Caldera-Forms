@@ -133,7 +133,6 @@ final class DateBasedStreamHandler extends AbstractProcessingHandler {
 
 		return
 			is_string( $file_format )
-			&& filter_var( $file_format, FILTER_SANITIZE_URL ) === $file_format
 			&& substr_count( $file_format, '{date}' ) === 1;
 	}
 

@@ -68,6 +68,10 @@ class Carbon extends DateTime implements JsonSerializable
     const ONE_DAY_WORDS = 04;
     const TWO_DAY_WORDS = 010;
 
+    // Substitutes for Carbon 2 modes
+    const DIFF_RELATIVE_TO_NOW = 'relative-to-now';
+    const DIFF_RELATIVE_TO_OTHER = 'relative-to-other';
+
     /**
      * The day constants.
      */
@@ -97,6 +101,7 @@ class Carbon extends DateTime implements JsonSerializable
     /**
      * Number of X in Y.
      */
+    const YEARS_PER_MILLENNIUM = 1000;
     const YEARS_PER_CENTURY = 100;
     const YEARS_PER_DECADE = 10;
     const MONTHS_PER_YEAR = 12;
@@ -107,6 +112,8 @@ class Carbon extends DateTime implements JsonSerializable
     const HOURS_PER_DAY = 24;
     const MINUTES_PER_HOUR = 60;
     const SECONDS_PER_MINUTE = 60;
+    const MICROSECONDS_PER_MILLISECOND = 1000;
+    const MICROSECONDS_PER_SECOND = 1000000;
 
     /**
      * RFC7231 DateTime format.
@@ -1917,6 +1924,21 @@ class Carbon extends DateTime implements JsonSerializable
     }
 
     /**
+     * Format the instance as date and time T-separated with no timezone
+     *
+     * @example
+     * ```
+     * echo Carbon::now()->toDateTimeLocalString();
+     * ```
+     *
+     * @return string
+     */
+    public function toDateTimeLocalString()
+    {
+        return $this->format('Y-m-d\TH:i:s');
+    }
+
+    /**
      * Format the instance with day, date and time
      *
      * @return string
@@ -2081,6 +2103,112 @@ class Carbon extends DateTime implements JsonSerializable
         );
     }
 
+    /**
+     * Get default object representation.
+     *
+     * @example
+     * ```
+     * var_dump(Carbon::now()->toObject());
+     * ```
+     *
+     * @return object
+     */
+    public function toObject()
+    {
+        return (object) $this->toArray();
+    }
+
+    /**
+     * Returns english human readable complete date string.
+     *
+     * @example
+     * ```
+     * echo Carbon::now()->toString();
+     * ```
+     *
+     * @return string
+     */
+    public function toString()
+    {
+        return $this->format('D M j Y H:i:s \G\M\TO');
+    }
+
+    /**
+     * Return the ISO-8601 string (ex: 1977-04-22T06:00:00Z, if $keepOffset truthy, offset will be kept:
+     * 1977-04-22T01:00:00-05:00).
+     *
+     * @example
+     * ```
+     * echo Carbon::now('America/Toronto')->toISOString() . "\n";
+     * echo Carbon::now('America/Toronto')->toISOString(true) . "\n";
+     * ```
+     *
+     * @param bool $keepOffset Pass true to keep the date offset. Else forced to UTC.
+     *
+     * @return null|string
+     */
+    public function toISOString($keepOffset = false)
+    {
+        if ($this->year === 0) {
+            return null;
+        }
+
+        $year = $this->year < 0 || $this->year > 9999
+            ? ($this->year < 0 ? '-' : '+').str_pad(abs($this->year), 6, '0', STR_PAD_LEFT)
+            : str_pad($this->year, 4, '0', STR_PAD_LEFT);
+        $tz = $keepOffset ? $this->format('P') : 'Z';
+        $date = $keepOffset ? $this : $this->copy()->setTimezone('UTC');
+
+        return $year.$date->format('-m-d\TH:i:s.u').$tz;
+    }
+
+    /**
+     * Return the ISO-8601 string (ex: 1977-04-22T06:00:00Z) with UTC timezone.
+     *
+     * @example
+     * ```
+     * echo Carbon::now('America/Toronto')->toJSON();
+     * ```
+     *
+     * @return null|string
+     */
+    public function toJSON()
+    {
+        return $this->toISOString();
+    }
+
+    /**
+     * Return native DateTime PHP object matching the current instance.
+     *
+     * @example
+     * ```
+     * var_dump(Carbon::now()->toDateTime());
+     * ```
+     *
+     * @return DateTime
+     */
+    public function toDateTime()
+    {
+        return new DateTime($this->format('Y-m-d H:i:s.u'), $this->getTimezone());
+    }
+
+    /**
+     * @alias toDateTime
+     *
+     * Return native DateTime PHP object matching the current instance.
+     *
+     * @example
+     * ```
+     * var_dump(Carbon::now()->toDate());
+     * ```
+     *
+     * @return DateTime
+     */
+    public function toDate()
+    {
+        return $this->toDateTime();
+    }
+
     ///////////////////////////////////////////////////////////////////
     ////////////////////////// COMPARISONS ////////////////////////////
     ///////////////////////////////////////////////////////////////////
@@ -2164,6 +2292,20 @@ class Carbon extends DateTime implements JsonSerializable
     }
 
     /**
+     * Determines if the instance is greater (after) than another
+     *
+     * @param \Carbon\Carbon|\DateTimeInterface|mixed $date
+     *
+     * @see gt()
+     *
+     * @return bool
+     */
+    public function isAfter($date)
+    {
+        return $this->gt($date);
+    }
+
+    /**
      * Determines if the instance is greater (after) than or equal to another
      *
      * @param \Carbon\Carbon|\DateTimeInterface|mixed $date
@@ -2211,6 +2353,20 @@ class Carbon extends DateTime implements JsonSerializable
      * @return bool
      */
     public function lessThan($date)
+    {
+        return $this->lt($date);
+    }
+
+    /**
+     * Determines if the instance is less (before) than another
+     *
+     * @param \Carbon\Carbon|\DateTimeInterface|mixed $date
+     *
+     * @see lt()
+     *
+     * @return bool
+     */
+    public function isBefore($date)
     {
         return $this->lt($date);
     }
@@ -2270,6 +2426,20 @@ class Carbon extends DateTime implements JsonSerializable
         $date = $this->resolveCarbon($date);
 
         return abs($this->diffInRealSeconds($date, false) + ($date->micro - $this->micro) / 1000000);
+    }
+
+    /**
+     * Determines if the instance is between two others
+     *
+     * @param \Carbon\Carbon|\DateTimeInterface|mixed $date1
+     * @param \Carbon\Carbon|\DateTimeInterface|mixed $date2
+     * @param bool                                    $equal Indicates if a > and < comparison should be used or <= or >=
+     *
+     * @return bool
+     */
+    public function isBetween($date1, $date2, $equal = true)
+    {
+        return $this->between($date1, $date2, $equal);
     }
 
     /**
@@ -4084,6 +4254,70 @@ class Carbon extends DateTime implements JsonSerializable
     }
 
     /**
+     * Get the difference in milliseconds.
+     *
+     * @param \Carbon\Carbon|\DateTimeInterface|string|null $date
+     * @param bool                                          $absolute Get the absolute of the difference
+     *
+     * @return int
+     */
+    public function diffInMilliseconds($date = null, $absolute = true)
+    {
+        return (int) ($this->diffInMicroseconds($date, $absolute) / static::MICROSECONDS_PER_MILLISECOND);
+    }
+
+    /**
+     * Get the difference in milliseconds using timestamps.
+     *
+     * @param \Carbon\Carbon|\DateTimeInterface|string|null $date
+     * @param bool                                          $absolute Get the absolute of the difference
+     *
+     * @return int
+     */
+    public function diffInRealMilliseconds($date = null, $absolute = true)
+    {
+        return (int) ($this->diffInRealMicroseconds($date, $absolute) / static::MICROSECONDS_PER_MILLISECOND);
+    }
+
+    /**
+     * Get the difference in microseconds.
+     *
+     * @param \Carbon\Carbon|\DateTimeInterface|string|null $date
+     * @param bool                                          $absolute Get the absolute of the difference
+     *
+     * @return int
+     */
+    public function diffInMicroseconds($date = null, $absolute = true)
+    {
+        $diff = $this->diff($this->resolveCarbon($date));
+        $micro = isset($diff->f) ? $diff->f : 0;
+        $value = (int) round((((($diff->days * static::HOURS_PER_DAY) +
+            $diff->h) * static::MINUTES_PER_HOUR +
+            $diff->i) * static::SECONDS_PER_MINUTE +
+            ($micro + $diff->s)) * static::MICROSECONDS_PER_SECOND);
+
+        return $absolute || !$diff->invert ? $value : -$value;
+    }
+
+    /**
+     * Get the difference in microseconds using timestamps.
+     *
+     * @param \Carbon\Carbon|\DateTimeInterface|string|null $date
+     * @param bool                                          $absolute Get the absolute of the difference
+     *
+     * @return int
+     */
+    public function diffInRealMicroseconds($date = null, $absolute = true)
+    {
+        /** @var Carbon $date */
+        $date = $this->resolveCarbon($date);
+        $value = ($date->timestamp - $this->timestamp) * static::MICROSECONDS_PER_SECOND +
+            $date->micro - $this->micro;
+
+        return $absolute ? abs($value) : $value;
+    }
+
+    /**
      * The number of seconds since midnight.
      *
      * @return int
@@ -4132,6 +4366,16 @@ class Carbon extends DateTime implements JsonSerializable
     public function diffForHumans($other = null, $absolute = false, $short = false, $parts = 1)
     {
         $isNow = $other === null;
+        $relativeToNow = $isNow;
+
+        if ($absolute === static::DIFF_RELATIVE_TO_NOW) {
+            $absolute = false;
+            $relativeToNow = true;
+        } elseif ($absolute === static::DIFF_RELATIVE_TO_OTHER) {
+            $absolute = false;
+            $relativeToNow = false;
+        }
+
         $interval = array();
 
         $parts = min(6, max(1, (int) $parts));
@@ -4209,7 +4453,7 @@ class Carbon extends DateTime implements JsonSerializable
 
         $isFuture = $diffInterval->invert === 1;
 
-        $transId = $isNow ? ($isFuture ? 'from_now' : 'ago') : ($isFuture ? 'after' : 'before');
+        $transId = $relativeToNow ? ($isFuture ? 'from_now' : 'ago') : ($isFuture ? 'after' : 'before');
 
         if ($parts === 1) {
             if ($isNow && $unit === 'day') {
@@ -4236,6 +4480,187 @@ class Carbon extends DateTime implements JsonSerializable
         }
 
         return static::translator()->trans($transId, array(':time' => $time));
+    }
+
+    /**
+     * @alias diffForHumans
+     *
+     * Get the difference in a human readable format in the current locale.
+     *
+     * When comparing a value in the past to default now:
+     * 1 hour ago
+     * 5 months ago
+     *
+     * When comparing a value in the future to default now:
+     * 1 hour from now
+     * 5 months from now
+     *
+     * When comparing a value in the past to another value:
+     * 1 hour before
+     * 5 months before
+     *
+     * When comparing a value in the future to another value:
+     * 1 hour after
+     * 5 months after
+     *
+     * @param Carbon|null $other
+     * @param bool        $absolute removes time difference modifiers ago, after, etc
+     * @param bool        $short    displays short format of time units
+     * @param int         $parts    displays number of parts in the interval
+     *
+     * @return string
+     */
+    public function from($other = null, $absolute = false, $short = false, $parts = 1)
+    {
+        if (!$other && !$absolute) {
+            $absolute = static::DIFF_RELATIVE_TO_NOW;
+        }
+
+        return $this->diffForHumans($other, $absolute, $short, $parts);
+    }
+
+    /**
+     * @alias diffForHumans
+     *
+     * Get the difference in a human readable format in the current locale.
+     *
+     * When comparing a value in the past to default now:
+     * 1 hour ago
+     * 5 months ago
+     *
+     * When comparing a value in the future to default now:
+     * 1 hour from now
+     * 5 months from now
+     *
+     * When comparing a value in the past to another value:
+     * 1 hour before
+     * 5 months before
+     *
+     * When comparing a value in the future to another value:
+     * 1 hour after
+     * 5 months after
+     *
+     * @param Carbon|null $other
+     * @param bool        $absolute removes time difference modifiers ago, after, etc
+     * @param bool        $short    displays short format of time units
+     * @param int         $parts    displays number of parts in the interval
+     *
+     * @return string
+     */
+    public function since($other = null, $absolute = false, $short = false, $parts = 1)
+    {
+        return $this->diffForHumans($other, $absolute, $short, $parts);
+    }
+
+    /**
+     * Get the difference in a human readable format in the current locale from an other
+     * instance given (or now if null given) to current instance.
+     *
+     * When comparing a value in the past to default now:
+     * 1 hour from now
+     * 5 months from now
+     *
+     * When comparing a value in the future to default now:
+     * 1 hour ago
+     * 5 months ago
+     *
+     * When comparing a value in the past to another value:
+     * 1 hour after
+     * 5 months after
+     *
+     * When comparing a value in the future to another value:
+     * 1 hour before
+     * 5 months before
+     *
+     * @param Carbon|null $other
+     * @param bool        $absolute removes time difference modifiers ago, after, etc
+     * @param bool        $short    displays short format of time units
+     * @param int         $parts    displays number of parts in the interval
+     *
+     * @return string
+     */
+    public function to($other = null, $absolute = false, $short = false, $parts = 1)
+    {
+        if (!$other && !$absolute) {
+            $absolute = static::DIFF_RELATIVE_TO_NOW;
+        }
+
+        return $this->resolveCarbon($other)->diffForHumans($this, $absolute, $short, $parts);
+    }
+
+    /**
+     * @alias to
+     *
+     * Get the difference in a human readable format in the current locale from an other
+     * instance given (or now if null given) to current instance.
+     *
+     * @param Carbon|null $other
+     * @param bool        $absolute removes time difference modifiers ago, after, etc
+     * @param bool        $short    displays short format of time units
+     * @param int         $parts    displays number of parts in the interval
+     *
+     * @return string
+     */
+    public function until($other = null, $absolute = false, $short = false, $parts = 1)
+    {
+        return $this->to($other, $absolute, $short, $parts);
+    }
+
+    /**
+     * Get the difference in a human readable format in the current locale from current
+     * instance to now.
+     *
+     * @param bool $absolute removes time difference modifiers ago, after, etc
+     * @param bool $short    displays short format of time units
+     * @param int  $parts    displays number of parts in the interval
+     *
+     * @return string
+     */
+    public function fromNow($absolute = null, $short = false, $parts = 1)
+    {
+        $other = null;
+
+        if ($absolute instanceof DateTimeInterface) {
+            list($other, $absolute, $short, $parts) = array_pad(func_get_args(), 5, null);
+        }
+
+        return $this->from($other, $absolute, $short, $parts);
+    }
+
+    /**
+     * Get the difference in a human readable format in the current locale from an other
+     * instance given to now
+     *
+     * @param bool $absolute removes time difference modifiers ago, after, etc
+     * @param bool $short    displays short format of time units
+     * @param int  $parts    displays number of parts in the interval
+     *
+     * @return string
+     */
+    public function toNow($absolute = null, $short = false, $parts = 1)
+    {
+        return $this->to(null, $absolute, $short, $parts);
+    }
+
+    /**
+     * Get the difference in a human readable format in the current locale from an other
+     * instance given to now
+     *
+     * @param bool $absolute removes time difference modifiers ago, after, etc
+     * @param bool $short    displays short format of time units
+     * @param int  $parts    displays number of parts in the interval
+     *
+     * @return string
+     */
+    public function ago($absolute = null, $short = false, $parts = 1)
+    {
+        $other = null;
+
+        if ($absolute instanceof DateTimeInterface) {
+            list($other, $absolute, $short, $parts) = array_pad(func_get_args(), 5, null);
+        }
+
+        return $this->from($other, $absolute, $short, $parts);
     }
 
     ///////////////////////////////////////////////////////////////////
@@ -4368,6 +4793,30 @@ class Carbon extends DateTime implements JsonSerializable
     public function endOfCentury()
     {
         $year = $this->year - 1 - ($this->year - 1) % static::YEARS_PER_CENTURY + static::YEARS_PER_CENTURY;
+
+        return $this->setDate($year, 12, 31)->endOfDay();
+    }
+
+    /**
+     * Resets the date to the first day of the century and the time to 00:00:00
+     *
+     * @return static
+     */
+    public function startOfMillennium()
+    {
+        $year = $this->year - ($this->year - 1) % static::YEARS_PER_MILLENNIUM;
+
+        return $this->setDate($year, 1, 1)->startOfDay();
+    }
+
+    /**
+     * Resets the date to end of the century and time to 23:59:59
+     *
+     * @return static
+     */
+    public function endOfMillennium()
+    {
+        $year = $this->year - 1 - ($this->year - 1) % static::YEARS_PER_MILLENNIUM + static::YEARS_PER_MILLENNIUM;
 
         return $this->setDate($year, 12, 31)->endOfDay();
     }
@@ -4849,6 +5298,14 @@ class Carbon extends DateTime implements JsonSerializable
     }
 
     /**
+     * Remove all macros.
+     */
+    public static function resetMacros()
+    {
+        static::$localMacros = array();
+    }
+
+    /**
      * Mix another object into the class.
      *
      * @param object $mixin
@@ -4938,5 +5395,33 @@ class Carbon extends DateTime implements JsonSerializable
         }
 
         return call_user_func_array($macro, $parameters);
+    }
+
+    /**
+     * Show truthy properties on var_dump().
+     *
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return array_filter(get_object_vars($this), function ($var) {
+            return $var;
+        });
+    }
+
+    /**
+     * Cast the current instance into the given class.
+     *
+     * @param string $className The $className::instance() method will be called to cast the current object.
+     *
+     * @return object
+     */
+    public function cast($className)
+    {
+        if (!method_exists($className, 'instance')) {
+            throw new \InvalidArgumentException("$className has not the instance() method needed to cast the date.");
+        }
+
+        return $className::instance($this);
     }
 }

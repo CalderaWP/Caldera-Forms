@@ -1,5 +1,27 @@
 # Change Log
 
+## 1.3.1 (2019-12-26)
+* Revert improved exception debugging due to BC breaks (#1032)
+
+## 1.3.0 (2019-11-24)
+
+* Added capture `Mockery::capture` convenience matcher (#1020)
+* Added `andReturnArg` to echo back an argument passed to a an expectation (#992)
+* Improved exception debugging (#1000)
+* Fixed `andSet` to not reuse properties between mock objects (#1012)
+
+## 1.2.4 (2019-09-30)
+
+* Fix a bug introduced with previous release, for empty method definition lists (#1009)
+
+## 1.2.3 (2019-08-07)
+
+* Allow mocking classes that have allows and expects methods (#868)
+* Allow passing thru __call method in all mock types (experimental) (#969)
+* Add support for `!` to blacklist methods (#959)
+* Added `withSomeOfArgs` to partial match a list of args (#967)
+* Fix chained demeter calls with type hint (#956)
+
 ## 1.2.2 (2019-02-13)
 
 * Fix a BC breaking change for PHP 5.6/PHPUnit 5.7.27 (#947) 
