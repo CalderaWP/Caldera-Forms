@@ -24,7 +24,6 @@
     "start:blocks": "wp-scripts start  --config webpack.blocks.js ",
     "build:blocks": "wp-scripts build  --config webpack.blocks.js ",
     "build:clients": "yarn build:clients:pre && cross-env BABEL_ENV=default NODE_ENV=production webpack --config webpack.clients.js",
-    "build:clients:render": "cross-env BABEL_ENV=default NODE_ENV=production webpack --config webpack.render-client.js",
     "build:clients:pre": "node clients/deleteBuilds.js",
     "build:webpack": "cross-env BABEL_ENV=default NODE_ENV=production webpack  --config webpack.clients.js",
     "build:grunt": "grunt",
@@ -37,10 +36,7 @@
     "test:watch": "cross-env BABEL_ENV=testing BABEL_ENV=testing jest --watch",
     "test:once": "jest",
     "test:e2e": "cypress open",
-    "test:e2e:ci": "cypress run",
-    "postinstall": "yarn copy:react && yarn copy:react-dom",
-    "copy:react": "cp node_modules/react/umd/react.production.min.js dist && mv dist/react.production.min.js dist/react.min.js",
-    "copy:react-dom": "cp node_modules/react-dom/umd/react-dom.production.min.js dist && mv dist/react-dom.production.min.js dist/react-dom.min.js"
+    "test:e2e:ci": "cypress run"
   },
   "browserslist": [
     "last 2 versions",
@@ -61,7 +57,8 @@
     "lodash.remove": "^4.7.0",
     "md5-file": "^4.0.0",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
-    "react-dropzone": "^10.2.1",
+    "prop-types": "^15.7.2",
+    "react-dropzone": "6.2.4",
     "react-emoji-render": "^1.2.1",
     "react-ga": "^2.5.7",
     "spark-md5": "^3.0.0",
@@ -86,7 +83,7 @@
     "@wordpress/dom": "^2.1.0",
     "@wordpress/dom-ready": "^2.5.1",
     "@wordpress/editor": "^9.3.0",
-    "@wordpress/element": "2.10.0",
+    "@wordpress/element": "^2.10.0",
     "@wordpress/i18n": "^3.3.0",
     "@wordpress/redux-routine": "^3.3.0",
     "@wordpress/url": "^2.3.0",

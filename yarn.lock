@@ -1983,7 +1983,7 @@
     refx "^3.0.0"
     rememo "^3.0.0"
 
-"@wordpress/element@2.10.0", "@wordpress/element@^2.10.0":
+"@wordpress/element@^2.10.0":
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/@wordpress/element/-/element-2.10.0.tgz#46c09ba2d1b80bc2e59e5b72efdc024080ab01e7"
   integrity sha512-CedhhFfcubM/lsluY7JPC49VG0/Ee0chOBJ1vyDEvIJmQk0bM3sLfgt5qVK773yivVOqD9blQMO+JihnaMXF8w==
@@ -2708,10 +2708,12 @@ atob@^2.1.2:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-attr-accept@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/attr-accept/-/attr-accept-2.0.0.tgz#8422fef5ee4a511c207796c888227ab5de03306f"
-  integrity sha512-I9SDP4Wvh2ItYYoafEg8hFpsBe96pfQ+eabceShXt3sw2fbIP96+Aoj9zZE0vkZNAkXXzHJATVRuWz+h9FxJxQ==
+attr-accept@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/attr-accept/-/attr-accept-1.1.3.tgz#48230c79f93790ef2775fcec4f0db0f5db41ca52"
+  integrity sha512-iT40nudw8zmCweivz6j58g+RT33I4KbaIvRUhjNmDwO2WmsQUxFEZZYZ5w3vXe5x5MX9D7mfvA/XaLOZYFR9EQ==
+  dependencies:
+    core-js "^2.5.0"
 
 autoprefixer@^9.0.0, autoprefixer@^9.7.3:
   version "9.7.3"
@@ -5540,13 +5542,6 @@ file-loader@^5.0.2:
   dependencies:
     loader-utils "^1.2.3"
     schema-utils "^2.5.0"
-
-file-selector@^0.1.12:
-  version "0.1.12"
-  resolved "https://registry.yarnpkg.com/file-selector/-/file-selector-0.1.12.tgz#fe726547be219a787a9dcc640575a04a032b1fd0"
-  integrity sha512-Kx7RTzxyQipHuiqyZGf+Nz4vY9R1XGxuQl/hLoJwq+J4avk/9wxxgZyHKtbyIPJmbD4A66DWGYfyykWNpcYutQ==
-  dependencies:
-    tslib "^1.9.0"
 
 file-uri-to-path@1.0.0:
   version "1.0.0"
@@ -10602,14 +10597,13 @@ react-dom@^16.9.0:
     prop-types "^15.6.2"
     scheduler "^0.18.0"
 
-react-dropzone@^10.2.1:
-  version "10.2.1"
-  resolved "https://registry.yarnpkg.com/react-dropzone/-/react-dropzone-10.2.1.tgz#b7520124c4a3b66f96d49f7879027c7a475eaa20"
-  integrity sha512-Me5nOu8hK9/Xyg5easpdfJ6SajwUquqYR/2YTdMotsCUgJ1pHIIwNsv0n+qcIno0tWR2V2rVQtj2r/hXYs2TnQ==
+react-dropzone@6.2.4:
+  version "6.2.4"
+  resolved "https://registry.yarnpkg.com/react-dropzone/-/react-dropzone-6.2.4.tgz#6a63f7eb5fdd0ed5d85b0c8c3b8ecc3d3bb661fe"
+  integrity sha512-fkG/Nxalhai12FdNw9RZ6dIr1SctmRXWekkSoOKAhNDAECwDg4HWKuvvZVkEAedGNeAgmkQRVoqNfT8uje1zfg==
   dependencies:
-    attr-accept "^2.0.0"
-    file-selector "^0.1.12"
-    prop-types "^15.7.2"
+    attr-accept "^1.1.3"
+    prop-types "^15.6.2"
 
 react-emoji-render@^1.2.1:
   version "1.2.1"

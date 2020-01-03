@@ -1,7 +1,7 @@
 import './index.scss';
 import jQuery from 'jquery'
 import React,{Component,Fragment} from 'react';
-import {render} from "react-dom";
+import {render} from "@wordpress/element";
 import domReady from '@wordpress/dom-ready';
 import MainDashboard from './MainDashboard/MainDashboard';
 window._lodash = window._;

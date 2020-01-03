@@ -11,6 +11,7 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const defaultConfig = require("./node_modules/@wordpress/scripts/config/webpack.config");
 const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extraction-webpack-plugin' );
 
 /**
@@ -182,10 +183,11 @@ const optimization = isProduction ? {
  *
  * @type {{}}
  */
-const externals = isTest ? {} : {
+const externals = isTest ? {
+
+} : {
 	jquery: 'jQuery',
-	'react': 'React',
-	'react-dom': 'ReactDOM',
+	react: 'React',
 };
 
 // Setup external for each entry point
@@ -205,7 +207,23 @@ entryPointNames.forEach( entryPointName => {
 let plugins = [
 	//CSS/SASS
 	cssPlugin,
+	//default
+	...defaultConfig.plugins
 ];
+
+//Remove default dependency extractor
+plugins.filter(
+	plugin => plugin.constructor.name !== 'DependencyExtractionWebpackPlugin',
+);
+
+//Add dependency extractor back, with different options.
+plugins.push(
+	new DependencyExtractionWebpackPlugin( {
+		injectPolyfill: true,
+		//By default php file is generated, we want JSON
+		outputFormat: 'json',
+	} ),
+);
 //Add more plugins in development
 if( ! isProduction ){
 	plugins = [...plugins, 
@@ -225,6 +243,7 @@ if( ! isProduction ){
 			multiStep: true,
 		}),] 
 }
+
 
 // Clean up manifest on exit.
 onExit(() => {

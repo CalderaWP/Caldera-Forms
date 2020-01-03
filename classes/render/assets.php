@@ -322,8 +322,6 @@ class Caldera_Forms_Render_Assets
 			'privacy' => self::make_url('privacy'),
 			'render' => self::make_url('render'),
 			'legacy-bundle' => self::make_url('legacy-bundle'),
-            'cf-react' => trailingslashit( CFCORE_URL ) . 'dist/react.min.js',
-            'cf-react-dom' => trailingslashit( CFCORE_URL ) . 'dist/react-dom.min.js',
 		];
 
 		return $script_urls;
@@ -498,10 +496,6 @@ class Caldera_Forms_Render_Assets
 	public static function enqueue_script($script, $depts = ['jquery'])
 	{
 
-	    if( 'cf-react' === $script ){
-	        wp_enqueue_script($script);
-	        return;
-        }
 		if( 'render' === $script ||$script === self::make_slug('render')  ){
 			if (is_admin() ) {
 				$load_render = false;
@@ -597,13 +591,14 @@ class Caldera_Forms_Render_Assets
             }
 
 		    $manifest = self::get_webpack_manifest();
+
 			if ($script) {
                 if (
                     in_array($name, [
                         'blocks',
                         'pro',
                         'privacy',
-                        'legacy-bundle'
+                        'legacy-bundle',
                     ])
                     || empty($manifest)
                     || ! array_key_exists("{$name}.js",$manifest)
@@ -618,7 +613,7 @@ class Caldera_Forms_Render_Assets
                         'blocks',
                         'pro',
                         'privacy',
-                        'legacy-bundle'
+                        'legacy-bundle',
                     ])
                     || empty($manifest)
                     || ! array_key_exists("{$name}.css",$manifest)
@@ -706,32 +701,20 @@ class Caldera_Forms_Render_Assets
 			}
 			$tags = [self::make_slug( 'legacy-bundle' )];
 		}else {
-			if ($tag === "blocks") {
-				$tags = ["wp-blocks"];
-			} else if($tag === "render") {
-                if (! Caldera_Forms_Admin::is_main_page()) {
-					$root_path = CFCORE_PATH;
-					$name = 'render';
-					$deps_path = "{$root_path}clients/{$name}/build/index.min.deps.json";
-                	$tags = file_exists($deps_path) ? (array)json_decode(file_get_contents( $deps_path) ) : [];
 
-				}
-                //this should not be needed, but it seams to be only way to get react on the page
-				foreach ($tags as $t ){
-				    wp_enqueue_script($t);
-                }
-			}elseif( 'admin-client' === $tag ){
-			    $tags = [
-                    'lodash',
-                    'cf-react',
-                    'cf-react-dom',
-                    'wp-polyfill',
-                    'wp-keycodes'
-                ];
-			    wp_enqueue_script('lodash' );
+		    //Get the json file listing dependencies for this client.
+            //Generate with wordpress-scripts by running `yarn build:clients` or `yarn build`.
+            $root_path = CFCORE_PATH;
+            if( 'admin-client' === $tag ){
+                $name = 'admin';
+            }else{
+                $name = $tag;
             }
-
-		}
+            $deps_path = "{$root_path}clients/{$name}/build/index.min.asset.json";
+            $assets = file_exists($deps_path) ? (array)json_decode(file_get_contents($deps_path)) : [];
+            //If file exists it SHOULD have key "dependencies" with a list of tags.
+            $tags =  is_array($assets) && isset($assets['dependencies']) ? $assets['dependencies'] : [];
+        }
 
 		foreach ( $tags as $_tag ){
             if( ! wp_script_is($_tag, 'registered')){
@@ -740,6 +723,10 @@ class Caldera_Forms_Render_Assets
                 wp_default_packages_scripts( $wp_scripts );
                 break;
             }
+        }
+        //this should not be needed, but it seams to be only way to get react on the page
+        foreach ($tags as $t) {
+            wp_enqueue_script($t);
         }
 
 		return $tags;
@@ -882,8 +869,6 @@ class Caldera_Forms_Render_Assets
 			return;
 		} elseif ('editor' == $script_key) {
 			$depts = ['jquery', 'wp-color-picker'];
-		} elseif( 'privacy' === $script_key ) {
-            $depts = ['cf-react','cf-react-dom'];
 		} else {
 			//no needd...
 		}
