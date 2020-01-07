@@ -727,7 +727,7 @@ class Caldera_Forms_Render_Assets
          //this should not be needed, but it seams to be only way to get react on the page
 		 foreach ($tags as $t) {
 			//Only enqueue react dependency for WP < 5.3 (in order to get hooks ), otherwise don't enqueue the react dependency ( only wp-element )
-			if($t === "react" && version_compare($wp_version, '5.3.0', '<')){
+			if($t === "react" && version_compare($wp_version, '5.2', '<')){
 				wp_enqueue_script($t);
 			} else if($t !== "react") {
 				wp_enqueue_script($t);
