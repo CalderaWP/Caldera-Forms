@@ -58,6 +58,7 @@
     "md5-file": "^4.0.0",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "prop-types": "^15.7.2",
+    "react": "16.9.0",
     "react-dropzone": "6.2.4",
     "react-emoji-render": "^1.2.1",
     "react-ga": "^2.5.7",
