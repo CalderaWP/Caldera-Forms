@@ -2,12 +2,36 @@ stages:
   - Unit Tests
   - Integration Tests
 
+# SQL Variables for the WordPress tests
 variables:
   # Configure mysql service (https://hub.docker.com/_/mysql/)
   MYSQL_DATABASE: wordpress_tests
   MYSQL_ROOT_PASSWORD: mysql
 
+# Unit Test Stage
+PHP 7.3 Unit:
+  stage: Unit Tests
+  image: edbizarro/gitlab-ci-pipeline-php:7.3-alpine
+  script:
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress
+    - composer test:unit
 
+PHP 7.2 Unit:
+  stage: Unit Tests
+  image: edbizarro/gitlab-ci-pipeline-php:7.2-alpine
+  script:
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress
+    - composer test:unit
+
+JS Unit Test:
+  image: node:latest
+  stage: Unit Tests
+  script:
+    - yarn
+    - yarn build
+    - yarn test
+
+# Integration Test Stage
 WP-Integration:
   image: tetraweb/php:7.1
   stage: Integration Tests
@@ -35,11 +59,3 @@ WP-Integration:
     - curl -sS https://getcomposer.org/installer | php
     - php composer.phar install --no-dev
     - php composer.phar global require "phpunit/phpunit:^6"
-JS Unit Test:
-  image: node:latest
-  stage: Unit Tests
-  script:
-    - yarn
-    - yarn build
-    - yarn test
-
