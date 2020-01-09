@@ -47,10 +47,13 @@ services:
     image: "cypress/included:3.2.0"
     depends_on:
       - wordpress
+    environment:
+      # pass base url to test pointing at the web application
+      - CYPRESS_baseUrl=http://sentimentalyzer:8123
     # share the current folder as volume to avoid copying
-    working_dir: ./
+    working_dir: /e2e
     volumes:
-      - ./:/
+      - ./:/e2e
 volumes:
   testsuite:
   wordpress:
