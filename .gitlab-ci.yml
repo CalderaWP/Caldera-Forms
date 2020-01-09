@@ -16,14 +16,14 @@ PHP 7.3 Unit:
   image: edbizarro/gitlab-ci-pipeline-php:7.3-alpine
   script:
     - composer install --prefer-dist --no-ansi --no-interaction --no-progress
-    - phpunit --configuration phpunit-unit.xml.dist
+    - composer:test
 
 PHP 7.2 Unit:
   stage: Unit Tests
   image: edbizarro/gitlab-ci-pipeline-php:7.2-alpine
   script:
     - composer install --prefer-dist --no-ansi --no-interaction --no-progress
-    - phpunit --configuration phpunit-unit.xml.dist
+    -  php ./vendor/bin/phpunit --configuration phpunit-unit.xml.dist
 
 ## JavaScript Unit Tests
 JS Unit Test:
