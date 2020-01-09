@@ -42,7 +42,15 @@ services:
     image: composer
     volumes:
       - .:/app
-
+  cypress:
+    # the Docker image to use from https://github.com/cypress-io/cypress-docker-images
+    image: "cypress/included:3.2.0"
+    depends_on:
+      - wordpress
+    # share the current folder as volume to avoid copying
+    working_dir: ./
+    volumes:
+      - ./:/
 volumes:
   testsuite:
   wordpress:
