@@ -1,7 +1,7 @@
 import { TabPanel } from "@wordpress/components";
 
 const onSelect = () => {};
-import { Addons } from "../components/AddOns/Addons";
+import { Addons } from "../components/Addons/Addons";
 import { Fragment } from "react";
 
 export default function ProDashboard({ isProConnected, apiRoot }) {

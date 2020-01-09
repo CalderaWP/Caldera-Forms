@@ -1,7 +1,6 @@
 import { Panel, PanelBody, PanelRow } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { DocSearchApp } from "../../../components";
-import { RemotePost } from "../../../components";
 import ProDashboard from "./ProDashboard";
 import { Component } from "@wordpress/element";
 import Translate from "../components/Translate/Translate";
