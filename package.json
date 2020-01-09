@@ -34,7 +34,7 @@
     "package": "yarn run build && grunt make",
     "test": "yarn test:watch",
     "test:watch": "cross-env BABEL_ENV=testing BABEL_ENV=testing jest --watch",
-    "test:once": "jest",
+    "test:once": "jest --ci",
     "test:e2e": "cypress open",
     "test:e2e:ci": "cypress run"
   },

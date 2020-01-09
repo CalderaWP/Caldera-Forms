@@ -22,14 +22,14 @@ PHP 7.2 Unit:
   script:
     - composer install --prefer-dist --no-ansi --no-interaction --no-progress
     - vendor/bin/phpunit --configuration phpunit-unit.xml.dist
-    
+
 JS Unit Test:
   image: node:latest
   stage: Unit Tests
   script:
     - yarn
     - yarn build
-    - yarn test
+    - yarn test:once
 
 # Integration Test Stage
 WP-Integration:
