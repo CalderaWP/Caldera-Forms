@@ -1,11 +1,13 @@
 import './index.scss';
 import jQuery from 'jquery'
-import {Component, render, unmountComponentAtNode,Fragment} from '@wordpress/element';
+import React,{Component,Fragment} from 'react';
+import {render} from "@wordpress/element";
 import domReady from '@wordpress/dom-ready';
 import MainDashboard from './MainDashboard/MainDashboard';
+window._lodash = window._;
+window.lodash = window._;
 
 class FormsAdminApp extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -84,7 +86,6 @@ class FormsAdminApp extends Component {
         }
 
     }
-
     render() {
         const {props} = this;
         const {hide} = this.state;

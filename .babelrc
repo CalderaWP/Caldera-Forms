@@ -1,3 +1,5 @@
 {
-	"presets": [ "@wordpress/default" ]
+  "presets": [
+    "@calderajs/babel-preset-calderajs"
+  ]
 }

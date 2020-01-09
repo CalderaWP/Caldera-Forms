@@ -1,3 +1,4 @@
+import React from 'react';
 import {CalderaFormsFieldGroup} from "../../../render/components";
 import renderer from 'react-test-renderer';
 const handler = () => {

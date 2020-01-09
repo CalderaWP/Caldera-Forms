@@ -1,3 +1,4 @@
+import React from 'react';
 import {handleFileUploadResponse, hashAndUpload, handleFileUploadError, processFiles, processFileField, processFormSubmit} from "../../../render/fileUploads";
 import {hashFile, createMediaFromFile} from "../../../render/util";
 import * as data from './Mocks/mockUtils';

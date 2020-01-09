@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 preset: psr2
 
 finder:
@@ -8,3 +9,15 @@ finder:
 
 disabled:
   - braces
+=======
+preset: psr2
+
+finder:
+  not-name:
+    - MethodWithHHVMReturnType.php
+    - MockingParameterAndReturnTypesTest.php
+    - SemiReservedWordsAsMethods.php
+
+disabled:
+  - braces
+>>>>>>> feature/3239

@@ -3,7 +3,11 @@
 namespace MathParser;
 
 use MathParser\Lexing\StdMathLexer;
+<<<<<<< HEAD
 use MathParser\Parsing\Parser;
+=======
+use MathParser\Parsing\Parser;
+>>>>>>> feature/3239
 
 /**
  * Convenience class for using the MathParser library.

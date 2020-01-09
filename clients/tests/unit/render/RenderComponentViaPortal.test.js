@@ -1,3 +1,4 @@
+import React from 'react';
 import {RenderComponentViaPortal} from "../../../render/components/RenderComponentViaPortal";
 import renderer from 'react-test-renderer';
 import {mount} from 'enzyme';

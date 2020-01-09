@@ -1,8 +1,8 @@
+import React from 'react';
 import renderer from 'react-test-renderer';
 import {shallow} from 'enzyme';
 import {CalderaFormsRender} from "../../../render/components";
 import EnzymeAdapter from '../createEnzymeAdapter'
-import React from 'react';
 import {shouldDisableKey, shouldShowKey} from "../../../render/components/CalderaFormsRender";
 
 const handler = () => {

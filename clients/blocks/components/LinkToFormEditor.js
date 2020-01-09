@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-
+import React from 'react';
 /**
  * Basic component to link the form selected in the Gutenberg Block to its edition page
  *

@@ -1,8 +1,6 @@
-import {CalderaFormsFieldGroup, Fragment} from "../CalderaFormsFieldGroup";
 import {CalderaFormsFieldPropType} from "../CalderaFormsFieldRender";
 import {sizeFormat} from "../../util";
 import React from 'react';
-
 import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
 
@@ -17,20 +15,11 @@ import Dropzone from 'react-dropzone';
  */
 export const FileInput = (props) => {
 
-	const {maxFileUploadSize, onChange, accept, field, describedById, style, className, multiUploadText, multiple, inputProps, usePreviews, previewHeight, previewWidth, strings} = props;
+	const {maxFileUploadSize, onChange, accept, field, style, className, multiUploadText, multiple, inputProps, usePreviews, previewHeight, previewWidth, strings} = props;
 	let {shouldDisable} = props;
 	const {
-		allowedTypes,
-		outterIdAttr,
 		fieldId,
-		fieldLabel,
-		fieldCaption,
-		required,
-		isRequired,
-		fieldPlaceHolder,
-		fieldDefault,
 		fieldIdAttr,
-		isInvalid,
 		fieldValue
 	} = field;
 

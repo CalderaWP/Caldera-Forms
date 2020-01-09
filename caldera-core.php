@@ -130,6 +130,14 @@ if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
 		 */
 		do_action('caldera_forms_includes_complete');
 
+		add_filter( 'script_loader_src',
+		 [Caldera_Forms_Render_Assets::class,'maybe_remove_version_query_arg'],
+		15, 2 );
+		add_filter( 'style_loader_src',
+		 [Caldera_Forms_Render_Assets::class,'maybe_remove_version_query_arg'],
+		15, 2 );
+
+		add_action( 'init', [Caldera_Forms_Render_Assets::class,'maybe_redirect_to_dist']);
 		/**
 		 * Start cf2 system
 		 *
@@ -153,8 +161,6 @@ if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
 	//@see https://github.com/CalderaWP/Caldera-Forms/issues/2855
 	add_filter( 'caldera_forms_pro_log_mode', '__return_false' );
 	add_filter( 'caldera_forms_pro_mail_debug', '__return_false' );
-
-
 }
 
 /**

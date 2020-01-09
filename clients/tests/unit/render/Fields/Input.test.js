@@ -1,3 +1,4 @@
+import React from 'react';
 import renderer from 'react-test-renderer';
 import{Input} from "../../../../render/components/Fields/Input";
 describe( 'Input field', () => {
@@ -11,7 +12,8 @@ describe( 'Input field', () => {
 		fieldPlaceHolder: "",
 		fieldValue: "",
 		outterIdAttr: "cf2-fld_5843941_1",
-		required: false,
+		required: false
+		,
 		type: "text",
 	};
 	const handler = () => {
