@@ -44,7 +44,7 @@ services:
       - .:/app
   cypress:
     # the Docker image to use from https://github.com/cypress-io/cypress-docker-images
-    image: "cypress/included:3.2.0"
+    image: cypress/browsers:chrome67
     depends_on:
       - wordpress
     environment:
