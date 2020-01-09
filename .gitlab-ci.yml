@@ -9,6 +9,8 @@ variables:
   MYSQL_ROOT_PASSWORD: mysql
 
 # Unit Test Stage
+
+## PHP Unit Tests
 PHP 7.3 Unit:
   stage: Unit Tests
   image: edbizarro/gitlab-ci-pipeline-php:7.3-alpine
@@ -23,6 +25,7 @@ PHP 7.2 Unit:
     - composer install --prefer-dist --no-ansi --no-interaction --no-progress
     - vendor/bin/phpunit --configuration phpunit-unit.xml.dist
 
+## JavaScript Unit Tests
 JS Unit Test:
   image: node:latest
   stage: Unit Tests
