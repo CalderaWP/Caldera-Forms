@@ -7,49 +7,96 @@ variables:
   # Configure mysql service (https://hub.docker.com/_/mysql/)
   MYSQL_DATABASE: wordpress_tests
   MYSQL_ROOT_PASSWORD: mysql
-  # to cache both npm modules and Cypress binary we use environment variables
-  # to point at the folders we can list as paths in "cache" job settings
-  yarn_config_cache: "$CI_PROJECT_DIR/.yarn"
-  CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/cache/Cypress"
 
-# cache using branch name
-# https://gitlab.com/help/ci/caching/index.md
-cache:
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-    - .yarn
-    - cache/Cypress
-    - node_modules
-
-# this job installs Yarn dependencies and Cypress
-install cypress:
-  image: cypress/base:10
+GI tests:
+  image: wordpress
   stage: .pre
-
   script:
-    - yarn install --frozen-lockfile
-    # show where the Cypress test runner binaries are cached
-    - $(yarn bin)/cypress cache path
-    # show all installed versions of Cypress binary
-    - $(yarn bin)/cypress cache list
-    - $(yarn bin)/cypress verify
+    - echo "Starting Ghost Inspector tests"
+    - results=$(curl -s "https://api.ghostinspector.com/v1/suites/5e15e2270756ad297ce9258a/execute/?apiKey=6d95c09df386dbbe2cad26e25b88332d7505015a")
+    - if [[ $(jq '.code' <<< $results) != "\"SUCCESS\"" ]]; then
+    -   echo "Tests failed to run!"
+    -   echo ""
+    -   echo "$results"
+    -   exit 1
+    - fi
+    - IFS=$'\n'
+    - lines=$(jq '.' <<< $results)
+    - passing=1
+    - counter=0
+    - for line in $lines; do
+    -   printf "$counter "
+    -   'if [[ "$line" =~ "\"passing\": false," || "$line" =~ "\"passing\": null," ]]; then'
+    -     passing=0
+    -     printf "***> "
+    -   fi
+    -   echo "$line"
+    -   let counter=counter+1
+    - done
+    - if [ "$passing" -gt 0 ]; then
+    -   echo "Ghost Inspector Integration tests PASSED SUCCESSFULLY!"
+    - else
+    -   echo "Ghost Inspector Integration tests FAILED!!!"
+    -   exit 1
+    - fi
 
   before_script:
-    # Set up WordPress tests
-    - bash bin/install-docker.sh
+    - echo "PreInstall"
+    - sudo apt-get -y -qq update
+    - sudo apt-get -y install jq curl
+    - sudo apt-get -y install php5-cli
 
-# Yarn dependencies and Cypress binary should be already installed
-cypress-e2e:
-  image: cypress/base:10
-  stage: Integration Tests
+# Unit Test Stage
+
+## PHP Unit Tests
+PHP 7.3 Unit:
+  stage: Unit Tests
+  image: edbizarro/gitlab-ci-pipeline-php:7.3-alpine
   script:
-    - $(yarn bin)/cypress run
-  artifacts:
-    expire_in: 1 week
-    when: always
-    paths:
-    - cypress/screenshots
-    - cypress/videos
-    reports:
-      junit:
-        - results/TEST-*.xml
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress
+    - composer test:unit
+
+PHP 7.2 Unit:
+  stage: Unit Tests
+  image: edbizarro/gitlab-ci-pipeline-php:7.2-alpine
+  script:
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress
+    - composer test:unit
+
+## JavaScript Unit Tests
+JS Unit Test:
+  image: node:latest
+  stage: Unit Tests
+  script:
+    - yarn
+    - yarn build
+    - yarn test:once
+
+# Integration Test Stage
+WP-Integration:
+  image: tetraweb/php:7.1
+  stage: Integration Tests
+  services:
+    - mysql:5.6
+  script:
+    - phpunit --configuration phpunit-integration.xml.dist
+  before_script:
+    # Install dependencies
+
+    # update the docker
+    - apt-get clean
+    - apt-get -yqq update
+
+    # install the required packages for the running CI tests
+    - apt-get -yqqf install zip unzip subversion mysql-client libmysqlclient-dev --fix-missing
+
+    # PHP extensions
+    - docker-php-ext-enable mbstring mcrypt mysqli pdo_mysql intl gd zip bz2
+
+    # Set up WordPress tests
+    - bash bin/install-wp-tests.sh wordpress_tests root mysql mysql latest true
+
+    # Install composer, then install with composer
+    - curl -sS https://getcomposer.org/installer | php
+    - php composer.phar install --no-dev
+    - php composer.phar global require "phpunit/phpunit:^6"
