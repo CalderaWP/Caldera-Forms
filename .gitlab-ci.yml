@@ -27,7 +27,7 @@ install:
   stage: .pre
 
   script:
-    - yarn ci
+    - yarn install --frozen-lockfile
     # show where the Cypress test runner binaries are cached
     - $(yarn bin)/cypress cache path
     # show all installed versions of Cypress binary
