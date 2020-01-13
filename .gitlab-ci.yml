@@ -37,14 +37,6 @@ install cypress:
 
 # Unit Test Stage
 
-## JavaScript Unit Tests
-JS Unit Test:
-  image: node:latest
-  stage: Unit Tests
-  script:
-    - yarn
-    - yarn build
-    - yarn test:once
 
 # Yarn dependencies and Cypress binary should be already installed
 cypress-e2e:
