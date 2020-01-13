@@ -21,8 +21,8 @@ cache:
     - cache/Cypress
     - node_modules
 
-# this job installs NPM dependencies and Cypress
-install:
+# this job installs Yarn dependencies and Cypress
+install cypress:
   image: cypress/base:10
   stage: .pre
 
@@ -37,21 +37,6 @@ install:
 
 # Unit Test Stage
 
-## PHP Unit Tests
-PHP 7.3 Unit:
-  stage: Unit Tests
-  image: edbizarro/gitlab-ci-pipeline-php:7.3-alpine
-  script:
-    - composer install --prefer-dist --no-ansi --no-interaction --no-progress
-    - composer test:unit
-
-PHP 7.2 Unit:
-  stage: Unit Tests
-  image: edbizarro/gitlab-ci-pipeline-php:7.2-alpine
-  script:
-    - composer install --prefer-dist --no-ansi --no-interaction --no-progress
-    - composer test:unit
-
 ## JavaScript Unit Tests
 JS Unit Test:
   image: node:latest
@@ -60,6 +45,22 @@ JS Unit Test:
     - yarn
     - yarn build
     - yarn test:once
+
+# Yarn dependencies and Cypress binary should be already installed
+cypress-e2e:
+  image: cypress/base:10
+  stage: Integration Tests
+  script:
+    - $(yarn bin)/cypress run
+  artifacts:
+    expire_in: 1 week
+    when: always
+    paths:
+    - cypress/screenshots
+    - cypress/videos
+    reports:
+      junit:
+        - results/TEST-*.xml
 
 # Integration Test Stage
 WP-Integration:
@@ -89,20 +90,3 @@ WP-Integration:
     - curl -sS https://getcomposer.org/installer | php
     - php composer.phar install --no-dev
     - php composer.phar global require "phpunit/phpunit:^6"
-
-# two jobs that run after "install" job finishes
-# NPM dependencies and Cypress binary should be already installed
-cypress-e2e:
-  image: cypress/base:10
-  stage: Integration Tests
-  script:
-    - $(yarn bin)/cypress run
-  artifacts:
-    expire_in: 1 week
-    when: always
-    paths:
-    - cypress/screenshots
-    - cypress/videos
-    reports:
-      junit:
-        - results/TEST-*.xml
