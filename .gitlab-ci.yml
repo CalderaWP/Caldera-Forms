@@ -34,6 +34,19 @@ JS Unit Test:
     - yarn build
     - yarn test:once
 
+cypress-e2e:
+  image: cypress/base:10
+  stage: Unit Tests
+  script:
+    - yarn test:e2e:ci
+  artifacts:
+    paths:
+      - cypress/screenshots
+      - cypress/videos
+      reports:
+        junit:
+          - results/TEST-*.xml  
+
 # Integration Test Stage
 WP-Integration:
   image: tetraweb/php:7.1
