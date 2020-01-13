@@ -1,6 +1,8 @@
 stages:
+  - build
   - Unit Tests
   - Integration Tests
+  - deploy
 
 # SQL Variables for the WordPress tests
 variables:
