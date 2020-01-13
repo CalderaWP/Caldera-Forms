@@ -1193,7 +1193,19 @@ do_action('caldera_forms_edit_end', $element);
 				</div>
 				{{/each}}
 			</div>
-			<button type="button" class="button button-small ajax-trigger" data-id="{{../id}}" data-type="{{type}}" data-group="{{id}}" data-request="new_conditional_line" data-target="#{{id}}_conditions_lines" data-callback="rebuild_field_binding" data-template="#conditional-line-tmpl" data-target-insert="append"><?php echo esc_html__( 'Add Condition', 'caldera-forms' ); ?></button>
+			<button
+                type="button"
+                class="button button-small ajax-trigger "
+                data-id="{{../id}}" data-type="{{type}}"
+                data-group="{{id}}"
+                data-request="new_conditional_line"
+                data-target="#{{id}}_conditions_lines"
+                data-callback="rebuild_field_binding"
+                data-template="#conditional-line-tmpl"
+                ata-target-insert="append"
+            >
+                <?php echo esc_html__( 'Add Condition', 'caldera-forms' ); ?>
+            </button>
 		</div>
 	{{/each}}
 </script>

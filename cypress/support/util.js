@@ -469,16 +469,21 @@ export const cfGetFileDropzone = ( fieldId => {
 /**
  * Create a form using UI
  *
- * NOTE: Uses blank template
+ *
  * @since 1.8.0
  *
  * @param name What to name new form
  */
-export const  createForm = (name) => {
+export const createForm = (name,blankForm = true) => {
 	visitPluginPage('caldera-forms');
 	cy.get('.cf-new-form-button').click();
 	cy.get('form#new_form_baldrickModal').should('be.visible');
-	cy.get('.cf-form-template').last().click();
+	if( blankForm ){
+		cy.get('.cf-form-template').last().click();
+	}else{
+		cy.get('.cf-form-template').first().click();
+	}
+
 	cy.get('.new-form-name').type(name);
 	cy.get('.cf-create-form-button').click();
-}
+};
