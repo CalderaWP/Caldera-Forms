@@ -10,10 +10,34 @@ variables:
 
 # Unit Test Stage
 
+## PHP Unit Tests
+PHP 7.3 Unit:
+  stage: Unit Tests
+  image: edbizarro/gitlab-ci-pipeline-php:7.3-alpine
+  script:
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress
+    - composer test:unit
+
+PHP 7.2 Unit:
+  stage: Unit Tests
+  image: edbizarro/gitlab-ci-pipeline-php:7.2-alpine
+  script:
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress
+    - composer test:unit
+
+## JavaScript Unit Tests
+JS Unit Test:
+  image: node:latest
+  stage: Unit Tests
+  script:
+    - yarn
+    - yarn build
+    - yarn test:once
+
 # Integration Test Stage
 WP-Integration:
   image: tetraweb/php:7.1
-  stage: Integration Tests
+  stage: .pre
   services:
     - mysql:5.6
   script:
