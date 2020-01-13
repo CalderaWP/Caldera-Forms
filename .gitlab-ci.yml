@@ -43,9 +43,9 @@ cypress-e2e:
     paths:
       - cypress/screenshots
       - cypress/videos
-      reports:
-        junit:
-          - results/TEST-*.xml  
+    reports:
+      junit:
+        - results/TEST-*.xml  
 
 # Integration Test Stage
 WP-Integration:
