@@ -8,69 +8,7 @@ variables:
   MYSQL_DATABASE: wordpress_tests
   MYSQL_ROOT_PASSWORD: mysql
 
-GI tests:
-  image: wordpress
-  stage: .pre
-  script:
-    - echo "Starting Ghost Inspector tests"
-    - results=$(curl -s "https://api.ghostinspector.com/v1/suites/5e15e2270756ad297ce9258a/execute/?apiKey=6d95c09df386dbbe2cad26e25b88332d7505015a")
-    - if [[ $(jq '.code' <<< $results) != "\"SUCCESS\"" ]]; then
-    -   echo "Tests failed to run!"
-    -   echo ""
-    -   echo "$results"
-    -   exit 1
-    - fi
-    - IFS=$'\n'
-    - lines=$(jq '.' <<< $results)
-    - passing=1
-    - counter=0
-    - for line in $lines; do
-    -   printf "$counter "
-    -   'if [[ "$line" =~ "\"passing\": false," || "$line" =~ "\"passing\": null," ]]; then'
-    -     passing=0
-    -     printf "***> "
-    -   fi
-    -   echo "$line"
-    -   let counter=counter+1
-    - done
-    - if [ "$passing" -gt 0 ]; then
-    -   echo "Ghost Inspector Integration tests PASSED SUCCESSFULLY!"
-    - else
-    -   echo "Ghost Inspector Integration tests FAILED!!!"
-    -   exit 1
-    - fi
-
-  before_script:
-    - echo "PreInstall"
-    - apt-get -y -qq update
-    - apt-get -y install jq curl
-    - apt-get -y install php7.1-cli
-
 # Unit Test Stage
-
-## PHP Unit Tests
-PHP 7.3 Unit:
-  stage: Unit Tests
-  image: edbizarro/gitlab-ci-pipeline-php:7.3-alpine
-  script:
-    - composer install --prefer-dist --no-ansi --no-interaction --no-progress
-    - composer test:unit
-
-PHP 7.2 Unit:
-  stage: Unit Tests
-  image: edbizarro/gitlab-ci-pipeline-php:7.2-alpine
-  script:
-    - composer install --prefer-dist --no-ansi --no-interaction --no-progress
-    - composer test:unit
-
-## JavaScript Unit Tests
-JS Unit Test:
-  image: node:latest
-  stage: Unit Tests
-  script:
-    - yarn
-    - yarn build
-    - yarn test:once
 
 # Integration Test Stage
 WP-Integration:
