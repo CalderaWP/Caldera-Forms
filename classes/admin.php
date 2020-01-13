@@ -1688,7 +1688,6 @@ class Caldera_Forms_Admin {
 		echo $newform['ID'];
 		exit;
 
-
 	}
 
 

@@ -323,7 +323,7 @@ function set_form_state( obj ){
 
 function new_form_redirect(obj){
 	if(typeof obj.data === 'string'){
-		window.location = 'admin.php?page=caldera-forms&edit=' + obj.data.trim();
+		window.location = '<?php echo esc_url(add_query_arg( ['page' => 'caldera-forms' ], admin_url( 'admin.php' ) ) ); ?>&edit=' + obj.data.trim();
 	}else{
 		alert(obj.data.error);
 	}
