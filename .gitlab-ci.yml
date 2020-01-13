@@ -24,7 +24,7 @@ cache:
 # this job installs NPM dependencies and Cypress
 install:
   image: cypress/base:10
-  stage: build
+  stage: .pre
 
   script:
     - yarn ci
@@ -94,7 +94,7 @@ WP-Integration:
 # NPM dependencies and Cypress binary should be already installed
 cypress-e2e:
   image: cypress/base:10
-  stage: test
+  stage: Integration Tests
   script:
     - $(yarn bin)/cypress run
   artifacts:
