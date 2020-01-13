@@ -7,6 +7,33 @@ variables:
   # Configure mysql service (https://hub.docker.com/_/mysql/)
   MYSQL_DATABASE: wordpress_tests
   MYSQL_ROOT_PASSWORD: mysql
+  # to cache both npm modules and Cypress binary we use environment variables
+  # to point at the folders we can list as paths in "cache" job settings
+  yarn_config_cache: "$CI_PROJECT_DIR/.yarn"
+  CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/cache/Cypress"
+
+# cache using branch name
+# https://gitlab.com/help/ci/caching/index.md
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .yarn
+    - cache/Cypress
+    - node_modules
+
+# this job installs NPM dependencies and Cypress
+install:
+  image: cypress/base:10
+  stage: build
+
+  script:
+    - yarn ci
+    # show where the Cypress test runner binaries are cached
+    - $(yarn bin)/cypress cache path
+    # show all installed versions of Cypress binary
+    - $(yarn bin)/cypress cache list
+    - $(yarn bin)/cypress verify
+
 
 # Unit Test Stage
 
@@ -33,19 +60,6 @@ JS Unit Test:
     - yarn
     - yarn build
     - yarn test:once
-
-cypress-e2e:
-  image: cypress/base:10
-  stage: Unit Tests
-  script:
-    - yarn test:e2e:ci
-  artifacts:
-    paths:
-      - cypress/screenshots
-      - cypress/videos
-    reports:
-      junit:
-        - results/TEST-*.xml  
 
 # Integration Test Stage
 WP-Integration:
@@ -75,3 +89,20 @@ WP-Integration:
     - curl -sS https://getcomposer.org/installer | php
     - php composer.phar install --no-dev
     - php composer.phar global require "phpunit/phpunit:^6"
+
+# two jobs that run after "install" job finishes
+# NPM dependencies and Cypress binary should be already installed
+cypress-e2e:
+  image: cypress/base:10
+  stage: test
+  script:
+    - $(yarn bin)/cypress run
+  artifacts:
+    expire_in: 1 week
+    when: always
+    paths:
+    - cypress/screenshots
+    - cypress/videos
+    reports:
+      junit:
+        - results/TEST-*.xml

@@ -6,5 +6,9 @@
       "pass": "password"
     }
   },
-  "projectId": "3jgs4a"
+  "projectId": "3jgs4a",
+  "reporter": "junit",
+    "reporterOptions": {
+        "mochaFile": "results/TEST-[hash].xml"
+        }
 }
