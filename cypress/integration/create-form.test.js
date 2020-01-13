@@ -3,6 +3,8 @@ import {
     login,
 } from '../support/util';
 
+
+
 /**
  * Can we create a new form?
  */
@@ -11,12 +13,14 @@ describe('Create a form', () => {
         visitPluginPage('caldera-forms')
     });
     before(() => login());
-    it('Creates a form', () => {
+
+    it( 'Opens new form modal', () => {
         cy.get('.cf-new-form-button').click();
         cy.get('form#new_form_baldrickModal').should('be.visible');
-        cy.get('.cf-form-template').last().click();
-        cy.get('.new-form-name').type('Test Form');
-        cy.get('.cf-create-form-button').click();
+    });
+
+    it('Creates a form', () => {
+       createForm('Some New Form');
         cy.get('.caldera-editor-header-nav li.caldera-element-type-label').should('be.visible');
     });
 });
