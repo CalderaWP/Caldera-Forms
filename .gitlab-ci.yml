@@ -42,9 +42,9 @@ GI tests:
 
   before_script:
     - echo "PreInstall"
-    - sudo apt-get -y -qq update
-    - sudo apt-get -y install jq curl
-    - sudo apt-get -y install php5-cli
+    - apt-get -y -qq update
+    - apt-get -y install jq curl
+    - apt-get -y install php7.1-cli
 
 # Unit Test Stage
 
