@@ -25,6 +25,9 @@ function prepareTags(tags) {
 
 /**
  * Prepare field magic tags, from object supplied in global current_form_fields
+ *
+ * @since 1.8.10
+ *
  * @param currentFormFields
  * @returns {Array}
  */

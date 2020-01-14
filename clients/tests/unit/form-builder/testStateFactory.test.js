@@ -204,12 +204,12 @@ describe('State factory', () => {
         expect(state.getAllMagicTags().length).toBe(28);
     });
 
-    it( 'Prepares fields', ()=> {
-       const factory = stateFactory();
-       const fields = factory.prepareFields(current_form_fields);
-       expect(fields.length).toBe(Object.keys(current_form_fields).length);
-       expect(fields.find( f => 'fld_6770247' === f.id ).label).toBe("disc2");
-       expect(fields.find( f => 'fld_6770247' === f.id ).tag).toBe("%disc2%");
+    it('Prepares fields', () => {
+        const factory = stateFactory();
+        const fields = factory.prepareFields(current_form_fields);
+        expect(fields.length).toBe(Object.keys(current_form_fields).length);
+        expect(fields.find(f => 'fld_6770247' === f.id).label).toBe("disc2");
+        expect(fields.find(f => 'fld_6770247' === f.id).tag).toBe("%disc2%");
     });
     it('Adds field tag types', () => {
         const factory = stateFactory({
@@ -244,18 +244,18 @@ describe('State factory', () => {
                     "%"
                 ]
             },
-        },current_form_fields);
+        }, current_form_fields);
         const state = factory.createState();
         expect(state.getAllMagicTags().length).toBe(Object.keys(current_form_fields).length + 1);
-        expect(state.getMagicTagsByType('hidden' ).length).toBe(2);
-        expect(state.getMagicTagsByType('summary' ).length).toBe(1);
+        expect(state.getMagicTagsByType('hidden').length).toBe(2);
+        expect(state.getMagicTagsByType('summary').length).toBe(1);
     });
 
-    
-    it( 'Adds fields', () => {
-        const factory = stateFactory(system_values,current_form_fields);
+
+    it('Adds fields', () => {
+        const factory = stateFactory(system_values, current_form_fields);
         const state = factory.createState();
-        expect(state.getMagicTagsByType('hidden' ).length).toBe(2);
+        expect(state.getMagicTagsByType('hidden').length).toBe(2);
         expect(state.addField({
             id: 'fld1234',
             "label": "New Field",
@@ -264,15 +264,67 @@ describe('State factory', () => {
 
         })).toBe(true);
 
-        expect(state.getMagicTagsByType('hidden' ).length).toBe(3);
+        expect(state.getMagicTagsByType('hidden').length).toBe(3);
     });
 
-    it( 'Removes fields', () => {
-        const factory = stateFactory(system_values,current_form_fields);
+    it('Removes fields', () => {
+        const factory = stateFactory(system_values, current_form_fields);
         const state = factory.createState();
-        expect(state.getMagicTagsByType('hidden' ).length).toBe(2);
+        expect(state.getMagicTagsByType('hidden').length).toBe(2);
         expect(state.removeField('fld_1803763')).toBe(true);
-        expect(state.getMagicTagsByType('hidden' ).length).toBe(1);
+        expect(state.getMagicTagsByType('hidden').length).toBe(1);
+    });
+
+    const conditional = {
+        "id": "con_8",
+        "type": "hide",
+        config: {
+            "name": "Hide 1",
+            "type": "hide",
+            "fields": {
+                cl4: "fld_9272690"
+            },
+            group: {
+                rw5: {
+                    cl4: {
+                        "parent": "rw5",
+                        "field": "fld_9272690",
+                        "compare": "is",
+                        "value": "opt19"
+                    }
+                }
+            }
+        }
+
+    };
+
+    it('Adds a conditional group', () => {
+        const factory = stateFactory(system_values, current_form_fields);
+        const state = factory.createState();
+        expect(state.getAllConditionals().length).toBe(0);
+        state.addConditional({id: 'r1', type: "disable"});
+        expect(state.getAllConditionals().length).toBe(1);
+        state.addConditional({id: 'r2', type: "enable"});
+        expect(state.getAllConditionals().length).toBe(2);
+        expect( state.getConditional('r1').type ).toBe('disable')
+    });
+
+    it('Updates a conditional group', () => {
+        const factory = stateFactory(system_values, current_form_fields);
+        const state = factory.createState();
+        state.addConditional({id: 'r1', type: "enable"});
+        state.addConditional({id: 'r2', type: "enable"});
+        state.addConditional({id: 'r3', type: "enable"});
+        state.updateConditional({id: 'r2', type: "disable"});
+        expect( state.getConditional('r2').type ).toBe('disable')
+    });
+
+    it('Removes a conditional group', () => {
+        const factory = stateFactory(system_values, current_form_fields);
+        const state = factory.createState();
+        expect(state.getAllConditionals().length).toBe(0);
+        state.addConditional(conditional);
+        expect(state.getAllConditionals().length).toBe(1);
     });
 
 });
