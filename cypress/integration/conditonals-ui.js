@@ -126,10 +126,10 @@ describe('Using fields with conditionals', () => {
         cy.get('.condition-line-field').should('have.value', 'fld_29462');
     });
 
-    it.only( 'Uses a radio fields options for conditional logic values', () => {
+    it( 'Uses a radio fields options for conditional logic values', () => {
         cloneRadioForm();
         clickConditionalsTab();
-        //create conditional using field header
+
         createConditional('c1', 'hide');
         cy.get('.condition-group-add-lines').click();
         cy.get( '.condition-line-field').first( ).select('fld_6733423');
@@ -138,7 +138,7 @@ describe('Using fields with conditionals', () => {
         cy.get('.caldera-conditional-field-value select' ).select( 'One' );
     });
 
-    it.only( 'Updates the conditional settings based on field type change', () => {
+    it( 'Updates the conditional settings based on field type change', () => {
         cloneRadioForm();
         clickConditionalsTab();
 
@@ -155,6 +155,31 @@ describe('Using fields with conditionals', () => {
         //Test it changed back to an input
         cy.get('.caldera-conditional-field-value input' ).should( 'be.visible' );
 
+    });
+
+    it( 'Updates options for a conditional based on a radio, when radio gets more options', () => {
+        cloneRadioForm();
+
+        clickConditionalsTab();
+        createConditional('Radio-Based Group', 'hide');
+        cy.get('.condition-group-add-lines').click();
+        cy.get( '.condition-line-field').first().select('fld_6733423');
+        //It has two options
+        cy.get('.caldera-conditional-field-value select' ).select( 'Two' );
+        cy.get('.caldera-conditional-field-value select' ).select( 'One' );
+
+        //Add another option
+        clickLayoutTab();
+        cy.get( '#fld_6733423 .add-option' ).click();
+        cy.get( '#fld_6733423 .toggle_label_field').last().clear().type( 'Three' ).blur();
+        cy.get( '#fld_6733423 .toggle_value_field').last().clear().type( '3' ).blur();
+
+        clickConditionalsTab();
+
+        //It has three options
+        cy.get('.caldera-conditional-field-value select' ).select( 'Three' );
+        cy.get('.caldera-conditional-field-value select' ).select( 'Two' );
+        cy.get('.caldera-conditional-field-value select' ).select( 'One' );
     });
 });
 

@@ -296,7 +296,7 @@ $field_options_template = "
 </div>
 <div class=\"caldera-config-group-toggle-options\" {{#if auto}}style=\"display:none;\"{{/if}}>
 	<div class=\"caldera-config-group caldera-config-group-full\">
-		<button type=\"button\" class=\"button add-toggle-option\" style=\"width: 180px;\">" . esc_html__( 'Add Option', 'caldera-forms' ) . "</button>
+		<button type=\"button\" class=\"button add-toggle-option add-option\" style=\"width: 180px;\">" . esc_html__( 'Add Option', 'caldera-forms' ) . "</button>
 		<button type=\"button\" data-bulk=\"#{{_id}}_bulkwrap\" class=\"button add-toggle-option\" style=\"width: 190px;\">" . esc_html__( 'Bulk Insert / Preset', 'caldera-forms' ) . "</button>
 		<div id=\"{{_id}}_bulkwrap\" style=\"display:none; margin-top:10px;\" class=\"bulk-preset-panel\">
 		<select data-bulk=\"#{{_id}}_batch\" class=\"preset_options block-input\" style=\"margin-bottom:6px;\">
