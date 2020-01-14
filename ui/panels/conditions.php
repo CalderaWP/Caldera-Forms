@@ -11,14 +11,17 @@ if( !empty( $element['conditional_groups']['fields'] ) ){
 </button>
 
 <input type="hidden" name="_magic" value="<?php echo esc_attr( json_encode( $magic_tags['system']['tags'] ) ); ?>">
-<input type="hidden" id="cf-conditions-db" name="config[conditional_groups]" value="<?php echo esc_attr( json_encode( $element['conditional_groups'] ) ); ?>" 
-class="ajax-trigger"
-data-event="rebuild-conditions"
-data-request="#cf-conditions-db"
-data-type="json"
-data-template="#conditions-tmpl"
-data-target="#caldera-forms-conditions-panel"
-data-autoload="true"
+<input type="hidden"
+       id="cf-conditions-db"
+       name="config[conditional_groups]"
+       value="<?php echo esc_attr( json_encode( $element['conditional_groups'] ) ); ?>"
+    class="ajax-trigger"
+    data-event="rebuild-conditions"
+    data-request="#cf-conditions-db"
+    data-type="json"
+    data-template="#conditions-tmpl"
+    data-target="#caldera-forms-conditions-panel"
+    data-autoload="true"
 >
 <div id="caldera-forms-conditions-panel"></div>
 <script type="text/html" id="conditions-tmpl">
@@ -28,7 +31,7 @@ data-autoload="true"
 			{{#each conditions}}
 				<li class="caldera-condition-nav {{#is @root/_open_condition value=id}}active{{/is}} caldera-forms-condition-group condition-point-{{id}}" style="">
 					<input type="hidden" name="conditions[{{id}}][id]" value="{{id}}">
-					{{#if name}}			
+					{{#if name}}
 						{{#is @root/_open_condition not=id}}
 							<input type="hidden" name="conditions[{{id}}][name]" value="{{name}}">
 							<input type="hidden" name="conditions[{{id}}][type]" value="{{type}}">
@@ -76,7 +79,7 @@ data-autoload="true"
                             />
 						</div>
 					</div>
-					
+
 					<div class="caldera-config-group">
 						<label for="{{id}}_lable"><?php _e( 'Type', 'caldera-forms' ); ?></label>
 						<div class="caldera-config-field">
@@ -86,15 +89,22 @@ data-autoload="true"
                                     class="condition-group-type"
                             >
 								<option value=""></option>
-								<option value="show" {{#is type value="show"}}selected="selected"{{/is}}><?php _e('Show', 'caldera-forms'); ?></option>
-								<option value="hide" {{#is type value="hide"}}selected="selected"{{/is}}><?php _e('Hide', 'caldera-forms'); ?></option>
-								<option value="disable" {{#is type value="disable"}}selected="selected"{{/is}}><?php _e('Disable', 'caldera-forms'); ?></option>
+								<option value="show" {{#is type value="show"}}selected="selected"{{/is}}>
+                                    <?php _e('Show', 'caldera-forms'); ?>
+                                </option>
+								<option value="hide" {{#is type value="hide"}}selected="selected"{{/is}}>
+                                    <?php _e('Hide', 'caldera-forms'); ?>
+                                </option>
+								<option value="disable" {{#is type value="disable"}}selected="selected"{{/is}}>
+                                <?php _e('Disable', 'caldera-forms'); ?>
+                                </option>
 							</select>
 							{{#if type}}
 								<button
-                                        type="button"
-                                        data-add-group="{{id}}"
-                                        class="pull-right button button-small condition-group-add-lines">
+                                    type="button"
+                                    data-add-group="{{id}}"
+                                    class="pull-right button button-small condition-group-add-lines"
+                                >
                                     <?php echo __('Add Conditional Line', 'caldera-forms'); ?>
                                 </button>
 							{{/if}}
@@ -107,13 +117,23 @@ data-autoload="true"
 						<div class="caldera-condition-group caldera-condition-lines">
 						{{#each this}}
 							<div class="caldera-condition-line condition-line-{{@key}}">
-								<input type="hidden" name="conditions[{{../../id}}][group][{{parent}}][{{@key}}][parent]" value="{{parent}}">
+								<input
+                                        type="hidden"
+                                       name="conditions[{{../../id}}][group][{{parent}}][{{@key}}][parent]"
+                                        value="{{parent}}"
+                                />
 								<span style="display:inline-block;">{{#if @first}}
 									<?php _e( 'if', 'caldera-forms' ); ?>
 								{{else}}
 									<?php _e( 'and', 'caldera-forms' ); ?>
 								{{/if}}</span>
-								<input type="hidden" name="conditions[{{../../../id}}][fields][{{@key}}]" value="{{field}}" id="condition-bound-field-{{@key}}" data-live-sync="true">
+								<input
+                                    type="hidden"
+                                    name="conditions[{{../../../id}}][fields][{{@key}}]"
+                                    value="{{field}}"
+                                    id="condition-bound-field-{{@key}}"
+                                    data-live-sync="true"
+                                >
 								<select
                                     class="condition-line-field"
                                     style="max-width:120px;vertical-align: inherit;"
@@ -155,15 +175,18 @@ data-autoload="true"
 											{{/each}}
 										</select>
 									{{else}}
-										<input type="text" class="magic-tag-enabled block-input" name="conditions[{{../../../../id}}][group][{{../../parent}}][{{@key}}][value]" value="{{../../value}}" {{#unless ../../field}}placeholder="<?php echo esc_html__( 'Select field first', 'caldera-forms' ); ?>" disabled=""{{/unless}}>
+										<input
+                                                type="text"
+                                                class="magic-tag-enabled block-input"
+                                                name="conditions[{{../../../../id}}][group][{{../../parent}}][{{@key}}][value]"
+                                                value="{{../../value}}" {{#unless ../../field}}placeholder="<?php echo esc_html__( 'Select field first', 'caldera-forms' ); ?>" disabled=""{{/unless}} >
 									{{/if}}
 								{{else}}
 									<input type="text" class="magic-tag-enabled block-input" name="conditions[{{../../../../id}}][group][{{../parent}}][{{@key}}][value]" value="{{../value}}" {{#unless ../field}}placeholder="<?php echo esc_html__( 'Select field first', 'caldera-forms' ); ?>" disabled=""{{/unless}}>
 								{{/find}}
 								</span>
 								<button
-                                    class="caldera-condition-line-remove button
-                                     pull-right"
+                                    class="caldera-condition-line-remove button pull-right"
                                     data-remove-line="{{@key}}"
                                     type="button"
                                 >
@@ -189,9 +212,7 @@ data-autoload="true"
 					<h4 style="border-bottom: 1px solid rgb(191, 191, 191); margin: 0px 0px 6px; padding: 0px 0px 6px;"><?php _e('Applied Fields', 'caldera-forms'); ?></h4>
 					<p class="description"><?php _e('Select the fields to apply this condition to.', 'caldera-forms' ); ?></p>
 					{{#each @root/fields}}
-
 						<label style="display: block; margin-left: 20px;{{#find ../../fields ID}}opacity:0.7;{{/find}}"><input style="margin-left: -20px;" type="checkbox" data-bind-condition="#field-condition-type-{{ID}}" value="{{../id}}" {{#is conditions/type value=../id}}checked="checked"{{else}}{{#find @root/conditions conditions/type}}disabled="disabled"{{/find}}{{/is}} {{#find ../../fields ID}}disabled="disabled"{{/find}}>{{label}} [{{slug}}]</label>
-						
 					{{/each}}
 				{{/if}}
 				</div>
