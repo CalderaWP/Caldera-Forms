@@ -4,11 +4,17 @@
  */
 export const site = Cypress.env('wp_site');
 export const {url, user, pass} = site;
+
+/**
+ * Login to the site
+ *
+ * @since unknown
+ */
 export const login = () => {
 	cy.visit(url + '/wp-login.php');
-	cy.wait(500);
-	cy.get('#user_login').type(user);
-	cy.get('#user_pass').type(pass);
+	cy.wait(250);
+	cy.get('#user_login').clear().type(user);
+	cy.get('#user_pass').clear().type(pass);
 	cy.get('#wp-submit').click();
 };
 
