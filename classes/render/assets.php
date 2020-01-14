@@ -260,7 +260,8 @@ class Caldera_Forms_Render_Assets
 			'font' => self::make_url('cfont', false),
 			'table' => self::make_url('caldera-table', false),
 			'entry-viewer-2' => self::make_url('entry-viewer-2', false),
-			'render' => self::make_url('render', false)
+			'render' => self::make_url('render', false),
+			'form-builder' => self::make_url('form-builder', false)
 		];
 
 		$style_urls[ 'fields' ] = $style_urls[ 'field' ];
@@ -525,6 +526,10 @@ class Caldera_Forms_Render_Assets
 			return Caldera_Forms_Admin_Assets::enqueue_script($script);
 		}
 
+		if( 'form-builder' === $script || 'form-builder' === self::make_slug($script) ){
+            wp_enqueue_script(self::make_slug('form-builder'), self::make_url('form-builder'), self::cf_dependencies('form-builder' ), CFCORE_VER);
+        }
+
 
 		if (in_array($script, ['validator', self::make_slug('validator')])) {
 			$scripts = self::get_core_scripts();
@@ -660,7 +665,8 @@ class Caldera_Forms_Render_Assets
             'pro',
             'privacy',
             'render',
-            'legacy-bundle'
+            'legacy-bundle',
+            'form-builder'
         ]);
 	}
 

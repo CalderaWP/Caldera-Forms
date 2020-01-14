@@ -34,9 +34,10 @@ console.log( `Building for ${isProduction ? 'Production' : "Development"}`);
  * @type {string[]}
  */
 const entryPointNames = [
-	'admin',
-	'privacy',
-	'render',
+	'admin', // the main admin page
+	'privacy', //privacy settings screen
+	'render', //Renders Caldera Forms
+	'form-builder' // The form editor
 ];
 
 /**
@@ -168,11 +169,12 @@ const output = {
  *
  * @type {{}}
  */
-const optimization = isProduction ? {
+let optimization = isProduction ? {
 	minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})]
 } : {
 	minimize: false
 };
+optimization.runtimeChunk  = false;
 
 /**
  * The webpack configuration for "externals"
@@ -187,7 +189,6 @@ const externals = isTest ? {
 
 } : {
 	jquery: 'jQuery',
-	react: 'React',
 };
 
 // Setup external for each entry point

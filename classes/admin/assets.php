@@ -42,6 +42,7 @@ class Caldera_Forms_Admin_Assets
         self::enqueue_script('edit-fields');
         self::enqueue_script('editor');
         self::enqueue_style('editor-grid');
+        Caldera_Forms_Render_Assets::enqueue_script( 'form-builder' );
 
         wp_enqueue_script('jquery-ui-users');
         wp_enqueue_script('jquery-ui-sortable');
@@ -96,15 +97,13 @@ class Caldera_Forms_Admin_Assets
         wp_register_script(self::slug('baldrick'), Caldera_Forms_Render_Assets::make_url('wp-baldrick-full'), array('jquery'), $version);
 
         wp_register_script(Caldera_Forms_Render_Assets::make_slug('admin-client'), Caldera_Forms_Render_Assets::make_url('admin-client'), Caldera_Forms_Render_Assets::cf_dependencies('admin-client' ), $version);
-
+        Caldera_Forms_Render_Assets::enqueue_script(Caldera_Forms_Render_Assets::make_slug('form-builder' ) );
         wp_register_script(self::slug('admin'), Caldera_Forms_Render_Assets::make_url('admin'), array(
             self::slug('baldrick'),
             Caldera_Forms_Render_Assets::make_slug('conditionals'),
             'wp-pointer',
             'password-strength-meter',
         ), $version);
-
-
 
         wp_register_script(self::slug('edit-fields'), Caldera_Forms_Render_Assets::make_url('fields'), array(
             'jquery',
@@ -230,6 +229,10 @@ class Caldera_Forms_Admin_Assets
             return Caldera_Forms_Render_Assets::make_slug('editor');
         }
 
+        if ('form-builder' === $slug) {
+            return Caldera_Forms_Render_Assets::make_slug('form-builder');
+        }
+
         if ('baldrick' == $slug) {
             $slug = Caldera_Forms::PLUGIN_SLUG . '-' . $slug;
             return $slug;
@@ -290,6 +293,7 @@ class Caldera_Forms_Admin_Assets
             Caldera_Forms_Render_Assets::enqueue_all_fields();
             $front = true;
             self::register_styles();
+
         }
 
         if (!did_action('caldera_forms_admin_assets_scripts_registered')) {
@@ -299,6 +303,7 @@ class Caldera_Forms_Admin_Assets
             }
             self::register_scripts();
         }
+
     }
 
     /**
