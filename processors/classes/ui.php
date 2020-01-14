@@ -347,6 +347,17 @@ class Caldera_Forms_Processor_UI {
 					'{{' . esc_attr( $id ) . '}}'
 				);
 				break;
+			case 'dynamic':
+				$field = sprintf('<select id="{{_name}}[%s]" class="%s dynamic" name="{{_name}}[%s]" data-value="{{%s}}" data-callback="%s"></select>',
+					esc_attr( $id ),
+					$classes,
+					esc_attr( $id ),
+					esc_attr( $id ),
+					$args['callback']
+				);
+				// Manually trigger load event for element.
+				$field .= sprintf('<script>cfProcessorLoadDynamicOptions("{{_name}}[%s]")</script>', esc_attr( $id ) );
+				break;
 			default :
 				$field = sprintf( '<input type="%1s" class="%2s" id="%3s" name="{{_name}}[%4s]" value="%5s" %6s>',
 					$args[ 'type' ],

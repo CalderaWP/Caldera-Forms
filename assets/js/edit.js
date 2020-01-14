@@ -2740,4 +2740,21 @@ function cf_revisions_ui() {
 
 }
 
+/**
+ * @TODO Move this wherever it needs to go.
+ */
 
+function cfProcessorLoadDynamicOptions(id) {
+    const select = document.getElementById(id);
+    const value = select.getAttribute('data-value');
+    const callback = select.getAttribute('data-callback');
+    const options = window[callback]();
+
+    options.map(function(option) {
+        const el = document.createElement('option');
+        el.value = option.value;
+        el.innerHTML = option.label;
+        if(option.value == value) el.setAttribute('selected', 'selected');
+        select.append(el);
+    });
+}
