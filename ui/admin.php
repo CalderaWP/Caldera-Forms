@@ -230,7 +230,24 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 							data-modal-buttons="<?php echo esc_attr( __( 'Export Form', 'caldera-forms' ) ); ?>|<?php echo esc_attr( json_encode( $buttons ) ); ?>"
 							data-template="#cf-export-template"
 							href="#export"><?php esc_html_e('Export', 'caldera-forms'); ?></a> | </span><?php } ?>
-						<span><a class="ajax-trigger" href="#clone" data-request="start_new_form" data-modal-buttons='<?php echo $modal_new_form; ?>' data-clone="<?php echo $form_id; ?>" data-modal-width="600" data-modal-height="160" data-load-class="none" data-modal="new_clone" data-nonce="<?php echo esc_attr( wp_create_nonce( 'cf_create_form' ) ); ?>" data-modal-title="<?php echo __('Clone Form', 'caldera-forms'); ?>" data-template="#new-form-tmpl"><?php echo __('Clone', 'caldera-forms'); ?></a><?php if( empty( $form['_external_form'] ) ){ ?> | </span>
+						<span>
+                            <a
+                                class="ajax-trigger clone-form-<?php esc_attr_e( $form_id ); ?>"
+                                href="#clone"
+                                data-request="start_new_form"
+                                data-modal-buttons='<?php echo  $modal_new_form ; ?>'
+                                data-clone="<?php esc_attr_e( $form_id ); ?>"
+                                data-modal-width="600"
+                                data-modal-height="160"
+                                data-load-class="none"
+                                data-modal="new_clone"
+                                data-nonce="<?php esc_attr_e( wp_create_nonce( 'cf_create_form' ) ); ?>"
+                                data-modal-title="<?php esc_attr_e('Clone Form', 'caldera-forms'); ?>"
+                                data-template="#new-form-tmpl"
+                            >
+                                <?php echo esc_html__('Clone', 'caldera-forms'); ?>
+                            </a>
+                            <?php if( empty( $form['_external_form'] ) ){ ?> | </span>
 						<span class="trash form-delete"><a class="form-control" data-confirm="<?php echo __('This will delete this form permanently. Continue?', 'caldera-forms'); ?>" href="admin.php?page=caldera-forms&delete=<?php echo trim( $form_id ); ?>&cal_del=<?php echo wp_create_nonce( 'cf_del_frm' ); ?>"><?php echo __('Delete'); ?></a></span><?php } ?>
 
 
