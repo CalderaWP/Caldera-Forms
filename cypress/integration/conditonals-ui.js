@@ -46,6 +46,14 @@ describe('Using fields with conditionals', () => {
     });
     before(() => login());
 
+    const cloneRadioForm = () => {
+        cy.get( '#form_row_CF5e1dd6a3eec18').trigger('mouseover');
+        cy.get( '.clone-form-CF5e1dd6a3eec18' ).click({ force: true });
+        cy.get( '#new_clone_baldrickModalLable' ).should( 'be.visible' );
+        cy.get( '#cf-clone-form-name' ).clear().type( 'Radio Clone' );
+        cy.get( '#new_clone_baldrickModalFooter button' ).click();
+    };
+
 
     it('Sets field for conditional', () => {
         createForm('Sets field for conditional', false);
@@ -71,10 +79,10 @@ describe('Using fields with conditionals', () => {
         cy.get('.condition-line-field').first().select('fld_8768091');
     });
 
-    it.only('Knows the labels of fields after they update', () => {
+    it('Knows the labels of fields after they update', () => {
         createForm('Knows the labels of fields after they update', false);
-
         clickConditionalsTab();
+
         //create conditional using field header
         createConditional('c1', 'hide');
         cy.get('.condition-group-add-lines').click();
@@ -118,6 +126,16 @@ describe('Using fields with conditionals', () => {
         cy.get('.condition-line-field').should('have.value', 'fld_29462');
     });
 
+    it.only( 'Uses a radio fields options for conditional logic values', () => {
+        cloneRadioForm();
+        clickConditionalsTab();
+        //create conditional using field header
+        createConditional('c1', 'hide');
+        cy.get('.condition-group-add-lines').click();
+        cy.get( '.condition-line-field').first( ).select('fld_6733423');
+        cy.get('.caldera-conditional-field-value select' ).select( 'Two' );
+        cy.get('.caldera-conditional-field-value select' ).select( 'One' );
+    });
 });
 
 
@@ -150,7 +168,7 @@ describe('Conditional Logic Editor', () => {
         cy.get('.condition-group-type').select('show');
     });
 
-    it.only('Can add two conditionals', () => {
+    it('Can add two conditionals', () => {
         clickConditionalsTab();
         cy.get('#new-conditional').click();
         cy.get('.condition-new-group-name').should('be.visible');
