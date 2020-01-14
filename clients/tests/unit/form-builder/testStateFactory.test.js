@@ -1,7 +1,7 @@
 import stateFactory from "../../../form-builder/stateFactory";
 
 describe('State factory', () => {
-    const systemTags = {
+    const system_values = {
         "field": {
             "tags": {
                 "text": [
@@ -90,6 +90,43 @@ describe('State factory', () => {
             ]
         }
     };
+    const current_form_fields = {
+        "fld_9272690": {
+            "label": "selections",
+            "slug": "selections",
+            "type": "checkbox"
+        },
+        "fld_7896676": {
+            "label": "total",
+            "slug": "total",
+            "type": "calculation"
+        },
+        "fld_1803763": {
+            "label": "disc1",
+            "slug": "disc1",
+            "type": "hidden"
+        },
+        "fld_6770247": {
+            "label": "disc2",
+            "slug": "disc2",
+            "type": "hidden"
+        },
+        "fld_3195385": {
+            "label": "summary",
+            "slug": "summary",
+            "type": "summary"
+        },
+        "fld_1734684": {
+            "label": "discount",
+            "slug": "discount",
+            "type": "calculation"
+        },
+        "fld_6532733": {
+            "label": "grand total",
+            "slug": "grand_total",
+            "type": "calculation"
+        }
+    };
     it('Prepares system tags', () => {
         const factory = stateFactory({
             system: {
@@ -152,9 +189,90 @@ describe('State factory', () => {
     });
 
     it('Adds additional tag types', () => {
-        const factory = stateFactory(systemTags);
+        const factory = stateFactory({
+            ...system_values,
+            "field": {
+                "tags": {},
+                "type": "Fields",
+                "wrap": [
+                    "%",
+                    "%"
+                ]
+            },
+        });
         const state = factory.createState();
         expect(state.getAllMagicTags().length).toBe(28);
+    });
+
+    it( 'Prepares fields', ()=> {
+       const factory = stateFactory();
+       const fields = factory.prepareFields(current_form_fields);
+       expect(fields.length).toBe(Object.keys(current_form_fields).length);
+       expect(fields.find( f => 'fld_6770247' === f.id ).label).toBe("disc2");
+       expect(fields.find( f => 'fld_6770247' === f.id ).tag).toBe("%disc2%");
+    });
+    it('Adds field tag types', () => {
+        const factory = stateFactory({
+            //One system tag to make sure they get merged in
+            "system": {
+                "type": "System Tags",
+                "tags": {
+                    "email": [
+                        "user:user_email"
+                    ],
+                },
+                "wrap": [
+                    "{",
+                    "}"
+                ]
+            },
+            "field": {
+                //This is intentionally wrong (missing fields)
+                //This part of the object is NOT used intentionally.
+                "tags": {
+                    "hidden": [
+                        "disc1",
+                        "disc2"
+                    ],
+                    "summary": [
+                        "summary"
+                    ]
+                },
+                "type": "Fields",
+                "wrap": [
+                    "%",
+                    "%"
+                ]
+            },
+        },current_form_fields);
+        const state = factory.createState();
+        expect(state.getAllMagicTags().length).toBe(Object.keys(current_form_fields).length + 1);
+        expect(state.getMagicTagsByType('hidden' ).length).toBe(2);
+        expect(state.getMagicTagsByType('summary' ).length).toBe(1);
+    });
+
+    
+    it( 'Adds fields', () => {
+        const factory = stateFactory(system_values,current_form_fields);
+        const state = factory.createState();
+        expect(state.getMagicTagsByType('hidden' ).length).toBe(2);
+        expect(state.addField({
+            id: 'fld1234',
+            "label": "New Field",
+            "slug": "new_field",
+            "type": "hidden",
+
+        })).toBe(true);
+
+        expect(state.getMagicTagsByType('hidden' ).length).toBe(3);
+    });
+
+    it( 'Removes fields', () => {
+        const factory = stateFactory(system_values,current_form_fields);
+        const state = factory.createState();
+        expect(state.getMagicTagsByType('hidden' ).length).toBe(2);
+        expect(state.removeField('fld_1803763')).toBe(true);
+        expect(state.getMagicTagsByType('hidden' ).length).toBe(1);
     });
 
 });
