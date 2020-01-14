@@ -493,3 +493,13 @@ export const createForm = (name,blankForm = true) => {
 	cy.get('.new-form-name').type(name);
 	cy.get('.cf-create-form-button').click();
 };
+
+/**
+ * Save form and refresh page
+ *
+ * @since 1.8.10
+ */
+export const saveFormAndReload = ()  => {
+	cy.get('.caldera-header-save-button').click();
+	cy.reload();
+};

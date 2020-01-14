@@ -2,6 +2,7 @@ import {
     visitPluginPage,
     login,
     createForm,
+    saveFormAndReload
 } from '../support/util';
 
 /**
@@ -38,6 +39,8 @@ const createConditional = (name, type) => {
     cy.get('.condition-group-type').select(type);
 };
 
+
+
 describe('Using fields with conditionals', () => {
     let formName;
     beforeEach(() => {
@@ -65,6 +68,10 @@ describe('Using fields with conditionals', () => {
         cy.get('.condition-line-field').last().select('fld_9970286');
         cy.get('.condition-line-field').first().select('fld_8768091');
 
+        saveFormAndReload();
+        clickConditionalsTab();
+        cy.get('.condition-line-field').last().should('have.value', 'fld_9970286');
+        cy.get('.condition-line-field').first().select('have.value','fld_8768091');
     });
 
 
@@ -77,6 +84,15 @@ describe('Using fields with conditionals', () => {
         cy.get('.condition-group-add-lines').click();
         cy.get('.condition-group-add-line').click();
         cy.get('.condition-line-field').first().select('fld_8768091');
+
+
+        saveFormAndReload();
+
+        //Make sure conditionals are still set right
+        clickConditionalsTab();
+        cy.get('.caldera-condition-nav' ).first().find( 'a' ).click();
+        cy.get('.condition-line-field').first().should('have.value', 'fld_8768091');
+
     });
 
     it('Knows the labels of fields after they update', () => {
@@ -94,21 +110,28 @@ describe('Using fields with conditionals', () => {
         //Go to layout tab and change field label
         clickLayoutTab();
         cy.get( '#fld_29462_lable' ).clear().type( 'Paste' ).blur();
+
+
         clickConditionalsTab();
-
         cy.get('.condition-line-field').should('have.value', 'fld_29462');
-
         cy.get('.condition-line-field').first().select('Paste [header]');
         cy.get('.condition-line-field').should('have.value', 'fld_29462');
 
+        saveFormAndReload();
+
+        //Make sure conditionals are still set right
+        clickConditionalsTab();
+        cy.get('.caldera-condition-nav' ).first().find( 'a' ).click();
+        cy.get('.condition-line-field').should('have.value', 'fld_29462');
     });
 
     it( 'Knows the slug of the field after it updates', () => {
         createForm('Knows the slug of the field after it updates', false);
 
         clickConditionalsTab();
+
         //create conditional using field header
-        createConditional('c1', 'hide');
+        createConditional('Slug Test', 'hide');
         cy.get('.condition-group-add-lines').click();
         cy.get('.condition-group-add-line').click();
 
