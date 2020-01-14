@@ -65,4 +65,9 @@ WP-Integration:
     - php composer.phar install --no-dev
     - php composer.phar global require "phpunit/phpunit:^6"
 
-    
+cypress-e2e:
+  stage: .pre
+  image: cypress/base:10
+  script:
+    - yarn
+    - yarn test:e2e
