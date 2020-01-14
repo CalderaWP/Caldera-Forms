@@ -1,8 +1,6 @@
 stages:
-  - build
   - Unit Tests
   - Integration Tests
-  - deploy
 
 # SQL Variables for the WordPress tests
 variables:
@@ -39,7 +37,7 @@ JS Unit Test:
 # Integration Test Stage
 WP-Integration:
   image: tetraweb/php:7.1
-  stage: .pre
+  stage: Integration Tests
   services:
     - mysql:5.6
   script:
@@ -64,10 +62,3 @@ WP-Integration:
     - curl -sS https://getcomposer.org/installer | php
     - php composer.phar install --no-dev
     - php composer.phar global require "phpunit/phpunit:^6"
-
-cypress-e2e:
-  stage: .pre
-  image: cypress/base:10
-  script:
-    - yarn
-    - yarn test:e2e
