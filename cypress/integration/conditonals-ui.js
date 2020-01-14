@@ -133,8 +133,28 @@ describe('Using fields with conditionals', () => {
         createConditional('c1', 'hide');
         cy.get('.condition-group-add-lines').click();
         cy.get( '.condition-line-field').first( ).select('fld_6733423');
+        //Using select in query tests that it's a select option, not a text input now.
         cy.get('.caldera-conditional-field-value select' ).select( 'Two' );
         cy.get('.caldera-conditional-field-value select' ).select( 'One' );
+    });
+
+    it.only( 'Updates the conditional settings based on field type change', () => {
+        cloneRadioForm();
+        clickConditionalsTab();
+
+
+        createConditional('Radio-Based', 'hide');
+        cy.get('.condition-group-add-lines').click();
+        cy.get( '.condition-line-field').first( ).select('fld_6733423');
+        cy.get('.caldera-conditional-field-value select' ).select( 'Two' );
+
+        clickLayoutTab();
+        cy.get( '#fld_6733423_type' ).select( 'Number' );
+
+        clickConditionalsTab();
+        //Test it changed back to an input
+        cy.get('.caldera-conditional-field-value input' ).should( 'be.visible' );
+
     });
 });
 
