@@ -114,7 +114,10 @@ class Caldera_Forms_Processor_UI {
 
 		if( 'dropdown' == $args[ 'type' ] ){
 			$args[ 'magic' ] = false;
+		}
 
+		if( 'dynamic' == $args[ 'type' ] ){
+			$args[ 'magic' ] = false;
 		}
 
 		if ( is_string( $args[ 'extra_classes']) ) {
