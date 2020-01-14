@@ -121,7 +121,7 @@ describe('Using fields with conditionals', () => {
 });
 
 
-describe.skip('Conditional Logic Editor', () => {
+describe('Conditional Logic Editor', () => {
     let formName;
     beforeEach(() => {
         formName = Math.random().toString(36).substring(7);
@@ -142,12 +142,35 @@ describe.skip('Conditional Logic Editor', () => {
     it('Can add conditional and set type', () => {
         clickConditionalsTab();
         cy.get('#new-conditional').click();
-        cy.get('.condition-new-group-name').should('be.visible')
+        cy.get('.condition-new-group-name').should('be.visible');
         cy.get('.condition-new-group-name').type('Condition 1').blur();
         cy.get('.condition-group-type').should('be.visible');
         cy.get('.condition-group-type').select('hide');
         cy.get('.condition-group-type').select('disable');
         cy.get('.condition-group-type').select('show');
+    });
+
+    it.only('Can add two conditionals', () => {
+        clickConditionalsTab();
+        cy.get('#new-conditional').click();
+        cy.get('.condition-new-group-name').should('be.visible');
+        cy.get('.condition-new-group-name').type('Hide').blur();
+        cy.get('.condition-group-type').select('hide');
+
+
+        cy.get('#new-conditional').click();
+        cy.get('.condition-new-group-name').should('be.visible');
+        cy.get('.condition-new-group-name').type('Disable').blur();
+        cy.get('.condition-group-type').select('disable');
+
+        cy.get('.caldera-condition-nav' ).first().find( 'a' ).click();
+        cy.get('.condition-group-name' ).should( 'have.value', 'Hide' );
+        cy.get('.condition-group-type').should( 'have.value', 'hide' );
+
+        cy.get('.caldera-condition-nav' ).last().find( 'a' ).click();
+        cy.get('.condition-group-name' ).should( 'have.value', 'Disable' );
+        cy.get('.condition-group-type').should( 'have.value', 'disable' );
+
     });
 
     it('Can add conditional lines', () => {
