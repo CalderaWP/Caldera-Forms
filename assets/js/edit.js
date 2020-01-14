@@ -2741,28 +2741,50 @@ function cf_revisions_ui() {
 }
 
 /**
+ * Processor Dynamic Options
  * @TODO Move this wherever it needs to go.
  */
 
-function cfProcessorLoadDynamicOptions(id) {
-    const debug = window.cfProcessorLoadDynamicOptionsDebug;
+window.cfProcessorDynamicOptionsCache = {};
+
+function cfProcessorDynamicOptionsLoad(id) {
     const select = document.getElementById(id);
-    const value = select.getAttribute('data-value');
     const callback = select.getAttribute('data-callback');
+    if(window.cfProcessorDynamicOptionsCache[callback]) {
+        console.log('Update option from cache');
+        cfProcessorDynamicOptionsUpdate(select, window.cfProcessorDynamicOptionsCache[callback]);
+    } else {
+        console.log('Fetching options');
+        cfProcessorDynamicOptionsFetch(id);
+    }
+}
 
-    if(debug) console.log('Created promise for dynamic option callback');
+function cfProcessorDynamicOptionsRefresh(id) {
+    const select = document.getElementById(id);
+    select.options.length = 0;
+    cfProcessorDynamicOptionsFetch(id)
+}
+
+function cfProcessorDynamicOptionsFetch(id) {
+    const select = document.getElementById(id);
+    select.classList.add('dynamic-fetching');
+    const callback = select.getAttribute('data-callback');
     const promise = new Promise(window[callback]);
-      
     promise.then(function(options) {
-        if(debug) console.log('Promise resolved.');
-        options.map(function(option) {
-            const el = document.createElement('option');
-            el.value = option.value;
-            el.innerHTML = option.label;
-            if(option.value == value) el.setAttribute('selected', 'selected');
-            select.append(el);
-        });
+        window.cfProcessorDynamicOptionsCache[callback] = options;
+        cfProcessorDynamicOptionsUpdate(select, options);
     });
+}
 
-
+function cfProcessorDynamicOptionsUpdate(select, options) {
+    const value = select.getAttribute('data-value');
+    select.options.length = 0;
+    options.map(function(option) {
+        const el = document.createElement('option');
+        el.value = option.value;
+        el.innerHTML = option.label;
+        if(option.value == value) el.setAttribute('selected', 'selected');
+        select.append(el);
+    });
+    select.classList.remove('dynamic-fetching');
 }

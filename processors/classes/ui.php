@@ -358,8 +358,12 @@ class Caldera_Forms_Processor_UI {
 					esc_attr( $id ),
 					$args['callback']
 				);
+
+				// Append refresh icon.
+				$field .= sprintf('<button type="button" class="button dynamic-refresh" onclick="cfProcessorDynamicOptionsRefresh(\'{{_name}}[%s]\')"></button>', esc_attr( $id ) );
+
 				// Manually trigger load event for element.
-				$field .= sprintf('<script>cfProcessorLoadDynamicOptions("{{_name}}[%s]")</script>', esc_attr( $id ) );
+				$field .= sprintf('<script>cfProcessorDynamicOptionsLoad("{{_name}}[%s]")</script>', esc_attr( $id ) );
 				break;
 			default :
 				$field = sprintf( '<input type="%1s" class="%2s" id="%3s" name="{{_name}}[%4s]" value="%5s" %6s>',

@@ -2254,3 +2254,15 @@ li.caldera-forms-toolbar-item.success {
 .caldera-forms-not-deleted {
   color: red;
 }
+
+.dynamic-refresh {
+  position: absolute;
+  margin-left: 5px;
+}
+.dynamic-refresh::before {
+  font-family: dashicons;
+  content: "\f463";
+}
+.dynamic-fetching + .dynamic-refresh::before {
+  content: "\f176";
+}
