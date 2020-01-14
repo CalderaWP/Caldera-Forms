@@ -58,7 +58,7 @@ describe('Using fields with conditionals', () => {
     };
 
 
-    it('Sets field for conditional', () => {
+    it.only('Sets field for conditional', () => {
         createForm('Sets field for conditional', false);
         cy.get( '.layout-form-field' ).should('have.length', 7);
         clickConditionalsTab();
@@ -70,8 +70,10 @@ describe('Using fields with conditionals', () => {
 
         saveFormAndReload();
         clickConditionalsTab();
+        cy.get('.caldera-condition-nav' ).first().find( 'a' ).click();
+
         cy.get('.condition-line-field').last().should('have.value', 'fld_9970286');
-        cy.get('.condition-line-field').first().select('have.value','fld_8768091');
+        cy.get('.condition-line-field').first().should('have.value','fld_8768091');
     });
 
 
