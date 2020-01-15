@@ -351,9 +351,35 @@ class Caldera_Forms_Admin_Assets
 
         if (Caldera_Forms_Admin::is_edit()) {
             $form_id = trim($_GET[Caldera_Forms_Admin::EDIT_KEY]);
+            $form = Caldera_Forms_Forms::get_form($form_id);
             $data['rest']['form'] = esc_url_raw(Caldera_Forms_API_Util::url('forms/' . $form_id, true));
             $data['rest']['revisions'] = esc_url_raw(Caldera_Forms_API_Util::url('forms/' . $form_id . '/revisions', true));
             $data['rest']['delete_entries'] = esc_url_raw(Caldera_Forms_API_Util::url('entries/' . $form_id . '/delete', true));
+            $data['conditions' ] = isset( $form['conditional_groups'], $form['conditional_groups']['conditions'] ) && is_array($form['conditional_groups']['conditions'] )
+                ? array_values( $form['conditional_groups']['conditions'] ): [];
+            //Translation strings
+            $data['strings' ] = [
+                //Organized by panel
+                'conditionals' => [
+                    'new-conditional' =>   esc_html__( 'Add Conditional Group', 'caldera-forms' ),
+                    'new-group-name' =>   esc_html__( 'New Group Name', 'caldera-forms' ),
+                    'name' => esc_html__('Name', 'caldera-forms'),
+                    'type' => esc_html__('Type', 'caldera-forms'),
+                    'show' => esc_html__('Show', 'caldera-forms'),
+                    'hide' => esc_html__('Hide', 'caldera-forms'),
+                    'disable' => esc_html__('Disable', 'caldera-forms'),
+                    'add-conditional-line' => esc_html__('Add Conditional Line', 'caldera-forms'),
+                    'confirm-remove' => esc_html__('Are you sure you want to remove this condition?', 'caldera-forms' ),
+                    'remove-condition' => esc_html__('Remove Condition', 'caldera-forms' ),
+                    'applied-fields' => esc_html__('Applied Fields', 'caldera-forms' ),
+                    'select-apply-fields' => esc_html__('Select the fields to apply this condition to.', 'caldera-forms' ),
+                    'if' => esc_html__('if', 'caldera-forms' ),
+                    'and' => esc_html__('and', 'caldera-forms' ),
+                    'fields' => esc_html__('Fields', 'caldera-forms' ),
+                    'system-tags' => esc_html__('System Tags', 'caldera-forms' ),
+                    'add-condition' => esc_html__('Add Condition', 'caldera-forms' ),
+                ]
+            ];
         }
         return $data;
     }

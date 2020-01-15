@@ -39,28 +39,9 @@ export default function (state,$,document) {
         return data;
     };
 
-    $document.on('click', '[data-add-line]', function () {
+    $document.on('click', '#new-conditional', function () {
 
-        var clicked = $(this),
-            id = clicked.data('addLine'),
-            db = $('#cf-conditions-db'),
-            data = get_base_form(),
-            pid = clicked.data('group'),
-            cid = 'cl' + Math.round(Math.random() * 99887766) + '' + Math.round(Math.random() * 99887766);
-
-        if (!data.conditions[pid].group) {
-            data.conditions[pid].group = {};
-        }
-        if (!data.conditions[pid].group[id]) {
-            data.conditions[pid].group[id] = {};
-        }
-
-        // initial line
-        data.conditions[pid].group[id][cid] = {
-            parent: id
-        };
-        get_base_form();
-        db.val(JSON.stringify(data)).trigger('rebuild-conditions');
+       console.log('New Conditionals');
     });
 
     /**
@@ -138,28 +119,14 @@ export default function (state,$,document) {
     });
 
     $document.on('click', '[data-open-group]', function () {
-
-
-        var clicked = $(this),
-            id = clicked.data('openGroup'),
-            db = $('#cf-conditions-db'),
-            data = get_base_form();
-
-        data._open_condition = id;
-        db.val(JSON.stringify(data)).trigger('rebuild-conditions');
+        const $clicked = $(this);
+        console.log('opened group',$clicked);
 
     });
 
     $document.on('click', '[data-remove-line]', function () {
-        var clicked = $(this),
-            id = clicked.data('removeLine');
-
-        $('.condition-line-' + id).remove();
-
-        var db = $('#cf-conditions-db'),
-            data = get_base_form();
-
-        db.val(JSON.stringify(data)).trigger('rebuild-conditions');
+        const $clicked = $(this);
+        console.log('Remove Line',$clicked);
     });
 
     $document.on('click', '[data-remove-group]', function () {
@@ -177,66 +144,11 @@ export default function (state,$,document) {
         var db = $('#cf-conditions-db'),
             data = get_base_form();
 
-        data._open_condition = '';
-
-        db.val(JSON.stringify(data)).trigger('rebuild-conditions');
     });
 
-    $document.on('keydown keyup keypress change', '[data-sync]', function (e) {
-        var press = $(this),
-            target = $(press.data('sync'));
-        if (target.is('input')) {
-            target.val(press.val()).trigger('change');
-        } else {
-            target.html(press.val());
-        }
-    });
-    $document.on('change', '[data-bind-condition]', function () {
 
-        $document.trigger('show.fieldedit');
-
-        var clicked = $(this),
-            bind = $(clicked.data('bindCondition'));
-        if (clicked.is(':checked')) {
-            bind.val(clicked.val());
-        } else {
-            bind.val('');
-        }
-
-        var data = get_base_form(),
-            db = $('#cf-conditions-db');
-
-        db.val(JSON.stringify(data)).trigger('rebuild-conditions');
-    });
     $document.on('show.fieldedit', function () {
 
-        var data = $('#caldera-forms-conditions-panel').formJSON(),
-            condition_selectors = $('.cf-conditional-selector');
-        condition_selectors.each(function () {
-            var select = $(this),
-                selected = select.parent().val(),
-                field = select.parent().data('id');
-
-            select.empty();
-            for (var con in data.conditions) {
-                var run = true;
-                // check field is not in here.
-                for (var grp in data.conditions[con].group) {
-                    for (var ln in data.conditions[con].group[grp]) {
-                        if (data.conditions[con].group[grp][ln].field === field) {
-                            run = false;
-                        }
-                    }
-                }
-                if (true === run) {
-                    var sel = '',
-                        line = '<option value="' + con + '" ' + (selected === con ? 'selected="selected"' : '') + '>' + data.conditions[con].name + '</option>';
-
-                    select.append(line);
-                }
-            }
-
-        });
     });
 
 

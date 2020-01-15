@@ -1,47 +1,4 @@
 /* contains edit.js, layout-grid.js, processors.js */
-function new_conditional_group(obj){
-
-    var id 	  	=	obj.trigger.data('id'),
-        lineid 	=	'cl' + Math.round(Math.random() * 18746582734),
-        rowid	=	'rw' + Math.round(Math.random() * 98347598345),
-        group 	=	[
-            {
-                id		:	rowid,
-                type	:	obj.trigger.data('type'),
-                lines	:	[
-                    {
-                        id	:	lineid
-                    }
-                ]
-            }
-        ];
-
-
-    return {group : group, id: id};
-}
-function new_conditional_line(obj){
-
-    var id 	  	=	obj.trigger.data('id'),
-        rowid 	=	obj.trigger.data('group'),
-        type 	=	obj.trigger.data('type'),
-        lineid	=	'cl' + Math.round(Math.random() * 18746582734),
-        line 	=	{
-            id		:	id,
-            type	:	type,
-            lineid	:	lineid,
-            rowid	:	rowid,
-            name	:	"config[" + type + "][" + id + "][conditions][group][" + rowid + "][" + lineid + "]"
-        };
-
-    return line;
-}
-
-function build_conditions_config(obj){
-    var config = JSON.parse(obj.trigger.val());
-    config.id = obj.trigger.data('id');
-    return config;
-
-}
 
 /**
  * Pre compile all Handelbars templates

@@ -6,24 +6,13 @@ if( !empty( $element['conditional_groups']['fields'] ) ){
 }
 ?>
 
-<button style="width:250px;" id="new-conditional" class="button" type="button">
-    <?php _e( 'Add Conditional Group', 'caldera-forms' ); ?>
-</button>
 
-<input type="hidden" name="_magic" value="<?php echo esc_attr( json_encode( $magic_tags['system']['tags'] ) ); ?>">
-<input type="hidden"
-       id="cf-conditions-db"
-       name="config[conditional_groups]"
-       value="<?php echo esc_attr( json_encode( $element['conditional_groups'] ) ); ?>"
-    class="ajax-trigger"
-    data-event="rebuild-conditions"
-    data-request="#cf-conditions-db"
-    data-type="json"
-    data-template="#conditions-tmpl"
-    data-target="#caldera-forms-conditions-panel"
-    data-autoload="true"
->
-<div id="caldera-forms-conditions-panel"></div>
+<div id="caldera-forms-conditions-panel">
+</div>
+
+<?php
+// Templage for
+?>
 <script type="text/html" id="conditions-tmpl">
 	<input type="hidden" name="_open_condition" value="{{_open_condition}}">
 	<div class="caldera-editor-conditions-panel" style="margin-bottom: 32px;">
@@ -43,7 +32,7 @@ if( !empty( $element['conditional_groups']['fields'] ) ){
 							{{/if}}
 
 						{{/is}}
-						<a data-open-group="{{id}}" style="cursor:pointer;"><span id="condition-group-{{id}}">{{name}}</span> <span class="condition-line-number"></span></a>
+						<a class="condition-open-group" data-open-group="{{id}}" style="cursor:pointer;"><span id="condition-group-{{id}}">{{name}}</span> <span class="condition-line-number"></span></a>
 					{{else}}
 						<input type="text"
                                name="conditions[{{id}}][name]"
