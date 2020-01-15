@@ -2747,6 +2747,11 @@ function cf_revisions_ui() {
 
 window.cfProcessorDynamicOptionsCache = {};
 
+/**
+ * Initial load of the dynamic select element.
+ * 
+ * @param int id The ID of the dynamic select element.
+ */
 function cfProcessorDynamicOptionsLoad(id) {
     const select = document.getElementById(id);
     const callback = select.getAttribute('data-callback');
@@ -2759,12 +2764,22 @@ function cfProcessorDynamicOptionsLoad(id) {
     }
 }
 
+/**
+ * Refresh (or re-fetch) the dynamic select options.
+ * 
+ * @param int id The ID of the dynamic select element.
+ */
 function cfProcessorDynamicOptionsRefresh(id) {
     const select = document.getElementById(id);
     select.options.length = 0;
     cfProcessorDynamicOptionsFetch(id)
 }
 
+/**
+ * Fetch the dynamic select options using the provided callback.
+ * 
+ * @param int id The ID of the dynamic select element.
+ */
 function cfProcessorDynamicOptionsFetch(id) {
     const select = document.getElementById(id);
     select.classList.add('dynamic-fetching');
@@ -2776,6 +2791,12 @@ function cfProcessorDynamicOptionsFetch(id) {
     });
 }
 
+/**
+ * Update the options of the dynamic select element.
+ * 
+ * @var el select The select element to which the options will be updated.
+ * @var array options [ { value: string, label: string }]
+ */
 function cfProcessorDynamicOptionsUpdate(select, options) {
     const value = select.getAttribute('data-value');
     select.options.length = 0;
