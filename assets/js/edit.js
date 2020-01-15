@@ -2798,6 +2798,8 @@ function cfProcessorDynamicOptionsFetch(id) {
  * @var array options [ { value: string, label: string }]
  */
 function cfProcessorDynamicOptionsUpdate(select, options) {
+    if( 'undefined' === options ) return;
+    if( ! Array.isArray(options) || ! options.length ) return;
     const value = select.getAttribute('data-value');
     select.options.length = 0;
     options.map(function(option) {
