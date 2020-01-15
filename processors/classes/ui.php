@@ -244,7 +244,7 @@ class Caldera_Forms_Processor_UI {
 	 *
 	 * @since 1.3.0
 	 *
-	 * @param string $type The type of input. This is NOT The input type. Options are simple|checkbox|advanced|dropdown
+	 * @param string $type The type of input. This is NOT The input type. Options are simple|checkbox|advanced|dropdown|dynamic
 	 * @param array $args Field args
 	 * @param string $id ID attribute
 	 * @param string $classes Class attribute.
