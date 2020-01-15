@@ -2754,6 +2754,7 @@ window.cfProcessorDynamicOptionsCache = {};
  */
 function cfProcessorDynamicOptionsLoad(id) {
     const select = document.getElementById(id);
+    if( 'undefined' === typeof select ) return;
     const callback = select.getAttribute('data-callback');
     if(window.cfProcessorDynamicOptionsCache[callback]) {
         console.log('Update option from cache');
@@ -2771,6 +2772,7 @@ function cfProcessorDynamicOptionsLoad(id) {
  */
 function cfProcessorDynamicOptionsRefresh(id) {
     const select = document.getElementById(id);
+    if( 'undefined' === typeof select ) return;
     select.options.length = 0;
     cfProcessorDynamicOptionsFetch(id)
 }
@@ -2782,6 +2784,7 @@ function cfProcessorDynamicOptionsRefresh(id) {
  */
 function cfProcessorDynamicOptionsFetch(id) {
     const select = document.getElementById(id);
+    if( 'undefined' === typeof select ) return;
     select.classList.add('dynamic-fetching');
     const callback = select.getAttribute('data-callback');
     const promise = new Promise(window[callback]);
@@ -2798,7 +2801,8 @@ function cfProcessorDynamicOptionsFetch(id) {
  * @var array options [ { value: string, label: string }]
  */
 function cfProcessorDynamicOptionsUpdate(select, options) {
-    if( 'undefined' === options ) return;
+    if( 'undefined' === typeof select ) return;
+    if( 'undefined' === typeof options ) return;
     if( ! Array.isArray(options) || ! options.length ) return;
     const value = select.getAttribute('data-value');
     select.options.length = 0;
