@@ -351,19 +351,36 @@ class Caldera_Forms_Processor_UI {
 				);
 				break;
 			case 'dynamic':
-				$field = sprintf('<select id="{{_name}}[%s]" class="%s dynamic" name="{{_name}}[%s]" data-value="{{%s}}" data-callback="%s"></select>',
+
+				$options = [];
+				if(isset($args['options'])) { // Duplicated from the 'dropdown' type.
+					foreach( $args[ 'options' ] as $value => $label ) {
+						$options[] = sprintf( '<option value="%1s" {{#is %2s value="%3s"}}selected{{/is}}>%4s</option>',
+							esc_attr( $value ),
+							esc_attr( $id ),
+							esc_attr( $value ),
+							esc_html( $label )
+						);
+					}
+					$options = implode( "/n", $options );
+				}
+
+				$field = sprintf('<select id="{{_name}}[%s]" class="%s dynamic" name="{{_name}}[%s]" data-value="{{%s}}" data-callback="%s">%s</select>',
 					esc_attr( $id ),
 					$classes,
 					esc_attr( $id ),
 					esc_attr( $id ),
-					$args['callback']
+					$args['callback'],
+					$options
 				);
 
 				// Append refresh icon.
 				$field .= sprintf('<button type="button" class="button dynamic-refresh" onclick="cfProcessorDynamicOptionsRefresh(\'{{_name}}[%s]\')"></button>', esc_attr( $id ) );
 
-				// Manually trigger load event for element.
-				$field .= sprintf('<script>cfProcessorDynamicOptionsLoad("{{_name}}[%s]")</script>', esc_attr( $id ) );
+				if(!$options) {
+					// Manually trigger load event for element.
+					$field .= sprintf('<script>cfProcessorDynamicOptionsLoad("{{_name}}[%s]")</script>', esc_attr( $id ) );
+				}
 				break;
 			default :
 				$field = sprintf( '<input type="%1s" class="%2s" id="%3s" name="{{_name}}[%4s]" value="%5s" %6s>',
