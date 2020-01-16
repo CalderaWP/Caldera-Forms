@@ -124,8 +124,8 @@ describe('State factory', () => {
         const factory = stateFactory();
         const fields = factory.prepareFields(current_form_fields);
         expect(fields.length).toBe(Object.keys(current_form_fields).length);
-        expect(fields.find(f => 'fld_6770247' === f.id).label).toBe("disc2");
-        expect(fields.find(f => 'fld_6770247' === f.id).tag).toBe("%disc2%");
+        expect(fields.find(f => 'fld_6770247' === f.ID).label).toBe("disc2");
+        expect(fields.find(f => 'fld_6770247' === f.ID).tag).toBe("%disc2%");
     });
     it('Adds field tag types', () => {
         const factory = stateFactory({
@@ -173,7 +173,7 @@ describe('State factory', () => {
         const state = factory.createState();
         expect(state.getMagicTagsByType('hidden').length).toBe(2);
         expect(state.addField({
-            id: 'fld1234',
+            ID: 'fld1234',
             "label": "New Field",
             "slug": "new_field",
             "type": "hidden",

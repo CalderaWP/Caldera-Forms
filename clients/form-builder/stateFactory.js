@@ -35,7 +35,7 @@ function prepareFields(currentFormFields){
     return currentFormFields && Object.keys(currentFormFields).length ? Object.keys(currentFormFields).map(
         id => {
             const field = currentFormFields[id];
-            return {...field,id,tag: '%' + field.slug + '%'}
+            return {...field,ID:id,tag: '%' + field.slug + '%'}
         }
     ) : [];
 }
@@ -149,14 +149,13 @@ export const getFieldsNotAllowedForConditional = (conditionalId,state) => {
  */
 export default function (system_values,current_form_fields) {
     const systemTags = system_values && system_values.system.tags ? system_values.system.tags : [];
-    //spelling error is intentional, must fix upstream.
-    const intialFields = prepareFields(current_form_fields);
+    const initialFields = prepareFields(current_form_fields);
     const api =  {
         prepareFields,
         createState: () => {
             const state = cfEditorState({
                 initialSystemValues: prepareTags(systemTags),
-                intialFields
+                initialFields
             });
             addInitialMagicTypes(system_values,state);
             return  state;
