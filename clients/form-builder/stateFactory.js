@@ -1,4 +1,5 @@
 import cfEditorState from '@calderajs/cf-editor-state';
+import testForm from "../tests/unit/form-builder/test-form";
 
 /**
  * Prepare tags objects, as represented in system_values global
@@ -137,6 +138,37 @@ export const getFieldsNotAllowedForConditional = (conditionalId,state) => {
 
 };
 
+/**
+ * Convert conditional group from CF form config to the correct format for this system
+ *
+ * @since 1.8.10
+ *
+ * @param conditionalGroup
+ * @returns {{id: *, type: (*|string), config: {fields: (*|[]), group: *}}}
+ */
+const conditionalFromCfConfig =  (conditionalGroup) =>{
+    return  {
+        id: conditionalGroup.id,
+        type: conditionalGroup.type ? conditionalGroup.type : 'show',
+        config: {
+            fields: conditionalGroup.hasOwnProperty('fields' ) ? Object.values(conditionalGroup.fields) : [],
+            group: conditionalGroup.hasOwnProperty('group') ? conditionalGroup.group : {},
+        }
+    };
+};
+/**
+ * Set conditionals, as supplied in CF1 field config, on state.
+ *
+ * @since 1.8.10
+ *
+ * @param form
+ * @param state
+ */
+export const setConditionalsFromCfConfig = (form,state) => {
+     Object.values(testForm.conditional_groups.conditions).map(group => state.addConditional(conditionalFromCfConfig(group)));
+
+}
+
 
 /**
  * Factory for editor state management
@@ -162,24 +194,7 @@ export default function (system_values,current_form_fields) {
 
         },
         prepareSystemTags: () => prepareTags(systemTags),
-        /**
-         * Convert conditional group from CF form config to the correct format for this system
-         *
-         * @since 1.8.10
-         *
-         * @param conditionalGroup
-         * @returns {{id: *, type: (*|string), config: {fields: (*|[]), group: *}}}
-         */
-        conditionalFromCfConfig: (conditionalGroup) =>{
-            return  {
-                id: conditionalGroup.id,
-                type: conditionalGroup.type ? conditionalGroup.type : 'show',
-                config: {
-                    fields: conditionalGroup.hasOwnProperty('fields' ) ? Object.values(conditionalGroup.fields) : [],
-                    group: conditionalGroup.hasOwnProperty('group') ? conditionalGroup.group : {},
-                }
-            };
-        }
+        conditionalFromCfConfig,
     };
 
     return api;

@@ -6,7 +6,7 @@ import system_values from "./system_values";
 import stateFactory, {
     getAllFieldsUsed,
     getFieldsNotAllowedForConditional,
-    getFieldsUsedByConditional
+    getFieldsUsedByConditional, setConditionalsFromCfConfig
 } from "../../../form-builder/stateFactory";
 import {mount} from "enzyme/build";
 import EnzymeAdapter from '../createEnzymeAdapter'
@@ -25,7 +25,7 @@ describe('Editor for a single conditional', () => {
     const groupId = 'con_8761120514939434';
     const factory = stateFactory(system_values, current_form_fields);
     const state = factory.createState();
-    Object.values(testForm.conditional_groups.conditions).map(group => state.addConditional(factory.conditionalFromCfConfig(group)));
+    setConditionalsFromCfConfig(testForm,state);
 
     const fieldsUsed = getAllFieldsUsed(state);
     const notAllowedFields = getFieldsNotAllowedForConditional(groupId, state);

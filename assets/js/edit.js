@@ -32,6 +32,12 @@ function get_compiled_template( template ) {
 
 }
 
+function build_conditions_config(obj){
+    var config = JSON.parse(obj.trigger.val());
+    config.id = obj.trigger.data('id');
+    return config;
+
+}
 
 jQuery(document).ready(function($){
 

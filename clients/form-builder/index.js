@@ -1,5 +1,5 @@
 /** globals system_values,current_form_fields,CF_ADMIN **/
-import conditionalEditor from './conditional-editor';
+import React from 'react';
 import stateFactory from "./stateFactory";
 import Conditionals from "./components/Conditionals";
 import {render} from '@wordpress/element';
@@ -16,18 +16,16 @@ document.addEventListener("DOMContentLoaded", function () {
     if ('object' == typeof system_values && 'object' == typeof current_form_fields) {
         const factory = stateFactory(system_values, current_form_fields);
         const state = factory.createState();
-        const conditions = CF_ADMIN.hasOwnProperty( 'conditions' ) ? CF_ADMIN.conditions : [];
-        conditions.forEach(condition => state.addConditional(condition ) );
+        const conditions = CF_ADMIN.hasOwnProperty('conditions') ? CF_ADMIN.conditions : [];
+        conditions.forEach(condition => state.addConditional(condition));
 
-        const onNewConditional = (name) => {
 
-        };
-
-        const onEditConditional = () => {
-
-        };
-
-        render(<Conditionals state={state} strings={CF_ADMIN.strings.conditionals} /> )
+        render(
+            <Conditionals
+                state={state}
+                strings={CF_ADMIN.strings.conditionals}
+                formFields={state.getAllFields()}
+            />, document.getElementById('caldera-forms-conditions-panel'))
 
     }
 });
