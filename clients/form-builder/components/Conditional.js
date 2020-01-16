@@ -300,13 +300,13 @@ const Conditional = ({conditional, formFields, strings, id, onRemoveConditional,
     const onRemoveLine = (lineId,groupId) => {
         let groups = group;
 
-        delete  groups[groupId][lineId];
+        delete groups[groupId][lineId];
 
         onUpdateConditional({
             conditional,
             config: {
                 ...conditional.config,
-                group: _group
+                group: groups
             }
         });
     };
