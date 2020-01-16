@@ -122,20 +122,10 @@ export default function ({state, strings, formFields}) {
     const [openCondition, setOpenCondition] = React.useState('');
 
     /**
-     * The conditional group that is open
-     *
-     * @type {function(): conditional}
-     */
-    const getOpenConditional = React.useCallback(() => {
-        return state.getConditional(openCondition);
-        }, [openCondition]
-    );
-
-    /**
      * Get fields NOT allowed to be used by current function
      * @type {Function}
      */
-    const getFieldsNotAllowedForOpenConditional = React.useCallback(() => {
+    const getFieldsNotAllowedForOpenConditional = () => {
         if( ! openCondition ){
             return  [];
         }
@@ -143,7 +133,7 @@ export default function ({state, strings, formFields}) {
         const fieldsNotAllowed = getFieldsNotAllowedForConditional(openCondition,state);
         return undefined === fieldsNotAllowed ? [] : fieldsNotAllowed;
 
-    },[openCondition]);
+    };
 
     /**
      * Get the fields that apply to the open conditional
