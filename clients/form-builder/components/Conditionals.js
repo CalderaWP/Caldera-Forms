@@ -111,7 +111,7 @@ export const NewConditionalButton = ({text, onClick}) => {
  * @returns {*}
  */
 export default function ({state, strings, formFields}) {
-
+    state.getAllFields()
 
     /**
      * Tracks the open conditional

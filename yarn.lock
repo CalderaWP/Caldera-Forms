@@ -995,10 +995,10 @@
     "@babel/preset-env" "^7.3.1"
     "@babel/preset-react" "^7.0.0"
 
-"@calderajs/cf-editor-state@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@calderajs/cf-editor-state/-/cf-editor-state-0.0.4.tgz#77f0b43c7d6152a01f6d6f8591ef13f660bd903b"
-  integrity sha512-T1ZJksk8GtZkvy9vsJLsYCsHSPHeXcoxUFq51z7/i9qO3j3Lexcn0zrN3Ve33eYmlqQBMOBdeiePPfqc2KxClg==
+"@calderajs/cf-editor-state@0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@calderajs/cf-editor-state/-/cf-editor-state-0.2.0.tgz#2d2c2a52c1c8b7d8915a9e3f4245107f04d15a8c"
+  integrity sha512-m61vLdEJtNqQiqzjPGIh9WKEYJsU4E0O6HGmp0n2lRYZfzOLo3WVY/YgfFgnO9gZ8/SaEIjKqBJwJJuk6DXpHQ==
   dependencies:
     tsee "^1.3.0"
 
