@@ -3,97 +3,9 @@ import stateFactory, {
     getFieldsNotAllowedForConditional,
     getFieldsUsedByConditional
 } from "../../../form-builder/stateFactory";
-
+import system_values from "./system_values";
 describe('State factory', () => {
-    const system_values = {
-        "field": {
-            "tags": {
-                "text": [
-                    "selections",
-                    "total",
-                    "disc1",
-                    "disc2",
-                    "summary",
-                    "discount",
-                    "grand_total"
-                ],
-                "checkbox": [
-                    "selections"
-                ],
-                "calculation": [
-                    "total",
-                    "discount",
-                    "grand_total"
-                ],
-                "hidden": [
-                    "disc1",
-                    "disc2"
-                ],
-                "summary": [
-                    "summary"
-                ]
-            },
-            "type": "Fields",
-            "wrap": [
-                "%",
-                "%"
-            ]
-        },
-        "system": {
-            "type": "System Tags",
-            "tags": {
-                "text": [
-                    "entry_id",
-                    "entry_token",
-                    "ip",
-                    "user:id",
-                    "user:user_login",
-                    "user:first_name",
-                    "user:last_name",
-                    "user:user_email",
-                    "get:*",
-                    "post:*",
-                    "request:*",
-                    "post_meta:*",
-                    "embed_post:ID",
-                    "embed_post:post_title",
-                    "embed_post:permalink",
-                    "embed_post:post_date",
-                    "date:Y-m-d H:i:s",
-                    "date:Y/m/d",
-                    "date:Y/d/m",
-                    "login_url",
-                    "logout_url",
-                    "register_url",
-                    "lostpassword_url",
-                    "referer_url"
-                ],
-                "email": [
-                    "user:user_email"
-                ],
-                "date_picker": [
-                    "embed_post:post_date",
-                    "date:Y-m-d H:i:s"
-                ]
-            },
-            "wrap": [
-                "{",
-                "}"
-            ]
-        },
-        "increment_capture": {
-            "type": "Increment Value",
-            "tags": {
-                "text": [
-                    "increment_capture:increment_value"
-                ]
-            },
-            "wrap": [
-                "{",
-                "}"
-            ]
-        }
-    };
+
     const current_form_fields = {
         "fld_9272690": {
             "label": "selections",
@@ -349,7 +261,7 @@ describe('State factory', () => {
             config: {name: 'r2', fields: {c5: 'fld_4', c6: 'fld2'}}
         });
 
-        expect(getAllFieldsUsed(state).length).toBe(3);
+        expect(getAllFieldsUsed(state).length).toBe(4);
     });
 
     test( 'getFieldsUsedByConditional utility method',( ) => {
@@ -365,6 +277,7 @@ describe('State factory', () => {
             id: 'r3', type: "enable",
             config: {name: 'r threee', fields: {c5: 'fld_4', c6: 'fld2'}}
         });
+
         expect( getFieldsUsedByConditional('r3', state).length ).toBe(2);
     });
 
@@ -383,9 +296,11 @@ describe('State factory', () => {
             config: {name: 'r threee', fields: {c5: 'fld_4', c6: 'fld2'}}
         });
         //No other conditionals have fields used, so all fields are allowed.
-        expect( getFieldsNotAllowedForConditional('r3', state).length ).toBe(0);
+        expect( getFieldsNotAllowedForConditional('r3', state) ).toEqual([]);
 
         //Other conditional group has 2 fields applied, so those are blocked
-        expect( getFieldsNotAllowedForConditional('none', state).length ).toBe(2);
+        expect( getFieldsNotAllowedForConditional('none', state) ).toEqual([
+            'fld_4', 'fld2'
+        ])
     })
 });

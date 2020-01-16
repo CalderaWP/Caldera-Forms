@@ -1,20 +1,45 @@
+import React from 'react';
 import {NewGroupName} from "./Conditionals";
+import {getFieldsNotAllowedForConditional} from "../stateFactory";
 
 /**
  * The section to set which fields it applies to
  *
  * @since 1.8.10
  *
- * @param Array fields The form's fields
+ * @param Array formFields The form's fields
  * @param Array fieldsUsed The fields used by this conditional.
  * @param Array appliedFields The fields this conditional is applied to.
+ * @param Array notAllowedFields The fields this conditional can NOT applied to.
  * @param strings Translation strings
  * @param onChange
  * @param groupId
  * @returns {*}
  * @constructor
  */
-export const AppliesToFields = ({fields, fieldsUsed, appliedFields, strings, onChange, groupId}) => {
+export const AppliesToFields = ({formFields, fieldsUsed, appliedFields, notAllowedFields,strings, onChange, groupId}) => {
+    /**
+     * Check if we should disable this option
+     *
+     * @since 1.8.10
+     *
+     * @param fieldId
+     * @returns {*}
+     */
+    function isFieldDisabled(fieldId) {
+        return  notAllowedFields.includes(fieldId);
+    }
+    /**
+     * Check if field is used and should be checked.
+     *
+     * @since 1.8.10
+     *
+     * @param fieldId
+     * @returns {*}
+     */
+    function isFieldChecked(fieldId) {
+        return fieldsUsed.includes(fieldId);
+    }
 
     return (
         <div style={{float: 'left', width: '288px', paddingLeft: '12px'}}>
@@ -22,25 +47,26 @@ export const AppliesToFields = ({fields, fieldsUsed, appliedFields, strings, onC
                 {strings['applied-fields']}
             </h4>
             <p className="description">{strings['select-apply-fields']}</p>
-            {fields.map(field => (
+            {formFields.map(field => (
                     <label style={{display: 'block', marginLeft: `20px`}}>
                         {field.label}
                         <input
                             style={{marginLeft: `-20px`}}
                             type="checkbox"
-                            disabled={fieldsUsed.includes(field.id)}
+                            disabled={isFieldDisabled(field.ID)}
                             onClick={(e) => {
                                 e.preventDefault();
-                                if (!appliedFields || !appliedFields.length) {
-                                    onChange([field.id])
-
-                                } else if (appliedFields.include(field.id)) {
-                                    onChange(appliedFields.filter(f => f.id === field.id))
+                                //Is it already applied?
+                                if (isFieldChecked(field.ID)) {
+                                    //remove from applied fields
+                                    onChange(appliedFields.filter(f => f.ID === field.ID))
                                 } else {
-                                    onChange([...appliedFields, field.id])
+                                    //Add to applied fields.
+                                    onChange([...appliedFields, field.ID])
                                 }
                             }}
                             value={groupId}
+                            checked={isFieldChecked(field.ID)}
                         />
                     </label>
                 )
@@ -147,20 +173,10 @@ const ConditionalLines = ({lines, strings}) => {
  * One conditional
  *
  * @since 1.8.10
- *
- * @param name
- * @param strings
- * @param id
- * @param type
- * @param group
- * @param fields
- * @returns {*}
- * @constructor
  */
-const Conditional = ({name, strings, id, type, group, fields}) => {
-    const fieldsUsed = React.useMemo(() => {
-        return this.getUsedFields(fields);
-    }, [id]);
+const Conditional = ({conditional,formFields, strings,id,onAddConditional,onRemoveConditional,onUpdateConditional, fieldsNotAllowed,fieldsUsed}) => {
+    const {name,type,config} = conditional;
+
     const onAddLine = () => {
     };
     return (

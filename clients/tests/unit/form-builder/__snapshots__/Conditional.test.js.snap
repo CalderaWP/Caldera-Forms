@@ -1,0 +1,161 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Editor for a single conditional AppliesToFields matches snapshot 1`] = `
+<div
+  style={
+    Object {
+      "float": "left",
+      "paddingLeft": "12px",
+      "width": "288px",
+    }
+  }
+>
+  <h4
+    style={
+      Object {
+        "borderBottom": "1px solid rgb(191, 191, 191)",
+        "margin": "0px 0px 6px; padding: 0px 0px 6px",
+      }
+    }
+  >
+    applied-fields
+  </h4>
+  <p
+    className="description"
+  >
+    select-apply-fields
+  </p>
+  <label
+    style={
+      Object {
+        "display": "block",
+        "marginLeft": "20px",
+      }
+    }
+  >
+    Number
+    <input
+      checked={true}
+      disabled={true}
+      onClick={[Function]}
+      style={
+        Object {
+          "marginLeft": "-20px",
+        }
+      }
+      type="checkbox"
+      value="con_8761120514939434"
+    />
+  </label>
+  <label
+    style={
+      Object {
+        "display": "block",
+        "marginLeft": "20px",
+      }
+    }
+  >
+    Dropdown
+    <input
+      checked={true}
+      disabled={false}
+      onClick={[Function]}
+      style={
+        Object {
+          "marginLeft": "-20px",
+        }
+      }
+      type="checkbox"
+      value="con_8761120514939434"
+    />
+  </label>
+  <label
+    style={
+      Object {
+        "display": "block",
+        "marginLeft": "20px",
+      }
+    }
+  >
+    Number 2
+    <input
+      checked={true}
+      disabled={true}
+      onClick={[Function]}
+      style={
+        Object {
+          "marginLeft": "-20px",
+        }
+      }
+      type="checkbox"
+      value="con_8761120514939434"
+    />
+  </label>
+  <label
+    style={
+      Object {
+        "display": "block",
+        "marginLeft": "20px",
+      }
+    }
+  >
+    Dropdown 2
+    <input
+      checked={true}
+      disabled={false}
+      onClick={[Function]}
+      style={
+        Object {
+          "marginLeft": "-20px",
+        }
+      }
+      type="checkbox"
+      value="con_8761120514939434"
+    />
+  </label>
+  <label
+    style={
+      Object {
+        "display": "block",
+        "marginLeft": "20px",
+      }
+    }
+  >
+    Next Page
+    <input
+      checked={false}
+      disabled={false}
+      onClick={[Function]}
+      style={
+        Object {
+          "marginLeft": "-20px",
+        }
+      }
+      type="checkbox"
+      value="con_8761120514939434"
+    />
+  </label>
+  <label
+    style={
+      Object {
+        "display": "block",
+        "marginLeft": "20px",
+      }
+    }
+  >
+    Back
+    <input
+      checked={false}
+      disabled={false}
+      onClick={[Function]}
+      style={
+        Object {
+          "marginLeft": "-20px",
+        }
+      }
+      type="checkbox"
+      value="con_8761120514939434"
+    />
+  </label>
+</div>
+`;

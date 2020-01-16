@@ -80,10 +80,17 @@ export const getAllFieldsUsed = (state) => {
         return [];
     }
 
-    return groups.map((conditional) => {
-        return conditional.hasOwnProperty('config') && conditional.config.hasOwnProperty('fields')
-            ? Object.values(conditional.config.fields) : null
+    let fields = [];
+     groups.forEach( ( conditional) => {
+        if( conditional.hasOwnProperty('config') && conditional.config.hasOwnProperty('fields') ){
+            const _fields =  Object.values(conditional.config.fields);
+            if( _fields.length ){
+                _fields.map( _f => fields.push(_f));
+            }
+        }
+
     });
+     return  fields;
 };
 
 /**
@@ -123,12 +130,12 @@ export const getFieldsNotAllowedForConditional = (conditionalId,state) => {
     const fieldsUsedByConditional = getFieldsUsedByConditional(conditionalId,state);
     //No fields used by THIS conditional? If so, return allFieldsUsed un filtered
     if( ! fieldsUsedByConditional.length ){
-        return allFieldsUsed;
+       // return allFieldsUsed;
     }
     //Filter out fields used by OTHER conditional groups
-    return allFieldsUsed.filter( fieldId => fieldsUsedByConditional.includes(fieldId) );
+    return allFieldsUsed.filter( fieldId => !fieldsUsedByConditional.includes(fieldId) );
 
-}
+};
 
 
 /**
@@ -155,7 +162,25 @@ export default function (system_values,current_form_fields) {
             return  state;
 
         },
-        prepareSystemTags: () => prepareTags(systemTags)
+        prepareSystemTags: () => prepareTags(systemTags),
+        /**
+         * Convert conditional group from CF form config to the correct format for this system
+         *
+         * @since 1.8.10
+         *
+         * @param conditionalGroup
+         * @returns {{id: *, type: (*|string), config: {fields: (*|[]), group: *}}}
+         */
+        conditionalFromCfConfig: (conditionalGroup) =>{
+            return  {
+                id: conditionalGroup.id,
+                type: conditionalGroup.type ? conditionalGroup.type : 'show',
+                config: {
+                    fields: conditionalGroup.hasOwnProperty('fields' ) ? Object.values(conditionalGroup.fields) : [],
+                    group: conditionalGroup.hasOwnProperty('group') ? conditionalGroup.group : {},
+                }
+            };
+        }
     };
 
     return api;
