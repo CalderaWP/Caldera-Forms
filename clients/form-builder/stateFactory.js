@@ -151,6 +151,7 @@ const conditionalFromCfConfig =  (conditionalGroup) =>{
         id: conditionalGroup.id,
         type: conditionalGroup.type ? conditionalGroup.type : 'show',
         config: {
+            name: conditionalGroup.hasOwnProperty('name'  ) ? conditionalGroup.name : '',
             fields: conditionalGroup.hasOwnProperty('fields' ) ? Object.values(conditionalGroup.fields) : [],
             group: conditionalGroup.hasOwnProperty('group') ? conditionalGroup.group : {},
         }
@@ -166,9 +167,7 @@ const conditionalFromCfConfig =  (conditionalGroup) =>{
  */
 export const setConditionalsFromCfConfig = (form,state) => {
      Object.values(testForm.conditional_groups.conditions).map(group => state.addConditional(conditionalFromCfConfig(group)));
-
-}
-
+};
 
 /**
  * Factory for editor state management

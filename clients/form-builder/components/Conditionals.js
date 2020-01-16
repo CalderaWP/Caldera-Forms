@@ -3,6 +3,8 @@ import cfEditorState from "@calderajs/cf-editor-state";
 import Conditional from './Conditional';
 import {getFieldsNotAllowedForConditional, getFieldsUsedByConditional} from "../stateFactory";
 
+
+
 /**
  * One item in the conditionals list
  *
@@ -14,7 +16,9 @@ import {getFieldsNotAllowedForConditional, getFieldsUsedByConditional} from "../
  * @returns {*}
  * @constructor
  */
-const ConditionalListItem = ({active, id, name, onChooseItem}) => {
+const ConditionalListItem = ({active, condition, onChooseItem}) => {
+    const {id} = condition;
+    const name = React.useRef( condition.hasOwnProperty('config' ) && condition.config.hasOwnProperty('name' ) ? condition.config.name : '' );
     return (
         <li className={`caldera-condition-nav ${active} caldera-forms-condition-group condition-point-${id}`}>
             <a className="condition-open-group" onClick={(e) => {
@@ -24,7 +28,7 @@ const ConditionalListItem = ({active, id, name, onChooseItem}) => {
                style={{cursor: "pointer"}}
             >
             <span id={`condition-group-${id}`}>
-                {name}
+                {name.current}
             </span>
                 <span className="condition-line-number"/>
             </a>
@@ -45,7 +49,7 @@ export const ConditionalsList = ({conditionals, onChooseItem}) => {
     return (
         <div className="caldera-editor-conditions-panel" style={{marginBottom: "32px"}}>
             <ul className="active-conditions-list">
-                {conditionals.map(condition => <ConditionalListItem key={condition.id} {...condition}
+                {conditionals.map(condition => <ConditionalListItem key={condition.id} condition={condition}
                                                                     onChooseItem={onChooseItem}/>)}
             </ul>
         </div>
@@ -123,7 +127,7 @@ export default function ({state, strings, formFields}) {
      * @type {function(): conditional}
      */
     const getOpenConditional = React.useCallback(() => {
-            return state.getConditional(openCondition);
+        return state.getConditional(openCondition);
         }, [openCondition]
     );
 
@@ -135,9 +139,19 @@ export default function ({state, strings, formFields}) {
         if( ! openCondition ){
             return  [];
         }
-        return getFieldsNotAllowedForConditional(openCondition,state);
+
+        const fieldsNotAllowed = getFieldsNotAllowedForConditional(openCondition,state);
+        return undefined === fieldsNotAllowed ? [] : fieldsNotAllowed;
+
     },[openCondition]);
 
+    /**
+     * Get the fields that apply to the open conditional
+     *
+     * @since 1.8.10
+     *
+     * @type {Function}
+     */
     const getFieldsAppliedForOpenConditional = React.useCallback( () => {
         if( ! openCondition ){
             return  [];
@@ -153,7 +167,8 @@ export default function ({state, strings, formFields}) {
     const onNewConditional = (name) => {
         const id = `con_${Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5)}`
         state.addConditional({type: 'show', config: {name}, id});
-        setOpenCondition(name);
+        console.log(id,name)
+        setOpenCondition(id);
     };
 
     /**
@@ -187,7 +202,7 @@ export default function ({state, strings, formFields}) {
             />
             {openCondition &&
             <Conditional
-                group={getOpenConditional()}
+                conditional={state.getConditional(openCondition)}
                 formFields={formFields}
                 id={openCondition}
                 strings={strings}

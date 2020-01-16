@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {NewGroupName} from "./Conditionals";
+import {getFieldsUsedByConditional} from "../stateFactory";
 
 /**
  * The section to set which fields it applies to
@@ -7,8 +8,7 @@ import {NewGroupName} from "./Conditionals";
  * @since 1.8.10
  *
  * @param Array formFields The form's fields
- * @param Array fieldsUsed The fields used by this conditional.
- * @param Array appliedFields The fields this conditional is applied to.
+ * @param Array fieldsUsed The fields this conditional is applied to.
  * @param Array notAllowedFields The fields this conditional can NOT applied to.
  * @param strings Translation strings
  * @param onChange
@@ -16,7 +16,7 @@ import {NewGroupName} from "./Conditionals";
  * @returns {*}
  * @constructor
  */
-export const AppliesToFields = ({formFields, fieldsUsed, appliedFields, notAllowedFields, strings, onChange, groupId}) => {
+export const AppliesToFields = ({formFields, fieldsUsed, notAllowedFields, strings, onChange, groupId}) => {
     /**
      * Check if we should disable this option
      *
@@ -26,6 +26,9 @@ export const AppliesToFields = ({formFields, fieldsUsed, appliedFields, notAllow
      * @returns {*}
      */
     function isFieldDisabled(fieldId) {
+        if( undefined === notAllowedFields ){
+            return false;
+        }
         return notAllowedFields.includes(fieldId);
     }
 
@@ -59,10 +62,10 @@ export const AppliesToFields = ({formFields, fieldsUsed, appliedFields, notAllow
                                 //Is it already applied?
                                 if (isFieldChecked(field.ID)) {
                                     //remove from applied fields
-                                    onChange(appliedFields.filter(f => f.ID === field.ID))
+                                    onChange(fieldsUsed.filter(f => f.ID === field.ID))
                                 } else {
                                     //Add to applied fields.
-                                    onChange([...appliedFields, field.ID])
+                                    onChange([...fieldsUsed, field.ID])
                                 }
                             }}
                             value={groupId}
@@ -95,7 +98,13 @@ const isFieldTypeWithOptions = (fieldType) => ['dropdown', 'checkbox', 'radio', 
 export const ConditionalLine = ({line, strings, isFirst, formFields,onRemoveLine,onUpdateLine}) => {
     const {value, field, compare} = line;
     const fieldConfig = React.useMemo(() => {
-        return formFields.find(f => f.ID === field)
+        const config =  formFields.find(f => f.ID === field);
+        if( config ){
+            return config;
+        }
+        return {
+            type: 'text'
+        }
     }, [field]);
 
     /**
@@ -213,14 +222,16 @@ export const ConditionalLine = ({line, strings, isFirst, formFields,onRemoveLine
  * @constructor
  */
 const ConditionalLines = ({lines, strings, formFields,onRemoveLine,onUpdateLine}) => {
-    let isFirst = true;
+
+
     return (
         <div className="caldera-condition-group caldera-condition-lines">
-            {lines.map(line => {
-                const Line = (
+            {lines.map((line,index) => {
+                console.log(index,line);
+                return (
                     <ConditionalLine
                         line={line}
-                        isFirst={isFirst}
+                        isFirst={0  === index }
                         { ...{
                             strings,
                             formFields,
@@ -228,9 +239,7 @@ const ConditionalLines = ({lines, strings, formFields,onRemoveLine,onUpdateLine}
                             onUpdateLine
                         }}
                     />
-                );
-                isFirst = false;
-                return <Line/>
+                )
             })}
 
             <div style={{margin: "12px 0 0"}}>
@@ -249,9 +258,11 @@ const ConditionalLines = ({lines, strings, formFields,onRemoveLine,onUpdateLine}
  *
  * @since 1.8.10
  */
-const Conditional = ({conditional, formFields, strings, id, onRemoveConditional, onUpdateConditional, fieldsNotAllowed, fieldsUsed}) => {
-    const {name, type, config} = conditional;
+const Conditional = ({conditional, formFields, strings, onRemoveConditional, onUpdateConditional, fieldsNotAllowed, fieldsUsed}) => {
+
+    const { type, config,id} = conditional;
     const group = config && config.hasOwnProperty('group') ? config.group : {};
+    const name = conditional.hasOwnProperty('config' ) && conditional.config.hasOwnProperty('name' ) ? conditional.config.name : '';
     const onAddLine = () => {
         const id = `cl_${Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5)}`
         onUpdateConditional({
@@ -301,9 +312,8 @@ const Conditional = ({conditional, formFields, strings, id, onRemoveConditional,
         let groups = group;
 
         delete groups[groupId][lineId];
-
         onUpdateConditional({
-            conditional,
+            ...conditional,
             config: {
                 ...conditional.config,
                 group: groups
@@ -320,15 +330,10 @@ const Conditional = ({conditional, formFields, strings, id, onRemoveConditional,
      * @param name
      */
     const onUpdateName = (name) => {
-        onUpdateConditional(conditional.hasOwnProperty('config') ? {
-            conditional,
+        onUpdateConditional({
+            ...conditional,
             config: {
                 ...conditional.config,
-                name,
-            }
-        } : {
-            conditional,
-            config: {
                 name,
             }
         })
@@ -380,7 +385,7 @@ const Conditional = ({conditional, formFields, strings, id, onRemoveConditional,
                                 name={`conditions[${id}][name]`}
                                 id={`condition-group-name-${id}`}
                                 value={name}
-                                onChange={onUpdateName}
+                                onChange={(e) => onUpdateName(e.target.value)}
                                 required
                                 className="required block-input condition-group-name"
                             />
@@ -399,7 +404,7 @@ const Conditional = ({conditional, formFields, strings, id, onRemoveConditional,
                         >
                             <select
                                 value={type}
-                                onChange={onChangeType}
+                                onChange={(e) => onChangeType(e.target.value)}
                                 id={`condition-group-type-${id}`}
                                 name={`conditions[${id}][type]`}
                                 className="condition-group-type"
@@ -426,29 +431,38 @@ const Conditional = ({conditional, formFields, strings, id, onRemoveConditional,
                             }
                         </div>
                     </div>
-                    <ConditionalLines
-                        lines={group.lines}
-                        strings={strings}
-                        formFields={formFields}
-                        onUpdateLine={onUpdateLine}
-                        onRemoveLine={onRemoveLine}
-                    />
-                    <button
-                        style={{margin: "12px 0 12px"}}
-                        type="button"
-                        className="block-input button"
-                        data-confirm={strings['confirm-remove']}
-                        onClick={e => {
-                            e.preventDefault();
-                            onRemoveConditional(id)
-                        }}
-                    >
-                        {strings['remove-condition']}
-                    </button>
+                    {Object.keys(group).map(groupId=> {
+                        const lineGroups = group[groupId];
+                            return (
+                                <Fragment>
+                                    <ConditionalLines
+                                        lines={Object.values(lineGroups)}
+                                        strings={strings}
+                                        formFields={formFields}
+                                        onUpdateLine={onUpdateLine}
+                                        onRemoveLine={onRemoveLine}
+                                    />
+                                    <button
+                                        style={{margin: "12px 0 12px"}}
+                                        type="button"
+                                        className="block-input button"
+                                        data-confirm={strings['confirm-remove']}
+                                        onClick={e => {
+                                            e.preventDefault();
+                                            onRemoveConditional(id)
+                                        }}
+                                    >
+                                        {strings['remove-condition']}
+                                    </button>
+                                </Fragment>
+                            )
+                        })
+
+                    }
+
                     <AppliesToFields
                         formFields={formFields}
                         fieldsUsed={fieldsUsed}
-                        appliedFields={appliedFields}
                         fieldsNotAllowed={fieldsNotAllowed}
                         strings={strings}
                         onChange={() => {

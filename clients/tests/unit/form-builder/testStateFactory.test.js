@@ -1,7 +1,7 @@
 import stateFactory, {
     getAllFieldsUsed,
     getFieldsNotAllowedForConditional,
-    getFieldsUsedByConditional
+    getFieldsUsedByConditional,
 } from "../../../form-builder/stateFactory";
 import system_values from "./system_values";
 describe('State factory', () => {
@@ -302,5 +302,7 @@ describe('State factory', () => {
         expect( getFieldsNotAllowedForConditional('none', state) ).toEqual([
             'fld_4', 'fld2'
         ])
-    })
+    });
+
+
 });
