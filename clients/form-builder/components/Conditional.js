@@ -290,7 +290,7 @@ const Conditional = ({conditional, formFields, strings, id, onRemoveConditional,
     };
 
     /**
-     *  Callback for removign a line
+     *  Callback for removing a line
      *
      *  @since 1.8.10
      *
