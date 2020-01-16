@@ -442,23 +442,23 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
                                         onUpdateLine={onUpdateLine}
                                         onRemoveLine={onRemoveLine}
                                     />
-                                    <button
-                                        style={{margin: "12px 0 12px"}}
-                                        type="button"
-                                        className="block-input button"
-                                        data-confirm={strings['confirm-remove']}
-                                        onClick={e => {
-                                            e.preventDefault();
-                                            onRemoveConditional(id)
-                                        }}
-                                    >
-                                        {strings['remove-condition']}
-                                    </button>
                                 </Fragment>
                             )
                         })
 
                     }
+                    <button
+                        style={{margin: "12px 0 12px"}}
+                        type="button"
+                        className="block-input button"
+                        data-confirm={strings['confirm-remove']}
+                        onClick={e => {
+                            e.preventDefault();
+                            onRemoveConditional(id)
+                        }}
+                    >
+                        {strings['remove-condition']}
+                    </button>
 
                     <AppliesToFields
                         formFields={formFields}
