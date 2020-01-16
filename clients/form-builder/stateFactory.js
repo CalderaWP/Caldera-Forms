@@ -115,7 +115,19 @@ export const getFieldsUsedByConditional = (conditionalId,state) => {
  * @param {cfEditorState }state
  */
 export const getFieldsNotAllowedForConditional = (conditionalId,state) => {
-    return [];
+    const allFieldsUsed = getAllFieldsUsed(state);
+    //No fields used by ANY conditional? If so, all fields can be used.
+    if( ! allFieldsUsed.length ){
+        return [];
+    }
+    const fieldsUsedByConditional = getFieldsUsedByConditional(conditionalId,state);
+    //No fields used by THIS conditional? If so, return allFieldsUsed un filtered
+    if( ! fieldsUsedByConditional.length ){
+        return allFieldsUsed;
+    }
+    //Filter out fields used by OTHER conditional groups
+    return allFieldsUsed.filter( fieldId => fieldsUsedByConditional.includes(fieldId) );
+
 }
 
 
