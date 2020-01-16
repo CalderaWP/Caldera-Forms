@@ -159,3 +159,285 @@ exports[`Editor for a single conditional AppliesToFields matches snapshot 1`] = 
   </label>
 </div>
 `;
+
+exports[`Editor for a single conditional ConditionalLine with a checkbox field as value 1`] = `
+<div
+  className="caldera-condition-line condition-line-undefined"
+>
+  <span
+    style={
+      Object {
+        "display": "inline-block",
+      }
+    }
+  >
+    If
+  </span>
+  <select
+    className="condition-line-field"
+    style={
+      Object {
+        "maxWidth": "120px",
+        "verticalAlign": "inherit",
+      }
+    }
+    value="fld_5216203"
+  >
+    <option />
+    <optgroup>
+      <option>
+        Number
+         [
+        number
+        ]
+      </option>
+      <option>
+        Dropdown
+         [
+        dropdown
+        ]
+      </option>
+      <option>
+        Number 2
+         [
+        number_2
+        ]
+      </option>
+      <option>
+        Dropdown 2
+         [
+        dropdown_2
+        ]
+      </option>
+      <option>
+        Next Page
+         [
+        next_page
+        ]
+      </option>
+      <option>
+        Back
+         [
+        back
+        ]
+      </option>
+    </optgroup>
+  </select>
+  <select
+    className="condition-line-compare"
+    style={
+      Object {
+        "maxWidth": "120px",
+        "verticalAlign": "inherit",
+      }
+    }
+    value="greater"
+  >
+    <option
+      value="is"
+    >
+      is
+    </option>
+    <option
+      value="isnot"
+    >
+      isnot
+    </option>
+    <option
+      value="greater"
+    >
+      greater
+    </option>
+    <option
+      value="smaller"
+    >
+      smaller
+    </option>
+    <option
+      value="startswith"
+    >
+      startswith
+    </option>
+    <option
+      value="endswith"
+    >
+      endswith
+    </option>
+    <option
+      value="contains"
+    >
+      contains
+    </option>
+  </select>
+  <select
+    style={
+      Object {
+        "maxWidth": "165px",
+        "verticalAlign": "inherit",
+      }
+    }
+    value="opt1184564"
+  >
+    <option />
+    <option>
+      Number
+    </option>
+    <option>
+      Dropdown
+    </option>
+    <option>
+      Number 2
+    </option>
+    <option>
+      Dropdown 2
+    </option>
+    <option>
+      Next Page
+    </option>
+    <option>
+      Back
+    </option>
+  </select>
+</div>
+`;
+
+exports[`Editor for a single conditional ConditionalLine with a number field as value 1`] = `
+<div
+  className="caldera-condition-line condition-line-undefined"
+>
+  <span
+    style={
+      Object {
+        "display": "inline-block",
+      }
+    }
+  >
+    If
+  </span>
+  <select
+    className="condition-line-field"
+    style={
+      Object {
+        "maxWidth": "120px",
+        "verticalAlign": "inherit",
+      }
+    }
+    value="fld_1705245"
+  >
+    <option />
+    <optgroup>
+      <option>
+        Number
+         [
+        number
+        ]
+      </option>
+      <option>
+        Dropdown
+         [
+        dropdown
+        ]
+      </option>
+      <option>
+        Number 2
+         [
+        number_2
+        ]
+      </option>
+      <option>
+        Dropdown 2
+         [
+        dropdown_2
+        ]
+      </option>
+      <option>
+        Next Page
+         [
+        next_page
+        ]
+      </option>
+      <option>
+        Back
+         [
+        back
+        ]
+      </option>
+    </optgroup>
+  </select>
+  <select
+    className="condition-line-compare"
+    style={
+      Object {
+        "maxWidth": "120px",
+        "verticalAlign": "inherit",
+      }
+    }
+    value="greater"
+  >
+    <option
+      value="is"
+    >
+      is
+    </option>
+    <option
+      value="isnot"
+    >
+      isnot
+    </option>
+    <option
+      value="greater"
+    >
+      greater
+    </option>
+    <option
+      value="smaller"
+    >
+      smaller
+    </option>
+    <option
+      value="startswith"
+    >
+      startswith
+    </option>
+    <option
+      value="endswith"
+    >
+      endswith
+    </option>
+    <option
+      value="contains"
+    >
+      contains
+    </option>
+  </select>
+  <select
+    style={
+      Object {
+        "maxWidth": "165px",
+        "verticalAlign": "inherit",
+      }
+    }
+    value="5"
+  >
+    <option />
+    <option>
+      Number
+    </option>
+    <option>
+      Dropdown
+    </option>
+    <option>
+      Number 2
+    </option>
+    <option>
+      Dropdown 2
+    </option>
+    <option>
+      Next Page
+    </option>
+    <option>
+      Back
+    </option>
+  </select>
+</div>
+`;

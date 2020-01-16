@@ -1,5 +1,5 @@
 import React from 'react';
-import Conditional, {AppliesToFields} from "../../../form-builder/components/Conditional";
+import Conditional, {AppliesToFields, ConditionalLine} from "../../../form-builder/components/Conditional";
 import testForm from './test-form';
 import renderer from 'react-test-renderer';
 import system_values from "./system_values";
@@ -30,10 +30,18 @@ describe('Editor for a single conditional', () => {
     const fieldsUsed = getAllFieldsUsed(state);
     const notAllowedFields = getFieldsNotAllowedForConditional(groupId, state);
     const appliedFields = getFieldsUsedByConditional(groupId, state);
-    console.log(fieldsUsed.length, notAllowedFields.length, formFields.length);
-    console.log(fieldsUsed);
 
-    const strings = {'applied-fields': 'applied-fields', 'select-apply-fields': 'select-apply-fields'};
+
+    const strings = {
+        if: 'If',
+        and: 'And',
+        name: 'Name',
+        disable: 'Disable',
+        'add-conditional-line': 'add-conditional-line',
+        'applied-fields': 'applied-fields',
+        'select-apply-fields': 'select-apply-fields',
+        'remove-condition': 'remove-condition',
+    };
     const props = {
         onChange: jest.fn(),
         formFields,
@@ -68,6 +76,38 @@ describe('Editor for a single conditional', () => {
         expect(component.find({type: 'checkbox', checked: true}).length).toBe(4);
     });
 
+    test('ConditionalLine with a number field as value', () => {
+        const line = {
+            "parent": "rw7802324828821689",
+            "field": "fld_1705245",
+            "compare": "greater",
+            "value": "5"
+        };
+        const props = {line,strings,formFields,isFirst:true};
+        const component = renderer.create(
+            <ConditionalLine
+                {...props}
+            />
+        );
+        expect(component.toJSON()).toMatchSnapshot();
+    })
+
+    test('ConditionalLine with a checkbox field as value', () => {
+        const line = {
+            "parent": "rw7802324828821689",
+            "field": "fld_5216203",
+            "compare": "greater",
+            "value": "opt1184564"
+        };
+        const props = {line,strings,formFields,isFirst:true};
+        const component = renderer.create(
+            <ConditionalLine
+                {...props}
+            />
+        );
+        expect(component.toJSON()).toMatchSnapshot();
+    })
+
 
 })
-;
+

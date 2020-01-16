@@ -1,6 +1,5 @@
 import React from 'react';
 import {NewGroupName} from "./Conditionals";
-import {getFieldsNotAllowedForConditional} from "../stateFactory";
 
 /**
  * The section to set which fields it applies to
@@ -75,34 +74,40 @@ export const AppliesToFields = ({formFields, fieldsUsed, appliedFields, notAllow
     );
 };
 
+const isFieldTypeWithOptions = (fieldType) => ['dropdown','checkbox', 'radio','filtered_select2','toggle_switch'];
+
+
 /**
  * One line in a group
  *
  * @since 1.8.10
  *
- * @param line
- * @param strings
- * @param isFirst
- * @param fieldOptions
+ * @param line The single line of conditional rule.
+ * @param {} strings Translation field
+ * @param boolean isFirst
+ * @param formFields The fields in the form. Array.
  * @returns {*}
  * @constructor
  */
-const ConditionalLine = ({line, strings, isFirst, fieldOptions}) => {
+export const ConditionalLine = ({line, strings, isFirst, formFields}) => {
+    const {value,field,compare} = line;
+    const fieldConfig = React.useMemo(() => {
+        return formFields.find( f => f.ID === field )
+    },[field]);
 
     return (
         <div key={line.id} className={`caldera-condition-line condition-line-${line.id}`}>
-                        <span style={{display: "inline-block"}}>
-                            {isFirst ? <React.Fragment>{strings['if']}</React.Fragment> :
-                                <React.Fragment>{strings['and']}</React.Fragment>}
-                        </span>
-
+            <span style={{display: "inline-block"}}>
+                {isFirst ? <React.Fragment>{strings['if']}</React.Fragment> : <React.Fragment>{strings['and']}</React.Fragment>}
+            </span>
             <select
                 style={{maxWidth: "120px", verticalAlign: 'inherit'}}
                 className="condition-line-field"
+                value={field}
             >
                 <option/>
                 <optgroup label={strings['fields']}>
-                    {fields.map(field => (
+                    {formFields.map(field => (
                         <option value={field.id}>
                             {field.label} [{field.slug}]
                         </option>
@@ -111,22 +116,30 @@ const ConditionalLine = ({line, strings, isFirst, fieldOptions}) => {
             </select>
             <select
                 className="condition-line-compare"
+                value={compare}
                 style={{maxWidth: "120px", verticalAlign: 'inherit'}}
             >
                 {['is', 'isnot', 'greater', 'smaller', 'startswith', 'endswith', 'contains'].map(compareType => (
                     <option key={compareType} value={compareType}>{compareType}</option>
                 ))}
-
             </select>
-            {fieldOptions ? (<select
+            {isFieldTypeWithOptions(fieldConfig.type ) ? (
+                <select
+                    value={value}
                     style={{maxWidth: "165px", verticalAlign: 'inherit'}}>
                     <option/>
-                    {fieldOptions.map(option => <option key={option.value}
-                                                        value={option.value}>{option.label}</option>)}
+                    {formFields.map(option => (
+                        <option
+                            key={option.value}
+                            value={option.value}>
+                            {option.label}
+                        </option>)
+                    )}
 
                 </select>
             ) : (
                 <input
+                    value={value}
                     type="text"
                     className="magic-tag-enabled block-input"
                 />
@@ -145,17 +158,21 @@ const ConditionalLine = ({line, strings, isFirst, fieldOptions}) => {
  * @returns {*}
  * @constructor
  */
-const ConditionalLines = ({lines, strings}) => {
-
+const ConditionalLines = ({lines, strings,formFields}) => {
     let isFirst = true;
     return (
         <div className="caldera-condition-group caldera-condition-lines">
             {lines.map(line => {
-                const r = (
-                    <ConditionalLine line={line} isFirst={isFirst} strings={strings}/>
+                const Line = (
+                    <ConditionalLine
+                        line={line}
+                        isFirst={isFirst}
+                        strings={strings}
+                        formFields={formFields}
+                    />
                 );
                 isFirst = false;
-                return r;
+                return <Line />
             })}
 
             <div style={{margin: "12px 0 0"}}>
@@ -176,14 +193,14 @@ const ConditionalLines = ({lines, strings}) => {
  */
 const Conditional = ({conditional,formFields, strings,id,onAddConditional,onRemoveConditional,onUpdateConditional, fieldsNotAllowed,fieldsUsed}) => {
     const {name,type,config} = conditional;
-
+    const group = config && config.hasOwnProperty('group' ) ? config.group : {};
     const onAddLine = () => {
     };
     return (
         <div className="caldera-editor-condition-config caldera-forms-condition-edit"
              style={{marginTop: '-27px', width: "auto"}}
         >
-            {name ? (
+            {! name ? (
                 <NewGroupName placeholder={strings['new-group-name']} id={id}/>
             ) : (
                 <div
@@ -200,7 +217,7 @@ const Conditional = ({conditional,formFields, strings,id,onAddConditional,onRemo
                                 type="text"
                                 name={`conditions[${id}][name]`}
                                 id={`condition-group-name-${id}`}
-                                value="{{name}}"
+                                value={name}
                                 required
                                 className="required block-input condition-group-name"
                             />
@@ -211,7 +228,9 @@ const Conditional = ({conditional,formFields, strings,id,onAddConditional,onRemo
                         <label htmlFor={`condition-group-type-${id}`}>
                             {strings.type}
                         </label>
-                        <div className="caldera-config-field">
+                        <div
+                            value={type}
+                            className="caldera-config-field">
                             <select
                                 id={`condition-group-type-${id}`}
                                 name={`conditions[${id}][type]`}
@@ -245,6 +264,10 @@ const Conditional = ({conditional,formFields, strings,id,onAddConditional,onRemo
                         type="button"
                         className="block-input button"
                         data-confirm={strings['confirm-remove']}
+                        onClick={e => {
+                            e.preventDefault();
+                            onRemoveConditional(id)
+                        }}
                     >
                         {strings['remove-condition']}
                     </button>
@@ -255,32 +278,5 @@ const Conditional = ({conditional,formFields, strings,id,onAddConditional,onRemo
     )
 };
 
-/**
- * Get the fields that this conditional group applies to.
- *
- * @since 1.8.10
- *
- * @param fields
- * @param group
- * @returns {[]}
- */
-Conditional.getNotAllowedFields = (fields,group) => {
-    const applied = [];
-    return applied;
-};
-
-/**
- * Get the fields used in the rules of this conditional, which can therefore NOT be applied
- *
- * @since 1.8.0
- *
- * @param fields
- * @param group
- * @returns {[]}
- */
-Conditional.getUsedFields = (fields,group) => {
-    const used = [];
-    return used;
-};
 
 export default  Conditional;

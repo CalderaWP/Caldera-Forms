@@ -58,7 +58,7 @@ describe('Using fields with conditionals', () => {
     };
 
 
-    it.only('Sets field for conditional', () => {
+    it('Sets field for conditional', () => {
         createForm('Sets field for conditional', false);
         cy.get( '.layout-form-field' ).should('have.length', 7);
         clickConditionalsTab();
