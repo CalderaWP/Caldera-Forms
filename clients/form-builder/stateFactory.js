@@ -64,6 +64,61 @@ function addInitialMagicTypes(system_values,state) {
 
 }
 
+
+
+/**
+ * Get all fields used by all conditional groups
+ *
+ * @since 1.8.10
+ *
+ * @param {cfEditorState }state
+ * @returns {*}
+ */
+export const getAllFieldsUsed = (state) => {
+    const groups =  state.getAllConditionals();
+    if( ! groups.length ){
+        return [];
+    }
+
+    return groups.map((conditional) => {
+        return conditional.hasOwnProperty('config') && conditional.config.hasOwnProperty('fields')
+            ? Object.values(conditional.config.fields) : null
+    });
+};
+
+/**
+ * Get the fields used by a conditional group.
+ *
+ * @since 1.8.10
+ *
+ * @param conditionalId
+ * @param {cfEditorState }state
+ */
+export const getFieldsUsedByConditional = (conditionalId,state) => {
+    const conditional = state.getConditional(conditionalId);
+    if( ! conditional ){
+        return [];
+    }
+
+    if( ! conditional.hasOwnProperty('config') || !  conditional.config.hasOwnProperty('fields') ) {
+        return [];
+    }
+    return  Object.values(conditional.config.fields);
+};
+
+/**
+ * Get the fields that can not be used by a conditional group.
+ *
+ * @since 1.8.10
+ *
+ * @param conditionalId
+ * @param {cfEditorState }state
+ */
+export const getFieldsNotAllowedForConditional = (conditionalId,state) => {
+    return [];
+}
+
+
 /**
  * Factory for editor state management
  *

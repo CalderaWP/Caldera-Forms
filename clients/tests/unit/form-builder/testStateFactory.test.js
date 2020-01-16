@@ -1,4 +1,8 @@
-import stateFactory from "../../../form-builder/stateFactory";
+import stateFactory, {
+    getAllFieldsUsed,
+    getFieldsNotAllowedForConditional,
+    getFieldsUsedByConditional
+} from "../../../form-builder/stateFactory";
 
 describe('State factory', () => {
     const system_values = {
@@ -327,4 +331,61 @@ describe('State factory', () => {
         expect(state.getAllConditionals().length).toBe(1);
     });
 
+    test( 'getAllFieldsUsed utility method', () => {
+        const factory = stateFactory(system_values, current_form_fields);
+        const state = factory.createState();
+        state.addConditional(conditional);
+
+        expect(getAllFieldsUsed(state).length).toBe(1);
+
+        //Add two more conditions
+        state.addConditional({
+            id: 'r2', type: "enable",
+            config: {name: 'r2', fields: {c2: 'fld2'}}
+        });
+        //This one uses one of the same fields as previous
+        state.addConditional({
+            id: 'r3', type: "enable",
+            config: {name: 'r2', fields: {c5: 'fld_4', c6: 'fld2'}}
+        });
+
+        expect(getAllFieldsUsed(state).length).toBe(3);
+    });
+
+    test( 'getFieldsUsedByConditional utility method',( ) => {
+        const factory = stateFactory(system_values, current_form_fields);
+        const state = factory.createState();
+        state.addConditional({
+            id: 'none', type: "enable",
+            config: {name: 'No fields'}
+        });
+        expect( getFieldsUsedByConditional('none', state).length ).toBe(0);
+
+        state.addConditional({
+            id: 'r3', type: "enable",
+            config: {name: 'r threee', fields: {c5: 'fld_4', c6: 'fld2'}}
+        });
+        expect( getFieldsUsedByConditional('r3', state).length ).toBe(2);
+    });
+
+    test( 'getFieldsNotAllowedForConditional utility method',( ) => {
+        const factory = stateFactory(system_values, current_form_fields);
+        const state = factory.createState();
+        state.addConditional({
+            id: 'none', type: "enable",
+            config: {name: 'No fields'}
+        });
+        expect( getFieldsUsedByConditional('none', state).length ).toBe(0);
+
+
+        state.addConditional({
+            id: 'r3', type: "enable",
+            config: {name: 'r threee', fields: {c5: 'fld_4', c6: 'fld2'}}
+        });
+        //No other conditionals have fields used, so all fields are allowed.
+        expect( getFieldsNotAllowedForConditional('r3', state).length ).toBe(0);
+
+        //Other conditional group has 2 fields applied, so those are blocked
+        expect( getFieldsNotAllowedForConditional('none', state).length ).toBe(2);
+    })
 });

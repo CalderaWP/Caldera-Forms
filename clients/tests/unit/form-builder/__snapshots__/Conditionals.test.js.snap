@@ -1,100 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[` 1`] = `
-<div
-  className="caldera-editor-conditions-panel"
-  style={
-    Object {
-      "marginBottom": "32px",
-    }
-  }
->
-  <ul
-    className="active-conditions-list"
-  >
-    <li
-      className="caldera-condition-nav undefined caldera-forms-condition-group condition-point-con_3840644613791445"
-    >
-      <a
-        className="condition-open-group"
-        data-open-group="con_3840644613791445"
-        style={
-          Object {
-            "cursor": "pointer",
-          }
-        }
-      >
-        <span
-          id="condition-group-con_3840644613791445"
-        >
-          Hide Number
-        </span>
-        <span
-          className="condition-line-number"
-        />
-      </a>
-    </li>
-    <li
-      className="caldera-condition-nav undefined caldera-forms-condition-group condition-point-con_3156693554561454"
-    >
-      <a
-        className="condition-open-group"
-        data-open-group="con_3156693554561454"
-        style={
-          Object {
-            "cursor": "pointer",
-          }
-        }
-      >
-        <span
-          id="condition-group-con_3156693554561454"
-        >
-          Hide Dropdown
-        </span>
-        <span
-          className="condition-line-number"
-        />
-      </a>
-    </li>
-    <li
-      className="caldera-condition-nav undefined caldera-forms-condition-group condition-point-con_8761120514939434"
-    >
-      <a
-        className="condition-open-group"
-        data-open-group="con_8761120514939434"
-        style={
-          Object {
-            "cursor": "pointer",
-          }
-        }
-      >
-        <span
-          id="condition-group-con_8761120514939434"
-        >
-          Hide Number 2
-        </span>
-        <span
-          className="condition-line-number"
-        />
-      </a>
-    </li>
-  </ul>
-</div>
-`;
-
-exports[`Conditionals New group name field 1`] = `
-<input
-  className="condition-new-group-name"
-  name="conditions[undefined][name]"
-  style={
-    Object {
-      "width": "100%",
-    }
-  }
-  type="text"
-/>
-`;
-
 exports[`Conditionals New group name field renders 1`] = `
 <input
   className="condition-new-group-name"
@@ -125,7 +30,7 @@ exports[`Conditionals Renders list 1`] = `
     >
       <a
         className="condition-open-group"
-        data-open-group="con_3840644613791445"
+        onClick={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -147,7 +52,7 @@ exports[`Conditionals Renders list 1`] = `
     >
       <a
         className="condition-open-group"
-        data-open-group="con_3156693554561454"
+        onClick={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -169,7 +74,7 @@ exports[`Conditionals Renders list 1`] = `
     >
       <a
         className="condition-open-group"
-        data-open-group="con_8761120514939434"
+        onClick={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -194,7 +99,7 @@ exports[`Conditionals Renders new conditional button 1`] = `
 <button
   className="button"
   id="new-conditional"
-  onClick={[MockFunction]}
+  onClick={[Function]}
   style={
     Object {
       "width": "250px",

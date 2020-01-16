@@ -1,5 +1,5 @@
 import React from 'react';
-import {ConditionalsList,NewConditionalButton,NewGroupName} from "../../../form-builder/components/Conditionals";
+import {ConditionalsList, NewConditionalButton, NewGroupName} from "../../../form-builder/components/Conditionals";
 import testForm from './test-form';
 import renderer from 'react-test-renderer';
 
@@ -14,7 +14,7 @@ describe('Conditionals', () => {
         expect(component.toJSON()).toMatchSnapshot();
     });
 
-    it( 'Renders new conditional button', () => {
+    it('Renders new conditional button', () => {
         const component = renderer.create(
             <NewConditionalButton
                 text={'New'}
@@ -24,7 +24,7 @@ describe('Conditionals', () => {
         expect(component.toJSON()).toMatchSnapshot();
     });
 
-    it( 'New group name field renders',() => {
+    it('New group name field renders', () => {
         const props = {placeholder: 'Placeholder', onChange: jest.fn(), id: 'f', value: 'val'};
         const component = renderer.create(
             <NewGroupName
@@ -34,5 +34,6 @@ describe('Conditionals', () => {
         );
         expect(component.toJSON()).toMatchSnapshot();
     });
+
 
 });
