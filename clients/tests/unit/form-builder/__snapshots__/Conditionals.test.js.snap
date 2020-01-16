@@ -82,6 +82,32 @@ exports[` 1`] = `
 </div>
 `;
 
+exports[`Conditionals New group name field 1`] = `
+<input
+  className="condition-new-group-name"
+  name="conditions[undefined][name]"
+  style={
+    Object {
+      "width": "100%",
+    }
+  }
+  type="text"
+/>
+`;
+
+exports[`Conditionals New group name field renders 1`] = `
+<input
+  className="condition-new-group-name"
+  name="conditions[undefined][name]"
+  style={
+    Object {
+      "width": "100%",
+    }
+  }
+  type="text"
+/>
+`;
+
 exports[`Conditionals Renders list 1`] = `
 <div
   className="caldera-editor-conditions-panel"

@@ -43,8 +43,7 @@ export const ConditionalsList = ({conditionals, onChooseItem}) => {
     return (
         <div className="caldera-editor-conditions-panel" style={{marginBottom: "32px"}}>
             <ul className="active-conditions-list">
-                {conditionals.map(condition => <ConditionalListItem key={condition.id} {...condition}
-                                                                    onChooseItem={onChooseItem}/>)}
+                {conditionals.map(condition => <ConditionalListItem key={condition.id} {...condition} onChooseItem={onChooseItem}/>)}
             </ul>
         </div>
     )
@@ -61,14 +60,16 @@ export const ConditionalsList = ({conditionals, onChooseItem}) => {
  * @returns {*}
  * @constructor
  */
-export const NewGroupName = ({placeholder, onChange, id}) => {
+export const NewGroupName = ({placeholder, onChange, id, value}) => {
     return (
-        <input type="text"
-               name={`conditions[${id}][name]`}
-               value="{{name}}"
-               className="condition-new-group-name"
-               placeholder={placeholder}
-               style={{width: "100%"}}
+        <input
+            type="text"
+            name={`conditions[${id}][name]`}
+            value={value}
+            className="condition-new-group-name"
+            placeholder={placeholder}
+            style={{width: "100%"}}
+            onChange={onChange}
         />
     )
 };
@@ -84,7 +85,7 @@ export const NewGroupName = ({placeholder, onChange, id}) => {
  * @returns {*}
  * @constructor
  */
-const AppliesToFields = ({fields, fieldsUsed, appliedFields, strings, onChange, groupId}) => {
+export const AppliesToFields = ({fields, fieldsUsed, appliedFields, strings, onChange, groupId}) => {
 
     return (
         <div style={{float: 'left', width: '288px', paddingLeft: '12px'}}>
