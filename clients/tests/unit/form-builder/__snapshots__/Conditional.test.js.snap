@@ -175,6 +175,7 @@ exports[`Editor for a single conditional ConditionalLine with a checkbox field a
   </span>
   <select
     className="condition-line-field"
+    onChange={[Function]}
     style={
       Object {
         "maxWidth": "120px",
@@ -225,6 +226,7 @@ exports[`Editor for a single conditional ConditionalLine with a checkbox field a
   </select>
   <select
     className="condition-line-compare"
+    onChange={[Function]}
     style={
       Object {
         "maxWidth": "120px",
@@ -270,6 +272,7 @@ exports[`Editor for a single conditional ConditionalLine with a checkbox field a
     </option>
   </select>
   <select
+    onChange={[Function]}
     style={
       Object {
         "maxWidth": "165px",
@@ -298,6 +301,14 @@ exports[`Editor for a single conditional ConditionalLine with a checkbox field a
       Back
     </option>
   </select>
+  <button
+    className="button pull-right"
+    type="button"
+  >
+    <i
+      className="icon-join"
+    />
+  </button>
 </div>
 `;
 
@@ -316,6 +327,7 @@ exports[`Editor for a single conditional ConditionalLine with a number field as 
   </span>
   <select
     className="condition-line-field"
+    onChange={[Function]}
     style={
       Object {
         "maxWidth": "120px",
@@ -366,6 +378,7 @@ exports[`Editor for a single conditional ConditionalLine with a number field as 
   </select>
   <select
     className="condition-line-compare"
+    onChange={[Function]}
     style={
       Object {
         "maxWidth": "120px",
@@ -411,6 +424,7 @@ exports[`Editor for a single conditional ConditionalLine with a number field as 
     </option>
   </select>
   <select
+    onChange={[Function]}
     style={
       Object {
         "maxWidth": "165px",
@@ -439,5 +453,13 @@ exports[`Editor for a single conditional ConditionalLine with a number field as 
       Back
     </option>
   </select>
+  <button
+    className="button pull-right"
+    type="button"
+  >
+    <i
+      className="icon-join"
+    />
+  </button>
 </div>
 `;

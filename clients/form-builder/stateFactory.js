@@ -94,7 +94,7 @@ export const getAllFieldsUsed = (state) => {
 };
 
 /**
- * Get the fields used by a conditional group.
+ * Get the fields this conditional group applies to.
  *
  * @since 1.8.10
  *

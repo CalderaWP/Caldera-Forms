@@ -1,7 +1,7 @@
 import React from 'react';
 import cfEditorState from "@calderajs/cf-editor-state";
 import Conditional from './Conditional';
-import {getFieldsNotAllowedForConditional} from "../stateFactory";
+import {getFieldsNotAllowedForConditional, getFieldsUsedByConditional} from "../stateFactory";
 
 /**
  * One item in the conditionals list
@@ -137,7 +137,15 @@ export default function ({state, strings, formFields}) {
             return  [];
         }
         return getFieldsNotAllowedForConditional(openCondition,state);
-    },[openCondition,]);
+    },[openCondition]);
+
+    const getFieldsAppliedForOpenConditional = React.useCallback( () => {
+        if( ! openCondition ){
+            return  [];
+        }
+        return getFieldsUsedByConditional(openCondition,state);
+    }, [openCondition]);
+
 
     /**
      * Callback for adding conditional
@@ -168,7 +176,6 @@ export default function ({state, strings, formFields}) {
     };
 
 
-
     return (
         <React.Fragment>
             <NewConditionalButton
@@ -185,8 +192,11 @@ export default function ({state, strings, formFields}) {
                 formFields={formFields}
                 id={openCondition}
                 strings={strings}
+                fieldsUsed={getFieldsAppliedForOpenConditional()}
+                fieldsNotAllowed={getFieldsNotAllowedForOpenConditional()}
                 onAddConditional={onAddConditional}
                 onRemoveConditional={onRemoveConditional}
+                onUpdateConditional={state.updateConditional}
             />
             }
         </React.Fragment>
