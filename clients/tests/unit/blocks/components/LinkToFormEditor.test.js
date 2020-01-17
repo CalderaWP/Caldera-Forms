@@ -1,8 +1,9 @@
+import React from 'react';
+
 import renderer from 'react-test-renderer';
 import {shallow} from 'enzyme';
 import {LinkToFormEditor} from "../../../../blocks/components/LinkToFormEditor";
 import EnzymeAdapter from '../../createEnzymeAdapter'
-import React from 'react';
 
 describe( 'Tests for LinkToFormEditor', () => {
 

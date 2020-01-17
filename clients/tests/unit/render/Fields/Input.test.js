@@ -1,3 +1,4 @@
+import React from 'react';
 import renderer from 'react-test-renderer';
 import{Input} from "../../../../render/components/Fields/Input";
 describe( 'Input field', () => {
