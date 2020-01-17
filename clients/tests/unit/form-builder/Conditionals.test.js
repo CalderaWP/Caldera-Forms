@@ -24,16 +24,4 @@ describe('Conditionals', () => {
         expect(component.toJSON()).toMatchSnapshot();
     });
 
-    it('New group name field renders', () => {
-        const props = {placeholder: 'Placeholder', onChange: jest.fn(), id: 'f', value: 'val'};
-        const component = renderer.create(
-            <NewGroupName
-                text={'New'}
-                onClick={jest.fn()}
-            />
-        );
-        expect(component.toJSON()).toMatchSnapshot();
-    });
-
-
 });

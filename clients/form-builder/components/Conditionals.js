@@ -41,15 +41,33 @@ const ConditionalListItem = ({active, condition, onChooseItem}) => {
  * @since 1.8.10
  *
  * @param conditionals
+ * @param onChooseItem
+ * @param strings
+ * @param onNewConditional
  * @returns {*}
  * @constructor
  */
 export const ConditionalsList = ({conditionals, onChooseItem, strings, onNewConditional}) => {
+    //Tracks the new group's name
     const [newGroupName, setNewGroupName] = React.useState('');
+
+    //Tracks the new group's ID
     const [newGroupId, setNewGroupId] = React.useState('');
+
+    //Should we show new group name input?
     const [showNewGroupName, setShowNewGroupName] = React.useState(false);
+
+    //Ref for new group name input so we can control focus.
     let newNameInputRef = React.createRef();
 
+    /**
+     * When new group name input is blurred:
+     * * If has name, add group and hide new group name.
+     * * If no name, hide new group name.
+     *
+     * @since 1.8.10
+     *
+     */
     const onNewBlur = () => {
         if (newGroupName.length) {
             onNewConditional(newGroupName, newGroupId);
@@ -61,13 +79,19 @@ export const ConditionalsList = ({conditionals, onChooseItem, strings, onNewCond
         }
     };
 
+    /**
+     * When we click on the new group button:
+     * * Create ID for group
+     * * Show new group name input
+     * * Focus new group name input
+     *
+     * @since 1.8.10
+     */
     const onClickNew = () => {
         const id = `con_${Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5)}`;
-
         setNewGroupId(id);
         setShowNewGroupName(true);
         setNewGroupName('');
-        console.log(newNameInputRef);
         newNameInputRef.current.focus();
     };
 
@@ -107,32 +131,6 @@ export const ConditionalsList = ({conditionals, onChooseItem, strings, onNewCond
 };
 
 /**
- * Set name for a group
- *
- * @since 1.8.10
- *
- * @param placeholder
- * @param onChange
- * @param id
- * @returns {*}
- * @constructor
- */
-export const NewGroupName = ({placeholder, onChange, id, value}) => {
-    return (
-        <input
-            type="text"
-            name={`conditions[${id}][name]`}
-            value={value}
-            className="condition-new-group-name"
-            placeholder={placeholder}
-            style={{width: "100%"}}
-            onChange={onChange}
-        />
-    )
-};
-
-
-/**
  * A button to add a new conditional with
  *
  * @param text
@@ -164,7 +162,7 @@ export const NewConditionalButton = ({text, onClick}) => {
  * @param strings
  * @returns {*}
  */
-export default function ({state, strings, formFields}) {
+export default function ({state, strings, formFields,conditionals,updateConditional,addConditional,removeConditional}) {
 
     /**
      * Tracks the open conditional
@@ -205,17 +203,8 @@ export default function ({state, strings, formFields}) {
      * @param name
      */
     const onNewConditional = (name, id) => {
-        state.addConditional({type: 'show', config: {name}, id});
+        addConditional({type: 'show', config: {name}, id});
         setOpenCondition(id);
-    };
-
-    /**
-     * Callback for adding conditional
-     * @param name
-     */
-    const onAddConditional = (conditionalId) => {
-        state.removeConditional(conditionalId);
-        setOpenCondition('');
     };
 
     /**
@@ -223,7 +212,7 @@ export default function ({state, strings, formFields}) {
      * @param name
      */
     const onRemoveConditional = (conditionalId) => {
-        state.removeConditional(conditionalId);
+        removeConditional(conditionalId);
         setOpenCondition('');
     };
 
@@ -231,7 +220,7 @@ export default function ({state, strings, formFields}) {
     return (
         <React.Fragment>
             <ConditionalsList
-                conditionals={state.getAllConditionals()}
+                conditionals={conditionals}
                 onChooseItem={setOpenCondition}
                 strings={strings}
                 onNewConditional={onNewConditional}
@@ -245,12 +234,8 @@ export default function ({state, strings, formFields}) {
                 strings={strings}
                 fieldsUsed={getFieldsAppliedForOpenConditional()}
                 fieldsNotAllowed={getFieldsNotAllowedForOpenConditional()}
-                onAddConditional={onAddConditional}
                 onRemoveConditional={onRemoveConditional}
-                onUpdateConditional={(update) => {
-                    console.log(update);
-                    state.updateConditional(update)
-                }}
+                onUpdateConditional={(updateConditional}
             />
             }
         </React.Fragment>
