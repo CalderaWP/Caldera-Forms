@@ -4,7 +4,6 @@ import Conditional from './Conditional';
 import {getFieldsNotAllowedForConditional, getFieldsUsedByConditional} from "../stateFactory";
 
 
-
 /**
  * One item in the conditionals list
  *
@@ -18,7 +17,7 @@ import {getFieldsNotAllowedForConditional, getFieldsUsedByConditional} from "../
  */
 const ConditionalListItem = ({active, condition, onChooseItem}) => {
     const {id} = condition;
-    const name = React.useRef( condition.hasOwnProperty('config' ) && condition.config.hasOwnProperty('name' ) ? condition.config.name : '' );
+    const name = React.useRef(condition.hasOwnProperty('config') && condition.config.hasOwnProperty('name') ? condition.config.name : '');
     return (
         <li className={`caldera-condition-nav ${active} caldera-forms-condition-group condition-point-${id}`}>
             <a className="condition-open-group" onClick={(e) => {
@@ -45,13 +44,64 @@ const ConditionalListItem = ({active, condition, onChooseItem}) => {
  * @returns {*}
  * @constructor
  */
-export const ConditionalsList = ({conditionals, onChooseItem}) => {
+export const ConditionalsList = ({conditionals, onChooseItem, strings, onNewConditional}) => {
+    const [newGroupName, setNewGroupName] = React.useState('');
+    const [newGroupId, setNewGroupId] = React.useState('');
+    const [showNewGroupName, setShowNewGroupName] = React.useState(false);
+    let newNameInputRef = React.createRef();
+
+    const onNewBlur = () => {
+        if (newGroupName.length) {
+            onNewConditional(newGroupName, newGroupId);
+            setShowNewGroupName(false);
+        } else {
+            setShowNewGroupName(false);
+            setNewGroupName('');
+            setNewGroupId('');
+        }
+    };
+
+    const onClickNew = () => {
+        const id = `con_${Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5)}`;
+
+        setNewGroupId(id);
+        setShowNewGroupName(true);
+        setNewGroupName('');
+        console.log(newNameInputRef);
+        newNameInputRef.current.focus();
+    };
+
     return (
         <div className="caldera-editor-conditions-panel" style={{marginBottom: "32px"}}>
             <ul className="active-conditions-list">
-                {conditionals.map(condition => <ConditionalListItem key={condition.id} condition={condition}
-                                                                    onChooseItem={onChooseItem}/>)}
+                {conditionals.map(condition => (
+                        <ConditionalListItem
+                            key={condition.id}
+                            condition={condition}
+                            onChooseItem={onChooseItem}
+                        />
+                    )
+                )}
             </ul>
+            {!showNewGroupName && <NewConditionalButton
+                text={strings['new-conditional']}
+                onClick={onClickNew}
+            />}
+            {showNewGroupName &&
+            <input
+                type="text"
+                name={`conditions[${newGroupId}][name]`}
+                value={newGroupName}
+                className="condition-new-group-name"
+                placeholder={strings['new-group-name']}
+                style={{width: "100%"}}
+                onChange={(e) => setNewGroupName(e.target.value)}
+                ref={newNameInputRef}
+                onBlur={onNewBlur}
+            />
+            }
+
+
         </div>
     )
 };
@@ -126,11 +176,11 @@ export default function ({state, strings, formFields}) {
      * @type {Function}
      */
     const getFieldsNotAllowedForOpenConditional = () => {
-        if( ! openCondition ){
-            return  [];
+        if (!openCondition) {
+            return [];
         }
 
-        const fieldsNotAllowed = getFieldsNotAllowedForConditional(openCondition,state);
+        const fieldsNotAllowed = getFieldsNotAllowedForConditional(openCondition, state);
         return undefined === fieldsNotAllowed ? [] : fieldsNotAllowed;
 
     };
@@ -142,11 +192,11 @@ export default function ({state, strings, formFields}) {
      *
      * @type {Function}
      */
-    const getFieldsAppliedForOpenConditional = React.useCallback( () => {
-        if( ! openCondition ){
-            return  [];
+    const getFieldsAppliedForOpenConditional = React.useCallback(() => {
+        if (!openCondition) {
+            return [];
         }
-        return getFieldsUsedByConditional(openCondition,state);
+        return getFieldsUsedByConditional(openCondition, state);
     }, [openCondition]);
 
 
@@ -154,10 +204,8 @@ export default function ({state, strings, formFields}) {
      * Callback for adding conditional
      * @param name
      */
-    const onNewConditional = (name) => {
-        const id = `con_${Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5)}`
+    const onNewConditional = (name, id) => {
         state.addConditional({type: 'show', config: {name}, id});
-        console.log(id,name)
         setOpenCondition(id);
     };
 
@@ -182,14 +230,13 @@ export default function ({state, strings, formFields}) {
 
     return (
         <React.Fragment>
-            <NewConditionalButton
-                text={strings['new-conditional']}
-                onClick={onNewConditional}
-            />
             <ConditionalsList
                 conditionals={state.getAllConditionals()}
                 onChooseItem={setOpenCondition}
+                strings={strings}
+                onNewConditional={onNewConditional}
             />
+
             {openCondition &&
             <Conditional
                 conditional={state.getConditional(openCondition)}
@@ -200,7 +247,10 @@ export default function ({state, strings, formFields}) {
                 fieldsNotAllowed={getFieldsNotAllowedForOpenConditional()}
                 onAddConditional={onAddConditional}
                 onRemoveConditional={onRemoveConditional}
-                onUpdateConditional={state.updateConditional}
+                onUpdateConditional={(update) => {
+                    console.log(update);
+                    state.updateConditional(update)
+                }}
             />
             }
         </React.Fragment>

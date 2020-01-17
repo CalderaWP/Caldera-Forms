@@ -14,7 +14,7 @@ services:
       - wordpress:/var/www/html
       - ./wp-content/plugins:/var/www/html/wp-content/plugins
       - .:/var/www/html/wp-content/plugins/caldera-forms
-
+      - ./caldera-core.php:/var/www/html/wp-content/plugins/caldera-forms/caldera-core.php
   cli:
     image: wordpress:cli
     volumes:

@@ -1,6 +1,4 @@
 import React, {Fragment} from 'react';
-import {NewGroupName} from "./Conditionals";
-import {getFieldsUsedByConditional} from "../stateFactory";
 
 /**
  * The section to set which fields it applies to
@@ -26,7 +24,7 @@ export const AppliesToFields = ({formFields, fieldsUsed, notAllowedFields, strin
      * @returns {*}
      */
     function isFieldDisabled(fieldId) {
-        if( undefined === notAllowedFields ){
+        if (undefined === notAllowedFields) {
             return false;
         }
         return notAllowedFields.includes(fieldId);
@@ -95,11 +93,11 @@ const isFieldTypeWithOptions = (fieldType) => ['dropdown', 'checkbox', 'radio', 
  * @returns {*}
  * @constructor
  */
-export const ConditionalLine = ({line, strings, isFirst, formFields,onRemoveLine,onUpdateLine}) => {
+export const ConditionalLine = ({line, strings, isFirst, formFields, onRemoveLine, onUpdateLine}) => {
     const {value, field, compare} = line;
     const fieldConfig = React.useMemo(() => {
-        const config =  formFields.find(f => f.ID === field);
-        if( config ){
+        const config = formFields.find(f => f.ID === field);
+        if (config) {
             return config;
         }
         return {
@@ -114,7 +112,7 @@ export const ConditionalLine = ({line, strings, isFirst, formFields,onRemoveLine
      */
     const onChangeField = (field) => {
         onUpdateLine({
-            field,compare,value,
+            field, compare, value,
         })
     };
 
@@ -127,7 +125,7 @@ export const ConditionalLine = ({line, strings, isFirst, formFields,onRemoveLine
      */
     const onChangeValue = (value) => {
         onUpdateLine({
-            field,compare,value,
+            field, compare, value,
         })
     };
 
@@ -140,7 +138,7 @@ export const ConditionalLine = ({line, strings, isFirst, formFields,onRemoveLine
      */
     const onChangeCompare = (compare) => {
         onUpdateLine({
-            field,compare,value,
+            field, compare, value,
         })
     };
 
@@ -159,7 +157,7 @@ export const ConditionalLine = ({line, strings, isFirst, formFields,onRemoveLine
                 <option/>
                 <optgroup label={strings['fields']}>
                     {formFields.map(field => (
-                        <option value={field.id}>
+                        <option value={field.ID}>
                             {field.label} [{field.slug}]
                         </option>
                     ))}
@@ -221,18 +219,17 @@ export const ConditionalLine = ({line, strings, isFirst, formFields,onRemoveLine
  * @returns {*}
  * @constructor
  */
-const ConditionalLines = ({lines, strings, formFields,onRemoveLine,onUpdateLine}) => {
+const ConditionalLines = ({lines, strings, formFields, onRemoveLine, onUpdateLine}) => {
 
 
     return (
         <div className="caldera-condition-group caldera-condition-lines">
-            {lines.map((line,index) => {
-                console.log(index,line);
+            {lines.map((line, index) => {
                 return (
                     <ConditionalLine
                         line={line}
-                        isFirst={0  === index }
-                        { ...{
+                        isFirst={0 === index}
+                        {...{
                             strings,
                             formFields,
                             onRemoveLine,
@@ -260,9 +257,9 @@ const ConditionalLines = ({lines, strings, formFields,onRemoveLine,onUpdateLine}
  */
 const Conditional = ({conditional, formFields, strings, onRemoveConditional, onUpdateConditional, fieldsNotAllowed, fieldsUsed}) => {
 
-    const { type, config,id} = conditional;
+    const {type, config, id} = conditional;
     const group = config && config.hasOwnProperty('group') ? config.group : {};
-    const name = conditional.hasOwnProperty('config' ) && conditional.config.hasOwnProperty('name' ) ? conditional.config.name : '';
+    const name = conditional.hasOwnProperty('config') && conditional.config.hasOwnProperty('name') ? conditional.config.name : '';
     const onAddLine = () => {
         const id = `cl_${Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5)}`
         onUpdateConditional({
@@ -289,12 +286,12 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
      * @param line
      * @param lineId
      */
-    const onUpdateLine = (line,lineId) => {
+    const onUpdateLine = (line, lineId) => {
         let groups = group;
-        const groupId  = line.parent;
+        const groupId = line.parent;
         onUpdateConditional({
             ...conditional,
-            config:{
+            config: {
                 group: groups
             }
         })
@@ -308,7 +305,7 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
      * @param lineId
      * @param groupId
      */
-    const onRemoveLine = (lineId,groupId) => {
+    const onRemoveLine = (lineId, groupId) => {
         let groups = group;
 
         delete groups[groupId][lineId];
@@ -347,7 +344,7 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
      * @param type
      * @returns {*}
      */
-    const onChangeType = (type ) => {
+    const onChangeType = (type) => {
         return onUpdateConditional({
             ...conditional,
             type
@@ -359,118 +356,111 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
         <div className="caldera-editor-condition-config caldera-forms-condition-edit"
              style={{marginTop: '-27px', width: "auto"}}
         >
-            {!name ? (
-                <NewGroupName
-                    placeholder={strings['new-group-name']}
-                    id={id}
-                    value={name}
-                    onChange={onUpdateName}
-                />
-            ) : (
+
+            <div
+                className={`condition-point-${id}`}
+                style={{float: 'left', width: "550px"}}
+            >
                 <div
-                    className={`condition-point-${id}`}
-                    style={{float: 'left', width: "550px"}}
+                    className="caldera-config-group"
                 >
+                    <label htmlFor={`condition-group-name-${id}`}>
+                        {strings.name}
+                    </label>
                     <div
-                        className="caldera-config-group"
+                        className="caldera-config-field"
                     >
-                        <label htmlFor={`condition-group-name-${id}`}>
-                            {strings.name}
-                        </label>
-                        <div
-                            className="caldera-config-field"
-                        >
-                            <input
-                                type="text"
-                                name={`conditions[${id}][name]`}
-                                id={`condition-group-name-${id}`}
-                                value={name}
-                                onChange={(e) => onUpdateName(e.target.value)}
-                                required
-                                className="required block-input condition-group-name"
-                            />
-                        </div>
+                        <input
+                            type="text"
+                            name={`conditions[${id}][name]`}
+                            id={`condition-group-name-${id}`}
+                            value={name}
+                            onChange={(e) => onUpdateName(e.target.value)}
+                            required
+                            className="required block-input condition-group-name"
+                        />
                     </div>
-
-                    <div className="caldera-config-group">
-                        <label
-                            htmlFor={`condition-group-type-${id}`}
-                        >
-                            {strings.type}
-                        </label>
-                        <div
-
-                            className="caldera-config-field"
-                        >
-                            <select
-                                value={type}
-                                onChange={(e) => onChangeType(e.target.value)}
-                                id={`condition-group-type-${id}`}
-                                name={`conditions[${id}][type]`}
-                                className="condition-group-type"
-                            >
-                                <option value=""/>
-                                <option value="show">
-                                    {strings.show}
-                                </option>
-                                <option value="hide">
-                                    {strings.hide}
-                                </option>
-                                <option value="disable">
-                                    {strings.disable}
-                                </option>
-                            </select>
-                            {type &&
-                            <button
-                                type="button"
-                                className="pull-right button button-small condition-group-add-lines"
-                                onClick={onAddLine}
-                            >
-                                {strings['add-conditional-line']}
-                            </button>
-                            }
-                        </div>
-                    </div>
-                    {Object.keys(group).map(groupId=> {
-                        const lineGroups = group[groupId];
-                            return (
-                                <Fragment>
-                                    <ConditionalLines
-                                        lines={Object.values(lineGroups)}
-                                        strings={strings}
-                                        formFields={formFields}
-                                        onUpdateLine={onUpdateLine}
-                                        onRemoveLine={onRemoveLine}
-                                    />
-                                </Fragment>
-                            )
-                        })
-
-                    }
-                    <button
-                        style={{margin: "12px 0 12px"}}
-                        type="button"
-                        className="block-input button"
-                        data-confirm={strings['confirm-remove']}
-                        onClick={e => {
-                            e.preventDefault();
-                            onRemoveConditional(id)
-                        }}
-                    >
-                        {strings['remove-condition']}
-                    </button>
-
-                    <AppliesToFields
-                        formFields={formFields}
-                        fieldsUsed={fieldsUsed}
-                        fieldsNotAllowed={fieldsNotAllowed}
-                        strings={strings}
-                        onChange={() => {
-                        }}
-                        groupId={id}
-                    />
                 </div>
-            )}
+
+                <div className="caldera-config-group">
+                    <label
+                        htmlFor={`condition-group-type-${id}`}
+                    >
+                        {strings.type}
+                    </label>
+                    <div
+
+                        className="caldera-config-field"
+                    >
+                        <select
+                            value={type}
+                            onChange={(e) => onChangeType(e.target.value)}
+                            id={`condition-group-type-${id}`}
+                            name={`conditions[${id}][type]`}
+                            className="condition-group-type"
+                        >
+                            <option value=""/>
+                            <option value="show">
+                                {strings.show}
+                            </option>
+                            <option value="hide">
+                                {strings.hide}
+                            </option>
+                            <option value="disable">
+                                {strings.disable}
+                            </option>
+                        </select>
+                        {type &&
+                        <button
+                            type="button"
+                            className="pull-right button button-small condition-group-add-lines"
+                            onClick={onAddLine}
+                        >
+                            {strings['add-conditional-line']}
+                        </button>
+                        }
+                    </div>
+                </div>
+                {Object.keys(group).map(groupId => {
+                    const lineGroups = group[groupId];
+                    return (
+                        <Fragment>
+                            <ConditionalLines
+                                lines={Object.values(lineGroups)}
+                                strings={strings}
+                                formFields={formFields}
+                                onUpdateLine={onUpdateLine}
+                                onRemoveLine={onRemoveLine}
+                            />
+                        </Fragment>
+                    )
+                })
+
+                }
+                <button
+                    style={{margin: "12px 0 12px"}}
+                    type="button"
+                    className="block-input button"
+                    data-confirm={strings['confirm-remove']}
+                    onClick={e => {
+                        e.preventDefault();
+                        onRemoveConditional(id)
+                    }}
+                >
+                    {strings['remove-condition']}
+                </button>
+
+                <AppliesToFields
+                    formFields={formFields}
+                    fieldsUsed={fieldsUsed}
+                    fieldsNotAllowed={fieldsNotAllowed}
+                    strings={strings}
+                    onChange={() => {
+                    }}
+                    groupId={id}
+                />
+            </div>
+
         </div>
     )
 };
