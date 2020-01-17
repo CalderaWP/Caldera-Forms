@@ -162,11 +162,11 @@ const conditionalFromCfConfig =  (conditionalGroup) =>{
  *
  * @since 1.8.10
  *
- * @param form
+ * @param conditions
  * @param state
  */
-export const setConditionalsFromCfConfig = (form,state) => {
-     Object.values(testForm.conditional_groups.conditions).map(group => state.addConditional(conditionalFromCfConfig(group)));
+export const setConditionalsFromCfConfig = (conditions,state) => {
+     Object.values(conditions).map(group => state.addConditional(conditionalFromCfConfig(group)));
 };
 
 /**

@@ -173,6 +173,13 @@ export default function ({state, strings, formFields, conditionals, updateCondit
     const [openCondition, setOpenCondition] = React.useState('');
     const [conditional,setConditional] = React.useState(null );
 
+    /**
+     * When conditional is opened:
+     *
+     * * update conditional
+     * * update openCondition
+     * @param conditionalId
+     */
     const onOpenConditional = (conditionalId) => {
         setConditional( conditionals.find( conditional => conditional.id === conditionalId ) );
         setOpenCondition(conditionalId);
@@ -213,7 +220,7 @@ export default function ({state, strings, formFields, conditionals, updateCondit
      */
     const onNewConditional = (name, id) => {
         addConditional({type: 'show', config: {name}, id});
-        setOpenCondition(id);
+        onOpenConditional(id);
     };
 
     /**
@@ -226,7 +233,11 @@ export default function ({state, strings, formFields, conditionals, updateCondit
     };
 
 
-
+    /**
+     * Callback for updating a conditonal.
+     *
+     * @param update
+     */
     const onUpdateConditional = (update) => {
         updateConditional(update);
         setConditional(update);

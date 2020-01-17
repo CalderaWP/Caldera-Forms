@@ -227,7 +227,7 @@ export const ConditionalLine = ({line, strings, isFirst, formFields, onRemoveLin
  * @returns {*}
  * @constructor
  */
-const ConditionalLines = ({lines, strings, formFields, onRemoveLine, onUpdateLine}) => {
+const ConditionalLines = ({lines, strings, formFields, onRemoveLine, onUpdateLine,onAddLine,groupId}) => {
     return (
         <div className="caldera-condition-group caldera-condition-lines">
             {lines.map((line, index) => {
@@ -249,6 +249,10 @@ const ConditionalLines = ({lines, strings, formFields, onRemoveLine, onUpdateLin
                 <button
                     className="button button-small condition-group-add-line"
                     type="button"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        onAddLine(groupId);
+                    }}
                 >
                     {strings['add-condition']}
                 </button>
@@ -272,13 +276,14 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
             config: {
                 ...conditional.config,
                 group: {
-                    ...group,
+                    ...conditional.config.group,
                     [groupId] : {
-                        ...conditional.config[groupId],
+                        ...conditional.config.group[groupId],
                         [id]: {
                             field: '',
                             value: '',
-                            type: ''
+                            type: '',
+                            parent: groupId,
                         }
                     }
 
@@ -314,7 +319,7 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
 
     /**
      *  Callback for removing a line from a line group
-     *  
+     *
      *  @since 1.8.10
      *
      * @param lineId
@@ -438,7 +443,6 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
                             className="pull-right button button-small condition-group-add-lines"
                             onClick={(e) => {
                                 e.preventDefault();
-                                onAddLine(groupId)
                             }}
                         >
                             {strings['add-conditional-line']}
@@ -464,6 +468,8 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
                                 formFields={formFields}
                                 onUpdateLine={(update,lineId) => onUpdateLine(update,lineId,groupId)}
                                 onRemoveLine={(lineId) => onRemoveLine(lineId,groupId)}
+                                onAddLine={() => onAddLine(groupId)}
+                                groupId={groupId}
                             />
                         </Fragment>
                     )

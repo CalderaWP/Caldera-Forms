@@ -15,16 +15,13 @@ document.addEventListener("DOMContentLoaded", function () {
     if ('object' == typeof system_values && 'object' == typeof current_form_fields) {
         const factory = stateFactory(system_values, current_form_fields);
         const strings = CF_ADMIN.strings.conditionals;
-        const App = ({factory, strings}) => {
+        const state = factory.createState();
+        const App = ({state, strings}) => {
 
-            // Tracks state management option in away we can force updates.
-            const [state,updateState] = React.useState(factory.createState());
-
-
-            const conditionals = state.getAllConditionals();
+            const [conditionals,setConditionals] = React.useState(state.getAllConditionals());
 
             //Maintains list of form fields in it's own array
-            const [formFields,setFormFields] = React.useState([]);
+            const [formFields,setFormFields] = React.useState(state.getAllFields());
 
             /**
              * Set the conditionals form was loaded with
@@ -34,11 +31,27 @@ document.addEventListener("DOMContentLoaded", function () {
             React.useEffect(() => {
                 const conditions = CF_ADMIN.hasOwnProperty('conditions') ? CF_ADMIN.conditions : [];
                 setConditionalsFromCfConfig(conditions, state);
+                setConditionals(state.getAllConditionals());
+                setFormFields(state.getAllFields() );
             }, [CF_ADMIN.conditions]);
 
-            React.useEffect( () => {
-                setFormFields(state.getAllFields() );
-            }, [state,setFormFields]);
+
+            /**
+             * Find array index of conditional in collection
+             *
+             * @since 1.8.10
+             *
+             * @param conditionalId
+             */
+            const findConditionalIndex = (
+                conditionalId
+            ) => {
+                if (!conditionals.length) {
+                    return undefined;
+                }
+                return conditionals.findIndex((c) => c.id === conditionalId);
+            };
+
             /**
              * Callback for adding conditional
              *
@@ -48,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
              */
             const addConditional = (conditional) => {
                 state.addConditional(conditional);
-                updateState(state);
+                setConditionals([...conditionals,conditional]);
             };
 
             /**
@@ -60,7 +73,9 @@ document.addEventListener("DOMContentLoaded", function () {
              */
             const updateConditional = (conditional) => {
                 state.updateConditional(conditional);
-                updateState(state);
+                const index = findConditionalIndex(conditional.id);
+                console.log(index,state.getAllConditionals());
+
             };
 
             /**
@@ -71,8 +86,13 @@ document.addEventListener("DOMContentLoaded", function () {
              * @param conditionalId Id of conditional to remove
              */
             const removeConditional =  (conditionalId) => {
+                const index = findConditionalIndex(conditionalId);
+                setConditionals([
+                    ...conditionals.slice(0, index),
+                    ...conditionals.slice(index+1)
+                ]);
+
                 state.removeConditional(conditionalId);
-                updateState(state);
             };
 
             return (
@@ -89,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
         };
 
         render(
-            <App factory={factory} strings={strings}/>, document.getElementById('caldera-forms-conditions-panel')
+            <App state={state} strings={strings}/>, document.getElementById('caldera-forms-conditions-panel')
         )
 
     }
