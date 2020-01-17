@@ -62,3 +62,68 @@ WP-Integration:
     - curl -sS https://getcomposer.org/installer | php
     - php composer.phar install --no-dev
     - php composer.phar global require "phpunit/phpunit:^6"
+
+#Deploy current code to the wp-content/plugins/caldera-forms folder of the https://dev-caldera-testing.pantheonsite.io site installation
+#Only triggered when a Tag is pushed
+Deploy for Pantheon Tests:
+  stage: .pre
+  image: tetraweb/php:7.1
+
+  before_script:
+    - apt-get update -qq
+    - apt-get install -qq git curl 
+    # Install composer
+    - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    - php -r "if (hash_file('sha384', 'composer-setup.php') === '$COMPOSER_HASH') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+    - php composer-setup.php
+    - php -r "unlink('composer-setup.php');"
+    - php composer.phar install
+    # Setup SSH deploy keys
+    - 'which ssh-agent || ( apt-get install -qq openssh-client )'
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    # Configure git for that job
+    - git config --global user.email "$GITLAB_USER_EMAIL"
+    - git config --global user.name "$GITLAB_USER_ID"
+    - git remote rm origin
+    - git remote set-url origin $GIT_PANTHEON_URL
+    - git add . 
+    - git remote -v
+    - git commit -m "Plugin"
+
+  script:
+    - if [ -d "wordpress" ]; then rm -Rf wordpress; fi
+    - if [ -d "wp-content" ]; then rm -Rf wp-content; fi
+    - mkdir -p .wp-content/plugins/caldera-forms/
+    - cp -rf * .wp-content/plugins/caldera-forms/
+    - shopt -s extglob
+    - rm -rf !(wp-content)
+    - git pull origin master
+    - mv -f .wp-content/plugins/caldera-forms wp-content/plugins/caldera-forms
+    - git branch -vv
+    - git add . 
+    - git commit -m "Test"
+    - git push origin master
+
+  rules:
+    - if: '$CI_COMMIT_TAG'
+
+
+# Cypress Test Stage
+# Only triggered when a Tag is pushed
+Cypress Tests:
+  image: fabn/composer-yarn
+  stage: Integration Tests
+
+  script:
+    - yarn test:e2e
+
+  before_script:
+    # Install dependencies
+    - composer install
+    - yarn
+  
+  rules:
+    - if: '$CI_COMMIT_TAG'
