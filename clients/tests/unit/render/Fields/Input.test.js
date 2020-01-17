@@ -12,8 +12,7 @@ describe( 'Input field', () => {
 		fieldPlaceHolder: "",
 		fieldValue: "",
 		outterIdAttr: "cf2-fld_5843941_1",
-		required: false
-		,
+		required: false,
 		type: "text",
 	};
 	const handler = () => {
