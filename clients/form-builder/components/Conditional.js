@@ -95,6 +95,7 @@ const isFieldTypeWithOptions = (fieldType) => ['dropdown', 'checkbox', 'radio', 
  */
 export const ConditionalLine = ({line, strings, isFirst, formFields, onRemoveLine, onUpdateLine}) => {
     const {value, field, compare} = line;
+    const lineId = line.id;
     const fieldConfig = React.useMemo(() => {
         const config = formFields.find(f => f.ID === field);
         if (config) {
@@ -142,8 +143,9 @@ export const ConditionalLine = ({line, strings, isFirst, formFields, onRemoveLin
         })
     };
 
+
     return (
-        <div key={line.id} className={`caldera-condition-line condition-line-${line.id}`}>
+        <div key={lineId} className={`caldera-condition-line condition-line-${lineId}`}>
             <span style={{display: "inline-block"}}>
                 {isFirst ? <React.Fragment>{strings['if']}</React.Fragment> :
                     <React.Fragment>{strings['and']}</React.Fragment>}
@@ -152,7 +154,7 @@ export const ConditionalLine = ({line, strings, isFirst, formFields, onRemoveLin
                 style={{maxWidth: "120px", verticalAlign: 'inherit'}}
                 className="condition-line-field"
                 value={field}
-                onChange={onChangeField}
+                onChange={(e) => onChangeField(e.target.value,lineId)}
             >
                 <option/>
                 <optgroup label={strings['fields']}>
@@ -166,7 +168,7 @@ export const ConditionalLine = ({line, strings, isFirst, formFields, onRemoveLin
             <select
                 className="condition-line-compare"
                 value={compare}
-                onChange={onChangeCompare}
+                onChange={(e) => onChangeCompare(e.target.value)}
                 style={{maxWidth: "120px", verticalAlign: 'inherit'}}
             >
                 {['is', 'isnot', 'greater', 'smaller', 'startswith', 'endswith', 'contains'].map(compareType => (
@@ -176,17 +178,20 @@ export const ConditionalLine = ({line, strings, isFirst, formFields, onRemoveLin
             {isFieldTypeWithOptions(fieldConfig.type) ? (
                 <select
                     value={value}
-                    onChange={onChangeValue}
+                    onChange={(e) => onChangeValue(e.target.value)}
                     style={{maxWidth: "165px", verticalAlign: 'inherit'}}>
                     <option/>
-                    {formFields.map(option => (
-                        <option
-                            key={option.value}
-                            value={option.value}>
-                            {option.label}
-                        </option>)
-                    )}
-
+                    {formFields.map(option => {
+                        //should be fieldConfig.option, except that doesn't exist.
+                        return (
+                            <option
+                                key={option.value}
+                                value={option.value}
+                            >
+                                {option.label}
+                            </option>
+                        )
+                    })}
                 </select>
             ) : (
                 <input
@@ -229,11 +234,11 @@ const ConditionalLines = ({lines, strings, formFields, onRemoveLine, onUpdateLin
                     <ConditionalLine
                         line={line}
                         isFirst={0 === index}
+                        onUpdateLine={(update)=> onUpdateLine(update,line.id)}
                         {...{
                             strings,
                             formFields,
                             onRemoveLine,
-                            onUpdateLine
                         }}
                     />
                 )
@@ -256,7 +261,6 @@ const ConditionalLines = ({lines, strings, formFields, onRemoveLine, onUpdateLin
  * @since 1.8.10
  */
 const Conditional = ({conditional, formFields, strings, onRemoveConditional, onUpdateConditional, fieldsNotAllowed, fieldsUsed}) => {
-
     const {type, config, id} = conditional;
     const group = config && config.hasOwnProperty('group') ? config.group : {};
     const name = conditional.hasOwnProperty('config') && conditional.config.hasOwnProperty('name') ? conditional.config.name : '';
@@ -286,15 +290,20 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
      * @param line
      * @param lineId
      */
-    const onUpdateLine = (line, lineId) => {
-        let groups = group;
-        const groupId = line.parent;
+    const onUpdateLine = (line, lineId,groupId) => {
+        let group = conditional.config.group;
         onUpdateConditional({
             ...conditional,
             config: {
-                group: groups
+                group: {
+                    ...group,
+                    [groupId] :{
+                        ...group[groupId],
+                        [lineId]: line
+                    }
+                }
             }
-        })
+        });
     };
 
     /**
@@ -423,13 +432,21 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
                 </div>
                 {Object.keys(group).map(groupId => {
                     const lineGroups = group[groupId];
+                    const lines = Object.keys(lineGroups).map(
+                        (lineGroupId) => {
+                            return {
+                                ...lineGroups[lineGroupId],
+                                id: lineGroupId,
+                            }
+                        }
+                    );
                     return (
                         <Fragment>
                             <ConditionalLines
-                                lines={Object.values(lineGroups)}
+                                lines={lines}
                                 strings={strings}
                                 formFields={formFields}
-                                onUpdateLine={onUpdateLine}
+                                onUpdateLine={(update,lineId) => onUpdateLine(update,lineId,groupId)}
                                 onRemoveLine={onRemoveLine}
                             />
                         </Fragment>

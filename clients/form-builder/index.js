@@ -17,15 +17,20 @@ document.addEventListener("DOMContentLoaded", function () {
         const factory = stateFactory(system_values, current_form_fields);
         const strings = CF_ADMIN.strings.conditionals;
         const App = ({factory, strings}) => {
-            /**
-             * Track state management in a ref
-             *
-             * @since 1.8.10
-             *
-             * @type {React.MutableRefObject<cfEditorState>}
-             */
-            const state = React.useRef(factory.createState());
-            const [conditionals,setConditionals] = React.useState([]);
+
+            // Tracks state management option in away we can force updates.
+            const [state,updateState] = React.useState(factory.createState());
+
+            //Maintains list of conditionals in it's own array
+            const conditionals = React.useMemo( () => {
+                console.log(26);
+                return state.getAllConditionals();
+
+
+            },[state]);
+
+            //Maintains list of form fields in it's own array
+            const [formFields,setFormFields] = React.useState([]);
 
             /**
              * Set the conditionals form was loaded with
@@ -34,10 +39,13 @@ document.addEventListener("DOMContentLoaded", function () {
              */
             React.useEffect(() => {
                 const conditions = CF_ADMIN.hasOwnProperty('conditions') ? CF_ADMIN.conditions : [];
-                setConditionalsFromCfConfig(conditions, state.current);
-                setConditionals(state.current.getAllConditionals());
+                setConditionalsFromCfConfig(conditions, state);
             }, [CF_ADMIN.conditions]);
 
+            React.useEffect( () => {
+                console.log(42);
+                setFormFields(state.getAllFields() );
+            }, [state,setFormFields])
             /**
              * Callback for adding conditional
              *
@@ -46,7 +54,8 @@ document.addEventListener("DOMContentLoaded", function () {
              * @param conditional New Conditional to add.
              */
             const addConditional = (conditional) => {
-                state.current.addConditional(conditional);
+                state.addConditional(conditional);
+                updateState(state);
             };
 
             /**
@@ -57,7 +66,12 @@ document.addEventListener("DOMContentLoaded", function () {
              * @param conditional New Conditional to add.
              */
             const updateConditional = (conditional) => {
-                state.current.updateConditional(conditional);
+                state.updateConditional(conditional);
+                updateState(state);
+            };
+
+            const getConditional = (conditionalId ) => {
+                return state.getConditional(conditionalId)
             };
 
             /**
@@ -68,18 +82,20 @@ document.addEventListener("DOMContentLoaded", function () {
              * @param conditionalId Id of conditional to remove
              */
             const removeConditional =  (conditionalId) => {
-                state.current.removeConditional(conditionalId);
+                state.removeConditional(conditionalId);
+                updateState(state);
             };
 
             return (
                 <Conditionals
                     conditionals={conditionals}
-                    state={state.current}
+                    state={state}
                     strings={strings}
-                    formFields={state.current.getAllFields()}
+                    formFields={formFields}
                     addConditional={addConditional}
                     removeConditional={removeConditional}
                     updateConditional={updateConditional}
+                    getConditional={getConditional}
                 />
             )
         };

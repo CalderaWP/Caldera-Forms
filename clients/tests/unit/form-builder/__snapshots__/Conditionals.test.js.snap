@@ -1,18 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Conditionals New group name field renders 1`] = `
-<input
-  className="condition-new-group-name"
-  name="conditions[undefined][name]"
-  style={
-    Object {
-      "width": "100%",
-    }
-  }
-  type="text"
-/>
-`;
-
 exports[`Conditionals Renders list 1`] = `
 <div
   className="caldera-editor-conditions-panel"
@@ -92,6 +79,19 @@ exports[`Conditionals Renders list 1`] = `
       </a>
     </li>
   </ul>
+  <button
+    className="button"
+    id="new-conditional"
+    onClick={[Function]}
+    style={
+      Object {
+        "width": "250px",
+      }
+    }
+    type="button"
+  >
+    New Conditional
+  </button>
 </div>
 `;
 

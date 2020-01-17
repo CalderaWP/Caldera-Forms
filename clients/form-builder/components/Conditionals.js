@@ -20,11 +20,13 @@ const ConditionalListItem = ({active, condition, onChooseItem}) => {
     const name = React.useRef(condition.hasOwnProperty('config') && condition.config.hasOwnProperty('name') ? condition.config.name : '');
     return (
         <li className={`caldera-condition-nav ${active} caldera-forms-condition-group condition-point-${id}`}>
-            <a className="condition-open-group" onClick={(e) => {
-                e.preventDefault();
-                onChooseItem(id);
-            }}
-               style={{cursor: "pointer"}}
+            <a
+                className="condition-open-group"
+                onClick={(e) => {
+                    e.preventDefault();
+                    onChooseItem(id);
+                }}
+                style={{cursor: "pointer"}}
             >
             <span id={`condition-group-${id}`}>
                 {name.current}
@@ -47,7 +49,7 @@ const ConditionalListItem = ({active, condition, onChooseItem}) => {
  * @returns {*}
  * @constructor
  */
-export const ConditionalsList = ({conditionals, onChooseItem, strings, onNewConditional}) => {
+export const ConditionalsList = ({conditionals, onChooseItem, strings, onNewConditional, getConditional, active}) => {
     //Tracks the new group's name
     const [newGroupName, setNewGroupName] = React.useState('');
 
@@ -100,6 +102,7 @@ export const ConditionalsList = ({conditionals, onChooseItem, strings, onNewCond
             <ul className="active-conditions-list">
                 {conditionals.map(condition => (
                         <ConditionalListItem
+                            active={condition.id == active}
                             key={condition.id}
                             condition={condition}
                             onChooseItem={onChooseItem}
@@ -162,7 +165,7 @@ export const NewConditionalButton = ({text, onClick}) => {
  * @param strings
  * @returns {*}
  */
-export default function ({state, strings, formFields,conditionals,updateConditional,addConditional,removeConditional}) {
+export default function ({state, strings, formFields, conditionals, updateConditional, addConditional, removeConditional, getConditional}) {
 
     /**
      * Tracks the open conditional
@@ -224,18 +227,19 @@ export default function ({state, strings, formFields,conditionals,updateConditio
                 onChooseItem={setOpenCondition}
                 strings={strings}
                 onNewConditional={onNewConditional}
+                active={openCondition}
             />
 
             {openCondition &&
             <Conditional
-                conditional={state.getConditional(openCondition)}
+                conditional={getConditional(openCondition)}
                 formFields={formFields}
                 id={openCondition}
                 strings={strings}
                 fieldsUsed={getFieldsAppliedForOpenConditional()}
                 fieldsNotAllowed={getFieldsNotAllowedForOpenConditional()}
                 onRemoveConditional={onRemoveConditional}
-                onUpdateConditional={(updateConditional}
+                onUpdateConditional={updateConditional}
             />
             }
         </React.Fragment>

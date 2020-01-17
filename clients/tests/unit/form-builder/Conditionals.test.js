@@ -9,6 +9,7 @@ describe('Conditionals', () => {
         const component = renderer.create(
             <ConditionalsList
                 conditionals={Object.values(testForm.conditional_groups.conditions)}
+                strings={{'new-conditional': 'New Conditional'}}
             />
         );
         expect(component.toJSON()).toMatchSnapshot();
