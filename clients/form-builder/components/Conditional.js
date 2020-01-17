@@ -445,7 +445,7 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
                                 e.preventDefault();
                             }}
                         >
-                            {strings['add-conditional-line']}
+                            {strings['add-conditional-group']}
                         </button>
                         }
                     </div>

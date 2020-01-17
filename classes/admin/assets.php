@@ -368,7 +368,7 @@ class Caldera_Forms_Admin_Assets
                     'show' => esc_html__('Show', 'caldera-forms'),
                     'hide' => esc_html__('Hide', 'caldera-forms'),
                     'disable' => esc_html__('Disable', 'caldera-forms'),
-                    'add-conditional-line' => esc_html__('Add Conditional Line', 'caldera-forms'),
+                    'add-conditional-group' => esc_html__('Add Conditional Group', 'caldera-forms'),
                     'confirm-remove' => esc_html__('Are you sure you want to remove this condition?', 'caldera-forms' ),
                     'remove-condition' => esc_html__('Remove Condition', 'caldera-forms' ),
                     'applied-fields' => esc_html__('Applied Fields', 'caldera-forms' ),

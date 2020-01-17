@@ -37,7 +37,7 @@ describe('Editor for a single conditional', () => {
         and: 'And',
         name: 'Name',
         disable: 'Disable',
-        'add-conditional-line': 'add-conditional-line',
+        'add-conditional-group': 'add-conditional-group',
         'applied-fields': 'applied-fields',
         'select-apply-fields': 'select-apply-fields',
         'remove-condition': 'remove-condition',
