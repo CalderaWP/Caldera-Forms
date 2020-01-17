@@ -88,6 +88,7 @@ Deploy for Pantheon Tests:
     - git config --global user.email "$GITLAB_USER_EMAIL"
     - git config --global user.name "$GITLAB_USER_ID"
     - git remote rm origin
+    - git remote add origin $GIT_PANTHEON_URL
     - git remote set-url origin $GIT_PANTHEON_URL
     - git add . 
     - git remote -v
