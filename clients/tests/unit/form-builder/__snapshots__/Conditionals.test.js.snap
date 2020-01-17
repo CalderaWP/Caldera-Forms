@@ -13,7 +13,7 @@ exports[`Conditionals Renders list 1`] = `
     className="active-conditions-list"
   >
     <li
-      className="caldera-condition-nav undefined caldera-forms-condition-group condition-point-con_3840644613791445"
+      className="caldera-condition-nav false caldera-forms-condition-group condition-point-con_3840644613791445"
     >
       <a
         className="condition-open-group"
@@ -35,7 +35,7 @@ exports[`Conditionals Renders list 1`] = `
       </a>
     </li>
     <li
-      className="caldera-condition-nav undefined caldera-forms-condition-group condition-point-con_3156693554561454"
+      className="caldera-condition-nav false caldera-forms-condition-group condition-point-con_3156693554561454"
     >
       <a
         className="condition-open-group"
@@ -57,7 +57,7 @@ exports[`Conditionals Renders list 1`] = `
       </a>
     </li>
     <li
-      className="caldera-condition-nav undefined caldera-forms-condition-group condition-point-con_8761120514939434"
+      className="caldera-condition-nav false caldera-forms-condition-group condition-point-con_8761120514939434"
     >
       <a
         className="condition-open-group"

@@ -3,7 +3,6 @@ import React from 'react';
 import stateFactory, {setConditionalsFromCfConfig} from "./stateFactory";
 import Conditionals from "./components/Conditionals";
 import {render} from '@wordpress/element';
-import cfEditorState from "@calderajs/cf-editor-state";
 /**
  * Form builder
  *
@@ -21,13 +20,8 @@ document.addEventListener("DOMContentLoaded", function () {
             // Tracks state management option in away we can force updates.
             const [state,updateState] = React.useState(factory.createState());
 
-            //Maintains list of conditionals in it's own array
-            const conditionals = React.useMemo( () => {
-                console.log(26);
-                return state.getAllConditionals();
 
-
-            },[state]);
+            const conditionals = state.getAllConditionals();
 
             //Maintains list of form fields in it's own array
             const [formFields,setFormFields] = React.useState([]);
@@ -43,9 +37,8 @@ document.addEventListener("DOMContentLoaded", function () {
             }, [CF_ADMIN.conditions]);
 
             React.useEffect( () => {
-                console.log(42);
                 setFormFields(state.getAllFields() );
-            }, [state,setFormFields])
+            }, [state,setFormFields]);
             /**
              * Callback for adding conditional
              *
@@ -70,10 +63,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 updateState(state);
             };
 
-            const getConditional = (conditionalId ) => {
-                return state.getConditional(conditionalId)
-            };
-
             /**
              * Callback for removing conditional
              *
@@ -95,7 +84,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     addConditional={addConditional}
                     removeConditional={removeConditional}
                     updateConditional={updateConditional}
-                    getConditional={getConditional}
                 />
             )
         };

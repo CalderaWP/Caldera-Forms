@@ -202,7 +202,10 @@ export const ConditionalLine = ({line, strings, isFirst, formFields, onRemoveLin
                 />
             )}
             <button
-                onClick={onRemoveLine}
+                onClick={(e) => {
+                    e.preventDefault();
+                    onRemoveLine(lineId);
+                }}
                 className="button pull-right" type="button"
             >
                 <i className="icon-join"/>
@@ -225,8 +228,6 @@ export const ConditionalLine = ({line, strings, isFirst, formFields, onRemoveLin
  * @constructor
  */
 const ConditionalLines = ({lines, strings, formFields, onRemoveLine, onUpdateLine}) => {
-
-
     return (
         <div className="caldera-condition-group caldera-condition-lines">
             {lines.map((line, index) => {
@@ -264,7 +265,7 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
     const {type, config, id} = conditional;
     const group = config && config.hasOwnProperty('group') ? config.group : {};
     const name = conditional.hasOwnProperty('config') && conditional.config.hasOwnProperty('name') ? conditional.config.name : '';
-    const onAddLine = () => {
+    const onAddLine = (groupId) => {
         const id = `cl_${Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5)}`
         onUpdateConditional({
             conditional,
@@ -272,18 +273,22 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
                 ...conditional.config,
                 group: {
                     ...group,
-                    [id]: {
-                        field: '',
-                        value: '',
-                        type: ''
+                    [groupId] : {
+                        ...conditional.config[groupId],
+                        [id]: {
+                            field: '',
+                            value: '',
+                            type: ''
+                        }
                     }
+
                 }
             }
         });
     };
 
     /**
-     * Callback for updating a line in a conditonal group
+     * Callback for updating a line in a conditional group
      *
      * @since 1.8.10
      *
@@ -295,6 +300,7 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
         onUpdateConditional({
             ...conditional,
             config: {
+                ...conditional.config,
                 group: {
                     ...group,
                     [groupId] :{
@@ -307,8 +313,8 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
     };
 
     /**
-     *  Callback for removing a line
-     *
+     *  Callback for removing a line from a line group
+     *  
      *  @since 1.8.10
      *
      * @param lineId
@@ -317,7 +323,14 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
     const onRemoveLine = (lineId, groupId) => {
         let groups = group;
 
+        //Delete line from line group
         delete groups[groupId][lineId];
+
+        //no lines left?
+        if( ! Object.values(groups[groupId]).length){
+            //delete line group
+            delete groups[groupId];
+        }
         onUpdateConditional({
             ...conditional,
             config: {
@@ -331,7 +344,7 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
     /**
      * Callback for updating name of conditional group
      *
-     * @sicne 1.8.0
+     * @since 1.8.10
      *
      * @param name
      */
@@ -346,9 +359,9 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
     };
 
     /**
-     * Callback for changing type of conditonal
+     * Callback for changing type of conditional
      *
-     * @sicne 1.8.0
+     * @since 1.8.10
      *
      * @param type
      * @returns {*}
@@ -358,7 +371,7 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
             ...conditional,
             type
         })
-    }
+    };
 
 
     return (
@@ -423,7 +436,10 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
                         <button
                             type="button"
                             className="pull-right button button-small condition-group-add-lines"
-                            onClick={onAddLine}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                onAddLine(groupId)
+                            }}
                         >
                             {strings['add-conditional-line']}
                         </button>
@@ -447,7 +463,7 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
                                 strings={strings}
                                 formFields={formFields}
                                 onUpdateLine={(update,lineId) => onUpdateLine(update,lineId,groupId)}
-                                onRemoveLine={onRemoveLine}
+                                onRemoveLine={(lineId) => onRemoveLine(lineId,groupId)}
                             />
                         </Fragment>
                     )

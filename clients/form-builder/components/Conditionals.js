@@ -165,12 +165,18 @@ export const NewConditionalButton = ({text, onClick}) => {
  * @param strings
  * @returns {*}
  */
-export default function ({state, strings, formFields, conditionals, updateConditional, addConditional, removeConditional, getConditional}) {
+export default function ({state, strings, formFields, conditionals, updateConditional, addConditional, removeConditional}) {
 
     /**
-     * Tracks the open conditional
+     * Tracks the Id of the open conditional
      */
     const [openCondition, setOpenCondition] = React.useState('');
+    const [conditional,setConditional] = React.useState(null );
+
+    const onOpenConditional = (conditionalId) => {
+        setConditional( conditionals.find( conditional => conditional.id === conditionalId ) );
+        setOpenCondition(conditionalId);
+    };
 
     /**
      * Get fields NOT allowed to be used by current function
@@ -220,27 +226,33 @@ export default function ({state, strings, formFields, conditionals, updateCondit
     };
 
 
+
+    const onUpdateConditional = (update) => {
+        updateConditional(update);
+        setConditional(update);
+    };
+
     return (
         <React.Fragment>
             <ConditionalsList
                 conditionals={conditionals}
-                onChooseItem={setOpenCondition}
+                onChooseItem={onOpenConditional}
                 strings={strings}
                 onNewConditional={onNewConditional}
                 active={openCondition}
             />
 
             {openCondition &&
-            <Conditional
-                conditional={getConditional(openCondition)}
-                formFields={formFields}
-                id={openCondition}
-                strings={strings}
-                fieldsUsed={getFieldsAppliedForOpenConditional()}
-                fieldsNotAllowed={getFieldsNotAllowedForOpenConditional()}
-                onRemoveConditional={onRemoveConditional}
-                onUpdateConditional={updateConditional}
-            />
+                <Conditional
+                    conditional={conditional}
+                    formFields={formFields}
+                    id={openCondition}
+                    strings={strings}
+                    fieldsUsed={getFieldsAppliedForOpenConditional()}
+                    fieldsNotAllowed={getFieldsNotAllowedForOpenConditional()}
+                    onRemoveConditional={onRemoveConditional}
+                    onUpdateConditional={onUpdateConditional}
+                />
             }
         </React.Fragment>
     )
