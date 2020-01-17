@@ -1,0 +1,60 @@
+{
+  "_last_updated": "Tue, 14 Jan 2020 14:57:09 +0000",
+  "ID": "CF5e1dd6a3eec18",
+  "cf_version": "1.8.9",
+  "name": "One Radio",
+  "scroll_top": 0,
+  "success": "Form has been successfully submitted. Thank you.\t\t\t",
+  "db_support": 1,
+  "pinned": 0,
+  "hide_form": 1,
+  "check_honey": 1,
+  "avatar_field": null,
+  "form_ajax": 1,
+  "custom_callback": "",
+  "layout_grid": { "fields": { "fld_6733423": "1:1" }, "structure": "12" },
+  "fields": {
+    "fld_6733423": {
+      "ID": "fld_6733423",
+      "type": "radio",
+      "label": "The Spirit Of Radio",
+      "slug": "the_spirit_of_radio",
+      "conditions": { "type": "" },
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "default_option": "",
+        "auto_type": "",
+        "taxonomy": "category",
+        "post_type": "post",
+        "value_field": "name",
+        "orderby_tax": "count",
+        "orderby_post": "ID",
+        "order": "ASC",
+        "default": "",
+        "show_values": 1,
+        "option": {
+          "opt1672221": { "calc_value": 2, "value": 2, "label": "Two" },
+          "opt1161035": { "calc_value": 1, "value": 1, "label": "One" }
+        }
+      }
+    }
+  },
+  "page_names": ["Page 1"],
+  "mailer": {
+    "on_insert": 1,
+    "sender_name": "Caldera Forms Notification",
+    "sender_email": "test@test.com",
+    "reply_to": "",
+    "email_type": "html",
+    "recipients": "",
+    "bcc_to": "",
+    "email_subject": "Form With Radio Field",
+    "email_message": "{summary}"
+  },
+  "conditional_groups": { "fields": [] },
+  "settings": { "responsive": { "break_point": "sm" } },
+  "version": "1.8.9",
+  "db_id": "362",
+  "type": "primary"
+}

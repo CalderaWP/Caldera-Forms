@@ -10,8 +10,8 @@ const formStore = registerStore(CALDERA_FORMS_STORE_NAME,STORE);
 import { ServerSideRender } from '@wordpress/components';
 
 //Import CF components
-import {FormChooserWithSelect} from "./components/formChooser";
-import {LinkToFormEditor} from "./components/linkToFormEditor";
+import {FormChooserWithSelect} from "./components/FormChooser";
+import {LinkToFormEditor} from "./components/LinkToFormEditor";
 //Create block
 registerBlockType( 'calderaforms/cform', {
 	title: __( 'Caldera Form' ),

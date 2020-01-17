@@ -4,11 +4,17 @@
  */
 export const site = Cypress.env('wp_site');
 export const {url, user, pass} = site;
+
+/**
+ * Login to the site
+ *
+ * @since unknown
+ */
 export const login = () => {
 	cy.visit(url + '/wp-login.php');
-	cy.wait(500);
-	cy.get('#user_login').type(user);
-	cy.get('#user_pass').type(pass);
+	cy.wait(250);
+	cy.get('#user_login').clear().type(user);
+	cy.get('#user_pass').clear().type(pass);
 	cy.get('#wp-submit').click();
 };
 
@@ -465,3 +471,35 @@ export const cfDropSingleFile = (fieldId, filesPaths, filesTypes)=> {
 export const cfGetFileDropzone = ( fieldId => {
 	return cy.get('div[data-field=' + fieldId + ']').find( '.cf2-dropzone button' );
 });
+
+/**
+ * Create a form using UI
+ *
+ *
+ * @since 1.8.0
+ *
+ * @param name What to name new form
+ */
+export const createForm = (name,blankForm = true) => {
+	visitPluginPage('caldera-forms');
+	cy.get('.cf-new-form-button').click();
+	cy.get('form#new_form_baldrickModal').should('be.visible');
+	if( blankForm ){
+		cy.get('.cf-form-template').last().click();
+	}else{
+		cy.get('.cf-form-template').first().click();
+	}
+
+	cy.get('.new-form-name').type(name);
+	cy.get('.cf-create-form-button').click();
+};
+
+/**
+ * Save form and refresh page
+ *
+ * @since 1.8.10
+ */
+export const saveFormAndReload = ()  => {
+	cy.get('.caldera-header-save-button').click();
+	cy.reload();
+};

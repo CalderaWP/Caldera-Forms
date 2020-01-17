@@ -724,14 +724,9 @@ class Caldera_Forms_Render_Assets
                 break;
             }
         }
-         //this should not be needed, but it seams to be only way to get react on the page
-		 foreach ($tags as $t) {
-			//Only enqueue react dependency for WP < 5.3 (in order to get hooks ), otherwise don't enqueue the react dependency ( only wp-element )
-			if($t === "react" && version_compare($wp_version, '5.2', '<')){
-				wp_enqueue_script($t);
-			} else if($t !== "react") {
-				wp_enqueue_script($t);
-			}
+        //this should not be needed, but it seams to be only way to get react on the page
+        foreach ($tags as $t) {
+            wp_enqueue_script($t);
         }
 
 		return $tags;
@@ -785,7 +780,8 @@ class Caldera_Forms_Render_Assets
 				'strings' => [
 					'cf2FileField' => [
 						'removeFile' => esc_attr__('Remove file', 'caldera-forms'),
-						'defaultButtonText' => esc_attr__('Drop files or click to select files to Upload', 'caldera-forms'),
+						'defaultButtonText' => esc_attr__('Drop files or click to select files to Upload',
+							'caldera-forms'),
 						'fileUploadError1' => esc_attr__('Error: ', 'caldera-forms'),
 						'fileUploadError2' => esc_attr__(' could not be processed', 'caldera-forms'),
 						'invalidFiles' => esc_attr__('These Files have been rejected : ', 'caldera-forms'),
@@ -794,7 +790,8 @@ class Caldera_Forms_Render_Assets
 						'fieldIsRequired' => esc_attr__('Field is required', 'caldera-forms'),
 						'filesUnit' => esc_attr__('bytes', 'caldera-forms'),
 						'maxSizeAlert' => esc_attr__('This file is too large. Maxium size is ', 'caldera-forms'),
-						'wrongTypeAlert' => esc_attr__('This file type is not allowed. Allowed types are ',	'caldera-forms'),
+						'wrongTypeAlert' => esc_attr__('This file type is not allowed. Allowed types are ',
+							'caldera-forms'),
 					],
 				],
 				'nonce' => [
