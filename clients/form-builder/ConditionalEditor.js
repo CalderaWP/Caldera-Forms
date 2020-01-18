@@ -18,15 +18,23 @@ import cfEditorState from "@calderajs/cf-editor-state";
  * @constructor
  */
 const ConditionalEditor = ({formFields, conditionals, strings, updateConditional, onNewConditional, removeConditional}) => {
+    //The id (or null) of currently active conditional
     const [activeConditionalId, setActiveConditionalId] = React.useState(null);
+
+    /**
+     * Find conditional by Id
+     *
+     * @since 1.8.10
+     *
+     * @param conditionalId
+     * @returns {undefined}
+     */
     const findConditionalById = (conditionalId) => conditionals.length ? conditionals.find(conditional => conditionalId === conditional.id) : undefined;
+
+    //The configuration for the active conditional
     const activeConditional = React.useMemo(() => {
         return findConditionalById(activeConditionalId);
     }, [activeConditionalId]);
-
-    const onActivateConditional = (conditionalId) => {
-        setActiveConditionalId(conditionalId);
-    };
 
     return (
         <div>
@@ -45,7 +53,7 @@ const ConditionalEditor = ({formFields, conditionals, strings, updateConditional
                                         className="condition-open-group"
                                         onClick={(e) => {
                                             e.preventDefault();
-                                            onActivateConditional(condition.id)
+                                            setActiveConditionalId(condition.id)
                                         }}
                                         style={{cursor: "pointer"}}
                                     >
@@ -87,7 +95,7 @@ const ConditionalEditor = ({formFields, conditionals, strings, updateConditional
  * Complete conditional logic editor with list and state management
  *
  * @since 1.8.10
- * 
+ *
  * @param state
  * @param strings
  * @returns {*}

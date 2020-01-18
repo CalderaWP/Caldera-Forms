@@ -118,6 +118,32 @@ describe('ConditionalEditor', () => {
       component.find( '.condition-remove' ).simulate('click');
       expect( component.find('.active-conditions-list').children().length).toBe(2);
 
-  })
+  });
+
+    test( 'Updates condition', () => {
+        const component = mount(
+            <ConditionalEditorApp strings={strings} state={state}/>
+        );
+        const condition0 = state.getAllConditionals()[0];
+        const condition1 = state.getAllConditionals()[1];
+        const {id} = condition1;
+        component.find(`#condition-open-group-${id}`)
+            .simulate('click');
+        component.find('.condition-line-compare').last().simulate('change', {
+            target: {value: 'isnot'}
+        });
+        //Value updated
+        expect( component.find('.condition-line-compare').last().prop('value') ).toEqual( 'isnot' );
+
+        //Click to other conditional
+        component.find(`#condition-open-group-${condition0.id}`)
+            .simulate('click');
+        //Click back
+        component.find(`#condition-open-group-${id}`)
+            .simulate('click');
+        //Value is still there
+        expect( component.find('.condition-line-compare').last().prop('value') ).toEqual( 'isnot' );
+
+    });
 
 });
