@@ -16,8 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const factory = stateFactory(system_values, current_form_fields);
         const strings = CF_ADMIN.strings.conditionals;
         const state = factory.createState();
-
-
+        setConditionalsFromCfConfig(CF_ADMIN.conditions,state);
         render(
             <ConditionalEditorApp state={state} strings={strings}/>, document.getElementById('caldera-forms-conditions-panel')
         )

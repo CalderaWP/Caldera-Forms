@@ -20,6 +20,7 @@ import cfEditorState from "@calderajs/cf-editor-state";
 const ConditionalEditor = ({formFields, conditionals, strings, updateConditional, onNewConditional, removeConditional}) => {
     //The id (or null) of currently active conditional
     const [activeConditionalId, setActiveConditionalId] = React.useState(null);
+    const [activeConditional, setActiveConditional] = React.useState(null);
 
     /**
      * Find conditional by Id
@@ -31,10 +32,12 @@ const ConditionalEditor = ({formFields, conditionals, strings, updateConditional
      */
     const findConditionalById = (conditionalId) => conditionals.length ? conditionals.find(conditional => conditionalId === conditional.id) : undefined;
 
-    //The configuration for the active conditional
-    const activeConditional = React.useMemo(() => {
-        return findConditionalById(activeConditionalId);
-    }, [activeConditionalId]);
+
+
+    const onUpdateConditional = (conditional) => {
+        updateConditional(conditional);
+        setActiveConditional(conditional);
+    };
 
     return (
         <div>
@@ -53,7 +56,8 @@ const ConditionalEditor = ({formFields, conditionals, strings, updateConditional
                                         className="condition-open-group"
                                         onClick={(e) => {
                                             e.preventDefault();
-                                            setActiveConditionalId(condition.id)
+                                            setActiveConditionalId(condition.id);
+                                            setActiveConditional(findConditionalById(condition.id));
                                         }}
                                         style={{cursor: "pointer"}}
                                     >
@@ -82,7 +86,7 @@ const ConditionalEditor = ({formFields, conditionals, strings, updateConditional
                 formFields={formFields}
                 strings={strings}
                 onRemoveConditional={removeConditional}
-                onUpdateConditional={updateConditional}
+                onUpdateConditional={onUpdateConditional}
                 fieldsNotAllowed={[]} fieldsUsed={[]}
             />
             }
