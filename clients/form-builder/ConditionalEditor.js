@@ -33,14 +33,13 @@ const ConditionalEditor = ({formFields, conditionals, strings, updateConditional
     const findConditionalById = (conditionalId) => conditionals.length ? conditionals.find(conditional => conditionalId === conditional.id) : undefined;
 
 
-
     const onUpdateConditional = (conditional) => {
         updateConditional(conditional);
         setActiveConditional(conditional);
     };
 
     return (
-        <div>
+        <Fragment>
             <div className="caldera-editor-conditions-panel" style={{marginBottom: "32px"}}>
                 {conditionals.length &&
                 <ul className="active-conditions-list">
@@ -91,7 +90,7 @@ const ConditionalEditor = ({formFields, conditionals, strings, updateConditional
             />
             }
 
-        </div>
+        </Fragment>
     );
 };
 
@@ -153,14 +152,15 @@ export const ConditionalEditorApp = ({state, strings}) => {
         setConditionals([...conditionals, {id, type: 'show', config: {name}}]);
     };
 
-    return (<ConditionalEditor
-        strings={strings} onNewConditional={onNewConditional}
-        conditionals={conditionals}
-        formFields={fields}
-        updateConditional={updateConditional}
-        removeConditional={removeConditional}
-
-    />);
+    return (
+        <ConditionalEditor
+            strings={strings} onNewConditional={onNewConditional}
+            conditionals={conditionals}
+            formFields={fields}
+            updateConditional={updateConditional}
+            removeConditional={removeConditional}
+        />
+    );
 
 };
 

@@ -76,7 +76,7 @@ export const AppliesToFields = ({formFields, fieldsUsed, notAllowedFields, strin
     );
 };
 
-const isFieldTypeWithOptions = (fieldType) => ['dropdown', 'checkbox', 'radio', 'filtered_select2', 'toggle_switch'];
+const isFieldTypeWithOptions = (fieldType) => ['dropdown', 'checkbox', 'radio', 'filtered_select2', 'toggle_switch'].includes(fieldType);
 
 
 /**
@@ -178,7 +178,14 @@ export const ConditionalLine = ({line, strings, isFirst, formFields, onRemoveLin
                     <option key={compareType} value={compareType}>{compareType}</option>
                 ))}
             </select>
-            {isFieldTypeWithOptions(fieldConfig.type) ? (
+            <span className={'caldera-conditional-field-value'}
+                  style={{
+                      padding: `0 12px 0`,
+                      display:`inline-block`,
+                      width:`200px`
+                  }}
+            >
+                {isFieldTypeWithOptions(fieldConfig.type) ? (
                 <select
                     value={value}
                     onChange={(e) => onChangeValue(e.target.value)}
@@ -198,12 +205,13 @@ export const ConditionalLine = ({line, strings, isFirst, formFields, onRemoveLin
                 </select>
             ) : (
                 <input
-                    onChange={onChangeValue}
+                    onChange={(e) => onChangeValue(e.target.value)}
                     value={value}
                     type="text"
                     className="magic-tag-enabled block-input"
                 />
             )}
+            </span>
             <button
                 onClick={(e) => {
                     e.preventDefault();
@@ -265,7 +273,7 @@ export const ConditionalLines = ({lines, strings, formFields, onRemoveLine, onUp
 };
 
 /**
- * One conditional
+ * Editor for one conditional
  *
  * @since 1.8.10
  */
@@ -278,7 +286,7 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
      * Create a new line's ID.
      *
      * @since 1.8.10
-     * 
+     *
      * @returns {string}
      */
     const newLineId = ( ) => `cl_${Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 12)}`;
