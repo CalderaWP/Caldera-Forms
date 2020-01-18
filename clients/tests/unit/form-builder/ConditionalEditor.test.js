@@ -87,7 +87,7 @@ describe('ConditionalEditor', () => {
 
     });
 
-    test('Adding a conditional', () => {
+    test.skip('Adding a conditional', () => {
         const component = mount(
             <ConditionalEditorApp strings={strings} state={state}/>
         );

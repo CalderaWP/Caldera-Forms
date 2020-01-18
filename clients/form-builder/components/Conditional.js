@@ -277,7 +277,8 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
     const onAddGroup = () => {
         const groupId = `rw${Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 12)}`;
         onUpdateConditional({
-            conditional,
+            id,
+            type,
             config: {
                 ...conditional.config,
                 group: {
@@ -296,16 +297,17 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
         });
     }
     const onAddLine = (groupId) => {
-        const id = newLineId();
+        const lineId = newLineId();
         onUpdateConditional({
-            conditional,
+            id,
+            type,
             config: {
                 ...conditional.config,
                 group: {
                     ...conditional.config.group,
                     [groupId]: {
                         ...conditional.config.group[groupId],
-                        [id]: {
+                        [lineId]: {
                             field: '',
                             value: '',
                             type: '',
