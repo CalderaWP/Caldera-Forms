@@ -10,13 +10,12 @@ import cfEditorState from "@calderajs/cf-editor-state";
  * @param strings
  * @returns {*}
  */
-export default function ({fields, conditionals, strings, updateConditional, onNewConditional}) {
+export default function ({formFields, conditionals, strings, updateConditional, onNewConditional,removeConditional}) {
     const [activeConditionalId, setActiveConditionalId] = React.useState(null);
     const findConditionalById = (conditionalId) => conditionals.length ? conditionals.find(conditional => conditionalId === conditional.id) : undefined;
     const activeConditional = React.useMemo(() => {
         return findConditionalById(activeConditionalId);
     }, [activeConditionalId]);
-
 
     const onActivateConditional = (conditionalId) => {
         setActiveConditionalId(conditionalId);
@@ -63,31 +62,17 @@ export default function ({fields, conditionals, strings, updateConditional, onNe
                     }}
                 />
             </div>
+            {activeConditional &&
+            <Conditional
+                conditional={activeConditional}
+                formFields={formFields}
+                strings={strings}
+                onRemoveConditional={removeConditional}
+                onUpdateConditional={updateConditional}
+                fieldsNotAllowed={[]} fieldsUsed={[]}
+            />
+            }
 
-
-            <div
-                id={`temporary-right`}
-                 className="caldera-editor-condition-config caldera-forms-condition-edit"
-                 style={{marginTop: '-27px', width: "auto"}}
-            >
-                {activeConditional &&
-                <input
-                    id={`condition-group-name-${activeConditional.id}`}
-                    className={`condition-group-name`}
-                    value={activeConditional.config.name}
-                    onChange={(e) => {
-                        return updateConditional({
-                                ...activeConditional,
-                                config: {
-                                    ...activeConditional.config,
-                                    name: e.target.value
-                                }
-                            }
-                        );
-                    }}
-                />
-                }
-            </div>
         </div>
     );
 }

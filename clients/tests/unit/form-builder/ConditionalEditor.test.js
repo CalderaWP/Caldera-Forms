@@ -78,8 +78,13 @@ describe('ConditionalEditor', () => {
         };
 
         return <ConditionalEditor
-            strings={strings} onNewConditional={onNewConditional} conditionals={conditionals} fields={fields}
-            updateConditional={updateConditional}/>
+            strings={strings} onNewConditional={onNewConditional}
+            conditionals={conditionals}
+            formFields={fields}
+            updateConditional={updateConditional}
+            removeConditional={removeConditional}
+
+        />
 
     };
 
