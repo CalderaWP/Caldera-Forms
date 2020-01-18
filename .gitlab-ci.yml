@@ -68,11 +68,23 @@ WP-Integration:
 #Only triggered when a Tag is pushed
 Deploy To Pantheon:
   stage: Staging Deploy
+  image: composer
+    
   environment:
     name: dev
     url: https://dev-$PANTHEON_SITE.pantheonsite.io/
 
   before_script:
+    # Update/upgrade apk
+    - apk update
+    - apk upgrade
+
+    # Make the Terminus directory
+    - mkdir -p /usr/local/share/terminus
+
+    # Install Terminus 2.x with Composer
+    - /usr/bin/env COMPOSER_BIN_DIR=/usr/local/bin composer -n --working-dir=/usr/local/share/terminus require pantheon-systems/terminus:"^2"
+
     # Set SSH conf
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
@@ -97,6 +109,10 @@ Deploy To Pantheon:
     - git add .
     - git commit -m "$CI_COMMIT_MESSAGE $CI_COMMIT_TAG"
     - git push
+    # Update Tests
+    - terminus auth:login --machine-token=$GITLAB_MACHINE_TOKEN
+    - terminus wp caldera-testing.dev -- cf import-test-forms
+    - terminus wp caldera-testing.dev -- cf create-test-pages
   
   rules:
     - if: '$CI_COMMIT_TAG'
