@@ -104,19 +104,15 @@ Deploy To Pantheon:
 # Cypress Test Stage
 # Only triggered when a Tag is pushed
 Cypress Tests:
-  image: edbizarro/gitlab-ci-pipeline-php:latest
-  stage: .pre
+  image: cypress/base:10
+    stage: Integration Tests
 
-  before_script:
-    # Install dependencies
-    - composer install
-    - yarn
-    - yarn install cypress --save-dev
-    # Refresh assets
-    - yarn build
+    before_script:
+      - yarn
+      - yarn add cypress --dev
 
-  script:
-    - yarn test:e2e
+    script:
+      - yarn test:e2e:ci
   
   rules:
     - if: '$CI_COMMIT_TAG'
