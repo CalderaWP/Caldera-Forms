@@ -35,8 +35,8 @@ exports[`Editor for a single conditional AppliesToFields matches snapshot 1`] = 
   >
     Number
     <input
-      checked={true}
-      disabled={true}
+      checked={false}
+      disabled={false}
       onClick={[Function]}
       style={
         Object {
@@ -57,7 +57,7 @@ exports[`Editor for a single conditional AppliesToFields matches snapshot 1`] = 
   >
     Dropdown
     <input
-      checked={true}
+      checked={false}
       disabled={false}
       onClick={[Function]}
       style={
@@ -79,8 +79,8 @@ exports[`Editor for a single conditional AppliesToFields matches snapshot 1`] = 
   >
     Number 2
     <input
-      checked={true}
-      disabled={true}
+      checked={false}
+      disabled={false}
       onClick={[Function]}
       style={
         Object {
@@ -101,7 +101,7 @@ exports[`Editor for a single conditional AppliesToFields matches snapshot 1`] = 
   >
     Dropdown 2
     <input
-      checked={true}
+      checked={false}
       disabled={false}
       onClick={[Function]}
       style={
@@ -186,37 +186,49 @@ exports[`Editor for a single conditional ConditionalLine with a checkbox field a
   >
     <option />
     <optgroup>
-      <option>
+      <option
+        value="fld_1705245"
+      >
         Number
          [
         number
         ]
       </option>
-      <option>
+      <option
+        value="fld_5216203"
+      >
         Dropdown
          [
         dropdown
         ]
       </option>
-      <option>
+      <option
+        value="fld_8846716"
+      >
         Number 2
          [
         number_2
         ]
       </option>
-      <option>
+      <option
+        value="fld_313720"
+      >
         Dropdown 2
          [
         dropdown_2
         ]
       </option>
-      <option>
+      <option
+        value="fld_7100783"
+      >
         Next Page
          [
         next_page
         ]
       </option>
-      <option>
+      <option
+        value="fld_5619974"
+      >
         Back
          [
         back
@@ -303,6 +315,7 @@ exports[`Editor for a single conditional ConditionalLine with a checkbox field a
   </select>
   <button
     className="button pull-right"
+    onClick={[Function]}
     type="button"
   >
     <i
@@ -338,37 +351,49 @@ exports[`Editor for a single conditional ConditionalLine with a number field as 
   >
     <option />
     <optgroup>
-      <option>
+      <option
+        value="fld_1705245"
+      >
         Number
          [
         number
         ]
       </option>
-      <option>
+      <option
+        value="fld_5216203"
+      >
         Dropdown
          [
         dropdown
         ]
       </option>
-      <option>
+      <option
+        value="fld_8846716"
+      >
         Number 2
          [
         number_2
         ]
       </option>
-      <option>
+      <option
+        value="fld_313720"
+      >
         Dropdown 2
          [
         dropdown_2
         ]
       </option>
-      <option>
+      <option
+        value="fld_7100783"
+      >
         Next Page
          [
         next_page
         ]
       </option>
-      <option>
+      <option
+        value="fld_5619974"
+      >
         Back
          [
         back
@@ -455,6 +480,7 @@ exports[`Editor for a single conditional ConditionalLine with a number field as 
   </select>
   <button
     className="button pull-right"
+    onClick={[Function]}
     type="button"
   >
     <i

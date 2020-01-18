@@ -123,7 +123,7 @@ export const ConditionalsList = ({conditionals, onChooseItem, strings, onNewCond
                 placeholder={strings['new-group-name']}
                 style={{width: "100%"}}
                 onChange={(e) => setNewGroupName(e.target.value)}
-                ref={newNameInputRef}
+                ref={(ref) => newNameInputRef.current = ref}
                 onBlur={onNewBlur}
             />
             }

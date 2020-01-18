@@ -73,8 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
              */
             const updateConditional = (conditional) => {
                 state.updateConditional(conditional);
-                const index = findConditionalIndex(conditional.id);
-                console.log(index,state.getAllConditionals());
+                setConditionals([...state.getAllConditionals()] );
 
             };
 

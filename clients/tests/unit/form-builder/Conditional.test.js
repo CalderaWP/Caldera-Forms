@@ -106,15 +106,15 @@ describe('Editor for a single conditional', () => {
             />
         );
         expect(component.toJSON()).toMatchSnapshot();
-    })
+    });
 
 
     test( 'setConditionalsFromCfConfig adds conditionals from cf1 config style', () => {
         const factory = stateFactory(system_values, current_form_fields);
         const state = factory.createState();
-        setConditionalsFromCfConfig(testForm,state);
+        setConditionalsFromCfConfig(testForm.conditional_groups.conditions,state);
         expect(state.getConditional('con_3156693554561454').config.name).toBe('Hide Dropdown')
     });
 
-})
+});
 

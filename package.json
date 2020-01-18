@@ -44,7 +44,7 @@
         "ie > 8"
     ],
     "dependencies": {
-        "@calderajs/cf-editor-state": "0.2.1",
+        "@calderajs/cf-editor-state": "0.4.1",
         "@cypress/webpack-preprocessor": "^4.1.1",
         "@wordpress/keycodes": "^2.3.0",
         "@wordpress/scripts": "^6.1.0",
