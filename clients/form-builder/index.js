@@ -1,7 +1,7 @@
 /** globals system_values,current_form_fields,CF_ADMIN **/
 import React from 'react';
 import stateFactory, {setConditionalsFromCfConfig} from "./stateFactory";
-import Conditionals from "./components/Conditionals";
+import {ConditionalEditorApp} from "./ConditionalEditor";
 import {render} from '@wordpress/element';
 /**
  * Form builder
@@ -18,12 +18,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const state = factory.createState();
 
 
-        function App() {
-          return <div>1</div>
-        }
-
         render(
-            <App state={state} strings={strings}/>, document.getElementById('caldera-forms-conditions-panel')
+            <ConditionalEditorApp state={state} strings={strings}/>, document.getElementById('caldera-forms-conditions-panel')
         )
 
     }

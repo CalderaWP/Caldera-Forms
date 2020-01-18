@@ -236,6 +236,7 @@ export const ConditionalLines = ({lines, strings, formFields, onRemoveLine, onUp
             {lines.map((line, index) => {
                 return (
                     <ConditionalLine
+                        key={line.id}
                         line={line}
                         isFirst={0 === index}
                         onUpdateLine={(update) => onUpdateLine(update, line.id)}
@@ -482,7 +483,7 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
                 <button
                     style={{margin: "12px 0 12px"}}
                     type="button"
-                    className="block-input button"
+                    className="block-input button condition-remove"
                     data-confirm={strings['confirm-remove']}
                     onClick={e => {
                         e.preventDefault();
@@ -491,16 +492,6 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
                 >
                     {strings['remove-condition']}
                 </button>
-
-                <AppliesToFields
-                    formFields={formFields}
-                    fieldsUsed={fieldsUsed}
-                    fieldsNotAllowed={fieldsNotAllowed}
-                    strings={strings}
-                    onChange={() => {
-                    }}
-                    groupId={id}
-                />
             </div>
 
         </div>

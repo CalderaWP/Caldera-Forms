@@ -188,7 +188,7 @@ describe('Editor for a single conditional', () => {
             />
         );
         component.find('.condition-line-remove').simulate('click');
-        expect(onRemoveLine).toBeCalledWith(line.id);
+        expect(onRemoveLine).toBeCalledWith(line.id,line.parent);
 
     });
 
