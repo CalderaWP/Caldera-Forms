@@ -10,17 +10,19 @@ import cfEditorState from "@calderajs/cf-editor-state";
  * @returns {*}
  */
 export default function ({fields, conditionals, strings, updateConditional}) {
+    const [activeConditionalId, setActiveConditionalId] = React.useState(null);
 
-    const [activeConditional, setActiveConditional] = React.useState(null);
 
     const findConditionalById = (conditionalId) => conditionals.length ? conditionals.find(conditional => conditionalId === conditional.id) : undefined;
-
+    const activeConditional = React.useMemo(() => {
+        return findConditionalById(activeConditionalId);
+    }, [activeConditionalId])
     const onActivateConditional = (conditionalId) => {
-        const active = findConditionalById(conditionalId);
-        if (active) {
-            setActiveConditional(active);
-        }
+
+            setActiveConditionalId(conditionalId);
+
     };
+
     const onNewConditional = () => {
 
     };
@@ -30,41 +32,50 @@ export default function ({fields, conditionals, strings, updateConditional}) {
         <div>
             <div className="caldera-editor-conditions-panel" style={{marginBottom: "32px"}}>
                 <ul className="active-conditions-list">
-                    {conditionals.map(condition => (
-                            <li className={`caldera-condition-nav`} key={condition.id}>
-                                  <span id={`condition-group-${condition.id}`}>
-                                        {condition.config.name}
-                                    </span>
-                            </li>
-                        )
+                    {conditionals.map(condition => {
+                            const active = activeConditional && activeConditionalId === condition.id;
+                            return (
+                                <li
+                                    key={condition.id}
+                                    className={`caldera-condition-nav ${active ? 'active' : ''} caldera-forms-condition-group condition-point-${condition.id}`}
+                                >
+                                    <a
+                                        id={`condition-open-group-${condition.id}`}
+                                        className="condition-open-group"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            onActivateConditional(condition.id)
+                                        }}
+                                        style={{cursor: "pointer"}}
+                                    >
+                                <span id={`condition-group-${condition.id}`}>
+                                    {condition.config.name}
+                                </span>
+                                        <span className="condition-line-number"/>
+                                    </a>
+                                </li>
+                            )
+                        }
                     )}
                 </ul>
             </div>
 
 
             <div id={`temporary-right`}>
-                <ul>
-                    {conditionals.map(conditional => {
-                        const {id, config} = conditional;
-                        const {name} = config;
-                        return (
-                            <div key={id}>
-                                <input id={`condition-group-name-${id}`} value={name}
-                                       onChange={(e) => {
-                                           return updateConditional({
-                                                   ...findConditionalById(id),
-                                                   config: {
-                                                       ...findConditionalById(id).config,
-                                                       name: e.target.value
-                                                   }
-                                               }
-                                           );
-                                       }}
-                                />
-                            </div>
-                        )
-                    })}
-                </ul>
+                {activeConditional &&
+                <input id={`condition-group-name-${activeConditional.id}`} value={activeConditional.config.name}
+                       onChange={(e) => {
+                           return updateConditional({
+                                   ...activeConditional,
+                                   config: {
+                                       ...activeConditional.config,
+                                       name: e.target.value
+                                   }
+                               }
+                           );
+                       }}
+                />
+                }
             </div>
         </div>
     );

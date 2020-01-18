@@ -1,5 +1,5 @@
 import React from 'react';
-import {mount,shallow} from "enzyme/build";
+import {mount, shallow} from "enzyme/build";
 import EnzymeAdapter from '../createEnzymeAdapter'
 import ConditionalEditor from "../../../form-builder/ConditionalEditor";
 import testForm from "./test-form";
@@ -29,65 +29,84 @@ const current_form_fields = formFields.map(field => {
 const groupId = 'con_8761120514939434';
 const factory = stateFactory(system_values, current_form_fields);
 const state = factory.createState();
-setConditionalsFromCfConfig(testForm.conditional_groups.conditions,state);
+setConditionalsFromCfConfig(testForm.conditional_groups.conditions, state);
+
+
+describe('ConditionalEditor', () => {
+    it('lists conditionals', () => {
+        //expect.assertions(4);
+        const fields = state.getAllFields();
+        const conditionals = state.getAllConditionals();
+        expect(conditionals.length).toBe(3);
+
+        const component = mount(
+            <ConditionalEditor strings={strings} fields={fields} conditionals={conditionals}/>
+        );
+        const navList = component.find('.caldera-condition-nav');
+        expect(navList.length).toBe(3);
+        conditionals.map(c => {
+            const {id} = c;
+            const name = c.config.name;
+            expect(navList.find(`#condition-group-${id}`).text()).toBe(name);
+        });
+    });
+
+    const Test = ({state, strings}) => {
+        const [fields, setFields] = React.useState(state.getAllFields());
+        const [conditionals, setConditionals] = React.useState(state.getAllConditionals());
+        const findConditionalById = (conditionalId) => conditionals.length ? conditionals.find(conditional => conditionalId === conditional.id) : undefined;
+        const findConditionalIndexId = (conditionalId) => conditionals.length ? conditionals.findIndex(conditional => conditionalId === conditional.id) : undefined;
+
+        const updateConditional = (conditional) => {
+            const index = findConditionalIndexId(conditional.id);
+            setConditionals([
+                ...conditionals.slice(0, index),
+                ...[conditional],
+                ...conditionals.slice(index + 1),
+            ]);
+        };
+
+        return <ConditionalEditor
+            strings={strings} conditionals={conditionals} fields={fields} updateConditional={updateConditional}/>
+
+    };
 
 
 
-describe( 'ConditionalEditor', () => {
-   it( 'lists conditionals', () => {
-       //expect.assertions(4);
-       const fields = state.getAllFields();
-       const conditionals = state.getAllConditionals();
-       expect(conditionals.length).toBe(3);
 
-       const component = mount(
-           <ConditionalEditor strings={strings} fields={ fields} conditionals={conditionals} />
-       );
-       const navList = component.find( '.caldera-condition-nav' );
-       expect(navList.length ).toBe(3);
-       conditionals.map(c => {
-           const {id} = c;
-           const name = c.config.name;
-           expect(navList.find( `#condition-group-${id}`).text() ).toBe(name);
-       });
-   });
+    test('Activating conditional', () => {
 
-   test( 'Changing conditional name updates list', () => {
+        const component = mount(
+            <Test strings={strings} state={state}/>
+        );
+        const condition = state.getAllConditionals()[1];
+        const {id} = condition;
+        expect(component.find('.active').length).toBe(0);
+        component.find(`#condition-open-group-${id}`)
+            .simulate('click');
+        expect(component.find('.active').length).toBe(1);
 
-       const Test = ({state,strings}) => {
-            const [fields,setFields] = React.useState(state.getAllFields() );
-            const [conditionals,setConditionals] = React.useState(state.getAllConditionals() );
-           const findConditionalById = (conditionalId) => conditionals.length ? conditionals.find(conditional => conditionalId === conditional.id) : undefined;
-           const findConditionalIndexId = (conditionalId) => conditionals.length ? conditionals.findIndex(conditional => conditionalId === conditional.id) : undefined;
 
-           const updateConditional = (conditional) => {
-               const index = findConditionalIndexId(conditional.id);
-               setConditionals( [
-                   ...conditionals.slice(0, index),
-                   ...[conditional],
-                   ...conditionals.slice(index + 1),
-               ]);
+    });
 
-           };
+    test('Changing conditional name updates list', () => {
 
-           return <ConditionalEditor
-               strings={strings} conditionals={conditionals} fields={fields}  updateConditional={updateConditional}/>
+        const component = mount(
+            <Test strings={strings} state={state}/>
+        );
+        const condition = state.getAllConditionals()[1];
+        const {id} = condition;
+        component.find(`#condition-open-group-${id}`)
+            .simulate('click');
 
-       };
-       const component = mount(
-           <Test strings={strings} state={state} />
-       );
-       const condition = state.getAllConditionals()[1];
-       const {id} = condition;
+        expect(component.find('.active').length).toBe(1);
+        expect(component.find(`#condition-group-con_3156693554561454`).text()).toBe('Hide Dropdown');
 
-       expect(component.find( `#condition-group-con_3156693554561454`).text() ).toBe('Hide Dropdown');
+        expect(component.find(`#condition-group-name-${id}`).length).toBe(1);
+        component.find(`#condition-group-name-${id}`)
+            .simulate('change', {target: {value: 'Hello'}});
+        expect(component.find(`#condition-group-con_3156693554561454`).text()).toBe('Hello');
 
-       expect( component.find( `#condition-group-name-${id}` ).length).toBe( 1);
-       component.find( `#condition-group-name-${id}`)
-           .simulate('change', { target: { value: 'Hello' } });
+    });
 
-        expect(component.find( `#condition-group-name-${id}` ).props().value).toBe( 'Hello');
-        expect(component.find(`#condition-group-con_3156693554561454`).text() ).toBe('Hello');
-
-   });
 });
