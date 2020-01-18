@@ -1,5 +1,6 @@
 stages:
   - Unit Tests
+  - Staging Deploy
   - Integration Tests
 
 # SQL Variables for the WordPress tests
@@ -65,66 +66,57 @@ WP-Integration:
 
 #Deploy current code to the wp-content/plugins/caldera-forms folder of the https://dev-caldera-testing.pantheonsite.io site installation
 #Only triggered when a Tag is pushed
-Deploy for Pantheon Tests:
-  stage: .pre
-  image: tetraweb/php:7.1
+Deploy To Pantheon:
+  stage: Staging Deploy
+  environment:
+    name: dev
+    url: https://dev-$PANTHEON_SITE.pantheonsite.io/
 
   before_script:
-    - apt-get update -qq
-    - apt-get install -qq git curl 
-    # Install composer
-    - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-    - php -r "if (hash_file('sha384', 'composer-setup.php') === '$COMPOSER_HASH') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-    - php composer-setup.php
-    - php -r "unlink('composer-setup.php');"
-    - php composer.phar install
-    # Setup SSH deploy keys
-    - 'which ssh-agent || ( apt-get install -qq openssh-client )'
+    # Set SSH conf
     - eval $(ssh-agent -s)
-    - ssh-add <(echo "$SSH_PRIVATE_KEY")
-    - mkdir -p ~/.ssh
-    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-    # Configure git for that job
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p $HOME/.ssh && echo "StrictHostKeyChecking no" >> "$HOME/.ssh/config"
+    # git config
     - git config --global user.email "$GITLAB_USER_EMAIL"
-    - git config --global user.name "$GITLAB_USER_ID"
-    - git remote rm origin
-    - git remote add origin $GIT_PANTHEON_URL
-    - git remote set-url origin $GIT_PANTHEON_URL
-    - git add . 
-    - git remote -v
-    - git commit -m "Plugin"
+    - git config --global user.name "Gitlab CI"
 
   script:
-    - if [ -d "wordpress" ]; then rm -Rf wordpress; fi
-    - if [ -d "wp-content" ]; then rm -Rf wp-content; fi
-    - mkdir -p .wp-content/plugins/caldera-forms/
-    - cp -rf * .wp-content/plugins/caldera-forms/
-    - shopt -s extglob
-    - rm -rf !(wp-content)
-    - git pull origin master
-    - mv -f .wp-content/plugins/caldera-forms wp-content/plugins/caldera-forms
-    - git branch -vv
-    - git add . 
-    - git commit -m "Test"
-    - git push origin master
-
+    # Create a DIR and clone Pantheon repo
+    - mkdir .pantheon
+    - cd .pantheon
+    - git remote rm origin
+    - git clone $GIT_PANTHEON_URL
+    # Copy CF code into Pantheon repository
+    - cd ../
+    - if [ -d ".pantheon/repository/wp-content/plugins/caldera-forms" ]; then rm -Rf .pantheon/repository/wp-content/plugins/caldera-forms; fi
+    - mkdir .pantheon/repository/wp-content/plugins/caldera-forms
+    - cp -Rf * .pantheon/repository/wp-content/plugins/caldera-forms
+    # Commit and push Pantheon repository
+    - cd .pantheon/repository
+    - git add .
+    - git commit -m "$CI_COMMIT_MESSAGE $CI_COMMIT_TAG"
+    - git push
+  
   rules:
     - if: '$CI_COMMIT_TAG'
-
 
 # Cypress Test Stage
 # Only triggered when a Tag is pushed
 Cypress Tests:
-  image: fabn/composer-yarn
-  stage: Integration Tests
-
-  script:
-    - yarn test:e2e
+  image: edbizarro/gitlab-ci-pipeline-php:latest
+  stage: .pre
 
   before_script:
     # Install dependencies
     - composer install
     - yarn
+    - yarn install cypress --save-dev
+    # Refresh assets
+    - yarn build
+
+  script:
+    - yarn test:e2e
   
   rules:
     - if: '$CI_COMMIT_TAG'
