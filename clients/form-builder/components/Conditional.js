@@ -273,7 +273,21 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
     const {type, config, id} = conditional;
     const group = config && config.hasOwnProperty('group') ? config.group : {};
     const name = conditional.hasOwnProperty('config') && conditional.config.hasOwnProperty('name') ? conditional.config.name : '';
+
+    /**
+     * Create a new line's ID.
+     *
+     * @since 1.8.10
+     * 
+     * @returns {string}
+     */
     const newLineId = ( ) => `cl_${Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 12)}`;
+
+    /**
+     * Callback for creating a group
+     *
+     * @since 1.8.10
+     */
     const onAddGroup = () => {
         const groupId = `rw${Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 12)}`;
         onUpdateConditional({
@@ -295,7 +309,15 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
                 }
             }
         });
-    }
+    };
+
+    /**
+     * Callback for adding a line
+     *
+     * @since 1.8.10
+     *
+     * @param groupId
+     */
     const onAddLine = (groupId) => {
         const lineId = newLineId();
         onUpdateConditional({
