@@ -105,14 +105,14 @@ Deploy To Pantheon:
 # Only triggered when a Tag is pushed
 Cypress Tests:
   image: cypress/base:10
-    stage: Integration Tests
+  stage: Integration Tests
 
-    before_script:
-      - yarn
-      - yarn add cypress --dev
+  before_script:
+    - yarn
+    - yarn add cypress --dev
 
-    script:
-      - yarn test:e2e:ci
+  script:
+    - yarn test:e2e:ci
   
   rules:
     - if: '$CI_COMMIT_TAG'
