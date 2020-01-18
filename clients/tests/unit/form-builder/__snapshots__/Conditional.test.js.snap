@@ -283,36 +283,47 @@ exports[`Editor for a single conditional ConditionalLine with a checkbox field a
       contains
     </option>
   </select>
-  <select
-    onChange={[Function]}
+  <span
+    className="caldera-conditional-field-value"
     style={
       Object {
-        "maxWidth": "165px",
-        "verticalAlign": "inherit",
+        "display": "inline-block",
+        "padding": "0 12px 0",
+        "width": "200px",
       }
     }
-    value="opt1184564"
   >
-    <option />
-    <option>
-      Number
-    </option>
-    <option>
-      Dropdown
-    </option>
-    <option>
-      Number 2
-    </option>
-    <option>
-      Dropdown 2
-    </option>
-    <option>
-      Next Page
-    </option>
-    <option>
-      Back
-    </option>
-  </select>
+    <select
+      onChange={[Function]}
+      style={
+        Object {
+          "maxWidth": "165px",
+          "verticalAlign": "inherit",
+        }
+      }
+      value="opt1184564"
+    >
+      <option />
+      <option>
+        Number
+      </option>
+      <option>
+        Dropdown
+      </option>
+      <option>
+        Number 2
+      </option>
+      <option>
+        Dropdown 2
+      </option>
+      <option>
+        Next Page
+      </option>
+      <option>
+        Back
+      </option>
+    </select>
+  </span>
   <button
     className="button pull-right condition-line-remove"
     onClick={[Function]}
@@ -448,36 +459,23 @@ exports[`Editor for a single conditional ConditionalLine with a number field as 
       contains
     </option>
   </select>
-  <select
-    onChange={[Function]}
+  <span
+    className="caldera-conditional-field-value"
     style={
       Object {
-        "maxWidth": "165px",
-        "verticalAlign": "inherit",
+        "display": "inline-block",
+        "padding": "0 12px 0",
+        "width": "200px",
       }
     }
-    value="5"
   >
-    <option />
-    <option>
-      Number
-    </option>
-    <option>
-      Dropdown
-    </option>
-    <option>
-      Number 2
-    </option>
-    <option>
-      Dropdown 2
-    </option>
-    <option>
-      Next Page
-    </option>
-    <option>
-      Back
-    </option>
-  </select>
+    <input
+      className="magic-tag-enabled block-input"
+      onChange={[Function]}
+      type="text"
+      value="5"
+    />
+  </span>
   <button
     className="button pull-right condition-line-remove"
     onClick={[Function]}
