@@ -1,9 +1,10 @@
 import stateFactory, {
     getAllFieldsUsed,
-    getFieldsNotAllowedForConditional,
+    getFieldsNotAllowedForConditional, getFieldsOfGroups,
     getFieldsUsedByConditional,
 } from "../../../form-builder/stateFactory";
 import system_values from "./system_values";
+
 describe('State factory', () => {
 
     const current_form_fields = {
@@ -222,7 +223,7 @@ describe('State factory', () => {
         expect(state.getAllConditionals().length).toBe(1);
         state.addConditional({id: 'r2', type: "enable"});
         expect(state.getAllConditionals().length).toBe(2);
-        expect( state.getConditional('r1').type ).toBe('disable')
+        expect(state.getConditional('r1').type).toBe('disable')
     });
 
     it('Updates a conditional group', () => {
@@ -232,7 +233,7 @@ describe('State factory', () => {
         state.addConditional({id: 'r2', type: "enable"});
         state.addConditional({id: 'r3', type: "enable"});
         state.updateConditional({id: 'r2', type: "disable"});
-        expect( state.getConditional('r2').type ).toBe('disable')
+        expect(state.getConditional('r2').type).toBe('disable')
     });
 
     it('Removes a conditional group', () => {
@@ -243,7 +244,7 @@ describe('State factory', () => {
         expect(state.getAllConditionals().length).toBe(1);
     });
 
-    test( 'getAllFieldsUsed utility method', () => {
+    test('getAllFieldsUsed utility method', () => {
         const factory = stateFactory(system_values, current_form_fields);
         const state = factory.createState();
         state.addConditional(conditional);
@@ -261,34 +262,50 @@ describe('State factory', () => {
             config: {name: 'r2', fields: {c5: 'fld_4', c6: 'fld2'}}
         });
 
-        expect(getAllFieldsUsed(state).length).toBe(4);
+        expect(getAllFieldsUsed(state).length).toBe(3);
     });
 
-    test( 'getFieldsUsedByConditional utility method',( ) => {
+    test('getFieldsOfGroups utility method', () => {
+        let conditionals = [
+            {
+                id: 'r3', type: "enable",
+                config: {name: 'r2', fields: {c5: 'fld_4', c6: 'fld2'}}
+            },
+            {
+                id: 'r2', type: "enable",
+                config: {name: 'r2', fields: {c2: 'fld2'}}
+            }
+        ];
+
+
+        expect(getFieldsOfGroups(conditionals).length).toBe(2);
+    });
+
+    test('getFieldsUsedByConditional utility method', () => {
         const factory = stateFactory(system_values, current_form_fields);
         const state = factory.createState();
         state.addConditional({
             id: 'none', type: "enable",
             config: {name: 'No fields'}
         });
-        expect( getFieldsUsedByConditional('none', state).length ).toBe(0);
+        expect(getFieldsUsedByConditional('none', state).length).toBe(0);
 
         state.addConditional({
             id: 'r3', type: "enable",
             config: {name: 'r threee', fields: {c5: 'fld_4', c6: 'fld2'}}
         });
 
-        expect( getFieldsUsedByConditional('r3', state).length ).toBe(2);
+        expect(getFieldsUsedByConditional('r3', state).length).toBe(2);
     });
 
-    test( 'getFieldsNotAllowedForConditional utility method',( ) => {
+    test('getFieldsNotAllowedForConditional utility method', () => {
         const factory = stateFactory(system_values, current_form_fields);
         const state = factory.createState();
         state.addConditional({
             id: 'none', type: "enable",
             config: {name: 'No fields'}
         });
-        expect( getFieldsUsedByConditional('none', state).length ).toBe(0);
+        expect(getFieldsUsedByConditional('none', state).length).toBe(0);
 
 
         state.addConditional({
@@ -296,10 +313,10 @@ describe('State factory', () => {
             config: {name: 'r threee', fields: {c5: 'fld_4', c6: 'fld2'}}
         });
         //No other conditionals have fields used, so all fields are allowed.
-        expect( getFieldsNotAllowedForConditional('r3', state) ).toEqual([]);
+        expect(getFieldsNotAllowedForConditional('r3', state)).toEqual([]);
 
         //Other conditional group has 2 fields applied, so those are blocked
-        expect( getFieldsNotAllowedForConditional('none', state) ).toEqual([
+        expect(getFieldsNotAllowedForConditional('none', state)).toEqual([
             'fld_4', 'fld2'
         ])
     });

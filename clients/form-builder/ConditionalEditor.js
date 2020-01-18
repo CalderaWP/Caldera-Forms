@@ -2,6 +2,7 @@ import React, {Fragment} from 'react';
 import Conditional from './components/Conditional';
 import {NewConditionalGroup} from "./components/NewConditionalGroup";
 import cfEditorState from "@calderajs/cf-editor-state";
+import {getFieldsOfGroups} from "./stateFactory";
 
 /**
  * Caldera Forms Conditional Logic Editor
@@ -33,6 +34,13 @@ const ConditionalEditor = ({formFields, conditionals, strings, updateConditional
     const findConditionalById = (conditionalId) => conditionals.length ? conditionals.find(conditional => conditionalId === conditional.id) : undefined;
 
 
+    /**
+     * Callback for editing a conditional
+     *
+     * @since 1.8.10
+     *
+     * @param conditional
+     */
     const onUpdateConditional = (conditional) => {
         updateConditional(conditional);
         setActiveConditional(conditional);
@@ -80,14 +88,14 @@ const ConditionalEditor = ({formFields, conditionals, strings, updateConditional
                 />
             </div>
             {activeConditional &&
-            <Conditional
-                conditional={activeConditional}
-                formFields={formFields}
-                strings={strings}
-                onRemoveConditional={removeConditional}
-                onUpdateConditional={onUpdateConditional}
-                fieldsNotAllowed={[]} fieldsUsed={[]}
-            />
+                <Conditional
+                    conditional={activeConditional}
+                    formFields={formFields}
+                    strings={strings}
+                    onRemoveConditional={removeConditional}
+                    onUpdateConditional={onUpdateConditional}
+                />
+
             }
 
         </Fragment>
@@ -148,8 +156,14 @@ export const ConditionalEditorApp = ({state, strings}) => {
 
     };
 
+    /**
+     * Add a new conditional
+     *
+     * @param id
+     * @param name
+     */
     const onNewConditional = (id, name) => {
-        setConditionals([...conditionals, {id, type: 'show', config: {name}}]);
+        setConditionals([...conditionals, {id, type: 'show', applies: [], config: {name}}]);
     };
 
     return (

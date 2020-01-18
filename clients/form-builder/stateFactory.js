@@ -66,6 +66,27 @@ function addInitialMagicTypes(system_values, state) {
 
 }
 
+/**
+ * Get all fields used by a collection of conditional groups
+ *
+ * @since 1.8.10
+ *
+ * @param conditionals
+ * @returns {*[]}
+ */
+export const getFieldsOfGroups = (conditionals) => {
+    let fields = [];
+    conditionals.forEach((conditional) => {
+        if (conditional.hasOwnProperty('config') && conditional.config.hasOwnProperty('fields')) {
+            const _fields = Object.values(conditional.config.fields);
+            if (_fields.length) {
+                _fields.map(_f => fields.push(_f));
+            }
+        }
+
+    });
+    return [...new Set(fields)]; ;
+};
 
 /**
  * Get all fields used by all conditional groups
@@ -76,22 +97,13 @@ function addInitialMagicTypes(system_values, state) {
  * @returns {*}
  */
 export const getAllFieldsUsed = (state) => {
-    const groups = state.getAllConditionals();
-    if (!groups.length) {
+    const conditionals = state.getAllConditionals();
+    if (!conditionals.length) {
         return [];
     }
 
-    let fields = [];
-    groups.forEach((conditional) => {
-        if (conditional.hasOwnProperty('config') && conditional.config.hasOwnProperty('fields')) {
-            const _fields = Object.values(conditional.config.fields);
-            if (_fields.length) {
-                _fields.map(_f => fields.push(_f));
-            }
-        }
 
-    });
-    return fields;
+    return getFieldsOfGroups(conditionals);
 };
 
 /**
@@ -150,6 +162,7 @@ const conditionalFromCfConfig = (conditionalGroup) => {
     return {
         id: conditionalGroup.id,
         type: conditionalGroup.type ? conditionalGroup.type : 'show',
+        applies: conditionalGroup.applies ? conditionalGroup.applies : [],
         config: {
             name: conditionalGroup.hasOwnProperty('name') ? conditionalGroup.name : '',
             fields: conditionalGroup.hasOwnProperty('fields') ? Object.values(conditionalGroup.fields) : [],

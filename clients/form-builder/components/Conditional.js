@@ -14,7 +14,7 @@ import React, {Fragment} from 'react';
  * @returns {*}
  * @constructor
  */
-export const AppliesToFields = ({formFields, fieldsUsed, notAllowedFields, strings, onChange, groupId}) => {
+export const AppliesToFields = ({formFields, appliedFields, notAllowedFields, strings, onChange, groupId}) => {
     /**
      * Check if we should disable this option
      *
@@ -39,7 +39,10 @@ export const AppliesToFields = ({formFields, fieldsUsed, notAllowedFields, strin
      * @returns {*}
      */
     function isFieldChecked(fieldId) {
-        return fieldsUsed.includes(fieldId);
+        if (undefined === appliedFields) {
+            return false;
+        }
+        return appliedFields.includes(fieldId);
     }
 
     return (
@@ -50,25 +53,23 @@ export const AppliesToFields = ({formFields, fieldsUsed, notAllowedFields, strin
             <p className="description">{strings['select-apply-fields']}</p>
             {formFields.map(field => (
                     <label style={{display: 'block', marginLeft: `20px`}}>
-                        {field.label}
                         <input
                             style={{marginLeft: `-20px`}}
                             type="checkbox"
                             disabled={isFieldDisabled(field.ID)}
                             onClick={(e) => {
-                                e.preventDefault();
-                                //Is it already applied?
-                                if (isFieldChecked(field.ID)) {
-                                    //remove from applied fields
-                                    onChange(fieldsUsed.filter(f => f.ID === field.ID))
+                                if( ! appliedFields ||! appliedFields.length ){
+                                    onChange([field.ID]);
+                                }else if (isFieldChecked(field.ID)) {
+                                    onChange([...appliedFields.filter(f => field.ID !== f)]);
                                 } else {
-                                    //Add to applied fields.
-                                    onChange([...fieldsUsed, field.ID])
+                                    onChange([...appliedFields, field.ID]);
                                 }
                             }}
                             value={groupId}
                             checked={isFieldChecked(field.ID)}
                         />
+                        {field.label}
                     </label>
                 )
             )}
@@ -181,41 +182,41 @@ export const ConditionalLine = ({line, strings, isFirst, formFields, onRemoveLin
             <span className={'caldera-conditional-field-value'}
                   style={{
                       padding: `0 12px 0`,
-                      display:`inline-block`,
-                      width:`200px`
+                      display: `inline-block`,
+                      width: `200px`
                   }}
             >
                 {isFieldTypeWithOptions(fieldConfig.type) ? (
-                <select
-                    value={value}
-                    onChange={(e) => onChangeValue(e.target.value)}
-                    style={{maxWidth: "165px", verticalAlign: 'inherit'}}>
-                    <option/>
-                    {formFields.map(option => {
-                        //should be fieldConfig.option, except that doesn't exist.
-                        return (
-                            <option
-                                key={option.value}
-                                value={option.value}
-                            >
-                                {option.label}
-                            </option>
-                        )
-                    })}
-                </select>
-            ) : (
-                <input
-                    onChange={(e) => onChangeValue(e.target.value)}
-                    value={value}
-                    type="text"
-                    className="magic-tag-enabled block-input"
-                />
-            )}
+                    <select
+                        value={value}
+                        onChange={(e) => onChangeValue(e.target.value)}
+                        style={{maxWidth: "165px", verticalAlign: 'inherit'}}>
+                        <option/>
+                        {formFields.map(option => {
+                            //should be fieldConfig.option, except that doesn't exist.
+                            return (
+                                <option
+                                    key={option.value}
+                                    value={option.value}
+                                >
+                                    {option.label}
+                                </option>
+                            )
+                        })}
+                    </select>
+                ) : (
+                    <input
+                        onChange={(e) => onChangeValue(e.target.value)}
+                        value={value}
+                        type="text"
+                        className="magic-tag-enabled block-input"
+                    />
+                )}
             </span>
             <button
                 onClick={(e) => {
                     e.preventDefault();
-                    onRemoveLine(lineId,line.parent);
+                    onRemoveLine(lineId, line.parent);
                 }}
                 className="button pull-right condition-line-remove" type="button"
             >
@@ -277,8 +278,8 @@ export const ConditionalLines = ({lines, strings, formFields, onRemoveLine, onUp
  *
  * @since 1.8.10
  */
-const Conditional = ({conditional, formFields, strings, onRemoveConditional, onUpdateConditional, fieldsNotAllowed, fieldsUsed}) => {
-    const {type, config, id} = conditional;
+const Conditional = ({conditional, formFields, strings, onRemoveConditional, onUpdateConditional}) => {
+    const {type, config, id, applies} = conditional;
     const group = config && config.hasOwnProperty('group') ? config.group : {};
     const name = conditional.hasOwnProperty('config') && conditional.config.hasOwnProperty('name') ? conditional.config.name : '';
 
@@ -289,7 +290,7 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
      *
      * @returns {string}
      */
-    const newLineId = ( ) => `cl_${Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 12)}`;
+    const newLineId = () => `cl_${Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 12)}`;
 
     /**
      * Callback for creating a group
@@ -360,7 +361,7 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
      */
     const onUpdateLine = (line, lineId, groupId) => {
         let group = conditional.config.group;
-        onUpdateConditional({
+        const update = {
             ...conditional,
             config: {
                 ...conditional.config,
@@ -371,6 +372,22 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
                         [lineId]: line
                     }
                 }
+            }
+        };
+        let fields = [];
+        Object.values(group).forEach(lineGroup => {
+            Object.values(lineGroup).forEach(line => {
+                if (line.field && !fields.includes(line.field)) {
+                    fields = [...fields, line.field];
+                }
+            })
+        });
+
+        onUpdateConditional({
+            ...update,
+            config: {
+                ...update.config,
+                fields
             }
         });
     };
@@ -402,7 +419,6 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
             }
         });
     };
-
 
     /**
      * Callback for updating name of conditional group
@@ -547,6 +563,19 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
                 >
                     {strings['remove-condition']}
                 </button>
+                <AppliesToFields
+                    formFields={formFields}
+                    strings={strings}
+                    notAllowedFields={conditional.config.hasOwnProperty('fields') ? conditional.config.fields : []}
+                    appliedFields={applies}
+                    onChange={(applies) => {
+                        onUpdateConditional({
+                            ...conditional,
+                            applies,
+                        });
+                    }}
+                    groupId={conditional.id}
+                />
             </div>
 
         </div>

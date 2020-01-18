@@ -356,7 +356,24 @@ class Caldera_Forms_Admin_Assets
             $data['rest']['revisions'] = esc_url_raw(Caldera_Forms_API_Util::url('forms/' . $form_id . '/revisions', true));
             $data['rest']['delete_entries'] = esc_url_raw(Caldera_Forms_API_Util::url('entries/' . $form_id . '/delete', true));
             $data['conditions' ] = isset( $form['conditional_groups'], $form['conditional_groups']['conditions'] ) && is_array($form['conditional_groups']['conditions'] )
-                ? array_values( $form['conditional_groups']['conditions'] ): [];
+                ?  $form['conditional_groups']['conditions'] : [];
+
+            if( ! empty( $data['conditions' ] ) ){
+                foreach ( $data['conditions' ] as $conditional_id => $condition ){
+                    $data['conditions' ][$conditional_id]['applies'] = [];
+                }
+
+                foreach( $form[ 'fields' ] as $field_id => $field ){
+                    if( isset( $field[ 'conditions' ], $field['conditions']['type'] )  ){
+                        $conditional_id = $field['conditions']['type'];
+                        if( ! empty($conditional_id)){
+                            $data['conditions' ][$conditional_id]['applies'][] = $field_id;
+                        }
+                    }
+                }
+            }
+            $data['conditions' ] = array_values( $data['conditions' ] );
+
             //Translation strings
             $data['strings' ] = [
                 //Organized by panel
