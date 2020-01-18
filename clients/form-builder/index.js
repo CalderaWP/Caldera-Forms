@@ -15,10 +15,10 @@ document.addEventListener("DOMContentLoaded", function () {
     if ('object' == typeof system_values && 'object' == typeof current_form_fields) {
         const factory = stateFactory(system_values, current_form_fields);
         const strings = CF_ADMIN.strings.conditionals;
-        const state = factory.createState();
-        setConditionalsFromCfConfig(CF_ADMIN.conditions,state);
+        window.cfEditorState  = factory.createState();
+        setConditionalsFromCfConfig(CF_ADMIN.conditions,window.cfEditorState);
         render(
-            <ConditionalEditorApp state={state} strings={strings}/>, document.getElementById('caldera-forms-conditions-panel')
+            <ConditionalEditorApp state={window.cfEditorState} strings={strings}/>, document.getElementById('caldera-forms-conditions-panel')
         )
 
     }
