@@ -66,12 +66,15 @@ describe('ConditionalEditor', () => {
             ]);
         };
 
+        const onNewConditional = (id, name) => {
+            setConditionals([...conditionals, {id, type: 'show', config: {name}}]);
+        };
+
         return <ConditionalEditor
-            strings={strings} conditionals={conditionals} fields={fields} updateConditional={updateConditional}/>
+            strings={strings} onNewConditional={onNewConditional} conditionals={conditionals} fields={fields}
+            updateConditional={updateConditional}/>
 
     };
-
-
 
 
     test('Activating conditional', () => {
@@ -106,6 +109,24 @@ describe('ConditionalEditor', () => {
         component.find(`#condition-group-name-${id}`)
             .simulate('change', {target: {value: 'Hello'}});
         expect(component.find(`#condition-group-con_3156693554561454`).text()).toBe('Hello');
+
+    });
+
+    test('Adding a conditional', () => {
+
+        const component = mount(
+            <Test strings={strings} state={state}/>
+        );
+        component.find('#new-conditional').simulate('click');
+        component.find('.condition-new-group-name').simulate('change', {
+            target: {value: 'Hello'}
+        }).simulate('blur');
+        //Adds to list
+        expect( component.find('.caldera-condition-nav').length).toBe(4);
+        //Sets an active class
+        expect(component.find('.active').length).toBe(1);
+        //Has this conditional editor open
+        expect(component.find('.condition-group-name').prop('value')).toBe('Hello')
 
     });
 

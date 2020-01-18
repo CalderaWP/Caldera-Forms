@@ -1,5 +1,6 @@
 import React from 'react';
-import {ConditionalsList, ConditionalListItem} from './components/Conditionals';
+import Conditional from './components/Conditional';
+import {NewConditionalGroup} from "./components/NewConditionalGroup";
 import cfEditorState from "@calderajs/cf-editor-state";
 
 
@@ -9,23 +10,21 @@ import cfEditorState from "@calderajs/cf-editor-state";
  * @param strings
  * @returns {*}
  */
-export default function ({fields, conditionals, strings, updateConditional}) {
+export default function ({fields, conditionals, strings, updateConditional, onNewConditional}) {
     const [activeConditionalId, setActiveConditionalId] = React.useState(null);
 
 
     const findConditionalById = (conditionalId) => conditionals.length ? conditionals.find(conditional => conditionalId === conditional.id) : undefined;
     const activeConditional = React.useMemo(() => {
         return findConditionalById(activeConditionalId);
-    }, [activeConditionalId])
+    }, [activeConditionalId]);
+
+
     const onActivateConditional = (conditionalId) => {
-
-            setActiveConditionalId(conditionalId);
-
+        setActiveConditionalId(conditionalId);
     };
 
-    const onNewConditional = () => {
 
-    };
 
 
     return (
@@ -33,7 +32,7 @@ export default function ({fields, conditionals, strings, updateConditional}) {
             <div className="caldera-editor-conditions-panel" style={{marginBottom: "32px"}}>
                 <ul className="active-conditions-list">
                     {conditionals.map(condition => {
-                            const active = activeConditional && activeConditionalId === condition.id;
+                            const active = activeConditionalId === condition.id;
                             return (
                                 <li
                                     key={condition.id}
@@ -58,22 +57,36 @@ export default function ({fields, conditionals, strings, updateConditional}) {
                         }
                     )}
                 </ul>
+                <NewConditionalGroup
+                    strings={strings}
+                    onNewConditional={(name,id)=> {
+                        onNewConditional(id,name);
+                        setActiveConditionalId(id)
+                    }}
+                />
             </div>
 
 
-            <div id={`temporary-right`}>
+            <div
+                id={`temporary-right`}
+                 className="caldera-editor-condition-config caldera-forms-condition-edit"
+                 style={{marginTop: '-27px', width: "auto"}}
+            >
                 {activeConditional &&
-                <input id={`condition-group-name-${activeConditional.id}`} value={activeConditional.config.name}
-                       onChange={(e) => {
-                           return updateConditional({
-                                   ...activeConditional,
-                                   config: {
-                                       ...activeConditional.config,
-                                       name: e.target.value
-                                   }
-                               }
-                           );
-                       }}
+                <input
+                    id={`condition-group-name-${activeConditional.id}`}
+                    className={`condition-group-name`}
+                    value={activeConditional.config.name}
+                    onChange={(e) => {
+                        return updateConditional({
+                                ...activeConditional,
+                                config: {
+                                    ...activeConditional.config,
+                                    name: e.target.value
+                                }
+                            }
+                        );
+                    }}
                 />
                 }
             </div>

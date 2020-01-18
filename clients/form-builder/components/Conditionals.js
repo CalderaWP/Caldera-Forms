@@ -1,41 +1,7 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import cfEditorState from "@calderajs/cf-editor-state";
 import Conditional from './Conditional';
 import {getFieldsNotAllowedForConditional, getFieldsUsedByConditional} from "../stateFactory";
-
-
-/**
- * One item in the conditionals list
- *
- * @since 1.8.10
- *
- * @param active
- * @param id
- * @param name
- * @returns {*}
- * @constructor
- */
-export const ConditionalListItem = ({active, condition, onChooseItem}) => {
-    const {id} = condition;
-    const name = React.useRef(condition.hasOwnProperty('config') && condition.config.hasOwnProperty('name') ? condition.config.name : '');
-    return (
-        <li className={`caldera-condition-nav ${active} caldera-forms-condition-group condition-point-${id}`}>
-            <a
-                className="condition-open-group"
-                onClick={(e) => {
-                    e.preventDefault();
-                    onChooseItem(id);
-                }}
-                style={{cursor: "pointer"}}
-            >
-            <span id={`condition-group-${id}`}>
-                {name.current}
-            </span>
-                <span className="condition-line-number"/>
-            </a>
-        </li>
-    );
-};
 
 /**
  * The list of conditionals
