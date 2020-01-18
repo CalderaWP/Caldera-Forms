@@ -15,7 +15,7 @@ import {getFieldsNotAllowedForConditional, getFieldsUsedByConditional} from "../
  * @returns {*}
  * @constructor
  */
-const ConditionalListItem = ({active, condition, onChooseItem}) => {
+export const ConditionalListItem = ({active, condition, onChooseItem}) => {
     const {id} = condition;
     const name = React.useRef(condition.hasOwnProperty('config') && condition.config.hasOwnProperty('name') ? condition.config.name : '');
     return (

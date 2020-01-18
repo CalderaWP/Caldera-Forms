@@ -35,30 +35,59 @@ setConditionalsFromCfConfig(testForm.conditional_groups.conditions,state);
 
 describe( 'ConditionalEditor', () => {
    it( 'lists conditionals', () => {
-       expect.assertions(4);
+       //expect.assertions(4);
+       const fields = state.getAllFields();
+       const conditionals = state.getAllConditionals();
+       expect(conditionals.length).toBe(3);
+
        const component = mount(
-           <ConditionalEditor strings={strings} state={state} />
+           <ConditionalEditor strings={strings} fields={ fields} conditionals={conditionals} />
        );
-       expect(component.find( '.caldera-condition-nav' ).length ).toBe(3);
-       state.getAllConditionals().map(c => {
-           expect(component.find(`condition-group-${c.id}`).innerHtml ).toBe(c.name);
+       const navList = component.find( '.caldera-condition-nav' );
+       expect(navList.length ).toBe(3);
+       conditionals.map(c => {
+           const {id} = c;
+           const name = c.config.name;
+           expect(navList.find( `#condition-group-${id}`).text() ).toBe(name);
        });
    });
 
    test( 'Changing conditional name updates list', () => {
+
+       const Test = ({state,strings}) => {
+            const [fields,setFields] = React.useState(state.getAllFields() );
+            const [conditionals,setConditionals] = React.useState(state.getAllConditionals() );
+           const findConditionalById = (conditionalId) => conditionals.length ? conditionals.find(conditional => conditionalId === conditional.id) : undefined;
+           const findConditionalIndexId = (conditionalId) => conditionals.length ? conditionals.findIndex(conditional => conditionalId === conditional.id) : undefined;
+
+           const updateConditional = (conditional) => {
+               const index = findConditionalIndexId(conditional.id);
+               setConditionals( [
+                   ...conditionals.slice(0, index),
+                   ...[conditional],
+                   ...conditionals.slice(index + 1),
+               ]);
+
+           };
+
+           return <ConditionalEditor
+               strings={strings} conditionals={conditionals} fields={fields}  updateConditional={updateConditional}/>
+
+       };
        const component = mount(
-           <ConditionalEditor strings={strings} state={state} />
+           <Test strings={strings} state={state} />
        );
        const condition = state.getAllConditionals()[1];
        const {id} = condition;
-       expect(component.find(`condition-group-${condition.id}`).innerHtml ).toBe(condition.name);
 
+       expect(component.find( `#condition-group-con_3156693554561454`).text() ).toBe('Hide Dropdown');
+
+       expect( component.find( `#condition-group-name-${id}` ).length).toBe( 1);
        component.find( `#condition-group-name-${id}`)
            .simulate('change', { target: { value: 'Hello' } });
-       
-       expect(state.getConditional(id).config.name).toBe( 'Hello');
 
-       expect(component.find(`condition-group-${condition.id}`).innerHtml ).toBe('Hello');
+        expect(component.find( `#condition-group-name-${id}` ).props().value).toBe( 'Hello');
+        expect(component.find(`#condition-group-con_3156693554561454`).text() ).toBe('Hello');
 
    });
 });
