@@ -273,8 +273,30 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
     const {type, config, id} = conditional;
     const group = config && config.hasOwnProperty('group') ? config.group : {};
     const name = conditional.hasOwnProperty('config') && conditional.config.hasOwnProperty('name') ? conditional.config.name : '';
+    const newLineId = ( ) => `cl_${Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 12)}`;
+    const onAddGroup = () => {
+        const groupId = `rw${Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 12)}`;
+        onUpdateConditional({
+            conditional,
+            config: {
+                ...conditional.config,
+                group: {
+                    ...conditional.config.group,
+                    [groupId]: {
+                        [newLineId()]: {
+                            field: '',
+                            value: '',
+                            type: 'is',
+                            parent: groupId,
+                        }
+                    }
+
+                }
+            }
+        });
+    }
     const onAddLine = (groupId) => {
-        const id = `cl_${Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5)}`
+        const id = newLineId();
         onUpdateConditional({
             conditional,
             config: {
@@ -447,6 +469,7 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
                             className="pull-right button button-small condition-group-add-lines"
                             onClick={(e) => {
                                 e.preventDefault();
+                                onAddGroup();
                             }}
                         >
                             {strings['add-conditional-group']}
