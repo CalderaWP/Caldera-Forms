@@ -113,7 +113,8 @@ export const ConditionalLine = ({line, strings, isFirst, formFields, onRemoveLin
      */
     const onChangeField = (field) => {
         onUpdateLine({
-            field, compare, value,
+            ...line,
+            field,
         })
     };
 
@@ -126,7 +127,8 @@ export const ConditionalLine = ({line, strings, isFirst, formFields, onRemoveLin
      */
     const onChangeValue = (value) => {
         onUpdateLine({
-            field, compare, value,
+            ...line,
+            value
         })
     };
 
@@ -139,7 +141,8 @@ export const ConditionalLine = ({line, strings, isFirst, formFields, onRemoveLin
      */
     const onChangeCompare = (compare) => {
         onUpdateLine({
-            field, compare, value,
+            ...line,
+            compare
         })
     };
 
@@ -154,7 +157,7 @@ export const ConditionalLine = ({line, strings, isFirst, formFields, onRemoveLin
                 style={{maxWidth: "120px", verticalAlign: 'inherit'}}
                 className="condition-line-field"
                 value={field}
-                onChange={(e) => onChangeField(e.target.value,lineId)}
+                onChange={(e) => onChangeField(e.target.value, lineId)}
             >
                 <option/>
                 <optgroup label={strings['fields']}>
@@ -204,9 +207,9 @@ export const ConditionalLine = ({line, strings, isFirst, formFields, onRemoveLin
             <button
                 onClick={(e) => {
                     e.preventDefault();
-                    onRemoveLine(lineId);
+                    onRemoveLine(lineId,line.parent);
                 }}
-                className="button pull-right" type="button"
+                className="button pull-right condition-line-remove" type="button"
             >
                 <i className="icon-join"/>
             </button>
@@ -227,7 +230,7 @@ export const ConditionalLine = ({line, strings, isFirst, formFields, onRemoveLin
  * @returns {*}
  * @constructor
  */
-const ConditionalLines = ({lines, strings, formFields, onRemoveLine, onUpdateLine,onAddLine,groupId}) => {
+export const ConditionalLines = ({lines, strings, formFields, onRemoveLine, onUpdateLine, onAddLine, groupId}) => {
     return (
         <div className="caldera-condition-group caldera-condition-lines">
             {lines.map((line, index) => {
@@ -235,7 +238,7 @@ const ConditionalLines = ({lines, strings, formFields, onRemoveLine, onUpdateLin
                     <ConditionalLine
                         line={line}
                         isFirst={0 === index}
-                        onUpdateLine={(update)=> onUpdateLine(update,line.id)}
+                        onUpdateLine={(update) => onUpdateLine(update, line.id)}
                         {...{
                             strings,
                             formFields,
@@ -277,7 +280,7 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
                 ...conditional.config,
                 group: {
                     ...conditional.config.group,
-                    [groupId] : {
+                    [groupId]: {
                         ...conditional.config.group[groupId],
                         [id]: {
                             field: '',
@@ -300,7 +303,7 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
      * @param line
      * @param lineId
      */
-    const onUpdateLine = (line, lineId,groupId) => {
+    const onUpdateLine = (line, lineId, groupId) => {
         let group = conditional.config.group;
         onUpdateConditional({
             ...conditional,
@@ -308,7 +311,7 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
                 ...conditional.config,
                 group: {
                     ...group,
-                    [groupId] :{
+                    [groupId]: {
                         ...group[groupId],
                         [lineId]: line
                     }
@@ -332,7 +335,7 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
         delete groups[groupId][lineId];
 
         //no lines left?
-        if( ! Object.values(groups[groupId]).length){
+        if (!Object.values(groups[groupId]).length) {
             //delete line group
             delete groups[groupId];
         }
@@ -466,8 +469,8 @@ const Conditional = ({conditional, formFields, strings, onRemoveConditional, onU
                                 lines={lines}
                                 strings={strings}
                                 formFields={formFields}
-                                onUpdateLine={(update,lineId) => onUpdateLine(update,lineId,groupId)}
-                                onRemoveLine={(lineId) => onRemoveLine(lineId,groupId)}
+                                onUpdateLine={(update, lineId) => onUpdateLine(update, lineId, groupId)}
+                                onRemoveLine={(lineId) => onRemoveLine(lineId, groupId)}
                                 onAddLine={() => onAddLine(groupId)}
                                 groupId={groupId}
                             />

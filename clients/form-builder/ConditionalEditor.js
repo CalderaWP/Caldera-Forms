@@ -12,8 +12,6 @@ import cfEditorState from "@calderajs/cf-editor-state";
  */
 export default function ({fields, conditionals, strings, updateConditional, onNewConditional}) {
     const [activeConditionalId, setActiveConditionalId] = React.useState(null);
-
-
     const findConditionalById = (conditionalId) => conditionals.length ? conditionals.find(conditional => conditionalId === conditional.id) : undefined;
     const activeConditional = React.useMemo(() => {
         return findConditionalById(activeConditionalId);

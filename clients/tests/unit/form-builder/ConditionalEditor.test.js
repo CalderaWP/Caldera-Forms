@@ -54,7 +54,6 @@ describe('ConditionalEditor', () => {
     const Test = ({state, strings}) => {
         const [fields, setFields] = React.useState(state.getAllFields());
         const [conditionals, setConditionals] = React.useState(state.getAllConditionals());
-        const findConditionalById = (conditionalId) => conditionals.length ? conditionals.find(conditional => conditionalId === conditional.id) : undefined;
         const findConditionalIndexId = (conditionalId) => conditionals.length ? conditionals.findIndex(conditional => conditionalId === conditional.id) : undefined;
 
         const updateConditional = (conditional) => {
@@ -62,6 +61,14 @@ describe('ConditionalEditor', () => {
             setConditionals([
                 ...conditionals.slice(0, index),
                 ...[conditional],
+                ...conditionals.slice(index + 1),
+            ]);
+        };
+
+        const removeConditional = (conditional) => {
+            const index = findConditionalIndexId(conditional.id);
+            setConditionals([
+                ...conditionals.slice(0, index),
                 ...conditionals.slice(index + 1),
             ]);
         };
@@ -113,7 +120,6 @@ describe('ConditionalEditor', () => {
     });
 
     test('Adding a conditional', () => {
-
         const component = mount(
             <Test strings={strings} state={state}/>
         );
@@ -127,7 +133,6 @@ describe('ConditionalEditor', () => {
         expect(component.find('.active').length).toBe(1);
         //Has this conditional editor open
         expect(component.find('.condition-group-name').prop('value')).toBe('Hello')
-
     });
 
 });

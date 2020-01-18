@@ -314,7 +314,7 @@ exports[`Editor for a single conditional ConditionalLine with a checkbox field a
     </option>
   </select>
   <button
-    className="button pull-right"
+    className="button pull-right condition-line-remove"
     onClick={[Function]}
     type="button"
   >
@@ -479,7 +479,7 @@ exports[`Editor for a single conditional ConditionalLine with a number field as 
     </option>
   </select>
   <button
-    className="button pull-right"
+    className="button pull-right condition-line-remove"
     onClick={[Function]}
     type="button"
   >
