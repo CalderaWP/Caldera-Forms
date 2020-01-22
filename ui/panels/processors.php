@@ -315,7 +315,11 @@ foreach($form_processors as $processor=>$config){
 	if(isset($config['template'])){
 		include $config['template'];
 	}else{
-		echo '<p>' . __('This processor has no configurable options.', 'caldera-forms') . '</p>';
+		if( isset($config['html'])){
+			echo $config['html'];
+		}else{
+			echo '<p>' . __('This processor has no configurable options.', 'caldera-forms') . '</p>';
+		}
 	}
 	echo "\r\n</script>\r\n";
 
