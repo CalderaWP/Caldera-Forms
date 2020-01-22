@@ -34,7 +34,7 @@ class FormServiceTest extends TestCase
     {
         $container = $this->getContainer();
         $container->registerService(new FormsService(), true);
-        $this->assertInstanceOf(FormsService::class, $container->getService(FormsService::IDENTIFIER));
+        $this->assertInstanceOf(FormCollection::class, $container->getService(FormsService::IDENTIFIER));
     }
 
     /**

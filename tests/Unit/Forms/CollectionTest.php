@@ -60,7 +60,7 @@ class CollectionTest extends TestCase
             'ID' => 'cf1',
             'name' => 'Taco Pants'
         ]);
-        $this->assertSame('Taco Pants', $forms->getForm('cf1'));
+        $this->assertSame('Taco Pants', $forms->getForm('cf1')['name']);
     }
 
     /**

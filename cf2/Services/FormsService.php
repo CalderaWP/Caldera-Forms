@@ -39,7 +39,7 @@ class FormsService implements ServiceContract
     {
         $collection = new Collection();
         $forms = \Caldera_Forms_Forms::get_forms(true, false);
-        if (!$forms) {
+        if (!empty($forms)) {
             foreach ($forms as $form) {
                 if (isset($form['ID'])) {
                     $collection->addForm($form);
