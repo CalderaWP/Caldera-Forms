@@ -22,7 +22,7 @@ class Processor implements ProcessorFactory
      * @param array $form Saved settings for this form
      * @param array $fields Processor settings field configuration
      *
-     * @return \Caldera_Forms_Processor_Get_Data
+     * @return \Caldera_Forms_Processor_Data
      */
     public function dataFactory(array $config,array $form,array $fields){
         return new \Caldera_Forms_Processor_Get_Data($config,$form,$fields);
