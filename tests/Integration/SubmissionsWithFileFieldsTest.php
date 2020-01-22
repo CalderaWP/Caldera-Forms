@@ -318,8 +318,6 @@ class SubmissionsWithFileFieldsTest extends TestCase
 	 *
 	 * @covers \calderawp\calderaforms\cf2\Fields\Handlers\Cf1FileUploader::addFilter()
 	 * @covers \calderawp\calderaforms\cf2\Fields\Handlers\Cf1FileUploader::removeFilter()
-	 *
-	 * @group now
 	 */
 	public function testScheduleDelete(){
 

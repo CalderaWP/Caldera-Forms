@@ -4,7 +4,11 @@
 namespace calderawp\calderaforms\Tests\Integration\Features;
 
 
+use calderawp\calderaforms\cf2\Factories\ProcessorFactory;
+use calderawp\calderaforms\cf2\Forms\FormCollection;
 use calderawp\calderaforms\cf2\Jobs\Scheduler;
+use calderawp\calderaforms\cf2\Services\FormsService;
+use calderawp\calderaforms\cf2\Services\ProcessorService;
 use calderawp\calderaforms\cf2\Services\QueueSchedulerService;
 use calderawp\calderaforms\cf2\Services\QueueService;
 use calderawp\calderaforms\Tests\Integration\TestCase;
@@ -24,13 +28,50 @@ class ContainerServicesAreLoadedTest extends TestCase
 		$this->assertEquals( 1, did_action( 'caldera_forms_core_init'));
 		$this->assertEquals( 1,did_action( 'caldera_forms_v2_init'));
 	}
-	/** @group now */
+
+    /**
+     * @since 1.8.0
+     *
+     * @covers \caldera_forms_v2_container_setup()
+     */
 	public function testHasQueueService(){
 		$this->assertInstanceOf( Queue::class, caldera_forms_get_v2_container()->getService(QueueService::class) );
 	}
 
-	/** @group now */
+    /**
+     * @since 1.8.0
+     *
+     * @covers \caldera_forms_v2_container_setup()
+     */
 	public function testHasQueueSchedulerService(){
 		$this->assertInstanceOf( Scheduler::class, caldera_forms_get_v2_container()->getService(QueueSchedulerService::class) );
 	}
+
+    /**
+     * @since 1.8.10
+    *
+     * @covers \caldera_forms_v2_container_setup()
+     */
+    public function testHasFormsService()
+    {
+        $this->assertInstanceOf( FormCollection::class,
+            caldera_forms_get_v2_container()
+                ->getService(FormsService::class )
+        );
+
+    }
+
+    /**
+     * @since 1.8.10
+     *
+     * @group now
+     * @covers \caldera_forms_v2_container_setup()
+     */
+    public function testHasProcessorService()
+    {
+        $this->assertInstanceOf( ProcessorFactory::class,
+            caldera_forms_get_v2_container()
+                ->getService(ProcessorService::class )
+        );
+    }
 }

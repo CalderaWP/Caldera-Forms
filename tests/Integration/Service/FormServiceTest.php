@@ -27,17 +27,7 @@ class FormServiceTest extends TestCase
     }
 
     /**
-     * @covers \calderawp\calderaforms\cf2\Services\FormsService::register()
-     * @covers \calderawp\calderaforms\cf2\Services\FormsService::getIdentifier()
-     */
-    public function testRegister()
-    {
-        $container = $this->getContainer();
-        $container->registerService(new FormsService(), true);
-        $this->assertInstanceOf(FormCollection::class, $container->getService(FormsService::IDENTIFIER));
-    }
-
-    /**
+     * @since 1.8.10
      * @covers \calderawp\calderaforms\cf2\Services\FormsService::register()
      * @covers \calderawp\calderaforms\cf2\Forms\Collection::getAll()
      * @covers \calderawp\calderaforms\cf2\Forms\Collection::addForm()
@@ -58,13 +48,15 @@ class FormServiceTest extends TestCase
         $container = $this->getContainer();
         $container->registerService(new FormsService(), true);
         /** @var FormCollection $formService */
-        $formService = $container->getService(FormsService::IDENTIFIER);
+        $formService = $container->getService(FormsService::class);
         $this->assertCount(2, $formService->getAll());
         $this->assertSame('Dessert Forks', $formService->getAll()[$form2Id]['name']);
         $this->assertSame('Salad Tables', $formService->getAll()[$formId]['name']);
     }
 
     /**
+     * @since 1.8.10
+     *
      * @covers \calderawp\calderaforms\cf2\Services\FormsService::register()
      * @covers \calderawp\calderaforms\cf2\Forms\Collection::getForm()
      * @covers \calderawp\calderaforms\cf2\Forms\Collection::addForm()
@@ -85,7 +77,7 @@ class FormServiceTest extends TestCase
         $container = $this->getContainer();
         $container->registerService(new FormsService(), true);
         /** @var FormCollection $formService */
-        $formService = $container->getService(FormsService::IDENTIFIER);
+        $formService = $container->getService(FormsService::class);
         $this->assertCount(2, $formService->getAll());
         $this->assertSame('Dessert Forks', $formService->getForm($form2Id)['name']);
         $this->assertSame('Salad Tables', $formService->getForm($formId)['name']);

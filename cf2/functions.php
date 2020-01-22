@@ -45,7 +45,9 @@ function caldera_forms_v2_container_setup(\calderawp\calderaforms\cf2\CalderaFor
 	$container
 		->registerService(new \calderawp\calderaforms\cf2\Services\QueueService(), true)
 		->registerService(new \calderawp\calderaforms\cf2\Services\QueueSchedulerService(), true)
-        ->registerService(new \calderawp\calderaforms\cf2\Services\FormsService(), true );
+        ->registerService(new \calderawp\calderaforms\cf2\Services\FormsService(), true )
+        ->registerService(new \calderawp\calderaforms\cf2\Services\ProcessorService(), true );
+
 
 	//Run the scheduler with CRON
 	/** @var \calderawp\calderaforms\cf2\Jobs\Scheduler $scheduler */

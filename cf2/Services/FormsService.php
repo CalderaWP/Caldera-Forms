@@ -12,21 +12,9 @@ use calderawp\calderaforms\cf2\Forms\Collection;
  *
  * Service provider for forms. Abstracts over v1 forms API.
  */
-class FormsService implements ServiceContract
+class FormsService extends Service
 {
 
-    /**
-     * Identifier for this service
-     *
-     * @since 1.8.10
-     */
-    const IDENTIFIER = 'forms';
-
-    /** @inheritDoc */
-    public function getIdentifier()
-    {
-        return self::IDENTIFIER;
-    }
 
     /** @inheritDoc */
     public function isSingleton()
