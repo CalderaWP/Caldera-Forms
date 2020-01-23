@@ -68,6 +68,17 @@ if(!isset($element['variables'])){
 		rebind_field_bindings();
 	});
 	jQuery(document).on('change', '.set-system-variable', function(){
+
+		cf_set_system_variable();	
+      
+	});
+	jQuery(document).ready( function(){
+		
+		cf_set_system_variable();
+      
+	});
+
+	function cf_set_system_variable() {
 		//set-system-variable
 		var variables 	= jQuery('.set-system-variable');
 
@@ -90,9 +101,9 @@ if(!isset($element['variables'])){
 				system_values.variable.tags.vars.push( 'variable:' + variables[v].value );
 				jQuery(variables[v]).closest('.caldera-config-group').find('.var-value').data('parent', variables[v].value);
 			}
-		}		
-      
-	});
-    
+		}
+	}	
+
+	
 
 </script>
