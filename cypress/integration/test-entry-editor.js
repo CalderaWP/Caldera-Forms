@@ -56,6 +56,9 @@ describe( 'Editing forms using entry editor',  () => {
         //Save, which not possible if field empty due to #3024
         cy.get( '.baldrick-modal-footer .button-primary' ).first().click({force:true});
 
+        //Open and make sure still has value.
+        cy.get( '.baldrick-modal-footer .button-primary' ).first().click({force:true});
+        getCfField(numberFieldId).should( 'have.value', '0');
     });
 
 
