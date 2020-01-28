@@ -153,8 +153,12 @@
       "pageSlug": "cf2-file-2-not-required"
     },
     {
+      "formId" : "CF5e2997843a875",
+      "pageSlug": "variables-tests-dev-1-8-10"
+    },
+    {
       "formId" : "CF5e303beea19de",
       "pageSlug": "calculation-triggered-when-unhiding-calculation-field"
-    }
+    }    
   ]
 }
