@@ -14,7 +14,6 @@ services:
       - wordpress:/var/www/html
       - ./wp-content/plugins:/var/www/html/wp-content/plugins
       - .:/var/www/html/wp-content/plugins/caldera-forms
-      - ./caldera-core.php:/var/www/html/wp-content/plugins/caldera-forms/caldera-core.php
       - ./wp-content/mu-plugins:/var/www/html/wp-content/mu-plugins
 
   cli:
