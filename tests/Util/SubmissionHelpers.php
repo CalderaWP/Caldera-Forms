@@ -13,11 +13,11 @@ class SubmissionHelpers
      *
      * USE: Fake POST data when testing form submissions
      *
-     * @since 1.8.0
-     *
      * @param string $formId The form Id
      * @param array $data Optional. Array of field data
      * @return array
+     * @since 1.8.0
+     *
      */
     public static function submission_data($formId, array $data = array())
     {
@@ -55,12 +55,13 @@ class SubmissionHelpers
      *
      * NOTE: is called by self::fakeFormSubmit()
      *
-     * @since 1.8.0
-     *
      * @param bool $blockEmail Optional. Should email be blocked form sending. Default is true.
      * @param bool $blockAutoResponses Optional. Should auto-responders be blocked form sending. Default is true.
+     * @since 1.8.0
+     *
      */
-    public static function preventEmailAndRedirect($blockEmail = true, $blockAutoResponses = true){
+    public static function preventEmailAndRedirect($blockEmail = true, $blockAutoResponses = true)
+    {
         //prevent emails
         if ($blockEmail) {
             add_filter('caldera_forms_send_email', '__return_false', 10000);
@@ -78,22 +79,65 @@ class SubmissionHelpers
     /**
      * Fake a form submission
      *
-     * @since 1.8.0
-     *
      * @param string $formId The form Id
      * @param array $data Array of field data
      * @param bool $blockEmail Optional. Should email be blocked form sending. Default is true.
      * @param bool $blockAutoResponses Optional. Should auto-responders be blocked form sending. Default is true.
+     * @since 1.8.0
+     *
      */
-    public static function fakeFormSubmit($formId,array $data,$blockEmail = true, $blockAutoResponses = true){
-        static::preventEmailAndRedirect($blockEmail,$blockAutoResponses);
+    public static function fakeFormSubmit($formId, array $data, $blockEmail = true, $blockAutoResponses = true)
+    {
+        static::preventEmailAndRedirect($blockEmail, $blockAutoResponses);
         /**
          * @var \WP_Query
          */
         global $wp_query;
-        $wp_query->query_vars[ 'cf_api' ] = $formId;
+        $wp_query->query_vars['cf_api'] = $formId;
         $_SERVER['HTTP_REFERER'] = $data['_wp_http_referer'];
         $_POST = $data;
         \Caldera_Forms::process_submission();
+    }
+
+    /**
+     * Create a saved entry for a form with random field data or supplied field data.
+     *
+     * @since 1.8.10
+     *
+     * @param array $form Form config
+     * @param array $data Optional. Data to save. If empty, all fields' values set to random strings.
+     * @return array
+     */
+    public static function createEntry(array $form, array $data = [])
+    {
+
+        if (empty($data)) {
+            $data = array();
+            $i = 0;
+            foreach ($form['fields'] as $field_id => $field_config) {
+                if (1 == $i) {
+                    $data[$field_id] = $field_id . '_' . rand();
+                } else {
+                    $data[$field_id] = array(
+                        rand(),
+                        5 => rand(),
+                        rand(),
+                        'batman'
+                    );
+                }
+                if (0 == $i) {
+                    $i = 1;
+                } else {
+                    $i = 0;
+                }
+            }
+        }
+
+        $entry_id = \Caldera_Forms_Save_Final::create_entry($form, $data);
+        return [
+            'id' => $entry_id,
+            'field_data' => $data,
+            'form_id' => $form['ID'],
+       ];
     }
 }

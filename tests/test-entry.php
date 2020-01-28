@@ -17,6 +17,7 @@ class Test_Caldera_Forms_Entry extends Caldera_Forms_Test_Case  {
      *
      * @group db
      * @group entry
+     * @group now
      *
      * @covers Caldera_Forms_Entry
      * @covers Caldera_Forms_Entry:query()
