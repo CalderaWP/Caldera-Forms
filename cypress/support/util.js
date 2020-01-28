@@ -505,19 +505,31 @@ export const saveFormAndReload = ()  => {
 };
 
 /**
- * Variables functions
+ * Click the Variables tab to access the variables UI
  * 
  * @since 1.8.10
  */
 export const cfGoToVariablesTab = () => {
 	cy.get('#tab_variables a').click();
 };
+
+/**
+ * Adds a variable and sets its name and value
+ * 
+ * @since 1.8.10
+ */
 export const cfAddVariable = () =>{
 	cy.get('.caldera-add-variable').click();
 	cy.get('.set-system-variable').type('variable_name');
 	cy.get('.var-value').click();
 	cy.get('.var-value').type('variable_value');
 }
+
+/**
+ * Remove all variables
+ * 
+ * @since 1.8.10
+ */
 export const cfRemoveVariable = () => {
 	cy.get( '.remove-this-variable' ).each(($el) => {
 		cy.wrap($el).click()
