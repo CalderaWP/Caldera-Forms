@@ -456,10 +456,11 @@ class Caldera_Forms_Field_Util {
 	 *
 	 * @param array|string $field Field config or field ID
 	 * @param array $form Form config
+     * @param int|string|null $entry_id Optional. ID of saved entry.
 	 *
 	 * @return bool
 	 */
-	public static function check_conditional( $field, array $form ){
+	public static function check_conditional( $field, array $form, $entry_id = null ){
 		if ( is_string( $field ) ) {
 			$field = self::get_field( $field, $form );
 		}
@@ -470,7 +471,7 @@ class Caldera_Forms_Field_Util {
 				$conditional = $form[ 'conditional_groups' ][ 'conditions' ][ $field[ 'conditions' ][ 'type' ] ];
 			}
 
-			return Caldera_Forms::check_condition( $conditional, $form );
+			return Caldera_Forms::check_condition( $conditional, $form,$entry_id );
 		}
 
 		return true;
