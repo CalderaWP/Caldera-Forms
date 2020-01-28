@@ -149,6 +149,10 @@
     },{
       "formId" : "CF5bee3162ab0b2",
       "pageSlug": "cf2-file-2-not-required"
+    },
+    {
+      "formId" : "CF5e304e98685fd",
+      "pageSlug": "required-number"
     }
   ]
 }
