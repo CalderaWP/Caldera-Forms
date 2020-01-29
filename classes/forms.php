@@ -410,10 +410,12 @@ class Caldera_Forms_Forms {
 	 * @return array
 	 */
 	protected static function add_details( $forms ){
-	    if( empty( $forms ) ){
+		if( empty( $forms ) ){
 			return [];
-        }
+		}
 
+		//Intentionally avoiding using form cache here.
+		//See: https://github.com/CalderaWP/Caldera-Forms/pull/3354
 		$valid_forms = [];
 
 		foreach( $forms as $id => $form  ){
