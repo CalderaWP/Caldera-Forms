@@ -312,14 +312,14 @@ foreach($form_processors as $processor=>$config){
 			echo '<span class="no-conditions"></span>';
 		}
 	}	
+	
+	//Output config options from template, pre-rendered HTML or an notice of no options.
 	if(isset($config['template'])){
 		include $config['template'];
+	}elseif( isset($config['html'])){
+		echo $config['html'];
 	}else{
-		if( isset($config['html'])){
-			echo $config['html'];
-		}else{
-			echo '<p>' . __('This processor has no configurable options.', 'caldera-forms') . '</p>';
-		}
+		echo '<p>' . esc_html__('This processor has no configurable options.', 'caldera-forms') . '</p>';
 	}
 	echo "\r\n</script>\r\n";
 
