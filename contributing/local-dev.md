@@ -7,7 +7,7 @@ The local server is [http://localhost:8228](http://localhost:8228)
 
 
 ## Requirements
-* [Docker](https://docs.docker.com/)
+* Docker
     - [Installation documentation](https://docs.docker.com/install/)
 * [Composer](https://getcomposer.org/)
     - [Installation documentation](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx)
@@ -25,6 +25,16 @@ The local server is [http://localhost:8228](http://localhost:8228)
     - password: password
 * [See Commands](https://github.com/CalderaWP/Caldera-Forms/tree/develop#composer)
 
+
+## Testing Older Versions of PHP
+
+The primary WordPress site uses the latest version of PHP.
+
+There are also sites for testing older versions of PHP:
+
+* PHP 5.6 [http://localhost:8256](http://localhost:8256)
+* PHP 7.0 [http://localhost:8270](http://localhost:8270)
+
 ## JavaScript Development
 * Install
     - `yarn`
@@ -34,3 +44,4 @@ The local server is [http://localhost:8228](http://localhost:8228)
     - `yarn start:blocks`
 * Build all JavaScript and CSS
     - `yarn build`
+
