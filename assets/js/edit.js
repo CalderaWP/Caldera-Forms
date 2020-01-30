@@ -1483,7 +1483,7 @@ rebind_field_bindings = function(){
                 }
 
                 for(var t = 0; t<types.length; t++){
-                    if( system_values[type].tags && system_values[type].tags[types[t]]){
+                    if( system_values[type] !== null && system_values[type].tags && system_values[type].tags[types[t]]){
 
                         for( var instance = 0; instance < type_instances.length; instance++){
 
