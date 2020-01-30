@@ -1,8 +1,8 @@
 === Caldera Forms - More Than Contact Forms ===
 Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
 Tags: form, contact form, forms, form creator, form manager, mailchimp, paypal, stripe, login, payment, forms manager, forms creation
-Requires at least: 4.7
-Tested up to: 5.3
+Requires at least: 5.1
+Tested up to: 5.4
 Stable tag: 1.8.9
 License: GPLv2
 Requires PHP: 5.6
