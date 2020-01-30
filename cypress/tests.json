@@ -143,12 +143,18 @@
     {
       "formId" : "CF5bc8e4db50622",
       "pageSlug": "conditionals-cf2-fields-2766"
-    },{
+    },
+    {
       "formId" : "CF5bee2f0d5a1d6",
       "pageSlug": "cf2-file-not-required"
-    },{
+    },
+    {
       "formId" : "CF5bee3162ab0b2",
       "pageSlug": "cf2-file-2-not-required"
+    },
+    {
+      "formId" : "CF5e2997843a875",
+      "pageSlug": "variables-tests-dev-1-8-10"
     }
   ]
 }

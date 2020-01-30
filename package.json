@@ -34,7 +34,7 @@
     "package": "yarn run build && grunt make",
     "test": "yarn test:watch",
     "test:watch": "cross-env BABEL_ENV=testing BABEL_ENV=testing jest --watch",
-    "test:once": "jest",
+    "test:once": "jest --ci",
     "test:e2e": "cypress open",
     "test:e2e:ci": "cypress run"
   },
@@ -43,6 +43,8 @@
     "ie > 8"
   ],
   "dependencies": {
+    "@calderajs/cf-editor-state": "^0.0.4",
+    "@cypress/webpack-preprocessor": "^4.1.1",
     "@wordpress/keycodes": "^2.3.0",
     "@wordpress/scripts": "^6.1.0",
     "axios-extensions": "^3.0.5",
@@ -74,6 +76,7 @@
     "@caldera-labs/api-client": "^0.6.1",
     "@caldera-labs/state": "^0.9.0",
     "@calderajs/babel-preset-calderajs": "^0.9.6",
+    "@wordpress/babel-preset-default": "^1.3.0",
     "@wordpress/blocks": "^6.1.0",
     "@wordpress/browserslist-config": "^2.2.2",
     "@wordpress/components": "^8.5.0",
@@ -95,6 +98,7 @@
     "classnames": "^2.2.6",
     "copy-webpack-plugin": "^5.1.1",
     "cross-env": "^6.0.3",
+    "cypress": "^3.8.1",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.7.0",
     "file-loader": "^5.0.2",
