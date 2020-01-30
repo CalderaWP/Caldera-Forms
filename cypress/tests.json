@@ -160,6 +160,10 @@
     {
       "formId": "CF5e2997843a875",
       "pageSlug": "variables-tests-dev-1-8-10"
+    },
+    {
+      "formId": "CF5e32fc7f39dc8",
+      "pageSlug": "test-resend-button"
     }
   ]
 }
