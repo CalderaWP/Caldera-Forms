@@ -230,7 +230,24 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 							data-modal-buttons="<?php echo esc_attr( __( 'Export Form', 'caldera-forms' ) ); ?>|<?php echo esc_attr( json_encode( $buttons ) ); ?>"
 							data-template="#cf-export-template"
 							href="#export"><?php esc_html_e('Export', 'caldera-forms'); ?></a> | </span><?php } ?>
-						<span><a class="ajax-trigger" href="#clone" data-request="start_new_form" data-modal-buttons='<?php echo $modal_new_form; ?>' data-clone="<?php echo $form_id; ?>" data-modal-width="600" data-modal-height="160" data-load-class="none" data-modal="new_clone" data-nonce="<?php echo esc_attr( wp_create_nonce( 'cf_create_form' ) ); ?>" data-modal-title="<?php echo __('Clone Form', 'caldera-forms'); ?>" data-template="#new-form-tmpl"><?php echo __('Clone', 'caldera-forms'); ?></a><?php if( empty( $form['_external_form'] ) ){ ?> | </span>
+						<span>
+                            <a
+                                class="ajax-trigger clone-form-<?php esc_attr_e( $form_id ); ?>"
+                                href="#clone"
+                                data-request="start_new_form"
+                                data-modal-buttons='<?php echo  $modal_new_form ; ?>'
+                                data-clone="<?php esc_attr_e( $form_id ); ?>"
+                                data-modal-width="600"
+                                data-modal-height="160"
+                                data-load-class="none"
+                                data-modal="new_clone"
+                                data-nonce="<?php esc_attr_e( wp_create_nonce( 'cf_create_form' ) ); ?>"
+                                data-modal-title="<?php esc_attr_e('Clone Form', 'caldera-forms'); ?>"
+                                data-template="#new-form-tmpl"
+                            >
+                                <?php echo esc_html__('Clone', 'caldera-forms'); ?>
+                            </a>
+                            <?php if( empty( $form['_external_form'] ) ){ ?> | </span>
 						<span class="trash form-delete"><a class="form-control" data-confirm="<?php echo __('This will delete this form permanently. Continue?', 'caldera-forms'); ?>" href="admin.php?page=caldera-forms&delete=<?php echo trim( $form_id ); ?>&cal_del=<?php echo wp_create_nonce( 'cf_del_frm' ); ?>"><?php echo __('Delete'); ?></a></span><?php } ?>
 
 
@@ -323,7 +340,7 @@ function set_form_state( obj ){
 
 function new_form_redirect(obj){
 	if(typeof obj.data === 'string'){
-		window.location = 'admin.php?page=caldera-forms&edit=' + obj.data.trim();
+		window.location = '<?php echo esc_url(add_query_arg( ['page' => 'caldera-forms' ], admin_url( 'admin.php' ) ) ); ?>&edit=' + obj.data.trim();
 	}else{
 		alert(obj.data.error);
 	}
@@ -539,10 +556,36 @@ jQuery( function( $ ){
 		name.show();
 	})
 
+	$(document).ready(function() {
+		var emailSettingsNotificationNudgeTimeout = setTimeout(function(){
+			$('#cf-email-settings').addClass('cf-email-settings-notification-nudge');
+		}, 3000);
+		$('#cf-email-settings').on('click', function() {
+			clearTimeout(emailSettingsNotificationNudgeTimeout);
+			$('#cf-email-settings').removeClass('cf-email-settings-notification-nudge');
+		});
+	});
+
 });
 </script>
-<?php
 
+<style>
+.cf-email-settings-notification-nudge {
+	position: relative;
+}
+.cf-email-settings-notification-nudge::after {
+	content: " ";
+	background-color: #ca4a1f;
+	width: 10px;
+	height: 10px;
+	position: absolute;
+	top: -5px;
+	right: -5px;
+	border-radius: 50%;
+}
+</style>
+
+<?php
 
 /**
  * Runs at the bottom of the main Caldera Forms admin page

@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.8.5 - 2019-05-29 */var resBaldrickTriggers;
+/*! GENERATED SOURCE FILE caldera-forms - v1.8.9 - 2020-01-09 */var resBaldrickTriggers;
 
 jQuery(function($){
 	function fieldErrors(fields, $form, $notice) {
@@ -174,7 +174,9 @@ jQuery(function($){
                 });
 
 				//Check if any cf2 fields are blocking submit
-				var cf2 = window.cf2[ $form.attr( 'id' ) ];
+                if( 'object' === typeof  window.cf2 ){
+                    var cf2 = window.cf2[ $form.attr( 'id' ) ];
+                }
 				if( 'object' === typeof cf2 ){
 					if( cf2.hasOwnProperty( 'pending' ) && 0 !== cf2.pending.length ){
 						return false;

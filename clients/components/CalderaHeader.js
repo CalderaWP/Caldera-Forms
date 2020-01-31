@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * Creates the Caldera admin page header
  *

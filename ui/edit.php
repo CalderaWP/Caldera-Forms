@@ -296,7 +296,7 @@ $field_options_template = "
 </div>
 <div class=\"caldera-config-group-toggle-options\" {{#if auto}}style=\"display:none;\"{{/if}}>
 	<div class=\"caldera-config-group caldera-config-group-full\">
-		<button type=\"button\" class=\"button add-toggle-option\" style=\"width: 180px;\">" . esc_html__( 'Add Option', 'caldera-forms' ) . "</button>
+		<button type=\"button\" class=\"button add-toggle-option add-option\" style=\"width: 180px;\">" . esc_html__( 'Add Option', 'caldera-forms' ) . "</button>
 		<button type=\"button\" data-bulk=\"#{{_id}}_bulkwrap\" class=\"button add-toggle-option\" style=\"width: 190px;\">" . esc_html__( 'Bulk Insert / Preset', 'caldera-forms' ) . "</button>
 		<div id=\"{{_id}}_bulkwrap\" style=\"display:none; margin-top:10px;\" class=\"bulk-preset-panel\">
 		<select data-bulk=\"#{{_id}}_batch\" class=\"preset_options block-input\" style=\"margin-bottom:6px;\">
@@ -359,7 +359,7 @@ $field_options_template = "
 
 $default_template = "
 <div class=\"caldera-config-group\">
-	<label>Default</label>
+	<label>" . esc_html__( 'Default', 'caldera-forms' ) . "</label>
 	<div class=\"caldera-config-field\">
 		<input type=\"text\" class=\"block-input field-config\" name=\"{{_name}}[default]\" value=\"{{default}}\">
 	</div>
@@ -1162,7 +1162,7 @@ do_action('caldera_forms_edit_end', $element);
 </script>
 <script type="text/html" id="noconfig_field_templ" class="cf-editor-template">
 <div class="caldera-config-group">
-	<label>Default</label>
+	<label><?php _e( 'Default', 'caldera-forms' ); ?></label>
 	<div class="caldera-config-field">
 		<input type="text" class="block-input field-config" name="{{_name}}[default]" value="{{default}}">
 	</div>
@@ -1175,7 +1175,7 @@ do_action('caldera_forms_edit_end', $element);
 			<div class="caldera-condition-lines" id="{{id}}_conditions_lines">
 				{{#each lines}}
 				<div class="caldera-condition-line">
-					if 
+					<?php _e( 'if', 'caldera-forms' ); ?>
 					<select name="config[{{../type}}][{{../../id}}][conditions][group][{{../id}}][{{id}}][field]" data-condition="{{../type}}" class="caldera-field-bind caldera-conditional-field-set" data-id="{{../../id}}" {{#if field}}data-default="{{field}}"{{/if}} data-line="{{id}}" data-row="{{../id}}" data-all="true" style="max-width:120px;">
 						{{#if field}}<option value="{{field}}" class="bound-field" selected="selected"></option>{{else}}<option value="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>{{/if}}
 					</select>
@@ -1193,14 +1193,26 @@ do_action('caldera_forms_edit_end', $element);
 				</div>
 				{{/each}}
 			</div>
-			<button type="button" class="button button-small ajax-trigger" data-id="{{../id}}" data-type="{{type}}" data-group="{{id}}" data-request="new_conditional_line" data-target="#{{id}}_conditions_lines" data-callback="rebuild_field_binding" data-template="#conditional-line-tmpl" data-target-insert="append"><?php echo esc_html__( 'Add Condition', 'caldera-forms' ); ?></button>
+			<button
+                type="button"
+                class="button button-small ajax-trigger "
+                data-id="{{../id}}" data-type="{{type}}"
+                data-group="{{id}}"
+                data-request="new_conditional_line"
+                data-target="#{{id}}_conditions_lines"
+                data-callback="rebuild_field_binding"
+                data-template="#conditional-line-tmpl"
+                ata-target-insert="append"
+            >
+                <?php echo esc_html__( 'Add Condition', 'caldera-forms' ); ?>
+            </button>
 		</div>
 	{{/each}}
 </script>
 <script type="text/html" id="conditional-line-tmpl">
 	<div class="caldera-condition-line">
 		<div class="caldera-condition-line-label"><?php echo esc_html__( 'and', 'caldera-forms' ); ?></div>
-		if 
+		<?php _e( 'if', 'caldera-forms' ); ?>
 		<select name="{{name}}[field]" class="caldera-field-bind caldera-conditional-field-set" data-condition="{{type}}" data-id="{{id}}" data-line="{{lineid}}" data-row="{{rowid}}" data-all="true" style="max-width:120px;"></select>
 		<select name="{{name}}[compare]" style="max-width:110px;">
 			<option value="is"><?php echo esc_html__( 'is', 'caldera-forms' ); ?></option>

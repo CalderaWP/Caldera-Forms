@@ -10,8 +10,8 @@ const formStore = registerStore(CALDERA_FORMS_STORE_NAME,STORE);
 import { ServerSideRender } from '@wordpress/components';
 
 //Import CF components
-import {FormChooserWithSelect} from "./components/formChooser";
-import {LinkToFormEditor} from "./components/linkToFormEditor";
+import {FormChooserWithSelect} from "./components/FormChooser";
+import {LinkToFormEditor} from "./components/LinkToFormEditor";
 //Create block
 registerBlockType( 'calderaforms/cform', {
 	title: __( 'Caldera Form' ),
@@ -24,7 +24,6 @@ registerBlockType( 'calderaforms/cform', {
 		}
     },
     edit({ attributes, setAttributes, className, isSelected, id } ) {
-
         /**
          * Change handler for when form in block changes
          *
@@ -34,9 +33,7 @@ registerBlockType( 'calderaforms/cform', {
          */
         const setCurrentForm = (newFormId) => {
             setAttributes({formId:newFormId});
-        };
-
-
+        }
         return (
 		<div>
 			<InspectorControls>
@@ -72,7 +69,7 @@ registerBlockType( 'calderaforms/cform', {
             </div>
         );
     },
-    save: function(  ) {
+    save() {
        return null;
     },
 } );

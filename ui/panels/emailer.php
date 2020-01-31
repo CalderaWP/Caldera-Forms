@@ -197,8 +197,17 @@ if ( ! empty( $element['mailer']['enable_mailer'] ) ) {
 				<label><input type="checkbox" value="1" name="config[debug_mailer]" class="field-config"<?php if(isset($element['debug_mailer'])){ echo ' checked="checked"'; } ?>> <?php esc_html_e('Enable email send transaction log', 'caldera-forms'); ?></label>
 				<p class="description"><?php esc_html_e('If set, entries will have a "Mailer Debug" meta tab to see the transaction log. Do not keep this enabled on production as it sends two emails for tracking.', 'caldera-forms'); ?></p>
 				<p class="description">
-					<?php esc_html_e( 'If you are having email issues, we strongly recommend configuring a third-party mailer service, which is easy to do.', 'caldera-forms' ); ?> <a href="https://calderaforms.com/doc/improving-the-reliability-of-emails-sent-through-caldera-forms/" target="_blank" rel="nofollow"><?php esc_html_e( 'Learn More', 'caldera-forms' ); ?></a>
+					<?php echo sprintf( esc_html( 'If you are having email issues, we strongly recommend %sSendWP%s.', 'caldera-forms' ), '<a href="https://sendwp.com?utm_source=Caldera+Forms+Plugin&utm_medium=Forms_Edit+Forms_Email&utm_campaign=SendWP+banner+ad" target="_blank" rel="nofollow">', '</a>' ); ?>
 				</p>
+
+				<a href="https://sendwp.com?utm_source=Caldera+Forms+Plugin&utm_medium=Forms_Edit+Forms_Email&utm_campaign=SendWP+banner+ad" target="_blank" rel="nofollow" style="text-decoration:none;">
+					<div class="mailer_config_panel caldera-config-processor-notice" style="clear: both; padding: 20px 0px 0px;width:550px;">
+						<p style="padding:12px;text-align:center;color:white;background:#21394a;" class="description">
+							<?php echo sprintf( esc_html__('%sSendWP%s - Fix Your WordPress Email%sThe easy solution to transactional email in WordPress', 'caldera-forms'), '<strong>', '</strong>', '<br />' ); ?>
+						</p>
+					</div>
+				</a>
+
 			</div>
 		</div>
 

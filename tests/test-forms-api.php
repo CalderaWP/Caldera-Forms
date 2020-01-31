@@ -225,7 +225,7 @@ class Test_Caldera_Forms_API extends Caldera_Forms_Test_Case
       		'conditions' 	=>	[],
       		'required' 		=>	1,
 			'config'		=>	[
-				'manual_formula'	=> ' 2 + 2\n'
+				'manual_formula'	=> '2 + 2\n'
 			]
 		];
 		Caldera_Forms_Forms::save_form($form);
@@ -235,5 +235,61 @@ class Test_Caldera_Forms_API extends Caldera_Forms_Test_Case
 		$this->assertSame( '2 + 2', $form['fields']['fld_60011111']['config']['manual_formula'] );
 	}
 
+	/**
+	 * Test manual Formulas trimming during forms saving
+	 *
+	 * @since 1.8.6
+	 *
+	 * @covers Caldera_Forms_Forms::save_form()
+	 */
+	public function testManualFormulasTrimDuringSaveWithRound ()
+	{
+		$form_id = $this->import_contact_form();
+		$form = Caldera_Forms_Forms::get_form($form_id);
+
+		$form['fields']['fld_60011111'] = [
+      		'ID' 			=> 'fld_60011111',
+      		'type' 			=>	'calculation',
+      		'label' 		=>	'Calculation',
+      		'slug' 			=>	'calculation',
+      		'conditions' 	=>	[],
+      		'required' 		=>	1,
+			'config'		=>	[
+				'manual_formula'	=> 'round(2 * 2.3333)\r\n'
+			]
+		];
+		Caldera_Forms_Forms::save_form($form);
+
+		$form = Caldera_Forms_Forms::get_form($form_id);
+
+		$this->assertSame( 'round(2 * 2.3333)', $form['fields']['fld_60011111']['config']['manual_formula'] );
+	}
+
+    /**
+     * Is cache cleared after creating a form?
+     *
+     * @see https://github.com/CalderaWP/Caldera-Forms/issues/3455
+     *
+     * @covers Caldera_Forms_Forms::create_form()
+     * @covers Caldera_Forms_Forms::get_form()
+     * @covers Caldera_Forms_Forms::get_forms()
+     */
+	public function testCreateGetForms()
+    {
+        $form = \Caldera_Forms_Forms::create_form([
+            'name' => 'One'
+        ]);
+        $form2 = \Caldera_Forms_Forms::create_form([
+            'name' => 'Two'
+        ]);
+        //Query form all forms, check name is returned correctly for both forms
+        $forms = \Caldera_Forms_Forms::get_forms(true,true);
+        $this->assertSame($form['name'], $forms[$form['ID']]['name']);
+        $this->assertSame($form2['name'], $forms[$form2['ID']]['name']);
+
+        //Query for one form, check is name returned correctly
+        $this->assertSame($form['name'],  \Caldera_Forms_Forms::get_form($form['ID'])['name']);
+        $this->assertSame($form2['name'],  \Caldera_Forms_Forms::get_form($form2['ID'])['name']);
+    }
 
 }

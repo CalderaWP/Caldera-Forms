@@ -110,33 +110,35 @@ ob_start();
 }
 </style>
 <script>
-jQuery( function($){
-	<?php if( !empty( $bound ) ){ ?>
-	var opts = {
-		ajax: {
-			url: ajaxurl,
-			dataType: 'json',
-			quietMillis: 250,
-			data: function (term, page) {
-				return {
-					action : 'cf_filter_populate',
-					q: $('<?php echo $bound; ?>').val(), // search term
-					<?php if( !empty( $field['config']['easy_pod'] ) ){?>easy_pod : '<?php echo $field['config']['easy_pod']; ?>'<?php } ?>
-				};
-			},
-			results: function (data, page) {
+window.addEventListener('DOMContentLoaded', function(){
+	jQuery( function($){
+		<?php if( !empty( $bound ) ){ ?>
+		var opts = {
+			ajax: {
+				url: ajaxurl,
+				dataType: 'json',
+				quietMillis: 250,
+				data: function (term, page) {
+					return {
+						action : 'cf_filter_populate',
+						q: $('<?php echo $bound; ?>').val(), // search term
+						<?php if( !empty( $field['config']['easy_pod'] ) ){?>easy_pod : '<?php echo $field['config']['easy_pod']; ?>'<?php } ?>
+					};
+				},
+				results: function (data, page) {
 
-				return { results: data };
-			},
-			cache: true
-		}
-	};
-	<?php }else{ ?>	
-	var opts = {};
-	<?php } ?>
+					return { results: data };
+				},
+				cache: true
+			}
+		};
+		<?php }else{ ?>	
+		var opts = {};
+		<?php } ?>
 
-	$(document).on('cf.bind', '#<?php echo $field_id; ?>', function() {
-		$(this).select2( opts );
+		$(document).on('cf.bind', '#<?php echo $field_id; ?>', function() {
+			$(this).select2( opts );
+		});
 	});
 });
 </script>

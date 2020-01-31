@@ -38,7 +38,12 @@ data-autoload="true"
 						{{/is}}
 						<a data-open-group="{{id}}" style="cursor:pointer;"><span id="condition-group-{{id}}">{{name}}</span> <span class="condition-line-number"></span></a>
 					{{else}}
-						<input type="text" name="conditions[{{id}}][name]" value="{{name}}" data-new-condition="{{id}}" placeholder="<?php echo esc_attr( 'New Group Name', 'caldera-forms'); ?>" style="width:100%;">
+						<input type="text"
+                               name="conditions[{{id}}][name]"
+                               value="{{name}}"
+                               data-new-condition="{{id}}"
+                               class="condition-new-group-name"
+                               placeholder="<?php echo esc_attr( 'New Group Name', 'caldera-forms'); ?>" style="width:100%;">
 						{{#script}}
 							jQuery('[data-new-condition]').focus();
 						{{/script}}
@@ -56,21 +61,38 @@ data-autoload="true"
 					<div class="caldera-config-group">
 						<label for="{{id}}_lable"><?php _e( 'Name', 'caldera-forms' ); ?></label>
 						<div class="caldera-config-field">
-							<input type="text" name="conditions[{{id}}][name]" id="condition-group-name-{{id}}" data-sync="#condition-group-{{id}}" value="{{name}}" required class="required block-input">
+							<input
+                                    type="text"
+                                    name="conditions[{{id}}][name]"
+                                    id="condition-group-name-{{id}}"
+                                    data-sync="#condition-group-{{id}}"
+                                    value="{{name}}"
+                                    required
+                                    class="required block-input condition-group-name"
+                            />
 						</div>
 					</div>
 					
 					<div class="caldera-config-group">
-						<label for="{{id}}_lable">Type</label>
+						<label for="{{id}}_lable"><?php _e( 'Type', 'caldera-forms' ); ?></label>
 						<div class="caldera-config-field">
-							<select name="conditions[{{id}}][type]" data-live-sync="true">
+							<select
+                                    name="conditions[{{id}}][type]"
+                                    data-live-sync="true"
+                                    class="condition-group-type"
+                            >
 								<option value=""></option>
 								<option value="show" {{#is type value="show"}}selected="selected"{{/is}}><?php _e('Show', 'caldera-forms'); ?></option>
 								<option value="hide" {{#is type value="hide"}}selected="selected"{{/is}}><?php _e('Hide', 'caldera-forms'); ?></option>
 								<option value="disable" {{#is type value="disable"}}selected="selected"{{/is}}><?php _e('Disable', 'caldera-forms'); ?></option>
 							</select>
 							{{#if type}}
-								<button type="button" data-add-group="{{id}}" class="pull-right button button-small"><?php echo __('Add Conditional Line', 'caldera-forms'); ?></button>
+								<button
+                                        type="button"
+                                        data-add-group="{{id}}"
+                                        class="pull-right button button-small condition-group-add-lines">
+                                    <?php echo __('Add Conditional Line', 'caldera-forms'); ?>
+                                </button>
 							{{/if}}
 						</div>
 					</div>
@@ -88,7 +110,12 @@ data-autoload="true"
 									<?php _e( 'and', 'caldera-forms' ); ?>
 								{{/if}}</span>
 								<input type="hidden" name="conditions[{{../../../id}}][fields][{{@key}}]" value="{{field}}" id="condition-bound-field-{{@key}}" data-live-sync="true">
-								<select style="max-width:120px;vertical-align: inherit;" name="conditions[{{../../id}}][group][{{parent}}][{{@key}}][field]" data-sync="#condition-bound-field-{{@key}}">
+								<select
+                                    class="condition-line-field"
+                                    style="max-width:120px;vertical-align: inherit;"
+                                    name="conditions[{{../../id}}][group][{{parent}}][{{@key}}][field]"
+                                    data-sync="#condition-bound-field-{{@key}}"
+                                >
 									<option></option>
 									<optgroup label="<?php _e('Fields', 'caldera-forms'); ?>">
 									{{#each @root/fields}}
@@ -101,7 +128,11 @@ data-autoload="true"
 									{{/each}}
 									</optgroup>*/ ?>
 								</select>
-								<select style="max-width:110px;vertical-align: inherit;" name="conditions[{{../../id}}][group][{{parent}}][{{@key}}][compare]">
+								<select
+                                    class="condition-line-compare"
+                                    style="max-width:110px;vertical-align: inherit;"
+                                    name="conditions[{{../../id}}][group][{{parent}}][{{@key}}][compare]"
+                                >
 									<option value="is" {{#is compare value="is"}}selected="selected"{{/is}}><?php _e( 'is', 'caldera-forms' ); ?></option>
 									<option value="isnot" {{#is compare value="isnot"}}selected="selected"{{/is}}><?php _e( 'is not', 'caldera-forms' ); ?></option>
 									<option value="greater" {{#is compare value="greater"}}selected="selected"{{/is}}><?php _e( 'is greater than', 'caldera-forms' ); ?></option>
@@ -126,10 +157,26 @@ data-autoload="true"
 									<input type="text" class="magic-tag-enabled block-input" name="conditions[{{../../../../id}}][group][{{../parent}}][{{@key}}][value]" value="{{../value}}" {{#unless ../field}}placeholder="<?php echo esc_html__( 'Select field first', 'caldera-forms' ); ?>" disabled=""{{/unless}}>
 								{{/find}}
 								</span>
-								<button class="button pull-right" data-remove-line="{{@key}}" type="button"><i class="icon-join"></i></button>
+								<button
+                                    class="caldera-condition-line-remove button
+                                     pull-right"
+                                    data-remove-line="{{@key}}"
+                                    type="button"
+                                >
+                                    <i class="icon-join"></i>
+                                </button>
 							</div>
 						{{/each}}
-						<div style="margin: 12px 0 0;"><button class="button button-small" data-add-line="{{@key}}" data-group="{{../id}}" type="button"><?php _e( 'Add Condition', 'caldera-forms' ); ?></button></div>
+						<div style="margin: 12px 0 0;">
+                            <button
+                                class="button button-small condition-group-add-line"
+                                data-add-line="{{@key}}"
+                                data-group="{{../id}}" t
+                                type="button"
+                            >
+                                <?php _e( 'Add Condition', 'caldera-forms' ); ?>
+                            </button>
+                        </div>
 						</div>
 					{{/each}}
 

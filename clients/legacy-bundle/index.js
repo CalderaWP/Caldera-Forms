@@ -8,10 +8,9 @@ import isShallowEqual from '@wordpress/is-shallow-equal';
 import reduxRoutine from '@wordpress/redux-routine';
 import components from '@wordpress/components';
 import blocks from '@wordpress/blocks';
-import utils from '@wordpress/utils';
-import date from '@wordpress/date';
+import utils from '@wordpress/editor';
+import date from '@wordpress/editor';
 import editor from '@wordpress/editor';
-
 function wpDependencies(){
 
     const dependencies = wpBabel + browserlistConfig + data + deprecated + 

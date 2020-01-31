@@ -126,29 +126,44 @@
       "formId": "CF5bc64d633d2ea"
     },
     {
-      "formId" : "CF5a1163356fe7c",
+      "formId": "CF5a1163356fe7c",
       "pageSlug": "2090-select-created1-5-7-1-dev1-5-8"
     },
     {
-      "formId" : "CF5bcb67b899a38",
+      "formId": "CF5bcb67b899a38",
       "pageSlug": "conditionals-fancy"
     },
     {
-      "formId" : "CF5bcb71a2d27bf",
+      "formId": "CF5bcb71a2d27bf",
       "pageSlug": "conditionals-fancy-multi-page"
-    }, {
-      "formId" : "CF5be31da4beff7",
+    },
+    {
+      "formId": "CF5be31da4beff7",
       "pageSlug": "date-validation-2747"
     },
     {
-      "formId" : "CF5bc8e4db50622",
+      "formId": "CF5bc8e4db50622",
       "pageSlug": "conditionals-cf2-fields-2766"
-    },{
+    },
+    {
       "formId" : "CF5bee2f0d5a1d6",
       "pageSlug": "cf2-file-not-required"
-    },{
+    },
+    {
       "formId" : "CF5bee3162ab0b2",
       "pageSlug": "cf2-file-2-not-required"
+    },
+    {
+      "formId": "CF5e304e98685fd",
+      "pageSlug": "required-number"
+    },
+    {
+      "formId" : "CF5e2997843a875",
+      "pageSlug": "variables-tests-dev-1-8-10"
+    },
+    {
+      "formId": "CF5e32fc7f39dc8",
+      "pageSlug": "test-resend-button"
     }
   ]
 }

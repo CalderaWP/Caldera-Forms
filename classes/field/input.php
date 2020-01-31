@@ -18,15 +18,13 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 		$type = Caldera_Forms_Field_Util::get_type( $field );
 		$field_base_id = Caldera_Forms_Field_Util::get_base_id( $field, null, $form );
 		if ( null === $value ) {
-			if( ! empty( $field_structure [ 'field_value' ] ) ){
+			if( isset( $field_structure [ 'field_value' ] ) ){
 				$value = Caldera_Forms::do_magic_tags( $field_structure [ 'field_value' ], null, $form );
 			}else{
 				$value = self::find_default( $field, $form );
 			}
-
-
-
 		}
+
 
 		$sync =  $syncer = $default = false;
 		if( in_array( $type, self::sync_fields() ) ){
@@ -62,7 +60,11 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 			$place_holder  = self::place_holder_string( $field, $field[ 'label' ] );
 		}
 
-		if( 'number' === $type ){
+		if('color_picker' === $type ){
+			$attrs[ 'class' ] = 'form-control minicolor-picker init_field_type miniColors';
+			$attrs[ 'type' ] = 'text';
+			$attrs[ 'data-type' ] = 'color_picker';
+		}elseif( 'number' === $type ){
 			foreach( array(
 				'min',
 				'max',
