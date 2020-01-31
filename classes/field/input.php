@@ -18,15 +18,13 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 		$type = Caldera_Forms_Field_Util::get_type( $field );
 		$field_base_id = Caldera_Forms_Field_Util::get_base_id( $field, null, $form );
 		if ( null === $value ) {
-			if( ! empty( $field_structure [ 'field_value' ] ) ){
+			if( isset( $field_structure [ 'field_value' ] ) ){
 				$value = Caldera_Forms::do_magic_tags( $field_structure [ 'field_value' ], null, $form );
 			}else{
 				$value = self::find_default( $field, $form );
 			}
-
-
-
 		}
+
 
 		$sync =  $syncer = $default = false;
 		if( in_array( $type, self::sync_fields() ) ){

@@ -95,7 +95,7 @@ export const getCfFieldSelector = (fieldId) => {
  * @return {Cypress.Chainable<JQuery<HTMLElement>>}
  */
 export const clearCfField = (fieldId) => {
-	return getCfField(fieldId).clear();
+	return getCfField(fieldId).clear({force: true});
 };
 
 /**

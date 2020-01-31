@@ -636,8 +636,10 @@ class Caldera_Forms_Forms {
 		$added = self::save_to_db( $newform, 'primary' );
 		if( ! $added ){
 			return false;
-
 		}
+
+		// Fixes https://github.com/CalderaWP/Caldera-Forms/issues/3455
+		self::clear_cache();
 
 		/**
 		 * Runs after form is created

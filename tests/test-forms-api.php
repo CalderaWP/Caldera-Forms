@@ -265,4 +265,31 @@ class Test_Caldera_Forms_API extends Caldera_Forms_Test_Case
 		$this->assertSame( 'round(2 * 2.3333)', $form['fields']['fld_60011111']['config']['manual_formula'] );
 	}
 
+    /**
+     * Is cache cleared after creating a form?
+     *
+     * @see https://github.com/CalderaWP/Caldera-Forms/issues/3455
+     *
+     * @covers Caldera_Forms_Forms::create_form()
+     * @covers Caldera_Forms_Forms::get_form()
+     * @covers Caldera_Forms_Forms::get_forms()
+     */
+	public function testCreateGetForms()
+    {
+        $form = \Caldera_Forms_Forms::create_form([
+            'name' => 'One'
+        ]);
+        $form2 = \Caldera_Forms_Forms::create_form([
+            'name' => 'Two'
+        ]);
+        //Query form all forms, check name is returned correctly for both forms
+        $forms = \Caldera_Forms_Forms::get_forms(true,true);
+        $this->assertSame($form['name'], $forms[$form['ID']]['name']);
+        $this->assertSame($form2['name'], $forms[$form2['ID']]['name']);
+
+        //Query for one form, check is name returned correctly
+        $this->assertSame($form['name'],  \Caldera_Forms_Forms::get_form($form['ID'])['name']);
+        $this->assertSame($form2['name'],  \Caldera_Forms_Forms::get_form($form2['ID'])['name']);
+    }
+
 }
