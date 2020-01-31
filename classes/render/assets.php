@@ -789,7 +789,7 @@ class Caldera_Forms_Render_Assets
 						'invalidFileResponse' => esc_attr__('Unknown File Process Error', 'caldera-forms'),
 						'fieldIsRequired' => esc_attr__('Field is required', 'caldera-forms'),
 						'filesUnit' => esc_attr__('bytes', 'caldera-forms'),
-						'maxSizeAlert' => esc_attr__('This file is too large. Maxium size is ', 'caldera-forms'),
+						'maxSizeAlert' => esc_attr__('This file is too large. Maximum size is ', 'caldera-forms'),
 						'wrongTypeAlert' => esc_attr__('This file type is not allowed. Allowed types are ',
 							'caldera-forms'),
 					],
