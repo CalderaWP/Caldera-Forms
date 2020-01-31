@@ -1,7 +1,7 @@
 AL|Alabama
 AK|Alaska
 AZ|Arizona
-AK|Arkansas
+AR|Arkansas
 CA|California
 CO|Colorado
 CT|Connecticut
@@ -12,7 +12,7 @@ HI|Hawaii
 ID|Idaho
 IL|Illinois
 IN|Indiana
-IAIowa
+IA|Iowa
 KS|Kansas
 KY|Kentucky
 LA|Louisiana

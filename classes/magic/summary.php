@@ -87,16 +87,21 @@ class Caldera_Forms_Magic_Summary extends Caldera_Forms_Magic_Parser {
 				$type = Caldera_Forms_Field_Util::get_type( $field, $this->form );
 				$not_support = Caldera_Forms_Fields::not_support( $type, 'entry_list' );
 				if( $not_support ){
-					continue;
+					if( 'html' !== $type || empty( $field[ 'config' ][ 'show_in_summary' ] ) ){
+						continue;
+
+					}
 				}
 
 				if( Caldera_Forms_Field_Util::is_file_field( $field_id, $this->form ) && Caldera_Forms_Files::is_private( $field )  ){
 					continue;
-
 				}
 
 				$field_value = false;
 				switch( $type ){
+					case 'html' :
+						$field_value = Caldera_Forms::do_magic_tags( Caldera_Forms_Field_Util::get_default( $field_id, $this->form ) );
+						break;
 					case 'file'  :
 						$field_value = Caldera_Forms_Magic_Doer::magic_image( $field,  $this->get_field_value( $field_id ), $this->form );
 						break;
@@ -114,7 +119,7 @@ class Caldera_Forms_Magic_Summary extends Caldera_Forms_Magic_Parser {
 							$field_values = (array) Caldera_Forms::get_field_data( $field_id, $this->form );
 						}else{
 							if( ! isset( $this->data[ $field_id ] ) ){
-								continue;
+								break;
 							}
 							$field_values = (array) $this->get_field_value( $field_id );
 						}

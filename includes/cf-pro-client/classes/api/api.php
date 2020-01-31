@@ -8,7 +8,8 @@ namespace calderawp\calderaforms\pro\api;
  * Class api
  * @package calderawp\calderaforms\pro\api
  */
-abstract class api {
+abstract class api
+{
 	/**
 	 * API keys
 	 *
@@ -16,7 +17,7 @@ abstract class api {
 	 *
 	 * @var keys
 	 */
-	protected  $keys;
+	protected $keys;
 
 	/**
 	 * client constructor.
@@ -25,7 +26,7 @@ abstract class api {
 	 *
 	 * @param keys $keys API keys
 	 */
-	public function __construct( keys $keys )
+	public function __construct(keys $keys)
 	{
 		$this->keys = $keys;
 	}
@@ -41,16 +42,17 @@ abstract class api {
 	 *
 	 * @return array|\WP_Error
 	 */
-	protected function request( $endpoint, $data, $method = 'GET' ){
-		$url = untrailingslashit( $this->get_url_root() ) . $endpoint;
-		$args = $this->set_request_args( $method );
+	protected function request($endpoint, $data, $method = 'GET')
+	{
+		$url = untrailingslashit($this->get_url_root()) . $endpoint;
+		$args = $this->set_request_args($method);
 
-		if( 'GET' == $method ){
-			$url = add_query_arg( $data, $url );
-		}else{
-			$args[ 'body' ] = wp_json_encode( $data );
+		if ( 'GET' == $method ) {
+			$url = add_query_arg($data, $url);
+		} else {
+			$args[ 'body' ] = wp_json_encode($data);
 		}
-		$request = wp_remote_request( $url, $args );
+		$request = wp_remote_request($url, $args);
 		return $request;
 
 	}
@@ -64,22 +66,21 @@ abstract class api {
 	 *
 	 * @return array
 	 */
-	protected function set_request_args( $method )
+	protected function set_request_args($method)
 	{
-		$args = array(
-			'headers' => array(
-				'X-CS-TOKEN'   => $this->keys->get_token(),
-				'X-CS-PUBLIC'  => $this->keys->get_public(),
-				'content-type' => 'application/json'
+		$args = [
+			'headers' => [
+				'X-CS-TOKEN' => $this->keys->get_token(),
+				'X-CS-PUBLIC' => $this->keys->get_public(),
+				'content-type' => 'application/json',
 
-			),
-			'method'  => $method,
-			'timeout' => 30
-		);
+			],
+			'method' => $method,
+			'timeout' => 30,
+		];
 
 		return $args;
 	}
-
 
 
 	/**

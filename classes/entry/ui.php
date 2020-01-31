@@ -198,7 +198,7 @@ class Caldera_Forms_Entry_UI {
 		}
 
 		if ( current_user_can( Caldera_Forms::get_manage_cap( 'resend-email' ) ) ) {
-			echo '<a href="' . esc_url( add_query_arg( '_cf_resend', Caldera_Forms_Admin_Resend::resend_nonce(), admin_url() ) ) . '&e={{_entry_id}}&f={{../../form}}" class=" button button-small  edit-entry-btn" data-active-class="current-edit" title="' . esc_attr( __( 'Click to resend email from this message', 'caldera-forms' ) ) . ' ">' . esc_html__( 'Resend', 'caldera-forms' ) . '</button>';
+			echo '<a href="' . esc_url( add_query_arg( '_cf_resend', Caldera_Forms_Admin_Resend::resend_nonce(), admin_url() ) ) . '&e={{_entry_id}}&f={{../../form}}" class=" button button-small  edit-entry-btn" data-active-class="current-edit" title="' . esc_attr( __( 'Click to resend email from this message', 'caldera-forms' ) ) . ' ">' . esc_html__( 'Resend', 'caldera-forms' ) . '</a>';
 		}
 
 	}

@@ -45,7 +45,7 @@ if(!empty($element['layout_grid']['fields'])){
 			// build config
 			ob_start();
 
-			field_wrapper_template( $field_id, $field['label'], $field['slug'], $field['caption'], ( isset($field['hide_label']) ? 1 : 0 ), ( isset($field['required']) ? 1 : 0 ),( isset($field['entry_list']) ? 1 : 0 ), $field['type'], $config_str, $conditions);
+			caldera_forms_field_wrapper_template( $field_id, $field['label'], $field['slug'], $field['caption'], ( isset($field['hide_label']) ? 1 : 0 ), ( isset($field['required']) ? 1 : 0 ),( isset($field['entry_list']) ? 1 : 0 ), $field['type'], $config_str, $conditions);
 			$field_config_panels[] = ob_get_clean();
 		}
 

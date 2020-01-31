@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProEnterApp component Matches snapshot with minimal props 1`] = `
+<div
+  className="caldera-forms-global-form-settings"
+>
+  <a
+    href="/wp-admin/admin.php?page=cf-pro"
+  >
+    Go to Pro Settings
+  </a>
+</div>
+`;

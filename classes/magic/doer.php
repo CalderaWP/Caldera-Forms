@@ -72,6 +72,13 @@ class Caldera_Forms_Magic_Doer {
 					$field = Caldera_Forms_Field_Util::get_field_by_slug( $tag, $form );
 				}
 
+				if( 'html' === Caldera_Forms_Field_Util::get_type( $tag, $form ) ){
+					$field = Caldera_Forms_Field_Util::get_field($tag,$form );
+					if( ! empty( $field[ 'config' ][ 'show_in_summary' ] ) ){
+						$value = Caldera_Forms::do_magic_tags( Caldera_Forms_Field_Util::get_default( $field, $form ) );
+					}
+				}
+
 				if( Caldera_Forms_Field_Util::is_file_field( $field, $form ) ){
 					$_value = self::magic_image( $field, $entry, $form );
 					if( false !== $_value ){
@@ -166,9 +173,6 @@ class Caldera_Forms_Magic_Doer {
 	public static function do_bracket_magic( $value, $form, $entry_id, $magic_caller, $referrer ){
 		global $processed_meta;
 
-		/**
-		 * 
-		 */
 		$form   = self::filter_form( $form, $entry_id );
 		$magics = Caldera_Forms_Magic_Util::explode_bracket_magic( $value );
 		if ( ! empty( $magics[ 1 ] ) ) {
@@ -309,6 +313,7 @@ class Caldera_Forms_Magic_Doer {
 						case 'query_var' :
 							$magic_tag = get_query_var($magic[ 1 ]);
 							break;
+
 					}
 				} else {
 					switch ( $magic_tag ) {
@@ -372,6 +377,12 @@ class Caldera_Forms_Magic_Doer {
 						case 'current_url' :
 							$magic_tag = urldecode( caldera_forms_get_current_url() );
 							break;
+                        case 'privacy_page':
+                            $magic_tag = esc_url_raw(caldera_forms_privacy_policy_page_url());
+							break;
+						case 'referer_url' :
+						case 'referrer_url' :
+							$magic_tag = esc_url_raw( wp_get_raw_referer() );
 					}
 
 				}
@@ -492,11 +503,14 @@ class Caldera_Forms_Magic_Doer {
 	 * @return array
 	 */
 	public static function magic_tag_meta_prepare( $entry_id ){
-		global $processed_meta;		
+		global $processed_meta;
 		if( ! is_array( self::$entry_details ) )  {
 			self::$entry_details = array();
 		}
 
+                if( is_array( $entry_id ) || is_object( $entry_id ) ) {
+                    return;
+                }
 
 		if( ! isset( self::$entry_details[ $entry_id ] ) ) {
 			$entry_details = Caldera_Forms::get_entry_detail( $entry_id );
@@ -538,8 +552,10 @@ class Caldera_Forms_Magic_Doer {
 			if( is_object( $_value ) ){
 				$value = implode( ', ', (array) $_value );
 			}
-
+		} else if( is_array( $value )  ){
+			$value = implode( ', ', $value );
 		}
+
 
 		return $value;
 

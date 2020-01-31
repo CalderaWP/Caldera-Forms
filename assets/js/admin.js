@@ -2,8 +2,8 @@ var baldrickTriggers, loop_loader;
 
 jQuery(document).ready(function($){
 	var adminAJAX;
-	if( 'object' == typeof  CF_ADMIN ){
-		adminAJAX = CF_ADMIN.adminAjax
+	if( 'object' === typeof  CF_ADMIN ){
+		adminAJAX = CF_ADMIN.adminAjax;
 	}else{
 		//yolo
 		adminAJAX = ajaxurl;
@@ -117,18 +117,72 @@ jQuery(document).ready(function($){
 	});
 
 
-	//setup clippy on admin, not edit
-	var CFclippy;
-	if( undefined != typeof  CF_CLIPPY && 'object' == typeof  CF_CLIPPY ){
-		CFclippy = new CalderaFormsAdminClippys2(  'caldera-forms-clippy', CF_CLIPPY, $ );
-		CFclippy.init();
-	}
+  /**
+   * Delete all entries saved in a form form Settings tab in the form
+   *
+   * @since 1.7.0
+   */
+  //Display controls
+  $('#caldera-forms-delete-all-form-entries').click(function(e) {
+    e.preventDefault();
+    $('#caldera-forms-confirm-delete-all-form-entries').slideToggle("fast");
+  });
+  //No clicked
+  $('#caldera-forms-no-confirm-delete-all-form-entries').click(function(e) {
+    e.preventDefault();
+    $('#caldera-forms-confirm-delete-all-form-entries').slideToggle("fast");
+  });
+  //Yes clicked
+  $('#caldera-forms-yes-confirm-delete-all-form-entries').click(function(e) {
+    e.preventDefault();
 
-	$( '.cf-entry-viewer-link' ).on( 'click', function(){
-		if ( 'object' == typeof  CFclippy ){
-			CFclippy.remove();
-		}
-	});
+    var url = CF_ADMIN.rest.delete_entries;
+
+    var $spinner = jQuery( '#caldera-forms-delete-entries-spinner' );
+    $spinner.css({
+      visibility: 'visible',
+      float:'none'
+    });
+
+    wp.apiRequest({
+      url: url,
+      method: 'GET'
+      }).then(function (r) {
+      if( r.hasOwnProperty( 'message' ) ) {
+        if (r.deleted === true) {
+          $('#caldera-forms-label-delete-all-entries').append("<div class='caldera-forms-deleted'>" + r.message + "</div>");
+          setTimeout(function () {
+            $('.caldera-forms-deleted').remove();
+          }, 5000);
+          $('#caldera-forms-confirm-delete-all-form-entries').slideToggle("fast");
+        } else {
+          $('#caldera-forms-label-delete-all-entries').append("<div class='caldera-forms-not-deleted'>" + r.message + "</div>");
+          setTimeout(function () {
+            $('.caldera-forms-not-deleted').remove();
+          }, 5000);
+          $('#caldera-forms-confirm-delete-all-form-entries').slideToggle("fast");
+        }
+      }
+      $spinner.css({
+        visibility: 'hidden',
+        float:'none'
+      });
+
+    }).fail(function (r) {
+      if( r.responseJSON.hasOwnProperty( 'message' ) ) {
+        $('#caldera-forms-label-delete-all-entries').append("<div class='caldera-forms-not-deleted'>" + r.responseJSON.message + "</div>");
+        setTimeout(function () {
+          $('.caldera-forms-not-deleted').remove();
+        }, 5000);
+        $('#caldera-forms-confirm-delete-all-form-entries').slideToggle("fast");
+      }
+      $spinner.css({
+        visibility: 'hidden',
+        float:'none'
+      });
+    });
+
+  });
 
 });
 

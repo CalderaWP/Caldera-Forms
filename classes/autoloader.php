@@ -62,19 +62,19 @@ class Caldera_Forms_Autoloader {
 				$file = CFCORE_PATH . 'classes/fields.php';
 			} elseif ( 'Caldera_Forms_Magic' === $class ) {
 				$file = CFCORE_PATH . 'classes/magic.php';
-			}elseif ( 'Caldera_Form_Grid' == $class ) {
+			}elseif ( 'Caldera_Form_Grid' === $class ) {
 				$file = $dir . 'caldera-grid.php';
-			} elseif( 'Caldera_Forms_Entry' == $class ) {
+			} elseif( 'Caldera_Forms_Entry' === $class ) {
 				$file = CFCORE_PATH . 'classes/entry.php';
 			} elseif ( 'Caldera_Forms_Save_Final' == $class ){
 				$file = CFCORE_PATH . 'classes/save.php';
-			} elseif( 'Caldera_Forms_Admin' == $class ){
+			} elseif( 'Caldera_Forms_Admin' === $class ){
 				$file = CFCORE_PATH . 'classes/admin.php';
 			} elseif( 'Caldera_Forms_CDN' == $class ){
 				$file = CFCORE_PATH . 'classes/cdn.php';
-			} elseif( 'Caldera_Forms_Settings' == $class ){
+			} elseif( 'Caldera_Forms_Settings' === $class ){
 				$file = CFCORE_PATH . 'classes/settings.php';
-			}else {
+            }else {
 				$file = $dir . self::get_base( $class, $root );
 			}
 
@@ -111,8 +111,6 @@ class Caldera_Forms_Autoloader {
 				return $root;
 			}
 		}
-
-
 	}
 
 	/**
@@ -125,7 +123,6 @@ class Caldera_Forms_Autoloader {
 	 * @return string|void
 	 */
 	protected static function get_dir( $root ){
-		if( 'Caldera_Forms_Fields')
 		if( array_key_exists( $root, self::$roots ) ){
 			return trailingslashit( self::$roots[ $root ] );
 		}

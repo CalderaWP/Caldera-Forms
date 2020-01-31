@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.5.8.1 - 2017-12-21 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.8.9 - 2020-01-09 *//**
  * API Client for Caldera Forms API for a single form
  *
  * @since 1.5.0
@@ -36,9 +36,9 @@ function CFAPI( routes, perPage, formId, tokens,  $ ) {
                 beforeSend: function ( xhr ) {
                     addHeaders( xhr );
                 }
-            }).success(function (r) {
+            }).done(function (r) {
                 return r;
-            }).error(function (r) {
+            }).fail(function (r) {
                 console.log(r);
             });
         },
@@ -49,9 +49,9 @@ function CFAPI( routes, perPage, formId, tokens,  $ ) {
                 beforeSend: function ( xhr ) {
                     addHeaders( xhr );
                 }
-            } ).success(function (r) {
+            } ).done(function (r) {
                 return r;
-            }).error(function (r) {
+            }).fail(function (r) {
                 console.log(r);
             });
         },
@@ -80,9 +80,9 @@ function CFAPI( routes, perPage, formId, tokens,  $ ) {
                 data:{
                     per_page: perPage
                 }
-            }).success( function( r ){
+            }).done( function( r ){
                 return r.per_page;
-            }).error( function( r ){
+            }).fail( function( r ){
                 console.log(r);
             })
 
@@ -324,7 +324,7 @@ function CFEntryViewer2( formId, formStore, entryStore, api, config ){
                             if ('string' == typeof  entry[fieldId]) {
                                 return entry[fieldId];
                             } else if ('object' == typeof entry['fields'][fieldId]) {
-                                return entry['fields'][fieldId].value;
+                                return this.checkResult( entry['fields'][fieldId].value );
                             } else {
                                 return '';
                             }
@@ -332,6 +332,14 @@ function CFEntryViewer2( formId, formStore, entryStore, api, config ){
                         close: function () {
                             $singleEntryZone.empty();
                             $modal.destroy();
+                        },
+                        checkResult: function ( value ) {
+                            //Check if value is an object and return the values only ( this is useful for checkboxes values )
+                            if(typeof value === "object"){
+                                value = Object.values(value);
+                            }
+
+                            return value
                         }
                     },
                 });

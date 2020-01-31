@@ -95,10 +95,10 @@ class Caldera_Forms_DB_Tables {
 	protected function find_missing_tables(){
 		$tables = $this->wpdb->get_results( "SHOW TABLES", ARRAY_A );
 		$alltables = array();
+
 		foreach ( $tables as $table ) {
 			$alltables[] = implode( $table );
 		}
-
 
 		$missing_tables = array();
 		foreach ( $this->get_tables_list()  as  $cf_table ){
@@ -124,12 +124,17 @@ class Caldera_Forms_DB_Tables {
 		$tables = array(
 			'cf_form_entry_values',
 			'cf_form_entry_meta',
-			'cf_tracking',
-			'cf_tracking_meta',
 			'cf_form_entries',
 			'cf_form_entry_values',
-			'cf_forms'
+			'cf_forms',
+			'cf_queue_failures',
+			'cf_queue_jobs',
 		);
+
+		if( function_exists( 'caldera_forms_pro_is_active') && caldera_forms_pro_is_active() ){
+		    $tables[] = 'cf_pro_messages';
+        }
+
 		foreach ( $tables as &$table ){
 			$table = $this->wpdb->prefix . $table;
 		}
@@ -298,6 +303,75 @@ class Caldera_Forms_DB_Tables {
 				KEY `form_id` (`form_id`)
 				) " . $this->charset_collate . ";";
 		dbDelta( $forms_table );
+	}
+
+
+    /**
+     * Add cf_pro_messages table
+     *
+     * Warning: does not check if it exists first, which could cause SQL errors.
+     *
+     * @since 1.6.2
+     */
+	public function pro_messages(){
+        if ( function_exists( 'caldera_forms_pro_db_delta_1' ) ) {
+            caldera_forms_pro_db_delta_1();
+            caldera_forms_pro_db_delta_2();
+        }
+    }
+
+
+	/**
+	 * Install database table for job queue
+	 *
+	 * @since 1.8.0
+	 */
+	public function queue_jobs()
+	{
+		global $wpdb;
+
+		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+
+		$wpdb->hide_errors();
+		$charset_collate = $wpdb->get_charset_collate();
+		$table = \calderawp\calderaforms\cf2\Jobs\DatabaseConnection::QUEUED_JOBS_TABLE;
+		$sql = "CREATE TABLE {$wpdb->prefix}{$table} (
+				id bigint(20) NOT NULL AUTO_INCREMENT,
+				job longtext NOT NULL,
+				attempts tinyint(3) NOT NULL DEFAULT 0,
+				reserved_at datetime DEFAULT NULL,
+				available_at datetime NOT NULL,
+				created_at datetime NOT NULL,
+				PRIMARY KEY  (id)
+				) $charset_collate;";
+
+		dbDelta($sql);
+
+
+	}
+
+	/**
+	 * Install database table for job queue fails
+	 *
+	 * @since 1.8.0
+	 */
+	public function queue_failures(){
+		global $wpdb;
+
+		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+
+		$wpdb->hide_errors();
+		$charset_collate = $wpdb->get_charset_collate();
+		$table = \calderawp\calderaforms\cf2\Jobs\DatabaseConnection::FAILED_JOBS_TABLE;
+		$sql = "CREATE TABLE {$wpdb->prefix}{$table} (
+				id bigint(20) NOT NULL AUTO_INCREMENT,
+				job longtext NOT NULL,
+				error text DEFAULT NULL,
+				failed_at datetime NOT NULL,
+				PRIMARY KEY  (id)
+				) $charset_collate;";
+
+		dbDelta( $sql );
 	}
 
 

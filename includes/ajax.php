@@ -73,7 +73,7 @@ function cf_form_ajaxsetup($form){
 			<div class="caldera-config-field">
 				<input id="caldera-forms-custom_callback" type="text" value="<?php echo $form['custom_callback']; ?>" name="config[custom_callback]" class="field-config block-input" aria-describedby="caldera-forms-custom_callback-desc">
 				<p class="description" id="caldera-forms-custom_callback-desc">
-					<?php esc_html_e('Javascript function to call on submission. Passed an object containing form submission result.'); ?> <a href="#" onclick="jQuery('#json_callback_example').toggle();return false;"><?php esc_html_e( 'See Example', 'caldera-forms' ); ?></a>
+					<?php esc_html_e('Javascript function to call on submission. Passed an object containing form submission result.', 'caldera-forms' ); ?> <a href="#" onclick="jQuery('#json_callback_example').toggle();return false;"><?php esc_html_e( 'See Example', 'caldera-forms' ); ?></a>
 				</p>
 					<pre id="json_callback_example" style="display:none;"><?php echo htmlentities('
 {    
@@ -176,9 +176,9 @@ function cf_ajax_redirect($type, $url, $form){
 			if( isset( $data['fields'][$fieldid] ) ){
 
 				if($urlparts['path'] == 'api'){
-					$out['fields'][$field['slug']] = $data['fields'][$fieldid];
+					$out['fields'][$field['slug']] = Caldera_Forms_Sanitize::remove_scripts($data['fields'][$fieldid]);
 				}else{
-					$out['fields'][$fieldid] = $data['fields'][$fieldid];
+					$out['fields'][$fieldid] = Caldera_Forms_Sanitize::remove_scripts($data['fields'][$fieldid]);
 				}
 			}
 		}
@@ -202,7 +202,7 @@ function cf_ajax_redirect($type, $url, $form){
 		}
 		$out['data'] = $query;
 	}
-	$out['html'] = $html;
+	$out['html'] = Caldera_Forms_Sanitize::remove_scripts($html);
 	$out['type'] = ( isset($data['type']) ? $data['type'] : $type );
 	$out['form_id'] = $form['ID'];
 	$out['form_name'] = $form['name'];	
@@ -213,8 +213,7 @@ function cf_ajax_redirect($type, $url, $form){
 	}
 
 	$out = apply_filters( 'caldera_forms_ajax_return', $out, $form);
-
-	wp_send_json( $out );
+	caldera_forms_send_json( $out );
 	exit;
 
 }

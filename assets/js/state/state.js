@@ -102,7 +102,7 @@ function CFState(formId, $ ){
 		}
 
 		if (calcVals.hasOwnProperty(id) ) {
-			if( false === calcVals[id] || null === calcVals[id] ){
+			if( false === calcVals[id] || null === calcVals[id] || 0 === calcVals[id] ){
 				//@TODO use let here, when ES6.
 				var _val = findCalcVal( $( document.getElementById( id ) ) );
 				if( isString( _val )  ) {
@@ -214,6 +214,12 @@ function CFState(formId, $ ){
 			 */
 			detach: function(id,callback){
 				events.detach(id,callback);
+			},
+			emit: function (eventName,payload) {
+				events.emit(eventName,payload);
+			},
+			attatchEvent: function(eventName,callback){
+				events.subscribe(eventName,callback);
 			}
 		}
 	};
@@ -250,11 +256,29 @@ function CFState(formId, $ ){
 			});
 			calcVals[id] = findCalcVal( $( document.getElementById( id ) ) );
 			self.mutateState([$field.attr('id')],$field.val());
+			$field.trigger('cf.bind', {
+				field: $field.attr('id')
+			});
 
 			return true;
 		} else {
 			$field = $('.' + id);
 			if ($field.length) {
+				//Rebind checkbox options when the checkbow field is unhidden
+				if( 'object' == typeof  $field  ){
+					var val = [];
+					var allSums = 0;
+					$field.each(function ( i, el ) {
+						var $this = $(el);
+						var sum = 0;
+						if ($this.prop('checked')) {
+							sum += parseFloat(findCalcVal($this));
+							allSums += sum;
+							val.push($this.val());
+						}
+						calcVals[id] = allSums;
+					});
+				}
 
 
 				$field.on('change', function () {
@@ -317,6 +341,10 @@ function CFState(formId, $ ){
 
 
 					self.mutateState(id,val);
+					
+					$field.trigger('cf.bind', {
+						field: $field.attr('id')
+					});
 
 				});
 				return true;
@@ -342,7 +370,7 @@ function CFState(formId, $ ){
 	function bindCalcField(id,config) {
 		fieldVals[id] = 0;
 		calcVals[id] = 0;
-		self.events().subscribe(id,function (value,id) {
+		self.events().subscribe(id,function (id,value) {
 			calcVals[id] = value;
 		});
 	}

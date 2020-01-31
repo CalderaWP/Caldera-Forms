@@ -1,0 +1,16 @@
+<phpunit
+	bootstrap="Tests/bootstrap.php"
+	backupGlobals="false"
+	colors="true"
+	convertErrorsToExceptions="true"
+	convertNoticesToExceptions="true"
+	convertWarningsToExceptions="true"
+	>
+	<testsuites>
+		<testsuite  name="unit" suffix=".php">
+			<directory>./Tests/Unit</directory>
+		</testsuite>
+
+	</testsuites>
+	<log type="coverage-clover" target="clover.xml"/>
+</phpunit>

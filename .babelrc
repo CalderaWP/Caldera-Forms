@@ -1,0 +1,5 @@
+{
+  "presets": [
+    "@calderajs/babel-preset-calderajs"
+  ]
+}

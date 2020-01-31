@@ -69,9 +69,11 @@ class Caldera_Forms_Settings {
 	}
 
 	/**
+	 * Get CDN settings
+     *
+     * @since 1.5.3
 	 *
-	 *
-	 * @return Caldera_Forms_CDN_Settings|WP_Error
+	 * @return Caldera_Forms_CDN_Settings|WP_Error|Caldera_Forms_Settings_Contract
 	 */
 	public function get_cdn(){
 		if( ! did_action( 'caldera_forms_settings_registered' ) ){
@@ -80,4 +82,5 @@ class Caldera_Forms_Settings {
 
 		return $this->get( 'cdn' );
 	}
+
 }

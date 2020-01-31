@@ -1,0 +1,187 @@
+{
+  "_last_updated": "Mon, 22 Jan 2018 23:11:12 +0000",
+  "ID": "CF5a665b9ca5513",
+  "cf_version": "1.5.9-rc.1",
+  "name": "Contact Form With Auto Responder",
+  "scroll_top": 0,
+  "success": "Form has been successfully submitted. Thank you.\t\t\t\t\t\t\t\t\t\t\t\t",
+  "db_support": 1,
+  "pinned": 1,
+  "hide_form": 1,
+  "check_honey": 1,
+  "avatar_field": "fld_6009157",
+  "form_ajax": 1,
+  "custom_callback": "",
+  "layout_grid": {
+    "fields": {
+      "fld_29462": "1:1",
+      "fld_8768091": "2:1",
+      "fld_9970286": "2:2",
+      "fld_6009157": "2:3",
+      "fld_2758980": "3:1",
+      "fld_7683514": "4:1",
+      "fld_7908577": "5:1"
+    },
+    "structure": "12|4:4:4|12|12|12"
+  },
+  "fields": {
+    "fld_29462": {
+      "ID": "fld_29462",
+      "type": "html",
+      "label": "header",
+      "slug": "header",
+      "conditions": {
+        "type": ""
+      },
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "default": "<h2>Your Details<\/h2>\n<p>Let us know how to get back to you.<\/p>\n<hr>"
+      }
+    },
+    "fld_8768091": {
+      "ID": "fld_8768091",
+      "type": "text",
+      "label": "First Name",
+      "slug": "first_name",
+      "conditions": {
+        "type": ""
+      },
+      "required": 1,
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "placeholder": "",
+        "default": "",
+        "type_override": "text",
+        "mask": ""
+      }
+    },
+    "fld_9970286": {
+      "ID": "fld_9970286",
+      "type": "text",
+      "label": "Last Name",
+      "slug": "last_name",
+      "conditions": {
+        "type": ""
+      },
+      "required": 1,
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "placeholder": "",
+        "default": "",
+        "type_override": "text",
+        "mask": ""
+      }
+    },
+    "fld_6009157": {
+      "ID": "fld_6009157",
+      "type": "email",
+      "label": "Email Address",
+      "slug": "email_address",
+      "conditions": {
+        "type": ""
+      },
+      "required": 1,
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "placeholder": "",
+        "default": ""
+      }
+    },
+    "fld_2758980": {
+      "ID": "fld_2758980",
+      "type": "html",
+      "label": "Message",
+      "slug": "message",
+      "conditions": {
+        "type": ""
+      },
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "default": "<h2>How can we help?<\/h2>\n<p>Feel free to ask a question or simply leave a comment.<\/p>\n<hr>"
+      }
+    },
+    "fld_7683514": {
+      "ID": "fld_7683514",
+      "type": "paragraph",
+      "label": "Comments \/ Questions",
+      "slug": "comments_questions",
+      "conditions": {
+        "type": ""
+      },
+      "required": 1,
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "placeholder": "",
+        "rows": 7,
+        "default": ""
+      }
+    },
+    "fld_7908577": {
+      "ID": "fld_7908577",
+      "type": "button",
+      "label": "Send Message",
+      "slug": "submit",
+      "conditions": {
+        "type": ""
+      },
+      "caption": "",
+      "config": {
+        "custom_class": "",
+        "type": "submit",
+        "class": "btn btn-default",
+        "target": ""
+      }
+    }
+  },
+  "page_names": [
+    "Page 1"
+  ],
+  "mailer": {
+    "sender_name": "Caldera Forms Notification",
+    "sender_email": "from@from.com",
+    "reply_to": "%email_address%",
+    "email_type": "html",
+    "recipients": "to@example.com, %email_address%",
+    "bcc_to": "bcc1@example.com, bcc2@example2.com",
+    "email_subject": "Contact Form",
+    "email_message": "{summary}"
+  },
+  "processors": {
+    "fp_64814225": {
+      "ID": "fp_64814225",
+      "runtimes": {
+        "insert": 1
+      },
+      "type": "auto_responder",
+      "config": {
+        "sender_name": "FROM NAME",
+        "sender_email": "from@auto.com",
+        "reply_to": "replyto@auto.com",
+        "cc": "cc1@auto.com, %email_address%, cc3@auto.com",
+        "bcc": "bc1@auto.com",
+        "subject": "Auto Subject",
+        "recipient_name": "%first_name%",
+        "recipient_email": "auto@example.com",
+        "message": "Hi %recipient_name%.\nThanks for your email.\nWe'll get back to you as soon as possible!\n"
+      },
+      "conditions": {
+        "type": ""
+      }
+    }
+  },
+  "conditional_groups": [],
+  "settings": {
+    "responsive": {
+      "break_point": "sm"
+    }
+  },
+  "version": "1.5.9-rc.1",
+  "db_id": "7",
+  "type": "primary"
+}

@@ -20,76 +20,93 @@
 class Caldera_Forms_Sanitize {
 
 
-	/**
-	 * Filter input and return sanitized output
-	 *
-	 * @param mixed $input The string, array, or object to sanitize
-	 * @param array $params Additional options
-	 *
-	 * @return array|mixed|object|string|void
-	 *
-	 * @since 1.1.10
-	 *
-	 */
-	public static function sanitize( $input, $params = array() ) {
+    /**
+     * Filter input and return sanitized output
+     *
+     * @param mixed $input The string, array, or object to sanitize
+     * @param array $params {
+     *     Optional. Additional options
+     *
+     *     @type string $nested
+     *     @type string $type Sprintf type to use %s|%d|%f
+     *     @type bool   $strip_scripts If true, all scripts will be removed from output. Default is false.
+     *     @type bool $strip_tags If true, all tags are stripped. Default is false.
+     * }
+     *
+     * @return array|mixed|object|string|void
+     *
+     * @since 1.1.10
+     *
+     */
+    public static function sanitize( $input, $params = array() ) {
 
-		$input = stripslashes_deep( $input );
+        $input = stripslashes_deep( $input );
 
-		if ( '' === $input || is_int( $input ) || is_float( $input ) || empty( $input ) ) {
-			return $input;
-		}
+        if ( '' === $input || is_int( $input ) || is_float( $input ) || empty( $input ) ) {
+            return $input;
+        }
 
-		$output = array();
+        $output = array();
 
-		$defaults = array(
-			'nested' => false,
-			'type' => null // %s %d %f etc
-		);
+        $defaults = array(
+            'nested' => false,
+            'type' => null, // %s %d %f etc
+            'strip_tags' => false,
+            'strip_scripts' => false,
+        );
 
-		if ( !is_array( $params ) ) {
-			$defaults[ 'type' ] = $params;
+        if ( !is_array( $params ) ) {
+            $defaults[ 'type' ] = $params;
 
-			$params = $defaults;
-		}
-		else {
-			$params = array_merge( $defaults, (array) $params );
-		}
+            $params = $defaults;
+        }
+        else {
+            $params = array_merge( $defaults, (array) $params );
+        }
 
-		if ( is_object( $input ) ) {
-			$input = get_object_vars( $input );
+        if ( is_object( $input ) ) {
+            $input = get_object_vars( $input );
 
-			$n_params = $params;
-			$n_params[ 'nested' ] = true;
+            $n_params = $params;
+            $n_params[ 'nested' ] = true;
 
-			foreach ( $input as $key => $val ) {
-				$output[ self::sanitize( $key ) ] = self::sanitize( $val, $n_params );
-			}
+            foreach ( $input as $key => $val ) {
+                $output[ self::sanitize( $key ) ] = self::sanitize( $val, $n_params );
+            }
 
-			$output = (object) $output;
-		}
-		elseif ( is_array( $input ) ) {
-			$n_params = $params;
-			$n_params[ 'nested' ] = true;
+            $output = (object) $output;
+        }
+        elseif ( is_array( $input ) ) {
+            $n_params = $params;
+            $n_params[ 'nested' ] = true;
 
-			foreach ( $input as $key => $val ) {
-				$output[ self::sanitize( $key ) ] = self::sanitize( $val, $n_params );
-			}
-		}
-		elseif ( !empty( $params[ 'type' ] ) && false !== strpos( $params[ 'type' ], '%' ) ) {
-			/**
-			 * @var $wpdb wpdb
-			 */
-			global $wpdb;
+            foreach ( $input as $key => $val ) {
+                $output[ self::sanitize( $key ) ] = self::sanitize( $val, $n_params );
+            }
+        }
+        elseif ( !empty( $params[ 'type' ] ) && false !== strpos( $params[ 'type' ], '%' ) ) {
+            /**
+             * @var $wpdb wpdb
+             */
+            global $wpdb;
 
-			$output = $wpdb->prepare( $params[ 'type' ], $output );
-		}
-		else {
-			$output = wp_slash( $input );
-		}
+            $output = $wpdb->prepare( $params[ 'type' ], $output );
+        }
+        else {
+            $output = wp_slash( $input );
+        }
 
-		return $output;
+        if ( true === $params[ 'strip_scripts' ] ){
+            $output = self::remove_scripts( $output );
+        }
 
-	}
+        if( true === $params[ 'strip_tags' ] ){
+            $output = strip_tags( $output );
+        }
+
+        return $output;
+
+    }
 
 	/**
 	 * Filter input and return sanitized SQL LIKE output
@@ -229,9 +246,42 @@ class Caldera_Forms_Sanitize {
 	 * @return string The processed string.
 	 */
 	public static function remove_scripts($string ) {
-		return preg_replace( '@<(script)[^>]*?>.*?</\\1>@si', '', $string );
+	    if( is_array( $string ) ){
+            if (! empty( $string)) {
+                foreach ($string as $i => $part) {
+                    $string[$i] = self::remove_scripts($part);
+                }
+            }
+            return $string;
+        }
+		return str_replace( 'javascript:', '', preg_replace( '@<(script|iframe)[^>]*?>.*?</\\1>@si', '', $string ));
 
 	}
+
+    /**
+     * Remove unintentional line breaks in a string, such as an email header
+     *
+     * @since 1.5.9
+     *
+     * @param string $header
+     * @return string
+     */
+	public static function sanitize_header($header){
+        return preg_replace( '=((<CR>|<LF>|0x0A/%0A|0x0D/%0D|\\n|\\r)\S).*=i', null, $header );
+
+	}
+	
+	/**
+     * Remove partially removed line breaks (backslash removed but not r or n)
+     *
+     * @since 1.8.6
+     *
+     * @param string $string
+     * @return string
+     */
+	public static function finish_trim($string){
+		return rtrim( $string, " \\r\\n" );
+    }
 
 }
 

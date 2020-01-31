@@ -2,6 +2,7 @@
 
 
 namespace calderawp\calderaforms\pro\settings;
+
 use calderawp\calderaforms\pro\container;
 use calderawp\calderaforms\pro\json_arrayable;
 use calderawp\calderaforms\pro\settings;
@@ -14,7 +15,8 @@ use calderawp\calderaforms\pro\settings;
  *
  * @package calderawp\calderaforms\pro\settings
  */
-class form extends json_arrayable {
+class form extends json_arrayable
+{
 
 	/**
 	 * Allowed properites of this repo
@@ -23,12 +25,13 @@ class form extends json_arrayable {
 	 *
 	 * @var array
 	 */
-	protected $properties = array(
+	protected $properties = [
 		'attach_pdf',
 		'pdf_link',
 		'layout',
 		'pdf_layout',
-	);
+		'send_local',
+	];
 
 	/**
 	 * Values in the repo
@@ -37,7 +40,7 @@ class form extends json_arrayable {
 	 *
 	 * @var array
 	 */
-	protected $attributes = array();
+	protected $attributes = [];
 
 	/**
 	 * @var settings
@@ -71,7 +74,8 @@ class form extends json_arrayable {
 	 *
 	 * @param string $form_id
 	 */
-	public function __construct(  $form_id ){
+	public function __construct($form_id)
+	{
 
 		$this->form_id = $form_id;
 	}
@@ -85,13 +89,14 @@ class form extends json_arrayable {
 	 *
 	 * @return form|null
 	 */
-	public static function from_saved( $form_id ){
-		$obj = new form( $form_id );
-		$saved = get_option( $obj->option_key() );
+	public static function from_saved($form_id)
+	{
+		$obj = new form($form_id);
+		$saved = get_option($obj->option_key());
 
 		$obj->form_id = $form_id;
-		if( is_array( $saved ) ){
-			foreach ( $saved as $prop => $value ){
+		if ( is_array($saved) ) {
+			foreach ( $saved as $prop => $value ) {
 				$obj->$prop = $value;
 			}
 
@@ -112,9 +117,10 @@ class form extends json_arrayable {
 	 *
 	 * @return form
 	 */
-	public function __set( $name, $value ){
-		if( array_key_exists( $name, array_flip( $this->properties )) ){
-			$this->set_property( $name, $value );
+	public function __set($name, $value)
+	{
+		if ( array_key_exists($name, array_flip($this->properties)) ) {
+			$this->set_property($name, $value);
 		}
 
 		return $this;
@@ -125,8 +131,9 @@ class form extends json_arrayable {
 	 *
 	 * @since 0.0.1
 	 */
-	public function save(){
-		update_option( $this->option_key(), $this->toArray(), 'no' );
+	public function save()
+	{
+		update_option($this->option_key(), $this->toArray(), 'no');
 
 	}
 
@@ -134,14 +141,15 @@ class form extends json_arrayable {
 	 * @inheritdoc
 	 * @since 0.0.1
 	 */
-	public function toArray(){
-		$array = array();
-		foreach ( $this->properties as $property ){
+	public function toArray()
+	{
+		$array = [];
+		foreach ( $this->properties as $property ) {
 			$cb = 'get_' . $property;
-			if( method_exists( $this, $cb   ) ){
+			if ( method_exists($this, $cb) ) {
 				$array[ $property ] = $this->$cb();
-			}else{
-				$array[ $property ] = $this->get_property( $property, 'int' );
+			} else {
+				$array[ $property ] = $this->get_property($property, 'int');
 			}
 		}
 		$array[ 'form_id' ] = $this->form_id;
@@ -156,10 +164,10 @@ class form extends json_arrayable {
 	 *
 	 * @return array
 	 */
-	public function get_properties(){
+	public function get_properties()
+	{
 		return $this->properties;
 	}
-
 
 
 	/**
@@ -169,10 +177,22 @@ class form extends json_arrayable {
 	 *
 	 * @return string
 	 */
-	public function get_form_id(){
+	public function get_form_id()
+	{
 		return $this->form_id;
 	}
 
+	/**
+	 * Getter for send_local setting in form
+	 *
+	 * @since 1.5.9
+	 *
+	 * @return bool
+	 */
+	public function get_send_local()
+	{
+		return $this->get_property('send_local');
+	}
 
 	/**
 	 * Getter for send_local setting
@@ -181,9 +201,10 @@ class form extends json_arrayable {
 	 *
 	 * @return bool
 	 */
-	public function should_send_local(){
+	public function should_send_local()
+	{
 		/**
-		 * Change if an indivdual form should use local email system or not.
+		 * Change if an individual form should use local email system or not.
 		 *
 		 * Default is system value
 		 *
@@ -191,8 +212,13 @@ class form extends json_arrayable {
 		 * @param string $form_id Form ID
 		 *
 		 */
-		return apply_filters( 'caldera_forms_pro_send_local', container::get_instance()->get_settings()->send_local(), $this->form_id );
-
+		$_send_local = $this->get_send_local();
+		if ( $_send_local === true ) {
+			return apply_filters('caldera_forms_pro_send_local', true, $this->form_id);
+		} else {
+			return apply_filters('caldera_forms_pro_send_local',
+				container::get_instance()->get_settings()->send_local(), $this->form_id);
+		}
 	}
 
 	/**
@@ -202,9 +228,11 @@ class form extends json_arrayable {
 	 *
 	 * @return bool
 	 */
-	public function should_attatch_pdf(){
+	public function should_attatch_pdf()
+	{
 		return $this->get_attach_pdf();
 	}
+
 	/**
 	 * Check if this form should add PDF links after submissions
 	 *
@@ -212,8 +240,9 @@ class form extends json_arrayable {
 	 *
 	 * @return bool
 	 */
-	public function should_add_pdf_link(){
-		return $this->get_property( 'pdf_link', 'bool' );
+	public function should_add_pdf_link()
+	{
+		return $this->get_property('pdf_link', 'bool');
 	}
 
 	/**
@@ -223,8 +252,9 @@ class form extends json_arrayable {
 	 *
 	 * @return bool
 	 */
-	public function get_attach_pdf(){
-		return $this->get_property( 'attach_pdf'  );
+	public function get_attach_pdf()
+	{
+		return $this->get_property('attach_pdf');
 	}
 
 	/**
@@ -234,8 +264,9 @@ class form extends json_arrayable {
 	 *
 	 * @return bool
 	 */
-	public function get_pdf_layout(){
-		return $this->get_property( 'pdf_layout', 'int'  );
+	public function get_pdf_layout()
+	{
+		return $this->get_property('pdf_layout', 'int');
 
 	}
 
@@ -246,8 +277,9 @@ class form extends json_arrayable {
 	 *
 	 * @return int
 	 */
-	public function get_layout(){
-		return $this->get_property( 'layout' , 'int' );
+	public function get_layout()
+	{
+		return $this->get_property('layout', 'int');
 
 	}
 
@@ -256,8 +288,9 @@ class form extends json_arrayable {
 	 *
 	 * @return bool
 	 */
-	public function use_html_layout(){
-		if( ! container::get_instance()->get_settings()->is_basic() && ! 0 < $this->get_layout() ){
+	public function use_html_layout()
+	{
+		if ( !container::get_instance()->get_settings()->is_basic() && !0 < $this->get_layout() ) {
 			return true;
 		}
 
@@ -271,9 +304,10 @@ class form extends json_arrayable {
 	 *
 	 * @return string
 	 */
-	public function get_name(){
+	public function get_name()
+	{
 		$form = $this->get_form();
-		return isset( $form[ 'name' ] ) ? $form[ 'name' ] : $form[ 'ID'  ];
+		return isset($form[ 'name' ]) ? $form[ 'name' ] : $form[ 'ID' ];
 	}
 
 	/**
@@ -285,17 +319,18 @@ class form extends json_arrayable {
 	 *
 	 * @return bool
 	 */
-	protected function get_property( $prop, $cast = 'bool' ){
-		if ( ! isset( $this->attributes[ $prop ] ) ) {
+	protected function get_property($prop, $cast = 'bool')
+	{
+		if ( !isset($this->attributes[ $prop ]) ) {
 			$this->attributes[ $prop ] = false;
 		}
 
-		switch( $cast ) {
+		switch ( $cast ) {
 			case 'int' :
-				return intval( $this->attributes[ $prop ] );
+				return intval($this->attributes[ $prop ]);
 				break;
 			default:
-				return boolval( $this->attributes[ $prop ] );
+				return boolval($this->attributes[ $prop ]);
 				break;
 		}
 	}
@@ -307,23 +342,24 @@ class form extends json_arrayable {
 	 *
 	 * @param string $prop Property to set
 	 * @param mixed $value Value to set
+	 *
 	 * @return bool|form
 	 */
-	protected function set_property( $prop, $value ){
+	protected function set_property($prop, $value)
+	{
 
-		if( in_array( $prop, [
+		if ( in_array($prop, [
 			'layout',
 			'pdf_layout',
-		]) ){
-			$value = absint( $value );
-		}else{
-			$value = rest_sanitize_boolean( $value );
+		]) ) {
+			$value = absint($value);
+		} else {
+			$value = rest_sanitize_boolean($value);
 		}
 		$this->attributes[ $prop ] = $value;
 
 		return $this;
 	}
-
 
 
 	/**
@@ -333,7 +369,8 @@ class form extends json_arrayable {
 	 *
 	 * @return string
 	 */
-	protected function option_key(){
+	protected function option_key()
+	{
 		return '_cf_pro_' . $this->form_id;
 	}
 
@@ -344,9 +381,10 @@ class form extends json_arrayable {
 	 *
 	 * @return array
 	 */
-	protected function get_form(){
-		if( empty( $this->form ) ){
-			$this->form = \Caldera_Forms_Forms::get_form( $this->form_id );
+	protected function get_form()
+	{
+		if ( empty($this->form) ) {
+			$this->form = \Caldera_Forms_Forms::get_form($this->form_id);
 		}
 		return $this->form;
 	}

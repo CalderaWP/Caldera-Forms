@@ -1,0 +1,154 @@
+/** Legacy fixes **/
+.caldera-entry-exporter {
+  margin-top: 0px !important;
+}
+
+/** New CSS **/
+#caldera-forms-admin-page-right {
+  .caldera-grid {
+    width: 100%
+  }
+
+  .components-panel {
+    &__header {
+      text-align: center;
+
+      h2 {
+        font-size: 115%;
+        margin: 0 auto;
+      }
+    }
+  }
+
+  a.button {
+    background-color: #a3bf61;
+    color: #fff;
+
+  }
+
+  a.button-primary {
+    background-color: #ff7e30;
+
+  }
+
+  a.button-primary:hover {
+    background-color: #a3bf61;
+
+  }
+
+  a.button:hover {
+    background-color: #ff7e30;
+  }
+
+  #cf-addons {
+
+    a.button {
+      text-align: center;
+      width: 100%;
+    }
+
+
+    .caldera-editor-header-nav {
+      height: 48px;
+    }
+
+    li.caldera-forms-toolbar-item {
+      padding: 0;
+    }
+
+    .panel-footer {
+      position: absolute;
+      bottom: 0px;
+      padding: 6px;
+      background: none repeat scroll 0 0 rgba(0, 0, 0, 0.03);
+      left: 0px;
+      right: 0px;
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+
+    .addon-panel {
+      margin: 10px;
+      width: 220px;
+      float: left;
+      height: 250px;
+      position: relative;
+      padding: 0;
+      border: 1px solid #a3bf61;
+      border-radius: 2px;
+      background: #fff;
+
+      h2 {
+        padding: 6px 7px;
+      }
+    }
+  }
+
+  .caldera-forms-pro-what-is {
+    font-size: 110%;
+
+    p {
+      &.pro-title {
+        color: #839e3f;
+        text-align: center;
+        font-size: 115%;
+      }
+    }
+
+    img {
+      margin-right: 0.5em !important;
+    }
+  }
+
+  .cf-pro-dashboard-panels {
+    margin-top: 2.5em;
+
+    .components-tab-panel__tabs {
+      margin-bottom: 1.5em;
+
+      .active-tab {
+        color: #ffffff;
+        background: #839e3f;
+      }
+
+      button {
+        display: inline-block;
+        padding: 12px;
+        text-decoration: none;
+        color: #839e3f;
+        background-color: #ffffff;
+        background-blend-mode: darken;
+      }
+
+    }
+
+  }
+
+  .cf-translate-panel {
+    .more-link {
+      display: block;
+      width: 50%;
+      color: #fff;
+      background-color: #839e3f;
+      text-align: center;
+      padding: 12px;
+      margin: 12px auto 0;
+    }
+    .entry-title {
+      a {
+        color: #839e3f;
+      }
+    }
+    .cf-translate-cta {
+      width: 100%;
+      text-align: center;
+    }
+    .h3{
+      text-align: center;
+      color:#839e3f;
+      font-size: 2em;
+    }
+  }
+
+}
+

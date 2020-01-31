@@ -2,8 +2,10 @@
 
 
 namespace calderawp\calderaforms\pro;
+
 use calderawp\calderaforms\pro\api\keys;
 use calderawp\calderaforms\pro\settings\form;
+use Monolog\Logger as Monolog;
 
 
 /**
@@ -13,7 +15,8 @@ use calderawp\calderaforms\pro\settings\form;
  *
  * @package calderawp\calderaforms\pro
  */
-class settings  extends repository{
+class settings extends repository
+{
 
 	/**
 	 * ID of default layout
@@ -58,25 +61,32 @@ class settings  extends repository{
 	 *
 	 * @return settings
 	 */
-	public static function from_saved(){
+	public static function from_saved()
+	{
 		$settings = new static();
-		$saved = get_option( self::$_option_key, array( ) );
-		if( ! empty( $saved[ 'account_id' ] ) ){
-			$settings->set_account_id( $saved[ 'account_id' ]  );
+		$saved = get_option(self::$_option_key, []);
+		if ( !empty($saved[ 'account_id' ]) ) {
+			$settings->set_account_id($saved[ 'account_id' ]);
 		}
-		if( ! empty( $saved[ 'apiKeys' ] ) ){
-			$keys = keys::fromArray( $saved[ 'apiKeys' ] );
-			$settings->set_api_keys( $keys );
-		}
-
-		if ( isset( $saved[ 'enhancedDelivery' ] ) ) {
-			$settings->set_enhanced_delivery( $saved[ 'enhancedDelivery' ] );
+		if ( !empty($saved[ 'apiKeys' ]) ) {
+			$keys = keys::fromArray($saved[ 'apiKeys' ]);
+			$settings->set_api_keys($keys);
 		}
 
-		if( ! empty( $saved[ 'plan' ] ) ){
-			$settings->set_plan( $saved[ 'plan' ] );
-		}else{
-			$settings->set_plan( 'basic' );
+		if ( isset($saved[ 'enhancedDelivery' ]) ) {
+			$settings->set_enhanced_delivery($saved[ 'enhancedDelivery' ]);
+		}
+
+		if ( !empty($saved[ 'logLevel' ]) ) {
+			$settings->set_log_level($saved[ 'logLevel' ]);
+		} else {
+			$settings->set_log_level(Monolog::NOTICE);
+		}
+
+		if ( !empty($saved[ 'plan' ]) ) {
+			$settings->set_plan($saved[ 'plan' ]);
+		} else {
+			$settings->set_plan('basic');
 		}
 
 		return $settings;
@@ -92,19 +102,20 @@ class settings  extends repository{
 	 *
 	 * @return form
 	 */
-	public function set_form( $form ){
+	public function set_form($form)
+	{
 
-		if( ! $this->has( $form->get_form_id() ) ){
-			$forms = $this->get( 'forms', array() );
+		if ( !$this->has($form->get_form_id()) ) {
+			$forms = $this->get('forms', []);
 
 			$forms[] = $form->get_form_id();
-			$this->set( 'forms', $forms );
+			$this->set('forms', $forms);
 		}
 
-		$this->set( $form->get_form_id(), $form );
+		$this->set($form->get_form_id(), $form);
 
 
-		return $this->get( $form->get_form_id() );
+		return $this->get($form->get_form_id());
 
 	}
 
@@ -119,15 +130,16 @@ class settings  extends repository{
 	 *
 	 * @return form
 	 */
-	public function get_form( $form_id ){
-		if( ! $this->has( $form_id ) ){
-			$_form = form::from_saved( $form_id );
-			if( is_object( $_form ) ){
-				$this->set( $form_id, $_form );
+	public function get_form($form_id)
+	{
+		if ( !$this->has($form_id) ) {
+			$_form = form::from_saved($form_id);
+			if ( is_object($_form) ) {
+				$this->set($form_id, $_form);
 			}
 		}
 
-		return $this->get( $form_id, new form( $form_id ) );
+		return $this->get($form_id, new form($form_id));
 
 	}
 
@@ -140,8 +152,9 @@ class settings  extends repository{
 	 *
 	 * @return $this
 	 */
-	public function set_account_id( $id ){
-		$this->account_id = absint( $id );
+	public function set_account_id($id)
+	{
+		$this->account_id = absint($id);
 		return $this;
 	}
 
@@ -152,8 +165,9 @@ class settings  extends repository{
 	 *
 	 * @return int
 	 */
-	public function get_account_id(){
-		return absint( $this->account_id );
+	public function get_account_id()
+	{
+		return absint($this->account_id);
 	}
 
 	/**
@@ -165,9 +179,10 @@ class settings  extends repository{
 	 *
 	 * @return $this
 	 */
-	public function set_api_public( $public ){
+	public function set_api_public($public)
+	{
 		$keys = $this->get_api_keys();
-		$keys->set_public( $public );
+		$keys->set_public($public);
 		return $this;
 	}
 
@@ -180,9 +195,10 @@ class settings  extends repository{
 	 *
 	 * @return $this
 	 */
-	public function set_api_secret( $secret ){
+	public function set_api_secret($secret)
+	{
 		$keys = $this->get_api_keys();
-		$keys->set_secret( $secret );
+		$keys->set_secret($secret);
 		return $this;
 
 	}
@@ -194,12 +210,13 @@ class settings  extends repository{
 	 *
 	 * @return keys
 	 */
-	public function get_api_keys(){
-		if( ! $this->has( 'apiKeys' ) ){
-			$this->set( 'apiKeys', new keys() );
+	public function get_api_keys()
+	{
+		if ( !$this->has('apiKeys') ) {
+			$this->set('apiKeys', new keys());
 		}
 
-		return $this->get( 'apiKeys' );
+		return $this->get('apiKeys');
 
 	}
 
@@ -210,8 +227,9 @@ class settings  extends repository{
 	 *
 	 * @param keys $keys
 	 */
-	public function set_api_keys( $keys ){
-		$this->set( 'apiKeys', $keys );
+	public function set_api_keys($keys)
+	{
+		$this->set('apiKeys', $keys);
 	}
 
 	/**
@@ -219,9 +237,10 @@ class settings  extends repository{
 	 *
 	 * @param bool $enable
 	 */
-	public function set_enhanced_delivery( $enable ){
-		$enable = rest_sanitize_boolean( $enable );
-		$this->set( 'enhanced_delivery',  $enable  );
+	public function set_enhanced_delivery($enable)
+	{
+		$enable = rest_sanitize_boolean($enable);
+		$this->set('enhanced_delivery', $enable);
 	}
 
 	/**
@@ -233,8 +252,9 @@ class settings  extends repository{
 	 *
 	 * @return bool
 	 */
-	public function get_enhanced_delivery(){
-		return $this->get( 'enhanced_delivery', true );
+	public function get_enhanced_delivery()
+	{
+		return $this->get('enhanced_delivery', true);
 
 	}
 
@@ -245,8 +265,9 @@ class settings  extends repository{
 	 *
 	 * @return bool
 	 */
-	public function send_local(){
-		return ! $this->send_remote();
+	public function send_local()
+	{
+		return !$this->send_remote();
 	}
 
 	/**
@@ -256,7 +277,8 @@ class settings  extends repository{
 	 *
 	 * @return bool
 	 */
-	public function send_remote(){
+	public function send_remote()
+	{
 		return $this->get_enhanced_delivery();
 
 	}
@@ -268,9 +290,10 @@ class settings  extends repository{
 	 *
 	 * @param string $plan
 	 */
-	public function set_plan( $plan ){
-		if( in_array( $plan, [ 'basic', 'apex', 'awesome' ] ) ){
-			$this->set( 'plan', $plan );
+	public function set_plan($plan)
+	{
+		if ( in_array($plan, [ 'basic', 'apex', 'awesome' ]) ) {
+			$this->set('plan', $plan);
 		}
 
 	}
@@ -282,8 +305,63 @@ class settings  extends repository{
 	 *
 	 * @return string
 	 */
-	public function get_plan(){
-		return $this->get( 'plan', 'basic' );
+	public function get_plan()
+	{
+		return $this->get('plan', 'basic');
+	}
+
+	/**
+	 * List all log levels from Monolog
+	 *
+	 * @since 1.5.9
+	 *
+	 * @return array
+	 */
+	public function log_levels()
+	{
+		$levels = Monolog::getLevels();
+		$all_levels = [];
+		$i = 0;
+		foreach ( $levels as $name => $number ) {
+			$all_levels[ $i ] = [
+				'name' => $name,
+				'number' => $number,
+			];
+			$i++;
+		}
+		return $all_levels;
+	}
+
+	/**
+	 * Set log level
+	 *
+	 * @since 1.5.9
+	 *
+	 * @param integer $level
+	 */
+	public function set_log_level($level)
+	{
+		$all_levels = $this->log_levels();
+
+		$levels = [];
+		foreach ( $all_levels as $levelindex ) {
+			$levels[] = $levelindex[ 'number' ];
+		}
+		if ( in_array($level, $levels) ) {
+			$this->set('logLevel', $level);
+		}
+	}
+
+	/**
+	 * Get log level
+	 *
+	 * @since 1.5.9
+	 *
+	 * @return integer
+	 */
+	public function get_log_level()
+	{
+		return $this->get('logLevel', Monolog::NOTICE);
 	}
 
 	/**
@@ -293,7 +371,8 @@ class settings  extends repository{
 	 *
 	 * @return bool
 	 */
-	public function is_basic(){
+	public function is_basic()
+	{
 		return 'basic' === $this->get_plan();
 	}
 
@@ -302,22 +381,21 @@ class settings  extends repository{
 	 *
 	 * @since 0.0.1
 	 */
-	public function save(){
-		foreach ( $this->forms() as $form ){
+	public function save()
+	{
+		foreach ( $this->forms() as $form ) {
 			$form->save();
 		}
 
-		if( $this->get_api_keys()->get_public() && $this->get_api_keys()->get_secret() ){
+		if ( $this->get_api_keys()->get_public() && $this->get_api_keys()->get_secret() ) {
 
 		}
 
 		$data = $this->toArray();
-		unset( $data[ 'forms' ] );
-		update_option( $this->option_key, $data  );
+		unset($data[ 'forms' ]);
+		update_option($this->option_key, $data);
 
 	}
-
-
 
 
 	/**
@@ -327,14 +405,16 @@ class settings  extends repository{
 	 *
 	 * @return array
 	 */
-	public function toArray(){
-		$data = array(
-			'account_id'       => $this->get_account_id(),
-			'apiKeys'          => $this->get_api_keys()->toArray(),
-			'forms'            => $this->forms_to_array(),
+	public function toArray()
+	{
+		$data = [
+			'account_id' => $this->get_account_id(),
+			'apiKeys' => $this->get_api_keys()->toArray(),
+			'forms' => $this->forms_to_array(),
 			'enhancedDelivery' => $this->get_enhanced_delivery(),
-			'plan'             => $this->get_plan(),
-		);
+			'plan' => $this->get_plan(),
+			'logLevel' => $this->get_log_level(),
+		];
 
 		return $data;
 	}
@@ -346,11 +426,12 @@ class settings  extends repository{
 	 *
 	 * @return array
 	 */
-	protected function forms(){
-		$forms = array();
+	protected function forms()
+	{
+		$forms = [];
 		$all_forms = \Caldera_Forms_Forms::get_forms();
-		foreach ( $all_forms as $form ){
-			$forms[ ] = $this->get_form( $form );
+		foreach ( $all_forms as $form ) {
+			$forms[] = $this->get_form($form);
 		}
 		return $forms;
 	}
@@ -362,9 +443,10 @@ class settings  extends repository{
 	 *
 	 * @return array
 	 */
-	protected function forms_to_array(  ){
+	protected function forms_to_array()
+	{
 		$array = [];
-		foreach ( $this->forms() as $form ){
+		foreach ( $this->forms() as $form ) {
 			$array[] = $form->toArray();
 		}
 		return $array;

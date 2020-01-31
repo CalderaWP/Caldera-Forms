@@ -8,7 +8,7 @@
  * @link
  * @copyright 2016 Josh Pollock
  */
-class Caldera_Forms_Test_Case extends \PHPUnit\Framework\TestCase {
+class Caldera_Forms_Test_Case extends WP_UnitTestCase {
 
 	const MOCK_FORM_ID = 'cf12345hiroy';
 
@@ -21,6 +21,7 @@ class Caldera_Forms_Test_Case extends \PHPUnit\Framework\TestCase {
      */
     protected $mock_form;
 
+    /** @inheritdoc */
     public function setUp(){
 		$this->set_mock_form();
 		//test that mock form is set properly
@@ -29,7 +30,8 @@ class Caldera_Forms_Test_Case extends \PHPUnit\Framework\TestCase {
 		parent::setUp();
 	}
 
-	public function tearDown(){
+    /** @inheritdoc */
+    public function tearDown(){
 
 		$forms = Caldera_Forms_Forms::get_forms();
 
@@ -41,6 +43,7 @@ class Caldera_Forms_Test_Case extends \PHPUnit\Framework\TestCase {
 
 		wp_cache_delete( '_caldera_forms_forms', 'options' );
 		parent::tearDown();
+        reset_phpmailer_instance();
 	}
 
 	/**
@@ -89,7 +92,7 @@ class Caldera_Forms_Test_Case extends \PHPUnit\Framework\TestCase {
             'name'               => 'Another form',
             'description'        => '',
             'db_support'         => 1,
-            'pinned'             => 0,
+            'pinned'             => 1,
             'hide_form'          => 1,
             'check_honey'        => 1,
             'success'            => __( 'Form has been successfully submitted. Thank you.', 'caldera-forms' ),
@@ -218,6 +221,219 @@ class Caldera_Forms_Test_Case extends \PHPUnit\Framework\TestCase {
                     'email_message' => '{summary}',
                 ),
         );
+    }
+
+    /**
+     * Create a mock entry to test
+     *
+     * @since 1.4.0
+     *
+     * @param array|null $form
+     * @param array|null $data
+     * @return array
+     */
+    protected function create_entry( array $form = null, array $data = [] ){
+        if ( ! $form ) {
+            $form = $this->mock_form;
+        }
+       return \calderawp\calderaforms\Tests\Util\SubmissionHelpers::createEntry($form,$data);
+    }
+
+    /**
+     * Import contact form without auto-responder
+     *
+     * @since 1.5.9
+     *
+     * @param bool $main_mailer Optional. If true, the default, contact form for main mailer is imported. If false, contact form for auti-responder is imported.
+     * @return string
+     */
+    protected function import_contact_form($main_mailer = true ){
+        if ($main_mailer) {
+            $file = $this->get_path_for_main_mailer_form_import();
+        } else {
+            $file = $this->get_path_for_auto_responder_contact_form_import();
+
+        }
+
+        return $this->import_form($file);
+    }
+
+
+
+    /**
+     * Cast array or object, like a form import, to array
+     *
+     * @since 1.5.9
+     *
+     * @param $array_or_object
+     * @return array
+     */
+    protected function recursive_cast_array( $array_or_object ){
+        $array_or_object = (array) $array_or_object;
+        foreach ( $array_or_object as $key => $value ){
+            if( is_array( $value ) || is_object( $value ) ){
+                $array_or_object[ $key ] = $this->recursive_cast_array( $value );
+            }
+
+        }
+        return $array_or_object;
+    }
+
+    /**
+     * Create submission data for mock submissions.
+     *
+     * Designed to be used to set $_POST for contact form tests or other mock submission requiring tests.
+     *
+     * @since 1.5.9
+     *
+     * @param null|string $form_id
+     * @param array $data
+     * @return array
+     */
+    protected function submission_data( $form_id = null, array $data = array() ){
+        if( ! $form_id ){
+            $form_id = self::MOCK_FORM_ID;
+        }
+
+        return \calderawp\calderaforms\Tests\Util\SubmissionHelpers::submission_data($form_id,$data);
+    }
+
+    /**
+     * Import form by file path
+     *
+     * @since 1.5.9
+     *
+     * @param string $file Path to form config
+     * @return string
+     */
+    protected function import_form($file) {
+        $json = file_get_contents($file);
+        $config = $this->recursive_cast_array(json_decode($json));
+        $form_id = Caldera_Forms_Forms::import_form($config);
+        return $form_id;
+    }
+
+    /**
+     * Import form for autoresponder tests to file system
+     *
+     * @since 1.7.0
+     *
+     * @return string
+     */
+    protected function import_autoresponder_form(){
+        return $this->import_form($this->get_path_for_auto_responder_contact_form_import());
+    }
+
+    /**
+     * Get file path for JSON export we import for contact form main mailer tests
+     *
+     * @since 1.6.0
+     *
+     * @return string
+     */
+    protected function get_path_for_main_mailer_form_import(){
+        return $file = dirname(__FILE__) . '/forms/contact-forms-no-auto-responder.json';
+    }
+
+	/**
+	 * Get file path for JSON export we import for contact form with form_draft "1"
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return string
+	 */
+	protected function get_path_for_form_draft_form_import(){
+		return $file = dirname(__FILE__) . '/forms/contact-form-form-draft.json';
+	}
+
+    /**
+     * Get file path for JSON export we import for contact form auto-responder tests
+     *
+     * @since 1.6.0
+     *
+     * @return string
+     */
+    protected function get_path_for_auto_responder_contact_form_import(){
+        return dirname(__FILE__) . '/forms/contact-form-autoresponder.json';
+    }
+
+    /**
+     * Assert a value is numeric
+     *
+     * @since 1.6
+     *
+     * @param mixed $maybeNumeric
+     */
+    protected function assertIsNumeric( $maybeNumeric, $message = '' ){
+        $this->assertTrue( is_numeric( $maybeNumeric ), $message );
+    }
+
+    /**
+     * Save an entry, with email and name fields we can identify a person by.
+     *
+     * @since 1.7.0
+     *
+     * @param array $form
+     * @param string $email
+     * @param string$name
+     * @param string $email_slug
+     * @param string $name_slug
+     * @return int Entry ID
+     */
+    protected function save_identifiable_entry( array  $form, $email, $name, $email_slug = 'email_address', $name_slug = 'first_name' )
+    {
+        $data = [];
+        foreach( $form[ 'fields'] as $field_id => $field ){
+            switch( $field[ 'slug' ] ){
+                case $email_slug:
+                    $data[$field_id] = $email;
+                    break;
+                case $name_slug:
+                    $data[$field_id] = $name;
+                    break;
+                default:
+                    $data[$field_id] = $field[ 'slug' ] .  md5( $field[ 'slug' ] );
+                    break;
+            }
+        }
+
+        $entry = $this->create_entry( $form, $data );
+        return intval($entry[ 'id' ]);
+    }
+
+    /**
+     * Saves entries that are personally identifiable, for two forms.
+     *
+     * Creates 2 in each form, 4 total.
+     *
+     * @since 1.7.0
+     *
+     * @param string $form_id
+     * @param string $form_id_two
+     * @param string $email
+     * @param string $email_field
+     *
+     * @return array
+     */
+    protected function save_identifiable_entries_for_two_forms($form_id, $form_id_two, $email, $email_field )
+    {
+        $form = Caldera_Forms_Forms::get_form($form_id);
+        $form_two = Caldera_Forms_Forms::get_form($form_id_two);
+        if ( $form_id !== $form_id_two) {
+            $this->assertNotEquals($form, $form_two);
+        } else {
+            $this->assertEquals( $form, $form_two );
+        }
+
+        $entry_ids = [
+            'form_1' => [],
+            'form_2' => [],
+        ];
+        for ($i = 0; $i <= 2; $i++) {
+            $entry_ids['form_1'][] = $this->save_identifiable_entry($form, $email, 'Roy', $email_field);
+            $entry_ids['form_2'][] = $this->save_identifiable_entry($form_two, $email, 'Roy', $email_field);
+        }
+        return $entry_ids;
     }
 
 }

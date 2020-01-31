@@ -10,7 +10,6 @@ module.exports = function (grunt) {
         '!build/**',
         '!sources/**',
         '!tests/**',
-        '!vendor/**',
         '!.gitattributes',
         '!.gitignore',
         '!.gitmodules',
@@ -34,8 +33,34 @@ module.exports = function (grunt) {
         '!includes/cf-pro-client/composer.lock',
         '!includes/cf-pro-client/package-lock.json',
         '!includes/cf-pro-client/package.json',
-        '!includes/cf-pro-client/build/**'
+        '!includes/cf-pro-client/build/**',
+        //Exclude client dir, most of it we don't need
+        '!clients/**',
+        '!src/**',
+        '!Dockerfile',
+        '!.env',
+        '!db-error.php',
+        '!webpack.config.js',
+        '!docker-compose.yml',
+        '!wp-content/**',
+        '!wordpress/**'
     ];
+
+    //Include webpacked clients
+    [
+        'admin',
+		'blocks',
+        'components',
+        'functions',
+		'privacy',
+        'pro',
+        'render',
+        'state',
+        'viewer'
+    ].forEach( (client) => {
+       files_list.push( `clients/${client}/build/index.min.js` );
+       files_list.push( `clients/${client}/build/style.min.css` );
+    });
 
     require( 'load-grunt-tasks' )( grunt );
 
@@ -163,6 +188,8 @@ module.exports = function (grunt) {
             },
             form: {
                 src: [
+                    'assets/js/ajax-core.js',
+                    'assets/js/conditionals.js',
                     'assets/js/state/events.js',
                     'assets/js/state/state.js',
                     'assets/js/inputmask.js',
@@ -184,6 +211,7 @@ module.exports = function (grunt) {
             scripts: {
                 files: [
                     'assets/js/*.js',
+					'assets/js/state/*.js',
                     'assets/css/*.css'
                 ],
                 tasks: ['default'],
@@ -257,30 +285,39 @@ module.exports = function (grunt) {
                     create: [ 'build' ]
                 }
             }
+        },
+
+
+        exec: {
+            deleteVendor: 'rm -rf vendor',
+            composerDist: 'composer clearcache && rm -rf vendor && composer update --prefer-dist --no-dev --optimize-autoloader --ignore-platform-reqs'
         }
 
     });
 
-
-
-
     grunt.registerTask( 'buildCopy', [ 'copy:i18n', 'copy:fonts', 'copy:images'] );
     //register default task
     grunt.registerTask( 'default',  [
-        'concat',
-        'uglify',
+        'js',
         'cssmin',
         'buildCopy'
     ] );
 
     grunt.registerTask( 'js',  [
-        'uglify',
-        'concat'
+		'concat',
+        'uglify'
     ] );
 
     grunt.registerTask( 'version_number', [ 'replace' ] );
-    grunt.registerTask( 'build', [  'version_number', 'default', 'mkdir:build', 'copy:build' ] );
+    grunt.registerTask( 'build', [  'version_number', 'default',  'make' ] );
+    grunt.registerTask( 'make', [
+        'exec:deleteVendor',
+        'exec:composerDist',
+        'mkdir:build',
+        'copy:build'
+    ] );
 
 
 
 };
+

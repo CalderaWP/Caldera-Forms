@@ -21,7 +21,7 @@ if( $sync ){
 
 }else{
 	$html_template = $field[ 'config' ][ 'default' ];
-	$content = do_shortcode( Caldera_Forms::do_magic_tags(  $html_template   ) );
+	$content = do_shortcode( Caldera_Forms::do_magic_tags( wpautop( $html_template ) ) );
 	echo '<div class="' . esc_attr( $field['config']['custom_class'] ) . '">' . $content . '</div>';
 }
 

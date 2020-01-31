@@ -112,7 +112,15 @@
 				<?php esc_html_e( 'Form Name', 'caldera-forms' ); ?>
 			</label>
 			<div class="caldera-config-field">
-				<input id="cf-new-form-name" type="text" class="new-form-name block-input field-config" autocomplete="off" name="name" value="" required="required">
+				<input
+                    id="cf-new-form-name"
+                    type="text"
+                    class="new-form-name block-input field-config"
+                    autocomplete="off"
+                    name="name"
+                    value=""
+                    required="required"
+                />
 			</div>
 		</div>
 		<div class="caldera-config-group">
@@ -120,13 +128,43 @@
 				<?php esc_html_e( 'Form File', 'caldera-forms' ); ?>
 			</label>
 			<div class="caldera-config-field">
-				<input type="file" id="cf-new-form-file" class="new-form-name" name="import_file" required="required" style="width: 230px;">
+				<input
+                    type="file"
+                    id="cf-new-form-file"
+                    class="new-form-name"
+                    name="import_file"
+                    required="required"
+                    style="width: 230px;"
+                />
 			</div>
 		</div>
+
+        <div class="caldera-config-group">
+            <label for="cf-new-form-trusted">
+                <?php esc_html_e( 'Trusted Source', 'caldera-forms' ); ?>
+            </label>
+            <div class="caldera-config-field">
+                <input
+                    type="checkbox"
+                    id="cf-new-form-trusted"
+                    name="import_trusted"
+                    aria-describedby="cf-new-form-trusted-desc"
+                />
+                <p 
+                    id="cf-new-form-trusted-desc"
+                    class="description"
+                >
+                    <?php esc_html_e( 'Is this file from a trusted source?','caldera-forms' ); ?>
+
+                </p>
+            </div>
+        </div>
 		
 		<div class="baldrick-modal-footer" style="display: block; clear: both; position: relative; height: 24px; width: 100%; margin: 0px -12px;">
 
-			<button type="submit" class="button" style="float:right;"><?php esc_html_e( 'Import Form', 'caldera-forms' ); ?></button>	
+			<button type="submit" class="button" style="float:right;">
+                <?php esc_html_e( 'Import Form', 'caldera-forms' ); ?>
+            </button>
 
 		</div>
 
@@ -144,7 +182,7 @@
 <script type="text/html" id="front-settings-tmpl">
 	<?php
 
-	$style_includes = get_option( '_caldera_forms_styleincludes' );
+	$style_includes = Caldera_Forms_Render_Assets::get_style_includes();
 	if(empty($style_includes)){
 		$style_includes = array(
 			'alert'	=>	true,
@@ -275,8 +313,6 @@
 		jQuery('.new-form-name').focus();
 		{{/script}}
 </script>
-
-
 
 <?php 
 $forms = Caldera_Forms_Forms::get_forms( true );

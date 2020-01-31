@@ -22,33 +22,45 @@ add_action( 'init', 'caldera_forms_register_block');
  * @since 1.5.8
  */
 function caldera_forms_enqueue_block_assets() {
-    wp_enqueue_script(
-        'calderaforms/cform',
-        plugins_url( 'cform/block.build.js', __FILE__ ),
-        array( 'wp-blocks', 'wp-i18n', 'wp-element' ),
-        CFCORE_VER
-    );
+	Caldera_Forms_Render_Assets::enqueue_script( 'blocks', array( 'wp-blocks', 'wp-i18n', 'wp-element' ) );
 
-    $formOptions = array();
-    $forms = Caldera_Forms_Forms::get_forms(true);
-    foreach ( $forms as $form ){
-        $formOptions[] = array(
-            'name' => esc_html( $form[ 'name'  ] ),
-            'formId' => esc_attr( $form[ 'ID' ] )
-        );
-    }
-
-    wp_localize_script(
-        'calderaforms/cform',
-        'CF_FORMS',
-        array(
-            'forms' => $formOptions,
-            'previewApi' => esc_url( Caldera_Forms_API_Util::url( 'forms/-formId-/preview' ) )
-        )
-    );
+    caldera_forms_print_cf_forms_var('blocks');
 
 
 }
+
+/**
+ * Print to DOM the CF_FORM variable
+ *
+ * @since 1.7.0
+ *
+ * @param string $script_handle Handle of script to use with wp_localize_script()
+ */
+function caldera_forms_print_cf_forms_var($script_handle){
+	$form_options = array();
+	$forms = Caldera_Forms_Forms::get_forms(true);
+	$forms = array_reverse($forms);
+	foreach ($forms as $form) {
+		if( !empty( $form['form_draft'] ) ) {
+			continue;
+		}
+		$form_options[] = array(
+			'name' => esc_html($form['name']),
+			'formId' => esc_attr($form['ID']),
+			'ID' => esc_attr($form['ID'])
+		);
+
+	}
+
+	wp_localize_script(
+		Caldera_Forms_Render_Assets::make_slug($script_handle),
+		'CF_FORMS',
+		array(
+			'forms' => $form_options
+		)
+	);
+}
+
 
 
 /**
@@ -61,6 +73,12 @@ function caldera_forms_enqueue_block_assets() {
  */
 function caldera_forms_render_cform_block($atts ) {
     if( ! empty( $atts[ 'formId' ] ) ){
+		if ( ! empty( $atts[ 'className' ] ) ){
+			add_filter( 'caldera_forms_render_form_wrapper_classes', function( $wrapper_classes ) use ( $atts ){
+				$wrapper_classes[] = $atts[ 'className' ];
+				return $wrapper_classes;
+			} );
+		}
         return Caldera_Forms::render_form(
             array(
                 'ID' => caldera_forms_very_safe_string( $atts[ 'formId' ] )
@@ -82,15 +100,21 @@ function caldera_forms_register_block(){
     if( ! function_exists( 'register_block_type' ) ){
         return;
     }
-    register_block_type( 'calderaforms/cform', array(
-        'render_callback' => 'caldera_forms_render_cform_block',
-        'attributes' => array(
-            'formId' => array(
-                'type' => 'string',
-                'default' => ''
-            )
-        )
-    ) );
+	$script = Caldera_Forms_Render_Assets::make_slug('blocks');
+	wp_register_script($script, Caldera_Forms_Render_Assets::make_url('blocks'), [
+		'wp-components',
+		'wp-blocks',
+		'wp-editor',
+	], CFCORE_VER);
+	register_block_type('calderaforms/cform', [
+		'render_callback' => 'caldera_forms_render_cform_block',
+		'attributes' => [
+			'formId' => [
+				'type' => 'string',
+				'default' => '',
+			],
+		],
+	]);
 }
 
 

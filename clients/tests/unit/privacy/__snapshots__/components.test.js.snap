@@ -1,0 +1,705 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Docs links Renders 1`] = `
+<ul
+  className="list-group"
+  style={
+    Object {
+      "padding": "12px",
+    }
+  }
+>
+  <li
+    className="list-group-item"
+  >
+    <span
+      className="undefined"
+    >
+      <img
+        alt="👀"
+        src="http://twemoji.maxcdn.com/2/72x72/1f440.png"
+        style={
+          Object {
+            "height": "1em",
+            "margin": "0 .05em 0 .1em",
+            "verticalAlign": "-0.1em",
+            "width": "1em",
+          }
+        }
+      />
+    </span>
+    <a
+      href="https://calderaforms.com/doc/setting-caldera-forms-gdpr-data-requests/?utm_source=wp-admin&utm_campaign=privacy-settings"
+    >
+      Setting Up Caldera Forms For GDPR Requests
+    </a>
+  </li>
+  <li
+    className="list-group-item"
+  >
+    <span
+      className="undefined"
+    >
+      <img
+        alt="👀"
+        src="http://twemoji.maxcdn.com/2/72x72/1f440.png"
+        style={
+          Object {
+            "height": "1em",
+            "margin": "0 .05em 0 .1em",
+            "verticalAlign": "-0.1em",
+            "width": "1em",
+          }
+        }
+      />
+    </span>
+    <a
+      href="https://calderaforms.com/gdpr/?utm_source=wp-admin&utm_campaign=privacy-settings"
+    >
+      All Caldera Forms GDPR Compliance Tools
+    </a>
+  </li>
+  <li
+    className="list-group-item"
+  />
+</ul>
+`;
+
+exports[`Field group component Help text is optional 1`] = `
+<div
+  className="form-group"
+>
+  <label
+    className="control-label"
+    htmlFor="control-22"
+  >
+    Who
+  </label>
+  <input
+    className="form-control"
+    id="control-22"
+  />
+</div>
+`;
+
+exports[`Field group component Works with help text 1`] = `
+<div
+  className="form-group"
+>
+  <label
+    className="control-label"
+    htmlFor="control-22"
+  >
+    Who
+  </label>
+  <input
+    className="form-control"
+    id="control-22"
+  />
+  <span
+    className="help-block"
+  >
+    Who to say hi to
+  </span>
+</div>
+`;
+
+exports[`Helpbox Does what it does. This needs broken up 1`] = `
+<div
+  className="col-xs-4"
+  style={
+    Object {
+      "backgroundColor": "#fff",
+    }
+  }
+>
+  <p
+    style={
+      Object {
+        "borderBottom": "1px solid #eee",
+        "margin": 0,
+        "padding": ".7em 1em",
+      }
+    }
+  >
+    <button>
+      Push Me
+    </button>
+  </p>
+  <h3>
+    <span
+      className=""
+    >
+      <img
+        alt="🌋"
+        src="http://twemoji.maxcdn.com/2/72x72/1f30b.png"
+        style={
+          Object {
+            "height": "1em",
+            "margin": "0 .05em 0 .1em",
+            "verticalAlign": "-0.1em",
+            "width": "1em",
+          }
+        }
+      />
+       Terms
+    </span>
+  </h3>
+  <ul
+    className="list-group"
+    style={
+      Object {
+        "padding": "12px",
+      }
+    }
+  >
+    <li
+      className="list-group-item"
+    >
+      <span
+        className="undefined"
+      >
+        <img
+          alt="👀"
+          src="http://twemoji.maxcdn.com/2/72x72/1f440.png"
+          style={
+            Object {
+              "height": "1em",
+              "margin": "0 .05em 0 .1em",
+              "verticalAlign": "-0.1em",
+              "width": "1em",
+            }
+          }
+        />
+      </span>
+      Email Identifying Fields: The field(s) of your form that can be used to determine whose data an entry belongs to.
+    </li>
+    <li
+      className="list-group-item"
+    >
+      <span
+        className="undefined"
+      >
+        <img
+          alt="👀"
+          src="http://twemoji.maxcdn.com/2/72x72/1f440.png"
+          style={
+            Object {
+              "height": "1em",
+              "margin": "0 .05em 0 .1em",
+              "verticalAlign": "-0.1em",
+              "width": "1em",
+            }
+          }
+        />
+      </span>
+      Personally Identifying Fields (PII): The field(s) of your form that contain PII about the person identified in the email identifying field.
+    </li>
+  </ul>
+  <h3>
+    <span
+      className=""
+    >
+      <img
+        alt="🌋"
+        src="http://twemoji.maxcdn.com/2/72x72/1f30b.png"
+        style={
+          Object {
+            "height": "1em",
+            "margin": "0 .05em 0 .1em",
+            "verticalAlign": "-0.1em",
+            "width": "1em",
+          }
+        }
+      />
+       Documentation
+    </span>
+  </h3>
+  <ul
+    className="list-group"
+    style={
+      Object {
+        "padding": "12px",
+      }
+    }
+  >
+    <li
+      className="list-group-item"
+    >
+      <span
+        className="undefined"
+      >
+        <img
+          alt="👀"
+          src="http://twemoji.maxcdn.com/2/72x72/1f440.png"
+          style={
+            Object {
+              "height": "1em",
+              "margin": "0 .05em 0 .1em",
+              "verticalAlign": "-0.1em",
+              "width": "1em",
+            }
+          }
+        />
+      </span>
+      <a
+        href="https://calderaforms.com/doc/setting-caldera-forms-gdpr-data-requests/?utm_source=wp-admin&utm_campaign=privacy-settings"
+      >
+        Setting Up Caldera Forms For GDPR Requests
+      </a>
+    </li>
+    <li
+      className="list-group-item"
+    >
+      <span
+        className="undefined"
+      >
+        <img
+          alt="👀"
+          src="http://twemoji.maxcdn.com/2/72x72/1f440.png"
+          style={
+            Object {
+              "height": "1em",
+              "margin": "0 .05em 0 .1em",
+              "verticalAlign": "-0.1em",
+              "width": "1em",
+            }
+          }
+        />
+      </span>
+      <a
+        href="https://calderaforms.com/gdpr/?utm_source=wp-admin&utm_campaign=privacy-settings"
+      >
+        All Caldera Forms GDPR Compliance Tools
+      </a>
+    </li>
+    <li
+      className="list-group-item"
+    />
+  </ul>
+</div>
+`;
+
+exports[`Settings Email and PII Identify Field settings Email identifying field Works 1`] = `
+<div
+  id="caldera-forms-privacy-gdpr-is-email-identifiying-fld_9899154"
+>
+  Not an email or text field
+</div>
+`;
+
+exports[`Settings Email and PII Identify Field settings Pii field Works 1`] = `
+<div
+  className="form-group"
+>
+  <label
+    className="control-label"
+    htmlFor="caldera-forms-privacy-gdpr-is-pii-field-fld_9899154"
+  >
+    Personally Identifying Field?
+  </label>
+  <div
+    className="checkbox"
+  >
+    <label
+      title=""
+    >
+      <input
+        checked={true}
+        disabled={false}
+        id="caldera-forms-privacy-gdpr-is-pii-field-fld_9899154"
+        onChange={[Function]}
+        type="checkbox"
+      />
+      <span
+        style={
+          Object {
+            "marginLeft": "12px",
+          }
+        }
+      >
+        Yes
+      </span>
+    </label>
+  </div>
+  <span
+    className="screen-reader-text help-block"
+  >
+    Does field contain personally identifying data?
+  </span>
+</div>
+`;
+
+exports[`Settings Field settings  Works 1`] = `
+<section
+  className="row"
+  style={
+    Object {
+      "backgroundColor": "#fff",
+      "margin": "1em",
+    }
+  }
+>
+  <h4
+    style={
+      Object {
+        "borderBottom": "1px solid #eee",
+        "margin": 0,
+        "padding": ".7em 1em",
+      }
+    }
+  >
+    Priceaa
+  </h4>
+  <div
+    className="col-xs-6"
+    style={
+      Object {
+        "padding": "12px",
+      }
+    }
+  >
+    <div
+      className="form-group"
+    >
+      <label
+        className="control-label"
+        htmlFor="caldera-forms-privacy-gdpr-is-pii-field-fld_9899154"
+      >
+        Personally Identifying Field?
+      </label>
+      <div
+        className="checkbox"
+      >
+        <label
+          title=""
+        >
+          <input
+            checked={true}
+            disabled={false}
+            id="caldera-forms-privacy-gdpr-is-pii-field-fld_9899154"
+            onChange={[Function]}
+            type="checkbox"
+          />
+          <span
+            style={
+              Object {
+                "marginLeft": "12px",
+              }
+            }
+          >
+            Yes
+          </span>
+        </label>
+      </div>
+      <span
+        className="screen-reader-text help-block"
+      >
+        Does field contain personally identifying data?
+      </span>
+    </div>
+  </div>
+  <div
+    className="col-xs-6"
+    style={
+      Object {
+        "padding": "12px",
+      }
+    }
+  >
+    <div
+      id="caldera-forms-privacy-gdpr-is-email-identifiying-fld_9899154"
+    >
+      Not an email or text field
+    </div>
+  </div>
+</section>
+`;
+
+exports[`Settings Fields settings  Works 1`] = `
+<div>
+  <section
+    className="row"
+    style={
+      Object {
+        "backgroundColor": "#fff",
+        "margin": "1em",
+      }
+    }
+  >
+    <h4
+      style={
+        Object {
+          "borderBottom": "1px solid #eee",
+          "margin": 0,
+          "padding": ".7em 1em",
+        }
+      }
+    >
+      Priceaa
+    </h4>
+    <div
+      className="col-xs-6"
+      style={
+        Object {
+          "padding": "12px",
+        }
+      }
+    >
+      <div
+        className="form-group"
+      >
+        <label
+          className="control-label"
+          htmlFor="caldera-forms-privacy-gdpr-is-pii-field-fld_9899154"
+        >
+          Personally Identifying Field?
+        </label>
+        <div
+          className="checkbox"
+        >
+          <label
+            title=""
+          >
+            <input
+              checked={true}
+              disabled={false}
+              id="caldera-forms-privacy-gdpr-is-pii-field-fld_9899154"
+              onChange={[Function]}
+              type="checkbox"
+            />
+            <span
+              style={
+                Object {
+                  "marginLeft": "12px",
+                }
+              }
+            >
+              Yes
+            </span>
+          </label>
+        </div>
+        <span
+          className="screen-reader-text help-block"
+        >
+          Does field contain personally identifying data?
+        </span>
+      </div>
+    </div>
+    <div
+      className="col-xs-6"
+      style={
+        Object {
+          "padding": "12px",
+        }
+      }
+    >
+      <div
+        id="caldera-forms-privacy-gdpr-is-email-identifiying-fld_9899154"
+      >
+        Not an email or text field
+      </div>
+    </div>
+  </section>
+  <section
+    className="row"
+    style={
+      Object {
+        "backgroundColor": "#fff",
+        "margin": "1em",
+      }
+    }
+  >
+    <h4
+      style={
+        Object {
+          "borderBottom": "1px solid #eee",
+          "margin": 0,
+          "padding": ".7em 1em",
+        }
+      }
+    >
+      Email
+    </h4>
+    <div
+      className="col-xs-6"
+      style={
+        Object {
+          "padding": "12px",
+        }
+      }
+    >
+      <div
+        className="form-group"
+      >
+        <label
+          className="control-label"
+          htmlFor="caldera-forms-privacy-gdpr-is-pii-field-fld_4917648"
+        >
+          Personally Identifying Field?
+        </label>
+        <div
+          className="checkbox"
+        >
+          <label
+            title=""
+          >
+            <input
+              checked={true}
+              disabled={false}
+              id="caldera-forms-privacy-gdpr-is-pii-field-fld_4917648"
+              onChange={[Function]}
+              type="checkbox"
+            />
+            <span
+              style={
+                Object {
+                  "marginLeft": "12px",
+                }
+              }
+            >
+              Yes
+            </span>
+          </label>
+        </div>
+        <span
+          className="screen-reader-text help-block"
+        >
+          Does field contain personally identifying data?
+        </span>
+      </div>
+    </div>
+    <div
+      className="col-xs-6"
+      style={
+        Object {
+          "padding": "12px",
+        }
+      }
+    >
+      <div
+        className="form-group"
+      >
+        <label
+          className="control-label"
+          htmlFor="caldera-forms-privacy-gdpr-is-email-identifiying-fld_4917648"
+        >
+          Email Identifying Field?
+        </label>
+        <div
+          className="checkbox"
+        >
+          <label
+            title=""
+          >
+            <input
+              checked={true}
+              disabled={false}
+              id="caldera-forms-privacy-gdpr-is-email-identifiying-fld_4917648"
+              onChange={[Function]}
+              type="checkbox"
+            />
+            <span
+              style={
+                Object {
+                  "marginLeft": "12px",
+                }
+              }
+            >
+              Yes
+            </span>
+          </label>
+        </div>
+        <span
+          className="screen-reader-text help-block"
+        >
+          Can this field be used to determine whose data an entry belongs to?
+        </span>
+      </div>
+    </div>
+  </section>
+  <section
+    className="row"
+    style={
+      Object {
+        "backgroundColor": "#fff",
+        "margin": "1em",
+      }
+    }
+  >
+    <h4
+      style={
+        Object {
+          "borderBottom": "1px solid #eee",
+          "margin": 0,
+          "padding": ".7em 1em",
+        }
+      }
+    >
+      Total
+    </h4>
+    <div
+      className="col-xs-6"
+      style={
+        Object {
+          "padding": "12px",
+        }
+      }
+    >
+      <div
+        className="form-group"
+      >
+        <label
+          className="control-label"
+          htmlFor="caldera-forms-privacy-gdpr-is-pii-field-fld_1081036"
+        >
+          Personally Identifying Field?
+        </label>
+        <div
+          className="checkbox"
+        >
+          <label
+            title=""
+          >
+            <input
+              checked={false}
+              disabled={false}
+              id="caldera-forms-privacy-gdpr-is-pii-field-fld_1081036"
+              onChange={[Function]}
+              type="checkbox"
+            />
+            <span
+              style={
+                Object {
+                  "marginLeft": "12px",
+                }
+              }
+            >
+              Yes
+            </span>
+          </label>
+        </div>
+        <span
+          className="screen-reader-text help-block"
+        >
+          Does field contain personally identifying data?
+        </span>
+      </div>
+    </div>
+    <div
+      className="col-xs-6"
+      style={
+        Object {
+          "padding": "12px",
+        }
+      }
+    >
+      <div
+        id="caldera-forms-privacy-gdpr-is-email-identifiying-fld_1081036"
+      >
+        Not an email or text field
+      </div>
+    </div>
+  </section>
+</div>
+`;

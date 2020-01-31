@@ -13,15 +13,27 @@
 	<div style="margin:20px;">
 		<div class="caldera-forms-clippy-zone-inner-wrap" style="background: white">
 			<div class="caldera-forms-clippy"
-			     style="background-color:white;border-left: 4px solid #dc3232;">
-				<h2 style="margin-left: 12px">
-					<?php esc_html_e( 'Deprecated Functionality', 'caldera-forms' ); ?>
+			     style="text-align:center;background-color:white;padding:20px;">
+				<h2>
+					<?php esc_html_e( 'Getting WordPress email into an inbox just got a lot easier!', 'caldera-forms' ); ?>
 				</h2>
-				<p style="margin-left: 12px">
-					<?php esc_html_e( 'SendGrid integration was our first attempt to improve email in Caldera Forms. But we decided to create something easier and provides more value to you -- our users. We call it Caldera Forms Pro.', 'caldera-forms' ); ?>
+				<p>
+					<?php
+					esc_html_e(
+						'SendWP makes getting emails delivered as simple as a few clicks. So you can relax, knowing those important emails are being delivered on time.',
+						'caldera-forms'
+					);
+					?>
 				</p>
-				<a href="https://calderaforms.com/pro?utm-source=wp-admin&utm_campaign=email-settings&utm_term=email-setting"
-				   target="_blank" class="bt-btn btn btn-green" style="width: 80%;margin-left:5%;">
+				<button
+					class="button button-primary"
+					style="display:block;margin:20px auto;"
+					onClick="caldera_forms_sendwp_remote_install()"
+					>
+					<?php esc_html_e('Signup for SendWP', 'caldera-forms'); ?>
+				</button>
+				<a href="https://sendwp.com?utm_source=Caldera+Forms+Plugin&utm_medium=Forms_Email+Settings&utm_campaign=SendWP+banner+ad"
+				   target="_blank" class="bt-btn btn btn-green" style="width: 80%;margin: auto;">
 					<?php esc_html_e( 'Learn More', 'caldera-forms' ); ?>
 				</a>
 			</div>

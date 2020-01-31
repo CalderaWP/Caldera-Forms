@@ -16,7 +16,7 @@ abstract class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @var Caldera_Forms_API_Form
+	 * @var Caldera_Forms_API_Form|Caldera_Forms_API_Privacy
 	 */
 	protected $form;
 
@@ -141,16 +141,27 @@ abstract class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 	}
 
 	/**
-	 * Define query arguments
+	 * Define query arguments for GET requests
 	 *
 	 * @since 1.4.4 
 	 *
-	 * @return array(
+	 * @return array
 	 */
 	public function request_args(){
 		//must ovveride, should be abstract but PHP5.2
 		_doing_it_wrong( __FUNCTION__, '', '1.5.0' );
 	}
+
+    /**
+     * Define query arguments for POST/PUT requests
+     *
+     * @since 1.8.0
+     *
+     * @return array
+     */
+	public function args_for_create(){
+        return $this->request_args();
+    }
 
 	/**
 	 * Check if a given request has access to get items
@@ -353,21 +364,27 @@ abstract class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route {
 	 * @param string $id Form ID
 	 * @param WP_REST_Request $request Current REST API request
 	 * @param bool $set_prop Optional. Set in $form property of object if true, the default. If false, return.
+	 * @param bool $privacy_context Optional. If false, a Caldera_Forms_API_Privacy is returned. If true, the default, a Caldera_Forms_API_Form is returned.
 	 *
-	 * @return Caldera_Forms_API_Form|void
+	 * @return Caldera_Forms_API_Form|Caldera_Forms_API_Privacy
 	 * @throws Exception
 	 */
-	protected function form_object_factory( $id, WP_REST_Request $request, $set_prop = true ){
-		$form = Caldera_Forms_Forms::get_form( $id );
-		if( empty( $form ) || empty( $form[ 'ID' ] ) || empty( $form[ 'name' ] ) ){
+	protected function form_object_factory( $id, WP_REST_Request $request, $set_prop = true, $privacy_context= false ){
+	    $form = Caldera_Forms_Forms::get_form( $id );
+
+		if( empty( $form ) || ( empty( $form[ 'ID' ] ) && empty( $form[ 'name' ] ) ) ){
 			throw new Exception();
 		}
 
-		$obj = new Caldera_Forms_API_Form( $form );
-		$obj->set_request( $request );
+        if ($privacy_context) {
+            $obj = new Caldera_Forms_API_Form($form);
+        }else{
+		    $obj = new Caldera_Forms_API_Privacy($form);
+        }
+
+        $obj->set_request( $request );
 		if ( $set_prop ) {
 			$this->form = $obj;
-
 		} else {
 
 			return $obj;

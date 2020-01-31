@@ -57,31 +57,41 @@ if ( ! empty( $element['mailer']['enable_mailer'] ) ) {
 				</p>
 			</div>
 		</div>
-		<div class="caldera-config-group">
-			<label for="cf-email-from-email">
-				<?php esc_html_e('From Email', 'caldera-forms'); ?>
-			</label>
-			<div class="caldera-config-field">
-				<input type="email" class="field-config" name="config[mailer][sender_email]" value="<?php echo $element['mailer']['sender_email']; ?>" style="width:400px;" id="cf-email-from-email" aria-describedby="cf-email-from-email-description">
-				<p class="description" id="cf-email-from-email-description">
-					<?php esc_html_e( 'Email Address for sender. If you want to use a form field use the "Reply To Email" setting below.', 'caldera-forms'); ?>
-					<strong><?php esc_html_e( 'Do Not Use A Magic Tag', 'caldera-forms' ); ?>.</strong>
-				</p>
-			</div>
-		</div>
-		<div class="caldera-config-group">
-			<label for="cf-email-from-replyto">
-				<?php esc_html_e('Reply To Email', 'caldera-forms'); ?> 
-			</label>
-			<div class="caldera-config-field">
-				<input type="text" class="field-config magic-tag-enabled" name="config[mailer][reply_to]" value="<?php if(isset( $element['mailer']['reply_to'] ) ){ echo $element['mailer']['reply_to']; } ?>" style="width:400px;" id="cf-email-from-replyto" aria-describedby="cf-email-from-replyto-description">
-				<p class="description" id="cf-email-from-replyto-description">
-					<?php esc_html_e('The email address of the person filling in the form. This will allow replies to the email to go to the sender.', 'caldera-forms'); ?>
-					</p>
-			</div>
-		</div>
 
-		<div class="caldera-config-group">
+
+        <div class="caldera-config-group">
+            <label for="cf-email-from-email" class="no-pro-enhanced">
+                <?php esc_html_e('From Email', 'caldera-forms'); ?>
+            </label>
+            <label for="cf-email-from-email" class="pro-enhanced">
+                <?php esc_html_e('Reply To Email', 'caldera-forms'); ?>
+            </label>
+
+            <div class="caldera-config-field">
+                <input type="email" class="field-config" name="config[mailer][sender_email]" value="<?php echo $element['mailer']['sender_email']; ?>" style="width:400px;" id="cf-email-from-email" aria-describedby="cf-email-from-email-description">
+                <p class="description no-pro-enhanced" id="cf-email-from-email-description">
+                    <?php esc_html_e( 'Email Address for sender. If you want to use a form field use the "Reply To Email" setting below.', 'caldera-forms'); ?>
+                    <strong><?php esc_html_e( 'Do Not Use A Magic Tag', 'caldera-forms' ); ?>.</strong>
+                </p>
+                <p class="description pro-enhanced" id="cf-email-from-email-description">
+                    <?php esc_html_e('The email address of the person filling in the form. This will allow replies to the email to go to the sender.', 'caldera-forms'); ?>
+                </p>
+            </div>
+        </div>
+
+        <div class="caldera-config-group no-pro-enhanced">
+            <label for="cf-email-from-replyto">
+                <?php esc_html_e('Reply To Email', 'caldera-forms'); ?>
+            </label>
+            <div class="caldera-config-field">
+                <input type="text" class="field-config magic-tag-enabled" name="config[mailer][reply_to]" value="<?php if(isset( $element['mailer']['reply_to'] ) ){ echo $element['mailer']['reply_to']; } ?>" style="width:400px;" id="cf-email-from-replyto" aria-describedby="cf-email-from-replyto-description">
+                <p class="description" id="cf-email-from-replyto-description">
+                    <?php esc_html_e('The email address of the person filling in the form. This will allow replies to the email to go to the sender.', 'caldera-forms'); ?>
+                </p>
+            </div>
+        </div>
+
+        <div class="caldera-config-group">
 			<label for="cf-email-type">
 				<?php esc_html_e('Email Type', 'caldera-forms'); ?>
 			</label>
@@ -187,28 +197,107 @@ if ( ! empty( $element['mailer']['enable_mailer'] ) ) {
 				<label><input type="checkbox" value="1" name="config[debug_mailer]" class="field-config"<?php if(isset($element['debug_mailer'])){ echo ' checked="checked"'; } ?>> <?php esc_html_e('Enable email send transaction log', 'caldera-forms'); ?></label>
 				<p class="description"><?php esc_html_e('If set, entries will have a "Mailer Debug" meta tab to see the transaction log. Do not keep this enabled on production as it sends two emails for tracking.', 'caldera-forms'); ?></p>
 				<p class="description">
-					<?php esc_html_e( 'If you are having email issues, we strongly recommend configuring a third-party mailer service, which is easy to do.', 'caldera-forms' ); ?> <a href="https://calderaforms.com/doc/improving-the-reliability-of-emails-sent-through-caldera-forms/" target="_blank" rel="nofollow"><?php esc_html_e( 'Learn More', 'caldera-forms' ); ?></a>
+					<?php echo sprintf( esc_html( 'If you are having email issues, we strongly recommend %sSendWP%s.', 'caldera-forms' ), '<a href="https://sendwp.com?utm_source=Caldera+Forms+Plugin&utm_medium=Forms_Edit+Forms_Email&utm_campaign=SendWP+banner+ad" target="_blank" rel="nofollow">', '</a>' ); ?>
 				</p>
+
+				<a href="https://sendwp.com?utm_source=Caldera+Forms+Plugin&utm_medium=Forms_Edit+Forms_Email&utm_campaign=SendWP+banner+ad" target="_blank" rel="nofollow" style="text-decoration:none;">
+					<div class="mailer_config_panel caldera-config-processor-notice" style="clear: both; padding: 20px 0px 0px;width:550px;">
+						<p style="padding:12px;text-align:center;color:white;background:#21394a;" class="description">
+							<?php echo sprintf( esc_html__('%sSendWP%s - Fix Your WordPress Email%sThe easy solution to transactional email in WordPress', 'caldera-forms'), '<strong>', '</strong>', '<br />' ); ?>
+						</p>
+					</div>
+				</a>
+
 			</div>
 		</div>
 
 	</div>
 </div>
 
+<?php //Set Different From email and Reply-to text depending on Pro delivery status of the form
+    if( caldera_forms_pro_is_active() === true ) {
 
-	
+        $enhanced_delivery = \calderawp\calderaforms\pro\container::get_instance()->get_settings()->get_enhanced_delivery();
+
+        if( $enhanced_delivery === true ) {
+
+            $send_local = \calderawp\calderaforms\pro\container::get_instance()->get_settings()->get_form( $element['ID'] )->get_send_local();
+            ?>
+            <script type="text/javascript">
+              var cfId = "<?php echo $element['ID'] ?>";
+              var $check = jQuery("<input id='cf-pro-send-local-" + cfId + "' type='checkbox'/>" );
+            </script>
+            <?php
+             if( $send_local === false ) { ?>
+                <script type="text/javascript">
+                    jQuery($check).prop('checked', false)
+                </script>
+            <?php } else if ( $send_local === true ) { ?>
+                <script type="text/javascript">
+                    jQuery($check).prop('checked', true);
+                </script>
+            <?php } ?>
+
+            <script type="text/javascript">
+
+                jQuery(function ($) {
+                  var checkProStatus = function () {
+                    if ( $check.prop("checked") === true) {
+						$(".pro-enhanced").show().attr('aria-hidden', false);
+						$(".no-pro-enhanced").hide().attr('aria-hidden', true);
+                    } else {
+						$(".pro-enhanced").hide().attr('aria-hidden', true);
+						$(".no-pro-enhanced").show().attr('aria-hidden', false);
+                    }
+                  };
+
+                  jQuery(function ($) {
+                      $( 'body' ).on( 'change', $check, function(e) {
+                        e.preventDefault();
+                        if( $( $check ).prop('checked') !== true ){
+                          $($check).prop('checked', true);
+                        } else if( $( $check ).prop('checked') !== false ) {
+                          $($check).prop('checked', false);
+                        }
+						checkProStatus();
+                      });
+                  });
+
+                  $('.caldera-forms-options-form').on('click', '#tab_mailer', function() {
+                    checkProStatus();
+                  });
+
+                  checkProStatus();
+                });
+
+            </script>
+
+        <?php } else { ?>
+            <script type="text/javascript">
+              jQuery(".pro-enhanced").hide().attr('aria-hidden', true);
+              jQuery(".no-pro-enhanced").show().attr('aria-hidden', false);
+            </script>
+        <?php }
+
+    } else { ?>
+
+        <script type="text/javascript">
+          jQuery(".pro-enhanced").hide().attr('aria-hidden', true);
+          jQuery(".no-pro-enhanced").show().attr('aria-hidden', false);
+        </script>
+    <?php } ?>
 
 <script type="text/javascript">
 	
-jQuery('body').on('change', '#mailer_status_select', function(){
-	var status = jQuery(this);
+    jQuery('body').on('change', '#mailer_status_select', function(){
+        var status = jQuery(this);
 
-	if(status.val() === '0'){
-		jQuery('.mailer_config_panel').slideUp(100);
-	}else{
-		jQuery('.mailer_config_panel').slideDown(100);
-	}
-});
+        if(status.val() === '0'){
+            jQuery('.mailer_config_panel').slideUp(100);
+        }else{
+            jQuery('.mailer_config_panel').slideDown(100);
+        }
+    });
 
 </script>
 

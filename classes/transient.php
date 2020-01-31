@@ -1,5 +1,5 @@
 <?php
-
+use calderawp\calderaforms\cf2\Transients\TransientApiContract;
 /**
  * Class Caldera_Forms_Transient
  *
@@ -9,8 +9,9 @@
  * Before 1.4.9.1 get/set_transient was used as a convention.
  * In 1.4.9.1 This class was added as an API wrapping get/set_transient()
  * In 1.5.6 This API switched to using get/update_option() with WordPress "CRON job" to delete if needed, which it should not be most of the time, transient should be deleted on caldera_forms_submit_complete aaction. Reasons explained in https://github.com/CalderaWP/Caldera-Forms/issues/1866
+ * In 1.8.0 Created calderawp\calderaforms\cf2\Transients\TransientApiContract as public API definition.
  */
-class Caldera_Forms_Transient {
+class Caldera_Forms_Transient  {
 
 	/**
 	 * Tracks the transients to be deleted at caldera_forms_submit_complete action
@@ -59,7 +60,11 @@ class Caldera_Forms_Transient {
 			$expires = absint( $expires );
 		}
 
-		wp_schedule_single_event( time() + $expires, self::CRON_ACTION, array(  $id  ) );
+		//schedule delete with job manager
+		caldera_forms_get_v2_container()
+			->getService(\calderawp\calderaforms\cf2\Services\QueueSchedulerService::class)
+			->schedule( new \calderawp\calderaforms\cf2\Jobs\DeleteTransientJob($id), $expires );
+
 		return update_option( self::prefix( $id ), $data, false );
 
 	}
@@ -131,4 +136,43 @@ class Caldera_Forms_Transient {
 		}
 
 	}
+
+
+	/**
+	 * Clear all schedule cron jobs
+	 *
+	 * @since 1.8.0
+	 */
+	public static function clear_wpcron(){
+		$transients = self::get_all();
+		if( ! empty($transients)){
+			foreach ($transients as $transient_id ){
+				wp_clear_scheduled_hook(self::CRON_ACTION, [$transient_id]);
+			}
+		}
+
+	}
+
+	/**
+	 * Get the names of all transients
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return array
+	 */
+	public static function get_all(){
+		global $wpdb;
+		$like = '%' . $wpdb->esc_like( 'cftransdata' ) . '%';
+		$query = $wpdb->prepare( "SELECT option_name FROM {$wpdb->options} WHERE option_name LIKE %s ", $like );
+		$return = [];
+		$results = $wpdb->get_results($query,ARRAY_A);
+		if( ! empty( $results) ){
+			foreach ($results as $result ){
+				$return[] = $result[ 'option_name' ];
+			}
+		}
+		return $return;
+	}
+
+
 }
