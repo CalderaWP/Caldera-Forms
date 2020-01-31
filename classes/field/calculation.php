@@ -94,7 +94,7 @@ class Caldera_Forms_Field_Calculation {
 		/**
 		 * Filter calculation field value.
 		 *
-		 * @since 1.8.x
+		 * @since 1.8.10
 		 *
 		 * @param float $number The calculation value
 		 * @param string|int The field entry value
