@@ -144,7 +144,8 @@ class Test_Main_Mailer extends Caldera_Forms_Mailer_Test_Case{
     /**
      * Test that the content of the email is correct
      *
-     * @since 1.5.9
+     * @since 1.5.9 
+     * @edited 1.8.10 to test magic tag in a textarea and multiple % symbols not removing content if not magic tags
      *
      * @group email
      * @group mainmailer
@@ -155,7 +156,7 @@ class Test_Main_Mailer extends Caldera_Forms_Mailer_Test_Case{
     public function test_content(){
         $this->submit_contact_form();
         $mailer = tests_retrieve_phpmailer_instance();
-        $this->assertEquals('97cae2f8e53fc89902562dac3714475b', md5($mailer->get_sent()->body));
+        $this->assertEquals('578d6556b390d479a2d37722ff1d705d', md5($mailer->get_sent()->body));
     }
 
 }
