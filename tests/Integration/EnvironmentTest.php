@@ -16,4 +16,6 @@ class EnvironmentTest extends TestCase
     {
         $this->assertTrue(is_numeric(wp_insert_post(['post_title' => 'LOl', 'post_content' => 'LOL' ] ) ) );
     }
+
+
 }

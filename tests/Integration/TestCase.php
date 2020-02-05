@@ -37,4 +37,25 @@ class TestCase extends \WP_UnitTestCase
         $form = null;
         unset($GLOBALS['form']);
     }
+
+    /**
+     * Recursively cast array or object to array
+     *
+     * @since 1.8.10
+     *
+     * @param $arrayOrObject
+     * @return array
+     */
+    protected function recursiveCastArray($arrayOrObject)
+    {
+        $arrayOrObject = (array) $arrayOrObject;
+        foreach ($arrayOrObject as $key => $value ){
+            if( is_array( $value ) || is_object( $value ) ){
+                $arrayOrObject[ $key ] = $this->recursiveCastArray( $value );
+            }
+
+        }
+        return $arrayOrObject;
+    }
+
 }
