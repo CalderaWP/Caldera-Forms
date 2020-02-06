@@ -162,6 +162,14 @@
       "pageSlug": "variables-tests-dev-1-8-10"
     },
     {
+      "formId" : "CF5e303beea19de",
+      "pageSlug": "calculation-triggered-when-unhiding-calculation-field"
+    },
+    {
+      "formId": "CF5e3410d1167a8",
+      "pageSlug": "calculation-showing-by-default-hidden-unhidden-displays-result"
+    },
+    { 
       "formId": "CF5e32fc7f39dc8",
       "pageSlug": "test-resend-button"
     }

@@ -707,20 +707,19 @@
 				result = 0;
 			}
 
-			if ( null === lastValue || result !== lastValue ) {
-				lastValue = result;
-				state.mutateState( fieldConfig.id, result );
-                if( 'number' != typeof  result ){
-                    result = parseInt( result, 10 );
-                }
+            lastValue = result;
+            state.mutateState( fieldConfig.id, result );
+            if( 'number' != typeof  result ){
+                result = parseInt( result, 10 );
+            }
 
-                if( fieldConfig.moneyFormat ){
-                    result = result.toFixed(2);
-                }
+            if( fieldConfig.moneyFormat ){
+                result = result.toFixed(2);
+            }
 
-				$( '#' + fieldConfig.id ).html( addCommas( result ) ).data( 'calc-value', result );
-				$('#' + fieldConfig.targetId ).val( result ).trigger( 'change' );
-			}
+            $( '#' + fieldConfig.id ).html( addCommas( result ) ).data( 'calc-value', result );
+            $('#' + fieldConfig.targetId ).val( result ).trigger( 'change' );
+
 		};
 
 		//Update when any field that is part of the formula changes
