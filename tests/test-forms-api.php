@@ -79,16 +79,16 @@ class Test_Caldera_Forms_API extends Caldera_Forms_Test_Case
 		//Same number of forms if $with_details is true, was false in previous assertion
 		$this->assertCount(0, Caldera_Forms_Forms::get_forms(true,true));
 
-		//Four forms added on filter caldera_forms_get_forms in bootstrap.php
-		$this->assertCount(4, Caldera_Forms_Forms::get_forms(FALSE));
+		//Three forms added on filter caldera_forms_get_forms in bootstrap.php
+		$this->assertCount(3, Caldera_Forms_Forms::get_forms(FALSE));
 		//Same number of forms if $with_details is true, was false in previous assertion
-		$this->assertCount(4, Caldera_Forms_Forms::get_forms(true,false));
+		$this->assertCount(3, Caldera_Forms_Forms::get_forms(true,false));
 
 		//add one more form and check again
 		$this->import_contact_form();
-		$this->assertCount(5, Caldera_Forms_Forms::get_forms(FALSE));
+		$this->assertCount(4, Caldera_Forms_Forms::get_forms(FALSE));
 		//Same number of forms if $with_details is true, was false in previous assertion
-		$this->assertCount(5, Caldera_Forms_Forms::get_forms(true ));
+		$this->assertCount(4, Caldera_Forms_Forms::get_forms(true ));
 
 
 	}
