@@ -1018,11 +1018,15 @@ class Caldera_Forms
 							parse_str($redirect['query'], $redirect['query']);
 							$base_redirect = explode('?', $base_redirect, 2);
 							$query_vars = array_merge($redirect['query'], $query_vars);
-							$redirect = add_query_arg($query_vars, $base_redirect[0]);
-						} else {
-							$redirect = add_query_arg($query_vars, $base_redirect);
+							$base_redirect = $base_redirect[0];
 						}
-
+						
+						// Re urlencode query vars after they were parsed in this function
+						foreach($query_vars as $var_names => $var_values){
+							$query_vars[$var_names] = urlencode($var_values);
+						}
+						$redirect = add_query_arg($query_vars, $base_redirect);
+						
 						return $redirect;
 					}
 				}
