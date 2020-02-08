@@ -156,7 +156,7 @@ class Caldera_Forms_API_Form  implements  ArrayAccess {
 	 * @since 1.5.0
 	 */
 	protected function set_fields(){
-		$this->fields = Caldera_Forms_Forms::get_fields( $this->form, true, true );
+		$this->fields = Caldera_Forms_Forms::get_fields( $this->form, true );
 		if( ! empty( $this->fields ) ){
 			foreach ( $this->fields as $field_id => $field ){
 

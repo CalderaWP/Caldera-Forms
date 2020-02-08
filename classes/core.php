@@ -1428,9 +1428,9 @@ class Caldera_Forms
 	 * 
 	 * @since 1.8.5
 	 * 
-	 * @param string $formula that needs to be parsed and processed as a calculation
+	 * @param string $formula That needs to be parsed and processed as a calculation.
 	 * 
-	 * @return result of calculation
+	 * @return string Result of calculation.
 	 */
 	static public function original_calculation_job( $formula )
 	{
@@ -1448,7 +1448,7 @@ class Caldera_Forms
 	 * @param string $formula to be sent to original calculation job
 	 * @param string $deprecated function or symbol caught
 	 * 
-	 * @return original process and notice for admin users
+	 * @return string original process and notice for admin users
 	 */
 	static public function calculation_deprecated_caught_process( $formula, $deprecated )
 	{

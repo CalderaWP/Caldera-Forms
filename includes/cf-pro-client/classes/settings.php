@@ -191,9 +191,9 @@ class settings extends repository
 	 *
 	 * @since 0.0.1
 	 *
-	 * @param $secret
+	 * @param string $secret
 	 *
-	 * @return $this
+	 * @return settings
 	 */
 	public function set_api_secret($secret)
 	{

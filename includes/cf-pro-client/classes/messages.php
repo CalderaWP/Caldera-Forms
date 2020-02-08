@@ -185,7 +185,7 @@ class messages
 	 *
 	 * @param string $field field to search by
 	 * @param int $value Value to search for cfp_id|ID|entry_id
-	 * @param null|string Optional. Message type to search by
+	 * @param null|string $type Optional. Message type to search by
 	 *
 	 * @return message
 	 * @throws Exception

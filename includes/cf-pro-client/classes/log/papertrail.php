@@ -68,7 +68,7 @@ class papertrail
 		$json = json_encode($data);
 
 		if ( empty($destination) || 2 != count($destination) || empty($destination[ 'hostname' ]) ) {
-			return new WP_Error('papertrail-invalid-destination',
+			return new \WP_Error('papertrail-invalid-destination',
 				sprintf(__('Invalid Papertrail destination (%s >> %s:%s).', 'papertrail'), self::$destination,
 					$destination[ 'hostname' ], $destination[ 'port' ]));
 		}

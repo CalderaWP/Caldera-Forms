@@ -85,7 +85,7 @@ class form extends json_arrayable
 	 *
 	 * @since 0.0.1
 	 *
-	 * @param $form_id
+	 * @param int $form_id
 	 *
 	 * @return form|null
 	 */
@@ -112,8 +112,8 @@ class form extends json_arrayable
 	 *
 	 * @since 0.0.1
 	 *
-	 * @param $name
-	 * @param $value
+	 * @param string $name
+	 * @param mixed $value
 	 *
 	 * @return form
 	 */
@@ -315,9 +315,10 @@ class form extends json_arrayable
 	 *
 	 * @since 0.0.1
 	 *
-	 * @param $prop
+	 * @param string $prop
+	 * @param string $cast
 	 *
-	 * @return bool
+	 * @return int|bool
 	 */
 	protected function get_property($prop, $cast = 'bool')
 	{

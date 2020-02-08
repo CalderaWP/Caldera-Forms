@@ -201,7 +201,7 @@ function caldera_forms_pro_link_html($form, $link)
 	 * @param string $message Link message
 	 * @param array $form Form config
 	 */
-	$message = apply_filters('caldera_forms_pro_link_message', __('Download Form Entry As PDF', 'caldera-forms', $form),
+	$message = apply_filters('caldera_forms_pro_link_message', __('Download Form Entry As PDF', 'caldera-forms'),
 		$form);
 
 	/**
@@ -226,7 +226,7 @@ if ( !function_exists('caldera_forms_safe_explode') ) {
 	 * Safely exploded, what might be a string with a comma
 	 * @since 1.5.8
 	 *
-	 * @param $string
+	 * @param string $string
 	 *
 	 * @return array
 	 */

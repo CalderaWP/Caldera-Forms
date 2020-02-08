@@ -24,7 +24,7 @@ function caldera_forms_sanitize( $input, $params = array() ){
  *
  * @since 1.4.0
  *
- * @param $string
+ * @param string $string
  *
  * @return string
  */

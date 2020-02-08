@@ -7,7 +7,6 @@ namespace calderawp\calderaforms\cf2\Fields;
 use calderawp\calderaforms\cf2\Fields\FieldTypes\FileFieldType;
 use calderawp\calderaforms\cf2\Fields\FieldTypes\TextFieldType;
 use calderawp\calderaforms\cf2\Traits\ConvertsMimeTypes;
-use function foo\func;
 
 class RenderField implements RenderFieldContract
 {

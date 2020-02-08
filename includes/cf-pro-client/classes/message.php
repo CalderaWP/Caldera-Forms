@@ -142,8 +142,8 @@ class message extends json_arrayable
 	 *
 	 * @since 0.0.1
 	 *
-	 * @param string $name Method . Supported: save|delete
-	 * @param $arguments
+	 * @param string $name Supported methods: 'save'|'delete'
+	 * @param array $arguments
 	 *
 	 * @return message|false|int|null
 	 */

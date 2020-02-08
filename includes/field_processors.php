@@ -37,9 +37,9 @@ add_filter('caldera_forms_process_field_advanced_file', 'cf_handle_file_upload',
  *
  * @since unknown
  *
- * @param $entry
- * @param $field
- * @param $form
+ * @param string $entry
+ * @param string $field
+ * @param string $form
  *
  * @return bool|mixed
  */
