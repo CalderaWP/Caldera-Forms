@@ -43,7 +43,16 @@ module.exports = function (grunt) {
         '!webpack.config.js',
         '!docker-compose.yml',
         '!wp-content/**',
-        '!wordpress/**'
+        '!wordpress/**',
+        '!cypress/**',
+        '!contributing/**',
+        '!cypress.json',
+        '!webpack.blocks.js',
+        '!webpack.clients.js',
+        '!phpunit-integration.xml.dist',
+        '!phpunit-unit.xml.dist',
+        '!phpunit.xml.dist',
+        '!yarn.lock'
     ];
 
     //Include webpacked clients
@@ -60,6 +69,8 @@ module.exports = function (grunt) {
     ].forEach( (client) => {
        files_list.push( `clients/${client}/build/index.min.js` );
        files_list.push( `clients/${client}/build/style.min.css` );
+       files_list.push( `clients/${client}/build/index.min.asset.json` );
+       files_list.push( `clients/${client}/build/index.min.asset.php` );
     });
 
     require( 'load-grunt-tasks' )( grunt );
@@ -317,7 +328,4 @@ module.exports = function (grunt) {
         'copy:build'
     ] );
 
-
-
 };
-
