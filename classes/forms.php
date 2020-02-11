@@ -656,6 +656,7 @@ class Caldera_Forms_Forms {
 	public static function delete_form( $id ){
 		$forms = self::get_forms();
 		if( ! isset( $forms[ $id ] ) ){
+			var_dump(false);
 			return false;
 		}
 

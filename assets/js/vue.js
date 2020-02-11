@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.8.9 - 2020-01-31 *//*!
+/*! GENERATED SOURCE FILE caldera-forms - v1.8.10 - 2020-02-11 *//*!
  * Vue.js v2.1.6
  * (c) 2014-2016 Evan You
  * Released under the MIT License.
