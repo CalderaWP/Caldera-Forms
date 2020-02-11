@@ -1,7 +1,7 @@
 // Validation errors messages for Parsley
 // Load this after Parsley
 
-Parsley.addMessages('zh-cn', {
+Parsley.addMessages('zh_cn', {
   defaultMessage: "不正确的值",
   type: {
     email:        "请输入一个有效的电子邮箱地址",
@@ -26,4 +26,4 @@ Parsley.addMessages('zh-cn', {
   equalto:        "输入值不同"
 });
 
-Parsley.setLocale('zh-cn');
+Parsley.setLocale('zh_cn');

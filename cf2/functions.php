@@ -20,7 +20,6 @@ function caldera_forms_get_v2_container()
 }
 
 /**
-<<<<<<< HEAD
  * Setup Cf2 container
  *
  * @since 1.8.0
@@ -45,7 +44,10 @@ function caldera_forms_v2_container_setup(\calderawp\calderaforms\cf2\CalderaFor
 	//Register other services
 	$container
 		->registerService(new \calderawp\calderaforms\cf2\Services\QueueService(), true)
-		->registerService(new \calderawp\calderaforms\cf2\Services\QueueSchedulerService(), true);
+		->registerService(new \calderawp\calderaforms\cf2\Services\QueueSchedulerService(), true)
+        ->registerService(new \calderawp\calderaforms\cf2\Services\FormsService(), true )
+        ->registerService(new \calderawp\calderaforms\cf2\Services\ProcessorService(), true );
+
 
 	//Run the scheduler with CRON
 	/** @var \calderawp\calderaforms\cf2\Jobs\Scheduler $scheduler */
@@ -68,4 +70,3 @@ function caldera_forms_schedule_job(\calderawp\calderaforms\cf2\Jobs\Job $job, $
 		->getService(\calderawp\calderaforms\cf2\Services\QueueSchedulerService::class)
 		->schedule($job, $delay);
 }
-

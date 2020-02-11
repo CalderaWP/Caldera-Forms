@@ -91,6 +91,18 @@ class Caldera_Forms_Field_Calculation {
 
 		}
 
+		/**
+		 * Filter calculation field value.
+		 *
+		 * @since 1.8.10
+		 *
+		 * @param float $number The calculation value
+		 * @param string|int The field entry value
+		 * @param array $field The field entry config
+		 * @param array $form The form config
+		 */
+		$number = apply_filters( 'caldera_forms_calculation_field_get_value', $number, $entry_value, $field, $form );
+
 		return floatval( $number );
 
 	}

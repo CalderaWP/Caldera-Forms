@@ -88,7 +88,7 @@ exports[`ProWhatIs component Matches snapshot with minimal props 1`] = `
     </li>
     <li>
       <span
-        className="emoji undefined"
+        className="emoji"
       >
         <img
           alt="😛"
@@ -102,6 +102,7 @@ exports[`ProWhatIs component Matches snapshot with minimal props 1`] = `
             }
           }
         />
+        lug:
       </span>
       Add-ons Included in Yearly Plans
     </li>

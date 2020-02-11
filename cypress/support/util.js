@@ -4,11 +4,17 @@
  */
 export const site = Cypress.env('wp_site');
 export const {url, user, pass} = site;
+
+/**
+ * Login to the site
+ *
+ * @since unknown
+ */
 export const login = () => {
 	cy.visit(url + '/wp-login.php');
-	cy.wait(500);
-	cy.get('#user_login').type(user);
-	cy.get('#user_pass').type(pass);
+	cy.wait(250);
+	cy.get('#user_login').clear().type(user);
+	cy.get('#user_pass').clear().type(pass);
 	cy.get('#wp-submit').click();
 };
 
@@ -36,7 +42,7 @@ export const visitPluginPage = (pluginSlug) => {
 	cy.visit(pluginUrl(pluginSlug));
 };
 export const visitFormEditor = (formId) => {
-	cy.visit(`${pluginUrl('caldera-forms')}&edit=${formId}` );
+	cy.visit(`${pluginUrl('caldera-forms')}&edit=${formId}`)
 }
 export const visitPage = (pageSlug) => {
 	cy.visit(`${url}/${pageSlug}`);
@@ -89,7 +95,7 @@ export const getCfFieldSelector = (fieldId) => {
  * @return {Cypress.Chainable<JQuery<HTMLElement>>}
  */
 export const clearCfField = (fieldId) => {
-	return getCfField(fieldId).clear();
+	return getCfField(fieldId).clear({force: true});
 };
 
 /**
@@ -465,3 +471,67 @@ export const cfDropSingleFile = (fieldId, filesPaths, filesTypes)=> {
 export const cfGetFileDropzone = ( fieldId => {
 	return cy.get('div[data-field=' + fieldId + ']').find( '.cf2-dropzone button' );
 });
+
+/**
+ * Create a form using UI
+ *
+ *
+ * @since 1.8.0
+ *
+ * @param name What to name new form
+ */
+export const createForm = (name,blankForm = true) => {
+	visitPluginPage('caldera-forms');
+	cy.get('.cf-new-form-button').click();
+	cy.get('form#new_form_baldrickModal').should('be.visible');
+	if( blankForm ){
+		cy.get('.cf-form-template').last().click();
+	}else{
+		cy.get('.cf-form-template').first().click();
+	}
+
+	cy.get('.new-form-name').type(name);
+	cy.get('.cf-create-form-button').click();
+};
+
+/**
+ * Save form and refresh page
+ *
+ * @since 1.8.10
+ */
+export const saveFormAndReload = ()  => {
+	cy.get('.caldera-header-save-button').click();
+	cy.reload();
+};
+
+/**
+ * Click the Variables tab to access the variables UI
+ * 
+ * @since 1.8.10
+ */
+export const cfGoToVariablesTab = () => {
+	cy.get('#tab_variables a').click();
+};
+
+/**
+ * Adds a variable and sets its name and value
+ * 
+ * @since 1.8.10
+ */
+export const cfAddVariable = () =>{
+	cy.get('.caldera-add-variable').click();
+	cy.get('.set-system-variable').type('variable_name');
+	cy.get('.var-value').click();
+	cy.get('.var-value').type('variable_value');
+}
+
+/**
+ * Remove all variables
+ * 
+ * @since 1.8.10
+ */
+export const cfRemoveVariable = () => {
+	cy.get( '.remove-this-variable' ).each(($el) => {
+		cy.wrap($el).click()
+	})
+}

@@ -1688,7 +1688,6 @@ class Caldera_Forms_Admin {
 		echo $newform['ID'];
 		exit;
 
-
 	}
 
 
@@ -2123,7 +2122,7 @@ class Caldera_Forms_Admin {
             'scripts' => [
                 'privacy',
                 'admin',
-
+                Caldera_Forms_Render_Assets::make_slug('cf-react')
             ],
             'styles' => [
                 'editor-grid'

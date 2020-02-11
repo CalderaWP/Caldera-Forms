@@ -1,6 +1,7 @@
 //https://gist.github.com/josephhanson/372b44f93472f9c5a2d025d40e7bb4cc
 function MockFile() {
 };
+import React from 'react';
 
 MockFile.prototype.create = function (name, size, mimeType) {
 	name = name || "mock.txt";

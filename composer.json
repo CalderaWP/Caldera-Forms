@@ -64,9 +64,9 @@
     },
     "scripts": {
         "test:php": "composer test:unit && composer wp:tests",
-        "dev:install": "composer install && npm install && composer wp:install && composer wp:activate && composer test:setup",
+        "dev:install": "composer install && yarn install && composer wp:install && composer wp:activate && composer test:setup",
         "dev:destroy": "composer nuke && composer wp:destroy",
-        "nuke": "rm package-lock.json && rm composer.lock && rm -rf node_modules/ && rm -rf vendor",
+        "nuke": "rm yarn.lock && rm composer.lock && rm -rf node_modules/ && rm -rf vendor",
         "wp:install": "bash ./bin/install-docker.sh && composer wp:config",
         "wp:activate": "bash ./bin/activate-plugin.sh",
         "test:setup": "bash ./bin/setup-test-forms.sh",

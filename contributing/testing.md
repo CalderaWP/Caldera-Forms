@@ -92,7 +92,30 @@ We use phpunit to run unit tests and acceptance tests.
 We primarily use Ghost Inspector to write and run acceptance tests against a live WordPress site. We have not yet automated this part. For Caldera Forms 1.8, we added acceptance tests with Cypress, because they are written in code and easier to automate. Also, we can run them locally.
 
 ### Relevant CLI Commands
-* `npm run test:e2e` - Start Cypress e2e test runner.
+
+Before running cypress test, WordPress local environment must be installed and configured:
+
+* Install test site:
+     * `composer wp:install`
+* Add test forms and put on pages:
+     * `composer test:setup`
+     * This step imports all forms in `cypress/forms` and puts them on pages.
+Then you can open the Cypress application:
+* `yarn test:e2e`
+
+### How To Add A Test Form And Page
+
+To add a form that gets put on a page by  `composer test:setup`:
+
+1) Save an export of the form file to `cypress/forms`
+2) In `cypress/tests.json` add an object to the array with form ID (`formId`) and the slug of the page (`pageSlug`) you want it to appear on.
+
+```
+{
+      "formId" : "CF5bcb67b899a38",
+      "pageSlug": "conditionals-fancy"
+},
+```
 
 ### Tools Used
 * [Cypress](https://cypress.io) - Acceptance tests run against the [local development environment](./local-dev.md).

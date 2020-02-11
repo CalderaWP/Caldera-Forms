@@ -143,6 +143,7 @@ class Caldera_Forms_Admin_Page
     public function enqueue_assets()
     {
 
+        Caldera_Forms_Render_Assets::maybe_register();
         if (!empty($this->assets['scripts'])) {
             foreach ($this->assets['scripts'] as $handle) {
                 Caldera_Forms_Render_Assets::enqueue_script($handle);

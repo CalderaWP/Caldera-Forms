@@ -26,3 +26,11 @@ wp-test-case
 /vendor/**/.git
 
 !assets/build/
+
+# Avoid committing webpack dev client assets
+dist/*
+dist/caldera-hot-load/*
+!dist/caldera-hot-load/.gitkeep
+!dist/README.md
+!dist/react.min.js
+!dist/react-dom.min.js

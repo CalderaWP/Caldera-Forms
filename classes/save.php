@@ -243,11 +243,14 @@ class Caldera_Forms_Save_Final {
 			preg_match_all( "/%(.+?)%/", $mail['message'], $hastags );
 			if ( ! empty( $hastags[1] ) ) {
 				foreach ( $hastags[1] as $tag_key => $tag ) {
-					$tagval = Caldera_Forms::get_slug_data( $tag, $form );
-					if ( is_array( $tagval ) ) {
-						$tagval = implode( ', ', $tagval );
+					//Check that the $tag between two % symbols does not contain a space character
+					if( ! preg_match('/\s/', $tag) ){
+						$tagval = Caldera_Forms::get_slug_data( $tag, $form );
+						if ( is_array( $tagval ) ) {
+							$tagval = implode( ', ', $tagval );
+						}
+						$mail['message'] = str_replace( $hastags[0][ $tag_key ], $tagval, $mail['message'] );
 					}
-					$mail['message'] = str_replace( $hastags[0][ $tag_key ], $tagval, $mail['message'] );
 				}
 			}
 
