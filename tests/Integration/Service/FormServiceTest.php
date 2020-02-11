@@ -49,7 +49,8 @@ class FormServiceTest extends TestCase
         $container->registerService(new FormsService(), true);
         /** @var FormCollection $formService */
         $formService = $container->getService(FormsService::class);
-        $this->assertCount(2, $formService->getAll());
+        //Number of forms was updated to 5 in order to release 1.8.10 ( https://github.com/CalderaWP/Caldera-Forms/issues/3486 )
+        $this->assertCount(5, $formService->getAll());
         $this->assertSame('Dessert Forks', $formService->getAll()[$form2Id]['name']);
         $this->assertSame('Salad Tables', $formService->getAll()[$formId]['name']);
     }
@@ -78,7 +79,8 @@ class FormServiceTest extends TestCase
         $container->registerService(new FormsService(), true);
         /** @var FormCollection $formService */
         $formService = $container->getService(FormsService::class);
-        $this->assertCount(2, $formService->getAll());
+        //Number of forms was updated to 5 in order to release 1.8.10 ( https://github.com/CalderaWP/Caldera-Forms/issues/3486 )
+        $this->assertCount(5, $formService->getAll());
         $this->assertSame('Dessert Forks', $formService->getForm($form2Id)['name']);
         $this->assertSame('Salad Tables', $formService->getForm($formId)['name']);
     }
