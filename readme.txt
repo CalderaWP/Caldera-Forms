@@ -3,7 +3,7 @@ Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
 Tags: form, contact form, forms, form creator, form manager, mailchimp, paypal, stripe, login, payment, forms manager, forms creation
 Requires at least: 5.1
 Tested up to: 5.4
-Stable tag: 1.8.9
+Stable tag: 1.8.10
 License: GPLv2
 Requires PHP: 5.6
 
@@ -770,6 +770,27 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 == Changelog ==
 
+= Caldera Forms 1.8.10 (February 11, 2020) To all our fathers  =
+See: [https://calderaforms.com/updates/caldera-forms-1-8-10](https://calderaforms.com/updates/caldera-forms-1-8-10?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-10)
+* [Main mailer is omitting all text between two % symbols in input](https://github.com/CalderaWP/Caldera-Forms/issues/3469 )
+* [Variables set in processors are unset after form edition]( https://github.com/CalderaWP/Caldera-Forms/issues/3374 )
+* [Show calculation value when unhiding the calculation field]( https://github.com/CalderaWP/Caldera-Forms/issues/3403 )
+* [Errors stored in transient are printed on all forms in same page if cf_er is used]( https://github.com/CalderaWP/Caldera-Forms/issues/3419 )
+* [Entry resend fails to send conditional fields]( https://github.com/CalderaWP/Caldera-Forms/issues/2797 )
+* [The resend button in entries list view fails to resend the email]( https://github.com/CalderaWP/Caldera-Forms/issues/3365 )
+* [Editing entires in Number Field with value of 0 returns a blank field]( https://github.com/CalderaWP/Caldera-Forms/issues/3024 )
+* [Can not access created form (form cache not cleared)]( https://github.com/CalderaWP/Caldera-Forms/issues/3455 )
+* [Error if TypeError: system_values[type] is null edit.js]( https://github.com/CalderaWP/Caldera-Forms/issues/3474 )
+* [JavaScript Error `zh_cn is not available in the catalog`]( https://github.com/CalderaWP/Caldera-Forms/issues/2885 )
+* [Spelling issue in file field validation message]( https://github.com/CalderaWP/Caldera-Forms/issues/3344 )
+* [Re URL encode the URL variables when using a redirection processor]( https://github.com/CalderaWP/Caldera-Forms/issues/3482 )
+* [Ensure `\Caldera_Forms_Forms::get_forms:()` returns forms added on a filter.]( https://github.com/CalderaWP/Caldera-Forms/pull/3354 )
+* [New filter hook is for numbers passed to calculation 'caldera_forms_calculation_field_get_value']( https://github.com/CalderaWP/Caldera-Forms/issues/3083 )
+* [Allow processor template to be a string]( https://github.com/CalderaWP/Caldera-Forms/issues/3460 )
+* [Introduce new cf2 services to aid in add-on development]( https://github.com/CalderaWP/Caldera-Forms/issues/3463 )
+* [Improve webpack config]( https://github.com/CalderaWP/Caldera-Forms/issues/3239 )
+
+
 = Caldera Forms 1.8.9 (December 17, 2019) Last '19 update  =
 See: [https://calderaforms.com/updates/caldera-forms-1-8-9](https://calderaforms.com/updates/caldera-forms-1-8-9?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-9)
 * [Hide Pro settings by default and introduced 'caldera_forms_show_pro_ui' filter hook](https://github.com/CalderaWP/Caldera-Forms/issues/3413) - https://calderaforms.com/doc/caldera-forms-show-pro-ui/ -
@@ -780,7 +801,7 @@ See: [https://calderaforms.com/updates/caldera-forms-1-8-9](https://calderaforms
 * [The color picker field was fixed](https://github.com/CalderaWP/Caldera-Forms/issues/1683)
 * [Plugins management within our testing local environment](https://github.com/CalderaWP/Caldera-Forms/issues/3358)
 
-= Caldera Forms 1.8.8 (Novenmber 11, 2019) SendWP Init =
+= Caldera Forms 1.8.8 (November 11, 2019) SendWP Init =
 * Remove Pro mention information panels next to forms lists (Caldera Forms -> Forms)
 * Add mention to SendWP under Email settings
 * Add mention to SendWP in the Mailer tab of Form edition page
