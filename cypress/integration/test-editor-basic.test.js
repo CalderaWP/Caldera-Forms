@@ -48,14 +48,20 @@ describe( 'Basic editing of form',  () => {
 		cy.get( '.processor-form_redirect' ).should('be.visible');
 	});
 
-
-
-
 	it( 'Can add a processor', () => {
 		cfGoToProcessorsTab();
 		const processorType = 'auto_responder';
 		cfAddProcessor(processorType);
 		cy.get( '.active-processors-list').children().should('have.length', 2);
+	});
+
+	it( 'Can add a second condition line in a processors conditional group', () => {
+		cfGoToProcessorsTab();
+		cy.get('.caldera-processor-nav:first-child').click();
+		cy.get('a[href="#fp_6427173_conditions_pane"]').click();
+		cy.get('.caldera-editor-processor-config .caldera-conditionals-wrapper > .caldera-condition-group > .caldera-condition-lines .caldera-condition-line').should('have.length', 2);
+		cy.get('.caldera-editor-processor-config .caldera-condition-group > button').first().click();
+		cy.get('.caldera-editor-processor-config .caldera-conditionals-wrapper > .caldera-condition-group > .caldera-condition-lines .caldera-condition-line').should('have.length', 3);
 	});
 
 	it.skip( 'Page nav', () => {
