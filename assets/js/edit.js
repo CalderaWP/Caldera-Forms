@@ -1173,7 +1173,7 @@ jQuery(document).ready(function($){
             fieldtype.push('vars');
             for( var ft = 0; ft < fieldtype.length; ft++){
                 for( var tp in system_values ){
-                    if(typeof system_values[tp].tags === 'undefined' || typeof system_values[tp].tags[fieldtype[ft]] === 'undefined'){
+                    if( ! system_values[tp] || typeof system_values[tp].tags === 'undefined' || typeof system_values[tp].tags[fieldtype[ft]] === 'undefined'){
                         continue;
                     }
 
