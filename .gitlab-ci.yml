@@ -38,7 +38,7 @@ JS Unit Test:
 
 # Integration Test Stage
 WP-Integration:
-  image: edbizarro/gitlab-ci-pipeline-php:7.3-alpine
+  image: roadiz/php72-runner
   stage: Integration Tests
   services:
     - mysql:5.6
@@ -49,7 +49,6 @@ WP-Integration:
 
     # update the docker
     - apt-get clean
-    - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
     - apt-get -yqq update
 
     # install the required packages for the running CI tests
@@ -61,6 +60,7 @@ WP-Integration:
     # Set up WordPress tests
     - bash bin/install-wp-tests.sh wordpress_tests root mysql mysql latest true
 
-    # Install composer dependencies
-    - composer install --no-dev
-    - composer global require "phpunit/phpunit:^6"
+    # Install composer, then install with composer
+    - curl -sS https://getcomposer.org/installer | php
+    - php composer.phar install --no-dev
+    - php composer.phar global require "phpunit/phpunit:^6"
