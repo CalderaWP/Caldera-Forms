@@ -38,7 +38,7 @@ JS Unit Test:
 
 # Integration Test Stage
 WP-Integration:
-  image: tetraweb/php:7.1
+  image: roadiz/php73-runner
   stage: Integration Tests
   services:
     - mysql:5.6
