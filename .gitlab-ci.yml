@@ -52,7 +52,7 @@ WP-Integration PHP 7.3:
     - apt-get clean
     - apt-get -yqq update
     # Install packages
-    - apt-get -yqqf install zip unzip subversion mysql-client libmysqlclient-dev --fix-missing
+    - apt-get -yqqf install zip unzip subversion mysql-client --fix-missing
 
     # PHP extensions
     - docker-php-ext-enable mbstring mcrypt mysqli pdo_mysql intl gd zip bz2
@@ -77,7 +77,7 @@ WP-Integration PHP 7.2:
     - apt-get clean
     - apt-get -yqq update
     # Install packages
-    - apt-get -yqqf install zip unzip subversion mysql-client libmysqlclient-dev --fix-missing
+    - apt-get -yqqf install zip unzip subversion mysql-client --fix-missing
     
     # PHP extensions
     - docker-php-ext-enable mbstring mcrypt mysqli pdo_mysql intl gd zip bz2g 
