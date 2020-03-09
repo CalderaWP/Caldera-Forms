@@ -1,5 +1,5 @@
 stages:
-  - Unit Tests
+  #- Unit Tests
   - Integration Tests
 
 # SQL Variables for the WordPress tests
@@ -56,7 +56,7 @@ WP-Integration PHP 7.3:
     - composer install --prefer-dist --no-ansi --no-interaction --no-progress
     - composer global require "phpunit/phpunit:^6"
 
-# Tests with PHP 7.3
+# Tests with PHP 7.2
 WP-Integration PHP 7.2:
   image: calevans/docker:php7.2
   stage: Integration Tests
@@ -69,9 +69,7 @@ WP-Integration PHP 7.2:
     - apt-get clean
     - apt-get -yqq update
     # Install packages
-    - apt-get -yqqf install zip unzip subversion mysql-client libmysqlclient-dev --fix-missing
-    # PHP extensions
-    - docker-php-ext-enable mbstring mcrypt msqli pdo_mysql intl gd zip bz2
+    - apt-get -yqqf install subversion --fix-missing 
 
     # Set up WordPress tests
     - bash bin/install-wp-tests.sh wordpress_tests root mysql mysql latest true
