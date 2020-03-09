@@ -38,7 +38,7 @@ JS Unit Test:
 
 # Integration Test Stage
 WP-Integration:
-  image: php:7.3
+  image: tetraweb/php:7.1
   stage: Integration Tests
   services:
     - mysql:5.6
@@ -51,7 +51,10 @@ WP-Integration:
     - apt-get -yqq update
 
     # install the required packages for the running CI tests
-    - apt-get -yqqf install zip unzip subversion default-mysql-client default-libmysqlclient-dev --fix-missing
+    - apt-get -yqqf install zip unzip subversion mysql-client libmysqlclient-dev --fix-missing
+
+    # PHP extensions
+    - docker-php-ext-enable mbstring mcrypt mysqli pdo_mysql intl gd zip bz2
 
     # Set up WordPress tests
     - bash bin/install-wp-tests.sh wordpress_tests root mysql mysql latest true

@@ -34,7 +34,8 @@
         "composer/installers": "^1.6",
         "a5hleyrich/wp-queue": "^1.3",
         "symfony/translation": "~3.0",
-        "mossadal/math-parser": "^1.3"
+        "mossadal/math-parser": "^1.3",
+        "pimple/pimple": "^3.2"
     },
     "autoload": {
         "psr-4": {
