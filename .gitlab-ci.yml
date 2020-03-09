@@ -62,7 +62,7 @@ WP-Integration PHP 7.3:
 
     # Install composer, then install with composer
     - composer install --prefer-dist --no-ansi --no-interaction --no-progress
-    - composer global require "phpunit/phpunit:^6" phpunit/php-invoker ext-uopz ext-soap ext-xdebug
+    - composer global require "phpunit/phpunit:^6" phpunit/php-invoker
 
 # Tests with PHP 7.2
 WP-Integration PHP 7.2:
@@ -87,5 +87,5 @@ WP-Integration PHP 7.2:
 
     # Install composer, then install with composer
     - composer install --prefer-dist --no-ansi --no-interaction --no-progress
-    - composer global require phpunit/phpunit:^6 phpunit/php-invoker ext-uopz ext-soap ext-xdebug
+    - composer global require phpunit/phpunit:^6 phpunit/php-invoker
    
