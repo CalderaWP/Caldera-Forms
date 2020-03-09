@@ -69,6 +69,14 @@ class Description
     }
 
     /**
+     * Returns the body template.
+     */
+    public function getBodyTemplate() : string
+    {
+        return $this->bodyTemplate;
+    }
+
+    /**
      * Returns the tags for this DocBlock.
      *
      * @return Tag[]

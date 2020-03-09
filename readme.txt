@@ -3,7 +3,7 @@ Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
 Tags: form, contact form, forms, form creator, form manager, mailchimp, paypal, stripe, login, payment, forms manager, forms creation
 Requires at least: 5.1
 Tested up to: 5.4
-Stable tag: 1.8.10
+Stable tag: 1.8.11
 License: GPLv2
 Requires PHP: 5.6
 
@@ -769,6 +769,12 @@ This could also be a sign of a more serious issue on your server, but is probabl
 5. **Go Further With Form Processors** - Auto-responders, conditional recipients, redirects are included! Go further with our add-ons!
 
 == Changelog ==
+
+= Caldera Forms 1.8.11 (March 05, 2020) Two Fixes  =
+See: [https://calderaforms.com/updates/caldera-forms-1-8-11](https://calderaforms.com/updates/caldera-forms-1-8-11?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-11)
+*["Add Condition" (in line) button is broken in processors](https://github.com/CalderaWP/Caldera-Forms/issues/3490)
+*[Magic tag selector throws error if no variables in form](https://github.com/CalderaWP/Caldera-Forms/issues/3492)
+
 
 = Caldera Forms 1.8.10 (February 11, 2020) To all our fathers  =
 See: [https://calderaforms.com/updates/caldera-forms-1-8-10](https://calderaforms.com/updates/caldera-forms-1-8-10?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-10)

@@ -14,11 +14,10 @@ declare(strict_types=1);
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
 use InvalidArgumentException;
-use const FILTER_VALIDATE_EMAIL;
 use function filter_var;
 use function preg_match;
-use function strlen;
 use function trim;
+use const FILTER_VALIDATE_EMAIL;
 
 /**
  * Reflection class for an {@}author tag in a Docblock.
@@ -29,10 +28,10 @@ final class Author extends BaseTag implements Factory\StaticMethod
     protected $name = 'author';
 
     /** @var string The name of the author */
-    private $authorName = '';
+    private $authorName;
 
     /** @var string The email of the author */
-    private $authorEmail = '';
+    private $authorEmail;
 
     /**
      * Initializes this tag with the author name and e-mail.
@@ -72,7 +71,7 @@ final class Author extends BaseTag implements Factory\StaticMethod
      */
     public function __toString() : string
     {
-        return $this->authorName . (strlen($this->authorEmail) ? ' <' . $this->authorEmail . '>' : '');
+        return $this->authorName . ($this->authorEmail !== '' ? ' <' . $this->authorEmail . '>' : '');
     }
 
     /**

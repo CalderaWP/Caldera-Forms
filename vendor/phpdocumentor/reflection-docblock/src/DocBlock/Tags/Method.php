@@ -42,21 +42,24 @@ final class Method extends BaseTag implements Factory\StaticMethod
     protected $name = 'method';
 
     /** @var string */
-    private $methodName = '';
+    private $methodName;
 
-    /** @var string[][] */
-    private $arguments = [];
+    /**
+     * @phpstan-var array<int, array{name: string, type: Type}>
+     * @var array<int, array<string, Type|string>>
+     */
+    private $arguments;
 
     /** @var bool */
-    private $isStatic = false;
+    private $isStatic;
 
     /** @var Type */
     private $returnType;
 
     /**
-     * @param mixed[][] $arguments
+     * @param array<int, array<string, Type|string>> $arguments
      *
-     * @psalm-param array<int, array<string, string|Type>|string> $arguments
+     * @phpstan-param array<int, array{name: string, type: Type}|string> $arguments
      */
     public function __construct(
         string $methodName,
@@ -78,9 +81,6 @@ final class Method extends BaseTag implements Factory\StaticMethod
         $this->description = $description;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function create(
         string $body,
         ?TypeResolver $typeResolver = null,
@@ -117,7 +117,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
                             (?:[\w\|_\\\\]+)
                             # array notation
                             (?:\[\])*
-                        )*
+                        )*+
                     )
                     \s+
                 )?
@@ -137,7 +137,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
             return null;
         }
 
-        [, $static, $returnType, $methodName, $arguments, $description] = $matches;
+        [, $static, $returnType, $methodName, $argumentLines, $description] = $matches;
 
         $static = $static === 'static';
 
@@ -148,11 +148,13 @@ final class Method extends BaseTag implements Factory\StaticMethod
         $returnType  = $typeResolver->resolve($returnType, $context);
         $description = $descriptionFactory->create($description, $context);
 
-        if ($arguments !== '') {
-            $arguments = explode(',', $arguments);
-            foreach ($arguments as &$argument) {
+        /** @phpstan-var array<int, array{name: string, type: Type}> $arguments */
+        $arguments = [];
+        if ($argumentLines !== '') {
+            $argumentsExploded = explode(',', $argumentLines);
+            foreach ($argumentsExploded as $argument) {
                 $argument = explode(' ', self::stripRestArg(trim($argument)), 2);
-                if ($argument[0][0] === '$') {
+                if (strpos($argument[0], '$') === 0) {
                     $argumentName = substr($argument[0], 1);
                     $argumentType = new Mixed_();
                 } else {
@@ -164,10 +166,8 @@ final class Method extends BaseTag implements Factory\StaticMethod
                     }
                 }
 
-                $argument = ['name' => $argumentName, 'type' => $argumentType];
+                $arguments[] = ['name' => $argumentName, 'type' => $argumentType];
             }
-        } else {
-            $arguments = [];
         }
 
         return new static($methodName, $arguments, $returnType, $static, $description);
@@ -182,7 +182,9 @@ final class Method extends BaseTag implements Factory\StaticMethod
     }
 
     /**
-     * @return string[][]
+     * @return array<int, array<string, Type|string>>
+     *
+     * @phpstan-return array<int, array{name: string, type: Type}>
      */
     public function getArguments() : array
     {
@@ -223,8 +225,8 @@ final class Method extends BaseTag implements Factory\StaticMethod
      *
      * @return mixed[][]
      *
-     * @psalm-param array<int, array<string, string|Type>|string> $arguments
-     * @psalm-return array<int, array<string, string|Type>> $arguments
+     * @phpstan-param array<int, array{name: string, type: Type}|string> $arguments
+     * @phpstan-return array<int, array{name: string, type: Type}>
      */
     private function filterArguments(array $arguments = []) : array
     {

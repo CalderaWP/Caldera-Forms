@@ -44,7 +44,7 @@ final class Deprecated extends BaseTag implements Factory\StaticMethod
     )';
 
     /** @var string|null The version vector. */
-    private $version = '';
+    private $version;
 
     public function __construct(?string $version = null, ?Description $description = null)
     {
@@ -75,6 +75,7 @@ final class Deprecated extends BaseTag implements Factory\StaticMethod
         }
 
         Assert::notNull($descriptionFactory);
+
         return new static(
             $matches[1],
             $descriptionFactory->create($matches[2] ?? '', $context)

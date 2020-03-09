@@ -19,14 +19,13 @@ use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
 use Webmozart\Assert\Assert;
-use const PREG_SPLIT_DELIM_CAPTURE;
 use function array_shift;
 use function array_unshift;
 use function implode;
 use function preg_split;
-use function strlen;
 use function strpos;
 use function substr;
+use const PREG_SPLIT_DELIM_CAPTURE;
 
 /**
  * Reflection class for the {@}param tag in a Docblock.
@@ -52,9 +51,6 @@ final class Param extends TagWithType implements Factory\StaticMethod
         $this->description  = $description;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function create(
         string $body,
         ?TypeResolver $typeResolver = null,
@@ -69,11 +65,12 @@ final class Param extends TagWithType implements Factory\StaticMethod
 
         $type         = null;
         $parts        = preg_split('/(\s+)/Su', $body, 2, PREG_SPLIT_DELIM_CAPTURE);
+        Assert::isArray($parts);
         $variableName = '';
         $isVariadic   = false;
 
         // if the first item that is encountered is not a variable; it is a type
-        if ($firstPart && (strlen($firstPart) > 0) && ($firstPart[0] !== '$')) {
+        if ($firstPart && $firstPart[0] !== '$') {
             $type = $typeResolver->resolve($firstPart, $context);
         } else {
             // first part is not a type; we should prepend it to the parts array for further processing
@@ -81,19 +78,18 @@ final class Param extends TagWithType implements Factory\StaticMethod
         }
 
         // if the next item starts with a $ or ...$ it must be the variable name
-        if (isset($parts[0])
-            && (strlen($parts[0]) > 0)
-            && ($parts[0][0] === '$' || substr($parts[0], 0, 4) === '...$')
-        ) {
+        if (isset($parts[0]) && (strpos($parts[0], '$') === 0 || strpos($parts[0], '...$') === 0)) {
             $variableName = array_shift($parts);
             array_shift($parts);
 
-            if ($variableName !== null && strpos($variableName, '...') === 0) {
+            Assert::notNull($variableName);
+
+            if (strpos($variableName, '...') === 0) {
                 $isVariadic   = true;
                 $variableName = substr($variableName, 3);
             }
 
-            if ($variableName !== null && strpos($variableName, '$') === 0) {
+            if (strpos($variableName, '$') === 0) {
                 $variableName = substr($variableName, 1);
             }
         }

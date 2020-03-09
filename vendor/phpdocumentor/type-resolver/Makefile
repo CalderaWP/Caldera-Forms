@@ -15,22 +15,17 @@ setup: install-phive
 phpcs:
 	docker run -it --rm -v${PWD}:/opt/project -w /opt/project phpdoc/phpcs-ga:v1.0.0 -s
 
-.PHONY: phpcbf
-phpcbf:
-	docker run -it --rm -v${PWD}:/opt/project -w /opt/project phpdoc/phpcs-ga:v1.0.0 phpcbf
-
 .PHONY: phpstan
 phpstan:
 	docker run -it --rm -v${PWD}:/opt/project -w /opt/project phpdoc/phpstan-ga:latest analyse src --no-progress --configuration phpstan.neon
 
-.PHONY: psalm
+.PHONY: psaml
 psalm:
 	docker run -it --rm -v${PWD}:/opt/project -w /opt/project mickaelandrieu/psalm-ga
 
 .PHONY: test
 test:
-	docker run -it --rm -v${CURDIR}:/github/workspace phpdoc/phpunit-ga
-	docker run -it --rm -v${CURDIR}:/data -w /data php:7.2 -f ./tests/coverage-checker.php 89
+	docker run -it --rm -v${PWD}:/opt/project -w /opt/project php:7.2 tools/phpunit
 
 .PHONY: pre-commit-test
 pre-commit-test: test phpcs phpstan psalm
