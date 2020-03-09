@@ -38,29 +38,17 @@ JS Unit Test:
 
 # Integration Test Stage
 WP-Integration:
-  image: roadiz/php72-runner
+  image: calevans/docker:php7.3
   stage: Integration Tests
   services:
     - mysql:5.6
   script:
     - phpunit --configuration phpunit-integration.xml.dist
   before_script:
-    # Install dependencies
-    - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-    # update the docker
-    - apt-get clean
-    - apt-get -yqq update
-
-    # install the required packages for the running CI tests
-    - apt-get -yqqf install zip unzip subversion mysql-client libmysqlclient-dev --fix-missing
-
-    # PHP extensions
-    - docker-php-ext-enable mbstring mcrypt mysqli pdo_mysql intl gd zip bz2
-
     # Set up WordPress tests
     - bash bin/install-wp-tests.sh wordpress_tests root mysql mysql latest true
 
     # Install composer, then install with composer
-    - curl -sS https://getcomposer.org/installer | php
-    - php composer.phar install --no-dev
-    - php composer.phar global require "phpunit/phpunit:^6"
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress
+    - composer global require "phpunit/phpunit:^6"
+    - composer wp:tests
