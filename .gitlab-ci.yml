@@ -36,56 +36,30 @@ JS Unit Test:
     - yarn build
     - yarn test:once
 
-
 # Integration Test Stage
-
-# Tests with PHP 7.3
-WP-Integration PHP 7.3:
-  image: calevans/docker:php7.3
+WP-Integration:
+  image: php:7.3
   stage: Integration Tests
   services:
     - mysql:5.6
   script:
     - phpunit --configuration phpunit-integration.xml.dist
   before_script:
-    #Update the docker
+    # Install dependencies
+    # update the docker
     - apt-get clean
     - apt-get -yqq update
-    # Install packages
-    - apt-get -yqqf install zip unzip subversion mysql-client --fix-missing
+
+    # install the required packages for the running CI tests
+    - apt-get -yqqf install zip unzip subversion mysql-client libmysqlclient-dev --fix-missing
 
     # PHP extensions
-    - docker-php-ext-enable mbstring mysqli pdo_mysql intl gd zip bz2
+    - docker-php-ext-enable mbstring mcrypt mysqli pdo_mysql intl gd zip bz2
 
     # Set up WordPress tests
     - bash bin/install-wp-tests.sh wordpress_tests root mysql mysql latest true
 
     # Install composer, then install with composer
-    - composer install --prefer-dist --no-ansi --no-interaction --no-progress
-    - composer global require "phpunit/phpunit:^6" phpunit/php-invoker
-
-# Tests with PHP 7.2
-WP-Integration PHP 7.2:
-  image: calevans/docker:php7.2
-  stage: Integration Tests
-  services:
-    - mysql:5.6
-  script:
-    - phpunit --configuration phpunit-integration.xml.dist
-  before_script:
-    #Update the docker
-    - apt-get clean
-    - apt-get -yqq update
-    # Install packages
-    - apt-get -yqqf install zip unzip subversion mysql-client --fix-missing
-    
-    # PHP extensions
-    - docker-php-ext-enable mbstring mysqli pdo_mysql intl gd zip bz2g 
-
-    # Set up WordPress tests
-    - bash bin/install-wp-tests.sh wordpress_tests root mysql mysql latest true
-
-    # Install composer, then install with composer
-    - composer install --prefer-dist --no-ansi --no-interaction --no-progress
-    - composer global require phpunit/phpunit:^6 phpunit/php-invoker
-   
+    - curl -sS https://getcomposer.org/installer | php
+    - php composer.phar install --no-dev
+    - php composer.phar global require "phpunit/phpunit:^6"
