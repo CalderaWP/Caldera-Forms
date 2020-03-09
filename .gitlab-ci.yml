@@ -46,16 +46,14 @@ WP-Integration PHP 7.3:
   services:
     - mysql:5.6
   script:
-    - docker-compose run --rm wordpress_phpunit phpunit --configuration phpunit-integration.xml.dist
+    - phpunit --configuration phpunit-integration.xml.dist
   before_script:
     #Update the docker
     - apt-get clean
     - apt-get -yqq update
     # Install packages
     - apt-get -yqqf install subversion --fix-missing
-    #Install docker-compose
-    - curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-    - chmod +x /usr/local/bin/docker-compose
+
     # Set up WordPress tests
     - bash bin/install-wp-tests.sh wordpress_tests root mysql mysql latest true
 
@@ -70,16 +68,13 @@ WP-Integration PHP 7.2:
   services:
     - mysql:5.6
   script:
-    - composer wp:tests
+    - phpunit --configuration phpunit-integration.xml.dist
   before_script:
     #Update the docker
     - apt-get clean
     - apt-get -yqq update
     # Install packages
     - apt-get -yqqf install subversion --fix-missing 
-    #Install docker-compose
-    - curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-    - chmod +x /usr/local/bin/docker-compose
 
     # Set up WordPress tests
     - bash bin/install-wp-tests.sh wordpress_tests root mysql mysql latest true
