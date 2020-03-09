@@ -1,5 +1,5 @@
 stages:
-  #- Unit Tests
+  - Unit Tests
   - Integration Tests
 
 # SQL Variables for the WordPress tests
