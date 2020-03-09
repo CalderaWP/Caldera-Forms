@@ -46,7 +46,6 @@ WP-Integration:
     - phpunit --configuration phpunit-integration.xml.dist
   before_script:
     # Install dependencies
-
     # update the docker
     - apt-get clean
     - apt-get -yqq update
