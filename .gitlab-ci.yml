@@ -54,7 +54,7 @@ WP-Integration:
     - apt-get -yqqf install zip unzip subversion default-mysql-client default-libmysqlclient-dev --fix-missing
 
     # PHP extensions
-    - docker-php-ext-enable mbstring mcrypt mysqli pdo_mysql intl gd zip bz2
+    - docker-php-ext-enable mcrypt mysqli pdo_mysql intl gd zip bz2
 
     # Set up WordPress tests
     - bash bin/install-wp-tests.sh wordpress_tests root mysql mysql latest true
