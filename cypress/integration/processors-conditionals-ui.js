@@ -177,7 +177,7 @@ describe('Processor conditional logic', () => {
         goToFirstProcessorConditionals();
         cy.get( '.caldera-conditional-field-set').first().should( 'have.value','fld_29462');
         cy.get( '.caldera-conditional-value-field').find(':selected').contains( 'Legs' );
-        
+
     });
 
 
