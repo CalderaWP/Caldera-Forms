@@ -3,6 +3,7 @@ import {
     login,
     createForm,
     cfGoToProcessorsTab,
+    cfGoToLayoutTab,
     saveFormAndReload
 } from '../support/util';
 
@@ -19,6 +20,14 @@ function goToFirstProcessorConditionals() {
     cy.get('.toggle_option_tab').children().last().click();
 }
 
+function addConditionalGroup() {
+    cy.get('.add-conditional-group').click();
+}
+
+function expectNumberOfConditionalGroups(groups) {
+    cy.get('.caldera-condition-group').should('have.length', groups);
+}
+
 describe('Processor conditional logic', () => {
     let formName;
 
@@ -33,8 +42,8 @@ describe('Processor conditional logic', () => {
      Are we making sure that?
      All of the above changes can be saved, the form editor reloaded, and the settings are the same.
      */
-    it.only('We can add new conditional groups to a processor', () => {
-        const formName = makeFormName('We can add new conditional groups to a processor');
+    it('We can add new conditional groups to a processor', () => {
+        const formName = makeFormName('add new conditional');
         createForm(formName, false);
         goToFirstProcessorConditionals();
         //There is the conditional type selector
@@ -42,8 +51,8 @@ describe('Processor conditional logic', () => {
         cy.get('.caldera-conditionals-usetype:visible').select( 'Use');
 
         //Add a group
-        cy.get( '.add-conditional-group').click();
-        cy.get( '.caldera-condition-group' ).should('have.length', 1);
+        addConditionalGroup();
+        expectNumberOfConditionalGroups(1);
         cy.get( '.caldera-conditional-field-set' ).first().should( 'have.length', 1 );
         //Trigger one change to get options to load
         cy.get( '.caldera-conditional-field-set' ).select( '' );
@@ -53,8 +62,8 @@ describe('Processor conditional logic', () => {
         cy.get( '.caldera-conditional-value-field').first().type( 'Lobster' );
 
         //Add another group
-        cy.get( '.add-conditional-group').click();
-        cy.get( '.caldera-condition-group' ).should('have.length', 2);
+        addConditionalGroup();
+        expectNumberOfConditionalGroups(2);
         //Has settings for two field values
         cy.get( '.caldera-conditional-field-set').should( 'have.length', 2 );
         //Set second to last name endswith Fish
@@ -77,31 +86,98 @@ describe('Processor conditional logic', () => {
     });
 
     it('We can remove conditional groups from a processor.', () => {
-        const formName = makeFormName('We can remove conditional groups from a processor.');
+        const formName = makeFormName('remove conditional groups');
         createForm(formName, false);
-        cfGoToProcessorsTab();
-        cy.get('.active-processors-list').should('have.length', 1);
-    });
+        goToFirstProcessorConditionals();
+        cy.get('.caldera-conditionals-usetype:visible').select( 'Use');
+        //Add a group
+        addConditionalGroup();
+        expectNumberOfConditionalGroups(1);
 
-    it('When a processor has conditionals, the saved settings load in the editor correctly.', () => {
-        const formName = makeFormName('When a processor has conditionals, the saved settings load in the editor correctly.');
-        createForm(formName, false);
-        cfGoToProcessorsTab();
-        cy.get('.active-processors-list').should('have.length', 1);
+        //Remove group
+        cy.get( '.remove-conditional-line').first().click();
+        expectNumberOfConditionalGroups(0);
+
+        //Add two and remove one
+        addConditionalGroup();
+        addConditionalGroup();
+        expectNumberOfConditionalGroups(2);
+        cy.get( '.remove-conditional-line').last().click();
+        expectNumberOfConditionalGroups(1);
+
     });
 
     it('When field type changes to field type with options, its options are used as conditional value.', () => {
-        const formName = makeFormName('When field type changes to field type with options, its options are used as conditional value.');
+        const formName = makeFormName('field type changes');
         createForm(formName, false);
+        goToFirstProcessorConditionals();
+        cy.get('.caldera-conditionals-usetype:visible').select( 'Use');
+        addConditionalGroup();
+        cy.get( '.caldera-conditional-field-set' ).select( '' );
+        cy.get( '.caldera-conditional-field-set').first().select( 'header [header]');
+        cy.get( '.compare-type').first().select( 'isnot');
+        cy.get( '.caldera-conditional-value-field').first().type( 'Lobster' );
+
+        //Change first field type to radio
+        cfGoToLayoutTab();
+        cy.get( '.caldera-select-field-type').first().select( "Radio");
+        //Add two options
+        cy.get( '.add-toggle-option.add-option').click();
+        cy.get( '.add-toggle-option.add-option').click();
+        cy.get( '.toggle_label_field:visible').should( 'have.length', 2);
+        cy.get( '.toggle_label_field').first().type( 'Arms');
+        cy.get( '.toggle_label_field').last().type( 'Pants');
+
         cfGoToProcessorsTab();
         cy.get('.active-processors-list').should('have.length', 1);
+        //First two settings should be the same.
+        cy.get( '.caldera-conditional-field-set').first().should( 'have.value','fld_29462');
+        cy.get( '.compare-type').first().should( 'have.value', 'isnot');
+        //It SHOULD have lost value-field, can we change it?
+        cy.get( '.caldera-conditional-value-field').first().should( 'have.value', '' );
+        cy.get( '.caldera-conditional-value-field').select( 'Pants' );
+
+        //Save, reload and check saved values load correctly
+        saveFormAndReload();
+        goToFirstProcessorConditionals();
+        cy.get( '.caldera-conditional-field-set').first().should( 'have.value','fld_29462');
+        cy.get( '.compare-type').first().should( 'have.value', 'isnot');
+        cy.get( '.caldera-conditional-value-field').first().should( 'have.value', 'Pants' );
+
     });
 
     it('When options for a field used as conditional value change, conditional editor reflects change', () => {
-        const formName = makeFormName('When options for a field used as conditional value change, conditional editor reflects change');
+        const formName = makeFormName('Options change');
         createForm(formName, false);
-        cfGoToProcessorsTab();
-        cy.get('.active-processors-list').should('have.length', 1);
+        cy.get( '.caldera-select-field-type').first().select( "Checkbox");
+        cy.get( '.add-toggle-option.add-option').click();
+        cy.get( '.toggle_label_field').first().type( 'Jumpy');
+        goToFirstProcessorConditionals();
+        cy.get('.caldera-conditionals-usetype:visible').select( 'Use');
+        addConditionalGroup();
+        cy.get( '.caldera-conditional-field-set' ).select( '' );
+        cy.get( '.caldera-conditional-field-set').first().select( 'header [header]');
+        cy.get( '.compare-type').first().select( 'isnot');
+        cy.get( '.caldera-conditional-value-field').select( 'Jumpy' );
+        cy.get( '.caldera-conditional-value-field').find(':selected').contains( 'Jumpy' );
+
+        //add another option
+        cfGoToLayoutTab();
+        cy.get( '.add-toggle-option.add-option').click();
+        cy.get( '.toggle_label_field').last().type( 'Legs');
+
+        //Can we use new option?
+        goToFirstProcessorConditionals();
+        cy.get( '.caldera-conditional-value-field').find(':selected').contains( 'Jumpy' );
+        cy.get( '.caldera-conditional-value-field').select( 'Legs' );
+        cy.get( '.caldera-conditional-value-field').find(':selected').contains( 'Legs' );
+
+        //Save, reload and check saved values load correctly
+        saveFormAndReload();
+        goToFirstProcessorConditionals();
+        cy.get( '.caldera-conditional-field-set').first().should( 'have.value','fld_29462');
+        cy.get( '.caldera-conditional-value-field').find(':selected').contains( 'Legs' );
+        
     });
 
 

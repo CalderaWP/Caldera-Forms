@@ -386,16 +386,37 @@ export const cfEditorIsFieldPreviewVisible = (fieldId ) => {
 	return cfEditorGetFieldPreview(fieldId).should('be.visible');
 };
 
+/**
+ * Check if editor field is visible
+ *
+ * @param fieldId
+ * @returns {Cypress.Chainable<JQuery>}
+ */
 export const cfEditorIsFieldPreviewNotVisible = (fieldId ) => {
 	return cfEditorGetFieldPreview(fieldId).not('be.visible');
 };
+
+/**
+ * Add a processor
+ * @param processorType
+ */
 export const cfAddProcessor = (processorType) =>{
 	cy.get( '.new-processor-button' ).click();
 	cy.get(`.add-new-processor[data-type="${processorType}"]`).click();
-}
+};
 
-export const cfGoToProcessorsTab=() => {
+/**
+ * Go to the processors tab
+ */
+export const cfGoToProcessorsTab = () => {
 	cy.get('#tab_processors a').click();
+};
+
+/**
+ * Go to the processors tab
+ */
+export const cfGoToLayoutTab = () => {
+	cy.get('#tab_layout a').click();
 };
 
 /**
@@ -523,7 +544,7 @@ export const cfAddVariable = () =>{
 	cy.get('.set-system-variable').type('variable_name');
 	cy.get('.var-value').click();
 	cy.get('.var-value').type('variable_value');
-}
+};
 
 /**
  * Remove all variables
