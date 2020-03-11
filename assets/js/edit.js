@@ -922,7 +922,6 @@ jQuery(document).ready(function($){
             var options_rows = options_wrap.find('.toggle_option_row'),
                 out = '<select name="' + name + '[value]" class="caldera-processor-value-bind caldera-conditional-value-field" data-field="' + field_id + '" style="max-width: 220px; width: 220px;">';
             out += '<option value=""></option>';
-
             options_rows.each(function(k,v){
                 var label = $(v).find('.toggle_label_field'),
                     value = label.data('option'),
@@ -934,7 +933,7 @@ jQuery(document).ready(function($){
                     }
                 }
 
-                out += '<option value="' + value + '"' + sel + '>' + label.val() + '</option>';
+                out += '<option date-field-slug="arms" value="' + value + '"' + sel + '>' + label.val() + '</option>';
             })
 
             out += '</select>';
