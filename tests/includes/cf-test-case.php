@@ -236,33 +236,7 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
         if ( ! $form ) {
             $form = $this->mock_form;
         }
-        $x= 0;
-        if (empty( $data )) {
-            $data = array();
-            $i = 0;
-            foreach ($form['fields'] as $field_id => $field_config) {
-                if (1 == $i) {
-                    $data[$field_id] = $field_id . '_' . rand();
-                } else {
-                    $data[$field_id] = array(
-                        rand(),
-                        5 => rand(), rand(), 'batman'
-                    );
-                }
-                if (0 == $i) {
-                    $i = 1;
-                } else {
-                    $i = 0;
-                }
-            }
-        }
-
-        $entry_id = Caldera_Forms_Save_Final::create_entry( $form, $data  );
-        return array(
-            'id' => $entry_id,
-            'field_data' => $data,
-            'form_id' => $form[ 'ID' ],
-        );
+       return \calderawp\calderaforms\Tests\Util\SubmissionHelpers::createEntry($form,$data);
     }
 
     /**

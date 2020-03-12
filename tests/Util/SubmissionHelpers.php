@@ -96,4 +96,47 @@ class SubmissionHelpers
         $_POST = $data;
         \Caldera_Forms::process_submission();
     }
+
+    /**
+     * Create a saved entry for a form with random field data or supplied field data.
+     *
+     * @since 1.8.10
+     *
+     * @param array $form Form config
+     * @param array $data Optional. Data to save. If empty, all fields' values'set to random strings.
+     * @return array
+     */
+    public static function createEntry(array $form, array $data = [])
+    {
+
+
+        if (empty($data)) {
+            $data = array();
+            $i = 0;
+            foreach ($form['fields'] as $field_id => $field_config) {
+                if (1 == $i) {
+                    $data[$field_id] = $field_id . '_' . rand();
+                } else {
+                    $data[$field_id] = array(
+                        rand(),
+                        5 => rand(),
+                        rand(),
+                        'batman'
+                    );
+                }
+                if (0 == $i) {
+                    $i = 1;
+                } else {
+                    $i = 0;
+                }
+            }
+        }
+
+        $entry_id = \Caldera_Forms_Save_Final::create_entry($form, $data);
+        return [
+            'id' => $entry_id,
+            'field_data' => $data,
+            'form_id' => $form['ID'],
+       ];
+    }
 }

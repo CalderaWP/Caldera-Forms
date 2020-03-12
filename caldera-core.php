@@ -4,7 +4,7 @@
   Plugin URI: https://CalderaForms.com
   Description: Easy to use, grid based responsive form builder for creating simple to complex forms.
   Author: Caldera Labs
-  Version: 1.8.9
+  Version: 1.8.10
   Author URI: http://CalderaLabs.org
   Text Domain: caldera-forms
   GitHub Plugin URI: https://github.com/CalderaWP/caldera-forms
@@ -43,16 +43,14 @@ if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
 	add_shortcode('caldera_form', 'caldera_forms_fallback_shortcode');
 	add_shortcode('caldera_form_modal', 'caldera_forms_fallback_shortcode');
 	add_action('admin_notices', 'caldera_forms_php_version_nag');
-} elseif ( !version_compare($wp_version, '4.7.0', '>=') ) {
-	function caldera_forms_wp_version_nag()
-	{
+} elseif ( !version_compare($wp_version, '5.0.0', '>=') ) {
+	function caldera_forms_wp_version_nag(){
 		?>
-        <div class="notice notice-error">
-            <p>
-				<?php _e('Your version of WordPress is incompatible with Caldera Forms and can not be used.',
-					'caldera-forms'); ?>
-            </p>
-        </div>
+		<div class="notice notice-error">
+		    <p>
+			<?php _e('Your version of WordPress is incompatible with Caldera Forms and can not be used.', 'caldera-forms'); ?>
+		    </p>
+		</div>
 		<?php
 	}
 
@@ -62,7 +60,7 @@ if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
 } else {
 	define('CFCORE_PATH', plugin_dir_path(__FILE__));
 	define('CFCORE_URL', plugin_dir_url(__FILE__));
-	define( 'CFCORE_VER', '1.8.9' );
+	define( 'CFCORE_VER', '1.8.10' );
 	define('CFCORE_EXTEND_URL', 'https://api.calderaforms.com/1.0/');
 	define('CFCORE_BASENAME', plugin_basename(__FILE__));
 
@@ -179,3 +177,24 @@ function caldera_forms_fallback_shortcode()
 	return esc_html__('Form could not be loaded. Contact the site administrator.', 'caldera-forms');
 
 }
+
+
+add_action( 'graphql_register_types', function() {
+    register_graphql_object_type('CalderaTextField', [
+        'fields' => [
+            'label' => [
+                'type' => 'String',
+            ],
+            'description' => [
+                'type' => 'String',
+            ],
+            'placeholder' => [
+                'type' => 'String',
+            ],
+            'value' => [
+                'type' => 'String',
+            ],
+        ],
+    ]);
+});
+

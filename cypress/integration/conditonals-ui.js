@@ -63,8 +63,8 @@ describe('Using fields with conditionals', () => {
         cy.get( '.layout-form-field' ).should('have.length', 7);
         clickConditionalsTab();
         createConditional('c1', 'hide');
-        cy.get('.condition-group-add-lines').click();
-        cy.get('.condition-group-add-line').click();
+        cy.get('.condition-group-add-lines').click({force: true});
+        cy.get('.condition-group-add-line').click({force: true});
         cy.get('.condition-line-field').last().select('fld_9970286');
         cy.get('.condition-line-field').first().select('fld_8768091');
 

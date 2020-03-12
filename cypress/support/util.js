@@ -42,7 +42,7 @@ export const visitPluginPage = (pluginSlug) => {
 	cy.visit(pluginUrl(pluginSlug));
 };
 export const visitFormEditor = (formId) => {
-	cy.visit(`${pluginUrl('caldera-forms')}&edit=${formId}` );
+	cy.visit(`${pluginUrl('caldera-forms')}&edit=${formId}`)
 }
 export const visitPage = (pageSlug) => {
 	cy.visit(`${url}/${pageSlug}`);
@@ -95,7 +95,7 @@ export const getCfFieldSelector = (fieldId) => {
  * @return {Cypress.Chainable<JQuery<HTMLElement>>}
  */
 export const clearCfField = (fieldId) => {
-	return getCfField(fieldId).clear();
+	return getCfField(fieldId).clear({force: true});
 };
 
 /**
@@ -386,16 +386,37 @@ export const cfEditorIsFieldPreviewVisible = (fieldId ) => {
 	return cfEditorGetFieldPreview(fieldId).should('be.visible');
 };
 
+/**
+ * Check if editor field is visible
+ *
+ * @param fieldId
+ * @returns {Cypress.Chainable<JQuery>}
+ */
 export const cfEditorIsFieldPreviewNotVisible = (fieldId ) => {
 	return cfEditorGetFieldPreview(fieldId).not('be.visible');
 };
+
+/**
+ * Add a processor
+ * @param processorType
+ */
 export const cfAddProcessor = (processorType) =>{
 	cy.get( '.new-processor-button' ).click();
 	cy.get(`.add-new-processor[data-type="${processorType}"]`).click();
-}
+};
 
-export const cfGoToProcessorsTab=() => {
+/**
+ * Go to the processors tab
+ */
+export const cfGoToProcessorsTab = () => {
 	cy.get('#tab_processors a').click();
+};
+
+/**
+ * Go to the processors tab
+ */
+export const cfGoToLayoutTab = () => {
+	cy.get('#tab_layout a').click();
 };
 
 /**
@@ -503,3 +524,35 @@ export const saveFormAndReload = ()  => {
 	cy.get('.caldera-header-save-button').click();
 	cy.reload();
 };
+
+/**
+ * Click the Variables tab to access the variables UI
+ * 
+ * @since 1.8.10
+ */
+export const cfGoToVariablesTab = () => {
+	cy.get('#tab_variables a').click();
+};
+
+/**
+ * Adds a variable and sets its name and value
+ * 
+ * @since 1.8.10
+ */
+export const cfAddVariable = () =>{
+	cy.get('.caldera-add-variable').click();
+	cy.get('.set-system-variable').type('variable_name');
+	cy.get('.var-value').click();
+	cy.get('.var-value').type('variable_value');
+};
+
+/**
+ * Remove all variables
+ * 
+ * @since 1.8.10
+ */
+export const cfRemoveVariable = () => {
+	cy.get( '.remove-this-variable' ).each(($el) => {
+		cy.wrap($el).click()
+	})
+}

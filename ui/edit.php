@@ -1202,7 +1202,7 @@ do_action('caldera_forms_edit_end', $element);
                 data-target="#{{id}}_conditions_lines"
                 data-callback="rebuild_field_binding"
                 data-template="#conditional-line-tmpl"
-                ata-target-insert="append"
+                data-target-insert="append"
             >
                 <?php echo esc_html__( 'Add Condition', 'caldera-forms' ); ?>
             </button>

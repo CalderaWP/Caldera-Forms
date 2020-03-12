@@ -15,6 +15,7 @@ PHP 7.3 Unit:
   stage: Unit Tests
   image: edbizarro/gitlab-ci-pipeline-php:7.3-alpine
   script:
+    - if [ -d "vendor" ]; then rm -Rf vendor; fi
     - composer install --prefer-dist --no-ansi --no-interaction --no-progress
     - composer test:unit
 
@@ -22,6 +23,7 @@ PHP 7.2 Unit:
   stage: Unit Tests
   image: edbizarro/gitlab-ci-pipeline-php:7.2-alpine
   script:
+    - if [ -d "vendor" ]; then rm -Rf vendor; fi
     - composer install --prefer-dist --no-ansi --no-interaction --no-progress
     - composer test:unit
 

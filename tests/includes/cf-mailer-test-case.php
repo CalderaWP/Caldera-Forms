@@ -78,7 +78,7 @@ abstract class Caldera_Forms_Mailer_Test_Case extends Caldera_Forms_Test_Case {
                 'fld_8768091' => 'Mike',
                 'fld_9970286' => 'Corkum',
                 'fld_6009157' => 'roy@roysivan.com',
-                'fld_7683514' => 'Triangular',
+                'fld_7683514' => '%last_name%, then data with a first % sign and a second % symbol, that is two % symbols, well now three, and a magic tag %first_name%',
                 'fld_7908577' => 'click',
                 'formId' => $this->form_id,
                 'instance' => '1',

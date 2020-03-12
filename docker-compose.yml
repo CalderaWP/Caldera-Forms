@@ -9,12 +9,14 @@ services:
     environment:
       WORDPRESS_DB_PASSWORD: example
       WORDPRESS_DEBUG: 1
+      WORDPRESSS_DEBUG_LOG: example
       ABSPATH: /usr/src/wordpress/
     volumes:
       - wordpress:/var/www/html
       - ./wp-content/plugins:/var/www/html/wp-content/plugins
       - .:/var/www/html/wp-content/plugins/caldera-forms
       - ./caldera-core.php:/var/www/html/wp-content/plugins/caldera-forms/caldera-core.php
+      - ./wp-content/mu-plugins:/var/www/html/wp-content/mu-plugins
   cli:
     image: wordpress:cli
     volumes:

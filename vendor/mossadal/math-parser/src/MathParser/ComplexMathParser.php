@@ -13,11 +13,7 @@ namespace MathParser;
 
 
 use MathParser\Parsing\Parser;
-<<<<<<< HEAD
 use MathParser\Lexing\ComplexLexer;
-=======
-use MathParser\Lexing\ComplexLexer;
->>>>>>> feature/3239
 
 class ComplexMathParser extends AbstractMathParser
 {
