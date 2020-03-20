@@ -32,33 +32,14 @@ class Hooks
 			$this->container->getCoreDir()
 		);
         add_filter('caldera_forms_get_field_types', [$register, 'filter' ], 2 );
-        add_action('wp_register_scripts', [$this,'registerAssets']);
-        add_action('admin_enqueue_scripts', [$this,'enqueueAdminAssets']);
+        (new \calderawp\calderaforms\cf2\Asset\Hooks(
+            ['form-builder'],
+            file_exists( CFCORE_PATH . '/dist/asset-manifest.json') ?
+                (array) json_decode( file_get_contents(CFCORE_PATH . '/dist/asset-manifest.json'),true)
+                : []
+        ))->subscribe();
     }
 
-    /**
-     * @var Asset\Register[]
-     */
-    protected $assets = [];
-    public function registerAssets(){
-        if( empty( $this->assets ) ){
-            $this->assets['form-builder'] = new Asset\Register('form-builder', []);
-
-        }
-        $this->assets['form-builder']->register();
-    }
-
-    public function enqueueAdminAssets($hook){
-        if( 'toplevel_page_caldera-forms' !== $hook ){
-            return;
-        }
-        if( empty( $this->assets ) ){
-            $this->registerAssets();
-        }
-        if( \Caldera_Forms_Admin::is_edit()) {
-            $this->assets['form-builder']->enqueue();
-        }
-    }
 
     /**
      * @return FileFieldHandler

@@ -14,44 +14,95 @@ class Register
     /**
      * @var array
      */
-    protected  $data;
+    protected $data;
 
-    public function __construct( $handle,array $data = [])
+    /**
+     * @var string
+     */
+    protected $scriptUrl;
+
+    /**
+     * @var string
+     */
+    protected $assetsFilePath;
+
+    protected $registered;
+
+    /**
+     * Register constructor.
+     * @param $handle
+     * @param $coreUrl
+     * @param $corePath
+     * @param array $data
+     */
+    public function __construct($handle, $coreUrl, $corePath, array $data = [])
     {
         $this->handle = $handle;
         $this->data = $data;
+        $this->registered = false;
+        $this->setScriptUrl($coreUrl . '/clients/' . $this->handle . '/build/index.min.js');
+        $this->setAssetsFilePath($corePath . '/clients/' . $this->handle . '/build/index.min.asset.json');
     }
 
-    protected function  getClientsPath()
+
+    public function getScriptUrl(){
+        return $this->scriptUrl;
+    }
+
+    public function getAssetFilePath(){
+        return $this->assetsFilePath;
+    }
+    public function setScriptUrl($scriptUrl)
     {
-        return CFCORE_PATH . '/clients/';
+        $this->scriptUrl = $scriptUrl;
+        return $this;
     }
 
-    protected function getClientsUrl(){
-        return CFCORE_URL . '/clients/';
+    public function setAssetsFilePath($assetsFilePath){
+        $this->assetsFilePath = $assetsFilePath;
+        return $this;
     }
 
     protected function getLocalizeData()
     {
         return $this->data ? $this->data : [];
     }
-    public function register(){
-        $assetFile = file_get_contents($this->getClientsPath() . $this->handle . '/build/index.min.asset.json');
-        $assetFile = (array)json_decode($assetFile,true);
+
+    /**
+     * @return $this
+     */
+    public function register()
+    {
+
+        $assetFile = file_get_contents($this->getAssetFilePath() );
+        $assetFile = (array)json_decode($assetFile, true);
         wp_register_script(
             $this->handle,
-            $this->getClientsUrl() . $this->handle . '/build/index.min.js',
+            $this->getScriptUrl(),
             $assetFile['dependencies'],
             $assetFile['version']
         );
 
-        wp_localize_script($this->handle, strtoupper('CF_' . str_replace('-', '_',$this->handle)), array_merge($this->getLocalizeData(),[
-            'hi' => 'roy'
-        ]));
+        wp_localize_script($this->handle, strtoupper('CF_' . str_replace('-', '_', $this->handle)),
+            array_merge($this->getLocalizeData(), [
+                'hi' => 'roy'
+            ]));
+        $this->registered = true;
+        return $this;
 
     }
 
-    public function enqueue(){
+    /**
+     * @return bool
+     */
+    public function isRegistered()
+    {
+        return $this->registered;
+    }
+
+    public function enqueue()
+    {
         wp_enqueue_script($this->handle);
+        return $this;
     }
 }
