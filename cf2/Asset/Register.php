@@ -6,26 +6,45 @@ namespace calderawp\calderaforms\cf2\Asset;
 
 class Register
 {
-
     /**
+     *
+     * @since 1.9.0
+     *
      * @var string
      */
+
     protected $handle;
     /**
+     *
+     * @since 1.9.0
+     *
      * @var array
      */
     protected $data;
 
     /**
+     *
+     * @since 1.9.0
+     *
      * @var string
      */
     protected $scriptUrl;
 
     /**
+     *
+     * @since 1.9.0
+     *
      * @var string
      */
     protected $assetsFilePath;
 
+    /**
+     *
+     *
+     * @since 1.9.0
+     *
+     * @var bool
+     */
     protected $registered;
 
     /**
@@ -35,6 +54,7 @@ class Register
      * @param $coreUrl
      * @param $corePath
      * @param array $data
+     *
      * @since 1.9.0
      *
      */
@@ -146,6 +166,9 @@ class Register
      */
     public function enqueue()
     {
+        if (!$this->isRegistered()) {
+            $this->register();
+        }
         wp_enqueue_script($this->handle);
         return $this;
     }

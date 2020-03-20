@@ -34,9 +34,9 @@ console.log( `Building for ${isProduction ? 'Production' : "Development"}`);
  * @type {string[]}
  */
 const entryPointNames = [
-	'admin',
-	'privacy',
-	'render',
+	//'admin',
+	//'privacy',
+	//'render',
 	'form-builder'
 ];
 

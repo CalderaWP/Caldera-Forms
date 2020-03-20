@@ -96,9 +96,8 @@ class Hooks
     public function enqueueAdminAssets($hook)
     {
         if ('toplevel_page_caldera-forms' !== $hook) {
-            return;
+            return $this;
         }
-
         if (\Caldera_Forms_Admin::is_edit()) {
             $this->getHandler('form-builder')->enqueue();
         }

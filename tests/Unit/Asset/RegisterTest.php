@@ -59,6 +59,22 @@ class RegisterTest extends TestCase
     }
 
     /**
+     * @covers \calderawp\calderaforms\cf2\Asset\Register::enqueue()
+     * @covers \calderawp\calderaforms\cf2\Asset\Register::register()
+     * @covers \calderawp\calderaforms\cf2\Asset\Register::isRegistered()
+     */
+    public function testRegisterAndEnqueueWithoutCallingRegister()
+    {
+        $register = $this->getRegister();
+
+        \Brain\Monkey\Functions\expect('wp_register_script')->once();
+        \Brain\Monkey\Functions\expect('wp_localize_script')->once();
+        \Brain\Monkey\Functions\expect('wp_enqueue_script')->once();
+
+        $this->assertEquals($register, $register->enqueue());
+    }
+
+    /**
      * @covers \calderawp\calderaforms\cf2\Asset\Register::setAssetsFilePath()
      * @covers \calderawp\calderaforms\cf2\Asset\Register::getAssetFilePath()
      */
