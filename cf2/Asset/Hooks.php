@@ -31,45 +31,24 @@ class Hooks
     public function __construct(array $handles, CalderaFormsV2Contract $container, array $manifest = [])
     {
         $this->handles = $handles;
-        $this->manifest = $manifest;
         $this->container = $container;
-
+        $this->manifest = $manifest;
     }
 
     public function subscribe()
     {
-
         $this->maybeUseManifest();
         add_action('wp_register_scripts', [$this, 'registerAssets']);
         add_action('admin_enqueue_scripts', [$this, 'enqueueAdminAssets']);
     }
 
-    /**
-     * If a webpack asset-manifest.json was used, substitute URLs from that array
-     */
-    protected function maybeUseManifest()
-    {
-        if (!empty($this->manifest) && !empty($this->handles)) {
-            foreach ($this->handles as $handle) {
-                $assetFilePath = isset($this->manifest["{$handle}.json"]) ? $this->manifest["{$handle}.json"] : null;
-                if (!is_null($assetFilePath)) {
-                    $this->getHandler($handle)->setAssetsFilePath($assetFilePath);
-                }
-                $scriptsUrl = isset($this->manifest["{$handle}.js"]) ? $this->manifest["{$handle}.js"] : null;
-                if (!is_null($scriptsUrl)) {
-                    $this->getHandler($handle)->setScriptUrl($scriptsUrl);
-
-                }
-
-
-            }
-
-        }
-    }
 
     /**
+     * Get a
      * @param $handle
      * @return Register|null
+     * @since 1.9.0
+     *
      */
     public function getHandler($handle)
     {
@@ -88,12 +67,32 @@ class Hooks
 
     /**
      * Register all assets
+     *
+     * @return $this
+     * @since 1.9.0
+     *
+     * @uses "wp_register_scripts" action
+     *
      */
     public function registerAssets()
     {
-        $this->getHandler('form-builder')->register();
+        if (!empty($this->handlers)) {
+            foreach ($this->handles as $handle) {
+                $this->getHandler($handle)->register();
+            }
+        }
+        return $this;
     }
 
+    /**
+     * Maybe enqueue assets
+     *
+     * @return $this
+     * @since 1.9.0
+     *
+     * @uses "admin_enqueue_scripts" action
+     *
+     */
     public function enqueueAdminAssets($hook)
     {
         if ('toplevel_page_caldera-forms' !== $hook) {
@@ -102,6 +101,28 @@ class Hooks
 
         if (\Caldera_Forms_Admin::is_edit()) {
             $this->getHandler('form-builder')->enqueue();
+        }
+        return $this;
+    }
+
+    /**
+     * If a webpack asset-manifest.json was used, substitute URLs from that array
+     *
+     * @since 1.9.0
+     */
+    protected function maybeUseManifest()
+    {
+        if (!empty($this->manifest)) {
+            foreach ($this->handles as $handle) {
+                $assetFilePath = isset($this->manifest["{$handle}.json"]) ? $this->manifest["{$handle}.json"] : null;
+                if (!is_null($assetFilePath)) {
+                    $this->getHandler($handle)->setAssetsFilePath($assetFilePath);
+                }
+                $scriptsUrl = isset($this->manifest["{$handle}.js"]) ? $this->manifest["{$handle}.js"] : null;
+                if (!is_null($scriptsUrl)) {
+                    $this->getHandler($handle)->setScriptUrl($scriptsUrl);
+                }
+            }
         }
     }
 }

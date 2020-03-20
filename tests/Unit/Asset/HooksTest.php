@@ -22,15 +22,30 @@ class HooksTest extends TestCase
         parent::setUp();
     }
 
+    /**
+     * @covers \calderawp\calderaforms\cf2\Asset\Hooks::registerAssets()
+     */
     public function testRegisterAssets()
     {
         $hooks = new Hooks(['form-builder'], $this->container);
         \Brain\Monkey\Functions\expect('wp_register_script')->once();
         \Brain\Monkey\Functions\expect('wp_localize_script')->once();
-        $hooks->registerAssets();
+        $this->assertEquals($hooks, $hooks->registerAssets());
 
     }
 
+    /**
+     * @covers \calderawp\calderaforms\cf2\Asset\Hooks::registerAssets()
+     */
+    public function testRegisterAssetsNoHandles()
+    {
+        $hooks = new Hooks([], $this->container);
+        $this->assertEquals($hooks, $hooks->registerAssets());
+    }
+
+    /**
+     * @covers \calderawp\calderaforms\cf2\Asset\Hooks::subscribe()
+     */
     public function testSubscribe()
     {
         $hooks = new Hooks(['form-builder'], $this->container);
@@ -39,7 +54,9 @@ class HooksTest extends TestCase
         $this->assertTrue(has_action('wp_register_scripts'), [$hooks, 'registerAssets']);
     }
 
-
+    /**
+     * @covers \calderawp\calderaforms\cf2\Asset\Hooks::getHandler()
+     */
     public function testGetHandler()
     {
         $hooks = new Hooks(['form-builder'], $this->container);
@@ -48,5 +65,46 @@ class HooksTest extends TestCase
             '/clients/form-builder/build/index.min.asset.json',
             $hooks->getHandler('form-builder')->getAssetFilePath()
         );
+    }
+
+    /**
+     * @covers \calderawp\calderaforms\cf2\Asset\Hooks::subscribe()
+     * @covers \calderawp\calderaforms\cf2\Asset\Hooks::maybeUseManifest()
+     */
+    public function testUseManifest()
+    {
+        $hooks = new Hooks(['form-builder', 'arms'], $this->container,
+            [
+                'arms.js' => 'https://website.wordpress/something/arms.js',
+                'arms.json' => dirname(__FILE__ ) .'/assets.json'
+            ]);
+
+        $hooks->subscribe();
+        $this->assertInstanceOf(Register::class, $hooks->getHandler('arms'));
+        //Does not change defaults with no override
+        $this->assertStringEndsWith(
+            '/clients/form-builder/build/index.min.asset.json',
+            $hooks->getHandler('form-builder')->getAssetFilePath()
+        );
+        $this->assertStringEndsWith(
+            '/clients/form-builder/build/index.min.js',
+            $hooks
+                ->getHandler('form-builder')
+                ->getScriptUrl()
+        );
+
+        //Does  change defaults when has override
+        $this->assertEquals(
+            dirname(__FILE__ ) .'/assets.json',
+            $hooks->getHandler('arms')->getAssetFilePath()
+        );
+
+        $this->assertEquals(
+            'https://website.wordpress/something/arms.js',
+            $hooks
+                ->getHandler('arms')
+                ->getScriptUrl()
+        );
+
     }
 }

@@ -30,10 +30,13 @@ class Register
 
     /**
      * Register constructor.
+     *
      * @param $handle
      * @param $coreUrl
      * @param $corePath
      * @param array $data
+     * @since 1.9.0
+     *
      */
     public function __construct($handle, $coreUrl, $corePath, array $data = [])
     {
@@ -45,24 +48,56 @@ class Register
     }
 
 
-    public function getScriptUrl(){
+    /**
+     *
+     * @return string
+     * @since 1.9.0
+     *
+     */
+    public function getScriptUrl()
+    {
         return $this->scriptUrl;
     }
 
-    public function getAssetFilePath(){
+    /**
+     *
+     * @return string
+     * @since 1.9.0
+     *
+     */
+    public function getAssetFilePath()
+    {
         return $this->assetsFilePath;
     }
+
+    /**
+     * @return $this
+     * @since 1.9.0
+     *
+     */
     public function setScriptUrl($scriptUrl)
     {
         $this->scriptUrl = $scriptUrl;
         return $this;
     }
 
-    public function setAssetsFilePath($assetsFilePath){
+    /**
+     * @return $this
+     * @since 1.9.0
+     *
+     */
+    public function setAssetsFilePath($assetsFilePath)
+    {
         $this->assetsFilePath = $assetsFilePath;
         return $this;
     }
 
+    /**
+     *
+     * @return array
+     * @since 1.9.0
+     *
+     */
     protected function getLocalizeData()
     {
         return $this->data ? $this->data : [];
@@ -70,11 +105,13 @@ class Register
 
     /**
      * @return $this
+     * @since 1.9.0
+     *
      */
     public function register()
     {
 
-        $assetFile = file_get_contents($this->getAssetFilePath() );
+        $assetFile = file_get_contents($this->getAssetFilePath());
         $assetFile = (array)json_decode($assetFile, true);
         wp_register_script(
             $this->handle,
@@ -94,12 +131,19 @@ class Register
 
     /**
      * @return bool
+     * @since 1.9.0
+     *
      */
     public function isRegistered()
     {
         return $this->registered;
     }
 
+    /**
+     * @return $this
+     * @since 1.9.0
+     *
+     */
     public function enqueue()
     {
         wp_enqueue_script($this->handle);

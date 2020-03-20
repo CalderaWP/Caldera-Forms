@@ -11,9 +11,14 @@ use calderawp\calderaforms\cf2\Fields\RegisterFields;
 class Hooks
 {
 
+    /**
+     *
+     * @scine 1.8.0
+     *
+     * @CalderaFormsV2Contract
+     */
     protected $container;
     protected $fileFieldHandler;
-
 
     public function __construct(CalderaFormsV2Contract $container )
     {
@@ -32,8 +37,11 @@ class Hooks
 			$this->container->getCoreDir()
 		);
         add_filter('caldera_forms_get_field_types', [$register, 'filter' ], 2 );
+
+        //Set up hooks for registering client assets
         (new \calderawp\calderaforms\cf2\Asset\Hooks(
             ['form-builder'],
+            $this->container,
             file_exists( CFCORE_PATH . '/dist/asset-manifest.json') ?
                 (array) json_decode( file_get_contents(CFCORE_PATH . '/dist/asset-manifest.json'),true)
                 : []
