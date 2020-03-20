@@ -346,9 +346,11 @@ class Caldera_Forms_Admin_Assets
 
         if (Caldera_Forms_Admin::is_edit()) {
             $form_id = trim($_GET[Caldera_Forms_Admin::EDIT_KEY]);
+            $form = Caldera_Forms_Forms::get_form($form_id);
             $data['rest']['form'] = esc_url_raw(Caldera_Forms_API_Util::url('forms/' . $form_id, true));
             $data['rest']['revisions'] = esc_url_raw(Caldera_Forms_API_Util::url('forms/' . $form_id . '/revisions', true));
             $data['rest']['delete_entries'] = esc_url_raw(Caldera_Forms_API_Util::url('entries/' . $form_id . '/delete', true));
+            $data['form'] = $form;
         }
         return $data;
     }

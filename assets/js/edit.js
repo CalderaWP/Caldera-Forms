@@ -36,12 +36,7 @@ function new_conditional_line(obj){
     return line;
 }
 
-function build_conditions_config(obj){
-    var config = JSON.parse(obj.trigger.val());
-    config.id = obj.trigger.data('id');
-    return config;
 
-}
 
 /**
  * Pre compile all Handelbars templates

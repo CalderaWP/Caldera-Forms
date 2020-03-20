@@ -147,7 +147,6 @@ function processor_wrapper_template($id = '{{id}}', $type = '{{type}}', $config_
 		</p>
 		<div class="caldera-conditionals-wrapper" id="<?php echo $id; ?>_conditional_wrap"></div>
 		<?php do_action('caldera_forms_processor_conditionals_template', $id); ?>
-		<input type="hidden" class="processor_conditions_config_string block-input ajax-trigger" data-event="none" data-type="processors" data-autoload="true" data-request="build_conditions_config" data-template="#conditional-group-tmpl" data-id="<?php echo $id; ?>" data-target="#<?php echo $id; ?>_conditional_wrap" data-callback="rebuild_field_binding" value="<?php echo htmlentities( $conditions_str ); ?>">
 		</div>
 	</div>
 	<?php

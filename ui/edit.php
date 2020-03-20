@@ -313,7 +313,7 @@ $field_options_template = "
 	<label class=\"pull-right\" style=\"padding: 10px;\"><input type=\"checkbox\" class=\"toggle_show_values field-config\" name=\"{{_name}}[show_values]\" value=\"1\" {{#if show_values}}checked=\"checked\"{{/if}}> " . esc_html__( 'Show Values', 'caldera-forms' ) . "</label>
 	</div>
 	
-	<div class=\"caldera-config-group caldera-config-group-full toggle-options caldera-config-field\">
+	<div class=\"caldera-config-group caldera-config-group-full toggle-options field-options caldera-config-field\" data-field=\"{{_id}}\">
 		{{#each option}}
 			<div class=\"toggle_option_row 315\">
 					<i class=\"dashicons dashicons-sort option-group-control\" style=\"padding: 4px 9px;\"></i>
@@ -326,14 +326,14 @@ $field_options_template = "
 						<label class=\"option-setting-label option-setting-label-for-value\" for=\"opt-calc-val-{{@key}}\">
 							". esc_html__( 'Calculation Value', 'caldera-forms' ) . "
 						</label>
-						<input{{#unless ../show_values}} style=\"display:none;\"{{/unless}} type=\"text\" class=\"toggle_calc_value_field field-config option-setting \" name=\"{{../_name}}[option][{{@key}}][calc_value]\" value=\"{{#if ../show_values}}{{calc_value}}{{else}}{{label}}{{/if}}\" placeholder=\"" . esc_attr( __( 'Calculation Value', 'caldera-forms' ) ) . "\" id=\"opt-calc-val-{{@key}}\" data-opt=\"{{@key}}\" />
+						<input {{#unless ../show_values}} style=\"display:none;\"{{/unless}} type=\"text\" class=\"toggle_calc_value_field field-config option-setting \" name=\"{{../_name}}[option][{{@key}}][calc_value]\" value=\"{{#if ../show_values}}{{calc_value}}{{else}}{{label}}{{/if}}\" placeholder=\"" . esc_attr( __( 'Calculation Value', 'caldera-forms' ) ) . "\" id=\"opt-calc-val-{{@key}}\" data-opt=\"{{@key}}\" />
 					</div>
 					
 					<div class=\"caldera-config-group\">
 						<label class=\"option-setting-label option-setting-label-for-value\" for=\"opt-val-{{@key}}\">
 							". esc_html__( 'Value', 'caldera-forms' ) . " 
 						</label>
-						<input{{#unless ../show_values}} style=\"display:none;\"{{/unless}} type=\"text\" class=\"toggle_value_field option-setting field-config  required \" name=\"{{../_name}}[option][{{@key}}][value]\" value=\"{{#if ../show_values}}{{value}}{{else}}{{label}}{{/if}}\"" . esc_attr( __( 'Value', 'caldera-forms' ) ) . "\" id=\"opt-val-{{@key}}\" data-opt=\"{{@key}}\" />
+						<input  {{#unless ../show_values}} style=\"display:none;\"{{/unless}} type=\"text\" class=\"toggle_value_field option-setting field-config  required \" name=\"{{../_name}}[option][{{@key}}][value]\" value=\"{{#if ../show_values}}{{value}}{{else}}{{label}}{{/if}}\"" . esc_attr( __( 'Value', 'caldera-forms' ) ) . "\" id=\"opt-val-{{@key}}\" data-opt=\"{{@key}}\" />
 						
 					</div>
 					
@@ -341,7 +341,7 @@ $field_options_template = "
 						<label class=\"option-setting-label option-setting-label-for-label\" for=\"opt-label-{{@key}}\">
 							". esc_html__( 'Label', 'caldera-forms' ) . "
 						</label>
-						<input{{#unless ../show_values}} style=\"width:245px;\"{{/unless}} type=\"text\" data-option=\"{{@key}}\" class=\"toggle_label_field option-setting field-config required\" name=\"{{../_name}}[option][{{@key}}][label]\" value=\"{{label}}\" placeholder=\"" . esc_attr( __( 'Label', 'caldera-forms' ) ) . "\" for=\"opt-label-{{@key}}\" data-opt=\"{{@key}}\" />
+						<input {{#unless ../show_values}} style=\"width:245px;\"{{/unless}} type=\"text\" data-option=\"{{@key}}\" class=\"toggle_label_field option-setting field-config required\" name=\"{{../_name}}[option][{{@key}}][label]\" value=\"{{label}}\" placeholder=\"" . esc_attr( __( 'Label', 'caldera-forms' ) ) . "\" for=\"opt-label-{{@key}}\" data-opt=\"{{@key}}\" />
 					</div>	
 				<button class=\"button button-small toggle-remove-option\" type=\"button\">
 					<i class=\"icn-delete\"></i>
@@ -640,11 +640,7 @@ function caldera_forms_field_wrapper_template($field_id = '{{field_id}}', $label
 			do_action( 'caldera_forms_field_wrapper_after_field_setup', $config, $type, $field_id );
 			?>
 
-
 			<input type="hidden" class="field_config_string block-input" value="<?php echo htmlentities( $config_str ); ?>">
-
-            <input type="hidden" class="field_conditions_config_string block-input ajax-trigger" data-event="none" data-autoload="true" data-request="build_conditions_config" data-template="#conditional-group-tmpl" data-id="<?php echo esc_attr($field_id); ?>" data-target="#<?php echo esc_attr($field_id); ?>_conditional_wrap" data-type="fields" data-callback="rebuild_field_binding" value="<?php echo htmlentities( $conditions_str ); ?>">
-
             <br>
 			<?php
 			/**
@@ -1115,6 +1111,7 @@ do_action('caldera_forms_edit_end', $element);
 				type="text"
 				class="toggle_calc_value_field field-config option-setting "
 				name="{{../_name}}[option][{{@key}}][calc_value]"
+                data-field="{{../_name}}"
 				value="{{calc_value}}"
 				placeholder="<?php esc_attr_e( 'Calculation Value', 'caldera-forms'  ); ?>"
 				id="opt-calc-val-{{@key}}"
