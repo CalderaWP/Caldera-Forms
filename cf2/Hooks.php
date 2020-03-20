@@ -32,8 +32,33 @@ class Hooks
 			$this->container->getCoreDir()
 		);
         add_filter('caldera_forms_get_field_types', [$register, 'filter' ], 2 );
+        add_action('wp_register_scripts', [$this,'registerAssets']);
+        add_action('admin_enqueue_scripts', [$this,'enqueueAdminAssets']);
     }
 
+    /**
+     * @var Asset\Register[]
+     */
+    protected $assets = [];
+    public function registerAssets(){
+        if( empty( $this->assets ) ){
+            $this->assets['form-builder'] = new Asset\Register('form-builder', []);
+
+        }
+        $this->assets['form-builder']->register();
+    }
+
+    public function enqueueAdminAssets($hook){
+        if( 'toplevel_page_caldera-forms' !== $hook ){
+            return;
+        }
+        if( empty( $this->assets ) ){
+            $this->registerAssets();
+        }
+        if( \Caldera_Forms_Admin::is_edit()) {
+            $this->assets['form-builder']->enqueue();
+        }
+    }
 
     /**
      * @return FileFieldHandler
@@ -42,6 +67,7 @@ class Hooks
     {
         return $this->fileFieldHandler;
     }
+
 
     /**
      * Add field handlers filters

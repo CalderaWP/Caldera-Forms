@@ -1017,11 +1017,10 @@
     "@babel/preset-env" "^7.3.1"
     "@babel/preset-react" "^7.0.0"
 
-"@calderajs/cf-editor-state@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@calderajs/cf-editor-state/-/cf-editor-state-0.0.4.tgz#77f0b43c7d6152a01f6d6f8591ef13f660bd903b"
-  integrity sha512-T1ZJksk8GtZkvy9vsJLsYCsHSPHeXcoxUFq51z7/i9qO3j3Lexcn0zrN3Ve33eYmlqQBMOBdeiePPfqc2KxClg==
+"@calderajs/form-builder@file:../form-builder":
+  version "0.1.0"
   dependencies:
+    deep-clone "^3.0.3"
     tsee "^1.3.0"
 
 "@cnakazawa/watch@^1.0.3":
@@ -1555,9 +1554,9 @@
   integrity sha512-Uo4chgKbnPNlxQwoFmYIwctkQVkMMmsAoGGU4JKwLuvBefF0pCq4FybNSnfkfRCpC7ZW7kttcC/TrRtAJsvGtg==
 
 "@types/node@^12.7.2":
-  version "12.12.29"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.29.tgz#46275f028b4e463b9ac5fefc1d08bc66cc193f25"
-  integrity sha512-yo8Qz0ygADGFptISDj3pOC9wXfln/5pQaN/ysDIzOaAWXt73cNHmtEC8zSO2Y+kse/txmwIAJzkYZ5fooaS5DQ==
+  version "12.12.30"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.30.tgz#3501e6f09b954de9c404671cefdbcc5d9d7c45f6"
+  integrity sha512-sz9MF/zk6qVr3pAnM0BSQvYIBK44tS75QC5N+VbWSE4DjCV/pJ+UzCW/F+vVnl7TkOPcuwQureKNtSSwjBTaMg==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -5242,6 +5241,11 @@ decompress-zip@^0.2.2:
     q "^1.1.2"
     readable-stream "^1.1.8"
     touch "0.0.3"
+
+deep-clone@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/deep-clone/-/deep-clone-3.0.3.tgz#c13d7797625b66e955c5f6f52bfad028eb1166bb"
+  integrity sha512-6jtXIlCBAwr3GP/7Il52clbIFIKAxg/pnNkL4/sE6+Oqb10MXMtm9LDZV2IAuwdaKV9VBm8hlxAFk9r6pF8XRw==
 
 deep-equal@^1.0.1:
   version "1.1.1"

@@ -37,6 +37,7 @@ const entryPointNames = [
 	'admin',
 	'privacy',
 	'render',
+	'form-builder'
 ];
 
 /**
