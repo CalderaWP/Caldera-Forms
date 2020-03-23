@@ -99,9 +99,11 @@ function processor_wrapper_template($id = '{{id}}', $type = '{{type}}', $config_
 	?>
 	<div class="caldera-editor-processor-config-wrapper caldera-editor-config-wrapper processor-<?php echo $type; ?>" id="<?php echo $id; ?>" data-type="<?php echo $type; ?>" style="display:none;">
 
-		<div class="toggle_option_tab">
-			<a href="#<?php echo $id; ?>_settings_pane" class="button button-primary"><?php echo esc_html__( 'Settings', 'caldera-forms' ); ?></a>
-			<a href="#<?php echo $id; ?>_conditions_pane" class="button "><?php echo esc_html__( 'Conditions', 'caldera-forms' ); ?></a>
+		<div class="toggle_option_tab" data-pid="<?php echo esc_attr($id); ?>">
+			<a href="<?php echo  esc_attr('#' .$id . '_settings_pane' ); ?>" class="button button-primary"><?php echo esc_html__( 'Settings', 'caldera-forms' ); ?></a>
+			<a href="<?php echo  esc_attr('#' .$id . '_conditions_pane' ); ?>" class="button set-conditions" data-pid="<?php echo  esc_attr($id); ?>">
+                <?php echo esc_html__( 'Conditions', 'caldera-forms' ); ?>
+            </a>
 		</div>
 		<h3 data-title="<?php esc_html_e( 'New Form Processor', 'caldera-forms'); ?>" class="caldera-editor-processor-title"><?php echo $type_name; ?></h3>
 		<div id="<?php echo $id; ?>_settings_pane" class="wrapper-instance-pane">
@@ -137,16 +139,6 @@ function processor_wrapper_template($id = '{{id}}', $type = '{{type}}', $config_
 			<button class="button block-button delete-processor" data-confirm="<?php esc_html_e( 'Are you sure you want to remove this processor?', 'caldera-forms'); ?>" type="button"><?php esc_html_e( 'Remove Processor', 'caldera-forms'); ?></button>
 		</div>
 		<div id="<?php echo $id; ?>_conditions_pane" style="display:none;" class="wrapper-instance-pane">
-		<p>
-			<select name="config[processors][<?php echo $id; ?>][conditions][type]" data-id="<?php echo $id; ?>" class="caldera-conditionals-usetype">
-				<option value=""></option>
-				<option value="use" <?php if($condition_type == 'use'){ echo 'selected="selected"'; } ?>><?php esc_html_e( 'Use', 'caldera-forms'); ?></option>
-				<option value="not" <?php if($condition_type == 'not'){ echo 'selected="selected"'; } ?>><?php esc_html_e( 'Don\'t Use', 'caldera-forms'); ?></option>
-			</select>
-			<button id="<?php echo $id; ?>_condition_group_add" style="display:none;" type="button" data-id="<?php echo $id; ?>" class="pull-right button button-small add-conditional-group ajax-trigger" data-type="processors" data-template="#conditional-group-tmpl" data-target-insert="append" data-request="new_conditional_group" data-callback="rebuild_field_binding" data-target="#<?php echo $id; ?>_conditional_wrap"><?php esc_html_e( 'Add Conditional Group', 'caldera-forms'); ?></button>
-		</p>
-		<div class="caldera-conditionals-wrapper" id="<?php echo $id; ?>_conditional_wrap"></div>
-		<?php do_action('caldera_forms_processor_conditionals_template', $id); ?>
 		</div>
 	</div>
 	<?php

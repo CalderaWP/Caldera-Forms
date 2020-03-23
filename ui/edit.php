@@ -1278,6 +1278,7 @@ var preset_options = <?php echo json_encode( $option_presets ); ?>;
 	jQuery('.error,.notice,.notice-error').remove();
 </script>
 
+
 <?php
 /**
  * Runs at the bottom of the Caldera Forms form editor page

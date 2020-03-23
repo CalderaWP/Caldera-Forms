@@ -19,7 +19,6 @@ const SubscribesToFieldOptions = (props) => {
         let isSubscribed = true;
         jQuery(document).on('change record click', '.field-options .option-setting', function () {
             let update = Object.assign({}, fieldOptions);
-            console.log(jQuery(this));
             let key = '';
             if (jQuery(this).hasClass('toggle_value_field')) {
                 key = 'value'
@@ -101,6 +100,10 @@ domReady(function () {
     if (!form.hasOwnProperty('fields')) {
         form.fields = {};
     }
+    jQuery(document).on( 'field.config-change', (e,{name,value}) => {
+        console.log(name.split( '[').map( l => l.replace( ']', '')));
+        console.log(name.split( '[').map( l => l.replace( ']', '')).join('.'));
+    });
 
     let options = {};
     Object.values(form.fields).forEach((field) => {
@@ -131,6 +134,10 @@ domReady(function () {
             );
             //Yah seriously, use portals
         }
+    });
+    jQuery( '.toggle_option_tab a.set-conditions' ).on('click', function () {
+        const processorId = jQuery(this).data('pid');
+        //do processor conditional ui
     });
 
 });

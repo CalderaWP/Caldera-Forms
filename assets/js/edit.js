@@ -838,7 +838,10 @@ jQuery(document).ready(function($){
     });
 
     $('.caldera-editor-body').on('change record', '.field-config', function(e){
-
+        $(document).trigger('field.config-change', {
+            name: e.target.name,
+            value: e.target.value
+        });
         var field 	= $(this),
             parent 	= field.closest('.caldera-editor-field-config-wrapper');
 

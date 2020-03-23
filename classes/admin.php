@@ -1238,6 +1238,11 @@ class Caldera_Forms_Admin {
 
 		echo "	<div class=\"wrap\">\r\n";
 		if(!empty($_GET['edit'])){
+
+            //Root element for form builder client.
+            //Use portals to render inside existing builder
+            echo '<div id="caldera-forms-form-builder"></div>';
+            //The form builder
 			echo "<form method=\"POST\" action=\"admin.php?page=" . $this->plugin_slug . "\" data-load-element=\"#save_indicator\" data-sender=\"ajax\" class=\"caldera-forms-options-form edit-update-trigger\">\r\n";
 			include CFCORE_PATH . 'ui/edit.php';
 			echo "</form>\r\n";
