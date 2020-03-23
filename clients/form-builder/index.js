@@ -102,7 +102,7 @@ domReady(function () {
     }
     jQuery(document).on( 'field.config-change', (e,{name,value}) => {
         console.log(name.split( '[').map( l => l.replace( ']', '')));
-        console.log(name.split( '[').map( l => l.replace( ']', '')).join('.'));
+        console.log(name.split( '[').map( l => l.replace( ']', '.')).join('.'));
     });
 
     let options = {};

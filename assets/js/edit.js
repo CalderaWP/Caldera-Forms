@@ -652,7 +652,9 @@ jQuery(document).ready(function($){
             // remove line
             line.remove();
             rebuild_field_binding();
-            $(document).trigger('field.removed');
+            $(document).trigger('field.removed',{
+                fieldId: field
+            });
         });
 
     });
@@ -1775,7 +1777,9 @@ jQuery(document).ready(function($) {
 
         $('#' + name + '_lable').focus().select();
         baldrickTriggers();
-        $(document).trigger('field.added');
+        $(document).trigger('field.added', {
+            field: field_set
+        });
         if( field_default ){
             $('#' + new_name + '_type' ).data('type', field_set.type ).trigger('change');
         }else{
