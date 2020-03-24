@@ -30,7 +30,7 @@ function processor_line_template($id = '{{id}}', $type = null){
 	}
 
 	?>
-	<li class="caldera-processor-nav <?php echo $id; ?> <?php if(!empty($type)){ echo 'processor_type_'.$type; }; ?>">
+	<li class="<?php echo esc_attr('caldera-processor-nav ' . $id); ?> <?php if(!empty($type)){ echo 'processor_type_'.$type; }; ?>" data-pid="<?php echo esc_attr($id); ?>">
 		<a href="#<?php echo $id; ?>">
 		<?php echo $type_name; ?>
 		<span class="processor-line-number"></span>
@@ -332,7 +332,6 @@ function hide_single_processors(){
 }
 
 function new_form_processor(obj){
-
 	return {};
 }
 
