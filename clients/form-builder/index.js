@@ -70,6 +70,7 @@ domReady(function () {
     render(
         <SubscribesToFormFields
             jQuery={window.jQuery}
+            intitalFields={form.fields}
             component={({formFields}) => {
                 console.log(formFields);
                 //Maybe render on a portal?

@@ -40,7 +40,7 @@ class Hooks
 
         $manifest = [];
         if( file_exists( CFCORE_PATH . 'dist/asset-manifest.json') ){
-            $manifest =(array) json_decode( file_get_contents(CFCORE_PATH . 'dist/asset-manifest.json'),true);
+            $manifest = (array) json_decode( file_get_contents(CFCORE_PATH . 'dist/asset-manifest.json'),true);
         }
 
         //Set up hooks for registering client assets
