@@ -7,43 +7,6 @@ import React from 'react';
 import {render} from '@wordpress/element';
 import domReady from '@wordpress/dom-ready';
 
-/**
- * Watches for changes to field options and provides to child
- *
- * @todo Move to form-builder lib?
- */
-const SubscribesToFieldOptions = (props) => {
-    const {jQuery} = props;
-    const [fieldOptions, setFieldOptions] = React.useState(props.options || {});
-    React.useEffect(() => {
-        let isSubscribed = true;
-        jQuery(document).on('change record click', '.field-options .option-setting', function () {
-            let update = Object.assign({}, fieldOptions);
-            let key = '';
-            if (jQuery(this).hasClass('toggle_value_field')) {
-                key = 'value'
-            } else if (jQuery(this).hasClass('toggle_label_field')) {
-                key = 'label'
-            } else {
-                return;
-            }
-            const option = jQuery(this).data('opt');
-            const fieldId = jQuery(this).closest('.field-options').data('field');
-            if (!update.hasOwnProperty(fieldId)) {
-                update[fieldId] = {};
-            }
-            update[fieldId][option] = {
-                ...update[fieldId].hasOwnProperty(option) ? update[fieldId][option] : {},
-                [key]: jQuery(this)[0].value
-            };
-            setFieldOptions(update);
-        });
-        return () => {
-            isSubscribed = false;
-        }
-    }, [jQuery]);
-    return props.component({fieldOptions, setFieldOptions})
-};
 
 /**
  * The conditional logic app of today
@@ -54,37 +17,18 @@ const SubscribesToFieldOptions = (props) => {
 const FormBuilder = (props) => {
     const {strings, conditionals} = props;
     return (
-        <SubscribesToFieldOptions
-            options={props.fieldOptions}
+        <SubscribesToFormFields
             jQuery={window.jQuery}
-            component={({fieldOptions}) => {
+            component={({formFields}) => {
+                console.log(formFields);
+                //Maybe render on a portal?
+                //Or will need a different app for Processor Conditionals
                 return (
-                    <SubscribesToFormFields
-                        jQuery={window.jQuery}
-                        component={({formFields}) => {
-                            const fields = formFields.map(field => {
-                                if (fieldOptions.hasOwnProperty(field.ID)) {
-                                    return {
-                                        ...field,
-                                        config: {
-                                            option: fieldOptions[field.ID]
-                                        }
-                                    }
-                                } else {
-                                    return field;
-                                }
-
-                            });
-                            //Maybe render on a portal?
-                            //Or will need a different app for Processor Conditionals
-                            return (
-                                <ConditionalEditor formFields={fields} conditionals={conditionals} strings={strings}/>
-                            )
-                        }}
-                    />
+                    <div />
                 )
-            }}/>
-    )
+            }}
+        />
+    );
 };
 
 FormBuilder.defaultProps = {
@@ -100,10 +44,7 @@ domReady(function () {
     if (!form.hasOwnProperty('fields')) {
         form.fields = {};
     }
-    jQuery(document).on( 'field.config-change', (e,{name,value}) => {
-        console.log(name.split( '[').map( l => l.replace( ']', '')));
-        console.log(name.split( '[').map( l => l.replace( ']', '.')).join('.'));
-    });
+
 
     let options = {};
     Object.values(form.fields).forEach((field) => {
@@ -119,25 +60,25 @@ domReady(function () {
         }
     });
 
-    /**
-     * Load conditional editor when clicking on conditions tab
-     * @type {boolean}
-     */
-    let isLoaded = false;
-    document.getElementById('tab_conditions').addEventListener("click", () => {
-        if (!isLoaded) {
-            isLoaded = true;
-            //Maybe render on hidden element and then use portals for editor.
-            render(
-                <FormBuilder conditionals={[]} strings={translationStrings} fieldOptions={options}/>,
-                document.getElementById('caldera-forms-conditions-panel')
-            );
-            //Yah seriously, use portals
-        }
-    });
-    jQuery( '.toggle_option_tab a.set-conditions' ).on('click', function () {
-        const processorId = jQuery(this).data('pid');
-        //do processor conditional ui
-    });
+    jQuery('.caldera-editor-body').on(
+        'change',
+        '.caldera-select-field-type',
+        (e) => {
+            e.target.value;
+        });
 
+    render(
+        <SubscribesToFormFields
+            jQuery={window.jQuery}
+            component={({formFields}) => {
+                console.log(formFields);
+                //Maybe render on a portal?
+                //Or will need a different app for Processor Conditionals
+                return (
+                    <div />
+                )
+            }}
+        />,
+        document.getElementById('caldera-forms-form-builder')
+    );
 });
