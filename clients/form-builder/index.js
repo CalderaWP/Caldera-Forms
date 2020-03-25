@@ -3,52 +3,14 @@ import {
     SubscribesToFormFields,
     translationStrings,
     conditionalsFromCfConfig,
-    useProcessorConditonals,
-    prepareProcessorConditonalFromSaved,
-    ProcessorConditionalEditor
-
+    Processors
 } from '@calderajs/form-builder';
 import React from 'react';
 import {render} from '@wordpress/element';
 import domReady from '@wordpress/dom-ready';
 import  {RenderComponentViaPortal} from "../render/components/RenderComponentViaPortal";
 
-/**
- * UI for a single processor
- *
- * Currently only the conditionals
- */
-const Processor = (props) => {
-    const {processor} = props;
-    const {
-        conditional,
-        onAddLine,
-        onRemoveLine,
-        onUpdateLine,
-        onChangeType,
-        onAddGroup,
-    } = useProcessorConditonals({
-        conditional: prepareProcessorConditonalFromSaved(processor.conditions),
-    });
-    return (
-            <div style={{ marginTop: '20px' }}>
-                <ProcessorConditionalEditor
-                    strings={translationStrings}
-                    formFields={props.formFields}
-                    processorId={processor.id}
-                    {...{
-                        onAddGroup,
-                        conditional,
-                        onAddLine,
-                        onRemoveLine,
-                        onUpdateLine,
-                        onChangeType,
-                    }}
-                />
-            </div>
 
-    );
-};
 
 /**
  * The Caldera Forms form builder app for building forms.
@@ -60,24 +22,6 @@ const FormBuilder = ({conditionalsNode,initialConditionals,form}) => {
     const [activeProcessorId,setActiveProcessorId] = React.useState('');
     //Element processor conditional logic UI is rendered on.
     const processorConditionalsNode = React.useRef();
-
-    //The List of processors
-    const [processors] = React.useState(() => {
-       let collection = {};
-       //no saved processors? Return early
-       if( ! form.hasOwnProperty('processors')){
-           return collection;
-       }
-       //set processors from saved form.
-       Object.keys(form.processors).forEach(processorId =>{
-           let processor = form.processors[processorId];
-           if( ! processor.hasOwnProperty('conditions') ){
-               processor.conditions = {};
-           }
-           collection[processorId] = processor;
-       });
-       return collection;
-    });
 
     //Listen outside of app for changes to active conditional
     React.useEffect( () => {
@@ -107,7 +51,12 @@ const FormBuilder = ({conditionalsNode,initialConditionals,form}) => {
                     {/** Processor Conditional Logic Editor*/}
                     { processorConditionalsNode.current && (
                         <RenderComponentViaPortal domNode={processorConditionalsNode.current}>
-                           <Processor processor={processors[activeProcessorId]}  strings={translationStrings} formFields={formFields} />
+                           <Processors
+                               processors={form.hasOwnProperty('processors') ? form.processors : {}}
+                               strings={translationStrings}
+                               formFields={formFields}
+                               activeProcessorId={activeProcessorId}
+                           />
                         </RenderComponentViaPortal>
                     ) }
                     {/** Primary Conditional Logic Editor*/}
