@@ -9,8 +9,12 @@ import React from 'react';
 import {render} from '@wordpress/element';
 import domReady from '@wordpress/dom-ready';
 import  {RenderComponentViaPortal} from "../render/components/RenderComponentViaPortal";
+import ErrorBoundary from 'react-error-boundary';
 
-
+const errorHandler = (error,componentStack) => {
+    console.log(error.message);
+    console.table(componentStack);
+};
 
 /**
  * The Caldera Forms form builder app for building forms.
@@ -51,17 +55,21 @@ const FormBuilder = ({conditionalsNode,initialConditionals,form}) => {
                     {/** Processor Conditional Logic Editor*/}
                     { processorConditionalsNode.current && (
                         <RenderComponentViaPortal domNode={processorConditionalsNode.current}>
+                            <ErrorBoundary onError={errorHandler}>
                            <Processors
                                processors={form.hasOwnProperty('processors') ? form.processors : {}}
                                strings={translationStrings}
                                formFields={formFields}
                                activeProcessorId={activeProcessorId}
                            />
+                            </ErrorBoundary>
                         </RenderComponentViaPortal>
                     ) }
                     {/** Primary Conditional Logic Editor*/}
                     <RenderComponentViaPortal domNode={conditionalsNode}>
-                        <ConditionalEditor formFields={formFields} strings={translationStrings} conditionals={initialConditionals}/>
+                        <ErrorBoundary onError={errorHandler}>
+                            <ConditionalEditor formFields={formFields} strings={translationStrings} conditionals={initialConditionals}/>
+                        </ErrorBoundary>
                     </RenderComponentViaPortal>
                 </React.Fragment>
 
