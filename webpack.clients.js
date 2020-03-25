@@ -262,7 +262,8 @@ onExit(() => {
  * @since 1.8.6
  */
 module.exports = {
-	mode: isProduction ? 'production' : 'development',
+	//mode: isProduction ? 'production' : 'development',
+	mode: 'development',
 	entry,
 	output,
 	optimization,
