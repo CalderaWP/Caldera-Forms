@@ -3,7 +3,8 @@ import {
     SubscribesToFormFields,
     translationStrings,
     conditionalsFromCfConfig,
-    Processors
+    Processors,
+    MagicTagProvider
 } from '@calderajs/form-builder';
 import React from 'react';
 import {render} from '@wordpress/element';
@@ -45,6 +46,15 @@ const FormBuilder = ({conditionalsNode, initialConditionals, form}) => {
 
     }, [setActiveProcessorId]);
 
+    React.useEffect(() => {
+        // When form is saved:
+        // Add conditionals to save
+        // Add processor conditionals to save
+        jQuery(document).on('cf.presave', function (event, config) {
+
+        });
+    });
+
 
     let savedProcessors = form.hasOwnProperty('processors') ? form.processors : {};
     //Important: As long as some of the builder is not in React, we will ONLY render via portal here.
@@ -67,6 +77,7 @@ const FormBuilder = ({conditionalsNode, initialConditionals, form}) => {
                                         strings={translationStrings}
                                         formFields={formFields}
                                         activeProcessorId={activeProcessorId}
+                                        jQuery={window.jQuery}
                                     />
                                 </ErrorBoundary>
                             </RenderComponentViaPortal>
@@ -80,6 +91,7 @@ const FormBuilder = ({conditionalsNode, initialConditionals, form}) => {
                                     formFields={formFields}
                                     strings={translationStrings}
                                     conditionals={initialConditionals}
+                                    jQuery={window.jQuery}
                                 />
                             </ErrorBoundary>
                         </RenderComponentViaPortal>
