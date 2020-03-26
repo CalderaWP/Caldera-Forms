@@ -65,37 +65,40 @@ const FormBuilder = ({conditionalsNode, initialConditionals, form}) => {
             intitalFields={form.fields}
             component={({formFields}) => {
                 return (
-                    <React.Fragment>
-                        {/** Processor Conditional Logic Editor*/}
-                        {processorConditionalsNode.current && (
+                    <MagicTagProvider systemValues={window.system_values}>
+
+                        <React.Fragment>
+                            {/** Processor Conditional Logic Editor*/}
+                            {processorConditionalsNode.current && (
+                                <RenderComponentViaPortal
+                                    domNode={processorConditionalsNode.current}
+                                >
+                                    <ErrorBoundary onError={errorHandler}>
+                                        <Processors
+                                            savedProcessors={savedProcessors}
+                                            strings={translationStrings}
+                                            formFields={formFields}
+                                            activeProcessorId={activeProcessorId}
+                                            jQuery={window.jQuery}
+                                        />
+                                    </ErrorBoundary>
+                                </RenderComponentViaPortal>
+                            )}
+                            {/** Primary Conditional Logic Editor*/}
                             <RenderComponentViaPortal
-                                domNode={processorConditionalsNode.current}
+                                domNode={conditionalsNode}
                             >
                                 <ErrorBoundary onError={errorHandler}>
-                                    <Processors
-                                        savedProcessors={savedProcessors}
-                                        strings={translationStrings}
+                                    <ConditionalEditor
                                         formFields={formFields}
-                                        activeProcessorId={activeProcessorId}
+                                        strings={translationStrings}
+                                        conditionals={initialConditionals}
                                         jQuery={window.jQuery}
                                     />
                                 </ErrorBoundary>
                             </RenderComponentViaPortal>
-                        )}
-                        {/** Primary Conditional Logic Editor*/}
-                        <RenderComponentViaPortal
-                            domNode={conditionalsNode}
-                        >
-                            <ErrorBoundary onError={errorHandler}>
-                                <ConditionalEditor
-                                    formFields={formFields}
-                                    strings={translationStrings}
-                                    conditionals={initialConditionals}
-                                    jQuery={window.jQuery}
-                                />
-                            </ErrorBoundary>
-                        </RenderComponentViaPortal>
-                    </React.Fragment>
+                        </React.Fragment>
+                    </MagicTagProvider>
                 )
             }}
         />), [activeProcessorId, processorConditionalsNode.current, conditionalsNode]);
