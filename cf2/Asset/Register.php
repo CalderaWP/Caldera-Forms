@@ -134,11 +134,13 @@ class Register
         $assetFile = file_get_contents($this->getAssetFilePath());
         $assetFile = (array)json_decode($assetFile, true);
         wp_register_script(
-            $this->handle,
+            $this->getHandle(),
             $this->getScriptUrl(),
             $assetFile['dependencies'],
-            $assetFile['version']
+            $assetFile['version'],
+            true
         );
+       
 
         wp_localize_script($this->handle, strtoupper('CF_' . str_replace('-', '_', $this->handle)),
             array_merge($this->getLocalizeData(), [
@@ -169,7 +171,15 @@ class Register
         if (!$this->isRegistered()) {
             $this->register();
         }
-        wp_enqueue_script($this->handle);
+        
+        wp_enqueue_script($this->getHandle());
         return $this;
+    }
+
+    protected function getHandle(){
+        if( 0 === substr( $this->handle, '3')){
+            return $this->handle;
+        }
+        return 'cf-' . $this->handle;
     }
 }
