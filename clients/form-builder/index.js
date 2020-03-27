@@ -87,6 +87,9 @@ const CalderaFormsBuilder = ({ savedForm, jQuery, conditionalsNode }) => {
 					jQuery={jQuery}
 					conditionalsNode={conditionalsNode}
 					form={savedForm}
+					strings={
+						window.CF_FORM_BUILDER ? window.CF_FORM_BUILDER.strings : undefined
+					}
 				/>
 			</ConditionalsProvider>
 		</ProcessorsProvider>

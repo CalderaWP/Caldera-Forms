@@ -140,11 +140,25 @@ class Register
             $assetFile['version'],
             true
         );
-       
-
-        wp_localize_script($this->handle, strtoupper('CF_' . str_replace('-', '_', $this->handle)),
+        wp_localize_script($this->getHandle(), strtoupper( str_replace('-', '_', $this->getHandle())),
             array_merge($this->getLocalizeData(), [
-                'hi' => 'roy'
+                'strings' => [
+                    'if'=> esc_html__( 'If', 'caldera-forms'),
+                    'and'=> esc_html__( 'And', 'caldera-forms'),
+                    'name'=> esc_html__('Name', 'caldera-forms'),
+                    'disable'=> esc_html__( 'Disable', 'caldera-forms'),
+                    'type'=> esc_html__('Type', 'caldera-forms'),
+                    'add-conditional-group'=> esc_html__( 'Add Con!!!ditional Line', 'caldera-forms'),
+                    'applied-fields'=> esc_html__( 'Applied Fields', 'caldera-forms'),
+                    'select-apply-fields'=> esc_html__( 'Select the fields to apply this condition to.', 'caldera-forms'),
+                    'remove-condition'=> esc_html__( 'Remove Conditon', 'caldera-forms'),
+                    'remove-condfirm' => esc_html__('Are you sure you would like to remove this conditional group', 'caldera-forms'),
+                    'show'=> esc_html__('Show', 'caldera-forms'),
+                    'hide' => esc_html__( 'Hide', 'caldera-forms'),
+                    'new-conditional'=> esc_html__( 'New Conditon', 'caldera-forms'),
+                    'fields' => esc_html__('Fields', 'caldera-forms')
+                     
+                ]
             ]));
         $this->registered = true;
         return $this;
