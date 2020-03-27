@@ -15,8 +15,10 @@ import { render } from "@wordpress/element";
 import domReady from "@wordpress/dom-ready";
 import apiFetch from "@wordpress/api-fetch";
 const HandleSave = ({ jQuery, formId }) => {
-	const { conditionals } = React.useContext(ConditionalsContext);
-	const { processors } = React.useContext(ProcessorsContext);
+	const { conditionals, hasConditionals } = React.useContext(
+		ConditionalsContext
+	);
+	const { processors, hasProcessors } = React.useContext(ProcessorsContext);
 	const [isSaving, setIsSaving] = React.useState(false);
 	const onSave = () => {
 		setIsSaving(true);
@@ -31,12 +33,22 @@ const HandleSave = ({ jQuery, formId }) => {
 		jQuery(document).trigger("cf.presave", {
 			config: data_fields.config
 		});
-		data_fields.config.conditional_groups = {
-			conditions: (data_fields.conditions = prepareConditionalsForSave(
-				conditionals
-			))
-		};
-		data_fields.config.processors = prepareProcessorsForSave(processors);
+
+		if (hasConditionals) {
+			data_fields.config.conditional_groups = {
+				conditions: (data_fields.conditions = prepareConditionalsForSave(
+					conditionals
+				))
+			};
+		} else {
+			data_fields.config.conditional_groups = {};
+		}
+
+		if (hasProcessors) {
+			data_fields.config.processors = prepareProcessorsForSave(processors);
+		} else {
+			data_fields.config.processors = {};
+		}
 		apiFetch({
 			path: `/cf-api/v2/forms`,
 			data: {
