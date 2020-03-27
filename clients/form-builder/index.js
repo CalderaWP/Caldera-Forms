@@ -8,6 +8,8 @@ import {
 	prepareConditionalsForSave,
 	RenderViaPortal
 } from "@calderajs/form-builder";
+import { Button } from "@wordpress/components";
+
 import React from "react";
 import { render } from "@wordpress/element";
 import domReady from "@wordpress/dom-ready";
@@ -15,8 +17,9 @@ import apiFetch from "@wordpress/api-fetch";
 const HandleSave = ({ jQuery, formId }) => {
 	const { conditionals } = React.useContext(ConditionalsContext);
 	const { processors } = React.useContext(ProcessorsContext);
-
+	const [isSaving, setIsSaving] = React.useState(false);
 	const onSave = () => {
+		setIsSaving(true);
 		if (typeof window.tinyMCE !== "undefined") {
 			window.tinyMCE.triggerSave();
 		}
@@ -43,18 +46,30 @@ const HandleSave = ({ jQuery, formId }) => {
 			method: "POST"
 		})
 			.then(r => {
-				console.log(r);
+				const $notice = jQuery(".updated_notice_box");
+				$notice.stop().animate({ top: 0 }, 200, function() {
+					setTimeout(function() {
+						$notice.stop().animate({ top: -75 }, 700);
+					}, 1700);
+				});
 			})
-			.catch(e => console.log(e));
+			.catch(e => console.log(e))
+			.finally(() => {
+				window.setTimeout(() => {
+					setIsSaving(false);
+				}, 2000);
+			});
 	};
 	return (
-		<button
-			class="button button-primary caldera-header-save-button"
+		<Button
+			isPrimary
+			isBusy={isSaving}
+			className="button button-primary caldera-header-save-button"
 			type="button"
 			onClick={onSave}
 		>
-			Save Form
-		</button>
+			{!isSaving ? "Save Form" : "Saving"}
+		</Button>
 	);
 };
 const CalderaFormsBuilder = ({ savedForm, jQuery, conditionalsNode }) => {
