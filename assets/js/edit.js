@@ -93,57 +93,7 @@ jQuery(document).ready(function($){
             }
         })
     });
-    $('.caldera-header-save-button').baldrick({
-        method			:	'POST',
-        request			:	'admin.php?page=caldera-forms',
-        before			: function(el, e){
-            e.preventDefault();
-
-            if(!check_required_bindings()){
-                return false;
-            }
-
-            $spinner.addClass('loading');
-            if( typeof tinyMCE !== 'undefined'){
-                tinyMCE.triggerSave();
-            }
-
-            var data_fields		= $('.caldera-forms-options-form').formJSON();
-            if( data_fields.conditions ){
-                data_fields.config.conditional_groups = { conditions : data_fields.conditions };
-            }
-
-            $(el).data('cf_edit_nonce', data_fields.cf_edit_nonce);
-            $(el).data('_wp_http_referer', data_fields._wp_http_referer);
-            $(el).data('sender', 'ajax');
-            $( document ).trigger( 'cf.presave', {
-                config: data_fields.config
-            });
-            $(el).data('config', JSON.stringify(data_fields.config));
-
-            return true;
-
-        },
-        callback: function( obj ){
-
-            if( false === obj.data ){
-                var notice = $('.updated_notice_box');
-
-                notice.stop().animate({top: 0}, 200, function(){
-                    setTimeout( function(){
-                        notice.stop().animate({top: -75}, 200);
-                    }, 2000);
-                });
-
-                cf_revisions_ui();
-            }
-        },
-        complete: function( obj ){
-
-            $('.wrapper-instance-pane .field-config').prop('sabled', false);
-
-        }
-    });
+    
 
     /*
      *	Build the fieltypes config

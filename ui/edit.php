@@ -751,10 +751,7 @@ function field_line_template($id = '{{id}}', $label = '{{label}}', $group = '{{g
 
 	<?php if( ! Caldera_Forms_Admin::is_revision_edit() ){ ?>
 
-		<button class="button button-primary caldera-header-save-button" data-active-class="none" data-load-element="#save_indicator" type="button" disabled="disabled">
-			<?php esc_html_e( 'Save Form', 'caldera-forms' ); ?>
-			<span id="save_indicator" class="spinner" style="position: absolute; right: -33px;"></span>
-		</button>
+		<div id="caldera-header-save-button"></div>
 
 		<a class="button caldera-header-preview-button" target="_blank" href="<?php echo esc_url( Caldera_Forms_Admin::preview_link( $element[ 'ID' ] ) ); ?>">
 			<?php esc_html_e( 'Preview Form', 'caldera-forms' ); ?>
