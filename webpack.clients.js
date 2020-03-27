@@ -1,18 +1,18 @@
 /**
  * This file defines the configuration for development and dev-server builds.
  */
-const fs = require('fs');
-const {unlinkSync} = fs;
-const path = require('path');
-const {join} = path;
-const onExit = require('signal-exit');
-const webpack = require('webpack');
-const ManifestPlugin = require('webpack-manifest-plugin');
-const TerserJSPlugin = require('terser-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const fs = require("fs");
+const { unlinkSync } = fs;
+const path = require("path");
+const { join } = path;
+const onExit = require("signal-exit");
+const webpack = require("webpack");
+const ManifestPlugin = require("webpack-manifest-plugin");
+const TerserJSPlugin = require("terser-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const defaultConfig = require("./node_modules/@wordpress/scripts/config/webpack.config");
-const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extraction-webpack-plugin' );
+const DependencyExtractionWebpackPlugin = require("@wordpress/dependency-extraction-webpack-plugin");
 
 /**
  * Is build production or dev?
@@ -21,10 +21,10 @@ const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extrac
  *
  * @type {boolean}
  */
-const isProduction = 'production' === process.env.NODE_ENV;
-const isTest = 'testing' === process.env.NODE_ENV
-console.log( `${isTest ? 'isTest' : "Is Not Test"}`);
-console.log( `Building for ${isProduction ? 'Production' : "Development"}`);
+const isProduction = "production" === process.env.NODE_ENV;
+const isTest = "testing" === process.env.NODE_ENV;
+console.log(`${isTest ? "isTest" : "Is Not Test"}`);
+console.log(`Building for ${isProduction ? "Production" : "Development"}`);
 
 /**
  * The names of each entry point
@@ -33,12 +33,7 @@ console.log( `Building for ${isProduction ? 'Production' : "Development"}`);
  *
  * @type {string[]}
  */
-const entryPointNames = [
-	//'admin',
-	//'privacy',
-	//'render',
-	'form-builder'
-];
+const entryPointNames = ["admin", "privacy", "render", "form-builder"];
 
 /**
  * The webpack configuration for "entry"
@@ -48,7 +43,7 @@ const entryPointNames = [
  * @see https://webpack.js.org/configuration/entry-context#entry
  */
 const entry = entryPointNames.reduce((memo, entryPointName) => {
-	memo[entryPointName] = './clients/' + entryPointName + '/index.js';
+	memo[entryPointName] = "./clients/" + entryPointName + "/index.js";
 	return memo;
 }, {});
 
@@ -63,11 +58,11 @@ const entry = entryPointNames.reduce((memo, entryPointName) => {
  */
 const cssPlugin = new MiniCssExtractPlugin({
 	filename: isProduction
-		? '../clients/[name]/build/style.min.css'
-		: '../clients/[name]/build/style.[hash].css',
+		? "../clients/[name]/build/style.min.css"
+		: "../clients/[name]/build/style.[hash].css",
 	chunkFilename: isProduction
-		? '../clients/[name]/build/[id].css'
-		: '../clients/[name]/build/[id].[hash].css'
+		? "../clients/[name]/build/[id].css"
+		: "../clients/[name]/build/[id].[hash].css"
 });
 
 /**
@@ -86,11 +81,11 @@ const cssRule = {
 			loader: MiniCssExtractPlugin.loader,
 			options: {
 				//hmr: process.env.NODE_ENV === 'development',
-			},
+			}
 		},
-		'css-loader',
-		'sass-loader',
-	],
+		"css-loader",
+		"sass-loader"
+	]
 };
 
 /**
@@ -122,13 +117,13 @@ const publicPath = `https://localhost:${port}/`;
 const devServer = {
 	https: true,
 	headers: {
-		'Access-Control-Allow-Origin': '*',
+		"Access-Control-Allow-Origin": "*"
 	},
 	hotOnly: true,
 	watchOptions: {
-		aggregateTimeout: 300,
+		aggregateTimeout: 300
 	},
-	writeToDisk: true,//False by default, so 404 on intial load
+	writeToDisk: true, //False by default, so 404 on intial load
 	disableHostCheck: true,
 	stats: {
 		all: false,
@@ -137,7 +132,7 @@ const devServer = {
 		errors: true,
 		performance: true,
 		timings: true,
-		warnings: true,
+		warnings: true
 	},
 	port
 };
@@ -153,11 +148,13 @@ const devServer = {
  */
 const output = {
 	//filename: '../clients/[name]/build/index.min.js',
-	filename: isProduction ? '../clients/[name]/build/index.min.js' : '../clients/[name]/build/index.[hash].js',
-	library: ['calderaForms', '[name]'],
-	libraryTarget: 'this',
-	hotUpdateChunkFilename: '../dist/caldera-hot-load/[name].[hash].js',
-    hotUpdateMainFilename: '../dist/caldera-hot-load/hot-update.json' 
+	filename: isProduction
+		? "../clients/[name]/build/index.min.js"
+		: "../clients/[name]/build/index.[hash].js",
+	library: ["calderaForms", "[name]"],
+	libraryTarget: "this",
+	hotUpdateChunkFilename: "../dist/caldera-hot-load/[name].[hash].js",
+	hotUpdateMainFilename: "../dist/caldera-hot-load/hot-update.json"
 };
 
 /**
@@ -169,11 +166,13 @@ const output = {
  *
  * @type {{}}
  */
-const optimization = isProduction ? {
-	minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})]
-} : {
-	minimize: false
-};
+const optimization = isProduction
+	? {
+			minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})]
+	  }
+	: {
+			minimize: false
+	  };
 
 /**
  * The webpack configuration for "externals"
@@ -184,26 +183,26 @@ const optimization = isProduction ? {
  *
  * @type {{}}
  */
-const externals = isTest ? {
-
-} : {
-	jquery: 'jQuery',
-	react: 'React',
-};
+const externals = isTest
+	? {}
+	: {
+			jquery: "jQuery",
+			react: "React"
+	  };
 
 // Setup external for each entry point
-entryPointNames.forEach( entryPointName => {
-	externals[ '@/calderaForms' + entryPointName ] = {
-		this: [ 'calderaForms', entryPointName ]
-	}
-} );
+entryPointNames.forEach(entryPointName => {
+	externals["@/calderaForms" + entryPointName] = {
+		this: ["calderaForms", entryPointName]
+	};
+});
 
 /**
  * The webpack configuration for "plugins"
- * 
+ *
  * @since 1.8.6
- * 
- * @seehttps://webpack.js.org/configuration/plugins 
+ *
+ * @seehttps://webpack.js.org/configuration/plugins
  */
 let plugins = [
 	//CSS/SASS
@@ -214,44 +213,48 @@ let plugins = [
 
 //Remove default dependency extractor
 plugins.filter(
-	plugin => plugin.constructor.name !== 'DependencyExtractionWebpackPlugin',
+	plugin => plugin.constructor.name !== "DependencyExtractionWebpackPlugin"
 );
 
 //Add dependency extractor back, with different options.
 plugins.push(
-	new DependencyExtractionWebpackPlugin( {
+	new DependencyExtractionWebpackPlugin({
 		injectPolyfill: true,
 		//By default php file is generated, we want JSON
-		outputFormat: 'json',
-	} ),
+		outputFormat: "json"
+	})
 );
 //Add more plugins in development
-if( ! isProduction ){
-	plugins = [...plugins, 
+if (!isProduction) {
+	plugins = [
+		...plugins,
 		// Generate a manifest file which contains a mapping of all asset filenames
 		// to their corresponding output file so that PHP can pick up their paths.
 		new ManifestPlugin({
-			fileName: 'asset-manifest.json',
+			fileName: "asset-manifest.json",
 			writeToFileEmit: true,
 			publicPath,
-			generate: (seed, files) => files.reduce((manifest, {name, path}) => {
-				//remove ".." in paths written to asset manifest
-				return ({...manifest, [name]: path.replace('/../clients/', '/clients/')})
-			}, seed)
-		}),
+			generate: (seed, files) =>
+				files.reduce((manifest, { name, path }) => {
+					//remove ".." in paths written to asset manifest
+					return {
+						...manifest,
+						[name]: path.replace("/../clients/", "/clients/")
+					};
+				}, seed)
+		})
 		/**
 		// Enable HMR.
 		new webpack.HotModuleReplacementPlugin({
 			multiStep: true,
 		}), **/
-	]
+	];
 }
-
 
 // Clean up manifest on exit.
 onExit(() => {
 	try {
-		unlinkSync('./build/asset-manifest.json');
+		unlinkSync("./build/asset-manifest.json");
 	} catch (e) {
 		// Silently ignore unlinking errors: so long as the file is gone, that is good.
 	}
@@ -262,13 +265,12 @@ onExit(() => {
  * @since 1.8.6
  */
 module.exports = {
-	//mode: isProduction ? 'production' : 'development',
-	mode: 'development',
+	mode: isProduction ? "production" : "development",
 	entry,
 	output,
 	optimization,
 	//externals,
-	devtool: 'cheap-module-source-map',
+	devtool: "cheap-module-source-map",
 	context: process.cwd(),
 	devServer,
 	module: {
@@ -278,17 +280,16 @@ module.exports = {
 				// Process JS with Babel.
 				test: /\.js$/,
 				exclude: /(node_modules|clients\/editor)/,
-				loader: require.resolve('babel-loader'),
+				loader: require.resolve("babel-loader"),
 				options: {
 					// Cache compilation results in ./node_modules/.cache/babel-loader/
 					cacheDirectory: true,
-					presets: [require('@calderajs/babel-preset-calderajs')]
-
-				},
+					presets: [require("@calderajs/babel-preset-calderajs")]
+				}
 			},
 			cssRule
-		],
+		]
 	},
 
-	plugins,
+	plugins
 };
