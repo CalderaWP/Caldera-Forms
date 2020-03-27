@@ -14,12 +14,26 @@ import React from "react";
 import { render } from "@wordpress/element";
 import domReady from "@wordpress/dom-ready";
 import apiFetch from "@wordpress/api-fetch";
+
+/**
+ * Deals with saving forms
+ *
+ * Including the save button and API interactions
+ *
+ * @since 1.9.0
+ *
+ */
 const HandleSave = ({ jQuery, formId }) => {
+	//Get conditonals
 	const { conditionals, hasConditionals } = React.useContext(
 		ConditionalsContext
 	);
+	//Get processors
 	const { processors, hasProcessors } = React.useContext(ProcessorsContext);
+	//Track if we're saving or not
 	const [isSaving, setIsSaving] = React.useState(false);
+
+	//Save handler
 	const onSave = () => {
 		setIsSaving(true);
 		if (typeof window.tinyMCE !== "undefined") {
@@ -57,7 +71,7 @@ const HandleSave = ({ jQuery, formId }) => {
 			},
 			method: "POST"
 		})
-			.then(r => {
+			.then(({ form_id, form }) => {
 				const $notice = jQuery(".updated_notice_box");
 				$notice.stop().animate({ top: 0 }, 200, function() {
 					setTimeout(function() {
@@ -84,6 +98,12 @@ const HandleSave = ({ jQuery, formId }) => {
 		</Button>
 	);
 };
+
+/**
+ * Caldera Forms Form Builder React App
+ *
+ * @since 2.0.0
+ */
 const CalderaFormsBuilder = ({ savedForm, jQuery, conditionalsNode }) => {
 	const savedProcessors = savedForm.hasOwnProperty("processors")
 		? savedForm.processors
@@ -107,6 +127,12 @@ const CalderaFormsBuilder = ({ savedForm, jQuery, conditionalsNode }) => {
 		</ProcessorsProvider>
 	);
 };
+
+/**
+ * Initialize form builder
+ *
+ * @since 1.9.0
+ */
 domReady(function() {
 	let form = CF_ADMIN.form;
 	if (!form.hasOwnProperty("fields")) {
