@@ -110,7 +110,7 @@ const CalderaFormsBuilder = ({ savedForm, jQuery, conditionalsNode }) => {
 		: {};
 	const saveNode = document.getElementById("caldera-header-save-button");
 	return (
-		<ProcessorsProvider savedProcessors={savedProcessors}>
+		<ProcessorsProvider savedProcessors={savedProcessors} jQuery={jQuery}>
 			<ConditionalsProvider savedForm={savedForm}>
 				<RenderViaPortal domNode={saveNode}>
 					<HandleSave jQuery={jQuery} formId={savedForm.ID} />
