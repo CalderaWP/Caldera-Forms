@@ -148,7 +148,7 @@ class Register
                     'name'=> esc_html__('Name', 'caldera-forms'),
                     'disable'=> esc_html__( 'Disable', 'caldera-forms'),
                     'type'=> esc_html__('Type', 'caldera-forms'),
-                    'add-conditional-group'=> esc_html__( 'Add Con!!!ditional Line', 'caldera-forms'),
+                    'add-conditional-group'=> esc_html__( 'Add Rule', 'caldera-forms'),
                     'applied-fields'=> esc_html__( 'Applied Fields', 'caldera-forms'),
                     'select-apply-fields'=> esc_html__( 'Select the fields to apply this condition to.', 'caldera-forms'),
                     'remove-condition'=> esc_html__( 'Remove Conditon', 'caldera-forms'),
@@ -156,8 +156,8 @@ class Register
                     'show'=> esc_html__('Show', 'caldera-forms'),
                     'hide' => esc_html__( 'Hide', 'caldera-forms'),
                     'new-conditional'=> esc_html__( 'New Conditon', 'caldera-forms'),
-                    'fields' => esc_html__('Fields', 'caldera-forms')
-                     
+                    'fields' => esc_html__('Fields', 'caldera-forms'),
+                     'add-condition' => esc_html__('Add Line', 'caldera-forms')
                 ]
             ]));
         $this->registered = true;
