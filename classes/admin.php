@@ -1606,6 +1606,7 @@ class Caldera_Forms_Admin {
 	 * @since 1.3.4
 	 *
 	 * @param array $data
+     * @return bool|string
 	 */
 	public static function save_a_form( $data ){
 		$saved_form = Caldera_Forms_Forms::get_form( $data['ID'] );
@@ -1625,7 +1626,7 @@ class Caldera_Forms_Admin {
 			}
 		}
 
-		Caldera_Forms_Forms::save_form( $data );
+		return Caldera_Forms_Forms::save_form( $data );
 
 	}
 
