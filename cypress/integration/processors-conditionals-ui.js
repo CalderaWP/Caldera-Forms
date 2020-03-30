@@ -46,42 +46,33 @@ describe('Processor conditional logic', () => {
         const formName = makeFormName('add new conditional');
         createForm(formName, false);
         goToFirstProcessorConditionals();
-        //There is the conditional type selector
-        cy.get('.caldera-conditionals-usetype:visible').should('have.length', 1);
         cy.get('.caldera-conditionals-usetype:visible').select( 'Use');
-
-        //Add a group
         addConditionalGroup();
-        expectNumberOfConditionalGroups(1);
-        cy.get( '.caldera-conditional-field-set' ).first().should( 'have.length', 1 );
-        //Trigger one change to get options to load
-        cy.get( '.caldera-conditional-field-set' ).select( '' );
-        //Change to first name NOT lobster
-        cy.get( '.caldera-conditional-field-set').first().select( 'First Name [first_name]');
-        cy.get( '.compare-type').first().select( 'isnot');
-        cy.get( '.caldera-conditional-value-field').first().type( 'Lobster' );
+
+        cy.get( '.condition-line-field').first().select( 'header [header]');
+        cy.get( '.condition-line-compare').first().select( 'isnot');
+        cy.get( '.caldera-conditional-field-value-input').first().type( 'Lobster' );
 
         //Add another group
         addConditionalGroup();
         expectNumberOfConditionalGroups(2);
         //Has settings for two field values
-        cy.get( '.caldera-conditional-field-set').should( 'have.length', 2 );
-        //Set second to last name endswith Fish
-        cy.get( '.caldera-conditional-field-set' ).last().select( '' );
-        cy.get( '.caldera-conditional-field-set').last().select( 'Last Name [last_name]');
-        cy.get( '.compare-type').last().select( 'endswith');
-        cy.get( '.caldera-conditional-value-field').last().type( 'Fish' );
+        cy.get( '.condition-line-field').should( 'have.length', 2 );
+        cy.get( '.condition-line-field').last().select( 'Last Name [last_name]');
+        cy.get( '.condition-line-compare').last().select( 'endswith');
+        cy.get( '.caldera-conditional-field-value-input').last().type( 'Fish' );
+
 
         //Save, reload and check saved values load correctly
         saveFormAndReload();
         goToFirstProcessorConditionals();
-        cy.get( '.caldera-conditional-field-set').first().should( 'have.value','fld_8768091');
-        cy.get( '.compare-type').first().should( 'have.value', 'isnot');
-        cy.get( '.caldera-conditional-value-field').first().should( 'have.value', 'Lobster' );
+        cy.get( '.condition-line-field').first().should( 'have.value','fld_29462');
+        cy.get( '.condition-line-compare').first().should( 'have.value', 'isnot');
+        cy.get( '.caldera-conditional-field-value-input').first().should( 'have.value', 'Lobster' );
 
-        cy.get( '.caldera-conditional-field-set').last().should( 'have.value','fld_9970286');
-        cy.get( '.compare-type').last().should( 'have.value','endswith');
-        cy.get( '.caldera-conditional-value-field').last().should( 'have.value', 'Fish' );
+        cy.get( '.condition-line-field').last().should( 'have.value','fld_9970286');
+        cy.get( '.condition-line-compare').last().should( 'have.value','endswith');
+        cy.get( '.caldera-conditional-field-value-input').last().should( 'have.value', 'Fish' );
 
     });
 
@@ -95,14 +86,14 @@ describe('Processor conditional logic', () => {
         expectNumberOfConditionalGroups(1);
 
         //Remove group
-        cy.get( '.remove-conditional-line').first().click();
+        cy.get( '.condition-line-remove').first().click();
         expectNumberOfConditionalGroups(0);
 
         //Add two and remove one
         addConditionalGroup();
         addConditionalGroup();
         expectNumberOfConditionalGroups(2);
-        cy.get( '.remove-conditional-line').last().click();
+        cy.get( '.condition-line-remove').last().click();
         expectNumberOfConditionalGroups(1);
 
     });
@@ -113,10 +104,10 @@ describe('Processor conditional logic', () => {
         goToFirstProcessorConditionals();
         cy.get('.caldera-conditionals-usetype:visible').select( 'Use');
         addConditionalGroup();
-        cy.get( '.caldera-conditional-field-set' ).select( '' );
-        cy.get( '.caldera-conditional-field-set').first().select( 'header [header]');
-        cy.get( '.compare-type').first().select( 'isnot');
-        cy.get( '.caldera-conditional-value-field').first().type( 'Lobster' );
+
+        cy.get( '.condition-line-field').first().select( 'header [header]');
+        cy.get( '.condition-line-compare').first().select( 'isnot');
+        cy.get( '.caldera-conditional-field-value-input').first().type( 'Lobster' );
 
         //Change first field type to radio
         cfGoToLayoutTab();
@@ -131,18 +122,19 @@ describe('Processor conditional logic', () => {
         cfGoToProcessorsTab();
         cy.get('.active-processors-list').should('have.length', 1);
         //First two settings should be the same.
-        cy.get( '.caldera-conditional-field-set').first().should( 'have.value','fld_29462');
-        cy.get( '.compare-type').first().should( 'have.value', 'isnot');
+        cy.get( '.condition-line-field').first().should( 'have.value','fld_29462');
+        cy.get( '.condition-line-compare').first().should( 'have.value', 'isnot');
         //It SHOULD have lost value-field, can we change it?
-        cy.get( '.caldera-conditional-value-field').first().should( 'have.value', '' );
-        cy.get( '.caldera-conditional-value-field').select( 'Pants' );
+        cy.get( '.caldera-conditional-field-value select').first().should( 'have.value', '' );
+        cy.get( '.caldera-conditional-field-value select').select( 'Pants' );
+        cy.get( '.caldera-conditional-field-value select option:selected').should( 'have.text', 'Pants' );
 
         //Save, reload and check saved values load correctly
         saveFormAndReload();
         goToFirstProcessorConditionals();
-        cy.get( '.caldera-conditional-field-set').first().should( 'have.value','fld_29462');
-        cy.get( '.compare-type').first().should( 'have.value', 'isnot');
-        cy.get( '.caldera-conditional-value-field').first().should( 'have.value', 'Pants' );
+        cy.get( '.condition-line-field').first().should( 'have.value','fld_29462');
+        cy.get( '.condition-line-compare').first().should( 'have.value', 'isnot');
+        cy.get( '.caldera-conditional-field-value select option:selected').should( 'have.text', 'Pants' );
 
     });
 
@@ -155,11 +147,10 @@ describe('Processor conditional logic', () => {
         goToFirstProcessorConditionals();
         cy.get('.caldera-conditionals-usetype:visible').select( 'Use');
         addConditionalGroup();
-        cy.get( '.caldera-conditional-field-set' ).select( '' );
-        cy.get( '.caldera-conditional-field-set').first().select( 'header [header]');
-        cy.get( '.compare-type').first().select( 'isnot');
-        cy.get( '.caldera-conditional-value-field').select( 'Jumpy' );
-        cy.get( '.caldera-conditional-value-field').find(':selected').contains( 'Jumpy' );
+        cy.get( '.condition-line-field').first().select( 'header [header]');
+        cy.get( '.condition-line-compare').first().select( 'isnot');
+        cy.get( '.caldera-conditional-field-value select').select( 'Jumpy' );
+        cy.get( '.caldera-conditional-field-value select').find(':selected').contains( 'Jumpy' );
 
         //add another option
         cfGoToLayoutTab();
@@ -168,15 +159,15 @@ describe('Processor conditional logic', () => {
 
         //Can we use new option?
         goToFirstProcessorConditionals();
-        cy.get( '.caldera-conditional-value-field').find(':selected').contains( 'Jumpy' );
-        cy.get( '.caldera-conditional-value-field').select( 'Legs' );
-        cy.get( '.caldera-conditional-value-field').find(':selected').contains( 'Legs' );
+        cy.get( '.caldera-conditional-field-value select').find(':selected').contains( 'Jumpy' );
+        cy.get( '.caldera-conditional-field-value select').select( 'Legs' );
+        cy.get( '.caldera-conditional-field-value select').find(':selected').contains( 'Legs' );
 
         //Save, reload and check saved values load correctly
         saveFormAndReload();
         goToFirstProcessorConditionals();
-        cy.get( '.caldera-conditional-field-set').first().should( 'have.value','fld_29462');
-        cy.get( '.caldera-conditional-value-field').find(':selected').contains( 'Legs' );
+        cy.get( '.condition-line-field').first().should( 'have.value','fld_29462');
+        cy.get( '.caldera-conditional-field-value select').find(':selected').contains( 'Legs' );
 
     });
 
