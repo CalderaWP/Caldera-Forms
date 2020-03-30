@@ -9,6 +9,8 @@ services:
     environment:
       WORDPRESS_DB_PASSWORD: example
       WORDPRESS_DEBUG: 1
+      WORDPRESSS_DEBUG_LOG: example
+
       ABSPATH: /usr/src/wordpress/
     volumes:
       - wordpress:/var/www/html
