@@ -19,11 +19,11 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
 	 */
 	public function add_routes( $namespace ) {
 		parent::add_routes($namespace);
-        register_rest_route( $namespace, $this->non_id_endpoint_url(),
-            array(
-                'methods'             => ['POST'],
-                'callback'            => array( $this, 'save_form' ),
-                'permission_callback' => array( $this, 'save_form_permissions_check' ),
+        register_rest_route( $namespace, $this->id_endpoint_url(),
+           [
+                'methods'             => \WP_REST_Server::EDITABLE,
+                'callback'            => [ $this, 'save_form' ],
+                'permission_callback' => [ $this, 'save_form_permissions_check' ],
                 'args'                => [
                     'cf_edit_nonce' => [
                         'type' => 'string',
@@ -41,13 +41,8 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
                         'required' => 'true'
                     ],
                 ]
-                ),
-      
-        true
-    );
-    
-
-
+            ], true
+        );
 
 		register_rest_route( $namespace, $this->id_endpoint_url() . '/revisions',
 			array(
@@ -111,7 +106,7 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
      * @since 1.9.0
      */
 	public function save_form(\WP_REST_Request $request){
-        $saved = Caldera_Forms_Admin::save_a_form($request['config']);
+        $saved = Caldera_Forms_Admin::save_a_form(array_merge(['ID' => $request['form_id']],$request['config']));
         if( ! $saved ){
            return new \WP_Error(500,__('Not saved', 'caldera-forms'));
         }

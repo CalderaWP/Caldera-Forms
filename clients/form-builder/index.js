@@ -65,12 +65,11 @@ const HandleSave = ({ jQuery, formId }) => {
 			data_fields.config.processors = {};
 		}
 		apiFetch({
-			path: `/cf-api/v2/forms`,
+			path: `/cf-api/v2/forms/${formId}`,
 			data: {
 				...data_fields,
-				form: formId
 			},
-			method: "POST"
+			method: "PUT"
 		})
 			.then(({ form_id, form }) => {
 				const $notice = jQuery(".updated_notice_box");
