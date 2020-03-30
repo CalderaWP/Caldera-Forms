@@ -4,6 +4,7 @@ import {
 	ProcessorsProvider,
 	ConditionalsContext,
 	ConditionalsProvider,
+	MagicTagProvider,
 	prepareProcessorsForSave,
 	prepareConditionalsForSave,
 	RenderViaPortal
@@ -110,21 +111,25 @@ const CalderaFormsBuilder = ({ savedForm, jQuery, conditionalsNode }) => {
 		: {};
 	const saveNode = document.getElementById("caldera-header-save-button");
 	return (
-		<ProcessorsProvider savedProcessors={savedProcessors} jQuery={jQuery}>
-			<ConditionalsProvider savedForm={savedForm}>
-				<RenderViaPortal domNode={saveNode}>
-					<HandleSave jQuery={jQuery} formId={savedForm.ID} />
-				</RenderViaPortal>
-				<FormBuilder
-					jQuery={jQuery}
-					conditionalsNode={conditionalsNode}
-					form={savedForm}
-					strings={
-						window.CF_FORM_BUILDER ? window.CF_FORM_BUILDER.strings : undefined
-					}
-				/>
-			</ConditionalsProvider>
-		</ProcessorsProvider>
+		<MagicTagProvider systemValues={window.system_values || {}}>
+			<ProcessorsProvider savedProcessors={savedProcessors} jQuery={jQuery}>
+				<ConditionalsProvider savedForm={savedForm}>
+					<RenderViaPortal domNode={saveNode}>
+						<HandleSave jQuery={jQuery} formId={savedForm.ID} />
+					</RenderViaPortal>
+					<FormBuilder
+						jQuery={jQuery}
+						conditionalsNode={conditionalsNode}
+						form={savedForm}
+						strings={
+							window.CF_FORM_BUILDER
+								? window.CF_FORM_BUILDER.strings
+								: undefined
+						}
+					/>
+				</ConditionalsProvider>
+			</ProcessorsProvider>
+		</MagicTagProvider>
 	);
 };
 
