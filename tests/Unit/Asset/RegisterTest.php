@@ -28,6 +28,7 @@ class RegisterTest extends TestCase
     public function testRegister()
     {
         $register = $this->getRegister();
+        $register->setAssetsFilePath(__DIR__ .'/assets.json');
         \Brain\Monkey\Functions\expect('wp_register_script')->once();
         \Brain\Monkey\Functions\expect('wp_localize_script')->once();
         $this->assertTrue($register
