@@ -45,6 +45,7 @@ class RegisterTest extends TestCase
     public function testRegisterAndEnqueue()
     {
         $register = $this->getRegister();
+        $register->setAssetsFilePath(__DIR__ . '/assets.json');
 
         \Brain\Monkey\Functions\expect('wp_register_script')->once();
         \Brain\Monkey\Functions\expect('wp_localize_script')->once();
@@ -66,7 +67,7 @@ class RegisterTest extends TestCase
     public function testRegisterAndEnqueueWithoutCallingRegister()
     {
         $register = $this->getRegister();
-
+        $register->setAssetsFilePath(__DIR__ . '/assets.json');
         \Brain\Monkey\Functions\expect('wp_register_script')->once();
         \Brain\Monkey\Functions\expect('wp_localize_script')->once();
         \Brain\Monkey\Functions\expect('wp_enqueue_script')->once();
@@ -97,7 +98,7 @@ class RegisterTest extends TestCase
     public function testGetScriptUrl()
     {
         $register = $this->getRegister();
-        $this->assertStringEndsWith('/clients/form-builder/build/index.min.js', $register->getScriptUrl());
+        $this->assertStringEndsWith('clients/form-builder/build/index.min.js', $register->getScriptUrl());
     }
 
     /**
@@ -123,7 +124,7 @@ class RegisterTest extends TestCase
     public function testGetAssetsFilePath()
     {
         $register = $this->getRegister();
-        $this->assertStringEndsWith('/clients/form-builder/build/index.min.asset.json', $register->getAssetFilePath());
+        $this->assertStringEndsWith('/build/index.min.asset.json', $register->getAssetFilePath());
     }
 
 

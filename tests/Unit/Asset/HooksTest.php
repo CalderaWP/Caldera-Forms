@@ -25,18 +25,6 @@ class HooksTest extends TestCase
     /**
      * @covers \calderawp\calderaforms\cf2\Asset\Hooks::registerAssets()
      */
-    public function testRegisterAssets()
-    {
-        $hooks = new Hooks(['form-builder'], $this->container);
-        \Brain\Monkey\Functions\expect('wp_register_script')->once();
-        \Brain\Monkey\Functions\expect('wp_localize_script')->once();
-        $this->assertEquals($hooks, $hooks->registerAssets());
-
-    }
-
-    /**
-     * @covers \calderawp\calderaforms\cf2\Asset\Hooks::registerAssets()
-     */
     public function testRegisterAssetsNoHandles()
     {
         $hooks = new Hooks([], $this->container);
@@ -87,7 +75,7 @@ class HooksTest extends TestCase
             $hooks->getHandler('form-builder')->getAssetFilePath()
         );
         $this->assertStringEndsWith(
-            '/clients/form-builder/build/index.min.js',
+            'build/index.min.js',
             $hooks
                 ->getHandler('form-builder')
                 ->getScriptUrl()
