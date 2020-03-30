@@ -1162,65 +1162,7 @@ do_action('caldera_forms_edit_end', $element);
 	</div>
 </div>
 </script>
-<script type="text/html" id="conditional-group-tmpl">	
-	{{#each group}}
-		<div class="caldera-condition-group">
-			<div class="caldera-condition-group-label"><?php echo esc_html__( 'or', 'caldera-forms' ); ?></div>			
-			<div class="caldera-condition-lines" id="{{id}}_conditions_lines">
-				{{#each lines}}
-				<div class="caldera-condition-line">
-					<?php _e( 'if', 'caldera-forms' ); ?>
-					<select name="config[{{../type}}][{{../../id}}][conditions][group][{{../id}}][{{id}}][field]" data-condition="{{../type}}" class="caldera-field-bind caldera-conditional-field-set" data-id="{{../../id}}" {{#if field}}data-default="{{field}}"{{/if}} data-line="{{id}}" data-row="{{../id}}" data-all="true" style="max-width:120px;">
-						{{#if field}}<option value="{{field}}" class="bound-field" selected="selected"></option>{{else}}<option value="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>{{/if}}
-					</select>
-					<select class="compare-type" name="config[{{../type}}][{{../../id}}][conditions][group][{{../id}}][{{id}}][compare]" style="max-width:110px;">
-						<option value="is" {{#is compare value="is"}}selected="selected"{{/is}}><?php echo esc_html__( 'is', 'caldera-forms' ); ?></option>
-						<option value="isnot" {{#is compare value="isnot"}}selected="selected"{{/is}}><?php echo esc_html__( 'is not', 'caldera-forms' ); ?></option>
-						<option value=">" {{#is compare value=">"}}selected="selected"{{/is}}><?php echo esc_html__( 'is greater than', 'caldera-forms' ); ?></option>
-						<option value="<" {{#is compare value="<"}}selected="selected"{{/is}}><?php echo esc_html__( 'is less than', 'caldera-forms' ); ?></option>
-						<option value="startswith" {{#is compare value="startswith"}}selected="selected"{{/is}}><?php echo esc_html__( 'starts with', 'caldera-forms' ); ?></option>
-						<option value="endswith" {{#is compare value="endswith"}}selected="selected"{{/is}}><?php echo esc_html__( 'ends with', 'caldera-forms' ); ?></option>
-						<option value="contains" {{#is compare value="contains"}}selected="selected"{{/is}}><?php echo esc_html__( 'contains', 'caldera-forms' ); ?></option>
-					</select>
-					<span style="padding: 0 12px 0; " class="caldera-conditional-field-value" data-value="{{value}}" id="{{id}}_value"><input disabled type="text" value="" placeholder="<?php echo esc_html__( 'Select field first', 'caldera-forms' ); ?>" style="max-width: 165px;"></span>
-					<button type="button" class="button remove-conditional-line pull-right"><i class="icon-join"></i></button>
-				</div>
-				{{/each}}
-			</div>
-			<button
-                type="button"
-                class="button button-small ajax-trigger "
-                data-id="{{../id}}" data-type="{{type}}"
-                data-group="{{id}}"
-                data-request="new_conditional_line"
-                data-target="#{{id}}_conditions_lines"
-                data-callback="rebuild_field_binding"
-                data-template="#conditional-line-tmpl"
-                data-target-insert="append"
-            >
-                <?php echo esc_html__( 'Add Condition', 'caldera-forms' ); ?>
-            </button>
-		</div>
-	{{/each}}
-</script>
-<script type="text/html" id="conditional-line-tmpl">
-	<div class="caldera-condition-line">
-		<div class="caldera-condition-line-label"><?php echo esc_html__( 'and', 'caldera-forms' ); ?></div>
-		<?php _e( 'if', 'caldera-forms' ); ?>
-		<select name="{{name}}[field]" class="caldera-field-bind caldera-conditional-field-set" data-condition="{{type}}" data-id="{{id}}" data-line="{{lineid}}" data-row="{{rowid}}" data-all="true" style="max-width:120px;"></select>
-		<select name="{{name}}[compare]" style="max-width:110px;">
-			<option value="is"><?php echo esc_html__( 'is', 'caldera-forms' ); ?></option>
-			<option value="isnot"><?php echo esc_html__( 'is not', 'caldera-forms' ); ?></option>
-			<option value=">"><?php echo esc_html__( 'is greater than', 'caldera-forms' ); ?></option>
-			<option value="<"><?php echo esc_html__( 'is less than', 'caldera-forms' ); ?></option>
-			<option value="startswith"><?php echo esc_html__( 'starts with', 'caldera-forms' ); ?></option>
-			<option value="endswith"><?php echo esc_html__( 'ends with', 'caldera-forms' ); ?></option>
-			<option value="contains"><?php echo esc_html__( 'contains', 'caldera-forms' ); ?></option>
-		</select>
-		<span class="caldera-conditional-field-value" id="{{lineid}}_value"><input disabled type="text" value="" placeholder="<?php echo esc_html__( 'Select field first', 'caldera-forms' ); ?>" style="max-width: 165px;"></span>
-		<button type="button" class="button remove-conditional-line pull-right"><i class="icon-join"></i></button>
-	</div>
-</script>
+
 <?php
 
 /// Output the field templates
