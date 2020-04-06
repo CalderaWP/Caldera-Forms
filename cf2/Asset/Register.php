@@ -64,7 +64,7 @@ class Register
         $this->data = $data;
         $this->registered = false;
         $this->setScriptUrl($coreUrl . 'clients/' . $this->handle . '/build/index.min.js');
-        $this->setAssetsFilePath($corePath . '/clients/' . $this->handle . '/build/index.min.asset.json');
+        $this->setAssetsFilePath($corePath . 'clients/' . $this->handle . '/build/index.min.asset.json');
     }
 
 
