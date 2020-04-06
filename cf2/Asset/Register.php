@@ -130,7 +130,9 @@ class Register
      */
     public function register()
     {
-
+        if( ! file_exists($this->getAssetFilePath())){
+            return;
+        }
         $assetFile = file_get_contents($this->getAssetFilePath());
         $assetFile = (array)json_decode($assetFile, true);
         wp_register_script(
