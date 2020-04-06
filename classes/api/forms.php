@@ -27,17 +27,17 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
                 'args'                => [
                     'cf_edit_nonce' => [
                         'type' => 'string',
-                        'description' => __('Caldera Forms editor nonce'),
+                        'description' => __('Caldera Forms editor nonce', 'caldera-forms'),
                         'required' => 'true'
                     ],
                     'config' => [
                         'type' => 'object',
-                        'description' => __('Caldera Forms editor nonce'),
+                        'description' => __('Caldera Forms editor nonce', 'caldera-forms'),
                         'required' => 'true'
                     ],
                     'form' => [
                         'type' => 'string',
-                        'description' => __('ID of form'),
+                        'description' => __('ID of form', 'caldera-forms'),
                         'required' => 'true'
                     ],
                 ]

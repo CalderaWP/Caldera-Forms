@@ -177,24 +177,3 @@ function caldera_forms_fallback_shortcode()
 	return esc_html__('Form could not be loaded. Contact the site administrator.', 'caldera-forms');
 
 }
-
-
-add_action( 'graphql_register_types', function() {
-    register_graphql_object_type('CalderaTextField', [
-        'fields' => [
-            'label' => [
-                'type' => 'String',
-            ],
-            'description' => [
-                'type' => 'String',
-            ],
-            'placeholder' => [
-                'type' => 'String',
-            ],
-            'value' => [
-                'type' => 'String',
-            ],
-        ],
-    ]);
-});
-
