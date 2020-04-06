@@ -33,7 +33,8 @@ registerBlockType( 'calderaforms/cform', {
          */
         const setCurrentForm = (newFormId) => {
             setAttributes({formId:newFormId});
-        }
+        };
+
         return (
 		<div>
 			<InspectorControls>

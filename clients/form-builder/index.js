@@ -7,7 +7,7 @@ import {
 	MagicTagProvider,
 	prepareProcessorsForSave,
 	prepareConditionalsForSave,
-	RenderViaPortal
+	RenderViaPortal,
 } from "@calderajs/form-builder";
 import { Button } from "@wordpress/components";
 
@@ -46,14 +46,14 @@ const HandleSave = ({ jQuery, formId }) => {
 
 		//Legacy hook
 		jQuery(document).trigger("cf.presave", {
-			config: data_fields.config
+			config: data_fields.config,
 		});
 
 		if (hasConditionals) {
 			data_fields.config.conditional_groups = {
 				conditions: (data_fields.conditions = prepareConditionalsForSave(
 					conditionals
-				))
+				)),
 			};
 		} else {
 			data_fields.config.conditional_groups = {};
@@ -64,22 +64,48 @@ const HandleSave = ({ jQuery, formId }) => {
 		} else {
 			data_fields.config.processors = {};
 		}
+
+		//Clear all assignments of fields to conditonals
+		if (data_fields.config.hasOwnProperty("fields")) {
+			Object.keys(data_fields.config.fields).forEach((fieldId) => {
+				if (data_fields.config.fields.hasOwnProperty(fieldId)) {
+					data_fields.config.fields[fieldId].conditions = {
+						type: "",
+					};
+				}
+			});
+		}
+
+		//Reset assignments of fields to conditonals
+		conditionals.forEach((c) => {
+			const appliesTo = c.hasOwnProperty("config") ? c.config.appliesTo : [];
+			if (appliesTo) {
+				appliesTo.forEach((fieldId) => {
+					if (data_fields.config.fields.hasOwnProperty(fieldId)) {
+						data_fields.config.fields[fieldId].conditions = {
+							type: c.id,
+						};
+					}
+				});
+			}
+		});
+
 		apiFetch({
 			path: `/cf-api/v2/forms/${formId}`,
 			data: {
 				...data_fields,
 			},
-			method: "PUT"
+			method: "PUT",
 		})
 			.then(({ form_id, form }) => {
 				const $notice = jQuery(".updated_notice_box");
-				$notice.stop().animate({ top: 0 }, 200, function() {
-					setTimeout(function() {
+				$notice.stop().animate({ top: 0 }, 200, function () {
+					setTimeout(function () {
 						$notice.stop().animate({ top: -75 }, 700);
 					}, 1700);
 				});
 			})
-			.catch(e => console.log(e))
+			.catch((e) => console.log(e))
 			.finally(() => {
 				window.setTimeout(() => {
 					setIsSaving(false);
@@ -137,7 +163,7 @@ const CalderaFormsBuilder = ({ savedForm, jQuery, conditionalsNode }) => {
  *
  * @since 1.9.0
  */
-domReady(function() {
+domReady(function () {
 	let form = CF_ADMIN.form;
 	if (!form.hasOwnProperty("fields")) {
 		form.fields = {};
