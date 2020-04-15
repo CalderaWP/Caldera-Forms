@@ -486,7 +486,7 @@ function caldera_forms_field_wrapper_template($field_id = '{{field_id}}', $label
 	}else{
 		$config = json_decode($config_str, true);
 	}
-
+$form = [];
 
 	$condition_type = '';
 	if(!empty($conditions_str)){
@@ -515,6 +515,7 @@ function caldera_forms_field_wrapper_template($field_id = '{{field_id}}', $label
 			$conditions_str = json_encode($conditions);
 		}
 	}	
+	
 	?>
 	<div class="caldera-editor-field-config-wrapper caldera-editor-config-wrapper ajax-trigger" 
 	
@@ -577,18 +578,7 @@ function caldera_forms_field_wrapper_template($field_id = '{{field_id}}', $label
 					<input type="text" class="block-input field-config field-slug required" id="<?php echo esc_attr($field_id); ?>_slug" name="config[fields][<?php echo esc_attr($field_id); ?>][slug]" value="<?php echo $slug; ?>">
 				</div>
 			</div>
-
-			<div class="caldera-config-group">
-				<label for="<?php echo esc_attr($field_id); ?>_fcond"><?php echo esc_html__( 'Condition', 'caldera-forms' ); ?></label>
-				<div class="caldera-config-field">
-					<select id="field-condition-type-<?php echo esc_attr($field_id); ?>" name="config[fields][<?php echo esc_attr($field_id); ?>][conditions][type]" data-id="<?php echo esc_attr($field_id); ?>" class="caldera-conditionals-usetype block-input">
-						<option></option>
-						<optgroup class="cf-conditional-selector">
-							<?php if( !in_array( $condition_type, array( 'show', 'hide','disable' ) ) ){ ?><option value="<?php echo $condition_type; ?>" selected="selected"><?php echo esc_html__( 'Disable', 'caldera-forms' ); ?></option><?php } ?></optgroup>
-						</optgroup>
-					</select>
-				</div>
-			</div>
+			<div id="field-condition-type-<?php echo esc_attr($field_id); ?>"></div>
 
 			<div class="caldera-config-group required-field">
 				<label for="<?php echo esc_attr($field_id); ?>_required"><?php echo esc_html__( 'Required', 'caldera-forms' ); ?></label>

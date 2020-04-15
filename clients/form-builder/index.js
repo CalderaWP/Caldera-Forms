@@ -1,13 +1,12 @@
 import {
 	FormBuilder,
-	ProcessorsContext,
-	ProcessorsProvider,
+	FormFieldsContext,
 	ConditionalsContext,
-	ConditionalsProvider,
-	MagicTagProvider,
-	prepareProcessorsForSave,
-	prepareConditionalsForSave,
+	ProcessorsContext,
 	RenderViaPortal,
+	FieldConditonalSelectorWithState,
+	prepareConditionalsForSave,
+	prepareProcessorsForSave,
 } from "@calderajs/form-builder";
 import { Button } from "@wordpress/components";
 
@@ -15,14 +14,38 @@ import React from "react";
 import { render } from "@wordpress/element";
 import domReady from "@wordpress/dom-ready";
 import apiFetch from "@wordpress/api-fetch";
-
+const FieldConditonalSelectors = () => {
+	const { formFields } = React.useContext(FormFieldsContext);
+	const { conditionals } = React.useContext(ConditionalsContext);
+	const nodeFactory = (fieldId) =>
+		document.getElementById(`field-condition-type-${fieldId}`);
+	return React.useMemo(
+		() => (
+			<React.Fragment>
+				{formFields && formFields.length ? (
+					formFields.map((field) => {
+						return (
+							<React.Fragment key={field.ID}>
+								<RenderViaPortal domNode={nodeFactory(field.ID)}>
+									<FieldConditonalSelectorWithState fieldId={field.ID} />
+								</RenderViaPortal>
+							</React.Fragment>
+						);
+					})
+				) : (
+					<React.Fragment />
+				)}
+			</React.Fragment>
+		),
+		[formFields, conditionals]
+	);
+};
 /**
  * Deals with saving forms
  *
  * Including the save button and API interactions
  *
  * @since 1.9.0
- *
  */
 const HandleSave = ({ jQuery, formId }) => {
 	//Get conditionals
@@ -31,6 +54,7 @@ const HandleSave = ({ jQuery, formId }) => {
 	);
 	//Get processors
 	const { processors, hasProcessors } = React.useContext(ProcessorsContext);
+
 	//Track if we're saving or not
 	const [isSaving, setIsSaving] = React.useState(false);
 
@@ -113,11 +137,6 @@ const HandleSave = ({ jQuery, formId }) => {
 			});
 	};
 
-	React.useEffect(() => {
-		conditionals.forEach(conditional => {
-			console.log(conditional);
-		})
-	},[conditionals]);
 	return (
 		<Button
 			isPrimary
@@ -132,35 +151,116 @@ const HandleSave = ({ jQuery, formId }) => {
 };
 
 /**
- * Caldera Forms Form Builder React App
+ * Keeps state in sync between legacy field editor and React state.
  *
- * @since 2.0.0
+ * @since 1.9.0
+ */
+const SubscribeToFieldChanges = ({ jQuery }) => {
+	const {
+		getFieldById,
+		updateFieldSetting,
+		addField,
+		removeField,
+		updateFieldType,
+	} = React.useContext(FormFieldsContext);
+
+	//Watch DOM for events outside of React for field configs
+	//Update React state as needed
+	React.useEffect(() => {
+		let isSubscribed = true;
+
+		jQuery(document).on("field.config-change", (e, update) => {
+			let { name, value } = update;
+			if (isSubscribed) {
+				updateFieldSetting(name, value);
+			}
+		});
+
+		jQuery(document).on("field.removed", (e, data) => {
+			if (isSubscribed) {
+				removeField(data.fieldId);
+			}
+		});
+		jQuery(document).on("field.added", (e, data) => {
+			if (isSubscribed) {
+				const field = {
+					ID: data.field.id,
+					label: data.field.label,
+					slug: data.field.slug,
+					value: "",
+					type: "",
+					conditions: {
+						type: "",
+					},
+					config: {},
+				};
+				addField(field);
+			}
+		});
+		jQuery(".caldera-editor-body").on(
+			"change",
+			".caldera-select-field-type",
+			function () {
+				if (isSubscribed) {
+					const $this = jQuery(this);
+					let fieldId = $this.attr("data-field");
+					updateFieldType(fieldId, $this.val());
+				}
+			}
+		);
+		return () => {
+			isSubscribed = false;
+		};
+	}, [jQuery, getFieldById]);
+	return <React.Fragment />;
+};
+
+/**
+ * Wrapper for FormBuilder componet for use in Caldera Forms 1.x
+ *
+ * @since 1.9.0
  */
 const CalderaFormsBuilder = ({ savedForm, jQuery, conditionalsNode }) => {
-	const savedProcessors = savedForm.hasOwnProperty("processors")
-		? savedForm.processors
-		: {};
-	const saveNode = document.getElementById("caldera-header-save-button");
+	//Tracks which processor is being editted right now
+	const [activeProcessorId, setActiveProcessorId] = React.useState();
+	React.useEffect(() => {
+		let isSubscribed = true;
+		//Activate new processor on creation
+		jQuery(document).on("processor.added", (event, data) => {
+			if (isSubscribed) {
+				setActiveProcessorId(data.processor.id);
+				jQuery(".caldera-processor-nav a").on("click", function () {
+					setActiveProcessorId(jQuery(this).parent().data("pid"));
+				});
+			}
+		});
+
+		//Activate processor when clicked on
+		jQuery(".caldera-processor-nav a").on("click", function () {
+			setActiveProcessorId(jQuery(this).parent().data("pid"));
+		});
+
+		return () => {
+			isSubscribed = false;
+		};
+	}, [setActiveProcessorId, jQuery]);
+
 	return (
-		<MagicTagProvider systemValues={window.system_values || {}}>
-			<ProcessorsProvider savedProcessors={savedProcessors} jQuery={jQuery}>
-				<ConditionalsProvider savedForm={savedForm}>
-					<RenderViaPortal domNode={saveNode}>
-						<HandleSave jQuery={jQuery} formId={savedForm.ID} />
-					</RenderViaPortal>
-					<FormBuilder
-						jQuery={jQuery}
-						conditionalsNode={conditionalsNode}
-						form={savedForm}
-						strings={
-							window.CF_FORM_BUILDER
-								? window.CF_FORM_BUILDER.strings
-								: undefined
-						}
-					/>
-				</ConditionalsProvider>
-			</ProcessorsProvider>
-		</MagicTagProvider>
+		<FormBuilder
+			activeProcessorId={activeProcessorId}
+			strings={CF_FORM_BUILDER.strings}
+			savedForm={savedForm}
+			jQuery={jQuery}
+			conditionalsNode={conditionalsNode}
+		>
+			<SubscribeToFieldChanges jQuery={jQuery} />
+			<FieldConditonalSelectors />
+			<RenderViaPortal
+				domNode={document.getElementById("caldera-header-save-button")}
+			>
+				<HandleSave jQuery={jQuery} />
+			</RenderViaPortal>
+		</FormBuilder>
 	);
 };
 

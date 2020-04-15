@@ -62,7 +62,7 @@ const cssPlugin = new MiniCssExtractPlugin({
 		: "../clients/[name]/build/style.[hash].css",
 	chunkFilename: isProduction
 		? "../clients/[name]/build/[id].css"
-		: "../clients/[name]/build/[id].[hash].css"
+		: "../clients/[name]/build/[id].[hash].css",
 });
 
 /**
@@ -81,11 +81,11 @@ const cssRule = {
 			loader: MiniCssExtractPlugin.loader,
 			options: {
 				//hmr: process.env.NODE_ENV === 'development',
-			}
+			},
 		},
 		"css-loader",
-		"sass-loader"
-	]
+		"sass-loader",
+	],
 };
 
 /**
@@ -117,11 +117,11 @@ const publicPath = `https://localhost:${port}/`;
 const devServer = {
 	https: true,
 	headers: {
-		"Access-Control-Allow-Origin": "*"
+		"Access-Control-Allow-Origin": "*",
 	},
 	hotOnly: true,
 	watchOptions: {
-		aggregateTimeout: 300
+		aggregateTimeout: 300,
 	},
 	writeToDisk: true, //False by default, so 404 on intial load
 	disableHostCheck: true,
@@ -132,9 +132,9 @@ const devServer = {
 		errors: true,
 		performance: true,
 		timings: true,
-		warnings: true
+		warnings: true,
 	},
-	port
+	port,
 };
 
 /**
@@ -154,7 +154,7 @@ const output = {
 	library: ["calderaForms", "[name]"],
 	libraryTarget: "this",
 	hotUpdateChunkFilename: "../dist/caldera-hot-load/[name].[hash].js",
-	hotUpdateMainFilename: "../dist/caldera-hot-load/hot-update.json"
+	hotUpdateMainFilename: "../dist/caldera-hot-load/hot-update.json",
 };
 
 /**
@@ -168,10 +168,10 @@ const output = {
  */
 const optimization = isProduction
 	? {
-			minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})]
+			minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
 	  }
 	: {
-			minimize: false
+			minimize: false,
 	  };
 
 /**
@@ -187,13 +187,13 @@ const externals = isTest
 	? {}
 	: {
 			jquery: "jQuery",
-			react: "React"
+			react: "React",
 	  };
 
 // Setup external for each entry point
-entryPointNames.forEach(entryPointName => {
+entryPointNames.forEach((entryPointName) => {
 	externals["@/calderaForms" + entryPointName] = {
-		this: ["calderaForms", entryPointName]
+		this: ["calderaForms", entryPointName],
 	};
 });
 
@@ -208,12 +208,12 @@ let plugins = [
 	//CSS/SASS
 	cssPlugin,
 	//default
-	...defaultConfig.plugins
+	...defaultConfig.plugins,
 ];
 
 //Remove default dependency extractor
 plugins.filter(
-	plugin => plugin.constructor.name !== "DependencyExtractionWebpackPlugin"
+	(plugin) => plugin.constructor.name !== "DependencyExtractionWebpackPlugin"
 );
 
 //Add dependency extractor back, with different options.
@@ -221,7 +221,7 @@ plugins.push(
 	new DependencyExtractionWebpackPlugin({
 		injectPolyfill: true,
 		//By default php file is generated, we want JSON
-		outputFormat: "json"
+		outputFormat: "json",
 	})
 );
 //Add more plugins in development
@@ -239,10 +239,10 @@ if (!isProduction) {
 					//remove ".." in paths written to asset manifest
 					return {
 						...manifest,
-						[name]: path.replace("/../clients/", "/clients/")
+						[name]: path.replace("/../clients/", "/clients/"),
 					};
-				}, seed)
-		})
+				}, seed),
+		}),
 		/**
 		// Enable HMR.
 		new webpack.HotModuleReplacementPlugin({
@@ -284,12 +284,12 @@ module.exports = {
 				options: {
 					// Cache compilation results in ./node_modules/.cache/babel-loader/
 					cacheDirectory: true,
-					presets: [require("@calderajs/babel-preset-calderajs")]
-				}
+					presets: [require("@calderajs/babel-preset-calderajs")],
+				},
 			},
-			cssRule
-		]
+			cssRule,
+		],
 	},
 
-	plugins
+	plugins,
 };
