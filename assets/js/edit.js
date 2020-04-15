@@ -67,7 +67,6 @@ jQuery(document).ready(function($) {
 			template = get_compiled_template(val),
 			config = parent.find(".field_config_string").val(),
 			current_type = select.data("type");
-
 		parent.find(".caldera-config-group").show();
 
 		select.addClass("field-initialized");
@@ -80,6 +79,8 @@ jQuery(document).ready(function($) {
 			config = fieldtype_defaults[select.val() + "_cfg"];
 		}
 
+
+
 		// build template
 		if (!config) {
 			config = {};
@@ -87,7 +88,6 @@ jQuery(document).ready(function($) {
 
 		config._id = select.data("field");
 		config._name = "config[fields][" + select.data("field") + "][config]";
-
 		template = $("<div>").html(template(config));
 
 		// send to target
@@ -2457,6 +2457,7 @@ jQuery(document).ready(function($) {
 				default: false
 			};
 		}
+
 		$(".preset_options").val("");
 		// place new row
 		toggle_rows.append(template(config));

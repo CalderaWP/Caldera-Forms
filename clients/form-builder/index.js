@@ -25,7 +25,7 @@ import apiFetch from "@wordpress/api-fetch";
  *
  */
 const HandleSave = ({ jQuery, formId }) => {
-	//Get conditonals
+	//Get conditionals
 	const { conditionals, hasConditionals } = React.useContext(
 		ConditionalsContext
 	);
@@ -112,6 +112,12 @@ const HandleSave = ({ jQuery, formId }) => {
 				}, 2000);
 			});
 	};
+
+	React.useEffect(() => {
+		conditionals.forEach(conditional => {
+			console.log(conditional);
+		})
+	},[conditionals]);
 	return (
 		<Button
 			isPrimary
