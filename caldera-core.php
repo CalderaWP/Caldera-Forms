@@ -31,7 +31,7 @@ if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
 		?>
         <div class="notice notice-error">
             <p>
-				<?php _e('Your version of PHP is incompatible with Caldera Forms and can not be used.',
+				<?php esc_html_e('Your version of PHP is incompatible with Caldera Forms and can not be used.',
 					'caldera-forms'); ?>
 				<?php printf(' <a href="https://calderaforms.com/php?utm_source=wp-admin&utm_campaign=php_deprecated&utm_source=admin-nag" target="__blank">%s</a>',
 					esc_html__('Learn More', 'caldera-forms')
@@ -48,7 +48,7 @@ if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
 		?>
 		<div class="notice notice-error">
 		    <p>
-			<?php _e('Your version of WordPress is incompatible with Caldera Forms and can not be used.', 'caldera-forms'); ?>
+			<?php esc_html_e('Your version of WordPress is incompatible with Caldera Forms and can not be used.', 'caldera-forms'); ?>
 		    </p>
 		</div>
 		<?php

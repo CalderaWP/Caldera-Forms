@@ -39,7 +39,7 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
                 <li class="caldera-forms-toolbar-item">
                     <button class="button button-primary ajax-trigger cf-new-form-button"
                             data-request="start_new_form"
-                            data-modal-no-buttons='<?php echo $modal_new_form; ?>'
+                            data-modal-no-buttons='<?php echo esc_attr( $modal_new_form ); ?>'
                             data-modal-width="70%"
                             data-modal-height="80%"
                             data-load-class="none" data-modal="new_form"
