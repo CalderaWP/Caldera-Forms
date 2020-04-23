@@ -12,15 +12,16 @@ function caldera_forms_sendwp_remote_install() {
                 var div = jQuery('<div class="notice error"></div>');
                 var p = jQuery('<p></p>');
                 var notice = sendwp_vars.security_failed_message;
-                div.append(p);
                 p.append(notice);
+                div.append(p);
                 jQuery("#cf-email-settings-ui").prepend(div);
             } else if( data.debug === '!user_capablity'){
                 var userdiv = jQuery('<div class="notice error"></div>');
                 var userp = jQuery('<p></p>');
                 var usernotice = sendwp_vars.user_capability_message;
-                userdiv.append();
                 userp.append(usernotice);
+                userdiv.append();
+                jQuery("#cf-email-settings-ui").prepend(userdiv);
             }
         } else {
             caldera_forms_sendwp_register_client(data.register_url, data.client_name, data.client_secret, data.client_redirect, data.partner_id);
