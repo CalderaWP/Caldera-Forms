@@ -1023,7 +1023,7 @@ class Caldera_Forms
 						
 						// Re urlencode query vars after they were parsed in this function
 						foreach($query_vars as $var_names => $var_values){
-							$query_vars[$var_names] = urlencode($var_values);
+							$query_vars[$var_names] = rawurlencode($var_values);
 						}
 						$redirect = add_query_arg($query_vars, $base_redirect);
 						
