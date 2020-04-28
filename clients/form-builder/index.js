@@ -14,7 +14,14 @@ import React from "react";
 import { render } from "@wordpress/element";
 import domReady from "@wordpress/dom-ready";
 import apiFetch from "@wordpress/api-fetch";
-const FieldConditonalSelectors = () => {
+
+/**
+ * Control for the field conditional groups
+ *
+ * @returns {*}
+ * @constructor
+ */
+const FieldConditionalSelectors = () => {
 	const { formFields } = React.useContext(FormFieldsContext);
 	const { conditionals } = React.useContext(ConditionalsContext);
 	const nodeFactory = (fieldId) =>
@@ -89,7 +96,7 @@ const HandleSave = ({ jQuery, formId }) => {
 			data_fields.config.processors = {};
 		}
 
-		//Clear all assignments of fields to conditonals
+		//Clear all assignments of fields to conditionals
 		if (data_fields.config.hasOwnProperty("fields")) {
 			Object.keys(data_fields.config.fields).forEach((fieldId) => {
 				if (data_fields.config.fields.hasOwnProperty(fieldId)) {
@@ -100,7 +107,7 @@ const HandleSave = ({ jQuery, formId }) => {
 			});
 		}
 
-		//Reset assignments of fields to conditonals
+		//Reset assignments of fields to conditionals
 		conditionals.forEach((c) => {
 			const appliesTo = c.hasOwnProperty("config") ? c.config.appliesTo : [];
 			if (appliesTo) {
@@ -168,19 +175,19 @@ const SubscribeToFieldChanges = ({ jQuery }) => {
 	//Update React state as needed
 	React.useEffect(() => {
 		let isSubscribed = true;
-
 		jQuery(document).on("field.config-change", (e, update) => {
 			let { name, value } = update;
 			if (isSubscribed) {
 				updateFieldSetting(name, value);
 			}
 		});
-
+		//Watch for field removed
 		jQuery(document).on("field.removed", (e, data) => {
 			if (isSubscribed) {
 				removeField(data.fieldId);
 			}
 		});
+		//Watch for field added
 		jQuery(document).on("field.added", (e, data) => {
 			if (isSubscribed) {
 				const field = {
@@ -197,6 +204,7 @@ const SubscribeToFieldChanges = ({ jQuery }) => {
 				addField(field);
 			}
 		});
+		//Watch changes to field type
 		jQuery(".caldera-editor-body").on(
 			"change",
 			".caldera-select-field-type",
@@ -208,6 +216,7 @@ const SubscribeToFieldChanges = ({ jQuery }) => {
 				}
 			}
 		);
+		//Prevent binding when unmounted
 		return () => {
 			isSubscribed = false;
 		};
@@ -216,12 +225,12 @@ const SubscribeToFieldChanges = ({ jQuery }) => {
 };
 
 /**
- * Wrapper for FormBuilder componet for use in Caldera Forms 1.x
+ * Wrapper for FormBuilder component for use in Caldera Forms 1.x
  *
  * @since 1.9.0
  */
 const CalderaFormsBuilder = ({ savedForm, jQuery, conditionalsNode }) => {
-	//Tracks which processor is being editted right now
+	//Tracks which processor is being edited right now
 	const [activeProcessorId, setActiveProcessorId] = React.useState();
 	React.useEffect(() => {
 		let isSubscribed = true;
@@ -239,7 +248,7 @@ const CalderaFormsBuilder = ({ savedForm, jQuery, conditionalsNode }) => {
 		jQuery(".caldera-processor-nav a").on("click", function () {
 			setActiveProcessorId(jQuery(this).parent().data("pid"));
 		});
-
+		//Prevents calling when unmounted
 		return () => {
 			isSubscribed = false;
 		};
@@ -254,7 +263,7 @@ const CalderaFormsBuilder = ({ savedForm, jQuery, conditionalsNode }) => {
 			conditionalsNode={conditionalsNode}
 		>
 			<SubscribeToFieldChanges jQuery={jQuery} />
-			<FieldConditonalSelectors />
+			<FieldConditionalSelectors />
 			<RenderViaPortal
 				domNode={document.getElementById("caldera-header-save-button")}
 			>
