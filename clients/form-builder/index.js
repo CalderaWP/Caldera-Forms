@@ -227,6 +227,11 @@ const SubscribeToFieldChanges = ({ jQuery }) => {
 	return <React.Fragment />;
 };
 
+/**
+ * Keeps state in sync between legacy processor editor and React state.
+ *
+ * @since 1.9.0
+ */
 const SubscribeToProcessorChanges = ({jQuery,setActiveProcessorId,activeProcessorId}) => {
     //Access processor state
     const { updateProcessor,getProcessor } = React.useContext(ProcessorsContext);
@@ -271,6 +276,7 @@ const SubscribeToProcessorChanges = ({jQuery,setActiveProcessorId,activeProcesso
         };
     }, [jQuery]);
 
+    //Force re-render when active processor changes
     return React.useMemo(() => <React.Fragment/>, [activeProcessorId]);
 
 };
