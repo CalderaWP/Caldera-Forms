@@ -96,6 +96,7 @@ function processor_wrapper_template($id = '{{id}}', $type = '{{type}}', $config_
 		}
 	}
 
+	$enabled = ! isset( $run_times['insert'] ) || $run_times['insert'];
 	?>
 	<div class="caldera-editor-processor-config-wrapper caldera-editor-config-wrapper processor-<?php echo $type; ?>" id="<?php echo $id; ?>" data-type="<?php echo $type; ?>" style="display:none;">
 
@@ -106,39 +107,61 @@ function processor_wrapper_template($id = '{{id}}', $type = '{{type}}', $config_
             </a>
 		</div>
 		<h3 data-title="<?php esc_html_e( 'New Form Processor', 'caldera-forms'); ?>" class="caldera-editor-processor-title"><?php echo $type_name; ?></h3>
-		<div id="<?php echo $id; ?>_settings_pane" class="wrapper-instance-pane">
+		<div id="<?php echo esc_attr( $id . "_settings_pane"); ?>" class="wrapper-instance-pane">
 			<div class="toggle_processor_event">
-
-				<label title="<?php echo esc_attr( __('Enable / Disable Processor', 'caldera-forms') ); ?>" class="button button-small <?php if( !empty( $run_times['insert'] )){ echo 'activated'; } ?>"><input type="checkbox" style="display:none;" value="1" name="config[processors][<?php echo $id; ?>][runtimes][insert]" <?php if( !empty( $run_times['insert'] )){ echo 'checked="checked"'; } ?>>
-				<span class="is_active" style="<?php if( empty( $run_times ) ){ ?> display:none;<?php } ?>"><?php esc_html_e( 'Disable Processor', 'caldera-forms' ); ?></span>
-				<span class="not_active" style="<?php if( !empty( $run_times ) ){ ?> display:none;<?php } ?>"><?php esc_html_e( 'Enable Processor', 'caldera-forms' ); ?></span>
+				<label
+                    title="<?php echo esc_attr( __('Enable / Disable Processor', 'caldera-forms') ); ?>"
+                    class="button button-small <?php if( !empty( $run_times['insert'] )){ echo 'activated'; } ?>"
+                    data-pid="<?php echo esc_attr($id); ?>"
+                >
+                    <input
+                        type="checkbox"
+                        style="display:none;"
+                        value="1"
+                        name="config[processors][<?php echo esc_attr($id); ?>][runtimes][insert]"
+                        <?php if( $enabled ){ echo 'checked="checked"'; } ?>
+                    />
+                    <span
+                        class="is_active"
+                        style="<?php if( ! $enabled ){ ?> display:none;<?php } ?>"
+                    >
+                        <?php esc_html_e( 'Disable Processor', 'caldera-forms' ); ?>
+                    </span>
+                    <span
+                        class="not_active"
+                        style="<?php if(  $enabled ){ ?> display:none;<?php } ?>"
+                    >
+                        <?php esc_html_e( 'Enable Processor', 'caldera-forms' ); ?>
+                    </span>
 				</label>
-				<?php /*<label title="<?php echo esc_attr( __('Run processor on Update', 'caldera-forms') ); ?>" class="button button-small <?php if( !empty( $run_times['update'] )){ echo 'button-primary'; } ?> "><input type="checkbox" style="display:none;" value="1" name="config[processors][<?php echo $id; ?>][runtimes][update]" <?php if( !empty( $run_times['update'] )){ echo 'checked="checked"'; } ?>>Update</label>
-				<label class="button button-small <?php if( !empty( $run_times['delete'] )){ echo 'button-primary'; } ?> "><input type="checkbox" style="display:none;" value="1" name="config[processors][<?php echo $id; ?>][runtimes][delete]" <?php if( !empty( $run_times['delete'] )){ echo 'checked="checked"'; } ?>>Delete</label> */ ?>
-			</div>
-			<div class="caldera-config-processor-notice" style="<?php if( !empty( $run_times ) ){ ?> display:none;<?php } ?>clear: both; padding: 20px 0px 0px;">
-				<p style="padding:12px; text-align:center;background:#e7e7e7;" class="description"><?php esc_html_e('Processor is currently disabled', 'caldera-forms'); ?></p>
+            </div>
+			<div class="caldera-config-processor-notice" style="<?php if( $enabled ){ ?> display:none;<?php } ?>clear: both; padding: 20px 0px 0px;">
+				<p style="padding:12px; text-align:center;background:#e7e7e7;" class="description">
+                    <?php esc_html_e('Processor is currently disabled', 'caldera-forms'); ?>
+                </p>
 			</div>
 			<div class="caldera-config-group" style="display:none;">
-				<label for="<?php echo $id; ?>_type"><?php esc_html_e( 'Processor Type', 'caldera-forms'); ?></label>
+				<label for="<?php echo esc_attr($id . "_type" ); ?>">
+                    <?php esc_html_e( 'Processor Type', 'caldera-forms'); ?>
+                </label>
 				<div class="caldera-config-field">
-					<select class="block-input caldera-select-processor-type" id="<?php echo $id; ?>_type" name="config[processors][<?php echo $id; ?>][type]" data-type="<?php echo $type; ?>">					
+					<select class="block-input caldera-select-processor-type" id="<?php echo esc_attr($id . "_type" ); ?>" name="config[processors][<?php echo esc_attr($id); ?>][type]" data-type="<?php echo esc_attr($type); ?>">
 						<?php
-						echo build_processor_types($type);
+						    echo build_processor_types($type);
 						?>
 					</select>
 				</div>
 			</div>
-			<div class="caldera-config-processor-setup" <?php if( empty( $run_times ) ){ ?> style="display:none;"<?php } ?>>
-
+			<div class="caldera-config-processor-setup" <?php if( ! $enabled ){ ?> style="display:none;"<?php } ?>>
 			</div>
-			<input type="hidden" class="processor_config_string block-input" value="<?php echo htmlentities( $config_str ); ?>">
+			<input type="hidden" class="processor_config_string block-input" value="<?php echo htmlentities( $config_str ); ?>" />
 			<br>
 			<br>
-
-			<button class="button block-button delete-processor" data-confirm="<?php esc_html_e( 'Are you sure you want to remove this processor?', 'caldera-forms'); ?>" type="button"><?php esc_html_e( 'Remove Processor', 'caldera-forms'); ?></button>
+			<button class="button block-button delete-processor" data-confirm="<?php esc_html_e( 'Are you sure you want to remove this processor?', 'caldera-forms'); ?>" type="button">
+                <?php esc_html_e( 'Remove Processor', 'caldera-forms'); ?>
+            </button>
 		</div>
-		<div id="<?php echo $id; ?>_conditions_pane" style="display:none;" class="wrapper-instance-pane">
+		<div id="<?php echo esc_attr( $id . 'conditions_pane' );?>" style="display:none;" class="wrapper-instance-pane">
 		</div>
 	</div>
 	<?php

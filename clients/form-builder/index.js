@@ -14,6 +14,7 @@ import React from "react";
 import { render } from "@wordpress/element";
 import domReady from "@wordpress/dom-ready";
 import apiFetch from "@wordpress/api-fetch";
+import {set} from "react-ga";
 
 /**
  * Control for the field conditional groups
@@ -91,7 +92,9 @@ const HandleSave = ({ jQuery, formId }) => {
 		}
 
 		if (hasProcessors) {
+		    console.log(processors);
 			data_fields.config.processors = prepareProcessorsForSave(processors);
+			console.log(data_fields.config.processors);
 		} else {
 			data_fields.config.processors = {};
 		}
@@ -224,35 +227,62 @@ const SubscribeToFieldChanges = ({ jQuery }) => {
 	return <React.Fragment />;
 };
 
+const SubscribeToProcessorChanges = ({jQuery,setActiveProcessorId,activeProcessorId}) => {
+    //Access processor state
+    const { updateProcessor,getProcessor } = React.useContext(ProcessorsContext);
+
+    React.useEffect(() => {
+        let isSubscribed = true;
+        //Activate new processor on creation
+        jQuery(document).on("processor.added", (event, data) => {
+            if (isSubscribed) {
+                setActiveProcessorId(data.processor.id);
+                jQuery(".caldera-processor-nav a").on("click", function () {
+                    setActiveProcessorId(jQuery(this).parent().data("pid"));
+                });
+            }
+        });
+
+        //Activate processor when clicked on
+        jQuery(".caldera-processor-nav a").on("click", function () {
+            setActiveProcessorId(jQuery(this).parent().data("pid"));
+        });
+
+        //Enable processor
+        jQuery(document).on("processor.enabled",  (e,data) => {
+            updateProcessor({
+                ...getProcessor(data.processorId),
+                runtimes: {insert: 1},
+            });
+
+        });
+
+        //Disable processor
+        jQuery(document).on("processor.disabled",  (e,data) => {
+            updateProcessor({
+                ...getProcessor(data.processorId),
+                runtimes: {insert: 0},
+            });
+        });
+
+        //Prevents calling when unmounted
+        return () => {
+            isSubscribed = false;
+        };
+    }, [jQuery]);
+
+    return React.useMemo(() => <React.Fragment/>, [activeProcessorId]);
+
+};
+
 /**
  * Wrapper for FormBuilder component for use in Caldera Forms 1.x
  *
  * @since 1.9.0
  */
 const CalderaFormsBuilder = ({ savedForm, jQuery, conditionalsNode }) => {
-	//Tracks which processor is being edited right now
+	//Tracks which processor is active -- being edited  -- right now
 	const [activeProcessorId, setActiveProcessorId] = React.useState();
-	React.useEffect(() => {
-		let isSubscribed = true;
-		//Activate new processor on creation
-		jQuery(document).on("processor.added", (event, data) => {
-			if (isSubscribed) {
-				setActiveProcessorId(data.processor.id);
-				jQuery(".caldera-processor-nav a").on("click", function () {
-					setActiveProcessorId(jQuery(this).parent().data("pid"));
-				});
-			}
-		});
-
-		//Activate processor when clicked on
-		jQuery(".caldera-processor-nav a").on("click", function () {
-			setActiveProcessorId(jQuery(this).parent().data("pid"));
-		});
-		//Prevents calling when unmounted
-		return () => {
-			isSubscribed = false;
-		};
-	}, [setActiveProcessorId, jQuery]);
 
 	return (
 		<FormBuilder
@@ -263,6 +293,7 @@ const CalderaFormsBuilder = ({ savedForm, jQuery, conditionalsNode }) => {
 			conditionalsNode={conditionalsNode}
 		>
 			<SubscribeToFieldChanges jQuery={jQuery} />
+			<SubscribeToProcessorChanges jQuery={jQuery} setActiveProcessorId={setActiveProcessorId} activeProcessorId={activeProcessorId} />
 			<FieldConditionalSelectors />
 			<RenderViaPortal
 				domNode={document.getElementById("caldera-header-save-button")}

@@ -325,7 +325,8 @@ jQuery(document).ready(function ($) {
 			settings = parent.find(".caldera-config-processor-setup"),
 			notice = parent.find(".caldera-config-processor-notice");
 
-		if (clicked.is(":checked")) {
+		var enabling = clicked.is(":checked");
+		if (enabling) {
 			clicked.parent().addClass("activated");
 			clicked
 				.parent()
@@ -339,6 +340,10 @@ jQuery(document).ready(function ($) {
 				.hide()
 				.attr("aria-hidden", true)
 				.css("visibility", "hidden");
+
+			$(document).trigger("processor.enabled", {
+				processorId:  clicked.parent().data('pid')
+			});
 		} else {
 			clicked.parent().removeClass("activated");
 			clicked
@@ -353,10 +358,14 @@ jQuery(document).ready(function ($) {
 				.show()
 				.attr("aria-hidden", false)
 				.css("visibility", "visible");
+
+			$(document).trigger("processor.disabled", {
+				processorId:  clicked.parent().data('pid')
+			});
 		}
 
-		// check if all are selected
-		if (parent.find(".toggle_processor_event .activated").length) {
+		// Show or hide the settings panel
+		if (enabling) {
 			settings.slideDown(100);
 			notice.slideUp(100);
 		} else {
@@ -364,6 +373,7 @@ jQuery(document).ready(function ($) {
 			notice.slideDown(100);
 		}
 	});
+
 	$("body").on("click", ".toggle_option_tab > a", function (e) {
 		e.preventDefault();
 		var clicked = $(this),
