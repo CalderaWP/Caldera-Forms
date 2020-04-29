@@ -1055,10 +1055,10 @@
     "@babel/preset-env" "^7.3.1"
     "@babel/preset-react" "^7.0.0"
 
-"@calderajs/form-builder@1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@calderajs/form-builder/-/form-builder-1.0.5.tgz#d79613e1c7e42c18a92eace73eae8ea41b036706"
-  integrity sha512-ojFH64Pr05NCQMjZfG/EvZGxl7NtlZbQ89XtMRbUrpUsctWBBtHI5A/xV/aOFg7ph2imhNfvH/p3MxmMC9mG0w==
+"@calderajs/form-builder@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@calderajs/form-builder/-/form-builder-1.1.0.tgz#2e53a911f59db2282d1e7dbe05667d4ff8587851"
+  integrity sha512-pPxleZiT+zMEItSIyvQnMnU131zuXfPpSxwslaMkLgDb//O4g1fK0q7ik9bCiNd2PguBoI//Ro+LSgB3iirXDA==
   dependencies:
     "@types/dot-object" "^1.7.0"
     deep-clone "^3.0.3"
