@@ -161,7 +161,7 @@ function processor_wrapper_template($id = '{{id}}', $type = '{{type}}', $config_
                 <?php esc_html_e( 'Remove Processor', 'caldera-forms'); ?>
             </button>
 		</div>
-		<div id="<?php echo esc_attr( $id . 'conditions_pane' );?>" style="display:none;" class="wrapper-instance-pane">
+		<div id="<?php echo esc_attr( $id . '_conditions_pane' );?>" style="display:none;" class="wrapper-instance-pane">
 		</div>
 	</div>
 	<?php
