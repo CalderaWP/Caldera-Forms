@@ -3729,8 +3729,8 @@ class Caldera_Forms
 			if (!empty($form[ 'ID' ])) {
 
 				if ($form[ 'ID' ] === $form_id) {
-					$entry_id = !empty($wp_query->query_vars[ 'cf_entry' ]) ? $wp_query->query_vars[ 'cf_entry' ]
-						: isset($_GET, $_GET[ 'entry' ]) && absint($_GET[ 'entry' ]) ? $_GET[ 'entry' ] : null;
+					$entry_id = ( !empty($wp_query->query_vars[ 'cf_entry' ]) ? $wp_query->query_vars[ 'cf_entry' ]
+						: isset($_GET, $_GET[ 'entry' ]) ) && absint($_GET[ 'entry' ]) ? $_GET[ 'entry' ] : null;
 					if ($entry_id) {
 						$atts[ 'entry' ] = (int)$entry_id;
 					}
