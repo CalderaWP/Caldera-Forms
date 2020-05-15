@@ -39,7 +39,7 @@ if(!empty($field['config']['orientation']) && $field['config']['orientation'] ==
 					$selclass = $selectedClassName;
 				}
 
-					?><a id="<?php echo esc_attr(Caldera_Forms_Field_Util::opt_id_attr( $field_id, $option_key ) ); ?>" data-label="<?php echo esc_attr( $option['label'] );?>" data-field="<?php echo esc_attr( $field_base_id ); ?>" data-active="<?php echo $selectedClassName; ?>" data-default="<?php echo $defaultClassName; ?>" class="btn <?php echo $selclass; ?>" data-value="<?php echo esc_attr( $option['value'] ); ?>" <?php echo $field_structure['aria']; ?> title="<?php echo esc_attr( __( 'Choose Option', 'caldera-forms' ) .  $option['label']  ); ?>"><?php echo $option['label']; ?></a><?php
+					?><a id="<?php echo esc_attr(Caldera_Forms_Field_Util::opt_id_attr( $field_id, $option_key ) ); ?>" data-label="<?php echo esc_attr( $option['label'] );?>" data-field="<?php echo esc_attr( $field_base_id ); ?>" data-active="<?php echo $selectedClassName; ?>" data-default="<?php echo $defaultClassName; ?>" class="btn <?php echo $selclass; ?>" data-value="<?php echo esc_attr( $option['value'] ); ?>" <?php echo $field_structure['aria']; ?> title="<?php echo esc_attr( sprintf( __( 'Choose Option %s', 'caldera-forms' ), $option['label'] ) ); ?>"><?php echo $option['label']; ?></a><?php
 				}
 			} ?>		
 		</div>
