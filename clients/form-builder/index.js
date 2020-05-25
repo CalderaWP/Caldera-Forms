@@ -78,7 +78,14 @@ const HandleSave = ({ jQuery, formId }) => {
 
 	//Save handler
 	const onSave = () => {
+
 		setIsSaving(true);
+
+		if(!check_required_bindings()){
+			setIsSaving(false );
+			return false;
+		}
+
 		if (typeof window.tinyMCE !== "undefined") {
 			window.tinyMCE.triggerSave();
 		}
@@ -102,11 +109,10 @@ const HandleSave = ({ jQuery, formId }) => {
 		}
 
 		if (hasProcessors) {
-			data_fields.config.processors = prepareProcessorsForSave(processors);
+			data_fields.config.processors = prepareProcessorsForSave(processors,data_fields.config.processors );
 		} else {
 			data_fields.config.processors = {};
 		}
-
 		//Clear all assignments of fields to conditionals
 		if (data_fields.config.hasOwnProperty("fields")) {
 			Object.keys(data_fields.config.fields).forEach((fieldId) => {
