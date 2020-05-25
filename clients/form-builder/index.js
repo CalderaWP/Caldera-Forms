@@ -3,7 +3,10 @@ import React from "react";
 import { render } from "@wordpress/element";
 import domReady from "@wordpress/dom-ready";
 import apiFetch from "@wordpress/api-fetch";
-
+/**
+ * Import CSS
+ */
+import '../admin/styles/form-builder.scss';
 /**
  * Import most of client from form-builder repo
  *
