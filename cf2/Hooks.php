@@ -37,18 +37,6 @@ class Hooks
 			$this->container->getCoreDir()
 		);
         add_filter('caldera_forms_get_field_types', [$register, 'filter' ], 2 );
-
-        $manifest = [];
-        if( file_exists( CFCORE_PATH . 'dist/asset-manifest.json') ){
-            $manifest = (array) json_decode( file_get_contents(CFCORE_PATH . 'dist/asset-manifest.json'),true);
-        }
-
-        //Set up hooks for registering client assets
-        (new \calderawp\calderaforms\cf2\Asset\Hooks(
-            ['form-builder'],
-            $this->container,
-            $manifest
-        ))->subscribe();
     }
 
 
