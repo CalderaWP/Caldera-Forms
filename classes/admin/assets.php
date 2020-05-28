@@ -42,7 +42,7 @@ class Caldera_Forms_Admin_Assets
         self::enqueue_script('edit-fields');
         self::enqueue_script('editor');
         self::enqueue_style('editor-grid');
-        Caldera_Forms_Render_Assets::enqueue_style('form-builder' );
+        Caldera_Forms_Render_Assets::enqueue_style('form-builder',Caldera_Forms_Render_Assets::cf_dependencies('form-builder') );
         Caldera_Forms_Render_Assets::enqueue_script('form-builder' );
 
         wp_enqueue_script('jquery-ui-users');
