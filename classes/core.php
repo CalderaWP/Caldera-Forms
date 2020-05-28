@@ -3096,12 +3096,29 @@ class Caldera_Forms
 			$future_fields = $_POST['_cf_future'];
 		}
 
+		//https://developer.wordpress.org/reference/functions/wp_blacklist_check/
+        //https://halfelf.org/2018/spam-your-blacklist/amp/?__twitter_impression=true
+        $bad_words = explode( "\n", get_option( 'blacklist_keys' ) );
 
 		// start brining in entries
 		foreach ($form['fields'] as $field_id => $field) {
 
 			$entry = self::get_field_data($field_id, $form);
+            if( empty( $entry) && ! empty( $bad_words )) {
+                foreach ( $bad_words as $bad_word ) {
+                    $bad_word = trim( $bad_word );
 
+                    // Skip empty lines.
+                    if ( empty( $bad_word ) ) {
+                        continue;
+                    }
+
+                    ///Contains blacklisted Word
+                    if ( false !== strpos( $entry, $bad_word ) ) {
+                        $entry = new WP_Error( 400, __( 'This field contains a word that has been blocked.', 'caldera-forms' ) );
+                    }
+                }
+            }
 			if (is_wp_error($entry)) {
 				$transdata['fields'][$field_id] = $entry->get_error_message();
 			} else {
