@@ -112,7 +112,13 @@ const HandleSave = ({ jQuery, formId }) => {
 		}
 
 		if (hasProcessors) {
-			data_fields.config.processors = prepareProcessorsForSave(processors,data_fields.config.processors );
+			let _processors = {};
+			Object.keys(processors).forEach( processorId => {
+				if( data_fields.config.processors.hasOwnProperty(processorId ) ){
+					_processors[processorId] = processors[processorId];
+				}
+			});
+			data_fields.config.processors = prepareProcessorsForSave(_processors,data_fields.config.processors );
 		} else {
 			data_fields.config.processors = {};
 		}
