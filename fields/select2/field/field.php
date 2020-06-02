@@ -121,8 +121,8 @@ window.addEventListener('DOMContentLoaded', function(){
 				data: function (term, page) {
 					return {
 						action : 'cf_filter_populate',
-						q: $('<?php echo $bound; ?>').val(), // search term
-						<?php if( !empty( $field['config']['easy_pod'] ) ){?>easy_pod : '<?php echo $field['config']['easy_pod']; ?>'<?php } ?>
+						q: $('<?php echo esc_html( $bound ); ?>').val(), // search term
+						<?php if( !empty( $field['config']['easy_pod'] ) ){?>easy_pod : '<?php echo esc_html( $field['config']['easy_pod'] ); ?>'<?php } ?>
 					};
 				},
 				results: function (data, page) {
@@ -136,7 +136,7 @@ window.addEventListener('DOMContentLoaded', function(){
 		var opts = {};
 		<?php } ?>
 
-		$(document).on('cf.bind', '#<?php echo $field_id; ?>', function() {
+		$(document).on('cf.bind', '#<?php echo esc_html( $field_id ); ?>', function() {
 			$(this).select2( opts );
 		});
 	});
