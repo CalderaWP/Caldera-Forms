@@ -8,7 +8,7 @@ function caldera_forms_sendwp_remote_install() {
     jQuery.post(ajaxurl, data, function(response) {
         var data = JSON.parse(response);
          
-         if(data.error === true ){
+         if( data.error ){
 
             var element = jQuery("#cf-email-settings-ui"),
             inner = '<div class="notice error"></div>',
