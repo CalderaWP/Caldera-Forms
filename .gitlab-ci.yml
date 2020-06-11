@@ -11,6 +11,15 @@ variables:
 # Unit Test Stage
 
 ## PHP Unit Tests
+PHP 7.4 Unit:
+  stage: Unit Tests
+  image: edbizarro/gitlab-ci-pipeline-php:7.4-alpine
+  script:
+    - if [ -d "vendor" ]; then rm -Rf vendor; fi
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress
+    - composer test:unit
+
+## PHP Unit Tests
 PHP 7.3 Unit:
   stage: Unit Tests
   image: edbizarro/gitlab-ci-pipeline-php:7.3-alpine
