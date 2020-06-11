@@ -1,7 +1,7 @@
 <?php
 
-add_action( 'wp_ajax_caldera_forms_sendwp_remote_install', 'wp_ajax_caldera_forms_sendwp_remote_install_handler' );
-function wp_ajax_caldera_forms_sendwp_remote_install_handler () {
+add_action( 'wp_ajax_caldera_forms_sendwp_remote_install', 'caldera_forms_sendwp_remote_install_handler' );
+function caldera_forms_sendwp_remote_install_handler () {
 
     //Security check via senwp_install_nonce
     $security = check_ajax_referer('sendwp_install_nonce', 'sendwp_nonce', false);
@@ -23,6 +23,14 @@ function wp_ajax_caldera_forms_sendwp_remote_install_handler () {
         activate_plugin( $path );
         break;
     }
+
+    //Display an error message if a connection is activated on the website
+    if( $is_sendwp_installed && sendwp_client_connected() ){
+        ob_end_clean();
+        echo json_encode( array( 'error' => true, 'debug' => 'sendwp_connected' ) );
+        exit;
+    }
+
 
     if( ! $is_sendwp_installed ) {
 
@@ -78,9 +86,10 @@ function wp_ajax_caldera_forms_sendwp_remote_install_handler () {
     echo json_encode( array(
         'partner_id' => 2400,
         'register_url' => esc_url( sendwp_get_server_url() . '_/signup' ),
-        'client_name' => esc_url( sendwp_get_client_name() ),
+        'client_name' => esc_attr( sendwp_get_client_name() ),
         'client_secret' => esc_attr( sendwp_get_client_secret() ),
         'client_redirect' => esc_url( sendwp_get_client_redirect() ),
+        'client_url' => esc_url( sendwp_get_client_url() )
     ) );
     exit;
 }
