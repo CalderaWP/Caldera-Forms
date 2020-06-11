@@ -36,4 +36,4 @@ dist/caldera-hot-load/*
 !dist/react.min.js
 !dist/react-dom.min.js
 
-clients/build
+clients/*/build

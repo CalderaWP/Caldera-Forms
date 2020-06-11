@@ -74,7 +74,7 @@ const HandleSave = ({ jQuery, formId }) => {
 		ConditionalsContext
 	);
 	//Get processors
-	const { processors, hasProcessors } = React.useContext(ProcessorsContext);
+	const { processors } = React.useContext(ProcessorsContext);
 
 	//Track if we're saving or not
 	const [isSaving, setIsSaving] = React.useState(false);
@@ -111,8 +111,10 @@ const HandleSave = ({ jQuery, formId }) => {
 			data_fields.config.conditional_groups = {};
 		}
 
-		if (hasProcessors) {
+		//processors includes removed processors, so check legacy state
+		if (data_fields.config.processors) {
 			let _processors = {};
+			//Loop through processors in React state, prepare to save those known by legacy state
 			Object.keys(processors).forEach( processorId => {
 				if( data_fields.config.processors.hasOwnProperty(processorId ) ){
 					_processors[processorId] = processors[processorId];
@@ -262,7 +264,7 @@ const SubscribeToProcessorChanges = ({ jQuery }) => {
 		updateProcessor,
 		getProcessor,
 		setActiveProcessorId,
-		activeProcessorId,
+		addProcessor
 	} = React.useContext(ProcessorsContext);
 
 	React.useEffect(() => {
@@ -275,6 +277,10 @@ const SubscribeToProcessorChanges = ({ jQuery }) => {
 					setActiveProcessorId(jQuery(this).parent().data("pid"));
 				});
 			}
+		});
+
+		jQuery(document).on('processor.added', (event, data) => {
+			addProcessor(data.processor.type, data.processor.id);
 		});
 
 		//Activate processor when clicked on

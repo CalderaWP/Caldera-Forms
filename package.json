@@ -10,7 +10,7 @@
 	"keywords": [
 		"WordPress"
 	],
-	"author": "Caldera Labs",
+	"author": "Caldera Forms",
 	"license": "GPL-2.0",
 	"bugs": {
 		"url": "https://github.com/CalderaWP/Caldera-Forms/issues"
@@ -44,7 +44,7 @@
 		"ie > 8"
 	],
 	"dependencies": {
-		"@calderajs/form-builder": "1.2.3",
+		"@calderajs/form-builder": "1.2.4",
 		"@cypress/webpack-preprocessor": "^4.1.1",
 		"@wordpress/api-fetch": "latest",
 		"@wordpress/keycodes": "^2.3.0",
