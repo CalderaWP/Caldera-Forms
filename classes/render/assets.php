@@ -1238,7 +1238,6 @@ class Caldera_Forms_Render_Assets
 			if( file_exists($path)){
 				cf_redirect(untrailingslashit(CFCORE_URL) . $uri);exit;
 			}
-			var_dump($path);
 		}
 	
 
