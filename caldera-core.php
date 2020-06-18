@@ -3,28 +3,20 @@
   Plugin Name: Caldera Forms
   Plugin URI: https://CalderaForms.com
   Description: Easy to use, grid based responsive form builder for creating simple to complex forms.
-  Author: Caldera Labs
-  Version: 1.8.11
-  Author URI: http://CalderaLabs.org
+  Author: Caldera Forms
+  Version: 1.9.0-b2
+  Author URI: https://CalderaForms.com
   Text Domain: caldera-forms
   GitHub Plugin URI: https://github.com/CalderaWP/caldera-forms
   Release Asset: true
 */
-
 
 // If this file is called directly, abort.
 if ( !defined('WPINC') ) {
 	die;
 }
 
-add_action( 'init', function(){
-    //hack to make code splitting work.
-    if( false !== strpos( $_SERVER['REQUEST_URI'], 'wp-admin/clients/') ){
-        cf_redirect(plugin_dir_url(__FILE__).str_replace( '/wp-admin/', '',$_SERVER['REQUEST_URI']));exit;
-    }
-
-});
-
+//Check version minimums first
 global $wp_version;
 if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
 	function caldera_forms_php_version_nag()
@@ -44,7 +36,7 @@ if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
 	add_shortcode('caldera_form', 'caldera_forms_fallback_shortcode');
 	add_shortcode('caldera_form_modal', 'caldera_forms_fallback_shortcode');
 	add_action('admin_notices', 'caldera_forms_php_version_nag');
-} elseif ( !version_compare($wp_version, '5.0.0', '>=') ) {
+} elseif ( !version_compare($wp_version, '5.1.0', '>=') ) {
 	function caldera_forms_wp_version_nag(){
 		?>
 		<div class="notice notice-error">
@@ -61,7 +53,7 @@ if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
 } else {
 	define('CFCORE_PATH', plugin_dir_path(__FILE__));
 	define('CFCORE_URL', plugin_dir_url(__FILE__));
-	define( 'CFCORE_VER', '1.8.11' );
+	define( 'CFCORE_VER', '1.9.0-b2' );
 	define('CFCORE_EXTEND_URL', 'https://api.calderaforms.com/1.0/');
 	define('CFCORE_BASENAME', plugin_basename(__FILE__));
 

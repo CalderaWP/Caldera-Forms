@@ -1,0 +1,58 @@
+//Header save form button
+.caldera-editor-header {
+    #caldera-header-save-button {
+        .button {
+            &.caldera-header-save-button {
+                margin: 0.4rem auto auto 0.5rem;
+                height: auto;
+            }
+        }
+    }
+}
+
+//Conditions panel
+#caldera-forms-conditions-panel  {
+
+    .caldera-editor-condition-config{
+        &.caldera-forms-condition-edit {
+            > div {
+                > div[style='float: left; width: 288px; padding-left: 12px;'] {
+                    position: absolute !important;
+                    margin-left: 560px !important;
+                    top: 2.5rem;
+                }
+            }
+        }
+    }
+
+    .condition-new-group-name {
+        margin-top: 0.3rem;
+    }
+ 
+}
+
+//Conditions Panel and Processor panel conditions
+#caldera-forms-conditions-panel, .caldera-editor-processor-config {
+    .caldera-condition-line{
+        margin-bottom: 0.3rem;
+
+        select, .caldera-conditional-field-value {
+            margin: auto 0.3rem !important;
+            padding: 0px !important;
+        }
+
+    }
+
+    .caldera-conditonals-or, .caldera-condition-line > span {
+        font-size: 115%;
+    }
+
+}
+
+//Processor panel conditions {
+.caldera-editor-processor-config {
+    .caldera-condition-lines {
+        margin: 0.3rem auto;
+    }
+}
+

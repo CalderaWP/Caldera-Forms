@@ -42,6 +42,8 @@ class Caldera_Forms_Admin_Assets
         self::enqueue_script('edit-fields');
         self::enqueue_script('editor');
         self::enqueue_style('editor-grid');
+        Caldera_Forms_Render_Assets::enqueue_style('form-builder',Caldera_Forms_Render_Assets::cf_dependencies('form-builder') );
+        Caldera_Forms_Render_Assets::enqueue_script('form-builder' );
 
         wp_enqueue_script('jquery-ui-users');
         wp_enqueue_script('jquery-ui-sortable');
@@ -299,6 +301,26 @@ class Caldera_Forms_Admin_Assets
             }
             self::register_scripts();
         }
+
+        wp_localize_script(Caldera_Forms_Render_Assets::make_slug( 'form-builder'), 'CF_FORM_BUILDER', [
+            'strings' => [
+                'if'=> esc_html__( 'If', 'caldera-forms'),
+                'and'=> esc_html__( 'And', 'caldera-forms'),
+                'name'=> esc_html__('Name', 'caldera-forms'),
+                'disable'=> esc_html__( 'Disable', 'caldera-forms'),
+                'type'=> esc_html__('Type', 'caldera-forms'),
+                'add-conditional-group'=> esc_html__( 'Add Rule', 'caldera-forms'),
+                'applied-fields'=> esc_html__( 'Applied Fields', 'caldera-forms'),
+                'select-apply-fields'=> esc_html__( 'Select the fields to apply this condition to.', 'caldera-forms'),
+                'remove-condition'=> esc_html__( 'Remove Condition', 'caldera-forms'),
+                'remove-condfirm' => esc_html__('Are you sure you would like to remove this conditional group', 'caldera-forms'),
+                'show'=> esc_html__('Show', 'caldera-forms'),
+                'hide' => esc_html__( 'Hide', 'caldera-forms'),
+                'new-conditional'=> esc_html__( 'New Condition', 'caldera-forms'),
+                'fields' => esc_html__('Fields', 'caldera-forms'),
+                'add-condition' => esc_html__('Add Line', 'caldera-forms')
+            ]
+        ]);
     }
 
     /**
@@ -346,9 +368,11 @@ class Caldera_Forms_Admin_Assets
 
         if (Caldera_Forms_Admin::is_edit()) {
             $form_id = trim($_GET[Caldera_Forms_Admin::EDIT_KEY]);
+            $form = Caldera_Forms_Forms::get_form($form_id);
             $data['rest']['form'] = esc_url_raw(Caldera_Forms_API_Util::url('forms/' . $form_id, true));
             $data['rest']['revisions'] = esc_url_raw(Caldera_Forms_API_Util::url('forms/' . $form_id . '/revisions', true));
             $data['rest']['delete_entries'] = esc_url_raw(Caldera_Forms_API_Util::url('entries/' . $form_id . '/delete', true));
+            $data['form'] = $form;
         }
         return $data;
     }
