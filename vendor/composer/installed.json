@@ -926,17 +926,17 @@
     },
     {
         "name": "symfony/translation",
-        "version": "v3.4.40",
-        "version_normalized": "3.4.40.0",
+        "version": "v3.4.42",
+        "version_normalized": "3.4.42.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/translation.git",
-            "reference": "4e844362f573713e6d45949795c95a4cb6cf760d"
+            "reference": "b0cd62ef0ff7ec31b67d78d7fc818e2bda4e844f"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/translation/zipball/4e844362f573713e6d45949795c95a4cb6cf760d",
-            "reference": "4e844362f573713e6d45949795c95a4cb6cf760d",
+            "url": "https://api.github.com/repos/symfony/translation/zipball/b0cd62ef0ff7ec31b67d78d7fc818e2bda4e844f",
+            "reference": "b0cd62ef0ff7ec31b67d78d7fc818e2bda4e844f",
             "shasum": ""
         },
         "require": {
@@ -963,7 +963,7 @@
             "symfony/config": "",
             "symfony/yaml": ""
         },
-        "time": "2020-04-12T16:39:58+00:00",
+        "time": "2020-05-30T18:58:05+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
