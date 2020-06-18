@@ -770,6 +770,17 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 == Changelog ==
 
+= Caldera Forms 1.9.0 (June 18, 2020) Conditionals Improved =
+See: [https://calderaforms.com/updates/caldera-forms-1-9-0](https://calderaforms.com/updates/caldera-forms-1-9-0?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-11)
+* [Replace conditional logic and improve performance](https://github.com/CalderaWP/Caldera-Forms/pull/3519)
+* [Set minimum WordPress version to 5.1.0](https://github.com/CalderaWP/Caldera-Forms/pull/3465)
+* [Fixes deprecated warnings in PHP 7.4](https://github.com/CalderaWP/Caldera-Forms/pull/3539)
+* [Prevent get_field_data() from always returning null for string form IDs](https://github.com/CalderaWP/Caldera-Forms/pull/3417)
+* [Adapt to rawurlencode()](https://github.com/CalderaWP/Caldera-Forms/pull/3528)
+* [Add/adjust escaping functions](https://github.com/CalderaWP/Caldera-Forms/pull/3524)
+* [Update SendWP SDK](https://github.com/CalderaWP/Caldera-Forms/pull/3548)
+* [add `Release Asset` header](https://github.com/CalderaWP/Caldera-Forms/pull/3367)
+
 = Caldera Forms 1.8.11 (March 05, 2020) Two Fixes  =
 See: [https://calderaforms.com/updates/caldera-forms-1-8-11](https://calderaforms.com/updates/caldera-forms-1-8-11?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-11)
 *["Add Condition" (in line) button is broken in processors](https://github.com/CalderaWP/Caldera-Forms/issues/3490)
