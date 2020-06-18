@@ -19,6 +19,7 @@ wp-content
 cypress/screenshots
 cypress/videos
 build
+vendor
 
 wp-test-case
 
@@ -34,3 +35,5 @@ dist/caldera-hot-load/*
 !dist/README.md
 !dist/react.min.js
 !dist/react-dom.min.js
+
+clients/*/build

@@ -85,6 +85,7 @@ This is the old stuff, built with grunt.
 * `yarn build:clients` - Build other JavaScript and CSS for production.
 * `yarn start` - Start dev server for clients that are not blocks and run watcher.
 * `yarn start:blocks` - Start dev server for blocks and run watcher.
+* `yarn start:clients` - Start dev server for other clients and run watcher.
 * `yarn test:once` - Run JavaScript unit tests once
 * `yarn test:e2e` - Start Cypress e2e test runner.
 * `yarn test:e2e:ci` - Trigger Cypress.io test record.

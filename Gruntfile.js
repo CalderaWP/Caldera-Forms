@@ -60,6 +60,7 @@ module.exports = function (grunt) {
         'admin',
 		'blocks',
         'components',
+        'form-builder',
         'functions',
 		'privacy',
         'pro',

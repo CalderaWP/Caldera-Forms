@@ -1023,7 +1023,7 @@ class Caldera_Forms
 						
 						// Re urlencode query vars after they were parsed in this function
 						foreach($query_vars as $var_names => $var_values){
-							$query_vars[$var_names] = urlencode($var_values);
+							$query_vars[$var_names] = rawurlencode($var_values);
 						}
 						$redirect = add_query_arg($query_vars, $base_redirect);
 						
@@ -2369,10 +2369,11 @@ class Caldera_Forms
 		global $processed_data;
 
 		if (is_string($form)) {
-			$form = Caldera_Forms_Forms::get_form($form);
-			if (!isset($form['ID']) || $form['ID'] !== $form) {
+			$form_obj = Caldera_Forms_Forms::get_form($form);
+			if (!isset($form_obj['ID']) || $form_obj['ID'] !== $form) {
 				return null;
 			}
+			$form = $form_obj;
 		}
 
 		if (!is_array($form)) {
@@ -3729,8 +3730,8 @@ class Caldera_Forms
 			if (!empty($form[ 'ID' ])) {
 
 				if ($form[ 'ID' ] === $form_id) {
-					$entry_id = !empty($wp_query->query_vars[ 'cf_entry' ]) ? $wp_query->query_vars[ 'cf_entry' ]
-						: isset($_GET, $_GET[ 'entry' ]) && absint($_GET[ 'entry' ]) ? $_GET[ 'entry' ] : null;
+					$entry_id = ( !empty($wp_query->query_vars[ 'cf_entry' ]) ? $wp_query->query_vars[ 'cf_entry' ]
+						: isset($_GET, $_GET[ 'entry' ]) ) && absint($_GET[ 'entry' ]) ? $_GET[ 'entry' ] : null;
 					if ($entry_id) {
 						$atts[ 'entry' ] = (int)$entry_id;
 					}

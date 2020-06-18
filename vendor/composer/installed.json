@@ -154,31 +154,34 @@
     },
     {
         "name": "composer/installers",
-        "version": "v1.8.0",
-        "version_normalized": "1.8.0.0",
+        "version": "v1.9.0",
+        "version_normalized": "1.9.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/composer/installers.git",
-            "reference": "7d610d50aae61ae7ed6675e58efeabdf279bb5e3"
+            "reference": "b93bcf0fa1fccb0b7d176b0967d969691cd74cca"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/composer/installers/zipball/7d610d50aae61ae7ed6675e58efeabdf279bb5e3",
-            "reference": "7d610d50aae61ae7ed6675e58efeabdf279bb5e3",
+            "url": "https://api.github.com/repos/composer/installers/zipball/b93bcf0fa1fccb0b7d176b0967d969691cd74cca",
+            "reference": "b93bcf0fa1fccb0b7d176b0967d969691cd74cca",
             "shasum": ""
         },
         "require": {
-            "composer-plugin-api": "^1.0"
+            "composer-plugin-api": "^1.0 || ^2.0"
         },
         "replace": {
             "roundcube/plugin-installer": "*",
             "shama/baton": "*"
         },
         "require-dev": {
-            "composer/composer": "1.0.*@dev",
-            "phpunit/phpunit": "^4.8.36"
+            "composer/composer": "1.6.* || 2.0.*@dev",
+            "composer/semver": "1.0.* || 2.0.*@dev",
+            "phpunit/phpunit": "^4.8.36",
+            "sebastian/comparator": "^1.2.4",
+            "symfony/process": "^2.3"
         },
-        "time": "2020-02-07T10:39:20+00:00",
+        "time": "2020-04-07T06:57:05+00:00",
         "type": "composer-plugin",
         "extra": {
             "class": "Composer\\Installers\\Plugin",
@@ -349,17 +352,17 @@
     },
     {
         "name": "kylekatarnls/update-helper",
-        "version": "1.2.0",
-        "version_normalized": "1.2.0.0",
+        "version": "1.2.1",
+        "version_normalized": "1.2.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/kylekatarnls/update-helper.git",
-            "reference": "5786fa188e0361b9adf9e8199d7280d1b2db165e"
+            "reference": "429be50660ed8a196e0798e5939760f168ec8ce9"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/kylekatarnls/update-helper/zipball/5786fa188e0361b9adf9e8199d7280d1b2db165e",
-            "reference": "5786fa188e0361b9adf9e8199d7280d1b2db165e",
+            "url": "https://api.github.com/repos/kylekatarnls/update-helper/zipball/429be50660ed8a196e0798e5939760f168ec8ce9",
+            "reference": "429be50660ed8a196e0798e5939760f168ec8ce9",
             "shasum": ""
         },
         "require": {
@@ -371,7 +374,7 @@
             "composer/composer": "2.0.x-dev || ^2.0.0-dev",
             "phpunit/phpunit": ">=4.8.35 <6.0"
         },
-        "time": "2019-07-29T11:03:54+00:00",
+        "time": "2020-04-07T20:44:10+00:00",
         "type": "composer-plugin",
         "extra": {
             "class": "UpdateHelper\\ComposerPlugin"
@@ -396,17 +399,17 @@
     },
     {
         "name": "monolog/monolog",
-        "version": "1.25.3",
-        "version_normalized": "1.25.3.0",
+        "version": "1.25.4",
+        "version_normalized": "1.25.4.0",
         "source": {
             "type": "git",
             "url": "https://github.com/Seldaek/monolog.git",
-            "reference": "fa82921994db851a8becaf3787a9e73c5976b6f1"
+            "reference": "3022efff205e2448b560c833c6fbbf91c3139168"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/Seldaek/monolog/zipball/fa82921994db851a8becaf3787a9e73c5976b6f1",
-            "reference": "fa82921994db851a8becaf3787a9e73c5976b6f1",
+            "url": "https://api.github.com/repos/Seldaek/monolog/zipball/3022efff205e2448b560c833c6fbbf91c3139168",
+            "reference": "3022efff205e2448b560c833c6fbbf91c3139168",
             "shasum": ""
         },
         "require": {
@@ -420,11 +423,10 @@
             "aws/aws-sdk-php": "^2.4.9 || ^3.0",
             "doctrine/couchdb": "~1.0@dev",
             "graylog2/gelf-php": "~1.0",
-            "jakub-onderka/php-parallel-lint": "0.9",
             "php-amqplib/php-amqplib": "~2.4",
             "php-console/php-console": "^3.1.3",
+            "php-parallel-lint/php-parallel-lint": "^1.0",
             "phpunit/phpunit": "~4.5",
-            "phpunit/phpunit-mock-objects": "2.3.0",
             "ruflin/elastica": ">=0.90 <3.0",
             "sentry/sentry": "^0.13",
             "swiftmailer/swiftmailer": "^5.3|^6.0"
@@ -442,7 +444,7 @@
             "ruflin/elastica": "Allow sending log messages to an Elastic Search server",
             "sentry/sentry": "Allow sending log messages to a Sentry server"
         },
-        "time": "2019-12-20T14:15:16+00:00",
+        "time": "2020-05-22T07:31:27+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -588,17 +590,17 @@
     },
     {
         "name": "nilportugues/sql-query-builder",
-        "version": "1.7.0",
-        "version_normalized": "1.7.0.0",
+        "version": "1.8.0",
+        "version_normalized": "1.8.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/nilportugues/php-sql-query-builder.git",
-            "reference": "89918711eb1e3e982309aa202b9987c08c6f495b"
+            "reference": "cc3401099328ddfad54b2b801e38e05a50da11bd"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/nilportugues/php-sql-query-builder/zipball/89918711eb1e3e982309aa202b9987c08c6f495b",
-            "reference": "89918711eb1e3e982309aa202b9987c08c6f495b",
+            "url": "https://api.github.com/repos/nilportugues/php-sql-query-builder/zipball/cc3401099328ddfad54b2b801e38e05a50da11bd",
+            "reference": "cc3401099328ddfad54b2b801e38e05a50da11bd",
             "shasum": ""
         },
         "require": {
@@ -610,7 +612,7 @@
             "nilportugues/php_backslasher": "~0.2",
             "phpunit/phpunit": "4.*"
         },
-        "time": "2019-02-05T13:28:29+00:00",
+        "time": "2020-04-07T22:51:47+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -814,23 +816,23 @@
     },
     {
         "name": "psr/log",
-        "version": "1.1.2",
-        "version_normalized": "1.1.2.0",
+        "version": "1.1.3",
+        "version_normalized": "1.1.3.0",
         "source": {
             "type": "git",
             "url": "https://github.com/php-fig/log.git",
-            "reference": "446d54b4cb6bf489fc9d75f55843658e6f25d801"
+            "reference": "0f73288fd15629204f9d42b7055f72dacbe811fc"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/php-fig/log/zipball/446d54b4cb6bf489fc9d75f55843658e6f25d801",
-            "reference": "446d54b4cb6bf489fc9d75f55843658e6f25d801",
+            "url": "https://api.github.com/repos/php-fig/log/zipball/0f73288fd15629204f9d42b7055f72dacbe811fc",
+            "reference": "0f73288fd15629204f9d42b7055f72dacbe811fc",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3.0"
         },
-        "time": "2019-11-01T11:05:21+00:00",
+        "time": "2020-03-23T09:12:05+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -863,17 +865,17 @@
     },
     {
         "name": "symfony/polyfill-mbstring",
-        "version": "v1.14.0",
-        "version_normalized": "1.14.0.0",
+        "version": "v1.17.0",
+        "version_normalized": "1.17.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/polyfill-mbstring.git",
-            "reference": "34094cfa9abe1f0f14f48f490772db7a775559f2"
+            "reference": "fa79b11539418b02fc5e1897267673ba2c19419c"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/34094cfa9abe1f0f14f48f490772db7a775559f2",
-            "reference": "34094cfa9abe1f0f14f48f490772db7a775559f2",
+            "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/fa79b11539418b02fc5e1897267673ba2c19419c",
+            "reference": "fa79b11539418b02fc5e1897267673ba2c19419c",
             "shasum": ""
         },
         "require": {
@@ -882,11 +884,11 @@
         "suggest": {
             "ext-mbstring": "For best performance"
         },
-        "time": "2020-01-13T11:15:53+00:00",
+        "time": "2020-05-12T16:47:27+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.14-dev"
+                "dev-master": "1.17-dev"
             }
         },
         "installation-source": "dist",
@@ -924,17 +926,17 @@
     },
     {
         "name": "symfony/translation",
-        "version": "v3.4.38",
-        "version_normalized": "3.4.38.0",
+        "version": "v3.4.42",
+        "version_normalized": "3.4.42.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/translation.git",
-            "reference": "1eb074e0bd94939a30dd14dbecf7a92b165cea34"
+            "reference": "b0cd62ef0ff7ec31b67d78d7fc818e2bda4e844f"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/translation/zipball/1eb074e0bd94939a30dd14dbecf7a92b165cea34",
-            "reference": "1eb074e0bd94939a30dd14dbecf7a92b165cea34",
+            "url": "https://api.github.com/repos/symfony/translation/zipball/b0cd62ef0ff7ec31b67d78d7fc818e2bda4e844f",
+            "reference": "b0cd62ef0ff7ec31b67d78d7fc818e2bda4e844f",
             "shasum": ""
         },
         "require": {
@@ -961,7 +963,7 @@
             "symfony/config": "",
             "symfony/yaml": ""
         },
-        "time": "2020-02-04T07:22:30+00:00",
+        "time": "2020-05-30T18:58:05+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {

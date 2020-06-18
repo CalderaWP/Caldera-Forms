@@ -1238,6 +1238,11 @@ class Caldera_Forms_Admin {
 
 		echo "	<div class=\"wrap\">\r\n";
 		if(!empty($_GET['edit'])){
+
+            //Root element for form builder client.
+            //Use portals to render inside existing builder
+            echo '<div id="caldera-forms-form-builder"></div>';
+            //The form builder
 			echo "<form method=\"POST\" action=\"admin.php?page=" . $this->plugin_slug . "\" data-load-element=\"#save_indicator\" data-sender=\"ajax\" class=\"caldera-forms-options-form edit-update-trigger\">\r\n";
 			include CFCORE_PATH . 'ui/edit.php';
 			echo "</form>\r\n";
@@ -1558,27 +1563,7 @@ class Caldera_Forms_Admin {
 			exit;
 		}
 
-		if( isset($_POST['config']) && isset( $_POST['cf_edit_nonce'] ) && current_user_can( Caldera_Forms::get_manage_cap( 'manage' ) ) ){
-
-			// if this fails, check_admin_referer() will automatically print a "failed" page and die.
-			if ( check_admin_referer( 'cf_edit_element', 'cf_edit_nonce' ) ) {
-
-				// strip slashes
-				$data = json_decode( stripslashes_deep($_POST['config']) , ARRAY_A );
-				self::save_a_form( $data );
-
-				if(!empty($_POST['sender'])){
-					exit;
-				}
-
-				wp_redirect('admin.php?page=caldera-forms');
-				die;
-
-			}
-			return;
-		}
-
-		/** Resotre revisions */
+		/** Restore revisions */
 		if( isset( $_POST[ 'cf_edit_nonce' ], $_POST[ self::REVISION_KEY ], $_POST[ 'form' ], $_POST[ 'restore' ] ) ){
 			if( ! current_user_can( Caldera_Forms::get_manage_cap( 'manage' ) ) || ! wp_verify_nonce( $_POST[ 'cf_edit_nonce' ], 'cf_edit_element' ) ){
 				wp_send_json_error();
@@ -1601,6 +1586,7 @@ class Caldera_Forms_Admin {
 	 * @since 1.3.4
 	 *
 	 * @param array $data
+     * @return bool|string
 	 */
 	public static function save_a_form( $data ){
 		$saved_form = Caldera_Forms_Forms::get_form( $data['ID'] );
@@ -1620,7 +1606,7 @@ class Caldera_Forms_Admin {
 			}
 		}
 
-		Caldera_Forms_Forms::save_form( $data );
+		return Caldera_Forms_Forms::save_form( $data );
 
 	}
 
