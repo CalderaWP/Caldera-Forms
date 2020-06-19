@@ -770,6 +770,10 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 == Changelog ==
 
+= Caldera Forms 1.9.1 (June 19, 2020) Rebuild build =
+See: [https://calderaforms.com/updates/caldera-forms-1-9-1](https://calderaforms.com/updates/caldera-forms-1-9-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-11)
+* This version fixes an issue with processors that comes from the build process for 1.9.0
+
 = Caldera Forms 1.9.0 (June 18, 2020) Conditionals Improved =
 See: [https://calderaforms.com/updates/caldera-forms-1-9-0](https://calderaforms.com/updates/caldera-forms-1-9-0?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-11)
 * [Replace conditional logic and improve performance](https://github.com/CalderaWP/Caldera-Forms/pull/3519)
