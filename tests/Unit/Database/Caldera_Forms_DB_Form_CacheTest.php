@@ -185,7 +185,7 @@ class Caldera_Forms_DB_Form_CacheTest extends TestCase
         ]);
         $this->assertCount(3, $cache->get_all());
 
-        $cache->delete([$form1['ID'],$form3['ID']));
+        $cache->delete([$form1['ID'],$form3['ID']]);
 
         $this->assertCount(1, $cache->get_all());
     }
@@ -216,7 +216,7 @@ class Caldera_Forms_DB_Form_CacheTest extends TestCase
         ]);
         $this->assertCount(3, $cache->get_all());
 
-        $cache->delete_by_form_id($form1['ID');
+        $cache->delete_by_form_id($form1['ID']);
 
         $this->assertSame($form2,$cache->get_by_form_id($form2['ID']));
         $this->assertCount(2, $cache->get_all());
