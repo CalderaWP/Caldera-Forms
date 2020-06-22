@@ -9,7 +9,7 @@
  * @link
  * @copyright 2017 CalderaWP LLC
  */
-class Caldera_Forms_DB_Form extends Caldera_Forms_DB_Base {
+class Caldera_Forms_DB_Form extends Caldera_Forms_DB_Base implements Caldera_Forms_DB_Form_Interface{
 
 	/**
 	 * Name of primary index
