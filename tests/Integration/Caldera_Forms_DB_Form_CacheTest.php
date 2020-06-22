@@ -3,21 +3,22 @@
 namespace calderawp\calderaforms\Tests\Unit\Database;
 
 
-
 use calderawp\calderaforms\Tests\Integration\TestCase;
 
-class Db_Mock implements  \Caldera_Forms_DB_Form_Interface
+class Db_Mock implements \Caldera_Forms_DB_Form_Interface
 {
 
     protected $nextResult;
+
     public function setNextResult($nextResult)
     {
 
         $this->nextResult = $nextResult;
     }
+
     public function get_all($primary = true)
     {
-       return $this->nextResult;
+        return $this->nextResult;
     }
 
 
@@ -50,24 +51,23 @@ class Db_Mock implements  \Caldera_Forms_DB_Form_Interface
         return $this->nextResult;
     }
 }
+
 class Caldera_Forms_DB_Form_CacheTest extends TestCase
 {
 
+
     /**
-     * Shows how this mock works.
-     *
-     * @covers \calderawp\calderaforms\Tests\Unit\Database\Db_Mock::setNextResult()
+     * Tests something, unclear what
      */
-    public function testMockSystem(){
-        $dbApi = new Db_Mock();
-        $cache = new \Caldera_Forms_DB_Form_Cache($dbApi);
-        $form1 = [
-            'ID' => 'cf_tacos',
-            'name' => 'Tacos'
-        ];
-        //Every method will return whatever is set here.
-        $dbApi->setNextResult(42);
-        $this->assertSame( 42, $cache->create($form1) );
+    public function testMockSystem()
+    {
+        $this->deleteAllForms();
+        $dbApi = \Caldera_Forms_DB_Form::get_instance();
+        $form1Id = $this->importFormWithAutoResponder();
+        $form2Id = $this->importFormWithAutoResponder();
+        $this->assertCount(2, $dbApi->get_all());
+        $this->deleteAllForms();
+
     }
 
     /**
@@ -76,150 +76,102 @@ class Caldera_Forms_DB_Form_CacheTest extends TestCase
      */
     public function testGet_by_form_id()
     {
-        $dbApi = new Db_Mock();
+        $this->deleteAllForms();
+        $dbApi = \Caldera_Forms_DB_Form::get_instance();
+        $form1Id = $this->importFormWithAutoResponder();
+        $form2Id = $this->importFormWithAutoResponder();
+        $this->assertCount(2, $dbApi->get_all());
+
+
+        global $wpdb;
         $cache = new \Caldera_Forms_DB_Form_Cache($dbApi);
-        $form1 = [
-            'ID' => 'cf_tacos',
-            'name' => 'Tacos'
-        ];
-        $cache->create($form1);
-        $form2 = [
-            'ID' => 'cf_sandwiches',
-            'name' => 'nachos'
-        ];
-        $cache->create($form2);
-        //If Cache is NOT used, this will return
-        $dbApi->setNextResult(false );
-        $this->assertSame($form2,$cache->get_by_form_id($form2['ID']));
+        //Search with empty cache
+        $formFromQuery1 = $cache->get_by_form_id($form1Id);
+        //Ran query to get from db, so query was ran
+        $this->assertFalse(is_null($wpdb->last_query));
+
+        //Clear wpdb then query for the same form again
+        $wpdb->last_query = null;
+        $formFromQuery2 = $cache->get_by_form_id($form1Id);
+        //No query ran
+        $this->assertTrue(is_null($wpdb->last_query));
+        $this->assertSame($form1Id, $formFromQuery1['ID']);
+        $this->assertSame($form1Id, $formFromQuery2['ID']);
+        $this->assertSame($formFromQuery1['name'], $formFromQuery2['name']);
+
+        $wpdb->last_query = null;
+        $form2fromQuery = $cache->get_by_form_id($form2Id);
+        $this->assertFalse(is_null($wpdb->last_query));
+        $this->assertSame($form2Id, $form2fromQuery['ID']);
+
+        $this->deleteAllForms();
 
     }
 
     /**
      * @covers Caldera_Forms_DB_Form_Cache::get_by_form_id()
-     * @covers Caldera_Forms_DB_Form_Cache::create()
-     */
-    public function testGet_all()
-    {
-        $dbApi = new Db_Mock();
-        $cache = new \Caldera_Forms_DB_Form_Cache($dbApi);
-        $form1 = [
-            'ID' => 'cf_tacos',
-            'name' => 'Tacos'
-        ];
-        $cache->create($form1);
-        $form2 = [
-            'ID' => 'cf_sandwiches',
-            'name' => 'nachos'
-        ];
-        $cache->create($form2);
-        //If Cache is NOT used, this will return
-        $dbApi->setNextResult(false );
-        $forms = $cache->get_all();
-        $this->assertTrue(is_array($forms));
-    }
-
-    /**
      * @covers Caldera_Forms_DB_Form_Cache::update()
      * @covers Caldera_Forms_DB_Form_Cache::create()
      */
     public function testUpdate()
     {
-        $dbApi = new Db_Mock();
+        $this->deleteAllForms();
+        $dbApi = \Caldera_Forms_DB_Form::get_instance();
+        $form1Id = $this->importFormWithAutoResponder();
+        $form2Id = $this->importFormWithAutoResponder();
+        $this->assertCount(2, $dbApi->get_all());
+
+        $form2 = \Caldera_Forms_Forms::get_form($form2Id);
+        $save = $form2;
+        $save['name'] = 'Aftermath';
+        \Caldera_Forms_Forms::save_form($save);
+
+        global $wpdb;
         $cache = new \Caldera_Forms_DB_Form_Cache($dbApi);
-        //If Cache is NOT used, this value will return false and break test
-        $dbApi->setNextResult(false );
+        //Search with empty cache
+        $cache->get_by_form_id($form2Id);
+        //Ran query to get from db, so query was ran
+        $this->assertFalse(is_null($wpdb->last_query));
 
-        $form1 = [
-            'ID' => 'cf_tacos',
-            'name' => 'Tacos'
-        ];
-        $cache->create($form1);
-        $form2 = [
-            'ID' => 'cf_sandwiches',
-            'name' => 'nachos'
-        ];
-        $cache->create($form2);
+        //Clear wpdb then query for the same form again
+        $wpdb->last_query = null;
+        $formFromQuery2 = $cache->get_by_form_id($form2Id);
+        //No query ran
+        $this->assertTrue(is_null($wpdb->last_query));
+        $this->assertSame($form2Id, $formFromQuery2['ID']);
+        $this->assertSame($save['name'], $formFromQuery2['name']);
+        $this->deleteAllForms();
 
-        $cache->update([
-            'ID' => 'cf_sandwiches',
-            'name' => 'spatulas'
-        ]);
-
-        $this->assertSame([
-            'ID' => 'cf_sandwiches',
-            'name' => 'spatulas'
-        ],$cache->get_by_form_id($form2['ID']));
-
-        $this->assertSame($form2,$cache->get_by_form_id($form2['ID']));
     }
 
+
     /**
+     * @covers Caldera_Forms_DB_Form_Cache::get_by_form_id()
+     * @covers Caldera_Forms_DB_Form_Cache::update()
+     * @covers Caldera_Forms_DB_Form_Cache::create()
      * @covers Caldera_Forms_DB_Form_Cache::delete()
      * @covers Caldera_Forms_DB_Form_Cache::delete_by_form_id()
-     * @covers Caldera_Forms_DB_Form_Cache::get_all()
      */
     public function testDelete()
     {
-        $dbApi = new Db_Mock();
+        $this->deleteAllForms();
+        $dbApi = \Caldera_Forms_DB_Form::get_instance();
+        $form1Id = $this->importFormWithAutoResponder();
+        $form2Id = $this->importFormWithAutoResponder();
+        $this->assertCount(2, $dbApi->get_all());
+
+        \Caldera_Forms_Forms::delete_form($form1Id);
+
+        global $wpdb;
         $cache = new \Caldera_Forms_DB_Form_Cache($dbApi);
-        //If Cache is NOT used, this value will return false and break test
-        $dbApi->setNextResult(false );
 
-        $form1 = [
-            'ID' => 'cf_tacos',
-            'name' => 'Tacos'
-        ];
-        $cache->create($form1);
-        $form2 = [
-            'ID' => 'cf_sandwiches',
-            'name' => 'nachos'
-        ];
-        $cache->create($form2);
-        $form3 = $cache->create( [
-            'ID' => 'cf_face_palms',
-            'name' => 'salads'
-        ]);
-        $cache->create( [
-            'ID' => 'cf_face_palms',
-            'name' => 'salads'
-        ]);
-        $this->assertCount(3, $cache->get_all());
+        $this->assertFalse( $cache->get_by_form_id($form1Id) );
+        $this->assertFalse( \Caldera_Forms_Forms::get_form($form1Id) );
 
-        $cache->delete([$form1['ID'],$form3['ID']]);
+        $this->deleteAllForms();
 
-        $this->assertCount(1, $cache->get_all());
     }
 
-    /**
-     * @covers Caldera_Forms_DB_Form_Cache::delete_by_form_id()
-     */
-    public function testDelete_by_form_id()
-    {
-        $dbApi = new Db_Mock();
-        $cache = new \Caldera_Forms_DB_Form_Cache($dbApi);
-        //If Cache is NOT used, this value will return false and break test
-        $dbApi->setNextResult(false );
 
-        $form1 = [
-            'ID' => 'cf_tacos',
-            'name' => 'Tacos'
-        ];
-        $cache->create($form1);
-        $form2 = [
-            'ID' => 'cf_sandwiches',
-            'name' => 'nachos'
-        ];
-        $cache->create($form2);
-        $cache->create( [
-            'ID' => 'cf_face_palms',
-            'name' => 'salads'
-        ]);
-        $this->assertCount(3, $cache->get_all());
-
-        $cache->delete_by_form_id($form1['ID']);
-
-        $this->assertSame($form2,$cache->get_by_form_id($form2['ID']));
-        $this->assertCount(2, $cache->get_all());
-    }
 
 }

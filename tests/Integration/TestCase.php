@@ -21,6 +21,16 @@ class TestCase extends \WP_UnitTestCase
         parent::tearDown();
     }
 
+    protected function deleteAllForms()
+    {
+        $forms = \Caldera_Forms_Forms::get_forms(false);
+        if (!empty($forms)) {
+            foreach ($forms as $formId) {
+                \Caldera_Forms_Forms::delete_form($formId);
+            }
+        }
+    }
+
     /**
      * Rest all of the globals that Caldera Forms v1 sets
      *
