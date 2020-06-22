@@ -5,57 +5,13 @@ namespace calderawp\calderaforms\Tests\Unit\Database;
 
 use calderawp\calderaforms\Tests\Integration\TestCase;
 
-class Db_Mock implements \Caldera_Forms_DB_Form_Interface
-{
-
-    protected $nextResult;
-
-    public function setNextResult($nextResult)
-    {
-
-        $this->nextResult = $nextResult;
-    }
-
-    public function get_all($primary = true)
-    {
-        return $this->nextResult;
-    }
-
-
-    public function get_by_form_id($form_id, $primary_only = true)
-    {
-        return $this->nextResult;
-    }
-
-
-    public function create(array $data)
-    {
-        return $this->nextResult;
-    }
-
-
-    public function update(array $data)
-    {
-        return $this->nextResult;
-    }
-
-
-    public function delete_by_form_id($form_id)
-    {
-        return $this->nextResult;
-    }
-
-
-    public function delete($ids)
-    {
-        return $this->nextResult;
-    }
-}
-
+/**
+ * Class Caldera_Forms_DB_Form_CacheTest
+ *
+ * Tests the form cache and its integration with Caldera_Forms_Forms class
+ */
 class Caldera_Forms_DB_Form_CacheTest extends TestCase
 {
-
-
     /**
      * Tests something, unclear what
      */
@@ -67,7 +23,6 @@ class Caldera_Forms_DB_Form_CacheTest extends TestCase
         $form2Id = $this->importFormWithAutoResponder();
         $this->assertCount(2, $dbApi->get_all());
         $this->deleteAllForms();
-
     }
 
     /**
@@ -95,14 +50,15 @@ class Caldera_Forms_DB_Form_CacheTest extends TestCase
         $formFromQuery2 = $cache->get_by_form_id($form1Id);
         //No query ran
         $this->assertTrue(is_null($wpdb->last_query));
-        $this->assertSame($form1Id, $formFromQuery1['ID']);
-        $this->assertSame($form1Id, $formFromQuery2['ID']);
-        $this->assertSame($formFromQuery1['name'], $formFromQuery2['name']);
+
+        //This is a db result so expect form_id not ID.
+        $this->assertSame($form1Id, $formFromQuery1['form_id']);
+        $this->assertSame($form1Id, $formFromQuery2['form_id']);
 
         $wpdb->last_query = null;
         $form2fromQuery = $cache->get_by_form_id($form2Id);
         $this->assertFalse(is_null($wpdb->last_query));
-        $this->assertSame($form2Id, $form2fromQuery['ID']);
+        $this->assertSame($form2Id, $form2fromQuery['form_id']);
 
         $this->deleteAllForms();
 
@@ -138,8 +94,10 @@ class Caldera_Forms_DB_Form_CacheTest extends TestCase
         $formFromQuery2 = $cache->get_by_form_id($form2Id);
         //No query ran
         $this->assertTrue(is_null($wpdb->last_query));
-        $this->assertSame($form2Id, $formFromQuery2['ID']);
-        $this->assertSame($save['name'], $formFromQuery2['name']);
+        //This is a db result so expect form_id not ID and config is a key
+        $this->assertSame($form2Id, $formFromQuery2['form_id']);
+        $this->assertSame($form2Id, $formFromQuery2['config']['ID']);
+        $this->assertSame($save['name'], $formFromQuery2['config']['name']);
         $this->deleteAllForms();
 
     }

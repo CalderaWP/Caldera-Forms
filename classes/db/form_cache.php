@@ -10,7 +10,8 @@ class Caldera_Forms_DB_Form_Cache implements Caldera_Forms_DB_Form_Interface
      * @var array
      */
     protected $cache;
-    public function __construct( Caldera_Forms_DB_Form_Interface $db)
+
+    public function __construct(Caldera_Forms_DB_Form_Interface $db)
     {
         $this->db = $db;
         $this->cache = [];
@@ -18,31 +19,68 @@ class Caldera_Forms_DB_Form_Cache implements Caldera_Forms_DB_Form_Interface
 
     public function get_all($primary = true)
     {
-        // TODO: Implement get_all() method.
+        if( ! $primary ){
+            return $this->db->get_all(false);
+        }
+
+       if( empty($this->cache )){
+           $this->cache = $this->db->get_all($primary);
+       }
+        return $this->cache;
+
+
     }
 
     public function get_by_form_id($form_id, $primary_only = true)
     {
-        // TODO: Implement get_by_form_id() method.
+        if (!$primary_only) {
+            return $this->db->get_by_form_id($form_id, false);
+        }
+        return $this->get($form_id);
     }
 
     public function create(array $data)
     {
-        // TODO: Implement create() method.
+
+        return $this->db->create($data);
+
     }
 
     public function update(array $data)
     {
-        // TODO: Implement update() method.
+        return $this->db->update($data);
     }
 
     public function delete_by_form_id($form_id)
     {
-        // TODO: Implement delete_by_form_id() method.
+        $deleted = $this->db->delete_by_form_id($form_id );
+        if( $deleted && $this->has($form_id)){
+            unset($this->cache[$form_id]);
+        }
+        return $deleted;
     }
 
     public function delete($ids)
     {
-        // TODO: Implement delete() method.
+        $this->db->delete($ids);
     }
+
+    protected function has($id)
+    {
+        return !empty($this->cache) && isset($this->cache[$id]);
+    }
+
+    protected function get($id)
+    {
+        if( $this->has($id)){
+            return $this->cache[$id];
+        }
+        $form = $this->db->get_by_form_id($id);
+        if( $form ){
+            $this->cache[$id] = $form;
+        }
+        return $form;
+    }
+
+
 }

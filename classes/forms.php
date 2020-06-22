@@ -993,7 +993,6 @@ class Caldera_Forms_Forms {
 	 * @return array|bool
 	 */
 	protected static function get_from_db( $form_id, $primary_only = true ){
-
 		return Caldera_Forms_DB_Form::get_instance()->get_by_form_id( $form_id, $primary_only );
 
 	}
