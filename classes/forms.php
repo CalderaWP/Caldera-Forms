@@ -17,49 +17,26 @@
 class Caldera_Forms_Forms {
 
 	/**
-	 * Holds registry of forms
+	 * Holds simple index "registry" of all form IDs
 	 *
-	 * @since 1.3.4
-	 *
-	 * @var array
-	 */
-	protected static $registry_cache;
-
-	/**
-	 * Cache key for storing form registry in
-	 *
-	 * @since 1.3.4
-	 *
-	 * @var string
-	 */
-	protected static $registry_cache_key = '_cadera_forms';
-
-	/**
-	 * Holds simple index of form IDs
-	 *
-	 * @since 1.3.4
+     * Flat array of form_id  => form_id
+     *
+     * @since 1.3.4
 	 *
 	 * @var array
 	 */
 	protected static $index;
 
 	/**
-	 * Holds stored forms
+	 * Holds simple index "registry" of forms stored in the database
 	 *
+     * Flat array of form_id  => form_id
+     *
 	 * @since 1.3.4
 	 *
 	 * @var array
 	 */
 	protected static $stored_forms;
-
-	/**
-	 * Option key for storing registry in
-	 *
-	 * @since 1.3.4
-	 *
-	 * @var string
-	 */
-	protected static $registry_option_key = '_caldera_forms_forms';
 
 	/**
 	 * Fields used when converting flat registry to detailed registry
@@ -455,7 +432,6 @@ class Caldera_Forms_Forms {
 			}
 		}
 
-		set_transient( self::$registry_cache_key, $valid_forms, HOUR_IN_SECONDS );
 		return $valid_forms;
 	}
 
@@ -702,10 +678,7 @@ class Caldera_Forms_Forms {
 	 */
 	protected static function clear_cache(){
 		self::$index = array();
-		self::$registry_cache = array();
 		self::$stored_forms = array();
-		wp_cache_delete( '_caldera_forms_forms', 'options' );
-		delete_transient( self::$registry_cache_key );
 	}
 
 	/**
@@ -735,12 +708,6 @@ class Caldera_Forms_Forms {
 
 		}else{
 			$form['form_draft'] = 1;
-
-		}
-
-		if( is_array( self::$registry_cache ) && isset( self::$registry_cache[ $form[ 'ID' ] ] ) ){
-			delete_transient( self::$registry_cache_key );
-			self::$registry_cache[ $form[ 'ID' ] ][ 'form_draft' ] = $form['form_draft'];
 		}
 
 		self::save_form( $form );
@@ -1026,6 +993,7 @@ class Caldera_Forms_Forms {
 	 * @return array|bool
 	 */
 	protected static function get_from_db( $form_id, $primary_only = true ){
+
 		return Caldera_Forms_DB_Form::get_instance()->get_by_form_id( $form_id, $primary_only );
 
 	}
