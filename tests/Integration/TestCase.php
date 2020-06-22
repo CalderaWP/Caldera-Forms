@@ -23,10 +23,10 @@ class TestCase extends \WP_UnitTestCase
 
     protected function deleteAllForms()
     {
-        $forms = \Caldera_Forms_Forms::get_forms(false);
+        $forms = \Caldera_Forms_DB_Form::get_instance()->get_all(true);
         if (!empty($forms)) {
-            foreach ($forms as $formId) {
-                \Caldera_Forms_Forms::delete_form($formId);
+            foreach ($forms as  $form) {
+                \Caldera_Forms_Forms::delete_form($form['form_id']);
             }
         }
     }

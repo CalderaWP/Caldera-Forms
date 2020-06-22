@@ -17,7 +17,6 @@ class Caldera_Forms_DB_Form_CacheTest extends TestCase
      */
     public function testMockSystem()
     {
-        $this->deleteAllForms();
         $dbApi = \Caldera_Forms_DB_Form::get_instance();
         $form1Id = $this->importFormWithAutoResponder();
         $form2Id = $this->importFormWithAutoResponder();
@@ -31,7 +30,6 @@ class Caldera_Forms_DB_Form_CacheTest extends TestCase
      */
     public function testGet_by_form_id()
     {
-        $this->deleteAllForms();
         $dbApi = \Caldera_Forms_DB_Form::get_instance();
         $form1Id = $this->importFormWithAutoResponder();
         $form2Id = $this->importFormWithAutoResponder();
@@ -65,13 +63,41 @@ class Caldera_Forms_DB_Form_CacheTest extends TestCase
     }
 
     /**
+     * @group now
+     *
+     * @covers Caldera_Forms_DB_Form_Cache::delete()
+     * @covers Caldera_Forms_DB_Form_Cache::get_by_form_id()
+     * @covers Caldera_Forms_DB_Form_Cache::create()
+     */
+    public function testCreateGetAll()
+    {
+        $this->deleteAllForms();
+
+        $dbApi = \Caldera_Forms_DB_Form::get_instance();
+        $cache = new \Caldera_Forms_DB_Form_Cache($dbApi);
+        $this->assertFalse(\Caldera_Forms_DB_Form::get_instance()->get_all());
+        $this->assertFalse($cache->get_all());
+        $this->assertCount(0, \Caldera_Forms_Forms::get_forms());
+        $this->importFormWithAutoResponder();
+
+        $this->assertCount(1, \Caldera_Forms_DB_Form::get_instance()->get_all());
+        $this->assertCount(1, $cache->get_all());
+        $this->assertCount(1, \Caldera_Forms_Forms::get_forms());
+        $this->importFormWithAutoResponder();
+        $this->assertCount(2, \Caldera_Forms_DB_Form::get_instance()->get_all());
+        $this->assertCount(2, \Caldera_Forms_Forms::get_forms());
+
+        $this->deleteAllForms();
+
+    }
+
+    /**
      * @covers Caldera_Forms_DB_Form_Cache::get_by_form_id()
      * @covers Caldera_Forms_DB_Form_Cache::update()
      * @covers Caldera_Forms_DB_Form_Cache::create()
      */
     public function testUpdate()
     {
-        $this->deleteAllForms();
         $dbApi = \Caldera_Forms_DB_Form::get_instance();
         $form1Id = $this->importFormWithAutoResponder();
         $form2Id = $this->importFormWithAutoResponder();
@@ -112,7 +138,6 @@ class Caldera_Forms_DB_Form_CacheTest extends TestCase
      */
     public function testDelete()
     {
-        $this->deleteAllForms();
         $dbApi = \Caldera_Forms_DB_Form::get_instance();
         $form1Id = $this->importFormWithAutoResponder();
         $form2Id = $this->importFormWithAutoResponder();
@@ -123,13 +148,12 @@ class Caldera_Forms_DB_Form_CacheTest extends TestCase
         global $wpdb;
         $cache = new \Caldera_Forms_DB_Form_Cache($dbApi);
 
-        $this->assertFalse( $cache->get_by_form_id($form1Id) );
-        $this->assertFalse( \Caldera_Forms_Forms::get_form($form1Id) );
+        $this->assertFalse($cache->get_by_form_id($form1Id));
+        $this->assertFalse(\Caldera_Forms_Forms::get_form($form1Id));
 
         $this->deleteAllForms();
 
     }
-
 
 
 }

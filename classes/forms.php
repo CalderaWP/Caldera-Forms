@@ -60,6 +60,19 @@ class Caldera_Forms_Forms {
 		'form_draft'
 	);
 
+    /**
+     * Getter and Lazy-loader for db API/ with cache
+     *
+     *
+     * @since 1.9.1
+     *
+     * @return Caldera_Forms_DB_Form_Interface
+     */
+    protected static function get_db_instance()
+    {
+        return Caldera_Forms_DB_Form::get_instance();
+    }
+
 	/**
 	 * Load a form by ID or name
 	 *
@@ -220,7 +233,7 @@ class Caldera_Forms_Forms {
 	protected static function get_stored_forms() {
 
 		if ( empty( self::$stored_forms ) ) {
-            $forms = Caldera_Forms_DB_Form::get_instance()->get_all();
+            $forms = self::get_db_instance()->get_all();
             if( ! empty( $forms ) ){
                 foreach( $forms as $form ){
                     if ( ! empty( $form[ 'config' ] ) ) {
@@ -636,7 +649,7 @@ class Caldera_Forms_Forms {
 		}
 
 		unset( $forms[ $id ] );
-		$deleted = Caldera_Forms_DB_Form::get_instance()->delete_by_form_id( $id );
+		$deleted = self::get_db_instance()->delete_by_form_id( $id );
 		if ( $deleted ) {
 			self::update_registry( $forms );
 
@@ -890,7 +903,7 @@ class Caldera_Forms_Forms {
 	 * @return array
 	 */
 	public static function get_revisions( $form_id, $simple = false ){
-		$forms = Caldera_Forms_DB_Form::get_instance()->get_by_form_id( $form_id, false );
+		$forms = self::get_db_instance()->get_by_form_id( $form_id, false );
 		$revisions = array();
 		if( ! empty( $forms ) ){
 			foreach ( $forms as $i => $form ){
@@ -923,7 +936,7 @@ class Caldera_Forms_Forms {
 	 * @return array
 	 */
 	public static function get_revision( $id ){
-		$form = Caldera_Forms_DB_Form::get_instance()->get_record( $id );
+		$form = self::get_db_instance()->get_record( $id );
 		$form = self::db_to_return( $form );
 		$form = self::filter_form( $form[ 'ID' ], $form, true );
 		return $form;
@@ -939,7 +952,7 @@ class Caldera_Forms_Forms {
 	 * @return array|bool
 	 */
 	protected static function maybe_migrate( array $form ){
-		$in_db = Caldera_Forms_DB_Form::get_instance()->get_by_form_id( $form[ 'ID' ] );
+		$in_db = self::get_db_instance()->get_by_form_id( $form[ 'ID' ] );
 		if( empty( $in_db ) ){
 			self::save_to_db( $form, 'primary' );
 		}
@@ -971,10 +984,10 @@ class Caldera_Forms_Forms {
 
 		if( isset( $form[ 'db_id' ] ) ){
 			$data[ 'db_id' ] = $form[ 'db_id' ];
-			$db_id = Caldera_Forms_DB_Form::get_instance()->update( $data );
+			$db_id = self::get_db_instance()->update( $data );
 			self::maybe_delete_old_revisions( $form );
 		}else{
-			$db_id = Caldera_Forms_DB_Form::get_instance()->create( $data );
+			$db_id = self::get_db_instance()->create( $data );
 
 		}
 
@@ -993,7 +1006,7 @@ class Caldera_Forms_Forms {
 	 * @return array|bool
 	 */
 	protected static function get_from_db( $form_id, $primary_only = true ){
-		return Caldera_Forms_DB_Form::get_instance()->get_by_form_id( $form_id, $primary_only );
+		return self::get_db_instance()->get_by_form_id( $form_id, $primary_only );
 
 	}
 
@@ -1018,7 +1031,7 @@ class Caldera_Forms_Forms {
 						$deletes[] = $id;
 					}
 				}
-				Caldera_Forms_DB_Form::get_instance()->delete( $deletes );
+				self::get_db_instance()->delete( $deletes );
 
 			}
 
@@ -1084,6 +1097,8 @@ class Caldera_Forms_Forms {
     public static function create_unique_form_id(){
         return uniqid( 'CF' );
     }
+
+
 }
 
 
