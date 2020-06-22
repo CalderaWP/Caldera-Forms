@@ -32,9 +32,7 @@ class ProcessorTest extends TestCase
     public function testTheTestAssumptions()
     {
         //Import form
-        $config = json_decode(file_get_contents(dirname(__FILE__,
-                3) . '/includes/forms/contact-form-autoresponder.json'));
-        $formId = \Caldera_Forms_Forms::import_form($this->recursiveCastArray($config), true);
+        $formId = $this->importFormWithAutoResponder();
         //Set as global form
         global $form;
         $form = \Caldera_Forms_Forms::get_form($formId);
@@ -102,9 +100,7 @@ class ProcessorTest extends TestCase
      */
     public function testFactory()
     {
-        $config = json_decode(file_get_contents(dirname(__FILE__,
-                3) . '/includes/forms/contact-form-autoresponder.json'));
-        $formId = \Caldera_Forms_Forms::import_form($this->recursiveCastArray($config), true);
+        $formId = $this->importFormWithAutoResponder();
         global $form;
         $form = \Caldera_Forms_Forms::get_form($formId);
         $_POST = SubmissionHelpers::submission_data($formId, [
@@ -140,6 +136,8 @@ class ProcessorTest extends TestCase
         $this->assertEquals('hard coded value', $data->get_value('three'));
 
     }
+
+
 
 
 }

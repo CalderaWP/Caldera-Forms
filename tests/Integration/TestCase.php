@@ -39,6 +39,22 @@ class TestCase extends \WP_UnitTestCase
     }
 
     /**
+     * Import a contact form with the auto responder processor
+     *
+     * @since 1.9.1
+     *
+     * @return string
+     */
+    protected function importFormWithAutoResponder()
+    {
+        $config = json_decode(file_get_contents(
+            dirname(__FILE__, 2) . '/includes/forms/contact-form-autoresponder.json')
+        );
+        $formId = \Caldera_Forms_Forms::import_form($this->recursiveCastArray($config), true);
+        return $formId;
+    }
+
+    /**
      * Recursively cast array or object to array
      *
      * @since 1.8.10
