@@ -651,8 +651,8 @@ class Caldera_Forms_Forms {
 		unset( $forms[ $id ] );
 		$deleted = self::get_db_instance()->delete_by_form_id( $id );
 		if ( $deleted ) {
+		    unset(self::$stored_forms[$id]);
 			self::update_registry( $forms );
-
 			return $deleted;
 		}
 

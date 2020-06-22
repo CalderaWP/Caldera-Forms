@@ -11,10 +11,26 @@ class Caldera_Forms_DB_Form_Cache implements Caldera_Forms_DB_Form_Interface
      */
     protected $cache;
 
+    /**
+     * Caldera_Forms_DB_Form_Cache constructor.
+     * @param Caldera_Forms_DB_Form_Interface $db
+     */
     public function __construct(Caldera_Forms_DB_Form_Interface $db)
     {
         $this->db = $db;
         $this->cache = [];
+    }
+
+    /**
+     * @param $name
+     * @param $arguments
+     * @return mixed
+     */
+    public function __call($name, $arguments)
+    {
+       if( method_exists( $this->db, $name ) ){
+           return call_user_func([$this->db,$name],$arguments);
+       }
     }
 
     public function get_all($primary = true)
@@ -41,23 +57,23 @@ class Caldera_Forms_DB_Form_Cache implements Caldera_Forms_DB_Form_Interface
 
     public function create(array $data)
     {
-
+        $this->cache[$data['form_id']] = $data;
         return $this->db->create($data);
 
     }
 
     public function update(array $data)
     {
+        $this->cache[$data['form_id']] = $data;
         return $this->db->update($data);
     }
 
     public function delete_by_form_id($form_id)
     {
-        $deleted = $this->db->delete_by_form_id($form_id );
-        if( $deleted && $this->has($form_id)){
-            unset($this->cache[$form_id]);
-        }
-        return $deleted;
+        unset($this->cache[$form_id]);
+
+      return $this->db->delete_by_form_id($form_id );
+
     }
 
     public function delete($ids)
