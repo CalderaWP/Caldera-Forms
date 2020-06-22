@@ -2,11 +2,11 @@
 
 namespace calderawp\calderaforms\Tests\Unit\Database;
 
-use Caldera_Forms_DB_Form_Cache;
-use Caldera_Forms_DB_Form_Interface;
-use calderawp\calderaforms\Tests\Unit\TestCase;
 
-class Db_Mock implements  Caldera_Forms_DB_Form_Interface
+
+use calderawp\calderaforms\Tests\Integration\TestCase;
+
+class Db_Mock implements  \Caldera_Forms_DB_Form_Interface
 {
 
     protected $nextResult;
@@ -60,7 +60,7 @@ class Caldera_Forms_DB_Form_CacheTest extends TestCase
      */
     public function testMockSystem(){
         $dbApi = new Db_Mock();
-        $cache = new Caldera_Forms_DB_Form_Cache($dbApi);
+        $cache = new \Caldera_Forms_DB_Form_Cache($dbApi);
         $form1 = [
             'ID' => 'cf_tacos',
             'name' => 'Tacos'
@@ -77,7 +77,7 @@ class Caldera_Forms_DB_Form_CacheTest extends TestCase
     public function testGet_by_form_id()
     {
         $dbApi = new Db_Mock();
-        $cache = new Caldera_Forms_DB_Form_Cache($dbApi);
+        $cache = new \Caldera_Forms_DB_Form_Cache($dbApi);
         $form1 = [
             'ID' => 'cf_tacos',
             'name' => 'Tacos'
@@ -101,7 +101,7 @@ class Caldera_Forms_DB_Form_CacheTest extends TestCase
     public function testGet_all()
     {
         $dbApi = new Db_Mock();
-        $cache = new Caldera_Forms_DB_Form_Cache($dbApi);
+        $cache = new \Caldera_Forms_DB_Form_Cache($dbApi);
         $form1 = [
             'ID' => 'cf_tacos',
             'name' => 'Tacos'
@@ -125,7 +125,7 @@ class Caldera_Forms_DB_Form_CacheTest extends TestCase
     public function testUpdate()
     {
         $dbApi = new Db_Mock();
-        $cache = new Caldera_Forms_DB_Form_Cache($dbApi);
+        $cache = new \Caldera_Forms_DB_Form_Cache($dbApi);
         //If Cache is NOT used, this value will return false and break test
         $dbApi->setNextResult(false );
 
@@ -161,7 +161,7 @@ class Caldera_Forms_DB_Form_CacheTest extends TestCase
     public function testDelete()
     {
         $dbApi = new Db_Mock();
-        $cache = new Caldera_Forms_DB_Form_Cache($dbApi);
+        $cache = new \Caldera_Forms_DB_Form_Cache($dbApi);
         //If Cache is NOT used, this value will return false and break test
         $dbApi->setNextResult(false );
 
@@ -196,7 +196,7 @@ class Caldera_Forms_DB_Form_CacheTest extends TestCase
     public function testDelete_by_form_id()
     {
         $dbApi = new Db_Mock();
-        $cache = new Caldera_Forms_DB_Form_Cache($dbApi);
+        $cache = new \Caldera_Forms_DB_Form_Cache($dbApi);
         //If Cache is NOT used, this value will return false and break test
         $dbApi->setNextResult(false );
 
