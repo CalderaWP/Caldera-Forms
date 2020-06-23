@@ -1056,8 +1056,8 @@ class Caldera_Forms_Forms
      *
      * @since 1.9.1
      *
-     * @param string $form_id
-     * @param array $db_form
+     * @param string $form_id ID of form to cache
+     * @param array $db_form The form as returned by database.
      */
     protected static function form_cache_add($form_id, $db_form ){
         if (!is_array(self::$cache)) {
@@ -1066,14 +1066,30 @@ class Caldera_Forms_Forms
         self::$cache[$form_id] = $db_form;
     }
 
+    /**
+     * Check if form cache has item
+     *
+     * @since 1.9.1
+     *
+     * @param string $form_id ID of form to cache
+     *
+     * @return bool
+     */
     protected static function form_cache_has($form_id){
         return is_array(self::$cache) && array_key_exists($form_id,self::$cache);
     }
 
+    /**
+     * Get form from cache, if possible
+     *
+     * @since 1.9.1
+     *
+     * @param string $form_id ID of form to cache
+     * @return array|bool The form as returned by database or false if not in cache.
+     */
     protected static function form_cache_get($form_id){
         return self::form_cache_has($form_id) ? self::$cache[$form_id] : false;
     }
-
 
     /**
      * Delete form revisions if there are more than the max revisions
