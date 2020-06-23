@@ -235,13 +235,13 @@ class Caldera_Forms_Forms
      */
     protected static function get_stored_forms()
     {
-
         if (empty(self::$stored_forms)) {
             $forms = Caldera_Forms_DB_Form::get_instance()->get_all();
             if (!empty($forms)) {
                 foreach ($forms as $form) {
                     if (!empty($form['config'])) {
                         static::$stored_forms[$form['form_id']] = $form['form_id'];
+                        self::form_cache_add($form['form_id'],$form);
                     }
                 }
             }
@@ -1037,17 +1037,43 @@ class Caldera_Forms_Forms
                 ->get_by_form_id($form_id, false);
         }
 
+        if( ! self::form_cache_has($form_id) ){
+            self::form_cache_add(
+                $form_id,
+                Caldera_Forms_DB_Form::get_instance()
+                    ->get_by_form_id(
+                        $form_id,
+                        $primary_only
+                    )
+            );
+        }
+
+        return  self::form_cache_get($form_id);
+    }
+
+    /**
+     * Add item to form cache
+     *
+     * @since 1.9.1
+     *
+     * @param string $form_id
+     * @param array $db_form
+     */
+    protected static function form_cache_add($form_id, $db_form ){
         if (!is_array(self::$cache)) {
             self::$cache = [];
         }
-
-        if( ! array_key_exists($form_id,self::$cache) ){
-            self::$cache[$form_id] = Caldera_Forms_DB_Form::get_instance()
-                ->get_by_form_id($form_id, $primary_only);
-        }
-
-        return isset(self::$cache[$form_id]) ? self::$cache[$form_id] : false;
+        self::$cache[$form_id] = $db_form;
     }
+
+    protected static function form_cache_has($form_id){
+        return is_array(self::$cache) && array_key_exists($form_id,self::$cache);
+    }
+
+    protected static function form_cache_get($form_id){
+        return self::form_cache_has($form_id) ? self::$cache[$form_id] : false;
+    }
+
 
     /**
      * Delete form revisions if there are more than the max revisions
