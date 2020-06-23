@@ -244,7 +244,6 @@ class Caldera_Forms_Forms
                         static::$stored_forms[$form['form_id']] = $form['form_id'];
                     }
                 }
-
             }
         }
 
@@ -707,7 +706,6 @@ class Caldera_Forms_Forms
         self::$index = array();
         self::$stored_forms = array();
         self::$cache = null;
-
     }
 
     /**
