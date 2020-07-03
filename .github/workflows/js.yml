@@ -25,4 +25,7 @@ jobs:
     - name: Run Jest Tests
       run: yarn test:once
 
+    - name: Run Cypress Tests
+      run: yarn test:e2e:ci
+
 
