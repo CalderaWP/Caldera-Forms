@@ -1,4 +1,4 @@
-name: JS tests
+name: JS Tests
 
 on: [push]
 
@@ -22,7 +22,7 @@ jobs:
     - name: Refresh assets build
       run: yarn build
 
-    - name: Refresh assets build
+    - name: Run Jest Tests
       run: yarn test:once
 
 
