@@ -18,33 +18,41 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
 	 * @since 1.5.3
 	 */
 	public function add_routes( $namespace ) {
+	    $this->request_args();
 		parent::add_routes($namespace);
-        register_rest_route( $namespace, $this->id_endpoint_url(),
-           [
-                'methods'             => \WP_REST_Server::EDITABLE,
-                'callback'            => [ $this, 'save_form' ],
-                'permission_callback' => [ $this, 'save_form_permissions_check' ],
-                'args'                => [
-                    'cf_edit_nonce' => [
-                        'type' => 'string',
-                        'description' => __('Caldera Forms editor nonce', 'caldera-forms'),
-                        'required' => 'true'
-                    ],
-                    'config' => [
-                        'type' => 'object',
-                        'description' => __('Caldera Forms editor nonce', 'caldera-forms'),
-                        'required' => 'true'
-                    ],
-                    'form' => [
-                        'type' => 'string',
-                        'description' => __('ID of form', 'caldera-forms'),
-                        'required' => 'true'
-                    ],
-                ]
-            ], true
-        );
 
-		register_rest_route( $namespace, $this->id_endpoint_url() . '/revisions',
+		//Get the id routes
+		$id_route = $this->id_route();
+		//Replace edit route
+		$id_route[ \WP_REST_Server::EDITABLE ] = [
+            'methods'             => \WP_REST_Server::EDITABLE,
+            'callback'            => [ $this, 'save_form' ],
+            'permission_callback' => [ $this, 'save_form_permissions_check' ],
+            //These args are different then $this->request_args()
+            'args'                => [
+                'cf_edit_nonce' => [
+                    'type' => 'string',
+                    'description' => __('Caldera Forms editor nonce', 'caldera-forms'),
+                    'required' => 'true'
+                ],
+                'config' => [
+                    'type' => 'object',
+                    'description' => __('Caldera Forms editor nonce', 'caldera-forms'),
+                    'required' => 'true'
+                ],
+                'form' => [
+                    'type' => 'string',
+                    'description' => __('ID of form', 'caldera-forms'),
+                    'required' => 'true'
+                ],
+            ]
+        ];
+
+		//Re-register them
+        register_rest_route($namespace, $this->id_endpoint_url(), array_values( $this->id_route() ),true );
+
+
+        register_rest_route( $namespace, $this->id_endpoint_url() . '/revisions',
 			array(
 				'methods'             => \WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'get_revisions' ),
