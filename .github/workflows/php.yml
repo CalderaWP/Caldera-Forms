@@ -1,0 +1,23 @@
+name: PHP Composer
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate
+
+    - name: Install environment and tests
+        run: composer dev:install
+
+    - name: Finish setup
+        run: composer wp:setup
+
+    - name: Run test suite
+        run: composer test:php
