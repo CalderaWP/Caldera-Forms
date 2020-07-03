@@ -25,9 +25,6 @@ jobs:
     - name: Activate Caldera Forms
       run: composer wp:activate
 
-    - name: Set permalinks
-      run: composer wp:config
-
     - name: Tests setup
       run: composer test:setup
 
