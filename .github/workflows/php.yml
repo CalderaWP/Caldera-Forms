@@ -1,6 +1,6 @@
-name: PHP Composer
+name: PHP Tests
 
-on: [push]
+on: [pull-request]
 
 jobs:
   build:
