@@ -13,11 +13,26 @@ jobs:
     - name: Validate composer.json and composer.lock
       run: composer validate
 
-    - name: Install environment and tests
-      run: composer dev:install
+    - name: Install dependencies
+      run: composer install
 
-    - name: Finish setup
-      run: composer wp:setup
+    - name: Install js packages
+      run: yarn
 
-    - name: Run test suite
-      run: composer test:php
+    - name: Install wordpress
+      run: composer wp:install
+
+    - name: Activate Caldera Forms
+      run: composer wp:activate
+
+    - name: Set permalinks
+      run: composer wp:config
+
+    - name: Tests setup
+      run: composer test:setup
+
+    - name: Run test unit
+      run: composer test:unit
+
+    - name: Run test wp
+      run: composer wp:tests
