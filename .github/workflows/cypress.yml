@@ -1,4 +1,4 @@
-name: PHP Tests
+name: E2E Tests
 
 on: [pull_request]
 
@@ -31,8 +31,5 @@ jobs:
     - name: Tests setup
       run: composer test:setup
 
-    - name: Run test unit
-      run: composer test:unit
-
-    - name: Run test wp
-      run: composer wp:tests
+    - name: Run e2e tests
+      run: yarn test:e2e:ci
