@@ -35,7 +35,9 @@ services:
       MYSQL_DATABASE: wordpress_test
 
   wordpress_phpunit:
-    image: chriszarate/wordpress-phpunit
+    build:
+      context: ./bin/docker/phpunit
+      dockerfile: DOCKERFILE
     environment:
       PHPUNIT_DB_HOST: mysql
     volumes:
