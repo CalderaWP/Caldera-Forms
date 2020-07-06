@@ -364,7 +364,7 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
      *
      * @param mixed $maybeNumeric
      */
-    protected function assertIsNumeric( $maybeNumeric, $message = '' ){
+    protected function __assertIsNumeric( $maybeNumeric, $message = '' ){
         $this->assertTrue( is_numeric( $maybeNumeric ), $message );
     }
 
