@@ -282,7 +282,9 @@ class RunCalculationTest extends Caldera_Forms_Test_Case
 		$form = $this->form;
 		$form['fields']['fld_8568604']['config']['manual'] = true;
 		$calculationField = $form['fields']['fld_8568604'];
-		$actualResult = Caldera_Forms::run_calculation(null, $calculationField, $form);
+
+        //create_function() is expected to be used. It is deprecated.
+        $actualResult = Caldera_Forms::run_calculation(null, $calculationField, $form);
 		$this->assertSame(floatval($expectedResult), floatval($actualResult));
 	}
 
@@ -304,7 +306,10 @@ class RunCalculationTest extends Caldera_Forms_Test_Case
 		$form['fields']['fld_8568604']['config']['manual'] = true;
 		$form['fields']['fld_8568604']['config']['manual_formula'] = 'pow(%field1%,%field2%)+%field3%';
 		$calculationField = $form['fields']['fld_8568604'];
-		$actualResult = Caldera_Forms::run_calculation(null, $calculationField, $form);
+
+    //create_function() is expected to be used. It is deprecated.
+        $this->expectException(\PHPUnit\Framework\Error\Deprecated::class);
+        $actualResult = Caldera_Forms::run_calculation(null, $calculationField, $form);
 		$this->assertSame(floatval($expectedResult), floatval($actualResult));
 	}
 
@@ -326,7 +331,10 @@ class RunCalculationTest extends Caldera_Forms_Test_Case
 		$form['fields']['fld_8568604']['config']['manual'] = true;
 		$form['fields']['fld_8568604']['config']['manual_formula'] = '%field1%**%field2%+%field3%';
 		$calculationField = $form['fields']['fld_8568604'];
-		$actualResult = Caldera_Forms::run_calculation(null, $calculationField, $form);
+
+        //create_function() is expected to be used. It is deprecated.
+        $this->expectException(\PHPUnit\Framework\Error\Deprecated::class);
+        $actualResult = Caldera_Forms::run_calculation(null, $calculationField, $form);
 		$this->assertSame(floatval($expectedResult), floatval($actualResult));
 	}
 
@@ -348,7 +356,8 @@ class RunCalculationTest extends Caldera_Forms_Test_Case
 		$form['fields']['fld_8568604']['config']['manual'] = true;
 		$form['fields']['fld_8568604']['config']['manual_formula'] = 'exp(%field1%)+%field3%*%field2%';
 		$calculationField = $form['fields']['fld_8568604'];
-		$actualResult = Caldera_Forms::run_calculation(null, $calculationField, $form);
+
+        $actualResult = Caldera_Forms::run_calculation(null, $calculationField, $form);
 		$this->assertSame(floatval($expectedResult), floatval($actualResult));
 	}
 
@@ -370,7 +379,8 @@ class RunCalculationTest extends Caldera_Forms_Test_Case
 		$form['fields']['fld_8568604']['config']['manual'] = true;
 		$form['fields']['fld_8568604']['config']['manual_formula'] = 'ceil(%field1%)*%field3%/%field2%';
 		$calculationField = $form['fields']['fld_8568604'];
-		$actualResult = Caldera_Forms::run_calculation(null, $calculationField, $form);
+
+        $actualResult = Caldera_Forms::run_calculation(null, $calculationField, $form);
 		$this->assertSame(floatval($expectedResult), floatval($actualResult));
 	}
 
@@ -391,7 +401,10 @@ class RunCalculationTest extends Caldera_Forms_Test_Case
 		$form['fields']['fld_8568604']['config']['manual'] = true;
 		$form['fields']['fld_8568604']['config']['manual_formula'] = 'floor(log(%field1%,%field2%))';
 		$calculationField = $form['fields']['fld_8568604'];
-		$actualResult = Caldera_Forms::run_calculation(null, $calculationField, $form);
+
+        //create_function() is expected to be used. It is deprecated.
+        $this->expectException(\PHPUnit\Framework\Error\Deprecated::class);
+        $actualResult = Caldera_Forms::run_calculation(null, $calculationField, $form);
 		$this->assertSame(floatval($expectedResult), floatval($actualResult));
 	}
 
@@ -412,7 +425,8 @@ class RunCalculationTest extends Caldera_Forms_Test_Case
 		$form['fields']['fld_8568604']['config']['manual'] = true;
 		$form['fields']['fld_8568604']['config']['manual_formula'] = 'round(sqrt(%field1%)+sqrt(%field2%))';
 		$calculationField = $form['fields']['fld_8568604'];
-		$actualResult = Caldera_Forms::run_calculation(null, $calculationField, $form);
+		
+        $actualResult = Caldera_Forms::run_calculation(null, $calculationField, $form);
 		$this->assertSame(floatval($expectedResult), floatval($actualResult));
 	}
 
@@ -434,7 +448,8 @@ class RunCalculationTest extends Caldera_Forms_Test_Case
 		$form['fields']['fld_8568604']['config']['manual'] = true;
 		$form['fields']['fld_8568604']['config']['manual_formula'] = 'cos(%field1%)+sin(%field2%)+tan(%field3%)';
 		$calculationField = $form['fields']['fld_8568604'];
-		$actualResult = Caldera_Forms::run_calculation(null, $calculationField, $form);
+
+        $actualResult = Caldera_Forms::run_calculation(null, $calculationField, $form);
 		$this->assertSame(floatval($expectedResult), floatval($actualResult));
 	}
 
@@ -456,7 +471,10 @@ class RunCalculationTest extends Caldera_Forms_Test_Case
 		$form['fields']['fld_8568604']['config']['manual'] = true;
 		$form['fields']['fld_8568604']['config']['manual_formula'] = 'acos(%field1%)+asin(%field2%)+atan(%field3%)';
 		$calculationField = $form['fields']['fld_8568604'];
-		$actualResult = Caldera_Forms::run_calculation(null, $calculationField, $form);
+
+		//create_function() is expected to be used. It is deprecated.
+        $this->expectException(\PHPUnit\Framework\Error\Deprecated::class);
+        $actualResult = Caldera_Forms::run_calculation(null, $calculationField, $form);
 		$this->assertSame(floatval($expectedResult), floatval($actualResult));
 	}
 
