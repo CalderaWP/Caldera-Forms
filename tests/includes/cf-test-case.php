@@ -356,18 +356,7 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
     protected function get_path_for_auto_responder_contact_form_import(){
         return dirname(__FILE__) . '/forms/contact-form-autoresponder.json';
     }
-
-    /**
-     * Assert a value is numeric
-     *
-     * @since 1.6
-     *
-     * @param mixed $maybeNumeric
-     */
-    protected function __assertIsNumeric( $maybeNumeric, $message = '' ){
-        $this->assertTrue( is_numeric( $maybeNumeric ), $message );
-    }
-
+    
     /**
      * Save an entry, with email and name fields we can identify a person by.
      *
