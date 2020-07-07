@@ -113,7 +113,7 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
      * 
      * @since 1.9.0
      */
-	public static function save_form(\WP_REST_Request $request){
+	public function save_form(\WP_REST_Request $request){
         $saved = Caldera_Forms_Admin::save_a_form(array_merge(['ID' => $request['form_id']],$request['config']));
         if( ! $saved ){
            return new \WP_Error(500,__('Not saved', 'caldera-forms'));
