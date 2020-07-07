@@ -253,9 +253,7 @@ abstract class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route
      */
     public function update_item(WP_REST_Request $request)
     {
-
-        return $this->not_yet_response();
-           
+        return $this->not_yet_response(); 
     }
 
     /**
