@@ -26,3 +26,28 @@ export const privacySettingsClient = calderaApiClient.wpClientFactory(
 	cfAdmin.rest.nonce,
 	'privacy'
 );
+
+function removeForwardSlash(endpoint) {
+	if ('' !== endpoint && '/' === endpoint.charAt(0)) {
+		endpoint = endpoint.substr(1);
+	}
+	return endpoint;
+}
+
+privacySettingsClient.urlString =  (data, endpoint = '') =>{
+
+	endpoint = removeForwardSlash(endpoint);
+
+	let str = '';
+	for (let key in data) {
+		if (str !== '') {
+			str += '&';
+		}
+		str += key + '=' + data[key];
+	}
+	console.log(endpoint);
+	if (endpoint) {
+		return `${this.route}/${endpoint}?${str}`;
+	}
+	return this.route + '?' + str;
+}
