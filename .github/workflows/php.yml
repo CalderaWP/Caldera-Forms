@@ -1,0 +1,38 @@
+name: PHP Tests
+
+on: [pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate
+
+    - name: Install dependencies
+      run: composer install
+
+    - name: Install js packages
+      run: yarn
+
+    - name: Refresh assets build
+      run: yarn build
+
+    - name: Install wordpress
+      run: composer wp:install
+
+    - name: Activate Caldera Forms
+      run: composer wp:activate
+
+    - name: Tests setup
+      run: composer test:setup
+
+    - name: Run test unit
+      run: composer test:unit
+
+    - name: Run test wp
+      run: composer wp:tests

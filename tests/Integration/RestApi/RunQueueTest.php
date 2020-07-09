@@ -47,7 +47,7 @@ class RunQueueTest extends RestApiTestCase
 
 		$request = new \WP_REST_Request('POST', $uri);
 		$request->set_param( 'jobs', 5 );
-		$endpoint->runQueue($request);
+		$this->assertTrue(is_object($endpoint->runQueue($request)));
 	}
 
 	/**
