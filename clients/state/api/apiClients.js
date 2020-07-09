@@ -34,10 +34,22 @@ function removeForwardSlash(endpoint) {
 	return endpoint;
 }
 
-privacySettingsClient.urlString =  (data, endpoint = '') =>{
+//If pretty permalinks are enabled params need to be prefixed with "?"
+//Else there already is a "?" so we need to add a "&"
+//@see https://github.com/CalderaWP/Caldera-Forms/pull/3576#issuecomment-655563315
 
+/**
+ * Change url string generation in client to prevent having two "?" in URL
+ *
+ * @see https://github.com/CalderaWP/Caldera-Forms/pull/3576#issuecomment-655563315
+ * @since 1.9.2
+ *
+ * @param {{}} data
+ * @param {string} endpoint
+ * @returns {string}
+ */
+privacySettingsClient.urlString =  function(data, endpoint = ''){
 	endpoint = removeForwardSlash(endpoint);
-
 	let str = '';
 	for (let key in data) {
 		if (str !== '') {
@@ -45,9 +57,10 @@ privacySettingsClient.urlString =  (data, endpoint = '') =>{
 		}
 		str += key + '=' + data[key];
 	}
-	console.log(endpoint);
+	const divider = this.route.indexOf('?' ) ? '&' : '?';
 	if (endpoint) {
-		return `${this.route}/${endpoint}?${str}`;
+		let uri = `${this.route}/${endpoint}${divider}${str}`;
+		return uri;
 	}
-	return this.route + '?' + str;
+	return this.route + divider + str;
 }
