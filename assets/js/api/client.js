@@ -64,7 +64,7 @@ function CFAPI( routes, perPage, formId, tokens,  $ ) {
             //If pretty permalinks are enabled params need to be prefixed with "?"
             //Else there already is a "?" so we need to add a "&"
             //@see https://github.com/CalderaWP/Caldera-Forms/pull/3576#issuecomment-655563315
-            var divider = routes.entries.indexOf('?' ) ? '&' : '?';
+            var divider = routes.entries.indexOf('?') === -1 ? '?' : '&';
             return routes.entries + formId + divider + params
         },
         setPerPage : function( newPerPage ) {
