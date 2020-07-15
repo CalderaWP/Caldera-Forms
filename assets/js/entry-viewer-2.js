@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.9.1 - 2020-06-19 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.9.1 - 2020-07-08 *//**
  * API Client for Caldera Forms API for a single form
  *
  * @since 1.5.0
@@ -61,7 +61,10 @@ function CFAPI( routes, perPage, formId, tokens,  $ ) {
                 per_page: perPage
             });
 
-            return routes.entries + formId + '?' + params
+            console.log(routes.entries);
+            var divider = routes.entries.indexOf('?' ) ? '&' : '?';
+            console.log(divider,routes.entries + formId + divider + params);
+            return routes.entries + formId + divider + params
         },
         setPerPage : function( newPerPage ) {
             perPage = newPerPage;

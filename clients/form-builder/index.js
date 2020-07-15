@@ -69,6 +69,12 @@ const FieldConditionalSelectors = () => {
  * @since 1.9.0
  */
 const HandleSave = ({ jQuery, formId }) => {
+
+	//Reset formId if undefined
+	if(typeof formId === "undefined"){
+		formId = CF_ADMIN.form.ID;
+	}
+
 	//Get conditionals
 	const { conditionals, hasConditionals } = React.useContext(
 		ConditionalsContext
