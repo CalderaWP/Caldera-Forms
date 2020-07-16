@@ -13,26 +13,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
       - name: Install PHP dependencies, optimized
         run: composer install --no-dev -o
+
       - name: Install JS dependencies
         run: yarn
+
       - name: Build assets for release
         run: yarn build
+
       # MUST set in package.json to same as tag name before pushing tag
       - name: Set version number 
         run: yarn version:number
+
       - name: Create build
         run: yarn package
+
       - name: Create ZIP
-        - uses: papeloto/action-zip@v1
-          with:
-            files: assets/ cf2/ classes/ fields/ languages/ vendor/ processors/ sendwp/ ui/ caldera-core.php readme.txt LICENSE
-            recursive: false
-            dest: caldera-forms-${{ github.ref }}.zip
+      - uses: papeloto/action-zip@v1
+        with:
+          files: assets/ cf2/ classes/ fields/ languages/ vendor/ processors/ sendwp/ ui/ caldera-core.php readme.txt LICENSE
+          recursive: false
+          dest: caldera-forms-${{ github.ref }}.zip
       - name: Upload ZIP to release
-        - uses: svenstaro/upload-release-action@v2
-          with:
-            repo_token: ${{ secrets.GITHUB_TOKEN }}
-            file: caldera-forms-${{ github.ref }}.zip
-            tag: ${{ github.ref }}
+      - uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: caldera-forms-${{ github.ref }}.zip
+          tag: ${{ github.ref }}
