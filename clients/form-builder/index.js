@@ -124,19 +124,21 @@ const HandleSave = ({ jQuery, formId }) => {
 		} else {
 			data_fields.config.processors = {};
 		}
-		
-		//Clear all assignments of fields to conditionals
-		if (data_fields.config.hasOwnProperty("fields")) {
-			Object.keys(data_fields.config.fields).forEach((fieldId) => {
-				if (data_fields.config.fields.hasOwnProperty(fieldId)) {
-					data_fields.config.fields[fieldId].conditions = {
-						type: "",
-					};
-				}
-			});
-		}
 
-		if( conditionals ){
+		
+		if( typeof fieldID !== "undefined" ){
+
+			//Clear all assignments of fields to conditionals
+			if (data_fields.config.hasOwnProperty("fields")) {
+				Object.keys(data_fields.config.fields).forEach((fieldId) => {
+					if (data_fields.config.fields.hasOwnProperty(fieldId)) {
+						data_fields.config.fields[fieldId].conditions = {
+							type: "",
+						};
+					}
+				});
+			}
+
 			//Reset assignments of fields to conditionals
 			conditionals.forEach((c) => {
 				const appliesTo = c.hasOwnProperty("config") ? c.config.appliesTo : [];
