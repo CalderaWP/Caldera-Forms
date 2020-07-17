@@ -30,14 +30,13 @@ jobs:
       - name: Create ZIP
         uses: papeloto/action-zip@v1
         with:
-          files: build/${{steps.tag.outputs.tag}}/
+          files: build/${{ github.ref }}/
           recursive: false
-          dest: caldera-forms.zip
+          dest: caldera-forms-${{ github.ref }}.zip
 
       - name: Upload ZIP to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: caldera-forms.zip
-          tag: ${{steps.tag.outputs.tag}}
-          
+          file: caldera-forms-${{ github.ref }}.zip
+          tag: ${{ github.ref }}
