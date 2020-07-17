@@ -131,8 +131,8 @@ const HandleSave = ({ jQuery, formId }) => {
 			data_fields.config.processors = {};
 		}
 
-		
-		if( typeof fieldID !== "undefined" ){
+
+		if( conditionals.length > 0 ){
 
 			//Clear all assignments of fields to conditionals
 			if (data_fields.config.hasOwnProperty("fields")) {
