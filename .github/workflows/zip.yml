@@ -1,9 +1,9 @@
 name: ZIP
 
 on:
-  release:
-    types:
-      - created
+  push:
+    tags:
+      - "*"
 
 jobs:
   build:
@@ -30,7 +30,7 @@ jobs:
       - name: Create ZIP
         uses: papeloto/action-zip@v1
         with:
-          files: build/${GITHUB_REF#refs/*/}/
+          files: build/${{steps.tag.outputs.tag}}/
           recursive: false
           dest: caldera-forms.zip
 
@@ -39,4 +39,5 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: caldera-forms.zip
-          tag: ${GITHUB_REF#refs/*/}
+          tag: ${{steps.tag.outputs.tag}}
+          
