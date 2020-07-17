@@ -31,7 +31,7 @@ jobs:
         uses: papeloto/action-zip@v1
         with:
           files: build/${{ github.ref }}/
-          recursive: false
+          recursive: true
           dest: caldera-forms-${{ github.ref }}.zip
 
       - name: Upload ZIP to release
