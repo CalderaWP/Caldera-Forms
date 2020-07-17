@@ -4,9 +4,6 @@ on:
   push:
     tags:
       - "*"
-  release:
-    types:
-      - created
 
 jobs:
   build:
@@ -33,8 +30,8 @@ jobs:
       - name: Create ZIP
         uses: papeloto/action-zip@v1
         with:
-          files: assets/ cf2/ classes/ fields/ languages/ vendor/ processors/ sendwp/ ui/ caldera-core.php readme.txt LICENSE
-          recursive: false
+          files: build/${{ github.ref }}/
+          recursive: true
           dest: caldera-forms-${{ github.ref }}.zip
 
       - name: Upload ZIP to release
