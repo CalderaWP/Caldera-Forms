@@ -33,7 +33,7 @@ jobs:
       - name: Create ZIP
         uses: papeloto/action-zip@v1
         with:
-          files: assets/ cf2/ classes/ fields/ languages/ vendor/ processors/ sendwp/ ui/ caldera-core.php readme.txt LICENSE
+          files: build/${{ github.ref }}
           recursive: false
           dest: caldera-forms-${{ github.ref }}.zip
 
