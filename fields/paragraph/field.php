@@ -15,7 +15,6 @@ $field_value = $default = $syncer->get_default();
 
 $attrs = array(
 	'name' => $field_name,
-	'value' => $field_value,
 	'data-field' => $field_base_id,
 	'class' => $field_class,
 	'id' => $field_id,

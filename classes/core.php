@@ -4124,7 +4124,7 @@ class Caldera_Forms
 			"name" => $field['ID'],//$field['slug'],
 			"wrapper_before" => "<div data-field-wrapper=\"" . $field['ID'] . "\" class=\"" . $field_wrapper_class . "\" id=\"" . $field_id_attr . "-wrap\">\r\n",
 			"field_before" => "<div class=\"" . $field_input_class . "\">\r\n",
-			"label_before" => "<label id=\"" . $field['ID'] . "Label\" for=\"" . $field_id_attr . "\" class=\"" . implode(' ',
+			"label_before" => "<label id=\"" . "{$field['ID']}_{$current_form_count}_" . "Label\" for=\"" . $field_id_attr . "\" class=\"" . implode(' ',
 					$field_classes['field_label']) . "\">",
 			"label" => $field['label'],
 			"label_required" => (empty($field['hide_label']) ? (!empty($field['required']) ? " <span aria-hidden=\"true\" role=\"presentation\" class=\"" . implode(' ',
@@ -4144,7 +4144,7 @@ class Caldera_Forms
 			'button',
 			'hidden'
 		))) {
-			$field_structure['aria']['labelledby'] = $field['ID'] . 'Label';
+			$field_structure['aria']['labelledby'] = "{$field['ID']}_{$current_form_count}_" . 'Label';
 		}
 
 		// if has caption
