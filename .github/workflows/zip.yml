@@ -1,0 +1,42 @@
+name: ZIP
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install PHP dependencies, optimized
+        run: composer install --no-dev -o
+
+      - name: Install JS dependencies
+        run: yarn
+
+      - name: Build assets for release
+        run: yarn build
+
+      # MUST set in package.json to same as tag name before pushing tag
+      - name: Set version number 
+        run: yarn version:number
+
+      - name: Create build
+        run: yarn package
+
+      - name: Create ZIP
+        uses: papeloto/action-zip@v1
+        with:
+          files: build/${{ github.ref }}/
+          recursive: true
+          dest: caldera-forms-${{ github.ref }}.zip
+
+      - name: Upload ZIP to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: caldera-forms-${{ github.ref }}.zip
+          tag: ${{ github.ref }}

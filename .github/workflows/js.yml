@@ -1,0 +1,26 @@
+name: JS Tests
+
+on: [pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate
+
+    - name: Install dependencies
+      run: composer install
+
+    - name: Install js packages
+      run: yarn
+
+    - name: Refresh assets build
+      run: yarn build
+
+    - name: Run Jest Tests
+      run: yarn test:once

@@ -3,7 +3,7 @@ Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
 Tags: form, contact form, forms, form creator, form manager, mailchimp, paypal, stripe, login, payment, forms manager, forms creation
 Requires at least: 5.2
 Tested up to: 5.4.2
-Stable tag: 1.9.1
+Stable tag: 1.9.2
 License: GPLv2
 Requires PHP: 5.6
 
@@ -769,6 +769,16 @@ This could also be a sign of a more serious issue on your server, but is probabl
 5. **Go Further With Form Processors** - Auto-responders, conditional recipients, redirects are included! Go further with our add-ons!
 
 == Changelog ==
+
+= Caldera Forms 1.9.2 (July 22, 2020) Savings =
+See: [https://calderaforms.com/updates/caldera-forms-1-9-2](https://calderaforms.com/updates/caldera-forms-1-9-2?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-9.2)
+* [Fixes Privacy Settings issue](https://github.com/CalderaWP/Caldera-Forms/issues/3577)
+* [Fixes caldera_forms_entry_viewer shortcode issue](https://github.com/CalderaWP/Caldera-Forms/issues/3571)
+* [Form settings saving issue](https://github.com/CalderaWP/Caldera-Forms/issues/3570)
+* [Fixes Duplicate queries selecting from form table on every request](https://github.com/CalderaWP/Caldera-Forms/issues/3553)
+* [Entry edition can now be used with plain permalinks structure set](https://github.com/CalderaWP/Caldera-Forms/issues/3568)
+* [Fixes Duplicate queries selecting from form table on every request](https://github.com/CalderaWP/Caldera-Forms/issues/3553)
+* [Fix Connected forms saving](https://github.com/CalderaWP/Caldera-Forms/pull/3587)
 
 = Caldera Forms 1.9.1 (June 19, 2020) Rebuild build =
 See: [https://calderaforms.com/updates/caldera-forms-1-9-1](https://calderaforms.com/updates/caldera-forms-1-9-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-11)

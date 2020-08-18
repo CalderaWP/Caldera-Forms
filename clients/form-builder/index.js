@@ -69,6 +69,12 @@ const FieldConditionalSelectors = () => {
  * @since 1.9.0
  */
 const HandleSave = ({ jQuery, formId }) => {
+
+	//Reset formId if undefined
+	if(typeof formId === "undefined"){
+		formId = CF_ADMIN.form.ID;
+	}
+
 	//Get conditionals
 	const { conditionals, hasConditionals } = React.useContext(
 		ConditionalsContext
@@ -124,30 +130,36 @@ const HandleSave = ({ jQuery, formId }) => {
 		} else {
 			data_fields.config.processors = {};
 		}
-		//Clear all assignments of fields to conditionals
-		if (data_fields.config.hasOwnProperty("fields")) {
-			Object.keys(data_fields.config.fields).forEach((fieldId) => {
-				if (data_fields.config.fields.hasOwnProperty(fieldId)) {
-					data_fields.config.fields[fieldId].conditions = {
-						type: "",
-					};
-				}
-			});
-		}
 
-		//Reset assignments of fields to conditionals
-		conditionals.forEach((c) => {
-			const appliesTo = c.hasOwnProperty("config") ? c.config.appliesTo : [];
-			if (appliesTo) {
-				appliesTo.forEach((fieldId) => {
+
+		if( conditionals.length > 0 ){
+
+			//Clear all assignments of fields to conditionals
+			if (data_fields.config.hasOwnProperty("fields")) {
+				Object.keys(data_fields.config.fields).forEach((fieldId) => {
 					if (data_fields.config.fields.hasOwnProperty(fieldId)) {
 						data_fields.config.fields[fieldId].conditions = {
-							type: c.id,
+							type: "",
 						};
 					}
 				});
 			}
-		});
+
+			//Reset assignments of fields to conditionals
+			conditionals.forEach((c) => {
+				const appliesTo = c.hasOwnProperty("config") ? c.config.appliesTo : [];
+				if (appliesTo) {
+					appliesTo.forEach((fieldId) => {
+						if (data_fields.config.fields.hasOwnProperty(fieldId)) {
+							data_fields.config.fields[fieldId].conditions = {
+								type: c.id,
+							};
+						}
+					});
+				}
+			});	
+		}
+		
 
 		apiFetch({
 			path: `/cf-api/v2/forms/${formId}`,

@@ -279,7 +279,7 @@ module.exports = function (grunt) {
                     mode:true
                 },
                 src:  files_list,
-                dest: 'build/<%= pkg.version %>',
+                dest: 'build/refs/tags/<%= pkg.version %>',
             }
         },
 
