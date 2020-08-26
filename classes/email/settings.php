@@ -31,9 +31,9 @@ class Caldera_Forms_Email_Settings {
 
 	/**
 	 * Nonce action for settings UI
-	 * 
+	 *
 	 * @since 1.4.0
-	 * 
+	 *
 	 * @var string
 	 */
 	protected static $nonce_action = 'cf-emails';
@@ -50,7 +50,7 @@ class Caldera_Forms_Email_Settings {
 			'key' => false
 		),
 		'wp' => array(
-		
+
 		),
 		'method' => 'wp'
 	);
@@ -67,8 +67,8 @@ class Caldera_Forms_Email_Settings {
 			self::$settings = get_option( self::$option_key, array() );
 			self::$settings = wp_parse_args( self::$settings, self::$defaults );
 		}
-
-		return self::$settings;
+		
+		return apply_filters( 'change_email_settings', self::$settings, $arg1, $arg2 );
 	}
 
 	/**
@@ -114,9 +114,9 @@ class Caldera_Forms_Email_Settings {
 
 	/**
 	 * Check if is an allowed API
-	 * 
+	 *
 	 * @since 1.4.0
-	 * 
+	 *
 	 * @param string $api Name of API
 	 *
 	 * @return bool
@@ -128,16 +128,16 @@ class Caldera_Forms_Email_Settings {
 
 	/**
 	 * Save email settings
-	 * 
+	 *
 	 * @uses "wp_ajax_cf_email_save" action
-	 * 
+	 *
 	 * @since 1.3.5
 	 */
 	public static function save(){
 		if( ! current_user_can( Caldera_Forms::get_manage_cap( 'admin' ) ) ) {
 			wp_die();
 		}
-		
+
 		if( isset( $_POST[ 'nonce' ] ) && wp_verify_nonce( $_POST[ 'nonce' ], self::$nonce_action ) ){
 			if( isset( $_POST[ 'method' ] ) ){
 				if ( self::is_allowed_method( $_POST[ 'method' ] ) ) {
@@ -159,7 +159,7 @@ class Caldera_Forms_Email_Settings {
 		}
 
 		wp_send_json_error();
-		
+
 	}
 
 
@@ -186,7 +186,7 @@ class Caldera_Forms_Email_Settings {
 				}
 
 			}
-			
+
 		}
 
 
@@ -210,7 +210,7 @@ class Caldera_Forms_Email_Settings {
 	 * @since 1.4.0
 	 *
 	 * @param string $api API name
-	 
+
 	 * @return bool
 	 */
 	protected static function valid( $api ) {
@@ -261,7 +261,7 @@ class Caldera_Forms_Email_Settings {
 			include CFCORE_PATH . '/ui/emails/settings.php';
 
 		}
-		
+
 
 
 	}
@@ -306,7 +306,7 @@ class Caldera_Forms_Email_Settings {
 		if( ! is_array( $values ) ){
 			return self::$defaults;
 		}
-		
+
 		foreach ( $values as $key => $value ){
 			if( ! array_key_exists( $key, self::$defaults ) ){
 				unset( $values[ $key ] );
@@ -328,10 +328,10 @@ class Caldera_Forms_Email_Settings {
 				$values[ $api ] = self::$defaults[ $api ];
 			}
 		}
-		
-		
+
+
 		return $values;
-		
+
 	}
 
 }
