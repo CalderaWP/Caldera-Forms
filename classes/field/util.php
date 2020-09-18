@@ -611,7 +611,7 @@ class Caldera_Forms_Field_Util {
 				$field_value = $option_values[ $field_value ];
 			}
 
-			if ( ! in_array( $field_value, $option_values ) ) {
+			if ( ! is_array($field_value) &&  ! in_array( $field_value, $option_values ) ) {
 				$field_value = null;
 			}
 
