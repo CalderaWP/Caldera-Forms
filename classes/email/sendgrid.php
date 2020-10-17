@@ -93,13 +93,20 @@ class Caldera_Forms_Email_SendGrid extends Caldera_Forms_Email_Client{
 			}
 		}
 		
-		if( ! empty( $this->message[ 'bcc' ] ) && is_email( $this->message[ 'bcc' ] ) ){
+        if( ! empty( $this->message[ 'bcc' ] ) && is_email( $this->message[ 'bcc' ] ) ){
 			$email = $this->create_email( $this->message[ 'bcc' ] );
 			if ( is_object( $email ) ) {
 				$personalization->addTo( $email );
 			}
 			
 		}
+        
+        if( ! empty( $this->message[ 'cc' ] ) && is_email( $this->message[ 'cc' ] ) ){
+            $email = $this->create_email( $this->message[ 'cc' ] );
+            if ( is_object( $email ) ) {
+                $personalization->addTo( $email );
+            }
+        }
 		
 		$mail->addPersonalization( $personalization );
 		
