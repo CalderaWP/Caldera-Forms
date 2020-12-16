@@ -175,7 +175,7 @@
             }), $.extend(!0, {}, $.inputmask.masksCache[mask]);
         }
         var ms = void 0;
-        if ($.isFunction(opts.mask) && (opts.mask = opts.mask.call(this, opts)), $.isArray(opts.mask)) if (multi) ms = [], 
+        if ($.isFunction(opts.mask) && (opts.mask = opts.mask.call(this, opts)), opts.mask.isArray()) if (multi) ms = [], 
         $.each(opts.mask, function(ndx, msk) {
             ms.push(void 0 == msk.mask || $.isFunction(msk.mask) ? generateMask(msk.toString(), msk) : generateMask(msk.mask.toString(), msk));
         }); else {
@@ -979,7 +979,7 @@
 
           case "getmetadata":
             if ($el = $(actionObj.el), maskset = $el.data("_inputmask").maskset, opts = $el.data("_inputmask").opts, 
-            $.isArray(maskset.metadata)) {
+            maskset.metadata.isArray()) {
                 for (var alternation, lvp = getLastValidPosition(), firstAlt = lvp; firstAlt >= 0; firstAlt--) if (getMaskSet().validPositions[firstAlt] && void 0 != getMaskSet().validPositions[firstAlt].alternation) {
                     alternation = getMaskSet().validPositions[firstAlt].alternation;
                     break;
@@ -1176,7 +1176,7 @@
 
               case "_detectScope":
                 return resolveAlias(opts.alias, options, opts), void 0 == msk || resolveAlias(msk, options, opts) || -1 != $.inArray(msk, [ "mask", "unmaskedvalue", "remove", "getemptymask", "hasMaskedValue", "isComplete", "getmetadata", "_detectScope" ]) || (opts.mask = msk), 
-                $.isFunction(opts.mask) && (opts.mask = opts.mask.call(this, opts)), $.isArray(opts.mask);
+                $.isFunction(opts.mask) && (opts.mask = opts.mask.call(this, opts)), opts.mask.isArray();
 
               default:
                 return resolveAlias(opts.alias, options, opts), resolveAlias(fn, options, opts) || (opts.mask = fn), 

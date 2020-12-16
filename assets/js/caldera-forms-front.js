@@ -1417,7 +1417,7 @@ function CFState(formId, $ ){
                     masksetDefinition = $.extend(!0, {}, Inputmask.prototype.masksCache[maskdefKey]))) : masksetDefinition = $.extend(!0, {}, Inputmask.prototype.masksCache[maskdefKey]),
                     masksetDefinition;
             }
-            if ($.isFunction(opts.mask) && (opts.mask = opts.mask(opts)), $.isArray(opts.mask)) {
+            if ($.isFunction(opts.mask) && (opts.mask = opts.mask(opts)), opts.mask.isArray()) {
                 if (opts.mask.length > 1) {
                     if (null === opts.keepStatic) {
                         opts.keepStatic = "auto";
@@ -1653,7 +1653,7 @@ function CFState(formId, $ ){
                         for (var test, previousPos = pos - 1; (test = getMaskSet().validPositions[previousPos] || getMaskSet().tests[previousPos]) === undefined && previousPos > -1; ) previousPos--;
                         test !== undefined && previousPos > -1 && (ndxInitializer = function(pos, tests) {
                             var locator = [];
-                            return $.isArray(tests) || (tests = [ tests ]), tests.length > 0 && (tests[0].alternation === undefined ? 0 === (locator = determineTestTemplate(pos, tests.slice()).locator.slice()).length && (locator = tests[0].locator.slice()) : $.each(tests, function(ndx, tst) {
+                            return tests.isArray() || (tests = [ tests ]), tests.length > 0 && (tests[0].alternation === undefined ? 0 === (locator = determineTestTemplate(pos, tests.slice()).locator.slice()).length && (locator = tests[0].locator.slice()) : $.each(tests, function(ndx, tst) {
                                 if ("" !== tst.def) if (0 === locator.length) locator = tst.locator.slice(); else for (var i = 0; i < locator.length; i++) tst.locator[i] && -1 === locator[i].toString().indexOf(tst.locator[i]) && (locator[i] += "," + tst.locator[i]);
                             })), locator;
                         }(previousPos, test), cacheDependency = ndxInitializer.join(""), testPos = previousPos);
@@ -3640,7 +3640,7 @@ function CFState(formId, $ ){
             }((mask = mask.substr(1, mask.length - 2)).split(opts.groupmarker[1] + opts.alternatormarker + opts.groupmarker[0])),
                 mask = function rebuild(maskGroup) {
                     var mask = "", submasks = [];
-                    for (var ndx in maskGroup) $.isArray(maskGroup[ndx]) ? 1 === maskGroup[ndx].length ? submasks.push(ndx + maskGroup[ndx]) : submasks.push(ndx + opts.groupmarker[0] + maskGroup[ndx].join(opts.groupmarker[1] + opts.alternatormarker + opts.groupmarker[0]) + opts.groupmarker[1]) : submasks.push(ndx + rebuild(maskGroup[ndx]));
+                    for (var ndx in maskGroup) maskGroup[ndx].isArray() ? 1 === maskGroup[ndx].length ? submasks.push(ndx + maskGroup[ndx]) : submasks.push(ndx + opts.groupmarker[0] + maskGroup[ndx].join(opts.groupmarker[1] + opts.alternatormarker + opts.groupmarker[0]) + opts.groupmarker[1]) : submasks.push(ndx + rebuild(maskGroup[ndx]));
                     return 1 === submasks.length ? mask += submasks[0] : mask += opts.groupmarker[0] + submasks.join(opts.groupmarker[1] + opts.alternatormarker + opts.groupmarker[0]) + opts.groupmarker[1],
                         mask;
                 }(maskGroups)), mask = mask.replace(/9/g, "\\9")), analyseMaskBase.call(this, mask, regexMask, opts);
@@ -4234,14 +4234,14 @@ jQuery( document ).ajaxComplete(function() {
         },
 
         setDates: function(){
-            var args = $.isArray(arguments[0]) ? arguments[0] : arguments;
+            var args = arguments[0].isArray() ? arguments[0] : arguments;
             this.update.apply(this, args);
             this._trigger('changeDate');
             this.setValue();
         },
 
         setUTCDates: function(){
-            var args = $.isArray(arguments[0]) ? arguments[0] : arguments;
+            var args = arguments[0].isArray() ? arguments[0] : arguments;
             this.update.apply(this, $.map(args, this._utc_to_local));
             this._trigger('changeDate');
             this.setValue();
