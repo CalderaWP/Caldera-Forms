@@ -1417,7 +1417,7 @@ function CFState(formId, $ ){
                     masksetDefinition = $.extend(!0, {}, Inputmask.prototype.masksCache[maskdefKey]))) : masksetDefinition = $.extend(!0, {}, Inputmask.prototype.masksCache[maskdefKey]),
                     masksetDefinition;
             }
-            if ($.isFunction(opts.mask) && (opts.mask = opts.mask(opts)), opts.mask.isArray()) {
+            if (typeof opts.mask === "function" && (opts.mask = opts.mask(opts)), opts.mask.isArray()) {
                 if (opts.mask.length > 1) {
                     if (null === opts.keepStatic) {
                         opts.keepStatic = "auto";
@@ -1429,12 +1429,12 @@ function CFState(formId, $ ){
                     var altMask = opts.groupmarker[0];
                     return $.each(opts.isRTL ? opts.mask.reverse() : opts.mask, function(ndx, msk) {
                         altMask.length > 1 && (altMask += opts.groupmarker[1] + opts.alternatormarker + opts.groupmarker[0]),
-                            msk.mask === undefined || $.isFunction(msk.mask) ? altMask += msk : altMask += msk.mask;
+                            msk.mask === undefined || typeof msk.mask === "function" ? altMask += msk : altMask += msk.mask;
                     }), generateMask(altMask += opts.groupmarker[1], opts.mask, opts);
                 }
                 opts.mask = opts.mask.pop();
             }
-            return opts.mask && opts.mask.mask !== undefined && !$.isFunction(opts.mask.mask) ? generateMask(opts.mask.mask, opts.mask, opts) : generateMask(opts.mask, opts.mask, opts);
+            return opts.mask && opts.mask.mask !== undefined && !typeof opts.mask.mask === "function" ? generateMask(opts.mask.mask, opts.mask, opts) : generateMask(opts.mask, opts.mask, opts);
         }
         function isInputEventSupported(eventName) {
             var el = document.createElement("input"), evName = "on" + eventName, isSupported = evName in el;
@@ -1789,7 +1789,7 @@ function CFState(formId, $ ){
                                                 break;
 
                                             default:
-                                                if ($.isFunction(opts.casing)) {
+                                                if (typeof opts.casing === "function") {
                                                     var args = Array.prototype.slice.call(arguments);
                                                     args.push(getMaskSet().validPositions), elem = opts.casing.apply(this, args);
                                                 }
@@ -1802,7 +1802,7 @@ function CFState(formId, $ ){
                 }
                 pos.begin !== undefined && (maskPos = isRTL ? pos.end : pos.begin);
                 var result = !0, positionsClone = $.extend(!0, {}, getMaskSet().validPositions);
-                if ($.isFunction(opts.preValidation) && !strict && !0 !== fromSetValid && !0 !== validateOnly && (result = opts.preValidation(getBuffer(), maskPos, c, isSelection(pos), opts, getMaskSet())),
+                if (typeof opts.preValidation === "function" && !strict && !0 !== fromSetValid && !0 !== validateOnly && (result = opts.preValidation(getBuffer(), maskPos, c, isSelection(pos), opts, getMaskSet())),
                 !0 === result) {
                     if (trackbackPositions(undefined, maskPos, !0), (maxLength === undefined || maskPos < maxLength) && (result = _isValid(maskPos, c, strict),
                     (!strict || !0 === fromSetValid) && !1 === result && !0 !== validateOnly)) {
@@ -1822,7 +1822,7 @@ function CFState(formId, $ ){
                         pos: maskPos
                     });
                 }
-                if ($.isFunction(opts.postValidation) && !1 !== result && !strict && !0 !== fromSetValid && !0 !== validateOnly) {
+                if (typeof opts.postValidation === "function" && !1 !== result && !strict && !0 !== fromSetValid && !0 !== validateOnly) {
                     var postResult = opts.postValidation(getBuffer(!0), result, opts);
                     if (postResult !== undefined) {
                         if (postResult.refreshFromBuffer && postResult.buffer) {
@@ -1921,7 +1921,7 @@ function CFState(formId, $ ){
                 return position;
             }
             function writeBuffer(input, buffer, caretPos, event, triggerEvents) {
-                if (event && $.isFunction(opts.onBeforeWrite)) {
+                if (event && typeof opts.onBeforeWrite === "function") {
                     var result = opts.onBeforeWrite.call(inputmask, event, buffer, caretPos, opts);
                     if (result) {
                         if (result.refreshFromBuffer) {
@@ -1941,7 +1941,7 @@ function CFState(formId, $ ){
                 }
             }
             function getPlaceholder(pos, test, returnPL) {
-                if ((test = test || getTest(pos).match).placeholder !== undefined || !0 === returnPL) return $.isFunction(test.placeholder) ? test.placeholder(opts) : test.placeholder;
+                if ((test = test || getTest(pos).match).placeholder !== undefined || !0 === returnPL) return typeof test.placeholder === "function" ? test.placeholder(opts) : test.placeholder;
                 if (null === test.fn) {
                     if (pos > -1 && getMaskSet().validPositions[pos] === undefined) {
                         var prevTest, tests = getTests(pos), staticAlternations = [];
@@ -2074,7 +2074,7 @@ function CFState(formId, $ ){
                         inputValue = valueBeforeCaret + ev.clipboardData.getData("text/plain") + valueAfterCaret;
                     }
                     var pasteValue = inputValue;
-                    if ($.isFunction(opts.onBeforePaste)) {
+                    if (typeof opts.onBeforePaste === "function") {
                         if (!1 === (pasteValue = opts.onBeforePaste.call(inputmask, inputValue, opts))) return e.preventDefault();
                         pasteValue || (pasteValue = inputValue);
                     }
@@ -2146,7 +2146,7 @@ function CFState(formId, $ ){
                 setValueEvent: function(e) {
                     this.inputmask.refreshValue = !1;
                     var value = (value = e && e.detail ? e.detail[0] : arguments[1]) || this.inputmask._valueGet(!0);
-                    $.isFunction(opts.onBeforeMask) && (value = opts.onBeforeMask.call(inputmask, value, opts) || value),
+                    typeof opts.onBeforeMask === "function" && (value = opts.onBeforeMask.call(inputmask, value, opts) || value),
                         checkVal(this, !0, !1, value = value.split("")), undoValue = getBuffer().join(""),
                     (opts.clearMaskOnLostFocus || opts.clearIncomplete) && this.inputmask._valueGet() === getBufferTemplate().join("") && this.inputmask._valueSet("");
                 },
@@ -2292,7 +2292,7 @@ function CFState(formId, $ ){
                 var umValue = [], vps = getMaskSet().validPositions;
                 for (var pndx in vps) vps[pndx].match && null != vps[pndx].match.fn && umValue.push(vps[pndx].input);
                 var unmaskedValue = 0 === umValue.length ? "" : (isRTL ? umValue.reverse() : umValue).join("");
-                if ($.isFunction(opts.onUnMask)) {
+                if (typeof opts.onUnMask === "function") {
                     var bufferValue = (isRTL ? getBuffer().slice().reverse() : getBuffer()).join("");
                     unmaskedValue = opts.onUnMask.call(inputmask, bufferValue, unmaskedValue, opts);
                 }
@@ -2355,7 +2355,7 @@ function CFState(formId, $ ){
                 return buffer;
             }
             function isComplete(buffer) {
-                if ($.isFunction(opts.isComplete)) return opts.isComplete(buffer, opts);
+                if (typeof opts.isComplete === "function") return opts.isComplete(buffer, opts);
                 if ("*" === opts.repeat) return undefined;
                 var complete = !1, lrp = determineLastRequiredPosition(!0), aml = seekPrevious(lrp.l);
                 if (lrp.def === undefined || lrp.def.newBlockMarker || lrp.def.optionality || lrp.def.optionalQuantifier) {
@@ -2463,8 +2463,8 @@ function CFState(formId, $ ){
 
                 case "unmaskedvalue":
                     return el !== undefined && actionObj.value === undefined || (valueBuffer = actionObj.value,
-                        valueBuffer = ($.isFunction(opts.onBeforeMask) && opts.onBeforeMask.call(inputmask, valueBuffer, opts) || valueBuffer).split(""),
-                        checkVal.call(this, undefined, !1, !1, valueBuffer), $.isFunction(opts.onBeforeWrite) && opts.onBeforeWrite.call(inputmask, undefined, getBuffer(), 0, opts)),
+                        valueBuffer = (typeof opts.onBeforeMask === "function" && opts.onBeforeMask.call(inputmask, valueBuffer, opts) || valueBuffer).split(""),
+                        checkVal.call(this, undefined, !1, !1, valueBuffer), typeof opts.onBeforeWrite === "function" && opts.onBeforeWrite.call(inputmask, undefined, getBuffer(), 0, opts)),
                         unmaskedvalue(el);
 
                 case "mask":
@@ -2570,7 +2570,7 @@ function CFState(formId, $ ){
                             EventRuler.on(el, "keyup", $.noop), EventRuler.on(el, "input", EventHandlers.inputFallBackEvent),
                             EventRuler.on(el, "beforeinput", EventHandlers.beforeInputEvent)), EventRuler.on(el, "setvalue", EventHandlers.setValueEvent),
                             undoValue = getBufferTemplate().join(""), "" !== el.inputmask._valueGet(!0) || !1 === opts.clearMaskOnLostFocus || document.activeElement === el)) {
-                            var initialValue = $.isFunction(opts.onBeforeMask) && opts.onBeforeMask.call(inputmask, el.inputmask._valueGet(!0), opts) || el.inputmask._valueGet(!0);
+                            var initialValue = typeof opts.onBeforeMask === "function" && opts.onBeforeMask.call(inputmask, el.inputmask._valueGet(!0), opts) || el.inputmask._valueGet(!0);
                             "" !== initialValue && checkVal(el, !0, !1, initialValue.split(""));
                             var buffer = getBuffer().slice();
                             undoValue = buffer.join(""), !1 === isComplete(buffer) && opts.clearIncomplete && resetMaskSet(),
@@ -2582,7 +2582,7 @@ function CFState(formId, $ ){
                     break;
 
                 case "format":
-                    return valueBuffer = ($.isFunction(opts.onBeforeMask) && opts.onBeforeMask.call(inputmask, actionObj.value, opts) || actionObj.value).split(""),
+                    return valueBuffer = (typeof opts.onBeforeMask === "function" && opts.onBeforeMask.call(inputmask, actionObj.value, opts) || actionObj.value).split(""),
                         checkVal.call(this, undefined, !0, !1, valueBuffer), actionObj.metadata ? {
                         value: isRTL ? getBuffer().slice().reverse().join("") : getBuffer().join(""),
                         metadata: maskScope.call(this, {
@@ -2645,7 +2645,7 @@ function CFState(formId, $ ){
                 onKeyDown: $.noop,
                 onBeforeMask: null,
                 onBeforePaste: function(pastedValue, opts) {
-                    return $.isFunction(opts.onBeforeMask) ? opts.onBeforeMask.call(this, pastedValue, opts) : pastedValue;
+                    return typeof opts.onBeforeMask === "function" ? opts.onBeforeMask.call(this, pastedValue, opts) : pastedValue;
                 },
                 onBeforeWrite: null,
                 onUnMask: null,

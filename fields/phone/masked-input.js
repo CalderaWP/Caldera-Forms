@@ -175,16 +175,16 @@
             }), $.extend(!0, {}, $.inputmask.masksCache[mask]);
         }
         var ms = void 0;
-        if ($.isFunction(opts.mask) && (opts.mask = opts.mask.call(this, opts)), opts.mask.isArray()) if (multi) ms = [], 
+        if (typeof opts.mask === "function" && (opts.mask = opts.mask.call(this, opts)), opts.mask.isArray()) if (multi) ms = [], 
         $.each(opts.mask, function(ndx, msk) {
-            ms.push(void 0 == msk.mask || $.isFunction(msk.mask) ? generateMask(msk.toString(), msk) : generateMask(msk.mask.toString(), msk));
+            ms.push(void 0 == msk.mask || typeof msk.mask === "function" ? generateMask(msk.toString(), msk) : generateMask(msk.mask.toString(), msk));
         }); else {
             opts.keepStatic = void 0 == opts.keepStatic ? !0 : opts.keepStatic;
             var altMask = "(";
             $.each(opts.mask, function(ndx, msk) {
-                altMask.length > 1 && (altMask += ")|("), altMask += void 0 == msk.mask || $.isFunction(msk.mask) ? msk.toString() : msk.mask.toString();
+                altMask.length > 1 && (altMask += ")|("), altMask += void 0 == msk.mask || typeof msk.mask === "function" ? msk.toString() : msk.mask.toString();
             }), altMask += ")", ms = generateMask(altMask, opts.mask);
-        } else opts.mask && (ms = void 0 == opts.mask.mask || $.isFunction(opts.mask.mask) ? generateMask(opts.mask.toString(), opts.mask) : generateMask(opts.mask.mask.toString(), opts.mask));
+        } else opts.mask && (ms = void 0 == opts.mask.mask || typeof opts.mask.mask === "function" ? generateMask(opts.mask.toString(), opts.mask) : generateMask(opts.mask.mask.toString(), opts.mask));
         return ms;
     }
     function maskScope(actionObj, maskset, opts) {
@@ -519,7 +519,7 @@
         }
         function getPlaceholder(pos, test) {
             test = test || getTest(pos);
-            var placeholder = $.isFunction(test.placeholder) ? test.placeholder.call(this, opts) : test.placeholder;
+            var placeholder = typeof test.placeholder === "function" ? test.placeholder.call(this, opts) : test.placeholder;
             return void 0 != placeholder ? placeholder : null == test.fn ? test.def : opts.placeholder.charAt(pos % opts.placeholder.length);
         }
         function checkVal(input, writeOut, strict, nptvl, intelliCheck) {
@@ -546,7 +546,7 @@
                 var umValue = [], vps = getMaskSet().validPositions;
                 for (var pndx in vps) vps[pndx].match && null != vps[pndx].match.fn && umValue.push(vps[pndx].input);
                 var unmaskedValue = (isRTL ? umValue.reverse() : umValue).join(""), bufferValue = (isRTL ? getBuffer().slice().reverse() : getBuffer()).join("");
-                return $.isFunction(opts.onUnMask) && (unmaskedValue = opts.onUnMask.call($input, bufferValue, unmaskedValue, opts) || unmaskedValue), 
+                return typeof opts.onUnMask === "function" && (unmaskedValue = opts.onUnMask.call($input, bufferValue, unmaskedValue, opts) || unmaskedValue), 
                 unmaskedValue;
             }
             return $input[0]._valueGet();
@@ -597,7 +597,7 @@
             tmpBuffer.splice(rl, lmib + 1 - rl), writeBuffer(input, tmpBuffer);
         }
         function isComplete(buffer) {
-            if ($.isFunction(opts.isComplete)) return opts.isComplete.call($el, buffer, opts);
+            if (typeof opts.isComplete === "function") return opts.isComplete.call($el, buffer, opts);
             if ("*" == opts.repeat) return void 0;
             var complete = !1, lrp = determineLastRequiredPosition(!0), aml = seekPrevious(lrp.l), lvp = getLastValidPosition();
             if (lvp == aml && (void 0 == lrp.def || lrp.def.newBlockMarker || lrp.def.optionalQuantifier)) {
@@ -648,7 +648,7 @@
                         },
                         set: function(elem, value) {
                             var result, $elem = $(elem), inputData = $elem.data("_inputmask");
-                            return inputData ? (result = valueSet(elem, $.isFunction(inputData.opts.onBeforeMask) ? inputData.opts.onBeforeMask.call(el, value, inputData.opts) || value : value), 
+                            return inputData ? (result = valueSet(elem, typeof inputData.opts.onBeforeMask === "function" ? inputData.opts.onBeforeMask.call(el, value, inputData.opts) || value : value), 
                             $elem.triggerHandler("setvalue.inputmask")) : result = valueSet(elem, value), result;
                         },
                         inputmaskpatch: !0
@@ -661,7 +661,7 @@
             }
             function setter(value) {
                 var inputData = $(this).data("_inputmask");
-                inputData ? (valueSet.call(this, $.isFunction(inputData.opts.onBeforeMask) ? inputData.opts.onBeforeMask.call(el, value, inputData.opts) || value : value), 
+                inputData ? (valueSet.call(this, typeof inputData.opts.onBeforeMask === "function" ? inputData.opts.onBeforeMask.call(el, value, inputData.opts) || value : value), 
                 $(this).triggerHandler("setvalue.inputmask")) : valueSet.call(this, value);
             }
             function InstallNativeValueSetFallback(npt) {
@@ -799,7 +799,7 @@
             var input = this, $input = $(input), inputValue = input._valueGet(), caretPos = caret(input);
             if ("propertychange" == e.type && input._valueGet().length <= getMaskLength()) return !0;
             "paste" == e.type && (window.clipboardData && window.clipboardData.getData ? inputValue = inputValue.substr(0, caretPos.begin) + window.clipboardData.getData("Text") + inputValue.substr(caretPos.end, inputValue.length) : e.originalEvent && e.originalEvent.clipboardData && e.originalEvent.clipboardData.getData && (inputValue = inputValue.substr(0, caretPos.begin) + e.originalEvent.clipboardData.getData("text/plain") + inputValue.substr(caretPos.end, inputValue.length)));
-            var pasteValue = $.isFunction(opts.onBeforePaste) ? opts.onBeforePaste.call(input, inputValue, opts) || inputValue : inputValue;
+            var pasteValue = typeof opts.onBeforePaste === "function" ? opts.onBeforePaste.call(input, inputValue, opts) || inputValue : inputValue;
             return checkVal(input, !0, !1, isRTL ? pasteValue.split("").reverse() : pasteValue.split(""), !0), 
             $input.click(), isComplete(getBuffer()) === !0 && $input.trigger("complete"), !1;
         }
@@ -905,7 +905,7 @@
                 "paste" !== PasteEventType || msie1x || $el.bind("input.inputmask", inputFallBackEvent), 
                 msie1x && $el.bind("input.inputmask", pasteEvent), (android || androidfirefox || androidchrome || kindle) && ("input" == PasteEventType && $el.unbind(PasteEventType + ".inputmask"), 
                 $el.bind("input.inputmask", mobileInputEvent)), patchValueProperty(el);
-                var initialValue = $.isFunction(opts.onBeforeMask) ? opts.onBeforeMask.call(el, el._valueGet(), opts) || el._valueGet() : el._valueGet();
+                var initialValue = typeof opts.onBeforeMask === "function" ? opts.onBeforeMask.call(el, el._valueGet(), opts) || el._valueGet() : el._valueGet();
                 checkVal(el, !0, !1, initialValue.split(""), !0), valueOnFocus = getBuffer().join("");
                 var activeElement;
                 try {
@@ -936,7 +936,7 @@
                 opts: opts,
                 isRTL: opts.numericInput
             }), opts.numericInput && (isRTL = !0);
-            var valueBuffer = ($.isFunction(opts.onBeforeMask) ? opts.onBeforeMask.call($el, actionObj.value, opts) || actionObj.value : actionObj.value).split("");
+            var valueBuffer = (typeof opts.onBeforeMask === "function" ? opts.onBeforeMask.call($el, actionObj.value, opts) || actionObj.value : actionObj.value).split("");
             return checkVal($el, !1, !1, isRTL ? valueBuffer.reverse() : valueBuffer, !0), opts.onKeyPress.call(this, void 0, getBuffer(), 0, opts), 
             actionObj.metadata ? {
                 value: isRTL ? getBuffer().slice().reverse().join("") : getBuffer().join(""),
@@ -1176,7 +1176,7 @@
 
               case "_detectScope":
                 return resolveAlias(opts.alias, options, opts), void 0 == msk || resolveAlias(msk, options, opts) || -1 != $.inArray(msk, [ "mask", "unmaskedvalue", "remove", "getemptymask", "hasMaskedValue", "isComplete", "getmetadata", "_detectScope" ]) || (opts.mask = msk), 
-                $.isFunction(opts.mask) && (opts.mask = opts.mask.call(this, opts)), opts.mask.isArray();
+                typeof opts.mask === "function" && (opts.mask = opts.mask.call(this, opts)), opts.mask.isArray();
 
               default:
                 return resolveAlias(opts.alias, options, opts), resolveAlias(fn, options, opts) || (opts.mask = fn), 

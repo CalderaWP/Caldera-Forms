@@ -428,7 +428,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 if (handler && typeof handler.abort === "function") { handler.abort(); }
 
                 if (options.params) {
-                    if ($.isFunction(options.params)) {
+                    if (typeof options.params === "function") {
                         $.extend(params, options.params.call(self));
                     } else {
                         $.extend(params, options.params);
@@ -481,12 +481,12 @@ the specific language governing permissions and limitations under the Apache Lic
             tmp,
             text = function (item) { return ""+item.text; }; // function used to retrieve the text portion of a data item that is matched against the search
 
-         if ($.isArray(data)) {
+         if (data.isArray()) {
             tmp = data;
             data = { results: tmp };
         }
 
-         if ($.isFunction(data) === false) {
+         if (typeof data !== "function") {
             tmp = data;
             data = function() { return tmp; };
         }
@@ -495,7 +495,7 @@ the specific language governing permissions and limitations under the Apache Lic
         if (dataItem.text) {
             text = dataItem.text;
             // if text is not a function we assume it to be a key name
-            if (!$.isFunction(text)) {
+            if (!typeof text === "function") {
                 dataText = dataItem.text; // we need to store this in a separate variable because in the next step data gets reset and data.text is no longer available
                 text = function (item) { return item[dataText]; };
             }
@@ -535,7 +535,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
     // TODO javadoc
     function tags(data) {
-        var isFunc = $.isFunction(data);
+        var isFunc = typeof data === "function";
         return function (query) {
             var t = query.term, filtered = {results: []};
             var result = isFunc ? data(query) : data;
@@ -561,7 +561,7 @@ the specific language governing permissions and limitations under the Apache Lic
      * @param formatter
      */
     function checkFormatter(formatter, formatterName) {
-        if ($.isFunction(formatter)) return true;
+        if (typeof formatter === "function") return true;
         if (!formatter) return false;
         if (typeof(formatter) === 'string') return true;
         throw new Error(formatterName +" must be a string, function, or falsy value");
@@ -576,7 +576,7 @@ the specific language governing permissions and limitations under the Apache Lic
    * @returns {*}
    */
     function evaluate(val, context) {
-        if ($.isFunction(val)) {
+        if (typeof val === "function") {
             var args = Array.prototype.slice.call(arguments, 2);
             return val.apply(context, args);
         }
@@ -818,7 +818,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.nextSearchTerm = undefined;
 
-            if ($.isFunction(this.opts.initSelection)) {
+            if (typeof this.opts.initSelection === "function") {
                 // initialize selection based on the current value of the source element
                 this.initSelection();
 
@@ -1068,7 +1068,7 @@ the specific language governing permissions and limitations under the Apache Lic
                                 $(splitVal(element.val(), opts.separator, opts.transformVal)).each(function () {
                                     var obj = { id: this, text: this },
                                         tags = opts.tags;
-                                    if ($.isFunction(tags)) tags=tags();
+                                    if (typeof tags === "function") tags=tags();
                                     $(tags).each(function() { if (equal(this.id, obj.id)) { obj = this; return false; } });
                                     data.push(obj);
                                 });
@@ -1937,7 +1937,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     }
 
                     return null;
-                } else if ($.isFunction(this.opts.width)) {
+                } else if (typeof this.opts.width === "function") {
                     return this.opts.width();
                 } else {
                     return this.opts.width;
@@ -2358,7 +2358,7 @@ the specific language governing permissions and limitations under the Apache Lic
                             }
                             return is_match;
                         },
-                        callback: !$.isFunction(callback) ? $.noop : function() {
+                        callback: typeof callback !== "function" ? $.noop : function() {
                             callback(match);
                         }
                     });
@@ -2629,7 +2629,7 @@ the specific language governing permissions and limitations under the Apache Lic
                             }
                             return is_match;
                         },
-                        callback: !$.isFunction(callback) ? $.noop : function() {
+                        callback: typeof callback !== "function" ? $.noop : function() {
                             // reorder matches based on the order they appear in the ids array because right now
                             // they are in the order in which they appear in data array
                             var ordered = [];
@@ -3454,7 +3454,7 @@ the specific language governing permissions and limitations under the Apache Lic
         id: function (e) { return e == undefined ? null : e.id; },
         text: function (e) {
           if (e && this.data && this.data.text) {
-            if ($.isFunction(this.data.text)) {
+            if (typeof this.data.text === "function") {
               return this.data.text(e);
             } else {
               return e[this.data.text];
