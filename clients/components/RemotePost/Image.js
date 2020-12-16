@@ -14,7 +14,7 @@ export default function (props) {
                     height: 'auto'
                 }
             }
-            lazy={true}
+            lazy="true"
         />
     )
 }
