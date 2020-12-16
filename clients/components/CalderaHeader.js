@@ -12,7 +12,7 @@ export const CalderaHeader = (props) => {
     return(
         <div className="caldera-editor-header">
             <ul className="caldera-editor-header-nav">
-                <li className="caldera-editor-logo">
+                <li className="caldera-editor-logo" key="caldera-editor-logo">
                     <span className="caldera-forms-name">
                         Caldera Forms: {props.name ? props.name : 'Caldera Forms'}
                     </span>

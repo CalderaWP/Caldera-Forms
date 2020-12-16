@@ -178,7 +178,7 @@ export const PrivacySettings = (props) => {
                         name={headerText}
                     >
 
-                        <li>
+                        <li key="status-indicator">
                             <StatusIndicator
                                 message={props.status.message}
                                 show={props.status.show}
@@ -187,7 +187,7 @@ export const PrivacySettings = (props) => {
                         </li>
 
                         {true === props.spin &&
-                            <li className={'spinner is-active' }></li>
+                            <li key="spinner" className={'spinner is-active' }></li>
                         }
 
                     </CalderaHeader>
@@ -207,7 +207,7 @@ export const PrivacySettings = (props) => {
             <CalderaHeader
                 name={headerText}
             >
-                <li
+                <li key="form-selector"
                     style={{
                         marginTop: '6px',
                         paddingLeft: '12px'

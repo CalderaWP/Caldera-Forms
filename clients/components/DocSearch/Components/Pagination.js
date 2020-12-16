@@ -43,8 +43,8 @@ export class Pagination extends React.Component {
                 </Pager>
 
                 <ul className="list-inline text-center">
-                    <li className="sr-only">Page: {this.props.page}</li>
-                    <li className="sr-only">Total: {this.props.pages}</li>
+                    <li key="page" className="sr-only">Page: {this.props.page}</li>
+                    <li key="total" className="sr-only">Total: {this.props.pages}</li>
                 </ul>
 
             </div>
