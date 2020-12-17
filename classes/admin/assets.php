@@ -212,8 +212,8 @@ class Caldera_Forms_Admin_Assets
         if (1 !== strpos($slug, Caldera_Forms::PLUGIN_SLUG)) {
             $slug = self::slug($slug, true);
         }
-        //Hack for jQuery issues on admin page
-        if( Caldera_Forms_Admin::is_main_page() ){
+        //Hack for jQuery issues on main admin page
+        if( Caldera_Forms_Admin::is_main_page() || substr( $_GET['page'], 0, 17 ) === "caldera-forms-pin" ){
             wp_enqueue_script( "jqueryOneTwelve",  CFCORE_URL . "/assets/build/js/jquery-12-4.min.js");
         }
         
