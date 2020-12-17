@@ -1,6 +1,19 @@
 Changelog
 =========
 
+## [v1.0.4 (2020-07-21)](https://github.com/inpsyde/Wonolog/releases/tag/1.0.4)
+
+### Changed
+- Do not log silenced errors by-default (See #50)
+
+## [v1.0.3 (2019-09-11)](https://github.com/inpsyde/Wonolog/releases/tag/1.0.3)
+
+### Changed
+- Constrain major version of Monolog (See #44)
+
+### Fixed
+- Added support for default handler file path that contain spaces  (See #39)
+
 ## [v1.0.2 (2018-05-15)](https://github.com/inpsyde/Wonolog/releases/tag/1.0.2)
 
 ### Changed
