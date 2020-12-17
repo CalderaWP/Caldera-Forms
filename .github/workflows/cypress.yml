@@ -12,6 +12,9 @@ jobs:
     - uses: actions/setup-node@v2
       with:
         node-version: '12'
+    - uses: nanasess/setup-php@master
+        with:
+          php-version: '7.4'
 
     - name: Validate composer.json and composer.lock
       run: composer validate
