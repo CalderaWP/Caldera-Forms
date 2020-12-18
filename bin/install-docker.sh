@@ -57,3 +57,12 @@ if [ "$CURRENT_URL" != "http://localhost:$HOST_PORT" ]; then
 fi
 echo -e $(status_message "Server is running at:")
 echo -e $(status_message "http://localhost:$HOST_PORT")
+
+# Install Composer
+echo -e $(status_message "Installing and updating Composer modules...")
+docker-compose run --rm composer install
+
+# Install the PHPUnit test scaffolding
+echo -e $(status_message "Installing PHPUnit test scaffolding...")
+docker-compose run --rm wordpress_phpunit bash $(dirname "$0")/install-wp-tests.sh wordpress_test root example mysql "${WP_VERSION}" false >/dev/null
+echo -e $(status_message "Completed installing tests")
