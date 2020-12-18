@@ -10,7 +10,6 @@ if( class_exists( 'WP_CLI' ) ){
      * @param $args
      */
     function calderaFormsImportTestFormsCommand( $args ) {
-        var_dump($args);
         $filePath = file_exists($args[0]) ? $args[0]: dirname(__FILE__, 2) . '/cypress/forms';
         $importer = new \calderawp\calderaforms\Tests\Util\ImportForms($filePath);
         WP_CLI::success( sprintf( 'Forms imported: %d', $importer->import() ) );
