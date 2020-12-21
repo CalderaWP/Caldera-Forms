@@ -49,7 +49,9 @@ class Caldera_Forms_API_Forms extends  Caldera_Forms_API_CRUD {
         ];
 
 		//Re-register them
-        register_rest_route($namespace, $this->id_endpoint_url(), array_values( $id_route ),true );
+        //register_rest_route($namespace, $this->id_endpoint_url(), array_values( $id_route ),true );
+	// to remove register_rest_route errors
+	register_rest_route($namespace, $this->id_endpoint_url(), $id_route,true );
 
 
         register_rest_route( $namespace, $this->id_endpoint_url() . '/revisions',
