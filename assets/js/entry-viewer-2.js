@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.9.1 - 2020-07-08 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.9.3-b3 - 2020-12-18 *//**
  * API Client for Caldera Forms API for a single form
  *
  * @since 1.5.0
@@ -61,9 +61,10 @@ function CFAPI( routes, perPage, formId, tokens,  $ ) {
                 per_page: perPage
             });
 
-            console.log(routes.entries);
-            var divider = routes.entries.indexOf('?' ) ? '&' : '?';
-            console.log(divider,routes.entries + formId + divider + params);
+            //If pretty permalinks are enabled params need to be prefixed with "?"
+            //Else there already is a "?" so we need to add a "&"
+            //@see https://github.com/CalderaWP/Caldera-Forms/pull/3576#issuecomment-655563315
+            var divider = routes.entries.indexOf('?') === -1 ? '?' : '&';
             return routes.entries + formId + divider + params
         },
         setPerPage : function( newPerPage ) {
