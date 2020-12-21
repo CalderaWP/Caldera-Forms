@@ -770,6 +770,16 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 == Changelog ==
 
+= Caldera Forms 1.9.3 (December 21, 2020) WP 5.6 =
+See: [https://calderaforms.com/updates/caldera-forms-1-9-3](https://calderaforms.com/updates/caldera-forms-1-9-3?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-9.3)
+* Fixes WP 5.6 Compatibility issues
+    * New Form creation
+    * Clone Form
+    * Import / Export Form feature
+    * Entry viewer for pinned forms
+    * Color picker field
+
+
 = Caldera Forms 1.9.2 (July 22, 2020) Savings =
 See: [https://calderaforms.com/updates/caldera-forms-1-9-2](https://calderaforms.com/updates/caldera-forms-1-9-2?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-9.2)
 * [Fixes Privacy Settings issue](https://github.com/CalderaWP/Caldera-Forms/issues/3577)
