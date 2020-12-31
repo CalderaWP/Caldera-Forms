@@ -215,7 +215,7 @@ class Caldera_Forms_Admin_Assets
         $curent_page = get_current_screen();
         //Fix jQuery issues on admin
         if( is_admin() ){
-           // wp_enqueue_script( "jqueryOneTwelve",  CFCORE_URL . "assets/build/js/jquery-12-4.min.js");
+           wp_enqueue_script( "jqueryOneTwelve",  CFCORE_URL . "assets/build/js/jquery-12-4.min.js");
         }
         
         wp_enqueue_script($slug);
