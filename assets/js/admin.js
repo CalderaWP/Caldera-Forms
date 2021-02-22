@@ -182,6 +182,12 @@ jQuery( function(){
 
   });
 
+  // This allows baldrick function to be triggered via elements that are not on the DOM after document first load
+  // Adaptation for WP > 5.6
+  jQuery('.ajax-trigger').on('click', function(e) {
+	baldrickTriggers( this, e );
+  });
+
 });
 
 /**
