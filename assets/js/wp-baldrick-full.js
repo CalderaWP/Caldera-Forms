@@ -4941,7 +4941,9 @@ jQuery(function($){
                   jQuery('#' + modal_id + '_baldrickModalCloser').trigger('click');
                 })
               }else{
-                button.addClass(defaults.triggerClass.substr(1));
+                if(typeof defaults.triggerClass !== "undefined" ) {
+                  button.addClass(defaults.triggerClass.substr(1));
+                }
               }
               button.prop('disabled', true);
               
