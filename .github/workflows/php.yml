@@ -21,6 +21,9 @@ jobs:
     - name: Install dependencies
       run: composer install
 
+    - name: Composer update
+      run: composer update
+
     - name: Install js packages
       run: yarn
 
