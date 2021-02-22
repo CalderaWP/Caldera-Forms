@@ -1,6 +1,6 @@
 {
 	"name": "caldera-forms",
-	"version": "1.9.3",
+	"version": "1.9.4-b2",
 	"description": "Apex WordPress Forms",
 	"main": "Gruntfile.js",
 	"repository": {
