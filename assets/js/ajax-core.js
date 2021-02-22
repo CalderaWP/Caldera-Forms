@@ -312,7 +312,6 @@ jQuery(function($){
                     }
                 }
 
-                console.log(obj.data.type);
                 // trigger global event
                 jQuery( document ).trigger( 'cf.submission', obj );
                 jQuery( document ).trigger( 'cf.' + obj.data.type );
