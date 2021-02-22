@@ -11,9 +11,9 @@ jobs:
     - uses: actions/setup-node@v2
       with:
         node-version: '12'
-    - uses: nanasess/setup-php@master
+    - uses: shivammathur/setup-php@v2
       with:
-        php-version: '7.4'
+        php-version: '7.0'
 
     - name: Validate composer.json and composer.lock
       run: composer validate
