@@ -32,6 +32,7 @@ jobs:
 
     - name: Install wordpress
       run: composer wp:install
+      continue-on-error: true
 
     - name: Activate Caldera Forms
       run: composer wp:activate

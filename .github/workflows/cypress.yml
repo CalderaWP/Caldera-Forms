@@ -32,12 +32,15 @@ jobs:
 
     - name: Install wordpress
       run: composer wp:install
+      continue-on-error: true
 
     - name: Activate Caldera Forms
       run: composer wp:activate
+      continue-on-error: true
 
     - name: Tests setup
       run: composer test:setup
+      continue-on-error: true
 
     # These don't work in CI yet
     - name: Run e2e tests
