@@ -601,7 +601,7 @@ class Caldera_Forms_Render_Assets
                         'pro',
                         'privacy',
                         'legacy-bundle',
-                       // 'form-builder'
+                       	'form-builder'
                     ])
                     || empty($manifest)
                     || ! array_key_exists("{$name}.js",$manifest)

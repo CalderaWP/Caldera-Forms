@@ -32,20 +32,20 @@ function get_compiled_template(template) {
 		: compiled_templates.noconfig_field_templ;
 }
 
-jQuery(document).ready(function ($) {
-	var $spinner = $("#save_indicator");
+jQuery( function ($) {
+	var $spinner = jQuery("#save_indicator");
 
-	$("#caldera-forms-restore-revision").on("click", function (e) {
+	jQuery("#caldera-forms-restore-revision").on("click", function (e) {
 		e.preventDefault();
-		var $el = $(this);
+		var $el = jQuery(this);
 		$spinner.addClass("loading");
 
-		$.post({
+		jQuery.post({
 			url: "admin.php?page=caldera-forms",
 			data: {
-				cf_edit_nonce: $("#cf_edit_nonce").val(),
+				cf_edit_nonce: jQuery("#cf_edit_nonce").val(),
 				form: $el.data("form"),
-				cf_revision: $("#form_db_id_field").val(),
+				cf_revision: jQuery("#form_db_id_field").val(),
 				restore: true,
 			},
 			success: function () {
@@ -60,7 +60,7 @@ jQuery(document).ready(function ($) {
 	 *
 	 */
 	function build_fieldtype_config(el) {
-		var select = $(el);
+		var select = jQuery(el);
 		var val = select.val();
 		var parent = select.closest(".caldera-editor-field-config-wrapper"),
 			target = parent.find(".caldera-config-field-setup"),
@@ -86,7 +86,7 @@ jQuery(document).ready(function ($) {
 
 		config._id = select.data("field");
 		config._name = "config[fields][" + select.data("field") + "][config]";
-		template = $("<div>").html(template(config));
+		template = jQuery("<div>").html(template(config));
 
 		// send to target
 		target.html(template.html());
@@ -144,29 +144,29 @@ jQuery(document).ready(function ($) {
 		// seup options
 		parent.find(".toggle_show_values").trigger("change");
 
-		if (!$(".caldera-select-field-type").not(".field-initialized").length) {
+		if (!jQuery(".caldera-select-field-type").not(".field-initialized").length) {
 			if (!core_form) {
 				core_form = jQuery(".caldera-forms-options-form");
 			}
 
 			// build previews
 			if (!core_form.hasClass("builder-loaded")) {
-				var fields = $(".caldera-select-field-type.field-initialized");
+				var fields = jQuery(".caldera-select-field-type.field-initialized");
 				for (var f = 0; f < fields.length; f++) {
-					build_field_preview($(fields[f]).data("field"));
+					build_field_preview(jQuery(fields[f]).data("field"));
 				}
 				core_form.addClass("builder-loaded");
 			} else {
 				build_field_preview(select.data("field"));
 			}
-			$(".caldera-header-save-button").prop("disabled", false);
+			jQuery(".caldera-header-save-button").prop("disabled", false);
 			rebuild_field_binding();
 			baldrickTriggers();
 		}
-		if ($(".color-field").length) {
-			$(".color-field").wpColorPicker({
+		if (jQuery(".color-field").length) {
+			jQuery(".color-field").wpColorPicker({
 				change: function (obj) {
-					var trigger = $(this);
+					var trigger = jQuery(this);
 
 					if (trigger.data("ev")) {
 						clearTimeout(trigger.data("ev"));
@@ -178,8 +178,8 @@ jQuery(document).ready(function ($) {
 						}, 200)
 					);
 					if (trigger.data("target")) {
-						$(trigger.data("target")).css(trigger.data("style"), trigger.val());
-						$(trigger.data("target")).val(trigger.val());
+						jQuery(trigger.data("target")).css(trigger.data("style"), trigger.val());
+						jQuery(trigger.data("target")).val(trigger.val());
 					}
 				},
 			});
@@ -196,19 +196,19 @@ jQuery(document).ready(function ($) {
 	}
 
 	function build_field_preview(id) {
-		var panel = $("#" + id);
+		var panel = jQuery("#" + id);
 		var select = panel.find(".caldera-select-field-type");
 		var val = select.val();
-		var preview_parent = $('.layout-form-field[data-config="' + id + '"]'),
+		var preview_parent = jQuery('.layout-form-field[data-config="' + id + '"]'),
 			preview_target = preview_parent.find(".field_preview"),
-			preview = $("#preview-" + val + "_tmpl").html(),
+			preview = jQuery("#preview-" + val + "_tmpl").html(),
 			template = get_compiled_template("preview-" + val),
 			config = { id: id },
 			data_fields = panel.find(".field-config"),
 			objects = [];
 
 		data_fields.each(function (k, v) {
-			var field = $(v),
+			var field = jQuery(v),
 				basename = field
 					.prop("name")
 					.split("[" + id + "]")[1]
@@ -228,39 +228,39 @@ jQuery(document).ready(function ($) {
 					lineconf[name[i]] = newobj;
 				}
 			}
-			$.extend(true, config, lineconf);
+			jQuery.extend(true, config, lineconf);
 		});
 
 		preview_target.html(template(config));
 		preview_parent.removeClass("button");
 
-		$(".preview-field-config").prop("disabled", true);
+		jQuery(".preview-field-config").prop("disabled", true);
 	}
 
 	// switch active group
 	function switch_active_group(id) {
-		var fields_panel = $(".caldera-editor-fields-panel"),
-			groups_panel = $(".caldera-editor-groups-panel"),
-			group_navs = $(".caldera-group-nav"),
-			group_line = $('[data-group="' + id + '"]'),
+		var fields_panel = jQuery(".caldera-editor-fields-panel"),
+			groups_panel = jQuery(".caldera-editor-groups-panel"),
+			group_navs = jQuery(".caldera-group-nav"),
+			group_line = jQuery('[data-group="' + id + '"]'),
 			group_name = group_line.find(".caldera-config-group-name"),
 			group_slug = group_line.find(".caldera-config-group-slug"),
 			group_desc = group_line.find(".caldera-config-group-desc"),
 			group_admin = group_line.find(".caldera-config-group-admin"),
-			group_name_edit = $(".active-group-name"),
-			group_slug_edit = $(".active-group-slug"),
-			group_desc_edit = $(".active-group-desc"),
-			group_admin_edit = $(".active-group-admin"),
-			field_lists = $(".caldera-editor-fields-list ul"),
+			group_name_edit = jQuery(".active-group-name"),
+			group_slug_edit = jQuery(".active-group-slug"),
+			group_desc_edit = jQuery(".active-group-desc"),
+			group_admin_edit = jQuery(".active-group-admin"),
+			field_lists = jQuery(".caldera-editor-fields-list ul"),
 			group_repeat = group_line.find(".caldera-config-group-repeat"),
-			repeat_button = $(".repeat-config-button"),
-			group_settings = $(".caldera-editor-group-settings"),
-			deleter = $(".caldera-config-group-remove"),
+			repeat_button = jQuery(".repeat-config-button"),
+			group_settings = jQuery(".caldera-editor-group-settings"),
+			deleter = jQuery(".caldera-config-group-remove"),
 			group_field_lists;
 
 		// remove any hdden fields
-		$(".new-group-input").remove();
-		$(".new-field-input").remove();
+		jQuery(".new-group-input").remove();
+		jQuery(".new-field-input").remove();
 
 		// remove current active group
 		group_navs.removeClass("active");
@@ -279,7 +279,7 @@ jQuery(document).ready(function ($) {
 		group_line.addClass("active");
 
 		// hide delete button or show
-		group_field_lists = $(".caldera-editor-fields-list ul.active li");
+		group_field_lists = jQuery(".caldera-editor-fields-list ul.active li");
 
 		if (group_field_lists.length) {
 			// has fields
@@ -289,7 +289,7 @@ jQuery(document).ready(function ($) {
 		}
 
 		// hide all field configs
-		$(".caldera-editor-field-config-wrapper").hide();
+		jQuery(".caldera-editor-field-config-wrapper").hide();
 
 		// show groups fields
 		group_line.show();
@@ -319,8 +319,8 @@ jQuery(document).ready(function ($) {
 	}
 
 	// tabs button
-	$("body").on("click", ".toggle_processor_event input", function (e) {
-		var clicked = $(this),
+	jQuery("body").on("click", ".toggle_processor_event input", function (e) {
+		var clicked = jQuery(this),
 			parent = clicked.closest(".wrapper-instance-pane"),
 			settings = parent.find(".caldera-config-processor-setup"),
 			notice = parent.find(".caldera-config-processor-notice");
@@ -341,7 +341,7 @@ jQuery(document).ready(function ($) {
 				.attr("aria-hidden", true)
 				.css("visibility", "hidden");
 
-			$(document).trigger("processor.enabled", {
+			jQuery(document).trigger("processor.enabled", {
 				processorId:  clicked.parent().data('pid')
 			});
 		} else {
@@ -359,7 +359,7 @@ jQuery(document).ready(function ($) {
 				.attr("aria-hidden", false)
 				.css("visibility", "visible");
 
-			$(document).trigger("processor.disabled", {
+			jQuery(document).trigger("processor.disabled", {
 				processorId:  clicked.parent().data('pid')
 			});
 		}
@@ -374,10 +374,10 @@ jQuery(document).ready(function ($) {
 		}
 	});
 
-	$("body").on("click", ".toggle_option_tab > a", function (e) {
+	jQuery("body").on("click", ".toggle_option_tab > a", function (e) {
 		e.preventDefault();
-		var clicked = $(this),
-			panel = $(clicked.attr("href")),
+		var clicked = jQuery(this),
+			panel = jQuery(clicked.attr("href")),
 			tabs = clicked.parent().find("a"),
 			panels = clicked
 				.closest(".caldera-editor-config-wrapper")
@@ -391,7 +391,7 @@ jQuery(document).ready(function ($) {
 	});
 
 	// Change Field Type
-	$(".caldera-editor-body").on(
+	jQuery(".caldera-editor-body").on(
 		"change",
 		".caldera-select-field-type",
 		function (e) {
@@ -401,37 +401,37 @@ jQuery(document).ready(function ($) {
 	);
 
 	// build group navigation
-	$(".caldera-editor-body").on("click", ".caldera-group-nav a", function (e) {
+	jQuery(".caldera-editor-body").on("click", ".caldera-group-nav a", function (e) {
 		// stop link
 		e.preventDefault();
 
 		//switch group
-		switch_active_group($(this).attr("href").substr(1));
+		switch_active_group(jQuery(this).attr("href").substr(1));
 	});
 
 	// build field navigation
-	$(".caldera-editor-body").on(
+	jQuery(".caldera-editor-body").on(
 		"click",
 		".caldera-editor-fields-list a",
 		function (e) {
 			// stop link
 			e.preventDefault();
 
-			var clicked = $(this),
-				field_config = $(clicked.attr("href"));
+			var clicked = jQuery(this),
+				field_config = jQuery(clicked.attr("href"));
 
 			// remove any hdden fields
-			$(".new-group-input").remove();
-			$(".new-field-input").remove();
+			jQuery(".new-group-input").remove();
+			jQuery(".new-field-input").remove();
 
 			// remove active field
-			$(".caldera-editor-fields-list li.active").removeClass("active");
+			jQuery(".caldera-editor-fields-list li.active").removeClass("active");
 
 			// mark active
 			clicked.parent().addClass("active");
 
 			// hide all field configs
-			$(".caldera-editor-field-config-wrapper").hide();
+			jQuery(".caldera-editor-field-config-wrapper").hide();
 
 			// show field config
 			field_config.show();
@@ -439,11 +439,11 @@ jQuery(document).ready(function ($) {
 	);
 
 	// bind show group config panel
-	$(".caldera-editor-body").on("click", ".group-config-button", function (e) {
-		var clicked = $(this),
-			group_settings = $(".caldera-editor-group-settings"),
+	jQuery(".caldera-editor-body").on("click", ".group-config-button", function (e) {
+		var clicked = jQuery(this),
+			group_settings = jQuery(".caldera-editor-group-settings"),
 			parent = clicked.closest(".caldera-editor-fields-panel"),
-			deleter = $(".caldera-config-group-remove");
+			deleter = jQuery(".caldera-config-group-remove");
 
 		// check if children
 		if (parent.find(".caldera-field-line").length) {
@@ -463,8 +463,8 @@ jQuery(document).ready(function ($) {
 			clicked.addClass("field-edit-open");
 		}
 	});
-	$(".caldera-editor-body").on("keydown", ".field-config", function (e) {
-		if ($(this).is("textarea")) {
+	jQuery(".caldera-editor-body").on("keydown", ".field-config", function (e) {
+		if (jQuery(this).is("textarea")) {
 			return;
 		}
 		if (e.which === 13) {
@@ -472,17 +472,17 @@ jQuery(document).ready(function ($) {
 		}
 	});
 	// field label bind
-	$(".caldera-editor-body").on("change", ".field-label", function (e) {
-		var field = $(this)
+	jQuery(".caldera-editor-body").on("change", ".field-label", function (e) {
+		var field = jQuery(this)
 			.closest(".caldera-editor-field-config-wrapper")
 			.prop("id");
-		var field_line = $('[data-field="' + field + '"]'),
-			field_title = $(
+		var field_line = jQuery('[data-field="' + field + '"]'),
+			field_title = jQuery(
 				"#" +
 					field +
 					" .caldera-editor-field-title, .layout-form-field.field-edit-open .layout_field_name"
 			),
-			slug = $("#" + field + " .field-slug");
+			slug = jQuery("#" + field + " .field-slug");
 
 		field_line.find("a").html('<i class="icn-field"></i> ' + this.value);
 		field_title.text(this.value);
@@ -493,9 +493,9 @@ jQuery(document).ready(function ($) {
 	});
 
 	// rename group
-	$(".caldera-editor-body").on("change", ".active-group-name", function (e) {
+	jQuery(".caldera-editor-body").on("change", ".active-group-name", function (e) {
 		e.preventDefault();
-		var active_group = $(".caldera-group-nav.active"),
+		var active_group = jQuery(".caldera-group-nav.active"),
 			group = active_group.data("group"),
 			group_name = active_group.find(".caldera-config-group-name"),
 			group_label = active_group.find("span");
@@ -509,10 +509,10 @@ jQuery(document).ready(function ($) {
 		group_label.text(this.value);
 	});
 	// rename group slug
-	$(".caldera-editor-body").on("change", ".active-group-slug", function (e) {
+	jQuery(".caldera-editor-body").on("change", ".active-group-slug", function (e) {
 		e.preventDefault();
 
-		var active_group = $(".caldera-group-nav.active"),
+		var active_group = jQuery(".caldera-group-nav.active"),
 			group = active_group.data("group"),
 			group_name = active_group.find(".caldera-config-group-name").val(),
 			group_slug = active_group.find(".caldera-config-group-slug"),
@@ -540,10 +540,10 @@ jQuery(document).ready(function ($) {
 		this.value = slug_sanitized;
 	});
 	// rename group description
-	$(".caldera-editor-body").on("change", ".active-group-desc", function (e) {
+	jQuery(".caldera-editor-body").on("change", ".active-group-desc", function (e) {
 		e.preventDefault();
 
-		var active_group = $(".caldera-group-nav.active"),
+		var active_group = jQuery(".caldera-group-nav.active"),
 			group = active_group.data("group"),
 			group_desc = active_group.find(".caldera-config-group-desc");
 
@@ -551,10 +551,10 @@ jQuery(document).ready(function ($) {
 	});
 
 	// set group admin
-	$(".caldera-editor-body").on("change", ".active-group-admin", function (e) {
+	jQuery(".caldera-editor-body").on("change", ".active-group-admin", function (e) {
 		e.preventDefault();
 
-		var active_group = $(".caldera-group-nav.active"),
+		var active_group = jQuery(".caldera-group-nav.active"),
 			group = active_group.data("group"),
 			group_name = active_group.find(".caldera-config-group-name").val(),
 			group_admin = active_group.find(".caldera-config-group-admin"),
@@ -568,7 +568,7 @@ jQuery(document).ready(function ($) {
 				.toLowerCase();
 
 		// check its not blank
-		if ($(this).prop("checked")) {
+		if (jQuery(this).prop("checked")) {
 			group_admin.val(1);
 			active_group.addClass("is-admin");
 		} else {
@@ -578,13 +578,13 @@ jQuery(document).ready(function ($) {
 	});
 
 	// set repeatable
-	$(".caldera-editor-body").on("click", ".repeat-config-button", function (e) {
+	jQuery(".caldera-editor-body").on("click", ".repeat-config-button", function (e) {
 		e.preventDefault();
-		var active_group = $(".caldera-group-nav.active"),
+		var active_group = jQuery(".caldera-group-nav.active"),
 			group = active_group.data("group"),
 			icon = active_group.find("a .group-type"),
 			group_repeat = active_group.find(".caldera-config-group-repeat"),
-			clicked = $(this);
+			clicked = jQuery(this);
 
 		if (clicked.hasClass("field-edit-open")) {
 			// set static
@@ -600,8 +600,8 @@ jQuery(document).ready(function ($) {
 	});
 
 	// bind delete field
-	$(".caldera-editor-body").on("click", ".delete-field", function () {
-		var clicked = $(this),
+	jQuery(".caldera-editor-body").on("click", ".delete-field", function () {
+		var clicked = jQuery(this),
 			field = clicked
 				.closest(".caldera-editor-field-config-wrapper")
 				.prop("id");
@@ -610,55 +610,55 @@ jQuery(document).ready(function ($) {
 			return;
 		}
 		// remove config
-		$("#" + field).remove();
+		jQuery("#" + field).remove();
 		// remove options
-		$('option[value="' + field + '"]').remove();
-		$('[data-bind="' + field + '"]').remove();
+		jQuery('option[value="' + field + '"]').remove();
+		jQuery('[data-bind="' + field + '"]').remove();
 
 		// remove field
 		delete current_form_fields[field];
 
-		$('[data-config="' + field + '"]').slideUp(200, function () {
-			var line = $(this);
+		jQuery('[data-config="' + field + '"]').slideUp(200, function () {
+			var line = jQuery(this);
 
 			// remove line
 			line.remove();
 			rebuild_field_binding();
-			$(document).trigger("field.removed", {
+			jQuery(document).trigger("field.removed", {
 				fieldId: field,
 			});
 		});
 	});
 
 	// bind add new group button
-	$(".caldera-editor-body").on(
+	jQuery(".caldera-editor-body").on(
 		"click",
 		".add-new-group,.add-field",
 		function () {
-			var clicked = $(this);
+			var clicked = jQuery(this);
 
 			// remove any hdden fields
-			$(".new-group-input").remove();
-			$(".new-field-input").remove();
+			jQuery(".new-group-input").remove();
+			jQuery(".new-field-input").remove();
 
 			if (clicked.hasClass("add-field")) {
-				var field_input = $(
+				var field_input = jQuery(
 					'<input type="text" class="new-field-input block-input">'
 				);
 				field_input
-					.appendTo($(".caldera-editor-fields-list ul.active"))
+					.appendTo(jQuery(".caldera-editor-fields-list ul.active"))
 					.focus();
 			} else {
-				var group_input = $(
+				var group_input = jQuery(
 					'<input type="text" class="new-group-input block-input">'
 				);
-				group_input.appendTo($(".caldera-editor-groups-panel")).focus();
+				group_input.appendTo(jQuery(".caldera-editor-groups-panel")).focus();
 			}
 		}
 	);
 
 	// dynamic group creation
-	$(".caldera-editor-body").on("change keypress", ".new-group-input", function (
+	jQuery(".caldera-editor-body").on("change keypress", ".new-group-input", function (
 		e
 	) {
 		if (e.type === "keypress") {
@@ -670,9 +670,9 @@ jQuery(document).ready(function ($) {
 		}
 
 		var group_name = this.value,
-			input = $(this),
-			wrap = $(".caldera-editor-groups-panel ul"),
-			field_list = $(".caldera-editor-fields-list"),
+			input = jQuery(this),
+			wrap = jQuery(".caldera-editor-groups-panel ul"),
+			field_list = jQuery(".caldera-editor-fields-list"),
 			new_templ,
 			new_group;
 
@@ -680,7 +680,7 @@ jQuery(document).ready(function ($) {
 			// no name- just remove the input
 			input.remove();
 		} else {
-			new_templ = Handlebars.compile($("#caldera_group_line_templ").html());
+			new_templ = Handlebars.compile(jQuery("#caldera_group_line_templ").html());
 			new_group = {
 				id: group_name
 					.split(" ")
@@ -696,7 +696,7 @@ jQuery(document).ready(function ($) {
 			wrap.append(new_templ(new_group));
 
 			// create field list
-			var new_list = $('<ul data-group="' + new_group.id + '">').hide();
+			var new_list = jQuery('<ul data-group="' + new_group.id + '">').hide();
 
 			// place list in fields list
 			new_list.appendTo(field_list);
@@ -712,7 +712,7 @@ jQuery(document).ready(function ($) {
 	});
 
 	// dynamic field creation
-	$(".caldera-editor-body").on("change keypress", ".new-field-input", function (
+	jQuery(".caldera-editor-body").on("change keypress", ".new-field-input", function (
 		e
 	) {
 		if (e.type === "keypress") {
@@ -724,13 +724,13 @@ jQuery(document).ready(function ($) {
 		}
 
 		var new_name = this.value,
-			input = $(this),
+			input = jQuery(this),
 			wrap = input.parent(),
-			field_conf = $(".caldera-editor-field-config"),
+			field_conf = jQuery(".caldera-editor-field-config"),
 			new_templ,
 			new_conf_templ,
 			new_field,
-			deleter = $(".caldera-config-group-remove");
+			deleter = jQuery(".caldera-config-group-remove");
 
 		if (!new_name.length) {
 			// no name- just remove the input
@@ -739,10 +739,10 @@ jQuery(document).ready(function ($) {
 			// hide delete group
 			deleter.hide();
 			// field line template
-			new_templ = Handlebars.compile($("#caldera_field_line_templ").html());
+			new_templ = Handlebars.compile(jQuery("#caldera_field_line_templ").html());
 			// field conf template
 			new_conf_templ = Handlebars.compile(
-				$("#caldera_field_config_wrapper_templ").html()
+				jQuery("#caldera_field_config_wrapper_templ").html()
 			);
 
 			new_field = {
@@ -761,10 +761,10 @@ jQuery(document).ready(function ($) {
 					.join("_")
 					.replace(/[^a-z0-9_]/gi, "")
 					.toLowerCase(),
-				group: $(".caldera-group-nav.active").data("group"),
+				group: jQuery(".caldera-group-nav.active").data("group"),
 			};
 
-			var field = $(new_templ(new_field));
+			var field = jQuery(new_templ(new_field));
 
 			// place new field line
 			field.appendTo(wrap);
@@ -780,7 +780,7 @@ jQuery(document).ready(function ($) {
 	});
 
 	// bind slug editing to keep clean
-	$(".caldera-editor-body").on("change", ".field-slug", function (e) {
+	jQuery(".caldera-editor-body").on("change", ".field-slug", function (e) {
 		if (this.value.length) {
 			this.value = this.value
 				.split(" ")
@@ -791,7 +791,7 @@ jQuery(document).ready(function ($) {
 				.toLowerCase();
 		} else {
 			if (e.type === "change") {
-				this.value = $(this)
+				this.value = jQuery(this)
 					.closest(".caldera-editor-field-config-wrapper")
 					.find(".field-label")
 					.val()
@@ -806,53 +806,55 @@ jQuery(document).ready(function ($) {
 	});
 
 	// bind add group button
-	$(".caldera-editor-body").on("click", ".caldera-add-group", function (e) {
-		var clicked = $(this),
+	jQuery(".caldera-editor-body").on("click", ".caldera-add-group", function (e) {
+		var clicked = jQuery(this),
 			group = clicked.data("group"),
-			template = $("#" + group + "_panel_tmpl").html();
+			template = jQuery("#" + group + "_panel_tmpl").html();
 
 		clicked.parent().parent().append(template);
 	});
 	// bind remove group button
-	$(".caldera-editor-body").on(
+	jQuery(".caldera-editor-body").on(
 		"click",
 		".caldera-config-group-remove",
 		function (e) {
-			var group = $(".active-group-slug").val();
+			var group = jQuery(".active-group-slug").val();
 
-			$('[data-group="' + group + '"]').hide(0, function () {
-				$(this).remove();
-				var navs = $(".caldera-group-nav");
+			jQuery('[data-group="' + group + '"]').hide(0, function () {
+				jQuery(this).remove();
+				var navs = jQuery(".caldera-group-nav");
 
 				if (navs.length) {
 					navs.first().find("a").trigger("click");
 				} else {
-					$(".caldera-editor-fields-panel").hide();
+					jQuery(".caldera-editor-fields-panel").hide();
 				}
 			});
 		}
 	);
 
-	$("body").on("click", ".set-current-field", function (e) {
+	jQuery("body").on("click", ".set-current-field", function (e) {
 		e.preventDefault();
 
-		var clicked = $(this);
+		var clicked = jQuery(this);
 
-		$("#" + clicked.data("field") + "_type")
+		jQuery("#" + clicked.data("field") + "_type")
 			.val(clicked.data("type"))
 			.trigger("change");
 
-		$("#" + clicked.data("field") + "_lable").focus();
+		jQuery("#" + clicked.data("field") + "_lable").focus();
 
-		$("#field_setup_baldrickModalCloser").trigger("click");
+		jQuery("#field_setup_baldrickModalCloser").trigger("click");
 	});
 
-	$(".caldera-editor-body").on("change record", ".field-config", function (e) {
-		$(document).trigger("field.config-change", {
-			name: e.target.name,
-			value: e.target.value,
-		});
-		var field = $(this),
+	jQuery(".caldera-editor-body").on("change record", ".field-config", function (e) {
+		if( typeof e.target.name !== "undefined" && typeof e.target.value !== "undefined") {
+			jQuery(document).trigger("field.config-change", {
+				name: e.target.name,
+				value: e.target.value,
+			});
+		}
+		var field = jQuery(this),
 			parent = field.closest(".caldera-editor-field-config-wrapper");
 
 		if (!current_form_fields) {
@@ -877,8 +879,8 @@ jQuery(document).ready(function ($) {
 		}
 	});
 
-	$(".caldera-editor-body").on("focus", ".caldera-field-bind", function (e) {
-		var field = $(this),
+	jQuery(".caldera-editor-body").on("focus", ".caldera-field-bind", function (e) {
+		var field = jQuery(this),
 			value = this.value;
 
 		if (e.type && e.type === "focusin") {
@@ -890,11 +892,11 @@ jQuery(document).ready(function ($) {
 	});
 
 	// load fist  group
-	$(".caldera-group-nav").first().find("a").trigger("click");
+	jQuery(".caldera-group-nav").first().find("a").trigger("click");
 
 	// toggle set values
-	$(".caldera-editor-body").on("change", ".toggle_show_values", function (e) {
-		var $clicked = $(this),
+	jQuery(".caldera-editor-body").on("change", ".toggle_show_values", function (e) {
+		var $clicked = jQuery(this),
 			$wrap = $clicked.closest(".caldera-config-group-toggle-options"),
 			$labelInputs = $wrap.find(".toggle_label_field"),
 			$valueInputs = $wrap.find(
@@ -927,14 +929,14 @@ jQuery(document).ready(function ($) {
 	});
 
 	// autopopulate
-	$(".caldera-editor-body").on("change", ".auto-populate-type", function () {
-		$(this)
+	jQuery(".caldera-editor-body").on("change", ".auto-populate-type", function () {
+		jQuery(this)
 			.closest(".wrapper-instance-pane")
 			.find(".auto-populate-options")
 			.trigger("change");
 	});
-	$(".caldera-editor-body").on("change", ".auto-populate-options", function () {
-		var clicked = $(this),
+	jQuery(".caldera-editor-body").on("change", ".auto-populate-options", function () {
+		var clicked = jQuery(this),
 			wrap = clicked.closest(".wrapper-instance-pane"),
 			manual = wrap.find(".caldera-config-group-toggle-options"),
 			autotype_wrap = wrap.find(".caldera-config-group-auto-options"),
@@ -953,9 +955,9 @@ jQuery(document).ready(function ($) {
 		autotype_wrap.find(".caldera-config-group-auto-" + autotype.val()).show();
 	});
 
-	$("body").on("change", ".pin-toggle-roles", function () {
-		var clicked = $(this),
-			roles = $("#caldera-pin-rules");
+	jQuery("body").on("change", ".pin-toggle-roles", function () {
+		var clicked = jQuery(this),
+			roles = jQuery("#caldera-pin-rules");
 
 		if (clicked.val() === "1") {
 			roles.show();
@@ -964,19 +966,19 @@ jQuery(document).ready(function ($) {
 		}
 	});
 
-	$("body").on("click", ".magic-tag-init", function (e) {
-		var clicked = $(this),
+	jQuery("body").on("click", ".magic-tag-init", function (e) {
+		var clicked = jQuery(this),
 			input = clicked.prev();
 
 		input.focus().trigger("init.magic");
 	});
 	// show magic tag autocompletes
-	$("body").on(
+	jQuery("body").on(
 		"keyup  focus select click init.magic",
 		".magic-tag-enabled",
 		function (e) {
 			init_magic_tags();
-			var input = $(this),
+			var input = jQuery(this),
 				wrap = input.parent(),
 				fieldtype = wrap
 					.closest(".wrapper-instance-pane")
@@ -1051,15 +1053,15 @@ jQuery(document).ready(function ($) {
 					}
 				}
 				if (!tags.length) {
-					tags = $('<div class="magic-tags-autocomplete"></div>');
-					list = $("<ul></ul>");
+					tags = jQuery('<div class="magic-tags-autocomplete"></div>');
+					list = jQuery("<ul></ul>");
 					list.appendTo(tags);
 					tags.insertAfter(input);
 					tags.on("mouseenter", function () {
-						$(this).data("focus", true);
+						jQuery(this).data("focus", true);
 					});
 					tags.on("mouseleave", function () {
-						$(this).data("focus", false);
+						jQuery(this).data("focus", false);
 
 						setTimeout(function () {
 							tags.remove();
@@ -1140,7 +1142,7 @@ jQuery(document).ready(function ($) {
 							instance++
 						) {
 							if (tagtypes === "all" || tagtypes === tp || tp === "variable") {
-								var heading = $(
+								var heading = jQuery(
 										'<li class="header">' +
 											system_values[tp].type +
 											(instance > 0 ? " [" + (instance + 1) + "]" : "") +
@@ -1185,7 +1187,7 @@ jQuery(document).ready(function ($) {
 											"<strong>" + current_tag + "</strong>"
 										);
 
-										var linetag = $(
+										var linetag = jQuery(
 											'<li class="tag" data-tag="' +
 												this_tag +
 												'">' +
@@ -1194,7 +1196,7 @@ jQuery(document).ready(function ($) {
 										);
 
 										linetag.on("click", function () {
-											var selected = $(this).data("tag");
+											var selected = jQuery(this).data("tag");
 
 											input
 												.val(
@@ -1248,7 +1250,7 @@ jQuery(document).ready(function ($) {
 
 	// build configs on load:
 	// allows us to keep changes on reload as not to loose settings on accidental navigation
-	$(".caldera-select-field-type")
+	jQuery(".caldera-select-field-type")
 		.not(".field-initialized")
 		.each(function (k, v) {
 			build_fieldtype_config(v);
@@ -1710,14 +1712,14 @@ function check_required_bindings(el) {
 	return all_clear;
 }
 
-jQuery(document).ready(function ($) {
+jQuery( function ($) {
 	add_new_grid_page = function (obj) {
 		return { page_no: "pg_" + Math.round(Math.random() * 10000000) };
 	};
 
 	add_page_grid = function (obj) {
-		var btn_count = $(".page-toggle").length + 1,
-			button = $(
+		var btn_count = jQuery(".page-toggle").length + 1,
+			button = jQuery(
 				'<button type="button" data-name="Page ' +
 					btn_count +
 					'" data-page="' +
@@ -1728,7 +1730,7 @@ jQuery(document).ready(function ($) {
 					btn_count +
 					"</button> "
 			),
-			option_tab = $("#page-toggles");
+			option_tab = jQuery("#page-toggles");
 		button.appendTo(option_tab);
 		option_tab.show();
 		buildSortables();
@@ -1736,13 +1738,13 @@ jQuery(document).ready(function ($) {
 		if (btn_count === 1) {
 			option_tab.hide();
 		}
-		$(document).trigger("add.page");
+		jQuery(document).trigger("add.page");
 	};
 
 	// bind pages tab
-	$(document).on("remove.page add.page load.page", function (e) {
-		var btn_count = $(".page-toggle").length,
-			pages_tab = $("#tab_pages");
+	jQuery(document).on("remove.page add.page load.page", function (e) {
+		var btn_count = jQuery(".page-toggle").length,
+			pages_tab = jQuery("#tab_pages");
 
 		if (btn_count <= 1) {
 			pages_tab.hide();
@@ -1752,27 +1754,27 @@ jQuery(document).ready(function ($) {
 	});
 
 	function buildLayoutString() {
-		var grid_panels = $(".layout-grid-panel"),
+		var grid_panels = jQuery(".layout-grid-panel"),
 			row_index = 0;
 
 		grid_panels.each(function (pk, pv) {
-			var panel = $(pv),
+			var panel = jQuery(pv),
 				capt = panel.find(".layout-structure"),
 				rows = panel.find(".row"),
 				struct = [];
 
 			rows.each(function (k, v) {
-				var row = $(v),
+				var row = jQuery(v),
 					cols = row.children().not(".column-merge"),
 					rowcols = [];
 				row_index += 1;
 				cols.each(function (p, c) {
-					span = $(c).attr("class").split("-");
+					span = jQuery(c).attr("class").split("-");
 					rowcols.push(span[2]);
-					var fields = $(c).find(".field-location");
+					var fields = jQuery(c).find(".field-location");
 					if (fields.length) {
 						fields.each(function (x, f) {
-							var field = $(f);
+							var field = jQuery(f);
 							field.val(row_index + ":" + (p + 1)).removeAttr("disabled");
 						});
 					}
@@ -1787,7 +1789,7 @@ jQuery(document).ready(function ($) {
 	function insert_new_field(newfield, target, field_default) {
 		var name = "fld_" + Math.round(Math.random() * 10000000),
 			new_name = name,
-			field_conf = $("#field_config_panels"),
+			field_conf = jQuery("#field_config_panels"),
 			new_conf_templ,
 			field_set;
 
@@ -1795,10 +1797,10 @@ jQuery(document).ready(function ($) {
 
 		// field conf template
 		new_conf_templ = Handlebars.compile(
-			$("#caldera_field_config_wrapper_templ").html()
+			jQuery("#caldera_field_config_wrapper_templ").html()
 		);
 
-		field_set = $.extend(
+		field_set = jQuery.extend(
 			{},
 			{
 				id: new_name,
@@ -1832,30 +1834,30 @@ jQuery(document).ready(function ($) {
 		buildSortables();
 		newfield.find(".icon-edit").trigger("click");
 
-		$("#" + name + "_lable")
+		jQuery("#" + name + "_lable")
 			.focus()
 			.select();
 		baldrickTriggers();
-		$(document).trigger("field.added", {
+		jQuery(document).trigger("field.added", {
 			field: field_set,
 		});
 		if (field_default) {
-			$("#" + new_name + "_type")
+			jQuery("#" + new_name + "_type")
 				.data("type", field_set.type)
 				.trigger("change");
 		} else {
-			$("#" + name).trigger("field.drop");
+			jQuery("#" + name).trigger("field.drop");
 		}
 		rebuild_field_binding();
 	}
 
 	function buildSortables() {
 		// Sortables
-		$(".toggle-options").sortable({
+		jQuery(".toggle-options").sortable({
 			handle: ".dashicons-sort",
 		});
 
-		$("#grid-pages-panel").sortable({
+		jQuery("#grid-pages-panel").sortable({
 			placeholder: "row-drop-helper",
 			handle: ".sort-handle",
 			items: ".first-row-level",
@@ -1864,7 +1866,7 @@ jQuery(document).ready(function ($) {
 				buildLayoutString();
 			},
 		});
-		$(".layout-column").sortable({
+		jQuery(".layout-column").sortable({
 			connectWith: ".layout-column",
 			appendTo: "#grid-pages-panel",
 			helper: "clone",
@@ -1883,26 +1885,26 @@ jQuery(document).ready(function ($) {
 		});
 
 		// Draggables
-		$("h3 .layout-new-form-field").draggable({
+		jQuery("h3 .layout-new-form-field").draggable({
 			helper: "clone",
 			appendTo: "body",
 		});
-		$(".page-toggle.button").droppable({
+		jQuery(".page-toggle.button").droppable({
 			accept: ".layout-form-field",
 			over: function (e, ui) {
-				$(this).trigger("click");
-				$(".layout-column").sortable("refresh");
+				jQuery(this).trigger("click");
+				jQuery(".layout-column").sortable("refresh");
 			},
 		});
 		// Tools Bar Items
-		$(".layout-column").droppable({
+		jQuery(".layout-column").droppable({
 			greedy: true,
 			activeClass: "ui-state-dropper",
 			hoverClass: "ui-state-hoverable",
 			accept: ".layout-new-form-field",
 			drop: function (event, ui) {
 				var newfield = ui.draggable.clone(),
-					target = $(this);
+					target = jQuery(this);
 
 				insert_new_field(newfield, target);
 			},
@@ -1912,22 +1914,22 @@ jQuery(document).ready(function ($) {
 	}
 	buildSortables();
 
-	$("#grid-pages-panel").on(
+	jQuery("#grid-pages-panel").on(
 		"click",
 		".column-fieldinsert .dashicons-plus-alt",
 		function (e) {
 			//newfield-tool
-			var target = $(this).closest(".column-container"),
-				newfield = $("#newfield-tool").clone().css("display", "");
+			var target = jQuery(this).closest(".column-container"),
+				newfield = jQuery("#newfield-tool").clone().css("display", "");
 
 			insert_new_field(newfield, target);
 		}
 	);
 
-	$("#grid-pages-panel").on("click", ".column-split", function (e) {
-		var column = $(this).parent().parent(),
+	jQuery("#grid-pages-panel").on("click", ".column-split", function (e) {
+		var column = jQuery(this).parent().parent(),
 			size = column.attr("class").split("-"),
-			newcol = $("<div>").insertAfter(column);
+			newcol = jQuery("<div>").insertAfter(column);
 
 		var left = Math.ceil(size[2] / 2),
 			right = Math.floor(size[2] / 2);
@@ -1938,28 +1940,28 @@ jQuery(document).ready(function ($) {
 		newcol
 			.addClass(size.join("-"))
 			.append('<div class="layout-column column-container">');
-		$(this).remove();
+		jQuery(this).remove();
 		buildSortables();
 
 		jQuery(".column-tools").remove();
 		jQuery(".column-merge").remove();
 	});
-	$("#grid-pages-panel").on("click", ".column-remove", function (e) {
-		var row = $(this).closest(".row"),
+	jQuery("#grid-pages-panel").on("click", ".column-remove", function (e) {
+		var row = jQuery(this).closest(".row"),
 			fields = row.find(".layout-form-field"),
 			wrap = row.closest(".layout-grid-panel");
 
 		//find fields
 		if (fields.length) {
-			if (!confirm($("#row-remove-fields-message").text())) {
+			if (!confirm(jQuery("#row-remove-fields-message").text())) {
 				return;
 			}
 			fields.each(function (k, v) {
-				var field_id = $(v).data("config");
-				$("#" + field_id).remove();
+				var field_id = jQuery(v).data("config");
+				jQuery("#" + field_id).remove();
 				// remove options
-				$('option[value="' + field_id + '"]').remove();
-				$('[data-bind="' + field_id + '"]').remove();
+				jQuery('option[value="' + field_id + '"]').remove();
+				jQuery('[data-bind="' + field_id + '"]').remove();
 
 				// remove field
 				delete current_form_fields[field_id];
@@ -1968,12 +1970,12 @@ jQuery(document).ready(function ($) {
 		//return;
 
 		row.slideUp(200, function () {
-			$(this).remove();
+			jQuery(this).remove();
 			buildLayoutString();
 			rebuild_field_binding();
 			if (!wrap.find(".row").length) {
 				wrap.remove();
-				var btn = $("#page-toggles .button-primary"),
+				var btn = jQuery("#page-toggles .button-primary"),
 					prev = btn.prev(),
 					next = btn.next();
 
@@ -1984,36 +1986,36 @@ jQuery(document).ready(function ($) {
 					next.trigger("click");
 				}
 			}
-			$(document).trigger("remove.page");
+			jQuery(document).trigger("remove.page");
 		});
 
 		jQuery(".column-tools").remove();
 		jQuery(".column-merge").remove();
 	});
 
-	$(".caldera-config-editor-main-panel").on(
+	jQuery(".caldera-config-editor-main-panel").on(
 		"click",
 		".caldera-add-row",
 		function (e) {
 			e.preventDefault();
-			var wrap = $(".page-active");
+			var wrap = jQuery(".page-active");
 			if (!wrap.length) {
-				$(".caldera-add-page").trigger("click");
+				jQuery(".caldera-add-page").trigger("click");
 				return;
 			}
-			var new_row = $(
+			var new_row = jQuery(
 				'<div style="display:none;" class="first-row-level row"><div class="col-xs-12"><div class="layout-column column-container"></div></div></div>'
 			);
 
-			$(".page-active").append(new_row);
+			jQuery(".page-active").append(new_row);
 			new_row.slideDown(200);
 			buildSortables();
 			buildLayoutString();
 		}
 	);
 
-	$("#grid-pages-panel").on("click", ".column-join", function (e) {
-		var column = $(this).parent().parent().parent();
+	jQuery("#grid-pages-panel").on("click", ".column-join", function (e) {
+		var column = jQuery(this).parent().parent().parent();
 
 		var prev = column.prev(),
 			left = prev.attr("class").split("-"),
@@ -2031,7 +2033,7 @@ jQuery(document).ready(function ($) {
 		jQuery(".column-merge").remove();
 	});
 
-	$("#grid-pages-panel").on("mouseenter", ".row", function (e) {
+	jQuery("#grid-pages-panel").on("mouseenter", ".row", function (e) {
 		var setrow = jQuery(this);
 		jQuery(".column-tools,.column-merge").remove();
 		setrow
@@ -2063,7 +2065,7 @@ jQuery(document).ready(function ($) {
 			.children()
 			.children()
 			.each(function (k, v) {
-				var column = $(v);
+				var column = jQuery(v);
 				var width = column.width() / 2 - 5;
 				column.prepend(
 					'<div class="column-fieldinsert column-tools"><i class="dashicons dashicons-plus-alt" data-toggle="tooltip" data-placement="top" title="' +
@@ -2086,10 +2088,10 @@ jQuery(document).ready(function ($) {
 			appendTo: setrow,
 			grid: [single, 0],
 			drag: function (e, ui) {
-				$(this).addClass("dragging");
-				$(".column-tools").remove();
-				$(".column-split").remove();
-				var column = $(this).parent().parent(),
+				jQuery(this).addClass("dragging");
+				jQuery(".column-tools").remove();
+				jQuery(".column-split").remove();
+				var column = jQuery(this).parent().parent(),
 					dragged = ui.helper,
 					direction =
 						ui.originalPosition.left > dragged.position().left
@@ -2119,7 +2121,7 @@ jQuery(document).ready(function ($) {
 							column.attr("class", right.join("-"));
 							ui.originalPosition.left = dragged.position().left;
 						} else {
-							$(this).draggable("option", "disabled", true);
+							jQuery(this).draggable("option", "disabled", true);
 						}
 					} else {
 						left[2]++;
@@ -2129,14 +2131,14 @@ jQuery(document).ready(function ($) {
 							column.attr("class", right.join("-"));
 							ui.originalPosition.left = dragged.position().left;
 						} else {
-							$(this).draggable("option", "disabled", true);
+							jQuery(this).draggable("option", "disabled", true);
 						}
 					}
 					buildLayoutString();
 				}
 			},
 			stop: function () {
-				$(this)
+				jQuery(this)
 					.removeClass("dragging")
 					.parent()
 					.parent()
@@ -2145,35 +2147,35 @@ jQuery(document).ready(function ($) {
 			},
 		});
 	});
-	$("#grid-pages-panel").on("mouseleave", ".row", function (e) {
+	jQuery("#grid-pages-panel").on("mouseleave", ".row", function (e) {
 		jQuery(".column-tools").remove();
 		jQuery(".column-merge").remove();
 	});
 
-	$("#grid-pages-panel").on(
+	jQuery("#grid-pages-panel").on(
 		"click",
 		".layout-form-field .icon-remove",
 		function () {
-			var clicked = $(this),
+			var clicked = jQuery(this),
 				panel = clicked.parent(),
-				config = $("#" + panel.data("config"));
+				config = jQuery("#" + panel.data("config"));
 
 			panel.slideUp(100, function () {
-				$(this).remove();
+				jQuery(this).remove();
 			});
 			config.slideUp(100, function () {
-				$(this).remove();
+				jQuery(this).remove();
 			});
 		}
 	);
-	$(document).on(
+	jQuery(document).on(
 		"click",
 		".layout-form-field .dashicons-admin-page",
 		function () {
-			var clicked = $(this),
+			var clicked = jQuery(this),
 				wrap = clicked.parent(),
 				clone_id = wrap.data("config"),
-				clone = $("#" + clone_id).formJSON(),
+				clone = jQuery("#" + clone_id).formJSON(),
 				target = clicked.closest(".column-container"),
 				newfield = wrap.clone().css("display", ""),
 				new_params = {};
@@ -2181,7 +2183,7 @@ jQuery(document).ready(function ($) {
 			if (wrap.hasClass("field-edit-open")) {
 				wrap.removeClass("field-edit-open");
 				newfield.removeClass("field-edit-open");
-				$(".caldera-editor-field-config-wrapper").hide();
+				jQuery(".caldera-editor-field-config-wrapper").hide();
 			}
 
 			if (clone.config.fields[clone_id]) {
@@ -2192,23 +2194,23 @@ jQuery(document).ready(function ($) {
 			insert_new_field(newfield, target, new_params);
 		}
 	);
-	$(document).on("click", ".layout-form-field .icon-edit", function () {
-		var clicked = $(this),
+	jQuery(document).on("click", ".layout-form-field .icon-edit", function () {
+		var clicked = jQuery(this),
 			panel = clicked.parent(),
-			type = $("#" + panel.data("config") + "_type").val();
+			type = jQuery("#" + panel.data("config") + "_type").val();
 
-		$(".caldera-editor-field-config-wrapper").hide();
+		jQuery(".caldera-editor-field-config-wrapper").hide();
 
 		if (panel.hasClass("field-edit-open")) {
 			panel.removeClass("field-edit-open");
 		} else {
-			$(".layout-form-field").removeClass("field-edit-open");
+			jQuery(".layout-form-field").removeClass("field-edit-open");
 			panel.addClass("field-edit-open");
-			$("#" + panel.data("config")).show();
+			jQuery("#" + panel.data("config")).show();
 		}
 
-		$(document).trigger("show." + panel.data("config"));
-		$(document).trigger("show.fieldedit");
+		jQuery(document).trigger("show." + panel.data("config"));
+		jQuery(document).trigger("show.fieldedit");
 
 		if (
 			type === "radio" ||
@@ -2216,21 +2218,21 @@ jQuery(document).ready(function ($) {
 			type === "dropdown" ||
 			type === "toggle_switch"
 		) {
-			$("#" + panel.data("config") + "_auto").trigger("change");
+			jQuery("#" + panel.data("config") + "_auto").trigger("change");
 		}
 	});
-	$("body").on(
+	jQuery("body").on(
 		"click",
 		".layout-modal-edit-closer,.layout-modal-save-action",
 		function (e) {
 			e.preventDefault();
 
-			var clicked = $(this),
-				panel = $(".layout-form-field.edit-open"),
+			var clicked = jQuery(this),
+				panel = jQuery(".layout-form-field.edit-open"),
 				modal = clicked.closest(".layout-modal-container");
 			settings = modal.find(".settings-panel").first();
 
-			$(".edit-open").removeClass("edit-open");
+			jQuery(".edit-open").removeClass("edit-open");
 			settings.appendTo(panel.find(".settings-wrapper")).hide();
 
 			modal.hide();
@@ -2238,18 +2240,18 @@ jQuery(document).ready(function ($) {
 	);
 
 	// clear params
-	$(".layout-editor-body").on("change", ".layout-core-pod-query", function () {
-		$(this).parent().find(".settings-panel-row").remove();
-		$(".edit-open")
+	jQuery(".layout-editor-body").on("change", ".layout-core-pod-query", function () {
+		jQuery(this).parent().find(".settings-panel-row").remove();
+		jQuery(".edit-open")
 			.find(".drag-handle .set-pod")
-			.html(" - " + $(this).val());
+			.html(" - " + jQuery(this).val());
 	});
-	$(".layout-editor-body").on("click", ".remove-where", function () {
-		$(this).closest(".settings-panel-row").remove();
+	jQuery(".layout-editor-body").on("click", ".remove-where", function () {
+		jQuery(this).closest(".settings-panel-row").remove();
 	});
 	// load pod fields
-	$(".layout-editor-body").on("click", ".use-pod-container", function () {
-		var clicked = $(this),
+	jQuery(".layout-editor-body").on("click", ".use-pod-container", function () {
+		var clicked = jQuery(this),
 			podselect = clicked.prev(),
 			pod = podselect.val(),
 			container = "";
@@ -2258,7 +2260,7 @@ jQuery(document).ready(function ($) {
 			return;
 		}
 
-		$(".edit-open")
+		jQuery(".edit-open")
 			.find(".drag-handle .set-pod")
 			.html(" - " + podselect.val());
 
@@ -2271,10 +2273,10 @@ jQuery(document).ready(function ($) {
 			},
 		};
 
-		$.post(cfAdminAJAX, data, function (res) {
+		jQuery.post(cfAdminAJAX, data, function (res) {
 			clicked.parent().find(".spinner").css("display", "none");
 
-			var template = $("#where-line-tmpl").html(),
+			var template = jQuery("#where-line-tmpl").html(),
 				fields = "",
 				container = clicked.closest(".settings-panel").data("container");
 
@@ -2290,11 +2292,11 @@ jQuery(document).ready(function ($) {
 	});
 
 	// edit row
-	$(".caldera-editor-header").on("click", ".column-sort .icon-edit", function (
+	jQuery(".caldera-editor-header").on("click", ".column-sort .icon-edit", function (
 		e
 	) {});
 	// bind tray stuff
-	$(".layout-editor-body").on(
+	jQuery(".layout-editor-body").on(
 		"tray_loaded",
 		".layout-template-tray",
 		function () {
@@ -2302,22 +2304,22 @@ jQuery(document).ready(function ($) {
 		}
 	);
 	// build panel navigation
-	$(".caldera-editor-header").on(
+	jQuery(".caldera-editor-header").on(
 		"click",
 		".caldera-editor-header-nav a",
 		function (e) {
 			e.preventDefault();
 
-			var clicked = $(this);
+			var clicked = jQuery(this);
 
 			// remove active tab
-			$(".caldera-editor-header-nav li").removeClass("active");
+			jQuery(".caldera-editor-header-nav li").removeClass("active");
 
 			// hide all tabs
-			$(".caldera-editor-body").hide();
+			jQuery(".caldera-editor-body").hide();
 
 			// show new tab
-			$(clicked.attr("href")).show();
+			jQuery(clicked.attr("href")).show();
 
 			// set active tab
 			clicked.parent().addClass("active");
@@ -2325,31 +2327,31 @@ jQuery(document).ready(function ($) {
 		}
 	);
 
-	$("body").on("change", ".required", function () {
+	jQuery("body").on("change", ".required", function () {
 		check_required_bindings(this);
 	});
 
 	// prevent error forms from submiting
-	$("body").on("submit", ".caldera-forms-options-form", function (e) {
-		var errors = $(".required.has-error");
+	jQuery("body").on("submit", ".caldera-forms-options-form", function (e) {
+		var errors = jQuery(".required.has-error");
 		if (errors.length) {
 			e.preventDefault();
 		}
 	});
 
 	//toggle_option_row
-	$(".caldera-editor-body").on("click", ".add-toggle-option", function (e) {
-		var clicked = $(this);
+	jQuery(".caldera-editor-body").on("click", ".add-toggle-option", function (e) {
+		var clicked = jQuery(this);
 
 		if (clicked.data("bulk")) {
-			$(clicked.data("bulk")).toggle();
-			$(clicked.data("bulk")).find("textarea").focus();
+			jQuery(clicked.data("bulk")).toggle();
+			jQuery(clicked.data("bulk")).find("textarea").focus();
 			return;
 		}
 
 		var wrapper = clicked.closest(".caldera-editor-field-config-wrapper"),
 			toggle_rows = wrapper.find(".toggle-options"),
-			row = $("#field-option-row-tmpl").html(),
+			row = jQuery("#field-option-row-tmpl").html(),
 			template = Handlebars.compile(row),
 			key = "opt" + parseInt((Math.random() + 1) * 0x100000),
 			config = {
@@ -2358,7 +2360,7 @@ jQuery(document).ready(function ($) {
 			};
 
 		if (clicked.data("options")) {
-			var batchinput = $(clicked.data("options")),
+			var batchinput = jQuery(clicked.data("options")),
 				batch = batchinput.val().split("\n"),
 				has_vals = false;
 			for (var i = 0; i < batch.length; i++) {
@@ -2378,7 +2380,7 @@ jQuery(document).ready(function ($) {
 					default: false,
 				};
 			}
-			$(clicked.data("options")).parent().hide();
+			jQuery(clicked.data("options")).parent().hide();
 			batchinput.val("");
 			if (true === has_vals) {
 				wrapper.find(".toggle_show_values").prop("checked", true);
@@ -2396,12 +2398,12 @@ jQuery(document).ready(function ($) {
 			};
 		}
 
-		$(".preset_options").val("");
+		jQuery(".preset_options").val("");
 		// place new row
 		toggle_rows.append(template(config));
 		wrapper.find(".toggle_show_values").trigger("change");
 
-		$(".toggle-options").sortable({
+		jQuery(".toggle-options").sortable({
 			handle: ".dashicons-sort",
 		});
 		if (!batch) {
@@ -2409,10 +2411,10 @@ jQuery(document).ready(function ($) {
 		}
 	});
 	// presets
-	$(".caldera-editor-body").on("change", ".preset_options", function (e) {
-		var select = $(this),
+	jQuery(".caldera-editor-body").on("change", ".preset_options", function (e) {
+		var select = jQuery(this),
 			preset = select.val(),
-			batch = $(select.data("bulk"));
+			batch = jQuery(select.data("bulk"));
 
 		if (
 			preset_options &&
@@ -2429,42 +2431,42 @@ jQuery(document).ready(function ($) {
 		}
 	});
 	// remove an option row
-	$(".caldera-editor-body").on("click", ".toggle-remove-option", function (e) {
-		var triggerfield = $(this)
+	jQuery(".caldera-editor-body").on("click", ".toggle-remove-option", function (e) {
+		var triggerfield = jQuery(this)
 			.closest(".caldera-editor-field-config-wrapper")
 			.find(".field-config")
 			.first();
-		$(this).parent().remove();
+		jQuery(this).parent().remove();
 		triggerfield.trigger("change");
-		$(document).trigger("option.remove");
+		jQuery(document).trigger("option.remove");
 	});
 
-	$(".caldera-editor-body").on("click", ".page-toggle", function (e) {
-		var clicked = $(this),
+	jQuery(".caldera-editor-body").on("click", ".page-toggle", function (e) {
+		var clicked = jQuery(this),
 			wrap = clicked.parent(),
 			btns = wrap.find(".button");
 
 		btns.removeClass("button-primary");
-		$(".layout-grid-panel").hide().removeClass("page-active");
-		$("#" + clicked.data("page"))
+		jQuery(".layout-grid-panel").hide().removeClass("page-active");
+		jQuery("#" + clicked.data("page"))
 			.show()
 			.addClass("page-active");
 		clicked.addClass("button-primary");
 		//reindex
 		btns.each(function (k, v) {
-			$(v).html(wrap.data("title") + " " + (k + 1));
+			jQuery(v).html(wrap.data("title") + " " + (k + 1));
 		});
 		if (btns.length === 1) {
 			wrap.hide();
 		}
 	});
 
-	$(".caldera-editor-body").on(
+	jQuery(".caldera-editor-body").on(
 		"blur toggle.values",
 		".toggle_label_field",
 		function (e) {
-			var $label = $(this),
-				$value = $(
+			var $label = jQuery(this),
+				$value = jQuery(
 					'.toggle_value_field[data-opt="' + $label.data("option") + '"]'
 				);
 
@@ -2476,13 +2478,13 @@ jQuery(document).ready(function ($) {
 		}
 	);
 
-	$(document).on("change focusout", ".toggle_value_field", function () {
-		$(document).trigger("show.fieldedit");
+	jQuery(document).on("change focusout", ".toggle_value_field", function () {
+		jQuery(document).trigger("show.fieldedit");
 	});
 
-	$(document).on("show.fieldedit option.remove", function (e) {
-		$(".toggle_value_field.has-error").removeClass("has-error");
-		var field = $("#" + $(".layout-form-field.field-edit-open").data("config")),
+	jQuery(document).on("show.fieldedit option.remove", function (e) {
+		jQuery(".toggle_value_field.has-error").removeClass("has-error");
+		var field = jQuery("#" + jQuery(".layout-form-field.field-edit-open").data("config")),
 			options = field.find(".toggle_value_field"),
 			notice = field.find(".notice"),
 			count = 0;
@@ -2496,12 +2498,12 @@ jQuery(document).ready(function ($) {
 				}
 
 				if (options[i].value === options[f].value) {
-					$(options[f]).addClass("has-error");
+					jQuery(options[f]).addClass("has-error");
 					repeats++;
 				}
 			}
 			if (repeats > 0) {
-				$(options[i]).addClass("has-error");
+				jQuery(options[i]).addClass("has-error");
 				count++;
 			}
 		}
@@ -2518,22 +2520,22 @@ jQuery(document).ready(function ($) {
 		pulsing_adders;
 
 	focus_initial_field = function (e) {
-		var field = $(".layout-grid-panel .icon-edit").first();
+		var field = jQuery(".layout-grid-panel .icon-edit").first();
 		if (field.length) {
 			field.trigger("click");
 		} else {
-			$(".layout-column.column-container").first().trigger("mouseover");
+			jQuery(".layout-column.column-container").first().trigger("mouseover");
 			is_pulsating = setInterval(pulsate_adders, 500);
 		}
-		$(document).off("load.page", focus_initial_field);
+		jQuery(document).off("load.page", focus_initial_field);
 	};
-	$(document).on("load.page", focus_initial_field);
+	jQuery(document).on("load.page", focus_initial_field);
 	function pulsate_adders() {
 		if (is_pulsating) {
-			var adders = $(".column-fieldinsert");
+			var adders = jQuery(".column-fieldinsert");
 			if (adders.length) {
 				adders.stop().fadeToggle(700);
-				$(".layout-new-form-field").stop().fadeToggle(700);
+				jQuery(".layout-new-form-field").stop().fadeToggle(700);
 			} else {
 				cf_clear_puler();
 			}
@@ -2543,30 +2545,30 @@ jQuery(document).ready(function ($) {
 	cf_clear_puler = function () {
 		if (is_pulsating) {
 			clearTimeout(is_pulsating);
-			$(document).off(
+			jQuery(document).off(
 				"mouseover",
 				".layout-new-form-field, .column-fieldinsert",
 				cf_clear_puler
 			);
 		}
-		$(".layout-new-form-field, .column-fieldinsert").fadeIn();
+		jQuery(".layout-new-form-field, .column-fieldinsert").fadeIn();
 	};
-	$(document).on(
+	jQuery(document).on(
 		"mouseover",
 		".layout-new-form-field, .column-fieldinsert",
 		cf_clear_puler
 	);
 	// build fild bindings
 	rebuild_field_binding();
-	$(document).trigger("load.page");
+	jQuery(document).trigger("load.page");
 
-	var $newProcessorButton = $(".new-processor-button");
+	var $newProcessorButton = jQuery(".new-processor-button");
 	var addProcessorButtonPulser;
 
 	// build processor sortables
 	function build_processor_sortables() {
 		// set sortable groups
-		$(".caldera-editor-processors-panel ul").sortable({
+		jQuery(".caldera-editor-processors-panel ul").sortable({
 			update: function () {
 				rebuild_field_binding();
 			},
@@ -2576,7 +2578,7 @@ jQuery(document).ready(function ($) {
 			 * @since 1.5.0.9
 			 */
 			create: function () {
-				if (0 == $(".caldera-editor-processors-panel ul").children().length) {
+				if (0 == jQuery(".caldera-editor-processors-panel ul").children().length) {
 					$newProcessorButton.addClass("button-primary");
 					addProcessorButtonPulser = new CalderaFormsButtonPulse(
 						$newProcessorButton
@@ -2590,30 +2592,30 @@ jQuery(document).ready(function ($) {
 	}
 
 	// set active processor editor
-	$("body").on("click", ".caldera-processor-nav a", function (e) {
+	jQuery("body").on("click", ".caldera-processor-nav a", function (e) {
 		e.preventDefault();
 
-		var clicked = $(this);
+		var clicked = jQuery(this);
 
-		$(".caldera-processor-nav").removeClass("active");
-		$(".caldera-editor-processor-config-wrapper").hide();
-		$(clicked.attr("href")).show();
+		jQuery(".caldera-processor-nav").removeClass("active");
+		jQuery(".caldera-editor-processor-config-wrapper").hide();
+		jQuery(clicked.attr("href")).show();
 		clicked.parent().addClass("active");
 	});
 
-	$("body").on("click", ".add-new-processor", function (e) {
+	jQuery("body").on("click", ".add-new-processor", function (e) {
 		if ("object" === typeof addProcessorButtonPulser) {
 			$newProcessorButton.removeClass("button-primary");
 			addProcessorButtonPulser.stopPulse();
 		}
 
-		var clicked = $(this),
-			new_conf_templ = Handlebars.compile($("#processor-wrapper-tmpl").html());
-		(wrap = $(".active-processors-list")),
-			(process_conf = $(".caldera-editor-processor-config")),
+		var clicked = jQuery(this),
+			new_conf_templ = Handlebars.compile(jQuery("#processor-wrapper-tmpl").html());
+		(wrap = jQuery(".active-processors-list")),
+			(process_conf = jQuery(".caldera-editor-processor-config")),
 			(processid = Math.round(Math.random() * 100000000));
 
-		new_templ = Handlebars.compile($("#processor-line-tmpl").html());
+		new_templ = Handlebars.compile(jQuery("#processor-line-tmpl").html());
 		new_proc = {
 			id: "fp_" + processid,
 			type: clicked.data("type"),
@@ -2626,22 +2628,22 @@ jQuery(document).ready(function ($) {
 		process_conf.append(new_conf_templ(new_proc));
 
 		// reset sortable
-		$("#form_processor_baldrickModalCloser").trigger("click");
-		$(".caldera-processor-nav a").last().trigger("click");
-		$("#fp_" + processid + "_type")
+		jQuery("#form_processor_baldrickModalCloser").trigger("click");
+		jQuery(".caldera-processor-nav a").last().trigger("click");
+		jQuery("#fp_" + processid + "_type")
 			.val(clicked.data("type"))
 			.trigger("change");
 		build_processor_sortables();
 
 		baldrickTriggers();
-		$(document).trigger("processor.added", {
+		jQuery(document).trigger("processor.added", {
 			processor: new_proc,
 		});
 	});
 
 	// remove processor
-	$("body").on("click", ".delete-processor", function (e) {
-		var clicked = $(this),
+	jQuery("body").on("click", ".delete-processor", function (e) {
+		var clicked = jQuery(this),
 			parent = clicked.closest(".caldera-editor-processor-config-wrapper"),
 			type = parent.data("type");
 
@@ -2649,21 +2651,21 @@ jQuery(document).ready(function ($) {
 			return;
 		}
 
-		$("." + parent.prop("id")).remove();
+		jQuery("." + parent.prop("id")).remove();
 		parent.remove();
 
-		$(".caldera-processor-nav a").first().trigger("click");
+		jQuery(".caldera-processor-nav a").first().trigger("click");
 
 		rebuild_field_binding();
 	});
 
 	// set title & config of selected processor
-	$("body").on("change", ".caldera-select-processor-type", function (e) {
-		var selected = $(this),
+	jQuery("body").on("change", ".caldera-select-processor-type", function (e) {
+		var selected = jQuery(this),
 			parent = selected.closest(".caldera-editor-processor-config-wrapper"),
 			title = selected.find('option[value="' + selected.val() + '"]').text(),
 			title_line = parent.find(".caldera-editor-processor-title"),
-			activeline = $(".caldera-processor-nav.active a");
+			activeline = jQuery(".caldera-processor-nav.active a");
 
 		if (title === "") {
 			title = title_line.data("title");
@@ -2680,12 +2682,12 @@ jQuery(document).ready(function ($) {
 
 		rebuild_field_binding();
 	});
-	$(document).on("click", "#cf-shortcode-preview", function () {
-		$(this).focus().select();
+	jQuery(document).on("click", "#cf-shortcode-preview", function () {
+		jQuery(this).focus().select();
 	});
-	$(document).on("change", ".cf-email-preview-toggle", function () {
-		var clicked = $(this),
-			preview_button = $(".caldera-header-email-preview-button");
+	jQuery(document).on("change", ".cf-email-preview-toggle", function () {
+		var clicked = jQuery(this),
+			preview_button = jQuery(".caldera-header-email-preview-button");
 		if (clicked.is(":checked")) {
 			preview_button
 				.show()
@@ -2701,9 +2703,9 @@ jQuery(document).ready(function ($) {
 
 	// build processor type config
 	function build_processor_config(el) {
-		var select = $(el),
-			templ = $("#" + select.val() + "-tmpl").length
-				? $("#" + select.val() + "-tmpl").html()
+		var select = jQuery(el),
+			templ = jQuery("#" + select.val() + "-tmpl").length
+				? jQuery("#" + select.val() + "-tmpl").html()
 				: "",
 			parent = select.closest(".caldera-editor-processor-config-wrapper"),
 			target = parent.find(".caldera-config-processor-setup"),
@@ -2727,7 +2729,7 @@ jQuery(document).ready(function ($) {
 		config._id = parent.prop("id");
 		config._name = "config[processors][" + parent.prop("id") + "][config]";
 
-		template = $("<div>").html(template(config));
+		template = jQuery("<div>").html(template(config));
 
 		// send to target
 		target.html(template.html());
@@ -2747,11 +2749,11 @@ jQuery(document).ready(function ($) {
 		baldrickTriggers();
 
 		// initialise baldrick triggers
-		$(".wp-baldrick").baldrick({
+		jQuery(".wp-baldrick").baldrick({
 			request: cfAdminAJAX,
 			method: "POST",
 			before: function (el) {
-				var tr = $(el);
+				var tr = jQuery(el);
 
 				if (tr.data("addNode") && !tr.data("request")) {
 					tr.data("request", "cf_get_default_setting");
@@ -2763,8 +2765,7 @@ jQuery(document).ready(function ($) {
 	// build configs on load:
 	// allows us to keep changes on reload as not to loose settings on accedental navigation
 	rebuild_field_binding();
-
-	$(".caldera-select-processor-type").each(function (k, v) {
+	jQuery(".caldera-select-processor-type").each(function (k, v) {
 		build_processor_config(v);
 	});
 
