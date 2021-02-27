@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.9.4-b2 - 2021-02-22 */var resBaldrickTriggers;
+/*! GENERATED SOURCE FILE caldera-forms - v1.9.4 - 2021-02-27 */var resBaldrickTriggers;
 
 jQuery(function($){
 	function fieldErrors(fields, $form, $notice) {
@@ -324,7 +324,7 @@ jQuery(function($){
 });
 
 var calders_forms_check_conditions, calders_forms_init_conditions;
-(function($){
+jQuery(function($){
 
 	/**
 	 * Stores field values before hiding with conditional logic
@@ -750,7 +750,7 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 		calders_forms_init_conditions();
 		jQuery('.caldera_forms_form').find('[data-field]').first().trigger('change');
 	};
-})(jQuery);
+});
 /**
  * Simple event bindings for form state
  *
@@ -7302,7 +7302,7 @@ var cf_jsfields_init, cf_presubmit;
 
 	};
 
-	$('document').ready(function(){
+	jQuery( function(){
 		// check for init function
 		cf_jsfields_init();
 	});

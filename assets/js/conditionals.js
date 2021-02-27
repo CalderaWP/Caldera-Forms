@@ -1,5 +1,5 @@
 var calders_forms_check_conditions, calders_forms_init_conditions;
-(function($){
+jQuery(function($){
 
 	/**
 	 * Stores field values before hiding with conditional logic
@@ -425,4 +425,4 @@ var calders_forms_check_conditions, calders_forms_init_conditions;
 		calders_forms_init_conditions();
 		jQuery('.caldera_forms_form').find('[data-field]').first().trigger('change');
 	};
-})(jQuery);
+});

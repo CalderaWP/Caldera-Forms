@@ -4915,7 +4915,7 @@ jQuery(function($){
           label.html(trigger.data('modalTitle')).parent().show();
         }
         if(trigger.data('modalButtons')){
-          var buttons = jQuery.trim(trigger.data('modalButtons')).split(';'),
+          var buttons = trigger.data('modalButtons').trim().split(';'),
             button_list = [];
 
           body.addClass('has-buttons');
@@ -4926,7 +4926,7 @@ jQuery(function($){
               var options   = buttons[b].split('|'),
                 buttonLabel = options[0],
                 callback  = options[1].trim(),
-                atts    = jQuery.extend({}, {"type": "button", "class":'button '}, ( callback.substr(0,1) === '{' ? jQuery.parseJSON(callback) : {"data-callback" : callback} ) ),
+                atts    = jQuery.extend({}, {"type": "button", "class":'button '}, ( callback.substr(0,1) === '{' ? JSON.parse(callback) : {"data-callback" : callback} ) ),
                 button    = jQuery('<button>', atts);
               if(options[2]){
                 button.addClass(options[2]);

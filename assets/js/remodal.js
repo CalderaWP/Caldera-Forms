@@ -743,7 +743,7 @@
     return instance;
   };
 
-  $(document).ready(function() {
+  jQuery(function() {
 
     // data-remodal-target opens a modal window with the special Id
     $(document).on('click', '[data-' + PLUGIN_NAME + '-target]', function(e) {

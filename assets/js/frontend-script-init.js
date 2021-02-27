@@ -71,7 +71,7 @@ var cf_jsfields_init, cf_presubmit;
 
 	};
 
-	$('document').ready(function(){
+	jQuery( function(){
 		// check for init function
 		cf_jsfields_init();
 	});
