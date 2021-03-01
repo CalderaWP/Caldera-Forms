@@ -1,8 +1,7 @@
-import { Button } from "@wordpress/components";
-import React from "react";
-import { render } from "@wordpress/element";
+import { render, useState, useEffect, useContext, useMemo, Fragment } from "@wordpress/element";
 import domReady from "@wordpress/dom-ready";
 import apiFetch from "@wordpress/api-fetch";
+import { Button } from "@wordpress/components";
 /**
  * Import CSS
  */
@@ -30,33 +29,33 @@ import {
  * @since 1.9.0
  */
 const FieldConditionalSelectors = () => {
-	const { formFields } = React.useContext(FormFieldsContext);
-	const { conditionals } = React.useContext(ConditionalsContext);
+	const { formFields } = useContext(FormFieldsContext);
+	const { conditionals } = useContext(ConditionalsContext);
 	//Tries to get the node created by ui/edit.php to render portal on
 	const nodeFactory = (fieldId) =>
 		document.getElementById(`field-condition-type-${fieldId}`);
-	return React.useMemo(
+	return useMemo(
 		() => (
-			<React.Fragment>
+			<Fragment>
 				{formFields && formFields.length ? (
 					formFields.map((field) => {
 						const node = nodeFactory(field.ID);
 						//No dom node? Return early.
 						if (!node) {
-							return <React.Fragment key={field.ID} />;
+							return <Fragment key={field.ID} />;
 						}
 						return (
-							<React.Fragment key={field.ID}>
+							<Fragment key={field.ID}>
 								<RenderViaPortal domNode={node}>
 									<FieldConditonalSelectorWithState fieldId={field.ID} />
 								</RenderViaPortal>
-							</React.Fragment>
+							</Fragment>
 						);
 					})
 				) : (
-					<React.Fragment />
+					<Fragment />
 				)}
-			</React.Fragment>
+			</Fragment>
 		),
 		[formFields, conditionals]
 	);
@@ -76,14 +75,14 @@ const HandleSave = ({ jQuery, formId }) => {
 	}
 
 	//Get conditionals
-	const { conditionals, hasConditionals } = React.useContext(
+	const { conditionals, hasConditionals } = useContext(
 		ConditionalsContext
 	);
 	//Get processors
-	const { processors } = React.useContext(ProcessorsContext);
+	const { processors } = useContext(ProcessorsContext);
 
 	//Track if we're saving or not
-	const [isSaving, setIsSaving] = React.useState(false);
+	const [isSaving, setIsSaving] = useState(false);
 
 	//Save handler
 	const onSave = () => {
@@ -209,11 +208,11 @@ const SubscribeToFieldChanges = ({ jQuery }) => {
 		addField,
 		removeField,
 		updateFieldType,
-	} = React.useContext(FormFieldsContext);
+	} = useContext(FormFieldsContext);
 
 	//Watch DOM for events outside of React for field configs
 	//Update React state as needed
-	React.useEffect(() => {
+	useEffect( () => {
 		let isSubscribed = true;
 		jQuery(document).on("field.config-change", (e, update) => {
 			let { name, value } = update;
@@ -262,7 +261,7 @@ const SubscribeToFieldChanges = ({ jQuery }) => {
 		};
 	}, [jQuery, getFieldById]);
 
-	return <React.Fragment />;
+	return <Fragment />;
 };
 
 /**
@@ -277,9 +276,9 @@ const SubscribeToProcessorChanges = ({ jQuery }) => {
 		getProcessor,
 		setActiveProcessorId,
 		addProcessor
-	} = React.useContext(ProcessorsContext);
+	} = useContext(ProcessorsContext);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		let isSubscribed = true;
 		//Activate new processor on creation
 		jQuery(document).on("processor.added", (event, data) => {
@@ -323,7 +322,7 @@ const SubscribeToProcessorChanges = ({ jQuery }) => {
 	}, [jQuery]);
 
 	//Force re-render when active processor changes
-	return <React.Fragment />;
+	return <Fragment />;
 };
 
 /**

@@ -1,6 +1,6 @@
 var baldrickTriggers, loop_loader;
 
-jQuery(document).ready(function($){
+jQuery( function(){
 	var adminAJAX;
 	if( 'object' === typeof  CF_ADMIN ){
 		adminAJAX = CF_ADMIN.adminAjax;
@@ -12,14 +12,13 @@ jQuery(document).ready(function($){
 	// admin stuff!
 	// Baldrick Bindings
 	baldrickTriggers = function(){
-		$('.ajax-trigger').baldrick({
+		jQuery('.ajax-trigger').baldrick({
 			request			:	adminAJAX,
 			method			:	'POST',
 			before			:	function( el, e ){
-				var clicked = $( el );
+				var clicked = jQuery( el );
 				// check for a nonce
-
-				var nonce 		= $('#cf_toolbar_actions'),
+				var nonce 		= jQuery('#cf_toolbar_actions'),
 					referer		= nonce.parent().find('[name="_wp_http_referer"]');
 
 				if( nonce.length && referer.length ){
@@ -29,16 +28,15 @@ jQuery(document).ready(function($){
 
 				if( clicked.data('trigger') ){
 					e.preventDefault();
-					var trigger = $( clicked.data('trigger') );
-
+					var trigger = jQuery( clicked.data('trigger') );
 					trigger.trigger( ( trigger.data('event') ? trigger.data('event') : 'click' ) );
 					return false;
 				}
 			},
 			complete		:	function(){
 				// check for init function
-				$('.init_field_type[data-type]').each(function(k,v){
-					var ftype = $(v);
+				jQuery('.init_field_type[data-type]').each(function(k,v){
+					var ftype = jQuery(v);
 					if( typeof window[ftype.data('type') + '_init'] === 'function' ){
 						window[ftype.data('type') + '_init'](ftype.prop('id'), ftype[0]);
 					}
@@ -57,12 +55,12 @@ jQuery(document).ready(function($){
 
 
 	// Profile TABS
-	$('body').on('click', '.modal-side-tab', function(e){
+	jQuery('body').on('click', '.modal-side-tab', function(e){
 		e.preventDefault();
-		var clicked = $(this),
+		var clicked = jQuery(this),
 			parent = clicked.closest('.caldera-modal-body'),
 			panels = parent.find('.tab-detail-panel'),
-			panel = $(clicked.attr('href'));
+			panel = jQuery(clicked.attr('href'));
 
 		parent.find('.modal-side-tab.active').removeClass('active');
 		clicked.addClass('active');
@@ -72,11 +70,11 @@ jQuery(document).ready(function($){
 	});
 
 	// Profile Repeatable Group Remove
-	$('body').on('click', '.caldera-group-remover', function(e){
+	jQuery('body').on('click', '.caldera-group-remover', function(e){
 
 		e.preventDefault();
 
-		var clicked = $(this),
+		var clicked = jQuery(this),
 			parent = clicked.closest('.caldera-repeater-group');
 
 		parent.slideUp(200, function(){
@@ -86,8 +84,8 @@ jQuery(document).ready(function($){
 
 	});
 
-	$('body').on('click', '.form-delete a.form-control', function(e){
-		var clicked = $(this);
+	jQuery('body').on('click', '.form-delete a.form-control', function(e){
+		var clicked = jQuery(this);
 		if(confirm(clicked.data('confirm'))){
 			return;
 		}else{
@@ -97,17 +95,17 @@ jQuery(document).ready(function($){
 	});
 
 	// bind slugs
-	$('body').on('keyup change', '[data-format="key"]', function(e){
+	jQuery('body').on('keyup change', '[data-format="key"]', function(e){
 		this.value = this.value.replace(/[^a-z0-9]/gi, '-').toLowerCase();
 	});
-	$('body').on('keyup change', '[data-format="slug"]', function(e){
+	jQuery('body').on('keyup change', '[data-format="slug"]', function(e){
 		this.value = this.value.replace(/[^a-z0-9]/gi, '_').toLowerCase();
 	});
 
-	$( window ).on('resize', function(){
+	jQuery( window ).on('resize', function(){
 
-		var list_toggle = $('#cf_forms_toggle'),
-			forms_panel = $('.form-panel-wrap');
+		var list_toggle = jQuery('#cf_forms_toggle'),
+			forms_panel = jQuery('.form-panel-wrap');
 
 		if( window.innerWidth <= 1420 ){
 			if( list_toggle.is(':visible') && forms_panel.is(':visible') ){
@@ -123,17 +121,17 @@ jQuery(document).ready(function($){
    * @since 1.7.0
    */
   //Display controls
-  $('#caldera-forms-delete-all-form-entries').click(function(e) {
+  jQuery('#caldera-forms-delete-all-form-entries').on('click', function(e) {
     e.preventDefault();
-    $('#caldera-forms-confirm-delete-all-form-entries').slideToggle("fast");
+    jQuery('#caldera-forms-confirm-delete-all-form-entries').slideToggle("fast");
   });
   //No clicked
-  $('#caldera-forms-no-confirm-delete-all-form-entries').click(function(e) {
+  jQuery('#caldera-forms-no-confirm-delete-all-form-entries').on('click',function(e) {
     e.preventDefault();
-    $('#caldera-forms-confirm-delete-all-form-entries').slideToggle("fast");
+    jQuery('#caldera-forms-confirm-delete-all-form-entries').slideToggle("fast");
   });
   //Yes clicked
-  $('#caldera-forms-yes-confirm-delete-all-form-entries').click(function(e) {
+  jQuery('#caldera-forms-yes-confirm-delete-all-form-entries').on('click',function(e) {
     e.preventDefault();
 
     var url = CF_ADMIN.rest.delete_entries;
@@ -150,17 +148,17 @@ jQuery(document).ready(function($){
       }).then(function (r) {
       if( r.hasOwnProperty( 'message' ) ) {
         if (r.deleted === true) {
-          $('#caldera-forms-label-delete-all-entries').append("<div class='caldera-forms-deleted'>" + r.message + "</div>");
+          jQuery('#caldera-forms-label-delete-all-entries').append("<div class='caldera-forms-deleted'>" + r.message + "</div>");
           setTimeout(function () {
-            $('.caldera-forms-deleted').remove();
+            jQuery('.caldera-forms-deleted').remove();
           }, 5000);
-          $('#caldera-forms-confirm-delete-all-form-entries').slideToggle("fast");
+          jQuery('#caldera-forms-confirm-delete-all-form-entries').slideToggle("fast");
         } else {
-          $('#caldera-forms-label-delete-all-entries').append("<div class='caldera-forms-not-deleted'>" + r.message + "</div>");
+          jQuery('#caldera-forms-label-delete-all-entries').append("<div class='caldera-forms-not-deleted'>" + r.message + "</div>");
           setTimeout(function () {
-            $('.caldera-forms-not-deleted').remove();
+            jQuery('.caldera-forms-not-deleted').remove();
           }, 5000);
-          $('#caldera-forms-confirm-delete-all-form-entries').slideToggle("fast");
+          jQuery('#caldera-forms-confirm-delete-all-form-entries').slideToggle("fast");
         }
       }
       $spinner.css({
@@ -170,11 +168,11 @@ jQuery(document).ready(function($){
 
     }).fail(function (r) {
       if( r.responseJSON.hasOwnProperty( 'message' ) ) {
-        $('#caldera-forms-label-delete-all-entries').append("<div class='caldera-forms-not-deleted'>" + r.responseJSON.message + "</div>");
+        jQuery('#caldera-forms-label-delete-all-entries').append("<div class='caldera-forms-not-deleted'>" + r.responseJSON.message + "</div>");
         setTimeout(function () {
-          $('.caldera-forms-not-deleted').remove();
+          jQuery('.caldera-forms-not-deleted').remove();
         }, 5000);
-        $('#caldera-forms-confirm-delete-all-form-entries').slideToggle("fast");
+        jQuery('#caldera-forms-confirm-delete-all-form-entries').slideToggle("fast");
       }
       $spinner.css({
         visibility: 'hidden',
@@ -182,6 +180,12 @@ jQuery(document).ready(function($){
       });
     });
 
+  });
+
+  // This allows baldrick function to be triggered via elements that are not on the DOM after document first load
+  // Adaptation for WP > 5.6
+  jQuery('.ajax-trigger').on('click', function(e) {
+	baldrickTriggers( this, e );
   });
 
 });

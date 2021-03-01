@@ -29,11 +29,11 @@ jQuery(function($){
     var cf_upload_queue = [];
     // admin stuff!
     var cf_push_file_upload = function( form, file_number, data ){
-        var progress = $('#progress-file-' + file_number ),
-            filesize = $('.' + file_number + ' .file-size');
+        var progress = jQuery('#progress-file-' + file_number ),
+            filesize = jQuery('.' + file_number + ' .file-size');
         cf_upload_queue.push(1);
         cf_uploader_filelist[ file_number ].state = 2;
-        $.ajax({
+        jQuery.ajax({
             xhr: function(){
                 var xhr = new window.XMLHttpRequest();
                 //Upload progress
@@ -64,7 +64,7 @@ jQuery(function($){
                 if( data.success && data.success === true ){
 
                     cf_upload_queue.pop();
-                    var file_remover = $('[data-file="' + file_number + '"]');
+                    var file_remover = jQuery('[data-file="' + file_number + '"]');
                     file_remover.next().addClass('file-uploaded');
                     file_remover.remove();
 
@@ -75,10 +75,10 @@ jQuery(function($){
 
                 }else if( data.data && !data.success ){
                     //show error
-                    $('.' + file_number ).addClass('has-error');
+                    jQuery('.' + file_number ).addClass('has-error');
                     form.find(':submit').prop('disabled',false);
                     form.find('.cf-uploader-trigger').slideDown();
-                    $('.' + file_number +' .file-error' ).html( data.data );
+                    jQuery('.' + file_number +' .file-error' ).html( data.data );
 
                     return;
                 }
@@ -103,7 +103,7 @@ jQuery(function($){
          * @returns {*|jQuery|HTMLElement}
          */
         var getNoticeEl = function(obj) {
-            return $('#caldera_notices_' + obj.params.trigger.data('instance'));
+            return jQuery('#caldera_notices_' + obj.params.trigger.data('instance'));
         };
 
         /**
@@ -115,7 +115,7 @@ jQuery(function($){
          * @returns {*|jQuery|HTMLElement}
          */
         var getBreadCrumbsEl = function (obj) {
-            return $('#caldera-forms-breadcrumb_' + obj.params.trigger.data('instance'));
+            return jQuery('#caldera-forms-breadcrumb_' + obj.params.trigger.data('instance'));
         };
 
         /**
@@ -146,14 +146,14 @@ jQuery(function($){
             }
         };
 
-        $('.cfajax-trigger').baldrick({
+        jQuery('.cfajax-trigger').baldrick({
             request			:	'./',
             method			:	'POST',
             init			: function(el, ev){
 
                 ev.preventDefault();
 
-                var $form	=	$(el),
+                var $form	=	jQuery(el),
                     buttons = 	$form.find(':submit');
                 var pending = [];
                 var fieldsBlocking = [];
@@ -165,12 +165,12 @@ jQuery(function($){
                  *
                  * @since 1.8.0
 				 */
-				$( document ).trigger( 'cf.ajax.request', {
+				jQuery( document ).trigger( 'cf.ajax.request', {
                     $form: $form,
                     formIdAttr: $form.attr( 'id' ),
                     displayFieldErrors:fieldErrors,
 					fieldsBlocking: fieldsBlocking,
-                    $notice: $( '#caldera_notices_' + $form.data( 'instance' ) )
+                    $notice: jQuery( '#caldera_notices_' + $form.data( 'instance' ) )
                 });
 
 				//Check if any cf2 fields are blocking submit
@@ -212,7 +212,7 @@ jQuery(function($){
                         has_files = true;
                         var data = new FormData(),
                             file_number = file,
-                            field = $('#' + file_number.split('_file_')[0] );
+                            field = jQuery('#' + file_number.split('_file_')[0] );
                         data.append( field.data('field'), cf_uploader_filelist[ file ].file );
                         data.append( 'field', field.data('field') );
                         data.append( 'control', field.data('controlid') );
@@ -241,7 +241,7 @@ jQuery(function($){
                     var $notice = getNoticeEl(obj);
                     if( obj.jqxhr.responseJSON.data.html ){
                         $notice.html (obj.jqxhr.responseJSON.data.html );
-                        $('html,body').animate({
+                        jQuery('html,body').animate({
                             scrollTop: $notice.offset().top - $notice.outerHeight()
                         }, 300 );
 
@@ -264,8 +264,8 @@ jQuery(function($){
 
                 if( !obj.params.trigger.data('inhibitnotice') ){
 
-                    $('.caldera_ajax_error_wrap').removeClass('caldera_ajax_error_wrap').removeClass('has-error');
-                    $('.caldera_ajax_error_block').remove();
+                    jQuery('.caldera_ajax_error_wrap').removeClass('caldera_ajax_error_wrap').removeClass('has-error');
+                    jQuery('.caldera_ajax_error_block').remove();
 
                     if(obj.data.status === 'complete' || obj.data.type === 'success'){
                         maybeHideBreadCrumbs(obj);
@@ -305,17 +305,16 @@ jQuery(function($){
                 if ( 'undefined' != obj.data.scroll ) {
                     var el = document.getElementById( obj.data.scroll );
                     if ( null != el ) {
-                        var $scrollToEl = $( el );
-                        $('html,body').animate({
+                        var $scrollToEl = jQuery( el );
+                        jQuery('html,body').animate({
                             scrollTop: $scrollToEl.offset().top - $scrollToEl.outerHeight() - 12
                         }, 300);
                     }
                 }
 
-
                 // trigger global event
-                $( document ).trigger( 'cf.submission', obj );
-                $( document ).trigger( 'cf.' + obj.data.type );
+                jQuery( document ).trigger( 'cf.submission', obj );
+                jQuery( document ).trigger( 'cf.' + obj.data.type );
 
             }
         });

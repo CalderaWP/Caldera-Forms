@@ -59,6 +59,7 @@ abstract class Caldera_Forms_API_CRUD implements Caldera_Forms_API_Route
         register_rest_route($namespace, '/' . $this->route_base(), array(
             'methods' => 'GET',
             'callback' => array($this, 'index'),
+            'permission_callback' => TRUE,
         ));
     }
 

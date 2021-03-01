@@ -3,7 +3,7 @@ Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
 Tags: form, contact form, forms, form creator, form manager, mailchimp, paypal, stripe, login, payment, forms manager, forms creation
 Requires at least: 5.2
 Tested up to: 5.4.2
-Stable tag: 1.9.3
+Stable tag: 1.9.4
 License: GPLv2
 Requires PHP: 5.6
 
@@ -769,6 +769,18 @@ This could also be a sign of a more serious issue on your server, but is probabl
 5. **Go Further With Form Processors** - Auto-responders, conditional recipients, redirects are included! Go further with our add-ons!
 
 == Changelog ==
+
+= Caldera Forms 1.9.4 (February 26, 2021) Saving buttons, forms and creators =
+See: [https://calderaforms.com/updates/caldera-forms-1-9-4](https://calderaforms.com/updates/caldera-forms-1-9-4?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-9.4)
+* Fixes WP 5.6 Compatibility issues
+    * make sure the field edition process ( in @calderajs package ) is passed all data required
+    * dequeue jQuery 1.12.4
+    * changed deprecated jQuery events
+    * call jQuery instead of $
+    * add a js click event to reTrigger baldrickTrigger events ( jQuery update seem not to listen to baldrick events for DOM elements that are not shown on the first pageload )
+    * add an html onClick event to call baldrickTrigger on the view entry button
+    * Add 'permission_callback' => TRUE to tokens.php and crud.php
+
 
 = Caldera Forms 1.9.3 (December 21, 2020) WP 5.6 =
 See: [https://calderaforms.com/updates/caldera-forms-1-9-3](https://calderaforms.com/updates/caldera-forms-1-9-3?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-9.3)

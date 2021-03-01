@@ -106,8 +106,8 @@ export class Addons extends Component {
                 <div className="addon-panel">
                     <img src={image_src}
                          style={{
-                             width: '100%',
-                             'vertical-align': 'top'
+                            width: '100%',
+                            verticalAlign: 'top'
                          }}
 
                     />
@@ -123,7 +123,7 @@ export class Addons extends Component {
 
                     <div className="panel-footer">
 
-                        <a class="button" href={url({source: 'cf-admin-app',categories:category}, link)} target="_blank" rel="nofollow" style={{
+                        <a className="button" href={url({source: 'cf-admin-app',categories:category}, link)} target="_blank" rel="nofollow" style={{
                             width: '100%'
                         }}>
                             { __('Learn More', 'caldera-forms') }

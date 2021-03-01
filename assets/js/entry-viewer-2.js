@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.9.3-b3 - 2020-12-18 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.9.4 - 2021-02-27 *//**
  * API Client for Caldera Forms API for a single form
  *
  * @since 1.5.0
@@ -373,7 +373,7 @@ function CFEntryViewer2( formId, formStore, entryStore, api, config ){
  *
  * @since 1.5.0
  */
-jQuery( document ).ready( function ($) {
+jQuery( function ($) {
     if( 'object' == typeof CF_ENTRY_VIEWER_2_CONFIG ){
 
         var formId = CF_ENTRY_VIEWER_2_CONFIG.formId;

@@ -4506,14 +4506,14 @@ var handlebarsVariables = {};
 
 
 /* Baldrick handlebars.js templating plugin */
-(function($){
+jQuery(function($){
   var compiledTemplates = {};
-  $.fn.baldrick.registerhelper('handlebars', {
+  jQuery.fn.baldrick.registerhelper('handlebars', {
     bind  : function(triggers, defaults){
       var templates = triggers.filter("[data-template-url]");
       if(templates.length){
         templates.each(function(){
-          var trigger = $(this);
+          var trigger = jQuery(this);
           //console.log(trigger.data());
           if(typeof compiledTemplates[trigger.data('templateUrl')] === 'undefined'){
             compiledTemplates[trigger.data('templateUrl')] = true;
@@ -4540,7 +4540,7 @@ var handlebarsVariables = {};
             if(cache){
               compiledTemplates[trigger.data('templateUrl')] = Handlebars.compile(cache);
             }else{
-              $.get(trigger.data('templateUrl'), function(data, ts, xhr){
+              jQuery.get(trigger.data('templateUrl'), function(data, ts, xhr){
                 
                 if(typeof(Storage)!=="undefined"){
 
@@ -4584,8 +4584,8 @@ var handlebarsVariables = {};
         if( typeof compiledTemplates[opts.params.trigger.data('template')] === 'function' ){
           opts.data = compiledTemplates[opts.params.trigger.data('template')](opts.data);
         }else{
-          if($(opts.params.trigger.data('template'))){
-            compiledTemplates[opts.params.trigger.data('template')] = Handlebars.compile( $(opts.params.trigger.data('template')).html(), { trackIds : true } );
+          if(jQuery(opts.params.trigger.data('template'))){
+            compiledTemplates[opts.params.trigger.data('template')] = Handlebars.compile( jQuery(opts.params.trigger.data('template')).html(), { trackIds : true } );
             opts.data = compiledTemplates[opts.params.trigger.data('template')](opts.data);
           }
         }
@@ -4595,17 +4595,17 @@ var handlebarsVariables = {};
     }
   });
 
-})(jQuery);
+});
 
 
 /* Baldrick modals.js templating plugin */
-(function($){
+jQuery(function($){
 
   var wm_hasModal = false;
   
-  $.fn.baldrick.registerhelper('baldrick_modal', {
+  jQuery.fn.baldrick.registerhelper('baldrick_modal', {
     close_modal: function(modal, modalBackdrop, trigger, size_cycle, ev){
-      $('body').css('overflow', '');
+      jQuery('body').css('overflow', '');
       ev.preventDefault();
       modalBackdrop.fadeOut(200);
       modal.fadeOut(200, function(){
@@ -4615,17 +4615,17 @@ var handlebarsVariables = {};
           clearTimeout( size_cycle );
         }
         trigger.removeClass( ( trigger.data('activeClass') ? trigger.data('activeClass') : 'active' ) );
-        $('.baldrick-modal-wrap').css('zIndex' , '');
+        jQuery('.baldrick-modal-wrap').css('zIndex' , '');
       });
 
       // cleanup
     },
     resize_modal: function(modal, trigger){
       
-      $('body').css('overflow', 'hidden');
+      jQuery('body').css('overflow', 'hidden');
 
-      var windowWidth = $(window).width(),
-        windowHeight = $(window).height(),
+      var windowWidth = jQuery(window).width(),
+        windowHeight = jQuery(window).height(),
         modalHeight = ( modal.data('height') ? modal.data('height') : ( trigger.data('modalHeight') ? trigger.data('modalHeight') : 350 ) ),
         modalWidth = ( modal.data('width') ? modal.data('width') : ( trigger.data('modalWidth') ? trigger.data('modalWidth') : 450 ) ),
         body = modal.find('.baldrick-modal-body')
@@ -4670,20 +4670,20 @@ var handlebarsVariables = {};
     },
     refresh: function(obj){
       if(obj.params.trigger.data('modalAutoclose')){
-        $('#' + obj.params.trigger.data('modalAutoclose') + '_baldrickModalCloser').trigger('click');
+        jQuery('#' + obj.params.trigger.data('modalAutoclose') + '_baldrickModalCloser').trigger('click');
       }
       // inject tabs      
       var navtabs = obj.params.target.find('[data-tab]'),
           avatar = obj.params.target.find('.user-avatar');
           
       if( navtabs.length ){
-        var tabs = $('<ul>', { "class" : "navtabs" } ),
+        var tabs = jQuery('<ul>', { "class" : "navtabs" } ),
             hasSelection = false;
        
         navtabs.each( function(k,v){
-          var tab = $(this),
-              element = $('<li>'),
-              link = $('<a>', { "href": '#'});
+          var tab = jQuery(this),
+              element = jQuery('<li>'),
+              link = jQuery('<a>', { "href": '#'});
 
             tab.addClass('hidden');
             link.html( tab.data('tab') ).attr('title', tab.data('tab') );
@@ -4695,12 +4695,12 @@ var handlebarsVariables = {};
             }
           link.on('click', function(e){
             e.preventDefault();
-            var clicked = $(this);
+            var clicked = jQuery(this);
             navtabs.hide();
             tab.show();
             tabs.children().removeClass('selected');
             clicked.parent().addClass('selected');
-            $(window).trigger('modaltabchange');
+            jQuery(window).trigger('modaltabchange');
           });
           tabs.append(element);
 
@@ -4730,34 +4730,34 @@ var handlebarsVariables = {};
       }            
     },
     event : function(el, obj){
-      var trigger = $(el), modal_id = 'wm';     
+      var trigger = jQuery(el), modal_id = 'wm';     
       
       if(trigger.data('modal') && wm_hasModal === false){
         if(trigger.data('modal') !== 'true'){
           modal_id = trigger.data('modal');
         }
-        if( $('#' + modal_id + '_baldrickModal').length ){
-          $('#' + modal_id + '_baldrickModal').remove();
+        if( jQuery('#' + modal_id + '_baldrickModal').length ){
+          jQuery('#' + modal_id + '_baldrickModal').remove();
         }
-        if( !$('#' + modal_id + '_baldrickModal').length ){
-          $('.baldrick-modal-wrap').css('zIndex' , '100099');
+        if( !jQuery('#' + modal_id + '_baldrickModal').length ){
+          jQuery('.baldrick-modal-wrap').css('zIndex' , '100099');
           //wm_hasModal = true;
           // write out a template wrapper.
-          var modal = $('<' + ( trigger.data('modalElement') ?  trigger.data('modalElement') : 'form' ) + '>', {
+          var modal = jQuery('<' + ( trigger.data('modalElement') ?  trigger.data('modalElement') : 'form' ) + '>', {
               id          : modal_id + '_baldrickModal',
               tabIndex      : -1,
               "ariaLabelled-by" : modal_id + '_baldrickModalLable',
               "class"       : "baldrick-modal-wrap ",
               "method"    : "POST"
             }),         
-          //modalDialog = $('<div>', {"class" : "modal-dialog"});
-          //modalBackdrop = $('.baldrick-backdrop').length ? $('.baldrick-backdrop') : $('<div>', {"class" : "baldrick-backdrop"});
-          modalBackdrop = $('.baldrick-backdrop').length ? ( $('.baldrick-modal-wrap' ).length ? $('<div>', {"class" : "baldrick-backdrop-invisible"}) : $('.baldrick-backdrop') ) : $('<div>', {"class" : "baldrick-backdrop"});
-          modalContent = $('<div>', {"class" : "baldrick-modal-body",id: modal_id + '_baldrickModalBody'});
-          modalFooter = $('<div>', {"class" : "baldrick-modal-footer",id: modal_id + '_baldrickModalFooter'});
-          modalHeader = $('<div>', {"class" : "baldrick-modal-title", id : modal_id + '_baldrickModalTitle'});
-          modalCloser = $('<a>', { "href" : "#close", "class":"baldrick-modal-closer", "data-dismiss":"modal", "aria-hidden":"true",id: modal_id + '_baldrickModalCloser'}).html('&times;');
-          modalTitle = $('<h3>', {"class" : "modal-label", id : modal_id + '_baldrickModalLable'});
+          //modalDialog = jQuery('<div>', {"class" : "modal-dialog"});
+          //modalBackdrop = jQuery('.baldrick-backdrop').length ? jQuery('.baldrick-backdrop') : jQuery('<div>', {"class" : "baldrick-backdrop"});
+          modalBackdrop = jQuery('.baldrick-backdrop').length ? ( jQuery('.baldrick-modal-wrap' ).length ? jQuery('<div>', {"class" : "baldrick-backdrop-invisible"}) : jQuery('.baldrick-backdrop') ) : jQuery('<div>', {"class" : "baldrick-backdrop"});
+          modalContent = jQuery('<div>', {"class" : "baldrick-modal-body",id: modal_id + '_baldrickModalBody'});
+          modalFooter = jQuery('<div>', {"class" : "baldrick-modal-footer",id: modal_id + '_baldrickModalFooter'});
+          modalHeader = jQuery('<div>', {"class" : "baldrick-modal-title", id : modal_id + '_baldrickModalTitle'});
+          modalCloser = jQuery('<a>', { "href" : "#close", "class":"baldrick-modal-closer", "data-dismiss":"modal", "aria-hidden":"true",id: modal_id + '_baldrickModalCloser'}).html('&times;');
+          modalTitle = jQuery('<h3>', {"class" : "modal-label", id : modal_id + '_baldrickModalLable'});
           
           modalHeader.append(modalCloser).appendTo(modal);
 
@@ -4790,26 +4790,26 @@ var handlebarsVariables = {};
                   return;
                 }                
               }
-              $(window).off('keypress', modal_closer );
-              $(window).off('resize', resize_action);
+              jQuery(window).off('keypress', modal_closer );
+              jQuery(window).off('resize', resize_action);
               close_modal(modal, modalBackdrop, trigger, size_cycle, e);
             };
           
-          $(window).on('resize', resize_action);
+          jQuery(window).on('resize', resize_action);
           if( ! trigger.data('fixed') ){
             modalBackdrop.on('click', modal_closer );
           }
           modalCloser.on('click', modal_closer );
-          $(window).on('keypress', modal_closer )
+          jQuery(window).on('keypress', modal_closer )
           
           modal.on('keyup', 'select,input,checkbox,radio,textarea', function(){
-            $(window).off('keypress', modal_closer );
+            jQuery(window).off('keypress', modal_closer );
           })
 
           modalContent.appendTo(modal);
           modalFooter.appendTo(modal);
 
-          modal.appendTo($('body')).hide().fadeIn(200);
+          modal.appendTo(jQuery('body')).hide().fadeIn(200);
           if( trigger.data('modalFloat') ){
             modalBackdrop.css({'background': 'transparent'});
           }
@@ -4826,10 +4826,10 @@ var handlebarsVariables = {};
           modal_id = obj.params.trigger.data('modal');
         }
 
-        modal       = $('#' + modal_id + '_baldrickModal');
-        modalBody   = $('#' + modal_id + '_baldrickModalBody');
-        modalTitle  = $('#' + modal_id + '_baldrickModalTitle');
-        modalButtons= $('#' + modal_id + '_baldrickModalFooter button');
+        modal       = jQuery('#' + modal_id + '_baldrickModal');
+        modalBody   = jQuery('#' + modal_id + '_baldrickModalBody');
+        modalTitle  = jQuery('#' + modal_id + '_baldrickModalTitle');
+        modalButtons= jQuery('#' + modal_id + '_baldrickModalFooter button');
         modalButtons.prop('disabled', false);
 
         if(obj.params.trigger.data('loadClass')){
@@ -4840,13 +4840,13 @@ var handlebarsVariables = {};
           var delay = parseFloat(obj.params.trigger.data('modalLife'));
           if(delay > 0){
             setTimeout(function(){
-              $('#' + modal_id + '_baldrickModalCloser').trigger('click');
+              jQuery('#' + modal_id + '_baldrickModalCloser').trigger('click');
             }, delay);
           }else{
-            $('#' + modal_id + '_baldrickModalCloser').trigger('click');
+            jQuery('#' + modal_id + '_baldrickModalCloser').trigger('click');
           }
         }
-        //$('#' + modal_id + '_baldrickModalLoader').hide();
+        //jQuery('#' + modal_id + '_baldrickModalLoader').hide();
         modalBody.removeClass(loadClass).show();
 
         //if(obj.params.trigger.data('modalCenter')){
@@ -4862,7 +4862,7 @@ var handlebarsVariables = {};
           if(obj.params.trigger.data('modal') !== 'true'){
             modal_id = obj.params.trigger.data('modal');
           }
-          var data = $(obj.data).prop('id', modal_id + '_baldrickModalBody');
+          var data = jQuery(obj.data).prop('id', modal_id + '_baldrickModalBody');
           obj.data = data;
         }
       }
@@ -4882,27 +4882,27 @@ var handlebarsVariables = {};
         var modal;
 
         if(params.url){
-          params.target = $('#' + modal_id + '_baldrickModalBody');
-          params.loadElement = $('#' + modal_id + '_baldrickModalLoader');
+          params.target = jQuery('#' + modal_id + '_baldrickModalBody');
+          params.loadElement = jQuery('#' + modal_id + '_baldrickModalLoader');
           params.target.empty();
         }
 
         if(trigger.data('modalTemplate')){
-          modal = $(trigger.data('modalTemplate'));
+          modal = jQuery(trigger.data('modalTemplate'));
         }else{
-          modal = $('#' + modal_id + '_baldrickModal');
+          modal = jQuery('#' + modal_id + '_baldrickModal');
         }
         // close if already open
-        if($('.modal-backdrop').length){
+        if(jQuery('.modal-backdrop').length){
           //modal.modal('hide');
         }
 
         // get options.
-        var label = $('#' + modal_id + '_baldrickModalLable'),
-          //loader  = $('#' + modal_id + '_baldrickModalLoader'),
-          title  = $('#' + modal_id + '_baldrickModalTitle'),
-          body  = $('#' + modal_id + '_baldrickModalBody'),
-          footer  = $('#' + modal_id + '_baldrickModalFooter');
+        var label = jQuery('#' + modal_id + '_baldrickModalLable'),
+          //loader  = jQuery('#' + modal_id + '_baldrickModalLoader'),
+          title  = jQuery('#' + modal_id + '_baldrickModalTitle'),
+          body  = jQuery('#' + modal_id + '_baldrickModalBody'),
+          footer  = jQuery('#' + modal_id + '_baldrickModalFooter');
 
         // reset modal
         //modal.removeClass('fade');
@@ -4915,7 +4915,7 @@ var handlebarsVariables = {};
           label.html(trigger.data('modalTitle')).parent().show();
         }
         if(trigger.data('modalButtons')){
-          var buttons = $.trim(trigger.data('modalButtons')).split(';'),
+          var buttons = trigger.data('modalButtons').trim().split(';'),
             button_list = [];
 
           body.addClass('has-buttons');
@@ -4926,22 +4926,24 @@ var handlebarsVariables = {};
               var options   = buttons[b].split('|'),
                 buttonLabel = options[0],
                 callback  = options[1].trim(),
-                atts    = $.extend({}, {"type": "button", "class":'button '}, ( callback.substr(0,1) === '{' ? jQuery.parseJSON(callback) : {"data-callback" : callback} ) ),
-                button    = $('<button>', atts);
+                atts    = jQuery.extend({}, {"type": "button", "class":'button '}, ( callback.substr(0,1) === '{' ? JSON.parse(callback) : {"data-callback" : callback} ) ),
+                button    = jQuery('<button>', atts);
               if(options[2]){
                 button.addClass(options[2]);
               }
               if(atts['data-modal-close']){
                 button.data('callback', function(){
-                  $('#' + modal_id + '_baldrickModalCloser').trigger('click');
+                  jQuery('#' + modal_id + '_baldrickModalCloser').trigger('click');
                 });
               }
               if(callback === 'dismiss'){
                 button.on('click', function(){
-                  $('#' + modal_id + '_baldrickModalCloser').trigger('click');
+                  jQuery('#' + modal_id + '_baldrickModalCloser').trigger('click');
                 })
               }else{
-                button.addClass(defaults.triggerClass.substr(1));
+                if(typeof defaults.triggerClass !== "undefined" ) {
+                  button.addClass(defaults.triggerClass.substr(1));
+                }
               }
               button.prop('disabled', true);
               
@@ -4959,20 +4961,20 @@ var handlebarsVariables = {};
 
         //optional content
         if(trigger.data('modalContent')){
-          body.html($(trigger.data('modalContent')).html());
+          body.html(jQuery(trigger.data('modalContent')).html());
           loader.hide();
           body.show();
-          $(defaults.triggerClass).baldrick(defaults);
+          jQuery(defaults.triggerClass).baldrick(defaults);
         }
 
-        $(window).trigger('resize');
+        jQuery(window).trigger('resize');
         // launch
         /*modal.modal('show').on('hidden.bs.modal', function (e) {
           wm_hasModal = false;
-          $(this).remove();
+          jQuery(this).remove();
         });*/
       }
     }
   });
 
-})(jQuery);
+});
