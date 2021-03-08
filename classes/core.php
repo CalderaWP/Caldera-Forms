@@ -4848,7 +4848,7 @@ class Caldera_Forms
 				// retain query string
 				$qurystr = array();
 				parse_str($_SERVER['QUERY_STRING'], $qurystr);
-				$out .= "<span class=\"caldera-grid\"><ol class=\"breadcrumb\" data-form=\"caldera_form_" . $current_form_count . "\" id=\"caldera-forms-breadcrumb_" . $current_form_count . "\">\r\n";
+				$out .= "<div class=\"caldera-grid\"><ol class=\"breadcrumb\" data-form=\"caldera_form_" . $current_form_count . "\" id=\"caldera-forms-breadcrumb_" . $current_form_count . "\">\r\n";
 				$current_page = 1;
 				if (!empty($_GET['cf_pg'])) {
 					$current_page = $_GET['cf_pg'];
@@ -4865,7 +4865,7 @@ class Caldera_Forms
 					$out .= "<li" . $tabclass . "><a aria-controls=\"form_page_" . $current_form_count . "_pg_" . ($page_key + 1) . "\" aria-expanded=\"" . $expanded . "\" id=\"breadcrumb_" . $current_form_count . "_pg_" . ($page_key + 1) . "\" href=\"?" . http_build_query($qurystr) . "\" data-page=\"" . ($page_key + 1) . "\" data-pagenav=\"caldera_form_" . $current_form_count . "\" title=\"" . sprintf(__('Navigate to %s',
 							'caldera-forms'), $page_name) . "\">" . $page_name . "</a></li>\r\n";
 				}
-				$out .= "</ol></span>\r\n";
+				$out .= "</ol></div>\r\n";
 			}
 
 			// sticky sticky honey
@@ -4874,7 +4874,10 @@ class Caldera_Forms
 			}
 
 
-			$out .= $form['grid_object']->renderLayout();
+			out .= sprintf('<div class="%s">%s</div>',
+				apply_filters('caldera_forms_grid_wrapper_class', 'cf-grid-wrapper', $form),
+				$form['grid_object']->renderLayout()
+			);
 
 			$out .= "</" . $form_element . ">\r\n";
 		}
