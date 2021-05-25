@@ -23,7 +23,7 @@ if(empty($style_includes)){
 
 
 // create user modal buttons
-$modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : "create_form", "data-active-class": "disabled", "data-load-class": "disabled", "data-callback": "new_form_redirect", "data-before" : "serialize_modal_form", "data-modal-autoclose" : "new_form" }|right';
+$modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"class": "ajax-trigger button", "onClick": "baldrickTriggers()", "data-action" : "create_form", "data-active-class": "disabled", "data-load-class": "disabled", "data-callback": "new_form_redirect", "data-before" : "serialize_modal_form", "data-modal-autoclose" : "new_form" }|right';
 
 ?><div class="caldera-editor-header">
 
@@ -38,6 +38,7 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
                 </li>
                 <li class="caldera-forms-toolbar-item">
                     <button class="button button-primary ajax-trigger cf-new-form-button"
+							onClick="baldrickTriggers()"
                             data-request="start_new_form"
                             data-modal-no-buttons='<?php echo esc_attr( $modal_new_form ); ?>'
                             data-modal-width="70%"
@@ -51,6 +52,7 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
                 </li>
                 <li class="caldera-forms-toolbar-item">
                     <button class="button ajax-trigger"
+							onClick="baldrickTriggers()"
                             data-request="start_new_form"
                             data-modal-width="400"
                             data-modal-height="270"
@@ -198,6 +200,7 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 									echo '<span title="' . esc_attr( sprintf( __( 'Entry viewer is disabled due to your PHP version, see %s', 'caldera-forms' ), 'https://calderaforms.com/php?utm_source=wp-admin&utm_keyword=entry_viewer_php_version' ) ) .'" data-toggle="tooltip" data-placement="bottom" class="disabled">' . esc_html__( 'Entries', 'caldera-forms' ) . '</span> |';
 								} else { ?>
 									<a class="form-control form-entry-trigger ajax-trigger cf-entry-viewer-link"
+										onClick="baldrickTriggers()"
 									   href="#entres"
 									   data-nonce="<?php echo wp_create_nonce( 'view_entries' ); ?>"
 									   data-action="browse_entries"
@@ -220,6 +223,7 @@ $modal_new_form = esc_html__('Create Form', 'caldera-forms').'|{"data-action" : 
 								$buttons = array(
 									'data-request' => 'cf_build_export',
 									'data-modal-autoclose' => 'export',
+									'class'	=> 'ajax-trigger button'
 								);
 							?>
 							data-modal="export"
@@ -405,23 +409,23 @@ var cf_build_export;
 jQuery( function( $ ){
 
 	cf_build_export = function( el ){
-		var export_object = $('#export_baldrickModal').serialize();
+		var export_object = jQuery('#export_baldrickModal').serialize();
 		window.location = "<?php echo esc_attr( admin_url('admin.php?page=caldera-forms' ) ); ?>&" + export_object;
 	};
 
-	var $notices = $('.error,.notice,.notice-error');
+	var $notices = jQuery('.error,.notice,.notice-error');
 	$notices.remove();
 
-	$( document ).on('submit', '#new_form_baldrickModal', function(e){
+	jQuery( document ).on('submit', '#new_form_baldrickModal', function(e){
 		e.preventDefault();
-		var trigger = $(this).find('button.ajax-trigger');
+		var trigger = jQuery(this).find('button.ajax-trigger');
 		trigger.trigger('click');
 	});
 	var form_toggle_state = false;
-	$( document ).on( 'click', '.hide-forms', function(){
-		var clicked = $(this),
-			panel = $('.form-admin-page-wrap'),
-			forms = $('.form-panel-wrap'),
+	jQuery( document ).on( 'click', '.hide-forms', function(){
+		var clicked = jQuery(this),
+			panel = jQuery('.form-admin-page-wrap'),
+			forms = jQuery('.form-panel-wrap'),
 			size = -35;
 
 		if( true === form_toggle_state ){
@@ -439,25 +443,25 @@ jQuery( function( $ ){
 
 	});
 
-	$( document ).on('change', '.cf-template-select', function(){
-		var template = $(this).parent(),
-			create = $('.cf-form-create'),
-			name = $('.new-form-name');
+	jQuery( document ).on('change', '.cf-template-select', function(){
+		var template = jQuery(this).parent(),
+			create = jQuery('.cf-form-create'),
+			name = jQuery('.new-form-name');
 
 		if( create.find('.cf-loading-form').length ){
 			return;
 		}
-		$('.cf-template-title').html( template.find('small').html() );
-		$('.cf-form-template.selected').removeClass('selected');
+		jQuery('.cf-template-title').html( template.find('small').html() );
+		jQuery('.cf-form-template.selected').removeClass('selected');
 		template.addClass('selected');
-		$('.cf-form-template.selected').animate( {opacity: 1}, 100 );
+		jQuery('.cf-form-template.selected').animate( {opacity: 1}, 100 );
 		//$('.cf-form-template:not(.selected)').animate( {opacity: 0.6}, 200 );
 		// shift siding
-		var box = $('.cf-templates-wrapper');
+		var box = jQuery('.cf-templates-wrapper');
 		var relativeX = box.offset().left - template.offset().left;
 		var boxwid = box.offset().left + box.innerWidth();
 		var diffwid = template.offset().left + template.innerWidth();
-		$('.cf-form-template').css('overflow', 'hidden').find('.row,small').show();
+		jQuery('.cf-form-template').css('overflow', 'hidden').find('.row,small').show();
 		template.css('overflow', 'visible').find('.row,small').hide();
 		if( boxwid - diffwid > template.outerWidth() ){
 			create.css( { left : -2, right: '' } );
@@ -469,13 +473,13 @@ jQuery( function( $ ){
 
 		name.focus();
 	});
-	$( document ).on('click', '.cf-change-template-button', function(){
-		$('.cf-template-select:checked').prop('checked', false);
-		$('.cf-form-template').removeClass('selected');
+	jQuery( document ).on('click', '.cf-change-template-button', function(){
+		jQuery('.cf-template-select:checked').prop('checked', false);
+		jQuery('.cf-form-template').removeClass('selected');
 		//$('.cf-form-template').animate( {opacity: 1}, 200 );
-		$('.cf-form-create').fadeOut(100, function(){
-			$('.cf-form-template').css('overflow', 'hidden').find('div,small').fadeIn(100);
-			$(this).attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
+		jQuery('.cf-form-create').fadeOut(100, function(){
+			jQuery('.cf-form-template').css('overflow', 'hidden').find('div,small').fadeIn(100);
+			jQuery(this).attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
 		})
 	});
 
@@ -483,16 +487,16 @@ jQuery( function( $ ){
 
 	//switch in and out of email settings
 	var inEmailSettings = false;
-	$( '#cf-email-settings' ).on( 'click', function(e){
+	jQuery( '#cf-email-settings' ).on( 'click', function(e){
 		e.preventDefault();
-		var $mainUI = $( '.form-panel-wrap, .form-entries-wrap' ),
-			$emailSettingsUI = $('#cf-email-settings-ui'),
-			$otherButtons = $('.caldera-forms-toolbar-item a'),
-			$toggles = $('.toggle_option_preview, #render-with-label'),
-			$clippy = $('#caldera-forms-clippy');
+		var $mainUI = jQuery( '.form-panel-wrap, .form-entries-wrap' ),
+			$emailSettingsUI = jQuery('#cf-email-settings-ui'),
+			$otherButtons = jQuery('.caldera-forms-toolbar-item a'),
+			$toggles = jQuery('.toggle_option_preview, #render-with-label'),
+			$clippy = jQuery('#caldera-forms-clippy');
 
 		if( inEmailSettings ){
-			$( this ).html( '<?php esc_html_e( 'Email Settings', 'caldera-forms' ); ?>' );
+			jQuery( this ).html( '<?php esc_html_e( 'Email Settings', 'caldera-forms' ); ?>' );
 			inEmailSettings = false;
 			$otherButtons.removeClass( 'disabled' );
 			$emailSettingsUI.hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
@@ -501,11 +505,11 @@ jQuery( function( $ ){
 			$clippy.show().attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' );
 		}else{
 			inEmailSettings = true;
-			$( this ).html( '<?php esc_html_e( 'Close Email Settings', 'caldera-forms' ); ?>' );
+			jQuery( this ).html( '<?php esc_html_e( 'Close Email Settings', 'caldera-forms' ); ?>' );
 			$otherButtons.addClass( 'disabled' );
 			$mainUI.hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
 			$emailSettingsUI.show().attr( 'aria-hidden', 'false' ).css( 'visibility', 'visible' );
-			$( this ).html = "<?php esc_html__( 'Email Settings', 'caldera-forms' ); ?>";
+			jQuery( this ).html = "<?php esc_html__( 'Email Settings', 'caldera-forms' ); ?>";
 			$clippy.hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
 			$toggles.hide().attr( 'aria-hidden', 'true' ).css( 'visibility', 'hidden' );
 		}
@@ -515,18 +519,18 @@ jQuery( function( $ ){
 	});
 
 	//handle save of email settings
-	$( '#cf-email-settings-save' ).on( 'click', function( e ) {
+	jQuery( '#cf-email-settings-save' ).on( 'click', function( e ) {
 		e.preventDefault( e );
 		var data = {
-			nonce: $('#cfemail').val(),
+			nonce: jQuery('#cfemail').val(),
 			action: 'cf_email_save',
-			method: $('#cf-emails-api').val(),
-			sendgrid: $('#cf-emails-sendgrid-key').val()
+			method: jQuery('#cf-emails-api').val(),
+			sendgrid: jQuery('#cf-emails-sendgrid-key').val()
 		};
-		var $spinner = $( '#cf-email-spinner' );
+		var $spinner = jQuery( '#cf-email-spinner' );
 		$spinner.attr( 'aria-hidden', false ).css( 'visibility', 'visible' ).show();
 
-		$.post( ajaxurl, data ).done( function( r ) {
+		jQuery.post( ajaxurl, data ).done( function( r ) {
 			$spinner.attr( 'aria-hidden', true ).css( 'visibility', 'hidden' ).hide(
 				500, function(){
 					document.getElementById( 'cf-email-settings' ).click();
@@ -539,16 +543,16 @@ jQuery( function( $ ){
 
 
 
-	$(document).on('click', '.cf-form-shortcode-preview', function(){
-		var clicked = $( this ),
+	jQuery(document).on('click', '.cf-form-shortcode-preview', function(){
+		var clicked = jQuery( this ),
 			shortcode = clicked.prev(),
 			name = shortcode.prev();
 		name.hide();
 		clicked.hide();
 		shortcode.show().focus().select();
 	});
-	$(document).on('blur', '.cf-shortcode-preview', function(){
-		var clicked = $( this ),
+	jQuery(document).on('blur', '.cf-shortcode-preview', function(){
+		var clicked = jQuery( this ),
 			form = clicked.prev(),
 			name = clicked.next();
 		clicked.hide();
@@ -556,13 +560,13 @@ jQuery( function( $ ){
 		name.show();
 	})
 
-	$(document).ready(function() {
+	jQuery( function() {
 		var emailSettingsNotificationNudgeTimeout = setTimeout(function(){
-			$('#cf-email-settings').addClass('cf-email-settings-notification-nudge');
+			jQuery('#cf-email-settings').addClass('cf-email-settings-notification-nudge');
 		}, 3000);
-		$('#cf-email-settings').on('click', function() {
+		jQuery('#cf-email-settings').on('click', function() {
 			clearTimeout(emailSettingsNotificationNudgeTimeout);
-			$('#cf-email-settings').removeClass('cf-email-settings-notification-nudge');
+			jQuery('#cf-email-settings').removeClass('cf-email-settings-notification-nudge');
 		});
 	});
 

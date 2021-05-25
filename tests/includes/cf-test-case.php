@@ -358,17 +358,6 @@ class Caldera_Forms_Test_Case extends WP_UnitTestCase {
     }
 
     /**
-     * Assert a value is numeric
-     *
-     * @since 1.6
-     *
-     * @param mixed $maybeNumeric
-     */
-    protected function assertIsNumeric( $maybeNumeric, $message = '' ){
-        $this->assertTrue( is_numeric( $maybeNumeric ), $message );
-    }
-
-    /**
      * Save an entry, with email and name fields we can identify a person by.
      *
      * @since 1.7.0

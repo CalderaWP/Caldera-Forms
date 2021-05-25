@@ -20,7 +20,7 @@ WP_CORE_DIR=${WP_CORE_DIR-/tmp/wordpress/}
 
 if [[ $WP_VERSION =~ [0-9]+\.[0-9]+(\.[0-9]+)? ]]; then
 	WP_TESTS_TAG="tags/$WP_VERSION"
-elif [[ $WP_VERSION == 'nightly' || $WP_VERSION == 'trunk' ]]; then
+elif [[ $WP_VERSION == 'nightly' || $WP_VERSION == 'trunk' ]] ; then
 	WP_TESTS_TAG="trunk"
 else
 	# http serves a single offer, whereas https serves multiple. we only want one
@@ -44,7 +44,7 @@ install_wp() {
 
 	mkdir -p $WP_CORE_DIR
 
-	if [[ $WP_VERSION == 'nightly' || $WP_VERSION == 'trunk' ]]; then
+	if [[ $WP_VERSION == 'nightly' || $WP_VERSION == 'trunk' ]] ; then
 		mkdir -p /tmp/wordpress-nightly
 		download https://wordpress.org/nightly-builds/wordpress-latest.zip  /tmp/wordpress-nightly/wordpress-nightly.zip
 		unzip -q /tmp/wordpress-nightly/wordpress-nightly.zip -d /tmp/wordpress-nightly/
@@ -93,7 +93,7 @@ install_test_suite() {
 
 install_db() {
 
-	if [ ${SKIP_DB_CREATE} = "true" ]; then
+	if [ ${SKIP_DB_CREATE} = "true" ] ; then
 		return 0
 	fi
 
@@ -104,7 +104,7 @@ install_db() {
 	local EXTRA=""
 
 	if ! [ -z $DB_HOSTNAME ] ; then
-		if [ $(echo $DB_SOCK_OR_PORT | grep -e '^[0-9]\{1,\}$') ]; then
+		if [ $(echo $DB_SOCK_OR_PORT | grep -e '^[0-9]\{1,\}$') ] ; then
 			EXTRA=" --host=$DB_HOSTNAME --port=$DB_SOCK_OR_PORT --protocol=tcp"
 		elif ! [ -z $DB_SOCK_OR_PORT ] ; then
 			EXTRA=" --socket=$DB_SOCK_OR_PORT"

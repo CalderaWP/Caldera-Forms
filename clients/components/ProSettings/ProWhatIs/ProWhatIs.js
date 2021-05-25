@@ -17,19 +17,19 @@ export const ProWhatIs = (props) => {
 			<p className="pro-title">Caldera Forms Pro is an app + plugins that makes forms easy.</p>
 			<h3><Twemoji className="emoji" text=":volcano:"/>Benefits</h3>
 			<ul>
-				<li>
+				<li key="enhanced-mail-delivery">
 					<Twemoji className="emoji" text=":email:"/>
 					Enhanced Email Delivery
 				</li>
-				<li>
+				<li key="form-to-pdf">
 					<Twemoji className="emoji" text=":eyes:"/>
 					Form To PDF
 				</li>
-				<li>
+				<li key="priority-support">
 					<Twemoji className="emoji" text=":volcano:"/>
 					Priority Support
 				</li>
-				<li>
+				<li key="add-ons">
 					<Twemoji className="emoji" text=":plug:"/>
 					Add-ons Included in Yearly Plans
 				</li>

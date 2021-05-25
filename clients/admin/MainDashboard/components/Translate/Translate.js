@@ -102,7 +102,7 @@ export default class Translate extends Component {
             <Grid
                 className={'cf-translate-panel'}
                 style={
-                    {'max-width': '100%'}
+                    {maxWidth: '100%'}
                 }>
                 <Row>
                     <Col xs={12}>

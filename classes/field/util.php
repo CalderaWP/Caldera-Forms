@@ -66,8 +66,20 @@ class Caldera_Forms_Field_Util {
 			$fields = Caldera_Forms_Forms::get_fields( $form, false );
 			if ( isset( $fields[ $field ] ) ) {
 				$field = $fields[ $field ];
+
 			} else {
-				return false;
+				//Check If the field was passed via its slug
+				$new_field = false;
+				foreach( $fields as $ind => $in_field){
+					if( $field === $in_field["slug"] ) {
+						$new_field = $field = $in_field;
+					}
+				}
+				//If it is still undefined return false
+				if(!$new_field){
+					return false;
+				}
+				
 			}
 		}
 

@@ -625,9 +625,10 @@ class Caldera_Forms_Admin {
 			$buttons[ 'edit_entry' ] = array(
 				'label'  => esc_html__( 'Edit Entry', 'caldera-forms' ),
 				'config' => array(
-					'data-trigger' => '#edit-entry-{{_entry_id}}'
+					'data-trigger' => '#edit-entry-{{_entry_id}}',
+					'onClick'	=>	'baldrickTriggers()'
 				),
-				'class'  => 'button-primary'
+				'class'  => 'button-primary ajax-trigger'
 			);
 
 		}
@@ -642,16 +643,18 @@ class Caldera_Forms_Admin {
 		$buttons['submit_form'] = array(
 			'label'		=>	esc_html__( 'Save Changes', 'caldera-forms' ),
 			'config'	=>	array(
-				"data-for" => "#view_entry_baldrickModalBody .caldera_forms_form"
+				"data-for" => "#view_entry_baldrickModalBody .caldera_forms_form",
+				'onclick'	=> 'baldrickTriggers()'
 			),
-			'class'		=>	'right button-primary'
+			'class'		=>	'right button-primary ajax-trigger'
 		);
 		$buttons['view_entry'] = array(
 			'label'		=>	esc_html__( 'View Entry', 'caldera-forms' ),
 			'config'	=>	array(
-				"data-for" => ".view-entry-btn.current-view"
+				"data-for" => ".view-entry-btn.current-view",
+				'onclick'	=> 'baldrickTriggers()'
 			),
-			'class'		=>	''
+			'class'		=>	'ajax-trigger'
 		);
 
 

@@ -164,6 +164,47 @@ class Test_Caldera_Forms_API extends Caldera_Forms_Test_Case
 		$this->assertSame($forms[ $form_two_id ][ 'db_support' ], $form[ 'db_support' ]);
 	}
 
+    /**
+     * @group now
+     */
+	public function testGetFormsUsesCache(){
+        global $wpdb;
+        $form_one_id = $this->import_autoresponder_form();
+        $form_two_id = $this->import_contact_form();
+        $forms = Caldera_Forms_Forms::get_forms(TRUE, TRUE);
+        $this->assertCount(2, $forms);
+        $this->assertFalse(is_null($wpdb->last_query));
+
+        $wpdb->last_query = null;
+        $forms = Caldera_Forms_Forms::get_forms(TRUE, TRUE);
+        $this->assertCount(2, $forms);
+        $this->assertTrue(is_null($wpdb->last_query));
+
+    }
+
+    /**
+     * @group now
+     */
+    public function testGetFormUsesCache(){
+        global $wpdb;
+        $form_one_id = $this->import_autoresponder_form();
+        $form_two_id = $this->import_contact_form();
+        $forms = Caldera_Forms_Forms::get_forms(TRUE, TRUE);
+        $this->assertCount(2, $forms);
+        $this->assertFalse(is_null($wpdb->last_query));
+
+        $wpdb->last_query = null;
+        $form = Caldera_Forms_Forms::get_form($form_one_id);
+        $this->assertTrue(is_null($wpdb->last_query));
+        $this->assertSame($forms[ $form_one_id ][ 'name' ], $form[ 'name' ]);
+        $this->assertSame($forms[ $form_one_id ][ 'ID' ], $form[ 'ID' ]);
+
+        $form = Caldera_Forms_Forms::get_form($form_two_id);
+        $this->assertTrue(is_null($wpdb->last_query));
+        $this->assertSame($forms[ $form_two_id ][ 'name' ], $form[ 'name' ]);
+        $this->assertSame($forms[ $form_two_id ][ 'ID' ], $form[ 'ID' ]);
+    }
+
 	/**
 	 * Test created form comes back out of database correctly
 	 *

@@ -1,4 +1,4 @@
-jQuery( document ).ready(function($) {
+jQuery( function($) {
 	/**
 	 * Add accessibility attributes on invalid field
 	 *

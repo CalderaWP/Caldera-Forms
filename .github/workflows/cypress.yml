@@ -1,0 +1,48 @@
+name: E2E Tests
+
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '12'
+    - uses: nanasess/setup-php@master
+      with:
+        php-version: '7.4'
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate
+
+    - name: Install dependencies
+      run: composer install
+
+    - name: Composer update
+      run: composer update
+
+    - name: Install js packages
+      run: yarn
+
+    - name: Refresh assets build
+      run: yarn build
+
+    - name: Install wordpress
+      run: composer wp:install
+      continue-on-error: true
+
+    - name: Activate Caldera Forms
+      run: composer wp:activate
+      continue-on-error: true
+
+    - name: Tests setup
+      run: composer test:setup
+      continue-on-error: true
+
+    # These don't work in CI yet
+    - name: Run e2e tests
+      run: yarn test:e2e:ci
+      continue-on-error: true

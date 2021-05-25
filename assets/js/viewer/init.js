@@ -3,7 +3,7 @@
  *
  * @since 1.5.0
  */
-jQuery( document ).ready( function ($) {
+jQuery( function ($) {
     if( 'object' == typeof CF_ENTRY_VIEWER_2_CONFIG ){
 
         var formId = CF_ENTRY_VIEWER_2_CONFIG.formId;

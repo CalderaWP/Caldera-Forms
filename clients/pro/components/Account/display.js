@@ -7,9 +7,9 @@ export default {
     return (
       <div id="cf-pro-account">
         <ul>
-          <li>Public Key {this.publicKey}</li>
-          <li>Secret Key {this.secretKey}</li>
-          <li>Token {this.token}</li>
+          <li key="public-key">Public Key {this.publicKey}</li>
+          <li key="secret-key">Secret Key {this.secretKey}</li>
+          <li key="token">Token {this.token}</li>
         </ul>
       </div>
     )

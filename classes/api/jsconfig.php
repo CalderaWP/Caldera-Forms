@@ -66,6 +66,7 @@ class Caldera_Forms_API_JsConfig implements JsonSerializable{
 	 * @since 1.5.0
 	 */
 	protected function set_data(){
+
 		$this->data = array(
 			'dateFormat' => Caldera_Forms::time_format(),
 			'api' => array(
