@@ -21,7 +21,7 @@
 			<?php esc_html_e( 'Form Name', 'caldera-forms' ); ?>
 		</label>
 		<div class="caldera-config-field">
-			<input id="cf-form-name"type="text" class="field-config required" name="config[name]" value="<?php echo $element[ 'name' ]; ?>" style="width:500px;" required="required">
+			<input id="cf-form-name"type="text" class="field-config required" name="config[name]" value="<?php esc_attr_e( $element[ 'name' ] ); ?>" style="width:500px;" required="required">
 		</div>
 	</div>
 
