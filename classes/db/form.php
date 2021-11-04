@@ -359,6 +359,9 @@ class Caldera_Forms_DB_Form extends Caldera_Forms_DB_Base {
 	 * @return string
 	 */
 	protected function prepare_config( $config ){
+		if(!empty($config['name'])){
+			$config['name'] = sanitize_text_field($config['name']);
+		}
 		return serialize( stripslashes_deep( $config ) );
 
 	}
