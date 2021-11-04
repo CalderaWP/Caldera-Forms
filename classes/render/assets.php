@@ -597,6 +597,7 @@ class Caldera_Forms_Render_Assets
 			if ($script) {
                 if (
                     in_array($name, [
+						'render',
                         'blocks',
                         'pro',
                         'privacy',
@@ -613,6 +614,7 @@ class Caldera_Forms_Render_Assets
             } else {
                 if (
                     in_array($name, [
+						'render',
                         'blocks',
                         'pro',
                         'privacy',
