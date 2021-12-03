@@ -7,7 +7,7 @@
         "forms",
         "caldera"
     ],
-    "license": "GPL-2.0+",
+    "license": "GPL-2.0-or-later",
     "authors": [
         {
             "name": "Josh Pollock",
@@ -34,6 +34,7 @@
         "composer/installers": "^1.6",
         "a5hleyrich/wp-queue": "^1.3",
         "symfony/translation": "~3.0",
+        "symfony/polyfill-mbstring": "1.20",
         "mossadal/math-parser": "^1.3",
         "pimple/pimple": "3.2.*"
     },
