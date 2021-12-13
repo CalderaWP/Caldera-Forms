@@ -3,7 +3,7 @@ Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
 Tags: form, contact form, forms, form creator, form manager, mailchimp, paypal, stripe, login, payment, forms manager, forms creation
 Requires at least: 5.2
 Tested up to: 5.4.2
-Stable tag: 1.9.5
+Stable tag: 1.9.5.1
 License: GPLv2
 Requires PHP: 5.6
 
@@ -769,6 +769,10 @@ This could also be a sign of a more serious issue on your server, but is probabl
 5. **Go Further With Form Processors** - Auto-responders, conditional recipients, redirects are included! Go further with our add-ons!
 
 == Changelog ==
+
+= Caldera Forms 1.9.5.1 (December 13, 2021) Regenerating dependencies =
+See: [https://calderaforms.com/updates/caldera-forms-1-9-5-1](https://calderaforms.com/updates/caldera-forms-1-9-5-1?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-9.5.1)
+* Regenerate dependencies
 
 = Caldera Forms 1.9.5 (November 4, 2021) 0 - CF-1.9.5 - ... =
 See: [https://calderaforms.com/updates/caldera-forms-1-9-5](https://calderaforms.com/updates/caldera-forms-1-9-5?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-9.5)
