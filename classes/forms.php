@@ -125,7 +125,7 @@ class Caldera_Forms_Forms
         $form = self::filter_form($id_name, $form);
 
         if (is_array($form) && empty($form['ID'])) {
-            $form['ID'] = $id_name;
+            $form['ID'] = sanitize_html_class( $id_name );
         }
 
         if (!empty($form) && !empty($external)) {
