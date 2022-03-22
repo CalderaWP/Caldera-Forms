@@ -770,6 +770,10 @@ This could also be a sign of a more serious issue on your server, but is probabl
 
 == Changelog ==
 
+= Caldera Forms 1.9.7 (March 22, 2022) cf-api fix =
+See: [https://calderaforms.com/updates/caldera-forms-1-9-7](https://calderaforms.com/updates/caldera-forms-1-9-7?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-9.7)
+* Fixes an issue with cf-api query param when no id attribute is set.
+
 = Caldera Forms 1.9.6 (December 13, 2021) Regenerating dependencies =
 See: [https://calderaforms.com/updates/caldera-forms-1-9-6](https://calderaforms.com/updates/caldera-forms-1-9-6?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-9.6)
 * Regenerate dependencies
