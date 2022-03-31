@@ -78,7 +78,7 @@ class Caldera_Forms_Field_Honey{
 
         $honey_words = self::words( $form );
         $word        = $honey_words[ rand( 0, count( $honey_words ) - 1 ) ];
-        $field .= "<label>" . esc_html__( ucwords( str_replace( '_', ' ', $word ) ) ) . "</label><input type=\"text\" name=\"" . esc_attr( $word ) . "\" value=\"\" autocomplete=\"off\">\r\n";
+        $field .= "<label>" . esc_html__( ucwords( str_replace( '_', ' ', $word ) ) ) . "<input type=\"text\" name=\"" . esc_attr( $word ) . "\" value=\"\" autocomplete=\"off\"></label>\r\n";
         $field .= "</div>";
         return $field;
 
