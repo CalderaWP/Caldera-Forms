@@ -73,6 +73,10 @@ class Caldera_Forms_Email_Resend {
 		do_action( 'caldera_forms_pre_email_resend', $this->form, $this->entry_id, $this->get_data() );
         $this->remove_magic_hooks();
         $this->form['mailer'][ 'recipients' ] = Caldera_Forms::do_magic_tags($this->form['mailer'][ 'recipients' ], $this->entry_id, $this->data );
+        $this->form['mailer'][ 'sender_name' ] = Caldera_Forms::do_magic_tags($this->form['mailer'][ 'sender_name' ], $this->entry_id, $this->data );
+        $this->form['mailer'][ 'reply_to' ] = Caldera_Forms::do_magic_tags($this->form['mailer'][ 'reply_to' ], $this->entry_id, $this->data );
+        $this->form['mailer'][ 'cc_to' ] = Caldera_Forms::do_magic_tags($this->form['mailer'][ 'cc_to' ], $this->entry_id, $this->data );
+        $this->form['mailer'][ 'bcc_to' ] = Caldera_Forms::do_magic_tags($this->form['mailer'][ 'bcc_to' ], $this->entry_id, $this->data );
         $this->add_magic_hooks();
 		Caldera_Forms_Save_Final::do_mailer( $this->form, $this->entry_id, $this->get_data() );
         $this->remove_magic_hooks();
