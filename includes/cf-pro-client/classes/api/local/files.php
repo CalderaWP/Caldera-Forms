@@ -45,8 +45,8 @@ class files implements \Caldera_Forms_API_Route {
 	 */
 	public function key_check(\WP_REST_Request $request)
 	{
-		$public = !empty($request[ 'public' ]) ? $request[ 'public' ] : !is_null($request->get_header('X-CS-PUBLIC')) ? $request->get_header('X-CS-PUBLIC') : null;
-		$token = !empty($request[ 'token' ]) ? $request[ 'token' ] : !is_null($request->get_header('X-CS-TOKEN')) ? $request->get_header('X-CS-TOKEN') : null;
+		$public = !empty($request[ 'public' ]) ? $request[ 'public' ] : ( !is_null($request->get_header('X-CS-PUBLIC')) ? $request->get_header('X-CS-PUBLIC') : null );
+		$token = !empty($request[ 'token' ]) ? $request[ 'token' ] : ( !is_null($request->get_header('X-CS-TOKEN')) ? $request->get_header('X-CS-TOKEN') : null );
 		return caldera_forms_pro_compare_to_saved_keys($public, $token);
 	}
 
