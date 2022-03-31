@@ -1137,13 +1137,25 @@ class Caldera_Forms
 		if (!empty($config['bcc'])) {
 			$email_message['bcc'] = Caldera_Forms::do_magic_tags($config['bcc']);
 
-			$bcc_array = array_map('trim', preg_split('/[;,]/', Caldera_Forms::do_magic_tags($config['bcc'])));
+            $bcc_array = array_map('trim', preg_split('/[;,]/', Caldera_Forms::do_magic_tags($config['bcc'])));
 			foreach ($bcc_array as $bcc_to) {
 				if (is_email($bcc_to)) {
 					$email_message['headers'][] = 'Bcc: ' . $bcc_to;
 				}
 			}
-		}
+        }
+        
+        $email_message['cc'] = false;
+        if (!empty($config['cc'])) {
+        $email_message['cc'] = Caldera_Forms::do_magic_tags($config['cc']);
+        
+            $cc_array = array_map('trim', preg_split('/[;,]/', Caldera_Forms::do_magic_tags($config['cc'])));
+            foreach ($cc_array as $cc_to) {
+                if (is_email($cc_to)) {
+                    $email_message['headers'][] = 'Cc: ' . $cc_to;
+                }
+            }
+        }
 
 		/**
 		 * Filter email to be sent as auto responder

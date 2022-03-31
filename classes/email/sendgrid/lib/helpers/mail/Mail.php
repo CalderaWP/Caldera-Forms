@@ -79,6 +79,43 @@ class ClickTracking implements \jsonSerializable
     }
 }
 
+class CcSettings implements \jsonSerializable
+{
+    private
+    $enable,
+    $email;
+    
+    public function setEnable($enable)
+    {
+        $this->enable = $enable;
+    }
+    
+    public function getEnable()
+    {
+        return $this->enable;
+    }
+    
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+    
+    public function getEmail()
+    {
+        return $this->email;
+    }
+    
+    public function jsonSerialize()
+    {
+        return array_filter(
+            [
+                'enable' => $this->getEnable(),
+                'email' => $this->getEmail()
+            ]
+        );
+    }
+}
+
 class OpenTracking implements \jsonSerializable
 {
     private
@@ -511,6 +548,7 @@ class MailSettings implements \jsonSerializable
 {
     private
         $bcc,
+        $cc,
         $bypass_list_management,
         $footer,
         $sandbox_mode,
@@ -524,6 +562,16 @@ class MailSettings implements \jsonSerializable
     public function getBccSettings()
     {
         return $this->bcc;
+    }
+    
+    public function setCcSettings($cc)
+    {
+        $this->cc = $cc;
+    }
+
+    public function getCcSettings()
+    {
+        return $this->cc;
     }
 
     public function setBypassListManagement($bypass_list_management)

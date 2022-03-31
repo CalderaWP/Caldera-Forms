@@ -126,7 +126,20 @@ if ( ! empty( $element['mailer']['enable_mailer'] ) ) {
 			</div>
 
 		</div>
-		<div class="caldera-config-group">
+        
+        <div class="caldera-config-group">
+            <label for="cf-email-cc">
+                <?php esc_html_e('CC', 'caldera-forms'); ?>
+            </label>
+            <div class="caldera-config-field">
+				<input type="text" class="field-config magic-tag-enabled" name="config[mailer][cc_to]" value="<?php if(isset( $element['mailer']['cc_to'] ) ){ echo $element['mailer']['cc_to']; } ?>" style="width:400px;" id="cf-email-cc" aria-describedby="cf-email-cc-description" />
+				<p class="description" id="cf-email-cc-description">
+					<?php esc_html_e('Comma separated list of email addresses to send a CC to.', 'caldera-forms'); ?>
+				</p>
+            </div>
+        </div>
+        
+        <div class="caldera-config-group">
 			<label for="cf-email-bcc">
 				<?php esc_html_e('BCC', 'caldera-forms'); ?>
 			</label>

@@ -203,8 +203,20 @@ class Caldera_Forms_Save_Final {
 				'attachments' => array()
 			);
 			$mail['from']      = $sendermail;
-			$mail['from_name'] = $sendername;
+            $mail['from_name'] = $sendername;
 
+            // if added a cc
+            $mail['cc'] = false;
+            if ( isset( $form['mailer']['cc_to'] ) && ! empty( $form['mailer']['cc_to'] ) ) {
+                $mail['cc']       = $form['mailer']['cc_to'];
+
+                $cc_array = array_map('trim', preg_split( '/[;,]/', Caldera_Forms::do_magic_tags( $form['mailer']['cc_to'] ) ) );
+                foreach( $cc_array as $cc_to ) {
+                    if ( is_email( $cc_to ) ) {
+                        $mail['headers'][] = 'Cc: ' . $cc_to;
+                    }
+                }
+            }
 
 			// if added a bcc
 			$mail['bcc'] = false;
