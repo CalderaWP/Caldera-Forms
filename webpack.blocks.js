@@ -23,6 +23,12 @@ plugins.push(
  */
 module.exports = {
     ...defaultConfig,
+    resolve: {
+      fallback: {
+          crypto: false,
+          // querystring: require.resolve("querystring-es3"),
+      },
+    },
     entry: {
         index: path.resolve( process.cwd(), 'clients/blocks', 'index.js' ),
     },

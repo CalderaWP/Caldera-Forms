@@ -222,7 +222,7 @@ export const processFileField = (processData, processFunctions) => {
 		cf2.uploadStarted.push(fieldId);
 		obj.$form.data(fieldId, field.control);
 		cf2.pending.push(fieldId);
-		processData.verify = jQuery(`#_cf_verify_${field.formId}`).val();
+		processData.verify = jQuery(`._cf_verify_${field.formId}`).val();
 		if( '' === values[fieldId] ){
 			if( theComponent.isFieldRequired(fieldIdAttr) ){
 				theComponent.addFieldMessage( fieldIdAttr, strings.fieldIsRequired);

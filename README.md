@@ -26,14 +26,14 @@ Requires: git, yarn, Grunt.
     - `yarn i && composer install`
 - If you are wish to use [the provided local development environment](./contributing/local-dev.md)
     - `composer dev:install`
-    
+
 ### Build For Release
 To create a build to ship to WordPress.org:
 `yarn package`
 
 This creates `/build/<version>` where `<version>` is the current version set in `package.json`. This creates a directory you can ZIP up for testing or whatever.
 
-See "Release To WordPress.org" section below for more details on pushing this build to WordPress.org. 
+See "Release To WordPress.org" section below for more details on pushing this build to WordPress.org.
 
 ### JavaScript Development
 [See automated testing docs for more information on directory structure, in regards to JavaScript test files]()
@@ -61,6 +61,9 @@ This is the old stuff, built with grunt.
     -  `yarn build:legacy`    
 
 #### CLI Commands
+
+* npx @wordpress/scripts packages-update --dist-tag=wp-5.8
+
 ##### Composer
 * `composer test:php` - Run PHP tests -- isolated unit tests and the WordPress integration tests.
 * `composer dev:install` - Installs dependencies, Docker-based test environment and sets up test forms.

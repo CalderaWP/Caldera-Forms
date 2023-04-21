@@ -41,7 +41,7 @@ domReady(function () {
 			const fieldIdAttr = fieldElement.getAttribute('data-field-id');
 			if('undefined' !== typeof idAttr){
 				const formConfig = window.cf2[idAttr];
-				
+
 				if('undefined' !== typeof formConfig){
 					let fieldConfig = formConfig.fields.hasOwnProperty(fieldIdAttr) ?
 						formConfig.fields[fieldIdAttr]
@@ -59,7 +59,7 @@ domReady(function () {
 					}
 				}
 			}
-			
+
 		});
 
 		/**
@@ -84,7 +84,7 @@ domReady(function () {
 			){
 				return;
 			}
-			
+
 			//Compare the event form id with the component form id
 			if(!obj.hasOwnProperty('formIdAttr') || obj.formIdAttr !== idAttr){
 				return;
@@ -154,5 +154,3 @@ domReady(function () {
 	});
 
 });
-
-

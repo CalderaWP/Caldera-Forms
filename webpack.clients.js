@@ -7,10 +7,10 @@ const path = require("path");
 const { join } = path;
 const onExit = require("signal-exit");
 const webpack = require("webpack");
-const ManifestPlugin = require("webpack-manifest-plugin");
 const TerserJSPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
+const OptimizeCSSAssetsPlugin = require("css-minimizer-webpack-plugin");
 const defaultConfig = require("./node_modules/@wordpress/scripts/config/webpack.config");
 const DependencyExtractionWebpackPlugin = require("@wordpress/dependency-extraction-webpack-plugin");
 
@@ -119,21 +119,21 @@ const devServer = {
 	headers: {
 		"Access-Control-Allow-Origin": "*",
 	},
-	hotOnly: true,
-	watchOptions: {
-		aggregateTimeout: 300,
-	},
-	writeToDisk: true, //False by default, so 404 on intial load
-	disableHostCheck: true,
-	stats: {
-		all: false,
-		assets: true,
-		colors: true,
-		errors: true,
-		performance: true,
-		timings: true,
-		warnings: true,
-	},
+	// hotOnly: true,
+	// watchOptions: {
+	// 	aggregateTimeout: 300,
+	// },
+	// writeToDisk: true, //False by default, so 404 on intial load
+	// disableHostCheck: true,
+	// stats: {
+	// 	all: false,
+	// 	assets: true,
+	// 	colors: true,
+	// 	errors: true,
+	// 	performance: true,
+	// 	timings: true,
+	// 	warnings: true,
+	// },
 	port,
 };
 
@@ -154,7 +154,7 @@ const output = {
 	library: ["calderaForms", "[name]"],
 	libraryTarget: "this",
 	hotUpdateChunkFilename: "../dist/caldera-hot-load/[name].[hash].js",
-	hotUpdateMainFilename: "../dist/caldera-hot-load/hot-update.json",
+	// hotUpdateMainFilename: `../dist/caldera-hot-load/hot-update.${NODE_ENV}.json`,
 };
 
 /**
@@ -212,7 +212,7 @@ let plugins = [
 ];
 
 //Remove default dependency extractor
-plugins.filter(
+plugins = plugins.filter(
 	(plugin) => plugin.constructor.name !== "DependencyExtractionWebpackPlugin"
 );
 
@@ -224,14 +224,15 @@ plugins.push(
 		outputFormat: "json",
 	})
 );
+
 //Add more plugins in development
 if (!isProduction) {
 	plugins = [
 		...plugins,
 		// Generate a manifest file which contains a mapping of all asset filenames
 		// to their corresponding output file so that PHP can pick up their paths.
-		new ManifestPlugin({
-			fileName: "asset-manifest.json",
+		new WebpackManifestPlugin({
+			fileName: "dist/asset-manifest.json",
 			writeToFileEmit: true,
 			publicPath,
 			generate: (seed, files) =>
@@ -273,6 +274,15 @@ module.exports = {
 	devtool: "cheap-module-source-map",
 	context: process.cwd(),
 	devServer,
+	resolve: {
+		alias: {
+			"axios/lib": "/node_modules/axios/lib",
+		},
+    fallback: {
+				crypto: false,
+        querystring: require.resolve("querystring-es3"),
+    },
+  },
 	module: {
 		strictExportPresence: true,
 		rules: [
