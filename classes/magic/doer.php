@@ -67,10 +67,13 @@ class Caldera_Forms_Magic_Doer {
 				}
 				$entry = Caldera_Forms::get_slug_data( $tag, $form, $entry_id );
 
-				$field = false;
-				if ( $entry !== null ) {
-					$field = Caldera_Forms_Field_Util::get_field_by_slug( $tag, $form );
+				//If no field matching this tag candidate, do not replace
+				if ( is_null( $entry ) ){
+					continue;
 				}
+
+				$field = false;
+				$field = Caldera_Forms_Field_Util::get_field_by_slug( $tag, $form );
 
 				if( 'html' === Caldera_Forms_Field_Util::get_type( $tag, $form ) ){
 					$field = Caldera_Forms_Field_Util::get_field($tag,$form );
