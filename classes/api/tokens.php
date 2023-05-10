@@ -22,7 +22,7 @@ class Caldera_Forms_API_Tokens implements Caldera_Forms_API_Route {
 			array(
 				'methods'         => 'post',
 				'callback'        => array( $this, 'get_new_nonce' ),
-			        'permission_callback' => TRUE,
+			  'permission_callback' => '__return_true',
 				'args'            => array(
 					'form_id' => array(
 						'required'          => 'true',

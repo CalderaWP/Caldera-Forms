@@ -106,14 +106,19 @@ final class CronDebugListener implements ActionListenerInterface {
 			return;
 		}
 
-		$hooks = array_reduce(
-			$cron_array,
-			function ( $hooks, $crons ) {
+        $hooks = array_reduce(
+            (array)$cron_array,
+            function ( $hooks, $crons ) {
+                return ( $crons && is_array( $crons ) )
+                    ? array_merge( $hooks, array_keys( $crons ) )
+                    : $hooks;
+            },
+            []
+        );
 
-				return array_merge( $hooks, array_keys( $crons ) );
-			},
-			[]
-		);
+        if ( ! $hooks ) {
+            return;
+        }
 
 		$profile_cb = function () {
 
@@ -124,8 +129,7 @@ final class CronDebugListener implements ActionListenerInterface {
 			$hooks,
 			function ( $hook ) use ( $profile_cb ) {
 
-				// Please note that "(int) ( PHP_INT_MAX + 1 )" is the lowest possible integer.
-				add_action( $hook, $profile_cb, (int) ( PHP_INT_MAX + 1 ) );
+				add_action( $hook, $profile_cb, PHP_INT_MIN );
 				add_action( $hook, $profile_cb, PHP_INT_MAX );
 			}
 		);

@@ -23,8 +23,6 @@ const DependencyExtractionWebpackPlugin = require("@wordpress/dependency-extract
  */
 const isProduction = "production" === process.env.NODE_ENV;
 const isTest = "testing" === process.env.NODE_ENV;
-console.log(`${isTest ? "isTest" : "Is Not Test"}`);
-console.log(`Building for ${isProduction ? "Production" : "Development"}`);
 
 /**
  * The names of each entry point
@@ -58,11 +56,11 @@ const entry = entryPointNames.reduce((memo, entryPointName) => {
  */
 const cssPlugin = new MiniCssExtractPlugin({
 	filename: isProduction
-		? "../clients/[name]/build/style.min.css"
-		: "../clients/[name]/build/style.[hash].css",
+		? "./clients/[name]/build/style.min.css"
+		: "./clients/[name]/build/style.[hash].css",
 	chunkFilename: isProduction
-		? "../clients/[name]/build/[id].css"
-		: "../clients/[name]/build/[id].[hash].css",
+		? "./clients/[name]/build/[id].css"
+		: "./clients/[name]/build/[id].[hash].css",
 });
 
 /**
@@ -104,7 +102,7 @@ const port = parseInt(process.env.PORT, 10) || 3030;
  *
  * @type {string}
  */
-const publicPath = `https://localhost:${port}/`;
+const publicPath = `http://localhost:${port}/`;
 
 /**
  * The dev server
@@ -115,7 +113,9 @@ const publicPath = `https://localhost:${port}/`;
  *
  */
 const devServer = {
-	https: true,
+	hot: true,
+	https: false,
+	watchFiles: ['./clients/**/*'],
 	headers: {
 		"Access-Control-Allow-Origin": "*",
 	},
@@ -149,11 +149,11 @@ const devServer = {
 const output = {
 	//filename: '../clients/[name]/build/index.min.js',
 	filename: isProduction
-		? "../clients/[name]/build/index.min.js"
-		: "../clients/[name]/build/index.[hash].js",
+		? "./clients/[name]/build/index.min.js"
+		: "./clients/[name]/build/index.[hash].js",
 	library: ["calderaForms", "[name]"],
 	libraryTarget: "this",
-	hotUpdateChunkFilename: "../dist/caldera-hot-load/[name].[hash].js",
+	// hotUpdateChunkFilename: "../dist/caldera-hot-load/[name].[hash].js",
 	// hotUpdateMainFilename: `../dist/caldera-hot-load/hot-update.${NODE_ENV}.json`,
 };
 

@@ -1020,13 +1020,13 @@ class Caldera_Forms
 							$query_vars = array_merge($redirect['query'], $query_vars);
 							$base_redirect = $base_redirect[0];
 						}
-						
+
 						// Re urlencode query vars after they were parsed in this function
 						foreach($query_vars as $var_names => $var_values){
 							$query_vars[$var_names] = rawurlencode($var_values);
 						}
 						$redirect = add_query_arg($query_vars, $base_redirect);
-						
+
 						return $redirect;
 					}
 				}
@@ -4115,8 +4115,9 @@ class Caldera_Forms
 			$field_classes['field_label'][] = 'screen-reader-text sr-only';
 		}
 
-
-
+		if ( defined( 'AMP__FILE__') ) {
+			if ( 'phone' === $type && is_amp_endpoint()) $field['caption'] = '(000) 000-0000';
+		}
 
 		$field_structure = array(
 			"field" => $field,
@@ -4124,7 +4125,7 @@ class Caldera_Forms
 			"name" => $field['ID'],//$field['slug'],
 			"wrapper_before" => "<div data-field-wrapper=\"" . $field['ID'] . "\" class=\"" . $field_wrapper_class . "\" id=\"" . $field_id_attr . "-wrap\">\r\n",
 			"field_before" => "<div class=\"" . $field_input_class . "\">\r\n",
-			"label_before" => "<label id=\"" . "{$field['ID']}_{$current_form_count}_" . "Label\" for=\"" . $field_id_attr . "\" class=\"" . implode(' ',
+			"label_before" => "<label id=\"" . "{$field['ID']}_{$current_form_count}_" . "Label\" for=\"" . esc_attr( $field_id_attr ) . "\" class=\"" . implode(' ',
 					$field_classes['field_label']) . "\">",
 			"label" => $field['label'],
 			"label_required" => (empty($field['hide_label']) ? (!empty($field['required']) ? " <span aria-hidden=\"true\" role=\"presentation\" class=\"" . implode(' ',
@@ -5143,6 +5144,7 @@ class Caldera_Forms
 		 */
 		do_action('caldera_forms_rest_api_pre_init', self::$api);
 
+		self::$api->add_route(new Caldera_Forms_API_Tokens());
 		self::$api->add_route(new Caldera_Forms_API_Entries());
 		self::$api->add_route(new Caldera_Forms_API_Forms());
 		self::$api->add_route(new Caldera_Forms_API_Settings());

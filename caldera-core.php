@@ -4,7 +4,7 @@
   Plugin URI: https://CalderaForms.com
   Description: Easy to use, grid based responsive form builder for creating simple to complex forms.
   Author: Caldera Forms
-  Version: 1.9.4
+  Version: 1.9.6
   Author URI: https://CalderaForms.com
   Text Domain: caldera-forms
   GitHub Plugin URI: https://github.com/CalderaWP/caldera-forms
@@ -53,7 +53,7 @@ if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
 } else {
 	define('CFCORE_PATH', plugin_dir_path(__FILE__));
 	define('CFCORE_URL', plugin_dir_url(__FILE__));
-	define( 'CFCORE_VER', '1.9.4' );
+	define( 'CFCORE_VER', '1.9.6' );
 	define('CFCORE_EXTEND_URL', 'https://api.calderaforms.com/1.0/');
 	define('CFCORE_BASENAME', plugin_basename(__FILE__));
 
@@ -89,6 +89,7 @@ if ( !version_compare(PHP_VERSION, '5.6.0', '>=') ) {
 		Caldera_Forms_Autoloader::add_root('Caldera_Forms_CSV', CFCORE_PATH . 'classes/csv');
 		Caldera_Forms_Autoloader::add_root('Caldera_Forms_Processor_Interface', CFCORE_PATH . 'processors/classes/interfaces');
 		Caldera_Forms_Autoloader::add_root('Caldera_Forms_API', CFCORE_PATH . 'classes/api');
+		Caldera_Forms_Autoloader::add_root('Caldera_Forms_API_Tokens', CFCORE_PATH . 'classes/api/tokens');
 		Caldera_Forms_Autoloader::add_root('Caldera_Forms_Field', CFCORE_PATH . 'classes/field');
 		Caldera_Forms_Autoloader::add_root('Caldera_Forms_Magic', CFCORE_PATH . 'classes/magic');
 		Caldera_Forms_Autoloader::add_root('Caldera_Forms_Processor', CFCORE_PATH . 'processors/classes');

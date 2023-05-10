@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.9.5 - 2023-04-20 */var resBaldrickTriggers;
+/*! GENERATED SOURCE FILE caldera-forms - v1.9.6 - 2023-05-09 */var resBaldrickTriggers;
 
 jQuery(function($){
 	function fieldErrors(fields, $form, $notice) {
@@ -7644,7 +7644,7 @@ window.addEventListener("load", function(){
                              formId: formId,
                              state: state,
                              fieldIds: CFFIELD_CONFIG[instance].fields.hasOwnProperty( 'ids' ) ? CFFIELD_CONFIG[instance].fields.ids : [],
-                             nonce: jQuery( '#_cf_verify_' + formId ).val()
+                             nonce: jQuery( '._cf_verify_' + formId ).val()
                          });
 					 }
 
@@ -7739,7 +7739,7 @@ function CalderaFormsResetNonce( formId, config, $ ){
 	 * @since 1.5.0
      */
 	this.init = function(){
-		$nonceField = $( '#' + config.nonce.field + '_' + formId );
+		$nonceField = $( '.' + config.nonce.field + '_' + formId );
 		if( isNonceOld( $nonceField.data( 'nonce-time' ) ) ){
 			replaceNonce();
 		}
@@ -7902,4 +7902,3 @@ function CalderaFormsJQueryWarning( $form, $, errorStrings ){
 
 	}
 }
-

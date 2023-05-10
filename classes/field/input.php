@@ -75,6 +75,10 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 				}
 			}
 			$attrs[ 'data-parsley-type' ] = 'number';
+		}elseif ( 'phone' === $type ){
+			$attrs[ 'type' ] = 'tel';
+			$attrs[ 'title' ] = "Phone format: (000) 000-0000";
+			$attrs[ 'class' ] = 'form-control masked-phone';
 		}elseif ( 'phone_better' === $type ){
 			$attrs[ 'type' ] = 'tel';
 		}elseif ( 'credit_card_number' === $type ){
@@ -152,7 +156,7 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 				$mask = $field[ 'config' ][ 'mask' ];
 			}
 		} else {
-			$mask = '(999)999-9999';
+			$mask = '\([0-9]{3}\) [0-9]{3}-[0-9]{4}';
 			if( $field['config']['type'] == 'international' ){
 				$mask = '+99 99 999 9999';
 			}elseif ( $field['config']['type'] == 'custom' ) {
@@ -161,12 +165,10 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 
 		}
 
-		if( ! empty( $mask ) ){
-			$mask = "data-inputmask=\"'mask': '" . $mask . "'\" ";
+		if ( ! empty( $mask ) ) {
+			$mask = "pattern=\"$mask\" data-inputmask=\"'mask': '" . $mask . "'\" ";
 		}
 
 		return $mask;
 	}
-
-
 }

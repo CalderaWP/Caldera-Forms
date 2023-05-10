@@ -1,6 +1,6 @@
 {
 	"name": "caldera-forms",
-	"version": "1.9.5",
+	"version": "1.9.6",
 	"description": "Apex WordPress Forms",
 	"main": "Gruntfile.js",
 	"engines": {
@@ -143,7 +143,6 @@
 		"react": "^18.2.0",
 		"react-bootstrap": "^0.32.4",
 		"react-dom": "^18.2.0",
-		"react-error-boundary": "^4.0.4",
 		"react-redux": "^8.0.5",
 		"react-test-renderer": "^18.2.0",
 		"redux": "^4.0.1",
@@ -152,8 +151,8 @@
 		"sass-loader": "^13.2.2",
 		"style-loader": "^0.23.1",
 		"webpack": "5.47",
-		"webpack-cli": "^4.10.0",
-		"webpack-dev-server": "^4.13.3",
+		"webpack-cli": "^5.1.1",
+		"webpack-dev-server": "^4.15.0",
 		"webpack-manifest-plugin": "^5.0.0",
 		"webpack-preprocessor": "^0.1.12"
 	},

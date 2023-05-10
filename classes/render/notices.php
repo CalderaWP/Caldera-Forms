@@ -37,7 +37,7 @@ class Caldera_Forms_Render_Notices {
 	 *
 	 * @return array
 	 */
-	public static function prepare_notices( array  $notices = array(), array  $form ){
+	public static function prepare_notices( array $notices, array $form ){
 		/**
 		 * Filter final HTML for notices
 		 *

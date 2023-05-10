@@ -94,7 +94,7 @@ class Caldera_Forms_Render_Nonce {
 			}
 		}
 
-		$nonce_field = '<input type="hidden" id="' . esc_attr( self::nonce_field_name( $form_id ) ) . '" name="' . esc_attr( self::nonce_field_name() ) . '" value="' . esc_attr( self::create_verify_nonce( $form_id ) ) . '"  data-nonce-time="' . esc_attr( time() ) . '" />';
+		$nonce_field = '<input type="hidden" class="' . esc_attr( self::nonce_field_name( $form_id ) ) . '" name="' . esc_attr( self::nonce_field_name() ) . '" value="' . esc_attr( self::create_verify_nonce( $form_id ) ) . '"  data-nonce-time="' . esc_attr( time() ) . '" />';
 		$nonce_field .= wp_referer_field( false );
 		return $nonce_field;
 	}

@@ -527,7 +527,7 @@ export const saveFormAndReload = ()  => {
 
 /**
  * Click the Variables tab to access the variables UI
- * 
+ *
  * @since 1.8.10
  */
 export const cfGoToVariablesTab = () => {
@@ -536,7 +536,7 @@ export const cfGoToVariablesTab = () => {
 
 /**
  * Adds a variable and sets its name and value
- * 
+ *
  * @since 1.8.10
  */
 export const cfAddVariable = () =>{
@@ -548,7 +548,7 @@ export const cfAddVariable = () =>{
 
 /**
  * Remove all variables
- * 
+ *
  * @since 1.8.10
  */
 export const cfRemoveVariable = () => {
