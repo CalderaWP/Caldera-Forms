@@ -1,4 +1,0 @@
-# single file
-coverage_clover: coverage/clover.xml
-service_name: travis-ci
-repo_token: COVERALLS_KEY

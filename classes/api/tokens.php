@@ -17,7 +17,6 @@ class Caldera_Forms_API_Tokens implements Caldera_Forms_API_Route {
 	 * @inheritdoc
 	 */
 	public function add_routes( $namespace ) {
-		_deprecated_function( __FUNCTION__, '1.6.2', '');
 		register_rest_route( $namespace, '/tokens/form',
 			array(
 				'methods'         => 'post',
@@ -60,7 +59,6 @@ class Caldera_Forms_API_Tokens implements Caldera_Forms_API_Route {
 	 * @return Caldera_Forms_API_Response
 	 */
 	public function get_new_nonce( WP_REST_Request $request ){
-		_deprecated_function( __FUNCTION__, '1.6.2', '');
 		$form_id = $request[ 'form_id' ];
 		$nonce = Caldera_Forms_Render_Nonce::create_verify_nonce( $form_id );
 		$response = new Caldera_Forms_API_Response( array(
