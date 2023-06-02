@@ -42,7 +42,7 @@ class Caldera_Forms_Field_Util {
 			return false;
 		}
 
-		return $field[ 'type' ];
+		return isset( $field[ 'type' ]) ? $field[ 'type' ] : false;
 
 	}
 
