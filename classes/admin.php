@@ -631,6 +631,14 @@ class Caldera_Forms_Admin {
 				'class'  => 'button-primary ajax-trigger'
 			);
 
+			$buttons[ 'print_entry' ] = array(
+				'label'  => esc_html__( 'Print Entry', 'caldera-forms' ),
+				'config' => array(
+					'data-trigger' => '#print-entry-{{_entry_id}}',
+					'onClick'	=>	'baldrickPrint()'
+				),
+				'class'  => 'button-secondary ajax-trigger'
+			);
 		}
 
 
@@ -1477,7 +1485,7 @@ class Caldera_Forms_Admin {
 				`entry`.`user_id` AS `_user_id`
 
 			FROM `" . $wpdb->prefix ."cf_form_entries` AS `entry`
-			
+
 
 			WHERE `entry`.`form_id` = %s
 			" . $filter . "
@@ -1834,7 +1842,7 @@ class Caldera_Forms_Admin {
 		);
 
 		if( Caldera_Forms_Admin::show_pro_ui() ){
-			
+
 			$internal_panels['form_layout']["tabs"]["antispam"] = array(
 				"name" => __( 'Anti-Spam', 'caldera-forms' ),
 				"location" => "lower",
@@ -2195,5 +2203,3 @@ class Caldera_Forms_Admin {
 
 
 }
-
-

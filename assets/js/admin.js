@@ -1,4 +1,4 @@
-var baldrickTriggers, loop_loader;
+var baldrickTriggers, loop_loader, baldrickPrint;
 
 jQuery( function(){
 	var adminAJAX;
@@ -7,6 +7,12 @@ jQuery( function(){
 	}else{
 		//yolo
 		adminAJAX = ajaxurl;
+	}
+
+	//
+	baldrickPrint = function(){
+    jQuery('body').addClass( 'modal-print' );
+    window.print();
 	}
 
 	// admin stuff!

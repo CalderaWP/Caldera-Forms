@@ -1,6 +1,6 @@
 {
 	"name": "caldera-forms",
-	"version": "1.9.7",
+	"version": "1.9.8",
 	"description": "Apex WordPress Forms",
 	"main": "Gruntfile.js",
 	"engines": {
@@ -150,11 +150,12 @@
 		"rimraf": "^2.6.1",
 		"sass-loader": "^13.2.2",
 		"style-loader": "^0.23.1",
-		"webpack": "5.47",
+		"webpack": "^5.88.2",
 		"webpack-cli": "^5.1.1",
 		"webpack-dev-server": "^4.15.0",
 		"webpack-manifest-plugin": "^5.0.0",
-		"webpack-preprocessor": "^0.1.12"
+		"webpack-preprocessor": "^0.1.12",
+		"yarn": "^1.22.19"
 	},
 	"jest": {
 		"collectCoverageFrom": [

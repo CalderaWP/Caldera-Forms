@@ -74,7 +74,7 @@
   position: absolute;
   right: 0;
   top: 43px;
-  overflow: auto;  
+  overflow: auto;
 }
 .caldera-modal-body h4 {
   border-bottom: 1px solid #dfdfdf;
@@ -221,9 +221,22 @@
   padding: 12px;
   position: absolute;
   right: 0;
-  
+
 }
 
+@media print {
+  body.modal-print > *,
+  body.modal-print #view_entry_baldrickModal .baldrick-modal-footer {
+    display: none;
+  }
+
+  body.modal-print #view_entry_baldrickModal {
+    top: 5px !important;
+    left: 10px !important;
+    height: 900px !important;
+    display: block;
+  }
+}
 
 @media (max-width: 600px) {
   /* Small Screens */
@@ -268,7 +281,7 @@
   display: block;
   padding: 8px 12px;
   text-decoration: none;
-  text-overflow: ellipsis;  
+  text-overflow: ellipsis;
   overflow: hidden;
 }
 .baldrick-modal-body.has-tabs {
