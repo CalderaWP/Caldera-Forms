@@ -233,8 +233,13 @@
   body.modal-print #view_entry_baldrickModal {
     top: 5px !important;
     left: 10px !important;
-    height: 900px !important;
+    height: auto !important;
     display: block;
+  }
+
+  body.modal-print #view_entry_baldrickModal .baldrick-modal-body {
+    position: static;
+    overflow: inherit !important ;
   }
 }
 
