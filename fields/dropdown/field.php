@@ -15,7 +15,6 @@ $attr_string =  caldera_forms_field_attributes( $attrs, $field, $form );
 
 ?>
 	<?php echo $field_label; ?>
-	<?php echo $field_before; ?>
 		<select <?php echo $attr_string . ' ' . $field_required . ' ' . $field_structure['aria']; ?> >
 		<?php
 
@@ -62,5 +61,4 @@ $attr_string =  caldera_forms_field_attributes( $attrs, $field, $form );
 			?>
 		</select>
 		<?php echo $field_caption; ?>
-	<?php echo $field_after; ?>
 <?php echo $wrapper_after; ?>

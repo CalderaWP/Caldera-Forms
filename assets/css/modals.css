@@ -230,16 +230,20 @@
     display: none;
   }
 
+  body.modal-print {
+    overflow: auto !important;
+  }
+  
   body.modal-print #view_entry_baldrickModal {
     top: 5px !important;
     left: 10px !important;
     height: auto !important;
+    position: static !important;
     display: block;
   }
 
   body.modal-print #view_entry_baldrickModal .baldrick-modal-body {
     position: static;
-    overflow: inherit !important ;
   }
 }
 

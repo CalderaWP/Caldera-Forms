@@ -1,10 +1,10 @@
-<?php 
+<?php
 
 $bound = null;
 if( !empty( $field['config']['advanced_populate']['filter'] ) ){
 	preg_match_all("/%(.+?)%/", $field['config']['advanced_populate']['filter'], $hastags);
 	if(!empty($hastags[1])){
-		
+
 		foreach($hastags[1] as $tag_key=>$tag){
 			foreach($form['fields'] as $key_id=>$fcfg){
 				if($fcfg['slug'] === $tag){
@@ -12,7 +12,7 @@ if( !empty( $field['config']['advanced_populate']['filter'] ) ){
 				}
 			}
 		}
-	}	
+	}
 }
 
 $field_value = Caldera_Forms_Field_Util::find_select_field_value( $field, $field_value );
@@ -42,7 +42,6 @@ if( empty( $field['config']['color'] ) ){
 
 ?>
 	<?php echo $field_label; ?>
-	<?php echo $field_before; ?>
 		<?php if( empty( $bound ) ){ ?>
 		<select <?php echo $field_placeholder; ?> id="<?php echo esc_attr( $field_id ); ?>" <?php echo $multi; ?> data-select-two="true" data-field="<?php echo esc_attr( $field_base_id ); ?>" class="<?php echo esc_attr( $field_class ); ?>" name="<?php echo esc_attr( $field_name ); ?>" <?php echo $field_required; ?> <?php echo $placeholder; ?>>
 		<?php
@@ -80,7 +79,6 @@ if( empty( $field['config']['color'] ) ){
 		<input type="text" data-select-two="true" id="<?php echo esc_attr( $field_id ); ?>" data-field="<?php echo esc_attr( $field_base_id ); ?>" name="<?php echo esc_attr( $field_name ); ?>[]" multiple="multiple" value="<?php echo htmlentities( $field_value ); ?>">
 		<?php } ?>
 		<?php echo $field_caption; ?>
-	<?php echo $field_after; ?>
 <?php echo $wrapper_after; ?>
 
 <?php
@@ -132,7 +130,7 @@ window.addEventListener('DOMContentLoaded', function(){
 				cache: true
 			}
 		};
-		<?php }else{ ?>	
+		<?php }else{ ?>
 		var opts = {};
 		<?php } ?>
 
@@ -149,20 +147,3 @@ window.addEventListener('DOMContentLoaded', function(){
 	}else{
 		echo $script_template;
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
