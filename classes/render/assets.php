@@ -606,6 +606,7 @@ class Caldera_Forms_Render_Assets
                     || empty($manifest)
                     || ! array_key_exists("{$name}.js",$manifest)
                 ) {
+										if ( $name == 'admin' ) return;
                     return "{$root_url}clients/{$name}/build/index.min.js";
                 } else {
                     return $manifest["{$name}.js"];
@@ -622,6 +623,7 @@ class Caldera_Forms_Render_Assets
                     || empty($manifest)
                     || ! array_key_exists("{$name}.css",$manifest)
                 ) {
+										if ( $name == 'admin' ) return;
                     return "{$root_url}clients/{$name}/build/style.min.css";
 
                 }else{
@@ -1128,7 +1130,7 @@ class Caldera_Forms_Render_Assets
 		} elseif (file_exists(CFCORE_PATH . 'assets/js/i18n/' . strtolower(substr($locale, 3)) . '.js')) {
 			$locale = strtolower(substr($locale, 3));
 		} else {
-			//No file is matching the locale in validation folder, 
+			//No file is matching the locale in validation folder,
 			//Fallback to english instead of not enqueueing for Parsley to be set a locale and not return an error
 			$locale = "en";
 		}
@@ -1201,11 +1203,11 @@ class Caldera_Forms_Render_Assets
 
 	/**
 	 * If neccasary, remove 'ver' query arg from CSS/ JS URL
-	 * 
+	 *
 	 * This is neccasary when webpack is serving the asset for HMR to work.
-	 * 
+	 *
 	 * @since 1.8.6
-	 * 
+	 *
 	 * @uses "script_loader_src" filter
 	 * @uses "style_loader_src" filter
 	 */
@@ -1233,13 +1235,13 @@ class Caldera_Forms_Render_Assets
 		}
 		$uri = isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI']  : '';
 		if( $uri && 0 === strpos( $uri,'/dist/caldera-hot-load' ) ){
-	
+
 			$path =  CFCORE_PATH  . $_SERVER['REQUEST_URI'];
 			if( file_exists($path)){
 				cf_redirect(untrailingslashit(CFCORE_URL) . $uri);exit;
 			}
 		}
-	
+
 
 	}
 }

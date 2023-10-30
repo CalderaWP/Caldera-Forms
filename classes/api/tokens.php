@@ -26,7 +26,6 @@ class Caldera_Forms_API_Tokens implements Caldera_Forms_API_Route {
 					'form_id' => array(
 						'required'          => 'true',
 						'type'              => 'string',
-						'validate_callback' => array( $this, 'form_exists' )
 					)
 				)
 			)

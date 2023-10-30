@@ -212,7 +212,7 @@ class Caldera_Forms_Admin_Assets
         if (1 !== strpos($slug, Caldera_Forms::PLUGIN_SLUG)) {
             $slug = self::slug($slug, true);
         }
-        
+
         wp_enqueue_script($slug);
     }
 

@@ -542,7 +542,7 @@ function CalderaFormsResetNonce( formId, config, $ ){
 			url:config.rest.tokens.nonce,
 			method: 'POST',
 			beforeSend: function ( xhr ) {
-				xhr.setRequestHeader( 'X-WP-Nonce', config.rest.nonce );
+				// xhr.setRequestHeader( 'X-WP-Nonce', config.rest.nonce );
 			},data:{
 				form_id: formId
 			}

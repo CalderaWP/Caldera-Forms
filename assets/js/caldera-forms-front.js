@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.10.0 - 2023-09-27 */var resBaldrickTriggers;
+/*! GENERATED SOURCE FILE caldera-forms - v1.10.1 - 2023-10-30 */var resBaldrickTriggers;
 
 jQuery(function($){
 	function fieldErrors(fields, $form, $notice) {
@@ -365,7 +365,7 @@ jQuery(function($){
 		};
 	}
 	cf_debounce = function(func, wait, immediate) {
-		var timeout;		
+		var timeout;
 		return function() {
 			var context = this, args = arguments;
 			var later = function() {
@@ -505,20 +505,20 @@ jQuery(function($){
 			var type	=	caldera_conditionals[ inst_id ][field].type,
 			groups	=	caldera_conditionals[ inst_id ][field].group,
 			trues	=	[];
-			
+
 			// has a wrapper - bind conditions
 			for(var id in groups){
-				
+
 				var truelines	= {},
-				lines		= groups[id];						
+				lines		= groups[id];
 				// go over each line in a group to find a false
-				for(var lid in lines){					
-					/// get field 
+				for(var lid in lines){
+					/// get field
 
 					var compareelement 	= $form.find('[data-field="' + lines[lid].field + '"]'),
 					comparefield 	= [],
 					comparevalue	= (typeof lines[lid].value === 'function' ? lines[lid].value() : lines[lid].value);
-					
+
 					if( typeof lines[lid].selectors !== 'undefined' ){
 						for( var selector in lines[lid].selectors ){
 							var re = new RegExp( selector ,"g");
@@ -537,11 +537,11 @@ jQuery(function($){
 							compareelement 	= $form.find('[data-calc-field="' + lines[lid].field + '"]');
 						}
 					}
-					
+
 					if(!compareelement.length){
 						comparefield.push(lines[lid].field);
 					}else{
-						for( var i = 0; i<compareelement.length; i++){							
+						for( var i = 0; i<compareelement.length; i++){
 							comparefield.push(compareelement[i].value);
 						}
 					}
@@ -594,7 +594,7 @@ jQuery(function($){
 						}
 						break;
 					}
-				}				
+				}
 				// add result in
 				istrue = true;
 				for( var prop in truelines ){
@@ -612,7 +612,7 @@ jQuery(function($){
 			target		=	jQuery('#conditional_' + field),
 			target_field=	jQuery('[data-field="' + field + '"]'),
 			action;
-			if(trues.length && trues.indexOf(true) >= 0){					
+			if(trues.length && trues.indexOf(true) >= 0){
 				if(type === 'show'){
 					action = 'show';
 				}else if (type === 'hide'){
@@ -743,7 +743,7 @@ jQuery(function($){
 		jQuery('.caldera_forms_form').on('change keyup', '[data-field]', cf_debounce( function(e){
 			var form 			= $(this).closest('.caldera_forms_form').prop('id');
 			calders_forms_check_conditions( form );
-		}, 10 ) );	
+		}, 10 ) );
 	};
 
 	if(typeof caldera_conditionals !== 'undefined'){
@@ -1197,7 +1197,7 @@ function CFState(formId, $ ){
 
 
 					self.mutateState(id,val);
-					
+
 					$field.trigger('cf.bind', {
 						field: $field.attr('id')
 					});
@@ -6482,7 +6482,7 @@ jQuery(document).on( 'cf.init', function(){
          $.each( configs, function( i, config ){
              fields[ config.id ] = self[config.type]( config );
          } );
-         
+
          setupInputMasks();
 		 $( document ).on( 'cf.add', setupInputMasks );
 	 };
@@ -7025,7 +7025,7 @@ jQuery(document).on( 'cf.init', function(){
              });
 
              $field.css( 'background', 'url("' + fieldConfig.imgPath + icon + '")' );
-             
+
          }
 
      };
@@ -7097,7 +7097,7 @@ jQuery(document).on( 'cf.init', function(){
          }
 
      };
-     
+
      this.color_picker = function ( fieldConfig ) {
          $( document.getElementById( fieldConfig.id ) ).miniColors( fieldConfig.settings );
          $(document).on('cf.pagenav cf.add cf.disable cf.modal', function () {
@@ -7773,7 +7773,7 @@ function CalderaFormsResetNonce( formId, config, $ ){
 			url:config.rest.tokens.nonce,
 			method: 'POST',
 			beforeSend: function ( xhr ) {
-				xhr.setRequestHeader( 'X-WP-Nonce', config.rest.nonce );
+				// xhr.setRequestHeader( 'X-WP-Nonce', config.rest.nonce );
 			},data:{
 				form_id: formId
 			}
