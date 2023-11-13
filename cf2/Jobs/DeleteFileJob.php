@@ -38,11 +38,11 @@ class DeleteFileJob extends Job
 	/** @inheritdoc */
 	public function handle()
 	{
-		if ( file_exists($this->path) ) {
+		if ( is_string( $this->path ) && file_exists($this->path) ) {
 			unlink($this->path);
 		}
 
-		if( file_exists( $this->dirName() ) && $this->isEmptyDir() ){
+		if( is_string( $this->dirName() ) && file_exists( $this->dirName() ) && $this->isEmptyDir() ){
 			rmdir(dirname($this->path));
 		}
 

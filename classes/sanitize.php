@@ -197,7 +197,7 @@ class Caldera_Forms_Sanitize {
 		}
 		else {
 			$output = wp_unslash( $input );
-			
+
 		}
 
 		return $output;
@@ -267,10 +267,9 @@ class Caldera_Forms_Sanitize {
      * @return string
      */
 	public static function sanitize_header($header){
-        return preg_replace( '=((<CR>|<LF>|0x0A/%0A|0x0D/%0D|\\n|\\r)\S).*=i', null, $header );
-
+    return preg_replace( '=((<CR>|<LF>|0x0A/%0A|0x0D/%0D|\\n|\\r)\S).*=i', '', $header );
 	}
-	
+
 	/**
      * Remove partially removed line breaks (backslash removed but not r or n)
      *
@@ -284,5 +283,3 @@ class Caldera_Forms_Sanitize {
     }
 
 }
-
-

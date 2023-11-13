@@ -62,10 +62,10 @@ class CalderaFormsV2Test extends TestCase
 		$coreDir = 'foo/bar';
 		$containerMock = $this->getContainer();
 		$containerMock->setCoreDir($coreDir);
-		$this->assertAttributeEquals( $coreDir, 'coreDirPath', $containerMock );
+		$this->assertEquals( $coreDir, $containerMock->getCoreDir() );
 		$containerReal = new CalderaFormsV2();
 		$containerReal->setCoreDir($coreDir);
-		$this->assertAttributeEquals( $coreDir, 'coreDirPath', $containerReal );
+		$this->assertEquals( $coreDir, $containerReal->getCoreDir() );
 	}
 
 	/**
@@ -95,10 +95,10 @@ class CalderaFormsV2Test extends TestCase
 		$coreUrl = 'https://example.com/wp-content/plugins/foo';
 		$containerMock = $this->getContainer();
 		$containerMock->setCoreUrl($coreUrl);
-		$this->assertAttributeEquals( $coreUrl, 'coreUrl', $containerMock );
+		$this->assertEquals( $coreUrl, $containerMock->getCoreUrl() );
 		$containerReal = new CalderaFormsV2();
 		$containerReal->setCoreUrl($coreUrl);
-		$this->assertAttributeEquals( $coreUrl, 'coreUrl', $containerReal );
+		$this->assertEquals( $coreUrl, $containerReal->getCoreUrl() );
 	}
 
 	/**

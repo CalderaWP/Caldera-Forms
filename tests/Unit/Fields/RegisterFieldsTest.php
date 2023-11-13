@@ -20,8 +20,8 @@ class RegisterFieldsTest extends TestCase
 		$fieldTypeFactory = new FieldTypeFactory();
 		$path = 'foo/bar';
 		$register = new RegisterFields($fieldTypeFactory, $path);
-		$this->assertAttributeEquals($fieldTypeFactory, 'factory', $register);
-		$this->assertAttributeEquals($path, 'coreDirPath', $register);
+		$this->assertEquals($fieldTypeFactory, $register->getFactory());
+		$this->assertEquals($path, $register->getCoreDirPath());
 	}
 
 	/**

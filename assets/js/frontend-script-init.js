@@ -539,10 +539,10 @@ function CalderaFormsResetNonce( formId, config, $ ){
      */
 	function replaceNonce(){
 		$.ajax({
-			url:config.rest.tokens.nonce,
+			url: config.rest.tokens.nonce,
 			method: 'POST',
 			beforeSend: function ( xhr ) {
-				// xhr.setRequestHeader( 'X-WP-Nonce', config.rest.nonce );
+				if ( config.logged_in ) xhr.setRequestHeader( 'X-WP-Nonce', config.rest.nonce );
 			},data:{
 				form_id: formId
 			}

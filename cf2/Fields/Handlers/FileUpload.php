@@ -175,4 +175,34 @@ class FileUpload
 		return $types;
 	}
 
+	/**
+	 *
+	 *
+	 * @return array
+	 */
+	public function getField()
+	{
+		return $this->field;
+	}
+
+	/**
+	 *
+	 *
+	 * @return array
+	 */
+	public function getForm()
+	{
+		return $this->form;
+	}
+
+	/**
+	 *
+	 *
+	 * @return array
+	 */
+	public function getUploader()
+	{
+		return $this->uploader;
+	}
+
 }

@@ -63,6 +63,12 @@ class RenderField implements RenderFieldContract
         return $this->formIdAttr;
     }
 
+		/** @inheritdoc */
+		public function getField()
+		{
+				return $this->field;
+		}
+
     /** @inheritdoc */
     public function render()
     {

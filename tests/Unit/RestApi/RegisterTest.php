@@ -34,7 +34,7 @@ class RegisterTest extends TestCase
     public function test__construct()
     {
         $register = new Register('cf22' );
-        $this->assertAttributeEquals('cf22', 'namespace', $register );
+        $this->assertEquals('cf22', $register->getNamespace() );
 
     }
 }

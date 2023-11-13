@@ -19,8 +19,8 @@ class HooksTest extends TestCase
     {
         $container = $this->getContainer();
         $hooks = new Hooks($container);
-        $this->assertAttributeInstanceOf(CalderaFormsV2Contract::class, 'container', $hooks );
-        $this->assertAttributeInstanceOf(FileFieldHandler::class, 'fileFieldHandler', $hooks );
+        $this->assertInstanceOf(CalderaFormsV2Contract::class, $hooks->getContainer() );
+        $this->assertInstanceOf(FileFieldHandler::class, $hooks->getFileFieldHandler() );
     }
 
     /**

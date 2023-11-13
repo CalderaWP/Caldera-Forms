@@ -416,8 +416,9 @@ class Caldera_Forms_Files{
 		$form = Caldera_Forms_Forms::get_form($form_id);
 		if ( is_array($form) ) {
 			$field = Caldera_Forms_Field_Util::get_field($field_id, $form);
+      $fileName = ! empty( $file[ 'name' ] ) ? $file[ 'name' ] : basename($file[ 'tmp_name' ]);
 			if ( is_array($field) && !self::is_persistent($field) ) {
-				caldera_forms_schedule_job(new \calderawp\calderaforms\cf2\Jobs\DeleteFileJob($file));
+				caldera_forms_schedule_job(new \calderawp\calderaforms\cf2\Jobs\DeleteFileJob($fileName));
 				return true;
 			}
 		}

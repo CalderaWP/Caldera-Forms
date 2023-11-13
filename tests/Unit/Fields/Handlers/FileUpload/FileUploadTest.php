@@ -26,9 +26,9 @@ class FileUploadTest extends TestCase
 		$form = [ 'ID' => 'cd1' ];
 		$uploader = new MockUploader();
 		$handler = new FileUpload($field, $form, $uploader);
-		$this->assertAttributeEquals($field, 'field', $handler);
-		$this->assertAttributeEquals($form, 'form', $handler);
-		$this->assertAttributeEquals($uploader, 'uploader', $handler);
+		$this->assertEquals($field, $handler->getField());
+		$this->assertEquals($form, $handler->getForm());
+		$this->assertEquals($uploader, $handler->getUploader());
 	}
 
 	/**

@@ -18,6 +18,6 @@ class FieldHandlerTest extends TestCase
     {
         $container = $this->getContainer();
         $handler = new MockFieldHandler($container);
-        $this->assertAttributeInstanceOf(CalderaFormsV2::class, 'container', $handler );
+        $this->assertInstanceOf(CalderaFormsV2::class, $handler->getContainer());
     }
 }

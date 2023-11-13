@@ -776,6 +776,7 @@ class Caldera_Forms_Render_Assets
 		if (!is_array(self::$api_data_localized) || !isset(self::$api_data_localized[ $field_script_to_localize ])) {
 			wp_localize_script($field_script_to_localize, 'CF_API_DATA', [
 				'rest' => [
+					'logged_in' => is_user_logged_in(),
 					'root' => esc_url_raw(Caldera_Forms_API_Util::url()),
 					'rootV3' => esc_url_raw(Caldera_Forms_API_Util::url('', false, 'v3')),
 					'fileUpload' => esc_url_raw(Caldera_Forms_API_Util::url('file', false, 'v3')),

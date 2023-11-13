@@ -20,8 +20,8 @@ class RenderFieldTest extends TestCase
 		$field = $this->fieldFactory('email');
 		$formIdAttr = 'cf1';
 		$renderer = new RenderField($formIdAttr, $field);
-		$this->assertAttributeEquals($formIdAttr, 'formIdAttr', $renderer);
-		$this->assertAttributeEquals($field, 'field', $renderer);
+		$this->assertEquals($formIdAttr, $renderer->getFormIdAttr());
+		$this->assertEquals($field, $renderer->getField());
 	}
 
 	/**

@@ -1,6 +1,6 @@
 {
 	"name": "caldera-forms",
-	"version": "1.10.1",
+	"version": "1.10.3",
 	"description": "Apex WordPress Forms",
 	"main": "Gruntfile.js",
 	"engines": {
@@ -57,7 +57,7 @@
 		"exports-loader": "^0.7.0",
 		"grunt-contrib-copy": "^1.0.0",
 		"import": "^0.0.6",
-		"inputmask": "^3.3.11",
+		"inputmask": "^5.0.8",
 		"jquery": "^3.6.4",
 		"lodash.remove": "^4.7.0",
 		"md5-file": "^4.0.0",

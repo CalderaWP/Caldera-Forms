@@ -167,7 +167,6 @@ class Caldera_Forms_Admin_Assets
             self::slug('modals', false),
             'wp-color-picker',
             'wp-pointer',
-            Caldera_Forms_Render_Assets::make_slug('admin-client', false)
         ), $version);
 
         wp_register_style(self::slug('processors', false), Caldera_Forms_Render_Assets::make_url('processors-edit', false), array(), $version);
@@ -197,7 +196,9 @@ class Caldera_Forms_Admin_Assets
             $slug = self::slug($slug, false);
         }
 
-        wp_enqueue_style($slug);
+        if ( wp_style_is( $slug, 'registered') ){
+          wp_enqueue_style($slug);
+        }
     }
 
     /**

@@ -61,9 +61,9 @@ class FieldTypeFactoryTest extends TestCase
 	{
 		$fieldTypeFactory = new FieldTypeFactory();
 		$fieldTypeFactory->add(new TextFieldType);
-		$this->assertAttributeCount(1, 'fields', $fieldTypeFactory);
+		$this->assertCount(1, $fieldTypeFactory->getAll());
 		$fieldTypeFactory->add(new TextFieldType);
-		$this->assertAttributeCount(1, 'fields', $fieldTypeFactory);
+		$this->assertCount(1, $fieldTypeFactory->getAll());
 
 
 	}

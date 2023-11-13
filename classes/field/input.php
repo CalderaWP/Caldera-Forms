@@ -150,25 +150,21 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
 	 * @return string
 	 */
 	protected static function get_mask_string( array  $field ){
-		$mask = '';
-		if ( 'phone' != Caldera_Forms_Field_Util::get_type( $field ) ) {
-			if ( ! empty( $field[ 'config' ][ 'masked' ] ) ) {
-				$mask = $field[ 'config' ][ 'mask' ];
-			}
-		} else {
-			$mask = '\([0-9]{3}\) [0-9]{3}-[0-9]{4}';
-			if( $field['config']['type'] == 'international' ){
-				$mask = '+99 99 999 9999';
-			}elseif ( $field['config']['type'] == 'custom' ) {
-				$mask = $field['config']['custom'];
-			}
-
-		}
-
-		if ( ! empty( $mask ) ) {
-			$mask = "pattern=\"$mask\" data-inputmask=\"'mask': '" . $mask . "'\" ";
-		}
-
-		return $mask;
-	}
+ 		$attrs = '';
+ 		if ( 'phone' != Caldera_Forms_Field_Util::get_type( $field ) ) {
+ 			if ( ! empty( $field[ 'config' ][ 'masked' ] ) ) {
+ 				$mask = $field[ 'config' ][ 'mask' ];
+ 				return "data-inputmask=\"'mask': '" . $mask . "'\" ";
+ 			}
+ 		} else {
+ 			$mask = '\([0-9]{3}\) [0-9]{3}-[0-9]{4}';
+ 			if( $field['config']['type'] == 'international' ){
+ 				$mask = '\+[0-9]{2} [0-9]{2} [0-9]{3} [0-9]{4}';
+ 			}elseif ( $field['config']['type'] == 'custom' ) {
+ 				$mask = $field['config']['custom'];
+ 			}
+ 			return "pattern=\"$mask\" data-inputmask-regex=\"$mask\"";
+ 		}
+ 		return $attrs;
+ 	}
 }

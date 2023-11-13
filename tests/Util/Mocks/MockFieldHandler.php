@@ -26,5 +26,10 @@ class MockFieldHandler extends FieldHandler
 		return $field_value;
 	}
 
+  public function getContainer()
+  {
+    return $this->container;
+  }
+
 
 }

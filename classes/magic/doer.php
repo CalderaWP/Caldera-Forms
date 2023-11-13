@@ -133,7 +133,7 @@ class Caldera_Forms_Magic_Doer {
 					}
 				}
 
-				$value = str_replace( $matches[ 0 ][ $key ], $entry, $value );
+				$value = str_replace( $matches[ 0 ][ $key ], (string) $entry, $value );
 			}
 
 			/**

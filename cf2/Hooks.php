@@ -39,6 +39,14 @@ class Hooks
         add_filter('caldera_forms_get_field_types', [$register, 'filter' ], 2 );
     }
 
+    /**
+     * @return FileFieldHandler
+     */
+    public function getContainer()
+    {
+        return $this->container;
+    }
+
 
     /**
      * @return FileFieldHandler

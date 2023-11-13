@@ -37,6 +37,11 @@ class RegisterFields implements RegisterFieldsContract
 		return $this->coreDirPath;
 	}
 
+	public function getFactory()
+	{
+		return $this->factory;
+	}
+
 	/** @inheritdoc */
 	public function filter($fields){
 		if( ! empty( $this->factory->getAll() ) ){
