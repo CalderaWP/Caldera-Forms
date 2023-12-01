@@ -130,6 +130,8 @@ class Caldera_Forms_Admin {
 		if( current_user_can( Caldera_Forms::get_manage_cap( 'create' ) ) ){
 			// create forms
 			add_action("wp_ajax_create_form", array( $this, 'create_form') );
+			add_filter( 'upload_mimes', array( $this, 'custom_mime_types' ) );
+
 		}
 
 		if( current_user_can( Caldera_Forms::get_manage_cap( 'admin' ) ) ) {
@@ -167,6 +169,12 @@ class Caldera_Forms_Admin {
 		do_action( 'caldera_forms_admin_init' );
 
 		/** Adding anything to this constructor after caldera_forms_admin_init action is a violation of intergalactic law */
+	}
+
+
+	public function custom_mime_types($mimes) {
+	    $mimes['json']  = 'application/json';
+	    return $mimes;
 	}
 
 	public function render_editor_template(){
