@@ -9,8 +9,7 @@
  * @copyright 2016 CalderaWP LLC
  */
 ?>
-<?php echo $wrapper_before; ?>
-	<?php echo $field_label; ?>
-		<?php echo Caldera_Forms_Field_Input::html( $field, $field_structure, $form ); ?>
-		<?php echo $field_caption; ?>
-<?php echo $wrapper_after; ?>
+
+<?php echo $field_label; ?>
+<?php echo Caldera_Forms_Field_Input::html( $field, $field_structure, $form ); ?>
+<?php echo $field_caption; ?>

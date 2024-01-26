@@ -4808,7 +4808,7 @@ class Caldera_Forms
 
 			$attributes = array();
 			foreach ($form_attributes as $attribute => $value) {
-				$attributes[] = $attribute . '="' . htmlentities($value) . '"';
+				if ( ! empty( $value ) ) $attributes[] = $attribute . '="' . htmlentities($value) . '"';
 			}
 
 			// render only non success

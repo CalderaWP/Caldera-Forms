@@ -19,11 +19,8 @@ if( $sync ){
 	$script_template = ob_get_clean();
 	Caldera_Forms_Render_Util::add_inline_data( $script_template, $form );
 
-}else{
+} else {
 	$html_template = $field[ 'config' ][ 'default' ];
 	$content = do_shortcode( Caldera_Forms::do_magic_tags( wpautop( $html_template ) ) );
-	echo '<div class="' . esc_attr( $field['config']['custom_class'] ) . '">' . $content . '</div>';
+	echo $content ;
 }
-
-
-

@@ -52,12 +52,11 @@ $attr_string_hidden_field =  caldera_forms_implode_field_attributes( caldera_for
 
 
 ?>
-<?php echo $wrapper_before; ?>
 <?php if ( ! empty( $field[ 'config' ][ 'label_space' ] ) ) { ?>
 	<label class="control-label">&nbsp;</label>
 <?php } ?>
 	<input  <?php echo $attr_string_button . ' ' . $field_structure[ 'aria' ]; ?>>
-<?php echo $wrapper_after; ?>
+
 	<input <?php echo $attr_string_hidden_field; ?> />
 <?php
 ob_start();

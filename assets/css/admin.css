@@ -620,7 +620,7 @@ h3.caldera-editor-field-title {
 .toggle_option_row .magic-tags-autocomplete {
 	width: 279px;
 }
-/** 
+/**
 Magic tags autocomplete
 .magic-tags-list is new
 .magic-tags-autocomplete is legacy
@@ -1292,9 +1292,6 @@ input.disabled-input {
 	color: inherit;
 	font: inherit;
 	margin: 0;
-}
-.form-panel button {
-	overflow: visible;
 }
 .form-panel button,
 .form-panel select {

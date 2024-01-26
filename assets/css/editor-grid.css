@@ -165,7 +165,7 @@
 	position: relative;
 }
 .column-fieldinsert .dashicons.dashicons-admin-generic,
-.column-fieldinsert .dashicons.dashicons-plus-alt {	
+.column-fieldinsert .dashicons.dashicons-plus-alt {
   background: none repeat scroll 0 0 #EFEFEF;
   color: #6C6C6C;
   font-size: 13px;
@@ -416,7 +416,6 @@ textarea.magic-tag-enabled {
 }
 .container-button.edit-open {
 	min-width: 100%;
-	overflow: visible;
 	position: relative;
 	width: auto;
 	z-index: 101;

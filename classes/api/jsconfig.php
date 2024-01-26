@@ -41,7 +41,7 @@ class Caldera_Forms_API_JsConfig implements JsonSerializable{
 	 * @inheritdoc
 	 * @since 1.5.0
 	 */
-	public function jsonSerialize():mixed {
+	public function jsonSerialize() : mixed {
 		return $this->toArray();
 	}
 

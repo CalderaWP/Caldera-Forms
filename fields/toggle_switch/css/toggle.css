@@ -109,9 +109,6 @@
   font: inherit;
   margin: 0;
 }
-.cf-toggle-switch button {
-  overflow: visible;
-}
 .cf-toggle-switch button,
 .cf-toggle-switch select {
   text-transform: none;

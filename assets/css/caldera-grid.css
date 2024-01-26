@@ -99,12 +99,9 @@
 .caldera-grid input,
 .caldera-grid optgroup,
 .caldera-grid select,
-.caldera-grid textarea { 
+.caldera-grid textarea {
   font: inherit;
   margin: 0;
-}
-.caldera-grid button {
-  overflow: visible;
 }
 .caldera-grid button,
 .caldera-grid select {
@@ -394,12 +391,9 @@
 .caldera-grid input,
 .caldera-grid optgroup,
 .caldera-grid select,
-.caldera-grid textarea { 
+.caldera-grid textarea {
   font: inherit;
   margin: 0;
-}
-.caldera-grid button {
-  overflow: visible;
 }
 .caldera-grid button,
 .caldera-grid select {
