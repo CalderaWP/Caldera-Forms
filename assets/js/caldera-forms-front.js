@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.10.4 - 2024-01-25 */var resBaldrickTriggers;
+/*! GENERATED SOURCE FILE caldera-forms - v1.10.5 - 2024-01-25 */var resBaldrickTriggers;
 
 jQuery(function($){
 	function fieldErrors(fields, $form, $notice) {
@@ -7332,7 +7332,7 @@ jQuery(document).on( 'cf.init', function(){
          $.each( configs, function( i, config ){
              fields[ config.id ] = self[config.type]( config );
          } );
-         
+
          setupInputMasks();
 		 $( document ).on( 'cf.add', setupInputMasks );
 	 };
@@ -7875,7 +7875,7 @@ jQuery(document).on( 'cf.init', function(){
              });
 
              $field.css( 'background', 'url("' + fieldConfig.imgPath + icon + '")' );
-             
+
          }
 
      };
@@ -7947,7 +7947,7 @@ jQuery(document).on( 'cf.init', function(){
          }
 
      };
-     
+
      this.color_picker = function ( fieldConfig ) {
          $( document.getElementById( fieldConfig.id ) ).miniColors( fieldConfig.settings );
          $(document).on('cf.pagenav cf.add cf.disable cf.modal', function () {
@@ -8073,11 +8073,19 @@ jQuery(document).on( 'cf.init', function(){
         if (!$.prototype.inputmask){
             return;
         }
+        
         $form.find('[data-inputmask]').inputmask();
+
+        Array.prototype.filter.call(document.getElementsByClassName('masked-phone'), function(item) {
+          item.addEventListener( 'blur', function(e) {
+            var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+            e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+          });
+        });
+
     }
 
  }
-
 
 
 var cf_jsfields_init, cf_presubmit;
