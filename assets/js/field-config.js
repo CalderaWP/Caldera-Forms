@@ -767,19 +767,18 @@
      * @since 1.6.2
      */
     function setupInputMasks() {
-        if (!$.prototype.inputmask){
-            return;
-        }
-        
-        $form.find('[data-inputmask]').inputmask();
-
-        Array.prototype.filter.call(document.getElementsByClassName('masked-phone'), function(item) {
-          item.addEventListener( 'blur', function(e) {
-            var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
-            e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
-          });
+      Array.prototype.filter.call(document.getElementsByClassName('masked-phone'), function(item) {
+        item.addEventListener( 'blur', function(e) {
+          var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+          e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
         });
+      });
 
+      if (!$.prototype.inputmask){
+          return;
+      }
+
+      $form.find('[data-inputmask]').inputmask();
     }
 
  }
