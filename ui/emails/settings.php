@@ -48,9 +48,6 @@
 				<option value="wp" <?php if ( 'wp'  == Caldera_Forms_Email_Settings::get_method() ) : echo 'selected'; endif; ?> >
 					<?php esc_html_e( 'WordPress', 'caldera-forms' ); ?>
 				</option>
-				<option value="sendgrid" <?php if ( 'sendgrid'  == Caldera_Forms_Email_Settings::get_method() ) : echo 'selected'; endif; ?> >
-					<?php esc_html_e( 'SendGrid', 'caldera-forms' ); ?>
-				</option>
 				<option value="caldera" <?php if ( 'caldera'  == Caldera_Forms_Email_Settings::get_method() ) : echo 'selected'; endif; ?> disabled >
 					<?php esc_html_e( 'Caldera (coming soon)', 'caldera-forms' ); ?>
 				</option>
@@ -59,23 +56,6 @@
 		<p class="description" id="cf-emails-api-desc" style="max-width: 440px; margin-bottom: 12px;">
 			<?php esc_html_e( 'By default Caldera Forms uses WordPress to send emails. You can choose to use another method to increase reliability of emails and reduce server load.', 'caldera-forms' ); ?>
 		</p>
-	</div>
-	<div class="cf-emails-field-group caldera-config-group" id="cf-emails-sendgrid-key-wrap">
-		<label for="cf-emails-sendgrid-key" id="cf-emails-sendgrid-key-label">
-			<?php esc_html_e( 'SendGrid API Key', 'caldera-forms' ); ?>
-		</label>
-		<div class="cf-emails-field-group">
-			<input type="text" class="cf-email-settings" id="cf-emails-sendgrid-key" name="cf-emails-sendgrid-key" value="<?php echo esc_attr( Caldera_Forms_Email_Settings::get_key( 'sendgrid' ) ); ?>">
-		</div>
-		<p class="description" id="cf-emails-sendgrid-key-desc" style="max-width: 440px; margin-bottom: 12px;">
-		<?php printf( '<span>%s</span> <span><a href="%s" target="_blank" rel="nofollow" title="%s">%s</a></span>',
-					esc_html__( 'SendGrid API Key', 'caldera-forms' ),
-					'https://CalderaWP.com/docs/configure-sendgrid',
-					esc_attr__( 'Documentation for configuring SendGrid API', 'caldera-forms' ),
-					esc_html__( 'Learn More', 'caldera-forms' )
-				);
-		?></p>
-
 	</div>
 	<?php echo Caldera_Forms_Email_Settings::nonce_field(); ?>
 	<br><br>
